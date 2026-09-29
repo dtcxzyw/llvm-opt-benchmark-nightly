@@ -202,16 +202,18 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.d = getelementptr i8, ptr %.0.val, i64 -8
   %.val.i.i = load i64, ptr %i.d, align 8, !noundef !6 ; 2 uses
-  %narrow.i.not.i.i = icmp ugt i64 %.val.i.i, 128102389400760774
-  br i1 %narrow.i.not.i.i, label %bb.b, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit.i, !prof !9
+  %0 = mul i64 %.val.i.i, 72
+  %1 = add i64 %0, 16                             ; 2 uses
+  %narrow.i.i = icmp ult i64 %.val.i.i, 256204778801521550
+  %2 = icmp ult i64 %1, 9223372036854775799
+  %narrow.i.i.i = and i1 %narrow.i.i, %2
+  br i1 %narrow.i.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit.i, label %bb.b, !prof !8
 
 bb.b:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECs2AodJlUx5rK_5typst.exit.i
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #25
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECs2AodJlUx5rK_5typst.exit.i
-  %0 = mul nuw nsw i64 %.val.i.i, 72
-  %1 = add nuw nsw i64 %0, 16
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %i.b, ptr %i.e, align 8
   store i64 8, ptr %i.a, align 8
@@ -614,13 +616,13 @@ bb.c:                                             ; preds = %bb.a
   %i.ae = load i64, ptr %i.ad, align 8, !alias.scope !269, !noalias !270, !noundef !6
   tail call void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher11write_usize(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, i64 noundef %i.ae), !noalias !269, !inline_history !210
   %i.af = getelementptr inbounds nuw i8, ptr %i.aa, i64 64
-  %i.ag = load i8, ptr %i.af, align 8, !range !10, !alias.scope !269, !noalias !270, !noundef !6
+  %i.ag = load i8, ptr %i.af, align 8, !range !9, !alias.scope !269, !noalias !270, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !271
   store i8 %i.ag, ptr %i.e, align 1, !noalias !271
   call void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.e, i64 noundef 1), !noalias !269
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !271
   %i.ah = getelementptr inbounds nuw i8, ptr %i.aa, i64 65
-  %i.ai = load i8, ptr %i.ah, align 1, !range !10, !alias.scope !269, !noalias !270, !noundef !6
+  %i.ai = load i8, ptr %i.ah, align 1, !range !9, !alias.scope !269, !noalias !270, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !272
   store i8 %i.ai, ptr %i.f, align 1, !noalias !272
   call void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef 1), !noalias !269
@@ -646,7 +648,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i26, i64 32 ; 2 uses
   call fastcc void @_RINvXst_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB6_4NodeNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs2AodJlUx5rK_5typst(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.0.0.i26, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1) #30, !noalias !269, !inline_history !217
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i26, i64 24
-  %i.at = load i64, ptr %i.as, align 8, !range !11, !alias.scope !274, !noalias !275, !noundef !6
+  %i.at = load i64, ptr %i.as, align 8, !range !10, !alias.scope !274, !noalias !275, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !276
   store i64 %i.at, ptr %i.a, align 8, !noalias !276
   call void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef 8), !noalias !269
@@ -837,17 +839,17 @@ _RINvXsl_NtNtCs3oUPovFnLWP_4core4hash5implsTNtNtCsakL8LGkl72C_4ecow6string9EcoSt
 define internal void @_RNCINvMs0_NtNtCsaL1QbXo9JQH_3std4sync4onceNtB8_4Once15call_once_forceNCNvMNtBa_9lazy_lockINtB1a_8LazyLockNtNtCsdaEETE4DqmE_13typst_library8routines8RoutinesE5force0E0Cs2AodJlUx5rK_5typst(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr nofree noundef nonnull readonly align 4 captures(none) %1) unnamed_addr #4 {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 4 uses
-  %i.b = load ptr, ptr %0, align 8, !nonnull !6, !align !12, !noundef !6 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !align !12, !noundef !6 ; 3 uses
+  %i.b = load ptr, ptr %0, align 8, !nonnull !6, !align !11, !noundef !6 ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !align !11, !noundef !6 ; 3 uses
   store ptr null, ptr %i.b, align 8
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %bb.d, label %bb.b, !prof !9
+  br i1 %.not, label %bb.d, label %bb.b, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %1, i64 4
-  %.val = load i8, ptr %i.d, align 4, !range !10, !noundef !6
+  %.val = load i8, ptr %i.d, align 4, !range !9, !noundef !6
   %i.e = trunc nuw i8 %.val to i1
-  br i1 %i.e, label %bb.c, label %_RNCNvMNtNtCsaL1QbXo9JQH_3std4sync9lazy_lockINtB4_8LazyLockNtNtCsdaEETE4DqmE_13typst_library8routines8RoutinesE5force0Cs2AodJlUx5rK_5typst.exit, !prof !9
+  br i1 %i.e, label %bb.c, label %_RNCNvMNtNtCsaL1QbXo9JQH_3std4sync9lazy_lockINtB4_8LazyLockNtNtCsdaEETE4DqmE_13typst_library8routines8RoutinesE5force0Cs2AodJlUx5rK_5typst.exit, !prof !12
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvNtNtCsaL1QbXo9JQH_3std4sync9lazy_lock14panic_poisoned() #29
@@ -870,18 +872,18 @@ bb.d:                                             ; preds = %bb.a
 define internal void @_RNSNvYNCINvMs0_NtNtCsaL1QbXo9JQH_3std4sync4onceNtBd_4Once15call_once_forceNCNvMNtBf_9lazy_lockINtB1f_8LazyLockNtNtCsdaEETE4DqmE_13typst_library8routines8RoutinesE5force0E0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTRNtBd_9OnceStateEE9call_once6vtableCs2AodJlUx5rK_5typst(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull readonly align 4 captures(none) %1) unnamed_addr #4 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 4 uses
-  %i.b = load ptr, ptr %0, align 8, !nonnull !6, !align !12, !noundef !6 ; 2 uses
+  %i.b = load ptr, ptr %0, align 8, !nonnull !6, !align !11, !noundef !6 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !328)
-  %i.c = load ptr, ptr %i.b, align 8, !alias.scope !328, !noalias !329, !align !12, !noundef !6 ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !alias.scope !328, !noalias !329, !align !11, !noundef !6 ; 3 uses
   store ptr null, ptr %i.b, align 8, !alias.scope !328, !noalias !329
   %.not.i.i = icmp eq ptr %i.c, null
-  br i1 %.not.i.i, label %bb.d, label %bb.b, !prof !9
+  br i1 %.not.i.i, label %bb.d, label %bb.b, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %1, i64 4
-  %.val.i.i = load i8, ptr %i.d, align 4, !range !10, !noalias !330, !noundef !6
+  %.val.i.i = load i8, ptr %i.d, align 4, !range !9, !noalias !330, !noundef !6
   %i.e = trunc nuw i8 %.val.i.i to i1
-  br i1 %i.e, label %bb.c, label %_RNvYNCINvMs0_NtNtCsaL1QbXo9JQH_3std4sync4onceNtBb_4Once15call_once_forceNCNvMNtBd_9lazy_lockINtB1d_8LazyLockNtNtCsdaEETE4DqmE_13typst_library8routines8RoutinesE5force0E0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceCs2AodJlUx5rK_5typst.exit, !prof !9
+  br i1 %i.e, label %bb.c, label %_RNvYNCINvMs0_NtNtCsaL1QbXo9JQH_3std4sync4onceNtBb_4Once15call_once_forceNCNvMNtBd_9lazy_lockINtB1d_8LazyLockNtNtCsdaEETE4DqmE_13typst_library8routines8RoutinesE5force0E0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceCs2AodJlUx5rK_5typst.exit, !prof !12
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvNtNtCsaL1QbXo9JQH_3std4sync9lazy_lock14panic_poisoned() #29, !noalias !330
@@ -1160,7 +1162,7 @@ bb.q:                                             ; preds = %_RNvXsq_NtCsakL8LGk
   store i64 7237128888997146499, ptr %.sroa.512.0..sroa_idx.i.i.i, align 8, !noalias !406
   store i64 8387220255154660723, ptr %.sroa.613.0..sroa_idx.i.i.i, align 8, !noalias !406
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.0..sroa_idx.i.i.i, i8 0, i64 40, i1 false), !noalias !406
-  %.val.i.i.i.i.i = load i64, ptr %i.bh, align 8, !range !11, !alias.scope !405, !noalias !407, !noundef !6
+  %.val.i.i.i.i.i = load i64, ptr %i.bh, align 8, !range !10, !alias.scope !405, !noalias !407, !noundef !6
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %.val1.i.i.i.i.i = load i64, ptr %i.bj, align 8, !alias.scope !405, !noalias !407
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !408
@@ -1213,7 +1215,7 @@ bb.q:                                             ; preds = %_RNvXsq_NtCsakL8LGk
   %i.cb = call noundef i64 @llvm.fshl.i64(i64 %i.ca, i64 %i.ca, i64 26) ; 2 uses
   %i.cc = load i64, ptr %i.aa, align 8, !alias.scope !414, !noalias !415, !noundef !6
   %i.cd = icmp eq i64 %i.cc, 0
-  br i1 %i.cd, label %bb.r, label %_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTouEE7reserveNCINvNtB8_3map11make_hasherouNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE0ECs2AodJlUx5rK_5typst.exit.i.i.i.i, !prof !9
+  br i1 %i.cd, label %bb.r, label %_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTouEE7reserveNCINvNtB8_3map11make_hasherouNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE0ECs2AodJlUx5rK_5typst.exit.i.i.i.i, !prof !12
 
 bb.r:                                             ; preds = %.noexc10
   %i.ce = invoke { i64, i64 } @_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTouEE14reserve_rehashNCINvNtB8_3map11make_hasherouNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE0ECsdaEETE4DqmE_13typst_library(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.j, i64 noundef 1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ab, i1 noundef zeroext true) #24
@@ -1256,7 +1258,7 @@ bb.s:                                             ; preds = %bb.v, %_RINvMs6_NtC
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %bb.t, %bb.s
   %.not12.i.i.i.i.i = icmp eq i64 %.sroa.04.0.i.i.i.i.i, 1
-  br i1 %.not12.i.i.i.i.i, label %.thread.i.i.i.i.i, label %bb.u, !prof !9
+  br i1 %.not12.i.i.i.i.i, label %.thread.i.i.i.i.i, label %bb.u, !prof !12
 
 bb.t:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.cv = add i16 %.sroa.01.033.i.i.i.i.i, -1
@@ -1268,7 +1270,7 @@ bb.u:                                             ; preds = %._crit_edge.i.i.i.i
   %i.cx = icmp slt <16 x i8> %.sroa.0.0.copyload.i31.i.i.i.i.i, zeroinitializer
   %i.cy = bitcast <16 x i1> %i.cx to i16          ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq i16 %i.cy, 0
-  br i1 %.not.i.i.i.i.i.i, label %bb.v, label %.thread28.i.i.i.i.i, !prof !9
+  br i1 %.not.i.i.i.i.i.i, label %bb.v, label %.thread28.i.i.i.i.i, !prof !12
 
 .thread28.i.i.i.i.i:                              ; preds = %bb.u
   %i.cz = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %i.cy, i1 true)
@@ -1282,7 +1284,7 @@ bb.u:                                             ; preds = %._crit_edge.i.i.i.i
   %i.dd = icmp eq <16 x i8> %.sroa.0.0.copyload.i31.i.i.i.i.i, splat (i8 -1)
   %i.de = bitcast <16 x i1> %i.dd to i16
   %i.df = icmp eq i16 %i.de, 0
-  br i1 %i.df, label %bb.v, label %bb.w, !prof !9
+  br i1 %i.df, label %bb.v, label %bb.w, !prof !12
 
 bb.v:                                             ; preds = %.thread.i.i.i.i.i, %bb.u
   %.sroa.04.126.i.i.i.i.i = phi i64 [ 1, %.thread.i.i.i.i.i ], [ 0, %bb.u ]
@@ -1295,7 +1297,7 @@ bb.w:                                             ; preds = %.thread.i.i.i.i.i
   %i.di = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.sroa.4.125.i.i.i.i.i
   %i.dj = load i8, ptr %i.di, align 1, !noalias !420, !noundef !6 ; 2 uses
   %i.dk = icmp sgt i8 %i.dj, -1
-  br i1 %i.dk, label %bb.x, label %bb.y, !prof !9
+  br i1 %i.dk, label %bb.x, label %bb.y, !prof !12
 
 bb.x:                                             ; preds = %bb.w
   %.val62.i.i.i.i.i.i = load <16 x i8>, ptr %.val.i.i.i.i, align 16, !noalias !420
@@ -1644,7 +1646,7 @@ bb.q:                                             ; preds = %bb.s, %bb.p
           to label %.thread105 unwind label %bb.dg
 
 bb.r:                                             ; preds = %bb.p
-  br i1 %i.bp, label %bb.s, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtBN_6string9EcoStringNtB1O_8DiagSpanEE8capacity0ECs2AodJlUx5rK_5typst.exit.i38, !prof !9
+  br i1 %i.bp, label %bb.s, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtBN_6string9EcoStringNtB1O_8DiagSpanEE8capacity0ECs2AodJlUx5rK_5typst.exit.i38, !prof !12
 
 bb.s:                                             ; preds = %bb.r
   invoke void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #29
@@ -1722,7 +1724,7 @@ bb.z:                                             ; preds = %bb.y
   %i.cd = getelementptr inbounds i8, ptr %.val46.i.i, i64 -16
   %i.ce = atomicrmw add ptr %i.cd, i64 1 monotonic, align 8, !noalias !652
   %i.cf = icmp slt i64 %i.ce, 0
-  br i1 %i.cf, label %bb.aa, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs2AodJlUx5rK_5typst.exit.i.i, !prof !9
+  br i1 %i.cf, label %bb.aa, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs2AodJlUx5rK_5typst.exit.i.i, !prof !12
 
 bb.aa:                                            ; preds = %bb.z
   invoke fastcc void @_RINvNtCsakL8LGkl72C_4ecow3vec18ref_count_overflowhECs2AodJlUx5rK_5typst(ptr noundef nonnull %.val46.i.i) #25
@@ -1753,7 +1755,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ck = getelementptr inbounds i8, ptr %.val.i.i47, i64 -16
   %i.cl = atomicrmw add ptr %i.ck, i64 1 monotonic, align 8, !noalias !652
   %i.cm = icmp slt i64 %i.cl, 0
-  br i1 %i.cm, label %bb.ad, label %_RNvXsB_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_11PackageSpecNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, !prof !9
+  br i1 %i.cm, label %bb.ad, label %_RNvXsB_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_11PackageSpecNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, !prof !12
 
 bb.ad:                                            ; preds = %bb.ac
   invoke fastcc void @_RINvNtCsakL8LGkl72C_4ecow3vec18ref_count_overflowhECs2AodJlUx5rK_5typst(ptr noundef nonnull %.val.i.i47) #25
@@ -1826,7 +1828,7 @@ bb.al:                                            ; preds = %bb.ak
   call void @llvm.experimental.noalias.scope.decl(metadata !655)
   %i.cx = load ptr, ptr %0, align 8, !alias.scope !655, !noalias !656, !nonnull !6, !noundef !6 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.cz = load ptr, ptr %i.cy, align 8, !alias.scope !655, !noalias !656, !nonnull !6, !align !12, !noundef !6 ; 2 uses
+  %i.cz = load ptr, ptr %i.cy, align 8, !alias.scope !655, !noalias !656, !nonnull !6, !align !11, !noundef !6 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.db = load ptr, ptr %i.da, align 8, !alias.scope !655, !noalias !656, !noundef !6 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -2229,7 +2231,7 @@ bb.co:                                            ; preds = %.noexc.i
 
 .noexc8.i:                                        ; preds = %.noexc7.i
   %i.yw = getelementptr inbounds nuw i8, ptr %i.yo, i64 56
-  %i.yx = load i64, ptr %i.yw, align 8, !range !11, !alias.scope !730, !noalias !731, !noundef !6
+  %i.yx = load i64, ptr %i.yw, align 8, !range !10, !alias.scope !730, !noalias !731, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !733
   store i64 %i.yx, ptr %i.e, align 8, !noalias !733
   invoke void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.e, i64 noundef 8)
@@ -2592,7 +2594,7 @@ bb.l:                                             ; preds = %bb.n, %bb.k
           to label %.body unwind label %bb.t
 
 bb.m:                                             ; preds = %bb.k
-  br i1 %i.al, label %bb.n, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs2AodJlUx5rK_5typst.exit124, !prof !9
+  br i1 %i.al, label %bb.n, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs2AodJlUx5rK_5typst.exit124, !prof !12
 
 bb.n:                                             ; preds = %bb.m
   invoke void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #29
@@ -2858,7 +2860,7 @@ bb.ai:                                            ; preds = %bb.ak, %bb.ah
           to label %.body142 unwind label %bb.t
 
 bb.aj:                                            ; preds = %bb.ah
-  br i1 %i.cg, label %bb.ak, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs2AodJlUx5rK_5typst.exit, !prof !9
+  br i1 %i.cg, label %bb.ak, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs2AodJlUx5rK_5typst.exit, !prof !12
 
 bb.ak:                                            ; preds = %bb.aj
   invoke void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @30, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @25) #29
@@ -3261,7 +3263,7 @@ bb.aa:                                            ; preds = %_RINvMNtCs3oUPovFnL
 define internal fastcc void @_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtB7_6string9EcoStringNtBK_8DiagSpanEE4growCs2AodJlUx5rK_5typst(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp slt i64 %1, 0
-  br i1 %i.a, label %bb.b, label %bb.c, !prof !9
+  br i1 %i.a, label %bb.b, label %bb.c, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #25
@@ -3288,7 +3290,7 @@ bb.e:                                             ; preds = %_RNvMs0_NtCsakL8LGk
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26
   %i.g = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.d, i64 noundef 8) #26 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %bb.g, label %bb.h, !prof !9
+  br i1 %i.h, label %bb.g, label %bb.h, !prof !12
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtBN_6string9EcoStringNtB1O_8DiagSpanEE8capacity0ECs2AodJlUx5rK_5typst.exit: ; preds = %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtB7_6string9EcoStringNtBK_8DiagSpanEE4sizeCs2AodJlUx5rK_5typst.exit
   %i.i = getelementptr i8, ptr %i.f, i64 -8
@@ -3308,7 +3310,7 @@ _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4
   %i.n = getelementptr inbounds i8, ptr %i.f, i64 -16
   %i.o = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.n, i64 noundef %i.l, i64 noundef 8, i64 noundef %i.d) #26 ; 2 uses
   %i.p = icmp eq ptr %i.o, null
-  br i1 %i.p, label %bb.g, label %bb.h, !prof !9
+  br i1 %i.p, label %bb.g, label %bb.h, !prof !12
 
 bb.g:                                             ; preds = %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtB7_6string9EcoStringNtBK_8DiagSpanEE4sizeCs2AodJlUx5rK_5typst.exit37, %bb.e
   tail call void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %i.d) #25
@@ -3328,23 +3330,25 @@ bb.h:                                             ; preds = %_RNvMs0_NtCsakL8LGk
 define internal fastcc void @_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4growCs2AodJlUx5rK_5typst(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp slt i64 %1, 0
-  br i1 %i.a, label %bb.b, label %bb.c, !prof !9
+  br i1 %i.a, label %bb.b, label %bb.c, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #25
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %narrow.i.not.i = icmp samesign ugt i64 %1, 128102389400760774
-  br i1 %narrow.i.not.i, label %bb.d, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit, !prof !9
+  %2 = mul i64 %1, 72
+  %3 = add i64 %2, 16                             ; 4 uses
+  %narrow.i = icmp samesign ult i64 %1, 256204778801521550
+  %4 = icmp ult i64 %3, 9223372036854775799
+  %narrow.i.i = and i1 %narrow.i, %4
+  br i1 %narrow.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit, label %bb.d, !prof !8
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #25
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit: ; preds = %bb.c
-  %2 = mul nuw nsw i64 %1, 72
-  %3 = add nuw nsw i64 %2, 16                     ; 3 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !6, !noundef !6 ; 3 uses
   %.not = icmp eq ptr %i.b, inttoptr (i64 16 to ptr)
   br i1 %.not, label %bb.e, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECs2AodJlUx5rK_5typst.exit
@@ -3353,13 +3357,17 @@ bb.e:                                             ; preds = %_RNvMs0_NtCsakL8LGk
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26
   %i.c = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %3, i64 noundef 8) #26 ; 2 uses
   %i.d = icmp eq ptr %i.c, null
-  br i1 %i.d, label %bb.g, label %bb.h, !prof !9
+  br i1 %i.d, label %bb.g, label %bb.h, !prof !12
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECs2AodJlUx5rK_5typst.exit: ; preds = %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit
   %i.e = getelementptr i8, ptr %i.b, i64 -8
   %.val.i = load i64, ptr %i.e, align 8, !noundef !6 ; 2 uses
-  %narrow.i.not.i34 = icmp ugt i64 %.val.i, 128102389400760774
-  br i1 %narrow.i.not.i34, label %bb.f, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit37, !prof !9
+  %5 = mul i64 %.val.i, 72
+  %6 = add i64 %5, 16                             ; 2 uses
+  %narrow.i34 = icmp ult i64 %.val.i, 256204778801521550
+  %7 = icmp ult i64 %6, 9223372036854775799
+  %narrow.i.i35 = and i1 %narrow.i34, %7
+  br i1 %narrow.i.i35, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit37, label %bb.f, !prof !8
 
 bb.f:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECs2AodJlUx5rK_5typst.exit
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #25
@@ -3367,11 +3375,9 @@ bb.f:                                             ; preds = %_RINvMNtCs3oUPovFnL
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit37: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECs2AodJlUx5rK_5typst.exit
   %i.f = getelementptr inbounds i8, ptr %i.b, i64 -16
-  %4 = mul nuw nsw i64 %.val.i, 72
-  %5 = add nuw nsw i64 %4, 16
-  %i.g = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %5, i64 noundef 8, i64 noundef %3) #26 ; 2 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %6, i64 noundef 8, i64 noundef %3) #26 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %bb.g, label %bb.h, !prof !9
+  br i1 %i.h, label %bb.g, label %bb.h, !prof !12
 
 bb.g:                                             ; preds = %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCs2AodJlUx5rK_5typst.exit37, %bb.e
   tail call void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %3) #25
@@ -3391,7 +3397,7 @@ bb.h:                                             ; preds = %_RNvMs0_NtCsakL8LGk
 define internal fastcc void @_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechE4growCs2AodJlUx5rK_5typst(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp slt i64 %1, 0
-  br i1 %i.a, label %bb.b, label %bb.c, !prof !9
+  br i1 %i.a, label %bb.b, label %bb.c, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #25
@@ -3415,7 +3421,7 @@ bb.e:                                             ; preds = %_RNvMs0_NtCsakL8LGk
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26
   %i.d = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.b, i64 noundef 8) #26 ; 2 uses
   %i.e = icmp eq ptr %i.d, null
-  br i1 %i.e, label %bb.g, label %bb.h, !prof !9
+  br i1 %i.e, label %bb.g, label %bb.h, !prof !12
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECs2AodJlUx5rK_5typst.exit: ; preds = %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechE4sizeCs2AodJlUx5rK_5typst.exit
   %i.f = getelementptr i8, ptr %i.c, i64 -8
@@ -3432,7 +3438,7 @@ _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechE4sizeCs2AodJlUx5rK_5typst.exit37
   %i.h = add nuw nsw i64 %.val.i, 16
   %i.i = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.g, i64 noundef %i.h, i64 noundef 8, i64 noundef %i.b) #26 ; 2 uses
   %i.j = icmp eq ptr %i.i, null
-  br i1 %i.j, label %bb.g, label %bb.h, !prof !9
+  br i1 %i.j, label %bb.g, label %bb.h, !prof !12
 
 bb.g:                                             ; preds = %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechE4sizeCs2AodJlUx5rK_5typst.exit37, %bb.e
   tail call void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %i.b) #25
@@ -3598,7 +3604,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
 bb.c:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtBN_6string9EcoStringNtB1O_8DiagSpanEE8capacity0ECs2AodJlUx5rK_5typst.exit
   %i.i = add i64 %i.f, %1                         ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.f
-  br i1 %i.j, label %bb.f, label %bb.e, !prof !9
+  br i1 %i.j, label %bb.f, label %bb.e, !prof !12
 
 bb.d:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtBN_6string9EcoStringNtB1O_8DiagSpanEE8capacity0ECs2AodJlUx5rK_5typst.exit, %bb.e
   %.sroa.0.0 = phi i64 [ %..i20, %bb.e ], [ %.sroa.02.0.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtBN_6string9EcoStringNtB1O_8DiagSpanEE8capacity0ECs2AodJlUx5rK_5typst.exit ] ; 4 uses
@@ -3702,7 +3708,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ab = getelementptr inbounds i8, ptr %.val.i.i.i.i, i64 -16
   %i.ac = atomicrmw add ptr %i.ab, i64 1 monotonic, align 8, !noalias !841
   %i.ad = icmp slt i64 %i.ac, 0
-  br i1 %i.ad, label %bb.n, label %bb.o, !prof !9
+  br i1 %i.ad, label %bb.n, label %bb.o, !prof !12
 
 bb.n:                                             ; preds = %bb.m
   invoke fastcc void @_RINvNtCsakL8LGkl72C_4ecow3vec18ref_count_overflowhECs2AodJlUx5rK_5typst(ptr noundef nonnull %.val.i.i.i.i) #25
@@ -3836,7 +3842,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
 bb.c:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECs2AodJlUx5rK_5typst.exit
   %i.j = add i64 %i.g, %1                         ; 2 uses
   %i.k = icmp ult i64 %i.j, %i.g
-  br i1 %i.k, label %bb.f, label %bb.e, !prof !9
+  br i1 %i.k, label %bb.f, label %bb.e, !prof !12
 
 bb.d:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECs2AodJlUx5rK_5typst.exit, %bb.e
   %.sroa.0.0 = phi i64 [ %..i20, %bb.e ], [ %.sroa.02.0.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECs2AodJlUx5rK_5typst.exit ] ; 4 uses
@@ -4049,7 +4055,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
 bb.c:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECs2AodJlUx5rK_5typst.exit
   %i.j = add i64 %i.g, %1                         ; 2 uses
   %i.k = icmp ult i64 %i.j, %i.g
-  br i1 %i.k, label %bb.f, label %bb.e, !prof !9
+  br i1 %i.k, label %bb.f, label %bb.e, !prof !12
 
 bb.d:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECs2AodJlUx5rK_5typst.exit, %bb.e
   %.sroa.0.0 = phi i64 [ %..i18, %bb.e ], [ %.sroa.02.0.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECs2AodJlUx5rK_5typst.exit ] ; 4 uses
@@ -4452,7 +4458,7 @@ define internal fastcc void @_RNvXsE_NtCsdaEETE4DqmE_13typst_library4diagNtB5_16
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.c = load i8, ptr %i.b, align 8, !range !10, !noundef !6
+  %i.c = load i8, ptr %i.b, align 8, !range !9, !noundef !6
   %i.d = load <2 x i64>, ptr %1, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -4472,7 +4478,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds i8, ptr %.val22, i64 -16
   %i.j = atomicrmw add ptr %i.i, i64 1 monotonic, align 8
   %i.k = icmp slt i64 %i.j, 0
-  br i1 %i.k, label %bb.d, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs2AodJlUx5rK_5typst.exit, !prof !9
+  br i1 %i.k, label %bb.d, label %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs2AodJlUx5rK_5typst.exit, !prof !12
 
 bb.d:                                             ; preds = %bb.c
   tail call fastcc void @_RINvNtCsakL8LGkl72C_4ecow3vec18ref_count_overflowhECs2AodJlUx5rK_5typst(ptr noundef nonnull %.val22) #25
@@ -4494,7 +4500,7 @@ bb.e:                                             ; preds = %_RNvXs6_NtCsakL8LGk
   %i.n = getelementptr inbounds i8, ptr %.val24, i64 -16
   %i.o = atomicrmw add ptr %i.n, i64 1 monotonic, align 8
   %i.p = icmp slt i64 %i.o, 0
-  br i1 %i.p, label %bb.f, label %bb.i, !prof !9
+  br i1 %i.p, label %bb.f, label %bb.i, !prof !12
 
 bb.f:                                             ; preds = %bb.e
   invoke fastcc void @_RINvNtCsakL8LGkl72C_4ecow3vec18ref_count_overflowINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointEECs2AodJlUx5rK_5typst(ptr noundef nonnull %.val24, i64 noundef %.val25) #25
@@ -4525,7 +4531,7 @@ bb.j:                                             ; preds = %bb.i
   %i.t = getelementptr inbounds i8, ptr %.val26, i64 -16
   %i.u = atomicrmw add ptr %i.t, i64 1 monotonic, align 8
   %i.v = icmp slt i64 %i.u, 0
-  br i1 %i.v, label %bb.k, label %bb.m, !prof !9
+  br i1 %i.v, label %bb.k, label %bb.m, !prof !12
 
 bb.k:                                             ; preds = %bb.j
   invoke fastcc void @_RINvNtCsakL8LGkl72C_4ecow3vec18ref_count_overflowINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtB4_6string9EcoStringNtBO_8DiagSpanEECs2AodJlUx5rK_5typst(ptr noundef nonnull %.val26, i64 noundef %.val27) #25
@@ -4680,7 +4686,7 @@ bb.k:                                             ; preds = %bb.j
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26, !noalias !907
   %i.ak = tail call noundef align 8 dereferenceable_or_null(46) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 46, i64 noundef 8) #26, !noalias !907 ; 4 uses
   %i.al = icmp eq ptr %i.ak, null
-  br i1 %i.al, label %.noexc33.i.i, label %bb.p, !prof !9
+  br i1 %i.al, label %.noexc33.i.i, label %bb.p, !prof !12
 
 .noexc33.i.i:                                     ; preds = %bb.k
   tail call void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 46) #25, !noalias !904
@@ -5083,10 +5089,10 @@ attributes #30 = { inlinehint }
 !6 = !{}
 !7 = !{i64 0, i64 2}
 !8 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!9 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!10 = !{i8 0, i8 2}
-!11 = !{i64 1, i64 0}
-!12 = !{i64 8}
+!9 = !{i8 0, i8 2}
+!10 = !{i64 1, i64 0}
+!11 = !{i64 8}
+!12 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !13 = distinct !{!13, !"_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs5PEMdK7bMAG_12typst_syntax6source6SourceECs2AodJlUx5rK_5typst"}
 !14 = distinct !{!14, !13, !"_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs5PEMdK7bMAG_12typst_syntax6source6SourceECs2AodJlUx5rK_5typst: argument 0"}
 !15 = distinct !{!15, !"_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtCs5PEMdK7bMAG_12typst_syntax6source11SourceInnerEEECs2AodJlUx5rK_5typst"}

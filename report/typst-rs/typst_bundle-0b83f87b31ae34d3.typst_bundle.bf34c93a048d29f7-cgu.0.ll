@@ -205,8 +205,12 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !693
   %i.k = getelementptr i8, ptr %.val.i.i, i64 -8
   %.val.i.i.i.i.i = load i64, ptr %i.k, align 8, !noalias !693, !noundef !19 ; 2 uses
-  %narrow.i.not.i.i.i.i.i = icmp ugt i64 %.val.i.i.i.i.i, 384307168202282324
-  br i1 %narrow.i.not.i.i.i.i.i, label %bb.d, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i, !prof !22
+  %1 = mul i64 %.val.i.i.i.i.i, 24
+  %2 = add i64 %1, 16                             ; 2 uses
+  %narrow.i.i.i.i.i = icmp ult i64 %.val.i.i.i.i.i, 768614336404564650
+  %3 = icmp ult i64 %2, 9223372036854775799
+  %narrow.i.i.i.i.i.i = and i1 %narrow.i.i.i.i.i, %3
+  br i1 %narrow.i.i.i.i.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i, label %bb.d, !prof !21
 
 bb.d:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtBN_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i
   invoke void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #46
@@ -216,8 +220,6 @@ bb.d:                                             ; preds = %_RINvMNtCs3oUPovFnL
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtB7_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtBN_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i
-  %1 = mul nuw nsw i64 %.val.i.i.i.i.i, 24
-  %2 = add nuw nsw i64 %1, 16
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.i, ptr %i.l, align 8, !noalias !693
   store i64 8, ptr %i.d, align 8, !noalias !693
@@ -620,16 +622,18 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.d = getelementptr i8, ptr %.0.val, i64 -8
   %.val.i.i = load i64, ptr %i.d, align 8, !noundef !19 ; 2 uses
-  %narrow.i.not.i.i = icmp ugt i64 %.val.i.i, 128102389400760774
-  br i1 %narrow.i.not.i.i, label %bb.b, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i, !prof !22
+  %0 = mul i64 %.val.i.i, 72
+  %1 = add i64 %0, 16                             ; 2 uses
+  %narrow.i.i = icmp ult i64 %.val.i.i, 256204778801521550
+  %2 = icmp ult i64 %1, 9223372036854775799
+  %narrow.i.i.i = and i1 %narrow.i.i, %2
+  br i1 %narrow.i.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i, label %bb.b, !prof !21
 
 bb.b:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit.i
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #46
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit.i
-  %0 = mul nuw nsw i64 %.val.i.i, 72
-  %1 = add nuw nsw i64 %0, 16
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %i.b, ptr %i.e, align 8
   store i64 8, ptr %i.a, align 8
@@ -715,16 +719,18 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1040
   %i.e = getelementptr i8, ptr %.val4.i, i64 -8
   %.val.i1 = load i64, ptr %i.e, align 8, !noundef !19 ; 2 uses
-  %narrow.i.not.i = icmp ugt i64 %.val.i1, 128102389400760774
-  br i1 %narrow.i.not.i, label %bb.b, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgE4sizeCsgpMJJHpo27b_12typst_bundle.exit, !prof !22
+  %1 = mul i64 %.val.i1, 72
+  %2 = add i64 %1, 16                             ; 2 uses
+  %narrow.i = icmp ult i64 %.val.i1, 256204778801521550
+  %3 = icmp ult i64 %2, 9223372036854775799
+  %narrow.i.i = and i1 %narrow.i, %3
+  br i1 %narrow.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgE4sizeCsgpMJJHpo27b_12typst_bundle.exit, label %bb.b, !prof !21
 
 bb.b:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #46, !noalias !1040
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgE4sizeCsgpMJJHpo27b_12typst_bundle.exit: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit
-  %1 = mul nuw nsw i64 %.val.i1, 72
-  %2 = add nuw nsw i64 %1, 16
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.c, ptr %i.f, align 8, !noalias !1040
   store i64 8, ptr %i.b, align 8, !noalias !1040
@@ -989,16 +995,18 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.d = getelementptr i8, ptr %.0.val, i64 -8
   %.val.i.i = load i64, ptr %i.d, align 8, !noundef !19 ; 2 uses
-  %narrow.i.not.i.i = icmp ugt i64 %.val.i.i, 384307168202282324
-  br i1 %narrow.i.not.i.i, label %bb.b, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i, !prof !22
+  %0 = mul i64 %.val.i.i, 24
+  %1 = add i64 %0, 16                             ; 2 uses
+  %narrow.i.i = icmp ult i64 %.val.i.i, 768614336404564650
+  %2 = icmp ult i64 %1, 9223372036854775799
+  %narrow.i.i.i = and i1 %narrow.i.i, %2
+  br i1 %narrow.i.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i, label %bb.b, !prof !21
 
 bb.b:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit.i
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #46
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit.i
-  %0 = mul nuw nsw i64 %.val.i.i, 24
-  %1 = add nuw nsw i64 %0, 16
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %i.b, ptr %i.e, align 8
   store i64 8, ptr %i.a, align 8
@@ -1401,16 +1409,18 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6Head
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.f = getelementptr i8, ptr %.0.val, i64 -8
   %.val.i.i.i = load i64, ptr %i.f, align 8, !noundef !19 ; 2 uses
-  %narrow.i.not.i.i.i = icmp ugt i64 %.val.i.i.i, 384307168202282324
-  br i1 %narrow.i.not.i.i.i, label %bb.b, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtCs9gmjTwvRRSu_10typst_html3dom8HtmlAttrNtNtB7_6string9EcoStringEE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i.i, !prof !22
+  %0 = mul i64 %.val.i.i.i, 24
+  %1 = add i64 %0, 16                             ; 2 uses
+  %narrow.i.i.i = icmp ult i64 %.val.i.i.i, 768614336404564650
+  %2 = icmp ult i64 %1, 9223372036854775799
+  %narrow.i.i.i.i = and i1 %narrow.i.i.i, %2
+  br i1 %narrow.i.i.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtCs9gmjTwvRRSu_10typst_html3dom8HtmlAttrNtNtB7_6string9EcoStringEE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i.i, label %bb.b, !prof !21
 
 bb.b:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtCs9gmjTwvRRSu_10typst_html3dom8HtmlAttrNtNtBN_6string9EcoStringEE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit.i.i
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #46
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtCs9gmjTwvRRSu_10typst_html3dom8HtmlAttrNtNtB7_6string9EcoStringEE4sizeCsgpMJJHpo27b_12typst_bundle.exit.i.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtCs9gmjTwvRRSu_10typst_html3dom8HtmlAttrNtNtBN_6string9EcoStringEE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit.i.i
-  %0 = mul nuw nsw i64 %.val.i.i.i, 24
-  %1 = add nuw nsw i64 %0, 16
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store ptr %i.d, ptr %i.g, align 8
   store i64 8, ptr %i.c, align 8
@@ -1813,16 +1823,18 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %narrow.i.not.i = icmp samesign ugt i64 %1, 128102389400760774
-  br i1 %narrow.i.not.i, label %bb.d, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit, !prof !22
+  %2 = mul i64 %1, 72
+  %3 = add i64 %2, 16                             ; 4 uses
+  %narrow.i = icmp samesign ult i64 %1, 256204778801521550
+  %4 = icmp ult i64 %3, 9223372036854775799
+  %narrow.i.i = and i1 %narrow.i, %4
+  br i1 %narrow.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit, label %bb.d, !prof !21
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #46
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit: ; preds = %bb.c
-  %2 = mul nuw nsw i64 %1, 72
-  %3 = add nuw nsw i64 %2, 16                     ; 3 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !19, !noundef !19 ; 3 uses
   %.not = icmp eq ptr %i.b, inttoptr (i64 16 to ptr)
   br i1 %.not, label %bb.e, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit
@@ -1836,8 +1848,12 @@ bb.e:                                             ; preds = %_RNvMs0_NtCsakL8LGk
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit: ; preds = %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit
   %i.e = getelementptr i8, ptr %i.b, i64 -8
   %.val.i = load i64, ptr %i.e, align 8, !noundef !19 ; 2 uses
-  %narrow.i.not.i34 = icmp ugt i64 %.val.i, 128102389400760774
-  br i1 %narrow.i.not.i34, label %bb.f, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit37, !prof !22
+  %5 = mul i64 %.val.i, 72
+  %6 = add i64 %5, 16                             ; 2 uses
+  %narrow.i34 = icmp ult i64 %.val.i, 256204778801521550
+  %7 = icmp ult i64 %6, 9223372036854775799
+  %narrow.i.i35 = and i1 %narrow.i34, %7
+  br i1 %narrow.i.i35, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit37, label %bb.f, !prof !21
 
 bb.f:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #46
@@ -1845,9 +1861,7 @@ bb.f:                                             ; preds = %_RINvMNtCs3oUPovFnL
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE4sizeCsgpMJJHpo27b_12typst_bundle.exit37: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit
   %i.f = getelementptr inbounds i8, ptr %i.b, i64 -16
-  %4 = mul nuw nsw i64 %.val.i, 72
-  %5 = add nuw nsw i64 %4, 16
-  %i.g = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %5, i64 noundef 8, i64 noundef %3) #48 ; 2 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %6, i64 noundef 8, i64 noundef %3) #48 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.g, label %bb.h, !prof !22
 
@@ -1876,16 +1890,18 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %narrow.i.not.i = icmp samesign ugt i64 %1, 384307168202282324
-  br i1 %narrow.i.not.i, label %bb.d, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit, !prof !22
+  %2 = mul i64 %1, 24
+  %3 = add i64 %2, 16                             ; 4 uses
+  %narrow.i = icmp samesign ult i64 %1, 768614336404564650
+  %4 = icmp ult i64 %3, 9223372036854775799
+  %narrow.i.i = and i1 %narrow.i, %4
+  br i1 %narrow.i.i, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit, label %bb.d, !prof !21
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #46
   unreachable
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit: ; preds = %bb.c
-  %2 = mul nuw nsw i64 %1, 24
-  %3 = add nuw nsw i64 %2, 16                     ; 3 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !19, !noundef !19 ; 3 uses
   %.not = icmp eq ptr %i.b, inttoptr (i64 16 to ptr)
   br i1 %.not, label %bb.e, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit
@@ -1899,8 +1915,12 @@ bb.e:                                             ; preds = %_RNvMs0_NtCsakL8LGk
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit: ; preds = %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit
   %i.e = getelementptr i8, ptr %i.b, i64 -8
   %.val.i = load i64, ptr %i.e, align 8, !noundef !19 ; 2 uses
-  %narrow.i.not.i34 = icmp ugt i64 %.val.i, 384307168202282324
-  br i1 %narrow.i.not.i34, label %bb.f, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit37, !prof !22
+  %5 = mul i64 %.val.i, 24
+  %6 = add i64 %5, 16                             ; 2 uses
+  %narrow.i34 = icmp ult i64 %.val.i, 768614336404564650
+  %7 = icmp ult i64 %6, 9223372036854775799
+  %narrow.i.i35 = and i1 %narrow.i34, %7
+  br i1 %narrow.i.i35, label %_RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit37, label %bb.f, !prof !21
 
 bb.f:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit
   tail call void @_RNvNtCsakL8LGkl72C_4ecow3vec17capacity_overflow() #46
@@ -1908,9 +1928,7 @@ bb.f:                                             ; preds = %_RINvMNtCs3oUPovFnL
 
 _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE4sizeCsgpMJJHpo27b_12typst_bundle.exit37: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE8capacity0ECsgpMJJHpo27b_12typst_bundle.exit
   %i.f = getelementptr inbounds i8, ptr %i.b, i64 -16
-  %4 = mul nuw nsw i64 %.val.i, 24
-  %5 = add nuw nsw i64 %4, 16
-  %i.g = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %5, i64 noundef 8, i64 noundef %3) #48 ; 2 uses
+  %i.g = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.f, i64 noundef %6, i64 noundef 8, i64 noundef %3) #48 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.g, label %bb.h, !prof !22
 
@@ -2313,16 +2331,16 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.i = mul i64 %1, 40                           ; 5 uses
-  %or.cond.not = icmp ugt i64 %1, 230584300921369395
-  br i1 %or.cond.not, label %bb.m, label %_RINvCsiSzwKAiqS6b_8smallvec12layout_arrayThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECsgpMJJHpo27b_12typst_bundle.exit, !prof !28
+  %or.cond = icmp ult i64 %1, 230584300921369396
+  br i1 %or.cond, label %_RINvCsiSzwKAiqS6b_8smallvec12layout_arrayThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECsgpMJJHpo27b_12typst_bundle.exit, label %bb.m, !prof !79
 
 _RINvCsiSzwKAiqS6b_8smallvec12layout_arrayThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECsgpMJJHpo27b_12typst_bundle.exit: ; preds = %bb.f
   br i1 %i.c, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_RINvCsiSzwKAiqS6b_8smallvec12layout_arrayThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECsgpMJJHpo27b_12typst_bundle.exit
   %i.j = mul i64 %.sink.i, 40                     ; 2 uses
-  %or.cond62.not = icmp ugt i64 %i.b, 230584300921369395
-  br i1 %or.cond62.not, label %bb.m, label %_RINvCsiSzwKAiqS6b_8smallvec12layout_arrayThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECsgpMJJHpo27b_12typst_bundle.exit45, !prof !28
+  %or.cond62 = icmp ult i64 %i.b, 230584300921369396
+  br i1 %or.cond62, label %_RINvCsiSzwKAiqS6b_8smallvec12layout_arrayThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECsgpMJJHpo27b_12typst_bundle.exit45, label %bb.m, !prof !79
 
 bb.h:                                             ; preds = %_RINvCsiSzwKAiqS6b_8smallvec12layout_arrayThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECsgpMJJHpo27b_12typst_bundle.exit
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #48
@@ -2353,8 +2371,8 @@ bb.k:                                             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.e, ptr nonnull align 8 %i.f, i64 %i.p, i1 false)
   store i64 %i.g, ptr %0, align 8
   %i.q = mul i64 %.sink.i, 40                     ; 2 uses
-  %or.cond.not.i = icmp ugt i64 %i.b, 230584300921369395
-  br i1 %or.cond.not.i, label %bb.l, label %_RINvCsiSzwKAiqS6b_8smallvec10deallocateThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECsgpMJJHpo27b_12typst_bundle.exit, !prof !28
+  %or.cond.i = icmp ult i64 %i.b, 230584300921369396
+  br i1 %or.cond.i, label %_RINvCsiSzwKAiqS6b_8smallvec10deallocateThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECsgpMJJHpo27b_12typst_bundle.exit, label %bb.l, !prof !79
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13928
