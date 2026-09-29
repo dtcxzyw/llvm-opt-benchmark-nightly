@@ -204,7 +204,7 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   br i1 %.not1417, label %bb.dm, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl, %bb.bn
-  %i.nl = add i32 %.01369, 1                      ; 2 uses
+  %i.nl = add nuw i32 %.01369, 1                  ; 2 uses
   %.not1418 = icmp eq i32 %i.nl, %.213771660
   br i1 %.not1418, label %bb.cn, label %bb.az
 
@@ -436,7 +436,7 @@ bb.df:                                            ; preds = %bb.cv, %bb.de, %bb.
   br i1 %.not1421, label %bb.dh, label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df
-  %i.qs = add i32 %.11370, 1                      ; 2 uses
+  %i.qs = add nuw i32 %.11370, 1                  ; 2 uses
   %i.qt = icmp eq i32 %i.qs, %.213771660
   br i1 %i.qt, label %bb.di, label %bb.cq
 
@@ -839,7 +839,7 @@ bb.r:                                             ; preds = %bb.p
   %.val1356 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.da = getelementptr inbounds nuw i8, ptr %.val1356, i64 %i.e
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 232
-  %.0.copyload.i1387 = load i64, ptr %i.db, align 1 ; 7 uses
+  %.0.copyload.i1387 = load i64, ptr %i.db, align 1 ; 6 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i1387) #6, !srcloc !21
   %.val1283 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.dc = getelementptr inbounds nuw i8, ptr %.val1283, i64 %i.ae
@@ -995,7 +995,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.bx
 
 bb.af:                                            ; preds = %bb.ad
-  %i.fi = trunc nuw nsw i64 %.0.copyload.i1387 to i32
+  %i.fi = trunc nuw nsw i64 %.0.copyload.i1387 to i32 ; 2 uses
   %i.fj = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AJSArray0x3A0x3Acreate0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20int0x2C0x20unsigned0x20int0x29(ptr noundef nonnull %0, i32 noundef %3, i32 noundef %i.fi, i32 noundef 0) #6 ; 4 uses
   %i.fk = icmp eq i32 %i.fj, -1
   %.val1324 = load ptr, ptr %i.d, align 8, !tbaa !12 ; 2 uses
@@ -1398,10 +1398,9 @@ bb.bv:                                            ; preds = %bb.bq, %bb.bp, %bb.
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1440) #6, !srcloc !13
   %i.og = and i32 %.0.copyload.i1440, 2147483647
   tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AStringBuilder0x3A0x3AappendStringPrim0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3E0x2C0x20unsigned0x20int0x29(ptr noundef nonnull %0, i32 noundef %i.mq, i32 noundef %.11179, i32 noundef %i.og)
-  %i.oh = add i32 %.5, 1                          ; 2 uses
-  %5 = zext i32 %i.oh to i64
-  %6 = icmp ugt i64 %.0.copyload.i1387, %5
-  br i1 %6, label %bb.bp, label %.loopexit
+  %i.oh = add nuw i32 %.5, 1                      ; 2 uses
+  %5 = icmp ult i32 %i.oh, %i.fi
+  br i1 %5, label %bb.bp, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.bv, %bb.bo
   %.val1244 = load ptr, ptr %i.d, align 8, !tbaa !12

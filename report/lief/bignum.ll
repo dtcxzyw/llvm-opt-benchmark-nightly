@@ -205,7 +205,7 @@ mbedtls_mpi_lset.exit:                            ; preds = %._crit_edge.i, %bb.
   br i1 %.not.i68, label %bb.s, label %mbedtls_mpi_grow.exit
 
 bb.s:                                             ; preds = %.lr.ph98
-  %i.bc = shl i64 %.03997, 2
+  %i.bc = shl nuw nsw i64 %.03997, 2
   %i.bd = and i64 %i.bc, 60
   %i.be = shl nuw i64 %storemerge25.i, %i.bd
   %i.bf = lshr i64 %.03997, 4
@@ -214,7 +214,7 @@ bb.s:                                             ; preds = %.lr.ph98
   %i.bi = or i64 %i.bh, %i.be
   store i64 %i.bi, ptr %i.bg, align 8, !tbaa !26
   %i.bj = add nsw i64 %.04096, -1                 ; 2 uses
-  %i.bk = add nuw i64 %.03997, 1
+  %i.bk = add nuw nsw i64 %.03997, 1
   %.not64 = icmp eq i64 %i.bj, 0
   br i1 %.not64, label %.loopexit, label %.lr.ph98, !llvm.loop !37
 

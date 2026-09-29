@@ -204,12 +204,12 @@ bb.a:
   %4 = alloca %struct.cpu_set_t, align 8          ; 9 uses
   %5 = alloca %struct.cpu_set_t, align 8          ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  %i.a = tail call i32 @uv_cpumask_size() #12     ; 5 uses
+  %i.a = tail call i32 @uv_cpumask_size() #12     ; 4 uses
   %i.b = icmp slt i32 %i.a, 0
   br i1 %i.b, label %bb.n, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = zext nneg i32 %i.a to i64
+  %i.c = zext nneg i32 %i.a to i64                ; 2 uses
   %i.d = icmp ult i64 %3, %i.c
   br i1 %i.d, label %bb.n, label %bb.c
 
@@ -336,14 +336,10 @@ uv_thread_getaffinity.exit:                       ; preds = %bb.f
 bb.k:                                             ; preds = %uv_thread_getaffinity.exit.thread29, %bb.c, %uv_thread_getaffinity.exit
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %5, i8 0, i64 128, i1 false)
   %.not32 = icmp eq i32 %i.a, 0
-  br i1 %.not32, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not32, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.k
-  %wide.trip.count = zext nneg i32 %i.a to i64
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.m
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.m ] ; 5 uses
+.lr.ph:                                           ; preds = %bb.k, %bb.m
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 0, %bb.k ] ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
   %i.as = load i8, ptr %i.ar, align 1
   %.not26 = icmp ne i8 %i.as, 0
@@ -363,7 +359,7 @@ bb.l:                                             ; preds = %.lr.ph
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !5
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.k

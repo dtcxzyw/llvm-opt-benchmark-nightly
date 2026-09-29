@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.lr.ph232.1
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph232.1
   %i.fj = add nuw nsw i64 %.1125231, 2            ; 2 uses
-  %niter289.next.1 = add i64 %niter289, 2         ; 2 uses
+  %niter289.next.1 = add nuw nsw i64 %niter289, 2 ; 2 uses
   %niter289.ncmp.1 = icmp eq i64 %niter289.next.1, %unroll_iter288
   br i1 %niter289.ncmp.1, label %.preheader.unr-lcssa, label %.lr.ph232, !llvm.loop !156
 
@@ -607,10 +607,10 @@ bb.r:                                             ; preds = %bb.a
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !53 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 8
-  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !43 ; 62 uses
+  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !43 ; 64 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.az, i64 16 ; 2 uses
-  %.idx.i = shl i64 %i.bb, 3                      ; 13 uses
-  %i.bd = add i64 %.idx.i, 8                      ; 9 uses
+  %.idx.i = shl nsw i64 %i.bb, 3                  ; 11 uses
+  %i.bd = add nsw i64 %.idx.i, 8                  ; 9 uses
   %i.be = icmp ugt i64 %i.bd, 9223372036854775800
   br i1 %i.be, label %.noexc.i.i, label %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i.i.i
 
@@ -868,7 +868,7 @@ bb.ae:                                            ; preds = %.noexc593, %_ZSt6fi
 _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i597: ; preds = %.noexc602
   %i.ds = getelementptr i8, ptr %i.dr, i64 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ds, i8 0, i64 %.idx.i, i1 false), !tbaa !43
-  %i.dt = icmp eq i64 %.idx.i, -8
+  %i.dt = icmp eq i64 %i.bb, -1
   %i.du = select i1 %i.dt, ptr null, ptr %i.dr
   br label %bb.af
 
@@ -913,7 +913,7 @@ bb.ah:                                            ; preds = %.noexc620, %_ZSt6fi
 _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i624: ; preds = %.noexc629
   %i.ed = getelementptr i8, ptr %i.eb, i64 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ed, i8 0, i64 %.idx.i, i1 false), !tbaa !43
-  %i.ee = icmp eq i64 %.idx.i, -8
+  %i.ee = icmp eq i64 %i.bb, -1
   %i.ef = select i1 %i.ee, ptr null, ptr %i.eb
   br label %bb.ai
 
@@ -1316,12 +1316,12 @@ bb.ab:                                            ; preds = %.sink.split, %_ZNKS
 
 bb.ac:                                            ; preds = %bb.b
   %i.cu = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %i.cv = load i64, ptr %i.cu, align 8, !tbaa !43 ; 13 uses
+  %i.cv = load i64, ptr %i.cu, align 8, !tbaa !43 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #29
   tail call void @llvm.experimental.noalias.scope.decl(metadata !502)
   %i.cw = getelementptr i8, ptr %i.d, i64 32      ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, i8 0, i64 24, i1 false), !alias.scope !502
-  %.idx.i = shl nsw i64 %i.cv, 3                  ; 6 uses
+  %.idx.i = shl nsw i64 %i.cv, 3                  ; 8 uses
   %i.cx = icmp ugt i64 %.idx.i, 9223372036854775800
   br i1 %i.cx, label %.noexc.i.i, label %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i.i.i
 
@@ -1466,17 +1466,16 @@ _ZNSt6vectorIxSaIxEE6resizeEm.exit:               ; preds = %_ZNSt12_Vector_base
 .lr.ph:                                           ; preds = %_ZNSt6vectorIxSaIxEE6resizeEm.exit
   %i.eu = load ptr, ptr %i.c, align 8, !tbaa !53  ; 6 uses
   %i.ev = sub nuw i64 %i.es, %i.cv                ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ev, 18
+  %min.iters.check = icmp ult i64 %i.ev, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %19 = shl i64 %i.cv, 3                          ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.eo, i64 %19 ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.eo, i64 %.idx.i ; 2 uses
   %scevgep162 = getelementptr i8, ptr %i.eo, i64 %i.er ; 2 uses
   %i.ew = add i64 %i.dk, %i.es
   %i.ex = shl i64 %i.ew, 3
   %i.ey = add i64 %i.ex, 24
-  %i.ez = sub i64 %i.ey, %19
+  %i.ez = sub i64 %i.ey, %.idx.i
   %scevgep163 = getelementptr i8, ptr %i.di, i64 %i.ez
   %scevgep164 = getelementptr i8, ptr %i.eu, i64 8
   %bound0 = icmp ult ptr %scevgep, %scevgep163
@@ -1879,7 +1878,7 @@ _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc43
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !43
   %i.cr = add nsw i64 %i.cq, %i.cn                ; 3 uses
   store i64 %i.cr, ptr %i.cp, align 8, !tbaa !43
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge147.loopexit.unr-lcssa, label %.lr.ph146, !llvm.loop !627
 

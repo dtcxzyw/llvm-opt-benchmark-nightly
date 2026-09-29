@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %.not.i353.i, label %bb.p, label %SzReadNumber32.exit.thread.i
 
 bb.p:                                             ; preds = %bb.o
-  %i.ao = load i64, ptr %i.a, align 8, !tbaa !31  ; 12 uses
+  %i.ao = load i64, ptr %i.a, align 8, !tbaa !31  ; 19 uses
   %i.ap = icmp ugt i64 %i.ao, 2147483647
   br i1 %i.ap, label %SzReadNumber32.exit.thread.i, label %bb.q
 
@@ -215,7 +215,7 @@ SzReadNumber32.exit.thread.i:                     ; preds = %bb.p, %bb.o
   br label %SzReadHeader2.exit
 
 bb.q:                                             ; preds = %bb.p
-  %i.aq = trunc nuw i64 %i.ao to i32              ; 3 uses
+  %i.aq = trunc nuw nsw i64 %i.ao to i32          ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i32 %i.aq, ptr %i.ar, align 8, !tbaa !59
@@ -283,11 +283,9 @@ bb.r:                                             ; preds = %bb.q
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
   %i.bi = shl nuw nsw i64 %i.ao, 3
   %i.bj = add nuw nsw i64 %i.bi, 8
-  %umax495.i = tail call i32 @llvm.umax.i32(i32 %i.aq, i32 1)
-  %wide.trip.count496.i = zext nneg i32 %umax495.i to i64 ; 7 uses
   %min.iters.check = icmp ult i64 %i.ao, 8
-  %n.vec = and i64 %wide.trip.count496.i, 2147483640 ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count496.i
+  %n.vec = and i64 %i.ao, 2147483640              ; 3 uses
+  %cmp.n = icmp eq i64 %i.ao, %n.vec
   br label %bb.s
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
@@ -468,7 +466,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ds = zext i1 %.not329.i to i32
   %spec.select.i = add i32 %.1247434.i, %i.ds     ; 2 uses
   %indvars.iv.next505.i = add nuw nsw i64 %indvars.iv504.i, 1 ; 2 uses
-  %exitcond509.not.i = icmp eq i64 %indvars.iv.next505.i, %wide.trip.count496.i
+  %exitcond509.not.i = icmp eq i64 %indvars.iv.next505.i, %i.ao
   br i1 %exitcond509.not.i, label %.loopexit.i, label %scalar.ph, !llvm.loop !101
 
 bb.ag:                                            ; preds = %bb.w
@@ -520,7 +518,7 @@ bb.ak:                                            ; preds = %.lr.ph433.i
 
 .thread388.i:                                     ; preds = %bb.ak, %.lr.ph433.i
   %indvars.iv.next499.i = add nuw nsw i64 %indvars.iv498.i, 1 ; 2 uses
-  %exitcond503.not.i = icmp eq i64 %indvars.iv.next499.i, %wide.trip.count496.i
+  %exitcond503.not.i = icmp eq i64 %indvars.iv.next499.i, %i.ao
   br i1 %exitcond503.not.i, label %SzReadSwitch.exit356._crit_edge.i, label %.lr.ph433.i
 
 SzReadSwitch.exit356._crit_edge.i:                ; preds = %.thread388.i, %SzReadSwitch.exit356.preheader.i
@@ -578,7 +576,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 .thread396.i:                                     ; preds = %bb.ap, %.lr.ph431.i
   %indvars.iv.next493.i = add nuw nsw i64 %indvars.iv492.i, 1 ; 2 uses
-  %exitcond497.not.i = icmp eq i64 %indvars.iv.next493.i, %wide.trip.count496.i
+  %exitcond497.not.i = icmp eq i64 %indvars.iv.next493.i, %i.ao
   br i1 %exitcond497.not.i, label %SzReadSwitch.exit357._crit_edge.i, label %.lr.ph431.i
 
 SzReadSwitch.exit357._crit_edge.i:                ; preds = %.thread396.i, %SzReadSwitch.exit357.preheader.i
@@ -677,7 +675,7 @@ bb.aq:                                            ; preds = %.thread553.i.us
   %i.gd = getelementptr inbounds nuw i8, ptr %i.fq, i64 27
   store i8 %i.gc, ptr %i.gd, align 1, !tbaa !68
   %indvars.iv.next511.i.us = add nuw nsw i64 %indvars.iv510.i.us, 1 ; 2 uses
-  %exitcond515.not.i.us = icmp eq i64 %indvars.iv.next511.i.us, %wide.trip.count496.i
+  %exitcond515.not.i.us = icmp eq i64 %indvars.iv.next511.i.us, %i.ao
   br i1 %exitcond515.not.i.us, label %._crit_edge.i, label %.thread553.i.us
 
 .lr.ph482.i.split:                                ; preds = %.lr.ph482.i, %bb.aw
@@ -747,7 +745,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.as
   %.2237.ph.i = phi i32 [ %i.hc, %bb.av ], [ %.0235480.i, %bb.as ]
   %.2.ph.i = phi i32 [ %.0481.i, %bb.av ], [ %i.gw, %bb.as ]
   %indvars.iv.next511.i = add nuw nsw i64 %indvars.iv510.i, 1 ; 2 uses
-  %exitcond515.not.i = icmp eq i64 %indvars.iv.next511.i, %wide.trip.count496.i
+  %exitcond515.not.i = icmp eq i64 %indvars.iv.next511.i, %i.ao
   br i1 %exitcond515.not.i, label %._crit_edge.i, label %.lr.ph482.i.split
 
 ._crit_edge.i:                                    ; preds = %bb.aw, %bb.aq, %.critedge.i
@@ -1148,9 +1146,6 @@ bb.t:                                             ; preds = %bb.o, %bb.s, %.loop
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #10

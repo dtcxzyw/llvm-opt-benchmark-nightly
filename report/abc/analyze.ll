@@ -120,8 +120,8 @@ bb.e:                                             ; preds = %bb.de, %bb.d
   %i.ay = load ptr, ptr %i.t, align 8, !tbaa !59  ; 5 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.028, i64 12 ; 15 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.028, i64 8 ; 2 uses
-  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !102 ; 5 uses
-  %i.bc = zext i32 %i.bb to i64                   ; 2 uses
+  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !102 ; 4 uses
+  %i.bc = zext i32 %i.bb to i64                   ; 3 uses
   %.idx.i = shl nuw nsw i64 %i.bc, 2
   %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 %.idx.i
   %.not154.i = icmp eq i32 %i.bb, 0
@@ -304,8 +304,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph173.1.
   %.1110.ph.1.i = phi i32 [ %i.dl, %bb.n ], [ %.0109169.1.i, %.lr.ph173.1.i ] ; 2 uses
   %.1108.ph.1.i = phi i32 [ %i.dp, %bb.n ], [ %.0107170.1.i, %.lr.ph173.1.i ]
   %indvars.iv.next182.1.i = add nuw nsw i64 %indvars.iv181.1.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next182.1.i to i32
-  %exitcond = icmp eq i32 %i.bb, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next182.1.i, %i.bc
   br i1 %exitcond, label %._crit_edge174.1.i, label %.lr.ph173.1.i, !llvm.loop !68
 
 ._crit_edge174.1.i:                               ; preds = %bb.o, %bb.n
@@ -708,7 +707,7 @@ bb.bw:                                            ; preds = %bb.bv, %.lr.ph381.i
 ._crit_edge385.i.i.1:                             ; preds = %.lr.ph384.i.i.1, %._crit_edge385.i.i
   %.lcssa.i.i.1 = phi ptr [ %i.nt, %._crit_edge385.i.i ], [ %i.ob, %.lr.ph384.i.i.1 ]
   store i32 %i.nu, ptr %.lcssa.i.i.1, align 4, !tbaa !62
-  %i.of = add nuw i64 %.0291388.i.i, 2            ; 2 uses
+  %i.of = add nuw nsw i64 %.0291388.i.i, 2        ; 2 uses
   %niter294.next.1 = add i64 %niter294, 2         ; 2 uses
   %niter294.ncmp.1 = icmp eq i64 %niter294.next.1, %unroll_iter293
   br i1 %niter294.ncmp.1, label %sort_levels.exit.i.loopexit.unr-lcssa, label %.lr.ph389.i.i, !llvm.loop !79

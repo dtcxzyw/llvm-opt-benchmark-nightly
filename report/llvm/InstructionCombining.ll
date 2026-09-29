@@ -205,11 +205,11 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 1096
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 1104
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 1216
+  %16 = zext nneg i32 %i.f to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %.critedge164, %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit179
   %indvars.iv = phi i64 [ 0, %.critedge164 ], [ %indvars.iv.next, %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit179 ] ; 7 uses
-  %.0140297 = phi i32 [ 0, %.critedge164 ], [ %16, %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit179 ]
   %.0141296 = phi i1 [ false, %.critedge164 ], [ %.2143, %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit179 ] ; 5 uses
   %i.bv = load ptr, ptr %i.aw, align 8, !tbaa !147 ; 2 uses
   %i.bw = getelementptr inbounds nuw [32 x i8], ptr %i.bv, i64 %indvars.iv
@@ -565,7 +565,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.ai, %bb.
   br i1 %.not.i177, label %bb.ar, label %bb.aq, !prof !146
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.gv = trunc nuw i64 %indvars.iv to i32
+  %i.gv = trunc nuw nsw i64 %indvars.iv to i32
   call void @_ZN4llvm23SmallVectorTemplateBaseIjLb1EE15growAndPushBackEj(ptr noundef nonnull align 8 dereferenceable(16) %11, i32 noundef %i.gv)
   br label %_ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit
 
@@ -573,7 +573,7 @@ bb.ar:                                            ; preds = %bb.ap
   %i.gw = zext i32 %i.gt to i64
   %i.gx = load ptr, ptr %11, align 8, !tbaa !37
   %i.gy = getelementptr inbounds nuw [4 x i8], ptr %i.gx, i64 %i.gw
-  %i.gz = trunc nuw i64 %indvars.iv to i32
+  %i.gz = trunc nuw nsw i64 %indvars.iv to i32
   store i32 %i.gz, ptr %i.gy, align 1
   %i.ha = load i32, ptr %i.au, align 8, !tbaa !141
   %i.hb = add i32 %i.ha, 1
@@ -657,7 +657,7 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit182: ; pred
   br i1 %.not.i183, label %bb.ba, label %bb.az, !prof !146
 
 bb.az:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit182
-  %i.ih = trunc nuw i64 %indvars.iv to i32
+  %i.ih = trunc nuw nsw i64 %indvars.iv to i32
   call void @_ZN4llvm23SmallVectorTemplateBaseIjLb1EE15growAndPushBackEj(ptr noundef nonnull align 8 dereferenceable(16) %11, i32 noundef %i.ih)
   br label %_ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit184
 
@@ -665,7 +665,7 @@ bb.ba:                                            ; preds = %_ZN4llvm23SmallVect
   %i.ii = zext i32 %i.if to i64
   %i.ij = load ptr, ptr %11, align 8, !tbaa !37
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.ij, i64 %i.ii
-  %i.il = trunc nuw i64 %indvars.iv to i32
+  %i.il = trunc nuw nsw i64 %indvars.iv to i32
   store i32 %i.il, ptr %i.ik, align 1
   %i.im = load i32, ptr %i.au, align 8, !tbaa !141
   %i.in = add i32 %i.im, 1
@@ -748,9 +748,8 @@ bb.be:                                            ; preds = %.lr.ph.i.i.i.i
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit179: ; preds = %bb.be, %bb.bd, %bb.bc, %bb.aa, %bb.ab, %bb.at, %bb.as
   %.2143 = phi i1 [ %.0141296, %bb.at ], [ %.0141296, %bb.aa ], [ %.0141296, %bb.as ], [ %.0141296, %bb.ab ], [ true, %bb.bc ], [ true, %bb.bd ], [ true, %bb.be ]
-  %16 = add i32 %.0140297, 1                      ; 2 uses
-  %.not151 = icmp eq i32 %16, %i.f
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.not151 = icmp eq i64 %indvars.iv.next, %16
   br i1 %.not151, label %.critedge167, label %bb.k, !llvm.loop !670
 
 .critedge167:                                     ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit179

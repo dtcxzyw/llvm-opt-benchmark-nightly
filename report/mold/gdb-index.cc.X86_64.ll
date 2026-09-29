@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.us.us
   %i.ax = add i32 %i.aw, 1
   store i32 %i.ax, ptr %i.av, align 4, !tbaa !58
   %i.ay = add nuw nsw i64 %.02030.us.us.i, 2      ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.us.us.i.unr-lcssa, label %bb.h, !llvm.loop !1156
 
@@ -309,7 +309,7 @@ bb.i:                                             ; preds = %bb.i, %._crit_edge.
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.da
   store i32 %.0.copyload.i21.us.us.i.1, ptr %i.db, align 1
   %i.dc = add nuw nsw i64 %.01832.us.us.i, 2      ; 2 uses
-  %niter24.next.1 = add i64 %niter24, 2           ; 2 uses
+  %niter24.next.1 = add nuw nsw i64 %niter24, 2   ; 2 uses
   %niter24.ncmp.1 = icmp eq i64 %niter24.next.1, %unroll_iter23
   br i1 %niter24.ncmp.1, label %._crit_edge34.us.us.i.unr-lcssa, label %.preheader.us.us.i, !llvm.loop !1158
 
@@ -370,7 +370,7 @@ bb.j:                                             ; preds = %bb.j, %._crit_edge3
   %i.ea = add i32 %i.dz, 1
   store i32 %i.ea, ptr %i.dy, align 4, !tbaa !58
   %i.eb = add nuw nsw i64 %.02030.us.us.1.i, 2    ; 2 uses
-  %niter30.next.1 = add i64 %niter30, 2           ; 2 uses
+  %niter30.next.1 = add nuw nsw i64 %niter30, 2   ; 2 uses
   %niter30.ncmp.1 = icmp eq i64 %niter30.next.1, %unroll_iter29
   br i1 %niter30.ncmp.1, label %._crit_edge.us.us.1.i.unr-lcssa, label %bb.j, !llvm.loop !1156
 
@@ -477,7 +477,7 @@ bb.k:                                             ; preds = %bb.k, %._crit_edge.
   %i.gh = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.gg
   store i32 %.0.copyload.i21.us.us.1.i.1, ptr %i.gh, align 1
   %i.gi = add nuw nsw i64 %.01832.us.us.1.i, 2    ; 2 uses
-  %niter35.next.1 = add i64 %niter35, 2           ; 2 uses
+  %niter35.next.1 = add nuw nsw i64 %niter35, 2   ; 2 uses
   %niter35.ncmp.1 = icmp eq i64 %niter35.next.1, %unroll_iter34
   br i1 %niter35.ncmp.1, label %._crit_edge34.us.us.1.i.unr-lcssa, label %.preheader.us.us.1.i, !llvm.loop !1158
 

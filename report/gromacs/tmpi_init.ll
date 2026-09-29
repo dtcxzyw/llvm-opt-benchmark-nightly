@@ -204,7 +204,7 @@ _ZL16tMPI_Global_initP11tmpi_globali.exit:        ; preds = %bb.e, %bb.d, %bb.c
   br i1 %.not, label %bb.f, label %.thread79
 
 bb.f:                                             ; preds = %_ZL16tMPI_Global_initP11tmpi_globali.exit.thread, %_ZL16tMPI_Global_initP11tmpi_globali.exit
-  %i.o = zext nneg i32 %1 to i64
+  %i.o = zext nneg i32 %1 to i64                  ; 4 uses
   %i.p = mul nuw nsw i64 %i.o, 424
   %i.q = tail call noundef ptr @_Z11tMPI_Mallocm(i64 noundef %i.p) ; 2 uses
   store ptr %i.q, ptr @threads, align 8, !tbaa !33
@@ -227,7 +227,6 @@ bb.h:                                             ; preds = %bb.g
   %i.v = icmp ne ptr %3, null
   %i.w = icmp ne ptr %4, null
   %or.cond = and i1 %i.v, %i.w
-  %wide.trip.count104 = zext nneg i32 %1 to i64   ; 3 uses
   %.pre120 = load ptr, ptr @threads, align 8, !tbaa !33 ; 3 uses
   br i1 %or.cond, label %.lr.ph86.split.us, label %.lr.ph86.split.preheader
 
@@ -235,12 +234,12 @@ bb.h:                                             ; preds = %bb.g
   %.pre118 = load ptr, ptr @TMPI_COMM_WORLD, align 8, !tbaa !11
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre118, i64 8
   %.pre119 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !60 ; 5 uses
-  %xtraiter = and i64 %wide.trip.count104, 3      ; 3 uses
+  %xtraiter = and i64 %i.o, 3                     ; 3 uses
   %i.x = icmp ult i32 %1, 4
   br i1 %i.x, label %.lr.ph86.split.epil.preheader, label %.lr.ph86.split.preheader.new
 
 .lr.ph86.split.preheader.new:                     ; preds = %.lr.ph86.split.preheader
-  %unroll_iter = and i64 %wide.trip.count104, 2147483644
+  %unroll_iter = and i64 %i.o, 2147483644
   br label %.lr.ph86.split
 
 .lr.ph86.split.us:                                ; preds = %.lr.ph86, %.loopexit.us
@@ -288,7 +287,7 @@ bb.i:                                             ; preds = %.lr.ph.us, %bb.i
   %i.ax = getelementptr inbounds nuw i8, ptr %i.am, i64 400
   store ptr %6, ptr %i.ax, align 8, !tbaa !65
   %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1 ; 2 uses
-  %exitcond105.not = icmp eq i64 %indvars.iv.next101, %wide.trip.count104
+  %exitcond105.not = icmp eq i64 %indvars.iv.next101, %i.o
   br i1 %exitcond105.not, label %._crit_edge, label %.lr.ph86.split.us, !llvm.loop !71
 
 .lr.ph.us:                                        ; preds = %.lr.ph86.split.us

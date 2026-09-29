@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aq = load ptr, ptr %6, align 8, !tbaa !35
   %i.ar = load ptr, ptr %2, align 8, !tbaa !29    ; 3 uses
   %i.as = sext i32 %i.an to i64
-  %wide.trip.count = zext nneg i32 %4 to i64      ; 2 uses
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 3 uses
   %invariant.gep = getelementptr [8 x i8], ptr %i.aq, i64 %i.as ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.at = icmp eq i32 %4, 1
@@ -279,7 +279,6 @@ bb.b:                                             ; preds = %bb.a
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !54
   %i.bq = add nsw i64 %i.bp, 1
   store i64 %i.bq, ptr %i.bo, align 8, !tbaa !54
-  %9 = zext nneg i32 %4 to i64
   %i.br = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4pbrtL15totalPrimitivesE)
   br label %common.ret
 
@@ -422,7 +421,7 @@ bb.f:                                             ; preds = %bb.e
 
 common.ret:                                       ; preds = %._crit_edge, %bb.g
   %.sink = phi ptr [ %i.br, %._crit_edge ], [ %i.ew, %bb.g ] ; 2 uses
-  %.sink115 = phi i64 [ %9, %._crit_edge ], [ 1, %bb.g ]
+  %.sink115 = phi i64 [ %wide.trip.count, %._crit_edge ], [ 1, %bb.g ]
   %common.ret.op = phi ptr [ %i.al, %._crit_edge ], [ %i.ed, %bb.g ]
   %i.dz = load i64, ptr %.sink, align 8, !tbaa !54
   %i.ea = add nsw i64 %i.dz, %.sink115
@@ -825,14 +824,14 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #28
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #20
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #20
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v8f32.v8p0(<8 x float>, <8 x ptr>, <8 x i1>) #30

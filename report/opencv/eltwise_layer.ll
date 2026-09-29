@@ -204,7 +204,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 52                  ; 3 uses
+  %i.g = sdiv exact i64 %i.f, 52                  ; 4 uses
   %i.h = icmp ugt i64 %i.g, 1
   br i1 %i.h, label %bb.g, label %bb.b
 
@@ -364,7 +364,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit129: ; preds = %bb
   %i.au = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   %i.av = load i32, ptr %i.au, align 4, !tbaa !92 ; 6 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
-  %umax323 = tail call i64 @llvm.umax.i64(i64 %i.g, i64 2) ; 2 uses
   br i1 %i.as, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.y
@@ -409,7 +408,7 @@ bb.x:                                             ; preds = %_ZNK2cv8MatShapeixE
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %_ZNK2cv8MatShapeixEm.exit159.us
   %.1.us = phi i32 [ %.0213259.us, %bb.x ], [ %.0213259.us, %bb.w ], [ %.0213259.us, %_ZNK2cv8MatShapeixEm.exit159.us ], [ %.sroa.speculated.us, %bb.v ] ; 2 uses
   %i.bg = add nuw i64 %.069261.us, 1              ; 2 uses
-  %exitcond324.not.a = icmp eq i64 %i.bg, %umax323
+  %exitcond324.not.a = icmp eq i64 %i.bg, %i.g
   br i1 %exitcond324.not.a, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !185
 
 common.resume:                                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit129, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit165, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit168, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit188, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i198, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i192, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i177, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i172, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i157
@@ -637,7 +636,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit168: ; preds = %bb
 bb.av:                                            ; preds = %bb.ad, %bb.al, %bb.aq, %bb.ag
   %.1 = phi i32 [ %i.av, %bb.ag ], [ %.0213259, %bb.al ], [ %.0213259, %bb.ad ], [ %.sroa.speculated, %bb.aq ] ; 2 uses
   %i.cu = add nuw i64 %.069261, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.cu, %umax323
+  %exitcond.not = icmp eq i64 %i.cu, %i.g
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !185
 
 bb.aw:                                            ; preds = %._crit_edge
@@ -1040,7 +1039,7 @@ _ZNKSt6vectorIPKN2cv3MatESaIS3_EE12_M_check_lenEmPKc.exit.i: ; preds = %_ZN2cv8M
   store i64 0, ptr %i.bj, align 8, !tbaa !132
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.bf, i8 0, i64 52, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.bg, i8 0, i64 36, i1 false)
-  %i.bk = zext nneg i32 %2 to i64                 ; 9 uses
+  %i.bk = zext nneg i32 %2 to i64                 ; 10 uses
   %i.bl = shl nuw nsw i64 %i.bk, 3                ; 2 uses
   %i.bm = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bl) #21
           to label %.noexc235 unwind label %bb.aj ; 4 uses
@@ -1170,7 +1169,6 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %_ZSt8_DestroyIPiiEv
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 3 uses
   %i.di = getelementptr inbounds nuw i8, ptr %21, i64 88
-  %wide.trip.count = zext nneg i32 %2 to i64
   br label %bb.ak
 
 ._crit_edge:                                      ; preds = %.loopexit
@@ -1573,7 +1571,7 @@ bb.dl:                                            ; preds = %.split284.us, %.spl
 .loopexit:                                        ; preds = %bb.dj, %bb.dk, %bb.dc, %bb.dd, %bb.cd, %bb.da
   %.199403 = phi i1 [ true, %bb.cd ], [ %.199, %bb.dc ], [ %.199, %bb.da ], [ %.199, %bb.dd ], [ %.199, %bb.dk ], [ %.199, %bb.dj ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.bk
   br i1 %exitcond.not, label %._crit_edge, label %bb.ak, !llvm.loop !194
 
 bb.dm:                                            ; preds = %._crit_edge

@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.n
   %i.bc = add i32 %.0..0..0..0..0..i, %i.ao       ; 5 uses
   %.4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %.4..4..4..4..4..i = load i32, ptr %.4..4..4..4..4..sroa_idx, align 4, !tbaa !74 ; 41 uses
+  %.4..4..4..4..4..i = load i32, ptr %.4..4..4..4..4..sroa_idx, align 4, !tbaa !74 ; 40 uses
   %.8..8..8..8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
   %.8..8..8..8..8..i = load i32, ptr %.8..8..8..8..8..sroa_idx, align 4, !tbaa !74 ; 4 uses
   %i.bd = sdiv i32 %.8..8..8..8..8..i, 2          ; 29 uses
@@ -420,7 +420,6 @@ bb.ae:                                            ; preds = %bb.ab
   %i.ew = trunc nuw nsw i64 %n.vec76 to i32
   %i.ex = mul nuw nsw i32 %i.ew, 3
   %cmp.n81 = icmp eq i64 %n.vec76, %i.dr
-  %min.iters.check = icmp ult i32 %.4..4..4..4..4..i, 12
   %i.ey = trunc nsw i64 %i.ds to i32
   %i.ez = trunc nsw i64 %i.ds to i32
   %mul.result = shl i32 %i.ez, 1                  ; 2 uses
@@ -509,19 +508,13 @@ bb.ah:                                            ; preds = %.loopexit655.i, %.l
   %i.hd = zext i32 %i.hc to i64                   ; 2 uses
   %scevgep55 = getelementptr i8, ptr %i.da, i64 %i.hd
   %scevgep57 = getelementptr i8, ptr %scevgep56, i64 %i.hd
-  %7 = trunc i64 %indvars.iv747.i to i32
-  %8 = xor i32 %7, -1
-  %9 = add i32 %i.bd, %8
-  %10 = mul i32 %.4..4..4..4..4..i, %9
-  %11 = trunc i64 %indvars.iv747.i to i32
-  %12 = mul i32 %narrow, %11
   %i.he = trunc i64 %indvars.iv747.i to i32
-  %i.hf = mul i32 %i.cn, %i.he                    ; 19 uses
+  %i.hf = mul i32 %i.cn, %i.he                    ; 18 uses
   switch i16 %.14..14..14..14..14..i, label %.loopexit655.i [
     i16 1, label %.lr.ph676.i
     i16 4, label %.lr.ph676.i
     i16 8, label %.lr.ph676.i
-    i16 16, label %.lr.ph671.i
+    i16 16, label %vector.scevcheck
     i16 24, label %.lr.ph668.i
     i16 32, label %.lr.ph.i
   ]
@@ -889,19 +882,22 @@ scalar.ph73.preheader:                            ; preds = %vector.memcheck63, 
   %.3551667.i.ph = phi i32 [ %i.hf, %vector.memcheck63 ], [ %i.hf, %vector.scevcheck59 ], [ %i.hf, %.lr.ph668.i ], [ %i.px, %middle.block80 ]
   br label %scalar.ph73
 
-.lr.ph671.i:                                      ; preds = %bb.ah
+vector.scevcheck:                                 ; preds = %bb.ah
+  %7 = trunc i64 %indvars.iv747.i to i32
+  %8 = mul i32 %narrow, %7
+  %9 = trunc i64 %indvars.iv747.i to i32
+  %10 = xor i32 %9, -1
+  %11 = add i32 %i.bd, %10
+  %12 = mul i32 %.4..4..4..4..4..i, %11
   %13 = xor i64 %indvars.iv747.i, -1
   %14 = add nsw i64 %13, %i.dq
   %15 = mul i64 %14, %i.dr                        ; 2 uses
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
-
-vector.scevcheck:                                 ; preds = %.lr.ph671.i
-  %i.st = xor i32 %10, -1
+  %i.st = xor i32 %12, -1
   %i.su = icmp ult i32 %i.st, %i.ey
   %i.sv = xor i32 %i.hf, -1
   %i.sw = icmp ugt i32 %mul.result, %i.sv
   %i.sx = or i1 %i.sw, %i.fa
-  %i.sy = xor i32 %12, -2
+  %i.sy = xor i32 %8, -2
   %i.sz = icmp ult i32 %i.sy, %mul.result
   %i.ta = or i1 %i.su, %i.sx
   %i.tb = or i1 %i.sz, %i.ta
@@ -992,9 +988,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %.loopexit655.i, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph671.i, %middle.block
-  %indvars.iv738.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph671.i ], [ %n.vec, %middle.block ]
-  %.2550670.i.ph = phi i32 [ %i.hf, %vector.memcheck ], [ %i.hf, %vector.scevcheck ], [ %i.hf, %.lr.ph671.i ], [ %i.tc, %middle.block ]
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %middle.block
+  %indvars.iv738.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ %n.vec, %middle.block ]
+  %.2550670.i.ph = phi i32 [ %i.hf, %vector.memcheck ], [ %i.hf, %vector.scevcheck ], [ %i.tc, %middle.block ]
   br label %scalar.ph
 
 .lr.ph676.i:                                      ; preds = %bb.ah, %bb.ah, %bb.ah

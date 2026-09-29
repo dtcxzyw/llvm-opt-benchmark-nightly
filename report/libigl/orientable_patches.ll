@@ -204,7 +204,6 @@ _ZN5Eigen12SparseMatrixIiLi0EiE7reserveEl.exit.preheader: ; preds = %_ZN5Eigen12
   %i.je = mul nuw nsw i64 %i.b, 100
   %i.jf = udiv i64 %i.je, 139
   %.not298 = icmp eq i64 %i.b, 0
-  %4 = tail call i64 @llvm.umax.i64(i64 %i.b, i64 1)
   br label %bb.ai
 
 _ZN5Eigen12SparseMatrixIiLi0EiE7reserveEl.exit._crit_edge: ; preds = %_ZN5Eigen12SparseMatrixIiLi0EiE7reserveEl.exit, %_ZN5Eigen12SparseMatrixIiLi0EiE7reserveEl.exit.preheader
@@ -607,7 +606,7 @@ bb.bk:                                            ; preds = %bb.bi
 
 bb.bl:                                            ; preds = %.lr.ph292, %bb.bj
   %i.rd = add nuw nsw i64 %.0291, 1               ; 2 uses
-  %exitcond316.not = icmp eq i64 %i.rd, %4
+  %exitcond316.not = icmp eq i64 %i.rd, %i.b
   br i1 %exitcond316.not, label %_ZN5Eigen12SparseMatrixIiLi0EiE7reserveEl.exit, label %.lr.ph292, !llvm.loop !405
 
 _ZN5Eigen12SparseMatrixIiLi0EiE7reserveEl.exit:   ; preds = %bb.aw, %bb.bl, %bb.bh, %._crit_edge287.thread, %.preheader262, %.preheader, %_ZSt4sortIPlEvT_S1_.exit
@@ -1009,9 +1008,6 @@ declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #22

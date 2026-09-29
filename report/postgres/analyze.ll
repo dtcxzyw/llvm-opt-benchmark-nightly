@@ -205,7 +205,7 @@ analyze_mcv_list.exit.thread:                     ; preds = %bb.ap, %bb.al, %bb.
   %i.ld = sub i32 %.1366, %.2371407               ; 2 uses
   %i.le = icmp sgt i32 %i.ld, %i.m
   %i.lf = add i32 %i.m, 1
-  %spec.select404 = select i1 %i.le, i32 %i.lf, i32 %i.ld ; 5 uses
+  %spec.select404 = select i1 %i.le, i32 %i.lf, i32 %i.ld ; 4 uses
   %i.lg = icmp sgt i32 %spec.select404, 1
   br i1 %i.lg, label %bb.at, label %bb.ax
 
@@ -261,14 +261,13 @@ bb.aw:                                            ; preds = %bb.av, %.thread408
   %i.lz = load ptr, ptr %i.ly, align 8
   %i.ma = load ptr, ptr @CurrentMemoryContext, align 8
   store ptr %i.lz, ptr @CurrentMemoryContext, align 8
-  %i.mb = zext nneg i32 %spec.select404 to i64
+  %i.mb = zext nneg i32 %spec.select404 to i64    ; 2 uses
   %i.mc = shl nuw nsw i64 %i.mb, 3
   %i.md = call ptr @palloc(i64 noundef %i.mc) #13 ; 2 uses
   %i.me = add i32 %.0352, -1                      ; 2 uses
   %i.mf = add nsw i32 %spec.select404, -1         ; 4 uses
   %i.mg = sdiv i32 %i.me, %i.mf
   %i.mh = srem i32 %i.me, %i.mf
-  %wide.trip.count476 = zext nneg i32 %spec.select404 to i64
   br label %.lr.ph450
 
 .lr.ph450:                                        ; preds = %.lr.ph450.preheader, %.lr.ph450
@@ -296,7 +295,7 @@ bb.aw:                                            ; preds = %bb.av, %.thread408
   %i.mx = select i1 %.not398, i32 %i.mf, i32 0
   %.1349 = sub nsw i32 %i.mv, %i.mx
   %indvars.iv.next474 = add nuw nsw i64 %indvars.iv473, 1 ; 2 uses
-  %exitcond477.not = icmp eq i64 %indvars.iv.next474, %wide.trip.count476
+  %exitcond477.not = icmp eq i64 %indvars.iv.next474, %i.mb
   br i1 %exitcond477.not, label %._crit_edge451, label %.lr.ph450, !llvm.loop !54
 
 ._crit_edge451:                                   ; preds = %.lr.ph450

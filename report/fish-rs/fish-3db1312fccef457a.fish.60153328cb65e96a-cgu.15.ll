@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !396)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !397)
-  %i.g = load i64, ptr %1, align 8, !alias.scope !398, !noalias !399, !noundef !16 ; 7 uses
-  %i.h = load i64, ptr %i.f, align 8, !alias.scope !400, !noalias !401, !noundef !16 ; 6 uses
+  %i.g = load i64, ptr %1, align 8, !alias.scope !398, !noalias !399, !noundef !16 ; 6 uses
+  %i.h = load i64, ptr %i.f, align 8, !alias.scope !400, !noalias !401, !noundef !16 ; 5 uses
   %.not.i = icmp sgt i64 %i.g, %i.h
   br i1 %.not.i, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VeciE7reserveCs8frGy5WneL6_4fish.exit.thread, label %_RNvXsd_NtNtCs3oUPovFnLWP_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits8iterator8Iterator9size_hintCs8frGy5WneL6_4fish.exit
 
 _RNvXsd_NtNtCs3oUPovFnLWP_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits8iterator8Iterator9size_hintCs8frGy5WneL6_4fish.exit: ; preds = %bb.b
-  %i.i = sub i64 %i.h, %i.g                       ; 3 uses
+  %i.i = sub i64 %i.h, %i.g                       ; 6 uses
   %.not = icmp eq i64 %i.i, -1
   %i.j = add nuw i64 %i.i, 1
   br i1 %.not, label %bb.e, label %bb.c, !prof !402
@@ -241,12 +241,11 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VeciE7reserveCs8frGy5WneL6_4fish.exit.th
   br i1 %i.s, label %.lr.ph.i.i.i.preheader, label %._crit_edge16.i.i.i
 
 .lr.ph.i.i.i.preheader:                           ; preds = %.preheader.i.i.i
-  %2 = sub i64 %i.h, %i.g                         ; 3 uses
-  %min.iters.check = icmp ult i64 %2, 4
+  %min.iters.check = icmp ult i64 %i.i, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader29, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
-  %n.vec = and i64 %2, -4                         ; 4 uses
+  %n.vec = and i64 %i.i, -4                       ; 4 uses
   %i.t = add i64 %i.r, %n.vec                     ; 2 uses
   %i.u = add i64 %i.g, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.g, i64 0
@@ -269,7 +268,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !386
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %2, %n.vec
+  %cmp.n = icmp eq i64 %i.i, %n.vec
   br i1 %cmp.n, label %._crit_edge16.i.i.i, label %.lr.ph.i.i.i.preheader29
 
 .lr.ph.i.i.i.preheader29:                         ; preds = %.lr.ph.i.i.i.preheader, %middle.block

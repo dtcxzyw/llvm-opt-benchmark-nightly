@@ -204,8 +204,7 @@ bb.m:                                             ; preds = %.lr.ph61.split.us.s
   store i32 %spec.select.lcssa, ptr %0, align 8, !tbaa !92
   %i.bz = load ptr, ptr %i.d, align 8, !tbaa !79
   %i.ca = load i32, ptr %i.bz, align 8, !tbaa !86 ; 2 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %spec.select.lcssa, i32 2)
-  %wide.trip.count46 = zext i32 %umax to i64
+  %wide.trip.count46 = zext i32 %spec.select.lcssa to i64
   br label %.lr.ph39
 
 bb.n:                                             ; preds = %.lr.ph39
@@ -288,9 +287,6 @@ declare noundef i32 @fputc(i32 noundef, ptr noundef captures(none)) local_unname
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #25
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #25

@@ -205,7 +205,7 @@ bb.a:
   store i32 1, ptr %i.a, align 4, !tbaa !26
   %i.c = icmp eq i32 %1, 0
   %spec.select = select i1 %i.c, ptr %i.a, ptr %2 ; 5 uses
-  %spec.select77 = tail call i32 @llvm.umax.i32(i32 %1, i32 1) ; 5 uses
+  %spec.select77 = tail call i32 @llvm.umax.i32(i32 %1, i32 1) ; 4 uses
   %or.cond = icmp ult i32 %1, 33
   %i.d = icmp ne ptr %spec.select, null
   %or.cond3 = and i1 %or.cond, %i.d
@@ -345,7 +345,8 @@ bb.n:                                             ; preds = %_ZN2cv8MatShapeixEm
   br i1 %i.ap, label %.lr.ph97.preheader, label %.loopexit
 
 .lr.ph97.preheader:                               ; preds = %bb.n
-  %i.aq = shl nuw nsw i32 %spec.select77, 2
+  %17 = call i32 @llvm.umax.i32(i32 %1, i32 1)
+  %i.aq = shl nuw nsw i32 %17, 2
   %i.ar = zext nneg i32 %i.aq to i64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.b, ptr noundef nonnull align 4 dereferenceable(1) %spec.select, i64 %i.ar, i1 false), !tbaa !26
   br label %.loopexit

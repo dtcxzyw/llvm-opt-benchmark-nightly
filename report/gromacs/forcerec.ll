@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %i.bf, label %.lr.ph59.i, label %.loopexit.i, !llvm.loop !663
 
 .loopexit.i:                                      ; preds = %bb.j, %bb.d, %bb.c
-  %.258 = phi i32 [ %.157, %bb.c ], [ %.157, %bb.d ], [ %.460, %bb.j ] ; 5 uses
+  %.258 = phi i32 [ %.157, %bb.c ], [ %.157, %bb.d ], [ %.460, %bb.j ] ; 4 uses
   %.2 = phi ptr [ %.155, %bb.c ], [ %.155, %bb.d ], [ %.4, %bb.j ] ; 5 uses
   %indvars.iv.next68.i = add nuw nsw i64 %indvars.iv67.i, 1 ; 2 uses
   %.not54.i = icmp eq i64 %indvars.iv.next68.i, 95
@@ -216,7 +216,7 @@ _ZL12count_tables19InteractionFunctionSt8optionalIS_ERK10gmx_mtop_tPiPS5_.exit: 
   br i1 %i.bg, label %bb.k, label %_ZL14gmx_sfree_implIiEvPKcS1_iPT_.exit
 
 bb.k:                                             ; preds = %_ZL12count_tables19InteractionFunctionSt8optionalIS_ERK10gmx_mtop_tPiPS5_.exit
-  %i.bh = zext nneg i32 %.258 to i64              ; 4 uses
+  %i.bh = zext nneg i32 %.258 to i64              ; 6 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !221 ; 3 uses
   %i.bk = load ptr, ptr %0, align 8, !tbaa !220   ; 2 uses
@@ -281,7 +281,6 @@ _ZSt8_DestroyIP13bondedtable_tS0_EvT_S2_RSaIT0_E.exit.i.i: ; preds = %_ZSt8_Dest
   %i.ck = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
-  %wide.trip.count96 = zext nneg i32 %.258 to i64 ; 2 uses
   br i1 %i.ch, label %.lr.ph74.split.us, label %.lr.ph74.split
 
 .lr.ph74.split.us:                                ; preds = %.lr.ph74, %bb.r
@@ -303,7 +302,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %.lr.ph74.split.us
   %indvars.iv.next92 = add nuw nsw i64 %indvars.iv91, 1 ; 2 uses
-  %exitcond97.not = icmp eq i64 %indvars.iv.next92, %wide.trip.count96
+  %exitcond97.not = icmp eq i64 %indvars.iv.next92, %i.bh
   br i1 %exitcond97.not, label %._crit_edge75, label %.lr.ph74.split.us, !llvm.loop !664
 
 .split.us:                                        ; preds = %bb.q, %bb.p
@@ -497,7 +496,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit48: ; preds = %bb.
 
 bb.ah:                                            ; preds = %.lr.ph74.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count96
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.bh
   br i1 %exitcond.not, label %._crit_edge75, label %.lr.ph74.split, !llvm.loop !664
 
 _ZL14gmx_sfree_implIiEvPKcS1_iPT_.exit:           ; preds = %bb.a, %._crit_edge75, %_ZL12count_tables19InteractionFunctionSt8optionalIS_ERK10gmx_mtop_tPiPS5_.exit

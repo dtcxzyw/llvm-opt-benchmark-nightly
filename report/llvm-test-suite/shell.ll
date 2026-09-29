@@ -204,8 +204,9 @@ bb.f:                                             ; preds = %bb.a, %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ah = add nsw i32 %1, -1
   %i.ai = zext nneg i32 %i.ah to i64              ; 2 uses
-  %wide.trip.count445 = zext nneg i32 %1 to i64
-  %.not517 = icmp eq i32 %1, 1
+  %wide.trip.count445 = zext nneg i32 %1 to i64   ; 2 uses
+  %4 = add nsw i64 %wide.trip.count445, -1        ; 2 uses
+  %.not517 = icmp eq i64 %4, 0
   br i1 %.not517, label %._crit_edge379.peel.begin, label %.lr.ph378.split
 
 .lr.ph378.split:                                  ; preds = %.lr.ph378
@@ -340,15 +341,20 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not295.not, label %.loopexit337, label %.lr.ph381
 
 .lr.ph381:                                        ; preds = %._crit_edge379
-  %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 468
-  %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 468 ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.cf = add nsw i32 %1, -1
-  %i.cg = zext nneg i32 %i.cf to i64
+  %i.cg = zext nneg i32 %i.cf to i64              ; 2 uses
   %wide.trip.count450 = zext nneg i32 %1 to i64
+  %.not520 = icmp eq i64 %4, 0
+  br i1 %.not520, label %.loopexit337.loopexit.peel.begin, label %.lr.ph381.split
+
+.lr.ph381.split:                                  ; preds = %.lr.ph381
+  %5 = add nsw i64 %wide.trip.count450, -2
   br label %bb.u
 
-bb.u:                                             ; preds = %.lr.ph381, %bb.w
-  %indvars.iv447 = phi i64 [ 0, %.lr.ph381 ], [ %indvars.iv.next448, %bb.w ] ; 4 uses
+bb.u:                                             ; preds = %.lr.ph381.split, %bb.w
+  %indvars.iv447 = phi i64 [ 0, %.lr.ph381.split ], [ %indvars.iv.next448, %bb.w ] ; 5 uses
   %i.ch = icmp samesign ult i64 %indvars.iv447, 100
   br i1 %i.ch, label %bb.v, label %bb.w
 
@@ -364,10 +370,28 @@ bb.w:                                             ; preds = %bb.u, %bb.v
   %i.cm = select i1 %i.cl, ptr @.str.107, ptr @.str.114
   %i.cn = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ck, ptr noundef nonnull @.str.142, i32 noundef %.0223, i32 noundef %.0223, ptr noundef nonnull @.str.143, ptr noundef nonnull %i.cm) #22 ; 0 uses
   %indvars.iv.next448 = add nuw nsw i64 %indvars.iv447, 1 ; 2 uses
-  %exitcond451.not = icmp eq i64 %indvars.iv.next448, %wide.trip.count450
-  br i1 %exitcond451.not, label %.loopexit337, label %bb.u, !llvm.loop !72
+  %exitcond451.not = icmp eq i64 %indvars.iv447, %5
+  br i1 %exitcond451.not, label %.loopexit337.loopexit.peel.begin, label %bb.u, !llvm.loop !72
 
-.loopexit337:                                     ; preds = %bb.w, %._crit_edge379, %bb.f
+.loopexit337.loopexit.peel.begin:                 ; preds = %.lr.ph381, %bb.w
+  %6 = phi i64 [ 0, %.lr.ph381 ], [ %indvars.iv.next448, %bb.w ] ; 3 uses
+  %7 = icmp samesign ult i64 %6, 100
+  br i1 %7, label %8, label %.loopexit337.loopexit.peel.next
+
+8:                                                ; preds = %.loopexit337.loopexit.peel.begin
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %6
+  %10 = load i32, ptr %9, align 4, !tbaa !10
+  br label %.loopexit337.loopexit.peel.next
+
+.loopexit337.loopexit.peel.next:                  ; preds = %8, %.loopexit337.loopexit.peel.begin
+  %.0223.peel = phi i32 [ %10, %8 ], [ 10, %.loopexit337.loopexit.peel.begin ] ; 2 uses
+  %11 = load ptr, ptr %i.ce, align 8, !tbaa !23
+  %12 = icmp eq i64 %6, %i.cg
+  %13 = select i1 %12, ptr @.str.107, ptr @.str.114
+  %14 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %11, ptr noundef nonnull @.str.142, i32 noundef %.0223.peel, i32 noundef %.0223.peel, ptr noundef nonnull @.str.143, ptr noundef nonnull %13) #22 ; 0 uses
+  br label %.loopexit337
+
+.loopexit337:                                     ; preds = %.loopexit337.loopexit.peel.next, %._crit_edge379, %bb.f
   %i.co = icmp ne ptr %2, null
   %i.cp = icmp sgt i32 %1, 0
   %or.cond391 = and i1 %i.co, %i.cp
@@ -770,7 +794,7 @@ attributes #30 = { nounwind allocsize(1) }
 !69 = distinct !{!69, !20}
 !70 = distinct !{!70, !20}
 !71 = distinct !{!71, !20, !91}
-!72 = distinct !{!72, !20}
+!72 = distinct !{!72, !20, !91}
 !73 = distinct !{!73, !20, !91}
 !74 = distinct !{!74, !20, !91}
 !75 = distinct !{!75, !20}

@@ -205,7 +205,7 @@ bb.a:
   %i.i = alloca ptr, align 8                      ; 4 uses
   %i.j = load ptr, ptr %2, align 8, !tbaa !42     ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !43   ; 3 uses
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !43   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !44   ; 6 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -286,6 +286,7 @@ select.unfold.i.i.i:                              ; preds = %bb.d, %bb.c
   %i.ak = call i32 @dbus_message_iter_open_container(ptr noundef nonnull %18, i32 noundef 118, ptr noundef nonnull @.str.31, ptr noundef nonnull %19) #15 ; 0 uses
   %i.al = call i32 @dbus_message_iter_open_container(ptr noundef nonnull %19, i32 noundef 97, ptr noundef nonnull @.str.32, ptr noundef nonnull %20) #15 ; 0 uses
   %i.am = icmp eq ptr %.134.i.i.i, null
+  %29 = zext i32 %i.l to i64                      ; 2 uses
   br i1 %i.am, label %.split.us.i.i.i, label %.split.i.i.i
 
 .split.us.i.i.i:                                  ; preds = %select.unfold.i.i.i, %.split.us.i.i.i
@@ -293,8 +294,7 @@ select.unfold.i.i.i:                              ; preds = %bb.d, %bb.c
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.j, i64 %indvars.iv53.i.i.i
   call fastcc void @_ZN12_GLOBAL__N_118AppendSingleFilterER15DBusMessageIterRK17nfdu8filteritem_t(ptr noundef nonnull align 8 dereferenceable(72) %20, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.an)
   %indvars.iv.next54.i.i.i = add nuw nsw i64 %indvars.iv53.i.i.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next54.i.i.i to i32
-  %exitcond = icmp eq i32 %i.l, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next54.i.i.i, %29
   br i1 %exitcond, label %.critedge.i.i.i, label %.split.us.i.i.i, !llvm.loop !60
 
 .split50.us.loopexit52.i.i.i:                     ; preds = %bb.g
@@ -310,7 +310,6 @@ select.unfold.i.i.i:                              ; preds = %bb.d, %bb.c
 
 .split.i.i.i:                                     ; preds = %select.unfold.i.i.i, %bb.g
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.g ], [ 0, %select.unfold.i.i.i ] ; 3 uses
-  %.048.i.i.i = phi i32 [ %29, %bb.g ], [ 0, %select.unfold.i.i.i ]
   %.02847.i.i.i = phi i64 [ %.1.i.i.i, %bb.g ], [ undef, %select.unfold.i.i.i ] ; 2 uses
   %.02946.i.i.i = phi i8 [ %.130.i.i.i, %bb.g ], [ 0, %select.unfold.i.i.i ]
   %i.av = trunc nuw i8 %.02946.i.i.i to i1
@@ -330,9 +329,8 @@ bb.f:                                             ; preds = %.split.i.i.i
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.130.i.i.i = phi i8 [ 1, %bb.f ], [ %i.ay, %bb.e ] ; 2 uses
   %.1.i.i.i = phi i64 [ %.02847.i.i.i, %bb.f ], [ %spec.select44.i.i.i, %bb.e ] ; 2 uses
-  %29 = add i32 %.048.i.i.i, 1                    ; 2 uses
-  %.not42.i.i.i = icmp eq i32 %29, %i.l
-  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
+  %.not42.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %29
   br i1 %.not42.i.i.i, label %.split50.us.loopexit52.i.i.i, label %.split.i.i.i, !llvm.loop !60
 
 bb.h:                                             ; preds = %.split50.us.loopexit52.i.i.i
