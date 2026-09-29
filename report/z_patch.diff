@@ -1,0 +1,53 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index ae5f85374ad39..f58bc933d1de2 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1415,18 +1415,12 @@ static bool getConstraintFromMemoryAccess(GetElementPtrInst &GEP,
+                                           CmpPredicate &Pred, Value *&A,
+                                           Value *&B, const DataLayout &DL,
+                                           const TargetLibraryInfo &TLI) {
+-  auto Offset = collectOffsets(cast<GEPOperator>(GEP), DL);
+-  if (!Offset.NW.hasNoUnsignedWrap())
++  if (!GEP.hasNoUnsignedWrap())
+     return false;
+ 
+-  if (Offset.VariableOffsets.size() != 1)
+-    return false;
+-
+-  uint64_t BitWidth = Offset.ConstantOffset.getBitWidth();
+-  auto &[Index, Scale] = Offset.VariableOffsets.front();
+-  // Bail out on non-canonical GEPs.
+-  if (Index->getType()->getScalarSizeInBits() != BitWidth)
+-    return false;
++  Value *Base = GEP.getPointerOperand();
++  if (auto *InnerGEP = dyn_cast<GetElementPtrInst>(Base))
++    Base = InnerGEP->getPointerOperand();
+ 
+   ObjectSizeOpts Opts;
+   // Workaround for gep inbounds, ptr null, idx.
+@@ -1434,11 +1428,23 @@ static bool getConstraintFromMemoryAccess(GetElementPtrInst &GEP,
+   // Be conservative since we are not clear on whether an out of bounds access
+   // to the padding is UB or not.
+   Opts.RoundToAlign = true;
+-  std::optional<TypeSize> Size =
+-      getBaseObjectSize(Offset.BasePtr, DL, &TLI, Opts);
++  std::optional<TypeSize> Size = getBaseObjectSize(Base, DL, &TLI, Opts);
+   if (!Size || Size->isScalable())
+     return false;
+ 
++  auto Offset = collectOffsets(cast<GEPOperator>(GEP), DL);
++  if (Offset.BasePtr != Base || !Offset.NW.hasNoUnsignedWrap())
++    return false;
++
++  if (Offset.VariableOffsets.size() != 1)
++    return false;
++
++  uint64_t BitWidth = Offset.ConstantOffset.getBitWidth();
++  auto &[Index, Scale] = Offset.VariableOffsets.front();
++  // Bail out on non-canonical GEPs.
++  if (Index->getType()->getScalarSizeInBits() != BitWidth)
++    return false;
++
+   // Index * Scale + ConstOffset + AccessSize <= AllocSize
+   // With nuw flag, we know that the index addition doesn't have unsigned wrap.
+   // If (AllocSize - (ConstOffset + AccessSize)) wraps around, there is no valid
