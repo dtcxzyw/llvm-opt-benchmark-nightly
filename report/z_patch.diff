@@ -1,0 +1,470 @@
+diff --git a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+index d16a3a1535cb75..ed0eebba0edc10 100644
+--- a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
++++ b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+@@ -24,6 +24,8 @@
+ #include "llvm/Analysis/GlobalsModRef.h"
+ #include "llvm/Analysis/InstSimplifyFolder.h"
+ #include "llvm/Analysis/Loads.h"
++#include "llvm/Analysis/LoopAccessAnalysis.h"
++#include "llvm/Analysis/ScalarEvolution.h"
+ #include "llvm/Analysis/TargetFolder.h"
+ #include "llvm/Analysis/TargetTransformInfo.h"
+ #include "llvm/Analysis/ValueTracking.h"
+@@ -78,10 +80,10 @@ class VectorCombine {
+ public:
+   VectorCombine(Function &F, const TargetTransformInfo &TTI,
+                 const DominatorTree &DT, AAResults &AA, AssumptionCache &AC,
+-                const DataLayout *DL, TTI::TargetCostKind CostKind,
+-                bool TryEarlyFoldsOnly)
++                ScalarEvolution *SE, const DataLayout *DL,
++                TTI::TargetCostKind CostKind, bool TryEarlyFoldsOnly)
+       : F(F), Builder(F.getContext(), InstSimplifyFolder(*DL)), TTI(TTI),
+-        DT(DT), AA(AA), DL(DL), CostKind(CostKind),
++        DT(DT), AA(AA), SE(SE), DL(DL), CostKind(CostKind),
+         SQ(*DL, /*TLI=*/nullptr, &DT, &AC),
+         TryEarlyFoldsOnly(TryEarlyFoldsOnly) {}
+ 
+@@ -93,6 +95,7 @@ class VectorCombine {
+   const TargetTransformInfo &TTI;
+   const DominatorTree &DT;
+   AAResults &AA;
++  ScalarEvolution *SE;
+   const DataLayout *DL;
+   TTI::TargetCostKind CostKind;
+   const SimplifyQuery SQ;
+@@ -143,6 +146,7 @@ class VectorCombine {
+   bool foldShuffleOfSelects(Instruction &I);
+   bool foldShuffleOfCastops(Instruction &I);
+   bool foldShuffleOfShuffles(Instruction &I);
++  bool foldShuffleOfAdjacentLoads(Instruction &I);
+   bool foldPermuteOfIntrinsic(Instruction &I);
+   bool foldShufflesOfLengthChangingShuffles(Instruction &I);
+   bool foldShuffleOfIntrinsics(Instruction &I);
+@@ -6773,6 +6777,211 @@ bool VectorCombine::shrinkLoadForShuffles(Instruction &I) {
+   return false;
+ }
+ 
++// Attempt to combine two adjacent fixed-length vector loads, that only feed
++// shufflevector instructions, into a single wider load, rewriting every such
++// shuffle so that operand 0 is the wide load and operand 1 is poison.
++// clang-format off
++// e.g.
++//   %loadA = load <16 x i8>, ptr %a
++//   %gep = getelementptr inbounds <16 x i8>, ptr %a, i64 1
++//   %loadB = load <16 x i8>, ptr %gep
++//   %shuffle0 = shufflevector <16 x i8> %loadA, <16 x i8> %loadB,
++//               <32 x i8> <...>
++//   %shuffle1 = shufflevector <16 x i8> %loadA, <16 x i8> %loadB,
++//               <32 x i8> <...>
++//
++// The fold would transform this to:
++//   %loadAB = load <32 x i8>, ptr %a
++//   %shuffle0 = shufflevector <32 x i8> %loadAB, <32 x i8> poison,
++//               <32 x i8> <...>
++//   %shuffle1 = shufflevector <32 x i8> %loadAB, <32 x i8> poison,
++//               <32 x i8> <...>
++//
++// clang-format on
++// Matching this pattern in codegen becomes difficult and hence, we prefer doing
++// this here.
++bool VectorCombine::foldShuffleOfAdjacentLoads(Instruction &I) {
++  auto *SV = cast<ShuffleVectorInst>(&I);
++
++  // The two operands must be distinct loads of the same fixed vector type.
++  auto *Load0 = dyn_cast<LoadInst>(SV->getOperand(0));
++  auto *Load1 = dyn_cast<LoadInst>(SV->getOperand(1));
++  if (!Load0 || !Load1 || Load0 == Load1 || !Load0->isSimple() ||
++      !Load1->isSimple())
++    return false;
++
++  // Confirm both loads are of fixed vector type.
++  auto *LoadTy = dyn_cast<FixedVectorType>(Load0->getType());
++  if (!LoadTy)
++    return false;
++
++  // We restrict to loads occurring in the same BB for now.
++  if (Load0->getParent() != Load1->getParent())
++    return false;
++
++  if (Load0->getPointerAddressSpace() != Load1->getPointerAddressSpace())
++    return false;
++
++  // Check that the original load type has no padding bits otherwise the wide
++  // load would be incorrect.
++  if (DL->getTypeSizeInBits(LoadTy) != 8 * DL->getTypeStoreSize(LoadTy))
++    return false;
++
++  const int NumElts = LoadTy->getNumElements();
++
++  // Determine which load is at the lower address and confirm the two loads are
++  // exactly contiguous. isConsecutiveAccess(A, B) is true only when B directly
++  // follows A, so we probe both orderings to also handle the reversed case.
++  LoadInst *LowLoad, *HighLoad;
++  assert(SE && "ScalarEvolution is only available for late folds");
++  if (isConsecutiveAccess(Load0, Load1, *DL, *SE)) {
++    LowLoad = Load0;
++    HighLoad = Load1;
++  } else if (isConsecutiveAccess(Load1, Load0, *DL, *SE)) {
++    LowLoad = Load1;
++    HighLoad = Load0;
++  } else {
++    return false;
++  }
++
++  // 1. Check all users of both loads are shuffles.
++  // 2. Check that both loads feed exactly the same set of shuffles.
++  SmallPtrSet<ShuffleVectorInst *, 4> Shuffles;
++  auto AreShufflesOnlyUsersOfLoads = [LowLoad, HighLoad, &Shuffles]() -> bool {
++    // Step 1: collect every user of LowLoad, requiring each to be a shuffle.
++    for (User *U : LowLoad->users()) {
++      auto *SV = dyn_cast<ShuffleVectorInst>(U);
++      if (!SV)
++        return false;
++      Shuffles.insert(SV);
++    }
++
++    // Step 2: every user of HighLoad must be a shuffle already collected from
++    // LowLoad, counting them as we go.
++    unsigned HighLoadUsers = 0;
++    for (User *U : HighLoad->users()) {
++      auto *SV = dyn_cast<ShuffleVectorInst>(U);
++      if (!SV || !Shuffles.contains(SV))
++        return false;
++      ++HighLoadUsers;
++    }
++
++    // Step 3: both loads must feed exactly the same set of shuffles. Combined
++    // with step 2, this guarantees every shuffle uses both LowLoad and
++    // HighLoad, so their operands are exactly {LowLoad, HighLoad}.
++    return HighLoadUsers == Shuffles.size();
++  };
++  if (!AreShufflesOnlyUsersOfLoads())
++    return false;
++
++  // The value loaded by either load must not be clobbered in between the loads.
++  auto *WideTy = FixedVectorType::get(LoadTy->getElementType(), NumElts * 2);
++  LoadInst *FirstLoad = LowLoad, *LastLoad = HighLoad;
++  bool LowComesFirst = LowLoad->comesBefore(HighLoad);
++  if (!LowComesFirst)
++    std::swap(FirstLoad, LastLoad);
++  MemoryLocation FirstLoc = MemoryLocation::get(FirstLoad);
++  if (isMemModifiedBetween(std::next(FirstLoad->getIterator()),
++                           LastLoad->getIterator(), FirstLoc, AA))
++    return false;
++
++  // case 1: wide load = LowLoad + HighLoad   ,
++  //         shuffle 0th operand = LowLoad
++  //         shuffle 1st operand = HighLoad
++  // Implication with this is shuffle mask for the wide load remains unchanged
++  // case 2: wide load = LowLoad + HighLoad   ,
++  //         shuffle 0th operand = HighLoad
++  //         shuffle 1st operand = LowLoad
++  // Implication with this is shuffle mask for the wide load changes
++  auto RemapMask = [LowLoad, HighLoad, NumElts](ShuffleVectorInst *SV,
++                                                SmallVectorImpl<int> &NewMask) {
++    Value *SVOp0 = SV->getOperand(0);
++    Value *SVOp1 = SV->getOperand(1);
++    ArrayRef<int> OldMask = SV->getShuffleMask();
++    assert(((SVOp0 == LowLoad && SVOp1 == HighLoad) ||
++            (SVOp0 == HighLoad && SVOp1 == LowLoad)) &&
++           "Shuffle operands must be exactly {LowLoad, HighLoad} or {HighLoad, "
++           "LowLoad}");
++    unsigned Off0 = SVOp0 == LowLoad ? 0 : NumElts;
++    unsigned Off1 = SVOp1 == LowLoad ? 0 : NumElts;
++
++    NewMask.clear();
++    for (int M : OldMask) {
++      if (M < 0)
++        NewMask.push_back(M);
++      else if (M < NumElts)
++        NewMask.push_back(Off0 + M);
++      else
++        NewMask.push_back(Off1 + (M - NumElts));
++    }
++  };
++
++  // Cost model checks
++  Value *Poison = PoisonValue::get(WideTy);
++  InstructionCost OldCost =
++      TTI.getMemoryOpCost(Instruction::Load, LoadTy, LowLoad->getAlign(),
++                          LowLoad->getPointerAddressSpace(), CostKind);
++  OldCost +=
++      TTI.getMemoryOpCost(Instruction::Load, LoadTy, HighLoad->getAlign(),
++                          HighLoad->getPointerAddressSpace(), CostKind);
++  InstructionCost NewCost =
++      TTI.getMemoryOpCost(Instruction::Load, WideTy, LowLoad->getAlign(),
++                          LowLoad->getPointerAddressSpace(), CostKind);
++  for (ShuffleVectorInst *SV : Shuffles) {
++    OldCost += TTI.getShuffleCost(TTI::SK_PermuteTwoSrc, SV->getType(), LoadTy,
++                                  CostKind, SV->getShuffleMask());
++    SmallVector<int, 32> NewMask;
++    RemapMask(SV, NewMask);
++    // LoadSz = initial load size
++    // WideSz = 2 * LoadSz
++    // MaxMaskSize = WideSz * 2
++    // Check if MaxMaskSize fits within an integer range.
++    if (!ShuffleVectorInst::isValidOperands(Poison, Poison, NewMask))
++      return false;
++    NewCost += TTI.getShuffleCost(TTI::SK_PermuteSingleSrc, SV->getType(),
++                                  WideTy, CostKind, NewMask);
++  }
++
++  LLVM_DEBUG(dbgs() << "Found adjacent loads feeding shuffles: " << *LowLoad
++                    << ", " << *HighLoad << "\n  OldCost: " << OldCost
++                    << " vs NewCost: " << NewCost << "\n");
++
++  if (!NewCost.isValid() || NewCost > OldCost)
++    return false;
++
++  // Insert the wide load at whichever original load comes last, so that both
++  // halves of the contiguous range are known to be dereferenceable there.
++  LoadInst *InsertPt = LastLoad;
++
++  // Build the wide load at the insertion point using the low load's pointer and
++  // alignment, intersecting alias metadata from both original loads.
++  Builder.SetInsertPoint(InsertPt);
++  Builder.SetCurrentDebugLocation(InsertPt->getDebugLoc());
++  LoadInst *WideLoad = Builder.CreateAlignedLoad(
++      WideTy, LowLoad->getPointerOperand(), LowLoad->getAlign());
++
++  // Set the metadata on the wide load. copyMetadataForLoad seeds it from
++  // LowLoad, then combineMetadataForCSE intersects every known kind against
++  // HighLoad (taking the most-generic value where applicable, keeping facts
++  // only where both loads agree, and dropping unknown metadata), so nothing is
++  // asserted over the combined load unless justified by both halves.
++  copyMetadataForLoad(*WideLoad, *LowLoad);
++  combineMetadataForCSE(WideLoad, HighLoad, /*DoesKMove=*/true);
++
++  for (ShuffleVectorInst *SV : Shuffles) {
++    SmallVector<int, 32> NewMask;
++    RemapMask(SV, NewMask);
++
++    Builder.SetInsertPoint(SV);
++    Builder.SetCurrentDebugLocation(SV->getDebugLoc());
++    Value *NewShuf = Builder.CreateShuffleVector(WideLoad, Poison, NewMask);
++    // We do not want to erase shuffles immediately because they may invalidate
++    // the NextInst pointer in the caller's BB traversal.
++    replaceValue(*SV, *NewShuf, /*Erase=*/false);
++  }
++  return true;
++}
++
+ // Attempt to narrow a phi of shufflevector instructions where the two incoming
+ // values have the same operands but different masks. If the two shuffle masks
+ // are offsets of one another we can use one branch to rotate the incoming
+@@ -6965,6 +7174,8 @@ bool VectorCombine::run() {
+           return true;
+         if (foldShuffleOfShuffles(I))
+           return true;
++        if (foldShuffleOfAdjacentLoads(I))
++          return true;
+         if (foldPermuteOfIntrinsic(I))
+           return true;
+         if (foldShufflesOfLengthChangingShuffles(I))
+@@ -7093,10 +7304,13 @@ PreservedAnalyses VectorCombinePass::run(Function &F,
+   TargetTransformInfo &TTI = FAM.getResult<TargetIRAnalysis>(F);
+   DominatorTree &DT = FAM.getResult<DominatorTreeAnalysis>(F);
+   AAResults &AA = FAM.getResult<AAManager>(F);
++  ScalarEvolution *SE =
++      TryEarlyFoldsOnly ? nullptr : &FAM.getResult<ScalarEvolutionAnalysis>(F);
+   const DataLayout *DL = &F.getDataLayout();
+   TTI::TargetCostKind CostKind =
+       F.hasOptSize() ? TTI::TCK_CodeSize : TTI::TCK_RecipThroughput;
+-  VectorCombine Combiner(F, TTI, DT, AA, AC, DL, CostKind, TryEarlyFoldsOnly);
++  VectorCombine Combiner(F, TTI, DT, AA, AC, SE, DL, CostKind,
++                         TryEarlyFoldsOnly);
+   if (!Combiner.run())
+     return PreservedAnalyses::all();
+   PreservedAnalyses PA;
+diff --git a/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-adjacent-loads.ll b/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-adjacent-loads.ll
+new file mode 100644
+index 00000000000000..68f6df532e2de6
+--- /dev/null
++++ b/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-adjacent-loads.ll
+@@ -0,0 +1,185 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes=vector-combine -S -mtriple=aarch64 | FileCheck %s
++
++define <8 x i32> @adjacent_loads_widen_v4i32_v8i32(ptr %p) {
++; CHECK-LABEL: define <8 x i32> @adjacent_loads_widen_v4i32_v8i32(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = load <8 x i32>, ptr [[P]], align 4
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <8 x i32> [[TMP1]], <8 x i32> poison, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
++; CHECK-NEXT:    ret <8 x i32> [[S]]
++;
++  %p16 = getelementptr inbounds i8, ptr %p, i64 16
++  %a = load <4 x i32>, ptr %p, align 4
++  %b = load <4 x i32>, ptr %p16, align 4
++  %s = shufflevector <4 x i32> %a, <4 x i32> %b, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
++  ret <8 x i32> %s
++}
++
++define void @adjacent_loads_multiple_shuffles_widen_v2i32_v4i32(ptr %p, ptr %d0, ptr %d1) {
++; CHECK-LABEL: define void @adjacent_loads_multiple_shuffles_widen_v2i32_v4i32(
++; CHECK-SAME: ptr [[P:%.*]], ptr [[D0:%.*]], ptr [[D1:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = load <4 x i32>, ptr [[P]], align 4
++; CHECK-NEXT:    [[S0:%.*]] = shufflevector <4 x i32> [[TMP1]], <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
++; CHECK-NEXT:    [[S1:%.*]] = shufflevector <4 x i32> [[TMP1]], <4 x i32> poison, <4 x i32> <i32 1, i32 2, i32 1, i32 0>
++; CHECK-NEXT:    store <4 x i32> [[S0]], ptr [[D0]], align 4
++; CHECK-NEXT:    store <4 x i32> [[S1]], ptr [[D1]], align 4
++; CHECK-NEXT:    ret void
++;
++  %p8 = getelementptr inbounds i8, ptr %p, i64 8
++  %a = load <2 x i32>, ptr %p, align 4
++  %b = load <2 x i32>, ptr %p8, align 4
++  %s0 = shufflevector <2 x i32> %a, <2 x i32> %b, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
++  %s1 = shufflevector <2 x i32> %a, <2 x i32> %b, <4 x i32> <i32 1, i32 2, i32 1, i32 0>
++  store <4 x i32> %s0, ptr %d0, align 4
++  store <4 x i32> %s1, ptr %d1, align 4
++  ret void
++}
++
++define <8 x i32> @swapped_shuffle_ops_widen_v4i32_v8i32(ptr %p) {
++; CHECK-LABEL: define <8 x i32> @swapped_shuffle_ops_widen_v4i32_v8i32(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = load <8 x i32>, ptr [[P]], align 4
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <8 x i32> [[TMP1]], <8 x i32> poison, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3>
++; CHECK-NEXT:    ret <8 x i32> [[S]]
++;
++  %p16 = getelementptr inbounds i8, ptr %p, i64 16
++  %a = load <4 x i32>, ptr %p, align 4
++  %b = load <4 x i32>, ptr %p16, align 4
++  %s = shufflevector <4 x i32> %b, <4 x i32> %a, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  ret <8 x i32> %s
++}
++
++define <8 x i32> @non_adjacent_loads_no_widen(ptr %p) {
++; CHECK-LABEL: define <8 x i32> @non_adjacent_loads_no_widen(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[P17:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 17
++; CHECK-NEXT:    [[A:%.*]] = load <4 x i32>, ptr [[P]], align 4
++; CHECK-NEXT:    [[B:%.*]] = load <4 x i32>, ptr [[P17]], align 4
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <4 x i32> [[A]], <4 x i32> [[B]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    ret <8 x i32> [[S]]
++;
++  %p17 = getelementptr inbounds i8, ptr %p, i64 17
++  %a = load <4 x i32>, ptr %p, align 4
++  %b = load <4 x i32>, ptr %p17, align 4
++  %s = shufflevector <4 x i32> %a, <4 x i32> %b, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  ret <8 x i32> %s
++}
++
++define <8 x i32> @non_shuffle_user_for_one_load_no_widen(ptr %p, ptr %d) {
++; CHECK-LABEL: define <8 x i32> @non_shuffle_user_for_one_load_no_widen(
++; CHECK-SAME: ptr [[P:%.*]], ptr [[D:%.*]]) {
++; CHECK-NEXT:    [[P16:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 16
++; CHECK-NEXT:    [[A:%.*]] = load <4 x i32>, ptr [[P]], align 4
++; CHECK-NEXT:    [[B:%.*]] = load <4 x i32>, ptr [[P16]], align 4
++; CHECK-NEXT:    store <4 x i32> [[A]], ptr [[D]], align 4
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <4 x i32> [[A]], <4 x i32> [[B]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    ret <8 x i32> [[S]]
++;
++  %p16 = getelementptr inbounds i8, ptr %p, i64 16
++  %a = load <4 x i32>, ptr %p, align 4
++  %b = load <4 x i32>, ptr %p16, align 4
++  store <4 x i32> %a, ptr %d, align 4
++  %s = shufflevector <4 x i32> %a, <4 x i32> %b, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  ret <8 x i32> %s
++}
++
++define <8 x i32> @mem_clobbered_by_store_no_widen(ptr %p, ptr %q) {
++; CHECK-LABEL: define <8 x i32> @mem_clobbered_by_store_no_widen(
++; CHECK-SAME: ptr [[P:%.*]], ptr [[Q:%.*]]) {
++; CHECK-NEXT:    [[P16:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 16
++; CHECK-NEXT:    [[A:%.*]] = load <4 x i32>, ptr [[P]], align 4
++; CHECK-NEXT:    store <4 x i32> zeroinitializer, ptr [[Q]], align 4
++; CHECK-NEXT:    [[B:%.*]] = load <4 x i32>, ptr [[P16]], align 4
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <4 x i32> [[A]], <4 x i32> [[B]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    ret <8 x i32> [[S]]
++;
++  %p16 = getelementptr inbounds i8, ptr %p, i64 16
++  %a = load <4 x i32>, ptr %p, align 4
++  store <4 x i32> zeroinitializer, ptr %q, align 4
++  %b = load <4 x i32>, ptr %p16, align 4
++  %s = shufflevector <4 x i32> %a, <4 x i32> %b, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  ret <8 x i32> %s
++}
++
++define <6 x i8> @no_padding_adjacent_loads_widen_v3i8_v6i8(ptr %p) {
++; CHECK-LABEL: define <6 x i8> @no_padding_adjacent_loads_widen_v3i8_v6i8(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[S:%.*]] = load <6 x i8>, ptr [[P]], align 1
++; CHECK-NEXT:    ret <6 x i8> [[S]]
++;
++  %p3 = getelementptr inbounds i8, ptr %p, i64 3
++  %a = load <3 x i8>, ptr %p, align 1
++  %b = load <3 x i8>, ptr %p3, align 1
++  %s = shufflevector <3 x i8> %a, <3 x i8> %b, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5>
++  ret <6 x i8> %s
++}
++
++define <12 x i1> @padding_bits_for_load_no_widen(ptr %p) {
++; CHECK-LABEL: define <12 x i1> @padding_bits_for_load_no_widen(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[P1:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 1
++; CHECK-NEXT:    [[A:%.*]] = load <6 x i1>, ptr [[P]], align 1
++; CHECK-NEXT:    [[B:%.*]] = load <6 x i1>, ptr [[P1]], align 1
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <6 x i1> [[A]], <6 x i1> [[B]], <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
++; CHECK-NEXT:    ret <12 x i1> [[S]]
++;
++  %p1 = getelementptr inbounds i8, ptr %p, i64 1
++  %a = load <6 x i1>, ptr %p, align 1
++  %b = load <6 x i1>, ptr %p1, align 1
++  %s = shufflevector <6 x i1> %a, <6 x i1> %b, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
++  ret <12 x i1> %s
++}
++
++; Make sure we do not crash when the widened shuffle would have more than
++; INT_MAX elements in the concatenated operand space.
++define <2 x i8> @huge_adjacent_loads_no_widen(ptr %p) {
++; CHECK-LABEL: define <2 x i8> @huge_adjacent_loads_no_widen(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[P_HI:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 1073741823
++; CHECK-NEXT:    [[A:%.*]] = load <1073741823 x i8>, ptr [[P]], align 1073741824
++; CHECK-NEXT:    [[B:%.*]] = load <1073741823 x i8>, ptr [[P_HI]], align 1073741824
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <1073741823 x i8> [[A]], <1073741823 x i8> [[B]], <2 x i32> <i32 0, i32 1>
++; CHECK-NEXT:    ret <2 x i8> [[S]]
++;
++  %p_hi = getelementptr inbounds i8, ptr %p, i64 1073741823
++  %a = load <1073741823 x i8>, ptr %p
++  %b = load <1073741823 x i8>, ptr %p_hi
++  %s = shufflevector <1073741823 x i8> %a, <1073741823 x i8> %b, <2 x i32> <i32 0, i32 1>
++  ret <2 x i8> %s
++}
++
++define <8 x i32> @adjacent_loads_different_metadata_widen_v4i32_v8i32(ptr %p) {
++; CHECK-LABEL: define <8 x i32> @adjacent_loads_different_metadata_widen_v4i32_v8i32(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = load <8 x i32>, ptr [[P]], align 4, !tbaa [[CHAR_TBAA0:![0-9]+]], !alias.scope [[META3:![0-9]+]], !noalias [[META7:![0-9]+]]
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <8 x i32> [[TMP1]], <8 x i32> poison, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
++; CHECK-NEXT:    ret <8 x i32> [[S]]
++;
++  %p16 = getelementptr inbounds i8, ptr %p, i64 16
++  %a = load <4 x i32>, ptr %p, align 4, !tbaa !0, !alias.scope !5, !noalias !8
++  %b = load <4 x i32>, ptr %p16, align 4, !tbaa !3, !alias.scope !8, !noalias !5
++  %s = shufflevector <4 x i32> %a, <4 x i32> %b, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
++  ret <8 x i32> %s
++}
++
++!0 = !{!1, !1, i64 0}
++!1 = !{!"int", !2, i64 0}
++!2 = !{!"omnipotent char", !4, i64 0}
++!3 = !{!10, !10, i64 0}
++!10 = !{!"float", !2, i64 0}
++!4 = !{!"Simple C++ TBAA"}
++!5 = !{!6}
++!6 = distinct !{!6, !7, !"scopeA"}
++!7 = distinct !{!7, !"domain"}
++!8 = !{!9}
++!9 = distinct !{!9, !7, !"scopeB"}
++;.
++; CHECK: [[CHAR_TBAA0]] = !{[[META1:![0-9]+]], [[META1]], i64 0}
++; CHECK: [[META1]] = !{!"omnipotent char", [[META2:![0-9]+]], i64 0}
++; CHECK: [[META2]] = !{!"Simple C++ TBAA"}
++; CHECK: [[META3]] = !{[[META4:![0-9]+]], [[META6:![0-9]+]]}
++; CHECK: [[META4]] = distinct !{[[META4]], [[META5:![0-9]+]], !"scopeA"}
++; CHECK: [[META5]] = distinct !{[[META5]], !"domain"}
++; CHECK: [[META6]] = distinct !{[[META6]], [[META5]], !"scopeB"}
++; CHECK: [[META7]] = !{}
++;.
