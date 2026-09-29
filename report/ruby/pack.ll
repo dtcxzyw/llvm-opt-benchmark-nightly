@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.an = zext nneg i8 %i.am to i64
   %i.ao = getelementptr i8, ptr %i.c, i64 %i.an
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !15
-  %i.aq = add nsw i64 %.261, 4                    ; 3 uses
+  %i.aq = add i64 %.261, 4                        ; 3 uses
   %i.ar = getelementptr i8, ptr %i.m, i64 3
   store i8 %i.ap, ptr %i.ar, align 1, !tbaa !15
   %i.as = getelementptr i8, ptr %.162, i64 3      ; 3 uses
