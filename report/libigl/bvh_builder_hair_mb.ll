@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.gt = load <4 x float>, ptr %i.gr, align 16, !noalias !1377
   %i.gu = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.gs, <4 x float> %i.gt)
   store <4 x float> %i.gu, ptr %i.gq, align 16
-  %i.gv = add nuw i64 %.0.i15, 1                  ; 2 uses
+  %i.gv = add nuw nsw i64 %.0.i15, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.gv, %i.eg
   br i1 %exitcond.not, label %_ZN6embree4sse28BinInfoTILm32ENS_9PrimRefMBENS_5LBBoxINS_6Vec3faEEEE5mergeERKS6_m.exit, label %bb.c, !llvm.loop !16
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.gt = load <4 x float>, ptr %i.gr, align 16, !noalias !1608
   %i.gu = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.gs, <4 x float> %i.gt)
   store <4 x float> %i.gu, ptr %i.gq, align 16
-  %i.gv = add nuw i64 %.0.i15, 1                  ; 2 uses
+  %i.gv = add nuw nsw i64 %.0.i15, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.gv, %i.eg
   br i1 %exitcond.not, label %_ZN6embree4sse28BinInfoTILm32ENS_9PrimRefMBENS_5LBBoxINS_6Vec3faEEEE5mergeERKS6_m.exit, label %bb.c, !llvm.loop !16
 

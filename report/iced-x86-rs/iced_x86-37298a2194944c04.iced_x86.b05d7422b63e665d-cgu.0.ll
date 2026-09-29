@@ -205,7 +205,7 @@ bb.tu:                                            ; preds = %.lr.ph.i1208
   %i.ayz = phi i64 [ %i.azc, %bb.tv ], [ %i.aym, %bb.tu ] ; 2 uses
   %i.aza = getelementptr inbounds nuw i8, ptr @10842, i64 %i.ayz
   %i.azb = load i8, ptr %i.aza, align 1, !noalias !14726, !noundef !21 ; 2 uses
-  %i.azc = add nuw i64 %i.ayz, 1                  ; 3 uses
+  %i.azc = add nuw nsw i64 %i.ayz, 1              ; 3 uses
   %i.azd = zext i8 %i.azb to i32                  ; 2 uses
   %i.aze = icmp sgt i8 %i.azb, -1
   br i1 %i.aze, label %bb.tw, label %bb.tv
@@ -475,7 +475,7 @@ bb.us:                                            ; preds = %.lr.ph.i1253
   %i.bbx = phi i64 [ %i.bca, %bb.ut ], [ %i.bbl, %bb.us ] ; 2 uses
   %i.bby = getelementptr inbounds nuw i8, ptr @10842, i64 %i.bbx
   %i.bbz = load i8, ptr %i.bby, align 1, !noalias !14736, !noundef !21 ; 2 uses
-  %i.bca = add nuw i64 %i.bbx, 1                  ; 3 uses
+  %i.bca = add nuw nsw i64 %i.bbx, 1              ; 3 uses
   %i.bcb = zext i8 %i.bbz to i32                  ; 2 uses
   %i.bcc = icmp sgt i8 %i.bbz, -1
   br i1 %i.bcc, label %bb.uu, label %bb.ut
@@ -878,7 +878,7 @@ bb.ld:                                            ; preds = %.lr.ph.i934
   %i.aln = phi i64 [ %i.alq, %bb.le ], [ %i.ala, %bb.ld ] ; 2 uses
   %i.alo = getelementptr inbounds nuw i8, ptr @10956, i64 %i.aln
   %i.alp = load i8, ptr %i.alo, align 1, !noalias !15902, !noundef !21 ; 2 uses
-  %i.alq = add nuw i64 %i.aln, 1                  ; 3 uses
+  %i.alq = add nuw nsw i64 %i.aln, 1              ; 3 uses
   %i.alr = zext i8 %i.alp to i32                  ; 2 uses
   %i.als = icmp sgt i8 %i.alp, -1
   br i1 %i.als, label %bb.lf, label %bb.le
@@ -1281,7 +1281,7 @@ bb.si:                                            ; preds = %.lr.ph.i1256
   %i.bbf = phi i64 [ %i.bbi, %bb.sj ], [ %i.bas, %bb.si ] ; 2 uses
   %i.bbg = getelementptr inbounds nuw i8, ptr @11046, i64 %i.bbf
   %i.bbh = load i8, ptr %i.bbg, align 1, !noalias !17307, !noundef !21 ; 2 uses
-  %i.bbi = add nuw i64 %i.bbf, 1                  ; 3 uses
+  %i.bbi = add nuw nsw i64 %i.bbf, 1              ; 3 uses
   %i.bbj = zext i8 %i.bbh to i32                  ; 2 uses
   %i.bbk = icmp sgt i8 %i.bbh, -1
   br i1 %i.bbk, label %bb.sk, label %bb.sj
@@ -1595,7 +1595,7 @@ bb.tk:                                            ; preds = %.lr.ph.i1322
   %i.bff = phi i64 [ %i.bfi, %bb.tl ], [ %i.bet, %bb.tk ] ; 2 uses
   %i.bfg = getelementptr inbounds nuw i8, ptr @11046, i64 %i.bff
   %i.bfh = load i8, ptr %i.bfg, align 1, !noalias !17321, !noundef !21 ; 2 uses
-  %i.bfi = add nuw i64 %i.bff, 1                  ; 3 uses
+  %i.bfi = add nuw nsw i64 %i.bff, 1              ; 3 uses
   %i.bfj = zext i8 %i.bfh to i32                  ; 2 uses
   %i.bfk = icmp sgt i8 %i.bfh, -1
   br i1 %i.bfk, label %bb.tm, label %bb.tl
@@ -1840,7 +1840,7 @@ bb.uh:                                            ; preds = %.lr.ph.i1366
   %i.bid = phi i64 [ %i.big, %bb.ui ], [ %i.bhq, %bb.uh ] ; 3 uses
   %i.bie = getelementptr inbounds nuw i8, ptr @11046, i64 %i.bid
   %i.bif = load i8, ptr %i.bie, align 1, !noalias !17330, !noundef !21 ; 2 uses
-  %i.big = add nuw i64 %i.bid, 1                  ; 4 uses
+  %i.big = add nuw nsw i64 %i.bid, 1              ; 4 uses
   %i.bih = zext i8 %i.bif to i32                  ; 2 uses
   %i.bii = icmp sgt i8 %i.bif, -1
   br i1 %i.bii, label %bb.uj, label %bb.ui
@@ -2243,7 +2243,7 @@ bb.mb:                                            ; preds = %.lr.ph.i868
   %i.ali = phi i64 [ %i.all, %bb.mc ], [ %i.akv, %bb.mb ] ; 2 uses
   %i.alj = getelementptr inbounds nuw i8, ptr @11098, i64 %i.ali
   %i.alk = load i8, ptr %i.alj, align 1, !noalias !18140, !noundef !21 ; 2 uses
-  %i.all = add nuw i64 %i.ali, 1                  ; 3 uses
+  %i.all = add nuw nsw i64 %i.ali, 1              ; 3 uses
   %i.alm = zext i8 %i.alk to i32                  ; 2 uses
   %i.aln = icmp sgt i8 %i.alk, -1
   br i1 %i.aln, label %bb.md, label %bb.mc
@@ -2557,7 +2557,7 @@ bb.nd:                                            ; preds = %.lr.ph.i934
   %i.api = phi i64 [ %i.apl, %bb.ne ], [ %i.aow, %bb.nd ] ; 2 uses
   %i.apj = getelementptr inbounds nuw i8, ptr @11098, i64 %i.api
   %i.apk = load i8, ptr %i.apj, align 1, !noalias !18154, !noundef !21 ; 2 uses
-  %i.apl = add nuw i64 %i.api, 1                  ; 3 uses
+  %i.apl = add nuw nsw i64 %i.api, 1              ; 3 uses
   %i.apm = zext i8 %i.apk to i32                  ; 2 uses
   %i.apn = icmp sgt i8 %i.apk, -1
   br i1 %i.apn, label %bb.nf, label %bb.ne
@@ -2802,7 +2802,7 @@ bb.oa:                                            ; preds = %.lr.ph.i978
   %i.asg = phi i64 [ %i.asj, %bb.ob ], [ %i.art, %bb.oa ] ; 3 uses
   %i.ash = getelementptr inbounds nuw i8, ptr @11098, i64 %i.asg
   %i.asi = load i8, ptr %i.ash, align 1, !noalias !18163, !noundef !21 ; 2 uses
-  %i.asj = add nuw i64 %i.asg, 1                  ; 4 uses
+  %i.asj = add nuw nsw i64 %i.asg, 1              ; 4 uses
   %i.ask = zext i8 %i.asi to i32                  ; 2 uses
   %i.asl = icmp sgt i8 %i.asi, -1
   br i1 %i.asl, label %bb.oc, label %bb.ob
