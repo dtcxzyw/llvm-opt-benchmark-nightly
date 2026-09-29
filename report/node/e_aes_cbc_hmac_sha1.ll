@@ -204,8 +204,8 @@ bb.ar:                                            ; preds = %bb.aq
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.ap
-  %.0298.i = phi i32 [ %i.ht, %bb.ar ], [ %i.hm, %bb.aq ], [ %i.hm, %bb.ap ] ; 8 uses
-  %.0297.i = phi i32 [ %i.hs, %bb.ar ], [ %i.hj, %bb.aq ], [ %i.hj, %bb.ap ] ; 7 uses
+  %.0298.i = phi i32 [ %i.ht, %bb.ar ], [ %i.hm, %bb.aq ], [ %i.hm, %bb.ap ] ; 7 uses
+  %.0297.i = phi i32 [ %i.hs, %bb.ar ], [ %i.hj, %bb.aq ], [ %i.hj, %bb.ap ] ; 11 uses
   store ptr %i.gs, ptr %4, align 16, !tbaa !55
   store ptr %i.gs, ptr %6, align 16, !tbaa !57
   %i.hu = getelementptr inbounds nuw i8, ptr %i.gq, i64 21
@@ -483,7 +483,7 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph330.u
 
 .lr.ph334.split.i:                                ; preds = %.loopexit.i
   %i.nb = add nsw i32 %i.gy, -1
-  %i.nc = zext i32 %i.nb to i64                   ; 3 uses
+  %i.nc = zext i32 %i.nb to i64                   ; 2 uses
   %wide.trip.count378.i = zext i32 %i.gy to i64   ; 2 uses
   %i.nd = add nsw i64 %wide.trip.count378.i, -1   ; 12 uses
   br label %bb.aw
@@ -627,27 +627,41 @@ bb.ax:                                            ; preds = %bb.ax, %._crit_edge
   %i.qg = getelementptr inbounds nuw i8, ptr %i.c, i64 472 ; 2 uses
   %i.qh = getelementptr inbounds nuw i8, ptr %i.c, i64 473 ; 2 uses
   %i.qi = getelementptr inbounds nuw i8, ptr %i.c, i64 474 ; 2 uses
-  %invariant.op.a = sub i32 36, %.1304.i
+  %8 = sub i32 %.0297.i, %.1304.i
+  %9 = zext i32 %8 to i64
+  %10 = add nuw i32 %.0297.i, 21
+  %11 = zext i32 %10 to i64                       ; 2 uses
+  %12 = add nuw i32 %.0297.i, 4
+  %13 = and i32 %12, 15                           ; 2 uses
+  %14 = trunc nuw nsw i32 %13 to i8
+  %15 = xor i8 %14, 15
+  %16 = sub i32 11, %.0297.i
+  %17 = and i32 %16, 15
+  %18 = zext nneg i32 %17 to i64                  ; 2 uses
+  %19 = add nuw nsw i64 %18, 1
+  %20 = sub i32 %.0297.i, %13                     ; 3 uses
+  %invariant.op.a = sub i32 %20, %.1304.i
+  %.reass.i = add i32 %invariant.op.a, 36
+  %21 = lshr i32 %.reass.i, 4
+  %22 = add i32 %20, 52                           ; 2 uses
+  %23 = lshr i32 %22, 8
+  %24 = trunc i32 %23 to i8
+  %25 = trunc i32 %22 to i8
+  %invariant.op = add i32 %20, 57
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ay, %.lr.ph346.split.i
-  %indvars.iv388.i = phi i64 [ 0, %.lr.ph346.split.i ], [ %indvars.iv.next389.i, %bb.ay ] ; 8 uses
+  %indvars.iv388.i = phi i64 [ 0, %.lr.ph346.split.i ], [ %indvars.iv.next389.i, %bb.ay ] ; 7 uses
   %.0295344.i = phi ptr [ %i.gq, %.lr.ph346.split.i ], [ %scevgep387.i, %bb.ay ] ; 7 uses
   %.0305342.i = phi i32 [ 0, %.lr.ph346.split.i ], [ %i.rs, %bb.ay ]
-  %8 = icmp eq i64 %indvars.iv388.i, %i.nc
-  %9 = select i1 %8, i32 %.0298.i, i32 %.0297.i   ; 5 uses
   %i.qj = getelementptr inbounds nuw [40 x i8], ptr %6, i64 %indvars.iv388.i ; 4 uses
   %i.qk = getelementptr inbounds nuw i8, ptr %i.qj, i64 8 ; 2 uses
   %i.ql = load ptr, ptr %i.qk, align 8, !tbaa !58
   %i.qm = load ptr, ptr %i.qj, align 8, !tbaa !57
-  %10 = sub i32 %9, %.1304.i
-  %11 = zext i32 %10 to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ql, ptr align 1 %i.qm, i64 %11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ql, ptr align 1 %i.qm, i64 %9, i1 false)
   %i.qn = load ptr, ptr %i.qk, align 8, !tbaa !58
   store ptr %i.qn, ptr %i.qj, align 8, !tbaa !57
-  %12 = add i32 %9, 21
-  %13 = zext i32 %12 to i64                       ; 2 uses
-  %i.qo = getelementptr i8, ptr %.0295344.i, i64 %13 ; 6 uses
+  %i.qo = getelementptr i8, ptr %.0295344.i, i64 %11 ; 6 uses
   %i.qp = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %indvars.iv388.i
   %i.qq = load i32, ptr %i.qp, align 4, !tbaa !10
   %i.qr = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.qq) #7, !srcloc !76
@@ -673,24 +687,12 @@ bb.ay:                                            ; preds = %bb.ay, %.lr.ph346.s
   %i.rh = getelementptr inbounds nuw i8, ptr %i.qo, i64 16
   store i32 %i.rg, ptr %i.rh, align 4, !tbaa !10
   %i.ri = getelementptr i8, ptr %i.qo, i64 20
-  %14 = add i32 %9, 4
-  %15 = and i32 %14, 15                           ; 2 uses
-  %16 = trunc nuw nsw i32 %15 to i8
-  %17 = xor i8 %16, 15
-  %18 = sub i32 11, %9
-  %19 = and i32 %18, 15
-  %20 = zext nneg i32 %19 to i64                  ; 2 uses
-  %21 = add nuw nsw i64 %20, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ri, i8 %17, i64 %21, i1 false), !tbaa !11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ri, i8 %15, i64 %19, i1 false), !tbaa !11
   %scevgep.i = getelementptr i8, ptr %.0295344.i, i64 21
-  %i.rj = getelementptr i8, ptr %scevgep.i, i64 %13
-  %scevgep387.i = getelementptr i8, ptr %i.rj, i64 %20 ; 7 uses
-  %22 = sub i32 %9, %15                           ; 3 uses
-  %.reass.i.reass.reass = add i32 %22, %invariant.op.a
-  %23 = lshr i32 %.reass.i.reass.reass, 4
+  %i.rj = getelementptr i8, ptr %scevgep.i, i64 %11
+  %scevgep387.i = getelementptr i8, ptr %i.rj, i64 %18 ; 7 uses
   %i.rk = getelementptr inbounds nuw i8, ptr %i.qj, i64 16
-  store i32 %23, ptr %i.rk, align 8, !tbaa !64
-  %24 = add i32 %22, 52                           ; 2 uses
+  store i32 %21, ptr %i.rk, align 8, !tbaa !64
   %i.rl = load i8, ptr %i.qg, align 4, !tbaa !11
   store i8 %i.rl, ptr %.0295344.i, align 1, !tbaa !11
   %i.rm = load i8, ptr %i.qh, align 1, !tbaa !11
@@ -699,15 +701,11 @@ bb.ay:                                            ; preds = %bb.ay, %.lr.ph346.s
   %i.ro = load i8, ptr %i.qi, align 2, !tbaa !11
   %i.rp = getelementptr inbounds nuw i8, ptr %.0295344.i, i64 2
   store i8 %i.ro, ptr %i.rp, align 1, !tbaa !11
-  %25 = lshr i32 %24, 8
-  %26 = trunc i32 %25 to i8
   %i.rq = getelementptr inbounds nuw i8, ptr %.0295344.i, i64 3
-  store i8 %26, ptr %i.rq, align 1, !tbaa !11
-  %27 = trunc i32 %24 to i8
+  store i8 %24, ptr %i.rq, align 1, !tbaa !11
   %i.rr = getelementptr inbounds nuw i8, ptr %.0295344.i, i64 4
-  store i8 %27, ptr %i.rr, align 1, !tbaa !11
-  %28 = add i32 %.0305342.i, 57
-  %i.rs = add i32 %28, %22                        ; 2 uses
+  store i8 %25, ptr %i.rr, align 1, !tbaa !11
+  %i.rs = add i32 %.0305342.i, %invariant.op      ; 2 uses
   %indvars.iv.next389.i = add nuw nsw i64 %indvars.iv388.i, 1 ; 2 uses
   %exitcond392.not.i = icmp eq i64 %indvars.iv.next389.i, %i.nd
   br i1 %exitcond392.not.i, label %._crit_edge347.loopexit.peel.begin.i, label %bb.ay, !llvm.loop !46
