@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %b3GetHullPoints.exi
 bb.ab:                                            ; preds = %b3GetHullPoints.exit446
   %i.by = getelementptr inbounds nuw i8, ptr %5, i64 7 ; 7 uses
   store i8 0, ptr %i.by, align 1, !tbaa !126
-  %i.bz = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 3 uses
   %i.ca = load i8, ptr %i.bz, align 4, !tbaa !74
   switch i8 %i.ca, label %.critedge416 [
     i8 8, label %bb.ct
@@ -607,9 +607,8 @@ bb.cu:                                            ; preds = %bb.ct
 
 .critedge416:                                     ; preds = %bb.cl, %bb.cq, %bb.av, %bb.al, %bb.ck, %bb.ab
   store i32 0, ptr %i.g, align 8, !tbaa !19
-  %.sroa_idx609 = getelementptr inbounds nuw i8, ptr %5, i64 5 ; 3 uses
-  %.sroa_idx610 = getelementptr inbounds nuw i8, ptr %5, i64 6 ; 3 uses
-  store i64 0, ptr %5, align 4
+  store i32 0, ptr %5, align 4
+  store i32 0, ptr %i.bz, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   call void @b3ComputeSeparatingAxis(ptr dead_on_unwind nonnull writable sret(%struct.b3AxisQuery) align 4 %15, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef nonnull byval(%struct.b3Transform) align 8 %4, i1 noundef zeroext true)
   %i.xj = getelementptr inbounds nuw i8, ptr %15, i64 84
@@ -620,6 +619,8 @@ bb.cu:                                            ; preds = %bb.ct
 bb.cv:                                            ; preds = %.critedge416
   %i.xl = trunc i32 %i.xk to i8
   store i8 %i.xl, ptr %i.bz, align 4, !tbaa !74
+  %21 = getelementptr inbounds nuw i8, ptr %5, i64 5 ; 3 uses
+  %22 = getelementptr inbounds nuw i8, ptr %5, i64 6 ; 3 uses
   switch i32 %i.xk, label %bb.cy [
     i32 2, label %bb.cw
     i32 3, label %bb.cx
@@ -632,11 +633,11 @@ bb.cw:                                            ; preds = %bb.cv
   %i.xo = getelementptr inbounds nuw i8, ptr %15, i64 16
   %i.xp = load i32, ptr %i.xo, align 4, !tbaa !129
   %i.xq = trunc i32 %i.xp to i8
-  store i8 %i.xq, ptr %.sroa_idx609, align 1, !tbaa !75
+  store i8 %i.xq, ptr %21, align 1, !tbaa !75
   %i.xr = getelementptr inbounds nuw i8, ptr %15, i64 20
   %i.xs = load i32, ptr %i.xr, align 4, !tbaa !130
   %i.xt = trunc i32 %i.xs to i8
-  store i8 %i.xt, ptr %.sroa_idx610, align 2, !tbaa !77
+  store i8 %i.xt, ptr %22, align 2, !tbaa !77
   br label %bb.dl
 
 bb.cx:                                            ; preds = %bb.cv
@@ -646,11 +647,11 @@ bb.cx:                                            ; preds = %bb.cv
   %i.xw = getelementptr inbounds nuw i8, ptr %15, i64 44
   %i.xx = load i32, ptr %i.xw, align 4, !tbaa !132
   %i.xy = trunc i32 %i.xx to i8
-  store i8 %i.xy, ptr %.sroa_idx609, align 1, !tbaa !75
+  store i8 %i.xy, ptr %21, align 1, !tbaa !75
   %i.xz = getelementptr inbounds nuw i8, ptr %15, i64 48
   %i.ya = load i32, ptr %i.xz, align 4, !tbaa !133
   %i.yb = trunc i32 %i.ya to i8
-  store i8 %i.yb, ptr %.sroa_idx610, align 2, !tbaa !77
+  store i8 %i.yb, ptr %22, align 2, !tbaa !77
   br label %bb.dl
 
 bb.cy:                                            ; preds = %bb.cv
@@ -660,11 +661,11 @@ bb.cy:                                            ; preds = %bb.cv
   %i.ye = getelementptr inbounds nuw i8, ptr %15, i64 72
   %i.yf = load i32, ptr %i.ye, align 4, !tbaa !135
   %i.yg = trunc i32 %i.yf to i8
-  store i8 %i.yg, ptr %.sroa_idx609, align 1, !tbaa !75
+  store i8 %i.yg, ptr %21, align 1, !tbaa !75
   %i.yh = getelementptr inbounds nuw i8, ptr %15, i64 76
   %i.yi = load i32, ptr %i.yh, align 4, !tbaa !136
   %i.yj = trunc i32 %i.yi to i8
-  store i8 %i.yj, ptr %.sroa_idx610, align 2, !tbaa !77
+  store i8 %i.yj, ptr %22, align 2, !tbaa !77
   br label %bb.dl
 
 bb.cz:                                            ; preds = %.critedge416
@@ -1067,8 +1068,8 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.ig, label %.split362, label %.split358.us.a, !prof !10, !nosanitize !9
 
 .split.split:                                     ; preds = %.split, %bb.bh
-  %.047 = phi ptr [ %.0, %bb.bh ], [ %6, %.split ] ; 4 uses
-  %.0 = phi ptr [ %.047, %bb.bh ], [ %5, %.split ] ; 2 uses
+  %.047 = phi ptr [ %.0, %bb.bh ], [ %5, %.split ] ; 2 uses
+  %.0 = phi ptr [ %.047, %bb.bh ], [ %6, %.split ] ; 4 uses
   %.0113.in = phi i8 [ %i.il, %bb.bh ], [ %i.hm, %.split ] ; 2 uses
   %.0112 = phi i32 [ %i.kh, %bb.bh ], [ %i.hb, %.split ]
   %.0113 = zext i8 %.0113.in to i32
@@ -1205,7 +1206,7 @@ b3Normalize.exit:                                 ; preds = %bb.bc, %bb.bd
   %i.kf = fmul float %.sroa.5.0.copyload, %i.kb
   %i.kg = fadd float %i.kf, %i.ke
   %.sroa.211.12.vec.insert.i = insertelement <2 x float> %foldExtExtBinop112, float %i.kg, i64 1
-  %i.kh = call i32 @b3ClipPolygon(ptr noundef %.047, ptr noundef %.0, i32 noundef %.0112, <2 x float> %.sroa.016.4.vec.insert.i, <2 x float> %.sroa.211.12.vec.insert.i, i32 noundef %.0113, <2 x float> %.sroa.024.0.copyload, <2 x float> %.sroa.9.0.copyload) #11 ; 5 uses
+  %i.kh = call i32 @b3ClipPolygon(ptr noundef %.0, ptr noundef %.047, i32 noundef %.0112, <2 x float> %.sroa.016.4.vec.insert.i, <2 x float> %.sroa.211.12.vec.insert.i, i32 noundef %.0113, <2 x float> %.sroa.024.0.copyload, <2 x float> %.sroa.9.0.copyload) #11 ; 5 uses
   %i.ki = icmp sgt i32 %i.kh, 2
   br i1 %i.ki, label %bb.bh, label %bb.be
 
@@ -1220,7 +1221,9 @@ bb.bf:                                            ; preds = %bb.be
   unreachable, !nosanitize !9
 
 bb.bg:                                            ; preds = %bb.be
-  store i64 0, ptr %4, align 4
+  store i32 0, ptr %4, align 4
+  %.sroa_idx2 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 0, ptr %.sroa_idx2, align 4
   br label %bb.ej
 
 bb.bh:                                            ; preds = %b3Normalize.exit
@@ -1229,7 +1232,7 @@ bb.bh:                                            ; preds = %b3Normalize.exit
   br i1 %.not135, label %bb.bi, label %.split.split, !llvm.loop !140
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.kn = ptrtoint ptr %.047 to i64               ; 3 uses
+  %i.kn = ptrtoint ptr %.0 to i64                 ; 3 uses
   %i.ko = call i32 @llvm.umin.i32(i32 %i.kh, i32 64) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
   %i.kp = ptrtoint ptr %0 to i64, !nosanitize !9  ; 2 uses
@@ -1259,7 +1262,7 @@ bb.bk:                                            ; preds = %bb.bm
 .split365.split:                                  ; preds = %.split365.split.preheader, %bb.bm
   %indvars.iv = phi i64 [ 0, %.split365.split.preheader ], [ %indvars.iv.next, %bb.bm ] ; 5 uses
   %.0110366 = phi float [ f0x7F7FFFFF, %.split365.split.preheader ], [ %i.lt, %bb.bm ] ; 2 uses
-  %i.kx = getelementptr inbounds nuw [20 x i8], ptr %.047, i64 %indvars.iv ; 4 uses
+  %i.kx = getelementptr inbounds nuw [20 x i8], ptr %.0, i64 %indvars.iv ; 4 uses
   %i.ky = mul nuw nsw i64 %indvars.iv, 20
   %i.kz = add i64 %i.ky, %i.kn, !nosanitize !9    ; 2 uses
   %.not392 = icmp ult i64 %i.kz, %i.kn, !nosanitize !9
@@ -1322,7 +1325,9 @@ bb.bo:                                            ; preds = %bb.bn
   unreachable, !nosanitize !9
 
 bb.bp:                                            ; preds = %bb.bn
-  store i64 0, ptr %4, align 4
+  store i32 0, ptr %4, align 4
+  %.sroa_idx1 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 0, ptr %.sroa_idx1, align 4
   br label %bb.ei
 
 bb.bq:                                            ; preds = %bb.bk
@@ -1725,7 +1730,9 @@ bb.c:                                             ; preds = %bb.b
   unreachable, !nosanitize !9
 
 bb.d:                                             ; preds = %bb.b
-  store i64 0, ptr %5, align 4
+  store i32 0, ptr %5, align 4
+  %.sroa_idx95 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store i32 0, ptr %.sroa_idx95, align 4
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.a
@@ -2128,7 +2135,9 @@ bb.ap:                                            ; preds = %b3IsWithinSegments.
   unreachable, !nosanitize !9
 
 bb.aq:                                            ; preds = %b3IsWithinSegments.exit.thread
-  store i64 0, ptr %5, align 4
+  store i32 0, ptr %5, align 4
+  %.sroa_idx205 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store i32 0, ptr %.sroa_idx205, align 4
   br label %bb.ay
 
 bb.ar:                                            ; preds = %b3IsWithinSegments.exit

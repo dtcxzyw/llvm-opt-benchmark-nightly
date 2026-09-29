@@ -204,9 +204,8 @@ bb.fn:                                            ; preds = %.lr.ph, %_ZN4cvc58i
   %i.oc = phi i32 [ %.pre216, %.lr.ph ], [ %i.si, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit194 ]
   %.0213 = phi i32 [ 0, %.lr.ph ], [ %i.sj, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit194 ] ; 4 uses
   %i.od = add i32 %.0213, -1
-  %i.oe = add i32 %i.od, %i.oc                    ; 2 uses
-  %.not = icmp ult i32 %i.oe, %4
-  %spec.select = select i1 %.not, i32 %i.oe, i32 %i.mz ; 2 uses
+  %i.oe = add i32 %i.od, %i.oc
+  %spec.select = call i32 @llvm.umin.i32(i32 %i.oe, i32 %i.mz) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %46) #27
   store ptr %i.lh, ptr %47, align 8, !tbaa !56
   %i.of = load i64, ptr %i.lh, align 8            ; 3 uses
@@ -608,6 +607,9 @@ declare i64 @llvm.umax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #24
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

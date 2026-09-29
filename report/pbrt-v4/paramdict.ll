@@ -205,12 +205,10 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond.not.i.7, label %._crit_edge.i, label %vec.epilog.scalar.ph, !llvm.loop !162
 
 _ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEE7reserveEm.exit: ; preds = %bb.b, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i
-  %i.ca = phi ptr [ %i.j, %bb.b ], [ %.pre15, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i ] ; 4 uses
-  %i.cb = phi ptr [ %i.i, %bb.b ], [ %.pre14, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i ] ; 11 uses
+  %i.ca = phi ptr [ %i.j, %bb.b ], [ %.pre15, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i ] ; 5 uses
+  %i.cb = phi ptr [ %i.i, %bb.b ], [ %.pre14, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i ] ; 12 uses
   %i.cc = phi i64 [ %i.f, %bb.b ], [ %.pre13, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i ] ; 3 uses
   %i.cd = phi ptr [ %i.b, %bb.b ], [ %.0.i.i.i.i, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i ] ; 2 uses
-  %4 = ptrtoaddr ptr %i.cb to i64                 ; 2 uses
-  %5 = ptrtoaddr ptr %i.ca to i64                 ; 2 uses
   %.not.i.i6 = icmp eq ptr %i.cd, null
   %i.ce = select i1 %.not.i.i6, ptr %i.c, ptr %i.cd ; 2 uses
   %i.cf = getelementptr [8 x i8], ptr %i.ce, i64 %i.cc ; 8 uses
@@ -218,8 +216,10 @@ _ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_alloca
   br i1 %.not9, label %._crit_edge, label %iter.check54
 
 iter.check54:                                     ; preds = %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEE7reserveEm.exit
-  %i.cg = add i64 %4, -8
-  %i.ch = sub i64 %i.cg, %5                       ; 3 uses
+  %4 = ptrtoaddr ptr %i.ca to i64
+  %5 = ptrtoaddr ptr %i.cb to i64
+  %i.cg = add i64 %5, -8
+  %i.ch = sub i64 %i.cg, %4                       ; 3 uses
   %i.ci = lshr i64 %i.ch, 3
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 5 uses
   %min.iters.check33 = icmp ult i64 %i.ch, 24
@@ -227,8 +227,10 @@ iter.check54:                                     ; preds = %_ZN4pbrt13InlinedVe
 
 vector.memcheck31:                                ; preds = %iter.check54
   %i.ck = shl i64 %i.cc, 3
-  %i.cl = add i64 %4, -8
-  %i.cm = sub i64 %i.cl, %5
+  %6 = ptrtoaddr ptr %i.cb to i64
+  %7 = ptrtoaddr ptr %i.ca to i64
+  %i.cl = add i64 %6, -8
+  %i.cm = sub i64 %i.cl, %7
   %i.cn = and i64 %i.cm, -8                       ; 2 uses
   %i.co = getelementptr i8, ptr %i.ce, i64 %i.ck
   %i.cp = getelementptr i8, ptr %i.co, i64 %i.cn

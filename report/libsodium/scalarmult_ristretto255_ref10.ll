@@ -10,15 +10,44 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind ssp uwtable
 define dso_local range(i32 -1, 1) i32 @crypto_scalarmult_ristretto255(ptr noundef nonnull %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr noundef nonnull %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.ge25519_p3, align 8         ; 4 uses
-  %4 = alloca %struct.ge25519_p3, align 8         ; 4 uses
+  %3 = alloca %struct.ge25519_p3, align 8         ; 6 uses
+  %4 = alloca %struct.ge25519_p3, align 8         ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #4
   %i.a = call i32 @ristretto255_frombytes(ptr noundef nonnull %4, ptr noundef nonnull %2) #4
   %.not = icmp eq i32 %i.a, 0
-  br i1 %.not, label %.preheader.preheader.a, label %bb.b
+  br i1 %.not, label %.preheader.preheader, label %9
 
-.preheader.preheader.a:                           ; preds = %bb.a
+.preheader.preheader:                             ; preds = %bb.a
+  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %6 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %7 = add i64 %5, 32
+  %8 = add i64 %6, 32
+  %rt.bound0 = icmp ugt i64 %7, %6
+  %rt.bound1 = icmp ugt i64 %8, %5
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  br i1 %rt.conflict, label %.preheader.preheader.a, label %.preheader.preheader.rtvec, !prof !4
+
+9:                                                ; preds = %bb.b, %bb.a
+  %.012 = phi i32 [ -1, %bb.a ], [ %..rtmerge, %bb.b ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #4
+  ret i32 %.012
+
+.preheader.preheader.rtvec:                       ; preds = %.preheader.preheader
+  %10 = load <16 x i8>, ptr %1, align 1
+  store <16 x i8> %10, ptr %0, align 1
+  %11 = getelementptr i8, ptr %1, i64 16
+  %12 = getelementptr i8, ptr %0, i64 16
+  %13 = load <16 x i8>, ptr %11, align 1
+  %14 = and <16 x i8> %13, <i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 127>
+  store <16 x i8> %14, ptr %12, align 1
+  call void @ge25519_scalarmult(ptr noundef nonnull %3, ptr noundef nonnull %0, ptr noundef nonnull %4) #4
+  call void @ristretto255_p3_tobytes(ptr noundef nonnull %0, ptr noundef nonnull %3) #4
+  %15 = call i32 @sodium_is_zero(ptr noundef nonnull %0, i64 noundef 32) #4
+  br label %bb.b
+
+.preheader.preheader.a:                           ; preds = %.preheader.preheader
   %i.b = load i8, ptr %1, align 1
   store i8 %i.b, ptr %0, align 1
   %i.c = getelementptr i8, ptr %1, i64 1
@@ -149,15 +178,13 @@ bb.a:
   call void @ge25519_scalarmult(ptr noundef nonnull %3, ptr noundef nonnull %0, ptr noundef nonnull %4) #4
   call void @ristretto255_p3_tobytes(ptr noundef nonnull %0, ptr noundef nonnull %3) #4
   %i.cs = call i32 @sodium_is_zero(ptr noundef nonnull %0, i64 noundef 32) #4
-  %.not13 = icmp ne i32 %i.cs, 0
-  %. = sext i1 %.not13 to i32
   br label %bb.b
 
-bb.b:                                             ; preds = %.preheader.preheader.a, %bb.a
-  %.012.a = phi i32 [ -1, %bb.a ], [ %., %.preheader.preheader.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #4
-  ret i32 %.012.a
+bb.b:                                             ; preds = %.preheader.preheader.a, %.preheader.preheader.rtvec
+  %.012.a = phi i32 [ %15, %.preheader.preheader.rtvec ], [ %i.cs, %.preheader.preheader.a ]
+  %..rtmerge.in = icmp ne i32 %.012.a, 0
+  %..rtmerge = sext i1 %..rtmerge.in to i32
+  br label %9
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -176,9 +203,33 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nounwind ssp uwtable
 define dso_local range(i32 -1, 1) i32 @crypto_scalarmult_ristretto255_base(ptr noundef nonnull initializes((0, 32)) %0, ptr nofree noundef nonnull readonly captures(none) %1) local_unnamed_addr #0 {
-bb.a:
-  %2 = alloca %struct.ge25519_p3, align 8         ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #4
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %5 = add i64 %4, 32
+  %6 = add i64 %3, 32
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %7 = alloca %struct.ge25519_p3, align 8         ; 8 uses
+  br i1 %rt.conflict, label %bb.a, label %.rtvec, !prof !4
+
+.rtvec:                                           ; preds = %2
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #4
+  %8 = load <16 x i8>, ptr %1, align 1
+  store <16 x i8> %8, ptr %0, align 1
+  %9 = getelementptr i8, ptr %1, i64 16
+  %10 = getelementptr i8, ptr %0, i64 16
+  %11 = load <16 x i8>, ptr %9, align 1
+  %12 = and <16 x i8> %11, <i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 127>
+  store <16 x i8> %12, ptr %10, align 1
+  call void @ge25519_scalarmult_base(ptr noundef nonnull %7, ptr noundef nonnull %0) #4
+  call void @ristretto255_p3_tobytes(ptr noundef nonnull %0, ptr noundef nonnull %7) #4
+  %13 = call i32 @sodium_is_zero(ptr noundef nonnull %0, i64 noundef 32) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
+  br label %.rtcont
+
+bb.a:                                             ; preds = %2
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #4
   %i.a = load i8, ptr %1, align 1
   store i8 %i.a, ptr %0, align 1
   %i.b = getelementptr i8, ptr %1, i64 1
@@ -306,13 +357,17 @@ bb.a:
   %i.cp = getelementptr i8, ptr %0, i64 31
   %i.cq = and i8 %i.co, 127
   store i8 %i.cq, ptr %i.cp, align 1
-  call void @ge25519_scalarmult_base(ptr noundef nonnull %2, ptr noundef nonnull %0) #4
-  call void @ristretto255_p3_tobytes(ptr noundef nonnull %0, ptr noundef nonnull %2) #4
+  call void @ge25519_scalarmult_base(ptr noundef nonnull %7, ptr noundef nonnull %0) #4
+  call void @ristretto255_p3_tobytes(ptr noundef nonnull %0, ptr noundef nonnull %7) #4
   %i.cr = call i32 @sodium_is_zero(ptr noundef nonnull %0, i64 noundef 32) #4
-  %.not = icmp ne i32 %i.cr, 0
-  %. = sext i1 %.not to i32
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #4
-  ret i32 %.
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
+  br label %.rtcont
+
+.rtcont:                                          ; preds = %bb.a, %.rtvec
+  %..rtmerge.in.in = phi i32 [ %13, %.rtvec ], [ %i.cr, %bb.a ]
+  %..rtmerge.in = icmp ne i32 %..rtmerge.in.in, 0
+  %..rtmerge = sext i1 %..rtmerge.in to i32
+  ret i32 %..rtmerge
 }
 
 declare void @ge25519_scalarmult_base(ptr noundef, ptr noundef) local_unnamed_addr #2
@@ -342,4 +397,5 @@ attributes #4 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
+!4 = !{!"branch_weights", i32 1, i32 1048575}
 end_hunk_0

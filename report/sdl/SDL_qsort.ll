@@ -204,16 +204,17 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph328.i
   br i1 %.not286.i29, label %.loopexit.i35, label %.preheader.i30.preheader
 
 .preheader.i30.preheader:                         ; preds = %._crit_edge329.i28
-  %i.xm = add i64 %2, -4                          ; 2 uses
+  %i.xm = add i64 %2, -4                          ; 3 uses
   %i.xn = lshr i64 %i.xm, 2
   %i.xo = add nuw nsw i64 %i.xn, 1                ; 2 uses
   %min.iters.check654 = icmp ult i64 %i.xm, 44
   br i1 %min.iters.check654, label %.preheader.i30.preheader681, label %vector.memcheck647
 
 vector.memcheck647:                               ; preds = %.preheader.i30.preheader
-  %i.xp = and i64 %2, -4                          ; 2 uses
-  %scevgep648 = getelementptr i8, ptr %spec.select.i26, i64 %i.xp
-  %scevgep649 = getelementptr i8, ptr %0, i64 %i.xp
+  %i.xp = and i64 %i.xm, -4
+  %8 = add i64 %i.xp, 4                           ; 2 uses
+  %scevgep648 = getelementptr i8, ptr %spec.select.i26, i64 %8
+  %scevgep649 = getelementptr i8, ptr %0, i64 %8
   %bound0650 = icmp ult ptr %spec.select.i26, %scevgep649
   %bound1651 = icmp ult ptr %0, %scevgep648
   %found.conflict652 = and i1 %bound0650, %bound1651
@@ -616,16 +617,17 @@ bb.bp:                                            ; preds = %bb.bp, %.lr.ph328.i
   br i1 %.not286.i29.i, label %.loopexit.i35.i, label %.preheader.i30.i.preheader
 
 .preheader.i30.i.preheader:                       ; preds = %._crit_edge329.i28.i
-  %i.abo = add i64 %2, -4                         ; 2 uses
+  %i.abo = add i64 %2, -4                         ; 3 uses
   %i.abp = lshr i64 %i.abo, 2
   %i.abq = add nuw nsw i64 %i.abp, 1              ; 2 uses
   %min.iters.check536 = icmp ult i64 %i.abo, 44
   br i1 %min.iters.check536, label %.preheader.i30.i.preheader561, label %vector.memcheck529
 
 vector.memcheck529:                               ; preds = %.preheader.i30.i.preheader
-  %i.abr = and i64 %2, -4                         ; 2 uses
-  %scevgep530 = getelementptr i8, ptr %spec.select.i26.i, i64 %i.abr
-  %scevgep531 = getelementptr i8, ptr %0, i64 %i.abr
+  %i.abr = and i64 %i.abo, -4
+  %7 = add i64 %i.abr, 4                          ; 2 uses
+  %scevgep530 = getelementptr i8, ptr %spec.select.i26.i, i64 %7
+  %scevgep531 = getelementptr i8, ptr %0, i64 %7
   %bound0532 = icmp ult ptr %spec.select.i26.i, %scevgep531
   %bound1533 = icmp ult ptr %0, %scevgep530
   %found.conflict534 = and i1 %bound0532, %bound1533

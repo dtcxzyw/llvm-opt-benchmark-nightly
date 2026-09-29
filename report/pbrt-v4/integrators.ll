@@ -205,24 +205,26 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.k, ptr %i.l, align 8, !tbaa !62
-  %i.m = load ptr, ptr %1, align 8, !tbaa !61     ; 10 uses
-  %2 = ptrtoaddr ptr %i.m to i64                  ; 2 uses
-  %i.n = load ptr, ptr %i.a, align 8, !tbaa !61   ; 3 uses
-  %3 = ptrtoaddr ptr %i.n to i64                  ; 2 uses
+  %i.m = load ptr, ptr %1, align 8, !tbaa !61     ; 11 uses
+  %i.n = load ptr, ptr %i.a, align 8, !tbaa !61   ; 4 uses
   %.not11.i.i.i.i = icmp eq ptr %i.m, %i.n
   br i1 %.not11.i.i.i.i, label %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN4pbrt5LightESt6vectorIS3_SaIS3_EEEEPS3_S3_ET0_T_SC_SB_RSaIT1_E.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.c
-  %i.o = add i64 %3, -8
-  %i.p = sub i64 %i.o, %2                         ; 3 uses
+  %2 = ptrtoaddr ptr %i.n to i64
+  %3 = ptrtoaddr ptr %i.m to i64
+  %i.o = add i64 %2, -8
+  %i.p = sub i64 %i.o, %3                         ; 3 uses
   %i.q = lshr i64 %i.p, 3
   %i.r = add nuw nsw i64 %i.q, 1                  ; 5 uses
   %min.iters.check = icmp ult i64 %i.p, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.s = add i64 %3, -8
-  %i.t = sub i64 %i.s, %2
+  %4 = ptrtoaddr ptr %i.n to i64
+  %5 = ptrtoaddr ptr %i.m to i64
+  %i.s = add i64 %4, -8
+  %i.t = sub i64 %i.s, %5
   %i.u = and i64 %i.t, -8
   %i.v = add i64 %i.u, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %i.i, i64 %i.v
@@ -625,24 +627,26 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.i
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   store ptr %i.n, ptr %i.o, align 8, !tbaa !62
-  %i.p = load ptr, ptr %2, align 8, !tbaa !61     ; 10 uses
-  %5 = ptrtoaddr ptr %i.p to i64                  ; 2 uses
-  %i.q = load ptr, ptr %i.d, align 8, !tbaa !61   ; 3 uses
-  %6 = ptrtoaddr ptr %i.q to i64                  ; 2 uses
+  %i.p = load ptr, ptr %2, align 8, !tbaa !61     ; 11 uses
+  %i.q = load ptr, ptr %i.d, align 8, !tbaa !61   ; 4 uses
   %.not11.i.i.i.i.i = icmp eq ptr %i.p, %i.q
   br i1 %.not11.i.i.i.i.i, label %_ZNSt6vectorIN4pbrt5LightESaIS1_EEC2ERKS3_.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.c
-  %i.r = add i64 %6, -8
-  %i.s = sub i64 %i.r, %5                         ; 3 uses
+  %5 = ptrtoaddr ptr %i.q to i64
+  %6 = ptrtoaddr ptr %i.p to i64
+  %i.r = add i64 %5, -8
+  %i.s = sub i64 %i.r, %6                         ; 3 uses
   %i.t = lshr i64 %i.s, 3
   %i.u = add nuw nsw i64 %i.t, 1                  ; 5 uses
   %min.iters.check = icmp ult i64 %i.s, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.v = add i64 %6, -8
-  %i.w = sub i64 %i.v, %5
+  %7 = ptrtoaddr ptr %i.q to i64
+  %8 = ptrtoaddr ptr %i.p to i64
+  %i.v = add i64 %7, -8
+  %i.w = sub i64 %i.v, %8
   %i.x = and i64 %i.w, -8
   %i.y = add i64 %i.x, 8                          ; 2 uses
   %scevgep = getelementptr i8, ptr %i.l, i64 %i.y

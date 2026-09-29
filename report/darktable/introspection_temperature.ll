@@ -205,16 +205,18 @@ bb.h:                                             ; preds = %bb.a
   %i.ki = getelementptr inbounds nuw i8, ptr %i.f, i64 4 ; 2 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %i.f, i64 12 ; 2 uses
-  %i.kl = add i64 %i.kh, -4                       ; 2 uses
-  %i.km = lshr exact i64 %i.kl, 2
+  %i.kl = add i64 %i.kh, -1                       ; 2 uses
+  %i.km = lshr i64 %i.kl, 2
   %i.kn = add nuw nsw i64 %i.km, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.kl, 28
+  %min.iters.check = icmp ult i64 %i.kh, 29
   br i1 %min.iters.check, label %.preheader175.preheader288, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader175.preheader
-  %i.ko = shl i64 %i.kh, 2                        ; 2 uses
-  %scevgep = getelementptr i8, ptr %3, i64 %i.ko  ; 2 uses
-  %scevgep242 = getelementptr i8, ptr %2, i64 %i.ko
+  %i.ko = shl i64 %i.kl, 2
+  %6 = and i64 %i.ko, -16
+  %7 = add i64 %6, 16                             ; 2 uses
+  %scevgep = getelementptr i8, ptr %3, i64 %7     ; 2 uses
+  %scevgep242 = getelementptr i8, ptr %2, i64 %7
   %scevgep243 = getelementptr i8, ptr %i.f, i64 16
   %bound0 = icmp ult ptr %3, %scevgep242
   %bound1 = icmp ult ptr %2, %scevgep

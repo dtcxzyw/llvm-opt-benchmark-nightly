@@ -205,17 +205,18 @@ bb.a:
   br i1 %i.c, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.d = add i64 %0, -8                           ; 2 uses
+  %i.d = add i64 %0, -8                           ; 3 uses
   %i.e = lshr i64 %i.d, 3
   %i.f = add nuw nsw i64 %i.e, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.d, 24
   br i1 %min.iters.check, label %.lr.ph.preheader55, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.g = shl i64 %0, 2
-  %i.h = and i64 %i.g, -32                        ; 2 uses
-  %scevgep = getelementptr i8, ptr %3, i64 %i.h
-  %scevgep39 = getelementptr i8, ptr %1, i64 %i.h
+  %i.g = shl i64 %i.d, 2
+  %i.h = and i64 %i.g, -32
+  %4 = add i64 %i.h, 32                           ; 2 uses
+  %scevgep = getelementptr i8, ptr %3, i64 %4
+  %scevgep39 = getelementptr i8, ptr %1, i64 %4
   %bound0 = icmp ult ptr %3, %scevgep39
   %bound1 = icmp ult ptr %1, %scevgep
   %found.conflict = and i1 %bound0, %bound1

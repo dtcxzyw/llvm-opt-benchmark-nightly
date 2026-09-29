@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   unreachable, !nosanitize !9
 
 bb.i:                                             ; preds = %bb.g
-  %i.bf = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 7 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 11 uses
   %i.bg = load i8, ptr %i.bf, align 4, !tbaa !46
   %i.bh = icmp eq i8 %i.bg, 1
   br i1 %i.bh, label %bb.j, label %bb.l
@@ -449,7 +449,8 @@ bb.ah:                                            ; preds = %bb.ag
 
 .critedge:                                        ; preds = %bb.ah, %bb.ag
   store i32 0, ptr %i.f, align 8, !tbaa !16
-  store i64 0, ptr %10, align 4
+  store i32 0, ptr %10, align 4
+  store i32 0, ptr %i.bf, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #9
   br label %bb.cu
 
@@ -606,7 +607,8 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %.critedge484, %bb.as
   store i32 0, ptr %i.f, align 8, !tbaa !16
-  store i64 0, ptr %10, align 4
+  store i32 0, ptr %10, align 4
+  store i32 0, ptr %i.bf, align 4
   br label %bb.cu
 
 bb.ax:                                            ; preds = %bb.aa
@@ -927,7 +929,8 @@ bb.cc:                                            ; preds = %bb.cb
   br i1 %i.mw, label %.critedge491, label %.critedge489
 
 .critedge491:                                     ; preds = %bb.by, %bb.cc, %bb.cb, %bb.bx
-  store i64 0, ptr %10, align 4
+  store i32 0, ptr %10, align 4
+  store i32 0, ptr %i.bf, align 4
   br label %bb.cu
 
 bb.cd:                                            ; preds = %bb.aa
@@ -1330,7 +1333,8 @@ bb.dz:                                            ; preds = %bb.dx
   br label %bb.ea
 
 bb.ea:                                            ; preds = %bb.du, %bb.dz
-  store i64 0, ptr %10, align 4
+  store i32 0, ptr %10, align 4
+  store i32 0, ptr %i.bf, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #9
@@ -1664,8 +1668,8 @@ bb.ab:                                            ; preds = %bb.ah
 bb.ac:                                            ; preds = %bb.aa, %bb.ah
   %indvars.iv567 = phi i64 [ 0, %bb.aa ], [ %indvars.iv.next568, %bb.ah ] ; 6 uses
   %.1107303 = phi i32 [ %i.cy, %bb.aa ], [ %i.er, %bb.ah ]
-  %.040301 = phi ptr [ %6, %bb.aa ], [ %.041300, %bb.ah ] ; 2 uses
-  %.041300 = phi ptr [ %7, %bb.aa ], [ %.040301, %bb.ah ] ; 5 uses
+  %.040301 = phi ptr [ %7, %bb.aa ], [ %.041300, %bb.ah ] ; 5 uses
+  %.041300 = phi ptr [ %6, %bb.aa ], [ %.040301, %bb.ah ] ; 2 uses
   %i.dm = mul nuw nsw i64 %indvars.iv567, 12      ; 2 uses
   %i.dn = add i64 %i.dm, %i.di, !nosanitize !9    ; 2 uses
   %.not137 = icmp ult i64 %i.dn, %i.di, !nosanitize !9
@@ -1735,7 +1739,7 @@ bb.ah:                                            ; preds = %b3Normalize.exit
   %i.ep = fadd float %i.eo, %i.en
   %.sroa.211.12.vec.insert.i = insertelement <2 x float> %.sroa.211.8.vec.insert.i, float %i.ep, i64 1
   %i.eq = trunc nuw nsw i64 %indvars.iv567 to i32
-  %i.er = call i32 @b3ClipPolygon(ptr noundef %.041300, ptr noundef %.040301, i32 noundef %.1107303, <2 x float> %.sroa.07.0.i, <2 x float> %.sroa.211.12.vec.insert.i, i32 noundef %i.eq, <2 x float> %.sroa.024.0.copyload, <2 x float> %.sroa.829.0.copyload) #9 ; 4 uses
+  %i.er = call i32 @b3ClipPolygon(ptr noundef %.040301, ptr noundef %.041300, i32 noundef %.1107303, <2 x float> %.sroa.07.0.i, <2 x float> %.sroa.211.12.vec.insert.i, i32 noundef %i.eq, <2 x float> %.sroa.024.0.copyload, <2 x float> %.sroa.829.0.copyload) #9 ; 4 uses
   %indvars.iv.next568 = add nuw nsw i64 %indvars.iv567, 1
   %i.es = icmp samesign ult i64 %indvars.iv567, 2
   %i.et = icmp sgt i32 %i.er, 0                   ; 2 uses
@@ -1753,7 +1757,9 @@ bb.aj:                                            ; preds = %bb.ai
   unreachable, !nosanitize !9
 
 bb.ak:                                            ; preds = %bb.ai
-  store i64 0, ptr %4, align 4
+  store i32 0, ptr %4, align 4
+  %.sroa_idx2 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 0, ptr %.sroa_idx2, align 4
   br label %bb.be
 
 bb.al:                                            ; preds = %bb.ab
@@ -1761,7 +1767,7 @@ bb.al:                                            ; preds = %bb.ab
   br i1 %i.et, label %.lr.ph.split, label %._crit_edge
 
 .lr.ph.split:                                     ; preds = %bb.al
-  %i.ez = ptrtoint ptr %.041300 to i64, !nosanitize !9 ; 5 uses
+  %i.ez = ptrtoint ptr %.040301 to i64, !nosanitize !9 ; 5 uses
   %i.fa = ptrtoint ptr %0 to i64                  ; 2 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.fc = and i64 %i.fa, 7
@@ -1776,7 +1782,7 @@ bb.al:                                            ; preds = %bb.ab
   %indvars.iv573 = phi i64 [ 0, %.lr.ph.split.split.us.preheader ], [ %indvars.iv.next574, %bb.ar ] ; 3 uses
   %.0102305.us317 = phi i32 [ 0, %.lr.ph.split.split.us.preheader ], [ %.1.us, %bb.ar ] ; 5 uses
   %.0103304.us318 = phi float [ f0x7F7FFFFF, %.lr.ph.split.split.us.preheader ], [ %i.fk, %bb.ar ] ; 2 uses
-  %i.fe = getelementptr inbounds nuw [20 x i8], ptr %.041300, i64 %indvars.iv573 ; 3 uses
+  %i.fe = getelementptr inbounds nuw [20 x i8], ptr %.040301, i64 %indvars.iv573 ; 3 uses
   %i.ff = mul nuw nsw i64 %indvars.iv573, 20
   %i.fg = add i64 %i.ff, %i.ez, !nosanitize !9    ; 2 uses
   %.not384 = icmp ult i64 %i.fg, %i.ez, !nosanitize !9
@@ -1858,7 +1864,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.am
   unreachable, !nosanitize !9
 
 bb.as:                                            ; preds = %.lr.ph.split.split.split
-  %i.gn = getelementptr inbounds nuw [20 x i8], ptr %.041300, i64 %indvars.iv570
+  %i.gn = getelementptr inbounds nuw [20 x i8], ptr %.040301, i64 %indvars.iv570
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 12
   %i.gp = load float, ptr %i.go, align 4, !tbaa !35 ; 3 uses
   %i.gq = fcmp ule float %i.gp, 0.000000e+00
@@ -1915,7 +1921,9 @@ bb.ax:                                            ; preds = %bb.aw
   unreachable, !nosanitize !9
 
 bb.ay:                                            ; preds = %bb.aw
-  store i64 0, ptr %4, align 4
+  store i32 0, ptr %4, align 4
+  %.sroa_idx1 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 0, ptr %.sroa_idx1, align 4
   br label %bb.be
 
 bb.az:                                            ; preds = %bb.av
@@ -2318,9 +2326,11 @@ bb.ar:                                            ; preds = %bb.aq
   unreachable, !nosanitize !9
 
 bb.as:                                            ; preds = %bb.aq
-  %i.fw = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store i64 0, ptr %5, align 4
-  %i.fx = load float, ptr %i.fw, align 4, !tbaa !37
+  store i32 0, ptr %5, align 4
+  %i.fw = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store i32 0, ptr %i.fw, align 4
+  %9 = getelementptr inbounds nuw i8, ptr %4, i64 12
+  %i.fx = load float, ptr %9, align 4, !tbaa !37
   br label %bb.bi
 
 bb.at:                                            ; preds = %b3Normalize.exit
@@ -2455,7 +2465,9 @@ bb.bd:                                            ; preds = %bb.bc
   unreachable, !nosanitize !9
 
 bb.be:                                            ; preds = %bb.bc
-  store i64 0, ptr %5, align 4
+  store i32 0, ptr %5, align 4
+  %.sroa_idx230 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store i32 0, ptr %.sroa_idx230, align 4
   br label %bb.bi
 
 bb.bf:                                            ; preds = %bb.bb
@@ -2690,7 +2702,9 @@ bb.z:                                             ; preds = %bb.y
   unreachable, !nosanitize !9
 
 bb.aa:                                            ; preds = %bb.y
-  store i64 0, ptr %7, align 4
+  store i32 0, ptr %7, align 4
+  %.sroa_idx132 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  store i32 0, ptr %.sroa_idx132, align 4
   br label %bb.am
 
 bb.ab:                                            ; preds = %bb.x

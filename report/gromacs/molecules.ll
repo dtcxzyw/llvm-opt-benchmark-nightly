@@ -205,24 +205,26 @@ _ZNSt12_Vector_baseISt5tupleIJiiEESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.
           to label %.noexc103 unwind label %bb.o  ; 13 uses
 
 .noexc103:                                        ; preds = %_ZNSt12_Vector_baseISt5tupleIJiiEESaIS1_EE11_M_allocateEm.exit.i
-  %i.dr = load ptr, ptr %0, align 8, !tbaa !68    ; 14 uses
-  %22 = ptrtoaddr ptr %i.dr to i64                ; 2 uses
-  %i.ds = load ptr, ptr %i.br, align 8, !tbaa !46 ; 3 uses
-  %23 = ptrtoaddr ptr %i.ds to i64                ; 2 uses
+  %i.dr = load ptr, ptr %0, align 8, !tbaa !68    ; 15 uses
+  %i.ds = load ptr, ptr %i.br, align 8, !tbaa !46 ; 4 uses
   %.not10.i.i.i.i = icmp eq ptr %i.dr, %i.ds
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt5tupleIJiiEESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i, label %iter.check497
 
 iter.check497:                                    ; preds = %.noexc103
-  %i.dt = add i64 %23, -8
-  %i.du = sub i64 %i.dt, %22                      ; 3 uses
+  %22 = ptrtoaddr ptr %i.ds to i64
+  %23 = ptrtoaddr ptr %i.dr to i64
+  %i.dt = add i64 %22, -8
+  %i.du = sub i64 %i.dt, %23                      ; 3 uses
   %i.dv = lshr i64 %i.du, 3
   %i.dw = add nuw nsw i64 %i.dv, 1                ; 5 uses
   %min.iters.check476 = icmp ult i64 %i.du, 24
   br i1 %min.iters.check476, label %.lr.ph.i.i.i.i100.preheader, label %vector.memcheck474
 
 vector.memcheck474:                               ; preds = %iter.check497
-  %i.dx = add i64 %23, -8
-  %i.dy = sub i64 %i.dx, %22
+  %24 = ptrtoaddr ptr %i.ds to i64
+  %25 = ptrtoaddr ptr %i.dr to i64
+  %i.dx = add i64 %24, -8
+  %i.dy = sub i64 %i.dx, %25
   %i.dz = and i64 %i.dy, -8
   %i.ea = add i64 %i.dz, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.dq, i64 %i.ea

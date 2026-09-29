@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_ZNK4cvc58internal1
           to label %_ZNK4cvc58internal12NodeTemplateILb1EE8getConstINS0_6IntAndEEERKT_v.exit unwind label %bb.bf
 
 _ZNK4cvc58internal12NodeTemplateILb1EE8getConstINS0_6IntAndEEERKT_v.exit: ; preds = %bb.h
-  %i.az = load i32, ptr %i.ay, align 4, !tbaa !55 ; 8 uses
+  %i.az = load i32, ptr %i.ay, align 4, !tbaa !55 ; 7 uses
   %i.ba = load ptr, ptr %11, align 8, !tbaa !20   ; 3 uses
   %i.bb = load i64, ptr %i.ba, align 8            ; 3 uses
   %i.bc = and i64 %i.bb, 1152920405095219200
@@ -607,9 +607,8 @@ bb.bv:                                            ; preds = %.lr.ph, %bb.fg
   %i.hd = phi ptr [ %i.ek, %.lr.ph ], [ %i.pb, %bb.fg ] ; 5 uses
   %.0189 = phi i32 [ 0, %.lr.ph ], [ %i.he, %bb.fg ] ; 5 uses
   %i.he = add i32 %.0189, %i.bo                   ; 3 uses
-  %i.hf = add i32 %i.he, -1                       ; 2 uses
-  %.not = icmp ult i32 %i.hf, %i.az
-  %spec.select = select i1 %.not, i32 %i.hf, i32 %i.el ; 4 uses
+  %i.hf = add i32 %i.he, -1
+  %spec.select = call i32 @llvm.umin.i32(i32 %i.hf, i32 %i.el) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #21
   invoke void @_ZNK4cvc58internal9BitVector7extractEjj(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::BitVector") align 8 %24, ptr noundef nonnull align 8 dereferenceable(24) %18, i32 noundef %spec.select, i32 noundef %.0189)
           to label %bb.bw unwind label %bb.el
@@ -1011,6 +1010,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #19
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

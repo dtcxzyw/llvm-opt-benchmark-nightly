@@ -202,6 +202,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .lr.ph130:                                        ; preds = %._crit_edge.thread
   %i.w = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %7 = tail call i64 @llvm.umax.i64(i64 %1, i64 1) ; 2 uses
   %min.iters.check184 = icmp ult i64 %1, 12
   br i1 %min.iters.check184, label %scalar.ph183.preheader, label %vector.scevcheck170
 
@@ -214,7 +215,7 @@ vector.scevcheck170:                              ; preds = %.lr.ph130
   br i1 %i.ab, label %scalar.ph183.preheader, label %vector.memcheck171
 
 vector.memcheck171:                               ; preds = %vector.scevcheck170
-  %i.ac = shl nuw nsw i64 %1, 3                   ; 2 uses
+  %i.ac = shl nuw nsw i64 %7, 3                   ; 2 uses
   %i.ad = getelementptr i8, ptr %0, i64 %i.ac
   %scevgep172 = getelementptr i8, ptr %i.ad, i64 -4
   %scevgep173 = getelementptr i8, ptr %0, i64 4
@@ -230,7 +231,7 @@ vector.memcheck171:                               ; preds = %vector.scevcheck170
   br i1 %conflict.rdx182, label %scalar.ph183.preheader, label %vector.ph185
 
 vector.ph185:                                     ; preds = %vector.memcheck171
-  %n.vec186 = and i64 %1, 8589934590              ; 3 uses
+  %n.vec186 = and i64 %7, 8589934590              ; 3 uses
   %broadcast.splatinsert187 = insertelement <2 x i32> poison, i32 %3, i64 0
   %broadcast.splatinsert189 = insertelement <2 x i32> poison, i32 %4, i64 0
   %i.ae = shufflevector <2 x i32> %broadcast.splatinsert187, <2 x i32> %broadcast.splatinsert189, <4 x i32> <i32 0, i32 2, i32 0, i32 2>
@@ -632,6 +633,9 @@ declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

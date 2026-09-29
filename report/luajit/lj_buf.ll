@@ -201,11 +201,11 @@ lj_buf_more.exit:                                 ; preds = %bb.a
   br i1 %.not, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %lj_buf_more.exit.thread, %lj_buf_more.exit
-  %i.p = phi ptr [ %i.m, %lj_buf_more.exit.thread ], [ %i.o, %lj_buf_more.exit ] ; 2 uses
+  %i.p = phi ptr [ %i.m, %lj_buf_more.exit.thread ], [ %i.o, %lj_buf_more.exit ] ; 3 uses
   %i.q = phi i64 [ %i.l, %lj_buf_more.exit.thread ], [ %i.n, %lj_buf_more.exit ] ; 3 uses
-  %.0.i19 = phi ptr [ %i.k, %lj_buf_more.exit.thread ], [ %i.e, %lj_buf_more.exit ] ; 9 uses
-  %i.r = ptrtoaddr ptr %i.p to i64                ; 2 uses
-  %.0.i1920 = ptrtoaddr ptr %.0.i19 to i64        ; 5 uses
+  %.0.i19 = phi ptr [ %i.k, %lj_buf_more.exit.thread ], [ %i.e, %lj_buf_more.exit ] ; 10 uses
+  %i.r = ptrtoaddr ptr %i.p to i64
+  %.0.i1920 = ptrtoaddr ptr %.0.i19 to i64        ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %i.q
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 23 ; 6 uses
   %i.u = add nuw i64 %.0.i1920, 1
@@ -215,11 +215,13 @@ iter.check:                                       ; preds = %lj_buf_more.exit.th
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.w = add nuw i64 %.0.i1920, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.r, i64 %i.w) ; 2 uses
-  %i.x = sub i64 %umax, %.0.i1920
+  %2 = ptrtoaddr ptr %i.p to i64
+  %3 = ptrtoaddr ptr %.0.i19 to i64               ; 3 uses
+  %i.w = add nuw i64 %3, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.w) ; 2 uses
+  %i.x = sub i64 %umax, %3
   %scevgep = getelementptr i8, ptr %.0.i19, i64 %i.x
-  %i.y = add i64 %i.q, %.0.i1920
+  %i.y = add i64 %i.q, %3
   %i.z = add i64 %i.y, 24
   %i.aa = sub i64 %i.z, %umax
   %scevgep21 = getelementptr i8, ptr %1, i64 %i.aa

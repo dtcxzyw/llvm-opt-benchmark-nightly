@@ -205,8 +205,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
   %i.c = inttoptr i64 %i.b to ptr
-  %i.d = tail call ptr @pg_detoast_datum_packed(ptr noundef %i.c) #18 ; 6 uses
-  %i.e = ptrtoaddr ptr %i.d to i64                ; 4 uses
+  %i.d = tail call ptr @pg_detoast_datum_packed(ptr noundef %i.c) #18 ; 7 uses
+  %i.e = ptrtoaddr ptr %i.d to i64                ; 2 uses
   %i.f = load i8, ptr %i.d, align 1               ; 3 uses
   %i.g = and i8 %i.f, 1
   %.not.i = icmp eq i8 %i.g, 0
@@ -276,14 +276,15 @@ iter.check:                                       ; preds = %.preheader30
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %1 = add i64 %.v.i, %i.e                        ; 2 uses
-  %i.an = add i64 %1, %i.x                        ; 2 uses
-  %i.ao = add i64 %i.an, 4
-  %i.ap = add i64 %1, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.an, i64 %i.ap) ; 2 uses
-  %i.aq = sub i64 %i.ao, %umax
+  %1 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.an = add i64 %.v.i, %1                       ; 2 uses
+  %i.ao = add i64 %i.an, %i.x                     ; 2 uses
+  %i.ap = add i64 %i.an, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.ao, i64 %i.ap) ; 2 uses
+  %2 = add i64 %i.ao, 4
+  %i.aq = sub i64 %2, %umax
   %scevgep = getelementptr i8, ptr %i.aa, i64 %i.aq
-  %i.ar = sub i64 %umax, %i.e
+  %i.ar = sub i64 %umax, %1
   %scevgep40 = getelementptr i8, ptr %i.d, i64 %i.ar
   %bound0 = icmp ult ptr %scevgep, %scevgep40
   %bound1 = icmp ult ptr %i.h, %i.ac
