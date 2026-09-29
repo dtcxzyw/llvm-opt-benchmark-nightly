@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.preheader:                                 ; preds = %bb.b, %bb.c
   %i.l = phi <2 x i32> [ %i.k, %bb.c ], [ %i.b, %bb.b ] ; 2 uses
-  %5 = sext i32 %1 to i64                         ; 2 uses
-  %smax = add nsw i32 %0, -1
-  %wide.trip.count = zext nneg i32 %smax to i64
-  %invariant.gep = getelementptr [4 x i8], ptr %2, i64 %5
+  %5 = add nsw i32 %0, -1
+  %6 = sext i32 %1 to i64                         ; 2 uses
+  %wide.trip.count = zext nneg i32 %5 to i64
+  %invariant.gep = getelementptr [4 x i8], ptr %2, i64 %6
   %i.m = extractelement <2 x i32> %i.l, i64 0
   %i.n = extractelement <2 x i32> %i.l, i64 1
   br label %.lr.ph
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %bb.b
   %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ] ; 4 uses
   %.136 = phi i32 [ %i.n, %.lr.ph.preheader ], [ %.2, %bb.e ] ; 5 uses
   %.13335 = phi i32 [ %i.m, %.lr.ph.preheader ], [ %.136, %bb.e ] ; 4 uses
-  %i.o = sub nsw i64 %indvars.iv, %5
+  %i.o = sub nsw i64 %indvars.iv, %6
   %i.p = getelementptr inbounds [4 x i8], ptr %2, i64 %i.o
   %i.q = load i32, ptr %i.p, align 4, !tbaa !9    ; 4 uses
   %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv
