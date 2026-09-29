@@ -136,7 +136,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = zext i16 %i.n to i32                     ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.q = load i16, ptr %i.p, align 1, !tbaa !33   ; 3 uses
-  %i.r = zext i16 %i.q to i32                     ; 6 uses
+  %i.r = zext i16 %i.q to i32                     ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.l, i64 10
   %i.t = load i16, ptr %i.s, align 1, !tbaa !33
   %i.u = zext i16 %i.t to i32
@@ -144,9 +144,9 @@ bb.c:                                             ; preds = %bb.b
   %i.w = add nsw i32 %i.v, 1                      ; 12 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 12
   %i.y = load i16, ptr %i.x, align 1, !tbaa !33   ; 2 uses
-  %i.z = zext i16 %i.y to i32                     ; 3 uses
-  %i.aa = sub nsw i32 %i.z, %i.r                  ; 7 uses
-  %i.ab = add nsw i32 %i.aa, 1                    ; 4 uses
+  %i.z = zext i16 %i.y to i32
+  %i.aa = sub nsw i32 %i.z, %i.r                  ; 9 uses
+  %i.ab = add nsw i32 %i.aa, 1                    ; 6 uses
   %i.ac = load ptr, ptr %i.f, align 8, !tbaa !32  ; 5 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 112
   %i.ae = load i32, ptr %i.ad, align 8, !tbaa !62 ; 4 uses
@@ -486,14 +486,11 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 .lr.ph.i:                                         ; preds = %.preheader340.i
   %i.gn = ptrtoint ptr %.sroa.51.1.i to i64       ; 3 uses
   %i.go = zext nneg i32 %i.w to i64               ; 3 uses
-  %4 = add nuw nsw i32 %i.z, 1
-  %5 = sub nsw i32 %4, %i.r                       ; 3 uses
-  %xtraiter = and i32 %5, 1
   %i.gp = icmp eq i16 %i.y, %i.q
   br i1 %i.gp, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i32 %5, -2
+  %unroll_iter = and i32 %i.ab, 2147483646
   br label %bb.al
 
 .preheader338.i:                                  ; preds = %bb.ac
@@ -502,14 +499,12 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 
 .preheader.lr.ph.i:                               ; preds = %.preheader338.i
   %i.gq = ptrtoint ptr %.sroa.51.1.i to i64       ; 4 uses
-  %6 = add nuw nsw i32 %i.z, 1
-  %7 = sub nsw i32 %6, %i.r
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.ak, %.preheader.lr.ph.i
   %.1202374.i = phi ptr [ %.0201.i, %.preheader.lr.ph.i ], [ %i.il, %bb.ak ]
   %.0204373.i = phi ptr [ %i.gb, %.preheader.lr.ph.i ], [ %i.ik, %bb.ak ] ; 4 uses
-  %.1210372.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %i.im, %bb.ak ]
+  %.1210372.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %i.im, %bb.ak ] ; 2 uses
   %.sroa.0.4371.i = phi ptr [ %.sroa.0.3.i, %.preheader.lr.ph.i ], [ %.us-phi.i, %bb.ak ] ; 2 uses
   %.1202374.fr.i = freeze ptr %.1202374.i         ; 3 uses
   %.not375.i = icmp eq ptr %.1202374.fr.i, null
@@ -625,8 +620,8 @@ bb.ak:                                            ; preds = %.split.us.i
   %i.ij = sext i32 %i.ii to i64
   %i.ik = getelementptr inbounds i8, ptr %.0204373.i, i64 %i.ij
   %i.il = getelementptr inbounds i8, ptr %.1202374.fr.i, i64 %.0198.i
-  %i.im = add nuw nsw i32 %.1210372.i, 1          ; 2 uses
-  %exitcond402.not.i = icmp eq i32 %i.im, %7
+  %i.im = add nuw nsw i32 %.1210372.i, 1
+  %exitcond402.not.i = icmp eq i32 %.1210372.i, %i.aa
   br i1 %exitcond402.not.i, label %vmd_decode.exit, label %.preheader.i, !llvm.loop !49
 
 bb.al:                                            ; preds = %bb.al, %.lr.ph.i.new
@@ -976,13 +971,14 @@ bb.bh:                                            ; preds = %bb.bf
   br i1 %exitcond400.not.i, label %vmd_decode.exit, label %.preheader342.i, !llvm.loop !56
 
 vmd_decode.exit.loopexit167.unr-lcssa:            ; preds = %bb.al
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %vmd_decode.exit, label %.epil.preheader
+  %4 = and i32 %i.aa, 1
+  %lcmp.mod.not = icmp eq i32 %4, 0
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %vmd_decode.exit
 
 .epil.preheader:                                  ; preds = %vmd_decode.exit.loopexit167.unr-lcssa, %.lr.ph.i
   %.1205368.i.epil.init = phi ptr [ %i.gb, %.lr.ph.i ], [ %i.jc, %vmd_decode.exit.loopexit167.unr-lcssa ]
   %.sroa.0.7366.i.epil.init = phi ptr [ %.sroa.0.3.i, %.lr.ph.i ], [ %i.iz, %vmd_decode.exit.loopexit167.unr-lcssa ] ; 2 uses
-  %lcmp.mod179 = trunc i32 %5 to i1
+  %lcmp.mod179 = trunc i32 %i.ab to i1
   tail call void @llvm.assume(i1 %lcmp.mod179)
   %i.nn = ptrtoint ptr %.sroa.0.7366.i.epil.init to i64
   %i.no = sub i64 %i.gn, %i.nn

@@ -204,9 +204,8 @@ middle.block200:                                  ; preds = %vector.body195
   br label %.lr.ph158.preheader
 
 .lr.ph158.preheader:                              ; preds = %.ph211.lver.orig.epil.preheader, %.lr.ph158.preheader.loopexit217.unr-lcssa, %.epil.preheader, %.lr.ph158.preheader.loopexit.unr-lcssa
-  %6 = zext nneg i32 %3 to i64
   %wide.trip.count177 = zext nneg i32 %3 to i64
-  %wide.trip.count171 = zext nneg i32 %3 to i64   ; 2 uses
+  %wide.trip.count171 = zext nneg i32 %3 to i64   ; 3 uses
   %i.ee = shl nuw nsw i64 %wide.trip.count, 2
   %i.ef = add nuw nsw i64 %i.ee, 4                ; 2 uses
   %scevgep204.a = getelementptr i8, ptr %i.ax, i64 %i.ef
@@ -245,7 +244,7 @@ bb.g:                                             ; preds = %bb.g, %.ph211.new
 
 .loopexit:                                        ; preds = %bb.h, %.ph.lver.orig, %.lr.ph158
   %indvars.iv.next167 = add nuw nsw i64 %indvars.iv166, 1
-  %exitcond178.not = icmp eq i64 %indvars.iv.next174, %wide.trip.count177
+  %exitcond178.not = icmp eq i64 %indvars.iv.next174, %wide.trip.count171
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond178.not, label %.loopexit143, label %.lr.ph158, !llvm.loop !145
 
@@ -256,7 +255,7 @@ bb.g:                                             ; preds = %bb.g, %.ph211.new
   %.0135157.pn = phi ptr [ %0, %.lr.ph158.preheader ], [ %.0135157, %.loopexit ]
   %.0139155 = phi float [ %i.cm, %.lr.ph158.preheader ], [ %i.fi, %.loopexit ] ; 2 uses
   %.0140154 = phi float [ %i.ch, %.lr.ph158.preheader ], [ %i.fc, %.loopexit ] ; 2 uses
-  %i.et = shl i64 %indvar, 2
+  %i.et = shl nuw nsw i64 %indvar, 2
   %i.eu = getelementptr i8, ptr %i.ax, i64 %i.et
   %scevgep208 = getelementptr i8, ptr %i.eu, i64 8
   %.pn = getelementptr [4 x i8], ptr %.0135157.pn, i64 %i.ay
@@ -279,13 +278,13 @@ bb.g:                                             ; preds = %bb.g, %.ph211.new
   %i.fk = fmul float %.0139155, %i.fj
   store float %i.fk, ptr %i.ez, align 4, !tbaa !17
   %indvars.iv.next174 = add nuw nsw i64 %indvars.iv173, 1 ; 3 uses
-  %i.fl = icmp samesign ult i64 %indvars.iv.next174, %6
+  %i.fl = icmp samesign ult i64 %indvars.iv.next174, %wide.trip.count177
   br i1 %i.fl, label %.lver.check, label %.loopexit
 
 .lver.check:                                      ; preds = %.lr.ph158
-  %i.fm = shl i64 %indvar, 2                      ; 2 uses
+  %i.fm = shl nuw nsw i64 %indvar, 2              ; 2 uses
   %scevgep206 = getelementptr i8, ptr %i.eg, i64 %i.fm
-  %i.fn = shl i64 %indvar, 3
+  %i.fn = shl nuw nsw i64 %indvar, 3
   %i.fo = getelementptr i8, ptr %0, i64 %i.fn
   %scevgep205 = getelementptr i8, ptr %i.fo, i64 12
   %i.fp = getelementptr i8, ptr %i.ax, i64 %i.fm

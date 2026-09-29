@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph120
   br i1 %i.g, label %bb.b, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.b, %.preheader88
-  %i.h = zext nneg i32 %0 to i64                  ; 2 uses
+  %i.h = zext nneg i32 %0 to i64                  ; 3 uses
   %i.i = tail call noalias ptr @calloc(i64 noundef %i.h, i64 noundef 4) #13 ; 10 uses
   %i.j = add nuw nsw i32 %0, 1
   %i.k = zext nneg i32 %i.j to i64
@@ -297,6 +297,9 @@ middle.block:                                     ; preds = %vector.body
   store float %.pre116, ptr %i.aw, align 4, !tbaa !12
   %.not = icmp eq i32 %0, 2
   br i1 %.not, label %.lr.ph95.preheader, label %iter.check
+
+.lr.ph95.preheader:                               ; preds = %.lr.ph93, %middle.block148, %vec.epilog.middle.block, %._crit_edge
+  br label %.lr.ph95
 
 iter.check:                                       ; preds = %._crit_edge
   %smax = tail call i32 @llvm.smax.i32(i32 %i.b, i32 2)
@@ -408,10 +411,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond102.not = icmp eq i64 %indvars.iv.next99, %wide.trip.count
   br i1 %exitcond102.not, label %._crit_edge, label %.lr.ph, !llvm.loop !26
 
-.lr.ph95.preheader:                               ; preds = %.lr.ph93, %middle.block148, %vec.epilog.middle.block, %._crit_edge
-  %wide.trip.count112 = zext nneg i32 %0 to i64
-  br label %.lr.ph95
-
 .lr.ph93:                                         ; preds = %.lr.ph93.preheader, %.lr.ph93
   %indvars.iv103 = phi i64 [ %indvars.iv.next104, %.lr.ph93 ], [ %indvars.iv103.ph, %.lr.ph93.preheader ] ; 3 uses
   %i.co = getelementptr [4 x i8], ptr %i.i, i64 %indvars.iv103 ; 2 uses
@@ -431,7 +430,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.loopexit
 
 .lr.ph95:                                         ; preds = %.lr.ph95.preheader, %bb.f
-  %indvars.iv108 = phi i64 [ 0, %.lr.ph95.preheader ], [ %indvars.iv.next109, %bb.f ] ; 3 uses
+  %indvars.iv108 = phi i64 [ %indvars.iv.next109, %bb.f ], [ 0, %.lr.ph95.preheader ] ; 3 uses
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv108
   %i.cw = load float, ptr %i.cv, align 4, !tbaa !12 ; 3 uses
   %i.cx = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.cw)
@@ -470,7 +469,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   %indvars.iv.next109 = add nuw nsw i64 %indvars.iv108, 1 ; 2 uses
-  %exitcond113.not = icmp eq i64 %indvars.iv.next109, %wide.trip.count112
+  %exitcond113.not = icmp eq i64 %indvars.iv.next109, %i.h
   br i1 %exitcond113.not, label %._crit_edge96, label %.lr.ph95
 
 .loopexit:                                        ; preds = %.lr.ph120, %bb.a, %._crit_edge96

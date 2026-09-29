@@ -206,13 +206,13 @@ bb.a:
   %or.cond = and i1 %i.b, %i.c
   %i.d = icmp ne ptr %7, null
   %spec.select = and i1 %or.cond, %i.d            ; 3 uses
-  %10 = add i32 %0, -2                            ; 2 uses
   %i.e = icmp sgt i32 %0, 2
   br i1 %i.e, label %.lr.ph, label %.critedge171
 
 .lr.ph:                                           ; preds = %bb.a
+  %10 = add nsw i32 %0, -2
   %i.f = load float, ptr %1, align 4, !tbaa !69
-  %wide.trip.count = zext nneg i32 %10 to i64
+  %wide.trip.count = zext nneg i32 %10 to i64     ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
@@ -615,8 +615,6 @@ bb.n:                                             ; preds = %bb.m
 .lr.ph228.preheader:                              ; preds = %bb.n, %bb.m
   %.0.i183 = phi double [ %i.nc, %bb.n ], [ -6.660000e+02, %bb.m ]
   %i.nd = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.22, double noundef %i.mq, ptr noundef nonnull %.pre-phi, double noundef %i.mr, double noundef %.0.i183) ; 0 uses
-  %smax = call i32 @llvm.smax.i32(i32 %10, i32 1)
-  %wide.trip.count267 = zext nneg i32 %smax to i64
   br label %.lr.ph228
 
 .lr.ph228:                                        ; preds = %.lr.ph228.preheader, %bb.p
@@ -634,7 +632,7 @@ bb.o:                                             ; preds = %.lr.ph228
 
 bb.p:                                             ; preds = %.lr.ph228, %bb.o
   %indvars.iv.next265 = add nuw nsw i64 %indvars.iv264, 1 ; 2 uses
-  %exitcond268.not = icmp eq i64 %indvars.iv.next265, %wide.trip.count267
+  %exitcond268.not = icmp eq i64 %indvars.iv.next265, %wide.trip.count
   br i1 %exitcond268.not, label %.critedge173, label %.lr.ph228, !llvm.loop !202
 
 bb.q:                                             ; preds = %bb.o
@@ -1037,13 +1035,13 @@ declare ptr @strcpy(ptr noalias returned writeonly, ptr noalias readonly capture
 declare void @llvm.experimental.noalias.scope.decl(metadata) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #14

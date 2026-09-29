@@ -204,12 +204,12 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 368
   %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 3080 ; 2 uses
-  %i.g = load i32, ptr %i.f, align 4              ; 7 uses
+  %i.g = load i32, ptr %i.f, align 4              ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 3084
-  %i.i = load i32, ptr %i.h, align 4              ; 6 uses
+  %i.i = load i32, ptr %i.h, align 4              ; 5 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !14
   fence seq_cst
-  %i.j = sub i32 %i.i, %i.g                       ; 3 uses
+  %i.j = sub i32 %i.i, %i.g                       ; 4 uses
   %i.k = icmp ne i32 %i.i, %i.g
   %i.l = icmp ult i32 %i.j, 2049
   %or.cond.not.i = and i1 %i.k, %i.l              ; 3 uses
@@ -237,9 +237,8 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i:                                         ; preds = %bb.d, %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 1024 ; 3 uses
-  %1 = sub i32 %i.i, %i.g
   %.neg = add i32 %i.g, 1
-  %xtraiter = and i32 %1, 1
+  %xtraiter = and i32 %i.j, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
