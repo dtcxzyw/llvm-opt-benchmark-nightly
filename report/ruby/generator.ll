@@ -205,10 +205,9 @@ bb.l:                                             ; preds = %bb.k
 
 .peel.begin:                                      ; preds = %bb.l, %bb.k
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %trunc = trunc nuw i32 %.0.i to i8
-  switch i8 %trunc, label %bb.m [
-    i8 5, label %.loopexit
-    i8 20, label %.loopexit88
+  switch i32 %.0.i, label %bb.m [
+    i32 5, label %.loopexit
+    i32 20, label %.loopexit88
   ]
 
 bb.m:                                             ; preds = %.peel.begin
