@@ -205,7 +205,7 @@ iter.check:                                       ; preds = %bb.g
   br i1 %min.iters.check, label %_ZN8facebook5velox6StatusD2Ev.exit36.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.dp = shl nsw i64 %i.dg, 3
+  %i.dp = shl nuw nsw i64 %i.dg, 3
   %scevgep = getelementptr nuw i8, ptr %i.dm, i64 %i.dp ; 2 uses
   %i.dq = or disjoint i64 %i.dg, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.dq, i64 %i.df)
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not77.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CombineHashFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJllEEEJllEEEE7iterateIJNS3_20ConstantVectorReaderIlEENS3_16FlatVectorReaderIlEEEEEvRNSG_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.g
-  %i.dp = sext i32 %i.dm to i64                   ; 12 uses
+  %i.dp = sext i32 %i.dm to i64                   ; 13 uses
   %i.dq = load ptr, ptr %i.cu, align 8, !tbaa !688, !nonnull !79, !align !163 ; 4 uses
   %i.dr = load ptr, ptr %i.cv, align 8, !tbaa !689, !nonnull !79, !align !163
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !351, !noalias !1825 ; 5 uses
@@ -638,7 +638,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   br i1 %i.ej, label %_ZN8facebook5velox6StatusD2Ev.exit33.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.ek = shl nsw i64 %i.dp, 3                    ; 2 uses
+  %i.ek = shl nuw nsw i64 %i.dp, 3
   %scevgep = getelementptr nuw i8, ptr %i.dw, i64 %i.ek ; 2 uses
   %i.el = or disjoint i64 %i.dp, 1
   %umax72 = tail call i64 @llvm.umax.i64(i64 %i.el, i64 %i.do)
@@ -650,7 +650,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.ep = sext i35 %i.eo to i64                   ; 2 uses
   %scevgep75 = getelementptr i8, ptr %i.ds, i64 %i.ep
   %i.eq = add i64 %i.em, %i.ep
-  %i.er = sub i64 %i.eq, %i.ek
+  %4 = shl nsw i64 %i.dp, 3
+  %i.er = sub i64 %i.eq, %4
   %scevgep76 = getelementptr i8, ptr %i.ds, i64 %i.er
   %bound0 = icmp ult ptr %scevgep, %scevgep74
   %bound1 = icmp ult ptr %i.dq, %scevgep73
@@ -1053,7 +1054,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not76.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CombineHashFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJllEEEJllEEEE7iterateIJNS3_16FlatVectorReaderIlEENS3_20ConstantVectorReaderIlEEEEEvRNSG_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.g
-  %i.dp = sext i32 %i.dm to i64                   ; 12 uses
+  %i.dp = sext i32 %i.dm to i64                   ; 13 uses
   %i.dq = load ptr, ptr %i.cu, align 8, !tbaa !701, !nonnull !79, !align !163
   %i.dr = load ptr, ptr %i.cv, align 8, !tbaa !702, !nonnull !79, !align !163 ; 4 uses
   %i.ds = load ptr, ptr %i.dq, align 8, !tbaa !351, !noalias !1887 ; 5 uses
@@ -1083,7 +1084,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   br i1 %i.ej, label %_ZN8facebook5velox6StatusD2Ev.exit32.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.ek = shl nsw i64 %i.dp, 3                    ; 2 uses
+  %i.ek = shl nuw nsw i64 %i.dp, 3
   %scevgep = getelementptr nuw i8, ptr %i.dw, i64 %i.ek ; 2 uses
   %i.el = or disjoint i64 %i.dp, 1
   %umax72 = tail call i64 @llvm.umax.i64(i64 %i.el, i64 %i.do)
@@ -1095,7 +1096,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.ep = sext i35 %i.eo to i64                   ; 2 uses
   %scevgep75 = getelementptr i8, ptr %i.ds, i64 %i.ep
   %i.eq = add i64 %i.em, %i.ep
-  %i.er = sub i64 %i.eq, %i.ek
+  %4 = shl nsw i64 %i.dp, 3
+  %i.er = sub i64 %i.eq, %4
   %scevgep76 = getelementptr i8, ptr %i.ds, i64 %i.er
   %bound0 = icmp ult ptr %scevgep, %scevgep74
   %bound1 = icmp ult ptr %i.dr, %scevgep73

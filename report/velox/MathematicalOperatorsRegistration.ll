@@ -205,7 +205,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not93.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112PlusFunctionINS3_10VectorExecEEESC_dNS0_15ConstantCheckerIJddEEEJddEEEE7iterateIJNS3_12VectorReaderIdEESK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph92.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph92.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avk = sext i32 %i.avh to i64                 ; 24 uses
+  %i.avk = sext i32 %i.avh to i64                 ; 25 uses
   %i.avl = load ptr, ptr %i.auq, align 8, !tbaa !354 ; 10 uses
   %i.avm = ptrtoaddr ptr %i.avl to i64
   %i.avn = load i8, ptr %i.aur, align 2, !tbaa !355, !range !125, !noundef !126
@@ -340,7 +340,7 @@ vector.scevcheck338:                              ; preds = %iter.check
   br i1 %i.ayf, label %.noexc26.i.us.us62.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck343
 
 vector.memcheck343:                               ; preds = %vector.scevcheck338
-  %i.ayg = shl nsw i64 %i.avk, 3                  ; 2 uses
+  %i.ayg = shl nuw nsw i64 %i.avk, 3
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayg ; 2 uses
   %i.ayh = or disjoint i64 %i.avk, 1
   %umax344 = call i64 @llvm.umax.i64(i64 %i.ayh, i64 %i.avj)
@@ -354,7 +354,8 @@ vector.memcheck343:                               ; preds = %vector.scevcheck338
   %i.aym = sext i35 %i.ayl to i64                 ; 2 uses
   %scevgep348 = getelementptr i8, ptr %i.avl, i64 %i.aym
   %i.ayn = add i64 %i.ayi, %i.aym
-  %i.ayo = sub i64 %i.ayn, %i.ayg
+  %9 = shl nsw i64 %i.avk, 3
+  %i.ayo = sub i64 %i.ayn, %9
   %scevgep349 = getelementptr i8, ptr %i.avl, i64 %i.ayo
   %bound0 = icmp ult ptr %scevgep, %scevgep347
   %bound1 = icmp ult ptr %i.axs, %scevgep345
@@ -757,7 +758,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not89.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112PlusFunctionINS3_10VectorExecEEESC_fNS0_15ConstantCheckerIJffEEEJffEEEE7iterateIJNS3_12VectorReaderIfEESK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avr = sext i32 %i.avo to i64                 ; 25 uses
+  %i.avr = sext i32 %i.avo to i64                 ; 26 uses
   %i.avs = load ptr, ptr %i.aux, align 8, !tbaa !354, !noalias !1348 ; 11 uses
   %i.avt = ptrtoaddr ptr %i.avs to i64
   %i.avu = load i8, ptr %i.auy, align 2, !tbaa !355, !range !125, !noalias !1348, !noundef !126
@@ -913,7 +914,7 @@ vector.scevcheck344:                              ; preds = %iter.check376
   br i1 %i.ayt, label %_ZNK8facebook5velox4exec12VectorReaderIfEixEm.exit.i47.us.us63.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck349
 
 vector.memcheck349:                               ; preds = %vector.scevcheck344
-  %i.ayu = shl nsw i64 %i.avr, 2                  ; 2 uses
+  %i.ayu = shl nuw nsw i64 %i.avr, 2
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayu ; 2 uses
   %i.ayv = or disjoint i64 %i.avr, 1
   %umax350 = call i64 @llvm.umax.i64(i64 %i.ayv, i64 %i.avq)
@@ -927,7 +928,8 @@ vector.memcheck349:                               ; preds = %vector.scevcheck344
   %i.aza = sext i34 %i.ayz to i64                 ; 2 uses
   %scevgep354 = getelementptr i8, ptr %i.avs, i64 %i.aza
   %i.azb = add i64 %i.ayw, %i.aza
-  %i.azc = sub i64 %i.azb, %i.ayu
+  %9 = shl nsw i64 %i.avr, 2
+  %i.azc = sub i64 %i.azb, %9
   %scevgep355 = getelementptr i8, ptr %i.avs, i64 %i.azc
   %bound0 = icmp ult ptr %scevgep, %scevgep353
   %bound1 = icmp ult ptr %i.ayg, %scevgep351
@@ -1330,7 +1332,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not90.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_112PlusFunctionINS3_10VectorExecEEESC_NS0_15IntervalDayTimeENS0_15ConstantCheckerIJSE_SE_EEEJSE_SE_EEEE7iterateIJNS3_12VectorReaderISE_EESL_EEEvRNSI_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph89.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph89.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avo = sext i32 %i.avl to i64                 ; 24 uses
+  %i.avo = sext i32 %i.avl to i64                 ; 25 uses
   %i.avp = load ptr, ptr %i.auu, align 8, !tbaa !354, !noalias !1609 ; 10 uses
   %i.avq = ptrtoaddr ptr %i.avp to i64
   %i.avr = load i8, ptr %i.auv, align 2, !tbaa !355, !range !125, !noalias !1609, !noundef !126
@@ -1465,7 +1467,7 @@ vector.scevcheck335:                              ; preds = %iter.check
   br i1 %i.ayj, label %_ZNK8facebook5velox4exec12VectorReaderINS0_15IntervalDayTimeEEixEm.exit.i47.us.us63.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck340
 
 vector.memcheck340:                               ; preds = %vector.scevcheck335
-  %i.ayk = shl nsw i64 %i.avo, 3                  ; 2 uses
+  %i.ayk = shl nuw nsw i64 %i.avo, 3
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayk ; 2 uses
   %i.ayl = or disjoint i64 %i.avo, 1
   %umax341 = call i64 @llvm.umax.i64(i64 %i.ayl, i64 %i.avn)
@@ -1479,7 +1481,8 @@ vector.memcheck340:                               ; preds = %vector.scevcheck335
   %i.ayq = sext i35 %i.ayp to i64                 ; 2 uses
   %scevgep345 = getelementptr i8, ptr %i.avp, i64 %i.ayq
   %i.ayr = add i64 %i.aym, %i.ayq
-  %i.ays = sub i64 %i.ayr, %i.ayk
+  %9 = shl nsw i64 %i.avo, 3
+  %i.ays = sub i64 %i.ayr, %9
   %scevgep346 = getelementptr i8, ptr %i.avp, i64 %i.ays
   %bound0 = icmp ult ptr %scevgep, %scevgep344
   %bound1 = icmp ult ptr %i.axw, %scevgep342
@@ -1882,7 +1885,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not93.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113MinusFunctionINS3_10VectorExecEEESC_dNS0_15ConstantCheckerIJddEEEJddEEEE7iterateIJNS3_12VectorReaderIdEESK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph92.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph92.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avo = sext i32 %i.avl to i64                 ; 24 uses
+  %i.avo = sext i32 %i.avl to i64                 ; 25 uses
   %i.avp = load ptr, ptr %i.auu, align 8, !tbaa !354 ; 10 uses
   %i.avq = ptrtoaddr ptr %i.avp to i64
   %i.avr = load i8, ptr %i.auv, align 2, !tbaa !355, !range !125, !noundef !126
@@ -2017,7 +2020,7 @@ vector.scevcheck338:                              ; preds = %iter.check
   br i1 %i.ayj, label %.noexc26.i.us.us62.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck343
 
 vector.memcheck343:                               ; preds = %vector.scevcheck338
-  %i.ayk = shl nsw i64 %i.avo, 3                  ; 2 uses
+  %i.ayk = shl nuw nsw i64 %i.avo, 3
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayk ; 2 uses
   %i.ayl = or disjoint i64 %i.avo, 1
   %umax344 = call i64 @llvm.umax.i64(i64 %i.ayl, i64 %i.avn)
@@ -2031,7 +2034,8 @@ vector.memcheck343:                               ; preds = %vector.scevcheck338
   %i.ayq = sext i35 %i.ayp to i64                 ; 2 uses
   %scevgep348 = getelementptr i8, ptr %i.avp, i64 %i.ayq
   %i.ayr = add i64 %i.aym, %i.ayq
-  %i.ays = sub i64 %i.ayr, %i.ayk
+  %9 = shl nsw i64 %i.avo, 3
+  %i.ays = sub i64 %i.ayr, %9
   %scevgep349 = getelementptr i8, ptr %i.avp, i64 %i.ays
   %bound0 = icmp ult ptr %scevgep, %scevgep347
   %bound1 = icmp ult ptr %i.axw, %scevgep345
@@ -2434,7 +2438,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not89.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113MinusFunctionINS3_10VectorExecEEESC_fNS0_15ConstantCheckerIJffEEEJffEEEE7iterateIJNS3_12VectorReaderIfEESK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avv = sext i32 %i.avs to i64                 ; 25 uses
+  %i.avv = sext i32 %i.avs to i64                 ; 26 uses
   %i.avw = load ptr, ptr %i.avb, align 8, !tbaa !354, !noalias !2327 ; 11 uses
   %i.avx = ptrtoaddr ptr %i.avw to i64
   %i.avy = load i8, ptr %i.avc, align 2, !tbaa !355, !range !125, !noalias !2327, !noundef !126
@@ -2590,7 +2594,7 @@ vector.scevcheck344:                              ; preds = %iter.check376
   br i1 %i.ayx, label %_ZNK8facebook5velox4exec12VectorReaderIfEixEm.exit.i47.us.us63.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck349
 
 vector.memcheck349:                               ; preds = %vector.scevcheck344
-  %i.ayy = shl nsw i64 %i.avv, 2                  ; 2 uses
+  %i.ayy = shl nuw nsw i64 %i.avv, 2
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayy ; 2 uses
   %i.ayz = or disjoint i64 %i.avv, 1
   %umax350 = call i64 @llvm.umax.i64(i64 %i.ayz, i64 %i.avu)
@@ -2604,7 +2608,8 @@ vector.memcheck349:                               ; preds = %vector.scevcheck344
   %i.aze = sext i34 %i.azd to i64                 ; 2 uses
   %scevgep354 = getelementptr i8, ptr %i.avw, i64 %i.aze
   %i.azf = add i64 %i.aza, %i.aze
-  %i.azg = sub i64 %i.azf, %i.ayy
+  %9 = shl nsw i64 %i.avv, 2
+  %i.azg = sub i64 %i.azf, %9
   %scevgep355 = getelementptr i8, ptr %i.avw, i64 %i.azg
   %bound0 = icmp ult ptr %scevgep, %scevgep353
   %bound1 = icmp ult ptr %i.ayk, %scevgep351
@@ -3007,7 +3012,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not90.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_113MinusFunctionINS3_10VectorExecEEESC_NS0_15IntervalDayTimeENS0_15ConstantCheckerIJSE_SE_EEEJSE_SE_EEEE7iterateIJNS3_12VectorReaderISE_EESL_EEEvRNSI_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISS_EEvRKNS0_17SelectivityVectorESR_EUlSR_E_EEvSW_SR_T0_EUlSR_E_EEvPKmiibSR_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph89.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph89.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avo = sext i32 %i.avl to i64                 ; 24 uses
+  %i.avo = sext i32 %i.avl to i64                 ; 25 uses
   %i.avp = load ptr, ptr %i.auu, align 8, !tbaa !354, !noalias !2568 ; 10 uses
   %i.avq = ptrtoaddr ptr %i.avp to i64
   %i.avr = load i8, ptr %i.auv, align 2, !tbaa !355, !range !125, !noalias !2568, !noundef !126
@@ -3142,7 +3147,7 @@ vector.scevcheck335:                              ; preds = %iter.check
   br i1 %i.ayj, label %_ZNK8facebook5velox4exec12VectorReaderINS0_15IntervalDayTimeEEixEm.exit.i47.us.us63.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck340
 
 vector.memcheck340:                               ; preds = %vector.scevcheck335
-  %i.ayk = shl nsw i64 %i.avo, 3                  ; 2 uses
+  %i.ayk = shl nuw nsw i64 %i.avo, 3
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayk ; 2 uses
   %i.ayl = or disjoint i64 %i.avo, 1
   %umax341 = call i64 @llvm.umax.i64(i64 %i.ayl, i64 %i.avn)
@@ -3156,7 +3161,8 @@ vector.memcheck340:                               ; preds = %vector.scevcheck335
   %i.ayq = sext i35 %i.ayp to i64                 ; 2 uses
   %scevgep345 = getelementptr i8, ptr %i.avp, i64 %i.ayq
   %i.ayr = add i64 %i.aym, %i.ayq
-  %i.ays = sub i64 %i.ayr, %i.ayk
+  %9 = shl nsw i64 %i.avo, 3
+  %i.ays = sub i64 %i.ayr, %9
   %scevgep346 = getelementptr i8, ptr %i.avp, i64 %i.ays
   %bound0 = icmp ult ptr %scevgep, %scevgep344
   %bound1 = icmp ult ptr %i.axw, %scevgep342
@@ -3559,7 +3565,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not93.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_116MultiplyFunctionINS3_10VectorExecEEESC_dNS0_15ConstantCheckerIJddEEEJddEEEE7iterateIJNS3_12VectorReaderIdEESK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph92.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph92.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avk = sext i32 %i.avh to i64                 ; 24 uses
+  %i.avk = sext i32 %i.avh to i64                 ; 25 uses
   %i.avl = load ptr, ptr %i.auq, align 8, !tbaa !354 ; 10 uses
   %i.avm = ptrtoaddr ptr %i.avl to i64
   %i.avn = load i8, ptr %i.aur, align 2, !tbaa !355, !range !125, !noundef !126
@@ -3694,7 +3700,7 @@ vector.scevcheck338:                              ; preds = %iter.check
   br i1 %i.ayf, label %.noexc26.i.us.us62.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck343
 
 vector.memcheck343:                               ; preds = %vector.scevcheck338
-  %i.ayg = shl nsw i64 %i.avk, 3                  ; 2 uses
+  %i.ayg = shl nuw nsw i64 %i.avk, 3
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayg ; 2 uses
   %i.ayh = or disjoint i64 %i.avk, 1
   %umax344 = call i64 @llvm.umax.i64(i64 %i.ayh, i64 %i.avj)
@@ -3708,7 +3714,8 @@ vector.memcheck343:                               ; preds = %vector.scevcheck338
   %i.aym = sext i35 %i.ayl to i64                 ; 2 uses
   %scevgep348 = getelementptr i8, ptr %i.avl, i64 %i.aym
   %i.ayn = add i64 %i.ayi, %i.aym
-  %i.ayo = sub i64 %i.ayn, %i.ayg
+  %9 = shl nsw i64 %i.avk, 3
+  %i.ayo = sub i64 %i.ayn, %9
   %scevgep349 = getelementptr i8, ptr %i.avl, i64 %i.ayo
   %bound0 = icmp ult ptr %scevgep, %scevgep347
   %bound1 = icmp ult ptr %i.axs, %scevgep345
@@ -4111,7 +4118,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not89.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_116MultiplyFunctionINS3_10VectorExecEEESC_fNS0_15ConstantCheckerIJffEEEJffEEEE7iterateIJNS3_12VectorReaderIfEESK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avr = sext i32 %i.avo to i64                 ; 25 uses
+  %i.avr = sext i32 %i.avo to i64                 ; 26 uses
   %i.avs = load ptr, ptr %i.aux, align 8, !tbaa !354, !noalias !3248 ; 11 uses
   %i.avt = ptrtoaddr ptr %i.avs to i64
   %i.avu = load i8, ptr %i.auy, align 2, !tbaa !355, !range !125, !noalias !3248, !noundef !126
@@ -4267,7 +4274,7 @@ vector.scevcheck344:                              ; preds = %iter.check376
   br i1 %i.ayt, label %_ZNK8facebook5velox4exec12VectorReaderIfEixEm.exit.i47.us.us63.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck349
 
 vector.memcheck349:                               ; preds = %vector.scevcheck344
-  %i.ayu = shl nsw i64 %i.avr, 2                  ; 2 uses
+  %i.ayu = shl nuw nsw i64 %i.avr, 2
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayu ; 2 uses
   %i.ayv = or disjoint i64 %i.avr, 1
   %umax350 = call i64 @llvm.umax.i64(i64 %i.ayv, i64 %i.avq)
@@ -4281,7 +4288,8 @@ vector.memcheck349:                               ; preds = %vector.scevcheck344
   %i.aza = sext i34 %i.ayz to i64                 ; 2 uses
   %scevgep354 = getelementptr i8, ptr %i.avs, i64 %i.aza
   %i.azb = add i64 %i.ayw, %i.aza
-  %i.azc = sub i64 %i.azb, %i.ayu
+  %9 = shl nsw i64 %i.avr, 2
+  %i.azc = sub i64 %i.azb, %9
   %scevgep355 = getelementptr i8, ptr %i.avs, i64 %i.azc
   %bound0 = icmp ult ptr %scevgep, %scevgep353
   %bound1 = icmp ult ptr %i.ayg, %scevgep351
@@ -4684,7 +4692,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not89.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_116MultiplyFunctionINS3_10VectorExecEEESC_NS0_15IntervalDayTimeENS0_15ConstantCheckerIJSE_lEEEJSE_lEEEE7iterateIJNS3_12VectorReaderISE_EENSK_IlEEEEEvRNSI_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avk = sext i32 %i.avh to i64                 ; 24 uses
+  %i.avk = sext i32 %i.avh to i64                 ; 25 uses
   %i.avl = load ptr, ptr %i.auq, align 8, !tbaa !354, !noalias !3489 ; 10 uses
   %i.avm = ptrtoaddr ptr %i.avl to i64
   %i.avn = load i8, ptr %i.aur, align 2, !tbaa !355, !range !125, !noalias !3489, !noundef !126
@@ -4819,7 +4827,7 @@ vector.scevcheck335:                              ; preds = %iter.check
   br i1 %i.ayf, label %_ZNK8facebook5velox4exec12VectorReaderINS0_15IntervalDayTimeEEixEm.exit.i47.us.us63.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck340
 
 vector.memcheck340:                               ; preds = %vector.scevcheck335
-  %i.ayg = shl nsw i64 %i.avk, 3                  ; 2 uses
+  %i.ayg = shl nuw nsw i64 %i.avk, 3
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayg ; 2 uses
   %i.ayh = or disjoint i64 %i.avk, 1
   %umax341 = call i64 @llvm.umax.i64(i64 %i.ayh, i64 %i.avj)
@@ -4833,7 +4841,8 @@ vector.memcheck340:                               ; preds = %vector.scevcheck335
   %i.aym = sext i35 %i.ayl to i64                 ; 2 uses
   %scevgep345 = getelementptr i8, ptr %i.avl, i64 %i.aym
   %i.ayn = add i64 %i.ayi, %i.aym
-  %i.ayo = sub i64 %i.ayn, %i.ayg
+  %9 = shl nsw i64 %i.avk, 3
+  %i.ayo = sub i64 %i.ayn, %9
   %scevgep346 = getelementptr i8, ptr %i.avl, i64 %i.ayo
   %bound0 = icmp ult ptr %scevgep, %scevgep344
   %bound1 = icmp ult ptr %i.axs, %scevgep342
@@ -5236,7 +5245,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not89.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_116MultiplyFunctionINS3_10VectorExecEEESC_NS0_15IntervalDayTimeENS0_15ConstantCheckerIJlSE_EEEJlSE_EEEE7iterateIJNS3_12VectorReaderIlEENSK_ISE_EEEEEvRNSI_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowIST_EEvRKNS0_17SelectivityVectorESS_EUlSS_E_EEvSX_SS_T0_EUlSS_E_EEvPKmiibSS_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.avk = sext i32 %i.avh to i64                 ; 24 uses
+  %i.avk = sext i32 %i.avh to i64                 ; 25 uses
   %i.avl = load ptr, ptr %i.auq, align 8, !tbaa !354, !noalias !3730 ; 10 uses
   %i.avm = ptrtoaddr ptr %i.avl to i64
   %i.avn = load i8, ptr %i.aur, align 2, !tbaa !355, !range !125, !noalias !3730, !noundef !126
@@ -5371,7 +5380,7 @@ vector.scevcheck335:                              ; preds = %iter.check
   br i1 %i.ayf, label %_ZNK8facebook5velox4exec12VectorReaderIlEixEm.exit.i47.us.us63.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck340
 
 vector.memcheck340:                               ; preds = %vector.scevcheck335
-  %i.ayg = shl nsw i64 %i.avk, 3                  ; 2 uses
+  %i.ayg = shl nuw nsw i64 %i.avk, 3
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.ayg ; 2 uses
   %i.ayh = or disjoint i64 %i.avk, 1
   %umax341 = call i64 @llvm.umax.i64(i64 %i.ayh, i64 %i.avj)
@@ -5385,7 +5394,8 @@ vector.memcheck340:                               ; preds = %vector.scevcheck335
   %i.aym = sext i35 %i.ayl to i64                 ; 2 uses
   %scevgep345 = getelementptr i8, ptr %i.avl, i64 %i.aym
   %i.ayn = add i64 %i.ayi, %i.aym
-  %i.ayo = sub i64 %i.ayn, %i.ayg
+  %9 = shl nsw i64 %i.avk, 3
+  %i.ayo = sub i64 %i.ayn, %9
   %scevgep346 = getelementptr i8, ptr %i.avl, i64 %i.ayo
   %bound0 = icmp ult ptr %scevgep, %scevgep344
   %bound1 = icmp ult ptr %i.axs, %scevgep342
@@ -5788,7 +5798,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not93.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_114DivideFunctionINS3_10VectorExecEEESC_dNS0_15ConstantCheckerIJddEEEJddEEEE7iterateIJNS3_12VectorReaderIdEESK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph92.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph92.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.asg = sext i32 %i.asd to i64                 ; 23 uses
+  %i.asg = sext i32 %i.asd to i64                 ; 24 uses
   %i.ash = load ptr, ptr %i.arm, align 8, !tbaa !354 ; 9 uses
   %i.asi = ptrtoaddr ptr %i.ash to i64
   %i.asj = load i8, ptr %i.arn, align 2, !tbaa !355, !range !125, !noundef !126
@@ -5916,7 +5926,7 @@ vector.scevcheck336:                              ; preds = %.lr.ph92.i.split.us
   br i1 %i.auy, label %.noexc26.i.us.us62.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck341
 
 vector.memcheck341:                               ; preds = %vector.scevcheck336
-  %i.auz = shl nsw i64 %i.asg, 3                  ; 2 uses
+  %i.auz = shl nuw nsw i64 %i.asg, 3
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.auz ; 2 uses
   %i.ava = or disjoint i64 %i.asg, 1
   %umax342 = call i64 @llvm.umax.i64(i64 %i.ava, i64 %i.asf)
@@ -5930,7 +5940,8 @@ vector.memcheck341:                               ; preds = %vector.scevcheck336
   %i.avf = sext i35 %i.ave to i64                 ; 2 uses
   %scevgep346 = getelementptr i8, ptr %i.ash, i64 %i.avf
   %i.avg = add i64 %i.avb, %i.avf
-  %i.avh = sub i64 %i.avg, %i.auz
+  %9 = shl nsw i64 %i.asg, 3
+  %i.avh = sub i64 %i.avg, %9
   %scevgep347 = getelementptr i8, ptr %i.ash, i64 %i.avh
   %bound0 = icmp ult ptr %scevgep, %scevgep345
   %bound1 = icmp ult ptr %i.auk, %scevgep343
@@ -6333,7 +6344,7 @@ bb.dz:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %.not89.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions12_GLOBAL__N_114DivideFunctionINS3_10VectorExecEEESC_fNS0_15ConstantCheckerIJffEEEJffEEEE7iterateIJNS3_12VectorReaderIfEESK_EEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUliE_clEi.exit.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph88.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %bb.dz
-  %i.atm = sext i32 %i.atj to i64                 ; 23 uses
+  %i.atm = sext i32 %i.atj to i64                 ; 24 uses
   %i.atn = load ptr, ptr %i.ass, align 8, !tbaa !354, !noalias !5457 ; 9 uses
   %i.ato = ptrtoaddr ptr %i.atn to i64
   %i.atp = load i8, ptr %i.ast, align 2, !tbaa !355, !range !125, !noalias !5457, !noundef !126
@@ -6461,7 +6472,7 @@ vector.scevcheck337:                              ; preds = %.lr.ph88.i.split.us
   br i1 %i.awe, label %_ZNK8facebook5velox4exec12VectorReaderIfEixEm.exit.i47.us.us63.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck342
 
 vector.memcheck342:                               ; preds = %vector.scevcheck337
-  %i.awf = shl nsw i64 %i.atm, 2                  ; 2 uses
+  %i.awf = shl nuw nsw i64 %i.atm, 2
   %scevgep = getelementptr i8, ptr %.sink.i.i, i64 %i.awf ; 2 uses
   %i.awg = or disjoint i64 %i.atm, 1
   %umax343 = call i64 @llvm.umax.i64(i64 %i.awg, i64 %i.atl)
@@ -6475,7 +6486,8 @@ vector.memcheck342:                               ; preds = %vector.scevcheck337
   %i.awl = sext i34 %i.awk to i64                 ; 2 uses
   %scevgep347 = getelementptr i8, ptr %i.atn, i64 %i.awl
   %i.awm = add i64 %i.awh, %i.awl
-  %i.awn = sub i64 %i.awm, %i.awf
+  %9 = shl nsw i64 %i.atm, 2
+  %i.awn = sub i64 %i.awm, %9
   %scevgep348 = getelementptr i8, ptr %i.atn, i64 %i.awn
   %bound0 = icmp ult ptr %scevgep, %scevgep346
   %bound1 = icmp ult ptr %i.avq, %scevgep344

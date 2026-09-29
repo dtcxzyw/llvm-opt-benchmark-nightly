@@ -205,19 +205,21 @@ scalar.ph3204:                                    ; preds = %scalar.ph3204.prehe
 
 vector.memcheck2953:                              ; preds = %.lr.ph921.preheader.i
   %i.lgd = or disjoint i32 %indvars.iv1051.i, %i.lfv
-  %i.lge = sext i32 %i.lgd to i64
-  %i.lgf = shl nsw i64 %i.lge, 2                  ; 3 uses
+  %i.lge = sext i32 %i.lgd to i64                 ; 2 uses
+  %i.lgf = shl nsw i64 %i.lge, 2                  ; 2 uses
   %scevgep2955 = getelementptr i8, ptr %scevgep2954, i64 %i.lgf
   %i.lgg = sub i32 %i.lau, %i.lfv
   %i.lgh = lshr i32 %i.lgg, 1
   %i.lgi = zext nneg i32 %i.lgh to i64
-  %i.lgj = shl nuw nsw i64 %i.lgi, 3
-  %6 = add nsw i64 %i.lgj, %i.lgf                 ; 2 uses
-  %scevgep2957.a = getelementptr i8, ptr %scevgep2956, i64 %6
-  %scevgep2959 = getelementptr i8, ptr %scevgep2958, i64 %i.lgf
-  %scevgep2961 = getelementptr i8, ptr %scevgep2960, i64 %6
+  %i.lgj = shl nuw nsw i64 %i.lgi, 3              ; 2 uses
+  %6 = getelementptr i8, ptr %scevgep2956, i64 %i.lgj
+  %scevgep2957 = getelementptr i8, ptr %6, i64 %i.lgf
+  %7 = shl nuw nsw i64 %i.lge, 2                  ; 2 uses
+  %scevgep2957.a = getelementptr i8, ptr %scevgep2958, i64 %7
+  %scevgep2959 = getelementptr i8, ptr %scevgep2960, i64 %i.lgj
+  %scevgep2961 = getelementptr i8, ptr %scevgep2959, i64 %7
   %bound02962 = icmp ult ptr %scevgep2955, %scevgep2961
-  %bound12963 = icmp ult ptr %scevgep2959, %scevgep2957.a
+  %bound12963 = icmp ult ptr %scevgep2957.a, %scevgep2957
   %found.conflict2964 = and i1 %bound02962, %bound12963
   br i1 %found.conflict2964, label %.lr.ph921.i.preheader, label %vector.ph2967
 
