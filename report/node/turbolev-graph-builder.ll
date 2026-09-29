@@ -205,7 +205,7 @@ _ZNK2v88internal8compiler10turboshaft16OperationMatcher25MatchIntegralWordConsta
   %i.v = and i64 %i.u, 4294967295                 ; 2 uses
   %.0228 = select i1 %i.s, i64 %i.v, i64 %i.u     ; 7 uses
   %i.w = zext i8 %5 to i16
-  %i.x = zext nneg i8 %4 to i16
+  %i.x = zext i8 %4 to i16
   %i.y = shl nuw nsw i16 %i.w, 7
   %i.z = shl nuw nsw i16 %i.x, 4
   %i.aa = zext i8 %2 to i16

@@ -205,7 +205,7 @@ bb.hd:                                            ; preds = %bb.hc
   %i.awo = sub nuw nsw i32 30, %i.awn             ; 2 uses
   %i.awp = shl nuw nsw i32 %i.awo, 1
   %i.awq = lshr i32 %narrow, %i.awo
-  %i.awr = add nuw nsw i32 %i.awq, %i.awp
+  %i.awr = add i32 %i.awq, %i.awp
   br label %GetCopyLengthCode.exit
 
 bb.he:                                            ; preds = %bb.hc
@@ -222,7 +222,7 @@ GetCopyLengthCode.exit.thread1296:                ; preds = %bb.he
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.hd
   %.sink1428 = phi i32 [ %i.awr, %bb.hd ], [ %i.avm, %GetInsertLengthCode.exit ]
   %.sink1427 = phi i16 [ 4, %bb.hd ], [ -2, %GetInsertLengthCode.exit ]
-  %i.awx = trunc nuw nsw i32 %.sink1428 to i16
+  %i.awx = trunc i32 %.sink1428 to i16
   %i.awy = add nsw i16 %.sink1427, %i.awx         ; 4 uses
   %i.awz = icmp samesign ult i16 %.0.i415, 8
   %or.cond.i417 = and i1 %i.avo, %i.awz
@@ -625,7 +625,7 @@ bb.hd:                                            ; preds = %bb.hc
   %i.aws = sub nuw nsw i32 30, %i.awr             ; 2 uses
   %i.awt = shl nuw nsw i32 %i.aws, 1
   %i.awu = lshr i32 %narrow, %i.aws
-  %i.awv = add nuw nsw i32 %i.awu, %i.awt
+  %i.awv = add i32 %i.awu, %i.awt
   br label %GetCopyLengthCode.exit
 
 bb.he:                                            ; preds = %bb.hc
@@ -642,7 +642,7 @@ GetCopyLengthCode.exit.thread1273:                ; preds = %bb.he
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.hd
   %.sink1405 = phi i32 [ %i.awv, %bb.hd ], [ %i.avq, %GetInsertLengthCode.exit ]
   %.sink1404 = phi i16 [ 4, %bb.hd ], [ -2, %GetInsertLengthCode.exit ]
-  %i.axb = trunc nuw nsw i32 %.sink1405 to i16
+  %i.axb = trunc i32 %.sink1405 to i16
   %i.axc = add nsw i16 %.sink1404, %i.axb         ; 4 uses
   %i.axd = icmp samesign ult i16 %.0.i277, 8
   %or.cond.i279 = and i1 %i.avs, %i.axd
@@ -1045,7 +1045,7 @@ bb.hh:                                            ; preds = %bb.hg
   %i.bbf = sub nuw nsw i32 30, %i.bbe             ; 2 uses
   %i.bbg = shl nuw nsw i32 %i.bbf, 1
   %i.bbh = lshr i32 %narrow, %i.bbf
-  %i.bbi = add nuw nsw i32 %i.bbh, %i.bbg
+  %i.bbi = add i32 %i.bbh, %i.bbg
   br label %GetCopyLengthCode.exit
 
 bb.hi:                                            ; preds = %bb.hg
@@ -1062,7 +1062,7 @@ GetCopyLengthCode.exit.thread1308:                ; preds = %bb.hi
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.hh
   %.sink1442 = phi i32 [ %i.bbi, %bb.hh ], [ %i.bad, %GetInsertLengthCode.exit ]
   %.sink1441 = phi i16 [ 4, %bb.hh ], [ -2, %GetInsertLengthCode.exit ]
-  %i.bbo = trunc nuw nsw i32 %.sink1442 to i16
+  %i.bbo = trunc i32 %.sink1442 to i16
   %i.bbp = add nsw i16 %.sink1441, %i.bbo         ; 4 uses
   %i.bbq = icmp samesign ult i16 %.0.i277, 8
   %or.cond.i279 = and i1 %i.baf, %i.bbq
@@ -1465,7 +1465,7 @@ bb.hh:                                            ; preds = %bb.hg
   %i.bbk = sub nuw nsw i32 30, %i.bbj             ; 2 uses
   %i.bbl = shl nuw nsw i32 %i.bbk, 1
   %i.bbm = lshr i32 %narrow, %i.bbk
-  %i.bbn = add nuw nsw i32 %i.bbm, %i.bbl
+  %i.bbn = add i32 %i.bbm, %i.bbl
   br label %GetCopyLengthCode.exit
 
 bb.hi:                                            ; preds = %bb.hg
@@ -1482,7 +1482,7 @@ GetCopyLengthCode.exit.thread1311:                ; preds = %bb.hi
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.hh
   %.sink1445 = phi i32 [ %i.bbn, %bb.hh ], [ %i.bai, %GetInsertLengthCode.exit ]
   %.sink1444 = phi i16 [ 4, %bb.hh ], [ -2, %GetInsertLengthCode.exit ]
-  %i.bbt = trunc nuw nsw i32 %.sink1445 to i16
+  %i.bbt = trunc i32 %.sink1445 to i16
   %i.bbu = add nsw i16 %.sink1444, %i.bbt         ; 4 uses
   %i.bbv = icmp samesign ult i16 %.0.i277, 8
   %or.cond.i279 = and i1 %i.bak, %i.bbv
@@ -1885,7 +1885,7 @@ bb.ih:                                            ; preds = %bb.ig
   %i.bbr = sub nuw nsw i32 30, %i.bbq             ; 2 uses
   %i.bbs = shl nuw nsw i32 %i.bbr, 1
   %i.bbt = lshr i32 %narrow, %i.bbr
-  %i.bbu = add nuw nsw i32 %i.bbt, %i.bbs
+  %i.bbu = add i32 %i.bbt, %i.bbs
   br label %GetCopyLengthCode.exit
 
 bb.ii:                                            ; preds = %bb.ig
@@ -1902,7 +1902,7 @@ GetCopyLengthCode.exit.thread1265:                ; preds = %bb.ii
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.ih
   %.sink1434 = phi i32 [ %i.bbu, %bb.ih ], [ %i.bap, %GetInsertLengthCode.exit ]
   %.sink1433 = phi i16 [ 4, %bb.ih ], [ -2, %GetInsertLengthCode.exit ]
-  %i.bca = trunc nuw nsw i32 %.sink1434 to i16
+  %i.bca = trunc i32 %.sink1434 to i16
   %i.bcb = add nsw i16 %.sink1433, %i.bca         ; 4 uses
   %i.bcc = icmp samesign ult i16 %.0.i277, 8
   %or.cond.i279 = and i1 %i.bar, %i.bcc
@@ -2305,7 +2305,7 @@ bb.gt:                                            ; preds = %bb.gs
   %i.avc = sub nuw nsw i32 30, %i.avb             ; 2 uses
   %i.avd = shl nuw nsw i32 %i.avc, 1
   %i.ave = lshr i32 %narrow, %i.avc
-  %i.avf = add nuw nsw i32 %i.ave, %i.avd
+  %i.avf = add i32 %i.ave, %i.avd
   br label %GetCopyLengthCode.exit
 
 bb.gu:                                            ; preds = %bb.gs
@@ -2322,7 +2322,7 @@ GetCopyLengthCode.exit.thread1212:                ; preds = %bb.gu
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.gt
   %.sink1345 = phi i32 [ %i.avf, %bb.gt ], [ %i.aua, %GetInsertLengthCode.exit ]
   %.sink1344 = phi i16 [ 4, %bb.gt ], [ -2, %GetInsertLengthCode.exit ]
-  %i.avl = trunc nuw nsw i32 %.sink1345 to i16
+  %i.avl = trunc i32 %.sink1345 to i16
   %i.avm = add nsw i16 %.sink1344, %i.avl         ; 4 uses
   %i.avn = icmp samesign ult i16 %.0.i277, 8
   %or.cond.i279 = and i1 %i.auc, %i.avn
@@ -2725,7 +2725,7 @@ bb.gs:                                            ; preds = %bb.gr
   %i.avv = sub nuw nsw i32 30, %i.avu             ; 2 uses
   %i.avw = shl nuw nsw i32 %i.avv, 1
   %i.avx = lshr i32 %narrow, %i.avv
-  %i.avy = add nuw nsw i32 %i.avx, %i.avw
+  %i.avy = add i32 %i.avx, %i.avw
   br label %GetCopyLengthCode.exit
 
 bb.gt:                                            ; preds = %bb.gr
@@ -2742,7 +2742,7 @@ GetCopyLengthCode.exit.thread1205:                ; preds = %bb.gt
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.gs
   %.sink1337 = phi i32 [ %i.avy, %bb.gs ], [ %i.aut, %GetInsertLengthCode.exit ]
   %.sink1336 = phi i16 [ 4, %bb.gs ], [ -2, %GetInsertLengthCode.exit ]
-  %i.awe = trunc nuw nsw i32 %.sink1337 to i16
+  %i.awe = trunc i32 %.sink1337 to i16
   %i.awf = add nsw i16 %.sink1336, %i.awe         ; 4 uses
   %i.awg = icmp samesign ult i16 %.0.i277, 8
   %or.cond.i279 = and i1 %i.auv, %i.awg
@@ -3145,7 +3145,7 @@ bb.hy:                                            ; preds = %bb.hx
   %i.bbr = sub nuw nsw i32 30, %i.bbq             ; 2 uses
   %i.bbs = shl nuw nsw i32 %i.bbr, 1
   %i.bbt = lshr i32 %narrow, %i.bbr
-  %i.bbu = add nuw nsw i32 %i.bbt, %i.bbs
+  %i.bbu = add i32 %i.bbt, %i.bbs
   br label %GetCopyLengthCode.exit
 
 bb.hz:                                            ; preds = %bb.hx
@@ -3162,7 +3162,7 @@ GetCopyLengthCode.exit.thread1419:                ; preds = %bb.hz
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.hy
   %.sink1567 = phi i32 [ %i.bbu, %bb.hy ], [ %i.bap, %GetInsertLengthCode.exit ]
   %.sink1566 = phi i16 [ 4, %bb.hy ], [ -2, %GetInsertLengthCode.exit ]
-  %i.bca = trunc nuw nsw i32 %.sink1567 to i16
+  %i.bca = trunc i32 %.sink1567 to i16
   %i.bcb = add nsw i16 %.sink1566, %i.bca         ; 4 uses
   %i.bcc = icmp samesign ult i16 %.0.i277, 8
   %or.cond.i279 = and i1 %i.bar, %i.bcc
@@ -3565,7 +3565,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.tr = sub nuw nsw i32 30, %i.tq               ; 2 uses
   %i.ts = shl nuw nsw i32 %i.tr, 1
   %i.tt = lshr i32 %narrow, %i.tr
-  %i.tu = add nuw nsw i32 %i.tt, %i.ts
+  %i.tu = add i32 %i.tt, %i.ts
   br label %GetCopyLengthCode.exit
 
 bb.br:                                            ; preds = %bb.bp
@@ -3582,7 +3582,7 @@ GetCopyLengthCode.exit.thread657:                 ; preds = %bb.br
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.bq
   %.sink717 = phi i32 [ %i.tu, %bb.bq ], [ %i.sp, %GetInsertLengthCode.exit ]
   %.sink716 = phi i16 [ 4, %bb.bq ], [ -2, %GetInsertLengthCode.exit ]
-  %i.ua = trunc nuw nsw i32 %.sink717 to i16
+  %i.ua = trunc i32 %.sink717 to i16
   %i.ub = add nsw i16 %.sink716, %i.ua            ; 4 uses
   %i.uc = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.sr, %i.uc
@@ -3985,7 +3985,7 @@ bb.dp:                                            ; preds = %bb.do
   %i.aen = sub nuw nsw i32 30, %i.aem             ; 2 uses
   %i.aeo = shl nuw nsw i32 %i.aen, 1
   %i.aep = lshr i32 %narrow, %i.aen
-  %i.aeq = add nuw nsw i32 %i.aep, %i.aeo
+  %i.aeq = add i32 %i.aep, %i.aeo
   br label %GetCopyLengthCode.exit
 
 bb.dq:                                            ; preds = %bb.do
@@ -4002,7 +4002,7 @@ GetCopyLengthCode.exit.thread708:                 ; preds = %bb.dq
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.dp
   %.sink804 = phi i32 [ %i.aeq, %bb.dp ], [ %i.adl, %GetInsertLengthCode.exit ]
   %.sink803 = phi i16 [ 4, %bb.dp ], [ -2, %GetInsertLengthCode.exit ]
-  %i.aew = trunc nuw nsw i32 %.sink804 to i16
+  %i.aew = trunc i32 %.sink804 to i16
   %i.aex = add nsw i16 %.sink803, %i.aew          ; 4 uses
   %i.aey = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.adn, %i.aey
@@ -4405,7 +4405,7 @@ bb.dv:                                            ; preds = %bb.du
   %i.aem = sub nuw nsw i32 30, %i.ael             ; 2 uses
   %i.aen = shl nuw nsw i32 %i.aem, 1
   %i.aeo = lshr i32 %narrow, %i.aem
-  %i.aep = add nuw nsw i32 %i.aeo, %i.aen
+  %i.aep = add i32 %i.aeo, %i.aen
   br label %GetCopyLengthCode.exit
 
 bb.dw:                                            ; preds = %bb.du
@@ -4422,7 +4422,7 @@ GetCopyLengthCode.exit.thread876:                 ; preds = %bb.dw
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.dv
   %.sink948 = phi i32 [ %i.aep, %bb.dv ], [ %i.adk, %GetInsertLengthCode.exit ]
   %.sink947 = phi i16 [ 4, %bb.dv ], [ -2, %GetInsertLengthCode.exit ]
-  %i.aev = trunc nuw nsw i32 %.sink948 to i16
+  %i.aev = trunc i32 %.sink948 to i16
   %i.aew = add nsw i16 %.sink947, %i.aev          ; 4 uses
   %i.aex = icmp samesign ult i16 %.0.i313, 8
   %or.cond.i315 = and i1 %i.adm, %i.aex
@@ -4825,7 +4825,7 @@ bb.dv:                                            ; preds = %bb.du
   %i.aeq = sub nuw nsw i32 30, %i.aep             ; 2 uses
   %i.aer = shl nuw nsw i32 %i.aeq, 1
   %i.aes = lshr i32 %narrow, %i.aeq
-  %i.aet = add nuw nsw i32 %i.aes, %i.aer
+  %i.aet = add i32 %i.aes, %i.aer
   br label %GetCopyLengthCode.exit
 
 bb.dw:                                            ; preds = %bb.du
@@ -4842,7 +4842,7 @@ GetCopyLengthCode.exit.thread854:                 ; preds = %bb.dw
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.dv
   %.sink926 = phi i32 [ %i.aet, %bb.dv ], [ %i.ado, %GetInsertLengthCode.exit ]
   %.sink925 = phi i16 [ 4, %bb.dv ], [ -2, %GetInsertLengthCode.exit ]
-  %i.aez = trunc nuw nsw i32 %.sink926 to i16
+  %i.aez = trunc i32 %.sink926 to i16
   %i.afa = add nsw i16 %.sink925, %i.aez          ; 4 uses
   %i.afb = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.adq, %i.afb
@@ -5245,7 +5245,7 @@ bb.ez:                                            ; preds = %bb.ey
   %i.ajm = sub nuw nsw i32 30, %i.ajl             ; 2 uses
   %i.ajn = shl nuw nsw i32 %i.ajm, 1
   %i.ajo = lshr i32 %narrow, %i.ajm
-  %i.ajp = add nuw nsw i32 %i.ajo, %i.ajn
+  %i.ajp = add i32 %i.ajo, %i.ajn
   br label %GetCopyLengthCode.exit
 
 bb.fa:                                            ; preds = %bb.ey
@@ -5262,7 +5262,7 @@ GetCopyLengthCode.exit.thread846:                 ; preds = %bb.fa
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.ez
   %.sink955 = phi i32 [ %i.ajp, %bb.ez ], [ %i.aik, %GetInsertLengthCode.exit ]
   %.sink954 = phi i16 [ 4, %bb.ez ], [ -2, %GetInsertLengthCode.exit ]
-  %i.ajv = trunc nuw nsw i32 %.sink955 to i16
+  %i.ajv = trunc i32 %.sink955 to i16
   %i.ajw = add nsw i16 %.sink954, %i.ajv          ; 4 uses
   %i.ajx = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.aim, %i.ajx
@@ -5665,7 +5665,7 @@ bb.dl:                                            ; preds = %bb.dk
   %i.acx = sub nuw nsw i32 30, %i.acw             ; 2 uses
   %i.acy = shl nuw nsw i32 %i.acx, 1
   %i.acz = lshr i32 %narrow, %i.acx
-  %i.ada = add nuw nsw i32 %i.acz, %i.acy
+  %i.ada = add i32 %i.acz, %i.acy
   br label %GetCopyLengthCode.exit
 
 bb.dm:                                            ; preds = %bb.dk
@@ -5682,7 +5682,7 @@ GetCopyLengthCode.exit.thread793:                 ; preds = %bb.dm
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.dl
   %.sink866 = phi i32 [ %i.ada, %bb.dl ], [ %i.abv, %GetInsertLengthCode.exit ]
   %.sink865 = phi i16 [ 4, %bb.dl ], [ -2, %GetInsertLengthCode.exit ]
-  %i.adg = trunc nuw nsw i32 %.sink866 to i16
+  %i.adg = trunc i32 %.sink866 to i16
   %i.adh = add nsw i16 %.sink865, %i.adg          ; 4 uses
   %i.adi = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.abx, %i.adi
@@ -6085,7 +6085,7 @@ bb.dk:                                            ; preds = %bb.dj
   %i.adq = sub nuw nsw i32 30, %i.adp             ; 2 uses
   %i.adr = shl nuw nsw i32 %i.adq, 1
   %i.ads = lshr i32 %narrow, %i.adq
-  %i.adt = add nuw nsw i32 %i.ads, %i.adr
+  %i.adt = add i32 %i.ads, %i.adr
   br label %GetCopyLengthCode.exit
 
 bb.dl:                                            ; preds = %bb.dj
@@ -6102,7 +6102,7 @@ GetCopyLengthCode.exit.thread786:                 ; preds = %bb.dl
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.dk
   %.sink858 = phi i32 [ %i.adt, %bb.dk ], [ %i.aco, %GetInsertLengthCode.exit ]
   %.sink857 = phi i16 [ 4, %bb.dk ], [ -2, %GetInsertLengthCode.exit ]
-  %i.adz = trunc nuw nsw i32 %.sink858 to i16
+  %i.adz = trunc i32 %.sink858 to i16
   %i.aea = add nsw i16 %.sink857, %i.adz          ; 4 uses
   %i.aeb = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.acq, %i.aeb
@@ -6505,7 +6505,7 @@ bb.dz:                                            ; preds = %bb.dy
   %i.aja = sub nuw nsw i32 30, %i.aiz             ; 2 uses
   %i.ajb = shl nuw nsw i32 %i.aja, 1
   %i.ajc = lshr i32 %narrow, %i.aja
-  %i.ajd = add nuw nsw i32 %i.ajc, %i.ajb
+  %i.ajd = add i32 %i.ajc, %i.ajb
   br label %GetCopyLengthCode.exit
 
 bb.ea:                                            ; preds = %bb.dy
@@ -6522,7 +6522,7 @@ GetCopyLengthCode.exit.thread890:                 ; preds = %bb.ea
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.dz
   %.sink964 = phi i32 [ %i.ajd, %bb.dz ], [ %i.ahy, %GetInsertLengthCode.exit ]
   %.sink963 = phi i16 [ 4, %bb.dz ], [ -2, %GetInsertLengthCode.exit ]
-  %i.ajj = trunc nuw nsw i32 %.sink964 to i16
+  %i.ajj = trunc i32 %.sink964 to i16
   %i.ajk = add nsw i16 %.sink963, %i.ajj          ; 4 uses
   %i.ajl = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.aia, %i.ajl
@@ -6925,7 +6925,7 @@ bb.dz:                                            ; preds = %bb.dy
   %i.ajf = sub nuw nsw i32 30, %i.aje             ; 2 uses
   %i.ajg = shl nuw nsw i32 %i.ajf, 1
   %i.ajh = lshr i32 %narrow, %i.ajf
-  %i.aji = add nuw nsw i32 %i.ajh, %i.ajg
+  %i.aji = add i32 %i.ajh, %i.ajg
   br label %GetCopyLengthCode.exit
 
 bb.ea:                                            ; preds = %bb.dy
@@ -6942,7 +6942,7 @@ GetCopyLengthCode.exit.thread894:                 ; preds = %bb.ea
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.dz
   %.sink968 = phi i32 [ %i.aji, %bb.dz ], [ %i.aid, %GetInsertLengthCode.exit ]
   %.sink967 = phi i16 [ 4, %bb.dz ], [ -2, %GetInsertLengthCode.exit ]
-  %i.ajo = trunc nuw nsw i32 %.sink968 to i16
+  %i.ajo = trunc i32 %.sink968 to i16
   %i.ajp = add nsw i16 %.sink967, %i.ajo          ; 4 uses
   %i.ajq = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.aif, %i.ajq
@@ -7345,7 +7345,7 @@ bb.eq:                                            ; preds = %bb.ep
   %i.ajo = sub nuw nsw i32 30, %i.ajn             ; 2 uses
   %i.ajp = shl nuw nsw i32 %i.ajo, 1
   %i.ajq = lshr i32 %narrow, %i.ajo
-  %i.ajr = add nuw nsw i32 %i.ajq, %i.ajp
+  %i.ajr = add i32 %i.ajq, %i.ajp
   br label %GetCopyLengthCode.exit
 
 bb.er:                                            ; preds = %bb.ep
@@ -7362,7 +7362,7 @@ GetCopyLengthCode.exit.thread1002:                ; preds = %bb.er
 GetCopyLengthCode.exit:                           ; preds = %GetInsertLengthCode.exit, %bb.eq
   %.sink1090 = phi i32 [ %i.ajr, %bb.eq ], [ %i.aim, %GetInsertLengthCode.exit ]
   %.sink1089 = phi i16 [ 4, %bb.eq ], [ -2, %GetInsertLengthCode.exit ]
-  %i.ajx = trunc nuw nsw i32 %.sink1090 to i16
+  %i.ajx = trunc i32 %.sink1090 to i16
   %i.ajy = add nsw i16 %.sink1089, %i.ajx         ; 4 uses
   %i.ajz = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.aio, %i.ajz

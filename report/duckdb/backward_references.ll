@@ -205,7 +205,7 @@ bb.gx:                                            ; preds = %bb.gw
   %i.awl = sub nuw nsw i32 30, %i.awk             ; 2 uses
   %i.awm = shl nuw nsw i32 %i.awl, 1
   %i.awn = lshr i32 %narrow, %i.awl
-  %i.awo = add nuw nsw i32 %i.awn, %i.awm
+  %i.awo = add i32 %i.awn, %i.awm
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.gy:                                            ; preds = %bb.gw
@@ -222,7 +222,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread1234: ; preds = %bb.gy
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.gx
   %.sink1366 = phi i32 [ %i.awo, %bb.gx ], [ %i.avj, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink1365 = phi i16 [ 4, %bb.gx ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.awu = trunc nuw nsw i32 %.sink1366 to i16
+  %i.awu = trunc i32 %.sink1366 to i16
   %i.awv = add nsw i16 %.sink1365, %i.awu         ; 4 uses
   %i.aww = icmp samesign ult i16 %.0.i401, 8
   %or.cond.i403 = and i1 %i.avl, %i.aww
@@ -625,7 +625,7 @@ bb.gx:                                            ; preds = %bb.gw
   %i.awp = sub nuw nsw i32 30, %i.awo             ; 2 uses
   %i.awq = shl nuw nsw i32 %i.awp, 1
   %i.awr = lshr i32 %narrow, %i.awp
-  %i.aws = add nuw nsw i32 %i.awr, %i.awq
+  %i.aws = add i32 %i.awr, %i.awq
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.gy:                                            ; preds = %bb.gw
@@ -642,7 +642,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread1214: ; preds = %bb.gy
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.gx
   %.sink1346 = phi i32 [ %i.aws, %bb.gx ], [ %i.avn, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink1345 = phi i16 [ 4, %bb.gx ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.awy = trunc nuw nsw i32 %.sink1346 to i16
+  %i.awy = trunc i32 %.sink1346 to i16
   %i.awz = add nsw i16 %.sink1345, %i.awy         ; 4 uses
   %i.axa = icmp samesign ult i16 %.0.i274, 8
   %or.cond.i276 = and i1 %i.avp, %i.axa
@@ -1045,7 +1045,7 @@ bb.if:                                            ; preds = %bb.ie
   %i.bbr = sub nuw nsw i32 30, %i.bbq             ; 2 uses
   %i.bbs = shl nuw nsw i32 %i.bbr, 1
   %i.bbt = lshr i32 %narrow, %i.bbr
-  %i.bbu = add nuw nsw i32 %i.bbt, %i.bbs
+  %i.bbu = add i32 %i.bbt, %i.bbs
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.ig:                                            ; preds = %bb.ie
@@ -1062,7 +1062,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread1257: ; preds = %bb.ig
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.if
   %.sink1426 = phi i32 [ %i.bbu, %bb.if ], [ %i.bap, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink1425 = phi i16 [ 4, %bb.if ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.bca = trunc nuw nsw i32 %.sink1426 to i16
+  %i.bca = trunc i32 %.sink1426 to i16
   %i.bcb = add nsw i16 %.sink1425, %i.bca         ; 4 uses
   %i.bcc = icmp samesign ult i16 %.0.i274, 8
   %or.cond.i276 = and i1 %i.bar, %i.bcc
@@ -1465,7 +1465,7 @@ bb.gr:                                            ; preds = %bb.gq
   %i.avc = sub nuw nsw i32 30, %i.avb             ; 2 uses
   %i.avd = shl nuw nsw i32 %i.avc, 1
   %i.ave = lshr i32 %narrow, %i.avc
-  %i.avf = add nuw nsw i32 %i.ave, %i.avd
+  %i.avf = add i32 %i.ave, %i.avd
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.gs:                                            ; preds = %bb.gq
@@ -1482,7 +1482,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread1204: ; preds = %bb.gs
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.gr
   %.sink1337 = phi i32 [ %i.avf, %bb.gr ], [ %i.aua, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink1336 = phi i16 [ 4, %bb.gr ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.avl = trunc nuw nsw i32 %.sink1337 to i16
+  %i.avl = trunc i32 %.sink1337 to i16
   %i.avm = add nsw i16 %.sink1336, %i.avl         ; 4 uses
   %i.avn = icmp samesign ult i16 %.0.i274, 8
   %or.cond.i276 = and i1 %i.auc, %i.avn
@@ -1885,7 +1885,7 @@ bb.gq:                                            ; preds = %bb.gp
   %i.avv = sub nuw nsw i32 30, %i.avu             ; 2 uses
   %i.avw = shl nuw nsw i32 %i.avv, 1
   %i.avx = lshr i32 %narrow, %i.avv
-  %i.avy = add nuw nsw i32 %i.avx, %i.avw
+  %i.avy = add i32 %i.avx, %i.avw
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.gr:                                            ; preds = %bb.gp
@@ -1902,7 +1902,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread1197: ; preds = %bb.gr
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.gq
   %.sink1329 = phi i32 [ %i.avy, %bb.gq ], [ %i.aut, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink1328 = phi i16 [ 4, %bb.gq ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.awe = trunc nuw nsw i32 %.sink1329 to i16
+  %i.awe = trunc i32 %.sink1329 to i16
   %i.awf = add nsw i16 %.sink1328, %i.awe         ; 4 uses
   %i.awg = icmp samesign ult i16 %.0.i274, 8
   %or.cond.i276 = and i1 %i.auv, %i.awg
@@ -2305,7 +2305,7 @@ bb.hs:                                            ; preds = %bb.hr
   %i.bbo = sub nuw nsw i32 30, %i.bbn             ; 2 uses
   %i.bbp = shl nuw nsw i32 %i.bbo, 1
   %i.bbq = lshr i32 %narrow, %i.bbo
-  %i.bbr = add nuw nsw i32 %i.bbq, %i.bbp
+  %i.bbr = add i32 %i.bbq, %i.bbp
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.ht:                                            ; preds = %bb.hr
@@ -2322,7 +2322,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread1362: ; preds = %bb.ht
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.hs
   %.sink1510 = phi i32 [ %i.bbr, %bb.hs ], [ %i.bam, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink1509 = phi i16 [ 4, %bb.hs ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.bbx = trunc nuw nsw i32 %.sink1510 to i16
+  %i.bbx = trunc i32 %.sink1510 to i16
   %i.bby = add nsw i16 %.sink1509, %i.bbx         ; 4 uses
   %i.bbz = icmp samesign ult i16 %.0.i274, 8
   %or.cond.i276 = and i1 %i.bao, %i.bbz
@@ -2725,7 +2725,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.tr = sub nuw nsw i32 30, %i.tq               ; 2 uses
   %i.ts = shl nuw nsw i32 %i.tr, 1
   %i.tt = lshr i32 %narrow, %i.tr
-  %i.tu = add nuw nsw i32 %i.tt, %i.ts
+  %i.tu = add i32 %i.tt, %i.ts
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.br:                                            ; preds = %bb.bp
@@ -2742,7 +2742,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread657: ; preds = %bb.br
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.bq
   %.sink717 = phi i32 [ %i.tu, %bb.bq ], [ %i.sp, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink716 = phi i16 [ 4, %bb.bq ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.ua = trunc nuw nsw i32 %.sink717 to i16
+  %i.ua = trunc i32 %.sink717 to i16
   %i.ub = add nsw i16 %.sink716, %i.ua            ; 4 uses
   %i.uc = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.sr, %i.uc
@@ -3145,7 +3145,7 @@ bb.dp:                                            ; preds = %bb.do
   %i.aen = sub nuw nsw i32 30, %i.aem             ; 2 uses
   %i.aeo = shl nuw nsw i32 %i.aen, 1
   %i.aep = lshr i32 %narrow, %i.aen
-  %i.aeq = add nuw nsw i32 %i.aep, %i.aeo
+  %i.aeq = add i32 %i.aep, %i.aeo
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.dq:                                            ; preds = %bb.do
@@ -3162,7 +3162,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread708: ; preds = %bb.dq
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.dp
   %.sink804 = phi i32 [ %i.aeq, %bb.dp ], [ %i.adl, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink803 = phi i16 [ 4, %bb.dp ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.aew = trunc nuw nsw i32 %.sink804 to i16
+  %i.aew = trunc i32 %.sink804 to i16
   %i.aex = add nsw i16 %.sink803, %i.aew          ; 4 uses
   %i.aey = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.adn, %i.aey
@@ -3565,7 +3565,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.aej = sub nuw nsw i32 30, %i.aei             ; 2 uses
   %i.aek = shl nuw nsw i32 %i.aej, 1
   %i.ael = lshr i32 %narrow, %i.aej
-  %i.aem = add nuw nsw i32 %i.ael, %i.aek
+  %i.aem = add i32 %i.ael, %i.aek
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.ds:                                            ; preds = %bb.dq
@@ -3582,7 +3582,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread820: ; preds = %bb.ds
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.dr
   %.sink892 = phi i32 [ %i.aem, %bb.dr ], [ %i.adh, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink891 = phi i16 [ 4, %bb.dr ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.aes = trunc nuw nsw i32 %.sink892 to i16
+  %i.aes = trunc i32 %.sink892 to i16
   %i.aet = add nsw i16 %.sink891, %i.aes          ; 4 uses
   %i.aeu = icmp samesign ult i16 %.0.i305, 8
   %or.cond.i307 = and i1 %i.adj, %i.aeu
@@ -3985,7 +3985,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.aen = sub nuw nsw i32 30, %i.aem             ; 2 uses
   %i.aeo = shl nuw nsw i32 %i.aen, 1
   %i.aep = lshr i32 %narrow, %i.aen
-  %i.aeq = add nuw nsw i32 %i.aep, %i.aeo
+  %i.aeq = add i32 %i.aep, %i.aeo
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.ds:                                            ; preds = %bb.dq
@@ -4002,7 +4002,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread800: ; preds = %bb.ds
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.dr
   %.sink872 = phi i32 [ %i.aeq, %bb.dr ], [ %i.adl, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink871 = phi i16 [ 4, %bb.dr ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.aew = trunc nuw nsw i32 %.sink872 to i16
+  %i.aew = trunc i32 %.sink872 to i16
   %i.aex = add nsw i16 %.sink871, %i.aew          ; 4 uses
   %i.aey = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.adn, %i.aey
@@ -4405,7 +4405,7 @@ bb.ez:                                            ; preds = %bb.ey
   %i.ajm = sub nuw nsw i32 30, %i.ajl             ; 2 uses
   %i.ajn = shl nuw nsw i32 %i.ajm, 1
   %i.ajo = lshr i32 %narrow, %i.ajm
-  %i.ajp = add nuw nsw i32 %i.ajo, %i.ajn
+  %i.ajp = add i32 %i.ajo, %i.ajn
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.fa:                                            ; preds = %bb.ey
@@ -4422,7 +4422,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread842: ; preds = %bb.fa
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.ez
   %.sink951 = phi i32 [ %i.ajp, %bb.ez ], [ %i.aik, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink950 = phi i16 [ 4, %bb.ez ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.ajv = trunc nuw nsw i32 %.sink951 to i16
+  %i.ajv = trunc i32 %.sink951 to i16
   %i.ajw = add nsw i16 %.sink950, %i.ajv          ; 4 uses
   %i.ajx = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.aim, %i.ajx
@@ -4825,7 +4825,7 @@ bb.dl:                                            ; preds = %bb.dk
   %i.acx = sub nuw nsw i32 30, %i.acw             ; 2 uses
   %i.acy = shl nuw nsw i32 %i.acx, 1
   %i.acz = lshr i32 %narrow, %i.acx
-  %i.ada = add nuw nsw i32 %i.acz, %i.acy
+  %i.ada = add i32 %i.acz, %i.acy
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.dm:                                            ; preds = %bb.dk
@@ -4842,7 +4842,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread789: ; preds = %bb.dm
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.dl
   %.sink862 = phi i32 [ %i.ada, %bb.dl ], [ %i.abv, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink861 = phi i16 [ 4, %bb.dl ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.adg = trunc nuw nsw i32 %.sink862 to i16
+  %i.adg = trunc i32 %.sink862 to i16
   %i.adh = add nsw i16 %.sink861, %i.adg          ; 4 uses
   %i.adi = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.abx, %i.adi
@@ -5245,7 +5245,7 @@ bb.dk:                                            ; preds = %bb.dj
   %i.adq = sub nuw nsw i32 30, %i.adp             ; 2 uses
   %i.adr = shl nuw nsw i32 %i.adq, 1
   %i.ads = lshr i32 %narrow, %i.adq
-  %i.adt = add nuw nsw i32 %i.ads, %i.adr
+  %i.adt = add i32 %i.ads, %i.adr
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.dl:                                            ; preds = %bb.dj
@@ -5262,7 +5262,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread782: ; preds = %bb.dl
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.dk
   %.sink854 = phi i32 [ %i.adt, %bb.dk ], [ %i.aco, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink853 = phi i16 [ 4, %bb.dk ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.adz = trunc nuw nsw i32 %.sink854 to i16
+  %i.adz = trunc i32 %.sink854 to i16
   %i.aea = add nsw i16 %.sink853, %i.adz          ; 4 uses
   %i.aeb = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.acq, %i.aeb
@@ -5665,7 +5665,7 @@ bb.em:                                            ; preds = %bb.el
   %i.ajl = sub nuw nsw i32 30, %i.ajk             ; 2 uses
   %i.ajm = shl nuw nsw i32 %i.ajl, 1
   %i.ajn = lshr i32 %narrow, %i.ajl
-  %i.ajo = add nuw nsw i32 %i.ajn, %i.ajm
+  %i.ajo = add i32 %i.ajn, %i.ajm
   br label %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
 
 bb.en:                                            ; preds = %bb.el
@@ -5682,7 +5682,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit.thread948: ; preds = %bb.en
 _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit, %bb.em
   %.sink1036 = phi i32 [ %i.ajo, %bb.em ], [ %i.aij, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
   %.sink1035 = phi i16 [ 4, %bb.em ], [ -2, %_ZN13duckdb_brotliL19GetInsertLengthCodeEm.exit ]
-  %i.aju = trunc nuw nsw i32 %.sink1036 to i16
+  %i.aju = trunc i32 %.sink1036 to i16
   %i.ajv = add nsw i16 %.sink1035, %i.aju         ; 4 uses
   %i.ajw = icmp samesign ult i16 %.0.i197, 8
   %or.cond.i = and i1 %i.ail, %i.ajw

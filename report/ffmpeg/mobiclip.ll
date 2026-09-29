@@ -205,7 +205,7 @@ block_sum.exit280.unr-lcssa:                      ; preds = %.preheader.i271
 block_sum.exit280:                                ; preds = %.preheader.i271.epil, %block_sum.exit280.unr-lcssa
   %.lcssa878 = phi i32 [ %i.ud, %block_sum.exit280.unr-lcssa ], [ %i.uh, %.preheader.i271.epil ]
   %i.uj = shl nuw nsw i32 %.lcssa878, 1
-  %14 = udiv i32 %i.uj, %6
+  %14 = sdiv i32 %i.uj, %6
   %i.uk = add nuw nsw i32 %14, 1
   %i.ul = lshr i32 %i.uk, 1
   br label %.critedge
@@ -267,7 +267,7 @@ scalar.ph.preheader:                              ; preds = %.preheader.i282, %m
 block_sum.exit291:                                ; preds = %scalar.ph, %middle.block
   %.lcssa794 = phi i32 [ %i.vi, %middle.block ], [ %i.vp, %scalar.ph ]
   %i.vj = shl nuw nsw i32 %.lcssa794, 1
-  %15 = udiv i32 %i.vj, %6
+  %15 = sdiv i32 %i.vj, %6
   %i.vk = add nuw nsw i32 %15, 1
   %i.vl = lshr i32 %i.vk, 1
   br label %.critedge
