@@ -202,8 +202,7 @@ bb.a:
   br label %.outer
 
 .outer:                                           ; preds = %bb.j, %bb.a
-  %.not.i25 = phi i1 [ false, %bb.j ], [ true, %bb.a ]
-  %.0.ph = phi i32 [ 130, %bb.j ], [ 2, %bb.a ]
+  %.0.ph = phi i32 [ 130, %bb.j ], [ 2, %bb.a ]   ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.outer, %break_deleg_wait.exit
@@ -312,8 +311,10 @@ break_deleg_wait.exit:                            ; preds = %bb.h, %locks_inode_
 
 bb.j:                                             ; preds = %break_deleg_wait.exit, %end_creating_path.exit
   %.1 = phi i32 [ %.0.i.i, %break_deleg_wait.exit ], [ %.01827, %end_creating_path.exit ] ; 2 uses
-  %i.am = icmp eq i32 %.1, -116
-  %i.an = and i1 %.not.i25, %i.am
+  %5 = icmp eq i32 %.1, -116
+  %6 = and i32 %.0.ph, 128
+  %i.am = icmp eq i32 %6, 0
+  %i.an = and i1 %i.am, %5
   br i1 %i.an, label %.outer, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.j, %bb.c

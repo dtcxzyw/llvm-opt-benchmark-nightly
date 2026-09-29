@@ -204,7 +204,8 @@ bb.e:                                             ; preds = %.critedge
   %i.aa = tail call fastcc i64 @_ZL21space_upto_line_breakR11ast_managerP3app(ptr noundef %i.z) ; 2 uses
   %.sroa.0.0.extract.trunc = trunc i64 %i.aa to i32
   %i.ab = add i32 %.02832, %.sroa.0.0.extract.trunc ; 3 uses
-  %.not = icmp samesign ult i64 %i.aa, 4294967296
+  %2 = and i64 %i.aa, 4294967296
+  %.not = icmp eq i64 %2, 0
   br i1 %.not, label %bb.e, label %.critedge19
 
 bb.f:                                             ; preds = %_ZNK3app13get_decl_kindEv.exit

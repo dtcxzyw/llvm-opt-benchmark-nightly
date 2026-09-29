@@ -67,7 +67,7 @@ bb.a:
 bb.b:                                             ; preds = %.critedge.i
   %i.al = icmp ne i32 %i.ah, 318769153            ; 2 uses
   %brmerge.not = and i1 %i.al, %or.cond48.i
-  %.mux = zext i1 %i.al to i8
+  %.mux = zext i1 %i.al to i32
   br i1 %brmerge.not, label %bb.c, label %GetPixelAccessMethod.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -83,7 +83,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aq = add nsw i32 %i.ap, -3
   %switch.and.i = and i32 %i.aq, -6
   %switch.selectcmp.i = icmp eq i32 %switch.and.i, 0
-  %spec.select = select i1 %switch.selectcmp.i, i8 2, i8 1
+  %spec.select = select i1 %switch.selectcmp.i, i32 2, i32 1
   br label %GetPixelAccessMethod.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -102,10 +102,11 @@ switch.lookup:                                    ; preds = %bb.f
   %i.au = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.SDL_Blit_Slow_Float, i64 %i.au
   %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %GetPixelAccessMethod.exit
 
 GetPixelAccessMethod.exit:                        ; preds = %bb.b, %bb.e, %bb.f, %switch.lookup, %bb.d, %bb.a, %.critedge.i
-  %.0.i = phi i8 [ 4, %bb.a ], [ 3, %.critedge.i ], [ %spec.select, %bb.d ], [ %.mux, %bb.b ], [ %switch.load, %switch.lookup ], [ 1, %bb.f ], [ 1, %bb.e ]
+  %.0.i = phi i32 [ 4, %bb.a ], [ 3, %.critedge.i ], [ %spec.select, %bb.d ], [ %.mux, %bb.b ], [ %switch.ext, %switch.lookup ], [ 1, %bb.f ], [ 1, %bb.e ]
   %i.av = load i32, ptr %i.t, align 4             ; 8 uses
   %.not.i634 = icmp eq i32 %i.av, 0
   %.mask.i635 = and i32 %i.av, -268435456
@@ -322,11 +323,11 @@ bb.q:                                             ; preds = %.lr.ph, %bb.ak
   %i.eg = lshr i64 %.0566695, 16
   %i.eh = mul nuw nsw i64 %i.eg, %i.ci
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ed, i64 %i.eh ; 14 uses
-  switch i8 %.0.i, label %bb.ah [
-    i8 0, label %bb.r
-    i8 1, label %bb.s
-    i8 2, label %bb.y
-    i8 3, label %bb.ac
+  switch i32 %.0.i, label %bb.ah [
+    i32 0, label %bb.r
+    i32 1, label %bb.s
+    i32 2, label %bb.y
+    i32 3, label %bb.ac
   ]
 
 bb.r:                                             ; preds = %bb.q

@@ -205,19 +205,19 @@ bb.ca:                                            ; preds = %bb.bz
 
 bb.cb:                                            ; preds = %bb.ca, %bb.bz, %.preheader
   %.0193.lcssa = phi i32 [ 0, %.preheader ], [ %spec.select, %bb.ca ], [ 1, %bb.bz ] ; 4 uses
-  %i.qw = zext nneg i32 %.0193.lcssa to i64       ; 4 uses
+  %i.qw = zext nneg i32 %.0193.lcssa to i64       ; 5 uses
   %umax = call i32 @llvm.umax.i32(i32 %.0193.lcssa, i32 2)
   %wide.trip.count = zext nneg i32 %umax to i64
   %exitcond673.not943 = icmp samesign ugt i32 %.0193.lcssa, 1
   br i1 %exitcond673.not943, label %.critedge273, label %.lr.ph946
 
 bb.cc:                                            ; preds = %.lr.ph946
-  %indvars.iv.next671 = add nuw nsw i64 %i.qw, 1  ; 3 uses
-  %exitcond673.not = icmp eq i64 %indvars.iv.next671, %wide.trip.count
+  %exitcond673.not = icmp eq i64 %indvars.iv.next672, %wide.trip.count
   br i1 %exitcond673.not, label %.critedge273, label %.lr.ph946.1
 
 .lr.ph946.1:                                      ; preds = %bb.cc
-  %13 = shl i64 %i.gl, %indvars.iv.next671        ; 2 uses
+  %indvars.iv.next672.1 = or disjoint i64 %i.qw, 2 ; 2 uses
+  %13 = mul nsw i64 %i.gl, %indvars.iv.next672.1  ; 2 uses
   %i.qx = getelementptr [4 x i8], ptr %i.mz, i64 %13
   %i.qy = load i32, ptr %i.qx, align 4, !tbaa !40 ; 2 uses
   %i.qz = sext i32 %i.qy to i64                   ; 2 uses
@@ -227,6 +227,7 @@ bb.cc:                                            ; preds = %.lr.ph946
   br i1 %i.rc, label %bb.cd, label %.critedge273, !llvm.loop !118
 
 .lr.ph946:                                        ; preds = %bb.cb
+  %indvars.iv.next672 = add nuw nsw i64 %i.qw, 1  ; 3 uses
   %i.rd = shl i64 %i.gl, %i.qw                    ; 2 uses
   %i.re = getelementptr [4 x i8], ptr %i.mz, i64 %i.rd
   %i.rf = load i32, ptr %i.re, align 4, !tbaa !40 ; 2 uses
@@ -237,11 +238,12 @@ bb.cc:                                            ; preds = %.lr.ph946
   br i1 %i.rj, label %bb.cd, label %bb.cc, !llvm.loop !118
 
 bb.cd:                                            ; preds = %.lr.ph946.1, %.lr.ph946
-  %indvars.iv670944.lcssa = phi i64 [ %i.qw, %.lr.ph946 ], [ %indvars.iv.next671, %.lr.ph946.1 ] ; 2 uses
+  %indvars.iv671945.lcssa = phi i64 [ %i.qw, %.lr.ph946 ], [ %indvars.iv.next672, %.lr.ph946.1 ]
+  %indvars.iv670944.lcssa = phi i64 [ %indvars.iv.next672, %.lr.ph946 ], [ %indvars.iv.next672.1, %.lr.ph946.1 ]
   %.lcssa980 = phi i64 [ %i.rd, %.lr.ph946 ], [ %13, %.lr.ph946.1 ] ; 2 uses
   %.lcssa978 = phi i32 [ %i.rf, %.lr.ph946 ], [ %i.qy, %.lr.ph946.1 ] ; 2 uses
   %.lcssa976 = phi i64 [ %i.rg, %.lr.ph946 ], [ %i.qz, %.lr.ph946.1 ] ; 2 uses
-  %i.rk = trunc nuw nsw i64 %indvars.iv670944.lcssa to i32
+  %i.rk = trunc nuw nsw i64 %indvars.iv671945.lcssa to i32
   %.0.neg = xor i32 %i.rk, -1
   %reass.sub = sub nsw i32 %.0.neg, %.0193.lcssa
   %i.rl = add i32 %reass.sub, 3                   ; 2 uses
@@ -331,9 +333,9 @@ bb.ci:                                            ; preds = %.lr.ph.i.i.i.i406
   %.pre688 = load i64, ptr %i.ay, align 8, !tbaa !38 ; 2 uses
   %.pre689 = load i64, ptr %i.as, align 8, !tbaa !59
   %.pre690 = load ptr, ptr %12, align 8, !tbaa !58
-  %.pre699 = shl i64 %.pre688, %indvars.iv670944.lcssa ; 2 uses
+  %.pre700 = mul nsw i64 %.pre688, %indvars.iv670944.lcssa ; 2 uses
   %.phi.trans.insert703 = getelementptr [4 x i8], ptr %.pre687, i64 %indvars.iv674
-  %.phi.trans.insert704 = getelementptr [4 x i8], ptr %.phi.trans.insert703, i64 %.pre699
+  %.phi.trans.insert704 = getelementptr [4 x i8], ptr %.phi.trans.insert703, i64 %.pre700
   %.pre705 = load i32, ptr %.phi.trans.insert704, align 4, !tbaa !40 ; 2 uses
   %.pre708 = sext i32 %.pre705 to i64
   br label %.loopexit502
@@ -347,7 +349,7 @@ _ZNSt10_HashtableIiSt4pairIKiiESaIS2_ENSt8__detail10_Select1stESt8equal_toIiESt4
 .loopexit502:                                     ; preds = %bb.ch, %.noexc415..loopexit502_crit_edge, %bb.cg
   %.pre-phi709 = phi i64 [ %.pre708, %.noexc415..loopexit502_crit_edge ], [ %.lcssa976, %bb.cg ], [ %.lcssa976, %bb.ch ] ; 2 uses
   %i.tf = phi i32 [ %.pre705, %.noexc415..loopexit502_crit_edge ], [ %.lcssa978, %bb.cg ], [ %.lcssa978, %bb.ch ] ; 2 uses
-  %.pre-phi700 = phi i64 [ %.pre699, %.noexc415..loopexit502_crit_edge ], [ %.lcssa980, %bb.cg ], [ %.lcssa980, %bb.ch ]
+  %.pre-phi700 = phi i64 [ %.pre700, %.noexc415..loopexit502_crit_edge ], [ %.lcssa980, %bb.cg ], [ %.lcssa980, %bb.ch ]
   %i.tg = phi ptr [ %.pre690, %.noexc415..loopexit502_crit_edge ], [ %i.sm, %bb.cg ], [ %i.sm, %bb.ch ]
   %i.th = phi i64 [ %.pre689, %.noexc415..loopexit502_crit_edge ], [ %i.sk, %bb.cg ], [ %i.sk, %bb.ch ] ; 2 uses
   %i.ti = phi i64 [ %.pre688, %.noexc415..loopexit502_crit_edge ], [ %i.gl, %bb.cg ], [ %i.gl, %bb.ch ] ; 2 uses

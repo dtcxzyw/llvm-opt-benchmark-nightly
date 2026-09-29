@@ -202,7 +202,8 @@ bb.ae:                                            ; preds = %bb.ad
   br label %_ZNK6icu_7810UCharsTrie7currentEv.exit
 
 bb.af:                                            ; preds = %bb.ac
-  %.not112 = icmp samesign ult i32 %.0, 32768
+  %3 = and i32 %.0, 32768
+  %.not112 = icmp eq i32 %3, 0
   br i1 %.not112, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
@@ -458,7 +459,8 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.b, !llvm.loop !32
 
 bb.i:                                             ; preds = %bb.g
-  %.not = icmp samesign ult i32 %.031, 32768      ; 2 uses
+  %3 = and i32 %.031, 32768
+  %.not = icmp eq i32 %3, 0                       ; 2 uses
   br i1 %.not, label %bb.n, label %bb.j
 
 bb.j:                                             ; preds = %bb.i

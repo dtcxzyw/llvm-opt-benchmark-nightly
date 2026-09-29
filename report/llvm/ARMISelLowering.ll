@@ -205,16 +205,15 @@ bb.e:                                             ; preds = %_ZN4llvm5ARMCCL19ge
 
 _ZNK4llvm3EVT15isFloatingPointEv.exit:            ; preds = %bb.d, %bb.e
   %i.an = phi i1 [ %i.al, %bb.d ], [ %i.am, %bb.e ]
-  %trunc = trunc nuw i32 %.0.i to i8
-  switch i8 %trunc, label %_ZL14isValidMVECondjb.exit.thread31 [
-    i8 0, label %_ZL14isValidMVECondjb.exit.thread
-    i8 1, label %_ZL14isValidMVECondjb.exit.thread
-    i8 13, label %_ZL14isValidMVECondjb.exit.thread
-    i8 12, label %_ZL14isValidMVECondjb.exit.thread
-    i8 10, label %_ZL14isValidMVECondjb.exit.thread
-    i8 11, label %_ZL14isValidMVECondjb.exit.thread
-    i8 2, label %_ZL14isValidMVECondjb.exit
-    i8 8, label %_ZL14isValidMVECondjb.exit
+  switch i32 %.0.i, label %_ZL14isValidMVECondjb.exit.thread31 [
+    i32 0, label %_ZL14isValidMVECondjb.exit.thread
+    i32 1, label %_ZL14isValidMVECondjb.exit.thread
+    i32 13, label %_ZL14isValidMVECondjb.exit.thread
+    i32 12, label %_ZL14isValidMVECondjb.exit.thread
+    i32 10, label %_ZL14isValidMVECondjb.exit.thread
+    i32 11, label %_ZL14isValidMVECondjb.exit.thread
+    i32 2, label %_ZL14isValidMVECondjb.exit
+    i32 8, label %_ZL14isValidMVECondjb.exit
   ]
 
 _ZL14isValidMVECondjb.exit:                       ; preds = %_ZNK4llvm3EVT15isFloatingPointEv.exit, %_ZNK4llvm3EVT15isFloatingPointEv.exit

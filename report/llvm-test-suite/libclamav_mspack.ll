@@ -205,10 +205,10 @@ split3330:                                        ; preds = %.preheader1332.19, 
   br label %bb.nr
 
 bb.fn:                                            ; preds = %.preheader1332.preheader
-  %2 = lshr i32 %.161083.lcssa, 19
-  %3 = trunc nuw nsw i32 %2 to i16
-  %4 = and i16 %3, 1
-  %i.rl = or disjoint i16 %i.rj, %4
+  %2 = and i32 %.161083.lcssa, 524288
+  %.not1219 = icmp ne i32 %2, 0
+  %3 = zext i1 %.not1219 to i16
+  %i.rl = or disjoint i16 %i.rj, %3
   %i.rm = zext nneg i16 %i.rl to i64
   %i.rn = getelementptr inbounds nuw [2 x i8], ptr %i.bu, i64 %i.rm
   %i.ro = load i16, ptr %i.rn, align 2, !tbaa !34 ; 3 uses
@@ -611,10 +611,10 @@ split3332:                                        ; preds = %.preheader.19, %.pr
   br label %bb.nr
 
 bb.gu:                                            ; preds = %.preheader.preheader
-  %5 = lshr i32 %.171084.lcssa, 19
-  %6 = trunc nuw nsw i32 %5 to i16
-  %7 = and i16 %6, 1
-  %i.aat = or disjoint i16 %i.aar, %7
+  %4 = and i32 %.171084.lcssa, 524288
+  %.not1220 = icmp ne i32 %4, 0
+  %5 = zext i1 %.not1220 to i16
+  %i.aat = or disjoint i16 %i.aar, %5
   %i.aau = zext nneg i16 %i.aat to i64
   %i.aav = getelementptr inbounds nuw [2 x i8], ptr %i.bw, i64 %i.aau
   %i.aaw = load i16, ptr %i.aav, align 2, !tbaa !34 ; 3 uses
@@ -1017,10 +1017,10 @@ split:                                            ; preds = %.preheader1349.19, 
   br label %bb.nr
 
 bb.iq:                                            ; preds = %.preheader1349.preheader
-  %8 = lshr i32 %.231090.lcssa, 19
-  %9 = trunc nuw nsw i32 %8 to i16
-  %10 = and i16 %9, 1
-  %i.apk = or disjoint i16 %i.api, %10
+  %6 = and i32 %.231090.lcssa, 524288
+  %.not1200 = icmp ne i32 %6, 0
+  %7 = zext i1 %.not1200 to i16
+  %i.apk = or disjoint i16 %i.api, %7
   %i.apl = zext nneg i16 %i.apk to i64
   %i.apm = getelementptr inbounds nuw [2 x i8], ptr %i.bu, i64 %i.apl
   %i.apn = load i16, ptr %i.apm, align 2, !tbaa !34 ; 3 uses
@@ -1423,10 +1423,10 @@ split3328:                                        ; preds = %.preheader1345.19, 
   br label %bb.nr
 
 bb.jx:                                            ; preds = %.preheader1345.preheader
-  %11 = lshr i32 %.241091.lcssa, 19
-  %12 = trunc nuw nsw i32 %11 to i16
-  %13 = and i16 %12, 1
-  %i.ays = or disjoint i16 %i.ayq, %13
+  %8 = and i32 %.241091.lcssa, 524288
+  %.not1201 = icmp ne i32 %8, 0
+  %9 = zext i1 %.not1201 to i16
+  %i.ays = or disjoint i16 %i.ayq, %9
   %i.ayt = zext nneg i16 %i.ays to i64
   %i.ayu = getelementptr inbounds nuw [2 x i8], ptr %i.bw, i64 %i.ayt
   %i.ayv = load i16, ptr %i.ayu, align 2, !tbaa !34 ; 3 uses

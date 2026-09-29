@@ -205,7 +205,7 @@ define noundef i32 @_ZN5ImGui11GetKeyOwnerE8ImGuiKey(i32 noundef %0) local_unnam
 bb.a:
   %i.a = add i32 %0, -512                         ; 2 uses
   %or.cond.i = icmp ult i32 %i.a, 155
-  %.pre = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %0)
+  %.pre = tail call range(i32 1, 10) i32 @llvm.ctpop.i32(i32 %0)
   %i.b = icmp eq i32 %.pre, 1                     ; 2 uses
   br i1 %or.cond.i, label %._crit_edge, label %switch.early.test.i
 

@@ -205,10 +205,11 @@ switch.lookup:                                    ; preds = %_ZNSt6vectorIPN4LIE
   %i.dc = zext nneg i16 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4LIEF5MachO12BinaryParser12post_processINS0_7details7MachO32EEENS_10ok_error_tERNS0_17LazyLoadDylibInfoE, i64 %i.dc
   %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %_ZN4LIEF5MachO22ChainedPointerAnalysis8ptr_sizeENS0_23DYLD_CHAINED_PTR_FORMATE.exit
 
 _ZN4LIEF5MachO22ChainedPointerAnalysis8ptr_sizeENS0_23DYLD_CHAINED_PTR_FORMATE.exit: ; preds = %_ZNSt6vectorIPN4LIEF5MachO17LazyLoadDylibInfoESaIS3_EE9push_backEOS3_.exit, %switch.lookup
-  %.0.i = phi i8 [ %switch.load, %switch.lookup ], [ 0, %_ZNSt6vectorIPN4LIEF5MachO17LazyLoadDylibInfoESaIS3_EE9push_backEOS3_.exit ]
+  %.0.i = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %_ZNSt6vectorIPN4LIEF5MachO17LazyLoadDylibInfoESaIS3_EE9push_backEOS3_.exit ]
   %i.dd = load i8, ptr %i.d, align 2, !tbaa !685, !range !256, !noundef !257
   %i.de = trunc nuw i8 %i.dd to i1
   br i1 %i.de, label %bb.s, label %bb.n
@@ -220,9 +221,9 @@ bb.n:                                             ; preds = %_ZN4LIEF5MachO22Cha
   br i1 %.not, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  switch i8 %.0.i, label %bb.s [
-    i8 8, label %bb.p
-    i8 4, label %bb.p
+  switch i64 %.0.i, label %bb.s [
+    i64 8, label %bb.p
+    i64 4, label %bb.p
   ]
 
 bb.p:                                             ; preds = %bb.o, %bb.o
@@ -625,10 +626,11 @@ switch.lookup:                                    ; preds = %_ZNSt6vectorIPN4LIE
   %i.dc = zext nneg i16 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4LIEF5MachO12BinaryParser12post_processINS0_7details7MachO32EEENS_10ok_error_tERNS0_17LazyLoadDylibInfoE, i64 %i.dc
   %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %_ZN4LIEF5MachO22ChainedPointerAnalysis8ptr_sizeENS0_23DYLD_CHAINED_PTR_FORMATE.exit
 
 _ZN4LIEF5MachO22ChainedPointerAnalysis8ptr_sizeENS0_23DYLD_CHAINED_PTR_FORMATE.exit: ; preds = %_ZNSt6vectorIPN4LIEF5MachO17LazyLoadDylibInfoESaIS3_EE9push_backEOS3_.exit, %switch.lookup
-  %.0.i = phi i8 [ %switch.load, %switch.lookup ], [ 0, %_ZNSt6vectorIPN4LIEF5MachO17LazyLoadDylibInfoESaIS3_EE9push_backEOS3_.exit ]
+  %.0.i = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %_ZNSt6vectorIPN4LIEF5MachO17LazyLoadDylibInfoESaIS3_EE9push_backEOS3_.exit ]
   %i.dd = load i8, ptr %i.d, align 2, !tbaa !685, !range !256, !noundef !257
   %i.de = trunc nuw i8 %i.dd to i1
   br i1 %i.de, label %bb.s, label %bb.n
@@ -640,9 +642,9 @@ bb.n:                                             ; preds = %_ZN4LIEF5MachO22Cha
   br i1 %.not, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  switch i8 %.0.i, label %bb.s [
-    i8 8, label %bb.p
-    i8 4, label %bb.p
+  switch i64 %.0.i, label %bb.s [
+    i64 8, label %bb.p
+    i64 4, label %bb.p
   ]
 
 bb.p:                                             ; preds = %bb.o, %bb.o

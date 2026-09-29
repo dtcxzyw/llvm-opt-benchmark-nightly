@@ -204,7 +204,8 @@ bb.z:                                             ; preds = %bb.y
   %.078.i1391 = phi i64 [ 0, %bb.z ], [ 1, %.critedge.i ] ; 2 uses
   %i.nq = phi <4 x i32> [ %i.mr, %bb.z ], [ %i.akt, %.critedge.i ]
   %i.nr = mul nuw nsw i64 %.078.i1391, %i.mx      ; 2 uses
-  %12 = shl nuw nsw i64 %i.mx, %.078.i1391        ; 2 uses
+  %12 = add nuw nsw i64 %.078.i1391, 1
+  %13 = mul nuw nsw i64 %12, %i.mx                ; 2 uses
   br label %bb.aa
 
 bb.aa:                                            ; preds = %_ZNK6embree4sse217OccludedKEpilogMUILi1ELi4ELb1EEclINS0_12PlueckerHitKILi4ENS0_6MapUV1ILi4EEEEEEENS_11vboolf_implILi4EEERKS9_RKT_.exit, %.preheader1364
@@ -213,8 +214,8 @@ bb.aa:                                            ; preds = %_ZNK6embree4sse217O
   %i.nt = add nuw nsw i64 %.0.i1490, %i.nr        ; 4 uses
   %i.nu = add nuw nsw i64 %.0.i1490, 1            ; 4 uses
   %i.nv = add nuw nsw i64 %i.nu, %i.nr            ; 5 uses
-  %i.nw = add nuw nsw i64 %.0.i1490, %12          ; 5 uses
-  %i.nx = add nuw nsw i64 %i.nu, %12              ; 4 uses
+  %i.nw = add nuw nsw i64 %.0.i1490, %13          ; 5 uses
+  %i.nx = add nuw nsw i64 %i.nu, %13              ; 4 uses
   %i.ny = getelementptr inbounds nuw [4 x i8], ptr %i.ne, i64 %i.nt
   %i.nz = load float, ptr %i.ny, align 4, !noalias !3432
   %i.oa = insertelement <4 x float> poison, float %i.nz, i64 0
@@ -617,7 +618,7 @@ _ZNK6embree4sse217OccludedKEpilogMUILi1ELi4ELb1EEclINS0_12PlueckerHitKILi4ENS0_6
   %i.aks = bitcast <4 x i1> %i.akr to i4
   %.not1359 = icmp eq i4 %i.aks, 0
   %exitcond.not = icmp eq i64 %i.nu, %i.nj
-  %or.cond = or i1 %.not1359, %exitcond.not
+  %or.cond = select i1 %.not1359, i1 true, i1 %exitcond.not
   br i1 %or.cond, label %.critedge.i, label %bb.aa, !llvm.loop !42
 
 .critedge.i:                                      ; preds = %_ZNK6embree4sse217OccludedKEpilogMUILi1ELi4ELb1EEclINS0_12PlueckerHitKILi4ENS0_6MapUV0ILi4EEEEEEENS_11vboolf_implILi4EEERKS9_RKT_.exit, %_ZNK6embree4sse217OccludedKEpilogMUILi1ELi4ELb1EEclINS0_12PlueckerHitKILi4ENS0_6MapUV1ILi4EEEEEEENS_11vboolf_implILi4EEERKS9_RKT_.exit
@@ -1020,7 +1021,8 @@ bb.u:                                             ; preds = %.lr.ph, %_ZN6embree
   %.0116.i1564 = phi i64 [ 0, %bb.u ], [ 1, %.thread1509 ] ; 2 uses
   %i.lh = phi <4 x i32> [ %i.ki, %bb.u ], [ %i.alu, %.thread1509 ]
   %i.li = mul nuw nsw i64 %.0116.i1564, %i.kp     ; 2 uses
-  %13 = shl nuw nsw i64 %i.kp, %.0116.i1564       ; 2 uses
+  %13 = add nuw nsw i64 %.0116.i1564, 1
+  %14 = mul nuw nsw i64 %13, %i.kp                ; 2 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.at, %.preheader1544
@@ -1029,8 +1031,8 @@ bb.v:                                             ; preds = %bb.at, %.preheader1
   %i.lk = add nuw nsw i64 %.0.i1649, %i.li        ; 4 uses
   %i.ll = add nuw nsw i64 %.0.i1649, 1            ; 4 uses
   %i.lm = add nuw nsw i64 %i.ll, %i.li            ; 4 uses
-  %i.ln = add nuw nsw i64 %.0.i1649, %13          ; 4 uses
-  %i.lo = add nuw nsw i64 %i.ll, %13              ; 4 uses
+  %i.ln = add nuw nsw i64 %.0.i1649, %14          ; 4 uses
+  %i.lo = add nuw nsw i64 %i.ll, %14              ; 4 uses
   %i.lp = getelementptr inbounds nuw [4 x i8], ptr %i.ky, i64 %i.lk
   %i.lq = load float, ptr %i.lp, align 4, !noalias !3583
   %i.lr = insertelement <4 x float> poison, float %i.lq, i64 0
@@ -1433,7 +1435,8 @@ bb.v:                                             ; preds = %bb.u
   %i.mz = phi i1 [ %i.mw, %bb.v ], [ false, %bb.w ]
   %.077.i1762 = phi i64 [ 0, %bb.v ], [ 1, %bb.w ] ; 2 uses
   %i.na = mul nuw nsw i64 %.077.i1762, %i.mi      ; 2 uses
-  %16 = shl nuw nsw i64 %i.mi, %.077.i1762        ; 2 uses
+  %16 = add nuw nsw i64 %.077.i1762, 1
+  %17 = mul nuw nsw i64 %16, %i.mi                ; 2 uses
   br label %bb.x
 
 bb.w:                                             ; preds = %_ZNK6embree4sse218IntersectKEpilogMUILi1ELi4ELb1EEclINS0_12PlueckerHitKILi4ENS0_6MapUV1ILi4EEEEEEENS_11vboolf_implILi4EEERKS9_RKT_.exit
@@ -1445,8 +1448,8 @@ bb.x:                                             ; preds = %.preheader1749, %_Z
   %i.nc = add nuw nsw i64 %.0.i1761, %i.na        ; 4 uses
   %i.nd = add nuw nsw i64 %.0.i1761, 1            ; 2 uses
   %i.ne = add nuw nsw i64 %i.nd, %i.na            ; 4 uses
-  %i.nf = add nuw nsw i64 %.0.i1761, %16          ; 4 uses
-  %i.ng = add nuw nsw i64 %i.nd, %16              ; 4 uses
+  %i.nf = add nuw nsw i64 %.0.i1761, %17          ; 4 uses
+  %i.ng = add nuw nsw i64 %i.nd, %17              ; 4 uses
   %i.nh = getelementptr inbounds nuw [4 x i8], ptr %i.mp, i64 %i.nc
   %i.ni = load float, ptr %i.nh, align 4
   %i.nj = insertelement <4 x float> poison, float %i.ni, i64 0
@@ -1849,7 +1852,8 @@ bb.l:                                             ; preds = %._crit_edge.thread
   %.078.i1588 = phi i64 [ 0, %bb.l ], [ 1, %.critedge.i ] ; 2 uses
   %i.mf = phi <4 x i32> [ %i.lg, %bb.l ], [ %i.aji, %.critedge.i ]
   %i.mg = mul nuw nsw i64 %.078.i1588, %i.lm      ; 2 uses
-  %12 = shl nuw nsw i64 %i.lm, %.078.i1588        ; 2 uses
+  %12 = add nuw nsw i64 %.078.i1588, 1
+  %13 = mul nuw nsw i64 %12, %i.lm                ; 2 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZNK6embree4sse217OccludedKEpilogMUILi1ELi4ELb1EEclINS0_12PlueckerHitKILi4ENS0_6MapUV1ILi4EEEEEEENS_11vboolf_implILi4EEERKS9_RKT_.exit, %.preheader1574
@@ -1858,8 +1862,8 @@ bb.m:                                             ; preds = %_ZNK6embree4sse217O
   %i.mi = add nuw nsw i64 %.0.i1646, %i.mg        ; 4 uses
   %i.mj = add nuw nsw i64 %.0.i1646, 1            ; 4 uses
   %i.mk = add nuw nsw i64 %i.mj, %i.mg            ; 5 uses
-  %i.ml = add nuw nsw i64 %.0.i1646, %12          ; 5 uses
-  %i.mm = add nuw nsw i64 %i.mj, %12              ; 4 uses
+  %i.ml = add nuw nsw i64 %.0.i1646, %13          ; 5 uses
+  %i.mm = add nuw nsw i64 %i.mj, %13              ; 4 uses
   %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.lt, i64 %i.mi
   %i.mo = load float, ptr %i.mn, align 4, !noalias !13387
   %i.mp = insertelement <4 x float> poison, float %i.mo, i64 0
@@ -2262,7 +2266,7 @@ _ZNK6embree4sse217OccludedKEpilogMUILi1ELi4ELb1EEclINS0_12PlueckerHitKILi4ENS0_6
   %i.ajh = bitcast <4 x i1> %i.ajg to i4
   %.not1570 = icmp eq i4 %i.ajh, 0
   %exitcond.not = icmp eq i64 %i.mj, %i.ly
-  %or.cond = or i1 %.not1570, %exitcond.not
+  %or.cond = select i1 %.not1570, i1 true, i1 %exitcond.not
   br i1 %or.cond, label %.critedge.i, label %bb.m, !llvm.loop !42
 
 .critedge.i:                                      ; preds = %_ZNK6embree4sse217OccludedKEpilogMUILi1ELi4ELb1EEclINS0_12PlueckerHitKILi4ENS0_6MapUV0ILi4EEEEEEENS_11vboolf_implILi4EEERKS9_RKT_.exit, %_ZNK6embree4sse217OccludedKEpilogMUILi1ELi4ELb1EEclINS0_12PlueckerHitKILi4ENS0_6MapUV1ILi4EEEEEEENS_11vboolf_implILi4EEERKS9_RKT_.exit

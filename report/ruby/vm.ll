@@ -205,15 +205,14 @@ bb.g:                                             ; preds = %bb.f, %rb_class_of.
 
 vm_search_method.exit:                            ; preds = %bb.f, %bb.g
   %.0.i.val.i = phi ptr [ %.0.i.val.pre.i, %bb.g ], [ %.val.i, %bb.f ] ; 12 uses
-  %trunc = trunc nuw i32 %.0.i5254 to i8
-  switch i8 %trunc, label %check_method_basic_definition.exit.thread [
-    i8 20, label %bb.h
-    i8 3, label %bb.j
-    i8 2, label %bb.j
-    i8 17, label %bb.n
-    i8 18, label %bb.q
-    i8 19, label %bb.t
-    i8 21, label %bb.w
+  switch i32 %.0.i5254, label %check_method_basic_definition.exit.thread [
+    i32 20, label %bb.h
+    i32 3, label %bb.j
+    i32 2, label %bb.j
+    i32 17, label %bb.n
+    i32 18, label %bb.q
+    i32 19, label %bb.t
+    i32 21, label %bb.w
   ]
 
 bb.h:                                             ; preds = %vm_search_method.exit

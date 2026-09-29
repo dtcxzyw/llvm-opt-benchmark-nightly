@@ -148,7 +148,6 @@ bb.m:                                             ; preds = %bb.l, %switch.looku
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
   %i.al = zext nneg i32 %.0143 to i64
   %i.am = trunc nuw nsw i32 %. to i16
-  %trunc = trunc nuw i32 %.0143 to i8
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %.loopexit203
@@ -208,10 +207,10 @@ bb.s:                                             ; preds = %.preheader
   br i1 %i.af, label %bb.t, label %bb.y
 
 bb.t:                                             ; preds = %bb.s
-  switch i8 %trunc, label %default.unreachable245 [
-    i8 4, label %bb.u
-    i8 3, label %bb.v
-    i8 2, label %bb.w
+  switch i32 %.0143, label %default.unreachable245 [
+    i32 4, label %bb.u
+    i32 3, label %bb.v
+    i32 2, label %bb.w
   ]
 
 bb.u:                                             ; preds = %bb.t
