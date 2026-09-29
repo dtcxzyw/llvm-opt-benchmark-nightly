@@ -205,8 +205,6 @@ $_ZN2v88internal4wasm8LoadType8kMemTypeE = comdat any
 
 $_ZN2v88internal4wasm9StoreType14kStoreSizeLog2E = comdat any
 
-$_ZN2v88internal4wasm9StoreType7kMemRepE = comdat any
-
 $_ZN2v88internal4wasm4impl11kCachedSigsE = comdat any
 
 $_ZN2v88internal4wasm4impl8kSig_s_sE = comdat any
@@ -533,7 +531,6 @@ $_ZN2v88internal4wasm4impl10kTypes_v_vE = comdat any
 @_ZN2v88internal4wasm8LoadType8kMemTypeE = linkonce_odr hidden local_unnamed_addr constant [16 x %"class.v8::internal::MachineType"] [%"class.v8::internal::MachineType" { i8 4, i8 2 }, %"class.v8::internal::MachineType" { i8 2, i8 2 }, %"class.v8::internal::MachineType" { i8 2, i8 3 }, %"class.v8::internal::MachineType" { i8 3, i8 2 }, %"class.v8::internal::MachineType" { i8 3, i8 3 }, %"class.v8::internal::MachineType" { i8 5, i8 4 }, %"class.v8::internal::MachineType" { i8 2, i8 2 }, %"class.v8::internal::MachineType" { i8 2, i8 3 }, %"class.v8::internal::MachineType" { i8 3, i8 2 }, %"class.v8::internal::MachineType" { i8 3, i8 3 }, %"class.v8::internal::MachineType" { i8 4, i8 2 }, %"class.v8::internal::MachineType" { i8 4, i8 3 }, %"class.v8::internal::MachineType" { i8 16, i8 8 }, %"class.v8::internal::MachineType" { i8 17, i8 8 }, %"class.v8::internal::MachineType" { i8 18, i8 8 }, %"class.v8::internal::MachineType" { i8 19, i8 0 }], comdat, align 16
 @__const._ZN2v88internal4wasmL11GetLoadTypeENS1_10WasmOpcodeE.kLoadTypes = private unnamed_addr constant [14 x %"class.v8::internal::wasm::LoadType"] [%"class.v8::internal::wasm::LoadType" zeroinitializer, %"class.v8::internal::wasm::LoadType" { i8 5 }, %"class.v8::internal::wasm::LoadType" { i8 13 }, %"class.v8::internal::wasm::LoadType" { i8 14 }, %"class.v8::internal::wasm::LoadType" { i8 1 }, %"class.v8::internal::wasm::LoadType" { i8 2 }, %"class.v8::internal::wasm::LoadType" { i8 3 }, %"class.v8::internal::wasm::LoadType" { i8 4 }, %"class.v8::internal::wasm::LoadType" { i8 6 }, %"class.v8::internal::wasm::LoadType" { i8 7 }, %"class.v8::internal::wasm::LoadType" { i8 8 }, %"class.v8::internal::wasm::LoadType" { i8 9 }, %"class.v8::internal::wasm::LoadType" { i8 10 }, %"class.v8::internal::wasm::LoadType" { i8 11 }], align 1
 @_ZN2v88internal4wasm9StoreType14kStoreSizeLog2E = linkonce_odr hidden local_unnamed_addr constant [11 x i8] c"\02\00\01\03\00\01\02\01\02\03\04", comdat, align 1
-@_ZN2v88internal4wasm9StoreType7kMemRepE = linkonce_odr hidden local_unnamed_addr constant [11 x i8] c"\04\02\03\05\02\03\04\10\11\12\13", comdat, align 1
 @__const._ZN2v88internal4wasmL12GetStoreTypeENS1_10WasmOpcodeE.kStoreTypes = private unnamed_addr constant [9 x %"class.v8::internal::wasm::StoreType"] [%"class.v8::internal::wasm::StoreType" zeroinitializer, %"class.v8::internal::wasm::StoreType" { i8 3 }, %"class.v8::internal::wasm::StoreType" { i8 8 }, %"class.v8::internal::wasm::StoreType" { i8 9 }, %"class.v8::internal::wasm::StoreType" { i8 1 }, %"class.v8::internal::wasm::StoreType" { i8 2 }, %"class.v8::internal::wasm::StoreType" { i8 4 }, %"class.v8::internal::wasm::StoreType" { i8 5 }, %"class.v8::internal::wasm::StoreType" { i8 6 }], align 1
 @.str.152 = private unnamed_addr constant [17 x i8] c"object reference\00", align 1
 @.str.154 = private unnamed_addr constant [7 x i8] c"<null>\00", align 1
@@ -936,6 +933,7 @@ begin_hunk_1
 @switch.table._ZN2v88internal4wasm32TurboshaftGraphBuildingInterface12AsmjsLoadMemENS0_8compiler10turboshaft1VINS4_12WordWithBitsILm32EEEEENS4_20MemoryRepresentationE.6 = private unnamed_addr constant [22 x i8] c"\00\00\00\00\00\00\01\01\02\02\03\04\04\04\04\04\04\04\04\01\06\07", align 8
 @switch.table._ZN2v88internal4wasm32TurboshaftGraphBuildingInterface9ArrayCopyEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEERKNS2_5ValueESB_SB_SB_RKNS1_19ArrayIndexImmediateESB_ = private unnamed_addr constant [6 x i8] c"##d\14\14#", align 8
 @switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_16Simd128ShuffleOpEJNS2_14ShadowyOpIndexESG_NSF_4KindEPKhEEENS2_7OpIndexEDpT0_ = private unnamed_addr constant [4 x i8] c"\02\04\08\10", align 8
+@switch.table._ZN2v88internal4wasm32TurboshaftGraphBuildingInterface9StoreLaneEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEENS1_9StoreTypeERKNS1_21MemoryAccessImmediateERKNS2_5ValueESF_h = private unnamed_addr constant [11 x i8] c"\05\01\03\07\01\03\05\08\09\0A\14", align 1
 @switch.table._ZZN2v88internal4wasm32TurboshaftGraphBuildingInterface8AtomicOpEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEENS1_10WasmOpcodeEPKNS2_5ValueEmRKNS1_21MemoryAccessImmediateEPSA_EN12AtomicOpInfo3GetES9_ = private unnamed_addr constant [63 x i64] [i64 1407374883553281, i64 1971424348602369, i64 281474976710657, i64 844424930131969, i64 282574488338433, i64 845524441759745, i64 1408474395181057, i64 1407374883553282, i64 1971424348602370, i64 281474976710658, i64 844424930131970, i64 282574488338434, i64 845524441759746, i64 1408474395181058, i64 1407374883553280, i64 1971424348602368, i64 281474976710656, i64 844424930131968, i64 282574488338432, i64 845524441759744, i64 1408474395181056, i64 1407379178520576, i64 1971428643569664, i64 281479271677952, i64 844429225099264, i64 282578783305728, i64 845528736727040, i64 1408478690148352, i64 1407383473487872, i64 1971432938536960, i64 281483566645248, i64 844433520066560, i64 282583078273024, i64 845533031694336, i64 1408482985115648, i64 1407387768455168, i64 1971437233504256, i64 281487861612544, i64 844437815033856, i64 282587373240320, i64 845537326661632, i64 1408487280082944, i64 1407392063422464, i64 1971441528471552, i64 281492156579840, i64 844442110001152, i64 282591668207616, i64 845541621628928, i64 1408491575050240, i64 1407396358389760, i64 1971445823438848, i64 281496451547136, i64 844446404968448, i64 282595963174912, i64 845545916596224, i64 1408495870017536, i64 1407400653357056, i64 1971450118406144, i64 281500746514432, i64 844450699935744, i64 282600258142208, i64 845550211563520, i64 1408500164984832], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -1338,93 +1336,27 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32Turbos
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface8StoreMemEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEENS1_9StoreTypeERKNS1_21MemoryAccessImmediateERKNS2_5ValueESF_(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %1, i8 %2, ptr noundef nonnull align 8 dereferenceable(28) %3, ptr noundef nonnull align 4 dereferenceable(8) %4, ptr noundef nonnull align 4 dereferenceable(8) %5) local_unnamed_addr #0 comdat align 2 {
-  %7 = alloca [1 x %"struct.std::pair.1252"], align 4 ; 5 uses
-  %8 = icmp ne i8 %2, 7                           ; 2 uses
-  %9 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8compiler10turboshaft19SupportedOperations9instance_E, i64 31), align 1, !range !38
-  %10 = trunc nuw i8 %9 to i1                     ; 2 uses
-  %spec.select = select i1 %10, i8 7, i8 2
-  %.sroa.068.0 = select i1 %8, i8 %2, i8 %spec.select
-  %.0.not = select i1 %8, i1 true, i1 %10
-  %11 = zext i8 %.sroa.068.0 to i64
-  %12 = getelementptr inbounds nuw i8, ptr @_ZN2v88internal4wasm9StoreType7kMemRepE, i64 %11
-  %13 = load i8, ptr %12, align 1
-  switch i8 %13, label %27 [
-    i8 2, label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-    i8 3, label %14
-    i8 4, label %15
-    i8 5, label %16
-    i8 7, label %17
-    i8 8, label %18
-    i8 9, label %19
-    i8 16, label %20
-    i8 17, label %21
-    i8 18, label %22
-    i8 14, label %23
-    i8 19, label %24
-    i8 20, label %25
-    i8 0, label %26
-    i8 6, label %26
-    i8 1, label %26
-    i8 10, label %26
-    i8 11, label %26
-    i8 12, label %26
-    i8 13, label %26
-    i8 15, label %26
-  ]
-
-14:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-15:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-16:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-17:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-18:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-19:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-20:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-21:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-22:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-23:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-24:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-25:                                               ; preds = %6
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-26:                                               ; preds = %6, %6, %6, %6, %6, %6, %6, %6
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.26) #21
-  unreachable
-
-27:                                               ; preds = %6
-  unreachable
-
-_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit: ; preds = %6, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25
-  %switch.i = phi i1 [ false, %25 ], [ false, %14 ], [ false, %15 ], [ false, %16 ], [ false, %17 ], [ false, %18 ], [ false, %19 ], [ false, %20 ], [ false, %21 ], [ false, %22 ], [ false, %23 ], [ false, %24 ], [ true, %6 ]
-  %.sroa.0.0.i = phi i8 [ 21, %25 ], [ 3, %14 ], [ 5, %15 ], [ 7, %16 ], [ 13, %17 ], [ 12, %18 ], [ 11, %19 ], [ 8, %20 ], [ 9, %21 ], [ 10, %22 ], [ 19, %23 ], [ 20, %24 ], [ 1, %6 ] ; 5 uses
+_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit:
+  %6 = alloca [1 x %"struct.std::pair.1252"], align 4 ; 5 uses
+  %7 = icmp ne i8 %2, 7                           ; 2 uses
+  %8 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8compiler10turboshaft19SupportedOperations9instance_E, i64 31), align 1, !range !38
+  %9 = trunc nuw i8 %8 to i1                      ; 2 uses
+  %spec.select = select i1 %9, i8 7, i8 2
+  %.sroa.068.0 = select i1 %7, i8 %2, i8 %spec.select ; 2 uses
+  %.0.not = select i1 %7, i1 true, i1 %9
+  %10 = zext i8 %.sroa.068.0 to i64
+  %switch.cast = zext nneg i8 %.sroa.068.0 to i11
+  %switch.downshift = lshr i11 18, %switch.cast
+  %switch.masked = trunc i11 %switch.downshift to i1
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal4wasm32TurboshaftGraphBuildingInterface9StoreLaneEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEENS1_9StoreTypeERKNS1_21MemoryAccessImmediateERKNS2_5ValueESF_h, i64 %10
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 4
   %.sroa.030.0.copyload = load i32, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8
-  %i.f = tail call i64 @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface14BoundsCheckMemEPKNS1_10WasmMemoryENS0_8compiler10turboshaft20MemoryRepresentationENS7_7OpIndexEmNS6_18EnforceBoundsCheckENS6_14AlignmentCheckE(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %i.b, i8 %.sroa.0.0.i, i32 %.sroa.030.0.copyload, i64 noundef %i.e, i1 noundef zeroext false, i1 noundef zeroext false) ; 2 uses
+  %i.f = tail call i64 @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface14BoundsCheckMemEPKNS1_10WasmMemoryENS0_8compiler10turboshaft20MemoryRepresentationENS7_7OpIndexEmNS6_18EnforceBoundsCheckENS6_14AlignmentCheckE(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %i.b, i8 %switch.load, i32 %.sroa.030.0.copyload, i64 noundef %i.e, i1 noundef zeroext false, i1 noundef zeroext false) ; 2 uses
   %.sroa.062.0.extract.trunc = trunc i64 %i.f to i32 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4              ; 2 uses
@@ -1474,10 +1406,10 @@ _ZN2v88internal4wasm32TurboshaftGraphBuildingInterface8MemStartEj.exit: ; preds 
   br i1 %i.ab, label %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface19GetMemoryAccessKindENS0_8compiler10turboshaft20MemoryRepresentationENS3_17BoundsCheckResultE.exit, label %bb.d
 
 bb.d:                                             ; preds = %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface8MemStartEj.exit
-  br i1 %switch.i, label %bb.f, label %bb.e
+  br i1 %switch.masked, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ac = tail call noundef zeroext i1 @_ZN2v88internal8compiler10turboshaft19SupportedOperations24IsUnalignedLoadSupportedENS2_20MemoryRepresentationE(i8 %.sroa.0.0.i) #22
+  %i.ac = tail call noundef zeroext i1 @_ZN2v88internal8compiler10turboshaft19SupportedOperations24IsUnalignedLoadSupportedENS2_20MemoryRepresentationE(i8 %switch.load) #22
   br i1 %i.ac, label %bb.f, label %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface19GetMemoryAccessKindENS0_8compiler10turboshaft20MemoryRepresentationENS3_17BoundsCheckResultE.exit
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -1492,7 +1424,7 @@ _ZN2v88internal4wasm32TurboshaftGraphBuildingInterface19GetMemoryAccessKindENS0_
   br i1 %i.ae, label %bb.g, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE22TruncateWord64ToWord32ENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit
 
 bb.g:                                             ; preds = %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface19GetMemoryAccessKindENS0_8compiler10turboshaft20MemoryRepresentationENS3_17BoundsCheckResultE.exit
-  switch i8 %.sroa.0.0.i, label %default.unreachable [
+  switch i8 %switch.load, label %default.unreachable [
     i8 21, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE22TruncateWord64ToWord32ENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit
     i8 1, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit.i
     i8 2, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit.i
@@ -1538,12 +1470,12 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
 
 bb.i:                                             ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE22TruncateWord64ToWord32ENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit
   %i.am = tail call i64 @_ZN2v88internal17ExternalReference23wasm_float32_to_float16Ev() #22
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
-  store i32 %.sroa.021.0, ptr %7, align 4
-  %i.an = getelementptr inbounds nuw i8, ptr %7, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
+  store i32 %.sroa.021.0, ptr %6, align 4
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 4
   store i8 9, ptr %i.an, align 4
-  %i.ao = call i32 @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface25CallCStackSlotToStackSlotENS0_17ExternalReferenceENS0_8compiler10turboshaft20MemoryRepresentationESt16initializer_listISt4pairINS5_7OpIndexES6_EE(ptr noundef nonnull align 8 dereferenceable(288) %0, i64 %i.am, i8 2, ptr nonnull %7, i64 1)
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
+  %i.ao = call i32 @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface25CallCStackSlotToStackSlotENS0_17ExternalReferenceENS0_8compiler10turboshaft20MemoryRepresentationESt16initializer_listISt4pairINS5_7OpIndexES6_EE(ptr noundef nonnull align 8 dereferenceable(288) %0, i64 %i.am, i8 2, ptr nonnull %6, i64 1)
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE22TruncateWord64ToWord32ENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit
@@ -1588,7 +1520,7 @@ bb.m:                                             ; preds = %bb.j
 
 bb.n:                                             ; preds = %.thread
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bd, i64 32
-  %i.bi = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_7StoreOpEJNS2_14ShadowyOpIndexENS2_15OptionalOpIndexESG_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.bh, i32 %.sroa.08.083, i32 %.sroa.062.0.extract.trunc, i32 %.sroa.021.1, i8 %.sroa.0.0.i47, i8 %.sroa.0.0.i, i8 noundef zeroext 0, i32 noundef %i.bb, i8 noundef zeroext 0, i1 noundef zeroext false, i64 noundef 0) ; 0 uses
+  %i.bi = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_7StoreOpEJNS2_14ShadowyOpIndexENS2_15OptionalOpIndexESG_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.bh, i32 %.sroa.08.083, i32 %.sroa.062.0.extract.trunc, i32 %.sroa.021.1, i8 %.sroa.0.0.i47, i8 %switch.load, i8 noundef zeroext 0, i32 noundef %i.bb, i8 noundef zeroext 0, i1 noundef zeroext false, i64 noundef 0) ; 0 uses
   br label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit: ; preds = %.thread, %bb.n
@@ -1599,7 +1531,7 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
 bb.o:                                             ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit
   %i.bl = load i32, ptr %i.g, align 4
   %i.bm = load i64, ptr %i.d, align 8
-  call void @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface20TraceMemoryOperationEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEbjNS0_8compiler10turboshaft20MemoryRepresentationENSA_1VINSA_12WordWithBitsILm64EEEEEm(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %1, i1 noundef zeroext true, i32 noundef %i.bl, i8 %.sroa.0.0.i, i32 %.sroa.062.0.extract.trunc, i64 noundef %i.bm)
+  call void @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface20TraceMemoryOperationEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEbjNS0_8compiler10turboshaft20MemoryRepresentationENSA_1VINSA_12WordWithBitsILm64EEEEEm(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %1, i1 noundef zeroext true, i32 noundef %i.bl, i8 %switch.load, i32 %.sroa.062.0.extract.trunc, i64 noundef %i.bm)
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit
@@ -2002,97 +1934,30 @@ _ZN2v88internal8compiler10turboshaft23GrowingOpIndexSidetableINS2_7OpIndexEEixES
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface9StoreLaneEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEENS1_9StoreTypeERKNS1_21MemoryAccessImmediateERKNS2_5ValueESF_h(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %1, i8 %2, ptr noundef nonnull align 8 dereferenceable(28) %3, ptr noundef nonnull align 4 dereferenceable(8) %4, ptr noundef nonnull align 4 dereferenceable(8) %5, i8 noundef zeroext %6) local_unnamed_addr #0 comdat align 2 {
-  %8 = zext i8 %2 to i64
-  %9 = getelementptr inbounds nuw i8, ptr @_ZN2v88internal4wasm9StoreType7kMemRepE, i64 %8
-  %10 = load i8, ptr %9, align 1
-  switch i8 %10, label %24 [
-    i8 2, label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-    i8 3, label %11
-    i8 4, label %12
-    i8 5, label %13
-    i8 7, label %14
-    i8 8, label %15
-    i8 9, label %16
-    i8 16, label %17
-    i8 17, label %18
-    i8 18, label %19
-    i8 14, label %20
-    i8 19, label %21
-    i8 20, label %22
-    i8 0, label %23
-    i8 6, label %23
-    i8 1, label %23
-    i8 10, label %23
-    i8 11, label %23
-    i8 12, label %23
-    i8 13, label %23
-    i8 15, label %23
-  ]
-
-11:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-12:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-13:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-14:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-15:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-16:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-17:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-18:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-19:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-20:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-21:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-22:                                               ; preds = %7
-  br label %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-
-23:                                               ; preds = %7, %7, %7, %7, %7, %7, %7, %7
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.26) #21
-  unreachable
-
-24:                                               ; preds = %7
-  unreachable
-
-_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit: ; preds = %7, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22
-  %switch.i = phi i1 [ false, %22 ], [ false, %11 ], [ false, %12 ], [ false, %13 ], [ false, %14 ], [ false, %15 ], [ false, %16 ], [ false, %17 ], [ false, %18 ], [ false, %19 ], [ false, %20 ], [ false, %21 ], [ true, %7 ]
-  %25 = phi i1 [ false, %22 ], [ true, %11 ], [ true, %12 ], [ true, %13 ], [ false, %14 ], [ false, %15 ], [ false, %16 ], [ false, %17 ], [ false, %18 ], [ false, %19 ], [ false, %20 ], [ false, %21 ], [ true, %7 ]
-  %.sroa.0.0.i = phi i8 [ 21, %22 ], [ 3, %11 ], [ 5, %12 ], [ 7, %13 ], [ 13, %14 ], [ 12, %15 ], [ 11, %16 ], [ 8, %17 ], [ 9, %18 ], [ 10, %19 ], [ 19, %20 ], [ 20, %21 ], [ 1, %7 ] ; 4 uses
+_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit:
+  %7 = zext i8 %2 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal4wasm32TurboshaftGraphBuildingInterface9StoreLaneEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEENS1_9StoreTypeERKNS1_21MemoryAccessImmediateERKNS2_5ValueESF_h, i64 %7
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 4
   %.sroa.012.0.copyload = load i32, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8
-  %i.f = tail call i64 @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface14BoundsCheckMemEPKNS1_10WasmMemoryENS0_8compiler10turboshaft20MemoryRepresentationENS7_7OpIndexEmNS6_18EnforceBoundsCheckENS6_14AlignmentCheckE(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %i.b, i8 %.sroa.0.0.i, i32 %.sroa.012.0.copyload, i64 noundef %i.e, i1 noundef zeroext false, i1 noundef zeroext false) ; 2 uses
+  %i.f = tail call i64 @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface14BoundsCheckMemEPKNS1_10WasmMemoryENS0_8compiler10turboshaft20MemoryRepresentationENS7_7OpIndexEmNS6_18EnforceBoundsCheckENS6_14AlignmentCheckE(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %i.b, i8 %switch.load, i32 %.sroa.012.0.copyload, i64 noundef %i.e, i1 noundef zeroext false, i1 noundef zeroext false) ; 2 uses
   %.sroa.033.0.extract.trunc = trunc i64 %i.f to i32 ; 2 uses
   %.sroa.5.0.extract.shift.mask = and i64 %i.f, -4294967296
   %i.g = icmp eq i64 %.sroa.5.0.extract.shift.mask, 4294967296
   br i1 %i.g, label %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface19GetMemoryAccessKindENS0_8compiler10turboshaft20MemoryRepresentationENS3_17BoundsCheckResultE.exit, label %bb.a
 
 bb.a:                                             ; preds = %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit
-  br i1 %switch.i, label %bb.c, label %bb.b
+  %switch.cast = zext nneg i8 %2 to i11
+  %switch.downshift = lshr i11 18, %switch.cast
+  %switch.masked = trunc i11 %switch.downshift to i1
+  br i1 %switch.masked, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = tail call noundef zeroext i1 @_ZN2v88internal8compiler10turboshaft19SupportedOperations24IsUnalignedLoadSupportedENS2_20MemoryRepresentationE(i8 %.sroa.0.0.i) #22
+  %i.h = tail call noundef zeroext i1 @_ZN2v88internal8compiler10turboshaft19SupportedOperations24IsUnalignedLoadSupportedENS2_20MemoryRepresentationE(i8 %switch.load) #22
   br i1 %i.h, label %bb.c, label %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface19GetMemoryAccessKindENS0_8compiler10turboshaft20MemoryRepresentationENS3_17BoundsCheckResultE.exit
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -2100,10 +1965,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 _ZN2v88internal4wasm32TurboshaftGraphBuildingInterface19GetMemoryAccessKindENS0_8compiler10turboshaft20MemoryRepresentationENS3_17BoundsCheckResultE.exit: ; preds = %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit, %bb.b, %bb.c
   %.sroa.0.0.i26 = phi i8 [ 4, %_ZN2v88internal8compiler10turboshaft20MemoryRepresentation25FromMachineRepresentationENS0_21MachineRepresentationE.exit ], [ 0, %bb.c ], [ 2, %bb.b ]
-  %switch.tableidx = add nsw i8 %.sroa.0.0.i, -1  ; 2 uses
+  %switch.tableidx = add i8 %switch.load, -1      ; 3 uses
+  %8 = icmp ult i8 %switch.tableidx, 7
   %switch.shifted = lshr i8 85, %switch.tableidx
   %switch.lobit = trunc i8 %switch.shifted to i1
-  %or.cond = select i1 %25, i1 %switch.lobit, i1 false
+  %or.cond = select i1 %8, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %switch.lookup, label %bb.d
 
 bb.d:                                             ; preds = %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface19GetMemoryAccessKindENS0_8compiler10turboshaft20MemoryRepresentationENS3_17BoundsCheckResultE.exit
@@ -2111,9 +1977,9 @@ bb.d:                                             ; preds = %_ZN2v88internal4was
   unreachable
 
 switch.lookup:                                    ; preds = %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface19GetMemoryAccessKindENS0_8compiler10turboshaft20MemoryRepresentationENS3_17BoundsCheckResultE.exit
-  %switch.cast = zext i8 %switch.tableidx to i56
-  %switch.shiftamt = shl nuw nsw i56 %switch.cast, 3
-  %switch.downshift.a = lshr i56 844433520132096, %switch.shiftamt
+  %9 = shl nuw nsw i8 %switch.tableidx, 3
+  %switch.shiftamt52 = zext nneg i8 %9 to i56
+  %switch.downshift.a = lshr i56 844433520132096, %switch.shiftamt52
   %switch.masked.a = trunc i56 %switch.downshift.a to i8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !nonnull !39, !align !41 ; 5 uses
@@ -2192,7 +2058,7 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
 bb.j:                                             ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE17Simd128LaneMemoryENS2_1VINS2_12WordWithBitsILm64EEEEESI_SI_NS2_19Simd128LaneMemoryOp4ModeENS2_6LoadOp4KindENSJ_8LaneKindEhi.exit
   %i.ar = load i32, ptr %i.k, align 4
   %i.as = load i64, ptr %i.d, align 8
-  tail call void @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface20TraceMemoryOperationEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEbjNS0_8compiler10turboshaft20MemoryRepresentationENSA_1VINSA_12WordWithBitsILm64EEEEEm(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %1, i1 noundef zeroext true, i32 noundef %i.ar, i8 %.sroa.0.0.i, i32 %.sroa.033.0.extract.trunc, i64 noundef %i.as)
+  tail call void @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface20TraceMemoryOperationEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEEbjNS0_8compiler10turboshaft20MemoryRepresentationENSA_1VINSA_12WordWithBitsILm64EEEEEm(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %1, i1 noundef zeroext true, i32 noundef %i.ar, i8 %switch.load, i32 %.sroa.033.0.extract.trunc, i64 noundef %i.as)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE17Simd128LaneMemoryENS2_1VINS2_12WordWithBitsILm64EEEEESI_SI_NS2_19Simd128LaneMemoryOp4ModeENS2_6LoadOp4KindENSJ_8LaneKindEhi.exit

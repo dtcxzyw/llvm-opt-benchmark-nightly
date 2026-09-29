@@ -205,10 +205,10 @@ bb.lt:                                            ; preds = %bb.ls
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEECsiU5vK8fN4ZC_11ide_assists.exit.sink.split
 
 bb.lu:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEECsiU5vK8fN4ZC_11ide_assists.exit, %.backedge
-  %.sroa.075.0.idx1003 = phi i64 [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEECsiU5vK8fN4ZC_11ide_assists.exit ], [ %.sroa.075.0.add, %.backedge ] ; 3 uses
+  %.sroa.075.0.idx1003 = phi i64 [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEECsiU5vK8fN4ZC_11ide_assists.exit ], [ %.sroa.075.0.add, %.backedge ] ; 7 uses
   %.sroa.075.0.ptr1004 = getelementptr inbounds nuw i8, ptr @79, i64 %.sroa.075.0.idx1003 ; 2 uses
   %.sroa.075.0.add = add nuw nsw i64 %.sroa.075.0.idx1003, 1 ; 2 uses
-  %.sroa.075.0.ptr.val = load i8, ptr %.sroa.075.0.ptr1004, align 1 ; 5 uses
+  %.sroa.075.0.ptr.val = load i8, ptr %.sroa.075.0.ptr1004, align 1
   call void @llvm.experimental.noalias.scope.decl(metadata !2124)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store ptr %i.an, ptr %i.e, align 8, !noalias !2125
@@ -611,22 +611,18 @@ switch.lookup:                                    ; preds = %bb.on
   store ptr %i.ald, ptr %.sroa.4118.0..sroa_idx, align 8
   store i64 15, ptr %.sroa.5119.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa)
-  %2 = zext nneg i8 %.sroa.075.0.ptr.val to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_variable16extract_variable, i64 %2
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_variable16extract_variable, i64 %.sroa.075.0.idx1003
   %switch.load = load ptr, ptr %switch.gep, align 8
-  %3 = zext nneg i8 %.sroa.075.0.ptr.val to i64
-  %switch.gep1414 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_variable16extract_variable.784, i64 %3
+  %switch.gep1414 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_variable16extract_variable.784, i64 %.sroa.075.0.idx1003
   %switch.load1415 = load i8, ptr %switch.gep1414, align 1
-  %switch.ext = zext i8 %switch.load1415 to i64
-  %i.alf = zext nneg i8 %.sroa.075.0.ptr.val to i64
-  %switch.gep1416 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_variable16extract_variable.785, i64 %i.alf
+  %i.alf = zext i8 %switch.load1415 to i64
+  %switch.gep1416 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_variable16extract_variable.785, i64 %.sroa.075.0.idx1003
   %switch.load1417 = load i8, ptr %switch.gep1416, align 1
-  %switch.ext1418 = zext i8 %switch.load1417 to i64
-  %i.alg = zext nneg i8 %.sroa.075.0.ptr.val to i64
-  %switch.gep1419 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_variable16extract_variable.786, i64 %i.alg
+  %i.alg = zext i8 %switch.load1417 to i64
+  %switch.gep1419 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers16extract_variable16extract_variable.786, i64 %.sroa.075.0.idx1003
   %switch.load1420 = load ptr, ptr %switch.gep1419, align 8
   store ptr %switch.load, ptr %i.afk, align 8
-  store i64 %switch.ext, ptr %i.afl, align 8
+  store i64 %i.alf, ptr %i.afl, align 8
   store i8 3, ptr %i.afm, align 8
   store i64 0, ptr %i.aa, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z)
@@ -642,7 +638,7 @@ switch.lookup:                                    ; preds = %bb.on
   store ptr %i.ag, ptr %i.afv, align 8
   store ptr %i.ae, ptr %i.afw, align 8
   store ptr %i.af, ptr %i.afx, align 8
-  %i.alh = invoke noundef zeroext i1 @_RINvMs_NtCsiU5vK8fN4ZC_11ide_assists14assist_contextNtB5_7Assists9add_groupReNCNvNtNtB7_8handlers16extract_variable16extract_variables4_0EB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ab, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.aa, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load1420, i64 noundef %switch.ext1418, i32 noundef %..i.i618, i32 noundef %..i2.i619, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(96) %i.z)
+  %i.alh = invoke noundef zeroext i1 @_RINvMs_NtCsiU5vK8fN4ZC_11ide_assists14assist_contextNtB5_7Assists9add_groupReNCNvNtNtB7_8handlers16extract_variable16extract_variables4_0EB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ab, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.aa, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load1420, i64 noundef %i.alg, i32 noundef %..i.i618, i32 noundef %..i2.i619, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(96) %i.z)
           to label %bb.oq unwind label %bb.op     ; 0 uses
 
 bb.op:                                            ; preds = %switch.lookup

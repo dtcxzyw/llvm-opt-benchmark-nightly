@@ -202,6 +202,8 @@ begin_hunk_0
 @233 = private unnamed_addr constant [76 x i8] c"/rustc/787af2b8c80638c51a4fc8e44f84e6891f243ec7/library/alloc/src/string.rs\00", align 1
 @234 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @233, [16 x i8] c"K\00\00\00\00\00\00\00\96\0B\00\00\0E\00\00\00" }>, align 8
 @235 = private unnamed_addr constant [5 x i8] c"Error", align 1
+@switch.table._RNvMsC_NtNtCsa9sSWSfjDbm_4jiff5civil8datetimeNtB5_13DateTimeRound5round = private unnamed_addr constant [7 x i16] [i16 1000, i16 1000, i16 1000, i16 60, i16 60, i16 24, i16 2], align 8
+@switch.table._RNvMsD_NtNtCsa9sSWSfjDbm_4jiff5civil4timeNtB5_9TimeRound5round = private unnamed_addr constant [6 x i16] [i16 1000, i16 1000, i16 1000, i16 60, i16 60, i16 24], align 8
 @switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtCsa9sSWSfjDbm_4jiff4util1b18SpecialBoundsErrorNtB6_5Debug3fmtBC_ = private unnamed_addr constant [3 x i8] c"  \18", align 8
 @switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtCsa9sSWSfjDbm_4jiff4util1b18SpecialBoundsErrorNtB6_5Debug3fmtBC_.29 = private unnamed_addr constant [3 x ptr] [ptr @178, ptr @179, ptr @180], align 8
 @switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtNtNtCsa9sSWSfjDbm_4jiff5error2tz6system7enabled5ErrorNtB6_5Debug3fmtBG_ = private unnamed_addr constant [6 x i8] c"\0B\11\14\14\18\15", align 8
@@ -604,60 +606,22 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
-  %i.o = zext nneg i8 %i.i to i64
+  %i.o = zext nneg i8 %i.i to i64                 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr @31, i64 %i.o
-  %i.q = load i8, ptr %i.p, align 1, !range !6, !alias.scope !312, !noalias !314, !noundef !4 ; 2 uses
+  %i.q = load i8, ptr %i.p, align 1, !range !6, !alias.scope !312, !noalias !314, !noundef !4
   %i.r = add i64 %i.k, -1000000001
   %or.cond.i30 = icmp ult i64 %i.r, -1000000000
-  br i1 %or.cond.i30, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.thread.i, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-
-_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i: ; preds = %bb.d
-  switch i8 %i.q, label %default.unreachable [
-    i8 0, label %.thread.i
-    i8 1, label %3
-    i8 2, label %bb.e
-    i8 3, label %4
-    i8 4, label %5
-    i8 5, label %6
-    i8 6, label %7
-    i8 7, label %7
-    i8 8, label %7
-    i8 9, label %8
-    i8 10, label %8
-    i8 11, label %9
-  ]
+  br i1 %or.cond.i30, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.thread.i, label %bb.e
 
 _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.thread.i: ; preds = %bb.d
   %i.s = tail call noundef ptr @_RNvXNtNtCsa9sSWSfjDbm_4jiff4util1bNtNtB6_5error5ErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB2_11BoundsErrorE4from(i8 noundef 10), !noalias !313
   br label %bb.g
 
-default.unreachable:                              ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  unreachable
-
-3:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %.thread.i
-
-4:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.e
-
-5:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.e
-
-6:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.e
-
-7:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.e
-
-8:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.e
-
-9:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.e
-
-bb.e:                                             ; preds = %9, %8, %7, %6, %5, %4, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.08.0.i = phi i64 [ 2, %9 ], [ 60, %8 ], [ 1000, %7 ], [ 86400, %4 ], [ 1440, %5 ], [ 24, %6 ], [ 86400000, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i ] ; 2 uses
-  %i.t = icmp samesign ult i64 %i.k, %.sroa.08.0.i
+bb.e:                                             ; preds = %bb.d
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNvMsC_NtNtCsa9sSWSfjDbm_4jiff5civil8datetimeNtB5_13DateTimeRound5round, i64 %i.o
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64      ; 2 uses
+  %i.t = icmp samesign ult i64 %i.k, %switch.ext
   br i1 %i.t, label %.thread.i, label %bb.f
 
 bb.f:                                             ; preds = %.thread.i, %bb.e
@@ -670,9 +634,8 @@ bb.f:                                             ; preds = %.thread.i, %bb.e
   %i.u = tail call noundef ptr @_RNvXNtNtCsa9sSWSfjDbm_4jiff5error4unitNtB4_5ErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB2_15UnitConfigErrorE4from(i24 %.sroa.020.2.insert.insert.i) #24, !noalias !313
   br label %bb.g
 
-.thread.i:                                        ; preds = %bb.e, %3, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.08.028.i = phi i64 [ %.sroa.08.0.i, %bb.e ], [ 86400000000000, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i ], [ 86400000000, %3 ]
-  %i.v = urem i64 %.sroa.08.028.i, %i.k
+.thread.i:                                        ; preds = %bb.e
+  %i.v = urem i64 %switch.ext, %i.k
   %i.w = icmp eq i64 %i.v, 0
   br i1 %i.w, label %bb.o, label %bb.f
 
@@ -1020,60 +983,22 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = zext nneg i8 %i.e to i64
+  %i.i = zext nneg i8 %i.e to i64                 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr @33, i64 %i.i
-  %i.k = load i8, ptr %i.j, align 1, !range !6, !alias.scope !363, !noalias !365, !noundef !4 ; 2 uses
+  %i.k = load i8, ptr %i.j, align 1, !range !6, !alias.scope !363, !noalias !365, !noundef !4
   %i.l = add i64 %i.f, -1000000001
   %or.cond.i18 = icmp ult i64 %i.l, -1000000000
-  br i1 %or.cond.i18, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.thread.i, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-
-_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i: ; preds = %bb.c
-  switch i8 %i.k, label %default.unreachable [
-    i8 0, label %.thread.i
-    i8 1, label %3
-    i8 2, label %bb.d
-    i8 3, label %4
-    i8 4, label %5
-    i8 5, label %6
-    i8 6, label %7
-    i8 7, label %7
-    i8 8, label %7
-    i8 9, label %8
-    i8 10, label %8
-    i8 11, label %9
-  ]
+  br i1 %or.cond.i18, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.thread.i, label %bb.d
 
 _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.thread.i: ; preds = %bb.c
   %i.m = tail call noundef ptr @_RNvXNtNtCsa9sSWSfjDbm_4jiff4util1bNtNtB6_5error5ErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB2_11BoundsErrorE4from(i8 noundef 10), !noalias !364
   br label %bb.f
 
-default.unreachable:                              ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  unreachable
-
-3:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %.thread.i
-
-4:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.d
-
-5:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.d
-
-6:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.d
-
-7:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.d
-
-8:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.d
-
-9:                                                ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  br label %bb.d
-
-bb.d:                                             ; preds = %9, %8, %7, %6, %5, %4, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.08.0.i = phi i64 [ 2, %9 ], [ 60, %8 ], [ 1000, %7 ], [ 86400, %4 ], [ 1440, %5 ], [ 24, %6 ], [ 86400000, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i ] ; 2 uses
-  %i.n = icmp samesign ult i64 %i.f, %.sroa.08.0.i
+bb.d:                                             ; preds = %bb.c
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNvMsD_NtNtCsa9sSWSfjDbm_4jiff5civil4timeNtB5_9TimeRound5round, i64 %i.i
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64      ; 2 uses
+  %i.n = icmp samesign ult i64 %i.f, %switch.ext
   br i1 %i.n, label %.thread.i, label %bb.e
 
 bb.e:                                             ; preds = %.thread.i, %bb.d
@@ -1086,9 +1011,8 @@ bb.e:                                             ; preds = %.thread.i, %bb.d
   %i.o = tail call noundef ptr @_RNvXNtNtCsa9sSWSfjDbm_4jiff5error4unitNtB4_5ErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB2_15UnitConfigErrorE4from(i24 %.sroa.020.2.insert.insert.i) #24, !noalias !364
   br label %bb.f
 
-.thread.i:                                        ; preds = %bb.d, %3, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.08.028.i = phi i64 [ %.sroa.08.0.i, %bb.d ], [ 86400000000000, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i ], [ 86400000000, %3 ]
-  %i.p = urem i64 %.sroa.08.028.i, %i.f
+.thread.i:                                        ; preds = %bb.d
+  %i.p = urem i64 %switch.ext, %i.f
   %i.q = icmp eq i64 %i.p, 0
   br i1 %i.q, label %bb.l, label %bb.e
 
