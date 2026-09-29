@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph374
   br i1 %exitcond426.not, label %.lr.ph377.preheader, label %.lr.ph374, !llvm.loop !43
 
 ._crit_edge378:                                   ; preds = %.lr.ph377, %middle.block579
-  %spec.select.lcssa = phi i32 [ %i.gm, %middle.block579 ], [ %spec.select, %.lr.ph377 ] ; 11 uses
+  %spec.select.lcssa = phi i32 [ %i.gm, %middle.block579 ], [ %spec.select, %.lr.ph377 ] ; 12 uses
   %i.gr = icmp ne i32 %spec.select.lcssa, 0       ; 3 uses
   br i1 %i.gr, label %bb.q, label %.lr.ph385.preheader
 
@@ -416,7 +416,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   store i32 0, ptr %i.a, align 4, !tbaa !13
   %i.jk = zext nneg i32 %spec.select.lcssa to i64 ; 5 uses
-  %i.jl = shl nuw nsw i64 %i.jk, 3                ; 2 uses
+  %i.jl = shl nuw nsw i64 %i.jk, 3
   %calloc = tail call ptr @calloc(i64 1, i64 %i.jl) ; 5 uses
   %.not.i = icmp eq ptr %calloc, null
   br i1 %.not.i, label %.critedge337, label %.lr.ph.preheader.i
@@ -438,7 +438,11 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   br label %.preheader
 
 .preheader:                                       ; preds = %.sink.split.i, %.critedge337
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ic, i8 0, i64 %i.jl, i1 false), !tbaa !15
+  %3 = add nsw i32 %spec.select.lcssa, -1
+  %4 = zext i32 %3 to i64
+  %5 = shl nuw nsw i64 %4, 3
+  %6 = add nuw nsw i64 %5, 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ic, i8 0, i64 %6, i1 false), !tbaa !15
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ib, i8 0, i64 %i.ia, i1 false), !tbaa !15
   %xtraiter597 = and i64 %i.jk, 3                 ; 3 uses
   %i.jp = icmp ult i32 %spec.select.lcssa, 4

@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %i.cp = shl nsw i64 %i.cl, 2
-  %i.cq = call noalias ptr @malloc(i64 noundef %i.cp) #11 ; 9 uses
+  %i.cq = call noalias ptr @malloc(i64 noundef %i.cp) #11 ; 10 uses
   %i.cr = icmp eq ptr %i.cq, null
   br i1 %i.cr, label %bb.q, label %bb.r
 
@@ -285,26 +285,62 @@ bb.y:                                             ; preds = %bb.u, %bb.x, %bb.w
 
 .lr.ph160:                                        ; preds = %._crit_edge156
   %i.dq = add nsw i32 %i.dm, -1
-  %i.dr = zext nneg i32 %i.dq to i64
+  %i.dr = zext nneg i32 %i.dq to i64              ; 2 uses
   %wide.trip.count182 = zext nneg i32 %i.dm to i64
   %i.ds = load i32, ptr %i.cq, align 4, !tbaa !35
   %i.dt = icmp eq i32 %i.ds, 1
-  br i1 %i.dt, label %bb.z, label %bb.aa
+  br i1 %i.dt, label %bb.z, label %9
 
 bb.z:                                             ; preds = %.lr.ph160
   store i32 3, ptr %i.cq, align 4, !tbaa !35
-  br label %bb.aa
+  br label %9
 
-bb.aa:                                            ; preds = %bb.z, %.lr.ph160
-  %exitcond183.peel.not = icmp eq i32 %i.dm, 1
-  br i1 %exitcond183.peel.not, label %.lr.ph162, label %.peel.next
+9:                                                ; preds = %bb.z, %.lr.ph160
+  switch i32 %i.dm, label %.peel.next.preheader.split [
+    i32 1, label %.lr.ph162
+    i32 2, label %.peel.next.peel
+  ]
 
-.lr.ph162:                                        ; preds = %.thread, %bb.aa
+.peel.next.preheader.split:                       ; preds = %9
+  %10 = add nsw i64 %wide.trip.count182, -2
+  br label %.peel.next
+
+.peel.next.peel:                                  ; preds = %9, %.thread
+  %11 = phi i64 [ 1, %9 ], [ %indvars.iv.next180, %.thread ] ; 2 uses
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %11 ; 4 uses
+  %13 = load i32, ptr %12, align 4, !tbaa !35
+  %14 = icmp eq i32 %13, 1
+  br i1 %14, label %15, label %.lr.ph162
+
+15:                                               ; preds = %.peel.next.peel
+  %16 = icmp eq i64 %11, %i.dr
+  %17 = getelementptr i8, ptr %12, i64 -4
+  %18 = load i32, ptr %17, align 4, !tbaa !35
+  %.not138.peel = icmp eq i32 %18, 1              ; 2 uses
+  br i1 %16, label %22, label %19
+
+19:                                               ; preds = %15
+  br i1 %.not138.peel, label %.lr.ph162, label %bb.aa
+
+bb.aa:                                            ; preds = %19
+  %20 = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %21 = load i32, ptr %20, align 4, !tbaa !35
+  %exitcond183.peel.not = icmp eq i32 %21, 1
+  br i1 %exitcond183.peel.not, label %.lr.ph162, label %.thread.sink.split.peel
+
+22:                                               ; preds = %15
+  br i1 %.not138.peel, label %.lr.ph162, label %.thread.sink.split.peel
+
+.thread.sink.split.peel:                          ; preds = %22, %bb.aa
+  store i32 3, ptr %12, align 4, !tbaa !35
+  br label %.lr.ph162
+
+.lr.ph162:                                        ; preds = %.thread.sink.split.peel, %22, %bb.aa, %19, %.peel.next.peel, %9
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   br label %bb.af
 
-.peel.next:                                       ; preds = %bb.aa, %.thread
-  %indvars.iv179 = phi i64 [ %indvars.iv.next180, %.thread ], [ 1, %bb.aa ] ; 3 uses
+.peel.next:                                       ; preds = %.peel.next.preheader.split, %.thread
+  %indvars.iv179 = phi i64 [ %indvars.iv.next180, %.thread ], [ 1, %.peel.next.preheader.split ] ; 4 uses
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %indvars.iv179 ; 4 uses
   %i.dw = load i32, ptr %i.dv, align 4, !tbaa !35
   %i.dx = icmp eq i32 %i.dw, 1
@@ -335,8 +371,8 @@ bb.ae:                                            ; preds = %bb.ad
 
 .thread:                                          ; preds = %.thread.sink.split, %bb.ac, %.peel.next, %bb.ae, %bb.ad
   %indvars.iv.next180 = add nuw nsw i64 %indvars.iv179, 1 ; 2 uses
-  %exitcond183.not = icmp eq i64 %indvars.iv.next180, %wide.trip.count182
-  br i1 %exitcond183.not, label %.lr.ph162, label %.peel.next, !llvm.loop !128
+  %exitcond183.not = icmp eq i64 %indvars.iv179, %10
+  br i1 %exitcond183.not, label %.peel.next.peel, label %.peel.next, !llvm.loop !128
 
 bb.af:                                            ; preds = %.lr.ph162, %.thread140
   %indvars.iv185 = phi i64 [ 0, %.lr.ph162 ], [ %indvars.iv.next186, %.thread140 ] ; 5 uses
@@ -739,7 +775,7 @@ attributes #11 = { nounwind allocsize(0) }
 !127 = distinct !{!127, !34}
 !128 = distinct !{!128, !34, !130}
 !129 = distinct !{!129, !34}
-!130 = !{!"llvm.loop.peeled.count", i32 1}
+!130 = !{!"llvm.loop.peeled.count", i32 2}
 !131 = distinct !{!131, !34}
 !132 = distinct !{!132, !34}
 !133 = distinct !{!133, !34, !82, !83}

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/qdrant.qdrant.3f8cc1c7dccbb09-cgu.179?download=true
 inline.NumInlined: 431
 inline.NumDeleted: 193
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RINvXs0_NvXNvNtNtCsPYQCUnoTxQ_10collection10operations18consistency_paramss1_1__NtBb_19ReadConsistencyTypeNtNtCs4NSHK7GLW4I_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB1I_7Visitor10visit_enumINtNtNtNtCs5pRimKDHYSy_5serde7private2de7content19EnumRefDeserializerNtNtB1I_5value5ErrorEECsl8OoimOLbh_6qdrant:bb.a
 
 bb.j:                                             ; preds = %bb.f
@@ -204,9 +204,9 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.q
   %i.ac = getelementptr i8, ptr %i.aa, i64 8
-  %.val.i = load ptr, ptr %i.ac, align 8, !nonnull !5, !noundef !5 ; 11 uses
+  %.val.i = load ptr, ptr %i.ac, align 8, !nonnull !5, !noundef !5 ; 17 uses
   %i.ad = getelementptr i8, ptr %i.aa, i64 16
-  %.val3.i = load i64, ptr %i.ad, align 8, !noundef !5 ; 15 uses
+  %.val3.i = load i64, ptr %i.ad, align 8, !noundef !5 ; 21 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.val3.i
   %i.af = icmp samesign eq i64 %.val3.i, 0
   br i1 %i.af, label %.thread.thread94, label %iter.check
@@ -338,16 +338,16 @@ bb.w:                                             ; preds = %thread-pre-split.i.
 
 bb.x:                                             ; preds = %thread-pre-split.i.i.i
   %i.bm = getelementptr inbounds nuw i8, ptr %.val.i, i64 1 ; 2 uses
-  %i.bn = add nsw i64 %.val3.i, -1                ; 3 uses
+  %i.bn = add nsw i64 %.val3.i, -1                ; 2 uses
   %i.bo = icmp samesign ult i64 %.val3.i, 9
   br i1 %i.bo, label %.preheader118.i.i.i, label %.lr.ph.i.i.i20
 
 .preheader118.i.i.i:                              ; preds = %bb.x
   %.not105139.i.i.i = icmp eq i64 %i.bn, 0
-  br i1 %.not105139.i.i.i, label %.loopexit.i.i.i, label %.lr.ph143.i.i.i.a
+  br i1 %.not105139.i.i.i, label %.loopexit.i.i.i, label %.lr.ph143.i.i.i
 
-.loopexit.i.i.i:                                  ; preds = %bb.aa, %bb.ab, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am, %.preheader.i.i.i, %.preheader118.i.i.i
-  %.sroa.086.1.i.i.i = phi i32 [ %6, %bb.ab ], [ %i.er, %bb.am ], [ %i.cx, %bb.af ], [ 0, %.preheader.i.i.i ], [ 0, %.preheader118.i.i.i ], [ %i.da, %bb.ag ], [ %i.di, %bb.ah ], [ %i.dp, %bb.ai ], [ %i.dw, %bb.aj ], [ %i.ed, %bb.ak ], [ %i.ek, %bb.al ], [ %i.cc, %bb.aa ]
+.loopexit.i.i.i:                                  ; preds = %bb.aa, %6, %14, %22, %30, %38, %42, %50, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am, %.preheader.i.i.i, %.preheader118.i.i.i
+  %.sroa.086.1.i.i.i = phi i32 [ %52, %50 ], [ %i.er, %bb.am ], [ %i.cx, %bb.af ], [ 0, %.preheader.i.i.i ], [ 0, %.preheader118.i.i.i ], [ %i.da, %bb.ag ], [ %i.di, %bb.ah ], [ %i.dp, %bb.ai ], [ %i.dw, %bb.aj ], [ %i.ed, %bb.ak ], [ %i.ek, %bb.al ], [ %8, %6 ], [ %16, %14 ], [ %24, %22 ], [ %32, %30 ], [ %40, %38 ], [ %44, %42 ], [ %i.cc, %bb.aa ]
   %.sroa.086.1.i.i.i.fr = freeze i32 %.sroa.086.1.i.i.i
   %i.bp = zext i32 %.sroa.086.1.i.i.i.fr to i64
   %i.bq = shl nuw i64 %i.bp, 32
@@ -390,23 +390,100 @@ bb.aa:                                            ; preds = %bb.z
   %i.cg = select i1 %i.cf, i64 %.sink190.i.i.i, i64 257
   br label %.thread
 
-.lr.ph143.i.i.i.a:                                ; preds = %.preheader118.i.i.i, %bb.ab
-  %.sroa.0.2142.i.i.i = phi ptr [ %5, %bb.ab ], [ %i.bm, %.preheader118.i.i.i ] ; 2 uses
-  %.sroa.26.2141.i.i.i = phi i64 [ %4, %bb.ab ], [ %i.bn, %.preheader118.i.i.i ]
-  %.sroa.086.2140.i.i.i = phi i32 [ %6, %bb.ab ], [ 0, %.preheader118.i.i.i ]
-  %i.ch = load i8, ptr %.sroa.0.2142.i.i.i, align 1, !alias.scope !484, !noundef !5
+.lr.ph143.i.i.i:                                  ; preds = %.preheader118.i.i.i
+  %3 = load i8, ptr %i.bm, align 1, !alias.scope !484, !noundef !5 ; 2 uses
+  %4 = add i8 %3, -48
+  %5 = icmp ult i8 %4, 10
+  br i1 %5, label %6, label %.thread.thread94
+
+6:                                                ; preds = %.lr.ph143.i.i.i
+  %7 = zext i8 %3 to i32
+  %8 = sub nsw i32 48, %7                         ; 2 uses
+  %.not105.i.i.i = icmp eq i64 %.val3.i, 2
+  br i1 %.not105.i.i.i, label %.loopexit.i.i.i, label %.lr.ph143.i.i.i.1
+
+.lr.ph143.i.i.i.1:                                ; preds = %6
+  %9 = getelementptr inbounds nuw i8, ptr %.val.i, i64 2
+  %10 = load i8, ptr %9, align 1, !alias.scope !484, !noundef !5
+  %11 = zext i8 %10 to i32
+  %12 = add nsw i32 %11, -48                      ; 2 uses
+  %13 = icmp ult i32 %12, 10
+  br i1 %13, label %14, label %.thread.thread94
+
+14:                                               ; preds = %.lr.ph143.i.i.i.1
+  %15 = mul nsw i32 %8, 10
+  %16 = sub nsw i32 %15, %12                      ; 2 uses
+  %.not105.i.i.i.1 = icmp eq i64 %.val3.i, 3
+  br i1 %.not105.i.i.i.1, label %.loopexit.i.i.i, label %.lr.ph143.i.i.i.2
+
+.lr.ph143.i.i.i.2:                                ; preds = %14
+  %17 = getelementptr inbounds nuw i8, ptr %.val.i, i64 3
+  %18 = load i8, ptr %17, align 1, !alias.scope !484, !noundef !5
+  %19 = zext i8 %18 to i32
+  %20 = add nsw i32 %19, -48                      ; 2 uses
+  %21 = icmp ult i32 %20, 10
+  br i1 %21, label %22, label %.thread.thread94
+
+22:                                               ; preds = %.lr.ph143.i.i.i.2
+  %23 = mul nsw i32 %16, 10
+  %24 = sub nsw i32 %23, %20                      ; 2 uses
+  %.not105.i.i.i.2 = icmp eq i64 %.val3.i, 4
+  br i1 %.not105.i.i.i.2, label %.loopexit.i.i.i, label %.lr.ph143.i.i.i.3
+
+.lr.ph143.i.i.i.3:                                ; preds = %22
+  %25 = getelementptr inbounds nuw i8, ptr %.val.i, i64 4
+  %26 = load i8, ptr %25, align 1, !alias.scope !484, !noundef !5
+  %27 = zext i8 %26 to i32
+  %28 = add nsw i32 %27, -48                      ; 2 uses
+  %29 = icmp ult i32 %28, 10
+  br i1 %29, label %30, label %.thread.thread94
+
+30:                                               ; preds = %.lr.ph143.i.i.i.3
+  %31 = mul nsw i32 %24, 10
+  %32 = sub i32 %31, %28                          ; 2 uses
+  %.not105.i.i.i.3 = icmp eq i64 %.val3.i, 5
+  br i1 %.not105.i.i.i.3, label %.loopexit.i.i.i, label %.lr.ph143.i.i.i.4
+
+.lr.ph143.i.i.i.4:                                ; preds = %30
+  %33 = getelementptr inbounds nuw i8, ptr %.val.i, i64 5
+  %34 = load i8, ptr %33, align 1, !alias.scope !484, !noundef !5
+  %35 = zext i8 %34 to i32
+  %36 = add nsw i32 %35, -48                      ; 2 uses
+  %37 = icmp ult i32 %36, 10
+  br i1 %37, label %38, label %.thread.thread94
+
+38:                                               ; preds = %.lr.ph143.i.i.i.4
+  %39 = mul i32 %32, 10
+  %40 = sub i32 %39, %36                          ; 2 uses
+  %.not105.i.i.i.4 = icmp eq i64 %.val3.i, 6
+  br i1 %.not105.i.i.i.4, label %.loopexit.i.i.i, label %.lr.ph143.i.i.i.a
+
+.lr.ph143.i.i.i.a:                                ; preds = %38
+  %41 = getelementptr inbounds nuw i8, ptr %.val.i, i64 6
+  %i.ch = load i8, ptr %41, align 1, !alias.scope !484, !noundef !5
   %i.ci = zext i8 %i.ch to i32
   %i.cj = add nsw i32 %i.ci, -48                  ; 2 uses
   %i.ck = icmp ult i32 %i.cj, 10
-  br i1 %i.ck, label %bb.ab, label %.thread.thread94
+  br i1 %i.ck, label %42, label %.thread.thread94
 
-bb.ab:                                            ; preds = %.lr.ph143.i.i.i.a
-  %3 = mul i32 %.sroa.086.2140.i.i.i, 10
-  %4 = add nsw i64 %.sroa.26.2141.i.i.i, -1       ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.2142.i.i.i, i64 1
-  %6 = sub i32 %3, %i.cj                          ; 2 uses
-  %.not105.i.i.i = icmp eq i64 %4, 0
-  br i1 %.not105.i.i.i, label %.loopexit.i.i.i, label %.lr.ph143.i.i.i.a
+42:                                               ; preds = %.lr.ph143.i.i.i.a
+  %43 = mul i32 %40, 10
+  %44 = sub i32 %43, %i.cj                        ; 2 uses
+  %.not105.i.i.i.5 = icmp eq i64 %.val3.i, 7
+  br i1 %.not105.i.i.i.5, label %.loopexit.i.i.i, label %bb.ab
+
+bb.ab:                                            ; preds = %42
+  %45 = getelementptr inbounds nuw i8, ptr %.val.i, i64 7
+  %46 = load i8, ptr %45, align 1, !alias.scope !484, !noundef !5
+  %47 = zext i8 %46 to i32
+  %48 = add nsw i32 %47, -48                      ; 2 uses
+  %49 = icmp ult i32 %48, 10
+  br i1 %49, label %50, label %.thread.thread94
+
+50:                                               ; preds = %bb.ab
+  %51 = mul i32 %44, 10
+  %52 = sub i32 %51, %48
+  br label %.loopexit.i.i.i
 
 bb.ac:                                            ; preds = %bb.v, %bb.w, %thread-pre-split.i.i.i
   %.sroa.26.0.i.i.i = phi i64 [ %i.bl, %bb.w ], [ %.val3.i, %thread-pre-split.i.i.i ], [ %.val3.i, %bb.v ] ; 9 uses
@@ -548,7 +625,7 @@ bb.am:                                            ; preds = %.lr.ph152.i.i.i.6
   %..i.i2191 = select i1 %spec.select.i.i.i90, i32 0, i32 2
   br label %bb.an
 
-.thread.thread94:                                 ; preds = %bb.y, %bb.z, %.lr.ph143.i.i.i.a, %bb.ae, %bb.ad, %.lr.ph152.i.i.i, %.lr.ph152.i.i.i.1, %.lr.ph152.i.i.i.2, %.lr.ph152.i.i.i.3, %.lr.ph152.i.i.i.4, %.lr.ph152.i.i.i.5, %.lr.ph152.i.i.i.6, %bb.v, %bb.v, %bb.r
+.thread.thread94:                                 ; preds = %bb.y, %bb.z, %.lr.ph143.i.i.i, %.lr.ph143.i.i.i.1, %.lr.ph143.i.i.i.2, %.lr.ph143.i.i.i.3, %.lr.ph143.i.i.i.4, %.lr.ph143.i.i.i.a, %bb.ab, %bb.ae, %bb.ad, %.lr.ph152.i.i.i, %.lr.ph152.i.i.i.1, %.lr.ph152.i.i.i.2, %.lr.ph152.i.i.i.3, %.lr.ph152.i.i.i.4, %.lr.ph152.i.i.i.5, %.lr.ph152.i.i.i.6, %bb.v, %bb.v, %bb.r
   %i.eu = getelementptr inbounds nuw i8, ptr %i.g, i64 104
   %.val99 = load i16, ptr %i.eu, align 8
   %i.ev = add i16 %.val99, -200
