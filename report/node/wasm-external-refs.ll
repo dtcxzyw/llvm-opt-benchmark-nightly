@@ -204,7 +204,7 @@ bb.a:
   %i.b = add i64 %0, 8
   %i.c = inttoptr i64 %i.b to ptr
   %.0.copyload.i4 = load double, ptr %i.c, align 1
-  %i.d = tail call noundef double @_ZN2v88internal4math3powEdd(double noundef %.0.copyload.i, double noundef %.0.copyload.i4) #14
+  %i.d = tail call noundef double @_ZN2v88internal4math3powEdd(double noundef %.0.copyload.i, double noundef %.0.copyload.i4) #13
   store double %i.d, ptr %i.a, align 1
   ret void
 }
@@ -276,22 +276,22 @@ define hidden void @_ZN2v88internal4wasm18f32x4_ceil_wrapperEm(i64 noundef %0) l
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 2 uses
   %.0.copyload.i.i = load float, ptr %i.a, align 1
-  %i.b = tail call noundef float @ceilf(float noundef %.0.copyload.i.i)
+  %i.b = tail call float @llvm.ceil.f32(float %.0.copyload.i.i)
   store float %i.b, ptr %i.a, align 1
   %i.c = add i64 %0, 4
   %i.d = inttoptr i64 %i.c to ptr                 ; 2 uses
   %.0.copyload.i.1.i = load float, ptr %i.d, align 1
-  %i.e = tail call noundef float @ceilf(float noundef %.0.copyload.i.1.i)
+  %i.e = tail call float @llvm.ceil.f32(float %.0.copyload.i.1.i)
   store float %i.e, ptr %i.d, align 1
   %i.f = add i64 %0, 8
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
   %.0.copyload.i.2.i = load float, ptr %i.g, align 1
-  %i.h = tail call noundef float @ceilf(float noundef %.0.copyload.i.2.i)
+  %i.h = tail call float @llvm.ceil.f32(float %.0.copyload.i.2.i)
   store float %i.h, ptr %i.g, align 1
   %i.i = add i64 %0, 12
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
   %.0.copyload.i.3.i = load float, ptr %i.j, align 1
-  %i.k = tail call noundef float @ceilf(float noundef %.0.copyload.i.3.i)
+  %i.k = tail call float @llvm.ceil.f32(float %.0.copyload.i.3.i)
   store float %i.k, ptr %i.j, align 1
   ret void
 }
@@ -301,22 +301,22 @@ define hidden void @_ZN2v88internal4wasm19f32x4_floor_wrapperEm(i64 noundef %0) 
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 2 uses
   %.0.copyload.i.i = load float, ptr %i.a, align 1
-  %i.b = tail call noundef float @floorf(float noundef %.0.copyload.i.i)
+  %i.b = tail call float @llvm.floor.f32(float %.0.copyload.i.i)
   store float %i.b, ptr %i.a, align 1
   %i.c = add i64 %0, 4
   %i.d = inttoptr i64 %i.c to ptr                 ; 2 uses
   %.0.copyload.i.1.i = load float, ptr %i.d, align 1
-  %i.e = tail call noundef float @floorf(float noundef %.0.copyload.i.1.i)
+  %i.e = tail call float @llvm.floor.f32(float %.0.copyload.i.1.i)
   store float %i.e, ptr %i.d, align 1
   %i.f = add i64 %0, 8
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
   %.0.copyload.i.2.i = load float, ptr %i.g, align 1
-  %i.h = tail call noundef float @floorf(float noundef %.0.copyload.i.2.i)
+  %i.h = tail call float @llvm.floor.f32(float %.0.copyload.i.2.i)
   store float %i.h, ptr %i.g, align 1
   %i.i = add i64 %0, 12
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
   %.0.copyload.i.3.i = load float, ptr %i.j, align 1
-  %i.k = tail call noundef float @floorf(float noundef %.0.copyload.i.3.i)
+  %i.k = tail call float @llvm.floor.f32(float %.0.copyload.i.3.i)
   store float %i.k, ptr %i.j, align 1
   ret void
 }
@@ -326,22 +326,22 @@ define hidden void @_ZN2v88internal4wasm19f32x4_trunc_wrapperEm(i64 noundef %0) 
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 2 uses
   %.0.copyload.i.i = load float, ptr %i.a, align 1
-  %i.b = tail call noundef float @truncf(float noundef %.0.copyload.i.i)
+  %i.b = tail call float @llvm.trunc.f32(float %.0.copyload.i.i)
   store float %i.b, ptr %i.a, align 1
   %i.c = add i64 %0, 4
   %i.d = inttoptr i64 %i.c to ptr                 ; 2 uses
   %.0.copyload.i.1.i = load float, ptr %i.d, align 1
-  %i.e = tail call noundef float @truncf(float noundef %.0.copyload.i.1.i)
+  %i.e = tail call float @llvm.trunc.f32(float %.0.copyload.i.1.i)
   store float %i.e, ptr %i.d, align 1
   %i.f = add i64 %0, 8
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
   %.0.copyload.i.2.i = load float, ptr %i.g, align 1
-  %i.h = tail call noundef float @truncf(float noundef %.0.copyload.i.2.i)
+  %i.h = tail call float @llvm.trunc.f32(float %.0.copyload.i.2.i)
   store float %i.h, ptr %i.g, align 1
   %i.i = add i64 %0, 12
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
   %.0.copyload.i.3.i = load float, ptr %i.j, align 1
-  %i.k = tail call noundef float @truncf(float noundef %.0.copyload.i.3.i)
+  %i.k = tail call float @llvm.trunc.f32(float %.0.copyload.i.3.i)
   store float %i.k, ptr %i.j, align 1
   ret void
 }
@@ -351,22 +351,22 @@ define hidden void @_ZN2v88internal4wasm25f32x4_nearest_int_wrapperEm(i64 nounde
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 2 uses
   %.0.copyload.i.i = load float, ptr %i.a, align 1
-  %i.b = tail call noundef float @nearbyintf(float noundef %.0.copyload.i.i)
+  %i.b = tail call float @llvm.nearbyint.f32(float %.0.copyload.i.i)
   store float %i.b, ptr %i.a, align 1
   %i.c = add i64 %0, 4
   %i.d = inttoptr i64 %i.c to ptr                 ; 2 uses
   %.0.copyload.i.1.i = load float, ptr %i.d, align 1
-  %i.e = tail call noundef float @nearbyintf(float noundef %.0.copyload.i.1.i)
+  %i.e = tail call float @llvm.nearbyint.f32(float %.0.copyload.i.1.i)
   store float %i.e, ptr %i.d, align 1
   %i.f = add i64 %0, 8
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
   %.0.copyload.i.2.i = load float, ptr %i.g, align 1
-  %i.h = tail call noundef float @nearbyintf(float noundef %.0.copyload.i.2.i)
+  %i.h = tail call float @llvm.nearbyint.f32(float %.0.copyload.i.2.i)
   store float %i.h, ptr %i.g, align 1
   %i.i = add i64 %0, 12
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
   %.0.copyload.i.3.i = load float, ptr %i.j, align 1
-  %i.k = tail call noundef float @nearbyintf(float noundef %.0.copyload.i.3.i)
+  %i.k = tail call float @llvm.nearbyint.f32(float %.0.copyload.i.3.i)
   store float %i.k, ptr %i.j, align 1
   ret void
 }
@@ -769,7 +769,7 @@ bb.a:
   %i.m = and i32 %.signext.i.i, -2147483648
   %i.n = or i32 %i.m, %i.l
   %i.o = bitcast i32 %i.n to float
-  %i.p = tail call noundef float @sqrtf(float noundef %i.o) #14 ; 2 uses
+  %i.p = tail call noundef float @sqrtf(float noundef %i.o) #13 ; 2 uses
   %i.q = tail call float @llvm.fabs.f32(float %i.p)
   %i.r = fmul float %i.q, f0x77800000
   %i.s = fmul float %i.r, f0x08800000
@@ -823,7 +823,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.q = and i32 %.signext.i.i.i.i, -2147483648
   %i.r = or i32 %i.q, %i.p
   %i.s = bitcast i32 %i.r to float
-  %i.t = tail call noundef float @sqrtf(float noundef %i.s) #14 ; 2 uses
+  %i.t = tail call noundef float @sqrtf(float noundef %i.s) #13 ; 2 uses
   %i.u = tail call float @llvm.fabs.f32(float %i.t)
   %i.v = fmul float %i.u, f0x77800000
   %i.w = fmul float %i.v, f0x08800000
@@ -1226,11 +1226,11 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.g, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @_ZN2v88internal4Heap9MoveRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %0, i64 %i.v, i64 %i.z, i32 noundef %4, i32 noundef 4) #14
+  tail call void @_ZN2v88internal4Heap9MoveRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %0, i64 %i.v, i64 %i.z, i32 noundef %4, i32 noundef 4) #13
   br label %_ZN2v88internal7MemMoveEPvPKvm.exit
 
 bb.h:                                             ; preds = %bb.f
-  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %0, i64 %i.v, i64 %i.z, i32 noundef %4, i32 noundef 4) #14
+  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %0, i64 %i.v, i64 %i.z, i32 noundef %4, i32 noundef 4) #13
   br label %_ZN2v88internal7MemMoveEPvPKvm.exit
 
 _ZNK2v88internal4wasm13ValueTypeBase15value_kind_sizeEv.exit: ; preds = %bb.e
@@ -1481,7 +1481,7 @@ _ZNK2v88internal4wasm13ValueTypeBase15value_kind_sizeEv.exit88: ; preds = %_ZNK2
   br i1 %i.p, label %bb.d, label %bb.c, !prof !6
 
 bb.c:                                             ; preds = %_ZNK2v88internal4wasm13ValueTypeBase15value_kind_sizeEv.exit88
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #15
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
   unreachable
 
 bb.d:                                             ; preds = %_ZNK2v88internal4wasm13ValueTypeBase15value_kind_sizeEv.exit88
@@ -1497,7 +1497,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.v, label %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.2) #15
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.2) #14
   unreachable
 
 bb.g:                                             ; preds = %bb.d
@@ -1596,7 +1596,7 @@ bb.o:                                             ; preds = %_ZNK2v88internal4wa
   br label %bb.s
 
 _ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.thread: ; preds = %bb.g, %bb.g, %bb.g
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.2) #15
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.2) #14
   unreachable
 
 default.unreachable111:                           ; preds = %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit
@@ -1639,7 +1639,7 @@ bb.r:                                             ; preds = %bb.q
   %i.av = getelementptr inbounds i8, ptr %i.m, i64 %i.o
   %i.aw = ptrtoint ptr %i.av to i64
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 55464
-  tail call void @_ZN2v88internal12WriteBarrier8ForRangeINS0_14FullObjectSlotEEEvPNS0_4HeapENS0_6TaggedINS0_10HeapObjectEEET_S9_(ptr noundef nonnull %i.ax, i64 %0, i64 %i.l, i64 %i.aw) #14
+  tail call void @_ZN2v88internal12WriteBarrier8ForRangeINS0_14FullObjectSlotEEEvPNS0_4HeapENS0_6TaggedINS0_10HeapObjectEEET_S9_(ptr noundef nonnull %i.ax, i64 %0, i64 %i.l, i64 %i.aw) #13
   br label %bb.s
 
 bb.s:                                             ; preds = %.thread105, %.thread104, %.thread103, %.thread, %bb.q, %bb.r, %bb.o
@@ -1654,7 +1654,7 @@ declare void @_ZN2v88internal12WriteBarrier8ForRangeINS0_14FullObjectSlotEEEvPNS
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef double @_ZN2v88internal4wasm18flat_string_to_f64Em(i64 noundef %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call noundef double @_ZN2v88internal18FlatStringToDoubleENS0_6TaggedINS0_6StringEEENS0_14ConversionFlagEd(i64 %0, i32 noundef 2, double noundef +qnan) #14
+  %i.a = tail call noundef double @_ZN2v88internal18FlatStringToDoubleENS0_6TaggedINS0_6StringEEENS0_14ConversionFlagEd(i64 %0, i32 noundef 2, double noundef +qnan) #13
   ret double %i.a
 }
 
@@ -1665,7 +1665,7 @@ define hidden void @_ZN2v88internal4wasm11start_stackEPNS0_7IsolateEPNS1_11Stack
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.b = load ptr, ptr %i.a, align 8
-  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE2ELS5_1EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef %2, i64 noundef %3, i64 noundef %4) #14
+  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE2ELS5_1EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef %2, i64 noundef %3, i64 noundef %4) #13
   ret void
 }
 
@@ -1676,7 +1676,7 @@ define hidden void @_ZN2v88internal4wasm13suspend_stackEPNS0_7IsolateEPNS1_11Sta
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.b = load ptr, ptr %i.a, align 8
-  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE1ELS5_2EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef %2, i64 noundef %3, i64 noundef %4) #14
+  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE1ELS5_2EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef %2, i64 noundef %3, i64 noundef %4) #13
   ret void
 }
 
@@ -1706,7 +1706,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZN2v88internal12WriteBarrier10SharedSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64 %5, i64 %i.c, i64 %.sroa.0.0.copyload.i) #14
+  tail call void @_ZN2v88internal12WriteBarrier10SharedSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64 %5, i64 %i.c, i64 %.sroa.0.0.copyload.i) #13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1718,14 +1718,14 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not.i.i.i, label %bb.g, label %bb.f, !prof !6
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64 %5, i64 %i.c, i64 %.sroa.0.0.copyload.i) #14
+  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64 %5, i64 %i.c, i64 %.sroa.0.0.copyload.i) #13
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.b, %bb.e, %bb.f
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.n = load ptr, ptr %i.m, align 8
   store i64 %5, ptr %i.a, align 8
-  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE2ELS5_1EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.n, i64 noundef %2, i64 noundef %3, i64 noundef %4) #14
+  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE2ELS5_1EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.n, i64 noundef %2, i64 noundef %3, i64 noundef %4) #13
   ret void
 }
 
@@ -1734,8 +1734,8 @@ define hidden void @_ZN2v88internal4wasm12return_stackEPNS0_7IsolateEPNS1_11Stac
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.b = load ptr, ptr %i.a, align 8
-  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE3ELS5_2EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef 0, i64 noundef 0, i64 noundef 0) #14
-  tail call void @_ZN2v88internal7Isolate15RetireWasmStackEPNS0_4wasm11StackMemoryE(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1) #14
+  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE3ELS5_2EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef 0, i64 noundef 0, i64 noundef 0) #13
+  tail call void @_ZN2v88internal7Isolate15RetireWasmStackEPNS0_4wasm11StackMemoryE(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1) #13
   ret void
 }
 
@@ -1751,7 +1751,7 @@ bb.a:
   %i.c = load i64, ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 536
   %i.e = load i64, ptr %i.d, align 8
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 noundef %i.e) #14
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 noundef %i.e) #13
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 552
   store i64 %i.c, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 544
@@ -1778,7 +1778,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c, !prof !24
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.7) #15
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.7) #14
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -1788,7 +1788,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not11, label %bb.d, label %bb.e, !prof !24
 
 bb.d:                                             ; preds = %bb.c
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.8) #15
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.8) #14
   unreachable
 
 bb.e:                                             ; preds = %bb.c
@@ -1796,7 +1796,7 @@ bb.e:                                             ; preds = %bb.c
   store i8 0, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.f, i64 noundef %i.d) #14
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.f, i64 noundef %i.d) #13
   ret void
 }
 
@@ -1814,7 +1814,7 @@ bb.a:
   store i64 %i.e, ptr %.sroa.4.0..sroa_idx.i, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 536
   %i.h = load i64, ptr %i.g, align 8
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 noundef %i.h) #14
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 noundef %i.h) #13
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 448
   store i8 1, ptr %i.i, align 8
   ret i64 %i.e
@@ -1830,9 +1830,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 448
   store i8 0, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = tail call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #14
+  %i.f = tail call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #13
   %i.g = ptrtoint ptr %i.f to i64
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.e, i64 noundef %i.g) #14
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.e, i64 noundef %i.g) #13
   ret void
 }
 
@@ -1842,15 +1842,15 @@ declare noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef no
 define hidden noundef i64 @_ZN2v88internal4wasm10grow_stackEPNS0_7IsolateEPvmmm(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #4 {
 bb.a:
   %5 = alloca %"class.v8::internal::StackLimitCheck", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   store ptr %0, ptr %5, align 8
-  %i.a = call noundef zeroext i1 @_ZNK2v88internal15StackLimitCheck17WasmHasOverflowedEm(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef %3) #14
+  %i.a = call noundef zeroext i1 @_ZNK2v88internal15StackLimitCheck17WasmHasOverflowedEm(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef %3) #13
   br i1 %i.a, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.c = load ptr, ptr %i.b, align 8              ; 4 uses
-  %i.d = call noundef zeroext i1 @_ZN2v88internal7Isolate16IsOnCentralStackEv(ptr noundef nonnull align 8 dereferenceable(64320) %0) #14
+  %i.d = call noundef zeroext i1 @_ZN2v88internal7Isolate16IsOnCentralStackEv(ptr noundef nonnull align 8 dereferenceable(64320) %0) #13
   br i1 %i.d, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -1859,7 +1859,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = trunc nuw i8 %i.f to i1
   %i.h = select i1 %i.g, i64 20480, i64 40960
   %i.i = add i64 %i.e, %i.h
-  %i.j = call noundef zeroext i1 @_ZN2v88internal4wasm11StackMemory4GrowEmm(ptr noundef nonnull align 8 dereferenceable(136) %i.c, i64 noundef %4, i64 noundef %i.i) #14
+  %i.j = call noundef zeroext i1 @_ZN2v88internal4wasm11StackMemory4GrowEmm(ptr noundef nonnull align 8 dereferenceable(136) %i.c, i64 noundef %4, i64 noundef %i.i) #13
   br i1 %i.j, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -1876,14 +1876,14 @@ bb.d:                                             ; preds = %bb.c
   %i.s = inttoptr i64 %i.r to ptr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.s, ptr align 1 %1, i64 %2, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.u = call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.c) #14
+  %i.u = call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.c) #13
   %i.v = ptrtoint ptr %i.u to i64
-  call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.t, i64 noundef %i.v) #14
+  call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.t, i64 noundef %i.v) #13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.b, %bb.c, %bb.d
   %.2 = phi i64 [ 0, %bb.c ], [ 0, %bb.b ], [ %i.r, %bb.d ], [ 0, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   ret i64 %.2
 }
 
@@ -1904,11 +1904,11 @@ bb.a:
   br i1 %i.e, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = tail call noundef i64 @_ZN2v88internal4wasm11StackMemory6ShrinkEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #14
+  %i.f = tail call noundef i64 @_ZN2v88internal4wasm11StackMemory6ShrinkEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #13
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.h = tail call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #14
+  %i.h = tail call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #13
   %i.i = ptrtoint ptr %i.h to i64
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.g, i64 noundef %i.i) #14
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.g, i64 noundef %i.i) #13
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1953,18 +1953,6 @@ declare void @_ZN2v88internal12WriteBarrier10SharedSlowENS0_6TaggedINS0_13Truste
 
 declare void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64, i64, i64) local_unnamed_addr #5
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @ceilf(float noundef) local_unnamed_addr #13
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @floorf(float noundef) local_unnamed_addr #13
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @truncf(float noundef) local_unnamed_addr #13
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @nearbyintf(float noundef) local_unnamed_addr #13
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #1
 
@@ -1999,9 +1987,8 @@ attributes #9 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stac
 attributes #10 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #14 = { nounwind }
-attributes #15 = { noreturn nounwind }
+attributes #13 = { nounwind }
+attributes #14 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}
