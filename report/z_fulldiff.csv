@@ -1,0 +1,15 @@
+Delta,Added Lines,Removed Lines,Download URL
+35,8937,8902,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/gfluidcore.bc?download=true
+10,186,176,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/slurm/original/torus3d_record.bc?download=true
+1,10,9,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SplitFunctions.bc?download=true
+0,9,9,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/StaleProfileMatching.bc?download=true
+-2,14,16,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/vf_blend.bc?download=true
+-4,17,21,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/freetype/original/autofit.bc?download=true
+-4,17,21,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/autofit.bc?download=true
+-4,17,21,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/neon_helper.bc?download=true
+-9,24,33,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/BasicBlockMatchingAndInference.bc?download=true
+-31,39,70,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/InterpBuiltin.bc?download=true
+-31,2751,2782,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/sve_helper.bc?download=true
+-32,89,121,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hdf5/original/h5diff_array.bc?download=true
+-96,336,432,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/mve_helper.bc?download=true
+-147,448,595,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish_color-1d697e6a0cff9662.fish_color.99c63356aa944a30-cgu.0.bc?download=true
