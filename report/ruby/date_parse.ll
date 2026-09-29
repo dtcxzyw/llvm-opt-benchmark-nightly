@@ -205,7 +205,7 @@ RSTRING_PTR.exit26.thread.us.i158:                ; preds = %RSTRING_PTR.exit26.
   %i.et = zext nneg i16 %i.es to i32
   %.234.us.i161.3 = or i32 %.234.us.i161.2, %i.et ; 3 uses
   %i.eu = add nuw nsw i64 %.043.us.i159, 4        ; 2 uses
-  %niter928.next.3 = add nuw nsw i64 %niter928, 4 ; 2 uses
+  %niter928.next.3 = add i64 %niter928, 4         ; 2 uses
   %niter928.ncmp.3 = icmp eq i64 %niter928.next.3, %unroll_iter927
   br i1 %niter928.ncmp.3, label %check_class.exit166.loopexit.unr-lcssa, label %RSTRING_PTR.exit26.thread.us.i158, !llvm.loop !1
 
@@ -259,7 +259,7 @@ RSTRING_PTR.exit28.i150:                          ; preds = %RSTRING_PTR.exit28.
   %i.gb = zext nneg i16 %i.ga to i32
   %.2.i153.3 = or i32 %.2.i153.2, %i.gb           ; 3 uses
   %i.gc = add nuw nsw i64 %.043.i151, 4           ; 2 uses
-  %niter921.next.3 = add nuw nsw i64 %niter921, 4 ; 2 uses
+  %niter921.next.3 = add i64 %niter921, 4         ; 2 uses
   %niter921.ncmp.3 = icmp eq i64 %niter921.next.3, %unroll_iter920
   br i1 %niter921.ncmp.3, label %check_class.exit166.loopexit902.unr-lcssa, label %RSTRING_PTR.exit28.i150, !llvm.loop !1
 
@@ -662,7 +662,7 @@ RSTRING_PTR.exit26.thread.us.i413:                ; preds = %RSTRING_PTR.exit26.
   %i.avn = zext nneg i16 %i.avm to i32
   %.234.us.i416.3 = or i32 %.234.us.i416.2, %i.avn ; 3 uses
   %i.avo = add nuw nsw i64 %.043.us.i414, 4       ; 2 uses
-  %niter1096.next.3 = add nuw nsw i64 %niter1096, 4 ; 2 uses
+  %niter1096.next.3 = add i64 %niter1096, 4       ; 2 uses
   %niter1096.ncmp.3 = icmp eq i64 %niter1096.next.3, %unroll_iter1095
   br i1 %niter1096.ncmp.3, label %check_class.exit421.loopexit.unr-lcssa, label %RSTRING_PTR.exit26.thread.us.i413, !llvm.loop !1
 
@@ -716,7 +716,7 @@ RSTRING_PTR.exit28.i405:                          ; preds = %RSTRING_PTR.exit28.
   %i.awv = zext nneg i16 %i.awu to i32
   %.2.i408.3 = or i32 %.2.i408.2, %i.awv          ; 3 uses
   %i.aww = add nuw nsw i64 %.043.i406, 4          ; 2 uses
-  %niter1089.next.3 = add nuw nsw i64 %niter1089, 4 ; 2 uses
+  %niter1089.next.3 = add i64 %niter1089, 4       ; 2 uses
   %niter1089.ncmp.3 = icmp eq i64 %niter1089.next.3, %unroll_iter1088
   br i1 %niter1089.ncmp.3, label %check_class.exit421.loopexit890.unr-lcssa, label %RSTRING_PTR.exit28.i405, !llvm.loop !1
 

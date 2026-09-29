@@ -205,7 +205,7 @@ _ZNK7xgboost6common4SpanIKfLm18446744073709551615EEixEm.exit.i57.epil: ; preds =
   %i.gu = load double, ptr %i.gt, align 8, !tbaa !225
   %i.gv = fadd double %i.gr, %i.gu                ; 3 uses
   %i.gw = add nuw i64 %.sroa.4.011.i, 8           ; 2 uses
-  %niter134.next.7 = add nuw i64 %niter134, 8     ; 2 uses
+  %niter134.next.7 = add i64 %niter134, 8         ; 2 uses
   %niter134.ncmp.7 = icmp eq i64 %niter134.next.7, %unroll_iter133
   br i1 %niter134.ncmp.7, label %_ZSt10accumulateIN7xgboost6common6detail12SpanIteratorINS1_4SpanIdLm18446744073709551615EEELb1EEEdET0_T_S8_S7_.exit.loopexit.unr-lcssa, label %.lr.ph.split.i, !llvm.loop !11
 
