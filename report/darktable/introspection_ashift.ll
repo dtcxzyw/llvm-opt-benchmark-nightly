@@ -166,8 +166,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.154 = private unnamed_addr constant [38 x i8] c"region2rect: invalid image 'modgrad'.\00", align 1
 @.str.156 = private unnamed_addr constant [40 x i8] c"region2rect: weights sum equal to zero.\00", align 1
 @.str.161 = private unnamed_addr constant [32 x i8] c"get_theta: null inertia matrix.\00", align 1
-@.str.167 = private unnamed_addr constant [32 x i8] c"refine: invalid image 'angles'.\00", align 1
-@.str.173 = private unnamed_addr constant [46 x i8] c"reduce_region_radius: invalid image 'angles'.\00", align 1
 @.str.175 = private unnamed_addr constant [28 x i8] c"rect_nfa: invalid 'angles'.\00", align 1
 @.str.177 = private unnamed_addr constant [27 x i8] c"ri_ini: Not enough memory.\00", align 1
 @.str.179 = private unnamed_addr constant [23 x i8] c"ri_inc: NULL iterator.\00", align 1
@@ -570,7 +568,7 @@ new_ntuple_list.exit.i.i.i.i:                     ; preds = %bb.ad
   %i.ly = tail call reassoc nsz arcp contract afn double @llvm.ceil.f64(double %i.lu)
   %i.lz = fptoui double %i.ly to i32
   %i.ma = tail call fastcc ptr @new_image_double(i32 noundef %i.lx, i32 noundef %i.z) ; 6 uses
-  %i.mb = tail call fastcc ptr @new_image_double(i32 noundef %i.lx, i32 noundef %i.lz) ; 8 uses
+  %i.mb = tail call fastcc ptr @new_image_double(i32 noundef %i.lx, i32 noundef %i.lz) ; 6 uses
   %i.mc = shl nuw i32 %i.aa, 1                    ; 27 uses
   %i.md = shl nuw i32 %i.z, 1                     ; 27 uses
   %i.me = getelementptr inbounds nuw i8, ptr %i.ma, i64 8
@@ -586,9 +584,9 @@ new_ntuple_list.exit.i.i.i.i:                     ; preds = %bb.ad
   br label %.lr.ph.i164.i.i.i
 
 .preheader135.i.i.i.i:                            ; preds = %._crit_edge141.i.i.i.i, %new_ntuple_list.exit.i.i.i.i
-  %i.mi = getelementptr inbounds nuw i8, ptr %i.mb, i64 12 ; 3 uses
-  %i.mj = load i32, ptr %i.mi, align 4, !tbaa !290 ; 2 uses
-  %.not155.i.i.i.i = icmp eq i32 %i.mj, 0
+  %i.mi = getelementptr inbounds nuw i8, ptr %i.mb, i64 12
+  %i.mj = load i32, ptr %i.mi, align 4, !tbaa !290 ; 9 uses
+  %.not155.i.i.i.i = icmp eq i32 %i.mj, 0         ; 2 uses
   br i1 %.not155.i.i.i.i, label %free_ntuple_list.exit.i.i.i.i, label %.lr.ph152.i.i.i.i
 
 .lr.ph152.i.i.i.i:                                ; preds = %.preheader135.i.i.i.i
@@ -991,32 +989,26 @@ bb.bb:                                            ; preds = %free_ntuple_list.ex
 gaussian_sampler.exit.i.i.i:                      ; preds = %free_ntuple_list.exit.i.i.i.i
   tail call void @free(ptr noundef nonnull %i.wn) #34
   tail call void @free(ptr noundef nonnull %i.ma) #34
-  %i.wp = load ptr, ptr %i.mb, align 8, !tbaa !291
+  %i.wp = load ptr, ptr %i.mb, align 8, !tbaa !291 ; 6 uses
   %i.wq = icmp eq ptr %i.wp, null
   br i1 %i.wq, label %bb.bd, label %bb.bc
 
 bb.bc:                                            ; preds = %gaussian_sampler.exit.i.i.i
-  %i.wr = getelementptr inbounds nuw i8, ptr %i.mb, i64 8 ; 2 uses
-  %i.ws = load i32, ptr %i.wr, align 8, !tbaa !289 ; 21 uses
+  %i.wr = getelementptr inbounds nuw i8, ptr %i.mb, i64 8
+  %i.ws = load i32, ptr %i.wr, align 8, !tbaa !289 ; 22 uses
   %i.wt = icmp eq i32 %i.ws, 0
-  br i1 %i.wt, label %bb.bd, label %4
+  %brmerge.i.i.i = or i1 %.not155.i.i.i.i, %i.wt
+  br i1 %brmerge.i.i.i, label %bb.bd, label %bb.be
 
-4:                                                ; preds = %bb.bc
-  %5 = load i32, ptr %i.mi, align 4, !tbaa !290   ; 7 uses
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %bb.bd, label %bb.be
-
-bb.bd:                                            ; preds = %4, %bb.bc, %gaussian_sampler.exit.i.i.i
+bb.bd:                                            ; preds = %bb.bc, %gaussian_sampler.exit.i.i.i
   tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.121, ptr noundef nonnull @.str.133) #34
   tail call void @exit(i32 noundef 1) #38
   unreachable
 
-bb.be:                                            ; preds = %4
-  %i.wu = tail call fastcc ptr @new_image_double(i32 noundef %i.ws, i32 noundef %5) ; 37 uses
-  %7 = load i32, ptr %i.wr, align 8, !tbaa !289
-  %8 = load i32, ptr %i.mi, align 4, !tbaa !290
-  %i.wv = tail call fastcc ptr @new_image_double(i32 noundef %7, i32 noundef %8) ; 6 uses
-  %i.ww = mul i32 %5, %i.ws
+bb.be:                                            ; preds = %bb.bc
+  %i.wu = tail call fastcc ptr @new_image_double(i32 noundef %i.ws, i32 noundef %i.mj) ; 32 uses
+  %i.wv = tail call fastcc ptr @new_image_double(i32 noundef %i.ws, i32 noundef %i.mj) ; 6 uses
+  %i.ww = mul i32 %i.ws, %i.mj
   %i.wx = zext i32 %i.ww to i64
   %i.wy = tail call noalias ptr @calloc(i64 noundef %i.wx, i64 noundef 16) #36 ; 4 uses
   %i.wz = tail call noalias dereferenceable_or_null(8192) ptr @calloc(i64 noundef 1024, i64 noundef 8) #36 ; 21 uses
@@ -1029,9 +1021,9 @@ bb.be:                                            ; preds = %4
   br i1 %or.cond3.i.i.i.i, label %bb.bf, label %iter.check
 
 iter.check:                                       ; preds = %bb.be
-  %i.xe = load ptr, ptr %i.wu, align 8, !tbaa !291 ; 23 uses
-  %i.xf = add i32 %5, -1                          ; 3 uses
-  %i.xg = mul i32 %i.xf, %i.ws                    ; 12 uses
+  %i.xe = load ptr, ptr %i.wu, align 8, !tbaa !291 ; 28 uses
+  %i.xf = add i32 %i.mj, -1                       ; 3 uses
+  %i.xg = mul i32 %i.ws, %i.xf                    ; 12 uses
   %wide.trip.count.i137.i.i.i = zext i32 %i.ws to i64 ; 9 uses
   %min.iters.check179.a = icmp ult i32 %i.ws, 4
   br i1 %min.iters.check179.a, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
@@ -1144,14 +1136,14 @@ bb.bf:                                            ; preds = %bb.be
   unreachable
 
 iter.check206:                                    ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block186
-  %wide.trip.count226.i.i.i.i = zext i32 %5 to i64 ; 8 uses
-  %min.iters.check195 = icmp ugt i32 %5, 3
+  %wide.trip.count226.i.i.i.i = zext i32 %i.mj to i64 ; 8 uses
+  %min.iters.check195 = icmp ugt i32 %i.mj, 3
   %ident.check.not = icmp eq i32 %i.ws, 1
   %or.cond = and i1 %min.iters.check195, %ident.check.not
   br i1 %or.cond, label %vector.main.loop.iter.check196, label %vec.epilog.scalar.ph207.preheader
 
 vector.main.loop.iter.check196:                   ; preds = %iter.check206
-  %min.iters.check197 = icmp ult i32 %5, 16
+  %min.iters.check197 = icmp ult i32 %i.mj, 16
   br i1 %min.iters.check197, label %vec.epilog.ph210, label %vector.ph198
 
 vector.ph198:                                     ; preds = %vector.main.loop.iter.check196
@@ -1277,14 +1269,13 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.zz = add i32 %i.ws, -1                       ; 3 uses
   %.not215.i.i.i.i = icmp eq i32 %i.zz, 0
   %.not216.i.i.i.i = icmp eq i32 %i.xf, 0
-  %or.cond272.i.i.i.i = or i1 %.not215.i.i.i.i, %.not216.i.i.i.i
+  %or.cond272.i.i.i.i = or i1 %.not216.i.i.i.i, %.not215.i.i.i.i
   br i1 %or.cond272.i.i.i.i, label %.preheader190.i.i.i.i.preheader, label %.preheader193.lr.ph.split.us.i.i.i.i
 
 .preheader190.i.i.i.i.preheader:                  ; preds = %._crit_edge.i143.i.i.i, %.preheader194.i.i.i.i
   br label %.preheader190.i.i.i.i
 
 .preheader193.lr.ph.split.us.i.i.i.i:             ; preds = %.preheader194.i.i.i.i
-  %9 = load ptr, ptr %i.mb, align 8, !tbaa !291   ; 4 uses
   %i.aaa = load ptr, ptr %i.wv, align 8, !tbaa !291 ; 2 uses
   %wide.trip.count231.i.i.i.i = zext i32 %i.xf to i64 ; 2 uses
   br label %.preheader193.us.i.i.i.i
@@ -1303,18 +1294,18 @@ bb.bg:                                            ; preds = %bb.bi, %.preheader1
   %i.aae = add i32 %i.aad, %i.ws                  ; 2 uses
   %i.aaf = add i32 %i.aae, 1
   %i.aag = zext i32 %i.aaf to i64
-  %i.aah = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.aag
+  %i.aah = getelementptr inbounds nuw [8 x i8], ptr %i.wp, i64 %i.aag
   %i.aai = load double, ptr %i.aah, align 8, !tbaa !166
   %i.aaj = zext i32 %i.aad to i64                 ; 3 uses
-  %i.aak = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.aaj
+  %i.aak = getelementptr inbounds nuw [8 x i8], ptr %i.wp, i64 %i.aaj
   %i.aal = load double, ptr %i.aak, align 8, !tbaa !166
   %i.aam = fsub reassoc nsz arcp contract afn double %i.aai, %i.aal ; 2 uses
   %i.aan = add i32 %i.aad, 1
   %i.aao = zext i32 %i.aan to i64
-  %i.aap = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.aao
+  %i.aap = getelementptr inbounds nuw [8 x i8], ptr %i.wp, i64 %i.aao
   %i.aaq = load double, ptr %i.aap, align 8, !tbaa !166
   %i.aar = zext i32 %i.aae to i64
-  %i.aas = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.aar
+  %i.aas = getelementptr inbounds nuw [8 x i8], ptr %i.wp, i64 %i.aar
   %i.aat = load double, ptr %i.aas, align 8, !tbaa !166
   %i.aau = fsub reassoc nsz arcp contract afn double %i.aaq, %i.aat ; 2 uses
   %i.aav = fadd reassoc nsz arcp contract afn double %i.aau, %i.aam ; 3 uses
@@ -1469,7 +1460,7 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
 
 .critedge.thread.i.i.i.i:                         ; preds = %bb.bn
   %i.ady = load ptr, ptr %i.wz, align 8, !tbaa !554
-  br label %ll_angle.exit.i.i.i
+  br label %free_image_double.exit.i.i.i
 
 .preheader190.i.i.i.i:                            ; preds = %bb.bn, %.preheader190.i.i.i.i.preheader
   %indvars.iv.i = phi i64 [ 1023, %.preheader190.i.i.i.i.preheader ], [ %indvars.iv.next.i.10, %bb.bn ] ; 13 uses
@@ -1590,7 +1581,7 @@ bb.bp:                                            ; preds = %bb.bo, %.preheader.
   %indvars.iv246.i.i.i.i.unr = phi i64 [ %indvars.iv.i.lcssa, %.preheader.preheader.i.i.i.i ], [ %i.afj, %bb.bp ]
   %.0160.i.i.i.i.unr = phi ptr [ %i.afh, %.preheader.preheader.i.i.i.i ], [ %.1161.i.i.i.i.prol, %bb.bp ]
   %i.afp = icmp ult i64 %i.afi, 3
-  br i1 %i.afp, label %ll_angle.exit.i.i.i, label %.preheader.i.i.i.i
+  br i1 %i.afp, label %free_image_double.exit.i.i.i, label %.preheader.i.i.i.i
 
 .preheader.i.i.i.i:                               ; preds = %.preheader.i.i.i.i.prol.loopexit, %bb.bu
   %indvars.iv246.i.i.i.i = phi i64 [ %i.agi, %bb.bu ], [ %indvars.iv246.i.i.i.i.unr, %.preheader.i.i.i.i.prol.loopexit ] ; 4 uses
@@ -1656,26 +1647,16 @@ bb.bt:                                            ; preds = %.preheader.i.i.i.i.
 bb.bu:                                            ; preds = %bb.bt, %.preheader.i.i.i.i.3
   %.1161.i.i.i.i.3 = phi ptr [ %i.agn, %bb.bt ], [ %.1161.i.i.i.i.2, %.preheader.i.i.i.i.3 ]
   %.old4.not.wide.i.i.i.i.3 = icmp eq i64 %i.agi, 0
-  br i1 %.old4.not.wide.i.i.i.i.3, label %ll_angle.exit.i.i.i, label %.preheader.i.i.i.i
+  br i1 %.old4.not.wide.i.i.i.i.3, label %free_image_double.exit.i.i.i, label %.preheader.i.i.i.i
 
-ll_angle.exit.i.i.i:                              ; preds = %.preheader.i.i.i.i.prol.loopexit, %bb.bu, %.critedge.thread.i.i.i.i
-  %10 = phi ptr [ %i.ady, %.critedge.thread.i.i.i.i ], [ %.lcssa231, %bb.bu ], [ %.lcssa231, %.preheader.i.i.i.i.prol.loopexit ] ; 2 uses
+free_image_double.exit.i.i.i:                     ; preds = %.preheader.i.i.i.i.prol.loopexit, %bb.bu, %.critedge.thread.i.i.i.i
+  %4 = phi ptr [ %i.ady, %.critedge.thread.i.i.i.i ], [ %.lcssa231, %bb.bu ], [ %.lcssa231, %.preheader.i.i.i.i.prol.loopexit ] ; 2 uses
   tail call void @free(ptr noundef nonnull %i.wz) #34
   tail call void @free(ptr noundef %i.xa) #34
-  %11 = load ptr, ptr %i.mb, align 8, !tbaa !291  ; 2 uses
-  %12 = icmp eq ptr %11, null
-  br i1 %12, label %13, label %free_image_double.exit.i.i.i
-
-13:                                               ; preds = %ll_angle.exit.i.i.i
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.121, ptr noundef nonnull @.str.139) #34
-  tail call void @exit(i32 noundef 1) #38
-  unreachable
-
-free_image_double.exit.i.i.i:                     ; preds = %ll_angle.exit.i.i.i
-  tail call void @free(ptr noundef nonnull %11) #34
+  tail call void @free(ptr noundef nonnull %i.wp) #34
   tail call void @free(ptr noundef nonnull %i.mb) #34
-  %i.ago = getelementptr inbounds nuw i8, ptr %i.wu, i64 8 ; 4 uses
-  %i.agp = load i32, ptr %i.ago, align 8, !tbaa !289 ; 7 uses
+  %i.ago = getelementptr inbounds nuw i8, ptr %i.wu, i64 8
+  %i.agp = load i32, ptr %i.ago, align 8, !tbaa !289 ; 8 uses
   %i.agq = getelementptr inbounds nuw i8, ptr %i.wu, i64 12
   %i.agr = load i32, ptr %i.agq, align 4, !tbaa !290 ; 4 uses
   %i.ags = uitofp reassoc nsz arcp contract afn i32 %i.agp to double
@@ -1730,7 +1711,7 @@ new_image_char_ini.exit.i.i.i:                    ; preds = %bb.by
   br i1 %i.ahm, label %bb.ca, label %.preheader.i201.i.i
 
 .preheader.i201.i.i:                              ; preds = %new_image_char_ini.exit.i.i.i
-  %.not28.i.i.i = icmp eq ptr %10, null
+  %.not28.i.i.i = icmp eq ptr %4, null
   br i1 %.not28.i.i.i, label %._crit_edge.i204.i.i, label %.lr.ph.i202.i.i
 
 .lr.ph.i202.i.i:                                  ; preds = %.preheader.i201.i.i
@@ -1758,25 +1739,20 @@ bb.ca:                                            ; preds = %new_image_char_ini.
   unreachable
 
 bb.cb:                                            ; preds = %bb.fo, %.lr.ph.i202.i.i
-  %.0829.i.i.i = phi ptr [ %10, %.lr.ph.i202.i.i ], [ %i.axv, %bb.fo ] ; 3 uses
-  %i.aid = load i32, ptr %.0829.i.i.i, align 8, !tbaa !557 ; 3 uses
+  %.0829.i.i.i = phi ptr [ %4, %.lr.ph.i202.i.i ], [ %i.axv, %bb.fo ] ; 3 uses
+  %i.aid = load i32, ptr %.0829.i.i.i, align 8, !tbaa !557 ; 2 uses
   %i.aie = getelementptr inbounds nuw i8, ptr %.0829.i.i.i, i64 4
-  %i.aif = load i32, ptr %i.aie, align 4, !tbaa !558 ; 3 uses
+  %i.aif = load i32, ptr %i.aie, align 4, !tbaa !558 ; 2 uses
   %i.aig = mul i32 %i.aif, %i.agp
   %i.aih = add i32 %i.aig, %i.aid
-  %i.aii = zext i32 %i.aih to i64
+  %i.aii = zext i32 %i.aih to i64                 ; 2 uses
   %i.aij = getelementptr inbounds nuw i8, ptr %i.ahh, i64 %i.aii
   %i.aik = load i8, ptr %i.aij, align 1, !tbaa !177
   %i.ail = icmp eq i8 %i.aik, 0
   br i1 %i.ail, label %bb.cc, label %bb.fo
 
 bb.cc:                                            ; preds = %bb.cb
-  %14 = load ptr, ptr %i.wu, align 8, !tbaa !291
-  %15 = load i32, ptr %i.ago, align 8, !tbaa !289
-  %16 = mul i32 %15, %i.aif
-  %17 = add i32 %16, %i.aid
-  %18 = zext i32 %17 to i64
-  %i.aim = getelementptr inbounds nuw [8 x i8], ptr %14, i64 %18
+  %i.aim = getelementptr inbounds nuw [8 x i8], ptr %i.xe, i64 %i.aii
   %i.ain = load double, ptr %i.aim, align 8, !tbaa !166
   %i.aio = fcmp reassoc nsz arcp contract afn une double %i.ain, -1.024000e+03
   br i1 %i.aio, label %bb.cd, label %bb.fo
@@ -1785,23 +1761,13 @@ bb.cd:                                            ; preds = %bb.cc
   call fastcc void @region_grow(i32 noundef %i.aid, i32 noundef %i.aif, ptr noundef nonnull %i.wu, ptr noundef nonnull %i.ahl, ptr noundef %i.b, ptr noundef %i.c, ptr noundef nonnull %i.ahd, double noundef f0x3FD921FB54442D18)
   %i.aip = load i32, ptr %i.b, align 4, !tbaa !17 ; 5 uses
   %i.aiq = icmp slt i32 %i.aip, %i.aha
-  br i1 %i.aiq, label %bb.fo, label %19
+  br i1 %i.aiq, label %bb.fo, label %bb.ce
 
-19:                                               ; preds = %bb.cd
-  %20 = load double, ptr %i.c, align 8, !tbaa !166 ; 2 uses
-  call fastcc void @region2rect(ptr noundef nonnull %i.ahl, i32 noundef %i.aip, ptr noundef nonnull %i.wv, double noundef %20, ptr noundef %3)
+bb.ce:                                            ; preds = %bb.cd
+  %5 = load double, ptr %i.c, align 8, !tbaa !166 ; 2 uses
+  call fastcc void @region2rect(ptr noundef nonnull %i.ahl, i32 noundef %i.aip, ptr noundef nonnull %i.wv, double noundef %5, ptr noundef %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store double %20, ptr %i.a, align 8, !tbaa !166
-  %21 = load ptr, ptr %i.wu, align 8, !tbaa !291  ; 2 uses
-  %22 = icmp eq ptr %21, null
-  br i1 %22, label %23, label %bb.ce
-
-23:                                               ; preds = %19
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.121, ptr noundef nonnull @.str.167) #34
-  tail call void @exit(i32 noundef 1) #38
-  unreachable
-
-bb.ce:                                            ; preds = %19
+  store double %5, ptr %i.a, align 8, !tbaa !166
   %i.air = sitofp reassoc nsz arcp contract afn i32 %i.aip to double
   %i.ais = load double, ptr %3, align 16, !tbaa !297
   %i.ait = load double, ptr %i.ahn, align 8, !tbaa !298
@@ -1824,11 +1790,10 @@ bb.cf:                                            ; preds = %bb.ce
   %i.ajh = sitofp reassoc nsz arcp contract afn i32 %i.ajg to double
   %i.aji = load i32, ptr %i.ahr, align 4, !tbaa !304 ; 3 uses
   %i.ajj = sitofp reassoc nsz arcp contract afn i32 %i.aji to double
-  %24 = load i32, ptr %i.ago, align 8, !tbaa !289
-  %i.ajk = mul i32 %24, %i.aji
+  %i.ajk = mul i32 %i.aji, %i.agp
   %i.ajl = add i32 %i.ajk, %i.ajg
   %i.ajm = zext i32 %i.ajl to i64
-  %i.ajn = getelementptr inbounds nuw [8 x i8], ptr %21, i64 %i.ajm
+  %i.ajn = getelementptr inbounds nuw [8 x i8], ptr %i.xe, i64 %i.ajm
   %i.ajo = load double, ptr %i.ajn, align 8, !tbaa !166
   %i.ajp = icmp sgt i32 %i.aip, 0
   br i1 %i.ajp, label %.lr.ph.i147.preheader.i.i.i, label %refine.exit.thread.i.i.i
@@ -1843,12 +1808,12 @@ bb.cf:                                            ; preds = %bb.ce
   %.093108.i.i.i.i = phi double [ %.194.i.i.i.i, %bb.ch ], [ 0.000000e+00, %.lr.ph.i147.preheader.i.i.i ] ; 2 uses
   %.095107.i.i.i.i = phi double [ %.196.i.i.i.i, %bb.ch ], [ 0.000000e+00, %.lr.ph.i147.preheader.i.i.i ] ; 2 uses
   %i.ajr = getelementptr inbounds nuw [8 x i8], ptr %i.ahl, i64 %indvars.iv.i148.i.i.i ; 2 uses
-  %i.ajs = load i32, ptr %i.ajr, align 4, !tbaa !303 ; 3 uses
+  %i.ajs = load i32, ptr %i.ajr, align 4, !tbaa !303 ; 2 uses
   %i.ajt = getelementptr inbounds nuw i8, ptr %i.ajr, i64 4
-  %i.aju = load i32, ptr %i.ajt, align 4, !tbaa !304 ; 3 uses
+  %i.aju = load i32, ptr %i.ajt, align 4, !tbaa !304 ; 2 uses
   %i.ajv = mul i32 %i.aju, %i.agp
   %i.ajw = add i32 %i.ajv, %i.ajs
-  %i.ajx = zext i32 %i.ajw to i64
+  %i.ajx = zext i32 %i.ajw to i64                 ; 2 uses
   %i.ajy = getelementptr inbounds nuw i8, ptr %i.ahh, i64 %i.ajx
   store i8 0, ptr %i.ajy, align 1, !tbaa !177
   %i.ajz = sitofp reassoc nsz arcp contract afn i32 %i.ajs to double
@@ -1863,12 +1828,7 @@ bb.cf:                                            ; preds = %bb.ce
   br i1 %i.akh, label %bb.cg, label %bb.ch
 
 bb.cg:                                            ; preds = %.lr.ph.i147.i.i.i
-  %25 = load ptr, ptr %i.wu, align 8, !tbaa !291
-  %26 = load i32, ptr %i.ago, align 8, !tbaa !289
-  %27 = mul i32 %26, %i.aju
-  %28 = add i32 %27, %i.ajs
-  %29 = zext i32 %28 to i64
-  %i.aki = getelementptr inbounds nuw [8 x i8], ptr %25, i64 %29
+  %i.aki = getelementptr inbounds nuw [8 x i8], ptr %i.xe, i64 %i.ajx
   %i.akj = load double, ptr %i.aki, align 8, !tbaa !166
   %i.akk = fsub reassoc nsz arcp contract afn double %i.akj, %i.ajo ; 3 uses
   %i.akl = fcmp reassoc nsz arcp contract afn ugt double %i.akk, f0xC00921FB54442D18
@@ -1946,19 +1906,9 @@ bb.cj:                                            ; preds = %bb.ci
   %i.alw = fmul reassoc nsz arcp contract afn double %i.alu, %i.alv
   %i.alx = fdiv reassoc nsz arcp contract afn double %i.alj, %i.alw
   %i.aly = fcmp reassoc nsz arcp contract afn olt double %i.alx, f0x3FE6666666666666
-  br i1 %i.aly, label %30, label %bb.co
+  br i1 %i.aly, label %.lr.ph86.i.i.i.i.i, label %bb.co
 
-30:                                               ; preds = %bb.cj
-  %31 = load ptr, ptr %i.wu, align 8, !tbaa !291
-  %32 = icmp eq ptr %31, null
-  br i1 %32, label %33, label %.lr.ph86.i.i.i.i.i
-
-33:                                               ; preds = %30
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.121, ptr noundef nonnull @.str.173) #34
-  tail call void @exit(i32 noundef 1) #38
-  unreachable
-
-.lr.ph86.i.i.i.i.i:                               ; preds = %30
+.lr.ph86.i.i.i.i.i:                               ; preds = %bb.cj
   %i.alz = load <2 x i32>, ptr %i.ahl, align 4, !tbaa !17
   %i.ama = sitofp <2 x i32> %i.alz to <2 x double> ; 4 uses
   %i.amb = shufflevector <4 x double> %i.alk, <4 x double> poison, <2 x i32> <i32 3, i32 1>
@@ -2361,8 +2311,7 @@ bb.fo:                                            ; preds = %add_7tuple.exit.i.i
   br i1 %.not.i203.i.i, label %._crit_edge.i204.i.i, label %bb.cb
 
 ._crit_edge.i204.i.i:                             ; preds = %bb.fo, %.preheader.i201.i.i
-  %34 = load ptr, ptr %i.wu, align 8, !tbaa !291  ; 2 uses
-  %i.axw = icmp eq ptr %34, null
+  %i.axw = icmp eq ptr %i.xe, null
   br i1 %i.axw, label %bb.fp, label %bb.fq
 
 bb.fp:                                            ; preds = %._crit_edge.i204.i.i
@@ -2371,7 +2320,7 @@ bb.fp:                                            ; preds = %._crit_edge.i204.i.
   unreachable
 
 bb.fq:                                            ; preds = %._crit_edge.i204.i.i
-  tail call void @free(ptr noundef nonnull %34) #34
+  tail call void @free(ptr noundef nonnull %i.xe) #34
   tail call void @free(ptr noundef nonnull %i.wu) #34
   %i.axx = load ptr, ptr %i.wv, align 8, !tbaa !291 ; 2 uses
   %i.axy = icmp eq ptr %i.axx, null
@@ -2774,7 +2723,7 @@ declare void @exit(i32 noundef) local_unnamed_addr #28
 declare double @llvm.ceil.f64(double) #12
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc nonnull ptr @new_image_double(i32 noundef %0, i32 noundef %1) unnamed_addr #5 {
+define internal fastcc noalias nonnull ptr @new_image_double(i32 noundef %0, i32 noundef %1) unnamed_addr #5 {
 bb.a:
   %i.a = icmp eq i32 %0, 0
   %i.b = icmp eq i32 %1, 0

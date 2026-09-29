@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str = private unnamed_addr constant [9 x i8] c"%19.16g\0A\00", align 1
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define noundef ptr @N_VNewEmpty_Serial(i64 noundef %0) local_unnamed_addr #0 {
+define noalias noundef ptr @N_VNewEmpty_Serial(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #18 ; 6 uses
   %i.b = icmp eq ptr %i.a, null
@@ -107,9 +107,9 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #1
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define noundef ptr @N_VClone_Serial(ptr nofree noundef readonly captures(address_is_null) %0) #3 {
+define noalias noundef ptr @N_VClone_Serial(ptr nofree noundef readonly captures(address_is_null) %0) #3 {
 bb.a:
-  %i.a = tail call ptr @N_VCloneEmpty_Serial(ptr noundef %0) ; 8 uses
+  %i.a = tail call ptr @N_VCloneEmpty_Serial(ptr noundef %0) ; 7 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.g, label %bb.b
 
@@ -136,14 +136,10 @@ bb.e:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !17
   tail call void @free(ptr noundef %i.n) #19
-  %1 = load ptr, ptr %i.a, align 8, !tbaa !20     ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store ptr null, ptr %2, align 8, !tbaa !17
   br label %N_VDestroy_Serial.exit
 
 N_VDestroy_Serial.exit:                           ; preds = %bb.d, %bb.e
-  %3 = phi ptr [ %1, %bb.e ], [ %i.i, %bb.d ]
-  tail call void @free(ptr noundef nonnull %3) #19
+  tail call void @free(ptr noundef nonnull %i.i) #19
   store ptr null, ptr %i.a, align 8, !tbaa !20
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !21
@@ -163,7 +159,7 @@ bb.g:                                             ; preds = %bb.b, %bb.f, %bb.a,
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: read, target_mem: none) uwtable
-define noundef ptr @N_VCloneEmpty_Serial(ptr nofree noundef readonly captures(address_is_null) %0) #4 {
+define noalias noundef ptr @N_VCloneEmpty_Serial(ptr nofree noundef readonly captures(address_is_null) %0) #4 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.h, label %bb.b
@@ -566,9 +562,9 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define noundef ptr @N_VNew_Serial(i64 noundef %0) local_unnamed_addr #3 {
+define noalias noundef ptr @N_VNew_Serial(i64 noundef %0) local_unnamed_addr #3 {
 bb.a:
-  %i.a = tail call ptr @N_VNewEmpty_Serial(i64 noundef %0) ; 8 uses
+  %i.a = tail call ptr @N_VNewEmpty_Serial(i64 noundef %0) ; 7 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.g, label %bb.b
 
@@ -593,14 +589,10 @@ bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !17
   tail call void @free(ptr noundef %i.l) #19
-  %1 = load ptr, ptr %i.a, align 8, !tbaa !20     ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store ptr null, ptr %2, align 8, !tbaa !17
   br label %N_VDestroy_Serial.exit
 
 N_VDestroy_Serial.exit:                           ; preds = %bb.d, %bb.e
-  %3 = phi ptr [ %1, %bb.e ], [ %i.g, %bb.d ]
-  tail call void @free(ptr noundef nonnull %3) #19
+  tail call void @free(ptr noundef nonnull %i.g) #19
   store ptr null, ptr %i.a, align 8, !tbaa !20
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !21
@@ -620,7 +612,7 @@ bb.g:                                             ; preds = %bb.b, %bb.f, %bb.a,
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define noundef ptr @N_VMake_Serial(i64 noundef %0, ptr noundef %1) local_unnamed_addr #3 {
+define noalias noundef ptr @N_VMake_Serial(i64 noundef %0, ptr noundef %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = tail call ptr @N_VNewEmpty_Serial(i64 noundef %0) ; 3 uses
   %i.b = icmp ne ptr %i.a, null
@@ -641,7 +633,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define noundef ptr @N_VCloneVectorArray_Serial(i32 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #11 {
+define noalias noundef ptr @N_VCloneVectorArray_Serial(i32 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #11 {
 bb.a:
   %i.a = icmp slt i32 %0, 1
   br i1 %i.a, label %.loopexit, label %bb.b
@@ -762,7 +754,7 @@ N_VDestroy_Serial.exit:                           ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define noundef ptr @N_VCloneVectorArrayEmpty_Serial(i32 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #11 {
+define noalias noundef ptr @N_VCloneVectorArrayEmpty_Serial(i32 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #11 {
 bb.a:
   %i.a = icmp slt i32 %0, 1
   br i1 %i.a, label %.loopexit, label %bb.b

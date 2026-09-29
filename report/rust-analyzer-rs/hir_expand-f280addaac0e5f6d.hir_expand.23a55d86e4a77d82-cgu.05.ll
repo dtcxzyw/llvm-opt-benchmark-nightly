@@ -204,7 +204,6 @@ bb.a:
   %i.w = alloca [1 x i8], align 1                 ; 2 uses
   %i.x = alloca [24 x i8], align 8                ; 6 uses
   %i.y = alloca [24 x i8], align 16               ; 5 uses
-  %.sroa.453.sroa.4.i = alloca [20 x i8], align 4 ; 4 uses
   %.sroa.8189 = alloca [12 x i8], align 8         ; 4 uses
   %.sroa.8183 = alloca [12 x i8], align 8         ; 4 uses
   %.sroa.8178 = alloca [12 x i8], align 8         ; 4 uses
@@ -607,17 +606,14 @@ bb.ld:                                            ; preds = %bb.lc
   unreachable
 
 .noexc50:                                         ; preds = %bb.lc
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.453.sroa.4.i)
-  %i.agt = getelementptr inbounds nuw i8, ptr %i.adt, i64 84
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.453.sroa.4.i, ptr noundef nonnull align 4 dereferenceable(20) %i.agt, i64 20, i1 false), !noalias !1678
+  %1 = getelementptr inbounds nuw i8, ptr %i.adt, i64 84
+  %i.agt = getelementptr inbounds nuw i8, ptr %i.agr, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.agt, ptr noundef nonnull align 4 dereferenceable(20) %1, i64 20, i1 false), !noalias !1678
   store i32 1, ptr %i.agr, align 8, !noalias !1678
   %.sroa.453.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.agr, i64 4
   store i32 93, ptr %.sroa.453.0..sroa_idx.i, align 4, !noalias !1678
-  %.sroa.453.sroa.4.0..sroa.453.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.agr, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.453.sroa.4.0..sroa.453.0..sroa_idx.sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.453.sroa.4.i, i64 20, i1 false), !noalias !1678
   %.sroa.453.sroa.5.0..sroa.453.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.agr, i64 28
   store i8 0, ptr %.sroa.453.sroa.5.0..sroa.453.0..sroa_idx.sroa_idx.i, align 4, !noalias !1678
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.453.sroa.4.i)
   store i8 0, ptr %i.aex, align 4, !noalias !1678
   %i.agu = load i64, ptr %i.aer, align 8, !noalias !1678, !noundef !4
   %i.agv = add i64 %i.agu, 1

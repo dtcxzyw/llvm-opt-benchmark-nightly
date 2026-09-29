@@ -37,7 +37,7 @@ target triple = "x86_64-pc-linux-gnu"
 @str.1 = private unnamed_addr constant [25 x i8] c"Verification successful.\00", align 1
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @Res6_ManReadPla(ptr noundef %0) local_unnamed_addr #0 {
+define noalias noundef ptr @Res6_ManReadPla(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 8 uses
   %i.b = alloca i32, align 4                      ; 8 uses
@@ -440,8 +440,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = load i32, ptr %i.a, align 8, !tbaa !35   ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !25
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !25   ; 2 uses
   %i.f = xor i32 %i.c, -1
   %i.g = add i32 %i.e, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 12
@@ -451,9 +451,8 @@ bb.c:                                             ; preds = %bb.b
   %i.l = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.9, i32 noundef %i.c, i32 noundef %i.g, i32 noundef %i.i, i32 noundef %i.k) ; 0 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   %i.n = getelementptr i8, ptr %i.a, i64 124
-  %.val = load i32, ptr %i.n, align 4, !tbaa !19
-  %i.o = load i32, ptr %i.d, align 4, !tbaa !25
-  tail call void @Res6_PrintSolutionPla(ptr noundef nonnull %i.m, i32 noundef %.val, i32 noundef %i.o)
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !19
+  tail call void @Res6_PrintSolutionPla(ptr noundef nonnull %i.m, i32 noundef %i.o, i32 noundef %i.e)
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.b, %bb.c
