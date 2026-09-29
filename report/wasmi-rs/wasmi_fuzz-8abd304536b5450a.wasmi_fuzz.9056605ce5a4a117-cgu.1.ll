@@ -202,18 +202,17 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %exitcond.not.i.i.i, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %i.k = phi i64 [ %i.l, %bb.c ], [ %.sroa.0.04.i, %bb.b ] ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr @116, i64 %i.k
-  %3 = load i8, ptr %2, align 1, !range !13, !noalias !271, !noundef !4 ; 2 uses
+  %i.k = phi i64 [ %i.l, %bb.c ], [ %.sroa.0.04.i, %bb.b ] ; 3 uses
   %i.l = add nuw nsw i64 %i.k, 1                  ; 3 uses
-  %4 = zext nneg i8 %3 to i64
-  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtCs13fhi2aYsSw_7flagset7FlagSetNtNtCs7wImhEnBy0k_10wasm_smith4core15InstructionKindENtB6_5Debug3fmtCscoiT177WhKJ_10wasmi_fuzz, i64 %4
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtCs13fhi2aYsSw_7flagset7FlagSetNtNtCs7wImhEnBy0k_10wasm_smith4core15InstructionKindENtB6_5Debug3fmtCscoiT177WhKJ_10wasmi_fuzz, i64 %i.k
   %switch.load = load i16, ptr %switch.gep, align 2
   %i.m = or i16 %switch.load, %.val
   %i.n = icmp eq i16 %i.m, -1
   br i1 %i.n, label %bb.d, label %bb.c
 
 bb.d:                                             ; preds = %.lr.ph
+  %2 = getelementptr inbounds nuw i8, ptr @116, i64 %i.k
+  %3 = load i8, ptr %2, align 1, !range !13, !noalias !271, !noundef !4
   %i.o = add i64 %.sroa.83.0.i, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 %3, ptr %i.c, align 1

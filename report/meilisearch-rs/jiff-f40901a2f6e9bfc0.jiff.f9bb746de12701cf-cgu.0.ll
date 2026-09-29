@@ -205,10 +205,11 @@ begin_hunk_0
 @switch.table._ZN4jiff4span5Nudge18relative_invariant17hf5816d3597116f74E.633 = private unnamed_addr constant [7 x i32] [i32 0, i32 0, i32 0, i32 1, i32 60, i32 3600, i32 86400], align 8
 @switch.table._ZN4jiff4span9SpanTotal5total17h175a92fa97d17efcE.641 = private unnamed_addr constant [8 x i64] [i64 0, i64 0, i64 0, i64 1000000000, i64 60000000000, i64 3600000000000, i64 86400000000000, i64 604800000000000], align 8
 @switch.table._ZN4jiff4span9SpanTotal5total17h175a92fa97d17efcE.643 = private unnamed_addr constant [6 x i64] [i64 0, i64 0, i64 0, i64 1000000000, i64 60000000000, i64 3600000000000], align 8
+@switch.table._ZN4jiff4util5round9Increment10for_limits17h85c6ade5a369d533E = private unnamed_addr constant [12 x i64] [i64 86400000000000, i64 86400000000, i64 86400000, i64 86400, i64 1440, i64 24, i64 1000, i64 1000, i64 1000, i64 60, i64 60, i64 2], align 8
 @switch.table._ZN4jiff5civil8datetime13DateTimeRound5round17ha18a1310279c63e0E = private unnamed_addr constant [8 x i32] [i32 1, i32 1000, i32 1000000, i32 0, i32 0, i32 0, i32 0, i32 0], align 8
 @switch.table._ZN4jiff5civil8datetime13DateTimeRound5round17ha18a1310279c63e0E.645 = private unnamed_addr constant [8 x i32] [i32 0, i32 0, i32 0, i32 1, i32 60, i32 3600, i32 86400, i32 604800], align 8
 @switch.table._ZN4jiff5zoned5Zoned12memory_usage17h23ac1346e53ad5faE = private unnamed_addr constant [6 x i16] [i16 0, i16 0, i16 0, i16 0, i16 368, i16 104], align 8
-@switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE = private unnamed_addr constant [12 x i64] [i64 86400000000000, i64 86400000000, i64 86400000, i64 86400, i64 1440, i64 24, i64 1000, i64 1000, i64 1000, i64 60, i64 60, i64 2], align 8
+@switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE = private unnamed_addr constant [6 x i64] [i64 86400000000000, i64 86400000000, i64 86400000, i64 86400, i64 1440, i64 24], align 8
 @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.646 = private unnamed_addr constant [6 x i32] [i32 1, i32 1000, i32 1000000, i32 0, i32 0, i32 0], align 8
 @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.647 = private unnamed_addr constant [6 x i16] [i16 0, i16 0, i16 0, i16 1, i16 60, i16 3600], align 8
 @"switch.table._ZN53_$LT$jiff..span..Unit$u20$as$u20$core..fmt..Debug$GT$3fmt17h213add3c726e3375E.648" = private unnamed_addr constant [10 x ptr] [ptr @459, ptr @458, ptr @457, ptr @456, ptr @455, ptr @454, ptr @453, ptr @452, ptr @451, ptr @450], align 8
@@ -611,7 +612,7 @@ bb.e:                                             ; preds = %bb.c
 
 switch.lookup:                                    ; preds = %bb.c
   %i.l = zext nneg i8 %i.f to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE, i64 %i.l
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4jiff4util5round9Increment10for_limits17h85c6ade5a369d533E, i64 %i.l
   %switch.load = load i64, ptr %switch.gep, align 8 ; 2 uses
   %i.m = icmp slt i64 %2, %switch.load
   br i1 %i.m, label %bb.f, label %bb.g
@@ -1014,9 +1015,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = zext nneg i8 %i.c to i64
+  %i.g = zext nneg i8 %i.c to i64                 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr @335, i64 %i.g
-  %i.i = load i8, ptr %i.h, align 1, !range !32, !noalias !11710, !noundef !11 ; 2 uses
+  %i.i = load i8, ptr %i.h, align 1, !range !32, !noalias !11710, !noundef !11
   %i.j = add i64 %i.d, -1000000001
   %or.cond.i.i.i = icmp ult i64 %i.j, -1000000000
   %i.k = shl nuw nsw i64 %i.d, 32
@@ -1030,8 +1031,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.i
 
 switch.lookup:                                    ; preds = %bb.c
-  %4 = zext nneg i8 %i.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE, i64 %4
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE, i64 %i.g
   %switch.load = load i64, ptr %switch.gep, align 8 ; 2 uses
   %.not.i.i = icmp sgt i64 %i.d, %switch.load
   br i1 %.not.i.i, label %bb.f, label %bb.e

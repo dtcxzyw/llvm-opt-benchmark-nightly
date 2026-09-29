@@ -205,7 +205,6 @@ begin_hunk_0
 @.str.771 = private unnamed_addr constant [4 x i8] c" 1\0A\00", align 1
 @__const._ZN12_GLOBAL__N_110RVVEmitter12createHeaderERN4llvm11raw_ostreamE.Log2LMULs = private unnamed_addr constant [7 x i32] [i32 -3, i32 -2, i32 -1, i32 0, i32 1, i32 2, i32 3], align 16
 @_ZN5clang5RISCV19PrototypeDescriptor4MaskE = external local_unnamed_addr global %"struct.clang::RISCV::PrototypeDescriptor", align 2
-@.str.772 = private unnamed_addr constant [5 x i8] c"csil\00", align 1
 @_ZN5clang5RISCV19PrototypeDescriptor6VectorE = external local_unnamed_addr global %"struct.clang::RISCV::PrototypeDescriptor", align 2
 @.str.773 = private unnamed_addr constant [21 x i8] c"\0A#ifdef __cplusplus\0A\00", align 1
 @.str.774 = private unnamed_addr constant [3 x i8] c"}\0A\00", align 1
@@ -284,6 +283,7 @@ begin_hunk_0
 @.str.849 = private unnamed_addr constant [24 x i8] c"vector::_M_range_insert\00", align 1
 @.str.850 = private unnamed_addr constant [21 x i8] c"PrototypeDescriptor(\00", align 1
 @.str.851 = private unnamed_addr constant [4 x i8] c"),\0A\00", align 1
+@switch.table._ZN5clang13EmitRVVHeaderERKN4llvm12RecordKeeperERNS0_11raw_ostreamE = private unnamed_addr constant [5 x i8] c"\01\02\04\08\00", align 2
 @switch.table._ZN12_GLOBAL__N_110RVVEmitter19createRVVIntrinsicsERSt6vectorISt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS5_EESaIS8_EEPS1_INS_10SemaRecordESaISC_EE.64 = private unnamed_addr constant [25 x i16] [i16 256, i16 512, i16 1, i16 128, i16 0, i16 64, i16 0, i16 0, i16 4, i16 0, i16 0, i16 8, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 2, i16 0, i16 0, i16 0, i16 0, i16 32, i16 16], align 2
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -686,20 +686,9 @@ bb.ao:                                            ; preds = %bb.ap
 
 .preheader.i:                                     ; preds = %"_ZZN12_GLOBAL__N_110RVVEmitter12createHeaderERN4llvm11raw_ostreamEENK3$_0clIPN5clang5RISCV7RVVTypeEEEDaT_.exit.i", %bb.ap
   %.097.idx245.i = phi i64 [ %.097.add.i, %bb.ap ], [ 0, %"_ZZN12_GLOBAL__N_110RVVEmitter12createHeaderERN4llvm11raw_ostreamEENK3$_0clIPN5clang5RISCV7RVVTypeEEEDaT_.exit.i" ] ; 2 uses
-  %.097.ptr.i = getelementptr inbounds nuw i8, ptr @.str.772, i64 %.097.idx245.i
-  %i.gq = load i8, ptr %.097.ptr.i, align 1, !tbaa !24
-  %switch.tableidx = add i8 %i.gq, -97            ; 2 uses
-  %4 = icmp ult i8 %switch.tableidx, 25
-  br i1 %4, label %switch.lookup, label %_ZL14ParseBasicTypec.exit.i
-
-switch.lookup:                                    ; preds = %.preheader.i
-  %5 = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN12_GLOBAL__N_110RVVEmitter19createRVVIntrinsicsERSt6vectorISt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS5_EESaIS8_EEPS1_INS_10SemaRecordESaISC_EE.64, i64 %5
-  %switch.load = load i16, ptr %switch.gep, align 2
-  br label %_ZL14ParseBasicTypec.exit.i
-
-_ZL14ParseBasicTypec.exit.i:                      ; preds = %.preheader.i, %switch.lookup
-  %.0.i.i = phi i16 [ %switch.load, %switch.lookup ], [ 0, %.preheader.i ] ; 4 uses
+  %.097.ptr.i = getelementptr inbounds nuw i8, ptr @switch.table._ZN5clang13EmitRVVHeaderERKN4llvm12RecordKeeperERNS0_11raw_ostreamE, i64 %.097.idx245.i
+  %i.gq = load i8, ptr %.097.ptr.i, align 1
+  %switch.ext = zext i8 %i.gq to i16              ; 4 uses
   br label %bb.aq
 
 bb.ap:                                            ; preds = %bb.be
@@ -707,12 +696,12 @@ bb.ap:                                            ; preds = %bb.be
   %.not101.i = icmp eq i64 %.097.add.i, 4
   br i1 %.not101.i, label %bb.ao, label %.preheader.i
 
-bb.aq:                                            ; preds = %bb.be, %_ZL14ParseBasicTypec.exit.i
-  %.096.idx244.i = phi i64 [ 0, %_ZL14ParseBasicTypec.exit.i ], [ %.096.add.i, %bb.be ] ; 2 uses
+bb.aq:                                            ; preds = %bb.be, %.preheader.i
+  %.096.idx244.i = phi i64 [ 0, %.preheader.i ], [ %.096.add.i, %bb.be ] ; 2 uses
   %.096.ptr.i = getelementptr inbounds nuw i8, ptr @__const._ZN12_GLOBAL__N_110RVVEmitter12createHeaderERN4llvm11raw_ostreamE.Log2LMULs, i64 %.096.idx244.i
   %i.gr = load i32, ptr %.096.ptr.i, align 4, !tbaa !101 ; 4 uses
   %.sroa.038.0.copyload.i = load i32, ptr @_ZN5clang5RISCV19PrototypeDescriptor6VectorE, align 2
-  %i.gs = call { ptr, i8 } @_ZN5clang5RISCV12RVVTypeCache11computeTypeENS0_9BasicTypeEiNS0_19PrototypeDescriptorE(ptr noundef nonnull align 8 dereferenceable(104) %i.c, i16 noundef zeroext %.0.i.i, i32 noundef %i.gr, i32 %.sroa.038.0.copyload.i) #20 ; 2 uses
+  %i.gs = call { ptr, i8 } @_ZN5clang5RISCV12RVVTypeCache11computeTypeENS0_9BasicTypeEiNS0_19PrototypeDescriptorE(ptr noundef nonnull align 8 dereferenceable(104) %i.c, i16 noundef zeroext %switch.ext, i32 noundef %i.gr, i32 %.sroa.038.0.copyload.i) #20 ; 2 uses
   %i.gt = extractvalue { ptr, i8 } %i.gs, 0       ; 4 uses
   %i.gu = extractvalue { ptr, i8 } %i.gs, 1
   %i.gv = trunc nuw i8 %i.gu to i1
@@ -795,7 +784,7 @@ bb.ax:                                            ; preds = %_ZN4llvm11raw_ostre
   br label %"_ZZN12_GLOBAL__N_110RVVEmitter12createHeaderERN4llvm11raw_ostreamEENK3$_0clIPN5clang5RISCV7RVVTypeEEEDaT_.exit154.i"
 
 "_ZZN12_GLOBAL__N_110RVVEmitter12createHeaderERN4llvm11raw_ostreamEENK3$_0clIPN5clang5RISCV7RVVTypeEEEDaT_.exit154.i": ; preds = %bb.ax, %bb.aw
-  %i.ii = call { ptr, i8 } @_ZN5clang5RISCV12RVVTypeCache11computeTypeENS0_9BasicTypeEiNS0_19PrototypeDescriptorE(ptr noundef nonnull align 8 dereferenceable(104) %i.c, i16 noundef zeroext %.0.i.i, i32 noundef %i.gr, i32 524290) #20
+  %i.ii = call { ptr, i8 } @_ZN5clang5RISCV12RVVTypeCache11computeTypeENS0_9BasicTypeEiNS0_19PrototypeDescriptorE(ptr noundef nonnull align 8 dereferenceable(104) %i.c, i16 noundef zeroext %switch.ext, i32 noundef %i.gr, i32 524290) #20
   %i.ij = extractvalue { ptr, i8 } %i.ii, 0       ; 4 uses
   %i.ik = load ptr, ptr %i.n, align 8, !tbaa !46
   %i.il = load ptr, ptr %i.p, align 8, !tbaa !47  ; 2 uses
@@ -879,11 +868,11 @@ bb.be:                                            ; preds = %"_ZZN12_GLOBAL__N_1
   %i.jw = shl nuw nsw i32 %.095243.i, 8
   %.sroa.2220.0.insert.shift.i = add nuw nsw i32 %i.jw, 8448 ; 2 uses
   %.sroa.0219.0.insert.insert.i = or disjoint i32 %.sroa.2220.0.insert.shift.i, 1048578
-  %i.jx = call { ptr, i8 } @_ZN5clang5RISCV12RVVTypeCache11computeTypeENS0_9BasicTypeEiNS0_19PrototypeDescriptorE(ptr noundef nonnull align 8 dereferenceable(104) %i.c, i16 noundef zeroext %.0.i.i, i32 noundef %i.gr, i32 %.sroa.0219.0.insert.insert.i) #20 ; 2 uses
+  %i.jx = call { ptr, i8 } @_ZN5clang5RISCV12RVVTypeCache11computeTypeENS0_9BasicTypeEiNS0_19PrototypeDescriptorE(ptr noundef nonnull align 8 dereferenceable(104) %i.c, i16 noundef zeroext %switch.ext, i32 noundef %i.gr, i32 %.sroa.0219.0.insert.insert.i) #20 ; 2 uses
   %i.jy = extractvalue { ptr, i8 } %i.jx, 0       ; 4 uses
   %i.jz = extractvalue { ptr, i8 } %i.jx, 1
   %.sroa.0213.0.insert.insert.i = or disjoint i32 %.sroa.2220.0.insert.shift.i, 524290
-  %i.ka = call { ptr, i8 } @_ZN5clang5RISCV12RVVTypeCache11computeTypeENS0_9BasicTypeEiNS0_19PrototypeDescriptorE(ptr noundef nonnull align 8 dereferenceable(104) %i.c, i16 noundef zeroext %.0.i.i, i32 noundef %i.gr, i32 %.sroa.0213.0.insert.insert.i) #20 ; 2 uses
+  %i.ka = call { ptr, i8 } @_ZN5clang5RISCV12RVVTypeCache11computeTypeENS0_9BasicTypeEiNS0_19PrototypeDescriptorE(ptr noundef nonnull align 8 dereferenceable(104) %i.c, i16 noundef zeroext %switch.ext, i32 noundef %i.gr, i32 %.sroa.0213.0.insert.insert.i) #20 ; 2 uses
   %i.kb = extractvalue { ptr, i8 } %i.ka, 0       ; 4 uses
   %i.kc = extractvalue { ptr, i8 } %i.ka, 1
   %i.kd = trunc nuw i8 %i.jz to i1
