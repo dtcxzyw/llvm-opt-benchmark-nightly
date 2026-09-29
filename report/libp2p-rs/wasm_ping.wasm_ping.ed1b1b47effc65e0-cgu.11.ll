@@ -204,16 +204,16 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.k = mul i64 %1, 40                           ; 5 uses
-  %or.cond.not = icmp ugt i64 %1, 230584300921369395
-  br i1 %or.cond.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit, !prof !1460
+  %or.cond = icmp ult i64 %1, 230584300921369396
+  br i1 %or.cond, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit, label %bb.l, !prof !1460
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit: ; preds = %bb.e
   br i1 %i.d, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit
   %i.l = mul i64 %.sink.i, 40                     ; 2 uses
-  %or.cond65.not = icmp ugt i64 %i.c, 230584300921369395
-  br i1 %or.cond65.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit48, !prof !1460
+  %or.cond65 = icmp ult i64 %i.c, 230584300921369396
+  br i1 %or.cond65, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit48, label %bb.l, !prof !1460
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26
@@ -246,8 +246,8 @@ bb.j:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %.sink12.i, i64 %i.r, i1 false)
   store i64 %i.i, ptr %i.b, align 8
   %i.s = mul i64 %.sink.i, 40                     ; 2 uses
-  %or.cond.not.i = icmp ugt i64 %i.c, 230584300921369395
-  br i1 %or.cond.not.i, label %bb.k, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit, !prof !1460
+  %or.cond.i = icmp ult i64 %i.c, 230584300921369396
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit, label %bb.k, !prof !1460
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1461
@@ -650,7 +650,7 @@ begin_hunk_1_@llvm.umin.i64
 !1457 = !{!"branch_weights", i32 1, i32 4000, i32 1}
 !1458 = distinct !{!1458, !"_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtB4_5alloc6layout6LayoutNtCsczYENlYh6wI_8smallvec18CollectionAllocErrE6unwrapCskm6LeB9lWb4_9wasm_ping"}
 !1459 = distinct !{!1459, !1458, !"_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtB4_5alloc6layout6LayoutNtCsczYENlYh6wI_8smallvec18CollectionAllocErrE6unwrapCskm6LeB9lWb4_9wasm_ping: argument 0"}
-!1460 = !{!"branch_weights", i32 2002, i32 2000}
+!1460 = !{!"branch_weights", i32 2000, i32 2002}
 !1461 = !{!1459}
 !1462 = distinct !{!1462, !"_RNvXsZ_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt5Write10write_char"}
 !1463 = distinct !{!1463, !1462, !"_RNvXsZ_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt5Write10write_char: argument 0"}

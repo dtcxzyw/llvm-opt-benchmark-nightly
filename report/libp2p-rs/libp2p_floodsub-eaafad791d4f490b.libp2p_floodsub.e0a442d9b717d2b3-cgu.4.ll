@@ -205,15 +205,15 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw nsw i64 %i.l, 24                 ; 3 uses
-  %or.cond.not.i = icmp ugt i64 %.sroa.02.0, 384307168202282324
-  br i1 %or.cond.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i, !prof !13
+  %or.cond.i = icmp ult i64 %.sroa.02.0, 384307168202282325
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i, label %bb.n, !prof !13
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i: ; preds = %bb.f
   br i1 %i.m, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i
-  %or.cond65.not.i = icmp ugt i64 %i.c, 384307168202282325
-  br i1 %or.cond65.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit48.i, !prof !13
+  %or.cond65.i = icmp ult i64 %i.c, 384307168202282326
+  br i1 %or.cond65.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit48.i, label %bb.n, !prof !13
 
 bb.h:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !120
@@ -247,8 +247,8 @@ bb.k:                                             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 8 %.sink12.i.i, i64 %i.z, i1 false)
   store i64 %i.q, ptr %i.b, align 8, !alias.scope !120
   %i.aa = mul i64 %.sink.i.i, 24                  ; 2 uses
-  %or.cond.not.i.i = icmp ugt i64 %i.c, 384307168202282325
-  br i1 %or.cond.not.i.i, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec10deallocateNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBF_.exit.i, !prof !13
+  %or.cond.i.i = icmp ult i64 %i.c, 384307168202282326
+  br i1 %or.cond.i.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBF_.exit.i, label %bb.l, !prof !13
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !121
@@ -365,15 +365,15 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw nsw i64 %i.l, 24                 ; 3 uses
-  %or.cond.not.i = icmp ugt i64 %.sroa.02.0, 384307168202282324
-  br i1 %or.cond.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i, !prof !13
+  %or.cond.i = icmp ult i64 %.sroa.02.0, 384307168202282325
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i, label %bb.n, !prof !13
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i: ; preds = %bb.f
   br i1 %i.m, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i
-  %or.cond65.not.i = icmp ugt i64 %i.c, 384307168202282325
-  br i1 %or.cond65.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit48.i, !prof !13
+  %or.cond65.i = icmp ult i64 %i.c, 384307168202282326
+  br i1 %or.cond65.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit48.i, label %bb.n, !prof !13
 
 bb.h:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBH_.exit.i
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !136
@@ -407,8 +407,8 @@ bb.k:                                             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 8 %.sink12.i.i, i64 %i.z, i1 false)
   store i64 %i.q, ptr %i.b, align 8, !alias.scope !136
   %i.aa = mul i64 %.sink.i.i, 24                  ; 2 uses
-  %or.cond.not.i.i = icmp ugt i64 %i.c, 384307168202282325
-  br i1 %or.cond.not.i.i, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec10deallocateNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBF_.exit.i, !prof !13
+  %or.cond.i.i = icmp ult i64 %i.c, 384307168202282326
+  br i1 %or.cond.i.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateNtNtCsjhLfUTo7RNn_15libp2p_floodsub5topic5TopicEBF_.exit.i, label %bb.l, !prof !13
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !137
@@ -811,7 +811,7 @@ attributes #26 = { noreturn }
 !10 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !11 = !{!"branch_weights", !"expected", i32 2146410, i32 2145337238}
 !12 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!13 = !{!"branch_weights", i32 2002, i32 2000}
+!13 = !{!"branch_weights", i32 2000, i32 2002}
 !14 = distinct !{!14, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsjhLfUTo7RNn_15libp2p_floodsub"}
 !15 = distinct !{!15, !14, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsjhLfUTo7RNn_15libp2p_floodsub: argument 0"}
 !16 = distinct !{!16, !"_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECsjhLfUTo7RNn_15libp2p_floodsub"}

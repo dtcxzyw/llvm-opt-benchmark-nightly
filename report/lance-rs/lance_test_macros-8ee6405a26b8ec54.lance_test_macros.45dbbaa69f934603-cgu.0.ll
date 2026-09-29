@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc void @_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs5ZQXtie4Wk1_17lance_test_macros(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef range(i64 0, -1) %1) unnamed_addr #3 {
 bb.a:
   %i.a = mul nuw nsw i64 %1, 40                   ; 4 uses
-  %or.cond.not = icmp ugt i64 %1, 230584300921369395
-  br i1 %or.cond.not, label %bb.f, label %bb.b, !prof !3666
+  %or.cond = icmp ult i64 %1, 230584300921369396
+  br i1 %or.cond, label %bb.b, label %bb.f, !prof !3666
 
 bb.b:                                             ; preds = %bb.a
   %i.b = icmp eq i64 %.0.val, 0
@@ -606,7 +606,7 @@ begin_hunk_1_@llvm.umax.i64
 !3663 = !{!3616}
 !3664 = !{!3617}
 !3665 = !{!3619, !3616}
-!3666 = !{!"branch_weights", i32 2002, i32 2000}
+!3666 = !{!"branch_weights", i32 2000, i32 2002}
 !3667 = !{i64 0, i64 -9223372036854775807}
 !3668 = distinct !{!3668, !"_RNvXsz_NtCsb2PI9uRnNxu_3syn10punctuatedINtB5_11PrivateIterNtNtB7_4item5FnArgNtNtB7_5token5CommaENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCs5ZQXtie4Wk1_17lance_test_macros"}
 !3669 = distinct !{!3669, !3668, !"_RNvXsz_NtCsb2PI9uRnNxu_3syn10punctuatedINtB5_11PrivateIterNtNtB7_4item5FnArgNtNtB7_5token5CommaENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCs5ZQXtie4Wk1_17lance_test_macros: argument 1"}
