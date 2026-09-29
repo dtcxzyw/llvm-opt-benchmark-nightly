@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not140, label %cpuid_or_from_dump.exit166.thread, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.cy = load i32, ptr %.0111, align 8, !tbaa !65 ; 2 uses
+  %i.cy = load i32, ptr %.0111, align 8, !tbaa !65 ; 3 uses
   %.not42.i.i149 = icmp eq i32 %i.cy, 0
   br i1 %.not42.i.i149, label %._crit_edge.i.i157, label %.lr.ph.i.i150
 
@@ -280,6 +280,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ah, %bb.
   %i.dv = load ptr, ptr @stderr, align 8, !tbaa !28
   %i.dw = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dv, ptr noundef nonnull @.str.17, i32 noundef 1, i32 noundef %i.cw, i32 noundef %.1279287, i32 noundef %storemerge.i291) #25 ; 0 uses
   store i32 0, ptr %i.a, align 4, !tbaa !12
+  %.pre397 = load i32, ptr %.0111, align 8, !tbaa !65
   br label %cpuid_or_from_dump.exit166
 
 cpuid_or_from_dump.exit166.thread:                ; preds = %bb.aa
@@ -296,12 +297,12 @@ cpuid_or_from_dump.exit166.thread:                ; preds = %bb.aa
 
 cpuid_or_from_dump.exit166:                       ; preds = %.critedge.i.i165, %._crit_edge.i.i157
   %i.ee = phi i32 [ %i.dq, %.critedge.i.i165 ], [ 0, %._crit_edge.i.i157 ] ; 2 uses
+  %7 = phi i32 [ %i.cy, %.critedge.i.i165 ], [ %.pre397, %._crit_edge.i.i157 ] ; 2 uses
   %.2280 = phi i32 [ %i.ds, %.critedge.i.i165 ], [ 0, %._crit_edge.i.i157 ] ; 3 uses
   %storemerge.i158 = phi i32 [ %i.du, %.critedge.i.i165 ], [ 0, %._crit_edge.i.i157 ] ; 3 uses
   store i32 %storemerge.i158, ptr %i.b, align 16, !tbaa !12
   %i.ef = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i32 %.2280, ptr %i.ef, align 16, !tbaa !12
-  %7 = load i32, ptr %.0111, align 8, !tbaa !65   ; 2 uses
   %.not42.i.i168 = icmp eq i32 %7, 0
   br i1 %.not42.i.i168, label %._crit_edge.i.i176, label %.lr.ph.i.i169
 
@@ -704,7 +705,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare void @hwloc_set_native_binding_hooks(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef ptr @cpuiddump_read(ptr noundef nonnull %0, i32 noundef %1) unnamed_addr #0 {
+define internal fastcc noalias noundef ptr @cpuiddump_read(ptr noundef nonnull %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [128 x i8], align 16              ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21

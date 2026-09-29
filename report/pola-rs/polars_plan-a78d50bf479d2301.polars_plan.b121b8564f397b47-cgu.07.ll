@@ -204,7 +204,7 @@ bb.bi:                                            ; preds = %.body.thread
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtCsgZ49sUHp3tW_5alloc5boxed14box_new_uninit(i64 noundef range(i64 8, 129) %0, i64 noundef range(i64 8, 641) %1) unnamed_addr #4 !dbg !27 {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtCsgZ49sUHp3tW_5alloc5boxed14box_new_uninit(i64 noundef range(i64 8, 129) %0, i64 noundef range(i64 8, 641) %1) unnamed_addr #4 !dbg !27 {
 bb.a:
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34, !dbg !153242
   %i.a = tail call noundef ptr @_RNvCs9MrPpZx4smZ_7___rustc12___rust_alloc(i64 noundef range(i64 8, 641) %1, i64 noundef range(i64 8, 129) %0) #34, !dbg !153243 ; 2 uses

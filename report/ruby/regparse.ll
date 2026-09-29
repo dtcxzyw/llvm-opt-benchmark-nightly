@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree nounwind sspstrong willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define dso_local noundef ptr @onig_node_new_list(ptr noundef %0, ptr noundef %1) local_unnamed_addr #14 {
+define dso_local noalias noundef ptr @onig_node_new_list(ptr noundef %0, ptr noundef %1) local_unnamed_addr #14 {
 bb.a:
   %i.a = tail call noalias noundef dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #26 ; 5 uses
   %i.b = icmp eq ptr %i.a, null
@@ -256,7 +256,7 @@ onig_node_new_list.exit.thread:                   ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree nounwind sspstrong willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define dso_local noundef ptr @onig_node_new_alt(ptr noundef %0, ptr noundef %1) local_unnamed_addr #14 {
+define dso_local noalias noundef ptr @onig_node_new_alt(ptr noundef %0, ptr noundef %1) local_unnamed_addr #14 {
 bb.a:
   %i.a = tail call noalias noundef dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #26 ; 5 uses
   %i.b = icmp eq ptr %i.a, null
@@ -275,7 +275,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree nounwind sspstrong willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define dso_local noundef ptr @onig_node_new_anchor(i32 noundef %0) local_unnamed_addr #14 {
+define dso_local noalias noundef ptr @onig_node_new_anchor(i32 noundef %0) local_unnamed_addr #14 {
 bb.a:
   %i.a = tail call noalias noundef dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #26 ; 7 uses
   %i.b = icmp eq ptr %i.a, null
@@ -298,7 +298,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree nounwind sspstrong willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define dso_local noundef ptr @onig_node_new_enclose(i32 noundef %0) local_unnamed_addr #14 {
+define dso_local noalias noundef ptr @onig_node_new_enclose(i32 noundef %0) local_unnamed_addr #14 {
 bb.a:
   %i.a = tail call noalias noundef dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #26 ; 10 uses
   %i.b = icmp eq ptr %i.a, null
@@ -327,7 +327,7 @@ node_new_enclose.exit:                            ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree nounwind sspstrong willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define internal fastcc noundef ptr @node_new_enclose(i32 noundef %0) unnamed_addr #14 {
+define internal fastcc noalias noundef ptr @node_new_enclose(i32 noundef %0) unnamed_addr #14 {
 bb.a:
   %i.a = tail call noalias noundef dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #26 ; 10 uses
   %i.b = icmp eq ptr %i.a, null
@@ -730,7 +730,7 @@ bb.q:                                             ; preds = %bb.o, %bb.a, %bb.p,
 }
 
 ; Function Attrs: mustprogress nofree nounwind sspstrong willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define internal fastcc noundef ptr @node_new_enclose_memory(i32 noundef %0, i32 noundef range(i32 0, 2) %1) unnamed_addr #14 {
+define internal fastcc noalias noundef ptr @node_new_enclose_memory(i32 noundef %0, i32 noundef range(i32 0, 2) %1) unnamed_addr #14 {
 bb.a:
   %i.a = tail call noalias noundef dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #26 ; 8 uses
   %i.b = icmp eq ptr %i.a, null
@@ -1133,7 +1133,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.fa = load i32, ptr %i.ez, align 8, !tbaa !161
   %i.fb = add i32 %i.fa, 1
   store i32 %i.fb, ptr %i.ez, align 8, !tbaa !161
-  br label %thread-pre-split
+  br label %bb.eg
 
 bb.ba:                                            ; preds = %bb.p
   %i.fc = icmp ult ptr %i.bm, %4
@@ -1291,7 +1291,7 @@ bb.bw:                                            ; preds = %bb.bu
 
 bb.bx:                                            ; preds = %.sink.split, %bb.bl, %bb.bj
   %.0312.i = phi i1 [ true, %bb.bl ], [ true, %bb.bj ], [ %i.hp, %.sink.split ]
-  %i.hq = tail call fastcc ptr @node_new_enclose(i32 noundef 8), !inline_history !150 ; 3 uses
+  %i.hq = tail call fastcc ptr @node_new_enclose(i32 noundef 8), !inline_history !150 ; 4 uses
   store ptr %i.hq, ptr %0, align 8, !tbaa !84
   %i.hr = icmp eq ptr %i.hq, null
   br i1 %i.hr, label %.critedge.i.thread, label %bb.by
@@ -1303,8 +1303,7 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %.0312.i, label %.critedge.i, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by
-  %7 = load ptr, ptr %0, align 8, !tbaa !84
-  %i.hu = getelementptr i8, ptr %7, i64 4         ; 2 uses
+  %i.hu = getelementptr i8, ptr %i.hq, i64 4      ; 2 uses
   %i.hv = load i32, ptr %i.hu, align 4, !tbaa !21
   %i.hw = or i32 %i.hv, 2048
   store i32 %i.hw, ptr %i.hu, align 4, !tbaa !21
@@ -1317,7 +1316,7 @@ bb.bz:                                            ; preds = %bb.by
 
 .critedge.i:                                      ; preds = %bb.bz, %bb.by
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #25
-  br label %thread-pre-split
+  br label %bb.eg
 
 bb.ca:                                            ; preds = %bb.p
   %i.hx = icmp ult ptr %i.bm, %4
@@ -1654,18 +1653,15 @@ bb.ee:                                            ; preds = %bb.ed
   %i.mb = load ptr, ptr %0, align 8, !tbaa !84
   %i.mc = getelementptr i8, ptr %i.mb, i64 12
   store i32 %i.lz, ptr %i.mc, align 4, !tbaa !21
-  br label %thread-pre-split
-
-thread-pre-split:                                 ; preds = %bb.az, %bb.ee, %.critedge.i
-  %.pr = load ptr, ptr %0, align 8, !tbaa !84
+  %.pr.pre = load ptr, ptr %0, align 8, !tbaa !84
   br label %bb.ef
 
-bb.ef:                                            ; preds = %thread-pre-split, %onig_node_new_anchor.exit394, %onig_node_new_anchor.exit395, %bb.y, %bb.w, %onig_node_new_anchor.exit396, %onig_node_new_anchor.exit397
-  %i.md = phi ptr [ %.pr, %thread-pre-split ], [ %i.ec, %onig_node_new_anchor.exit394 ], [ %i.dw, %onig_node_new_anchor.exit395 ], [ %i.ci, %bb.y ], [ %i.ce, %bb.w ], [ %i.by, %onig_node_new_anchor.exit396 ], [ %i.bs, %onig_node_new_anchor.exit397 ]
+bb.ef:                                            ; preds = %bb.ee, %onig_node_new_anchor.exit394, %onig_node_new_anchor.exit395, %bb.y, %bb.w, %onig_node_new_anchor.exit396, %onig_node_new_anchor.exit397
+  %i.md = phi ptr [ %i.bs, %onig_node_new_anchor.exit397 ], [ %i.ec, %onig_node_new_anchor.exit394 ], [ %i.dw, %onig_node_new_anchor.exit395 ], [ %i.ci, %bb.y ], [ %i.ce, %bb.w ], [ %i.by, %onig_node_new_anchor.exit396 ], [ %.pr.pre, %bb.ee ]
   %i.me = icmp eq ptr %i.md, null
   br i1 %i.me, label %parse_enclose.exit.thread, label %bb.eg
 
-bb.eg:                                            ; preds = %bb.ef
+bb.eg:                                            ; preds = %.critedge.i, %bb.az, %bb.ef
   %i.mf = call fastcc i32 @fetch_token(ptr noundef nonnull %1, ptr noundef %i.l, ptr noundef %4, ptr noundef nonnull %5), !inline_history !150 ; 2 uses
   %i.mg = icmp slt i32 %i.mf, 0
   br i1 %i.mg, label %parse_enclose.exit.thread, label %bb.eh
@@ -2068,7 +2064,7 @@ bb.t:                                             ; preds = %.thread77._crit_edg
 }
 
 ; Function Attrs: mustprogress nofree nounwind sspstrong willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define internal fastcc noundef ptr @node_new_option(i32 noundef %0) unnamed_addr #14 {
+define internal fastcc noalias noundef ptr @node_new_option(i32 noundef %0) unnamed_addr #14 {
 bb.a:
   %i.a = tail call noalias noundef dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #26 ; 7 uses
   %i.b = icmp eq ptr %i.a, null

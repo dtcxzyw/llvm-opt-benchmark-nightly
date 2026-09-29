@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @Prs_CreateDetectRams(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define noalias ptr @Prs_CreateDetectRams(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !64
@@ -607,18 +607,22 @@ Cba_ObjName.exit:                                 ; preds = %bb.d, %._crit_edge.
   br i1 %i.ch, label %.critedge4, label %._crit_edge, !llvm.loop !126
 
 ._crit_edge:                                      ; preds = %.critedge4, %.preheader1230
-  %i.ci = tail call ptr @Prs_CreateDetectRams(ptr noundef nonnull %1) ; 5 uses
+  %i.ci = tail call ptr @Prs_CreateDetectRams(ptr noundef nonnull %1) ; 4 uses
   %.not = icmp eq ptr %i.ci, null
   br i1 %.not, label %Vec_PtrFreeP.exit, label %.preheader1229
 
 .preheader1229:                                   ; preds = %._crit_edge
-  %i.cj = getelementptr i8, ptr %i.ci, i64 4      ; 2 uses
-  %.val5791244 = load i32, ptr %i.cj, align 4, !tbaa !51
+  %i.cj = getelementptr i8, ptr %i.ci, i64 4
+  %.val5791244 = load i32, ptr %i.cj, align 4, !tbaa !51 ; 2 uses
   %i.ck = icmp sgt i32 %.val5791244, 0
-  br i1 %i.ck, label %.lr.ph1246, label %.critedge6
+  %2 = getelementptr i8, ptr %i.ci, i64 8         ; 2 uses
+  br i1 %i.ck, label %.lr.ph1246, label %.preheader1229..critedge6_crit_edge
+
+.preheader1229..critedge6_crit_edge:              ; preds = %.preheader1229
+  %.pre = load ptr, ptr %2, align 8, !tbaa !53
+  br label %.critedge6
 
 .lr.ph1246:                                       ; preds = %.preheader1229
-  %2 = getelementptr i8, ptr %i.ci, i64 8
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 4 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 204 ; 6 uses
   %i.cn = getelementptr i8, ptr %0, i64 208       ; 10 uses
@@ -633,12 +637,13 @@ Cba_ObjName.exit:                                 ; preds = %bb.d, %._crit_edge.
   %i.cw = getelementptr i8, ptr %0, i64 288       ; 5 uses
   %i.cx = getelementptr i8, ptr %0, i64 112
   %i.cy = getelementptr i8, ptr %0, i64 144
+  %.val583.pre = load ptr, ptr %2, align 8, !tbaa !53 ; 2 uses
+  %3 = zext nneg i32 %.val5791244 to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph1246, %Vec_PtrFree.exit
   %indvars.iv1309 = phi i64 [ 0, %.lr.ph1246 ], [ %indvars.iv.next1310, %Vec_PtrFree.exit ] ; 2 uses
-  %.val583 = load ptr, ptr %2, align 8, !tbaa !53
-  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %.val583, i64 %indvars.iv1309
+  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %.val583.pre, i64 %indvars.iv1309
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !63 ; 3 uses
   %i.db = getelementptr i8, ptr %i.da, i64 8      ; 3 uses
   %.val582 = load ptr, ptr %i.db, align 8, !tbaa !53 ; 2 uses
@@ -1041,19 +1046,16 @@ bb.br:                                            ; preds = %.critedge8
 Vec_PtrFree.exit:                                 ; preds = %.critedge8, %bb.br
   tail call void @free(ptr noundef nonnull %i.da) #28
   %indvars.iv.next1310 = add nuw nsw i64 %indvars.iv1309, 1 ; 2 uses
-  %.val579 = load i32, ptr %i.cj, align 4, !tbaa !51
-  %3 = sext i32 %.val579 to i64
-  %4 = icmp slt i64 %indvars.iv.next1310, %3
+  %4 = icmp samesign ult i64 %indvars.iv.next1310, %3
   br i1 %4, label %bb.o, label %.critedge6, !llvm.loop !128
 
-.critedge6:                                       ; preds = %Vec_PtrFree.exit, %.preheader1229
-  %5 = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
-  %6 = load ptr, ptr %5, align 8, !tbaa !53       ; 2 uses
-  %.not.i787 = icmp eq ptr %6, null
+.critedge6:                                       ; preds = %Vec_PtrFree.exit, %.preheader1229..critedge6_crit_edge
+  %5 = phi ptr [ %.pre, %.preheader1229..critedge6_crit_edge ], [ %.val583.pre, %Vec_PtrFree.exit ] ; 2 uses
+  %.not.i787 = icmp eq ptr %5, null
   br i1 %.not.i787, label %bb.bs, label %.thread.i
 
 .thread.i:                                        ; preds = %.critedge6
-  tail call void @free(ptr noundef nonnull %6) #28
+  tail call void @free(ptr noundef nonnull %5) #28
   br label %bb.bs
 
 bb.bs:                                            ; preds = %.thread.i, %.critedge6

@@ -203,7 +203,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @192 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @138, [16 x i8] c"e\00\00\00\00\00\00\00\DD\00\00\00\11\00\00\00" }>, align 8
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_ZN14unsafe_libyaml3api11yaml_malloc17hede18d1f2b9cdb2cE(i64 noundef %0) unnamed_addr #0 {
+define internal fastcc noalias noundef nonnull ptr @_ZN14unsafe_libyaml3api11yaml_malloc17hede18d1f2b9cdb2cE(i64 noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = add nuw i64 %0, 8                        ; 4 uses
   %i.b = icmp ugt i64 %0, -9
@@ -238,7 +238,7 @@ _ZN14unsafe_libyaml7externs6malloc17h8ca625f09467adc0E.exit: ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef ptr @_ZN14unsafe_libyaml3api11yaml_strdup17h8cc8728489c61115E(ptr nofree noundef readonly captures(address_is_null) %0) unnamed_addr #0 {
+define internal fastcc noalias noundef ptr @_ZN14unsafe_libyaml3api11yaml_strdup17h8cc8728489c61115E(ptr nofree noundef readonly captures(address_is_null) %0) unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.g, label %bb.b
@@ -284,7 +284,7 @@ bb.g:                                             ; preds = %bb.a, %_ZN14unsafe_
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_ZN14unsafe_libyaml3api12yaml_realloc17h5fba004c459eee5cE(ptr noundef %0, i64 noundef %1) unnamed_addr #0 {
+define internal fastcc noalias noundef nonnull ptr @_ZN14unsafe_libyaml3api12yaml_realloc17h5fba004c459eee5cE(ptr noundef %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.b, label %bb.g
@@ -407,15 +407,13 @@ bb.b:                                             ; preds = %.lr.ph
   %i.t = load ptr, ptr %2, align 8, !noundef !6
   %i.u = load ptr, ptr %0, align 8, !noundef !6
   %i.v = ptrtoint ptr %i.t to i64
-  %i.w = ptrtoint ptr %i.u to i64
+  %i.w = ptrtoint ptr %i.u to i64                 ; 2 uses
   %i.x = sub i64 %i.v, %i.w                       ; 2 uses
   %i.y = getelementptr i8, ptr %i.s, i64 %i.x
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.y, i8 0, i64 %i.x, i1 false)
   %i.z = load ptr, ptr %1, align 8, !noundef !6
-  %3 = load ptr, ptr %0, align 8, !noundef !6
-  %4 = ptrtoint ptr %i.z to i64
-  %i.aa = ptrtoint ptr %3 to i64
-  %i.ab = sub i64 %4, %i.aa
+  %i.aa = ptrtoint ptr %i.z to i64
+  %i.ab = sub i64 %i.aa, %i.w
   %i.ac = getelementptr i8, ptr %i.s, i64 %i.ab
   store ptr %i.ac, ptr %1, align 8
   %i.ad = load ptr, ptr %2, align 8, !noundef !6
@@ -818,15 +816,13 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %2, align 8, !noundef !6
   %i.k = load ptr, ptr %0, align 8, !noundef !6
   %i.l = ptrtoint ptr %i.j to i64
-  %i.m = ptrtoint ptr %i.k to i64
+  %i.m = ptrtoint ptr %i.k to i64                 ; 2 uses
   %i.n = sub i64 %i.l, %i.m                       ; 2 uses
   %i.o = getelementptr i8, ptr %i.i, i64 %i.n
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.o, i8 0, i64 %i.n, i1 false)
   %i.p = load ptr, ptr %1, align 8, !noundef !6
-  %3 = load ptr, ptr %0, align 8, !noundef !6
-  %4 = ptrtoint ptr %i.p to i64
-  %i.q = ptrtoint ptr %3 to i64
-  %i.r = sub i64 %4, %i.q
+  %i.q = ptrtoint ptr %i.p to i64
+  %i.r = sub i64 %i.q, %i.m
   %i.s = getelementptr i8, ptr %i.i, i64 %i.r
   store ptr %i.s, ptr %1, align 8
   %i.t = load ptr, ptr %2, align 8, !noundef !6
@@ -1229,7 +1225,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 23 uses
   %i.b = load ptr, ptr %i.a, align 8, !noundef !6 ; 2 uses
   %i.c = getelementptr i8, ptr %i.b, i64 5
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !noundef !6 ; 2 uses
   %.not = icmp ult ptr %i.c, %i.e
   br i1 %.not, label %bb.e, label %bb.b
@@ -1253,21 +1249,16 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.d, align 8, !noundef !6
   %i.o = load ptr, ptr %1, align 8, !noundef !6
   %i.p = ptrtoint ptr %i.n to i64
-  %i.q = ptrtoint ptr %i.o to i64
-  %i.r = sub i64 %i.p, %i.q                       ; 2 uses
+  %i.q = ptrtoint ptr %i.o to i64                 ; 2 uses
+  %i.r = sub i64 %i.p, %i.q                       ; 4 uses
   %i.s = getelementptr i8, ptr %i.m, i64 %i.r
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.s, i8 0, i64 %i.r, i1 false)
   %i.t = load ptr, ptr %i.a, align 8, !noundef !6
-  %2 = load ptr, ptr %1, align 8, !noundef !6
-  %3 = ptrtoint ptr %i.t to i64
-  %i.u = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.v = sub i64 %3, %i.u
+  %i.u = ptrtoint ptr %i.t to i64
+  %i.v = sub i64 %i.u, %i.q
   %i.w = getelementptr i8, ptr %i.m, i64 %i.v     ; 2 uses
   store ptr %i.w, ptr %i.a, align 8
-  %4 = load ptr, ptr %i.d, align 8, !noundef !6
-  %5 = ptrtoint ptr %4 to i64
-  %6 = sub i64 %5, %i.u                           ; 2 uses
-  %i.x = add i64 %6, 4611686018427387904
+  %i.x = add i64 %i.r, 4611686018427387904
   %i.y = icmp slt i64 %i.x, 0
   br i1 %i.y, label %bb.d, label %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit, !prof !4
 
@@ -1276,7 +1267,7 @@ bb.d:                                             ; preds = %"_ZN53_$LT$i64$u20$
   unreachable
 
 _ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit: ; preds = %"_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i"
-  %i.z = shl nsw i64 %6, 1
+  %i.z = shl nsw i64 %i.r, 1
   %i.aa = getelementptr i8, ptr %i.m, i64 %i.z
   store ptr %i.aa, ptr %i.d, align 8
   store ptr %i.m, ptr %1, align 8
@@ -1679,7 +1670,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 17 uses
   %i.b = load ptr, ptr %i.a, align 8, !noundef !6 ; 2 uses
   %i.c = getelementptr i8, ptr %i.b, i64 5
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !noundef !6 ; 2 uses
   %.not = icmp ult ptr %i.c, %i.e
   br i1 %.not, label %bb.e, label %bb.b
@@ -1703,21 +1694,16 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.d, align 8, !noundef !6
   %i.o = load ptr, ptr %1, align 8, !noundef !6
   %i.p = ptrtoint ptr %i.n to i64
-  %i.q = ptrtoint ptr %i.o to i64
-  %i.r = sub i64 %i.p, %i.q                       ; 2 uses
+  %i.q = ptrtoint ptr %i.o to i64                 ; 2 uses
+  %i.r = sub i64 %i.p, %i.q                       ; 4 uses
   %i.s = getelementptr i8, ptr %i.m, i64 %i.r
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.s, i8 0, i64 %i.r, i1 false)
   %i.t = load ptr, ptr %i.a, align 8, !noundef !6
-  %2 = load ptr, ptr %1, align 8, !noundef !6
-  %3 = ptrtoint ptr %i.t to i64
-  %i.u = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.v = sub i64 %3, %i.u
+  %i.u = ptrtoint ptr %i.t to i64
+  %i.v = sub i64 %i.u, %i.q
   %i.w = getelementptr i8, ptr %i.m, i64 %i.v     ; 2 uses
   store ptr %i.w, ptr %i.a, align 8
-  %4 = load ptr, ptr %i.d, align 8, !noundef !6
-  %5 = ptrtoint ptr %4 to i64
-  %6 = sub i64 %5, %i.u                           ; 2 uses
-  %i.x = add i64 %6, 4611686018427387904
+  %i.x = add i64 %i.r, 4611686018427387904
   %i.y = icmp slt i64 %i.x, 0
   br i1 %i.y, label %bb.d, label %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit, !prof !4
 
@@ -1726,7 +1712,7 @@ bb.d:                                             ; preds = %"_ZN53_$LT$i64$u20$
   unreachable
 
 _ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit: ; preds = %"_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i"
-  %i.z = shl nsw i64 %6, 1
+  %i.z = shl nsw i64 %i.r, 1
   %i.aa = getelementptr i8, ptr %i.m, i64 %i.z
   store ptr %i.aa, ptr %i.d, align 8
   store ptr %i.m, ptr %1, align 8

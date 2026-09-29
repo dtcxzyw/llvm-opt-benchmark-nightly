@@ -205,7 +205,7 @@ onig_node_str_clear.exit:                         ; preds = %bb.a, %bb.b, %bb.c,
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define dso_local noundef ptr @onig_node_new_list(ptr noundef %0, ptr noundef %1) local_unnamed_addr #16 {
+define dso_local noalias noundef ptr @onig_node_new_list(ptr noundef %0, ptr noundef %1) local_unnamed_addr #16 {
 bb.a:
   %calloc.i.i = tail call noalias noundef dereferenceable_or_null(72) ptr @calloc(i64 1, i64 72) ; 5 uses
   %i.a = icmp eq ptr %calloc.i.i, null
@@ -224,7 +224,7 @@ node_new_list.exit:                               ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define dso_local noundef ptr @onig_node_new_alt(ptr noundef %0, ptr noundef %1) local_unnamed_addr #16 {
+define dso_local noalias noundef ptr @onig_node_new_alt(ptr noundef %0, ptr noundef %1) local_unnamed_addr #16 {
 bb.a:
   %calloc.i = tail call noalias noundef dereferenceable_or_null(72) ptr @calloc(i64 1, i64 72) ; 5 uses
   %i.a = icmp eq ptr %calloc.i, null
@@ -243,7 +243,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define dso_local noundef ptr @onig_node_new_bag(i32 noundef %0) local_unnamed_addr #16 {
+define dso_local noalias noundef ptr @onig_node_new_bag(i32 noundef %0) local_unnamed_addr #16 {
 bb.a:
   %calloc.i.i = tail call noalias noundef dereferenceable_or_null(72) ptr @calloc(i64 1, i64 72) ; 7 uses
   %i.a = icmp eq ptr %calloc.i.i, null
@@ -646,7 +646,7 @@ bb.le:                                            ; preds = %bb.ld
   %i.aiq = getelementptr inbounds nuw i8, ptr %calloc.i.i.i.i.i475, i64 4
   store i32 4194304, ptr %i.aiq, align 4, !tbaa !28
   store ptr %calloc.i.i.i.i.i475, ptr %i.aii, align 8, !tbaa !110
-  %i.air = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 3 uses
+  %i.air = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 3 uses
   %i.ais = icmp eq ptr %i.air, null
   br i1 %i.ais, label %onig_node_free.exit.i477, label %bb.lf
 
@@ -677,7 +677,7 @@ bb.lh:                                            ; preds = %bb.lg
   %i.aja = getelementptr inbounds nuw i8, ptr %calloc.i.i.i.i27.i, i64 4
   store i32 4194304, ptr %i.aja, align 4, !tbaa !28
   store ptr %calloc.i.i.i.i27.i, ptr %i.a, align 16, !tbaa !110
-  %i.ajb = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 3 uses
+  %i.ajb = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 3 uses
   %i.ajc = icmp eq ptr %i.ajb, null
   br i1 %i.ajc, label %onig_node_free.exit.i477, label %bb.li
 
@@ -938,7 +938,7 @@ bb.d:                                             ; preds = %bb.c, %node_new_str
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define internal fastcc noundef ptr @node_new_ctype(i32 noundef range(i32 -1, 13) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #16 {
+define internal fastcc noalias noundef ptr @node_new_ctype(i32 noundef range(i32 -1, 13) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #16 {
 bb.a:
   %calloc.i = tail call noalias noundef dereferenceable_or_null(72) ptr @calloc(i64 1, i64 72) ; 6 uses
   %i.a = icmp eq ptr %calloc.i, null
@@ -1341,7 +1341,7 @@ bb.ag:                                            ; preds = %._crit_edge137
 
 ._crit_edge137.thread:                            ; preds = %bb.k, %._crit_edge137
   %.0100.lcssa158 = phi i32 [ %.2102, %._crit_edge137 ], [ 0, %bb.k ]
-  %i.dr = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef range(i32 2, 1) %.0100.lcssa158, ptr noundef nonnull readonly %i.b)
+  %i.dr = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef range(i32 2, 1) %.0100.lcssa158, ptr noundef nonnull readonly %i.b)
   br label %bb.ah
 
 bb.ah:                                            ; preds = %._crit_edge137.thread, %bb.ag
@@ -1389,7 +1389,7 @@ bb.al:                                            ; preds = %bb.c, %bb.g, %bb.h,
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc noundef ptr @node_new_backref(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(none) %5) unnamed_addr #14 {
+define internal fastcc noalias noundef ptr @node_new_backref(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(none) %5) unnamed_addr #14 {
 bb.a:
   %calloc.i = tail call noalias noundef dereferenceable_or_null(72) ptr @calloc(i64 1, i64 72) ; 13 uses
   %i.a = icmp eq ptr %calloc.i, null
@@ -1792,7 +1792,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   store i32 10, ptr %calloc.i.i32, align 8, !tbaa !28
-  %i.o = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 4 uses
+  %i.o = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 4 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %onig_node_free.exit, label %bb.e
 
@@ -1811,7 +1811,7 @@ bb.f:                                             ; preds = %bb.e
   store i32 5, ptr %i.s, align 4, !tbaa !28
   %i.t = getelementptr inbounds nuw i8, ptr %calloc.i.i34, i64 4
   store i32 16777216, ptr %i.t, align 4, !tbaa !28
-  %i.u = call fastcc noundef ptr @make_list_or_alt(i32 noundef 8, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 4 uses
+  %i.u = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 8, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 4 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %onig_node_free.exit, label %bb.g
 
@@ -1822,7 +1822,7 @@ bb.g:                                             ; preds = %bb.f
   store i32 %i.y, ptr %i.w, align 4, !tbaa !28
   store ptr %calloc.i.i, ptr %i.a, align 16, !tbaa !110
   store ptr %i.u, ptr %i.b, align 8, !tbaa !110
-  %i.z = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 2 uses
+  %i.z = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 2 uses
   %i.aa = icmp eq ptr %i.z, null
   br i1 %i.aa, label %onig_node_free.exit.thread59, label %bb.h
 
@@ -2035,7 +2035,7 @@ bb.r:                                             ; preds = %bb.q
   store i32 2, ptr %i.bg, align 8, !tbaa !28
   %i.bh = getelementptr inbounds nuw i8, ptr %calloc.i.i33.i, i64 20
   store i32 2, ptr %i.bh, align 4, !tbaa !28
-  %i.bi = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 3, ptr noundef nonnull readonly %i.a) ; 2 uses
+  %i.bi = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 3, ptr noundef nonnull readonly %i.a) ; 2 uses
   %i.bj = icmp eq ptr %i.bi, null
   br i1 %i.bj, label %node_new_save_gimmick.exit.i, label %bb.s
 
@@ -2166,7 +2166,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.e, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.co = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 4, ptr noundef nonnull readonly %i.b) ; 2 uses
+  %i.co = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 4, ptr noundef nonnull readonly %i.b) ; 2 uses
   %i.cp = icmp eq ptr %i.co, null
   br i1 %i.cp, label %node_new_save_gimmick.exit, label %bb.af
 
@@ -2177,7 +2177,7 @@ bb.ad:                                            ; preds = %bb.ab
   br i1 %.not66, label %bb.ae, label %node_new_save_gimmick.exit
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cs = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 7, ptr noundef nonnull readonly %i.b) ; 2 uses
+  %i.cs = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 7, ptr noundef nonnull readonly %i.b) ; 2 uses
   %i.ct = icmp eq ptr %i.cs, null
   br i1 %i.ct, label %node_new_save_gimmick.exit, label %bb.af
 
@@ -2580,7 +2580,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.c,
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc noundef ptr @make_list_or_alt(i32 noundef range(i32 7, 9) %0, i32 noundef %1, ptr nofree noundef nonnull readonly captures(none) %2) unnamed_addr #14 {
+define internal fastcc noalias noundef ptr @make_list_or_alt(i32 noundef range(i32 7, 9) %0, i32 noundef %1, ptr nofree noundef nonnull readonly captures(none) %2) unnamed_addr #14 {
 bb.a:
   %i.a = icmp slt i32 %1, 1
   br i1 %i.a, label %bb.g, label %bb.b
@@ -2687,7 +2687,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   store i32 10, ptr %calloc.i.i64, align 8, !tbaa !28
-  %i.s = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 4, ptr noundef nonnull readonly %i.a) ; 3 uses
+  %i.s = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 4, ptr noundef nonnull readonly %i.a) ; 3 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.s, label %bb.g
 
@@ -2695,7 +2695,7 @@ bb.g:                                             ; preds = %bb.f
   store ptr %i.s, ptr %i.a, align 16, !tbaa !110
   store ptr %3, ptr %i.c, align 8, !tbaa !110
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.l, i8 0, i64 16, i1 false)
-  %i.u = call fastcc noundef ptr @make_list_or_alt(i32 noundef 8, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 3 uses
+  %i.u = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 8, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 3 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %bb.s, label %bb.h
 
@@ -2754,14 +2754,14 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   store i32 10, ptr %calloc.i.i71, align 8, !tbaa !28
-  %i.ak = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.c) ; 3 uses
+  %i.ak = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.c) ; 3 uses
   %i.al = icmp eq ptr %i.ak, null
   br i1 %i.al, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   store ptr %i.ak, ptr %i.c, align 8, !tbaa !110
   store ptr null, ptr %i.l, align 16, !tbaa !110
-  %i.am = call fastcc noundef ptr @make_list_or_alt(i32 noundef 8, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 3 uses
+  %i.am = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 8, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 3 uses
   %i.an = icmp eq ptr %i.am, null
   br i1 %i.an, label %bb.s, label %bb.p
 
@@ -2868,7 +2868,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   store i32 10, ptr %calloc.i.i31, align 8, !tbaa !28
-  %i.o = call fastcc noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 4 uses
+  %i.o = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 7, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 4 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %onig_node_free.exit, label %bb.e
 
@@ -2887,7 +2887,7 @@ bb.f:                                             ; preds = %bb.e
   store i32 2, ptr %i.s, align 8, !tbaa !28
   %i.t = getelementptr inbounds nuw i8, ptr %calloc.i.i33, i64 20
   store i32 2, ptr %i.t, align 4, !tbaa !28
-  %i.u = call fastcc noundef ptr @make_list_or_alt(i32 noundef 8, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 2 uses
+  %i.u = call fastcc noalias noundef ptr @make_list_or_alt(i32 noundef 8, i32 noundef 2, ptr noundef nonnull readonly %i.a) ; 2 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %onig_node_free.exit, label %bb.g
 

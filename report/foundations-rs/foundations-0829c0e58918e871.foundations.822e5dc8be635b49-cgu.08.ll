@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMNtNtNtCs3zuhHmEJ01l_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEE3newCsbaWXNhtWAp9_11foundations(i64 noundef %0) unnamed_addr #3 !dbg !544 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMNtNtNtCs3zuhHmEJ01l_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEE3newCsbaWXNhtWAp9_11foundations(i64 noundef %0) unnamed_addr #3 !dbg !544 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !dbg !9012
   %i.a = tail call noundef align 8 dereferenceable_or_null(7200) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 7200, i64 noundef 8) #25, !dbg !9013 ; 4 uses
@@ -381,7 +381,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMNtNtNtCs3zuhHmEJ01l_5tokio4sync4mpsc5blockINtB2_5BlockINtNtNtCsaCYLheajBls_5hyper6client8dispatch8EnvelopeINtNtCs74LoFwSioHw_4http7request7RequestNtNtCsfUalJnHtWpm_5tonic4body4BodyEINtNtB1P_8response8ResponseNtNtNtB11_4body8incoming8IncomingEEE3newCsbaWXNhtWAp9_11foundations(i64 noundef %0) unnamed_addr #3 !dbg !562 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMNtNtNtCs3zuhHmEJ01l_5tokio4sync4mpsc5blockINtB2_5BlockINtNtNtCsaCYLheajBls_5hyper6client8dispatch8EnvelopeINtNtCs74LoFwSioHw_4http7request7RequestNtNtCsfUalJnHtWpm_5tonic4body4BodyEINtNtB1P_8response8ResponseNtNtNtB11_4body8incoming8IncomingEEE3newCsbaWXNhtWAp9_11foundations(i64 noundef %0) unnamed_addr #3 !dbg !562 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !dbg !9245
   %i.a = tail call noundef align 8 dereferenceable_or_null(8480) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 8480, i64 noundef 8) #25, !dbg !9246 ; 4 uses
@@ -525,7 +525,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull align 8 ptr @_RNvMNtNtNtCs3zuhHmEJ01l_5tokio4sync4mpsc5blockINtB2_5BlockINtNtNtCsdBNFPP92xfl_5tower6buffer7message7MessageINtNtCs74LoFwSioHw_4http7request7RequestNtNtCsfUalJnHtWpm_5tonic4body4BodyEINtNtCs3oUPovFnLWP_4core3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtB30_6future6future6Futurep6OutputINtNtB30_6result6ResultINtNtB1N_8response8ResponseB2m_EIB3s_DNtNtB30_5error5ErrorNtNtB30_6marker4SendNtB5Z_4SyncEL_EEB5X_EL_EEEE3newCsbaWXNhtWAp9_11foundations(i64 noundef %0) unnamed_addr #3 !dbg !580 {
+define hidden noalias noundef nonnull align 8 ptr @_RNvMNtNtNtCs3zuhHmEJ01l_5tokio4sync4mpsc5blockINtB2_5BlockINtNtNtCsdBNFPP92xfl_5tower6buffer7message7MessageINtNtCs74LoFwSioHw_4http7request7RequestNtNtCsfUalJnHtWpm_5tonic4body4BodyEINtNtCs3oUPovFnLWP_4core3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtB30_6future6future6Futurep6OutputINtNtB30_6result6ResultINtNtB1N_8response8ResponseB2m_EIB3s_DNtNtB30_5error5ErrorNtNtB30_6marker4SendNtB5Z_4SyncEL_EEB5X_EL_EEEE3newCsbaWXNhtWAp9_11foundations(i64 noundef %0) unnamed_addr #3 !dbg !580 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !dbg !9419
   %i.a = tail call noundef align 8 dereferenceable_or_null(9248) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 9248, i64 noundef 8) #25, !dbg !9420 ; 4 uses
@@ -646,7 +646,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvMNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12field_redactNtB2_24FieldRedactFilterFactory3new(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !9561 {
+define internal fastcc noalias noundef nonnull ptr @_RNvMNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log12field_redactNtB2_24FieldRedactFilterFactory3new(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !9561 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 8 uses
@@ -1049,7 +1049,7 @@ bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtCsbaWXNhtWAp9_11foundations6sentry7metrics6sentry12events_totalENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3X_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !16999 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtCsbaWXNhtWAp9_11foundations6sentry7metrics6sentry12events_totalENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3X_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !16999 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !dbg !17027
   %i.a = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef range(i64 1, -9223372036854775807) 8) #25, !dbg !17028 ; 9 uses
@@ -1088,7 +1088,7 @@ bb.d:                                             ; preds = %_RNvNtCs1xwejQucwHj
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log10log_volume11foundations16log_record_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17038 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log10log_volume11foundations16log_record_countENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17038 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !dbg !17066
   %i.a = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef range(i64 1, -9223372036854775807) 8) #25, !dbg !17067 ; 9 uses
@@ -1127,7 +1127,7 @@ bb.d:                                             ; preds = %_RNvNtCs1xwejQucwHj
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7metrics7tracing10queue_sizeENtNtNtCsl4QKJNSbRGn_17prometheus_client7metrics5gauge5GaugeEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17077 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7metrics7tracing10queue_sizeENtNtNtCsl4QKJNSbRGn_17prometheus_client7metrics5gauge5GaugeEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17077 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !dbg !17105
   %i.a = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef range(i64 1, -9223372036854775807) 8) #25, !dbg !17106 ; 9 uses
@@ -1166,7 +1166,7 @@ bb.d:                                             ; preds = %_RNvNtCs1xwejQucwHj
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7metrics7tracing11spans_totalENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17116 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7metrics7tracing11spans_totalENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17116 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !dbg !17144
   %i.a = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef range(i64 1, -9223372036854775807) 8) #25, !dbg !17145 ; 9 uses
@@ -1205,7 +1205,7 @@ bb.d:                                             ; preds = %_RNvNtCs1xwejQucwHj
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7metrics7tracing13spans_droppedENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17155 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7metrics7tracing13spans_droppedENtNtB3c_11nonstandard28NonstandardUnsuffixedCounterEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17155 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !dbg !17183
   %i.a = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef range(i64 1, -9223372036854775807) 8) #25, !dbg !17184 ; 9 uses
@@ -1244,7 +1244,7 @@ bb.d:                                             ; preds = %_RNvNtCs1xwejQucwHj
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7metrics7tracing14max_queue_sizeENtNtNtCsl4QKJNSbRGn_17prometheus_client7metrics5gauge5GaugeEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17194 {
+define hidden noalias noundef nonnull ptr @_RNvXsY_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsix9GtmFTcQ_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapINtNtCskfQLOxWbF12_10prometools5serde6BridgeNtNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7metrics7tracing14max_queue_sizeENtNtNtCsl4QKJNSbRGn_17prometheus_client7metrics5gauge5GaugeEEENtNtCs3oUPovFnLWP_4core7default7Default7defaultB3Z_() unnamed_addr #3 personality ptr @rust_eh_personality !dbg !17194 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !dbg !17222
   %i.a = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef range(i64 1, -9223372036854775807) 8) #25, !dbg !17223 ; 9 uses

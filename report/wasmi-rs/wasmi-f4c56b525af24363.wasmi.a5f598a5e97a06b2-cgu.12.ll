@@ -204,7 +204,7 @@ _RNvMs1_NtCsefoF4u9kbII_5wasmi5errorNtB5_9ErrorKind12as_trap_code.exit: ; preds 
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef nonnull align 8 ptr @_RNvMNtCsefoF4u9kbII_5wasmi5errorNtB2_5Error9from_kind(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(112) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define noalias noundef nonnull align 8 ptr @_RNvMNtCsefoF4u9kbII_5wasmi5errorNtB2_5Error9from_kind(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(112) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34, !noalias !1426
   %i.a = tail call noundef align 8 dereferenceable_or_null(112) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef 112, i64 noundef 8) #34, !noalias !1426 ; 3 uses
@@ -607,7 +607,7 @@ bb.e:                                             ; preds = %bb.a, %_RNvXs1_NtCs
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef align 8 ptr @_RNvMs2_NtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func6layoutNtB5_11StackLayout15register_locals(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i8 noundef range(i8 0, 7) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noalias noundef align 8 ptr @_RNvMs2_NtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func6layoutNtB5_11StackLayout15register_locals(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i8 noundef range(i8 0, 7) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp eq i8 %2, 4
   %. = select i1 %i.a, i16 2, i16 1               ; 2 uses
@@ -668,7 +668,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VectE8push_mutCsefoF4u9kbII_5wasmi.exit
   br i1 %exitcond.not, label %.loopexit, label %bb.b
 
 .loopexit.sink.split:                             ; preds = %.split, %bb.a
-  %i.y = tail call fastcc noundef nonnull align 8 ptr @_RNvXsc_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtNtB7_6engine10translator5error16TranslationErrorE4from(i64 9) #37
+  %i.y = tail call fastcc noalias noundef nonnull align 8 ptr @_RNvXsc_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtNtB7_6engine10translator5error16TranslationErrorE4from(i64 9) #37
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VectE8push_mutCsefoF4u9kbII_5wasmi.exit, %.loopexit.sink.split, %.preheader
@@ -1071,7 +1071,7 @@ bb.a:
 }
 
 ; Function Attrs: cold inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvXsc_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtNtB7_6engine10translator5error16TranslationErrorE4from(i64 range(i64 9, 19) %0) unnamed_addr #19 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvXsc_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtNtB7_6engine10translator5error16TranslationErrorE4from(i64 range(i64 9, 19) %0) unnamed_addr #19 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1112,7 +1112,7 @@ _RNvMNtCsefoF4u9kbII_5wasmi5errorNtB2_5Error9from_kind.exit: ; preds = %bb.a
 }
 
 ; Function Attrs: cold inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvXsd_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtCs9FmeSmcCnTG_10wasmparser13binary_reader17BinaryReaderErrorE4from(ptr noalias noundef nonnull align 8 %0) unnamed_addr #19 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvXsd_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtCs9FmeSmcCnTG_10wasmparser13binary_reader17BinaryReaderErrorE4from(ptr noalias noundef nonnull align 8 %0) unnamed_addr #19 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1176,7 +1176,7 @@ bb.a:
 }
 
 ; Function Attrs: cold inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvXsj_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtB7_6engine9resumable22ResumableHostTrapErrorE4from(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #19 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvXsj_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtB7_6engine9resumable22ResumableHostTrapErrorE4from(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #19 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1217,7 +1217,7 @@ _RNvMNtCsefoF4u9kbII_5wasmi5errorNtB2_5Error9from_kind.exit: ; preds = %bb.a
 }
 
 ; Function Attrs: cold inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvXsk_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtB7_6engine9resumable23ResumableOutOfFuelErrorE4from(i64 noundef %0) unnamed_addr #19 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull align 8 ptr @_RNvXsk_NtCsefoF4u9kbII_5wasmi5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtB7_6engine9resumable23ResumableOutOfFuelErrorE4from(i64 noundef %0) unnamed_addr #19 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

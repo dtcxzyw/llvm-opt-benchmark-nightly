@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit(i64 noundef range(i64 24, 145) %0) unnamed_addr #1 {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit(i64 noundef range(i64 24, 145) %0) unnamed_addr #1 {
 bb.a:
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15
   %i.a = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 24, 145) %0, i64 noundef 8) #15 ; 2 uses
@@ -605,7 +605,6 @@ bb.a:
   %i.bw = alloca [24 x i8], align 8               ; 6 uses
   %i.bx = alloca [24 x i8], align 8               ; 6 uses
   %i.by = alloca [24 x i8], align 8               ; 6 uses
-  %.sroa.4191 = alloca [40 x i8], align 8         ; 4 uses
   %i.bz = alloca [24 x i8], align 8               ; 7 uses
   %i.ca = alloca [88 x i8], align 8               ; 8 uses
   %i.cb = alloca [24 x i8], align 8               ; 4 uses
@@ -613,10 +612,8 @@ bb.a:
   %i.cd = alloca [48 x i8], align 8               ; 6 uses
   %i.ce = alloca [24 x i8], align 8               ; 7 uses
   %i.cf = alloca [32 x i8], align 8               ; 9 uses
-  %.sroa.4182 = alloca [40 x i8], align 8         ; 4 uses
   %i.cg = alloca [24 x i8], align 8               ; 7 uses
   %i.ch = alloca [48 x i8], align 8               ; 7 uses
-  %.sroa.4175 = alloca [40 x i8], align 8         ; 4 uses
   %i.ci = alloca [24 x i8], align 8               ; 7 uses
   %i.cj = alloca [48 x i8], align 8               ; 7 uses
   %i.ck = alloca [16 x i8], align 8               ; 5 uses
@@ -627,7 +624,6 @@ bb.a:
   %i.co = alloca [32 x i8], align 8               ; 8 uses
   %i.cp = alloca [24 x i8], align 8               ; 6 uses
   %i.cq = alloca [24 x i8], align 8               ; 7 uses
-  %.sroa.4153 = alloca [40 x i8], align 8         ; 4 uses
   %i.cr = alloca [24 x i8], align 8               ; 7 uses
   %i.cs = alloca [48 x i8], align 8               ; 7 uses
   %.sroa.4146 = alloca [40 x i8], align 8         ; 4 uses
@@ -641,7 +637,6 @@ bb.a:
   %i.da = alloca [48 x i8], align 8               ; 8 uses
   %i.db = alloca [24 x i8], align 8               ; 13 uses
   %i.dc = alloca [32 x i8], align 8               ; 9 uses
-  %.sroa.4134 = alloca [40 x i8], align 8         ; 4 uses
   %i.dd = alloca [24 x i8], align 8               ; 7 uses
   %i.de = alloca [48 x i8], align 8               ; 4 uses
   %i.df = alloca [24 x i8], align 8               ; 7 uses
@@ -651,13 +646,10 @@ bb.a:
   %i.dj = alloca [48 x i8], align 8               ; 8 uses
   %i.dk = alloca [24 x i8], align 8               ; 7 uses
   %i.dl = alloca [32 x i8], align 8               ; 9 uses
-  %.sroa.4123 = alloca [40 x i8], align 8         ; 4 uses
   %i.dm = alloca [24 x i8], align 8               ; 7 uses
   %i.dn = alloca [48 x i8], align 8               ; 7 uses
-  %.sroa.4116 = alloca [40 x i8], align 8         ; 4 uses
   %i.do = alloca [24 x i8], align 8               ; 7 uses
   %i.dp = alloca [48 x i8], align 8               ; 7 uses
-  %.sroa.4109 = alloca [40 x i8], align 8         ; 4 uses
   %i.dq = alloca [24 x i8], align 8               ; 7 uses
   %i.dr = alloca [48 x i8], align 8               ; 7 uses
   %i.ds = alloca [24 x i8], align 8               ; 4 uses
@@ -682,30 +674,24 @@ bb.a:
   %i.ej = alloca [48 x i8], align 8               ; 7 uses
   %i.ek = alloca [24 x i8], align 8               ; 10 uses
   %i.el = alloca [32 x i8], align 8               ; 8 uses
-  %.sroa.478 = alloca [40 x i8], align 8          ; 4 uses
   %i.em = alloca [24 x i8], align 8               ; 7 uses
-  %.sroa.471 = alloca [40 x i8], align 8          ; 4 uses
   %i.en = alloca [24 x i8], align 8               ; 7 uses
   %i.eo = alloca [48 x i8], align 8               ; 8 uses
   %i.ep = alloca [24 x i8], align 8               ; 7 uses
   %i.eq = alloca [32 x i8], align 8               ; 8 uses
   %i.er = alloca [16 x i8], align 8               ; 5 uses
-  %2 = alloca [24 x i8], align 8                  ; 4 uses
-  %i.es = alloca [24 x i8], align 8               ; 5 uses
-  %.sroa.6480 = alloca [24 x i8], align 8         ; 4 uses
+  %i.es = alloca [24 x i8], align 8               ; 4 uses
+  %.sroa.6480 = alloca [24 x i8], align 8         ; 5 uses
   %i.et = alloca [16 x i8], align 8               ; 5 uses
   %i.eu = alloca [24 x i8], align 8               ; 4 uses
   %i.ev = alloca [24 x i8], align 8               ; 5 uses
-  %.sroa.448 = alloca [40 x i8], align 8          ; 4 uses
   %i.ew = alloca [24 x i8], align 8               ; 7 uses
-  %.sroa.4 = alloca [40 x i8], align 8            ; 4 uses
   %i.ex = alloca [24 x i8], align 8               ; 7 uses
   %i.ey = alloca [48 x i8], align 8               ; 8 uses
   %i.ez = alloca [16 x i8], align 8               ; 5 uses
   %i.fa = alloca [24 x i8], align 8               ; 4 uses
   %i.fb = alloca [24 x i8], align 8               ; 5 uses
   %i.fc = alloca [32 x i8], align 8               ; 8 uses
-  %.sroa.6446 = alloca [24 x i8], align 8         ; 4 uses
   %i.fd = alloca [16 x i8], align 8               ; 5 uses
   %i.fe = alloca [24 x i8], align 8               ; 4 uses
   %i.ff = alloca [24 x i8], align 8               ; 5 uses
@@ -1108,7 +1094,6 @@ bb.ds:                                            ; preds = %_RINvMNtCskKLDkoKar
   br label %bb.dr
 
 bb.dt:                                            ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsfF8zpZz1lvn_13yara_x_parser.exit855
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6446)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
   invoke void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfF8zpZz1lvn_13yara_x_parser(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.al, i64 noundef 6, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
           to label %bb.dv unwind label %bb.du
@@ -1138,15 +1123,13 @@ bb.dx:                                            ; preds = %bb.dv
   call void @llvm.assume(i1 %i.nn)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.nm, ptr noundef nonnull align 1 dereferenceable(6) @28, i64 6, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6446, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
+  %.sroa.6446.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nd, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6446.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   store i64 %i.nj, ptr %i.nd, align 8
   %.sroa.4444.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nd, i64 8
   store ptr %i.nm, ptr %.sroa.4444.0..sroa_idx, align 8
   %.sroa.5445.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nd, i64 16
   store i64 6, ptr %.sroa.5445.0..sroa_idx, align 8
-  %.sroa.6446.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nd, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6446.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6446, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6446)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.ff, i64 24, i1 false)
   %i.no = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 1, ptr %i.no, align 8
@@ -1242,7 +1225,6 @@ bb.ek:                                            ; preds = %bb.ei
   br label %bb.ej
 
 bb.el:                                            ; preds = %bb.ei
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   call void @llvm.experimental.noalias.scope.decl(metadata !139)
   %i.od = load ptr, ptr %i.na, align 8, !alias.scope !139, !noalias !140, !nonnull !5, !noundef !5
   %i.oe = load ptr, ptr %i.mz, align 8, !alias.scope !139, !noalias !140, !nonnull !5, !noundef !5 ; 4 uses
@@ -1264,11 +1246,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 bb.en:                                            ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit
   %.sroa.6.0..sroa_idx39 = getelementptr inbounds nuw i8, ptr %i.oe, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.0..sroa_idx39, i64 40, i1 false)
-  store i64 %.sroa.036.0.copyload37, ptr %i.ob, align 8
   %.sroa.4.0..sroa.035.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ob, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.0..sroa.035.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.0..sroa.035.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.0..sroa_idx39, i64 40, i1 false)
+  store i64 %.sroa.036.0.copyload37, ptr %i.ob, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ey, ptr noundef nonnull align 8 dereferenceable(24) %i.ex, i64 24, i1 false)
   %i.oi = getelementptr inbounds nuw i8, ptr %i.ey, i64 24
   store i64 1, ptr %i.oi, align 8
@@ -1334,7 +1314,6 @@ bb.eu:                                            ; preds = %bb.es
   br label %bb.et
 
 bb.ev:                                            ; preds = %bb.es
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.448)
   call void @llvm.experimental.noalias.scope.decl(metadata !141)
   %i.ou = load ptr, ptr %i.na, align 8, !alias.scope !141, !noalias !142, !nonnull !5, !noundef !5
   %i.ov = load ptr, ptr %i.mz, align 8, !alias.scope !141, !noalias !142, !nonnull !5, !noundef !5 ; 4 uses
@@ -1356,11 +1335,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeEECsfF8zpZz1lvn_13yara_x_parser.exit859: ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit857
   %.sroa.644.0..sroa_idx45 = getelementptr inbounds nuw i8, ptr %i.ov, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.448, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.644.0..sroa_idx45, i64 40, i1 false)
-  store i64 %.sroa.042.0.copyload43, ptr %i.os, align 8
   %.sroa.448.0..sroa.041.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.os, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.448.0..sroa.041.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.448, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.448)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.448.0..sroa.041.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.644.0..sroa_idx45, i64 40, i1 false)
+  store i64 %.sroa.042.0.copyload43, ptr %i.os, align 8
   %i.oz = getelementptr inbounds nuw i8, ptr %i.nq, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.oz, ptr noundef nonnull align 8 dereferenceable(24) %i.ew, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ew)
@@ -1517,7 +1494,6 @@ bb.fo:                                            ; preds = %_RINvMNtCskKLDkoKar
   br label %bb.fn
 
 bb.fp:                                            ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsfF8zpZz1lvn_13yara_x_parser.exit861
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6480)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah)
   invoke void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfF8zpZz1lvn_13yara_x_parser(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.ah, i64 noundef 7, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
           to label %bb.fr unwind label %bb.fq
@@ -1547,15 +1523,13 @@ bb.ft:                                            ; preds = %bb.fr
   call void @llvm.assume(i1 %i.qn)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.qm, ptr noundef nonnull align 1 dereferenceable(7) @35, i64 7, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6480, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
+  %.sroa.6480.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qd, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6480.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   store i64 %i.qj, ptr %i.qd, align 8
   %.sroa.4478.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qd, i64 8
   store ptr %i.qm, ptr %.sroa.4478.0..sroa_idx, align 8
   %.sroa.5479.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qd, i64 16
   store i64 7, ptr %.sroa.5479.0..sroa_idx, align 8
-  %.sroa.6480.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qd, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6480.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6480, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6480)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.ev, i64 24, i1 false)
   %i.qo = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 1, ptr %i.qo, align 8
@@ -1577,14 +1551,14 @@ bb.fv:                                            ; preds = %bb.fu
           to label %bb.fx unwind label %.thread203 ; 5 uses
 
 bb.fw:                                            ; preds = %bb.fu
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6480)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.es)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.qr = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.er)
   store ptr %i.qr, ptr %i.er, align 8
   %.sroa.4490.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.er, i64 8
   store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCsfF8zpZz1lvn_13yara_x_parser, ptr %.sroa.4490.0..sroa_idx, align 8
-  invoke void @_RNvNvNtCsexYYUdYSQU6_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %2, ptr noundef nonnull @36, ptr noundef nonnull %i.er)
+  invoke void @_RNvNvNtCsexYYUdYSQU6_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.es, ptr noundef nonnull @36, ptr noundef nonnull %i.er)
           to label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsfF8zpZz1lvn_13yara_x_parser.exit863 unwind label %.thread203
 
 bb.fx:                                            ; preds = %bb.fv
@@ -1637,8 +1611,8 @@ bb.gd:                                            ; preds = %bb.gb
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsfF8zpZz1lvn_13yara_x_parser.exit863: ; preds = %bb.fw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.er)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.es, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6480, ptr noundef nonnull align 8 dereferenceable(24) %i.es, i64 24, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.es)
   call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15
   %i.rf = call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 24, 145) 48, i64 noundef 8) #15 ; 7 uses
   %i.rg = icmp eq ptr %i.rf, null
@@ -1653,7 +1627,7 @@ bb.ge:                                            ; preds = %_RINvMNtCskKLDkoKar
 
 bb.gf:                                            ; preds = %bb.gh, %bb.gg
   %.pn750 = phi { ptr, i32 } [ %i.ri, %bb.gh ], [ %i.rh, %bb.gg ]
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsfF8zpZz1lvn_13yara_x_parser(ptr noalias nofree noundef align 8 dereferenceable(24) %i.es) #14
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsfF8zpZz1lvn_13yara_x_parser(ptr noalias nofree noundef align 8 dereferenceable(24) %.sroa.6480) #14
           to label %.thread unwind label %bb.bi
 
 bb.gg:                                            ; preds = %bb.ge
@@ -1698,14 +1672,14 @@ bb.gk:                                            ; preds = %bb.gi
   store ptr %i.rp, ptr %.sroa.4500.0..sroa_idx, align 8
   %.sroa.5501.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.rf, i64 16
   store i64 7, ptr %.sroa.5501.0..sroa_idx, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.es, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6480, i64 24, i1 false)
   %i.rr = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 1, ptr %i.rr, align 8
   %.sroa.462.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.rf, ptr %.sroa.462.0..sroa_idx, align 8
   %.sroa.563.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 1, ptr %.sroa.563.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.es)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6480)
   br label %bb.dy
 
 bb.gl:                                            ; preds = %bb.gq, %bb.gm
@@ -1810,7 +1784,6 @@ bb.gz:                                            ; preds = %bb.gx
   br label %bb.gy
 
 bb.ha:                                            ; preds = %bb.gx
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.471)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !143)
   %i.so = load ptr, ptr %i.gn, align 8, !alias.scope !143, !noalias !144, !nonnull !5, !noundef !5
   %i.sp = load ptr, ptr %i.gm, align 8, !alias.scope !143, !noalias !144, !nonnull !5, !noundef !5 ; 4 uses
@@ -1832,11 +1805,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 bb.hc:                                            ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit868
   %.sroa.668.0..sroa_idx69 = getelementptr inbounds nuw i8, ptr %i.sp, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.471, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.668.0..sroa_idx69, i64 40, i1 false)
-  store i64 %.sroa.066.0.copyload67, ptr %i.sm, align 8
   %.sroa.471.0..sroa.065.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.sm, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.471.0..sroa.065.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.471, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.471)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.471.0..sroa.065.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.668.0..sroa_idx69, i64 40, i1 false)
+  store i64 %.sroa.066.0.copyload67, ptr %i.sm, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.eo, ptr noundef nonnull align 8 dereferenceable(24) %i.en, i64 24, i1 false)
   %i.st = getelementptr inbounds nuw i8, ptr %i.eo, i64 24
   store i64 1, ptr %i.st, align 8
@@ -1902,7 +1873,6 @@ bb.hj:                                            ; preds = %bb.hh
   br label %bb.hi
 
 bb.hk:                                            ; preds = %bb.hh
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.478)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !145)
   %i.tf = load ptr, ptr %i.gn, align 8, !alias.scope !145, !noalias !146, !nonnull !5, !noundef !5
   %i.tg = load ptr, ptr %i.gm, align 8, !alias.scope !145, !noalias !146, !nonnull !5, !noundef !5 ; 4 uses
@@ -1924,11 +1894,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeEECsfF8zpZz1lvn_13yara_x_parser.exit871: ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit869
   %.sroa.675.0..sroa_idx76 = getelementptr inbounds nuw i8, ptr %i.tg, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.478, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.675.0..sroa_idx76, i64 40, i1 false)
-  store i64 %.sroa.073.0.copyload74, ptr %i.td, align 8
   %.sroa.478.0..sroa.072.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.td, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.478.0..sroa.072.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.478, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.478)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.478.0..sroa.072.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.675.0..sroa_idx76, i64 40, i1 false)
+  store i64 %.sroa.073.0.copyload74, ptr %i.td, align 8
   %i.tk = getelementptr inbounds nuw i8, ptr %i.sb, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.tk, ptr noundef nonnull align 8 dereferenceable(24) %i.em, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.em)
@@ -2331,7 +2299,6 @@ bb.no:                                            ; preds = %bb.nm
   br label %bb.nn
 
 bb.np:                                            ; preds = %bb.nm
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4109)
   call void @llvm.experimental.noalias.scope.decl(metadata !156)
   %i.aiq = load ptr, ptr %i.hl, align 8, !alias.scope !156, !noalias !157, !nonnull !5, !noundef !5
   %i.air = load ptr, ptr %i.hk, align 8, !alias.scope !156, !noalias !157, !nonnull !5, !noundef !5 ; 4 uses
@@ -2353,11 +2320,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 bb.nr:                                            ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit887
   %.sroa.6106.0..sroa_idx107 = getelementptr inbounds nuw i8, ptr %i.air, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4109, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6106.0..sroa_idx107, i64 40, i1 false)
-  store i64 %.sroa.0104.0.copyload105, ptr %i.aio, align 8
   %.sroa.4109.0..sroa.0103.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aio, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4109.0..sroa.0103.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4109, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4109)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4109.0..sroa.0103.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6106.0..sroa_idx107, i64 40, i1 false)
+  store i64 %.sroa.0104.0.copyload105, ptr %i.aio, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dr, ptr noundef nonnull align 8 dereferenceable(24) %i.dq, i64 24, i1 false)
   %i.aiv = getelementptr inbounds nuw i8, ptr %i.dr, i64 24
   store i64 1, ptr %i.aiv, align 8
@@ -2453,7 +2418,6 @@ bb.oa:                                            ; preds = %bb.ny
   br label %bb.nz
 
 bb.ob:                                            ; preds = %bb.ny
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4116)
   call void @llvm.experimental.noalias.scope.decl(metadata !158)
   %i.ajp = load ptr, ptr %i.hl, align 8, !alias.scope !158, !noalias !159, !nonnull !5, !noundef !5
   %i.ajq = load ptr, ptr %i.hk, align 8, !alias.scope !158, !noalias !159, !nonnull !5, !noundef !5 ; 4 uses
@@ -2475,11 +2439,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 bb.od:                                            ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit890
   %.sroa.6113.0..sroa_idx114 = getelementptr inbounds nuw i8, ptr %i.ajq, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4116, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6113.0..sroa_idx114, i64 40, i1 false)
-  store i64 %.sroa.0111.0.copyload112, ptr %i.ajn, align 8
   %.sroa.4116.0..sroa.0110.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ajn, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4116.0..sroa.0110.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4116, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4116)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4116.0..sroa.0110.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6113.0..sroa_idx114, i64 40, i1 false)
+  store i64 %.sroa.0111.0.copyload112, ptr %i.ajn, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dp, ptr noundef nonnull align 8 dereferenceable(24) %i.do, i64 24, i1 false)
   %i.aju = getelementptr inbounds nuw i8, ptr %i.dp, i64 24
   store i64 1, ptr %i.aju, align 8
@@ -2540,7 +2502,6 @@ bb.oj:                                            ; preds = %bb.oh
   br label %bb.oi
 
 bb.ok:                                            ; preds = %bb.oh
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4123)
   call void @llvm.experimental.noalias.scope.decl(metadata !160)
   %i.akf = load ptr, ptr %i.hl, align 8, !alias.scope !160, !noalias !161, !nonnull !5, !noundef !5
   %i.akg = load ptr, ptr %i.hk, align 8, !alias.scope !160, !noalias !161, !nonnull !5, !noundef !5 ; 4 uses
@@ -2562,11 +2523,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 bb.om:                                            ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit891
   %.sroa.6120.0..sroa_idx121 = getelementptr inbounds nuw i8, ptr %i.akg, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4123, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6120.0..sroa_idx121, i64 40, i1 false)
-  store i64 %.sroa.0118.0.copyload119, ptr %i.akd, align 8
   %.sroa.4123.0..sroa.0117.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.akd, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4123.0..sroa.0117.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4123, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4123)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4123.0..sroa.0117.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6120.0..sroa_idx121, i64 40, i1 false)
+  store i64 %.sroa.0118.0.copyload119, ptr %i.akd, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dn, ptr noundef nonnull align 8 dereferenceable(24) %i.dm, i64 24, i1 false)
   %i.akk = getelementptr inbounds nuw i8, ptr %i.dn, i64 24
   store i64 1, ptr %i.akk, align 8
@@ -2896,7 +2855,6 @@ bb.qd:                                            ; preds = %bb.qb
   br label %bb.qc
 
 bb.qe:                                            ; preds = %bb.qb
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4134)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !162)
   %i.ana = load ptr, ptr %i.hw, align 8, !alias.scope !162, !noalias !163, !nonnull !5, !noundef !5
   %i.anb = load ptr, ptr %i.hv, align 8, !alias.scope !162, !noalias !163, !nonnull !5, !noundef !5 ; 4 uses
@@ -2918,11 +2876,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeEECsfF8zpZz1lvn_13yara_x_parser.exit896: ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit894
   %.sroa.6131.0..sroa_idx132 = getelementptr inbounds nuw i8, ptr %i.anb, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4134, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6131.0..sroa_idx132, i64 40, i1 false)
-  store i64 %.sroa.0129.0.copyload130, ptr %i.amy, align 8
   %.sroa.4134.0..sroa.0128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.amy, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4134.0..sroa.0128.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4134, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4134)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4134.0..sroa.0128.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6131.0..sroa_idx132, i64 40, i1 false)
+  store i64 %.sroa.0129.0.copyload130, ptr %i.amy, align 8
   %i.anf = getelementptr inbounds nuw i8, ptr %i.alm, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.anf, ptr noundef nonnull align 8 dereferenceable(24) %i.dd, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dd)
@@ -3301,7 +3257,6 @@ bb.rt:                                            ; preds = %bb.rr
   br label %bb.rs
 
 bb.ru:                                            ; preds = %bb.rr
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4153)
   call void @llvm.experimental.noalias.scope.decl(metadata !167)
   %i.aqb = load ptr, ptr %i.ig, align 8, !alias.scope !167, !noalias !168, !nonnull !5, !noundef !5
   %i.aqc = load ptr, ptr %i.if, align 8, !alias.scope !167, !noalias !168, !nonnull !5, !noundef !5 ; 4 uses
@@ -3323,11 +3278,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 bb.rw:                                            ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit900
   %.sroa.6150.0..sroa_idx151 = getelementptr inbounds nuw i8, ptr %i.aqc, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4153, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6150.0..sroa_idx151, i64 40, i1 false)
-  store i64 %.sroa.0148.0.copyload149, ptr %i.apz, align 8
   %.sroa.4153.0..sroa.0147.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.apz, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4153.0..sroa.0147.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4153, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4153)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4153.0..sroa.0147.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6150.0..sroa_idx151, i64 40, i1 false)
+  store i64 %.sroa.0148.0.copyload149, ptr %i.apz, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cs, ptr noundef nonnull align 8 dereferenceable(24) %i.cr, i64 24, i1 false)
   %i.aqg = getelementptr inbounds nuw i8, ptr %i.cs, i64 24
   store i64 1, ptr %i.aqg, align 8
@@ -3613,7 +3566,6 @@ bb.sw:                                            ; preds = %bb.su
   br label %bb.sv
 
 bb.sx:                                            ; preds = %bb.su
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4175)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !176)
   %i.asg = load ptr, ptr %i.ig, align 8, !alias.scope !176, !noalias !177, !nonnull !5, !noundef !5
   %i.ash = load ptr, ptr %i.if, align 8, !alias.scope !176, !noalias !177, !nonnull !5, !noundef !5 ; 4 uses
@@ -3635,11 +3587,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 bb.sz:                                            ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit914
   %.sroa.6172.0..sroa_idx173 = getelementptr inbounds nuw i8, ptr %i.ash, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4175, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6172.0..sroa_idx173, i64 40, i1 false)
-  store i64 %.sroa.0170.0.copyload171, ptr %i.ase, align 8
   %.sroa.4175.0..sroa.0169.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ase, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4175.0..sroa.0169.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4175, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4175)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4175.0..sroa.0169.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6172.0..sroa_idx173, i64 40, i1 false)
+  store i64 %.sroa.0170.0.copyload171, ptr %i.ase, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cj, ptr noundef nonnull align 8 dereferenceable(24) %i.ci, i64 24, i1 false)
   %i.asl = getelementptr inbounds nuw i8, ptr %i.cj, i64 24
   store i64 1, ptr %i.asl, align 8
@@ -3743,7 +3693,6 @@ bb.tk:                                            ; preds = %bb.ti
   br label %bb.tj
 
 bb.tl:                                            ; preds = %bb.ti
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4182)
   call void @llvm.experimental.noalias.scope.decl(metadata !178)
   %i.ath = load ptr, ptr %i.ig, align 8, !alias.scope !178, !noalias !179, !nonnull !5, !noundef !5
   %i.ati = load ptr, ptr %i.if, align 8, !alias.scope !178, !noalias !179, !nonnull !5, !noundef !5 ; 4 uses
@@ -3765,11 +3714,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 bb.tn:                                            ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit915
   %.sroa.6179.0..sroa_idx180 = getelementptr inbounds nuw i8, ptr %i.ati, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4182, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6179.0..sroa_idx180, i64 40, i1 false)
-  store i64 %.sroa.0177.0.copyload178, ptr %i.atf, align 8
   %.sroa.4182.0..sroa.0176.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.atf, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4182.0..sroa.0176.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4182, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4182)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4182.0..sroa.0176.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6179.0..sroa_idx180, i64 40, i1 false)
+  store i64 %.sroa.0177.0.copyload178, ptr %i.atf, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ch, ptr noundef nonnull align 8 dereferenceable(24) %i.cg, i64 24, i1 false)
   %i.atm = getelementptr inbounds nuw i8, ptr %i.ch, i64 24
   store i64 1, ptr %i.atm, align 8
@@ -3970,7 +3917,6 @@ bb.uj:                                            ; preds = %bb.uh
   br label %bb.ui
 
 bb.uk:                                            ; preds = %bb.uh
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4191)
   call void @llvm.experimental.noalias.scope.decl(metadata !180)
   %i.ava = load ptr, ptr %i.is, align 8, !alias.scope !180, !noalias !181, !nonnull !5, !noundef !5
   %i.avb = load ptr, ptr %i.ir, align 8, !alias.scope !180, !noalias !181, !nonnull !5, !noundef !5 ; 4 uses
@@ -3992,11 +3938,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10a
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeEECsfF8zpZz1lvn_13yara_x_parser.exit922: ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfF8zpZz1lvn_13yara_x_parser.exit920
   %.sroa.6188.0..sroa_idx189 = getelementptr inbounds nuw i8, ptr %i.avb, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4191, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6188.0..sroa_idx189, i64 40, i1 false)
-  store i64 %.sroa.0186.0.copyload187, ptr %i.auy, align 8
   %.sroa.4191.0..sroa.0185.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.auy, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4191.0..sroa.0185.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4191, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4191)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4191.0..sroa.0185.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6188.0..sroa_idx189, i64 40, i1 false)
+  store i64 %.sroa.0186.0.copyload187, ptr %i.auy, align 8
   %i.avf = getelementptr inbounds nuw i8, ptr %i.atx, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.avf, ptr noundef nonnull align 8 dereferenceable(24) %i.bz, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bz)

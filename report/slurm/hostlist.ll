@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.k, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @hostlist_pop(ptr noundef %0) #0 {
+define dso_local noalias ptr @hostlist_pop(ptr noundef %0) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %.not = icmp eq ptr %0, null
@@ -605,14 +605,14 @@ bb.o:                                             ; preds = %bb.m
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @hostlist_shift(ptr noundef %0) #0 {
+define dso_local noalias ptr @hostlist_shift(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call ptr @hostlist_shift_dims(ptr noundef %0, i32 noundef 0)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @hostlist_shift_dims(ptr noundef %0, i32 noundef %1) #0 {
+define dso_local noalias ptr @hostlist_shift_dims(ptr noundef %0, i32 noundef %1) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %.not = icmp eq ptr %0, null
@@ -1015,7 +1015,7 @@ _set_span.exit.thread.thread64:                   ; preds = %_set_span.exit, %_s
 
 .lr.ph82:                                         ; preds = %.lr.ph82.preheader, %bb.o
   %i.az = phi ptr [ %i.au, %.lr.ph82.preheader ], [ %i.bo, %bb.o ] ; 2 uses
-  %i.ba = call ptr @hostlist_shift_dims(ptr noundef nonnull %0, i32 noundef 0) ; 3 uses
+  %i.ba = call noalias ptr @hostlist_shift_dims(ptr noundef nonnull %0, i32 noundef 0) ; 3 uses
   %.not37 = icmp eq ptr %i.ba, null
   br i1 %.not37, label %.critedge, label %bb.i
 
@@ -1060,7 +1060,7 @@ hostlist_create.exit:                             ; preds = %bb.i, %bb.j
   br i1 %.not39, label %bb.o, label %bb.l
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.br = call ptr @hostlist_shift_dims(ptr noundef nonnull %0, i32 noundef 0) ; 2 uses
+  %i.br = call noalias ptr @hostlist_shift_dims(ptr noundef nonnull %0, i32 noundef 0) ; 2 uses
   %i.bs = load ptr, ptr %1, align 8
   %i.bt = load i32, ptr %2, align 4
   %i.bu = sext i32 %i.bt to i64
@@ -1463,10 +1463,10 @@ bb.ae:                                            ; preds = %hostlist_create.exi
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @hostset_shift(ptr nofree noundef readonly captures(none) %0) #0 {
+define dso_local noalias ptr @hostset_shift(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
-  %i.b = tail call ptr @hostlist_shift_dims(ptr noundef %i.a, i32 noundef 0)
+  %i.b = tail call noalias ptr @hostlist_shift_dims(ptr noundef %i.a, i32 noundef 0)
   ret ptr %i.b
 }
 
@@ -1869,7 +1869,7 @@ bb.s:                                             ; preds = %hostrange_count.exi
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @hostrange_pop(ptr nofree noundef captures(none) %0) unnamed_addr #0 {
+define internal fastcc noalias ptr @hostrange_pop(ptr nofree noundef captures(none) %0) unnamed_addr #0 {
 bb.a:
   %i.a = tail call zeroext i16 @slurmdb_setup_cluster_dims() #21 ; 4 uses
   %i.b = zext i16 %i.a to i32                     ; 2 uses
@@ -2000,7 +2000,7 @@ bb.k:                                             ; preds = %hostrange_count.exi
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @hostrange_shift(ptr nofree noundef captures(none) %0, i32 noundef %1) unnamed_addr #0 {
+define internal fastcc noalias ptr @hostrange_shift(ptr nofree noundef captures(none) %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
   %.not = icmp eq i32 %1, 0
   br i1 %.not, label %bb.b, label %bb.c
@@ -2403,7 +2403,7 @@ declare i32 @get_log_level() local_unnamed_addr #2
 declare void @log_var(i32 noundef, ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define dso_local noundef nonnull ptr @hostlist_ranged_string_malloc(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local noalias noundef nonnull ptr @hostlist_ranged_string_malloc(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(8192) ptr @malloc(i64 noundef 8192) #25 ; 2 uses
   %cond11 = icmp eq ptr %i.a, null
@@ -2806,7 +2806,7 @@ hostlist_delete_host.exit:                        ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @hostset_pop(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noalias ptr @hostset_pop(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = tail call ptr @hostlist_pop(ptr noundef %i.a)

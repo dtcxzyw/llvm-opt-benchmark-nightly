@@ -202,7 +202,7 @@ bb.a:
   %i.fw = alloca [8 x i8], align 8                ; 19 uses
   %i.fx = alloca [24 x i8], align 8               ; 11 uses
   %i.fy = alloca [24 x i8], align 8               ; 12 uses
-  %i.fz = alloca [8 x i8], align 8                ; 22 uses
+  %i.fz = alloca [8 x i8], align 8                ; 20 uses
   %i.ga = alloca [192 x i8], align 8              ; 5 uses
   %i.gb = alloca [16 x i8], align 8               ; 17 uses
   %i.gc = alloca [32 x i8], align 8               ; 6 uses
@@ -605,7 +605,7 @@ bb.lk:                                            ; preds = %bb.li
   %i.yy = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
   store i64 1, ptr %i.yy, align 8
   %i.yz = invoke fastcc noundef ptr @_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit(i64 noundef 832)
-          to label %bb.ln unwind label %bb.ll     ; 4 uses
+          to label %bb.ln unwind label %bb.ll     ; 8 uses
 
 bb.ll:                                            ; preds = %bb.lk
   %i.za = landingpad { ptr, i32 }
@@ -641,8 +641,7 @@ bb.ln:                                            ; preds = %bb.lk
   br i1 %i.zl, label %bb.lp, label %bb.lo
 
 bb.lo:                                            ; preds = %bb.ln
-  %0 = load ptr, ptr %i.fz, align 8, !nonnull !6, !noundef !6 ; 2 uses
-  store ptr %0, ptr %i.fx, align 8
+  store ptr %i.yz, ptr %i.fx, align 8
   %i.zm = getelementptr inbounds nuw i8, ptr %i.fx, i64 8
   store ptr null, ptr %i.zm, align 8
   %i.zn = getelementptr inbounds nuw i8, ptr %i.fx, i64 16
@@ -664,7 +663,7 @@ bb.lq:                                            ; preds = %bb.lo
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fp)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(288) %i.fp, ptr noundef nonnull align 8 dereferenceable(288) %i.gp, i64 288, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fo)
-  %i.zo = atomicrmw add ptr %0, i64 1 monotonic, align 8
+  %i.zo = atomicrmw add ptr %i.yz, i64 1 monotonic, align 8
   %i.zp = icmp slt i64 %i.zo, 0
   br i1 %i.zp, label %bb.mk, label %bb.mj
 
@@ -827,8 +826,7 @@ bb.mi:                                            ; preds = %_RINvNtCskKLDkoKarT
   br i1 %i.mu, label %bb.qf, label %bb.qj
 
 bb.mj:                                            ; preds = %bb.lq
-  %1 = load ptr, ptr %i.fz, align 8, !nonnull !6, !noundef !6 ; 2 uses
-  store ptr %1, ptr %i.fo, align 8
+  store ptr %i.yz, ptr %i.fo, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fn)
   %.sroa.064.0.copyload = load i64, ptr %i.gi, align 8
   %i.aas = trunc nuw i64 %.sroa.064.0.copyload to i1
@@ -841,7 +839,7 @@ bb.mk:                                            ; preds = %bb.lq
 bb.ml:                                            ; preds = %bb.mj
   %.sroa.465.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fn, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.465.0..sroa_idx, i64 24, i1 false)
-  invoke void @_RNvMs_NtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_managerINtB4_16ConsensusManagerNtNtB6_3toc14TableOfContentE3newCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull sret([848 x i8]) align 8 captures(none) dereferenceable(848) %i.fq, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(288) %i.fp, ptr noundef nonnull %1, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.fn, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.zf, i64 noundef %i.zh)
+  invoke void @_RNvMs_NtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_managerINtB4_16ConsensusManagerNtNtB6_3toc14TableOfContentE3newCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull sret([848 x i8]) align 8 captures(none) dereferenceable(848) %i.fq, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(288) %i.fp, ptr noundef nonnull %i.yz, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.fn, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.zf, i64 noundef %i.zh)
           to label %bb.mo unwind label %.thread686
 
 .thread686:                                       ; preds = %bb.ml
@@ -1244,7 +1242,7 @@ bb.f:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit(i64 noundef range(i64 8, 2161) %0) unnamed_addr #0 {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit(i64 noundef range(i64 8, 2161) %0) unnamed_addr #0 {
 bb.a:
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29
   %i.a = tail call noundef ptr @malloc(i64 noundef range(i64 8, 2161) %0) #29 ; 2 uses

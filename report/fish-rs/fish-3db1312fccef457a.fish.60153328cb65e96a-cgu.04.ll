@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.loopexit.split-lp,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvMs5_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_10EnvNodeRef3new(i1 noundef zeroext %0, ptr noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RNvMs5_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_10EnvNodeRef3new(i1 noundef zeroext %0, ptr noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [96 x i8], align 8                ; 13 uses
   %i.b = alloca [8 x i8], align 8                 ; 2 uses
@@ -608,7 +608,7 @@ bb.l:                                             ; preds = %_RINvMsb_NtNtNtCs1x
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtCs1xwejQucwHj_5alloc5boxed14box_new_uninit(i64 noundef range(i64 1, 9) %0, i64 noundef range(i64 1, 121) %1) unnamed_addr #3 {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtCs1xwejQucwHj_5alloc5boxed14box_new_uninit(i64 noundef range(i64 1, 9) %0, i64 noundef range(i64 1, 121) %1) unnamed_addr #3 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #36
   %i.a = tail call noundef ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 1, 121) %1, i64 noundef range(i64 1, 9) %0) #36 ; 2 uses
@@ -1011,7 +1011,7 @@ bb.ea:                                            ; preds = %bb.dz
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RNvNtNtNtCs8frGy5WneL6_4fish3env4impl11environment15copy_node_chain(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noalias noundef nonnull ptr @_RNvNtNtNtCs8frGy5WneL6_4fish3env4impl11environment15copy_node_chain(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [96 x i8], align 8                ; 11 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -1414,9 +1414,9 @@ _RNCNvNtCs8frGy5WneL6_4fish12env_dispatch18VAR_DISPATCH_TABLE0B5_.exit: ; preds 
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef nonnull ptr @_RNvYNCNvNtNtNtCs8frGy5WneL6_4fish3env4impl11environment11GLOBAL_NODE0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuE9call_onceBc_() unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal noalias noundef nonnull ptr @_RNvYNCNvNtNtNtCs8frGy5WneL6_4fish3env4impl11environment11GLOBAL_NODE0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuE9call_onceBc_() unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = tail call fastcc noundef nonnull ptr @_RNvMs5_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_10EnvNodeRef3new(i1 noundef zeroext false, ptr noundef null)
+  %i.a = tail call fastcc noalias noundef nonnull ptr @_RNvMs5_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_10EnvNodeRef3new(i1 noundef zeroext false, ptr noundef null)
   ret ptr %i.a
 }
 
