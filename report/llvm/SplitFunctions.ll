@@ -205,8 +205,8 @@ bb.bg:                                            ; preds = %.loopexit.i20.i.i, 
 
 bb.bh:                                            ; preds = %bb.bg
   %i.aeb = getelementptr inbounds nuw i8, ptr %i.adw, i64 124
-  %i.aec = load i32, ptr %i.aeb, align 4, !tbaa !930, !noalias !924 ; 2 uses
-  %i.aed = zext i32 %i.aec to i64                 ; 2 uses
+  %i.aec = load i32, ptr %i.aeb, align 4, !tbaa !930, !noalias !924
+  %i.aed = zext i32 %i.aec to i64
   %i.aee = getelementptr inbounds nuw i8, ptr %i.adw, i64 40
   %i.aef = load ptr, ptr %i.aee, align 8, !tbaa !42, !noalias !924 ; 2 uses
   %i.aeg = getelementptr inbounds nuw i8, ptr %i.adw, i64 48
@@ -238,14 +238,12 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %.lr.ph.i22.i.i
   %i.aev = load ptr, ptr %.sroa.7.015.i.i.i, align 8, !tbaa !443, !noalias !924
   %i.aew = getelementptr inbounds nuw i8, ptr %i.aev, i64 120
-  %i.aex = load i32, ptr %i.aew, align 4, !tbaa !937, !noalias !924 ; 2 uses
-  %i.aey = zext i32 %i.aex to i64                 ; 2 uses
-  %4 = icmp ugt i32 %i.aec, %i.aex
-  %5 = sub nuw nsw i64 %i.aed, %i.aey
-  %i.aez = sub nuw nsw i64 %i.aey, %i.aed
-  %6 = select i1 %4, i64 %5, i64 %i.aez
+  %i.aex = load i32, ptr %i.aew, align 4, !tbaa !937, !noalias !924
+  %i.aey = zext i32 %i.aex to i64
+  %i.aez = sub nsw i64 %i.aed, %i.aey
+  %4 = call i64 @llvm.abs.i64(i64 %i.aez, i1 true)
   %i.afa = uitofp i64 %i.aet to double
-  %i.afb = add nuw nsw i64 %6, 1
+  %i.afb = add nuw nsw i64 %4, 1
   %i.afc = uitofp nneg i64 %i.afb to double
   %i.afd = call double @pow(double noundef %i.afc, double noundef %i.adu) #30, !noalias !924
   %i.afe = fdiv double %i.afa, %i.afd
@@ -647,6 +645,9 @@ declare i64 @llvm.umax.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #29
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #29

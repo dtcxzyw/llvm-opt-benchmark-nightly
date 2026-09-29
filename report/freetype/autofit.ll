@@ -205,27 +205,25 @@ bb.ar:                                            ; preds = %select.unfold.i, %b
   br i1 %.not227.i, label %select.unfold.i, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %i.go = load i16, ptr %i.gl, align 2, !tbaa !151 ; 2 uses
-  %i.gp = sext i16 %i.go to i64                   ; 2 uses
+  %i.go = load i16, ptr %i.gl, align 2, !tbaa !151
+  %i.gp = sext i16 %i.go to i64
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gn, i64 2
-  %i.gr = load i16, ptr %i.gq, align 2, !tbaa !151 ; 2 uses
-  %i.gs = sext i16 %i.gr to i64                   ; 2 uses
-  %2 = icmp sgt i16 %i.go, %i.gr
-  %3 = sub nsw i64 %i.gp, %i.gs
-  %i.gt = sub nsw i64 %i.gs, %i.gp
-  %4 = select i1 %2, i64 %3, i64 %i.gt            ; 3 uses
-  %.not228.i = icmp slt i64 %4, %.0179.i
+  %i.gr = load i16, ptr %i.gq, align 2, !tbaa !151
+  %i.gs = sext i16 %i.gr to i64
+  %i.gt = sub nsw i64 %i.gp, %i.gs
+  %2 = tail call i64 @llvm.abs.i64(i64 %i.gt, i1 true) ; 3 uses
+  %.not228.i = icmp slt i64 %2, %.0179.i
   br i1 %.not228.i, label %select.unfold.i, label %bb.at
 
 select.unfold.i:                                  ; preds = %bb.as, %bb.ar
-  %.2164.ph.i = phi i64 [ %.0162.i, %bb.ar ], [ %4, %bb.as ] ; 2 uses
+  %.2164.ph.i = phi i64 [ %.0162.i, %bb.ar ], [ %2, %bb.as ] ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %.0165.i, i64 24
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !119 ; 2 uses
   %.not229.i = icmp eq ptr %i.gv, %i.gk
   br i1 %.not229.i, label %bb.at, label %bb.ar, !llvm.loop !514
 
 bb.at:                                            ; preds = %select.unfold.i, %bb.as
-  %.2164239.i = phi i64 [ %.2164.ph.i, %select.unfold.i ], [ %4, %bb.as ]
+  %.2164239.i = phi i64 [ %.2164.ph.i, %select.unfold.i ], [ %2, %bb.as ]
   %.not230.i = icmp slt i64 %.2164239.i, %.0179.i
   br i1 %.not230.i, label %bb.au, label %bb.av
 
@@ -404,17 +402,15 @@ bb.bd:                                            ; preds = %.thread248.i
   %i.jk = sub nsw i64 %i.jh, %i.jj
   %spec.select232.i = tail call i64 @llvm.abs.i64(i64 %i.jk, i1 true)
   %i.jl = getelementptr inbounds nuw i8, ptr %.2182.i, i64 2
-  %i.jm = load i16, ptr %i.jl, align 2, !tbaa !151 ; 2 uses
-  %i.jn = sext i16 %i.jm to i64                   ; 2 uses
+  %i.jm = load i16, ptr %i.jl, align 2, !tbaa !151
+  %i.jn = sext i16 %i.jm to i64
   %i.jo = getelementptr inbounds nuw i8, ptr %.0152.i, i64 2
-  %i.jp = load i16, ptr %i.jo, align 2, !tbaa !151 ; 2 uses
-  %i.jq = sext i16 %i.jp to i64                   ; 2 uses
-  %5 = icmp sgt i16 %i.jm, %i.jp
-  %6 = sub nsw i64 %i.jn, %i.jq
-  %i.jr = sub nsw i64 %i.jq, %i.jn
-  %7 = select i1 %5, i64 %6, i64 %i.jr
-  %8 = icmp slt i64 %7, %spec.select232.i
-  br i1 %8, label %.sink.split.i17, label %bb.be
+  %i.jp = load i16, ptr %i.jo, align 2, !tbaa !151
+  %i.jq = sext i16 %i.jp to i64
+  %i.jr = sub nsw i64 %i.jn, %i.jq
+  %3 = tail call i64 @llvm.abs.i64(i64 %i.jr, i1 true)
+  %4 = icmp samesign ult i64 %3, %spec.select232.i
+  br i1 %4, label %.sink.split.i17, label %bb.be
 
 .sink.split.i17:                                  ; preds = %bb.bd, %.thread248.i
   %i.js = getelementptr inbounds nuw i8, ptr %.0152.i, i64 16

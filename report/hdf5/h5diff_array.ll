@@ -204,16 +204,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not179, label %bb.c, label %bb.q
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = zext i8 %.0.val1 to i32                  ; 3 uses
-  %i.f = zext i8 %.0.val to i32                   ; 3 uses
-  %2 = icmp ugt i8 %.0.val1, %.0.val
-  %3 = sub nsw i32 %i.e, %i.f
-  %i.g = sub nsw i32 %i.f, %i.e
-  %4 = select i1 %2, i32 %3, i32 %i.g             ; 2 uses
-  %5 = sitofp i32 %4 to double
+  %i.e = zext i8 %.0.val1 to i32                  ; 2 uses
+  %i.f = zext i8 %.0.val to i32                   ; 2 uses
+  %i.g = sub nsw i32 %i.e, %i.f
+  %2 = tail call i32 @llvm.abs.i32(i32 %i.g, i1 true) ; 2 uses
+  %3 = uitofp nneg i32 %2 to double
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.i = load double, ptr %i.h, align 8, !tbaa !22
-  %i.j = fcmp olt double %i.i, %5
+  %i.j = fcmp olt double %i.i, %3
   br i1 %i.j, label %bb.d, label %print_data.exit.thread
 
 bb.d:                                             ; preds = %bb.c
@@ -237,7 +235,7 @@ print_data.exit:                                  ; preds = %bb.d, %bb.e
   br i1 %.not4.i.not, label %bb.f, label %print_data.exit.thread
 
 bb.f:                                             ; preds = %print_data.exit
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.f, i32 noundef %i.e, i32 noundef %4) #15
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.f, i32 noundef %i.e, i32 noundef %2) #15
   br label %print_data.exit.thread
 
 bb.g:                                             ; preds = %bb.a
@@ -287,13 +285,11 @@ print_data.exit191:                               ; preds = %bb.j, %bb.k
   br i1 %.not4.i189.not, label %bb.l, label %print_data.exit.thread
 
 bb.l:                                             ; preds = %print_data.exit191
-  %i.ak = zext i8 %.0.val to i32                  ; 3 uses
-  %i.al = zext i8 %.0.val1 to i32                 ; 3 uses
-  %6 = icmp ugt i8 %.0.val1, %.0.val
-  %7 = sub nsw i32 %i.al, %i.ak
-  %i.am = sub nsw i32 %i.ak, %i.al
-  %8 = select i1 %6, i32 %7, i32 %i.am
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.110, i32 noundef %i.ak, i32 noundef %i.al, i32 noundef %8) #15
+  %i.ak = zext i8 %.0.val to i32                  ; 2 uses
+  %i.al = zext i8 %.0.val1 to i32                 ; 2 uses
+  %i.am = sub nsw i32 %i.al, %i.ak
+  %4 = tail call i32 @llvm.abs.i32(i32 %i.am, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.110, i32 noundef %i.ak, i32 noundef %i.al, i32 noundef %4) #15
   br label %print_data.exit.thread
 
 bb.m:                                             ; preds = %.thread, %bb.i
@@ -324,13 +320,11 @@ print_data.exit195:                               ; preds = %bb.n, %bb.o
   br i1 %.not4.i193.not, label %bb.p, label %print_data.exit.thread
 
 bb.p:                                             ; preds = %print_data.exit195
-  %i.aw = zext i8 %.0.val to i32                  ; 3 uses
-  %i.ax = zext i8 %.0.val1 to i32                 ; 3 uses
-  %9 = icmp ugt i8 %.0.val1, %.0.val
-  %10 = sub nsw i32 %i.ax, %i.aw
-  %i.ay = sub nsw i32 %i.aw, %i.ax
-  %11 = select i1 %9, i32 %10, i32 %i.ay
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.aw, i32 noundef %i.ax, i32 noundef %11, double noundef %.013922) #15
+  %i.aw = zext i8 %.0.val to i32                  ; 2 uses
+  %i.ax = zext i8 %.0.val1 to i32                 ; 2 uses
+  %i.ay = sub nsw i32 %i.ax, %i.aw
+  %5 = tail call i32 @llvm.abs.i32(i32 %i.ay, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.aw, i32 noundef %i.ax, i32 noundef %5, double noundef %.013922) #15
   br label %print_data.exit.thread
 
 bb.q:                                             ; preds = %bb.b
@@ -377,13 +371,11 @@ print_data.exit199:                               ; preds = %bb.s, %bb.t
   br i1 %.not4.i197.not, label %bb.u, label %print_data.exit.thread
 
 bb.u:                                             ; preds = %print_data.exit199
-  %i.bt = zext i8 %.0.val to i32                  ; 3 uses
-  %i.bu = zext i8 %.0.val1 to i32                 ; 3 uses
-  %12 = icmp ugt i8 %.0.val1, %.0.val
-  %13 = sub nsw i32 %i.bu, %i.bt
-  %i.bv = sub nsw i32 %i.bt, %i.bu
-  %14 = select i1 %12, i32 %13, i32 %i.bv
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.110, i32 noundef %i.bt, i32 noundef %i.bu, i32 noundef %14) #15
+  %i.bt = zext i8 %.0.val to i32                  ; 2 uses
+  %i.bu = zext i8 %.0.val1 to i32                 ; 2 uses
+  %i.bv = sub nsw i32 %i.bu, %i.bt
+  %6 = tail call i32 @llvm.abs.i32(i32 %i.bv, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.110, i32 noundef %i.bt, i32 noundef %i.bu, i32 noundef %6) #15
   br label %print_data.exit.thread
 
 bb.v:                                             ; preds = %.thread23, %bb.r
@@ -394,16 +386,14 @@ bb.v:                                             ; preds = %.thread23, %bb.r
   br i1 %i.by, label %bb.w, label %print_data.exit.thread
 
 bb.w:                                             ; preds = %bb.v
-  %i.bz = zext i8 %.0.val1 to i32                 ; 3 uses
-  %i.ca = zext i8 %.0.val to i32                  ; 3 uses
-  %15 = icmp ugt i8 %.0.val1, %.0.val
-  %16 = sub nsw i32 %i.bz, %i.ca
-  %i.cb = sub nsw i32 %i.ca, %i.bz
-  %17 = select i1 %15, i32 %16, i32 %i.cb         ; 2 uses
-  %18 = sitofp i32 %17 to double
+  %i.bz = zext i8 %.0.val1 to i32                 ; 2 uses
+  %i.ca = zext i8 %.0.val to i32                  ; 2 uses
+  %i.cb = sub nsw i32 %i.bz, %i.ca
+  %7 = tail call i32 @llvm.abs.i32(i32 %i.cb, i1 true) ; 2 uses
+  %8 = uitofp nneg i32 %7 to double
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.cd = load double, ptr %i.cc, align 8, !tbaa !22
-  %i.ce = fcmp olt double %i.cd, %18
+  %i.ce = fcmp olt double %i.cd, %8
   br i1 %i.ce, label %bb.x, label %print_data.exit.thread
 
 bb.x:                                             ; preds = %bb.w
@@ -427,12 +417,12 @@ print_data.exit203:                               ; preds = %bb.x, %bb.y
   br i1 %.not4.i201.not, label %bb.z, label %print_data.exit.thread
 
 bb.z:                                             ; preds = %print_data.exit203
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.ca, i32 noundef %i.bz, i32 noundef %17, double noundef %.114026) #15
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.ca, i32 noundef %i.bz, i32 noundef %7, double noundef %.114026) #15
   br label %print_data.exit.thread
 
 .thread10:                                        ; preds = %bb.g
-  %i.cl = zext i8 %.0.val to i32                  ; 3 uses
-  %i.cm = zext i8 %.0.val1 to i32                 ; 3 uses
+  %i.cl = zext i8 %.0.val to i32                  ; 2 uses
+  %i.cm = zext i8 %.0.val1 to i32                 ; 2 uses
   %.not183 = icmp eq i8 %.0.val, %.0.val1
   br i1 %.not183, label %print_data.exit.thread, label %bb.aa
 
@@ -457,11 +447,9 @@ print_data.exit207:                               ; preds = %bb.aa, %bb.ab
   br i1 %.not4.i205.not, label %bb.ac, label %print_data.exit.thread
 
 bb.ac:                                            ; preds = %print_data.exit207
-  %19 = icmp ugt i8 %.0.val1, %.0.val
   %i.ct = sub nsw i32 %i.cm, %i.cl
-  %20 = sub nsw i32 %i.cl, %i.cm
-  %21 = select i1 %19, i32 %i.ct, i32 %20
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.cl, i32 noundef %i.cm, i32 noundef %21) #15
+  %9 = tail call i32 @llvm.abs.i32(i32 %i.ct, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.cl, i32 noundef %i.cm, i32 noundef %9) #15
   br label %print_data.exit.thread
 
 print_data.exit.thread:                           ; preds = %bb.ab, %bb.y, %bb.t, %bb.o, %bb.k, %bb.e, %print_data.exit207, %bb.ac, %print_data.exit203, %bb.z, %print_data.exit199, %bb.u, %print_data.exit195, %bb.p, %print_data.exit191, %bb.l, %print_data.exit, %bb.f, %bb.c, %bb.v, %bb.w, %.thread10, %bb.m
@@ -756,16 +744,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not179, label %bb.c, label %bb.q
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = zext i16 %.0.val1 to i32                 ; 3 uses
-  %i.f = zext i16 %.0.val to i32                  ; 3 uses
-  %2 = icmp ugt i16 %.0.val1, %.0.val
-  %3 = sub nsw i32 %i.e, %i.f
-  %i.g = sub nsw i32 %i.f, %i.e
-  %4 = select i1 %2, i32 %3, i32 %i.g             ; 2 uses
-  %5 = sitofp i32 %4 to double
+  %i.e = zext i16 %.0.val1 to i32                 ; 2 uses
+  %i.f = zext i16 %.0.val to i32                  ; 2 uses
+  %i.g = sub nsw i32 %i.e, %i.f
+  %2 = tail call i32 @llvm.abs.i32(i32 %i.g, i1 true) ; 2 uses
+  %3 = uitofp nneg i32 %2 to double
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.i = load double, ptr %i.h, align 8, !tbaa !22
-  %i.j = fcmp olt double %i.i, %5
+  %i.j = fcmp olt double %i.i, %3
   br i1 %i.j, label %bb.d, label %print_data.exit.thread
 
 bb.d:                                             ; preds = %bb.c
@@ -789,7 +775,7 @@ print_data.exit:                                  ; preds = %bb.d, %bb.e
   br i1 %.not4.i.not, label %bb.f, label %print_data.exit.thread
 
 bb.f:                                             ; preds = %print_data.exit
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.f, i32 noundef %i.e, i32 noundef %4) #15
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.f, i32 noundef %i.e, i32 noundef %2) #15
   br label %print_data.exit.thread
 
 bb.g:                                             ; preds = %bb.a
@@ -839,13 +825,11 @@ print_data.exit191:                               ; preds = %bb.j, %bb.k
   br i1 %.not4.i189.not, label %bb.l, label %print_data.exit.thread
 
 bb.l:                                             ; preds = %print_data.exit191
-  %i.ak = zext i16 %.0.val to i32                 ; 3 uses
-  %i.al = zext i16 %.0.val1 to i32                ; 3 uses
-  %6 = icmp ugt i16 %.0.val1, %.0.val
-  %7 = sub nsw i32 %i.al, %i.ak
-  %i.am = sub nsw i32 %i.ak, %i.al
-  %8 = select i1 %6, i32 %7, i32 %i.am
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.110, i32 noundef %i.ak, i32 noundef %i.al, i32 noundef %8) #15
+  %i.ak = zext i16 %.0.val to i32                 ; 2 uses
+  %i.al = zext i16 %.0.val1 to i32                ; 2 uses
+  %i.am = sub nsw i32 %i.al, %i.ak
+  %4 = tail call i32 @llvm.abs.i32(i32 %i.am, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.110, i32 noundef %i.ak, i32 noundef %i.al, i32 noundef %4) #15
   br label %print_data.exit.thread
 
 bb.m:                                             ; preds = %.thread, %bb.i
@@ -876,13 +860,11 @@ print_data.exit195:                               ; preds = %bb.n, %bb.o
   br i1 %.not4.i193.not, label %bb.p, label %print_data.exit.thread
 
 bb.p:                                             ; preds = %print_data.exit195
-  %i.aw = zext i16 %.0.val to i32                 ; 3 uses
-  %i.ax = zext i16 %.0.val1 to i32                ; 3 uses
-  %9 = icmp ugt i16 %.0.val1, %.0.val
-  %10 = sub nsw i32 %i.ax, %i.aw
-  %i.ay = sub nsw i32 %i.aw, %i.ax
-  %11 = select i1 %9, i32 %10, i32 %i.ay
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.aw, i32 noundef %i.ax, i32 noundef %11, double noundef %.013922) #15
+  %i.aw = zext i16 %.0.val to i32                 ; 2 uses
+  %i.ax = zext i16 %.0.val1 to i32                ; 2 uses
+  %i.ay = sub nsw i32 %i.ax, %i.aw
+  %5 = tail call i32 @llvm.abs.i32(i32 %i.ay, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.aw, i32 noundef %i.ax, i32 noundef %5, double noundef %.013922) #15
   br label %print_data.exit.thread
 
 bb.q:                                             ; preds = %bb.b
@@ -929,13 +911,11 @@ print_data.exit199:                               ; preds = %bb.s, %bb.t
   br i1 %.not4.i197.not, label %bb.u, label %print_data.exit.thread
 
 bb.u:                                             ; preds = %print_data.exit199
-  %i.bt = zext i16 %.0.val to i32                 ; 3 uses
-  %i.bu = zext i16 %.0.val1 to i32                ; 3 uses
-  %12 = icmp ugt i16 %.0.val1, %.0.val
-  %13 = sub nsw i32 %i.bu, %i.bt
-  %i.bv = sub nsw i32 %i.bt, %i.bu
-  %14 = select i1 %12, i32 %13, i32 %i.bv
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.110, i32 noundef %i.bt, i32 noundef %i.bu, i32 noundef %14) #15
+  %i.bt = zext i16 %.0.val to i32                 ; 2 uses
+  %i.bu = zext i16 %.0.val1 to i32                ; 2 uses
+  %i.bv = sub nsw i32 %i.bu, %i.bt
+  %6 = tail call i32 @llvm.abs.i32(i32 %i.bv, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.110, i32 noundef %i.bt, i32 noundef %i.bu, i32 noundef %6) #15
   br label %print_data.exit.thread
 
 bb.v:                                             ; preds = %.thread23, %bb.r
@@ -946,16 +926,14 @@ bb.v:                                             ; preds = %.thread23, %bb.r
   br i1 %i.by, label %bb.w, label %print_data.exit.thread
 
 bb.w:                                             ; preds = %bb.v
-  %i.bz = zext i16 %.0.val1 to i32                ; 3 uses
-  %i.ca = zext i16 %.0.val to i32                 ; 3 uses
-  %15 = icmp ugt i16 %.0.val1, %.0.val
-  %16 = sub nsw i32 %i.bz, %i.ca
-  %i.cb = sub nsw i32 %i.ca, %i.bz
-  %17 = select i1 %15, i32 %16, i32 %i.cb         ; 2 uses
-  %18 = sitofp i32 %17 to double
+  %i.bz = zext i16 %.0.val1 to i32                ; 2 uses
+  %i.ca = zext i16 %.0.val to i32                 ; 2 uses
+  %i.cb = sub nsw i32 %i.bz, %i.ca
+  %7 = tail call i32 @llvm.abs.i32(i32 %i.cb, i1 true) ; 2 uses
+  %8 = uitofp nneg i32 %7 to double
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.cd = load double, ptr %i.cc, align 8, !tbaa !22
-  %i.ce = fcmp olt double %i.cd, %18
+  %i.ce = fcmp olt double %i.cd, %8
   br i1 %i.ce, label %bb.x, label %print_data.exit.thread
 
 bb.x:                                             ; preds = %bb.w
@@ -979,12 +957,12 @@ print_data.exit203:                               ; preds = %bb.x, %bb.y
   br i1 %.not4.i201.not, label %bb.z, label %print_data.exit.thread
 
 bb.z:                                             ; preds = %print_data.exit203
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.ca, i32 noundef %i.bz, i32 noundef %17, double noundef %.114026) #15
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.ca, i32 noundef %i.bz, i32 noundef %7, double noundef %.114026) #15
   br label %print_data.exit.thread
 
 .thread10:                                        ; preds = %bb.g
-  %i.cl = zext i16 %.0.val to i32                 ; 3 uses
-  %i.cm = zext i16 %.0.val1 to i32                ; 3 uses
+  %i.cl = zext i16 %.0.val to i32                 ; 2 uses
+  %i.cm = zext i16 %.0.val1 to i32                ; 2 uses
   %.not183 = icmp eq i16 %.0.val, %.0.val1
   br i1 %.not183, label %print_data.exit.thread, label %bb.aa
 
@@ -1009,11 +987,9 @@ print_data.exit207:                               ; preds = %bb.aa, %bb.ab
   br i1 %.not4.i205.not, label %bb.ac, label %print_data.exit.thread
 
 bb.ac:                                            ; preds = %print_data.exit207
-  %19 = icmp ugt i16 %.0.val1, %.0.val
   %i.ct = sub nsw i32 %i.cm, %i.cl
-  %20 = sub nsw i32 %i.cl, %i.cm
-  %21 = select i1 %19, i32 %i.ct, i32 %20
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.cl, i32 noundef %i.cm, i32 noundef %21) #15
+  %9 = tail call i32 @llvm.abs.i32(i32 %i.ct, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.cl, i32 noundef %i.cm, i32 noundef %9) #15
   br label %print_data.exit.thread
 
 print_data.exit.thread:                           ; preds = %bb.ab, %bb.y, %bb.t, %bb.o, %bb.k, %bb.e, %print_data.exit207, %bb.ac, %print_data.exit203, %bb.z, %print_data.exit199, %bb.u, %print_data.exit195, %bb.p, %print_data.exit191, %bb.l, %print_data.exit, %bb.f, %bb.c, %bb.v, %bb.w, %.thread10, %bb.m
@@ -1416,16 +1392,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not135, label %bb.c, label %bb.m
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = zext i8 %.0.val1 to i32                  ; 3 uses
-  %i.f = zext i8 %.0.val to i32                   ; 3 uses
-  %2 = icmp ugt i8 %.0.val1, %.0.val
-  %3 = sub nsw i32 %i.e, %i.f
-  %i.g = sub nsw i32 %i.f, %i.e
-  %4 = select i1 %2, i32 %3, i32 %i.g             ; 2 uses
-  %5 = sitofp i32 %4 to double
+  %i.e = zext i8 %.0.val1 to i32                  ; 2 uses
+  %i.f = zext i8 %.0.val to i32                   ; 2 uses
+  %i.g = sub nsw i32 %i.e, %i.f
+  %2 = tail call i32 @llvm.abs.i32(i32 %i.g, i1 true) ; 2 uses
+  %3 = uitofp nneg i32 %2 to double
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.i = load double, ptr %i.h, align 8, !tbaa !22
-  %i.j = fcmp olt double %i.i, %5
+  %i.j = fcmp olt double %i.i, %3
   br i1 %i.j, label %bb.d, label %print_data.exit.thread
 
 bb.d:                                             ; preds = %bb.c
@@ -1449,7 +1423,7 @@ print_data.exit:                                  ; preds = %bb.d, %bb.e
   br i1 %.not4.i.not, label %bb.f, label %print_data.exit.thread
 
 bb.f:                                             ; preds = %print_data.exit
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.f, i32 noundef %i.e, i32 noundef %4) #15
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.f, i32 noundef %i.e, i32 noundef %2) #15
   br label %print_data.exit.thread
 
 bb.g:                                             ; preds = %bb.a
@@ -1499,13 +1473,11 @@ print_data.exit147:                               ; preds = %bb.j, %bb.k
   br i1 %.not4.i145.not, label %bb.l, label %print_data.exit.thread
 
 bb.l:                                             ; preds = %print_data.exit147
-  %i.aj = zext i8 %.0.val to i32                  ; 3 uses
-  %i.ak = zext i8 %.0.val1 to i32                 ; 3 uses
-  %6 = icmp ugt i8 %.0.val1, %.0.val
-  %7 = sub nsw i32 %i.ak, %i.aj
-  %i.al = sub nsw i32 %i.aj, %i.ak
-  %8 = select i1 %6, i32 %7, i32 %i.al
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.aj, i32 noundef %i.ak, i32 noundef %8, double noundef %.0) #15
+  %i.aj = zext i8 %.0.val to i32                  ; 2 uses
+  %i.ak = zext i8 %.0.val1 to i32                 ; 2 uses
+  %i.al = sub nsw i32 %i.ak, %i.aj
+  %4 = tail call i32 @llvm.abs.i32(i32 %i.al, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.aj, i32 noundef %i.ak, i32 noundef %4, double noundef %.0) #15
   br label %print_data.exit.thread
 
 bb.m:                                             ; preds = %bb.b
@@ -1532,16 +1504,14 @@ bb.n:                                             ; preds = %bb.m, %.critedge143
   br i1 %i.ay, label %bb.o, label %print_data.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  %i.az = zext i8 %.0.val1 to i32                 ; 3 uses
-  %i.ba = zext i8 %.0.val to i32                  ; 3 uses
-  %9 = icmp ugt i8 %.0.val1, %.0.val
-  %10 = sub nsw i32 %i.az, %i.ba
-  %i.bb = sub nsw i32 %i.ba, %i.az
-  %11 = select i1 %9, i32 %10, i32 %i.bb          ; 2 uses
-  %12 = sitofp i32 %11 to double
+  %i.az = zext i8 %.0.val1 to i32                 ; 2 uses
+  %i.ba = zext i8 %.0.val to i32                  ; 2 uses
+  %i.bb = sub nsw i32 %i.az, %i.ba
+  %5 = tail call i32 @llvm.abs.i32(i32 %i.bb, i1 true) ; 2 uses
+  %6 = uitofp nneg i32 %5 to double
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.bd = load double, ptr %i.bc, align 8, !tbaa !22
-  %i.be = fcmp olt double %i.bd, %12
+  %i.be = fcmp olt double %i.bd, %6
   br i1 %i.be, label %bb.p, label %print_data.exit.thread
 
 bb.p:                                             ; preds = %bb.o
@@ -1565,12 +1535,12 @@ print_data.exit151:                               ; preds = %bb.p, %bb.q
   br i1 %.not4.i149.not, label %bb.r, label %print_data.exit.thread
 
 bb.r:                                             ; preds = %print_data.exit151
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.ba, i32 noundef %i.az, i32 noundef %11, double noundef %.1) #15
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.60, i32 noundef %i.ba, i32 noundef %i.az, i32 noundef %5, double noundef %.1) #15
   br label %print_data.exit.thread
 
 .thread5:                                         ; preds = %bb.g
-  %i.bl = zext i8 %.0.val to i32                  ; 3 uses
-  %i.bm = zext i8 %.0.val1 to i32                 ; 3 uses
+  %i.bl = zext i8 %.0.val to i32                  ; 2 uses
+  %i.bm = zext i8 %.0.val1 to i32                 ; 2 uses
   %.not139 = icmp eq i8 %.0.val, %.0.val1
   br i1 %.not139, label %print_data.exit.thread, label %bb.s
 
@@ -1595,11 +1565,9 @@ print_data.exit155:                               ; preds = %bb.s, %bb.t
   br i1 %.not4.i153.not, label %bb.u, label %print_data.exit.thread
 
 bb.u:                                             ; preds = %print_data.exit155
-  %13 = icmp ugt i8 %.0.val1, %.0.val
   %i.bt = sub nsw i32 %i.bm, %i.bl
-  %14 = sub nsw i32 %i.bl, %i.bm
-  %15 = select i1 %13, i32 %i.bt, i32 %14
-  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.bl, i32 noundef %i.bm, i32 noundef %15) #15
+  %7 = tail call i32 @llvm.abs.i32(i32 %i.bt, i1 true)
+  tail call void (ptr, ...) @parallel_print(ptr noundef nonnull @.str.59, i32 noundef %i.bl, i32 noundef %i.bm, i32 noundef %7) #15
   br label %print_data.exit.thread
 
 print_data.exit.thread:                           ; preds = %bb.t, %bb.q, %bb.k, %bb.e, %print_data.exit155, %bb.u, %print_data.exit151, %bb.r, %print_data.exit147, %bb.l, %print_data.exit, %bb.f, %bb.c, %bb.o, %bb.n, %.thread5, %bb.i

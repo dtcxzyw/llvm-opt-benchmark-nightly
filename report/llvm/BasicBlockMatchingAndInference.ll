@@ -202,9 +202,8 @@ bb.s:                                             ; preds = %.lr.ph.i.i
   br label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIjmNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjmEEEEjmS3_S6_E6lookupERKj.exit
 
 _ZNK4llvm12DenseMapBaseINS_8DenseMapIjmNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjmEEEEjmS3_S6_E6lookupERKj.exit: ; preds = %bb.r, %bb.s
-  %i.gd = phi i64 [ %i.gc, %bb.s ], [ 0, %bb.r ]  ; 5 uses
+  %i.gd = phi i64 [ %i.gc, %bb.s ], [ 0, %bb.r ]  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  %.sroa.024.0.extract.trunc.i = trunc i64 %i.gd to i16
   %.sroa.2.0.extract.shift.i = lshr i64 %i.gd, 16 ; 2 uses
   %.sroa.2.0.extract.trunc.i = trunc i64 %.sroa.2.0.extract.shift.i to i16
   %.sroa.3.0.extract.shift.i = lshr i64 %i.gd, 32
@@ -275,24 +274,21 @@ bb.v:                                             ; preds = %_ZNK4llvm12DenseMap
   br i1 %.not27.i, label %_ZNK12StaleMatcher10matchBlockEN4llvm16BlendedBlockHashE.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.v
-  %i.hn = and i64 %i.gd, 65535                    ; 2 uses
+  %i.hn = and i64 %i.gd, 65535
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.w, %.lr.ph.i
   %.030.i = phi i64 [ -1, %.lr.ph.i ], [ %.1.i, %bb.w ] ; 2 uses
   %.0929.i = phi ptr [ null, %.lr.ph.i ], [ %.110.i, %bb.w ] ; 2 uses
   %.sroa.014.028.i = phi ptr [ %i.hk, %.lr.ph.i ], [ %i.hz, %bb.w ] ; 3 uses
-  %i.ho = load i64, ptr %.sroa.014.028.i, align 8 ; 4 uses
+  %i.ho = load i64, ptr %.sroa.014.028.i, align 8 ; 3 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.014.028.i, i64 8
   %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8
-  %.sroa.0.0.extract.trunc.i = trunc i64 %i.ho to i16
   %.sroa.412.0.extract.shift.i = lshr i64 %i.ho, 32
   %.sroa.412.0.extract.trunc.i = trunc i64 %.sroa.412.0.extract.shift.i to i16
-  %i.hp = and i64 %i.ho, 65535                    ; 2 uses
-  %.not13.i.i = icmp ult i16 %.sroa.0.0.extract.trunc.i, %.sroa.024.0.extract.trunc.i
-  %6 = sub nsw i64 %i.hp, %i.hn
-  %i.hq = sub nsw i64 %i.hn, %i.hp
-  %7 = select i1 %.not13.i.i, i64 %i.hq, i64 %6
+  %i.hp = and i64 %i.ho, 65535
+  %i.hq = sub nsw i64 %i.hp, %i.hn
+  %6 = call i64 @llvm.abs.i64(i64 %i.hq, i1 true)
   %.not.i.unshifted.i = xor i64 %i.ho, %i.gd
   %.not.i.i62 = icmp ult i64 %.not.i.unshifted.i, 281474976710656
   %i.hr = select i1 %.not.i.i62, i64 0, i64 65536
@@ -300,7 +296,7 @@ bb.w:                                             ; preds = %bb.w, %.lr.ph.i
   %i.ht = zext i1 %i.hs to i64
   %i.hu = or disjoint i64 %i.hr, %i.ht
   %i.hv = shl nuw nsw i64 %i.hu, 16
-  %i.hw = add nsw i64 %i.hv, %7                   ; 2 uses
+  %i.hw = add nuw nsw i64 %i.hv, %6               ; 2 uses
   %i.hx = icmp eq ptr %.0929.i, null
   %i.hy = icmp ult i64 %i.hw, %.030.i
   %or.cond.i = select i1 %i.hx, i1 true, i1 %i.hy ; 2 uses
@@ -444,8 +440,7 @@ bb.ad:                                            ; preds = %.lr.ph.i.i72
   br label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIjmNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjmEEEEjmS3_S6_E6lookupERKj.exit75
 
 _ZNK4llvm12DenseMapBaseINS_8DenseMapIjmNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjmEEEEjmS3_S6_E6lookupERKj.exit75: ; preds = %bb.ac, %bb.ad
-  %i.kp = phi i64 [ %i.ko, %bb.ad ], [ 0, %bb.ac ] ; 5 uses
-  %.sroa.024.0.extract.trunc.i76 = trunc i64 %i.kp to i16
+  %i.kp = phi i64 [ %i.ko, %bb.ad ], [ 0, %bb.ac ] ; 4 uses
   %.sroa.2.0.extract.shift.i77 = lshr i64 %i.kp, 16 ; 2 uses
   %.sroa.2.0.extract.trunc.i78 = trunc i64 %.sroa.2.0.extract.shift.i77 to i16
   %.sroa.3.0.extract.shift.i79 = lshr i64 %i.kp, 32
@@ -516,24 +511,21 @@ bb.ag:                                            ; preds = %_ZNK4llvm12DenseMap
   br i1 %.not27.i86, label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIjmNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjmEEEEjmS3_S6_E5countERKj.exit70.thread, label %.lr.ph.i87
 
 .lr.ph.i87:                                       ; preds = %bb.ag
-  %i.lz = and i64 %i.kp, 65535                    ; 2 uses
+  %i.lz = and i64 %i.kp, 65535
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ah, %.lr.ph.i87
   %.030.i88 = phi i64 [ -1, %.lr.ph.i87 ], [ %.1.i101, %bb.ah ] ; 2 uses
   %.0929.i89 = phi ptr [ null, %.lr.ph.i87 ], [ %.110.i100, %bb.ah ] ; 2 uses
   %.sroa.014.028.i90 = phi ptr [ %i.lw, %.lr.ph.i87 ], [ %i.ml, %bb.ah ] ; 3 uses
-  %i.ma = load i64, ptr %.sroa.014.028.i90, align 8 ; 4 uses
+  %i.ma = load i64, ptr %.sroa.014.028.i90, align 8 ; 3 uses
   %.sroa.4.0..sroa_idx.i91 = getelementptr inbounds nuw i8, ptr %.sroa.014.028.i90, i64 8
   %.sroa.4.0.copyload.i92 = load ptr, ptr %.sroa.4.0..sroa_idx.i91, align 8
-  %.sroa.0.0.extract.trunc.i93 = trunc i64 %i.ma to i16
   %.sroa.412.0.extract.shift.i94 = lshr i64 %i.ma, 32
   %.sroa.412.0.extract.trunc.i95 = trunc i64 %.sroa.412.0.extract.shift.i94 to i16
-  %i.mb = and i64 %i.ma, 65535                    ; 2 uses
-  %.not13.i.i96 = icmp ult i16 %.sroa.0.0.extract.trunc.i93, %.sroa.024.0.extract.trunc.i76
-  %8 = sub nsw i64 %i.mb, %i.lz
-  %i.mc = sub nsw i64 %i.lz, %i.mb
-  %9 = select i1 %.not13.i.i96, i64 %i.mc, i64 %8
+  %i.mb = and i64 %i.ma, 65535
+  %i.mc = sub nsw i64 %i.mb, %i.lz
+  %7 = call i64 @llvm.abs.i64(i64 %i.mc, i1 true)
   %.not.i.unshifted.i97 = xor i64 %i.ma, %i.kp
   %.not.i.i98 = icmp ult i64 %.not.i.unshifted.i97, 281474976710656
   %i.md = select i1 %.not.i.i98, i64 0, i64 65536
@@ -541,7 +533,7 @@ bb.ah:                                            ; preds = %bb.ah, %.lr.ph.i87
   %i.mf = zext i1 %i.me to i64
   %i.mg = or disjoint i64 %i.md, %i.mf
   %i.mh = shl nuw nsw i64 %i.mg, 16
-  %i.mi = add nsw i64 %i.mh, %9                   ; 2 uses
+  %i.mi = add nuw nsw i64 %i.mh, %7               ; 2 uses
   %i.mj = icmp eq ptr %.0929.i89, null
   %i.mk = icmp ult i64 %i.mi, %.030.i88
   %or.cond.i99 = select i1 %i.mj, i1 true, i1 %i.mk ; 2 uses
@@ -689,8 +681,7 @@ bb.ao:                                            ; preds = %.lr.ph.i.i127
   br label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIjmNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjmEEEEjmS3_S6_E6lookupERKj.exit130
 
 _ZNK4llvm12DenseMapBaseINS_8DenseMapIjmNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjmEEEEjmS3_S6_E6lookupERKj.exit130: ; preds = %bb.an, %bb.ao
-  %i.pj = phi i64 [ %i.pi, %bb.ao ], [ 0, %bb.an ] ; 5 uses
-  %.sroa.024.0.extract.trunc.i131 = trunc i64 %i.pj to i16
+  %i.pj = phi i64 [ %i.pi, %bb.ao ], [ 0, %bb.an ] ; 4 uses
   %.sroa.2.0.extract.shift.i132 = lshr i64 %i.pj, 16 ; 2 uses
   %.sroa.2.0.extract.trunc.i133 = trunc i64 %.sroa.2.0.extract.shift.i132 to i16
   %.sroa.3.0.extract.shift.i134 = lshr i64 %i.pj, 32
@@ -761,24 +752,21 @@ bb.ar:                                            ; preds = %_ZNK4llvm12DenseMap
   br i1 %.not27.i141, label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIjmNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjmEEEEjmS3_S6_E5countERKj.exit125.thread, label %.lr.ph.i142
 
 .lr.ph.i142:                                      ; preds = %bb.ar
-  %i.qt = and i64 %i.pj, 65535                    ; 2 uses
+  %i.qt = and i64 %i.pj, 65535
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.as, %.lr.ph.i142
   %.030.i143 = phi i64 [ -1, %.lr.ph.i142 ], [ %.1.i156, %bb.as ] ; 2 uses
   %.0929.i144 = phi ptr [ null, %.lr.ph.i142 ], [ %.110.i155, %bb.as ] ; 2 uses
   %.sroa.014.028.i145 = phi ptr [ %i.qq, %.lr.ph.i142 ], [ %i.rf, %bb.as ] ; 3 uses
-  %i.qu = load i64, ptr %.sroa.014.028.i145, align 8 ; 4 uses
+  %i.qu = load i64, ptr %.sroa.014.028.i145, align 8 ; 3 uses
   %.sroa.4.0..sroa_idx.i146 = getelementptr inbounds nuw i8, ptr %.sroa.014.028.i145, i64 8
   %.sroa.4.0.copyload.i147 = load ptr, ptr %.sroa.4.0..sroa_idx.i146, align 8
-  %.sroa.0.0.extract.trunc.i148 = trunc i64 %i.qu to i16
   %.sroa.412.0.extract.shift.i149 = lshr i64 %i.qu, 32
   %.sroa.412.0.extract.trunc.i150 = trunc i64 %.sroa.412.0.extract.shift.i149 to i16
-  %i.qv = and i64 %i.qu, 65535                    ; 2 uses
-  %.not13.i.i151 = icmp ult i16 %.sroa.0.0.extract.trunc.i148, %.sroa.024.0.extract.trunc.i131
-  %10 = sub nsw i64 %i.qv, %i.qt
-  %i.qw = sub nsw i64 %i.qt, %i.qv
-  %11 = select i1 %.not13.i.i151, i64 %i.qw, i64 %10
+  %i.qv = and i64 %i.qu, 65535
+  %i.qw = sub nsw i64 %i.qv, %i.qt
+  %8 = call i64 @llvm.abs.i64(i64 %i.qw, i1 true)
   %.not.i.unshifted.i152 = xor i64 %i.qu, %i.pj
   %.not.i.i153 = icmp ult i64 %.not.i.unshifted.i152, 281474976710656
   %i.qx = select i1 %.not.i.i153, i64 0, i64 65536
@@ -786,7 +774,7 @@ bb.as:                                            ; preds = %bb.as, %.lr.ph.i142
   %i.qz = zext i1 %i.qy to i64
   %i.ra = or disjoint i64 %i.qx, %i.qz
   %i.rb = shl nuw nsw i64 %i.ra, 16
-  %i.rc = add nsw i64 %i.rb, %11                  ; 2 uses
+  %i.rc = add nuw nsw i64 %i.rb, %8               ; 2 uses
   %i.rd = icmp eq ptr %.0929.i144, null
   %i.re = icmp ult i64 %i.rc, %.030.i143
   %or.cond.i154 = select i1 %i.rd, i1 true, i1 %i.re ; 2 uses
@@ -1188,6 +1176,9 @@ declare i64 @llvm.umax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #17
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.abs.i64(i64, i1 immarg) #11
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
