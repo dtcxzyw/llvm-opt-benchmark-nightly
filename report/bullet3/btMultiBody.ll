@@ -205,9 +205,7 @@ begin_hunk_0_@_ZNK11btMultiBody30fillConstraintJacobianMultiDofEiRK9btVector3S2_
 
 .lr.ph393:                                        ; preds = %.preheader384
   %i.kk = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %9 = sext i32 %.0188.lcssa to i64
   %wide.trip.count = zext i32 %.0188.lcssa to i64
-  %10 = getelementptr [4 x i8], ptr %i.dq, i64 %9
   br label %bb.w
 
 .preheader.lr.ph:                                 ; preds = %bb.ab, %.preheader384
@@ -217,8 +215,11 @@ begin_hunk_0_@_ZNK11btMultiBody30fillConstraintJacobianMultiDofEiRK9btVector3S2_
 
 bb.w:                                             ; preds = %.lr.ph393, %bb.ab
   %indvars.iv406 = phi i64 [ 0, %.lr.ph393 ], [ %indvars.iv.next407, %bb.ab ] ; 2 uses
-  %11 = xor i64 %indvars.iv406, -1
-  %i.kn = getelementptr [4 x i8], ptr %10, i64 %11
+  %9 = trunc nuw nsw i64 %indvars.iv406 to i32
+  %10 = xor i32 %9, -1
+  %11 = add nsw i32 %.0188.lcssa, %10
+  %12 = sext i32 %11 to i64
+  %i.kn = getelementptr inbounds [4 x i8], ptr %i.dq, i64 %12
   %i.ko = load float, ptr %i.kn, align 4, !tbaa !20
   %i.kp = fptosi float %i.ko to i32               ; 2 uses
   %i.kq = load ptr, ptr %i.kk, align 8, !tbaa !47
