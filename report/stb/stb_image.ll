@@ -204,7 +204,7 @@ stbi__hdr_test_core.exit20:                       ; preds = %stbi__get8.exit.i13
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @stbi__hdr_load(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef writeonly captures(address_is_null) %3, i32 noundef %4, ptr nofree readnone captures(none) %5) local_unnamed_addr #2 {
+define noalias noundef ptr @stbi__hdr_load(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef writeonly captures(address_is_null) %3, i32 noundef %4, ptr nofree readnone captures(none) %5) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca [1024 x i8], align 16             ; 17 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
@@ -607,7 +607,7 @@ stbi__hdr_convert.exit:                           ; preds = %bb.az, %bb.ba, %bb.
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define noundef ptr @stbi__hdr_to_ldr(ptr noundef captures(address_is_null) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #16 {
+define noalias noundef ptr @stbi__hdr_to_ldr(ptr noundef captures(address_is_null) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #16 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.i, label %bb.b
@@ -1010,7 +1010,7 @@ bb.cp:                                            ; preds = %.loopexit, %bb.co, 
 }
 
 ; Function Attrs: nounwind memory(write, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define noundef ptr @stbi__convert_16_to_8(ptr noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #17 {
+define noalias noundef ptr @stbi__convert_16_to_8(ptr noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #17 {
 bb.a:
   %i.a = mul nsw i32 %2, %1
   %i.b = mul nsw i32 %i.a, %3                     ; 5 uses
@@ -1114,7 +1114,7 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
 }
 
 ; Function Attrs: nounwind memory(write, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define noundef ptr @stbi__convert_8_to_16(ptr noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #17 {
+define noalias noundef ptr @stbi__convert_8_to_16(ptr noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #17 {
 bb.a:
   %i.a = mul nsw i32 %2, %1
   %i.b = mul nsw i32 %i.a, %3                     ; 5 uses
@@ -1517,7 +1517,7 @@ bb.aa:                                            ; preds = %bb.z, %.critedge
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @stbi__loadf_main(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
+define noalias noundef ptr @stbi__loadf_main(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca [2048 x i8], align 16             ; 4 uses
   %i.b = tail call i32 @stbi__hdr_test(ptr noundef %0)
@@ -1639,7 +1639,7 @@ stbi__float_postprocess.exit:                     ; preds = %bb.b, %bb.d, %bb.e,
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define noundef ptr @stbi__ldr_to_hdr(ptr noundef captures(address_is_null) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #16 {
+define noalias noundef ptr @stbi__ldr_to_hdr(ptr noundef captures(address_is_null) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #16 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.f, label %bb.b
@@ -1846,7 +1846,7 @@ bb.f:                                             ; preds = %bb.a, %.loopexit, %
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @stbi_loadf_from_memory(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr nofree noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #2 {
+define noalias noundef ptr @stbi_loadf_from_memory(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr nofree noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
   %6 = alloca %struct.stbi__context, align 8      ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #37
@@ -1872,7 +1872,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @stbi_loadf_from_callbacks(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr nofree noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #2 {
+define noalias noundef ptr @stbi_loadf_from_callbacks(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr nofree noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
   %6 = alloca %struct.stbi__context, align 8      ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #37
@@ -1929,7 +1929,7 @@ stbi__start_callbacks.exit:                       ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @stbi_loadf(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
+define noalias noundef ptr @stbi_loadf(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
 bb.a:
   %5 = alloca %struct.stbi__context, align 8      ; 14 uses
   %i.a = tail call noalias noundef ptr @fopen(ptr noundef readonly %0, ptr noundef nonnull @.str.2) ; 4 uses
@@ -1990,7 +1990,7 @@ stbi_loadf_from_file.exit:                        ; preds = %bb.d, %bb.e
   store ptr %.sink.i.i.i.i, ptr %i.y, align 8, !tbaa !31
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 216
   store ptr %.sink.i.i.i.i, ptr %i.z, align 8, !tbaa !30
-  %i.aa = call noundef ptr @stbi__loadf_main(ptr noundef nonnull %5, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4)
+  %i.aa = call noalias noundef ptr @stbi__loadf_main(ptr noundef nonnull %5, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #37
   %i.ab = call i32 @fclose(ptr noundef nonnull %i.a) ; 0 uses
   br label %bb.f
@@ -2001,7 +2001,7 @@ bb.f:                                             ; preds = %stbi_loadf_from_fil
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @stbi_loadf_from_file(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
+define noalias noundef ptr @stbi_loadf_from_file(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
 bb.a:
   %5 = alloca %struct.stbi__context, align 8      ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #37

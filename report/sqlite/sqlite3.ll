@@ -206,7 +206,7 @@ sqlite3_result_subtype.exit:                      ; preds = %bb.ax, %bb.aw, %.cr
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sqlite3MemMalloc(i32 noundef %0) #0 {
+define internal noalias ptr @sqlite3MemMalloc(i32 noundef %0) #0 {
 bb.a:
   %i.a = add nsw i32 %0, 8
   %i.b = sext i32 %i.a to i64
@@ -238,7 +238,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sqlite3MemRealloc(ptr noundef captures(none) %0, i32 noundef %1) #0 {
+define internal noalias ptr @sqlite3MemRealloc(ptr noundef captures(none) %0, i32 noundef %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.b = add nsw i32 %1, 8

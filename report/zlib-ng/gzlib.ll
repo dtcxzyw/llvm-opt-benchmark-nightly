@@ -199,14 +199,14 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 declare hidden void @zng_free_aligned(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define dso_local noundef ptr @zng_gzopen(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #1 {
+define dso_local noalias noundef ptr @zng_gzopen(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call fastcc ptr @gz_open(ptr noundef %0, i32 noundef -1, ptr noundef %1)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef ptr @gz_open(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #1 {
+define internal fastcc noalias noundef ptr @gz_open(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #1 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %gz_state_init.exit.thread, label %bb.b
@@ -442,7 +442,7 @@ gz_state_init.exit.thread:                        ; preds = %bb.b, %bb.a, %gz_re
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noundef ptr @zng_gzdopen(i32 noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #1 {
+define dso_local noalias noundef ptr @zng_gzdopen(i32 noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
