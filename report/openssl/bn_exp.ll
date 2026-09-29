@@ -205,9 +205,8 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not159, label %.thread177, label %bb.y
 
 bb.y:                                             ; preds = %.thread
-  %i.ag = add nsw i32 %i.ae, -1                   ; 2 uses
-  %.not211 = icmp eq i32 %i.ag, 0
-  br i1 %.not211, label %.loopexit195, label %.lr.ph
+  %i.ag = add nsw i32 %i.ae, -1
+  br label %.lr.ph
 
 bb.z:                                             ; preds = %bb.aa
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -231,8 +230,8 @@ bb.aa:                                            ; preds = %.lr.ph
   %.not170 = icmp eq i32 %i.ao, 0
   br i1 %.not170, label %.thread177, label %bb.z
 
-.loopexit195:                                     ; preds = %bb.z, %bb.y, %bb.x
-  %6 = phi i32 [ 1, %bb.x ], [ 1, %bb.y ], [ %i.ae, %bb.z ] ; 2 uses
+.loopexit195:                                     ; preds = %bb.z, %bb.x
+  %6 = phi i32 [ 1, %bb.x ], [ %i.ae, %bb.z ]     ; 2 uses
   %i.ap = add nsw i32 %i.j, -1
   %i.aq = load i32, ptr %i.c, align 8, !tbaa !12  ; 6 uses
   %i.ar = load ptr, ptr %3, align 8, !tbaa !14
@@ -590,9 +589,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not122, label %.thread139, label %bb.u
 
 bb.u:                                             ; preds = %.thread
-  %i.ab = add nsw i32 %i.z, -1                    ; 2 uses
-  %.not170 = icmp eq i32 %i.ab, 0
-  br i1 %.not170, label %.loopexit157, label %.lr.ph
+  %i.ab = add nsw i32 %i.z, -1
+  br label %.lr.ph
 
 bb.v:                                             ; preds = %bb.w
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -616,8 +614,8 @@ bb.w:                                             ; preds = %.lr.ph
   %.not131 = icmp eq i32 %i.aj, 0
   br i1 %.not131, label %.thread139, label %bb.v
 
-.loopexit157:                                     ; preds = %bb.v, %bb.u, %bb.t
-  %6 = phi i32 [ 1, %bb.t ], [ 1, %bb.u ], [ %i.z, %bb.v ] ; 2 uses
+.loopexit157:                                     ; preds = %bb.v, %bb.t
+  %6 = phi i32 [ 1, %bb.t ], [ %i.z, %bb.v ]      ; 2 uses
   %i.ak = add nsw i32 %i.e, -1
   %i.al = icmp eq ptr %0, %2
   br i1 %i.al, label %bb.x, label %bb.z
@@ -1020,9 +1018,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not122, label %.thread139, label %bb.s
 
 bb.s:                                             ; preds = %.thread
-  %i.u = add nsw i32 %i.s, -1                     ; 2 uses
-  %.not170 = icmp eq i32 %i.u, 0
-  br i1 %.not170, label %.loopexit157, label %.lr.ph
+  %i.u = add nsw i32 %i.s, -1
+  br label %.lr.ph
 
 bb.t:                                             ; preds = %bb.u
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -1046,8 +1043,8 @@ bb.u:                                             ; preds = %.lr.ph
   %.not131 = icmp eq i32 %i.ac, 0
   br i1 %.not131, label %.thread139, label %bb.t
 
-.loopexit157:                                     ; preds = %bb.t, %bb.s, %bb.r
-  %5 = phi i32 [ 1, %bb.r ], [ 1, %bb.s ], [ %i.s, %bb.t ] ; 2 uses
+.loopexit157:                                     ; preds = %bb.t, %bb.r
+  %5 = phi i32 [ 1, %bb.r ], [ %i.s, %bb.t ]      ; 2 uses
   %i.ad = add nsw i32 %i.f, -1
   %i.ae = icmp eq ptr %0, %2
   br i1 %i.ae, label %bb.v, label %bb.x

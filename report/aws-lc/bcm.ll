@@ -205,11 +205,10 @@ OPENSSL_memcpy.exit:                              ; preds = %BN_window_bits_for_
 bb.j:                                             ; preds = %OPENSSL_memcpy.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #46
   call void @bn_mod_mul_montgomery_small(ptr noundef nonnull %i.e, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, i64 noundef %2, ptr noundef %5)
-  %i.bb = add nsw i32 %spec.store.select, -1      ; 2 uses
-  %.not = icmp eq i32 %i.bb, 0
-  br i1 %.not, label %._crit_edge123, label %.lr.ph122
+  %i.bb = add nsw i32 %spec.store.select, -1
+  br label %.lr.ph122
 
-._crit_edge123:                                   ; preds = %.lr.ph122, %bb.j
+._crit_edge123:                                   ; preds = %.lr.ph122
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #46
   br label %bb.k
 
