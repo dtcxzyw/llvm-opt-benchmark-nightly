@@ -135,7 +135,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @125 = private unnamed_addr constant [40 x i8] c"description() is deprecated; use Display", align 1
 @126 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 5883805652883263326 to ptr), ptr inttoptr (i64 -5863290666228718298 to ptr) }>, align 8
 @127 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 7082989028940618977 to ptr), ptr inttoptr (i64 1133409767824993473 to ptr) }>, align 8
-@switch.table._RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtCs13fhi2aYsSw_7flagset7FlagSetNtNtCs7wImhEnBy0k_10wasm_smith4core15InstructionKindENtB6_5Debug3fmtCscoiT177WhKJ_10wasmi_fuzz = private unnamed_addr constant [12 x i16] [i16 -2, i16 -4, i16 -5, i16 -13, i16 -17, i16 -33, i16 -65, i16 -129, i16 -257, i16 -769, i16 -1025, i16 -2049], align 2
+@switch.table._RNvXs_Cs13fhi2aYsSw_7flagsetINtB4_4IterNtNtCs7wImhEnBy0k_10wasm_smith4core15InstructionKindENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCscoiT177WhKJ_10wasmi_fuzz = private unnamed_addr constant [12 x i16] [i16 -2, i16 -4, i16 -5, i16 -13, i16 -17, i16 -33, i16 -65, i16 -129, i16 -257, i16 -769, i16 -1025, i16 -2049], align 2
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvCsaoJQ0BThbft_11wasmprinter11print_bytesRShECscoiT177WhKJ_10wasmi_fuzz(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -538,18 +538,17 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %exitcond.not.i.i.i, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %i.k = phi i64 [ %i.l, %bb.c ], [ %.sroa.0.04.i, %bb.b ] ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr @116, i64 %i.k
-  %3 = load i8, ptr %2, align 1, !range !13, !noalias !271, !noundef !4 ; 2 uses
+  %i.k = phi i64 [ %i.l, %bb.c ], [ %.sroa.0.04.i, %bb.b ] ; 3 uses
   %i.l = add nuw nsw i64 %i.k, 1                  ; 3 uses
-  %4 = zext nneg i8 %3 to i64
-  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtCs13fhi2aYsSw_7flagset7FlagSetNtNtCs7wImhEnBy0k_10wasm_smith4core15InstructionKindENtB6_5Debug3fmtCscoiT177WhKJ_10wasmi_fuzz, i64 %4
-  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNvXs_Cs13fhi2aYsSw_7flagsetINtB4_4IterNtNtCs7wImhEnBy0k_10wasm_smith4core15InstructionKindENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCscoiT177WhKJ_10wasmi_fuzz, i64 %i.k
+  %switch.load = load i16, ptr %switch.gep, align 2, !noalias !271
   %i.m = or i16 %switch.load, %.val
   %i.n = icmp eq i16 %i.m, -1
   br i1 %i.n, label %bb.d, label %bb.c
 
 bb.d:                                             ; preds = %.lr.ph
+  %2 = getelementptr inbounds nuw i8, ptr @116, i64 %i.k
+  %3 = load i8, ptr %2, align 1, !range !13, !noalias !271, !noundef !4
   %i.o = add i64 %.sroa.83.0.i, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 %3, ptr %i.c, align 1
