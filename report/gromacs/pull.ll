@@ -205,32 +205,32 @@ bb.e:                                             ; preds = %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %i.s, i64 200
   call void @_Z8pbc_dx_dPK5t_pbcPKdS3_Pd(ptr noundef nonnull align 4 dereferenceable(384) %2, ptr noundef nonnull %i.x, ptr noundef nonnull %i.y, ptr noundef nonnull %i.a)
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 116
-  %7 = load <2 x i32>, ptr %i.z, align 4, !tbaa !67
-  %8 = sitofp <2 x i32> %7 to <2 x double>
-  %9 = load <2 x double>, ptr %i.a, align 16, !tbaa !85
-  %10 = fmul <2 x double> %9, %8                  ; 4 uses
-  store <2 x double> %10, ptr %i.a, align 16, !tbaa !85
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 124
-  %11 = load i32, ptr %i.aa, align 4, !tbaa !67
-  %12 = sitofp i32 %11 to double
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %14 = load double, ptr %13, align 16, !tbaa !85
-  %15 = fmul double %14, %12                      ; 5 uses
-  store double %15, ptr %13, align 16, !tbaa !85
-  %i.ab = extractelement <2 x double> %10, i64 1  ; 3 uses
-  %16 = fmul double %i.ab, %i.ab
-  %17 = extractelement <2 x double> %10, i64 0    ; 3 uses
-  %i.ac = call double @llvm.fmuladd.f64(double %17, double %17, double %16)
-  %i.ad = call noundef double @llvm.fmuladd.f64(double %15, double %15, double %i.ac)
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 124
+  %8 = load i32, ptr %7, align 4, !tbaa !67
+  %9 = sitofp i32 %8 to double
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %11 = load double, ptr %10, align 16, !tbaa !85
+  %12 = fmul double %11, %9                       ; 5 uses
+  store double %12, ptr %10, align 16, !tbaa !85
+  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 288
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 264
+  %14 = load <2 x i32>, ptr %i.z, align 4, !tbaa !67
+  %15 = sitofp <2 x i32> %14 to <2 x double>
+  %16 = load <2 x double>, ptr %i.a, align 16, !tbaa !85
+  %17 = fmul <2 x double> %16, %15                ; 4 uses
+  %18 = extractelement <2 x double> %17, i64 0    ; 3 uses
+  %i.ab = extractelement <2 x double> %17, i64 1  ; 3 uses
+  store <2 x double> %17, ptr %i.a, align 16, !tbaa !85
+  %19 = fmul double %i.ab, %i.ab
+  %i.ac = call double @llvm.fmuladd.f64(double %18, double %18, double %19)
+  %i.ad = call noundef double @llvm.fmuladd.f64(double %12, double %12, double %i.ac)
   %sqrt.i.i = call noundef double @llvm.sqrt.f64(double %i.ad) ; 3 uses
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 288
-  store double %sqrt.i.i, ptr %18, align 8, !tbaa !112
-  %19 = getelementptr inbounds nuw i8, ptr %1, i64 264
+  store double %sqrt.i.i, ptr %i.aa, align 8, !tbaa !112
   %i.ae = insertelement <2 x double> poison, double %sqrt.i.i, i64 0
   %i.af = shufflevector <2 x double> %i.ae, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ag = fdiv <2 x double> %10, %i.af            ; 3 uses
-  store <2 x double> %i.ag, ptr %19, align 8, !tbaa !85
-  %i.ah = fdiv double %15, %sqrt.i.i              ; 2 uses
+  %i.ag = fdiv <2 x double> %17, %i.af            ; 3 uses
+  store <2 x double> %i.ag, ptr %13, align 8, !tbaa !85
+  %i.ah = fdiv double %12, %sqrt.i.i              ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 280
   store double %i.ah, ptr %i.ai, align 8, !tbaa !85
   %i.aj = load ptr, ptr @debug, align 8, !tbaa !114 ; 2 uses
@@ -240,7 +240,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.ak = extractelement <2 x double> %i.ag, i64 0
   %i.al = extractelement <2 x double> %i.ag, i64 1
-  %i.am = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.aj, ptr noundef nonnull @.str.9, i32 noundef %i.e, double noundef %17, double noundef %i.ab, double noundef %15, double noundef %i.ak, double noundef %i.al, double noundef %i.ah) #20 ; 0 uses
+  %i.am = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.aj, ptr noundef nonnull @.str.9, i32 noundef %i.e, double noundef %18, double noundef %i.ab, double noundef %12, double noundef %i.ak, double noundef %i.al, double noundef %i.ah) #20 ; 0 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e

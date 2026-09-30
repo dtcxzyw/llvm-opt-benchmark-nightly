@@ -205,10 +205,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i8: ; preds = 
   store i8 %i.cc, ptr %i.cd, align 1, !tbaa !239
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
-  %i.cg = load <2 x ptr>, ptr %i.ce, align 8, !tbaa !155
-  %i.ch = load <2 x ptr>, ptr %i.cf, align 8, !tbaa !155
-  store <2 x ptr> %i.ch, ptr %i.ce, align 8, !tbaa !155
-  store <2 x ptr> %i.cg, ptr %i.cf, align 8, !tbaa !155
+  %i.cg = load <2 x ptr>, ptr %i.cf, align 8, !tbaa !155
+  %i.ch = load <2 x ptr>, ptr %i.ce, align 8, !tbaa !155
+  store <2 x ptr> %i.cg, ptr %i.ce, align 8, !tbaa !155
+  store <2 x ptr> %i.ch, ptr %i.cf, align 8, !tbaa !155
   %i.ci = load i64, ptr %i.t, align 8, !tbaa !325
   store i64 %i.ci, ptr %i.bb, align 8, !tbaa !325
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef nonnull align 8 dereferenceable(24) %i.w, i64 16, i1 false)
@@ -423,10 +423,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i: ; preds = %
   store i8 %i.bg, ptr %i.n, align 8, !tbaa !109
   %i.bh = load i8, ptr %i.o, align 1, !tbaa !239
   store i8 %i.bh, ptr %i.p, align 1, !tbaa !239
-  %i.bi = load <2 x ptr>, ptr %i.q, align 8, !tbaa !155
-  %i.bj = load <2 x ptr>, ptr %i.r, align 8, !tbaa !155
-  store <2 x ptr> %i.bj, ptr %i.q, align 8, !tbaa !155
-  store <2 x ptr> %i.bi, ptr %i.r, align 8, !tbaa !155
+  %i.bi = load <2 x ptr>, ptr %i.r, align 8, !tbaa !155
+  %i.bj = load <2 x ptr>, ptr %i.q, align 8, !tbaa !155
+  store <2 x ptr> %i.bi, ptr %i.q, align 8, !tbaa !155
+  store <2 x ptr> %i.bj, ptr %i.r, align 8, !tbaa !155
   %i.bk = load i64, ptr %i.g, align 8, !tbaa !325
   store i64 %i.bk, ptr %i.s, align 8, !tbaa !325
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.t, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 16, i1 false)
@@ -761,10 +761,10 @@ _ZN6duckdb11LogicalTypeaSEOS0_.exit:              ; preds = %bb.k, %_ZNSt7__cxx1
   store i8 %i.cs, ptr %i.ct, align 1, !tbaa !239
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.018.0, i64 56 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
-  %i.cw = load <2 x ptr>, ptr %i.cu, align 8, !tbaa !155
-  %i.cx = load <2 x ptr>, ptr %i.cv, align 8, !tbaa !155
-  store <2 x ptr> %i.cx, ptr %i.cu, align 8, !tbaa !155
-  store <2 x ptr> %i.cw, ptr %i.cv, align 8, !tbaa !155
+  %i.cw = load <2 x ptr>, ptr %i.cv, align 8, !tbaa !155
+  %i.cx = load <2 x ptr>, ptr %i.cu, align 8, !tbaa !155
+  store <2 x ptr> %i.cw, ptr %i.cu, align 8, !tbaa !155
+  store <2 x ptr> %i.cx, ptr %i.cv, align 8, !tbaa !155
   %i.cy = load i64, ptr %i.t, align 8, !tbaa !325
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.018.0, i64 72
   store i64 %i.cy, ptr %i.cz, align 8, !tbaa !325

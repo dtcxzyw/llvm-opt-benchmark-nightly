@@ -204,75 +204,75 @@ bb.dx:                                            ; preds = %bb.ds
   %i.yl = load i32, ptr %i.dp, align 8, !tbaa !44
   %i.ym = sitofp i32 %i.yl to float               ; 4 uses
   %i.yn = getelementptr inbounds nuw i8, ptr %i.xp, i64 24
-  %34 = load <2 x i32>, ptr %i.k, align 8, !tbaa !44
-  %35 = sitofp <2 x i32> %34 to <2 x float>       ; 4 uses
-  %36 = load <2 x float>, ptr %i.yg, align 4, !tbaa !54
-  %37 = fmul <2 x float> %36, %35                 ; 2 uses
-  store <2 x float> %37, ptr %i.yg, align 4, !tbaa !54
-  %38 = getelementptr inbounds nuw i8, ptr %i.yg, i64 8 ; 2 uses
-  %39 = load float, ptr %38, align 4, !tbaa !54
-  %40 = fmul float %39, %i.ym                     ; 2 uses
-  store float %40, ptr %38, align 4, !tbaa !54
-  %i.yo = fpext <2 x float> %37 to <2 x double>
+  %34 = getelementptr inbounds nuw i8, ptr %i.yg, i64 8 ; 2 uses
+  %35 = load float, ptr %34, align 4, !tbaa !54
+  %36 = fmul float %35, %i.ym                     ; 2 uses
+  store float %36, ptr %34, align 4, !tbaa !54
+  %37 = load <2 x i32>, ptr %i.k, align 8, !tbaa !44
+  %38 = sitofp <2 x i32> %37 to <2 x float>       ; 4 uses
+  %39 = load <2 x float>, ptr %i.yg, align 4, !tbaa !54
+  %40 = fmul <2 x float> %39, %38                 ; 2 uses
+  store <2 x float> %40, ptr %i.yg, align 4, !tbaa !54
+  %i.yo = fpext <2 x float> %40 to <2 x double>
   store <2 x double> %i.yo, ptr %i.yn, align 8, !tbaa !130
   %i.yp = getelementptr inbounds nuw i8, ptr %i.xp, i64 40
   %i.yq = getelementptr inbounds nuw i8, ptr %i.yg, i64 12
   %i.yr = load float, ptr %i.yq, align 4, !tbaa !54
-  %i.ys = insertelement <2 x float> poison, float %40, i64 0
+  %i.ys = insertelement <2 x float> poison, float %36, i64 0
   %i.yt = insertelement <2 x float> %i.ys, float %i.yr, i64 1
   %i.yu = fpext <2 x float> %i.yt to <2 x double>
   store <2 x double> %i.yu, ptr %i.yp, align 8, !tbaa !130
   %i.yv = getelementptr inbounds nuw i8, ptr %i.yg, i64 16 ; 2 uses
-  %41 = load <2 x float>, ptr %i.yv, align 4, !tbaa !54
-  %42 = fmul <2 x float> %41, %35                 ; 2 uses
-  store <2 x float> %42, ptr %i.yv, align 4, !tbaa !54
-  %i.yw = getelementptr inbounds nuw i8, ptr %i.yg, i64 24 ; 2 uses
-  %43 = load float, ptr %i.yw, align 4, !tbaa !54
-  %44 = fmul float %43, %i.ym                     ; 2 uses
-  store float %44, ptr %i.yw, align 4, !tbaa !54
-  %45 = getelementptr inbounds nuw i8, ptr %i.xp, i64 56
-  %i.yx = fpext <2 x float> %42 to <2 x double>
-  store <2 x double> %i.yx, ptr %45, align 8, !tbaa !130
+  %41 = getelementptr inbounds nuw i8, ptr %i.yg, i64 24 ; 2 uses
+  %42 = load float, ptr %41, align 4, !tbaa !54
+  %43 = fmul float %42, %i.ym                     ; 2 uses
+  store float %43, ptr %41, align 4, !tbaa !54
+  %i.yw = getelementptr inbounds nuw i8, ptr %i.xp, i64 56
+  %44 = load <2 x float>, ptr %i.yv, align 4, !tbaa !54
+  %45 = fmul <2 x float> %44, %38                 ; 2 uses
+  store <2 x float> %45, ptr %i.yv, align 4, !tbaa !54
+  %i.yx = fpext <2 x float> %45 to <2 x double>
+  store <2 x double> %i.yx, ptr %i.yw, align 8, !tbaa !130
   %i.yy = getelementptr inbounds nuw i8, ptr %i.xp, i64 72
   %i.yz = getelementptr inbounds nuw i8, ptr %i.yg, i64 28
   %i.za = load float, ptr %i.yz, align 4, !tbaa !54
-  %i.zb = insertelement <2 x float> poison, float %44, i64 0
+  %i.zb = insertelement <2 x float> poison, float %43, i64 0
   %i.zc = insertelement <2 x float> %i.zb, float %i.za, i64 1
   %i.zd = fpext <2 x float> %i.zc to <2 x double>
   store <2 x double> %i.zd, ptr %i.yy, align 8, !tbaa !130
   %i.ze = getelementptr inbounds nuw i8, ptr %i.yg, i64 32 ; 2 uses
-  %46 = load <2 x float>, ptr %i.ze, align 4, !tbaa !54
-  %47 = fmul <2 x float> %46, %35                 ; 2 uses
-  store <2 x float> %47, ptr %i.ze, align 4, !tbaa !54
-  %i.zf = getelementptr inbounds nuw i8, ptr %i.yg, i64 40 ; 2 uses
-  %48 = load float, ptr %i.zf, align 4, !tbaa !54
-  %49 = fmul float %48, %i.ym                     ; 2 uses
-  store float %49, ptr %i.zf, align 4, !tbaa !54
-  %50 = getelementptr inbounds nuw i8, ptr %i.xp, i64 88
-  %i.zg = fpext <2 x float> %47 to <2 x double>
-  store <2 x double> %i.zg, ptr %50, align 8, !tbaa !130
+  %46 = getelementptr inbounds nuw i8, ptr %i.yg, i64 40 ; 2 uses
+  %47 = load float, ptr %46, align 4, !tbaa !54
+  %48 = fmul float %47, %i.ym                     ; 2 uses
+  store float %48, ptr %46, align 4, !tbaa !54
+  %i.zf = getelementptr inbounds nuw i8, ptr %i.xp, i64 88
+  %49 = load <2 x float>, ptr %i.ze, align 4, !tbaa !54
+  %50 = fmul <2 x float> %49, %38                 ; 2 uses
+  store <2 x float> %50, ptr %i.ze, align 4, !tbaa !54
+  %i.zg = fpext <2 x float> %50 to <2 x double>
+  store <2 x double> %i.zg, ptr %i.zf, align 8, !tbaa !130
   %i.zh = getelementptr inbounds nuw i8, ptr %i.xp, i64 104
   %i.zi = getelementptr inbounds nuw i8, ptr %i.yg, i64 44
   %i.zj = load float, ptr %i.zi, align 4, !tbaa !54
-  %i.zk = insertelement <2 x float> poison, float %49, i64 0
+  %i.zk = insertelement <2 x float> poison, float %48, i64 0
   %i.zl = insertelement <2 x float> %i.zk, float %i.zj, i64 1
   %i.zm = fpext <2 x float> %i.zl to <2 x double>
   store <2 x double> %i.zm, ptr %i.zh, align 8, !tbaa !130
   %i.zn = getelementptr inbounds nuw i8, ptr %i.yg, i64 48 ; 2 uses
-  %51 = load <2 x float>, ptr %i.zn, align 4, !tbaa !54
-  %52 = fmul <2 x float> %51, %35                 ; 2 uses
-  store <2 x float> %52, ptr %i.zn, align 4, !tbaa !54
-  %i.zo = getelementptr inbounds nuw i8, ptr %i.yg, i64 56 ; 2 uses
-  %53 = load float, ptr %i.zo, align 4, !tbaa !54
-  %54 = fmul float %53, %i.ym                     ; 2 uses
-  store float %54, ptr %i.zo, align 4, !tbaa !54
-  %55 = getelementptr inbounds nuw i8, ptr %i.xp, i64 120
-  %i.zp = fpext <2 x float> %52 to <2 x double>
-  store <2 x double> %i.zp, ptr %55, align 8, !tbaa !130
+  %51 = getelementptr inbounds nuw i8, ptr %i.yg, i64 56 ; 2 uses
+  %52 = load float, ptr %51, align 4, !tbaa !54
+  %53 = fmul float %52, %i.ym                     ; 2 uses
+  store float %53, ptr %51, align 4, !tbaa !54
+  %i.zo = getelementptr inbounds nuw i8, ptr %i.xp, i64 120
+  %54 = load <2 x float>, ptr %i.zn, align 4, !tbaa !54
+  %55 = fmul <2 x float> %54, %38                 ; 2 uses
+  store <2 x float> %55, ptr %i.zn, align 4, !tbaa !54
+  %i.zp = fpext <2 x float> %55 to <2 x double>
+  store <2 x double> %i.zp, ptr %i.zo, align 8, !tbaa !130
   %i.zq = getelementptr inbounds nuw i8, ptr %i.xp, i64 136
   %i.zr = getelementptr inbounds nuw i8, ptr %i.yg, i64 60
   %i.zs = load float, ptr %i.zr, align 4, !tbaa !54
-  %i.zt = insertelement <2 x float> poison, float %54, i64 0
+  %i.zt = insertelement <2 x float> poison, float %53, i64 0
   %i.zu = insertelement <2 x float> %i.zt, float %i.zs, i64 1
   %i.zv = fpext <2 x float> %i.zu to <2 x double>
   store <2 x double> %i.zv, ptr %i.zq, align 8, !tbaa !130

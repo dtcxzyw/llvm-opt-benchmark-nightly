@@ -205,9 +205,9 @@ bb.j:                                             ; preds = %bb.g
   %i.ah = getelementptr inbounds nuw i8, ptr %i.h, i64 12, !dbg !186660
   %i.ai = load i8, ptr %i.ah, align 4, !dbg !186660, !range !7871, !noundef !7550 ; 2 uses
   %i.aj = zext nneg i8 %i.ai to i32, !dbg !186660
-  %5 = load <2 x i32>, ptr %i.ag, align 4, !dbg !186659
   %i.ak = load <2 x i16>, ptr %i.h, align 4, !dbg !186661
   %i.al = load i16, ptr %i.h, align 4, !dbg !186661, !range !8056, !noundef !7550
+  %5 = load <2 x i32>, ptr %i.ag, align 4, !dbg !186659
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !186662
   %i.am = load ptr, ptr %i.m, align 8, !dbg !186663, !nonnull !7550, !noundef !7550
   %i.an = getelementptr inbounds nuw [48 x i8], ptr %i.am, i64 %i.q, !dbg !186664 ; 3 uses
@@ -249,9 +249,9 @@ bb.l:                                             ; preds = %bb.g
   %i.bi = getelementptr inbounds nuw i8, ptr %i.g, i64 12, !dbg !186679
   %i.bj = load i8, ptr %i.bi, align 4, !dbg !186679, !range !7871, !noundef !7550 ; 2 uses
   %i.bk = zext nneg i8 %i.bj to i32, !dbg !186679
-  %6 = load <2 x i32>, ptr %i.bh, align 4, !dbg !186678
   %i.bl = load <2 x i16>, ptr %i.g, align 4, !dbg !186680
   %i.bm = load i16, ptr %i.g, align 4, !dbg !186680, !range !8056, !noundef !7550
+  %6 = load <2 x i32>, ptr %i.bh, align 4, !dbg !186678
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !186681
   %i.bn = load ptr, ptr %i.m, align 8, !dbg !186682, !nonnull !7550, !noundef !7550
   %i.bo = getelementptr inbounds nuw [48 x i8], ptr %i.bn, i64 %i.q, !dbg !186683 ; 3 uses

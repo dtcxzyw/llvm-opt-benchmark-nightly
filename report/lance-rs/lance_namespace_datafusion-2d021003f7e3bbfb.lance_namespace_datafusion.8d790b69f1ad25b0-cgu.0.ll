@@ -205,9 +205,6 @@ bb.v:                                             ; preds = %bb.l, %bb.m
   %i.et = and i64 %i.es, %.val7.i.i.i
   %i.eu = getelementptr i8, ptr %.val.i16.i.i, i64 %i.et
   %i.ev = getelementptr i8, ptr %i.eu, i64 16
-  %6 = load <2 x i64>, ptr %i.co, align 8, !alias.scope !40594, !noalias !40596
-  %7 = insertelement <2 x i64> <i64 poison, i64 -1>, i64 %i.er, i64 0
-  %8 = sub <2 x i64> %6, %7
   %i.ew = sub nsw i64 0, %.sroa.3.0.i.ph.i.i.i
   %i.ex = getelementptr inbounds [40 x i8], ptr %.val.i16.i.i, i64 %i.ew ; 4 uses
   %i.ey = getelementptr inbounds i8, ptr %i.ex, i64 -40
@@ -217,6 +214,9 @@ bb.v:                                             ; preds = %bb.l, %bb.m
   %i.ez = load <2 x ptr>, ptr %i.d, align 16, !noalias !40572
   store i8 %i.cu, ptr %i.eo, align 1, !noalias !40595
   store i8 %i.cu, ptr %i.ev, align 1, !noalias !40595
+  %6 = load <2 x i64>, ptr %i.co, align 8, !alias.scope !40594, !noalias !40596
+  %7 = insertelement <2 x i64> <i64 poison, i64 -1>, i64 %i.er, i64 0
+  %8 = sub <2 x i64> %6, %7
   store <2 x i64> %8, ptr %i.co, align 8, !alias.scope !40594, !noalias !40596
   store i64 %3, ptr %i.ey, align 8, !noalias !40597
   store i64 %.sroa.10.026, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !40597
@@ -619,9 +619,6 @@ bb.u:                                             ; preds = %bb.o
   %i.ev = and i64 %i.eu, %.val7.i.i.i
   %i.ew = getelementptr i8, ptr %.val.i16.i.i, i64 %i.ev
   %i.ex = getelementptr i8, ptr %i.ew, i64 16
-  %4 = load <2 x i64>, ptr %i.cl, align 8, !alias.scope !41467, !noalias !41469
-  %5 = insertelement <2 x i64> <i64 poison, i64 -1>, i64 %i.et, i64 0
-  %6 = sub <2 x i64> %4, %5
   %i.ey = sub nsw i64 0, %.sroa.3.0.i.ph.i.i.i
   %i.ez = getelementptr inbounds [40 x i8], ptr %.val.i16.i.i, i64 %i.ey ; 4 uses
   %i.fa = getelementptr inbounds i8, ptr %i.ez, i64 -40
@@ -631,6 +628,9 @@ bb.u:                                             ; preds = %bb.o
   %i.fb = load <2 x ptr>, ptr %i.d, align 16, !noalias !41439
   store i8 %i.cr, ptr %i.eq, align 1, !noalias !41468
   store i8 %i.cr, ptr %i.ex, align 1, !noalias !41468
+  %4 = load <2 x i64>, ptr %i.cl, align 8, !alias.scope !41467, !noalias !41469
+  %5 = insertelement <2 x i64> <i64 poison, i64 -1>, i64 %i.et, i64 0
+  %6 = sub <2 x i64> %4, %5
   store <2 x i64> %6, ptr %i.cl, align 8, !alias.scope !41467, !noalias !41469
   store i64 %.sroa.0.0.copyload15.i, ptr %i.fa, align 8, !noalias !41470
   store i64 %.sroa.6.sroa.0.0.copyload21.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !41470

@@ -205,11 +205,13 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l, %bb.m
   %i.jm = phi <2 x float> [ %i.jl, %bb.m ], [ <float 1.000000e+00, float 0.000000e+00>, %bb.l ] ; 9 uses
   %i.jn = load float, ptr %i.b, align 8, !tbaa !253
+  %18 = shufflevector <2 x float> %i.jm, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %19 = extractelement <2 x float> %i.jm, i64 0   ; 2 uses
+  %20 = extractelement <2 x float> %i.jm, i64 1   ; 2 uses
   %i.jo = load <2 x float>, ptr %i.d, align 8, !tbaa !253 ; 2 uses
   %i.jp = fneg <2 x float> %i.jo
   %i.jq = shufflevector <2 x float> %i.jm, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.jr = fmul <2 x float> %i.jq, %i.jp
-  %18 = shufflevector <2 x float> %i.jm, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.js = shufflevector <2 x float> %i.jm, <2 x float> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.jt = insertelement <2 x float> poison, float %i.jn, i64 0
   %i.ju = insertelement <2 x float> %i.jt, float %i.fj, i64 1 ; 2 uses
@@ -219,9 +221,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %i.jx = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jq, <2 x float> %i.ju, <2 x float> %i.jw)
   store <2 x float> %i.jx, ptr %i.d, align 8, !tbaa !253
   %i.jy = fneg float %i.fk
-  %19 = extractelement <2 x float> %i.jm, i64 0   ; 2 uses
   %i.jz = fmul float %19, %i.jy
-  %20 = extractelement <2 x float> %i.jm, i64 1   ; 2 uses
   %i.ka = call float @llvm.fmuladd.f32(float %20, float %i.fg, float %i.jz)
   store float %i.ka, ptr %i.t, align 8, !tbaa !253
   %i.kb = fmul float %i.fk, %20

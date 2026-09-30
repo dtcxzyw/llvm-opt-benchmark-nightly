@@ -206,8 +206,8 @@ bb.o:                                             ; preds = %bb.k
 
 bb.p:                                             ; preds = %bb.n
   %.sroa.5.0..sroa_idx71 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %4 = load <2 x double>, ptr %.sroa.5.0..sroa_idx71, align 8 ; 4 uses
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.bb = load <2 x double>, ptr %.sroa.7.0..sroa_idx, align 8 ; 4 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.bc = load <2 x double>, ptr %.sroa.10.0..sroa_idx, align 8 ; 2 uses
@@ -454,8 +454,8 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.m
   %.sroa.5.0..sroa_idx70 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %4 = load <2 x double>, ptr %.sroa.5.0..sroa_idx70, align 8 ; 4 uses
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.at = load <2 x double>, ptr %.sroa.7.0..sroa_idx, align 8 ; 4 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.au = load <2 x double>, ptr %.sroa.10.0..sroa_idx, align 8 ; 2 uses

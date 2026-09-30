@@ -205,21 +205,21 @@ bb.b:                                             ; preds = %_ZNSt3mapIiPN2v88in
 ; Function Attrs: mustprogress nounwind uwtable
 define internal i64 @"_ZN4absl19functional_internal12InvokeObjectIZN2v88internal6maglev18MaglevGraphBuilder25TryReduceArrayPrototypeAtENS3_8compiler13JSFunctionRefERNS4_13CallArgumentsEE3$_0NS4_12ReduceResultEJEEET0_NS0_7VoidPtrEDpNS0_8ForwardTIT1_E4typeE"(ptr nofree readonly captures(none) %0) #0 {
 bb.a:
-  %1 = alloca %class.anon.3042, align 8           ; 5 uses
+  %1 = alloca %class.anon.3042, align 16          ; 5 uses
   %2 = alloca %class.anon.3043, align 8           ; 4 uses
   %3 = alloca %"class.v8::base::FunctionRef.61", align 8 ; 5 uses
   %4 = alloca %class.anon.3044, align 8           ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #33
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = load <2 x ptr>, ptr %i.b, align 8
-  store <2 x ptr> %5, ptr %i.a, align 8
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %5 = load ptr, ptr %i.b, align 8, !nonnull !56, !align !64
+  store ptr %5, ptr %i.a, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.d = load <2 x ptr>, ptr %0, align 8
-  %i.e = load ptr, ptr %0, align 8                ; 3 uses
-  store ptr %i.e, ptr %1, align 8
+  %i.d = load <2 x ptr>, ptr %0, align 8          ; 2 uses
+  %i.e = load ptr, ptr %0, align 8                ; 2 uses
+  store <2 x ptr> %i.d, ptr %1, align 16
   %i.f = load <2 x ptr>, ptr %i.c, align 8
   %i.g = shufflevector <2 x ptr> %i.f, <2 x ptr> %i.d, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x ptr> %i.g, ptr %2, align 8

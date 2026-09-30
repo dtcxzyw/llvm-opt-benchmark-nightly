@@ -202,13 +202,13 @@ bb.d:                                             ; preds = %bb.c
   store double %.sink.i, ptr %i.ab, align 8, !tbaa !52, !noalias !147
   %i.ac = getelementptr inbounds nuw i8, ptr %i.q, i64 72
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !49, !noalias !147
+  %4 = load <2 x double>, ptr %2, align 8         ; 2 uses
   %i.ad = insertelement <2 x double> poison, double %.sink22.i, i64 0
   %i.ae = insertelement <2 x double> %i.ad, double %.sink.i, i64 1 ; 2 uses
   %i.af = fmul <2 x double> %i.ae, splat (double 5.000000e-01)
   %i.ag = load <2 x double>, ptr %i.v, align 8, !tbaa !15, !noalias !147
   %i.ah = fsub <2 x double> %i.ag, %i.af          ; 4 uses
   store <2 x double> %i.ah, ptr %i.v, align 8, !tbaa !15, !noalias !147
-  %4 = load <2 x double>, ptr %2, align 8         ; 2 uses
   %i.ai = fcmp olt <2 x double> %4, %i.ah
   %i.aj = select <2 x i1> %i.ai, <2 x double> %4, <2 x double> %i.ah
   store <2 x double> %i.aj, ptr %2, align 8, !tbaa !15

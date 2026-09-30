@@ -205,17 +205,17 @@ _ZN8ImVectorI6ImVec4E9push_backERKS0_.exit:       ; preds = %._ZN8ImVectorI6ImVe
   %i.ae = phi ptr [ %.pre.i, %._ZN8ImVectorI6ImVec4E7reserveEi.exit_crit_edge.i ], [ %i.w, %bb.h ]
   %i.af = fcmp oge <2 x float> %i.i, %i.j
   %i.ag = sext i32 %i.ad to i64
-  %i.ah = getelementptr inbounds [16 x i8], ptr %i.ae, i64 %i.ag ; 2 uses
-  store <2 x float> %i.i, ptr %i.ah, align 4
-  %.sroa.12.0..sroa_idx13 = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
+  %i.ah = getelementptr inbounds [16 x i8], ptr %i.ae, i64 %i.ag
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 136
+  %.sroa.12.0..sroa_idx13 = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.ai = select <2 x i1> %i.af, <2 x float> %i.i, <2 x float> %i.j ; 2 uses
-  store <2 x float> %i.ai, ptr %.sroa.12.0..sroa_idx13, align 4
+  %5 = shufflevector <2 x float> %i.i, <2 x float> %i.ai, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.ah, align 4
   %i.aj = load i32, ptr %i.k, align 8, !tbaa !60
   %i.ak = add nsw i32 %i.aj, 1
   store i32 %i.ak, ptr %i.k, align 8, !tbaa !60
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %5 = shufflevector <2 x float> %i.i, <2 x float> %i.ai, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x float> %5, ptr %4, align 8, !tbaa !15
+  store <2 x float> %i.i, ptr %4, align 8, !tbaa !15
+  store <2 x float> %i.ai, ptr %.sroa.12.0..sroa_idx13, align 8, !tbaa !15
   tail call void @_ZN10ImDrawList18_OnChangedClipRectEv(ptr noundef nonnull align 8 dereferenceable(196) %0)
   ret void
 }

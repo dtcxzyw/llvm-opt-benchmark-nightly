@@ -205,13 +205,13 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.ce, ptr noundef nonnull align 8 dereferenceable(88) %2, i64 88, i1 false), !tbaa.struct !396
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bz, i64 96 ; 2 uses
-  %i.cg = load ptr, ptr %i.bx, align 8, !tbaa !193
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !193
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bz, i64 104
-  %i.ci = load ptr, ptr %i.by, align 8, !tbaa !95
-  %i.cj = load <2 x ptr>, ptr %i.cf, align 8, !tbaa !110
-  store ptr %i.ci, ptr %i.ch, align 8, !tbaa !95
-  store <2 x ptr> %i.cj, ptr %i.bx, align 8, !tbaa !110
-  store ptr %i.cg, ptr %i.cf, align 8, !tbaa !193
+  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !95
+  %i.cj = load <2 x ptr>, ptr %i.bx, align 8, !tbaa !110
+  store ptr %i.cg, ptr %i.bx, align 8, !tbaa !193
+  store <2 x ptr> %i.cj, ptr %i.cf, align 8, !tbaa !110
+  store ptr %i.ci, ptr %i.by, align 8, !tbaa !95
   %i.ck = load i16, ptr %i.ca, align 4, !tbaa !398
   store i16 %.013.i, ptr %i.ca, align 4, !tbaa !398
   %i.cl = load i32, ptr %i.bz, align 8, !tbaa !397

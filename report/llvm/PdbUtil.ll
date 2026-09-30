@@ -202,17 +202,17 @@ _ZN4llvm5ErrorD2Ev.exit250:                       ; preds = %_ZNK4llvm8codeview8
   br i1 %i.sq, label %_ZNK4llvm8codeview8CVRecordINS0_10SymbolKindEE4kindEv.exit253.thread, label %_ZNK4llvm8codeview8CVRecordINS0_10SymbolKindEE4kindEv.exit253.preheader
 
 _ZNK4llvm8codeview8CVRecordINS0_10SymbolKindEE4kindEv.exit253.preheader: ; preds = %_ZN4llvm5ErrorD2Ev.exit250
-  %i.sr = insertelement <2 x ptr> poison, ptr %i.pw, i64 0
+  %i.sr = insertelement <2 x ptr> poison, ptr %i.qd, i64 0
   %i.ss = shufflevector <2 x ptr> %i.sr, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %i.st = insertelement <2 x ptr> poison, ptr %i.qd, i64 0
+  %i.st = insertelement <2 x ptr> poison, ptr %i.pw, i64 0
   %i.su = shufflevector <2 x ptr> %i.st, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.sv = insertelement <2 x ptr> poison, ptr %i.pn, i64 0
   %i.sw = shufflevector <2 x ptr> %i.sv, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.sx = insertelement <2 x ptr> poison, ptr %i.pe, i64 0
   %i.sy = shufflevector <2 x ptr> %i.sx, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %i.sz = insertelement <2 x ptr> poison, ptr %i.on, i64 0
+  %i.sz = insertelement <2 x ptr> poison, ptr %i.ou, i64 0
   %i.ta = shufflevector <2 x ptr> %i.sz, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %i.tb = insertelement <2 x ptr> poison, ptr %i.ou, i64 0
+  %i.tb = insertelement <2 x ptr> poison, ptr %i.on, i64 0
   %i.tc = shufflevector <2 x ptr> %i.tb, <2 x ptr> poison, <2 x i32> zeroinitializer
   %i.td = insertelement <2 x ptr> poison, ptr %i.oe, i64 0
   %i.te = shufflevector <2 x ptr> %i.td, <2 x ptr> poison, <2 x i32> zeroinitializer
@@ -615,7 +615,7 @@ bb.hk:                                            ; preds = %bb.hj
   %i.aic = load i64, ptr %i.e, align 8, !tbaa !46
   store i32 0, ptr %i.on, align 8, !tbaa !213
   store ptr null, ptr %i.oo, align 8, !tbaa !214
-  store <2 x ptr> %i.ta, ptr %i.op, align 8, !tbaa !239
+  store <2 x ptr> %i.tc, ptr %i.op, align 8, !tbaa !239
   store i64 0, ptr %i.oq, align 8, !tbaa !217
   call void @_ZN12lldb_private15DWARFExpressionC1Ev(ptr noundef nonnull align 8 dereferenceable(52) %i.or) #21
   store i8 0, ptr %i.os, align 8, !tbaa !244
@@ -628,7 +628,7 @@ bb.hk:                                            ; preds = %bb.hj
   store i64 %i.aib, ptr %i.ot, align 8, !tbaa !231
   store i32 0, ptr %i.ou, align 8, !tbaa !213
   store ptr null, ptr %i.ov, align 8, !tbaa !214
-  store <2 x ptr> %i.tc, ptr %i.ow, align 8, !tbaa !239
+  store <2 x ptr> %i.ta, ptr %i.ow, align 8, !tbaa !239
   store i64 0, ptr %i.oy, align 8, !tbaa !217
   %i.aie = load ptr, ptr %i.oo, align 8, !tbaa !214 ; 2 uses
   %.not.i.i.i.i101.i = icmp eq ptr %i.aie, null
@@ -854,7 +854,7 @@ bb.ia:                                            ; preds = %._crit_edge.i
   %i.akc = load i64, ptr %i.e, align 8, !tbaa !46
   store i32 0, ptr %i.pw, align 8, !tbaa !213
   store ptr null, ptr %i.px, align 8, !tbaa !214
-  store <2 x ptr> %i.ss, ptr %i.py, align 8, !tbaa !239
+  store <2 x ptr> %i.su, ptr %i.py, align 8, !tbaa !239
   store i64 0, ptr %i.pz, align 8, !tbaa !217
   call void @_ZN12lldb_private15DWARFExpressionC1Ev(ptr noundef nonnull align 8 dereferenceable(52) %i.qa) #21
   store i8 0, ptr %i.qb, align 8, !tbaa !244
@@ -867,7 +867,7 @@ bb.ia:                                            ; preds = %._crit_edge.i
   store i64 %i.akb, ptr %i.qc, align 8, !tbaa !231
   store i32 0, ptr %i.qd, align 8, !tbaa !213
   store ptr null, ptr %i.qe, align 8, !tbaa !214
-  store <2 x ptr> %i.su, ptr %i.qf, align 8, !tbaa !239
+  store <2 x ptr> %i.ss, ptr %i.qf, align 8, !tbaa !239
   store i64 0, ptr %i.qh, align 8, !tbaa !217
   %i.ake = load ptr, ptr %i.px, align 8, !tbaa !214 ; 2 uses
   %.not.i.i.i.i126.i = icmp eq ptr %i.ake, null

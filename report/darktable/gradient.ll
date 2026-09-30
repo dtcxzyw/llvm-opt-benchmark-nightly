@@ -205,40 +205,40 @@ bb.r:                                             ; preds = %dt_masks_get_image_
   %i.dc = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.dd = load float, ptr %i.dc, align 8, !tbaa !157
   %i.de = getelementptr inbounds nuw i8, ptr %8, i64 28
-  %10 = load <2 x float>, ptr %i.cz, align 4, !tbaa !29 ; 4 uses
-  %11 = load <2 x float>, ptr %i.de, align 4, !tbaa !29
-  %12 = fsub reassoc nsz arcp contract afn <2 x float> %10, %11
-  store <2 x float> %12, ptr %i.da, align 4, !tbaa !29
-  %i.df = extractelement <2 x float> %10, i64 1   ; 3 uses
-  %13 = fsub reassoc nsz arcp contract afn float %i.cx, %i.df
-  %14 = extractelement <2 x float> %10, i64 0     ; 3 uses
-  %15 = fsub reassoc nsz arcp contract afn float %i.cy, %14
-  %16 = tail call reassoc nsz arcp contract afn float @llvm.atan2.f32(float %13, float %15)
-  %17 = fneg reassoc nsz arcp contract afn float %i.dd
-  %18 = fneg reassoc nsz arcp contract afn float %i.db
-  %i.dg = tail call reassoc nsz arcp contract afn float @llvm.atan2.f32(float %17, float %18)
-  %i.dh = fsub reassoc nsz arcp contract afn float %16, %i.dg
+  %10 = fneg reassoc nsz arcp contract afn float %i.dd
+  %11 = fneg reassoc nsz arcp contract afn float %i.db
+  %12 = tail call reassoc nsz arcp contract afn float @llvm.atan2.f32(float %10, float %11)
+  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %14 = load <2 x float>, ptr %i.cz, align 4, !tbaa !29 ; 4 uses
+  %i.df = extractelement <2 x float> %14, i64 1   ; 3 uses
+  %15 = extractelement <2 x float> %14, i64 0     ; 3 uses
+  %16 = load <2 x float>, ptr %i.de, align 4, !tbaa !29
+  %17 = fsub reassoc nsz arcp contract afn <2 x float> %14, %16
+  store <2 x float> %17, ptr %i.da, align 4, !tbaa !29
+  %18 = fsub reassoc nsz arcp contract afn float %i.cx, %i.df
+  %19 = fsub reassoc nsz arcp contract afn float %i.cy, %15
+  %i.dg = tail call reassoc nsz arcp contract afn float @llvm.atan2.f32(float %18, float %19)
+  %i.dh = fsub reassoc nsz arcp contract afn float %i.dg, %12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
-  %19 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store <2 x float> %10, ptr %i.b, align 16, !tbaa !29
+  store <2 x float> %14, ptr %i.b, align 16, !tbaa !29
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store float %i.cy, ptr %i.di, align 8, !tbaa !29
   %i.dj = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   store float %i.cx, ptr %i.dj, align 4, !tbaa !29
   %i.dk = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  %i.dl = fadd reassoc nsz arcp contract afn float %14, 1.000000e+01
+  %i.dl = fadd reassoc nsz arcp contract afn float %15, 1.000000e+01
   store float %i.dl, ptr %i.dk, align 16, !tbaa !29
   %i.dm = getelementptr inbounds nuw i8, ptr %i.b, i64 20 ; 2 uses
   store float %i.df, ptr %i.dm, align 4, !tbaa !29
   %i.dn = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
-  store float %14, ptr %i.dn, align 8, !tbaa !29
+  store float %15, ptr %i.dn, align 8, !tbaa !29
   %i.do = getelementptr inbounds nuw i8, ptr %i.b, i64 28 ; 2 uses
   %i.dp = fadd reassoc nsz arcp contract afn float %i.df, 1.000000e+01
   store float %i.dp, ptr %i.do, align 4, !tbaa !29
   %i.dq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 64), align 8, !tbaa !131
   %i.dr = call i32 @dt_dev_distort_backtransform(ptr noundef %i.dq, ptr noundef nonnull %i.b, i64 noundef 4) #12 ; 0 uses
   %i.ds = load float, ptr %i.do, align 4, !tbaa !29
-  %i.dt = load float, ptr %19, align 4, !tbaa !29 ; 2 uses
+  %i.dt = load float, ptr %13, align 4, !tbaa !29 ; 2 uses
   %i.du = fsub reassoc nsz arcp contract afn float %i.ds, %i.dt
   %i.dv = load float, ptr %i.dn, align 8, !tbaa !29
   %i.dw = load float, ptr %i.b, align 16, !tbaa !29 ; 2 uses
