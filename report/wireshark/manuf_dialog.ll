@@ -202,11 +202,11 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.h, %.lr.ph.i.i.i.i
-  %indvar.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i ], [ %9, %bb.h ]
+  %indvar.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i ], [ %indvar.next.i.i.i.i, %bb.h ] ; 2 uses
   %.sroa.0.020.i.i.i.i = phi ptr [ %.sroa.0.017.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.sroa.0.0.i.i.i.i, %bb.h ] ; 7 uses
   %.pn19.i.i.i.i = phi ptr [ %i.t, %.lr.ph.i.i.i.i ], [ %.sroa.0.020.i.i.i.i, %bb.h ] ; 5 uses
-  %9 = add nuw nsw i64 %indvar.i.i.i.i, 1         ; 2 uses
-  %10 = mul nuw nsw i64 %9, 24
+  %9 = mul nuw nsw i64 %indvar.i.i.i.i, 24
+  %10 = add nuw nsw i64 %9, 24
   %.val.i.i.i.i.i = load i32, ptr %.sroa.0.020.i.i.i.i, align 8 ; 7 uses
   %i.aj = getelementptr i8, ptr %.pn19.i.i.i.i, i64 28
   %.val1.i.i.i.i.i = load i32, ptr %i.aj, align 4 ; 4 uses
@@ -278,6 +278,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %"_ZSt25__unguarded_linear_insertIN5QListI11QModelIndexE8iteratorEN9__gnu_cxx5__ops14_Val_comp_iterIZN11ManufDialog15copyToClipboardEvE3$_0EEEvT_T0_.exit.i.i.i.i", %_ZSt13move_backwardIN5QListI11QModelIndexE8iteratorES3_ET0_T_S5_S4_.exit.i.i.i.i
   %.sroa.0.0.i.i.i.i = getelementptr i8, ptr %.sroa.0.020.i.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i35 = icmp eq ptr %.sroa.0.0.i.i.i.i, %i.ah
+  %indvar.next.i.i.i.i = add nuw nsw i64 %indvar.i.i.i.i, 1
   br i1 %.not.i.i.i.i35, label %"_ZSt16__insertion_sortIN5QListI11QModelIndexE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZN11ManufDialog15copyToClipboardEvE3$_0EEEvT_SA_T0_.exit.i.i.i", label %bb.e, !llvm.loop !39
 
 "_ZSt16__insertion_sortIN5QListI11QModelIndexE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZN11ManufDialog15copyToClipboardEvE3$_0EEEvT_SA_T0_.exit.i.i.i": ; preds = %bb.h
@@ -343,14 +344,13 @@ bb.i:                                             ; preds = %bb.l, %.lr.ph.i35.i
   %indvar.i36.i.i.i = phi i64 [ 0, %.lr.ph.i35.i.i.i ], [ %indvar.next.i58.i.i.i, %bb.l ] ; 2 uses
   %.sroa.0.020.i37.i.i.i = phi ptr [ %.sroa.0.017.i33.i.i.i, %.lr.ph.i35.i.i.i ], [ %.sroa.0.0.i56.i.i.i, %bb.l ] ; 8 uses
   %.pn19.i38.i.i.i = phi ptr [ %i.t, %.lr.ph.i35.i.i.i ], [ %.sroa.0.020.i37.i.i.i, %bb.l ] ; 6 uses
-  %i.bn = mul i64 %indvar.i36.i.i.i, 24           ; 2 uses
-  %i.bo = add i64 %i.bn, 24
-  %i.bp = udiv i64 %i.bo, 24                      ; 2 uses
-  %11 = icmp ult i64 %i.bn, -24                   ; 2 uses
+  %i.bn = mul i64 %indvar.i36.i.i.i, 24
+  %i.bo = add i64 %i.bn, 24                       ; 3 uses
+  %i.bp = udiv exact i64 %i.bo, 24
+  %11 = icmp ne i64 %i.bo, 0                      ; 2 uses
   %umin.neg.i39.i.i.i = sext i1 %11 to i64
   %i.bq = select i1 %11, i64 24, i64 0
-  %.neg.i40.i.i.i = mul i64 %i.bp, -24
-  %12 = add i64 %.neg.i40.i.i.i, %i.bq            ; 2 uses
+  %12 = sub i64 %i.bq, %i.bo                      ; 2 uses
   %scevgep.i41.i.i.i = getelementptr i8, ptr %.sroa.0.020.i37.i.i.i, i64 %12
   %scevgep22.i42.i.i.i = getelementptr i8, ptr %.pn19.i38.i.i.i, i64 %12
   %i.br = add nuw nsw i64 %i.bp, 1

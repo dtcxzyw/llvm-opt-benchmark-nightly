@@ -204,11 +204,11 @@ bb.p:                                             ; preds = %_ZN16QCPDataContain
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.t, %.lr.ph.i.i69
-  %indvar.i.i = phi i64 [ 0, %.lr.ph.i.i69 ], [ %4, %bb.t ]
+  %indvar.i.i = phi i64 [ 0, %.lr.ph.i.i69 ], [ %indvar.next.i.i, %bb.t ] ; 2 uses
   %.sroa.0.022.i.i = phi ptr [ %.sroa.0.019.i.i, %.lr.ph.i.i69 ], [ %.sroa.0.0.i.i, %bb.t ] ; 8 uses
   %.pn21.i.i = phi ptr [ %i.ct, %.lr.ph.i.i69 ], [ %.sroa.0.022.i.i, %bb.t ] ; 2 uses
-  %4 = add nuw nsw i64 %indvar.i.i, 1             ; 2 uses
-  %5 = mul nuw nsw i64 %4, 24
+  %4 = mul nuw nsw i64 %indvar.i.i, 24
+  %5 = add nuw nsw i64 %4, 24
   %i.dg = load double, ptr %.sroa.0.022.i.i, align 8 ; 4 uses
   %i.dh = load double, ptr %i.ct, align 8
   %i.di = fcmp olt double %i.dg, %i.dh
@@ -255,6 +255,7 @@ _ZSt25__unguarded_linear_insertIN5QListI12QCPCurveDataE8iteratorEN9__gnu_cxx5__o
 bb.t:                                             ; preds = %_ZSt25__unguarded_linear_insertIN5QListI12QCPCurveDataE8iteratorEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S8_EEEEvT_T0_.exit.i.i, %_ZSt13move_backwardIN5QListI12QCPCurveDataE8iteratorES3_ET0_T_S5_S4_.exit.i.i
   %.sroa.0.0.i.i = getelementptr i8, ptr %.sroa.0.022.i.i, i64 24 ; 2 uses
   %.not.i.i70 = icmp eq ptr %.sroa.0.0.i.i, %i.df
+  %indvar.next.i.i = add nuw nsw i64 %indvar.i.i, 1
   br i1 %.not.i.i70, label %_ZSt16__insertion_sortIN5QListI12QCPCurveDataE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbRKS1_S8_EEEEvT_SC_T0_.exit.i, label %bb.q, !llvm.loop !62
 
 _ZSt16__insertion_sortIN5QListI12QCPCurveDataE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbRKS1_S8_EEEEvT_SC_T0_.exit.i: ; preds = %bb.t
@@ -297,14 +298,13 @@ bb.u:                                             ; preds = %bb.p
   %indvar.i23.i = phi i64 [ %indvar.next.i34.i, %bb.x ], [ 0, %bb.u ] ; 2 uses
   %.sroa.0.022.i24.i = phi ptr [ %.sroa.0.0.i32.i, %bb.x ], [ %.sroa.0.019.i.i, %bb.u ] ; 9 uses
   %.pn21.i25.i = phi ptr [ %.sroa.0.022.i24.i, %bb.x ], [ %i.ct, %bb.u ] ; 3 uses
-  %i.dv = mul i64 %indvar.i23.i, 24               ; 2 uses
-  %i.dw = add i64 %i.dv, 24
-  %i.dx = udiv i64 %i.dw, 24                      ; 2 uses
-  %6 = icmp ult i64 %i.dv, -24                    ; 2 uses
+  %i.dv = mul i64 %indvar.i23.i, 24
+  %i.dw = add i64 %i.dv, 24                       ; 3 uses
+  %i.dx = udiv exact i64 %i.dw, 24
+  %6 = icmp ne i64 %i.dw, 0                       ; 2 uses
   %umin.neg.i26.i = sext i1 %6 to i64
   %i.dy = select i1 %6, i64 24, i64 0
-  %.neg.i27.i = mul i64 %i.dx, -24
-  %7 = add i64 %.neg.i27.i, %i.dy                 ; 2 uses
+  %7 = sub i64 %i.dy, %i.dw                       ; 2 uses
   %scevgep.i28.i = getelementptr i8, ptr %.sroa.0.022.i24.i, i64 %7
   %scevgep24.i29.i = getelementptr i8, ptr %.pn21.i25.i, i64 %7
   %i.dz = add nuw nsw i64 %i.dx, 1
@@ -707,11 +707,11 @@ bb.p:                                             ; preds = %_ZN16QCPDataContain
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.t, %.lr.ph.i.i69
-  %indvar.i.i = phi i64 [ 0, %.lr.ph.i.i69 ], [ %4, %bb.t ]
+  %indvar.i.i = phi i64 [ 0, %.lr.ph.i.i69 ], [ %indvar.next.i.i, %bb.t ] ; 2 uses
   %.sroa.0.022.i.i = phi ptr [ %.sroa.0.019.i.i, %.lr.ph.i.i69 ], [ %.sroa.0.0.i.i, %bb.t ] ; 8 uses
   %.pn21.i.i = phi ptr [ %i.ct, %.lr.ph.i.i69 ], [ %.sroa.0.022.i.i, %bb.t ] ; 2 uses
-  %4 = add nuw nsw i64 %indvar.i.i, 1             ; 2 uses
-  %5 = mul nuw nsw i64 %4, 40
+  %4 = mul nuw nsw i64 %indvar.i.i, 40
+  %5 = add nuw nsw i64 %4, 40
   %i.dg = load double, ptr %.sroa.0.022.i.i, align 8 ; 4 uses
   %i.dh = load double, ptr %i.ct, align 8
   %i.di = fcmp olt double %i.dg, %i.dh
@@ -758,6 +758,7 @@ _ZSt25__unguarded_linear_insertIN5QListI16QCPFinancialDataE8iteratorEN9__gnu_cxx
 bb.t:                                             ; preds = %_ZSt25__unguarded_linear_insertIN5QListI16QCPFinancialDataE8iteratorEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S8_EEEEvT_T0_.exit.i.i, %_ZSt13move_backwardIN5QListI16QCPFinancialDataE8iteratorES3_ET0_T_S5_S4_.exit.i.i
   %.sroa.0.0.i.i = getelementptr i8, ptr %.sroa.0.022.i.i, i64 40 ; 2 uses
   %.not.i.i70 = icmp eq ptr %.sroa.0.0.i.i, %i.df
+  %indvar.next.i.i = add nuw nsw i64 %indvar.i.i, 1
   br i1 %.not.i.i70, label %_ZSt16__insertion_sortIN5QListI16QCPFinancialDataE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbRKS1_S8_EEEEvT_SC_T0_.exit.i, label %bb.q, !llvm.loop !87
 
 _ZSt16__insertion_sortIN5QListI16QCPFinancialDataE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbRKS1_S8_EEEEvT_SC_T0_.exit.i: ; preds = %bb.t
@@ -800,14 +801,13 @@ bb.u:                                             ; preds = %bb.p
   %indvar.i23.i = phi i64 [ %indvar.next.i34.i, %bb.x ], [ 0, %bb.u ] ; 2 uses
   %.sroa.0.022.i24.i = phi ptr [ %.sroa.0.0.i32.i, %bb.x ], [ %.sroa.0.019.i.i, %bb.u ] ; 9 uses
   %.pn21.i25.i = phi ptr [ %.sroa.0.022.i24.i, %bb.x ], [ %i.ct, %bb.u ] ; 3 uses
-  %i.dv = mul i64 %indvar.i23.i, 40               ; 2 uses
-  %i.dw = add i64 %i.dv, 40
-  %i.dx = udiv i64 %i.dw, 40                      ; 2 uses
-  %6 = icmp ult i64 %i.dv, -40                    ; 2 uses
+  %i.dv = mul i64 %indvar.i23.i, 40
+  %i.dw = add i64 %i.dv, 40                       ; 3 uses
+  %i.dx = udiv exact i64 %i.dw, 40
+  %6 = icmp ne i64 %i.dw, 0                       ; 2 uses
   %umin.neg.i26.i = sext i1 %6 to i64
   %i.dy = select i1 %6, i64 40, i64 0
-  %.neg.i27.i = mul i64 %i.dx, -40
-  %7 = add i64 %.neg.i27.i, %i.dy                 ; 2 uses
+  %7 = sub i64 %i.dy, %i.dw                       ; 2 uses
   %scevgep.i28.i = getelementptr i8, ptr %.sroa.0.022.i24.i, i64 %7
   %scevgep24.i29.i = getelementptr i8, ptr %.pn21.i25.i, i64 %7
   %i.dz = add nuw nsw i64 %i.dx, 1
@@ -1210,11 +1210,11 @@ bb.b:                                             ; preds = %_ZN16QCPDataContain
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %.lr.ph.i.i
-  %indvar.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %1, %bb.f ]
+  %indvar.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvar.next.i.i, %bb.f ] ; 2 uses
   %.sroa.0.022.i.i = phi ptr [ %.sroa.0.019.i.i, %.lr.ph.i.i ], [ %.sroa.0.0.i.i, %bb.f ] ; 8 uses
   %.pn21.i.i = phi ptr [ %i.y, %.lr.ph.i.i ], [ %.sroa.0.022.i.i, %bb.f ] ; 2 uses
-  %1 = add nuw nsw i64 %indvar.i.i, 1             ; 2 uses
-  %2 = mul nuw nsw i64 %1, 24
+  %1 = mul nuw nsw i64 %indvar.i.i, 24
+  %2 = add nuw nsw i64 %1, 24
   %i.am = load double, ptr %.sroa.0.022.i.i, align 8 ; 4 uses
   %i.an = load double, ptr %i.y, align 8
   %i.ao = fcmp olt double %i.am, %i.an
@@ -1261,6 +1261,7 @@ _ZSt25__unguarded_linear_insertIN5QListI12QCPCurveDataE8iteratorEN9__gnu_cxx5__o
 bb.f:                                             ; preds = %_ZSt25__unguarded_linear_insertIN5QListI12QCPCurveDataE8iteratorEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S8_EEEEvT_T0_.exit.i.i, %_ZSt13move_backwardIN5QListI12QCPCurveDataE8iteratorES3_ET0_T_S5_S4_.exit.i.i
   %.sroa.0.0.i.i = getelementptr i8, ptr %.sroa.0.022.i.i, i64 24 ; 2 uses
   %.not.i.i5 = icmp eq ptr %.sroa.0.0.i.i, %i.al
+  %indvar.next.i.i = add nuw nsw i64 %indvar.i.i, 1
   br i1 %.not.i.i5, label %_ZSt16__insertion_sortIN5QListI12QCPCurveDataE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbRKS1_S8_EEEEvT_SC_T0_.exit.i, label %bb.c, !llvm.loop !62
 
 _ZSt16__insertion_sortIN5QListI12QCPCurveDataE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbRKS1_S8_EEEEvT_SC_T0_.exit.i: ; preds = %bb.f
@@ -1303,14 +1304,13 @@ bb.g:                                             ; preds = %bb.b
   %indvar.i23.i = phi i64 [ %indvar.next.i34.i, %bb.j ], [ 0, %bb.g ] ; 2 uses
   %.sroa.0.022.i24.i = phi ptr [ %.sroa.0.0.i32.i, %bb.j ], [ %.sroa.0.019.i.i, %bb.g ] ; 9 uses
   %.pn21.i25.i = phi ptr [ %.sroa.0.022.i24.i, %bb.j ], [ %i.y, %bb.g ] ; 3 uses
-  %i.bb = mul i64 %indvar.i23.i, 24               ; 2 uses
-  %i.bc = add i64 %i.bb, 24
-  %i.bd = udiv i64 %i.bc, 24                      ; 2 uses
-  %3 = icmp ult i64 %i.bb, -24                    ; 2 uses
+  %i.bb = mul i64 %indvar.i23.i, 24
+  %i.bc = add i64 %i.bb, 24                       ; 3 uses
+  %i.bd = udiv exact i64 %i.bc, 24
+  %3 = icmp ne i64 %i.bc, 0                       ; 2 uses
   %umin.neg.i26.i = sext i1 %3 to i64
   %i.be = select i1 %3, i64 24, i64 0
-  %.neg.i27.i = mul i64 %i.bd, -24
-  %4 = add i64 %.neg.i27.i, %i.be                 ; 2 uses
+  %4 = sub i64 %i.be, %i.bc                       ; 2 uses
   %scevgep.i28.i = getelementptr i8, ptr %.sroa.0.022.i24.i, i64 %4
   %scevgep24.i29.i = getelementptr i8, ptr %.pn21.i25.i, i64 %4
   %i.bf = add nuw nsw i64 %i.bd, 1
@@ -1713,11 +1713,11 @@ bb.b:                                             ; preds = %_ZN16QCPDataContain
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %.lr.ph.i.i
-  %indvar.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %1, %bb.f ]
+  %indvar.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvar.next.i.i, %bb.f ] ; 2 uses
   %.sroa.0.022.i.i = phi ptr [ %.sroa.0.019.i.i, %.lr.ph.i.i ], [ %.sroa.0.0.i.i, %bb.f ] ; 8 uses
   %.pn21.i.i = phi ptr [ %i.y, %.lr.ph.i.i ], [ %.sroa.0.022.i.i, %bb.f ] ; 2 uses
-  %1 = add nuw nsw i64 %indvar.i.i, 1             ; 2 uses
-  %2 = mul nuw nsw i64 %1, 40
+  %1 = mul nuw nsw i64 %indvar.i.i, 40
+  %2 = add nuw nsw i64 %1, 40
   %i.am = load double, ptr %.sroa.0.022.i.i, align 8 ; 4 uses
   %i.an = load double, ptr %i.y, align 8
   %i.ao = fcmp olt double %i.am, %i.an
@@ -1764,6 +1764,7 @@ _ZSt25__unguarded_linear_insertIN5QListI16QCPFinancialDataE8iteratorEN9__gnu_cxx
 bb.f:                                             ; preds = %_ZSt25__unguarded_linear_insertIN5QListI16QCPFinancialDataE8iteratorEN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKS1_S8_EEEEvT_T0_.exit.i.i, %_ZSt13move_backwardIN5QListI16QCPFinancialDataE8iteratorES3_ET0_T_S5_S4_.exit.i.i
   %.sroa.0.0.i.i = getelementptr i8, ptr %.sroa.0.022.i.i, i64 40 ; 2 uses
   %.not.i.i5 = icmp eq ptr %.sroa.0.0.i.i, %i.al
+  %indvar.next.i.i = add nuw nsw i64 %indvar.i.i, 1
   br i1 %.not.i.i5, label %_ZSt16__insertion_sortIN5QListI16QCPFinancialDataE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbRKS1_S8_EEEEvT_SC_T0_.exit.i, label %bb.c, !llvm.loop !87
 
 _ZSt16__insertion_sortIN5QListI16QCPFinancialDataE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbRKS1_S8_EEEEvT_SC_T0_.exit.i: ; preds = %bb.f
@@ -1806,14 +1807,13 @@ bb.g:                                             ; preds = %bb.b
   %indvar.i23.i = phi i64 [ %indvar.next.i34.i, %bb.j ], [ 0, %bb.g ] ; 2 uses
   %.sroa.0.022.i24.i = phi ptr [ %.sroa.0.0.i32.i, %bb.j ], [ %.sroa.0.019.i.i, %bb.g ] ; 9 uses
   %.pn21.i25.i = phi ptr [ %.sroa.0.022.i24.i, %bb.j ], [ %i.y, %bb.g ] ; 3 uses
-  %i.bb = mul i64 %indvar.i23.i, 40               ; 2 uses
-  %i.bc = add i64 %i.bb, 40
-  %i.bd = udiv i64 %i.bc, 40                      ; 2 uses
-  %3 = icmp ult i64 %i.bb, -40                    ; 2 uses
+  %i.bb = mul i64 %indvar.i23.i, 40
+  %i.bc = add i64 %i.bb, 40                       ; 3 uses
+  %i.bd = udiv exact i64 %i.bc, 40
+  %3 = icmp ne i64 %i.bc, 0                       ; 2 uses
   %umin.neg.i26.i = sext i1 %3 to i64
   %i.be = select i1 %3, i64 40, i64 0
-  %.neg.i27.i = mul i64 %i.bd, -40
-  %4 = add i64 %.neg.i27.i, %i.be                 ; 2 uses
+  %4 = sub i64 %i.be, %i.bc                       ; 2 uses
   %scevgep.i28.i = getelementptr i8, ptr %.sroa.0.022.i24.i, i64 %4
   %scevgep24.i29.i = getelementptr i8, ptr %.pn21.i25.i, i64 %4
   %i.bf = add nuw nsw i64 %i.bd, 1
