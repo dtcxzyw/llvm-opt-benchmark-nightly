@@ -205,10 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.b = add i32 %0, -1
   %i.c = tail call fastcc float @equivalent_sigma_at_step(i32 noundef %i.b) ; 2 uses
   %i.d = fmul reassoc nsz arcp contract afn float %i.c, %i.c
-  %1 = uitofp reassoc nsz arcp contract afn i32 %0 to float
-  %2 = tail call reassoc nnan nsz arcp contract afn float @llvm.exp2.f32(float %1)
-  %3 = fmul reassoc nnan nsz arcp contract afn float %2, f0x3F871634 ; 2 uses
-  %i.e = fmul reassoc nsz arcp contract afn float %3, %3
+  %1 = tail call i32 @llvm.umin.i32(i32 %0, i32 128)
+  %2 = tail call reassoc nsz arcp contract afn float @llvm.ldexp.f32.i32(float f0x3F871634, i32 %1) ; 2 uses
+  %i.e = fmul reassoc nsz arcp contract afn float %2, %2
   %i.f = fadd reassoc nsz arcp contract afn float %i.d, %i.e
   %i.g = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %i.f)
   br label %common.ret1
@@ -216,9 +215,6 @@ bb.b:                                             ; preds = %bb.a
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @sprintf(ptr noalias noundef writeonly captures(none), ptr noundef readonly captures(none), ...) local_unnamed_addr #28
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.exp2.f32(float) #14
 
 declare i32 @dt_bauhaus_widget_get_quad_active(ptr noundef) local_unnamed_addr #3
 
@@ -248,6 +244,9 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.ldexp.f32.i32(float, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #14
