@@ -204,9 +204,9 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj, %bb.ai
-  %.3929.1.ph = phi i32 [ %.3929.ph, %bb.ai ], [ %.3929.ph, %bb.aj ], [ %i.me, %bb.ak ] ; 4 uses
-  %.3884.1.ph = phi i32 [ %.3884.ph, %bb.ai ], [ %.3884.ph, %bb.aj ], [ %i.lf, %bb.ak ]
-  %.3.1.ph = phi i32 [ %.3.ph, %bb.ai ], [ %.3.ph, %bb.aj ], [ %i.aj, %bb.ak ]
+  %.3929.1.ph = phi i32 [ %.3929.ph, %bb.ai ], [ %.3929.ph, %bb.aj ], [ %i.me, %bb.ak ] ; 5 uses
+  %.3884.1.ph = phi i32 [ %.3884.ph, %bb.ai ], [ %.3884.ph, %bb.aj ], [ %i.lf, %bb.ak ] ; 2 uses
+  %.3.1.ph = phi i32 [ %.3.ph, %bb.ai ], [ %.3.ph, %bb.aj ], [ %i.aj, %bb.ak ] ; 2 uses
   %i.mg = add nsw i32 %i.aj, -1                   ; 2 uses
   %i.mh = load ptr, ptr @mvbits, align 8, !tbaa !65 ; 4 uses
   %i.mi = getelementptr inbounds [4 x i8], ptr %i.mh, i64 %i.hh
@@ -228,7 +228,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %bb.
   %i.my = ashr i32 %i.mx, 16
   %i.mz = add nsw i32 %i.my, %i.mo                ; 3 uses
   %i.na = icmp slt i32 %i.mz, %.3929.1.ph
-  br i1 %i.na, label %bb.am, label %.preheader.3.a
+  br i1 %i.na, label %bb.am, label %.split
 
 bb.am:                                            ; preds = %bb.al
   %i.nb = load ptr, ptr @computeBiPred, align 8, !tbaa !11
@@ -237,15 +237,15 @@ bb.am:                                            ; preds = %bb.al
   %i.ne = tail call i32 %i.nb(ptr noundef %0, i32 noundef %i.o, i32 noundef %i.p, i32 noundef %i.nc, i32 noundef %i.ig, i32 noundef %i.ih, i32 noundef %i.ii, i32 noundef %i.nd) #11
   %i.nf = add nsw i32 %i.ne, %i.mz                ; 2 uses
   %i.ng = icmp slt i32 %i.nf, %.3929.1.ph
-  br i1 %i.ng, label %.split, label %.preheader.3.a
+  br i1 %i.ng, label %.preheader.3.a, label %.split
 
-.preheader.3.a:                                   ; preds = %bb.am, %bb.al
+.preheader.3.a:                                   ; preds = %bb.am
   br label %.split
 
-.split:                                           ; preds = %bb.am, %.preheader.3.a
-  %.3.21327 = phi i32 [ %.3.1.ph, %.preheader.3.a ], [ %i.mg, %bb.am ] ; 2 uses
-  %.3884.21326 = phi i32 [ %.3884.1.ph, %.preheader.3.a ], [ %i.ai, %bb.am ] ; 2 uses
-  %.3929.21325 = phi i32 [ %.3929.1.ph, %.preheader.3.a ], [ %i.nf, %bb.am ] ; 5 uses
+.split:                                           ; preds = %.preheader.3.a, %bb.am, %bb.al
+  %.3929.2.ph = phi i32 [ %.3929.1.ph, %bb.al ], [ %.3929.1.ph, %bb.am ], [ %i.nf, %.preheader.3.a ] ; 5 uses
+  %.3884.2.ph = phi i32 [ %.3884.1.ph, %bb.al ], [ %.3884.1.ph, %bb.am ], [ %i.ai, %.preheader.3.a ] ; 2 uses
+  %.3.2.ph = phi i32 [ %.3.1.ph, %bb.al ], [ %.3.1.ph, %bb.am ], [ %i.mg, %.preheader.3.a ] ; 2 uses
   %i.nh = add nsw i32 %i.aj, 1                    ; 2 uses
   %i.ni = load ptr, ptr @mvbits, align 8, !tbaa !65 ; 4 uses
   %i.nj = getelementptr inbounds [4 x i8], ptr %i.ni, i64 %i.hh
@@ -266,16 +266,16 @@ bb.am:                                            ; preds = %bb.al
   %i.ny = mul nsw i32 %i.nx, %16
   %i.nz = ashr i32 %i.ny, 16
   %i.oa = add nsw i32 %i.nz, %i.np                ; 3 uses
-  %i.ob = icmp slt i32 %i.oa, %.3929.21325
+  %i.ob = icmp slt i32 %i.oa, %.3929.2.ph
   br i1 %i.ob, label %bb.an, label %.preheader.3.thread
 
 bb.an:                                            ; preds = %.split
   %i.oc = load ptr, ptr @computeBiPred, align 8, !tbaa !11
-  %i.od = sub nsw i32 %.3929.21325, %i.oa
+  %i.od = sub nsw i32 %.3929.2.ph, %i.oa
   %i.oe = add nsw i32 %i.ns, 80
   %i.of = tail call i32 %i.oc(ptr noundef %0, i32 noundef %i.o, i32 noundef %i.p, i32 noundef %i.od, i32 noundef %i.ig, i32 noundef %i.ih, i32 noundef %i.ii, i32 noundef %i.oe) #11
   %i.og = add nsw i32 %i.of, %i.oa                ; 2 uses
-  %i.oh = icmp slt i32 %i.og, %.3929.21325
+  %i.oh = icmp slt i32 %i.og, %.3929.2.ph
   br i1 %i.oh, label %bb.ao, label %.preheader.3.thread
 
 bb.ao:                                            ; preds = %bb.an
@@ -356,9 +356,9 @@ bb.au:                                            ; preds = %bb.at
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at, %bb.as
-  %.5931.1.ph = phi i32 [ %.5931.ph, %bb.as ], [ %.5931.ph, %bb.at ], [ %i.qh, %bb.au ] ; 4 uses
-  %.5886.1.ph = phi i32 [ %.5886.ph, %bb.as ], [ %.5886.ph, %bb.at ], [ %i.pi, %bb.au ]
-  %.5.1.ph = phi i32 [ %.5.ph, %bb.as ], [ %.5.ph, %bb.at ], [ %i.aj, %bb.au ]
+  %.5931.1.ph = phi i32 [ %.5931.ph, %bb.as ], [ %.5931.ph, %bb.at ], [ %i.qh, %bb.au ] ; 5 uses
+  %.5886.1.ph = phi i32 [ %.5886.ph, %bb.as ], [ %.5886.ph, %bb.at ], [ %i.pi, %bb.au ] ; 2 uses
+  %.5.1.ph = phi i32 [ %.5.ph, %bb.as ], [ %.5.ph, %bb.at ], [ %i.aj, %bb.au ] ; 2 uses
   %i.qj = add nsw i32 %i.aj, -1                   ; 2 uses
   %i.qk = load ptr, ptr @mvbits, align 8, !tbaa !65 ; 4 uses
   %i.ql = getelementptr inbounds [4 x i8], ptr %i.qk, i64 %i.hh
@@ -380,7 +380,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
   %i.rb = ashr i32 %i.ra, 16
   %i.rc = add nsw i32 %i.rb, %i.qr                ; 3 uses
   %i.rd = icmp slt i32 %i.rc, %.5931.1.ph
-  br i1 %i.rd, label %bb.aw, label %.preheader1114.3.a
+  br i1 %i.rd, label %bb.aw, label %.split1347
 
 bb.aw:                                            ; preds = %bb.av
   %i.re = load ptr, ptr @computeBiPred, align 8, !tbaa !11
@@ -389,15 +389,15 @@ bb.aw:                                            ; preds = %bb.av
   %i.rh = tail call i32 %i.re(ptr noundef %0, i32 noundef %i.o, i32 noundef %i.p, i32 noundef %i.rf, i32 noundef %i.ig, i32 noundef %i.ih, i32 noundef %i.ii, i32 noundef %i.rg) #11
   %i.ri = add nsw i32 %i.rh, %i.rc                ; 2 uses
   %i.rj = icmp slt i32 %i.ri, %.5931.1.ph
-  br i1 %i.rj, label %.split1347, label %.preheader1114.3.a
+  br i1 %i.rj, label %.preheader1114.3.a, label %.split1347
 
-.preheader1114.3.a:                               ; preds = %bb.aw, %bb.av
+.preheader1114.3.a:                               ; preds = %bb.aw
   br label %.split1347
 
-.split1347:                                       ; preds = %bb.aw, %.preheader1114.3.a
-  %.5.21350 = phi i32 [ %.5.1.ph, %.preheader1114.3.a ], [ %i.qj, %bb.aw ] ; 2 uses
-  %.5886.21349 = phi i32 [ %.5886.1.ph, %.preheader1114.3.a ], [ %i.ai, %bb.aw ] ; 2 uses
-  %.5931.21348 = phi i32 [ %.5931.1.ph, %.preheader1114.3.a ], [ %i.ri, %bb.aw ] ; 5 uses
+.split1347:                                       ; preds = %.preheader1114.3.a, %bb.aw, %bb.av
+  %.5931.2.ph = phi i32 [ %.5931.1.ph, %bb.av ], [ %.5931.1.ph, %bb.aw ], [ %i.ri, %.preheader1114.3.a ] ; 5 uses
+  %.5886.2.ph = phi i32 [ %.5886.1.ph, %bb.av ], [ %.5886.1.ph, %bb.aw ], [ %i.ai, %.preheader1114.3.a ] ; 2 uses
+  %.5.2.ph = phi i32 [ %.5.1.ph, %bb.av ], [ %.5.1.ph, %bb.aw ], [ %i.qj, %.preheader1114.3.a ] ; 2 uses
   %i.rk = add nsw i32 %i.aj, 1                    ; 2 uses
   %i.rl = load ptr, ptr @mvbits, align 8, !tbaa !65 ; 4 uses
   %i.rm = getelementptr inbounds [4 x i8], ptr %i.rl, i64 %i.hh
@@ -418,25 +418,25 @@ bb.aw:                                            ; preds = %bb.av
   %i.sb = mul nsw i32 %i.sa, %16
   %i.sc = ashr i32 %i.sb, 16
   %i.sd = add nsw i32 %i.sc, %i.rs                ; 3 uses
-  %i.se = icmp slt i32 %i.sd, %.5931.21348
+  %i.se = icmp slt i32 %i.sd, %.5931.2.ph
   br i1 %i.se, label %bb.ax, label %.preheader1114.3.thread
 
 bb.ax:                                            ; preds = %.split1347
   %i.sf = load ptr, ptr @computeBiPred, align 8, !tbaa !11
-  %i.sg = sub nsw i32 %.5931.21348, %i.sd
+  %i.sg = sub nsw i32 %.5931.2.ph, %i.sd
   %i.sh = add nsw i32 %i.rv, 80
   %i.si = tail call i32 %i.sf(ptr noundef %0, i32 noundef %i.o, i32 noundef %i.p, i32 noundef %i.sg, i32 noundef %i.ig, i32 noundef %i.ih, i32 noundef %i.ii, i32 noundef %i.sh) #11
   %i.sj = add nsw i32 %i.si, %i.sd                ; 2 uses
-  %i.sk = icmp slt i32 %i.sj, %.5931.21348
+  %i.sk = icmp slt i32 %i.sj, %.5931.2.ph
   br i1 %i.sk, label %bb.ay, label %.preheader1114.3.thread
 
 bb.ay:                                            ; preds = %bb.ax
   br label %.preheader1114.3.thread
 
 .preheader1114.3.thread:                          ; preds = %.preheader1114.preheader, %bb.ay, %bb.ax, %.split1347
-  %.5931.3 = phi i32 [ %i.sj, %bb.ay ], [ %.5931.21348, %bb.ax ], [ %.5931.21348, %.split1347 ], [ %.1927, %.preheader1114.preheader ] ; 4 uses
-  %.5886.3 = phi i32 [ %i.ai, %bb.ay ], [ %.5886.21349, %bb.ax ], [ %.5886.21349, %.split1347 ], [ %.1882, %.preheader1114.preheader ] ; 8 uses
-  %.5.3 = phi i32 [ %i.rk, %bb.ay ], [ %.5.21350, %bb.ax ], [ %.5.21350, %.split1347 ], [ %.1, %.preheader1114.preheader ] ; 8 uses
+  %.5931.3 = phi i32 [ %i.sj, %bb.ay ], [ %.5931.2.ph, %bb.ax ], [ %.5931.2.ph, %.split1347 ], [ %.1927, %.preheader1114.preheader ] ; 4 uses
+  %.5886.3 = phi i32 [ %i.ai, %bb.ay ], [ %.5886.2.ph, %bb.ax ], [ %.5886.2.ph, %.split1347 ], [ %.1882, %.preheader1114.preheader ] ; 8 uses
+  %.5.3 = phi i32 [ %i.rk, %bb.ay ], [ %.5.2.ph, %bb.ax ], [ %.5.2.ph, %.split1347 ], [ %.1, %.preheader1114.preheader ] ; 8 uses
   %i.sl = icmp eq i32 %5, 1
   %i.sm = shl i32 %.5931.3, 2                     ; 2 uses
   br i1 %i.sl, label %bb.az, label %._crit_edge1222
@@ -839,9 +839,9 @@ bb.et:                                            ; preds = %bb.el, %bb.es, %bb.
   br i1 %or.cond1060, label %.preheader.3.thread, label %.thread1374
 
 .preheader.3.thread:                              ; preds = %bb.et, %.thread1374, %.preheader1109, %bb.ds, %bb.dt, %bb.du, %bb.dv, %.preheader1106.2, %.split, %bb.an, %bb.ao, %.preheader.preheader
-  %.31912.sink = phi i32 [ %.23904.1, %.preheader1106.2 ], [ %.1882, %.preheader.preheader ], [ %i.ai, %bb.ao ], [ %.3884.21326, %bb.an ], [ %.3884.21326, %.split ], [ %.21902, %bb.dv ], [ %.23904.2.ph, %bb.du ], [ %.23904.2.ph, %bb.dt ], [ %.23904.2.ph, %bb.ds ], [ %.21902, %.preheader1109 ], [ %.30911.31381, %.thread1374 ], [ %.289091167, %bb.et ]
-  %.31.sink = phi i32 [ %.21, %.preheader1106.2 ], [ %.1, %.preheader.preheader ], [ %i.nh, %bb.ao ], [ %.3.21327, %bb.an ], [ %.3.21327, %.split ], [ %i.aod, %bb.dv ], [ %.23.2.ph, %bb.du ], [ %.23.2.ph, %bb.dt ], [ %.23.2.ph, %bb.ds ], [ %.21, %.preheader1109 ], [ %.30.31382, %.thread1374 ], [ %.281168, %bb.et ]
-  %.0925 = phi i32 [ %.23949.1, %.preheader1106.2 ], [ %.1927, %.preheader.preheader ], [ %i.og, %bb.ao ], [ %.3929.21325, %bb.an ], [ %.3929.21325, %.split ], [ %i.api, %bb.dv ], [ %.23949.2.ph, %bb.du ], [ %.23949.2.ph, %bb.dt ], [ %.23949.2.ph, %bb.ds ], [ %.21947, %.preheader1109 ], [ %.30956.31379, %.thread1374 ], [ %.30956.3, %bb.et ]
+  %.31912.sink = phi i32 [ %.23904.1, %.preheader1106.2 ], [ %.1882, %.preheader.preheader ], [ %i.ai, %bb.ao ], [ %.3884.2.ph, %bb.an ], [ %.3884.2.ph, %.split ], [ %.21902, %bb.dv ], [ %.23904.2.ph, %bb.du ], [ %.23904.2.ph, %bb.dt ], [ %.23904.2.ph, %bb.ds ], [ %.21902, %.preheader1109 ], [ %.30911.31381, %.thread1374 ], [ %.289091167, %bb.et ]
+  %.31.sink = phi i32 [ %.21, %.preheader1106.2 ], [ %.1, %.preheader.preheader ], [ %i.nh, %bb.ao ], [ %.3.2.ph, %bb.an ], [ %.3.2.ph, %.split ], [ %i.aod, %bb.dv ], [ %.23.2.ph, %bb.du ], [ %.23.2.ph, %bb.dt ], [ %.23.2.ph, %bb.ds ], [ %.21, %.preheader1109 ], [ %.30.31382, %.thread1374 ], [ %.281168, %bb.et ]
+  %.0925 = phi i32 [ %.23949.1, %.preheader1106.2 ], [ %.1927, %.preheader.preheader ], [ %i.og, %bb.ao ], [ %.3929.2.ph, %bb.an ], [ %.3929.2.ph, %.split ], [ %i.api, %bb.dv ], [ %.23949.2.ph, %bb.du ], [ %.23949.2.ph, %bb.dt ], [ %.23949.2.ph, %bb.ds ], [ %.21947, %.preheader1109 ], [ %.30956.31379, %.thread1374 ], [ %.30956.3, %bb.et ]
   %i.awo = sub nsw i32 %.31912.sink, %3
   %i.awp = trunc i32 %i.awo to i16
   store i16 %i.awp, ptr %10, align 2, !tbaa !9
