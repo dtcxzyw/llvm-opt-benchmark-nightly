@@ -204,21 +204,21 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.d = and i8 %.sroa.5.0.extract.trunc, 7       ; 3 uses
+  %i.d = and i8 %.sroa.5.0.extract.trunc, 7       ; 2 uses
   %i.e = icmp eq i8 %i.d, 4
-  %5 = select i1 %i.e, i8 8, i8 0
   %i.f = lshr i8 %.sroa.5.0.extract.trunc, 6
   %i.g = and i8 %i.f, 1
-  %6 = or disjoint i8 %5, %i.g                    ; 2 uses
-  %7 = icmp ne i8 %i.d, 1
-  %8 = icmp ult i8 %.sroa.5.0.extract.trunc, 32
-  %.not7.i = or i1 %8, %7
-  %9 = icmp eq i8 %6, 0
-  %.not.i = and i1 %.not7.i, %9
+  %5 = icmp eq i8 %i.d, 1                         ; 4 uses
+  %6 = icmp ugt i8 %.sroa.5.0.extract.trunc, 31
+  %7 = and i1 %6, %5
+  %8 = select i1 %7, i8 64, i8 0
+  %9 = select i1 %i.e, i8 8, i8 %8
+  %10 = or disjoint i8 %9, %i.g                   ; 2 uses
+  %.not.i = icmp eq i8 %10, 0
   br i1 %.not.i, label %_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = or disjoint i8 %6, 64
+  %i.h = or i8 %10, 64
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !58   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 1
@@ -231,11 +231,10 @@ _ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit: ; pre
   %i.m = icmp eq i64 %i.l, 2                      ; 2 uses
   %i.n = icmp eq i64 %.sroa.416.0.extract.shift, 1
   %or.cond = and i1 %i.m, %i.n
-  %10 = icmp eq i8 %i.d, 1                        ; 3 uses
   br i1 %or.cond, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit
-  %i.o = select i1 %10, i8 -48, i8 -47
+  %i.o = select i1 %5, i8 -48, i8 -47
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !58   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 1
@@ -252,7 +251,7 @@ bb.f:                                             ; preds = %_ZN4Luau7CodeGen3X6
   br i1 %i.m, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.v = select i1 %10, i8 -64, i8 -63
+  %i.v = select i1 %5, i8 -64, i8 -63
   store i8 %i.v, ptr %i.t, align 1, !tbaa !17
   tail call void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX6414placeModRegMemENS1_10OperandX64Ehi(ptr noundef nonnull align 8 dereferenceable(268) %0, i64 %2, i8 noundef zeroext %4, i32 noundef 1)
   %i.w = trunc i64 %.sroa.416.0.extract.shift to i8
@@ -263,7 +262,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  %i.z = select i1 %10, i8 -46, i8 -45
+  %i.z = select i1 %5, i8 -46, i8 -45
   store i8 %i.z, ptr %i.t, align 1, !tbaa !17
   tail call void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX6414placeModRegMemENS1_10OperandX64Ehi(ptr noundef nonnull align 8 dereferenceable(268) %0, i64 %2, i8 noundef zeroext %4, i32 noundef 0)
   br label %bb.i
@@ -361,19 +360,19 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.i = icmp eq i8 %i.f, 4
-  %3 = select i1 %i.i, i8 8, i8 0
   %i.j = lshr i8 %.sroa.15136.0.extract.trunc, 6
   %i.k = and i8 %i.j, 1
-  %4 = or disjoint i8 %3, %i.k                    ; 2 uses
-  %5 = icmp ne i8 %i.f, 1
-  %6 = icmp ult i8 %.sroa.15136.0.extract.trunc, 32
-  %.not7.i = or i1 %6, %5
-  %7 = icmp eq i8 %4, 0
-  %.not.i = and i1 %.not7.i, %7
+  %3 = icmp eq i8 %i.f, 1
+  %4 = icmp ugt i8 %.sroa.15136.0.extract.trunc, 31
+  %5 = and i1 %4, %3
+  %6 = select i1 %5, i8 64, i8 0
+  %7 = select i1 %i.i, i8 8, i8 %6
+  %8 = or disjoint i8 %7, %i.k                    ; 2 uses
+  %.not.i = icmp eq i8 %8, 0
   br i1 %.not.i, label %_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.l = or disjoint i8 %4, 64
+  %i.l = or i8 %8, 64
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !58   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 1
@@ -497,19 +496,19 @@ bb.n:                                             ; preds = %_ZN4Luau7CodeGen3X6
 
 bb.o:                                             ; preds = %bb.n
   %i.bo = icmp eq i8 %i.f, 4
-  %8 = select i1 %i.bo, i8 8, i8 0
   %i.bp = lshr i8 %.sroa.15136.0.extract.trunc, 6
   %i.bq = and i8 %i.bp, 1
-  %9 = or disjoint i8 %8, %i.bq                   ; 2 uses
-  %10 = icmp ne i8 %i.f, 1
-  %11 = icmp ult i8 %.sroa.15136.0.extract.trunc, 32
-  %.not7.i260 = or i1 %11, %10
-  %12 = icmp eq i8 %9, 0
-  %.not.i261 = and i1 %.not7.i260, %12
-  br i1 %.not.i261, label %_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit262, label %bb.p
+  %9 = icmp eq i8 %i.f, 1
+  %10 = icmp ugt i8 %.sroa.15136.0.extract.trunc, 31
+  %11 = and i1 %10, %9
+  %12 = select i1 %11, i8 64, i8 0
+  %13 = select i1 %i.bo, i8 8, i8 %12
+  %14 = or disjoint i8 %13, %i.bq                 ; 2 uses
+  %.not.i257 = icmp eq i8 %14, 0
+  br i1 %.not.i257, label %_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit262, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.br = or disjoint i8 %9, 64
+  %i.br = or i8 %14, 64
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !58 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 1
@@ -834,19 +833,19 @@ define dso_local void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11R
 bb.a:
   %i.a = and i8 %1, 7                             ; 2 uses
   %i.b = icmp eq i8 %i.a, 4
-  %2 = select i1 %i.b, i8 8, i8 0
   %i.c = lshr i8 %1, 6
   %i.d = and i8 %i.c, 1
-  %3 = or disjoint i8 %2, %i.d                    ; 2 uses
-  %4 = icmp ne i8 %i.a, 1
-  %5 = icmp ult i8 %1, 32
-  %.not7 = or i1 %5, %4
-  %6 = icmp eq i8 %3, 0
-  %.not = and i1 %.not7, %6
+  %2 = icmp eq i8 %i.a, 1
+  %3 = icmp ugt i8 %1, 31
+  %4 = and i1 %3, %2
+  %5 = select i1 %4, i8 64, i8 0
+  %6 = select i1 %i.b, i8 8, i8 %5
+  %7 = or disjoint i8 %6, %i.d                    ; 2 uses
+  %.not = icmp eq i8 %7, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = or disjoint i8 %3, 64
+  %i.e = or i8 %7, 64
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !58   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 1
@@ -928,15 +927,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = and i8 %.sroa.4.0.extract.trunc, 7       ; 2 uses
   %i.b = icmp eq i8 %i.a, 4
-  %2 = select i1 %i.b, i8 8, i8 0
   %i.c = lshr i8 %.sroa.4.0.extract.trunc, 6
   %i.d = and i8 %i.c, 1
-  %3 = or disjoint i8 %2, %i.d
   %i.e = icmp eq i8 %i.a, 1
   %i.f = icmp ugt i8 %.sroa.4.0.extract.trunc, 31
   %i.g = and i1 %i.f, %i.e
-  %i.h = select i1 %i.g, i8 64, i8 0
-  %i.i = or disjoint i8 %3, %i.h
+  %2 = select i1 %i.g, i8 64, i8 0
+  %i.h = select i1 %i.b, i8 8, i8 %2
+  %i.i = or disjoint i8 %i.h, %i.d
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -1339,19 +1337,19 @@ bb.g:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.h:                                             ; preds = %bb.g, %bb.a
   %i.s = and i8 %1, 7                             ; 2 uses
   %i.t = icmp eq i8 %i.s, 4
-  %3 = select i1 %i.t, i8 8, i8 0
   %i.u = lshr i8 %1, 6
   %i.v = and i8 %i.u, 1
-  %4 = or disjoint i8 %3, %i.v                    ; 2 uses
-  %5 = icmp ne i8 %i.s, 1
-  %6 = icmp ult i8 %1, 32
-  %.not7.i = or i1 %6, %5
-  %7 = icmp eq i8 %4, 0
-  %.not.i = and i1 %.not7.i, %7
+  %3 = icmp eq i8 %i.s, 1
+  %4 = icmp ugt i8 %1, 31
+  %5 = and i1 %4, %3
+  %6 = select i1 %5, i8 64, i8 0
+  %7 = select i1 %i.t, i8 8, i8 %6
+  %8 = or disjoint i8 %7, %i.v                    ; 2 uses
+  %.not.i = icmp eq i8 %8, 0
   br i1 %.not.i, label %_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.w = or disjoint i8 %4, 64
+  %i.w = or i8 %8, 64
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !58   ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1
@@ -1754,15 +1752,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.i = icmp eq i8 %i.f, 4
-  %6 = select i1 %i.i, i8 8, i8 0
   %i.j = lshr i8 %.sroa.522.0.extract.trunc, 6
   %i.k = and i8 %i.j, 1
-  %7 = or disjoint i8 %6, %i.k
   %i.l = icmp eq i8 %i.f, 1
   %i.m = icmp ugt i8 %.sroa.522.0.extract.trunc, 31
   %i.n = and i1 %i.m, %i.l
-  %i.o = select i1 %i.n, i8 64, i8 0
-  %i.p = or disjoint i8 %7, %i.o
+  %6 = select i1 %i.n, i8 64, i8 0
+  %i.o = select i1 %i.i, i8 8, i8 %6
+  %i.p = or disjoint i8 %i.o, %i.k
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -2165,19 +2162,19 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.2.0.extract.trunc = trunc i64 %.sroa.2.0.extract.shift to i8 ; 4 uses
   %i.d = and i8 %.sroa.2.0.extract.trunc, 7       ; 2 uses
   %i.e = icmp eq i8 %i.d, 4
-  %2 = select i1 %i.e, i8 8, i8 0
-  %3 = lshr i8 %.sroa.2.0.extract.trunc, 6
-  %4 = and i8 %3, 1
-  %5 = or disjoint i8 %2, %4                      ; 2 uses
-  %6 = icmp ne i8 %i.d, 1
-  %7 = icmp ult i8 %.sroa.2.0.extract.trunc, 32
-  %.not7.i = or i1 %7, %6
-  %8 = icmp eq i8 %5, 0
-  %.not.i = and i1 %.not7.i, %8
+  %2 = lshr i8 %.sroa.2.0.extract.trunc, 6
+  %3 = and i8 %2, 1
+  %4 = icmp eq i8 %i.d, 1
+  %5 = icmp ugt i8 %.sroa.2.0.extract.trunc, 31
+  %6 = and i1 %5, %4
+  %7 = select i1 %6, i8 64, i8 0
+  %8 = select i1 %i.e, i8 8, i8 %7
+  %9 = or disjoint i8 %8, %3                      ; 2 uses
+  %.not.i = icmp eq i8 %9, 0
   br i1 %.not.i, label %_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = or disjoint i8 %5, 64
+  %i.f = or i8 %9, 64
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !58   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 1
@@ -2278,19 +2275,19 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.2.0.extract.trunc = trunc i64 %.sroa.2.0.extract.shift to i8 ; 4 uses
   %i.d = and i8 %.sroa.2.0.extract.trunc, 7       ; 2 uses
   %i.e = icmp eq i8 %i.d, 4
-  %2 = select i1 %i.e, i8 8, i8 0
-  %3 = lshr i8 %.sroa.2.0.extract.trunc, 6
-  %4 = and i8 %3, 1
-  %5 = or disjoint i8 %2, %4                      ; 2 uses
-  %6 = icmp ne i8 %i.d, 1
-  %7 = icmp ult i8 %.sroa.2.0.extract.trunc, 32
-  %.not7.i = or i1 %7, %6
-  %8 = icmp eq i8 %5, 0
-  %.not.i = and i1 %.not7.i, %8
+  %2 = lshr i8 %.sroa.2.0.extract.trunc, 6
+  %3 = and i8 %2, 1
+  %4 = icmp eq i8 %i.d, 1
+  %5 = icmp ugt i8 %.sroa.2.0.extract.trunc, 31
+  %6 = and i1 %5, %4
+  %7 = select i1 %6, i8 64, i8 0
+  %8 = select i1 %i.e, i8 8, i8 %7
+  %9 = or disjoint i8 %8, %3                      ; 2 uses
+  %.not.i = icmp eq i8 %9, 0
   br i1 %.not.i, label %_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = or disjoint i8 %5, 64
+  %i.f = or i8 %9, 64
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !58   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 1
@@ -2402,15 +2399,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.g = and i8 %.sroa.4.0.extract.trunc.i, 7     ; 2 uses
   %i.h = icmp eq i8 %i.g, 4
-  %3 = select i1 %i.h, i8 8, i8 0
   %i.i = lshr i8 %.sroa.4.0.extract.trunc.i, 6
   %i.j = and i8 %i.i, 1
-  %4 = or disjoint i8 %3, %i.j
   %i.k = icmp eq i8 %i.g, 1
   %i.l = icmp ugt i8 %.sroa.4.0.extract.trunc.i, 31
   %i.m = and i1 %i.l, %i.k
-  %i.n = select i1 %i.m, i8 64, i8 0
-  %i.o = or disjoint i8 %4, %i.n
+  %3 = select i1 %i.m, i8 64, i8 0
+  %i.n = select i1 %i.h, i8 8, i8 %3
+  %i.o = or disjoint i8 %i.n, %i.j
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -2813,19 +2809,19 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.d = and i8 %1, 7                             ; 2 uses
   %i.e = icmp eq i8 %i.d, 4
-  %2 = select i1 %i.e, i8 8, i8 0
   %i.f = lshr i8 %1, 6
   %i.g = and i8 %i.f, 1
-  %3 = or disjoint i8 %2, %i.g                    ; 2 uses
-  %4 = icmp ne i8 %i.d, 1
-  %5 = icmp ult i8 %1, 32
-  %.not7.i = or i1 %5, %4
-  %6 = icmp eq i8 %3, 0
-  %.not.i = and i1 %.not7.i, %6
+  %2 = icmp eq i8 %i.d, 1
+  %3 = icmp ugt i8 %1, 31
+  %4 = and i1 %3, %2
+  %5 = select i1 %4, i8 64, i8 0
+  %6 = select i1 %i.e, i8 8, i8 %5
+  %7 = or disjoint i8 %6, %i.g                    ; 2 uses
+  %.not.i = icmp eq i8 %7, 0
   br i1 %.not.i, label %_ZN4Luau7CodeGen3X6418AssemblyBuilderX648placeRexENS1_11RegisterX64E.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = or disjoint i8 %3, 64
+  %i.h = or i8 %7, 64
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !58   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 1
@@ -3228,15 +3224,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = icmp eq i8 %i.c, 4
-  %7 = select i1 %i.f, i8 8, i8 0
   %i.g = lshr i8 %.sroa.639.0.extract.trunc, 6
   %i.h = and i8 %i.g, 1
-  %8 = or disjoint i8 %7, %i.h
   %i.i = icmp eq i8 %i.c, 1
   %i.j = icmp ugt i8 %.sroa.639.0.extract.trunc, 31
   %i.k = and i1 %i.j, %i.i
-  %i.l = select i1 %i.k, i8 64, i8 0
-  %i.m = or disjoint i8 %8, %i.l
+  %7 = select i1 %i.k, i8 64, i8 0
+  %i.l = select i1 %i.f, i8 8, i8 %7
+  %i.m = or disjoint i8 %i.l, %i.h
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a

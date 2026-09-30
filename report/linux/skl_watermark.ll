@@ -205,16 +205,13 @@ skl_compute_wm_levels.exit:                       ; preds = %skl_wm_latency.exit
 
 bb.l:                                             ; preds = %skl_compute_wm_levels.exit
   %i.bu = getelementptr i8, ptr %i.d, i64 1168
-  %i.bv = load i16, ptr %i.bu, align 8            ; 3 uses
+  %i.bv = load i16, ptr %i.bu, align 8            ; 2 uses
   %i.bw = icmp eq i16 %i.bv, 9
   br i1 %i.bw, label %skl_compute_transition_wm.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bx = icmp ugt i16 %i.bv, 10
-  %..i = select i1 %i.bx, i16 4, i16 14
-  %5 = icmp eq i16 %i.bv, 10
-  %.030.i = select i1 %5, i16 0, i16 10
-  %6 = add nuw nsw i16 %..i, %.030.i              ; 2 uses
+  %i.bx = icmp ugt i16 %i.bv, 9
+  %.030.i = select i1 %i.bx, i16 14, i16 24       ; 2 uses
   %i.by = getelementptr i8, ptr %i.i, i64 4
   %i.bz = load i16, ptr %i.by, align 2
   %i.ca = add i16 %i.bz, -1                       ; 2 uses
@@ -228,11 +225,11 @@ mul_round_up_u32_fixed16.exit.i:                  ; preds = %bb.m
   %i.cf = zext i16 %i.ca to i32
   %i.cg = tail call i32 @llvm.umax.i32(i32 %i.ce, i32 %i.cf)
   %i.ch = trunc nuw i32 %i.cg to i16
-  %i.ci = add i16 %6, %i.ch
+  %i.ci = add i16 %.030.i, %i.ch
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.cj = add i16 %i.ca, %6
+  %i.cj = add i16 %i.ca, %.030.i
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %mul_round_up_u32_fixed16.exit.i
@@ -329,16 +326,13 @@ tgl_compute_sagv_wm.exit:                         ; preds = %bb.s, %skl_wm_laten
   br i1 %i.dw, label %bb.y, label %skl_compute_transition_wm.exit42
 
 bb.y:                                             ; preds = %tgl_compute_sagv_wm.exit
-  %i.dx = load i16, ptr %i.cq, align 8            ; 3 uses
+  %i.dx = load i16, ptr %i.cq, align 8            ; 2 uses
   %i.dy = icmp eq i16 %i.dx, 9
   br i1 %i.dy, label %skl_compute_transition_wm.exit42, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.dz = icmp ugt i16 %i.dx, 10
-  %..i38 = select i1 %i.dz, i16 4, i16 14
-  %7 = icmp eq i16 %i.dx, 10
-  %.030.i39 = select i1 %7, i16 0, i16 10
-  %8 = add nuw nsw i16 %..i38, %.030.i39          ; 2 uses
+  %i.dz = icmp ugt i16 %i.dx, 9
+  %.030.i39 = select i1 %i.dz, i16 14, i16 24     ; 2 uses
   %i.ea = getelementptr i8, ptr %i.i, i64 112
   %i.eb = load i16, ptr %i.ea, align 2
   %i.ec = add i16 %i.eb, -1                       ; 2 uses
@@ -352,11 +346,11 @@ mul_round_up_u32_fixed16.exit.i41:                ; preds = %bb.z
   %i.eh = zext i16 %i.ec to i32
   %i.ei = tail call i32 @llvm.umax.i32(i32 %i.eg, i32 %i.eh)
   %i.ej = trunc nuw i32 %i.ei to i16
-  %i.ek = add i16 %8, %i.ej
+  %i.ek = add i16 %.030.i39, %i.ej
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %i.el = add i16 %i.ec, %8
+  %i.el = add i16 %i.ec, %.030.i39
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %mul_round_up_u32_fixed16.exit.i41

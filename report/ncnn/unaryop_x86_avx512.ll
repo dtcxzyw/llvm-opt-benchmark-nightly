@@ -202,9 +202,8 @@ bb.b:                                             ; preds = %bb.a
   %i.y = fcmp fast ogt <16 x float> %i.x, zeroinitializer
   %i.z = fcmp fast olt <16 x float> %i.x, zeroinitializer
   %i.aa = select fast <16 x i1> %i.y, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %i.ab = select fast <16 x i1> %i.z, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %6 = fsub fast <16 x float> %i.aa, %i.ab
-  store <16 x float> %6, ptr %.02738, align 1, !tbaa !41
+  %i.ab = select fast <16 x i1> %i.z, <16 x float> splat (float -1.000000e+00), <16 x float> %i.aa
+  store <16 x float> %i.ab, ptr %.02738, align 1, !tbaa !41
   %i.ac = getelementptr inbounds nuw i8, ptr %.02738, i64 64 ; 2 uses
   %i.ad = add nuw nsw i32 %.039, 16               ; 3 uses
   %i.ae = or disjoint i32 %i.ad, 15
@@ -229,9 +228,8 @@ bb.c:                                             ; preds = %._crit_edge
   %i.an = fcmp fast ogt <16 x float> %i.am, zeroinitializer
   %i.ao = fcmp fast olt <16 x float> %i.am, zeroinitializer
   %i.ap = select fast <16 x i1> %i.an, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %i.aq = select fast <16 x i1> %i.ao, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %7 = fsub fast <16 x float> %i.ap, %i.aq
-  call void @llvm.masked.store.v16f32.p0(<16 x float> nofpclass(nan inf) %7, ptr align 1 %.027.lcssa, <16 x i1> %i.al)
+  %i.aq = select fast <16 x i1> %i.ao, <16 x float> splat (float -1.000000e+00), <16 x float> %i.ap
+  call void @llvm.masked.store.v16f32.p0(<16 x float> nofpclass(nan inf) %i.aq, ptr align 1 %.027.lcssa, <16 x i1> %i.al)
   %.pre = load i32, ptr %i.b, align 4, !tbaa !37
   br label %bb.d
 
@@ -634,13 +632,10 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = bitcast <16 x i32> %i.ad to <16 x float> ; 2 uses
   %i.af = fcmp fast ogt <16 x float> %i.ae, zeroinitializer
   %i.ag = fcmp fast olt <16 x float> %i.ae, zeroinitializer
-  %6 = select fast <16 x i1> %i.af, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %7 = select fast <16 x i1> %i.ag, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %8 = fsub fast <16 x float> %6, %7
-  %9 = bitcast <16 x float> %8 to <16 x i32>
-  %10 = lshr <16 x i32> %9, splat (i32 16)        ; 2 uses
-  %i.ah = shufflevector <16 x i32> %10, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.ai = shufflevector <16 x i32> %10, <16 x i32> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %6 = select <16 x i1> %i.af, <16 x i32> splat (i32 16256), <16 x i32> zeroinitializer
+  %7 = select <16 x i1> %i.ag, <16 x i32> splat (i32 49024), <16 x i32> %6 ; 2 uses
+  %i.ah = shufflevector <16 x i32> %7, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.ai = shufflevector <16 x i32> %7, <16 x i32> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.aj = call <16 x i16> @llvm.x86.avx2.packusdw(<8 x i32> %i.ah, <8 x i32> %i.ai)
   %i.ak = bitcast <16 x i16> %i.aj to <4 x i64>
   %i.al = shufflevector <4 x i64> %i.ak, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
@@ -676,13 +671,10 @@ bb.c:                                             ; preds = %._crit_edge
   %i.bf = bitcast <16 x i32> %i.be to <16 x float> ; 2 uses
   %i.bg = fcmp fast ogt <16 x float> %i.bf, zeroinitializer
   %i.bh = fcmp fast olt <16 x float> %i.bf, zeroinitializer
-  %11 = select fast <16 x i1> %i.bg, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %12 = select fast <16 x i1> %i.bh, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %13 = fsub fast <16 x float> %11, %12
-  %14 = bitcast <16 x float> %13 to <16 x i32>
-  %15 = lshr <16 x i32> %14, splat (i32 16)       ; 2 uses
-  %i.bi = shufflevector <16 x i32> %15, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.bj = shufflevector <16 x i32> %15, <16 x i32> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %8 = select <16 x i1> %i.bg, <16 x i32> splat (i32 16256), <16 x i32> zeroinitializer
+  %9 = select <16 x i1> %i.bh, <16 x i32> splat (i32 49024), <16 x i32> %8 ; 2 uses
+  %i.bi = shufflevector <16 x i32> %9, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.bj = shufflevector <16 x i32> %9, <16 x i32> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.bk = call <16 x i16> @llvm.x86.avx2.packusdw(<8 x i32> %i.bi, <8 x i32> %i.bj)
   %i.bl = bitcast <16 x i16> %i.bk to <4 x i64>
   %i.bm = shufflevector <4 x i64> %i.bl, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>

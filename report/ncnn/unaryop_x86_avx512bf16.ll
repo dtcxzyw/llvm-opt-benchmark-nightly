@@ -202,9 +202,8 @@ bb.b:                                             ; preds = %bb.a
   %i.x = fcmp fast ogt <16 x bfloat> %i.w, zeroinitializer
   %i.y = fcmp fast olt <16 x bfloat> %i.w, zeroinitializer
   %i.z = select fast <16 x i1> %i.x, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %i.aa = select fast <16 x i1> %i.y, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %6 = fsub fast <16 x float> %i.z, %i.aa
-  %i.ab = call fast noundef nofpclass(nan inf) <16 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.512(<16 x float> nofpclass(nan inf) %6)
+  %i.aa = select fast <16 x i1> %i.y, <16 x float> splat (float -1.000000e+00), <16 x float> %i.z
+  %i.ab = call fast noundef nofpclass(nan inf) <16 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.512(<16 x float> nofpclass(nan inf) %i.aa)
   store <16 x bfloat> %i.ab, ptr %.03453, align 1, !tbaa !18
   %i.ac = getelementptr inbounds nuw i8, ptr %.03453, i64 32 ; 2 uses
   %i.ad = add nuw nsw i32 %.054, 16               ; 3 uses
@@ -231,9 +230,8 @@ bb.c:                                             ; preds = %._crit_edge
   %i.ap = fcmp fast ogt <16 x bfloat> %i.ao, zeroinitializer
   %i.aq = fcmp fast olt <16 x bfloat> %i.ao, zeroinitializer
   %i.ar = select fast <16 x i1> %i.ap, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %i.as = select fast <16 x i1> %i.aq, <16 x float> splat (float 1.000000e+00), <16 x float> zeroinitializer
-  %7 = fsub fast <16 x float> %i.ar, %i.as
-  %i.at = call fast noundef nofpclass(nan inf) <16 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.512(<16 x float> nofpclass(nan inf) %7)
+  %i.as = select fast <16 x i1> %i.aq, <16 x float> splat (float -1.000000e+00), <16 x float> %i.ar
+  %i.at = call fast noundef nofpclass(nan inf) <16 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.512(<16 x float> nofpclass(nan inf) %i.as)
   %i.au = bitcast <16 x bfloat> %i.at to <16 x i16>
   call void @llvm.masked.store.v16i16.p0(<16 x i16> %i.au, ptr align 1 %.034.lcssa, <16 x i1> %i.am)
   %.pre69 = load i32, ptr %4, align 4, !tbaa !14

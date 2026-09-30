@@ -204,11 +204,11 @@ bb.ac:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !631)
   %i.dj = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.dk = load i32, ptr %i.dj, align 8, !range !7, !alias.scope !630, !noalias !632, !noundef !4
-  %.not.i1 = icmp ne i32 %i.dk, -1                ; 3 uses
+  %.not.i1 = icmp ne i32 %i.dk, -1                ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %4 = load i8, ptr %i.dl, align 8, !alias.scope !630, !noalias !632
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 113
-  %6 = load i8, ptr %5, align 1, !alias.scope !630, !noalias !632
+  %4 = load i16, ptr %i.dl, align 8, !alias.scope !630, !noalias !632
+  %5 = zext i16 %4 to i40
+  %6 = shl nuw nsw i40 %5, 8
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 129
   %i.dn = load i8, ptr %i.dm, align 1, !range !25, !alias.scope !630, !noalias !632, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i)
@@ -611,14 +611,8 @@ bb.cd:                                            ; preds = %_RNvMss_Cs7HL9jt3VR
   store i32 6, ptr %.sroa.7113.0..sroa_idx.i, align 8, !noalias !638
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an), !noalias !638
   %.sroa.087.0.insert.ext.i = zext i1 %.not.i1 to i40
-  %7 = zext i8 %4 to i40
-  %8 = shl nuw nsw i40 %7, 8
-  %.sroa.087.1.insert.shift.i = select i1 %.not.i1, i40 %8, i40 0
-  %.sroa.087.1.insert.insert.i = or disjoint i40 %.sroa.087.1.insert.shift.i, %.sroa.087.0.insert.ext.i
-  %9 = zext i8 %6 to i40
-  %10 = shl nuw nsw i40 %9, 16
-  %.sroa.087.2.insert.shift.i = select i1 %.not.i1, i40 %10, i40 0
-  %.sroa.087.2.insert.insert.i = or disjoint i40 %.sroa.087.1.insert.insert.i, %.sroa.087.2.insert.shift.i
+  %.sroa.087.2.insert.shift.i = select i1 %.not.i1, i40 %6, i40 0
+  %.sroa.087.2.insert.insert.i = or disjoint i40 %.sroa.087.2.insert.shift.i, %.sroa.087.0.insert.ext.i
   %.sroa.087.4.insert.ext.i = zext nneg i8 %i.dn to i40
   %.sroa.087.4.insert.shift.i = shl nuw nsw i40 %.sroa.087.4.insert.ext.i, 32
   %.sroa.087.4.insert.insert.i = or disjoint i40 %.sroa.087.2.insert.insert.i, %.sroa.087.4.insert.shift.i
@@ -1021,25 +1015,19 @@ bb.ac:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !674)
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.dv = load i32, ptr %i.du, align 8, !range !7, !alias.scope !674, !noalias !675, !noundef !4
-  %.not.i1 = icmp ne i32 %i.dv, -1                ; 3 uses
+  %.not.i1 = icmp ne i32 %i.dv, -1                ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %4 = load i8, ptr %i.dw, align 8, !alias.scope !674, !noalias !675
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 113
-  %6 = load i8, ptr %5, align 1, !alias.scope !674, !noalias !675
+  %4 = load i16, ptr %i.dw, align 8, !alias.scope !674, !noalias !675
+  %5 = zext i16 %4 to i40
+  %6 = shl nuw nsw i40 %5, 8
   %i.dx = getelementptr inbounds nuw i8, ptr %1, i64 129
   %i.dy = load i8, ptr %i.dx, align 1, !range !25, !alias.scope !674, !noalias !675, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az), !noalias !676
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.614.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay), !noalias !676
-  %.sroa.0141.0.insert.ext.i = zext i1 %.not.i1 to i40
-  %7 = zext i8 %4 to i40
-  %8 = shl nuw nsw i40 %7, 8
-  %.sroa.0141.1.insert.shift.i = select i1 %.not.i1, i40 %8, i40 0
-  %.sroa.0141.1.insert.insert.i = or disjoint i40 %.sroa.0141.1.insert.shift.i, %.sroa.0141.0.insert.ext.i
-  %i.dz = zext i8 %6 to i40
-  %9 = shl nuw nsw i40 %i.dz, 16
-  %.sroa.0141.2.insert.shift.i = select i1 %.not.i1, i40 %9, i40 0
-  %.sroa.0141.2.insert.insert.i = or disjoint i40 %.sroa.0141.1.insert.insert.i, %.sroa.0141.2.insert.shift.i
+  %i.dz = zext i1 %.not.i1 to i40
+  %.sroa.0141.2.insert.shift.i = select i1 %.not.i1, i40 %6, i40 0
+  %.sroa.0141.2.insert.insert.i = or disjoint i40 %.sroa.0141.2.insert.shift.i, %i.dz
   %.sroa.0141.4.insert.ext.i = zext nneg i8 %i.dy to i40
   %.sroa.0141.4.insert.shift.i = shl nuw nsw i40 %.sroa.0141.4.insert.ext.i, 32
   %.sroa.0141.4.insert.insert.i = or disjoint i40 %.sroa.0141.2.insert.insert.i, %.sroa.0141.4.insert.shift.i ; 2 uses

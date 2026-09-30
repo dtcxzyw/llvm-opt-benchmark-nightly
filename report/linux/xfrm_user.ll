@@ -204,15 +204,12 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
   %i.e = getelementptr i8, ptr %0, i64 380        ; 2 uses
   %i.f = load i8, ptr %i.e, align 4
   %i.g = zext i8 %i.f to i32
-  %i.h = shl nuw nsw i32 %i.g, 6                  ; 2 uses
-  %5 = or disjoint i32 %i.h, 4
+  %i.h = shl nuw nsw i32 %i.g, 6
   %.val74.i = load ptr, ptr %0, align 8
   %i.i = icmp eq i32 %i.d, 20                     ; 2 uses
-  %6 = add nuw nsw i32 %i.h, 176
-  %spec.select.i = select i1 %i.i, i32 %6, i32 %5
-  %spec.select103.i = select i1 %i.i, i32 64, i32 168 ; 3 uses
-  %7 = add nuw nsw i32 %spec.select103.i, 28
-  %i.j = add nuw nsw i32 %7, %spec.select.i
+  %spec.select.i = select i1 %i.i, i32 64, i32 168 ; 2 uses
+  %spec.select103.i = select i1 %i.i, i32 268, i32 200
+  %i.j = add nuw nsw i32 %spec.select103.i, %i.h
   %i.k = tail call ptr @__alloc_skb(i32 noundef range(i32 0, -3) %i.j, i32 noundef range(i32 2080, 3265) 2080, i32 noundef 0, i32 noundef -1) #14 ; 15 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %xfrm_notify_policy.exit, label %bb.c
@@ -234,12 +231,12 @@ skb_tailroom.exit.i.i:                            ; preds = %bb.c
   %i.u = getelementptr i8, ptr %i.k, i64 188      ; 2 uses
   %i.v = load i32, ptr %i.u, align 4
   %i.w = sub i32 %i.t, %i.v
-  %i.x = or disjoint i32 %spec.select103.i, 16
+  %i.x = or disjoint i32 %spec.select.i, 16
   %i.y = icmp slt i32 %i.w, %i.x
   br i1 %i.y, label %copy_user_offload.exit.i, label %nlmsg_put.exit.i, !prof !11
 
 nlmsg_put.exit.i:                                 ; preds = %skb_tailroom.exit.i.i
-  %i.z = tail call ptr @__nlmsg_put(ptr noundef nonnull %i.k, i32 noundef %i.n, i32 noundef %i.p, i32 noundef %i.q, i32 noundef range(i32 0, 281) %spec.select103.i, i32 noundef 0) #14 ; 6 uses
+  %i.z = tail call ptr @__nlmsg_put(ptr noundef nonnull %i.k, i32 noundef %i.n, i32 noundef %i.p, i32 noundef %i.q, i32 noundef range(i32 0, 281) %spec.select.i, i32 noundef 0) #14 ; 6 uses
   %i.aa = icmp eq ptr %i.z, null
   br i1 %i.aa, label %copy_user_offload.exit.i, label %bb.d
 

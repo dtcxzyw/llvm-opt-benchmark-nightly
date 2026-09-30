@@ -205,15 +205,15 @@ bb.a:
   %i.c = load i24, ptr %i.b, align 8              ; 3 uses
   %i.d = and i24 %i.c, 196608
   %.not = icmp eq i24 %i.d, 0
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %2 = load ptr, ptr %1, align 8, !tbaa !37
+  %3 = load i24, ptr %2, align 8                  ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %5 = load ptr, ptr %4, align 8, !tbaa !37
+  %6 = load i24, ptr %5, align 8                  ; 3 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %2 = load ptr, ptr %1, align 8, !tbaa !37
-  %3 = load i24, ptr %2, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %5 = load ptr, ptr %4, align 8, !tbaa !37
-  %6 = load i24, ptr %5, align 8
   %i.e = or i24 %3, %6
   %i.f = or i24 %i.e, %i.c
   %i.g = lshr i24 %i.f, 14
@@ -223,28 +223,19 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %7 = lshr i24 %i.c, 14
-  %8 = trunc i24 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %10 = load ptr, ptr %9, align 8, !tbaa !37
-  %11 = load i24, ptr %10, align 8
-  %i.k = lshr i24 %11, 14
-  %i.l = trunc i24 %i.k to i8                     ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %13 = load ptr, ptr %12, align 8, !tbaa !37
-  %14 = load i24, ptr %13, align 8
-  %i.m = lshr i24 %14, 14
-  %i.n = trunc i24 %i.m to i8                     ; 2 uses
-  %15 = load i24, ptr %0, align 8
-  %16 = and i24 %15, 524288
-  %.not16 = icmp eq i24 %16, 0                    ; 2 uses
-  %spec.select.v = select i1 %.not16, i8 %i.n, i8 %i.l ; 2 uses
-  %spec.select15 = select i1 %.not16, i8 %i.l, i8 %i.n
-  %17 = and i8 %spec.select.v, 12
-  %18 = or i8 %spec.select15, %8
-  %19 = or i8 %18, %spec.select.v
-  %i.o = and i8 %19, 19
-  %i.p = or disjoint i8 %i.o, %17
+  %7 = load i24, ptr %0, align 8
+  %8 = and i24 %7, 524288
+  %.not16 = icmp eq i24 %8, 0
+  %spec.select.v.v.v = select i1 %.not16, i24 %6, i24 %3
+  %i.k = lshr i24 %spec.select.v.v.v, 14
+  %i.l = trunc i24 %i.k to i8
+  %9 = and i8 %i.l, 12
+  %10 = or i24 %3, %i.c
+  %11 = or i24 %10, %6
+  %i.m = lshr i24 %11, 14
+  %i.n = trunc i24 %i.m to i8
+  %i.o = and i8 %i.n, 19
+  %i.p = or disjoint i8 %9, %i.o
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

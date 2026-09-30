@@ -205,10 +205,9 @@ bb.az:                                            ; preds = %bb.ay
   %.not68.i = icmp eq i8 %.sroa.0.190.fr.i, 6     ; 2 uses
   %i.eb = and i8 %.pre107.i, -52
   %i.ec = icmp eq i8 %.sroa.0.190.fr.i, 2
-  %spec.select.i = select i1 %i.ec, i8 32, i8 2
-  %i.ed = select i1 %.not68.i, i8 2, i8 18
-  %7 = or i8 %i.ed, %spec.select.i
-  %i.ee = or disjoint i8 %7, %i.eb
+  %spec.select.i = select i1 %.not68.i, i8 2, i8 18
+  %i.ed = select i1 %i.ec, i8 50, i8 %spec.select.i
+  %i.ee = or disjoint i8 %i.eb, %i.ed
   store i8 %i.ee, ptr %i.cp, align 4
   br i1 %.not68.i, label %bb.ba, label %bb.bb
 

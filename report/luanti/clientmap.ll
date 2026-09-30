@@ -205,12 +205,11 @@ bb.dg:                                            ; preds = %bb.df
   %i.aft = phi i8 [ %i.afs, %bb.dg ], [ 63, %bb.df ] ; 2 uses
   store i8 %i.aft, ptr %i.m, align 1, !tbaa !65
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #2
-  %i.afu = icmp eq i8 %i.afh, 63                  ; 2 uses
-  %22 = select i1 %i.afu, i8 63, i8 %i.aft
+  %i.afu = icmp eq i8 %i.afh, 63
   %i.afv = xor i8 %i.afh, -1
-  %23 = select i1 %i.afu, i8 63, i8 %i.afv
-  %24 = and i8 %23, %i.afp
-  %i.afw = and i8 %24, %22                        ; 2 uses
+  %22 = and i8 %i.aft, %i.afv
+  %23 = select i1 %i.afu, i8 63, i8 %22
+  %i.afw = and i8 %23, %i.afp                     ; 2 uses
   %i.afx = lshr i8 %i.afw, 1
   %i.afy = or i8 %i.afx, %i.afw                   ; 3 uses
   %i.afz = and i8 %i.afy, 1

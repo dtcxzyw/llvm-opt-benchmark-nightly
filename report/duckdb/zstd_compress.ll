@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
   %i.am = select i1 %i.al, i64 4, i64 3
   %i.an = icmp ugt i64 %i.u, 16383
   %i.ao = zext i1 %i.an to i64
-  %2 = add nuw nsw i64 %i.am, %i.ao
   %i.ap = icmp ult i64 %i.u, 256
   switch i32 %i.ak, label %bb.h [
     i32 0, label %_ZN11duckdb_zstdL30ZSTD_estimateBlockSize_literalEPKhmPKNS_17ZSTD_hufCTables_tEPKNS_25ZSTD_hufCTablesMetadata_tEPvmi.exit.i
@@ -237,7 +236,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.0.i.i = phi i64 [ %i.aw, %bb.f ], [ %i.at, %bb.e ] ; 2 uses
   %i.ax = add i64 %.0.i.i, 6
   %spec.select.i.i = select i1 %i.ap, i64 %.0.i.i, i64 %i.ax
-  %i.ay = add i64 %2, %spec.select.i.i
+  %2 = add i64 %i.am, %spec.select.i.i
+  %i.ay = add i64 %2, %i.ao
   br label %_ZN11duckdb_zstdL30ZSTD_estimateBlockSize_literalEPKhmPKNS_17ZSTD_hufCTables_tEPKNS_25ZSTD_hufCTablesMetadata_tEPvmi.exit.i
 
 bb.h:                                             ; preds = %bb.b
@@ -433,10 +433,9 @@ _ZN11duckdb_zstdL22ZSTD_estimateBlockSizeEPKhmS1_S1_S1_mPKNS_21ZSTD_entropyCTabl
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !491
   %i.da = icmp ugt i64 %i.ah, 32511
   %i.db = icmp ugt i64 %i.ah, 127
-  %i.dc = select i1 %i.db, i64 3, i64 2
-  %i.dd = select i1 %i.da, i64 4, i64 3
-  %3 = add nuw nsw i64 %i.dd, %i.dc
-  %i.de = add i64 %3, %.126.i.i
+  %i.dc = select i1 %i.da, i64 7, i64 6
+  %i.dd = select i1 %i.db, i64 %i.dc, i64 5
+  %i.de = add i64 %.126.i.i, %i.dd
   %i.df = add i64 %i.de, %.034.i.i.i
   %i.dg = add i64 %i.df, %.034.i33.i.i
   %i.dh = add i64 %i.dg, %.034.i49.i.i
