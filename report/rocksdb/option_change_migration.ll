@@ -202,15 +202,9 @@ bb.et:                                            ; preds = %_ZN7rocksdb12_GLOBA
   %i.zi = load i8, ptr %i.xw, align 8, !tbaa !306, !range !123, !noalias !303, !noundef !124
   %i.zj = trunc nuw i8 %i.zi to i1
   %spec.select = select i1 %i.zj, i1 true, i1 %.0 ; 2 uses
-  %52 = getelementptr i8, ptr %i.ym, i64 160
-  %.val.i = load i32, ptr %52, align 8
   %.val29.i = load i8, ptr %i.yo, align 8, !tbaa !307 ; 2 uses
   %switch.i.i = icmp ult i8 %.val29.i, 2
-  %53 = icmp eq i32 %.val.i, 1
-  %or.cond.i.i = select i1 %switch.i.i, i1 %53, i1 false
-  %54 = icmp eq i8 %.val29.i, 2
-  %or.cond9.i.i = or i1 %54, %or.cond.i.i
-  br i1 %or.cond9.i.i, label %bb.ew, label %_ZN7rocksdb12_GLOBAL__N_131ApplySpecialSingleLevelSettingsERKNS_19ColumnFamilyOptionsEPS1_.exit.i
+  br i1 %switch.i.i, label %52, label %55
 
 bb.eu:                                            ; preds = %bb.ei
   %i.zk = landingpad { ptr, i32 }
@@ -222,12 +216,22 @@ bb.ev:                                            ; preds = %_ZN7rocksdb12_GLOBA
           cleanup
   br label %bb.fi
 
-bb.ew:                                            ; preds = %bb.et
+52:                                               ; preds = %bb.et
+  %53 = getelementptr i8, ptr %i.ym, i64 160
+  %.val.i = load i32, ptr %53, align 8
+  %54 = icmp eq i32 %.val.i, 1
+  br i1 %54, label %bb.ew, label %_ZN7rocksdb12_GLOBAL__N_131ApplySpecialSingleLevelSettingsERKNS_19ColumnFamilyOptionsEPS1_.exit.i
+
+55:                                               ; preds = %bb.et
+  %.old6.i.i = icmp eq i8 %.val29.i, 2
+  br i1 %.old6.i.i, label %bb.ew, label %_ZN7rocksdb12_GLOBAL__N_131ApplySpecialSingleLevelSettingsERKNS_19ColumnFamilyOptionsEPS1_.exit.i
+
+bb.ew:                                            ; preds = %55, %52
   store i64 999999999999999, ptr %i.xy, align 8, !tbaa !309, !noalias !303
   store i64 999999999999999, ptr %i.xz, align 8, !tbaa !311, !noalias !303
   br label %_ZN7rocksdb12_GLOBAL__N_131ApplySpecialSingleLevelSettingsERKNS_19ColumnFamilyOptionsEPS1_.exit.i
 
-_ZN7rocksdb12_GLOBAL__N_131ApplySpecialSingleLevelSettingsERKNS_19ColumnFamilyOptionsEPS1_.exit.i: ; preds = %bb.ew, %bb.et
+_ZN7rocksdb12_GLOBAL__N_131ApplySpecialSingleLevelSettingsERKNS_19ColumnFamilyOptionsEPS1_.exit.i: ; preds = %bb.ew, %55, %52
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #18, !noalias !303
   invoke void @_ZN7rocksdb9DBOptionsC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(1736) %19, ptr noundef nonnull align 8 dereferenceable(753) %2)
           to label %.noexc30.i unwind label %bb.fd

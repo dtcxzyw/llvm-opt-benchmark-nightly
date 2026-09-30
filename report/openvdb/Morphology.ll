@@ -205,12 +205,12 @@ _ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Valu
   br i1 %.not7.i, label %_ZN7openvdb5v13_05tools14count_internal18ActiveVoxelCountOpINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEEEEEclISD_EEbRKT_m.exit, label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE13cbeginValueOnEv.exit.i
-  %.promoted.i = load i64, ptr %1, align 8, !tbaa !1683
+  %.promoted.i = load i64, ptr %1, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i, %.lr.ph.i.a
-  %11 = phi i64 [ %.promoted.i, %.lr.ph.i.a ], [ %i.m, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i ]
-  %.sroa.5.08.i = phi ptr [ %.sroa.2.1.i.i, %.lr.ph.i.a ], [ %.sroa.5.3.i, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i ]
+  %.sroa.5.08.i = phi ptr [ %.sroa.5.3.i, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i ], [ %.sroa.2.1.i.i, %.lr.ph.i.a ]
+  %11 = phi i64 [ %i.m, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i ], [ %.promoted.i, %.lr.ph.i.a ]
   %i.m = add i64 %11, 68719476736                 ; 2 uses
   store i64 %i.m, ptr %1, align 8, !tbaa !1683
   %i.n = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.5.08.i) #32 ; 3 uses
@@ -613,12 +613,12 @@ _ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj
   br i1 %.not7.i.i.i.i, label %_ZN7openvdb5v13_04tree8NodeListIKNS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE11OpWithIndex4evalINS1_14ReduceFilterOpINS0_5tools14count_internal18ActiveVoxelCountOpINS1_4TreeINS1_8RootNodeIS8_EEEEEEEEEEvRT_RNSA_9NodeRange8IteratorE.exit.i, label %.lr.ph.i.i.i.i.a
 
 .lr.ph.i.i.i.i.a:                                 ; preds = %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE13cbeginValueOnEv.exit.i.i.i.i
-  %.promoted.i.i.i.i = load i64, ptr %i.l, align 8, !tbaa !1683
+  %.promoted.i.i.i.i = load i64, ptr %i.l, align 1
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i, %.lr.ph.i.i.i.i.a
-  %4 = phi i64 [ %.promoted.i.i.i.i, %.lr.ph.i.i.i.i.a ], [ %i.ah, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i ]
-  %.sroa.3.08.i.i.i.i = phi i32 [ %i.ag, %.lr.ph.i.i.i.i.a ], [ %.118.i.i.i.i.i.i.i.i, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i ]
+  %.sroa.3.08.i.i.i.i = phi i32 [ %.118.i.i.i.i.i.i.i.i, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i ], [ %i.ag, %.lr.ph.i.i.i.i.a ]
+  %4 = phi i64 [ %i.ah, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i ], [ %.promoted.i.i.i.i, %.lr.ph.i.i.i.i.a ]
   %i.ah = add i64 %4, 2097152                     ; 2 uses
   store i64 %i.ah, ptr %i.l, align 8, !tbaa !1683
   %i.ai = add i32 %.sroa.3.08.i.i.i.i, 1          ; 4 uses
@@ -1021,12 +1021,12 @@ _ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj
   br i1 %.not7.i.i.i.i.i.i.i.i.i, label %_ZN7openvdb5v13_04tree8NodeListIKNS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE11OpWithIndex4evalINS1_14ReduceFilterOpINS0_5tools14count_internal18ActiveVoxelCountOpINS1_4TreeINS1_8RootNodeIS8_EEEEEEEEEEvRT_RNSA_9NodeRange8IteratorE.exit.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.a
 
 .lr.ph.i.i.i.i.i.i.i.i.i.a:                       ; preds = %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE13cbeginValueOnEv.exit.i.i.i.i.i.i.i.i.i
-  %.promoted.i.i.i.i.i.i.i.i.i = load i64, ptr %i.t, align 8, !tbaa !1683
+  %.promoted.i.i.i.i.i.i.i.i.i = load i64, ptr %i.t, align 1
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.a
-  %6 = phi i64 [ %.promoted.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.a ], [ %i.ap, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i ]
-  %.sroa.3.08.i.i.i.i.i.i.i.i.i = phi i32 [ %i.ao, %.lr.ph.i.i.i.i.i.i.i.i.i.a ], [ %.118.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i ]
+  %.sroa.3.08.i.i.i.i.i.i.i.i.i = phi i32 [ %.118.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i ], [ %i.ao, %.lr.ph.i.i.i.i.i.i.i.i.i.a ]
+  %6 = phi i64 [ %i.ap, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i ], [ %.promoted.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.a ]
   %i.ap = add i64 %6, 2097152                     ; 2 uses
   store i64 %i.ap, ptr %i.t, align 8, !tbaa !1683
   %i.aq = add i32 %.sroa.3.08.i.i.i.i.i.i.i.i.i, 1 ; 4 uses
@@ -1368,15 +1368,15 @@ _ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj
   br i1 %.not7.i.i.i.i.i.i.i.i.i21, label %_ZN7openvdb5v13_04tree8NodeListIKNS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE11OpWithIndex4evalINS1_14ReduceFilterOpINS0_5tools14count_internal18ActiveVoxelCountOpINS1_4TreeINS1_8RootNodeIS8_EEEEEEEEEEvRT_RNSA_9NodeRange8IteratorE.exit.i.i.i.i.i.i29, label %.lr.ph.i.i.i.i.i.i.i.i.i22
 
 .lr.ph.i.i.i.i.i.i.i.i.i22:                       ; preds = %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE13cbeginValueOnEv.exit.i.i.i.i.i.i.i.i.i20
-  %.promoted.i.i.i.i.i.i.i.i.i23 = load i64, ptr %i.gc, align 8, !tbaa !1683
+  %.promoted.i.i.i.i.i.i.i.i.i23 = load i64, ptr %i.gc, align 1
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i26, %.lr.ph.i.i.i.i.i.i.i.i.i22
-  %7 = phi i64 [ %.promoted.i.i.i.i.i.i.i.i.i23, %.lr.ph.i.i.i.i.i.i.i.i.i22 ], [ %i.gy, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i26 ]
-  %.sroa.3.08.i.i.i.i.i.i.i.i.i24 = phi i32 [ %i.gx, %.lr.ph.i.i.i.i.i.i.i.i.i22 ], [ %.118.i.i.i.i.i.i.i.i.i.i.i.i.i27, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i26 ]
+  %.sroa.3.08.i.i.i.i.i.i.i.i.i25 = phi i32 [ %.118.i.i.i.i.i.i.i.i.i.i.i.i.i27, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i26 ], [ %i.gx, %.lr.ph.i.i.i.i.i.i.i.i.i22 ]
+  %7 = phi i64 [ %i.gy, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i.i.i.i.i.i.i26 ], [ %.promoted.i.i.i.i.i.i.i.i.i23, %.lr.ph.i.i.i.i.i.i.i.i.i22 ]
   %i.gy = add i64 %7, 2097152                     ; 2 uses
   store i64 %i.gy, ptr %i.gc, align 8, !tbaa !1683
-  %i.gz = add i32 %.sroa.3.08.i.i.i.i.i.i.i.i.i24, 1 ; 4 uses
+  %i.gz = add i32 %.sroa.3.08.i.i.i.i.i.i.i.i.i25, 1 ; 4 uses
   %i.ha = lshr i32 %i.gz, 6                       ; 3 uses
   %i.hb = icmp ugt i32 %i.gz, 32767
   br i1 %i.hb, label %_ZN7openvdb5v13_04tree8NodeListIKNS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE11OpWithIndex4evalINS1_14ReduceFilterOpINS0_5tools14count_internal18ActiveVoxelCountOpINS1_4TreeINS1_8RootNodeIS8_EEEEEEEEEEvRT_RNSA_9NodeRange8IteratorE.exit.i.i.i.i.i.i29, label %bb.z
@@ -1779,24 +1779,26 @@ _ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Valu
   br i1 %.not10.i, label %_ZN7openvdb5v13_05tools14count_internal20InactiveVoxelCountOpINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEEEEEclERKSD_m.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE14cbeginValueOffEv.exit.i
+  %.promoted.i = load i64, ptr %1, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.m = load i8, ptr %i.l, align 8, !tbaa !514, !range !512, !noundef !528
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_12ValueOffPredEKbEppEv.exit.i, %.lr.ph.i
   %.sroa.5.011.i = phi ptr [ %.sroa.2.1.i.i, %.lr.ph.i ], [ %.sroa.5.3.i, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_12ValueOffPredEKbEppEv.exit.i ] ; 2 uses
+  %7 = phi i64 [ %.promoted.i, %.lr.ph.i ], [ %8, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_12ValueOffPredEKbEppEv.exit.i ] ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.5.011.i, i64 56
   %i.o = load i8, ptr %i.n, align 1, !tbaa !514, !range !512, !noundef !528
   %i.p = icmp eq i8 %i.o, %i.m
   br i1 %i.p, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %7 = load i64, ptr %1, align 8, !tbaa !1685
-  %i.q = add i64 %7, 68719476736
+  %i.q = add i64 %7, 68719476736                  ; 2 uses
   store i64 %i.q, ptr %1, align 8, !tbaa !1685
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
+  %8 = phi i64 [ %i.q, %bb.d ], [ %7, %bb.c ]
   %i.r = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.5.011.i) #32 ; 3 uses
   %.not3.i.i.i3.i = icmp eq ptr %i.r, %i.d
   br i1 %.not3.i.i.i3.i, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_12ValueOffPredEKbEppEv.exit.i, label %.lr.ph.i.i.i4.i
@@ -2199,11 +2201,13 @@ _ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj
   br i1 %.not9.i.i.i, label %_ZN7openvdb5v13_04tree8NodeListIKNS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE11OpWithIndex4evalINS1_14ReduceFilterOpINS0_5tools14count_internal20InactiveVoxelCountOpINS1_4TreeINS1_8RootNodeIS8_EEEEEEEEEEvRT_RNSA_9NodeRange8IteratorE.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE14cbeginValueOffEv.exit.i.i.i
+  %.promoted.i.i.i = load i64, ptr %i.l, align 1
   %i.ai = getelementptr inbounds nuw i8, ptr %i.p, i64 262144
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util15OffMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i, %.lr.ph.i.i.i
   %.sroa.3.010.i.i.i = phi i32 [ %i.ah, %.lr.ph.i.i.i ], [ %.118.i.i.i.i.i.i.i, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util15OffMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i ] ; 3 uses
+  %2 = phi i64 [ %.promoted.i.i.i, %.lr.ph.i.i.i ], [ %3, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util15OffMaskIteratorINS3_8NodeMaskILj5EEEEEKNS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit.i.i.i ] ; 2 uses
   %i.aj = lshr i32 %.sroa.3.010.i.i.i, 6
   %i.ak = zext nneg i32 %i.aj to i64
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.ak
@@ -2216,12 +2220,12 @@ bb.h:                                             ; preds = %_ZN7openvdb5v13_04t
   br i1 %.not.i.i.i.i.i, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %2 = load i64, ptr %i.l, align 8, !tbaa !1685
-  %i.ar = add i64 %2, 2097152
+  %i.ar = add i64 %2, 2097152                     ; 2 uses
   store i64 %i.ar, ptr %i.l, align 8, !tbaa !1685
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
+  %3 = phi i64 [ %2, %bb.h ], [ %i.ar, %bb.i ]
   %i.as = add i32 %.sroa.3.010.i.i.i, 1           ; 4 uses
   %i.at = lshr i32 %i.as, 6                       ; 3 uses
   %i.au = icmp ugt i32 %i.as, 32767
@@ -2624,12 +2628,12 @@ _ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9Valu
   br i1 %.not7.i, label %_ZN7openvdb5v13_05tools14count_internal17ActiveTileCountOpINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEEEEEclERKSD_m.exit, label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE13cbeginValueOnEv.exit.i
-  %.promoted.i = load i64, ptr %1, align 8, !tbaa !1687
+  %.promoted.i = load i64, ptr %1, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i, %.lr.ph.i.a
-  %6 = phi i64 [ %.promoted.i, %.lr.ph.i.a ], [ %i.m, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i ]
-  %.sroa.5.08.i = phi ptr [ %.sroa.2.1.i.i, %.lr.ph.i.a ], [ %.sroa.5.3.i, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i ]
+  %.sroa.5.08.i = phi ptr [ %.sroa.5.3.i, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i ], [ %.sroa.2.1.i.i, %.lr.ph.i.a ]
+  %6 = phi i64 [ %i.m, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE9ValueIterIKS9_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS9_10NodeStructEEENS9_11ValueOnPredEKbEppEv.exit.i ], [ %.promoted.i, %.lr.ph.i.a ]
   %i.m = add i64 %6, 1                            ; 2 uses
   store i64 %i.m, ptr %1, align 8, !tbaa !1687
   %i.n = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.5.08.i) #32 ; 3 uses

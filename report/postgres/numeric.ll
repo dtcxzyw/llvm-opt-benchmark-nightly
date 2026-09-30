@@ -204,17 +204,17 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.0144 = phi i64 [ %i.cm, %bb.o ], [ %i.ch, %bb.n ]
-  %5 = insertelement <2 x i32> <i32 1, i32 poison>, i32 %i.k, i64 1
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.ab
-  %i.cn = phi i32 [ %i.bi, %bb.p ], [ %12, %bb.ab ] ; 2 uses
+  %i.cn = phi i32 [ %i.bi, %bb.p ], [ %11, %bb.ab ] ; 3 uses
   %indvars.iv227 = phi i32 [ 1, %bb.p ], [ %indvars.iv.next228, %bb.ab ] ; 2 uses
-  %.0141202 = phi i32 [ 0, %bb.p ], [ %.2263, %bb.ab ]
-  %.0142201 = phi i32 [ 0, %bb.p ], [ %.1143, %bb.ab ] ; 4 uses
+  %.0141202 = phi i32 [ 0, %bb.p ], [ %.2263267, %bb.ab ]
+  %.0142201 = phi i32 [ 0, %bb.p ], [ %.1143, %bb.ab ] ; 5 uses
   %.0145200 = phi i64 [ 0, %bb.p ], [ %.3, %bb.ab ]
-  %.0149199.a = phi i32 [ 0, %bb.p ], [ %9, %bb.ab ] ; 4 uses
-  %6 = phi <2 x i32> [ %5, %bb.p ], [ %10, %bb.ab ] ; 2 uses
+  %.0149199 = phi i32 [ 0, %bb.p ], [ %9, %bb.ab ] ; 4 uses
+  %.0149199.a = phi i32 [ %i.k, %bb.p ], [ %12, %bb.ab ] ; 2 uses
+  %.0153197 = phi i32 [ 1, %bb.p ], [ %8, %bb.ab ] ; 3 uses
   %i.co = mul i64 %.0145200, 10                   ; 2 uses
   %i.cp = icmp sgt i32 %.0142201, -1
   %i.cq = icmp slt i32 %.0142201, %i.cn
@@ -231,7 +231,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %.1146 = phi i64 [ %i.cw, %bb.r ], [ %i.co, %bb.q ] ; 2 uses
+  %.1146 = phi i64 [ %i.cw, %bb.r ], [ %i.co, %bb.q ] ; 3 uses
   %i.cx = mul i64 %.1146, 10
   %i.cy = sdiv i64 %i.cx, %.0144                  ; 2 uses
   %i.cz = add i64 %i.cy, 1
@@ -241,7 +241,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 .lr.ph193:                                        ; preds = %bb.s, %bb.w
   %.0148192 = phi i64 [ %i.ea, %bb.w ], [ %spec.store.select1, %bb.s ] ; 5 uses
-  %i.db = getelementptr inbounds nuw [40 x i8], ptr %4, i64 %.0148192 ; 6 uses
+  %i.db = getelementptr inbounds nuw [40 x i8], ptr %4, i64 %.0148192 ; 7 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 24 ; 2 uses
   %i.dd = load ptr, ptr %i.dc, align 8
   %i.de = icmp eq ptr %i.dd, null
@@ -288,54 +288,51 @@ bb.v:                                             ; preds = %.lr.ph, %bb.v
 
 .thread:                                          ; preds = %bb.v, %bb.u, %.lr.ph193
   %i.dx = getelementptr inbounds nuw i8, ptr %i.db, i64 4
-  store <2 x i32> %6, ptr %i.dx, align 4
+  store i32 %.0153197, ptr %i.dx, align 4
+  %5 = getelementptr inbounds nuw i8, ptr %i.db, i64 8
+  store i32 %.0149199.a, ptr %5, align 8
   %i.dy = call fastcc i32 @cmp_abs(ptr noundef nonnull %3, ptr noundef nonnull %i.db) ; 2 uses
   %i.dz = icmp sgt i32 %i.dy, -1
   br i1 %i.dz, label %.thread._crit_edge, label %bb.w
 
 bb.w:                                             ; preds = %.thread
-  %i.ea = add nsw i64 %.0148192, -1               ; 3 uses
+  %i.ea = add nsw i64 %.0148192, -1
   %i.eb = icmp sgt i64 %.0148192, 1
   br i1 %i.eb, label %.lr.ph193, label %.thread._crit_edge.thread, !llvm.loop !34
 
 .thread._crit_edge.thread:                        ; preds = %bb.w
-  %7 = trunc i64 %i.ea to i8
-  %i.ec = add i32 %.0149199.a, 1                  ; 2 uses
+  %i.ec = add i32 %.0149199, 1                    ; 2 uses
   %i.ed = sext i32 %i.ec to i64
   %i.ee = getelementptr inbounds i8, ptr %i.bx, i64 %i.ed ; 2 uses
-  store i8 %7, ptr %i.ee, align 1
-  br label %bb.x
+  store i8 0, ptr %i.ee, align 1
+  %6 = add i32 %.0153197, -1
+  br label %bb.ab
 
 .thread._crit_edge:                               ; preds = %.thread, %bb.s
-  %.0148.lcssa = phi i64 [ %spec.store.select1, %bb.s ], [ %.0148192, %.thread ] ; 2 uses
-  %.2 = phi i32 [ %.0141202, %bb.s ], [ %i.dy, %.thread ] ; 2 uses
+  %.0148.lcssa = phi i64 [ %spec.store.select1, %bb.s ], [ %.0148192, %.thread ] ; 3 uses
+  %.2 = phi i32 [ %.0141202, %bb.s ], [ %i.dy, %.thread ] ; 4 uses
   %i.ef = trunc i64 %.0148.lcssa to i8
-  %i.eg = add i32 %.0149199.a, 1                  ; 3 uses
+  %i.eg = add i32 %.0149199, 1                    ; 5 uses
   %i.eh = sext i32 %i.eg to i64
-  %i.ei = getelementptr inbounds i8, ptr %i.bx, i64 %i.eh ; 3 uses
+  %i.ei = getelementptr inbounds i8, ptr %i.bx, i64 %i.eh ; 5 uses
   store i8 %i.ef, ptr %i.ei, align 1
   %i.ej = icmp eq i32 %.2, 0
   br i1 %i.ej, label %bb.ac, label %bb.x
 
-bb.x:                                             ; preds = %.thread._crit_edge.thread, %.thread._crit_edge
-  %8 = phi ptr [ %i.ee, %.thread._crit_edge.thread ], [ %i.ei, %.thread._crit_edge ]
-  %9 = phi i32 [ %i.ec, %.thread._crit_edge.thread ], [ %i.eg, %.thread._crit_edge ] ; 3 uses
-  %.2263 = phi i32 [ -1, %.thread._crit_edge.thread ], [ %.2, %.thread._crit_edge ]
-  %.0148.lcssa262 = phi i64 [ %i.ea, %.thread._crit_edge.thread ], [ %.0148.lcssa, %.thread._crit_edge ] ; 2 uses
-  %10 = add <2 x i32> %6, <i32 -1, i32 1>         ; 2 uses
-  %i.ek = icmp eq i64 %.0148.lcssa262, 0
+bb.x:                                             ; preds = %.thread._crit_edge
+  %7 = add i32 %.0153197, -1                      ; 4 uses
+  %i.ek = icmp eq i64 %.0148.lcssa, 0
   br i1 %i.ek, label %bb.ab, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.el = getelementptr inbounds [40 x i8], ptr %4, i64 %.0148.lcssa262
+  %i.el = getelementptr inbounds [40 x i8], ptr %4, i64 %.0148.lcssa
   %i.em = call fastcc i32 @sub_abs(ptr noundef nonnull %3, ptr noundef nonnull %i.el, ptr noundef nonnull %3)
   %.not167 = icmp eq i32 %i.em, 0
   br i1 %.not167, label %bb.z, label %.loopexit178
 
 bb.z:                                             ; preds = %bb.y
   %i.en = load i32, ptr %i.bj, align 4
-  %11 = extractelement <2 x i32> %10, i64 0
-  %i.eo = sub i32 %i.en, %11                      ; 5 uses
+  %i.eo = sub i32 %i.en, %7                       ; 5 uses
   %i.ep = icmp sgt i32 %i.eo, -1
   %i.eq = load i32, ptr %3, align 8               ; 3 uses
   %i.er = icmp slt i32 %i.eo, %i.eq
@@ -350,21 +347,26 @@ bb.aa:                                            ; preds = %bb.z
   %i.ew = zext i8 %i.ev to i64
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.z, %bb.aa, %bb.x
-  %12 = phi i32 [ %i.cn, %bb.x ], [ %i.eq, %bb.aa ], [ %i.eq, %bb.z ]
-  %.3 = phi i64 [ %.1146, %bb.x ], [ %i.ew, %bb.aa ], [ 0, %bb.z ]
-  %.1143.in = phi i32 [ %.0142201, %bb.x ], [ %i.eo, %bb.aa ], [ %i.eo, %bb.z ]
+bb.ab:                                            ; preds = %.thread._crit_edge.thread, %bb.z, %bb.aa, %bb.x
+  %8 = phi i32 [ %7, %bb.x ], [ %7, %bb.aa ], [ %7, %bb.z ], [ %6, %.thread._crit_edge.thread ]
+  %.2263267 = phi i32 [ %.2, %bb.x ], [ %.2, %bb.aa ], [ %.2, %bb.z ], [ -1, %.thread._crit_edge.thread ]
+  %9 = phi i32 [ %i.eg, %bb.x ], [ %i.eg, %bb.aa ], [ %i.eg, %bb.z ], [ %i.ec, %.thread._crit_edge.thread ] ; 3 uses
+  %10 = phi ptr [ %i.ei, %bb.x ], [ %i.ei, %bb.aa ], [ %i.ei, %bb.z ], [ %i.ee, %.thread._crit_edge.thread ]
+  %11 = phi i32 [ %i.cn, %bb.x ], [ %i.eq, %bb.aa ], [ %i.eq, %bb.z ], [ %i.cn, %.thread._crit_edge.thread ]
+  %.3 = phi i64 [ %.1146, %bb.x ], [ %i.ew, %bb.aa ], [ 0, %bb.z ], [ %.1146, %.thread._crit_edge.thread ]
+  %.1143.in = phi i32 [ %.0142201, %bb.x ], [ %i.eo, %bb.aa ], [ %i.eo, %bb.z ], [ %.0142201, %.thread._crit_edge.thread ]
+  %12 = add i32 %.0149199.a, 1
   %.1143 = add i32 %.1143.in, 1
   %.not = icmp sgt i32 %9, %spec.store.select
   %indvars.iv.next228 = add i32 %indvars.iv227, 1
   br i1 %.not, label %bb.ac, label %bb.q, !llvm.loop !35
 
 bb.ac:                                            ; preds = %.thread._crit_edge, %bb.ab
-  %i.ex = phi ptr [ %i.ei, %.thread._crit_edge ], [ %8, %bb.ab ] ; 2 uses
+  %i.ex = phi ptr [ %i.ei, %.thread._crit_edge ], [ %10, %bb.ab ] ; 2 uses
   %i.ey = phi i32 [ %i.eg, %.thread._crit_edge ], [ %9, %bb.ab ]
-  %i.ez = add i32 %.0149199.a, 2                  ; 2 uses
+  %i.ez = add i32 %.0149199, 2                    ; 2 uses
   store i32 %i.ez, ptr %2, align 8
-  %i.fa = icmp eq i32 %.0149199.a, %spec.store.select
+  %i.fa = icmp eq i32 %.0149199, %spec.store.select
   br i1 %i.fa, label %bb.ad, label %.loopexit177
 
 bb.ad:                                            ; preds = %bb.ac

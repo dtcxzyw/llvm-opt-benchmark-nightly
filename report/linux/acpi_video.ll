@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 120
 inline.NumDeleted: 56
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
     ".section \22.export_symbol\22,\22a\22 ; __export_symbol_acpi_video_handles_brightness_key_presses: ; .asciz \22\22 ; .ascii \22\22 \22\\0\22 ; .balign 8 ; .quad acpi_video_handles_brightness_key_presses ; .previous"
     ".section\09\22.initcall6.init\22, \22a\22\09\09"
@@ -205,7 +205,7 @@ _kmalloc_noprof.exit:                             ; preds = %bb.f
   %i.o = zext i32 %i.n to i64
   %i.p = shl nuw nsw i64 %i.o, 2
   %i.q = call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 0, 721554505561) %i.p, i32 noundef 3264) #23 ; 2 uses
-  %i.r = getelementptr i8, ptr %i.l, i64 8        ; 6 uses
+  %i.r = getelementptr i8, ptr %i.l, i64 8        ; 8 uses
   store ptr %i.q, ptr %i.r, align 8
   %.not94 = icmp eq ptr %i.q, null
   br i1 %.not94, label %bb.g, label %.preheader111
@@ -347,35 +347,62 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph118.ne
   %.086.lcssa143 = phi i32 [ %.288.lcssa, %._crit_edge ], [ 0, %.preheader ], [ 0, %.preheader111 ] ; 2 uses
   %.083.lcssa135142 = phi i32 [ %.184, %._crit_edge ], [ %.184, %.preheader ], [ 0, %.preheader111 ] ; 2 uses
   %.079.lcssa136141 = phi i32 [ %.281, %._crit_edge ], [ %.281, %.preheader ], [ 0, %.preheader111 ]
-  %i.bt = sub i32 2, %.086.lcssa143               ; 2 uses
+  %i.bt = sub i32 2, %.086.lcssa143               ; 4 uses
   %i.bu = getelementptr i8, ptr %i.l, i64 16      ; 2 uses
   %i.bv = load i8, ptr %i.bu, align 8
   %i.bw = or i8 %i.bv, 1
   store i8 %i.bw, ptr %i.bu, align 8
   %i.bx = add i32 %.083.lcssa135142, 1
-  %i.by = sub i32 %i.bx, %.086.lcssa143           ; 2 uses
+  %i.by = sub i32 %i.bx, %.086.lcssa143           ; 4 uses
   %i.bz = icmp sgt i32 %i.by, 1
-  br i1 %i.bz, label %.lr.ph122.preheader.a, label %._crit_edge123
+  br i1 %i.bz, label %.lr.ph122.preheader, label %._crit_edge123
 
-.lr.ph122.preheader.a:                            ; preds = %._crit_edge.thread
-  %4 = zext nneg i32 %i.by to i64
-  br label %.lr.ph122
+.lr.ph122.preheader:                              ; preds = %._crit_edge.thread
+  %4 = zext nneg i32 %i.by to i64                 ; 4 uses
+  %5 = and i64 %4, 1
+  %lcmp.mod147.not.not = icmp eq i64 %5, 0
+  br i1 %lcmp.mod147.not.not, label %.lr.ph122.preheader.a, label %.lr.ph122.prol.loopexit
 
-.lr.ph122:                                        ; preds = %.lr.ph122.preheader.a, %.lr.ph122
-  %indvars.iv125 = phi i64 [ %4, %.lr.ph122.preheader.a ], [ %indvars.iv.next126.a, %.lr.ph122 ] ; 4 uses
+.lr.ph122.preheader.a:                            ; preds = %.lr.ph122.preheader
+  %6 = load ptr, ptr %i.r, align 8                ; 2 uses
+  %7 = sub i32 %i.by, %i.bt
+  %8 = sext i32 %7 to i64
+  %9 = getelementptr [4 x i8], ptr %6, i64 %8
+  %10 = load i32, ptr %9, align 4
+  %11 = getelementptr [4 x i8], ptr %6, i64 %4
+  store i32 %10, ptr %11, align 4
+  %indvars.iv.next126.prol = add nsw i64 %4, -1
+  br label %.lr.ph122.prol.loopexit
+
+.lr.ph122.prol.loopexit:                          ; preds = %.lr.ph122.preheader.a, %.lr.ph122.preheader
+  %indvars.iv125.unr = phi i64 [ %4, %.lr.ph122.preheader ], [ %indvars.iv.next126.prol, %.lr.ph122.preheader.a ]
+  %12 = icmp eq i32 %i.by, 2
+  br i1 %12, label %._crit_edge123, label %.lr.ph122
+
+.lr.ph122:                                        ; preds = %.lr.ph122.prol.loopexit, %.lr.ph122
+  %indvars.iv125 = phi i64 [ %indvars.iv.next126.a, %.lr.ph122 ], [ %indvars.iv125.unr, %.lr.ph122.prol.loopexit ] ; 5 uses
+  %13 = load ptr, ptr %i.r, align 8               ; 2 uses
+  %14 = trunc nuw nsw i64 %indvars.iv125 to i32
+  %15 = sub i32 %14, %i.bt
+  %16 = sext i32 %15 to i64
+  %17 = getelementptr [4 x i8], ptr %13, i64 %16
+  %18 = load i32, ptr %17, align 4
+  %19 = getelementptr [4 x i8], ptr %13, i64 %indvars.iv125
+  store i32 %18, ptr %19, align 4
+  %indvars.iv.next126 = add nsw i64 %indvars.iv125, -1 ; 2 uses
   %i.ca = load ptr, ptr %i.r, align 8             ; 2 uses
-  %i.cb = trunc nuw nsw i64 %indvars.iv125 to i32
+  %i.cb = trunc nuw nsw i64 %indvars.iv.next126 to i32
   %i.cc = sub i32 %i.cb, %i.bt
   %i.cd = sext i32 %i.cc to i64
   %i.ce = getelementptr [4 x i8], ptr %i.ca, i64 %i.cd
   %i.cf = load i32, ptr %i.ce, align 4
-  %i.cg = getelementptr [4 x i8], ptr %i.ca, i64 %indvars.iv125
+  %i.cg = getelementptr [4 x i8], ptr %i.ca, i64 %indvars.iv.next126
   store i32 %i.cf, ptr %i.cg, align 4
-  %indvars.iv.next126.a = add nsw i64 %indvars.iv125, -1
-  %5 = icmp samesign ugt i64 %indvars.iv125, 2
-  br i1 %5, label %.lr.ph122, label %._crit_edge123, !llvm.loop !19
+  %indvars.iv.next126.a = add nsw i64 %indvars.iv125, -2
+  %20 = icmp sgt i64 %indvars.iv125, 3
+  br i1 %20, label %.lr.ph122, label %._crit_edge123, !llvm.loop !19
 
-._crit_edge123:                                   ; preds = %.lr.ph122, %._crit_edge.thread
+._crit_edge123:                                   ; preds = %.lr.ph122.prol.loopexit, %.lr.ph122, %._crit_edge.thread
   %i.ch = add i32 %i.bt, %.083.lcssa135142
   br label %bb.q
 

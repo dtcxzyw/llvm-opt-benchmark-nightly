@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 8 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !38   ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !39   ; 3 uses
   %i.e = mul nsw i64 %i.d, %i.b
   %i.f = icmp eq i64 %i.e, 0
@@ -245,17 +245,19 @@ bb.d:                                             ; preds = %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8, !tbaa !99
   store i64 %.078120, ptr %i.w, align 8, !tbaa !99
+  %.pre = load i64, ptr %i.c, align 8
   br label %.thread
 
 .thread:                                          ; preds = %bb.c, %.thread117, %bb.d
+  %5 = phi i64 [ %.pre, %.thread117 ], [ %i.d, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %.not116 = phi i1 [ false, %.thread117 ], [ true, %bb.d ], [ true, %bb.c ]
   %.077 = phi i64 [ %i.x, %.thread117 ], [ 0, %bb.d ], [ 0, %bb.c ]
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 232
   %i.z = load i32, ptr %i.y, align 8, !tbaa !28
   %i.aa = and i32 %i.z, 1
   %.not81 = icmp eq i32 %i.aa, 0
-  %i.ab = icmp sgt i64 %i.d, 0
-  %or.cond = and i1 %.not81, %i.ab
+  %i.ab = icmp sgt i64 %5, 0
+  %or.cond = select i1 %.not81, i1 %i.ab, i1 false
   br i1 %or.cond, label %.preheader.lr.ph, label %.loopexit
 
 .preheader.lr.ph:                                 ; preds = %.thread
@@ -295,7 +297,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bi, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %i.bj = phi i64 [ %i.bm, %._crit_edge ], [ %i.d, %.preheader.lr.ph ]
+  %i.bj = phi i64 [ %i.bm, %._crit_edge ], [ %5, %.preheader.lr.ph ]
   %i.bk = phi i64 [ %i.bn, %._crit_edge ], [ %i.b, %.preheader.lr.ph ] ; 2 uses
   %.076165 = phi i64 [ %i.bo, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %.0113164 = phi i64 [ %.1.lcssa, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 2 uses

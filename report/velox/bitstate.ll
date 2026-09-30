@@ -204,30 +204,34 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store i64 %1, ptr %i.b, align 8, !tbaa !63
   store ptr %2, ptr %.sroa.235.0..sroa_idx, align 8, !tbaa !67
-  br label %bb.c
+  %9 = load ptr, ptr %0, align 8, !tbaa !50       ; 2 uses
+  %10 = load i8, ptr %9, align 8, !tbaa !133, !range !72, !noundef !73
+  br label %bb.d
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %.sroa.022.0.copyload = phi i64 [ %1, %bb.b ], [ %3, %bb.a ]
-  %.sroa.223.0.copyload = phi ptr [ %2, %bb.b ], [ %4, %bb.a ] ; 2 uses
-  %i.d = load ptr, ptr %0, align 8, !tbaa !50     ; 3 uses
+bb.c:                                             ; preds = %bb.a
+  %i.d = load ptr, ptr %0, align 8, !tbaa !50     ; 2 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !133, !range !72, !noundef !73 ; 2 uses
   %i.f = trunc nuw i8 %i.e to i1
-  %.not = icmp ne ptr %.sroa.223.0.copyload, %2
+  %.not = icmp ne ptr %4, %2
   %or.cond.not = select i1 %i.f, i1 %.not, i1 false
   br i1 %or.cond.not, label %.loopexit, label %bb.d
 
-bb.d:                                             ; preds = %bb.c
-  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 1
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %11 = phi i8 [ %10, %bb.b ], [ %i.e, %bb.c ]
+  %12 = phi ptr [ %9, %bb.b ], [ %i.d, %bb.c ]    ; 2 uses
+  %.sroa.223.0.copyload101 = phi ptr [ %2, %bb.b ], [ %4, %bb.c ]
+  %.sroa.022.0.copyload100 = phi i64 [ %1, %bb.b ], [ %3, %bb.c ]
+  %i.g = getelementptr inbounds nuw i8, ptr %12, i64 1
   %i.h = load i8, ptr %i.g, align 1, !tbaa !134, !range !72, !noundef !73 ; 3 uses
   %i.i = trunc nuw i8 %i.h to i1
-  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.223.0.copyload, i64 %.sroa.022.0.copyload
+  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.223.0.copyload101, i64 %.sroa.022.0.copyload100
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 %1
   %.not43 = icmp ne ptr %i.j, %i.k
   %or.cond98.not = select i1 %i.i, i1 %.not43, i1 false
   br i1 %or.cond98.not, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %spec.select71 = select i1 %5, i8 1, i8 %i.e
+  %spec.select71 = select i1 %5, i8 1, i8 %11
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   store i8 %spec.select71, ptr %i.l, align 8, !tbaa !135
   %i.m = select i1 %6, i8 1, i8 %i.h
@@ -247,7 +251,7 @@ bb.e:                                             ; preds = %bb.d
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.e
-  %i.s = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.d, %bb.e ]
+  %i.s = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %12, %bb.e ]
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 48
   %i.u = load i32, ptr %i.t, align 8, !tbaa !136
   %i.v = trunc i64 %1 to i32

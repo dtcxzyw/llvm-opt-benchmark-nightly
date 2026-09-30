@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/php/original/optimize_temp_vars_5?download=true
 inline.NumInlined: 14
 inline.NumDeleted: 5
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -57,7 +57,7 @@ zend_arena_alloc.exit200:                         ; preds = %bb.b, %bb.c
   %.pre-phi = phi i64 [ %i.l, %bb.b ], [ %.pre, %bb.c ] ; 3 uses
   %i.y = phi ptr [ %i.o, %bb.b ], [ %i.u, %bb.c ] ; 3 uses
   %i.z = phi ptr [ %i.e, %bb.b ], [ %i.s, %bb.c ] ; 4 uses
-  %.0.i198 = phi ptr [ %i.f, %bb.b ], [ %i.t, %bb.c ] ; 15 uses
+  %.0.i198 = phi ptr [ %i.f, %bb.b ], [ %i.t, %bb.c ] ; 17 uses
   %i.aa = shl nuw nsw i64 %i.g, 3                 ; 4 uses
   %i.ab = ptrtoint ptr %i.y to i64
   %i.ac = sub i64 %.pre-phi, %i.ab
@@ -460,7 +460,7 @@ bb.ac:                                            ; preds = %.lr.ph231
 
 bb.ad:                                            ; preds = %._crit_edge232, %bb.ab
   %i.im = phi i32 [ %.3169.lcssa, %._crit_edge232 ], [ %i.hv, %bb.ab ]
-  %.8 = phi i32 [ %spec.select192, %._crit_edge232 ], [ %.6, %bb.ab ] ; 5 uses
+  %.8 = phi i32 [ %spec.select192, %._crit_edge232 ], [ %.6, %bb.ab ] ; 6 uses
   %i.in = add nsw i32 %i.im, %i.d
   %i.io = shl i32 %i.in, 4
   %i.ip = add i32 %i.io, 80
@@ -477,7 +477,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not187, label %.thread, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.iv = load i32, ptr %i.hu, align 4, !tbaa !63 ; 3 uses
+  %i.iv = load i32, ptr %i.hu, align 4, !tbaa !63 ; 5 uses
   %i.iw = and i32 %i.iv, 63
   %i.ix = zext nneg i32 %i.iw to i64
   %i.iy = shl nuw i64 1, %i.ix
@@ -501,13 +501,50 @@ bb.ag:                                            ; preds = %bb.af
   %i.jj = zext i32 %i.jh to i64
   %i.jk = shl nuw nsw i64 %i.jj, 3
   %i.jl = add nuw nsw i64 %i.jk, 8
-  %i.jm = lshr i64 %i.jl, 4
-  %i.jn = trunc nuw i64 %i.jm to i32
+  %i.jm = lshr i64 %i.jl, 4                       ; 2 uses
+  %i.jn = trunc nuw i64 %i.jm to i32              ; 3 uses
+  %2 = and i32 %i.jn, 1
+  %lcmp.mod324.not.not = icmp eq i32 %2, 0
+  br i1 %lcmp.mod324.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph238
+  %3 = add i32 %i.jn, -1                          ; 2 uses
+  %4 = add i32 %i.iv, %3                          ; 2 uses
+  %5 = and i32 %4, 63
+  %6 = zext nneg i32 %5 to i64
+  %7 = shl nuw i64 1, %6
+  %8 = xor i64 %7, -1
+  %9 = lshr i32 %4, 6
+  %10 = zext nneg i32 %9 to i64
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %.0.i198, i64 %10 ; 2 uses
+  %12 = load i64, ptr %11, align 8, !tbaa !62
+  %13 = and i64 %12, %8
+  store i64 %13, ptr %11, align 8, !tbaa !62
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph238
+  %.0236.unr = phi i32 [ %i.jn, %.lr.ph238 ], [ %3, %.prol.loopexit.unr-lcssa ]
+  %14 = icmp eq i64 %i.jm, 2
+  br i1 %14, label %.thread, label %.lr.ph238.new
+
+.lr.ph238.new:                                    ; preds = %.prol.loopexit
+  %invariant.op330 = add i32 -1, %i.iv
   br label %bb.ah
 
-bb.ah:                                            ; preds = %.lr.ph238, %bb.ah
-  %.0236 = phi i32 [ %i.jn, %.lr.ph238 ], [ %i.jo, %bb.ah ]
-  %i.jo = add i32 %.0236, -1                      ; 3 uses
+bb.ah:                                            ; preds = %bb.ah, %.lr.ph238.new
+  %.0236 = phi i32 [ %.0236.unr, %.lr.ph238.new ], [ %i.jo, %bb.ah ] ; 2 uses
+  %.reass331 = add i32 %.0236, %invariant.op330   ; 2 uses
+  %15 = and i32 %.reass331, 63
+  %16 = zext nneg i32 %15 to i64
+  %17 = shl nuw i64 1, %16
+  %18 = xor i64 %17, -1
+  %19 = lshr i32 %.reass331, 6
+  %20 = zext nneg i32 %19 to i64
+  %21 = getelementptr inbounds nuw [8 x i8], ptr %.0.i198, i64 %20 ; 2 uses
+  %22 = load i64, ptr %21, align 8, !tbaa !62
+  %23 = and i64 %22, %18
+  store i64 %23, ptr %21, align 8, !tbaa !62
+  %i.jo = add i32 %.0236, -2                      ; 3 uses
   %i.jp = add i32 %i.iv, %i.jo                    ; 2 uses
   %i.jq = and i32 %i.jp, 63
   %i.jr = zext nneg i32 %i.jq to i64
@@ -522,8 +559,8 @@ bb.ah:                                            ; preds = %.lr.ph238, %bb.ah
   %i.jz = icmp ugt i32 %i.jo, 1
   br i1 %i.jz, label %bb.ah, label %.thread, !llvm.loop !19
 
-.thread:                                          ; preds = %bb.ah, %bb.ag, %bb.ae, %bb.ad, %bb.af, %bb.aa
-  %.9 = phi i32 [ %.6, %bb.aa ], [ %.8, %bb.af ], [ %.8, %bb.ad ], [ %.8, %bb.ae ], [ %.8, %bb.ag ], [ %.8, %bb.ah ] ; 2 uses
+.thread:                                          ; preds = %.prol.loopexit, %bb.ah, %bb.ag, %bb.ae, %bb.ad, %bb.af, %bb.aa
+  %.9 = phi i32 [ %.6, %bb.aa ], [ %.8, %bb.af ], [ %.8, %bb.ad ], [ %.8, %bb.ae ], [ %.8, %bb.ag ], [ %.8, %bb.ah ], [ %.8, %.prol.loopexit ] ; 2 uses
   %i.ka = getelementptr inbounds i8, ptr %.1171240, i64 -32 ; 2 uses
   %.not176 = icmp ult ptr %i.ka, %i.bu
   br i1 %.not176, label %._crit_edge248, label %bb.k, !llvm.loop !20

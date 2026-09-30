@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/php/original/compact_vars?download=true
 inline.NumInlined: 8
 inline.NumDeleted: 4
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -33,7 +33,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %i.m = phi ptr [ %i.l, %bb.c ], [ %i.k, %bb.b ] ; 11 uses
+  %i.m = phi ptr [ %i.l, %bb.c ], [ %i.k, %bb.b ] ; 13 uses
   %i.n = load i32, ptr %i.a, align 4, !tbaa !35
   %i.o = load i32, ptr %i.c, align 8, !tbaa !36
   %i.p = add i32 %i.o, %i.n                       ; 2 uses
@@ -135,7 +135,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %.not237, label %.loopexit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 4 uses
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !42
   %i.bn = lshr i32 %i.bm, 4
   %i.bo = add nsw i32 %i.bn, -5                   ; 2 uses
@@ -163,16 +163,53 @@ bb.n:                                             ; preds = %bb.m
   %i.cd = zext i32 %i.cb to i64
   %i.ce = shl nuw nsw i64 %i.cd, 3
   %i.cf = add nuw nsw i64 %i.ce, 8
-  %i.cg = lshr i64 %i.cf, 4
-  %i.ch = trunc nuw i64 %i.cg to i32
-  br label %.lr.ph
+  %i.cg = lshr i64 %i.cf, 4                       ; 2 uses
+  %i.ch = trunc nuw i64 %i.cg to i32              ; 4 uses
+  %1 = and i32 %i.ch, 1
+  %lcmp.mod.not.not = icmp eq i32 %1, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.0243 = phi i32 [ %i.ci, %.lr.ph ], [ %i.ch, %.lr.ph.preheader ] ; 2 uses
-  %i.ci = add i32 %.0243, -1                      ; 2 uses
+.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
+  %2 = add i32 %i.ch, -1
+  %3 = load i32, ptr %i.bl, align 8, !tbaa !42
+  %4 = lshr i32 %3, 4
+  %5 = add i32 %i.ch, -6
+  %6 = add i32 %5, %4                             ; 2 uses
+  %7 = and i32 %6, 63
+  %8 = zext nneg i32 %7 to i64
+  %9 = shl nuw i64 1, %8
+  %10 = lshr i32 %6, 6
+  %11 = zext nneg i32 %10 to i64
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %11 ; 2 uses
+  %13 = load i64, ptr %12, align 8, !tbaa !44
+  %14 = or i64 %9, %13
+  store i64 %14, ptr %12, align 8, !tbaa !44
+  br label %.lr.ph.prol.loopexit
+
+.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
+  %.0243.unr = phi i32 [ %i.ch, %.lr.ph.preheader ], [ %2, %.lr.ph.prol ]
+  %15 = icmp eq i64 %i.cg, 2
+  br i1 %15, label %.loopexit, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
+  %.0243 = phi i32 [ %i.ci, %.lr.ph ], [ %.0243.unr, %.lr.ph.prol.loopexit ] ; 3 uses
+  %16 = load i32, ptr %i.bl, align 8, !tbaa !42
+  %17 = lshr i32 %16, 4
+  %18 = add i32 %.0243, -6
+  %19 = add i32 %18, %17                          ; 2 uses
+  %20 = and i32 %19, 63
+  %21 = zext nneg i32 %20 to i64
+  %22 = shl nuw i64 1, %21
+  %23 = lshr i32 %19, 6
+  %24 = zext nneg i32 %23 to i64
+  %25 = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %24 ; 2 uses
+  %26 = load i64, ptr %25, align 8, !tbaa !44
+  %27 = or i64 %22, %26
+  store i64 %27, ptr %25, align 8, !tbaa !44
+  %i.ci = add i32 %.0243, -2                      ; 2 uses
   %i.cj = load i32, ptr %i.bl, align 8, !tbaa !42
   %i.ck = lshr i32 %i.cj, 4
-  %i.cl = add i32 %.0243, -6
+  %i.cl = add i32 %.0243, -7
   %i.cm = add i32 %i.cl, %i.ck                    ; 2 uses
   %i.cn = and i32 %i.cm, 63
   %i.co = zext nneg i32 %i.cn to i64
@@ -186,7 +223,7 @@ bb.n:                                             ; preds = %bb.m
   %i.cv = icmp ugt i32 %i.ci, 1
   br i1 %i.cv, label %.lr.ph, label %.loopexit, !llvm.loop !12
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.n, %bb.m, %bb.l
+.loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.n, %bb.m, %bb.l
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader241, label %bb.h, !llvm.loop !13

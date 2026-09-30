@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 
 _ZN4llvm9SetVectorIPKN5clang6interp5BlockENS_11SmallVectorIS5_Lj0EEENS_8DenseSetIS5_NS_12DenseMapInfoIS5_vEEEELj0EE6insertERKS5_.exit: ; preds = %_ZNK5clang6interp7PtrView12isOnePastEndEv.exit.thread107, %bb.d, %bb.e
   %i.bq = load i32, ptr %i.e, align 8, !tbaa !39  ; 3 uses
-  %i.br = load ptr, ptr %0, align 8, !tbaa !38    ; 4 uses
+  %i.br = load ptr, ptr %0, align 8, !tbaa !38    ; 5 uses
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !21 ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 24
   %i.bu = load i32, ptr %i.bt, align 8, !tbaa !31
@@ -388,14 +388,15 @@ _ZNK5clang6interp7PtrView5derefINS0_7PointerEEERT_v.exit: ; preds = %bb.o, %bb.p
   %i.eo = load i8, ptr %i.en, align 1, !tbaa !73, !range !71, !noundef !72
   %i.ep = trunc nuw i8 %i.eo to i1
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.er = load i64, ptr %i.eq, align 8, !tbaa !41 ; 2 uses
+  %i.er = load i64, ptr %i.eq, align 8            ; 2 uses
   %i.es = icmp eq i64 %i.er, %.pre
-  %9 = and i1 %i.es, %i.ep                        ; 2 uses
-  %.sink6.i = select i1 %9, i64 %.pre, i64 40
-  %.sink5.i = select i1 %9, i64 48, i64 %i.er
-  %i.et = getelementptr inbounds nuw i8, ptr %i.br, i64 %.sink6.i
-  %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 %.sink5.i
-  call void @_ZN5clang6interp7PointerC1ERKS1_(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull align 8 dereferenceable(48) %i.eu) #16
+  %9 = select i1 %i.ep, i1 %i.es, i1 false
+  %10 = getelementptr inbounds nuw i8, ptr %i.br, i64 %.pre
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 48
+  %i.et = getelementptr inbounds nuw i8, ptr %i.br, i64 40
+  %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.er
+  %.0.i66 = select i1 %9, ptr %11, ptr %i.eu
+  call void @_ZN5clang6interp7PointerC1ERKS1_(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull align 8 dereferenceable(48) %.0.i66) #16
   %i.ev = call fastcc noundef zeroext i1 @"_ZZN5clang6interpL13collectBlocksENS0_7PtrViewERN4llvm9SetVectorIPKNS0_5BlockENS2_11SmallVectorIS6_Lj0EEENS2_8DenseSetIS6_NS2_12DenseMapInfoIS6_vEEEELj0EEEENK3$_0clERKNS0_7PointerE"(ptr noundef nonnull align 8 dereferenceable(48) %4)
   br i1 %i.ev, label %bb.q, label %bb.s
 

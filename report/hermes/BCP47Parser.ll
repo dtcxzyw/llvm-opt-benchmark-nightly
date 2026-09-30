@@ -204,7 +204,7 @@ _ZN6hermes13platform_intl12_GLOBAL__N_121isUnicodeRegionSubtagERKNSt7__cxx1112ba
 bb.i:                                             ; preds = %_ZN6hermes13platform_intl17LanguageTagParser10nextSubtagEv.exit28, %_ZN6hermes13platform_intl12_GLOBAL__N_121isUnicodeRegionSubtagERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE.exit.thread
   %i.cg = phi ptr [ %i.gc, %_ZN6hermes13platform_intl17LanguageTagParser10nextSubtagEv.exit28 ], [ %i.ce, %_ZN6hermes13platform_intl12_GLOBAL__N_121isUnicodeRegionSubtagERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE.exit.thread ] ; 2 uses
   %i.ch = getelementptr inbounds i8, ptr %i.cg, i64 -32 ; 2 uses
-  %.val13 = load ptr, ptr %i.ch, align 8          ; 5 uses
+  %.val13 = load ptr, ptr %i.ch, align 8          ; 6 uses
   %i.ci = getelementptr i8, ptr %i.cg, i64 -24
   %.val14 = load i64, ptr %i.ci, align 8, !tbaa !18 ; 4 uses
   %i.cj = add i64 %.val14, -9
@@ -212,14 +212,16 @@ bb.i:                                             ; preds = %_ZN6hermes13platfor
   br i1 %or.cond.i.i, label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.thread.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %2 = getelementptr inbounds nuw [2 x i8], ptr %.val13, i64 %.val14 ; 3 uses
-  %3 = ptrtoint ptr %2 to i64
-  %i.ck = lshr i64 %.val14, 2
+  %.idx.i = shl nuw nsw i64 %.val14, 1            ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.val13, i64 %.idx.i ; 2 uses
+  %i.ck = lshr i64 %.val14, 2                     ; 2 uses
+  %3 = shl nuw nsw i64 %i.ck, 3                   ; 2 uses
+  %scevgep.i = getelementptr i8, ptr %.val13, i64 %3 ; 5 uses
   br label %.lr.ph.i.i.i.i.i.i.i23
 
 .lr.ph.i.i.i.i.i.i.i23:                           ; preds = %bb.n, %bb.j
   %.052.i.i.i.i.i.i.i = phi i64 [ %i.dr, %bb.n ], [ %i.ck, %bb.j ] ; 2 uses
-  %.sroa.032.051.i.i.i.i.i.i.i = phi ptr [ %i.dq, %bb.n ], [ %.val13, %bb.j ] ; 10 uses
+  %.sroa.032.051.i.i.i.i.i.i.i = phi ptr [ %i.dq, %bb.n ], [ %.val13, %bb.j ] ; 9 uses
   %i.cl = load i16, ptr %.sroa.032.051.i.i.i.i.i.i.i, align 2, !tbaa !27 ; 2 uses
   %i.cm = and i16 %i.cl, -33
   %i.cn = add i16 %i.cm, -65
@@ -263,14 +265,13 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.dp, label %bb.n, label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i.i, i64 8 ; 6 uses
+  %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i.i, i64 8
   %i.dr = add nsw i64 %.052.i.i.i.i.i.i.i, -1
   %i.ds = icmp sgt i64 %.052.i.i.i.i.i.i.i, 1
   br i1 %i.ds, label %.lr.ph.i.i.i.i.i.i.i23, label %._crit_edge.loopexit.i.i.i.i.i.i.i, !llvm.loop !1
 
 ._crit_edge.loopexit.i.i.i.i.i.i.i:               ; preds = %bb.n
-  %.pre.i.i.i.i.i.i.i = ptrtoint ptr %i.dq to i64
-  %.pre57.i.i.i.i.i.i.i = sub i64 %3, %.pre.i.i.i.i.i.i.i
+  %.pre57.i.i.i.i.i.i.i = sub nsw i64 %.idx.i, %3
   %i.dt = ashr exact i64 %.pre57.i.i.i.i.i.i.i, 1
   switch i64 %i.dt, label %_ZN6hermes13platform_intl12_GLOBAL__N_122isUnicodeVariantSubtagERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE.exit.thread30 [
     i64 3, label %bb.o
@@ -279,7 +280,7 @@ bb.n:                                             ; preds = %bb.m
   ]
 
 bb.o:                                             ; preds = %._crit_edge.loopexit.i.i.i.i.i.i.i
-  %i.du = load i16, ptr %i.dq, align 2, !tbaa !27 ; 2 uses
+  %i.du = load i16, ptr %scevgep.i, align 2, !tbaa !27 ; 2 uses
   %i.dv = and i16 %i.du, -33
   %i.dw = add i16 %i.dv, -65
   %i.dx = icmp ult i16 %i.dw, 26
@@ -289,11 +290,11 @@ bb.o:                                             ; preds = %._crit_edge.loopexi
   br i1 %i.ea, label %bb.p, label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i
 
 bb.p:                                             ; preds = %bb.o
-  %i.eb = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i.i, i64 10
+  %i.eb = getelementptr i8, ptr %scevgep.i, i64 2
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %._crit_edge.loopexit.i.i.i.i.i.i.i
-  %.sroa.032.1.i.i.i.i.i.i.i = phi ptr [ %i.eb, %bb.p ], [ %i.dq, %._crit_edge.loopexit.i.i.i.i.i.i.i ] ; 3 uses
+  %.sroa.032.1.i.i.i.i.i.i.i = phi ptr [ %i.eb, %bb.p ], [ %scevgep.i, %._crit_edge.loopexit.i.i.i.i.i.i.i ] ; 3 uses
   %i.ec = load i16, ptr %.sroa.032.1.i.i.i.i.i.i.i, align 2, !tbaa !27 ; 2 uses
   %i.ed = and i16 %i.ec, -33
   %i.ee = add i16 %i.ed, -65
@@ -308,7 +309,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %._crit_edge.loopexit.i.i.i.i.i.i.i
-  %.sroa.032.2.i.i.i.i.i.i.i = phi ptr [ %i.ej, %bb.r ], [ %i.dq, %._crit_edge.loopexit.i.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.032.2.i.i.i.i.i.i.i = phi ptr [ %i.ej, %bb.r ], [ %scevgep.i, %._crit_edge.loopexit.i.i.i.i.i.i.i ] ; 2 uses
   %i.ek = load i16, ptr %.sroa.032.2.i.i.i.i.i.i.i, align 2, !tbaa !27 ; 2 uses
   %i.el = and i16 %i.ek, -33
   %i.em = add i16 %i.el, -65
@@ -332,7 +333,7 @@ _ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basi
   br label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i
 
 _ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.i23, %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit, %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit65.a, %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit67, %bb.s, %bb.q, %bb.o
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i.i.i = phi ptr [ %.sroa.032.1.i.i.i.i.i.i.i, %bb.q ], [ %spec.select.i.i.i.i.i.i.i, %bb.s ], [ %i.dq, %bb.o ], [ %i.et, %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit67 ], [ %i.er, %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit ], [ %i.es, %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit65.a ], [ %.sroa.032.051.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i23 ]
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i.i.i = phi ptr [ %.sroa.032.1.i.i.i.i.i.i.i, %bb.q ], [ %spec.select.i.i.i.i.i.i.i, %bb.s ], [ %scevgep.i, %bb.o ], [ %i.et, %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit67 ], [ %i.er, %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit ], [ %i.es, %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.i.loopexit.split.loop.exit65.a ], [ %.sroa.032.051.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i23 ]
   %i.eu = icmp eq ptr %2, %.sroa.08.0.in.sroa.speculated.i.i.i.i.i.i.i
   br i1 %i.eu, label %_ZN6hermes13platform_intl12_GLOBAL__N_122isUnicodeVariantSubtagERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE.exit.thread30, label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.thread.i
 
@@ -503,7 +504,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal fastcc noundef zeroext i1 @_ZN6hermes13platform_intl12_GLOBAL__N_123isUnicodeLanguageSubtagERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE(ptr %.0.val, i64 %.8.val) unnamed_addr #3 {
+define internal fastcc noundef zeroext i1 @_ZN6hermes13platform_intl12_GLOBAL__N_123isUnicodeLanguageSubtagERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE(ptr nofree readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #3 {
 bb.a:
   %i.a = and i64 %.8.val, -2
   %or.cond.i.not = icmp eq i64 %i.a, 2
@@ -553,14 +554,17 @@ _ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basi
   br i1 %or.cond.i7, label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit26, label %bb.f
 
 bb.f:                                             ; preds = %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit.thread
-  %0 = getelementptr inbounds nuw [2 x i8], ptr %.0.val, i64 %.8.val ; 4 uses
-  %1 = ptrtoint ptr %0 to i64
-  %i.t = lshr i64 %.8.val, 2
+  %.idx = shl nuw nsw i64 %.8.val, 1              ; 2 uses
+  %0 = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.idx ; 3 uses
+  %i.t = lshr i64 %.8.val, 2                      ; 2 uses
+  %1 = shl nuw nsw i64 %i.t, 3                    ; 3 uses
+  %scevgep = getelementptr i8, ptr %.0.val, i64 %1 ; 4 uses
+  %2 = getelementptr i8, ptr %.0.val, i64 %1
   br label %.lr.ph.i.i.i.i.i.i9
 
 .lr.ph.i.i.i.i.i.i9:                              ; preds = %bb.f, %bb.j
   %.052.i.i.i.i.i.i10 = phi i64 [ %i.ao, %bb.j ], [ %i.t, %bb.f ] ; 2 uses
-  %.sroa.032.051.i.i.i.i.i.i11 = phi ptr [ %i.an, %bb.j ], [ %.0.val, %bb.f ] ; 10 uses
+  %.sroa.032.051.i.i.i.i.i.i11 = phi ptr [ %i.an, %bb.j ], [ %.0.val, %bb.f ] ; 9 uses
   %i.u = load i16, ptr %.sroa.032.051.i.i.i.i.i.i11, align 2, !tbaa !27
   %i.v = and i16 %i.u, -33
   %i.w = add i16 %i.v, -65
@@ -592,14 +596,13 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.am, label %bb.j, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit20
 
 bb.j:                                             ; preds = %bb.i
-  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i11, i64 8 ; 6 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i11, i64 8
   %i.ao = add nsw i64 %.052.i.i.i.i.i.i10, -1
   %i.ap = icmp sgt i64 %.052.i.i.i.i.i.i10, 1
   br i1 %i.ap, label %.lr.ph.i.i.i.i.i.i9, label %._crit_edge.loopexit.i.i.i.i.i.i17, !llvm.loop !1
 
 ._crit_edge.loopexit.i.i.i.i.i.i17:               ; preds = %bb.j
-  %.pre.i.i.i.i.i.i18 = ptrtoint ptr %i.an to i64
-  %.pre57.i.i.i.i.i.i19 = sub i64 %1, %.pre.i.i.i.i.i.i18
+  %.pre57.i.i.i.i.i.i19 = sub nsw i64 %.idx, %1
   %i.aq = ashr exact i64 %.pre57.i.i.i.i.i.i19, 1
   switch i64 %i.aq, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12 [
     i64 3, label %bb.k
@@ -608,18 +611,18 @@ bb.j:                                             ; preds = %bb.i
   ]
 
 bb.k:                                             ; preds = %._crit_edge.loopexit.i.i.i.i.i.i17
-  %i.ar = load i16, ptr %i.an, align 2, !tbaa !27
+  %i.ar = load i16, ptr %scevgep, align 2, !tbaa !27
   %i.as = and i16 %i.ar, -33
   %i.at = add i16 %i.as, -65
   %i.au = icmp ult i16 %i.at, 26
   br i1 %i.au, label %bb.l, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12
 
 bb.l:                                             ; preds = %bb.k
-  %i.av = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i11, i64 10
+  %i.av = getelementptr i8, ptr %2, i64 2
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %._crit_edge.loopexit.i.i.i.i.i.i17
-  %.sroa.032.1.i.i.i.i.i.i25 = phi ptr [ %i.av, %bb.l ], [ %i.an, %._crit_edge.loopexit.i.i.i.i.i.i17 ] ; 3 uses
+  %.sroa.032.1.i.i.i.i.i.i25 = phi ptr [ %i.av, %bb.l ], [ %scevgep, %._crit_edge.loopexit.i.i.i.i.i.i17 ] ; 3 uses
   %i.aw = load i16, ptr %.sroa.032.1.i.i.i.i.i.i25, align 2, !tbaa !27
   %i.ax = and i16 %i.aw, -33
   %i.ay = add i16 %i.ax, -65
@@ -631,7 +634,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %._crit_edge.loopexit.i.i.i.i.i.i17
-  %.sroa.032.2.i.i.i.i.i.i23 = phi ptr [ %i.ba, %bb.n ], [ %i.an, %._crit_edge.loopexit.i.i.i.i.i.i17 ] ; 2 uses
+  %.sroa.032.2.i.i.i.i.i.i23 = phi ptr [ %i.ba, %bb.n ], [ %scevgep, %._crit_edge.loopexit.i.i.i.i.i.i17 ] ; 2 uses
   %i.bb = load i16, ptr %.sroa.032.2.i.i.i.i.i.i23, align 2, !tbaa !27
   %i.bc = and i16 %i.bb, -33
   %i.bd = add i16 %i.bc, -65
@@ -652,7 +655,7 @@ _ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEE
   br label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12
 
 _ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12: ; preds = %.lr.ph.i.i.i.i.i.i9, %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit, %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit18, %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit20, %bb.o, %bb.m, %bb.k, %._crit_edge.loopexit.i.i.i.i.i.i17
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i.i13 = phi ptr [ %.sroa.032.1.i.i.i.i.i.i25, %bb.m ], [ %spec.select.i.i.i.i.i.i24, %bb.o ], [ %0, %._crit_edge.loopexit.i.i.i.i.i.i17 ], [ %i.an, %bb.k ], [ %i.bh, %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit20 ], [ %i.bf, %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit ], [ %i.bg, %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit18 ], [ %.sroa.032.051.i.i.i.i.i.i11, %.lr.ph.i.i.i.i.i.i9 ]
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i.i13 = phi ptr [ %.sroa.032.1.i.i.i.i.i.i25, %bb.m ], [ %spec.select.i.i.i.i.i.i24, %bb.o ], [ %0, %._crit_edge.loopexit.i.i.i.i.i.i17 ], [ %scevgep, %bb.k ], [ %i.bh, %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit20 ], [ %i.bf, %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit ], [ %i.bg, %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i12.loopexit.split.loop.exit18 ], [ %.sroa.032.051.i.i.i.i.i.i11, %.lr.ph.i.i.i.i.i.i9 ]
   %i.bi = icmp eq ptr %0, %.sroa.08.0.in.sroa.speculated.i.i.i.i.i.i13
   br label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit26
 

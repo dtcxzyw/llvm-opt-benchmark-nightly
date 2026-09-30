@@ -15,7 +15,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.23 = private unnamed_addr constant [6 x i8] c"EC-20\00", align 1
 @.str.24 = private unnamed_addr constant [6 x i8] c"EC-14\00", align 1
 @_ZN6LibRaw12Oly_wb_list2E = external local_unnamed_addr global %class.libraw_static_table_t, align 8
-@.str.27 = private unnamed_addr constant [8 x i8] c"v757-71\00", align 1
 @_ZN6LibRaw12Oly_wb_list1E = external local_unnamed_addr global %class.libraw_static_table_t, align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
@@ -418,8 +417,10 @@ bb.d:                                             ; preds = %bb.b, %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 332
-  %5 = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.q, ptr noundef nonnull dereferenceable(8) @.str.27) #9
-  %.not61 = icmp eq i32 %5, 0
+  %5 = load i64, ptr %i.q, align 1
+  %6 = icmp ne i64 %5, 13852941198112630
+  %7 = zext i1 %6 to i32
+  %.not61 = icmp eq i32 %7, 0
   br i1 %.not61, label %.thread77, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

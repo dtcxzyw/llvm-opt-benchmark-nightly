@@ -205,7 +205,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call ptr @__dynamic_cast(ptr nonnull %i.b, ptr nonnull @_ZTIN5faiss5IndexE, ptr nonnull @_ZTIN5faiss19MultiIndexQuantizerE, i64 0) #25
   %i.e = icmp eq ptr %i.d, null
-  br i1 %i.e, label %1, label %bb.c
+  br i1 %i.e, label %._crit_edge, label %bb.c
+
+._crit_edge:                                      ; preds = %bb.b
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 256
+  %.pre = load i64, ptr %.phi.trans.insert, align 8
+  br label %bb.l
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 240
@@ -213,10 +218,10 @@ bb.c:                                             ; preds = %bb.b
   %i.h = and i64 %i.g, 1
   %i.i = icmp eq i64 %i.h, 0
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
-  %i.k = load i64, ptr %i.j, align 8
+  %i.k = load i64, ptr %i.j, align 8              ; 2 uses
   %i.l = icmp eq i64 %i.k, 4
   %or.cond = select i1 %i.i, i1 %i.l, i1 false
-  br i1 %or.cond, label %bb.d, label %1
+  br i1 %or.cond, label %bb.d, label %bb.l
 
 bb.d:                                             ; preds = %bb.c
   %i.m = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #31 ; 12 uses
@@ -312,18 +317,16 @@ _ZN5faiss12_GLOBAL__N_114Distance2xXPQ4C2ERKNS_11Index2LayerE.exit: ; preds = %b
   store ptr %i.ay, ptr %i.az, align 8, !tbaa !70
   br label %bb.s
 
-1:                                                ; preds = %bb.c, %bb.b
+bb.l:                                             ; preds = %._crit_edge, %bb.c
+  %1 = phi i64 [ %.pre, %._crit_edge ], [ %i.k, %bb.c ]
   %2 = tail call ptr @__dynamic_cast(ptr nonnull %i.b, ptr nonnull @_ZTIN5faiss5IndexE, ptr nonnull @_ZTIN5faiss9IndexFlatE, i64 0) #25
-  %3 = icmp eq ptr %2, null
-  br i1 %3, label %.critedge14, label %bb.l
-
-bb.l:                                             ; preds = %1
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
-  %5 = load i64, ptr %4, align 8, !tbaa !100
-  %i.ba = icmp eq i64 %5, 4
-  br i1 %i.ba, label %bb.m, label %.critedge14
+  %3 = icmp ne ptr %2, null
+  %i.ba = icmp eq i64 %1, 4
+  %or.cond17 = select i1 %3, i1 %i.ba, i1 false
+  br i1 %or.cond17, label %bb.m, label %.critedge14
 
 bb.m:                                             ; preds = %bb.l
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.bb = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #31 ; 12 uses
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN5faiss12_GLOBAL__N_114Distance2LevelE, i64 16), ptr %i.bb, align 8, !tbaa !49
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16 ; 2 uses
@@ -403,7 +406,7 @@ _ZN5faiss12_GLOBAL__N_112DistanceXPQ4C2ERKNS_11Index2LayerE.exit: ; preds = %bb.
   store ptr %i.cf, ptr %i.cg, align 8, !tbaa !70
   br label %bb.s
 
-.critedge14:                                      ; preds = %bb.a, %bb.l, %1
+.critedge14:                                      ; preds = %bb.a, %bb.l
   %i.ch = tail call noundef ptr @_ZNK5faiss5Index21get_distance_computerEv(ptr noundef nonnull align 8 dereferenceable(36) %0)
   br label %bb.s
 
