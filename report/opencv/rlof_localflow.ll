@@ -205,10 +205,8 @@ bb.a:
 define linkonce_odr hidden void @_ZNK2cv7optflow27HorizontalCrossSegmentationclERKNS_5RangeE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 4 dereferenceable(8) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
-  %i.b = load i8, ptr %i.a, align 4, !tbaa !108, !range !25, !noundef !26 ; 2 uses
-  %2 = trunc nuw i8 %i.b to i1
+  %i.b = load i8, ptr %i.a, align 4, !tbaa !108, !range !25, !noundef !26
   %i.c = shl nuw nsw i8 %i.b, 1
-  %3 = select i1 %2, i64 3, i64 1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !105  ; 5 uses
   %i.f = add nsw i32 %i.e, -1
@@ -483,15 +481,15 @@ middle.block:                                     ; preds = %vector.body
   %.sink.i93 = getelementptr inbounds nuw i8, ptr %i.ev, i64 %.sink.idx.i92
   %.sroa.0.0.insert.ext = shl i64 %spec.select112, 32
   %i.fa = ashr exact i64 %.sroa.0.0.insert.ext, 28
-  %i.fb = getelementptr inbounds i8, ptr %.sink.i93, i64 %i.fa ; 2 uses
-  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %i.ab ; 2 uses
+  %i.fb = getelementptr inbounds i8, ptr %.sink.i93, i64 %i.fa
+  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %i.ab ; 3 uses
   %i.fd = trunc i64 %indvars.iv141 to i32
   %i.fe = sub i32 %i.fd, %i.g
   store i32 %i.fe, ptr %i.fc, align 4, !tbaa !46
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %3 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.fc, i64 4 ; 2 uses
   %i.ff = trunc i64 %indvars.iv141 to i32
   %i.fg = add i32 %i.g, %i.ff
-  store i32 %i.fg, ptr %4, align 4, !tbaa !46
+  store i32 %i.fg, ptr %2, align 4, !tbaa !46
   br i1 %.not116, label %.loopexit, label %.lr.ph122
 
 .lr.ph122:                                        ; preds = %._crit_edge
@@ -535,7 +533,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.fw = trunc nuw nsw i64 %indvars.iv137 to i32
   %i.fx = add i32 %i.fi, %i.fw
-  store i32 %i.fx, ptr %4, align 4, !tbaa !46
+  store i32 %i.fx, ptr %2, align 4, !tbaa !46
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.h

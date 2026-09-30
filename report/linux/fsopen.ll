@@ -202,13 +202,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false), !annotation !17
-  %4 = and i32 %i.c, 2
-  %.not26.i = icmp eq i32 %4, 0
-  %spec.select.i = select i1 %.not26.i, i32 5, i32 4 ; 2 uses
+  %4 = lshr i32 %i.c, 1
+  %5 = and i32 %4, 1
   %i.e = and i32 %i.c, 4
-  %.not27.i = icmp eq i32 %i.e, 0
-  %5 = and i32 %spec.select.i, 1
-  %.120.i = select i1 %.not27.i, i32 %spec.select.i, i32 %5
+  %6 = or disjoint i32 %5, %i.e
+  %.120.i = xor i32 %6, 5
   %i.f = and i32 %i.c, 8
   %i.g = tail call ptr @getname_flags(ptr noundef %i.b, i32 noundef range(i32 0, 9) %i.f) #6 ; 2 uses
   %i.h = call i32 @filename_lookup(i32 noundef %i.a, ptr noundef %i.g, i32 noundef %.120.i, ptr noundef nonnull %3, ptr noundef null) #6 ; 2 uses

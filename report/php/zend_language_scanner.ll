@@ -204,10 +204,10 @@ bb.br:                                            ; preds = %bb.bq
 zend_string_release_ex.exit6387:                  ; preds = %bb.bp, %bb.bq, %bb.br
   store ptr %i.jv, ptr %0, align 8, !tbaa !44
   %i.kk = load i32, ptr %i.jw, align 4, !tbaa !44
-  %13 = and i32 %i.kk, 64
-  %.not6140 = icmp eq i32 %13, 0
-  %14 = select i1 %.not6140, i32 262, i32 6
-  store i32 %14, ptr %i.u, align 8, !tbaa !44
+  %13 = shl i32 %i.kk, 2
+  %14 = and i32 %13, 256
+  %15 = xor i32 %14, 262
+  store i32 %15, ptr %i.u, align 8, !tbaa !44
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #16
   br label %.thread6564

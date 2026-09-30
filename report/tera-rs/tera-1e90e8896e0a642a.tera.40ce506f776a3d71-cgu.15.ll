@@ -204,9 +204,9 @@ bb.y:                                             ; preds = %bb.x
 .preheader88.i.preheader:                         ; preds = %bb.y
   %i.bf = trunc nuw i128 %.sroa.10130.0 to i32, !dbg !20738
     #dbg_value(i32 %i.bf, !20540, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !20611)
-    #dbg_value(i32 %i.bf, !20486, !DIExpression(), !20614)
-    #dbg_value(i32 %i.bf, !20530, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !20612)
     #dbg_value(i32 %i.bf, !20635, !DIExpression(), !20416)
+    #dbg_value(i32 %i.bf, !20530, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !20612)
+    #dbg_value(i32 %i.bf, !20486, !DIExpression(), !20614)
   br label %.preheader88.i, !dbg !20739
 
 .preheader88.i:                                   ; preds = %.preheader88.i.preheader, %bb.ac

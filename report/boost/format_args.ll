@@ -204,9 +204,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !34
-  %4 = and i64 %i.c, 2048
-  %.not.i = icmp eq i64 %4, 0
-  %5 = select i1 %.not.i, i64 3, i64 1
+  %4 = lshr i64 %i.c, 10
+  %5 = and i64 %4, 2
+  %6 = xor i64 %5, 3
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
@@ -230,7 +230,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.029 = phi i64 [ 1, %bb.b ], [ 1, %bb.d ], [ 0, %bb.c ]
-  %.0 = phi i64 [ %5, %bb.b ], [ %i.n, %bb.d ], [ 0, %bb.c ]
+  %.0 = phi i64 [ %6, %bb.b ], [ %i.n, %bb.d ], [ 0, %bb.c ]
   %i.o = tail call i64 @llvm.abs.i64(i64 %1, i1 false)
   br label %bb.f
 
@@ -341,11 +341,11 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.bf = load i64, ptr %3, align 8, !tbaa !34
-  %6 = and i64 %i.bf, 4096
-  %.not.i39 = icmp eq i64 %6, 0
-  %7 = select i1 %.not.i39, i64 3, i64 1
+  %7 = lshr i64 %i.bf, 11
+  %8 = and i64 %7, 2
+  %9 = xor i64 %8, 3
   %i.bg = sub nuw i64 %.042, %i.z
-  %i.bh = mul i64 %7, %i.bg
+  %i.bh = mul i64 %9, %i.bg
   %i.bi = add i64 %i.bh, %i.y
   br label %_ZN5boost4urls6detail19get_width_from_argsEmNS_4core17basic_string_viewIcEENS1_11format_argsERm.exit.thread
 
@@ -490,11 +490,11 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.bb = load i64, ptr %3, align 8, !tbaa !34
-  %4 = and i64 %i.bb, 4096
-  %.not.i31 = icmp eq i64 %4, 0
-  %5 = select i1 %.not.i31, i64 3, i64 1
+  %4 = lshr i64 %i.bb, 11
+  %5 = and i64 %4, 2
+  %6 = xor i64 %5, 3
   %i.bc = sub nuw i64 %.034, %i.v
-  %i.bd = mul i64 %5, %i.bc
+  %i.bd = mul i64 %6, %i.bc
   %i.be = add i64 %i.bd, %i.u
   br label %_ZN5boost4urls6detail19get_width_from_argsEmNS_4core17basic_string_viewIcEENS1_11format_argsERm.exit.thread
 

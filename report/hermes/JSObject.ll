@@ -204,13 +204,13 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEONS0_
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
-  %2 = and i32 %i.b, 1
-  %.not.i = icmp eq i32 %2, 0
-  %3 = select i1 %.not.i, i32 257, i32 1
+  %2 = shl i32 %i.b, 8
+  %3 = and i32 %2, 256
+  %4 = xor i32 %3, 257
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit
-  %.sroa.04.0 = phi i32 [ %i.p, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit ], [ %3, %bb.e ]
+  %.sroa.04.0 = phi i32 [ %i.p, %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit ], [ %4, %bb.e ]
   ret i32 %.sroa.04.0
 }
 

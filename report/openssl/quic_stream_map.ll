@@ -202,10 +202,10 @@ bb.a:
   store ptr %i.a, ptr %i.e, align 8, !tbaa !33
   %i.f = getelementptr i8, ptr %1, i64 256
   %.val = load i64, ptr %i.f, align 8
-  %2 = and i64 %.val, 2
-  %.not = icmp eq i64 %2, 0
-  %. = select i1 %.not, i64 80, i64 88
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %. ; 2 uses
+  %2 = shl i64 %.val, 2
+  %3 = and i64 %2, 8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %3
+  %i.g = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !40
   %i.i = add i64 %i.h, 1
   store i64 %i.i, ptr %i.g, align 8, !tbaa !40
@@ -225,18 +225,18 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   %i.f = getelementptr i8, ptr %1, i64 256        ; 2 uses
   %.val = load i64, ptr %i.f, align 8
-  %3 = and i64 %.val, 2
-  %.not = icmp eq i64 %3, 0
-  %. = select i1 %.not, i64 80, i64 88
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %. ; 2 uses
+  %3 = shl i64 %.val, 2
+  %4 = and i64 %3, 8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %4
+  %i.g = getelementptr inbounds nuw i8, ptr %5, i64 80 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !40
   %i.i = add i64 %i.h, -1
   store i64 %i.i, ptr %i.g, align 8, !tbaa !40
   %.val9 = load i64, ptr %i.f, align 8
-  %4 = and i64 %.val9, 2
-  %.not.i = icmp eq i64 %4, 0
-  %.in.v.i = select i1 %.not.i, i64 128, i64 136
-  %.in.i = getelementptr inbounds nuw i8, ptr %0, i64 %.in.v.i
+  %6 = shl i64 %.val9, 2
+  %7 = and i64 %6, 8
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 %7
+  %.in.i = getelementptr inbounds nuw i8, ptr %8, i64 128
   %i.j = load ptr, ptr %.in.i, align 8, !tbaa !59 ; 2 uses
   %.not8 = icmp eq ptr %i.j, null
   br i1 %.not8, label %bb.c, label %bb.b

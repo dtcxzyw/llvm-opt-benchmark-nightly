@@ -202,7 +202,7 @@ bb.as:                                            ; preds = %get_nb_frames.exit
   %.not322 = icmp eq i64 %.0291, -9223372036854775808 ; 2 uses
   %.not323 = icmp eq i64 %.0292, %.0291
   %spec.select337 = select i1 %.not323, i32 128, i32 192 ; 2 uses
-  %.0262 = select i1 %.not322, i32 0, i32 %spec.select337
+  %.0262 = select i1 %.not322, i32 0, i32 %spec.select337 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.k, i64 48
   %i.gc = load i32, ptr %i.gb, align 8, !tbaa !67
   %i.gd = icmp eq i32 %i.gc, 0                    ; 2 uses
@@ -214,17 +214,15 @@ bb.as:                                            ; preds = %get_nb_frames.exit
   %i.gh = add nsw i32 %.3274, -3
   %i.gi = add nsw i32 %i.gh, %.5280
   call void @avio_w8(ptr noundef %i.gg, i32 noundef %i.gi) #9
-  br i1 %.not322, label %.critedge, label %.thread._crit_edge
+  br i1 %.not322, label %7, label %.thread._crit_edge
 
 .thread._crit_edge:                               ; preds = %.thread
   %i.gj = load ptr, ptr %i.cp, align 8, !tbaa !81 ; 3 uses
-  %6 = and i32 %spec.select337, 64                ; 2 uses
-  %.not325 = icmp eq i32 %6, 0
-  %7 = select i1 %.not325, i32 32, i32 48
+  %6 = lshr exact i32 %spec.select337, 2
   %i.gk = lshr i64 %.0291, 29
   %i.gl = trunc i64 %i.gk to i32
   %i.gm = and i32 %i.gl, 14
-  %i.gn = or disjoint i32 %i.gm, %7
+  %i.gn = or disjoint i32 %i.gm, %6
   %i.go = or disjoint i32 %i.gn, 1
   call void @avio_w8(ptr noundef %i.gj, i32 noundef %i.go) #9
   %i.gp = trunc i64 %.0291 to i32                 ; 2 uses
@@ -236,10 +234,14 @@ bb.as:                                            ; preds = %get_nb_frames.exit
   %i.gu = and i32 %i.gt, 65534
   %i.gv = or disjoint i32 %i.gu, 1
   call void @avio_wb16(ptr noundef %i.gj, i32 noundef %i.gv) #9
-  %8 = icmp eq i32 %6, 0
-  br i1 %8, label %.critedge, label %bb.at
+  br label %7
 
-bb.at:                                            ; preds = %.thread._crit_edge
+7:                                                ; preds = %.thread._crit_edge, %.thread
+  %8 = and i32 %.0262, 64
+  %.not326 = icmp eq i32 %8, 0
+  br i1 %.not326, label %.critedge, label %bb.at
+
+bb.at:                                            ; preds = %7
   %i.gw = load ptr, ptr %i.cp, align 8, !tbaa !81 ; 3 uses
   %i.gx = lshr i64 %.0292, 29
   %i.gy = trunc i64 %i.gx to i32
@@ -257,7 +259,7 @@ bb.at:                                            ; preds = %.thread._crit_edge
   call void @avio_wb16(ptr noundef %i.gw, i32 noundef %i.hh) #9
   br label %.critedge
 
-.critedge:                                        ; preds = %.thread, %bb.at, %.thread._crit_edge
+.critedge:                                        ; preds = %bb.at, %7
   br i1 %i.gd, label %bb.au, label %bb.bc
 
 bb.au:                                            ; preds = %.critedge

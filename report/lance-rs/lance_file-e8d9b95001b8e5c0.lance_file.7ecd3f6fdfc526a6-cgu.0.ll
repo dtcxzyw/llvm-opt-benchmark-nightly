@@ -205,10 +205,10 @@ bb.g:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.ai = load i64, ptr %1, align 8, !range !72, !noundef !62
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %7 = trunc nuw i64 %i.ai to i1
-  %8 = load ptr, ptr %i.aj, align 8, !nonnull !62
-  %storemerge.in.v = select i1 %7, i64 64, i64 96
-  %storemerge.in = getelementptr inbounds nuw i8, ptr %8, i64 %storemerge.in.v
+  %7 = load ptr, ptr %i.aj, align 8, !nonnull !62
+  %8 = shl nuw nsw i64 %i.ai, 5
+  %storemerge.in.v = xor i64 %8, 96
+  %storemerge.in = getelementptr inbounds nuw i8, ptr %7, i64 %storemerge.in.v
   %storemerge = load i64, ptr %storemerge.in, align 8, !noundef !62
   store i64 %storemerge, ptr %i.l, align 8
   %i.ak = load atomic i64, ptr @_RNvCs91CWldrXK7B_3log20MAX_LOG_LEVEL_FILTER monotonic, align 8 ; 2 uses

@@ -73,10 +73,11 @@ switch.lookup:                                    ; preds = %bb.a
   store i32 %switch.ext39, ptr %i.b, align 4, !tbaa !29
   %i.j = tail call i32 @avio_rb16(ptr noundef %i.d) #3 ; 2 uses
   %i.k = tail call i32 @avio_r8(ptr noundef %i.d) #3
-  %i.l = and i32 %i.k, 32
-  %.not = icmp eq i32 %i.l, 0
-  %1 = select i1 %.not, i64 11, i64 15
-  %i.m = tail call i64 @avio_skip(ptr noundef %i.d, i64 noundef %1) #3 ; 0 uses
+  %1 = lshr i32 %i.k, 3
+  %i.l = and i32 %1, 4
+  %2 = or disjoint i32 %i.l, 11
+  %3 = zext nneg i32 %2 to i64
+  %i.m = tail call i64 @avio_skip(ptr noundef %i.d, i64 noundef %3) #3 ; 0 uses
   %i.n = tail call ptr @avformat_new_stream(ptr noundef nonnull %0, ptr noundef null) #3 ; 3 uses
   %.not35 = icmp eq ptr %i.n, null
   br i1 %.not35, label %bb.d, label %bb.c

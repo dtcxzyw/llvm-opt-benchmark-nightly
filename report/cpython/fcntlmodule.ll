@@ -202,14 +202,14 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.ak = trunc i32 %.0 to i16
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 2
   store i16 %i.ak, ptr %i.al, align 2, !tbaa !44
-  %4 = and i32 %i.h, 4
-  %.not33.i = icmp eq i32 %4, 0
-  %5 = select i1 %.not33.i, i32 7, i32 6
+  %4 = lshr i32 %i.h, 2
+  %5 = and i32 %4, 1
+  %6 = xor i32 %5, 7
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.w, %bb.t
   %i.am = call ptr @PyEval_SaveThread() #6
-  %i.an = call i32 (i32, i32, ...) @fcntl64(i32 noundef range(i32 0, -2147483648) %i.d, i32 noundef %5, ptr noundef nonnull %3) #6 ; 2 uses
+  %i.an = call i32 (i32, i32, ...) @fcntl64(i32 noundef range(i32 0, -2147483648) %i.d, i32 noundef %6, ptr noundef nonnull %3) #6 ; 2 uses
   call void @PyEval_RestoreThread(ptr noundef %i.am) #6
   %i.ao = icmp eq i32 %i.an, -1
   br i1 %i.ao, label %bb.v, label %.critedge.i

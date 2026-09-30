@@ -202,13 +202,14 @@ bb.ae:                                            ; preds = %bb.a
   %.0.copyload.i541 = load i16, ptr %i.gv, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i16 %.0.copyload.i541) #8, !srcloc !36
   %i.gw = and i16 %.0.copyload.i541, -512
-  %4 = and i32 %.0.copyload.i, 1
-  %.not447 = icmp eq i32 %4, 0
-  %5 = select i1 %.not447, i16 257, i16 1
-  %i.gx = or disjoint i16 %i.gw, %5
   %.val503 = load ptr, ptr %i.d, align 8, !tbaa !12
+  %.0.copyload.i.tr = trunc i32 %.0.copyload.i to i16
+  %4 = shl i16 %.0.copyload.i.tr, 8
+  %5 = and i16 %4, 256
+  %i.gx = or disjoint i16 %i.gw, %5
+  %6 = xor i16 %i.gx, 257
   %i.gy = getelementptr inbounds nuw i8, ptr %.val503, i64 %i.gu
-  store i16 %i.gx, ptr %i.gy, align 1
+  store i16 %6, ptr %i.gy, align 1
   br label %w2c_hermes_hermes0x3A0x3Avm0x3A0x3AGCScope0x3A0x3A0x7EGCScope0x280x29.exit
 
 w2c_hermes_hermes0x3A0x3Avm0x3A0x3AGCScope0x3A0x3A0x7EGCScope0x280x29.exit: ; preds = %bb.ad, %bb.ac, %bb.ae

@@ -185,17 +185,15 @@ define dso_local range(i64 -2147483648, 2147483648) i64 @do_futex(ptr noundef %0
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
   store i32 %6, ptr %i.a, align 4
-  %7 = and i32 %1, 128
-  %.not.i = icmp eq i32 %7, 0
-  %spec.select.i = select i1 %.not.i, i32 18, i32 2
   %i.b = lshr i32 %1, 3
-  %i.c = and i32 %i.b, 32                         ; 2 uses
+  %i.c = and i32 %i.b, 48
   %i.d = shl i32 %1, 1
   %i.e = and i32 %i.d, 3072
-  %i.f = or disjoint i32 %spec.select.i, %i.e     ; 2 uses
-  %.3.i = or disjoint i32 %i.f, %i.c              ; 13 uses
+  %i.f = or disjoint i32 %i.c, %i.e
+  %.3.i = xor i32 %i.f, 18                        ; 14 uses
   %i.g = and i32 %1, -1921                        ; 3 uses
-  %.not = icmp eq i32 %i.c, 0
+  %7 = and i32 %1, 256
+  %.not = icmp eq i32 %7, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -268,7 +266,7 @@ bb.l:                                             ; preds = %bb.e
   br label %bb.s
 
 bb.m:                                             ; preds = %bb.e
-  %i.w = or disjoint i32 %i.f, 32
+  %i.w = or i32 %.3.i, 32
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.e

@@ -204,9 +204,9 @@ bb.aq:                                            ; preds = %bb.am
   %i.dh = add i64 %i.dg, %i.de
   %i.di = and i32 %.044.i.i, 64
   %.not33.i.i = icmp eq i32 %i.di, 0
-  %7 = and i32 %.044.i.i, 32
-  %.not34.i.i = icmp eq i32 %7, 0
-  %.37.i.i = select i1 %.not34.i.i, i32 6, i32 7
+  %7 = lshr i32 %.044.i.i, 5
+  %8 = and i32 %7, 1
+  %.37.i.i = or disjoint i32 %8, 6
   %.0.i165.i = select i1 %.not33.i.i, i32 %.37.i.i, i32 8
   %i.dj = or i32 %.044.i.i, 512
   br label %.loopexit.i
@@ -218,9 +218,9 @@ bb.ar:                                            ; preds = %bb.am
   %i.dn = add i64 %i.dm, %i.dk
   %i.do = and i32 %.044.i.i, 64
   %.not31.i.i = icmp eq i32 %i.do, 0
-  %8 = and i32 %.044.i.i, 32
-  %.not32.i.i = icmp eq i32 %8, 0
-  %.38.i.i = select i1 %.not32.i.i, i32 6, i32 7
+  %9 = lshr i32 %.044.i.i, 5
+  %10 = and i32 %9, 1
+  %.38.i.i = or disjoint i32 %10, 6
   %.1.i.i = select i1 %.not31.i.i, i32 %.38.i.i, i32 8
   %i.dp = or i32 %.044.i.i, 1536
   br label %.loopexit.i
@@ -232,9 +232,9 @@ bb.as:                                            ; preds = %bb.am
   %i.dt = add i64 %i.ds, %i.dq
   %i.du = and i32 %.044.i.i, 64
   %.not29.i.i = icmp eq i32 %i.du, 0
-  %9 = and i32 %.044.i.i, 32
-  %.not30.i.i = icmp eq i32 %9, 0
-  %.39.i.i = select i1 %.not30.i.i, i32 6, i32 7
+  %11 = lshr i32 %.044.i.i, 5
+  %12 = and i32 %11, 1
+  %.39.i.i = or disjoint i32 %12, 6
   %.2.i.i = select i1 %.not29.i.i, i32 %.39.i.i, i32 8
   %i.dv = or i32 %.044.i.i, 2560
   br label %.loopexit.i
@@ -246,9 +246,9 @@ bb.at:                                            ; preds = %bb.am
   %i.dz = add i64 %i.dy, %i.dw
   %i.ea = and i32 %.044.i.i, 64
   %.not.i163.i = icmp eq i32 %i.ea, 0
-  %10 = and i32 %.044.i.i, 32
-  %.not28.i.i = icmp eq i32 %10, 0
-  %.40.i.i = select i1 %.not28.i.i, i32 6, i32 7
+  %13 = lshr i32 %.044.i.i, 5
+  %14 = and i32 %13, 1
+  %.40.i.i = or disjoint i32 %14, 6
   %.3.i164.i = select i1 %.not.i163.i, i32 %.40.i.i, i32 8
   %i.eb = or i32 %.044.i.i, 6656
   br label %.loopexit.i
@@ -651,9 +651,10 @@ bb.fk:                                            ; preds = %bb.fj, %bb.fi
   br i1 %.not79.i, label %bb.fm, label %bb.fl
 
 bb.fl:                                            ; preds = %bb.fk
-  %11 = and i32 %i.on, 4096
-  %.not82.i = icmp eq i32 %11, 0
-  %12 = select i1 %.not82.i, i8 101, i8 69
+  %15 = lshr i32 %i.on, 7
+  %16 = trunc i32 %15 to i8
+  %17 = and i8 %16, 32
+  %18 = xor i8 %17, 101
   br label %bb.fo
 
 bb.fm:                                            ; preds = %bb.fk
@@ -662,13 +663,14 @@ bb.fm:                                            ; preds = %bb.fk
   br i1 %.not80.i, label %bb.fo, label %bb.fn
 
 bb.fn:                                            ; preds = %bb.fm
-  %13 = and i32 %i.on, 4096
-  %.not81.i = icmp eq i32 %13, 0
-  %14 = select i1 %.not81.i, i8 103, i8 71
+  %19 = lshr i32 %i.on, 7
+  %20 = trunc i32 %19 to i8
+  %21 = and i8 %20, 32
+  %22 = xor i8 %21, 103
   br label %bb.fo
 
 bb.fo:                                            ; preds = %bb.fm, %bb.fn, %bb.fl
-  %.sink = phi i8 [ %12, %bb.fl ], [ %14, %bb.fn ], [ 102, %bb.fm ]
+  %.sink = phi i8 [ %18, %bb.fl ], [ %22, %bb.fn ], [ 102, %bb.fm ]
   store i8 %.sink, ptr %.6.i, align 1, !tbaa !15
   %.7.i84 = getelementptr inbounds nuw i8, ptr %.6.i, i64 1
   store i8 0, ptr %.7.i84, align 1, !tbaa !15

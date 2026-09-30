@@ -202,9 +202,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not76, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %2 = and i32 %i.t, 512
-  %.not77 = icmp eq i32 %2, 0
-  %spec.select = select i1 %.not77, i32 1, i32 3
+  %2 = lshr i32 %i.t, 8
+  %spec.select = and i32 %2, 3
   tail call void (ptr, ptr, ...) @appendStringInfo(ptr noundef %0, ptr noundef nonnull @.str.12, i32 noundef %spec.select) #5
   br label %bb.f
 

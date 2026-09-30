@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !99   ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !99   ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 728
   %i.f = load i64, ptr %i.e, align 8              ; 4 uses
   %i.g = and i64 %i.f, 32
@@ -216,6 +216,7 @@ bb.c:                                             ; preds = %bb.b
   %.in.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %.in.v.i
   %i.i = load ptr, ptr %.in.i, align 8, !tbaa !113 ; 2 uses
   %.in34.in.v.i = select i1 %.not32.i, i64 304, i64 248
+  %.in34.in.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %.in34.in.v.i
   %.not35.i = icmp eq ptr %i.i, null
   br i1 %.not35.i, label %.thread.i, label %.thread43.i
 
@@ -225,16 +226,16 @@ bb.c:                                             ; preds = %bb.b
   %i.k = select i1 %.not36.i, i64 160, i64 200
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.k
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !115  ; 2 uses
-  %i.n = and i64 %i.f, 1024
-  %.not37.i = icmp eq i64 %i.n, 0
-  %.in38.in.v.i = select i1 %.not37.i, i64 792, i64 794
+  %6 = lshr i64 %i.f, 9
+  %i.n = and i64 %6, 2
+  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.n
+  %.in38.in.i = getelementptr inbounds nuw i8, ptr %7, i64 792
   %.not39.i = icmp eq ptr %i.m, null
   br i1 %.not39.i, label %cf_dns_conn_create.exit.thread, label %.thread43.i
 
 .thread43.i:                                      ; preds = %.thread.i, %bb.c
-  %.in38.in.v.pn.i = phi i64 [ %.in38.in.v.i, %.thread.i ], [ %.in34.in.v.i, %bb.c ]
+  %.148.in.i = phi ptr [ %.in38.in.i, %.thread.i ], [ %.in34.in.i, %bb.c ]
   %.13047.i = phi ptr [ %i.m, %.thread.i ], [ %i.i, %bb.c ]
-  %.148.in.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %.in38.in.v.pn.i
   %.148.i = load i16, ptr %.148.in.i, align 2, !tbaa !116
   %i.o = call fastcc i32 @cf_dns_create(ptr noundef nonnull %i.a, ptr noundef nonnull %0, i8 noundef zeroext %3, ptr noundef nonnull %.13047.i, i16 noundef zeroext %.148.i, i8 noundef zeroext %4, i1 noundef zeroext %.not.i, i1 noundef zeroext false, ptr noundef %5)
   br label %cf_dns_conn_create.exit

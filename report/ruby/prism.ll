@@ -205,9 +205,9 @@ bb.wp:                                            ; preds = %bb.wc, %bb.wc, %bb.
   %i.bmk = getelementptr i8, ptr %i.bmj, i64 %i.bmi
   store ptr %i.bmk, ptr %i.d, align 8, !tbaa !87
   %.val.i2895 = load i32, ptr %i.w, align 4, !tbaa !160
-  %8 = and i32 %.val.i2895, 128
-  %.not92.i = icmp eq i32 %8, 0
-  %9 = select i1 %.not92.i, i32 123, i32 59
+  %8 = lshr i32 %.val.i2895, 1
+  %9 = and i32 %8, 64
+  %10 = xor i32 %9, 123
   br label %lex_global_variable.exit
 
 bb.wq:                                            ; preds = %bb.wc
@@ -399,7 +399,7 @@ bb.xm:                                            ; preds = %peek.exit.i2893
   br label %lex_global_variable.exit
 
 lex_global_variable.exit:                         ; preds = %.preheader.split.us.i, %bb.xi, %char_is_identifier.exit85.us.i, %bb.wb, %bb.wd, %bb.we, %bb.wf, %char_is_identifier.exit.thread.i, %bb.wp, %.preheader.split.i, %bb.xl, %bb.xm
-  %.1.i2891 = phi i32 [ 59, %bb.wb ], [ 59, %bb.wf ], [ 59, %bb.wd ], [ %i.bkn, %bb.we ], [ %9, %bb.wp ], [ 59, %char_is_identifier.exit.thread.i ], [ 59, %bb.xm ], [ 59, %bb.xl ], [ 59, %.preheader.split.i ], [ 59, %char_is_identifier.exit85.us.i ], [ 59, %bb.xi ], [ 59, %.preheader.split.us.i ]
+  %.1.i2891 = phi i32 [ 59, %bb.wb ], [ 59, %bb.wf ], [ 59, %bb.wd ], [ %i.bkn, %bb.we ], [ %10, %bb.wp ], [ 59, %char_is_identifier.exit.thread.i ], [ 59, %bb.xm ], [ 59, %bb.xl ], [ 59, %.preheader.split.i ], [ 59, %char_is_identifier.exit85.us.i ], [ 59, %bb.xi ], [ 59, %.preheader.split.us.i ]
   %i.bpm = load ptr, ptr %i.o, align 8, !tbaa !93 ; 4 uses
   %i.bpn = load i32, ptr %i.bpm, align 8, !tbaa !99
   %i.bpo = icmp eq i32 %i.bpn, 2
@@ -802,7 +802,7 @@ peek.exit.lr.ph:                                  ; preds = %bb.a
 peek.exit:                                        ; preds = %peek.exit.lr.ph, %tailrecurse.backedge
   %.val5061313 = phi ptr [ %.val5061049, %peek.exit.lr.ph ], [ %.val506, %tailrecurse.backedge ] ; 12 uses
   %.val5071053 = phi ptr [ %.val5071050, %peek.exit.lr.ph ], [ %.val507, %tailrecurse.backedge ] ; 25 uses
-  %.tr7271051 = phi i8 [ %3, %peek.exit.lr.ph ], [ %i.qn, %tailrecurse.backedge ] ; 74 uses
+  %.tr7271051 = phi i8 [ %3, %peek.exit.lr.ph ], [ %i.qn, %tailrecurse.backedge ] ; 73 uses
   %i.f = load i8, ptr %.val5071053, align 1, !tbaa !83 ; 4 uses
   switch i8 %i.f, label %peek_offset.exit665.thread [
     i8 92, label %bb.b
@@ -835,12 +835,8 @@ peek.exit:                                        ; preds = %peek.exit.lr.ph, %t
 bb.b:                                             ; preds = %peek.exit
   %i.g = getelementptr i8, ptr %.val5071053, i64 1
   store ptr %i.g, ptr %i.b, align 8, !tbaa !87
-  %4 = and i8 %.tr7271051, 1
-  %.not.i = icmp eq i8 %4, 0
-  %spec.select.i = select i1 %.not.i, i8 92, i8 28
   %i.h = shl i8 %.tr7271051, 6                    ; 2 uses
-  %5 = and i8 %i.h, -128
-  %.1.i = or disjoint i8 %spec.select.i, %5       ; 2 uses
+  %.1.i = xor i8 %i.h, 92                         ; 2 uses
   %.not.i512 = icmp samesign ult i8 %.tr7271051, 8
   br i1 %.not.i512, label %bb.d, label %bb.c
 
@@ -886,17 +882,17 @@ escape_write_byte.exit:                           ; preds = %bb.d, %bb.h
 bb.i:                                             ; preds = %peek.exit
   %i.w = getelementptr i8, ptr %.val5071053, i64 1
   store ptr %i.w, ptr %i.b, align 8, !tbaa !87
-  %6 = and i8 %.tr7271051, 1
-  %.not.i513 = icmp eq i8 %6, 0
-  %spec.select.i514 = select i1 %.not.i513, i8 39, i8 7
+  %4 = shl i8 %.tr7271051, 5
+  %5 = and i8 %4, 32
   %i.x = shl i8 %.tr7271051, 6                    ; 2 uses
   %i.y = and i8 %i.x, -128
-  %.1.i515.a = or disjoint i8 %spec.select.i514, %i.y ; 2 uses
+  %.1.i515.a = or disjoint i8 %5, %i.y
+  %.1.i515 = xor i8 %.1.i515.a, 39                ; 2 uses
   %.not.i516 = icmp samesign ult i8 %.tr7271051, 8
   br i1 %.not.i516, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.z = zext i8 %.1.i515.a to i32
+  %i.z = zext i8 %.1.i515 to i32
   tail call void (ptr, ptr, ...) @pm_buffer_append_format(ptr noundef %2, ptr noundef nonnull @.str.98, i32 noundef %i.z) #27
   br label %bb.k
 
@@ -931,7 +927,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   br label %escape_write_byte.exit518
 
 escape_write_byte.exit518:                        ; preds = %bb.k, %bb.o
-  tail call void @pm_buffer_append_byte(ptr noundef %1, i8 noundef zeroext %.1.i515.a) #27
+  tail call void @pm_buffer_append_byte(ptr noundef %1, i8 noundef zeroext %.1.i515) #27
   br label %.critedge480
 
 bb.p:                                             ; preds = %peek.exit

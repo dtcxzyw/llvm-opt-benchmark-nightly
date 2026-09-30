@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %.val34 = load i64, ptr %i.n, align 8           ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19146)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !19147
-  %i.o = load i64, ptr %1, align 16, !range !95, !alias.scope !19146, !noalias !19148, !noundef !41 ; 3 uses
+  %i.o = load i64, ptr %1, align 16, !range !95, !alias.scope !19146, !noalias !19148, !noundef !41 ; 4 uses
   %i.p = icmp samesign ult i64 %i.o, 2
   br i1 %i.p, label %bb.d, label %bb.e
 
@@ -350,34 +350,41 @@ _RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5al
   %i.bb = fcmp one double %i.ba, +inf
   %spec.store.select5 = select i1 %i.bb, double %i.az, double 0.000000e+00 ; 2 uses
   switch i64 %i.v, label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit [
-    i64 0, label %.thread
-    i64 1, label %.thread41.a
+    i64 0, label %.thread41.a
+    i64 1, label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split
   ]
 
-.thread:                                          ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit
-  %2 = trunc nuw i64 %i.o to i1                   ; 2 uses
-  %spec.select.v = select i1 %2, i64 8, i64 72
-  br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split
-
 .thread41.a:                                      ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit
+  %2 = shl nuw nsw i64 %i.o, 6
+  %spec.select.v = xor i64 %2, 72
+  %spec.select = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v
+  %.sroa.028.0 = load double, ptr %spec.select, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %4 = load double, ptr %3, align 8, !alias.scope !19155, !noundef !41 ; 2 uses
+  %5 = trunc nuw i64 %i.o to i1
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %3 = load i64, ptr %i.bc, align 8, !range !49, !noundef !41
-  %4 = trunc nuw i64 %3 to i1                     ; 2 uses
-  %spec.select33.v = select i1 %4, i64 16, i64 40
-  br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split
+  %6 = load double, ptr %i.bc, align 8, !alias.scope !19155
+  %.sroa.022.0.i = select i1 %5, double %6, double %4 ; 2 uses
+  %7 = fneg double %.sroa.022.0.i
+  %8 = fcmp uno double %.sroa.022.0.i, 0.000000e+00
+  %spec.store.select.i = select i1 %8, double 0.000000e+00, double %7
+  %9 = fadd double %4, %spec.store.select.i       ; 2 uses
+  %.inv23.i = fcmp ord double %9, 0.000000e+00
+  %spec.store.select1.i = select i1 %.inv23.i, double %9, double 0.000000e+00
+  br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit
 
-_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split: ; preds = %.thread, %.thread41.a
-  %spec.select33.v.sink = phi i64 [ %spec.select33.v, %.thread41.a ], [ %spec.select.v, %.thread ]
-  %.sink53 = phi i64 [ 40, %.thread41.a ], [ 72, %.thread ]
-  %.sink51 = phi i64 [ 16, %.thread41.a ], [ 8, %.thread ]
-  %.sink = phi i1 [ %4, %.thread41.a ], [ %2, %.thread ]
-  %spec.select33 = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select33.v.sink
+_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split: ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %11 = load i64, ptr %10, align 8, !range !49, !noundef !41
+  %12 = trunc nuw i64 %11 to i1                   ; 2 uses
+  %spec.select33.v = select i1 %12, i64 16, i64 40
+  %spec.select33 = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select33.v
   %.sroa.028.2 = load double, ptr %spec.select33, align 8
-  %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 %.sink53
+  %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.be = load double, ptr %i.bd, align 8, !alias.scope !19155, !noundef !41 ; 2 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 %.sink51
-  %i.bg = load double, ptr %i.bf, align 8, !alias.scope !19155
-  %.sroa.012.0.i = select i1 %.sink, double %i.bg, double %i.be ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.bg = load double, ptr %i.bf, align 16, !alias.scope !19155
+  %.sroa.012.0.i = select i1 %12, double %i.bg, double %i.be ; 2 uses
   %i.bh = fneg double %.sroa.012.0.i
   %i.bi = fcmp uno double %.sroa.012.0.i, 0.000000e+00
   %spec.store.select2.i = select i1 %i.bi, double 0.000000e+00, double %i.bh
@@ -386,9 +393,9 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.e
   %spec.store.select3.i = select i1 %.inv.i, double %i.bj, double 0.000000e+00
   br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit
 
-_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit: ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split, %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit
-  %.sroa.028.140 = phi double [ 0.000000e+00, %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit ], [ %.sroa.028.2, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split ]
-  %.sroa.0.0.i36 = phi double [ 0.000000e+00, %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit ], [ %spec.store.select3.i, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split ]
+_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit: ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split, %.thread41.a
+  %.sroa.028.140 = phi double [ %.sroa.028.2, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split ], [ %.sroa.028.0, %.thread41.a ], [ 0.000000e+00, %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit ]
+  %.sroa.0.0.i36 = phi double [ %spec.store.select3.i, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split ], [ %spec.store.select1.i, %.thread41.a ], [ 0.000000e+00, %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit ]
   %i.bk = fsub double %.sroa.028.140, %spec.store.select5 ; 2 uses
   %.inv = fcmp ord double %i.bk, 0.000000e+00
   %spec.store.select2 = select i1 %.inv, double %i.bk, double 0.000000e+00
@@ -791,43 +798,50 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.j, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldRINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentEINtNtNtBa_5slice4iter4IterB1x_EuINtNtNtBa_3ops12control_flow11ControlFlowRB1x_ENCNvNtB1B_3run11measure_row0NCINvNvMsg_NtB6_7flattenINtB4s_13FlattenCompatppE13iter_try_fold7flattenB2y_uB34_NCINvNvXsi_B4s_B4F_NtNtNtB8_6traits8iterator8Iterator8try_fold7flattenB2y_uB34_NCINvNvB5T_4find5checkB3J_QNCB3R_s_0E0E0E0E0B1D_.exit.loopexit.i.i.i.i.i.i.i.i.i.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i, %bb.b
-  %i.k = phi ptr [ %i.l, %bb.b ], [ %.val7.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 6 uses
+  %i.k = phi ptr [ %i.l, %bb.b ], [ %.val7.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 9 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 304 ; 5 uses
-  %i.m = load i64, ptr %i.k, align 16, !range !95, !alias.scope !42905, !noalias !42906, !noundef !41 ; 3 uses
+  %i.m = load i64, ptr %i.k, align 16, !range !95, !alias.scope !42905, !noalias !42906, !noundef !41 ; 4 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.m, 4
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.b, label %.loopexit.i.i
 
 .loopexit.i.i:                                    ; preds = %.lr.ph
   %i.n = tail call i64 @llvm.usub.sat.i64(i64 %i.m, i64 1)
   switch i64 %i.n, label %bb.c [
-    i64 0, label %.thread.i.i.i
-    i64 1, label %.thread4.i.i.i.a
+    i64 0, label %.thread4.i.i.i.a
+    i64 1, label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i
   ]
 
-.thread.i.i.i:                                    ; preds = %.loopexit.i.i
-  %2 = trunc nuw i64 %i.m to i1                   ; 2 uses
-  %spec.select.v.i.i.i = select i1 %2, i64 8, i64 72
-  br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i
-
 .thread4.i.i.i.a:                                 ; preds = %.loopexit.i.i
+  %2 = shl nuw nsw i64 %i.m, 6
+  %spec.select.v.i.i.i = xor i64 %2, 72
+  %spec.select.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 %spec.select.v.i.i.i
+  %.sroa.0.0.i.i.i = load double, ptr %spec.select.i.i.i, align 8, !alias.scope !42907, !noalias !42908
+  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 72
+  %4 = load double, ptr %3, align 8, !alias.scope !42909, !noalias !42908, !noundef !41 ; 2 uses
+  %5 = trunc nuw i64 %i.m to i1
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %3 = load i64, ptr %i.o, align 8, !range !49, !alias.scope !42907, !noalias !42908, !noundef !41
-  %4 = trunc nuw i64 %3 to i1                     ; 2 uses
-  %spec.select6.v.i.i.i = select i1 %4, i64 16, i64 40
-  br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i
+  %6 = load double, ptr %i.o, align 8, !alias.scope !42909, !noalias !42908
+  %.sroa.022.0.i.i.i.i = select i1 %5, double %6, double %4 ; 2 uses
+  %7 = fneg double %.sroa.022.0.i.i.i.i
+  %8 = fcmp uno double %.sroa.022.0.i.i.i.i, 0.000000e+00
+  %spec.store.select.i.i.i.i = select i1 %8, double 0.000000e+00, double %7
+  %9 = fadd double %4, %spec.store.select.i.i.i.i ; 2 uses
+  %.inv23.i.i.i.i = fcmp ord double %9, 0.000000e+00
+  %spec.store.select1.i.i.i.i = select i1 %.inv23.i.i.i.i, double %9, double 0.000000e+00
+  br label %bb.c
 
-_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i: ; preds = %.thread4.i.i.i.a, %.thread.i.i.i
-  %spec.select.v.sink.i.i.i = phi i64 [ %spec.select.v.i.i.i, %.thread.i.i.i ], [ %spec.select6.v.i.i.i, %.thread4.i.i.i.a ]
-  %.sink16.i.i.i = phi i64 [ 72, %.thread.i.i.i ], [ 40, %.thread4.i.i.i.a ]
-  %.sink14.i.i.i = phi i64 [ 8, %.thread.i.i.i ], [ 16, %.thread4.i.i.i.a ]
-  %.sink.i.i.i = phi i1 [ %2, %.thread.i.i.i ], [ %4, %.thread4.i.i.i.a ]
-  %spec.select.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.k, i64 %spec.select.v.sink.i.i.i
+_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i: ; preds = %.loopexit.i.i
+  %10 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %11 = load i64, ptr %10, align 8, !range !49, !alias.scope !42907, !noalias !42908, !noundef !41
+  %12 = trunc nuw i64 %11 to i1                   ; 2 uses
+  %spec.select6.v.i.i.i = select i1 %12, i64 16, i64 40
+  %spec.select.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.k, i64 %spec.select6.v.i.i.i
   %.sroa.0.0.i.i.i.a = load double, ptr %spec.select.i.i.i.a, align 8, !alias.scope !42907, !noalias !42908
-  %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 %.sink16.i.i.i
+  %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 40
   %i.q = load double, ptr %i.p, align 8, !alias.scope !42909, !noalias !42908, !noundef !41 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 %.sink14.i.i.i
+  %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.s = load double, ptr %i.r, align 8, !alias.scope !42909, !noalias !42908
-  %.sroa.022.0.i.i.i.i.a = select i1 %.sink.i.i.i, double %i.s, double %i.q ; 2 uses
+  %.sroa.022.0.i.i.i.i.a = select i1 %12, double %i.s, double %i.q ; 2 uses
   %i.t = fneg double %.sroa.022.0.i.i.i.i.a
   %i.u = fcmp uno double %.sroa.022.0.i.i.i.i.a, 0.000000e+00
   %spec.store.select.i.i.i.i.a = select i1 %i.u, double 0.000000e+00, double %i.t
@@ -836,9 +850,9 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.e
   %spec.store.select1.i.i.i.i.a = select i1 %.inv23.i.i.i.i.a, double %i.v, double 0.000000e+00
   br label %bb.c
 
-bb.c:                                             ; preds = %.loopexit.i.i, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i
-  %.sroa.7.0.ph.i = phi double [ %spec.store.select1.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i ], [ 0.000000e+00, %.loopexit.i.i ] ; 2 uses
-  %.sroa.5.0.ph.i = phi double [ %.sroa.0.0.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i ], [ 0.000000e+00, %.loopexit.i.i ] ; 2 uses
+bb.c:                                             ; preds = %.loopexit.i.i, %.thread4.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i
+  %.sroa.7.0.ph.i = phi double [ 0.000000e+00, %.loopexit.i.i ], [ %spec.store.select1.i.i.i.i, %.thread4.i.i.i.a ], [ %spec.store.select1.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i ] ; 2 uses
+  %.sroa.5.0.ph.i = phi double [ 0.000000e+00, %.loopexit.i.i ], [ %.sroa.0.0.i.i.i, %.thread4.i.i.i.a ], [ %.sroa.0.0.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i ] ; 2 uses
   %i.w = icmp eq ptr %i.l, %i.h
   br i1 %i.w, label %_RNCINvNvXsi_NtNtNtCs3oUPovFnLWP_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator4fold7flattenINtNtNtBg_5slice4iter4IterNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentETNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB3w_ENCINvNtBc_6filter11filter_foldRB2u_B3v_NCNvNtB2y_3run11measure_rows_0NCINvNtBc_3map8map_foldB4T_B3v_B3v_NCB54_s0_0NCB54_s1_0E0E0E0B2A_.exit.i.i.i.i.i.i, label %bb.d
 
@@ -853,10 +867,10 @@ bb.e:                                             ; preds = %_RNvXs1_NtNtNtCs3oU
   %.sroa.05.0.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.d ], [ %i.ao, %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.6.0.i.i.i.i.i.i.i.i = phi double [ %.sroa.7.0.ph.i, %bb.d ], [ %.pn1.i.i.i.i.i.i.i.i.i.i, %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i.i.i.i.i = phi double [ %.sroa.5.0.ph.i, %bb.d ], [ %.pn3.i.i.i.i.i.i.i.i.i.i, %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i ] ; 2 uses
-  %i.ab = getelementptr inbounds nuw [304 x i8], ptr %i.l, i64 %.sroa.05.0.i.i.i.i.i.i.i.i ; 5 uses
+  %i.ab = getelementptr inbounds nuw [304 x i8], ptr %i.l, i64 %.sroa.05.0.i.i.i.i.i.i.i.i ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42910)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42911)
-  %i.ac = load i64, ptr %i.ab, align 16, !range !95, !alias.scope !42912, !noalias !42913, !noundef !41 ; 3 uses
+  %i.ac = load i64, ptr %i.ab, align 16, !range !95, !alias.scope !42912, !noalias !42913, !noundef !41 ; 4 uses
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ac, 4
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i, label %bb.f
 
@@ -864,34 +878,41 @@ bb.f:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42914)
   %i.ad = tail call i64 @llvm.usub.sat.i64(i64 %i.ac, i64 1)
   switch i64 %i.ad, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i [
-    i64 0, label %.thread.i.i.i.i.i.i.i.i.i.i.i.i
-    i64 1, label %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a
+    i64 0, label %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a
+    i64 1, label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i
   ]
 
-.thread.i.i.i.i.i.i.i.i.i.i.i.i:                  ; preds = %bb.f
-  %5 = trunc nuw i64 %i.ac to i1                  ; 2 uses
-  %spec.select.v.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %5, i64 8, i64 72
-  br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i
-
 .thread4.i.i.i.i.i.i.i.i.i.i.i.i.a:               ; preds = %bb.f
+  %13 = shl nuw nsw i64 %i.ac, 6
+  %spec.select.v.i.i.i.i.i.i.i.i.i.i.i.i = xor i64 %13, 72
+  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 %spec.select.v.i.i.i.i.i.i.i.i.i.i.i.i
+  %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i = load double, ptr %spec.select.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !42915, !noalias !42913
+  %14 = getelementptr inbounds nuw i8, ptr %i.ab, i64 72
+  %15 = load double, ptr %14, align 8, !alias.scope !42916, !noalias !42913, !noundef !41 ; 2 uses
+  %16 = trunc nuw i64 %i.ac to i1
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %6 = load i64, ptr %i.ae, align 8, !range !49, !alias.scope !42915, !noalias !42913, !noundef !41
-  %7 = trunc nuw i64 %6 to i1                     ; 2 uses
-  %spec.select6.v.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %7, i64 16, i64 40
-  br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i
+  %17 = load double, ptr %i.ae, align 8, !alias.scope !42916, !noalias !42913
+  %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %16, double %17, double %15 ; 2 uses
+  %18 = fneg double %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %19 = fcmp uno double %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i, 0.000000e+00
+  %spec.store.select.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %19, double 0.000000e+00, double %18
+  %20 = fadd double %15, %spec.store.select.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %.inv23.i.i.i.i.i.i.i.i.i.i.i.i.i = fcmp ord double %20, 0.000000e+00
+  %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %.inv23.i.i.i.i.i.i.i.i.i.i.i.i.i, double %20, double 0.000000e+00
+  br label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i
 
-_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a, %.thread.i.i.i.i.i.i.i.i.i.i.i.i
-  %spec.select.v.sink.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %spec.select.v.i.i.i.i.i.i.i.i.i.i.i.i, %.thread.i.i.i.i.i.i.i.i.i.i.i.i ], [ %spec.select6.v.i.i.i.i.i.i.i.i.i.i.i.i, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a ]
-  %.sink16.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 72, %.thread.i.i.i.i.i.i.i.i.i.i.i.i ], [ 40, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a ]
-  %.sink14.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 8, %.thread.i.i.i.i.i.i.i.i.i.i.i.i ], [ 16, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a ]
-  %.sink.i.i.i.i.i.i.i.i.i.i.i.i = phi i1 [ %5, %.thread.i.i.i.i.i.i.i.i.i.i.i.i ], [ %7, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a ]
-  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.ab, i64 %spec.select.v.sink.i.i.i.i.i.i.i.i.i.i.i.i
+_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.f
+  %21 = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
+  %22 = load i64, ptr %21, align 8, !range !49, !alias.scope !42915, !noalias !42913, !noundef !41
+  %23 = trunc nuw i64 %22 to i1                   ; 2 uses
+  %spec.select6.v.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %23, i64 16, i64 40
+  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.ab, i64 %spec.select6.v.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.a = load double, ptr %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.a, align 8, !alias.scope !42915, !noalias !42913
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.sink16.i.i.i.i.i.i.i.i.i.i.i.i
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 40
   %i.ag = load double, ptr %i.af, align 8, !alias.scope !42916, !noalias !42913, !noundef !41 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.sink14.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.ai = load double, ptr %i.ah, align 8, !alias.scope !42916, !noalias !42913
-  %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.a = select i1 %.sink.i.i.i.i.i.i.i.i.i.i.i.i, double %i.ai, double %i.ag ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
+  %i.ai = load double, ptr %i.ah, align 16, !alias.scope !42916, !noalias !42913
+  %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.a = select i1 %23, double %i.ai, double %i.ag ; 2 uses
   %i.aj = fneg double %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.a
   %i.ak = fcmp uno double %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.a, 0.000000e+00
   %spec.store.select.i.i.i.i.i.i.i.i.i.i.i.i.i.a = select i1 %i.ak, double 0.000000e+00, double %i.aj
@@ -900,9 +921,9 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.e
   %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i.a = select i1 %.inv23.i.i.i.i.i.i.i.i.i.i.i.i.i.a, double %i.al, double 0.000000e+00
   br label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i
 
-_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i, %bb.f
-  %.sroa.0.13.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ 0.000000e+00, %bb.f ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i ]
-  %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ 0.000000e+00, %bb.f ], [ %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i ]
+_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a, %bb.f
+  %.sroa.0.13.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a ], [ 0.000000e+00, %bb.f ]
+  %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i ], [ %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.a ], [ 0.000000e+00, %bb.f ]
   %i.am = tail call noundef double @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout3absNtB2_3Abs3max(double noundef %.sroa.02.0.i.i.i.i.i.i.i.i, double noundef %.sroa.0.13.i.i.i.i.i.i.i.i.i.i.i.i), !noalias !42917
   %i.an = tail call noundef double @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout3absNtB2_3Abs3max(double noundef %.sroa.6.0.i.i.i.i.i.i.i.i, double noundef %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i), !noalias !42917
   br label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i
@@ -943,10 +964,10 @@ bb.h:                                             ; preds = %_RNCINvNtNtNtCs3oUP
   %.sroa.05.0.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.bm, %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.h ] ; 2 uses
   %.sroa.6.0.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ %.pn1.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.6.0.i.i21.i.i.i.i.i.i, %bb.h ] ; 2 uses
   %.sroa.02.0.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ %.pn3.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.02.0.i.i22.i.i.i.i.i.i, %bb.h ] ; 2 uses
-  %i.az = getelementptr inbounds nuw [304 x i8], ptr %.val.i.i.i.i.i.i.i.i, i64 %.sroa.05.0.i.i.i.i.i.i.i.i.i.i.i.i ; 5 uses
+  %i.az = getelementptr inbounds nuw [304 x i8], ptr %.val.i.i.i.i.i.i.i.i, i64 %.sroa.05.0.i.i.i.i.i.i.i.i.i.i.i.i ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42918)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42919)
-  %i.ba = load i64, ptr %i.az, align 16, !range !95, !alias.scope !42920, !noalias !42913, !noundef !41 ; 3 uses
+  %i.ba = load i64, ptr %i.az, align 16, !range !95, !alias.scope !42920, !noalias !42913, !noundef !41 ; 4 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ba, 4
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.i
 
@@ -954,34 +975,41 @@ bb.i:                                             ; preds = %.preheader.i.i.i.i.
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42921)
   %i.bb = tail call i64 @llvm.usub.sat.i64(i64 %i.ba, i64 1)
   switch i64 %i.bb, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i [
-    i64 0, label %.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-    i64 1, label %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a
+    i64 0, label %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a
+    i64 1, label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   ]
 
-.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:          ; preds = %bb.i
-  %8 = trunc nuw i64 %i.ba to i1                  ; 2 uses
-  %spec.select.v.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %8, i64 8, i64 72
-  br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-
 .thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a:       ; preds = %bb.i
+  %24 = shl nuw nsw i64 %i.ba, 6
+  %spec.select.v.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = xor i64 %24, 72
+  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.az, i64 %spec.select.v.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load double, ptr %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !42922, !noalias !42913
+  %25 = getelementptr inbounds nuw i8, ptr %i.az, i64 72
+  %26 = load double, ptr %25, align 8, !alias.scope !42923, !noalias !42913, !noundef !41 ; 2 uses
+  %27 = trunc nuw i64 %i.ba to i1
   %i.bc = getelementptr inbounds nuw i8, ptr %i.az, i64 8
-  %9 = load i64, ptr %i.bc, align 8, !range !49, !alias.scope !42922, !noalias !42913, !noundef !41
-  %10 = trunc nuw i64 %9 to i1                    ; 2 uses
-  %spec.select6.v.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %10, i64 16, i64 40
-  br label %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %28 = load double, ptr %i.bc, align 8, !alias.scope !42923, !noalias !42913
+  %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %27, double %28, double %26 ; 2 uses
+  %29 = fneg double %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %30 = fcmp uno double %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 0.000000e+00
+  %spec.store.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %30, double 0.000000e+00, double %29
+  %31 = fadd double %26, %spec.store.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %.inv23.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = fcmp ord double %31, 0.000000e+00
+  %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %.inv23.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, double %31, double 0.000000e+00
+  br label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
-_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a, %.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %spec.select.v.sink.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %spec.select.v.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %spec.select6.v.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a ]
-  %.sink16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 72, %.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 40, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a ]
-  %.sink14.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 8, %.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 16, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a ]
-  %.sink.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i1 [ %8, %.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %10, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a ]
-  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.az, i64 %spec.select.v.sink.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.i
+  %32 = getelementptr inbounds nuw i8, ptr %i.az, i64 8
+  %33 = load i64, ptr %32, align 8, !range !49, !alias.scope !42922, !noalias !42913, !noundef !41
+  %34 = trunc nuw i64 %33 to i1                   ; 2 uses
+  %spec.select6.v.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %34, i64 16, i64 40
+  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.az, i64 %spec.select6.v.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a = load double, ptr %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a, align 8, !alias.scope !42922, !noalias !42913
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 %.sink16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 40
   %i.be = load double, ptr %i.bd, align 8, !alias.scope !42923, !noalias !42913, !noundef !41 ; 2 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.az, i64 %.sink14.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.bg = load double, ptr %i.bf, align 8, !alias.scope !42923, !noalias !42913
-  %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a = select i1 %.sink.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, double %i.bg, double %i.be ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.az, i64 16
+  %i.bg = load double, ptr %i.bf, align 16, !alias.scope !42923, !noalias !42913
+  %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a = select i1 %34, double %i.bg, double %i.be ; 2 uses
   %i.bh = fneg double %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a
   %i.bi = fcmp uno double %.sroa.022.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a, 0.000000e+00
   %spec.store.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a = select i1 %i.bi, double 0.000000e+00, double %i.bh
@@ -990,9 +1018,9 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.e
   %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a = select i1 %.inv23.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a, double %i.bj, double 0.000000e+00
   br label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
-_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.i
-  %.sroa.0.13.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ 0.000000e+00, %bb.i ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ]
-  %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ 0.000000e+00, %bb.i ], [ %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ]
+_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB1W_EB1V_NCNvNtBZ_3run11measure_rows0_0NCB2V_s1_0E0B11_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a, %bb.i
+  %.sroa.0.13.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a ], [ 0.000000e+00, %bb.i ]
+  %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi double [ %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %spec.store.select1.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.thread4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.a ], [ 0.000000e+00, %bb.i ]
   %i.bk = tail call noundef double @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout3absNtB2_3Abs3max(double noundef %.sroa.02.0.i.i.i.i.i.i.i.i.i.i.i.i, double noundef %.sroa.0.13.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i), !noalias !42924
   %i.bl = tail call noundef double @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout3absNtB2_3Abs3max(double noundef %.sroa.6.0.i.i.i.i.i.i.i.i.i.i.i.i, double noundef %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i), !noalias !42924
   br label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter11filter_foldRNtNtNtCs7tN9tvpkfrg_12typst_layout4math8fragment12MathFragmentTNtNtNtCsdaEETE4DqmE_13typst_library6layout3abs3AbsB2C_ENCNvNtB1F_3run11measure_rows_0NCINvNtBV_3map8map_foldB1A_B2B_B2B_NCB3x_s0_0NCB3x_s1_0E0E0INtB7_5FnMutTB2B_B1A_EE8call_mutB1H_.exit.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1395,8 +1423,8 @@ _RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5al
   ]
 
 bb.ad:                                            ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit178
-  %4 = trunc nuw i64 %i.cz to i1
-  %spec.select.v.i = select i1 %4, i64 8, i64 72
+  %4 = shl nuw nsw i64 %i.cz, 6
+  %spec.select.v.i = xor i64 %4, 72
   br label %.sink.split.i
 
 bb.ae:                                            ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit178
@@ -1684,8 +1712,8 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment6height.ex
   %i.gl = fadd double %i.gk, %spec.store.select13310 ; 2 uses
   %.inv154311 = fcmp ord double %i.gl, 0.000000e+00
   %spec.store.select15312 = select i1 %.inv154311, double %i.gl, double 0.000000e+00
-  %5 = trunc nuw i64 %i.gf to i1
-  %spec.select.v.i209 = select i1 %5, i64 8, i64 72
+  %5 = shl nuw nsw i64 %i.gf, 6
+  %spec.select.v.i209 = xor i64 %5, 72
   br label %.sink.split.i204
 
 _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment6height.exit.thread316: ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit201
@@ -2088,8 +2116,8 @@ bb.ak:                                            ; preds = %_RINvMNtNtCsaL1QbXo
   ]
 
 bb.al:                                            ; preds = %bb.ak
-  %4 = trunc nuw i64 %i.cr to i1
-  %spec.select.v.i = select i1 %4, i64 8, i64 72
+  %4 = shl nuw nsw i64 %i.cr, 6
+  %spec.select.v.i = xor i64 %4, 72
   br label %.sink.split.i
 
 bb.am:                                            ; preds = %bb.ak
@@ -2492,8 +2520,8 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment6height.ex
   %i.hb = fadd double %spec.store.select19324, %i.gz ; 2 uses
   %.inv185325 = fcmp ord double %i.hb, 0.000000e+00
   %spec.store.select27326 = select i1 %.inv185325, double %i.hb, double 0.000000e+00
-  %5 = trunc nuw i64 %i.gv to i1
-  %spec.select.v.i250 = select i1 %5, i64 8, i64 72
+  %5 = shl nuw nsw i64 %i.gv, 6
+  %spec.select.v.i250 = xor i64 %5, 72
   br label %.sink.split.i245
 
 _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment6height.exit235.thread330: ; preds = %bb.bw
@@ -2542,8 +2570,8 @@ _RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5al
   ]
 
 bb.bx:                                            ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit233
-  %6 = trunc nuw i64 %i.hy to i1
-  %spec.select.v.i242 = select i1 %6, i64 8, i64 72
+  %6 = shl nuw nsw i64 %i.hy, 6
+  %spec.select.v.i242 = xor i64 %6, 72
   br label %.sink.split.i237
 
 bb.by:                                            ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit233
@@ -2627,8 +2655,8 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment18italics_
   %.sroa.064.0365 = phi i8 [ %i.in, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment12is_text_like.exit.thread ], [ 0, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment12is_text_like.exit ]
   %i.iq = getelementptr inbounds nuw i8, ptr %i.u, i64 264
   %i.ir = load double, ptr %i.iq, align 8, !alias.scope !44244, !noundef !41
-  %7 = trunc nuw i64 %i.gv to i1
-  %spec.select.v.i254 = select i1 %7, i64 8, i64 72
+  %7 = shl nuw nsw i64 %i.gv, 6
+  %spec.select.v.i254 = xor i64 %7, 72
   br label %.sink.split.i255
 
 _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment18italics_correction.exit.thread: ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment12is_text_like.exit.thread367, %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment12is_text_like.exit
@@ -3031,7 +3059,7 @@ bb.a:
   %.not = icmp eq i8 %i.bm, 0
   %.sink.i.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.ay, i64 56
   %.sink.i.i.sroa.gep468 = getelementptr inbounds nuw i8, ptr %i.ay, i64 232
-  %.sink36.i.i.i.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.ay, i64 8 ; 13 uses
+  %.sink36.i.i.i.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.ay, i64 8 ; 12 uses
   %.sink36.i.i.i.i.sroa.gep469 = getelementptr inbounds nuw i8, ptr %i.ay, i64 16 ; 4 uses
   %.sink19.i.i.i.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.ay, i64 80 ; 2 uses
   %.sink19.i.i.i.i.sroa.gep471 = getelementptr inbounds nuw i8, ptr %i.ay, i64 264 ; 2 uses
@@ -3434,8 +3462,8 @@ bb.de:                                            ; preds = %.sink.split.i.i, %b
   br i1 %i.kd, label %bb.dh, label %bb.dg
 
 bb.df:                                            ; preds = %bb.dd
-  %4 = trunc nuw i64 %i.jr to i1
-  %spec.select.v.i.i = select i1 %4, i64 8, i64 72
+  %4 = shl nuw nsw i64 %i.jr, 6
+  %spec.select.v.i.i = xor i64 %4, 72
   br label %.sink.split.i.i
 
 bb.dg:                                            ; preds = %.noexc289.i
@@ -3662,8 +3690,8 @@ bb.dw:                                            ; preds = %.sink.split379.i.i,
   br i1 %.not255.i.i, label %bb.ea, label %bb.dz
 
 bb.dx:                                            ; preds = %bb.dv
-  %5 = trunc nuw i64 %i.mh to i1
-  %spec.select272.v.i.i = select i1 %5, i64 8, i64 72
+  %5 = shl nuw nsw i64 %i.mh, 6
+  %spec.select272.v.i.i = xor i64 %5, 72
   br label %.sink.split379.i.i
 
 bb.dy:                                            ; preds = %bb.dv
@@ -3695,8 +3723,8 @@ bb.ea:                                            ; preds = %.sink.split380.i.i,
           to label %.noexc296.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !45461
 
 bb.eb:                                            ; preds = %bb.dz
-  %6 = trunc nuw i64 %i.mm to i1
-  %spec.select274.v.i.i = select i1 %6, i64 8, i64 72
+  %6 = shl nuw nsw i64 %i.mm, 6
+  %spec.select274.v.i.i = xor i64 %6, 72
   br label %.sink.split380.i.i
 
 bb.ec:                                            ; preds = %bb.dz
@@ -3799,8 +3827,8 @@ bb.ej:                                            ; preds = %_RNvMNtNtCs7tN9tvpk
   br label %.sink.split390.i.peel.i
 
 bb.ek:                                            ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit307.i.peel.i
-  %7 = trunc nuw i64 %i.nj to i1
-  %spec.select276.v.i.peel.i = select i1 %7, i64 8, i64 72
+  %7 = shl nuw nsw i64 %i.nj, 6
+  %spec.select276.v.i.peel.i = xor i64 %7, 72
   br label %.sink.split390.i.peel.i
 
 .sink.split390.i.peel.i:                          ; preds = %bb.ek, %bb.ej
@@ -3876,8 +3904,8 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.e
   ]
 
 bb.ep:                                            ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit307.i.i
-  %8 = trunc nuw i64 %i.mw to i1
-  %spec.select276.v.i.i = select i1 %8, i64 8, i64 72
+  %8 = shl nuw nsw i64 %i.mw, 6
+  %spec.select276.v.i.i = xor i64 %8, 72
   br label %.sink.split390.i.i
 
 bb.eq:                                            ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit307.i.i
@@ -4047,8 +4075,8 @@ _RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5al
   ]
 
 bb.ex:                                            ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit28.i.i.i.i
-  %9 = trunc nuw i64 %i.qt to i1
-  %spec.select.v.i.i.i.i = select i1 %9, i64 8, i64 72
+  %9 = shl nuw nsw i64 %i.qt, 6
+  %spec.select.v.i.i.i.i = xor i64 %9, 72
   br label %.sink.split.i.i.i.i
 
 bb.ey:                                            ; preds = %_RINvMNtNtCsaL1QbXo9JQH_3std4sync9once_lockINtB3_8OnceLockINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font7metrics13MathConstantsEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_B1w_NtB1w_12FontInstance4math0E0zECs7tN9tvpkfrg_12typst_layout.exit28.i.i.i.i
@@ -4196,8 +4224,8 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.e
   ]
 
 bb.fh:                                            ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.i.i.i.i
-  %10 = trunc nuw i64 %i.so to i1
-  %spec.select.v.i.i22.i.i = select i1 %10, i64 8, i64 72
+  %10 = shl nuw nsw i64 %i.so, 6
+  %spec.select.v.i.i22.i.i = xor i64 %10, 72
   br label %.sink.split.i.i10.i.i
 
 bb.fi:                                            ; preds = %_RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.exit.i.i.i.i
@@ -4245,8 +4273,8 @@ bb.fj:                                            ; preds = %.noexc311.i, %_RINv
   ]
 
 bb.fk:                                            ; preds = %bb.fj
-  %11 = trunc nuw i64 %i.tc to i1
-  %spec.select.v.i = select i1 %11, i64 8, i64 72
+  %11 = shl nuw nsw i64 %i.tc, 6
+  %spec.select.v.i = xor i64 %11, 72
   br label %.sink.split.i
 
 bb.fl:                                            ; preds = %bb.fj
@@ -4574,13 +4602,12 @@ bb.gp:                                            ; preds = %_RNvMNtNtCs7tN9tvpk
   ]
 
 .thread.i:                                        ; preds = %bb.gp
-  %12 = trunc nuw i64 %i.tc to i1
-  %.sroa.gep473 = getelementptr inbounds nuw i8, ptr %i.ay, i64 72
-  %.sink36.i.i.i.i.sroa.gep.val = load double, ptr %.sink36.i.i.i.i.sroa.gep, align 8
-  %.sroa.gep473.val = load double, ptr %.sroa.gep473, align 8
-  %.sroa.0199.0.i = select i1 %12, double %.sink36.i.i.i.i.sroa.gep.val, double %.sroa.gep473.val ; 2 uses
-  %i.xw = fneg double %.sroa.0199.0.i
-  %i.xx = fcmp uno double %.sroa.0199.0.i, 0.000000e+00
+  %12 = shl nuw nsw i64 %i.tc, 6
+  %spec.select246.v.i = xor i64 %12, 72
+  %spec.select246.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 %spec.select246.v.i
+  %.sroa.gep473.val = load double, ptr %spec.select246.i, align 8, !alias.scope !45460, !noalias !45530 ; 2 uses
+  %i.xw = fneg double %.sroa.gep473.val
+  %i.xx = fcmp uno double %.sroa.gep473.val, 0.000000e+00
   %spec.store.select767.i = select i1 %i.xx, double 0.000000e+00, double %i.xw
   %i.xy = fadd double %i.uk, %spec.store.select767.i ; 2 uses
   %.inv21768.i = fcmp ord double %i.xy, 0.000000e+00
@@ -4983,8 +5010,8 @@ bb.ip:                                            ; preds = %bb.io
   ]
 
 bb.iq:                                            ; preds = %bb.ip
-  %13 = trunc nuw i64 %i.adc to i1
-  %spec.select.v.i386.i = select i1 %13, i64 8, i64 72
+  %13 = shl nuw nsw i64 %i.adc, 6
+  %spec.select.v.i386.i = xor i64 %13, 72
   br label %.sink.split.i380.i
 
 bb.ir:                                            ; preds = %bb.ip
@@ -5057,8 +5084,8 @@ bb.iy:                                            ; preds = %bb.is
   ]
 
 bb.iz:                                            ; preds = %bb.iy
-  %14 = trunc nuw i64 %i.adq to i1
-  %spec.select.v.i392.i = select i1 %14, i64 8, i64 72
+  %14 = shl nuw nsw i64 %i.adq, 6
+  %spec.select.v.i392.i = xor i64 %14, 72
   br label %.sink.split.i387.i
 
 bb.ja:                                            ; preds = %bb.iy
@@ -5122,8 +5149,8 @@ bb.jg:                                            ; preds = %bb.jb
   ]
 
 bb.jh:                                            ; preds = %bb.jg
-  %15 = trunc nuw i64 %i.aeb to i1
-  %spec.select.v.i405.i = select i1 %15, i64 8, i64 72
+  %15 = shl nuw nsw i64 %i.aeb, 6
+  %spec.select.v.i405.i = xor i64 %15, 72
   br label %.sink.split.i394.i
 
 bb.ji:                                            ; preds = %bb.jg
@@ -5190,8 +5217,8 @@ bb.jo:                                            ; preds = %bb.jj
   ]
 
 bb.jp:                                            ; preds = %bb.jo
-  %16 = trunc nuw i64 %i.aeo to i1
-  %spec.select.v.i418.i = select i1 %16, i64 8, i64 72
+  %16 = shl nuw nsw i64 %i.aeo, 6
+  %spec.select.v.i418.i = xor i64 %16, 72
   br label %.sink.split.i408.i
 
 bb.jq:                                            ; preds = %bb.jo
@@ -5255,8 +5282,8 @@ bb.jw:                                            ; preds = %bb.jr
   ]
 
 bb.jx:                                            ; preds = %bb.jw
-  %17 = trunc nuw i64 %i.aez to i1
-  %spec.select.v.i432.i = select i1 %17, i64 8, i64 72
+  %17 = shl nuw nsw i64 %i.aez, 6
+  %spec.select.v.i432.i = xor i64 %17, 72
   br label %.sink.split.i421.i
 
 bb.jy:                                            ; preds = %bb.jw
@@ -5320,8 +5347,8 @@ bb.ke:                                            ; preds = %bb.jz
   ]
 
 bb.kf:                                            ; preds = %bb.ke
-  %18 = trunc nuw i64 %i.afm to i1
-  %spec.select.v.i444.i = select i1 %18, i64 8, i64 72
+  %18 = shl nuw nsw i64 %i.afm, 6
+  %spec.select.v.i444.i = xor i64 %18, 72
   br label %.sink.split.i434.i
 
 bb.kg:                                            ; preds = %bb.ke
@@ -5724,8 +5751,8 @@ bb.c:                                             ; preds = %bb.a
   ]
 
 bb.d:                                             ; preds = %bb.b
-  %4 = trunc nuw i64 %i.a to i1
-  %spec.select.v = select i1 %4, i64 8, i64 72
+  %4 = shl nuw nsw i64 %i.a, 6
+  %spec.select.v = xor i64 %4, 72
   br label %.sink.split
 
 bb.e:                                             ; preds = %bb.b
@@ -5815,8 +5842,8 @@ _RNvMNtNtCs7tN9tvpkfrg_12typst_layout4math8fragmentNtB2_12MathFragment7descent.e
   ret double %i.ao
 
 bb.i:                                             ; preds = %bb.c
-  %5 = trunc nuw i64 %i.c to i1
-  %spec.select50.v = select i1 %5, i64 8, i64 72
+  %5 = shl nuw nsw i64 %i.c, 6
+  %spec.select50.v = xor i64 %5, 72
   br label %.sink.split97
 
 bb.j:                                             ; preds = %bb.c

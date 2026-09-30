@@ -202,8 +202,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 123
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !298, !range !299, !noundef !18 ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 124
-  %i.by = load i8, ptr %i.bx, align 4, !tbaa !300, !range !299, !noundef !18
-  %54 = trunc nuw i8 %i.by to i1
+  %i.by = load i8, ptr %i.bx, align 4, !tbaa !300, !range !299, !noundef !18 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 118 ; 3 uses
   %i.ca = load i16, ptr %i.bz, align 2, !tbaa !301
   %.not237 = icmp eq i16 %i.ca, 0
@@ -214,7 +213,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ce = load i64, ptr %i.cd, align 8, !tbaa !303
   %i.cf = icmp ne i64 %i.ce, 0                    ; 2 uses
   %spec.select.i = or disjoint i8 %i.bw, -128
-  %.045.i = select i1 %54, i8 -112, i8 -128       ; 2 uses
+  %54 = shl nuw nsw i8 %i.by, 4
+  %.045.i = or disjoint i8 %54, -128
   %.043.i = select i1 %i.t, i8 64, i8 0           ; 2 uses
   %i.cg = or disjoint i8 %.043.i, 32
   %.144.i = select i1 %.not237, i8 %.043.i, i8 %i.cg ; 2 uses
@@ -288,8 +288,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.dk = load ptr, ptr %i.dj, align 8
   call void %i.dk(ptr noundef nonnull align 8 dereferenceable(304) %i.l, ptr noundef nonnull align 8 dereferenceable(34) %9, i1 noundef zeroext true) #12, !inline_history !258
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #12
-  %55 = and i8 %.045.i, 16
-  %.not47.i = icmp eq i8 %55, 0
+  %.not47.i = icmp eq i8 %i.by, 0
   br i1 %.not47.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g

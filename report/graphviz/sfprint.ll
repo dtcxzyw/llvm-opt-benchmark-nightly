@@ -204,9 +204,9 @@ bb.hs:                                            ; preds = %bb.hr, %bb.hp
   %.168411555 = phi i32 [ %.16841, %bb.hs ], [ %i.xk, %bb.ho ], [ %.148391108, %bb.hn ] ; 2 uses
   %.1915461554 = phi ptr [ %.188201109, %bb.hs ], [ %i.xj, %bb.ho ], [ %.188201109, %bb.hn ]
   %.1415471552 = phi i32 [ %.14, %bb.hs ], [ %i.xd, %bb.ho ], [ %i.xd, %bb.hn ]
-  %3 = and i32 %.168411555, 512
-  %.not1007 = icmp eq i32 %3, 0
-  %4 = select i1 %.not1007, i32 32, i32 48        ; 2 uses
+  %3 = lshr i32 %.168411555, 5
+  %4 = and i32 %3, 16
+  %5 = or disjoint i32 %4, 32                     ; 2 uses
   br label %bb.hu
 
 bb.ht:                                            ; preds = %bb.hu
@@ -216,14 +216,14 @@ bb.ht:                                            ; preds = %bb.hu
 
 bb.hu:                                            ; preds = %.thread1548, %bb.ht
   %.06551305 = phi i32 [ 0, %.thread1548 ], [ %i.xp, %bb.ht ]
-  %i.xq = call i32 @putc(i32 noundef %4, ptr noundef %0)
+  %i.xq = call i32 @putc(i32 noundef %5, ptr noundef %0)
   %i.xr = icmp eq i32 %i.xq, -1
   br i1 %i.xr, label %.thread, label %bb.ht
 
 .thread1121:                                      ; preds = %bb.ht, %bb.hs
   %.168411556 = phi i32 [ %.16841, %bb.hs ], [ %.168411555, %bb.ht ] ; 3 uses
   %.1915461553 = phi ptr [ %.188201109, %bb.hs ], [ %.1915461554, %bb.ht ] ; 2 uses
-  %.15 = phi i32 [ %.14, %bb.hs ], [ %4, %bb.ht ] ; 2 uses
+  %.15 = phi i32 [ %.14, %bb.hs ], [ %5, %bb.ht ] ; 2 uses
   %i.xs = icmp sgt i32 %.147541116, 0
   %i.xt = and i32 %.168411556, 4
   %.not1008 = icmp eq i32 %i.xt, 0

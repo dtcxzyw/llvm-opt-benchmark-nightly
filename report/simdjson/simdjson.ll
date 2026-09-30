@@ -204,9 +204,9 @@ bb.a:
   br i1 %.not.i, label %_ZN8simdjson8internalL30detect_supported_architecturesEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = and i32 %i.f, 2
-  %.not24.i = icmp eq i32 %1, 0
-  %spec.select.i = select i1 %.not24.i, i32 8, i32 24 ; 3 uses
+  %1 = shl i32 %i.f, 3
+  %2 = and i32 %1, 16                             ; 2 uses
+  %spec.select.i = or disjoint i32 %2, 8          ; 3 uses
   %i.h = and i32 %i.f, 201326592
   %.not25.i = icmp eq i32 %i.h, 201326592
   br i1 %.not25.i, label %bb.c, label %_ZN8simdjson8internalL30detect_supported_architecturesEv.exit
@@ -222,15 +222,16 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.n = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A\09", "={ax},={bx},={cx},={dx},0,2,~{dirflag},~{fpsr},~{flags}"(i32 7, i32 0) #41, !srcloc !54 ; 2 uses
   %i.o = extractvalue { i32, i32, i32, i32 } %i.n, 1 ; 7 uses
-  %2 = lshr i32 %i.o, 3
-  %3 = and i32 %2, 4
+  %3 = and i32 %i.o, 32
+  %.not26.i = icmp eq i32 %3, 0
+  %4 = or disjoint i32 %2, 12
+  %spec.select38.i = select i1 %.not26.i, i32 %spec.select.i, i32 %4
   %i.p = shl i32 %i.o, 2
   %i.q = and i32 %i.p, 32
   %i.r = lshr i32 %i.o, 2
   %i.s = and i32 %i.r, 64
-  %4 = or disjoint i32 %3, %i.q
-  %i.t = or disjoint i32 %4, %i.s
-  %.3.i = or disjoint i32 %i.t, %spec.select.i    ; 2 uses
+  %i.t = or disjoint i32 %i.s, %i.q
+  %.3.i = or disjoint i32 %i.t, %spec.select38.i  ; 2 uses
   %i.u = and i64 %i.k, 224
   %i.v = icmp eq i64 %i.u, 224
   br i1 %i.v, label %bb.e, label %_ZN8simdjson8internalL30detect_supported_architecturesEv.exit
@@ -405,9 +406,9 @@ bb.a:
   br i1 %.not.i, label %_ZN8simdjson8internalL30detect_supported_architecturesEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = and i32 %i.b, 2
-  %.not24.i = icmp eq i32 %1, 0
-  %spec.select.i = select i1 %.not24.i, i32 8, i32 24 ; 3 uses
+  %1 = shl i32 %i.b, 3
+  %2 = and i32 %1, 16                             ; 2 uses
+  %spec.select.i = or disjoint i32 %2, 8          ; 3 uses
   %i.d = and i32 %i.b, 201326592
   %.not25.i = icmp eq i32 %i.d, 201326592
   br i1 %.not25.i, label %bb.c, label %_ZN8simdjson8internalL30detect_supported_architecturesEv.exit
@@ -423,15 +424,16 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.j = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A\09", "={ax},={bx},={cx},={dx},0,2,~{dirflag},~{fpsr},~{flags}"(i32 7, i32 0) #41, !srcloc !54 ; 2 uses
   %i.k = extractvalue { i32, i32, i32, i32 } %i.j, 1 ; 7 uses
-  %2 = lshr i32 %i.k, 3
-  %3 = and i32 %2, 4
+  %3 = and i32 %i.k, 32
+  %.not26.i = icmp eq i32 %3, 0
+  %4 = or disjoint i32 %2, 12
+  %spec.select38.i = select i1 %.not26.i, i32 %spec.select.i, i32 %4
   %i.l = shl i32 %i.k, 2
   %i.m = and i32 %i.l, 32
   %i.n = lshr i32 %i.k, 2
   %i.o = and i32 %i.n, 64
-  %4 = or disjoint i32 %3, %i.m
-  %i.p = or disjoint i32 %4, %i.o
-  %.3.i = or disjoint i32 %i.p, %spec.select.i    ; 2 uses
+  %i.p = or disjoint i32 %i.o, %i.m
+  %.3.i = or disjoint i32 %i.p, %spec.select38.i  ; 2 uses
   %i.q = and i64 %i.g, 224
   %i.r = icmp eq i64 %i.q, 224
   br i1 %i.r, label %bb.e, label %_ZN8simdjson8internalL30detect_supported_architecturesEv.exit

@@ -203,12 +203,12 @@ bb.a:
   %i.b = alloca i8, align 1                       ; 6 uses
   %i.c = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0)
   %i.d = zext i8 %i.c to i32                      ; 2 uses
-  %4 = and i32 %i.d, 8
-  %.not = icmp eq i32 %4, 0
-  %spec.select = select i1 %.not, i32 1, i32 3    ; 5 uses
+  %4 = lshr i32 %i.d, 2
+  %5 = and i32 %4, 2                              ; 2 uses
+  %spec.select = or disjoint i32 %5, 1            ; 4 uses
   %i.e = and i32 %i.d, 4
   %.not34 = icmp eq i32 %i.e, 0                   ; 3 uses
-  %i.f = add nuw nsw i32 %spec.select, 2          ; 2 uses
+  %i.f = add nuw nsw i32 %5, 3                    ; 2 uses
   %.1 = select i1 %.not34, i32 %spec.select, i32 %i.f
   %.0 = select i1 %.not34, i32 0, i32 %spec.select
   %i.g = tail call i32 @tvb_reported_length(ptr noundef %0)

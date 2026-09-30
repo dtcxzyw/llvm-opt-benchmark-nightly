@@ -202,10 +202,10 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   br i1 %or.cond465, label %bb.af, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %4 = and i64 %i.v, 8796093022208
-  %.not435 = icmp eq i64 %4, 0
-  %.sroa.17283.14.v = select i1 %.not435, i64 4831838208, i64 13421772800
-  %.sroa.17283.14 = or i64 %.sroa.17283.11, %.sroa.17283.14.v ; 2 uses
+  %4 = lshr i64 %i.v, 10
+  %5 = and i64 %4, 8589934592
+  %.sroa.17283.14.v = or i64 %5, %.sroa.17283.11  ; 2 uses
+  %.sroa.17283.14 = or i64 %.sroa.17283.14.v, 4831838208
   %i.ec = and i64 %i.v, 35184372088832
   %.not436 = icmp eq i64 %i.ec, 0
   br i1 %.not436, label %bb.af, label %bb.ae
@@ -213,14 +213,14 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 704
   %i.ee = load i64, ptr %i.ed, align 8
-  %5 = and i64 %i.ee, 33554432
-  %.not437 = icmp eq i64 %5, 0
-  %spec.select537.v = select i1 %.not437, i64 17179869184, i64 85899345920
-  %spec.select537 = or i64 %.sroa.17283.14, %spec.select537.v
+  %6 = shl i64 %i.ee, 11
+  %7 = and i64 %6, 68719476736
+  %spec.select537.v = or disjoint i64 %7, 22011707392
+  %spec.select537 = or i64 %.sroa.17283.14.v, %spec.select537.v
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac
-  %.sroa.17283.15 = phi i64 [ %.sroa.17283.11, %bb.ac ], [ %spec.select537, %bb.ae ], [ %.sroa.17283.14, %bb.ad ] ; 6 uses
+  %.sroa.17283.15 = phi i64 [ %.sroa.17283.11, %bb.ac ], [ %spec.select537, %bb.ae ], [ %.sroa.17283.14, %bb.ad ] ; 7 uses
   %i.ef = and i64 %.val473, 3584
   %.not530 = icmp eq i64 %i.ef, 0
   br i1 %.not530, label %bb.aw, label %bb.ag
@@ -266,9 +266,9 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not439, label %allocation_tag_access_enabled.exit.thread, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %6 = and i64 %.sroa.17283.15, 16384
-  %.not440 = icmp eq i64 %6, 0                    ; 2 uses
-  %.sroa.17283.16.v = select i1 %.not440, i64 819200, i64 294912
+  %8 = shl nuw nsw i64 %.sroa.17283.15, 5
+  %9 = and i64 %8, 524288
+  %.sroa.17283.16.v = xor i64 %9, 819200
   %.sroa.17283.16 = or i64 %.sroa.17283.16.v, %.sroa.17283.15 ; 2 uses
   %i.eu = select i1 %.not.i480, i64 288230376151711744, i64 576460752303423488
   %i.ev = and i64 %i.cy, %i.eu
@@ -276,7 +276,9 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %.not441, label %allocation_tag_access_enabled.exit.thread, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %spec.select538.v = select i1 %.not440, i64 422212465065984, i64 140737488355328
+  %10 = shl i64 %.sroa.17283.15, 34
+  %11 = and i64 %10, 281474976710656
+  %spec.select538.v = xor i64 %11, 422212465065984
   %spec.select538 = or i64 %.sroa.17283.16, %spec.select538.v
   br label %allocation_tag_access_enabled.exit.thread
 
@@ -323,9 +325,9 @@ allocation_tag_access_enabled.exit490:            ; preds = %bb.ap
   br i1 %.old518.not, label %allocation_tag_access_enabled.exit490.thread, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %allocation_tag_access_enabled.exit490
-  %7 = and i64 %i.cy, 288230376151711744
-  %.not446 = icmp eq i64 %7, 0
-  %spec.select539.v = select i1 %.not446, i64 524288, i64 281474977234944
+  %12 = lshr i64 %i.cy, 10
+  %13 = and i64 %12, 281474976710656
+  %spec.select539.v = or disjoint i64 %13, 524288
   %spec.select539 = or i64 %.sroa.17283.17, %spec.select539.v
   br label %allocation_tag_access_enabled.exit490.thread
 

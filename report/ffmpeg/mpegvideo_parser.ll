@@ -202,9 +202,8 @@ bb.aq:                                            ; preds = %bb.ah
 
 bb.ar:                                            ; preds = %bb.aq
   %i.he = getelementptr inbounds nuw i8, ptr %i.co, i64 3
-  %i.hf = load i8, ptr %i.he, align 1, !tbaa !23
+  %i.hf = load i8, ptr %i.he, align 1, !tbaa !23  ; 2 uses
   %i.hg = zext i8 %i.hf to i32                    ; 2 uses
-  %6 = and i32 %i.hg, 128                         ; 2 uses
   %i.hh = and i32 %i.hg, 2
   %i.hi = getelementptr inbounds nuw i8, ptr %i.co, i64 4
   %i.hj = load i8, ptr %i.hi, align 1, !tbaa !23
@@ -219,7 +218,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not170.i, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %.not172.i = icmp eq i32 %6, 0
+  %.not172.i = icmp sgt i8 %i.hf, -1
   %..i = select i1 %.not172.i, i32 3, i32 5
   br label %.sink.split.i21
 
@@ -234,8 +233,8 @@ bb.av:                                            ; preds = %bb.au, %bb.ar
   br i1 %or.cond.i23, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %.not173.i = icmp eq i32 %6, 0
-  %.271.i = select i1 %.not173.i, i32 3, i32 2
+  %6 = lshr i32 %i.hg, 7
+  %.271.i = xor i32 %6, 3
   br label %bb.ax
 
 .sink.split.i21:                                  ; preds = %bb.au, %bb.at

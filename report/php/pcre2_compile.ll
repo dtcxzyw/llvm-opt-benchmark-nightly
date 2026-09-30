@@ -205,11 +205,12 @@ bb.w:                                             ; preds = %._crit_edge1755
 
 bb.x:                                             ; preds = %._crit_edge1755
   %spec.store.select.i = call i32 @llvm.umin.i32(i32 %.01455.i, i32 -2) ; 2 uses
-  %16 = and i32 %.01522.i, 32
-  %.not1648.i = icmp eq i32 %16, 0
-  %17 = select i1 %.not1648.i, i8 12, i8 13
+  %16 = trunc i32 %.01522.i to i8
+  %17 = lshr i8 %16, 5
+  %18 = and i8 %17, 1
+  %19 = or disjoint i8 %18, 12
   %i.ez = getelementptr inbounds nuw i8, ptr %.31386.i, i64 1
-  store i8 %17, ptr %.31386.i, align 1, !tbaa !29
+  store i8 %19, ptr %.31386.i, align 1, !tbaa !29
   br label %.thread
 
 bb.y:                                             ; preds = %._crit_edge1755, %._crit_edge1755

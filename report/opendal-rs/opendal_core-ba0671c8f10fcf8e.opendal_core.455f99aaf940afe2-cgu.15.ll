@@ -205,9 +205,9 @@ bb.m:                                             ; preds = %bb.a
   br i1 %i.z, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %3 = trunc nuw i64 %i.n to i1
-  %spec.select.v = select i1 %3, i64 24, i64 8
-  %spec.select = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v
+  %3 = shl nuw nsw i64 %i.n, 4
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %3
+  %spec.select = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.sroa.3.0 = load i64, ptr %spec.select, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(40) %2, i64 40, i1 false)

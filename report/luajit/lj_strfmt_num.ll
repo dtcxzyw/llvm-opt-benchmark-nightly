@@ -204,11 +204,12 @@ bb.ct:                                            ; preds = %bb.ct, %bb.cs
 
 .loopexit875:                                     ; preds = %bb.ct, %.loopexit875.loopexit, %.loopexit878, %._crit_edge988
   %.23 = phi ptr [ %i.afq, %._crit_edge988 ], [ %.21532, %.loopexit875.loopexit ], [ %i.acn, %.loopexit878 ], [ %i.afn, %bb.ct ] ; 4 uses
-  %4 = and i32 %1, 8192
-  %.not578 = icmp eq i32 %4, 0
-  %5 = select i1 %.not578, i8 101, i8 69
+  %4 = lshr i32 %1, 8
+  %5 = trunc i32 %4 to i8
+  %6 = and i8 %5, 32
+  %7 = xor i8 %6, 101
   %i.afr = getelementptr inbounds nuw i8, ptr %.23, i64 1
-  store i8 %5, ptr %.23, align 1, !tbaa !16
+  store i8 %7, ptr %.23, align 1, !tbaa !16
   %i.afs = getelementptr inbounds nuw i8, ptr %.23, i64 2 ; 2 uses
   store i8 %spec.select621, ptr %i.afr, align 1, !tbaa !16
   br i1 %i.aag, label %bb.cu, label %.thread828

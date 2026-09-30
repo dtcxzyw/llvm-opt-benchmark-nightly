@@ -205,6 +205,7 @@ bb.b:                                             ; preds = %.preheader, %ma_ffs
   br i1 %i.i, label %bb.ai, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %2 = xor i32 %i.h, -1
   %i.j = and i32 %i.h, 1
   %.not.i46.not = icmp eq i32 %i.j, 0
   br i1 %.not.i46.not, label %ma_ffs_32.exit, label %bb.d
@@ -355,9 +356,9 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not.29.i.not, label %ma_ffs_32.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %2 = and i32 %i.h, 1073741824
-  %.not.30.i.not = icmp eq i32 %2, 0
-  %spec.select.i47 = select i1 %.not.30.i.not, i32 30, i32 31
+  %3 = lshr exact i32 %2, 30
+  %4 = and i32 %3, 1
+  %spec.select.i47 = xor i32 %4, 31
   br label %ma_ffs_32.exit
 
 ma_ffs_32.exit:                                   ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag
@@ -376,15 +377,15 @@ ma_ffs_32.exit:                                   ; preds = %bb.c, %bb.d, %bb.e,
   %i.at = trunc nuw nsw i64 %.03767.lcssa.wide to i32
   %i.au = atomicrmw add ptr %i.d, i32 1 seq_cst, align 8 ; 0 uses
   %i.av = shl i32 %i.at, 5
-  %3 = or disjoint i32 %.0.lcssa.i.lcssa, %i.av   ; 2 uses
+  %5 = add nuw i32 %.0.lcssa.i.lcssa, %i.av       ; 2 uses
   %i.aw = load i32, ptr %i.c, align 4, !tbaa !161
-  %.not = icmp ult i32 %3, %i.aw
+  %.not = icmp ult i32 %5, %i.aw
   br i1 %.not, label %bb.ah, label %.thread55
 
 bb.ah:                                            ; preds = %.loopexit
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !160
-  %i.az = zext i32 %3 to i64                      ; 2 uses
+  %i.az = zext i32 %5 to i64                      ; 2 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.az ; 2 uses
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !118
   %i.bc = add i32 %i.bb, 1                        ; 2 uses
@@ -430,6 +431,7 @@ bb.aj:                                            ; preds = %ma_ffs_32.exit.1, %
   br i1 %i.bs, label %bb.bp, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
+  %6 = xor i32 %i.br, -1
   %i.bt = and i32 %i.br, 1
   %.not.i46.not.1 = icmp eq i32 %i.bt, 0
   br i1 %.not.i46.not.1, label %ma_ffs_32.exit.1, label %bb.al
@@ -580,9 +582,9 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %.not.29.i.not.1, label %ma_ffs_32.exit.1, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %4 = and i32 %i.br, 1073741824
-  %.not.30.i.not.1 = icmp eq i32 %4, 0
-  %spec.select.i47.1 = select i1 %.not.30.i.not.1, i32 30, i32 31
+  %7 = lshr exact i32 %6, 30
+  %8 = and i32 %7, 1
+  %spec.select.i47.1 = xor i32 %8, 31
   br label %ma_ffs_32.exit.1
 
 ma_ffs_32.exit.1:                                 ; preds = %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak

@@ -205,10 +205,10 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %.lr.ph.split
   %.not69 = icmp eq i32 %i.ax, 0
   %i.az = load i32, ptr %i.c, align 4
-  %8 = and i32 %i.az, 2
-  %.not70 = icmp eq i32 %8, 0
-  %9 = select i1 %.not69, i1 true, i1 %.not70
-  %.058 = select i1 %9, i32 16640, i32 17152
+  %8 = shl i32 %i.az, 8
+  %9 = and i32 %8, 512
+  %spec.select = or disjoint i32 %9, 16640
+  %.058 = select i1 %.not69, i32 16640, i32 %spec.select
   store i32 0, ptr %6, align 8, !tbaa !218
   store i32 0, ptr %i.al, align 4
   store i64 3, ptr %i.am, align 8, !tbaa !365
@@ -611,7 +611,7 @@ dbuf_put_u16.exit163.i:                           ; preds = %bb.hp
   %.0128.lcssa.i = phi i32 [ 0, %.lr.ph250.i ], [ %i.afp, %dbuf_put_u16.exit163.i ] ; 2 uses
   %i.agu = load i32, ptr %i.as, align 8, !tbaa !707
   %.not136.i = icmp ne i32 %i.agu, 0
-  %spec.select.i = zext i1 %.not136.i to i8       ; 3 uses
+  %spec.select.i = zext i1 %.not136.i to i8       ; 5 uses
   %i.agv = load i32, ptr %i.afm, align 4, !tbaa !919
   %i.agw = icmp sgt i32 %i.agv, -1
   br i1 %i.agw, label %bb.hw, label %bb.ij
@@ -623,9 +623,10 @@ bb.hw:                                            ; preds = %._crit_edge247.i
   br i1 %.not137.i, label %bb.hx, label %.thread306.i
 
 .thread306.i:                                     ; preds = %bb.hw
-  %i.agy = and i8 %.fr.i, 4
-  %.not139308.i = icmp eq i8 %i.agy, 0
-  %spec.select140.v309.i = select i1 %.not139308.i, i8 -126, i8 -128
+  %4 = lshr i8 %.fr.i, 1
+  %i.agy = and i8 %4, 2
+  %5 = or disjoint i8 %i.agy, %spec.select.i
+  %spec.select140308.i = xor i8 %5, -126
   br label %bb.ik
 
 bb.hx:                                            ; preds = %bb.hw
@@ -747,16 +748,16 @@ bb.ij:                                            ; preds = %._crit_edge247.i
   %.pre265.i = load i64, ptr %i.w, align 8, !tbaa !466
   %.pre274.i = and i8 %.fr.i, 2
   %i.aiv = icmp eq i8 %.pre274.i, 0
-  %i.aiw = and i8 %.fr.i, 4
-  %.not139.i = icmp eq i8 %i.aiw, 0
-  %spec.select140.v.i = select i1 %.not139.i, i8 -126, i8 -128
-  %spec.select313.i = select i1 %i.aiv, i8 0, i8 %spec.select140.v.i
+  %6 = lshr i8 %.fr.i, 1
+  %i.aiw = and i8 %6, 2
+  %7 = or disjoint i8 %i.aiw, %spec.select.i
+  %spec.select140.i = xor i8 %7, -126
+  %spec.select313.i = select i1 %i.aiv, i8 %spec.select.i, i8 %spec.select140.i
   br label %bb.ik
 
 bb.ik:                                            ; preds = %bb.ij, %.thread306.i
   %i.aix = phi i64 [ %.pre266.i, %.thread306.i ], [ %.pre265.i, %bb.ij ] ; 3 uses
-  %i.aiy = phi i8 [ %spec.select140.v309.i, %.thread306.i ], [ %spec.select313.i, %bb.ij ]
-  %.1.i396 = or disjoint i8 %i.aiy, %spec.select.i ; 2 uses
+  %i.aiy = phi i8 [ %spec.select140308.i, %.thread306.i ], [ %spec.select313.i, %bb.ij ] ; 2 uses
   %i.aiz = load i64, ptr %i.v, align 8, !tbaa !465
   %i.aja = icmp eq i64 %i.aiz, %i.aix
   br i1 %i.aja, label %bb.il, label %bb.im, !prof !192
@@ -820,7 +821,7 @@ dbuf_put_u32.exit178.i:                           ; preds = %bb.ip, %bb.io
   br i1 %i.akb, label %bb.iq, label %bb.ir, !prof !192
 
 bb.iq:                                            ; preds = %dbuf_put_u32.exit178.i
-  call fastcc void @__dbuf_putc(ptr noundef nonnull %2, i8 noundef zeroext %.1.i396)
+  call fastcc void @__dbuf_putc(ptr noundef nonnull %2, i8 noundef zeroext %i.aiy)
   br label %.thread.i
 
 bb.ir:                                            ; preds = %dbuf_put_u32.exit178.i
@@ -828,7 +829,7 @@ bb.ir:                                            ; preds = %dbuf_put_u32.exit17
   %i.akd = add i64 %i.ajz, 1
   store i64 %i.akd, ptr %i.w, align 8, !tbaa !466
   %i.ake = getelementptr inbounds nuw i8, ptr %i.akc, i64 %i.ajz
-  store i8 %.1.i396, ptr %i.ake, align 1, !tbaa !218
+  store i8 %i.aiy, ptr %i.ake, align 1, !tbaa !218
   br label %.thread.i
 
 .thread.thread.sink.split.i:                      ; preds = %._crit_edge.i216.i, %bb.hu, %dbuf_putc.exit161.i

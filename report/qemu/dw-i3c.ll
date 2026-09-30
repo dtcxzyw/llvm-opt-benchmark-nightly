@@ -204,16 +204,17 @@ bb.a:
   %i.j = and i32 %i.i, 256
   %.not = icmp eq i32 %i.j, 0
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 1258
-  %i.l = load i8, ptr %i.k, align 2, !range !13
-  %2 = trunc nuw i8 %i.l to i1                    ; 2 uses
+  %i.l = load i8, ptr %i.k, align 2, !range !13   ; 2 uses
   br i1 %.not, label %bb.b, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.a
-  %3 = select i1 %2, i8 -127, i8 1
+  %2 = shl nuw i8 %i.l, 7
+  %3 = or disjoint i8 %2, 1
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  br i1 %2, label %bb.c, label %bb.k
+  %4 = trunc nuw i8 %i.l to i1
+  br i1 %4, label %bb.c, label %bb.k
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
   %spec.store.select.i = phi i8 [ %3, %._crit_edge ], [ -127, %bb.b ]

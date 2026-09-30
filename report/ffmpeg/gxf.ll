@@ -202,11 +202,10 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ch = lshr i32 %i.ca, 16
   %i.ci = and i32 %i.ch, 255
   %i.cj = lshr i32 %i.ca, 8
-  %1 = and i32 %i.cj, 255
-  %i.ck = and i32 %i.ca, 536870912
-  %.not19.i = icmp eq i32 %i.ck, 0
-  %2 = select i1 %.not19.i, i32 58, i32 59
-  %i.cl = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 128, ptr noundef nonnull @.str.16, i32 noundef %i.cg, i32 noundef %i.ci, i32 noundef %1, i32 noundef %2, i32 noundef %i.ce) #6 ; 0 uses
+  %i.ck = and i32 %i.cj, 255
+  %1 = lshr i32 %i.ca, 29
+  %2 = or i32 %1, 58
+  %i.cl = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 128, ptr noundef nonnull @.str.16, i32 noundef %i.cg, i32 noundef %i.ci, i32 noundef %i.ck, i32 noundef %2, i32 noundef %i.ce) #6 ; 0 uses
   %i.cm = call i32 @av_dict_set(ptr noundef nonnull %i.at, ptr noundef nonnull @.str.8, ptr noundef nonnull %i.a, i32 noundef 0) #6 ; 0 uses
   br label %add_timecode_metadata.exit
 
@@ -609,11 +608,10 @@ bb.d:                                             ; preds = %bb.c
   %i.g = lshr i32 %2, 16
   %i.h = and i32 %i.g, 255
   %i.i = lshr i32 %2, 8
-  %4 = and i32 %i.i, 255
-  %i.j = and i32 %2, 536870912
-  %.not19 = icmp eq i32 %i.j, 0
-  %5 = select i1 %.not19, i32 58, i32 59
-  %i.k = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 128, ptr noundef nonnull @.str.16, i32 noundef %i.f, i32 noundef %i.h, i32 noundef %4, i32 noundef %5, i32 noundef %i.d) #6 ; 0 uses
+  %i.j = and i32 %i.i, 255
+  %4 = lshr i32 %2, 29
+  %5 = or i32 %4, 58
+  %i.k = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 128, ptr noundef nonnull @.str.16, i32 noundef %i.f, i32 noundef %i.h, i32 noundef %i.j, i32 noundef %5, i32 noundef %i.d) #6 ; 0 uses
   %i.l = call i32 @av_dict_set(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.a, i32 noundef 0) #6 ; 0 uses
   br label %bb.e
 

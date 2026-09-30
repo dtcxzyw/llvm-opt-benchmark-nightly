@@ -205,8 +205,7 @@ bb.i:                                             ; preds = %bb.a
     #dbg_value(i8 %i.at, !13244, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13401)
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 34, !dbg !13523
   %i.av = load i8, ptr %i.au, align 2, !dbg !13523, !range !1633, !noundef !1053
-  %3 = trunc nuw i8 %i.av to i1, !dbg !13523
-    #dbg_value(i1 %3, !13245, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13401)
+    #dbg_value(i8 %i.av, !13245, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13401)
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !13524
     #dbg_value(ptr %i.aw, !13246, !DIExpression(), !13401)
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 4, !dbg !13525
@@ -217,9 +216,10 @@ bb.i:                                             ; preds = %bb.a
   %.sroa.512.sroa.0.0.copyload = load i56, ptr %.sroa.512.0..sroa_idx, align 1, !dbg !13525 ; 2 uses
     #dbg_value(i56 %.sroa.512.sroa.0.0.copyload, !13247, !DIExpression(DW_OP_LLVM_fragment, 8, 56), !13401)
     #dbg_value(i56 %.sroa.512.sroa.0.0.copyload, !13334, !DIExpression(DW_OP_LLVM_fragment, 8, 56), !13403)
-  %.88 = select i1 %3, i8 68, i8 64, !dbg !13526
+  %3 = shl nuw nsw i8 %i.av, 2, !dbg !13526
   %i.ay = shl nuw nsw i8 %i.at, 5, !dbg !13527
-  %.sroa.015.0 = or disjoint i8 %.88, %i.ay, !dbg !13527
+  %.sroa.015.0.v = or disjoint i8 %i.ay, 64, !dbg !13527
+  %.sroa.015.0 = or disjoint i8 %3, %.sroa.015.0.v, !dbg !13527
   %i.az = or i8 %.sroa.015.0, %.sroa.010.0.copyload, !dbg !13528
   tail call void @_RINvXs5_NtCshovLROGBtMy_11quinn_proto6codingINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_9BufMutExt5writehEB8_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2, i8 noundef %i.az), !dbg !13529
   %i.ba = tail call { ptr, i64 } @_RNvXs0_NtCshovLROGBtMy_11quinn_proto6sharedNtB5_12ConnectionIdNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(21) %i.aw), !dbg !13530 ; 2 uses

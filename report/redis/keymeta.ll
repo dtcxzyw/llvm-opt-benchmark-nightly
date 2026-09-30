@@ -204,9 +204,9 @@ define dso_local void @keyMetaOnUnlink(ptr nofree noundef readonly captures(addr
 bb.a:
   %3 = alloca %struct.RedisModuleKeyOptCtx, align 8 ; 7 uses
   %i.a = load i64, ptr %2, align 8                ; 2 uses
-  %4 = and i64 %i.a, 4294967296
-  %.not = icmp eq i64 %4, 0
-  %spec.select.v = select i1 %.not, i64 -8, i64 -16
+  %4 = lshr i64 %i.a, 29
+  %5 = and i64 %4, 8
+  %spec.select.v = xor i64 %5, -8
   %spec.select = getelementptr inbounds i8, ptr %2, i64 %spec.select.v
   %sum.shift = lshr i64 %i.a, 33
   %i.b = trunc nuw nsw i64 %sum.shift to i32
@@ -302,9 +302,9 @@ bb.a:
   br i1 %i.d, label %.loopexit, label %bb.b, !prof !27
 
 bb.b:                                             ; preds = %bb.a
-  %1 = and i64 %i.a, 4294967296
-  %.not = icmp eq i64 %1, 0
-  %spec.select.v = select i1 %.not, i64 -8, i64 -16
+  %1 = lshr i64 %i.a, 29
+  %2 = and i64 %1, 8
+  %spec.select.v = xor i64 %2, -8
   %spec.select = getelementptr inbounds i8, ptr %0, i64 %spec.select.v
   %i.e = tail call ptr @kvobjGetKey(ptr noundef nonnull %0) #16
   br label %bb.c
@@ -707,9 +707,9 @@ bb.a:
   br i1 %i.d, label %.critedge, label %.preheader, !prof !27
 
 .preheader:                                       ; preds = %bb.a
-  %5 = and i64 %i.a, 4294967296
-  %.not = icmp eq i64 %5, 0
-  %spec.select.v = select i1 %.not, i64 -8, i64 -16
+  %5 = lshr i64 %i.a, 29
+  %6 = and i64 %5, 8
+  %spec.select.v = xor i64 %6, -8
   %spec.select = getelementptr inbounds i8, ptr %2, i64 %spec.select.v
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -809,13 +809,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr %1, align 8                ; 2 uses
-  %2 = and i64 %i.e, 4294967296
-  %.not29 = icmp eq i64 %2, 0
-  %.023.v = select i1 %.not29, i64 -8, i64 -16
+  %2 = lshr i64 %i.e, 29
+  %3 = and i64 %2, 8
+  %.023.v = xor i64 %3, -8
   %.023 = getelementptr inbounds i8, ptr %1, i64 %.023.v ; 4 uses
-  %3 = and i64 %i.a, 4294967296
-  %.not = icmp eq i64 %3, 0
-  %spec.select.v = select i1 %.not, i64 -8, i64 -16
+  %4 = lshr i64 %i.a, 29
+  %5 = and i64 %4, 8
+  %spec.select.v = xor i64 %5, -8
   %spec.select = getelementptr inbounds i8, ptr %0, i64 %spec.select.v ; 5 uses
   %sum.shift30 = lshr i64 %i.e, 33                ; 2 uses
   %i.f = trunc nuw nsw i64 %sum.shift30 to i32    ; 7 uses
@@ -1218,9 +1218,9 @@ bb.f:                                             ; preds = %bb.d, %bb.c, %bb.e
 define dso_local void @keyMetaResetModuleValues(ptr nofree noundef captures(none) %0) local_unnamed_addr #11 {
 bb.a:
   %i.a = load i64, ptr %0, align 8                ; 2 uses
-  %1 = and i64 %i.a, 4294967296
-  %.not = icmp eq i64 %1, 0
-  %spec.select.v = select i1 %.not, i64 -8, i64 -16
+  %1 = lshr i64 %i.a, 29
+  %2 = and i64 %1, 8
+  %spec.select.v = xor i64 %2, -8
   %spec.select = getelementptr inbounds i8, ptr %0, i64 %spec.select.v ; 3 uses
   %sum.shift = lshr i64 %i.a, 33
   %i.b = trunc nuw nsw i64 %sum.shift to i32      ; 12 uses

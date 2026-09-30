@@ -202,8 +202,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !44
-  %1 = and i32 %i.f, 4
-  %.not = icmp eq i32 %1, 0
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 8 uses
   br label %bb.c
 
@@ -296,7 +294,9 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 split:                                            ; preds = %bb.c, %bb.l, %._crit_edge
   %i.ak = phi i32 [ %.pre71, %._crit_edge ], [ %.pre72, %bb.c ], [ %i.ai, %bb.l ]
-  %spec.select = select i1 %.not, i32 1, i32 3    ; 2 uses
+  %1 = lshr i32 %i.f, 1
+  %2 = and i32 %1, 2
+  %spec.select = or disjoint i32 %2, 1            ; 2 uses
   %i.al = and i32 %i.ak, 1
   %.not49 = icmp eq i32 %i.al, 0
   br i1 %.not49, label %bb.n, label %bb.m
@@ -571,9 +571,9 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not112, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  %5 = and i32 %i.bz, 1
-  %.not111 = icmp eq i32 %5, 0
-  %spec.select = select i1 %.not111, i32 1, i32 3
+  %5 = shl i32 %i.bz, 1
+  %6 = and i32 %5, 2
+  %spec.select = or disjoint i32 %6, 1
   call void @ares_conn_sock_state_cb_update(ptr noundef nonnull %i.b, i32 noundef %spec.select)
   br label %bb.ac
 

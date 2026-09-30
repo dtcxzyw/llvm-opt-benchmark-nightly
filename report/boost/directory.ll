@@ -202,9 +202,9 @@ declare void @_ZN5boost10filesystem6detail6statusERKNS0_4pathEPNS_6system10error
 define hidden void @_ZN5boost10filesystem6detail14open_directoryERKNS0_4pathENS0_17directory_optionsERNS_6system10error_codeE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.boost::scope::unique_resource") align 4 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, i32 noundef %2, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %3) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
-  %4 = and i32 %2, 16
-  %.not = icmp eq i32 %4, 0
-  %spec.select = select i1 %.not, i32 591872, i32 722944
+  %4 = shl i32 %2, 13
+  %5 = and i32 %4, 131072
+  %spec.select = or disjoint i32 %5, 591872
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.b, %bb.a
@@ -267,9 +267,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define hidden void @_ZN5boost10filesystem6detail16openat_directoryEiRKNS0_4pathENS0_17directory_optionsERNS_6system10error_codeE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.boost::scope::unique_resource") align 4 captures(none) %0, i32 noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, i32 noundef %3, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %4) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
-  %5 = and i32 %3, 16
-  %.not = icmp eq i32 %5, 0
-  %spec.select = select i1 %.not, i32 591872, i32 722944
+  %5 = shl i32 %3, 13
+  %6 = and i32 %5, 131072
+  %spec.select = or disjoint i32 %6, 591872
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.b, %bb.a
@@ -605,9 +605,9 @@ _ZN5boost5scope15unique_resourceIiNS0_10fd_deleterENS0_18fd_resource_traitsEEaSI
   br label %_ZNK5boost6system10error_codecvbEv.exit.thread10.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %13 = and i32 %2, 16
-  %.not.i.i = icmp eq i32 %13, 0
-  %spec.select.i.i = select i1 %.not.i.i, i32 591872, i32 722944
+  %13 = shl i32 %2, 13
+  %14 = and i32 %13, 131072
+  %spec.select.i.i = or disjoint i32 %14, 591872
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false), !alias.scope !109
   br label %.critedge.i.i
 
@@ -1010,9 +1010,9 @@ bb.am:                                            ; preds = %_ZN5boost10filesyst
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
   call void @llvm.experimental.noalias.scope.decl(metadata !171)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false), !noalias !171
-  %10 = and i32 %i.et, 16
-  %.not.i.i = icmp eq i32 %10, 0
-  %spec.select.i.i = select i1 %.not.i.i, i32 591872, i32 722944
+  %10 = shl i32 %i.et, 13
+  %11 = and i32 %10, 131072
+  %spec.select.i.i = or disjoint i32 %11, 591872
   br label %.critedge.i.i
 
 .critedge.i.i:                                    ; preds = %bb.an, %bb.am

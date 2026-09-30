@@ -17,21 +17,21 @@ bb.a:
   store i8 0, ptr %i.b, align 4, !tbaa !13
   %i.c = zext i16 %1 to i32                       ; 2 uses
   %i.d = and i32 %i.c, 2                          ; 2 uses
-  %.not.not = icmp eq i32 %i.d, 0
   %.lobit = lshr exact i32 %i.d, 1
   %spec.select = trunc nuw nsw i32 %.lobit to i8
-  %spec.select19 = select i1 %.not.not, i32 4095, i32 8191
+  %2 = shl nuw nsw i32 %i.d, 11
+  %spec.select19 = or disjoint i32 %2, 4095
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 9781
   store i8 %spec.select, ptr %i.e, align 1, !tbaa !14
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %spec.select19, ptr %i.f, align 8, !tbaa !15
   %i.g = and i32 %i.c, 4                          ; 3 uses
-  %.not14.not = icmp eq i32 %i.g, 0
   %.lobit20 = lshr exact i32 %i.g, 2
   %.sink18 = xor i32 %.lobit20, 1
   %.lobit21 = lshr exact i32 %i.g, 2
   %.sink17 = trunc nuw nsw i32 %.lobit21 to i8
-  %.sink16 = select i1 %.not14.not, i32 2, i32 3
+  %3 = lshr exact i32 %i.g, 2
+  %.sink16 = or disjoint i32 %3, 2
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 9776
   store i32 %.sink18, ptr %i.h, align 8, !tbaa !16
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 9782

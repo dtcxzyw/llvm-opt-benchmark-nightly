@@ -202,16 +202,15 @@ bb.f:                                             ; preds = %mmap_read_lock.exit
   br i1 %.not39.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %1 = and i32 %i.y, 2
-  %.not36.i = icmp eq i32 %1, 0
-  %.028.i = select i1 %.not36.i, i32 128, i32 129
+  %1 = lshr i32 %i.y, 1
+  %2 = and i32 %1, 1
   %i.ad = shl i32 %i.y, 6
   %i.ae = and i32 %i.ad, 256
+  %.1.v.i = or disjoint i32 %i.ae, %2
   %i.af = shl i32 %i.y, 3
   %i.ag = and i32 %i.af, 64
-  %.1.i = or disjoint i32 %i.ag, %i.ae
-  %i.ah = or disjoint i32 %.1.i, %.028.i
-  %.2.i = xor i32 %i.ah, 64
+  %i.ah = or disjoint i32 %.1.v.i, %i.ag
+  %.2.i = xor i32 %i.ah, 192
   %i.ai = load i64, ptr %i.t, align 8
   %i.aj = tail call i32 @handle_mm_fault(ptr noundef nonnull %i.w, i64 noundef %i.ai, i32 noundef %.2.i, ptr noundef null) #5
   %i.ak = and i32 %i.aj, 2163

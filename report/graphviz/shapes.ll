@@ -205,9 +205,9 @@ bb.x:                                             ; preds = %findFill.exit
   %i.ch = load double, ptr %i.b, align 8, !tbaa !10
   %.str.95. = select i1 %.not201, ptr @.str.95, ptr %i.ce
   call void @gvrender_set_gradient_vals(ptr noundef nonnull %0, ptr noundef nonnull %.str.95., i32 noundef %i.cg, double noundef %i.ch) #26
-  %4 = and i32 %i.bl, 2
-  %.not202 = icmp eq i32 %4, 0
-  %. = select i1 %.not202, i32 2, i32 3
+  %4 = lshr i32 %i.bl, 1
+  %5 = and i32 %4, 1
+  %. = or disjoint i32 %5, 2
   br label %bb.z
 
 bb.y:                                             ; preds = %findFill.exit
@@ -610,9 +610,9 @@ bb.n:                                             ; preds = %findFill.exit
   %i.bc = load double, ptr %i.b, align 8, !tbaa !10
   %.str.95. = select i1 %.not50, ptr @.str.95, ptr %i.az
   call void @gvrender_set_gradient_vals(ptr noundef nonnull %0, ptr noundef nonnull %.str.95., i32 noundef %i.bb, double noundef %i.bc) #26
-  %5 = and i32 %i.al, 2
-  %.not51 = icmp eq i32 %5, 0
-  %. = select i1 %.not51, i32 2, i32 3
+  %5 = lshr i32 %i.al, 1
+  %6 = and i32 %5, 1
+  %. = or disjoint i32 %6, 2
   br label %bb.p
 
 bb.o:                                             ; preds = %findFill.exit

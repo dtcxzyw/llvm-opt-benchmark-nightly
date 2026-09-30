@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.thread, %bb.i
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.k, %bb.l, %bb.j, %bb.m
-  %i.ar = phi i32 [ %i.ai, %bb.k ], [ %i.ai, %bb.l ], [ %i.ai, %bb.j ], [ %i.ap, %bb.m ] ; 2 uses
+  %i.ar = phi i32 [ %i.ai, %bb.k ], [ %i.ai, %bb.l ], [ %i.ai, %bb.j ], [ %i.ap, %bb.m ] ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.at = load i32, ptr %i.as, align 4            ; 3 uses
   switch i32 %i.at, label %bb.bp [
@@ -264,9 +264,8 @@ ReindexIndex.exit:                                ; preds = %bb.p, %bb.r, %bb.s
 bb.t:                                             ; preds = %bb.n
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bl = load ptr, ptr %i.bk, align 8            ; 3 uses
-  %8 = and i32 %i.ar, 8
-  %.not.i46 = icmp eq i32 %8, 0                   ; 2 uses
-  %9 = select i1 %.not.i46, i32 5, i32 4
+  %8 = lshr i32 %i.ar, 3
+  %9 = xor i32 %8, 5
   %i.bm = tail call i32 @RangeVarGetRelidExtended(ptr noundef %i.bl, i32 noundef %9, i32 noundef 0, ptr noundef nonnull @RangeVarCallbackMaintainsTable, ptr noundef null) #9 ; 5 uses
   %i.bn = tail call signext i8 @get_rel_relkind(i32 noundef %i.bm) #9
   %i.bo = icmp eq i8 %i.bn, 112
@@ -277,6 +276,8 @@ bb.u:                                             ; preds = %bb.t
   br label %ReindexTable.exit
 
 bb.v:                                             ; preds = %bb.t
+  %10 = and i32 %i.ar, 8
+  %.not.i46 = icmp eq i32 %10, 0
   br i1 %.not.i46, label %bb.aa, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -668,9 +669,9 @@ declare i32 @RangeVarGetRelidExtended(ptr noundef, i32 noundef, i32 noundef, ptr
 define internal void @RangeVarCallbackForReindexIndex(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(none) %3) #0 {
 bb.a:
   %i.a = load i32, ptr %3, align 4
-  %4 = and i32 %i.a, 8
-  %.not = icmp eq i32 %4, 0
-  %5 = select i1 %.not, i32 5, i32 4              ; 2 uses
+  %4 = lshr i32 %i.a, 3
+  %5 = and i32 %4, 1
+  %6 = xor i32 %5, 5                              ; 2 uses
   %i.b = icmp ne i32 %1, %2                       ; 3 uses
   %i.c = icmp ne i32 %2, 0
   %or.cond = and i1 %i.b, %i.c
@@ -679,7 +680,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.e = load i32, ptr %i.d, align 4
-  tail call void @UnlockRelationOid(i32 noundef %i.e, i32 noundef %5) #9
+  tail call void @UnlockRelationOid(i32 noundef %i.e, i32 noundef %6) #9
   store i32 0, ptr %i.d, align 4
   br label %bb.c
 
@@ -737,7 +738,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %i.b, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @LockRelationOid(i32 noundef %i.m, i32 noundef %5) #9
+  tail call void @LockRelationOid(i32 noundef %i.m, i32 noundef %6) #9
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %i.m, ptr %i.y, align 4
   br label %bb.m

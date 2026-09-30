@@ -202,20 +202,20 @@ bb.h:                                             ; preds = %bb.e, %bb.g, %bb.f,
   br i1 %.not, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %4 = and i32 %i.t, 4
-  %.not96 = icmp eq i32 %4, 0
-  %spec.select = select i1 %.not96, i32 4, i32 12 ; 3 uses
+  %4 = shl nuw nsw i32 %i.t, 1
+  %5 = and i32 %4, 8                              ; 3 uses
+  %spec.select = or disjoint i32 %5, 4
   switch i8 %i.u, label %bb.l [
     i8 1, label %bb.j
     i8 2, label %bb.k
   ]
 
 bb.j:                                             ; preds = %bb.i
-  %i.ak = add nuw nsw i32 %spec.select, 8
+  %i.ak = add nuw nsw i32 %5, 12
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.i
-  %i.al = or disjoint i32 %spec.select, 2
+  %i.al = or disjoint i32 %5, 6
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.i, %bb.k, %bb.j

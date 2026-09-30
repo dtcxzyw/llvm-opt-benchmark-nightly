@@ -200,7 +200,8 @@ bb.a:
   %.04053 = phi ptr [ %i.y, %bb.k ], [ %3, %bb.a ] ; 12 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 1
   store ptr %i.g, ptr %1, align 8, !tbaa !12
-  %i.h = load i8, ptr %i.f, align 1, !tbaa !13    ; 10 uses
+  %i.h = load i8, ptr %i.f, align 1, !tbaa !13    ; 4 uses
+  %6 = zext i8 %i.h to i32                        ; 7 uses
   %i.i = icmp eq i8 %i.h, -33
   br i1 %i.i, label %bb.b, label %bb.f
 
@@ -213,9 +214,9 @@ bb.c:                                             ; preds = %bb.b
   %i.k = or i32 %.054, 262144
   %i.l = getelementptr inbounds nuw i8, ptr %.04053, i64 1
   store i8 83, ptr %.04053, align 1, !tbaa !13
-  %6 = and i32 %.054, 32768
-  %.not50 = icmp eq i32 %6, 0
-  %7 = select i1 %.not50, i8 83, i8 115
+  %7 = lshr i32 %.054, 10
+  %8 = and i32 %7, 32
+  %9 = or disjoint i32 %8, 83
   br label %bb.k
 
 bb.d:                                             ; preds = %bb.b
@@ -242,7 +243,7 @@ bb.f:                                             ; preds = %.lr.ph
 
 bb.g:                                             ; preds = %bb.f
   %i.u = or i32 %.054, 262144
-  %8 = add i8 %i.h, 32
+  %10 = add nuw nsw i32 %6, 32
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.f
@@ -263,15 +264,16 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.x = or i32 %.054, 262144
-  %9 = add i8 %i.h, -32
+  %11 = add nsw i32 %6, -32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.h, %bb.h, %bb.h, %bb.h, %bb.g, %bb.i, %bb.j, %bb.c, %bb.e, %bb.d
   %.141 = phi ptr [ %i.l, %bb.c ], [ %i.o, %bb.e ], [ %.04053, %bb.d ], [ %.04053, %bb.g ], [ %.04053, %bb.h ], [ %.04053, %bb.j ], [ %.04053, %bb.h ], [ %.04053, %bb.i ], [ %.04053, %bb.h ], [ %.04053, %bb.h ] ; 2 uses
-  %.039 = phi i8 [ %7, %bb.c ], [ 115, %bb.e ], [ -33, %bb.d ], [ %8, %bb.g ], [ %i.h, %bb.h ], [ %9, %bb.j ], [ %i.h, %bb.h ], [ %i.h, %bb.i ], [ %i.h, %bb.h ], [ %i.h, %bb.h ]
+  %.039 = phi i32 [ %9, %bb.c ], [ 115, %bb.e ], [ 223, %bb.d ], [ %10, %bb.g ], [ %6, %bb.h ], [ %11, %bb.j ], [ %6, %bb.h ], [ %6, %bb.i ], [ %6, %bb.h ], [ %6, %bb.h ]
   %.1 = phi i32 [ %i.k, %bb.c ], [ %i.n, %bb.e ], [ %.054, %bb.d ], [ %i.u, %bb.g ], [ %.054, %bb.h ], [ %i.x, %bb.j ], [ %.054, %bb.h ], [ %.054, %bb.i ], [ %.054, %bb.h ], [ %.054, %bb.h ] ; 3 uses
+  %12 = trunc i32 %.039 to i8
   %i.y = getelementptr inbounds nuw i8, ptr %.141, i64 1 ; 3 uses
-  store i8 %.039, ptr %.141, align 1, !tbaa !13
+  store i8 %12, ptr %.141, align 1, !tbaa !13
   %i.z = and i32 %.1, 32768
   %.not51 = icmp eq i32 %i.z, 0
   %i.aa = xor i32 %.1, 57344

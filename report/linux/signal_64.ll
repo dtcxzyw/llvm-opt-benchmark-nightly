@@ -65,15 +65,14 @@ bb.c:                                             ; preds = %sigmask_to_save.exi
 bb.d:                                             ; preds = %bb.c
   %.val.i = load i16, ptr %i.n, align 8
   %i.q = icmp eq i16 %.val.i, 51
-  %2 = and i64 %i.m, 67108864
-  %.not.i61 = icmp eq i64 %2, 0
-  %..i = select i1 %.not.i61, i64 2, i64 3        ; 2 uses
-  %i.r = or disjoint i64 %..i, 4
-  %.1.i = select i1 %i.q, i64 %i.r, i64 %..i, !prof !15
+  %.1.v.i = select i1 %i.q, i64 6, i64 2, !prof !15
+  %2 = lshr i64 %i.m, 26
+  %3 = and i64 %2, 1
+  %i.r = or disjoint i64 %.1.v.i, %3
   call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09stac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #8, !srcloc !16
   call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte (20*32+ 2)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09lfence\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #8, !srcloc !17
   %i.s = getelementptr i8, ptr %i.l, i64 8        ; 2 uses
-  callbr void asm sideeffect "\0A1:\09movq $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "er,*m,!i,~{dirflag},~{fpsr},~{flags}"(i64 %.1.i, ptr elementtype(%struct.__large_struct) %i.s) #8
+  callbr void asm sideeffect "\0A1:\09movq $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "er,*m,!i,~{dirflag},~{fpsr},~{flags}"(i64 %i.r, ptr elementtype(%struct.__large_struct) %i.s) #8
           to label %bb.e [label %.thread], !srcloc !18
 
 bb.e:                                             ; preds = %bb.d

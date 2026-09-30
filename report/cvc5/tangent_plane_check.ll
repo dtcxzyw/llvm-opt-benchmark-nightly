@@ -204,9 +204,9 @@ _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit339: ; preds = %bb.dj, %bb.di,
 
 bb.dl:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit339
   call void @llvm.lifetime.start.p0(ptr nonnull %91) #19
-  %113 = and i64 %indvars.iv, 1
-  %.not = icmp eq i64 %113, 0
-  %114 = select i1 %.not, i32 76, i32 78
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %113 = shl nuw nsw i32 %indvars.iv.tr, 1
+  %114 = or i32 %113, 76
   call void @llvm.lifetime.start.p0(ptr nonnull %56)
   call void @llvm.lifetime.start.p0(ptr nonnull %57)
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #19, !noalias !157

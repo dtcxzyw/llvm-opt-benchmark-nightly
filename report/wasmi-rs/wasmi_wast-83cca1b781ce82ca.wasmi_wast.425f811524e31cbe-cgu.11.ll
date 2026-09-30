@@ -202,9 +202,9 @@ bb.a:
   %.val.i = load ptr, ptr %2, align 8, !nonnull !5, !align !6, !noundef !5 ; 2 uses
   %i.a = tail call noundef nonnull align 8 ptr @_RNvMs5_NtNtCsefoF4u9kbII_5wasmi5store5innerNtB5_10StoreInner12resolve_func(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1584) %.val.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %1) ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !range !10, !noundef !5
-  %3 = trunc nuw i64 %i.b to i1
-  %.sroa.0.0.v.i = select i1 %3, i64 24, i64 8
-  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.0.0.v.i
+  %3 = shl nuw nsw i64 %i.b, 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   tail call void @_RNvMs4_NtNtCsefoF4u9kbII_5wasmi5store5innerNtB5_10StoreInner17resolve_func_type(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1584) %.val.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %.sroa.0.0.i)
   ret void
 }
@@ -214,9 +214,9 @@ define hidden void @_RINvMs9_NtCsefoF4u9kbII_5wasmi4funcNtB6_4Func2tyRINtNtB8_5s
 bb.a:
   %i.a = tail call noundef nonnull align 8 ptr @_RNvMs5_NtNtCsefoF4u9kbII_5wasmi5store5innerNtB5_10StoreInner12resolve_func(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1584) %2, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %1) ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !range !10, !noundef !5
-  %3 = trunc nuw i64 %i.b to i1
-  %.sroa.0.0.v.i = select i1 %3, i64 24, i64 8
-  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.0.0.v.i
+  %3 = shl nuw nsw i64 %i.b, 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   tail call void @_RNvMs4_NtNtCsefoF4u9kbII_5wasmi5store5innerNtB5_10StoreInner17resolve_func_type(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1584) %2, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %.sroa.0.0.i)
   ret void
 }
@@ -228,9 +228,9 @@ bb.a:
   %.val.i.i = load ptr, ptr %.val.i, align 8, !nonnull !5, !align !6, !noundef !5 ; 2 uses
   %i.a = tail call noundef nonnull align 8 ptr @_RNvMs5_NtNtCsefoF4u9kbII_5wasmi5store5innerNtB5_10StoreInner12resolve_func(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1584) %.val.i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %1) ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !range !10, !noundef !5
-  %3 = trunc nuw i64 %i.b to i1
-  %.sroa.0.0.v.i = select i1 %3, i64 24, i64 8
-  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.0.0.v.i
+  %3 = shl nuw nsw i64 %i.b, 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   tail call void @_RNvMs4_NtNtCsefoF4u9kbII_5wasmi5store5innerNtB5_10StoreInner17resolve_func_type(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1584) %.val.i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %.sroa.0.0.i)
   ret void
 }
@@ -240,9 +240,9 @@ define internal fastcc noundef range(i8 -1, 5) i8 @_RINvMs9_NtCsefoF4u9kbII_5was
 bb.a:
   %i.a = tail call noundef nonnull align 8 ptr @_RNvMs5_NtNtCsefoF4u9kbII_5wasmi5store5innerNtB5_10StoreInner12resolve_func(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1688) %1, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %0) ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !range !10, !noundef !5
-  %6 = trunc nuw i64 %i.b to i1
-  %.sroa.0.0.v.i = select i1 %6, i64 24, i64 8
-  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.0.0.v.i
+  %6 = shl nuw nsw i64 %i.b, 4
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 %6
+  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 224
   %i.d = load ptr, ptr %i.c, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 368 ; 5 uses
@@ -458,9 +458,9 @@ bb.a:
 
 .noexc:                                           ; preds = %bb.a
   %i.j = load i64, ptr %i.i, align 8, !range !10, !noalias !292, !noundef !5
-  %5 = trunc nuw i64 %i.j to i1
-  %.sroa.0.0.v.i.i = select i1 %5, i64 24, i64 8
-  %.sroa.0.0.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 %.sroa.0.0.v.i.i
+  %5 = shl nuw nsw i64 %i.j, 4
+  %6 = getelementptr inbounds nuw i8, ptr %i.i, i64 %5
+  %.sroa.0.0.i.i = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 7 uses
   %i.l = load ptr, ptr %i.k, align 8, !alias.scope !291, !noalias !293, !nonnull !5, !noundef !5 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 368 ; 6 uses

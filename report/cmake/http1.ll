@@ -73,10 +73,12 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.h = and i32 %5, 1
-  %.not18.i.i = icmp eq i32 %i.h, 0               ; 5 uses
+  %.not18.i.i = icmp eq i32 %i.h, 0               ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.not.i49 = icmp eq ptr %4, null
-  %spec.select.i = select i1 %.not18.i.i, i32 2074, i32 26
+  %7 = shl i32 %5, 11
+  %8 = and i32 %7, 2048
+  %spec.select.i = xor i32 %8, 2074
   %.not114.i = icmp eq ptr %3, null
   br label %bb.b
 

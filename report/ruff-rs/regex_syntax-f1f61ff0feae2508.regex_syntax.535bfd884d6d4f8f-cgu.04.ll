@@ -202,6 +202,7 @@ bb.a:
   %i.o = alloca [24 x i8], align 8                ; 6 uses
   %i.p = alloca [16 x i8], align 8                ; 4 uses
   %i.q = alloca [16 x i8], align 8                ; 4 uses
+  %3 = alloca [40 x i8], align 8                  ; 5 uses
   %i.r = alloca [40 x i8], align 8                ; 5 uses
   %i.s = alloca [40 x i8], align 8                ; 5 uses
   %i.t = alloca [32 x i8], align 8                ; 6 uses
@@ -534,14 +535,14 @@ bb.s:                                             ; preds = %bb.a
   %i.ev = getelementptr inbounds nuw i8, ptr %i.en, i64 36
   %i.ew = load i8, ptr %i.ev, align 4, !range !11, !noalias !264, !noundef !5 ; 3 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.en, i64 37
-  %i.ey = load i8, ptr %i.ex, align 1, !range !11, !noalias !264, !noundef !5
+  %i.ey = load i8, ptr %i.ex, align 1, !range !11, !noalias !264, !noundef !5 ; 2 uses
   br i1 %i.eq, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.w, %bb.v, %bb.s
   %i.ez = and i8 %i.eu, 1
   %or.cond3.not.i = icmp eq i8 %i.ez, 0
   %or.cond6.not.not.i = icmp eq i8 %i.ew, 0       ; 2 uses
-  br i1 %or.cond3.not.i, label %bb.ab, label %bb.ai
+  br i1 %or.cond3.not.i, label %4, label %5
 
 bb.u:                                             ; preds = %bb.s
   %.not31.i = icmp eq i8 %i.ew, 2
@@ -588,15 +589,19 @@ bb.aa:                                            ; preds = %bb.z
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fk, ptr nonnull readonly align 1 %.val35.i, i64 %.val36.i, i1 false), !noalias !265
   br label %_RNvMs3_NtNtCs79ICTHwG85D_12regex_syntax3hir9translateNtB5_11TranslatorI5error.exit.i
 
-bb.ab:                                            ; preds = %bb.t
-  %i.fm = and i8 %i.ey, 1
-  %or.cond9.not.i = icmp eq i8 %i.fm, 0           ; 2 uses
-  br i1 %or.cond6.not.not.i, label %bb.ac, label %3
+4:                                                ; preds = %bb.t
+  br i1 %or.cond6.not.not.i, label %bb.ac, label %bb.ab
 
-3:                                                ; preds = %bb.ab
+5:                                                ; preds = %bb.t
+  %..i = zext i1 %or.cond6.not.not.i to i8
+  br label %bb.ai
+
+bb.ab:                                            ; preds = %4
+  %i.fm = and i8 %i.ey, 1
+  %or.cond9.not.i = icmp eq i8 %i.fm, 0
   br i1 %or.cond9.not.i, label %bb.ad, label %.thread53.i
 
-.thread53.i:                                      ; preds = %3
+.thread53.i:                                      ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !264
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !266
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !266
@@ -628,11 +633,12 @@ bb.ab:                                            ; preds = %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !266
   br label %bb.cb
 
-bb.ac:                                            ; preds = %bb.ab
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !264
-  br i1 %or.cond9.not.i, label %.thread56.i, label %.thread59.i
+bb.ac:                                            ; preds = %4
+  %6 = shl nuw nsw i8 %i.ey, 1
+  %.33.i = or i8 %6, 5
+  br label %bb.ai
 
-bb.ad:                                            ; preds = %3
+bb.ad:                                            ; preds = %bb.ab
   %i.gc = icmp sgt i8 %i.es, -1
   br i1 %i.gc, label %.thread.i, label %bb.ae
 
@@ -682,9 +688,19 @@ bb.ah:                                            ; preds = %bb.ag
   invoke void @_RNvMsa_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_12ClassUnicode6negate(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.x)
           to label %bb.al unwind label %bb.am, !noalias !266
 
-bb.ai:                                            ; preds = %bb.t
+bb.ai:                                            ; preds = %bb.ac, %5
+  %.sroa.0.0.i = phi i8 [ %.33.i, %bb.ac ], [ %..i, %5 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !264
-  br i1 %or.cond6.not.not.i, label %bb.ak, label %bb.aj
+  switch i8 %.sroa.0.0.i, label %default.unreachable.i217 [
+    i8 0, label %bb.aj
+    i8 1, label %bb.ak
+    i8 7, label %.thread59.i
+    i8 6, label %7
+    i8 5, label %.thread56.i
+  ]
+
+default.unreachable.i217:                         ; preds = %bb.ai
+  unreachable
 
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !266
@@ -718,7 +734,7 @@ bb.ak:                                            ; preds = %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !266
   br label %bb.cb
 
-.thread56.i:                                      ; preds = %bb.ac
+.thread56.i:                                      ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !266
   %i.gz = tail call { i8, i8 } @_RNvMsi_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_15ClassBytesRange3new(i8 noundef %i.es, i8 noundef %i.es), !noalias !266 ; 2 uses
   %i.ha = extractvalue { i8, i8 } %i.gz, 0
@@ -731,8 +747,33 @@ bb.ak:                                            ; preds = %bb.ai
   invoke void @_RNvMsf_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_10ClassBytes6negate(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.t)
           to label %bb.ao unwind label %bb.ap, !noalias !266
 
-.thread59.i:                                      ; preds = %bb.ac
+7:                                                ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !266
+  %8 = tail call { i8, i8 } @_RNvMsi_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_15ClassBytesRange3new(i8 noundef 0, i8 noundef 9), !noalias !266 ; 2 uses
+  %9 = extractvalue { i8, i8 } %8, 0
+  %10 = extractvalue { i8, i8 } %8, 1
+  %11 = tail call { i8, i8 } @_RNvMsi_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_15ClassBytesRange3new(i8 noundef 11, i8 noundef -1), !noalias !266 ; 2 uses
+  %12 = extractvalue { i8, i8 } %11, 0
+  %13 = extractvalue { i8, i8 } %11, 1
+  %.sroa.634.0.insert.ext.i.i = zext i8 %13 to i32
+  %.sroa.634.0.insert.shift.i.i = shl nuw i32 %.sroa.634.0.insert.ext.i.i, 24
+  %.sroa.533.0.insert.ext.i.i = zext i8 %12 to i32
+  %.sroa.533.0.insert.shift.i.i = shl nuw nsw i32 %.sroa.533.0.insert.ext.i.i, 16
+  %.sroa.533.0.insert.insert.i.i = or disjoint i32 %.sroa.634.0.insert.shift.i.i, %.sroa.533.0.insert.shift.i.i
+  %.sroa.432.0.insert.ext.i.i = zext i8 %10 to i32
+  %.sroa.432.0.insert.shift.i.i = shl nuw nsw i32 %.sroa.432.0.insert.ext.i.i, 8
+  %.sroa.432.0.insert.insert.i.i = or disjoint i32 %.sroa.533.0.insert.insert.i.i, %.sroa.432.0.insert.shift.i.i
+  %.sroa.031.0.insert.ext.i.i = zext i8 %9 to i32
+  %.sroa.031.0.insert.insert.i.i = or disjoint i32 %.sroa.432.0.insert.insert.i.i, %.sroa.031.0.insert.ext.i.i
+  %14 = getelementptr inbounds nuw i8, ptr %i.r, i64 8
+  call void @_RINvMs0_NtNtCs79ICTHwG85D_12regex_syntax3hir8intervalINtB6_11IntervalSetNtB8_15ClassBytesRangeE3newAB18_j2_EBa_(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %14, i32 noundef %.sroa.031.0.insert.insert.i.i), !noalias !266
+  store i64 1, ptr %i.r, align 8, !noalias !266
+  call fastcc void @_RNvMs3_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_3Hir5class(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.ac, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.r), !noalias !264
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !266
+  br label %bb.cb
+
+.thread59.i:                                      ; preds = %bb.ai
+  call void @llvm.lifetime.start.p0(ptr nonnull %3), !noalias !266
   %i.hc = tail call { i8, i8 } @_RNvMsi_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_15ClassBytesRange3new(i8 noundef 0, i8 noundef 9), !noalias !266 ; 2 uses
   %i.hd = extractvalue { i8, i8 } %i.hc, 0
   %i.he = extractvalue { i8, i8 } %i.hc, 1
@@ -758,11 +799,11 @@ bb.ak:                                            ; preds = %bb.ai
   %.sroa.035.5.insert.ext.i.i = zext i8 %i.hk to i48
   %.sroa.035.5.insert.shift.i.i = shl nuw i48 %.sroa.035.5.insert.ext.i.i, 40
   %.sroa.035.5.insert.insert.i.i = or disjoint i48 %.sroa.035.4.insert.insert.i.i, %.sroa.035.5.insert.shift.i.i
-  %i.hl = getelementptr inbounds nuw i8, ptr %i.r, i64 8
+  %i.hl = getelementptr inbounds nuw i8, ptr %3, i64 8
   call void @_RINvMs0_NtNtCs79ICTHwG85D_12regex_syntax3hir8intervalINtB6_11IntervalSetNtB8_15ClassBytesRangeE3newAB18_j3_EBa_(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.hl, i48 noundef %.sroa.035.5.insert.insert.i.i), !noalias !266
-  store i64 1, ptr %i.r, align 8, !noalias !266
-  call fastcc void @_RNvMs3_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_3Hir5class(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.ac, ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.r), !noalias !264
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !266
+  store i64 1, ptr %3, align 8, !noalias !266
+  call fastcc void @_RNvMs3_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_3Hir5class(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.ac, ptr noalias noundef align 8 captures(address) dereferenceable(40) %3), !noalias !264
+  call void @llvm.lifetime.end.p0(ptr nonnull %3), !noalias !266
   br label %bb.cb
 
 bb.al:                                            ; preds = %.thread.i
@@ -1165,7 +1206,7 @@ _RNvMs3_NtNtCs79ICTHwG85D_12regex_syntax3hir9translateNtB5_11TranslatorI5error.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt)
   br label %bb.ca
 
-bb.cb:                                            ; preds = %bb.ao, %bb.al, %.thread59.i, %bb.ak, %bb.aj, %.thread53.i
+bb.cb:                                            ; preds = %bb.ao, %bb.al, %.thread59.i, %7, %bb.ak, %bb.aj, %.thread53.i
   %.sroa.8327.8.copyload329 = load ptr, ptr %i.ac, align 8, !noalias !276
   %.sroa.13.8..sroa_idx331 = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %.sroa.13.8.copyload332 = load i64, ptr %.sroa.13.8..sroa_idx331, align 8, !noalias !276
@@ -1566,6 +1607,9 @@ declare hidden void @_RINvMs0_NtNtCs79ICTHwG85D_12regex_syntax3hir8intervalINtB6
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvMsf_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_10ClassBytes6negate(ptr noalias noundef align 8 dereferenceable(32)) unnamed_addr #0
+
+; Function Attrs: nonlazybind uwtable
+declare hidden void @_RINvMs0_NtNtCs79ICTHwG85D_12regex_syntax3hir8intervalINtB6_11IntervalSetNtB8_15ClassBytesRangeE3newAB18_j2_EBa_(ptr dead_on_unwind noalias noundef writable sret([32 x i8]) align 8 captures(none) dereferenceable(32), i32 noundef) unnamed_addr #0
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvMs0_NtNtCs79ICTHwG85D_12regex_syntax3hir8intervalINtB6_11IntervalSetNtB8_15ClassBytesRangeE3newAB18_j3_EBa_(ptr dead_on_unwind noalias noundef writable sret([32 x i8]) align 8 captures(none) dereferenceable(32), i48 noundef) unnamed_addr #0

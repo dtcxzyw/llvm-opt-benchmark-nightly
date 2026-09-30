@@ -202,9 +202,10 @@ bb.a:
   %.not = icmp eq i32 %i.b, 0
   %i.c = and i32 %5, -2
   %spec.select = select i1 %.not, i32 %5, i32 %i.c ; 7 uses
-  %6 = and i32 %spec.select, 1
-  %.not83 = icmp eq i32 %6, 0
-  %7 = select i1 %.not83, i8 32, i8 48
+  %.067.tr = trunc i32 %spec.select to i8
+  %6 = shl i8 %.067.tr, 4
+  %7 = and i8 %6, 16
+  %8 = or disjoint i8 %7, 32
   %i.d = and i32 %spec.select, 2
   %.not84 = icmp eq i32 %i.d, 0
   br i1 %.not84, label %bb.h, label %bb.b
@@ -359,7 +360,7 @@ bb.t:                                             ; preds = %bb.q, %bb.r, %bb.s,
   %i.ap = phi i32 [ %i.ar, %.lr.ph105 ], [ %i.an, %.preheader94 ] ; 2 uses
   %.4104 = phi ptr [ %i.aq, %.lr.ph105 ], [ %.3, %.preheader94 ] ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.4104, i32 1 ; 2 uses
-  store i8 %7, ptr %.4104, align 1
+  store i8 %8, ptr %.4104, align 1
   %i.ar = add nsw i32 %i.ap, -1
   %.not132 = icmp eq i32 %i.ap, 0
   br i1 %.not132, label %.loopexit, label %.lr.ph105, !llvm.loop !16

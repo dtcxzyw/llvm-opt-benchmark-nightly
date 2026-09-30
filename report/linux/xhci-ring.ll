@@ -204,10 +204,10 @@ bb.n:                                             ; preds = %bb.j, %bb.m, %bb.l,
   %i.bh = load i32, ptr %i.bg, align 1
   tail call fastcc void @queue_trb(ptr noundef %0, ptr noundef nonnull %i.k, i1 noundef zeroext true, i32 noundef %i.bf, i32 noundef %i.bh, i32 noundef 8, i32 noundef %.1) #14, !srcloc !86
   %i.bi = getelementptr i8, ptr %2, i64 92
-  %.val105 = load i32, ptr %i.bi, align 4         ; 2 uses
-  %5 = and i32 %.val105, 512
-  %.not98 = icmp eq i32 %5, 0                     ; 2 uses
-  %. = select i1 %.not98, i32 3072, i32 3076
+  %.val105 = load i32, ptr %i.bi, align 4         ; 3 uses
+  %5 = lshr i32 %.val105, 7
+  %6 = and i32 %5, 4
+  %. = or disjoint i32 %6, 3072
   %i.bj = load i32, ptr %i.ae, align 8            ; 5 uses
   %.not99 = icmp eq i32 %i.bj, 0
   br i1 %.not99, label %bb.v, label %bb.o
@@ -220,7 +220,9 @@ bb.o:                                             ; preds = %bb.n
   %.val10.i = load i8, ptr %i.bl, align 1
   %i.bm = and i8 %.val10.i, 3
   %.not.i = icmp ne i8 %i.bm, 1
-  %or.cond = select i1 %.not.i, i1 %.not98, i1 false
+  %7 = and i32 %.val105, 512
+  %.not7.not.i = icmp eq i32 %7, 0
+  %or.cond = select i1 %.not.i, i1 %.not7.not.i, i1 false
   br i1 %or.cond, label %bb.p, label %xhci_urb_suitable_for_idt.exit
 
 bb.p:                                             ; preds = %bb.o
@@ -277,7 +279,7 @@ xhci_td_remainder.exit:                           ; preds = %bb.u, %bb.t
   %i.cg = and i32 %i.bj, 131071
   %i.ch = or disjoint i32 %.0.i108, %i.cg
   %i.ci = load i8, ptr %i.au, align 1
-  %i.cj = or disjoint i32 %.3, 65536
+  %i.cj = or i32 %.3, 65536
   %.not100112 = icmp slt i8 %i.ci, 0
   %spec.select104 = select i1 %.not100112, i32 %i.cj, i32 %.3
   %.0..0..0..0. = load i64, ptr %i.a, align 8     ; 2 uses

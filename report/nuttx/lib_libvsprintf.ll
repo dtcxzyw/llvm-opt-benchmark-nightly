@@ -201,10 +201,10 @@ bb.cf:                                            ; preds = %bb.ce
 .loopexit54:                                      ; preds = %bb.cd, %bb.ce, %bb.cf
   %.15 = phi i32 [ %i.hf, %bb.ce ], [ %i.hh, %bb.cf ], [ %i.gv, %bb.cd ] ; 2 uses
   %i.hj = load ptr, ptr %i.a, align 8
-  %4 = and i32 %i.el, 8192
-  %.not578 = icmp eq i32 %4, 0
-  %5 = select i1 %.not578, i32 101, i32 69
-  call void %i.hj(ptr noundef nonnull %0, i32 noundef %5) #11
+  %4 = lshr i32 %i.el, 8
+  %5 = and i32 %4, 32
+  %6 = xor i32 %5, 101
+  call void %i.hj(ptr noundef nonnull %0, i32 noundef %6) #11
   %i.hk = icmp slt i32 %i.cs, 0
   br i1 %i.hk, label %bb.ci, label %bb.cg
 
@@ -607,10 +607,10 @@ bb.fa:                                            ; preds = %.loopexit52
 bb.fb:                                            ; preds = %bb.fa
   %i.pl = add nsw i32 %.23, 2
   %i.pm = load ptr, ptr %i.a, align 8
-  %6 = and i32 %.pre-phi178, 8192
-  %.not564 = icmp eq i32 %6, 0
-  %7 = select i1 %.not564, i32 120, i32 88
-  call void %i.pm(ptr noundef nonnull %0, i32 noundef %7) #11
+  %7 = lshr i32 %.pre-phi178, 8
+  %8 = and i32 %7, 32
+  %9 = xor i32 %8, 120
+  call void %i.pm(ptr noundef nonnull %0, i32 noundef %9) #11
   br label %bb.fe
 
 bb.fc:                                            ; preds = %.loopexit52

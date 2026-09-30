@@ -205,7 +205,7 @@ _ZN11CStringBaseIwEC2Ev.exit113:                  ; preds = %bb.as, %._crit_edge
   store i32 0, ptr %i.ji, align 4, !tbaa !9
   store i32 4, ptr %i.ic, align 4, !tbaa !42
   %i.jj = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.jk = load i32, ptr %i.jj, align 8, !tbaa !38 ; 12 uses
+  %i.jk = load i32, ptr %i.jj, align 8, !tbaa !38 ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   %i.jl = lshr i32 %i.jk, 12
   %i.jm = and i32 %i.jl, 15
@@ -220,18 +220,18 @@ _ZN11CStringBaseIwEC2Ev.exit113:                  ; preds = %bb.as, %._crit_edge
   %i.ju = insertelement <4 x i32> poison, i32 %i.jk, i64 0
   %i.jv = shufflevector <4 x i32> %i.ju, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.jw = and <4 x i32> %i.jv, <i32 256, i32 128, i32 64, i32 32>
-  %i.jx = icmp eq <4 x i32> %i.jw, zeroinitializer ; 2 uses
+  %i.jx = icmp eq <4 x i32> %i.jw, zeroinitializer
   %i.jy = select <4 x i1> %i.jx, <4 x i32> splat (i32 45), <4 x i32> <i32 114, i32 119, i32 120, i32 114>
   store <4 x i32> %i.jy, ptr %i.jr, align 4, !tbaa !9
   %i.jz = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   %i.ka = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.kb = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.kc = and <4 x i32> %i.jv, <i32 16, i32 8, i32 4, i32 2>
-  %i.kd = icmp eq <4 x i32> %i.kc, zeroinitializer ; 2 uses
+  %i.kd = icmp eq <4 x i32> %i.kc, zeroinitializer
   %i.ke = select <4 x i1> %i.kd, <4 x i32> splat (i32 45), <4 x i32> <i32 119, i32 120, i32 114, i32 119>
   store <4 x i32> %i.ke, ptr %i.jz, align 4, !tbaa !9
   %i.kf = and i32 %i.jk, 1
-  %.not67.2 = icmp eq i32 %i.kf, 0                ; 2 uses
+  %.not67.2 = icmp eq i32 %i.kf, 0
   %i.kg = select i1 %.not67.2, i32 45, i32 120
   %i.kh = getelementptr inbounds nuw i8, ptr %i.c, i64 36 ; 2 uses
   store i32 %i.kg, ptr %i.kh, align 4, !tbaa !9
@@ -240,9 +240,10 @@ _ZN11CStringBaseIwEC2Ev.exit113:                  ; preds = %bb.as, %._crit_edge
   br i1 %.not54, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %_ZN11CStringBaseIwEC2Ev.exit113
-  %5 = extractelement <4 x i1> %i.jx, i64 2
-  %6 = select i1 %5, i32 83, i32 115
-  store i32 %6, ptr %i.js, align 4, !tbaa !9
+  %5 = lshr i32 %i.jk, 1
+  %6 = and i32 %5, 32
+  %7 = or disjoint i32 %6, 83
+  store i32 %7, ptr %i.js, align 4, !tbaa !9
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %_ZN11CStringBaseIwEC2Ev.exit113
@@ -251,9 +252,10 @@ bb.au:                                            ; preds = %bb.at, %_ZN11CStrin
   br i1 %.not56, label %bb.aw, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %7 = extractelement <4 x i1> %i.kd, i64 1
-  %8 = select i1 %7, i32 83, i32 115
-  store i32 %8, ptr %i.ka, align 8, !tbaa !9
+  %8 = shl i32 %i.jk, 2
+  %9 = and i32 %8, 32
+  %10 = or disjoint i32 %9, 83
+  store i32 %10, ptr %i.ka, align 8, !tbaa !9
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
@@ -262,8 +264,10 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   br i1 %.not58, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %9 = select i1 %.not67.2, i32 84, i32 116
-  store i32 %9, ptr %i.kh, align 4, !tbaa !9
+  %11 = shl i32 %i.jk, 5
+  %12 = and i32 %11, 32
+  %13 = or disjoint i32 %12, 84
+  store i32 %13, ptr %i.kh, align 4, !tbaa !9
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw

@@ -205,10 +205,10 @@ bb.bh:                                            ; preds = %bb.bg
   %i.ej = getelementptr inbounds nuw i8, ptr %i.a, i64 7704
   %i.ek = load i32, ptr %i.ej, align 8, !tbaa !169
   %i.el = icmp eq i32 %i.ek, %1
-  %5 = and i32 %.1, 1024
-  %.not211 = icmp eq i32 %5, 0
-  %6 = select i1 %.not211, i32 1, i32 3
-  %i.em = tail call noundef float @_ZN5ImGui17GetNavInputAmountEi18ImGuiInputReadMode(i32 noundef 0, i32 noundef %6)
+  %5 = lshr i32 %.1, 9
+  %6 = and i32 %5, 2
+  %7 = or disjoint i32 %6, 1
+  %i.em = tail call noundef float @_ZN5ImGui17GetNavInputAmountEi18ImGuiInputReadMode(i32 noundef 0, i32 noundef %7)
   %i.en = fcmp ogt float %i.em, 0.000000e+00
   %or.cond3 = or i1 %i.el, %i.en
   br i1 %or.cond3, label %bb.bi, label %bb.bk

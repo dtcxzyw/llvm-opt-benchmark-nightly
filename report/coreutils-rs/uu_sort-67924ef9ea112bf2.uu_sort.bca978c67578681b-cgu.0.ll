@@ -205,8 +205,6 @@ bb.ac:                                            ; preds = %_RNvMNtCs6JMX4GRUq9
 
 _RNvCsgcf5BHVXlUt_7uu_sort21ordering_incompatible.exit.thread89: ; preds = %bb.t, %_RNvCsgcf5BHVXlUt_7uu_sort21ordering_incompatible.exit
   %i.di = trunc i48 %.sroa.059.0.copyload to i1
-  %4 = and i48 %.sroa.059.0.copyload, 4294967296
-  %.not = icmp eq i48 %4, 0
   %i.dj = and i48 %.sroa.059.0.copyload, 1099511627776
   %.not117 = icmp eq i48 %i.dj, 0
   br i1 %i.di, label %bb.ag, label %bb.ae
@@ -252,7 +250,10 @@ bb.ae:                                            ; preds = %_RNvCsgcf5BHVXlUt_7
   br i1 %brmerge67.not, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  %. = select i1 %.not, i8 6, i8 4
+  %sh.diff = lshr i48 %.sroa.059.0.copyload, 31
+  %tr.sh.diff = trunc i48 %sh.diff to i8
+  %4 = and i8 %tr.sh.diff, -2
+  %. = xor i8 %4, 6
   %spec.select68 = select i1 %.not117, i8 %., i8 5
   br label %bb.ag
 

@@ -202,14 +202,15 @@ define dso_local i32 @uv_socketpair(i32 noundef %0, i32 noundef %1, ptr nofree n
 bb.a:
   %i.a = alloca [2 x i32], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %i.b = and i32 %3, 64                           ; 2 uses
+  %i.b = and i32 %3, 64
   %.not = icmp eq i32 %i.b, 0
   %i.c = and i32 %4, 64
   %.not18 = icmp eq i32 %i.c, 0
-  %i.d = and i32 %i.b, %4
-  %or.cond.not.not = icmp eq i32 %i.d, 0
-  %.0.v = select i1 %or.cond.not.not, i32 524288, i32 526336
-  %.0 = or i32 %.0.v, %0                          ; 2 uses
+  %i.d = and i32 %4, %3
+  %5 = shl i32 %i.d, 5
+  %6 = and i32 %5, 2048
+  %.0.v = or i32 %0, %6                           ; 2 uses
+  %.0 = or i32 %.0.v, 524288
   %i.e = call i32 @socketpair(i32 noundef 1, i32 noundef %.0, i32 noundef %1, ptr noundef nonnull %i.a) #7
   %.not19 = icmp eq i32 %i.e, 0
   br i1 %.not19, label %bb.c, label %bb.b
@@ -221,7 +222,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.k
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = and i32 %.0, 2048
+  %i.i = and i32 %.0.v, 2048
   %.not20 = icmp eq i32 %i.i, 0
   br i1 %.not20, label %bb.e, label %bb.d
 

@@ -204,15 +204,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr i8, ptr %0, i64 39
   %.val = load i8, ptr %i.j, align 1              ; 2 uses
-  %2 = zext i8 %.val to i32                       ; 2 uses
-  %3 = and i32 %2, 32
-  %.not.i = icmp ne i32 %3, 0
-  %4 = icmp sgt i8 %.val, -1
-  %or.cond.i = or i1 %4, %.not.i
-  %5 = and i32 %2, 64
-  %.not3.i = icmp eq i32 %5, 0
-  %6 = select i1 %.not3.i, i8 1, i8 3
-  %i.k = select i1 %or.cond.i, i8 2, i8 %6
+  %2 = and i8 %.val, -96
+  %or.cond.i.not = icmp eq i8 %2, -128
+  %3 = lshr i8 %.val, 5
+  %4 = and i8 %3, 2
+  %..i = or disjoint i8 %4, 1
+  %i.k = select i1 %or.cond.i.not, i8 %..i, i8 2
   store i8 %i.k, ptr %i.g, align 4
   br label %bb.c
 
@@ -615,9 +612,9 @@ bb.a:
   %.not.i = icmp ne i32 %i.c, 0
   %i.d = icmp sgt i8 %.val, -1
   %or.cond.i = or i1 %i.d, %.not.i
-  %1 = and i32 %i.b, 64
-  %.not3.i = icmp eq i32 %1, 0
-  %..i = select i1 %.not3.i, i32 1, i32 3
+  %1 = lshr i32 %i.b, 5
+  %2 = and i32 %1, 2
+  %..i = or disjoint i32 %2, 1
   %.0.i = select i1 %or.cond.i, i32 2, i32 %..i
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.f = load i8, ptr %i.e, align 4

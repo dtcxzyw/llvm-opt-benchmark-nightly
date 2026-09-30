@@ -204,12 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = icmp ne i32 %i.k, 0
   %i.m = zext i1 %i.l to i32
   %.not26.i = icmp eq i32 %i.m, 0
-  br i1 %.not26.i, label %3, label %bb.c
-
-3:                                                ; preds = %bb.b
-  %4 = and i32 %i.c, 32
-  %.not27.i = icmp eq i32 %4, 0
-  br i1 %.not27.i, label %select.unfold, label %.critedge168
+  br i1 %.not26.i, label %gem_mac_address_filter.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.val.i = load i8, ptr %1, align 1              ; 2 uses
@@ -451,8 +446,14 @@ bb.m:                                             ; preds = %bb.l
   %.not33.3.i = icmp eq i32 %i.gy, 0
   br i1 %.not33.3.i, label %select.unfold, label %.critedge168
 
-select.unfold:                                    ; preds = %3, %bb.a, %bb.e, %bb.g, %bb.i, %bb.m, %bb.k
-  %.1.i.ph = phi i32 [ -2, %bb.a ], [ 1, %bb.k ], [ 0, %bb.m ], [ 2, %bb.i ], [ 3, %bb.g ], [ %i.q, %bb.e ], [ -3, %3 ] ; 2 uses
+gem_mac_address_filter.exit:                      ; preds = %bb.b
+  %3 = lshr i32 %i.c, 4
+  %..i = or i32 %3, -3                            ; 2 uses
+  %4 = icmp eq i32 %..i, -1
+  br i1 %4, label %.critedge168, label %select.unfold
+
+select.unfold:                                    ; preds = %bb.k, %bb.m, %bb.i, %bb.g, %bb.e, %bb.a, %gem_mac_address_filter.exit
+  %.1.i.ph = phi i32 [ %..i, %gem_mac_address_filter.exit ], [ 1, %bb.k ], [ 0, %bb.m ], [ 2, %bb.i ], [ 3, %bb.g ], [ %i.q, %bb.e ], [ -2, %bb.a ] ; 2 uses
   %i.gz = and i32 %i.c, 65536
   %.not = icmp eq i32 %i.gz, 0
   br i1 %.not, label %.critedge, label %bb.n
@@ -855,8 +856,8 @@ gem_set_isr.exit198:                              ; preds = %bb.dg, %bb.dh
   %i.uy = icmp samesign ult i64 %indvars.iv.next.i202, %i.ux
   br i1 %i.uy, label %.lr.ph.i200, label %.critedge168, !llvm.loop !0
 
-.critedge168:                                     ; preds = %.lr.ph.i200, %bb.ch, %bb.cf, %._crit_edge.thread.i, %bb.ce, %bb.l, %bb.m, %gem_set_isr.exit198, %bb.cc, %bb.cb, %3, %bb.o
-  %.4 = phi i64 [ %2, %bb.l ], [ -1, %bb.ch ], [ -1, %bb.cc ], [ -1, %bb.cb ], [ -1, %bb.o ], [ %2, %3 ], [ %.0151, %gem_set_isr.exit198 ], [ %2, %bb.m ], [ -1, %bb.ce ], [ -1, %._crit_edge.thread.i ], [ -1, %bb.cf ], [ %.0151, %.lr.ph.i200 ]
+.critedge168:                                     ; preds = %.lr.ph.i200, %bb.ch, %bb.cf, %._crit_edge.thread.i, %bb.ce, %bb.m, %bb.l, %gem_set_isr.exit198, %bb.cc, %bb.cb, %bb.o, %gem_mac_address_filter.exit
+  %.4 = phi i64 [ %2, %gem_mac_address_filter.exit ], [ -1, %bb.ch ], [ -1, %bb.cc ], [ -1, %bb.cb ], [ -1, %bb.o ], [ %2, %bb.m ], [ %.0151, %gem_set_isr.exit198 ], [ %2, %bb.l ], [ -1, %bb.ce ], [ -1, %._crit_edge.thread.i ], [ -1, %bb.cf ], [ %.0151, %.lr.ph.i200 ]
   ret i64 %.4
 }
 

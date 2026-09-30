@@ -205,9 +205,10 @@ bb.e:                                             ; preds = %zend_jit_exit_point
 bb.f:                                             ; preds = %bb.e
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !77
-  %4 = and i32 %i.aq, 2048
-  %.not15.i = icmp eq i32 %4, 0
-  %5 = select i1 %.not15.i, i8 68, i8 69
+  %4 = lshr i32 %i.aq, 11
+  %5 = trunc i32 %4 to i8
+  %6 = and i8 %5, 1
+  %7 = or disjoint i8 %6, 68
   %i.ar = getelementptr inbounds [4 x i8], ptr %2, i64 %i.al
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !78
   %i.at = tail call i32 @ir_get_spill_slot_offset(ptr noundef nonnull %0, i32 noundef %i.as) #34
@@ -216,7 +217,7 @@ bb.f:                                             ; preds = %bb.e
 
 zend_jit_resolve_ref_snapshot.exit:               ; preds = %bb.e, %bb.f
   %i.au = phi ptr [ %.pre, %bb.f ], [ %i.ai, %bb.e ]
-  %.014.i = phi i8 [ %5, %bb.f ], [ %i.an, %bb.e ] ; 3 uses
+  %.014.i = phi i8 [ %7, %bb.f ], [ %i.an, %bb.e ] ; 3 uses
   %.0.i = phi i32 [ %i.at, %bb.f ], [ 0, %bb.e ]  ; 2 uses
   %i.av = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.aj
   %i.aw = zext i16 %i.d to i64                    ; 2 uses
@@ -230,16 +231,17 @@ zend_jit_resolve_ref_snapshot.exit:               ; preds = %bb.e, %bb.f
 bb.g:                                             ; preds = %zend_jit_resolve_ref_snapshot.exit
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bb = load i32, ptr %i.ba, align 8, !tbaa !77
-  %6 = and i32 %i.bb, 2048
-  %.not15.i254 = icmp eq i32 %6, 0
-  %7 = select i1 %.not15.i254, i8 68, i8 69
+  %8 = lshr i32 %i.bb, 11
+  %9 = trunc i32 %8 to i8
+  %10 = and i8 %9, 1
+  %11 = or disjoint i8 %10, 68
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.aw
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !78
   %i.be = tail call i32 @ir_get_spill_slot_offset(ptr noundef nonnull %0, i32 noundef %i.bd) #34
   br label %zend_jit_resolve_ref_snapshot.exit257
 
 zend_jit_resolve_ref_snapshot.exit257:            ; preds = %zend_jit_resolve_ref_snapshot.exit, %bb.g
-  %.014.i255 = phi i8 [ %7, %bb.g ], [ %i.ay, %zend_jit_resolve_ref_snapshot.exit ] ; 3 uses
+  %.014.i255 = phi i8 [ %11, %bb.g ], [ %i.ay, %zend_jit_resolve_ref_snapshot.exit ] ; 3 uses
   %.0.i256 = phi i32 [ %i.be, %bb.g ], [ 0, %zend_jit_resolve_ref_snapshot.exit ] ; 2 uses
   %.not226 = icmp sgt i32 %i.ae, -1
   %.pre326.a = load ptr, ptr %i.z, align 8, !tbaa !54 ; 6 uses
@@ -642,9 +644,10 @@ bb.auo:                                           ; preds = %bb.aun
 
 bb.aup:                                           ; preds = %bb.auo
   %i.jhz = load i32, ptr %i.f, align 4, !tbaa !78
-  %7 = and i32 %i.jhz, 16
-  %.not7640 = icmp eq i32 %7, 0
-  %8 = select i1 %.not7640, i8 5, i8 4            ; 4 uses
+  %7 = trunc i32 %i.jhz to i8
+  %8 = lshr i8 %7, 4
+  %9 = and i8 %8, 1
+  %10 = xor i8 %9, 5                              ; 4 uses
   %i.jia = getelementptr inbounds nuw i8, ptr %i.byu, i64 12
   %i.jib = load i32, ptr %i.jia, align 4, !tbaa !72
   %i.jic = lshr i32 %i.jib, 4
@@ -653,7 +656,7 @@ bb.aup:                                           ; preds = %bb.auo
   %i.jif = getelementptr inbounds nuw [8 x i8], ptr %.06545, i64 %i.jie ; 5 uses
   %i.jig = getelementptr inbounds nuw i8, ptr %i.jif, i64 1 ; 2 uses
   %i.jih = load i8, ptr %i.jig, align 1, !tbaa !72
-  %.not7641 = icmp eq i8 %i.jih, %8
+  %.not7641 = icmp eq i8 %i.jih, %10
   br i1 %.not7641, label %bb.aut, label %bb.auq
 
 bb.auq:                                           ; preds = %bb.aup
@@ -669,9 +672,9 @@ bb.aur:                                           ; preds = %bb.auq
   br i1 %.not7642, label %bb.aus, label %bb.aut
 
 bb.aus:                                           ; preds = %bb.aur
-  call fastcc void @zend_jit_store_type(ptr noundef %4, i32 noundef %i.jid, i8 noundef zeroext %8)
-  store i8 %8, ptr %i.jif, align 4, !tbaa !72
-  store i8 %8, ptr %i.jig, align 1, !tbaa !72
+  call fastcc void @zend_jit_store_type(ptr noundef %4, i32 noundef %i.jid, i8 noundef zeroext %10)
+  store i8 %10, ptr %i.jif, align 4, !tbaa !72
+  store i8 %10, ptr %i.jig, align 1, !tbaa !72
   %i.jin = getelementptr inbounds nuw i8, ptr %i.jif, i64 2
   store i8 -1, ptr %i.jin, align 2, !tbaa !72
   %i.jio = getelementptr inbounds nuw i8, ptr %i.jif, i64 3
@@ -1074,9 +1077,10 @@ bb.awq:                                           ; preds = %bb.awp
 
 bb.awr:                                           ; preds = %bb.awq
   %i.jsf = load i32, ptr %i.e, align 4, !tbaa !78
-  %9 = and i32 %i.jsf, 16
-  %.not7604 = icmp eq i32 %9, 0
-  %10 = select i1 %.not7604, i8 5, i8 4           ; 4 uses
+  %11 = trunc i32 %i.jsf to i8
+  %12 = lshr i8 %11, 4
+  %13 = and i8 %12, 1
+  %14 = xor i8 %13, 5                             ; 4 uses
   %i.jsg = getelementptr inbounds nuw i8, ptr %i.byu, i64 8
   %i.jsh = load i32, ptr %i.jsg, align 8, !tbaa !72
   %i.jsi = lshr i32 %i.jsh, 4
@@ -1085,7 +1089,7 @@ bb.awr:                                           ; preds = %bb.awq
   %i.jsl = getelementptr inbounds nuw [8 x i8], ptr %.06545, i64 %i.jsk ; 5 uses
   %i.jsm = getelementptr inbounds nuw i8, ptr %i.jsl, i64 1 ; 2 uses
   %i.jsn = load i8, ptr %i.jsm, align 1, !tbaa !72
-  %.not7605 = icmp eq i8 %i.jsn, %10
+  %.not7605 = icmp eq i8 %i.jsn, %14
   br i1 %.not7605, label %bb.awv, label %bb.aws
 
 bb.aws:                                           ; preds = %bb.awr
@@ -1101,9 +1105,9 @@ bb.awt:                                           ; preds = %bb.aws
   br i1 %.not7606, label %bb.awu, label %bb.awv
 
 bb.awu:                                           ; preds = %bb.awt
-  call fastcc void @zend_jit_store_type(ptr noundef %4, i32 noundef %i.jsj, i8 noundef zeroext %10)
-  store i8 %10, ptr %i.jsl, align 4, !tbaa !72
-  store i8 %10, ptr %i.jsm, align 1, !tbaa !72
+  call fastcc void @zend_jit_store_type(ptr noundef %4, i32 noundef %i.jsj, i8 noundef zeroext %14)
+  store i8 %14, ptr %i.jsl, align 4, !tbaa !72
+  store i8 %14, ptr %i.jsm, align 1, !tbaa !72
   %i.jst = getelementptr inbounds nuw i8, ptr %i.jsl, i64 2
   store i8 -1, ptr %i.jst, align 2, !tbaa !72
   %i.jsu = getelementptr inbounds nuw i8, ptr %i.jsl, i64 3
@@ -1506,9 +1510,10 @@ bb.bah:                                           ; preds = %bb.bag
 
 bb.bai:                                           ; preds = %bb.bah
   %i.kjo = load i32, ptr %i.e, align 4, !tbaa !78
-  %11 = and i32 %i.kjo, 16
-  %.not7573 = icmp eq i32 %11, 0
-  %12 = select i1 %.not7573, i8 5, i8 4           ; 4 uses
+  %15 = trunc i32 %i.kjo to i8
+  %16 = lshr i8 %15, 4
+  %17 = and i8 %16, 1
+  %18 = xor i8 %17, 5                             ; 4 uses
   %i.kjp = getelementptr inbounds nuw i8, ptr %i.byu, i64 8
   %i.kjq = load i32, ptr %i.kjp, align 8, !tbaa !72
   %i.kjr = lshr i32 %i.kjq, 4
@@ -1517,7 +1522,7 @@ bb.bai:                                           ; preds = %bb.bah
   %i.kju = getelementptr inbounds nuw [8 x i8], ptr %.06545, i64 %i.kjt ; 5 uses
   %i.kjv = getelementptr inbounds nuw i8, ptr %i.kju, i64 1 ; 2 uses
   %i.kjw = load i8, ptr %i.kjv, align 1, !tbaa !72
-  %.not7574 = icmp eq i8 %i.kjw, %12
+  %.not7574 = icmp eq i8 %i.kjw, %18
   br i1 %.not7574, label %bb.bam, label %bb.baj
 
 bb.baj:                                           ; preds = %bb.bai
@@ -1533,9 +1538,9 @@ bb.bak:                                           ; preds = %bb.baj
   br i1 %.not7575, label %bb.bal, label %bb.bam
 
 bb.bal:                                           ; preds = %bb.bak
-  call fastcc void @zend_jit_store_type(ptr noundef %4, i32 noundef %i.kjs, i8 noundef zeroext %12)
-  store i8 %12, ptr %i.kju, align 4, !tbaa !72
-  store i8 %12, ptr %i.kjv, align 1, !tbaa !72
+  call fastcc void @zend_jit_store_type(ptr noundef %4, i32 noundef %i.kjs, i8 noundef zeroext %18)
+  store i8 %18, ptr %i.kju, align 4, !tbaa !72
+  store i8 %18, ptr %i.kjv, align 1, !tbaa !72
   %i.kkc = getelementptr inbounds nuw i8, ptr %i.kju, i64 2
   store i8 -1, ptr %i.kkc, align 2, !tbaa !72
   %i.kkd = getelementptr inbounds nuw i8, ptr %i.kju, i64 3
@@ -1938,11 +1943,12 @@ bb.av:                                            ; preds = %.lr.ph, %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
   %i.lh = load i32, ptr %i.la, align 8, !tbaa !281
-  %2 = and i32 %i.lh, 2048
-  %.not71 = icmp eq i32 %2, 0
-  %3 = select i1 %.not71, i8 4, i8 5
+  %2 = lshr i32 %i.lh, 11
+  %3 = trunc i32 %2 to i8
+  %4 = and i8 %3, 1
+  %5 = or disjoint i8 %4, 4
   %i.li = getelementptr inbounds nuw i8, ptr %i.ld, i64 2
-  store i8 %3, ptr %i.li, align 2, !tbaa !72
+  store i8 %5, ptr %i.li, align 2, !tbaa !72
   %i.lj = getelementptr inbounds nuw i8, ptr %i.ld, i64 4 ; 2 uses
   %i.lk = load i32, ptr %i.lj, align 4, !tbaa !82
   %i.ll = call i32 @ir_get_spill_slot_offset(ptr noundef nonnull %0, i32 noundef %i.lk) #34

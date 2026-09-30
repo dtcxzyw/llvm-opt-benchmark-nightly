@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %Fraig_GetSmallestCo
 .preheader.31.i.i:                                ; preds = %.preheader.30.i.i, %.preheader.29.i.i, %.preheader.28.i.i, %.preheader.27.i.i, %.preheader.26.i.i, %.preheader.25.i.i, %.preheader.24.i.i, %.preheader.23.i.i, %.preheader.22.i.i, %.preheader.21.i.i, %.preheader.20.i.i, %.preheader.19.i.i, %.preheader.18.i.i, %.preheader.17.i.i, %.preheader.16.i.i, %.preheader.15.i.i, %.preheader.14.i.i, %.preheader.13.i.i, %.preheader.12.i.i, %.preheader.11.i.i, %.preheader.10.i.i, %.preheader.9.i.i, %.preheader.8.i.i, %.preheader.7.i.i, %.preheader.6.i.i, %.preheader.5.i.i, %.preheader.4.i.i, %.preheader.3.i.i, %.preheader.2.i.i, %.preheader.1.i.i, %.preheader.preheader.i.i
   %.017.lcssa.i.i = phi i32 [ 0, %.preheader.preheader.i.i ], [ 1, %.preheader.1.i.i ], [ 2, %.preheader.2.i.i ], [ 3, %.preheader.3.i.i ], [ 4, %.preheader.4.i.i ], [ 5, %.preheader.5.i.i ], [ 6, %.preheader.6.i.i ], [ 7, %.preheader.7.i.i ], [ 8, %.preheader.8.i.i ], [ 9, %.preheader.9.i.i ], [ 10, %.preheader.10.i.i ], [ 11, %.preheader.11.i.i ], [ 12, %.preheader.12.i.i ], [ 13, %.preheader.13.i.i ], [ 14, %.preheader.14.i.i ], [ 15, %.preheader.15.i.i ], [ 16, %.preheader.16.i.i ], [ 17, %.preheader.17.i.i ], [ 18, %.preheader.18.i.i ], [ 19, %.preheader.19.i.i ], [ 20, %.preheader.20.i.i ], [ 21, %.preheader.21.i.i ], [ 22, %.preheader.22.i.i ], [ 23, %.preheader.23.i.i ], [ 24, %.preheader.24.i.i ], [ 25, %.preheader.25.i.i ], [ 26, %.preheader.26.i.i ], [ 27, %.preheader.27.i.i ], [ 28, %.preheader.28.i.i ], [ 29, %.preheader.29.i.i ], [ %spec.select.i63.i, %.preheader.30.i.i ]
   %i.il = shl nuw nsw i32 %i.ik, 5
-  %1 = or disjoint i32 %.017.lcssa.i.i, %i.il
+  %1 = add nuw nsw i32 %.017.lcssa.i.i, %i.il
   br label %Fraig_GetHittingPattern.exit.i
 
 .preheader.1.i.i:                                 ; preds = %.preheader.preheader.i.i
@@ -354,9 +354,9 @@ bb.t:                                             ; preds = %Fraig_GetSmallestCo
   br i1 %.not.29.i.i, label %.preheader.30.i.i, label %.preheader.31.i.i
 
 .preheader.30.i.i:                                ; preds = %.preheader.29.i.i
-  %2 = and i32 %i.ih, 1073741824
-  %.not.30.i.i = icmp eq i32 %2, 0
-  %spec.select.i63.i = select i1 %.not.30.i.i, i32 31, i32 30
+  %2 = lshr exact i32 %i.ih, 30
+  %3 = and i32 %2, 1
+  %spec.select.i63.i = xor i32 %3, 31
   br label %.preheader.31.i.i
 
 .loopexit.i64.i:                                  ; preds = %.lr.ph.i60.i

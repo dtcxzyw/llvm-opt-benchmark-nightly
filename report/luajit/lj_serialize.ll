@@ -202,11 +202,12 @@ bb.bh:                                            ; preds = %bb.bg
 serialize_more.exit217:                           ; preds = %bb.bg, %bb.bh
   %i.kn = phi i32 [ %.pre, %bb.bh ], [ %i.jw, %bb.bg ]
   %.0.i216 = phi ptr [ %i.km, %bb.bh ], [ %0, %bb.bg ] ; 3 uses
-  %3 = and i32 %i.kn, 8388608
-  %.not = icmp eq i32 %3, 0
-  %4 = select i1 %.not, i8 16, i8 17
+  %3 = lshr i32 %i.kn, 23
+  %4 = trunc i32 %3 to i8
+  %5 = and i8 %4, 1
+  %6 = or disjoint i8 %5, 16
   %i.ko = getelementptr inbounds nuw i8, ptr %.0.i216, i64 1
-  store i8 %4, ptr %.0.i216, align 1, !tbaa !16
+  store i8 %6, ptr %.0.i216, align 1, !tbaa !16
   %i.kp = load i64, ptr %i.ka, align 2
   store i64 %i.kp, ptr %i.ko, align 1
   %i.kq = getelementptr inbounds nuw i8, ptr %.0.i216, i64 9

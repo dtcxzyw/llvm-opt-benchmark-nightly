@@ -117,9 +117,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load i32, ptr %i.h, align 8, !tbaa !29   ; 2 uses
   %i.j = and i32 %i.i, 1
-  %2 = and i32 %i.i, 2
-  %.not7 = icmp eq i32 %2, 0
-  %spec.select.v = select i1 %.not7, i32 8216, i32 8220
+  %2 = shl i32 %i.i, 1
+  %3 = and i32 %2, 4
+  %spec.select.v = or disjoint i32 %3, 8216
   %spec.select = or disjoint i32 %i.j, %spec.select.v
   store i32 %spec.select, ptr %1, align 4
   %i.k = load i32, ptr %i.c, align 4, !tbaa !20
@@ -164,9 +164,9 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.f, ptr %i.g, align 4, !tbaa !25
   %i.h = and i32 %1, 1
-  %3 = and i32 %1, 2
-  %.not6 = icmp eq i32 %3, 0
-  %spec.select7.v = select i1 %.not6, i32 8216, i32 8220
+  %3 = shl i32 %1, 1
+  %4 = and i32 %3, 4
+  %spec.select7.v = or disjoint i32 %4, 8216
   %spec.select7 = or disjoint i32 %i.h, %spec.select7.v
   store i32 %spec.select7, ptr %2, align 4, !tbaa !27
   %i.i = load i32, ptr %i.c, align 4, !tbaa !20

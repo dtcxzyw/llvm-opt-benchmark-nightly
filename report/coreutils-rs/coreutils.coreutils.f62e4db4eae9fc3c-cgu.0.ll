@@ -205,8 +205,9 @@ _RNvMs6_Csgcf5BHVXlUt_7uu_sortNtB5_9ModeFlags7to_mode.exit.thread: ; preds = %bb
   br label %bb.gm
 
 _RNvMs6_Csgcf5BHVXlUt_7uu_sortNtB5_9ModeFlags7to_mode.exit.thread1317: ; preds = %bb.ga
-  %.not6.i = icmp eq i8 %.sroa.11.1, 0
-  %..i513 = select i1 %.not6.i, i8 6, i8 4
+  %1 = shl nuw nsw i8 %.sroa.11.1, 1
+  %2 = and i8 %1, 2
+  %..i513 = xor i8 %2, 6
   store i8 %..i513, ptr %i.fo, align 1
   br label %bb.ge
 

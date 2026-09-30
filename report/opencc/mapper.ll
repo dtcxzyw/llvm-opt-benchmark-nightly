@@ -202,9 +202,9 @@ bb.g:                                             ; preds = %bb.d
   %i.n = load i64, ptr %i.m, align 8, !tbaa !21   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store i64 %i.n, ptr %i.o, align 8, !tbaa !14
-  %4 = and i32 %2, 1
-  %.not18 = icmp eq i32 %4, 0
-  %spec.select = select i1 %.not18, i32 1, i32 32769
+  %4 = shl i32 %2, 15
+  %5 = and i32 %4, 32768
+  %spec.select = or disjoint i32 %5, 1
   %i.p = load i32, ptr %i.b, align 8, !tbaa !13
   %i.q = tail call ptr @mmap(ptr noundef null, i64 noundef %i.n, i32 noundef 1, i32 noundef %spec.select, i32 noundef %i.p, i64 noundef 0) #19 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8

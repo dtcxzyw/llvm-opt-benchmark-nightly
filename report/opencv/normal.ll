@@ -205,7 +205,6 @@ bb.ba:                                            ; preds = %.noexc54
   %scevgep75 = getelementptr i8, ptr %i.di, i64 -8
   %i.dj = add nsw i64 %.idx.i, -32                ; 3 uses
   %i.dk = lshr exact i64 %i.dj, 5
-  %21 = add nuw nsw i64 %i.dk, 1
   %min.iters.check = icmp ult i64 %i.dj, 64
   %bound0 = icmp ult ptr %i.cx, %scevgep75
   %bound1 = icmp ult ptr %i.cs, %scevgep
@@ -213,11 +212,10 @@ bb.ba:                                            ; preds = %.noexc54
   %i.dl = or i64 %i.cu, %i.cz
   %i.dm = icmp slt i64 %i.dl, 0
   %i.dn = or i1 %found.conflict, %i.dm
-  %22 = and i64 %i.dj, 32
-  %.not80 = icmp eq i64 %22, 0
-  %.neg = select i1 %.not80, i64 -1, i64 -2
-  %n.vec = add nsw i64 %.neg, %21                 ; 3 uses
-  %i.do = shl i64 %n.vec, 3
+  %21 = lshr exact i64 %i.dj, 5
+  %22 = and i64 %21, 1
+  %n.vec = sub nsw i64 %i.dk, %22                 ; 3 uses
+  %i.do = shl nsw i64 %n.vec, 3
   %i.dp = shl i64 %n.vec, 5
   br label %.lr.ph.preheader.i
 
@@ -620,7 +618,6 @@ bb.l:                                             ; preds = %.noexc96
   %scevgep108 = getelementptr i8, ptr %i.bh, i64 -8
   %i.bi = add nsw i64 %.idx.i, -32                ; 3 uses
   %i.bj = lshr exact i64 %i.bi, 5
-  %23 = add nuw nsw i64 %i.bj, 1
   %min.iters.check = icmp ult i64 %i.bi, 64
   %bound0 = icmp ult ptr %i.aw, %scevgep108
   %bound1 = icmp ult ptr %i.ar, %scevgep
@@ -628,11 +625,10 @@ bb.l:                                             ; preds = %.noexc96
   %i.bk = or i64 %i.at, %i.ay
   %i.bl = icmp slt i64 %i.bk, 0
   %i.bm = or i1 %found.conflict, %i.bl
-  %24 = and i64 %i.bi, 32
-  %.not = icmp eq i64 %24, 0
-  %.neg = select i1 %.not, i64 -1, i64 -2
-  %n.vec = add nsw i64 %.neg, %23                 ; 3 uses
-  %i.bn = shl i64 %n.vec, 3
+  %23 = lshr exact i64 %i.bi, 5
+  %24 = and i64 %23, 1
+  %n.vec = sub nsw i64 %i.bj, %24                 ; 3 uses
+  %i.bn = shl nsw i64 %n.vec, 3
   %i.bo = shl i64 %n.vec, 5
   br label %.lr.ph.preheader.i
 
@@ -1035,11 +1031,9 @@ bb.p:                                             ; preds = %._crit_edge
 
 vector.ph:                                        ; preds = %.lr.ph113.preheader
   %i.fc = lshr exact i64 %i.fb, 5
-  %26 = add nuw nsw i64 %i.fc, 1
-  %i.fd = and i64 %i.fb, 32
-  %.not128 = icmp eq i64 %i.fd, 0
-  %.neg = select i1 %.not128, i64 -1, i64 -2
-  %n.vec = add nsw i64 %.neg, %26                 ; 2 uses
+  %26 = lshr exact i64 %i.fb, 5
+  %i.fd = and i64 %26, 1
+  %n.vec = sub nsw i64 %i.fc, %i.fd               ; 2 uses
   %i.fe = shl i64 %n.vec, 5
   %i.ff = getelementptr i8, ptr %i.ev, i64 %i.fe
   br label %vector.body

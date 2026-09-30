@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %bb.a
   %i.o = load ptr, ptr %0, align 8, !tbaa !20035  ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   %i.q = load i32, ptr %i.p, align 8, !tbaa !20045
-  %5 = and i32 %i.q, 1024
-  %.not26 = icmp eq i32 %5, 0
-  %6 = select i1 %.not26, i32 3, i32 11
+  %5 = lshr i32 %i.q, 7
+  %6 = and i32 %5, 8
+  %7 = or disjoint i32 %6, 3
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 352
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !20034 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 360 ; 2 uses
@@ -292,7 +292,7 @@ _ZN5boost13re_detail_50019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   store i64 0, ptr %i.bf, align 8, !tbaa !19682
   %i.bg = load ptr, ptr %i.aa, align 8, !tbaa !20052
-  store i32 %6, ptr %i.bg, align 8, !tbaa !20056
+  store i32 %7, ptr %i.bg, align 8, !tbaa !20056
   br label %.critedge
 
 bb.l:                                             ; preds = %bb.a
@@ -301,9 +301,9 @@ bb.l:                                             ; preds = %bb.a
   %i.bi = load ptr, ptr %0, align 8, !tbaa !20035 ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 40
   %i.bk = load i32, ptr %i.bj, align 8, !tbaa !20045
-  %7 = and i32 %i.bk, 1024
-  %.not25 = icmp eq i32 %7, 0
-  %8 = select i1 %.not25, i32 4, i32 12
+  %8 = lshr i32 %i.bk, 7
+  %9 = and i32 %8, 8
+  %10 = or disjoint i32 %9, 4
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 352
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !20034 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bi, i64 360 ; 2 uses
@@ -388,7 +388,7 @@ _ZN5boost13re_detail_50019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
   store i64 0, ptr %i.cz, align 8, !tbaa !19682
   %i.da = load ptr, ptr %i.bu, align 8, !tbaa !20052
-  store i32 %8, ptr %i.da, align 8, !tbaa !20056
+  store i32 %10, ptr %i.da, align 8, !tbaa !20056
   br label %.critedge
 
 bb.s:                                             ; preds = %bb.a

@@ -205,7 +205,7 @@ begin_hunk_0_@vp4_unpack_dct_coeffs:bb.a
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader166, %.critedge151
-  %indvars.iv256 = phi i64 [ 0, %.preheader166 ], [ %indvars.iv.next257, %.critedge151 ] ; 5 uses
+  %indvars.iv256 = phi i64 [ 0, %.preheader166 ], [ %indvars.iv.next257, %.critedge151 ] ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.b, i8 0, i64 256, i1 false)
   %i.fn = icmp ne i64 %indvars.iv256, 0           ; 2 uses
   %i.fo = zext i1 %i.fn to i64                    ; 2 uses
@@ -608,15 +608,16 @@ bb.ab:                                            ; preds = %vp4_dc_pred.exit, %
   br i1 %.not146, label %.preheader, label %.critedge151, !llvm.loop !216
 
 .critedge151:                                     ; preds = %.critedge149, %.preheader.lr.ph, %.preheader163
-  %indvars.iv.next257 = add nuw nsw i64 %indvars.iv256, 1
+  %indvars.iv.next257 = add nuw nsw i64 %indvars.iv256, 1 ; 2 uses
   %i.qd = load ptr, ptr %0, align 16, !tbaa !51
   %i.qe = getelementptr inbounds nuw i8, ptr %i.qd, i64 64
   %i.qf = load i32, ptr %i.qe, align 8, !tbaa !92
-  %i.qg = and i32 %i.qf, 8192
-  %.not = icmp eq i32 %i.qg, 0
-  %.not145216 = icmp samesign ult i64 %indvars.iv256, 2
-  %.not145 = select i1 %.not, i1 %.not145216, i1 false
-  br i1 %.not145, label %bb.b, label %.critedge153, !llvm.loop !217
+  %3 = lshr i32 %i.qf, 12
+  %i.qg = and i32 %3, 2
+  %4 = xor i32 %i.qg, 3
+  %5 = zext nneg i32 %4 to i64
+  %.not144 = icmp samesign ult i64 %indvars.iv.next257, %5
+  br i1 %.not144, label %bb.b, label %.critedge153, !llvm.loop !217
 
 .critedge153:                                     ; preds = %.critedge151
   tail call fastcc void @vp4_set_tokens_base(ptr noundef nonnull %0)

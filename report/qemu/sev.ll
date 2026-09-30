@@ -202,17 +202,18 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 148
   %i.h = load i32, ptr %i.g, align 4
-  %1 = and i32 %i.h, 4
-  %.not16 = icmp eq i32 %1, 0                     ; 2 uses
-  %2 = select i1 %.not16, i32 2, i32 3            ; 3 uses
-  %i.i = tail call zeroext i1 @kvm_is_vm_type_supported(i32 noundef %2) #15
+  %1 = lshr i32 %i.h, 2
+  %2 = and i32 %1, 1                              ; 2 uses
+  %3 = or disjoint i32 %2, 2                      ; 3 uses
+  %i.i = tail call zeroext i1 @kvm_is_vm_type_supported(i32 noundef %3) #15
   br i1 %i.i, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.j = load i32, ptr %i.e, align 8
-  %i.k = icmp eq i32 %i.j, 0
-  %i.l = select i1 %.not16, ptr @.str.164, ptr @.str.165 ; 2 uses
-  br i1 %i.k, label %bb.f, label %bb.g
+  %4 = icmp eq i32 %i.j, 0
+  %i.k = icmp eq i32 %2, 0
+  %i.l = select i1 %i.k, ptr @.str.164, ptr @.str.165 ; 2 uses
+  br i1 %4, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   tail call void (ptr, ...) @error_report(ptr noundef nonnull @.str.163, ptr noundef nonnull %i.l) #15
@@ -223,11 +224,11 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.d
-  store i32 %2, ptr %i.c, align 8
+  store i32 %3, ptr %i.c, align 8
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.c, %bb.h, %bb.a, %bb.f, %bb.g
-  %.0 = phi i32 [ -1, %bb.f ], [ -1, %bb.g ], [ %i.d, %bb.a ], [ %2, %bb.h ], [ 0, %bb.c ]
+  %.0 = phi i32 [ -1, %bb.f ], [ -1, %bb.g ], [ %i.d, %bb.a ], [ %3, %bb.h ], [ 0, %bb.c ]
   ret i32 %.0
 }
 

@@ -19,12 +19,12 @@ bb.b:                                             ; preds = %bb.a
   %i.c = extractvalue { i32, i32, i32, i32 } %i.b, 0
   %i.d = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A", "={ax},={bx},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #2, !srcloc !10
   %i.e = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 4 uses
-  %5 = and i32 %i.e, 512
-  %.not24.i = icmp eq i32 %5, 0
-  %spec.select.i = select i1 %.not24.i, i32 1, i32 3
-  %6 = lshr i32 %i.e, 17
-  %7 = and i32 %6, 4
-  %.1.i = or disjoint i32 %spec.select.i, %7      ; 3 uses
+  %5 = lshr i32 %i.e, 8
+  %6 = and i32 %5, 2
+  %7 = lshr i32 %i.e, 17
+  %8 = and i32 %7, 4
+  %.1.v.i = or disjoint i32 %6, %8
+  %.1.i = or disjoint i32 %.1.v.i, 1              ; 3 uses
   %i.f = and i32 %i.e, 134217728
   %.not26.i = icmp eq i32 %i.f, 0
   br i1 %.not26.i, label %bb.g, label %bb.c
@@ -124,12 +124,12 @@ bb.b:                                             ; preds = %bb.a
   %i.c = extractvalue { i32, i32, i32, i32 } %i.b, 0
   %i.d = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A", "={ax},={bx},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #2, !srcloc !10
   %i.e = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 4 uses
-  %6 = and i32 %i.e, 512
-  %.not24.i = icmp eq i32 %6, 0
-  %spec.select.i = select i1 %.not24.i, i32 1, i32 3
-  %7 = lshr i32 %i.e, 17
-  %8 = and i32 %7, 4
-  %.1.i = or disjoint i32 %spec.select.i, %8      ; 3 uses
+  %6 = lshr i32 %i.e, 8
+  %7 = and i32 %6, 2
+  %8 = lshr i32 %i.e, 17
+  %9 = and i32 %8, 4
+  %.1.v.i = or disjoint i32 %7, %9
+  %.1.i = or disjoint i32 %.1.v.i, 1              ; 3 uses
   %i.f = and i32 %i.e, 134217728
   %.not26.i = icmp eq i32 %i.f, 0
   br i1 %.not26.i, label %bb.g, label %bb.c
@@ -233,12 +233,12 @@ bb.c:                                             ; preds = %bb.b
   %i.d = extractvalue { i32, i32, i32, i32 } %i.c, 0
   %i.e = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A", "={ax},={bx},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #2, !srcloc !10
   %i.f = extractvalue { i32, i32, i32, i32 } %i.e, 2 ; 4 uses
-  %7 = and i32 %i.f, 512
-  %.not24.i = icmp eq i32 %7, 0
-  %spec.select.i = select i1 %.not24.i, i32 1, i32 3
-  %8 = lshr i32 %i.f, 17
-  %9 = and i32 %8, 4
-  %.1.i = or disjoint i32 %spec.select.i, %9      ; 3 uses
+  %7 = lshr i32 %i.f, 8
+  %8 = and i32 %7, 2
+  %9 = lshr i32 %i.f, 17
+  %10 = and i32 %9, 4
+  %.1.v.i = or disjoint i32 %8, %10
+  %.1.i = or disjoint i32 %.1.v.i, 1              ; 3 uses
   %i.g = and i32 %i.f, 134217728
   %.not26.i = icmp eq i32 %i.g, 0
   br i1 %.not26.i, label %bb.h, label %bb.d
@@ -320,12 +320,12 @@ bb.b:                                             ; preds = %bb.a
   %i.c = extractvalue { i32, i32, i32, i32 } %i.b, 0
   %i.d = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A", "={ax},={bx},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #2, !srcloc !10
   %i.e = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 4 uses
-  %10 = and i32 %i.e, 512
-  %.not24.i = icmp eq i32 %10, 0
-  %spec.select.i = select i1 %.not24.i, i32 1, i32 3
-  %11 = lshr i32 %i.e, 17
-  %12 = and i32 %11, 4
-  %.1.i = or disjoint i32 %spec.select.i, %12     ; 3 uses
+  %10 = lshr i32 %i.e, 8
+  %11 = and i32 %10, 2
+  %12 = lshr i32 %i.e, 17
+  %13 = and i32 %12, 4
+  %.1.v.i = or disjoint i32 %11, %13
+  %.1.i = or disjoint i32 %.1.v.i, 1              ; 3 uses
   %i.f = and i32 %i.e, 134217728
   %.not26.i = icmp eq i32 %i.f, 0
   br i1 %.not26.i, label %bb.g, label %bb.c
@@ -436,12 +436,12 @@ bb.b:                                             ; preds = %bb.a
   %i.c = extractvalue { i32, i32, i32, i32 } %i.b, 0
   %i.d = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A", "={ax},={bx},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #2, !srcloc !10
   %i.e = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 4 uses
-  %0 = and i32 %i.e, 512
-  %.not24.i = icmp eq i32 %0, 0
-  %spec.select.i = select i1 %.not24.i, i32 1, i32 3
-  %1 = lshr i32 %i.e, 17
-  %2 = and i32 %1, 4
-  %.1.i = or disjoint i32 %spec.select.i, %2      ; 3 uses
+  %0 = lshr i32 %i.e, 8
+  %1 = and i32 %0, 2
+  %2 = lshr i32 %i.e, 17
+  %3 = and i32 %2, 4
+  %.1.v.i = or disjoint i32 %1, %3
+  %.1.i = or disjoint i32 %.1.v.i, 1              ; 3 uses
   %i.f = and i32 %i.e, 134217728
   %.not26.i = icmp eq i32 %i.f, 0
   br i1 %.not26.i, label %bb.g, label %bb.c

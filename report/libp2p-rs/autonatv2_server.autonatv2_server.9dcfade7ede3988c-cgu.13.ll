@@ -202,10 +202,10 @@ bb.d:                                             ; preds = %_RNvYNCNKNvNtNtCsc1
   store i8 1, ptr %i.v, align 1, !noalias !127
   %i.x = load i64, ptr %i.o, align 8, !range !11, !alias.scope !128, !noalias !129, !noundef !12
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %3 = trunc nuw i64 %i.x to i1
-  %4 = load ptr, ptr %i.y, align 8, !alias.scope !128, !noalias !129, !nonnull !12
-  %.sroa.0.0.v.i.i.i.i.i = select i1 %3, i64 512, i64 544
-  %.sroa.0.0.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 %.sroa.0.0.v.i.i.i.i.i
+  %3 = load ptr, ptr %i.y, align 8, !alias.scope !128, !noalias !129, !nonnull !12
+  %4 = shl nuw nsw i64 %i.x, 5
+  %.sroa.0.0.v.i.i.i.i.i = xor i64 %4, 544
+  %.sroa.0.0.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.0.0.v.i.i.i.i.i
   %i.z = invoke { i32, i32 } @_RNvMNtNtNtCsc13h7DQFCSE_5tokio4util4rand2rtNtB2_16RngSeedGenerator9next_seed(ptr noundef nonnull align 4 %.sroa.0.0.i.i.i.i.i)
           to label %.noexc3.i.i unwind label %bb.ag, !noalias !125 ; 2 uses
 
@@ -608,10 +608,10 @@ bb.b:                                             ; preds = %_RNvYNCNKNvNtNtCsc1
   store i8 %i.n, ptr %i.u, align 1, !noalias !2443
   %i.w = load i64, ptr %0, align 8, !range !11, !alias.scope !2444, !noalias !2445, !noundef !12
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = trunc nuw i64 %i.w to i1
-  %5 = load ptr, ptr %i.x, align 8, !alias.scope !2444, !noalias !2445, !nonnull !12
-  %.sroa.0.0.v.i.i.i = select i1 %4, i64 512, i64 544
-  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 %.sroa.0.0.v.i.i.i
+  %4 = load ptr, ptr %i.x, align 8, !alias.scope !2444, !noalias !2445, !nonnull !12
+  %5 = shl nuw nsw i64 %i.w, 5
+  %.sroa.0.0.v.i.i.i = xor i64 %5, 544
+  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 %.sroa.0.0.v.i.i.i
   %i.y = tail call { i32, i32 } @_RNvMNtNtNtCsc13h7DQFCSE_5tokio4util4rand2rtNtB2_16RngSeedGenerator9next_seed(ptr noundef nonnull align 4 %.sroa.0.0.i.i.i), !noalias !2443 ; 2 uses
   %i.z = extractvalue { i32, i32 } %i.y, 0
   %i.aa = extractvalue { i32, i32 } %i.y, 1
@@ -1014,10 +1014,10 @@ bb.b:                                             ; preds = %_RNvYNCNKNvNtNtCsc1
   store i8 %i.n, ptr %i.u, align 1, !noalias !2515
   %i.w = load i64, ptr %0, align 8, !range !11, !alias.scope !2516, !noalias !2517, !noundef !12
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = trunc nuw i64 %i.w to i1
-  %5 = load ptr, ptr %i.x, align 8, !alias.scope !2516, !noalias !2517, !nonnull !12
-  %.sroa.0.0.v.i.i.i = select i1 %4, i64 512, i64 544
-  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 %.sroa.0.0.v.i.i.i
+  %4 = load ptr, ptr %i.x, align 8, !alias.scope !2516, !noalias !2517, !nonnull !12
+  %5 = shl nuw nsw i64 %i.w, 5
+  %.sroa.0.0.v.i.i.i = xor i64 %5, 544
+  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 %.sroa.0.0.v.i.i.i
   %i.y = tail call { i32, i32 } @_RNvMNtNtNtCsc13h7DQFCSE_5tokio4util4rand2rtNtB2_16RngSeedGenerator9next_seed(ptr noundef nonnull align 4 %.sroa.0.0.i.i.i), !noalias !2515 ; 2 uses
   %i.z = extractvalue { i32, i32 } %i.y, 0
   %i.aa = extractvalue { i32, i32 } %i.y, 1

@@ -202,9 +202,8 @@ bb.g:                                             ; preds = %bb.f, %bb.c
   br i1 %.not61, label %bb.p, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %9 = and i32 %i.f, 4
-  %.not67 = icmp eq i32 %9, 0
-  %spec.select = select i1 %.not67, i32 536870912, i32 536870976 ; 7 uses
+  %9 = shl nuw nsw i32 %i.f, 4
+  %10 = and i32 %9, 64                            ; 7 uses
   switch i8 %i.l, label %default.unreachable78 [
     i8 1, label %bb.i
     i8 2, label %bb.j
@@ -216,47 +215,47 @@ bb.h:                                             ; preds = %bb.g
   ]
 
 bb.i:                                             ; preds = %bb.h
-  %i.q = or disjoint i32 %spec.select, 8          ; 2 uses
+  %i.q = or disjoint i32 %10, 536870920           ; 2 uses
   store i32 %i.q, ptr %i.a, align 4
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   store i8 4, ptr %i.r, align 2
   br label %bb.x
 
 bb.j:                                             ; preds = %bb.h
-  %i.s = or disjoint i32 %spec.select, 8          ; 2 uses
+  %i.s = or disjoint i32 %10, 536870920           ; 2 uses
   store i32 %i.s, ptr %i.a, align 4
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   store i8 2, ptr %i.t, align 2
   br label %bb.x
 
 bb.k:                                             ; preds = %bb.h
-  %i.u = or disjoint i32 %spec.select, 32         ; 2 uses
+  %i.u = or disjoint i32 %10, 536870944           ; 2 uses
   store i32 %i.u, ptr %i.a, align 4
   br label %bb.x
 
 bb.l:                                             ; preds = %bb.h
-  %i.v = or disjoint i32 %spec.select, 8          ; 2 uses
+  %i.v = or disjoint i32 %10, 536870920           ; 2 uses
   store i32 %i.v, ptr %i.a, align 4
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   store i8 16, ptr %i.w, align 2
   br label %bb.x
 
 bb.m:                                             ; preds = %bb.h
-  %i.x = or disjoint i32 %spec.select, 8          ; 2 uses
+  %i.x = or disjoint i32 %10, 536870920           ; 2 uses
   store i32 %i.x, ptr %i.a, align 4
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   store i8 8, ptr %i.y, align 2
   br label %bb.x
 
 bb.n:                                             ; preds = %bb.h
-  %i.z = or disjoint i32 %spec.select, 8          ; 2 uses
+  %i.z = or disjoint i32 %10, 536870920           ; 2 uses
   store i32 %i.z, ptr %i.a, align 4
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 3
   store i8 8, ptr %i.aa, align 1
   br label %bb.x
 
 bb.o:                                             ; preds = %bb.h
-  %i.ab = or disjoint i32 %spec.select, 8         ; 2 uses
+  %i.ab = or disjoint i32 %10, 536870920          ; 2 uses
   store i32 %i.ab, ptr %i.a, align 4
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 3
   store i8 11, ptr %i.ac, align 1

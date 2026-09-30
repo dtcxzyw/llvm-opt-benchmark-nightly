@@ -204,14 +204,14 @@ bb.bj:                                            ; preds = %bb.bh
 
 bb.bk:                                            ; preds = %bb.bj
   %i.ir = and i32 %i.fo, 1                        ; 2 uses
-  %.not1372 = icmp eq i32 %i.ir, 0
-  %8 = select i1 %.not1372, i32 18120, i32 18122
+  %8 = shl nuw nsw i32 %i.ir, 1
+  %9 = or disjoint i32 %8, 18120
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bj, %bb.bk, %bb.bi, %bb.as
   %.11278 = phi i32 [ 1, %bb.bi ], [ 0, %bb.as ], [ %i.ir, %bb.bk ], [ 1, %bb.bj ]
   %.21269 = phi i64 [ %i.io, %bb.bi ], [ %.0.copyload.i1505, %bb.as ], [ %.0.copyload.i1517, %bb.bk ], [ %.0.copyload.i1517, %bb.bj ]
-  %.3 = phi i32 [ 18120, %bb.bi ], [ 18120, %bb.as ], [ %8, %bb.bk ], [ 18121, %bb.bj ]
+  %.3 = phi i32 [ 18120, %bb.bi ], [ 18120, %bb.as ], [ %9, %bb.bk ], [ 18121, %bb.bj ]
   %i.is = tail call i32 @w2c_hermes_fmt_u(ptr noundef nonnull %0, i64 noundef %.21269, i32 noundef %i.i) #13
   br label %bb.bm
 

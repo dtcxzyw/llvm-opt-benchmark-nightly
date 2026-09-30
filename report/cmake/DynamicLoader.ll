@@ -21,8 +21,8 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %.not12 = icmp eq i32 %1, 0
-  %spec.select = select i1 %.not12, i32 1, i32 257
+  %2 = shl nuw nsw i32 %1, 7
+  %spec.select = or disjoint i32 %2, 1
   %i.b = load ptr, ptr %0, align 8, !tbaa !14
   %i.c = tail call ptr @dlopen(ptr noundef %i.b, i32 noundef %spec.select) #2
   br label %bb.c

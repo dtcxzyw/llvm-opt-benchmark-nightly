@@ -205,15 +205,16 @@ bb.da:                                            ; preds = %bb.cz
   br i1 %or.cond1349.not, label %.peel.begin, label %bb.em
 
 .peel.begin:                                      ; preds = %bb.da
-  %50 = and i32 %.pre1215, 1
-  %.not1044 = icmp eq i32 %50, 0                  ; 3 uses
   %i.uz = and i32 %.pre1215, 2
   %.not1045 = icmp eq i32 %i.uz, 0                ; 4 uses
   %i.va = getelementptr inbounds nuw i8, ptr %i.d, i64 1520 ; 11 uses
   store i32 0, ptr %i.va, align 8, !tbaa !186
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
-  %wide.trip.count = select i1 %.not1044, i64 3, i64 1 ; 2 uses
+  %50 = shl i32 %.pre1215, 1
+  %51 = and i32 %50, 2                            ; 2 uses
+  %52 = xor i32 %51, 3
   %i.vb = getelementptr inbounds nuw i8, ptr %i.v, i64 216 ; 2 uses
+  %wide.trip.count = zext nneg i32 %52 to i64     ; 2 uses
   %i.vc = load i8, ptr %i.cb, align 4, !tbaa !299, !range !263, !noundef !264
   %i.vd = trunc nuw i8 %i.vc to i1
   br i1 %i.vd, label %bb.db, label %bb.dg
@@ -269,7 +270,8 @@ bb.df:                                            ; preds = %bb.de, %bb.dd
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df, %.peel.begin
-  br i1 %.not1044, label %.peel.next, label %.peel.begin1161
+  %exitcond1153.peel.not.not = icmp eq i32 %51, 0 ; 2 uses
+  br i1 %exitcond1153.peel.not.not, label %.peel.next, label %.peel.begin1161
 
 .peel.begin1161:                                  ; preds = %bb.ds, %bb.dg
   call void @_ZN15ImGuiTextBuffer6appendEPKcS1_(ptr noundef nonnull align 8 dereferenceable(16) %i.va, ptr noundef nonnull @.str.139, ptr noundef null) #32
@@ -330,7 +332,7 @@ bb.dl:                                            ; preds = %bb.dk, %bb.dj
   br label %bb.dm
 
 bb.dm:                                            ; preds = %bb.dl, %.peel.begin1161
-  br i1 %.not1044, label %.peel.next1162, label %.loopexit1165
+  br i1 %exitcond1153.peel.not.not, label %.peel.next1162, label %.loopexit1165
 
 .peel.next:                                       ; preds = %bb.dg, %bb.ds
   %indvars.iv1150 = phi i64 [ %indvars.iv.next1151, %bb.ds ], [ 1, %bb.dg ] ; 2 uses

@@ -202,9 +202,9 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 32 ; 3 uses
-  %4 = and i32 %3, 1
-  %.not.i41 = icmp eq i32 %4, 0
-  %spec.select.i = select i1 %.not.i41, i32 5, i32 7
+  %4 = shl i32 %3, 1
+  %5 = and i32 %4, 2                              ; 2 uses
+  %spec.select.i = or disjoint i32 %5, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %resize.exit, %bb.a
@@ -397,13 +397,11 @@ resize.exit:                                      ; preds = %bb.j, %bb.f
 
 bb.k:                                             ; preds = %.loopexit
   %i.dh = load ptr, ptr %i.n, align 8
-  %5 = shl i32 %3, 1
-  %6 = and i32 %5, 2
   %i.di = load ptr, ptr %0, align 8
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.dk = load i64, ptr %i.dj, align 8
   %i.dl = add i64 %i.dk, 16
-  %i.dm = tail call i64 @dsa_allocate_extended(ptr noundef %i.di, i64 noundef %i.dl, i32 noundef %6) #11 ; 3 uses
+  %i.dm = tail call i64 @dsa_allocate_extended(ptr noundef %i.di, i64 noundef %i.dl, i32 noundef %5) #11 ; 3 uses
   %.not.i43 = icmp eq i64 %i.dm, 0
   br i1 %.not.i43, label %bb.l, label %bb.m
 

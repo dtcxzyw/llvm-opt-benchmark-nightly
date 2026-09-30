@@ -202,23 +202,21 @@ switch.lookup:                                    ; preds = %switch.hole_check
   br i1 %i.aj, label %.lr.ph57, label %.critedge
 
 .critedge:                                        ; preds = %switch.lookup
-  %6 = and i32 %i.ag, 1
-  %.not.i49 = icmp eq i32 %6, 0
-  %spec.select.i = select i1 %.not.i49, i32 3, i32 11 ; 2 uses
+  %6 = shl nuw nsw i32 %i.ag, 3
+  %7 = and i32 %6, 8                              ; 2 uses
   %i.ak = and i32 %i.ag, 16
   %.not16.i = icmp eq i32 %i.ak, 0
   br i1 %.not16.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  %7 = and i32 %spec.select.i, 8
   %i.al = or disjoint i32 %7, 4
   br label %.thread
 
 bb.e:                                             ; preds = %.critedge
   %i.am = shl nuw nsw i32 %i.ag, 5
   %i.an = and i32 %i.am, 192
-  %i.ao = or disjoint i32 %spec.select.i, %i.an
-  %.2.i = xor i32 %i.ao, 64
+  %i.ao = or disjoint i32 %i.an, %7
+  %.2.i = xor i32 %i.ao, 67
   %i.ap = and i32 %i.ag, 8
   %.not19.i = icmp eq i32 %i.ap, 0
   br i1 %.not19.i, label %.thread, label %bb.f
@@ -300,23 +298,21 @@ declare void @jsonpath_yyerror(ptr noundef, ptr noundef, ptr noundef, ptr nounde
 ; Function Attrs: nounwind uwtable
 define dso_local noundef zeroext i1 @jspConvertRegexFlags(i32 noundef %0, ptr nofree noundef writeonly captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = and i32 %0, 1
-  %.not = icmp eq i32 %3, 0
-  %spec.select = select i1 %.not, i32 3, i32 11   ; 2 uses
+  %3 = shl i32 %0, 3
+  %4 = and i32 %3, 8                              ; 2 uses
   %i.a = and i32 %0, 16
   %.not16 = icmp eq i32 %i.a, 0
   br i1 %.not16, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = and i32 %spec.select, 8
   %i.b = or disjoint i32 %4, 4
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
   %i.c = shl i32 %0, 5
   %i.d = and i32 %i.c, 192
-  %i.e = or disjoint i32 %i.d, %spec.select
-  %.2 = xor i32 %i.e, 64
+  %i.e = or disjoint i32 %i.d, %4
+  %.2 = xor i32 %i.e, 67
   %i.f = and i32 %0, 8
   %.not19 = icmp eq i32 %i.f, 0
   br i1 %.not19, label %bb.f, label %bb.d

@@ -204,12 +204,12 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.t
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bw, i64 1
-  %i.ca = load i8, ptr %i.bz, align 1, !tbaa !22
-  %7 = zext i8 %i.ca to i32                       ; 2 uses
-  %8 = and i32 %7, 32
-  %9 = icmp eq i32 %8, 0
-  %10 = select i1 %9, i32 76, i32 72
-  %11 = and i32 %7, 31
+  %i.ca = load i8, ptr %i.bz, align 1, !tbaa !22  ; 2 uses
+  %7 = lshr i8 %i.ca, 3
+  %8 = and i8 %7, 4
+  %9 = xor i8 %8, 76
+  %10 = and i8 %i.ca, 31
+  %11 = zext nneg i8 %10 to i32
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bw, i64 2
   %i.cc = load i32, ptr %i.cb, align 1, !tbaa !22
   %i.cd = call i32 @llvm.bswap.i32(i32 %i.cc)
@@ -237,7 +237,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %.pre = phi i1 [ false, %bb.u ], [ %i.cs, %bb.v ]
   %.1137 = phi i32 [ %i.aw, %bb.u ], [ %11, %bb.v ]
   %.0134 = phi i32 [ -99, %bb.u ], [ %i.ce, %bb.v ]
-  %.0132 = phi i32 [ 0, %bb.u ], [ %10, %bb.v ]
+  %.0132 = phi i8 [ 0, %bb.u ], [ %9, %bb.v ]
   %.1 = phi i32 [ %i.ay, %bb.u ], [ %i.cr, %bb.v ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
@@ -253,7 +253,7 @@ bb.x:                                             ; preds = %bb.r, %bb.q, %.lr.p
   %i.cv = phi i1 [ %.pre, %bb.w ], [ false, %bb.p ], [ false, %.lr.ph ], [ false, %bb.x ]
   %.2138 = phi i32 [ %.1137, %bb.w ], [ %i.aw, %bb.p ], [ %i.aw, %.lr.ph ], [ %i.aw, %bb.x ] ; 2 uses
   %.1135 = phi i32 [ %.0134, %bb.w ], [ -99, %bb.p ], [ -99, %.lr.ph ], [ -99, %bb.x ] ; 2 uses
-  %.1133 = phi i32 [ %.0132, %bb.w ], [ 0, %bb.p ], [ 0, %.lr.ph ], [ 0, %bb.x ] ; 2 uses
+  %.1133 = phi i8 [ %.0132, %bb.w ], [ 0, %bb.p ], [ 0, %.lr.ph ], [ 0, %bb.x ] ; 2 uses
   %.2 = phi i32 [ %.1, %bb.w ], [ %i.ay, %bb.p ], [ %i.ay, %.lr.ph ], [ %i.ay, %bb.x ] ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.cx = load i32, ptr %i.cw, align 8, !tbaa !28
@@ -262,7 +262,7 @@ bb.x:                                             ; preds = %bb.r, %bb.q, %.lr.p
   %or.cond = select i1 %i.cy, i1 %i.cz, i1 false
   %i.da = icmp ne i32 %.1135, -99
   %or.cond8 = select i1 %or.cond, i1 %i.da, i1 false
-  %i.db = icmp ne i32 %.1133, 0
+  %i.db = icmp ne i8 %.1133, 0
   %or.cond11 = select i1 %or.cond8, i1 %i.db, i1 false
   %i.dc = icmp ne i32 %.2, -99
   %or.cond13 = select i1 %or.cond11, i1 %i.dc, i1 false
@@ -270,9 +270,10 @@ bb.x:                                             ; preds = %bb.r, %bb.q, %.lr.p
   br i1 %or.cond17, label %.critedge182, label %bb.y
 
 .critedge182:                                     ; preds = %.critedge
+  %12 = zext nneg i8 %.1133 to i32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.d, i8 0, i64 32, i1 false)
   %i.dd = call ptr @av_fourcc_make_string(ptr noundef nonnull %i.d, i32 noundef 828601960) #6
-  call void (ptr, ptr, ...) @av_bprintf(ptr noundef %3, ptr noundef nonnull @.str.4, ptr noundef %i.dd, i32 noundef %.2138, i32 noundef %.1135, i32 noundef %.1133, i32 noundef %.2, ptr noundef nonnull %i.a) #6
+  call void (ptr, ptr, ...) @av_bprintf(ptr noundef %3, ptr noundef nonnull @.str.4, ptr noundef %i.dd, i32 noundef %.2138, i32 noundef %.1135, i32 noundef %12, i32 noundef %.2, ptr noundef nonnull %i.a) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %.critedge178
 

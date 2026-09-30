@@ -205,11 +205,9 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.new
 
 vector.ph:                                        ; preds = %.lr.ph248.preheader
   %i.db = lshr i64 %i.da, 1
-  %9 = add nuw i64 %i.db, 1
-  %i.dc = and i64 %i.da, 2
-  %.not304 = icmp eq i64 %i.dc, 0
-  %.neg305 = select i1 %.not304, i64 -1, i64 -2
-  %n.vec = add i64 %.neg305, %9                   ; 2 uses
+  %9 = lshr i64 %i.da, 1
+  %i.dc = and i64 %9, 1
+  %n.vec = sub nsw i64 %i.db, %i.dc               ; 2 uses
   %i.dd = shl i64 %n.vec, 1
   %i.de = or disjoint i64 %i.dd, 1
   %broadcast.splatinsert = insertelement <2 x float> poison, float %i.h, i64 0

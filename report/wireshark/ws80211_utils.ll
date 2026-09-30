@@ -204,18 +204,19 @@ bb.ac:                                            ; preds = %bb.ab
   %i.db = call zeroext i8 @nla_get_u8(ptr noundef nonnull %i.da)
   %i.dc = lshr i8 %i.db, 1
   %i.dd = and i8 %i.dc, 15                        ; 2 uses
-  %i.de = load i32, ptr %i.cw, align 8
+  %i.de = load i32, ptr %i.cw, align 8            ; 2 uses
   %i.df = zext nneg i8 %i.dd to i32               ; 3 uses
-  %i.dg = and i32 %i.df, 1
-  %.not11.i.i.i = icmp eq i32 %i.dg, 0
-  %spec.select.v.i.i.i = select i1 %.not11.i.i.i, i32 2, i32 18
+  %3 = shl nuw nsw i32 %i.df, 4
+  %i.dg = and i32 %3, 16
+  %spec.select.v.i.i.i = or i32 %i.de, %i.dg
+  %spec.select.i.i.i = or i32 %spec.select.v.i.i.i, 2
   %i.dh = and i32 %i.df, 2
   %.not12.i.i.i = icmp eq i32 %i.dh, 0
-  %spec.select15.v.i.i.i = select i1 %.not12.i.i.i, i32 %spec.select.v.i.i.i, i32 50
+  %4 = or i32 %i.de, 50
+  %spec.select15.v.i.i.i = select i1 %.not12.i.i.i, i32 %spec.select.i.i.i, i32 %4
   %i.di = shl nuw nsw i32 %i.df, 5
   %i.dj = and i32 %i.di, 128
-  %spec.select15.i.i.i = or i32 %i.dj, %i.de
-  %spec.select.i.i.i.a = or i32 %spec.select15.i.i.i, %spec.select15.v.i.i.i ; 2 uses
+  %spec.select.i.i.i.a = or i32 %spec.select15.v.i.i.i, %i.dj ; 2 uses
   store i32 %spec.select.i.i.i.a, ptr %i.cw, align 8
   %.not14.i.i.i = icmp samesign ult i8 %i.dd, 8
   br i1 %.not14.i.i.i, label %parse_band_he_cap_phy.exit.i.i, label %bb.ad

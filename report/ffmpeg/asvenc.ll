@@ -205,13 +205,14 @@ bb.a:
   %i.a = load ptr, ptr %0, align 16, !tbaa !48
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.c = load i32, ptr %i.b, align 8, !tbaa !49
-  %5 = and i32 %i.c, 8192
-  %.not = icmp eq i32 %5, 0
-  %wide.trip.count120 = select i1 %.not, i64 6, i64 4
+  %5 = lshr i32 %i.c, 12
+  %6 = and i32 %5, 2
+  %7 = xor i32 %6, 6
   %i.d = sub nsw i32 0, %3
   %i.e = sub nsw i32 0, %4
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %wide.trip.count118 = zext nneg i32 %7 to i64
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.q
@@ -588,7 +589,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %._crit_edge, %bb.d
   %indvars.iv.next118 = add nuw nsw i64 %indvars.iv117, 1 ; 2 uses
-  %exitcond121.not = icmp eq i64 %indvars.iv.next118, %wide.trip.count120
+  %exitcond121.not = icmp eq i64 %indvars.iv.next118, %wide.trip.count118
   br i1 %exitcond121.not, label %bb.b, label %bb.c, !llvm.loop !85
 }
 

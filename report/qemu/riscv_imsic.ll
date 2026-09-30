@@ -202,13 +202,14 @@ bb.g:                                             ; preds = %bb.d
 
 riscv_cpu_set_geilen.exit:                        ; preds = %bb.f, %bb.e, %bb.g
   %i.bg = load i8, ptr %i.j, align 16, !range !9, !noundef !10
-  %2 = trunc nuw i8 %i.bg to i1
-  %3 = select i1 %2, i64 3, i64 1                 ; 2 uses
+  %2 = shl nuw nsw i8 %i.bg, 1
+  %3 = or disjoint i8 %2, 1
   %i.bh = getelementptr inbounds nuw i8, ptr %i.i, i64 31784
-  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %3
+  %4 = zext nneg i8 %3 to i64                     ; 2 uses
+  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %4
   store ptr @riscv_imsic_rmw, ptr %i.bi, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %i.i, i64 31816
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %3
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %4
   store ptr %i.a, ptr %i.bk, align 8
   br label %bb.h
 

@@ -121,7 +121,8 @@ bb.a:
   %.04558 = phi ptr [ %i.z, %bb.n ], [ %3, %bb.a ] ; 15 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 1
   store ptr %i.g, ptr %1, align 8, !tbaa !12
-  %i.h = load i8, ptr %i.f, align 1, !tbaa !13    ; 8 uses
+  %i.h = load i8, ptr %i.f, align 1, !tbaa !13    ; 4 uses
+  %6 = zext i8 %i.h to i32                        ; 5 uses
   switch i8 %i.h, label %bb.f [
     i8 -33, label %bb.b
     i8 -70, label %bb.n
@@ -138,9 +139,9 @@ bb.c:                                             ; preds = %bb.b
   %i.j = or i32 %.059, 262144
   %i.k = getelementptr inbounds nuw i8, ptr %.04558, i64 1
   store i8 83, ptr %.04558, align 1, !tbaa !13
-  %6 = and i32 %.059, 32768
-  %.not55 = icmp eq i32 %6, 0
-  %7 = select i1 %.not55, i8 83, i8 115
+  %7 = lshr i32 %.059, 10
+  %8 = and i32 %7, 32
+  %9 = or disjoint i32 %8, 83
   br label %bb.n
 
 bb.d:                                             ; preds = %bb.b
@@ -169,6 +170,7 @@ bb.g:                                             ; preds = %bb.f
   %i.t = or i32 %.059, 262144
   %i.u = getelementptr inbounds nuw i8, ptr @EncISO_8859_15_ToLowerCaseTable, i64 %i.o
   %i.v = load i8, ptr %i.u, align 1, !tbaa !13
+  %10 = zext i8 %i.v to i32
   br label %bb.n
 
 bb.h:                                             ; preds = %bb.f
@@ -198,15 +200,16 @@ bb.l:                                             ; preds = %bb.i
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.i
-  %8 = add i8 %i.h, -32
+  %11 = add nsw i32 %6, -32
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %bb.i, %bb.h, %bb.j, %bb.l, %bb.m, %bb.k, %bb.g, %bb.c, %bb.e, %bb.d
   %.146 = phi ptr [ %i.k, %bb.c ], [ %i.n, %bb.e ], [ %.04558, %bb.d ], [ %.04558, %.lr.ph ], [ %.04558, %bb.g ], [ %.04558, %.lr.ph ], [ %.04558, %bb.j ], [ %.04558, %bb.k ], [ %.04558, %bb.l ], [ %.04558, %bb.m ], [ %.04558, %.lr.ph ], [ %.04558, %bb.h ], [ %.04558, %bb.i ] ; 2 uses
-  %.044 = phi i8 [ %7, %bb.c ], [ 115, %bb.e ], [ -33, %bb.d ], [ %i.h, %.lr.ph ], [ %i.v, %bb.g ], [ %i.h, %.lr.ph ], [ -76, %bb.j ], [ -68, %bb.k ], [ -66, %bb.l ], [ %8, %bb.m ], [ %i.h, %.lr.ph ], [ %i.h, %bb.h ], [ -90, %bb.i ]
+  %.044 = phi i32 [ %9, %bb.c ], [ 115, %bb.e ], [ 223, %bb.d ], [ %6, %.lr.ph ], [ %10, %bb.g ], [ %6, %.lr.ph ], [ 180, %bb.j ], [ 188, %bb.k ], [ 190, %bb.l ], [ %11, %bb.m ], [ %6, %.lr.ph ], [ %6, %bb.h ], [ 166, %bb.i ]
   %.1 = phi i32 [ %i.j, %bb.c ], [ %i.m, %bb.e ], [ %.059, %bb.d ], [ %.059, %.lr.ph ], [ %i.t, %bb.g ], [ %.059, %.lr.ph ], [ %i.y, %bb.j ], [ %i.y, %bb.k ], [ %i.y, %bb.l ], [ %i.y, %bb.m ], [ %.059, %.lr.ph ], [ %.059, %bb.h ], [ %i.y, %bb.i ] ; 3 uses
+  %12 = trunc i32 %.044 to i8
   %i.z = getelementptr inbounds nuw i8, ptr %.146, i64 1 ; 3 uses
-  store i8 %.044, ptr %.146, align 1, !tbaa !13
+  store i8 %12, ptr %.146, align 1, !tbaa !13
   %i.aa = and i32 %.1, 32768
   %.not56 = icmp eq i32 %i.aa, 0
   %i.ab = xor i32 %.1, 57344

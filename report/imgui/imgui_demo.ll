@@ -205,9 +205,9 @@ bb.xw:                                            ; preds = %bb.xv
 
 bb.xx:                                            ; preds = %bb.xw, %bb.xv
   %i.chg = load i32, ptr @_ZZL26DemoWindowWidgetsTreeNodesvE14selection_mask, align 4, !tbaa !51
-  %84 = and i32 %i.chg, 2
-  %.not34.1.i = icmp eq i32 %84, 0
-  %spec.select.1.i = select i1 %.not34.1.i, i32 2240, i32 2241
+  %84 = lshr i32 %i.chg, 1
+  %85 = and i32 %84, 1
+  %spec.select.1.i = or disjoint i32 %85, 2240
   %i.chh = call noundef zeroext i1 (ptr, i32, ptr, ...) @_ZN5ImGui10TreeNodeExEPKviPKcz(ptr noundef nonnull inttoptr (i64 1 to ptr), i32 noundef %spec.select.1.i, ptr noundef nonnull @.str.1255, i32 noundef 1)
   %i.chi = call noundef zeroext i1 @_ZN5ImGui13IsItemClickedEi(i32 noundef 0)
   br i1 %i.chi, label %bb.xy, label %bb.xz
@@ -228,9 +228,9 @@ bb.ya:                                            ; preds = %bb.xz
 
 bb.yb:                                            ; preds = %bb.ya, %bb.xz
   %i.chk = load i32, ptr @_ZZL26DemoWindowWidgetsTreeNodesvE14selection_mask, align 4, !tbaa !51
-  %85 = and i32 %i.chk, 4
-  %.not34.2.i = icmp eq i32 %85, 0
-  %spec.select.2.i = select i1 %.not34.2.i, i32 2240, i32 2241
+  %86 = lshr i32 %i.chk, 2
+  %87 = and i32 %86, 1
+  %spec.select.2.i = or disjoint i32 %87, 2240
   %i.chl = call noundef zeroext i1 (ptr, i32, ptr, ...) @_ZN5ImGui10TreeNodeExEPKviPKcz(ptr noundef nonnull inttoptr (i64 2 to ptr), i32 noundef %spec.select.2.i, ptr noundef nonnull @.str.1255, i32 noundef 2)
   %i.chm = call noundef zeroext i1 @_ZN5ImGui13IsItemClickedEi(i32 noundef 0)
   br i1 %i.chm, label %bb.yc, label %bb.yd
@@ -251,9 +251,9 @@ bb.ye:                                            ; preds = %bb.yd
 
 bb.yf:                                            ; preds = %bb.ye, %bb.yd
   %i.cho = load i32, ptr @_ZZL26DemoWindowWidgetsTreeNodesvE14selection_mask, align 4, !tbaa !51
-  %86 = and i32 %i.cho, 8
-  %.not34.3.i = icmp eq i32 %86, 0
-  %spec.select.3.i = select i1 %.not34.3.i, i32 2240, i32 2241
+  %88 = lshr i32 %i.cho, 3
+  %89 = and i32 %88, 1
+  %spec.select.3.i = or disjoint i32 %89, 2240
   %i.chp = call noundef zeroext i1 (ptr, i32, ptr, ...) @_ZN5ImGui10TreeNodeExEPKviPKcz(ptr noundef nonnull inttoptr (i64 3 to ptr), i32 noundef %spec.select.3.i, ptr noundef nonnull @.str.1255, i32 noundef 3)
   %i.chq = call noundef zeroext i1 @_ZN5ImGui13IsItemClickedEi(i32 noundef 0)
   br i1 %i.chq, label %bb.yg, label %bb.yh
@@ -274,9 +274,9 @@ bb.yi:                                            ; preds = %bb.yh
 
 bb.yj:                                            ; preds = %bb.yi, %bb.yh
   %i.chs = load i32, ptr @_ZZL26DemoWindowWidgetsTreeNodesvE14selection_mask, align 4, !tbaa !51
-  %87 = and i32 %i.chs, 16
-  %.not34.4.i = icmp eq i32 %87, 0
-  %spec.select.4.i = select i1 %.not34.4.i, i32 2240, i32 2241
+  %90 = lshr i32 %i.chs, 4
+  %91 = and i32 %90, 1
+  %spec.select.4.i = or disjoint i32 %91, 2240
   %i.cht = call noundef zeroext i1 (ptr, i32, ptr, ...) @_ZN5ImGui10TreeNodeExEPKviPKcz(ptr noundef nonnull inttoptr (i64 4 to ptr), i32 noundef %spec.select.4.i, ptr noundef nonnull @.str.1255, i32 noundef 4)
   %i.chu = call noundef zeroext i1 @_ZN5ImGui13IsItemClickedEi(i32 noundef 0)
   br i1 %i.chu, label %bb.yk, label %bb.yl
@@ -297,9 +297,9 @@ bb.ym:                                            ; preds = %bb.yl
 
 bb.yn:                                            ; preds = %bb.ym, %bb.yl
   %i.chw = load i32, ptr @_ZZL26DemoWindowWidgetsTreeNodesvE14selection_mask, align 4, !tbaa !51
-  %88 = and i32 %i.chw, 32
-  %.not34.5.i = icmp eq i32 %88, 0
-  %spec.select.5.i = select i1 %.not34.5.i, i32 2240, i32 2241
+  %92 = lshr i32 %i.chw, 5
+  %93 = and i32 %92, 1
+  %spec.select.5.i = or disjoint i32 %93, 2240
   %i.chx = call noundef zeroext i1 (ptr, i32, ptr, ...) @_ZN5ImGui10TreeNodeExEPKviPKcz(ptr noundef nonnull inttoptr (i64 5 to ptr), i32 noundef %spec.select.5.i, ptr noundef nonnull @.str.1255, i32 noundef 5)
   %i.chy = call noundef zeroext i1 @_ZN5ImGui13IsItemClickedEi(i32 noundef 0)
   br i1 %i.chy, label %bb.yo, label %bb.yp

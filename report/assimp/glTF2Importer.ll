@@ -205,9 +205,9 @@ _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocat
   %i.cd = phi i32 [ %.pre.i.i.i.i64, %.noexc.i.i63 ], [ %i.be, %bb.d ], [ %i.be, %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE9AddMemberIiEENS_8internal9DisableIfINS8_15RemoveSfinaeTagIPFRNS8_9SfinaeTagENS8_6OrExprINS8_9IsPointerIT_EENS8_14IsGenericValueISF_EEEEEE4TypeERS6_E4TypeENS_16GenericStringRefIcEESF_RS5_.exit._ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE9AddMemberIjEENS_8internal9DisableIfINS8_15RemoveSfinaeTagIPFRNS8_9SfinaeTagENS8_6OrExprINS8_9IsPointerIT_EENS8_14IsGenericValueISF_EEEEEE4TypeERS6_E4TypeENS_16GenericStringRefIcEESF_RS5_.exit_crit_edge ]
   %i.ce = or i64 ptrtoint (ptr @.str.89 to i64), 289637751035265024
   %i.cf = inttoptr i64 %i.ce to ptr
-  %3 = and i64 %i.bg, 2147483648
-  %.not.i.i.i = icmp eq i64 %3, 0
-  %.sroa.5.14.insert.ext.i.i59 = select i1 %.not.i.i.i, i64 141300438308749312, i64 132293239054008320
+  %3 = shl i64 %i.bg, 22
+  %4 = and i64 %3, 9007199254740992
+  %.sroa.5.14.insert.ext.i.i59 = xor i64 %4, 141300438308749312
   %i.cg = and i64 %i.bg, 4294967295
   %i.ch = ptrtoint ptr %i.cc to i64
   %i.ci = and i64 %i.ch, 281474976710655
@@ -342,9 +342,9 @@ _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocat
   %i.fe = phi i32 [ %.pre.i.i.i.i82, %.noexc.i.i81 ], [ %i.ef, %bb.f ], [ %i.ef, %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE9AddMemberIiEENS_8internal9DisableIfINS8_15RemoveSfinaeTagIPFRNS8_9SfinaeTagENS8_6OrExprINS8_9IsPointerIT_EENS8_14IsGenericValueISF_EEEEEE4TypeERS6_E4TypeENS_16GenericStringRefIcEESF_RS5_.exit73._ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE9AddMemberIjEENS_8internal9DisableIfINS8_15RemoveSfinaeTagIPFRNS8_9SfinaeTagENS8_6OrExprINS8_9IsPointerIT_EENS8_14IsGenericValueISF_EEEEEE4TypeERS6_E4TypeENS_16GenericStringRefIcEESF_RS5_.exit83_crit_edge ]
   %i.ff = or i64 ptrtoint (ptr @.str.91 to i64), 289637751035265024
   %i.fg = inttoptr i64 %i.ff to ptr               ; 2 uses
-  %4 = and i64 %i.eh, 2147483648
-  %.not.i.i.i76 = icmp eq i64 %4, 0
-  %.sroa.5.14.insert.ext.i.i77 = select i1 %.not.i.i.i76, i64 141300438308749312, i64 132293239054008320
+  %5 = shl i64 %i.eh, 22
+  %6 = and i64 %5, 9007199254740992
+  %.sroa.5.14.insert.ext.i.i77 = xor i64 %6, 141300438308749312
   %i.fh = and i64 %i.eh, 4294967295
   %i.fi = ptrtoint ptr %i.fd to i64
   %i.fj = and i64 %i.fi, 281474976710655
@@ -747,9 +747,9 @@ _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocat
   %i.uq = ptrtoint ptr %i.up to i64               ; 2 uses
   %i.ur = or i64 %i.uq, 844424930131968
   %i.us = inttoptr i64 %i.ur to ptr
-  %5 = and i64 %i.un, 2147483648
-  %.not.i.i.i178 = icmp eq i64 %5, 0
-  %.sroa.5.14.insert.ext.i.i179 = select i1 %.not.i.i.i178, i64 141300438308749312, i64 132293239054008320
+  %7 = shl i64 %i.un, 22
+  %8 = and i64 %7, 9007199254740992
+  %.sroa.5.14.insert.ext.i.i179 = xor i64 %8, 141300438308749312
   %i.ut = and i64 %i.un, 4294967295
   %i.uu = and i64 %i.uq, 281474976710655
   %i.uv = inttoptr i64 %i.uu to ptr               ; 17 uses
@@ -799,9 +799,9 @@ _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocat
   %i.vw = load i64, ptr %i.vv, align 8            ; 2 uses
   %i.vx = or i64 ptrtoint (ptr @.str.89 to i64), 289637751035265024
   %i.vy = inttoptr i64 %i.vx to ptr               ; 2 uses
-  %6 = and i64 %i.vw, 2147483648
-  %.not.i.i.i199 = icmp eq i64 %6, 0
-  %.sroa.5.14.insert.ext.i.i200 = select i1 %.not.i.i.i199, i64 141300438308749312, i64 132293239054008320
+  %9 = shl i64 %i.vw, 22
+  %10 = and i64 %9, 9007199254740992
+  %.sroa.5.14.insert.ext.i.i200 = xor i64 %10, 141300438308749312
   %i.vz = and i64 %i.vw, 4294967295
   %i.wa = getelementptr inbounds nuw i8, ptr %i.vs, i64 32
   store i32 10, ptr %i.wa, align 8
@@ -876,9 +876,9 @@ _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocat
   %i.xi = load ptr, ptr %i.ul, align 8
   %i.xj = getelementptr inbounds nuw i8, ptr %i.xi, i64 56
   %i.xk = load i64, ptr %i.xj, align 8            ; 2 uses
-  %7 = and i64 %i.xk, 2147483648
-  %.not.i.i.i238 = icmp eq i64 %7, 0
-  %.sroa.5.14.insert.ext.i.i239 = select i1 %.not.i.i.i238, i64 141300438308749312, i64 132293239054008320
+  %11 = shl i64 %i.xk, 22
+  %12 = and i64 %11, 9007199254740992
+  %.sroa.5.14.insert.ext.i.i239 = xor i64 %12, 141300438308749312
   %i.xl = and i64 %i.xk, 4294967295
   %i.xm = getelementptr inbounds nuw i8, ptr %i.xg, i64 32
   store i32 10, ptr %i.xm, align 8

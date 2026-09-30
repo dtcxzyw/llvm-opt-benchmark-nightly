@@ -87,10 +87,12 @@ target triple = "x86_64-unknown-linux-gnu"
 @_RNvNvNvNtCs4xylOWI7Ys4_12typst_render5paint11to_sk_paint6cached7___CACHE = internal global <{ ptr, [144 x i8], [4 x i8], [4 x i8] }> <{ ptr @_RNvYNCNvNvNvNtCs4xylOWI7Ys4_12typst_render5paint11to_sk_paint6cached7___CACHE0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuE9call_onceBc_, [144 x i8] undef, [4 x i8] c"\03\00\00\00", [4 x i8] undef }>, align 8
 @72 = private unnamed_addr constant [30 x i8] c"\11min > max. min = \C0\08, max = \C0\00", align 1
 @73 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @41, [16 x i8] c" \00\00\00\00\00\00\00\80\00\00\00!\00\00\00" }>, align 8
-@switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_ = private unnamed_addr constant [14 x i16] [i16 15025, i16 16344, i16 16339, i16 16418, i16 17597, i16 18055, i16 18746, i16 19151, i16 19469, i16 19395, i16 21227, i16 20733, i16 29513, i16 16729], align 8
-@switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_.363 = private unnamed_addr constant [14 x ptr] [ptr @24, ptr @25, ptr @26, ptr @27, ptr @28, ptr @29, ptr @30, ptr @31, ptr @32, ptr @33, ptr @34, ptr @35, ptr @36, ptr @37], align 8
+@switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_ = private unnamed_addr constant [4 x i16] [i16 15025, i16 16344, i16 16339, i16 16418], align 8
+@switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_.363 = private unnamed_addr constant [4 x ptr] [ptr @24, ptr @25, ptr @26, ptr @27], align 8
+@switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_.364 = private unnamed_addr constant [14 x i16] [i16 15025, i16 16344, i16 16339, i16 16418, i16 17597, i16 18055, i16 18746, i16 19151, i16 19469, i16 19395, i16 21227, i16 20733, i16 29513, i16 16729], align 8
+@switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_.365 = private unnamed_addr constant [14 x ptr] [ptr @24, ptr @25, ptr @26, ptr @27, ptr @28, ptr @29, ptr @30, ptr @31, ptr @32, ptr @33, ptr @34, ptr @35, ptr @36, ptr @37], align 8
 @switch.table._RNvNtCs4xylOWI7Ys4_12typst_render5paint11to_sk_paint = private unnamed_addr constant [3 x i8] c"a\89q", align 8
-@switch.table._RNvNtCs4xylOWI7Ys4_12typst_render5paint11to_sk_paint.364 = private unnamed_addr constant [3 x i8] c"`\88p", align 8
+@switch.table._RNvNtCs4xylOWI7Ys4_12typst_render5paint11to_sk_paint.366 = private unnamed_addr constant [3 x i8] c"`\88p", align 8
 
 ; Function Attrs: nounwind nonlazybind uwtable
 define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtCsaixNeEcpA3e_4slab5EntryINtNtCsloFShupyl5J_6comemo4tree8LeafNodeINtNtB18_7memoize10CacheEntryINtNvNtB18_5inputs1_1__9MultiCalluuuEINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapEEEEEECs4xylOWI7Ys4_12typst_render(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -493,11 +495,10 @@ bb.c:                                             ; preds = %bb.b
   %i.f = load i8, ptr %i.e, align 1, !range !18, !alias.scope !472, !noundef !5
   %i.g = trunc nuw i8 %i.f to i1
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 135
-  %i.i = load i8, ptr %i.h, align 1, !range !18, !alias.scope !472, !noundef !5
-  %3 = trunc nuw i8 %i.i to i1                    ; 2 uses
+  %i.i = load i8, ptr %i.h, align 1, !range !18, !alias.scope !472, !noundef !5 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 134
-  %i.k = load i8, ptr %i.j, align 2, !range !18, !alias.scope !472, !noundef !5 ; 3 uses
-  br i1 %i.g, label %5, label %4
+  %i.k = load i8, ptr %i.j, align 2, !range !18, !alias.scope !472, !noundef !5 ; 2 uses
+  br i1 %i.g, label %bb.e, label %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit
 
 bb.d:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 135
@@ -508,27 +509,19 @@ bb.d:                                             ; preds = %bb.b
   %i.q = trunc nuw i8 %i.p to i1                  ; 4 uses
   br i1 %i.n, label %bb.i, label %bb.h
 
-4:                                                ; preds = %bb.c
-  br i1 %3, label %bb.e, label %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit
+bb.e:                                             ; preds = %bb.c
+  %i.r = trunc nuw i8 %i.i to i1
+  %3 = trunc nuw i8 %i.k to i1                    ; 4 uses
+  br i1 %i.r, label %bb.g, label %bb.f
 
-5:                                                ; preds = %bb.c
-  %6 = trunc nuw i8 %i.k to i1                    ; 4 uses
-  br i1 %3, label %bb.g, label %bb.f
-
-bb.e:                                             ; preds = %4
-  %i.r = trunc nuw i8 %i.k to i1                  ; 2 uses
-  %. = select i1 %i.r, i64 16418, i64 16344
-  %.35 = select i1 %i.r, ptr @27, ptr @25
+bb.f:                                             ; preds = %bb.e
+  %.36 = select i1 %3, i64 21227, i64 19469
+  %.37 = select i1 %3, ptr @34, ptr @32
   br label %bb.j
 
-bb.f:                                             ; preds = %5
-  %.36 = select i1 %6, i64 21227, i64 19469
-  %.37 = select i1 %6, ptr @34, ptr @32
-  br label %bb.j
-
-bb.g:                                             ; preds = %5
-  %.38 = select i1 %6, i64 20733, i64 19395
-  %.39 = select i1 %6, ptr @35, ptr @33
+bb.g:                                             ; preds = %bb.e
+  %.38 = select i1 %3, i64 20733, i64 19395
+  %.39 = select i1 %3, ptr @35, ptr @33
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.d
@@ -541,15 +534,21 @@ bb.i:                                             ; preds = %bb.d
   %.43 = select i1 %i.q, ptr @31, ptr @29
   br label %bb.j
 
-_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit: ; preds = %4
-  %7 = icmp eq i8 %i.k, 0                         ; 2 uses
-  %spec.select = select i1 %7, i64 15025, i64 16339
-  %spec.select34 = select i1 %7, ptr @24, ptr @26
+_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit: ; preds = %bb.c
+  %4 = shl nuw nsw i8 %i.k, 1
+  %spec.select.i = or disjoint i8 %4, %i.i        ; 2 uses
+  %5 = zext nneg i8 %spec.select.i to i64
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_, i64 %5
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
+  %6 = zext nneg i8 %spec.select.i to i64
+  %switch.gep41 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_.363, i64 %6
+  %switch.load42 = load ptr, ptr %switch.gep41, align 8
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit
-  %.sroa.15.0.i = phi i64 [ %spec.select, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit ], [ %., %bb.e ], [ %.38, %bb.g ], [ %.36, %bb.f ], [ %.40, %bb.h ], [ %.42, %bb.i ]
-  %.sroa.0.0.i1 = phi ptr [ %spec.select34, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit ], [ %.35, %bb.e ], [ %.39, %bb.g ], [ %.37, %bb.f ], [ %.41, %bb.h ], [ %.43, %bb.i ]
+bb.j:                                             ; preds = %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit, %bb.i, %bb.h, %bb.g, %bb.f
+  %.sroa.15.0.i = phi i64 [ %switch.ext, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit ], [ %.36, %bb.f ], [ %.38, %bb.g ], [ %.42, %bb.i ], [ %.40, %bb.h ]
+  %.sroa.0.0.i1 = phi ptr [ %switch.load42, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit ], [ %.37, %bb.f ], [ %.39, %bb.g ], [ %.43, %bb.i ], [ %.41, %bb.h ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26, !noalias !473
   %i.s = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 32, i64 noundef 8) #26, !noalias !473 ; 2 uses
   %i.t = icmp eq ptr %i.s, null
@@ -563,11 +562,11 @@ switch.lookup:                                    ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.v = load i8, ptr %i.u, align 8, !range !474, !noundef !5 ; 2 uses
   %i.w = zext nneg i8 %i.v to i64
-  %switch.gep.a = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_, i64 %i.w
+  %switch.gep.a = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_.364, i64 %i.w
   %switch.load.a = load i16, ptr %switch.gep.a, align 2
   %switch.ext.a = zext i16 %switch.load.a to i64
   %i.x = zext nneg i8 %i.v to i64
-  %switch.gep49 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_.363, i64 %i.x
+  %switch.gep49 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNCNvNtCs4xylOWI7Ys4_12typst_render5image17build_pdf_textures_0B5_.365, i64 %i.x
   %switch.load50 = load ptr, ptr %switch.gep49, align 8
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26, !noalias !475
   %i.y = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 32, i64 noundef 8) #26, !noalias !475 ; 2 uses
@@ -970,7 +969,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia7shaders6Sha
   store i8 0, ptr %.sroa.547.sroa.11.0..sroa.547.0..sroa_idx48.sroa_idx, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.547.sroa.0)
   %i.bpx = load ptr, ptr %i.da, align 8, !nonnull !5, !noundef !5
-  %switch.gep552 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtCs4xylOWI7Ys4_12typst_render5paint11to_sk_paint.364, i64 %i.cz
+  %switch.gep552 = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtCs4xylOWI7Ys4_12typst_render5paint11to_sk_paint.366, i64 %i.cz
   %switch.load553 = load i8, ptr %switch.gep552, align 1
   %switch.ext554 = zext i8 %switch.load553 to i64
   %i.bpy = getelementptr inbounds nuw i8, ptr %i.bpx, i64 %switch.ext554

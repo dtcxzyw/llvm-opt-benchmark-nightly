@@ -204,10 +204,10 @@ bb.a:
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !889
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.n = load i64, ptr %i.m, align 8, !tbaa !114
-  %6 = and i64 %i.n, 256
-  %.not41 = icmp eq i64 %6, 0
-  %.in.v = select i1 %.not41, i64 8, i64 12
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %6 = lshr i64 %i.n, 6
+  %7 = and i64 %6, 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %.in = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.o = load i32, ptr %.in, align 4, !tbaa !111
   invoke void @_ZN3gmx21OptionStorageTemplateIbE11createStoreEPSt6vectorIbSaIbEEPbPii(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr") align 8 %i.f, ptr noundef nonnull align 8 dereferenceable(160) %0, ptr noundef %i.h, ptr noundef %i.j, ptr noundef %i.l, i32 noundef %i.o)
           to label %bb.b unwind label %bb.i
@@ -610,10 +610,10 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !906
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load i64, ptr %i.i, align 8, !tbaa !114
-  %6 = and i64 %i.j, 256
-  %.not41 = icmp eq i64 %6, 0
-  %.in.v = select i1 %.not41, i64 8, i64 12
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %6 = lshr i64 %i.j, 6
+  %7 = and i64 %6, 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %.in = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.k = load i32, ptr %.in, align 4, !tbaa !111
   invoke void @_ZN3gmx21OptionStorageTemplateIiE11createStoreEPSt6vectorIiSaIiEEPiS6_i(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.31") align 8 %i.b, ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef %i.d, ptr noundef %i.f, ptr noundef %i.h, i32 noundef %i.k)
           to label %bb.b unwind label %bb.i
@@ -1016,10 +1016,10 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !915
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load i64, ptr %i.i, align 8, !tbaa !114
-  %6 = and i64 %i.j, 256
-  %.not41 = icmp eq i64 %6, 0
-  %.in.v = select i1 %.not41, i64 8, i64 12
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %6 = lshr i64 %i.j, 6
+  %7 = and i64 %6, 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %.in = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.k = load i32, ptr %.in, align 4, !tbaa !111
   invoke void @_ZN3gmx21OptionStorageTemplateIjE11createStoreEPSt6vectorIjSaIjEEPjPii(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.65") align 8 %i.b, ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef %i.d, ptr noundef %i.f, ptr noundef %i.h, i32 noundef %i.k)
           to label %bb.b unwind label %bb.i
@@ -1422,10 +1422,10 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !929
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load i64, ptr %i.i, align 8, !tbaa !114
-  %6 = and i64 %i.j, 256
-  %.not41 = icmp eq i64 %6, 0
-  %.in.v = select i1 %.not41, i64 8, i64 12
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %6 = lshr i64 %i.j, 6
+  %7 = and i64 %6, 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %.in = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.k = load i32, ptr %.in, align 4, !tbaa !111
   invoke void @_ZN3gmx21OptionStorageTemplateIlE11createStoreEPSt6vectorIlSaIlEEPlPii(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.99") align 8 %i.b, ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef %i.d, ptr noundef %i.f, ptr noundef %i.h, i32 noundef %i.k)
           to label %bb.b unwind label %bb.i
@@ -1828,10 +1828,10 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !943
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load i64, ptr %i.i, align 8, !tbaa !114
-  %6 = and i64 %i.j, 256
-  %.not41 = icmp eq i64 %6, 0
-  %.in.v = select i1 %.not41, i64 8, i64 12
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %6 = lshr i64 %i.j, 6
+  %7 = and i64 %6, 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %.in = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.k = load i32, ptr %.in, align 4, !tbaa !111
   invoke void @_ZN3gmx21OptionStorageTemplateImE11createStoreEPSt6vectorImSaImEEPmPii(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.130") align 8 %i.b, ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef %i.d, ptr noundef %i.f, ptr noundef %i.h, i32 noundef %i.k)
           to label %bb.b unwind label %bb.i
@@ -2234,10 +2234,10 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !1072
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load i64, ptr %i.i, align 8, !tbaa !114
-  %6 = and i64 %i.j, 256
-  %.not41 = icmp eq i64 %6, 0
-  %.in.v = select i1 %.not41, i64 8, i64 12
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %6 = lshr i64 %i.j, 6
+  %7 = and i64 %6, 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %.in = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.k = load i32, ptr %.in, align 4, !tbaa !111
   invoke void @_ZN3gmx21OptionStorageTemplateIdE11createStoreEPSt6vectorIdSaIdEEPdPii(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.155") align 8 %i.b, ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef %i.d, ptr noundef %i.f, ptr noundef %i.h, i32 noundef %i.k)
           to label %bb.b unwind label %bb.i
@@ -2640,10 +2640,10 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !1104
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load i64, ptr %i.i, align 8, !tbaa !114
-  %6 = and i64 %i.j, 256
-  %.not41 = icmp eq i64 %6, 0
-  %.in.v = select i1 %.not41, i64 8, i64 12
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %6 = lshr i64 %i.j, 6
+  %7 = and i64 %6, 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %.in = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.k = load i32, ptr %.in, align 4, !tbaa !111
   invoke void @_ZN3gmx21OptionStorageTemplateIfE11createStoreEPSt6vectorIfSaIfEEPfPii(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.189") align 8 %i.b, ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef %i.d, ptr noundef %i.f, ptr noundef %i.h, i32 noundef %i.k)
           to label %bb.b unwind label %bb.i
@@ -3046,10 +3046,10 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !1136
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load i64, ptr %i.i, align 8, !tbaa !114
-  %6 = and i64 %i.j, 256
-  %.not40 = icmp eq i64 %6, 0
-  %.in.v = select i1 %.not40, i64 8, i64 12
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %6 = lshr i64 %i.j, 6
+  %7 = and i64 %6, 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %.in = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.k = load i32, ptr %.in, align 4, !tbaa !111
   invoke void @_ZN3gmx21OptionStorageTemplateINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE11createStoreEPSt6vectorIS6_SaIS6_EEPS6_Pii(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.228") align 8 %i.b, ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef %i.d, ptr noundef %i.f, ptr noundef %i.h, i32 noundef %i.k)
           to label %bb.b unwind label %bb.i
