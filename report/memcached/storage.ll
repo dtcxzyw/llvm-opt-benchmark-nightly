@@ -205,9 +205,9 @@ bb.ay:                                            ; preds = %bb.av, %bb.v, %bb.r
   %i.gr = trunc i64 %.385 to i32
   %i.gs = trunc i32 %.377 to i16
   %.sroa.0.0.insert.ext = zext i8 %.sroa.0.12 to i32 ; 3 uses
-  %5 = and i32 %.sroa.0.0.insert.ext, 8
-  %.not186.i = icmp eq i32 %5, 0
-  %6 = select i1 %.not186.i, i32 1, i32 5         ; 2 uses
+  %5 = lshr i32 %.sroa.0.0.insert.ext, 1
+  %6 = and i32 %5, 4
+  %7 = or disjoint i32 %6, 1                      ; 2 uses
   %i.gt = and i32 %.sroa.0.0.insert.ext, 2
   %.not191.i = icmp ne i32 %i.gt, 0
   %i.gu = and i32 %.sroa.0.0.insert.ext, 1
@@ -395,7 +395,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.kg = load i8, ptr %i.kf, align 8, !tbaa !12
   %i.kh = icmp sgt i8 %i.kg, -65                  ; 2 uses
   %brmerge.i = select i1 %i.kh, i1 true, i1 %.not191.i
-  %.mux.i = select i1 %i.kh, i32 %6, i32 4
+  %.mux.i = select i1 %i.kh, i32 %7, i32 4
   br i1 %brmerge.i, label %.thread208.i, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
@@ -403,7 +403,7 @@ bb.bu:                                            ; preds = %bb.bt
   br i1 %.not192.i, label %.thread208.i, label %.thread.i
 
 .thread208.i:                                     ; preds = %bb.bu, %bb.bt
-  %.0122215.i = phi i32 [ %6, %bb.bu ], [ %.mux.i, %bb.bt ] ; 3 uses
+  %.0122215.i = phi i32 [ %7, %bb.bu ], [ %.mux.i, %bb.bt ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
   store i32 %i.if, ptr %i.bn, align 8, !tbaa !101
   store i32 1, ptr %i.bo, align 4, !tbaa !102

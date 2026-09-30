@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = load i8, ptr @_ZN5FFlag20LuauEmitCallFeedbackE, align 8, !tbaa !233, !range !35, !noundef !36
-  %1 = trunc nuw i8 %i.bt to i1
-  %..i = select i1 %1, i8 11, i8 9
+  %1 = shl nuw nsw i8 %i.bt, 1
+  %..i = or disjoint i8 %1, 9
   br label %_ZN4Luau15BytecodeBuilder10getVersionEv.exit
 
 _ZN4Luau15BytecodeBuilder10getVersionEv.exit:     ; preds = %._crit_edge87, %bb.i, %bb.j, %bb.k
@@ -487,8 +487,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load i8, ptr @_ZN5FFlag20LuauEmitCallFeedbackE, align 8, !tbaa !233, !range !35, !noundef !36
-  %0 = trunc nuw i8 %i.g to i1
-  %. = select i1 %0, i8 11, i8 9
+  %0 = shl nuw nsw i8 %i.g, 1
+  %. = or disjoint i8 %0, 9
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a

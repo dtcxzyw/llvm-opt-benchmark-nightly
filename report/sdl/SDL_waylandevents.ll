@@ -204,12 +204,12 @@ bb.l:                                             ; preds = %bb.e
   br i1 %or.cond80.not, label %bb.r, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bg = and i32 %i.be, 2
+  %i.bg = and i32 %i.be, 8
   %.not62 = icmp eq i32 %i.bg, 0
-  %1 = and i32 %i.be, 8
-  %.not61 = icmp eq i32 %1, 0
-  %spec.select81 = select i1 %.not62, i32 6, i32 7
-  %spec.select88 = select i1 %.not61, i32 %spec.select81, i32 5
+  %1 = lshr i32 %i.be, 1
+  %2 = and i32 %1, 1
+  %spec.select81 = or disjoint i32 %2, 6
+  %spec.select88 = select i1 %.not62, i32 %spec.select81, i32 5
   br label %bb.r
 
 bb.n:                                             ; preds = %bb.e

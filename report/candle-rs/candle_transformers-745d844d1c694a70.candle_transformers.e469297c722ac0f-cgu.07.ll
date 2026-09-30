@@ -204,8 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.n = load i64, ptr %1, align 8, !range !4, !noundef !5
-  %3 = trunc nuw i64 %i.n to i1
-  %spec.select.v = select i1 %3, i64 8, i64 72
+  %3 = shl nuw nsw i64 %i.n, 6
+  %spec.select.v = xor i64 %3, 72
   %spec.select = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v
   %.sroa.0.0 = load i64, ptr %spec.select, align 8 ; 2 uses
   %i.o = udiv i64 %.sroa.0.0, %i.l                ; 5 uses
@@ -608,8 +608,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.x = load i64, ptr %1, align 8, !range !4, !noundef !5
-  %3 = trunc nuw i64 %i.x to i1
-  %spec.select.v = select i1 %3, i64 8, i64 72
+  %3 = shl nuw nsw i64 %i.x, 6
+  %spec.select.v = xor i64 %3, 72
   %spec.select = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v
   %.sroa.0.0 = load i64, ptr %spec.select, align 8 ; 2 uses
   %i.y = udiv i64 %.sroa.0.0, %i.v                ; 5 uses

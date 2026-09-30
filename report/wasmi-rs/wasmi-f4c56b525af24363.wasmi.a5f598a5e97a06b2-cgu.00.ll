@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %bb.g
 
 .noexc9:                                          ; preds = %bb.h
   %i.br = load i64, ptr %i.bq, align 8, !range !5, !noalias !7711, !noundef !4
-  %2 = trunc nuw i64 %i.br to i1
-  %3 = select i1 %2, i64 28, i64 12
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 %3
+  %2 = shl nuw nsw i64 %i.br, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.bq, i64 %2
+  %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.bt = load i32, ptr %i.bs, align 4, !noalias !7711, !noundef !4
   %.not25.i.i = icmp eq i32 %i.bt, %.sroa.734.0.copyload
   br i1 %.not25.i.i, label %bb.j, label %bb.i
@@ -440,9 +440,9 @@ bb.h:                                             ; preds = %bb.g
 
 .noexc10:                                         ; preds = %bb.h
   %i.bu = load i64, ptr %i.bt, align 8, !range !5, !noalias !7744, !noundef !4
-  %2 = trunc nuw i64 %i.bu to i1
-  %3 = select i1 %2, i64 28, i64 12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 %3
+  %2 = shl nuw nsw i64 %i.bu, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.bt, i64 %2
+  %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.bw = load i32, ptr %i.bv, align 4, !noalias !7744, !noundef !4
   %.not25.i.i = icmp eq i32 %i.bw, %.sroa.736.0.copyload
   br i1 %.not25.i.i, label %bb.j, label %bb.i
@@ -845,9 +845,9 @@ bb.g:                                             ; preds = %bb.f
 
 .noexc9:                                          ; preds = %bb.g
   %i.bn = load i64, ptr %i.bm, align 8, !range !5, !noalias !12371, !noundef !4
-  %2 = trunc nuw i64 %i.bn to i1
-  %3 = select i1 %2, i64 28, i64 12
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 %3
+  %2 = shl nuw nsw i64 %i.bn, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.bm, i64 %2
+  %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.bp = load i32, ptr %i.bo, align 4, !noalias !12371, !noundef !4
   %.not25.i.i = icmp eq i32 %i.bp, %.sroa.632.0.copyload
   br i1 %.not25.i.i, label %bb.i, label %bb.h
@@ -1068,9 +1068,9 @@ bb.g:                                             ; preds = %bb.f
 
 .noexc10:                                         ; preds = %bb.g
   %i.bq = load i64, ptr %i.bp, align 8, !range !5, !noalias !12404, !noundef !4
-  %2 = trunc nuw i64 %i.bq to i1
-  %3 = select i1 %2, i64 28, i64 12
-  %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 %3
+  %2 = shl nuw nsw i64 %i.bq, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.bp, i64 %2
+  %i.br = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.bs = load i32, ptr %i.br, align 4, !noalias !12404, !noundef !4
   %.not25.i.i = icmp eq i32 %i.bs, %.sroa.634.0.copyload
   br i1 %.not25.i.i, label %bb.i, label %bb.h
@@ -1473,9 +1473,9 @@ bb.h:                                             ; preds = %bb.g
 
 .noexc9:                                          ; preds = %bb.h
   %i.br = load i64, ptr %i.bq, align 8, !range !5, !noalias !12581, !noundef !4
-  %2 = trunc nuw i64 %i.br to i1
-  %3 = select i1 %2, i64 28, i64 12
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 %3
+  %2 = shl nuw nsw i64 %i.br, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.bq, i64 %2
+  %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.bt = load i32, ptr %i.bs, align 4, !noalias !12581, !noundef !4
   %.not25.i.i = icmp eq i32 %i.bt, %.sroa.734.0.copyload
   br i1 %.not25.i.i, label %bb.j, label %bb.i
@@ -1709,9 +1709,9 @@ bb.h:                                             ; preds = %bb.g
 
 .noexc10:                                         ; preds = %bb.h
   %i.bu = load i64, ptr %i.bt, align 8, !range !5, !noalias !12614, !noundef !4
-  %2 = trunc nuw i64 %i.bu to i1
-  %3 = select i1 %2, i64 28, i64 12
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 %3
+  %2 = shl nuw nsw i64 %i.bu, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.bt, i64 %2
+  %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.bw = load i32, ptr %i.bv, align 4, !noalias !12614, !noundef !4
   %.not25.i.i = icmp eq i32 %i.bw, %.sroa.736.0.copyload
   br i1 %.not25.i.i, label %bb.j, label %bb.i
@@ -2114,9 +2114,9 @@ bb.g:                                             ; preds = %bb.f
 
 .noexc9:                                          ; preds = %bb.g
   %i.bn = load i64, ptr %i.bm, align 8, !range !5, !noalias !13918, !noundef !4
-  %2 = trunc nuw i64 %i.bn to i1
-  %3 = select i1 %2, i64 28, i64 12
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 %3
+  %2 = shl nuw nsw i64 %i.bn, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.bm, i64 %2
+  %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.bp = load i32, ptr %i.bo, align 4, !noalias !13918, !noundef !4
   %.not25.i.i = icmp eq i32 %i.bp, %.sroa.632.0.copyload
   br i1 %.not25.i.i, label %bb.i, label %bb.h
@@ -2337,9 +2337,9 @@ bb.g:                                             ; preds = %bb.f
 
 .noexc10:                                         ; preds = %bb.g
   %i.bq = load i64, ptr %i.bp, align 8, !range !5, !noalias !13951, !noundef !4
-  %2 = trunc nuw i64 %i.bq to i1
-  %3 = select i1 %2, i64 28, i64 12
-  %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 %3
+  %2 = shl nuw nsw i64 %i.bq, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.bp, i64 %2
+  %i.br = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.bs = load i32, ptr %i.br, align 4, !noalias !13951, !noundef !4
   %.not25.i.i = icmp eq i32 %i.bs, %.sroa.634.0.copyload
   br i1 %.not25.i.i, label %bb.i, label %bb.h

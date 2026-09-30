@@ -204,8 +204,8 @@ bb.mu:                                            ; preds = %bb.ms
   store i32 %.sroa.41851.0.copyload, ptr %i.aun, align 8
   %i.auo = getelementptr inbounds nuw i8, ptr %i.ie, i64 9
   %i.aup = load i8, ptr %i.auo, align 1, !range !19, !noundef !11
-  %6 = trunc nuw i8 %i.aup to i1
-  %..i = select i1 %6, i8 1, i8 3
+  %6 = shl nuw nsw i8 %i.aup, 1
+  %..i = xor i8 %6, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dx)
   %i.auq = call { ptr, i32 } @_RNvMs8_NtCs8K4cjrcxBsw_6hir_ty3mirNtB5_8PlaceRef5store(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.dz) ; 2 uses
   %i.aur = extractvalue { ptr, i32 } %i.auq, 0

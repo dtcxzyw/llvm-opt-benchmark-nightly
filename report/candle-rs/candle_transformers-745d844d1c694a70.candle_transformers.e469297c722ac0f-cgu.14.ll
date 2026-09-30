@@ -204,10 +204,10 @@ bb.ag:                                            ; preds = %._crit_edge
   br i1 %.not337, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %3 = and i64 %i.ft, 1
-  %4 = icmp eq i64 %3, 0
-  %.sroa.670.0.in.v = select i1 %4, i64 8, i64 40
-  %.sroa.670.0.in = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.670.0.in.v
+  %3 = shl nuw nsw i64 %i.ft, 5
+  %4 = and i64 %3, 32
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 %4
+  %.sroa.670.0.in = getelementptr inbounds nuw i8, ptr %5, i64 8
   %.sroa.670.0 = load double, ptr %.sroa.670.0.in, align 8
   br label %bb.ai
 

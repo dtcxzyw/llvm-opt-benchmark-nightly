@@ -205,9 +205,9 @@ bb.fy:                                            ; preds = %bb.fx
 
 _ZL21hb_ot_substitute_postPK21hb_ot_shape_context_t.exit.i: ; preds = %bb.fy, %bb.fx, %_ZL29hb_ot_hide_default_ignorablesP11hb_buffer_tP9hb_font_t.exit.i.i
   %i.ann = load i32, ptr %i.cs, align 8, !tbaa !587 ; 2 uses
-  %8 = and i32 %i.ann, 64
-  %9 = icmp eq i32 %8, 0
-  %spec.select.i.i = select i1 %9, i32 5, i32 7   ; 3 uses
+  %8 = lshr i32 %i.ann, 5
+  %9 = and i32 %8, 2
+  %spec.select.i.i = or disjoint i32 %9, 5        ; 3 uses
   %i.ano = load ptr, ptr %i.ja, align 8, !tbaa !589 ; 37 uses
   %i.anp = and i32 %i.ann, 128
   %i.anq = icmp eq i32 %i.anp, 0

@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %bb.a
   %i.s = load ptr, ptr %0, align 8, !tbaa !258
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 40
   %i.u = load i32, ptr %i.t, align 8, !tbaa !268
-  %5 = and i32 %i.u, 1024
-  %.not26 = icmp eq i32 %5, 0
-  %6 = select i1 %.not26, i32 3, i32 11
-  %i.v = tail call noundef ptr @_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE12append_stateENS0_19syntax_element_typeE(ptr noundef nonnull align 8 dereferenceable(100) %0, i32 noundef %6) ; 0 uses
+  %5 = lshr i32 %i.u, 7
+  %6 = and i32 %5, 8
+  %7 = or disjoint i32 %6, 3
+  %i.v = tail call noundef ptr @_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE12append_stateENS0_19syntax_element_typeE(ptr noundef nonnull align 8 dereferenceable(100) %0, i32 noundef %7) ; 0 uses
   br label %.critedge
 
 bb.f:                                             ; preds = %bb.a
@@ -217,10 +217,10 @@ bb.f:                                             ; preds = %bb.a
   %i.x = load ptr, ptr %0, align 8, !tbaa !258
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 40
   %i.z = load i32, ptr %i.y, align 8, !tbaa !268
-  %7 = and i32 %i.z, 1024
-  %.not25 = icmp eq i32 %7, 0
-  %8 = select i1 %.not25, i32 4, i32 12
-  %i.aa = tail call noundef ptr @_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE12append_stateENS0_19syntax_element_typeE(ptr noundef nonnull align 8 dereferenceable(100) %0, i32 noundef %8) ; 0 uses
+  %8 = lshr i32 %i.z, 7
+  %9 = and i32 %8, 8
+  %10 = or disjoint i32 %9, 4
+  %i.aa = tail call noundef ptr @_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE12append_stateENS0_19syntax_element_typeE(ptr noundef nonnull align 8 dereferenceable(100) %0, i32 noundef %10) ; 0 uses
   br label %.critedge
 
 bb.g:                                             ; preds = %bb.a

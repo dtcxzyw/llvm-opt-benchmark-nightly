@@ -204,7 +204,7 @@ bb.a:
           to label %bb.b unwind label %bb.w       ; 2 uses
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = extractvalue { i64, ptr } %i.h, 0        ; 2 uses
+  %i.i = extractvalue { i64, ptr } %i.h, 0        ; 3 uses
   %i.j = extractvalue { i64, ptr } %i.h, 1        ; 3 uses
   store i64 %i.i, ptr %i.g, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 5 uses
@@ -217,16 +217,16 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   br i1 %.not.i.i, label %bb.c, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = trunc nuw i64 %i.i to i1                 ; 2 uses
+  %i.m = trunc nuw i64 %i.i to i1
   %.sroa.01.0.v = select i1 %i.m, i64 504, i64 568
   %.sroa.01.0 = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.01.0.v
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1443
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.b, ptr noundef nonnull align 8 dereferenceable(64) %0, i64 64, i1 false)
-  %.sroa.01.0.v.i.i.i = select i1 %i.m, i64 528, i64 512
-  %.sroa.01.0.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.01.0.v.i.i.i ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 16 ; 2 uses
+  %2 = shl nuw nsw i64 %i.i, 4
+  %.sroa.01.0.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 %2 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 528 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !noalias !1443, !noundef !9 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 24
+  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 536
   %.not.i.i.i = icmp eq ptr %i.o, null
   br i1 %.not.i.i.i, label %bb.h, label %bb.e
 

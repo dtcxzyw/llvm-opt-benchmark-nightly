@@ -205,7 +205,6 @@ bb.vj:                                            ; preds = %bb.vi
   %i.bto = and i16 %i.btm, 3
   %.not198.i.i = icmp eq i16 %i.bto, 0            ; 4 uses
   %i.btp = and i16 %i.btm, 64                     ; 3 uses
-  %.not200.i.i = icmp eq i16 %i.btp, 0
   %i.btq = lshr i16 %i.btm, 1
   %spec.select.i.i = and i16 %i.btq, 2
   %i.btr = shl nuw nsw i8 %.sroa.0.sroa.7.0.i, 5
@@ -327,7 +326,8 @@ _RNvMs5_NtCs7gfv9tzbXmh_6yara_x8compilerNtB5_8Compiler20c_literal_chain_head.exi
   %.idx.i36.i = mul nuw nsw i64 %.sroa.11.0.i, 72
   %i.but = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i, i64 %.idx.i36.i
   %i.buu = add nsw i64 %.sroa.11.0.i, -1
-  %spec.select203.v.i.i = select i1 %.not200.i.i, i16 4, i16 20
+  %2 = lshr exact i16 %i.btp, 2
+  %spec.select203.v.i.i = or disjoint i16 %2, 4
   br label %bb.wa
 
 bb.vp:                                            ; preds = %.noexc38.i
@@ -660,7 +660,7 @@ bb.wp:                                            ; preds = %bb.wo, %bb.wn
   %.sroa.0170.sroa.5.0.i.i = phi i64 [ %.sroa.0170.sroa.5.0.extract.shift.i.i, %bb.wn ], [ %i.bxz, %bb.wo ]
   %.sroa.0170.sroa.0.0.i.i = phi i32 [ %.sroa.0170.sroa.0.0.extract.trunc.i.i, %bb.wn ], [ %i.bxw, %bb.wo ]
   %.sroa.6171.0.i.i = phi i32 [ %.sroa.6171.0.copyload.i.i, %bb.wn ], [ %.sroa.6171.8.insert.ext.i.i, %bb.wo ]
-  %i.bya = or disjoint i16 %spec.select205.i.i, 1
+  %i.bya = or i16 %spec.select205.i.i, 1
   %.sroa.0170.sroa.5.0.insert.shift.i.i = shl nuw i64 %.sroa.0170.sroa.5.0.i.i, 32
   %.sroa.0170.sroa.0.0.insert.ext.i.i = zext i32 %.sroa.0170.sroa.0.0.i.i to i64
   %.sroa.0170.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.0170.sroa.5.0.insert.shift.i.i, %.sroa.0170.sroa.0.0.insert.ext.i.i

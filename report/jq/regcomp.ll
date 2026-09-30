@@ -205,9 +205,9 @@ bb.bd:                                            ; preds = %tailrecurse
 bb.be:                                            ; preds = %bb.bd
   %i.jl = getelementptr inbounds nuw i8, ptr %.tr, i64 4
   %i.jm = load i32, ptr %i.jl, align 4, !tbaa !27
-  %3 = and i32 %i.jm, 4194304
-  %.not187 = icmp eq i32 %3, 0
-  %4 = select i1 %.not187, i32 20, i32 21
+  %3 = lshr i32 %i.jm, 22
+  %4 = and i32 %3, 1
+  %5 = or disjoint i32 %4, 20
   %i.jn = load i32, ptr %i.c, align 8, !tbaa !25  ; 3 uses
   %i.jo = load i32, ptr %i.d, align 4, !tbaa !34  ; 3 uses
   %.not.i.i213 = icmp ult i32 %i.jn, %i.jo
@@ -261,7 +261,7 @@ bb.bj:                                            ; preds = %.sink.split.i.i.i21
   %i.km = sub i64 %i.kk, %i.kl
   %i.kn = sdiv exact i64 %i.km, 6
   %i.ko = getelementptr inbounds i8, ptr %i.kh, i64 %i.kn
-  store i32 %4, ptr %i.ko, align 4, !tbaa !15
+  store i32 %5, ptr %i.ko, align 4, !tbaa !15
   br label %add_op.exit216
 
 bb.bk:                                            ; preds = %bb.bd
@@ -664,13 +664,13 @@ bb.dl:                                            ; preds = %.lr.ph446
   %.not251.i = icmp eq ptr %i.up, null
   %i.uq = getelementptr inbounds nuw i8, ptr %i.un, i64 4
   %i.ur = load i32, ptr %i.uq, align 4, !tbaa !27
-  %5 = and i32 %i.ur, 4194304
-  %.not252.i = icmp eq i32 %5, 0                  ; 2 uses
+  %6 = lshr i32 %i.ur, 22
+  %7 = and i32 %6, 1                              ; 2 uses
   br i1 %.not251.i, label %bb.do, label %bb.dm
 
 bb.dm:                                            ; preds = %._crit_edge447
-  %6 = select i1 %.not252.i, i32 24, i32 25
-  %i.us = tail call fastcc i32 @add_op(ptr noundef %1, i32 noundef %6), !inline_history !209 ; 2 uses
+  %8 = or disjoint i32 %7, 24
+  %i.us = tail call fastcc i32 @add_op(ptr noundef %1, i32 noundef %8), !inline_history !209 ; 2 uses
   %.not254.i = icmp eq i32 %i.us, 0
   br i1 %.not254.i, label %bb.dn, label %add_op.exit216
 
@@ -685,8 +685,8 @@ bb.dn:                                            ; preds = %bb.dm
   br label %add_op.exit216
 
 bb.do:                                            ; preds = %._crit_edge447
-  %7 = select i1 %.not252.i, i32 22, i32 23
-  %i.uz = tail call fastcc i32 @add_op(ptr noundef %1, i32 noundef %7), !inline_history !209
+  %9 = or disjoint i32 %7, 22
+  %i.uz = tail call fastcc i32 @add_op(ptr noundef %1, i32 noundef %9), !inline_history !209
   br label %add_op.exit216
 
 is_anychar_infinite_greedy.exit.thread:           ; preds = %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df
@@ -1089,9 +1089,9 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %.tr, i64 4
   %i.x = load i32, ptr %i.w, align 4, !tbaa !27
-  %1 = and i32 %i.x, 64
-  %.not40 = icmp eq i32 %1, 0
-  %. = select i1 %.not40, i32 2, i32 3
+  %1 = lshr i32 %i.x, 6
+  %2 = and i32 %1, 1
+  %. = or disjoint i32 %2, 2
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.h, %bb.e, %tailrecurse, %bb.d, %bb.c, %bb.b, %bb.j

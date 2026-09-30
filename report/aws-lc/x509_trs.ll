@@ -46,9 +46,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.e = load i32, ptr %i.d, align 8, !tbaa !23
-  %3 = and i32 %i.e, 8192
-  %.not2.i = icmp eq i32 %3, 0
-  %..i = select i1 %.not2.i, i32 3, i32 1
+  %3 = lshr i32 %i.e, 12
+  %4 = and i32 %3, 2
+  %..i = xor i32 %4, 3
   br label %trust_compat.exit
 
 bb.e:                                             ; preds = %bb.a
@@ -157,9 +157,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.c = load i32, ptr %i.b, align 8, !tbaa !23
-  %2 = and i32 %i.c, 8192
-  %.not2 = icmp eq i32 %2, 0
-  %. = select i1 %.not2, i32 3, i32 1
+  %2 = lshr i32 %i.c, 12
+  %3 = and i32 %2, 2
+  %. = xor i32 %3, 3
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -290,9 +290,9 @@ bb.e:                                             ; preds = %bb.c, %bb.a
 bb.f:                                             ; preds = %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.k = load i32, ptr %i.j, align 8, !tbaa !23
-  %2 = and i32 %i.k, 8192
-  %.not2.i = icmp eq i32 %2, 0
-  %..i = select i1 %.not2.i, i32 3, i32 1
+  %2 = lshr i32 %i.k, 12
+  %3 = and i32 %2, 2
+  %..i = xor i32 %3, 3
   br label %trust_compat.exit
 
 trust_compat.exit:                                ; preds = %bb.f, %bb.e, %bb.d

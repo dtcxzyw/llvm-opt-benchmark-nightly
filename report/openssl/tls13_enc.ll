@@ -202,10 +202,10 @@ tls13_derive_finishedkey.exit:                    ; preds = %bb.bg, %bb.bf
   br label %bb.bh
 
 bb.bh:                                            ; preds = %.sink.split, %tls13_derive_finishedkey.exit
-  %2 = and i32 %1, 128
-  %.not178 = icmp eq i32 %2, 0
-  %3 = select i1 %.not178, i32 3, i32 2
-  %i.fb = select i1 %i.cx, i32 %3, i32 1
+  %2 = lshr i32 %1, 7
+  %3 = and i32 %2, 1
+  %4 = xor i32 %3, 3
+  %i.fb = select i1 %i.cx, i32 %4, i32 1
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.fd = load i32, ptr %i.fc, align 8, !tbaa !116
   %i.fe = load i64, ptr %i.f, align 8, !tbaa !15

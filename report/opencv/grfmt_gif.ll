@@ -204,10 +204,10 @@ bb.ab:                                            ; preds = %.preheader
 
 bb.ac:                                            ; preds = %.preheader255
   %i.eu = call noundef i32 @_ZN2cv12RLByteStream7getByteEv(ptr noundef nonnull align 8 dereferenceable(65) %i.c)
-  %10 = and i32 %i.eu, 1
-  %.not75 = icmp eq i32 %10, 0
-  %11 = select i1 %.not75, i32 64, i32 96
-  store i32 %11, ptr %i.e, align 8, !tbaa !67
+  %10 = shl i32 %i.eu, 5
+  %11 = and i32 %10, 32
+  %12 = or disjoint i32 %11, 64
+  store i32 %12, ptr %i.e, align 8, !tbaa !67
   call void @_ZN2cv11RBaseStream4skipEl(ptr noundef nonnull align 8 dereferenceable(65) %i.c, i64 noundef 2)
   br label %bb.ae
 

@@ -205,12 +205,12 @@ _ZN3fmt3v126detail16do_format_base2eIcjEEPT_iS4_T0_ib.exit14: ; preds = %.split.
   br i1 %.not38, label %_ZN3fmt3v126detail17do_format_decimalIcjEEPT_S4_T0_i.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZN3fmt3v126detail16do_format_base2eIcjEEPT_iS4_T0_ib.exit14
-  %4 = and i32 %i.b, 4096
-  %.not39 = icmp eq i32 %4, 0
-  %5 = select i1 %.not39, i32 25136, i32 16944    ; 2 uses
+  %4 = shl i32 %i.b, 1
+  %5 = and i32 %4, 8192
+  %6 = xor i32 %5, 25136                          ; 2 uses
   %.not.i15 = icmp eq i64 %.sroa.2.0.extract.shift.i, 0
-  %i.bg = shl nuw nsw i32 %5, 8
-  %i.bh = select i1 %.not.i15, i32 %5, i32 %i.bg
+  %i.bg = shl nuw nsw i32 %6, 8
+  %i.bh = select i1 %.not.i15, i32 %6, i32 %i.bg
   %i.bi = or i32 %i.bh, %.sroa.2.0.extract.trunc.i
   %i.bj = add i32 %i.bi, 33554432
   br label %_ZN3fmt3v126detail17do_format_decimalIcjEEPT_S4_T0_i.exit
@@ -613,12 +613,12 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not81, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %11 = and i32 %i.f, 4096
-  %.not82 = icmp eq i32 %11, 0
-  %12 = select i1 %.not82, i32 30768, i32 22576   ; 2 uses
+  %11 = shl i32 %i.f, 1
+  %12 = and i32 %11, 8192
+  %13 = xor i32 %12, 30768                        ; 2 uses
   %.not.i = icmp eq i32 %2, 0
-  %i.v = shl nuw nsw i32 %12, 8
-  %i.w = select i1 %.not.i, i32 %12, i32 %i.v
+  %i.v = shl nuw nsw i32 %13, 8
+  %i.w = select i1 %.not.i, i32 %13, i32 %i.v
   %i.x = or i32 %i.w, %2
   %i.y = add i32 %i.x, 33554432                   ; 2 uses
   store i32 %i.y, ptr %i.a, align 4, !tbaa !119
@@ -757,12 +757,12 @@ bb.l:                                             ; preds = %bb.a
   br i1 %.not84, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %13 = and i32 %i.f, 4096
-  %.not85 = icmp eq i32 %13, 0
-  %14 = select i1 %.not85, i32 25136, i32 16944   ; 2 uses
+  %14 = shl i32 %i.f, 1
+  %15 = and i32 %14, 8192
+  %16 = xor i32 %15, 25136                        ; 2 uses
   %.not.i53 = icmp eq i32 %2, 0
-  %i.bl = shl nuw nsw i32 %14, 8
-  %i.bm = select i1 %.not.i53, i32 %14, i32 %i.bl
+  %i.bl = shl nuw nsw i32 %16, 8
+  %i.bm = select i1 %.not.i53, i32 %16, i32 %i.bl
   %i.bn = or i32 %i.bm, %2
   %i.bo = add i32 %i.bn, 33554432                 ; 2 uses
   store i32 %i.bo, ptr %i.a, align 4, !tbaa !119
@@ -1165,12 +1165,12 @@ bb.i:                                             ; preds = %bb.a
   br i1 %.not81, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %11 = and i32 %i.f, 4096
-  %.not82 = icmp eq i32 %11, 0
-  %12 = select i1 %.not82, i32 30768, i32 22576   ; 2 uses
+  %11 = shl i32 %i.f, 1
+  %12 = and i32 %11, 8192
+  %13 = xor i32 %12, 30768                        ; 2 uses
   %.not.i = icmp eq i32 %2, 0
-  %i.u = shl nuw nsw i32 %12, 8
-  %i.v = select i1 %.not.i, i32 %12, i32 %i.u
+  %i.u = shl nuw nsw i32 %13, 8
+  %i.v = select i1 %.not.i, i32 %13, i32 %i.u
   %i.w = or i32 %i.v, %2
   %i.x = add i32 %i.w, 33554432                   ; 2 uses
   store i32 %i.x, ptr %i.a, align 4, !tbaa !119
@@ -1310,12 +1310,12 @@ bb.r:                                             ; preds = %bb.a
   br i1 %.not84, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %13 = and i32 %i.f, 4096
-  %.not85 = icmp eq i32 %13, 0
-  %14 = select i1 %.not85, i32 25136, i32 16944   ; 2 uses
+  %14 = shl i32 %i.f, 1
+  %15 = and i32 %14, 8192
+  %16 = xor i32 %15, 25136                        ; 2 uses
   %.not.i53 = icmp eq i32 %2, 0
-  %i.bl = shl nuw nsw i32 %14, 8
-  %i.bm = select i1 %.not.i53, i32 %14, i32 %i.bl
+  %i.bl = shl nuw nsw i32 %16, 8
+  %i.bm = select i1 %.not.i53, i32 %16, i32 %i.bl
   %i.bn = or i32 %i.bm, %2
   %i.bo = add i32 %i.bn, 33554432                 ; 2 uses
   store i32 %i.bo, ptr %i.a, align 4, !tbaa !119
@@ -1718,12 +1718,12 @@ _ZN3fmt3v126detail16do_format_base2eIcmEEPT_iS4_T0_ib.exit15: ; preds = %.split.
   br i1 %.not39, label %_ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZN3fmt3v126detail16do_format_base2eIcmEEPT_iS4_T0_ib.exit15
-  %5 = and i32 %i.b, 4096
-  %.not40 = icmp eq i32 %5, 0
-  %6 = select i1 %.not40, i32 25136, i32 16944    ; 2 uses
+  %5 = shl i32 %i.b, 1
+  %6 = and i32 %5, 8192
+  %7 = xor i32 %6, 25136                          ; 2 uses
   %.not.i16 = icmp eq i32 %2, 0
-  %i.bd = shl nuw nsw i32 %6, 8
-  %i.be = select i1 %.not.i16, i32 %6, i32 %i.bd
+  %i.bd = shl nuw nsw i32 %7, 8
+  %i.be = select i1 %.not.i16, i32 %7, i32 %i.bd
   %i.bf = or i32 %i.be, %2
   %i.bg = add i32 %i.bf, 33554432
   br label %_ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit
@@ -2126,12 +2126,12 @@ _ZN3fmt3v126detail16do_format_base2eIcoEEPT_iS4_T0_ib.exit12: ; preds = %.split.
   br i1 %.not39, label %_ZN3fmt3v126detail17do_format_decimalIcoEEPT_S4_T0_i.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZN3fmt3v126detail16do_format_base2eIcoEEPT_iS4_T0_ib.exit12
-  %4 = and i32 %i.b, 4096
-  %.not40 = icmp eq i32 %4, 0
-  %5 = select i1 %.not40, i32 25136, i32 16944    ; 2 uses
+  %4 = shl i32 %i.b, 1
+  %5 = and i32 %4, 8192
+  %6 = xor i32 %5, 25136                          ; 2 uses
   %.not.i13 = icmp eq i32 %.sroa.2.0.copyload, 0
-  %i.bg = shl nuw nsw i32 %5, 8
-  %i.bh = select i1 %.not.i13, i32 %5, i32 %i.bg
+  %i.bg = shl nuw nsw i32 %6, 8
+  %i.bh = select i1 %.not.i13, i32 %6, i32 %i.bg
   %i.bi = or i32 %i.bh, %.sroa.2.0.copyload
   %i.bj = add i32 %i.bi, 33554432
   br label %_ZN3fmt3v126detail17do_format_decimalIcoEEPT_S4_T0_i.exit

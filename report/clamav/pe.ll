@@ -205,9 +205,9 @@ bb.j:                                             ; preds = %get_pe_property.exi
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !37 ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.af = load i32, ptr %i.aa, align 4, !tbaa !116
-  %3 = and i32 %i.af, 2
-  %.not2482 = icmp eq i32 %3, 0
-  %spec.select = select i1 %.not2482, i32 18, i32 19 ; 3 uses
+  %3 = lshr i32 %i.af, 1
+  %4 = and i32 %3, 1                              ; 2 uses
+  %spec.select = or disjoint i32 %4, 18           ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !117
   %i.ai = and i32 %i.ah, 2
@@ -218,7 +218,7 @@ bb.k:                                             ; preds = %bb.j
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 60
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !56
   %.not2484 = icmp eq i32 %i.ak, 0
-  %i.al = or disjoint i32 %spec.select, 8
+  %i.al = or disjoint i32 %4, 26
   %spec.select2838 = select i1 %.not2484, i32 %i.al, i32 %spec.select
   br label %bb.l
 

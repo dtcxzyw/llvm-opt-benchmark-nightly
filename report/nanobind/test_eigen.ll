@@ -204,12 +204,12 @@ bb.a:
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = and i32 %2, 16
-  %.not = icmp eq i32 %4, 0
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.v = select i1 %.not, i32 -5, i32 -6
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %5 = lshr i32 %2, 4
+  %6 = and i32 %5, 1
+  %.v = xor i32 %6, -5
   %i.c = and i32 %.v, %2
-  %i.d = tail call noundef zeroext i1 @_ZN8nanobind6detail11type_casterINS_7ndarrayIJKiNS_5numpyENS0_5shapeIJLln1EEEENS0_6unusedEEEEiE11from_pythonENS_6handleEjPNS0_12cleanup_listE(ptr noundef nonnull align 8 dereferenceable(56) %5, ptr %1, i32 noundef %i.c, ptr noundef %3) #32
+  %i.d = tail call noundef zeroext i1 @_ZN8nanobind6detail11type_casterINS_7ndarrayIJKiNS_5numpyENS0_5shapeIJLln1EEEENS0_6unusedEEEEiE11from_pythonENS_6handleEjPNS0_12cleanup_listE(ptr noundef nonnull align 8 dereferenceable(56) %4, ptr %1, i32 noundef %i.c, ptr noundef %3) #32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a

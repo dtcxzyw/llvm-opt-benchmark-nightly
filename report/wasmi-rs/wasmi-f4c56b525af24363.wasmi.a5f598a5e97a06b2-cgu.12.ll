@@ -204,8 +204,8 @@ bb.k:                                             ; preds = %_RNvMso_NtNtNtNtCse
   %i.ah = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.ai = load ptr, ptr %i.ah, align 8, !noalias !1984, !nonnull !7, !align !12, !noundef !7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1984
-  %8 = trunc nuw i64 %i.m to i1
-  %. = select i1 %8, i64 3, i64 1
+  %8 = shl nuw nsw i64 %i.m, 1
+  %. = or disjoint i64 %8, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store i64 %., ptr %i.e, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8

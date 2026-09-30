@@ -205,8 +205,8 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %.not37.i, label %checkClusterStyle.exit.loopexit, label %.lr.ph.i99, !llvm.loop !3
 
 checkClusterStyle.exit.loopexit:                  ; preds = %.loopexit.i
-  %5 = icmp samesign ult i32 %.sroa.0.1.i, 2
-  %6 = select i1 %5, i32 2, i32 3
+  %5 = lshr i32 %.sroa.0.1.i, 1
+  %6 = or disjoint i32 %5, 2
   br label %checkClusterStyle.exit
 
 checkClusterStyle.exit:                           ; preds = %checkClusterStyle.exit.loopexit, %bb.dt, %bb.du, %bb.dv
@@ -609,9 +609,9 @@ bb.ae:                                            ; preds = %bb.ad
   %.str.27. = select i1 %.not169, ptr @.str.27, ptr %i.dc
   call void @gvrender_set_gradient_vals(ptr noundef nonnull %0, ptr noundef nonnull %.str.27., i32 noundef %i.de, double noundef %i.df) #27
   %i.dg = load i32, ptr %4, align 4
-  %5 = and i32 %i.dg, 2
-  %.not170 = icmp eq i32 %5, 0
-  %. = select i1 %.not170, i32 2, i32 3
+  %5 = lshr i32 %i.dg, 1
+  %6 = and i32 %5, 1
+  %. = or disjoint i32 %6, 2
   br label %bb.ag
 
 bb.af:                                            ; preds = %bb.ad

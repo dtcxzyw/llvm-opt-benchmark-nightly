@@ -202,9 +202,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.c, label %bb.l
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %4 = and i32 %3, 2
-  %.not72 = icmp eq i32 %4, 0
-  %5 = select i1 %.not72, i64 6, i64 7
+  %4 = lshr i32 %3, 1
+  %5 = and i32 %4, 1
   %.mask = and i64 %i.a, -140737488355328
   %i.g = icmp eq i64 %.mask, -1548112371908608
   %i.h = select i1 %i.g, ptr %1, ptr %2
@@ -249,9 +248,10 @@ bb.h:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.y = load i64, ptr %i.x, align 8, !tbaa !15
   %i.z = inttoptr i64 %i.y to ptr
-  %6 = getelementptr inbounds nuw i8, ptr %i.z, i64 432
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %5
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !18
+  %6 = zext nneg i32 %5 to i64
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.aa, i64 480
+  %i.ab = load i64, ptr %7, align 8, !tbaa !18
   %i.ac = inttoptr i64 %i.ab to ptr
   %i.ad = tail call ptr @lj_tab_getstr(ptr noundef nonnull %.015.i, ptr noundef %i.ac) #8 ; 2 uses
   %.not18.i = icmp eq ptr %i.ad, null

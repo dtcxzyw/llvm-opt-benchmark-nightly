@@ -204,13 +204,13 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 4628 ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 4
-  %3 = and i32 %i.ac, 4096
-  %.not19 = icmp eq i32 %3, 0
-  %4 = getelementptr i8, ptr %1, i64 208
-  %.val.i = load i8, ptr %4, align 8, !tbaa !127
-  %5 = sext i8 %.val.i to i32
-  %6 = select i1 %.not19, i32 73, i32 65
-  %.not20 = icmp eq i32 %6, %5
+  %3 = getelementptr i8, ptr %1, i64 208
+  %.val.i = load i8, ptr %3, align 8, !tbaa !127
+  %4 = sext i8 %.val.i to i32
+  %5 = lshr i32 %i.ac, 9
+  %6 = and i32 %5, 8
+  %7 = xor i32 %6, %4
+  %.not20 = icmp eq i32 %7, 73
   br i1 %.not20, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -613,13 +613,13 @@ bb.ay:                                            ; preds = %bb.ax
 bb.az:                                            ; preds = %bb.ay
   %i.er = getelementptr inbounds nuw i8, ptr %0, i64 4628 ; 2 uses
   %i.es = load i32, ptr %i.er, align 4
-  %5 = and i32 %i.es, 4096
-  %.not20.i = icmp eq i32 %5, 0
-  %6 = getelementptr i8, ptr %1, i64 208
-  %.val.i = load i8, ptr %6, align 8, !tbaa !127
-  %7 = sext i8 %.val.i to i32
-  %8 = select i1 %.not20.i, i32 73, i32 65
-  %.not21.i = icmp eq i32 %8, %7
+  %5 = getelementptr i8, ptr %1, i64 208
+  %.val.i = load i8, ptr %5, align 8, !tbaa !127
+  %6 = sext i8 %.val.i to i32
+  %7 = lshr i32 %i.es, 9
+  %8 = and i32 %7, 8
+  %9 = xor i32 %8, %6
+  %.not21.i = icmp eq i32 %9, 73
   br i1 %.not21.i, label %bb.bb, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az

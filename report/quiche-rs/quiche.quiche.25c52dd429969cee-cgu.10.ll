@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(i8 %i.d, !10321, !DIExpression(DW_OP_constu, 63, DW_OP_and, DW_OP_constu, 64, DW_OP_or, DW_OP_stack_value), !10362)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 116, !dbg !10505
   %i.h = load i8, ptr %i.g, align 4, !dbg !10505, !range !2117, !noundef !1030
-  %2 = trunc nuw i8 %i.h to i1, !dbg !10505
-  %3 = and i8 %i.d, 59, !dbg !10505
-  %.sroa.01.0.v = select i1 %2, i8 68, i8 64, !dbg !10505
-  %.sroa.01.0 = or disjoint i8 %.sroa.01.0.v, %3, !dbg !10505
+  %2 = and i8 %i.d, 59, !dbg !10505
+  %3 = shl nuw nsw i8 %i.h, 2, !dbg !10505
+  %.sroa.01.0.v = or disjoint i8 %3, %2, !dbg !10505
+  %.sroa.01.0 = or disjoint i8 %.sroa.01.0.v, 64, !dbg !10505
     #dbg_value(i8 %.sroa.01.0, !10321, !DIExpression(), !10362)
   %i.i = tail call { ptr, i64 } @_RNvMs2_Cs3cD8Bj6DSIP_6octetsNtB5_9OctetsMut6put_u8(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i8 noundef %.sroa.01.0), !dbg !10506
   %i.j = extractvalue { ptr, i64 } %i.i, 0, !dbg !10506

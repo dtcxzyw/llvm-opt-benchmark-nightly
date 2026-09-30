@@ -205,9 +205,9 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   %i.hp = select i1 %i.ho, i32 192, i32 128
   %i.hq = select i1 %i.hm, i32 %i.hp, i32 0
   %.1274 = or i32 %i.hq, %.0273                   ; 5 uses
-  %11 = and i32 %.1274, 64
-  %.not303 = icmp eq i32 %11, 0
-  %. = select i1 %.not303, i32 32, i32 288
+  %11 = shl i32 %.1274, 2
+  %12 = and i32 %11, 256
+  %. = or disjoint i32 %12, 32
   %.sink361 = select i1 %i.hi, i32 16, i32 %.
   %i.hr = or disjoint i32 %spec.select360, %.sink361
   %i.hs = lshr i32 %.0273, 9
@@ -452,10 +452,10 @@ bb.cj:                                            ; preds = %bb.ci
   %i.kt = load ptr, ptr %i.ks, align 8, !tbaa !202
   %i.ku = fadd float %.sroa.0328.0, %i.gw
   %i.kv = insertelement <2 x float> %i.cw, float %i.ku, i64 0
-  %12 = and i32 %.0273, 536870912
-  %.not312 = icmp eq i32 %12, 0
-  %13 = select i1 %.not312, i32 3, i32 2
-  %i.kw = select i1 %.0283.in, i32 %13, i32 1
+  %13 = lshr i32 %.0273, 29
+  %14 = and i32 %13, 1
+  %15 = xor i32 %14, 3
+  %i.kw = select i1 %.0283.in, i32 %15, i32 1
   call void @_ZN5ImGui11RenderArrowEP10ImDrawList6ImVec2j8ImGuiDirf(ptr noundef %i.kt, <2 x float> %i.kv, i32 noundef %i.ka, i32 noundef %i.kw, float noundef 1.000000e+00)
   br label %bb.cl
 
@@ -547,10 +547,10 @@ bb.cw:                                            ; preds = %bb.cv
   %i.me = call float @llvm.fmuladd.f32(float %i.mc, float 1.500000e-01, float %i.md)
   %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %i.mb, i64 0
   %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %i.me, i64 1
-  %14 = and i32 %.0273, 536870912
-  %.not310 = icmp eq i32 %14, 0
-  %15 = select i1 %.not310, i32 3, i32 2
-  %i.mf = select i1 %.0283.in, i32 %15, i32 1
+  %16 = lshr i32 %.0273, 29
+  %17 = and i32 %16, 1
+  %18 = xor i32 %17, 3
+  %i.mf = select i1 %.0283.in, i32 %18, i32 1
   call void @_ZN5ImGui11RenderArrowEP10ImDrawList6ImVec2j8ImGuiDirf(ptr noundef %i.ma, <2 x float> %.sroa.0.4.vec.insert, i32 noundef %i.ka, i32 noundef %i.mf, float noundef f0x3F333333)
   br label %bb.cx
 
@@ -953,9 +953,9 @@ bb.b:                                             ; preds = %bb.a
   %i.i = tail call noundef zeroext i1 @_ZN5ImGui11IsPopupOpenEji(i32 noundef %i.h, i32 noundef 0) ; 14 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   %i.k = load i32, ptr %i.j, align 4, !tbaa !245
-  %11 = and i32 %i.k, 268435456
-  %.not220 = icmp eq i32 %11, 0
-  %spec.select = select i1 %.not220, i32 268566853, i32 285344069 ; 2 uses
+  %11 = lshr i32 %i.k, 4
+  %12 = and i32 %11, 16777216
+  %spec.select = or disjoint i32 %12, 268566853   ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 9888 ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 9896 ; 4 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !459  ; 3 uses

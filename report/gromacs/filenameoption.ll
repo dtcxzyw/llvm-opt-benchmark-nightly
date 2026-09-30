@@ -202,10 +202,10 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !228
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = load i64, ptr %i.i, align 8, !tbaa !68
-  %6 = and i64 %i.j, 256
-  %.not40 = icmp eq i64 %6, 0
-  %.in.v = select i1 %.not40, i64 8, i64 12
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %6 = lshr i64 %i.j, 6
+  %7 = and i64 %6, 4
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %.in = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.k = load i32, ptr %.in, align 4, !tbaa !73
   invoke void @_ZN3gmx21OptionStorageTemplateINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE11createStoreEPSt6vectorIS6_SaIS6_EEPS6_Pii(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr") align 8 %i.b, ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef %i.d, ptr noundef %i.f, ptr noundef %i.h, i32 noundef %i.k)
           to label %bb.b unwind label %bb.i

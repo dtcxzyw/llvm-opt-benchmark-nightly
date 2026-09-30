@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 336
   %i.g = load i32, ptr %i.f, align 8
-  %2 = and i32 %i.g, 4
-  %.not13 = icmp eq i32 %2, 0
-  %spec.select = select i1 %.not13, i32 48, i32 16
+  %2 = shl i32 %i.g, 3
+  %3 = and i32 %2, 32
+  %spec.select = xor i32 %3, 48
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

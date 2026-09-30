@@ -202,9 +202,9 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bh = add nsw i32 %.0205, %.1225
-  %13 = and i32 %i.bh, 1
-  %.not252 = icmp eq i32 %13, 0
-  %spec.select273 = select i1 %.not252, i32 24, i32 28
+  %13 = shl i32 %i.bh, 2
+  %14 = and i32 %13, 4
+  %spec.select273 = or disjoint i32 %14, 24
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.aa
@@ -229,7 +229,7 @@ bb.ae:                                            ; preds = %bb.ad
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.bj, i8 0, i64 %i.bl, i1 false)
   %i.bm = zext nneg i32 %.1200 to i64
   %i.bn = getelementptr inbounds nuw i8, ptr %7, i64 %i.bm
-  %i.bo = sub nuw nsw i32 %8, %.1200
+  %i.bo = sub nsw i32 %8, %.1200
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.z

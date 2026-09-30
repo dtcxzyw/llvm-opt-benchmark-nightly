@@ -205,9 +205,9 @@ bb.w:                                             ; preds = %bb.u
   %i.ct = load ptr, ptr %i.cn, align 8, !noalias !2743, !nonnull !3, !align !18, !noundef !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !2743
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ao), !noalias !2743
-  %3 = and i32 %.sroa.7.0, 16777216
-  %.not221.i = icmp eq i32 %3, 0
-  %..i = select i1 %.not221.i, i32 3, i32 2       ; 2 uses
+  %3 = lshr i32 %.sroa.7.0, 24
+  %4 = and i32 %3, 1
+  %..i = xor i32 %4, 3                            ; 2 uses
   store i32 %..i, ptr %i.ao, align 4, !noalias !2743
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an), !noalias !2743
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.644.sroa.8.i.sroa.12)

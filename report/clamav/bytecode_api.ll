@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
   store i32 %2, ptr %i.e, align 4, !tbaa !71
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1120
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !65
-  %3 = and i32 %i.b, 128
-  %.not27 = icmp eq i32 %3, 0
-  %4 = select i1 %.not27, i32 3, i32 1
-  tail call void %i.g(ptr noundef nonnull %0, i32 noundef %4) #27
+  %3 = lshr i32 %i.b, 6
+  %4 = and i32 %3, 2
+  %5 = xor i32 %4, 3
+  tail call void %i.g(ptr noundef nonnull %0, i32 noundef %5) #27
   %i.h = load i32, ptr %i.a, align 8, !tbaa !69
   %i.i = and i32 %i.h, -193                       ; 2 uses
   store i32 %i.i, ptr %i.a, align 8, !tbaa !69

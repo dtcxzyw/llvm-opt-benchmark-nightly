@@ -205,12 +205,12 @@ _ZN3fmt3v126detail16do_format_base2eIcjEEPT_iS4_T0_ib.exit14: ; preds = %.split.
   br i1 %.not38, label %_ZN3fmt3v126detail17do_format_decimalIcjEEPT_S4_T0_i.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZN3fmt3v126detail16do_format_base2eIcjEEPT_iS4_T0_ib.exit14
-  %4 = and i32 %i.b, 4096
-  %.not39 = icmp eq i32 %4, 0
-  %5 = select i1 %.not39, i32 25136, i32 16944    ; 2 uses
+  %4 = shl i32 %i.b, 1
+  %5 = and i32 %4, 8192
+  %6 = xor i32 %5, 25136                          ; 2 uses
   %.not.i15 = icmp eq i64 %.sroa.2.0.extract.shift.i, 0
-  %i.bl = shl nuw nsw i32 %5, 8
-  %i.bm = select i1 %.not.i15, i32 %5, i32 %i.bl
+  %i.bl = shl nuw nsw i32 %6, 8
+  %i.bm = select i1 %.not.i15, i32 %6, i32 %i.bl
   %i.bn = or i32 %i.bm, %.sroa.2.0.extract.trunc.i
   %i.bo = add i32 %i.bn, 33554432
   br label %_ZN3fmt3v126detail17do_format_decimalIcjEEPT_S4_T0_i.exit

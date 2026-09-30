@@ -205,9 +205,9 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.kf, label %rec_mm_comp_cdata.exit, label %bb.bd
 
 rec_mm_comp_cdata.exit:                           ; preds = %bb.bc, %bb.bb
-  %2 = and i32 %i.et, 2
-  %.not568 = icmp eq i32 %2, 0
-  %3 = select i1 %.not568, i32 6, i32 7
+  %2 = lshr i32 %i.et, 1
+  %3 = and i32 %2, 1
+  %4 = or disjoint i32 %3, 6
   tail call void @lj_snap_add(ptr noundef nonnull %0) #8
   %i.kg = load i32, ptr %i.ex, align 8, !tbaa !75 ; 2 uses
   %i.kh = and i32 %i.kg, 520093696
@@ -221,7 +221,7 @@ rec_mm_comp_cdata.exit:                           ; preds = %bb.bc, %bb.bb
   %.sink17.i.sroa.gep.val623 = load i64, ptr %.sink17.i.sroa.gep, align 8
   %storemerge.i = select i1 %i.ki, i64 %.sink17.i.sroa.gep609.val622, i64 %.sink17.i.sroa.gep.val623
   store i64 %storemerge.i, ptr %1, align 8, !tbaa !9
-  %i.km = call i32 @lj_record_mm_lookup(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef range(i32 4, 8) %3) ; 0 uses
+  %i.km = call i32 @lj_record_mm_lookup(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef range(i32 4, 8) %4) ; 0 uses
   call fastcc void @rec_mm_callcomp(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef range(i32 0, 256) %i.eu)
   br label %lj_record_call.exit
 

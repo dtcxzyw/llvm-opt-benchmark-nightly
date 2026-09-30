@@ -204,15 +204,15 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) @__const.prune_shallow.sb, i64 24, i1 false)
-  %5 = and i32 %0, 2
-  %.not = icmp eq i32 %5, 0
-  %spec.select = select i1 %.not, i32 1, i32 5    ; 2 uses
+  %5 = shl i32 %0, 1
+  %6 = and i32 %5, 4                              ; 2 uses
+  %spec.select = or disjoint i32 %6, 1
   %i.a = and i32 %0, 1
   %.not7 = icmp eq i32 %i.a, 0
   br i1 %.not7, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = or disjoint i32 %spec.select, 2
+  %i.b = or disjoint i32 %6, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   store ptr %4, ptr %2, align 8, !tbaa !72
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
