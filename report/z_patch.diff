@@ -1,0 +1,26 @@
+diff --git a/llvm/lib/Transforms/Scalar/GVN.cpp b/llvm/lib/Transforms/Scalar/GVN.cpp
+index b8a44882af867..f059a7232db7a 100644
+--- a/llvm/lib/Transforms/Scalar/GVN.cpp
++++ b/llvm/lib/Transforms/Scalar/GVN.cpp
+@@ -3478,6 +3478,21 @@ bool GVNPass::processInstruction(Instruction *I) {
+         }
+       }
+     }
++    auto *ICmp = dyn_cast<ICmpInst>(I);
++    if (ICmp && ICmp->hasSameSign()) {
++      uint32_t SameSignNum = VN.lookupCmp(
++          ICmp->getOpcode(),
++          ICmpInst::getFlippedSignednessPredicate(ICmp->getPredicate()),
++          ICmp->getOperand(0), ICmp->getOperand(1));
++      if (SameSignNum != 0) {
++        Repl = findLeader(I->getParent(), SameSignNum);
++        if (Repl) {
++          patchAndReplaceAllUsesWith(I, Repl);
++          salvageAndRemoveInstruction(I);
++          return true;
++        }
++      }
++    }
+     // Failure, just remember this instance for future use.
+     LeaderTable.insert(Num, I, I->getParent());
+     return false;
