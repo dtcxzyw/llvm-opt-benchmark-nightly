@@ -204,25 +204,24 @@ _RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.i: ; preds =
 
 _RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit._RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.thread6_crit_edge.i: ; preds = %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.i
   %.val32.pre.i = load i64, ptr %i.m, align 8, !dbg !14653, !range !673, !noalias !14559
+  %2 = icmp ne i64 %.val32.pre.i, 0, !dbg !14654
   br label %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.thread6.i, !dbg !14652
 
 _RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.thread.i: ; preds = %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.i, %bb.g, %bb.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(120) %i.m, i64 120, i1 false), !dbg !14654, !noalias !14565
-  br label %_RNvMNtCs2NzvFoTxuAy_2rg8haystackNtB2_15HaystackBuilder5build.exit, !dbg !14655
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(120) %i.m, i64 120, i1 false), !dbg !14655, !noalias !14565
+  br label %_RNvMNtCs2NzvFoTxuAy_2rg8haystackNtB2_15HaystackBuilder5build.exit, !dbg !14656
 
 _RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.thread6.i: ; preds = %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit._RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.thread6_crit_edge.i, %bb.i, %bb.f
-  %.val32.i = phi i64 [ %.val32.pre.i, %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit._RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.thread6_crit_edge.i ], [ 1, %bb.f ], [ 1, %bb.i ], !dbg !14653 ; 2 uses
+  %.val32.i = phi i1 [ %2, %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit._RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.thread6_crit_edge.i ], [ true, %bb.f ], [ true, %bb.i ], !dbg !14653 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.m, i64 48, !dbg !14653 ; 2 uses
   %.val33.i = load i32, ptr %i.bq, align 8, !dbg !14653, !noalias !14559
-  %2 = icmp ne i64 %.val32.i, 0, !dbg !14656
   %i.br = and i32 %.val33.i, 61440, !dbg !14657   ; 3 uses
   %i.bs = icmp eq i32 %i.br, 32768, !dbg !14657
-  %.sroa.02.0.i.i.i = select i1 %2, i1 %i.bs, i1 false, !dbg !14657
+  %.sroa.02.0.i.i.i = select i1 %.val32.i, i1 %i.bs, i1 false, !dbg !14657
   br i1 %.sroa.02.0.i.i.i, label %bb.am, label %bb.ai, !dbg !14658
 
 bb.ai:                                            ; preds = %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.thread6.i
-  %3 = icmp eq i64 %.val32.i, 0, !dbg !14659
-  br i1 %3, label %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack6is_dir.exit.thread.i, label %bb.aj, !dbg !14659
+  br i1 %.val32.i, label %bb.aj, label %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack6is_dir.exit.thread.i, !dbg !14659
 
 bb.aj:                                            ; preds = %bb.ai
   %i.bt = icmp eq i32 %i.br, 16384, !dbg !14660
@@ -248,7 +247,7 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack11is_explicit.exit.thread6.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(120) %i.m, i64 120, i1 false), !dbg !14665, !noalias !14565
-  br label %_RNvMNtCs2NzvFoTxuAy_2rg8haystackNtB2_15HaystackBuilder5build.exit, !dbg !14655
+  br label %_RNvMNtCs2NzvFoTxuAy_2rg8haystackNtB2_15HaystackBuilder5build.exit, !dbg !14656
 
 _RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack6is_dir.exit.i: ; preds = %.noexc38.i
   br i1 %i.by, label %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack6is_dir.exit.thread9.i, label %_RNvMs_NtCs2NzvFoTxuAy_2rg8haystackNtB4_8Haystack6is_dir.exit.thread.i, !dbg !14666
@@ -651,9 +650,9 @@ begin_hunk_1_@llvm.umin.i32
 !14651 = !DILocation(line: 94, column: 9, scope: !14561, inlinedAt: !14414)
 !14652 = !DILocation(line: 56, column: 12, scope: !14417, inlinedAt: !14414)
 !14653 = !DILocation(line: 63, column: 16, scope: !14417, inlinedAt: !14414)
-!14654 = !DILocation(line: 57, column: 25, scope: !14417, inlinedAt: !14414)
-!14655 = !DILocation(line: 0, scope: !14566, inlinedAt: !14414)
-!14656 = !DILocation(line: 192, column: 9, scope: !14477, inlinedAt: !14482)
+!14654 = !DILocation(line: 192, column: 9, scope: !14477, inlinedAt: !14482)
+!14655 = !DILocation(line: 57, column: 25, scope: !14417, inlinedAt: !14414)
+!14656 = !DILocation(line: 0, scope: !14566, inlinedAt: !14414)
 !14657 = !DILocation(line: 1229, column: 9, scope: !14483, inlinedAt: !14484)
 !14658 = !DILocation(line: 63, column: 12, scope: !14417, inlinedAt: !14414)
 !14659 = !DILocation(line: 192, column: 9, scope: !425, inlinedAt: !14487)

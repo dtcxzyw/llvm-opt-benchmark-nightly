@@ -205,44 +205,43 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.h = load i8, ptr %i.g, align 8, !range !16, !noalias !1360, !noundef !4
   %i.i = icmp eq i8 %i.h, 1
-  br i1 %i.i, label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.i, label %_RNvYNCNKNvNtCs1D9TkrBnOxz_15crossbeam_epoch7default6HANDLE00INtNtNtCs4NRVxsYgnAr_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i.i, !prof !11
+  br i1 %i.i, label %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit, label %_RNvYNCNKNvNtCs1D9TkrBnOxz_15crossbeam_epoch7default6HANDLE00INtNtNtCs4NRVxsYgnAr_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i.i, !prof !11
 
 _RNvYNCNKNvNtCs1D9TkrBnOxz_15crossbeam_epoch7default6HANDLE00INtNtNtCs4NRVxsYgnAr_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i.i: ; preds = %bb.a
   %i.j = tail call noundef ptr @_RINvMs0_NtNtNtNtCs2AWtUsOyxgP_3std3sys12thread_local6native4lazyINtB6_7StorageNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleuE16get_or_init_slowNvNvNtB1i_7default6HANDLE27___rust_std_internal_init_fnECs2JiOgHzbbc7_10tokenizers(ptr noundef nonnull align 8 %i.f, ptr noalias noundef align 8 dereferenceable_or_null(16) null) ; 2 uses
   %i.k = icmp eq ptr %i.j, null
-  br i1 %i.k, label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.thread.i, label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.i
-
-_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.i: ; preds = %_RNvYNCNKNvNtCs1D9TkrBnOxz_15crossbeam_epoch7default6HANDLE00INtNtNtCs4NRVxsYgnAr_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i.i, %bb.a
-  %.sroa.0.0.i.i.i2.i.i = phi ptr [ %i.j, %_RNvYNCNKNvNtCs1D9TkrBnOxz_15crossbeam_epoch7default6HANDLE00INtNtNtCs4NRVxsYgnAr_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i.i ], [ %i.f, %bb.a ]
-  %.val.i.i = load ptr, ptr %.sroa.0.0.i.i.i2.i.i, align 8, !noundef !4
-  %2 = getelementptr i8, ptr %.val.i.i, i64 2072
-  %.val.val.i.i = load i64, ptr %2, align 8, !noundef !4
-  br label %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit
+  br i1 %i.k, label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.thread.i, label %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit
 
 _RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.thread.i: ; preds = %_RNvYNCNKNvNtCs1D9TkrBnOxz_15crossbeam_epoch7default6HANDLE00INtNtNtCs4NRVxsYgnAr_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i.i
   %i.l = tail call noundef nonnull align 8 ptr @_RNvNtCs1D9TkrBnOxz_15crossbeam_epoch7default9collector()
   %i.m = tail call noundef ptr @_RNvMs1_NtCs1D9TkrBnOxz_15crossbeam_epoch9collectorNtB5_9Collector8register(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.l) ; 3 uses
   %i.n = getelementptr i8, ptr %i.m, i64 2072
-  %.val2.val.i.i = load i64, ptr %i.n, align 8, !noundef !4 ; 2 uses
+  %.val2.val.i.i = load i64, ptr %i.n, align 8, !noundef !4
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 2080 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !noundef !4 ; 2 uses
   %i.q = add i64 %i.p, -1
   store i64 %i.q, ptr %i.o, align 8
-  %i.r = icmp eq i64 %.val2.val.i.i, 0
+  %i.r = icmp eq i64 %.val2.val.i.i, 0            ; 2 uses
   %i.s = icmp eq i64 %i.p, 1
   %or.cond.i.i.i3.i.i = and i1 %i.r, %i.s
-  br i1 %or.cond.i.i.i3.i.i, label %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit.thread, label %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit, !prof !17
+  br i1 %or.cond.i.i.i3.i.i, label %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit.thread, label %_RNCINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB4_9is_pinned0bEs_0Cs2JiOgHzbbc7_10tokenizers.exit.i, !prof !17
 
 _RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit.thread: ; preds = %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.thread.i
   tail call void @_RNvMs6_NtCs1D9TkrBnOxz_15crossbeam_epoch8internalNtB5_5Local8finalize(ptr noundef nonnull align 128 %i.m)
   br label %bb.d
 
-_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit: ; preds = %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.i, %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.thread.i
-  %.sroa.0.0.in.i = phi i64 [ %.val.val.i.i, %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.i ], [ %.val2.val.i.i, %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.thread.i ]
-  %.sroa.0.0.i.not = icmp eq i64 %.sroa.0.0.in.i, 0
+_RNCINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB4_9is_pinned0bEs_0Cs2JiOgHzbbc7_10tokenizers.exit.i: ; preds = %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs1D9TkrBnOxz_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECs2JiOgHzbbc7_10tokenizers.exit.thread.i
+  br i1 %i.r, label %bb.d, label %bb.b
+
+_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.a, %_RNvYNCNKNvNtCs1D9TkrBnOxz_15crossbeam_epoch7default6HANDLE00INtNtNtCs4NRVxsYgnAr_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i.i
+  %.sroa.0.0.i.i.i2.i.i = phi ptr [ %i.j, %_RNvYNCNKNvNtCs1D9TkrBnOxz_15crossbeam_epoch7default6HANDLE00INtNtNtCs4NRVxsYgnAr_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i.i ], [ %i.f, %bb.a ]
+  %.val.i.i = load ptr, ptr %.sroa.0.0.i.i.i2.i.i, align 8, !noundef !4
+  %2 = getelementptr i8, ptr %.val.i.i, i64 2072
+  %.val.val.i.i = load i64, ptr %2, align 8, !noundef !4
+  %.sroa.0.0.i.not = icmp eq i64 %.val.val.i.i, 0
   br i1 %.sroa.0.0.i.not, label %bb.d, label %bb.b
 
-bb.b:                                             ; preds = %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit
+bb.b:                                             ; preds = %_RNCINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB4_9is_pinned0bEs_0Cs2JiOgHzbbc7_10tokenizers.exit.i, %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit
   fence seq_cst
   br label %bb.d
 
@@ -252,7 +251,7 @@ bb.c:                                             ; preds = %bb.f
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1D9TkrBnOxz_15crossbeam_epoch5guard5GuardECs2JiOgHzbbc7_10tokenizers(ptr %i.u) #30
           to label %bb.q unwind label %bb.p
 
-bb.d:                                             ; preds = %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit, %bb.b, %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit.thread
+bb.d:                                             ; preds = %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit.thread, %_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECs2JiOgHzbbc7_10tokenizers.exit, %bb.b, %_RNCINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB4_9is_pinned0bEs_0Cs2JiOgHzbbc7_10tokenizers.exit.i
   %i.u = tail call fastcc noundef ptr @_RINvNtCs1D9TkrBnOxz_15crossbeam_epoch7default11with_handleNCNvB2_3pin0NtNtB4_5guard5GuardECs2JiOgHzbbc7_10tokenizers() ; 10 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 264
   %i.w = load atomic i64, ptr %i.v acquire, align 8

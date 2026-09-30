@@ -204,9 +204,9 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.u, %bb.w, %bb.z
   %.2114 = phi ptr [ %i.cc, %bb.u ], [ %i.cg, %bb.w ], [ %i.cl, %bb.z ] ; 2 uses
-  %.1103 = phi i32 [ %.0102149, %bb.u ], [ %.098150, %bb.w ], [ 0, %bb.z ] ; 7 uses
+  %.1103 = phi i32 [ %.0102149, %bb.u ], [ %.098150, %bb.w ], [ 0, %bb.z ] ; 6 uses
   %.2100 = phi i32 [ %i.cb, %bb.u ], [ %.098150, %bb.w ], [ 0, %bb.z ]
-  %.4 = phi i32 [ %i.ca, %bb.u ], [ %.2151, %bb.w ], [ %.2151, %bb.z ] ; 6 uses
+  %.4 = phi i32 [ %i.ca, %bb.u ], [ %.2151, %bb.w ], [ %.2151, %bb.z ] ; 5 uses
   %i.cm = icmp ult ptr %.2114, %.1
   br i1 %i.cm, label %.lr.ph, label %._crit_edge, !llvm.loop !8
 
@@ -217,16 +217,10 @@ bb.aa:                                            ; preds = %bb.u, %bb.w, %bb.z
 bb.ab:                                            ; preds = %._crit_edge
   %i.co = icmp eq i32 %.4, 8
   %i.cp = icmp ne i32 %.1103, -1
-  %or.cond19 = select i1 %i.co, i1 %i.cp, i1 false
-  br i1 %or.cond19, label %.loopexit, label %3
+  %or.cond190 = xor i1 %i.co, %i.cp
+  br i1 %or.cond190, label %bb.ac, label %.loopexit
 
-3:                                                ; preds = %bb.ab
-  %4 = icmp ne i32 %.4, 8
-  %5 = icmp eq i32 %.1103, -1
-  %or.cond21 = select i1 %4, i1 %5, i1 false
-  br i1 %or.cond21, label %.loopexit, label %bb.ac
-
-bb.ac:                                            ; preds = %3
+bb.ac:                                            ; preds = %bb.ab
   %i.cq = icmp sgt i32 %.1103, -1
   br i1 %i.cq, label %bb.ad, label %.loopexit.loopexit
 
@@ -337,8 +331,8 @@ bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #21
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.x, %bb.y, %.lr.ph, %bb.q, %.loopexit.loopexit, %bb.ad, %._crit_edge, %bb.ab, %3, %.critedge139, %.critedge136, %bb.i
-  %.7 = phi i32 [ 0, %.critedge136 ], [ 0, %bb.i ], [ 0, %.critedge139 ], [ 0, %3 ], [ 0, %bb.ab ], [ 0, %._crit_edge ], [ -1, %bb.ad ], [ 1, %.loopexit.loopexit ], [ 0, %bb.q ], [ 0, %.lr.ph ], [ 0, %bb.y ], [ 0, %bb.x ]
+.loopexit:                                        ; preds = %bb.x, %bb.y, %.lr.ph, %bb.q, %.loopexit.loopexit, %bb.ad, %._crit_edge, %bb.ab, %.critedge139, %.critedge136, %bb.i
+  %.7 = phi i32 [ 0, %.critedge136 ], [ 0, %bb.i ], [ 0, %.critedge139 ], [ 0, %bb.q ], [ 0, %bb.ab ], [ 0, %._crit_edge ], [ -1, %bb.ad ], [ 1, %.loopexit.loopexit ], [ 0, %.lr.ph ], [ 0, %bb.y ], [ 0, %bb.x ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #21
   br label %bb.ae
 

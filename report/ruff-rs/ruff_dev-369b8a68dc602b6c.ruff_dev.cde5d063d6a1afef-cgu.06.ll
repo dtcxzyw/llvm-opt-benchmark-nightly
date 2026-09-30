@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %bb.ak
           to label %bb.am unwind label %.loopexit.split-lp.loopexit.split-lp.i.i.i.i.i, !noalias !1551 ; 2 uses
 
 bb.am:                                            ; preds = %bb.al
-  %i.gp = extractvalue { i64, i32 } %i.go, 0      ; 3 uses
+  %i.gp = extractvalue { i64, i32 } %i.go, 0      ; 2 uses
   %i.gq = extractvalue { i64, i32 } %i.go, 1      ; 2 uses
   br i1 %i.bk, label %bb.ao, label %bb.an
 
@@ -368,10 +368,9 @@ bb.bi:                                            ; preds = %bb.bg
   br label %bb.an
 
 bb.bj:                                            ; preds = %bb.br, %bb.an
-  %3 = icmp eq i64 %i.gp, 0
   %i.hw = icmp ne i64 %i.gp, 0
   %i.hx = icmp samesign ugt i32 %i.gq, 50000000
-  %spec.select.i.i.i.i.i = select i1 %3, i1 %i.hx, i1 %i.hw
+  %spec.select.i.i.i.i.i = select i1 %i.hw, i1 true, i1 %i.hx
   br i1 %spec.select.i.i.i.i.i, label %bb.cv, label %bb.bs
 
 bb.bk:                                            ; preds = %bb.an

@@ -204,8 +204,8 @@ lean_nat_eq.exit:                                 ; preds = %bb.aq, %bb.ap, %bb.
   %i.cp = tail call zeroext i8 @l_Lake_Log_maxLv(ptr noundef nonnull %i.bx) #8 ; 4 uses
   %i.cq = getelementptr i8, ptr %i.bx, i64 8
   %.val1304 = load i64, ptr %i.cq, align 8, !tbaa !12 ; 2 uses
-  %3 = shl i64 %.val1304, 1                       ; 2 uses
-  %i.cr = icmp ne i64 %3, 0                       ; 2 uses
+  %.mask = and i64 %.val1304, 9223372036854775807
+  %i.cr = icmp ne i64 %.mask, 0                   ; 3 uses
   %i.cs = tail call zeroext i8 @l_Lake_instOrdLogLevel_ord(i8 noundef zeroext %i.ad, i8 noundef zeroext %i.cp) #8
   %i.ct = icmp ne i8 %i.cs, 2
   %narrow = select i1 %i.ct, i1 %i.cr, i1 false   ; 3 uses
@@ -604,8 +604,7 @@ bb.cx:                                            ; preds = %bb.cw
 
 lean_dec.exit1287:                                ; preds = %lean_dec_ref.exit1077
   %.0791 = select i1 %narrow, i8 0, i8 %i.ab
-  %.not1512 = icmp eq i64 %3, 0
-  br i1 %.not1512, label %bb.cc, label %lean_nat_le.exit.thread
+  br i1 %i.cr, label %lean_nat_le.exit.thread, label %bb.cc
 
 lean_dec_ref.exit1065:                            ; preds = %lean_dec_ref.exit1055, %bb.gj, %bb.gi, %bb.gh
   %.0835 = phi ptr [ %i.lv, %bb.gj ], [ %i.lv, %bb.gh ], [ %i.lv, %bb.gi ], [ %i.nb, %lean_dec_ref.exit1055 ] ; 4 uses

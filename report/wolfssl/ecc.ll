@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define range(i32 0, 2) i32 @wc_ecc_is_valid_idx(i32 noundef %0) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @wc_ecc_is_valid_idx(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = add i32 %0, 1
   %narrow = icmp ult i32 %i.a, 6
@@ -607,9 +607,9 @@ bb.b:                                             ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
   %i.c = getelementptr inbounds nuw [88 x i8], ptr @ecc_sets, i64 %i.b
   %i.d = load i32, ptr %i.c, align 8, !tbaa !27   ; 7 uses
-  %i.e = icmp ne ptr %1, null
+  %i.e = icmp ne ptr %1, null                     ; 2 uses
   %i.f = icmp eq ptr %2, null                     ; 2 uses
-  %i.g = icmp ne ptr %3, null
+  %i.g = icmp ne ptr %3, null                     ; 2 uses
   %i.h = and i1 %i.e, %i.g
   %or.cond3 = and i1 %i.f, %i.h
   br i1 %or.cond3, label %bb.c, label %bb.d
@@ -619,10 +619,9 @@ bb.c:                                             ; preds = %bb.b
   br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b
-  %4 = icmp eq ptr %1, null
-  %5 = icmp eq ptr %3, null
-  %6 = or i1 %4, %5
-  %or.cond7 = or i1 %i.f, %6
+  %.demorgan = and i1 %i.e, %i.g
+  %4 = xor i1 %.demorgan, true
+  %or.cond7 = or i1 %i.f, %4
   br i1 %or.cond7, label %bb.k, label %bb.e
 
 bb.e:                                             ; preds = %bb.d

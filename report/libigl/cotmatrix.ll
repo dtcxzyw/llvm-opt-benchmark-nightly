@@ -205,8 +205,8 @@ bb.bf:                                            ; preds = %.preheader, %_ZNSt6
   %.sroa.0714.21315 = phi ptr [ %.sroa.0714.11319, %.preheader ], [ %.sroa.0714.13, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJlldEEERS2_DpOT_.exit373 ] ; 8 uses
   %.sroa.15721.21314 = phi ptr [ %.sroa.15721.11318, %.preheader ], [ %.sroa.15721.6, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJlldEEERS2_DpOT_.exit373 ] ; 10 uses
   %.sroa.28.21313 = phi ptr [ %.sroa.28.11317, %.preheader ], [ %.sroa.28.13, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJlldEEERS2_DpOT_.exit373 ] ; 2 uses
-  %i.rm = add nuw nsw i64 %.01171316, 1           ; 4 uses
-  %i.rn = icmp eq i64 %i.rm, 3
+  %i.rm = add nuw nsw i64 %.01171316, 1           ; 3 uses
+  %i.rn = icmp eq i64 %i.rm, 3                    ; 2 uses
   %i.ro = select i1 %i.rn, i64 0, i64 %i.rm
   %i.rp = load ptr, ptr %21, align 8, !tbaa !67
   %i.rq = load i64, ptr %i.aj, align 8, !tbaa !68 ; 2 uses
@@ -609,8 +609,7 @@ _ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJlldEEERS2_DpOT_.exit373
   %.sroa.28.13 = phi ptr [ %i.zg, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE17_M_realloc_insertIJlldEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i370 ], [ %.sroa.28.12, %bb.cc ] ; 3 uses
   %.sroa.15721.6 = phi ptr [ %i.zf, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE17_M_realloc_insertIJlldEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i370 ], [ %i.yc, %bb.cc ] ; 3 uses
   %.sroa.0714.13 = phi ptr [ %i.yn, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE17_M_realloc_insertIJlldEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i370 ], [ %.sroa.0714.12, %bb.cc ] ; 3 uses
-  %exitcond1689.not = icmp eq i64 %i.rm, 3
-  br i1 %exitcond1689.not, label %bb.be, label %bb.bf, !llvm.loop !269
+  br i1 %i.rn, label %bb.be, label %bb.bf, !llvm.loop !269
 
 .loopexit804:                                     ; preds = %_ZNKSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i307
   %lpad.loopexit = landingpad { ptr, i32 }

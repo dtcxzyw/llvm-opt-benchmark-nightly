@@ -204,8 +204,7 @@ bb.h:                                             ; preds = %.critedge2
   br i1 %.1, label %bb.ak, label %bb.al
 
 bb.i:                                             ; preds = %bb.g, %.critedge2
-  %i.o = phi i1 [ false, %bb.g ], [ true, %.critedge2 ]
-  %3 = phi i1 [ true, %bb.g ], [ false, %.critedge2 ]
+  %i.o = phi i1 [ false, %bb.g ], [ true, %.critedge2 ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %bb.g ], [ 1, %.critedge2 ] ; 2 uses
   %.0114185 = phi i1 [ false, %bb.g ], [ %.1, %.critedge2 ] ; 2 uses
   %.sroa.0.0184 = phi ptr [ null, %bb.g ], [ %.sroa.0.1.lcssa, %.critedge2 ] ; 4 uses
@@ -606,7 +605,7 @@ bb.aj:                                            ; preds = %bb.ad, %bb.ai
   br i1 %.not126, label %.critedge2, label %.lr.ph182, !llvm.loop !190
 
 .critedge2:                                       ; preds = %.lr.ph182, %.preheader
-  br i1 %3, label %bb.i, label %bb.h, !llvm.loop !191
+  br i1 %i.o, label %bb.h, label %bb.i, !llvm.loop !191
 
 bb.ak:                                            ; preds = %bb.h
   %i.fk = load ptr, ptr %i.l, align 8, !tbaa !56

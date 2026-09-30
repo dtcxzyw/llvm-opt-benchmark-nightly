@@ -205,7 +205,7 @@ bb.gk:                                            ; preds = %bb.gj
   %i.bfv = load ptr, ptr %i.bfu, align 8, !tbaa !314, !alias.scope !319 ; 13 uses
   %i.bfw = getelementptr inbounds nuw i8, ptr %0, i64 712
   %i.bfx = load i32, ptr %i.bfw, align 8, !tbaa !315, !alias.scope !319 ; 12 uses
-  %i.bfy = load i32, ptr %1, align 8, !tbaa !74, !noalias !319 ; 33 uses
+  %i.bfy = load i32, ptr %1, align 8, !tbaa !74, !noalias !319 ; 30 uses
   %i.bfz = getelementptr inbounds nuw i8, ptr %1, i64 17 ; 2 uses
   %i.bga = load i8, ptr %i.bfz, align 1, !tbaa !75, !noalias !319 ; 7 uses
   %i.bgb = icmp ult i8 %i.bga, 9
@@ -575,7 +575,7 @@ bb.gp:                                            ; preds = %bb.gm
 
 bb.gq:                                            ; preds = %bb.gm
   %i.boj = icmp eq i8 %i.bga, 2
-  %i.bok = icmp ne i32 %i.bfy, 0
+  %i.bok = icmp ne i32 %i.bfy, 0                  ; 4 uses
   %or.cond257.i = select i1 %i.boj, i1 %i.bok, i1 false
   br i1 %or.cond257.i, label %.lr.ph.i208, label %.loopexit227.i
 
@@ -645,8 +645,7 @@ bb.gq:                                            ; preds = %bb.gm
   ]
 
 .preheader224.i:                                  ; preds = %.loopexit227.i
-  %.not.i204 = icmp eq i32 %i.bfy, 0
-  br i1 %.not.i204, label %png_do_gamma.exit, label %.lr.ph232.i.preheader
+  br i1 %i.bok, label %.lr.ph232.i.preheader, label %png_do_gamma.exit
 
 .lr.ph232.i.preheader:                            ; preds = %.preheader224.i
   %xtraiter751 = and i32 %i.bfy, 1
@@ -658,8 +657,7 @@ bb.gq:                                            ; preds = %bb.gm
   br label %.lr.ph232.i
 
 .preheader222.i:                                  ; preds = %.loopexit227.i
-  %.not258.i206 = icmp eq i32 %i.bfy, 0
-  br i1 %.not258.i206, label %png_do_gamma.exit, label %.lr.ph235.i.preheader
+  br i1 %i.bok, label %.lr.ph235.i.preheader, label %png_do_gamma.exit
 
 .lr.ph235.i.preheader:                            ; preds = %.preheader222.i
   %i.bqi = add i32 %i.bfy, -1
@@ -672,8 +670,7 @@ bb.gq:                                            ; preds = %bb.gm
   br label %.lr.ph235.i
 
 .preheader220.i:                                  ; preds = %.loopexit227.i
-  %.not259.i207 = icmp eq i32 %i.bfy, 0
-  br i1 %.not259.i207, label %png_do_gamma.exit, label %.lr.ph238.i.preheader
+  br i1 %i.bok, label %.lr.ph238.i.preheader, label %png_do_gamma.exit
 
 .lr.ph238.i.preheader:                            ; preds = %.preheader220.i
   %i.bqk = add i32 %i.bfy, -1                     ; 2 uses

@@ -205,9 +205,9 @@ bb.a:
   store ptr %.8.val, ptr %i.a, align 8, !tbaa !221, !alias.scope !1172
   %i.b = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
   store i64 %.16.val, ptr %i.b, align 8, !tbaa !133, !alias.scope !1172
-  %.not.i.i.i.i.i.i = icmp eq ptr %.8.val, null
+  %.not.i.i.i.i.i.i = icmp ne ptr %.8.val, null   ; 2 uses
   %i.c = inttoptr i64 %.16.val to ptr
-  br i1 %.not.i.i.i.i.i.i, label %_ZN7testing15SafeMatcherCastIRKN12_GLOBAL__N_112CopyDetectorES4_EENS_7MatcherIT_EERKNS5_IT0_EE.exit, label %_ZNK7testing8internal11MatcherBaseIRKN12_GLOBAL__N_112CopyDetectorEE8IsSharedEv.exit.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i, label %_ZNK7testing8internal11MatcherBaseIRKN12_GLOBAL__N_112CopyDetectorEE8IsSharedEv.exit.i.i.i.i.i, label %_ZN7testing15SafeMatcherCastIRKN12_GLOBAL__N_112CopyDetectorES4_EENS_7MatcherIT_EERKNS5_IT0_EE.exit
 
 _ZNK7testing8internal11MatcherBaseIRKN12_GLOBAL__N_112CopyDetectorEE8IsSharedEv.exit.i.i.i.i.i: ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.8.val, i64 24
@@ -225,8 +225,7 @@ _ZN7testing15SafeMatcherCastIRKN12_GLOBAL__N_112CopyDetectorES4_EENS_7MatcherIT_
   %i.g = getelementptr inbounds nuw i8, ptr %11, i64 8
   store ptr null, ptr %i.g, align 8, !tbaa !176
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN7testing8internal24DummyMatchResultListenerE, i64 16), ptr %11, align 8, !tbaa !98
-  %18 = icmp ne ptr %.8.val, null
-  %i.h = invoke noundef zeroext i1 @_ZN7testing8internal6IsTrueEb(i1 noundef zeroext %18)
+  %i.h = invoke noundef zeroext i1 @_ZN7testing8internal6IsTrueEb(i1 noundef zeroext %.not.i.i.i.i.i.i)
           to label %.noexc unwind label %bb.e
 
 .noexc:                                           ; preds = %_ZN7testing15SafeMatcherCastIRKN12_GLOBAL__N_112CopyDetectorES4_EENS_7MatcherIT_EERKNS5_IT0_EE.exit

@@ -87,8 +87,8 @@ bb.a:
   br i1 %.not, label %bb.af, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %6 = icmp eq i32 %2, 1
-  br i1 %6, label %bb.c, label %bb.d
+  %6 = icmp ne i32 %2, 1                          ; 2 uses
+  br i1 %6, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 536
@@ -181,8 +181,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.as = load i16, ptr %i.ar, align 4, !tbaa !187 ; 2 uses
   %i.at = icmp ult i16 %i.as, 772
-  %7 = icmp ne i32 %2, 1
-  %or.cond.i = and i1 %7, %i.at
+  %or.cond.i = and i1 %6, %i.at
   br i1 %or.cond.i, label %bb.p, label %bb.t
 
 bb.p:                                             ; preds = %bb.o

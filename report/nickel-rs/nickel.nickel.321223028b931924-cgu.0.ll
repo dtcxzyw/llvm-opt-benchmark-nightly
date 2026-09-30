@@ -205,8 +205,8 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(64) %1, i64 64, i1 false), !alias.scope !22500, !noalias !22498
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
-  %.val3.i = load i64, ptr %i.f, align 8, !noalias !22499 ; 4 uses
-  %.sroa.0.0.in.i = icmp ne i64 %.val3.i, -9223372036854775808
+  %.val3.i = load i64, ptr %i.f, align 8, !noalias !22499 ; 2 uses
+  %.sroa.0.0.in.i = icmp ne i64 %.val3.i, -9223372036854775808 ; 3 uses
   %.sroa.0.0.i = zext i1 %.sroa.0.0.in.i to i64   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -239,8 +239,7 @@ bb.c:                                             ; preds = %"_ZN9hashbrown3raw2
           to label %"_ZN8indexmap3map4core25IndexMapCore$LT$K$C$V$GT$7reserve17h04518e39c7d77a70E.exit.i" unwind label %bb.e, !noalias !22504
 
 "_ZN8indexmap3map4core25IndexMapCore$LT$K$C$V$GT$7reserve17h04518e39c7d77a70E.exit.i": ; preds = %bb.c, %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$7reserve17h1bcd01460d3c3fa9E.exit.i.i"
-  %.not12.i.i.i = icmp eq i64 %.val3.i, -9223372036854775808
-  br i1 %.not12.i.i.i, label %"_ZN117_$LT$indexmap..map..IndexMap$LT$K$C$V$C$S$GT$$u20$as$u20$core..iter..traits..collect..Extend$LT$$LP$K$C$V$RP$$GT$$GT$6extend17hecca974cce902ff7E.exit", label %.noexc2.i.i.i
+  br i1 %.sroa.0.0.in.i, label %.noexc2.i.i.i, label %"_ZN117_$LT$indexmap..map..IndexMap$LT$K$C$V$C$S$GT$$u20$as$u20$core..iter..traits..collect..Extend$LT$$LP$K$C$V$RP$$GT$$GT$6extend17hecca974cce902ff7E.exit"
 
 .noexc2.i.i.i:                                    ; preds = %"_ZN8indexmap3map4core25IndexMapCore$LT$K$C$V$GT$7reserve17h04518e39c7d77a70E.exit.i"
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -275,8 +274,7 @@ bb.d:                                             ; preds = %.noexc2.i.i.i
 bb.e:                                             ; preds = %bb.c, %bb.b
   %lpad.thr_comm.i = landingpad { ptr, i32 }
           cleanup
-  %2 = icmp eq i64 %.val3.i, -9223372036854775808
-  br i1 %2, label %"_ZN4core3ptr139drop_in_place$LT$core..option..IntoIter$LT$$LP$nickel_lang_parser..identifier..LocIdent$C$nickel_lang_core..term..record..Field$RP$$GT$$GT$17h0183a7a04c87a5b3E.exit.i", label %bb.f
+  br i1 %.sroa.0.0.in.i, label %bb.f, label %"_ZN4core3ptr139drop_in_place$LT$core..option..IntoIter$LT$$LP$nickel_lang_parser..identifier..LocIdent$C$nickel_lang_core..term..record..Field$RP$$GT$$GT$17h0183a7a04c87a5b3E.exit.i"
 
 bb.f:                                             ; preds = %bb.e
   invoke fastcc void @"_ZN4core3ptr58drop_in_place$LT$nickel_lang_core..term..record..Field$GT$17hd6967b05622b50ebE"(ptr noalias noundef align 8 dereferenceable(40) %i.f)

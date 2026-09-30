@@ -202,14 +202,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i65
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i60: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i59
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #29
-  %.pre81 = load ptr, ptr %5, align 8, !tbaa !38  ; 3 uses
-  %9 = icmp ne ptr %.pre81, null
-  %10 = zext i1 %9 to i32                         ; 2 uses
+  %.pre81 = load ptr, ptr %5, align 8, !tbaa !38  ; 2 uses
   %.not.i68 = icmp eq ptr %.pre81, null
   br i1 %.not.i68, label %_ZNSt10unique_ptrIN5osgeo4proj4FileESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN5osgeo4proj4FileEEclEPS2_.exit.i
 
 _ZNKSt14default_deleteIN5osgeo4proj4FileEEclEPS2_.exit.i: ; preds = %.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i60
-  %11 = phi i32 [ 1, %.thread ], [ %10, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i60 ]
   %i.dy = phi ptr [ %i.ax, %.thread ], [ %.pre81, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i60 ] ; 2 uses
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !13
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
@@ -218,7 +215,7 @@ _ZNKSt14default_deleteIN5osgeo4proj4FileEEclEPS2_.exit.i: ; preds = %.thread, %_
   br label %_ZNSt10unique_ptrIN5osgeo4proj4FileESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIN5osgeo4proj4FileESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i60, %_ZNKSt14default_deleteIN5osgeo4proj4FileEEclEPS2_.exit.i
-  %i.ec = phi i32 [ %10, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i60 ], [ %11, %_ZNKSt14default_deleteIN5osgeo4proj4FileEEclEPS2_.exit.i ]
+  %i.ec = phi i32 [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i60 ], [ 1, %_ZNKSt14default_deleteIN5osgeo4proj4FileEEclEPS2_.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
   br label %bb.ai
 

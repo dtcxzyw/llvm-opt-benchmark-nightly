@@ -205,8 +205,8 @@ vec.epilog.middle.block139:                       ; preds = %vec.epilog.vector.b
   br i1 %i.w, label %.lr.ph74, label %ZSTD_wildcopy.exit27, !llvm.loop !172
 
 bb.b:                                             ; preds = %bb.a
-  %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %bb.f, label %bb.c
+  %.not = icmp ne i32 %4, 0                       ; 3 uses
+  br i1 %.not, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
   %i.x = icmp ult i64 %i.d, 8
@@ -267,9 +267,8 @@ bb.g:                                             ; preds = %bb.f
   %i.aw = ptrtoint ptr %.1 to i64
   %i.ax = sub i64 %i.av, %i.aw
   %i.ay = getelementptr inbounds nuw i8, ptr %.161, i64 %.0 ; 2 uses
-  %5 = icmp ne i32 %4, 0
   %i.az = icmp slt i64 %i.ax, 16
-  %or.cond.i21 = and i1 %5, %i.az
+  %or.cond.i21 = and i1 %.not, %i.az
   br i1 %or.cond.i21, label %.preheader67, label %bb.h
 
 .preheader67:                                     ; preds = %bb.g, %.preheader67
@@ -317,9 +316,8 @@ bb.l:                                             ; preds = %bb.k
   %i.bm = ptrtoint ptr %.1 to i64
   %i.bn = sub i64 %i.bk, %i.bm
   %i.bo = getelementptr inbounds i8, ptr %.161, i64 %i.bl
-  %6 = icmp ne i32 %4, 0
   %i.bp = icmp slt i64 %i.bn, 16
-  %or.cond.i = and i1 %6, %i.bp
+  %or.cond.i = and i1 %.not, %i.bp
   br i1 %or.cond.i, label %.preheader65, label %bb.m
 
 .preheader65:                                     ; preds = %bb.l, %.preheader65

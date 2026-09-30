@@ -83,9 +83,9 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   store i32 %0, ptr @smain.1, align 8, !tbaa !16
   store ptr %.0, ptr @smain.0, align 8, !tbaa !17
-  %i.e = tail call i32 @lua_cpcall(ptr noundef nonnull %i.c, ptr noundef nonnull @pmain, ptr noundef null) #10 ; 2 uses
-  %.not.i = icmp eq i32 %i.e, 0
-  br i1 %.not.i, label %report.exit, label %bb.g
+  %i.e = tail call i32 @lua_cpcall(ptr noundef nonnull %i.c, ptr noundef nonnull @pmain, ptr noundef null) #10
+  %.not.i = icmp ne i32 %i.e, 0                   ; 2 uses
+  br i1 %.not.i, label %bb.g, label %report.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.f = tail call i32 @lua_type(ptr noundef nonnull %i.c, i32 noundef -1) #10
@@ -102,10 +102,9 @@ bb.h:                                             ; preds = %bb.g
 
 report.exit:                                      ; preds = %bb.f, %bb.g, %bb.h
   tail call void @lua_close(ptr noundef nonnull %i.c) #10
-  %2 = icmp ne i32 %i.e, 0
   %i.j = load i32, ptr @smain.2, align 4
   %i.k = icmp sgt i32 %i.j, 0
-  %i.l = select i1 %2, i1 true, i1 %i.k
+  %i.l = select i1 %.not.i, i1 true, i1 %i.k
   %i.m = zext i1 %i.l to i32
   br label %bb.i
 

@@ -204,13 +204,12 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %.02497 = phi i64 [ 0, %.lr.ph ], [ %i.dx, %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit ] ; 4 uses
   %i.ad = load ptr, ptr %1, align 8, !tbaa !121, !nonnull !86, !align !120
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 52
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !51 ; 2 uses
+  %i.af = load i32, ptr %i.ae, align 4, !tbaa !51
   %i.ag = load ptr, ptr %i.d, align 8, !tbaa !58
-  %i.ah = icmp ne i32 %i.af, 0
+  %i.ah = icmp ne i32 %i.af, 0                    ; 2 uses
   %.sroa.speculated.i.i.i = zext i1 %i.ah to i64
   %i.ai = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ag, ptr noundef nonnull @.str.1, i64 noundef %.sroa.speculated.i.i.i) ; 0 uses
-  %9 = icmp eq i32 %i.af, 0
-  br i1 %9, label %bb.c, label %_ZN5arrow12_GLOBAL__N_113PrettyPrinter5WriteESt17basic_string_viewIcSt11char_traitsIcEE.exit
+  br i1 %i.ah, label %_ZN5arrow12_GLOBAL__N_113PrettyPrinter5WriteESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.aj = load ptr, ptr %i.d, align 8, !tbaa !58  ; 2 uses

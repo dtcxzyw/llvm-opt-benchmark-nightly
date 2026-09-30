@@ -131,7 +131,7 @@ bb.a:
   %i.e = alloca i64, align 8                      ; 4 uses
   %i.f = alloca ptr, align 8                      ; 7 uses
   %i.g = alloca i8, align 1                       ; 7 uses
-  %i.h = mul i64 %2, %1                           ; 9 uses
+  %i.h = mul i64 %2, %1                           ; 8 uses
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 4632
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !83
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 48
@@ -145,7 +145,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.p = load i32, ptr %i.m, align 8, !tbaa !101
   %i.q = icmp eq i32 %i.p, 0
-  %i.r = icmp ne i64 %i.h, 0
+  %i.r = icmp ne i64 %i.h, 0                      ; 2 uses
   %or.cond = and i1 %i.r, %i.q
   br i1 %or.cond, label %.thread94, label %bb.c
 
@@ -158,8 +158,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %.not74 = icmp eq i64 %i.h, 0
-  br i1 %.not74, label %.loopexit, label %.lr.ph
+  br i1 %i.r, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.thread94, %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 8 uses

@@ -137,16 +137,15 @@ bb.i:                                             ; preds = %bb.e
   br i1 %i.v, label %.thread.i.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.w = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %3, i64 4) ; 2 uses
-  %4 = icmp ult i64 %i.w, %3
-  br i1 %4, label %.lr.ph, label %_RNvNtNtCs3oUPovFnLWP_4core3str7pattern13simd_containsCs3U9i7nQCKwt_15find_msvc_tools.exit.i
+  %i.w = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %3, i64 4)
+  br label %.lr.ph
 
 bb.k:                                             ; preds = %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs3U9i7nQCKwt_15find_msvc_tools.exit.i.i.i
   %i.x = icmp ult i64 %i.w, %i.z
   br i1 %i.x, label %.lr.ph, label %_RNvNtNtCs3oUPovFnLWP_4core3str7pattern13simd_containsCs3U9i7nQCKwt_15find_msvc_tools.exit.i
 
 .lr.ph:                                           ; preds = %bb.j, %bb.k
-  %i.y = phi i64 [ %i.z, %bb.k ], [ %3, %bb.j ]
+  %i.y = phi i64 [ %3, %bb.j ], [ %i.z, %bb.k ]
   %i.z = add nsw i64 %i.y, -1                     ; 6 uses
   %i.aa = icmp ult i64 %i.z, %3
   br i1 %i.aa, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs3U9i7nQCKwt_15find_msvc_tools.exit.i.i.i, label %bb.l
@@ -369,7 +368,7 @@ _RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRShN
   %i.dw = icmp ugt i64 %3, %i.dv
   br i1 %i.dw, label %.loopexit.i, label %_RNvXsY_NtNtCs3oUPovFnLWP_4core5slice4iterINtB5_7WindowshENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs3U9i7nQCKwt_15find_msvc_tools.exit.i.i.i
 
-_RNvNtNtCs3oUPovFnLWP_4core3str7pattern13simd_containsCs3U9i7nQCKwt_15find_msvc_tools.exit.i: ; preds = %bb.k, %bb.j
+_RNvNtNtCs3oUPovFnLWP_4core3str7pattern13simd_containsCs3U9i7nQCKwt_15find_msvc_tools.exit.i: ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.h
 

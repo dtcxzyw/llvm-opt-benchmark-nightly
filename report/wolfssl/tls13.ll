@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %bb.i
   %i.bc = select i1 %.not96, i8 3, i8 -3
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ae, i64 10
   store i8 %i.bc, ptr %i.bd, align 1, !tbaa !57
-  %3 = icmp eq i8 %1, 2                           ; 2 uses
-  br i1 %3, label %bb.k, label %bb.l
+  %3 = icmp ne i8 %1, 2                           ; 3 uses
+  br i1 %3, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 152
@@ -304,7 +304,7 @@ bb.u:                                             ; preds = %bb.p, %bb.t
   br i1 %.not102, label %bb.v, label %bb.z
 
 bb.v:                                             ; preds = %bb.u
-  br i1 %3, label %bb.w, label %bb.x
+  br i1 %3, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 1061
@@ -320,8 +320,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.db = load i64, ptr %i.az, align 16
   %i.dc = and i64 %i.db, 137438953472
   %i.dd = icmp eq i64 %i.dc, 0
-  %4 = icmp ne i8 %1, 2
-  %or.cond = or i1 %4, %i.dd
+  %or.cond = or i1 %3, %i.dd
   br i1 %or.cond, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
