@@ -200,8 +200,8 @@ begin_hunk_0_@r2cfII_25:bb.a
   %foldExtExtBinop575 = fsub <2 x double> %shift574, %i.nm ; 2 uses
   %shift577 = shufflevector <2 x double> %i.nm, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop578 = fsub <2 x double> %shift577, %i.ks ; 2 uses
-  %foldExtExtBinop580 = fadd <2 x double> %foldExtExtBinop575, %foldExtExtBinop578
-  %i.nn = extractelement <2 x double> %foldExtExtBinop580, i64 0 ; 2 uses
+  %foldExtExtBinop580 = fadd <2 x double> %foldExtExtBinop575, %foldExtExtBinop578 ; 2 uses
+  %i.nn = extractelement <2 x double> %foldExtExtBinop580, i64 0
   %i.no = fmul double %i.mq, f0x3FF8A80B635B6BEA
   %i.np = load i64, ptr %i.kx, align 8, !tbaa !11
   %i.nq = getelementptr inbounds [8 x i8], ptr %.0499510, i64 %i.np
@@ -264,12 +264,9 @@ begin_hunk_0_@r2cfII_25:bb.a
   %i.pv = getelementptr inbounds nuw i8, ptr %.0502507, i64 88
   %i.pw = load i64, ptr %i.pv, align 8, !tbaa !11
   %i.px = getelementptr inbounds [8 x i8], ptr %.0499510, i64 %i.pw
-  %10 = fmul double %i.nn, 2.500000e-01
   %foldExtExtBinop582 = fsub <2 x double> %foldExtExtBinop575, %foldExtExtBinop578
   %i.py = extractelement <2 x double> %foldExtExtBinop582, i64 0
   %i.pz = fmul double %i.py, f0x3FE1E3779B97F4A8  ; 2 uses
-  %11 = fadd double %i.ky, %10                    ; 2 uses
-  %12 = fneg double %11
   %i.qa = tail call double @llvm.fmuladd.f64(double %i.km, double f0x3FE465C6FEB501BC, double %i.no) ; 2 uses
   %i.qb = fsub double %i.kw, %i.qa                ; 2 uses
   %i.qc = shufflevector <2 x double> %i.ks, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -301,21 +298,25 @@ begin_hunk_0_@r2cfII_25:bb.a
   %i.qt = extractelement <2 x double> %i.qr, i64 1
   store double %i.qt, ptr %i.px, align 8, !tbaa !13
   %i.qu = insertelement <2 x double> poison, double %i.pz, i64 0
-  %13 = insertelement <2 x double> %i.qu, double %12, i64 1
-  %14 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.qe, <2 x double> <double f0x3FE2CF2304755A5E, double f0x3FEE6F0E134454FF>, <2 x double> %13) ; 2 uses
-  %shift587 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop588 = fsub <2 x double> %shift587, %14
-  %i.qv = extractelement <2 x double> %foldExtExtBinop588, i64 0
-  %15 = getelementptr inbounds nuw i8, ptr %.0503506, i64 48
-  %16 = load i64, ptr %15, align 8, !tbaa !11
-  %17 = getelementptr inbounds [8 x i8], ptr %.0500509, i64 %16
-  store double %i.qv, ptr %17, align 8, !tbaa !13
-  %i.qw = extractelement <2 x double> %i.qe, i64 1
-  %18 = fmul double %i.qw, f0x3FE2CF2304755A5E
-  %i.qx = extractelement <2 x double> %i.qe, i64 0
-  %i.qy = tail call double @llvm.fmuladd.f64(double %i.qx, double f0x3FEE6F0E134454FF, double %18)
+  %10 = getelementptr inbounds nuw i8, ptr %.0503506, i64 48
+  %11 = load i64, ptr %10, align 8, !tbaa !11
+  %12 = getelementptr inbounds [8 x i8], ptr %.0500509, i64 %11
+  %13 = shufflevector <2 x double> %foldExtExtBinop580, <2 x double> %i.qe, <2 x i32> <i32 0, i32 3>
+  %14 = fmul <2 x double> %13, <double 2.500000e-01, double f0x3FE2CF2304755A5E> ; 2 uses
+  %i.qv = extractelement <2 x double> %14, i64 0
+  %15 = fadd double %i.ky, %i.qv                  ; 2 uses
+  %16 = fneg double %15
+  %17 = insertelement <2 x double> %i.qu, double %16, i64 1
+  %18 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.qe, <2 x double> <double f0x3FE2CF2304755A5E, double f0x3FEE6F0E134454FF>, <2 x double> %17) ; 2 uses
+  %shift587 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop588 = fsub <2 x double> %shift587, %18
+  %i.qw = extractelement <2 x double> %foldExtExtBinop588, i64 0
+  store double %i.qw, ptr %12, align 8, !tbaa !13
+  %19 = extractelement <2 x double> %i.qe, i64 0
+  %i.qx = extractelement <2 x double> %14, i64 1
+  %i.qy = tail call double @llvm.fmuladd.f64(double %19, double f0x3FEE6F0E134454FF, double %i.qx)
   %i.qz = fadd double %i.qy, %i.pz
-  %i.ra = fsub double %i.qz, %11
+  %i.ra = fsub double %i.qz, %15
   %i.rb = getelementptr inbounds nuw i8, ptr %.0503506, i64 88
   %i.rc = load i64, ptr %i.rb, align 8, !tbaa !11
   %i.rd = getelementptr inbounds [8 x i8], ptr %.0500509, i64 %i.rc

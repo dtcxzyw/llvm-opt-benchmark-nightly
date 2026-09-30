@@ -204,14 +204,14 @@ bb.a:
   br label %bb.b
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.b
-  %i.g = fmul double %8, 2.000000e+00
+  %3 = extractelement <2 x double> %21, i64 1
+  %i.g = fmul double %3, 2.000000e+00
   br label %_ZN3igl8centroidIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi3ELi1ELi0ELi3ELi1EEEdEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERNS1_15PlainObjectBaseIT1_EERT2_.exit
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
-  %i.h = phi <2 x double> [ zeroinitializer, %.lr.ph.i ], [ %i.bu, %bb.b ]
-  %3 = phi double [ 0.000000e+00, %.lr.ph.i ], [ %19, %bb.b ]
-  %.0 = phi double [ 0.000000e+00, %.lr.ph.i ], [ %8, %bb.b ]
+  %i.h = phi <2 x double> [ zeroinitializer, %.lr.ph.i ], [ %i.bt, %bb.b ]
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses
+  %4 = phi <2 x double> [ zeroinitializer, %.lr.ph.i ], [ %21, %bb.b ]
   %i.i = load ptr, ptr %1, align 8, !tbaa !20
   %i.j = getelementptr [4 x i8], ptr %i.i, i64 %indvars.iv.i ; 3 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !13
@@ -280,44 +280,46 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %i.bn = extractelement <2 x double> %i.aw, i64 0
   %i.bo = tail call double @llvm.fmuladd.f64(double %i.bm, double %i.bn, double %i.bl) ; 2 uses
   %i.bp = fmul <2 x double> %.sroa.0119.8.vec.insert.i, %i.bh ; 2 uses
+  %5 = fmul <2 x double> %i.bh, splat (double f0x3FA5555555555555)
+  %foldExtExtBinop.a = fadd <2 x double> %.sroa.0119.8.vec.insert.i, %.sroa.0.8.vec.insert.i ; 2 uses
+  %6 = fmul <2 x double> %foldExtExtBinop.a, %foldExtExtBinop.a
+  %7 = fadd <2 x double> %.sroa.0.8.vec.insert.i, %.sroa.0133.8.vec.insert.i ; 2 uses
+  %8 = fmul <2 x double> %7, %7
+  %9 = fadd <2 x double> %6, %8
+  %10 = fadd <2 x double> %.sroa.0119.8.vec.insert.i, %.sroa.0133.8.vec.insert.i ; 2 uses
+  %i.bq = fmul <2 x double> %10, %10
+  %i.br = fadd <2 x double> %i.bq, %9
+  %i.bs = fmul <2 x double> %i.br, %5
+  %i.bt = fadd <2 x double> %i.h, %i.bs           ; 3 uses
+  store <2 x double> %i.bt, ptr %2, align 8, !tbaa !12
+  %11 = fmul double %i.bo, f0x3FA5555555555555
+  %12 = fadd double %i.t, %i.ad                   ; 2 uses
+  %13 = fadd double %i.ad, %i.am                  ; 2 uses
+  %14 = fadd double %i.t, %i.am                   ; 2 uses
   %shift = shufflevector <2 x double> %i.bp, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop.a = fadd <2 x double> %i.bp, %shift
-  %4 = extractelement <2 x double> %foldExtExtBinop.a, i64 0
-  %5 = fmul double %i.t, %i.bo
-  %6 = fadd double %5, %4
-  %7 = fdiv double %6, 6.000000e+00
-  %8 = fadd double %.0, %7                        ; 2 uses
-  %i.bq = fmul <2 x double> %i.bh, splat (double f0x3FA5555555555555)
-  %i.br = fadd <2 x double> %.sroa.0119.8.vec.insert.i, %.sroa.0.8.vec.insert.i ; 2 uses
-  %i.bs = fmul <2 x double> %i.br, %i.br
-  %i.bt = fadd <2 x double> %.sroa.0.8.vec.insert.i, %.sroa.0133.8.vec.insert.i ; 2 uses
-  %9 = fmul <2 x double> %i.bt, %i.bt
-  %10 = fadd <2 x double> %i.bs, %9
-  %11 = fadd <2 x double> %.sroa.0119.8.vec.insert.i, %.sroa.0133.8.vec.insert.i ; 2 uses
-  %12 = fmul <2 x double> %11, %11
-  %13 = fadd <2 x double> %12, %10
-  %14 = fmul <2 x double> %13, %i.bq
-  %i.bu = fadd <2 x double> %i.h, %14             ; 3 uses
-  store <2 x double> %i.bu, ptr %2, align 8, !tbaa !12
-  %i.bv = fmul double %i.bo, f0x3FA5555555555555
-  %i.bw = fadd double %i.t, %i.ad                 ; 2 uses
-  %i.bx = fmul double %i.bw, %i.bw
-  %i.by = fadd double %i.ad, %i.am                ; 2 uses
-  %i.bz = fmul double %i.by, %i.by
-  %i.ca = fadd double %i.bx, %i.bz
-  %15 = fadd double %i.t, %i.am                   ; 2 uses
-  %16 = fmul double %15, %15
-  %17 = fadd double %16, %i.ca
-  %18 = fmul double %i.bv, %17
-  %19 = fadd double %3, %18                       ; 3 uses
-  store double %19, ptr %i.e, align 8, !tbaa !11
+  %i.bu = fadd <2 x double> %i.bp, %shift
+  %15 = extractelement <2 x double> %i.bu, i64 0
+  %i.bv = fmul double %i.t, %i.bo
+  %i.bw = fadd double %i.bv, %15
+  %16 = fdiv double %i.bw, 6.000000e+00
+  %17 = fmul double %12, %12
+  %i.bx = fmul double %13, %13
+  %i.by = fadd double %17, %i.bx
+  %i.bz = fmul double %14, %14
+  %i.ca = fadd double %i.bz, %i.by
+  %18 = fmul double %11, %i.ca
+  %19 = insertelement <2 x double> poison, double %18, i64 0
+  %20 = insertelement <2 x double> %19, double %16, i64 1
+  %21 = fadd <2 x double> %4, %20                 ; 3 uses
+  %22 = extractelement <2 x double> %21, i64 0    ; 2 uses
+  store double %22, ptr %i.e, align 8, !tbaa !11
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %bb.b, !llvm.loop !50
 
 _ZN3igl8centroidIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi3ELi1ELi0ELi3ELi1EEEdEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERNS1_15PlainObjectBaseIT1_EERT2_.exit: ; preds = %bb.a, %._crit_edge.loopexit.i
-  %i.cb = phi double [ %19, %._crit_edge.loopexit.i ], [ 0.000000e+00, %bb.a ]
-  %i.cc = phi <2 x double> [ %i.bu, %._crit_edge.loopexit.i ], [ zeroinitializer, %bb.a ]
+  %i.cb = phi double [ %22, %._crit_edge.loopexit.i ], [ 0.000000e+00, %bb.a ]
+  %i.cc = phi <2 x double> [ %i.bt, %._crit_edge.loopexit.i ], [ zeroinitializer, %bb.a ]
   %i.cd = phi double [ %i.g, %._crit_edge.loopexit.i ], [ 0.000000e+00, %bb.a ]
   %i.ce = fdiv double 1.000000e+00, %i.cd         ; 2 uses
   %i.cf = insertelement <2 x double> poison, double %i.ce, i64 0
@@ -346,14 +348,14 @@ bb.a:
   br label %bb.b
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.b
-  %i.g = fmul double %8, 2.000000e+00
+  %3 = extractelement <2 x double> %21, i64 1
+  %i.g = fmul double %3, 2.000000e+00
   br label %_ZN3igl8centroidIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi1ELi3ELi1ELi1ELi3EEEdEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERNS1_15PlainObjectBaseIT1_EERT2_.exit
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
-  %i.h = phi <2 x double> [ zeroinitializer, %.lr.ph.i ], [ %i.bu, %bb.b ]
-  %3 = phi double [ 0.000000e+00, %.lr.ph.i ], [ %19, %bb.b ]
-  %.0 = phi double [ 0.000000e+00, %.lr.ph.i ], [ %8, %bb.b ]
+  %i.h = phi <2 x double> [ zeroinitializer, %.lr.ph.i ], [ %i.bt, %bb.b ]
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses
+  %4 = phi <2 x double> [ zeroinitializer, %.lr.ph.i ], [ %21, %bb.b ]
   %i.i = load ptr, ptr %1, align 8, !tbaa !20
   %i.j = getelementptr [4 x i8], ptr %i.i, i64 %indvars.iv.i ; 3 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !13
@@ -422,44 +424,46 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %i.bn = extractelement <2 x double> %i.aw, i64 0
   %i.bo = tail call double @llvm.fmuladd.f64(double %i.bm, double %i.bn, double %i.bl) ; 2 uses
   %i.bp = fmul <2 x double> %.sroa.0119.8.vec.insert.i, %i.bh ; 2 uses
+  %5 = fmul <2 x double> %i.bh, splat (double f0x3FA5555555555555)
+  %foldExtExtBinop.a = fadd <2 x double> %.sroa.0119.8.vec.insert.i, %.sroa.0.8.vec.insert.i ; 2 uses
+  %6 = fmul <2 x double> %foldExtExtBinop.a, %foldExtExtBinop.a
+  %7 = fadd <2 x double> %.sroa.0.8.vec.insert.i, %.sroa.0133.8.vec.insert.i ; 2 uses
+  %8 = fmul <2 x double> %7, %7
+  %9 = fadd <2 x double> %6, %8
+  %10 = fadd <2 x double> %.sroa.0119.8.vec.insert.i, %.sroa.0133.8.vec.insert.i ; 2 uses
+  %i.bq = fmul <2 x double> %10, %10
+  %i.br = fadd <2 x double> %i.bq, %9
+  %i.bs = fmul <2 x double> %i.br, %5
+  %i.bt = fadd <2 x double> %i.h, %i.bs           ; 3 uses
+  store <2 x double> %i.bt, ptr %2, align 8, !tbaa !12
+  %11 = fmul double %i.bo, f0x3FA5555555555555
+  %12 = fadd double %i.t, %i.ad                   ; 2 uses
+  %13 = fadd double %i.ad, %i.am                  ; 2 uses
+  %14 = fadd double %i.t, %i.am                   ; 2 uses
   %shift = shufflevector <2 x double> %i.bp, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop.a = fadd <2 x double> %i.bp, %shift
-  %4 = extractelement <2 x double> %foldExtExtBinop.a, i64 0
-  %5 = fmul double %i.t, %i.bo
-  %6 = fadd double %5, %4
-  %7 = fdiv double %6, 6.000000e+00
-  %8 = fadd double %.0, %7                        ; 2 uses
-  %i.bq = fmul <2 x double> %i.bh, splat (double f0x3FA5555555555555)
-  %i.br = fadd <2 x double> %.sroa.0119.8.vec.insert.i, %.sroa.0.8.vec.insert.i ; 2 uses
-  %i.bs = fmul <2 x double> %i.br, %i.br
-  %i.bt = fadd <2 x double> %.sroa.0.8.vec.insert.i, %.sroa.0133.8.vec.insert.i ; 2 uses
-  %9 = fmul <2 x double> %i.bt, %i.bt
-  %10 = fadd <2 x double> %i.bs, %9
-  %11 = fadd <2 x double> %.sroa.0119.8.vec.insert.i, %.sroa.0133.8.vec.insert.i ; 2 uses
-  %12 = fmul <2 x double> %11, %11
-  %13 = fadd <2 x double> %12, %10
-  %14 = fmul <2 x double> %13, %i.bq
-  %i.bu = fadd <2 x double> %i.h, %14             ; 3 uses
-  store <2 x double> %i.bu, ptr %2, align 8, !tbaa !12
-  %i.bv = fmul double %i.bo, f0x3FA5555555555555
-  %i.bw = fadd double %i.t, %i.ad                 ; 2 uses
-  %i.bx = fmul double %i.bw, %i.bw
-  %i.by = fadd double %i.ad, %i.am                ; 2 uses
-  %i.bz = fmul double %i.by, %i.by
-  %i.ca = fadd double %i.bx, %i.bz
-  %15 = fadd double %i.t, %i.am                   ; 2 uses
-  %16 = fmul double %15, %15
-  %17 = fadd double %16, %i.ca
-  %18 = fmul double %i.bv, %17
-  %19 = fadd double %3, %18                       ; 3 uses
-  store double %19, ptr %i.e, align 8, !tbaa !11
+  %i.bu = fadd <2 x double> %i.bp, %shift
+  %15 = extractelement <2 x double> %i.bu, i64 0
+  %i.bv = fmul double %i.t, %i.bo
+  %i.bw = fadd double %i.bv, %15
+  %16 = fdiv double %i.bw, 6.000000e+00
+  %17 = fmul double %12, %12
+  %i.bx = fmul double %13, %13
+  %i.by = fadd double %17, %i.bx
+  %i.bz = fmul double %14, %14
+  %i.ca = fadd double %i.bz, %i.by
+  %18 = fmul double %11, %i.ca
+  %19 = insertelement <2 x double> poison, double %18, i64 0
+  %20 = insertelement <2 x double> %19, double %16, i64 1
+  %21 = fadd <2 x double> %4, %20                 ; 3 uses
+  %22 = extractelement <2 x double> %21, i64 0    ; 2 uses
+  store double %22, ptr %i.e, align 8, !tbaa !11
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %bb.b, !llvm.loop !0
 
 _ZN3igl8centroidIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi1ELi3ELi1ELi1ELi3EEEdEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERNS1_15PlainObjectBaseIT1_EERT2_.exit: ; preds = %bb.a, %._crit_edge.loopexit.i
-  %i.cb = phi double [ %19, %._crit_edge.loopexit.i ], [ 0.000000e+00, %bb.a ]
-  %i.cc = phi <2 x double> [ %i.bu, %._crit_edge.loopexit.i ], [ zeroinitializer, %bb.a ]
+  %i.cb = phi double [ %22, %._crit_edge.loopexit.i ], [ 0.000000e+00, %bb.a ]
+  %i.cc = phi <2 x double> [ %i.bt, %._crit_edge.loopexit.i ], [ zeroinitializer, %bb.a ]
   %i.cd = phi double [ %i.g, %._crit_edge.loopexit.i ], [ 0.000000e+00, %bb.a ]
   %i.ce = fdiv double 1.000000e+00, %i.cd         ; 2 uses
   %i.cf = insertelement <2 x double> poison, double %i.ce, i64 0

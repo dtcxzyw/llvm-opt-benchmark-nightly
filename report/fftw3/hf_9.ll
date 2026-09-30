@@ -200,9 +200,7 @@ begin_hunk_0_@hf_9:bb.a
   %i.gq = shufflevector <2 x double> %i.gn, <2 x double> %i.gp, <2 x i32> <i32 0, i32 3>
   %i.gr = shufflevector <2 x double> %i.gn, <2 x double> %i.gp, <2 x i32> <i32 1, i32 2>
   %i.gs = fsub <2 x double> %i.gq, %i.gr          ; 2 uses
-  %7 = extractelement <2 x double> %i.gs, i64 0
-  %8 = fmul double %7, f0x3FEBB67AE8584CAA        ; 2 uses
-  %i.gt = extractelement <2 x double> %i.gs, i64 1
+  %i.gt = extractelement <2 x double> %i.gs, i64 0
   %i.gu = fmul double %i.gt, f0x3FEBB67AE8584CAA  ; 2 uses
   %i.gv = shufflevector <2 x double> %i.x, <2 x double> %i.ao, <2 x i32> <i32 1, i32 2>
   %i.gw = shufflevector <2 x double> %i.ao, <2 x double> %i.x, <2 x i32> <i32 1, i32 2>
@@ -255,19 +253,22 @@ begin_hunk_0_@hf_9:bb.a
   %foldExtExtBinop348 = fadd <2 x double> %i.hy, %i.ib
   %i.ic = extractelement <2 x double> %foldExtExtBinop348, i64 0
   store double %i.ic, ptr %i.cw, align 8, !tbaa !13
-  %i.id = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ib, <2 x double> splat (double -5.000000e-01), <2 x double> %i.hy) ; 2 uses
-  %9 = extractelement <2 x double> %i.id, i64 0   ; 2 uses
-  %10 = fsub double %9, %i.gu
-  store double %10, ptr %i.cy, align 8, !tbaa !13
-  %11 = fadd double %9, %i.gu
+  %i.id = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ib, <2 x double> splat (double -5.000000e-01), <2 x double> %i.hy) ; 3 uses
+  %7 = shufflevector <2 x double> %i.gs, <2 x double> %i.ib, <2 x i32> <i32 1, i32 3>
+  %8 = fmul <2 x double> %7, <double f0x3FEBB67AE8584CAA, double 1.000000e+00> ; 2 uses
+  %foldExtExtBinop350 = fsub <2 x double> %i.id, %8
+  %9 = extractelement <2 x double> %foldExtExtBinop350, i64 0
+  store double %9, ptr %i.cy, align 8, !tbaa !13
+  %10 = shufflevector <2 x double> %i.id, <2 x double> %i.hy, <2 x i32> <i32 0, i32 3>
+  %foldExtExtBinop350.a = fadd <2 x double> %10, %8 ; 2 uses
+  %11 = extractelement <2 x double> %foldExtExtBinop350.a, i64 0
   store double %11, ptr %i.dm, align 8, !tbaa !13
-  %foldExtExtBinop350.a = fadd <2 x double> %i.hy, %i.ib
   %i.ie = extractelement <2 x double> %foldExtExtBinop350.a, i64 1
   store double %i.ie, ptr %i.ef, align 8, !tbaa !13
   %i.if = extractelement <2 x double> %i.id, i64 1 ; 2 uses
-  %i.ig = fsub double %8, %i.if
+  %i.ig = fsub double %i.gu, %i.if
   store double %i.ig, ptr %i.ed, align 8, !tbaa !13
-  %i.ih = fadd double %8, %i.if
+  %i.ih = fadd double %i.gu, %i.if
   store double %i.ih, ptr %i.do, align 8, !tbaa !13
   %i.ii = add nsw i64 %.0322323, 1                ; 2 uses
   %i.ij = getelementptr inbounds [8 x i8], ptr %.0327, i64 %6
