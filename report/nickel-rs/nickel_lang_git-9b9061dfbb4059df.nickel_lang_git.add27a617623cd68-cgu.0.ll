@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i, %"_ZN4core3ptr52drop_in_place$LT$std..backtrace..BacktraceSymbol$GT$17he8ebb0f26ce17723E.exit.i.i.i.i.i.i.i.i.i.i"
   %.sroa.0.07.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.u, %"_ZN4core3ptr52drop_in_place$LT$std..backtrace..BacktraceSymbol$GT$17he8ebb0f26ce17723E.exit.i.i.i.i.i.i.i.i.i.i" ], [ 0, %.lr.ph.i.i.i.i.i.i.i ] ; 2 uses
-  %i.t = getelementptr inbounds nuw [72 x i8], ptr %.val.i.i.i.i.i.i.i.i, i64 %.sroa.0.07.i.i.i.i.i.i.i.i.i.i ; 6 uses
+  %i.t = getelementptr inbounds nuw [72 x i8], ptr %.val.i.i.i.i.i.i.i.i, i64 %.sroa.0.07.i.i.i.i.i.i.i.i.i.i ; 5 uses
   %i.u = add nuw i64 %.sroa.0.07.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59)
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 32
@@ -224,32 +224,27 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 
 bb.f:                                             ; preds = %"_ZN4core3ptr74drop_in_place$LT$core..option..Option$LT$alloc..vec..Vec$LT$u8$GT$$GT$$GT$17h96e3c95baff3c704E.exit.i.i.i.i.i.i.i.i.i.i.i"
   tail call void @llvm.experimental.noalias.scope.decl(metadata !67)
-  %1 = icmp eq i64 %i.x, 0
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.val.i.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.z, align 8, !alias.scope !68, !noalias !62 ; 3 uses
-  %i.aa = icmp eq i64 %.val.i.i.i.i.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
-  br i1 %1, label %2, label %bb.h
-
-2:                                                ; preds = %bb.f
+  %i.aa = icmp eq i64 %.val.i.i.i.i.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.aa, label %"_ZN4core3ptr52drop_in_place$LT$std..backtrace..BacktraceSymbol$GT$17he8ebb0f26ce17723E.exit.i.i.i.i.i.i.i.i.i.i", label %bb.g
 
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.f
+  %1 = icmp eq i64 %i.x, 0
   %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %.val1.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.ab, align 8, !alias.scope !68, !noalias !62, !nonnull !3, !noundef !3
+  %.val1.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.ab, align 8, !alias.scope !68, !noalias !62, !nonnull !3, !noundef !3 ; 2 uses
+  br i1 %1, label %bb.h, label %bb.i
+
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 noundef %.val.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #16, !noalias !69
   br label %"_ZN4core3ptr52drop_in_place$LT$std..backtrace..BacktraceSymbol$GT$17he8ebb0f26ce17723E.exit.i.i.i.i.i.i.i.i.i.i"
 
-bb.h:                                             ; preds = %bb.f
-  br i1 %i.aa, label %"_ZN4core3ptr52drop_in_place$LT$std..backtrace..BacktraceSymbol$GT$17he8ebb0f26ce17723E.exit.i.i.i.i.i.i.i.i.i.i", label %bb.i
-
-bb.i:                                             ; preds = %bb.h
-  %3 = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %.val3.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %3, align 8, !alias.scope !68, !noalias !62, !nonnull !3, !noundef !3
+bb.i:                                             ; preds = %bb.g
   %i.ac = shl nuw i64 %.val.i.i.i.i.i.i.i.i.i.i.i.i.i, 1
-  tail call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 noundef %i.ac, i64 noundef range(i64 1, -9223372036854775807) 2) #16, !noalias !69
+  tail call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 noundef %i.ac, i64 noundef range(i64 1, -9223372036854775807) 2) #16, !noalias !69
   br label %"_ZN4core3ptr52drop_in_place$LT$std..backtrace..BacktraceSymbol$GT$17he8ebb0f26ce17723E.exit.i.i.i.i.i.i.i.i.i.i"
 
-"_ZN4core3ptr52drop_in_place$LT$std..backtrace..BacktraceSymbol$GT$17he8ebb0f26ce17723E.exit.i.i.i.i.i.i.i.i.i.i": ; preds = %bb.i, %bb.h, %bb.g, %2, %"_ZN4core3ptr74drop_in_place$LT$core..option..Option$LT$alloc..vec..Vec$LT$u8$GT$$GT$$GT$17h96e3c95baff3c704E.exit.i.i.i.i.i.i.i.i.i.i.i"
+"_ZN4core3ptr52drop_in_place$LT$std..backtrace..BacktraceSymbol$GT$17he8ebb0f26ce17723E.exit.i.i.i.i.i.i.i.i.i.i": ; preds = %bb.i, %bb.h, %bb.f, %"_ZN4core3ptr74drop_in_place$LT$core..option..Option$LT$alloc..vec..Vec$LT$u8$GT$$GT$$GT$17h96e3c95baff3c704E.exit.i.i.i.i.i.i.i.i.i.i.i"
   %i.ad = icmp eq i64 %i.u, %.val1.i.i.i.i.i.i.i.i
   br i1 %i.ad, label %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hc094e62c8277f65fE.exit.i.i.i.i.i.i.i.i", label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 

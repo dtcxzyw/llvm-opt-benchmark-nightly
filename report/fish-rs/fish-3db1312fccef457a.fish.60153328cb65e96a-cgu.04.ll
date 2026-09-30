@@ -205,11 +205,11 @@ bb.h:                                             ; preds = %bb.y, %bb.f
   %.sroa.532.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 11 ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.b, i64 14 ; 3 uses
   %.sroa.528.0..sroa_idx29.i = getelementptr inbounds nuw i8, ptr %i.b, i64 15 ; 2 uses
-  %i.bj = icmp eq i64 %.sroa.5.0.i, 0             ; 3 uses
-  br i1 %.not57.i, label %.split.us.i.preheader, label %.split.split.i
+  %i.bj = icmp eq i64 %.sroa.5.0.i, 0
+  br i1 %i.bj, label %.split67.us.i, label %.split.us.i.preheader
 
 .split.us.i.preheader:                            ; preds = %bb.h
-  br i1 %i.bj, label %.split67.us.i, label %.lr.ph326
+  br i1 %.not57.i, label %.lr.ph326, label %.split.split.split.us.i.preheader
 
 .split.us.i:                                      ; preds = %bb.o
   %i.bk = icmp eq ptr %i.bl, %i.bf
@@ -274,14 +274,8 @@ bb.o:                                             ; preds = %bb.n
           cleanup
   br label %.body.i
 
-.split.split.i:                                   ; preds = %bb.h
-  br i1 %.not58.i, label %.split.split.split.us.i.preheader, label %.split.split.split.i.preheader
-
-.split.split.split.i.preheader:                   ; preds = %.split.split.i
-  br i1 %i.bj, label %.split67.us.i, label %.lr.ph
-
-.split.split.split.us.i.preheader:                ; preds = %.split.split.i
-  br i1 %i.bj, label %.split67.us.i, label %.lr.ph323
+.split.split.split.us.i.preheader:                ; preds = %.split.us.i.preheader
+  br i1 %.not58.i, label %.lr.ph323, label %.lr.ph
 
 .split.split.split.us.i:                          ; preds = %bb.x
   %i.bw = icmp eq ptr %i.bx, %i.bf
@@ -377,14 +371,14 @@ bb.y:                                             ; preds = %bb.g
   %i.cn = icmp eq ptr %i.co, %i.bf
   br i1 %i.cn, label %.split67.us.i, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.split.split.split.i.preheader, %.split.split.split.i
-  %.sroa.528.0.i321 = phi i24 [ %.sroa.528.1.i, %.split.split.split.i ], [ undef, %.split.split.split.i.preheader ] ; 2 uses
-  %.sroa.019.0.i320 = phi ptr [ %i.co, %.split.split.split.i ], [ %.sroa.0.0.i, %.split.split.split.i.preheader ] ; 5 uses
+.lr.ph:                                           ; preds = %.split.split.split.us.i.preheader, %.split.split.split.i
+  %.sroa.528.0.i321 = phi i24 [ %.sroa.528.1.i, %.split.split.split.i ], [ undef, %.split.split.split.us.i.preheader ] ; 2 uses
+  %.sroa.019.0.i320 = phi ptr [ %i.co, %.split.split.split.i ], [ %.sroa.0.0.i, %.split.split.split.us.i.preheader ] ; 5 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.sroa.019.0.i320, i64 16 ; 2 uses
   %i.cp = invoke noundef zeroext i1 @_RNvMsg_NtCs8frGy5WneL6_4fish2ioNtB5_9IoStreams15out_is_terminal(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %1)
           to label %bb.z unwind label %.loopexit.split.split.split.i, !noalias !4900
 
-.split67.us.i:                                    ; preds = %.split.split.split.i, %.split.split.split.us.i, %.split.us.i, %.split.split.split.i.preheader, %.split.split.split.us.i.preheader, %.split.us.i.preheader
+.split67.us.i:                                    ; preds = %.split.split.split.i, %.split.split.split.us.i, %.split.us.i, %bb.h
   %i.cq = load ptr, ptr %.sroa.436.0..sroa_idx.i, align 8, !noalias !4899, !nonnull !8, !noundef !8
   %i.cr = load i64, ptr %.sroa.537.0..sroa_idx.i, align 8, !noalias !4899, !noundef !8
   %i.cs = getelementptr inbounds nuw i8, ptr %1, i64 8

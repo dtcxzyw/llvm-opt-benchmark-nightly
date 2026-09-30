@@ -184,14 +184,10 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  %5 = icmp eq i32 %4, 1
-  %.not2026 = icmp eq i32 %0, 0                   ; 2 uses
-  br i1 %5, label %.preheader, label %.preheader21
+  %.not2026 = icmp eq i32 %0, 0
+  br i1 %.not2026, label %.loopexit, label %.preheader
 
-.preheader21:                                     ; preds = %bb.c
-  br i1 %.not2026, label %.loopexit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader21
+.lr.ph:                                           ; preds = %.preheader
   %i.e = sext i32 %4 to i64                       ; 9 uses
   %.pre = load double, ptr %1, align 8, !tbaa !9  ; 9 uses
   %xtraiter = and i32 %0, 7                       ; 2 uses
@@ -216,7 +212,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.h, label %.loopexit, label %.lr.ph.new
 
 .preheader:                                       ; preds = %bb.c
-  br i1 %.not2026, label %.loopexit, label %.lr.ph29.preheader
+  %5 = icmp eq i32 %4, 1
+  br i1 %5, label %.lr.ph29.preheader, label %.lr.ph
 
 .lr.ph29.preheader:                               ; preds = %.preheader
   %.pre31 = load double, ptr %1, align 8, !tbaa !9 ; 2 uses
@@ -286,7 +283,7 @@ middle.block:                                     ; preds = %vector.body
   %.not.7 = icmp eq i32 %i.z, 0
   br i1 %.not.7, label %.loopexit, label %.lr.ph.new, !llvm.loop !21
 
-.loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph.new, %.lr.ph29, %middle.block, %.preheader21, %.preheader, %bb.b
+.loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph.new, %.lr.ph29, %middle.block, %bb.c, %bb.b
   ret void
 }
 
@@ -317,14 +314,10 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  %6 = icmp eq i32 %5, 1
-  %.not2026 = icmp eq i32 %0, 0                   ; 2 uses
-  br i1 %6, label %.preheader, label %.preheader21
+  %.not2026 = icmp eq i32 %0, 0
+  br i1 %.not2026, label %.loopexit, label %.preheader
 
-.preheader21:                                     ; preds = %bb.c
-  br i1 %.not2026, label %.loopexit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader21
+.lr.ph:                                           ; preds = %.preheader
   %i.f = sext i32 %5 to i64                       ; 5 uses
   %xtraiter = and i32 %0, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -351,7 +344,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.l, label %.loopexit, label %.lr.ph.new
 
 .preheader:                                       ; preds = %bb.c
-  br i1 %.not2026, label %.loopexit, label %.lr.ph29.preheader
+  %6 = icmp eq i32 %5, 1
+  br i1 %6, label %.lr.ph29.preheader, label %.lr.ph
 
 .lr.ph29.preheader:                               ; preds = %.preheader
   %i.m = zext i32 %0 to i64                       ; 2 uses
@@ -484,7 +478,7 @@ middle.block:                                     ; preds = %vector.body
   %.not.3 = icmp eq i32 %i.bq, 0
   br i1 %.not.3, label %.loopexit, label %.lr.ph.new, !llvm.loop !29
 
-.loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph.new, %.lr.ph29.prol.loopexit, %.lr.ph29, %middle.block, %.preheader21, %.preheader, %bb.b
+.loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph.new, %.lr.ph29.prol.loopexit, %.lr.ph29, %middle.block, %bb.c, %bb.b
   ret void
 }
 

@@ -204,20 +204,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: inlinehint nonlazybind uwtable
 define void @_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsbi23obv45GP_19pyo3_macros_backend10attributes16KeywordAttributeNtNtBN_2kw6moduleNtNtCs1QQTzni0HOp_3syn3lit6LitStrEENtNtB7_5clone5Clone10clone_fromBP_(ptr align 8 %0, ptr align 8 %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %2 = load ptr, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.not = icmp eq ptr %2, null
   %.pr = load ptr, ptr %1, align 8
-  %.not5 = icmp eq ptr %.pr, null                 ; 2 uses
-  br i1 %.not, label %bb.b, label %3
-
-3:                                                ; preds = %bb.a
-  br i1 %.not5, label %.thread, label %bb.c
+  %.not5 = icmp eq ptr %.pr, null
+  br i1 %.not5, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  br i1 %.not5, label %.thread, label %bb.e
+  %2 = load ptr, ptr %0, align 8
+  %.not = icmp eq ptr %2, null
+  br i1 %.not, label %bb.e, label %bb.c
 
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %bb.b
   tail call void @_RNvYINtNtCsbi23obv45GP_19pyo3_macros_backend10attributes16KeywordAttributeNtNtB5_2kw6moduleNtNtCs1QQTzni0HOp_3syn3lit6LitStrENtNtCskKLDkoKarTP_4core5clone5Clone10clone_fromB7_(ptr nonnull align 8 %0, ptr nonnull align 8 %1) #12
   br label %bb.d
 
@@ -230,9 +227,9 @@ bb.e:                                             ; preds = %bb.b
   %i.d = extractvalue { ptr, i32 } %i.b, 1
   br label %.thread
 
-.thread:                                          ; preds = %3, %bb.b, %bb.e
-  %.sroa.4.0 = phi i32 [ %i.d, %bb.e ], [ undef, %bb.b ], [ undef, %3 ] ; 2 uses
-  %.sroa.0.0 = phi ptr [ %i.c, %bb.e ], [ null, %bb.b ], [ null, %3 ] ; 2 uses
+.thread:                                          ; preds = %bb.a, %bb.e
+  %.sroa.4.0 = phi i32 [ %i.d, %bb.e ], [ undef, %bb.a ] ; 2 uses
+  %.sroa.0.0 = phi ptr [ %i.c, %bb.e ], [ null, %bb.a ] ; 2 uses
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsbi23obv45GP_19pyo3_macros_backend10attributes16KeywordAttributeNtNtB10_2kw6moduleNtNtCs1QQTzni0HOp_3syn3lit6LitStrEEEB12_(ptr nonnull align 8 %0)
           to label %bb.g unwind label %bb.f
 

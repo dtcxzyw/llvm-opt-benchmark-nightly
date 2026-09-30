@@ -202,14 +202,11 @@ bb.cg:                                            ; preds = %_RINvMNtCsj6eKBz9Db
   %i.hb = load i64, ptr %i.ha, align 8            ; 2 uses
   %i.hc = icmp ult i64 %i.hb, 33909456017848441
   call void @llvm.assume(i1 %i.hc)
-  %i.hd = icmp eq i64 %i.hb, 0                    ; 2 uses
-  br i1 %.sroa.15.0, label %bb.ch, label %7
-
-7:                                                ; preds = %bb.cg
-  br i1 %i.hd, label %.thread, label %bb.ep
+  %i.hd = icmp eq i64 %i.hb, 0
+  br i1 %i.hd, label %.thread, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
-  br i1 %i.hd, label %.thread, label %bb.cf
+  br i1 %.sroa.15.0, label %bb.cf, label %bb.ep
 
 bb.ci:                                            ; preds = %bb.cf
   %i.he = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 2 uses
@@ -612,7 +609,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsjXdHNeFfodD_13hickory_proto2op5q
   invoke void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain4name4NameECsi17nFaBu4HY_10ech_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %i.aj) #26
           to label %bb.q unwind label %bb.dw
 
-.thread:                                          ; preds = %bb.ch, %7
+.thread:                                          ; preds = %bb.cg
   %.not100 = xor i1 %.us-phi, true
   %i.lb = getelementptr inbounds nuw i8, ptr %1, i64 184
   %i.lc = load i8, ptr %i.lb, align 8, !range !9
@@ -620,7 +617,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsjXdHNeFfodD_13hickory_proto2op5q
   %or.cond103 = select i1 %.not100, i1 true, i1 %i.ld
   br i1 %or.cond103, label %bb.eq, label %bb.ep
 
-bb.ep:                                            ; preds = %.thread, %7
+bb.ep:                                            ; preds = %bb.ch, %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab)
   invoke void @_RNvMNtNtCsjXdHNeFfodD_13hickory_proto2op7messageNtB2_7Message12all_sections(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %i.ab, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(152) %i.af)

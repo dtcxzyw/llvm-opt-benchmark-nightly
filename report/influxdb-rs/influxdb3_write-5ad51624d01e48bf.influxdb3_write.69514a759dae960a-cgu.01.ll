@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.x
   %.first_iter.i = icmp ult i64 %i.hb, %i.fz
   %exitcond.not.i19.i170.not = icmp ult i64 %.fr35, %i.fz
   %invariant.op240 = sub i64 1, %.fr35
-  %.not.i.us173 = icmp eq i64 %.fr35, 0           ; 2 uses
+  %.not.i.us173 = icmp eq i64 %.fr35, 0
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ag, %.lr.ph.i14.i
@@ -238,10 +238,10 @@ bb.ag:                                            ; preds = %bb.al, %.split34.us
   br i1 %exitcond.not.i19.i, label %.preheader.i.preheader, label %.lr.ph172
 
 .preheader.i.preheader:                           ; preds = %.preheader87.i, %.preheader87.i.preheader
-  br i1 %.first_iter.i, label %.preheader.i.us.preheader, label %.preheader.i
+  br i1 %.not.i.us173, label %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i, label %.preheader.i.us.preheader
 
 .preheader.i.us.preheader:                        ; preds = %.preheader.i.preheader
-  br i1 %.not.i.us173, label %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i, label %.lr.ph175
+  br i1 %.first_iter.i, label %.lr.ph175, label %bb.ai
 
 .preheader.i.us:                                  ; preds = %bb.ah
   %.not.i.us = icmp eq i64 %i.hq, 0
@@ -272,10 +272,7 @@ bb.ah:                                            ; preds = %.lr.ph175
   %i.hz = icmp ult i64 %i.hy, %i.fv
   br i1 %i.hz, label %bb.aj, label %bb.ak
 
-.preheader.i:                                     ; preds = %.preheader.i.preheader
-  br i1 %.not.i.us173, label %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i, label %bb.ai
-
-bb.ai:                                            ; preds = %.preheader.i
+bb.ai:                                            ; preds = %.preheader.i.us.preheader
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.hb, i64 noundef range(i64 0, -9223372036854775808) %i.fz, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #28, !noalias !140
   unreachable
 
@@ -420,8 +417,8 @@ bb.ay:                                            ; preds = %bb.aw
   %i.ju = add i64 %.reass.i.reass.reass, %.sroa.02.0.i.i167
   br label %.sink.split.i.i
 
-_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i: ; preds = %.sink.split.i.i, %.preheader29.i.preheader, %.preheader29.i, %bb.ag, %.preheader.i.us.preheader, %.preheader.i.us, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit12.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit14.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit16.i.i.i.i, %bb.ac, %.preheader.i, %bb.q, %bb.am, %bb.ad, %bb.ab, %bb.t, %.preheader.i4.i
-  %.sroa.0.025.i = phi i8 [ 1, %.preheader.i.us ], [ 0, %bb.ad ], [ 0, %.preheader.i4.i ], [ 1, %bb.ab ], [ 1, %.preheader29.i ], [ 1, %bb.t ], [ %.promoted26.i.i, %bb.q ], [ 0, %bb.am ], [ 1, %.preheader.i.us.preheader ], [ 1, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit12.i.i.i.i ], [ 1, %.preheader.i ], [ 1, %bb.ac ], [ 1, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit16.i.i.i.i ], [ 1, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit14.i.i.i.i ], [ 0, %bb.ag ], [ 0, %.sink.split.i.i ], [ 1, %.preheader29.i.preheader ]
+_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i: ; preds = %.sink.split.i.i, %.preheader29.i.preheader, %.preheader29.i, %.preheader.i.preheader, %bb.ag, %.preheader.i.us, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit12.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit14.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit16.i.i.i.i, %bb.ac, %bb.q, %bb.am, %bb.ad, %bb.ab, %bb.t, %.preheader.i4.i
+  %.sroa.0.025.i = phi i8 [ 1, %.preheader.i.us ], [ 0, %bb.ad ], [ 0, %.preheader.i4.i ], [ 1, %bb.ab ], [ 1, %.preheader29.i ], [ 1, %bb.t ], [ %.promoted26.i.i, %bb.q ], [ 0, %bb.am ], [ 1, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit14.i.i.i.i ], [ 1, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit12.i.i.i.i ], [ 1, %.preheader.i.preheader ], [ 1, %bb.ac ], [ 1, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs92BnbMq7p8c_15influxdb3_write.exit16.i.i.i.i ], [ 0, %bb.ag ], [ 0, %.sink.split.i.i ], [ 1, %.preheader29.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !123
   br label %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15is_contained_in.exit
 

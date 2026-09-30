@@ -204,18 +204,15 @@ bb.ai:                                            ; preds = %bb.y
   %i.cn = zext nneg i16 %i.y to i64
   %i.co = getelementptr [4 x i8], ptr @repeat_vars, i64 %i.cn
   %i.cp = load i32, ptr %i.co, align 4            ; 3 uses
-  %.not61 = icmp eq i32 %i.cp, 0                  ; 2 uses
-  br i1 %.0.shrunk45, label %.preheader, label %.preheader46
+  %.not61 = icmp eq i32 %i.cp, 0
+  br i1 %.not61, label %_process_ptvc_record.exit, label %.preheader
 
-.preheader46:                                     ; preds = %bb.ai
-  br i1 %.not61, label %_process_ptvc_record.exit, label %.lr.ph51
-
-.lr.ph51:                                         ; preds = %.preheader46
+.lr.ph51:                                         ; preds = %.preheader
   %i.cq = getelementptr i8, ptr %.03155, i64 8    ; 2 uses
   br label %bb.aj
 
 .preheader:                                       ; preds = %bb.ai
-  br i1 %.not61, label %_process_ptvc_record.exit, label %.lr.ph53
+  br i1 %.0.shrunk45, label %.lr.ph53, label %.lr.ph51
 
 .lr.ph53:                                         ; preds = %.preheader, %.lr.ph53
   %.1.i52 = phi i32 [ %i.cs, %.lr.ph53 ], [ 0, %.preheader ] ; 2 uses
@@ -251,7 +248,7 @@ bb.am:                                            ; preds = %bb.ak
   %exitcond64.not = icmp eq i32 %i.db, %i.cp
   br i1 %exitcond64.not, label %_process_ptvc_record.exit, label %bb.aj, !llvm.loop !28
 
-_process_ptvc_record.exit:                        ; preds = %bb.x, %bb.am, %.lr.ph53, %bb.p, %.preheader46, %.preheader, %process_struct_sub_ptvc_record.exit43, %bb.o, %bb.aa, %bb.ab, %bb.ah
+_process_ptvc_record.exit:                        ; preds = %bb.x, %bb.am, %.lr.ph53, %bb.ai, %bb.p, %process_struct_sub_ptvc_record.exit43, %bb.o, %bb.aa, %bb.ab, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   br label %bb.an
 

@@ -202,16 +202,13 @@ bb.d:                                             ; preds = %bb.a, %._crit_edge.
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %i.v = load i32, ptr %2, align 4, !tbaa !19, !noalias !44
   store i32 %i.v, ptr %i.u, align 4, !tbaa !19, !noalias !44
-  %i.w = icmp eq ptr %.013.lcssa.i11.i.i, %i.a    ; 2 uses
-  br i1 %.0.lcssa.i12.shrunk.i.i, label %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i, label %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.i.i
-
-_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.i.i: ; preds = %bb.d
-  br i1 %i.w, label %bb.e, label %bb.g
+  %i.w = icmp eq ptr %.013.lcssa.i11.i.i, %i.a
+  br i1 %i.w, label %bb.e, label %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i
 
 _ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i: ; preds = %bb.d
-  br i1 %i.w, label %bb.e, label %.thread.i.i
+  br i1 %.0.lcssa.i12.shrunk.i.i, label %.thread.i.i, label %bb.g
 
-bb.e:                                             ; preds = %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i, %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.i.i
+bb.e:                                             ; preds = %bb.d
   %i.x = ptrtoint ptr %i.t to i64
   %i.y = load ptr, ptr %i.a, align 8, !tbaa !21, !noalias !45
   %i.z = ptrtoint ptr %i.y to i64
@@ -237,7 +234,7 @@ bb.f:                                             ; preds = %.thread.i.i
   store ptr %i.t, ptr %i.ag, align 8, !tbaa !17, !noalias !45
   br label %_ZN5boost9container3dtl4treeIivSt4lessIiENS0_3pmr21polymorphic_allocatorIiEEvE20insert_unique_commitIiEENS1_23iterator_from_iiteratorINS_9intrusive13tree_iteratorINSB_8bhtraitsINS0_9base_nodeIiNS1_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENSB_18rbtree_node_traitsISG_Lb1EEELNSB_14link_mode_typeE0ENSB_7dft_tagELj3EEELb0EEELb0EEEOT_RNSB_20insert_commit_data_tIPNSB_19compact_rbtree_nodeISG_EEEE.exit
 
-bb.g:                                             ; preds = %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.i.i
+bb.g:                                             ; preds = %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsIS7_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i
   %i.aj = getelementptr inbounds nuw i8, ptr %.013.lcssa.i11.i.i, i64 16
   store ptr %i.t, ptr %i.aj, align 8, !tbaa !18, !noalias !45
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses

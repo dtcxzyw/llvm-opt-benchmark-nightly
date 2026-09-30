@@ -202,7 +202,7 @@ _ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.lr.ph.i.i.i: ; preds =
   %i.i = getelementptr inbounds i8, ptr %i.g, i64 -4
   %i.j = load i32, ptr %i.i, align 4, !tbaa !26   ; 4 uses
   %.not.i = icmp eq i32 %i.j, 0
-  br i1 %.not.i, label %_ZNK2lp14constraint_set18active_constraints3endEv.exit, label %.lr.ph.i.i.preheader.i
+  br i1 %.not.i, label %._crit_edge, label %.lr.ph.i.i.preheader.i
 
 .lr.ph.i.i.preheader.i:                           ; preds = %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.lr.ph.i.i.i
   %i.k = load ptr, ptr %i.g, align 8, !tbaa !259
@@ -235,13 +235,12 @@ _ZN2lp14constraint_set18active_constraints8iteratorC2ERKS0_j.exit.loopexit.split
   %i.v = trunc nuw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK2lp14constraint_set18active_constraints3endEv.exit
 
-_ZNK2lp14constraint_set18active_constraints3endEv.exit: ; preds = %_ZN2lp14constraint_set18active_constraints8iteratorC2ERKS0_j.exit.loopexit.split.loop.exit.i, %.lr.ph.i.i.preheader.i, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.lr.ph.i.i.i
-  %.sroa.2.1.i34 = phi i32 [ 0, %.lr.ph.i.i.preheader.i ], [ 0, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.lr.ph.i.i.i ], [ %i.v, %_ZN2lp14constraint_set18active_constraints8iteratorC2ERKS0_j.exit.loopexit.split.loop.exit.i ] ; 2 uses
-  %.sroa.2.1.i16 = phi i32 [ %i.j, %.lr.ph.i.i.preheader.i ], [ 0, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.lr.ph.i.i.i ], [ %i.j, %_ZN2lp14constraint_set18active_constraints8iteratorC2ERKS0_j.exit.loopexit.split.loop.exit.i ] ; 2 uses
-  %.not39 = icmp eq i32 %.sroa.2.1.i34, %.sroa.2.1.i16
+_ZNK2lp14constraint_set18active_constraints3endEv.exit: ; preds = %_ZN2lp14constraint_set18active_constraints8iteratorC2ERKS0_j.exit.loopexit.split.loop.exit.i, %.lr.ph.i.i.preheader.i
+  %.sroa.2.1.i34 = phi i32 [ %i.v, %_ZN2lp14constraint_set18active_constraints8iteratorC2ERKS0_j.exit.loopexit.split.loop.exit.i ], [ 0, %.lr.ph.i.i.preheader.i ] ; 2 uses
+  %.not39 = icmp eq i32 %.sroa.2.1.i34, %i.j
   br i1 %.not39, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.i.i.i, %_ZN2lp14constraint_set18active_constraints8iteratorppEv.exit, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.i.i.lr.ph.i, %bb.a, %_ZNK2lp14constraint_set18active_constraints3endEv.exit
+._crit_edge:                                      ; preds = %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.i.i.i, %_ZN2lp14constraint_set18active_constraints8iteratorppEv.exit, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.i.i.lr.ph.i, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.lr.ph.i.i.i, %bb.a, %_ZNK2lp14constraint_set18active_constraints3endEv.exit
   %i.w = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.43, i64 noundef 12) ; 0 uses
   %i.x = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.44, i64 noundef 17) ; 0 uses
   %i.y = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.45, i64 noundef 8) ; 0 uses
@@ -302,7 +301,7 @@ _ZN2lp14constraint_set18active_constraints8iteratorppEv.exit.loopexit.split.loop
 
 _ZN2lp14constraint_set18active_constraints8iteratorppEv.exit: ; preds = %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.i.i.i21, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.i.i.i21.lr.ph, %_ZN2lp14constraint_set18active_constraints8iteratorppEv.exit.loopexit.split.loop.exit, %.lr.ph.preheader.i.i.i, %.lr.ph, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.lr.ph.i.i.i19
   %.sroa.525.2 = phi i32 [ %i.af, %.lr.ph ], [ %i.af, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.lr.ph.i.i.i19 ], [ %i.af, %.lr.ph.preheader.i.i.i ], [ %i.ay, %_ZN2lp14constraint_set18active_constraints8iteratorppEv.exit.loopexit.split.loop.exit ], [ %i.aj, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.i.i.i21.lr.ph ], [ %i.aj, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit.i.i.i21 ] ; 2 uses
-  %.not = icmp eq i32 %.sroa.525.2, %.sroa.2.1.i16
+  %.not = icmp eq i32 %.sroa.525.2, %i.j
   br i1 %.not, label %._crit_edge, label %.lr.ph
 }
 

@@ -202,11 +202,11 @@ bb.cc:                                            ; preds = %bb.bz, %bb.ca, %flu
   %i.wa = icmp eq i32 %i.vz, 666                  ; 2 uses
   %i.wb = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.wc = load i32, ptr %i.wb, align 8, !tbaa !75
-  %.not387 = icmp eq i32 %i.wc, 0                 ; 2 uses
-  br i1 %i.wa, label %bb.cd, label %2
+  %.not387 = icmp eq i32 %i.wc, 0
+  br i1 %.not387, label %.thread475, label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc
-  br i1 %.not387, label %.thread475, label %bb.ce
+  br i1 %i.wa, label %bb.ce, label %bb.ch
 
 bb.ce:                                            ; preds = %bb.cd
   %i.wd = load ptr, ptr getelementptr inbounds nuw (i8, ptr @z_errmsg, i64 56), align 8, !tbaa !45
@@ -214,10 +214,7 @@ bb.ce:                                            ; preds = %bb.cd
   store ptr %i.wd, ptr %i.we, align 8, !tbaa !14
   br label %.critedge
 
-2:                                                ; preds = %bb.cc
-  br i1 %.not387, label %.thread475, label %bb.ch
-
-.thread475:                                       ; preds = %bb.cd, %2
+.thread475:                                       ; preds = %bb.cc
   %i.wf = getelementptr inbounds nuw i8, ptr %i.c, i64 164
   %i.wg = load i32, ptr %i.wf, align 4, !tbaa !69
   %.not389 = icmp eq i32 %i.wg, 0
@@ -230,7 +227,7 @@ bb.cf:                                            ; preds = %.thread475
 bb.cg:                                            ; preds = %bb.cf
   br i1 %i.wa, label %bb.cy, label %bb.ch
 
-bb.ch:                                            ; preds = %bb.cg, %.thread475, %2
+bb.ch:                                            ; preds = %bb.cd, %bb.cg, %.thread475
   %i.wh = getelementptr inbounds nuw i8, ptr %i.c, i64 184
   %i.wi = load i32, ptr %i.wh, align 8, !tbaa !49
   switch i32 %i.wi, label %bb.ck [

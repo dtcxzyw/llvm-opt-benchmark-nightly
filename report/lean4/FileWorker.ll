@@ -204,17 +204,17 @@ bb.c:                                             ; preds = %bb.a
 
 lean_obj_tag.exit:                                ; preds = %bb.b, %bb.c
   %.0.i64 = phi i32 [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  %3 = icmp eq i32 %.0.i64, 0
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !10   ; 3 uses
   %i.i = getelementptr i8, ptr %i.h, i64 8
   %.val62 = load i64, ptr %i.i, align 8, !tbaa !15
   %.mask90 = and i64 %.val62, 9223372036854775807 ; 3 uses
-  %.not89 = icmp eq i64 %.mask90, 0               ; 2 uses
-  br i1 %3, label %lean_nat_lt.exit, label %lean_nat_lt.exit54
+  %.not89 = icmp eq i64 %.mask90, 0
+  br i1 %.not89, label %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Data_PersistentArray_0__Lean_PersistentArray_foldlFromMAux___at___00Lean_PersistentArray_foldlM___at___00Lean_Server_FileWorker_handleGetInteractiveDiagnosticsRequest_spec__0_spec__0_spec__1.exit, label %lean_nat_lt.exit
 
 lean_nat_lt.exit:                                 ; preds = %lean_obj_tag.exit
-  br i1 %.not89, label %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Data_PersistentArray_0__Lean_PersistentArray_foldlFromMAux___at___00Lean_PersistentArray_foldlM___at___00Lean_Server_FileWorker_handleGetInteractiveDiagnosticsRequest_spec__0_spec__0_spec__1.exit, label %.lr.ph
+  %3 = icmp eq i32 %.0.i64, 0
+  br i1 %3, label %.lr.ph, label %bb.e
 
 .lr.ph:                                           ; preds = %lean_nat_lt.exit
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 24
@@ -230,15 +230,12 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %.not91 = icmp eq i64 %i.n, %.mask90
   br i1 %.not91, label %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Data_PersistentArray_0__Lean_PersistentArray_foldlFromMAux___at___00Lean_PersistentArray_foldlM___at___00Lean_Server_FileWorker_handleGetInteractiveDiagnosticsRequest_spec__0_spec__0_spec__1.exit, label %bb.d
 
-lean_nat_lt.exit54:                               ; preds = %lean_obj_tag.exit
-  br i1 %.not89, label %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Data_PersistentArray_0__Lean_PersistentArray_foldlFromMAux___at___00Lean_PersistentArray_foldlM___at___00Lean_Server_FileWorker_handleGetInteractiveDiagnosticsRequest_spec__0_spec__0_spec__1.exit, label %bb.e
-
-bb.e:                                             ; preds = %lean_nat_lt.exit54
+bb.e:                                             ; preds = %lean_nat_lt.exit
   %i.o = tail call ptr @l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00Lean_PersistentArray_foldlM___at___00Lean_Server_FileWorker_handleGetInteractiveDiagnosticsRequest_spec__0_spec__1(ptr noundef %0, ptr noundef nonnull %i.h, i64 noundef 0, i64 noundef %.mask90, ptr noundef %2)
   br label %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Data_PersistentArray_0__Lean_PersistentArray_foldlFromMAux___at___00Lean_PersistentArray_foldlM___at___00Lean_Server_FileWorker_handleGetInteractiveDiagnosticsRequest_spec__0_spec__0_spec__1.exit
 
-l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Data_PersistentArray_0__Lean_PersistentArray_foldlFromMAux___at___00Lean_PersistentArray_foldlM___at___00Lean_Server_FileWorker_handleGetInteractiveDiagnosticsRequest_spec__0_spec__0_spec__1.exit: ; preds = %bb.d, %lean_nat_lt.exit54, %bb.e, %lean_nat_lt.exit
-  %.4 = phi ptr [ %2, %lean_nat_lt.exit54 ], [ %2, %lean_nat_lt.exit ], [ %i.o, %bb.e ], [ %i.m, %bb.d ]
+l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Data_PersistentArray_0__Lean_PersistentArray_foldlFromMAux___at___00Lean_PersistentArray_foldlM___at___00Lean_Server_FileWorker_handleGetInteractiveDiagnosticsRequest_spec__0_spec__0_spec__1.exit: ; preds = %bb.d, %lean_obj_tag.exit, %bb.e
+  %.4 = phi ptr [ %i.o, %bb.e ], [ %2, %lean_obj_tag.exit ], [ %i.m, %bb.d ]
   ret ptr %.4
 }
 

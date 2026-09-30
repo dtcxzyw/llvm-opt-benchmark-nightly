@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.b
 
 bb.g:                                             ; preds = %bb.d
   %i.y = load i8, ptr %i.m, align 8, !noalias !32 ; 2 uses
-  %i.z = trunc nuw i8 %i.y to i1                  ; 2 uses
+  %i.z = trunc nuw i8 %i.y to i1
   %i.aa = and i8 %i.y, 1
   %i.ab = xor i8 %i.aa, 1
   store i8 %i.ab, ptr %i.m, align 8, !noalias !32
@@ -243,32 +243,29 @@ bb.j:                                             ; preds = %_RNvXs9_NtNtCs3oUPo
   store ptr %i.ak, ptr %i.a, align 8, !noalias !32
   store ptr %i.al, ptr %i.o, align 8, !noalias !32
   %i.am = call { i32, i32 } @_RINvNtNtCs3oUPovFnLWP_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.a) #23, !noalias !32 ; 2 uses
-  %2 = extractvalue { i32, i32 } %i.am, 0
   %i.an = extractvalue { i32, i32 } %i.am, 1      ; 3 uses
-  %3 = trunc i32 %2 to i1
-  br i1 %3, label %4, label %bb.k
+  br i1 %i.z, label %bb.m, label %bb.k
 
 _RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsiHivYpkJ4Hu_2cc.exit.thread.i: ; preds = %_RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsiHivYpkJ4Hu_2cc.exit.i, %bb.i, %.split.i.i
   %.lcssa5 = phi ptr [ null, %_RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsiHivYpkJ4Hu_2cc.exit.i ], [ %i.ad, %bb.i ], [ %i.ad, %.split.i.i ]
   call void @_RNvNtCs3oUPovFnLWP_4core3str16slice_error_fail(ptr %.lcssa5, i64 %i.ae, i64 %i.ac, i64 %i.ae, ptr nonnull align 8 @542) #24, !noalias !32
   unreachable
 
-4:                                                ; preds = %bb.j
-  br i1 %i.z, label %bb.m, label %bb.n
-
 bb.k:                                             ; preds = %bb.j
-  br i1 %i.z, label %bb.m, label %bb.l
+  %2 = extractvalue { i32, i32 } %i.am, 0
+  %3 = trunc i32 %2 to i1
+  br i1 %3, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   store i8 1, ptr %i.n, align 2, !noalias !32
   br label %.sink.split.i
 
-bb.m:                                             ; preds = %bb.k, %4
+bb.m:                                             ; preds = %bb.j
   store i64 %i.ac, ptr %i.k, align 8, !alias.scope !32
   store i64 %i.ac, ptr %i.l, align 8, !alias.scope !32
   br label %.sink.split.i
 
-bb.n:                                             ; preds = %4
+bb.n:                                             ; preds = %bb.k
   %i.ao = icmp ult i32 %i.an, 128
   br i1 %i.ao, label %bb.q, label %bb.o
 

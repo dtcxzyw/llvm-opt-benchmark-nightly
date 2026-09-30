@@ -202,15 +202,11 @@ bb.g:                                             ; preds = %bb.f
 mi_page_thread_free_collect.exit.i:               ; preds = %bb.e, %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %.056118, i64 32 ; 4 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !32   ; 2 uses
-  %.not.i = icmp eq ptr %i.y, null
   %.056.val.pr = load ptr, ptr %i.n, align 8, !tbaa !33
-  %.not103 = icmp eq ptr %.056.val.pr, null       ; 2 uses
-  br i1 %.not.i, label %bb.h, label %3
+  %.not103 = icmp eq ptr %.056.val.pr, null
+  br i1 %.not103, label %bb.h, label %.thread, !prof !94
 
-3:                                                ; preds = %mi_page_thread_free_collect.exit.i
-  br i1 %.not103, label %.sink.split.i, label %.thread, !prof !12
-
-.sink.split.i:                                    ; preds = %3
+.sink.split.i:                                    ; preds = %bb.h
   store ptr %i.y, ptr %i.n, align 8, !tbaa !33
   store ptr null, ptr %i.x, align 8, !tbaa !32
   %i.z = getelementptr inbounds nuw i8, ptr %.056118, i64 63
@@ -218,7 +214,8 @@ mi_page_thread_free_collect.exit.i:               ; preds = %bb.e, %bb.g
   br label %.thread
 
 bb.h:                                             ; preds = %mi_page_thread_free_collect.exit.i
-  br i1 %.not103, label %bb.i, label %.thread
+  %.not.i = icmp eq ptr %i.y, null
+  br i1 %.not.i, label %bb.i, label %.sink.split.i, !prof !95
 
 bb.i:                                             ; preds = %bb.h
   %i.aa = getelementptr i8, ptr %.056118, i64 56
@@ -292,8 +289,8 @@ bb.r:                                             ; preds = %mi_page_thread_free
   store i8 0, ptr %i.ay, align 1, !tbaa !36
   br label %mi_page_to_full.exit
 
-.thread:                                          ; preds = %3, %.sink.split.i, %.lr.ph, %bb.i, %bb.h
-  %.055.in88 = phi i1 [ true, %.lr.ph ], [ false, %bb.i ], [ true, %bb.h ], [ true, %.sink.split.i ], [ true, %3 ]
+.thread:                                          ; preds = %mi_page_thread_free_collect.exit.i, %.sink.split.i, %.lr.ph, %bb.i
+  %.055.in88 = phi i1 [ true, %.lr.ph ], [ false, %bb.i ], [ true, %mi_page_thread_free_collect.exit.i ], [ true, %.sink.split.i ]
   %i.az = icmp eq ptr %.057117, null
   br i1 %i.az, label %bb.s, label %bb.t
 
@@ -644,7 +641,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x ptr> %broadcast.splat, ptr %i.cf, align 8, !tbaa !19
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.cg = icmp eq i64 %index.next, %n.vec
-  br i1 %i.cg, label %middle.block, label %vector.body, !llvm.loop !94
+  br i1 %i.cg, label %middle.block, label %vector.body, !llvm.loop !96
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.cb, %n.vec
@@ -660,7 +657,7 @@ middle.block:                                     ; preds = %vector.body
   store ptr %2, ptr %i.ch, align 8, !tbaa !19
   %i.ci = add nuw nsw i64 %.039.i, 1
   %exitcond.not.i = icmp eq i64 %.039.i, %i.am
-  br i1 %exitcond.not.i, label %mi_theap_queue_first_update.exit, label %.lr.ph.i, !llvm.loop !95
+  br i1 %exitcond.not.i, label %mi_theap_queue_first_update.exit, label %.lr.ph.i, !llvm.loop !97
 
 mi_theap_queue_first_update.exit:                 ; preds = %.lr.ph.i, %middle.block, %bb.f, %bb.g, %bb.p
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 1216 ; 2 uses
@@ -956,6 +953,8 @@ attributes #12 = { "no-builtin-malloc" }
 !91 = distinct !{!91, !20, !58, !57}
 !92 = distinct !{!92, !20}
 !93 = !{!46, !16, i64 1296}
-!94 = distinct !{!94, !20, !57, !58}
-!95 = distinct !{!95, !20, !58, !57}
+!94 = !{!"branch_weights", i32 2001, i32 2}
+!95 = !{!"branch_weights", i32 1, i32 2000}
+!96 = distinct !{!96, !20, !57, !58}
+!97 = distinct !{!97, !20, !58, !57}
 end_hunk_0

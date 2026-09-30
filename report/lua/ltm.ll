@@ -205,18 +205,15 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.052 = phi i32 [ %.0.i, %bb.h ], [ %i.ak, %bb.i ] ; 8 uses
   %.051 = phi i32 [ %.0.i, %bb.h ], [ %3, %bb.i ] ; 4 uses
   %.1 = phi ptr [ %.0, %bb.h ], [ %2, %bb.i ]     ; 13 uses
-  %i.al = icmp sgt i32 %.052, 0                   ; 2 uses
-  br i1 %i.p, label %.preheader, label %.preheader58
+  %i.al = icmp sgt i32 %.052, 0
+  br i1 %i.al, label %.preheader, label %.loopexit
 
-.preheader58:                                     ; preds = %bb.j
-  br i1 %i.al, label %.lr.ph.preheader, label %.loopexit
-
-.lr.ph.preheader:                                 ; preds = %.preheader58
+.lr.ph.preheader:                                 ; preds = %.preheader
   %wide.trip.count = zext nneg i32 %.052 to i64
   br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.j
-  br i1 %i.al, label %.lr.ph62, label %.loopexit
+  br i1 %i.p, label %.lr.ph62, label %.lr.ph.preheader
 
 .lr.ph62:                                         ; preds = %.preheader
   %i.am = sext i32 %.0.i to i64
@@ -297,8 +294,8 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph
   store i8 %i.bq, ptr %i.br, align 8, !tbaa !25
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.m, %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader58, %.preheader
-  %.2 = phi i32 [ %.052, %.epil.preheader ], [ 0, %.preheader ], [ 0, %.preheader58 ], [ %.052, %.loopexit.loopexit.unr-lcssa ], [ %.052, %bb.m ] ; 4 uses
+.loopexit:                                        ; preds = %bb.m, %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.j
+  %.2 = phi i32 [ %.052, %.epil.preheader ], [ 0, %bb.j ], [ %.052, %.loopexit.loopexit.unr-lcssa ], [ %.052, %bb.m ] ; 4 uses
   %i.bs = icmp slt i32 %.2, %.051
   br i1 %i.bs, label %.lr.ph65.preheader, label %._crit_edge
 

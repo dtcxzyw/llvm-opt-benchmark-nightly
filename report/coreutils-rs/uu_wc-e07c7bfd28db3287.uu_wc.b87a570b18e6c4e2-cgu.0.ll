@@ -206,19 +206,16 @@ _RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VecReEINtB4_18S
   call void @llvm.assume(i1 %i.ya)
   %i.yb = icmp sgt i64 %.sroa.17.48.copyload, -1
   call void @llvm.assume(i1 %i.yb)
-  %.not = icmp eq i64 %.sroa.17.48.copyload, 0    ; 2 uses
-  br i1 %i.wf, label %bb.cu, label %2
-
-2:                                                ; preds = %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VecReEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB1F_6copied6CopiedINtNtNtB1J_5slice4iter4IterNtNtNtCsh036I4OHgIr_6uucore8features8hardware15HardwareFeatureEENvCsfPYenFzdTHO_5uu_wc22hardware_feature_labelEE9from_iterB4g_.exit204
-  br i1 %.not, label %bb.cv, label %bb.cw
+  %.not = icmp eq i64 %.sroa.17.48.copyload, 0
+  br i1 %.not, label %bb.cu, label %bb.cw
 
 bb.cu:                                            ; preds = %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VecReEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB1F_6copied6CopiedINtNtNtB1J_5slice4iter4IterNtNtNtCsh036I4OHgIr_6uucore8features8hardware15HardwareFeatureEENvCsfPYenFzdTHO_5uu_wc22hardware_feature_labelEE9from_iterB4g_.exit204
-  br i1 %.not, label %bb.fz, label %bb.cw
+  br i1 %i.wf, label %bb.fz, label %bb.cv
 
-bb.cv:                                            ; preds = %2
+bb.cv:                                            ; preds = %bb.cu
   br i1 %i.xf, label %bb.da, label %bb.cy
 
-bb.cw:                                            ; preds = %bb.cu, %2
+bb.cw:                                            ; preds = %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VecReEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB1F_6copied6CopiedINtNtNtB1J_5slice4iter4IterNtNtNtCsh036I4OHgIr_6uucore8features8hardware15HardwareFeatureEENvCsfPYenFzdTHO_5uu_wc22hardware_feature_labelEE9from_iterB4g_.exit204
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dc)
   store ptr @_RNvNvNtNtCs2vKOLqTMYjT_3std2io5stdio6stderr8INSTANCE, ptr %i.dc, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.db)

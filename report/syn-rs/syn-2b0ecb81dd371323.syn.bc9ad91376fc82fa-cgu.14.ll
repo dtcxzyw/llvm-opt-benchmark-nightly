@@ -204,16 +204,13 @@ bb.n:                                             ; preds = %bb.l
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor5group(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([56 x i8]) align 8 captures(none) dereferenceable(56) %0, ptr noundef %1, ptr noundef %2, i8 noundef range(i8 0, 4) %3) unnamed_addr #3 {
 bb.a:
-  %.not = icmp eq i8 %3, 3
   %.pr.pre = load i32, ptr %1, align 8            ; 3 uses
-  %i.a = icmp samesign ult i32 %.pr.pre, 2        ; 2 uses
-  br i1 %.not, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit, label %bb.b
-
-_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit: ; preds = %bb.a
-  br i1 %i.a, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread31, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread
+  %i.a = icmp samesign ult i32 %.pr.pre, 2
+  br i1 %i.a, label %bb.b, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread
 
 bb.b:                                             ; preds = %bb.a
-  br i1 %i.a, label %.lr.ph.i, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread
+  %.not = icmp eq i8 %3, 3
+  br i1 %.not, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread31, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.f
   %.sroa.0.1 = phi ptr [ %.sroa.0.0.i, %bb.f ], [ %1, %bb.b ] ; 5 uses
@@ -249,7 +246,7 @@ bb.f:                                             ; preds = %bb.e
   %i.m = icmp samesign ult i32 %i.j, 2
   br i1 %i.m, label %.lr.ph.i, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread
 
-_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread31: ; preds = %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit
+_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread31: ; preds = %bb.b
   %i.n = trunc nuw i32 %.pr.pre to i1
   br i1 %i.n, label %.thread, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread31.thread43
 
@@ -316,8 +313,8 @@ bb.i:                                             ; preds = %.preheader
   store ptr %2, ptr %.sroa.7.0..sroa_idx, align 8
   br label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread
 
-_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread: ; preds = %bb.f, %bb.b, %.thread, %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread31.thread43, %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit, %bb.i
-  %storemerge = phi i64 [ 1, %bb.i ], [ 0, %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit ], [ 0, %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread31.thread43 ], [ 0, %.thread ], [ 0, %bb.b ], [ 0, %bb.f ]
+_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread: ; preds = %bb.f, %bb.a, %.thread, %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread31.thread43, %bb.i
+  %storemerge = phi i64 [ 1, %bb.i ], [ 0, %bb.a ], [ 0, %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread31.thread43 ], [ 0, %.thread ], [ 0, %bb.f ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }

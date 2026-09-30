@@ -202,11 +202,11 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0197.0223, i64 64 ; 3 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !29
-  %.not220 = icmp eq ptr %i.u, %i.ab              ; 2 uses
-  br i1 %i.z, label %bb.c, label %3
+  %.not220 = icmp eq ptr %i.u, %i.ab
+  br i1 %.not220, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %.not220, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit, label %bb.d
+  br i1 %i.z, label %bb.d, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit124
 
 bb.d:                                             ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0197.0223, i64 96 ; 3 uses
@@ -312,10 +312,7 @@ bb.o:                                             ; preds = %.invoke, %bb.w, %bb
           cleanup
   br label %bb.af
 
-3:                                                ; preds = %bb.b
-  br i1 %.not220, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit124
-
-_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit124: ; preds = %3
+_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit124: ; preds = %bb.c
   %i.bq = load i64, ptr %i.u, align 8             ; 3 uses
   %i.br = and i64 %i.bq, 1152920405095219200
   %.not.i.i126 = icmp eq i64 %i.br, 1152920405095219200
@@ -416,7 +413,7 @@ bb.y:                                             ; preds = %_ZN4cvc58internal4e
   invoke void @_ZN4cvc58internal4expr9NodeValue20markRefCountMaxedOutEv(ptr noundef nonnull align 8 dereferenceable(24) %.sink254)
           to label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit unwind label %bb.o
 
-_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit: ; preds = %.invoke, %bb.n, %bb.y, %bb.x, %bb.s, %bb.r, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit.i, %3, %bb.u, %bb.t, %bb.c, %bb.d
+_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit: ; preds = %.invoke, %bb.b, %bb.n, %bb.y, %bb.x, %bb.s, %bb.r, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit.i, %bb.u, %bb.t, %bb.d
   %i.df = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0197.0223) #24 ; 2 uses
   %.not217 = icmp eq ptr %i.df, %i.e
   br i1 %.not217, label %._crit_edge, label %.lr.ph

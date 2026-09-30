@@ -202,7 +202,7 @@ bb.a:
   %i.i = invoke noundef i32 @_RNvNtCsG258MDvU3F_3std7process2id()
           to label %bb.b unwind label %.thread45
 
-.thread45:                                        ; preds = %bb.g, %bb.m, %bb.d, %bb.b, %bb.a, %bb.k
+.thread45:                                        ; preds = %bb.g, %bb.m, %bb.d, %bb.b, %bb.a, %bb.l
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.thread
@@ -262,28 +262,24 @@ _RNvMNtNtCsarFSTFZzLuM_11xet_runtime4core7contextNtB2_10XetContext25handle_meets
   br i1 %i.q, label %bb.n, label %bb.j
 
 bb.j:                                             ; preds = %_RNvMNtNtCsarFSTFZzLuM_11xet_runtime4core7contextNtB2_10XetContext25handle_meets_requirements.exit
-  %2 = icmp eq i64 %i.l, 0
   %i.r = atomicrmw sub ptr %i.o, i64 1 release, align 8, !noalias !378
-  %i.s = icmp eq i64 %i.r, 1                      ; 2 uses
-  br i1 %2, label %3, label %bb.l
-
-3:                                                ; preds = %bb.j
+  %i.s = icmp eq i64 %i.r, 1
   br i1 %i.s, label %bb.k, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsUrhh0HcRih_5tokio7runtime6handle6HandleECsarFSTFZzLuM_11xet_runtime.exit
 
-bb.k:                                             ; preds = %3
+bb.k:                                             ; preds = %bb.j
+  %2 = icmp eq i64 %i.l, 0
   fence acquire
+  br i1 %2, label %bb.l, label %bb.m
+
+bb.l:                                             ; preds = %bb.k
   invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtNtCsUrhh0HcRih_5tokio7runtime9scheduler14current_thread6HandleE9drop_slowBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.p) #24
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsUrhh0HcRih_5tokio7runtime6handle6HandleECsarFSTFZzLuM_11xet_runtime.exit unwind label %.thread45
 
-bb.l:                                             ; preds = %bb.j
-  br i1 %i.s, label %bb.m, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsUrhh0HcRih_5tokio7runtime6handle6HandleECsarFSTFZzLuM_11xet_runtime.exit
-
-bb.m:                                             ; preds = %bb.l
-  fence acquire
+bb.m:                                             ; preds = %bb.k
   invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtNtNtCsUrhh0HcRih_5tokio7runtime9scheduler12multi_thread6handle6HandleE9drop_slowBQ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.p) #24
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsUrhh0HcRih_5tokio7runtime6handle6HandleECsarFSTFZzLuM_11xet_runtime.exit unwind label %.thread45
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsUrhh0HcRih_5tokio7runtime6handle6HandleECsarFSTFZzLuM_11xet_runtime.exit: ; preds = %bb.l, %3, %bb.k, %bb.m
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsUrhh0HcRih_5tokio7runtime6handle6HandleECsarFSTFZzLuM_11xet_runtime.exit: ; preds = %bb.j, %bb.l, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br label %bb.g
 

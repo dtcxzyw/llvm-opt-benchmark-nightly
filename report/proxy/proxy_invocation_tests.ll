@@ -204,21 +204,18 @@ bb.a:
   %i.b = load ptr, ptr %.val, align 8, !tbaa !749, !nonnull !63, !align !95 ; 9 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !46   ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 4 uses
-  %3 = icmp eq ptr %i.c, %i.d
   %i.e = load ptr, ptr %1, align 8, !tbaa !46     ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
-  %i.g = icmp eq ptr %i.e, %i.f                   ; 2 uses
-  br i1 %3, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i: ; preds = %bb.a
-  br i1 %i.g, label %bb.b, label %.thread.i.i.i.i.i.i.i
+  %i.g = icmp eq ptr %i.e, %i.f
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  br i1 %i.g, label %bb.b, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i: ; preds = %bb.a
-  br i1 %i.g, label %bb.b, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i.i.i.i.i.i
+  %4 = icmp eq ptr %i.c, %i.d
+  br i1 %4, label %.thread.i.i.i.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i.i.i.i.i.i
 
-bb.b:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.h = load i64, ptr %4, align 8, !tbaa !32     ; 3 uses
+bb.b:                                             ; preds = %bb.a
+  %i.h = load i64, ptr %3, align 8, !tbaa !32     ; 3 uses
   %i.i = icmp ult i64 %i.h, 16
   tail call void @llvm.assume(i1 %i.i)
   %.not21.i.i.i.i.i.i.i = icmp eq ptr %1, %i.b
@@ -240,7 +237,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i.i.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i.i.i.i.i: ; preds = %bb.e, %bb.d, %bb.c
-  %i.k = load i64, ptr %4, align 8, !tbaa !32     ; 2 uses
+  %i.k = load i64, ptr %3, align 8, !tbaa !32     ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.k, ptr %i.l, align 8, !tbaa !32
   %i.m = load ptr, ptr %i.b, align 8, !tbaa !46
@@ -249,11 +246,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i.
   %.pre.i.i.i.i.i.i.i = load ptr, ptr %1, align 8, !tbaa !46
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i.i
 
-.thread.i.i.i.i.i.i.i:                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
+.thread.i.i.i.i.i.i.i:                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.e, ptr %i.b, align 8, !tbaa !46
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.p = load i64, ptr %5, align 8, !tbaa !32
+  %i.p = load i64, ptr %3, align 8, !tbaa !32
   store i64 %i.p, ptr %i.o, align 8, !tbaa !32
   %i.q = load i64, ptr %i.f, align 8, !tbaa !33
   store i64 %i.q, ptr %i.d, align 8, !tbaa !33
@@ -262,8 +258,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i.
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i.i.i.i.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i
   %i.r = load i64, ptr %i.d, align 8, !tbaa !33
   store ptr %i.e, ptr %i.b, align 8, !tbaa !46
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.s = load i64, ptr %6, align 8, !tbaa !32
+  %i.s = load i64, ptr %3, align 8, !tbaa !32
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.s, ptr %i.t, align 8, !tbaa !32
   %i.u = load i64, ptr %i.f, align 8, !tbaa !33

@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.r
   %.first_iter.i36.i = icmp ult i64 %i.ey, %i.ci
   %exitcond.not.i37.i106.not = icmp ult i64 %.fr235.i, %i.ci
   %invariant.op146 = sub i64 1, %.fr235.i, !dbg !6951
-  %.not58.i.us.i109 = icmp eq i64 %.fr235.i, 0    ; 2 uses
+  %.not58.i.us.i109 = icmp eq i64 %.fr235.i, 0
   br label %.lr.ph.split.us.i.i, !dbg !6951
 
 .lr.ph.split.us.i.i:                              ; preds = %bb.ag, %.lr.ph.i35.i
@@ -251,11 +251,11 @@ bb.ad:                                            ; preds = %bb.r
     #dbg_value(ptr undef, !6667, !DIExpression(), !6194)
     #dbg_value(ptr undef, !6668, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !6330)
     #dbg_value(ptr undef, !6668, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !6330)
-  br i1 %.first_iter.i36.i, label %.preheader.i39.us.i.preheader, label %.preheader.i39.i
+  br i1 %.not58.i.us.i109, label %.split.us.i41.i, label %.preheader.i39.us.i.preheader
 
 .preheader.i39.us.i.preheader:                    ; preds = %.preheader.i39.preheader.i
     #dbg_value(i64 %.fr235.i, !6706, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6331)
-  br i1 %.not58.i.us.i109, label %.split.us.i41.i, label %.lr.ph111, !dbg !6960
+  br i1 %.first_iter.i36.i, label %.lr.ph111, label %.split56.us.i40.i, !dbg !6960
 
 .preheader.i39.us.i:                              ; preds = %.lr.ph111
     #dbg_value(i64 %i.fi, !6706, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6331)
@@ -311,11 +311,7 @@ bb.ad:                                            ; preds = %bb.r
   %.not45.us.i.i = icmp eq i8 %i.fr, %i.fv, !dbg !6971
   br i1 %.not45.us.i.i, label %.preheader59.i.i, label %bb.ae, !dbg !6971
 
-.preheader.i39.i:                                 ; preds = %.preheader.i39.preheader.i
-    #dbg_value(i64 %i.ev, !6706, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6331)
-  br i1 %.not58.i.us.i109, label %.split.us.i41.i, label %.split56.us.i40.i, !dbg !6960
-
-.split56.us.i40.i:                                ; preds = %.preheader.i39.i
+.split56.us.i40.i:                                ; preds = %.preheader.i39.us.i.preheader
     #dbg_value(i64 %i.ev, !6755, !DIExpression(), !6274)
     #dbg_value(i64 %i.ev, !6752, !DIExpression(), !6269)
     #dbg_value(i64 %i.ey, !6706, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6331)
@@ -345,7 +341,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %.sp
   store i64 %.val13, ptr %i.cj, align 8, !dbg !6982, !alias.scope !6796, !noalias !6797
   br label %bb.ah, !dbg !6983
 
-.split.us.i41.i:                                  ; preds = %.preheader.i39.us.i.preheader, %.preheader.i39.us.i, %.preheader.i39.i
+.split.us.i41.i:                                  ; preds = %.preheader.i39.preheader.i, %.preheader.i39.us.i
   %i.ga = add i64 %i.fa, %i.ci, !dbg !6984        ; 2 uses
   store i64 %i.ga, ptr %i.cj, align 8, !dbg !6984, !alias.scope !6796, !noalias !6797
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, !dbg !6985

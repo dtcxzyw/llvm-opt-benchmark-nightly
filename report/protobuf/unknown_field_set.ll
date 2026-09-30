@@ -205,16 +205,13 @@ _ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEv.exit:
 ; Function Attrs: mustprogress noinline uwtable
 define linkonce_odr hidden void @_ZN6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE14GrowNoAnnotateEPNS0_5ArenaEbii(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, i1 noundef zeroext %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #11 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = icmp slt i32 %4, 1                       ; 2 uses
-  br i1 %2, label %_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit.thread, label %_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit
-
-_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit: ; preds = %bb.a
-  br i1 %i.a, label %_ZN6google8protobuf8internal20CalculateReserveSizeINS0_12UnknownFieldELi16EEEiii.exit, label %bb.b
+  %i.a = icmp slt i32 %4, 1
+  br i1 %i.a, label %_ZN6google8protobuf8internal20CalculateReserveSizeINS0_12UnknownFieldELi16EEEiii.exit, label %_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit.thread
 
 _ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit.thread: ; preds = %bb.a
-  br i1 %i.a, label %_ZN6google8protobuf8internal20CalculateReserveSizeINS0_12UnknownFieldELi16EEEiii.exit, label %.thread
+  br i1 %2, label %.thread, label %bb.b
 
-bb.b:                                             ; preds = %_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit
+bb.b:                                             ; preds = %_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit.thread
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21   ; 2 uses
@@ -228,8 +225,8 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %.sroa.speculated.i = tail call i32 @llvm.smax.i32(i32 %i.h, i32 %4)
   br label %_ZN6google8protobuf8internal20CalculateReserveSizeINS0_12UnknownFieldELi16EEEiii.exit
 
-_ZN6google8protobuf8internal20CalculateReserveSizeINS0_12UnknownFieldELi16EEEiii.exit: ; preds = %_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit.thread, %_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit, %bb.b, %.thread
-  %.1.i = phi i32 [ 1, %_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit ], [ %.sroa.speculated.i, %.thread ], [ 2147483647, %bb.b ], [ 1, %_ZNK6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8CapacityEb.exit.thread ] ; 2 uses
+_ZN6google8protobuf8internal20CalculateReserveSizeINS0_12UnknownFieldELi16EEEiii.exit: ; preds = %bb.a, %bb.b, %.thread
+  %.1.i = phi i32 [ 1, %bb.a ], [ %.sroa.speculated.i, %.thread ], [ 2147483647, %bb.b ] ; 2 uses
   %i.i = zext nneg i32 %.1.i to i64
   %i.j = shl nuw nsw i64 %i.i, 4
   %i.k = icmp eq ptr %1, null                     ; 2 uses

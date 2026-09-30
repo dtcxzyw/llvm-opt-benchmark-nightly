@@ -204,28 +204,25 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load i64, ptr @bitmap_pool_size, align 8, !tbaa !18 ; 3 uses
-  %1 = icmp eq i64 %i.a, 16
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !21
-  %i.b = icmp eq i64 %.pre, 0                     ; 2 uses
-  br i1 %1, label %bb.c, label %2
-
-2:                                                ; preds = %bb.b
-  br i1 %i.b, label %ewah_free.exit, label %bb.e
+  %i.b = icmp eq i64 %.pre, 0
+  br i1 %i.b, label %ewah_free.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %i.b, label %ewah_free.exit, label %bb.d
+  %1 = icmp eq i64 %i.a, 16
+  br i1 %1, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.c = load ptr, ptr %0, align 8, !tbaa !20
   tail call void @free(ptr noundef %i.c) #13
   br label %ewah_free.exit
 
-ewah_free.exit:                                   ; preds = %2, %bb.c, %bb.d
+ewah_free.exit:                                   ; preds = %bb.b, %bb.d
   tail call void @free(ptr noundef nonnull %0) #13
   br label %bb.f
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 1, ptr %i.d, align 8, !tbaa !19
   %i.e = load ptr, ptr %0, align 8, !tbaa !20     ; 2 uses

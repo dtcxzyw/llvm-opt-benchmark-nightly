@@ -204,7 +204,7 @@ bb.ai:                                            ; preds = %bb.w
   %.first_iter.i15.i = icmp ult i64 %i.fr, %i.df
   %exitcond.not.i16.i157.not = icmp ult i64 %.fr214.i, %i.df
   %invariant.op195 = sub i64 1, %.fr214.i
-  %.not34.i.us.i160 = icmp eq i64 %.fr214.i, 0    ; 2 uses
+  %.not34.i.us.i160 = icmp eq i64 %.fr214.i, 0
   br label %.lr.ph.split.us.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %bb.al, %.lr.ph.i14.i
@@ -228,10 +228,10 @@ bb.ai:                                            ; preds = %bb.w
   br i1 %exitcond.not.i16.i, label %.preheader.i18.preheader.i, label %.lr.ph159
 
 .preheader.i18.preheader.i:                       ; preds = %.preheader35.i.i, %.preheader35.i.i.preheader
-  br i1 %.first_iter.i15.i, label %.preheader.i18.us.i.preheader, label %.preheader.i18.i
+  br i1 %.not34.i.us.i160, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.preheader.i18.us.i.preheader
 
 .preheader.i18.us.i.preheader:                    ; preds = %.preheader.i18.preheader.i
-  br i1 %.not34.i.us.i160, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.lr.ph162
+  br i1 %.first_iter.i15.i, label %.lr.ph162, label %.split32.us.i19.i
 
 .preheader.i18.us.i:                              ; preds = %.lr.ph162
   %.not34.i.us.i = icmp eq i64 %i.ga, 0
@@ -266,10 +266,7 @@ bb.ai:                                            ; preds = %bb.w
   %.not21.us.i.i = icmp eq i8 %i.gj, %i.gn
   br i1 %.not21.us.i.i, label %.preheader35.i.i, label %bb.aj
 
-.preheader.i18.i:                                 ; preds = %.preheader.i18.preheader.i
-  br i1 %.not34.i.us.i160, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.split32.us.i19.i
-
-.split32.us.i19.i:                                ; preds = %.preheader.i18.i
+.split32.us.i19.i:                                ; preds = %.preheader.i18.us.i.preheader
   tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.fr, i64 noundef range(i64 0, -9223372036854775808) %i.df, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #22, !noalias !220
   unreachable
 
@@ -291,8 +288,8 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %.sp
 _RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split: ; preds = %.lr.ph.i.i4, %bb.y, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCseiMiKruFR5A_24candle_wasm_example_yolo.exit16.i.i.us.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCseiMiKruFR5A_24candle_wasm_example_yolo.exit14.i.i.us.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCseiMiKruFR5A_24candle_wasm_example_yolo.exit12.i.i.us.i, %bb.u
   br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
-_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.ad, %.preheader36.i.i.preheader, %.preheader36.i.i, %bb.al, %.preheader.i18.us.i.preheader, %.preheader.i18.us.i, %bb.z, %bb.k, %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split, %.preheader.i18.i, %bb.ai, %bb.aa, %bb.y, %bb.n, %bb.t, %.preheader.i, %bb.v
-  %storemerge.i.sink.i = phi i8 [ %.promoted205.i, %bb.k ], [ 0, %bb.aa ], [ 0, %bb.v ], [ 0, %bb.ai ], [ 1, %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split ], [ 0, %bb.y ], [ 1, %.preheader.i18.us.i ], [ 0, %.preheader.i ], [ 1, %bb.n ], [ 1, %bb.t ], [ 1, %.preheader36.i.i ], [ 1, %.preheader.i18.i ], [ 1, %.preheader.i18.us.i.preheader ], [ 0, %bb.z ], [ 0, %bb.al ], [ 0, %bb.ad ], [ 1, %.preheader36.i.i.preheader ]
+_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.ad, %.preheader36.i.i.preheader, %.preheader36.i.i, %.preheader.i18.preheader.i, %bb.al, %.preheader.i18.us.i, %bb.z, %bb.k, %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split, %bb.ai, %bb.aa, %bb.y, %bb.n, %bb.t, %.preheader.i, %bb.v
+  %storemerge.i.sink.i = phi i8 [ %.promoted205.i, %bb.k ], [ 0, %bb.aa ], [ 0, %bb.v ], [ 0, %bb.ai ], [ 1, %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split ], [ 0, %bb.y ], [ 1, %.preheader36.i.i ], [ 0, %.preheader.i ], [ 1, %bb.n ], [ 1, %bb.t ], [ 0, %bb.z ], [ 1, %.preheader.i18.preheader.i ], [ 1, %.preheader.i18.us.i ], [ 0, %bb.al ], [ 0, %bb.ad ], [ 1, %.preheader36.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_contains.exit.thread
 

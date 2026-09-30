@@ -9,12 +9,10 @@ target triple = "x86_64-pc-linux-gnu"
 define noundef zeroext i1 @ZL_parseInt(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq i64 %3, 0
-  br i1 %i.a, label %.critedge78.preheader, label %.lr.ph
+  br i1 %i.a, label %.critedge, label %.lr.ph
 
-.critedge78.preheader:                            ; preds = %ZL_parseInt64_fallback.exit.thread54, %bb.a
-  %.042.lcssa = phi ptr [ %1, %bb.a ], [ %i.f, %ZL_parseInt64_fallback.exit.thread54 ]
-  %.037.lcssa = phi i64 [ 0, %bb.a ], [ %i.ak, %ZL_parseInt64_fallback.exit.thread54 ] ; 2 uses
-  %i.b = icmp ult i64 %.037.lcssa, %3
+.critedge78.preheader:                            ; preds = %ZL_parseInt64_fallback.exit.thread54
+  %i.b = icmp ult i64 %i.ak, %3
   br i1 %i.b, label %.lr.ph93, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a, %ZL_parseInt64_fallback.exit.thread54
@@ -107,15 +105,15 @@ ZL_parseInt64_fallback.exit.thread54:             ; preds = %.critedge.i.thread,
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.03788
   store i64 %.05057, ptr %i.ai, align 8, !tbaa !15
   %i.aj = add nuw nsw i64 %.03589, %i.e           ; 2 uses
-  %i.ak = add nuw i64 %.03788, 1                  ; 3 uses
+  %i.ak = add nuw i64 %.03788, 1                  ; 4 uses
   %i.al = icmp uge i64 %i.ak, %3
   %i.am = icmp samesign ugt i64 %i.aj, 31
   %.not48 = select i1 %i.al, i1 true, i1 %i.am
   br i1 %.not48, label %.critedge78.preheader, label %.lr.ph, !llvm.loop !16
 
 .lr.ph93:                                         ; preds = %.critedge78.preheader, %ZL_parseInt64Unsafe.exit.thread64
-  %.13892 = phi i64 [ %i.bu, %ZL_parseInt64Unsafe.exit.thread64 ], [ %.037.lcssa, %.critedge78.preheader ] ; 3 uses
-  %.34591 = phi ptr [ %i.aq, %ZL_parseInt64Unsafe.exit.thread64 ], [ %.042.lcssa, %.critedge78.preheader ] ; 4 uses
+  %.13892 = phi i64 [ %i.bu, %ZL_parseInt64Unsafe.exit.thread64 ], [ %i.ak, %.critedge78.preheader ] ; 3 uses
+  %.34591 = phi ptr [ %i.aq, %ZL_parseInt64Unsafe.exit.thread64 ], [ %i.f, %.critedge78.preheader ] ; 4 uses
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.13892
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !18 ; 3 uses
   %i.ap = zext i32 %i.ao to i64
@@ -205,8 +203,8 @@ ZL_parseInt64Unsafe.exit.thread64:                ; preds = %.critedge.i.i.threa
   %exitcond.not = icmp eq i64 %i.bu, %3
   br i1 %exitcond.not, label %.critedge, label %.lr.ph93, !llvm.loop !17
 
-.critedge:                                        ; preds = %ZL_parseInt64_fallback.exit, %.split, %.lr.ph, %bb.c, %bb.f, %bb.d, %bb.g, %.lr.ph.i, %ZL_parseInt64Unsafe.exit.thread64, %.split68, %ZL_parseInt64Unsafe.exit, %.lr.ph93, %bb.j, %bb.m, %bb.k, %.lr.ph.i.i, %bb.n, %.critedge78.preheader
-  %.5 = phi i1 [ false, %bb.k ], [ false, %bb.g ], [ true, %.critedge78.preheader ], [ false, %.lr.ph.i.i ], [ false, %bb.n ], [ false, %bb.m ], [ false, %bb.j ], [ false, %.lr.ph93 ], [ false, %ZL_parseInt64Unsafe.exit ], [ false, %.split68 ], [ true, %ZL_parseInt64Unsafe.exit.thread64 ], [ false, %.lr.ph.i ], [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.c ], [ false, %.lr.ph ], [ false, %.split ], [ false, %ZL_parseInt64_fallback.exit ]
+.critedge:                                        ; preds = %ZL_parseInt64_fallback.exit, %.split, %.lr.ph, %bb.c, %bb.f, %bb.d, %bb.g, %.lr.ph.i, %ZL_parseInt64Unsafe.exit.thread64, %.split68, %ZL_parseInt64Unsafe.exit, %.lr.ph93, %bb.j, %bb.m, %bb.k, %.lr.ph.i.i, %bb.n, %bb.a, %.critedge78.preheader
+  %.5 = phi i1 [ true, %bb.a ], [ false, %bb.g ], [ true, %.critedge78.preheader ], [ false, %bb.k ], [ false, %.lr.ph.i.i ], [ false, %bb.n ], [ false, %bb.m ], [ false, %bb.j ], [ false, %.lr.ph93 ], [ false, %ZL_parseInt64Unsafe.exit ], [ false, %.split68 ], [ true, %ZL_parseInt64Unsafe.exit.thread64 ], [ false, %.lr.ph.i ], [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.c ], [ false, %.lr.ph ], [ false, %.split ], [ false, %ZL_parseInt64_fallback.exit ]
   ret i1 %.5
 }
 

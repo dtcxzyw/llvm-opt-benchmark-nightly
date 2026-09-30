@@ -204,17 +204,14 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 59
   %i.fe = load i8, ptr %i.fd, align 1, !tbaa !235 ; 3 uses
-  %.not67.i = icmp eq i8 %i.fe, 0
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fc, i64 248
   %i.fg = load i64, ptr %i.ff, align 8, !tbaa !136
-  %.not91.i = icmp eq i64 %i.fg, 0                ; 2 uses
-  br i1 %.not67.i, label %.thread73.i, label %bb.x
-
-.thread73.i:                                      ; preds = %bb.w
-  br i1 %.not91.i, label %.thread75.i, label %bb.z
+  %.not91.i = icmp eq i64 %i.fg, 0
+  br i1 %.not91.i, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
-  br i1 %.not91.i, label %bb.y, label %bb.z
+  %.not67.i = icmp eq i8 %i.fe, 0
+  br i1 %.not67.i, label %.thread75.i, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   store i8 %i.fe, ptr %i.cn, align 1, !tbaa !134
@@ -223,12 +220,12 @@ bb.y:                                             ; preds = %bb.x
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cp, ptr nonnull readonly align 4 %i.fi, i64 %i.fh, i1 false)
   br label %.critedge71.i
 
-.thread75.i:                                      ; preds = %.thread73.i, %bb.v
+.thread75.i:                                      ; preds = %bb.x, %bb.v
   %i.fj = load i16, ptr %i.cz, align 8, !tbaa !167
   %i.fk = icmp ugt i16 %i.fj, 771
   br i1 %i.fk, label %bb.z, label %.critedge71.i
 
-bb.z:                                             ; preds = %.thread75.i, %bb.x, %.thread73.i
+bb.z:                                             ; preds = %.thread75.i, %bb.w
   store i8 32, ptr %i.cn, align 1, !tbaa !134
   %i.fl = call i32 @RAND_bytes(ptr noundef nonnull %i.cp, i64 noundef 32) #6
   %.not68.i = icmp eq i32 %i.fl, 0

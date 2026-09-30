@@ -205,11 +205,9 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph
   %i.bk = load i32, ptr %i.bj, align 8, !noundef !4
   %i.bl = icmp eq i32 %i.bk, %2
   %i.bm = add nuw nsw i64 %.sroa.0.078, 1         ; 12 uses
-  %6 = icmp samesign ult i64 %i.bm, %i.bg
-  %or.cond = select i1 %i.bl, i1 %6, i1 false
-  br i1 %or.cond, label %bb.p, label %._crit_edge111
+  br i1 %i.bl, label %6, label %._crit_edge111
 
-._crit_edge:                                      ; preds = %._crit_edge111, %bb.a, %bb.g, %bb.o, %.split
+._crit_edge:                                      ; preds = %._crit_edge111, %6, %bb.g, %bb.a, %bb.o, %.split
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   ret void
@@ -234,14 +232,18 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTTmmElEEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef align 8 dereferenceable(24) %i.c) #33
           to label %bb.an unwind label %bb.am
 
+6:                                                ; preds = %.peel.next
+  %7 = icmp samesign ult i64 %i.bm, %i.bg
+  br i1 %7, label %bb.p, label %._crit_edge
+
 ._crit_edge111:                                   ; preds = %.peel.next, %bb.ad, %bb.ai, %bb.al, %bb.p
-  %i.bn = phi i64 [ %i.bg, %.peel.next ], [ %i.dp, %bb.ad ], [ %i.ee, %bb.ai ], [ %.pre110, %bb.al ], [ %i.bg, %bb.p ] ; 3 uses
+  %i.bn = phi i64 [ %i.bg, %bb.p ], [ %i.dp, %bb.ad ], [ %i.ee, %bb.ai ], [ %.pre110, %bb.al ], [ %i.bg, %.peel.next ] ; 3 uses
   %i.bo = icmp ult i64 %i.bn, 288230376151711744
   call void @llvm.assume(i1 %i.bo)
   %.not = icmp samesign ult i64 %i.bm, %i.bn
   br i1 %.not, label %.peel.next, label %._crit_edge, !llvm.loop !1349
 
-bb.p:                                             ; preds = %.peel.next
+bb.p:                                             ; preds = %6
   %i.bp = getelementptr inbounds nuw [32 x i8], ptr %i.bh, i64 %i.bm ; 3 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
   %i.br = load i32, ptr %i.bq, align 8, !noundef !4

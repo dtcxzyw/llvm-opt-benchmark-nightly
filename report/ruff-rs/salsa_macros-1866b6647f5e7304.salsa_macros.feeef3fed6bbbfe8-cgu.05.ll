@@ -202,11 +202,11 @@ bb.bm:                                            ; preds = %bb.bk
   %i.jp = load i64, ptr %i.jm, align 8, !noalias !35
   %.not11.i = icmp eq i64 %i.jp, -1               ; 2 uses
   %i.jq = load i64, ptr %i.jn, align 8, !noalias !35
-  %.not12.i = icmp eq i64 %i.jq, -1               ; 4 uses
+  %.not12.i = icmp eq i64 %i.jq, -1               ; 3 uses
   br i1 %.not.i87, label %bb.bo, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  br i1 %.not11.i, label %bb.fg, label %3
+  br i1 %.not12.i, label %bb.fg, label %bb.eb
 
 bb.bo:                                            ; preds = %bb.bm
   br i1 %.not11.i, label %bb.bq, label %bb.bp
@@ -525,7 +525,7 @@ bb.ea:                                            ; preds = %bb.dy
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.fg, ptr noundef nonnull align 8 dereferenceable(96) %i.n, i64 96, i1 false)
   br label %bb.gl
 
-bb.eb:                                            ; preds = %bb.fg, %3, %bb.bp
+bb.eb:                                            ; preds = %bb.bp, %bb.bn
   %i.kl = invoke align 8 ptr @_RNvMNtCs4NRVxsYgnAr_4core6optionINtB2_6OptionNtNtCsfq6Q4Do6HaX_3syn4expr4ExprE6as_refCslT0hxmHZAzk_12salsa_macros(ptr nonnull align 8 %i.jm)
           to label %.noexc93 unwind label %bb.bl  ; 2 uses
 
@@ -694,11 +694,8 @@ bb.ff:                                            ; preds = %bb.fd
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.fg, ptr noundef nonnull align 8 dereferenceable(96) %i.aa, i64 96, i1 false)
   br label %bb.gl
 
-3:                                                ; preds = %bb.bn
-  br i1 %.not12.i, label %bb.fi, label %bb.eb
-
 bb.fg:                                            ; preds = %bb.bn
-  br i1 %.not12.i, label %bb.fh, label %bb.eb
+  br i1 %.not11.i, label %bb.fh, label %bb.fi
 
 bb.fh:                                            ; preds = %bb.fg
   %i.kx = invoke align 8 ptr @_RNvMNtCs4NRVxsYgnAr_4core6optionINtB2_6OptionNtNtCsfq6Q4Do6HaX_3syn4expr4ExprE6as_refCslT0hxmHZAzk_12salsa_macros(ptr nonnull align 8 %i.jl)
@@ -726,7 +723,7 @@ _RNvMNtCs4NRVxsYgnAr_4core6optionINtB2_6OptionRNtNtCsfq6Q4Do6HaX_3syn4expr4ExprE
   store i64 -2, ptr %i.fg, align 8, !alias.scope !35
   br label %bb.gl
 
-bb.fi:                                            ; preds = %3
+bb.fi:                                            ; preds = %bb.fg
   store ptr %i.jl, ptr %i.bc, align 8, !noalias !35
   store ptr %i.jm, ptr %i.bb, align 8, !noalias !35
   invoke void @_RNvMCsghEUimwObfx_11proc_macro2NtB2_11TokenStream3new(ptr nonnull sret([32 x i8]) align 8 %i.ay)

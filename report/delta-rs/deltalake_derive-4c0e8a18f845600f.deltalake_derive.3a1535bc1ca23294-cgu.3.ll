@@ -204,7 +204,6 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.be = load i8, ptr %i.ac, align 8, !noalias !33 ; 2 uses
-  %4 = trunc nuw i8 %i.be to i1                   ; 2 uses
   %i.bf = and i8 %i.be, 1
   %i.bg = xor i8 %i.bf, 1
   store i8 %i.bg, ptr %i.ac, align 8, !noalias !33
@@ -217,36 +216,34 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  %4 = trunc nuw i8 %i.be to i1
   %i.bm = extractvalue { ptr, i64 } %i.bk, 1
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bm
   store ptr %i.bl, ptr %i.l, align 8, !noalias !33
   store ptr %i.bn, ptr %i.af, align 8, !noalias !33
   %i.bo = call { i32, i32 } @_RINvNtNtCsbvkFyIu7lgC_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsbjGuDcEILED_11proc_macro2(ptr nonnull align 8 %i.l) #15, !noalias !33 ; 2 uses
-  %5 = extractvalue { i32, i32 } %i.bo, 0
   %i.bp = extractvalue { i32, i32 } %i.bo, 1      ; 3 uses
-  %6 = trunc i32 %5 to i1
-  br i1 %6, label %7, label %bb.p
+  br i1 %4, label %bb.r, label %bb.p
 
 bb.o:                                             ; preds = %bb.m
   call void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr %i.bi, i64 %i.bj, i64 %i.bh, i64 %i.bj, ptr nonnull align 8 @5) #16, !noalias !33
   unreachable
 
-7:                                                ; preds = %bb.n
-  br i1 %4, label %bb.r, label %bb.s
-
 bb.p:                                             ; preds = %bb.n
-  br i1 %4, label %bb.r, label %bb.q
+  %5 = extractvalue { i32, i32 } %i.bo, 0
+  %6 = trunc i32 %5 to i1
+  br i1 %6, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   store i8 1, ptr %i.ab, align 2, !noalias !33
   br label %.sink.split.i.i
 
-bb.r:                                             ; preds = %bb.p, %7
+bb.r:                                             ; preds = %bb.n
   store i64 %i.bh, ptr %i.ag, align 8, !alias.scope !32, !noalias !31
   store i64 %i.bh, ptr %i.ah, align 8, !alias.scope !32, !noalias !31
   br label %.sink.split.i.i
 
-bb.s:                                             ; preds = %7
+bb.s:                                             ; preds = %bb.p
   %i.bq = icmp ult i32 %i.bp, 128
   br i1 %i.bq, label %bb.v, label %bb.t
 

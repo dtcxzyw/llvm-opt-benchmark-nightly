@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %.loopexit.i.i, %.lr.ph.i.i
   %.076.i.i = phi i32 [ %i.fw, %.lr.ph.i.i ], [ %.078.i.i, %.loopexit.i.i ] ; 5 uses
-  %i.gd = phi i32 [ 0, %.lr.ph.i.i ], [ %20, %.loopexit.i.i ] ; 10 uses
+  %i.gd = phi i32 [ 0, %.lr.ph.i.i ], [ %18, %.loopexit.i.i ] ; 9 uses
   %.079.in.i.i = phi float [ %.079.in.pre.i.i, %.lr.ph.i.i ], [ %.081.in.i.i, %.loopexit.i.i ] ; 3 uses
   %indvars.iv.i.i = phi i64 [ %i.gc, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %.loopexit.i.i ] ; 9 uses
   %.085119.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.i.i, %.loopexit.i.i ] ; 2 uses
@@ -272,14 +272,14 @@ bb.ak:                                            ; preds = %bb.ah
   br i1 %.not.i.i92, label %.critedge.i.i, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %16 = fcmp ogt double %.079..080.i.i, %.081.i.i
   %i.hi = call i32 @llvm.abs.i32(i32 %.078.i.i, i1 true)
   %i.hj = uitofp nneg i32 %i.hi to double
-  %i.hk = fcmp olt double %5, %i.hj               ; 2 uses
-  br i1 %16, label %bb.am, label %17
+  %i.hk = fcmp olt double %5, %i.hj
+  br i1 %i.hk, label %bb.am, label %.critedge.i.i
 
 bb.am:                                            ; preds = %bb.al
-  br i1 %i.hk, label %bb.an, label %.critedge.i.i
+  %16 = fcmp ogt double %.079..080.i.i, %.081.i.i
+  br i1 %16, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
   %i.hl = sub nsw i32 %.078.i.i, %.076..077.i.i
@@ -297,10 +297,7 @@ bb.an:                                            ; preds = %bb.am
   %not..not92.i.i = xor i1 %i.ht, %i.hs
   br i1 %not..not92.i.i, label %.critedge97.i.i, label %.critedge.i.i
 
-17:                                               ; preds = %bb.al
-  br i1 %i.hk, label %bb.ao, label %.critedge.i.i
-
-bb.ao:                                            ; preds = %17
+bb.ao:                                            ; preds = %bb.am
   %i.hu = sub nsw i32 %.078.i.i, %.077..076.i.i
   %i.hv = call i32 @llvm.abs.i32(i32 %i.hu, i1 true)
   %i.hw = uitofp nneg i32 %i.hv to double
@@ -333,7 +330,7 @@ bb.ap:                                            ; preds = %bb.ag
   store i64 %i.im, ptr %i.ik, align 8, !tbaa !37
   br label %.loopexit.i.i
 
-.critedge.i.i:                                    ; preds = %bb.ap, %.split116.i.i, %bb.ao, %17, %.split.i.i, %bb.an, %bb.am, %bb.ak, %bb.aj, %bb.ag
+.critedge.i.i:                                    ; preds = %bb.ap, %.split116.i.i, %bb.ao, %.split.i.i, %bb.an, %bb.al, %bb.ak, %bb.aj, %bb.ag
   %.076.1.i.i = load i32, ptr %i.gq, align 4, !tbaa !31 ; 5 uses
   %.077.1.i.i = load i32, ptr %i.gn, align 4, !tbaa !31 ; 5 uses
   %.078.1.i.i = load i32, ptr %i.gj, align 4, !tbaa !31 ; 7 uses
@@ -377,16 +374,12 @@ bb.at:                                            ; preds = %bb.aq
   br i1 %.not.1.i.i, label %.loopexit.i.i, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %18 = fcmp ogt double %.079..080.1.i.i, %.081.1.i.i
   %i.iy = call i32 @llvm.abs.i32(i32 %.078.1.i.i, i1 true)
   %i.iz = uitofp nneg i32 %i.iy to double
-  %i.ja = fcmp olt double %5, %i.iz               ; 2 uses
-  br i1 %18, label %bb.aw, label %19
+  %i.ja = fcmp olt double %5, %i.iz
+  br i1 %i.ja, label %bb.aw, label %.loopexit.i.i
 
-19:                                               ; preds = %bb.au
-  br i1 %i.ja, label %bb.av, label %.loopexit.i.i
-
-bb.av:                                            ; preds = %19
+bb.av:                                            ; preds = %bb.aw
   %i.jb = sub nsw i32 %.078.1.i.i, %.077..076.1.i.i
   %i.jc = call i32 @llvm.abs.i32(i32 %i.jb, i1 true)
   %i.jd = uitofp nneg i32 %i.jc to double
@@ -403,7 +396,8 @@ bb.av:                                            ; preds = %19
   br i1 %not..not91.1.i.i, label %.critedge97.i.i, label %.loopexit.i.i
 
 bb.aw:                                            ; preds = %bb.au
-  br i1 %i.ja, label %bb.ax, label %.loopexit.i.i
+  %17 = fcmp ogt double %.079..080.1.i.i, %.081.1.i.i
+  br i1 %17, label %bb.ax, label %bb.av
 
 bb.ax:                                            ; preds = %bb.aw
   %i.jk = sub nsw i32 %.078.1.i.i, %.076..077.1.i.i
@@ -434,14 +428,14 @@ bb.az:                                            ; preds = %bb.ay
   %i.jz = fcmp olt double %5, %i.jy
   br i1 %i.jz, label %.critedge97.i.i, label %.loopexit.i.i
 
-.loopexit.i.i:                                    ; preds = %bb.az, %bb.ay, %.split.1.i.i, %bb.ax, %bb.aw, %.split116.1.i.i, %bb.av, %19, %bb.at, %bb.as, %.critedge97.i.i
-  %20 = phi i32 [ %i.gd, %bb.az ], [ %i.gd, %bb.ay ], [ %i.gd, %.split.1.i.i ], [ %i.gd, %bb.ax ], [ %i.gd, %bb.aw ], [ %i.gd, %.split116.1.i.i ], [ %i.gd, %bb.av ], [ %i.gd, %19 ], [ %i.gd, %bb.at ], [ %i.gd, %bb.as ], [ -1, %.critedge97.i.i ] ; 3 uses
+.loopexit.i.i:                                    ; preds = %bb.az, %bb.ay, %.split.1.i.i, %bb.ax, %.split116.1.i.i, %bb.av, %bb.au, %bb.at, %bb.as, %.critedge97.i.i
+  %18 = phi i32 [ %i.gd, %bb.az ], [ %i.gd, %bb.ay ], [ %i.gd, %.split.1.i.i ], [ %i.gd, %bb.ax ], [ %i.gd, %.split116.1.i.i ], [ %i.gd, %bb.av ], [ %i.gd, %bb.au ], [ %i.gd, %bb.at ], [ %i.gd, %bb.as ], [ -1, %.critedge97.i.i ] ; 3 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   %i.ka = icmp sgt i64 %indvars.iv.i.i, 0
   br i1 %i.ka, label %bb.af, label %_ZL29_iup_contour_bound_forced_set10hb_array_tIK15contour_point_tES_IKiES4_R13hb_bit_page_td.exit.i, !llvm.loop !61
 
 _ZL29_iup_contour_bound_forced_set10hb_array_tIK15contour_point_tES_IKiES4_R13hb_bit_page_td.exit.i: ; preds = %.loopexit.i.i
-  store i32 %20, ptr %6, align 8
+  store i32 %18, ptr %6, align 8
   %i.kb = load i32, ptr %i.dj, align 8, !tbaa !26 ; 2 uses
   %i.kc = icmp slt i32 %i.kb, 0
   br i1 %i.kc, label %bb.ba, label %_ZN11hb_vector_tIjLb0EE5resetEv.exit.i, !prof !16
@@ -464,7 +458,7 @@ bb.bb:                                            ; preds = %_ZN11hb_vector_tIjL
 
 _ZN11hb_vector_tIiLb0EE5resetEv.exit.i:           ; preds = %bb.bb, %_ZN11hb_vector_tIjLb0EE5resetEv.exit.i
   store i32 0, ptr %i.dm, align 4, !tbaa !34
-  %i.kh = icmp eq i32 %20, -1
+  %i.kh = icmp eq i32 %18, -1
   br i1 %i.kh, label %bb.bc, label %bb.bu
 
 bb.bc:                                            ; preds = %_ZN11hb_vector_tIiLb0EE5resetEv.exit.i
@@ -867,7 +861,7 @@ attributes #9 = { nounwind }
 !20 = !{!"llvm.loop.mustprogress"}
 !21 = !{!18, !17, i64 8}
 !22 = !{!18, !9, i64 4}
-!23 = !{!"branch_weights", !"expected", i32 1913573, i32 2145570075}
+!23 = !{!"branch_weights", !"expected", i32 1912905, i32 2145570743}
 !24 = !{!"p1 int", !12, i64 0}
 !25 = !{!"_ZTS11hb_vector_tIjLb0EE", !9, i64 0, !9, i64 4, !24, i64 8}
 !26 = !{!25, !9, i64 0}
@@ -896,7 +890,7 @@ attributes #9 = { nounwind }
 !49 = !{!"llvm.loop.unroll.runtime.disable"}
 !50 = !{!"p1 _ZTS13hb_bit_page_t", !12, i64 0}
 !51 = !{!"_ZTSN13hb_bit_page_t6iter_tE", !50, i64 0, !9, i64 8}
-!52 = !{!"branch_weights", !"expected", i32 1914245, i32 2145569403}
+!52 = !{!"branch_weights", !"expected", i32 1914247, i32 2145569401}
 !53 = !{!8, !8, i64 0}
 !54 = !{i64 0, i64 4, !31, i64 8, i64 64, !53}
 !55 = distinct !{!55, !"_ZL9hb_memcpyPvPKvm"}

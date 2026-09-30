@@ -205,21 +205,21 @@ bb.g:                                             ; preds = %bb.a
   %i.cq = icmp ne i8 %i.cp, 2                     ; 2 uses
   %i.cr = zext i1 %i.cq to i64
   %i.cs = xor i64 %i.cr, -3750763034362895579
-  %i.ct = mul i64 %i.cs, 2232315406967589409      ; 7 uses
+  %i.ct = mul i64 %i.cs, 2232315406967589409      ; 6 uses
   br i1 %i.cq, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
   tail call void @llvm.experimental.noalias.scope.decl(metadata !713)
-  %2 = trunc nuw i8 %i.cp to i1
   %i.cu = load ptr, ptr %1, align 8, !alias.scope !714, !noalias !715, !nonnull !11, !noundef !11 ; 5 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.cw = load i64, ptr %i.cv, align 8, !alias.scope !714, !noalias !715, !noundef !11 ; 6 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.cw ; 2 uses
-  %i.cy = icmp samesign eq i64 %i.cw, 0           ; 2 uses
-  br i1 %2, label %3, label %bb.i
+  %i.cy = icmp samesign eq i64 %i.cw, 0
+  br i1 %i.cy, label %_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECs5XgW7KoffLW_12opendal_core.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  br i1 %i.cy, label %_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECs5XgW7KoffLW_12opendal_core.exit, label %.lr.ph.i.i.i20.preheader
+  %2 = trunc nuw i8 %i.cp to i1
+  br i1 %2, label %.lr.ph.i.i.i.i.preheader, label %.lr.ph.i.i.i20.preheader
 
 .lr.ph.i.i.i20.preheader:                         ; preds = %bb.i
   %xtraiter = and i64 %i.cw, 3                    ; 2 uses
@@ -249,10 +249,7 @@ bb.i:                                             ; preds = %bb.h
   %i.dh = icmp ult i64 %i.cw, 4
   br i1 %i.dh, label %_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECs5XgW7KoffLW_12opendal_core.exit, label %.lr.ph.i.i.i20
 
-3:                                                ; preds = %bb.h
-  br i1 %i.cy, label %_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECs5XgW7KoffLW_12opendal_core.exit, label %.lr.ph.i.i.i.i.preheader
-
-.lr.ph.i.i.i.i.preheader:                         ; preds = %3
+.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.i
   %xtraiter34 = and i64 %i.cw, 7                  ; 2 uses
   %lcmp.mod35.not = icmp eq i64 %xtraiter34, 0
   br i1 %lcmp.mod35.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
@@ -368,8 +365,8 @@ bb.j:                                             ; preds = %bb.g
   %i.gn = mul i64 %i.gm, 2232315406967589409
   br label %_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECs5XgW7KoffLW_12opendal_core.exit
 
-_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECs5XgW7KoffLW_12opendal_core.exit: ; preds = %.lr.ph.i.i.i20.prol.loopexit, %.lr.ph.i.i.i20, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %bb.i, %bb.j, %3, %_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtNtCs9k3SxhrAWiO_3std4hash6random13DefaultHasherECs5XgW7KoffLW_12opendal_core.exit
-  %.sroa.0.0 = phi i64 [ %i.cn, %_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtNtCs9k3SxhrAWiO_3std4hash6random13DefaultHasherECs5XgW7KoffLW_12opendal_core.exit ], [ %i.ct, %bb.i ], [ %i.gn, %bb.j ], [ %i.fb, %.lr.ph.i.i.i.i ], [ %i.ct, %3 ], [ %.lcssa.unr, %.lr.ph.i.i.i.i.prol.loopexit ], [ %.lcssa33.unr, %.lr.ph.i.i.i20.prol.loopexit ], [ %i.gh, %.lr.ph.i.i.i20 ]
+_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECs5XgW7KoffLW_12opendal_core.exit: ; preds = %.lr.ph.i.i.i20.prol.loopexit, %.lr.ph.i.i.i20, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %bb.h, %bb.j, %_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtNtCs9k3SxhrAWiO_3std4hash6random13DefaultHasherECs5XgW7KoffLW_12opendal_core.exit
+  %.sroa.0.0 = phi i64 [ %i.cn, %_RINvXsB_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_7HdrNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtNtCs9k3SxhrAWiO_3std4hash6random13DefaultHasherECs5XgW7KoffLW_12opendal_core.exit ], [ %i.fb, %.lr.ph.i.i.i.i ], [ %i.gn, %bb.j ], [ %i.ct, %bb.h ], [ %.lcssa.unr, %.lr.ph.i.i.i.i.prol.loopexit ], [ %.lcssa33.unr, %.lr.ph.i.i.i20.prol.loopexit ], [ %i.gh, %.lr.ph.i.i.i20 ]
   %i.go = trunc i64 %.sroa.0.0 to i16
   %i.gp = and i16 %i.go, 32767
   ret i16 %i.gp

@@ -202,25 +202,22 @@ bb.a:
   %i.ap = and i32 %i.ao, -2
   %i.aq = icmp eq i32 %i.ap, 2                    ; 6 uses
   %i.ar = load i32, ptr %i.ak, align 8, !tbaa !60
-  %.not503 = icmp eq i32 %i.ar, 0                 ; 2 uses
-  br i1 %i.aq, label %bb.b, label %5
+  %.not503 = icmp eq i32 %i.ar, 0
+  br i1 %.not503, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  br i1 %.not503, label %bb.c, label %.thread
+  br i1 %i.aq, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.as = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store i32 -9998, ptr %i.as, align 8, !tbaa !19
   br label %bb.dm
 
-5:                                                ; preds = %bb.a
-  br i1 %.not503, label %bb.d, label %.thread
-
-.thread:                                          ; preds = %bb.b, %5
+.thread:                                          ; preds = %bb.a
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %3, ptr noundef %i.f) #15
   br label %bb.g
 
-bb.d:                                             ; preds = %5
+bb.d:                                             ; preds = %bb.b
   %i.at = tail call i32 %i.ah(ptr noundef %i.ad, ptr noundef %2, ptr noundef %i.f) #15 ; 2 uses
   %.not505 = icmp eq i32 %i.at, 0
   br i1 %.not505, label %bb.f, label %bb.e

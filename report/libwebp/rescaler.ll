@@ -204,14 +204,10 @@ bb.a:
   %i.o = load i32, ptr %i.n, align 8, !tbaa !22
   %i.p = mul i32 %i.o, %i.m                       ; 2 uses
   %i.q = sub i32 0, %i.p
-  %.not = icmp eq i32 %i.p, 0
-  %i.r = icmp sgt i32 %i.i, 0                     ; 2 uses
-  br i1 %.not, label %.preheader, label %.preheader37
+  %i.r = icmp sgt i32 %i.i, 0
+  br i1 %i.r, label %.preheader, label %.loopexit
 
-.preheader37:                                     ; preds = %bb.a
-  br i1 %i.r, label %.lr.ph, label %.loopexit
-
-.lr.ph:                                           ; preds = %.preheader37
+.lr.ph:                                           ; preds = %.preheader
   %i.s = zext i32 %i.q to i64                     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
   %wide.trip.count = zext nneg i32 %i.i to i64    ; 5 uses
@@ -290,7 +286,8 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   br label %scalar.ph
 
 .preheader:                                       ; preds = %bb.a
-  br i1 %i.r, label %.lr.ph41, label %.loopexit
+  %.not = icmp eq i32 %i.p, 0
+  br i1 %.not, label %.lr.ph41, label %.lr.ph
 
 .lr.ph41:                                         ; preds = %.preheader
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 6 uses
@@ -443,7 +440,7 @@ scalar.ph101:                                     ; preds = %scalar.ph101.prol.l
   %exitcond48.not.1 = icmp eq i64 %indvars.iv.next45.1, %wide.trip.count47
   br i1 %exitcond48.not.1, label %.loopexit, label %scalar.ph101, !llvm.loop !69
 
-.loopexit:                                        ; preds = %scalar.ph, %scalar.ph101.prol.loopexit, %scalar.ph101, %middle.block, %middle.block123, %.preheader37, %.preheader
+.loopexit:                                        ; preds = %scalar.ph, %scalar.ph101.prol.loopexit, %scalar.ph101, %middle.block, %middle.block123, %bb.a
   ret void
 }
 

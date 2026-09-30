@@ -202,11 +202,11 @@ bb.h:                                             ; preds = %bb.g, %switch.looku
   tail call void @g_ptr_array_sort(ptr noundef %i.a, ptr noundef nonnull @qemu_pstrcmp0) #17
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.v = load i32, ptr %i.u, align 8
-  %.not36 = icmp eq i32 %i.v, 0                   ; 2 uses
-  br i1 %1, label %bb.i, label %2
+  %.not36 = icmp eq i32 %i.v, 0
+  br i1 %.not36, label %.thread, label %bb.i
 
 bb.i:                                             ; preds = %.critedge
-  br i1 %.not36, label %.thread, label %bb.j
+  br i1 %1, label %bb.j, label %bb.o
 
 bb.j:                                             ; preds = %bb.i
   %i.w = load ptr, ptr %0, align 8                ; 2 uses
@@ -221,10 +221,7 @@ bb.l:                                             ; preds = %bb.j
   %i.y = tail call i32 (i32, ptr, ...) @__printf_chk(i32 noundef 1, ptr noundef nonnull @.str.11) #17 ; 0 uses
   br label %bb.o
 
-2:                                                ; preds = %.critedge
-  br i1 %.not36, label %.thread, label %bb.o
-
-.thread:                                          ; preds = %bb.i, %2
+.thread:                                          ; preds = %.critedge
   %i.z = load ptr, ptr %0, align 8                ; 2 uses
   %.not37 = icmp eq ptr %i.z, null
   br i1 %.not37, label %bb.n, label %bb.m
@@ -237,7 +234,7 @@ bb.n:                                             ; preds = %.thread
   %i.ab = tail call i32 (i32, ptr, ...) @__printf_chk(i32 noundef 1, ptr noundef nonnull @.str.13) #17 ; 0 uses
   br label %bb.o
 
-bb.o:                                             ; preds = %2, %bb.n, %bb.m, %bb.k, %bb.l
+bb.o:                                             ; preds = %bb.i, %bb.n, %bb.m, %bb.k, %bb.l
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.ad = load i32, ptr %i.ac, align 8
   %.not44 = icmp eq i32 %i.ad, 0

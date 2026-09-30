@@ -204,27 +204,24 @@ bb.e:                                             ; preds = %bb.d, %LibdecorGetM
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.d, i64 72
   %.pre = load i64, ptr %.phi.trans.insert, align 8
   %.pre351 = and i64 %.pre, 64
-  %i.ae = icmp eq i64 %.pre351, 0                 ; 2 uses
-  br i1 %.0212, label %bb.f, label %3
-
-3:                                                ; preds = %bb.e
-  br i1 %i.ae, label %.thread375, label %bb.h
+  %i.ae = icmp eq i64 %.pre351, 0
+  br i1 %i.ae, label %.thread375, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  br i1 %i.ae, label %.thread375, label %bb.g
+  br i1 %.0212, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.af = call zeroext i1 @SDL_SendWindowEvent(ptr noundef nonnull %i.d, i32 noundef 523, i32 noundef 0, i32 noundef 0) #15 ; 0 uses
   br label %.thread375
 
-.thread375:                                       ; preds = %3, %bb.g, %bb.f
+.thread375:                                       ; preds = %bb.e, %bb.g
   %i.ag = xor i1 %.0211, true
   %i.ah = and i1 %.0210, %i.ag
   %i.ai = select i1 %i.ah, i32 522, i32 523
   %i.aj = call zeroext i1 @SDL_SendWindowEvent(ptr noundef nonnull %i.d, i32 noundef %i.ai, i32 noundef 0, i32 noundef 0) #15 ; 0 uses
   br label %bb.h
 
-bb.h:                                             ; preds = %.thread375, %3
+bb.h:                                             ; preds = %bb.f, %.thread375
   br i1 %.0211, label %bb.i, label %bb.u
 
 bb.i:                                             ; preds = %bb.h

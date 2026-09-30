@@ -205,15 +205,15 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.i
   %i.av = load i64, ptr %i.c, align 8, !tbaa !52
-  %2 = icmp eq i64 %i.av, 1
   %i.aw = load ptr, ptr %.val, align 8, !tbaa !22
   %i.ax = load ptr, ptr %i.w, align 8, !tbaa !59
   %i.ay = call fastcc ptr @newarrayobject(ptr noundef %i.aw, i64 noundef %i.ae, ptr noundef %i.ax) ; 6 uses
-  %i.az = icmp eq ptr %i.ay, null                 ; 2 uses
-  br i1 %2, label %bb.o, label %3
+  %i.az = icmp eq ptr %i.ay, null
+  br i1 %i.az, label %newarrayobject.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  br i1 %i.az, label %newarrayobject.exit, label %bb.p
+  %2 = icmp eq i64 %i.av, 1
+  br i1 %2, label %bb.p, label %.lr.ph
 
 bb.p:                                             ; preds = %bb.o
   %i.ba = getelementptr i8, ptr %i.ay, i64 24
@@ -228,10 +228,7 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bb, ptr align 1 %i.bh, i64 %i.bi, i1 false)
   br label %newarrayobject.exit
 
-3:                                                ; preds = %bb.n
-  br i1 %i.az, label %newarrayobject.exit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %3
+.lr.ph:                                           ; preds = %bb.o
   %i.bj = load i64, ptr %i.a, align 8, !tbaa !52  ; 2 uses
   %i.bk = getelementptr i8, ptr %i.ay, i64 24     ; 3 uses
   %i.bl = sext i32 %i.z to i64                    ; 9 uses
@@ -290,8 +287,8 @@ newarrayobject.exit.loopexit.unr-lcssa:           ; preds = %bb.q
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ci, ptr align 1 %i.cl, i64 %i.bl, i1 false)
   br label %newarrayobject.exit
 
-newarrayobject.exit:                              ; preds = %.epil.preheader, %newarrayobject.exit.loopexit.unr-lcssa, %bb.m, %bb.l, %bb.k, %3, %bb.p, %bb.o, %bb.h
-  %.2 = phi ptr [ null, %bb.o ], [ null, %bb.l ], [ null, %bb.h ], [ null, %3 ], [ %i.ay, %bb.p ], [ %i.aq, %bb.m ], [ %i.am, %bb.k ], [ %i.ay, %newarrayobject.exit.loopexit.unr-lcssa ], [ %i.ay, %.epil.preheader ]
+newarrayobject.exit:                              ; preds = %.epil.preheader, %newarrayobject.exit.loopexit.unr-lcssa, %bb.n, %bb.m, %bb.l, %bb.k, %bb.p, %bb.h
+  %.2 = phi ptr [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.h ], [ %i.am, %bb.k ], [ %i.ay, %bb.p ], [ %i.aq, %bb.m ], [ %i.ay, %newarrayobject.exit.loopexit.unr-lcssa ], [ %i.ay, %.epil.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12

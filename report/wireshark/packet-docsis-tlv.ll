@@ -202,11 +202,11 @@ bb.qq:                                            ; preds = %.lr.ph.i469
   %i.arl = load ptr, ptr %i.as, align 8           ; 14 uses
   %i.arm = zext i8 %i.amj to i32
   %i.arn = add i32 %.0194.i, %i.arm               ; 3 uses
-  %i.aro = icmp slt i32 %.0194.i, %i.arn          ; 2 uses
-  br i1 %i.ama, label %bb.qr, label %4
+  %i.aro = icmp slt i32 %.0194.i, %i.arn
+  br i1 %i.aro, label %bb.qr, label %dissect_upstream_sflow.exit.i
 
 bb.qr:                                            ; preds = %bb.qq
-  br i1 %i.aro, label %.lr.ph.i191.i, label %dissect_upstream_sflow.exit.i
+  br i1 %i.ama, label %.lr.ph.i191.i, label %.lr.ph.i192.i
 
 .lr.ph.i191.i:                                    ; preds = %bb.qr, %bb.sc
   %.0149.i.i = phi i32 [ %i.aui, %bb.sc ], [ %.0194.i, %bb.qr ] ; 4 uses
@@ -412,11 +412,8 @@ bb.sc:                                            ; preds = %bb.sb, %bb.sa, %bb.
   %i.auj = icmp slt i32 %i.aui, %i.arn
   br i1 %i.auj, label %.lr.ph.i191.i, label %dissect_upstream_sflow.exit.i, !llvm.loop !20
 
-4:                                                ; preds = %bb.qq
-  br i1 %i.aro, label %.lr.ph.i192.i, label %dissect_upstream_sflow.exit.i
-
-.lr.ph.i192.i:                                    ; preds = %4, %bb.sk
-  %.034.i.i = phi i32 [ %i.avb, %bb.sk ], [ %.0194.i, %4 ] ; 4 uses
+.lr.ph.i192.i:                                    ; preds = %bb.qr, %bb.sk
+  %.034.i.i = phi i32 [ %i.avb, %bb.sk ], [ %.0194.i, %bb.qr ] ; 4 uses
   %i.auk = add nsw i32 %.034.i.i, 1
   %i.aul = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.034.i.i)
   %i.aum = add i32 %.034.i.i, 2                   ; 3 uses
@@ -466,7 +463,7 @@ bb.sk:                                            ; preds = %bb.sj, %bb.si, %bb.
   %i.avc = icmp slt i32 %i.avb, %i.arn
   br i1 %i.avc, label %.lr.ph.i192.i, label %dissect_upstream_sflow.exit.i, !llvm.loop !21
 
-dissect_upstream_sflow.exit.i:                    ; preds = %bb.sk, %bb.sc, %4, %bb.qr, %bb.qp, %bb.qo, %bb.qn, %bb.ql, %bb.qk, %bb.qi, %bb.qh, %bb.qf, %bb.qe, %bb.qc, %bb.qb, %bb.pz, %bb.py, %bb.pw, %bb.pv, %bb.pt, %bb.ps, %bb.pq, %bb.pp, %bb.pn, %bb.pm, %bb.pk, %bb.pj, %bb.ph, %bb.pg, %bb.pe, %bb.pd, %dissect_sflow_err.exit.i, %bb.or, %bb.oq, %bb.op, %bb.on, %bb.om, %bb.ok, %bb.oj
+dissect_upstream_sflow.exit.i:                    ; preds = %bb.sk, %bb.sc, %bb.qq, %bb.qp, %bb.qo, %bb.qn, %bb.ql, %bb.qk, %bb.qi, %bb.qh, %bb.qf, %bb.qe, %bb.qc, %bb.qb, %bb.pz, %bb.py, %bb.pw, %bb.pv, %bb.pt, %bb.ps, %bb.pq, %bb.pp, %bb.pn, %bb.pm, %bb.pk, %bb.pj, %bb.ph, %bb.pg, %bb.pe, %bb.pd, %dissect_sflow_err.exit.i, %bb.or, %bb.oq, %bb.op, %bb.on, %bb.om, %bb.ok, %bb.oj
   %i.avd = zext i8 %i.amj to i32
   %i.ave = add i32 %i.ami, %i.avd                 ; 2 uses
   %i.avf = icmp slt i32 %i.ave, %i.ame

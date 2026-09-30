@@ -204,21 +204,18 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.n
   %i.as = call zeroext i1 @bdrv_uses_whitelist() #14
   %i.at = load i32, ptr %i.ar, align 8
-  %i.au = icmp eq i32 %i.at, 1                    ; 2 uses
-  br i1 %i.as, label %bb.p, label %5
+  %i.au = icmp eq i32 %i.at, 1
+  br i1 %i.au, label %bb.p, label %.thread
 
 bb.p:                                             ; preds = %bb.o
-  br i1 %i.au, label %bb.q, label %.thread
+  br i1 %i.as, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
   call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %3, ptr noundef nonnull @.str.19, i32 noundef 186, ptr noundef nonnull @__func__.qcow_open, ptr noundef nonnull @.str.26) #14
   call void (ptr, ptr, ...) @error_append_hint(ptr noundef %3, ptr noundef nonnull @.str.27) #14
   br label %bb.ao
 
-5:                                                ; preds = %bb.o
-  br i1 %i.au, label %bb.r, label %.thread
-
-bb.r:                                             ; preds = %5
+bb.r:                                             ; preds = %bb.p
   %.not173 = icmp eq ptr %i.e, null
   br i1 %.not173, label %bb.u, label %bb.s
 
@@ -248,7 +245,7 @@ bb.v:                                             ; preds = %bb.u
   %.not176 = icmp eq ptr %i.bb, null
   br i1 %.not176, label %bb.ao, label %bb.w
 
-.thread:                                          ; preds = %bb.p, %5
+.thread:                                          ; preds = %bb.o
   call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %3, ptr noundef nonnull @.str.19, i32 noundef 220, ptr noundef nonnull @__func__.qcow_open, ptr noundef nonnull @.str.30) #14
   br label %bb.ao
 

@@ -205,26 +205,23 @@ bb.he:                                            ; preds = %._crit_edge841
 
 bb.hf:                                            ; preds = %bb.he, %._crit_edge841
   %i.alt = load i32, ptr %i.bb, align 8, !tbaa !38
-  %.not693 = icmp eq i32 %i.alt, 0                ; 2 uses
-  br i1 %.2581.lcssa, label %bb.hg, label %2
+  %.not693 = icmp eq i32 %i.alt, 0
+  br i1 %.not693, label %.thread756, label %bb.hg
 
 bb.hg:                                            ; preds = %bb.hf
-  br i1 %.not693, label %.thread756, label %bb.hh
+  br i1 %.2581.lcssa, label %bb.hh, label %bb.hi
 
 bb.hh:                                            ; preds = %bb.hg
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 24, ptr noundef nonnull @.str.37) #12
   store i32 0, ptr %i.bb, align 8, !tbaa !38
   br label %.thread756
 
-2:                                                ; preds = %bb.hf
-  br i1 %.not693, label %.thread756, label %bb.hi
-
-bb.hi:                                            ; preds = %2
+bb.hi:                                            ; preds = %bb.hg
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 32, ptr noundef nonnull @.str.38) #12
   call fastcc void @clean_index(ptr noundef nonnull %0)
   br label %.thread756
 
-.thread756:                                       ; preds = %bb.hg, %bb.hh, %bb.hi, %2
+.thread756:                                       ; preds = %bb.hf, %bb.hh, %bb.hi
   call void @ff_metadata_conv_ctx(ptr noundef nonnull %0, ptr noundef null, ptr noundef nonnull @avi_metadata_conv) #12
   call void @ff_metadata_conv_ctx(ptr noundef nonnull %0, ptr noundef null, ptr noundef nonnull @ff_riff_info_conv) #12
   br label %guess_ni_flag.exit

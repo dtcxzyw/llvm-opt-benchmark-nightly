@@ -205,18 +205,15 @@ bb.b:                                             ; preds = %bb.a
   %.val5 = load i64, ptr %i.b, align 8, !alias.scope !27, !noalias !28, !noundef !7 ; 3 uses
   %.val6 = load i64, ptr %0, align 8, !alias.scope !28, !noalias !27, !noundef !7
   %i.c = icmp ult i64 %.val5, %.val6              ; 2 uses
-  %.not21 = icmp eq i64 %1, 2                     ; 2 uses
-  br i1 %i.c, label %.preheader, label %.preheader11
-
-.preheader11:                                     ; preds = %bb.b
-  br i1 %.not21, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit, label %.lr.ph
+  %.not21 = icmp eq i64 %1, 2
+  br i1 %.not21, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit.thread, label %.preheader
 
 .preheader:                                       ; preds = %bb.b
-  br i1 %.not21, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit, label %.lr.ph17
+  br i1 %i.c, label %.lr.ph17, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.preheader11, %bb.c
-  %.val4 = phi i64 [ %.val3, %bb.c ], [ %.val5, %.preheader11 ]
-  %.sroa.01.0.i13 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader11 ] ; 3 uses
+.lr.ph:                                           ; preds = %.preheader, %bb.c
+  %.val4 = phi i64 [ %.val3, %bb.c ], [ %.val5, %.preheader ]
+  %.sroa.01.0.i13 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader ] ; 3 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.0.i13
   %.val3 = load i64, ptr %i.d, align 8, !alias.scope !27, !noalias !28, !noundef !7 ; 2 uses
   %i.e = icmp ult i64 %.val3, %.val4
@@ -240,14 +237,14 @@ bb.d:                                             ; preds = %.lr.ph17
   %exitcond24.not = icmp eq i64 %i.i, %1
   br i1 %exitcond24.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit.thread, label %.lr.ph17
 
-_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit: ; preds = %.lr.ph, %.lr.ph17, %.preheader11, %.preheader
-  %.sroa.0.0.i = phi i64 [ 2, %.preheader11 ], [ 2, %.preheader ], [ %.sroa.01.1.i16, %.lr.ph17 ], [ %.sroa.01.0.i13, %.lr.ph ] ; 2 uses
+_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit: ; preds = %.lr.ph, %.lr.ph17
+  %.sroa.0.0.i = phi i64 [ %.sroa.01.1.i16, %.lr.ph17 ], [ %.sroa.01.0.i13, %.lr.ph ] ; 2 uses
   %i.j = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.j)
   %i.k = icmp eq i64 %.sroa.0.0.i, %1
   br i1 %i.k, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit.thread, label %bb.e
 
-_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit.thread: ; preds = %bb.c, %bb.d, %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit
+_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit.thread: ; preds = %bb.c, %bb.d, %bb.b, %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit
   br i1 %i.c, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSy12split_at_mutCsa5QsYiPB8Gl_5image.exit11.preheader.i.i, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSy7reverseCsa5QsYiPB8Gl_5image.exit
 
 bb.e:                                             ; preds = %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runyNvYyNtNtB8_3cmp10PartialOrd2ltECsa5QsYiPB8Gl_5image.exit

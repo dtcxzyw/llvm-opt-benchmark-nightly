@@ -202,23 +202,20 @@ bb.a:
   store i8 0, ptr %i.a, align 2, !tbaa !97
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1640 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !83   ; 3 uses
-  %.not = icmp eq ptr %i.c, null
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2128
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !118
-  %.not114 = icmp eq ptr %i.e, null               ; 2 uses
-  br i1 %.not, label %bb.b, label %1
+  %.not114 = icmp eq ptr %i.e, null
+  br i1 %.not114, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  br i1 %.not114, label %bb.c, label %.thread
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ptr, ...) @Curl_failf(ptr noundef nonnull %0, ptr noundef nonnull @.str.5) #7
   br label %bb.ab
 
-1:                                                ; preds = %bb.a
-  br i1 %.not114, label %.critedge, label %.thread
-
-.thread:                                          ; preds = %bb.b, %1
+.thread:                                          ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2128
   %i.g = load ptr, ptr @Curl_cfree, align 8, !tbaa !98
   tail call void %i.g(ptr noundef %i.c) #7
@@ -237,8 +234,8 @@ bb.d:                                             ; preds = %.thread
   tail call void (ptr, ptr, ...) @Curl_failf(ptr noundef nonnull %0, ptr noundef nonnull @.str.5) #7
   br label %bb.ab
 
-.critedge:                                        ; preds = %..critedge_crit_edge, %1
-  %i.k = phi ptr [ %.pre153, %..critedge_crit_edge ], [ %i.c, %1 ]
+.critedge:                                        ; preds = %bb.b, %..critedge_crit_edge
+  %i.k = phi ptr [ %.pre153, %..critedge_crit_edge ], [ %i.c, %bb.b ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4248
   tail call void @Curl_bufref_set(ptr noundef nonnull %i.l, ptr noundef %i.k, i64 noundef 0, ptr noundef null) #7
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 480 ; 2 uses

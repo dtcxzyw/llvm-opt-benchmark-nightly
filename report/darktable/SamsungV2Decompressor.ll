@@ -204,20 +204,17 @@ bb.ao:                                            ; preds = %.sink.split, %_ZN8r
   %.sroa.30.2 = phi i32 [ %i.gl, %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit90 ], [ 31, %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit90.thread ], [ %.sroa.30.2.ph, %.sink.split ] ; 4 uses
   %.sroa.0174.2 = phi i64 [ %i.gm, %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit90 ], [ %i.gq, %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit90.thread ], [ %.sroa.0174.2.ph, %.sink.split ] ; 3 uses
   %i.hn = load i32, ptr %i.v, align 8, !tbaa !143, !noalias !150 ; 8 uses
-  %.not58.i = icmp eq i32 %i.hn, 7                ; 2 uses
-  br i1 %i.x, label %bb.ap, label %5
+  %.not58.i = icmp eq i32 %i.hn, 7
+  br i1 %.not58.i, label %.thread, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  br i1 %.not58.i, label %.thread, label %bb.aq
+  br i1 %i.x, label %bb.aq, label %bb.as
 
 bb.aq:                                            ; preds = %bb.ap
   tail call void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKcz(ptr noundef nonnull @.str.10, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN8rawspeed21SamsungV2Decompressor21prepareBaselineValuesERNS_16BitStreamerMSB32Eii) #11, !noalias !150
   unreachable
 
-5:                                                ; preds = %bb.ao
-  br i1 %.not58.i, label %.thread, label %bb.as
-
-.thread:                                          ; preds = %bb.ap, %5
+.thread:                                          ; preds = %bb.ao
   %i.ho = icmp eq i64 %indvars.iv458, 0
   br i1 %i.ho, label %bb.ar, label %.preheader328.preheader
 
@@ -240,7 +237,7 @@ bb.ar:                                            ; preds = %.thread
   %i.hy = shufflevector <2 x i16> %i.hx, <2 x i16> poison, <16 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
   br label %_ZN8rawspeed21SamsungV2Decompressor21prepareBaselineValuesERNS_16BitStreamerMSB32Eii.exit.sink.split
 
-bb.as:                                            ; preds = %5
+bb.as:                                            ; preds = %bb.ap
   br i1 %i.aj, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as

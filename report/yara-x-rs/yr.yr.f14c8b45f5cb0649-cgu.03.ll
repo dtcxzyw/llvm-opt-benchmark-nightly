@@ -204,8 +204,8 @@ bb.ad:                                            ; preds = %.lr.ph28
   %.not20.i.i = icmp eq i8 %i.dx, %i.eb
   br i1 %.not20.i.i, label %.preheader36.i.i, label %bb.ae
 
-.split32.us.i.i.invoke:                           ; preds = %.preheader.i19.i, %.lr.ph28
-  %i.ec = phi i64 [ %i.du, %.lr.ph28 ], [ %i.ef, %.preheader.i19.i ]
+.split32.us.i.i.invoke:                           ; preds = %.preheader.i19.us.i.preheader, %.lr.ph28
+  %i.ec = phi i64 [ %i.du, %.lr.ph28 ], [ %i.ef, %.preheader.i19.us.i.preheader ]
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.ec, i64 noundef range(i64 0, -9223372036854775808) %.sroa.15.0.copyload, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #31
           to label %.split32.us.i.i.cont unwind label %.loopexit.split-lp
 
@@ -234,7 +234,7 @@ bb.ag:                                            ; preds = %bb.u
   %.first_iter.i16.i = icmp ult i64 %i.ef, %.sroa.15.0.copyload
   %exitcond.not.i17.i30.not = icmp ult i64 %.fr215.i, %.sroa.15.0.copyload
   %invariant.op96 = sub i64 1, %.fr215.i
-  %.not34.i.us.i33 = icmp eq i64 %.fr215.i, 0     ; 2 uses
+  %.not34.i.us.i33 = icmp eq i64 %.fr215.i, 0
   br label %.lr.ph.split.us.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %bb.aj, %.lr.ph.i15.i
@@ -258,10 +258,10 @@ bb.ag:                                            ; preds = %bb.u
   br i1 %exitcond.not.i17.i, label %.preheader.i19.preheader.i, label %.lr.ph32
 
 .preheader.i19.preheader.i:                       ; preds = %.preheader35.i.i, %.preheader35.i.i.preheader
-  br i1 %.first_iter.i16.i, label %.preheader.i19.us.i.preheader, label %.preheader.i19.i
+  br i1 %.not34.i.us.i33, label %.split.us.i21.i, label %.preheader.i19.us.i.preheader
 
 .preheader.i19.us.i.preheader:                    ; preds = %.preheader.i19.preheader.i
-  br i1 %.not34.i.us.i33, label %.split.us.i21.i, label %.lr.ph35
+  br i1 %.first_iter.i16.i, label %.lr.ph35, label %.split32.us.i.i.invoke
 
 .preheader.i19.us.i:                              ; preds = %.lr.ph35
   %.not34.i.us.i = icmp eq i64 %i.ep, 0
@@ -296,9 +296,6 @@ bb.ag:                                            ; preds = %bb.u
   %.not21.us.i.i = icmp eq i8 %i.ey, %i.fc
   br i1 %.not21.us.i.i, label %.preheader35.i.i, label %bb.ah
 
-.preheader.i19.i:                                 ; preds = %.preheader.i19.preheader.i
-  br i1 %.not34.i.us.i33, label %.split.us.i21.i, label %.split32.us.i.i.invoke
-
 bb.ah:                                            ; preds = %.lr.ph32
   %.reass282.i.reass.reass = add i64 %i.eh, %invariant.op96
   %i.fd = add i64 %.reass282.i.reass.reass, %.sroa.04.0.us.i.i31
@@ -314,7 +311,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah, %.sp
   %i.fg = icmp ult i64 %i.ff, %.sroa.1355.0.copyload
   br i1 %i.fg, label %.lr.ph.split.us.i.i, label %.loopexit
 
-.split.us.i21.i:                                  ; preds = %.preheader.i19.us.i.preheader, %.preheader.i19.us.i, %.preheader.i19.i
+.split.us.i21.i:                                  ; preds = %.preheader.i19.preheader.i, %.preheader.i19.us.i
   %i.fh = add i64 %i.eh, %.sroa.15.0.copyload     ; 2 uses
   br label %.loopexit42.split.us.i
 

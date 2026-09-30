@@ -204,14 +204,10 @@ bb.d:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %3, i8 0, i64 64, i1 false)
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.az = load float, ptr %i.ay, align 4, !tbaa !21 ; 2 uses
-  %4 = fcmp ogt float %i.az, 0.000000e+00
-  %i.ba = icmp sgt i32 %i.b, 0                    ; 2 uses
-  br i1 %4, label %.preheader, label %.preheader150
+  %i.ba = icmp sgt i32 %i.b, 0
+  br i1 %i.ba, label %.preheader, label %._crit_edge
 
-.preheader150:                                    ; preds = %bb.d
-  br i1 %i.ba, label %.loopexit.thread183, label %._crit_edge
-
-.loopexit.thread183:                              ; preds = %.preheader150
+.loopexit.thread183:                              ; preds = %.preheader
   %i.bb = zext nneg i32 %i.b to i64
   %i.bc = shl nuw nsw i64 %i.bb, 3
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %3, ptr nonnull align 4 %0, i64 %i.bc, i1 false), !tbaa !20
@@ -219,7 +215,8 @@ bb.d:                                             ; preds = %bb.a
   br label %.lr.ph159
 
 .preheader:                                       ; preds = %bb.d
-  br i1 %i.ba, label %.lr.ph154, label %._crit_edge
+  %4 = fcmp ogt float %i.az, 0.000000e+00
+  br i1 %4, label %.lr.ph154, label %.loopexit.thread183
 
 .lr.ph154:                                        ; preds = %.preheader
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
@@ -297,11 +294,11 @@ b2Normalize.exit:                                 ; preds = %bb.f, %bb.g
   %.pre = load <2 x float>, ptr %.phi.trans.insert, align 8
   br label %bb.h
 
-._crit_edge:                                      ; preds = %bb.h, %.loopexit, %.preheader150, %.preheader
-  %.093.lcssa = phi float [ 0.000000e+00, %.loopexit ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader150 ], [ %i.ee, %bb.h ]
-  %.092.lcssa = phi float [ 0.000000e+00, %.loopexit ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader150 ], [ %i.dj, %bb.h ] ; 2 uses
-  %.sroa.039.0.lcssa = phi <2 x float> [ zeroinitializer, %.loopexit ], [ zeroinitializer, %.preheader ], [ zeroinitializer, %.preheader150 ], [ %i.ds, %bb.h ]
-  %5 = phi <2 x float> [ zeroinitializer, %.preheader ], [ %i.bt, %.loopexit ], [ zeroinitializer, %.preheader150 ], [ %.sroa.031.0.copyload185, %bb.h ]
+._crit_edge:                                      ; preds = %bb.h, %.loopexit, %bb.d
+  %.093.lcssa = phi float [ 0.000000e+00, %.loopexit ], [ 0.000000e+00, %bb.d ], [ %i.ee, %bb.h ]
+  %.092.lcssa = phi float [ 0.000000e+00, %.loopexit ], [ 0.000000e+00, %bb.d ], [ %i.dj, %bb.h ] ; 2 uses
+  %.sroa.039.0.lcssa = phi <2 x float> [ zeroinitializer, %.loopexit ], [ zeroinitializer, %bb.d ], [ %i.ds, %bb.h ]
+  %5 = phi <2 x float> [ zeroinitializer, %bb.d ], [ %i.bt, %.loopexit ], [ %.sroa.031.0.copyload185, %bb.h ]
   %i.cm = fmul float %1, %.092.lcssa              ; 2 uses
   store float %i.cm, ptr %2, align 8, !tbaa !84
   %i.cn = fdiv float 1.000000e+00, %.092.lcssa

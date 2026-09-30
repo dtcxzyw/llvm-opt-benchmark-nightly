@@ -204,14 +204,11 @@ bb.k:                                             ; preds = %bb.i
   %i.an = load i64, ptr %i.am, align 8            ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ap = load ptr, ptr %i.ao, align 8, !nonnull !5 ; 2 uses
-  %i.aq = icmp eq i64 %i.ak, 0                    ; 2 uses
-  br i1 %3, label %.split.us, label %.split.preheader
-
-.split.preheader:                                 ; preds = %bb.k
-  br i1 %i.aq, label %.split30.us, label %.lr.ph
+  %i.aq = icmp eq i64 %i.ak, 0
+  br i1 %i.aq, label %.split30.us, label %.split.us
 
 .split.us:                                        ; preds = %bb.k
-  br i1 %i.aq, label %.split30.us, label %bb.l
+  br i1 %3, label %bb.l, label %.lr.ph
 
 bb.l:                                             ; preds = %.split.us
   %i.ar = getelementptr inbounds i8, ptr %i.al, i64 -8
@@ -227,14 +224,14 @@ bb.l:                                             ; preds = %.split.us
   %i.av = icmp eq ptr %i.ai, %i.aw
   br i1 %i.av, label %.split30.us, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.split.preheader, %.split
-  %.sroa.56.049 = phi ptr [ %i.aw, %.split ], [ %i.al, %.split.preheader ]
+.lr.ph:                                           ; preds = %.split.us, %.split
+  %.sroa.56.049 = phi ptr [ %i.aw, %.split ], [ %i.al, %.split.us ]
   %i.aw = getelementptr inbounds i8, ptr %.sroa.56.049, i64 -8 ; 3 uses
   %i.ax = load i64, ptr %i.aw, align 8, !noundef !5 ; 3 uses
   %i.ay = icmp ult i64 %i.ax, %i.an
   br i1 %i.ay, label %bb.m, label %.split32.us
 
-.split30.us:                                      ; preds = %.split, %.split.preheader, %.split.us
+.split30.us:                                      ; preds = %.split, %bb.k
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCs9oNxn7AafV1_7globset9CandidateECsbzNSmZPCnTx_10tgrep_core(ptr noalias nofree noundef align 8 dereferenceable(72) %i.c)
           to label %.sink.split unwind label %bb.h
 

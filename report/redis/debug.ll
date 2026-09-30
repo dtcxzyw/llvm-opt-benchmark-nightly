@@ -204,27 +204,24 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.e = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8), align 8, !tbaa !219
   %i.f = tail call i32 @pthread_join(i64 noundef %i.e, ptr noundef null) #24 ; 2 uses
-  %.not2.i = icmp eq i32 %i.f, 0
   %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6416), align 8, !tbaa !63
-  %i.h = icmp sgt i32 %i.g, 3                     ; 2 uses
-  br i1 %.not2.i, label %bb.e, label %0
+  %i.h = icmp sgt i32 %i.g, 3
+  br i1 %i.h, label %killMainThread.exit, label %bb.e
 
-0:                                                ; preds = %bb.c
-  br i1 %i.h, label %killMainThread.exit, label %bb.d
-
-bb.d:                                             ; preds = %0
+bb.d:                                             ; preds = %bb.e
   %i.i = tail call ptr @strerror(i32 noundef %i.f) #24
   tail call void (i32, ptr, ...) @_serverLog(i32 noundef 3, ptr noundef nonnull @.str.366, ptr noundef %i.i) #24
   br label %killMainThread.exit
 
 bb.e:                                             ; preds = %bb.c
-  br i1 %i.h, label %killMainThread.exit, label %bb.f
+  %.not2.i = icmp eq i32 %i.f, 0
+  br i1 %.not2.i, label %bb.f, label %bb.d
 
 bb.f:                                             ; preds = %bb.e
   tail call void (i32, ptr, ...) @_serverLog(i32 noundef 3, ptr noundef nonnull @.str.367) #24
   br label %killMainThread.exit
 
-killMainThread.exit:                              ; preds = %bb.a, %bb.b, %0, %bb.d, %bb.e, %bb.f
+killMainThread.exit:                              ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.f
   tail call void @bioKillThreads() #24
   tail call void @killIOThreads() #24
   ret void

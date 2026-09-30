@@ -204,18 +204,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i27.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_mm.exit31.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i27.i.i.i
   %i.ci = load ptr, ptr %5, align 8, !tbaa !31, !noalias !308 ; 6 uses
-  %16 = icmp eq ptr %i.ci, %i.ab
   %i.cj = load ptr, ptr %4, align 8, !tbaa !31, !noalias !308 ; 5 uses
-  %i.ck = icmp eq ptr %i.cj, %i.at                ; 2 uses
-  br i1 %16, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_mm.exit31.i.i.i
-  br i1 %i.ck, label %bb.g, label %.thread.i.i.i.i
+  %i.ck = icmp eq ptr %i.cj, %i.at
+  br i1 %i.ck, label %bb.g, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_mm.exit31.i.i.i
-  br i1 %i.ck, label %bb.g, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i.i.i
+  %16 = icmp eq ptr %i.ci, %i.ab
+  br i1 %16, label %.thread.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i.i.i
 
-bb.g:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
+bb.g:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_mm.exit31.i.i.i
   %i.cl = load i64, ptr %i.au, align 8, !tbaa !32, !noalias !308 ; 3 uses
   %i.cm = icmp ult i64 %i.cl, 16
   call void @llvm.assume(i1 %i.cm)
@@ -242,7 +239,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i.
   %.pre.i.i.i.i = load ptr, ptr %4, align 8, !tbaa !31, !noalias !308
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i
 
-.thread.i.i.i.i:                                  ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
+.thread.i.i.i.i:                                  ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i
   store ptr %i.cj, ptr %5, align 8, !tbaa !31, !noalias !308
   %i.cr = load <2 x i64>, ptr %i.au, align 8, !tbaa !34, !noalias !308
   store <2 x i64> %i.cr, ptr %i.ak, align 8, !tbaa !34, !noalias !308

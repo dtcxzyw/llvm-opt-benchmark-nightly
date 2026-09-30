@@ -205,9 +205,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.e, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.c
-  %exitcond21.not35 = icmp ult i64 %2, 4
-  %9 = tail call noundef zeroext i1 @_RNvMsa_NtCsf3Ta7LF998c_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4) ; 2 uses
-  br i1 %exitcond21.not35, label %.preheader._crit_edge, label %.lr.ph37
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.b, i64 1)
+  br label %.preheader
 
 bb.d:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 32
@@ -219,22 +218,16 @@ bb.d:                                             ; preds = %bb.b
   %exitcond.not.not30 = icmp eq i64 %1, 1
   br i1 %exitcond.not.not30, label %.loopexit, label %.lr.ph
 
-.preheader:                                       ; preds = %bb.j
-  %10 = add nuw i64 %.sroa.08.036, 1              ; 2 uses
-  %exitcond21.not = icmp eq i64 %i.b, %10
-  %i.i = tail call noundef zeroext i1 @_RNvMsa_NtCsf3Ta7LF998c_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4) ; 2 uses
-  br i1 %exitcond21.not, label %.preheader._crit_edge, label %.lr.ph37
+.preheader:                                       ; preds = %.preheader.preheader, %bb.j
+  %.sroa.08.0 = phi i64 [ %9, %bb.j ], [ 1, %.preheader.preheader ] ; 3 uses
+  %i.i = tail call noundef zeroext i1 @_RNvMsa_NtCsf3Ta7LF998c_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4)
+  br i1 %i.i, label %.loopexit, label %.lr.ph37
 
-.preheader._crit_edge:                            ; preds = %.preheader, %.preheader.preheader
-  %.lcssa = phi i1 [ %9, %.preheader.preheader ], [ %i.i, %.preheader ]
-  br i1 %.lcssa, label %.loopexit, label %bb.e
+.lr.ph37:                                         ; preds = %.preheader
+  %exitcond21.not = icmp eq i64 %.sroa.08.0, %umax
+  br i1 %exitcond21.not, label %bb.e, label %bb.j
 
-.lr.ph37:                                         ; preds = %.preheader.preheader, %.preheader
-  %11 = phi i1 [ %i.i, %.preheader ], [ %9, %.preheader.preheader ]
-  %.sroa.08.036 = phi i64 [ %10, %.preheader ], [ 1, %.preheader.preheader ] ; 2 uses
-  br i1 %11, label %.loopexit, label %bb.j
-
-bb.e:                                             ; preds = %.preheader._crit_edge
+bb.e:                                             ; preds = %.lr.ph37
   %i.j = tail call noundef zeroext i1 @_RNvMsa_NtCsf3Ta7LF998c_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %5, i64 noundef %6)
   br i1 %i.j, label %.loopexit, label %bb.f
 
@@ -261,7 +254,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.o, label %.loopexit, label %bb.g
 
 bb.j:                                             ; preds = %.lr.ph37
-  %i.p = tail call noundef zeroext i1 %i.d(ptr noundef nonnull %7, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.sroa.08.036) #29
+  %9 = add nuw i64 %.sroa.08.0, 1
+  %i.p = tail call noundef zeroext i1 %i.d(ptr noundef nonnull %7, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.sroa.08.0) #29
   br i1 %i.p, label %.loopexit, label %.preheader
 
 .preheader15:                                     ; preds = %bb.k
@@ -274,8 +268,8 @@ bb.j:                                             ; preds = %.lr.ph37
   %i.r = tail call noundef zeroext i1 @_RNvMsa_NtCsf3Ta7LF998c_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4)
   br i1 %i.r, label %.loopexit, label %bb.k
 
-.loopexit:                                        ; preds = %.preheader15, %bb.k, %.lr.ph, %.lr.ph37, %bb.j, %bb.g, %bb.i, %bb.h, %.preheader15.preheader, %bb.f, %bb.d, %bb.e, %.preheader._crit_edge, %bb.c, %bb.a
-  %.sroa.0.2 = phi i1 [ true, %bb.e ], [ false, %.preheader15.preheader ], [ true, %bb.d ], [ false, %bb.a ], [ true, %bb.h ], [ true, %bb.c ], [ true, %.preheader._crit_edge ], [ false, %bb.f ], [ true, %.lr.ph37 ], [ true, %bb.i ], [ false, %bb.g ], [ true, %bb.j ], [ true, %.lr.ph ], [ true, %bb.k ], [ false, %.preheader15 ]
+.loopexit:                                        ; preds = %.preheader15, %bb.k, %.lr.ph, %.preheader, %bb.j, %bb.g, %bb.i, %bb.h, %.preheader15.preheader, %bb.f, %bb.d, %bb.e, %bb.c, %bb.a
+  %.sroa.0.2 = phi i1 [ true, %bb.e ], [ true, %bb.h ], [ true, %bb.d ], [ false, %bb.a ], [ true, %.preheader ], [ true, %bb.c ], [ false, %bb.f ], [ false, %.preheader15.preheader ], [ true, %bb.i ], [ false, %bb.g ], [ true, %bb.j ], [ true, %.lr.ph ], [ false, %.preheader15 ], [ true, %bb.k ]
   ret i1 %.sroa.0.2
 
 bb.k:                                             ; preds = %.lr.ph

@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %lua_toboolean.exit.
   %.not58 = icmp eq i8 %.fr96, 94                 ; 2 uses
   %spec.select62.idx = zext i1 %.not58 to i64
   %spec.select62 = getelementptr inbounds nuw i8, ptr %i.e, i64 %spec.select62.idx ; 2 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.d, i64 %.046 ; 4 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.d, i64 %.046 ; 3 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %0, ptr %i.cj, align 8, !tbaa !279
   store ptr %i.d, ptr %2, align 8, !tbaa !280
@@ -214,19 +214,16 @@ bb.q:                                             ; preds = %lua_toboolean.exit.
   store ptr %i.ck, ptr %i.cl, align 8, !tbaa !281
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store i32 0, ptr %i.cm, align 8, !tbaa !282
-  %i.cn = call fastcc ptr @match(ptr noundef %2, ptr noundef nonnull %i.ci, ptr noundef nonnull %spec.select62) ; 3 uses
-  %.not56.us = icmp eq ptr %i.cn, null            ; 2 uses
-  br i1 %.not58, label %.split.us, label %.split, !llvm.loop !553
-
-.split.us:                                        ; preds = %bb.q
-  br i1 %.not56.us, label %.critedge, label %.split91.us
+  %i.cn = call fastcc ptr @match(ptr noundef %2, ptr noundef nonnull %i.ci, ptr noundef nonnull %spec.select62) ; 2 uses
+  %.not56.us = icmp eq ptr %i.cn, null
+  br i1 %.not56.us, label %.split, label %.split91.us, !llvm.loop !553
 
 .split:                                           ; preds = %bb.q
-  br i1 %.not56.us, label %.lr.ph, label %.split91.us
+  br i1 %.not58, label %.critedge, label %.lr.ph
 
-.split91.us:                                      ; preds = %bb.t, %.split, %.split.us
-  %.us-phi = phi ptr [ %i.ci, %.split.us ], [ %i.ci, %.split ], [ %i.dh, %bb.t ] ; 2 uses
-  %.us-phi92 = phi ptr [ %i.cn, %.split.us ], [ %i.cn, %.split ], [ %i.di, %bb.t ] ; 2 uses
+.split91.us:                                      ; preds = %bb.t, %bb.q
+  %.us-phi = phi ptr [ %i.ci, %bb.q ], [ %i.dh, %bb.t ] ; 2 uses
+  %.us-phi92 = phi ptr [ %i.cn, %bb.q ], [ %i.di, %bb.t ] ; 2 uses
   br i1 %.not, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %.split91.us
@@ -272,7 +269,7 @@ bb.t:                                             ; preds = %.lr.ph
   %.not56 = icmp eq ptr %i.di, null
   br i1 %.not56, label %.lr.ph, label %.split91.us
 
-.critedge:                                        ; preds = %.lr.ph, %.split.us
+.critedge:                                        ; preds = %.lr.ph, %.split
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #33
   %.pre = load ptr, ptr %i.i, align 8, !tbaa !95
   br label %.critedge61
