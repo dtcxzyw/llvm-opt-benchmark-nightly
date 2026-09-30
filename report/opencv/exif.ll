@@ -205,7 +205,7 @@ bb.a:
   %2 = alloca %"struct.std::pair.13", align 8     ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !55   ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !47     ; 18 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !47     ; 17 uses
   %i.d = icmp eq ptr %i.b, %i.c
   br i1 %i.d, label %._ZNK2cv10ExifReader9getFormatEv.exit_crit_edge, label %bb.b
 
@@ -264,19 +264,14 @@ bb.f:                                             ; preds = %_ZNK2cv10ExifReader
 
 bb.g:                                             ; preds = %_ZNK2cv10ExifReader9getFormatEv.exit
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  %3 = load i8, ptr %i.s, align 1, !tbaa !16
-  %4 = zext i8 %3 to i16
-  %5 = shl nuw i16 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  %7 = load i8, ptr %6, align 1, !tbaa !16
-  %8 = zext i8 %7 to i16
-  %9 = or disjoint i16 %5, %8
+  %3 = load i16, ptr %i.s, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
   br label %_ZNK2cv10ExifReader12checkTagMarkEv.exit
 
 _ZNK2cv10ExifReader12checkTagMarkEv.exit:         ; preds = %bb.f, %bb.g
   %i.t = phi i1 [ true, %bb.f ], [ false, %bb.g ]
   %i.u = phi i64 [ %i.g, %bb.f ], [ %.pre-phi35, %bb.g ] ; 3 uses
-  %.0.i.i = phi i16 [ %i.r, %bb.f ], [ %9, %bb.g ]
+  %.0.i.i = phi i16 [ %i.r, %bb.f ], [ %4, %bb.g ]
   %.not.i13 = icmp eq i16 %.0.i.i, 42
   br i1 %.not.i13, label %bb.h, label %.loopexit
 
@@ -679,7 +674,7 @@ bb.a:
   %i.a = add i64 %1, 3                            ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !55
-  %i.d = load ptr, ptr %0, align 8, !tbaa !47     ; 5 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !47     ; 6 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
@@ -695,10 +690,10 @@ bb.c:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.j = load i32, ptr %i.i, align 8, !tbaa !46
   %i.k = icmp eq i32 %i.j, 73
-  %i.l = getelementptr i8, ptr %i.d, i64 %1       ; 7 uses
+  %i.l = getelementptr i8, ptr %i.d, i64 %1       ; 8 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !16
   %i.n = zext i8 %i.m to i32                      ; 2 uses
-  %i.o = add i64 %1, 7                            ; 2 uses
+  %i.o = add i64 %1, 7                            ; 3 uses
   %.not.i2 = icmp ult i64 %i.o, %i.g              ; 2 uses
   br i1 %i.k, label %_ZNK2cv10ExifReader6getU32Em.exit, label %_ZNK2cv10ExifReader6getU32Em.exit.thread
 
@@ -756,14 +751,24 @@ bb.f:                                             ; preds = %_ZNK2cv10ExifReader
   %i.ba = zext i8 %i.az to i32
   %i.bb = or disjoint i32 %i.ax, %i.ba
   %i.bc = getelementptr i8, ptr %i.l, i64 4
-  %2 = load i32, ptr %i.bc, align 1
-  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
-  %i.bd = zext i32 %3 to i64
+  %2 = load i16, ptr %i.bc, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %4 = zext i16 %3 to i64
+  %5 = shl nuw nsw i64 %4, 16
+  %6 = getelementptr i8, ptr %i.l, i64 6
+  %7 = load i8, ptr %6, align 1, !tbaa !16
+  %8 = zext i8 %7 to i64
+  %9 = shl nuw nsw i64 %8, 8
+  %10 = or disjoint i64 %5, %9
+  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.o
+  %12 = load i8, ptr %11, align 1, !tbaa !16
+  %i.bd = zext i8 %12 to i64
+  %13 = or disjoint i64 %10, %i.bd
   br label %_ZNK2cv10ExifReader6getU32Em.exit4
 
 _ZNK2cv10ExifReader6getU32Em.exit4:               ; preds = %bb.e, %bb.f
   %.0.i810 = phi i32 [ %i.z, %bb.e ], [ %i.bb, %bb.f ]
-  %.0.i3 = phi i64 [ %i.am, %bb.e ], [ %i.bd, %bb.f ]
+  %.0.i3 = phi i64 [ %i.am, %bb.e ], [ %13, %bb.f ]
   %.sroa.2.0.insert.ext.i = shl nuw i64 %.0.i3, 32
   %.sroa.0.0.insert.ext.i = zext i32 %.0.i810 to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.ext.i, %.sroa.0.0.insert.ext.i
@@ -1166,10 +1171,10 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare i64 @llvm.umin.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #21
+declare i16 @llvm.bswap.i16(i16) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #21
+declare i64 @llvm.umax.i64(i64, i64) #21
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

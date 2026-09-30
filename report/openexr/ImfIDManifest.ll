@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.am = load i64, ptr %i.al, align 8, !tbaa !33
   %i.an = icmp ult i64 %i.am, %i.ak
-  br i1 %i.an, label %bb.j, label %bb.m
+  br i1 %i.an, label %bb.j, label %11
 
 bb.j:                                             ; preds = %bb.i
   %i.ao = call ptr @__cxa_allocate_exception(i64 72) #32 ; 3 uses
@@ -223,23 +223,24 @@ bb.l:                                             ; preds = %.invoke
           cleanup
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit287
 
-bb.m:                                             ; preds = %bb.i
-  %11 = load ptr, ptr %i.af, align 8, !tbaa !34   ; 2 uses
-  %12 = load i8, ptr %11, align 1, !tbaa !35
-  %i.ar = zext i8 %12 to i64                      ; 2 uses
-  br i1 %i.aj, label %bb.n, label %bb.o
+11:                                               ; preds = %bb.i
+  %12 = load ptr, ptr %i.af, align 8, !tbaa !34   ; 2 uses
+  br i1 %i.aj, label %bb.m, label %bb.n
 
-bb.n:                                             ; preds = %bb.m
-  %13 = shl nuw nsw i64 %i.ar, 8
-  %14 = getelementptr inbounds nuw i8, ptr %11, i64 1
-  %i.as = load i8, ptr %14, align 1, !tbaa !35
-  %i.at = zext i8 %i.as to i64
-  %15 = or disjoint i64 %13, %i.at
+bb.m:                                             ; preds = %11
+  %13 = load i16, ptr %12, align 1
+  %14 = call i16 @llvm.bswap.i16(i16 %13)
+  %i.ar = zext i16 %14 to i64
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.m, %bb.n
-  %.092 = phi i64 [ %15, %bb.n ], [ %i.ar, %bb.m ] ; 2 uses
-  %.091 = phi i64 [ 2, %bb.n ], [ 1, %bb.m ]      ; 4 uses
+bb.n:                                             ; preds = %11
+  %i.as = load i8, ptr %12, align 1, !tbaa !35
+  %i.at = zext i8 %i.as to i64
+  br label %bb.o
+
+bb.o:                                             ; preds = %bb.n, %bb.m
+  %.092 = phi i64 [ %i.ar, %bb.m ], [ %i.at, %bb.n ] ; 2 uses
+  %.091 = phi i64 [ 2, %bb.m ], [ 1, %bb.n ]      ; 4 uses
   %i.au = icmp ugt i64 %.092, %i.ai
   br i1 %i.au, label %bb.p, label %bb.r
 
@@ -287,9 +288,10 @@ bb.r:                                             ; preds = %bb.o
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc130, %bb.r
   %i.bd = phi ptr [ %i.bb, %.noexc130 ], [ %i.q, %bb.r ] ; 2 uses
-  switch i64 %spec.select.i.i.i, label %bb.t [
-    i64 1, label %bb.s
-    i64 0, label %bb.u
+  %trunc = trunc nuw i64 %spec.select.i.i.i to i16
+  switch i16 %trunc, label %bb.t [
+    i16 1, label %bb.s
+    i16 0, label %bb.u
   ]
 
 bb.s:                                             ; preds = %._crit_edge.i.i.i
@@ -690,6 +692,9 @@ declare i64 @llvm.smax.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #29
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #29

@@ -205,7 +205,7 @@ default.unreachable78:                            ; preds = %bb.f
 bb.j:                                             ; preds = %bb.f, %bb.i, %bb.h, %bb.g
   %.0 = phi i32 [ %i.ag, %bb.g ], [ %i.am, %bb.h ], [ %i.ay, %bb.i ], [ 0, %bb.f ]
   %i.az = lshr i32 %i.y, 6
-  %i.ba = sub i32 %.0, %i.az                      ; 12 uses
+  %i.ba = sub i32 %.0, %i.az                      ; 13 uses
   %i.bb = and i32 %i.y, 8
   %.not56 = icmp eq i32 %i.bb, 0
   %i.bc = and i32 %i.y, 7                         ; 2 uses
@@ -254,7 +254,7 @@ bb.p:                                             ; preds = %bb.j
   %i.bv = getelementptr inbounds nuw i8, ptr %.05069, i64 4
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !337
   %i.bx = zext i32 %i.bw to i64
-  %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 %i.bx ; 5 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 %i.bx ; 6 uses
   switch i32 %i.bc, label %bb.t [
     i32 4, label %bb.q
     i32 3, label %bb.r
@@ -276,7 +276,13 @@ bb.r:                                             ; preds = %bb.p
   store i8 %i.cd, ptr %.sroa.4.0..sroa_idx.i.i, align 1
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.by, i64 2
   store i8 %i.ce, ptr %.sroa.5.0..sroa_idx.i.i, align 1, !tbaa !277
-  %.not.i.i.i60 = icmp ult i32 %i.ba, 16777216
+  %1 = load i16, ptr %i.by, align 1
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %3 = zext i16 %2 to i32
+  %4 = shl nuw nsw i32 %3, 8
+  %5 = and i32 %i.ba, 255
+  %6 = or disjoint i32 %4, %5
+  %.not.i.i.i60 = icmp eq i32 %6, %i.ba
   br i1 %.not.i.i.i60, label %bb.v, label %bb.s
 
 bb.s:                                             ; preds = %bb.r

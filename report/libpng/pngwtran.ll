@@ -33,7 +33,7 @@ bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !48
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  tail call void %i.h(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %i.k) #5
+  tail call void %i.h(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %i.k) #6
   %.pre = load i32, ptr %i.d, align 4, !tbaa !46
   br label %bb.e
 
@@ -52,7 +52,7 @@ bb.f:                                             ; preds = %bb.e
   %i.s = lshr i32 %i.r, 7
   %.lobit = and i32 %i.s, 1
   %i.t = xor i32 %.lobit, 1
-  tail call void @png_do_strip_channel(ptr noundef %1, ptr noundef nonnull %i.p, i32 noundef %i.t) #5
+  tail call void @png_do_strip_channel(ptr noundef %1, ptr noundef nonnull %i.p, i32 noundef %i.t) #6
   %.pre127 = load i32, ptr %i.d, align 4, !tbaa !46
   br label %bb.g
 
@@ -66,7 +66,7 @@ bb.h:                                             ; preds = %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !48
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1
-  tail call void @png_do_packswap(ptr noundef %1, ptr noundef nonnull %i.y) #5
+  tail call void @png_do_packswap(ptr noundef %1, ptr noundef nonnull %i.y) #6
   %.pre128 = load i32, ptr %i.d, align 4, !tbaa !46
   br label %bb.i
 
@@ -318,7 +318,7 @@ bb.s:                                             ; preds = %png_do_pack.exit
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !48
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 1
-  tail call void @png_do_swap(ptr noundef %1, ptr noundef nonnull %i.ed) #5
+  tail call void @png_do_swap(ptr noundef %1, ptr noundef nonnull %i.ed) #6
   %.pre130 = load i32, ptr %i.d, align 4, !tbaa !46
   br label %bb.t
 
@@ -339,8 +339,8 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not.i, label %png_do_shift.exit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.em = and i8 %i.el, 2
   %.not125.i49 = icmp eq i8 %i.em, 0
   %i.en = getelementptr inbounds nuw i8, ptr %1, i64 17
@@ -540,13 +540,10 @@ bb.ag:                                            ; preds = %bb.ae
   %.0108135.i = phi i32 [ %i.ih, %._crit_edge.i50 ], [ 0, %bb.ag ] ; 2 uses
   %.0109134.i = phi ptr [ %i.ig, %._crit_edge.i50 ], [ %i.ei, %bb.ag ] ; 4 uses
   %i.hp = urem i32 %.0108135.i, %.1122.i
-  %2 = load i8, ptr %.0109134.i, align 1, !tbaa !55
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %.0109134.i, i64 1 ; 2 uses
-  %6 = load i8, ptr %5, align 1, !tbaa !55
-  %i.hq = zext i8 %6 to i32
-  %7 = or disjoint i32 %4, %i.hq                  ; 2 uses
+  %2 = load i16, ptr %.0109134.i, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.hq = zext i16 %3 to i32                      ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.0109134.i, i64 1
   %i.hr = zext nneg i32 %i.hp to i64              ; 2 uses
   %i.hs = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.hr
   %i.ht = load i32, ptr %i.hs, align 4, !tbaa !62 ; 2 uses
@@ -560,9 +557,9 @@ bb.ag:                                            ; preds = %bb.ae
   %.0133.i = phi i32 [ %.1.i, %.lr.ph.i52 ], [ 0, %.lr.ph137.i ]
   %.0107132.i = phi i32 [ %i.ic, %.lr.ph.i52 ], [ %i.ht, %.lr.ph137.i ] ; 4 uses
   %i.hy = icmp sgt i32 %.0107132.i, 0             ; 2 uses
-  %i.hz = shl i32 %7, %.0107132.i
+  %i.hz = shl i32 %i.hq, %.0107132.i
   %i.ia = sub nsw i32 0, %.0107132.i
-  %i.ib = lshr i32 %7, %i.ia
+  %i.ib = lshr i32 %i.hq, %i.ia
   %.pn.i = select i1 %i.hy, i32 %i.hz, i32 %i.ib
   %.1.i = or i32 %.pn.i, %.0133.i                 ; 2 uses
   %i.ic = sub nsw i32 %.0107132.i, %i.hv
@@ -575,7 +572,7 @@ bb.ag:                                            ; preds = %bb.ae
   store i8 %i.ie, ptr %.0109134.i, align 1, !tbaa !55
   %i.if = trunc i32 %.0.lcssa.i to i8
   %i.ig = getelementptr inbounds nuw i8, ptr %.0109134.i, i64 2
-  store i8 %i.if, ptr %5, align 1, !tbaa !55
+  store i8 %i.if, ptr %4, align 1, !tbaa !55
   %i.ih = add nuw i32 %.0108135.i, 1              ; 2 uses
   %exitcond.not.i51 = icmp eq i32 %i.ih, %i.gw
   br i1 %exitcond.not.i51, label %.loopexit.i, label %.lr.ph137.i, !llvm.loop !16
@@ -611,8 +608,8 @@ bb.ah:                                            ; preds = %bb.ah, %.lr.ph151.u
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %._crit_edge.i50, %._crit_edge142.i, %._crit_edge152.us.i.epil, %.loopexit.i.loopexit.unr-lcssa, %bb.ag, %bb.af, %.lr.ph157.split.preheader.i, %bb.ab
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %.pre131 = load i32, ptr %i.d, align 4, !tbaa !46
   br label %png_do_shift.exit
 
@@ -1015,7 +1012,7 @@ bb.aw:                                            ; preds = %png_do_write_invert
   %i.pf = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.pg = load ptr, ptr %i.pf, align 8, !tbaa !48
   %i.ph = getelementptr inbounds nuw i8, ptr %i.pg, i64 1
-  tail call void @png_do_bgr(ptr noundef %1, ptr noundef nonnull %i.ph) #5
+  tail call void @png_do_bgr(ptr noundef %1, ptr noundef nonnull %i.ph) #6
   %.pre132 = load i32, ptr %i.d, align 4, !tbaa !46
   br label %bb.ax
 
@@ -1029,7 +1026,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.pk = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.pl = load ptr, ptr %i.pk, align 8, !tbaa !48
   %i.pm = getelementptr inbounds nuw i8, ptr %i.pl, i64 1
-  tail call void @png_do_invert(ptr noundef %1, ptr noundef nonnull %i.pm) #5
+  tail call void @png_do_invert(ptr noundef %1, ptr noundef nonnull %i.pm) #6
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.a, %bb.ay, %bb.ax
@@ -1052,18 +1049,22 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #3
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #4
+declare void @llvm.assume(i1 noundef) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #5 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -204,8 +204,12 @@ _RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5
   %.val3.i63.i.i.i = phi ptr [ %i.r, %.sink.split.i8.i.i.i ], [ %.val3.i63.i.i.i.pre, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit ] ; 2 uses
   %i.u = phi ptr [ %i.t, %.sink.split.i8.i.i.i ], [ %.pre, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit ] ; 3 uses
   %i.v = phi ptr [ null, %.sink.split.i8.i.i.i ], [ %i.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit ] ; 3 uses
-  %.sroa.0.0.i.i.i = phi ptr [ %i.p, %.sink.split.i8.i.i.i ], [ %spec.select.i19.i.i.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit ]
-  %2 = load <4 x i8>, ptr %.sroa.0.0.i.i.i, align 1, !alias.scope !9561, !noalias !9548
+  %.sroa.0.0.i.i.i = phi ptr [ %i.p, %.sink.split.i8.i.i.i ], [ %spec.select.i19.i.i.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit ] ; 3 uses
+  %2 = load i16, ptr %.sroa.0.0.i.i.i, align 1, !alias.scope !9561, !noalias !9548
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 2
+  %4 = load i8, ptr %3, align 1, !alias.scope !9561, !noalias !9548, !noundef !4
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 3
+  %6 = load i8, ptr %5, align 1, !alias.scope !9561, !noalias !9548, !noundef !4
   %.not.i.i.i = icmp eq ptr %i.v, null
   %i.w = ptrtoint ptr %.val3.i.i.i.i to i64
   %i.x = ptrtoint ptr %i.v to i64
@@ -236,12 +240,19 @@ bb.f:                                             ; preds = %_RNvXs1_NtNtNtCsf3T
   unreachable
 
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshxhuDJfZv4T_6fontbe.exit: ; preds = %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %7 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %8 = zext i16 %7 to i32
+  %9 = shl nuw nsw i32 %8, 8
+  %.sroa.0.0.insert.ext.i.i.i = zext i8 %4 to i32
+  %.sroa.2.0.insert.insert.i.i.i = or disjoint i32 %9, %.sroa.0.0.insert.ext.i.i.i
+  %.sroa.4.0.insert.ext.i.i.i = zext i8 %6 to i32
+  %.sroa.4.0.insert.shift.i.i.i = shl nuw i32 %.sroa.4.0.insert.ext.i.i.i, 24
+  %.sroa.0.0.insert.insert.i.i.i = or disjoint i32 %.sroa.2.0.insert.insert.i.i.i, %.sroa.4.0.insert.shift.i.i.i
   %i.an = load ptr, ptr %i.al, align 8, !nonnull !4, !noundef !4 ; 2 uses
   %i.ao = icmp ult i64 %i.af, %i.ak
   tail call void @llvm.assume(i1 %i.ao)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  store <4 x i8> %3, ptr %i.an, align 1
+  store i32 %.sroa.0.0.insert.insert.i.i.i, ptr %i.an, align 1
   store i64 %i.ak, ptr %i.b, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store ptr %i.an, ptr %.sroa.4.0..sroa_idx, align 8
@@ -311,24 +322,20 @@ _RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5
   %i.bf = phi ptr [ %.lcssa, %select.unfold.i.i.i.i.i._crit_edge ], [ %.lcssa2.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit.i.i ]
   %spec.select.i9.i.i.i16.i.i = phi ptr [ %i.bb, %select.unfold.i.i.i.i.i._crit_edge ], [ %spec.select.i9.i.i.i17.i.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit.i.i ] ; 3 uses
   %i.bg = phi ptr [ null, %select.unfold.i.i.i.i.i._crit_edge ], [ %i.be, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit.i.i ] ; 3 uses
-  %.sroa.0.0.i.i.i.i.i = phi ptr [ %spec.select.i9.i.i.i17.i.i, %select.unfold.i.i.i.i.i._crit_edge ], [ %.lcssa.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit.i.i ] ; 4 uses
-  %4 = load i8, ptr %.sroa.0.0.i.i.i.i.i, align 1, !alias.scope !9563, !noalias !9564, !noundef !4
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 1
-  %6 = load i8, ptr %5, align 1, !alias.scope !9563, !noalias !9564, !noundef !4
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 2
-  %8 = load i8, ptr %7, align 1, !alias.scope !9563, !noalias !9564, !noundef !4
-  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 3
+  %.sroa.0.0.i.i.i.i.i = phi ptr [ %spec.select.i9.i.i.i17.i.i, %select.unfold.i.i.i.i.i._crit_edge ], [ %.lcssa.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs3v5ql5U6hxj_6fontir2ir5ColorEEIB15_B21_ENCNvXNtCshxhuDJfZv4T_6fontbe4cpalNtB2Q_8CpalWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtB2S_13orchestration7ContextNtB4o_9AnyWorkIdNtNtB2S_5error5ErrorE4exec0ENtNtNtB9_6traits8iterator8Iterator4nextB2S_.exit.i.loopexit.i.i ] ; 3 uses
+  %10 = load i16, ptr %.sroa.0.0.i.i.i.i.i, align 1, !alias.scope !9563, !noalias !9564
+  %11 = call i16 @llvm.bswap.i16(i16 %10)
+  %12 = zext i16 %11 to i32
+  %13 = shl nuw nsw i32 %12, 8
+  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 2
   %i.bi = load i8, ptr %i.bh, align 1, !alias.scope !9563, !noalias !9564, !noundef !4
-  %.sroa.4.0.insert.ext.i.i.i.i.i = zext i8 %i.bi to i32
-  %.sroa.4.0.insert.shift.i.i.i.i.i = shl nuw i32 %.sroa.4.0.insert.ext.i.i.i.i.i, 24
-  %.sroa.3.0.insert.ext.i.i.i.i.i = zext i8 %4 to i32
-  %.sroa.3.0.insert.shift.i.i.i.i.i = shl nuw nsw i32 %.sroa.3.0.insert.ext.i.i.i.i.i, 16
-  %.sroa.2.0.insert.ext.i.i.i.i.i = zext i8 %6 to i32
-  %.sroa.2.0.insert.shift.i.i.i.i.i = shl nuw nsw i32 %.sroa.2.0.insert.ext.i.i.i.i.i, 8
-  %.sroa.0.0.insert.ext.i.i.i.i.i = zext i8 %8 to i32
-  %.sroa.3.0.insert.insert.i.i.i.i.i = or disjoint i32 %.sroa.2.0.insert.shift.i.i.i.i.i, %.sroa.3.0.insert.shift.i.i.i.i.i
-  %.sroa.2.0.insert.insert.i.i.i.i.i = or disjoint i32 %.sroa.3.0.insert.insert.i.i.i.i.i, %.sroa.0.0.insert.ext.i.i.i.i.i
-  %.sroa.0.0.insert.insert.i.i.i.i.i = or disjoint i32 %.sroa.2.0.insert.insert.i.i.i.i.i, %.sroa.4.0.insert.shift.i.i.i.i.i
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 3
+  %15 = load i8, ptr %14, align 1, !alias.scope !9563, !noalias !9564, !noundef !4
+  %.sroa.2.0.insert.ext.i.i.i.i.i = zext i8 %15 to i32
+  %.sroa.2.0.insert.shift.i.i.i.i.i = shl nuw i32 %.sroa.2.0.insert.ext.i.i.i.i.i, 24
+  %.sroa.0.0.insert.ext.i.i.i.i.i = zext i8 %i.bi to i32
+  %.sroa.2.0.insert.insert.i.i.i.i.i = or disjoint i32 %13, %.sroa.0.0.insert.ext.i.i.i.i.i
+  %.sroa.0.0.insert.insert.i.i.i.i.i = or disjoint i32 %.sroa.2.0.insert.insert.i.i.i.i.i, %.sroa.2.0.insert.shift.i.i.i.i.i
   %i.bj = icmp samesign ult i64 %i.ap, 2305843009213693952
   call void @llvm.assume(i1 %i.bj)
   %i.bk = load i64, ptr %i.b, align 8, !range !10, !alias.scope !9565, !noalias !9566, !noundef !4
@@ -729,6 +736,9 @@ declare void @_RNvXs4D_NtNtCscScJTt9VrQp_6fea_rs10token_tree5typedNtB6_10BaseMin
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.umax.v2i16(<2 x i16>, <2 x i16>) #11

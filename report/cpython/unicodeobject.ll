@@ -205,18 +205,27 @@ bb.p:                                             ; preds = %PyUnicode_MAX_CHAR_
   br i1 %.not82, label %.preheader118.split.us, label %.preheader118.split
 
 .preheader118.split.us:                           ; preds = %.preheader118, %.split64.us
-  %i.be = phi ptr [ %i.bi, %.split64.us ], [ %i.av, %.preheader118 ] ; 4 uses
+  %i.be = phi ptr [ %i.bi, %.split64.us ], [ %i.av, %.preheader118 ] ; 5 uses
   %.1.us = phi i64 [ %i.bh, %.split64.us ], [ %i.bd, %.preheader118 ] ; 3 uses
-  %6 = load i32, ptr %i.be, align 1, !tbaa !237
-  %7 = call i32 @llvm.bswap.i32(i32 %6)           ; 3 uses
-  %i.bf = icmp ugt i32 %7, %.0.i
+  %6 = load i16, ptr %i.be, align 1
+  %7 = call i16 @llvm.bswap.i16(i16 %6)
+  %8 = zext i16 %7 to i32
+  %9 = shl nuw i32 %8, 16
+  %10 = getelementptr i8, ptr %i.be, i64 2
+  %11 = load i8, ptr %10, align 1, !tbaa !237
+  %12 = zext i8 %11 to i32
+  %13 = shl nuw nsw i32 %12, 8
+  %14 = or disjoint i32 %9, %13
+  %15 = getelementptr i8, ptr %i.be, i64 3
+  %16 = load i8, ptr %15, align 1, !tbaa !237     ; 2 uses
+  %17 = zext i8 %16 to i32
+  %18 = or disjoint i32 %14, %17                  ; 3 uses
+  %i.bf = icmp ugt i32 %18, %.0.i
   br i1 %i.bf, label %.loopexit, label %.split64.us
 
 .split64.us:                                      ; preds = %.preheader118.split.us
-  %8 = getelementptr i8, ptr %i.be, i64 3
-  %9 = load i8, ptr %8, align 1, !tbaa !237
   %i.bg = getelementptr i8, ptr %i.bb, i64 %.1.us
-  store i8 %9, ptr %i.bg, align 1, !tbaa !237
+  store i8 %16, ptr %i.bg, align 1, !tbaa !237
   %i.bh = add i64 %.1.us, 1                       ; 2 uses
   %i.bi = getelementptr i8, ptr %i.be, i64 4      ; 3 uses
   %.not81.us = icmp ugt ptr %i.bi, %i.bc
@@ -293,21 +302,17 @@ PyUnicode_WRITE.exit:                             ; preds = %bb.r, %bb.q
   br i1 %.not84, label %.loopexit, label %.preheader.split, !llvm.loop !576
 
 .preheader118.split:                              ; preds = %.preheader118, %PyUnicode_WRITE.exit90
-  %i.cu = phi ptr [ %i.dm, %PyUnicode_WRITE.exit90 ], [ %i.av, %.preheader118 ] ; 6 uses
+  %i.cu = phi ptr [ %i.dm, %PyUnicode_WRITE.exit90 ], [ %i.av, %.preheader118 ] ; 5 uses
   %.1 = phi i64 [ %i.dl, %PyUnicode_WRITE.exit90 ], [ %i.bd, %.preheader118 ] ; 4 uses
-  %10 = load i8, ptr %i.cu, align 1, !tbaa !237
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw i32 %11, 24
-  %13 = getelementptr i8, ptr %i.cu, i64 1
-  %14 = load i8, ptr %13, align 1, !tbaa !237
-  %i.cv = zext i8 %14 to i32
-  %i.cw = shl nuw nsw i32 %i.cv, 16
-  %15 = or disjoint i32 %i.cw, %12
+  %19 = load i16, ptr %i.cu, align 1
+  %20 = call i16 @llvm.bswap.i16(i16 %19)
+  %i.cv = zext i16 %20 to i32
+  %i.cw = shl nuw i32 %i.cv, 16
   %i.cx = getelementptr i8, ptr %i.cu, i64 2
   %i.cy = load i8, ptr %i.cx, align 1, !tbaa !237
   %i.cz = zext i8 %i.cy to i32
   %i.da = shl nuw nsw i32 %i.cz, 8
-  %i.db = or disjoint i32 %15, %i.da              ; 2 uses
+  %i.db = or disjoint i32 %i.cw, %i.da            ; 2 uses
   %i.dc = getelementptr i8, ptr %i.cu, i64 3
   %i.dd = load i8, ptr %i.dc, align 1, !tbaa !237
   %i.de = zext i8 %i.dd to i32
@@ -340,7 +345,7 @@ PyUnicode_WRITE.exit90:                           ; preds = %bb.t, %bb.s
 
 .loopexit:                                        ; preds = %PyUnicode_WRITE.exit90, %.preheader118.split, %.split64.us, %.preheader118.split.us, %PyUnicode_WRITE.exit, %.preheader.split, %.split.us, %.preheader.split.us
   %i.dn = phi ptr [ %i.be, %.preheader118.split.us ], [ %i.bj, %.preheader.split.us ], [ %i.ct, %PyUnicode_WRITE.exit ], [ %i.bz, %.split.us ], [ %i.ca, %.preheader.split ], [ %i.bi, %.split64.us ], [ %i.dm, %PyUnicode_WRITE.exit90 ], [ %i.cu, %.preheader118.split ] ; 5 uses
-  %.055 = phi i32 [ %7, %.split64.us ], [ %i.bv, %.split.us ], [ %i.cm, %PyUnicode_WRITE.exit ], [ %i.bv, %.preheader.split.us ], [ %i.cm, %.preheader.split ], [ %7, %.preheader118.split.us ], [ %i.df, %.preheader118.split ], [ %i.df, %PyUnicode_WRITE.exit90 ] ; 8 uses
+  %.055 = phi i32 [ %18, %.split64.us ], [ %i.bv, %.split.us ], [ %i.cm, %PyUnicode_WRITE.exit ], [ %i.bv, %.preheader.split.us ], [ %i.cm, %.preheader.split ], [ %18, %.preheader118.split.us ], [ %i.df, %.preheader118.split ], [ %i.df, %PyUnicode_WRITE.exit90 ] ; 8 uses
   %i.do = phi i64 [ %.1.us, %.preheader118.split.us ], [ %.0.us, %.preheader.split.us ], [ %i.cs, %PyUnicode_WRITE.exit ], [ %i.by, %.split.us ], [ %.0, %.preheader.split ], [ %i.bh, %.split64.us ], [ %i.dl, %PyUnicode_WRITE.exit90 ], [ %.1, %.preheader118.split ] ; 3 uses
   store ptr %i.dn, ptr %i.d, align 8
   store i64 %i.do, ptr %i.am, align 8, !tbaa !249

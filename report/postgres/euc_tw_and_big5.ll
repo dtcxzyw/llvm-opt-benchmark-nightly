@@ -54,7 +54,7 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.p = load i64, ptr %i.o, align 8
   %i.q = trunc i64 %i.p to i32
-  tail call void @check_encoding_conversion_args(i32 noundef %i.n, i32 noundef %i.q, i32 noundef %i.j, i32 noundef 4, i32 noundef 36) #5
+  tail call void @check_encoding_conversion_args(i32 noundef %i.n, i32 noundef %i.q, i32 noundef %i.j, i32 noundef 4, i32 noundef 36) #6
   %i.r = icmp sgt i32 %i.j, 0
   br i1 %i.r, label %.lr.ph.i, label %euc_tw2big5.exit
 
@@ -63,11 +63,12 @@ bb.a:
   %.04666.i = phi i32 [ %.147.i, %bb.r ], [ %i.j, %bb.a ] ; 6 uses
   %.04865.i = phi ptr [ %.149.i, %bb.r ], [ %i.g, %bb.a ] ; 8 uses
   %i.s = load i8, ptr %.04467.i, align 1          ; 5 uses
+  %1 = zext i8 %i.s to i16
   %.not.i = icmp sgt i8 %i.s, -1
   br i1 %.not.i, label %bb.n, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %i.t = tail call i32 @pg_encoding_verifymbchar(i32 noundef 4, ptr noundef nonnull %.04467.i, i32 noundef %.04666.i) #5 ; 3 uses
+  %i.t = tail call i32 @pg_encoding_verifymbchar(i32 noundef 4, ptr noundef nonnull %.04467.i, i32 noundef %.04666.i) #6 ; 3 uses
   %i.u = icmp slt i32 %i.t, 0
   br i1 %i.u, label %bb.c, label %bb.e
 
@@ -75,7 +76,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not, label %bb.d, label %euc_tw2big5.exit
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @report_invalid_encoding(i32 noundef 4, ptr noundef nonnull %.04467.i, i32 noundef %.04666.i) #6
+  tail call void @report_invalid_encoding(i32 noundef 4, ptr noundef nonnull %.04467.i, i32 noundef %.04666.i) #7
   unreachable
 
 bb.e:                                             ; preds = %bb.b
@@ -100,36 +101,38 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %.0.i = phi i8 [ %i.y, %bb.h ], [ -106, %bb.g ], [ -107, %bb.f ]
   %i.z = getelementptr inbounds nuw i8, ptr %.04467.i, i64 2
-  %1 = load i8, ptr %i.z, align 1
-  br label %bb.j
+  %2 = load i16, ptr %i.z, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  br label %4
 
-bb.j:                                             ; preds = %bb.i, %bb.e
-  %.sink95.in.i = phi i8 [ %1, %bb.i ], [ %i.s, %bb.e ]
-  %.sink94.i = phi i64 [ 3, %bb.i ], [ 1, %bb.e ]
-  %.1.i = phi i8 [ %.0.i, %bb.i ], [ -107, %bb.e ]
-  %.sink95.i = zext i8 %.sink95.in.i to i16
-  %i.aa = shl nuw i16 %.sink95.i, 8
-  %i.ab = getelementptr inbounds nuw i8, ptr %.04467.i, i64 %.sink94.i
+bb.j:                                             ; preds = %bb.e
+  %i.aa = shl nuw i16 %1, 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %.04467.i, i64 1
   %i.ac = load i8, ptr %i.ab, align 1
   %i.ad = zext i8 %i.ac to i16
   %i.ae = or disjoint i16 %i.aa, %i.ad
-  %2 = tail call zeroext i16 @CNStoBIG5(i16 noundef zeroext %i.ae, i8 noundef zeroext %.1.i) #5 ; 3 uses
-  %3 = icmp eq i16 %2, 0
-  br i1 %3, label %bb.k, label %bb.m
+  br label %4
 
-bb.k:                                             ; preds = %bb.j
+4:                                                ; preds = %bb.j, %bb.i
+  %.043.i = phi i16 [ %3, %bb.i ], [ %i.ae, %bb.j ]
+  %.1.i = phi i8 [ %.0.i, %bb.i ], [ -107, %bb.j ]
+  %5 = tail call zeroext i16 @CNStoBIG5(i16 noundef zeroext %.043.i, i8 noundef zeroext %.1.i) #6 ; 3 uses
+  %6 = icmp eq i16 %5, 0
+  br i1 %6, label %bb.k, label %bb.m
+
+bb.k:                                             ; preds = %4
   br i1 %.not, label %bb.l, label %euc_tw2big5.exit
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @report_untranslatable_char(i32 noundef 4, i32 noundef 36, ptr noundef nonnull %.04467.i, i32 noundef %.04666.i) #6
+  tail call void @report_untranslatable_char(i32 noundef 4, i32 noundef 36, ptr noundef nonnull %.04467.i, i32 noundef %.04666.i) #7
   unreachable
 
-bb.m:                                             ; preds = %bb.j
-  %i.af = lshr i16 %2, 8
+bb.m:                                             ; preds = %4
+  %i.af = lshr i16 %5, 8
   %i.ag = trunc nuw i16 %i.af to i8
   %i.ah = getelementptr inbounds nuw i8, ptr %.04865.i, i64 1
   store i8 %i.ag, ptr %.04865.i, align 1
-  %i.ai = trunc i16 %2 to i8
+  %i.ai = trunc i16 %5 to i8
   %i.aj = getelementptr inbounds nuw i8, ptr %.04865.i, i64 2
   store i8 %i.ai, ptr %i.ah, align 1
   %i.ak = zext nneg i32 %i.t to i64
@@ -145,7 +148,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not, label %bb.p, label %euc_tw2big5.exit
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @report_invalid_encoding(i32 noundef 4, ptr noundef nonnull %.04467.i, i32 noundef %.04666.i) #6
+  tail call void @report_invalid_encoding(i32 noundef 4, ptr noundef nonnull %.04467.i, i32 noundef %.04666.i) #7
   unreachable
 
 bb.q:                                             ; preds = %bb.n
@@ -203,8 +206,8 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.q = load i64, ptr %i.p, align 8
   %i.r = trunc i64 %i.q to i32
-  tail call void @check_encoding_conversion_args(i32 noundef %i.o, i32 noundef %i.r, i32 noundef %i.k, i32 noundef 36, i32 noundef 4) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  tail call void @check_encoding_conversion_args(i32 noundef %i.o, i32 noundef %i.r, i32 noundef %i.k, i32 noundef 36, i32 noundef 4) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.s = icmp sgt i32 %i.k, 0
   br i1 %i.s, label %.lr.ph.i, label %big52euc_tw.exit
 
@@ -217,7 +220,7 @@ bb.a:
   br i1 %.not.i, label %bb.m, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %i.u = call i32 @pg_encoding_verifymbchar(i32 noundef 36, ptr noundef nonnull %.065.i, i32 noundef %.04864.i) #5 ; 3 uses
+  %i.u = call i32 @pg_encoding_verifymbchar(i32 noundef 36, ptr noundef nonnull %.065.i, i32 noundef %.04864.i) #6 ; 3 uses
   %i.v = icmp slt i32 %i.u, 0
   br i1 %i.v, label %bb.c, label %bb.e
 
@@ -225,7 +228,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not, label %bb.d, label %big52euc_tw.exit
 
 bb.d:                                             ; preds = %bb.c
-  call void @report_invalid_encoding(i32 noundef 36, ptr noundef nonnull %.065.i, i32 noundef %.04864.i) #6
+  call void @report_invalid_encoding(i32 noundef 36, ptr noundef nonnull %.065.i, i32 noundef %.04864.i) #7
   unreachable
 
 bb.e:                                             ; preds = %bb.b
@@ -235,7 +238,7 @@ bb.e:                                             ; preds = %bb.b
   %i.z = load i8, ptr %i.y, align 1
   %i.aa = zext i8 %i.z to i16
   %i.ab = or disjoint i16 %i.x, %i.aa
-  %i.ac = call zeroext i16 @BIG5toCNS(i16 noundef zeroext %i.ab, ptr noundef nonnull %i.a) #5 ; 6 uses
+  %i.ac = call zeroext i16 @BIG5toCNS(i16 noundef zeroext %i.ab, ptr noundef nonnull %i.a) #6 ; 6 uses
   %i.ad = load i8, ptr %i.a, align 1              ; 2 uses
   switch i8 %i.ad, label %bb.h [
     i8 -107, label %bb.f
@@ -291,7 +294,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not, label %bb.k, label %big52euc_tw.exit
 
 bb.k:                                             ; preds = %bb.j
-  call void @report_untranslatable_char(i32 noundef 36, i32 noundef 4, ptr noundef nonnull %.065.i, i32 noundef %.04864.i) #6
+  call void @report_untranslatable_char(i32 noundef 36, i32 noundef 4, ptr noundef nonnull %.065.i, i32 noundef %.04864.i) #7
   unreachable
 
 bb.l:                                             ; preds = %bb.i, %bb.g, %bb.f
@@ -309,7 +312,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not, label %bb.o, label %big52euc_tw.exit
 
 bb.o:                                             ; preds = %bb.n
-  call void @report_invalid_encoding(i32 noundef 36, ptr noundef nonnull %.065.i, i32 noundef %.04864.i) #6
+  call void @report_invalid_encoding(i32 noundef 36, ptr noundef nonnull %.065.i, i32 noundef %.04864.i) #7
   unreachable
 
 bb.p:                                             ; preds = %bb.m
@@ -332,7 +335,7 @@ big52euc_tw.exit:                                 ; preds = %.backedge.i, %bb.a,
   store i8 0, ptr %.04962.i, align 1
   %i.bi = ptrtoint ptr %.055.i to i64
   %i.bj = sub i64 %i.bi, %i.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %sext = shl i64 %i.bj, 32
   %i.bk = ashr exact i64 %sext, 32
   ret i64 %i.bk
@@ -350,13 +353,17 @@ declare void @report_untranslatable_char(i32 noundef, i32 noundef, ptr noundef, 
 
 declare zeroext i16 @BIG5toCNS(i16 noundef zeroext, ptr noundef) local_unnamed_addr #3
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #5
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
-attributes #6 = { noreturn nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
+attributes #7 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
