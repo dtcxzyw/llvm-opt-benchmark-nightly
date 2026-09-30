@@ -205,15 +205,14 @@ bb.j:                                             ; preds = %bb.a
 .lr.ph376.split.split.us.preheader.new:           ; preds = %.lr.ph376.split.split.us.prol.loopexit
   %i.gx = insertelement <4 x float> poison, float %i.j, i64 0
   %i.gy = shufflevector <4 x float> %i.gx, <4 x float> poison, <4 x i32> zeroinitializer
-  %invariant.op = sub nuw i64 %i.gi, 3
   %i.gz = insertelement <4 x float> poison, float %i.j, i64 0
   %i.ha = shufflevector <4 x float> %i.gz, <4 x float> poison, <4 x i32> zeroinitializer
   br label %.lr.ph376.split.split.us
 
 .lr.ph376.split.split.us:                         ; preds = %bb.k, %.lr.ph376.split.split.us.preheader.new
-  %.sroa.011.1374.us = phi i64 [ %.sroa.011.1374.us.unr, %.lr.ph376.split.split.us.preheader.new ], [ %i.hh, %bb.k ] ; 5 uses
+  %.sroa.011.1374.us = phi i64 [ %.sroa.011.1374.us.unr, %.lr.ph376.split.split.us.preheader.new ], [ %i.hh, %bb.k ] ; 6 uses
   %.sroa.082.0373.us = phi ptr [ %.sroa.082.0373.us.unr, %.lr.ph376.split.split.us.preheader.new ], [ %i.hj, %bb.k ] ; 3 uses
-  %i.hb = add nuw i64 %.sroa.011.1374.us, 4       ; 4 uses
+  %i.hb = add nuw i64 %.sroa.011.1374.us, 4       ; 3 uses
   %i.hc = or disjoint i64 %.sroa.011.1374.us, 3
   %or.cond124.not.us = icmp ult i64 %i.hc, %i.gi
   br i1 %or.cond124.not.us, label %.lr.ph376.split.split.us.1, label %.split.us379, !prof !11
@@ -225,7 +224,8 @@ bb.j:                                             ; preds = %bb.a
   %i.hg = fmul <4 x float> %i.gy, %i.hf
   store <4 x float> %i.hg, ptr %.sroa.082.0373.us, align 4
   %i.hh = add nuw i64 %.sroa.011.1374.us, 8       ; 3 uses
-  %or.cond124.not.us.1 = icmp ult i64 %i.hb, %invariant.op
+  %8 = add nuw i64 %.sroa.011.1374.us, 7
+  %or.cond124.not.us.1 = icmp ult i64 %8, %i.gi
   br i1 %or.cond124.not.us.1, label %bb.k, label %.split.us379, !prof !11
 
 bb.k:                                             ; preds = %.lr.ph376.split.split.us.1

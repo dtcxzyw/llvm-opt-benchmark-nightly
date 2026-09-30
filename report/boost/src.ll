@@ -206,8 +206,8 @@ bb.aw:                                            ; preds = %bb.as
   br label %.thread434
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.gb = zext nneg i8 %i.fx to i32               ; 2 uses
-  %i.gc = add nsw i32 %i.gb, -48                  ; 2 uses
+  %i.gb = zext nneg i8 %i.fx to i32               ; 3 uses
+  %i.gc = add nsw i32 %i.gb, -48
   store i32 %i.gc, ptr %i.e, align 4, !tbaa !359
   %.21555 = getelementptr inbounds nuw i8, ptr %.19, i64 1 ; 4 uses
   %i.gd = icmp ult ptr %.21555, %i.c
@@ -304,7 +304,7 @@ bb.ba:                                            ; preds = %.lr.ph558.3
   br i1 %i.fq, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %.thread523
-  %3 = or disjoint i32 %i.gc, -2147483648
+  %3 = add nuw i32 %i.gb, 2147483600
   %i.hd = icmp slt i32 %i.fj, %3
   br i1 %i.hd, label %.thread454.sink.split, label %.thread454, !prof !252
 
@@ -707,8 +707,8 @@ bb.aq:                                            ; preds = %bb.am
   br label %bb.by
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.ge = zext nneg i8 %i.ga to i32               ; 2 uses
-  %i.gf = add nsw i32 %i.ge, -48                  ; 2 uses
+  %i.ge = zext nneg i8 %i.ga to i32               ; 3 uses
+  %i.gf = add nsw i32 %i.ge, -48
   store i32 %i.gf, ptr %i.d, align 4, !tbaa !359
   %.18512 = getelementptr inbounds nuw i8, ptr %.16, i64 1 ; 4 uses
   %i.gg = icmp ult ptr %.18512, %i.b
@@ -805,7 +805,7 @@ bb.au:                                            ; preds = %.lr.ph515.3
   br i1 %i.ft, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %.thread477
-  %3 = or disjoint i32 %i.gf, -2147483648
+  %3 = add nuw i32 %i.ge, 2147483600
   %i.hg = icmp slt i32 %i.fm, %3
   br i1 %i.hg, label %.thread416.sink.split, label %.thread416, !prof !252
 

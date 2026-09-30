@@ -205,12 +205,11 @@ bb.d:                                             ; preds = %_ZN5boost6spirit7cl
 
 .lr.ph.i:                                         ; preds = %bb.d, %bb.g
   %.226 = phi i64 [ %i.w, %bb.g ], [ %.125, %bb.d ] ; 2 uses
-  %.1 = phi i32 [ %i.t, %bb.g ], [ 0, %bb.d ]     ; 3 uses
+  %.1 = phi i32 [ %4, %bb.g ], [ 0, %bb.d ]       ; 3 uses
   %i.m = phi ptr [ %i.v, %bb.g ], [ %i.i, %bb.d ] ; 2 uses
   %.011.i.a = phi i64 [ %i.u, %bb.g ], [ 0, %bb.d ] ; 2 uses
   %i.n = load i8, ptr %i.m, align 1, !tbaa !54    ; 2 uses
-  %i.o = sext i8 %i.n to i32
-  %3 = add nsw i32 %i.o, -48                      ; 2 uses
+  %i.o = sext i8 %i.n to i32                      ; 2 uses
   %i.p = add i8 %i.n, -48
   %isdigit.i.i.i = icmp ult i8 %i.p, 10
   br i1 %isdigit.i.i.i, label %bb.e, label %_ZN5boost6spirit7classic4impl11extract_intILi10ELj1ELin1ENS2_19negative_accumulateIiLi10EEEE1fIKNS1_7scannerIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS1_16scanner_policiesINS1_16iteration_policyENS1_12match_policyENS1_13action_policyEEEEEiEEbRT_RT0_Rm.exit
@@ -221,12 +220,13 @@ bb.e:                                             ; preds = %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.e
   %i.r = mul nsw i32 %.1, 10                      ; 2 uses
-  %4 = or disjoint i32 %3, -2147483648
-  %i.s = icmp slt i32 %i.r, %4
+  %3 = add nuw i32 %i.o, 2147483600
+  %i.s = icmp slt i32 %i.r, %3
   br i1 %i.s, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.t = sub nsw i32 %i.r, %3                     ; 2 uses
+  %i.t = sub i32 %i.r, %i.o
+  %4 = add i32 %i.t, 48                           ; 2 uses
   %i.u = add i64 %.011.i.a, 1                     ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.m, i64 1 ; 3 uses
   store ptr %i.v, ptr %i.a, align 8, !tbaa !103
@@ -279,7 +279,7 @@ bb.k:                                             ; preds = %bb.j
 
 _ZN5boost6spirit7classic4impl11extract_intILi10ELj1ELin1ENS2_19negative_accumulateIiLi10EEEE1fIKNS1_7scannerIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS1_16scanner_policiesINS1_16iteration_policyENS1_12match_policyENS1_13action_policyEEEEEiEEbRT_RT0_Rm.exit: ; preds = %.lr.ph.i, %bb.g
   %.327 = phi i64 [ %i.w, %bb.g ], [ %.226, %.lr.ph.i ]
-  %.2 = phi i32 [ %i.t, %bb.g ], [ %.1, %.lr.ph.i ]
+  %.2 = phi i32 [ %4, %bb.g ], [ %.1, %.lr.ph.i ]
   %.0.lcssa.ph.i = phi i64 [ %i.u, %bb.g ], [ %.011.i.a, %.lr.ph.i ]
   %.not40 = icmp eq i64 %.0.lcssa.ph.i, 0
   br i1 %.not40, label %.thread, label %bb.l

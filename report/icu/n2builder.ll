@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %.loopexit
 bb.j:                                             ; preds = %.loopexit
   %i.bk = getelementptr inbounds nuw i8, ptr %4, i64 52
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !91
-  %i.bm = shl i32 %i.bl, 3
-  %i.bn = add i32 %i.bm, 512                      ; 3 uses
+  %i.bm = shl i32 %i.bl, 3                        ; 3 uses
+  %i.bn = add i32 %i.bm, 512
   %i.bo = load i8, ptr %i.c, align 2, !tbaa !62
   switch i8 %i.bo, label %bb.l [
     i8 0, label %bb.m
@@ -213,11 +213,11 @@ bb.j:                                             ; preds = %.loopexit
   ]
 
 bb.k:                                             ; preds = %bb.j
-  %6 = or disjoint i32 %i.bn, 2
+  %6 = add i32 %i.bm, 514
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %7 = or disjoint i32 %i.bn, 4
+  %7 = add i32 %i.bm, 516
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.j, %bb.k, %bb.l

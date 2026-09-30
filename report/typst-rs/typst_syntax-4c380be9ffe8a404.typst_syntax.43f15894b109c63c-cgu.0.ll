@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %bb.b
   %i.q = load ptr, ptr %.sroa.0.0, align 8, !alias.scope !5605, !nonnull !19
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
   %i.s = load i64, ptr %i.r, align 8, !alias.scope !5605
-  %.sroa.3.0.i = select i1 %.not.i, i64 %i.s, i64 %i.p ; 8 uses
+  %.sroa.3.0.i = select i1 %.not.i, i64 %i.s, i64 %i.p ; 9 uses
   %.sroa.0.0.i63 = select i1 %.not.i, ptr %i.q, ptr %.sroa.0.0 ; 4 uses
   %i.t = add i64 %.sroa.3.0.i, -1                 ; 2 uses
-  %i.u = add i64 %.sroa.3.0.i, -2                 ; 30 uses
+  %i.u = add i64 %.sroa.3.0.i, -2                 ; 29 uses
   %or.cond.i.not = icmp ugt i64 %.sroa.3.0.i, 1
   br i1 %or.cond.i.not, label %bb.f, label %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread126, !prof !45
 
@@ -320,9 +320,9 @@ _RNvXsq_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechEINtNtCs3oUPovFnLWP_4core7convert
 bb.k:                                             ; preds = %.thread129, %.lr.ph.preheader.i.i
   %.8..8..sroa.5.0.copyload123 = phi i64 [ 0, %.thread129 ], [ %i.ao, %.lr.ph.preheader.i.i ]
   %.0..0..sroa.0120.0.copyload121 = phi ptr [ null, %.thread129 ], [ %.0..0..0..sroa.0120.0.copyload121.pre, %.lr.ph.preheader.i.i ]
-  %.sroa.5.15.insert.ext = shl nuw nsw i64 %i.u, 56
-  %.sroa.5.15.insert.shift = or disjoint i64 %.sroa.5.15.insert.ext, %.8..8..sroa.5.0.copyload123
-  %.sroa.5.15.insert.insert = or disjoint i64 %.sroa.5.15.insert.shift, -9223372036854775808
+  %.sroa.5.15.insert.ext = shl nuw nsw i64 %.sroa.3.0.i, 56
+  %.sroa.5.15.insert.shift = add nuw i64 %.sroa.5.15.insert.ext, 9079256848778919936
+  %.sroa.5.15.insert.insert = or disjoint i64 %.sroa.5.15.insert.shift, %.8..8..sroa.5.0.copyload123
   br label %_RNvMNtCsakL8LGkl72C_4ecow7dynamicNtB2_10DynamicVec10from_slice.exit
 
 _RNvMNtCsakL8LGkl72C_4ecow7dynamicNtB2_10DynamicVec10from_slice.exit: ; preds = %_RNvXsq_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechEINtNtCs3oUPovFnLWP_4core7convert4FromRShE4fromCs5PEMdK7bMAG_12typst_syntax.exit.i, %bb.k

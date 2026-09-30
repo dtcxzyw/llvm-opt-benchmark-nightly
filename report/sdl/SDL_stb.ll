@@ -205,7 +205,7 @@ bb.a:
   br label %.lr.ph
 
 .preheader.loopexit:                              ; preds = %.lr.ph
-  %i.h = zext nneg i32 %i.be to i64
+  %i.h = zext i32 %i.be to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %.preheader66
@@ -252,7 +252,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.170 = phi i32 [ %i.bd, %.lr.ph ], [ %.05486, %.lr.ph.preheader ]
   %.15669 = phi i32 [ %i.bc, %.lr.ph ], [ %.05585, %.lr.ph.preheader ]
-  %.05868 = phi i32 [ %i.be, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %.05868 = phi i32 [ %i.be, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.16267 = phi ptr [ %i.bf, %.lr.ph ], [ %.06183, %.lr.ph.preheader ] ; 9 uses
   %i.r = load i8, ptr %.16267, align 1
   %i.s = zext i8 %i.r to i32
@@ -293,10 +293,10 @@ bb.a:
   %i.bb = zext i8 %i.ba to i32
   %i.bc = add i32 %i.ax, %i.bb                    ; 3 uses
   %i.bd = add i32 %i.ay, %i.bc                    ; 2 uses
-  %i.be = add nuw nsw i32 %.05868, 8              ; 3 uses
+  %i.be = add nuw i32 %.05868, 8                  ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.16267, i64 8 ; 2 uses
-  %3 = or disjoint i32 %i.be, 7
-  %i.bg = icmp samesign ult i32 %3, %i.g
+  %3 = add nuw i32 %.05868, 15
+  %i.bg = icmp ult i32 %3, %i.g
   br i1 %i.bg, label %.lr.ph, label %.preheader.loopexit, !llvm.loop !277
 
 .lr.ph78:                                         ; preds = %.lr.ph78.prol.loopexit, %.lr.ph78

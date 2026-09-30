@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
 
 .preheader.i17.i.i:                               ; preds = %.preheader.i17.i.loopexit.i, %bb.r
   %.0.lcssa.i18.i.i = phi i32 [ 0, %bb.r ], [ %i.eg, %.preheader.i17.i.loopexit.i ] ; 2 uses
-  %i.eh = icmp samesign ult i32 %.0.lcssa.i18.i.i, %i.dq
+  %i.eh = icmp ult i32 %.0.lcssa.i18.i.i, %i.dq
   br i1 %i.eh, label %.lr.ph18.preheader.i19.i.i, label %.loopexit886
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
