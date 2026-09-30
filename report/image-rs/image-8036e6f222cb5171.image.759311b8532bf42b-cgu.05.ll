@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1608)
   %i.ao = icmp ne i64 %i.ai, 0
   %..i.i33 = zext i1 %i.ao to i64                 ; 2 uses
-  %i.ap = sub nuw i64 %i.ai, %..i.i33             ; 3 uses
+  %i.ap = sub nuw i64 %i.ai, %..i.i33             ; 2 uses
   store i64 %i.ap, ptr %i.c, align 8, !alias.scope !1608
   %i.aq = load i64, ptr %i.o, align 8, !alias.scope !1609, !noalias !1608, !noundef !6
   %i.ar = add i64 %i.aq, %..i.i33
@@ -231,8 +231,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.aw = load i64, ptr %i.p, align 8, !noalias !1610, !noundef !6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1610
-  %..i.i35 = tail call noundef i64 @llvm.umin.i64(i64 %i.ap, i64 %i.aw)
-  %i.ax = icmp ne i64 %..i.i35, 0
+  %i.ax = icmp ne i64 %i.aw, 0
   %i.ay = icmp samesign ult i64 %indvars.iv, 48
   %or.cond = select i1 %i.ax, i1 %i.ay, i1 false
   br i1 %or.cond, label %bb.e, label %.loopexit

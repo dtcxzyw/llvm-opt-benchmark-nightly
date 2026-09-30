@@ -202,7 +202,7 @@ bb.ar:                                            ; preds = %bb.ao, %bb.ap
 
 ._crit_edge:                                      ; preds = %.critedge
   %i.da = select i1 %.1162, i32 125, i32 61
-  %i.db = icmp ne i32 %.3178, 3
+  %i.db = icmp ne i32 %.3178, 3                   ; 2 uses
   %or.cond13 = select i1 %.1164, i1 %i.db, i1 false
   br i1 %or.cond13, label %bb.as, label %._crit_edge.thread
 
@@ -212,9 +212,10 @@ bb.as:                                            ; preds = %._crit_edge
   br label %.thread265
 
 ._crit_edge.thread:                               ; preds = %._crit_edge.i.i, %._crit_edge
+  %24 = phi i1 [ %i.db, %._crit_edge ], [ true, %._crit_edge.i.i ]
   %.0161.lcssa520 = phi i32 [ %i.da, %._crit_edge ], [ 61, %._crit_edge.i.i ]
   %.0163.lcssa519 = phi i1 [ %.1164, %._crit_edge ], [ false, %._crit_edge.i.i ]
-  %.0175.lcssa518 = phi i32 [ %.3178, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 4 uses
+  %.0175.lcssa518 = phi i32 [ %.3178, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 3 uses
   %.0180.lcssa517 = phi i32 [ %.3183, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 2 uses
   %.0185.lcssa516 = phi i32 [ %.1186, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 8 uses
   %i.dd = load i8, ptr @_ZN5FFlag20DebugLuauTimeTracingE, align 8, !tbaa !212, !range !64, !noundef !65
@@ -263,7 +264,7 @@ bb.av:                                            ; preds = %bb.au
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ed, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %21, i8 0, i64 24, i1 false)
-  %24 = icmp eq i32 %.0175.lcssa518, 3
+  %.not = xor i1 %24, true
   %i.ee = icmp ugt i32 %.0175.lcssa518, 1         ; 2 uses
   br i1 %i.ee, label %bb.aw, label %_ZNSt6vectorI12CompileStatsSaIS0_EE7reserveEm.exit
 
@@ -358,7 +359,7 @@ bb.bb:                                            ; preds = %_ZNSt12_Vector_base
 _ZNSt6vectorI12CompileStatsSaIS0_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseI12CompileStatsSaIS0_EE13_M_deallocateEPS0_m.exit.i, %bb.ay, %bb.av
   %i.fe = phi ptr [ %.pre437, %_ZNSt12_Vector_baseI12CompileStatsSaIS0_EE13_M_deallocateEPS0_m.exit.i ], [ %i.dh, %bb.ay ], [ %i.dh, %bb.av ] ; 2 uses
   %i.ff = phi ptr [ %.pre, %_ZNSt12_Vector_baseI12CompileStatsSaIS0_EE13_M_deallocateEPS0_m.exit.i ], [ %i.di, %bb.ay ], [ %i.di, %bb.av ] ; 2 uses
-  %i.fg = zext i1 %24 to i32
+  %i.fg = zext i1 %.not to i32
   %i.fh = select i1 %.0163.lcssa519, i32 2, i32 0
   %i.fi = or disjoint i32 %i.fh, %i.fg
   %.not271406 = icmp eq ptr %i.ff, %i.fe

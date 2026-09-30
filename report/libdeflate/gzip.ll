@@ -204,12 +204,12 @@ bb.bg:                                            ; preds = %.lr.ph167, %compres
   %indvars.iv261 = phi i64 [ 0, %.lr.ph167 ], [ %indvars.iv.next262, %compress_file.exit ] ; 2 uses
   %.2166 = phi i32 [ 0, %.lr.ph167 ], [ %i.gz, %compress_file.exit ]
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %.044, i64 %indvars.iv261
-  %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !30 ; 10 uses
+  %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !30 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   %i.ez = icmp ne ptr %i.ey, null                 ; 3 uses
-  %.not = xor i1 %i.ez, true
+  %.not = xor i1 %i.ez, true                      ; 2 uses
   %or.cond = or i1 %.not, %i.ep
   br i1 %or.cond, label %bb.bk, label %bb.bh
 
@@ -263,9 +263,8 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %.not.i5575, label %bb.bm, label %bb.ce
 
 bb.bm:                                            ; preds = %.thread74
-  %9 = icmp eq ptr %i.ey, null
   %i.fp = icmp eq ptr %.050.i, null
-  %i.fq = or i1 %9, %i.fp
+  %i.fq = or i1 %i.fp, %.not
   %spec.select.i58 = or i1 %i.fq, %i.er
   br label %bb.bn
 

@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.ee = or disjoint i64 %.0114, 1
-  %i.ef = load i64, ptr %3, align 8, !tbaa !77    ; 8 uses
+  %i.ef = load i64, ptr %3, align 8, !tbaa !77    ; 7 uses
   %i.eg = mul i64 %i.ef, %i.ee
   %i.eh = mul i64 %i.ea, 6
   %i.ei = load i64, ptr %i.be, align 8, !tbaa !79 ; 4 uses
@@ -451,9 +451,7 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj
   %i.in = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   store i8 0, ptr %i.in, align 8, !tbaa !73
-  %12 = icmp ne i64 %i.ef, 0
-  %or.cond = and i1 %12, %.0129.lcssa
-  br i1 %or.cond, label %bb.al, label %.critedge10.thread
+  br i1 %.0129.lcssa, label %bb.al, label %.critedge10.thread
 
 bb.al:                                            ; preds = %bb.ak
   %i.io = getelementptr inbounds nuw i8, ptr %i.hy, i64 40

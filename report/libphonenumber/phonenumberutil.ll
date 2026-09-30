@@ -205,9 +205,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !78
   %i.c = tail call { ptr, ptr } @_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE4findIS9_EENSK_8iteratorERKT_(ptr noundef nonnull align 8 dereferenceable(40) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  %i.d = extractvalue { ptr, ptr } %i.c, 0        ; 3 uses
-  %2 = icmp eq ptr %i.d, null
-  br i1 %2, label %_ZN4absl7debian318container_internalneERKNS1_12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE8iteratorESN_.exit, label %bb.b
+  %i.d = extractvalue { ptr, ptr } %i.c, 0        ; 2 uses
+  %2 = icmp ne ptr %i.d, null                     ; 2 uses
+  br i1 %2, label %bb.b, label %_ZN4absl7debian318container_internalneERKNS1_12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE8iteratorESN_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load i8, ptr %i.d, align 1, !tbaa !157
@@ -219,8 +219,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN4absl7debian318container_internalneERKNS1_12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE8iteratorESN_.exit: ; preds = %bb.a, %bb.b
-  %3 = icmp ne ptr %i.d, null
-  ret i1 %3
+  ret i1 %2
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -623,9 +622,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !70
   %i.c = tail call { ptr, ptr } @_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS1_10StringHashENS1_8StringEqESaIS9_EE4findIS9_EENSE_8iteratorERKT_(ptr noundef nonnull align 8 dereferenceable(40) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  %i.d = extractvalue { ptr, ptr } %i.c, 0        ; 3 uses
-  %2 = icmp eq ptr %i.d, null
-  br i1 %2, label %_ZN4absl7debian318container_internalneERKNS1_12raw_hash_setINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS1_10StringHashENS1_8StringEqESaIS9_EE8iteratorESH_.exit, label %bb.b
+  %i.d = extractvalue { ptr, ptr } %i.c, 0        ; 2 uses
+  %2 = icmp ne ptr %i.d, null                     ; 2 uses
+  br i1 %2, label %bb.b, label %_ZN4absl7debian318container_internalneERKNS1_12raw_hash_setINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS1_10StringHashENS1_8StringEqESaIS9_EE8iteratorESH_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load i8, ptr %i.d, align 1, !tbaa !157
@@ -637,8 +636,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN4absl7debian318container_internalneERKNS1_12raw_hash_setINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS1_10StringHashENS1_8StringEqESaIS9_EE8iteratorESH_.exit: ; preds = %bb.a, %bb.b
-  %3 = icmp ne ptr %i.d, null
-  ret i1 %3
+  ret i1 %2
 }
 
 declare void @_ZN4i18n12phonenumbers6StrCatB5cxx11ERKNS0_12StringHolderES3_(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8, ptr noundef nonnull align 8 dereferenceable(48), ptr noundef nonnull align 8 dereferenceable(48)) local_unnamed_addr #8

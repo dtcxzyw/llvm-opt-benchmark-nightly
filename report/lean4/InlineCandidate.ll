@@ -204,8 +204,7 @@ bb.py:                                            ; preds = %lean_inc.exit2378, 
   br label %lean_dec.exit2669
 
 lean_dec_ref.exit2213:                            ; preds = %bb.xc, %bb.xb, %bb.wg, %bb.wh, %bb.abp
-  %8 = icmp eq i8 %i.aqf, 0
-  br i1 %8, label %lean_del_object.exit3064, label %bb.pz
+  br i1 %i.are, label %bb.pz, label %lean_del_object.exit3064
 
 bb.pz:                                            ; preds = %lean_dec_ref.exit2213
   %i.xv = tail call ptr @l_Lean_Compiler_LCNF_Decl_isCasesOnParam_x3f___redArg(ptr noundef nonnull %i.aox) #5 ; 11 uses
@@ -608,7 +607,7 @@ bb.aea:                                           ; preds = %bb.adz
   br label %lean_inc_ref_n.exit
 
 lean_inc_ref_n.exit:                              ; preds = %bb.ady, %bb.adz, %bb.aea
-  %i.aqf = tail call zeroext i8 @l_Lean_Compiler_LCNF_Decl_inlineIfReduceAttr___redArg(ptr noundef nonnull %i.aox) #5 ; 4 uses
+  %i.aqf = tail call zeroext i8 @l_Lean_Compiler_LCNF_Decl_inlineIfReduceAttr___redArg(ptr noundef nonnull %i.aox) #5 ; 3 uses
   %i.aqg = zext i8 %i.aqf to i64
   %i.aqh = shl nuw nsw i64 %i.aqg, 1
   %i.aqi = or disjoint i64 %i.aqh, 1
@@ -661,7 +660,7 @@ lean_inc.exit2350:                                ; preds = %bb.aee, %bb.aed, %b
   store ptr inttoptr (i64 1 to ptr), ptr %i.arc, align 8, !tbaa !10
   %i.ard = getelementptr inbounds nuw i8, ptr %i.aqr, i64 56
   store ptr %i.aqn, ptr %i.ard, align 8, !tbaa !10
-  %i.are = icmp ne i8 %i.aqf, 0
+  %i.are = icmp ne i8 %i.aqf, 0                   ; 2 uses
   %i.arf = icmp eq i8 %i.apz, 0
   %or.cond = select i1 %i.are, i1 true, i1 %i.arf
   br i1 %or.cond, label %bb.ye, label %lean_dec_ref.exit2209

@@ -205,12 +205,10 @@ bb.c:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %1, align 8, !tbaa !36     ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.i = load i64, ptr %i.h, align 8
-  %87 = trunc i64 %i.i to i32
-  %88 = and i32 %87, 1023                         ; 2 uses
-  %i.j = icmp ne i32 %88, 20                      ; 7 uses
+  %87 = and i64 %i.i, 1023
+  %i.j = icmp ne i64 %87, 20                      ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #24
-  %89 = icmp eq i32 %88, 20
-  br i1 %89, label %bb.d, label %bb.h
+  br i1 %i.j, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !225)

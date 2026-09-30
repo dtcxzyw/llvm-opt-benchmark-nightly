@@ -205,10 +205,10 @@ declare void @PyErr_Clear() local_unnamed_addr #12
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull ptr @_ZN8nanobind6detail14obj_vectorcallEPNS0_12nb_internalsEP7_objectPKS4_mmj(ptr nofree noundef readnone captures(none) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, i32 noundef %5) local_unnamed_addr #16 {
 bb.a:
-  %i.a = and i64 %3, 9223372036854775807          ; 7 uses
+  %i.a = and i64 %3, 9223372036854775807          ; 6 uses
   %.not = icmp eq ptr %1, null                    ; 4 uses
-  %.not45 = icmp eq i64 %i.a, 0
-  br i1 %.not45, label %._crit_edge, label %.lr.ph.preheader
+  %.not45 = icmp ne i64 %i.a, 0                   ; 2 uses
+  br i1 %.not45, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %min.iters.check = icmp samesign ult i64 %i.a, 4
@@ -273,8 +273,7 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   %.030 = phi ptr [ null, %._crit_edge ], [ %i.q, %bb.b ] ; 2 uses
   %.not47 = icmp eq i64 %4, 0
   %i.r = icmp samesign ugt i64 %i.a, 64
-  %6 = icmp ne i64 %i.a, 0
-  %or.cond44 = select i1 %.not47, i1 %i.r, i1 %6
+  %or.cond44 = select i1 %.not47, i1 %i.r, i1 %.not45
   br i1 %or.cond44, label %.lr.ph43.preheader, label %.loopexit
 
 .lr.ph43.preheader:                               ; preds = %bb.c

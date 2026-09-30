@@ -201,7 +201,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.cp = zext nneg i8 %spec.store.select15 to i32
   %i.cq = call i32 @__dtoa_engine(double noundef %i.co, ptr noundef nonnull %3, i32 noundef %i.cp, i32 noundef %.0421) #11 ; 2 uses
   %i.cr = trunc i32 %i.cq to i8                   ; 3 uses
-  %i.cs = load i32, ptr %3, align 4               ; 12 uses
+  %i.cs = load i32, ptr %3, align 4               ; 11 uses
   %i.ct = load i8, ptr %i.g, align 4              ; 2 uses
   %i.cu = and i8 %i.ct, 1
   %.not566 = icmp eq i8 %i.cu, 0
@@ -325,10 +325,8 @@ bb.bd:                                            ; preds = %.lr.ph97
 
 bb.be:                                            ; preds = %.critedge
   %i.eh = or disjoint i16 %.8476, -32768          ; 2 uses
-  %4 = icmp slt i32 %i.cs, 0
   %i.ei = icmp slt i32 %i.cs, %i.ee
-  %or.cond595 = or i1 %4, %i.ei
-  br i1 %or.cond595, label %bb.bf, label %bb.bh
+  br i1 %i.ei, label %bb.bf, label %bb.bh
 
 bb.bf:                                            ; preds = %bb.be
   %.neg = xor i32 %i.cs, -1

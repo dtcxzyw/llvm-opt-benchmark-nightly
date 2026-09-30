@@ -205,7 +205,7 @@ _ZN4Ptex4v2_414PtexMainWriter8LevelRecD2Ev.exit:  ; preds = %bb.k, %.noexc
   %i.cp = ptrtoint ptr %.pre161 to i64            ; 2 uses
   %i.cq = ptrtoint ptr %.pre163 to i64            ; 2 uses
   %i.cr = sub i64 %i.cp, %i.cq                    ; 4 uses
-  %i.cs = ashr exact i64 %i.cr, 3                 ; 7 uses
+  %i.cs = ashr exact i64 %i.cr, 3                 ; 6 uses
   %i.ct = icmp ult i64 %i.cs, %indvars.iv
   br i1 %i.ct, label %bb.o, label %bb.s
 
@@ -216,8 +216,6 @@ bb.o:                                             ; preds = %_ZN4Ptex4v2_414Ptex
   %i.cx = ptrtoint ptr %i.cw to i64
   %i.cy = sub i64 %i.cx, %i.cp
   %i.cz = ashr exact i64 %i.cy, 3                 ; 2 uses
-  %3 = icmp samesign ult i64 %i.cs, 1152921504606846976
-  tail call void @llvm.assume(i1 %3)
   %i.da = xor i64 %i.cs, 1152921504606846975
   %i.db = icmp ule i64 %i.cz, %i.da
   tail call void @llvm.assume(i1 %i.db)
@@ -307,7 +305,7 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %_ZNSt12_Vector_base
   %i.dz = ptrtoint ptr %i.dx to i64               ; 3 uses
   %i.ea = ptrtoint ptr %i.dy to i64               ; 4 uses
   %i.eb = sub i64 %i.dz, %i.ea                    ; 2 uses
-  %i.ec = ashr exact i64 %i.eb, 2                 ; 7 uses
+  %i.ec = ashr exact i64 %i.eb, 2                 ; 6 uses
   %i.ed = icmp ult i64 %i.ec, %indvars.iv
   br i1 %i.ed, label %bb.u, label %bb.w
 
@@ -318,8 +316,6 @@ bb.u:                                             ; preds = %_ZNSt6vectorIlSaIlE
   %i.eh = ptrtoint ptr %i.eg to i64
   %i.ei = sub i64 %i.eh, %i.dz
   %i.ej = ashr exact i64 %i.ei, 2                 ; 2 uses
-  %4 = icmp samesign ult i64 %i.ec, 2305843009213693952
-  tail call void @llvm.assume(i1 %4)
   %i.ek = xor i64 %i.ec, 2305843009213693951
   %i.el = icmp ule i64 %i.ej, %i.ek
   tail call void @llvm.assume(i1 %i.el)

@@ -84,13 +84,13 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.e, align 8, !tbaa !52
   %i.k = tail call noundef ptr @_Z15pj_param_existsP8ARG_listPKc(ptr noundef %i.j, ptr noundef nonnull @.str.3)
   %i.l = load ptr, ptr %i.e, align 8, !tbaa !52
-  %i.m = tail call noundef ptr @_Z15pj_param_existsP8ARG_listPKc(ptr noundef %i.l, ptr noundef nonnull @.str.4) ; 2 uses
+  %i.m = tail call noundef ptr @_Z15pj_param_existsP8ARG_listPKc(ptr noundef %i.l, ptr noundef nonnull @.str.4)
   %i.n = load ptr, ptr %i.e, align 8, !tbaa !52
   %i.o = tail call noundef ptr @_Z15pj_param_existsP8ARG_listPKc(ptr noundef %i.n, ptr noundef nonnull @.str.5) ; 2 uses
   %i.p = load ptr, ptr %i.e, align 8, !tbaa !52
   %i.q = tail call noundef ptr @_Z15pj_param_existsP8ARG_listPKc(ptr noundef %i.p, ptr noundef nonnull @.str.6)
   %i.r = icmp ne ptr %i.g, null                   ; 4 uses
-  %i.s = icmp ne ptr %i.m, null                   ; 2 uses
+  %i.s = icmp ne ptr %i.m, null                   ; 3 uses
   %or.cond = or i1 %i.r, %i.s
   br i1 %or.cond, label %bb.e, label %bb.d
 
@@ -130,10 +130,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.q
 
 bb.j:                                             ; preds = %bb.e
-  %i.ab = icmp eq ptr %i.m, null
-  %5 = icmp ne ptr %i.o, null
-  %or.cond13 = or i1 %i.ab, %5
-  br i1 %or.cond13, label %.thread103, label %bb.k
+  %i.ab = icmp eq ptr %i.o, null
+  %or.cond13.not = and i1 %i.ab, %i.s
+  br i1 %or.cond13.not, label %bb.k, label %.thread103
 
 bb.k:                                             ; preds = %bb.j
   tail call void (ptr, ptr, ...) @_Z14proj_log_errorPK8PJconstsPKcz(ptr noundef nonnull %0, ptr noundef nonnull @.str.10)

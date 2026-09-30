@@ -8,12 +8,12 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN8facebook4yoga23canUseCachedMeasurementENS0_10SizingModeEfS1_fS1_fS1_fffffPKNS0_6ConfigE(i32 noundef %0, float noundef %1, i32 noundef %2, float noundef %3, i32 noundef %4, float noundef %5, i32 noundef %6, float noundef %7, float noundef %8, float noundef %9, float noundef %10, float noundef %11, ptr noundef %12) local_unnamed_addr #0 {
 bb.a:
-  %i.a = fcmp ord float %9, 0.000000e+00
+  %i.a = fcmp ord float %9, 0.000000e+00          ; 3 uses
   %i.b = fcmp olt float %9, 0.000000e+00
   br i1 %i.b, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit84.thread106, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = fcmp ord float %8, 0.000000e+00
+  %i.c = fcmp ord float %8, 0.000000e+00          ; 3 uses
   %i.d = fcmp olt float %8, 0.000000e+00
   br i1 %i.d, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit84.thread106, label %bb.c
 
@@ -93,10 +93,9 @@ bb.m:                                             ; preds = %bb.l
   br i1 %or.cond.i.i, label %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit, label %.split
 
 .split:                                           ; preds = %bb.m
-  %13 = fcmp uno float %i.ah, 0.000000e+00
-  %14 = fcmp uno float %8, 0.000000e+00
-  %spec.select.i.i = and i1 %14, %13
-  br i1 %spec.select.i.i, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit, label %.thread92.thread
+  %13 = fcmp ord float %i.ah, 0.000000e+00
+  %spec.select.i.i.not = or i1 %13, %i.c
+  br i1 %spec.select.i.i.not, label %.thread92.thread, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit
 
 _ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit: ; preds = %bb.m
   %i.aj = fsub float %i.ah, %8
@@ -119,10 +118,9 @@ bb.p:                                             ; preds = %bb.o
   br i1 %or.cond.i.i74, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit, label %.split95
 
 .split95:                                         ; preds = %bb.p
-  %15 = fcmp uno float %i.ah, 0.000000e+00
-  %16 = fcmp uno float %8, 0.000000e+00
-  %spec.select.i.i75 = and i1 %16, %15
-  br i1 %spec.select.i.i75, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit, label %.thread92.thread
+  %14 = fcmp ord float %i.ah, 0.000000e+00
+  %spec.select.i.i75.not = or i1 %14, %i.c
+  br i1 %spec.select.i.i75.not, label %.thread92.thread, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit
 
 _ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit: ; preds = %bb.p
   %i.ap = fsub float %i.ah, %8
@@ -135,10 +133,10 @@ _ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit:
 
 .thread92:                                        ; preds = %bb.n
   %i.as = icmp eq i32 %4, 2
-  %or.cond.i76 = and i1 %i.as, %i.am
-  %17 = fcmp ogt float %5, %i.ah
-  %or.cond12.i = and i1 %i.c, %17
-  %or.cond = and i1 %or.cond12.i, %or.cond.i76
+  %15 = fcmp ogt float %5, %i.ah
+  %16 = and i1 %i.as, %15
+  %or.cond12.i = and i1 %16, %i.am
+  %or.cond = and i1 %or.cond12.i, %i.c
   br i1 %or.cond, label %bb.q, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit
 
 bb.q:                                             ; preds = %.thread92
@@ -169,10 +167,9 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond.i.i78, label %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit80, label %.split101
 
 .split101:                                        ; preds = %bb.u
-  %18 = fcmp uno float %i.ay, 0.000000e+00
-  %19 = fcmp uno float %9, 0.000000e+00
-  %spec.select.i.i79 = and i1 %19, %18
-  br i1 %spec.select.i.i79, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit84.thread106, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit89
+  %17 = fcmp ord float %i.ay, 0.000000e+00
+  %spec.select.i.i79.not = or i1 %17, %i.a
+  br i1 %spec.select.i.i79.not, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit89, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit84.thread106
 
 _ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit80: ; preds = %bb.u
   %i.ba = fsub float %i.ay, %9
@@ -195,10 +192,9 @@ bb.x:                                             ; preds = %bb.w
   br i1 %or.cond.i.i82, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit84, label %.split107
 
 .split107:                                        ; preds = %bb.x
-  %20 = fcmp uno float %i.ay, 0.000000e+00
-  %21 = fcmp uno float %9, 0.000000e+00
-  %spec.select.i.i83 = and i1 %21, %20
-  br i1 %spec.select.i.i83, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit84.thread106, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit89
+  %18 = fcmp ord float %i.ay, 0.000000e+00
+  %spec.select.i.i83.not = or i1 %18, %i.a
+  br i1 %spec.select.i.i83.not, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit89, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit84.thread106
 
 _ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit84: ; preds = %bb.x
   %i.bg = fsub float %i.ay, %9
@@ -208,10 +204,10 @@ _ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit8
 
 .thread103:                                       ; preds = %bb.v
   %i.bj = icmp eq i32 %6, 2
-  %or.cond.i85 = and i1 %i.bj, %i.bd
-  %22 = fcmp ogt float %7, %i.ay
-  %or.cond12.i87 = and i1 %i.a, %22
-  %or.cond113 = and i1 %or.cond12.i87, %or.cond.i85
+  %19 = fcmp ogt float %7, %i.ay
+  %20 = and i1 %i.bj, %19
+  %or.cond12.i87 = and i1 %20, %i.bd
+  %or.cond113 = and i1 %or.cond12.i87, %i.a
   br i1 %or.cond113, label %bb.y, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit89
 
 bb.y:                                             ; preds = %.thread103

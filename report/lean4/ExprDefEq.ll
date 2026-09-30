@@ -204,9 +204,8 @@ bb.aq:                                            ; preds = %bb.ap
   br label %lean_dec_ref_known.exit409
 
 lean_dec_ref_known.exit409:                       ; preds = %lean_dec.exit.i404, %bb.ao, %bb.ap, %bb.aq
-  %8 = lshr i64 %i.y, 1
-  %i.bq = and i64 %8, 255                         ; 2 uses
-  %i.br = icmp eq i64 %i.bq, 0
+  %i.bq = and i64 %i.y, 510
+  %i.br = icmp eq i64 %i.bq, 0                    ; 2 uses
   br i1 %i.br, label %bb.ar, label %bb.aw
 
 bb.ar:                                            ; preds = %lean_dec_ref_known.exit409
@@ -609,8 +608,7 @@ bb.fs:                                            ; preds = %bb.fr
   br label %lean_dec.exit288
 
 lean_dec.exit288:                                 ; preds = %bb.fs, %bb.fr, %bb.fq, %lean_dec.exit308
-  %.not = icmp eq i64 %i.bq, 0
-  br i1 %.not, label %bb.dk, label %bb.ft
+  br i1 %i.br, label %bb.dk, label %bb.ft
 
 bb.ft:                                            ; preds = %lean_dec.exit288
   br i1 %.not.i264, label %bb.fu, label %lean_dec.exit286

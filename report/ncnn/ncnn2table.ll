@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.d
   br label %_ZNSt6vectorIcSaIcEED2Ev.exit21
 
 bb.g:                                             ; preds = %bb.c, %bb.b
-  %.014 = phi i64 [ %i.e, %bb.b ], [ %i.h, %bb.c ] ; 10 uses
-  %.not.i.i.i.i = icmp eq i64 %.014, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit, label %.noexc
+  %.014 = phi i64 [ %i.e, %bb.b ], [ %i.h, %bb.c ] ; 9 uses
+  %.not.i.i.i.i = icmp ne i64 %.014, 0            ; 2 uses
+  br i1 %.not.i.i.i.i, label %.noexc, label %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit
 
 .noexc:                                           ; preds = %bb.g
   %i.k = call noalias noundef nonnull ptr @_Znwm(i64 noundef %.014) #39 ; 4 uses
@@ -230,8 +230,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorIcSaIcE
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.p, ptr %0, align 8, !tbaa !230
   %i.q = icmp eq ptr %.sroa.023.0, null           ; 2 uses
-  %4 = icmp ne i64 %.014, 0
-  %or.cond.i = and i1 %4, %i.q
+  %or.cond.i = and i1 %.not.i.i.i.i, %i.q
   br i1 %or.cond.i, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i

@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
 .preheader401:                                    ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit44, %.preheader401
   %.sroa.06.0.i = phi i64 [ %i.bw, %.preheader401 ], [ %i.bn, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit44 ]
   %.sroa.0.0.i = phi i64 [ %i.cb, %.preheader401 ], [ %i.au, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit44 ] ; 3 uses
-  %i.bw = add i64 %.sroa.06.0.i, -1               ; 5 uses
+  %i.bw = add i64 %.sroa.06.0.i, -1               ; 4 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.bw
   %i.by = urem i64 %.sroa.0.0.i, 10
   %i.bz = trunc nuw nsw i64 %i.by to i8
@@ -212,13 +212,12 @@ bb.o:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
   store i8 %i.ca, ptr %i.bx, align 1, !noalias !126
   %i.cb = udiv i64 %.sroa.0.0.i, 10
   %i.cc = icmp samesign ugt i64 %.sroa.0.0.i, 9
-  %i.cd = icmp ne i64 %i.bw, 0
+  %i.cd = icmp ne i64 %i.bw, 0                    ; 2 uses
   %or.cond2.i = and i1 %i.cc, %i.cd
   br i1 %or.cond2.i, label %.preheader401, label %.preheader400
 
 .preheader400:                                    ; preds = %.preheader401
-  %.not17.i403 = icmp eq i64 %i.bw, 0
-  br i1 %.not17.i403, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padmEBa_.exit, label %.lr.ph.preheader
+  br i1 %i.cd, label %.lr.ph.preheader, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padmEBa_.exit
 
 .lr.ph.preheader:                                 ; preds = %.preheader400
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.bv, i8 48, i64 %i.bw, i1 false), !noalias !126
@@ -311,7 +310,7 @@ bb.v:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
 .preheader399:                                    ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit, %.preheader399
   %.sroa.06.0.i31 = phi i64 [ %i.dn, %.preheader399 ], [ %i.dh, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ]
   %.sroa.0.0.i32 = phi i64 [ %i.ds, %.preheader399 ], [ %.sroa.0.0.copyload, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ] ; 3 uses
-  %i.dn = add i64 %.sroa.06.0.i31, -1             ; 5 uses
+  %i.dn = add i64 %.sroa.06.0.i31, -1             ; 4 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dm, i64 %i.dn
   %i.dp = urem i64 %.sroa.0.0.i32, 10
   %i.dq = trunc nuw nsw i64 %i.dp to i8
@@ -319,13 +318,12 @@ bb.v:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
   store i8 %i.dr, ptr %i.do, align 1, !noalias !128
   %i.ds = udiv i64 %.sroa.0.0.i32, 10
   %i.dt = icmp ugt i64 %.sroa.0.0.i32, 9
-  %i.du = icmp ne i64 %i.dn, 0
+  %i.du = icmp ne i64 %i.dn, 0                    ; 2 uses
   %or.cond2.i33 = and i1 %i.dt, %i.du
   br i1 %or.cond2.i33, label %.preheader399, label %.preheader
 
 .preheader:                                       ; preds = %.preheader399
-  %.not17.i36405 = icmp eq i64 %i.dn, 0
-  br i1 %.not17.i36405, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit, label %.lr.ph407.preheader
+  br i1 %i.du, label %.lr.ph407.preheader, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit
 
 .lr.ph407.preheader:                              ; preds = %.preheader
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.dm, i8 48, i64 %i.dn, i1 false), !noalias !128
@@ -728,7 +726,7 @@ bb.g:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
 .preheader6:                                      ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit, %.preheader6
   %.sroa.06.0.i12 = phi i64 [ %i.ap, %.preheader6 ], [ %i.ag, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ]
   %.sroa.0.0.i13 = phi i64 [ %i.au, %.preheader6 ], [ %i.g, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ] ; 3 uses
-  %i.ap = add i64 %.sroa.06.0.i12, -1             ; 5 uses
+  %i.ap = add i64 %.sroa.06.0.i12, -1             ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ap
   %i.ar = urem i64 %.sroa.0.0.i13, 10
   %i.as = trunc nuw nsw i64 %i.ar to i8
@@ -736,13 +734,12 @@ bb.g:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
   store i8 %i.at, ptr %i.aq, align 1, !noalias !202
   %i.au = udiv i64 %.sroa.0.0.i13, 10
   %i.av = icmp samesign ugt i64 %.sroa.0.0.i13, 9
-  %i.aw = icmp ne i64 %i.ap, 0
+  %i.aw = icmp ne i64 %i.ap, 0                    ; 2 uses
   %or.cond2.i14 = and i1 %i.av, %i.aw
   br i1 %or.cond2.i14, label %.preheader6, label %.preheader5
 
 .preheader5:                                      ; preds = %.preheader6
-  %.not17.i178 = icmp eq i64 %i.ap, 0
-  br i1 %.not17.i178, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit18, label %.lr.ph.preheader
+  br i1 %i.aw, label %.lr.ph.preheader, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit18
 
 .lr.ph.preheader:                                 ; preds = %.preheader5
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ao, i8 48, i64 %i.ap, i1 false), !noalias !202
@@ -784,7 +781,7 @@ bb.i:                                             ; preds = %_RNvMs0_NtNtCsa9sSW
 .preheader4:                                      ; preds = %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit21, %.preheader4
   %.sroa.06.0.i = phi i64 [ %i.bh, %.preheader4 ], [ %i.bd, %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit21 ]
   %.sroa.0.0.i = phi i64 [ %i.bm, %.preheader4 ], [ %.zext, %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit21 ] ; 3 uses
-  %i.bh = add i64 %.sroa.06.0.i, -1               ; 5 uses
+  %i.bh = add i64 %.sroa.06.0.i, -1               ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bh
   %i.bj = urem i64 %.sroa.0.0.i, 10
   %i.bk = trunc nuw nsw i64 %i.bj to i8
@@ -792,13 +789,12 @@ bb.i:                                             ; preds = %_RNvMs0_NtNtCsa9sSW
   store i8 %i.bl, ptr %i.bi, align 1, !noalias !204
   %i.bm = udiv i64 %.sroa.0.0.i, 10
   %i.bn = icmp samesign ugt i64 %.sroa.0.0.i, 9
-  %i.bo = icmp ne i64 %i.bh, 0
+  %i.bo = icmp ne i64 %i.bh, 0                    ; 2 uses
   %or.cond2.i = and i1 %i.bn, %i.bo
   br i1 %or.cond2.i, label %.preheader4, label %.preheader
 
 .preheader:                                       ; preds = %.preheader4
-  %.not17.i10 = icmp eq i64 %i.bh, 0
-  br i1 %.not17.i10, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit, label %.lr.ph12.preheader
+  br i1 %i.bo, label %.lr.ph12.preheader, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit
 
 .lr.ph12.preheader:                               ; preds = %.preheader
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.bg, i8 48, i64 %i.bh, i1 false), !noalias !204
@@ -1201,7 +1197,7 @@ bb.g:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
 .preheader9:                                      ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit, %.preheader9
   %.sroa.06.0.i = phi i64 [ %i.aj, %.preheader9 ], [ %i.aa, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ]
   %.sroa.0.0.i = phi i64 [ %i.ao, %.preheader9 ], [ %i.b, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ] ; 3 uses
-  %i.aj = add i64 %.sroa.06.0.i, -1               ; 5 uses
+  %i.aj = add i64 %.sroa.06.0.i, -1               ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.aj
   %i.al = urem i64 %.sroa.0.0.i, 10
   %i.am = trunc nuw nsw i64 %i.al to i8
@@ -1209,13 +1205,12 @@ bb.g:                                             ; preds = %_RNvNtNtCsa9sSWSfjD
   store i8 %i.an, ptr %i.ak, align 1, !noalias !564
   %i.ao = udiv i64 %.sroa.0.0.i, 10
   %i.ap = icmp ugt i64 %.sroa.0.0.i, 9
-  %i.aq = icmp ne i64 %i.aj, 0
+  %i.aq = icmp ne i64 %i.aj, 0                    ; 2 uses
   %or.cond2.i = and i1 %i.ap, %i.aq
   br i1 %or.cond2.i, label %.preheader9, label %.preheader
 
 .preheader:                                       ; preds = %.preheader9
-  %.not17.i12 = icmp eq i64 %i.aj, 0
-  br i1 %.not17.i12, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit, label %.lr.ph.preheader
+  br i1 %i.aq, label %.lr.ph.preheader, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer13write_int_padyEBa_.exit
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ai, i8 48, i64 %i.aj, i1 false), !noalias !564

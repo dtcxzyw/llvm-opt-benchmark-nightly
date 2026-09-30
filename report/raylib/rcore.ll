@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph92
-  %i.af = load i32, ptr %i.d, align 4             ; 4 uses
+  %i.af = load i32, ptr %i.d, align 4             ; 3 uses
   %i.ag = load i32, ptr %i.ae, align 4
   %i.ah = add nsw i32 %i.ag, %i.af                ; 2 uses
   %i.ai = add nsw i32 %i.ah, -1
@@ -214,8 +214,8 @@ bb.f:                                             ; preds = %.lr.ph92
   %i.al = load i32, ptr %i.ak, align 4
   %i.am = add nsw i32 %i.al, %i.aj                ; 2 uses
   %i.an = add nsw i32 %i.am, -1
-  %i.ao = load i32, ptr %i.b, align 4             ; 5 uses
-  %.not56 = icmp sge i32 %i.ao, %i.af
+  %i.ao = load i32, ptr %i.b, align 4             ; 4 uses
+  %.not56 = icmp sge i32 %i.ao, %i.af             ; 2 uses
   %.not57.not = icmp slt i32 %i.ao, %i.ah
   %or.cond = select i1 %.not56, i1 %.not57.not, i1 false
   %.pre = load i32, ptr %i.c, align 4             ; 5 uses
@@ -228,9 +228,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond62, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
-  %0 = icmp slt i32 %i.ao, %i.af
   %spec.select = call i32 @llvm.smin.i32(i32 %i.ao, i32 %i.ai)
-  %.035 = select i1 %0, i32 %i.af, i32 %spec.select
+  %.035 = select i1 %.not56, i32 %spec.select, i32 %i.af
   %i.ap = icmp slt i32 %.pre, %i.aj
   %spec.select63 = call i32 @llvm.smin.i32(i32 %.pre, i32 %i.an)
   %.0 = select i1 %i.ap, i32 %i.aj, i32 %spec.select63

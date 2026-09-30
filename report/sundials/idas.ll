@@ -204,10 +204,10 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
 
 bb.ac:                                            ; preds = %bb.aa
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 1224
-  %i.bd = load double, ptr %i.bc, align 8, !tbaa !297 ; 5 uses
+  %i.bd = load double, ptr %i.bc, align 8, !tbaa !297 ; 4 uses
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 1240 ; 11 uses
   store double %i.bd, ptr %i.be, align 8, !tbaa !169
-  %i.bf = fcmp une double %i.bd, 0.000000e+00
+  %i.bf = fcmp une double %i.bd, 0.000000e+00     ; 2 uses
   %i.bg = fmul double %i.ar, %i.bd
   %i.bh = fcmp olt double %i.bg, 0.000000e+00
   %or.cond467 = and i1 %i.bf, %i.bh
@@ -218,8 +218,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %IDAStopTest2.exit.thread
 
 bb.ae:                                            ; preds = %bb.ac
-  %6 = fcmp oeq double %i.bd, 0.000000e+00
-  br i1 %6, label %bb.af, label %bb.ap
+  br i1 %i.bf, label %bb.ap, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.bi = fmul double %i.as, 1.000000e-03

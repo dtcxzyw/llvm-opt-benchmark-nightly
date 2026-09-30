@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   br label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.b, %bb.c, %bb.a
-  %.sroa.5.0 = phi i64 [ 1, %bb.b ], [ %., %bb.c ], [ 1, %bb.a ] ; 8 uses
+  %.sroa.5.0 = phi i64 [ 1, %bb.b ], [ %., %bb.c ], [ 1, %bb.a ] ; 6 uses
   %.sroa.011.0 = phi ptr [ @9, %bb.b ], [ %.37, %bb.c ], [ @10, %bb.a ] ; 5 uses
   %i.k = trunc nuw i64 %4 to i1                   ; 4 uses
   %.38 = select i1 %i.k, i64 %5, i64 6            ; 8 uses
@@ -266,13 +266,12 @@ bb.f:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !382)
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.011.0, i64 %.sroa.5.0 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !383)
-  %.not.i.i.i.i.i = icmp ne i64 %.sroa.5.0, 0
+  %.not.i.i.i.i.i = icmp ne i64 %.sroa.5.0, 0     ; 2 uses
   %i.ai = zext i1 %.not.i.i.i.i.i to i64
   tail call void @_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecmE7reserveCs4RW8js5ES7g_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.ai), !noalias !384
   tail call void @llvm.experimental.noalias.scope.decl(metadata !385)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !386)
-  %.not.i9.i.i.i.i.i.i = icmp samesign eq i64 %.sroa.5.0, 0
-  br i1 %.not.i9.i.i.i.i.i.i, label %_RNvXs2X_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str.exit.i, label %.lr.ph.i.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, label %_RNvXs2X_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str.exit.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.f
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
@@ -462,13 +461,12 @@ _RNvXs2X_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringNtNtCs3oUPovFnL
   tail call void @llvm.experimental.noalias.scope.decl(metadata !405)
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.011.0, i64 %.sroa.5.0 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !406)
-  %.not.i.i.i.i14.i = icmp ne i64 %.sroa.5.0, 0
+  %.not.i.i.i.i14.i = icmp ne i64 %.sroa.5.0, 0   ; 2 uses
   %i.do = zext i1 %.not.i.i.i.i14.i to i64
   tail call void @_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecmE7reserveCs4RW8js5ES7g_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.do), !noalias !407
   tail call void @llvm.experimental.noalias.scope.decl(metadata !408)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !409)
-  %.not.i9.i.i.i.i.i16.i = icmp samesign eq i64 %.sroa.5.0, 0
-  br i1 %.not.i9.i.i.i.i.i16.i, label %_RNvXs2X_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str.exit26.i, label %.lr.ph.i.i.i.i.i17.i
+  br i1 %.not.i.i.i.i14.i, label %.lr.ph.i.i.i.i.i17.i, label %_RNvXs2X_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str.exit26.i
 
 .lr.ph.i.i.i.i.i17.i:                             ; preds = %.critedge.i
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses

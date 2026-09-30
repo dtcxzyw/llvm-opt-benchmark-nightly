@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.a
   br i1 %i.an, label %bb.bt, label %bb.bu, !dbg !16736
 
 bb.k:                                             ; preds = %bb.d, %bb.f
-  %.sroa.3.0.i.ph = phi i64 [ %i.y, %bb.f ], [ %i.u, %bb.d ] ; 20 uses
+  %.sroa.3.0.i.ph = phi i64 [ %i.y, %bb.f ], [ %i.u, %bb.d ] ; 19 uses
   %.sroa.0.0.i.ph = phi ptr [ %i.aa, %bb.f ], [ %i.v, %bb.d ] ; 9 uses
     #dbg_value(ptr %.sroa.0.0.i.ph, !15948, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15954)
     #dbg_value(ptr %.sroa.0.0.i.ph, !15881, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15955)
@@ -366,7 +366,7 @@ bb.v:                                             ; preds = %.lr.ph.i.i.i
   %exitcond.not.i.i.i = icmp eq i64 %i.bn, %.sroa.3.0.i32, !dbg !16765
   br i1 %exitcond.not.i.i.i, label %_RNvXst_NtNtCsf3Ta7LF998c_4core3str7patternReNtB5_7Pattern15is_contained_in.exit, label %.lr.ph.i.i.i, !dbg !16765
 
-_RNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_contains.exit.i: ; preds = %bb.bc, %bb.bb, %bb.s
+_RNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_contains.exit.i: ; preds = %bb.bc, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !16766, !noalias !16037
   call void @_RNvMsu_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.0.i33, i64 noundef %.sroa.3.0.i32, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.0.i.ph, i64 noundef %.sroa.3.0.i.ph), !dbg !16767
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16038), !dbg !16768
@@ -769,7 +769,7 @@ bb.ba:                                            ; preds = %bb.s
   br i1 %i.iq, label %.thread.i.i, label %bb.bb, !dbg !16908
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.ir = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %.sroa.3.0.i.ph, i64 4), !dbg !16909 ; 2 uses
+  %i.ir = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %.sroa.3.0.i.ph, i64 4), !dbg !16909
     #dbg_value(ptr undef, !16499, !DIExpression(), !15622)
     #dbg_value(ptr %.sroa.0.0.i.ph, !16500, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15622)
     #dbg_value(i64 %.sroa.3.0.i.ph, !16500, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !15622)
@@ -784,19 +784,18 @@ bb.bb:                                            ; preds = %bb.ba
     #dbg_value(ptr undef, !16449, !DIExpression(), !15619)
     #dbg_value(ptr undef, !16446, !DIExpression(), !15618)
     #dbg_value(ptr undef, !16447, !DIExpression(), !15618)
-  %3 = icmp ult i64 %i.ir, %.sroa.3.0.i.ph, !dbg !16910
-  br i1 %3, label %.lr.ph146, label %_RNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_contains.exit.i, !dbg !16911
+  br label %.lr.ph146, !dbg !16910
 
 bb.bc:                                            ; preds = %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs5yXxDE1DkoT_4tera.exit.i.i.i
     #dbg_value(ptr undef, !16451, !DIExpression(), !15620)
     #dbg_value(ptr undef, !16449, !DIExpression(), !15619)
     #dbg_value(ptr undef, !16446, !DIExpression(), !15618)
     #dbg_value(ptr undef, !16447, !DIExpression(), !15618)
-  %i.is = icmp ult i64 %i.ir, %i.iu, !dbg !16910
-  br i1 %i.is, label %.lr.ph146, label %_RNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_contains.exit.i, !dbg !16911
+  %i.is = icmp ult i64 %i.ir, %i.iu, !dbg !16911
+  br i1 %i.is, label %.lr.ph146, label %_RNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_contains.exit.i, !dbg !16910
 
 .lr.ph146:                                        ; preds = %bb.bb, %bb.bc
-  %i.it = phi i64 [ %i.iu, %bb.bc ], [ %.sroa.3.0.i.ph, %bb.bb ]
+  %i.it = phi i64 [ %.sroa.3.0.i.ph, %bb.bb ], [ %i.iu, %bb.bc ]
     #dbg_value(i64 %i.it, !16545, !DIExpression(), !15659)
     #dbg_value(i64 %i.it, !16548, !DIExpression(), !15660)
     #dbg_value(i64 1, !16546, !DIExpression(), !15659)
@@ -1199,8 +1198,8 @@ begin_hunk_2_@llvm.smin.i128
 !16907 = !DILocation(line: 1905, column: 28, scope: !15567, inlinedAt: !15575)
 !16908 = !DILocation(line: 1908, column: 34, scope: !15568, inlinedAt: !15575)
 !16909 = !DILocation(line: 2570, column: 13, scope: !15633, inlinedAt: !15634)
-!16910 = !DILocation(line: 2224, column: 50, scope: !15594, inlinedAt: !15617)
-!16911 = !DILocation(line: 1142, column: 12, scope: !15595, inlinedAt: !15616)
+!16910 = !DILocation(line: 1142, column: 12, scope: !15595, inlinedAt: !15616)
+!16911 = !DILocation(line: 2224, column: 50, scope: !15594, inlinedAt: !15617)
 !16912 = !DILocation(line: 1222, column: 17, scope: !15655, inlinedAt: !15658)
 !16913 = !DILocation(line: 1915, column: 73, scope: !15666, inlinedAt: !15668)
 !16914 = !DILocation(line: 290, column: 21, scope: !15611, inlinedAt: !15614)

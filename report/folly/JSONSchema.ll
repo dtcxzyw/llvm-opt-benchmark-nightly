@@ -205,10 +205,10 @@ bb.dt:                                            ; preds = %_ZNKSt6vectorISt10u
   br label %common.resume
 
 bb.du:                                            ; preds = %_ZNSt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_122StringPatternValidatorESt14default_deleteIS3_EED2Ev.exit, %_ZNSt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_113SizeValidatorISt10less_equalIlEEESt14default_deleteIS6_EED2Ev.exit
-  %i.uk = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.45, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.45, i64 5)) ; 6 uses
-  %i.ul = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.46, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.46, i64 15)) ; 5 uses
-  %i.um = icmp ne ptr %i.uk, null
-  %i.un = icmp ne ptr %i.ul, null
+  %i.uk = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.45, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.45, i64 5)) ; 5 uses
+  %i.ul = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.46, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.46, i64 15)) ; 4 uses
+  %i.um = icmp ne ptr %i.uk, null                 ; 2 uses
+  %i.un = icmp ne ptr %i.ul, null                 ; 2 uses
   %or.cond = or i1 %i.um, %i.un
   br i1 %or.cond, label %bb.dv, label %bb.ev
 
@@ -223,8 +223,7 @@ bb.dv:                                            ; preds = %bb.du
   %i.ut = getelementptr inbounds nuw i8, ptr %i.up, i64 48 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.uq, i8 0, i64 40, i1 false)
   store i8 1, ptr %i.ut, align 8, !tbaa !8384, !noalias !11081
-  %.not.i663 = icmp eq ptr %i.uk, null
-  br i1 %.not.i663, label %.critedge.i, label %bb.dw
+  br i1 %i.um, label %bb.dw, label %.critedge.i
 
 bb.dw:                                            ; preds = %bb.dv
   %i.uu = load i32, ptr %i.uk, align 8, !tbaa !8339, !noalias !11081
@@ -543,8 +542,7 @@ bb.ek:                                            ; preds = %.critedge.i
   br label %bb.ep
 
 .loopexit1074:                                    ; preds = %_ZNSt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_115SchemaValidatorESt14default_deleteIS3_EED2Ev.exit66.i, %_ZNK5folly7dynamic3endEv.exit.i, %_ZNSt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_115SchemaValidatorESt14default_deleteIS3_EED2Ev.exit91.i
-  %.not29.i = icmp eq ptr %i.ul, null
-  br i1 %.not29.i, label %_ZSt11make_uniqueIN5folly10jsonschema12_GLOBAL__N_119ArrayItemsValidatorEJRNS2_22SchemaValidatorContextERPKNS0_7dynamicES9_EENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit, label %bb.el
+  br i1 %i.un, label %bb.el, label %_ZSt11make_uniqueIN5folly10jsonschema12_GLOBAL__N_119ArrayItemsValidatorEJRNS2_22SchemaValidatorContextERPKNS0_7dynamicES9_EENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
 
 bb.el:                                            ; preds = %.loopexit1074
   %i.xo = load i32, ptr %i.ul, align 8, !tbaa !8339, !noalias !11081
@@ -947,13 +945,13 @@ _ZNSt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_120ArrayUniqueValidatorESt14de
   br label %common.resume
 
 _ZNSt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_120ArrayUniqueValidatorESt14default_deleteIS3_EED2Ev.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_110IValidatorESt14default_deleteIS4_EESaIS7_EE17_M_realloc_insertIJS0_INS3_20ArrayUniqueValidatorES5_ISB_EEEEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i, %bb.fk, %_ZNSt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_113SizeValidatorISt10less_equalIlEEESt14default_deleteIS6_EED2Ev.exit380
-  %i.afr = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.50, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.50, i64 10)) ; 4 uses
-  %i.afs = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.51, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.51, i64 17)) ; 4 uses
-  %i.aft = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.52, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.52, i64 20)) ; 5 uses
-  %i.afu = icmp ne ptr %i.afr, null
-  %i.afv = icmp ne ptr %i.afs, null
+  %i.afr = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.50, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.50, i64 10)) ; 3 uses
+  %i.afs = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.51, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.51, i64 17)) ; 3 uses
+  %i.aft = call noundef ptr @_ZNKR5folly7dynamic7get_ptrENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr nonnull @.str.52, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.52, i64 20)) ; 4 uses
+  %i.afu = icmp ne ptr %i.afr, null               ; 2 uses
+  %i.afv = icmp ne ptr %i.afs, null               ; 2 uses
   %or.cond5 = or i1 %i.afu, %i.afv
-  %i.afw = icmp ne ptr %i.aft, null
+  %i.afw = icmp ne ptr %i.aft, null               ; 2 uses
   %or.cond7 = or i1 %or.cond5, %i.afw
   br i1 %or.cond7, label %bb.fo, label %bb.jg
 
@@ -977,8 +975,7 @@ bb.fo:                                            ; preds = %_ZNSt10unique_ptrIN
   %i.agh = getelementptr inbounds nuw i8, ptr %i.afy, i64 96 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.age, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.agh, align 8, !tbaa !9880, !noalias !11120
-  %.not.i677 = icmp eq ptr %i.afr, null
-  br i1 %.not.i677, label %.loopexit1058, label %bb.fp
+  br i1 %i.afu, label %bb.fp, label %.loopexit1058
 
 bb.fp:                                            ; preds = %bb.fo
   %i.agi = load i32, ptr %i.afr, align 8, !tbaa !8339, !noalias !11120
@@ -1381,8 +1378,7 @@ _ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S
   br i1 %.not1024, label %.loopexit1058, label %bb.fq
 
 .loopexit1058:                                    ; preds = %_ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S2_ESt20forward_iterator_tagEppEv.exit.i, %.critedge.i.i.i.i.i, %_ZNK5folly7dynamic5itemsEv.exit.i, %bb.fp, %bb.fo
-  %.not41.i = icmp eq ptr %i.afs, null
-  br i1 %.not41.i, label %.loopexit1049, label %bb.hi
+  br i1 %i.afv, label %bb.hi, label %.loopexit1049
 
 bb.hi:                                            ; preds = %.loopexit1058
   %i.alq = load i32, ptr %i.afs, align 8, !tbaa !8339, !noalias !11120
@@ -1785,8 +1781,7 @@ _ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S
   br i1 %.not1025, label %.loopexit1049, label %bb.hj
 
 .loopexit1049:                                    ; preds = %_ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S2_ESt20forward_iterator_tagEppEv.exit124.i, %.critedge.i.i.i.i118.i, %_ZNK5folly7dynamic5itemsEv.exit71.i, %bb.hi, %.loopexit1058
-  %.not42.i = icmp eq ptr %i.aft, null
-  br i1 %.not42.i, label %_ZSt11make_uniqueIN5folly10jsonschema12_GLOBAL__N_119PropertiesValidatorEJRNS2_22SchemaValidatorContextERPKNS0_7dynamicES9_S9_EENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit, label %bb.iw
+  br i1 %i.afw, label %bb.iw, label %_ZSt11make_uniqueIN5folly10jsonschema12_GLOBAL__N_119PropertiesValidatorEJRNS2_22SchemaValidatorContextERPKNS0_7dynamicES9_S9_EENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
 
 bb.iw:                                            ; preds = %.loopexit1049
   %i.arg = load i32, ptr %i.aft, align 8, !tbaa !8339, !noalias !11120

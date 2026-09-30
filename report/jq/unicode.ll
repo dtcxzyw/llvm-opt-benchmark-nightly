@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
   %storemerge = phi i32 [ %storemerge.pre, %bb.d ], [ %i.f, %bb.c ], [ %i.f, %bb.b ]
   store i32 %storemerge, ptr %i.b, align 4, !tbaa !22
-  %i.v = and i32 %1, 1073741824                   ; 2 uses
-  %i.w = icmp ne i32 %i.v, 0
+  %i.v = and i32 %1, 1073741824
+  %i.w = icmp ne i32 %i.v, 0                      ; 2 uses
   %i.x = icmp ult ptr %i.m, %3
   %or.cond364 = select i1 %i.w, i1 %i.x, i1 false
   br i1 %or.cond364, label %bb.f, label %bb.ae
@@ -609,8 +609,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %exitcond584.not, label %.thread, label %bb.aj, !llvm.loop !64
 
 bb.am:                                            ; preds = %bb.af
-  %.not362 = icmp eq i32 %i.v, 0
-  br i1 %.not362, label %.thread, label %bb.an
+  br i1 %i.w, label %bb.an, label %.thread
 
 bb.an:                                            ; preds = %bb.am
   %i.ko = icmp eq i16 %i.js, 2
@@ -1013,7 +1012,7 @@ bb.l:                                             ; preds = %bb.k
   br label %egcb_get_type.exit61.i
 
 egcb_get_type.exit61.i:                           ; preds = %bb.l, %bb.k, %bb.j
-  %i.aw = phi i32 [ %i.av, %bb.l ], [ 0, %bb.k ], [ 0, %bb.j ] ; 9 uses
+  %i.aw = phi i32 [ %i.av, %bb.l ], [ 0, %bb.k ], [ 0, %bb.j ] ; 8 uses
   %i.ax = icmp eq i32 %i.ag, 0
   %i.ay = icmp eq i32 %i.aw, 0
   %or.cond.i = select i1 %i.ax, i1 %i.ay, i1 false
@@ -1041,7 +1040,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.bf = icmp eq i32 %i.ag, 13
-  %i.bg = icmp ne i32 %i.aw, 16
+  %i.bg = icmp ne i32 %i.aw, 16                   ; 2 uses
   %or.cond11.i = select i1 %i.bf, i1 %i.bg, i1 false
   br i1 %or.cond11.i, label %unicode_egcb_is_break_2code.exit.thread, label %bb.q
 
@@ -1057,11 +1056,10 @@ bb.r:                                             ; preds = %bb.q, %bb.q
   br i1 %or.cond15.i, label %unicode_egcb_is_break_2code.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %5 = icmp eq i32 %i.aw, 16
-  %i.bi = add i32 %i.ag, -15
-  %or.cond17.i = icmp ult i32 %i.bi, 2
-  %or.cond54.i = select i1 %5, i1 %or.cond17.i, i1 false
-  br i1 %or.cond54.i, label %unicode_egcb_is_break_2code.exit.thread, label %egcb_get_type.exit.thread
+  %i.bi = add i32 %i.ag, -17
+  %or.cond17.i = icmp ult i32 %i.bi, -2
+  %or.cond54.i = select i1 %i.bg, i1 true, i1 %or.cond17.i
+  br i1 %or.cond54.i, label %egcb_get_type.exit.thread, label %unicode_egcb_is_break_2code.exit.thread
 
 bb.t:                                             ; preds = %bb.o
   switch i32 %i.aw, label %bb.u [

@@ -205,8 +205,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load i8, ptr %i.b, align 8, !range !20, !alias.scope !1089, !noundef !19
   %i.d = trunc nuw i8 %i.c to i1
-  %i.e = load ptr, ptr %0, align 8, !alias.scope !1089, !nonnull !19 ; 7 uses
-  %.not.i.i = icmp ne ptr %i.e, inttoptr (i64 16 to ptr)
+  %i.e = load ptr, ptr %0, align 8, !alias.scope !1089, !nonnull !19 ; 6 uses
+  %.not.i.i = icmp ne ptr %i.e, inttoptr (i64 16 to ptr) ; 2 uses
   %or.cond.not.i.i = select i1 %i.d, i1 %.not.i.i, i1 false
   br i1 %or.cond.not.i.i, label %bb.b, label %_RNvXsC_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs5PEMdK7bMAG_12typst_syntax.exit.i
 
@@ -229,8 +229,7 @@ bb.c:                                             ; preds = %bb.b
           to label %common.resume.i unwind label %bb.h, !noalias !1088
 
 _RNvXsC_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs5PEMdK7bMAG_12typst_syntax.exit.i: ; preds = %bb.a
-  %.not.i.i.i.i = icmp eq ptr %i.e, inttoptr (i64 16 to ptr)
-  br i1 %.not.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec8IntoIterNtNtBG_6string9EcoStringEECs5PEMdK7bMAG_12typst_syntax.exit, label %_RNvXsC_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs5PEMdK7bMAG_12typst_syntax.exit._RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtBN_6string9EcoStringENtNtNtB5_3ops4drop4Drop4drop0ECs5PEMdK7bMAG_12typst_syntax.exit.i.i_crit_edge.i
+  br i1 %.not.i.i, label %_RNvXsC_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs5PEMdK7bMAG_12typst_syntax.exit._RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtBN_6string9EcoStringENtNtNtB5_3ops4drop4Drop4drop0ECs5PEMdK7bMAG_12typst_syntax.exit.i.i_crit_edge.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec8IntoIterNtNtBG_6string9EcoStringEECs5PEMdK7bMAG_12typst_syntax.exit
 
 _RNvXsC_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs5PEMdK7bMAG_12typst_syntax.exit._RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtBN_6string9EcoStringENtNtNtB5_3ops4drop4Drop4drop0ECs5PEMdK7bMAG_12typst_syntax.exit.i.i_crit_edge.i: ; preds = %_RNvXsC_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs5PEMdK7bMAG_12typst_syntax.exit.i
   %.val16.in.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -633,7 +632,7 @@ bb.g:                                             ; preds = %bb.f
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.av = load i32, ptr %i.au, align 8, !noalias !1789, !noundef !19 ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  %i.ax = load i32, ptr %i.aw, align 4, !noalias !1789, !noundef !19 ; 4 uses
+  %i.ax = load i32, ptr %i.aw, align 4, !noalias !1789, !noundef !19 ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.az = load i32, ptr %i.ay, align 8, !noalias !1789, !noundef !19 ; 3 uses
   store i32 %i.av, ptr %i.e, align 4, !alias.scope !1789
@@ -651,8 +650,8 @@ bb.h:                                             ; preds = %bb.g
   %i.bf = load i32, ptr %i.f, align 4, !range !47, !alias.scope !1790, !noalias !1791, !noundef !19
   %i.bg = trunc nuw i32 %i.bf to i1               ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %i.bi = load i32, ptr %i.bh, align 4            ; 3 uses
-  %i.bj = icmp ne i32 %i.ax, %i.bi
+  %i.bi = load i32, ptr %i.bh, align 4            ; 2 uses
+  %i.bj = icmp ne i32 %i.ax, %i.bi                ; 2 uses
   %or.cond.not = select i1 %i.bg, i1 %i.bj, i1 false
   br i1 %or.cond.not, label %.thread.i, label %bb.i
 
@@ -667,8 +666,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bn, label %_RNvMs9_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_14PackageVersion10matches_ge.exit.thread, label %_RNvMs9_NtCs5PEMdK7bMAG_12typst_syntax7packageNtB5_14PackageVersion10matches_ge.exit.thread82
 
 .thread.i:                                        ; preds = %bb.h, %bb.k
-  %.not6.i.i = icmp eq i32 %i.ax, %i.bi
-  br i1 %.not6.i.i, label %bb.j, label %.split84
+  br i1 %i.bj, label %.split84, label %bb.j
 
 bb.j:                                             ; preds = %.thread.i
   %i.bo = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -1071,9 +1069,10 @@ _RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser12next_nesting.exit.i: ; preds = %bb.
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.df, %.thread455.i
+  %9 = phi i1 [ false, %bb.df ], [ true, %._crit_edge.loopexit.i ], [ false, %.thread455.i ]
   %i.qk = phi ptr [ %i.mg, %bb.df ], [ %i.mg, %._crit_edge.loopexit.i ], [ %.sroa.0.0.i.i58, %.thread455.i ]
   %.idx459.i = phi i64 [ 0, %bb.df ], [ %.idx.i, %._crit_edge.loopexit.i ], [ 0, %.thread455.i ]
-  %.sroa.07.1166458.i = phi i64 [ 0, %bb.df ], [ %..sroa.07.0.i, %._crit_edge.loopexit.i ], [ 0, %.thread455.i ] ; 4 uses
+  %.sroa.07.1166458.i = phi i64 [ 0, %bb.df ], [ %..sroa.07.0.i, %._crit_edge.loopexit.i ], [ 0, %.thread455.i ] ; 3 uses
   %i.ql = phi i1 [ true, %bb.df ], [ %i.qj, %._crit_edge.loopexit.i ], [ true, %.thread455.i ]
   %i.qm = phi i64 [ 0, %bb.df ], [ %i.qg, %._crit_edge.loopexit.i ], [ 0, %.thread455.i ] ; 2 uses
   %.sroa.0141.0.lcssa.i = phi i8 [ 1, %bb.df ], [ %storemerge.i.i, %._crit_edge.loopexit.i ], [ 1, %.thread455.i ] ; 3 uses
@@ -1476,7 +1475,6 @@ bb.fl:                                            ; preds = %_RNvNtCs5PEMdK7bMAG
   br i1 %i.up, label %bb.fm, label %.critedge.i
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs5PEMdK7bMAG_12typst_syntax4node10SyntaxNodeEEB1c_.exit140.i: ; preds = %bb.fu, %_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs5PEMdK7bMAG_12typst_syntax4node10SyntaxNodeENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBJ_.exit.i138.i, %_RNvNtCs5PEMdK7bMAG_12typst_syntax6parser14reparse_markup.exit.i, %_RNvNtCs5PEMdK7bMAG_12typst_syntax6parser14reparse_markup.exit.thread.i
-  %9 = icmp ne i64 %.sroa.07.1166458.i, 0
   %brmerge4.i = select i1 %9, i1 true, i1 %i.up
   br i1 %brmerge4.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs5PEMdK7bMAG_12typst_syntax4node10SyntaxNodeEEB1c_.exit.i, label %bb.fx
 

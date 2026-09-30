@@ -205,11 +205,10 @@ _ZNSt8__detail13__to_chars_16IjEENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINS
   br label %.thread91
 
 bb.q:                                             ; preds = %bb.d
-  %.not49 = icmp ne i32 %1, 0                     ; 2 uses
+  %.not49 = icmp ne i32 %1, 0                     ; 3 uses
   %spec.select = select i1 %.not49, ptr @.str.112, ptr null ; 2 uses
   %spec.select96 = zext i1 %.not49 to i64         ; 2 uses
-  %3 = icmp eq i32 %1, 0
-  br i1 %3, label %.loopexit.sink.split, label %bb.r
+  br i1 %.not49, label %bb.r, label %.loopexit.sink.split
 
 bb.r:                                             ; preds = %bb.q
   %i.bz = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.045, i1 true)
@@ -612,11 +611,10 @@ _ZNSt8__detail13__to_chars_16ImEENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINS
   br label %.thread94
 
 bb.p:                                             ; preds = %bb.d
-  %.not49 = icmp ne i64 %1, 0                     ; 2 uses
+  %.not49 = icmp ne i64 %1, 0                     ; 3 uses
   %spec.select = select i1 %.not49, ptr @.str.112, ptr null ; 2 uses
   %spec.select99 = zext i1 %.not49 to i64         ; 2 uses
-  %3 = icmp eq i64 %1, 0
-  br i1 %3, label %.loopexit.sink.split, label %bb.q
+  br i1 %.not49, label %bb.q, label %.loopexit.sink.split
 
 bb.q:                                             ; preds = %bb.p
   %i.bw = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.045, i1 true)
@@ -1019,11 +1017,10 @@ _ZNSt8__detail13__to_chars_16IoEENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINS
   br label %.thread94
 
 bb.q:                                             ; preds = %bb.d
-  %.not49 = icmp ne i128 %1, 0                    ; 2 uses
+  %.not49 = icmp ne i128 %1, 0                    ; 3 uses
   %spec.select = select i1 %.not49, ptr @.str.112, ptr null ; 2 uses
   %spec.select99 = zext i1 %.not49 to i64         ; 2 uses
-  %3 = icmp eq i128 %1, 0
-  br i1 %3, label %.loopexit.sink.split, label %bb.r
+  br i1 %.not49, label %bb.r, label %.loopexit.sink.split
 
 bb.r:                                             ; preds = %bb.q
   %i.cd = lshr i128 %.045, 64                     ; 2 uses

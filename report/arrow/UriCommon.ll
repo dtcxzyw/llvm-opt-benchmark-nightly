@@ -53,16 +53,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr %0, align 8, !tbaa !55     ; 4 uses
-  %2 = icmp eq ptr %i.e, null
+  %i.e = load ptr, ptr %0, align 8, !tbaa !55     ; 3 uses
+  %2 = icmp ne ptr %i.e, null                     ; 2 uses
   %.pre = load ptr, ptr %1, align 8, !tbaa !55    ; 4 uses
-  %3 = icmp eq ptr %.pre, null
-  %or.cond37 = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond37, label %bb.d, label %bb.e
+  %3 = icmp ne ptr %.pre, null
+  %or.cond37 = select i1 %2, i1 %3, i1 false
+  br i1 %or.cond37, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = icmp ne ptr %i.e, null
-  %i.f = zext i1 %4 to i32
+  %i.f = zext i1 %2 to i32
   %i.g = icmp ne ptr %.pre, null
   %.neg29 = sext i1 %i.g to i32
   %i.h = add nsw i32 %.neg29, %i.f
@@ -465,16 +464,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr %0, align 8, !tbaa !61     ; 4 uses
-  %2 = icmp eq ptr %i.e, null
+  %i.e = load ptr, ptr %0, align 8, !tbaa !61     ; 3 uses
+  %2 = icmp ne ptr %i.e, null                     ; 2 uses
   %.pre = load ptr, ptr %1, align 8, !tbaa !61    ; 4 uses
-  %3 = icmp eq ptr %.pre, null
-  %or.cond35 = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond35, label %bb.d, label %bb.e
+  %3 = icmp ne ptr %.pre, null
+  %or.cond35 = select i1 %2, i1 %3, i1 false
+  br i1 %or.cond35, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = icmp ne ptr %i.e, null
-  %i.f = zext i1 %4 to i32
+  %i.f = zext i1 %2 to i32
   %i.g = icmp ne ptr %.pre, null
   %.neg = sext i1 %i.g to i32
   %i.h = add nsw i32 %.neg, %i.f

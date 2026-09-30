@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br label %_ZN3fmt3v126detail12write_paddedIcLNS0_5alignE2ENS0_14basic_appenderIcEERZNS1_14do_write_floatIcNS1_14digit_groupingIcEES5_NS1_9dragonbox10decimal_fpIfEEEET1_SC_RKT2_RKNS0_12format_specsENS0_4signEiNS0_10locale_refEEUlS5_E_EESC_SC_SI_mOSD_.exit
 
 bb.f:                                             ; preds = %bb.c, %bb.d
-  %.not51 = icmp ne i32 %3, 0
+  %.not51 = icmp ne i32 %3, 0                     ; 3 uses
   %i.ae = zext i1 %.not51 to i64
   %i.af = add nuw nsw i64 %i.o, %i.ae
   %sext = shl i64 %i.af, 32
@@ -291,8 +291,7 @@ bb.l:                                             ; preds = %_ZN3fmt3v126detail7
 
 bb.m:                                             ; preds = %bb.l, %_ZN3fmt3v126detail7reserveIcEENS0_14basic_appenderIT_EES5_m.exit.i.i
   %.sroa.09.0.i.i = phi ptr [ %i.ca, %bb.l ], [ %0, %_ZN3fmt3v126detail7reserveIcEENS0_14basic_appenderIT_EES5_m.exit.i.i ] ; 6 uses
-  %.not.i53 = icmp eq i32 %3, 0
-  br i1 %.not.i53, label %bb.p, label %bb.n
+  br i1 %.not51, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m
   %i.cb = shl nsw i32 %3, 3
@@ -409,8 +408,7 @@ bb.v:                                             ; preds = %bb.u
   br label %_ZN3fmt3v126detail7reserveIcEENS0_14basic_appenderIT_EES5_m.exit
 
 _ZN3fmt3v126detail7reserveIcEENS0_14basic_appenderIT_EES5_m.exit: ; preds = %bb.u, %bb.v
-  %.not.i = icmp eq i32 %3, 0
-  br i1 %.not.i, label %bb.y, label %bb.w
+  br i1 %.not51, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %_ZN3fmt3v126detail7reserveIcEENS0_14basic_appenderIT_EES5_m.exit
   %i.dx = shl nsw i32 %3, 3

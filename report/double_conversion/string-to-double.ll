@@ -204,11 +204,11 @@ _ZN17double_conversionL7AdvanceIPKcEEbPT_tiRS3_.exit290: ; preds = %bb.bj, %bb.b
   %.0185.lcssa = phi i32 [ 0, %.critedge227 ], [ %.1186, %.backedge414 ] ; 6 uses
   %.0174.lcssa = phi i1 [ false, %.critedge227 ], [ %.1175, %.backedge414 ] ; 4 uses
   %.0171.lcssa = phi i32 [ 0, %.critedge227 ], [ %.1172, %.backedge414 ] ; 10 uses
-  %.0166.lcssa = phi i32 [ 0, %.critedge227 ], [ %.1167, %.backedge414 ] ; 5 uses
+  %.0166.lcssa = phi i32 [ 0, %.critedge227 ], [ %.1167, %.backedge414 ] ; 4 uses
   %.lcssa = phi i8 [ %i.hm, %.critedge227 ], [ %i.ik, %.backedge414 ]
   store ptr %.lcssa456, ptr %i.b, align 8
-  %5 = icmp eq i32 %.0166.lcssa, 0                ; 2 uses
-  %spec.select = select i1 %5, i8 0, i8 %.0192.lcssa ; 6 uses
+  %5 = icmp ne i32 %.0166.lcssa, 0                ; 3 uses
+  %spec.select = select i1 %5, i8 %.0192.lcssa, i8 0 ; 6 uses
   %i.jb = icmp eq i8 %.lcssa, 46
   br i1 %i.jb, label %bb.bk, label %.critedge11
 
@@ -233,8 +233,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.jh, label %bb.bo, label %bb.bq
 
 bb.bo:                                            ; preds = %bb.bn
-  %6 = icmp ne i32 %.0166.lcssa, 0
-  %or.cond9 = or i1 %i.ec, %6
+  %or.cond9 = or i1 %i.ec, %5
   br i1 %or.cond9, label %_ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit315.thread390, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
@@ -245,9 +244,9 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bn
   %.promoted474.pre = load ptr, ptr %i.b, align 8, !tbaa !16 ; 2 uses
   %i.jk = load i8, ptr %.promoted474.pre, align 1, !tbaa !23 ; 2 uses
-  %7 = icmp eq i8 %i.jk, 48
-  %or.cond649 = select i1 %5, i1 %7, i1 false
-  br i1 %or.cond649, label %.lr.ph472, label %.loopexit
+  %6 = icmp ne i8 %i.jk, 48
+  %or.cond649 = select i1 %5, i1 true, i1 %6
+  br i1 %or.cond649, label %.loopexit, label %.lr.ph472
 
 .lr.ph472:                                        ; preds = %bb.bq, %bb.bs
   %.0157471 = phi i32 [ %i.js, %bb.bs ], [ 0, %bb.bq ]
@@ -650,11 +649,11 @@ _ZN17double_conversionL7AdvanceIPKtEEbPT_tiRS3_.exit290: ; preds = %bb.bj, %bb.b
   %.0185.lcssa = phi i32 [ 0, %.critedge227 ], [ %.1186, %.backedge414 ] ; 6 uses
   %.0174.lcssa = phi i1 [ false, %.critedge227 ], [ %.1175, %.backedge414 ] ; 4 uses
   %.0171.lcssa = phi i32 [ 0, %.critedge227 ], [ %.1172, %.backedge414 ] ; 10 uses
-  %.0166.lcssa = phi i32 [ 0, %.critedge227 ], [ %.1167, %.backedge414 ] ; 5 uses
+  %.0166.lcssa = phi i32 [ 0, %.critedge227 ], [ %.1167, %.backedge414 ] ; 4 uses
   %.lcssa = phi i16 [ %i.gr, %.critedge227 ], [ %i.hp, %.backedge414 ]
   store ptr %.lcssa456, ptr %i.a, align 8
-  %5 = icmp eq i32 %.0166.lcssa, 0                ; 2 uses
-  %spec.select = select i1 %5, i8 0, i8 %.0192.lcssa ; 6 uses
+  %5 = icmp ne i32 %.0166.lcssa, 0                ; 3 uses
+  %spec.select = select i1 %5, i8 %.0192.lcssa, i8 0 ; 6 uses
   %i.ib = icmp eq i16 %.lcssa, 46
   br i1 %i.ib, label %bb.bk, label %.critedge11
 
@@ -679,8 +678,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.ih, label %bb.bo, label %bb.bq
 
 bb.bo:                                            ; preds = %bb.bn
-  %6 = icmp ne i32 %.0166.lcssa, 0
-  %or.cond9 = or i1 %i.dw, %6
+  %or.cond9 = or i1 %i.dw, %5
   br i1 %or.cond9, label %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit315.thread390, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
@@ -691,9 +689,9 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bn
   %.promoted474.pre = load ptr, ptr %i.a, align 8, !tbaa !40 ; 2 uses
   %i.ik = load i16, ptr %.promoted474.pre, align 2, !tbaa !41 ; 2 uses
-  %7 = icmp eq i16 %i.ik, 48
-  %or.cond647 = select i1 %5, i1 %7, i1 false
-  br i1 %or.cond647, label %.lr.ph472, label %.loopexit
+  %6 = icmp ne i16 %i.ik, 48
+  %or.cond647 = select i1 %5, i1 true, i1 %6
+  br i1 %or.cond647, label %.loopexit, label %.lr.ph472
 
 .lr.ph472:                                        ; preds = %bb.bq, %bb.bs
   %.0157471 = phi i32 [ %i.it, %bb.bs ], [ 0, %bb.bq ]
