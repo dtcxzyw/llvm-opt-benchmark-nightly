@@ -205,7 +205,6 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20260
   br i1 %.not45105, label %.thread, label %.lr.ph110
 
 ._crit_edge111:                                   ; preds = %_ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE9push_backERKS4_.exit
-  %.not = icmp eq ptr %.sroa.0.1, %.sroa.11.1
   %i.av = icmp ult ptr %.sroa.0.1, %.pn81
   br i1 %i.av, label %.lr.ph.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit
 
@@ -307,20 +306,19 @@ _ZNSt6vectorIPN13sentencepiece7unigram7Lattice4NodeESaIS4_EE9push_backERKS4_.exi
 _ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit: ; preds = %.lr.ph.i.i, %._crit_edge111
   %i.bq = ptrtoint ptr %.sroa.11.1 to i64
   %i.br = ptrtoint ptr %.sroa.0.1 to i64          ; 5 uses
-  %i.bs = sub i64 %i.bq, %i.br                    ; 7 uses
+  %i.bs = sub i64 %i.bq, %i.br                    ; 6 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 0, i64 24, i1 false)
+  %.not = icmp eq ptr %.sroa.0.1, %.sroa.11.1
   br i1 %.not, label %.thread, label %bb.l
 
 .thread:                                          ; preds = %.critedge50, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit
-  %3 = phi i64 [ %i.bs, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit ], [ 0, %.critedge50 ]
   %i.bt = phi i64 [ %i.br, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit ], [ 0, %.critedge50 ]
   %.sroa.0.0.lcssa133143.a = phi ptr [ %.sroa.0.1, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit ], [ null, %.critedge50 ]
   %.sroa.17.0.lcssa135141.a = phi ptr [ %.sroa.17.1, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit ], [ null, %.critedge50 ]
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = getelementptr inbounds i8, ptr null, i64 %3 ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
-  store ptr %4, ptr %i.bv, align 8, !tbaa !53
+  store ptr null, ptr %i.bv, align 8, !tbaa !53
   br label %bb.p
 
 bb.l:                                             ; preds = %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPPN13sentencepiece7unigram7Lattice4NodeESt6vectorIS6_SaIS6_EEEEEvT_SC_.exit
@@ -373,7 +371,7 @@ bb.p:                                             ; preds = %bb.n, %bb.m, %.thre
   %i.cg = phi i64 [ %i.br, %bb.m ], [ %i.br, %bb.n ], [ %i.bt, %.thread ]
   %.sroa.0.0.lcssa133142 = phi ptr [ %.sroa.0.1, %bb.m ], [ %.sroa.0.1, %bb.n ], [ %.sroa.0.0.lcssa133143.a, %.thread ] ; 2 uses
   %.sroa.17.0.lcssa135140 = phi ptr [ %.sroa.17.1, %bb.m ], [ %.sroa.17.1, %bb.n ], [ %.sroa.17.0.lcssa135141.a, %.thread ]
-  %i.ch = phi ptr [ %i.bz, %bb.m ], [ %i.bz, %bb.n ], [ %4, %.thread ]
+  %i.ch = phi ptr [ %i.bz, %bb.m ], [ %i.bz, %bb.n ], [ null, %.thread ]
   %i.ci = phi ptr [ %i.by, %bb.m ], [ %i.by, %bb.n ], [ %i.bu, %.thread ]
   store ptr %i.ch, ptr %i.ci, align 8, !tbaa !83
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 24

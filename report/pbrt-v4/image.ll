@@ -205,11 +205,7 @@ _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.ex
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !38 ; 3 uses
   %i.bd = sub i32 1, %i.bc                        ; 2 uses
   %i.be = icmp slt i32 %i.bd, %i.bc
-  br i1 %i.be, label %.lr.ph183.preheader.i.i.i, label %._crit_edge184.thread.i.i.i
-
-._crit_edge184.thread.i.i.i:                      ; preds = %.loopexit123.i.i.i
-  %7 = icmp ne i64 %i.an, 0
-  br label %.loopexit122.i.i.i
+  br i1 %i.be, label %.lr.ph183.preheader.i.i.i, label %.loopexit122.i.i.i
 
 .lr.ph183.preheader.i.i.i:                        ; preds = %.loopexit123.i.i.i
   %i.bf = trunc nuw nsw i64 %indvars.iv206.i.i.i to i32
@@ -217,7 +213,7 @@ _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.ex
 
 ._crit_edge184.i.i.i:                             ; preds = %.loopexit.i.i.i
   %i.bg = fcmp ogt float %.4.i.i.i, 0.000000e+00
-  %i.bh = icmp ne i64 %i.an, 0                    ; 2 uses
+  %i.bh = icmp ne i64 %i.an, 0
   %or.cond.i.i.i = select i1 %i.bg, i1 %i.bh, i1 false
   br i1 %or.cond.i.i.i, label %iter.check, label %.loopexit122.i.i.i
 
@@ -620,9 +616,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %exitcond205.not.i.i.i = icmp eq i64 %indvars.iv.next203.i.i.i, %i.an
   br i1 %exitcond205.not.i.i.i, label %.loopexit122.i.i.i, label %vec.epilog.scalar.ph, !llvm.loop !2375
 
-.loopexit122.i.i.i:                               ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %._crit_edge184.i.i.i, %._crit_edge184.thread.i.i.i
-  %8 = phi i1 [ %7, %._crit_edge184.thread.i.i.i ], [ %i.bh, %._crit_edge184.i.i.i ], [ true, %middle.block ], [ true, %vec.epilog.middle.block ], [ true, %vec.epilog.scalar.ph ]
-  %i.jd = phi ptr [ %i.az, %._crit_edge184.thread.i.i.i ], [ %i.iw, %._crit_edge184.i.i.i ], [ %i.bi, %middle.block ], [ %i.bi, %vec.epilog.middle.block ], [ %i.bi, %vec.epilog.scalar.ph ]
+.loopexit122.i.i.i:                               ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %._crit_edge184.i.i.i, %.loopexit123.i.i.i
+  %i.jd = phi ptr [ %i.az, %.loopexit123.i.i.i ], [ %i.iw, %._crit_edge184.i.i.i ], [ %i.bi, %middle.block ], [ %i.bi, %vec.epilog.middle.block ], [ %i.bi, %vec.epilog.scalar.ph ]
   %i.je = load ptr, ptr %i.ab, align 8, !tbaa !2387, !nonnull !53, !align !214 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
   store i64 %i.an, ptr %i.a, align 8, !tbaa !47
@@ -646,8 +641,9 @@ bb.y:                                             ; preds = %.loopexit122.i.i.i
 bb.z:                                             ; preds = %.loopexit122.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #32
+  %.not214.i.i.i = icmp eq i64 %i.an, 0
   %.pre215.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !160 ; 5 uses
-  br i1 %8, label %.lr.ph.preheader.i.i.i.i, label %_ZN4pbrt5Image11SetChannelsENS_6Point2IiEERKNS_18ImageChannelValuesE.exit.i.i.i
+  br i1 %.not214.i.i.i, label %_ZN4pbrt5Image11SetChannelsENS_6Point2IiEERKNS_18ImageChannelValuesE.exit.i.i.i, label %.lr.ph.preheader.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %bb.z
   %.not.i.i96.i.i.i = icmp eq ptr %.pre215.i.i.i, null

@@ -202,12 +202,10 @@ bb.t:                                             ; preds = %bb.s, %bb.n
   store i64 -9223372036854775789, ptr %i.d, align 8
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs53gkmrwjETj_4tiff5error9TiffErrorEBF_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %4 = lshr i64 %i.at, 3
   %i.au = and i64 %i.at, 7
-  %.not248 = icmp eq i64 %i.au, 0                 ; 2 uses
-  %not..not248 = xor i1 %.not248, true
-  %5 = zext i1 %not..not248 to i64
-  %.sroa.077.0 = add nuw nsw i64 %4, %5
+  %.not248 = icmp eq i64 %i.au, 0
+  %4 = add nuw nsw i64 %i.at, 7
+  %.sroa.077.0 = lshr i64 %4, 3
   %i.av = zext i32 %2 to i64
   %i.aw = mul nuw nsw i64 %i.ao, %i.av
   %i.ax = mul nuw nsw i64 %i.aw, %.sroa.017.0

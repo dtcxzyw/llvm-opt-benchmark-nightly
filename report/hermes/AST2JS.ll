@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b, %tailrecurse
 bb.d:                                             ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %.tr145, i64 16
   %i.e = load i32, ptr %i.d, align 8, !tbaa !35   ; 8 uses
-  %.not89.not133 = icmp eq ptr %.tr145, null      ; 6 uses
+  %.not89.not133 = icmp eq ptr %.tr145, null      ; 5 uses
   %i.f = add i32 %i.e, -53
   %.not90.not155 = icmp ult i32 %i.f, -2
   %i.g = and i32 %i.e, -3
@@ -252,9 +252,8 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not97.not, label %bb.k, label %tailrecurse.backedge
 
 bb.k:                                             ; preds = %bb.j
-  %4 = icmp ne i32 %i.e, 74
-  %.not98.not.not.not = or i1 %4, %.not89.not133
-  br i1 %.not98.not.not.not, label %.thread125, label %bb.l
+  %4 = icmp eq i32 %i.e, 74
+  br i1 %4, label %bb.l, label %.thread125
 
 bb.l:                                             ; preds = %bb.k
   %i.u = getelementptr inbounds nuw i8, ptr %.tr145, i64 48

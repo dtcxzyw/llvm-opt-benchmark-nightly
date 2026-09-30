@@ -202,7 +202,7 @@ bb.ar:                                            ; preds = %bb.ao, %bb.ap
 
 ._crit_edge:                                      ; preds = %.critedge
   %i.da = select i1 %.1162, i32 125, i32 61
-  %i.db = icmp ne i32 %.3178, 3                   ; 2 uses
+  %i.db = icmp ne i32 %.3178, 3
   %or.cond13 = select i1 %.1164, i1 %i.db, i1 false
   br i1 %or.cond13, label %bb.as, label %._crit_edge.thread
 
@@ -212,10 +212,9 @@ bb.as:                                            ; preds = %._crit_edge
   br label %.thread265
 
 ._crit_edge.thread:                               ; preds = %._crit_edge.i.i, %._crit_edge
-  %24 = phi i1 [ %i.db, %._crit_edge ], [ true, %._crit_edge.i.i ]
   %.0161.lcssa521 = phi i32 [ %i.da, %._crit_edge ], [ 61, %._crit_edge.i.i ]
   %.0163.lcssa520 = phi i1 [ %.1164, %._crit_edge ], [ false, %._crit_edge.i.i ]
-  %.0175.lcssa519 = phi i32 [ %.3178, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 3 uses
+  %.0175.lcssa519 = phi i32 [ %.3178, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 4 uses
   %.0180.lcssa518 = phi i32 [ %.3183, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 2 uses
   %.0185.lcssa517 = phi i32 [ %.1186, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 8 uses
   %i.dd = load i8, ptr @_ZN5FFlag20DebugLuauTimeTracingE, align 8, !tbaa !212, !range !64, !noundef !65
@@ -264,7 +263,7 @@ bb.av:                                            ; preds = %bb.au
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ed, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %21, i8 0, i64 24, i1 false)
-  %.not = xor i1 %24, true
+  %.not = icmp eq i32 %.0175.lcssa519, 3
   %i.ee = icmp ugt i32 %.0175.lcssa519, 1         ; 2 uses
   br i1 %i.ee, label %bb.aw, label %_ZNSt6vectorI12CompileStatsSaIS0_EE7reserveEm.exit
 

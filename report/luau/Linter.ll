@@ -205,7 +205,7 @@ bb.a:
   %i.e = load i32, ptr @_ZN4Luau7AstRttiINS_13AstExprGlobalEE5valueE, align 4, !tbaa !30
   %i.f = icmp ne i32 %i.d, %i.e
   %.not.not11 = icmp eq ptr %i.b, null
-  %.not.not = or i1 %.not.not11, %i.f             ; 2 uses
+  %.not.not = or i1 %i.f, %.not.not11             ; 2 uses
   br i1 %.not.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load i32, ptr %i.e, align 8, !tbaa !308  ; 2 uses
   %i.g = load i32, ptr @_ZN4Luau7AstRttiINS_21AstExprConstantNumberEE5valueE, align 4, !tbaa !30 ; 2 uses
-  %i.h = icmp eq i32 %i.f, %i.g
+  %i.h = icmp eq i32 %i.f, %i.g                   ; 2 uses
   %i.i = load i32, ptr @_ZN4Luau7AstRttiINS_12AstExprUnaryEE5valueE, align 4, !tbaa !30 ; 2 uses
   %i.j = icmp ne i32 %i.f, %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -626,7 +626,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 20
   %i.u = load i64, ptr %i.t, align 4, !tbaa !30
   store i64 %i.u, ptr %i.s, align 8, !tbaa !30
-  %.not4852 = icmp eq ptr %i.d, null              ; 2 uses
+  %.not4852 = icmp eq ptr %i.d, null
   %.not48 = or i1 %.not4852, %i.j                 ; 2 uses
   br i1 %.not48, label %bb.f, label %bb.c
 
@@ -651,10 +651,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.r
 
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.not4852.not = xor i1 %.not4852, true
-  %3 = and i1 %i.h, %.not4852.not                 ; 2 uses
   %i.ae = icmp ne ptr %..i50, null                ; 2 uses
-  %or.cond3 = and i1 %3, %i.ae
+  %or.cond3 = and i1 %i.h, %i.ae
   br i1 %or.cond3, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f
@@ -685,7 +683,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.r
 
 .critedge:                                        ; preds = %bb.f, %bb.i
-  %or.cond7 = and i1 %3, %i.p
+  %or.cond7 = and i1 %i.h, %i.p
   br i1 %or.cond7, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %.critedge
