@@ -204,26 +204,26 @@ _ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit:
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.p = load ptr, ptr %i.i, align 8, !tbaa !68, !noalias !108
   store ptr %i.p, ptr %i.j, align 8, !tbaa !68
+  %2 = load <2 x i32>, ptr %i.n, align 8, !tbaa !18, !noalias !108
   store ptr %i.m, ptr %i.i, align 8, !tbaa !68
-  %2 = load <2 x i32>, ptr %i.k, align 8, !tbaa !18, !noalias !107
-  %i.q = load <2 x i32>, ptr %i.n, align 8, !tbaa !18, !noalias !108
-  store <2 x i32> %i.q, ptr %i.k, align 8, !tbaa !18
-  store <2 x i32> %2, ptr %i.n, align 8, !tbaa !18
+  %i.q = load <2 x i32>, ptr %i.k, align 8, !tbaa !18, !noalias !107
+  store <2 x i32> %2, ptr %i.k, align 8, !tbaa !18
+  store <2 x i32> %i.q, ptr %i.n, align 8, !tbaa !18
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.v = load <2 x ptr>, ptr %i.l, align 8, !tbaa !26, !noalias !38
-  %i.w = load <2 x ptr>, ptr %i.o, align 8, !tbaa !26, !noalias !38
-  store <2 x ptr> %i.w, ptr %i.l, align 8, !tbaa !26
-  store <2 x ptr> %i.v, ptr %i.o, align 8, !tbaa !26
-  %i.x = load ptr, ptr %i.s, align 8, !tbaa !67, !noalias !109
-  %i.y = load ptr, ptr %i.u, align 8, !tbaa !67, !noalias !110
+  %i.v = load <2 x ptr>, ptr %i.o, align 8, !tbaa !26, !noalias !38
+  %3 = load <2 x i32>, ptr %i.t, align 8, !tbaa !18, !noalias !109
+  %i.w = load <2 x ptr>, ptr %i.l, align 8, !tbaa !26, !noalias !38
+  store <2 x ptr> %i.v, ptr %i.l, align 8, !tbaa !26
+  store <2 x ptr> %i.w, ptr %i.o, align 8, !tbaa !26
+  %i.x = load ptr, ptr %i.s, align 8, !tbaa !67, !noalias !110
+  %i.y = load ptr, ptr %i.u, align 8, !tbaa !67, !noalias !109
   store ptr %i.y, ptr %i.s, align 8, !tbaa !67
-  %3 = load <2 x i32>, ptr %i.r, align 8, !tbaa !18, !noalias !109
-  %i.z = load <2 x i32>, ptr %i.t, align 8, !tbaa !18, !noalias !110
-  store <2 x i32> %i.z, ptr %i.r, align 8, !tbaa !18
-  store <2 x i32> %3, ptr %i.t, align 8, !tbaa !18
+  %i.z = load <2 x i32>, ptr %i.r, align 8, !tbaa !18, !noalias !110
+  store <2 x i32> %3, ptr %i.r, align 8, !tbaa !18
+  store <2 x i32> %i.z, ptr %i.t, align 8, !tbaa !18
   store ptr %i.x, ptr %i.u, align 8, !tbaa !67
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses

@@ -204,14 +204,12 @@ vector.body:                                      ; preds = %vector.main.loop.it
   %wide.load = load <16 x i8>, ptr %i.n, align 1, !tbaa !56, !alias.scope !82
   %i.o = uitofp <16 x i8> %wide.load to <16 x float>
   %i.p = fmul nsz <16 x float> %broadcast.splat, %i.o
-  %i.q = fptosi <16 x float> %i.p to <16 x i32>   ; 3 uses
-  %8 = icmp ult <16 x i32> %i.q, splat (i32 256)
-  %9 = icmp sgt <16 x i32> %i.q, splat (i32 -1)
-  %10 = sext <16 x i1> %9 to <16 x i8>
-  %i.r = trunc nuw <16 x i32> %i.q to <16 x i8>
-  %11 = select <16 x i1> %8, <16 x i8> %i.r, <16 x i8> %10
+  %i.q = fptosi <16 x float> %i.p to <16 x i32>
+  %8 = tail call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.q, <16 x i32> zeroinitializer)
+  %9 = tail call <16 x i32> @llvm.umin.v16i32(<16 x i32> %8, <16 x i32> splat (i32 255))
+  %i.r = trunc nuw <16 x i32> %9 to <16 x i8>
   %i.s = getelementptr inbounds nuw i8, ptr %.01618, i64 %index
-  store <16 x i8> %11, ptr %i.s, align 1, !tbaa !56, !alias.scope !83, !noalias !82
+  store <16 x i8> %i.r, ptr %i.s, align 1, !tbaa !56, !alias.scope !83, !noalias !82
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.t = icmp eq i64 %index.next, %n.vec
   br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !78
@@ -232,14 +230,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %wide.load33 = load <4 x i8>, ptr %i.u, align 1, !tbaa !56, !alias.scope !82
   %i.v = uitofp <4 x i8> %wide.load33 to <4 x float>
   %i.w = fmul nsz <4 x float> %broadcast.splat31, %i.v
-  %i.x = fptosi <4 x float> %i.w to <4 x i32>     ; 3 uses
-  %12 = icmp ult <4 x i32> %i.x, splat (i32 256)
-  %13 = icmp sgt <4 x i32> %i.x, splat (i32 -1)
-  %14 = sext <4 x i1> %13 to <4 x i8>
-  %i.y = trunc nuw <4 x i32> %i.x to <4 x i8>
-  %15 = select <4 x i1> %12, <4 x i8> %i.y, <4 x i8> %14
+  %i.x = fptosi <4 x float> %i.w to <4 x i32>
+  %10 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.x, <4 x i32> zeroinitializer)
+  %11 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %10, <4 x i32> splat (i32 255))
+  %i.y = trunc nuw <4 x i32> %11 to <4 x i8>
   %i.z = getelementptr inbounds nuw i8, ptr %.01618, i64 %index32
-  store <4 x i8> %15, ptr %i.z, align 1, !tbaa !56, !alias.scope !83, !noalias !82
+  store <4 x i8> %i.y, ptr %i.z, align 1, !tbaa !56, !alias.scope !83, !noalias !82
   %index.next34 = add nuw i64 %index32, 4         ; 2 uses
   %i.aa = icmp eq i64 %index.next34, %n.vec29
   br i1 %i.aa, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !79
@@ -256,14 +252,12 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !56
   %i.ad = uitofp i8 %i.ac to float
   %i.ae = fmul nsz float %7, %i.ad
-  %i.af = fptosi float %i.ae to i32               ; 3 uses
-  %.not.i.prol = icmp ult i32 %i.af, 256
-  %isnotneg.i.prol = icmp sgt i32 %i.af, -1
-  %16 = sext i1 %isnotneg.i.prol to i8
-  %i.ag = trunc nuw i32 %i.af to i8
-  %.0.i.prol = select i1 %.not.i.prol, i8 %i.ag, i8 %16
+  %i.af = fptosi float %i.ae to i32
+  %12 = tail call i32 @llvm.smax.i32(i32 %i.af, i32 0)
+  %.0.i17.prol = tail call i32 @llvm.umin.i32(i32 %12, i32 255)
+  %i.ag = trunc nuw i32 %.0.i17.prol to i8
   %i.ah = getelementptr inbounds nuw i8, ptr %.01618, i64 %indvars.iv.ph
-  store i8 %.0.i.prol, ptr %i.ah, align 1, !tbaa !56
+  store i8 %i.ag, ptr %i.ah, align 1, !tbaa !56
   %indvars.iv.next.prol = or disjoint i64 %indvars.iv.ph, 1
   br label %vec.epilog.scalar.ph.prol.loopexit
 
@@ -278,27 +272,23 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !56
   %i.al = uitofp i8 %i.ak to float
   %i.am = fmul nsz float %7, %i.al
-  %i.an = fptosi float %i.am to i32               ; 3 uses
-  %.not.i = icmp ult i32 %i.an, 256
-  %isnotneg.i = icmp sgt i32 %i.an, -1
-  %17 = sext i1 %isnotneg.i to i8
-  %i.ao = trunc nuw i32 %i.an to i8
-  %.0.i = select i1 %.not.i, i8 %i.ao, i8 %17
+  %i.an = fptosi float %i.am to i32
+  %13 = tail call i32 @llvm.smax.i32(i32 %i.an, i32 0)
+  %.0.i17 = tail call i32 @llvm.umin.i32(i32 %13, i32 255)
+  %i.ao = trunc nuw i32 %.0.i17 to i8
   %i.ap = getelementptr inbounds nuw i8, ptr %.01618, i64 %indvars.iv
-  store i8 %.0.i, ptr %i.ap, align 1, !tbaa !56
+  store i8 %i.ao, ptr %i.ap, align 1, !tbaa !56
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.01519, i64 %indvars.iv.next
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !56
   %i.as = uitofp i8 %i.ar to float
   %i.at = fmul nsz float %7, %i.as
-  %i.au = fptosi float %i.at to i32               ; 3 uses
-  %.not.i.1 = icmp ult i32 %i.au, 256
-  %isnotneg.i.1 = icmp sgt i32 %i.au, -1
-  %18 = sext i1 %isnotneg.i.1 to i8
-  %i.av = trunc nuw i32 %i.au to i8
-  %.0.i.1 = select i1 %.not.i.1, i8 %i.av, i8 %18
+  %i.au = fptosi float %i.at to i32
+  %14 = tail call i32 @llvm.smax.i32(i32 %i.au, i32 0)
+  %.0.i17.1 = tail call i32 @llvm.umin.i32(i32 %14, i32 255)
+  %i.av = trunc nuw i32 %.0.i17.1 to i8
   %i.aw = getelementptr inbounds nuw i8, ptr %.01618, i64 %indvars.iv.next
-  store i8 %.0.i.1, ptr %i.aw, align 1, !tbaa !56
+  store i8 %i.av, ptr %i.aw, align 1, !tbaa !56
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
   br i1 %exitcond.not.1, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !80
@@ -701,7 +691,25 @@ declare void @av_freep(ptr noundef) local_unnamed_addr #3
 declare i64 @llvm.umax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i32> @llvm.smax.v16i32(<16 x i32>, <16 x i32>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i32> @llvm.umin.v16i32(<16 x i32>, <16 x i32>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12

@@ -204,9 +204,9 @@ bb.iu:                                            ; preds = %bb.is
   %i.aak = inttoptr i64 %i.aaj to ptr
   %i.aal = extractelement <2 x i64> %i.aah, i64 0
   %.val121.cast.i = inttoptr i64 %i.aal to ptr
-  %i.aam = extractelement <2 x i64> %i.aaf, i64 1
-  %i.aan = extractelement <2 x i64> %i.aah, i64 1
-  invoke void @_RNvNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object17xorb_chunk_format20append_chunk_segment(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ah, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.aak, i64 noundef %i.aam, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %.val121.cast.i, i64 noundef %i.aan)
+  %i.aam = extractelement <2 x i64> %i.aah, i64 1
+  %i.aan = extractelement <2 x i64> %i.aaf, i64 1
+  invoke void @_RNvNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object17xorb_chunk_format20append_chunk_segment(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ah, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.aak, i64 noundef %i.aan, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %.val121.cast.i, i64 noundef %i.aam)
           to label %bb.iv unwind label %bb.it, !noalias !1460
 
 bb.iv:                                            ; preds = %bb.iu
@@ -364,12 +364,12 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiAynQAjgDuT_10xet_client10cas_cl
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCsiAynQAjgDuT_10xet_client10cas_client9multipart13MultipartPartEEB1v_.exit170.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiAynQAjgDuT_10xet_client10cas_client9multipart13MultipartPartEBH_.exit168.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !1459
-  %3 = extractelement <2 x i64> %i.aaf, i64 0
-  %4 = extractelement <2 x i64> %i.aaf, i64 1
   %i.abo = extractelement <2 x i32> %i.aag, i64 0
   %i.abp = extractelement <2 x i32> %i.aag, i64 1
   %i.abq = extractelement <2 x i64> %i.aah, i64 0
   %i.abr = extractelement <2 x i64> %i.aah, i64 1
+  %3 = extractelement <2 x i64> %i.aaf, i64 0
+  %4 = extractelement <2 x i64> %i.aaf, i64 1
   br label %bb.ig
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECsiAynQAjgDuT_10xet_client.exit.i: ; preds = %bb.ii

@@ -205,41 +205,41 @@ _RNvMs_NtCscwxJ8MeEu7n_4http8responseINtB4_8ResponseNtNtCsf7xb2awyBix_9axum_core
   %.sroa.28.0..sroa_idx45 = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %.sroa.1569.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.1569.0..sroa_idx, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.28.0..sroa_idx45, i64 16, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.jz = load <2 x i64>, ptr %i.b, align 16, !noalias !3232
-  %i.ka = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %i.ka = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.kb = load <2 x i64>, ptr %.sroa.824.0..sroa_idx25, align 16, !noalias !3232
-  %i.kc = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %i.kc = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.kd = load <2 x i64>, ptr %.sroa.12.0..sroa_idx29, align 16, !noalias !3232
-  %i.ke = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %i.ke = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.kf = load <2 x i64>, ptr %.sroa.16.0..sroa_idx33, align 16, !noalias !3232
-  %i.kg = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
+  %i.kg = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.kh = load <2 x i64>, ptr %.sroa.20.0..sroa_idx37, align 16, !noalias !3232
-  %i.ki = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
+  %i.ki = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.kj = load <2 x i64>, ptr %.sroa.24.0..sroa_idx41, align 16, !noalias !3232
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3230
   %i.kk = load <2 x i64>, ptr %i.jt, align 8, !alias.scope !3233, !noalias !13
   store <2 x i64> %i.jz, ptr %i.jt, align 8, !alias.scope !3233, !noalias !13
   store <2 x i64> %i.kk, ptr %0, align 8
-  %.sroa.559.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.kl = load <2 x i64>, ptr %i.ka, align 8, !alias.scope !3234, !noalias !13
-  store <2 x i64> %i.kb, ptr %i.ka, align 8, !alias.scope !3234, !noalias !13
-  store <2 x i64> %i.kl, ptr %.sroa.559.0..sroa_idx, align 8
-  %.sroa.761.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.km = load <2 x i64>, ptr %i.kc, align 8, !alias.scope !3235, !noalias !13
-  store <2 x i64> %i.kd, ptr %i.kc, align 8, !alias.scope !3235, !noalias !13
-  store <2 x i64> %i.km, ptr %.sroa.761.0..sroa_idx, align 8
-  %.sroa.963.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.kn = load <2 x i64>, ptr %i.ke, align 8, !alias.scope !3236, !noalias !13
-  store <2 x i64> %i.kf, ptr %i.ke, align 8, !alias.scope !3236, !noalias !13
-  store <2 x i64> %i.kn, ptr %.sroa.963.0..sroa_idx, align 8
-  %.sroa.1165.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.ko = load <2 x i64>, ptr %i.kg, align 8, !alias.scope !3237, !noalias !13
-  store <2 x i64> %i.kh, ptr %i.kg, align 8, !alias.scope !3237, !noalias !13
-  store <2 x i64> %i.ko, ptr %.sroa.1165.0..sroa_idx, align 8
-  %.sroa.1367.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.kp = load <2 x i64>, ptr %i.ki, align 8, !alias.scope !3238, !noalias !13
-  store <2 x i64> %i.kj, ptr %i.ki, align 8, !alias.scope !3238, !noalias !13
-  store <2 x i64> %i.kp, ptr %.sroa.1367.0..sroa_idx, align 8
+  %i.kl = load <2 x i64>, ptr %3, align 8, !alias.scope !3234, !noalias !13
+  store <2 x i64> %i.kb, ptr %3, align 8, !alias.scope !3234, !noalias !13
+  store <2 x i64> %i.kl, ptr %i.ka, align 8
+  %i.km = load <2 x i64>, ptr %4, align 8, !alias.scope !3235, !noalias !13
+  store <2 x i64> %i.kd, ptr %4, align 8, !alias.scope !3235, !noalias !13
+  store <2 x i64> %i.km, ptr %i.kc, align 8
+  %i.kn = load <2 x i64>, ptr %5, align 8, !alias.scope !3236, !noalias !13
+  store <2 x i64> %i.kf, ptr %5, align 8, !alias.scope !3236, !noalias !13
+  store <2 x i64> %i.kn, ptr %i.ke, align 8
+  %i.ko = load <2 x i64>, ptr %6, align 8, !alias.scope !3237, !noalias !13
+  store <2 x i64> %i.kh, ptr %6, align 8, !alias.scope !3237, !noalias !13
+  store <2 x i64> %i.ko, ptr %i.kg, align 8
+  %i.kp = load <2 x i64>, ptr %7, align 8, !alias.scope !3238, !noalias !13
+  store <2 x i64> %i.kj, ptr %7, align 8, !alias.scope !3238, !noalias !13
+  store <2 x i64> %i.kp, ptr %i.ki, align 8
   %.sroa.1670.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr %i.jv, ptr %.sroa.1670.0..sroa_idx, align 8
   %.sroa.1771.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120

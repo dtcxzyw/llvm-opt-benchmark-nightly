@@ -204,7 +204,7 @@ bb.a:
   %i.e = alloca [5 x i64], align 16               ; 6 uses
   %i.f = alloca [5 x i64], align 16               ; 6 uses
   %i.g = alloca [5 x i64], align 16               ; 9 uses
-  %i.h = alloca [5 x i64], align 16               ; 10 uses
+  %i.h = alloca [5 x i64], align 16               ; 9 uses
   %i.i = alloca [5 x i64], align 16               ; 14 uses
   %i.j = alloca [5 x i64], align 16               ; 8 uses
   %i.k = alloca [5 x i64], align 16               ; 5 uses
@@ -314,9 +314,8 @@ bb.a:
   store i64 %i.cf, ptr %i.ct, align 16
   call fastcc void @fe25519_mul(ptr noundef nonnull %i.d, ptr noundef nonnull @sqrtm1, ptr noundef nonnull %i.d)
   %i.cu = load i64, ptr %i.ct, align 16           ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %i.cv = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %i.cw = getelementptr inbounds nuw i8, ptr %i.h, i64 24
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %i.cw = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.cx = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   store i64 %i.cu, ptr %i.cx, align 16
   %i.cy = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
@@ -336,25 +335,24 @@ bb.a:
   %i.dm = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.dn = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.do = load <4 x i64>, ptr %i.d, align 16      ; 7 uses
-  %i.dp = extractelement <4 x i64> %i.do, i64 0
+  %i.dp = extractelement <4 x i64> %i.do, i64 0   ; 2 uses
   %i.dq = add i64 %i.dp, 1
   store i64 %i.dq, ptr %i.h, align 16
-  %i.dr = extractelement <4 x i64> %i.do, i64 1
-  store i64 %i.dr, ptr %2, align 8
+  %i.dr = extractelement <4 x i64> %i.do, i64 1   ; 2 uses
+  store i64 %i.dr, ptr %i.cv, align 8
   %i.ds = extractelement <4 x i64> %i.do, i64 2
-  store i64 %i.ds, ptr %i.cv, align 16
-  %3 = extractelement <4 x i64> %i.do, i64 3
-  store i64 %3, ptr %i.cw, align 8
+  %2 = extractelement <4 x i64> %i.do, i64 3
+  %3 = shufflevector <4 x i64> %i.do, <4 x i64> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  store <2 x i64> %3, ptr %i.cw, align 16
   call fastcc void @fe25519_mul(ptr noundef nonnull %i.h, ptr noundef nonnull %i.h, ptr noundef nonnull @onemsqd)
   store i64 4503599627370494, ptr %i.cy, align 8
   store i64 4503599627370494, ptr %i.cz, align 16
   store i64 4503599627370494, ptr %i.da, align 8
   store i64 4503599627370494, ptr %i.db, align 16
-  %i.dt = shufflevector <4 x i64> %i.do, <4 x i64> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
+  %i.dt = shufflevector <4 x i64> %i.do, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   %i.du = add <2 x i64> %i.dt, <i64 929955233495203, i64 466365720129213>
   store <2 x i64> %i.du, ptr %i.e, align 16
-  %4 = shufflevector <4 x i64> %i.do, <4 x i64> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
-  %i.dv = add <2 x i64> %4, <i64 1662059464998953, i64 2033849074728123>
+  %i.dv = add <2 x i64> %3, <i64 1662059464998953, i64 2033849074728123>
   store <2 x i64> %i.dv, ptr %i.dd, align 16
   store i64 %i.dc, ptr %i.de, align 16
   call fastcc void @fe25519_mul(ptr noundef nonnull %i.i, ptr noundef nonnull %i.d, ptr noundef nonnull @d)
@@ -461,16 +459,20 @@ bb.a:
   store <4 x i64> %i.hd, ptr %i.b, align 16
   %i.he = xor i64 %i.hc, 4503599627370494
   store i64 %i.he, ptr %i.db, align 16
-  %i.hf = add i64 %i.cu, 4503599627370494
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %6 = add <2 x i64> %i.dt, <i64 4503599627370457, i64 4503599627370494>
-  store <2 x i64> %6, ptr %i.c, align 16
-  %i.hg = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %i.hh = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
-  %7 = add <2 x i64> %4, splat (i64 4503599627370494)
-  store <2 x i64> %7, ptr %i.hg, align 16
+  %4 = add i64 %i.dp, 4503599627370457
+  %reass.sub45.i13 = add i64 %i.dr, 4503599627370494
+  %i.hf = add i64 %i.ds, 4503599627370494
+  %reass.sub47.i15 = add i64 %2, 4503599627370494
+  %5 = add i64 %i.cu, 4503599627370494
+  store i64 %4, ptr %i.c, align 16
+  %i.hg = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
+  store i64 %reass.sub45.i13, ptr %i.hg, align 8
+  %i.hh = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  store i64 %i.hf, ptr %i.hh, align 16
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
+  store i64 %reass.sub47.i15, ptr %6, align 8
   %i.hi = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 3 uses
-  store i64 %i.hf, ptr %i.hi, align 16
+  store i64 %5, ptr %i.hi, align 16
   call fastcc void @fe25519_mul(ptr noundef nonnull %i.c, ptr noundef nonnull %i.c, ptr noundef nonnull %i.b)
   call fastcc void @fe25519_mul(ptr noundef nonnull %i.c, ptr noundef nonnull %i.c, ptr noundef nonnull @sqdmone)
   %i.hj = load i64, ptr %i.i, align 16            ; 2 uses
@@ -483,7 +485,7 @@ bb.a:
   %i.hq = load i64, ptr %i.c, align 16
   %reass.sub48 = sub i64 %i.hq, %i.hp
   %i.hr = add i64 %reass.sub48, 4503599627370458
-  %i.hs = load i64, ptr %i.hh, align 8
+  %i.hs = load i64, ptr %6, align 8
   %i.ht = load i64, ptr %i.hi, align 16
   %i.hu = add i64 %i.ht, 4503599627370494
   %i.hv = add i64 %i.hk, %i.ho                    ; 2 uses
@@ -501,15 +503,15 @@ bb.a:
   %i.ih = and i64 %i.ie, 2251799813685247
   %.neg39.i16 = mul nsw i64 %i.ig, -19
   %i.ii = add i64 %i.hr, %.neg39.i16
-  %i.ij = load <2 x i64>, ptr %5, align 8
+  %i.ij = load <2 x i64>, ptr %i.hg, align 8
   %i.ik = sub <2 x i64> %i.ij, %i.ic
   %i.il = add <2 x i64> %i.ik, splat (i64 4503599627370494)
   %reass.sub51 = sub i64 %i.hs, %i.if
   %i.im = add i64 %reass.sub51, 4503599627370494
   %i.in = sub i64 %i.hu, %i.ih
   store i64 %i.ii, ptr %i.c, align 16
-  store <2 x i64> %i.il, ptr %5, align 8
-  store i64 %i.im, ptr %i.hh, align 8
+  store <2 x i64> %i.il, ptr %i.hg, align 8
+  store i64 %i.im, ptr %6, align 8
   store i64 %i.in, ptr %i.hi, align 16
   %i.io = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.ip = add i64 %i.gn, %i.gj                    ; 2 uses

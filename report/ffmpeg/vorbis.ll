@@ -205,13 +205,10 @@ bb.a:
   %i.d = tail call i32 @llvm.abs.i32(i32 %i.a, i1 true) ; 5 uses
   %.inv = icmp sgt i32 %i.a, -1
   %i.e = select i1 %.inv, i32 1, i32 -1           ; 3 uses
-  %.not.i51 = icmp ult i32 %1, 256
-  %isnotneg.i52 = icmp sgt i32 %1, -1
-  %5 = sext i1 %isnotneg.i52 to i64
-  %i.f = zext nneg i32 %1 to i64
-  %.0.i53 = select i1 %.not.i51, i64 %i.f, i64 %5
-  %6 = and i64 %.0.i53, 255
-  %i.g = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %6
+  %5 = tail call i32 @llvm.smax.i32(i32 %1, i32 0)
+  %.0.i5354 = tail call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.f = zext nneg i32 %.0.i5354 to i64
+  %i.g = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %i.f
   %i.h = load float, ptr %i.g, align 4, !tbaa !41
   %i.i = zext nneg i32 %0 to i64                  ; 3 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.i
@@ -242,39 +239,33 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.t, label %bb.d, label %._crit_edge46.i
 
 ._crit_edge46.i:                                  ; preds = %bb.c
-  %.pre.i.a = zext nneg i32 %.02941.i to i64
+  %.pre.i = tail call i32 @llvm.smax.i32(i32 %.02941.i, i32 0)
+  %.pre50.i = tail call i32 @llvm.umin.i32(i32 %.pre.i, i32 255)
+  %.pre.i.a = zext nneg i32 %.pre50.i to i64
+  %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %.pre.i.a
+  %.pre = load float, ptr %.phi.trans.insert, align 4, !tbaa !41
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.u = add nsw i32 %i.q, %i.s
-  %i.v = add i32 %.02941.i, %i.e                  ; 4 uses
-  %.not.i38.i = icmp ult i32 %i.v, 256
-  %isnotneg.i39.i = icmp sgt i32 %i.v, -1
-  %7 = sext i1 %isnotneg.i39.i to i64
-  %i.w = zext nneg i32 %i.v to i64                ; 2 uses
-  %.0.i40.i = select i1 %.not.i38.i, i64 %i.w, i64 %7
-  %8 = and i64 %.0.i40.i, 255
-  %i.x = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %8
-  %i.y = load float, ptr %i.x, align 4, !tbaa !41
+  %i.v = add i32 %.02941.i, %i.e                  ; 2 uses
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.v, i32 0)
+  %.0.i4042.i = tail call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.w = zext nneg i32 %.0.i4042.i to i64
+  %i.x = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %i.w
+  %i.y = load float, ptr %i.x, align 4, !tbaa !41 ; 2 uses
   %i.z = add nsw i64 %.02742.i, 2
   %i.aa = getelementptr inbounds [4 x i8], ptr %i.o, i64 %i.r
   store float %i.y, ptr %i.aa, align 4, !tbaa !41
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge46.i
-  %.pre-phi.i = phi i64 [ %.pre.i.a, %._crit_edge46.i ], [ %i.w, %bb.d ]
-  %.130.i = phi i32 [ %.02941.i, %._crit_edge46.i ], [ %i.v, %bb.d ] ; 4 uses
+  %7 = phi float [ %.pre, %._crit_edge46.i ], [ %i.y, %bb.d ]
+  %.130.i = phi i32 [ %.02941.i, %._crit_edge46.i ], [ %i.v, %bb.d ] ; 2 uses
   %.128.i = phi i64 [ %i.r, %._crit_edge46.i ], [ %i.z, %bb.d ] ; 4 uses
   %.1.i = phi i32 [ %i.s, %._crit_edge46.i ], [ %i.u, %bb.d ] ; 2 uses
-  %.not.i35.i = icmp ult i32 %.130.i, 256
-  %isnotneg.i36.i = icmp sgt i32 %.130.i, -1
-  %9 = sext i1 %isnotneg.i36.i to i64
-  %.0.i37.i = select i1 %.not.i35.i, i64 %.pre-phi.i, i64 %9
-  %10 = and i64 %.0.i37.i, 255
-  %11 = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %10
-  %12 = load float, ptr %11, align 4, !tbaa !41
   %i.ab = getelementptr inbounds [4 x i8], ptr %i.o, i64 %.128.i
-  store float %12, ptr %i.ab, align 4, !tbaa !41
+  store float %7, ptr %i.ab, align 4, !tbaa !41
   %i.ac = icmp slt i64 %.128.i, -1
   br i1 %i.ac, label %bb.c, label %._crit_edge.i, !llvm.loop !38
 
@@ -289,14 +280,11 @@ bb.f:                                             ; preds = %._crit_edge.i
   %i.ae = add nsw i32 %.0.lcssa.i, %i.d
   %i.af = icmp slt i32 %i.ae, 0
   %i.ag = select i1 %i.af, i32 0, i32 %i.e
-  %.2.i = add i32 %i.ag, %.029.lcssa.i            ; 3 uses
-  %.not.i.i = icmp ult i32 %.2.i, 256
-  %isnotneg.i.i = icmp sgt i32 %.2.i, -1
-  %13 = sext i1 %isnotneg.i.i to i64
-  %i.ah = zext nneg i32 %.2.i to i64
-  %.0.i.i = select i1 %.not.i.i, i64 %i.ah, i64 %13
-  %14 = and i64 %.0.i.i, 255
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %14
+  %.2.i = add i32 %i.ag, %.029.lcssa.i
+  %8 = tail call i32 @llvm.smax.i32(i32 %.2.i, i32 0)
+  %.0.i41.i = tail call i32 @llvm.umin.i32(i32 %8, i32 255)
+  %i.ah = zext nneg i32 %.0.i41.i to i64
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %i.ah
   %i.aj = load float, ptr %i.ai, align 4, !tbaa !41
   store float %i.aj, ptr %i.o, align 4, !tbaa !41
   br label %render_line_unrolled.exit
@@ -323,16 +311,13 @@ bb.g:                                             ; preds = %bb.a
   %i.as = add nsw i32 %.055, %i.an                ; 2 uses
   %i.at = icmp sgt i32 %i.as, -1                  ; 2 uses
   %i.au = select i1 %i.at, i32 %i.e, i32 0
-  %.144 = add nsw i32 %i.ar, %i.au                ; 4 uses
+  %.144 = add nsw i32 %i.ar, %i.au                ; 2 uses
   %i.av = select i1 %i.at, i32 %i.b, i32 0
   %.1 = sub nsw i32 %i.as, %i.av
-  %.not.i = icmp ult i32 %.144, 256
-  %isnotneg.i = icmp sgt i32 %.144, -1
-  %15 = sext i1 %isnotneg.i to i64
-  %i.aw = zext nneg i32 %.144 to i64
-  %.0.i = select i1 %.not.i, i64 %i.aw, i64 %15
-  %16 = and i64 %.0.i, 255
-  %i.ax = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %16
+  %9 = tail call i32 @llvm.smax.i32(i32 %.144, i32 0)
+  %.0.i55 = tail call i32 @llvm.umin.i32(i32 %9, i32 255)
+  %i.aw = zext nneg i32 %.0.i55 to i64
+  %i.ax = getelementptr inbounds nuw [4 x i8], ptr @ff_vorbis_floor1_inverse_db_table, i64 %i.aw
   %i.ay = load float, ptr %i.ax, align 4, !tbaa !41
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
   store float %i.ay, ptr %i.az, align 4, !tbaa !41
@@ -352,6 +337,12 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #7

@@ -202,13 +202,11 @@ bb.i:                                             ; preds = %.lr.ph
 
 get_dither_value.exit:                            ; preds = %.lr.ph, %bb.i
   %.0.i146 = phi double [ %i.bl, %bb.i ], [ %i.be, %.lr.ph ]
-  %i.bm = fptosi double %.0.i146 to i32           ; 3 uses
-  %.not.i142 = icmp ult i32 %i.bm, 256
-  %isnotneg.i143 = icmp sgt i32 %i.bm, -1
-  %2 = sext i1 %isnotneg.i143 to i8
-  %i.bn = trunc nuw i32 %i.bm to i8
-  %.0.i144 = select i1 %.not.i142, i8 %i.bn, i8 %2
-  store i8 %.0.i144, ptr %.0115160, align 1, !tbaa !67
+  %i.bm = fptosi double %.0.i146 to i32
+  %2 = tail call i32 @llvm.smax.i32(i32 %i.bm, i32 0)
+  %.0.i144156 = tail call i32 @llvm.umin.i32(i32 %2, i32 255)
+  %i.bn = trunc nuw i32 %.0.i144156 to i8
+  store i8 %i.bn, ptr %.0115160, align 1, !tbaa !67
   %i.bo = getelementptr inbounds nuw i8, ptr %.0114161, i64 1
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !67
   %i.bq = uitofp i8 %i.bp to float
@@ -230,14 +228,12 @@ bb.j:                                             ; preds = %get_dither_value.ex
 
 get_dither_value.exit149:                         ; preds = %get_dither_value.exit, %bb.j
   %.0.i148 = phi double [ %i.bz, %bb.j ], [ %i.bs, %get_dither_value.exit ]
-  %i.ca = fptosi double %.0.i148 to i32           ; 3 uses
-  %.not.i139 = icmp ult i32 %i.ca, 256
-  %isnotneg.i140 = icmp sgt i32 %i.ca, -1
-  %3 = sext i1 %isnotneg.i140 to i8
-  %i.cb = trunc nuw i32 %i.ca to i8
-  %.0.i141 = select i1 %.not.i139, i8 %i.cb, i8 %3
+  %i.ca = fptosi double %.0.i148 to i32
+  %3 = tail call i32 @llvm.smax.i32(i32 %i.ca, i32 0)
+  %.0.i141157 = tail call i32 @llvm.umin.i32(i32 %3, i32 255)
+  %i.cb = trunc nuw i32 %.0.i141157 to i8
   %i.cc = getelementptr inbounds nuw i8, ptr %.0115160, i64 1
-  store i8 %.0.i141, ptr %i.cc, align 1, !tbaa !67
+  store i8 %i.cb, ptr %i.cc, align 1, !tbaa !67
   %i.cd = getelementptr inbounds nuw i8, ptr %.0114161, i64 2
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !67
   %i.cf = uitofp i8 %i.ce to float
@@ -259,14 +255,12 @@ bb.k:                                             ; preds = %get_dither_value.ex
 
 get_dither_value.exit152:                         ; preds = %get_dither_value.exit149, %bb.k
   %.0.i151 = phi double [ %i.co, %bb.k ], [ %i.ch, %get_dither_value.exit149 ]
-  %i.cp = fptosi double %.0.i151 to i32           ; 3 uses
-  %.not.i136 = icmp ult i32 %i.cp, 256
-  %isnotneg.i137 = icmp sgt i32 %i.cp, -1
-  %4 = sext i1 %isnotneg.i137 to i8
-  %i.cq = trunc nuw i32 %i.cp to i8
-  %.0.i138 = select i1 %.not.i136, i8 %i.cq, i8 %4
+  %i.cp = fptosi double %.0.i151 to i32
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.cp, i32 0)
+  %.0.i138158 = tail call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %i.cq = trunc nuw i32 %.0.i138158 to i8
   %i.cr = getelementptr inbounds nuw i8, ptr %.0115160, i64 2
-  store i8 %.0.i138, ptr %i.cr, align 1, !tbaa !67
+  store i8 %i.cq, ptr %i.cr, align 1, !tbaa !67
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.0115160, i64 3
   %i.ct = getelementptr inbounds nuw i8, ptr %.0114161, i64 3
@@ -392,15 +386,13 @@ get_dither_value.exit155.us.us:                   ; preds = %bb.r, %bb.q
   %i.fc = tail call nsz float @llvm.fmuladd.f32(float %i.ex, float %i.fb, float 1.270000e+02)
   %i.fd = fpext nsz float %i.fc to double
   %i.fe = fadd nsz double %.0.i154.us.us, %i.fd
-  %i.ff = fptosi double %i.fe to i32              ; 3 uses
-  %.not.i133.us.us = icmp ult i32 %i.ff, 256
-  %isnotneg.i134.us.us = icmp sgt i32 %i.ff, -1
-  %5 = sext i1 %isnotneg.i134.us.us to i8
-  %i.fg = trunc nuw i32 %i.ff to i8
-  %.0.i135.us.us = select i1 %.not.i133.us.us, i8 %i.fg, i8 %5
+  %i.ff = fptosi double %i.fe to i32
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.ff, i32 0)
+  %.0.i135160.us.us = tail call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.fg = trunc nuw i32 %.0.i135160.us.us to i8
   %.1.us.us = getelementptr inbounds nuw i8, ptr %.0168.us.us, i64 1
   %.1108.us.us = getelementptr inbounds nuw i8, ptr %.0107167.us.us, i64 1
-  store i8 %.0.i135.us.us, ptr %.0107167.us.us, align 1, !tbaa !67
+  store i8 %i.fg, ptr %.0107167.us.us, align 1, !tbaa !67
   %i.fh = add nuw i32 %.1124166.us.us, 1          ; 2 uses
   %exitcond196.not = icmp eq i32 %i.fh, %i.ef
   br i1 %exitcond196.not, label %._crit_edge170.split.us.us, label %bb.q, !llvm.loop !56
@@ -446,15 +438,13 @@ get_dither_value.exit155:                         ; preds = %bb.s, %bb.t
   %i.fw = fmul nsz float %i.ft, %i.fv
   %i.fx = fpext nsz float %i.fw to double
   %i.fy = fadd nsz double %.0.i154, %i.fx
-  %i.fz = fptosi double %i.fy to i32              ; 3 uses
-  %.not.i = icmp ult i32 %i.fz, 256
-  %isnotneg.i = icmp sgt i32 %i.fz, -1
-  %6 = sext i1 %isnotneg.i to i8
-  %i.ga = trunc nuw i32 %i.fz to i8
-  %.0.i = select i1 %.not.i, i8 %i.ga, i8 %6
+  %i.fz = fptosi double %i.fy to i32
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.fz, i32 0)
+  %.0.i159 = tail call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.ga = trunc nuw i32 %.0.i159 to i8
   %.1 = getelementptr inbounds nuw i8, ptr %.0168, i64 1
   %.1108 = getelementptr inbounds nuw i8, ptr %.0107167, i64 1
-  store i8 %.0.i, ptr %.0107167, align 1, !tbaa !67
+  store i8 %i.ga, ptr %.0107167, align 1, !tbaa !67
   %indvars.iv.next193 = add nuw nsw i64 %indvars.iv192, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next193, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge170.split, label %bb.s, !llvm.loop !56
@@ -856,6 +846,12 @@ declare i32 @av_expr_parse(ptr noundef, ptr noundef, ptr noundef, ptr noundef, p
 declare void @av_freep(ptr noundef) local_unnamed_addr #2
 
 declare void @av_expr_free(ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #3
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

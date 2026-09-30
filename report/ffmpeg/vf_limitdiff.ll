@@ -202,13 +202,11 @@ pred.sdiv.if85:                                   ; preds = %pred.sdiv.continue8
 
 pred.sdiv.continue86:                             ; preds = %pred.sdiv.if85, %pred.sdiv.continue84
   %i.et = phi <16 x i32> [ %i.el, %pred.sdiv.continue84 ], [ %i.es, %pred.sdiv.if85 ]
-  %i.eu = add nsw <16 x i32> %i.et, %i.n          ; 3 uses
-  %8 = icmp ult <16 x i32> %i.eu, splat (i32 256)
-  %9 = icmp sgt <16 x i32> %i.eu, splat (i32 -1)
-  %10 = sext <16 x i1> %9 to <16 x i8>
-  %i.ev = trunc nuw <16 x i32> %i.eu to <16 x i8>
-  %11 = select <16 x i1> %8, <16 x i8> %i.ev, <16 x i8> %10
-  %predphi = select <16 x i1> %i.u, <16 x i8> %11, <16 x i8> %wide.load55
+  %i.eu = add nsw <16 x i32> %i.et, %i.n
+  %8 = tail call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.eu, <16 x i32> zeroinitializer)
+  %9 = tail call <16 x i32> @llvm.umin.v16i32(<16 x i32> %8, <16 x i32> splat (i32 255))
+  %i.ev = trunc nuw <16 x i32> %9 to <16 x i8>
+  %predphi = select <16 x i1> %i.u, <16 x i8> %i.ev, <16 x i8> %wide.load55
   %predphi87 = select <16 x i1> %i.t, <16 x i8> %predphi, <16 x i8> %wide.load
   %i.ew = getelementptr inbounds nuw i8, ptr %1, i64 %index
   store <16 x i8> %predphi87, ptr %i.ew, align 1, !tbaa !93
@@ -362,13 +360,11 @@ pred.sdiv.if111:                                  ; preds = %pred.sdiv.continue1
 
 pred.sdiv.continue112:                            ; preds = %pred.sdiv.if111, %pred.sdiv.continue110
   %i.hv = phi <8 x i32> [ %i.hn, %pred.sdiv.continue110 ], [ %i.hu, %pred.sdiv.if111 ]
-  %i.hw = add nsw <8 x i32> %i.hv, %i.fb          ; 3 uses
-  %12 = icmp ult <8 x i32> %i.hw, splat (i32 256)
-  %13 = icmp sgt <8 x i32> %i.hw, splat (i32 -1)
-  %14 = sext <8 x i1> %13 to <8 x i8>
-  %i.hx = trunc nuw <8 x i32> %i.hw to <8 x i8>
-  %15 = select <8 x i1> %12, <8 x i8> %i.hx, <8 x i8> %14
-  %predphi113 = select <8 x i1> %i.fi, <8 x i8> %15, <8 x i8> %wide.load95
+  %i.hw = add nsw <8 x i32> %i.hv, %i.fb
+  %10 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %i.hw, <8 x i32> zeroinitializer)
+  %11 = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %10, <8 x i32> splat (i32 255))
+  %i.hx = trunc nuw <8 x i32> %11 to <8 x i8>
+  %predphi113 = select <8 x i1> %i.fi, <8 x i8> %i.hx, <8 x i8> %wide.load95
   %predphi114 = select <8 x i1> %i.fh, <8 x i8> %predphi113, <8 x i8> %wide.load94
   %i.hy = getelementptr inbounds nuw i8, ptr %1, i64 %index93
   store <8 x i8> %predphi114, ptr %i.hy, align 1, !tbaa !93
@@ -412,16 +408,14 @@ bb.c:                                             ; preds = %bb.b
   %i.im = sub nuw nsw i32 %5, %i.il
   %i.in = mul nsw i32 %i.im, %i.ig
   %i.io = sdiv i32 %i.in, %i.f
-  %i.ip = add nsw i32 %i.io, %i.if                ; 3 uses
-  %.not.i = icmp ult i32 %i.ip, 256
-  %isnotneg.i = icmp sgt i32 %i.ip, -1
-  %16 = sext i1 %isnotneg.i to i8
-  %i.iq = trunc nuw i32 %i.ip to i8
-  %.0.i = select i1 %.not.i, i8 %i.iq, i8 %16
+  %i.ip = add nsw i32 %i.io, %i.if
+  %12 = tail call i32 @llvm.smax.i32(i32 %i.ip, i32 0)
+  %.0.i44 = tail call i32 @llvm.umin.i32(i32 %12, i32 255)
+  %i.iq = trunc nuw i32 %.0.i44 to i8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %vec.epilog.scalar.ph, %bb.c
-  %.sink = phi i8 [ %i.ib, %vec.epilog.scalar.ph ], [ %.0.i, %bb.c ], [ %i.ie, %bb.b ]
+  %.sink = phi i8 [ %i.ib, %vec.epilog.scalar.ph ], [ %i.iq, %bb.c ], [ %i.ie, %bb.b ]
   %i.ir = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
   store i8 %.sink, ptr %i.ir, align 1, !tbaa !93
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -676,13 +670,31 @@ declare i32 @ff_framesync_activate(ptr noundef) local_unnamed_addr #1
 declare i32 @llvm.abs.i32(i32, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i32> @llvm.abs.v16i32(<16 x i32>, i1 immarg) #7
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i32> @llvm.smax.v16i32(<16 x i32>, <16 x i32>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i32> @llvm.umin.v16i32(<16 x i32>, <16 x i32>) #8
+
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.abs.v8i32(<8 x i32>, i1 immarg) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i32> @llvm.umin.v8i32(<8 x i32>, <8 x i32>) #8
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

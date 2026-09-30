@@ -204,15 +204,15 @@ bb.b:                                             ; preds = %.noexc
   %i.as = getelementptr i8, ptr %i.ar, i64 8
   %i.at = getelementptr i8, ptr %i.ar, i64 16
   %i.au = load float, ptr %i.at, align 4, !tbaa !45
-  %8 = load <2 x float>, ptr %i.as, align 4, !tbaa !45
-  %9 = fpext <2 x float> %8 to <2 x double>       ; 4 uses
-  store <2 x double> %9, ptr %i.a, align 8, !tbaa !33
   %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store double 1.000000e+00, ptr %i.aw, align 8, !tbaa !33
   %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 88
+  %8 = load <2 x float>, ptr %i.as, align 4, !tbaa !45
+  %9 = fpext <2 x float> %8 to <2 x double>       ; 4 uses
+  store <2 x double> %9, ptr %i.a, align 8, !tbaa !33
   store <2 x double> %9, ptr %i.e, align 8, !tbaa !33
   %i.ba = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.bb = getelementptr inbounds nuw i8, ptr %i.e, i64 24
@@ -229,9 +229,6 @@ bb.b:                                             ; preds = %.noexc
   %i.bl = getelementptr i8, ptr %i.bj, i64 16
   %i.bm = load float, ptr %i.bl, align 4, !tbaa !45
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  %10 = load <2 x float>, ptr %i.bk, align 4, !tbaa !45
-  %11 = fpext <2 x float> %10 to <2 x double>     ; 4 uses
-  store <2 x double> %11, ptr %i.bn, align 8, !tbaa !33
   %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 112
   %i.bp = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   store double 1.000000e+00, ptr %i.bp, align 8, !tbaa !33
@@ -239,6 +236,9 @@ bb.b:                                             ; preds = %.noexc
   %i.br = getelementptr inbounds nuw i8, ptr %i.a, i64 176
   %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 184
   %i.bt = getelementptr inbounds nuw i8, ptr %i.e, i64 64
+  %10 = load <2 x float>, ptr %i.bk, align 4, !tbaa !45
+  %11 = fpext <2 x float> %10 to <2 x double>     ; 4 uses
+  store <2 x double> %11, ptr %i.bn, align 8, !tbaa !33
   store <2 x double> %11, ptr %i.bt, align 8, !tbaa !33
   %i.bu = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.bv = getelementptr inbounds nuw i8, ptr %i.e, i64 88
@@ -256,37 +256,37 @@ bb.b:                                             ; preds = %.noexc
   %i.cf = fpext <4 x float> %i.ce to <4 x double>
   %i.cg = fneg <4 x double> %i.cf                 ; 9 uses
   %i.ch = shufflevector <4 x double> %i.cg, <4 x double> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %12 = shufflevector <4 x double> %i.cg, <4 x double> poison, <2 x i32> zeroinitializer
-  %13 = fmul <2 x double> %12, %9
-  store <2 x double> %13, ptr %i.ax, align 8, !tbaa !33
-  %14 = fmul <4 x double> %i.cb, %i.ch            ; 4 uses
-  %15 = extractelement <4 x double> %14, i64 0
-  store double %15, ptr %i.ay, align 8, !tbaa !33
-  %16 = extractelement <4 x double> %i.cg, i64 0
-  store double %16, ptr %i.az, align 8, !tbaa !33
+  %12 = fmul <4 x double> %i.cb, %i.ch            ; 4 uses
+  %13 = extractelement <4 x double> %12, i64 0
+  store double %13, ptr %i.ay, align 8, !tbaa !33
+  %14 = extractelement <4 x double> %i.cg, i64 0
+  store double %14, ptr %i.az, align 8, !tbaa !33
+  %15 = shufflevector <4 x double> %i.cg, <4 x double> poison, <2 x i32> zeroinitializer
+  %16 = fmul <2 x double> %15, %9
+  store <2 x double> %16, ptr %i.ax, align 8, !tbaa !33
   store double %i.cc, ptr %i.ba, align 8, !tbaa !33
   %i.ci = shufflevector <4 x double> %i.cg, <4 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.cj = fmul <2 x double> %i.ci, %9
   store <2 x double> %i.cj, ptr %i.bc, align 8, !tbaa !33
-  %i.ck = extractelement <4 x double> %14, i64 2
+  %i.ck = extractelement <4 x double> %12, i64 2
   store double %i.ck, ptr %i.bd, align 8, !tbaa !33
   %i.cl = extractelement <4 x double> %i.cg, i64 1
   store double %i.cl, ptr %i.be, align 8, !tbaa !33
   %i.cm = extractelement <2 x double> %i.ca, i64 1 ; 2 uses
   store double %i.cm, ptr %i.bo, align 8, !tbaa !33
-  %17 = shufflevector <4 x double> %i.cg, <4 x double> poison, <2 x i32> <i32 2, i32 2>
-  %18 = fmul <2 x double> %17, %11
-  store <2 x double> %18, ptr %i.bq, align 8, !tbaa !33
-  %i.cn = extractelement <4 x double> %14, i64 1
-  store double %i.cn, ptr %i.br, align 8, !tbaa !33
-  %19 = extractelement <4 x double> %i.cg, i64 2
-  store double %19, ptr %i.bs, align 8, !tbaa !33
+  %17 = extractelement <4 x double> %12, i64 1
+  store double %17, ptr %i.br, align 8, !tbaa !33
+  %i.cn = extractelement <4 x double> %i.cg, i64 2
+  store double %i.cn, ptr %i.bs, align 8, !tbaa !33
+  %18 = shufflevector <4 x double> %i.cg, <4 x double> poison, <2 x i32> <i32 2, i32 2>
+  %19 = fmul <2 x double> %18, %11
+  store <2 x double> %19, ptr %i.bq, align 8, !tbaa !33
   store double %i.cm, ptr %i.bu, align 8, !tbaa !33
   %i.co = shufflevector <4 x double> %i.cg, <4 x double> poison, <2 x i32> <i32 3, i32 3>
   %i.cp = fmul <2 x double> %i.co, %11
   store <2 x double> %i.cp, ptr %i.bw, align 8, !tbaa !33
   %i.cq = getelementptr inbounds nuw i8, ptr %i.e, i64 112
-  %i.cr = extractelement <4 x double> %14, i64 3
+  %i.cr = extractelement <4 x double> %12, i64 3
   store double %i.cr, ptr %i.cq, align 8, !tbaa !33
   %i.cs = getelementptr inbounds nuw i8, ptr %i.e, i64 120
   %i.ct = extractelement <4 x double> %i.cg, i64 3
@@ -300,9 +300,6 @@ bb.b:                                             ; preds = %.noexc
   %i.da = getelementptr i8, ptr %i.cy, i64 16
   %i.db = load float, ptr %i.da, align 4, !tbaa !45
   %i.dc = getelementptr inbounds nuw i8, ptr %i.a, i64 192
-  %20 = load <2 x float>, ptr %i.cz, align 4, !tbaa !45
-  %21 = fpext <2 x float> %20 to <2 x double>     ; 4 uses
-  store <2 x double> %21, ptr %i.dc, align 8, !tbaa !33
   %i.dd = getelementptr inbounds nuw i8, ptr %i.a, i64 208
   %i.de = getelementptr inbounds nuw i8, ptr %i.a, i64 216
   store double 1.000000e+00, ptr %i.de, align 8, !tbaa !33
@@ -310,6 +307,9 @@ bb.b:                                             ; preds = %.noexc
   %i.dg = getelementptr inbounds nuw i8, ptr %i.a, i64 272
   %i.dh = getelementptr inbounds nuw i8, ptr %i.a, i64 280
   %i.di = getelementptr inbounds nuw i8, ptr %i.e, i64 128
+  %20 = load <2 x float>, ptr %i.cz, align 4, !tbaa !45
+  %21 = fpext <2 x float> %20 to <2 x double>     ; 4 uses
+  store <2 x double> %21, ptr %i.dc, align 8, !tbaa !33
   store <2 x double> %21, ptr %i.di, align 8, !tbaa !33
   %i.dj = getelementptr inbounds nuw i8, ptr %i.e, i64 144
   %i.dk = getelementptr inbounds nuw i8, ptr %i.e, i64 152
@@ -326,9 +326,6 @@ bb.b:                                             ; preds = %.noexc
   %i.du = getelementptr i8, ptr %i.ds, i64 16
   %i.dv = load float, ptr %i.du, align 4, !tbaa !45
   %i.dw = getelementptr inbounds nuw i8, ptr %i.a, i64 288
-  %22 = load <2 x float>, ptr %i.dt, align 4, !tbaa !45
-  %23 = fpext <2 x float> %22 to <2 x double>     ; 4 uses
-  store <2 x double> %23, ptr %i.dw, align 8, !tbaa !33
   %i.dx = getelementptr inbounds nuw i8, ptr %i.a, i64 304
   %i.dy = getelementptr inbounds nuw i8, ptr %i.a, i64 312
   store double 1.000000e+00, ptr %i.dy, align 8, !tbaa !33
@@ -336,6 +333,9 @@ bb.b:                                             ; preds = %.noexc
   %i.ea = getelementptr inbounds nuw i8, ptr %i.a, i64 368
   %i.eb = getelementptr inbounds nuw i8, ptr %i.a, i64 376
   %i.ec = getelementptr inbounds nuw i8, ptr %i.e, i64 192
+  %22 = load <2 x float>, ptr %i.dt, align 4, !tbaa !45
+  %23 = fpext <2 x float> %22 to <2 x double>     ; 4 uses
+  store <2 x double> %23, ptr %i.dw, align 8, !tbaa !33
   store <2 x double> %23, ptr %i.ec, align 8, !tbaa !33
   %i.ed = getelementptr inbounds nuw i8, ptr %i.e, i64 208
   %i.ee = getelementptr inbounds nuw i8, ptr %i.e, i64 216
@@ -353,37 +353,37 @@ bb.b:                                             ; preds = %.noexc
   %i.eo = fpext <4 x float> %i.en to <4 x double>
   %i.ep = fneg <4 x double> %i.eo                 ; 9 uses
   %i.eq = shufflevector <4 x double> %i.ep, <4 x double> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %24 = shufflevector <4 x double> %i.ep, <4 x double> poison, <2 x i32> zeroinitializer
-  %25 = fmul <2 x double> %24, %21
-  store <2 x double> %25, ptr %i.df, align 8, !tbaa !33
-  %26 = fmul <4 x double> %i.ek, %i.eq            ; 4 uses
-  %27 = extractelement <4 x double> %26, i64 0
-  store double %27, ptr %i.dg, align 8, !tbaa !33
-  %28 = extractelement <4 x double> %i.ep, i64 0
-  store double %28, ptr %i.dh, align 8, !tbaa !33
+  %24 = fmul <4 x double> %i.ek, %i.eq            ; 4 uses
+  %25 = extractelement <4 x double> %24, i64 0
+  store double %25, ptr %i.dg, align 8, !tbaa !33
+  %26 = extractelement <4 x double> %i.ep, i64 0
+  store double %26, ptr %i.dh, align 8, !tbaa !33
+  %27 = shufflevector <4 x double> %i.ep, <4 x double> poison, <2 x i32> zeroinitializer
+  %28 = fmul <2 x double> %27, %21
+  store <2 x double> %28, ptr %i.df, align 8, !tbaa !33
   store double %i.el, ptr %i.dj, align 8, !tbaa !33
   %i.er = shufflevector <4 x double> %i.ep, <4 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.es = fmul <2 x double> %i.er, %21
   store <2 x double> %i.es, ptr %i.dl, align 8, !tbaa !33
-  %i.et = extractelement <4 x double> %26, i64 2
+  %i.et = extractelement <4 x double> %24, i64 2
   store double %i.et, ptr %i.dm, align 8, !tbaa !33
   %i.eu = extractelement <4 x double> %i.ep, i64 1
   store double %i.eu, ptr %i.dn, align 8, !tbaa !33
   %i.ev = extractelement <2 x double> %i.ej, i64 1 ; 2 uses
   store double %i.ev, ptr %i.dx, align 8, !tbaa !33
-  %29 = shufflevector <4 x double> %i.ep, <4 x double> poison, <2 x i32> <i32 2, i32 2>
-  %30 = fmul <2 x double> %29, %23
-  store <2 x double> %30, ptr %i.dz, align 8, !tbaa !33
-  %i.ew = extractelement <4 x double> %26, i64 1
-  store double %i.ew, ptr %i.ea, align 8, !tbaa !33
-  %31 = extractelement <4 x double> %i.ep, i64 2
-  store double %31, ptr %i.eb, align 8, !tbaa !33
+  %29 = extractelement <4 x double> %24, i64 1
+  store double %29, ptr %i.ea, align 8, !tbaa !33
+  %i.ew = extractelement <4 x double> %i.ep, i64 2
+  store double %i.ew, ptr %i.eb, align 8, !tbaa !33
+  %30 = shufflevector <4 x double> %i.ep, <4 x double> poison, <2 x i32> <i32 2, i32 2>
+  %31 = fmul <2 x double> %30, %23
+  store <2 x double> %31, ptr %i.dz, align 8, !tbaa !33
   store double %i.ev, ptr %i.ed, align 8, !tbaa !33
   %i.ex = shufflevector <4 x double> %i.ep, <4 x double> poison, <2 x i32> <i32 3, i32 3>
   %i.ey = fmul <2 x double> %i.ex, %23
   store <2 x double> %i.ey, ptr %i.ef, align 8, !tbaa !33
   %i.ez = getelementptr inbounds nuw i8, ptr %i.e, i64 240
-  %i.fa = extractelement <4 x double> %26, i64 3
+  %i.fa = extractelement <4 x double> %24, i64 3
   store double %i.fa, ptr %i.ez, align 8, !tbaa !33
   %i.fb = getelementptr inbounds nuw i8, ptr %i.e, i64 248
   %i.fc = extractelement <4 x double> %i.ep, i64 3
@@ -403,26 +403,26 @@ bb.b:                                             ; preds = %.noexc
   %i.fp = load float, ptr %i.fh, align 4, !tbaa !45
   %i.fq = fpext float %i.fp to double
   %i.fr = getelementptr inbounds nuw i8, ptr %i.a, i64 384
-  %32 = load <2 x float>, ptr %i.fl, align 4, !tbaa !45
-  %33 = fpext <2 x float> %32 to <2 x double>     ; 4 uses
-  store <2 x double> %33, ptr %i.fr, align 8, !tbaa !33
   %i.fs = getelementptr inbounds nuw i8, ptr %i.a, i64 400
   store double %i.fo, ptr %i.fs, align 8, !tbaa !33
   %i.ft = getelementptr inbounds nuw i8, ptr %i.a, i64 408
   store double 1.000000e+00, ptr %i.ft, align 8, !tbaa !33
   %i.fu = fneg double %i.fq                       ; 3 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %i.a, i64 448
-  %34 = insertelement <2 x double> poison, double %i.fu, i64 0
-  %35 = shufflevector <2 x double> %34, <2 x double> poison, <2 x i32> zeroinitializer
-  %36 = fmul <2 x double> %35, %33
-  store <2 x double> %36, ptr %i.fv, align 8, !tbaa !33
-  %37 = fmul double %i.fo, %i.fu
-  %38 = getelementptr inbounds nuw i8, ptr %i.a, i64 464
-  store double %37, ptr %38, align 8, !tbaa !33
-  %39 = getelementptr inbounds nuw i8, ptr %i.a, i64 472
-  store double %i.fu, ptr %39, align 8, !tbaa !33
-  %40 = getelementptr inbounds nuw i8, ptr %i.e, i64 256
-  store <2 x double> %33, ptr %40, align 8, !tbaa !33
+  %32 = fmul double %i.fo, %i.fu
+  %33 = getelementptr inbounds nuw i8, ptr %i.a, i64 464
+  store double %32, ptr %33, align 8, !tbaa !33
+  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 472
+  store double %i.fu, ptr %34, align 8, !tbaa !33
+  %35 = getelementptr inbounds nuw i8, ptr %i.e, i64 256
+  %36 = load <2 x float>, ptr %i.fl, align 4, !tbaa !45
+  %37 = fpext <2 x float> %36 to <2 x double>     ; 4 uses
+  store <2 x double> %37, ptr %i.fr, align 8, !tbaa !33
+  %38 = insertelement <2 x double> poison, double %i.fu, i64 0
+  %39 = shufflevector <2 x double> %38, <2 x double> poison, <2 x i32> zeroinitializer
+  %40 = fmul <2 x double> %39, %37
+  store <2 x double> %40, ptr %i.fv, align 8, !tbaa !33
+  store <2 x double> %37, ptr %35, align 8, !tbaa !33
   %i.fw = getelementptr inbounds nuw i8, ptr %i.e, i64 272
   store double %i.fo, ptr %i.fw, align 8, !tbaa !33
   %i.fx = getelementptr inbounds nuw i8, ptr %i.e, i64 280
@@ -431,7 +431,7 @@ bb.b:                                             ; preds = %.noexc
   %i.fz = getelementptr inbounds nuw i8, ptr %i.e, i64 288
   %i.ga = insertelement <2 x double> poison, double %i.fy, i64 0
   %i.gb = shufflevector <2 x double> %i.ga, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.gc = fmul <2 x double> %i.gb, %33
+  %i.gc = fmul <2 x double> %i.gb, %37
   store <2 x double> %i.gc, ptr %i.fz, align 8, !tbaa !33
   %i.gd = fmul double %i.fy, %i.fo
   %i.ge = getelementptr inbounds nuw i8, ptr %i.e, i64 304

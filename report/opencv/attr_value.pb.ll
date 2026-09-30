@@ -205,12 +205,12 @@ bb.a:
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !239, !noalias !241
   %i.n = load ptr, ptr %i.e, align 8, !tbaa !105, !noalias !241
   store ptr %i.n, ptr %i.f, align 8, !tbaa !105
+  %2 = load <2 x i32>, ptr %i.k, align 8, !tbaa !101, !noalias !241
   store ptr %i.m, ptr %i.h, align 8, !tbaa !239
   store ptr %i.j, ptr %i.e, align 8, !tbaa !105
-  %2 = load <2 x i32>, ptr %i.g, align 8, !tbaa !101, !noalias !240
-  %i.o = load <2 x i32>, ptr %i.k, align 8, !tbaa !101, !noalias !241
-  store <2 x i32> %i.o, ptr %i.g, align 8, !tbaa !101
-  store <2 x i32> %2, ptr %i.k, align 8, !tbaa !101
+  %i.o = load <2 x i32>, ptr %i.g, align 8, !tbaa !101, !noalias !240
+  store <2 x i32> %2, ptr %i.g, align 8, !tbaa !101
+  store <2 x i32> %i.o, ptr %i.k, align 8, !tbaa !101
   store ptr %i.i, ptr %i.l, align 8, !tbaa !239
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
@@ -241,26 +241,26 @@ bb.a:
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.ae = load ptr, ptr %i.x, align 8, !tbaa !105, !noalias !243
   store ptr %i.ae, ptr %i.y, align 8, !tbaa !105
+  %3 = load <2 x i32>, ptr %i.ac, align 8, !tbaa !101, !noalias !243
   store ptr %i.ab, ptr %i.x, align 8, !tbaa !105
-  %3 = load <2 x i32>, ptr %i.z, align 8, !tbaa !101, !noalias !242
-  %i.af = load <2 x i32>, ptr %i.ac, align 8, !tbaa !101, !noalias !243
-  store <2 x i32> %i.af, ptr %i.z, align 8, !tbaa !101
-  store <2 x i32> %3, ptr %i.ac, align 8, !tbaa !101
+  %i.af = load <2 x i32>, ptr %i.z, align 8, !tbaa !101, !noalias !242
+  store <2 x i32> %3, ptr %i.z, align 8, !tbaa !101
+  store <2 x i32> %i.af, ptr %i.ac, align 8, !tbaa !101
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 160 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
-  %i.ak = load <2 x ptr>, ptr %i.aa, align 8, !tbaa !46, !noalias !106
-  %i.al = load <2 x ptr>, ptr %i.ad, align 8, !tbaa !46, !noalias !106
-  store <2 x ptr> %i.al, ptr %i.aa, align 8, !tbaa !46
-  store <2 x ptr> %i.ak, ptr %i.ad, align 8, !tbaa !46
-  %i.am = load ptr, ptr %i.ah, align 8, !tbaa !239, !noalias !244
-  %i.an = load ptr, ptr %i.aj, align 8, !tbaa !239, !noalias !245
+  %i.ak = load <2 x ptr>, ptr %i.ad, align 8, !tbaa !46, !noalias !106
+  %4 = load <2 x i32>, ptr %i.ai, align 8, !tbaa !101, !noalias !244
+  %i.al = load <2 x ptr>, ptr %i.aa, align 8, !tbaa !46, !noalias !106
+  store <2 x ptr> %i.ak, ptr %i.aa, align 8, !tbaa !46
+  store <2 x ptr> %i.al, ptr %i.ad, align 8, !tbaa !46
+  %i.am = load ptr, ptr %i.ah, align 8, !tbaa !239, !noalias !245
+  %i.an = load ptr, ptr %i.aj, align 8, !tbaa !239, !noalias !244
   store ptr %i.an, ptr %i.ah, align 8, !tbaa !239
-  %4 = load <2 x i32>, ptr %i.ag, align 8, !tbaa !101, !noalias !244
-  %i.ao = load <2 x i32>, ptr %i.ai, align 8, !tbaa !101, !noalias !245
-  store <2 x i32> %i.ao, ptr %i.ag, align 8, !tbaa !101
-  store <2 x i32> %4, ptr %i.ai, align 8, !tbaa !101
+  %i.ao = load <2 x i32>, ptr %i.ag, align 8, !tbaa !101, !noalias !245
+  store <2 x i32> %4, ptr %i.ag, align 8, !tbaa !101
+  store <2 x i32> %i.ao, ptr %i.ai, align 8, !tbaa !101
   store ptr %i.am, ptr %i.aj, align 8, !tbaa !239
   ret void
 }

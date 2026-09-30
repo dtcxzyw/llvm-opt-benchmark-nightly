@@ -205,29 +205,23 @@ bb.fz:                                            ; preds = %bb.fz, %bb.fy
   %i.big = load i16, ptr %i.bif, align 2, !tbaa !53
   %i.bih = zext i16 %i.big to i32
   %i.bii = mul nsw i32 %i.bic, %i.bih
-  %i.bij = ashr i32 %i.bii, 3                     ; 3 uses
-  %4 = icmp ugt i32 %i.bij, 255
-  %isnotneg.i374.i = icmp sgt i32 %i.bij, -1
-  %5 = sext i1 %isnotneg.i374.i to i16
-  %i.bik = trunc nuw i32 %i.bij to i16
-  %.0.i375.i = select i1 %4, i16 %5, i16 %i.bik
-  %6 = and i16 %.0.i375.i, 255
+  %i.bij = ashr i32 %i.bii, 3
+  %4 = call i32 @llvm.smax.i32(i32 %i.bij, i32 0)
+  %.0.i375387.i = call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %i.bik = trunc nuw nsw i32 %.0.i375387.i to i16
   %i.bil = zext i8 %i.bie to i64                  ; 2 uses
   %i.bim = getelementptr inbounds nuw [2 x i8], ptr %i.atd, i64 %i.bil
-  store i16 %6, ptr %i.bim, align 2, !tbaa !53
+  store i16 %i.bik, ptr %i.bim, align 2, !tbaa !53
   %i.bin = getelementptr inbounds nuw [2 x i8], ptr %spec.select.i, i64 %indvars.iv466.i
   %i.bio = load i16, ptr %i.bin, align 2, !tbaa !53
   %i.bip = zext i16 %i.bio to i32
   %i.biq = mul nsw i32 %i.bic, %i.bip
-  %i.bir = ashr i32 %i.biq, 3                     ; 3 uses
-  %7 = icmp ugt i32 %i.bir, 255
-  %isnotneg.i.i = icmp sgt i32 %i.bir, -1
-  %8 = sext i1 %isnotneg.i.i to i16
-  %i.bis = trunc nuw i32 %i.bir to i16
-  %.0.i.i = select i1 %7, i16 %8, i16 %i.bis
-  %9 = and i16 %.0.i.i, 255
+  %i.bir = ashr i32 %i.biq, 3
+  %5 = call i32 @llvm.smax.i32(i32 %i.bir, i32 0)
+  %.0.i388.i = call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.bis = trunc nuw nsw i32 %.0.i388.i to i16
   %i.bit = getelementptr inbounds nuw [2 x i8], ptr %i.ate, i64 %i.bil
-  store i16 %9, ptr %i.bit, align 2, !tbaa !53
+  store i16 %i.bis, ptr %i.bit, align 2, !tbaa !53
   %indvars.iv.next467.i = add nuw nsw i64 %indvars.iv466.i, 1 ; 2 uses
   %exitcond469.not.i = icmp eq i64 %indvars.iv.next467.i, 64
   br i1 %exitcond469.not.i, label %bb.ga, label %bb.fz, !llvm.loop !377

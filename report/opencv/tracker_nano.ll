@@ -205,7 +205,6 @@ _ZN2cv3Mat2atIfEERT_PKi.exit375:                  ; preds = %_ZN2cv3Mat2atIfEERT
   %i.adz = select <2 x i1> %i.ady, <2 x float> %i.adv, <2 x float> %i.adx ; 2 uses
   %i.aea = fcmp ogt <2 x float> %i.adz, zeroinitializer
   %i.aeb = select <2 x i1> %i.aea, <2 x float> %i.adz, <2 x float> zeroinitializer ; 2 uses
-  store <2 x float> %i.aeb, ptr %i.adm, align 4, !tbaa !51
   %i.aec = fdiv <2 x float> %i.adg, %i.zq
   %i.aed = insertelement <2 x float> poison, float %i.adn, i64 0
   %i.aee = shufflevector <2 x float> %i.aed, <2 x float> poison, <2 x i32> zeroinitializer
@@ -217,13 +216,14 @@ _ZN2cv3Mat2atIfEERT_PKi.exit375:                  ; preds = %_ZN2cv3Mat2atIfEERT
   %i.aek = select <2 x i1> %i.aej, <2 x float> %i.aei, <2 x float> %i.adx ; 2 uses
   %i.ael = fcmp ogt <2 x float> %i.aek, splat (float 1.000000e+01)
   %i.aem = select <2 x i1> %i.ael, <2 x float> %i.aek, <2 x float> splat (float 1.000000e+01) ; 4 uses
+  store <2 x float> %i.aeb, ptr %i.adm, align 4, !tbaa !51
   %i.aen = extractelement <2 x float> %i.aem, i64 0
   store float %i.aen, ptr %i.zm, align 4, !tbaa !51
   %i.aeo = extractelement <2 x float> %i.aem, i64 1
   store float %i.aeo, ptr %i.zn, align 4, !tbaa !51
   %i.aep = fmul <2 x float> %i.aem, splat (float 5.000000e-01)
   %i.aeq = fsub <2 x float> %i.aeb, %i.aep
-  %138 = shufflevector <2 x float> %i.aem, <2 x float> %i.aeq, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
+  %138 = shufflevector <2 x float> %i.aeq, <2 x float> %i.aem, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.aer = fptosi <4 x float> %138 to <4 x i32>
   store <4 x i32> %i.aer, ptr %2, align 4, !tbaa !64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #21

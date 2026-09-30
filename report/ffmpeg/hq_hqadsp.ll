@@ -204,83 +204,67 @@ begin_hunk_0_@hq_idct_put:vector.ph
   %.01925 = phi ptr [ %0, %vector.ph ], [ %i.nk, %.preheader ] ; 9 uses
   %i.lx = shl nuw nsw i64 %indvars.iv36, 3        ; 8 uses
   %i.ly = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.lx
-  %i.lz = load i16, ptr %i.ly, align 2, !tbaa !14 ; 3 uses
-  %3 = icmp ugt i16 %i.lz, 255
-  %isnotneg.i = icmp sgt i16 %i.lz, -1
-  %4 = sext i1 %isnotneg.i to i8
-  %i.ma = trunc i16 %i.lz to i8
-  %.0.i = select i1 %3, i8 %4, i8 %i.ma
-  store i8 %.0.i, ptr %.01925, align 1, !tbaa !15
+  %i.lz = load i16, ptr %i.ly, align 2, !tbaa !14
+  %3 = tail call i16 @llvm.smax.i16(i16 %i.lz, i16 0)
+  %.0.i20 = tail call i16 @llvm.umin.i16(i16 %3, i16 255)
+  %i.ma = trunc nuw i16 %.0.i20 to i8
+  store i8 %i.ma, ptr %.01925, align 1, !tbaa !15
   %i.mb = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.lx
   %i.mc = getelementptr inbounds nuw i8, ptr %i.mb, i64 2
-  %i.md = load i16, ptr %i.mc, align 2, !tbaa !14 ; 3 uses
-  %5 = icmp ugt i16 %i.md, 255
-  %isnotneg.i.1 = icmp sgt i16 %i.md, -1
-  %6 = sext i1 %isnotneg.i.1 to i8
-  %i.me = trunc i16 %i.md to i8
-  %.0.i.1 = select i1 %5, i8 %6, i8 %i.me
+  %i.md = load i16, ptr %i.mc, align 2, !tbaa !14
+  %4 = tail call i16 @llvm.smax.i16(i16 %i.md, i16 0)
+  %.0.i20.1 = tail call i16 @llvm.umin.i16(i16 %4, i16 255)
+  %i.me = trunc nuw i16 %.0.i20.1 to i8
   %i.mf = getelementptr inbounds nuw i8, ptr %.01925, i64 1
-  store i8 %.0.i.1, ptr %i.mf, align 1, !tbaa !15
+  store i8 %i.me, ptr %i.mf, align 1, !tbaa !15
   %i.mg = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.lx
   %i.mh = getelementptr inbounds nuw i8, ptr %i.mg, i64 4
-  %i.mi = load i16, ptr %i.mh, align 2, !tbaa !14 ; 3 uses
-  %7 = icmp ugt i16 %i.mi, 255
-  %isnotneg.i.2 = icmp sgt i16 %i.mi, -1
-  %8 = sext i1 %isnotneg.i.2 to i8
-  %i.mj = trunc i16 %i.mi to i8
-  %.0.i.2 = select i1 %7, i8 %8, i8 %i.mj
+  %i.mi = load i16, ptr %i.mh, align 2, !tbaa !14
+  %5 = tail call i16 @llvm.smax.i16(i16 %i.mi, i16 0)
+  %.0.i20.2 = tail call i16 @llvm.umin.i16(i16 %5, i16 255)
+  %i.mj = trunc nuw i16 %.0.i20.2 to i8
   %i.mk = getelementptr inbounds nuw i8, ptr %.01925, i64 2
-  store i8 %.0.i.2, ptr %i.mk, align 1, !tbaa !15
+  store i8 %i.mj, ptr %i.mk, align 1, !tbaa !15
   %i.ml = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.lx
   %i.mm = getelementptr inbounds nuw i8, ptr %i.ml, i64 6
-  %i.mn = load i16, ptr %i.mm, align 2, !tbaa !14 ; 3 uses
-  %9 = icmp ugt i16 %i.mn, 255
-  %isnotneg.i.3 = icmp sgt i16 %i.mn, -1
-  %10 = sext i1 %isnotneg.i.3 to i8
-  %i.mo = trunc i16 %i.mn to i8
-  %.0.i.3 = select i1 %9, i8 %10, i8 %i.mo
+  %i.mn = load i16, ptr %i.mm, align 2, !tbaa !14
+  %6 = tail call i16 @llvm.smax.i16(i16 %i.mn, i16 0)
+  %.0.i20.3 = tail call i16 @llvm.umin.i16(i16 %6, i16 255)
+  %i.mo = trunc nuw i16 %.0.i20.3 to i8
   %i.mp = getelementptr inbounds nuw i8, ptr %.01925, i64 3
-  store i8 %.0.i.3, ptr %i.mp, align 1, !tbaa !15
+  store i8 %i.mo, ptr %i.mp, align 1, !tbaa !15
   %i.mq = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.lx
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mq, i64 8
-  %i.ms = load i16, ptr %i.mr, align 2, !tbaa !14 ; 3 uses
-  %11 = icmp ugt i16 %i.ms, 255
-  %isnotneg.i.4 = icmp sgt i16 %i.ms, -1
-  %12 = sext i1 %isnotneg.i.4 to i8
-  %i.mt = trunc i16 %i.ms to i8
-  %.0.i.4 = select i1 %11, i8 %12, i8 %i.mt
+  %i.ms = load i16, ptr %i.mr, align 2, !tbaa !14
+  %7 = tail call i16 @llvm.smax.i16(i16 %i.ms, i16 0)
+  %.0.i20.4 = tail call i16 @llvm.umin.i16(i16 %7, i16 255)
+  %i.mt = trunc nuw i16 %.0.i20.4 to i8
   %i.mu = getelementptr inbounds nuw i8, ptr %.01925, i64 4
-  store i8 %.0.i.4, ptr %i.mu, align 1, !tbaa !15
+  store i8 %i.mt, ptr %i.mu, align 1, !tbaa !15
   %i.mv = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.lx
   %i.mw = getelementptr inbounds nuw i8, ptr %i.mv, i64 10
-  %i.mx = load i16, ptr %i.mw, align 2, !tbaa !14 ; 3 uses
-  %13 = icmp ugt i16 %i.mx, 255
-  %isnotneg.i.5 = icmp sgt i16 %i.mx, -1
-  %14 = sext i1 %isnotneg.i.5 to i8
-  %i.my = trunc i16 %i.mx to i8
-  %.0.i.5 = select i1 %13, i8 %14, i8 %i.my
+  %i.mx = load i16, ptr %i.mw, align 2, !tbaa !14
+  %8 = tail call i16 @llvm.smax.i16(i16 %i.mx, i16 0)
+  %.0.i20.5 = tail call i16 @llvm.umin.i16(i16 %8, i16 255)
+  %i.my = trunc nuw i16 %.0.i20.5 to i8
   %i.mz = getelementptr inbounds nuw i8, ptr %.01925, i64 5
-  store i8 %.0.i.5, ptr %i.mz, align 1, !tbaa !15
+  store i8 %i.my, ptr %i.mz, align 1, !tbaa !15
   %i.na = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.lx
   %i.nb = getelementptr inbounds nuw i8, ptr %i.na, i64 12
-  %i.nc = load i16, ptr %i.nb, align 2, !tbaa !14 ; 3 uses
-  %15 = icmp ugt i16 %i.nc, 255
-  %isnotneg.i.6 = icmp sgt i16 %i.nc, -1
-  %16 = sext i1 %isnotneg.i.6 to i8
-  %i.nd = trunc i16 %i.nc to i8
-  %.0.i.6 = select i1 %15, i8 %16, i8 %i.nd
+  %i.nc = load i16, ptr %i.nb, align 2, !tbaa !14
+  %9 = tail call i16 @llvm.smax.i16(i16 %i.nc, i16 0)
+  %.0.i20.6 = tail call i16 @llvm.umin.i16(i16 %9, i16 255)
+  %i.nd = trunc nuw i16 %.0.i20.6 to i8
   %i.ne = getelementptr inbounds nuw i8, ptr %.01925, i64 6
-  store i8 %.0.i.6, ptr %i.ne, align 1, !tbaa !15
+  store i8 %i.nd, ptr %i.ne, align 1, !tbaa !15
   %i.nf = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.lx
   %i.ng = getelementptr inbounds nuw i8, ptr %i.nf, i64 14
-  %i.nh = load i16, ptr %i.ng, align 2, !tbaa !14 ; 3 uses
-  %17 = icmp ugt i16 %i.nh, 255
-  %isnotneg.i.7 = icmp sgt i16 %i.nh, -1
-  %18 = sext i1 %isnotneg.i.7 to i8
-  %i.ni = trunc i16 %i.nh to i8
-  %.0.i.7 = select i1 %17, i8 %18, i8 %i.ni
+  %i.nh = load i16, ptr %i.ng, align 2, !tbaa !14
+  %10 = tail call i16 @llvm.smax.i16(i16 %i.nh, i16 0)
+  %.0.i20.7 = tail call i16 @llvm.umin.i16(i16 %10, i16 255)
+  %i.ni = trunc nuw i16 %.0.i20.7 to i8
   %i.nj = getelementptr inbounds nuw i8, ptr %.01925, i64 7
-  store i8 %.0.i.7, ptr %i.nj, align 1, !tbaa !15
+  store i8 %i.ni, ptr %i.nj, align 1, !tbaa !15
   %i.nk = getelementptr inbounds i8, ptr %.01925, i64 %i.lw
   %indvars.iv.next37 = add nuw nsw i64 %indvars.iv36, 1 ; 2 uses
   %exitcond39.not = icmp eq i64 %indvars.iv.next37, 8
@@ -290,8 +274,15 @@ bb.a:                                             ; preds = %.preheader
   ret void
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.smax.i16(i16, i16) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umin.i16(i16, i16) #2
+
 attributes #0 = { cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

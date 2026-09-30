@@ -204,12 +204,10 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 520
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 488
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 568
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 536
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 576
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 448
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 608
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 616
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 544
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 624
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 592
@@ -220,7 +218,6 @@ bb.a:
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 664
   store double %i.bg, ptr %i.bh, align 8, !tbaa !61
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 672
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 680
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 648
   %i.bk = load double, ptr %i.bj, align 8, !tbaa !61
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 688
@@ -235,15 +232,11 @@ bb.a:
   store <2 x double> %i.bn, ptr %8, align 16, !tbaa !61
   %i.bo = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.bp = load <2 x double>, ptr %i.aq, align 8, !tbaa !61 ; 3 uses
-  %17 = extractelement <2 x double> %i.bp, i64 0  ; 2 uses
-  store double %17, ptr %i.ar, align 8, !tbaa !61
-  %i.bq = extractelement <2 x double> %i.bp, i64 1
-  store double %i.bq, ptr %i.au, align 8, !tbaa !61
+  %i.bq = extractelement <2 x double> %i.bp, i64 0 ; 2 uses
+  store double %i.bq, ptr %i.ar, align 8, !tbaa !61
   store <2 x double> %i.bp, ptr %i.bo, align 16, !tbaa !61
   %i.br = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.bs = load <2 x double>, ptr %i.ay, align 8, !tbaa !61 ; 3 uses
-  %18 = extractelement <2 x double> %i.bs, i64 0
-  store double %18, ptr %i.az, align 8, !tbaa !61
   %i.bt = extractelement <2 x double> %i.bs, i64 1
   store double %i.bt, ptr %i.be, align 8, !tbaa !61
   store <2 x double> %i.bs, ptr %i.br, align 16, !tbaa !61
@@ -257,15 +250,15 @@ bb.a:
   store <2 x double> %i.by, ptr %i.bw, align 8, !tbaa !61
   %i.bz = getelementptr inbounds nuw i8, ptr %8, i64 72
   %i.ca = load <2 x double>, ptr %i.av, align 8, !tbaa !61 ; 3 uses
-  %19 = extractelement <2 x double> %i.ca, i64 0
-  store double %19, ptr %14, align 8, !tbaa !61
-  %20 = extractelement <2 x double> %i.ca, i64 1
-  store double %20, ptr %15, align 8, !tbaa !61
+  %14 = shufflevector <2 x double> %i.bp, <2 x double> %i.ca, <2 x i32> <i32 1, i32 2>
+  store <2 x double> %14, ptr %i.au, align 8, !tbaa !61
+  %15 = shufflevector <2 x double> %i.bs, <2 x double> %i.ca, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %15, ptr %i.az, align 8, !tbaa !61
   store <2 x double> %i.ca, ptr %i.bz, align 8, !tbaa !61
   %i.cb = getelementptr inbounds nuw i8, ptr %8, i64 88
   store double %i.bg, ptr %i.cb, align 8, !tbaa !61
   %i.cc = getelementptr inbounds nuw i8, ptr %8, i64 96
-  store double %17, ptr %i.cc, align 16, !tbaa !61
+  store double %i.bq, ptr %i.cc, align 16, !tbaa !61
   %i.cd = getelementptr inbounds nuw i8, ptr %8, i64 104
   store double %i.bx, ptr %i.cd, align 8, !tbaa !61
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 528
@@ -276,10 +269,8 @@ bb.a:
   store <2 x double> %i.ch, ptr %i.cf, align 16, !tbaa !61
   %i.ci = getelementptr inbounds nuw i8, ptr %8, i64 128
   %i.cj = load <2 x double>, ptr %i.ba, align 8, !tbaa !61 ; 3 uses
-  %21 = extractelement <2 x double> %i.cj, i64 0
-  store double %21, ptr %i.bb, align 8, !tbaa !61
-  %i.ck = extractelement <2 x double> %i.cj, i64 1
-  store double %i.ck, ptr %i.bi, align 8, !tbaa !61
+  %i.ck = extractelement <2 x double> %i.cj, i64 0
+  store double %i.ck, ptr %i.bb, align 8, !tbaa !61
   store <2 x double> %i.cj, ptr %i.ci, align 16, !tbaa !61
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.cm = getelementptr inbounds nuw i8, ptr %8, i64 144
@@ -293,8 +284,8 @@ bb.a:
   %i.cs = load <2 x double>, ptr %i.bc, align 8, !tbaa !61 ; 3 uses
   %i.ct = extractelement <2 x double> %i.cs, i64 0
   store double %i.ct, ptr %i.bd, align 8, !tbaa !61
-  %22 = extractelement <2 x double> %i.cs, i64 1
-  store double %22, ptr %16, align 8, !tbaa !61
+  %16 = shufflevector <2 x double> %i.cj, <2 x double> %i.cs, <2 x i32> <i32 1, i32 3>
+  store <2 x double> %16, ptr %i.bi, align 8, !tbaa !61
   store <2 x double> %i.cs, ptr %i.cr, align 16, !tbaa !61
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 608
   %i.cv = getelementptr inbounds nuw i8, ptr %8, i64 192

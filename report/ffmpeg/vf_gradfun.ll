@@ -62,14 +62,12 @@ bb.a:
   %i.t = zext i16 %i.s to i32
   %i.u = add nuw nsw i32 %i.e, %i.t
   %i.v = add nsw i32 %i.u, %i.p
-  %i.w = ashr i32 %i.v, 7                         ; 3 uses
-  %6 = icmp ugt i32 %i.w, 255
-  %isnotneg.i = icmp sgt i32 %i.w, -1
-  %7 = sext i1 %isnotneg.i to i8
-  %i.x = trunc nuw i32 %i.w to i8
-  %.0.i = select i1 %6, i8 %7, i8 %i.x
+  %i.w = ashr i32 %i.v, 7
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.w, i32 0)
+  %.0.i23 = tail call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.x = trunc nuw i32 %.0.i23 to i8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
-  store i8 %.0.i, ptr %i.y, align 1, !tbaa !9
+  store i8 %i.x, ptr %i.y, align 1, !tbaa !9
   %i.z = and i64 %indvars.iv, 1
   %i.aa = getelementptr inbounds nuw [2 x i8], ptr %.024, i64 %i.z
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

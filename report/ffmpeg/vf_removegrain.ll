@@ -202,8 +202,8 @@ bb.a:
   %i.f = tail call i32 @llvm.smin.i32(i32 %3, i32 %6) ; 3 uses
   %i.g = tail call i32 @llvm.smax.i32(i32 %4, i32 %5) ; 2 uses
   %i.h = tail call i32 @llvm.smin.i32(i32 %4, i32 %5) ; 3 uses
-  %i.i = sub nsw i32 %i.a, %i.b
-  %i.j = sub nsw i32 %i.c, %i.d
+  %i.i = sub i32 %i.a, %i.b
+  %i.j = sub i32 %i.c, %i.d
   %i.k = sub i32 %i.e, %i.f
   %i.l = sub i32 %i.g, %i.h
   %i.m = icmp slt i32 %0, %i.b
@@ -221,21 +221,17 @@ bb.a:
   %i.q = sub nsw i32 %0, %.0.i122
   %i.r = tail call i32 @llvm.abs.i32(i32 %i.q, i1 true)
   %i.s = shl nuw i32 %i.r, 1
-  %i.t = add nsw i32 %i.s, %i.i                   ; 3 uses
-  %.not.i130 = icmp ult i32 %i.t, 65536
-  %isnotneg.i131 = icmp sgt i32 %i.t, -1
-  %9 = sext i1 %isnotneg.i131 to i16
-  %i.u = trunc nuw i32 %i.t to i16
-  %.0.i132 = select i1 %.not.i130, i16 %i.u, i16 %9
+  %i.t = add nsw i32 %i.i, %i.s
+  %9 = tail call i32 @llvm.smax.i32(i32 %i.t, i32 0)
+  %.0.i132133 = tail call i32 @llvm.umin.i32(i32 %9, i32 65535)
+  %i.u = trunc nuw i32 %.0.i132133 to i16
   %i.v = sub nsw i32 %0, %.0.i120
   %i.w = tail call i32 @llvm.abs.i32(i32 %i.v, i1 true)
   %i.x = shl nuw i32 %i.w, 1
-  %i.y = add nsw i32 %i.x, %i.j                   ; 3 uses
-  %.not.i127 = icmp ult i32 %i.y, 65536
-  %isnotneg.i128 = icmp sgt i32 %i.y, -1
-  %10 = sext i1 %isnotneg.i128 to i16
-  %i.z = trunc nuw i32 %i.y to i16
-  %.0.i129 = select i1 %.not.i127, i16 %i.z, i16 %10 ; 2 uses
+  %i.y = add nsw i32 %i.j, %i.x
+  %10 = tail call i32 @llvm.smax.i32(i32 %i.y, i32 0)
+  %.0.i129134 = tail call i32 @llvm.umin.i32(i32 %10, i32 65535) ; 2 uses
+  %i.z = trunc nuw i32 %.0.i129134 to i16
   %i.aa = sub nsw i32 %0, %.0.i118
   %i.ab = tail call i32 @llvm.abs.i32(i32 %i.aa, i1 true)
   %i.ac = shl nuw i32 %i.ab, 1
@@ -248,7 +244,7 @@ bb.a:
   %i.aj = add nsw i32 %i.l, %i.ai
   %i.ak = tail call i32 @llvm.smax.i32(i32 %i.aj, i32 0)
   %i.al = tail call i32 @llvm.umin.i32(i32 %i.ak, i32 65535) ; 2 uses
-  %i.am = tail call i16 @llvm.umin.i16(i16 %.0.i132, i16 %.0.i129)
+  %i.am = tail call i16 @llvm.umin.i16(i16 %i.u, i16 %i.z)
   %i.an = zext i16 %i.am to i32
   %i.ao = tail call i32 @llvm.umin.i32(i32 %i.af, i32 %i.al)
   %i.ap = tail call i32 @llvm.umin.i32(i32 %i.ao, i32 %i.an) ; 3 uses
@@ -256,8 +252,7 @@ bb.a:
   br i1 %i.aq, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %11 = zext i16 %.0.i129 to i32
-  %i.ar = icmp eq i32 %i.ap, %11
+  %i.ar = icmp eq i32 %i.ap, %.0.i129134
   br i1 %i.ar, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -359,21 +354,17 @@ bb.a:
   %i.q = sub nsw i32 %0, %.0.i122
   %i.r = tail call i32 @llvm.abs.i32(i32 %i.q, i1 true)
   %i.s = shl i32 %i.i, 1
-  %i.t = add nsw i32 %i.r, %i.s                   ; 3 uses
-  %.not.i130 = icmp ult i32 %i.t, 65536
-  %isnotneg.i131 = icmp sgt i32 %i.t, -1
-  %9 = sext i1 %isnotneg.i131 to i16
-  %i.u = trunc nuw i32 %i.t to i16
-  %.0.i132 = select i1 %.not.i130, i16 %i.u, i16 %9
+  %i.t = add nsw i32 %i.r, %i.s
+  %9 = tail call i32 @llvm.smax.i32(i32 %i.t, i32 0)
+  %.0.i132133 = tail call i32 @llvm.umin.i32(i32 %9, i32 65535)
+  %i.u = trunc nuw i32 %.0.i132133 to i16
   %i.v = sub nsw i32 %0, %.0.i120
   %i.w = tail call i32 @llvm.abs.i32(i32 %i.v, i1 true)
   %i.x = shl i32 %i.j, 1
-  %i.y = add nsw i32 %i.w, %i.x                   ; 3 uses
-  %.not.i127 = icmp ult i32 %i.y, 65536
-  %isnotneg.i128 = icmp sgt i32 %i.y, -1
-  %10 = sext i1 %isnotneg.i128 to i16
-  %i.z = trunc nuw i32 %i.y to i16
-  %.0.i129 = select i1 %.not.i127, i16 %i.z, i16 %10 ; 2 uses
+  %i.y = add nsw i32 %i.w, %i.x
+  %10 = tail call i32 @llvm.smax.i32(i32 %i.y, i32 0)
+  %.0.i129134 = tail call i32 @llvm.umin.i32(i32 %10, i32 65535) ; 2 uses
+  %i.z = trunc nuw i32 %.0.i129134 to i16
   %i.aa = sub nsw i32 %0, %.0.i118
   %i.ab = tail call i32 @llvm.abs.i32(i32 %i.aa, i1 true)
   %i.ac = shl i32 %i.k, 1
@@ -386,7 +377,7 @@ bb.a:
   %i.aj = add nsw i32 %i.ah, %i.ai
   %i.ak = tail call i32 @llvm.smax.i32(i32 %i.aj, i32 0)
   %i.al = tail call i32 @llvm.umin.i32(i32 %i.ak, i32 65535) ; 2 uses
-  %i.am = tail call i16 @llvm.umin.i16(i16 %.0.i132, i16 %.0.i129)
+  %i.am = tail call i16 @llvm.umin.i16(i16 %i.u, i16 %i.z)
   %i.an = zext i16 %i.am to i32
   %i.ao = tail call i32 @llvm.umin.i32(i32 %i.af, i32 %i.al)
   %i.ap = tail call i32 @llvm.umin.i32(i32 %i.ao, i32 %i.an) ; 3 uses
@@ -394,8 +385,7 @@ bb.a:
   br i1 %i.aq, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %11 = zext i16 %.0.i129 to i32
-  %i.ar = icmp eq i32 %i.ap, %11
+  %i.ar = icmp eq i32 %i.ap, %.0.i129134
   br i1 %i.ar, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

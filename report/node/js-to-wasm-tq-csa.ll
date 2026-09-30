@@ -202,13 +202,13 @@ begin_hunk_0_@_ZN2v88internal30JSToWasmHandleReturnsAssembler33GenerateJSToWasmH
   %1669 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 5 uses
   %1670 = alloca %"class.v8::internal::TNode.20", align 8 ; 2 uses
   %1671 = alloca %"struct.v8::internal::TorqueStructReference_int64_0", align 8 ; 5 uses
-  %1672 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 8 ; 3 uses
+  %1672 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 16 ; 2 uses
   %1673 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 7 uses
   %1674 = alloca %"class.v8::internal::TNode", align 8 ; 2 uses
   %1675 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 5 uses
   %1676 = alloca %"class.v8::internal::TNode.185", align 8 ; 2 uses
   %1677 = alloca %"struct.v8::internal::TorqueStructReference_int32_0", align 8 ; 5 uses
-  %1678 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 8 ; 3 uses
+  %1678 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 16 ; 2 uses
   %1679 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 7 uses
   %1680 = alloca %"class.v8::internal::TNode.15", align 8 ; 6 uses
   %1681 = alloca %"class.v8::internal::TNode.15", align 8 ; 6 uses
@@ -336,13 +336,13 @@ begin_hunk_0_@_ZN2v88internal30JSToWasmHandleReturnsAssembler33GenerateJSToWasmH
   %1803 = alloca %"class.std::vector.0", align 8  ; 5 uses
   %1804 = alloca %"class.std::vector.0", align 8  ; 5 uses
   %1805 = alloca %"struct.v8::internal::TorqueStructReference_float64_0", align 8 ; 5 uses
-  %1806 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 8 ; 3 uses
+  %1806 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 16 ; 2 uses
   %1807 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 7 uses
   %1808 = alloca %"class.v8::internal::TNode.14", align 8 ; 2 uses
   %1809 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 5 uses
   %1810 = alloca %"class.v8::internal::TNode.38", align 8 ; 2 uses
   %1811 = alloca %"struct.v8::internal::TorqueStructReference_float32_0", align 8 ; 5 uses
-  %1812 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 8 ; 3 uses
+  %1812 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 16 ; 2 uses
   %1813 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 7 uses
   %1814 = alloca %"class.v8::internal::TNode.15", align 8 ; 5 uses
   %1815 = alloca %"class.v8::internal::TNode.15", align 8 ; 5 uses
@@ -363,7 +363,7 @@ begin_hunk_0_@_ZN2v88internal30JSToWasmHandleReturnsAssembler33GenerateJSToWasmH
   %1830 = alloca %"class.std::vector.0", align 8  ; 5 uses
   %1831 = alloca %"class.std::vector.0", align 8  ; 5 uses
   %1832 = alloca %"struct.v8::internal::TorqueStructReference_int64_0", align 8 ; 5 uses
-  %1833 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 8 ; 3 uses
+  %1833 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 16 ; 2 uses
   %1834 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 7 uses
   %1835 = alloca %"class.v8::internal::TNode.185", align 8 ; 2 uses
   %1836 = alloca %"class.v8::internal::TNode.185", align 8 ; 2 uses
@@ -375,7 +375,7 @@ begin_hunk_0_@_ZN2v88internal30JSToWasmHandleReturnsAssembler33GenerateJSToWasmH
   %1842 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 5 uses
   %1843 = alloca %"class.v8::internal::TNode.24", align 8 ; 2 uses
   %1844 = alloca %"struct.v8::internal::TorqueStructReference_float32_0", align 8 ; 5 uses
-  %1845 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 8 ; 3 uses
+  %1845 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 16 ; 2 uses
   %1846 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 7 uses
   %1847 = alloca %"class.v8::internal::TNode.15", align 8 ; 5 uses
   %1848 = alloca %"class.v8::internal::TNode.15", align 8 ; 5 uses
@@ -388,7 +388,7 @@ begin_hunk_0_@_ZN2v88internal30JSToWasmHandleReturnsAssembler33GenerateJSToWasmH
   %1855 = alloca %"class.v8::internal::TNode.15", align 8 ; 5 uses
   %1856 = alloca %"class.v8::internal::TNode.14", align 8 ; 5 uses
   %1857 = alloca %"struct.v8::internal::TorqueStructReference_float32_0", align 8 ; 5 uses
-  %1858 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 8 ; 3 uses
+  %1858 = alloca %"struct.v8::internal::TorqueStructReference_intptr_0", align 16 ; 2 uses
   %1859 = alloca %"class.v8::internal::CodeStubAssembler", align 8 ; 7 uses
   %1860 = alloca %"class.v8::internal::TNode.15", align 8 ; 5 uses
   %1861 = alloca %"class.v8::internal::TNode.15", align 8 ; 5 uses
@@ -791,24 +791,22 @@ bb.sm:                                            ; preds = %bb.sl
 
 _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7048: ; preds = %bb.sm, %bb.sl
   %i.hqn = load ptr, ptr %i.hqh, align 8          ; 6 uses
-  %2473 = getelementptr inbounds nuw i8, ptr %i.hqn, i64 16
-  %i.hqo = getelementptr inbounds nuw i8, ptr %i.hqn, i64 32
-  %i.hqp = getelementptr inbounds nuw i8, ptr %i.hqn, i64 48
-  %i.hqq = getelementptr inbounds nuw i8, ptr %i.hqn, i64 56
-  %i.hqr = getelementptr inbounds nuw i8, ptr %i.hqn, i64 64
-  %2474 = load ptr, ptr %i.hqr, align 8           ; 2 uses
-  %i.hqs = getelementptr inbounds nuw i8, ptr %1672, i64 8
+  %i.hqo = getelementptr inbounds nuw i8, ptr %i.hqn, i64 16
+  %i.hqp = getelementptr inbounds nuw i8, ptr %i.hqn, i64 32
+  %i.hqq = getelementptr inbounds nuw i8, ptr %i.hqn, i64 48
+  %i.hqr = getelementptr inbounds nuw i8, ptr %i.hqn, i64 56
+  %i.hqs = getelementptr inbounds nuw i8, ptr %i.hqn, i64 64
   %i.hqt = getelementptr inbounds nuw i8, ptr %1671, i64 8
   %i.hqu = getelementptr inbounds nuw i8, ptr %353, i64 16 ; 2 uses
   %i.hqv = load <2 x ptr>, ptr %i.hqn, align 8
-  %i.hqw = load <2 x ptr>, ptr %2473, align 8
+  %i.hqw = load <2 x ptr>, ptr %i.hqo, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %68)
   call void @llvm.lifetime.start.p0(ptr nonnull %1671) #10
-  store ptr %2474, ptr %i.hqs, align 8
-  %i.hqx = load <2 x ptr>, ptr %i.hqo, align 8
-  %i.hqy = load ptr, ptr %i.hqq, align 8
-  %i.hqz = load <2 x ptr>, ptr %i.hqp, align 8
-  store ptr %i.hqy, ptr %1672, align 8
+  %2473 = load <2 x ptr>, ptr %i.hqp, align 8
+  %i.hqx = load <2 x ptr>, ptr %i.hqq, align 8
+  %i.hqy = load ptr, ptr %i.hqs, align 8
+  %i.hqz = load <2 x ptr>, ptr %i.hqr, align 8
+  store <2 x ptr> %i.hqz, ptr %1672, align 16
   call void @_ZN2v88internal15RefCast_int64_0EPNS0_8compiler18CodeAssemblerStateENS0_30TorqueStructReference_intptr_0E(ptr dead_on_unwind nonnull writable sret(%"struct.v8::internal::TorqueStructReference_int64_0") align 8 %1671, ptr noundef %i.a, ptr noundef nonnull dead_on_return %1672)
   %i.hra = load ptr, ptr %i.hqt, align 8, !noalias !4550
   %i.hrb = load ptr, ptr %1671, align 8, !noalias !4550
@@ -854,11 +852,11 @@ _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7048: ; pre
   %.sroa.5.0..sroa_idx.i.i1874 = getelementptr inbounds nuw i8, ptr %i.hrg, i64 16
   store <2 x ptr> %i.hqw, ptr %.sroa.5.0..sroa_idx.i.i1874, align 8
   %.sroa.7.0..sroa_idx.i.i1876 = getelementptr inbounds nuw i8, ptr %i.hrg, i64 32
-  store <2 x ptr> %i.hqx, ptr %.sroa.7.0..sroa_idx.i.i1876, align 8
+  store <2 x ptr> %2473, ptr %.sroa.7.0..sroa_idx.i.i1876, align 8
   %.sroa.9.0..sroa_idx.i.i1878 = getelementptr inbounds nuw i8, ptr %i.hrg, i64 48
-  store <2 x ptr> %i.hqz, ptr %.sroa.9.0..sroa_idx.i.i1878, align 8
+  store <2 x ptr> %i.hqx, ptr %.sroa.9.0..sroa_idx.i.i1878, align 8
   %.sroa.11.0..sroa_idx.i.i1880 = getelementptr inbounds nuw i8, ptr %i.hrg, i64 64
-  store ptr %2474, ptr %.sroa.11.0..sroa_idx.i.i1880, align 8
+  store ptr %i.hqy, ptr %.sroa.11.0..sroa_idx.i.i1880, align 8
   %.sroa.12.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.hrg, i64 72
   store ptr %i.hrf, ptr %.sroa.12.0..sroa_idx.i.i, align 8
   %i.hri = getelementptr inbounds nuw i8, ptr %353, i64 8
@@ -915,24 +913,22 @@ bb.sq:                                            ; preds = %bb.sp
 
 _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7072: ; preds = %bb.sq, %bb.sp
   %i.hsa = load ptr, ptr %i.hru, align 8          ; 6 uses
-  %2475 = getelementptr inbounds nuw i8, ptr %i.hsa, i64 16
-  %i.hsb = getelementptr inbounds nuw i8, ptr %i.hsa, i64 32
-  %i.hsc = getelementptr inbounds nuw i8, ptr %i.hsa, i64 48
-  %i.hsd = getelementptr inbounds nuw i8, ptr %i.hsa, i64 56
-  %i.hse = getelementptr inbounds nuw i8, ptr %i.hsa, i64 64
-  %2476 = load ptr, ptr %i.hse, align 8           ; 2 uses
-  %i.hsf = getelementptr inbounds nuw i8, ptr %1678, i64 8
+  %i.hsb = getelementptr inbounds nuw i8, ptr %i.hsa, i64 16
+  %i.hsc = getelementptr inbounds nuw i8, ptr %i.hsa, i64 32
+  %i.hsd = getelementptr inbounds nuw i8, ptr %i.hsa, i64 48
+  %i.hse = getelementptr inbounds nuw i8, ptr %i.hsa, i64 56
+  %i.hsf = getelementptr inbounds nuw i8, ptr %i.hsa, i64 64
   %i.hsg = getelementptr inbounds nuw i8, ptr %1677, i64 8
   %i.hsh = getelementptr inbounds nuw i8, ptr %346, i64 16 ; 2 uses
   %i.hsi = load <2 x ptr>, ptr %i.hsa, align 8
-  %i.hsj = load <2 x ptr>, ptr %2475, align 8
+  %i.hsj = load <2 x ptr>, ptr %i.hsb, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %67)
   call void @llvm.lifetime.start.p0(ptr nonnull %1677) #10
-  store ptr %2476, ptr %i.hsf, align 8
-  %i.hsk = load <2 x ptr>, ptr %i.hsb, align 8
-  %i.hsl = load ptr, ptr %i.hsd, align 8
-  %i.hsm = load <2 x ptr>, ptr %i.hsc, align 8
-  store ptr %i.hsl, ptr %1678, align 8
+  %2474 = load <2 x ptr>, ptr %i.hsc, align 8
+  %i.hsk = load <2 x ptr>, ptr %i.hsd, align 8
+  %i.hsl = load ptr, ptr %i.hsf, align 8
+  %i.hsm = load <2 x ptr>, ptr %i.hse, align 8
+  store <2 x ptr> %i.hsm, ptr %1678, align 16
   call void @_ZN2v88internal15RefCast_int32_0EPNS0_8compiler18CodeAssemblerStateENS0_30TorqueStructReference_intptr_0E(ptr dead_on_unwind nonnull writable sret(%"struct.v8::internal::TorqueStructReference_int32_0") align 8 %1677, ptr noundef %i.a, ptr noundef nonnull dead_on_return %1678)
   %i.hsn = load ptr, ptr %i.hsg, align 8, !noalias !4554
   %i.hso = load ptr, ptr %1677, align 8, !noalias !4554
@@ -971,11 +967,11 @@ _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7072: ; pre
   %.sroa.5.0..sroa_idx.i.i1883 = getelementptr inbounds nuw i8, ptr %i.hss, i64 16
   store <2 x ptr> %i.hsj, ptr %.sroa.5.0..sroa_idx.i.i1883, align 8
   %.sroa.7.0..sroa_idx.i.i1885 = getelementptr inbounds nuw i8, ptr %i.hss, i64 32
-  store <2 x ptr> %i.hsk, ptr %.sroa.7.0..sroa_idx.i.i1885, align 8
+  store <2 x ptr> %2474, ptr %.sroa.7.0..sroa_idx.i.i1885, align 8
   %.sroa.9.0..sroa_idx.i.i1887 = getelementptr inbounds nuw i8, ptr %i.hss, i64 48
-  store <2 x ptr> %i.hsm, ptr %.sroa.9.0..sroa_idx.i.i1887, align 8
+  store <2 x ptr> %i.hsk, ptr %.sroa.9.0..sroa_idx.i.i1887, align 8
   %.sroa.11.0..sroa_idx.i.i1889 = getelementptr inbounds nuw i8, ptr %i.hss, i64 64
-  store ptr %2476, ptr %.sroa.11.0..sroa_idx.i.i1889, align 8
+  store ptr %i.hsl, ptr %.sroa.11.0..sroa_idx.i.i1889, align 8
   %.sroa.12.0..sroa_idx.i.i1890 = getelementptr inbounds nuw i8, ptr %i.hss, i64 72
   store ptr %i.hsr, ptr %.sroa.12.0..sroa_idx.i.i1890, align 8
   %i.hsu = getelementptr inbounds nuw i8, ptr %346, i64 8
@@ -1378,24 +1374,22 @@ bb.ux:                                            ; preds = %bb.uw
 
 _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7316: ; preds = %bb.ux, %bb.uw
   %i.inn = load ptr, ptr %i.inh, align 8          ; 6 uses
-  %2477 = getelementptr inbounds nuw i8, ptr %i.inn, i64 16
-  %i.ino = getelementptr inbounds nuw i8, ptr %i.inn, i64 32
-  %i.inp = getelementptr inbounds nuw i8, ptr %i.inn, i64 48
-  %i.inq = getelementptr inbounds nuw i8, ptr %i.inn, i64 56
-  %i.inr = getelementptr inbounds nuw i8, ptr %i.inn, i64 64
-  %2478 = load ptr, ptr %i.inr, align 8           ; 2 uses
-  %i.ins = getelementptr inbounds nuw i8, ptr %1806, i64 8
+  %i.ino = getelementptr inbounds nuw i8, ptr %i.inn, i64 16
+  %i.inp = getelementptr inbounds nuw i8, ptr %i.inn, i64 32
+  %i.inq = getelementptr inbounds nuw i8, ptr %i.inn, i64 48
+  %i.inr = getelementptr inbounds nuw i8, ptr %i.inn, i64 56
+  %i.ins = getelementptr inbounds nuw i8, ptr %i.inn, i64 64
   %i.int = getelementptr inbounds nuw i8, ptr %1805, i64 8
   %i.inu = getelementptr inbounds nuw i8, ptr %318, i64 16 ; 2 uses
   %i.inv = load <2 x ptr>, ptr %i.inn, align 8
-  %i.inw = load <2 x ptr>, ptr %2477, align 8
+  %i.inw = load <2 x ptr>, ptr %i.ino, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %55)
   call void @llvm.lifetime.start.p0(ptr nonnull %1805) #10
-  store ptr %2478, ptr %i.ins, align 8
-  %i.inx = load <2 x ptr>, ptr %i.ino, align 8
-  %i.iny = load ptr, ptr %i.inq, align 8
-  %i.inz = load <2 x ptr>, ptr %i.inp, align 8
-  store ptr %i.iny, ptr %1806, align 8
+  %2475 = load <2 x ptr>, ptr %i.inp, align 8
+  %i.inx = load <2 x ptr>, ptr %i.inq, align 8
+  %i.iny = load ptr, ptr %i.ins, align 8
+  %i.inz = load <2 x ptr>, ptr %i.inr, align 8
+  store <2 x ptr> %i.inz, ptr %1806, align 16
   call void @_ZN2v88internal17RefCast_float64_0EPNS0_8compiler18CodeAssemblerStateENS0_30TorqueStructReference_intptr_0E(ptr dead_on_unwind nonnull writable sret(%"struct.v8::internal::TorqueStructReference_float64_0") align 8 %1805, ptr noundef %i.a, ptr noundef nonnull dead_on_return %1806)
   %i.ioa = load ptr, ptr %i.int, align 8, !noalias !4596
   %i.iob = load ptr, ptr %1805, align 8, !noalias !4596
@@ -1441,11 +1435,11 @@ _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7316: ; pre
   %.sroa.5.0..sroa_idx.i.i1999 = getelementptr inbounds nuw i8, ptr %i.iog, i64 16
   store <2 x ptr> %i.inw, ptr %.sroa.5.0..sroa_idx.i.i1999, align 8
   %.sroa.7.0..sroa_idx.i.i2001 = getelementptr inbounds nuw i8, ptr %i.iog, i64 32
-  store <2 x ptr> %i.inx, ptr %.sroa.7.0..sroa_idx.i.i2001, align 8
+  store <2 x ptr> %2475, ptr %.sroa.7.0..sroa_idx.i.i2001, align 8
   %.sroa.9.0..sroa_idx.i.i2003 = getelementptr inbounds nuw i8, ptr %i.iog, i64 48
-  store <2 x ptr> %i.inz, ptr %.sroa.9.0..sroa_idx.i.i2003, align 8
+  store <2 x ptr> %i.inx, ptr %.sroa.9.0..sroa_idx.i.i2003, align 8
   %.sroa.11.0..sroa_idx.i.i2005 = getelementptr inbounds nuw i8, ptr %i.iog, i64 64
-  store ptr %2478, ptr %.sroa.11.0..sroa_idx.i.i2005, align 8
+  store ptr %i.iny, ptr %.sroa.11.0..sroa_idx.i.i2005, align 8
   %.sroa.12.0..sroa_idx.i.i2006 = getelementptr inbounds nuw i8, ptr %i.iog, i64 72
   store ptr %i.iof, ptr %.sroa.12.0..sroa_idx.i.i2006, align 8
   %i.ioi = getelementptr inbounds nuw i8, ptr %318, i64 8
@@ -1502,24 +1496,22 @@ bb.vb:                                            ; preds = %bb.va
 
 _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7340: ; preds = %bb.vb, %bb.va
   %i.ipa = load ptr, ptr %i.iou, align 8          ; 6 uses
-  %2479 = getelementptr inbounds nuw i8, ptr %i.ipa, i64 16
-  %i.ipb = getelementptr inbounds nuw i8, ptr %i.ipa, i64 32
-  %i.ipc = getelementptr inbounds nuw i8, ptr %i.ipa, i64 48
-  %i.ipd = getelementptr inbounds nuw i8, ptr %i.ipa, i64 56
-  %i.ipe = getelementptr inbounds nuw i8, ptr %i.ipa, i64 64
-  %2480 = load ptr, ptr %i.ipe, align 8           ; 2 uses
-  %i.ipf = getelementptr inbounds nuw i8, ptr %1812, i64 8
+  %i.ipb = getelementptr inbounds nuw i8, ptr %i.ipa, i64 16
+  %i.ipc = getelementptr inbounds nuw i8, ptr %i.ipa, i64 32
+  %i.ipd = getelementptr inbounds nuw i8, ptr %i.ipa, i64 48
+  %i.ipe = getelementptr inbounds nuw i8, ptr %i.ipa, i64 56
+  %i.ipf = getelementptr inbounds nuw i8, ptr %i.ipa, i64 64
   %i.ipg = getelementptr inbounds nuw i8, ptr %1811, i64 8
   %i.iph = getelementptr inbounds nuw i8, ptr %311, i64 16 ; 2 uses
   %i.ipi = load <2 x ptr>, ptr %i.ipa, align 8
-  %i.ipj = load <2 x ptr>, ptr %2479, align 8
+  %i.ipj = load <2 x ptr>, ptr %i.ipb, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %54)
   call void @llvm.lifetime.start.p0(ptr nonnull %1811) #10
-  store ptr %2480, ptr %i.ipf, align 8
-  %i.ipk = load <2 x ptr>, ptr %i.ipb, align 8
-  %i.ipl = load ptr, ptr %i.ipd, align 8
-  %i.ipm = load <2 x ptr>, ptr %i.ipc, align 8
-  store ptr %i.ipl, ptr %1812, align 8
+  %2476 = load <2 x ptr>, ptr %i.ipc, align 8
+  %i.ipk = load <2 x ptr>, ptr %i.ipd, align 8
+  %i.ipl = load ptr, ptr %i.ipf, align 8
+  %i.ipm = load <2 x ptr>, ptr %i.ipe, align 8
+  store <2 x ptr> %i.ipm, ptr %1812, align 16
   call void @_ZN2v88internal17RefCast_float32_0EPNS0_8compiler18CodeAssemblerStateENS0_30TorqueStructReference_intptr_0E(ptr dead_on_unwind nonnull writable sret(%"struct.v8::internal::TorqueStructReference_float32_0") align 8 %1811, ptr noundef %i.a, ptr noundef nonnull dead_on_return %1812)
   %i.ipn = load ptr, ptr %i.ipg, align 8, !noalias !4600
   %i.ipo = load ptr, ptr %1811, align 8, !noalias !4600
@@ -1558,11 +1550,11 @@ _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7340: ; pre
   %.sroa.5.0..sroa_idx.i.i2009 = getelementptr inbounds nuw i8, ptr %i.ips, i64 16
   store <2 x ptr> %i.ipj, ptr %.sroa.5.0..sroa_idx.i.i2009, align 8
   %.sroa.7.0..sroa_idx.i.i2011 = getelementptr inbounds nuw i8, ptr %i.ips, i64 32
-  store <2 x ptr> %i.ipk, ptr %.sroa.7.0..sroa_idx.i.i2011, align 8
+  store <2 x ptr> %2476, ptr %.sroa.7.0..sroa_idx.i.i2011, align 8
   %.sroa.9.0..sroa_idx.i.i2013 = getelementptr inbounds nuw i8, ptr %i.ips, i64 48
-  store <2 x ptr> %i.ipm, ptr %.sroa.9.0..sroa_idx.i.i2013, align 8
+  store <2 x ptr> %i.ipk, ptr %.sroa.9.0..sroa_idx.i.i2013, align 8
   %.sroa.11.0..sroa_idx.i.i2015 = getelementptr inbounds nuw i8, ptr %i.ips, i64 64
-  store ptr %2480, ptr %.sroa.11.0..sroa_idx.i.i2015, align 8
+  store ptr %i.ipl, ptr %.sroa.11.0..sroa_idx.i.i2015, align 8
   %.sroa.12.0..sroa_idx.i.i2016 = getelementptr inbounds nuw i8, ptr %i.ips, i64 72
   store ptr %i.ipr, ptr %.sroa.12.0..sroa_idx.i.i2016, align 8
   %i.ipu = getelementptr inbounds nuw i8, ptr %311, i64 8
@@ -1919,24 +1911,22 @@ bb.vq:                                            ; preds = %bb.vp
 
 _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7412: ; preds = %bb.vq, %bb.vp
   %i.iuk = load ptr, ptr %i.iue, align 8          ; 6 uses
-  %2481 = getelementptr inbounds nuw i8, ptr %i.iuk, i64 16
-  %i.iul = getelementptr inbounds nuw i8, ptr %i.iuk, i64 32
-  %i.ium = getelementptr inbounds nuw i8, ptr %i.iuk, i64 48
-  %i.iun = getelementptr inbounds nuw i8, ptr %i.iuk, i64 56
-  %i.iuo = getelementptr inbounds nuw i8, ptr %i.iuk, i64 64
-  %2482 = load ptr, ptr %i.iuo, align 8           ; 2 uses
-  %i.iup = getelementptr inbounds nuw i8, ptr %1833, i64 8
+  %i.iul = getelementptr inbounds nuw i8, ptr %i.iuk, i64 16
+  %i.ium = getelementptr inbounds nuw i8, ptr %i.iuk, i64 32
+  %i.iun = getelementptr inbounds nuw i8, ptr %i.iuk, i64 48
+  %i.iuo = getelementptr inbounds nuw i8, ptr %i.iuk, i64 56
+  %i.iup = getelementptr inbounds nuw i8, ptr %i.iuk, i64 64
   %i.iuq = getelementptr inbounds nuw i8, ptr %1832, i64 8
   %i.iur = getelementptr inbounds nuw i8, ptr %300, i64 16 ; 2 uses
   %i.ius = load <2 x ptr>, ptr %i.iuk, align 8
-  %i.iut = load <2 x ptr>, ptr %2481, align 8
+  %i.iut = load <2 x ptr>, ptr %i.iul, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %51)
   call void @llvm.lifetime.start.p0(ptr nonnull %1832) #10
-  store ptr %2482, ptr %i.iup, align 8
-  %i.iuu = load <2 x ptr>, ptr %i.iul, align 8
-  %i.iuv = load ptr, ptr %i.iun, align 8
-  %i.iuw = load <2 x ptr>, ptr %i.ium, align 8
-  store ptr %i.iuv, ptr %1833, align 8
+  %2477 = load <2 x ptr>, ptr %i.ium, align 8
+  %i.iuu = load <2 x ptr>, ptr %i.iun, align 8
+  %i.iuv = load ptr, ptr %i.iup, align 8
+  %i.iuw = load <2 x ptr>, ptr %i.iuo, align 8
+  store <2 x ptr> %i.iuw, ptr %1833, align 16
   call void @_ZN2v88internal15RefCast_int64_0EPNS0_8compiler18CodeAssemblerStateENS0_30TorqueStructReference_intptr_0E(ptr dead_on_unwind nonnull writable sret(%"struct.v8::internal::TorqueStructReference_int64_0") align 8 %1832, ptr noundef %i.a, ptr noundef nonnull dead_on_return %1833)
   %i.iux = load ptr, ptr %i.iuq, align 8, !noalias !4605
   %i.iuy = load ptr, ptr %1832, align 8, !noalias !4605
@@ -2003,11 +1993,11 @@ _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7412: ; pre
   %.sroa.5.0..sroa_idx.i.i2045 = getelementptr inbounds nuw i8, ptr %i.ivg, i64 16
   store <2 x ptr> %i.iut, ptr %.sroa.5.0..sroa_idx.i.i2045, align 8
   %.sroa.7.0..sroa_idx.i.i2047 = getelementptr inbounds nuw i8, ptr %i.ivg, i64 32
-  store <2 x ptr> %i.iuu, ptr %.sroa.7.0..sroa_idx.i.i2047, align 8
+  store <2 x ptr> %2477, ptr %.sroa.7.0..sroa_idx.i.i2047, align 8
   %.sroa.9.0..sroa_idx.i.i2049 = getelementptr inbounds nuw i8, ptr %i.ivg, i64 48
-  store <2 x ptr> %i.iuw, ptr %.sroa.9.0..sroa_idx.i.i2049, align 8
+  store <2 x ptr> %i.iuu, ptr %.sroa.9.0..sroa_idx.i.i2049, align 8
   %.sroa.11.0..sroa_idx.i.i2051 = getelementptr inbounds nuw i8, ptr %i.ivg, i64 64
-  store ptr %2482, ptr %.sroa.11.0..sroa_idx.i.i2051, align 8
+  store ptr %i.iuv, ptr %.sroa.11.0..sroa_idx.i.i2051, align 8
   %.sroa.12.0..sroa_idx.i.i2052 = getelementptr inbounds nuw i8, ptr %i.ivg, i64 72
   store ptr %i.ivf, ptr %.sroa.12.0..sroa_idx.i.i2052, align 8
   %i.ivi = getelementptr inbounds nuw i8, ptr %300, i64 8
@@ -2064,24 +2054,22 @@ bb.vu:                                            ; preds = %bb.vt
 
 _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7436: ; preds = %bb.vu, %bb.vt
   %i.iwa = load ptr, ptr %i.ivu, align 8          ; 6 uses
-  %2483 = getelementptr inbounds nuw i8, ptr %i.iwa, i64 16
-  %i.iwb = getelementptr inbounds nuw i8, ptr %i.iwa, i64 32
-  %i.iwc = getelementptr inbounds nuw i8, ptr %i.iwa, i64 48
-  %i.iwd = getelementptr inbounds nuw i8, ptr %i.iwa, i64 56
-  %i.iwe = getelementptr inbounds nuw i8, ptr %i.iwa, i64 64
-  %2484 = load ptr, ptr %i.iwe, align 8           ; 2 uses
-  %i.iwf = getelementptr inbounds nuw i8, ptr %1845, i64 8
+  %i.iwb = getelementptr inbounds nuw i8, ptr %i.iwa, i64 16
+  %i.iwc = getelementptr inbounds nuw i8, ptr %i.iwa, i64 32
+  %i.iwd = getelementptr inbounds nuw i8, ptr %i.iwa, i64 48
+  %i.iwe = getelementptr inbounds nuw i8, ptr %i.iwa, i64 56
+  %i.iwf = getelementptr inbounds nuw i8, ptr %i.iwa, i64 64
   %i.iwg = getelementptr inbounds nuw i8, ptr %1844, i64 8
   %i.iwh = getelementptr inbounds nuw i8, ptr %293, i64 16 ; 2 uses
   %i.iwi = load <2 x ptr>, ptr %i.iwa, align 8
-  %i.iwj = load <2 x ptr>, ptr %2483, align 8
+  %i.iwj = load <2 x ptr>, ptr %i.iwb, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %50)
   call void @llvm.lifetime.start.p0(ptr nonnull %1844) #10
-  store ptr %2484, ptr %i.iwf, align 8
-  %i.iwk = load <2 x ptr>, ptr %i.iwb, align 8
-  %i.iwl = load ptr, ptr %i.iwd, align 8
-  %i.iwm = load <2 x ptr>, ptr %i.iwc, align 8
-  store ptr %i.iwl, ptr %1845, align 8
+  %2478 = load <2 x ptr>, ptr %i.iwc, align 8
+  %i.iwk = load <2 x ptr>, ptr %i.iwd, align 8
+  %i.iwl = load ptr, ptr %i.iwf, align 8
+  %i.iwm = load <2 x ptr>, ptr %i.iwe, align 8
+  store <2 x ptr> %i.iwm, ptr %1845, align 16
   call void @_ZN2v88internal17RefCast_float32_0EPNS0_8compiler18CodeAssemblerStateENS0_30TorqueStructReference_intptr_0E(ptr dead_on_unwind nonnull writable sret(%"struct.v8::internal::TorqueStructReference_float32_0") align 8 %1844, ptr noundef %i.a, ptr noundef nonnull dead_on_return %1845)
   %i.iwn = load ptr, ptr %i.iwg, align 8, !noalias !4613
   %i.iwo = load ptr, ptr %1844, align 8, !noalias !4613
@@ -2120,11 +2108,11 @@ _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7436: ; pre
   %.sroa.5.0..sroa_idx.i.i2056 = getelementptr inbounds nuw i8, ptr %i.iws, i64 16
   store <2 x ptr> %i.iwj, ptr %.sroa.5.0..sroa_idx.i.i2056, align 8
   %.sroa.7.0..sroa_idx.i.i2058 = getelementptr inbounds nuw i8, ptr %i.iws, i64 32
-  store <2 x ptr> %i.iwk, ptr %.sroa.7.0..sroa_idx.i.i2058, align 8
+  store <2 x ptr> %2478, ptr %.sroa.7.0..sroa_idx.i.i2058, align 8
   %.sroa.9.0..sroa_idx.i.i2060 = getelementptr inbounds nuw i8, ptr %i.iws, i64 48
-  store <2 x ptr> %i.iwm, ptr %.sroa.9.0..sroa_idx.i.i2060, align 8
+  store <2 x ptr> %i.iwk, ptr %.sroa.9.0..sroa_idx.i.i2060, align 8
   %.sroa.11.0..sroa_idx.i.i2062 = getelementptr inbounds nuw i8, ptr %i.iws, i64 64
-  store ptr %2484, ptr %.sroa.11.0..sroa_idx.i.i2062, align 8
+  store ptr %i.iwl, ptr %.sroa.11.0..sroa_idx.i.i2062, align 8
   %.sroa.12.0..sroa_idx.i.i2063 = getelementptr inbounds nuw i8, ptr %i.iws, i64 72
   store ptr %i.iwr, ptr %.sroa.12.0..sroa_idx.i.i2063, align 8
   %i.iwu = getelementptr inbounds nuw i8, ptr %293, i64 8
@@ -2265,24 +2253,22 @@ bb.wb:                                            ; preds = %bb.wa
 
 _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7460: ; preds = %bb.wb, %bb.wa
   %i.iyh = load ptr, ptr %i.iyb, align 8          ; 6 uses
-  %2485 = getelementptr inbounds nuw i8, ptr %i.iyh, i64 16
-  %i.iyi = getelementptr inbounds nuw i8, ptr %i.iyh, i64 32
-  %i.iyj = getelementptr inbounds nuw i8, ptr %i.iyh, i64 48
-  %i.iyk = getelementptr inbounds nuw i8, ptr %i.iyh, i64 56
-  %i.iyl = getelementptr inbounds nuw i8, ptr %i.iyh, i64 64
-  %2486 = load ptr, ptr %i.iyl, align 8           ; 2 uses
-  %i.iym = getelementptr inbounds nuw i8, ptr %1858, i64 8
+  %i.iyi = getelementptr inbounds nuw i8, ptr %i.iyh, i64 16
+  %i.iyj = getelementptr inbounds nuw i8, ptr %i.iyh, i64 32
+  %i.iyk = getelementptr inbounds nuw i8, ptr %i.iyh, i64 48
+  %i.iyl = getelementptr inbounds nuw i8, ptr %i.iyh, i64 56
+  %i.iym = getelementptr inbounds nuw i8, ptr %i.iyh, i64 64
   %i.iyn = getelementptr inbounds nuw i8, ptr %1857, i64 8
   %i.iyo = getelementptr inbounds nuw i8, ptr %285, i64 16 ; 2 uses
   %i.iyp = load <2 x ptr>, ptr %i.iyh, align 8
-  %i.iyq = load <2 x ptr>, ptr %2485, align 8
+  %i.iyq = load <2 x ptr>, ptr %i.iyi, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %49)
   call void @llvm.lifetime.start.p0(ptr nonnull %1857) #10
-  store ptr %2486, ptr %i.iym, align 8
-  %i.iyr = load <2 x ptr>, ptr %i.iyi, align 8
-  %i.iys = load ptr, ptr %i.iyk, align 8
-  %i.iyt = load <2 x ptr>, ptr %i.iyj, align 8
-  store ptr %i.iys, ptr %1858, align 8
+  %2479 = load <2 x ptr>, ptr %i.iyj, align 8
+  %i.iyr = load <2 x ptr>, ptr %i.iyk, align 8
+  %i.iys = load ptr, ptr %i.iym, align 8
+  %i.iyt = load <2 x ptr>, ptr %i.iyl, align 8
+  store <2 x ptr> %i.iyt, ptr %1858, align 16
   call void @_ZN2v88internal17RefCast_float32_0EPNS0_8compiler18CodeAssemblerStateENS0_30TorqueStructReference_intptr_0E(ptr dead_on_unwind nonnull writable sret(%"struct.v8::internal::TorqueStructReference_float32_0") align 8 %1857, ptr noundef %i.a, ptr noundef nonnull dead_on_return %1858)
   %i.iyu = load ptr, ptr %i.iyn, align 8, !noalias !4616
   %i.iyv = load ptr, ptr %1857, align 8, !noalias !4616
@@ -2321,11 +2307,11 @@ _ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i7460: ; pre
   %.sroa.5.0..sroa_idx.i.i2078 = getelementptr inbounds nuw i8, ptr %i.iyz, i64 16
   store <2 x ptr> %i.iyq, ptr %.sroa.5.0..sroa_idx.i.i2078, align 8
   %.sroa.7.0..sroa_idx.i.i2080 = getelementptr inbounds nuw i8, ptr %i.iyz, i64 32
-  store <2 x ptr> %i.iyr, ptr %.sroa.7.0..sroa_idx.i.i2080, align 8
+  store <2 x ptr> %2479, ptr %.sroa.7.0..sroa_idx.i.i2080, align 8
   %.sroa.9.0..sroa_idx.i.i2082 = getelementptr inbounds nuw i8, ptr %i.iyz, i64 48
-  store <2 x ptr> %i.iyt, ptr %.sroa.9.0..sroa_idx.i.i2082, align 8
+  store <2 x ptr> %i.iyr, ptr %.sroa.9.0..sroa_idx.i.i2082, align 8
   %.sroa.11.0..sroa_idx.i.i2084 = getelementptr inbounds nuw i8, ptr %i.iyz, i64 64
-  store ptr %2486, ptr %.sroa.11.0..sroa_idx.i.i2084, align 8
+  store ptr %i.iys, ptr %.sroa.11.0..sroa_idx.i.i2084, align 8
   %.sroa.12.0..sroa_idx.i.i2085 = getelementptr inbounds nuw i8, ptr %i.iyz, i64 72
   store ptr %i.iyy, ptr %.sroa.12.0..sroa_idx.i.i2085, align 8
   %i.izb = getelementptr inbounds nuw i8, ptr %285, i64 8

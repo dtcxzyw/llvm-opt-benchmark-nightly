@@ -204,14 +204,12 @@ bb.dx:                                            ; preds = %.lr.ph715, %bb.ea
 bb.dy:                                            ; preds = %bb.dx
   %i.apt = load ptr, ptr %i.apq, align 8, !tbaa !44
   %i.apu = getelementptr inbounds nuw [4 x i8], ptr %i.apt, i64 %indvars.iv855
-  %i.apv = load i32, ptr %i.apu, align 4, !tbaa !84 ; 3 uses
-  %.not.i344 = icmp ult i32 %i.apv, 256
-  %isnotneg.i = icmp sgt i32 %i.apv, -1
-  %4 = sext i1 %isnotneg.i to i8
-  %i.apw = trunc nuw i32 %i.apv to i8
-  %.0.i = select i1 %.not.i344, i8 %i.apw, i8 %4
+  %i.apv = load i32, ptr %i.apu, align 4, !tbaa !84
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.apv, i32 0)
+  %.0.i548 = tail call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %i.apw = trunc nuw i32 %.0.i548 to i8
   %i.apx = getelementptr inbounds nuw i8, ptr %.0278712, i64 1
-  store i8 %.0.i, ptr %.0278712, align 1, !tbaa !40
+  store i8 %i.apw, ptr %.0278712, align 1, !tbaa !40
   %.pre867 = load i32, ptr %i.pg, align 8, !tbaa !88
   br label %bb.ea
 

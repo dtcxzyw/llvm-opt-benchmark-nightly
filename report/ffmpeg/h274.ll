@@ -205,13 +205,11 @@ vector.body:                                      ; preds = %vector.main.loop.it
   %i.bcj = getelementptr inbounds nuw i8, ptr %i.bce, i64 %index ; 2 uses
   %wide.load206 = load <16 x i8>, ptr %i.bcj, align 1, !tbaa !10, !alias.scope !75, !noalias !74
   %i.bck = sext <16 x i8> %wide.load206 to <16 x i32>
-  %i.bcl = add nsw <16 x i32> %i.bck, %i.bci      ; 3 uses
-  %4 = icmp ugt <16 x i32> %i.bcl, splat (i32 255)
-  %5 = icmp sgt <16 x i32> %i.bcl, splat (i32 -1)
-  %6 = sext <16 x i1> %5 to <16 x i8>
-  %i.bcm = trunc nuw <16 x i32> %i.bcl to <16 x i8>
-  %7 = select <16 x i1> %4, <16 x i8> %6, <16 x i8> %i.bcm
-  store <16 x i8> %7, ptr %i.bcj, align 1, !tbaa !10, !alias.scope !75, !noalias !74
+  %i.bcl = add nsw <16 x i32> %i.bck, %i.bci
+  %4 = tail call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.bcl, <16 x i32> zeroinitializer)
+  %5 = tail call <16 x i32> @llvm.umin.v16i32(<16 x i32> %4, <16 x i32> splat (i32 255))
+  %i.bcm = trunc nuw <16 x i32> %5 to <16 x i8>
+  store <16 x i8> %i.bcm, ptr %i.bcj, align 1, !tbaa !10, !alias.scope !75, !noalias !74
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.bcn = icmp eq i64 %index.next, %n.vec
   br i1 %i.bcn, label %middle.block, label %vector.body, !llvm.loop !59
@@ -234,13 +232,11 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.bcq = getelementptr inbounds nuw i8, ptr %i.bce, i64 %index208 ; 2 uses
   %wide.load210 = load <4 x i8>, ptr %i.bcq, align 1, !tbaa !10, !alias.scope !75, !noalias !74
   %i.bcr = sext <4 x i8> %wide.load210 to <4 x i32>
-  %i.bcs = add nsw <4 x i32> %i.bcr, %i.bcp       ; 3 uses
-  %8 = icmp ugt <4 x i32> %i.bcs, splat (i32 255)
-  %9 = icmp sgt <4 x i32> %i.bcs, splat (i32 -1)
-  %10 = sext <4 x i1> %9 to <4 x i8>
-  %i.bct = trunc nuw <4 x i32> %i.bcs to <4 x i8>
-  %11 = select <4 x i1> %8, <4 x i8> %10, <4 x i8> %i.bct
-  store <4 x i8> %11, ptr %i.bcq, align 1, !tbaa !10, !alias.scope !75, !noalias !74
+  %i.bcs = add nsw <4 x i32> %i.bcr, %i.bcp
+  %6 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.bcs, <4 x i32> zeroinitializer)
+  %7 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %6, <4 x i32> splat (i32 255))
+  %i.bct = trunc nuw <4 x i32> %7 to <4 x i8>
+  store <4 x i8> %i.bct, ptr %i.bcq, align 1, !tbaa !10, !alias.scope !75, !noalias !74
   %index.next211 = add nuw i64 %index208, 4       ; 2 uses
   %i.bcu = icmp eq i64 %index.next211, %n.vec207
   br i1 %i.bcu, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !60
@@ -259,13 +255,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bcy = getelementptr inbounds nuw i8, ptr %i.bce, i64 %indvars.iv.i.ph ; 2 uses
   %i.bcz = load i8, ptr %i.bcy, align 1, !tbaa !10
   %i.bda = sext i8 %i.bcz to i32
-  %i.bdb = add nsw i32 %i.bda, %i.bcx             ; 3 uses
-  %12 = icmp ugt i32 %i.bdb, 255
-  %isnotneg.i.i.prol = icmp sgt i32 %i.bdb, -1
-  %13 = sext i1 %isnotneg.i.i.prol to i8
-  %i.bdc = trunc nuw i32 %i.bdb to i8
-  %.0.i.i.prol = select i1 %12, i8 %13, i8 %i.bdc
-  store i8 %.0.i.i.prol, ptr %i.bcy, align 1, !tbaa !10
+  %i.bdb = add nsw i32 %i.bda, %i.bcx
+  %8 = tail call i32 @llvm.smax.i32(i32 %i.bdb, i32 0)
+  %.0.i8.i.prol = tail call i32 @llvm.umin.i32(i32 %8, i32 255)
+  %i.bdc = trunc nuw i32 %.0.i8.i.prol to i8
+  store i8 %i.bdc, ptr %i.bcy, align 1, !tbaa !10
   %indvars.iv.next.i.prol = or disjoint i64 %indvars.iv.i.ph, 1
   br label %.lr.ph.i.prol.loopexit
 
@@ -282,13 +276,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bdh = getelementptr inbounds nuw i8, ptr %i.bce, i64 %indvars.iv.i ; 2 uses
   %i.bdi = load i8, ptr %i.bdh, align 1, !tbaa !10
   %i.bdj = sext i8 %i.bdi to i32
-  %i.bdk = add nsw i32 %i.bdj, %i.bdg             ; 3 uses
-  %14 = icmp ugt i32 %i.bdk, 255
-  %isnotneg.i.i = icmp sgt i32 %i.bdk, -1
-  %15 = sext i1 %isnotneg.i.i to i8
-  %i.bdl = trunc nuw i32 %i.bdk to i8
-  %.0.i.i = select i1 %14, i8 %15, i8 %i.bdl
-  store i8 %.0.i.i, ptr %i.bdh, align 1, !tbaa !10
+  %i.bdk = add nsw i32 %i.bdj, %i.bdg
+  %9 = tail call i32 @llvm.smax.i32(i32 %i.bdk, i32 0)
+  %.0.i8.i = tail call i32 @llvm.umin.i32(i32 %9, i32 255)
+  %i.bdl = trunc nuw i32 %.0.i8.i to i8
+  store i8 %i.bdl, ptr %i.bdh, align 1, !tbaa !10
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.bdm = getelementptr inbounds nuw i8, ptr %i.bcg, i64 %indvars.iv.next.i
   %i.bdn = load i8, ptr %i.bdm, align 1, !tbaa !10
@@ -296,13 +288,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bdp = getelementptr inbounds nuw i8, ptr %i.bce, i64 %indvars.iv.next.i ; 2 uses
   %i.bdq = load i8, ptr %i.bdp, align 1, !tbaa !10
   %i.bdr = sext i8 %i.bdq to i32
-  %i.bds = add nsw i32 %i.bdr, %i.bdo             ; 3 uses
-  %16 = icmp ugt i32 %i.bds, 255
-  %isnotneg.i.i.1 = icmp sgt i32 %i.bds, -1
-  %17 = sext i1 %isnotneg.i.i.1 to i8
-  %i.bdt = trunc nuw i32 %i.bds to i8
-  %.0.i.i.1 = select i1 %16, i8 %17, i8 %i.bdt
-  store i8 %.0.i.i.1, ptr %i.bdp, align 1, !tbaa !10
+  %i.bds = add nsw i32 %i.bdr, %i.bdo
+  %10 = tail call i32 @llvm.smax.i32(i32 %i.bds, i32 0)
+  %.0.i8.i.1 = tail call i32 @llvm.umin.i32(i32 %10, i32 255)
+  %i.bdt = trunc nuw i32 %.0.i8.i.1 to i8
+  store i8 %i.bdt, ptr %i.bdp, align 1, !tbaa !10
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, %wide.trip.count.i
   br i1 %exitcond.not.i.1, label %add_8x8_clip_c.exit.loopexit, label %.lr.ph.i, !llvm.loop !61
@@ -705,10 +695,25 @@ declare i32 @llvm.smin.i32(i32, i32) #5
 declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.smax.i16(i16, i16) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i32> @llvm.smax.v16i32(<16 x i32>, <16 x i32>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i32> @llvm.umin.v16i32(<16 x i32>, <16 x i32>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5

@@ -206,10 +206,10 @@ bb.i:                                             ; preds = %sqlite3_sql.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(304) %0, ptr noundef nonnull align 8 dereferenceable(304) %1, i64 304, i1 false), !tbaa.struct !3229
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ag = load <2 x ptr>, ptr %i.af, align 8, !tbaa !851
-  %i.ah = load <2 x ptr>, ptr %i.ae, align 8, !tbaa !851
-  store <2 x ptr> %i.ag, ptr %i.ae, align 8, !tbaa !851
-  store <2 x ptr> %i.ah, ptr %i.af, align 8, !tbaa !851
+  %i.ag = load <2 x ptr>, ptr %i.ae, align 8, !tbaa !851
+  %i.ah = load <2 x ptr>, ptr %i.af, align 8, !tbaa !851
+  store <2 x ptr> %i.ah, ptr %i.ae, align 8, !tbaa !851
+  store <2 x ptr> %i.ag, ptr %i.af, align 8, !tbaa !851
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 248 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !704
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses

@@ -205,12 +205,9 @@ bb.r:                                             ; preds = %bb.q
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !209
   %i.cp = sext i32 %i.co to i64
   %i.cq = call i64 @av_rescale(i64 noundef %i.cm, i64 noundef 256, i64 noundef %i.cp) #11
-  %i.cr = trunc i64 %i.cq to i32                  ; 3 uses
-  %.not.i = icmp ult i32 %i.cr, 256
-  %isnotneg.i = icmp sgt i32 %i.cr, -1
-  %4 = sext i1 %isnotneg.i to i32
-  %.0.i = select i1 %.not.i, i32 %i.cr, i32 %4
-  %5 = and i32 %.0.i, 255
+  %i.cr = trunc i64 %i.cq to i32
+  %4 = call i32 @llvm.smax.i32(i32 %i.cr, i32 0)
+  %5 = call i32 @llvm.umin.i32(i32 %4, i32 255)
   call void @avio_w8(ptr noundef %i.cj, i32 noundef %5) #10
   br label %.critedge
 

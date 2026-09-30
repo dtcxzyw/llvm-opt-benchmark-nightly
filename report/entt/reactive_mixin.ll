@@ -205,12 +205,12 @@ _ZN4test18throwing_allocatorIN4entt8internal14dense_map_nodeIjNS1_9basic_anyILm0
   %i.aq = load ptr, ptr %i.ah, align 8, !tbaa !669
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !669
+  %3 = load <2 x ptr>, ptr %i.ar, align 8, !tbaa !365
   %i.as = load <2 x ptr>, ptr %i.al, align 8, !tbaa !365
   store <2 x ptr> %i.ao, ptr %i.ai, align 8, !tbaa !365
   %i.at = load ptr, ptr %i.ap, align 8, !tbaa !671
   store ptr %i.at, ptr %i.am, align 8, !tbaa !671
   store ptr %i.aq, ptr %i.aj, align 8, !tbaa !669
-  %3 = load <2 x ptr>, ptr %i.ar, align 8, !tbaa !365
   store <2 x ptr> %i.as, ptr %i.ar, align 8, !tbaa !365
   store <2 x ptr> %3, ptr %i.an, align 8, !tbaa !365
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -383,12 +383,12 @@ _ZN4test18throwing_allocatorIN4entt8internal14dense_map_nodeIjSt10shared_ptrINS1
   %i.aq = load ptr, ptr %i.ah, align 8, !tbaa !625
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !625
+  %3 = load <2 x ptr>, ptr %i.ar, align 8, !tbaa !686
   %i.as = load <2 x ptr>, ptr %i.al, align 8, !tbaa !686
   store <2 x ptr> %i.ao, ptr %i.ai, align 8, !tbaa !686
   %i.at = load ptr, ptr %i.ap, align 8, !tbaa !635
   store ptr %i.at, ptr %i.am, align 8, !tbaa !635
   store ptr %i.aq, ptr %i.aj, align 8, !tbaa !625
-  %3 = load <2 x ptr>, ptr %i.ar, align 8, !tbaa !686
   store <2 x ptr> %i.as, ptr %i.ar, align 8, !tbaa !686
   store <2 x ptr> %3, ptr %i.an, align 8, !tbaa !686
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -561,12 +561,12 @@ _ZN4test18throwing_allocatorIN4entt8internal14dense_map_nodeIjSt10shared_ptrINS2
   %i.aq = load ptr, ptr %i.ah, align 8, !tbaa !683
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !683
+  %3 = load <2 x ptr>, ptr %i.ar, align 8, !tbaa !367
   %i.as = load <2 x ptr>, ptr %i.al, align 8, !tbaa !367
   store <2 x ptr> %i.ao, ptr %i.ai, align 8, !tbaa !367
   %i.at = load ptr, ptr %i.ap, align 8, !tbaa !684
   store ptr %i.at, ptr %i.am, align 8, !tbaa !684
   store ptr %i.aq, ptr %i.aj, align 8, !tbaa !683
-  %3 = load <2 x ptr>, ptr %i.ar, align 8, !tbaa !367
   store <2 x ptr> %i.as, ptr %i.ar, align 8, !tbaa !367
   store <2 x ptr> %3, ptr %i.an, align 8, !tbaa !367
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses

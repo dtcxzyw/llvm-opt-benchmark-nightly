@@ -204,29 +204,113 @@ bb.a:
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal fastcc void @zbee_sec_key_hash(ptr nofree noundef readonly captures(none) %0, i8 noundef zeroext range(i8 0, 3) %1, ptr noundef initializes((0, 17)) %2) unnamed_addr #0 {
-.preheader.preheader.a:
-  %3 = alloca [32 x i8], align 16                 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
-  %i.a = getelementptr i8, ptr %0, i64 1
-  %i.b = getelementptr i8, ptr %0, i64 2
-  %i.c = getelementptr i8, ptr %0, i64 3
-  %i.d = getelementptr i8, ptr %0, i64 4
-  %i.e = getelementptr i8, ptr %0, i64 5
-  %i.f = getelementptr i8, ptr %0, i64 6
-  %i.g = getelementptr i8, ptr %0, i64 7
-  %i.h = getelementptr i8, ptr %0, i64 8
-  %i.i = getelementptr i8, ptr %0, i64 9
-  %i.j = getelementptr i8, ptr %0, i64 10
-  %i.k = getelementptr i8, ptr %0, i64 11
-  %i.l = getelementptr i8, ptr %0, i64 12
-  %i.m = getelementptr i8, ptr %0, i64 13
-  %i.n = getelementptr i8, ptr %0, i64 14
-  %i.o = getelementptr i8, ptr %0, i64 15
-  %4 = load <16 x i8>, ptr %0, align 1
-  %5 = load i8, ptr %0, align 1
-  %6 = xor <16 x i8> %4, splat (i8 92)
-  store <16 x i8> %6, ptr %3, align 16
-  %i.p = xor i8 %5, 54
+.preheader.preheader:
+  %3 = ptrtoaddr ptr %2 to i64                    ; 2 uses
+  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %5 = add i64 %4, 16
+  %6 = add i64 %3, 17
+  %rt.bound0 = icmp ugt i64 %5, %3
+  %rt.bound1 = icmp ugt i64 %6, %4
+  %rt.conflict = and i1 %rt.bound0, %rt.bound1
+  %7 = alloca [32 x i8], align 16                 ; 25 uses
+  br i1 %rt.conflict, label %.preheader.preheader.a, label %.preheader.preheader.rtvec, !prof !20
+
+.preheader.preheader.rtvec:                       ; preds = %.preheader.preheader
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
+  %8 = load <16 x i8>, ptr %0, align 1            ; 2 uses
+  %9 = xor <16 x i8> %8, splat (i8 92)
+  store <16 x i8> %9, ptr %7, align 16
+  %10 = xor <16 x i8> %8, splat (i8 54)
+  store <16 x i8> %10, ptr %2, align 1
+  %11 = getelementptr i8, ptr %2, i64 16
+  store i8 %1, ptr %11, align 1
+  %12 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  call fastcc void @zbee_sec_hash(ptr noundef %2, i32 noundef 17, ptr noundef nonnull %12)
+  call fastcc void @zbee_sec_hash(ptr noundef nonnull %7, i32 noundef 32, ptr noundef %2)
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
+  br label %.preheader.preheader.rtcont
+
+.preheader.preheader.a:                           ; preds = %.preheader.preheader
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
+  %13 = load i8, ptr %0, align 1                  ; 2 uses
+  %14 = xor i8 %13, 92
+  store i8 %14, ptr %7, align 16
+  %i.a = getelementptr i8, ptr %0, i64 1          ; 2 uses
+  %15 = load i8, ptr %i.a, align 1
+  %16 = xor i8 %15, 92
+  %17 = getelementptr inbounds nuw i8, ptr %7, i64 1
+  store i8 %16, ptr %17, align 1
+  %i.b = getelementptr i8, ptr %0, i64 2          ; 2 uses
+  %18 = load i8, ptr %i.b, align 1
+  %19 = xor i8 %18, 92
+  %20 = getelementptr inbounds nuw i8, ptr %7, i64 2
+  store i8 %19, ptr %20, align 2
+  %i.c = getelementptr i8, ptr %0, i64 3          ; 2 uses
+  %21 = load i8, ptr %i.c, align 1
+  %22 = xor i8 %21, 92
+  %23 = getelementptr inbounds nuw i8, ptr %7, i64 3
+  store i8 %22, ptr %23, align 1
+  %i.d = getelementptr i8, ptr %0, i64 4          ; 2 uses
+  %24 = load i8, ptr %i.d, align 1
+  %25 = xor i8 %24, 92
+  %26 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  store i8 %25, ptr %26, align 4
+  %i.e = getelementptr i8, ptr %0, i64 5          ; 2 uses
+  %27 = load i8, ptr %i.e, align 1
+  %28 = xor i8 %27, 92
+  %29 = getelementptr inbounds nuw i8, ptr %7, i64 5
+  store i8 %28, ptr %29, align 1
+  %i.f = getelementptr i8, ptr %0, i64 6          ; 2 uses
+  %30 = load i8, ptr %i.f, align 1
+  %31 = xor i8 %30, 92
+  %32 = getelementptr inbounds nuw i8, ptr %7, i64 6
+  store i8 %31, ptr %32, align 2
+  %i.g = getelementptr i8, ptr %0, i64 7          ; 2 uses
+  %33 = load i8, ptr %i.g, align 1
+  %34 = xor i8 %33, 92
+  %35 = getelementptr inbounds nuw i8, ptr %7, i64 7
+  store i8 %34, ptr %35, align 1
+  %i.h = getelementptr i8, ptr %0, i64 8          ; 2 uses
+  %36 = load i8, ptr %i.h, align 1
+  %37 = xor i8 %36, 92
+  %38 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store i8 %37, ptr %38, align 8
+  %i.i = getelementptr i8, ptr %0, i64 9          ; 2 uses
+  %39 = load i8, ptr %i.i, align 1
+  %40 = xor i8 %39, 92
+  %41 = getelementptr inbounds nuw i8, ptr %7, i64 9
+  store i8 %40, ptr %41, align 1
+  %i.j = getelementptr i8, ptr %0, i64 10         ; 2 uses
+  %42 = load i8, ptr %i.j, align 1
+  %43 = xor i8 %42, 92
+  %44 = getelementptr inbounds nuw i8, ptr %7, i64 10
+  store i8 %43, ptr %44, align 2
+  %i.k = getelementptr i8, ptr %0, i64 11         ; 2 uses
+  %45 = load i8, ptr %i.k, align 1
+  %46 = xor i8 %45, 92
+  %47 = getelementptr inbounds nuw i8, ptr %7, i64 11
+  store i8 %46, ptr %47, align 1
+  %i.l = getelementptr i8, ptr %0, i64 12         ; 2 uses
+  %48 = load i8, ptr %i.l, align 1
+  %49 = xor i8 %48, 92
+  %50 = getelementptr inbounds nuw i8, ptr %7, i64 12
+  store i8 %49, ptr %50, align 4
+  %i.m = getelementptr i8, ptr %0, i64 13         ; 2 uses
+  %51 = load i8, ptr %i.m, align 1
+  %52 = xor i8 %51, 92
+  %53 = getelementptr inbounds nuw i8, ptr %7, i64 13
+  store i8 %52, ptr %53, align 1
+  %i.n = getelementptr i8, ptr %0, i64 14         ; 2 uses
+  %54 = load i8, ptr %i.n, align 1
+  %55 = xor i8 %54, 92
+  %56 = getelementptr inbounds nuw i8, ptr %7, i64 14
+  store i8 %55, ptr %56, align 2
+  %i.o = getelementptr i8, ptr %0, i64 15         ; 2 uses
+  %57 = load i8, ptr %i.o, align 1
+  %58 = xor i8 %57, 92
+  %59 = getelementptr inbounds nuw i8, ptr %7, i64 15
+  store i8 %58, ptr %59, align 1
+  %i.p = xor i8 %13, 54
   store i8 %i.p, ptr %2, align 1
   %i.q = load i8, ptr %i.a, align 1
   %i.r = xor i8 %i.q, 54
@@ -290,10 +374,13 @@ define internal fastcc void @zbee_sec_key_hash(ptr nofree noundef readonly captu
   store i8 %i.bh, ptr %i.bi, align 1
   %i.bj = getelementptr i8, ptr %2, i64 16
   store i8 %1, ptr %i.bj, align 1
-  %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.bk = getelementptr inbounds nuw i8, ptr %7, i64 16
   call fastcc void @zbee_sec_hash(ptr noundef %2, i32 noundef 17, ptr noundef nonnull %i.bk)
-  call fastcc void @zbee_sec_hash(ptr noundef nonnull %3, i32 noundef 32, ptr noundef %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
+  call fastcc void @zbee_sec_hash(ptr noundef nonnull %7, i32 noundef 32, ptr noundef %2)
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
+  br label %.preheader.preheader.rtcont
+
+.preheader.preheader.rtcont:                      ; preds = %.preheader.preheader.a, %.preheader.preheader.rtvec
   ret void
 }
 
@@ -340,7 +427,7 @@ bb.a:
 .loopexit39:                                      ; preds = %.loopexit39.loopexit, %.preheader
   %.2 = phi i32 [ %i.f, %.preheader ], [ 0, %.loopexit39.loopexit ] ; 4 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %bb.b, label %.preheader, !llvm.loop !20
+  br i1 %exitcond.not, label %bb.b, label %.preheader, !llvm.loop !21
 
 bb.b:                                             ; preds = %.loopexit39
   %i.q = zext nneg i32 %.2 to i64
@@ -374,7 +461,7 @@ bb.b:                                             ; preds = %.loopexit39
   store i8 0, ptr %i.ab, align 1
   %.3 = add nuw nsw i32 %.5, 1                    ; 2 uses
   %.not38 = icmp eq i32 %.3, 14
-  br i1 %.not38, label %._crit_edge, label %.lr.ph, !llvm.loop !21
+  br i1 %.not38, label %._crit_edge, label %.lr.ph, !llvm.loop !22
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.b
   %i.ac = lshr i32 %1, 5
@@ -456,6 +543,7 @@ attributes #16 = { nounwind willreturn memory(none) }
 !17 = !{!14, !13}
 !18 = distinct !{!18, !6}
 !19 = distinct !{!19, !6}
-!20 = distinct !{!20, !6}
+!20 = !{!"branch_weights", i32 1, i32 1048575}
 !21 = distinct !{!21, !6}
+!22 = distinct !{!22, !6}
 end_hunk_0

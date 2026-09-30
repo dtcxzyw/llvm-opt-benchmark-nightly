@@ -32,13 +32,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !21   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 112
-  tail call void @ff_framesync_uninit(ptr noundef nonnull %i.c) #8
+  tail call void @ff_framesync_uninit(ptr noundef nonnull %i.c) #9
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  tail call void @av_freep(ptr noundef nonnull %i.d) #8
+  tail call void @av_freep(ptr noundef nonnull %i.d) #9
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 96
-  tail call void @av_freep(ptr noundef nonnull %i.e) #8
+  tail call void @av_freep(ptr noundef nonnull %i.e) #9
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 104
-  tail call void @av_freep(ptr noundef nonnull %i.f) #8
+  tail call void @av_freep(ptr noundef nonnull %i.f) #9
   ret void
 }
 
@@ -48,7 +48,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 112
-  %i.d = tail call i32 @ff_framesync_activate(ptr noundef nonnull %i.c) #8
+  %i.d = tail call i32 @ff_framesync_activate(ptr noundef nonnull %i.c) #9
   ret i32 %i.d
 }
 
@@ -61,9 +61,9 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !21   ; 14 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !31
-  %i.g = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.f) #8 ; 3 uses
+  %i.g = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.f) #9 ; 3 uses
   %i.h = load i32, ptr %i.e, align 4, !tbaa !31
-  %i.i = tail call i32 @av_pix_fmt_count_planes(i32 noundef %i.h) #8
+  %i.i = tail call i32 @av_pix_fmt_count_planes(i32 noundef %i.h) #9
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 72
   store i32 %i.i, ptr %i.j, align 8, !tbaa !37
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 9
@@ -106,17 +106,17 @@ bb.a:
   %i.an = getelementptr inbounds nuw i8, ptr %i.d, i64 80 ; 4 uses
   store i32 %i.am, ptr %i.an, align 8, !tbaa !44
   %i.ao = sext i32 %i.am to i64
-  %i.ap = tail call noalias ptr @av_calloc(i64 noundef %i.ao, i64 noundef 4) #8
+  %i.ap = tail call noalias ptr @av_calloc(i64 noundef %i.ao, i64 noundef 4) #9
   %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 88 ; 2 uses
   store ptr %i.ap, ptr %i.aq, align 8, !tbaa !46
   %i.ar = load i32, ptr %i.an, align 8, !tbaa !44
   %i.as = sext i32 %i.ar to i64
-  %i.at = tail call noalias ptr @av_calloc(i64 noundef %i.as, i64 noundef 4) #8
+  %i.at = tail call noalias ptr @av_calloc(i64 noundef %i.as, i64 noundef 4) #9
   %i.au = getelementptr inbounds nuw i8, ptr %i.d, i64 96 ; 2 uses
   store ptr %i.at, ptr %i.au, align 8, !tbaa !46
   %i.av = load i32, ptr %i.an, align 8, !tbaa !44
   %i.aw = sext i32 %i.av to i64
-  %i.ax = tail call noalias ptr @av_calloc(i64 noundef %i.aw, i64 noundef 4) #8 ; 2 uses
+  %i.ax = tail call noalias ptr @av_calloc(i64 noundef %i.aw, i64 noundef 4) #9 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.d, i64 104
   store ptr %i.ax, ptr %i.ay, align 8, !tbaa !47
   %i.az = load ptr, ptr %i.aq, align 8, !tbaa !46
@@ -152,9 +152,9 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !21   ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !31
-  %i.g = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.f) #8 ; 2 uses
+  %i.g = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.f) #9 ; 2 uses
   %i.h = load i32, ptr %i.e, align 4, !tbaa !31
-  %i.i = tail call i32 @av_pix_fmt_count_planes(i32 noundef %i.h) #8
+  %i.i = tail call i32 @av_pix_fmt_count_planes(i32 noundef %i.h) #9
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 72
   store i32 %i.i, ptr %i.j, align 8, !tbaa !37
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 9
@@ -557,27 +557,23 @@ compute_contrast_change.exit:                     ; preds = %.critedge.i.epil, %
   %i.ex = load i8, ptr %i.ew, align 1, !tbaa !65
   %i.ey = zext i8 %i.ex to i64
   %i.ez = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %i.ey
-  %i.fa = load i32, ptr %i.ez, align 4, !tbaa !42 ; 3 uses
-  %.not.i = icmp ult i32 %i.fa, 256
-  %isnotneg.i = icmp sgt i32 %i.fa, -1
-  %14 = sext i1 %isnotneg.i to i8
-  %i.fb = trunc nuw i32 %i.fa to i8
-  %.0.i = select i1 %.not.i, i8 %i.fb, i8 %14
+  %i.fa = load i32, ptr %i.ez, align 4, !tbaa !42
+  %14 = tail call i32 @llvm.smax.i32(i32 %i.fa, i32 0)
+  %.0.i60 = tail call i32 @llvm.umin.i32(i32 %14, i32 255)
+  %i.fb = trunc nuw i32 %.0.i60 to i8
   %i.fc = getelementptr inbounds nuw i8, ptr %.03261, i64 %indvars.iv
-  store i8 %.0.i, ptr %i.fc, align 1, !tbaa !65
+  store i8 %i.fb, ptr %i.fc, align 1, !tbaa !65
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %.03162, i64 %indvars.iv.next
   %i.fe = load i8, ptr %i.fd, align 1, !tbaa !65
   %i.ff = zext i8 %i.fe to i64
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %i.ff
-  %i.fh = load i32, ptr %i.fg, align 4, !tbaa !42 ; 3 uses
-  %.not.i.1 = icmp ult i32 %i.fh, 256
-  %isnotneg.i.1 = icmp sgt i32 %i.fh, -1
-  %15 = sext i1 %isnotneg.i.1 to i8
-  %i.fi = trunc nuw i32 %i.fh to i8
-  %.0.i.1 = select i1 %.not.i.1, i8 %i.fi, i8 %15
+  %i.fh = load i32, ptr %i.fg, align 4, !tbaa !42
+  %15 = tail call i32 @llvm.smax.i32(i32 %i.fh, i32 0)
+  %.0.i60.1 = tail call i32 @llvm.umin.i32(i32 %15, i32 255)
+  %i.fi = trunc nuw i32 %.0.i60.1 to i8
   %i.fj = getelementptr inbounds nuw i8, ptr %.03261, i64 %indvars.iv.next
-  store i8 %.0.i.1, ptr %i.fj, align 1, !tbaa !65
+  store i8 %i.fi, ptr %i.fj, align 1, !tbaa !65
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter114.next.1 = add i64 %niter114, 2         ; 2 uses
   %niter114.ncmp.1 = icmp eq i64 %niter114.next.1, %unroll_iter113
@@ -593,14 +589,12 @@ compute_contrast_change.exit:                     ; preds = %.critedge.i.epil, %
   %i.fl = load i8, ptr %i.fk, align 1, !tbaa !65
   %i.fm = zext i8 %i.fl to i64
   %i.fn = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %i.fm
-  %i.fo = load i32, ptr %i.fn, align 4, !tbaa !42 ; 3 uses
-  %.not.i.epil = icmp ult i32 %i.fo, 256
-  %isnotneg.i.epil = icmp sgt i32 %i.fo, -1
-  %16 = sext i1 %isnotneg.i.epil to i8
-  %i.fp = trunc nuw i32 %i.fo to i8
-  %.0.i.epil = select i1 %.not.i.epil, i8 %i.fp, i8 %16
+  %i.fo = load i32, ptr %i.fn, align 4, !tbaa !42
+  %16 = tail call i32 @llvm.smax.i32(i32 %i.fo, i32 0)
+  %.0.i60.epil = tail call i32 @llvm.umin.i32(i32 %16, i32 255)
+  %i.fp = trunc nuw i32 %.0.i60.epil to i8
   %i.fq = getelementptr inbounds nuw i8, ptr %.03261, i64 %indvars.iv.epil.init
-  store i8 %.0.i.epil, ptr %i.fq, align 1, !tbaa !65
+  store i8 %i.fp, ptr %i.fq, align 1, !tbaa !65
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader108
@@ -1003,7 +997,7 @@ bb.a:
   %i.q = load i64, ptr %i.p, align 8, !tbaa !42
   store i64 %i.q, ptr %i.o, align 8, !tbaa !42
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 112 ; 2 uses
-  %i.s = tail call i32 @ff_framesync_init(ptr noundef nonnull %i.r, ptr noundef %i.a, i32 noundef 2) #8 ; 2 uses
+  %i.s = tail call i32 @ff_framesync_init(ptr noundef nonnull %i.r, ptr noundef %i.a, i32 noundef 2) #9 ; 2 uses
   %i.t = icmp slt i32 %i.s, 0
   br i1 %i.t, label %bb.c, label %bb.b
 
@@ -1033,7 +1027,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.c, ptr %i.ah, align 8, !tbaa !83
   %i.ai = getelementptr inbounds nuw i8, ptr %i.c, i64 152
   store ptr @process_frame, ptr %i.ai, align 8, !tbaa !84
-  %i.aj = tail call i32 @ff_framesync_configure(ptr noundef nonnull %i.r) #8
+  %i.aj = tail call i32 @ff_framesync_configure(ptr noundef nonnull %i.r) #9
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 132
   %i.am = load i64, ptr %i.al, align 4, !tbaa !42
@@ -1059,15 +1053,15 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 56
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !88
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !54   ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 112 ; 2 uses
-  %i.k = call i32 @ff_framesync_get_frame(ptr noundef nonnull %i.j, i32 noundef 0, ptr noundef nonnull %i.a, i32 noundef 0) #8 ; 2 uses
+  %i.k = call i32 @ff_framesync_get_frame(ptr noundef nonnull %i.j, i32 noundef 0, ptr noundef nonnull %i.a, i32 noundef 0) #9 ; 2 uses
   %i.l = icmp slt i32 %i.k, 0
   br i1 %i.l, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.m = call i32 @ff_framesync_get_frame(ptr noundef nonnull %i.j, i32 noundef 1, ptr noundef nonnull %i.b, i32 noundef 0) #8 ; 2 uses
+  %i.m = call i32 @ff_framesync_get_frame(ptr noundef nonnull %i.j, i32 noundef 1, ptr noundef nonnull %i.b, i32 noundef 0) #9 ; 2 uses
   %i.n = icmp slt i32 %i.m, 0
   br i1 %i.n, label %.critedge, label %bb.c
 
@@ -1079,7 +1073,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !90
-  %i.r = call ptr @av_frame_clone(ptr noundef %i.q) #8 ; 2 uses
+  %i.r = call ptr @av_frame_clone(ptr noundef %i.q) #9 ; 2 uses
   %.not67 = icmp eq ptr %i.r, null
   br i1 %.not67, label %.critedge, label %.loopexit
 
@@ -1088,13 +1082,13 @@ bb.e:                                             ; preds = %bb.c
   %i.t = load i32, ptr %i.s, align 8, !tbaa !43
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 44
   %i.v = load i32, ptr %i.u, align 4, !tbaa !41
-  %i.w = call ptr @ff_get_video_buffer(ptr noundef %i.i, i32 noundef %i.t, i32 noundef %i.v) #8 ; 7 uses
+  %i.w = call ptr @ff_get_video_buffer(ptr noundef %i.i, i32 noundef %i.t, i32 noundef %i.v) #9 ; 7 uses
   %.not65.not = icmp eq ptr %i.w, null
   br i1 %.not65.not, label %.critedge, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.x = load ptr, ptr %i.a, align 8, !tbaa !90
-  %i.y = call i32 @av_frame_copy_props(ptr noundef nonnull %i.w, ptr noundef %i.x) #8 ; 0 uses
+  %i.y = call i32 @av_frame_copy_props(ptr noundef nonnull %i.w, ptr noundef %i.x) #9 ; 0 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 72 ; 2 uses
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !37
   %i.ab = icmp sgt i32 %i.aa, 0
@@ -1142,7 +1136,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bg = shl i32 %i.bc, %i.bf
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !42
-  call void @av_image_copy_plane(ptr noundef %i.as, i32 noundef %i.au, ptr noundef %i.ax, i32 noundef %i.ba, i32 noundef %i.bg, i32 noundef %i.bi) #8
+  call void @av_image_copy_plane(ptr noundef %i.as, i32 noundef %i.au, ptr noundef %i.ax, i32 noundef %i.ba, i32 noundef %i.bg, i32 noundef %i.bi) #9
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -1179,7 +1173,7 @@ bb.i:                                             ; preds = %bb.g
   %i.cn = load ptr, ptr %i.al, align 8, !tbaa !47
   %i.co = load i32, ptr %i.am, align 8, !tbaa !44
   %i.cp = sext i32 %i.co to i64
-  call void %i.bj(ptr noundef %i.bm, ptr noundef %i.bp, ptr noundef %i.br, i64 noundef %i.bv, i64 noundef %i.bz, i64 noundef %i.cc, i32 noundef %i.ce, i32 noundef %i.cg, i32 noundef %i.ci, i32 noundef %i.ck, ptr noundef %i.cl, ptr noundef %i.cm, ptr noundef %i.cn, i64 noundef %i.cp) #8
+  call void %i.bj(ptr noundef %i.bm, ptr noundef %i.bp, ptr noundef %i.br, i64 noundef %i.bv, i64 noundef %i.bz, i64 noundef %i.cc, i32 noundef %i.ce, i32 noundef %i.cg, i32 noundef %i.ci, i32 noundef %i.ck, ptr noundef %i.cl, ptr noundef %i.cm, ptr noundef %i.cn, i64 noundef %i.cp) #9
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -1197,16 +1191,16 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.cw = getelementptr inbounds nuw i8, ptr %i.i, i64 96
   %i.cx = load i64, ptr %i.cv, align 4
   %i.cy = load i64, ptr %i.cw, align 8
-  %i.cz = call i64 @av_rescale_q(i64 noundef %i.cu, i64 %i.cx, i64 %i.cy) #9
+  %i.cz = call i64 @av_rescale_q(i64 noundef %i.cu, i64 %i.cx, i64 %i.cy) #10
   %i.da = getelementptr inbounds nuw i8, ptr %.059, i64 136
   store i64 %i.cz, ptr %i.da, align 8, !tbaa !98
-  %i.db = call i32 @ff_filter_frame(ptr noundef %i.i, ptr noundef nonnull %.059) #8
+  %i.db = call i32 @ff_filter_frame(ptr noundef %i.i, ptr noundef nonnull %.059) #9
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.e, %bb.d, %bb.a, %bb.b, %.loopexit
   %.1 = phi i32 [ -12, %bb.e ], [ %i.db, %.loopexit ], [ %i.m, %bb.b ], [ %i.k, %bb.a ], [ -12, %bb.d ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %.1
 }
 
@@ -1235,8 +1229,14 @@ declare void @av_freep(ptr noundef) local_unnamed_addr #3
 
 declare i32 @ff_framesync_activate(ptr noundef) local_unnamed_addr #3
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #7
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #7
+declare void @llvm.assume(i1 noundef) #8
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1245,9 +1245,10 @@ attributes #3 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "st
 attributes #4 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #6 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #8 = { nounwind }
-attributes #9 = { nounwind willreturn memory(none) }
+attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #9 = { nounwind }
+attributes #10 = { nounwind willreturn memory(none) }
 
 !llvm.module.flags = !{!2, !3, !4}
 !llvm.ident = !{!5}

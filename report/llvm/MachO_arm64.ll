@@ -202,12 +202,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
   %i.p = load ptr, ptr %7, align 8, !tbaa !359    ; 3 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.s = load <2 x ptr>, ptr %2, align 8, !tbaa !105
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
-  %i.t = load ptr, ptr %i.q, align 16, !tbaa !361
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.t = load ptr, ptr %10, align 16, !tbaa !361
   %i.u = load <2 x ptr>, ptr %8, align 16, !tbaa !107
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
@@ -227,7 +227,7 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.t, ptr %i.aa, align 16, !tbaa !361
   call void @_ZN4llvm7jitlink21MachOLinkGraphBuilderC2ERKNS_6object15MachOObjectFileESt10shared_ptrINS_3orc16SymbolStringPoolEENS_6TripleENS_17SubtargetFeaturesEPFPKchE(ptr noundef nonnull align 8 dereferenceable(196) %9, ptr noundef nonnull align 8 dereferenceable(360) %i.p, ptr nofree noundef nonnull align 8 dereferenceable(16) %3, ptr nofree noundef nonnull align 8 dereferenceable(56) %4, ptr nofree noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull @_ZN4llvm7jitlink7aarch6415getEdgeKindNameEh) #18
   %i.ab = load ptr, ptr %5, align 16, !tbaa !363  ; 3 uses
-  %i.ac = load ptr, ptr %10, align 8, !tbaa !364  ; 2 uses
+  %i.ac = load ptr, ptr %i.r, align 8, !tbaa !364 ; 2 uses
   %.not4.i.i.i.i.i = icmp eq ptr %i.ab, %i.ac
   br i1 %.not4.i.i.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvT_S7_.exit.i.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -279,7 +279,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZN4llvm6TripleD2Ev.exit.i
 
 _ZN4llvm6TripleD2Ev.exit.i:                       ; preds = %_ZN4llvm17SubtargetFeaturesD2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-  %i.at = load ptr, ptr %i.r, align 8, !tbaa !114 ; 8 uses
+  %i.at = load ptr, ptr %i.q, align 8, !tbaa !114 ; 8 uses
   %.not.i.i.i = icmp eq ptr %i.at, null
   br i1 %.not.i.i.i, label %bb.k, label %bb.e
 

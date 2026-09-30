@@ -204,15 +204,15 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.jc, ptr noundef nonnull align 16 %i.b, i64 noundef range(i64 1, 32) %i.jb, i1 noundef false) #6
   %i.kl = load i64, ptr %i.b, align 16
   %i.km = load i64, ptr %i.jf, align 8
-  %10 = extractelement <2 x i64> %i.kf, i64 0     ; 2 uses
-  %11 = extractelement <2 x i64> %i.kf, i64 1     ; 2 uses
-  %12 = extractelement <2 x i64> %i.ju, i64 0
-  %13 = extractelement <2 x i64> %i.ju, i64 1
-  %14 = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 5 uses
-  %15 = getelementptr inbounds nuw i8, ptr %9, i64 72 ; 3 uses
-  %16 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
-  %17 = load <2 x i64>, ptr %i.jg, align 16
-  %i.kn = call { i64, i64 } @softaes_block_encrypt(i64 %12, i64 %13, i64 %10, i64 %11) #6 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 5 uses
+  %11 = getelementptr inbounds nuw i8, ptr %9, i64 72 ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
+  %13 = load <2 x i64>, ptr %i.jg, align 16
+  %14 = extractelement <2 x i64> %i.kf, i64 0     ; 2 uses
+  %15 = extractelement <2 x i64> %i.kf, i64 1     ; 2 uses
+  %16 = extractelement <2 x i64> %i.ju, i64 0
+  %17 = extractelement <2 x i64> %i.ju, i64 1
+  %i.kn = call { i64, i64 } @softaes_block_encrypt(i64 %16, i64 %17, i64 %14, i64 %15) #6 ; 2 uses
   %i.ko = extractvalue { i64, i64 } %i.kn, 0
   %i.kp = extractvalue { i64, i64 } %i.kn, 1
   store i64 %i.ko, ptr %i.jr, align 16
@@ -226,8 +226,8 @@ bb.h:                                             ; preds = %bb.g
   %i.kw = extractvalue { i64, i64 } %i.ku, 1
   store i64 %i.kv, ptr %i.jh, align 16
   store i64 %i.kw, ptr %i.ji, align 8
-  %i.kx = load i64, ptr %14, align 16
-  %i.ky = load i64, ptr %15, align 8
+  %i.kx = load i64, ptr %10, align 16
+  %i.ky = load i64, ptr %11, align 8
   %i.kz = load i64, ptr %i.jl, align 16
   %i.la = load i64, ptr %i.jm, align 8
   %i.lb = call { i64, i64 } @softaes_block_encrypt(i64 %i.kx, i64 %i.ky, i64 %i.kz, i64 %i.la) #6 ; 2 uses
@@ -237,13 +237,13 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.ld, ptr %i.jm, align 8
   %i.le = load i64, ptr %i.jp, align 16
   %i.lf = load i64, ptr %i.jq, align 8
-  %i.lg = load i64, ptr %14, align 16
-  %i.lh = load i64, ptr %15, align 8
+  %i.lg = load i64, ptr %10, align 16
+  %i.lh = load i64, ptr %11, align 8
   %i.li = call { i64, i64 } @softaes_block_encrypt(i64 %i.le, i64 %i.lf, i64 %i.lg, i64 %i.lh) #6 ; 2 uses
   %i.lj = extractvalue { i64, i64 } %i.li, 0
   %i.lk = extractvalue { i64, i64 } %i.li, 1
-  store i64 %i.lj, ptr %14, align 16
-  store i64 %i.lk, ptr %15, align 8
+  store i64 %i.lj, ptr %10, align 16
+  store i64 %i.lk, ptr %11, align 8
   %i.ll = load i64, ptr %i.jn, align 16
   %i.lm = load i64, ptr %i.jo, align 8
   %i.ln = load i64, ptr %i.jp, align 16
@@ -263,7 +263,7 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.lx, ptr %i.jn, align 16
   store i64 %i.ly, ptr %i.jo, align 8
   %i.lz = load i64, ptr %9, align 16
-  %i.ma = load i64, ptr %16, align 8
+  %i.ma = load i64, ptr %12, align 8
   %i.mb = load i64, ptr %i.jj, align 16
   %i.mc = load i64, ptr %i.jk, align 8
   %i.md = call { i64, i64 } @softaes_block_encrypt(i64 %i.lz, i64 %i.ma, i64 %i.mb, i64 %i.mc) #6 ; 2 uses
@@ -272,17 +272,17 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.me, ptr %i.jj, align 16
   store i64 %i.mf, ptr %i.jk, align 8
   %i.mg = load i64, ptr %9, align 16
-  %i.mh = load i64, ptr %16, align 8
-  %i.mi = call { i64, i64 } @softaes_block_encrypt(i64 %10, i64 %11, i64 %i.mg, i64 %i.mh) #6 ; 2 uses
+  %i.mh = load i64, ptr %12, align 8
+  %i.mi = call { i64, i64 } @softaes_block_encrypt(i64 %14, i64 %15, i64 %i.mg, i64 %i.mh) #6 ; 2 uses
   %i.mj = extractvalue { i64, i64 } %i.mi, 0
   %i.mk = extractvalue { i64, i64 } %i.mi, 1
   %i.ml = xor i64 %i.mj, %i.kl
   %i.mm = xor i64 %i.mk, %i.km
   store i64 %i.ml, ptr %9, align 16
-  store i64 %i.mm, ptr %16, align 8
-  %i.mn = load <2 x i64>, ptr %14, align 16
-  %i.mo = xor <2 x i64> %i.mn, %17
-  store <2 x i64> %i.mo, ptr %14, align 16
+  store i64 %i.mm, ptr %12, align 8
+  %i.mn = load <2 x i64>, ptr %10, align 16
+  %i.mo = xor <2 x i64> %i.mn, %13
+  store <2 x i64> %i.mo, ptr %10, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   br label %bb.j
 
@@ -329,15 +329,15 @@ bb.i:                                             ; preds = %bb.g
   %i.nx = call ptr @__memcpy_chk(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, i64 noundef range(i64 1, 32) %i.jb, i64 noundef 32) #6, !alias.scope !35 ; 0 uses
   %i.ny = load i64, ptr %i.a, align 16
   %i.nz = load i64, ptr %i.mr, align 8
-  %18 = extractelement <2 x i64> %i.nr, i64 0     ; 2 uses
-  %19 = extractelement <2 x i64> %i.nr, i64 1     ; 2 uses
-  %20 = extractelement <2 x i64> %i.ng, i64 0
-  %21 = extractelement <2 x i64> %i.ng, i64 1
-  %22 = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 5 uses
-  %23 = getelementptr inbounds nuw i8, ptr %9, i64 72 ; 3 uses
-  %24 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
-  %25 = load <2 x i64>, ptr %i.ms, align 16
-  %i.oa = call { i64, i64 } @softaes_block_encrypt(i64 %20, i64 %21, i64 %18, i64 %19) #6 ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 5 uses
+  %19 = getelementptr inbounds nuw i8, ptr %9, i64 72 ; 3 uses
+  %20 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
+  %21 = load <2 x i64>, ptr %i.ms, align 16
+  %22 = extractelement <2 x i64> %i.nr, i64 0     ; 2 uses
+  %23 = extractelement <2 x i64> %i.nr, i64 1     ; 2 uses
+  %24 = extractelement <2 x i64> %i.ng, i64 0
+  %25 = extractelement <2 x i64> %i.ng, i64 1
+  %i.oa = call { i64, i64 } @softaes_block_encrypt(i64 %24, i64 %25, i64 %22, i64 %23) #6 ; 2 uses
   %i.ob = extractvalue { i64, i64 } %i.oa, 0
   %i.oc = extractvalue { i64, i64 } %i.oa, 1
   store i64 %i.ob, ptr %i.nd, align 16
@@ -351,8 +351,8 @@ bb.i:                                             ; preds = %bb.g
   %i.oj = extractvalue { i64, i64 } %i.oh, 1
   store i64 %i.oi, ptr %i.mt, align 16
   store i64 %i.oj, ptr %i.mu, align 8
-  %i.ok = load i64, ptr %22, align 16
-  %i.ol = load i64, ptr %23, align 8
+  %i.ok = load i64, ptr %18, align 16
+  %i.ol = load i64, ptr %19, align 8
   %i.om = load i64, ptr %i.mx, align 16
   %i.on = load i64, ptr %i.my, align 8
   %i.oo = call { i64, i64 } @softaes_block_encrypt(i64 %i.ok, i64 %i.ol, i64 %i.om, i64 %i.on) #6 ; 2 uses
@@ -362,13 +362,13 @@ bb.i:                                             ; preds = %bb.g
   store i64 %i.oq, ptr %i.my, align 8
   %i.or = load i64, ptr %i.nb, align 16
   %i.os = load i64, ptr %i.nc, align 8
-  %i.ot = load i64, ptr %22, align 16
-  %i.ou = load i64, ptr %23, align 8
+  %i.ot = load i64, ptr %18, align 16
+  %i.ou = load i64, ptr %19, align 8
   %i.ov = call { i64, i64 } @softaes_block_encrypt(i64 %i.or, i64 %i.os, i64 %i.ot, i64 %i.ou) #6 ; 2 uses
   %i.ow = extractvalue { i64, i64 } %i.ov, 0
   %i.ox = extractvalue { i64, i64 } %i.ov, 1
-  store i64 %i.ow, ptr %22, align 16
-  store i64 %i.ox, ptr %23, align 8
+  store i64 %i.ow, ptr %18, align 16
+  store i64 %i.ox, ptr %19, align 8
   %i.oy = load i64, ptr %i.mz, align 16
   %i.oz = load i64, ptr %i.na, align 8
   %i.pa = load i64, ptr %i.nb, align 16
@@ -388,7 +388,7 @@ bb.i:                                             ; preds = %bb.g
   store i64 %i.pk, ptr %i.mz, align 16
   store i64 %i.pl, ptr %i.na, align 8
   %i.pm = load i64, ptr %9, align 16
-  %i.pn = load i64, ptr %24, align 8
+  %i.pn = load i64, ptr %20, align 8
   %i.po = load i64, ptr %i.mv, align 16
   %i.pp = load i64, ptr %i.mw, align 8
   %i.pq = call { i64, i64 } @softaes_block_encrypt(i64 %i.pm, i64 %i.pn, i64 %i.po, i64 %i.pp) #6 ; 2 uses
@@ -397,17 +397,17 @@ bb.i:                                             ; preds = %bb.g
   store i64 %i.pr, ptr %i.mv, align 16
   store i64 %i.ps, ptr %i.mw, align 8
   %i.pt = load i64, ptr %9, align 16
-  %i.pu = load i64, ptr %24, align 8
-  %i.pv = call { i64, i64 } @softaes_block_encrypt(i64 %18, i64 %19, i64 %i.pt, i64 %i.pu) #6 ; 2 uses
+  %i.pu = load i64, ptr %20, align 8
+  %i.pv = call { i64, i64 } @softaes_block_encrypt(i64 %22, i64 %23, i64 %i.pt, i64 %i.pu) #6 ; 2 uses
   %i.pw = extractvalue { i64, i64 } %i.pv, 0
   %i.px = extractvalue { i64, i64 } %i.pv, 1
   %i.py = xor i64 %i.pw, %i.ny
   %i.pz = xor i64 %i.px, %i.nz
   store i64 %i.py, ptr %9, align 16
-  store i64 %i.pz, ptr %24, align 8
-  %i.qa = load <2 x i64>, ptr %22, align 16
-  %i.qb = xor <2 x i64> %i.qa, %25
-  store <2 x i64> %i.qb, ptr %22, align 16
+  store i64 %i.pz, ptr %20, align 8
+  %i.qa = load <2 x i64>, ptr %18, align 16
+  %i.qb = xor <2 x i64> %i.qa, %21
+  store <2 x i64> %i.qb, ptr %18, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %bb.j
 

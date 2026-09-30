@@ -205,10 +205,8 @@ bb.bh:                                            ; preds = %.thread549, %bb.bg
   br label %bb.bi
 
 bb.bi:                                            ; preds = %.preheader, %pick_color.exit
-  %.sroa.12.0 = phi nsz float [ %11, %pick_color.exit ], [ 0.000000e+00, %.preheader ] ; 2 uses
-  %.sroa.9.0 = phi nsz float [ %10, %pick_color.exit ], [ 1.275000e+02, %.preheader ] ; 2 uses
   %.0 = phi i32 [ %i.zu, %pick_color.exit ], [ 0, %.preheader ] ; 3 uses
-  %2 = phi <2 x float> [ %9, %pick_color.exit ], [ <float 1.275000e+02, float 0.000000e+00>, %.preheader ] ; 2 uses
+  %2 = phi <4 x float> [ %10, %pick_color.exit ], [ <float 1.275000e+02, float 1.275000e+02, float 0.000000e+00, float 0.000000e+00>, %.preheader ] ; 4 uses
   br i1 %i.vc, label %bb.bk, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
@@ -448,20 +446,17 @@ pick_color.exit:                                  ; preds = %color_range.exit.th
   %.val516824 = phi float [ %.val516, %bb.ce ], [ %.val516, %bb.cb ], [ %.val516, %bb.cd ], [ %.val516, %color_range.exit ], [ %.val516822, %color_range.exit.thread ]
   %.2545823 = phi float [ %.0543, %bb.ce ], [ %.0543, %bb.cb ], [ %.0543, %bb.cd ], [ %.0543, %color_range.exit ], [ %.1544, %color_range.exit.thread ]
   %.sink11.i = phi float [ %i.zg, %bb.ce ], [ %i.yo, %bb.cb ], [ %i.yu, %bb.cd ], [ %i.ve, %color_range.exit ], [ %i.ve, %color_range.exit.thread ]
-  %i.zr = phi <2 x float> [ %i.xn, %bb.ce ], [ %i.xn, %bb.cb ], [ %i.xn, %bb.cd ], [ %i.xn, %color_range.exit ], [ %i.ww, %color_range.exit.thread ] ; 2 uses
-  %i.zs = phi <2 x float> [ %i.zq, %bb.ce ], [ %i.yq, %bb.cb ], [ %i.yw, %bb.cd ], [ %i.vg, %color_range.exit ], [ %i.vg, %color_range.exit.thread ] ; 2 uses
+  %i.zr = phi <2 x float> [ %i.xn, %bb.ce ], [ %i.xn, %bb.cb ], [ %i.xn, %bb.cd ], [ %i.xn, %color_range.exit ], [ %i.ww, %color_range.exit.thread ]
+  %i.zs = phi <2 x float> [ %i.zq, %bb.ce ], [ %i.yq, %bb.cb ], [ %i.yw, %bb.cd ], [ %i.vg, %color_range.exit ], [ %i.vg, %color_range.exit.thread ]
   %i.zt = fmul nsz float %.val516824, 2.550000e+02
-  %shift20 = shufflevector <2 x float> %i.zs, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop21 = fmul nsz <2 x float> %i.zr, %shift20
-  %3 = extractelement <2 x float> %foldExtExtBinop21, i64 0
-  %4 = fmul nsz float %i.ve, %i.zt
-  %5 = shufflevector <2 x float> %i.zr, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %6 = insertelement <2 x float> %5, float %.2545823, i64 1
-  %7 = insertelement <2 x float> %i.zs, float %.sink11.i, i64 1
-  %8 = fmul nsz <2 x float> %6, %7
-  %9 = fadd nsz <2 x float> %2, %8
-  %10 = fadd nsz float %.sroa.9.0, %3
-  %11 = fadd nsz float %.sroa.12.0, %4
+  %3 = shufflevector <2 x float> %i.zr, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %4 = insertelement <4 x float> %3, float %.2545823, i64 2
+  %5 = insertelement <4 x float> %4, float %i.ve, i64 3
+  %6 = shufflevector <2 x float> %i.zs, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
+  %7 = insertelement <4 x float> %6, float %.sink11.i, i64 2
+  %8 = insertelement <4 x float> %7, float %i.zt, i64 3
+  %9 = fmul nsz <4 x float> %5, %8
+  %10 = fadd nsz <4 x float> %2, %9
   %i.zu = add nuw nsw i32 %.0, 1
   br label %bb.bi, !llvm.loop !213
 
@@ -484,15 +479,12 @@ bb.cf:                                            ; preds = %bb.bk
   %i.aak = sext i32 %i.aaj to i64
   %i.aal = getelementptr inbounds i8, ptr %i.aai, i64 %i.aak
   %i.aam = getelementptr inbounds nuw i8, ptr %i.aal, i64 20
-  %12 = fptosi <2 x float> %2 to <2 x i32>        ; 3 uses
-  %13 = extractelement <2 x i32> %12, i64 1       ; 2 uses
-  %isnotneg.i514 = icmp sgt i32 %13, -1
-  %14 = sext i1 %isnotneg.i514 to i8
-  %i.aan = trunc nuw i32 %13 to i8
-  %15 = icmp ult <2 x i32> %12, splat (i32 256)   ; 2 uses
-  %16 = extractelement <2 x i1> %15, i64 1
-  %.0.i515 = select i1 %16, i8 %i.aan, i8 %14
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.aam, i8 %.0.i515, i64 10, i1 false)
+  %11 = extractelement <4 x float> %2, i64 2
+  %12 = fptosi float %11 to i32
+  %13 = call i32 @llvm.smax.i32(i32 %12, i32 0)
+  %.0.i515550 = call i32 @llvm.umin.i32(i32 %13, i32 255)
+  %i.aan = trunc nuw i32 %.0.i515550 to i8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.aam, i8 %i.aan, i64 10, i1 false)
   %i.aao = load ptr, ptr %i.ag, align 8, !tbaa !47 ; 2 uses
   %i.aap = getelementptr inbounds nuw i8, ptr %i.aao, i64 8
   %i.aaq = load ptr, ptr %i.aap, align 8, !tbaa !69
@@ -510,12 +502,12 @@ bb.cf:                                            ; preds = %bb.bk
   %i.abc = sext i32 %i.abb to i64
   %i.abd = getelementptr inbounds i8, ptr %i.aba, i64 %i.abc
   %i.abe = getelementptr inbounds nuw i8, ptr %i.abd, i64 20
-  %17 = extractelement <2 x i32> %12, i64 0       ; 2 uses
-  %isnotneg.i511 = icmp sgt i32 %17, -1
-  %18 = sext i1 %isnotneg.i511 to i8
-  %19 = trunc nuw i32 %17 to i8
-  %20 = extractelement <2 x i1> %15, i64 0
-  %.0.i512 = select i1 %20, i8 %19, i8 %18
+  %14 = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %15 = fptosi <2 x float> %14 to <2 x i32>
+  %16 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %15, <2 x i32> zeroinitializer) ; 2 uses
+  %17 = extractelement <2 x i32> %16, i64 1
+  %.0.i512551 = call i32 @llvm.umin.i32(i32 %17, i32 255)
+  %.0.i512 = trunc nuw i32 %.0.i512551 to i8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.abe, i8 %.0.i512, i64 10, i1 false)
   %i.abf = load ptr, ptr %i.ag, align 8, !tbaa !47 ; 2 uses
   %i.abg = getelementptr inbounds nuw i8, ptr %i.abf, i64 16
@@ -534,13 +526,10 @@ bb.cf:                                            ; preds = %bb.bk
   %i.abt = sext i32 %i.abs to i64
   %i.abu = getelementptr inbounds i8, ptr %i.abr, i64 %i.abt
   %i.abv = getelementptr inbounds nuw i8, ptr %i.abu, i64 20
-  %21 = fptosi float %.sroa.9.0 to i32            ; 3 uses
-  %.not.i507 = icmp ult i32 %21, 256
-  %isnotneg.i508 = icmp sgt i32 %21, -1
-  %22 = sext i1 %isnotneg.i508 to i8
-  %i.abw = trunc nuw i32 %21 to i8
-  %.0.i509 = select i1 %.not.i507, i8 %i.abw, i8 %22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.abv, i8 %.0.i509, i64 10, i1 false)
+  %18 = extractelement <2 x i32> %16, i64 0
+  %.0.i509552 = call i32 @llvm.umin.i32(i32 %18, i32 255)
+  %i.abw = trunc nuw i32 %.0.i509552 to i8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.abv, i8 %i.abw, i64 10, i1 false)
   %i.abx = load ptr, ptr %i.ag, align 8, !tbaa !47 ; 2 uses
   %i.aby = getelementptr inbounds nuw i8, ptr %i.abx, i64 24
   %i.abz = load ptr, ptr %i.aby, align 8, !tbaa !69 ; 2 uses
@@ -562,13 +551,12 @@ bb.cg:                                            ; preds = %bb.cf
   %i.acl = sext i32 %i.ack to i64
   %i.acm = getelementptr inbounds i8, ptr %i.acj, i64 %i.acl
   %i.acn = getelementptr inbounds nuw i8, ptr %i.acm, i64 20
-  %23 = fptosi float %.sroa.12.0 to i32           ; 3 uses
-  %.not.i = icmp ult i32 %23, 256
-  %isnotneg.i = icmp sgt i32 %23, -1
-  %24 = sext i1 %isnotneg.i to i8
-  %i.aco = trunc nuw i32 %23 to i8
-  %.0.i = select i1 %.not.i, i8 %i.aco, i8 %24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.acn, i8 %.0.i, i64 10, i1 false)
+  %19 = extractelement <4 x float> %2, i64 3
+  %20 = fptosi float %19 to i32
+  %21 = call i32 @llvm.smax.i32(i32 %20, i32 0)
+  %.0.i553 = call i32 @llvm.umin.i32(i32 %21, i32 255)
+  %i.aco = trunc nuw i32 %.0.i553 to i8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.acn, i8 %i.aco, i64 10, i1 false)
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cf
@@ -971,6 +959,9 @@ declare i32 @llvm.smin.i32(i32, i32) #3
 declare i32 @llvm.smax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.exp.v2f32(<2 x float>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
@@ -996,6 +987,9 @@ declare <4 x double> @llvm.cos.v4f64(<4 x double>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.sin.v4f64(<4 x double>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #3

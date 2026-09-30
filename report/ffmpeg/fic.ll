@@ -204,86 +204,68 @@ begin_hunk_0_@fic_decode_slice:bb.a
   ret i32 %.5
 
 .preheader.i.i.rtvec:                             ; preds = %.preheader.i.i
-  %i.ts = load <8 x i16>, ptr %.265.i.i, align 2, !tbaa !76 ; 3 uses
-  %2 = icmp ugt <8 x i16> %i.ts, splat (i16 255)
-  %3 = icmp sgt <8 x i16> %i.ts, splat (i16 -1)
-  %4 = sext <8 x i1> %3 to <8 x i8>
-  %i.tt = trunc <8 x i16> %i.ts to <8 x i8>
-  %5 = select <8 x i1> %2, <8 x i8> %4, <8 x i8> %i.tt
-  store <8 x i8> %5, ptr %.02663.i.i, align 1, !tbaa !36
+  %i.ts = load <8 x i16>, ptr %.265.i.i, align 2, !tbaa !76
+  %2 = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.ts, <8 x i16> zeroinitializer)
+  %3 = tail call <8 x i16> @llvm.umin.v8i16(<8 x i16> %2, <8 x i16> splat (i16 255))
+  %i.tt = trunc nuw <8 x i16> %3 to <8 x i8>
+  store <8 x i8> %i.tt, ptr %.02663.i.i, align 1, !tbaa !36
   br label %.preheader.i.i.rtcont
 
 .preheader.i.i.rtscalar:                          ; preds = %.preheader.i.i
-  %i.tu = load i16, ptr %.265.i.i, align 2, !tbaa !76 ; 3 uses
-  %6 = icmp ugt i16 %i.tu, 255
-  %isnotneg.i.i.i.scalar = icmp sgt i16 %i.tu, -1
-  %7 = sext i1 %isnotneg.i.i.i.scalar to i8
-  %i.tv = trunc i16 %i.tu to i8
-  %.0.i.i.i.scalar = select i1 %6, i8 %7, i8 %i.tv
-  store i8 %.0.i.i.i.scalar, ptr %.02663.i.i, align 1, !tbaa !36
+  %i.tu = load i16, ptr %.265.i.i, align 2, !tbaa !76
+  %4 = tail call i16 @llvm.smax.i16(i16 %i.tu, i16 0)
+  %.0.i33.i.i.scalar = tail call i16 @llvm.umin.i16(i16 %4, i16 255)
+  %i.tv = trunc nuw i16 %.0.i33.i.i.scalar to i8
+  store i8 %i.tv, ptr %.02663.i.i, align 1, !tbaa !36
   %i.tw = getelementptr inbounds nuw i8, ptr %.265.i.i, i64 2
-  %i.tx = load i16, ptr %i.tw, align 2, !tbaa !76 ; 3 uses
-  %8 = icmp ugt i16 %i.tx, 255
-  %isnotneg.i.1.i.i.scalar = icmp sgt i16 %i.tx, -1
-  %9 = sext i1 %isnotneg.i.1.i.i.scalar to i8
-  %i.ty = trunc i16 %i.tx to i8
-  %.0.i.1.i.i.scalar = select i1 %8, i8 %9, i8 %i.ty
+  %i.tx = load i16, ptr %i.tw, align 2, !tbaa !76
+  %5 = tail call i16 @llvm.smax.i16(i16 %i.tx, i16 0)
+  %.0.i33.1.i.i.scalar = tail call i16 @llvm.umin.i16(i16 %5, i16 255)
+  %i.ty = trunc nuw i16 %.0.i33.1.i.i.scalar to i8
   %i.tz = getelementptr inbounds nuw i8, ptr %.02663.i.i, i64 1
-  store i8 %.0.i.1.i.i.scalar, ptr %i.tz, align 1, !tbaa !36
+  store i8 %i.ty, ptr %i.tz, align 1, !tbaa !36
   %i.ua = getelementptr inbounds nuw i8, ptr %.265.i.i, i64 4
-  %i.ub = load i16, ptr %i.ua, align 2, !tbaa !76 ; 3 uses
-  %10 = icmp ugt i16 %i.ub, 255
-  %isnotneg.i.2.i.i.scalar = icmp sgt i16 %i.ub, -1
-  %11 = sext i1 %isnotneg.i.2.i.i.scalar to i8
-  %i.uc = trunc i16 %i.ub to i8
-  %.0.i.2.i.i.scalar = select i1 %10, i8 %11, i8 %i.uc
+  %i.ub = load i16, ptr %i.ua, align 2, !tbaa !76
+  %6 = tail call i16 @llvm.smax.i16(i16 %i.ub, i16 0)
+  %.0.i33.2.i.i.scalar = tail call i16 @llvm.umin.i16(i16 %6, i16 255)
+  %i.uc = trunc nuw i16 %.0.i33.2.i.i.scalar to i8
   %i.ud = getelementptr inbounds nuw i8, ptr %.02663.i.i, i64 2
-  store i8 %.0.i.2.i.i.scalar, ptr %i.ud, align 1, !tbaa !36
+  store i8 %i.uc, ptr %i.ud, align 1, !tbaa !36
   %i.ue = getelementptr inbounds nuw i8, ptr %.265.i.i, i64 6
-  %i.uf = load i16, ptr %i.ue, align 2, !tbaa !76 ; 3 uses
-  %12 = icmp ugt i16 %i.uf, 255
-  %isnotneg.i.3.i.i.scalar = icmp sgt i16 %i.uf, -1
-  %13 = sext i1 %isnotneg.i.3.i.i.scalar to i8
-  %i.ug = trunc i16 %i.uf to i8
-  %.0.i.3.i.i.scalar = select i1 %12, i8 %13, i8 %i.ug
+  %i.uf = load i16, ptr %i.ue, align 2, !tbaa !76
+  %7 = tail call i16 @llvm.smax.i16(i16 %i.uf, i16 0)
+  %.0.i33.3.i.i.scalar = tail call i16 @llvm.umin.i16(i16 %7, i16 255)
+  %i.ug = trunc nuw i16 %.0.i33.3.i.i.scalar to i8
   %i.uh = getelementptr inbounds nuw i8, ptr %.02663.i.i, i64 3
-  store i8 %.0.i.3.i.i.scalar, ptr %i.uh, align 1, !tbaa !36
+  store i8 %i.ug, ptr %i.uh, align 1, !tbaa !36
   %i.ui = getelementptr inbounds nuw i8, ptr %.265.i.i, i64 8
-  %i.uj = load i16, ptr %i.ui, align 2, !tbaa !76 ; 3 uses
-  %14 = icmp ugt i16 %i.uj, 255
-  %isnotneg.i.4.i.i.scalar = icmp sgt i16 %i.uj, -1
-  %15 = sext i1 %isnotneg.i.4.i.i.scalar to i8
-  %i.uk = trunc i16 %i.uj to i8
-  %.0.i.4.i.i.scalar = select i1 %14, i8 %15, i8 %i.uk
+  %i.uj = load i16, ptr %i.ui, align 2, !tbaa !76
+  %8 = tail call i16 @llvm.smax.i16(i16 %i.uj, i16 0)
+  %.0.i33.4.i.i.scalar = tail call i16 @llvm.umin.i16(i16 %8, i16 255)
+  %i.uk = trunc nuw i16 %.0.i33.4.i.i.scalar to i8
   %i.ul = getelementptr inbounds nuw i8, ptr %.02663.i.i, i64 4
-  store i8 %.0.i.4.i.i.scalar, ptr %i.ul, align 1, !tbaa !36
+  store i8 %i.uk, ptr %i.ul, align 1, !tbaa !36
   %i.um = getelementptr inbounds nuw i8, ptr %.265.i.i, i64 10
-  %i.un = load i16, ptr %i.um, align 2, !tbaa !76 ; 3 uses
-  %16 = icmp ugt i16 %i.un, 255
-  %isnotneg.i.5.i.i.scalar = icmp sgt i16 %i.un, -1
-  %17 = sext i1 %isnotneg.i.5.i.i.scalar to i8
-  %i.uo = trunc i16 %i.un to i8
-  %.0.i.5.i.i.scalar = select i1 %16, i8 %17, i8 %i.uo
+  %i.un = load i16, ptr %i.um, align 2, !tbaa !76
+  %9 = tail call i16 @llvm.smax.i16(i16 %i.un, i16 0)
+  %.0.i33.5.i.i.scalar = tail call i16 @llvm.umin.i16(i16 %9, i16 255)
+  %i.uo = trunc nuw i16 %.0.i33.5.i.i.scalar to i8
   %i.up = getelementptr inbounds nuw i8, ptr %.02663.i.i, i64 5
-  store i8 %.0.i.5.i.i.scalar, ptr %i.up, align 1, !tbaa !36
+  store i8 %i.uo, ptr %i.up, align 1, !tbaa !36
   %i.uq = getelementptr inbounds nuw i8, ptr %.265.i.i, i64 12
-  %i.ur = load i16, ptr %i.uq, align 2, !tbaa !76 ; 3 uses
-  %18 = icmp ugt i16 %i.ur, 255
-  %isnotneg.i.6.i.i.scalar = icmp sgt i16 %i.ur, -1
-  %19 = sext i1 %isnotneg.i.6.i.i.scalar to i8
-  %i.us = trunc i16 %i.ur to i8
-  %.0.i.6.i.i.scalar = select i1 %18, i8 %19, i8 %i.us
+  %i.ur = load i16, ptr %i.uq, align 2, !tbaa !76
+  %10 = tail call i16 @llvm.smax.i16(i16 %i.ur, i16 0)
+  %.0.i33.6.i.i.scalar = tail call i16 @llvm.umin.i16(i16 %10, i16 255)
+  %i.us = trunc nuw i16 %.0.i33.6.i.i.scalar to i8
   %i.ut = getelementptr inbounds nuw i8, ptr %.02663.i.i, i64 6
-  store i8 %.0.i.6.i.i.scalar, ptr %i.ut, align 1, !tbaa !36
+  store i8 %i.us, ptr %i.ut, align 1, !tbaa !36
   %i.uu = getelementptr inbounds nuw i8, ptr %.265.i.i, i64 14
-  %i.uv = load i16, ptr %i.uu, align 2, !tbaa !76 ; 3 uses
-  %20 = icmp ugt i16 %i.uv, 255
-  %isnotneg.i.7.i.i.scalar = icmp sgt i16 %i.uv, -1
-  %21 = sext i1 %isnotneg.i.7.i.i.scalar to i8
-  %i.uw = trunc i16 %i.uv to i8
-  %.0.i.7.i.i.scalar = select i1 %20, i8 %21, i8 %i.uw
+  %i.uv = load i16, ptr %i.uu, align 2, !tbaa !76
+  %11 = tail call i16 @llvm.smax.i16(i16 %i.uv, i16 0)
+  %.0.i33.7.i.i.scalar = tail call i16 @llvm.umin.i16(i16 %11, i16 255)
+  %i.uw = trunc nuw i16 %.0.i33.7.i.i.scalar to i8
   %i.ux = getelementptr inbounds nuw i8, ptr %.02663.i.i, i64 7
-  store i8 %.0.i.7.i.i.scalar, ptr %i.ux, align 1, !tbaa !36
+  store i8 %i.uw, ptr %i.ux, align 1, !tbaa !36
   br label %.preheader.i.i.rtcont
 
 .preheader.i.i.rtcont:                            ; preds = %.preheader.i.i.rtscalar, %.preheader.i.i.rtvec
@@ -685,6 +667,18 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.smax.i16(i16, i16) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umin.i16(i16, i16) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i16> @llvm.smax.v8i16(<8 x i16>, <8 x i16>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i16> @llvm.umin.v8i16(<8 x i16>, <8 x i16>) #6
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

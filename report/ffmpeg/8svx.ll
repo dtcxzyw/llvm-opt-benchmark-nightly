@@ -202,50 +202,45 @@ bb.q:                                             ; preds = %.lr.ph, %delta_deco
   %i.bp = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv ; 2 uses
   %i.bq = load ptr, ptr %i.bh, align 8, !tbaa !31 ; 2 uses
   %i.br = load i8, ptr %i.bp, align 1, !tbaa !44
+  %4 = zext i8 %i.br to i32
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
   %.022.i = phi ptr [ %i.bj, %bb.q ], [ %i.cl, %bb.r ] ; 3 uses
-  %.01421.i = phi i8 [ %i.br, %bb.q ], [ %.0.i.i, %bb.r ]
+  %.01423.i = phi i32 [ %4, %bb.q ], [ %.0.i20.i, %bb.r ]
   %.01520.i = phi ptr [ %i.bo, %bb.q ], [ %i.bt, %bb.r ] ; 2 uses
   %.01619.i = phi i32 [ %spec.select, %bb.q ], [ %i.bs, %bb.r ]
   %i.bs = add nsw i32 %.01619.i, -1               ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.01520.i, i64 1
   %i.bu = load i8, ptr %.01520.i, align 1, !tbaa !44
-  %4 = zext i8 %.01421.i to i32
   %i.bv = zext i8 %i.bu to i32                    ; 2 uses
   %i.bw = and i32 %i.bv, 15
   %i.bx = zext nneg i32 %i.bw to i64
   %i.by = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bx
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !44
   %i.ca = sext i8 %i.bz to i32
-  %i.cb = add nsw i32 %i.ca, %4                   ; 3 uses
-  %5 = icmp ugt i32 %i.cb, 255
-  %isnotneg.i17.i = icmp sgt i32 %i.cb, -1
-  %6 = sext i1 %isnotneg.i17.i to i8
-  %i.cc = trunc nuw i32 %i.cb to i8
-  %.0.i18.i = select i1 %5, i8 %6, i8 %i.cc       ; 2 uses
+  %i.cb = add nsw i32 %.01423.i, %i.ca
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.cb, i32 0)
+  %.0.i1819.i = tail call i32 @llvm.umin.i32(i32 %5, i32 255) ; 2 uses
+  %i.cc = trunc nuw i32 %.0.i1819.i to i8
   %i.cd = getelementptr inbounds nuw i8, ptr %.022.i, i64 1
-  store i8 %.0.i18.i, ptr %.022.i, align 1, !tbaa !44
-  %7 = zext i8 %.0.i18.i to i32
+  store i8 %i.cc, ptr %.022.i, align 1, !tbaa !44
   %i.ce = lshr i32 %i.bv, 4
   %i.cf = zext nneg i32 %i.ce to i64
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.cf
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !44
   %i.ci = sext i8 %i.ch to i32
-  %i.cj = add nsw i32 %7, %i.ci                   ; 3 uses
-  %8 = icmp ugt i32 %i.cj, 255
-  %isnotneg.i.i = icmp sgt i32 %i.cj, -1
-  %9 = sext i1 %isnotneg.i.i to i8
-  %i.ck = trunc nuw i32 %i.cj to i8
-  %.0.i.i = select i1 %8, i8 %9, i8 %i.ck         ; 3 uses
+  %i.cj = add nsw i32 %.0.i1819.i, %i.ci
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.cj, i32 0)
+  %.0.i20.i = tail call i32 @llvm.umin.i32(i32 %6, i32 255) ; 2 uses
+  %i.ck = trunc nuw i32 %.0.i20.i to i8           ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %.022.i, i64 2
-  store i8 %.0.i.i, ptr %i.cd, align 1, !tbaa !44
+  store i8 %i.ck, ptr %i.cd, align 1, !tbaa !44
   %.not.i = icmp eq i32 %i.bs, 0
   br i1 %.not.i, label %delta_decode.exit, label %bb.r, !llvm.loop !38
 
 delta_decode.exit:                                ; preds = %bb.r
-  store i8 %.0.i.i, ptr %i.bp, align 1, !tbaa !44
+  store i8 %i.ck, ptr %i.bp, align 1, !tbaa !44
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.q, !llvm.loop !39
@@ -292,6 +287,12 @@ declare void @av_freep(ptr noundef) local_unnamed_addr #2
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
 declare i32 @ff_get_buffer(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4

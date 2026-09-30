@@ -51,20 +51,16 @@ define internal void @vp5_edge_filter_hor(ptr nofree noundef captures(none) %0, 
   %i.z = add i32 %i.s, %2
   %i.aa = sub i32 %i.z, %i.y
   %i.ab = xor i32 %i.aa, %i.s                     ; 2 uses
-  %i.ac = add nsw i32 %i.ab, %i.i                 ; 3 uses
-  %.not.i17.lver.orig = icmp ult i32 %i.ac, 256
-  %isnotneg.i18.lver.orig = icmp sgt i32 %i.ac, -1
-  %3 = sext i1 %isnotneg.i18.lver.orig to i8
-  %i.ad = trunc nuw i32 %i.ac to i8
-  %.0.i19.lver.orig = select i1 %.not.i17.lver.orig, i8 %i.ad, i8 %3
-  store i8 %.0.i19.lver.orig, ptr %i.g, align 1, !tbaa !9
-  %i.ae = sub nsw i32 %i.f, %i.ab                 ; 3 uses
-  %.not.i.lver.orig = icmp ult i32 %i.ae, 256
-  %isnotneg.i.lver.orig = icmp sgt i32 %i.ae, -1
-  %4 = sext i1 %isnotneg.i.lver.orig to i8
-  %i.af = trunc nuw i32 %i.ae to i8
-  %.0.i.lver.orig = select i1 %.not.i.lver.orig, i8 %i.af, i8 %4
-  store i8 %.0.i.lver.orig, ptr %.01621.lver.orig, align 1, !tbaa !9
+  %i.ac = add nsw i32 %i.ab, %i.i
+  %3 = tail call i32 @llvm.smax.i32(i32 %i.ac, i32 0)
+  %.0.i1920.lver.orig = tail call i32 @llvm.umin.i32(i32 %3, i32 255)
+  %i.ad = trunc nuw i32 %.0.i1920.lver.orig to i8
+  store i8 %i.ad, ptr %i.g, align 1, !tbaa !9
+  %i.ae = sub nsw i32 %i.f, %i.ab
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.ae, i32 0)
+  %.0.i21.lver.orig = tail call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %i.af = trunc nuw i32 %.0.i21.lver.orig to i8
+  store i8 %i.af, ptr %.01621.lver.orig, align 1, !tbaa !9
   %i.ag = getelementptr inbounds i8, ptr %.01621.lver.orig, i64 %1
   %i.ah = add nuw nsw i32 %.022.lver.orig, 1      ; 2 uses
   %exitcond.not.lver.orig = icmp eq i32 %i.ah, 12
@@ -73,10 +69,11 @@ define internal void @vp5_edge_filter_hor(ptr nofree noundef captures(none) %0, 
 .ph:                                              ; preds = %.lver.check
   %scevgep = getelementptr i8, ptr %0, i64 -1
   %load_initial = load i8, ptr %scevgep, align 1
+  %5 = zext i8 %load_initial to i32
   br label %bb.a
 
 bb.a:                                             ; preds = %.ph, %bb.a
-  %store_forwarded = phi i8 [ %load_initial, %.ph ], [ %.0.i, %bb.a ]
+  %store_forwarded = phi i32 [ %5, %.ph ], [ %.0.i21, %bb.a ] ; 2 uses
   %.022 = phi i32 [ 0, %.ph ], [ %i.bm, %bb.a ]
   %.01621 = phi ptr [ %0, %.ph ], [ %i.bl, %bb.a ] ; 6 uses
   %i.ai = getelementptr inbounds i8, ptr %.01621, i64 -2
@@ -85,8 +82,7 @@ bb.a:                                             ; preds = %.ph, %bb.a
   %i.al = load i8, ptr %.01621, align 1, !tbaa !9
   %i.am = zext i8 %i.al to i32                    ; 2 uses
   %i.an = getelementptr inbounds i8, ptr %.01621, i64 -1
-  %5 = zext i8 %store_forwarded to i32            ; 2 uses
-  %i.ao = sub nsw i32 %i.am, %5
+  %i.ao = sub nsw i32 %i.am, %store_forwarded
   %i.ap = mul nsw i32 %i.ao, 3
   %i.aq = getelementptr inbounds nuw i8, ptr %.01621, i64 1
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !9
@@ -105,20 +101,16 @@ bb.a:                                             ; preds = %.ph, %bb.a
   %i.be = add i32 %i.ax, %2
   %i.bf = sub i32 %i.be, %i.bd
   %i.bg = xor i32 %i.bf, %i.ax                    ; 2 uses
-  %i.bh = add nsw i32 %i.bg, %5                   ; 3 uses
-  %.not.i17 = icmp ult i32 %i.bh, 256
-  %isnotneg.i18 = icmp sgt i32 %i.bh, -1
-  %6 = sext i1 %isnotneg.i18 to i8
-  %i.bi = trunc nuw i32 %i.bh to i8
-  %.0.i19 = select i1 %.not.i17, i8 %i.bi, i8 %6
-  store i8 %.0.i19, ptr %i.an, align 1, !tbaa !9
-  %i.bj = sub nsw i32 %i.am, %i.bg                ; 3 uses
-  %.not.i = icmp ult i32 %i.bj, 256
-  %isnotneg.i = icmp sgt i32 %i.bj, -1
-  %7 = sext i1 %isnotneg.i to i8
-  %i.bk = trunc nuw i32 %i.bj to i8
-  %.0.i = select i1 %.not.i, i8 %i.bk, i8 %7      ; 2 uses
-  store i8 %.0.i, ptr %.01621, align 1, !tbaa !9
+  %i.bh = add nsw i32 %i.bg, %store_forwarded
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.bh, i32 0)
+  %.0.i1920 = tail call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.bi = trunc nuw i32 %.0.i1920 to i8
+  store i8 %i.bi, ptr %i.an, align 1, !tbaa !9
+  %i.bj = sub nsw i32 %i.am, %i.bg
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.bj, i32 0)
+  %.0.i21 = tail call i32 @llvm.umin.i32(i32 %7, i32 255) ; 2 uses
+  %i.bk = trunc nuw i32 %.0.i21 to i8
+  store i8 %i.bk, ptr %.01621, align 1, !tbaa !9
   %i.bl = getelementptr inbounds nuw i8, ptr %.01621, i64 %1
   %i.bm = add nuw nsw i32 %.022, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.bm, 12
@@ -167,22 +159,18 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.ab = add i32 %i.u, %2
   %i.ac = sub i32 %i.ab, %i.aa
   %i.ad = xor i32 %i.ac, %i.u                     ; 2 uses
-  %i.ae = add nsw i32 %i.ad, %i.k                 ; 3 uses
-  %.not.i21 = icmp ult i32 %i.ae, 256
-  %isnotneg.i22 = icmp sgt i32 %i.ae, -1
-  %3 = sext i1 %isnotneg.i22 to i8
-  %i.af = trunc nuw i32 %i.ae to i8
-  %.0.i23 = select i1 %.not.i21, i8 %i.af, i8 %3
-  store i8 %.0.i23, ptr %i.i, align 1, !tbaa !9
+  %i.ae = add nsw i32 %i.ad, %i.k
+  %3 = tail call i32 @llvm.smax.i32(i32 %i.ae, i32 0)
+  %.0.i2324 = tail call i32 @llvm.umin.i32(i32 %3, i32 255)
+  %i.af = trunc nuw i32 %.0.i2324 to i8
+  store i8 %i.af, ptr %i.i, align 1, !tbaa !9
   %i.ag = load i8, ptr %.02025, align 1, !tbaa !9
   %i.ah = zext i8 %i.ag to i32
-  %i.ai = sub nsw i32 %i.ah, %i.ad                ; 3 uses
-  %.not.i = icmp ult i32 %i.ai, 256
-  %isnotneg.i = icmp sgt i32 %i.ai, -1
-  %4 = sext i1 %isnotneg.i to i8
-  %i.aj = trunc nuw i32 %i.ai to i8
-  %.0.i = select i1 %.not.i, i8 %i.aj, i8 %4
-  store i8 %.0.i, ptr %.02025, align 1, !tbaa !9
+  %i.ai = sub nsw i32 %i.ah, %i.ad
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.ai, i32 0)
+  %.0.i25 = tail call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %i.aj = trunc nuw i32 %.0.i25 to i8
+  store i8 %i.aj, ptr %.02025, align 1, !tbaa !9
   %i.ak = getelementptr inbounds nuw i8, ptr %.02025, i64 1
   %i.al = add nuw nsw i32 %.026, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.al, 12
@@ -195,9 +183,16 @@ bb.c:                                             ; preds = %bb.b
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #3
+
 attributes #0 = { cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw [288 x i8], ptr %i.e, i64 %1 ; 14 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 648
-  %i.l = tail call noundef ptr @_ZN5scene18SkinnedMeshBuilder8addJointEPNS_11SkinnedMesh6SJointE(ptr noundef nonnull align 8 dereferenceable(32) %i.k, ptr noundef %2) ; 18 uses
+  %i.l = tail call noundef ptr @_ZN5scene18SkinnedMeshBuilder8addJointEPNS_11SkinnedMesh6SJointE(ptr noundef nonnull align 8 dereferenceable(32) %i.k, ptr noundef %2) ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 48
   %i.n = load <4 x double>, ptr %i.m, align 8     ; 4 uses
@@ -273,11 +273,7 @@ bb.g:                                             ; preds = %bb.f
 "_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_21__deduce_visit_resultIN4core8CMatrix4IfEEEEOZN5sceneL13loadTransformESt8optionalISt7variantIJSt5arrayIdLm16EEN10tiniergltf4Node3TRSEEEEPNS8_11SkinnedMesh6SJointEE3$_0RSG_EJEEESt16integer_sequenceImJLm1EEEE14__visit_invokeESM_SN_.exit.i.i.i": ; preds = %bb.g, %bb.f
   %i.ag = getelementptr inbounds nuw i8, ptr %i.l, i64 40
   %i.ah = extractelement <4 x double> %i.p, i64 1
-  %5 = fptrunc double %i.ah to float              ; 3 uses
-  %6 = extractelement <4 x double> %i.p, i64 0
-  %7 = fptrunc double %6 to float                 ; 2 uses
-  %8 = extractelement <4 x double> %i.o, i64 3
-  %i.ai = fptrunc double %8 to float              ; 3 uses
+  %i.ai = fptrunc double %i.ah to float           ; 3 uses
   %i.aj = extractelement <4 x double> %i.o, i64 1
   %i.ak = fptrunc double %i.aj to float           ; 3 uses
   %i.al = fneg float %i.ak
@@ -301,11 +297,11 @@ bb.g:                                             ; preds = %bb.f
   %i.ay = getelementptr inbounds nuw i8, ptr %i.l, i64 60
   store <2 x float> %.sroa.3.12.vec.insert.i.i.i.i.i.i.i.i.i, ptr %i.ay, align 4, !tbaa !412, !noalias !930
   %i.az = getelementptr inbounds nuw i8, ptr %i.l, i64 68
-  store float %i.ai, ptr %i.az, align 4, !tbaa !412, !noalias !930
-  %9 = getelementptr inbounds nuw i8, ptr %i.l, i64 72
-  store float %7, ptr %9, align 4, !tbaa !412, !noalias !930
+  %5 = shufflevector <4 x double> %i.o, <4 x double> %i.p, <2 x i32> <i32 3, i32 4>
+  %6 = fptrunc <2 x double> %5 to <2 x float>     ; 4 uses
+  store <2 x float> %6, ptr %i.az, align 4, !tbaa !412, !noalias !930
   %i.ba = getelementptr inbounds nuw i8, ptr %i.l, i64 76
-  store float %5, ptr %i.ba, align 4, !tbaa !412, !noalias !930
+  store float %i.ai, ptr %i.ba, align 4, !tbaa !412, !noalias !930
   %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 60
   %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.bd = fmul float %i.as, %i.as
@@ -333,10 +329,9 @@ bb.g:                                             ; preds = %bb.f
   %i.bv = shufflevector <2 x float> %i.bu, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bw = fmul <2 x float> %i.bt, %i.bv           ; 6 uses
   %i.bx = extractelement <2 x float> %i.bw, i64 1 ; 3 uses
-  %10 = insertelement <2 x float> poison, float %i.ai, i64 0
-  %i.by = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
-  %11 = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %7, i64 0
-  %12 = shufflevector <4 x float> %11, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.by = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x float> %7, <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, <4 x i32> <i32 1, i32 1, i32 1, i32 5>
   %i.bz = shufflevector <2 x float> %i.bw, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.ca = insertelement <2 x float> %i.bz, float %i.bk, i64 0
   %i.cb = fmul <2 x float> %i.ca, splat (float 2.000000e+00) ; 7 uses
@@ -373,20 +368,20 @@ bb.g:                                             ; preds = %bb.f
   %i.dg = tail call float @llvm.fmuladd.f32(float %i.cl, float %i.bx, float %i.db)
   %i.dh = fmul <2 x float> %i.cv, %i.by
   store <2 x float> %i.dh, ptr %4, align 16, !tbaa !412, !alias.scope !931
-  %13 = extractelement <2 x float> %i.da, i64 0
-  %14 = fmul float %13, %i.ai
-  store float %14, ptr %i.bp, align 8, !tbaa !412, !alias.scope !931
+  %foldExtExtBinop = fmul <2 x float> %i.da, %6
+  %9 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  store float %9, ptr %i.bp, align 8, !tbaa !412, !alias.scope !931
   %i.di = shufflevector <2 x float> %i.da, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.dj = shufflevector <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, <4 x float> %i.di, <4 x i32> <i32 5, i32 poison, i32 poison, i32 3>
   %i.dk = shufflevector <2 x float> %i.df, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.dl = shufflevector <4 x float> %i.dj, <4 x float> %i.dk, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.dm = fmul <4 x float> %i.dl, %12
+  %i.dm = fmul <4 x float> %i.dl, %8
   store <4 x float> %i.dm, ptr %i.bm, align 16, !tbaa !412, !alias.scope !931
-  %i.dn = insertelement <2 x float> poison, float %5, i64 0
+  %i.dn = insertelement <2 x float> poison, float %i.ai, i64 0
   %i.do = shufflevector <2 x float> %i.dn, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dp = fmul <2 x float> %i.cy, %i.do
   store <2 x float> %i.dp, ptr %i.bn, align 16, !tbaa !412, !alias.scope !931
-  %i.dq = fmul float %i.dg, %5
+  %i.dq = fmul float %i.dg, %i.ai
   store float %i.dq, ptr %i.bc, align 8, !tbaa !412, !alias.scope !931
   %i.dr = shufflevector <4 x double> %i.n, <4 x double> poison, <2 x i32> <i32 0, i32 1>
   %i.ds = fptrunc <2 x double> %i.dr to <2 x float> ; 2 uses

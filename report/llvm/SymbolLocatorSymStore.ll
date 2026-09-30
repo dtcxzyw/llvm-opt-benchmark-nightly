@@ -204,11 +204,11 @@ _ZN12_GLOBAL__N_120GetGlobalLookupOrderEv.exit:   ; preds = %_ZN12lldb_private21
   %i.pu = getelementptr inbounds nuw i8, ptr %24, i64 24 ; 2 uses
   %i.pv = getelementptr inbounds nuw i8, ptr %24, i64 8 ; 3 uses
   %i.pw = getelementptr inbounds nuw i8, ptr %24, i64 16
-  %i.px = insertelement <2 x ptr> poison, ptr %50, i64 0
-  %i.py = insertelement <2 x ptr> %i.px, ptr %21, i64 1
+  %i.px = insertelement <2 x ptr> poison, ptr %21, i64 0
+  %i.py = insertelement <2 x ptr> %i.px, ptr %50, i64 1
   %i.pz = ptrtoint <2 x ptr> %i.py to <2 x i64>
-  %i.qa = insertelement <2 x ptr> poison, ptr %21, i64 0
-  %i.qb = insertelement <2 x ptr> %i.qa, ptr %50, i64 1
+  %i.qa = insertelement <2 x ptr> poison, ptr %50, i64 0
+  %i.qb = insertelement <2 x ptr> %i.qa, ptr %21, i64 1
   %i.qc = ptrtoint <2 x ptr> %i.qb to <2 x i64>
   %i.qd = getelementptr inbounds nuw i8, ptr %26, i64 56 ; 2 uses
   %.sroa.22.0..sroa_idx.i.i.i.i7.i.i = getelementptr inbounds nuw i8, ptr %26, i64 8
@@ -611,7 +611,7 @@ _ZN12_GLOBAL__N_119HasUnsafeCharactersEN4llvm9StringRefE.exit.thread.i.i: ; pred
   store ptr %i.qd, ptr %i.qe, align 8, !tbaa !31, !alias.scope !277, !noalias !271
   store i64 2, ptr %.sroa.2.0..sroa_idx.i.i.i.i8.i.i, align 8, !tbaa !29, !alias.scope !277, !noalias !271
   store i8 1, ptr %i.qf, align 8, !tbaa !36, !alias.scope !277, !noalias !271
-  store <2 x i64> %i.pz, ptr %i.qg, align 8, !tbaa !79, !alias.scope !277, !noalias !271
+  store <2 x i64> %i.qc, ptr %i.qg, align 8, !tbaa !79, !alias.scope !277, !noalias !271
   store ptr @_ZN4llvm12function_refIFvRNS_11raw_ostreamENS_9StringRefEEE11callback_fnINS_7support6detail13FormatFunctorIRS3_EEEEvlS2_S3_, ptr %i.qd, align 8, !alias.scope !277, !noalias !271
   store i64 %i.qi, ptr %.sroa.4.0..sroa_idx.i.i.i9.i.i, align 8, !alias.scope !277, !noalias !271
   store ptr @_ZN4llvm12function_refIFvRNS_11raw_ostreamENS_9StringRefEEE11callback_fnINS_7support6detail13FormatFunctorIRS3_EEEEvlS2_S3_, ptr %.ptr.1.i.i.i.i.i59.i, align 8, !alias.scope !277, !noalias !271
@@ -638,7 +638,7 @@ _ZN12_GLOBAL__N_119HasUnsafeCharactersEN4llvm9StringRefE.exit.thread.i.i: ; pred
   store ptr %i.qq, ptr %i.qr, align 8, !tbaa !31, !alias.scope !278, !noalias !271
   store i64 3, ptr %.sroa.2.0..sroa_idx.i.i.i.i11.i.i, align 8, !tbaa !29, !alias.scope !278, !noalias !271
   store i8 1, ptr %i.qs, align 8, !tbaa !36, !alias.scope !278, !noalias !271
-  store <2 x i64> %i.qc, ptr %i.qt, align 8, !tbaa !79, !alias.scope !278, !noalias !271
+  store <2 x i64> %i.pz, ptr %i.qt, align 8, !tbaa !79, !alias.scope !278, !noalias !271
   store i64 %i.qp, ptr %i.qv, align 8, !tbaa !79, !alias.scope !278, !noalias !271
   store ptr @_ZN4llvm12function_refIFvRNS_11raw_ostreamENS_9StringRefEEE11callback_fnINS_7support6detail13FormatFunctorIRS3_EEEEvlS2_S3_, ptr %i.qq, align 8, !alias.scope !278, !noalias !271
   store i64 %i.qw, ptr %.sroa.4.0..sroa_idx.i.i.i13.i.i, align 8, !alias.scope !278, !noalias !271

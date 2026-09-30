@@ -205,14 +205,12 @@ bb.r:                                             ; preds = %.loopexit.i
   %i.gd = getelementptr inbounds i8, ptr %i.fz, i64 -1
   %i.ge = load i8, ptr %i.gd, align 1, !tbaa !59
   %i.gf = zext i8 %i.ge to i32
-  %i.gg = sub nsw i32 %i.gc, %i.gf                ; 3 uses
-  %5 = icmp ugt i32 %i.gg, 255
-  %isnotneg.i.i.i = icmp sgt i32 %i.gg, -1
-  %6 = sext i1 %isnotneg.i.i.i to i8
-  %i.gh = trunc nuw i32 %i.gg to i8
-  %.0.i.i.i = select i1 %5, i8 %6, i8 %i.gh
+  %i.gg = sub nsw i32 %i.gc, %i.gf
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.gg, i32 0)
+  %.0.i71.i.i = tail call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.gh = trunc nuw i32 %.0.i71.i.i to i8
   %i.gi = load i8, ptr %.4.i.i, align 1, !tbaa !59
-  %i.gj = add i8 %.0.i.i.i, %i.gi                 ; 2 uses
+  %i.gj = add i8 %i.gi, %i.gh                     ; 2 uses
   store i8 %i.gj, ptr %.4.i.i, align 1, !tbaa !59
   %i.gk = add nuw nsw i32 %.36683.i.i, 1          ; 2 uses
   %i.gl = load i32, ptr %i.de, align 8, !tbaa !89 ; 2 uses
@@ -615,13 +613,11 @@ bb.a:
   %i.e = add nuw nsw i32 %i.d, %i.b
   %i.f = load i8, ptr %2, align 1, !tbaa !59
   %i.g = zext i8 %i.f to i32
-  %i.h = sub nsw i32 %i.e, %i.g                   ; 3 uses
-  %5 = icmp ugt i32 %i.h, 255
-  %isnotneg.i20 = icmp sgt i32 %i.h, -1
-  %6 = sext i1 %isnotneg.i20 to i8
-  %i.i = trunc nuw i32 %i.h to i8
-  %.0.i21 = select i1 %5, i8 %6, i8 %i.i
-  store i8 %.0.i21, ptr %0, align 1, !tbaa !59
+  %i.h = sub nsw i32 %i.e, %i.g
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.h, i32 0)
+  %.0.i2122 = tail call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.i = trunc nuw i32 %.0.i2122 to i8
+  store i8 %i.i, ptr %0, align 1, !tbaa !59
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.k = load i8, ptr %i.j, align 1, !tbaa !59
   %i.l = zext i8 %i.k to i32
@@ -632,14 +628,12 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.r = load i8, ptr %i.q, align 1, !tbaa !59
   %i.s = zext i8 %i.r to i32
-  %i.t = sub nsw i32 %i.p, %i.s                   ; 3 uses
-  %7 = icmp ugt i32 %i.t, 255
-  %isnotneg.i18 = icmp sgt i32 %i.t, -1
-  %8 = sext i1 %isnotneg.i18 to i8
-  %i.u = trunc nuw i32 %i.t to i8
-  %.0.i19 = select i1 %7, i8 %8, i8 %i.u
+  %i.t = sub nsw i32 %i.p, %i.s
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.t, i32 0)
+  %.0.i1923 = tail call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.u = trunc nuw i32 %.0.i1923 to i8
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.0.i19, ptr %i.v, align 1, !tbaa !59
+  store i8 %i.u, ptr %i.v, align 1, !tbaa !59
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.x = load i8, ptr %i.w, align 1, !tbaa !59
   %i.y = zext i8 %i.x to i32
@@ -650,14 +644,12 @@ bb.a:
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !59
   %i.af = zext i8 %i.ae to i32
-  %i.ag = sub nsw i32 %i.ac, %i.af                ; 3 uses
-  %9 = icmp ugt i32 %i.ag, 255
-  %isnotneg.i16 = icmp sgt i32 %i.ag, -1
-  %10 = sext i1 %isnotneg.i16 to i8
-  %i.ah = trunc nuw i32 %i.ag to i8
-  %.0.i17 = select i1 %9, i8 %10, i8 %i.ah
+  %i.ag = sub nsw i32 %i.ac, %i.af
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.ag, i32 0)
+  %.0.i1724 = tail call i32 @llvm.umin.i32(i32 %7, i32 255)
+  %i.ah = trunc nuw i32 %.0.i1724 to i8
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %.0.i17, ptr %i.ai, align 1, !tbaa !59
+  store i8 %i.ah, ptr %i.ai, align 1, !tbaa !59
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 3
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !59
   %i.al = zext i8 %i.ak to i32
@@ -668,14 +660,12 @@ bb.a:
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 3
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !59
   %i.as = zext i8 %i.ar to i32
-  %i.at = sub nsw i32 %i.ap, %i.as                ; 3 uses
-  %11 = icmp ugt i32 %i.at, 255
-  %isnotneg.i = icmp sgt i32 %i.at, -1
-  %12 = sext i1 %isnotneg.i to i8
-  %i.au = trunc nuw i32 %i.at to i8
-  %.0.i = select i1 %11, i8 %12, i8 %i.au
+  %i.at = sub nsw i32 %i.ap, %i.as
+  %8 = tail call i32 @llvm.smax.i32(i32 %i.at, i32 0)
+  %.0.i25 = tail call i32 @llvm.umin.i32(i32 %8, i32 255)
+  %i.au = trunc nuw i32 %.0.i25 to i8
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %.0.i, ptr %i.av, align 1, !tbaa !59
+  store i8 %i.au, ptr %i.av, align 1, !tbaa !59
   ret void
 }
 
@@ -694,13 +684,11 @@ bb.a:
   %.lhs.trunc = trunc nsw i32 %i.i to i16
   %i.j = sdiv i16 %.lhs.trunc, 2
   %.sext = sext i16 %i.j to i32
-  %i.k = add nsw i32 %i.h, %.sext                 ; 3 uses
-  %5 = icmp ugt i32 %i.k, 255
-  %isnotneg.i.i20 = icmp sgt i32 %i.k, -1
-  %6 = sext i1 %isnotneg.i.i20 to i8
-  %i.l = trunc nuw i32 %i.k to i8
-  %.0.i.i21 = select i1 %5, i8 %6, i8 %i.l
-  store i8 %.0.i.i21, ptr %0, align 1, !tbaa !59
+  %i.k = add nsw i32 %i.h, %.sext
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.k, i32 0)
+  %.0.i.i2128 = tail call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.l = trunc nuw i32 %.0.i.i2128 to i8
+  store i8 %i.l, ptr %0, align 1, !tbaa !59
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.n = load i8, ptr %i.m, align 1, !tbaa !59
   %i.o = zext i8 %i.n to i32
@@ -716,14 +704,12 @@ bb.a:
   %.lhs.trunc22 = trunc nsw i32 %i.x to i16
   %i.y = sdiv i16 %.lhs.trunc22, 2
   %.sext23 = sext i16 %i.y to i32
-  %i.z = add nsw i32 %i.w, %.sext23               ; 3 uses
-  %7 = icmp ugt i32 %i.z, 255
-  %isnotneg.i.i18 = icmp sgt i32 %i.z, -1
-  %8 = sext i1 %isnotneg.i.i18 to i8
-  %i.aa = trunc nuw i32 %i.z to i8
-  %.0.i.i19 = select i1 %7, i8 %8, i8 %i.aa
+  %i.z = add nsw i32 %i.w, %.sext23
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.z, i32 0)
+  %.0.i.i1929 = tail call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.aa = trunc nuw i32 %.0.i.i1929 to i8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.0.i.i19, ptr %i.ab, align 1, !tbaa !59
+  store i8 %i.aa, ptr %i.ab, align 1, !tbaa !59
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !59
   %i.ae = zext i8 %i.ad to i32
@@ -739,14 +725,12 @@ bb.a:
   %.lhs.trunc24 = trunc nsw i32 %i.an to i16
   %i.ao = sdiv i16 %.lhs.trunc24, 2
   %.sext25 = sext i16 %i.ao to i32
-  %i.ap = add nsw i32 %i.am, %.sext25             ; 3 uses
-  %9 = icmp ugt i32 %i.ap, 255
-  %isnotneg.i.i16 = icmp sgt i32 %i.ap, -1
-  %10 = sext i1 %isnotneg.i.i16 to i8
-  %i.aq = trunc nuw i32 %i.ap to i8
-  %.0.i.i17 = select i1 %9, i8 %10, i8 %i.aq
+  %i.ap = add nsw i32 %i.am, %.sext25
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.ap, i32 0)
+  %.0.i.i1730 = tail call i32 @llvm.umin.i32(i32 %7, i32 255)
+  %i.aq = trunc nuw i32 %.0.i.i1730 to i8
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %.0.i.i17, ptr %i.ar, align 1, !tbaa !59
+  store i8 %i.aq, ptr %i.ar, align 1, !tbaa !59
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 3
   %i.at = load i8, ptr %i.as, align 1, !tbaa !59
   %i.au = zext i8 %i.at to i32
@@ -762,14 +746,12 @@ bb.a:
   %.lhs.trunc26 = trunc nsw i32 %i.bd to i16
   %i.be = sdiv i16 %.lhs.trunc26, 2
   %.sext27 = sext i16 %i.be to i32
-  %i.bf = add nsw i32 %i.bc, %.sext27             ; 3 uses
-  %11 = icmp ugt i32 %i.bf, 255
-  %isnotneg.i.i = icmp sgt i32 %i.bf, -1
-  %12 = sext i1 %isnotneg.i.i to i8
-  %i.bg = trunc nuw i32 %i.bf to i8
-  %.0.i.i = select i1 %11, i8 %12, i8 %i.bg
+  %i.bf = add nsw i32 %i.bc, %.sext27
+  %8 = tail call i32 @llvm.smax.i32(i32 %i.bf, i32 0)
+  %.0.i.i31 = tail call i32 @llvm.umin.i32(i32 %8, i32 255)
+  %i.bg = trunc nuw i32 %.0.i.i31 to i8
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %.0.i.i, ptr %i.bh, align 1, !tbaa !59
+  store i8 %i.bg, ptr %i.bh, align 1, !tbaa !59
   ret void
 }
 

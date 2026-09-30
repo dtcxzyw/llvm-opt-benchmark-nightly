@@ -205,7 +205,7 @@ vector.body748:                                   ; preds = %vector.body748, %ve
   %i.nn = add <4 x i32> %wide.load750, %broadcast.splat741
   %i.no = mul nsw <4 x i32> %i.nn, %broadcast.splat745
   %i.np = add <4 x i32> %broadcast.splat747, %i.no
-  %i.nq = add <4 x i32> %i.np, %i.nl              ; 3 uses
+  %i.nq = add <4 x i32> %i.np, %i.nl
   %i.nr = load i8, ptr %i.mp, align 2, !tbaa !27, !alias.scope !143
   %i.ns = load i8, ptr %i.mr, align 2, !tbaa !27, !alias.scope !143
   %i.nt = load i8, ptr %i.mt, align 2, !tbaa !27, !alias.scope !143
@@ -215,12 +215,10 @@ vector.body748:                                   ; preds = %vector.body748, %ve
   %i.nx = insertelement <4 x i8> %i.nw, i8 %i.nt, i64 2
   %i.ny = insertelement <4 x i8> %i.nx, i8 %i.nu, i64 3
   %i.nz = getelementptr inbounds nuw [2 x i8], ptr %i.ml, i64 %index749
-  %3 = icmp ult <4 x i32> %i.nq, splat (i32 256)
-  %4 = icmp sgt <4 x i32> %i.nq, splat (i32 -1)
-  %5 = sext <4 x i1> %4 to <4 x i8>
-  %i.oa = trunc nuw <4 x i32> %i.nq to <4 x i8>
-  %6 = select <4 x i1> %3, <4 x i8> %i.oa, <4 x i8> %5
-  %interleaved.vec751 = shufflevector <4 x i8> %i.ny, <4 x i8> %6, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %3 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.nq, <4 x i32> zeroinitializer)
+  %4 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %3, <4 x i32> splat (i32 255))
+  %i.oa = trunc nuw <4 x i32> %4 to <4 x i8>
+  %interleaved.vec751 = shufflevector <4 x i8> %i.ny, <4 x i8> %i.oa, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i8> %interleaved.vec751, ptr %i.nz, align 1, !tbaa !27, !alias.scope !145, !noalias !146
   %index.next752 = add nuw i64 %index749, 4       ; 2 uses
   %i.ob = icmp eq i64 %index.next752, %n.vec739
@@ -248,17 +246,15 @@ scalar.ph736:                                     ; preds = %scalar.ph736.prehea
   %i.ol = add i32 %i.ok, %.neg328
   %i.om = mul nsw i32 %i.ol, %i.mg
   %i.on = add i32 %i.kb, %i.om
-  %i.oo = add i32 %i.on, %i.oi                    ; 3 uses
+  %i.oo = add i32 %i.on, %i.oi
   %i.op = load i8, ptr %i.oc, align 2, !tbaa !27
   %i.oq = getelementptr inbounds nuw [2 x i8], ptr %i.ml, i64 %indvars.iv633 ; 2 uses
   store i8 %i.op, ptr %i.oq, align 2, !tbaa !27
-  %.not.i335 = icmp ult i32 %i.oo, 256
-  %isnotneg.i336 = icmp sgt i32 %i.oo, -1
-  %7 = sext i1 %isnotneg.i336 to i8
-  %i.or = trunc nuw i32 %i.oo to i8
-  %.0.i337 = select i1 %.not.i335, i8 %i.or, i8 %7
+  %5 = call i32 @llvm.smax.i32(i32 %i.oo, i32 0)
+  %.0.i337557 = call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.or = trunc nuw i32 %.0.i337557 to i8
   %i.os = getelementptr inbounds nuw i8, ptr %i.oq, i64 1
-  store i8 %.0.i337, ptr %i.os, align 1, !tbaa !27
+  store i8 %i.or, ptr %i.os, align 1, !tbaa !27
   %indvars.iv.next634 = add nuw nsw i64 %indvars.iv633, 1 ; 2 uses
   %i.ot = icmp samesign ult i64 %indvars.iv.next634, %i.mm
   br i1 %i.ot, label %scalar.ph736, label %._crit_edge577, !llvm.loop !117
@@ -630,7 +626,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.xg = add <4 x i32> %wide.load, %broadcast.splat
   %i.xh = mul nsw <4 x i32> %i.xg, %broadcast.splat720
   %i.xi = add <4 x i32> %broadcast.splat722, %i.xh
-  %i.xj = add <4 x i32> %i.xi, %i.xe              ; 3 uses
+  %i.xj = add <4 x i32> %i.xi, %i.xe
   %i.xk = load i8, ptr %i.wi, align 2, !tbaa !27, !alias.scope !147
   %i.xl = load i8, ptr %i.wk, align 2, !tbaa !27, !alias.scope !147
   %i.xm = load i8, ptr %i.wm, align 2, !tbaa !27, !alias.scope !147
@@ -640,12 +636,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.xq = insertelement <4 x i8> %i.xp, i8 %i.xm, i64 2
   %i.xr = insertelement <4 x i8> %i.xq, i8 %i.xn, i64 3
   %i.xs = getelementptr inbounds nuw [2 x i8], ptr %i.wc, i64 %index
-  %8 = icmp ult <4 x i32> %i.xj, splat (i32 256)
-  %9 = icmp sgt <4 x i32> %i.xj, splat (i32 -1)
-  %10 = sext <4 x i1> %9 to <4 x i8>
-  %i.xt = trunc nuw <4 x i32> %i.xj to <4 x i8>
-  %11 = select <4 x i1> %8, <4 x i8> %i.xt, <4 x i8> %10
-  %interleaved.vec = shufflevector <4 x i8> %i.xr, <4 x i8> %11, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %6 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.xj, <4 x i32> zeroinitializer)
+  %7 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %6, <4 x i32> splat (i32 255))
+  %i.xt = trunc nuw <4 x i32> %7 to <4 x i8>
+  %interleaved.vec = shufflevector <4 x i8> %i.xr, <4 x i8> %i.xt, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i8> %interleaved.vec, ptr %i.xs, align 1, !tbaa !27, !alias.scope !149, !noalias !150
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.xu = icmp eq i64 %index.next, %n.vec
@@ -673,17 +667,15 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ye = add i32 %i.yd, %.neg
   %i.yf = mul nsw i32 %i.ye, %i.vx
   %i.yg = add i32 %i.ti, %i.yf
-  %i.yh = add i32 %i.yg, %i.yb                    ; 3 uses
+  %i.yh = add i32 %i.yg, %i.yb
   %i.yi = load i8, ptr %i.xv, align 2, !tbaa !27
   %i.yj = getelementptr inbounds nuw [2 x i8], ptr %i.wc, i64 %indvars.iv644 ; 2 uses
   store i8 %i.yi, ptr %i.yj, align 2, !tbaa !27
-  %.not.i = icmp ult i32 %i.yh, 256
-  %isnotneg.i = icmp sgt i32 %i.yh, -1
-  %12 = sext i1 %isnotneg.i to i8
-  %i.yk = trunc nuw i32 %i.yh to i8
-  %.0.i = select i1 %.not.i, i8 %i.yk, i8 %12
+  %8 = call i32 @llvm.smax.i32(i32 %i.yh, i32 0)
+  %.0.i558 = call i32 @llvm.umin.i32(i32 %8, i32 255)
+  %i.yk = trunc nuw i32 %.0.i558 to i8
   %i.yl = getelementptr inbounds nuw i8, ptr %i.yj, i64 1
-  store i8 %.0.i, ptr %i.yl, align 1, !tbaa !27
+  store i8 %i.yk, ptr %i.yl, align 1, !tbaa !27
   %indvars.iv.next645 = add nuw nsw i64 %indvars.iv644, 1 ; 2 uses
   %i.ym = icmp samesign ult i64 %indvars.iv.next645, %i.wd
   br i1 %i.ym, label %scalar.ph, label %._crit_edge594, !llvm.loop !125
@@ -1084,6 +1076,9 @@ declare void @llvm.assume(i1 noundef) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.smin.v8i32(<8 x i32>, <8 x i32>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #6

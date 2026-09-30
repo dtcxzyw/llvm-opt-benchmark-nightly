@@ -205,64 +205,120 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge
 
 bb.j:                                             ; preds = %.preheader, %bb.j
   %.1222 = phi i32 [ 0, %.preheader ], [ %i.dx, %bb.j ]
-  %.1200221 = phi ptr [ %i.a, %.preheader ], [ %i.dy, %bb.j ] ; 4 uses
-  %.0201220 = phi ptr [ %0, %.preheader ], [ %i.dz, %bb.j ] ; 2 uses
-  %i.dr = getelementptr inbounds nuw i8, ptr %.1200221, i64 8
-  %i.ds = getelementptr inbounds nuw i8, ptr %.1200221, i64 24
-  %3 = load <8 x i32>, ptr %.1200221, align 4     ; 5 uses
-  %i.dt = load i32, ptr %i.ds, align 4
-  %i.du = load i32, ptr %i.dr, align 4
-  %i.dv = add nsw i32 %i.dt, %i.du
-  %i.dw = mul nsw i32 %i.dv, 2217
-  %4 = shufflevector <8 x i32> %3, <8 x i32> poison, <2 x i32> <i32 6, i32 2>
-  %5 = mul nsw <2 x i32> %4, <i32 -7567, i32 3135>
-  %6 = insertelement <2 x i32> poison, i32 %i.dw, i64 0
-  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <2 x i32> zeroinitializer
-  %8 = add nsw <2 x i32> %7, %5
-  %9 = shufflevector <8 x i32> %3, <8 x i32> poison, <6 x i32> <i32 1, i32 3, i32 1, i32 3, i32 4, i32 0> ; 3 uses
-  %10 = shufflevector <8 x i32> %3, <8 x i32> poison, <6 x i32> <i32 5, i32 7, i32 5, i32 7, i32 0, i32 4> ; 2 uses
-  %11 = add nsw <6 x i32> %9, %10                 ; 2 uses
-  %12 = sub nsw <6 x i32> %9, %10
-  %13 = shufflevector <6 x i32> %11, <6 x i32> %12, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 11>
-  %14 = shufflevector <6 x i32> %9, <6 x i32> poison, <2 x i32> <i32 0, i32 1>
-  %15 = shufflevector <8 x i32> %3, <8 x i32> poison, <2 x i32> <i32 7, i32 5>
-  %16 = add nsw <2 x i32> %14, %15
-  %17 = shufflevector <6 x i32> %11, <6 x i32> poison, <2 x i32> <i32 0, i32 1>
-  %18 = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %17)
-  %19 = mul nsw i32 %18, 4816
-  %20 = shufflevector <8 x i32> %3, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  %21 = mul nsw <4 x i32> %20, <i32 6149, i32 12586, i32 8410, i32 1223>
-  %22 = mul nsw <2 x i32> %16, <i32 -3685, i32 -10497>
-  %23 = insertelement <2 x i32> poison, i32 %19, i64 0
-  %24 = mul nsw <6 x i32> %13, <i32 -1597, i32 -8034, i32 -1597, i32 -8034, i32 4096, i32 4096>
-  %25 = shufflevector <6 x i32> %24, <6 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison> ; 2 uses
-  %26 = shufflevector <2 x i32> %8, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison> ; 2 uses
-  %27 = shufflevector <8 x i32> %25, <8 x i32> %26, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9> ; 2 uses
-  %28 = shufflevector <8 x i32> %26, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 16842752, i32 16842752>, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 1, i32 0, i32 14, i32 15>
-  %29 = shufflevector <4 x i32> %21, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %30 = shufflevector <8 x i32> %29, <8 x i32> %28, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %31 = add <8 x i32> %27, %30
-  %32 = sub nsw <8 x i32> %27, %30
-  %33 = shufflevector <8 x i32> %31, <8 x i32> %32, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 6, i32 7>
-  %34 = shufflevector <8 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 16842752, i32 16842752, i32 poison, i32 poison>, <8 x i32> %25, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 5, i32 13, i32 12>
-  %35 = shufflevector <2 x i32> %23, <2 x i32> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
-  %36 = shufflevector <2 x i32> %22, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
-  %37 = add nsw <8 x i32> %35, %36
-  %38 = shufflevector <8 x i32> %37, <8 x i32> %34, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
-  %39 = add <8 x i32> %33, %38                    ; 4 uses
-  %40 = shufflevector <8 x i32> %39, <8 x i32> poison, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison>
-  %41 = shufflevector <8 x i32> %39, <8 x i32> poison, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
-  %42 = shufflevector <8 x i32> %39, <8 x i32> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 poison, i32 poison, i32 poison, i32 poison>
-  %43 = add nsw <8 x i32> %39, %42
-  %44 = sub nsw <8 x i32> %40, %41
-  %45 = shufflevector <8 x i32> %43, <8 x i32> %44, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %46 = ashr <8 x i32> %45, splat (i32 17)        ; 3 uses
-  %47 = icmp ugt <8 x i32> %46, splat (i32 255)
-  %48 = trunc <8 x i32> %46 to <8 x i8>
-  %49 = icmp sgt <8 x i32> %46, splat (i32 -1)
-  %50 = sext <8 x i1> %49 to <8 x i8>
-  %51 = select <8 x i1> %47, <8 x i8> %50, <8 x i8> %48
-  store <8 x i8> %51, ptr %.0201220, align 1
+  %.1200221 = phi ptr [ %i.a, %.preheader ], [ %i.dy, %bb.j ] ; 9 uses
+  %.0201220 = phi ptr [ %0, %.preheader ], [ %i.dz, %bb.j ] ; 9 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.1200221, i64 8
+  %4 = load i32, ptr %3, align 4                  ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %.1200221, i64 24
+  %6 = load i32, ptr %5, align 4                  ; 2 uses
+  %7 = add nsw i32 %6, %4
+  %8 = mul nsw i32 %7, 2217                       ; 2 uses
+  %9 = mul nsw i32 %6, -7567
+  %10 = add nsw i32 %8, %9                        ; 2 uses
+  %11 = mul nsw i32 %4, 3135
+  %12 = add nsw i32 %8, %11                       ; 2 uses
+  %13 = load i32, ptr %.1200221, align 4          ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %.1200221, i64 16
+  %15 = load i32, ptr %14, align 4                ; 2 uses
+  %16 = add nsw i32 %15, %13
+  %17 = shl nsw i32 %16, 12                       ; 2 uses
+  %18 = sub nsw i32 %13, %15
+  %19 = shl nsw i32 %18, 12                       ; 2 uses
+  %20 = sub nsw i32 %17, %12
+  %21 = sub nsw i32 %19, %10
+  %i.dr = getelementptr inbounds nuw i8, ptr %.1200221, i64 28
+  %22 = load i32, ptr %i.dr, align 4              ; 3 uses
+  %i.ds = getelementptr inbounds nuw i8, ptr %.1200221, i64 20
+  %23 = load i32, ptr %i.ds, align 4              ; 3 uses
+  %24 = getelementptr inbounds nuw i8, ptr %.1200221, i64 12
+  %i.dt = load i32, ptr %24, align 4              ; 3 uses
+  %25 = getelementptr inbounds nuw i8, ptr %.1200221, i64 4
+  %i.du = load i32, ptr %25, align 4              ; 3 uses
+  %26 = add nsw i32 %i.dt, %22                    ; 2 uses
+  %27 = add nsw i32 %i.du, %23                    ; 2 uses
+  %28 = add nsw i32 %i.du, %22
+  %29 = add nsw i32 %i.dt, %23
+  %30 = add nsw i32 %27, %26
+  %31 = mul nsw i32 %30, 4816                     ; 2 uses
+  %32 = mul nsw i32 %22, 1223
+  %33 = mul nsw i32 %23, 8410
+  %34 = mul nsw i32 %i.dt, 12586
+  %35 = mul nsw i32 %i.du, 6149
+  %36 = mul nsw i32 %28, -3685
+  %37 = add nsw i32 %31, %36                      ; 2 uses
+  %38 = mul nsw i32 %29, -10497
+  %i.dv = add nsw i32 %31, %38                    ; 2 uses
+  %39 = mul nsw i32 %26, -8034                    ; 2 uses
+  %i.dw = mul nsw i32 %27, -1597                  ; 2 uses
+  %40 = add i32 %i.dw, %35
+  %41 = add i32 %40, %37                          ; 2 uses
+  %42 = add i32 %39, %34
+  %43 = add i32 %42, %i.dv                        ; 2 uses
+  %44 = add i32 %i.dw, %33
+  %45 = add i32 %44, %i.dv                        ; 2 uses
+  %46 = add i32 %39, %32
+  %47 = add i32 %46, %37                          ; 2 uses
+  %48 = add i32 %12, 16842752
+  %49 = add i32 %48, %17                          ; 2 uses
+  %50 = add i32 %10, 16842752
+  %51 = add i32 %50, %19                          ; 2 uses
+  %52 = add nsw i32 %21, 16842752                 ; 2 uses
+  %53 = add nsw i32 %20, 16842752                 ; 2 uses
+  %54 = add nsw i32 %41, %49
+  %55 = ashr i32 %54, 17
+  %56 = tail call i32 @llvm.smax.i32(i32 range(i32 -16384, 16384) %55, i32 0)
+  %.06.i = tail call i32 @llvm.umin.i32(i32 %56, i32 255)
+  %.0.i = trunc nuw i32 %.06.i to i8
+  store i8 %.0.i, ptr %.0201220, align 1
+  %57 = sub nsw i32 %49, %41
+  %58 = ashr i32 %57, 17
+  %59 = tail call i32 @llvm.smax.i32(i32 range(i32 -16384, 16384) %58, i32 0)
+  %.06.i203 = tail call i32 @llvm.umin.i32(i32 %59, i32 255)
+  %.0.i204 = trunc nuw i32 %.06.i203 to i8
+  %60 = getelementptr inbounds nuw i8, ptr %.0201220, i64 7
+  store i8 %.0.i204, ptr %60, align 1
+  %61 = add nsw i32 %43, %51
+  %62 = ashr i32 %61, 17
+  %63 = tail call i32 @llvm.smax.i32(i32 range(i32 -16384, 16384) %62, i32 0)
+  %.06.i205 = tail call i32 @llvm.umin.i32(i32 %63, i32 255)
+  %.0.i206 = trunc nuw i32 %.06.i205 to i8
+  %64 = getelementptr inbounds nuw i8, ptr %.0201220, i64 1
+  store i8 %.0.i206, ptr %64, align 1
+  %65 = sub nsw i32 %51, %43
+  %66 = ashr i32 %65, 17
+  %67 = tail call i32 @llvm.smax.i32(i32 range(i32 -16384, 16384) %66, i32 0)
+  %.06.i207 = tail call i32 @llvm.umin.i32(i32 %67, i32 255)
+  %.0.i208 = trunc nuw i32 %.06.i207 to i8
+  %68 = getelementptr inbounds nuw i8, ptr %.0201220, i64 6
+  store i8 %.0.i208, ptr %68, align 1
+  %69 = add nsw i32 %45, %52
+  %70 = ashr i32 %69, 17
+  %71 = tail call i32 @llvm.smax.i32(i32 range(i32 -16384, 16384) %70, i32 0)
+  %.06.i209 = tail call i32 @llvm.umin.i32(i32 %71, i32 255)
+  %.0.i210 = trunc nuw i32 %.06.i209 to i8
+  %72 = getelementptr inbounds nuw i8, ptr %.0201220, i64 2
+  store i8 %.0.i210, ptr %72, align 1
+  %73 = sub nsw i32 %52, %45
+  %74 = ashr i32 %73, 17
+  %75 = tail call i32 @llvm.smax.i32(i32 range(i32 -16384, 16384) %74, i32 0)
+  %.06.i211 = tail call i32 @llvm.umin.i32(i32 %75, i32 255)
+  %.0.i212 = trunc nuw i32 %.06.i211 to i8
+  %76 = getelementptr inbounds nuw i8, ptr %.0201220, i64 5
+  store i8 %.0.i212, ptr %76, align 1
+  %77 = add nsw i32 %47, %53
+  %78 = ashr i32 %77, 17
+  %79 = tail call i32 @llvm.smax.i32(i32 range(i32 -16384, 16384) %78, i32 0)
+  %.06.i213 = tail call i32 @llvm.umin.i32(i32 %79, i32 255)
+  %.0.i214 = trunc nuw i32 %.06.i213 to i8
+  %80 = getelementptr inbounds nuw i8, ptr %.0201220, i64 3
+  store i8 %.0.i214, ptr %80, align 1
+  %81 = sub nsw i32 %53, %47
+  %82 = ashr i32 %81, 17
+  %83 = tail call i32 @llvm.smax.i32(i32 range(i32 -16384, 16384) %82, i32 0)
+  %.06.i215 = tail call i32 @llvm.umin.i32(i32 %83, i32 255)
+  %.0.i216 = trunc nuw i32 %.06.i215 to i8
+  %84 = getelementptr inbounds nuw i8, ptr %.0201220, i64 4
+  store i8 %.0.i216, ptr %84, align 1
   %i.dx = add nuw nsw i32 %.1222, 1               ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %.1200221, i64 32
   %i.dz = getelementptr inbounds i8, ptr %.0201220, i64 %i.b
@@ -663,9 +719,6 @@ declare i64 @llvm.umin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #11
