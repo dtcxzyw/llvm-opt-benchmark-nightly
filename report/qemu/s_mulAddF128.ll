@@ -202,10 +202,9 @@ bb.ah:                                            ; preds = %bb.af
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %.sroa.073.1 = phi i64 [ %i.bq, %bb.ag ], [ %i.bw, %bb.ah ]
   %.sroa.37.1 = phi i64 [ %i.bu, %bb.ag ], [ %i.bv, %bb.ah ] ; 2 uses
-  %10 = and i64 %.sroa.37.1, 144115188075855872   ; 2 uses
-  %.not294 = icmp eq i64 %10, 0
-  %spec.select303 = select i1 %.not294, i64 8, i64 9
-  %11 = lshr exact i64 %10, 57
+  %10 = lshr i64 %.sroa.37.1, 57
+  %11 = and i64 %10, 1                            ; 2 uses
+  %spec.select303 = or disjoint i64 %11, 8
   %spec.select304 = add nsw i64 %11, %.1247
   br label %bb.bb
 

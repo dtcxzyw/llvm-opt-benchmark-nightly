@@ -204,12 +204,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = trunc i64 %.0.copyload.i.i.i.i to i32
-  %1 = and i32 %i.b, 2                            ; 2 uses
   %i.c = icmp ult i64 %.0.copyload.i.i.i.i, 8
-  %.lobit.a = lshr exact i32 %1, 1
-  %.not.not = icmp eq i32 %1, 0
-  %2 = select i1 %.not.not, i32 3, i32 2
-  %.0 = select i1 %i.c, i32 %.lobit.a, i32 %2
+  %.lobit.a = lshr i32 %i.b, 1
+  %.lobit = and i32 %.lobit.a, 1                  ; 2 uses
+  %1 = xor i32 %.lobit, 3
+  %.0 = select i1 %i.c, i32 %.lobit, i32 %1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b

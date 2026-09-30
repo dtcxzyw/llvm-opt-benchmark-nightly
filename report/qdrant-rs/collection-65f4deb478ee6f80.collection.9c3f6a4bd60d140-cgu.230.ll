@@ -202,9 +202,8 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %2 = and i64 %i.c, 8589934592
-  %.not1 = icmp eq i64 %2, 0
-  %. = select i1 %.not1, i64 -2, i64 -1
+  %2 = lshr i64 %i.c, 33
+  %. = or i64 %2, -2
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.d

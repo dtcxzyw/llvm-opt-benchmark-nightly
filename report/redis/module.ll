@@ -204,9 +204,9 @@ bb.i:                                             ; preds = %bb.h
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 128
   store ptr %i.ad, ptr %i.af, align 8, !tbaa !185
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %7 = and i64 %i.m, 2097152
-  %.not40.i = icmp eq i64 %7, 0
-  %spec.store.select.i = select i1 %.not40.i, i64 50, i64 1074
+  %7 = lshr i64 %i.m, 11
+  %8 = and i64 %7, 1024
+  %spec.store.select.i = or disjoint i64 %8, 50
   store i64 %spec.store.select.i, ptr %i.ag, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   store i32 2, ptr %i.ah, align 8, !tbaa !186
@@ -318,9 +318,9 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 128
   store ptr %i.l, ptr %i.n, align 8, !tbaa !185
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %8 = and i64 %4, 2097152
-  %.not40 = icmp eq i64 %8, 0
-  %spec.store.select = select i1 %.not40, i64 50, i64 1074
+  %8 = lshr i64 %4, 11
+  %9 = and i64 %8, 1024
+  %spec.store.select = or disjoint i64 %9, 50
   store i64 %spec.store.select, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store i32 2, ptr %i.p, align 8, !tbaa !186
@@ -723,7 +723,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
   call void @llvm.va_start.p0(ptr nonnull %3)
   %i.f = call ptr @moduleCreateArgvFromUserFormat(ptr noundef %1, ptr noundef %2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %3) ; 2 uses
-  %i.g = load i32, ptr %i.b, align 4, !tbaa !29   ; 12 uses
+  %i.g = load i32, ptr %i.b, align 4, !tbaa !29   ; 11 uses
   %i.h = and i32 %i.g, 256                        ; 2 uses
   call void @llvm.va_end.p0(ptr nonnull %3)
   %i.i = load i64, ptr @moduleTempClientCount, align 8, !tbaa !45 ; 2 uses
@@ -1126,31 +1126,21 @@ bb.by:                                            ; preds = %bb.bo
 bb.bz:                                            ; preds = %bb.by, %bb.bn, %bb.bm
   %i.hn = and i32 %i.g, 1024
   %.not232 = icmp eq i32 %i.hn, 0
-  br i1 %.not232, label %4, label %autoMemoryAdd.exit
+  br i1 %.not232, label %bb.ca, label %autoMemoryAdd.exit
 
-4:                                                ; preds = %bb.bz
-  %5 = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7088), align 8, !tbaa !584 ; 2 uses
-  %6 = trunc i32 %i.g to i1                       ; 2 uses
-  %7 = icmp ne i32 %5, 0
-  %8 = select i1 %6, i1 %7, i1 false
-  %9 = zext i1 %8 to i32
-  store i32 %9, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7088), align 8, !tbaa !584
-  br i1 %6, label %10, label %bb.ca
-
-10:                                               ; preds = %4
-  %11 = and i32 %i.g, 2
-  %.not233 = icmp eq i32 %11, 0
-  %spec.select = select i1 %.not233, i32 5, i32 4
-  %12 = lshr i32 %i.g, 1
-  %13 = and i32 %12, 2
-  %14 = or disjoint i32 %spec.select, %13
-  %spec.select251 = xor i32 %14, 2
-  br label %bb.ca
-
-bb.ca:                                            ; preds = %10, %4
-  %.1175 = phi i32 [ %spec.select251, %10 ], [ 4, %4 ] ; 3 uses
+bb.ca:                                            ; preds = %bb.bz
+  %4 = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7088), align 8, !tbaa !584 ; 2 uses
+  %5 = trunc i32 %i.g to i1                       ; 2 uses
+  %6 = icmp ne i32 %4, 0
+  %7 = select i1 %5, i1 %6, i1 false
+  %8 = zext i1 %7 to i32
+  store i32 %8, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7088), align 8, !tbaa !584
+  %9 = lshr i32 %i.g, 1
+  %10 = and i32 %9, 3
+  %spec.select251 = xor i32 %10, 7
+  %.1175 = select i1 %5, i32 %spec.select251, i32 4 ; 3 uses
   call void @call(ptr noundef nonnull %.0.i, i32 noundef %.1175) #31
-  store i32 %5, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7088), align 8, !tbaa !584
+  store i32 %4, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7088), align 8, !tbaa !584
   %i.ho = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 5 uses
   %i.hp = load i64, ptr %i.ho, align 8, !tbaa !69
   %i.hq = and i64 %i.hp, 16

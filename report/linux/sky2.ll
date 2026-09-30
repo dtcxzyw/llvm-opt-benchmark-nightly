@@ -205,26 +205,23 @@ bb.cf:                                            ; preds = %gm_phy_write.exit40
   %i.lk = and i64 %.val297, 2
   %.not.i402.not = icmp eq i64 %i.lk, 0
   %i.ll = getelementptr i8, ptr %i.d, i64 2840
-  %i.lm = load i16, ptr %i.ll, align 8            ; 5 uses
+  %i.lm = load i16, ptr %i.ll, align 8            ; 4 uses
   br i1 %.not.i402.not, label %bb.cg, label %bb.ch
 
 bb.cg:                                            ; preds = %bb.cf
   %i.ln = shl i16 %i.lm, 4
-  %.1257 = and i16 %i.ln, 768
-  %i.lo = and i16 %i.lm, 8
-  %.not278 = icmp eq i16 %i.lo, 0
-  %.0253 = select i1 %.not278, i16 1, i16 257
+  %i.lo = and i16 %i.ln, 768
   %i.lp = shl i16 %i.lm, 5
-  %.2255 = and i16 %i.lp, 224
-  %spec.select293 = or disjoint i16 %.2255, %.0253
+  %.2255 = and i16 %i.lp, 480
+  %spec.select293 = or disjoint i16 %.2255, 1
   br label %.thread807
 
 bb.ch:                                            ; preds = %bb.cf
   %i.lq = and i16 %i.lm, 32
-  %2 = and i16 %i.lm, 16
-  %.not275 = icmp eq i16 %2, 0
-  %spec.select292.v = select i1 %.not275, i16 1, i16 65
-  %spec.select292 = or disjoint i16 %spec.select292.v, %i.lq
+  %2 = shl i16 %i.lm, 2
+  %3 = and i16 %2, 64
+  %spec.select292.v = or disjoint i16 %i.lq, %3
+  %spec.select292 = or disjoint i16 %spec.select292.v, 1
   br label %.thread807
 
 bb.ci:                                            ; preds = %gm_phy_write.exit401
@@ -262,7 +259,7 @@ bb.ck:                                            ; preds = %bb.cj
 
 .thread807:                                       ; preds = %.thread, %bb.cj, %.thread810, %bb.cg, %bb.ch, %.thread813, %bb.ck
   %.2262 = phi i16 [ -32768, %bb.ck ], [ %spec.select831, %.thread ], [ %.1261804817, %.thread813 ], [ -28160, %bb.cg ], [ -28160, %bb.ch ], [ -32512, %bb.cj ], [ -24320, %.thread810 ]
-  %.3259 = phi i16 [ 4096, %bb.ck ], [ 4096, %.thread ], [ 4096, %.thread813 ], [ %.1257, %bb.cg ], [ 0, %bb.ch ], [ 4096, %bb.cj ], [ 4096, %.thread810 ]
+  %.3259 = phi i16 [ 4096, %bb.ck ], [ 4096, %.thread ], [ 4096, %.thread813 ], [ %i.lo, %bb.cg ], [ 0, %bb.ch ], [ 4096, %bb.cj ], [ 4096, %.thread810 ]
   %.5 = phi i16 [ 1, %bb.ck ], [ 1, %.thread ], [ 1, %.thread813 ], [ %spec.select293, %bb.cg ], [ %spec.select292, %bb.ch ], [ 1, %bb.cj ], [ 1, %.thread810 ] ; 4 uses
   %.1 = phi i16 [ 5, %bb.ck ], [ %spec.select832, %.thread ], [ %.0249806816, %.thread813 ], [ 0, %bb.cg ], [ 0, %bb.ch ], [ 37, %bb.cj ], [ 45, %.thread810 ] ; 3 uses
   %i.ly = and i16 %i.li, 4

@@ -205,24 +205,22 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = load i8, ptr %1, align 1, !tbaa !33
   %i.c = zext i8 %i.b to i32                      ; 2 uses
-  %3 = and i32 %i.c, 2                            ; 2 uses
-  %.not = icmp eq i32 %3, 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 624
-  %.lobit.a = lshr exact i32 %3, 1
-  %i.e = trunc nuw nsw i32 %.lobit.a to i8
+  %.lobit.a = lshr i32 %i.c, 1
+  %.lobit = and i32 %.lobit.a, 1                  ; 2 uses
+  %i.e = trunc nuw nsw i32 %.lobit to i8
   store i8 %i.e, ptr %i.d, align 8, !tbaa !53
-  %4 = select i1 %.not, i32 6, i32 7
+  %3 = or disjoint i32 %.lobit, 6
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 628
-  store i32 %4, ptr %i.f, align 4, !tbaa !50
-  %5 = and i32 %i.c, 4                            ; 2 uses
-  %.not6 = icmp eq i32 %5, 0
+  store i32 %3, ptr %i.f, align 4, !tbaa !50
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 625
-  %.lobit5.a = lshr exact i32 %5, 2
-  %i.h = trunc nuw nsw i32 %.lobit5.a to i8
+  %.lobit5.a = lshr i32 %i.c, 2
+  %.lobit5 = and i32 %.lobit5.a, 1                ; 2 uses
+  %i.h = trunc nuw nsw i32 %.lobit5 to i8
   store i8 %i.h, ptr %i.g, align 1, !tbaa !44
-  %6 = select i1 %.not6, i32 2, i32 3
+  %4 = or disjoint i32 %.lobit5, 2
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 632
-  store i32 %6, ptr %i.i, align 8, !tbaa !51
+  store i32 %4, ptr %i.i, align 8, !tbaa !51
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -239,24 +237,22 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = load i8, ptr %1, align 1, !tbaa !33
   %i.c = zext i8 %i.b to i32                      ; 2 uses
-  %3 = and i32 %i.c, 2                            ; 2 uses
-  %.not.i = icmp eq i32 %3, 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 616
-  %.lobit.i.a = lshr exact i32 %3, 1
-  %i.e = trunc nuw nsw i32 %.lobit.i.a to i8
+  %.lobit.i.a = lshr i32 %i.c, 1
+  %.lobit.i = and i32 %.lobit.i.a, 1              ; 2 uses
+  %i.e = trunc nuw nsw i32 %.lobit.i to i8
   store i8 %i.e, ptr %i.d, align 8, !tbaa !53
-  %4 = select i1 %.not.i, i32 6, i32 7
+  %3 = or disjoint i32 %.lobit.i, 6
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 620
-  store i32 %4, ptr %i.f, align 4, !tbaa !50
-  %5 = and i32 %i.c, 4                            ; 2 uses
-  %.not6.i = icmp eq i32 %5, 0
+  store i32 %3, ptr %i.f, align 4, !tbaa !50
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 617
-  %.lobit5.i.a = lshr exact i32 %5, 2
-  %i.h = trunc nuw nsw i32 %.lobit5.i.a to i8
+  %.lobit5.i.a = lshr i32 %i.c, 2
+  %.lobit5.i = and i32 %.lobit5.i.a, 1            ; 2 uses
+  %i.h = trunc nuw nsw i32 %.lobit5.i to i8
   store i8 %i.h, ptr %i.g, align 1, !tbaa !44
-  %6 = select i1 %.not6.i, i32 2, i32 3
+  %4 = or disjoint i32 %.lobit5.i, 2
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 624
-  store i32 %6, ptr %i.i, align 8, !tbaa !51
+  store i32 %4, ptr %i.i, align 8, !tbaa !51
   br label %_ZN9NCompress8NImplode8NDecoder6CCoder21SetDecoderProperties2EPKhj.exit
 
 _ZN9NCompress8NImplode8NDecoder6CCoder21SetDecoderProperties2EPKhj.exit: ; preds = %bb.a, %bb.b

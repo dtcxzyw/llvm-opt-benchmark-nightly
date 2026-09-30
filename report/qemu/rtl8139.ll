@@ -204,8 +204,8 @@ bb.v:                                             ; preds = %bb.r, %bb.q, %bb.p,
   br label %bb.ak
 
 bb.w:                                             ; preds = %bb.l, %bb.c, %bb.g, %bb.u
-  %.not210 = phi i1 [ true, %bb.g ], [ false, %bb.l ], [ true, %bb.u ], [ true, %bb.c ]
-  %.1186 = phi i32 [ 8192, %bb.g ], [ 32768, %bb.l ], [ 16384, %bb.u ], [ 0, %bb.c ] ; 3 uses
+  %.not210 = phi i32 [ 805306368, %bb.g ], [ 872415232, %bb.l ], [ 805306368, %bb.u ], [ 805306368, %bb.c ]
+  %.1186 = phi i32 [ 8192, %bb.g ], [ 32768, %bb.l ], [ 16384, %bb.u ], [ 0, %bb.c ] ; 2 uses
   %i.ck = getelementptr i8, ptr %i.c, i64 2870    ; 2 uses
   %.val213 = load i16, ptr %i.ck, align 2
   %i.cl = and i16 %.val213, 2
@@ -358,16 +358,13 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !8
   fence seq_cst
   %i.fp = call i32 @address_space_rw(ptr noundef nonnull %i.da, i64 noundef %i.fo, i64 4294967296, ptr noundef nonnull %i.a, i64 noundef 4, i1 noundef zeroext true) #9 ; 0 uses
-  %3 = and i32 %.1186, 8192
-  %.not209 = icmp eq i32 %3, 0
-  %spec.select.v = select i1 %.not209, i32 805306368, i32 822083584
-  %spec.select = or i32 %i.dc, %spec.select.v     ; 2 uses
-  %i.fq = or i32 %spec.select, 67108864
-  %.1 = select i1 %.not210, i32 %spec.select, i32 %i.fq
-  %4 = shl nuw nsw i32 %.1186, 11
-  %i.fr = and i32 %4, 33554432
-  %.1.masked = and i32 %.1, 2147475456
-  %i.fs = or i32 %.1.masked, %i.fr
+  %3 = shl nuw nsw i32 %.1186, 11                 ; 2 uses
+  %4 = and i32 %3, 16777216
+  %i.fq = or disjoint i32 %4, %.not210
+  %5 = and i32 %3, 33554432
+  %i.fr = and i32 %i.dc, 2147475456
+  %.1.masked = or i32 %i.fq, %i.fr
+  %i.fs = or i32 %.1.masked, %5
   %i.ft = trunc nuw nsw i64 %i.fk to i32
   %i.fu = or i32 %i.fs, %i.ft                     ; 2 uses
   store i32 %i.fu, ptr %i.a, align 4

@@ -205,14 +205,12 @@ bb.z:                                             ; preds = %.noexc25, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5344
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5343
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5343
-  %i.cs = extractvalue { i64, ptr } %i.cr, 0      ; 2 uses
-  %i.ct = extractvalue { i64, ptr } %i.cr, 1      ; 3 uses
-  %1 = trunc nuw i64 %i.cs to i1
+  %i.cs = extractvalue { i64, ptr } %i.cr, 0
+  %i.ct = extractvalue { i64, ptr } %i.cr, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ct) ]
-  %spec.select.i.i = select i1 %1, i64 40, i64 8
   %spec.select8.idx.i.i = shl i64 %i.cs, 5
-  %spec.select8.i.i = getelementptr inbounds nuw i8, ptr %i.ct, i64 %spec.select8.idx.i.i
-  %i.cu = getelementptr i8, ptr %i.ct, i64 %spec.select.i.i
+  %spec.select8.i.i = getelementptr i8, ptr %i.ct, i64 %spec.select8.idx.i.i ; 2 uses
+  %i.cu = getelementptr i8, ptr %spec.select8.i.i, i64 8
   br label %_RNCNvMs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types3mroNtB7_11MroIterator29full_mro_except_first_element0Bb_.exit.i.i
 
 _RNCNvMs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types3mroNtB7_11MroIterator29full_mro_except_first_element0Bb_.exit.i.i: ; preds = %.noexc26, %.noexc24, %.noexc23, %.noexc22, %.noexc21
@@ -615,14 +613,12 @@ bb.ac:                                            ; preds = %.noexc27, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5938
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5937
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5937
-  %i.cr = extractvalue { i64, ptr } %i.cq, 0      ; 2 uses
-  %i.cs = extractvalue { i64, ptr } %i.cq, 1      ; 3 uses
-  %5 = trunc nuw i64 %i.cr to i1
+  %i.cr = extractvalue { i64, ptr } %i.cq, 0
+  %i.cs = extractvalue { i64, ptr } %i.cq, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cs) ]
-  %spec.select.i.i = select i1 %5, i64 40, i64 8
   %spec.select8.idx.i.i = shl i64 %i.cr, 5
-  %spec.select8.i.i = getelementptr inbounds nuw i8, ptr %i.cs, i64 %spec.select8.idx.i.i
-  %i.ct = getelementptr i8, ptr %i.cs, i64 %spec.select.i.i
+  %spec.select8.i.i = getelementptr i8, ptr %i.cs, i64 %spec.select8.idx.i.i ; 2 uses
+  %i.ct = getelementptr i8, ptr %spec.select8.i.i, i64 8
   br label %_RNCNvMs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types3mroNtB7_11MroIterator29full_mro_except_first_element0Bb_.exit.i.i
 
 _RNCNvMs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types3mroNtB7_11MroIterator29full_mro_except_first_element0Bb_.exit.i.i: ; preds = %.noexc28, %.noexc26, %.noexc25, %.noexc24, %.noexc23
@@ -1025,14 +1021,12 @@ bb.i:                                             ; preds = %bb.h, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !6334
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !6333
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !6333
-  %i.an = extractvalue { i64, ptr } %i.am, 0      ; 2 uses
-  %i.ao = extractvalue { i64, ptr } %i.am, 1      ; 3 uses
-  %1 = trunc nuw i64 %i.an to i1
+  %i.an = extractvalue { i64, ptr } %i.am, 0
+  %i.ao = extractvalue { i64, ptr } %i.am, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  %spec.select.i = select i1 %1, i64 40, i64 8
   %spec.select8.idx.i = shl i64 %i.an, 5
-  %spec.select8.i = getelementptr inbounds nuw i8, ptr %i.ao, i64 %spec.select8.idx.i
-  %i.ap = getelementptr i8, ptr %i.ao, i64 %spec.select.i
+  %spec.select8.i = getelementptr i8, ptr %i.ao, i64 %spec.select8.idx.i ; 2 uses
+  %i.ap = getelementptr i8, ptr %spec.select8.i, i64 8
   br label %_RNCNvMs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types3mroNtB7_11MroIterator29full_mro_except_first_element0Bb_.exit.i
 
 _RNCNvMs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types3mroNtB7_11MroIterator29full_mro_except_first_element0Bb_.exit.i: ; preds = %bb.i, %bb.g, %bb.f, %bb.e, %bb.d
@@ -1435,14 +1429,12 @@ _RNCNvMs3_NtNtCsoTR8nlGN3X_18ty_python_semantic5types3mroNtB7_11MroIterator29ful
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8059
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !8058
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !8058
-  %i.bc = extractvalue { i64, ptr } %i.bb, 0      ; 2 uses
-  %i.bd = extractvalue { i64, ptr } %i.bb, 1      ; 3 uses
-  %7 = trunc nuw i64 %i.bc to i1
+  %i.bc = extractvalue { i64, ptr } %i.bb, 0
+  %i.bd = extractvalue { i64, ptr } %i.bb, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bd) ]
-  %spec.select.i.i = select i1 %7, i64 40, i64 8
   %spec.select8.idx.i.i = shl i64 %i.bc, 5
-  %spec.select8.i.i = getelementptr inbounds nuw i8, ptr %i.bd, i64 %spec.select8.idx.i.i
-  %i.be = getelementptr i8, ptr %i.bd, i64 %spec.select.i.i
+  %spec.select8.i.i = getelementptr i8, ptr %i.bd, i64 %spec.select8.idx.i.i ; 2 uses
+  %i.be = getelementptr i8, ptr %spec.select8.i.i, i64 8
   %.val34.i.sink.i.i = load ptr, ptr %spec.select8.i.i, align 8, !noalias !8060, !nonnull !8, !noundef !8 ; 2 uses
   %.val35.i.sink.i.i = load i64, ptr %i.be, align 8, !noalias !8060, !noundef !8 ; 2 uses
   %.idx60.i.i.i = shl nuw nsw i64 %.val35.i.sink.i.i, 4

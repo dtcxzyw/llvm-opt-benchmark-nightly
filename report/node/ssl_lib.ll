@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.d
 SSL_get_rbio.exit:                                ; preds = %bb.c, %.thread22.i, %bb.f, %bb.e
   %i.l = phi i32 [ %.pre, %bb.e ], [ %.pre.i, %bb.f ], [ %i.i, %.thread22.i ], [ %i.b, %bb.c ] ; 2 uses
   %.0.i.ph = phi ptr [ %i.g, %bb.e ], [ null, %bb.f ], [ %i.k, %.thread22.i ], [ null, %bb.c ] ; 5 uses
-  %2 = and i32 %i.l, 128
-  %.not23 = icmp eq i32 %2, 0
-  %3 = select i1 %.not23, i32 1285, i32 1301
+  %2 = lshr i32 %i.l, 3
+  %3 = and i32 %2, 16
+  %4 = or disjoint i32 %3, 1285
   %i.m = icmp eq i32 %i.l, 129
   br i1 %i.m, label %SSL_get_rbio.exit.thread38, label %bb.g
 
@@ -223,7 +223,7 @@ bb.g:                                             ; preds = %SSL_get_rbio.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.o = tail call i32 @BIO_method_type(ptr noundef nonnull %.0.i.ph) #18
-  %.not24.a = icmp eq i32 %i.o, %3
+  %.not24.a = icmp eq i32 %i.o, %4
   br i1 %.not24.a, label %bb.i, label %.thread41
 
 bb.i:                                             ; preds = %bb.h
@@ -334,9 +334,9 @@ SSL_get_wbio.exitthread-pre-split:                ; preds = %bb.e, %bb.g, %bb.h
 SSL_get_wbio.exit:                                ; preds = %SSL_get_wbio.exitthread-pre-split, %bb.c, %bb.f
   %i.n = phi i32 [ %.pr, %SSL_get_wbio.exitthread-pre-split ], [ %i.b, %bb.c ], [ %.pre.i, %bb.f ] ; 2 uses
   %.0.i.ph = phi ptr [ %.0.i.ph.ph, %SSL_get_wbio.exitthread-pre-split ], [ null, %bb.c ], [ null, %bb.f ] ; 7 uses
-  %2 = and i32 %i.n, 128
-  %.not23 = icmp eq i32 %2, 0
-  %3 = select i1 %.not23, i32 1285, i32 1301
+  %2 = lshr i32 %i.n, 3
+  %3 = and i32 %2, 16
+  %4 = or disjoint i32 %3, 1285
   %i.o = icmp eq i32 %i.n, 129
   br i1 %i.o, label %SSL_get_wbio.exit.thread49, label %bb.i
 
@@ -352,7 +352,7 @@ bb.i:                                             ; preds = %SSL_get_wbio.exit
 
 bb.j:                                             ; preds = %bb.i
   %i.q = tail call i32 @BIO_method_type(ptr noundef nonnull %.0.i.ph) #18
-  %.not24.a = icmp eq i32 %i.q, %3
+  %.not24.a = icmp eq i32 %i.q, %4
   br i1 %.not24.a, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -755,8 +755,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = and i32 %i.n, 1                          ; 2 uses
   %.not75276 = trunc i32 %i.j to i1
   %.not75.mask277 = and i32 %i.j, 1
-  %i.p = or disjoint i32 %.not75.mask277, 2
-  %1 = zext nneg i32 %i.p to i64                  ; 2 uses
+  %i.p = or disjoint i32 %.not75.mask277, 2       ; 2 uses
   br i1 %.not75276, label %.critedge, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -771,14 +770,13 @@ bb.d:                                             ; preds = %bb.c
   %i.x = load i32, ptr %i.w, align 4, !tbaa !153
   %i.y = and i32 %i.x, 1                          ; 2 uses
   %.not75 = trunc i32 %i.t to i1
-  %.not75.mask = and i32 %i.t, 1
-  %spec.select = zext nneg i32 %.not75.mask to i64 ; 2 uses
-  %2 = or disjoint i64 %spec.select, 2
-  %.spec.select = select i1 %i.s, i64 %2, i64 %spec.select ; 2 uses
+  %.not75.mask = and i32 %i.t, 1                  ; 2 uses
+  %1 = or disjoint i32 %.not75.mask, 2
+  %..not75.mask = select i1 %i.s, i32 %1, i32 %.not75.mask ; 2 uses
   br i1 %.not75, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.thread
-  %3 = phi i64 [ %1, %.thread ], [ %.spec.select, %bb.d ] ; 11 uses
+  %2 = phi i32 [ %i.p, %.thread ], [ %..not75.mask, %bb.d ] ; 11 uses
   %cond.fr279287 = phi i1 [ true, %.thread ], [ %i.s, %bb.d ] ; 11 uses
   %i.z = phi i32 [ %i.l, %.thread ], [ %i.v, %bb.d ] ; 11 uses
   %i.aa = phi ptr [ %i.m, %.thread ], [ %i.w, %bb.d ] ; 11 uses
@@ -894,7 +892,7 @@ SSL_version.exit115:                              ; preds = %SSL_version.exit.th
   br label %.critedge
 
 .critedge:                                        ; preds = %SSL_version.exit115, %bb.d, %.thread, %SSL_version.exit.thread, %bb.m, %bb.j, %bb.n, %bb.k, %ssl_has_cert_type.exit.thread.i, %bb.e, %SSL_version.exit, %bb.h, %ssl_has_cert.exit
-  %4 = phi i64 [ %3, %SSL_version.exit.thread ], [ %3, %SSL_version.exit115 ], [ %3, %bb.h ], [ %3, %ssl_has_cert.exit ], [ %3, %SSL_version.exit ], [ %3, %bb.m ], [ %3, %ssl_has_cert_type.exit.thread.i ], [ %3, %bb.e ], [ %3, %bb.j ], [ %3, %bb.k ], [ %3, %bb.n ], [ %1, %.thread ], [ %.spec.select, %bb.d ]
+  %3 = phi i32 [ %2, %SSL_version.exit.thread ], [ %2, %SSL_version.exit115 ], [ %2, %bb.h ], [ %2, %ssl_has_cert.exit ], [ %2, %SSL_version.exit ], [ %2, %bb.m ], [ %2, %ssl_has_cert_type.exit.thread.i ], [ %2, %bb.e ], [ %2, %bb.j ], [ %2, %bb.k ], [ %2, %bb.n ], [ %i.p, %.thread ], [ %..not75.mask, %bb.d ]
   %cond.fr279286 = phi i1 [ %cond.fr279287, %SSL_version.exit.thread ], [ %cond.fr279287, %SSL_version.exit115 ], [ %cond.fr279287, %bb.h ], [ %cond.fr279287, %ssl_has_cert.exit ], [ %cond.fr279287, %SSL_version.exit ], [ %cond.fr279287, %bb.m ], [ %cond.fr279287, %ssl_has_cert_type.exit.thread.i ], [ %cond.fr279287, %bb.e ], [ %cond.fr279287, %bb.j ], [ %cond.fr279287, %bb.k ], [ %cond.fr279287, %bb.n ], [ true, %.thread ], [ %i.s, %bb.d ]
   %i.bp = phi i32 [ %i.z, %SSL_version.exit.thread ], [ %i.z, %SSL_version.exit115 ], [ %i.z, %bb.h ], [ %i.z, %ssl_has_cert.exit ], [ %i.z, %SSL_version.exit ], [ %i.z, %bb.m ], [ %i.z, %ssl_has_cert_type.exit.thread.i ], [ %i.z, %bb.e ], [ %i.z, %bb.j ], [ %i.z, %bb.k ], [ %i.z, %bb.n ], [ %i.l, %.thread ], [ %i.v, %bb.d ]
   %i.bq = phi ptr [ %i.aa, %SSL_version.exit.thread ], [ %i.aa, %SSL_version.exit115 ], [ %i.aa, %bb.h ], [ %i.aa, %ssl_has_cert.exit ], [ %i.aa, %SSL_version.exit ], [ %i.aa, %bb.m ], [ %i.aa, %ssl_has_cert_type.exit.thread.i ], [ %i.aa, %bb.e ], [ %i.aa, %bb.j ], [ %i.aa, %bb.k ], [ %i.aa, %bb.n ], [ %i.m, %.thread ], [ %i.w, %bb.d ] ; 2 uses
@@ -910,8 +908,7 @@ SSL_version.exit115:                              ; preds = %SSL_version.exit.th
   %.not79.not = icmp eq i32 %i.bx, 0
   %i.by = or disjoint i64 %i.bu, 5
   %.lobit = lshr exact i32 %i.bx, 12
-  %5 = zext nneg i32 %.lobit to i64
-  %.269 = or i64 %4, %5                           ; 2 uses
+  %.269 = or i32 %.lobit, %3                      ; 2 uses
   %.2 = select i1 %.not79.not, i64 %i.bv, i64 %i.by
   %i.bz = load i32, ptr %i.bq, align 4, !tbaa !153
   %i.ca = lshr i32 %i.bz, 9
@@ -1272,15 +1269,13 @@ bb.ar:                                            ; preds = %bb.aq
 
 ssl_has_cert.exit175.thread:                      ; preds = %SSL_version.exit182.thread, %.thread310, %bb.aq, %bb.an, %bb.ar, %bb.ao, %SSL_version.exit182, %ssl_has_cert_type.exit.thread.i173, %bb.ai, %bb.al, %ssl_has_cert.exit175, %ssl_has_cert.exit145.thread
   %.9 = phi i64 [ %.8, %ssl_has_cert.exit145.thread ], [ %.8, %ssl_has_cert.exit175 ], [ %.8, %bb.aq ], [ %.8, %bb.al ], [ %.8, %bb.ar ], [ %spec.select253, %.thread310 ], [ %.8, %ssl_has_cert_type.exit.thread.i173 ], [ %.8, %bb.ai ], [ %.8, %SSL_version.exit182 ], [ %.8, %bb.an ], [ %.8, %bb.ao ], [ %.8, %SSL_version.exit182.thread ]
-  %6 = and i64 %.269, 1
-  %.not97 = icmp eq i64 %6, 0
-  %spec.select107.v = select i1 %.not97, i64 12, i64 76
-  %7 = select i1 %cond.fr279286, i64 384, i64 128
-  %8 = or disjoint i64 %7, %spec.select107.v
-  %9 = or disjoint i64 %8, %.269
-  %10 = trunc nuw nsw i64 %9 to i32
+  %4 = shl nuw nsw i32 %.269, 6
+  %5 = and i32 %4, 64
+  %spec.select107.v = select i1 %cond.fr279286, i32 396, i32 140
+  %6 = or disjoint i32 %spec.select107.v, %5
+  %7 = or disjoint i32 %6, %.269
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 1040
-  store i32 %10, ptr %i.gy, align 8, !tbaa !467
+  store i32 %7, ptr %i.gy, align 8, !tbaa !467
   %i.gz = trunc nuw nsw i64 %.9 to i32
   %i.ha = or i32 %i.gz, 16
   %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 1044

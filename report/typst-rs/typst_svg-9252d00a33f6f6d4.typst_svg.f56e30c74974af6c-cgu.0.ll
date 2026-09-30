@@ -205,24 +205,26 @@ begin_hunk_0
 @409 = private unnamed_addr constant <{ ptr, [9 x i8], [7 x i8] }> <{ ptr @408, [9 x i8] c"\1C\00\00\00\00\00\00\00\17", [7 x i8] undef }>, align 8
 @410 = private unnamed_addr constant [77 x i8] c"/rustc/787af2b8c80638c51a4fc8e44f84e6891f243ec7/library/core/src/io/write.rs\00", align 1
 @411 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @410, [16 x i8] c"L\00\00\00\00\00\00\00\DC\00\00\00$\00\00\00" }>, align 8
-@switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_ = private unnamed_addr constant [14 x i16] [i16 15025, i16 16344, i16 16339, i16 16418, i16 17597, i16 18055, i16 18746, i16 19151, i16 19469, i16 19395, i16 21227, i16 20733, i16 29513, i16 16729], align 8
-@switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_.558 = private unnamed_addr constant [14 x ptr] [ptr @92, ptr @93, ptr @94, ptr @95, ptr @96, ptr @97, ptr @98, ptr @99, ptr @100, ptr @101, ptr @102, ptr @103, ptr @104, ptr @105], align 8
+@switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_ = private unnamed_addr constant [4 x i16] [i16 15025, i16 16344, i16 16339, i16 16418], align 8
+@switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_.558 = private unnamed_addr constant [4 x ptr] [ptr @92, ptr @93, ptr @94, ptr @95], align 8
+@switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_.559 = private unnamed_addr constant [14 x i16] [i16 15025, i16 16344, i16 16339, i16 16418, i16 17597, i16 18055, i16 18746, i16 19151, i16 19469, i16 19395, i16 21227, i16 20733, i16 29513, i16 16729], align 8
+@switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_.560 = private unnamed_addr constant [14 x ptr] [ptr @92, ptr @93, ptr @94, ptr @95, ptr @96, ptr @97, ptr @98, ptr @99, ptr @100, ptr @101, ptr @102, ptr @103, ptr @104, ptr @105], align 8
 @switch.table._RNvMNtCsl4q486LaARA_9typst_svg5paintNtB4_11SVGRenderer15write_gradients = private unnamed_addr constant [3 x i8] c"`\88p", align 8
 @switch.table._RNvMNtCsl4q486LaARA_9typst_svg5shapeNtB4_11SVGRenderer12write_stroke = private unnamed_addr constant [3 x ptr] [ptr @191, ptr @192, ptr @193], align 8
-@switch.table._RNvMNtCsl4q486LaARA_9typst_svg5shapeNtB4_11SVGRenderer12write_stroke.559 = private unnamed_addr constant [3 x ptr] [ptr @195, ptr @192, ptr @196], align 8
+@switch.table._RNvMNtCsl4q486LaARA_9typst_svg5shapeNtB4_11SVGRenderer12write_stroke.561 = private unnamed_addr constant [3 x ptr] [ptr @195, ptr @192, ptr @196], align 8
 @switch.table._RNvMNtCsl4q486LaARA_9typst_svg5shapeNtB4_11SVGRenderer21shape_paint_transform = private unnamed_addr constant [3 x i8] c"a\89q", align 8
 @switch.table._RNvMs0_NtCsl4q486LaARA_9typst_svg5imageNtB5_8WebImage13to_base64_url = private unnamed_addr constant [5 x ptr] [ptr @79, ptr @80, ptr @81, ptr @82, ptr @83], align 8
-@switch.table._RNvMs0_NtCsl4q486LaARA_9typst_svg5imageNtB5_8WebImage13to_base64_url.560 = private unnamed_addr constant [5 x i8] c"\09\0A\09\0A\0D", align 8
+@switch.table._RNvMs0_NtCsl4q486LaARA_9typst_svg5imageNtB5_8WebImage13to_base64_url.562 = private unnamed_addr constant [5 x i8] c"\09\0A\09\0A\0D", align 8
 @switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize = private unnamed_addr constant [3 x ptr] [ptr @163, ptr @171, ptr @160], align 8
-@switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.561 = private unnamed_addr constant [3 x i8] c"\0E\0E\07", align 8
-@switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.562 = private unnamed_addr constant [3 x ptr] [ptr @189, ptr @189, ptr @186], align 8
-@switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.563 = private unnamed_addr constant [3 x i8] c"\11\11\10", align 8
+@switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.563 = private unnamed_addr constant [3 x i8] c"\0E\0E\07", align 8
+@switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.564 = private unnamed_addr constant [3 x ptr] [ptr @189, ptr @189, ptr @186], align 8
+@switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.565 = private unnamed_addr constant [3 x i8] c"\11\11\10", align 8
 @switch.table._RNvXsD_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt = private unnamed_addr constant [18 x i8] [i8 5, i8 11, i8 poison, i8 6, i8 7, i8 5, i8 9, i8 6, i8 6, i8 7, i8 12, i8 6, i8 4, i8 12, i8 12, i8 9, i8 8, i8 9], align 8
-@switch.table._RNvXsD_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.564 = private unnamed_addr constant [18 x ptr] [ptr @278, ptr @279, ptr poison, ptr @280, ptr @281, ptr @282, ptr @283, ptr @284, ptr @285, ptr @286, ptr @287, ptr @288, ptr @289, ptr @290, ptr @291, ptr @292, ptr @293, ptr @294], align 8
+@switch.table._RNvXsD_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.566 = private unnamed_addr constant [18 x ptr] [ptr @278, ptr @279, ptr poison, ptr @280, ptr @281, ptr @282, ptr @283, ptr @284, ptr @285, ptr @286, ptr @287, ptr @288, ptr @289, ptr @290, ptr @291, ptr @292, ptr @293, ptr @294], align 8
 @switch.table._RNvXsL_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt = private unnamed_addr constant [18 x i8] [i8 8, i8 5, i8 11, i8 poison, i8 5, i8 7, i8 9, i8 9, i8 5, i8 17, i8 14, i8 9, i8 30, i8 27, i8 6, i8 7, i8 7, i8 7], align 8
-@switch.table._RNvXsL_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.565 = private unnamed_addr constant [18 x ptr] [ptr @340, ptr @278, ptr @279, ptr poison, ptr @341, ptr @281, ptr @342, ptr @283, ptr @343, ptr @344, ptr @345, ptr @346, ptr @347, ptr @348, ptr @349, ptr @350, ptr @351, ptr @352], align 8
+@switch.table._RNvXsL_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.567 = private unnamed_addr constant [18 x ptr] [ptr @340, ptr @278, ptr @279, ptr poison, ptr @341, ptr @281, ptr @342, ptr @283, ptr @343, ptr @344, ptr @345, ptr @346, ptr @347, ptr @348, ptr @349, ptr @350, ptr @351, ptr @352], align 8
 @switch.table._RNvXsv_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt = private unnamed_addr constant [22 x i8] [i8 4, i8 11, i8 poison, i8 4, i8 4, i8 5, i8 7, i8 11, i8 7, i8 3, i8 10, i8 10, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 10], align 8
-@switch.table._RNvXsv_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.566 = private unnamed_addr constant [22 x ptr] [ptr @289, ptr @279, ptr poison, ptr @396, ptr @397, ptr @282, ptr @398, ptr @399, ptr @400, ptr @401, ptr @402, ptr @403, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @404], align 8
+@switch.table._RNvXsv_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.568 = private unnamed_addr constant [22 x ptr] [ptr @289, ptr @279, ptr poison, ptr @396, ptr @397, ptr @282, ptr @398, ptr @399, ptr @400, ptr @401, ptr @402, ptr @403, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @404], align 8
 
 ; Function Attrs: cold noinline nonlazybind uwtable
 define { i64, i64 } @_RINvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB6_8RawTablejE14reserve_rehashNCINvNtNtCsjFU9swAW47b_8indexmap3map4core8get_hashoINtNtCs3oUPovFnLWP_4core6option6OptionNtNtCsl4q486LaARA_9typst_svg4text13RenderedGlyphEE0EB2C_(ptr noalias nofree noundef align 8 dereferenceable(32) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) %2, i64 noundef %3, i1 noundef zeroext %4) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -625,11 +627,10 @@ bb.c:                                             ; preds = %bb.b
   %i.f = load i8, ptr %i.e, align 1, !range !19, !alias.scope !2420, !noundef !12
   %i.g = trunc nuw i8 %i.f to i1
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 135
-  %i.i = load i8, ptr %i.h, align 1, !range !19, !alias.scope !2420, !noundef !12
-  %3 = trunc nuw i8 %i.i to i1                    ; 2 uses
+  %i.i = load i8, ptr %i.h, align 1, !range !19, !alias.scope !2420, !noundef !12 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 134
-  %i.k = load i8, ptr %i.j, align 2, !range !19, !alias.scope !2420, !noundef !12 ; 3 uses
-  br i1 %i.g, label %5, label %4
+  %i.k = load i8, ptr %i.j, align 2, !range !19, !alias.scope !2420, !noundef !12 ; 2 uses
+  br i1 %i.g, label %bb.e, label %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit
 
 bb.d:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 135
@@ -640,27 +641,19 @@ bb.d:                                             ; preds = %bb.b
   %i.q = trunc nuw i8 %i.p to i1                  ; 4 uses
   br i1 %i.n, label %bb.i, label %bb.h
 
-4:                                                ; preds = %bb.c
-  br i1 %3, label %bb.e, label %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit
+bb.e:                                             ; preds = %bb.c
+  %i.r = trunc nuw i8 %i.i to i1
+  %3 = trunc nuw i8 %i.k to i1                    ; 4 uses
+  br i1 %i.r, label %bb.g, label %bb.f
 
-5:                                                ; preds = %bb.c
-  %6 = trunc nuw i8 %i.k to i1                    ; 4 uses
-  br i1 %3, label %bb.g, label %bb.f
-
-bb.e:                                             ; preds = %4
-  %i.r = trunc nuw i8 %i.k to i1                  ; 2 uses
-  %. = select i1 %i.r, i64 16418, i64 16344
-  %.35 = select i1 %i.r, ptr @95, ptr @93
+bb.f:                                             ; preds = %bb.e
+  %.36 = select i1 %3, i64 21227, i64 19469
+  %.37 = select i1 %3, ptr @102, ptr @100
   br label %bb.j
 
-bb.f:                                             ; preds = %5
-  %.36 = select i1 %6, i64 21227, i64 19469
-  %.37 = select i1 %6, ptr @102, ptr @100
-  br label %bb.j
-
-bb.g:                                             ; preds = %5
-  %.38 = select i1 %6, i64 20733, i64 19395
-  %.39 = select i1 %6, ptr @103, ptr @101
+bb.g:                                             ; preds = %bb.e
+  %.38 = select i1 %3, i64 20733, i64 19395
+  %.39 = select i1 %3, ptr @103, ptr @101
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.d
@@ -673,15 +666,21 @@ bb.i:                                             ; preds = %bb.d
   %.43 = select i1 %i.q, ptr @99, ptr @97
   br label %bb.j
 
-_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit: ; preds = %4
-  %7 = icmp eq i8 %i.k, 0                         ; 2 uses
-  %spec.select = select i1 %7, i64 15025, i64 16339
-  %spec.select34 = select i1 %7, ptr @92, ptr @94
+_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit: ; preds = %bb.c
+  %4 = shl nuw nsw i8 %i.k, 1
+  %spec.select.i = or disjoint i8 %4, %i.i        ; 2 uses
+  %5 = zext nneg i8 %spec.select.i to i64
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_, i64 %5
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
+  %6 = zext nneg i8 %spec.select.i to i64
+  %switch.gep41 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_.558, i64 %6
+  %switch.load42 = load ptr, ptr %switch.gep41, align 8
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit
-  %.sroa.15.0.i = phi i64 [ %spec.select, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit ], [ %., %bb.e ], [ %.38, %bb.g ], [ %.36, %bb.f ], [ %.40, %bb.h ], [ %.42, %bb.i ]
-  %.sroa.0.0.i1 = phi ptr [ %spec.select34, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit ], [ %.35, %bb.e ], [ %.39, %bb.g ], [ %.37, %bb.f ], [ %.41, %bb.h ], [ %.43, %bb.i ]
+bb.j:                                             ; preds = %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit, %bb.i, %bb.h, %bb.g, %bb.f
+  %.sroa.15.0.i = phi i64 [ %switch.ext, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit ], [ %.36, %bb.f ], [ %.38, %bb.g ], [ %.42, %bb.i ], [ %.40, %bb.h ]
+  %.sroa.0.0.i1 = phi ptr [ %switch.load42, %_RNvMs7_NtCsdZBRolkNcUZ_15hayro_interpret4fontNtB5_17FallbackFontQuery18pick_standard_font.exit ], [ %.37, %bb.f ], [ %.39, %bb.g ], [ %.43, %bb.i ], [ %.41, %bb.h ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #31, !noalias !2421
   %i.s = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 32, i64 noundef range(i64 1, 17) 8) #31, !noalias !2421 ; 2 uses
   %i.t = icmp eq ptr %i.s, null
@@ -695,11 +694,11 @@ switch.lookup:                                    ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.v = load i8, ptr %i.u, align 8, !range !2422, !noundef !12 ; 2 uses
   %i.w = zext nneg i8 %i.v to i64
-  %switch.gep.a = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_, i64 %i.w
+  %switch.gep.a = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_.559, i64 %i.w
   %switch.load.a = load i16, ptr %switch.gep.a, align 2
   %switch.ext.a = zext i16 %switch.load.a to i64
   %i.x = zext nneg i8 %i.v to i64
-  %switch.gep49 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_.558, i64 %i.x
+  %switch.gep49 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNCNvNtCsl4q486LaARA_9typst_svg5image10pdf_to_svgs_0B5_.560, i64 %i.x
   %switch.load50 = load ptr, ptr %switch.gep49, align 8
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #31, !noalias !2423
   %i.y = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 32, i64 noundef range(i64 1, 17) 8) #31, !noalias !2423 ; 2 uses
@@ -1102,7 +1101,7 @@ switch.lookup:                                    ; preds = %bb.e, %bb.d, %bb.c
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 73
   %i.an = load i8, ptr %i.am, align 1, !range !18, !noundef !12
   %i.ao = zext nneg i8 %i.an to i64
-  %switch.gep5 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMNtCsl4q486LaARA_9typst_svg5shapeNtB4_11SVGRenderer12write_stroke.559, i64 %i.ao
+  %switch.gep5 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMNtCsl4q486LaARA_9typst_svg5shapeNtB4_11SVGRenderer12write_stroke.561, i64 %i.ao
   %switch.load6 = load ptr, ptr %switch.gep5, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %switch.load6, ptr %i.c, align 8, !noalias !5501
@@ -1505,7 +1504,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsbQmEUdn7Qi6_8lock_api6rwlock15RwL
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMs0_NtCsl4q486LaARA_9typst_svg5imageNtB5_8WebImage13to_base64_url, i64 %i.fr
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.fs = zext nneg i8 %i.v to i64
-  %switch.gep42 = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs0_NtCsl4q486LaARA_9typst_svg5imageNtB5_8WebImage13to_base64_url.560, i64 %i.fs
+  %switch.gep42 = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs0_NtCsl4q486LaARA_9typst_svg5imageNtB5_8WebImage13to_base64_url.562, i64 %i.fs
   %switch.load43 = load i8, ptr %switch.gep42, align 1
   %switch.ext = zext i8 %switch.load43 to i64
   store ptr %switch.load, ptr %i.h, align 8, !noalias !5800, !captures !49
@@ -1908,14 +1907,14 @@ bb.ai:                                            ; preds = %bb.am, %.lr.ph110
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize, i64 %i.eg
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.eh = zext nneg i8 %i.ef to i64
-  %switch.gep119 = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.561, i64 %i.eh
+  %switch.gep119 = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.563, i64 %i.eh
   %switch.load120 = load i8, ptr %switch.gep119, align 1
   %switch.ext = zext i8 %switch.load120 to i64
   %i.ei = zext nneg i8 %i.ef to i64
-  %switch.gep121 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.562, i64 %i.ei
+  %switch.gep121 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.564, i64 %i.ei
   %switch.load122 = load ptr, ptr %switch.gep121, align 8
   %i.ej = zext nneg i8 %i.ef to i64
-  %switch.gep123 = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.563, i64 %i.ej
+  %switch.gep123 = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs_Csl4q486LaARA_9typst_svgNtB4_11SVGRenderer8finalize.565, i64 %i.ej
   %switch.load124 = load i8, ptr %switch.gep123, align 1
   invoke void @_RNvMs_CsllPlovBjVoa_9xmlwriterNtB4_9XmlWriter13start_element(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load, i64 noundef range(i64 1, 15) %switch.ext) #35
           to label %_RNvMNtCsl4q486LaARA_9typst_svg5writeNtB2_7SvgElem4elem.exit.i22 unwind label %bb.ai, !noalias !7866
@@ -2318,7 +2317,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %switch.tableidx to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsD_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.564, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsD_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.566, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -2340,7 +2339,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsL_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.565, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsL_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.567, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -2743,7 +2742,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %switch.tableidx to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsv_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.566, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsv_NtNtCsbMQOdixSu6G_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.568, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d

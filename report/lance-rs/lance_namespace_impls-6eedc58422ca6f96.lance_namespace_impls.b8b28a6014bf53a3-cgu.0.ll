@@ -205,7 +205,7 @@ bb.eh:                                            ; preds = %bb.ee
   %i.qv = getelementptr inbounds nuw i8, ptr %1, i64 816 ; 3 uses
   %.val208.i = load i64, ptr %i.qv, align 16, !range !562, !noalias !159391, !noundef !416
   %i.qw = getelementptr i8, ptr %1, i64 1164
-  %.val209.i = load i8, ptr %i.qw, align 4, !range !428, !noalias !159391, !noundef !416 ; 2 uses
+  %.val209.i = load i8, ptr %i.qw, align 4, !range !428, !noalias !159391, !noundef !416
   %i.qx = getelementptr inbounds nuw i8, ptr %1, i64 1184 ; 2 uses
   %.val172.i = load ptr, ptr %i.qx, align 16, !noalias !159391, !nonnull !416, !noundef !416
   %i.qy = getelementptr i8, ptr %.val172.i, i64 296
@@ -216,11 +216,10 @@ bb.eh:                                            ; preds = %bb.ee
           to label %bb.ei unwind label %bb.eg, !noalias !159392
 
 bb.ei:                                            ; preds = %bb.eh
-  %.not.i269.i = icmp eq i64 %.val208.i, 40
   %..i.i = shl nuw nsw i8 %.val209.i, 1
-  %3 = trunc nuw i8 %.val209.i to i1
-  %.1.i.i = select i1 %3, i8 3, i8 1
-  %.sroa.0.0.i.i = select i1 %.not.i269.i, i8 %..i.i, i8 %.1.i.i
+  %.not.i269.i = icmp ne i64 %.val208.i, 40
+  %.1.i.i = zext i1 %.not.i269.i to i8
+  %.sroa.0.0.i.i = or disjoint i8 %..i.i, %.1.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd), !noalias !159391
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8474.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bc), !noalias !159391

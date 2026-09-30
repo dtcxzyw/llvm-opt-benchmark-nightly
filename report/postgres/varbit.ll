@@ -205,40 +205,32 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.02641 = phi i32 [ %i.o, %.lr.ph ], [ 0, %bb.a ]
   %.02940 = phi ptr [ %i.p, %.lr.ph ], [ %i.j, %bb.a ] ; 2 uses
-  %.03039 = phi ptr [ %12, %.lr.ph ], [ %i.i, %bb.a ] ; 6 uses
+  %.03039 = phi ptr [ %1, %.lr.ph ], [ %i.i, %bb.a ] ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %.03039, i64 8 ; 2 uses
   %i.l = load i8, ptr %.02940, align 1            ; 5 uses
   %.not34 = icmp sgt i8 %i.l, -1
   %i.m = select i1 %.not34, i8 48, i8 49
-  %1 = getelementptr inbounds nuw i8, ptr %.03039, i64 1
-  store i8 %i.m, ptr %.03039, align 1
-  %2 = getelementptr inbounds nuw i8, ptr %.03039, i64 5
+  %.mask = lshr i8 %i.l, 6
+  %.mask52 = lshr i8 %i.l, 5
+  %.mask53 = lshr i8 %i.l, 4
   %i.n = insertelement <4 x i8> poison, i8 %i.l, i64 0
-  %3 = shufflevector <4 x i8> %i.n, <4 x i8> poison, <4 x i32> zeroinitializer
-  %4 = and <4 x i8> %3, <i8 64, i8 32, i8 16, i8 8>
-  %5 = icmp eq <4 x i8> %4, zeroinitializer
-  %6 = select <4 x i1> %5, <4 x i8> splat (i8 48), <4 x i8> splat (i8 49)
-  store <4 x i8> %6, ptr %1, align 1
-  %.mask55 = and i8 %i.l, 4
-  %.not34.5 = icmp eq i8 %.mask55, 0
-  %7 = select i1 %.not34.5, i8 48, i8 49
-  %8 = getelementptr inbounds nuw i8, ptr %.03039, i64 6
-  store i8 %7, ptr %2, align 1
-  %.mask56 = and i8 %i.l, 2
-  %.not34.6 = icmp eq i8 %.mask56, 0
-  %9 = select i1 %.not34.6, i8 48, i8 49
-  %10 = getelementptr inbounds nuw i8, ptr %.03039, i64 7
-  store i8 %9, ptr %8, align 1
-  %.mask57 = and i8 %i.l, 1
-  %11 = or disjoint i8 %.mask57, 48
-  %12 = getelementptr inbounds nuw i8, ptr %.03039, i64 8 ; 2 uses
-  store i8 %11, ptr %10, align 1
+  %2 = insertelement <8 x i8> poison, i8 %i.m, i64 0
+  %3 = insertelement <8 x i8> %2, i8 %.mask, i64 1
+  %4 = insertelement <8 x i8> %3, i8 %.mask52, i64 2
+  %5 = insertelement <8 x i8> %4, i8 %.mask53, i64 3
+  %6 = shufflevector <4 x i8> %i.n, <4 x i8> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
+  %7 = lshr <8 x i8> %6, <i8 3, i8 2, i8 1, i8 0, i8 undef, i8 undef, i8 undef, i8 undef>
+  %8 = shufflevector <8 x i8> %5, <8 x i8> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %9 = and <8 x i8> %8, <i8 -1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1>
+  %10 = or disjoint <8 x i8> %9, <i8 0, i8 48, i8 48, i8 48, i8 48, i8 48, i8 48, i8 48>
+  store <8 x i8> %10, ptr %.03039, align 1
   %i.o = add i32 %.02641, 8                       ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.02940, i64 1 ; 2 uses
   %.not = icmp sgt i32 %i.o, %i.k
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !8
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %.030.lcssa = phi ptr [ %i.i, %bb.a ], [ %12, %.lr.ph ] ; 3 uses
+  %.030.lcssa = phi ptr [ %i.i, %bb.a ], [ %1, %.lr.ph ] ; 3 uses
   %.029.lcssa = phi ptr [ %i.j, %bb.a ], [ %i.p, %.lr.ph ]
   %.026.lcssa = phi i32 [ 0, %bb.a ], [ %i.o, %.lr.ph ] ; 5 uses
   %i.q = icmp slt i32 %.026.lcssa, %i.f
@@ -283,21 +275,21 @@ bb.b:                                             ; preds = %._crit_edge
   %i.z = select i1 %.not33, i8 48, i8 49
   %i.aa = getelementptr inbounds nuw i8, ptr %.244, i64 1
   store i8 %i.z, ptr %.244, align 1
-  %.mask = and i8 %.12845, 64
-  %.not33.1 = icmp eq i8 %.mask, 0
-  %13 = select i1 %.not33.1, i8 48, i8 49
+  %.mask67 = lshr i8 %.12845, 6
+  %11 = and i8 %.mask67, 1
+  %12 = or disjoint i8 %11, 48
   %i.ab = getelementptr inbounds nuw i8, ptr %.244, i64 2
-  store i8 %13, ptr %i.aa, align 1
-  %.mask67 = and i8 %.12845, 32
-  %.not33.2 = icmp eq i8 %.mask67, 0
-  %14 = select i1 %.not33.2, i8 48, i8 49
+  store i8 %12, ptr %i.aa, align 1
+  %.mask68 = lshr i8 %.12845, 5
+  %13 = and i8 %.mask68, 1
+  %14 = or disjoint i8 %13, 48
   %i.ac = getelementptr inbounds nuw i8, ptr %.244, i64 3
   store i8 %14, ptr %i.ab, align 1
-  %.mask68 = and i8 %.12845, 16
-  %.not33.3 = icmp eq i8 %.mask68, 0
-  %15 = select i1 %.not33.3, i8 48, i8 49
+  %.mask69 = lshr i8 %.12845, 4
+  %15 = and i8 %.mask69, 1
+  %16 = or disjoint i8 %15, 48
   %i.ad = getelementptr inbounds nuw i8, ptr %.244, i64 4 ; 2 uses
-  store i8 %15, ptr %i.ac, align 1
+  store i8 %16, ptr %i.ac, align 1
   %i.ae = shl i8 %.12845, 4
   %i.af = add nsw i32 %.146, 4                    ; 2 uses
   %exitcond.not.3 = icmp eq i32 %i.af, %i.f

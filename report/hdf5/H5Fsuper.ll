@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %bb.d, %bb.f
   %i.ae = load ptr, ptr %i.m, align 8, !tbaa !27  ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !50
-  %11 = and i32 %i.ag, 1
-  %.not319 = icmp eq i32 %11, 0
-  %spec.select = select i1 %.not319, i32 1152, i32 1024 ; 3 uses
+  %11 = shl i32 %i.ag, 7
+  %12 = and i32 %11, 128                          ; 2 uses
+  %spec.select = xor i32 %12, 1152                ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 1360
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !51
   %i.aj = call ptr @H5I_object(i64 noundef %i.ai) #6 ; 17 uses
@@ -324,8 +324,7 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.fq
 
 bb.x:                                             ; preds = %bb.v
-  %12 = and i32 %spec.select, 128
-  %13 = icmp eq i32 %12, 0                        ; 7 uses
+  %13 = icmp ne i32 %12, 0                        ; 7 uses
   %i.cp = load i8, ptr %i.ax, align 8, !range !10
   %i.cq = trunc nuw i8 %i.cp to i1
   %or.cond7 = select i1 %13, i1 %i.cq, i1 false

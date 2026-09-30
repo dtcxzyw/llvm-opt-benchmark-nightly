@@ -204,28 +204,18 @@ bb.a:
   %i.l = getelementptr i8, ptr %4, i64 32         ; 3 uses
   store i32 -1, ptr %i.l, align 4
   %i.m = icmp slt i32 %i.g, 1
-  br i1 %i.m, label %btmesh_access_find_key_and_decrypt.exit, label %5
+  br i1 %i.m, label %btmesh_access_find_key_and_decrypt.exit, label %check_address_type.exit.i
 
-5:                                                ; preds = %bb.a
-  %6 = getelementptr i8, ptr %4, i64 24           ; 3 uses
-  %7 = load i32, ptr %6, align 4                  ; 3 uses
-  %8 = and i32 %7, 32768
-  %.not.i.i = icmp eq i32 %8, 0
-  br i1 %.not.i.i, label %11, label %9
-
-9:                                                ; preds = %5
-  %10 = and i32 %7, 16384
-  %.not5.i.i = icmp eq i32 %10, 0
-  %..i.i = select i1 %.not5.i.i, i32 2, i32 3
-  br label %check_address_type.exit.i
-
-11:                                               ; preds = %5
-  %.not4.i.i = icmp ne i32 %7, 0
+check_address_type.exit.i:                        ; preds = %bb.a
+  %5 = getelementptr i8, ptr %4, i64 24           ; 3 uses
+  %6 = load i32, ptr %5, align 4                  ; 3 uses
+  %7 = and i32 %6, 32768
+  %.not.i.i = icmp eq i32 %7, 0
+  %8 = lshr i32 %6, 14
+  %..i.i = and i32 %8, 3
+  %.not4.i.i = icmp ne i32 %6, 0
   %.6.i.i = zext i1 %.not4.i.i to i32
-  br label %check_address_type.exit.i
-
-check_address_type.exit.i:                        ; preds = %11, %9
-  %.0.i.i = phi i32 [ %..i.i, %9 ], [ %.6.i.i, %11 ]
+  %.0.i.i = select i1 %.not.i.i, i32 %.6.i.i, i32 %..i.i
   %.0.i.fr.i = freeze i32 %.0.i.i                 ; 3 uses
   %i.n = getelementptr i8, ptr %4, i64 41         ; 2 uses
   %i.o = load i8, ptr %i.n, align 1               ; 2 uses
@@ -288,7 +278,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aq = getelementptr i8, ptr %i.am, i64 20
   %i.ar = load i16, ptr %i.aq, align 4
   %i.as = zext i16 %i.ar to i32
-  %i.at = load i32, ptr %6, align 4
+  %i.at = load i32, ptr %5, align 4
   %i.au = icmp eq i32 %i.at, %i.as
   br i1 %i.au, label %bb.f, label %bb.g
 
@@ -427,7 +417,7 @@ bb.o:                                             ; preds = %bb.n
   %i.dd = getelementptr i8, ptr %i.cz, i64 20
   %i.de = load i16, ptr %i.dd, align 4
   %i.df = zext i16 %i.de to i32
-  %i.dg = load i32, ptr %6, align 4
+  %i.dg = load i32, ptr %5, align 4
   %i.dh = icmp eq i32 %i.dg, %i.df
   br i1 %i.dh, label %bb.p, label %bb.q
 

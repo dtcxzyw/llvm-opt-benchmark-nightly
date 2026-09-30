@@ -205,15 +205,14 @@ _ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1E
   %.val56 = load ptr, ptr %i.cd, align 8
   %i.ci = getelementptr inbounds nuw i8, ptr %.val56, i64 8
   %.0.copyload.i.i.i.i.i = load i64, ptr %i.ci, align 1
-  %.mask.i.i = and i64 %.0.copyload.i.i.i.i.i, 128
-  %24 = icmp eq i64 %.mask.i.i, 0
-  %.neg = select i1 %24, i64 -1, i64 -2
+  %.mask.i.i = lshr i64 %.0.copyload.i.i.i.i.i, 7
+  %24 = and i64 %.mask.i.i, 1
   br label %_ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE15getLocalEntriesEv.exit
 
 _ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE15getLocalEntriesEv.exit: ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit68, %_ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE19getGotModulePointerEv.exit.thread, %_ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE19getGotModulePointerEv.exit.thread.thread
   %.val55191 = phi i64 [ %.val55.pr232, %_ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE19getGotModulePointerEv.exit.thread.thread ], [ %.val55.pr.pre, %_ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE19getGotModulePointerEv.exit.thread ], [ %.val51, %_ZN4llvm11raw_ostreamlsEPKc.exit68 ]
-  %.1.i.i.neg = phi i64 [ %.neg, %_ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE19getGotModulePointerEv.exit.thread.thread ], [ -1, %_ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE19getGotModulePointerEv.exit.thread ], [ -1, %_ZN4llvm11raw_ostreamlsEPKc.exit68 ]
-  %25 = sub i64 0, %.val55191
+  %.1.i.i.neg = phi i64 [ %24, %_ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE19getGotModulePointerEv.exit.thread.thread ], [ 0, %_ZNK12_GLOBAL__N_113MipsGOTParserIN4llvm6object7ELFTypeILNS1_10endiannessE0ELb1EEEE19getGotModulePointerEv.exit.thread ], [ 0, %_ZN4llvm11raw_ostreamlsEPKc.exit68 ]
+  %25 = add i64 %.val55191, -1
   %i.cj = icmp eq i64 %.1.i.i.neg, %25
   br i1 %i.cj, label %.loopexit198, label %bb.m
 
