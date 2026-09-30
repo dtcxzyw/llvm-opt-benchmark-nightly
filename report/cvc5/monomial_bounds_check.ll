@@ -204,7 +204,6 @@ bb.ab:                                            ; preds = %_ZNSt3mapIN4cvc58in
 bb.ac:                                            ; preds = %bb.ab
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 4
   %i.gn = load i32, ptr %i.gm, align 4, !tbaa !142 ; 2 uses
-  %74 = call noundef i32 @llvm.scmp.i32.i32(i32 %i.gn, i32 0)
   %i.go = icmp eq i32 %i.gn, 0
   br i1 %i.go, label %bb.oq, label %bb.ag
 
@@ -242,7 +241,6 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ah
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 4
   %i.ha = load i32, ptr %i.gz, align 4, !tbaa !142 ; 2 uses
-  %75 = call noundef i32 @llvm.scmp.i32.i32(i32 %i.ha, i32 0)
   %i.hb = icmp eq i32 %i.ha, 0
   br i1 %i.hb, label %bb.om, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit286
 
@@ -645,11 +643,12 @@ bb.hs:                                            ; preds = %bb.hr
           to label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit557 unwind label %bb.ic
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit557: ; preds = %bb.hr, %bb.hq, %bb.hs
-  %i.afm = select i1 %i.aex, i32 %75, i32 %74     ; 2 uses
+  %i.afm = select i1 %i.aex, i32 %i.ha, i32 %i.gn ; 2 uses
+  %74 = call i32 @llvm.scmp.i32.i32(i32 %i.afm, i32 0)
   %i.afn = select i1 %i.aex, i32 %i.ml, i32 %i.aan ; 2 uses
   store i32 %i.afn, ptr %indvars.iv.sroa.phi, align 4, !tbaa !125
   %i.afo = select i1 %i.aex, i32 1, i32 -1
-  %i.afp = icmp eq i32 %i.afm, %i.afo
+  %i.afp = icmp eq i32 %74, %i.afo
   br i1 %i.afp, label %bb.ht, label %bb.ie
 
 bb.ht:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit557
@@ -712,9 +711,9 @@ bb.id:                                            ; preds = %bb.hy
   br label %bb.jz
 
 bb.ie:                                            ; preds = %_ZN4cvc58internal6theory5arith19reverseRelationKindENS0_4kind6Kind_tE.exit, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit557
-  %76 = icmp eq i32 %i.afm, 1
+  %75 = icmp sgt i32 %i.afm, 0
   %i.afv = getelementptr inbounds nuw i8, ptr %i.aez, i64 16 ; 2 uses
-  br i1 %76, label %bb.if, label %bb.ja
+  br i1 %75, label %bb.if, label %bb.ja
 
 bb.if:                                            ; preds = %bb.ie
   call void @llvm.lifetime.start.p0(ptr nonnull %65) #22

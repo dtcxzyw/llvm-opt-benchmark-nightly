@@ -204,12 +204,11 @@ vector.body30:                                    ; preds = %vector.body30, %vec
   %i.jp = fadd nsz <2 x double> %i.jo, splat (double 1.000000e+00)
   %i.jq = tail call nsz <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.jp) ; 2 uses
   %i.jr = fmul nsz <2 x double> %broadcast.splat27, %i.ji
-  %1 = tail call nsz <2 x double> @llvm.atan.v2f64(<2 x double> %i.jr)
   %i.js = fdiv nsz <2 x double> %broadcast.splat27, %i.ji
-  %2 = tail call nsz <2 x double> @llvm.atan.v2f64(<2 x double> %i.js)
-  %i.jt = getelementptr inbounds nuw [40 x i8], ptr %i.ic, i64 %i.il ; 4 uses
-  %3 = getelementptr inbounds nuw [40 x i8], ptr %i.ic, i64 %i.il ; 2 uses
-  %i.ju = fmul nsz <2 x double> %1, splat (double 2.000000e+00)
+  %1 = getelementptr inbounds nuw [40 x i8], ptr %i.ic, i64 %i.il ; 4 uses
+  %i.jt = getelementptr inbounds nuw [40 x i8], ptr %i.ic, i64 %i.il ; 2 uses
+  %2 = tail call nsz <2 x double> @llvm.atan.v2f64(<2 x double> %i.jr)
+  %i.ju = fmul nsz <2 x double> %2, splat (double 2.000000e+00)
   %i.jv = tail call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %i.ju) ; 2 uses
   %i.jw = extractvalue { <2 x double>, <2 x double> } %i.jv, 0 ; 2 uses
   %i.jx = extractvalue { <2 x double>, <2 x double> } %i.jv, 1
@@ -224,28 +223,29 @@ vector.body30:                                    ; preds = %vector.body30, %vec
   %i.kg = fmul nsz <2 x double> %i.jq, %i.kf      ; 2 uses
   %i.kh = fmul nsz <2 x double> %i.kd, splat (double 2.000000e+00) ; 2 uses
   %i.ki = extractelement <2 x double> %i.kh, i64 0
-  store double %i.ki, ptr %i.jt, align 8, !tbaa !91
+  store double %i.ki, ptr %1, align 8, !tbaa !91
   %i.kj = fmul nsz <2 x double> %i.kb, splat (double -2.000000e+00) ; 2 uses
-  %i.kk = getelementptr inbounds nuw i8, ptr %i.jt, i64 8
-  %i.kl = getelementptr inbounds nuw i8, ptr %3, i64 88
+  %i.kk = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.kl = getelementptr inbounds nuw i8, ptr %i.jt, i64 88
   %i.km = extractelement <2 x double> %i.kj, i64 0
   store double %i.km, ptr %i.kk, align 8, !tbaa !54
   %i.kn = fmul nsz <2 x double> %i.kg, splat (double 2.000000e+00) ; 2 uses
-  %i.ko = getelementptr inbounds nuw i8, ptr %i.jt, i64 16
+  %i.ko = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.kp = shufflevector <2 x double> %i.kj, <2 x double> %i.kn, <2 x i32> <i32 1, i32 3>
   store <2 x double> %i.kp, ptr %i.kl, align 8, !tbaa !52
-  %i.kq = getelementptr inbounds nuw i8, ptr %3, i64 104
+  %i.kq = getelementptr inbounds nuw i8, ptr %i.jt, i64 104
   %i.kr = insertelement <2 x double> %i.kn, double 0.000000e+00, i64 1
   store <2 x double> %i.kr, ptr %i.ko, align 8, !tbaa !52
   %i.ks = fmul nsz <2 x double> %i.kg, splat (double -2.000000e+00) ; 2 uses
-  %i.kt = getelementptr inbounds nuw i8, ptr %i.jt, i64 32
+  %i.kt = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ku = extractelement <2 x double> %i.ks, i64 0
   store double %i.ku, ptr %i.kt, align 8, !tbaa !55
   %i.kv = insertelement <2 x double> %i.ks, double 0.000000e+00, i64 0
   store <2 x double> %i.kv, ptr %i.kq, align 8, !tbaa !52
   %i.kw = getelementptr inbounds nuw [40 x i8], ptr %i.ic, i64 %i.im ; 4 uses
   %i.kx = getelementptr inbounds nuw [40 x i8], ptr %i.ic, i64 %i.in ; 3 uses
-  %i.ky = fmul nsz <2 x double> %2, splat (double 2.000000e+00)
+  %3 = tail call nsz <2 x double> @llvm.atan.v2f64(<2 x double> %i.js)
+  %i.ky = fmul nsz <2 x double> %3, splat (double 2.000000e+00)
   %i.kz = tail call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %i.ky) ; 2 uses
   %i.la = extractvalue { <2 x double>, <2 x double> } %i.kz, 0 ; 2 uses
   %i.lb = extractvalue { <2 x double>, <2 x double> } %i.kz, 1
@@ -324,11 +324,10 @@ scalar.ph16:                                      ; preds = %scalar.ph16.prehead
   %i.nb = fadd nsz double %square228, 1.000000e+00
   %i.nc = tail call nsz double @llvm.sqrt.f64(double %i.nb) ; 2 uses
   %i.nd = fmul nsz double %i.ie, %i.mv
-  %4 = tail call nsz double @llvm.atan.f64(double %i.nd)
   %i.ne = fdiv nsz double %i.ie, %i.mv
-  %5 = tail call nsz double @llvm.atan.f64(double %i.ne)
-  %6 = getelementptr inbounds nuw [40 x i8], ptr %i.ic, i64 %indvars.iv264 ; 2 uses
-  %.0218 = fmul nsz double %4, 2.000000e+00
+  %4 = getelementptr inbounds nuw [40 x i8], ptr %i.ic, i64 %indvars.iv264 ; 2 uses
+  %. = tail call nsz double @llvm.atan.f64(double %i.nd)
+  %.0218 = fmul nsz double %., 2.000000e+00
   %sincos = tail call nsz { double, double } @llvm.sincos.f64(double %.0218) ; 2 uses
   %sin = extractvalue { double, double } %sincos, 0
   %cos = extractvalue { double, double } %sincos, 1
@@ -337,9 +336,10 @@ scalar.ph16:                                      ; preds = %scalar.ph16.prehead
   %i.nh = insertelement <2 x double> poison, double %sin, i64 0
   %i.ni = shufflevector <2 x double> %i.nh, <2 x double> poison, <2 x i32> zeroinitializer
   %i.nj = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ng, <2 x double> %i.ni, <2 x double> splat (double 1.000000e+00)) ; 2 uses
-  %i.nk = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %i.nk = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.nl = getelementptr inbounds nuw [40 x i8], ptr %i.ic, i64 %i.mc
-  %.0218.1 = fmul nsz double %5, 2.000000e+00
+  %..1 = tail call nsz double @llvm.atan.f64(double %i.ne)
+  %.0218.1 = fmul nsz double %..1, 2.000000e+00
   %sincos.1 = tail call nsz { double, double } @llvm.sincos.f64(double %.0218.1) ; 2 uses
   %sin.1 = extractvalue { double, double } %sincos.1, 0
   %cos.1 = extractvalue { double, double } %sincos.1, 1
@@ -361,7 +361,7 @@ scalar.ph16:                                      ; preds = %scalar.ph16.prehead
   %i.ob = insertelement <2 x double> poison, double %i.nw, i64 0
   %i.oc = shufflevector <2 x double> %i.ob, <2 x double> %i.nt, <2 x i32> <i32 0, i32 2>
   %i.od = fmul nsz <2 x double> %i.oc, <double 2.000000e+00, double -2.000000e+00>
-  store <2 x double> %i.od, ptr %6, align 8, !tbaa !52
+  store <2 x double> %i.od, ptr %4, align 8, !tbaa !52
   %i.oe = insertelement <4 x double> <double poison, double 1.000000e+00, double poison, double poison>, double %i.oa, i64 0
   %i.of = extractelement <2 x double> %i.nu, i64 1
   %i.og = fmul nsz double %cos.1, %i.of
@@ -474,12 +474,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.qu = fmul nsz <2 x double> %i.qo, splat (double 5.000000e-01) ; 3 uses
   %i.qv = fneg nsz <2 x double> %i.qu             ; 2 uses
   %i.qw = fmul nsz <2 x double> %broadcast.splat11, %i.qt
-  %7 = tail call nsz <2 x double> @llvm.atan.v2f64(<2 x double> %i.qw)
   %i.qx = fdiv nsz <2 x double> %broadcast.splat11, %i.qt
-  %8 = tail call nsz <2 x double> @llvm.atan.v2f64(<2 x double> %i.qx)
-  %i.qy = getelementptr inbounds nuw [40 x i8], ptr %i.pm, i64 %i.pw ; 5 uses
-  %9 = getelementptr inbounds nuw [40 x i8], ptr %i.pm, i64 %i.pw ; 2 uses
-  %i.qz = fmul nsz <2 x double> %7, splat (double 2.000000e+00)
+  %5 = getelementptr inbounds nuw [40 x i8], ptr %i.pm, i64 %i.pw ; 5 uses
+  %i.qy = getelementptr inbounds nuw [40 x i8], ptr %i.pm, i64 %i.pw ; 2 uses
+  %6 = tail call nsz <2 x double> @llvm.atan.v2f64(<2 x double> %i.qw)
+  %i.qz = fmul nsz <2 x double> %6, splat (double 2.000000e+00)
   %i.ra = tail call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %i.qz) ; 2 uses
   %i.rb = extractvalue { <2 x double>, <2 x double> } %i.ra, 0 ; 2 uses
   %i.rc = extractvalue { <2 x double>, <2 x double> } %i.ra, 1 ; 2 uses
@@ -495,31 +494,32 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.rm = fmul nsz <2 x double> %i.rl, %i.rj      ; 2 uses
   %i.rn = fmul nsz <2 x double> %i.ri, splat (double 2.000000e+00) ; 2 uses
   %i.ro = extractelement <2 x double> %i.rn, i64 0
-  store double %i.ro, ptr %i.qy, align 8, !tbaa !91
+  store double %i.ro, ptr %5, align 8, !tbaa !91
   %i.rp = fmul nsz <2 x double> %i.rg, splat (double -2.000000e+00) ; 2 uses
-  %i.rq = getelementptr inbounds nuw i8, ptr %i.qy, i64 8
-  %i.rr = getelementptr inbounds nuw i8, ptr %9, i64 88
+  %i.rq = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.rr = getelementptr inbounds nuw i8, ptr %i.qy, i64 88
   %i.rs = extractelement <2 x double> %i.rp, i64 0
   store double %i.rs, ptr %i.rq, align 8, !tbaa !54
   %i.rt = fmul nsz <2 x double> %i.rm, splat (double 2.000000e+00) ; 3 uses
-  %i.ru = getelementptr inbounds nuw i8, ptr %i.qy, i64 16
+  %i.ru = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.rv = extractelement <2 x double> %i.rt, i64 0 ; 2 uses
   store double %i.rv, ptr %i.ru, align 8, !tbaa !90
   %i.rw = shufflevector <2 x double> %i.rp, <2 x double> %i.rt, <2 x i32> <i32 1, i32 3>
   store <2 x double> %i.rw, ptr %i.rr, align 8, !tbaa !52
   %i.rx = fmul nsz <2 x double> %i.rm, splat (double -4.000000e+00)
   %i.ry = fmul nsz <2 x double> %broadcast.splat15, %i.rx ; 2 uses
-  %i.rz = getelementptr inbounds nuw i8, ptr %i.qy, i64 24
-  %i.sa = getelementptr inbounds nuw i8, ptr %9, i64 104
+  %i.rz = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %i.sa = getelementptr inbounds nuw i8, ptr %i.qy, i64 104
   %i.sb = extractelement <2 x double> %i.ry, i64 0
   store double %i.sb, ptr %i.rz, align 8, !tbaa !56
-  %i.sc = getelementptr inbounds nuw i8, ptr %i.qy, i64 32
+  %i.sc = getelementptr inbounds nuw i8, ptr %5, i64 32
   store double %i.rv, ptr %i.sc, align 8, !tbaa !55
   %i.sd = shufflevector <2 x double> %i.ry, <2 x double> %i.rt, <2 x i32> <i32 1, i32 3>
   store <2 x double> %i.sd, ptr %i.sa, align 8, !tbaa !52
   %i.se = getelementptr inbounds nuw [40 x i8], ptr %i.pm, i64 %i.px ; 5 uses
   %i.sf = getelementptr inbounds nuw [40 x i8], ptr %i.pm, i64 %i.py ; 3 uses
-  %i.sg = fmul nsz <2 x double> %8, splat (double 2.000000e+00)
+  %7 = tail call nsz <2 x double> @llvm.atan.v2f64(<2 x double> %i.qx)
+  %i.sg = fmul nsz <2 x double> %7, splat (double 2.000000e+00)
   %i.sh = tail call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %i.sg) ; 2 uses
   %i.si = extractvalue { <2 x double>, <2 x double> } %i.sh, 0 ; 2 uses
   %i.sj = extractvalue { <2 x double>, <2 x double> } %i.sh, 1 ; 2 uses
@@ -599,11 +599,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.uk = fmul nsz double %i.ue, 5.000000e-01     ; 2 uses
   %i.ul = fneg nsz double %i.uk
   %i.um = fmul nsz double %i.pp, %i.uj
-  %10 = tail call nsz double @llvm.atan.f64(double %i.um)
   %i.un = fdiv nsz double %i.pp, %i.uj
-  %11 = tail call nsz double @llvm.atan.f64(double %i.un)
-  %12 = getelementptr inbounds nuw [40 x i8], ptr %i.pm, i64 %indvars.iv ; 2 uses
-  %.0215 = fmul nsz double %10, 2.000000e+00
+  %8 = getelementptr inbounds nuw [40 x i8], ptr %i.pm, i64 %indvars.iv ; 2 uses
+  %.255 = tail call nsz double @llvm.atan.f64(double %i.um)
+  %.0215 = fmul nsz double %.255, 2.000000e+00
   %sincos234 = tail call nsz { double, double } @llvm.sincos.f64(double %.0215) ; 2 uses
   %sin235 = extractvalue { double, double } %sincos234, 0
   %cos236 = extractvalue { double, double } %sincos234, 1 ; 2 uses
@@ -618,9 +617,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.uw = fsub nsz double 1.000000e+00, %cos236
   %i.ux = fdiv nsz double %i.uw, %i.pn
   %i.uy = fmul nsz double %i.uv, 5.000000e-01     ; 2 uses
-  %i.uz = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %i.uz = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.va = getelementptr inbounds nuw [40 x i8], ptr %i.pm, i64 %i.tq
-  %.0215.1 = fmul nsz double %11, 2.000000e+00
+  %.255.1 = tail call nsz double @llvm.atan.f64(double %i.un)
+  %.0215.1 = fmul nsz double %.255.1, 2.000000e+00
   %sincos234.1 = tail call nsz { double, double } @llvm.sincos.f64(double %.0215.1) ; 2 uses
   %sin235.1 = extractvalue { double, double } %sincos234.1, 0
   %cos236.1 = extractvalue { double, double } %sincos234.1, 1 ; 2 uses
@@ -631,7 +631,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.vf = insertelement <2 x double> poison, double %i.vc, i64 0
   %i.vg = insertelement <2 x double> %i.vf, double %i.uy, i64 1
   %i.vh = fmul nsz <2 x double> %i.vg, <double 2.000000e+00, double -2.000000e+00>
-  store <2 x double> %i.vh, ptr %12, align 8, !tbaa !52
+  store <2 x double> %i.vh, ptr %8, align 8, !tbaa !52
   %i.vi = insertelement <2 x double> poison, double %sin235.1, i64 0
   %i.vj = shufflevector <2 x double> %i.vi, <2 x double> poison, <2 x i32> zeroinitializer
   %i.vk = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.up, <2 x double> %i.vj, <2 x double> splat (double 1.000000e+00)) ; 2 uses
