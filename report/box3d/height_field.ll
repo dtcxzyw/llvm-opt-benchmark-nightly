@@ -45,7 +45,7 @@ bb.a:
   %i.e = mul nsw i32 %i.d, %i.b                   ; 5 uses
   %i.f = add nsw i32 %i.b, -1                     ; 3 uses
   %i.g = add nsw i32 %i.d, -1                     ; 3 uses
-  %i.h = mul nsw i32 %i.g, %i.f                   ; 6 uses
+  %i.h = mul nsw i32 %i.g, %i.f                   ; 5 uses
   %i.i = shl nsw i32 %i.h, 1
   %i.j = sext i32 %i.e to i64                     ; 3 uses
   %i.k = shl nsw i64 %i.j, 1
@@ -233,29 +233,25 @@ middle.block:                                     ; preds = %vector.body
   %.0.lcssa1395 = phi float [ %i.bg, %._crit_edge ], [ %i.db, %middle.block ], [ %i.db, %.lr.ph1334 ], [ %i.db, %.lr.ph1334.prol.loopexit ]
   %.0926.lcssa1393 = phi float [ %i.bh, %._crit_edge ], [ %i.dd, %middle.block ], [ %i.dd, %.lr.ph1334 ], [ %i.dd, %.lr.ph1334.prol.loopexit ]
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  %1 = load ptr, ptr %i.dg, align 8, !tbaa !40
-  %.not = icmp eq ptr %1, null
-  %i.dh = icmp sgt i32 %i.h, 0                    ; 2 uses
-  br i1 %.not, label %.preheader1325, label %.preheader1326
+  %i.dh = icmp sgt i32 %i.h, 0
+  br i1 %i.dh, label %.preheader1326, label %.loopexit
 
 .preheader1326:                                   ; preds = %._crit_edge1335
-  br i1 %i.dh, label %.lr.ph1337.preheader, label %.loopexit
+  %1 = load ptr, ptr %i.dg, align 8, !tbaa !40
+  %.not = icmp eq ptr %1, null
+  %2 = zext nneg i32 %i.h to i64                  ; 3 uses
+  br i1 %.not, label %.lr.ph1339.preheader, label %.lr.ph1337.preheader
 
 .lr.ph1337.preheader:                             ; preds = %.preheader1326
-  %wide.trip.count1361 = zext nneg i32 %i.h to i64 ; 2 uses
-  %xtraiter1445 = and i64 %wide.trip.count1361, 3 ; 3 uses
+  %xtraiter1445 = and i64 %2, 3                   ; 3 uses
   %i.di = icmp ult i32 %i.h, 4
   br i1 %i.di, label %.lr.ph1337.epil.preheader, label %.lr.ph1337.preheader.new
 
 .lr.ph1337.preheader.new:                         ; preds = %.lr.ph1337.preheader
-  %unroll_iter = and i64 %wide.trip.count1361, 2147483644
+  %unroll_iter = and i64 %2, 2147483644
   br label %.lr.ph1337
 
-.preheader1325:                                   ; preds = %._crit_edge1335
-  br i1 %i.dh, label %.lr.ph1339.preheader, label %.loopexit
-
-.lr.ph1339.preheader:                             ; preds = %.preheader1325
-  %2 = zext nneg i32 %i.h to i64
+.lr.ph1339.preheader:                             ; preds = %.preheader1326
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.aq, i8 0, i64 %2, i1 false), !tbaa !41
   br label %.loopexit
 
@@ -326,8 +322,8 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph1337.epil
 
 .lr.ph1337.epil:                                  ; preds = %.lr.ph1337.epil, %.lr.ph1337.epil.preheader
-  %indvars.iv1358.epil = phi i64 [ %indvars.iv1358.epil.init, %.lr.ph1337.epil.preheader ], [ %indvars.iv.next1359.epil, %.lr.ph1337.epil ] ; 3 uses
-  %epil.iter = phi i64 [ 0, %.lr.ph1337.epil.preheader ], [ %epil.iter.next, %.lr.ph1337.epil ]
+  %indvars.iv1358.epil = phi i64 [ %indvars.iv.next1359.epil, %.lr.ph1337.epil ], [ %indvars.iv1358.epil.init, %.lr.ph1337.epil.preheader ] ; 3 uses
+  %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph1337.epil ], [ 0, %.lr.ph1337.epil.preheader ]
   %i.ep = load ptr, ptr %i.dg, align 8, !tbaa !40
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 %indvars.iv1358.epil
   %i.er = load i8, ptr %i.eq, align 1, !tbaa !41
@@ -338,7 +334,7 @@ middle.block:                                     ; preds = %vector.body
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter1445
   br i1 %epil.iter.cmp.not, label %.loopexit, label %.lr.ph1337.epil, !llvm.loop !64
 
-.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph1337.epil, %.lr.ph1339.preheader, %.preheader1326, %.preheader1325
+.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph1337.epil, %._crit_edge1335, %.lr.ph1339.preheader
   %i.et = getelementptr inbounds nuw i8, ptr %i.y, i64 20
   store float 0.000000e+00, ptr %i.et, align 4, !tbaa !21
   %.sroa.2769.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 24

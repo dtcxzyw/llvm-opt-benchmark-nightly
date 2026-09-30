@@ -205,25 +205,22 @@ _RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3any5checkjNCN
   br i1 %.sroa.0.0.shrunk.i.i.i.i.us.us, label %.split.us.split.us.split, label %.split254.us
 
 .split.us.split:                                  ; preds = %.split.us
-  %exitcond.not.i.us.us266443 = icmp eq i64 %i.cf, 0 ; 2 uses
-  br i1 %.not.i.i.i.i, label %.split.us.split.split.us.preheader, label %.split.us.split.split.preheader
+  %exitcond.not.i.us.us266443 = icmp eq i64 %i.cf, 0
+  br i1 %exitcond.not.i.us.us266443, label %.split254.us.thread, label %.split.us.split.split.preheader
 
 .split.us.split.split.preheader:                  ; preds = %.split.us.split
-  br i1 %exitcond.not.i.us.us266443, label %.split254.us.thread, label %.lr.ph442.preheader
+  br i1 %.not.i.i.i.i, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3any5checkjNCNvMs4_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models4smol7smollm3NtB1k_5Model3new0E0B1q_.exit.i.us.us267, label %.lr.ph442.preheader
 
 .lr.ph442.preheader:                              ; preds = %.split.us.split.split.preheader
   call void @llvm.assume(i1 %i.cn)
   br label %.lr.ph442
 
-.split.us.split.split.us.preheader:               ; preds = %.split.us.split
-  br i1 %exitcond.not.i.us.us266443, label %.split254.us.thread, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3any5checkjNCNvMs4_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models4smol7smollm3NtB1k_5Model3new0E0B1q_.exit.i.us.us267
-
 .split.us.split.split.us:                         ; preds = %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3any5checkjNCNvMs4_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models4smol7smollm3NtB1k_5Model3new0E0B1q_.exit.i.us.us267
   %exitcond.not.i.us.us266 = icmp eq i64 %i.cy, %i.cf
   br i1 %exitcond.not.i.us.us266, label %.split254.us.thread, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3any5checkjNCNvMs4_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models4smol7smollm3NtB1k_5Model3new0E0B1q_.exit.i.us.us267
 
-_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3any5checkjNCNvMs4_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models4smol7smollm3NtB1k_5Model3new0E0B1q_.exit.i.us.us267: ; preds = %.split.us.split.split.us.preheader, %.split.us.split.split.us
-  %i.cx = phi i64 [ %i.cy, %.split.us.split.split.us ], [ 0, %.split.us.split.split.us.preheader ] ; 2 uses
+_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator3any5checkjNCNvMs4_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models4smol7smollm3NtB1k_5Model3new0E0B1q_.exit.i.us.us267: ; preds = %.split.us.split.split.preheader, %.split.us.split.split.us
+  %i.cx = phi i64 [ %i.cy, %.split.us.split.split.us ], [ 0, %.split.us.split.split.preheader ] ; 2 uses
   %i.cy = add i64 %i.cx, 1                        ; 3 uses
   %i.cz = urem i64 %i.cy, %.fr281
   %.sroa.0.0.shrunk.i.i.i.i.us.us269 = icmp eq i64 %i.cz, 0
@@ -288,7 +285,7 @@ bb.i:                                             ; preds = %bb.jt, %bb.dq, %bb.
           cleanup
   br label %.thread
 
-.split254.us.thread:                              ; preds = %.split.split, %.split.us.split.split, %.split.us.split.split.us, %.split.us.split.us.split, %.split.split.preheader, %.split.us.split.split.preheader, %.split.us.split.split.us.preheader, %.split.us.split.us.split.preheader
+.split254.us.thread:                              ; preds = %.split.split, %.split.us.split.split, %.split.us.split.split.us, %.split.us.split.us.split, %.split.us.split, %.split.split.preheader, %.split.us.split.us.split.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bo)
   br label %bb.ds
 

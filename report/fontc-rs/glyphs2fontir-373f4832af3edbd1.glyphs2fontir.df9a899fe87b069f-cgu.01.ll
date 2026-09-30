@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %bb.r
   %.first_iter.i15 = icmp ult i64 %i.gq, %i.dq
   %exitcond.not.i16309.not = icmp ult i64 %.fr214, %i.dq
   %invariant.op358 = sub i64 1, %.fr214
-  %.not34.i.us312 = icmp eq i64 %.fr214, 0        ; 2 uses
+  %.not34.i.us312 = icmp eq i64 %.fr214, 0
   br label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %bb.ah, %.lr.ph.i14
@@ -229,10 +229,10 @@ bb.ae:                                            ; preds = %bb.r
   br i1 %exitcond.not.i16, label %.preheader.i18.preheader, label %.lr.ph311
 
 .preheader.i18.preheader:                         ; preds = %.preheader35.i, %.preheader35.i.preheader
-  br i1 %.first_iter.i15, label %.preheader.i18.us.preheader, label %.preheader.i18
+  br i1 %.not34.i.us312, label %.split.us.i20, label %.preheader.i18.us.preheader
 
 .preheader.i18.us.preheader:                      ; preds = %.preheader.i18.preheader
-  br i1 %.not34.i.us312, label %.split.us.i20, label %.lr.ph314
+  br i1 %.first_iter.i15, label %.lr.ph314, label %.split32.us.i19
 
 .preheader.i18.us:                                ; preds = %.lr.ph314
   %.not34.i.us = icmp eq i64 %i.ha, 0
@@ -267,10 +267,7 @@ bb.ae:                                            ; preds = %bb.r
   %.not21.us.i = icmp eq i8 %i.hj, %i.hn
   br i1 %.not21.us.i, label %.preheader35.i, label %bb.af
 
-.preheader.i18:                                   ; preds = %.preheader.i18.preheader
-  br i1 %.not34.i.us312, label %.split.us.i20, label %.split32.us.i19
-
-.split32.us.i19:                                  ; preds = %.preheader.i18
+.split32.us.i19:                                  ; preds = %.preheader.i18.us.preheader
   tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.gq, i64 noundef range(i64 0, -9223372036854775808) %i.dq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #29, !noalias !3029
   unreachable
 
@@ -294,7 +291,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %.sp
   store i64 %i.dm, ptr %i.dr, align 8, !alias.scope !3023, !noalias !3026
   br label %_RINvMsx_NtNtCsf3Ta7LF998c_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsjceHdiZFn9b_13glyphs2fontir.exit
 
-.split.us.i20:                                    ; preds = %.preheader.i18.us.preheader, %.preheader.i18.us, %.preheader.i18
+.split.us.i20:                                    ; preds = %.preheader.i18.preheader, %.preheader.i18.us
   %i.hs = add i64 %i.gs, %i.dq                    ; 2 uses
   store i64 %i.hs, ptr %i.dr, align 8, !alias.scope !3023, !noalias !3026
   %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 8

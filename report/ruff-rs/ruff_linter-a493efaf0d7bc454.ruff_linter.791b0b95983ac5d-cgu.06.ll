@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.d
   %i.ai = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.aj = load i64, ptr %i.ai, align 8, !noundef !5 ; 5 uses
   %i.ak = icmp eq i64 %i.aj, 0
-  br i1 %i.ak, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodeENCNvNtNtNtNtB1w_5rules4ruff5rules13noqa_comments13noqa_comments0ENtNtNtB9_6traits8iterator8Iterator5countB1w_.exit, label %bb.n
+  br i1 %i.ak, label %bb.y, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -243,18 +243,17 @@ bb.p:                                             ; preds = %.lr.ph
 
 _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map8map_foldRNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodejjNCINvNvXs1_NtB6_6filterINtB1M_6FilterppENtNtNtB8_6traits8iterator8Iterator5count8to_usizeBU_NCNvNtNtNtNtBZ_5rules4ruff5rules13noqa_comments13noqa_comments0E0NCINvXsK_NtB2j_5accumjNtB4h_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1B_EE0E0BZ_.exit.i.i: ; preds = %bb.p, %.lr.ph, %bb.o
   %.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.lcssa = phi i64 [ 0, %bb.o ], [ 0, %bb.p ], [ 1, %.lr.ph ]
-  %i.az = add i64 %.sroa.02.0.i.i, %.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.lcssa ; 2 uses
+  %i.az = add i64 %.sroa.02.0.i.i, %.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.i.not.not.not.lcssa ; 4 uses
   %i.ba = add nuw i64 %.sroa.04.0.i.i, 1          ; 2 uses
   %i.bb = icmp eq i64 %i.ba, %i.aj
   br i1 %i.bb, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodeENCNvNtNtNtNtB1w_5rules4ruff5rules13noqa_comments13noqa_comments0ENtNtNtB9_6traits8iterator8Iterator5countB1w_.exit, label %bb.o
 
-_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodeENCNvNtNtNtNtB1w_5rules4ruff5rules13noqa_comments13noqa_comments0ENtNtNtB9_6traits8iterator8Iterator5countB1w_.exit: ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map8map_foldRNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodejjNCINvNvXs1_NtB6_6filterINtB1M_6FilterppENtNtNtB8_6traits8iterator8Iterator5count8to_usizeBU_NCNvNtNtNtNtBZ_5rules4ruff5rules13noqa_comments13noqa_comments0E0NCINvXsK_NtB2j_5accumjNtB4h_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1B_EE0E0BZ_.exit.i.i, %bb.m
-  %.sroa.0.0.i.i = phi i64 [ 0, %bb.m ], [ %i.az, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map8map_foldRNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodejjNCINvNvXs1_NtB6_6filterINtB1M_6FilterppENtNtNtB8_6traits8iterator8Iterator5count8to_usizeBU_NCNvNtNtNtNtBZ_5rules4ruff5rules13noqa_comments13noqa_comments0E0NCINvXsK_NtB2j_5accumjNtB4h_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1B_EE0E0BZ_.exit.i.i ] ; 3 uses
-  %i.bc = icmp ule i64 %.sroa.0.0.i.i, %i.aj
+_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodeENCNvNtNtNtNtB1w_5rules4ruff5rules13noqa_comments13noqa_comments0ENtNtNtB9_6traits8iterator8Iterator5countB1w_.exit: ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map8map_foldRNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodejjNCINvNvXs1_NtB6_6filterINtB1M_6FilterppENtNtNtB8_6traits8iterator8Iterator5count8to_usizeBU_NCNvNtNtNtNtBZ_5rules4ruff5rules13noqa_comments13noqa_comments0E0NCINvXsK_NtB2j_5accumjNtB4h_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1B_EE0E0BZ_.exit.i.i
+  %i.bc = icmp ule i64 %i.az, %i.aj
   tail call void @llvm.assume(i1 %i.bc)
   %i.bd = icmp ult i64 %i.aj, 384307168202282326
   tail call void @llvm.assume(i1 %i.bd)
-  %i.be = icmp eq i64 %.sroa.0.0.i.i, %i.aj
+  %i.be = icmp eq i64 %i.az, %i.aj
   br i1 %i.be, label %bb.y, label %bb.q
 
 bb.q:                                             ; preds = %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodeENCNvNtNtNtNtB1w_5rules4ruff5rules13noqa_comments13noqa_comments0ENtNtNtB9_6traits8iterator8Iterator5countB1w_.exit
@@ -262,7 +261,7 @@ bb.q:                                             ; preds = %_RNvXs1_NtNtNtCs4NR
   br i1 %i.bf, label %bb.y, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.bg = icmp ne i64 %.sroa.0.0.i.i, 0
+  %i.bg = icmp ne i64 %i.az, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call fastcc void @_RINvMs8_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB6_11LintContext17report_diagnosticNtNtNtNtNtBa_5rules4ruff5rules13noqa_comments12NoqaCommentsEBa_(ptr noalias noundef align 8 captures(none) dereferenceable(48) %i.f, ptr noundef nonnull align 8 %0, i1 noundef zeroext %2, i32 noundef %.sroa.06.0, i32 noundef %.sroa.6.0)
   %brmerge = or i1 %3, %i.bg
@@ -323,7 +322,7 @@ bb.x:                                             ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.y
 
-bb.y:                                             ; preds = %.sink.split, %_RINvMNtCsEhZmuQNqkz_11ruff_linter7locatorNtB3_7Locator5sliceNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeEB5_.exit, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodeENCNvNtNtNtNtB1w_5rules4ruff5rules13noqa_comments13noqa_comments0ENtNtNtB9_6traits8iterator8Iterator5countB1w_.exit, %bb.q, %bb.l
+bb.y:                                             ; preds = %.sink.split, %_RINvMNtCsEhZmuQNqkz_11ruff_linter7locatorNtB3_7Locator5sliceNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeEB5_.exit, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsEhZmuQNqkz_11ruff_linter4noqa4CodeENCNvNtNtNtNtB1w_5rules4ruff5rules13noqa_comments13noqa_comments0ENtNtNtB9_6traits8iterator8Iterator5countB1w_.exit, %bb.q, %bb.l, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   ret void
 

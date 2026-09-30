@@ -204,14 +204,14 @@ bb.a:
   %i.b = load i32, ptr %3, align 4, !tbaa !143    ; 5 uses
   %i.c = load ptr, ptr %4, align 8, !tbaa !101    ; 2 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !230    ; 8 uses
+  %i.e = icmp slt i32 %i.b, 1
+  br i1 %i.e, label %_ZZN8LightGBM21BaggingSampleStrategy7BaggingEiPNS_11TreeLearnerEPfS3_ENKUliiiPiS4_E_clEiiiS4_S4_.exit, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
   %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 81
   %7 = load i8, ptr %6, align 1, !tbaa !48, !range !131, !noundef !132
   %8 = trunc nuw i8 %7 to i1
-  %i.e = icmp slt i32 %i.b, 1                     ; 2 uses
-  br i1 %8, label %bb.b, label %9
-
-bb.b:                                             ; preds = %bb.a
-  br i1 %i.e, label %_ZZN8LightGBM21BaggingSampleStrategy7BaggingEiPNS_11TreeLearnerEPfS3_ENKUliiiPiS4_E_clEiiiS4_S4_.exit, label %bb.c
+  br i1 %8, label %bb.c, label %.preheader.i.i
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -282,10 +282,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %_ZZN8LightGBM21BaggingSampleStrategy7BaggingEiPNS_11TreeLearnerEPfS3_ENKUliiiPiS4_E_clEiiiS4_S4_.exit, label %bb.d, !llvm.loop !228
 
-9:                                                ; preds = %bb.a
-  br i1 %i.e, label %_ZZN8LightGBM21BaggingSampleStrategy7BaggingEiPNS_11TreeLearnerEPfS3_ENKUliiiPiS4_E_clEiiiS4_S4_.exit, label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %9
+.preheader.i.i:                                   ; preds = %bb.b
   %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 88
   %i.ar = getelementptr inbounds nuw i8, ptr %i.d, i64 84
   %i.as = load ptr, ptr %i.aq, align 8, !tbaa !50
@@ -326,8 +323,8 @@ bb.i:                                             ; preds = %bb.i, %.preheader.i
   %exitcond.not.i9.i = icmp eq i32 %i.bp, %i.b
   br i1 %exitcond.not.i9.i, label %_ZZN8LightGBM21BaggingSampleStrategy7BaggingEiPNS_11TreeLearnerEPfS3_ENKUliiiPiS4_E_clEiiiS4_S4_.exit, label %bb.i, !llvm.loop !0
 
-_ZZN8LightGBM21BaggingSampleStrategy7BaggingEiPNS_11TreeLearnerEPfS3_ENKUliiiPiS4_E_clEiiiS4_S4_.exit: ; preds = %bb.i, %bb.h, %bb.b, %9
-  %.0.i = phi i32 [ %.125.i.i, %bb.h ], [ 0, %bb.b ], [ 0, %9 ], [ %.118.i.i, %bb.i ]
+_ZZN8LightGBM21BaggingSampleStrategy7BaggingEiPNS_11TreeLearnerEPfS3_ENKUliiiPiS4_E_clEiiiS4_S4_.exit: ; preds = %bb.i, %bb.h, %bb.a
+  %.0.i = phi i32 [ %.125.i.i, %bb.h ], [ 0, %bb.a ], [ %.118.i.i, %bb.i ]
   ret i32 %.0.i
 }
 

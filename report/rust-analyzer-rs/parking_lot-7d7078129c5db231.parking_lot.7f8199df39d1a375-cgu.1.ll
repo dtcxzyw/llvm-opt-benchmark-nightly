@@ -202,14 +202,11 @@ bb.u:                                             ; preds = %.noexc20
 
 _RNvYNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB9_7Condvar19wait_until_internals_0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceuE9call_onceBb_.exit.i: ; preds = %bb.u, %.noexc20
   %i.bn = load atomic i32, ptr %i.az acquire, align 8, !noalias !68
-  %i.bo = icmp eq i32 %i.bn, 0                    ; 2 uses
-  br i1 %i.au, label %bb.v, label %.preheader.i
-
-.preheader.i:                                     ; preds = %_RNvYNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB9_7Condvar19wait_until_internals_0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceuE9call_onceBb_.exit.i
-  br i1 %i.bo, label %_RINvNtCsd9r5UMv47dc_16parking_lot_core11parking_lot16with_thread_dataNtB2_10ParkResultNCINvB2_4parkNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB1G_7Condvar19wait_until_internal0NCB1B_s_0NCB1B_s0_0E0EB1I_.exit.sink.split, label %.lr.ph75.i
+  %i.bo = icmp eq i32 %i.bn, 0
+  br i1 %i.bo, label %_RINvNtCsd9r5UMv47dc_16parking_lot_core11parking_lot16with_thread_dataNtB2_10ParkResultNCINvB2_4parkNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB1G_7Condvar19wait_until_internal0NCB1B_s_0NCB1B_s0_0E0EB1I_.exit.sink.split, label %bb.v
 
 bb.v:                                             ; preds = %_RNvYNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB9_7Condvar19wait_until_internals_0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceuE9call_onceBb_.exit.i
-  br i1 %i.bo, label %_RINvNtCsd9r5UMv47dc_16parking_lot_core11parking_lot16with_thread_dataNtB2_10ParkResultNCINvB2_4parkNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB1G_7Condvar19wait_until_internal0NCB1B_s_0NCB1B_s0_0E0EB1I_.exit.sink.split, label %.lr.ph.i.i
+  br i1 %i.au, label %.lr.ph.i.i, label %.lr.ph75.i
 
 .lr.ph.i.i:                                       ; preds = %bb.v
   %i.bp = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
@@ -249,7 +246,7 @@ bb.x:                                             ; preds = %.noexc22
   %i.ce = icmp eq i32 %i.cd, 0
   br i1 %i.ce, label %_RINvNtCsd9r5UMv47dc_16parking_lot_core11parking_lot16with_thread_dataNtB2_10ParkResultNCINvB2_4parkNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB1G_7Condvar19wait_until_internal0NCB1B_s_0NCB1B_s0_0E0EB1I_.exit.sink.split, label %bb.w
 
-.lr.ph75.i:                                       ; preds = %.preheader.i, %.lr.ph75.i
+.lr.ph75.i:                                       ; preds = %bb.v, %.lr.ph75.i
   %i.cf = call noundef i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 4 %i.az, i32 noundef 128, i32 noundef 1, ptr noundef null) #21, !noalias !68 ; 0 uses
   %i.cg = load atomic i32, ptr %i.az acquire, align 8, !noalias !68
   %i.ch = icmp eq i32 %i.cg, 0
@@ -424,7 +421,7 @@ bb.aj:                                            ; preds = %_RNvYNCNvMs_NtCsaWI
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsd9r5UMv47dc_16parking_lot_core11parking_lot10ThreadDataEECsaWIbZW7RmAr_11parking_lot.exit: ; preds = %bb.b, %.loopexit.split-lp
   resume { ptr, i32 } %lpad.phi
 
-_RINvNtCsd9r5UMv47dc_16parking_lot_core11parking_lot16with_thread_dataNtB2_10ParkResultNCINvB2_4parkNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB1G_7Condvar19wait_until_internal0NCB1B_s_0NCB1B_s0_0E0EB1I_.exit.sink.split: ; preds = %.lr.ph75.i, %.noexc23, %bb.ae, %bb.af, %.preheader.i, %bb.v
+_RINvNtCsd9r5UMv47dc_16parking_lot_core11parking_lot16with_thread_dataNtB2_10ParkResultNCINvB2_4parkNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB1G_7Condvar19wait_until_internal0NCB1B_s_0NCB1B_s0_0E0EB1I_.exit.sink.split: ; preds = %.lr.ph75.i, %.noexc23, %bb.ae, %bb.af, %_RNvYNCNvMs_NtCsaWIbZW7RmAr_11parking_lot7condvarNtB9_7Condvar19wait_until_internals_0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceuE9call_onceBb_.exit.i
   %i.el = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 16
   %i.em = load i64, ptr %i.el, align 8, !noalias !68, !noundef !5
   %i.en = icmp eq i64 %i.em, 1

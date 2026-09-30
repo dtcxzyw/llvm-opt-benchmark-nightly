@@ -200,29 +200,26 @@ bb.c:                                             ; preds = %.lr.ph
   %memchr96 = tail call ptr @memchr(ptr noundef nonnull dereferenceable(1) @encode, i32 %i.bf, i64 65) ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ba, i64 2
   %i.bh = load i8, ptr %i.bg, align 1             ; 3 uses
-  %2 = icmp eq i8 %i.bh, 61
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ba, i64 3
   %i.bj = load i8, ptr %i.bi, align 1             ; 2 uses
-  %i.bk = icmp eq i8 %i.bj, 61                    ; 2 uses
-  br i1 %2, label %bb.d, label %3
+  %i.bk = icmp eq i8 %i.bj, 61
+  br i1 %i.bk, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %._crit_edge
-  br i1 %i.bk, label %bb.e, label %.thread
+  %2 = icmp eq i8 %i.bh, 61
+  br i1 %2, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.bl = add i64 %i.e, -2
   br label %bb.g
 
-3:                                                ; preds = %._crit_edge
-  br i1 %i.bk, label %bb.f, label %.thread
-
-bb.f:                                             ; preds = %3
+bb.f:                                             ; preds = %bb.d
   %i.bm = sext i8 %i.bh to i32
   %memchr99 = tail call ptr @memchr(ptr noundef nonnull dereferenceable(1) @encode, i32 %i.bm, i64 65)
   %i.bn = add i64 %i.e, -1
   br label %bb.g
 
-.thread:                                          ; preds = %bb.d, %3
+.thread:                                          ; preds = %._crit_edge
   %i.bo = sext i8 %i.bj to i32
   %i.bp = sext i8 %i.bh to i32
   %memchr97 = tail call ptr @memchr(ptr noundef nonnull dereferenceable(1) @encode, i32 %i.bp, i64 65)

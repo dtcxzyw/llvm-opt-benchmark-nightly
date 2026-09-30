@@ -205,11 +205,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
   %i.o = call i32 @CBS_get_u16(ptr noundef nonnull %5, ptr noundef nonnull %i.a)
-  %.not38.us.us88 = icmp eq i32 %i.o, 0           ; 2 uses
-  br i1 %4, label %.lr.ph66.split.us.split.us, label %.lr.ph66.split.us.split, !llvm.loop !275
+  %.not38.us.us88 = icmp eq i32 %i.o, 0
+  br i1 %.not38.us.us88, label %.split.us, label %.lr.ph66.split.us.split.us, !llvm.loop !275
 
 .lr.ph66.split.us.split.us:                       ; preds = %.lr.ph66.split.us
-  br i1 %.not38.us.us88, label %.split.us, label %.lr.ph90
+  br i1 %4, label %.lr.ph90, label %bb.c
 
 bb.b:                                             ; preds = %.preheader.us.us
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
@@ -230,10 +230,7 @@ bb.b:                                             ; preds = %.preheader.us.us
   %.not37.us.us = icmp eq i64 %i.r, 0
   br i1 %.not37.us.us, label %.loopexit, label %bb.b
 
-.lr.ph66.split.us.split:                          ; preds = %.lr.ph66.split.us
-  br i1 %.not38.us.us88, label %.split.us, label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph66.split.us.split
+bb.c:                                             ; preds = %.lr.ph66.split.us.split.us
   %i.s = call i32 @CBS_get_u16_length_prefixed(ptr noundef nonnull %5, ptr noundef nonnull %6)
   %.not39.us = icmp eq i32 %i.s, 0
   br i1 %.not39.us, label %.split.us, label %.split68.us
@@ -363,7 +360,7 @@ bb.j:                                             ; preds = %.lr.ph66.split.spli
   %i.bq = load i16, ptr %i.a, align 2, !tbaa !282
   br label %bb.k
 
-.split.us:                                        ; preds = %bb.j, %.lr.ph66.split.split, %bb.d, %.lr.ph66.split.split.us, %bb.b, %.lr.ph90, %.lr.ph66.split.us.split.us, %bb.c, %.lr.ph66.split.us.split
+.split.us:                                        ; preds = %bb.j, %.lr.ph66.split.split, %bb.d, %.lr.ph66.split.split.us, %bb.b, %.lr.ph90, %.lr.ph66.split.us, %bb.c
   call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 190, ptr noundef nonnull @.str, i32 noundef 190)
   br label %.thread50
 

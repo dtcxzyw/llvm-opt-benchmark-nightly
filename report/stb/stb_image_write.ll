@@ -204,16 +204,10 @@ middle.block:                                     ; preds = %vector.body
   %i.sg = zext i1 %i.se to i64
   %i.sh = getelementptr inbounds nuw i8, ptr %4, i64 %i.sg ; 17 uses
   %i.si = getelementptr inbounds nuw i8, ptr %4, i64 %i.sf ; 17 uses
-  %i.sj = icmp sgt i32 %2, 0                      ; 2 uses
-  br i1 %i.an, label %.preheader267, label %.preheader269
+  %i.sj = icmp sgt i32 %2, 0
+  br i1 %i.sj, label %.preheader267, label %.loopexit
 
-.preheader269:                                    ; preds = %middle.block
-  br i1 %i.sj, label %.preheader268.lr.ph, label %.loopexit
-
-.preheader268.lr.ph:                              ; preds = %.preheader269
-  %6 = icmp sgt i32 %1, 0
-  %7 = add nsw i32 %2, -1                         ; 3 uses
-  %8 = add nsw i32 %1, -1                         ; 8 uses
+.preheader268.lr.ph:                              ; preds = %.preheader267
   br i1 %6, label %.preheader268.us, label %.loopexit
 
 .preheader268.us:                                 ; preds = %.preheader268.lr.ph, %._crit_edge.us
@@ -561,16 +555,16 @@ bb.g:                                             ; preds = %.preheader268.us, %
   br i1 %i.adj, label %.preheader268.us, label %.loopexit, !llvm.loop !113
 
 .preheader267:                                    ; preds = %middle.block
-  br i1 %i.sj, label %.preheader266.lr.ph, label %.loopexit
+  %6 = icmp sgt i32 %1, 0                         ; 2 uses
+  %7 = add nsw i32 %2, -1                         ; 5 uses
+  %8 = add nsw i32 %1, -1                         ; 9 uses
+  br i1 %i.an, label %.preheader266.lr.ph, label %.preheader268.lr.ph
 
 .preheader266.lr.ph:                              ; preds = %.preheader267
-  %9 = icmp sgt i32 %1, 0
-  %10 = add nsw i32 %2, -1                        ; 2 uses
-  %11 = add nsw i32 %1, -1
   %i.adk = getelementptr inbounds nuw i8, ptr %i.z, i64 32
   %i.adl = getelementptr inbounds nuw i8, ptr %i.z, i64 512
   %i.adm = getelementptr inbounds nuw i8, ptr %i.z, i64 544
-  br i1 %9, label %.preheader266.us, label %.loopexit
+  br i1 %6, label %.preheader266.us, label %.loopexit
 
 .preheader266.us:                                 ; preds = %.preheader266.lr.ph, %._crit_edge.us320
   %indvars.iv377 = phi i32 [ %indvars.iv.next378, %._crit_edge.us320 ], [ 16, %.preheader266.lr.ph ] ; 2 uses
@@ -595,8 +589,8 @@ bb.h:                                             ; preds = %.preheader266.us, %
 bb.i:                                             ; preds = %bb.k, %bb.h
   %.1305.us = phi i32 [ %.0241318.us, %bb.h ], [ %i.aev, %bb.k ] ; 2 uses
   %.0237304.us = phi i32 [ 0, %bb.h ], [ %i.adt, %bb.k ] ; 2 uses
-  %i.ado = call i32 @llvm.smin.i32(i32 %.1305.us, i32 %10) ; 2 uses
-  %i.adp = sub nsw i32 %10, %i.ado
+  %i.ado = call i32 @llvm.smin.i32(i32 %.1305.us, i32 %7) ; 2 uses
+  %i.adp = sub nsw i32 %7, %i.ado
   %i.adq = select i1 %.not265.us, i32 %i.ado, i32 %i.adp
   %i.adr = mul nsw i32 %i.adq, %1
   %i.ads = sext i32 %.0237304.us to i64
@@ -606,7 +600,7 @@ bb.i:                                             ; preds = %bb.k, %bb.h
 bb.j:                                             ; preds = %bb.j, %bb.i
   %indvars.iv373 = phi i64 [ %indvars.iv.next374, %bb.j ], [ %i.ads, %bb.i ] ; 4 uses
   %.1227303.us = phi i32 [ %i.aeu, %bb.j ], [ %.0243312.us, %bb.i ] ; 2 uses
-  %i.adu = call i32 @llvm.smin.i32(i32 %.1227303.us, i32 %11)
+  %i.adu = call i32 @llvm.smin.i32(i32 %.1227303.us, i32 %8)
   %i.adv = add i32 %i.adu, %i.adr
   %i.adw = mul i32 %i.adv, %3
   %i.adx = sext i32 %i.adw to i64                 ; 3 uses
@@ -1009,7 +1003,7 @@ middle.block426:                                  ; preds = %vector.body421
   %indvars.iv.next378 = add i32 %indvars.iv377, 16
   br i1 %i.bqi, label %.preheader266.us, label %.loopexit, !llvm.loop !118
 
-.loopexit:                                        ; preds = %._crit_edge.us, %._crit_edge.us320, %.preheader266.lr.ph, %.preheader268.lr.ph, %.preheader269, %.preheader267
+.loopexit:                                        ; preds = %._crit_edge.us, %._crit_edge.us320, %middle.block, %.preheader266.lr.ph, %.preheader268.lr.ph
   %i.bqj = load i32, ptr %i.y, align 4, !tbaa !12 ; 3 uses
   %i.bqk = icmp sgt i32 %i.bqj, 0
   br i1 %i.bqk, label %.lr.ph.i.preheader, label %stbiw__jpg_writeBits.exit

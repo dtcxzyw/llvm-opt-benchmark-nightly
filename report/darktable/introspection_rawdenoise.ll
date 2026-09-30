@@ -205,11 +205,11 @@ bb.y:                                             ; preds = %bb.x, %._crit_edge.
   %i.ny = getelementptr inbounds i8, ptr %i.ma, i64 %i.hd
   %i.nz = load i8, ptr %i.ny, align 1, !tbaa !38, !noalias !171
   %i.oa = zext i8 %i.nz to i32
-  %i.ob = icmp eq i32 %.025420.i, %i.oa           ; 2 uses
-  br i1 %i.js, label %bb.z, label %6
+  %i.ob = icmp eq i32 %.025420.i, %i.oa
+  br i1 %i.ob, label %bb.z, label %.thread64.i
 
 bb.z:                                             ; preds = %bb.y
-  br i1 %i.ob, label %bb.aa, label %.thread64.i
+  br i1 %i.js, label %bb.aa, label %bb.ae
 
 bb.aa:                                            ; preds = %bb.z
   %i.oc = getelementptr [4 x i8], ptr %i.kv, i64 %i.fy
@@ -225,10 +225,7 @@ bb.aa:                                            ; preds = %bb.z
   store float %i.og, ptr %i.oj, align 4, !tbaa !12, !noalias !171
   br label %bb.ae
 
-6:                                                ; preds = %bb.y
-  br i1 %i.ob, label %bb.ae, label %.thread64.i
-
-.thread64.i:                                      ; preds = %6, %bb.z
+.thread64.i:                                      ; preds = %bb.y
   %i.ok = getelementptr inbounds i8, ptr %i.ma, i64 %i.hf
   %i.ol = load i8, ptr %i.ok, align 1, !tbaa !38, !noalias !171
   %i.om = zext i8 %i.ol to i32
@@ -269,7 +266,7 @@ bb.ad:                                            ; preds = %bb.ac
   store float %i.pf, ptr %i.pg, align 4, !tbaa !12, !noalias !171
   br label %bb.ae
 
-bb.ae:                                            ; preds = %.critedge.i, %6, %bb.aa
+bb.ae:                                            ; preds = %.critedge.i, %bb.aa, %bb.z
   %i.ph = add nuw i64 %.025111.i, 1               ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.ph, %i.fz
   br i1 %exitcond29.not.i, label %.split.i, label %.preheader.i35

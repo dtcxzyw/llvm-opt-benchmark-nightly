@@ -202,9 +202,8 @@ bb.ab:                                            ; preds = %bb.aa
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit119: ; preds = %_ZNSt13unordered_mapIN4cvc58internal12NodeTemplateILb1EEEPNS1_6theory6arrays4InfoESt4hashIS3_ESt8equal_toIS3_ESaISt4pairIKS3_S7_EEE4findERSD_.exit117, %bb.z, %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
-  %.not195 = icmp eq ptr %.sroa.06.1.i.i, null
-  %.not196 = icmp eq ptr %.sroa.06.1.i.i112, null ; 2 uses
-  br i1 %.not195, label %bb.aw, label %.critedge81
+  %.not196 = icmp eq ptr %.sroa.06.1.i.i112, null
+  br i1 %.not196, label %bb.bo, label %bb.aw
 
 bb.ac:                                            ; preds = %bb.a
   %i.dh = landingpad { ptr, i32 }
@@ -243,10 +242,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   br label %bb.bp
 
-.critedge81:                                      ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit119
-  br i1 %.not196, label %bb.bo, label %.critedge85
-
-.critedge85:                                      ; preds = %.critedge81
+.critedge85:                                      ; preds = %bb.aw
   %i.dm = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i, i64 16
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !103 ; 3 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 384
@@ -350,7 +346,8 @@ bb.av:                                            ; preds = %bb.au
           to label %bb.bo unwind label %bb.an     ; 0 uses
 
 bb.aw:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit119
-  br i1 %.not196, label %bb.bo, label %bb.ax
+  %.not195 = icmp eq ptr %.sroa.06.1.i.i, null
+  br i1 %.not195, label %bb.ax, label %.critedge85
 
 bb.ax:                                            ; preds = %bb.aw
   %i.fj = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i112, i64 16
@@ -480,7 +477,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   br label %bb.bp
 
-bb.bo:                                            ; preds = %bb.aw, %bb.at, %bb.av, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit165, %.critedge81
+bb.bo:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit119, %bb.at, %bb.av, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit165
   call void @_ZN4cvc58internal9CodeTimerD1Ev(ptr noundef nonnull align 8 dead_on_return(9) dereferenceable(9) %3) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
   ret void

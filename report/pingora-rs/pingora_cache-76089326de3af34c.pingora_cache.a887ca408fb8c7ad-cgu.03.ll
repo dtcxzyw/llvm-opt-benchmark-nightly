@@ -205,18 +205,18 @@ bb.j:                                             ; preds = %bb.d
   %i.cu = icmp ne i8 %i.j, 2                      ; 2 uses
   %i.cv = zext i1 %i.cu to i64
   %i.cw = xor i64 %i.cv, -3750763034362895579
-  %i.cx = mul i64 %i.cw, 2232315406967589409      ; 7 uses
+  %i.cx = mul i64 %i.cw, 2232315406967589409      ; 6 uses
   br i1 %i.cu, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %bb.j
-  %4 = trunc nuw i8 %i.j to i1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.015.0.copyload) ]
   %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.015.0.copyload, i64 %.sroa.416.0.copyload ; 2 uses
-  %i.cz = icmp samesign eq i64 %.sroa.416.0.copyload, 0 ; 2 uses
-  br i1 %4, label %5, label %bb.l
+  %i.cz = icmp samesign eq i64 %.sroa.416.0.copyload, 0
+  br i1 %i.cz, label %_RINvNtNtCs84JG9zk80ZV_4http6header3map15hash_elem_usingNtNtB4_4name7HdrNameECset5b41vfmiv_13pingora_cache.exit.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  br i1 %i.cz, label %_RINvNtNtCs84JG9zk80ZV_4http6header3map15hash_elem_usingNtNtB4_4name7HdrNameECset5b41vfmiv_13pingora_cache.exit.i.i, label %.lr.ph.i.i.i20.i.i.i.preheader
+  %4 = trunc nuw i8 %i.j to i1
+  br i1 %4, label %.lr.ph.i.i.i.i.i.i.i.preheader, label %.lr.ph.i.i.i20.i.i.i.preheader
 
 .lr.ph.i.i.i20.i.i.i.preheader:                   ; preds = %bb.l
   %xtraiter = and i64 %.sroa.416.0.copyload, 3    ; 2 uses
@@ -246,10 +246,7 @@ bb.l:                                             ; preds = %bb.k
   %i.di = icmp ult i64 %.sroa.416.0.copyload, 4
   br i1 %i.di, label %_RINvNtNtCs84JG9zk80ZV_4http6header3map15hash_elem_usingNtNtB4_4name7HdrNameECset5b41vfmiv_13pingora_cache.exit.i.i, label %.lr.ph.i.i.i20.i.i.i
 
-5:                                                ; preds = %bb.k
-  br i1 %i.cz, label %_RINvNtNtCs84JG9zk80ZV_4http6header3map15hash_elem_usingNtNtB4_4name7HdrNameECset5b41vfmiv_13pingora_cache.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
-
-.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %5
+.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %bb.l
   %xtraiter63 = and i64 %.sroa.416.0.copyload, 7  ; 2 uses
   %lcmp.mod64.not = icmp eq i64 %xtraiter63, 0
   br i1 %lcmp.mod64.not, label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.i.prol
@@ -365,8 +362,8 @@ bb.m:                                             ; preds = %bb.j
   %i.go = mul i64 %i.gn, 2232315406967589409
   br label %_RINvNtNtCs84JG9zk80ZV_4http6header3map15hash_elem_usingNtNtB4_4name7HdrNameECset5b41vfmiv_13pingora_cache.exit.i.i
 
-_RINvNtNtCs84JG9zk80ZV_4http6header3map15hash_elem_usingNtNtB4_4name7HdrNameECset5b41vfmiv_13pingora_cache.exit.i.i: ; preds = %.lr.ph.i.i.i20.i.i.i.prol.loopexit, %.lr.ph.i.i.i20.i.i.i, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i, %bb.m, %5, %bb.l, %_RINvXsB_NtNtCs84JG9zk80ZV_4http6header4nameNtB6_7HdrNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECset5b41vfmiv_13pingora_cache.exit.i.i.i
-  %.sroa.0.0.i.i.i = phi i64 [ %i.ct, %_RINvXsB_NtNtCs84JG9zk80ZV_4http6header4nameNtB6_7HdrNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECset5b41vfmiv_13pingora_cache.exit.i.i.i ], [ %i.cx, %bb.l ], [ %i.go, %bb.m ], [ %i.fc, %.lr.ph.i.i.i.i.i.i.i ], [ %i.cx, %5 ], [ %.lcssa60.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ], [ %.lcssa62.unr, %.lr.ph.i.i.i20.i.i.i.prol.loopexit ], [ %i.gi, %.lr.ph.i.i.i20.i.i.i ]
+_RINvNtNtCs84JG9zk80ZV_4http6header3map15hash_elem_usingNtNtB4_4name7HdrNameECset5b41vfmiv_13pingora_cache.exit.i.i: ; preds = %.lr.ph.i.i.i20.i.i.i.prol.loopexit, %.lr.ph.i.i.i20.i.i.i, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i, %bb.m, %bb.k, %_RINvXsB_NtNtCs84JG9zk80ZV_4http6header4nameNtB6_7HdrNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECset5b41vfmiv_13pingora_cache.exit.i.i.i
+  %.sroa.0.0.i.i.i = phi i64 [ %i.ct, %_RINvXsB_NtNtCs84JG9zk80ZV_4http6header4nameNtB6_7HdrNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECset5b41vfmiv_13pingora_cache.exit.i.i.i ], [ %i.fc, %.lr.ph.i.i.i.i.i.i.i ], [ %i.go, %bb.m ], [ %i.cx, %bb.k ], [ %.lcssa60.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ], [ %.lcssa62.unr, %.lr.ph.i.i.i20.i.i.i.prol.loopexit ], [ %i.gi, %.lr.ph.i.i.i20.i.i.i ]
   %i.gp = trunc i64 %.sroa.0.0.i.i.i to i16
   %i.gq = and i16 %i.gp, 32767                    ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %3, i64 88

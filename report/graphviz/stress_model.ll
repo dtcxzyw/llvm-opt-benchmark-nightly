@@ -11,26 +11,23 @@ bb.a:
   %i.a = tail call zeroext i1 @SparseMatrix_is_symmetric(ptr noundef %1, i1 noundef zeroext false) #2
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.c = load i32, ptr %i.b, align 8, !tbaa !19
-  %.not = icmp eq i32 %i.c, 1                     ; 2 uses
-  br i1 %i.a, label %4, label %bb.b
-
-4:                                                ; preds = %bb.a
-  br i1 %.not, label %bb.d, label %.thread
+  %.not = icmp eq i32 %i.c, 1
+  br i1 %.not, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  br i1 %.not, label %bb.c, label %.thread
+  br i1 %i.a, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call ptr @SparseMatrix_symmetrize(ptr noundef nonnull %1, i1 noundef zeroext false) #2
   %i.e = tail call ptr @SparseMatrix_remove_diagonal(ptr noundef %i.d) #2
   br label %bb.d
 
-.thread:                                          ; preds = %4, %bb.b
+.thread:                                          ; preds = %bb.a
   %i.f = tail call ptr @SparseMatrix_get_real_adjacency_matrix_symmetrized(ptr noundef nonnull %1) #2
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %.thread, %4
-  %.031 = phi ptr [ %i.e, %bb.c ], [ %i.f, %.thread ], [ %1, %4 ]
+bb.d:                                             ; preds = %bb.b, %bb.c, %.thread
+  %.031 = phi ptr [ %i.e, %bb.c ], [ %i.f, %.thread ], [ %1, %bb.b ]
   %i.g = tail call ptr @SparseMatrix_remove_diagonal(ptr noundef %.031) #2 ; 4 uses
   %i.h = load i32, ptr %i.g, align 8, !tbaa !20
   %i.i = tail call ptr @SparseStressMajorizationSmoother_new(ptr noundef nonnull %i.g, i32 noundef %0, ptr noundef %2) #2 ; 7 uses

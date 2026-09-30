@@ -204,11 +204,11 @@ bb.x:                                             ; preds = %.lr.ph419
   %i.kj = call i32 @ResvFrameBegin(ptr noundef nonnull %0, ptr noundef %5, i32 noundef %i.kh, i32 noundef %i.ki) #11
   %.not320 = icmp sgt i32 %.4303543, %i.kj        ; 2 uses
   %.pre516 = load i32, ptr %i.y, align 8, !tbaa !15 ; 4 uses
-  %i.kk = icmp sgt i32 %.pre516, 0                ; 2 uses
-  br i1 %.not320, label %.preheader378, label %.loopexit
+  %i.kk = icmp sgt i32 %.pre516, 0
+  br i1 %i.kk, label %.preheader378, label %._crit_edge449
 
 .preheader378:                                    ; preds = %._crit_edge420
-  br i1 %i.kk, label %.preheader377.lr.ph, label %._crit_edge449
+  br i1 %.not320, label %.preheader377.lr.ph, label %.preheader374.lr.ph
 
 .preheader377.lr.ph:                              ; preds = %.preheader378
   %i.kl = getelementptr inbounds nuw i8, ptr %0, i64 204
@@ -271,10 +271,7 @@ scalar.ph584:                                     ; preds = %scalar.ph584.prehea
   %i.lc = icmp samesign ult i64 %indvars.iv.next484, %i.ks
   br i1 %i.lc, label %.preheader377.us, label %.preheader374.lr.ph, !llvm.loop !57
 
-.loopexit:                                        ; preds = %._crit_edge420
-  br i1 %i.kk, label %.preheader374.lr.ph, label %._crit_edge449
-
-.preheader374.lr.ph:                              ; preds = %._crit_edge426.us, %.preheader377.lr.ph, %.loopexit
+.preheader374.lr.ph:                              ; preds = %._crit_edge426.us, %.preheader377.lr.ph, %.preheader378
   %i.ld = getelementptr inbounds nuw i8, ptr %0, i64 204 ; 2 uses
   %i.le = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.lf = getelementptr inbounds nuw i8, ptr %0, i64 84
@@ -655,7 +652,7 @@ bb.am:                                            ; preds = %bb.al
   %i.sw = icmp slt i64 %indvars.iv.next514, %i.sv
   br i1 %i.sw, label %.preheader370, label %._crit_edge449, !llvm.loop !64
 
-._crit_edge449:                                   ; preds = %._crit_edge447, %.preheader378, %.loopexit, %.preheader373, %.preheader370.lr.ph, %.preheader371
+._crit_edge449:                                   ; preds = %._crit_edge447, %._crit_edge420, %.preheader373, %.preheader370.lr.ph, %.preheader371
   %i.sx = load i32, ptr %i.f, align 4, !tbaa !9
   call void @ResvFrameEnd(ptr noundef nonnull %0, ptr noundef %5, i32 noundef %i.sx) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #11

@@ -202,16 +202,10 @@ bb.a:
   br i1 %exitcond41.not, label %.loopexit, label %.preheader.split.us, !llvm.loop !101
 
 bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %4 = load i32, ptr %3, align 8, !tbaa !107
-  %5 = icmp eq i32 %4, 3
-  %i.k = icmp sgt i32 %i.d, 0                     ; 2 uses
-  br i1 %5, label %bb.c, label %.preheader2
+  %i.k = icmp sgt i32 %i.d, 0
+  br i1 %i.k, label %bb.c, label %.lr.ph12
 
-.preheader2:                                      ; preds = %bb.b
-  br i1 %i.k, label %.lr.ph, label %.lr.ph12
-
-.lr.ph:                                           ; preds = %.preheader2
+.lr.ph:                                           ; preds = %bb.c
   %i.l = icmp eq i32 %2, 4
   %wide.trip.count28 = zext nneg i32 %i.d to i64  ; 2 uses
   br i1 %i.l, label %.lr.ph.split.us, label %.lr.ph.split
@@ -239,7 +233,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %exitcond29.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !102
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %i.k, label %.lr.ph6, label %.lr.ph12
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %4 = load i32, ptr %3, align 8, !tbaa !107
+  %5 = icmp eq i32 %4, 3
+  br i1 %5, label %.lr.ph6, label %.lr.ph
 
 .lr.ph6:                                          ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -354,8 +351,8 @@ bb.e:                                             ; preds = %bb.d, %.loopexit
   %i.cw = icmp samesign ult i32 %.3, %1
   br i1 %i.cw, label %.lr.ph12, label %._crit_edge
 
-.lr.ph12:                                         ; preds = %bb.c, %.preheader2, %bb.e
-  %.34749 = phi i32 [ %.3, %bb.e ], [ 0, %.preheader2 ], [ 0, %bb.c ] ; 2 uses
+.lr.ph12:                                         ; preds = %bb.b, %bb.e
+  %.34749 = phi i32 [ %.3, %bb.e ], [ 0, %bb.b ]  ; 2 uses
   %i.cx = icmp eq i32 %2, 4
   br i1 %i.cx, label %.lr.ph12.split.us, label %.lr.ph12.split
 

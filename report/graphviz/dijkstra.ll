@@ -202,14 +202,11 @@ bb.s:                                             ; preds = %bb.r
   %i.bx = call ptr %i.bw(ptr noundef nonnull %i.bc, ptr noundef null, i32 noundef 128) #18, !inline_history !33 ; 4 uses
   %i.by = load ptr, ptr %i.bc, align 8, !tbaa !56
   %i.bz = call ptr %i.by(ptr noundef nonnull %i.bc, ptr noundef %i.bx, i32 noundef 2) #18, !inline_history !33 ; 0 uses
-  %.not3468.i = icmp eq ptr %i.bx, null           ; 2 uses
-  br i1 %.b.i, label %.preheader.i, label %.preheader57.i
-
-.preheader57.i:                                   ; preds = %bb.s
-  br i1 %.not3468.i, label %.loopexit55.i, label %.lr.ph63.i
+  %.not3468.i = icmp eq ptr %i.bx, null
+  br i1 %.not3468.i, label %.loopexit55.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.s
-  br i1 %.not3468.i, label %.loopexit55.i, label %.lr.ph69.i
+  br i1 %.b.i, label %.lr.ph69.i, label %.lr.ph63.i
 
 .loopexit.i:                                      ; preds = %update.exit.i, %.lr.ph69.i
   %i.ca = load ptr, ptr %i.bc, align 8, !tbaa !56
@@ -318,8 +315,8 @@ update.exit.i:                                    ; preds = %.sink.split.i.i, %b
   %.not.i = icmp eq ptr %i.dk, null
   br i1 %.not.i, label %.loopexit55.i, label %.lr.ph63.i, !llvm.loop !38
 
-.lr.ph63.i:                                       ; preds = %.preheader57.i, %.loopexit56.i
-  %i.dn = phi ptr [ %i.dk, %.loopexit56.i ], [ %i.bx, %.preheader57.i ] ; 4 uses
+.lr.ph63.i:                                       ; preds = %.preheader.i, %.loopexit56.i
+  %i.dn = phi ptr [ %i.dk, %.loopexit56.i ], [ %i.bx, %.preheader.i ] ; 4 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 16 ; 2 uses
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !23
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 32
@@ -409,7 +406,7 @@ update.exit51.i:                                  ; preds = %.sink.split.i47.i, 
   %.not33.i = icmp eq ptr %i.er, null
   br i1 %.not33.i, label %.loopexit56.i, label %.lr.ph.i18, !llvm.loop !39
 
-.loopexit55.i:                                    ; preds = %.loopexit56.i, %.loopexit.i, %.preheader.i, %.preheader57.i
+.loopexit55.i:                                    ; preds = %.loopexit56.i, %.loopexit.i, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18

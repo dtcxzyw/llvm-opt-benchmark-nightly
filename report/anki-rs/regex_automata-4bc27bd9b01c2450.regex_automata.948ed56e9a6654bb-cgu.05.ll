@@ -202,16 +202,13 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.g, ptr %i.h, align 4
   %i.i = call zeroext i1 @_ZN14regex_automata4util6search8Anchored11is_anchored17h514b5ada16441f2bE(ptr nonnull align 4 %i.a)
   %i.j = call i64 @_ZN14regex_automata4util6search9HalfMatch6offset17h0dba85e8b82f9256E(ptr nonnull align 8 %i.b)
-  %i.k = call zeroext i1 @_ZN14regex_automata4util6search5Input16is_char_boundary17h1732f2c2c8520f39E(ptr align 8 %0, i64 %i.j) ; 2 uses
-  br i1 %i.i, label %bb.c, label %.preheader
-
-.preheader:                                       ; preds = %bb.b
-  br i1 %i.k, label %.loopexit, label %.lr.ph
+  %i.k = call zeroext i1 @_ZN14regex_automata4util6search5Input16is_char_boundary17h1732f2c2c8520f39E(ptr align 8 %0, i64 %i.j)
+  br i1 %i.k, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %i.k, label %.loopexit, label %bb.g
+  br i1 %i.i, label %bb.g, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.preheader, %bb.f
+.lr.ph:                                           ; preds = %bb.c, %bb.f
   %i.l = call align 8 ptr @_ZN14regex_automata6hybrid6search20find_overlapping_fwd17h8837fc3cd017d084E(ptr align 16 %2, ptr align 8 %3, ptr align 8 %0, ptr nonnull align 8 %1)
   %i.m = call align 8 ptr @"_ZN79_$LT$core..result..Result$LT$T$C$E$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17h35bf6546844b40dcE"(ptr align 8 %i.l) ; 2 uses
   %.not = icmp eq ptr %i.m, null
@@ -235,8 +232,8 @@ bb.f:                                             ; preds = %bb.e
   %i.q = call zeroext i1 @_ZN14regex_automata4util6search5Input16is_char_boundary17h1732f2c2c8520f39E(ptr align 8 %0, i64 %i.p)
   br i1 %i.q, label %.loopexit, label %.lr.ph
 
-.loopexit:                                        ; preds = %bb.f, %bb.e, %.preheader, %bb.c, %bb.g, %bb.a, %bb.d
-  %.sroa.0.0 = phi ptr [ null, %bb.g ], [ null, %bb.a ], [ %i.n, %bb.d ], [ null, %bb.c ], [ null, %.preheader ], [ null, %bb.e ], [ null, %bb.f ]
+.loopexit:                                        ; preds = %bb.f, %bb.e, %bb.b, %bb.g, %bb.a, %bb.d
+  %.sroa.0.0 = phi ptr [ null, %bb.g ], [ null, %bb.a ], [ %i.n, %bb.d ], [ null, %bb.b ], [ null, %bb.e ], [ null, %bb.f ]
   ret ptr %.sroa.0.0
 
 bb.g:                                             ; preds = %bb.c

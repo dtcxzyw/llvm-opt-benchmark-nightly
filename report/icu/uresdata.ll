@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bk = sext i32 %.0281 to i64                  ; 2 uses
   %i.bl = getelementptr inbounds [4 x i8], ptr %1, i64 %i.bk ; 3 uses
   %i.bm = getelementptr inbounds [4 x i8], ptr %2, i64 %i.bk ; 4 uses
-  %i.bn = icmp sgt i32 %.0280, 0                  ; 6 uses
+  %i.bn = icmp sgt i32 %.0280, 0                  ; 5 uses
   br i1 %i.bn, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.m
@@ -298,19 +298,16 @@ bb.v:                                             ; preds = %bb.t
 
 bb.w:                                             ; preds = %bb.s
   %.not291 = icmp eq ptr %.0276, null             ; 2 uses
-  br i1 %.not291, label %.preheader, label %.preheader306
+  br i1 %i.bn, label %.preheader, label %.loopexit
 
-.preheader306:                                    ; preds = %bb.w
-  br i1 %i.bn, label %.lr.ph313, label %.loopexit
-
-.lr.ph313:                                        ; preds = %.preheader306
+.lr.ph313:                                        ; preds = %.preheader
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.dh = getelementptr inbounds nuw i8, ptr %5, i64 8
   %wide.trip.count343 = zext nneg i32 %.0280 to i64
   br label %bb.x
 
 .preheader:                                       ; preds = %bb.w
-  br i1 %i.bn, label %.lr.ph315, label %.loopexit
+  br i1 %.not291, label %.lr.ph315, label %.lr.ph313
 
 .lr.ph315:                                        ; preds = %.preheader
   %i.di = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -349,7 +346,7 @@ bb.y:                                             ; preds = %.lr.ph315, %bb.y
   %exitcond349.not = icmp eq i64 %indvars.iv.next346, %wide.trip.count348
   br i1 %exitcond349.not, label %.loopexit, label %bb.y, !llvm.loop !87
 
-.loopexit:                                        ; preds = %bb.x, %bb.y, %.preheader306, %.preheader
+.loopexit:                                        ; preds = %bb.x, %bb.y, %bb.w
   %i.dz = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !74
   %i.eb = load ptr, ptr %5, align 8, !tbaa !73

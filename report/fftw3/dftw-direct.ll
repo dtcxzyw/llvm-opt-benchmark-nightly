@@ -79,20 +79,15 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !21   ; 11 uses
   %i.c = add nsw i64 %10, %9                      ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %14 = load i32, ptr %i.d, align 8, !tbaa !22
-  %.not.i = icmp eq i32 %14, 0
   %i.e = load i64, ptr %i.b, align 8, !tbaa !15
   %i.f = icmp eq i64 %1, %i.e
   %i.g = icmp eq i64 %2, %3
   %or.cond.i47.i = and i1 %i.g, %i.f
   %i.h = icmp eq i64 %7, %8
-  %or.cond64.i.i = and i1 %i.h, %or.cond.i47.i    ; 2 uses
-  br i1 %.not.i, label %bb.c, label %15
+  %or.cond64.i.i = and i1 %i.h, %or.cond.i47.i
+  br i1 %or.cond64.i.i, label %bb.c, label %applicable.exit.thread
 
-15:                                               ; preds = %bb.a
-  br i1 %or.cond64.i.i, label %bb.b, label %applicable.exit.thread
-
-bb.b:                                             ; preds = %15
+bb.b:                                             ; preds = %bb.c
   %i.i = add nsw i64 %1, 3
   %i.j = and i64 %i.i, -4
   %i.k = or disjoint i64 %i.j, 2                  ; 2 uses
@@ -113,7 +108,9 @@ applicable0_buf.exit.i:                           ; preds = %bb.b
   br i1 %.not51.i, label %applicable.exit.thread, label %bb.h
 
 bb.c:                                             ; preds = %bb.a
-  br i1 %or.cond64.i.i, label %bb.d, label %applicable.exit.thread
+  %14 = load i32, ptr %i.d, align 8, !tbaa !22
+  %.not.i = icmp eq i32 %14, 0
+  br i1 %.not.i, label %bb.d, label %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 4 uses
@@ -265,8 +262,8 @@ bb.m:                                             ; preds = %bb.l, %applicable.e
   store i32 %i.cr, ptr %i.cs, align 4, !tbaa !55
   br label %applicable.exit.thread
 
-applicable.exit.thread:                           ; preds = %bb.c, %bb.f, %bb.e, %bb.g, %bb.b, %15, %bb.k, %applicable0_buf.exit.i, %bb.i, %applicable0.exit.i, %bb.m
-  %.066 = phi ptr [ %i.ba, %bb.m ], [ null, %applicable0.exit.i ], [ null, %bb.i ], [ null, %applicable0_buf.exit.i ], [ null, %bb.k ], [ null, %15 ], [ null, %bb.b ], [ null, %bb.g ], [ null, %bb.e ], [ null, %bb.f ], [ null, %bb.c ]
+applicable.exit.thread:                           ; preds = %bb.a, %bb.f, %bb.e, %bb.g, %bb.b, %bb.k, %applicable0_buf.exit.i, %bb.i, %applicable0.exit.i, %bb.m
+  %.066 = phi ptr [ %i.ba, %bb.m ], [ null, %applicable0.exit.i ], [ null, %bb.i ], [ null, %applicable0_buf.exit.i ], [ null, %bb.k ], [ null, %bb.a ], [ null, %bb.b ], [ null, %bb.g ], [ null, %bb.e ], [ null, %bb.f ]
   ret ptr %.066
 }
 

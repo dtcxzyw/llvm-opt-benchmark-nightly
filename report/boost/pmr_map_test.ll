@@ -202,16 +202,13 @@ bb.d:                                             ; preds = %bb.a, %._crit_edge.
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 28
   %i.y = load float, ptr %i.v, align 4, !tbaa !49, !noalias !48
   store float %i.y, ptr %i.x, align 4, !tbaa !49, !noalias !48
-  %i.z = icmp eq ptr %.013.lcssa.i11.i.i, %i.a    ; 2 uses
-  br i1 %.0.lcssa.i12.shrunk.i.i, label %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeISt4pairIKifENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISA_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i, label %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeISt4pairIKifENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISA_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.i.i
-
-_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeISt4pairIKifENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISA_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.i.i: ; preds = %bb.d
-  br i1 %i.z, label %bb.e, label %bb.g
+  %i.z = icmp eq ptr %.013.lcssa.i11.i.i, %i.a
+  br i1 %i.z, label %bb.e, label %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeISt4pairIKifENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISA_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i
 
 _ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeISt4pairIKifENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISA_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i: ; preds = %bb.d
-  br i1 %i.z, label %bb.e, label %.thread.i.i
+  br i1 %.0.lcssa.i12.shrunk.i.i, label %.thread.i.i, label %bb.g
 
-bb.e:                                             ; preds = %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeISt4pairIKifENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISA_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i, %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeISt4pairIKifENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISA_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.i.i
+bb.e:                                             ; preds = %bb.d
   %i.aa = ptrtoint ptr %i.t to i64
   %i.ab = load ptr, ptr %i.a, align 8, !tbaa !21, !noalias !50
   %i.ac = ptrtoint ptr %i.ab to i64
@@ -237,7 +234,7 @@ bb.f:                                             ; preds = %.thread.i.i
   store ptr %i.t, ptr %i.aj, align 8, !tbaa !17, !noalias !50
   br label %_ZN5boost9container3dtl4treeISt4pairIKifEiSt4lessIiENS0_3pmr21polymorphic_allocatorIS5_EEvE20insert_unique_commitIS5_EENS1_23iterator_from_iiteratorINS_9intrusive13tree_iteratorINSE_8bhtraitsINS0_9base_nodeIS5_NS1_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENSE_18rbtree_node_traitsISJ_Lb1EEELNSE_14link_mode_typeE0ENSE_7dft_tagELj3EEELb0EEELb0EEEOT_RNSE_20insert_commit_data_tIPNSE_19compact_rbtree_nodeISJ_EEEE.exit
 
-bb.g:                                             ; preds = %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeISt4pairIKifENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISA_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.i.i
+bb.g:                                             ; preds = %_ZN5boost9intrusive13tree_iteratorINS0_8bhtraitsINS_9container9base_nodeISt4pairIKifENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISA_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEELb0EEppEv.exit.thread.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.013.lcssa.i11.i.i, i64 16
   store ptr %i.t, ptr %i.am, align 8, !tbaa !18, !noalias !50
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses

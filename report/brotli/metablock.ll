@@ -119,7 +119,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 36
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 2176 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 2184 ; 2 uses
-  %.not4555.i = icmp eq i64 %8, 0                 ; 5 uses
+  %.not4555.i = icmp eq i64 %8, 0                 ; 4 uses
   %i.g = add i32 %.sroa.12242.0.copyload, 16      ; 4 uses
   %notmask.i.us.i = shl nsw i32 -1, %.sroa.0234.0.copyload
   %i.h = xor i32 %notmask.i.us.i, -1              ; 2 uses
@@ -209,18 +209,13 @@ BrotliInitDistanceParams.exit:                    ; preds = %bb.b, %BrotliCalcul
   %.2146 = select i1 %or.cond, i32 0, i32 %.1145279 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.c, i8 0, i64 2184, i1 false)
   store double +inf, ptr %i.f, align 8, !tbaa !19
-  br i1 %i.o, label %11, label %.thread.i
-
-11:                                               ; preds = %BrotliInitDistanceParams.exit
   br i1 %.not4555.i, label %.loopexit271, label %.lr.ph.i
 
-.thread.i:                                        ; preds = %BrotliInitDistanceParams.exit
-  br i1 %.not4555.i, label %.loopexit271, label %.lr.ph.split.us.preheader.i
+.lr.ph.i:                                         ; preds = %BrotliInitDistanceParams.exit
+  %brmerge.demorgan = and i1 %i.o, %.fr
+  br i1 %brmerge.demorgan, label %.lr.ph.split.i, label %.lr.ph.split.us.preheader.i
 
-.lr.ph.i:                                         ; preds = %11
-  br i1 %.fr, label %.lr.ph.split.i, label %.lr.ph.split.us.preheader.i
-
-.lr.ph.split.us.preheader.i:                      ; preds = %.thread.i, %.lr.ph.i
+.lr.ph.split.us.preheader.i:                      ; preds = %.lr.ph.i
   %i.ba = zext nneg i32 %i.s to i64               ; 2 uses
   %i.bb = add nuw nsw i64 %i.ba, 16               ; 2 uses
   %i.bc = sub nsw i64 %i.q, %i.ba
@@ -364,8 +359,8 @@ PrefixEncodeCopyDistance.exit.i:                  ; preds = %bb.k
   %exitcond.not.i = icmp eq i64 %i.ec, %8
   br i1 %exitcond.not.i, label %.loopexit271, label %.lr.ph.split.i, !llvm.loop !114
 
-.loopexit271:                                     ; preds = %.critedge.us.i, %.critedge.i, %.thread.i, %11
-  %.029.lcssa.i = phi double [ 0.000000e+00, %11 ], [ 0.000000e+00, %.thread.i ], [ %.2.i, %.critedge.i ], [ %.2.us.i, %.critedge.us.i ]
+.loopexit271:                                     ; preds = %.critedge.us.i, %.critedge.i, %BrotliInitDistanceParams.exit
+  %.029.lcssa.i = phi double [ 0.000000e+00, %BrotliInitDistanceParams.exit ], [ %.2.i, %.critedge.i ], [ %.2.us.i, %.critedge.us.i ]
   %i.ed = tail call double @BrotliPopulationCostDistance(ptr noundef nonnull %i.c) #8
   %i.ee = fadd double %.029.lcssa.i, %i.ed        ; 3 uses
   %i.ef = fcmp ogt double %i.ee, %.1280

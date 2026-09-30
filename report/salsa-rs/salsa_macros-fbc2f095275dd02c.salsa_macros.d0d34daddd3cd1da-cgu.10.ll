@@ -202,28 +202,25 @@ bb.e:                                             ; preds = %thread-pre-split.i,
   %i.i = add i64 %.sroa.15.1.i31, -1              ; 2 uses
   %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i30, i64 10) ; 2 uses
   %i.k = extractvalue { i64, i1 } %i.j, 0         ; 2 uses
-  %3 = extractvalue { i64, i1 } %i.j, 1
   %i.l = load i8, ptr %.sroa.0.1.i32, align 1, !noalias !98
   %i.m = zext i8 %i.l to i32
   %i.n = tail call { i32, i32 } @_RNvMNtNtCs4NRVxsYgnAr_4core4char7methodsc8to_digitCshVzvyy7iigg_12salsa_macros(i32 %i.m, i32 10), !noalias !98 ; 2 uses
   %i.o = extractvalue { i32, i32 } %i.n, 0
-  %i.p = trunc i32 %i.o to i1                     ; 2 uses
-  br i1 %3, label %bb.f, label %4
-
-4:                                                ; preds = %.preheader54.i.preheader
-  br i1 %i.p, label %bb.g, label %.loopexit56.i
+  %i.p = trunc i32 %i.o to i1
+  br i1 %i.p, label %bb.f, label %.loopexit56.i
 
 bb.f:                                             ; preds = %.preheader54.i.preheader
-  br i1 %i.p, label %bb.i, label %.loopexit56.i
+  %3 = extractvalue { i64, i1 } %i.j, 1
+  br i1 %3, label %bb.i, label %bb.g
 
-bb.g:                                             ; preds = %4
+bb.g:                                             ; preds = %bb.f
   %i.q = extractvalue { i32, i32 } %i.n, 1
   %i.r = zext i32 %i.q to i64
   %i.s = add i64 %i.k, %i.r                       ; 3 uses
   %i.t = icmp ult i64 %i.s, %i.k
   br i1 %i.t, label %bb.h, label %.preheader54.i
 
-.loopexit56.i:                                    ; preds = %4, %bb.f
+.loopexit56.i:                                    ; preds = %.preheader54.i.preheader
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 1, ptr %i.u, align 1, !alias.scope !98
   br label %_RNvMsv_NtCs4NRVxsYgnAr_4core3numj16from_ascii_radixCshVzvyy7iigg_12salsa_macros.exit

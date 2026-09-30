@@ -202,31 +202,28 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 24, !dbg !15885 ; 2 uses
-  %2 = load i64, ptr %i.r, align 8, !dbg !15886, !range !707, !noundef !534
-  %.not = icmp eq i64 %2, -9223372036854775808, !dbg !15886
   %i.s = load i64, ptr %i.p, align 8, !dbg !15886, !range !707, !noundef !534
-  %.not1 = icmp eq i64 %i.s, -9223372036854775808, !dbg !15886 ; 2 uses
-  br i1 %.not, label %bb.i, label %3, !dbg !15887
+  %.not1 = icmp eq i64 %i.s, -9223372036854775808, !dbg !15886
+  br i1 %.not1, label %bb.k, label %bb.i, !dbg !15887
 
 _RNvXs4_NtCscgRAwXFJnXP_4core6optionINtB5_6OptionNtNtCsgZ49sUHp3tW_5alloc6string6StringENtNtB7_5clone5Clone5cloneCshquuC4dCYVj_10polars_sql.exit: ; preds = %bb.g, %bb.f, %_RNvNtCsgZ49sUHp3tW_5alloc3fmt6format.exit, %bb.k, %bb.j
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtB8_6string6StringEINtB4_10SpecExtendBT_INtNtCscgRAwXFJnXP_4core6option8IntoIterBT_EE11spec_extendCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.a), !dbg !15888
   br label %.loopexit, !dbg !15889
 
-3:                                                ; preds = %bb.h
-  br i1 %.not1, label %bb.k, label %_RNvNtCsgZ49sUHp3tW_5alloc3fmt6format.exit, !dbg !15887
-
 bb.i:                                             ; preds = %bb.h
-  br i1 %.not1, label %bb.k, label %bb.j, !dbg !15887
+  %2 = load i64, ptr %i.r, align 8, !dbg !15886, !range !707, !noundef !534
+  %.not = icmp eq i64 %2, -9223372036854775808, !dbg !15886
+  br i1 %.not, label %bb.j, label %_RNvNtCsgZ49sUHp3tW_5alloc3fmt6format.exit, !dbg !15887
 
 bb.j:                                             ; preds = %bb.i
   call void @_RNvXs4_NtCsgZ49sUHp3tW_5alloc6stringNtB5_6StringNtNtCscgRAwXFJnXP_4core5clone5Clone5clone(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.p), !dbg !15890
   br label %_RNvXs4_NtCscgRAwXFJnXP_4core6optionINtB5_6OptionNtNtCsgZ49sUHp3tW_5alloc6string6StringENtNtB7_5clone5Clone5cloneCshquuC4dCYVj_10polars_sql.exit, !dbg !15891
 
-bb.k:                                             ; preds = %bb.i, %3
+bb.k:                                             ; preds = %bb.h
   store i64 -9223372036854775808, ptr %i.a, align 8, !dbg !15892
   br label %_RNvXs4_NtCscgRAwXFJnXP_4core6optionINtB5_6OptionNtNtCsgZ49sUHp3tW_5alloc6string6StringENtNtB7_5clone5Clone5cloneCshquuC4dCYVj_10polars_sql.exit, !dbg !15892
 
-_RNvNtCsgZ49sUHp3tW_5alloc3fmt6format.exit:       ; preds = %3
+_RNvNtCsgZ49sUHp3tW_5alloc3fmt6format.exit:       ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !15893
   store ptr %i.r, ptr %i.d, align 8, !dbg !15893
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !15894

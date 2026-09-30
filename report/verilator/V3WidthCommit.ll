@@ -204,19 +204,16 @@ bb.a:
   tail call void @_ZN18WidthCommitVisitor9editDTypeEP7AstNode(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull %1)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !178  ; 4 uses
-  %.not.i = icmp eq ptr %i.b, null
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 188
   %i.d = load i8, ptr %i.c, align 4, !tbaa !330, !range !71, !noundef !72
-  %i.e = trunc nuw i8 %i.d to i1                  ; 2 uses
-  br i1 %.not.i, label %_ZN7AstNode4castI8AstClass13AstNodeModuleEEPT_PT0_.exit.thread, label %_ZN7AstNode4castI8AstClass13AstNodeModuleEEPT_PT0_.exit
-
-_ZN7AstNode4castI8AstClass13AstNodeModuleEEPT_PT0_.exit: ; preds = %bb.a
-  br i1 %i.e, label %bb.b, label %bb.i
+  %i.e = trunc nuw i8 %i.d to i1
+  br i1 %i.e, label %_ZN7AstNode4castI8AstClass13AstNodeModuleEEPT_PT0_.exit.thread, label %bb.i
 
 _ZN7AstNode4castI8AstClass13AstNodeModuleEEPT_PT0_.exit.thread: ; preds = %bb.a
-  br i1 %i.e, label %.thread, label %bb.i
+  %.not.i = icmp eq ptr %i.b, null
+  br i1 %.not.i, label %.thread, label %bb.b
 
-bb.b:                                             ; preds = %_ZN7AstNode4castI8AstClass13AstNodeModuleEEPT_PT0_.exit
+bb.b:                                             ; preds = %_ZN7AstNode4castI8AstClass13AstNodeModuleEEPT_PT0_.exit.thread
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.f, align 8, !tbaa !180
   %.not = icmp eq i16 %.sroa.0.0.copyload.i.i.i, 384
@@ -266,7 +263,7 @@ _ZN7V3Error10v3errorStrB5cxx11Ev.exit:            ; preds = %.thread, %bb.e, %bb
   tail call void @_ZNK7AstNode10v3errorEndERKNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(152) %1, ptr noundef nonnull align 8 dereferenceable(112) %i.s)
   br label %bb.i
 
-bb.i:                                             ; preds = %_ZN7AstNode4castI8AstClass13AstNodeModuleEEPT_PT0_.exit.thread, %_ZN7V3Error10v3errorStrB5cxx11Ev.exit, %bb.d, %bb.c, %_ZN7AstNode4castI8AstClass13AstNodeModuleEEPT_PT0_.exit
+bb.i:                                             ; preds = %bb.a, %_ZN7V3Error10v3errorStrB5cxx11Ev.exit, %bb.d, %bb.c
   ret void
 }
 

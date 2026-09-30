@@ -204,13 +204,10 @@ bb.jd:                                            ; preds = %bb.jc
   br label %.loopexit.sink.split
 
 bb.je:                                            ; preds = %bb.jc
-  %i.aae = icmp sgt i32 %i.aac, 0                 ; 2 uses
-  br i1 %3, label %bb.jg, label %11
+  %i.aae = icmp sgt i32 %i.aac, 0
+  br i1 %i.aae, label %bb.jg, label %.loopexit
 
-11:                                               ; preds = %bb.je
-  br i1 %i.aae, label %bb.jf, label %.loopexit
-
-bb.jf:                                            ; preds = %11
+bb.jf:                                            ; preds = %bb.jg
   %switch.selectcmp.case1 = icmp eq i8 %i.x, 112
   %switch.selectcmp.case2 = icmp eq i8 %i.x, 73
   %switch.selectcmp = or i1 %switch.selectcmp.case1, %switch.selectcmp.case2
@@ -219,7 +216,7 @@ bb.jf:                                            ; preds = %11
   br label %.loopexit.sink.split
 
 bb.jg:                                            ; preds = %bb.je
-  br i1 %i.aae, label %.lr.ph1487.preheader, label %.loopexit
+  br i1 %3, label %.lr.ph1487.preheader, label %bb.jf
 
 .lr.ph1487.preheader:                             ; preds = %bb.jg
   %i.aag = select i1 %i.zg, ptr @.str.983, ptr @.str.984
@@ -286,7 +283,7 @@ bb.jk:                                            ; preds = %.tail1425
   call void @printTableAddFooter(ptr noundef nonnull %6, ptr noundef %i.aau) #7
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.tail1425.thread, %.loopexit.sink.split, %bb.jg, %11
+.loopexit:                                        ; preds = %.tail1425.thread, %.loopexit.sink.split, %bb.je
   call void @PQclear(ptr noundef nonnull %i.aab) #7
   %.not1166 = icmp eq ptr %i.bw, null
   br i1 %.not1166, label %bb.jm, label %bb.jl

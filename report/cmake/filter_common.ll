@@ -203,14 +203,11 @@ bb.d:                                             ; preds = %bb.c
 
 lzma_validate_chain.exit:                         ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #4
-  %.not6186.not = icmp eq i64 %i.l, 0             ; 2 uses
-  br i1 %4, label %.preheader, label %.preheader80
-
-.preheader80:                                     ; preds = %lzma_validate_chain.exit
-  br i1 %.not6186.not, label %.loopexit, label %.lr.ph
+  %.not6186.not = icmp eq i64 %i.l, 0
+  br i1 %.not6186.not, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %lzma_validate_chain.exit
-  br i1 %.not6186.not, label %.loopexit, label %.lr.ph88
+  br i1 %4, label %.lr.ph88, label %.lr.ph
 
 .lr.ph88:                                         ; preds = %.preheader
   %i.t = getelementptr [24 x i8], ptr %5, i64 %i.l
@@ -245,8 +242,8 @@ bb.g:                                             ; preds = %bb.f
   %exitcond94.not = icmp eq i64 %i.ai, %indvars.iv
   br i1 %exitcond94.not, label %.loopexit, label %bb.e, !llvm.loop !29
 
-.lr.ph:                                           ; preds = %.preheader80, %bb.i
-  %.085 = phi i64 [ %i.aw, %bb.i ], [ 0, %.preheader80 ] ; 3 uses
+.lr.ph:                                           ; preds = %.preheader, %bb.i
+  %.085 = phi i64 [ %i.aw, %bb.i ], [ 0, %.preheader ] ; 3 uses
   %i.aj = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %.085 ; 3 uses
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !13
   %i.al = tail call ptr %3(i64 noundef %i.ak) #4  ; 2 uses
@@ -273,7 +270,7 @@ bb.i:                                             ; preds = %bb.h
   %exitcond.not = icmp eq i64 %i.aw, %indvars.iv
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !30
 
-.loopexit:                                        ; preds = %bb.i, %bb.g, %.preheader80, %.preheader
+.loopexit:                                        ; preds = %bb.i, %bb.g, %lzma_validate_chain.exit
   %i.ax = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %i.l ; 2 uses
   store i64 -1, ptr %i.ax, align 8, !tbaa !33
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8

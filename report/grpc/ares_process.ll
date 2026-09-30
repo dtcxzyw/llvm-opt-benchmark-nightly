@@ -202,13 +202,10 @@ bb.q:                                             ; preds = %bb.n
   %.not41.i.i = icmp eq i32 %i.br, 0              ; 2 uses
   %.pre.i.i = load i32, ptr %i.ax, align 8, !tbaa !22
   %.pre78.i.i = and i32 %.pre.i.i, 1
-  %.not43.i.i = icmp eq i32 %.pre78.i.i, 0        ; 2 uses
-  br i1 %.not41.i.i, label %bb.s, label %7
+  %.not43.i.i = icmp eq i32 %.pre78.i.i, 0
+  br i1 %.not43.i.i, label %.split.i.i, label %bb.s
 
-7:                                                ; preds = %bb.q
-  br i1 %.not43.i.i, label %.split.i.i, label %bb.r
-
-bb.r:                                             ; preds = %7
+bb.r:                                             ; preds = %bb.s
   %i.bs = load i64, ptr %i.k, align 8, !tbaa !31
   %i.bt = load i64, ptr %i.l, align 8, !tbaa !31
   %i.bu = icmp eq i64 %i.bs, %i.bt
@@ -217,14 +214,14 @@ bb.r:                                             ; preds = %7
   br i1 %i.bu, label %.backedge.i.i.backedge, label %.loopexit.i
 
 bb.s:                                             ; preds = %bb.q
-  br i1 %.not43.i.i, label %.split.i.i, label %.thread91.i.i
+  br i1 %.not41.i.i, label %.thread91.i.i, label %bb.r
 
 .thread91.i.i:                                    ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #7
   br label %.loopexit.i
 
-.split.i.i:                                       ; preds = %bb.s, %7
+.split.i.i:                                       ; preds = %bb.q
   %i.bv = load ptr, ptr %i.aw, align 8, !tbaa !86
   %i.bw = call i64 @ares_buf_len(ptr noundef %i.bv) #7
   store i64 %i.bw, ptr %i.l, align 8, !tbaa !31

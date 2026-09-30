@@ -202,11 +202,11 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 bb.g:                                             ; preds = %bb.e
-  %i.l = icmp ugt i64 %2, 15                      ; 2 uses
-  br i1 %i.i, label %bb.h, label %7
+  %i.l = icmp ugt i64 %2, 15
+  br i1 %i.l, label %bb.h, label %.loopexit
 
 bb.h:                                             ; preds = %bb.g
-  br i1 %i.l, label %.preheader.preheader, label %.loopexit
+  br i1 %i.i, label %.preheader.preheader, label %.lr.ph.preheader
 
 .preheader.preheader:                             ; preds = %bb.h
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -609,10 +609,7 @@ begin_hunk_1_@AES_bi_ige_encrypt:bb.a
   %i.qa = icmp ugt i64 %i.pz, 15
   br i1 %i.qa, label %.lr.ph167, label %.loopexit, !llvm.loop !20
 
-7:                                                ; preds = %bb.g
-  br i1 %i.l, label %.lr.ph.preheader, label %.loopexit
-
-.lr.ph.preheader:                                 ; preds = %7
+.lr.ph.preheader:                                 ; preds = %bb.h
   %i.qb = getelementptr inbounds nuw i8, ptr %1, i64 %2 ; 16 uses
   %i.qc = getelementptr inbounds nuw i8, ptr %0, i64 %2 ; 2 uses
   %i.qd = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -906,7 +903,7 @@ begin_hunk_1_@AES_bi_ige_encrypt:bb.a
   %i.ya = icmp ugt i64 %i.xz, 15
   br i1 %i.ya, label %.lr.ph150, label %.loopexit, !llvm.loop !22
 
-.loopexit:                                        ; preds = %.lr.ph150, %.lr.ph167, %.lr.ph150.preheader, %.lr.ph167.preheader, %7, %bb.h
+.loopexit:                                        ; preds = %.lr.ph150, %.lr.ph167, %bb.g, %.lr.ph150.preheader, %.lr.ph167.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret void
 }

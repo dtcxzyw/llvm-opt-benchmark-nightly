@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.g, %bb.c
 
 bb.f:                                             ; preds = %bb.a
   %.not19 = icmp eq i64 %i.a, 0
-  br i1 %.not19, label %_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE10pullAtMostEPvm.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i
+  br i1 %.not19, label %bb.n, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i: ; preds = %bb.f
   %.not.i.i.i.i = icmp samesign ugt i64 %i.a, 15
@@ -255,9 +255,8 @@ bb.j:                                             ; preds = %bb.i
   %i.u = invoke noundef i64 @_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE14pullAtMostSlowEPvm(ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull %i.k, i64 noundef %i.a)
           to label %_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE10pullAtMostEPvm.exit unwind label %bb.m
 
-_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE10pullAtMostEPvm.exit: ; preds = %bb.f, %bb.j
-  %.0.i = phi i64 [ %i.u, %bb.j ], [ 0, %bb.f ]
-  %.not = icmp eq i64 %.0.i, %i.a
+_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE10pullAtMostEPvm.exit: ; preds = %bb.j
+  %.not = icmp eq i64 %i.u, %i.a
   br i1 %.not, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE10pullAtMostEPvm.exit
@@ -272,7 +271,7 @@ bb.m:                                             ; preds = %bb.j, %bb.k
           cleanup
   br label %bb.o
 
-bb.n:                                             ; preds = %_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE10pullAtMostEPvm.exit.thread, %_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE10pullAtMostEPvm.exit
+bb.n:                                             ; preds = %bb.f, %_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE10pullAtMostEPvm.exit.thread, %_ZN5folly2io10CursorBaseINS0_6CursorEKNS_5IOBufEE10pullAtMostEPvm.exit
   ret void
 
 bb.o:                                             ; preds = %bb.m, %bb.e, %bb.d

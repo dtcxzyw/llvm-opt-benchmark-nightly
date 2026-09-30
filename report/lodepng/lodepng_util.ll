@@ -205,14 +205,11 @@ _ZN7lodepngL24convertToXYZ_gamma_tableEPfmmPK11LodePNGInfojPKNS_10LodePNGICCE.ex
   %.0108 = phi ptr [ %i.bh, %bb.m ], [ %i.ai, %bb.l ] ; 3 uses
   %.0107 = phi ptr [ %i.bh, %bb.m ], [ %i.as, %bb.l ] ; 2 uses
   %.0 = phi ptr [ %i.bh, %bb.m ], [ %i.az, %bb.l ] ; 2 uses
-  %.not151 = icmp eq i64 %mul.i141, 0             ; 2 uses
-  br i1 %i.e, label %.preheader, label %.preheader145
-
-.preheader145:                                    ; preds = %_ZN7lodepngL24convertToXYZ_gamma_tableEPfmmPK11LodePNGInfojPKNS_10LodePNGICCE.exit137
-  br i1 %.not151, label %.loopexit, label %.lr.ph
+  %.not151 = icmp eq i64 %mul.i141, 0
+  br i1 %.not151, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %_ZN7lodepngL24convertToXYZ_gamma_tableEPfmmPK11LodePNGInfojPKNS_10LodePNGICCE.exit137
-  br i1 %.not151, label %.loopexit, label %.lr.ph149
+  br i1 %i.e, label %.lr.ph149, label %.lr.ph
 
 .lr.ph149:                                        ; preds = %.preheader, %.lr.ph149
   %.0112148 = phi i64 [ %i.cy, %.lr.ph149 ], [ 0, %.preheader ] ; 3 uses
@@ -270,8 +267,8 @@ _ZN7lodepngL24convertToXYZ_gamma_tableEPfmmPK11LodePNGInfojPKNS_10LodePNGICCE.ex
   %exitcond153.not = icmp eq i64 %i.cy, %mul.i141
   br i1 %exitcond153.not, label %.loopexit, label %.lr.ph149, !llvm.loop !108
 
-.lr.ph:                                           ; preds = %.preheader145, %.lr.ph
-  %.1113147 = phi i64 [ %i.ea, %.lr.ph ], [ 0, %.preheader145 ] ; 2 uses
+.lr.ph:                                           ; preds = %.preheader, %.lr.ph
+  %.1113147 = phi i64 [ %i.ea, %.lr.ph ], [ 0, %.preheader ] ; 2 uses
   %i.cz = shl i64 %.1113147, 2                    ; 5 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.cz
   %i.db = load i8, ptr %i.da, align 1, !tbaa !21
@@ -307,7 +304,7 @@ _ZN7lodepngL24convertToXYZ_gamma_tableEPfmmPK11LodePNGInfojPKNS_10LodePNGICCE.ex
   %exitcond.not = icmp eq i64 %i.ea, %mul.i141
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !109
 
-.loopexit:                                        ; preds = %.lr.ph, %.lr.ph149, %.preheader145, %.preheader
+.loopexit:                                        ; preds = %.lr.ph, %.lr.ph149, %_ZN7lodepngL24convertToXYZ_gamma_tableEPfmmPK11LodePNGInfojPKNS_10LodePNGICCE.exit137
   %i.eb = call fastcc noundef i32 @_ZN7lodepngL17convertToXYZ_chrmEPfjjPK11LodePNGInfojPKNS_10LodePNGICCES0_(ptr noundef %0, i32 noundef %3, i32 noundef %4, ptr noundef nonnull %i.b, i32 noundef %.0109, ptr noundef %7, ptr noundef %1)
   br label %bb.n
 

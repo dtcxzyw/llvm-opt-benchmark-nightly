@@ -205,16 +205,16 @@ bb.a:
   br i1 %i.l, label %bb.b, label %bb.at
 
 bb.b:                                             ; preds = %bb.a
-  %12 = icmp eq i32 %i.j, 29
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !45   ; 9 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 3 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !47   ; 3 uses
-  %i.q = icmp slt i32 %i.p, 20                    ; 2 uses
-  br i1 %12, label %bb.c, label %13
+  %i.q = icmp slt i32 %i.p, 20
+  br i1 %i.q, label %bb.c, label %bb.at
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %i.q, label %bb.d, label %bb.at
+  %12 = icmp eq i32 %i.j, 29
+  br i1 %12, label %bb.d, label %bb.ao
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
@@ -617,10 +617,7 @@ bb.an:                                            ; preds = %bb.aj, %bb.u, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   br label %bb.au
 
-13:                                               ; preds = %bb.b
-  br i1 %i.q, label %bb.ao, label %bb.at
-
-bb.ao:                                            ; preds = %13
+bb.ao:                                            ; preds = %bb.c
   %i.jn = load ptr, ptr %i.h, align 8, !tbaa !10
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 96
   %i.jp = load ptr, ptr %i.jo, align 8
@@ -690,7 +687,7 @@ bb.as:                                            ; preds = %.sink.split.i118, %
           cleanup
   br label %bb.au
 
-bb.at:                                            ; preds = %13, %_ZN16btManifoldResult20refreshContactPointsEv.exit123, %bb.c, %_ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit, %bb.a
+bb.at:                                            ; preds = %bb.b, %_ZN16btManifoldResult20refreshContactPointsEv.exit123, %_ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit, %bb.a
   call void @_ZN14CProfileSampleD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %5) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   ret void

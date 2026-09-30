@@ -204,23 +204,20 @@ bb.b:                                             ; preds = %bb.a
 .split.us:                                        ; preds = %.thread, %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 2 uses
   %i.d = zext i32 %2 to i64                       ; 2 uses
-  %3 = icmp samesign ugt i32 %2, 10
-  %i.e = icmp samesign eq i64 %1, 0               ; 2 uses
-  br i1 %3, label %.split.us.split.preheader, label %.split.us.split.us.preheader
-
-.split.us.split.us.preheader:                     ; preds = %.split.us
-  br i1 %i.e, label %.loopexit, label %.lr.ph
+  %i.e = icmp samesign eq i64 %1, 0
+  br i1 %i.e, label %.loopexit, label %.split.us.split.preheader
 
 .split.us.split.preheader:                        ; preds = %.split.us
-  br i1 %i.e, label %.loopexit, label %.lr.ph49
+  %3 = icmp samesign ugt i32 %2, 10
+  br i1 %3, label %.lr.ph49, label %.lr.ph
 
 .split.us.split.us:                               ; preds = %bb.c
   %i.f = icmp eq ptr %i.g, %i.c
   br i1 %i.f, label %.loopexit, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.split.us.split.us.preheader, %.split.us.split.us
-  %.sroa.01.0.us.us38 = phi ptr [ %i.g, %.split.us.split.us ], [ %0, %.split.us.split.us.preheader ] ; 2 uses
-  %.sroa.014.0.us.us37 = phi i64 [ %i.q, %.split.us.split.us ], [ 0, %.split.us.split.us.preheader ] ; 4 uses
+.lr.ph:                                           ; preds = %.split.us.split.preheader, %.split.us.split.us
+  %.sroa.01.0.us.us38 = phi ptr [ %i.g, %.split.us.split.us ], [ %0, %.split.us.split.preheader ] ; 2 uses
+  %.sroa.014.0.us.us37 = phi i64 [ %i.q, %.split.us.split.us ], [ 0, %.split.us.split.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.01.0.us.us38, i64 1 ; 2 uses
   %i.h = load i8, ptr %.sroa.01.0.us.us38, align 1, !noundef !5 ; 2 uses
   %i.i = icmp eq i8 %i.h, 32
@@ -280,9 +277,9 @@ bb.e:                                             ; preds = %bb.a
   %i.ak = icmp eq i8 %i.aj, 32
   br i1 %i.ak, label %.loopexit, label %.thread
 
-.loopexit:                                        ; preds = %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us.us, %bb.c, %.lr.ph, %.split.us.split.us, %bb.d, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us, %.lr.ph49, %.split.us.split, %.split.us.split.us.preheader, %.split.us.split.preheader, %bb.b, %bb.f, %bb.e
-  %.sroa.7.0 = phi i64 [ undef, %bb.e ], [ 0, %bb.b ], [ 0, %bb.f ], [ 0, %.split.us.split.us.preheader ], [ 0, %.split.us.split.preheader ], [ %i.ah, %.split.us.split ], [ %.sroa.014.0.us47, %.lr.ph49 ], [ %.sroa.014.0.us47, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us ], [ %.sroa.014.0.us47, %bb.d ], [ %i.q, %.split.us.split.us ], [ %.sroa.014.0.us.us37, %.lr.ph ], [ %.sroa.014.0.us.us37, %bb.c ], [ %.sroa.014.0.us.us37, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us.us ]
-  %.sroa.0.0 = phi i64 [ 0, %bb.e ], [ 1, %bb.b ], [ 1, %bb.f ], [ 1, %.split.us.split.us.preheader ], [ 1, %.split.us.split.preheader ], [ 1, %.split.us.split ], [ 1, %.lr.ph49 ], [ 0, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us ], [ 0, %bb.d ], [ 1, %.split.us.split.us ], [ 1, %.lr.ph ], [ 0, %bb.c ], [ 0, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us.us ]
+.loopexit:                                        ; preds = %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us.us, %bb.c, %.lr.ph, %.split.us.split.us, %bb.d, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us, %.lr.ph49, %.split.us.split, %.split.us, %bb.b, %bb.f, %bb.e
+  %.sroa.7.0 = phi i64 [ undef, %bb.e ], [ 0, %bb.b ], [ 0, %bb.f ], [ %i.ah, %.split.us.split ], [ 0, %.split.us ], [ %.sroa.014.0.us47, %.lr.ph49 ], [ %.sroa.014.0.us47, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us ], [ %.sroa.014.0.us47, %bb.d ], [ %.sroa.014.0.us.us37, %.lr.ph ], [ %.sroa.014.0.us.us37, %bb.c ], [ %.sroa.014.0.us.us37, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us.us ], [ %i.q, %.split.us.split.us ]
+  %.sroa.0.0 = phi i64 [ 0, %bb.e ], [ 1, %bb.b ], [ 1, %bb.f ], [ 1, %.split.us.split ], [ 1, %.split.us ], [ 1, %.lr.ph49 ], [ 0, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us ], [ 0, %bb.d ], [ 1, %.lr.ph ], [ 0, %bb.c ], [ 0, %_RNvMNtNtCskKLDkoKarTP_4core4char7methodsc8to_digit.exit.us.us ], [ 1, %.split.us.split.us ]
   %i.al = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %i.am = insertvalue { i64, i64 } %i.al, i64 %.sroa.7.0, 1
   ret { i64, i64 } %i.am

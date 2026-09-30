@@ -204,19 +204,16 @@ bb.t:                                             ; preds = %bb.s
   %i.dh = sdiv exact i64 %i.dg, 24
   call void @_ZN6hermes6parser11getDocBlockB5cxx11EN4llvh8ArrayRefINS0_13StoredCommentEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %10, ptr %.sroa.048.0, i64 %i.dh) #20
   %i.di = load ptr, ptr %i.bk, align 8, !tbaa !317 ; 6 uses
-  %13 = icmp eq ptr %i.di, %i.bl
   %i.dj = load ptr, ptr %10, align 8, !tbaa !317  ; 5 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 4 uses
-  %i.dl = icmp eq ptr %i.dj, %i.dk                ; 2 uses
-  br i1 %13, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i: ; preds = %bb.t
-  br i1 %i.dl, label %bb.u, label %.thread.i
+  %i.dl = icmp eq ptr %i.dj, %i.dk
+  br i1 %i.dl, label %bb.u, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i: ; preds = %bb.t
-  br i1 %i.dl, label %bb.u, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i
+  %13 = icmp eq ptr %i.di, %i.bl
+  br i1 %13, label %.thread.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i
 
-bb.u:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
+bb.u:                                             ; preds = %bb.t
   %i.dm = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !302 ; 3 uses
   %i.do = icmp ult i64 %i.dn, 16
@@ -244,7 +241,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; p
   %.pre.i = load ptr, ptr %10, align 8, !tbaa !317
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-.thread.i:                                        ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
+.thread.i:                                        ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
   store ptr %i.dj, ptr %i.bk, align 8, !tbaa !317
   %i.dt = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.du = load <2 x i64>, ptr %i.dt, align 8, !tbaa !303

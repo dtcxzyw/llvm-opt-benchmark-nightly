@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %_ZL21compute_huffma
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.loopexit.i.i, %bb.ao
-  %.051.i.i = phi ptr [ %i.hx, %bb.ao ], [ %.7.i.i, %.loopexit.i.i ] ; 16 uses
+  %.051.i.i = phi ptr [ %i.hx, %bb.ao ], [ %.7.i.i, %.loopexit.i.i ] ; 15 uses
   %i.hy = load i32, ptr %i.j, align 8, !tbaa !22
   %i.hz = icmp slt i32 %i.hy, 16
   br i1 %i.hz, label %bb.aq, label %bb.as
@@ -492,27 +492,14 @@ bb.bt:                                            ; preds = %bb.bs
 bb.bu:                                            ; preds = %bb.bt
   %i.my = sub nsw i64 0, %i.ms
   %i.mz = getelementptr inbounds i8, ptr %.051.i.i, i64 %i.my ; 6 uses
-  %2 = icmp eq i32 %.0.i34.i, 1
-  %.not67.i35.i = icmp eq i32 %.047.i.i, 0        ; 2 uses
-  br i1 %2, label %3, label %8
-
-3:                                                ; preds = %bb.bu
+  %.not67.i35.i = icmp eq i32 %.047.i.i, 0
   br i1 %.not67.i35.i, label %.loopexit.i.i, label %.preheader.preheader.i37.i.a
 
-.preheader.preheader.i37.i.a:                     ; preds = %3
-  %4 = load i8, ptr %i.mz, align 1, !tbaa !10
-  %5 = zext i32 %.047.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %.051.i.i, i8 %4, i64 %5, i1 false), !tbaa !10
-  %scevgep.i38.i = getelementptr i8, ptr %.051.i.i, i64 1
-  %6 = add i32 %.047.i.i, -1
-  %7 = zext i32 %6 to i64
-  %scevgep100.i.i = getelementptr i8, ptr %scevgep.i38.i, i64 %7
-  br label %.loopexit.i.i
+.preheader.preheader.i37.i.a:                     ; preds = %bb.bu
+  %2 = icmp eq i32 %.0.i34.i, 1
+  br i1 %2, label %.preheader.preheader.i37.i, label %iter.check
 
-8:                                                ; preds = %bb.bu
-  br i1 %.not67.i35.i, label %.loopexit.i.i, label %iter.check
-
-iter.check:                                       ; preds = %8
+iter.check:                                       ; preds = %.preheader.preheader.i37.i.a
   %i.na = zext i32 %.047.i.i to i64               ; 5 uses
   %min.iters.check = icmp ult i32 %.047.i.i, 4
   %i.nb = add nsw i64 %i.ms, -1
@@ -609,6 +596,16 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.nu = icmp ult i32 %i.np, 7
   br i1 %i.nu, label %.loopexit.i.i, label %.preheader93.i.i
 
+.preheader.preheader.i37.i:                       ; preds = %.preheader.preheader.i37.i.a
+  %3 = load i8, ptr %i.mz, align 1, !tbaa !10
+  %4 = zext i32 %.047.i.i to i64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %.051.i.i, i8 %3, i64 %4, i1 false), !tbaa !10
+  %scevgep.i38.i = getelementptr i8, ptr %.051.i.i, i64 1
+  %5 = add i32 %.047.i.i, -1
+  %6 = zext i32 %5 to i64
+  %scevgep100.i.i = getelementptr i8, ptr %scevgep.i38.i, i64 %6
+  br label %.loopexit.i.i
+
 .preheader93.i.i:                                 ; preds = %.preheader93.i.i.prol.loopexit, %.preheader93.i.i
   %.3.i.i = phi ptr [ %i.os, %.preheader93.i.i ], [ %.3.i.i.unr, %.preheader93.i.i.prol.loopexit ] ; 9 uses
   %.048.i.i = phi ptr [ %i.oq, %.preheader93.i.i ], [ %.048.i.i.unr, %.preheader93.i.i.prol.loopexit ] ; 9 uses
@@ -649,8 +646,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.not66.i36.i.7 = icmp eq i32 %i.ot, 0
   br i1 %.not66.i36.i.7, label %.loopexit.i.i, label %.preheader93.i.i, !llvm.loop !37
 
-.loopexit.i.i:                                    ; preds = %.preheader93.i.i.prol.loopexit, %.preheader93.i.i, %middle.block, %vec.epilog.middle.block, %8, %.preheader.preheader.i37.i.a, %3, %bb.bb
-  %.7.i.i = phi ptr [ %i.jr, %bb.bb ], [ %scevgep100.i.i, %.preheader.preheader.i37.i.a ], [ %.051.i.i, %3 ], [ %.051.i.i, %8 ], [ %i.nk, %vec.epilog.middle.block ], [ %i.nd, %middle.block ], [ %.lcssa114.unr, %.preheader93.i.i.prol.loopexit ], [ %i.os, %.preheader93.i.i ]
+.loopexit.i.i:                                    ; preds = %.preheader93.i.i.prol.loopexit, %.preheader93.i.i, %middle.block, %vec.epilog.middle.block, %.preheader.preheader.i37.i, %bb.bu, %bb.bb
+  %.7.i.i = phi ptr [ %i.jr, %bb.bb ], [ %scevgep100.i.i, %.preheader.preheader.i37.i ], [ %.051.i.i, %bb.bu ], [ %i.nk, %vec.epilog.middle.block ], [ %i.nd, %middle.block ], [ %.lcssa114.unr, %.preheader93.i.i.prol.loopexit ], [ %i.os, %.preheader93.i.i ]
   br label %bb.ap, !llvm.loop !38
 
 bb.bv:                                            ; preds = %bb.bc

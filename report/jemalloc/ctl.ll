@@ -205,25 +205,22 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %.loopexit
   %.5 = phi ptr [ %i.n, %.loopexit ], [ %i.ac, %bb.h ] ; 4 uses
+  %i.af = load i8, ptr %.067117, align 1, !tbaa !59
+  %i.ag = icmp eq i8 %i.af, 0
+  br i1 %i.ag, label %.thread96, label %bb.j
+
+bb.j:                                             ; preds = %bb.i
   %6 = getelementptr inbounds nuw i8, ptr %.5, i64 32
   %7 = load ptr, ptr %6, align 8, !tbaa !24
   %.not83 = icmp eq ptr %7, null
-  %i.af = load i8, ptr %.067117, align 1, !tbaa !59
-  %i.ag = icmp eq i8 %i.af, 0                     ; 2 uses
-  br i1 %.not83, label %8, label %bb.j
+  br i1 %.not83, label %bb.k, label %.thread93
 
-8:                                                ; preds = %bb.i
-  br i1 %i.ag, label %.thread96, label %bb.k
-
-bb.j:                                             ; preds = %bb.i
-  br i1 %i.ag, label %.thread96, label %.thread93
-
-.thread96:                                        ; preds = %8, %bb.j
+.thread96:                                        ; preds = %bb.i
   %i.ah = add i64 %.065119, 1
   store i64 %i.ah, ptr %5, align 8, !tbaa !15
   br label %.loopexit101
 
-bb.k:                                             ; preds = %8
+bb.k:                                             ; preds = %bb.j
   %i.ai = getelementptr inbounds nuw i8, ptr %.067117, i64 1 ; 5 uses
   %i.aj = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.ai, i32 noundef 46) #16 ; 2 uses
   %.not84 = icmp eq ptr %i.aj, null
@@ -253,8 +250,8 @@ bb.n:                                             ; preds = %.loopexit101
   store ptr %.6, ptr %3, align 8, !tbaa !18
   br label %.thread93
 
-.thread93:                                        ; preds = %.preheader, %bb.g, %bb.f, %.loopexit, %bb.e, %bb.c, %bb.j, %bb.n, %.loopexit101
-  %.074 = phi i32 [ 0, %.loopexit101 ], [ 0, %bb.n ], [ 2, %bb.c ], [ 2, %bb.j ], [ 2, %bb.e ], [ 2, %.loopexit ], [ 2, %bb.f ], [ 2, %bb.g ], [ 2, %.preheader ]
+.thread93:                                        ; preds = %bb.j, %.preheader, %bb.g, %bb.f, %.loopexit, %bb.e, %bb.c, %bb.n, %.loopexit101
+  %.074 = phi i32 [ 0, %.loopexit101 ], [ 0, %bb.n ], [ 2, %bb.c ], [ 2, %bb.e ], [ 2, %.loopexit ], [ 2, %bb.f ], [ 2, %bb.g ], [ 2, %.preheader ], [ 2, %bb.j ]
   ret i32 %.074
 }
 

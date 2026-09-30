@@ -204,11 +204,11 @@ bb.i:                                             ; preds = %bb.h
   %.077.fr.i = freeze i64 %.077.i                 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ag, i64 524832 ; 2 uses
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !73 ; 3 uses
-  %.not84100.i = icmp eq ptr %i.at, null          ; 2 uses
-  br i1 %4, label %bb.j, label %bb.ac
+  %.not84100.i = icmp eq ptr %i.at, null
+  br i1 %.not84100.i, label %.critedge.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  br i1 %.not84100.i, label %.critedge.i, label %.lr.ph105.i
+  br i1 %4, label %.lr.ph105.i, label %bb.ac
 
 .lr.ph105.i:                                      ; preds = %bb.j
   %i.au = getelementptr inbounds nuw i8, ptr %i.ag, i64 524600 ; 2 uses
@@ -343,10 +343,9 @@ bb.ab:                                            ; preds = %bb.aa
   %.not84.i = icmp eq ptr %.266.i, null
   br i1 %.not84.i, label %.critedge.i, label %bb.k
 
-bb.ac:                                            ; preds = %bb.i
+bb.ac:                                            ; preds = %bb.j
   %.not83.i = icmp eq i64 %.077.fr.i, 0
-  %or.cond129.i = or i1 %.not84100.i, %.not83.i
-  br i1 %or.cond129.i, label %.critedge.i, label %.lr.ph.split.i
+  br i1 %.not83.i, label %.critedge.i, label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %bb.ac, %bb.ah
   %.36798.i = phi ptr [ %i.cx, %bb.ah ], [ %i.at, %bb.ac ] ; 5 uses
@@ -385,7 +384,7 @@ bb.ah:                                            ; preds = %bb.af, %bb.ae, %bb.
   %.not.i = icmp eq ptr %i.cx, null
   br i1 %.not.i, label %.critedge.i, label %.lr.ph.split.i, !llvm.loop !124
 
-.critedge.i:                                      ; preds = %bb.ah, %.lr.ph.split.i, %bb.x, %.thread112.i, %.split.i, %bb.k, %bb.ac, %bb.j
+.critedge.i:                                      ; preds = %bb.ah, %.lr.ph.split.i, %bb.x, %.thread112.i, %.split.i, %bb.k, %bb.ac, %bb.i
   %i.dj = load i64, ptr %i.ar, align 8, !tbaa !99
   %i.dk = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
   %i.dl = load i64, ptr %i.dk, align 8, !tbaa !54

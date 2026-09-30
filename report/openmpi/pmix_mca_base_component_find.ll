@@ -202,11 +202,11 @@ use_component.exit.thread:                        ; preds = %use_component.exit.
 
 ._crit_edge:                                      ; preds = %use_component.exit.thread, %.lr.ph, %bb.d
   %.050.ph86 = phi ptr [ %i.m, %bb.d ], [ null, %.lr.ph ], [ %i.m, %use_component.exit.thread ] ; 5 uses
-  %i.az = icmp eq ptr %.050.ph86, null            ; 2 uses
-  br i1 %.not, label %component_find_check.exit, label %bb.k
+  %i.az = icmp eq ptr %.050.ph86, null
+  br i1 %i.az, label %component_find_check.exit.thread64, label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge
-  br i1 %i.az, label %component_find_check.exit.thread64, label %.preheader.i42
+  br i1 %.not, label %component_find_check.exit.thread, label %.preheader.i42
 
 .preheader.i42:                                   ; preds = %bb.k
   %i.ba = load ptr, ptr %.050.ph86, align 8, !tbaa !29 ; 2 uses
@@ -264,16 +264,13 @@ bb.n:                                             ; preds = %._crit_edge.i44
   %.not29.i = icmp eq ptr %i.bs, null
   br i1 %.not29.i, label %component_find_check.exit.thread, label %bb.l, !llvm.loop !2
 
-component_find_check.exit:                        ; preds = %._crit_edge
-  br i1 %i.az, label %component_find_check.exit.thread64, label %component_find_check.exit.thread
-
-component_find_check.exit.thread:                 ; preds = %.critedge.i, %bb.n, %.preheader.i42, %component_find_check.exit
-  %.063 = phi i32 [ 0, %component_find_check.exit ], [ 0, %.preheader.i42 ], [ -46, %bb.n ], [ 0, %.critedge.i ]
+component_find_check.exit.thread:                 ; preds = %.critedge.i, %bb.n, %bb.k, %.preheader.i42
+  %.063 = phi i32 [ 0, %bb.k ], [ 0, %.preheader.i42 ], [ -46, %bb.n ], [ 0, %.critedge.i ]
   call void @PMIx_Argv_free(ptr noundef nonnull %.050.ph86) #12
   br label %component_find_check.exit.thread64
 
-component_find_check.exit.thread64:               ; preds = %bb.b, %bb.k, %pmix_mca_base_component_parse_requested.exit, %component_find_check.exit, %component_find_check.exit.thread, %bb.a
-  %.030 = phi i32 [ -1, %pmix_mca_base_component_parse_requested.exit ], [ 0, %bb.a ], [ %.063, %component_find_check.exit.thread ], [ 0, %component_find_check.exit ], [ 0, %bb.k ], [ 0, %bb.b ]
+component_find_check.exit.thread64:               ; preds = %._crit_edge, %bb.b, %pmix_mca_base_component_parse_requested.exit, %component_find_check.exit.thread, %bb.a
+  %.030 = phi i32 [ -1, %pmix_mca_base_component_parse_requested.exit ], [ 0, %bb.a ], [ %.063, %component_find_check.exit.thread ], [ 0, %bb.b ], [ 0, %._crit_edge ]
   ret i32 %.030
 }
 

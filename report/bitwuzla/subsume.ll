@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.bq = load i32, ptr %0, align 8, !tbaa !232
   %i.br = or i32 %i.bq, 1536
   store i32 %i.br, ptr %0, align 8, !tbaa !232
-  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 4832 ; 6 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 4832 ; 5 uses
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !235
   %i.bu = add nsw i64 %i.bt, 1                    ; 3 uses
   store i64 %i.bu, ptr %i.bs, align 8, !tbaa !235
@@ -608,14 +608,14 @@ bb.cp:                                            ; preds = %bb.co, %_ZN7CaDiCaL
   %i.qv = sub i64 %i.ih, %.0142415
   %.not225 = icmp eq i64 %i.ih, %.0142415         ; 2 uses
   %i.qw = load ptr, ptr %i.ai, align 8, !tbaa !189 ; 3 uses
-  %.not227 = icmp eq ptr %i.qw, null              ; 2 uses
-  br i1 %.not225, label %bb.cq, label %3
+  %.not227 = icmp eq ptr %i.qw, null
+  br i1 %.not227, label %bb.cu, label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
-  br i1 %.not227, label %bb.cu, label %bb.cr
+  %2 = load i64, ptr %i.bs, align 8, !tbaa !235   ; 2 uses
+  br i1 %.not225, label %bb.cr, label %bb.ct
 
 bb.cr:                                            ; preds = %bb.cq
-  %2 = load i64, ptr %i.bs, align 8, !tbaa !235
   invoke void (ptr, ptr, i64, ptr, ...) @_ZN7CaDiCaL8Internal5phaseEPKclS2_z(ptr noundef nonnull align 8 dereferenceable(7288) %i.qw, ptr noundef nonnull @.str, i64 noundef %2, ptr noundef nonnull @.str.5, i64 noundef %i.ih)
           to label %bb.cu unwind label %bb.cs
 
@@ -625,20 +625,16 @@ bb.cs:                                            ; preds = %_ZN7CaDiCaL12erase_
           cleanup
   br label %bb.ea
 
-3:                                                ; preds = %bb.cp
-  br i1 %.not227, label %bb.cu, label %bb.ct
-
-bb.ct:                                            ; preds = %3
-  %4 = load i64, ptr %i.bs, align 8, !tbaa !235
+bb.ct:                                            ; preds = %bb.cq
   %i.qy = uitofp nneg i64 %.0142415 to double
   %i.qz = sitofp i64 %i.ih to double
   %i.ra = fmul nnan double %i.qy, 1.000000e+02
   %i.rb = fdiv double %i.ra, %i.qz
   %i.rc = select i1 %.not387463, double 0.000000e+00, double %i.rb
-  invoke void (ptr, ptr, i64, ptr, ...) @_ZN7CaDiCaL8Internal5phaseEPKclS2_z(ptr noundef nonnull align 8 dereferenceable(7288) %i.qw, ptr noundef nonnull @.str, i64 noundef %4, ptr noundef nonnull @.str.6, i64 noundef %.0142415, double noundef %i.rc, i64 noundef %i.qv)
+  invoke void (ptr, ptr, i64, ptr, ...) @_ZN7CaDiCaL8Internal5phaseEPKclS2_z(ptr noundef nonnull align 8 dereferenceable(7288) %i.qw, ptr noundef nonnull @.str, i64 noundef %2, ptr noundef nonnull @.str.6, i64 noundef %.0142415, double noundef %i.rc, i64 noundef %i.qv)
           to label %bb.cu unwind label %bb.cs
 
-bb.cu:                                            ; preds = %3, %bb.ct, %bb.cq, %bb.cr
+bb.cu:                                            ; preds = %bb.cp, %bb.ct, %bb.cr
   %.not.i285 = icmp eq ptr %.sroa.30.2, %.sroa.0335.6
   br i1 %.not.i285, label %_ZN7CaDiCaL12erase_vectorINS_10ClauseSizeEEEvRSt6vectorIT_SaIS3_EE.exit, label %bb.cv
 

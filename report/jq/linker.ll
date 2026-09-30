@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br label %.thread
 
 .lr.ph:                                           ; preds = %.preheader, %bb.q
-  %.0180225 = phi i64 [ %i.el, %bb.q ], [ 0, %.preheader ] ; 3 uses
+  %.0180225 = phi i64 [ %i.el, %bb.q ], [ 0, %.preheader ] ; 5 uses
   %i.ef = load ptr, ptr %6, align 8, !tbaa !20
   %i.eg = getelementptr inbounds nuw [32 x i8], ptr %i.ef, i64 %.0180225
   %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !24
@@ -213,18 +213,17 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %i.ek, label %._crit_edge, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph
-  %i.el = add nuw i64 %.0180225, 1                ; 3 uses
+  %i.el = add nuw i64 %.0180225, 1                ; 2 uses
   %i.em = icmp ult i64 %i.el, %.pre.pre
-  br i1 %i.em, label %.lr.ph, label %._crit_edge, !llvm.loop !34
+  br i1 %i.em, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !34
 
-._crit_edge:                                      ; preds = %bb.q, %.lr.ph
-  %.0180.lcssa.ph = phi i64 [ %i.el, %bb.q ], [ %.0180225, %.lr.ph ] ; 3 uses
-  %i.en = icmp ult i64 %.0180.lcssa.ph, %.pre.pre
+._crit_edge:                                      ; preds = %.lr.ph
+  %i.en = icmp ult i64 %.0180225, %.pre.pre
   br i1 %i.en, label %bb.r, label %._crit_edge.thread
 
 bb.r:                                             ; preds = %._crit_edge
   %i.eo = load ptr, ptr %6, align 8, !tbaa !20
-  %i.ep = getelementptr inbounds nuw [32 x i8], ptr %i.eo, i64 %.0180.lcssa.ph
+  %i.ep = getelementptr inbounds nuw [32 x i8], ptr %i.eo, i64 %.0180225
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 24
   %i.er = load i32, ptr %i.eq, align 8, !tbaa !25
   %.not191 = icmp eq i32 %i.er, 0
@@ -233,7 +232,7 @@ bb.r:                                             ; preds = %._crit_edge
 bb.s:                                             ; preds = %bb.r
   tail call void @jv_free(i64 %i.dj, ptr %i.dk) #11
   %i.es = load ptr, ptr %6, align 8, !tbaa !20
-  %i.et = getelementptr inbounds nuw [32 x i8], ptr %i.es, i64 %.0180.lcssa.ph ; 2 uses
+  %i.et = getelementptr inbounds nuw [32 x i8], ptr %i.es, i64 %.0180225 ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 8
   %i.ev = load ptr, ptr %i.eu, align 8
   %i.ew = getelementptr inbounds nuw i8, ptr %i.et, i64 16
@@ -243,7 +242,7 @@ bb.s:                                             ; preds = %bb.r
   %i.fa = extractvalue { ptr, ptr } %i.ey, 1
   br label %.thread
 
-._crit_edge.thread:                               ; preds = %.preheader, %._crit_edge
+._crit_edge.thread:                               ; preds = %bb.q, %.preheader, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #11
   %i.fb = tail call { ptr, ptr } @gen_noop() #11  ; 0 uses
   %i.fc = call fastcc i32 @load_library(ptr noundef %0, i64 %i.dj, ptr %i.dk, i32 noundef %i.ad, i32 noundef %spec.select, i32 noundef %.0187, ptr noundef %.0185, ptr noundef %8, ptr noundef %6)

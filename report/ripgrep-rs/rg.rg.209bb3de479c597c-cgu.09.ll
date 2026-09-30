@@ -202,7 +202,7 @@ bb.ae:                                            ; preds = %bb.r
   %.first_iter.i16 = icmp ult i64 %i.gp, %i.dq
   %exitcond.not.i17310.not = icmp ult i64 %.fr215, %i.dq
   %invariant.op359 = sub i64 1, %.fr215, !dbg !10392
-  %.not34.i.us313 = icmp eq i64 %.fr215, 0        ; 2 uses
+  %.not34.i.us313 = icmp eq i64 %.fr215, 0
   br label %.lr.ph.split.us.i, !dbg !10392
 
 .lr.ph.split.us.i:                                ; preds = %bb.ah, %.lr.ph.i15
@@ -226,10 +226,10 @@ bb.ae:                                            ; preds = %bb.r
   br i1 %exitcond.not.i17, label %.preheader.i19.preheader, label %.lr.ph312, !dbg !10398
 
 .preheader.i19.preheader:                         ; preds = %.preheader35.i, %.preheader35.i.preheader
-  br i1 %.first_iter.i16, label %.preheader.i19.us.preheader, label %.preheader.i19
+  br i1 %.not34.i.us313, label %.split.us.i21, label %.preheader.i19.us.preheader
 
 .preheader.i19.us.preheader:                      ; preds = %.preheader.i19.preheader
-  br i1 %.not34.i.us313, label %.split.us.i21, label %.lr.ph315, !dbg !10401
+  br i1 %.first_iter.i16, label %.lr.ph315, label %.split32.us.i20, !dbg !10401
 
 .preheader.i19.us:                                ; preds = %.lr.ph315
   %.not34.i.us = icmp eq i64 %i.gz, 0, !dbg !10402
@@ -264,10 +264,7 @@ bb.ae:                                            ; preds = %bb.r
   %.not21.us.i = icmp eq i8 %i.hi, %i.hm, !dbg !10412
   br i1 %.not21.us.i, label %.preheader35.i, label %bb.af, !dbg !10412
 
-.preheader.i19:                                   ; preds = %.preheader.i19.preheader
-  br i1 %.not34.i.us313, label %.split.us.i21, label %.split32.us.i20, !dbg !10401
-
-.split32.us.i20:                                  ; preds = %.preheader.i19
+.split32.us.i20:                                  ; preds = %.preheader.i19.us.preheader
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.gp, i64 noundef range(i64 0, -9223372036854775808) %i.dq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #28, !dbg !10404, !noalias !10261
   unreachable, !dbg !10404
 
@@ -291,7 +288,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %.sp
   store i64 %i.dm, ptr %i.dr, align 8, !dbg !10423, !alias.scope !10255, !noalias !10258
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECs2NzvFoTxuAy_2rg.exit, !dbg !10424
 
-.split.us.i21:                                    ; preds = %.preheader.i19.us.preheader, %.preheader.i19.us, %.preheader.i19
+.split.us.i21:                                    ; preds = %.preheader.i19.preheader, %.preheader.i19.us
   %i.hr = add i64 %i.gr, %i.dq, !dbg !10425       ; 2 uses
   store i64 %i.hr, ptr %i.dr, align 8, !dbg !10425, !alias.scope !10255, !noalias !10258
   %i.hs = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !10426

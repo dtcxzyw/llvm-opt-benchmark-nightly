@@ -202,11 +202,11 @@ bb.a:
 thread-pre-split:                                 ; preds = %thread-pre-split.backedge, %bb.a
   %.018.ph = phi i1 [ false, %bb.a ], [ %.018.ph.be, %thread-pre-split.backedge ] ; 4 uses
   %.0.ph = phi i32 [ 0, %bb.a ], [ %.0.ph.be, %thread-pre-split.backedge ] ; 9 uses
-  %.b29.pr = load i1, ptr @stop_backfill, align 1 ; 2 uses
-  br i1 %.018.ph, label %thread-pre-split.split.us, label %thread-pre-split.split
+  %.b29.pr = load i1, ptr @stop_backfill, align 1
+  br i1 %.b29.pr, label %.split.us, label %thread-pre-split.split.us
 
 thread-pre-split.split.us:                        ; preds = %thread-pre-split
-  br i1 %.b29.pr, label %.split.us, label %.critedge
+  br i1 %.018.ph, label %.critedge, label %.critedge179
 
 .critedge:                                        ; preds = %thread-pre-split.split.us, %bb.b
   %i.c = tail call fastcc i32 @_my_sleep(i64 noundef 1000000) ; 0 uses
@@ -218,10 +218,7 @@ bb.b:                                             ; preds = %.critedge
   %i.e = trunc nuw i8 %i.d to i1
   br i1 %i.e, label %.critedge, label %.split75.us, !llvm.loop !24
 
-thread-pre-split.split:                           ; preds = %thread-pre-split
-  br i1 %.b29.pr, label %.split.us, label %.critedge179
-
-.critedge179:                                     ; preds = %thread-pre-split.split, %bb.c
+.critedge179:                                     ; preds = %thread-pre-split.split.us, %bb.c
   %i.f = load i32, ptr @backfill_interval, align 4 ; 2 uses
   %i.g = icmp eq i32 %i.f, -1
   %i.h = sext i32 %i.f to i64
@@ -462,7 +459,7 @@ bb.ag:                                            ; preds = %bb.af
   tail call void (ptr, ...) @fatal_abort(ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.backfill_agent) #16
   unreachable
 
-.split.us:                                        ; preds = %thread-pre-split.split, %thread-pre-split.split.us, %.critedge179, %.critedge
+.split.us:                                        ; preds = %thread-pre-split, %.critedge179, %.critedge
   %i.bv = load ptr, ptr @het_job_list, align 8    ; 2 uses
   %.not38 = icmp eq ptr %i.bv, null
   br i1 %.not38, label %bb.ai, label %bb.ah

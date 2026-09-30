@@ -204,14 +204,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef i64 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %1), !inline_history !2 ; 3 uses
-  %.not21 = icmp eq i64 %i.d, 0                   ; 2 uses
-  br i1 %3, label %.preheader, label %.preheader15
-
-.preheader15:                                     ; preds = %bb.a
-  br i1 %.not21, label %.loopexit, label %.lr.ph
+  %.not21 = icmp eq i64 %i.d, 0
+  br i1 %.not21, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  br i1 %.not21, label %.loopexit, label %.lr.ph20
+  br i1 %3, label %.lr.ph20, label %.lr.ph
 
 .lr.ph20:                                         ; preds = %.preheader, %.lr.ph20
   %.01419 = phi i64 [ %i.i, %.lr.ph20 ], [ 0, %.preheader ] ; 2 uses
@@ -224,8 +221,8 @@ bb.a:
   %exitcond.not = icmp eq i64 %i.i, %i.d
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph20, !llvm.loop !62
 
-.lr.ph:                                           ; preds = %.preheader15, %.lr.ph
-  %.018 = phi i64 [ %i.j, %.lr.ph ], [ %i.d, %.preheader15 ]
+.lr.ph:                                           ; preds = %.preheader, %.lr.ph
+  %.018 = phi i64 [ %i.j, %.lr.ph ], [ %i.d, %.preheader ]
   %i.j = add i64 %.018, -1                        ; 3 uses
   %i.k = load ptr, ptr %1, align 8, !tbaa !13
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
@@ -235,7 +232,7 @@ bb.a:
   %.not = icmp eq i64 %i.j, 0
   br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !63
 
-.loopexit:                                        ; preds = %.lr.ph, %.lr.ph20, %.preheader15, %.preheader
+.loopexit:                                        ; preds = %.lr.ph, %.lr.ph20, %bb.a
   ret void
 }
 

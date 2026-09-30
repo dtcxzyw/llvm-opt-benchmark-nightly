@@ -202,22 +202,19 @@ bb.b:                                             ; preds = %.lr.ph, %check_size
   br i1 %.not, label %bb.c, label %.critedge.loopexit
 
 bb.c:                                             ; preds = %bb.b
-  %7 = load i32, ptr %i.e, align 8, !tbaa !29
-  %.not134 = icmp eq i32 %7, 0
   %.pre = load i32, ptr %i.f, align 8, !tbaa !28
-  %.not136 = icmp eq i32 %.pre, 0                 ; 2 uses
-  br i1 %.not134, label %bb.e, label %8
+  %.not136 = icmp eq i32 %.pre, 0
+  br i1 %.not136, label %.thread, label %bb.e
 
-8:                                                ; preds = %bb.c
-  br i1 %.not136, label %.thread, label %bb.d
-
-bb.d:                                             ; preds = %8
+bb.d:                                             ; preds = %bb.e
   %.not149 = icmp eq i64 %i.ac, 0
   %. = select i1 %.not149, i32 2, i32 0
   br label %check_size_of_link_allocation_.exit
 
 bb.e:                                             ; preds = %bb.c
-  br i1 %.not136, label %.thread, label %bb.f
+  %7 = load i32, ptr %i.e, align 8, !tbaa !29
+  %.not134 = icmp eq i32 %7, 0
+  br i1 %.not134, label %bb.f, label %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ae = load i32, ptr %i.g, align 8, !tbaa !44
@@ -412,7 +409,7 @@ bb.ad:                                            ; preds = %bb.ac
   store i32 0, ptr %i.f, align 8, !tbaa !28
   br label %check_size_of_link_allocation_.exit.thread156
 
-.thread:                                          ; preds = %8, %bb.e
+.thread:                                          ; preds = %bb.c
   %i.dc = call i32 @ogg_sync_pageout(ptr noundef nonnull %i.aa, ptr noundef nonnull %i.ab) #14 ; 2 uses
   %i.dd = icmp sgt i32 %i.dc, 0
   br i1 %i.dd, label %bb.ae, label %bb.af

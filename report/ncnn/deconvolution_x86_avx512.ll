@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 488 ; 2 uses
   %i.am = trunc i64 %spec.select to i32
   %i.an = mul i32 %i.r, %i.am                     ; 11 uses
-  %i.ao = icmp sgt i32 %i.an, 0                   ; 3 uses
+  %i.ao = icmp sgt i32 %i.an, 0                   ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 216
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !48 ; 2 uses
   %i.ar = icmp sgt i32 %i.aq, 0
@@ -469,10 +469,10 @@ _ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split.us: ; preds = %._
   br i1 %exitcond153.not, label %._crit_edge, label %.noexc44.us
 
 .noexc44.lr.ph.split:                             ; preds = %.noexc44.lr.ph
-  br i1 %i.aj, label %.noexc44.lr.ph.split.split.us, label %.noexc44.lr.ph.split.split
+  br i1 %i.ao, label %.noexc44.lr.ph.split.split.us, label %._crit_edge
 
 .noexc44.lr.ph.split.split.us:                    ; preds = %.noexc44.lr.ph.split
-  br i1 %i.ao, label %.noexc44.us98.preheader, label %._crit_edge
+  br i1 %i.aj, label %.noexc44.us98.preheader, label %.noexc44.lr.ph.split.split.split.us
 
 .noexc44.us98.preheader:                          ; preds = %.noexc44.lr.ph.split.split.us
   %i.ec = zext nneg i32 %i.an to i64
@@ -540,10 +540,7 @@ _ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split.us: ; preds = %._
   %exitcond136.not.7 = icmp eq i32 %i.ef, %lftr.wideiv135.7
   br i1 %exitcond136.not.7, label %._crit_edge, label %.noexc44.us98
 
-.noexc44.lr.ph.split.split:                       ; preds = %.noexc44.lr.ph.split
-  br i1 %i.ao, label %.noexc44.lr.ph.split.split.split.us, label %._crit_edge
-
-.noexc44.lr.ph.split.split.split.us:              ; preds = %.noexc44.lr.ph.split.split
+.noexc44.lr.ph.split.split.split.us:              ; preds = %.noexc44.lr.ph.split.split.us
   %i.et = load i64, ptr %i.ak, align 8, !tbaa !21
   %i.eu = load i32, ptr %i.al, align 8, !tbaa !64
   %i.ev = sext i32 %i.eu to i64
@@ -712,7 +709,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %exitcond126.not = icmp eq i32 %i.ez, %lftr.wideiv
   br i1 %exitcond126.not, label %._crit_edge, label %iter.check
 
-._crit_edge:                                      ; preds = %._ZN4ncnn3Mat4fillEf.exit.preheader_crit_edge.us115, %.noexc44.us108.us.prol.loopexit, %.noexc44.us108.us, %.noexc44.us98.prol.loopexit, %.noexc44.us98, %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split.us, %.noexc44.lr.ph.split.split, %.noexc44.lr.ph.split.split.us, %bb.b
+._crit_edge:                                      ; preds = %._ZN4ncnn3Mat4fillEf.exit.preheader_crit_edge.us115, %.noexc44.us108.us.prol.loopexit, %.noexc44.us108.us, %.noexc44.us98.prol.loopexit, %.noexc44.us98, %_ZN4ncnn3Mat4fillEf.exit._ZN4ncnn3MatD2Ev.exit_crit_edge.split.us, %.noexc44.lr.ph.split, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9

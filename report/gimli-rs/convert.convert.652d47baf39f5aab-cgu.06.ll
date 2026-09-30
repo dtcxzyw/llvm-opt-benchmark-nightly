@@ -204,19 +204,16 @@ bb.q:                                             ; preds = %bb.e
   %.val45 = load i64, ptr %i.aq, align 8, !noundef !5 ; 4 uses
   %i.ar = icmp sgt i64 %.val45, -1
   call void @llvm.assume(i1 %i.ar)
-  %i.as = icmp ugt i64 %1, %.val45                ; 2 uses
-  br i1 %i.an, label %bb.s, label %4
+  %i.as = icmp ugt i64 %1, %.val45
+  br i1 %i.as, label %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit, label %bb.s
 
-4:                                                ; preds = %bb.q
-  br i1 %i.as, label %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit, label %bb.r
-
-bb.r:                                             ; preds = %4
+bb.r:                                             ; preds = %bb.s
   %i.at = sub nuw nsw i64 %.val45, %1
   %i.au = icmp samesign ult i64 %i.at, 3
   br i1 %i.au, label %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit, label %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit.sink.split
 
 bb.s:                                             ; preds = %bb.q
-  br i1 %i.as, label %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit, label %bb.t
+  br i1 %i.an, label %bb.t, label %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.av = getelementptr inbounds nuw i8, ptr %i.i, i64 1
@@ -232,8 +229,8 @@ _RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endiani
   call void @_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECs8GyQQEoxZtT_7convert(ptr noalias nofree noundef nonnull %i.ay, i64 noundef 3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sink72, i64 noundef 3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5)
   br label %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit
 
-_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit: ; preds = %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit.sink.split, %bb.t, %bb.s, %bb.r, %4
-  %.sroa.0.1 = phi i64 [ 1, %bb.r ], [ 0, %bb.s ], [ 0, %4 ], [ 1, %bb.t ], [ 255, %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit.sink.split ]
+_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit: ; preds = %bb.q, %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit.sink.split, %bb.t, %bb.r
+  %.sroa.0.1 = phi i64 [ 1, %bb.r ], [ 0, %bb.q ], [ 255, %_RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endianity13RunTimeEndianENtNtB6_6writer6Writer8write_atCs8GyQQEoxZtT_7convert.exit.sink.split ], [ 1, %bb.t ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   br label %bb.m
 

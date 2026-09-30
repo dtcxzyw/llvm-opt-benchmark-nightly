@@ -202,11 +202,11 @@ bb.bo:                                            ; preds = %.noexc177
 
 .noexc178:                                        ; preds = %bb.bo
   %i.ey = load i32, ptr @_ZN5Error8r_error_E, align 4, !tbaa !21
-  %.not44.i = icmp eq i32 %i.ey, 0                ; 2 uses
-  br i1 %i.ex, label %bb.bp, label %7
+  %.not44.i = icmp eq i32 %i.ey, 0
+  br i1 %.not44.i, label %bb.bp, label %_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit.thread
 
 bb.bp:                                            ; preds = %.noexc178
-  br i1 %.not44.i, label %bb.bq, label %_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit.thread
+  br i1 %i.ex, label %bb.bq, label %bb.bv
 
 bb.bq:                                            ; preds = %bb.bp
   %i.ez = invoke noundef i32 @_Z13pure_rnd_uptojPK6FilterPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(i32 noundef 10, ptr noundef null, ptr noundef null)
@@ -257,10 +257,7 @@ bb.bu:                                            ; preds = %bb.bt
   %i.fn = add nsw i32 %.v.i, %.2247258
   br label %_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit
 
-7:                                                ; preds = %.noexc178
-  br i1 %.not44.i, label %bb.bv, label %_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit.thread
-
-bb.bv:                                            ; preds = %7
+bb.bv:                                            ; preds = %bb.bp
   %i.fo = icmp slt i32 %i.er, %i.ep
   br i1 %i.fo, label %bb.bx, label %bb.bw
 
@@ -663,8 +660,8 @@ bb.fb:                                            ; preds = %bb.fa, %bb.ex
   store ptr %storemerge, ptr %3, align 8, !tbaa !64
   br label %_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit.thread
 
-_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit.thread: ; preds = %bb.h, %.noexc177, %bb.bp, %7, %_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit, %bb.ci, %bb.ch, %bb.dl, %bb.ek, %bb.ej, %bb.er, %bb.es, %bb.fb, %bb.du, %bb.dv, %bb.cx, %bb.cy, %bb.cq, %bb.cc
-  %.898 = phi ptr [ null, %.noexc177 ], [ null, %_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit ], [ null, %bb.cc ], [ null, %bb.ch ], [ null, %bb.ci ], [ null, %bb.cq ], [ null, %bb.cx ], [ null, %bb.cy ], [ null, %bb.dl ], [ null, %bb.du ], [ null, %bb.dv ], [ null, %bb.ej ], [ null, %bb.ek ], [ %i.v, %bb.fb ], [ null, %bb.es ], [ null, %bb.er ], [ null, %7 ], [ null, %bb.bp ], [ null, %bb.h ]
+_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit.thread: ; preds = %bb.h, %.noexc177, %.noexc178, %_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit, %bb.ci, %bb.ch, %bb.dl, %bb.ek, %bb.ej, %bb.er, %bb.es, %bb.fb, %bb.du, %bb.dv, %bb.cx, %bb.cy, %bb.cq, %bb.cc
+  %.898 = phi ptr [ null, %.noexc177 ], [ null, %_ZL24make_random_loop_controlRiS_S_R10eBinaryOpsR10eAssignOpsb.exit ], [ null, %bb.cc ], [ null, %bb.ch ], [ null, %bb.ci ], [ null, %bb.cq ], [ null, %bb.cx ], [ null, %bb.cy ], [ null, %bb.dl ], [ null, %bb.du ], [ null, %bb.dv ], [ null, %bb.ej ], [ null, %bb.ek ], [ %i.v, %bb.fb ], [ null, %bb.es ], [ null, %bb.er ], [ null, %.noexc178 ], [ null, %bb.h ]
   %i.kt = load ptr, ptr %5, align 8, !tbaa !28    ; 3 uses
   %.not.i.i.i187 = icmp eq ptr %i.kt, null
   br i1 %.not.i.i.i187, label %_ZNSt6vectorIPK8VariableSaIS2_EED2Ev.exit188, label %bb.fc

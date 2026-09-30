@@ -204,24 +204,21 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.082 = phi ptr [ %spec.store.select, %bb.d ], [ %i.k, %bb.c ], [ %i.i, %bb.b ]
   %i.o = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 256, ptr noundef nonnull @.str.220, ptr noundef nonnull %.082) #16 ; 0 uses
   %i.p = call i32 @mkdir(ptr noundef nonnull %i.a, i32 noundef 448) #16
-  %4 = icmp slt i32 %i.p, 0
   %i.q = tail call ptr @__errno_location() #17    ; 2 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !9
-  %.not = icmp eq i32 %i.r, 17                    ; 2 uses
-  br i1 %4, label %bb.f, label %5
+  %.not = icmp eq i32 %i.r, 17
+  br i1 %.not, label %.thread149, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  br i1 %.not, label %.thread149, label %bb.g
+  %4 = icmp slt i32 %i.p, 0
+  br i1 %4, label %bb.g, label %bb.k
 
 bb.g:                                             ; preds = %bb.f
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.221, ptr noundef nonnull %i.a) #16
   call void @free(ptr noundef nonnull %i.g) #16
   br label %bb.am
 
-5:                                                ; preds = %bb.e
-  br i1 %.not, label %.thread149, label %bb.k
-
-.thread149:                                       ; preds = %bb.f, %5
+.thread149:                                       ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   %i.s = call i32 @stat(ptr noundef nonnull %i.a, ptr noundef nonnull %2) #16
   %i.t = icmp sgt i32 %i.s, -1
@@ -251,7 +248,7 @@ bb.j:                                             ; preds = %.thread149
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   br label %bb.am
 
-bb.k:                                             ; preds = %.thread, %5
+bb.k:                                             ; preds = %bb.f, %.thread
   %i.aa = call ptr @messageFindArgument(ptr noundef nonnull %0, ptr noundef nonnull @.str.224) #16 ; 9 uses
   %i.ab = icmp eq ptr %i.aa, null
   br i1 %i.ab, label %bb.l, label %bb.m

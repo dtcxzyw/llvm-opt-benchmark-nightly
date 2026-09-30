@@ -205,29 +205,26 @@ bb.a:
   %i.f = getelementptr inbounds nuw [5064 x i8], ptr %i.b, i64 %.sroa.0.03.i ; 3 uses
   %i.g = add nuw nsw i64 %.sroa.0.03.i, 1         ; 2 uses
   %i.h = load i64, ptr %i.f, align 8, !range !13, !alias.scope !2538, !noundef !4
-  %1 = icmp eq i64 %i.h, 0
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 392
   tail call void @_RNvXs0_NtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector10static_vecINtB5_9StaticVecNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeKj8_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 8 dereferenceable(2824) %i.j) #21
   %i.k = load i64, ptr %i.i, align 8, !range !10, !alias.scope !2538, !noundef !4
-  %i.l = icmp eq i64 %i.k, -1                     ; 2 uses
-  br i1 %1, label %bb.b, label %2
+  %i.l = icmp eq i64 %i.k, -1
+  br i1 %i.l, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCsacUAxWRcRNR_9__iceoryx215service_details14ServiceDetailsEBF_.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i
-  br i1 %i.l, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCsacUAxWRcRNR_9__iceoryx215service_details14ServiceDetailsEBF_.exit.i, label %bb.c
+  %1 = icmp eq i64 %i.h, 0
+  br i1 %1, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvXs1_NtCsbqH9stoieM8_5alloc7raw_vecINtB5_6RawVecINtNtCsg6ZEkMtNi4J_8iceoryx24node9NodeStateNtNtNtBR_7service14ipc_threadsafe7ServiceEENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 8 dereferenceable(5056) %i.i) #21
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCsacUAxWRcRNR_9__iceoryx215service_details14ServiceDetailsEBF_.exit.i
 
-2:                                                ; preds = %.lr.ph.i
-  br i1 %i.l, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCsacUAxWRcRNR_9__iceoryx215service_details14ServiceDetailsEBF_.exit.i, label %bb.d
-
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.b
   tail call void @_RNvXs1_NtCsbqH9stoieM8_5alloc7raw_vecINtB5_6RawVecINtNtCsg6ZEkMtNi4J_8iceoryx24node9NodeStateNtNtNtBR_7service16local_threadsafe7ServiceEENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 8 dereferenceable(5056) %i.i) #21
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCsacUAxWRcRNR_9__iceoryx215service_details14ServiceDetailsEBF_.exit.i
 
-_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCsacUAxWRcRNR_9__iceoryx215service_details14ServiceDetailsEBF_.exit.i: ; preds = %bb.d, %2, %bb.c, %bb.b
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCsacUAxWRcRNR_9__iceoryx215service_details14ServiceDetailsEBF_.exit.i: ; preds = %bb.d, %bb.c, %.lr.ph.i
   %i.m = icmp eq i64 %i.g, %i.d
   br i1 %i.m, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueSNtNtCsacUAxWRcRNR_9__iceoryx215service_details14ServiceDetailsEBG_.exit, label %.lr.ph.i
 

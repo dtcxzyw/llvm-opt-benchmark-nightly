@@ -202,28 +202,24 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.m unwind label %bb.j, !noalias !474
 
 bb.e:                                             ; preds = %bb.c
-  %1 = icmp eq i64 %i.f, 0
   %i.s = atomicrmw sub ptr %i.l, i64 1 release, align 8, !noalias !475
-  %i.t = icmp eq i64 %i.s, 1                      ; 2 uses
-  br i1 %1, label %bb.f, label %2
+  %i.t = icmp eq i64 %i.s, 1
+  br i1 %i.t, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i
 
 bb.f:                                             ; preds = %bb.e
-  br i1 %i.t, label %bb.g, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i
+  %1 = icmp eq i64 %i.f, 0
+  fence acquire
+  br i1 %1, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  fence acquire
   call void @_RNvMsn_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler14current_thread6HandleE9drop_slowBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.m) #14, !noalias !474
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i
 
-2:                                                ; preds = %bb.e
-  br i1 %i.t, label %bb.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i
-
-bb.h:                                             ; preds = %2
-  fence acquire
+bb.h:                                             ; preds = %bb.f
   call void @_RNvMsn_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6handle6HandleE9drop_slowBQ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.m) #14, !noalias !474
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i: ; preds = %bb.h, %2, %bb.g, %bb.f
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i: ; preds = %bb.h, %bb.g, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !474
   br label %bb.i
 
@@ -493,28 +489,24 @@ bb.f:                                             ; preds = %bb.e
           to label %bb.n unwind label %bb.k
 
 bb.g:                                             ; preds = %bb.e
-  %0 = icmp eq i64 %i.f, 0
   %i.s = atomicrmw sub ptr %i.l, i64 1 release, align 8, !noalias !508
-  %i.t = icmp eq i64 %i.s, 1                      ; 2 uses
-  br i1 %0, label %bb.h, label %1
+  %i.t = icmp eq i64 %i.s, 1
+  br i1 %i.t, label %bb.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i.i
 
 bb.h:                                             ; preds = %bb.g
-  br i1 %i.t, label %bb.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i.i
+  %0 = icmp eq i64 %i.f, 0
+  fence acquire
+  br i1 %0, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  fence acquire
   call void @_RNvMsn_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler14current_thread6HandleE9drop_slowBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.m) #14
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i.i
 
-1:                                                ; preds = %bb.g
-  br i1 %i.t, label %bb.j, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i.i
-
-bb.j:                                             ; preds = %1
-  fence acquire
+bb.j:                                             ; preds = %bb.h
   call void @_RNvMsn_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6handle6HandleE9drop_slowBQ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.m) #14
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i.i
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i.i: ; preds = %bb.j, %1, %bb.i, %bb.h
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6handle6HandleEBH_.exit.i.i: ; preds = %bb.j, %bb.i, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RINvNtNtCslghKHtsL3a4_5tokio4time5clock10with_clockNtNtB4_7instant7InstantNCNvB2_3now0EB6_.exit.i
 

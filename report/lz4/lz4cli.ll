@@ -202,7 +202,7 @@ bb.dr:                                            ; preds = %bb.dq
 readU32FromChar.exit524:                          ; preds = %.critedge.i512, %bb.dq, %bb.dr
   %.lcssa11841186 = phi ptr [ %i.ka, %bb.dr ], [ %.lcssa11841185, %bb.dq ], [ %i.jo, %.critedge.i512 ]
   %.2.i518 = phi i32 [ %spec.select.i517, %bb.dr ], [ %spec.select.i517, %bb.dq ], [ %i.jn, %.critedge.i512 ] ; 5 uses
-  %i.kb = getelementptr inbounds i8, ptr %.lcssa11841186, i64 -1 ; 6 uses
+  %i.kb = getelementptr inbounds i8, ptr %.lcssa11841186, i64 -1 ; 5 uses
   %i.kc = icmp ult i32 %.2.i518, 4
   br i1 %i.kc, label %.thread, label %bb.ds
 
@@ -228,11 +228,6 @@ bb.du:                                            ; preds = %bb.dt
   %i.kk = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.kh, ptr noundef nonnull @.str.46, i32 noundef %i.kj) #23 ; 0 uses
   br label %.preheader739.backedge
 
-.preheader739.backedge:                           ; preds = %bb.du, %bb.dt, %5, %bb.ea, %bb.dy, %bb.dz, %bb.dm, %bb.dl, %bb.dk
-  %.lcssa11841187.be = phi ptr [ %i.kb, %bb.ea ], [ %i.jd, %bb.dm ], [ %i.kb, %5 ], [ %i.jd, %bb.dk ], [ %i.jd, %bb.dl ], [ %i.kb, %bb.du ], [ %i.kb, %bb.dt ], [ %i.kb, %bb.dz ], [ %i.kb, %bb.dy ]
-  %.2263.be = phi i64 [ %i.kn, %bb.ea ], [ %.2263, %bb.dm ], [ %i.kn, %5 ], [ %.2263, %bb.dk ], [ %.2263, %bb.dl ], [ %i.ke, %bb.du ], [ %i.ke, %bb.dt ], [ %i.kn, %bb.dz ], [ %i.kn, %bb.dy ]
-  br label %.preheader739
-
 bb.dv:                                            ; preds = %bb.ds
   %i.kl = icmp ult i32 %.2.i518, 32
   br i1 %i.kl, label %bb.dw, label %bb.dx
@@ -243,30 +238,31 @@ bb.dw:                                            ; preds = %bb.dv
 
 bb.dx:                                            ; preds = %bb.dv
   %i.km = zext i32 %.2.i518 to i64
-  %i.kn = tail call i64 @LZ4IO_setBlockSize(ptr noundef %i.an, i64 noundef %i.km) #22 ; 8 uses
+  %i.kn = tail call i64 @LZ4IO_setBlockSize(ptr noundef %i.an, i64 noundef %i.km) #22 ; 7 uses
   tail call void @BMK_setBlockSize(i64 noundef %i.kn) #22
-  %3 = icmp ugt i64 %i.kn, 1023
   %i.ko = load i32, ptr @displayLevel, align 4, !tbaa !12
-  %i.kp = icmp ugt i32 %i.ko, 1                   ; 2 uses
-  br i1 %3, label %bb.dy, label %5
+  %i.kp = icmp ugt i32 %i.ko, 1
+  br i1 %i.kp, label %bb.dy, label %.preheader739.backedge
+
+.preheader739.backedge:                           ; preds = %bb.dx, %bb.du, %bb.dt, %bb.ea, %bb.dz, %bb.dm, %bb.dl, %bb.dk
+  %.lcssa11841187.be = phi ptr [ %i.kb, %bb.dx ], [ %i.jd, %bb.dm ], [ %i.kb, %bb.ea ], [ %i.jd, %bb.dk ], [ %i.jd, %bb.dl ], [ %i.kb, %bb.du ], [ %i.kb, %bb.dt ], [ %i.kb, %bb.dz ]
+  %.2263.be = phi i64 [ %i.kn, %bb.dx ], [ %.2263, %bb.dm ], [ %i.kn, %bb.ea ], [ %.2263, %bb.dk ], [ %.2263, %bb.dl ], [ %i.ke, %bb.du ], [ %i.ke, %bb.dt ], [ %i.kn, %bb.dz ]
+  br label %.preheader739
 
 bb.dy:                                            ; preds = %bb.dx
-  br i1 %i.kp, label %bb.dz, label %.preheader739.backedge
+  %3 = icmp ugt i64 %i.kn, 1023
+  %4 = load ptr, ptr @stderr, align 8, !tbaa !15  ; 2 uses
+  br i1 %3, label %bb.dz, label %bb.ea
 
 bb.dz:                                            ; preds = %bb.dy
-  %4 = load ptr, ptr @stderr, align 8, !tbaa !15
   %i.kq = lshr i64 %i.kn, 10
   %i.kr = trunc i64 %i.kq to i32
   %i.ks = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %4, ptr noundef nonnull @.str.46, i32 noundef %i.kr) #23 ; 0 uses
   br label %.preheader739.backedge
 
-5:                                                ; preds = %bb.dx
-  br i1 %i.kp, label %bb.ea, label %.preheader739.backedge
-
-bb.ea:                                            ; preds = %5
-  %6 = load ptr, ptr @stderr, align 8, !tbaa !15
+bb.ea:                                            ; preds = %bb.dy
   %i.kt = trunc nuw nsw i64 %i.kn to i32
-  %i.ku = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %6, ptr noundef nonnull @.str.47, i32 noundef %i.kt) #23 ; 0 uses
+  %i.ku = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %4, ptr noundef nonnull @.str.47, i32 noundef %i.kt) #23 ; 0 uses
   br label %.preheader739.backedge
 
 bb.eb:                                            ; preds = %.tail734.thread.thread

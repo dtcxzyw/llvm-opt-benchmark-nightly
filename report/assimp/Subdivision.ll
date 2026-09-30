@@ -151,14 +151,11 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %.not293 = icmp eq i64 %2, 0                    ; 2 uses
-  br i1 %5, label %.preheader, label %.preheader178
-
-.preheader178:                                    ; preds = %bb.b
-  br i1 %.not293, label %_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit87, label %.lr.ph286
+  %.not293 = icmp eq i64 %2, 0
+  br i1 %.not293, label %_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit87, label %.preheader
 
 .preheader:                                       ; preds = %bb.b
-  br i1 %.not293, label %_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit87, label %.lr.ph288.preheader
+  br i1 %5, label %.lr.ph288.preheader, label %.lr.ph286
 
 .lr.ph288.preheader:                              ; preds = %.preheader
   %min.iters.check = icmp ult i64 %2, 8
@@ -251,8 +248,8 @@ middle.block:                                     ; preds = %vector.body
   %exitcond340.not.3 = icmp eq i64 %i.ad, %2
   br i1 %exitcond340.not.3, label %_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit87, label %.lr.ph288, !llvm.loop !11
 
-.lr.ph286:                                        ; preds = %.preheader178, %.lr.ph286
-  %.053285 = phi i64 [ %i.ah, %.lr.ph286 ], [ 0, %.preheader178 ] ; 3 uses
+.lr.ph286:                                        ; preds = %.preheader, %.lr.ph286
+  %.053285 = phi i64 [ %i.ah, %.lr.ph286 ], [ 0, %.preheader ] ; 3 uses
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.053285
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.053285
   %i.ag = load ptr, ptr %i.af, align 8
@@ -655,7 +652,7 @@ bb.ah:                                            ; preds = %_ZNSt6vectorIP6aiMe
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0131.0.lcssa368, i64 noundef %i.dw) #20
   br label %_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit87
 
-_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit87:         ; preds = %.lr.ph286, %.lr.ph288.prol.loopexit, %.lr.ph288, %middle.block, %.preheader178, %.preheader, %bb.ah, %_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit
+_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit87:         ; preds = %.lr.ph286, %.lr.ph288.prol.loopexit, %.lr.ph288, %middle.block, %bb.b, %bb.ah, %_ZNSt6vectorIP6aiMeshSaIS1_EED2Ev.exit
   ret void
 
 bb.ai:                                            ; preds = %.loopexit188, %.loopexit.split-lp189, %.loopexit182, %.loopexit.split-lp, %.loopexit183, %.loopexit.split-lp184, %bb.f

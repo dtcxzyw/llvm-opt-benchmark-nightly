@@ -204,19 +204,16 @@ bb.aj:                                            ; preds = %bb.ah
   br label %_RNvMs1_NtNtNtCsefoF4u9kbII_5wasmi6engine10translator4funcNtB5_14FuncTranslator18translate_end_else.exit
 
 bb.ak:                                            ; preds = %bb.ah
-  %1 = trunc nuw i8 %.val15.i to i1
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 492 ; 2 uses
   %i.dm = load i8, ptr %i.dl, align 4, !range !9, !alias.scope !16670, !noalias !16671, !noundef !10
-  %i.dn = trunc nuw i8 %i.dm to i1                ; 2 uses
-  br i1 %1, label %bb.al, label %2
-
-2:                                                ; preds = %bb.ak
-  br i1 %i.dn, label %bb.ao, label %bb.am
+  %i.dn = trunc nuw i8 %i.dm to i1
+  br i1 %i.dn, label %bb.ao, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  br i1 %i.dn, label %bb.ao, label %bb.an
+  %1 = trunc nuw i8 %.val15.i to i1
+  br i1 %1, label %bb.an, label %bb.am
 
-bb.am:                                            ; preds = %2
+bb.am:                                            ; preds = %bb.al
   %i.do = getelementptr inbounds nuw i8, ptr %i.p, i64 56
   %.val16.i17 = load i8, ptr %i.do, align 8, !range !9, !alias.scope !16671, !noalias !16670, !noundef !10
   br label %bb.an
@@ -227,7 +224,7 @@ bb.an:                                            ; preds = %_RNvMs1_NtNtNtCsefo
   %.not13.i = icmp eq ptr %i.dp, null
   br i1 %.not13.i, label %bb.aq, label %_RNvMs1_NtNtNtCsefoF4u9kbII_5wasmi6engine10translator4funcNtB5_14FuncTranslator18translate_end_else.exit
 
-bb.ao:                                            ; preds = %bb.al, %2
+bb.ao:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !16672
   %i.dq = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(16) %i.dq, i64 16, i1 false)

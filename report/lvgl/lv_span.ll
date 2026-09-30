@@ -204,20 +204,17 @@ bb.b:                                             ; preds = %bb.a
   %i.c = icmp slt i32 %1, 0                       ; 2 uses
   %spec.select25.v = select i1 %i.c, i64 104, i64 96
   %spec.select25 = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select25.v
-  %.0 = load ptr, ptr %spec.select25, align 8, !tbaa !91 ; 5 uses
+  %.0 = load ptr, ptr %spec.select25, align 8, !tbaa !91 ; 4 uses
   %.not26 = icmp eq ptr %.0, null
   br i1 %.not26, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
   %.lobit = ashr i32 %1, 31                       ; 3 uses
-  %i.d = icmp eq i32 %.lobit, %1                  ; 2 uses
-  br i1 %i.c, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
-
-.lr.ph.split.preheader:                           ; preds = %.lr.ph
-  br i1 %i.d, label %.loopexit, label %.lr.ph44
+  %i.d = icmp eq i32 %.lobit, %1
+  br i1 %i.d, label %.loopexit, label %.lr.ph.split.us.preheader
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  br i1 %i.d, label %.loopexit, label %.lr.ph48
+  br i1 %i.c, label %.lr.ph48, label %.lr.ph44
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph48
   %i.e = add nsw i32 %.12027.us47, -1             ; 2 uses
@@ -236,9 +233,9 @@ bb.b:                                             ; preds = %bb.a
   %i.i = icmp eq i32 %i.h, %1
   br i1 %i.i, label %.loopexit, label %.lr.ph44, !llvm.loop !90
 
-.lr.ph44:                                         ; preds = %.lr.ph.split.preheader, %.lr.ph.split
-  %.1202743 = phi i32 [ %i.h, %.lr.ph.split ], [ %.lobit, %.lr.ph.split.preheader ]
-  %.12842 = phi ptr [ %i.j, %.lr.ph.split ], [ %.0, %.lr.ph.split.preheader ]
+.lr.ph44:                                         ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split
+  %.1202743 = phi i32 [ %i.h, %.lr.ph.split ], [ %.lobit, %.lr.ph.split.us.preheader ]
+  %.12842 = phi ptr [ %i.j, %.lr.ph.split ], [ %.0, %.lr.ph.split.us.preheader ]
   %i.j = tail call ptr @lv_ll_get_next(ptr noundef nonnull %i.b, ptr noundef nonnull %.12842) #10 ; 3 uses
   %.not = icmp eq ptr %i.j, null
   br i1 %.not, label %..loopexit.loopexit40_crit_edge, label %.lr.ph.split, !llvm.loop !90
@@ -246,8 +243,8 @@ bb.b:                                             ; preds = %bb.a
 ..loopexit.loopexit40_crit_edge:                  ; preds = %.lr.ph44, %.lr.ph48
   br label %.loopexit, !llvm.loop !90
 
-.loopexit:                                        ; preds = %.lr.ph.split, %.lr.ph.split.us, %.lr.ph.split.preheader, %..loopexit.loopexit40_crit_edge, %.lr.ph.split.us.preheader, %bb.b, %bb.a
-  %.123 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ null, %..loopexit.loopexit40_crit_edge ], [ %.0, %.lr.ph.split.us.preheader ], [ %i.g, %.lr.ph.split.us ], [ %.0, %.lr.ph.split.preheader ], [ %i.j, %.lr.ph.split ]
+.loopexit:                                        ; preds = %.lr.ph.split, %.lr.ph.split.us, %.lr.ph, %..loopexit.loopexit40_crit_edge, %bb.b, %bb.a
+  %.123 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ %i.g, %.lr.ph.split.us ], [ %.0, %.lr.ph ], [ null, %..loopexit.loopexit40_crit_edge ], [ %i.j, %.lr.ph.split ]
   ret ptr %.123
 }
 

@@ -204,18 +204,15 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.not67 = icmp eq ptr %0, null                  ; 3 uses
-  %.not68172 = icmp ult i64 %2, 32                ; 2 uses
-  br i1 %.not67, label %.preheader, label %.preheader93
-
-.preheader93:                                     ; preds = %bb.f
-  br i1 %.not68172, label %.loopexit, label %.lr.ph170
+  %.not68172 = icmp ult i64 %2, 32
+  br i1 %.not68172, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.f
-  br i1 %.not68172, label %.loopexit, label %.lr.ph174
+  br i1 %.not67, label %.lr.ph174, label %.lr.ph170
 
-.lr.ph170:                                        ; preds = %.preheader93, %.lr.ph170
-  %i.iu = phi i64 [ %i.ix, %.lr.ph170 ], [ 32, %.preheader93 ] ; 3 uses
-  %.2169 = phi i64 [ %i.iu, %.lr.ph170 ], [ 0, %.preheader93 ] ; 2 uses
+.lr.ph170:                                        ; preds = %.preheader, %.lr.ph170
+  %i.iu = phi i64 [ %i.ix, %.lr.ph170 ], [ 32, %.preheader ] ; 3 uses
+  %.2169 = phi i64 [ %i.iu, %.lr.ph170 ], [ 0, %.preheader ] ; 2 uses
   %i.iv = getelementptr i8, ptr %0, i64 %.2169
   %i.iw = getelementptr i8, ptr %1, i64 %.2169
   call fastcc void @aegis128l_dec(ptr noundef %i.iv, ptr noundef %i.iw, ptr noundef %9)
@@ -232,8 +229,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.not68 = icmp ugt i64 %i.ja, %2
   br i1 %.not68, label %.loopexit, label %.lr.ph174, !llvm.loop !22
 
-.loopexit:                                        ; preds = %.lr.ph170, %.lr.ph174, %.preheader93, %.preheader
-  %.4 = phi i64 [ %i.iy, %.lr.ph174 ], [ 0, %.preheader ], [ 0, %.preheader93 ], [ %i.iu, %.lr.ph170 ] ; 3 uses
+.loopexit:                                        ; preds = %.lr.ph170, %.lr.ph174, %bb.f
+  %.4 = phi i64 [ %i.iy, %.lr.ph174 ], [ 0, %bb.f ], [ %i.iu, %.lr.ph170 ] ; 3 uses
   %i.jb = and i64 %2, 31                          ; 9 uses
   %.not70 = icmp eq i64 %i.jb, 0
   br i1 %.not70, label %bb.j, label %bb.g

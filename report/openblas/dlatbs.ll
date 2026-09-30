@@ -202,13 +202,10 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.gf = icmp slt i32 %i.fz, 0                   ; 3 uses
   %i.gg = icmp sge i32 %.2, %i.ga
   %i.gh = icmp sle i32 %.2, %i.ga
-  %.in585687 = select i1 %i.gf, i1 %i.gg, i1 %i.gh ; 2 uses
-  br i1 %.not566, label %bb.bn, label %12
+  %.in585687 = select i1 %i.gf, i1 %i.gg, i1 %i.gh
+  br i1 %.in585687, label %bb.bn, label %.loopexit619
 
-12:                                               ; preds = %bb.ao
-  br i1 %.in585687, label %.lr.ph669, label %.loopexit619
-
-.lr.ph669:                                        ; preds = %12
+.lr.ph669:                                        ; preds = %bb.bn
   %i.gi = sext i32 %.2 to i64
   %i.gj = sext i32 %i.fz to i64
   %i.gk = sext i32 %i.g to i64                    ; 2 uses
@@ -467,7 +464,7 @@ bb.bm:                                            ; preds = %.sink.split810, %bb
   br i1 %.in594, label %bb.ap, label %.loopexit619, !llvm.loop !14
 
 bb.bn:                                            ; preds = %bb.ao
-  br i1 %.in585687, label %.lr.ph693, label %.loopexit619
+  br i1 %.not566, label %.lr.ph693, label %.lr.ph669
 
 .lr.ph693:                                        ; preds = %bb.bn, %bb.cs
   %.7690 = phi i32 [ %i.sh, %bb.cs ], [ %.2, %bb.bn ] ; 14 uses
@@ -870,7 +867,7 @@ bb.cs:                                            ; preds = %bb.ch, %bb.cp, %._c
   %.in585 = select i1 %i.gf, i1 %i.si, i1 %i.sj
   br i1 %.in585, label %.lr.ph693, label %.loopexit619, !llvm.loop !19
 
-.loopexit619:                                     ; preds = %bb.bm, %bb.cs, %12, %bb.bn
+.loopexit619:                                     ; preds = %bb.bm, %bb.cs, %bb.ao
   %i.sk = load double, ptr %i.e, align 8, !tbaa !22 ; 2 uses
   %i.sl = load double, ptr %9, align 8, !tbaa !22
   %i.sm = fdiv double %i.sl, %i.sk

@@ -30,25 +30,21 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = load i64, ptr %i.d, align 8
-  %2 = icmp ult i64 %i.e, 4194304
   %i.f = tail call i8 asm sideeffect "movb %gs:(${1:c}), $0", "=qr,i,~{dirflag},~{fpsr},~{flags}"(i64 6) #5
-  %i.g = trunc i8 %i.f to i1                      ; 2 uses
-  br i1 %2, label %bb.d, label %4
+  %i.g = trunc i8 %i.f to i1
+  br i1 %i.g, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %i.g, label %bb.i, label %bb.e
+  %2 = icmp ult i64 %i.e, 4194304
+  %3 = tail call ptr @__errno() #6                ; 2 uses
+  br i1 %2, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %3 = tail call ptr @__errno() #6
   store i32 12, ptr %3, align 4
   br label %bb.i
 
-4:                                                ; preds = %bb.c
-  br i1 %i.g, label %bb.i, label %bb.f
-
-bb.f:                                             ; preds = %4
-  %5 = tail call ptr @__errno() #6
-  store i32 22, ptr %5, align 4
+bb.f:                                             ; preds = %bb.d
+  store i32 22, ptr %3, align 4
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.a, %bb.b
@@ -61,8 +57,8 @@ bb.h:                                             ; preds = %bb.g
   store i32 2, ptr %i.h, align 8
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f, %4, %bb.e, %bb.d
-  %.0 = phi i32 [ -1, %bb.f ], [ -1, %bb.e ], [ -1, %bb.d ], [ -1, %4 ], [ 0, %bb.h ], [ 0, %bb.g ]
+bb.i:                                             ; preds = %bb.c, %bb.g, %bb.h, %bb.f, %bb.e
+  %.0 = phi i32 [ -1, %bb.f ], [ -1, %bb.e ], [ -1, %bb.c ], [ 0, %bb.g ], [ 0, %bb.h ]
   ret i32 %.0
 }
 

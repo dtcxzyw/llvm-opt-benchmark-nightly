@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %.critedge143
   %i.bz = insertelement <4 x float> poison, float %10, i64 0
   %i.ca = shufflevector <4 x float> %i.bz, <4 x float> poison, <4 x i32> zeroinitializer ; 5 uses
   %i.cb = add i64 %2, -1                          ; 2 uses
-  %.not30.i157 = icmp eq i64 %2, 0                ; 3 uses
+  %.not30.i157 = icmp eq i64 %2, 0                ; 2 uses
   %.not258 = xor i1 %i.bx, true
   %i.cc = icmp eq i32 %1, 111
   %.idx74.i = shl i64 %7, 3                       ; 4 uses
@@ -375,10 +375,10 @@ bb.aj:                                            ; preds = %bb.ah
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  br i1 %i.aw, label %bb.al, label %13
+  br i1 %.not30.i157, label %_Z19MlasSgemmKernelLoopPKfS0_Pfmmmmmfb.exit148, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  br i1 %.not30.i157, label %_Z19MlasSgemmKernelLoopPKfS0_Pfmmmmmfb.exit148, label %.lr.ph240.preheader
+  br i1 %i.aw, label %.lr.ph240.preheader, label %.lr.ph
 
 .lr.ph240.preheader:                              ; preds = %bb.al
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.0129242
@@ -422,10 +422,7 @@ _Z15GetMlasPlatformv.exit183:                     ; preds = %.lr.ph240, %bb.am, 
   %.not.i147 = icmp eq i64 %i.en, 0
   br i1 %.not.i147, label %_Z19MlasSgemmKernelLoopPKfS0_Pfmmmmmfb.exit148, label %.lr.ph240, !llvm.loop !7
 
-13:                                               ; preds = %bb.ak
-  br i1 %.not30.i157, label %_Z19MlasSgemmKernelLoopPKfS0_Pfmmmmmfb.exit148, label %.lr.ph
-
-.lr.ph:                                           ; preds = %13
+.lr.ph:                                           ; preds = %bb.al
   %i.eo = mul i64 %.0129242, %7
   %i.ep = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.eo
   %i.eq = icmp ugt i64 %.sroa.speculated195, 3
@@ -726,7 +723,7 @@ _Z15GetMlasPlatformv.exit189:                     ; preds = %bb.as, %bb.at, %bb.
   %.not.i = icmp eq i64 %i.jj, 0
   br i1 %.not.i, label %_Z19MlasSgemmKernelLoopPKfS0_Pfmmmmmfb.exit.loopexit, label %bb.as, !llvm.loop !7
 
-_Z19MlasSgemmKernelLoopPKfS0_Pfmmmmmfb.exit148:   ; preds = %_Z19MlasSgemmKernelLoopPKfS0_Pfmmmmmfb.exit.loopexit, %_Z15GetMlasPlatformv.exit183, %13, %bb.al
+_Z19MlasSgemmKernelLoopPKfS0_Pfmmmmmfb.exit148:   ; preds = %_Z19MlasSgemmKernelLoopPKfS0_Pfmmmmmfb.exit.loopexit, %_Z15GetMlasPlatformv.exit183, %bb.ak
   %i.jk = add i64 %.sroa.speculated195, %.0129242 ; 2 uses
   %i.jl = icmp ult i64 %i.jk, %4
   br i1 %i.jl, label %bb.ah, label %bb.ag, !llvm.loop !70

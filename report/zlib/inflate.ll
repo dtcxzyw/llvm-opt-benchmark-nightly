@@ -205,22 +205,19 @@ inflateStateCheck.exit:                           ; preds = %bb.e
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21   ; 2 uses
   %i.n = add i32 %i.m, -16180
   %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  br i1 %or.cond.i, label %3, label %inflateStateCheck.exit.thread
 
-bb.f:                                             ; preds = %inflateStateCheck.exit
+3:                                                ; preds = %inflateStateCheck.exit
+  %4 = icmp eq i32 %i.m, 16190
+  br i1 %4, label %.thread, label %bb.f
+
+bb.f:                                             ; preds = %3
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.p = load i32, ptr %i.o, align 8, !tbaa !25
-  %.not17 = icmp eq i32 %i.p, 0
-  %i.q = icmp eq i32 %i.m, 16190                  ; 2 uses
-  br i1 %.not17, label %4, label %3
+  %i.q = icmp eq i32 %i.p, 0
+  br i1 %i.q, label %bb.g, label %inflateStateCheck.exit.thread
 
-3:                                                ; preds = %bb.f
-  br i1 %i.q, label %.thread, label %inflateStateCheck.exit.thread
-
-4:                                                ; preds = %bb.f
-  br i1 %i.q, label %.thread, label %bb.g
-
-.thread:                                          ; preds = %3, %4
+.thread:                                          ; preds = %3
   %i.r = tail call i64 @adler32(i64 noundef 0, ptr noundef null, i32 noundef 0) #9
   %i.s = tail call i64 @adler32(i64 noundef %i.r, ptr noundef %1, i32 noundef %2) #9
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 32
@@ -232,8 +229,8 @@ bb.f:                                             ; preds = %inflateStateCheck.e
   %.pre = load ptr, ptr %i.h, align 8, !tbaa !16
   br label %bb.g
 
-bb.g:                                             ; preds = %._crit_edge, %4
-  %i.v = phi ptr [ %.pre, %._crit_edge ], [ %i.i, %4 ] ; 11 uses
+bb.g:                                             ; preds = %bb.f, %._crit_edge
+  %i.v = phi ptr [ %.pre, %._crit_edge ], [ %i.i, %bb.f ] ; 11 uses
   %i.w = zext i32 %2 to i64
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %i.w ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 72 ; 3 uses
@@ -339,8 +336,8 @@ bb.q:                                             ; preds = %bb.n, %bb.p, %bb.o,
   store i32 1, ptr %i.bu, align 4, !tbaa !28
   br label %inflateStateCheck.exit.thread
 
-inflateStateCheck.exit.thread:                    ; preds = %bb.e, %bb.b, %bb.c, %bb.a, %bb.d, %.thread, %3, %inflateStateCheck.exit, %bb.q, %updatewindow.exit
-  %.0 = phi i32 [ 0, %bb.q ], [ -2, %inflateStateCheck.exit ], [ -2, %3 ], [ -4, %updatewindow.exit ], [ -3, %.thread ], [ -2, %bb.d ], [ -2, %bb.a ], [ -2, %bb.c ], [ -2, %bb.b ], [ -2, %bb.e ]
+inflateStateCheck.exit.thread:                    ; preds = %bb.f, %bb.e, %bb.b, %bb.c, %bb.a, %bb.d, %.thread, %inflateStateCheck.exit, %bb.q, %updatewindow.exit
+  %.0 = phi i32 [ 0, %bb.q ], [ -2, %inflateStateCheck.exit ], [ -2, %bb.f ], [ -4, %updatewindow.exit ], [ -3, %.thread ], [ -2, %bb.d ], [ -2, %bb.a ], [ -2, %bb.c ], [ -2, %bb.b ], [ -2, %bb.e ]
   ret i32 %.0
 }
 

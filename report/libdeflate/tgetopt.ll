@@ -93,7 +93,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 
 bb.h:                                             ; preds = %bb.c
   %i.z = trunc nsw i64 %indvars.iv99 to i32
-  %i.aa = load i8, ptr %i.j, align 1, !tbaa !14   ; 6 uses
+  %i.aa = load i8, ptr %i.j, align 1, !tbaa !14   ; 5 uses
   %i.ab = sext i8 %i.aa to i32                    ; 5 uses
   %i.ac = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.ab) #3 ; 3 uses
   %i.ad = icmp eq ptr %i.ac, null
@@ -113,7 +113,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br label %bb.ab
 
 bb.l:                                             ; preds = %bb.h
-  %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 1 ; 9 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 1 ; 8 uses
   store ptr %i.af, ptr @tgetopt.nextchar, align 8, !tbaa !13
   store ptr null, ptr @toptarg, align 8, !tbaa !13
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 1
@@ -134,11 +134,11 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ac, i64 2
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !14
-  %.not40 = icmp eq i8 %i.al, 58                  ; 2 uses
-  br i1 %i.h, label %bb.p, label %3
+  %.not40 = icmp eq i8 %i.al, 58
+  br i1 %.not40, label %.thread82, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  br i1 %.not40, label %.thread82, label %bb.q
+  br i1 %i.h, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
   %i.am = getelementptr [8 x i8], ptr %1, i64 %indvars.iv99 ; 2 uses
@@ -150,10 +150,7 @@ bb.q:                                             ; preds = %bb.p
   store ptr %i.ap, ptr @toptarg, align 8, !tbaa !13
   br label %.thread82
 
-3:                                                ; preds = %bb.o
-  br i1 %.not40, label %.thread82, label %bb.r
-
-bb.r:                                             ; preds = %3
+bb.r:                                             ; preds = %bb.p
   %i.aq = load i32, ptr @topterr, align 4, !tbaa !10
   %.not42 = icmp eq i32 %i.aq, 0
   br i1 %.not42, label %bb.u, label %bb.s
@@ -176,10 +173,10 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   %i.au = select i1 %i.at, i8 58, i8 63
   br label %.thread82
 
-.thread82:                                        ; preds = %bb.p, %bb.n, %3, %bb.u, %bb.q, %bb.l
-  %4 = phi ptr [ @tgetopt.empty, %bb.n ], [ %i.af, %bb.q ], [ %.pre74, %bb.u ], [ %i.af, %3 ], [ %i.af, %bb.l ], [ %i.af, %bb.p ]
-  %.0 = phi i8 [ %i.aa, %bb.n ], [ %i.aa, %bb.q ], [ %i.au, %bb.u ], [ %i.aa, %3 ], [ %i.aa, %bb.l ], [ %i.aa, %bb.p ]
-  %i.av = load i8, ptr %4, align 1, !tbaa !14
+.thread82:                                        ; preds = %bb.o, %bb.n, %bb.u, %bb.q, %bb.l
+  %3 = phi ptr [ @tgetopt.empty, %bb.n ], [ %i.af, %bb.q ], [ %.pre74, %bb.u ], [ %i.af, %bb.o ], [ %i.af, %bb.l ]
+  %.0 = phi i8 [ %i.aa, %bb.n ], [ %i.aa, %bb.q ], [ %i.au, %bb.u ], [ %i.aa, %bb.o ], [ %i.aa, %bb.l ]
+  %i.av = load i8, ptr %3, align 1, !tbaa !14
   %i.aw = icmp eq i8 %i.av, 0
   br i1 %i.aw, label %bb.v, label %bb.w
 
