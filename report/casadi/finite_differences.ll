@@ -205,7 +205,7 @@ _ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit:       ; preds = %.lr.ph.i.prol.loope
   br i1 %epil.iter.cmp.not, label %.preheader211, label %.lr.ph222.epil, !llvm.loop !230
 
 .preheader211:                                    ; preds = %.preheader211.loopexit.unr-lcssa, %.lr.ph222.epil, %._crit_edge
-  %.0148.pn.lcssa = phi ptr [ %.0148.lcssa, %._crit_edge ], [ %.1149.6, %.preheader211.loopexit.unr-lcssa ], [ %.1149220.epil, %.lr.ph222.epil ] ; 2 uses
+  %.0148.pn.lcssa = phi ptr [ %.0148.lcssa, %._crit_edge ], [ %.1149.6, %.preheader211.loopexit.unr-lcssa ], [ %.1149220.epil, %.lr.ph222.epil ]
   %.1149.lcssa = phi ptr [ %.1149218, %._crit_edge ], [ %.1149.7, %.preheader211.loopexit.unr-lcssa ], [ %.1149.epil, %.lr.ph222.epil ] ; 5 uses
   %.1149.lcssa404 = ptrtoaddr ptr %.1149.lcssa to i64
   %i.bo = icmp sgt i64 %i.b, 0                    ; 2 uses
@@ -278,8 +278,7 @@ _ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit:       ; preds = %.lr.ph.i.prol.loope
 .lr.ph261:                                        ; preds = %.preheader208
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 1328
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 1320 ; 2 uses
-  %.not.i163 = icmp eq ptr %.0148.pn.lcssa, null
-  %i.cn = icmp ne ptr %.0148.pn.lcssa, null
+  %i.cn = icmp ne ptr %.0148.pn.lcssa, null       ; 2 uses
   %.not15.i177 = icmp eq ptr %.2150.lcssa.fr, null ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 1352
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 1360
@@ -331,7 +330,7 @@ bb.d:                                             ; preds = %.preheader.us, %_ZN
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !127 ; 6 uses
   %i.dd = ptrtoaddr ptr %i.dc to i64
   %i.de = getelementptr [8 x i8], ptr %.1149.lcssa, i64 %.0129233.us ; 10 uses
-  br i1 %.not.i163, label %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit173.us, label %bb.e
+  br i1 %i.cn, label %bb.e, label %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit173.us
 
 bb.e:                                             ; preds = %bb.d
   %.not15.i164.us = icmp eq ptr %i.dc, null
@@ -470,9 +469,9 @@ bb.f:                                             ; preds = %_ZN6casadi11casadi_
   %i.fc = tail call noundef double %i.fb(ptr noundef nonnull align 8 dereferenceable(1400) %0, i64 noundef %.0130238.us, double noundef %.0132250) ; 6 uses
   %i.fd = load ptr, ptr %i.ex, align 8, !tbaa !127 ; 3 uses
   %i.fe = icmp ne ptr %i.fd, null
-  %or.cond.i.us = and i1 %i.cn, %i.fe
   %6 = icmp sgt i64 %i.da, 0
-  %or.cond15.i.us = and i1 %6, %or.cond.i.us
+  %7 = and i1 %i.fe, %6
+  %or.cond15.i.us = and i1 %7, %i.cn
   br i1 %or.cond15.i.us, label %.lr.ph.i174.us.preheader, label %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit.us
 
 .lr.ph.i174.us.preheader:                         ; preds = %bb.f

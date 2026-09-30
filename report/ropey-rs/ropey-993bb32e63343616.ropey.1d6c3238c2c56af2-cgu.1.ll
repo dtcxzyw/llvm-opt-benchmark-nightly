@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.d
   br label %bb.ek
 
 bb.i:                                             ; preds = %bb.g, %.split.i, %bb.e
-  %i.aq = sub nuw i64 %i.ad, %i.ag                ; 31 uses
+  %i.aq = sub nuw i64 %i.ad, %i.ag                ; 30 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ag ; 31 uses
   %i.as = ptrtoint ptr %i.ar to i64
   %i.at = sub i64 0, %i.as
@@ -608,8 +608,8 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %i.gm, label %.preheader.i665, label %bb.eq
 
 bb.bf:                                            ; preds = %bb.bc
-  %2 = icmp eq i64 %i.aq, 0
-  br i1 %2, label %_RNvNtCs2wCc12Mnjqg_5ropey9str_utils20ends_with_line_break.exit.thread, label %.preheader.i
+  %2 = icmp ne i64 %i.aq, 0                       ; 2 uses
+  br i1 %2, label %.preheader.i, label %_RNvNtCs2wCc12Mnjqg_5ropey9str_utils20ends_with_line_break.exit.thread
 
 .preheader.i:                                     ; preds = %bb.bf
   %.sroa.01.024.i = add i64 %i.aq, -1             ; 2 uses
@@ -818,7 +818,6 @@ _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5rope
   %i.kb = sub <2 x i64> %i.ka, %i.jv
   %i.kc = extractelement <4 x i64> %i.js, i64 3
   %i.kd = sub i64 %i.kc, %i.jx
-  %3 = icmp ne i64 %i.aq, 0
   %i.ke = getelementptr [16 x i8], ptr %i.id, i64 %i.hv ; 2 uses
   %i.kf = getelementptr i8, ptr %i.ke, i64 -16
   %i.kg = getelementptr i8, ptr %i.ke, i64 -8
@@ -830,7 +829,7 @@ bb.bl:                                            ; preds = %_RINvXs2J_NtNtCskKL
   %.sroa.21.0 = phi i64 [ %i.kd, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9next_impl0EBW_.exit ], [ %.sroa.21.1, %bb.by ] ; 3 uses
   %.sroa.0743.0 = phi i64 [ %i.jz, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9next_impl0EBW_.exit ], [ %.sroa.0743.1, %bb.by ] ; 3 uses
   %.sroa.052.0 = phi i64 [ %i.ie, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9next_impl0EBW_.exit ], [ %.sroa.052.1, %bb.by ] ; 6 uses
-  %.sroa.031.0 = phi i1 [ %3, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9next_impl0EBW_.exit ], [ true, %bb.by ]
+  %.sroa.031.0 = phi i1 [ %2, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9next_impl0EBW_.exit ], [ true, %bb.by ]
   %i.kj = phi <2 x i64> [ %i.kb, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9next_impl0EBW_.exit ], [ %i.oo, %bb.by ] ; 3 uses
   %i.kk = phi <2 x i64> [ %i.jv, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9next_impl0EBW_.exit ], [ %i.pn, %bb.by ] ; 3 uses
   %i.kl = load i64, ptr %i.ih, align 8, !noundef !5
@@ -1233,10 +1232,10 @@ bb.c:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
   %i.p = load i64, ptr %i.o, align 8, !noundef !5 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
-  %i.r = load i32, ptr %i.q, align 8, !noundef !5 ; 4 uses
+  %i.r = load i32, ptr %i.q, align 8, !noundef !5 ; 3 uses
   %i.s = zext i32 %i.r to i64                     ; 16 uses
-  %2 = icmp eq i32 %i.r, 0
-  br i1 %2, label %.thread, label %bb.d
+  %2 = icmp ne i32 %i.r, 0                        ; 2 uses
+  br i1 %2, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c
   %.not.i411 = icmp ugt i64 %i.p, %i.s
@@ -1639,7 +1638,6 @@ _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5rope
   %i.nb = add <2 x i64> %i.mv, %i.na
   %i.nc = extractelement <4 x i64> %i.ms, i64 2
   %i.nd = add i64 %i.mx, %i.nc
-  %3 = icmp ne i32 %i.r, 0
   %i.ne = getelementptr [16 x i8], ptr %i.lq, i64 %i.co ; 2 uses
   %i.nf = getelementptr i8, ptr %i.ne, i64 -16
   %i.ng = getelementptr i8, ptr %i.ne, i64 -8
@@ -1655,7 +1653,7 @@ bb.y:                                             ; preds = %_RINvXs2J_NtNtCskKL
   %.sroa.22.0 = phi i64 [ %i.nd, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit ], [ %.sroa.22.4, %bb.an ] ; 3 uses
   %.sroa.0515.0 = phi i64 [ %i.mz, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit ], [ %.sroa.0515.4, %bb.an ] ; 3 uses
   %.sroa.061.0 = phi i64 [ %i.cq, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit ], [ %.sroa.061.2, %bb.an ] ; 6 uses
-  %.sroa.042.0 = phi i1 [ %3, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit ], [ true, %bb.an ]
+  %.sroa.042.0 = phi i1 [ %2, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit ], [ true, %bb.an ]
   %i.nj = phi <2 x i64> [ %i.nb, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit ], [ %i.rh, %bb.an ] ; 3 uses
   %i.nk = phi <2 x i64> [ %i.mv, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit ], [ %i.sf, %bb.an ] ; 2 uses
   %i.nl = load i64, ptr %i.lt, align 8, !noundef !5 ; 2 uses

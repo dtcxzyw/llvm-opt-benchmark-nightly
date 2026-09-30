@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #29
   %i.f = and i32 %4, 2
   %i.g = icmp ne i32 %i.f, 0
-  %i.h = icmp ne i64 %3, 0
+  %i.h = icmp ne i64 %3, 0                        ; 2 uses
   %or.cond3 = and i1 %i.h, %i.g
   br i1 %or.cond3, label %bb.b, label %.loopexit
 
@@ -276,8 +276,7 @@ bb.c:                                             ; preds = %.critedge._crit_edg
   %spec.select61 = phi i32 [ %spec.select57, %.loopexit ], [ %spec.select, %.critedge._crit_edge ]
   %.not4459 = phi i1 [ false, %.loopexit ], [ true, %.critedge._crit_edge ]
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 %3
-  %.not = icmp eq i64 %3, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph65
+  br i1 %i.h, label %.lr.ph65, label %._crit_edge
 
 .lr.ph65:                                         ; preds = %bb.c
   %i.z = getelementptr i8, ptr %0, i64 152        ; 3 uses
@@ -680,8 +679,8 @@ bb.f:                                             ; preds = %bb.e
 js_parse_pop_val.exit:                            ; preds = %bb.e, %bb.f
   %i.x = trunc i64 %i.s to i32
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.z = load i32, ptr %i.y, align 8, !tbaa !119  ; 4 uses
-  %i.aa = icmp eq i32 %i.z, 61
+  %i.z = load i32, ptr %i.y, align 8, !tbaa !119  ; 3 uses
+  %i.aa = icmp eq i32 %i.z, 61                    ; 2 uses
   %i.ab = add i32 %i.z, -132
   %or.cond = icmp ult i32 %i.ab, 11
   %or.cond43 = or i1 %i.aa, %or.cond
@@ -691,8 +690,8 @@ bb.g:                                             ; preds = %js_parse_pop_val.ex
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !168
   tail call fastcc void @next_token(ptr noundef nonnull %0) #28
-  %3 = icmp ne i32 %i.z, 61
-  %i.ae = zext i1 %3 to i32
+  %.not85 = xor i1 %i.aa, true
+  %i.ae = zext i1 %.not85 to i32
   call fastcc void @get_lvalue(ptr noundef nonnull %0, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, i32 noundef %i.ae) #28
   %i.af = shl nuw nsw i32 %i.z, 1
   %i.ag = zext nneg i32 %i.af to i64              ; 2 uses

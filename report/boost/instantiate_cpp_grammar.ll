@@ -202,10 +202,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.s = load i64, ptr %6, align 8, !tbaa !57     ; 2 uses
-  %.lobit.i = ashr i64 %i.s, 63                   ; 2 uses
-  %8 = icmp ne i64 %.lobit.i, -1
-  %.not = icmp eq i64 %.lobit.i, -1
-  br i1 %.not, label %bb.i, label %bb.h
+  %8 = icmp sgt i64 %i.s, -1                      ; 2 uses
+  br i1 %8, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.t = invoke noundef zeroext i1 @_ZNK5boost6spirit10multi_passISt4pairINS_4wave8cpplexer4impl25lex_iterator_functor_shimINS4_9lex_tokenINS3_4util13file_positionINS8_11flex_stringIcSt11char_traitsIcESaIcENS8_9CowStringINS8_22AllocatorStringStorageIcSD_EEPcEEEEEEEEEEPNS4_19lex_input_interfaceISL_EEENS0_17iterator_policies14default_policyINSR_11ref_countedENSR_8no_checkENSR_19split_functor_inputENSR_15split_std_dequeEEEEeqERKSY_(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %2)

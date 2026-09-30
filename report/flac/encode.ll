@@ -205,7 +205,7 @@ bb.dr:                                            ; preds = %bb.ab, %bb.ab
   %.sroa.3497.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 1132
   %.sroa.3497.0.copyload = load i32, ptr %.sroa.3497.0..sroa_idx, align 4
   %.sroa.4499.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 1148
-  %.sroa.4499.0.copyload = load i32, ptr %.sroa.4499.0..sroa_idx, align 4 ; 2 uses
+  %.sroa.4499.0.copyload = load i32, ptr %.sroa.4499.0..sroa_idx, align 4
   %.sroa.5501.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8
   %i.rl = getelementptr inbounds nuw i8, ptr %14, i64 140
   store i32 0, ptr %i.rl, align 4, !tbaa !86
@@ -223,8 +223,7 @@ fread.inline.exit.i.lr.ph.i:                      ; preds = %bb.dr
   %i.rs = getelementptr inbounds nuw i8, ptr %14, i64 160
   %i.rt = getelementptr inbounds nuw i8, ptr %i.c, i64 1 ; 4 uses
   %.not209.i = icmp eq ptr %.sroa.5501.0.copyload, null
-  %.not202.i = icmp eq i32 %.sroa.4499.0.copyload, 0
-  %i.ru = icmp ne i32 %.sroa.4499.0.copyload, 0   ; 2 uses
+  %i.ru = icmp ne i32 %.sroa.4499.0.copyload, 0   ; 3 uses
   %.fr.i = freeze i32 %.sroa.3497.0.copyload
   %i.rv = icmp ne i32 %.fr.i, 0                   ; 2 uses
   %i.rw = getelementptr inbounds nuw i8, ptr %i.a, i64 1
@@ -620,7 +619,7 @@ bb.et:                                            ; preds = %fread.inline.exit.i
   store <4 x i8> %i.yl, ptr %i.e, align 4, !tbaa !29
   %.cast3850 = bitcast <4 x i8> %i.yl to i32      ; 3 uses
   %i.ym = zext i32 %.cast3850 to i64
-  br i1 %.not202.i, label %bb.ex, label %bb.eu
+  br i1 %i.ru, label %bb.eu, label %bb.ex
 
 bb.eu:                                            ; preds = %bb.et
   %.not203.i = icmp eq i32 %.cast3850, 0
@@ -689,8 +688,8 @@ bb.fa:                                            ; preds = %fread.inline.exit.i
   %i.zl = load <4 x i8>, ptr %i.e, align 4, !tbaa !29
   %i.zm = shufflevector <4 x i8> %i.zl, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0> ; 2 uses
   store <4 x i8> %i.zm, ptr %i.e, align 4, !tbaa !29
-  %.cast3852 = bitcast <4 x i8> %i.zm to i32      ; 3 uses
-  %i.zn = icmp eq i32 %.cast3852, 0
+  %.cast3852 = bitcast <4 x i8> %i.zm to i32      ; 2 uses
+  %i.zn = icmp eq i32 %.cast3852, 0               ; 2 uses
   %or.cond18.i = or i1 %i.ru, %i.zn
   br i1 %or.cond18.i, label %bb.fb, label %.thread289.i
 
@@ -702,8 +701,8 @@ bb.fa:                                            ; preds = %fread.inline.exit.i
   br label %bb.fd
 
 bb.fb:                                            ; preds = %bb.fa
-  %15 = icmp ne i32 %.cast3852, 0
-  %or.cond22.i = and i1 %i.ru, %15
+  %.not832.i = xor i1 %i.zn, true
+  %or.cond22.i = and i1 %i.ru, %.not832.i
   br i1 %or.cond22.i, label %bb.fc, label %bb.fd
 
 bb.fc:                                            ; preds = %bb.fb
@@ -1106,8 +1105,8 @@ define internal fastcc range(i32 0, 2) i32 @format_input(i32 noundef %0, i32 nou
 bb.a:
   %i.a = alloca [8 x ptr], align 16               ; 22 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  %.not134 = icmp eq i32 %3, 0                    ; 5 uses
-  br i1 %.not134, label %._crit_edge, label %.lr.ph.preheader
+  %.not134 = icmp ne i32 %3, 0                    ; 9 uses
+  br i1 %.not134, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = zext i32 %3 to i64           ; 2 uses
@@ -1189,9 +1188,8 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge
   %.not297 = icmp eq i32 %2, 0
-  %7 = icmp ne i32 %3, 0
   %i.ac = icmp ne i32 %0, 0
-  %or.cond124 = and i1 %7, %i.ac                  ; 2 uses
+  %or.cond124 = and i1 %.not134, %i.ac            ; 2 uses
   br i1 %.not297, label %.preheader2, label %.preheader4
 
 .preheader4:                                      ; preds = %bb.b
@@ -1482,9 +1480,8 @@ scalar.ph521:                                     ; preds = %scalar.ph521.prol.l
 bb.c:                                             ; preds = %._crit_edge
   %.not294 = icmp eq i32 %2, 0
   %.not295 = icmp eq i32 %1, 0                    ; 2 uses
-  %8 = icmp ne i32 %3, 0
   %i.eu = icmp ne i32 %0, 0
-  %or.cond128 = and i1 %8, %i.eu                  ; 4 uses
+  %or.cond128 = and i1 %.not134, %i.eu            ; 4 uses
   br i1 %.not294, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -1887,7 +1884,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not292, label %.preheader18, label %.preheader20
 
 .preheader20:                                     ; preds = %bb.g
-  br i1 %.not134, label %.loopexit, label %.lr.ph81
+  br i1 %.not134, label %.lr.ph81, label %.loopexit
 
 .lr.ph81:                                         ; preds = %.preheader20
   %.not140 = icmp eq i32 %0, 0
@@ -1900,7 +1897,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.lr.ph78
 
 .preheader18:                                     ; preds = %bb.g
-  br i1 %.not134, label %.loopexit, label %.lr.ph88
+  br i1 %.not134, label %.lr.ph88, label %.loopexit
 
 .lr.ph88:                                         ; preds = %.preheader18
   %.not142 = icmp eq i32 %0, 0
@@ -2057,7 +2054,7 @@ bb.i:                                             ; preds = %bb.f
   br i1 %.not292, label %.preheader22, label %.preheader24
 
 .preheader24:                                     ; preds = %bb.i
-  br i1 %.not134, label %.loopexit, label %.lr.ph67
+  br i1 %.not134, label %.lr.ph67, label %.loopexit
 
 .lr.ph67:                                         ; preds = %.preheader24
   %.not136 = icmp eq i32 %0, 0
@@ -2070,7 +2067,7 @@ bb.i:                                             ; preds = %bb.f
   br label %.lr.ph64
 
 .preheader22:                                     ; preds = %bb.i
-  br i1 %.not134, label %.loopexit, label %.lr.ph74
+  br i1 %.not134, label %.lr.ph74, label %.loopexit
 
 .lr.ph74:                                         ; preds = %.preheader22
   %.not138 = icmp eq i32 %0, 0
@@ -2226,9 +2223,8 @@ bb.j:                                             ; preds = %.lr.ph64, %bb.j
 bb.k:                                             ; preds = %._crit_edge
   %.not = icmp eq i32 %2, 0
   %.not289 = icmp eq i32 %1, 0                    ; 2 uses
-  %9 = icmp ne i32 %3, 0
   %i.up = icmp ne i32 %0, 0
-  %or.cond132 = and i1 %9, %i.up                  ; 4 uses
+  %or.cond132 = and i1 %.not134, %i.up            ; 4 uses
   br i1 %.not, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -2631,8 +2627,7 @@ bb.o:                                             ; preds = %.loopexit
   %notmask = shl nsw i32 -1, %5
   %i.add = xor i32 %notmask, -1
   %.not300122 = icmp ne i32 %0, 0
-  %10 = icmp ne i32 %3, 0
-  %or.cond133 = and i1 %.not300122, %10
+  %or.cond133 = and i1 %.not300122, %.not134
   br i1 %or.cond133, label %.preheader.preheader, label %.critedge
 
 .preheader.preheader:                             ; preds = %bb.o

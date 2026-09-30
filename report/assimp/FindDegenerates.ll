@@ -204,9 +204,9 @@ _ZNSt6vectorIbSaIbEE6resizeEmb.exit:              ; preds = %bb.b, %bb.a
   br label %bb.d
 
 ._crit_edge184:                                   ; preds = %.thread150
+  %3 = icmp ne i32 %i.ef, 0                       ; 2 uses
   %i.s = load i8, ptr %i.f, align 8, !range !14, !noundef !15
   %i.t = trunc nuw i8 %i.s to i1
-  %3 = icmp ne i32 %i.ef, 0
   %or.cond = select i1 %i.t, i1 %3, i1 false
   br i1 %or.cond, label %.preheader, label %.critedge
 
@@ -545,7 +545,7 @@ bb.ac:                                            ; preds = %._crit_edge181
   br label %.thread150
 
 .thread150:                                       ; preds = %bb.t, %bb.z, %._crit_edge181.thread, %bb.ac, %bb.ab, %bb.aa
-  %i.ef = phi i32 [ %i.cp, %bb.t ], [ %i.dr, %bb.z ], [ %i.ec, %._crit_edge181.thread ], [ %i.ds, %bb.ac ], [ %i.ds, %bb.ab ], [ %i.ds, %bb.aa ] ; 3 uses
+  %i.ef = phi i32 [ %i.cp, %bb.t ], [ %i.dr, %bb.z ], [ %i.ec, %._crit_edge181.thread ], [ %i.ds, %bb.ac ], [ %i.ds, %bb.ab ], [ %i.ds, %bb.aa ] ; 2 uses
   %indvars.iv.next203 = add nuw nsw i64 %indvars.iv202, 1 ; 2 uses
   %i.eg = load i32, ptr %i.m, align 8             ; 2 uses
   %i.eh = zext i32 %i.eg to i64
@@ -627,8 +627,7 @@ bb.al:                                            ; preds = %bb.ak, %._crit_edge
   br label %bb.as
 
 .critedge:                                        ; preds = %._crit_edge188, %._crit_edge184
-  %.not = icmp eq i32 %i.ef, 0
-  br i1 %.not, label %.critedge.thread, label %bb.am
+  br i1 %3, label %bb.am, label %.critedge.thread
 
 bb.am:                                            ; preds = %.critedge
   %i.fh = invoke noundef zeroext i1 @_ZN6Assimp13DefaultLogger12isNullLoggerEv()

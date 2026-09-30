@@ -204,10 +204,10 @@ define dso_local noundef zeroext i1 @_Z9is_numberRKNSt7__cxx1112basic_stringIcSt
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !24     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !25   ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !25   ; 2 uses
   %i.d = getelementptr i8, ptr %i.a, i64 %i.c     ; 3 uses
-  %.not10 = icmp samesign eq i64 %i.c, 0
-  br i1 %.not10, label %.critedge, label %.lr.ph
+  %.not10 = icmp ne i64 %i.c, 0                   ; 2 uses
+  br i1 %.not10, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.05.011 = phi ptr [ %i.g, %bb.b ], [ %i.a, %bb.a ] ; 3 uses
@@ -224,9 +224,8 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
   %.sroa.05.0.lcssa = phi ptr [ %i.a, %bb.a ], [ %i.d, %bb.b ], [ %.sroa.05.011, %.lr.ph ]
-  %1 = icmp ne i64 %i.c, 0
   %i.h = icmp eq ptr %.sroa.05.0.lcssa, %i.d
-  %spec.select = and i1 %1, %i.h
+  %spec.select = and i1 %.not10, %i.h
   ret i1 %spec.select
 }
 
@@ -572,7 +571,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit42: ; preds
   %i.cl = load ptr, ptr %3, align 8, !tbaa !24    ; 4 uses
   %i.cm = load i64, ptr %i.ci, align 8, !tbaa !25 ; 2 uses
   %i.cn = getelementptr i8, ptr %i.cl, i64 %i.cm  ; 2 uses
-  %.not10.i = icmp samesign eq i64 %i.cm, 0
+  %.not10.i = icmp eq i64 %i.cm, 0
   br i1 %.not10.i, label %_Z9is_numberRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit42, %bb.x
@@ -975,7 +974,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit46: ; preds
   %i.cp = load ptr, ptr %6, align 8, !tbaa !24    ; 3 uses
   %i.cq = load i64, ptr %i.cm, align 8, !tbaa !25 ; 2 uses
   %i.cr = getelementptr i8, ptr %i.cp, i64 %i.cq  ; 2 uses
-  %.not10.i = icmp samesign eq i64 %i.cq, 0
+  %.not10.i = icmp eq i64 %i.cq, 0
   br i1 %.not10.i, label %_Z9is_numberRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit46, %bb.y

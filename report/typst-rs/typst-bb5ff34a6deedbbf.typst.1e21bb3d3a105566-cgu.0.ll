@@ -202,12 +202,11 @@ bb.e:                                             ; preds = %bb.a
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   tail call fastcc void @_RINvXst_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB6_4NodeNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs2AodJlUx5rK_5typst(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.bv, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1) #30, !inline_history !247
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 56 ; 2 uses
-  %i.bx = load i32, ptr %i.bw, align 8, !alias.scope !285, !noalias !286, !noundef !6 ; 2 uses
-  %i.by = icmp ne i32 %i.bx, 0
+  %i.bx = load i32, ptr %i.bw, align 8, !alias.scope !285, !noalias !286, !noundef !6
+  %i.by = icmp ne i32 %i.bx, 0                    ; 2 uses
   %i.bz = zext i1 %i.by to i64
   tail call void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher11write_usize(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, i64 noundef range(i64 0, 4) %i.bz)
-  %.not.i1 = icmp eq i32 %i.bx, 0
-  br i1 %.not.i1, label %_RINvXsX_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB6_14WarningWrapperNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs2AodJlUx5rK_5typst.exit, label %bb.f
+  br i1 %i.by, label %bb.f, label %_RINvXsX_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB6_14WarningWrapperNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs2AodJlUx5rK_5typst.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bu, i64 60
@@ -290,14 +289,13 @@ bb.a:
   store i8 -1, ptr %i.c, align 1, !noalias !318
   call void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.c, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !318
-  %.val.i = load i32, ptr %i.g, align 8, !alias.scope !314, !noalias !319, !noundef !6 ; 3 uses
+  %.val.i = load i32, ptr %i.g, align 8, !alias.scope !314, !noalias !319, !noundef !6 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.0.03, i64 20
   %.val1.i = load i32, ptr %i.o, align 4, !alias.scope !314, !noalias !319
-  %i.p = icmp ne i32 %.val.i, 0
+  %i.p = icmp ne i32 %.val.i, 0                   ; 2 uses
   %i.q = zext i1 %i.p to i64
   call void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher11write_usize(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %2, i64 noundef range(i64 0, 4) %i.q)
-  %.not.i.i = icmp eq i32 %.val.i, 0
-  br i1 %.not.i.i, label %_RINvXsl_NtNtCs3oUPovFnLWP_4core4hash5implsTNtNtCsakL8LGkl72C_4ecow6string9EcoStringINtNtBa_6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEENtB8_4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs2AodJlUx5rK_5typst.exit, label %bb.b
+  br i1 %i.p, label %bb.b, label %_RINvXsl_NtNtCs3oUPovFnLWP_4core4hash5implsTNtNtCsakL8LGkl72C_4ecow6string9EcoStringINtNtBa_6option6OptionNtNtCs5PEMdK7bMAG_12typst_syntax4span8SubRangeEENtB8_4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs2AodJlUx5rK_5typst.exit
 
 bb.b:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !320
@@ -700,8 +698,8 @@ bb.am:                                            ; preds = %bb.al
   call void @llvm.experimental.noalias.scope.decl(metadata !660)
   call void @llvm.experimental.noalias.scope.decl(metadata !661)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 40, i1 false), !noalias !659
-  %i.dg = load i32, ptr %i.j, align 8, !range !5, !alias.scope !662, !noalias !663, !noundef !6 ; 7 uses
-  %i.dh = icmp ne i32 %i.dg, -1                   ; 2 uses
+  %i.dg = load i32, ptr %i.j, align 8, !range !5, !alias.scope !662, !noalias !663, !noundef !6 ; 6 uses
+  %i.dh = icmp ne i32 %i.dg, -1                   ; 3 uses
   %i.di = zext i1 %i.dh to i64                    ; 2 uses
   store i64 8, ptr %.sroa.12.0..sroa_idx.i.i, align 8, !alias.scope !664, !noalias !665
   %i.dj = xor i64 %i.di, 110374107243891
@@ -719,8 +717,7 @@ bb.am:                                            ; preds = %bb.al
   store i64 %i.ds, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !alias.scope !666, !noalias !665
   %i.dt = xor i64 %i.dn, %i.di                    ; 2 uses
   store i64 %i.dt, ptr %i.h, align 8, !alias.scope !664, !noalias !665
-  %.not.i.i.i = icmp eq i32 %i.dg, -1
-  br i1 %.not.i.i.i, label %bb.cn, label %_RNvYNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13NtNtCs3oUPovFnLWP_4core4hash6Hasher11write_isizeCs2AodJlUx5rK_5typst.exit.i.i.i.i
+  br i1 %i.dh, label %_RNvYNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13NtNtCs3oUPovFnLWP_4core4hash6Hasher11write_isizeCs2AodJlUx5rK_5typst.exit.i.i.i.i, label %bb.cn
 
 _RNvYNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13NtNtCs3oUPovFnLWP_4core4hash6Hasher11write_isizeCs2AodJlUx5rK_5typst.exit.i.i.i.i: ; preds = %.noexc53
   call void @llvm.experimental.noalias.scope.decl(metadata !667)

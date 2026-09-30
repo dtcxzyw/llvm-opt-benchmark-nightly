@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.ix = load i32, ptr %i.iw, align 4            ; 2 uses
   %i.iy = mul nsw i32 %i.ix, %i.iv
   %i.iz = getelementptr inbounds nuw i8, ptr %i.f, i64 20
-  %i.ja = load i32, ptr %i.iz, align 4            ; 7 uses
+  %i.ja = load i32, ptr %i.iz, align 4            ; 6 uses
   %i.jb = sext i32 %2 to i64
   %i.jc = getelementptr [120 x i8], ptr %i.f, i64 %i.jb ; 2 uses
   %i.jd = getelementptr i8, ptr %i.jc, i64 -96
@@ -306,14 +306,14 @@ bb.as:                                            ; preds = %bb.bh, %.lr.ph164.i
   %.0131161.i = phi i32 [ 1, %.lr.ph164.i ], [ %.1132.i, %bb.bh ] ; 3 uses
   %.0136160.i = phi ptr [ %i.js, %.lr.ph164.i ], [ %i.nh, %bb.bh ] ; 2 uses
   %.0137159.i = phi ptr [ %i.jn, %.lr.ph164.i ], [ %i.ne, %bb.bh ] ; 3 uses
-  %i.lc = load i32, ptr %.0137159.i, align 4      ; 6 uses
+  %i.lc = load i32, ptr %.0137159.i, align 4      ; 5 uses
   %i.ld = getelementptr inbounds nuw i8, ptr %.0137159.i, i64 4
   %i.le = load i32, ptr %i.ld, align 4            ; 4 uses
   %.not144.i = icmp slt i32 %i.le, %i.lc
   br i1 %.not144.i, label %bb.bh, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %.not145.i = icmp sge i32 %i.lc, %i.ja
+  %.not145.i = icmp sge i32 %i.lc, %i.ja          ; 2 uses
   %i.lf = icmp slt i32 %i.lc, %i.je
   %or.cond.i = select i1 %.not145.i, i1 %i.lf, i1 false
   br i1 %or.cond.i, label %bb.av, label %bb.au
@@ -335,10 +335,9 @@ bb.aw:                                            ; preds = %bb.av
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
-  %3 = icmp slt i32 %i.lc, %i.ja
   %i.li = sub nsw i32 %i.ja, %i.lc
   %.0127.i = call i32 @llvm.smax.i32(i32 %i.lc, i32 %i.ja) ; 3 uses
-  %narrow.i = select i1 %3, i32 %i.li, i32 0
+  %narrow.i = select i1 %.not145.i, i32 0, i32 %i.li
   %.0.idx.i = zext i32 %narrow.i to i64
   %.0.i = getelementptr inbounds nuw [4 x i8], ptr %.0136160.i, i64 %.0.idx.i
   %.0126.i = call i32 @llvm.smin.i32(i32 %i.le, i32 %i.kp) ; 4 uses
@@ -741,7 +740,7 @@ stbi__check_png_header.exit.thread:               ; preds = %bb.as, %bb.am, %bb.
 
 bb.aw:                                            ; preds = %.preheader419, %.loopexit
   %.0239 = phi i8 [ %.3242, %.loopexit ], [ 0, %.preheader419 ] ; 19 uses
-  %.0236 = phi i8 [ %.1237, %.loopexit ], [ 0, %.preheader419 ] ; 18 uses
+  %.0236 = phi i8 [ %.1237, %.loopexit ], [ 0, %.preheader419 ] ; 17 uses
   %.0233 = phi i32 [ %.1234, %.loopexit ], [ 0, %.preheader419 ] ; 22 uses
   %.0229 = phi i32 [ %.4, %.loopexit ], [ 0, %.preheader419 ] ; 22 uses
   %.0224 = phi i32 [ %.1225, %.loopexit ], [ 0, %.preheader419 ] ; 21 uses
@@ -1144,7 +1143,7 @@ bb.fh:                                            ; preds = %stbi_zlib_decode_ma
   %or.cond5.not263.not268 = and i1 %i.sv, %i.su
   %i.sw = icmp eq i8 %.0239, 0                    ; 2 uses
   %or.cond7.not265 = select i1 %or.cond5.not263.not268, i1 %i.sw, i1 false
-  %i.sx = icmp ne i8 %.0236, 0
+  %i.sx = icmp ne i8 %.0236, 0                    ; 3 uses
   %or.cond10 = select i1 %or.cond7.not265, i1 true, i1 %i.sx
   %spec.select1503 = select i1 %or.cond10, i32 %i.st, i32 %i.ss ; 4 uses
   %i.sy = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 4 uses
@@ -1354,8 +1353,7 @@ stbi__create_png_image.exit:                      ; preds = %bb.fh
   br i1 %.not269, label %.thread400, label %bb.fo
 
 bb.fo:                                            ; preds = %stbi__create_png_image.exit.thread394, %stbi__create_png_image.exit
-  %.not270 = icmp eq i8 %.0236, 0                 ; 2 uses
-  br i1 %.not270, label %bb.fs, label %bb.fp
+  br i1 %i.sx, label %bb.fp, label %bb.fs
 
 bb.fp:                                            ; preds = %bb.fo
   %i.wm = load i32, ptr %i.gm, align 8
@@ -1604,7 +1602,7 @@ stbi__expand_png_palette.exit:                    ; preds = %stbi__expand_png_pa
   br label %bb.ga
 
 bb.fy:                                            ; preds = %bb.fv
-  br i1 %.not270, label %bb.ga, label %bb.fz
+  br i1 %i.sx, label %bb.fz, label %bb.ga
 
 bb.fz:                                            ; preds = %bb.fy
   %i.aaj = load i32, ptr %i.gl, align 8

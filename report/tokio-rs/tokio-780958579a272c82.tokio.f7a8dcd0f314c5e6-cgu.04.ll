@@ -204,10 +204,9 @@ bb.a:
 define void @_RNvNtNtCslghKHtsL3a4_5tokio4time8interval11interval_at(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i32 noundef range(i32 0, 1000000000) %2, i64 noundef %3, i32 noundef range(i32 0, 1000000000) %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %5) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 5 uses
-  %6 = icmp eq i64 %3, 0
   %i.b = icmp ne i64 %3, 0
   %i.c = icmp ne i32 %4, 0
-  %spec.select = select i1 %6, i1 %i.c, i1 %i.b
+  %spec.select = or i1 %i.b, %i.c
   br i1 %spec.select, label %bb.c, label %bb.b, !prof !4
 
 bb.b:                                             ; preds = %bb.a
@@ -262,10 +261,9 @@ _RNvNtNtCslghKHtsL3a4_5tokio4time8interval20internal_interval_at.exit: ; preds =
 define void @_RNvNtNtCslghKHtsL3a4_5tokio4time8interval8interval(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i32 noundef range(i32 0, 1000000000) %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [112 x i8], align 8               ; 5 uses
-  %4 = icmp eq i64 %1, 0
   %i.b = icmp ne i64 %1, 0
   %i.c = icmp ne i32 %2, 0
-  %spec.select = select i1 %4, i1 %i.c, i1 %i.b
+  %spec.select = or i1 %i.b, %i.c
   br i1 %spec.select, label %bb.c, label %bb.b, !prof !4
 
 bb.b:                                             ; preds = %bb.a

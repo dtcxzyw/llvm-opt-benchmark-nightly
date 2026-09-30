@@ -81,10 +81,10 @@ bb.c:                                             ; preds = %bb.a
   %i.e = sext i32 %0 to i64
   tail call void @lua_pushinteger(ptr noundef nonnull %i.a, i64 noundef %i.e) #11
   tail call void @lua_pushlightuserdata(ptr noundef nonnull %i.a, ptr noundef %1) #11
-  %i.f = tail call i32 @lua_pcallk(ptr noundef nonnull %i.a, i32 noundef 2, i32 noundef 1, i32 noundef 0, i64 noundef 0, ptr noundef null) #11 ; 2 uses
+  %i.f = tail call i32 @lua_pcallk(ptr noundef nonnull %i.a, i32 noundef 2, i32 noundef 1, i32 noundef 0, i64 noundef 0, ptr noundef null) #11
   %i.g = tail call i32 @lua_toboolean(ptr noundef nonnull %i.a, i32 noundef -1) #11
-  %.not.i = icmp eq i32 %i.f, 0
-  br i1 %.not.i, label %report.exit, label %bb.d
+  %.not.i = icmp ne i32 %i.f, 0                   ; 2 uses
+  br i1 %.not.i, label %bb.d, label %report.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.h = tail call ptr @lua_tolstring(ptr noundef nonnull %i.a, i32 noundef -1, ptr noundef null) #11 ; 2 uses
@@ -98,8 +98,7 @@ bb.d:                                             ; preds = %bb.c
 report.exit:                                      ; preds = %bb.c, %bb.d
   tail call void @lua_close(ptr noundef nonnull %i.a) #11
   %i.k = icmp eq i32 %i.g, 0
-  %2 = icmp ne i32 %i.f, 0
-  %.not17 = select i1 %i.k, i1 true, i1 %2
+  %.not17 = or i1 %i.k, %.not.i
   %i.l = zext i1 %.not17 to i32
   br label %bb.e
 

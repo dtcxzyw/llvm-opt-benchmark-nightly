@@ -205,8 +205,8 @@ bb.a:
   %i.g = trunc i64 %i.f to i32                    ; 5 uses
   %i.h = add nsw i32 %i.g, 1                      ; 8 uses
   store i32 0, ptr %4, align 8, !tbaa !122
-  %5 = icmp eq ptr %1, null
-  br i1 %5, label %bb.b, label %bb.j
+  %5 = icmp ne ptr %1, null                       ; 4 uses
+  br i1 %5, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -316,15 +316,11 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %bb.m
-  %i.bf = tail call i32 @getc(ptr noundef %i.bb)
+  %i.bf = tail call i32 @getc(ptr noundef %i.bb)  ; 2 uses
   switch i32 %i.bf, label %bb.n [
     i32 10, label %bb.o
-    i32 -1, label %.thread
+    i32 -1, label %bb.t
   ]
-
-.thread:                                          ; preds = %bb.n
-  %6 = icmp ne ptr %1, null
-  br label %bb.t
 
 bb.o:                                             ; preds = %bb.n
   %i.bg = tail call i32 @getc(ptr noundef %i.bb)
@@ -333,8 +329,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o, %bb.l
   %.0 = phi i32 [ %i.bg, %bb.o ], [ %i.bd, %bb.l ] ; 2 uses
   %i.bh = icmp eq i32 %.0, 27
-  %7 = icmp ne ptr %1, null                       ; 2 uses
-  %or.cond = and i1 %7, %i.bh
+  %or.cond = and i1 %5, %i.bh
   br i1 %or.cond, label %bb.q, label %bb.t
 
 bb.q:                                             ; preds = %bb.p
@@ -358,10 +353,10 @@ bb.s:                                             ; preds = %.preheader, %.prehe
   store i32 0, ptr %4, align 8, !tbaa !122
   br label %bb.t
 
-bb.t:                                             ; preds = %.thread, %bb.s, %bb.p
-  %i.bl = phi ptr [ %i.bi, %bb.s ], [ %i.bb, %bb.p ], [ %i.bb, %.thread ]
-  %i.bm = phi i1 [ true, %bb.s ], [ %7, %bb.p ], [ %6, %.thread ]
-  %.1 = phi i32 [ %i.bk, %bb.s ], [ %.0, %bb.p ], [ -1, %.thread ]
+bb.t:                                             ; preds = %bb.n, %bb.s, %bb.p
+  %i.bl = phi ptr [ %i.bi, %bb.s ], [ %i.bb, %bb.p ], [ %i.bb, %bb.n ]
+  %i.bm = phi i1 [ true, %bb.s ], [ %5, %bb.p ], [ %5, %bb.n ]
+  %.1 = phi i32 [ %i.bk, %bb.s ], [ %.0, %bb.p ], [ %i.bf, %bb.n ]
   %i.bn = tail call i32 @ungetc(i32 noundef %.1, ptr noundef %i.bl) ; 0 uses
   %i.bo = tail call fastcc ptr @lua_tolstring(ptr noundef nonnull %0, i32 noundef -1, ptr noundef null) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
@@ -764,9 +759,9 @@ bb.a:
 lua_settop.exit:                                  ; preds = %.lr.ph.i, %bb.a
   store ptr %i.d, ptr %i.a, align 8, !tbaa !95
   %i.k = tail call fastcc ptr @lua_newuserdata(ptr noundef nonnull %0, i64 noundef 0) ; 0 uses
-  %i.l = load ptr, ptr %i.b, align 8, !tbaa !114  ; 6 uses
-  %i.m = load ptr, ptr %i.a, align 8, !tbaa !95   ; 5 uses
-  %.not28.i.i = icmp uge ptr %i.l, %i.m           ; 2 uses
+  %i.l = load ptr, ptr %i.b, align 8, !tbaa !114  ; 5 uses
+  %i.m = load ptr, ptr %i.a, align 8, !tbaa !95   ; 4 uses
+  %.not28.i.i = icmp uge ptr %i.l, %i.m           ; 3 uses
   %.luaO_nilobject_.i.i = select i1 %.not28.i.i, ptr @luaO_nilobject_, ptr %i.l ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.luaO_nilobject_.i.i, i64 8
   %i.o = load i32, ptr %i.n, align 8, !tbaa !99
@@ -977,8 +972,7 @@ lua_rawset.exit:                                  ; preds = %luaH_set.exit.i, %b
   br label %lua_getmetatable.exit34.sink.split
 
 lua_type.exit.thread:                             ; preds = %lua_toboolean.exit.thread35, %lua_type.exit
-  %.not28.i.i22 = icmp ult ptr %i.l, %i.m
-  %.luaO_nilobject_.i.i23 = select i1 %.not28.i.i22, ptr %i.l, ptr @luaO_nilobject_ ; 3 uses
+  %.luaO_nilobject_.i.i23 = select i1 %.not28.i.i, ptr @luaO_nilobject_, ptr %i.l ; 3 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.luaO_nilobject_.i.i23, i64 8
   %i.dg = load i32, ptr %i.df, align 8, !tbaa !99 ; 2 uses
   switch i32 %i.dg, label %bb.t [
@@ -1381,8 +1375,8 @@ luaL_prepbuffer.exit:                             ; preds = %bb.b, %bb.c
   %i.g = load ptr, ptr %3, align 8, !tbaa !276
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.f
   store ptr %i.h, ptr %3, align 8, !tbaa !276
-  %i.i = sub i64 %.014, %i.f                      ; 3 uses
-  %i.j = icmp ne i64 %i.i, 0
+  %i.i = sub i64 %.014, %i.f                      ; 2 uses
+  %i.j = icmp ne i64 %i.i, 0                      ; 2 uses
   %i.k = icmp eq i64 %i.f, %spec.select
   %i.l = and i1 %i.k, %i.j
   br i1 %i.l, label %bb.b, label %bb.d, !llvm.loop !541
@@ -1393,8 +1387,7 @@ bb.d:                                             ; preds = %luaL_prepbuffer.exi
   %i.o = load i32, ptr %i.d, align 8, !tbaa !277
   call fastcc void @lua_concat(ptr noundef %i.n, i32 noundef %i.o)
   store i32 1, ptr %i.d, align 8, !tbaa !277
-  %4 = icmp eq i64 %i.i, 0
-  br i1 %4, label %bb.j, label %bb.e
+  br i1 %i.j, label %bb.e, label %bb.j
 
 bb.e:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16

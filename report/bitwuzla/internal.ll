@@ -205,10 +205,10 @@ define noundef zeroext i1 @_ZN7CaDiCaL8Internal19traverse_constraintERNS_14Claus
 bb.a:
   %2 = alloca %"class.std::vector.20", align 8    ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1136
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !173  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !173  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1144
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !173  ; 3 uses
-  %i.e = icmp ne ptr %i.b, %i.d
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !173  ; 2 uses
+  %i.e = icmp ne ptr %i.b, %i.d                   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1160
   %i.g = load i8, ptr %i.f, align 8, !range !212
   %i.h = trunc nuw i8 %i.g to i1
@@ -224,8 +224,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %bb.c, label %.preheader
 
 .preheader:                                       ; preds = %bb.b
-  %.not43 = icmp eq ptr %i.b, %i.d
-  br i1 %.not43, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit, label %.lr.ph
+  br i1 %i.e, label %.lr.ph, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 .lr.ph:                                           ; preds = %.preheader
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 472

@@ -205,12 +205,12 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.aq = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64 ], [ %i.ao, %bb.d ]
   %i.ar = fcmp oeq float %i.l, 0.000000e+00
   %or.cond = and i1 %i.ar, %i.aq
-  %spec.store.select = select i1 %or.cond, float 6.500000e+03, float %i.l ; 3 uses
+  %spec.store.select = select i1 %or.cond, float 6.500000e+03, float %i.l ; 2 uses
   %i.as = fmul float %2, %i.d
   %i.at = fdiv float %i.as, 1.000000e+02          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #30
-  %22 = fcmp oeq float %spec.store.select, 0.000000e+00
-  %i.au = select i1 %22, float 6.500000e+03, float %spec.store.select
+  %22 = fcmp une float %spec.store.select, 0.000000e+00 ; 2 uses
+  %i.au = select i1 %22, float %spec.store.select, float 6.500000e+03
   invoke void @_ZN4pbrt7Spectra1DEfN4pstd3pmr21polymorphic_allocatorISt4byteEE(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::DenselySampledSpectrum") align 8 %15, float noundef %i.au, ptr %4)
           to label %bb.h unwind label %bb.i
 
@@ -278,10 +278,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit76: ; preds = %_ZN
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit127
 
 bb.h:                                             ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
-  %23 = fcmp une float %spec.store.select, 0.000000e+00
   %i.bo = ptrtoint ptr %15 to i64
   %i.bp = or i64 %i.bo, 288230376151711744
-  %i.bq = select i1 %23, i64 %i.bp, i64 288230376151711744 ; 2 uses
+  %i.bq = select i1 %22, i64 %i.bp, i64 288230376151711744 ; 2 uses
   %i.br = load i64, ptr %i.ae, align 8, !tbaa !31 ; 4 uses
   %i.bs = icmp eq i64 %i.br, 7
   %.pre = load ptr, ptr %12, align 8, !tbaa !33   ; 3 uses

@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.a
   %i.kg = udiv i32 %i.kf, 3600
   %i.kh = urem i32 %i.kf, 3600                    ; 2 uses
   %.lhs.trunc.i115 = trunc nuw nsw i32 %i.kh to i16 ; 2 uses
-  %i.ki = urem i16 %.lhs.trunc.i115, 60           ; 3 uses
+  %i.ki = urem i16 %.lhs.trunc.i115, 60           ; 2 uses
   %i.kj = udiv i16 %.lhs.trunc.i115, 60
   %i.kk = shl nuw nsw i32 %i.kg, 1
   %i.kl = zext nneg i32 %i.kk to i64
@@ -218,7 +218,7 @@ bb.w:                                             ; preds = %bb.a
   %i.kr = getelementptr inbounds nuw i8, ptr %5, i64 3 ; 2 uses
   store i8 %i.kq, ptr %i.ko, align 1, !tbaa !34
   %i.ks = icmp samesign ugt i32 %i.kh, 59
-  %i.kt = icmp ne i16 %i.ki, 0
+  %i.kt = icmp ne i16 %i.ki, 0                    ; 2 uses
   %or.cond = select i1 %i.ks, i1 true, i1 %i.kt
   br i1 %or.cond, label %bb.x, label %_ZNK6duckdb14StrfTimeFormat11WritePaddedEPcjm.exit
 
@@ -235,8 +235,7 @@ bb.x:                                             ; preds = %bb.w
   %i.lb = load i8, ptr %i.la, align 1, !tbaa !34
   %i.lc = getelementptr inbounds nuw i8, ptr %5, i64 6 ; 2 uses
   store i8 %i.lb, ptr %i.kz, align 1, !tbaa !34
-  %.not95 = icmp eq i16 %i.ki, 0
-  br i1 %.not95, label %_ZNK6duckdb14StrfTimeFormat11WritePaddedEPcjm.exit, label %bb.y
+  br i1 %i.kt, label %bb.y, label %_ZNK6duckdb14StrfTimeFormat11WritePaddedEPcjm.exit
 
 bb.y:                                             ; preds = %bb.x
   %i.ld = getelementptr inbounds nuw i8, ptr %5, i64 7

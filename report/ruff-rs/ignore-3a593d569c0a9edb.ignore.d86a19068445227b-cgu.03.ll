@@ -202,7 +202,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.g, %bb.d
-  %.sroa.0.0 = phi i1 [ false, %bb.d ], [ %.sroa.0.0.i, %bb.g ], [ true, %bb.a ]
+  %.sroa.0.0 = phi i1 [ false, %bb.d ], [ %.sroa.53.010, %bb.g ], [ true, %bb.a ]
   ret i1 %.sroa.0.0
 
 bb.c:                                             ; preds = %bb.a
@@ -221,7 +221,7 @@ bb.e:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.j = load i64, ptr %i.i, align 8, !noundef !3
   call void @_RINvNtCs2AWtUsOyxgP_3std2fs8metadataRNtNtB4_4path4PathECsizY4S0OBG5z_6ignore(ptr noalias noundef nonnull sret([176 x i8]) align 8 captures(none) dereferenceable(176) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef %i.j)
-  %i.k = load i64, ptr %i.a, align 8, !range !10, !noundef !3 ; 2 uses
+  %i.k = load i64, ptr %i.a, align 8, !range !10, !noundef !3
   %i.l = icmp eq i64 %i.k, 2
   br i1 %i.l, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2AWtUsOyxgP_3std2fs8MetadataNtNtNtB11_2io5error5ErrorEECsizY4S0OBG5z_6ignore.exit, label %bb.f
 
@@ -241,8 +241,6 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2AWtUsOyxgP_
 bb.g:                                             ; preds = %bb.f, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2AWtUsOyxgP_3std2fs8MetadataNtNtNtB11_2io5error5ErrorEECsizY4S0OBG5z_6ignore.exit
   %.sroa.53.010 = phi i1 [ false, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2AWtUsOyxgP_3std2fs8MetadataNtNtNtB11_2io5error5ErrorEECsizY4S0OBG5z_6ignore.exit ], [ %i.n, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %.not.i2 = icmp ne i64 %i.k, 2
-  %.sroa.0.0.i = select i1 %.not.i2, i1 %.sroa.53.010, i1 false
   br label %bb.b
 }
 

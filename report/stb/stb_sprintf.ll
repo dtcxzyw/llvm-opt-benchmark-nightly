@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %struct.stbsp__context, align 8     ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   %i.a = icmp ne i32 %1, 0
-  %i.b = icmp ne ptr %0, null
+  %i.b = icmp ne ptr %0, null                     ; 2 uses
   %or.cond = or i1 %i.b, %i.a
   br i1 %or.cond, label %bb.c, label %bb.b
 
@@ -225,9 +225,9 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.d, label %.thread
 
 .thread:                                          ; preds = %bb.c
-  %.not34.i = icmp eq ptr %0, null
+  %.not = xor i1 %i.b, true
   %.pre36.i = sext i32 %1 to i64
-  tail call void @llvm.assume(i1 %.not34.i)
+  tail call void @llvm.assume(i1 %.not)
   %i.h = getelementptr inbounds i8, ptr null, i64 %.pre36.i
   store ptr %i.h, ptr %4, align 8, !tbaa !27
   store i32 0, ptr %i.f, align 8, !tbaa !26
@@ -277,8 +277,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   call void @llvm.va_start.p0(ptr nonnull %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
-  %i.a = icmp ne i32 %1, 0
-  %i.b = icmp ne ptr %0, null
+  %i.a = icmp ne i32 %1, 0                        ; 2 uses
+  %i.b = icmp ne ptr %0, null                     ; 2 uses
   %or.cond.i = or i1 %i.b, %i.a
   br i1 %or.cond.i, label %bb.c, label %bb.b
 
@@ -299,17 +299,16 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %bb.d, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.c
-  %.not34.i.i = icmp eq ptr %0, null
+  %.not.i = xor i1 %i.b, true
   %.pre36.i.i = sext i32 %1 to i64
-  call void @llvm.assume(i1 %.not34.i.i)
+  call void @llvm.assume(i1 %.not.i)
   %i.h = getelementptr inbounds i8, ptr null, i64 %.pre36.i.i
   store ptr %i.h, ptr %3, align 8, !tbaa !27
   store i32 0, ptr %i.f, align 8, !tbaa !26
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %5 = icmp eq i32 %1, 0
-  br i1 %5, label %bb.e, label %bb.f
+  br i1 %i.a, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.thread.i
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 16

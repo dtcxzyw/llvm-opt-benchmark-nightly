@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %.preheader, %._crit
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.w
-  %.1335.lcssa.i = phi i32 [ %.0334431.i, %bb.w ], [ %i.dd, %._crit_edge.loopexit.i ] ; 11 uses
+  %.1335.lcssa.i = phi i32 [ %.0334431.i, %bb.w ], [ %i.dd, %._crit_edge.loopexit.i ] ; 10 uses
   %.1333.lcssa.i = phi ptr [ %.0332432.i, %bb.w ], [ %i.cy, %._crit_edge.loopexit.i ]
   %.1331.lcssa.i = phi ptr [ %.0330433.i, %bb.w ], [ %i.cz, %._crit_edge.loopexit.i ]
   %.1329.lcssa.i = phi ptr [ %.0328434.i, %bb.w ], [ %i.da, %._crit_edge.loopexit.i ]
@@ -216,7 +216,7 @@ bb.x:                                             ; preds = %._crit_edge.i
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.aw, i8 32, i64 %i.av, i1 false)
   %i.de = load i32, ptr @g_decodeOnly, align 4, !tbaa !9
   %.not359.i = icmp ne i32 %i.de, 0
-  %i.df = icmp ne i32 %.1335.lcssa.i, 0
+  %i.df = icmp ne i32 %.1335.lcssa.i, 0           ; 7 uses
   %or.cond500.i = and i1 %i.df, %.not359.i
   br i1 %or.cond500.i, label %.lr.ph437.preheader.i, label %.loopexit413.i
 
@@ -306,7 +306,6 @@ bb.z:                                             ; preds = %bb.y, %.loopexit413
   %i.ew = icmp eq i32 %i.ev, 0                    ; 2 uses
   %spec.select.i = select i1 %i.ew, i32 1, i32 %i.el
   %spec.select384.i = select i1 %i.ew, i32 1, i32 %i.eo
-  %.not502.i = icmp eq i32 %.1335.lcssa.i, 0      ; 6 uses
   %i.ex = select i1 %.not354.i, i64 2147483647, i64 8421504
   %wide.trip.count548.i = zext i32 %.1335.lcssa.i to i64 ; 9 uses
   %xtraiter180 = and i64 %wide.trip.count548.i, 7 ; 3 uses
@@ -320,8 +319,7 @@ bb.z:                                             ; preds = %bb.y, %.loopexit413
   %lcmp.mod187.not = icmp eq i64 %xtraiter185, 0
   %lcmp.mod189 = icmp ne i64 %xtraiter185, 0
   %xtraiter192 = and i64 %wide.trip.count548.i, 3 ; 3 uses
-  %12 = add i32 %.1335.lcssa.i, -1
-  %i.fa = icmp ult i32 %12, 3
+  %i.fa = icmp ult i32 %.1335.lcssa.i, 4
   %unroll_iter197 = and i64 %wide.trip.count548.i, 4294967292
   %lcmp.mod194.not = icmp eq i64 %xtraiter192, 0
   %lcmp.mod196 = icmp ne i64 %xtraiter192, 0
@@ -380,7 +378,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 
 bb.ag:                                            ; preds = %bb.af
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.aw, i8 -27, i64 %i.av, i1 false)
-  br i1 %.not502.i, label %._crit_edge441.i, label %.lr.ph440.i.preheader
+  br i1 %i.df, label %.lr.ph440.i.preheader, label %._crit_edge441.i
 
 .lr.ph440.i.preheader:                            ; preds = %bb.ag
   br i1 %i.ey, label %.lr.ph440.i.epil.preheader, label %.lr.ph440.i
@@ -448,7 +446,7 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %.not507.i, label %._crit_edge452.i, label %.lr.ph451.i
 
 .lr.ph451.i:                                      ; preds = %._crit_edge441.i
-  br i1 %.not502.i, label %.lr.ph451.split.i, label %.lr.ph445.us.i
+  br i1 %i.df, label %.lr.ph445.us.i, label %.lr.ph451.split.i
 
 .lr.ph445.us.i:                                   ; preds = %.lr.ph451.i, %._crit_edge446.us.i
   %.0288449.us.i = phi i32 [ %i.hd, %._crit_edge446.us.i ], [ 0, %.lr.ph451.i ]
@@ -503,8 +501,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %exitcond557.not.i = icmp eq i32 %i.hf, %.1313476.i
   br i1 %exitcond557.not.i, label %._crit_edge452.i, label %.lr.ph451.split.i, !llvm.loop !44
 
-._crit_edge452.i:                                 ; preds = %._crit_edge446.us.i, %.lr.ph451.split.i, %._crit_edge441.i
-  %.1337.lcssa.i = phi i32 [ %.0336472.i, %._crit_edge441.i ], [ %.0336472.i, %.lr.ph451.split.i ], [ %.3339.us.i, %._crit_edge446.us.i ]
+._crit_edge452.i:                                 ; preds = %.lr.ph451.split.i, %._crit_edge446.us.i, %._crit_edge441.i
+  %.1337.lcssa.i = phi i32 [ %.0336472.i, %._crit_edge441.i ], [ %.3339.us.i, %._crit_edge446.us.i ], [ %.0336472.i, %.lr.ph451.split.i ]
   %i.hg = call i64 @TIME_clockSpan_ns(i64 %i.gj) #19 ; 4 uses
   %.not363.i = icmp eq i64 %i.hg, 0
   br i1 %.not363.i, label %bb.an, label %bb.ak
@@ -535,7 +533,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %.2314.i = phi i32 [ %i.hn, %bb.am ], [ %i.ho, %bb.an ]
   %i.hp = add i64 %i.hg, %.0306480.i              ; 2 uses
   %i.hq = icmp ule i64 %i.hp, %i.ei
-  br i1 %.not502.i, label %._crit_edge458.i, label %.lr.ph457.i.preheader
+  br i1 %i.df, label %.lr.ph457.i.preheader, label %._crit_edge458.i
 
 .lr.ph457.i.preheader:                            ; preds = %bb.ao
   br i1 %i.ez, label %.lr.ph457.i.epil.preheader, label %.lr.ph457.i
@@ -656,9 +654,9 @@ bb.as:                                            ; preds = %bb.ar
   %i.jl = select i1 %.not366.i, ptr @LZ4_decompress_safe_usingDict, ptr @LZ4F_decompress_binding
   %i.jm = select i1 %.not366.i, ptr @.str.31, ptr @.str.30
   %i.jn = call i64 @TIME_getTime() #19
-  %.not508.i = icmp eq i32 %.1309478.i, 0
-  %brmerge622.i = or i1 %.not502.i, %.not508.i
-  br i1 %brmerge622.i, label %._crit_edge464.i, label %.preheader.us.i
+  %.not508.i = icmp ne i32 %.1309478.i, 0
+  %brmerge.not629.i = and i1 %i.df, %.not508.i
+  br i1 %brmerge.not629.i, label %.preheader.us.i, label %._crit_edge464.i
 
 .preheader.us.i:                                  ; preds = %bb.as, %.thread402.us.i
   %.0285463.us.i = phi i32 [ %i.km, %.thread402.us.i ], [ 0, %bb.as ]
@@ -763,10 +761,10 @@ bb.bc:                                            ; preds = %.critedge389.i, %bb
   %.1305.i = phi i64 [ %.0304481.i, %.critedge389.i ], [ %i.kw, %bb.bb ]
   %.1301.i = phi i1 [ false, %.critedge389.i ], [ %i.kx, %bb.bb ] ; 2 uses
   %i.kz = load i32, ptr @g_decodeOnly, align 4, !tbaa !9
-  %.not370.i = icmp eq i32 %i.kz, 0               ; 2 uses
-  %brmerge.i = or i1 %.not502.i, %.not370.i
-  %.0293484.mux.i = select i1 %.not370.i, i64 %.0293484.i, i64 0
-  br i1 %brmerge.i, label %.loopexit.i, label %.lr.ph469.i.preheader
+  %.not370.i = icmp ne i32 %i.kz, 0               ; 2 uses
+  %brmerge.not.i = and i1 %i.df, %.not370.i
+  %.0293484.mux.i = select i1 %.not370.i, i64 0, i64 %.0293484.i
+  br i1 %brmerge.not.i, label %.lr.ph469.i.preheader, label %.loopexit.i
 
 .lr.ph469.i.preheader:                            ; preds = %bb.bc
   br i1 %i.fa, label %.lr.ph469.i.epil.preheader, label %.lr.ph469.i
@@ -879,7 +877,7 @@ bb.bh:                                            ; preds = %.lr.ph489.i
   %i.nc = load ptr, ptr @stderr, align 8, !tbaa !12
   %i.nd = trunc nuw nsw i64 %.0281487.i to i32
   %i.ne = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.nc, ptr noundef nonnull @.str.36, i32 noundef %i.nd) #17 ; 0 uses
-  br i1 %.not502.i, label %._crit_edge494.i, label %.lr.ph493.i
+  br i1 %i.df, label %.lr.ph493.i, label %._crit_edge494.i
 
 .lr.ph493.i:                                      ; preds = %bb.bh, %bb.bi
   %indvars.iv578.i = phi i64 [ %indvars.iv.next579.i, %bb.bi ], [ 0, %bb.bh ] ; 3 uses

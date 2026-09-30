@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.c = sext i32 %i.b to i64                     ; 2 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !307
   %i.e = getelementptr inbounds nuw [128 x i8], ptr %i.d, i64 %i.c ; 4 uses
-  %.sroa.0.0.copyload = load i32, ptr %i.e, align 8 ; 4 uses
+  %.sroa.0.0.copyload = load i32, ptr %i.e, align 8 ; 3 uses
   %.sroa.7112.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %.sroa.7112.0.copyload = load double, ptr %.sroa.7112.0..sroa_idx, align 8 ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 96 ; 2 uses
@@ -257,9 +257,8 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN8LightGBM9SplitInfoC2ERKS0_.exit
 
 _ZN8LightGBM9SplitInfoC2ERKS0_.exit:              ; preds = %bb.f, %bb.g, %bb.h
-  %5 = icmp eq i32 %.sroa.0.0.copyload, -1
-  %spec.store.select3.i = select i1 %5, i32 2147483647, i32 %.sroa.0.0.copyload ; 3 uses
-  %6 = icmp ne i32 %.sroa.0.0.copyload, -1
+  %5 = icmp ne i32 %.sroa.0.0.copyload, -1        ; 2 uses
+  %spec.store.select3.i = select i1 %5, i32 %.sroa.0.0.copyload, i32 2147483647 ; 3 uses
   %i.u = sext i32 %i.b to i64
   br label %_ZNK8LightGBM9SplitInfoeqERKS0_.exit96.thread.outer
 
@@ -326,7 +325,7 @@ bb.l:                                             ; preds = %bb.j
   %i.ao = icmp eq i32 %i.an, -1
   %spec.store.select3.i85 = select i1 %i.ao, i32 2147483647, i32 %i.an
   %i.ap = icmp slt i32 %.sroa.0.0.copyload, %spec.store.select3.i85
-  %i.aq = select i1 %6, i1 %i.ap, i1 false
+  %i.aq = select i1 %5, i1 %i.ap, i1 false
   br label %_ZNK8LightGBM9SplitInfogtERKS0_.exit87
 
 _ZNK8LightGBM9SplitInfogtERKS0_.exit87:           ; preds = %bb.k, %bb.l
@@ -729,12 +728,11 @@ bb.b:                                             ; preds = %bb.a
   %i.c = sext i32 %i.b to i64                     ; 2 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !325    ; 2 uses
   %i.e = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %i.c ; 2 uses
-  %.sroa.0.0.copyload = load i32, ptr %i.e, align 8, !tbaa !177 ; 4 uses
+  %.sroa.0.0.copyload = load i32, ptr %i.e, align 8, !tbaa !177 ; 3 uses
   %.sroa.797.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.sroa.797.0.copyload = load double, ptr %.sroa.797.0..sroa_idx, align 8, !tbaa !295 ; 6 uses
-  %11 = icmp eq i32 %.sroa.0.0.copyload, -1
-  %spec.store.select3.i = select i1 %11, i32 2147483647, i32 %.sroa.0.0.copyload ; 3 uses
-  %12 = icmp ne i32 %.sroa.0.0.copyload, -1
+  %11 = icmp ne i32 %.sroa.0.0.copyload, -1       ; 2 uses
+  %spec.store.select3.i = select i1 %11, i32 %.sroa.0.0.copyload, i32 2147483647 ; 3 uses
   %i.f = sext i32 %i.b to i64
   br label %_ZNK8LightGBM14LightSplitInfoeqERKS0_.exit93.thread.outer
 
@@ -802,7 +800,7 @@ bb.f:                                             ; preds = %bb.d
   %i.z = icmp eq i32 %i.y, -1
   %spec.store.select3.i85 = select i1 %i.z, i32 2147483647, i32 %i.y
   %i.aa = icmp slt i32 %.sroa.0.0.copyload, %spec.store.select3.i85
-  %i.ab = select i1 %12, i1 %i.aa, i1 false
+  %i.ab = select i1 %11, i1 %i.aa, i1 false
   br label %_ZNK8LightGBM14LightSplitInfogtERKS0_.exit87
 
 _ZNK8LightGBM14LightSplitInfogtERKS0_.exit87:     ; preds = %bb.e, %bb.f
@@ -1205,8 +1203,8 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.c
   br label %bb.d
 
 bb.d:                                             ; preds = %.noexc60, %bb.b
-  %.pre-phi4.i = phi i64 [ %.pre3.i, %.noexc60 ], [ %i.z, %bb.b ] ; 3 uses
-  %.pre-phi.i = phi i64 [ %.pre2.i, %.noexc60 ], [ %i.y, %bb.b ] ; 3 uses
+  %.pre-phi4.i = phi i64 [ %.pre3.i, %.noexc60 ], [ %i.z, %bb.b ] ; 2 uses
+  %.pre-phi.i = phi i64 [ %.pre2.i, %.noexc60 ], [ %i.y, %bb.b ] ; 2 uses
   %i.ad = phi ptr [ %.pre.i, %.noexc60 ], [ %i.x, %bb.b ] ; 2 uses
   %i.ae = phi ptr [ %i.ac, %.noexc60 ], [ null, %bb.b ] ; 10 uses
   %i.af = sub i64 %.pre-phi.i, %.pre-phi4.i       ; 5 uses
@@ -1230,8 +1228,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.aj = getelementptr inbounds i8, ptr %i.ae, i64 %i.af ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   store ptr %6, ptr %5, align 8, !tbaa !2034
-  %.not6.i.i.i = icmp eq i64 %.pre-phi.i, %.pre-phi4.i ; 2 uses
-  br i1 %.not6.i.i.i, label %.loopexit279, label %.lr.ph.i.i.i
+  %.not6.i.i.i = icmp ne i64 %.pre-phi.i, %.pre-phi4.i ; 3 uses
+  br i1 %.not6.i.i.i, label %.lr.ph.i.i.i, label %.loopexit279
 
 .lr.ph.i.i.i:                                     ; preds = %bb.h, %.noexc61
   %.sroa.03.07.i.i.i = phi ptr [ %i.al, %.noexc61 ], [ %i.ae, %bb.h ] ; 3 uses
@@ -1257,7 +1255,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.ar = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.as = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 2 uses
   %i.at = lshr exact i64 %i.af, 2
-  %13 = icmp ne i64 %.pre-phi.i, %.pre-phi4.i
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   %i.av = trunc i64 %i.at to i32                  ; 2 uses
   br label %bb.l
@@ -1303,7 +1300,7 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   %i.bd = load ptr, ptr %i.ap, align 8            ; 2 uses
   %.not6.i.i.i64 = icmp eq ptr %i.bd, null
-  %or.cond = select i1 %13, i1 true, i1 %.not6.i.i.i64
+  %or.cond = select i1 %.not6.i.i.i, i1 true, i1 %.not6.i.i.i64
   br i1 %or.cond, label %_ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit, label %.lr.ph.i.i.i65
 
 .lr.ph.i.i.i65:                                   ; preds = %bb.m, %.noexc68
@@ -1406,7 +1403,7 @@ bb.t:                                             ; preds = %.critedge.i
   br label %.body
 
 _ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit: ; preds = %.noexc68, %bb.m
-  br i1 %.not6.i.i.i, label %_ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit76.thread, label %.lr.ph
+  br i1 %.not6.i.i.i, label %.lr.ph, label %_ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit76.thread
 
 .lr.ph:                                           ; preds = %_ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit
   %i.cn = load i64, ptr %i.aq, align 8, !tbaa !426

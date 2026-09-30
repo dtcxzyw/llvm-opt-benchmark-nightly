@@ -205,8 +205,7 @@ bb.abz:                                           ; preds = %"_ZN4core3str21_$LT
   br i1 %i.dax, label %.lr.ph.i.i.i361, label %.backedge.i.i
 
 ._crit_edge.i.i.i362:                             ; preds = %bb.acb
-  %0 = icmp eq i32 %.sroa.011.1.i.i.i, 0
-  br i1 %0, label %bb.aca, label %.backedge.i.i
+  br i1 %i.dbg, label %.backedge.i.i, label %bb.aca
 
 bb.aca:                                           ; preds = %._crit_edge.i.i.i362
   %i.day = icmp slt i8 %i.dbd, -64
@@ -227,10 +226,10 @@ bb.aca:                                           ; preds = %._crit_edge.i.i.i36
   ]
 
 bb.acb:                                           ; preds = %bb.acd, %bb.acc, %.lr.ph.i.i.i361
-  %.sroa.011.1.i.i.i = phi i32 [ %.sroa.011.034.i.i.i, %.lr.ph.i.i.i361 ], [ %i.dbh, %bb.acc ], [ %i.dbi, %bb.acd ] ; 3 uses
+  %.sroa.011.1.i.i.i = phi i32 [ %.sroa.011.034.i.i.i, %.lr.ph.i.i.i361 ], [ %i.dbh, %bb.acc ], [ %i.dbi, %bb.acd ] ; 2 uses
   %i.dbe = add nuw i64 %.sroa.015.033.i.i.i, 1    ; 2 uses
   %i.dbf = icmp ult i64 %i.dbe, %i.dad
-  %i.dbg = icmp ne i32 %.sroa.011.1.i.i.i, 0
+  %i.dbg = icmp ne i32 %.sroa.011.1.i.i.i, 0      ; 2 uses
   %or.cond.i.i.i = select i1 %i.dbf, i1 %i.dbg, i1 false
   br i1 %or.cond.i.i.i, label %.lr.ph.i.i.i361, label %._crit_edge.i.i.i362
 
@@ -630,8 +629,7 @@ bb.adk:                                           ; preds = %bb.adj, %.split.i.i
   br i1 %or.cond34.i.i.i, label %.lr.ph.i88.i.i, label %.backedge.i.i
 
 ._crit_edge.i90.i.i:                              ; preds = %bb.adm
-  %1 = icmp eq i32 %.sroa.07.1.i.i.i, 0
-  br i1 %1, label %bb.adl, label %.backedge.i.i
+  br i1 %i.dgr, label %.backedge.i.i, label %bb.adl
 
 bb.adl:                                           ; preds = %._crit_edge.i90.i.i
   %i.dgj = icmp slt i8 %i.dgo, -64
@@ -652,10 +650,10 @@ bb.adl:                                           ; preds = %._crit_edge.i90.i.i
   ]
 
 bb.adm:                                           ; preds = %bb.ado, %bb.adn, %.lr.ph.i88.i.i
-  %.sroa.07.1.i.i.i = phi i32 [ %.sroa.07.025.i.i.i, %.lr.ph.i88.i.i ], [ %i.dgs, %bb.adn ], [ %i.dgt, %bb.ado ] ; 3 uses
+  %.sroa.07.1.i.i.i = phi i32 [ %.sroa.07.025.i.i.i, %.lr.ph.i88.i.i ], [ %i.dgs, %bb.adn ], [ %i.dgt, %bb.ado ] ; 2 uses
   %i.dgp = add nuw i64 %.sroa.011.024.i.i.i, 1    ; 2 uses
   %i.dgq = icmp ult i64 %i.dgp, %i.dgf
-  %i.dgr = icmp ne i32 %.sroa.07.1.i.i.i, 0
+  %i.dgr = icmp ne i32 %.sroa.07.1.i.i.i, 0       ; 2 uses
   %or.cond.i89.i.i = select i1 %i.dgq, i1 %i.dgr, i1 false
   br i1 %or.cond.i89.i.i, label %.lr.ph.i88.i.i, label %._crit_edge.i90.i.i
 
