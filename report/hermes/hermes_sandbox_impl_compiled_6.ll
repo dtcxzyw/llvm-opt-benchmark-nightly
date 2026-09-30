@@ -204,10 +204,10 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %i.gi, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  %i.gj = or i32 %.0.copyload.i585, 15
-  %i.gk = add nuw nsw i32 %i.gj, 1                ; 2 uses
+  %i.gj = or i32 %.0.copyload.i585, 15            ; 2 uses
+  %i.gk = add nuw nsw i32 %i.gj, 1
   %i.gl = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.gk) #8 ; 3 uses
-  %3 = or disjoint i32 %i.gk, -2147483648
+  %3 = add nuw nsw i32 %i.gj, -2147483647
   %i.gm = zext i32 %1 to i64                      ; 3 uses
   %.val511 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.gn = getelementptr inbounds nuw i8, ptr %.val511, i64 %i.gm
@@ -610,10 +610,10 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
-  %i.eq = or i32 %i.ek, 15
-  %i.er = add nuw nsw i32 %i.eq, 1                ; 2 uses
+  %i.eq = or i32 %i.ek, 15                        ; 2 uses
+  %i.er = add nuw nsw i32 %i.eq, 1
   %i.es = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.er) #8 ; 2 uses
-  %8 = or disjoint i32 %i.er, -2147483648
+  %8 = add nuw nsw i32 %i.eq, -2147483647
   %.val4169 = load ptr, ptr %i.e, align 8, !tbaa !12
   %i.et = getelementptr inbounds nuw i8, ptr %.val4169, i64 %i.ag
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 152
@@ -1016,10 +1016,10 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %i.kv, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  %i.kw = or i32 %.0.copyload.i4299, 15
-  %i.kx = add nuw nsw i32 %i.kw, 1                ; 2 uses
+  %i.kw = or i32 %.0.copyload.i4299, 15           ; 2 uses
+  %i.kx = add nuw nsw i32 %i.kw, 1
   %i.ky = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.kx) #8 ; 3 uses
-  %9 = or disjoint i32 %i.kx, -2147483648
+  %9 = add nuw nsw i32 %i.kw, -2147483647
   %.val4155 = load ptr, ptr %i.e, align 8, !tbaa !12
   %i.kz = getelementptr inbounds nuw i8, ptr %.val4155, i64 %i.ki
   %i.la = getelementptr inbounds nuw i8, ptr %i.kz, i64 16
@@ -1105,10 +1105,10 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.mc, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
-  %i.md = or i32 %.0.copyload.i4301, 15
-  %i.me = add nuw nsw i32 %i.md, 1                ; 2 uses
+  %i.md = or i32 %.0.copyload.i4301, 15           ; 2 uses
+  %i.me = add nuw nsw i32 %i.md, 1
   %i.mf = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.me) #8 ; 3 uses
-  %10 = or disjoint i32 %i.me, -2147483648
+  %10 = add nuw nsw i32 %i.md, -2147483647
   %.val4148 = load ptr, ptr %i.e, align 8, !tbaa !12
   %i.mg = getelementptr inbounds nuw i8, ptr %.val4148, i64 %i.ki
   %i.mh = getelementptr inbounds nuw i8, ptr %i.mg, i64 40
@@ -1182,10 +1182,10 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.nd, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
-  %i.ne = or i32 %.0.copyload.i4303, 15
-  %i.nf = add nuw nsw i32 %i.ne, 1                ; 2 uses
+  %i.ne = or i32 %.0.copyload.i4303, 15           ; 2 uses
+  %i.nf = add nuw nsw i32 %i.ne, 1
   %i.ng = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.nf) #8 ; 3 uses
-  %11 = or disjoint i32 %i.nf, -2147483648
+  %11 = add nuw nsw i32 %i.ne, -2147483647
   %.val4144 = load ptr, ptr %i.e, align 8, !tbaa !12
   %i.nh = getelementptr inbounds nuw i8, ptr %.val4144, i64 %i.ki
   %i.ni = getelementptr inbounds nuw i8, ptr %i.nh, i64 52
@@ -1588,10 +1588,10 @@ bb.fp:                                            ; preds = %.loopexit4602
   br i1 %i.ala, label %bb.fq, label %bb.fr
 
 bb.fq:                                            ; preds = %bb.fp
-  %i.alb = or i32 %i.aky, 15
-  %i.alc = add nuw nsw i32 %i.alb, 1              ; 2 uses
+  %i.alb = or i32 %i.aky, 15                      ; 2 uses
+  %i.alc = add nuw nsw i32 %i.alb, 1
   %i.ald = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.alc) #8 ; 2 uses
-  %12 = or disjoint i32 %i.alc, -2147483648
+  %12 = add nuw nsw i32 %i.alb, -2147483647
   %i.ale = zext i32 %i.tv to i64                  ; 3 uses
   %.val4118 = load ptr, ptr %i.e, align 8, !tbaa !12
   %i.alf = getelementptr inbounds nuw i8, ptr %.val4118, i64 %i.ale

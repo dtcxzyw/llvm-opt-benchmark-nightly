@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %stbtt__buf_get8.exi
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %stbtt__csctx_rline_to.exit
-  %indvars.iv429 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next430, %stbtt__csctx_rline_to.exit ] ; 2 uses
+  %indvars.iv429 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next430, %stbtt__csctx_rline_to.exit ] ; 3 uses
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv429
   %i.by = load <2 x float>, ptr %i.bx, align 8, !tbaa !54
   %i.bz = load <2 x float>, ptr %i.ag, align 8, !tbaa !54
@@ -296,8 +296,8 @@ stbtt__csctx_rline_to.exit:                       ; preds = %stbtt__track_vertex
   %i.cy = phi i32 [ %.pre.i, %stbtt__track_vertex.exit.i.i ], [ %i.cs, %bb.y ]
   %i.cz = add nsw i32 %i.cy, 1
   store i32 %i.cz, ptr %.phi.trans.insert.i309, align 8, !tbaa !280
-  %indvars.iv.next430 = add nuw nsw i64 %indvars.iv429, 2 ; 2 uses
-  %5 = or disjoint i64 %indvars.iv.next430, 1
+  %indvars.iv.next430 = add nuw nsw i64 %indvars.iv429, 2
+  %5 = add nuw nsw i64 %indvars.iv429, 3
   %i.da = icmp samesign ult i64 %5, %i.bw
   br i1 %i.da, label %.preheader, label %.thread, !llvm.loop !1228
 
@@ -700,7 +700,7 @@ bb.cf:                                            ; preds = %stbtt__buf_get8.exi
   br label %.lr.ph357
 
 .lr.ph357:                                        ; preds = %.lr.ph357.preheader, %stbtt__csctx_rline_to.exit311
-  %indvars.iv420 = phi i64 [ 0, %.lr.ph357.preheader ], [ %indvars.iv.next421, %stbtt__csctx_rline_to.exit311 ] ; 2 uses
+  %indvars.iv420 = phi i64 [ 0, %.lr.ph357.preheader ], [ %indvars.iv.next421, %stbtt__csctx_rline_to.exit311 ] ; 3 uses
   %i.jo = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv420
   %i.jp = load <2 x float>, ptr %i.jo, align 8, !tbaa !54
   %i.jq = load <2 x float>, ptr %i.ag, align 8, !tbaa !54
@@ -791,8 +791,8 @@ stbtt__csctx_rline_to.exit311:                    ; preds = %stbtt__track_vertex
   %i.kp = phi i32 [ %.pre.i310, %stbtt__track_vertex.exit.i.i308 ], [ %i.kj, %bb.cs ]
   %i.kq = add nsw i32 %i.kp, 1
   store i32 %i.kq, ptr %.phi.trans.insert.i309, align 8, !tbaa !280
-  %indvars.iv.next421 = add nuw nsw i64 %indvars.iv420, 2 ; 4 uses
-  %6 = or disjoint i64 %indvars.iv.next421, 1
+  %indvars.iv.next421 = add nuw nsw i64 %indvars.iv420, 2 ; 3 uses
+  %6 = add nuw nsw i64 %indvars.iv420, 3
   %i.kr = icmp samesign ult i64 %6, %i.jn
   br i1 %i.kr, label %.lr.ph357, label %._crit_edge, !llvm.loop !1231
 

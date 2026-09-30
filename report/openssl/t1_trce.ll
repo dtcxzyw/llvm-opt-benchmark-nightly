@@ -204,11 +204,11 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.r = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.587, i32 noundef %i.k) #5 ; 0 uses
   %i.s = sub nuw i64 %i.m, %i.l
-  %i.t = add nuw nsw i32 %1, 2                    ; 3 uses
+  %i.t = add nuw nsw i32 %1, 2                    ; 2 uses
   %.not.i = icmp eq i32 %2, 0                     ; 3 uses
   %i.u = add nuw nsw i32 %1, 4                    ; 12 uses
   %.not232.i = icmp eq i8 %3, 4
-  %6 = or disjoint i32 %i.t, 4                    ; 9 uses
+  %6 = add nuw nsw i32 %1, 6                      ; 9 uses
   %i.v = icmp ne i32 %2, 0                        ; 2 uses
   br label %bb.g
 

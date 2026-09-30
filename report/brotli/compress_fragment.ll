@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.au = phi i64 [ %.pre359, %.lr.ph ], [ %i.bg, %bb.b ] ; 3 uses
-  %.0343.i181 = phi i64 [ 0, %.lr.ph ], [ %i.bh, %bb.b ] ; 2 uses
+  %.0343.i181 = phi i64 [ 0, %.lr.ph ], [ %i.bh, %bb.b ] ; 3 uses
   %i.av = lshr exact i64 %.0343.i181, 3
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !18
@@ -222,8 +222,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store i64 %i.bf, ptr %i.ba, align 1, !noalias !257
   %i.bg = add i64 %i.au, 8                        ; 3 uses
   store i64 %i.bg, ptr %5, align 8, !tbaa !17, !alias.scope !257, !noalias !258
-  %i.bh = add i64 %.0343.i181, 8                  ; 2 uses
-  %7 = or disjoint i64 %i.bh, 7
+  %i.bh = add i64 %.0343.i181, 8
+  %7 = add i64 %.0343.i181, 15
   %i.bi = load i64, ptr %i.aq, align 8, !tbaa !21 ; 2 uses
   %i.bj = icmp ult i64 %7, %i.bi
   br i1 %i.bj, label %bb.b, label %._crit_edge, !llvm.loop !0
@@ -626,7 +626,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.au = phi i64 [ %.pre359, %.lr.ph ], [ %i.bg, %bb.b ] ; 3 uses
-  %.0343.i181 = phi i64 [ 0, %.lr.ph ], [ %i.bh, %bb.b ] ; 2 uses
+  %.0343.i181 = phi i64 [ 0, %.lr.ph ], [ %i.bh, %bb.b ] ; 3 uses
   %i.av = lshr exact i64 %.0343.i181, 3
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !18
@@ -643,8 +643,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store i64 %i.bf, ptr %i.ba, align 1, !noalias !574
   %i.bg = add i64 %i.au, 8                        ; 3 uses
   store i64 %i.bg, ptr %5, align 8, !tbaa !17, !alias.scope !574, !noalias !575
-  %i.bh = add i64 %.0343.i181, 8                  ; 2 uses
-  %7 = or disjoint i64 %i.bh, 7
+  %i.bh = add i64 %.0343.i181, 8
+  %7 = add i64 %.0343.i181, 15
   %i.bi = load i64, ptr %i.aq, align 8, !tbaa !21 ; 2 uses
   %i.bj = icmp ult i64 %7, %i.bi
   br i1 %i.bj, label %bb.b, label %._crit_edge, !llvm.loop !0
@@ -1047,7 +1047,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.au = phi i64 [ %.pre359, %.lr.ph ], [ %i.bg, %bb.b ] ; 3 uses
-  %.0343.i181 = phi i64 [ 0, %.lr.ph ], [ %i.bh, %bb.b ] ; 2 uses
+  %.0343.i181 = phi i64 [ 0, %.lr.ph ], [ %i.bh, %bb.b ] ; 3 uses
   %i.av = lshr exact i64 %.0343.i181, 3
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !18
@@ -1064,8 +1064,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store i64 %i.bf, ptr %i.ba, align 1, !noalias !891
   %i.bg = add i64 %i.au, 8                        ; 3 uses
   store i64 %i.bg, ptr %5, align 8, !tbaa !17, !alias.scope !891, !noalias !892
-  %i.bh = add i64 %.0343.i181, 8                  ; 2 uses
-  %7 = or disjoint i64 %i.bh, 7
+  %i.bh = add i64 %.0343.i181, 8
+  %7 = add i64 %.0343.i181, 15
   %i.bi = load i64, ptr %i.aq, align 8, !tbaa !21 ; 2 uses
   %i.bj = icmp ult i64 %7, %i.bi
   br i1 %i.bj, label %bb.b, label %._crit_edge, !llvm.loop !0
@@ -1468,7 +1468,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.au = phi i64 [ %.pre359, %.lr.ph ], [ %i.bg, %bb.b ] ; 3 uses
-  %.0343.i181 = phi i64 [ 0, %.lr.ph ], [ %i.bh, %bb.b ] ; 2 uses
+  %.0343.i181 = phi i64 [ 0, %.lr.ph ], [ %i.bh, %bb.b ] ; 3 uses
   %i.av = lshr exact i64 %.0343.i181, 3
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !18
@@ -1485,8 +1485,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store i64 %i.bf, ptr %i.ba, align 1, !noalias !1208
   %i.bg = add i64 %i.au, 8                        ; 3 uses
   store i64 %i.bg, ptr %5, align 8, !tbaa !17, !alias.scope !1208, !noalias !1209
-  %i.bh = add i64 %.0343.i181, 8                  ; 2 uses
-  %7 = or disjoint i64 %i.bh, 7
+  %i.bh = add i64 %.0343.i181, 8
+  %7 = add i64 %.0343.i181, 15
   %i.bi = load i64, ptr %i.aq, align 8, !tbaa !21 ; 2 uses
   %i.bj = icmp ult i64 %7, %i.bi
   br i1 %i.bj, label %bb.b, label %._crit_edge, !llvm.loop !0

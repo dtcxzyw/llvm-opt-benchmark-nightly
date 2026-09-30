@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.thread
   br i1 %i.be, label %.lr.ph222, label %.loopexit145
 
 .lr.ph222:                                        ; preds = %.preheader144, %._crit_edge
-  %.069221 = phi i32 [ %i.asr, %._crit_edge ], [ 0, %.preheader144 ] ; 2 uses
+  %.069221 = phi i32 [ %i.asr, %._crit_edge ], [ 0, %.preheader144 ] ; 3 uses
   invoke void @_ZN6LibRaw11checkCancelEv(ptr noundef nonnull align 8 dereferenceable(768512) %0)
           to label %.preheader140 unwind label %.loopexit.split-lp.loopexit
 
@@ -220,7 +220,7 @@ bb.h:                                             ; preds = %.thread
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph220, %.split212.us
-  %.066219 = phi i32 [ 0, %.lr.ph220 ], [ %i.aso, %.split212.us ] ; 3 uses
+  %.066219 = phi i32 [ 0, %.lr.ph220 ], [ %i.aso, %.split212.us ] ; 4 uses
   invoke void @_ZN6LibRaw10ljpeg_idctEP5jhead(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef nonnull %1)
           to label %bb.j unwind label %.loopexit
 
@@ -623,15 +623,15 @@ bb.ap:                                            ; preds = %.loopexit.split-lp
           to label %bb.cb unwind label %bb.bw
 
 .split212.us:                                     ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.7, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.7, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.7, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.7, %.split190.us
-  %i.aso = add i32 %.066219, 8                    ; 2 uses
-  %2 = or disjoint i32 %i.aso, 7
+  %i.aso = add i32 %.066219, 8
+  %2 = add i32 %.066219, 15
   %i.asp = load i32, ptr %i.n, align 4, !tbaa !125
   %i.asq = icmp ult i32 %2, %i.asp
   br i1 %i.asq, label %bb.i, label %._crit_edge, !llvm.loop !114
 
 ._crit_edge:                                      ; preds = %.split212.us, %.preheader140
-  %i.asr = add i32 %.069221, 8                    ; 2 uses
-  %3 = or disjoint i32 %i.asr, 7
+  %i.asr = add i32 %.069221, 8
+  %3 = add i32 %.069221, 15
   %i.ass = load i32, ptr %i.s, align 8, !tbaa !129
   %i.ast = icmp ult i32 %3, %i.ass
   br i1 %i.ast, label %.lr.ph222, label %.loopexit145, !llvm.loop !115

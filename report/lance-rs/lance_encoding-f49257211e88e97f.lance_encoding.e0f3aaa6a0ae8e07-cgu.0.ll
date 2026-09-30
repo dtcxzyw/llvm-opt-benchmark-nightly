@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
 
 _RNvXs1_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCs40k4W9msRzi_5alloc3vec9into_iter8IntoIterNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit61: ; preds = %bb.r, %bb.q
   %.sroa.19.0 = phi ptr [ undef, %bb.q ], [ %.sroa.19.0.copyload, %bb.r ] ; 3 uses
-  %.sroa.15155.0 = phi i64 [ undef, %bb.q ], [ %.sroa.15155.0.copyload, %bb.r ] ; 7 uses
+  %.sroa.15155.0 = phi i64 [ undef, %bb.q ], [ %.sroa.15155.0.copyload, %bb.r ] ; 6 uses
   %.sroa.11152.0 = phi ptr [ undef, %bb.q ], [ %.sroa.11152.0.copyload, %bb.r ] ; 6 uses
   %.sroa.0148.0 = phi ptr [ null, %bb.q ], [ %.sroa.0148.0.copyload, %bb.r ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq)
@@ -347,7 +347,7 @@ bb.ag:                                            ; preds = %bb.aa, %bb.ab
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.dh = load i64, ptr %i.dg, align 8, !noundef !75
   %.not.i70 = icmp eq ptr %.sroa.0148.0, null     ; 4 uses
-  %spec.select = select i1 %.not.i70, i64 undef, i64 %.sroa.15155.0 ; 2 uses
+  %spec.select = select i1 %.not.i70, i64 undef, i64 %.sroa.15155.0 ; 3 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.db, i64 168
   %i.dj = load i16, ptr %i.di, align 8, !noundef !75
   call void @llvm.experimental.noalias.scope.decl(metadata !29551)
@@ -750,7 +750,6 @@ _RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecyE8push_mutCsjjpCCFGI3ul_14lance_enc
   store ptr %i.mt, ptr %i.mw, align 8, !noalias !29592
   %i.mx = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 3 uses
   store i64 0, ptr %i.mt, align 8, !noalias !29592
-  %invariant.op.i.i = add nsw i64 %.sroa.15155.0, -7
   store i64 1, ptr %i.mx, align 8, !noalias !29592
   %.not.i.not.i = icmp samesign ugt i64 %i.mg, %i.me
   br i1 %.not.i.not.i, label %.lr.ph.i104.preheader.i, label %._crit_edge.thread.i112.i
@@ -890,10 +889,10 @@ bb.ef:                                            ; preds = %bb.ee
   %.sroa.02.067.i.i = phi i1 [ %i.pf, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecyE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit30.i.i ], [ false, %.lr.ph.i104.preheader.i ]
   %.sroa.06.066.i.i = phi i64 [ %i.oi, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecyE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit30.i.i ], [ 0, %.lr.ph.i104.preheader.i ] ; 2 uses
   %i.oi = add nuw nsw i64 %.sroa.06.066.i.i, 1    ; 2 uses
-  %i.oj = mul i64 %.sroa.06.066.i.i, %i.my        ; 5 uses
+  %i.oj = mul i64 %.sroa.06.066.i.i, %i.my        ; 6 uses
   %i.ok = or disjoint i64 %i.oj, 7
   %or.cond.not.i.i.i = icmp ult i64 %i.ok, %spec.select
-  %i.ol = add i64 %i.oj, 8                        ; 4 uses
+  %i.ol = add i64 %i.oj, 8                        ; 3 uses
   br i1 %or.cond.not.i.i.i, label %bb.em, label %.invoke.i105.i, !prof !114
 
 .invoke.i105.i:                                   ; preds = %.lr.ph.i104.i, %bb.en
@@ -1003,7 +1002,8 @@ bb.el:                                            ; preds = %.thread.i.i
   unreachable
 
 bb.em:                                            ; preds = %.lr.ph.i104.i
-  %or.cond.not.i21.i.i = icmp ult i64 %i.ol, %invariant.op.i.i
+  %3 = add i64 %i.oj, 15
+  %or.cond.not.i21.i.i = icmp ult i64 %3, %spec.select
   br i1 %or.cond.not.i21.i.i, label %bb.eo, label %bb.en, !prof !114
 
 bb.en:                                            ; preds = %bb.em
