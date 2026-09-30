@@ -205,8 +205,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.xr, label %bb.ab, label %bb.ag
 
 bb.ab:                                            ; preds = %bb.aa
-  %9 = uitofp nneg i32 %.0528797 to float
-  %exp2 = tail call reassoc nsz arcp contract afn float @llvm.exp2.f32(float %9) ; 3 uses
+  %exp2 = tail call reassoc nsz arcp contract afn float @llvm.ldexp.f32.i32(float 1.000000e+00, i32 %.0528797) ; 3 uses
   %i.xs = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
   %i.xt = load ptr, ptr %i.xs, align 8, !tbaa !26
   %i.xu = getelementptr inbounds nuw i8, ptr %i.xt, i64 16
@@ -609,13 +608,13 @@ declare void @llvm.x86.sse.sfence() #14
 declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.exp2.f32(float) #8
+declare i32 @llvm.umin.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.ldexp.f32.i32(float, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #8
