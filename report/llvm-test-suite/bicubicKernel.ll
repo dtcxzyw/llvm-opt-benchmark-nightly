@@ -157,11 +157,12 @@ bb.a:
   %i.du = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dt, <2 x double> <double 2.000000e+00, double 3.000000e+00>, <2 x double> %i.dr) ; 2 uses
   %i.dv = extractelement <2 x double> %i.du, i64 0
   %i.dw = tail call double @llvm.fmuladd.f64(double %i.dk, double 4.000000e+00, double %i.dv)
-  %4 = extractelement <2 x double> %i.dq, i64 1
-  %5 = fsub double %i.dw, %4
-  %foldExtExtBinop76 = fsub <2 x double> %i.du, %i.dc
+  %4 = insertelement <2 x double> %i.du, double %i.dw, i64 0
+  %5 = shufflevector <2 x double> %i.dq, <2 x double> %i.dc, <2 x i32> <i32 1, i32 3>
+  %foldExtExtBinop76 = fsub <2 x double> %4, %5   ; 2 uses
+  %6 = extractelement <2 x double> %foldExtExtBinop76, i64 0
   %i.dx = extractelement <2 x double> %foldExtExtBinop76, i64 1
-  %i.dy = tail call double @llvm.fmuladd.f64(double %i.l, double %i.dx, double %5)
+  %i.dy = tail call double @llvm.fmuladd.f64(double %i.l, double %i.dx, double %6)
   %i.dz = tail call double @llvm.fmuladd.f64(double %i.l, double %i.dy, double %i.dl)
   %i.ea = tail call double @llvm.fmuladd.f64(double %i.m, double %i.dz, double %i.ds)
   %i.eb = fptosi double %i.ea to i32

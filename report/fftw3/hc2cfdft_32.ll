@@ -200,8 +200,8 @@ begin_hunk_0_@hc2cfdft_32:bb.a
   %i.us = fsub <2 x double> %i.up, %i.ur
   %i.ut = fadd <2 x double> %i.up, %i.ur
   %i.uu = shufflevector <2 x double> %i.us, <2 x double> %i.ut, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %i.uv = fadd <2 x double> %i.uu, %i.cx          ; 2 uses
-  %i.uw = fadd <2 x double> %i.dk, %i.dx          ; 2 uses
+  %i.uv = fadd <2 x double> %i.uu, %i.cx          ; 3 uses
+  %i.uw = fadd <2 x double> %i.dk, %i.dx          ; 3 uses
   %i.ux = fadd <2 x double> %i.eu, %i.ho          ; 3 uses
   %i.uy = fadd <2 x double> %i.ge, %i.iy          ; 3 uses
   %i.uz = shufflevector <2 x double> %i.pw, <2 x double> %i.ki, <2 x i32> <i32 1, i32 2>
@@ -235,15 +235,7 @@ begin_hunk_0_@hc2cfdft_32:bb.a
   %i.vx = fsub double %i.vt, %i.vr                ; 2 uses
   %i.vy = fsub double %i.vq, %i.vn                ; 2 uses
   %i.vz = fadd <2 x double> %i.vu, %i.vs          ; 2 uses
-  %9 = extractelement <2 x double> %i.vz, i64 0
-  %10 = fmul double %9, 5.000000e-01              ; 2 uses
-  %11 = extractelement <2 x double> %i.vz, i64 1
-  %12 = fmul double %11, 5.000000e-01             ; 2 uses
-  %foldExtExtBinop1466 = fsub <2 x double> %i.vu, %i.vs
-  %13 = extractelement <2 x double> %foldExtExtBinop1466, i64 1
-  %14 = fmul double %13, 5.000000e-01             ; 2 uses
-  %foldExtExtBinop1468 = fsub <2 x double> %i.vu, %i.vs
-  %i.wa = extractelement <2 x double> %foldExtExtBinop1468, i64 0
+  %i.wa = extractelement <2 x double> %i.vz, i64 0
   %i.wb = fmul double %i.wa, 5.000000e-01         ; 2 uses
   %i.wc = fadd <2 x double> %i.kv, %i.np          ; 3 uses
   %i.wd = fadd <2 x double> %i.mf, %i.oz          ; 3 uses
@@ -266,7 +258,6 @@ begin_hunk_0_@hc2cfdft_32:bb.a
   %i.wq = fsub double %i.wo, %i.wf                ; 2 uses
   %i.wr = fsub double %i.we, %i.wn                ; 2 uses
   %i.ws = fadd double %i.wq, %i.wr                ; 2 uses
-  %15 = fsub double %i.wq, %i.wr                  ; 2 uses
   %i.wt = fadd double %i.we, %i.wn                ; 2 uses
   %i.wu = fadd double %i.wf, %i.wo                ; 2 uses
   %i.wv = fsub <2 x double> %i.wp, %i.wg          ; 2 uses
@@ -294,7 +285,6 @@ begin_hunk_0_@hc2cfdft_32:bb.a
   %i.xm = extractelement <2 x double> %foldExtExtBinop1486.a, i64 0 ; 2 uses
   %i.xn = fsub double %i.xe, %i.xk                ; 2 uses
   %i.xo = fsub double %i.xm, %i.xn                ; 2 uses
-  %16 = fadd double %i.xm, %i.xn                  ; 2 uses
   %foldExtExtBinop1488.a = fsub <2 x double> %foldExtExtBinop1478.a, %foldExtExtBinop1482.a
   %i.xp = extractelement <2 x double> %foldExtExtBinop1488.a, i64 0 ; 2 uses
   %i.xq = fadd double %i.xe, %i.xk                ; 2 uses
@@ -328,33 +318,52 @@ begin_hunk_0_@hc2cfdft_32:bb.a
   store double %i.yk, ptr %i.ry, align 8, !tbaa !13
   %i.yl = fadd double %i.xo, %i.ws
   %i.ym = fmul double %i.yl, f0x3FD6A09E667F3BCD  ; 2 uses
-  %i.yn = fadd double %10, %i.ym
+  %i.yn = fadd double %i.wb, %i.ym
   store double %i.yn, ptr %i.h, align 8, !tbaa !13
-  %i.yo = fsub double %i.ym, %10
+  %i.yo = fsub double %i.ym, %i.wb
   store double %i.yo, ptr %i.qo, align 8, !tbaa !13
-  %i.yp = fadd double %16, %15
-  %17 = fmul double %i.yp, f0x3FD6A09E667F3BCD    ; 2 uses
-  %18 = fsub double %12, %17
-  store double %18, ptr %i.qs, align 8, !tbaa !13
-  %19 = fadd double %12, %17
-  store double %19, ptr %i.l, align 8, !tbaa !13
-  %20 = fsub double %i.xo, %i.ws
-  %21 = fmul double %20, f0x3FD6A09E667F3BCD      ; 2 uses
-  %22 = fsub double %14, %21
-  store double %22, ptr %i.tm, align 8, !tbaa !13
-  %23 = fadd double %14, %21
-  store double %23, ptr %i.ax, align 8, !tbaa !13
-  %24 = fsub double %15, %16
-  %25 = fmul double %24, f0x3FD6A09E667F3BCD      ; 2 uses
-  %26 = fadd double %i.wb, %25
-  store double %26, ptr %i.at, align 8, !tbaa !13
-  %27 = fsub double %25, %i.wb
-  store double %27, ptr %i.ti, align 8, !tbaa !13
-  %i.yq = fsub <2 x double> %i.xh, %i.xl          ; 2 uses
-  %28 = shufflevector <2 x double> %i.yq, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.yr = fmul <2 x double> %28, <double f0x3FC87DE2A6AEA963, double f0xBFDD906BCF328D46>
-  %29 = shufflevector <2 x double> %i.yq, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %30 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %29, <2 x double> <double f0x3FDD906BCF328D46, double f0x3FC87DE2A6AEA963>, <2 x double> %i.yr) ; 3 uses
+  %9 = fsub double %i.xo, %i.ws
+  %10 = shufflevector <2 x double> %i.vz, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %11 = insertelement <2 x double> %10, double %9, i64 1
+  %12 = fmul <2 x double> %11, <double 5.000000e-01, double f0x3FD6A09E667F3BCD> ; 3 uses
+  %13 = fsub <2 x double> %i.xh, %i.xl            ; 2 uses
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = fmul <2 x double> %14, <double f0x3FC87DE2A6AEA963, double f0xBFDD906BCF328D46>
+  %16 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %17 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %16, <2 x double> <double f0x3FDD906BCF328D46, double f0x3FC87DE2A6AEA963>, <2 x double> %15) ; 3 uses
+  %18 = fsub double %i.wq, %i.wr                  ; 2 uses
+  %i.yp = fadd double %i.xm, %i.xn                ; 2 uses
+  %19 = insertelement <2 x double> %i.vu, double %i.yp, i64 0 ; 2 uses
+  %20 = insertelement <2 x double> %i.vs, double %18, i64 0 ; 2 uses
+  %21 = fadd <2 x double> %19, %20
+  %22 = fsub <2 x double> %19, %20
+  %23 = shufflevector <2 x double> %21, <2 x double> %22, <2 x i32> <i32 0, i32 3>
+  %24 = fmul <2 x double> %23, <double f0x3FD6A09E667F3BCD, double 5.000000e-01> ; 3 uses
+  %foldExtExtBinop1486 = fsub <2 x double> %12, %24
+  %25 = extractelement <2 x double> %foldExtExtBinop1486, i64 0
+  store double %25, ptr %i.qs, align 8, !tbaa !13
+  %26 = fadd <2 x double> %24, %12                ; 2 uses
+  %27 = extractelement <2 x double> %26, i64 0
+  store double %27, ptr %i.l, align 8, !tbaa !13
+  %foldExtExtBinop1488 = fsub <2 x double> %24, %12
+  %28 = extractelement <2 x double> %foldExtExtBinop1488, i64 1
+  store double %28, ptr %i.tm, align 8, !tbaa !13
+  %29 = extractelement <2 x double> %26, i64 1
+  store double %29, ptr %i.ax, align 8, !tbaa !13
+  %30 = insertelement <2 x double> %i.uy, double %18, i64 0
+  %31 = insertelement <2 x double> %i.ux, double %i.yp, i64 0
+  %i.yq = fsub <2 x double> %30, %31              ; 2 uses
+  %32 = fmul <2 x double> %i.yq, <double f0x3FD6A09E667F3BCD, double 1.000000e+00> ; 3 uses
+  %33 = shufflevector <2 x double> %i.vu, <2 x double> %i.uv, <2 x i32> <i32 0, i32 2>
+  %34 = shufflevector <2 x double> %i.vs, <2 x double> %i.uw, <2 x i32> <i32 0, i32 2>
+  %35 = fsub <2 x double> %33, %34                ; 2 uses
+  %i.yr = fmul <2 x double> %35, <double 5.000000e-01, double 1.000000e+00> ; 3 uses
+  %36 = fadd <2 x double> %i.yr, %32
+  %37 = extractelement <2 x double> %36, i64 0
+  store double %37, ptr %i.at, align 8, !tbaa !13
+  %foldExtExtBinop1490 = fsub <2 x double> %32, %i.yr
+  %38 = extractelement <2 x double> %foldExtExtBinop1490, i64 0
+  store double %38, ptr %i.ti, align 8, !tbaa !13
   %i.ys = fadd <2 x double> %i.wg, %i.wp          ; 2 uses
   %i.yt = shufflevector <2 x double> %i.ys, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.yu = fmul <2 x double> %i.yt, <double f0x3FDD906BCF328D46, double f0xBFC87DE2A6AEA963>
@@ -366,56 +375,62 @@ begin_hunk_0_@hc2cfdft_32:bb.a
   %i.za = shufflevector <2 x double> %i.yx, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.zb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.za, <2 x double> <double f0x3FC87DE2A6AEA963, double f0x3FDD906BCF328D46>, <2 x double> %i.yz) ; 3 uses
   %i.zc = shufflevector <2 x double> %i.zb, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.zd = fsub <2 x double> %i.vh, %i.vk          ; 2 uses
-  %i.ze = fsub <2 x double> %i.vb, %i.ve          ; 2 uses
-  %i.zf = shufflevector <2 x double> %i.ze, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.zg = shufflevector <2 x double> %i.zd, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.zh = fadd <2 x double> %i.zg, %i.ze          ; 2 uses
-  %31 = fsub <2 x double> %i.zf, %i.zd            ; 2 uses
-  %i.zi = fsub <2 x double> %i.uv, %i.uw          ; 2 uses
-  %i.zj = shufflevector <2 x double> %i.uy, <2 x double> %i.ux, <2 x i32> <i32 1, i32 2>
-  %32 = shufflevector <2 x double> %i.ux, <2 x double> %i.uy, <2 x i32> <i32 1, i32 2>
-  %33 = fsub <2 x double> %i.zj, %32              ; 2 uses
-  %i.zk = fadd <2 x double> %i.zi, %33
-  %i.zl = fmul <2 x double> %i.zk, splat (double 5.000000e-01) ; 2 uses
-  %34 = fadd <2 x double> %31, %i.zh
-  %i.zm = fmul <2 x double> %34, splat (double f0x3FD6A09E667F3BCD) ; 2 uses
-  %i.zn = fadd <2 x double> %i.zl, %i.zm          ; 3 uses
-  %i.zo = fadd <2 x double> %i.zc, %i.yw          ; 3 uses
-  %i.zp = fadd <2 x double> %i.zn, %i.zo          ; 2 uses
+  %i.zd = fsub <2 x double> %i.ux, %i.uy          ; 2 uses
+  %39 = fadd <2 x double> %i.zc, %i.yw            ; 3 uses
+  %40 = shufflevector <2 x double> %i.zb, <2 x double> %i.yw, <2 x i32> <i32 1, i32 3>
+  %41 = shufflevector <2 x double> %i.yw, <2 x double> %i.zb, <2 x i32> <i32 0, i32 2>
+  %i.ze = fsub <2 x double> %40, %41              ; 3 uses
+  %i.zf = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %42 = fsub <2 x double> %i.vh, %i.vk            ; 3 uses
+  %43 = fsub <2 x double> %i.vb, %i.ve            ; 2 uses
+  %i.zg = shufflevector <2 x double> %43, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %foldExtExtBinop1494 = fsub <2 x double> %i.zg, %42 ; 2 uses
+  %i.zh = fadd <2 x double> %i.zg, %42            ; 3 uses
+  %44 = shufflevector <2 x double> %43, <2 x double> %i.uv, <2 x i32> <i32 1, i32 3>
+  %45 = shufflevector <2 x double> %42, <2 x double> %i.uw, <2 x i32> <i32 0, i32 3>
+  %i.zi = fsub <2 x double> %44, %45              ; 3 uses
+  %i.zj = shufflevector <2 x double> %foldExtExtBinop1494, <2 x double> %i.zi, <2 x i32> <i32 1, i32 2>
+  %46 = fsub <2 x double> %i.zj, %i.zh
+  %47 = fmul <2 x double> %46, splat (double f0x3FD6A09E667F3BCD) ; 2 uses
+  %48 = shufflevector <2 x double> %i.zh, <2 x double> %i.zd, <2 x i32> <i32 1, i32 2>
+  %i.zk = fadd <2 x double> %i.zi, %48
+  %i.zl = fmul <2 x double> %i.zk, <double f0x3FD6A09E667F3BCD, double 5.000000e-01> ; 3 uses
+  %49 = shufflevector <2 x double> %35, <2 x double> %i.zi, <2 x i32> <i32 1, i32 3>
+  %50 = shufflevector <2 x double> %i.yq, <2 x double> %i.zd, <2 x i32> <i32 1, i32 2>
+  %51 = fsub <2 x double> %49, %50
+  %i.zm = fmul <2 x double> %51, splat (double 5.000000e-01) ; 2 uses
+  %52 = shufflevector <2 x double> %i.yr, <2 x double> %i.zh, <2 x i32> <i32 1, i32 2>
+  %53 = shufflevector <2 x double> %32, <2 x double> %foldExtExtBinop1494, <2 x i32> <i32 1, i32 3>
+  %i.zn = fadd <2 x double> %52, %53
+  %54 = fmul <2 x double> %i.zn, <double 5.000000e-01, double f0x3FD6A09E667F3BCD> ; 3 uses
+  %i.zo = fadd <2 x double> %i.zl, %54            ; 3 uses
+  %i.zp = fadd <2 x double> %i.zo, %39            ; 2 uses
   %i.zq = extractelement <2 x double> %i.zp, i64 0
   store double %i.zq, ptr %i.ea, align 8, !tbaa !13
-  %foldExtExtBinop1490.a = fsub <2 x double> %i.zo, %i.zn
+  %foldExtExtBinop1490.a = fsub <2 x double> %39, %i.zo
   %i.zr = extractelement <2 x double> %foldExtExtBinop1490.a, i64 0
   store double %i.zr, ptr %i.la, align 8, !tbaa !13
-  %foldExtExtBinop1492 = fsub <2 x double> %i.zn, %i.zo
+  %foldExtExtBinop1492 = fsub <2 x double> %i.zo, %39
   %i.zs = extractelement <2 x double> %foldExtExtBinop1492, i64 1
   store double %i.zs, ptr %i.le, align 8, !tbaa !13
   %i.zt = extractelement <2 x double> %i.zp, i64 1
   store double %i.zt, ptr %i.ee, align 8, !tbaa !13
-  %35 = fsub <2 x double> %i.zl, %i.zm            ; 3 uses
-  %36 = shufflevector <2 x double> %i.yw, <2 x double> %i.zb, <2 x i32> <i32 1, i32 3>
-  %37 = shufflevector <2 x double> %i.zb, <2 x double> %i.yw, <2 x i32> <i32 0, i32 2>
-  %i.zu = fsub <2 x double> %36, %37              ; 3 uses
-  %foldExtExtBinop1494.a = fsub <2 x double> %35, %i.zu
-  %i.zv = extractelement <2 x double> %foldExtExtBinop1494.a, i64 1
+  %55 = shufflevector <2 x double> %i.zl, <2 x double> %54, <2 x i32> <i32 1, i32 2>
+  %56 = shufflevector <2 x double> %54, <2 x double> %i.zl, <2 x i32> <i32 1, i32 2>
+  %i.zu = fsub <2 x double> %55, %56              ; 3 uses
+  %foldExtExtBinop1494.a = fsub <2 x double> %i.zu, %i.ze
+  %i.zv = extractelement <2 x double> %foldExtExtBinop1494.a, i64 0
   store double %i.zv, ptr %i.ny, align 8, !tbaa !13
-  %i.zw = fadd <2 x double> %35, %i.zu            ; 2 uses
-  %i.zx = extractelement <2 x double> %i.zw, i64 1
+  %i.zw = fadd <2 x double> %i.zu, %i.ze          ; 2 uses
+  %i.zx = extractelement <2 x double> %i.zw, i64 0
   store double %i.zx, ptr %i.gy, align 8, !tbaa !13
-  %i.zy = extractelement <2 x double> %i.zw, i64 0
+  %i.zy = extractelement <2 x double> %i.zw, i64 1
   store double %i.zy, ptr %i.gu, align 8, !tbaa !13
-  %foldExtExtBinop1496 = fsub <2 x double> %i.zu, %35
-  %i.zz = extractelement <2 x double> %foldExtExtBinop1496, i64 0
+  %foldExtExtBinop1496 = fsub <2 x double> %i.ze, %i.zu
+  %i.zz = extractelement <2 x double> %foldExtExtBinop1496, i64 1
   store double %i.zz, ptr %i.nu, align 8, !tbaa !13
-  %38 = shufflevector <2 x double> %30, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %39 = fsub <2 x double> %i.zi, %33
-  %40 = fmul <2 x double> %39, splat (double 5.000000e-01) ; 2 uses
-  %41 = fsub <2 x double> %31, %i.zh
-  %42 = fmul <2 x double> %41, splat (double f0x3FD6A09E667F3BCD)
-  %43 = shufflevector <2 x double> %42, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.aaa = fadd <2 x double> %40, %43             ; 3 uses
-  %i.aab = fadd <2 x double> %38, %i.wz           ; 3 uses
+  %i.aaa = fadd <2 x double> %i.zm, %47           ; 3 uses
+  %i.aab = fadd <2 x double> %i.zf, %i.wz         ; 3 uses
   %i.aac = fadd <2 x double> %i.aaa, %i.aab       ; 2 uses
   %i.aad = extractelement <2 x double> %i.aac, i64 0
   store double %i.aad, ptr %i.fk, align 8, !tbaa !13
@@ -427,9 +442,9 @@ begin_hunk_0_@hc2cfdft_32:bb.a
   store double %i.aaf, ptr %i.mo, align 8, !tbaa !13
   %i.aag = extractelement <2 x double> %i.aac, i64 1
   store double %i.aag, ptr %i.fo, align 8, !tbaa !13
-  %i.aah = fsub <2 x double> %40, %43             ; 3 uses
-  %i.aai = shufflevector <2 x double> %i.wz, <2 x double> %30, <2 x i32> <i32 1, i32 3>
-  %i.aaj = shufflevector <2 x double> %30, <2 x double> %i.wz, <2 x i32> <i32 0, i32 2>
+  %i.aah = fsub <2 x double> %i.zm, %47           ; 3 uses
+  %i.aai = shufflevector <2 x double> %i.wz, <2 x double> %17, <2 x i32> <i32 1, i32 3>
+  %i.aaj = shufflevector <2 x double> %17, <2 x double> %i.wz, <2 x i32> <i32 0, i32 2>
   %i.aak = fsub <2 x double> %i.aai, %i.aaj       ; 3 uses
   %foldExtExtBinop1502 = fsub <2 x double> %i.aah, %i.aak
   %i.aal = extractelement <2 x double> %foldExtExtBinop1502, i64 1
