@@ -51,10 +51,10 @@ bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 48
   %i.m = shl i32 %3, 11
   %i.n = and i32 %i.m, 2048
-  %6 = shl i32 %3, 17
-  %7 = and i32 %6, 524288
-  %8 = or disjoint i32 %i.n, %7
-  %spec.select36 = xor i32 %8, 2048
+  %6 = and i32 %3, 4
+  %.not32 = icmp eq i32 %6, 0
+  %spec.select36.v = select i1 %.not32, i32 2048, i32 526336
+  %spec.select36 = xor i32 %i.n, %spec.select36.v
   store i32 %spec.select36, ptr %i.l, align 8
   %i.o = and i32 %3, 16
   %.not33 = icmp eq i32 %i.o, 0

@@ -205,12 +205,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = add nsw i64 %i.d, -1
@@ -218,7 +218,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = and i64 %i.c, 4
   %i.k = icmp eq i64 %i.j, 0
   %i.l = lshr exact i64 %i.f, 1                   ; 2 uses
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %bb.c
@@ -621,12 +621,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.0.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -635,7 +635,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = and i64 %i.c, 4
   %i.k = icmp eq i64 %i.j, 0
   %i.l = lshr exact i64 %i.f, 1                   ; 2 uses
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %bb.c
@@ -1038,12 +1038,12 @@ bb.a:
   %i.c = ptrtoint ptr %1 to i64
   %i.d = ptrtoint ptr %0 to i64
   %i.e = sub i64 %i.c, %i.d                       ; 2 uses
-  %i.f = ashr exact i64 %i.e, 2                   ; 3 uses
+  %i.f = ashr exact i64 %i.e, 2                   ; 4 uses
   %i.g = icmp slt i64 %i.f, 2
   br i1 %i.g, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = add nsw i64 %i.f, -2                     ; 3 uses
+  %i.h = add nsw i64 %i.f, -2                     ; 2 uses
   %i.i = lshr i64 %i.h, 1
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.0.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1060,7 +1060,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %9 = or disjoint i64 %i.h, 1                    ; 2 uses
+  %9 = add nsw i64 %i.f, -1                       ; 2 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %9
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.r
   br label %bb.c
@@ -1463,12 +1463,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.0.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !128 ; 2 uses
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1489,7 +1489,7 @@ bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %7 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %7 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %7
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.q
   br label %bb.c
@@ -1892,12 +1892,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !128 ; 2 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1916,7 +1916,7 @@ bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %7 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %7 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %7
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %bb.c
@@ -2319,12 +2319,12 @@ bb.a:
   %i.c = ptrtoint ptr %1 to i64
   %i.d = ptrtoint ptr %0 to i64
   %i.e = sub i64 %i.c, %i.d                       ; 2 uses
-  %i.f = ashr exact i64 %i.e, 2                   ; 3 uses
+  %i.f = ashr exact i64 %i.e, 2                   ; 4 uses
   %i.g = icmp slt i64 %i.f, 2
   br i1 %i.g, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = add nsw i64 %i.f, -2                     ; 3 uses
+  %i.h = add nsw i64 %i.f, -2                     ; 2 uses
   %i.i = lshr i64 %i.h, 1
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.0.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -2341,7 +2341,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %9 = or disjoint i64 %i.h, 1                    ; 2 uses
+  %9 = add nsw i64 %i.f, -1                       ; 2 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %9
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.r
   br label %bb.c
@@ -2744,12 +2744,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.0.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !128 ; 3 uses
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -2771,7 +2771,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %7 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %7 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %7
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.r
   br label %bb.c
@@ -3174,12 +3174,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !128 ; 3 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -3199,7 +3199,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %7 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %7 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %7
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %bb.c
@@ -3602,12 +3602,12 @@ bb.a:
   %i.g = ptrtoint ptr %1 to i64
   %i.h = ptrtoint ptr %0 to i64
   %i.i = sub i64 %i.g, %i.h                       ; 2 uses
-  %i.j = ashr exact i64 %i.i, 2                   ; 3 uses
+  %i.j = ashr exact i64 %i.i, 2                   ; 4 uses
   %i.k = icmp slt i64 %i.j, 2
   br i1 %i.k, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = add nsw i64 %i.j, -2                     ; 3 uses
+  %i.l = add nsw i64 %i.j, -2                     ; 2 uses
   %i.m = lshr i64 %i.l, 1
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.0.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -3620,7 +3620,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = lshr exact i64 %i.l, 1                   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %5 = or disjoint i64 %i.l, 1                    ; 2 uses
+  %5 = add nsw i64 %i.j, -1                       ; 2 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %5
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.t
   br label %bb.c
@@ -4023,12 +4023,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.0.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !128 ; 2 uses
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -4041,7 +4041,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = and i64 %i.c, 4
   %i.l = icmp eq i64 %i.k, 0
   %i.m = lshr exact i64 %i.f, 1                   ; 2 uses
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.m
   br label %bb.c
@@ -4444,12 +4444,12 @@ bb.a:
   %i.g = ptrtoint ptr %1 to i64
   %i.h = ptrtoint ptr %0 to i64
   %i.i = sub i64 %i.g, %i.h                       ; 2 uses
-  %i.j = ashr exact i64 %i.i, 2                   ; 3 uses
+  %i.j = ashr exact i64 %i.i, 2                   ; 4 uses
   %i.k = icmp slt i64 %i.j, 2
   br i1 %i.k, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = add nsw i64 %i.j, -2                     ; 3 uses
+  %i.l = add nsw i64 %i.j, -2                     ; 2 uses
   %i.m = lshr i64 %i.l, 1
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.0.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -4462,7 +4462,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = lshr exact i64 %i.l, 1                   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %5 = or disjoint i64 %i.l, 1                    ; 2 uses
+  %5 = add nsw i64 %i.j, -1                       ; 2 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %5
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.t
   br label %bb.c
@@ -4865,12 +4865,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.0.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !128 ; 3 uses
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -4884,7 +4884,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = and i64 %i.c, 4
   %i.m = icmp eq i64 %i.l, 0
   %i.n = lshr exact i64 %i.f, 1                   ; 2 uses
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.n
   br label %bb.c
@@ -5287,14 +5287,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.lcssa46 = phi i64 [ %i.c, %.lr.ph ], [ %i.cn, %bb.b ]
   %storemerge26.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.lcssa46, 24             ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %10 = or disjoint i64 %i.i, 1                   ; 2 uses
-  %i.o = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %10
+  %i.o = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.k
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.j
   br label %bb.c
 
@@ -5336,7 +5335,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ae = icmp sgt i64 %.1.i.i.i, %.08.i.i
   br i1 %i.ae, label %.lr.ph.i.i.i.i18, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN8facebook5velox10FlatVectorINS3_10StringViewEE30transferAndUpdateStringBuffersEPNS3_6memory10MemoryPoolEE21StringBufferRemappingSt6vectorISA_SaISA_EEEElSA_NS0_5__ops15_Iter_comp_iterIZNS6_30transferAndUpdateStringBuffersES9_EUlRKSA_SJ_E_EEEvT_T0_SN_T1_T2_.exit.i.i
 

@@ -205,14 +205,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr44.i28.lcssa = phi i64 [ %.fr44.i25, %.lr.ph ], [ %.fr44.i, %bb.b ]
   %storemerge26.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.j = udiv exact i64 %.fr44.i28.lcssa, 24      ; 3 uses
-  %i.k = add nsw i64 %i.j, -2                     ; 2 uses
+  %i.k = add nsw i64 %i.j, -2
   %i.l = lshr i64 %i.k, 1                         ; 3 uses
-  %i.m = add nsw i64 %i.j, -1
+  %i.m = add nsw i64 %i.j, -1                     ; 3 uses
   %i.n = lshr i64 %i.m, 1                         ; 2 uses
   %i.o = and i64 %i.j, 1
   %i.p = icmp eq i64 %i.o, 0
-  %3 = or disjoint i64 %i.k, 1                    ; 2 uses
-  %i.q = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %3 ; 2 uses
+  %i.q = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.m ; 2 uses
   %i.r = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.l ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 16
@@ -264,7 +263,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %3, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.m, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.am = icmp sgt i64 %.1.i.i.i.i, %.08.i.i.i
   br i1 %i.am, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_S1I_T1_T2_.exit.i.i.i"
 
@@ -667,12 +666,12 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %.fr = freeze i64 %i.c                          ; 2 uses
-  %i.d = ashr exact i64 %.fr, 2                   ; 3 uses
+  %i.d = ashr exact i64 %.fr, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
@@ -682,7 +681,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %.split
@@ -1008,14 +1007,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr44.i28.lcssa = phi i64 [ %.fr44.i25, %.lr.ph ], [ %.fr44.i, %bb.b ]
   %storemerge26.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.j = udiv exact i64 %.fr44.i28.lcssa, 24      ; 3 uses
-  %i.k = add nsw i64 %i.j, -2                     ; 2 uses
+  %i.k = add nsw i64 %i.j, -2
   %i.l = lshr i64 %i.k, 1                         ; 3 uses
-  %i.m = add nsw i64 %i.j, -1
+  %i.m = add nsw i64 %i.j, -1                     ; 3 uses
   %i.n = lshr i64 %i.m, 1                         ; 2 uses
   %i.o = and i64 %i.j, 1
   %i.p = icmp eq i64 %i.o, 0
-  %3 = or disjoint i64 %i.k, 1                    ; 2 uses
-  %i.q = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %3 ; 2 uses
+  %i.q = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.m ; 2 uses
   %i.r = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.l ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 16
@@ -1067,7 +1065,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %3, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.m, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.am = icmp sgt i64 %.1.i.i.i.i, %.08.i.i.i
   br i1 %i.am, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_S1N_T1_T2_.exit.i.i.i"
 

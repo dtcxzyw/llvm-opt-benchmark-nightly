@@ -205,14 +205,14 @@ bb.l:                                             ; preds = %stbtt__buf_get8.exi
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv383 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next384, %.preheader ] ; 2 uses
+  %indvars.iv383 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next384, %.preheader ] ; 3 uses
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv383 ; 2 uses
   %i.bq = load float, ptr %i.bp, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 4
   %i.bs = load float, ptr %i.br, align 4
   tail call fastcc void @stbtt__csctx_rline_to(ptr noundef %2, float noundef %i.bq, float noundef %i.bs)
-  %indvars.iv.next384 = add nuw nsw i64 %indvars.iv383, 2 ; 2 uses
-  %5 = or disjoint i64 %indvars.iv.next384, 1
+  %indvars.iv.next384 = add nuw nsw i64 %indvars.iv383, 2
+  %5 = add nuw nsw i64 %indvars.iv383, 3
   %i.bt = icmp samesign ult i64 %5, %i.bo
   br i1 %i.bt, label %.preheader, label %.thread
 
@@ -404,21 +404,21 @@ bb.af:                                            ; preds = %stbtt__buf_get8.exi
   br label %.lr.ph311
 
 .lr.ph311:                                        ; preds = %.lr.ph311.preheader, %.lr.ph311
-  %indvars.iv374 = phi i64 [ 0, %.lr.ph311.preheader ], [ %indvars.iv.next375, %.lr.ph311 ] ; 2 uses
+  %indvars.iv374 = phi i64 [ 0, %.lr.ph311.preheader ], [ %indvars.iv.next375, %.lr.ph311 ] ; 3 uses
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv374 ; 2 uses
   %i.fg = load float, ptr %i.ff, align 8
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ff, i64 4
   %i.fi = load float, ptr %i.fh, align 4
   tail call fastcc void @stbtt__csctx_rline_to(ptr noundef %2, float noundef %i.fg, float noundef %i.fi)
-  %indvars.iv.next375 = add nuw nsw i64 %indvars.iv374, 2 ; 4 uses
-  %6 = or disjoint i64 %indvars.iv.next375, 1
+  %indvars.iv.next375 = add nuw nsw i64 %indvars.iv374, 2 ; 3 uses
+  %6 = add nuw nsw i64 %indvars.iv374, 3
   %i.fj = icmp samesign ult i64 %6, %i.fe
   br i1 %i.fj, label %.lr.ph311, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph311
   %i.fk = trunc nuw nsw i64 %indvars.iv.next375 to i32
   %i.fl = add nuw nsw i32 %i.fk, 5                ; 2 uses
-  %.not268 = icmp samesign ult i32 %i.fl, %.0253320
+  %.not268 = icmp slt i32 %i.fl, %.0253320
   br i1 %.not268, label %bb.ag, label %.critedge
 
 bb.ag:                                            ; preds = %._crit_edge

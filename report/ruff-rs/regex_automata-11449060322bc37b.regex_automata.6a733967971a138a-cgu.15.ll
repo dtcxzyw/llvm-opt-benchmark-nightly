@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bv = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.ad ; 2 uses
   %.sroa.02.0.copyload.i.i.i.i.i = load i16, ptr %i.bv, align 1, !alias.scope !306, !noalias !307 ; 2 uses
   %i.bw = icmp slt i16 %.sroa.02.0.copyload.i.i.i.i.i, 0 ; 4 uses
-  %i.bx = and i16 %.sroa.02.0.copyload.i.i.i.i.i, 32767 ; 3 uses
+  %i.bx = and i16 %.sroa.02.0.copyload.i.i.i.i.i, 32767 ; 4 uses
   %i.by = zext nneg i16 %i.bx to i64              ; 3 uses
   %i.bz = add nsw i64 %i.bt, -2                   ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bv, i64 2 ; 2 uses
@@ -244,7 +244,7 @@ bb.v:                                             ; preds = %.lr.ph
   br i1 %cond.i.i, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.v, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit.i228.i
-  %i.cj = shl nuw nsw i64 %i.by, 2                ; 8 uses
+  %i.cj = shl nuw nsw i64 %i.by, 2                ; 7 uses
   %i.ck = icmp ult i64 %i.cg, %i.cj
   br i1 %i.ck, label %.loopexit338.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCs98D8VPWzHuM_14regex_automata.exit671.i.i
 
@@ -368,10 +368,9 @@ bb.al:                                            ; preds = %bb.ah
   br i1 %or.cond661.i.i, label %.loopexit338.i, label %bb.ak
 
 bb.am:                                            ; preds = %bb.ak
-  %i.do = add nsw i64 %i.cj, -4                   ; 3 uses
-  %3 = or disjoint i64 %i.do, 3
-  %or.cond.not.i.i.i = icmp ult i64 %3, %i.cj
-  br i1 %or.cond.not.i.i.i, label %_RNvMsh_NtNtCs98D8VPWzHuM_14regex_automata3dfa6sparseNtB5_5State7next_at.exit.i.i, label %.invoke.i, !prof !9
+  %i.do = add nsw i64 %i.cj, -4                   ; 2 uses
+  %or.cond.not.i.not.i.i = icmp eq i16 %i.bx, 0
+  br i1 %or.cond.not.i.not.i.i, label %.invoke.i, label %_RNvMsh_NtNtCs98D8VPWzHuM_14regex_automata3dfa6sparseNtB5_5State7next_at.exit.i.i, !prof !10
 
 .invoke.i:                                        ; preds = %bb.am, %bb.x, %bb.ad, %bb.g, %bb.e, %.lr.ph447.i, %bb.k
   %i.dp = phi i64 [ 1, %bb.k ], [ 0, %bb.ad ], [ 0, %bb.x ], [ 0, %bb.g ], [ 0, %bb.e ], [ %i.ae, %.lr.ph447.i ], [ %i.do, %bb.am ]
@@ -774,11 +773,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.b = load i64, ptr %i.a, align 8, !noundef !3
   tail call void @llvm.experimental.noalias.scope.decl(metadata !470)
-  %i.c = shl i64 %i.b, 2                          ; 2 uses
-  %i.d = add i64 %i.c, -4                         ; 3 uses
+  %i.c = shl i64 %i.b, 2                          ; 3 uses
+  %i.d = add i64 %i.c, -4                         ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load i64, ptr %i.e, align 8, !alias.scope !470, !noundef !3 ; 2 uses
-  %1 = or disjoint i64 %i.d, 3
+  %1 = add i64 %i.c, -1
   %or.cond.not.i = icmp ult i64 %1, %i.f
   br i1 %or.cond.not.i, label %_RNvMsh_NtNtCs98D8VPWzHuM_14regex_automata3dfa6sparseNtB5_5State7next_at.exit, label %bb.b, !prof !9
 

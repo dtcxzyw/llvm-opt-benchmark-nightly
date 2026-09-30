@@ -205,10 +205,10 @@ bb.dx:                                            ; preds = %._crit_edge330.i, %
 
 .preheader212.i:                                  ; preds = %.loopexit214.i
   %i.acg = shl i32 %i.xr, 1
-  %i.ach = mul i32 %i.acg, %i.xu                  ; 4 uses
-  %i.aci = add i32 %i.ach, 2                      ; 3 uses
-  %i.acj = add i32 %i.ach, 4                      ; 3 uses
-  %i.ack = add i32 %i.ach, 6                      ; 3 uses
+  %i.ach = mul i32 %i.acg, %i.xu                  ; 6 uses
+  %i.aci = add i32 %i.ach, 2                      ; 2 uses
+  %i.acj = add i32 %i.ach, 4                      ; 2 uses
+  %i.ack = add i32 %i.ach, 6                      ; 2 uses
   store i32 %i.aci, ptr %i.n, align 16, !tbaa !22
   store i32 %i.acj, ptr %i.xk, align 4, !tbaa !22
   store i32 %i.ack, ptr %i.xl, align 8, !tbaa !22
@@ -218,10 +218,10 @@ bb.dx:                                            ; preds = %._crit_edge330.i, %
   br i1 %.not180.i, label %Exa7_ManAddCnfStart.exit, label %bb.dy
 
 bb.dy:                                            ; preds = %.preheader212.i
-  %5 = or disjoint i32 %i.aci, 1                  ; 2 uses
+  %5 = add i32 %i.ach, 3                          ; 2 uses
   store i32 %5, ptr %i.n, align 16, !tbaa !22
   store i32 %i.acj, ptr %i.xk, align 4, !tbaa !22
-  %6 = or disjoint i32 %i.ack, 1                  ; 2 uses
+  %6 = add i32 %i.ach, 7                          ; 2 uses
   store i32 %6, ptr %i.xl, align 8, !tbaa !22
   %i.acn = load ptr, ptr %i.vu, align 8, !tbaa !36
   %i.aco = call i32 @cadical_solver_addclause(ptr noundef %i.acn, ptr noundef nonnull %i.n, ptr noundef nonnull %i.xm) #23
@@ -230,7 +230,7 @@ bb.dy:                                            ; preds = %.preheader212.i
 
 bb.dz:                                            ; preds = %bb.dy
   store i32 %i.aci, ptr %i.n, align 16, !tbaa !22
-  %7 = or disjoint i32 %i.acj, 1
+  %7 = add i32 %i.ach, 5                          ; 2 uses
   store i32 %7, ptr %i.xk, align 4, !tbaa !22
   store i32 %6, ptr %i.xl, align 8, !tbaa !22
   %i.acp = load ptr, ptr %i.vu, align 8, !tbaa !36
@@ -243,8 +243,7 @@ bb.ea:                                            ; preds = %bb.dz
 
 bb.eb:                                            ; preds = %bb.ea
   store i32 %5, ptr %i.n, align 16, !tbaa !22
-  %8 = add i32 %i.ach, 5
-  store i32 %8, ptr %i.xk, align 4, !tbaa !22
+  store i32 %7, ptr %i.xk, align 4, !tbaa !22
   store i32 %i.ack, ptr %i.xl, align 8, !tbaa !22
   %i.acr = load ptr, ptr %i.vu, align 8, !tbaa !36
   %i.acs = call i32 @cadical_solver_addclause(ptr noundef %i.acr, ptr noundef nonnull %i.n, ptr noundef nonnull %i.xm) #23

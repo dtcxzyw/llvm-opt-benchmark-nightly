@@ -204,10 +204,9 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.l = zext nneg i32 %i.j to i64
   %notmask = shl nsw i64 -1, %i.l
-  %3 = xor i64 %notmask, -1
   %i.m = load ptr, ptr %i.f, align 8, !tbaa !69
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 160
-  %.sroa.0.0.insert.insert.i = or disjoint i64 %3, 4294967296
+  %.sroa.0.0.insert.insert.i = xor i64 %notmask, -4294967297
   store i64 %.sroa.0.0.insert.insert.i, ptr %i.n, align 4
   %.pre222 = load ptr, ptr %i.a, align 8, !tbaa !27
   br label %bb.g

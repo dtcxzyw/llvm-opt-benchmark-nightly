@@ -205,9 +205,8 @@ bb.e:                                             ; preds = %bb.d
   %i.j = and i32 %i.i, 1
   %i.k = or disjoint i32 %i.j, %spec.select
   %i.l = shl i32 %i.e, 16
-  %3 = or disjoint i32 %i.l, 32768
-  %i.m = or disjoint i32 %i.k, %3
-  %i.n = xor i32 %i.m, 1
+  %i.m = or disjoint i32 %i.k, %i.l
+  %i.n = xor i32 %i.m, 32769
   store i32 %i.n, ptr %i.h, align 8, !tbaa !28
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 104
   %i.p = load i64, ptr %i.o, align 8, !tbaa !131

@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %_ZN3std4sync4mpmc7c
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.037.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.037.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !5010 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !5010 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !5010 ; 9 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -284,9 +284,9 @@ bb.g:                                             ; preds = %bb.c
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.u, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.u, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -484,11 +484,10 @@ _ZN3std4sync4mpmc5utils7Backoff10spin_heavy17h4febe83a2b9b9332E.exit.i.i: ; pred
 "_ZN3std4sync4mpmc4list14Block$LT$T$GT$9wait_next17h5f26b368a9ffbaa5E.exit.i": ; preds = %_ZN3std4sync4mpmc5utils7Backoff10spin_heavy17h4febe83a2b9b9332E.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_ZN3std4sync4mpmc5utils7Backoff10spin_heavy17h4febe83a2b9b9332E.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = load atomic ptr, ptr %.lcssa.i.i monotonic, align 8, !noalias !5010
-  %6 = icmp ne ptr %i.ba, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.ba, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !5010
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !5010
   br label %bb.t

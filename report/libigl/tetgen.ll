@@ -205,33 +205,22 @@ define void @_ZN10tetgenmesh10inittablesEv(ptr nofree nonnull readnone align 8 c
 .preheader133:                                    ; preds = %.preheader135, %.preheader133
   %indvars.iv156 = phi i64 [ %indvars.iv.next157, %.preheader133 ], [ 0, %.preheader135 ] ; 3 uses
   %i.a = trunc i64 %indvars.iv156 to i32
-  %.186139.not = and i32 %i.a, 12                 ; 14 uses
-  %1 = xor i32 %.186139.not, 12                   ; 4 uses
-  %i.b = getelementptr inbounds nuw [48 x i8], ptr @_ZN10tetgenmesh7fsymtblE, i64 %indvars.iv156 ; 9 uses
-  %.cmp98.not = icmp eq i32 %.186139.not, 0
-  %2 = select i1 %.cmp98.not, i32 0, i32 %1
-  store i32 %2, ptr %i.b, align 16, !tbaa !59
-  %3 = or disjoint i32 %1, 1
-  %.cmp98.1.not = icmp eq i32 %.186139.not, 0
-  %4 = select i1 %.cmp98.1.not, i32 1, i32 %3
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i32 %4, ptr %5, align 4, !tbaa !59
-  %6 = or disjoint i32 %1, 2
-  %.cmp98.2.not = icmp eq i32 %.186139.not, 0
-  %7 = select i1 %.cmp98.2.not, i32 2, i32 %6
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i32 %7, ptr %8, align 8, !tbaa !59
-  %9 = or disjoint i32 %1, 3
-  %.cmp98.3.not = icmp eq i32 %.186139.not, 0
-  %10 = select i1 %.cmp98.3.not, i32 3, i32 %9
-  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  store i32 %10, ptr %11, align 4, !tbaa !59
+  %i.b = getelementptr inbounds nuw [48 x i8], ptr @_ZN10tetgenmesh7fsymtblE, i64 %indvars.iv156 ; 6 uses
+  %.186139.not = and i32 %i.a, 12                 ; 9 uses
+  %1 = insertelement <4 x i32> poison, i32 %.186139.not, i64 0
+  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <4 x i32> zeroinitializer ; 5 uses
+  %3 = xor <4 x i32> %2, <i32 0, i32 13, i32 14, i32 15> ; 2 uses
+  %4 = xor <4 x i32> %2, <i32 12, i32 poison, i32 poison, i32 poison>
+  %5 = sub nsw <4 x i32> <i32 poison, i32 1, i32 2, i32 3>, %2
+  %6 = shufflevector <4 x i32> %4, <4 x i32> %5, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %7 = icmp samesign ult <4 x i32> %3, <i32 1, i32 12, i32 12, i32 12>
+  %8 = insertelement <4 x i32> %3, i32 0, i64 0
+  %9 = select <4 x i1> %7, <4 x i32> %8, <4 x i32> %6
+  store <4 x i32> %9, ptr %i.b, align 16, !tbaa !59
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %12 = insertelement <4 x i32> poison, i32 %.186139.not, i64 0
-  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.d = icmp samesign ugt <4 x i32> %13, <i32 4, i32 5, i32 6, i32 7>
+  %i.d = icmp samesign ugt <4 x i32> %2, <i32 4, i32 5, i32 6, i32 7>
   %i.e = select <4 x i1> %i.d, <4 x i32> <i32 16, i32 17, i32 18, i32 19>, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %i.f = sub nsw <4 x i32> %i.e, %13
+  %i.f = sub nsw <4 x i32> %i.e, %2
   store <4 x i32> %i.f, ptr %i.c, align 16, !tbaa !59
   %.cmp98.8 = icmp samesign ugt i32 %.186139.not, 8
   %.v205 = select i1 %.cmp98.8, i32 20, i32 8

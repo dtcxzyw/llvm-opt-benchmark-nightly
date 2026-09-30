@@ -204,8 +204,7 @@ bb.v:                                             ; preds = %bb.u, %._crit_edge
   %i.ex = load i32, ptr %i.g, align 4
   %i.ey = add i32 %i.ex, 1
   store i32 %i.ey, ptr %i.g, align 4
-  %i.ez = shl nuw nsw i32 %i.cf, 16
-  %3 = add nuw nsw i32 %i.ez, 262144              ; 2 uses
+  %i.ez = shl nuw nsw i32 %i.cf, 16               ; 2 uses
   %i.fa = load i8, ptr %1, align 1                ; 2 uses
   %i.fb = icmp eq i8 %i.fa, -1
   br i1 %i.fb, label %bb.w, label %bb.ac
@@ -241,18 +240,18 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.fq, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  %4 = or disjoint i32 %3, 8192
+  %3 = add nuw nsw i32 %i.ez, 270336
   br label %bb.ad
 
 bb.ac:                                            ; preds = %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
   %i.fr = and i8 %i.fa, 1
-  %5 = zext nneg i8 %i.fr to i32
-  %6 = shl nuw nsw i32 %5, 10
-  %spec.select95 = or disjoint i32 %6, %3
+  %.not94 = icmp eq i8 %i.fr, 0
+  %spec.select95.v = select i1 %.not94, i32 262144, i32 263168
+  %spec.select95 = add nuw nsw i32 %spec.select95.v, %i.ez
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  %.0 = phi i32 [ %4, %bb.ab ], [ %spec.select95, %bb.ac ] ; 2 uses
+  %.0 = phi i32 [ %3, %bb.ab ], [ %spec.select95, %bb.ac ] ; 2 uses
   %i.fs = or i32 %.0, 1073741824
   %spec.select96 = select i1 %.not108, i32 %i.fs, i32 %.0
   %i.ft = getelementptr inbounds nuw i8, ptr %i.a, i64 14620

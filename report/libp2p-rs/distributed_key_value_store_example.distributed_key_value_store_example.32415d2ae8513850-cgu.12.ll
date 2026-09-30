@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.h, %bb.d
-  %.sroa.05.0.i.i = phi i64 [ %i.i, %bb.d ], [ %.sroa.01.0.i.i.i, %bb.h ] ; 4 uses
+  %.sroa.05.0.i.i = phi i64 [ %i.i, %bb.d ], [ %.sroa.01.0.i.i.i, %bb.h ] ; 3 uses
   %.not.i.i = icmp sgt i64 %.sroa.05.0.i.i, -1
-  %i.j = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 2 uses
+  %i.j = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -221,9 +221,8 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %i.k = add nsw i64 %.sroa.05.0.i.i, 1
-  %3 = or i64 %i.k, -9223372036854775808
-  %i.l = cmpxchg ptr %i.h, i64 %.sroa.05.0.i.i, i64 %3 seq_cst seq_cst, align 8, !noalias !2135 ; 2 uses
+  %i.k = add nuw nsw i64 %i.j, -9223372036854775807
+  %i.l = cmpxchg ptr %i.h, i64 %.sroa.05.0.i.i, i64 %i.k seq_cst seq_cst, align 8, !noalias !2135 ; 2 uses
   %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.l, 1
   %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.l, 0
   br i1 %.sroa.18.0.in.i.i.i, label %bb.i, label %bb.e
@@ -626,9 +625,9 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.h, %bb.d
-  %.sroa.05.0.i.i = phi i64 [ %i.g, %bb.d ], [ %.sroa.01.0.i.i.i, %bb.h ] ; 4 uses
+  %.sroa.05.0.i.i = phi i64 [ %i.g, %bb.d ], [ %.sroa.01.0.i.i.i, %bb.h ] ; 3 uses
   %.not.i.i = icmp sgt i64 %.sroa.05.0.i.i, -1
-  %i.h = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 2 uses
+  %i.h = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -643,9 +642,8 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %i.i = add nsw i64 %.sroa.05.0.i.i, 1
-  %3 = or i64 %i.i, -9223372036854775808
-  %i.j = cmpxchg ptr %i.f, i64 %.sroa.05.0.i.i, i64 %3 seq_cst seq_cst, align 8, !noalias !2224 ; 2 uses
+  %i.i = add nuw nsw i64 %i.h, -9223372036854775807
+  %i.j = cmpxchg ptr %i.f, i64 %.sroa.05.0.i.i, i64 %i.i seq_cst seq_cst, align 8, !noalias !2224 ; 2 uses
   %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.j, 1
   %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.j, 0
   br i1 %.sroa.18.0.in.i.i.i, label %bb.i, label %bb.e
@@ -1022,12 +1020,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
-  %.sroa.05.0.i = phi i64 [ %i.d, %bb.b ], [ %.sroa.01.0.i.i, %bb.f ] ; 4 uses
+  %.sroa.05.0.i = phi i64 [ %i.d, %bb.b ], [ %.sroa.01.0.i.i, %bb.f ] ; 3 uses
   %.not.i = icmp sgt i64 %.sroa.05.0.i, -1
+  %3 = and i64 %.sroa.05.0.i, 9223372036854775807 ; 2 uses
   br i1 %.not.i, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = and i64 %.sroa.05.0.i, 9223372036854775807
   %.not11.i = icmp eq i64 %3, 9223372036854775807
   br i1 %.not11.i, label %bb.e, label %bb.f, !prof !18
 
@@ -1039,9 +1037,8 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.e = add nsw i64 %.sroa.05.0.i, 1
-  %4 = or i64 %i.e, -9223372036854775808
-  %i.f = cmpxchg ptr %i.c, i64 %.sroa.05.0.i, i64 %4 seq_cst seq_cst, align 8, !noalias !2270 ; 2 uses
+  %i.e = add nuw nsw i64 %3, -9223372036854775807
+  %i.f = cmpxchg ptr %i.c, i64 %.sroa.05.0.i, i64 %i.e seq_cst seq_cst, align 8, !noalias !2270 ; 2 uses
   %.sroa.18.0.in.i.i = extractvalue { i64, i1 } %i.f, 1
   %.sroa.01.0.i.i = extractvalue { i64, i1 } %i.f, 0
   br i1 %.sroa.18.0.in.i.i, label %bb.g, label %bb.c
@@ -1132,12 +1129,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
-  %.sroa.05.0.i = phi i64 [ %i.d, %bb.b ], [ %.sroa.01.0.i.i, %bb.f ] ; 4 uses
+  %.sroa.05.0.i = phi i64 [ %i.d, %bb.b ], [ %.sroa.01.0.i.i, %bb.f ] ; 3 uses
   %.not.i = icmp sgt i64 %.sroa.05.0.i, -1
+  %3 = and i64 %.sroa.05.0.i, 9223372036854775807 ; 2 uses
   br i1 %.not.i, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = and i64 %.sroa.05.0.i, 9223372036854775807
   %.not11.i = icmp eq i64 %3, 9223372036854775807
   br i1 %.not11.i, label %bb.e, label %bb.f, !prof !18
 
@@ -1149,9 +1146,8 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.e = add nsw i64 %.sroa.05.0.i, 1
-  %4 = or i64 %i.e, -9223372036854775808
-  %i.f = cmpxchg ptr %i.c, i64 %.sroa.05.0.i, i64 %4 seq_cst seq_cst, align 8, !noalias !2286 ; 2 uses
+  %i.e = add nuw nsw i64 %3, -9223372036854775807
+  %i.f = cmpxchg ptr %i.c, i64 %.sroa.05.0.i, i64 %i.e seq_cst seq_cst, align 8, !noalias !2286 ; 2 uses
   %.sroa.18.0.in.i.i = extractvalue { i64, i1 } %i.f, 1
   %.sroa.01.0.i.i = extractvalue { i64, i1 } %i.f, 0
   br i1 %.sroa.18.0.in.i.i, label %bb.g, label %bb.c
@@ -1554,9 +1550,9 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %bb.e
-  %.sroa.05.0.i.i.i.i = phi i64 [ %i.l, %bb.e ], [ %.sroa.01.0.i.i.i.i.i, %bb.i ] ; 4 uses
+  %.sroa.05.0.i.i.i.i = phi i64 [ %i.l, %bb.e ], [ %.sroa.01.0.i.i.i.i.i, %bb.i ] ; 3 uses
   %.not.i.i.i.i = icmp sgt i64 %.sroa.05.0.i.i.i.i, -1
-  %i.m = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 2 uses
+  %i.m = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -1571,9 +1567,8 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %bb.g
-  %i.n = add nsw i64 %.sroa.05.0.i.i.i.i, 1
-  %2 = or i64 %i.n, -9223372036854775808
-  %i.o = cmpxchg ptr %i.k, i64 %.sroa.05.0.i.i.i.i, i64 %2 seq_cst seq_cst, align 8, !noalias !2651 ; 2 uses
+  %i.n = add nuw nsw i64 %i.m, -9223372036854775807
+  %i.o = cmpxchg ptr %i.k, i64 %.sroa.05.0.i.i.i.i, i64 %i.n seq_cst seq_cst, align 8, !noalias !2651 ; 2 uses
   %.sroa.18.0.in.i.i.i.i.i = extractvalue { i64, i1 } %i.o, 1
   %.sroa.01.0.i.i.i.i.i = extractvalue { i64, i1 } %i.o, 0
   br i1 %.sroa.18.0.in.i.i.i.i.i, label %bb.j, label %bb.f
@@ -1976,9 +1971,9 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %bb.e
-  %.sroa.05.0.i.i.i.i = phi i64 [ %i.l, %bb.e ], [ %.sroa.01.0.i.i.i.i.i, %bb.i ] ; 4 uses
+  %.sroa.05.0.i.i.i.i = phi i64 [ %i.l, %bb.e ], [ %.sroa.01.0.i.i.i.i.i, %bb.i ] ; 3 uses
   %.not.i.i.i.i = icmp sgt i64 %.sroa.05.0.i.i.i.i, -1
-  %i.m = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 2 uses
+  %i.m = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -1993,9 +1988,8 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %bb.g
-  %i.n = add nsw i64 %.sroa.05.0.i.i.i.i, 1
-  %2 = or i64 %i.n, -9223372036854775808
-  %i.o = cmpxchg ptr %i.k, i64 %.sroa.05.0.i.i.i.i, i64 %2 seq_cst seq_cst, align 8, !noalias !2748 ; 2 uses
+  %i.n = add nuw nsw i64 %i.m, -9223372036854775807
+  %i.o = cmpxchg ptr %i.k, i64 %.sroa.05.0.i.i.i.i, i64 %i.n seq_cst seq_cst, align 8, !noalias !2748 ; 2 uses
   %.sroa.18.0.in.i.i.i.i.i = extractvalue { i64, i1 } %i.o, 1
   %.sroa.01.0.i.i.i.i.i = extractvalue { i64, i1 } %i.o, 0
   br i1 %.sroa.18.0.in.i.i.i.i.i, label %bb.j, label %bb.f

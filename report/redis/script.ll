@@ -202,13 +202,13 @@ bb.a:
   %i.b = and i64 %1, 3
   %.not = icmp eq i64 %i.b, 0
   %i.c = and i64 %1, 1
-  %2 = shl i64 %1, 8
-  %i.d = and i64 %2, 1024
-  %3 = or disjoint i64 %i.a, 4
-  %spec.select.masked.a = select i1 %.not, i64 %3, i64 %i.a
-  %.masked.a = or disjoint i64 %i.d, %i.c
-  %.2 = or disjoint i64 %.masked.a, %spec.select.masked.a
-  %i.e = xor i64 %.2, 1
+  %i.d = and i64 %1, 4
+  %.not10 = icmp eq i64 %i.d, 0
+  %spec.select.masked.a = select i1 %.not10, i64 1, i64 1025
+  %.masked.a = or disjoint i64 %i.a, 4
+  %spec.select.masked = select i1 %.not, i64 %.masked.a, i64 %i.a
+  %.2 = or disjoint i64 %spec.select.masked, %i.c
+  %i.e = xor i64 %.2, %spec.select.masked.a
   ret i64 %i.e
 }
 

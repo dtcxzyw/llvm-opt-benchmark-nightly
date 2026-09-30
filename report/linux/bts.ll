@@ -114,7 +114,7 @@ bb.a:
   %i.g = getelementptr i8, ptr %i.f, i64 20       ; 3 uses
   %i.h = load i8, ptr %i.g, align 4, !range !10, !noundef !11
   %i.i = getelementptr i8, ptr %0, i64 256
-  %i.j = load i64, ptr %i.i, align 8
+  %i.j = load i64, ptr %i.i, align 8              ; 2 uses
   %i.k = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #9, !srcloc !23
   %i.l = sext i32 %i.k to i64
   %i.m = getelementptr [8 x i8], ptr @__per_cpu_offset, i64 %i.l
@@ -190,12 +190,15 @@ bts_config_buffer.exit:                           ; preds = %._crit_edge.i, %bb.
   %.042.i = phi i64 [ %i.ab, %._crit_edge.i ], [ %i.aw, %bb.c ], [ %i.aw, %bb.d ]
   %.041.i = phi i64 [ 0, %._crit_edge.i ], [ %i.az, %bb.c ], [ %spec.select.i, %bb.d ]
   %.1.i = phi i64 [ %i.y, %._crit_edge.i ], [ %.0.i, %bb.c ], [ %.0.i, %bb.d ]
+  %1 = and i64 %i.j, 16
+  %.not15 = icmp eq i64 %1, 0
   %i.bd = shl i64 %i.j, 12
+  %2 = and i64 %i.bd, 131072
   %i.be = trunc nuw i8 %i.h to i1
   %spec.select = select i1 %i.be, i64 0, i64 1048576
-  %1 = and i64 %i.bd, 196608
-  %2 = or disjoint i64 %1, %spec.select
-  %.2 = xor i64 %2, 196608
+  %3 = or disjoint i64 %2, %spec.select
+  %.2.v = select i1 %.not15, i64 196608, i64 131072
+  %.2 = xor i64 %3, %.2.v
   %i.bf = load i64, ptr @vmemmap_base, align 8
   %i.bg = ptrtoint ptr %i.z to i64
   %i.bh = sub i64 %i.bg, %i.bf

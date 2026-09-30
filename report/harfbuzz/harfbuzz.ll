@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   store i32 %i.i, ptr %1, align 4, !tbaa !480
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 12 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 21 uses
   %i.m = icmp samesign ugt i16 %i.h, 3
   br i1 %i.m, label %.lr.ph.i.preheader.i, label %.preheader.i.i
 
@@ -227,16 +227,19 @@ bb.c:                                             ; preds = %bb.b
   br i1 %lcmp.mod16.not.not, label %.lr.ph.i.i.epil.preheader, label %.preheader.i.loopexit.i
 
 .lr.ph.i.i.epil.preheader:                        ; preds = %.preheader.i.loopexit.i.unr-lcssa, %.lr.ph.i.preheader.i
-  %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i ], [ %indvars.iv.next.i.1, %.preheader.i.loopexit.i.unr-lcssa ] ; 2 uses
+  %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i ], [ %indvars.iv.next.i.1, %.preheader.i.loopexit.i.unr-lcssa ] ; 5 uses
   %lcmp.mod18 = trunc i64 %i.q to i1
   tail call void @llvm.assume(i1 %lcmp.mod18)
-  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i.epil.init ; 4 uses
+  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i.epil.init
   store atomic i32 -2147483648, ptr %i.t monotonic, align 4
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 4
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i.epil.init
+  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 4
   store atomic i32 -2147483648, ptr %i.u monotonic, align 4
-  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i.epil.init
+  %i.v = getelementptr inbounds nuw i8, ptr %3, i64 8
   store atomic i32 -2147483648, ptr %i.v monotonic, align 4
-  %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 12
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i.epil.init
+  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 12
   store atomic i32 -2147483648, ptr %i.w monotonic, align 4
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil.init, 4
   br label %.preheader.i.loopexit.i
@@ -248,7 +251,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i.i:                                   ; preds = %.preheader.i.loopexit.i, %bb.c
   %.0.lcssa.i.i = phi i32 [ 0, %bb.c ], [ %i.x, %.preheader.i.loopexit.i ] ; 2 uses
-  %i.y = icmp samesign ult i32 %.0.lcssa.i.i, %i.i
+  %i.y = icmp ult i32 %.0.lcssa.i.i, %i.i
   br i1 %i.y, label %.lr.ph18.preheader.i.i, label %_ZN2OT17hb_scalar_cache_t6createEjPS0_.exit
 
 .lr.ph18.preheader.i.i:                           ; preds = %.preheader.i.i
@@ -276,24 +279,30 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ad, label %_ZN2OT17hb_scalar_cache_t6createEjPS0_.exit, label %.lr.ph18.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.preheader.i.new
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.preheader.i.new ], [ %indvars.iv.next.i.1, %.lr.ph.i.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.preheader.i.new ], [ %indvars.iv.next.i.1, %.lr.ph.i.i ] ; 6 uses
   %niter20 = phi i64 [ 0, %.lr.ph.i.preheader.i.new ], [ %niter20.next.1, %.lr.ph.i.i ]
-  %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i ; 4 uses
+  %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i
   store atomic i32 -2147483648, ptr %i.ae monotonic, align 4
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i
+  %i.af = getelementptr inbounds nuw i8, ptr %5, i64 4
   store atomic i32 -2147483648, ptr %i.af monotonic, align 4
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i
+  %i.ag = getelementptr inbounds nuw i8, ptr %6, i64 8
   store atomic i32 -2147483648, ptr %i.ag monotonic, align 4
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 12
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i
+  %i.ah = getelementptr inbounds nuw i8, ptr %7, i64 12
   store atomic i32 -2147483648, ptr %i.ah monotonic, align 4
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  store atomic i32 -2147483648, ptr %2 monotonic, align 4
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 20
+  %indvars.iv.next9 = or disjoint i64 %indvars.iv.i, 4 ; 4 uses
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.next9
+  store atomic i32 -2147483648, ptr %i.ai monotonic, align 4
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.next9
+  %i.aj = getelementptr inbounds nuw i8, ptr %8, i64 4
   store atomic i32 -2147483648, ptr %i.aj monotonic, align 4
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.next9
+  %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 8
   store atomic i32 -2147483648, ptr %i.ak monotonic, align 4
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 28
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.next9
+  %i.al = getelementptr inbounds nuw i8, ptr %10, i64 12
   store atomic i32 -2147483648, ptr %i.al monotonic, align 4
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 8 ; 3 uses
   %niter20.next.1 = add i64 %niter20, 2           ; 2 uses
@@ -339,7 +348,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   store i32 %i.i, ptr %i.be, align 4, !tbaa !480
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 4 ; 12 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 4 ; 21 uses
   %i.bg = icmp ugt i16 %i.h, 3
   br i1 %i.bg, label %.lr.ph.i25.i.preheader, label %.preheader.i17.i
 
@@ -361,16 +370,19 @@ bb.e:                                             ; preds = %bb.d
   br i1 %lcmp.mod.not.not, label %.lr.ph.i25.i.epil.preheader, label %.preheader.i17.i.loopexit
 
 .lr.ph.i25.i.epil.preheader:                      ; preds = %.preheader.i17.i.loopexit.unr-lcssa, %.lr.ph.i25.i.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.i25.i.preheader ], [ %indvars.iv.next.1, %.preheader.i17.i.loopexit.unr-lcssa ] ; 2 uses
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.i25.i.preheader ], [ %indvars.iv.next.1, %.preheader.i17.i.loopexit.unr-lcssa ] ; 5 uses
   %lcmp.mod12 = trunc i64 %i.bk to i1
   tail call void @llvm.assume(i1 %lcmp.mod12)
-  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.epil.init ; 4 uses
+  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.epil.init
   store atomic i32 -2147483648, ptr %i.bn monotonic, align 4
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.epil.init
+  %i.bo = getelementptr inbounds nuw i8, ptr %11, i64 4
   store atomic i32 -2147483648, ptr %i.bo monotonic, align 4
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.epil.init
+  %i.bp = getelementptr inbounds nuw i8, ptr %12, i64 8
   store atomic i32 -2147483648, ptr %i.bp monotonic, align 4
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.bn, i64 12
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.epil.init
+  %i.bq = getelementptr inbounds nuw i8, ptr %13, i64 12
   store atomic i32 -2147483648, ptr %i.bq monotonic, align 4
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil.init, 4
   br label %.preheader.i17.i.loopexit
@@ -382,7 +394,7 @@ bb.e:                                             ; preds = %bb.d
 
 .preheader.i17.i:                                 ; preds = %.preheader.i17.i.loopexit, %bb.e
   %.0.lcssa.i18.i = phi i32 [ 0, %bb.e ], [ %i.br, %.preheader.i17.i.loopexit ] ; 2 uses
-  %i.bs = icmp samesign ult i32 %.0.lcssa.i18.i, %i.i
+  %i.bs = icmp ult i32 %.0.lcssa.i18.i, %i.i
   br i1 %i.bs, label %.lr.ph18.preheader.i19.i, label %_ZN2OT17hb_scalar_cache_t6createEjPS0_.exit
 
 .lr.ph18.preheader.i19.i:                         ; preds = %.preheader.i17.i
@@ -409,24 +421,30 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.bx, label %_ZN2OT17hb_scalar_cache_t6createEjPS0_.exit, label %.lr.ph18.i21.i
 
 .lr.ph.i25.i:                                     ; preds = %.lr.ph.i25.i, %.lr.ph.i25.i.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.i25.i.preheader.new ], [ %indvars.iv.next.1, %.lr.ph.i25.i ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.i25.i.preheader.new ], [ %indvars.iv.next.1, %.lr.ph.i25.i ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph.i25.i.preheader.new ], [ %niter.next.1, %.lr.ph.i25.i ]
-  %i.by = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv ; 4 uses
+  %i.by = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv
   store atomic i32 -2147483648, ptr %i.by monotonic, align 4
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 4
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv
+  %i.bz = getelementptr inbounds nuw i8, ptr %14, i64 4
   store atomic i32 -2147483648, ptr %i.bz monotonic, align 4
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 8
+  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv
+  %i.ca = getelementptr inbounds nuw i8, ptr %15, i64 8
   store atomic i32 -2147483648, ptr %i.ca monotonic, align 4
-  %i.cb = getelementptr inbounds nuw i8, ptr %i.by, i64 12
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv
+  %i.cb = getelementptr inbounds nuw i8, ptr %16, i64 12
   store atomic i32 -2147483648, ptr %i.cb monotonic, align 4
-  %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv ; 4 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
-  store atomic i32 -2147483648, ptr %3 monotonic, align 4
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 20
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 4 ; 4 uses
+  %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.next
+  store atomic i32 -2147483648, ptr %i.cc monotonic, align 4
+  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.next
+  %i.cd = getelementptr inbounds nuw i8, ptr %17, i64 4
   store atomic i32 -2147483648, ptr %i.cd monotonic, align 4
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.cc, i64 24
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.next
+  %i.ce = getelementptr inbounds nuw i8, ptr %18, i64 8
   store atomic i32 -2147483648, ptr %i.ce monotonic, align 4
-  %i.cf = getelementptr inbounds nuw i8, ptr %i.cc, i64 28
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.next
+  %i.cf = getelementptr inbounds nuw i8, ptr %19, i64 12
   store atomic i32 -2147483648, ptr %i.cf monotonic, align 4
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 8 ; 3 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
@@ -829,7 +847,7 @@ bb.i:                                             ; preds = %bb.h
 
 .preheader.i17.i.i:                               ; preds = %.preheader.i17.i.loopexit.i, %bb.i
   %.0.lcssa.i18.i.i = phi i32 [ 0, %bb.i ], [ %i.az, %.preheader.i17.i.loopexit.i ] ; 2 uses
-  %i.ba = icmp samesign ult i32 %.0.lcssa.i18.i.i, %i.aj
+  %i.ba = icmp ult i32 %.0.lcssa.i18.i.i, %i.aj
   br i1 %i.ba, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
@@ -1232,7 +1250,7 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader.i17.i.i:                               ; preds = %.preheader.i17.i.loopexit.i, %bb.d
   %.0.lcssa.i18.i.i = phi i32 [ 0, %bb.d ], [ %i.ct, %.preheader.i17.i.loopexit.i ] ; 2 uses
-  %i.cu = icmp samesign ult i32 %.0.lcssa.i18.i.i, %i.cd
+  %i.cu = icmp ult i32 %.0.lcssa.i18.i.i, %i.cd
   br i1 %i.cu, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
@@ -1635,7 +1653,7 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph106
 
 .lr.ph99:                                         ; preds = %.lr.ph99.preheader242, %.lr.ph99
-  %.06497 = phi i32 [ %i.ff, %.lr.ph99 ], [ %.06497.ph, %.lr.ph99.preheader242 ]
+  %.06497 = phi i32 [ %i.ff, %.lr.ph99 ], [ %.06497.ph, %.lr.ph99.preheader242 ] ; 2 uses
   %.06696 = phi ptr [ %i.ez, %.lr.ph99 ], [ %.06696.ph, %.lr.ph99.preheader242 ] ; 2 uses
   %.17095 = phi ptr [ %i.fa, %.lr.ph99 ], [ %.17095.ph, %.lr.ph99.preheader242 ] ; 3 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %.06696, i64 4 ; 2 uses
@@ -1645,8 +1663,8 @@ middle.block:                                     ; preds = %vector.body
   %i.fd = load <4 x float>, ptr %.17095, align 4, !tbaa !304
   %i.fe = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fc, <4 x float> %i.j, <4 x float> %i.fd)
   store <4 x float> %i.fe, ptr %.17095, align 4, !tbaa !304
-  %i.ff = add nuw i32 %.06497, 4                  ; 2 uses
-  %4 = or disjoint i32 %i.ff, 3
+  %i.ff = add nuw i32 %.06497, 4
+  %4 = add nuw i32 %.06497, 7
   %i.fg = icmp ult i32 %4, %.sroa.speculated
   br i1 %i.fg, label %.lr.ph99, label %.preheader.loopexit, !llvm.loop !3179
 
@@ -1896,7 +1914,7 @@ middle.block192:                                  ; preds = %vector.body183
   br label %.lr.ph91
 
 .lr.ph84:                                         ; preds = %.lr.ph84.preheader244, %.lr.ph84
-  %.06182 = phi i32 [ %i.lk, %.lr.ph84 ], [ %.06182.ph, %.lr.ph84.preheader244 ]
+  %.06182 = phi i32 [ %i.lk, %.lr.ph84 ], [ %.06182.ph, %.lr.ph84.preheader244 ] ; 2 uses
   %.06281 = phi ptr [ %i.ld, %.lr.ph84 ], [ %.06281.ph, %.lr.ph84.preheader244 ] ; 2 uses
   %.380 = phi ptr [ %i.le, %.lr.ph84 ], [ %.380.ph, %.lr.ph84.preheader244 ] ; 3 uses
   %i.ld = getelementptr inbounds nuw i8, ptr %.06281, i64 8 ; 2 uses
@@ -1907,8 +1925,8 @@ middle.block192:                                  ; preds = %vector.body183
   %i.li = load <4 x float>, ptr %.380, align 4, !tbaa !304
   %i.lj = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.lh, <4 x float> %i.f, <4 x float> %i.li)
   store <4 x float> %i.lj, ptr %.380, align 4, !tbaa !304
-  %i.lk = add nuw i32 %.06182, 4                  ; 2 uses
-  %5 = or disjoint i32 %i.lk, 3
+  %i.lk = add nuw i32 %.06182, 4
+  %5 = add nuw i32 %.06182, 7
   %i.ll = icmp ult i32 %5, %.sroa.speculated
   br i1 %i.ll, label %.lr.ph84, label %.preheader75.loopexit, !llvm.loop !3183
 
@@ -2311,7 +2329,7 @@ bb.t:                                             ; preds = %bb.s
 
 .preheader.i17.i.i.i:                             ; preds = %.preheader.i17.i.loopexit.i.i, %bb.t
   %.0.lcssa.i18.i.i.i = phi i32 [ 0, %bb.t ], [ %i.dp, %.preheader.i17.i.loopexit.i.i ] ; 2 uses
-  %i.dq = icmp samesign ult i32 %.0.lcssa.i18.i.i.i, %i.cz
+  %i.dq = icmp ult i32 %.0.lcssa.i18.i.i.i, %i.cz
   br i1 %i.dq, label %.lr.ph18.preheader.i19.i.i.i, label %_ZNK12hb_ot_font_t17direction_cache_t22acquire_varStore_cacheERKN2OT18ItemVariationStoreE.exit
 
 .lr.ph18.preheader.i19.i.i.i:                     ; preds = %.preheader.i17.i.i.i
@@ -2641,7 +2659,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 .preheader.i17.i.i.i149:                          ; preds = %.preheader.i17.i.loopexit.i.i159, %bb.ap
   %.0.lcssa.i18.i.i.i150 = phi i32 [ 0, %bb.ap ], [ %i.ie, %.preheader.i17.i.loopexit.i.i159 ] ; 2 uses
-  %i.if = icmp samesign ult i32 %.0.lcssa.i18.i.i.i150, %.sroa.speculated.i.i
+  %i.if = icmp ult i32 %.0.lcssa.i18.i.i.i150, %.sroa.speculated.i.i
   br i1 %i.if, label %.lr.ph18.preheader.i19.i.i.i151, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit
 
 .lr.ph18.preheader.i19.i.i.i151:                  ; preds = %.preheader.i17.i.i.i149
@@ -2668,7 +2686,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.ik, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit, label %.lr.ph18.i21.i.i.i152
 
 .lr.ph.i25.i.i.i156:                              ; preds = %bb.ap, %.lr.ph.i25.i.i.i156
-  %indvars.iv.i.i157 = phi i64 [ %indvars.iv.next.i.i158, %.lr.ph.i25.i.i.i156 ], [ 0, %bb.ap ] ; 2 uses
+  %indvars.iv.i.i157 = phi i64 [ %indvars.iv.next.i.i158, %.lr.ph.i25.i.i.i156 ], [ 0, %bb.ap ] ; 3 uses
   %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.ic, i64 %indvars.iv.i.i157 ; 4 uses
   store atomic i32 -2147483648, ptr %i.il monotonic, align 4
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 4
@@ -2677,8 +2695,8 @@ bb.ap:                                            ; preds = %bb.ao
   store atomic i32 -2147483648, ptr %i.in monotonic, align 4
   %i.io = getelementptr inbounds nuw i8, ptr %i.il, i64 12
   store atomic i32 -2147483648, ptr %i.io monotonic, align 4
-  %indvars.iv.next.i.i158 = add nuw nsw i64 %indvars.iv.i.i157, 4 ; 3 uses
-  %10 = or disjoint i64 %indvars.iv.next.i.i158, 3
+  %indvars.iv.next.i.i158 = add nuw nsw i64 %indvars.iv.i.i157, 4 ; 2 uses
+  %10 = add nuw nsw i64 %indvars.iv.i.i157, 7
   %i.ip = icmp samesign ult i64 %10, %i.hy
   br i1 %i.ip, label %.lr.ph.i25.i.i.i156, label %.preheader.i17.i.loopexit.i.i159, !llvm.loop !5
 
@@ -3081,7 +3099,7 @@ bb.t:                                             ; preds = %bb.s
 
 .preheader.i17.i.i.i:                             ; preds = %.preheader.i17.i.loopexit.i.i, %bb.t
   %.0.lcssa.i18.i.i.i = phi i32 [ 0, %bb.t ], [ %i.dh, %.preheader.i17.i.loopexit.i.i ] ; 2 uses
-  %i.di = icmp samesign ult i32 %.0.lcssa.i18.i.i.i, %i.cr
+  %i.di = icmp ult i32 %.0.lcssa.i18.i.i.i, %i.cr
   br i1 %i.di, label %.lr.ph18.preheader.i19.i.i.i, label %_ZNK12hb_ot_font_t17direction_cache_t22acquire_varStore_cacheERKN2OT18ItemVariationStoreE.exit
 
 .lr.ph18.preheader.i19.i.i.i:                     ; preds = %.preheader.i17.i.i.i
@@ -3412,7 +3430,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 .preheader.i17.i.i.i145:                          ; preds = %.preheader.i17.i.loopexit.i.i155, %bb.ap
   %.0.lcssa.i18.i.i.i146 = phi i32 [ 0, %bb.ap ], [ %i.hv, %.preheader.i17.i.loopexit.i.i155 ] ; 2 uses
-  %i.hw = icmp samesign ult i32 %.0.lcssa.i18.i.i.i146, %.sroa.speculated.i.i
+  %i.hw = icmp ult i32 %.0.lcssa.i18.i.i.i146, %.sroa.speculated.i.i
   br i1 %i.hw, label %.lr.ph18.preheader.i19.i.i.i147, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit
 
 .lr.ph18.preheader.i19.i.i.i147:                  ; preds = %.preheader.i17.i.i.i145
@@ -3439,7 +3457,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.ib, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit, label %.lr.ph18.i21.i.i.i148
 
 .lr.ph.i25.i.i.i152:                              ; preds = %bb.ap, %.lr.ph.i25.i.i.i152
-  %indvars.iv.i.i153 = phi i64 [ %indvars.iv.next.i.i154, %.lr.ph.i25.i.i.i152 ], [ 0, %bb.ap ] ; 2 uses
+  %indvars.iv.i.i153 = phi i64 [ %indvars.iv.next.i.i154, %.lr.ph.i25.i.i.i152 ], [ 0, %bb.ap ] ; 3 uses
   %i.ic = getelementptr inbounds nuw [4 x i8], ptr %i.ht, i64 %indvars.iv.i.i153 ; 4 uses
   store atomic i32 -2147483648, ptr %i.ic monotonic, align 4
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 4
@@ -3448,8 +3466,8 @@ bb.ap:                                            ; preds = %bb.ao
   store atomic i32 -2147483648, ptr %i.ie monotonic, align 4
   %i.if = getelementptr inbounds nuw i8, ptr %i.ic, i64 12
   store atomic i32 -2147483648, ptr %i.if monotonic, align 4
-  %indvars.iv.next.i.i154 = add nuw nsw i64 %indvars.iv.i.i153, 4 ; 3 uses
-  %11 = or disjoint i64 %indvars.iv.next.i.i154, 3
+  %indvars.iv.next.i.i154 = add nuw nsw i64 %indvars.iv.i.i153, 4 ; 2 uses
+  %11 = add nuw nsw i64 %indvars.iv.i.i153, 7
   %i.ig = icmp samesign ult i64 %11, %i.hp
   br i1 %i.ig, label %.lr.ph.i25.i.i.i152, label %.preheader.i17.i.loopexit.i.i155, !llvm.loop !5
 
@@ -3852,7 +3870,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 .preheader.i17.i.i.i:                             ; preds = %.preheader.i17.i.loopexit.i.i, %bb.ah
   %.0.lcssa.i18.i.i.i = phi i32 [ 0, %bb.ah ], [ %i.ge, %.preheader.i17.i.loopexit.i.i ] ; 2 uses
-  %i.gf = icmp samesign ult i32 %.0.lcssa.i18.i.i.i, %i.fo
+  %i.gf = icmp ult i32 %.0.lcssa.i18.i.i.i, %i.fo
   br i1 %i.gf, label %.lr.ph18.preheader.i19.i.i.i, label %_ZNK12hb_ot_font_t14origin_cache_t22acquire_varStore_cacheERKN2OT18ItemVariationStoreE.exit
 
 .lr.ph18.preheader.i19.i.i.i:                     ; preds = %.preheader.i17.i.i.i
@@ -4255,7 +4273,7 @@ bb.bs:                                            ; preds = %bb.br
 
 .preheader.i17.i.i.i249:                          ; preds = %.preheader.i17.i.loopexit.i.i259, %bb.bs
   %.0.lcssa.i18.i.i.i250 = phi i32 [ 0, %bb.bs ], [ %i.nm, %.preheader.i17.i.loopexit.i.i259 ] ; 2 uses
-  %i.nn = icmp samesign ult i32 %.0.lcssa.i18.i.i.i250, %.sroa.speculated.i.i
+  %i.nn = icmp ult i32 %.0.lcssa.i18.i.i.i250, %.sroa.speculated.i.i
   br i1 %i.nn, label %.lr.ph18.preheader.i19.i.i.i251, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit
 
 .lr.ph18.preheader.i19.i.i.i251:                  ; preds = %.preheader.i17.i.i.i249
@@ -4282,7 +4300,7 @@ bb.bs:                                            ; preds = %bb.br
   br i1 %i.ns, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit, label %.lr.ph18.i21.i.i.i252
 
 .lr.ph.i25.i.i.i256:                              ; preds = %bb.bs, %.lr.ph.i25.i.i.i256
-  %indvars.iv.i.i257 = phi i64 [ %indvars.iv.next.i.i258, %.lr.ph.i25.i.i.i256 ], [ 0, %bb.bs ] ; 2 uses
+  %indvars.iv.i.i257 = phi i64 [ %indvars.iv.next.i.i258, %.lr.ph.i25.i.i.i256 ], [ 0, %bb.bs ] ; 3 uses
   %i.nt = getelementptr inbounds nuw [4 x i8], ptr %i.nk, i64 %indvars.iv.i.i257 ; 4 uses
   store atomic i32 -2147483648, ptr %i.nt monotonic, align 4
   %i.nu = getelementptr inbounds nuw i8, ptr %i.nt, i64 4
@@ -4291,8 +4309,8 @@ bb.bs:                                            ; preds = %bb.br
   store atomic i32 -2147483648, ptr %i.nv monotonic, align 4
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nt, i64 12
   store atomic i32 -2147483648, ptr %i.nw monotonic, align 4
-  %indvars.iv.next.i.i258 = add nuw nsw i64 %indvars.iv.i.i257, 4 ; 3 uses
-  %14 = or disjoint i64 %indvars.iv.next.i.i258, 3
+  %indvars.iv.next.i.i258 = add nuw nsw i64 %indvars.iv.i.i257, 4 ; 2 uses
+  %14 = add nuw nsw i64 %indvars.iv.i.i257, 7
   %i.nx = icmp samesign ult i64 %14, %i.ng
   br i1 %i.nx, label %.lr.ph.i25.i.i.i256, label %.preheader.i17.i.loopexit.i.i259, !llvm.loop !5
 
@@ -4695,7 +4713,7 @@ bb.i:                                             ; preds = %bb.h
 
 .preheader.i17.i.i.i:                             ; preds = %.preheader.i17.i.loopexit.i.i, %bb.i
   %.0.lcssa.i18.i.i.i = phi i32 [ 0, %bb.i ], [ %i.ag, %.preheader.i17.i.loopexit.i.i ] ; 2 uses
-  %i.ah = icmp samesign ult i32 %.0.lcssa.i18.i.i.i, %.sroa.speculated.i.i
+  %i.ah = icmp ult i32 %.0.lcssa.i18.i.i.i, %.sroa.speculated.i.i
   br i1 %i.ah, label %.lr.ph18.preheader.i19.i.i.i, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit
 
 .lr.ph18.preheader.i19.i.i.i:                     ; preds = %.preheader.i17.i.i.i
@@ -4722,7 +4740,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.am, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit, label %.lr.ph18.i21.i.i.i
 
 .lr.ph.i25.i.i.i:                                 ; preds = %bb.i, %.lr.ph.i25.i.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i25.i.i.i ], [ 0, %bb.i ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i25.i.i.i ], [ 0, %bb.i ] ; 3 uses
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %indvars.iv.i.i ; 4 uses
   store atomic i32 -2147483648, ptr %i.an monotonic, align 4
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 4
@@ -4731,8 +4749,8 @@ bb.i:                                             ; preds = %bb.h
   store atomic i32 -2147483648, ptr %i.ap monotonic, align 4
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 12
   store atomic i32 -2147483648, ptr %i.aq monotonic, align 4
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 4 ; 3 uses
-  %8 = or disjoint i64 %indvars.iv.next.i.i, 3
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
+  %8 = add nuw nsw i64 %indvars.iv.i.i, 7
   %i.ar = icmp samesign ult i64 %8, %i.aa
   br i1 %i.ar, label %.lr.ph.i25.i.i.i, label %.preheader.i17.i.loopexit.i.i, !llvm.loop !5
 

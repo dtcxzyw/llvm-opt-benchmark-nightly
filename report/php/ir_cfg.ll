@@ -204,12 +204,12 @@ _ir_add_successors.exit:                          ; preds = %ir_worklist_push.ex
   %i.js = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
   %i.jt = load i32, ptr %i.js, align 4, !tbaa !47
   %i.ju = lshr i32 %i.jt, 26
-  %.lobit = and i32 %i.ju, 1
-  %i.jv = xor i32 %.lobit, 1                      ; 2 uses
+  %.lobit = and i32 %i.ju, 1                      ; 2 uses
+  %i.jv = xor i32 %.lobit, 1
   br i1 %.not548, label %._crit_edge521.thread, label %.lr.ph520
 
 .lr.ph520:                                        ; preds = %.loopexit431
-  %1 = or disjoint i32 %i.jv, 4
+  %1 = xor i32 %.lobit, 5
   %i.jw = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
   br label %bb.ab
 

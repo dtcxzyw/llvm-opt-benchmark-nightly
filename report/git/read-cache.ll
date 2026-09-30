@@ -205,11 +205,10 @@ bb.a:
   %i.f = or disjoint i32 %i.e, 3
   %.not108 = icmp eq i32 %i.d, 0
   %.lobit = lshr exact i32 %i.d, 1
-  %i.g = and i32 %3, 64                           ; 2 uses
-  %.not109 = icmp eq i32 %i.g, 0
-  %5 = lshr exact i32 %i.g, 4
-  %6 = or disjoint i32 %.lobit, %5
-  %spec.select = xor i32 %6, 1
+  %i.g = and i32 %3, 64
+  %.not109 = icmp eq i32 %i.g, 0                  ; 2 uses
+  %spec.select.v = select i1 %.not109, i32 1, i32 5
+  %spec.select = xor i32 %spec.select.v, %.lobit
   %i.h = and i32 %i.b, 61440                      ; 6 uses
   %trunc = trunc nuw i32 %i.h to i16              ; 3 uses
   switch i16 %trunc, label %bb.b [

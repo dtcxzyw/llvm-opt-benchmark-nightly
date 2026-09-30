@@ -202,35 +202,46 @@ bb.a:
   %i.g = getelementptr i8, ptr %i.f, i64 52
   %i.h = load i16, ptr %i.g, align 2
   %i.i = shl i16 %i.h, 2
-  %i.j = and i16 %i.i, 16
-  %spec.select = xor i16 %i.j, 16                 ; 2 uses
+  %i.j = and i16 %i.i, 16                         ; 2 uses
   %i.k = getelementptr i8, ptr %1, i64 4
   %i.l = load i16, ptr %i.k, align 4              ; 2 uses
   %i.m = getelementptr i8, ptr %2, i64 32
-  %7 = load i16, ptr %i.m, align 8                ; 2 uses
-  %.not = icmp eq i16 %i.l, %7
+  %i.n = load i16, ptr %i.m, align 8              ; 2 uses
+  %.not29.a = icmp eq i16 %i.l, %i.n
+  br i1 %.not29.a, label %7, label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.a
+  %.phi.trans.insert = getelementptr i8, ptr %1, i64 14
+  %.pre = load i16, ptr %.phi.trans.insert, align 2
+  %.phi.trans.insert33 = getelementptr i8, ptr %2, i64 46
+  %.pre34 = load i16, ptr %.phi.trans.insert33, align 2
+  br label %._crit_edge.a
+
+7:                                                ; preds = %bb.a
+  %spec.select = xor i16 %i.j, 16
   %8 = getelementptr i8, ptr %1, i64 14
   %9 = load i16, ptr %8, align 2                  ; 2 uses
   %10 = getelementptr i8, ptr %2, i64 46
-  %i.n = load i16, ptr %10, align 2               ; 2 uses
-  %.not29.a = icmp eq i16 %9, %i.n
-  %or.cond = select i1 %.not, i1 %.not29.a, i1 false
-  br i1 %or.cond, label %bb.f, label %._crit_edge.a
+  %11 = load i16, ptr %10, align 2                ; 2 uses
+  %.not29 = icmp eq i16 %9, %11
+  br i1 %.not29, label %bb.f, label %._crit_edge.a
 
-._crit_edge.a:                                    ; preds = %bb.a
-  %11 = or disjoint i16 %spec.select, 8
+._crit_edge.a:                                    ; preds = %._crit_edge, %7
+  %12 = phi i16 [ %.pre34, %._crit_edge ], [ %11, %7 ]
+  %13 = phi i16 [ %.pre, %._crit_edge ], [ %9, %7 ]
+  %14 = xor i16 %i.j, 24
   %i.o = zext i16 %i.l to i32
   %i.p = shl nuw i32 %i.o, 16
   %i.q = add i32 %i.p, -65536
-  %i.r = zext i16 %7 to i32
+  %i.r = zext i16 %i.n to i32
   %i.s = add nsw i32 %i.r, -1
   %i.t = sdiv i32 %i.q, %i.s
   %i.u = lshr i32 %i.t, 2
   %i.v = trunc i32 %i.u to i16
-  %i.w = zext i16 %9 to i32
+  %i.w = zext i16 %13 to i32
   %i.x = shl nuw i32 %i.w, 16
   %i.y = add i32 %i.x, -65536
-  %i.z = zext i16 %i.n to i32
+  %i.z = zext i16 %12 to i32
   %i.aa = add nsw i32 %i.z, -1
   %i.ab = sdiv i32 %i.y, %i.aa
   %i.ac = lshr i32 %i.ab, 2
@@ -311,9 +322,9 @@ ivch_write.exit30:                                ; preds = %ivch_write.exit, %b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.a, %ivch_write.exit30
-  %.1 = phi i16 [ %11, %ivch_write.exit30 ], [ %spec.select, %bb.a ]
-  %.0 = phi i16 [ 13568, %ivch_write.exit30 ], [ 13312, %bb.a ]
+bb.f:                                             ; preds = %7, %ivch_write.exit30
+  %.1 = phi i16 [ %14, %ivch_write.exit30 ], [ %spec.select, %7 ]
+  %.0 = phi i16 [ 13568, %ivch_write.exit30 ], [ 13312, %7 ]
   %i.bk = load ptr, ptr %i.e, align 8
   %i.bl = getelementptr i8, ptr %0, i64 40        ; 2 uses
   %i.bm = load ptr, ptr %i.bl, align 8            ; 2 uses

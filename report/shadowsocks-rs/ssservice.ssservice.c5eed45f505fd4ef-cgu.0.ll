@@ -205,9 +205,9 @@ _RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsf
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.s, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsf3Ta7LF998c_4core6result6ResultNtNtNtCs2Z77Vc7pSLS_13hickory_proto2op12dns_response11DnsResponseNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorEE13poll_unparkedCsgZAIVb0XKpv_9ssservice.exit.thread
-  %.sroa.05.0.i.i = phi i64 [ %i.aq, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsf3Ta7LF998c_4core6result6ResultNtNtNtCs2Z77Vc7pSLS_13hickory_proto2op12dns_response11DnsResponseNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorEE13poll_unparkedCsgZAIVb0XKpv_9ssservice.exit.thread ], [ %.sroa.01.0.i.i.i1, %bb.s ] ; 4 uses
+  %.sroa.05.0.i.i = phi i64 [ %i.aq, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsf3Ta7LF998c_4core6result6ResultNtNtNtCs2Z77Vc7pSLS_13hickory_proto2op12dns_response11DnsResponseNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorEE13poll_unparkedCsgZAIVb0XKpv_9ssservice.exit.thread ], [ %.sroa.01.0.i.i.i1, %bb.s ] ; 3 uses
   %.not.i.i = icmp sgt i64 %.sroa.05.0.i.i, -1
-  %i.ar = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 2 uses
+  %i.ar = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i, label %bb.u, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -219,9 +219,8 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 bb.s:                                             ; preds = %bb.q
-  %i.as = add nsw i64 %.sroa.05.0.i.i, 1
-  %3 = or i64 %i.as, -9223372036854775808
-  %i.at = cmpxchg ptr %i.ap, i64 %.sroa.05.0.i.i, i64 %3 seq_cst seq_cst, align 8, !noalias !95808 ; 2 uses
+  %i.as = add nuw nsw i64 %i.ar, -9223372036854775807
+  %i.at = cmpxchg ptr %i.ap, i64 %.sroa.05.0.i.i, i64 %i.as seq_cst seq_cst, align 8, !noalias !95808 ; 2 uses
   %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.at, 1
   %.sroa.01.0.i.i.i1 = extractvalue { i64, i1 } %i.at, 0
   br i1 %.sroa.18.0.in.i.i.i, label %bb.t, label %bb.p
@@ -624,9 +623,9 @@ _RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.r, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE13poll_unparkedCsgZAIVb0XKpv_9ssservice.exit.thread.i.i
-  %.sroa.05.0.i.i.i.i = phi i64 [ %i.ar, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE13poll_unparkedCsgZAIVb0XKpv_9ssservice.exit.thread.i.i ], [ %.sroa.01.0.i.i.i1.i.i, %bb.r ] ; 4 uses
+  %.sroa.05.0.i.i.i.i = phi i64 [ %i.ar, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE13poll_unparkedCsgZAIVb0XKpv_9ssservice.exit.thread.i.i ], [ %.sroa.01.0.i.i.i1.i.i, %bb.r ] ; 3 uses
   %.not.i.i.i.i = icmp sgt i64 %.sroa.05.0.i.i.i.i, -1
-  %i.as = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 2 uses
+  %i.as = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i.i.i, label %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE8try_sendCsgZAIVb0XKpv_9ssservice.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -638,9 +637,8 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 bb.r:                                             ; preds = %bb.p
-  %i.at = add nsw i64 %.sroa.05.0.i.i.i.i, 1
-  %3 = or i64 %i.at, -9223372036854775808
-  %i.au = cmpxchg ptr %i.aq, i64 %.sroa.05.0.i.i.i.i, i64 %3 seq_cst seq_cst, align 8, !noalias !97414 ; 2 uses
+  %i.at = add nuw nsw i64 %i.as, -9223372036854775807
+  %i.au = cmpxchg ptr %i.aq, i64 %.sroa.05.0.i.i.i.i, i64 %i.at seq_cst seq_cst, align 8, !noalias !97414 ; 2 uses
   %.sroa.18.0.in.i.i.i.i.i = extractvalue { i64, i1 } %i.au, 1
   %.sroa.01.0.i.i.i1.i.i = extractvalue { i64, i1 } %i.au, 0
   br i1 %.sroa.18.0.in.i.i.i.i.i, label %bb.s, label %bb.o

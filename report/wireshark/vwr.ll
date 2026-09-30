@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
     i8 0, label %bb.ar
     i8 1, label %bb.at
     i8 2, label %bb.au
-    i8 3, label %8
+    i8 3, label %bb.av
   ]
 
 bb.ar:                                            ; preds = %bb.aq
@@ -275,35 +275,24 @@ bb.au:                                            ; preds = %bb.aq
   %i.rv = fdiv nnan float %i.ru, %..i341.i
   br label %get_legacy_rate.exit.i
 
-8:                                                ; preds = %bb.aq
-  %9 = lshr i8 %i.mn, 4
-  %10 = and i8 %i.ml, 15                          ; 9 uses
+bb.av:                                            ; preds = %bb.aq
+  %8 = lshr i8 %i.mn, 4                           ; 2 uses
+  %9 = and i8 %i.ml, 15                           ; 9 uses
   %.tr.i = zext i8 %i.ml to i16
-  %11 = shl nuw nsw i16 %.tr.i, 2
-  %12 = and i16 %11, 256
-  %13 = xor i16 %12, 384                          ; 3 uses
-  switch i8 %9, label %bb.av [
-    i8 3, label %14
-    i8 4, label %16
-  ]
-
-14:                                               ; preds = %8
-  %15 = or disjoint i16 %13, 512
-  br label %bb.av
-
-16:                                               ; preds = %8
-  %17 = or disjoint i16 %13, 1024
-  br label %bb.av
-
-bb.av:                                            ; preds = %16, %14, %8
-  %.0288.i = phi i16 [ %15, %14 ], [ %17, %16 ], [ %13, %8 ] ; 9 uses
+  %10 = shl nuw nsw i16 %.tr.i, 2
+  %11 = and i16 %10, 256
+  %12 = icmp eq i8 %8, 3
+  %13 = icmp eq i8 %8, 4
+  %spec.select.v.i = select i1 %13, i16 1408, i16 384
+  %.0288.v.i = select i1 %12, i16 896, i16 %spec.select.v.i ; 2 uses
+  %.0288.i = xor i16 %.0288.v.i, %11              ; 8 uses
   %i.rw = lshr i8 %i.ml, 4
   %narrow.i = add nuw nsw i8 %i.rw, 1             ; 9 uses
   %i.rx = zext nneg i16 %.0288.i to i32           ; 2 uses
   %i.ry = and i32 %i.rx, 256
   %.not.i347.i = icmp eq i32 %i.ry, 0
   %..i348.i = select i1 %.not.i347.i, float 4.000000e+00, float 3.600000e+00 ; 5 uses
-  %i.rz = icmp samesign ugt i8 %10, 9
+  %i.rz = icmp samesign ugt i8 %9, 9
   br i1 %i.rz, label %get_legacy_rate.exit.i, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
@@ -312,7 +301,7 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %.not23.i.i, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.sb = zext nneg i8 %10 to i64
+  %i.sb = zext nneg i8 %9 to i64
   %i.sc = getelementptr [4 x i8], ptr @get_vht_rate.canonical_ndbps_40_vht, i64 %i.sb
   %i.sd = load i32, ptr %i.sc, align 4
   %i.se = zext nneg i8 %narrow.i to i32
@@ -322,11 +311,11 @@ bb.ax:                                            ; preds = %bb.aw
   br label %get_legacy_rate.exit.i
 
 bb.ay:                                            ; preds = %bb.aw
-  %.not24.i.i = icmp samesign ult i16 %.0288.i, 1024
+  %.not24.i.i = icmp samesign ult i16 %.0288.v.i, 1024
   br i1 %.not24.i.i, label %bb.ba, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.si = zext nneg i8 %10 to i64
+  %i.si = zext nneg i8 %9 to i64
   %i.sj = getelementptr [4 x i8], ptr @get_vht_rate.canonical_ndbps_80_vht, i64 %i.si
   %i.sk = load i32, ptr %i.sj, align 4
   %i.sl = zext nneg i8 %narrow.i to i32
@@ -336,7 +325,7 @@ bb.az:                                            ; preds = %bb.ay
   br label %get_legacy_rate.exit.i
 
 bb.ba:                                            ; preds = %bb.ay
-  %i.sp = icmp eq i8 %10, 9
+  %i.sp = icmp eq i8 %9, 9
   br i1 %i.sp, label %bb.bb, label %bb.be
 
 bb.bb:                                            ; preds = %bb.ba
@@ -354,7 +343,7 @@ bb.bd:                                            ; preds = %bb.bb
   br label %get_legacy_rate.exit.i
 
 bb.be:                                            ; preds = %bb.ba
-  %i.ss = zext nneg i8 %10 to i64
+  %i.ss = zext nneg i8 %9 to i64
   %i.st = getelementptr [4 x i8], ptr @get_vht_rate.canonical_ndbps_20_vht, i64 %i.ss
   %i.su = load i32, ptr %i.st, align 4
   %i.sv = zext nneg i8 %narrow.i to i32
@@ -367,7 +356,7 @@ default.unreachable:                              ; preds = %bb.aq
   unreachable
 
 get_legacy_rate.exit.i:                           ; preds = %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.az, %bb.ax, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar
-  %.0298.i = phi i8 [ %i.qh, %bb.as ], [ %i.rf, %bb.au ], [ %i.qn, %bb.at ], [ %i.qh, %bb.ar ], [ %10, %bb.av ], [ %10, %bb.ax ], [ %10, %bb.az ], [ 9, %bb.bb ], [ 9, %bb.bc ], [ 9, %bb.bd ], [ %10, %bb.be ]
+  %.0298.i = phi i8 [ %i.qh, %bb.as ], [ %i.rf, %bb.au ], [ %i.qn, %bb.at ], [ %i.qh, %bb.ar ], [ %9, %bb.av ], [ %9, %bb.ax ], [ %9, %bb.az ], [ 9, %bb.bb ], [ 9, %bb.bc ], [ 9, %bb.bd ], [ %9, %bb.be ]
   %.0297.i = phi i8 [ 0, %bb.as ], [ %i.ro, %bb.au ], [ %i.qx, %bb.at ], [ 0, %bb.ar ], [ %narrow.i, %bb.av ], [ %narrow.i, %bb.ax ], [ %narrow.i, %bb.az ], [ %narrow.i, %bb.bb ], [ 3, %bb.bc ], [ 6, %bb.bd ], [ %narrow.i, %bb.be ]
   %.1293.i = phi i16 [ %..i, %bb.as ], [ 64, %bb.au ], [ 64, %bb.at ], [ %..i, %bb.ar ], [ 64, %bb.av ], [ 64, %bb.ax ], [ 64, %bb.az ], [ 64, %bb.bb ], [ 64, %bb.bc ], [ 64, %bb.bd ], [ 64, %bb.be ]
   %.1289.i = phi i16 [ 0, %bb.as ], [ %i.rk, %bb.au ], [ %i.qt, %bb.at ], [ 0, %bb.ar ], [ %.0288.i, %bb.av ], [ %.0288.i, %bb.ax ], [ %.0288.i, %bb.az ], [ %.0288.i, %bb.bb ], [ %.0288.i, %bb.bc ], [ %.0288.i, %bb.bd ], [ %.0288.i, %bb.be ]

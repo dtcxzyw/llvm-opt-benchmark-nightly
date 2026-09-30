@@ -205,14 +205,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.lcssa22 = phi i64 [ %i.c, %.lr.ph ], [ %i.gb, %bb.b ]
   %storemerge8.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.015.1.i.i, %bb.b ]
   %i.l = udiv exact i64 %.lcssa22, 24             ; 3 uses
-  %i.m = add nsw i64 %i.l, -2                     ; 2 uses
+  %i.m = add nsw i64 %i.l, -2
   %i.n = lshr i64 %i.m, 1                         ; 3 uses
-  %i.o = add nsw i64 %i.l, -1
+  %i.o = add nsw i64 %i.l, -1                     ; 3 uses
   %i.p = lshr i64 %i.o, 1                         ; 2 uses
   %i.q = and i64 %i.l, 1
   %i.r = icmp eq i64 %i.q, 0
-  %10 = or disjoint i64 %i.m, 1                   ; 2 uses
-  %i.s = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %10
+  %i.s = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.o
   %i.t = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.n
   br label %bb.c
 
@@ -271,7 +270,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.o, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.au = icmp sgt i64 %.1.i.i.i.i, %.08.i.i.i
   br i1 %i.au, label %.lr.ph.i.i.i.i.i, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4mold6ElfRelINS2_6X86_64EEESt4spanIS5_Lm18446744073709551615EEEElS5_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSC_4lessEZNS2_L14encode_androidIS4_EESt6vectorIhSaIhEES7_INS3_IT_EELm18446744073709551615EEEUlRKS5_E0_EEDaRSK_RT0_EUlOSK_OSR_E_EEEvSK_SR_SR_T1_T2_.exit.i.i.i
 
@@ -674,12 +673,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 3                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
@@ -689,7 +688,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.l
   br label %.split

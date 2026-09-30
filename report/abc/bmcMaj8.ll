@@ -205,19 +205,19 @@ bb.dy:                                            ; preds = %Exa8_KissatAddClaus
   br i1 %.not176.i, label %.preheader261.i, label %bb.ea
 
 .preheader261.i:                                  ; preds = %.loopexit263.i
-  %i.acs = shl i32 %i.xk, 1                       ; 4 uses
-  %i.act = add i32 %i.acs, 2                      ; 3 uses
-  %i.acu = add i32 %i.acs, 4                      ; 2 uses
-  %i.acv = add i32 %i.acs, 6                      ; 3 uses
+  %i.acs = shl i32 %i.xk, 1                       ; 6 uses
+  %i.act = add i32 %i.acs, 2
+  %i.acu = add i32 %i.acs, 4
+  %i.acv = add i32 %i.acs, 6                      ; 2 uses
   %i.acw = load ptr, ptr %i.vo, align 8, !tbaa !183
   %i.acx = add nsw i32 %i.xk, 2                   ; 2 uses
   call void @kissat_add(ptr noundef %i.acw, i32 noundef %i.acx) #23
   %i.acy = load ptr, ptr %i.vo, align 8, !tbaa !183
-  %i.acz = ashr exact i32 %i.acu, 1               ; 2 uses
+  %i.acz = ashr exact i32 %i.acu, 1
   %i.ada = add nsw i32 %i.acz, 1                  ; 2 uses
   call void @kissat_add(ptr noundef %i.acy, i32 noundef %i.ada) #23
   %i.adb = load ptr, ptr %i.vo, align 8, !tbaa !183
-  %i.adc = ashr exact i32 %i.acv, 1               ; 2 uses
+  %i.adc = ashr exact i32 %i.acv, 1
   %i.add = add nsw i32 %i.adc, 1                  ; 2 uses
   call void @kissat_add(ptr noundef %i.adb, i32 noundef %i.add) #23
   %i.ade = load ptr, ptr %i.vo, align 8, !tbaa !183
@@ -228,15 +228,17 @@ bb.dy:                                            ; preds = %Exa8_KissatAddClaus
   br i1 %.not.i217.not.i, label %Exa8_KissatAddClause.exit218.1.i, label %Exa8_ManAddCnfStart.exit.thread
 
 Exa8_KissatAddClause.exit218.1.i:                 ; preds = %.preheader261.i
-  %4 = or disjoint i32 %i.act, 1
+  %4 = add i32 %i.acs, 3                          ; 2 uses
+  %5 = add i32 %i.acs, 7                          ; 2 uses
   %i.adh = load ptr, ptr %i.vo, align 8, !tbaa !183
-  %i.adi = ashr exact i32 %i.act, 1
+  %i.adi = ashr i32 %4, 1
   %i.adj = xor i32 %i.adi, -1                     ; 2 uses
   call void @kissat_add(ptr noundef %i.adh, i32 noundef %i.adj) #23
   %i.adk = load ptr, ptr %i.vo, align 8, !tbaa !183
   call void @kissat_add(ptr noundef %i.adk, i32 noundef %i.ada) #23
   %i.adl = load ptr, ptr %i.vo, align 8, !tbaa !183
-  %i.adm = xor i32 %i.adc, -1                     ; 2 uses
+  %6 = ashr i32 %5, 1
+  %i.adm = xor i32 %6, -1                         ; 2 uses
   call void @kissat_add(ptr noundef %i.adl, i32 noundef %i.adm) #23
   %i.adn = load ptr, ptr %i.vo, align 8, !tbaa !183
   call void @kissat_add(ptr noundef %i.adn, i32 noundef 0) #23
@@ -246,15 +248,15 @@ Exa8_KissatAddClause.exit218.1.i:                 ; preds = %.preheader261.i
   br i1 %.not.i217.not.1.i, label %Exa8_KissatAddClause.exit218.2.i, label %Exa8_ManAddCnfStart.exit.thread
 
 Exa8_KissatAddClause.exit218.2.i:                 ; preds = %Exa8_KissatAddClause.exit218.1.i
-  %5 = or disjoint i32 %i.acv, 1
   store i32 %i.act, ptr %i.k, align 16, !tbaa !22
-  %6 = or disjoint i32 %i.acu, 1
-  store i32 %6, ptr %i.xa, align 4, !tbaa !22
+  %7 = add i32 %i.acs, 5                          ; 3 uses
+  store i32 %7, ptr %i.xa, align 4, !tbaa !22
   store i32 %5, ptr %i.xb, align 8, !tbaa !22
   %i.adq = load ptr, ptr %i.vo, align 8, !tbaa !183
   call void @kissat_add(ptr noundef %i.adq, i32 noundef %i.acx) #23
   %i.adr = load ptr, ptr %i.vo, align 8, !tbaa !183
-  %i.ads = xor i32 %i.acz, -1
+  %8 = ashr i32 %7, 1
+  %i.ads = xor i32 %8, -1                         ; 2 uses
   call void @kissat_add(ptr noundef %i.adr, i32 noundef %i.ads) #23
   %i.adt = load ptr, ptr %i.vo, align 8, !tbaa !183
   call void @kissat_add(ptr noundef %i.adt, i32 noundef %i.adm) #23
@@ -270,15 +272,12 @@ bb.dz:                                            ; preds = %Exa8_KissatAddClaus
 
 Exa8_KissatAddClause.exit225.i:                   ; preds = %bb.dz
   store i32 %4, ptr %i.k, align 16, !tbaa !22
-  %7 = add i32 %i.acs, 5                          ; 2 uses
   store i32 %7, ptr %i.xa, align 4, !tbaa !22
   store i32 %i.acv, ptr %i.xb, align 8, !tbaa !22
   %i.adx = load ptr, ptr %i.vo, align 8, !tbaa !183
   call void @kissat_add(ptr noundef %i.adx, i32 noundef %i.adj) #23
   %i.ady = load ptr, ptr %i.vo, align 8, !tbaa !183
-  %8 = ashr i32 %7, 1
-  %9 = xor i32 %8, -1
-  call void @kissat_add(ptr noundef %i.ady, i32 noundef %9) #23
+  call void @kissat_add(ptr noundef %i.ady, i32 noundef %i.ads) #23
   %i.adz = load ptr, ptr %i.vo, align 8, !tbaa !183
   call void @kissat_add(ptr noundef %i.adz, i32 noundef %i.add) #23
   %i.aea = load ptr, ptr %i.vo, align 8, !tbaa !183

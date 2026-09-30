@@ -202,11 +202,11 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.
   br i1 %or.cond145.i, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.hk = and i32 %i.gk, -1878982657
+  %i.hk = and i32 %i.gk, 65535
   %i.hl = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.fx, i1 true)
   %i.hm = shl nuw nsw i32 %i.hl, 16
   %i.hn = or disjoint i32 %i.hk, %i.hm
-  %i.ho = xor i32 %i.hn, 2031616
+  %i.ho = xor i32 %i.hn, -1877016576
   store i32 %i.ho, ptr %i.fb, align 8, !tbaa !58
   %i.hp = lshr i32 %.1121.i, 3
   store i32 %i.hp, ptr %i.fc, align 4, !tbaa !64

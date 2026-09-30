@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.e
 .backedge.i.i.i:                                  ; preds = %.backedge.i.i.i.backedge, %bb.y
   %.sroa.0.032.i.i.i = phi i32 [ 0, %bb.y ], [ %.sroa.0.032.i.i.i.be, %.backedge.i.i.i.backedge ] ; 13 uses
   %.sroa.014.0.i.i.i = phi ptr [ %i.cd, %bb.y ], [ %.sroa.014.0.i.i.i.be, %.backedge.i.i.i.backedge ] ; 8 uses
-  %.sroa.05.0.i.i.i = phi i64 [ %i.cb, %bb.y ], [ %.sroa.05.0.i.i.i.be, %.backedge.i.i.i.backedge ] ; 5 uses
+  %.sroa.05.0.i.i.i = phi i64 [ %i.cb, %bb.y ], [ %.sroa.05.0.i.i.i.be, %.backedge.i.i.i.backedge ] ; 6 uses
   %i.cf = lshr i64 %.sroa.05.0.i.i.i, 1           ; 2 uses
   %i.cg = and i64 %i.cf, 31                       ; 5 uses
   %i.ch = icmp eq i64 %i.cg, 31
@@ -256,9 +256,9 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   %.not.unshifted.i.i.i = xor i64 %i.cs, %.sroa.05.0.i.i.i
-  %.not.i.i.i = icmp ugt i64 %.not.unshifted.i.i.i, 63
-  %2 = zext i1 %.not.i.i.i to i64
-  %spec.select.i.i7.i = or disjoint i64 %i.cp, %2
+  %.not.i.i.i = icmp ult i64 %.not.unshifted.i.i.i, 64
+  %2 = add i64 %.sroa.05.0.i.i.i, 3
+  %spec.select.i.i7.i = select i1 %.not.i.i.i, i64 %i.cp, i64 %2
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ab
@@ -375,11 +375,10 @@ _RNvMNtCsmwebYWU4SQ_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i.i: 
 _RNvMs_NtNtCs40Ppcsylqp4_17crossbeam_channel7flavors4listINtB4_5BlockINtNtCskTBvlRM5ILY_4moka6future13InterruptedOpNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB1Q_16CachedReaderDataEE9wait_nextCs9KQ7US1M400_11lance_table.exit.i.i.i: ; preds = %_RNvMNtCsmwebYWU4SQ_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i.i, %bb.ak
   %.lcssa.i.i.i.i = phi ptr [ %i.dm, %bb.ak ], [ %i.dt, %_RNvMNtCsmwebYWU4SQ_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i.i ] ; 2 uses
   %i.dv = and i64 %.sroa.01.0.i.i1.i, -2
-  %3 = add i64 %i.dv, 2
   %i.dw = load atomic ptr, ptr %.lcssa.i.i.i.i monotonic, align 8, !noalias !37971
-  %4 = icmp ne ptr %i.dw, null
-  %5 = zext i1 %4 to i64
-  %spec.select19.i.i.i = or disjoint i64 %3, %5
+  %3 = icmp eq ptr %i.dw, null
+  %spec.select19.v.i.i.i = select i1 %3, i64 2, i64 3
+  %spec.select19.i.i.i = add i64 %spec.select19.v.i.i.i, %i.dv
   store atomic ptr %.lcssa.i.i.i.i, ptr %i.cc release, align 8, !noalias !37971
   store atomic i64 %spec.select19.i.i.i, ptr %.val26 release, align 8, !noalias !37971
   br label %bb.al
@@ -782,7 +781,7 @@ bb.gi:                                            ; preds = %bb.fo
 .backedge.i.i.i.i182:                             ; preds = %.backedge.i.i.i.i182.backedge, %bb.gi
   %.sroa.0.032.i.i.i.i = phi i32 [ 0, %bb.gi ], [ %.sroa.0.032.i.i.i.i.be, %.backedge.i.i.i.i182.backedge ] ; 13 uses
   %.sroa.014.0.i.i.i.i = phi ptr [ %i.aak, %bb.gi ], [ %.sroa.014.0.i.i.i.i.be, %.backedge.i.i.i.i182.backedge ] ; 8 uses
-  %.sroa.05.0.i.i.i.i = phi i64 [ %i.aai, %bb.gi ], [ %.sroa.05.0.i.i.i.i.be, %.backedge.i.i.i.i182.backedge ] ; 5 uses
+  %.sroa.05.0.i.i.i.i = phi i64 [ %i.aai, %bb.gi ], [ %.sroa.05.0.i.i.i.i.be, %.backedge.i.i.i.i182.backedge ] ; 6 uses
   %i.aam = lshr i64 %.sroa.05.0.i.i.i.i, 1        ; 2 uses
   %i.aan = and i64 %i.aam, 31                     ; 5 uses
   %i.aao = icmp eq i64 %i.aan, 31
@@ -833,9 +832,9 @@ bb.gl:                                            ; preds = %bb.gk
 
 bb.gm:                                            ; preds = %bb.gl
   %.not.unshifted.i.i.i.i = xor i64 %i.aaz, %.sroa.05.0.i.i.i.i
-  %.not.i.i.i.i = icmp ugt i64 %.not.unshifted.i.i.i.i, 63
-  %2 = zext i1 %.not.i.i.i.i to i64
-  %spec.select.i.i11.i.i = or disjoint i64 %i.aaw, %2
+  %.not.i.i.i.i = icmp ult i64 %.not.unshifted.i.i.i.i, 64
+  %2 = add i64 %.sroa.05.0.i.i.i.i, 3
+  %spec.select.i.i11.i.i = select i1 %.not.i.i.i.i, i64 %i.aaw, i64 %2
   br label %bb.go
 
 bb.gn:                                            ; preds = %bb.gl
@@ -952,11 +951,10 @@ _RNvMNtCsmwebYWU4SQ_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i.i.i
 _RNvMs_NtNtCs40Ppcsylqp4_17crossbeam_channel7flavors4listINtB4_5BlockINtNtNtCskTBvlRM5ILY_4moka6common10concurrent6ReadOpNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB1W_16CachedReaderDataEE9wait_nextCs9KQ7US1M400_11lance_table.exit.i.i.i.i: ; preds = %_RNvMNtCsmwebYWU4SQ_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i.i.i, %bb.gu
   %.lcssa.i.i.i.i.i = phi ptr [ %i.abt, %bb.gu ], [ %i.aca, %_RNvMNtCsmwebYWU4SQ_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i.i.i ] ; 2 uses
   %i.acc = and i64 %.sroa.01.0.i.i2.i.i, -2
-  %3 = add i64 %i.acc, 2
   %i.acd = load atomic ptr, ptr %.lcssa.i.i.i.i.i monotonic, align 8, !noalias !40607
-  %4 = icmp ne ptr %i.acd, null
-  %5 = zext i1 %4 to i64
-  %spec.select19.i.i.i.i = or disjoint i64 %3, %5
+  %3 = icmp eq ptr %i.acd, null
+  %spec.select19.v.i.i.i.i = select i1 %3, i64 2, i64 3
+  %spec.select19.i.i.i.i = add i64 %spec.select19.v.i.i.i.i, %i.acc
   store atomic ptr %.lcssa.i.i.i.i.i, ptr %i.aaj release, align 8, !noalias !40607
   store atomic i64 %spec.select19.i.i.i.i, ptr %.val25.i release, align 8, !noalias !40607
   br label %bb.gv
@@ -1359,7 +1357,7 @@ bb.ws:                                            ; preds = %bb.vy
 .backedge.i.i.i55.i:                              ; preds = %.backedge.i.i.i55.i.backedge, %bb.ws
   %.sroa.0.032.i.i.i.i267 = phi i32 [ 0, %bb.ws ], [ %.sroa.0.032.i.i.i.i267.be, %.backedge.i.i.i55.i.backedge ] ; 13 uses
   %.sroa.014.0.i.i.i.i268 = phi ptr [ %i.cab, %bb.ws ], [ %.sroa.014.0.i.i.i.i268.be, %.backedge.i.i.i55.i.backedge ] ; 7 uses
-  %.sroa.05.0.i.i.i.i269 = phi i64 [ %i.bzz, %bb.ws ], [ %.sroa.05.0.i.i.i.i269.be, %.backedge.i.i.i55.i.backedge ] ; 5 uses
+  %.sroa.05.0.i.i.i.i269 = phi i64 [ %i.bzz, %bb.ws ], [ %.sroa.05.0.i.i.i.i269.be, %.backedge.i.i.i55.i.backedge ] ; 6 uses
   %i.cad = lshr i64 %.sroa.05.0.i.i.i.i269, 1     ; 2 uses
   %i.cae = and i64 %i.cad, 31                     ; 5 uses
   %i.caf = icmp eq i64 %i.cae, 31
@@ -1410,9 +1408,9 @@ bb.wv:                                            ; preds = %bb.wu
 
 bb.ww:                                            ; preds = %bb.wv
   %.not.unshifted.i.i.i.i307 = xor i64 %i.caq, %.sroa.05.0.i.i.i.i269
-  %.not.i.i.i.i308 = icmp ugt i64 %.not.unshifted.i.i.i.i307, 63
-  %6 = zext i1 %.not.i.i.i.i308 to i64
-  %spec.select.i.i7.i.i = or disjoint i64 %i.can, %6
+  %.not.i.i.i.i309 = icmp ult i64 %.not.unshifted.i.i.i.i307, 64
+  %4 = add i64 %.sroa.05.0.i.i.i.i269, 3
+  %spec.select.i.i7.i.i = select i1 %.not.i.i.i.i309, i64 %i.can, i64 %4
   br label %bb.wy
 
 bb.wx:                                            ; preds = %bb.wv
@@ -1530,14 +1528,13 @@ _RNvMNtCsmwebYWU4SQ_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i.i.i
 _RNvMs_NtNtCs40Ppcsylqp4_17crossbeam_channel7flavors4listINtB4_5BlockINtNtNtCskTBvlRM5ILY_4moka6common10concurrent7WriteOpNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB1X_16CachedReaderDataEE9wait_nextCs9KQ7US1M400_11lance_table.exit.i.i.i.i: ; preds = %_RNvMNtCsmwebYWU4SQ_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i.i.i293, %bb.xe
   %.lcssa.i.i.i.i.i287 = phi ptr [ %i.cbl, %bb.xe ], [ %i.cbs, %_RNvMNtCsmwebYWU4SQ_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i.i.i293 ] ; 2 uses
   %i.cbu = and i64 %.sroa.01.0.i.i1.i.i, -2
-  %7 = add i64 %i.cbu, 2
   %i.cbv = getelementptr inbounds nuw i8, ptr %.lcssa.i.i.i.i.i287, i64 1488
   %i.cbw = load atomic ptr, ptr %i.cbv monotonic, align 8, !noalias !40768
-  %8 = icmp ne ptr %i.cbw, null
-  %9 = zext i1 %8 to i64
-  %spec.select19.i.i.i.i288 = or disjoint i64 %7, %9
+  %5 = icmp eq ptr %i.cbw, null
+  %spec.select19.v.i.i.i.i288 = select i1 %5, i64 2, i64 3
+  %spec.select19.i.i.i.i289 = add i64 %spec.select19.v.i.i.i.i288, %i.cbu
   store atomic ptr %.lcssa.i.i.i.i.i287, ptr %i.caa release, align 8, !noalias !40768
-  store atomic i64 %spec.select19.i.i.i.i288, ptr %.val34.i197 release, align 8, !noalias !40768
+  store atomic i64 %spec.select19.i.i.i.i289, ptr %.val34.i197 release, align 8, !noalias !40768
   br label %bb.xf
 
 _RNvMs1_NtNtCs40Ppcsylqp4_17crossbeam_channel7flavors4listINtB5_7ChannelINtNtNtCskTBvlRM5ILY_4moka6common10concurrent7WriteOpNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB20_16CachedReaderDataEE10start_recvCs9KQ7US1M400_11lance_table.exit.i.i.i: ; preds = %bb.wx

@@ -205,17 +205,16 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr.i.i.i26.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.fy, %bb.b ] ; 3 uses
   %storemerge24.lcssa = phi ptr [ %.fr28, %.lr.ph ], [ %.sroa.014.1.i.i, %bb.b ]
   %i.i = lshr i64 %.fr.i.i.i26.lcssa, 2           ; 2 uses
-  %i.j = add nsw i64 %i.i, -2                     ; 2 uses
+  %i.j = add nsw i64 %i.i, -2
   %i.k = lshr i64 %i.j, 1                         ; 4 uses
-  %i.l = add nsw i64 %i.i, -1
+  %i.l = add nsw i64 %i.i, -1                     ; 3 uses
   %i.m = lshr i64 %i.l, 1                         ; 4 uses
   %i.n = and i64 %.fr.i.i.i26.lcssa, 4
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %.split.preheader.i.i.i, label %.split.us.i.i.i
 
 .split.preheader.i.i.i:                           ; preds = %._crit_edge
-  %4 = or disjoint i64 %i.j, 1                    ; 2 uses
-  %i.p = getelementptr inbounds nuw [4 x i8], ptr %.fr27, i64 %4
+  %i.p = getelementptr inbounds nuw [4 x i8], ptr %.fr27, i64 %i.l
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %.fr27, i64 %i.k
   br label %.split.i.i.i
 
@@ -332,7 +331,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %4, %bb.g ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.l, %bb.g ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.bw = icmp sgt i64 %.1.i.i.i.i, %.09.i.i.i
   br i1 %i.bw, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_comp_iterIZN8facebook5velox15ArrayVectorBase20hasOverlappingRangesEiPKmPKiSF_RS5_E3$_0EEEvT_T0_SK_T1_T2_.exit.i.i.i"
 
@@ -735,12 +734,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = add nsw i64 %i.d, -1
@@ -748,7 +747,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = and i64 %i.c, 4
   %i.k = icmp eq i64 %i.j, 0
   %i.l = lshr exact i64 %i.f, 1                   ; 2 uses
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %bb.c
@@ -1151,12 +1150,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.0.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1165,7 +1164,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = and i64 %i.c, 4
   %i.k = icmp eq i64 %i.j, 0
   %i.l = lshr exact i64 %i.f, 1                   ; 2 uses
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   br label %bb.c

@@ -204,23 +204,22 @@ bb.c:                                             ; preds = %bb.b
   %i.k = and i32 %i.f, 3                          ; 2 uses
   %i.l = lshr i32 %i.f, 3
   %i.m = and i32 %i.l, 16
-  %6 = shl nuw nsw i32 %i.f, 5
-  %i.n = and i32 %6, 128                          ; 2 uses
+  %6 = or disjoint i32 %i.m, %i.k
+  %i.n = and i32 %i.f, 4
+  %.not8.i = icmp eq i32 %i.n, 0                  ; 2 uses
+  %.1.v.i = select i1 %.not8.i, i32 16, i32 144
+  %.1.i = xor i32 %6, %.1.v.i
   %7 = shl nuw nsw i32 %i.f, 6
   %8 = and i32 %7, 512
-  %9 = or disjoint i32 %8, %i.m
-  %10 = or disjoint i32 %9, %i.k
-  %11 = or disjoint i32 %10, %i.n
-  %.2.i = xor i32 %11, 16
+  %.2.i = or disjoint i32 %.1.i, %8
   %i.o = call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #8, !srcloc !13 ; 0 uses
   %.not.i = icmp eq i32 %i.k, 2
   br i1 %.not.i, label %futex_flags_valid.exit, label %futex_validate_input.exit.thread33
 
 futex_flags_valid.exit:                           ; preds = %bb.c
-  %.not9.i = icmp eq i32 %i.n, 0
   %i.p = load i32, ptr @nr_node_ids, align 4
   %.not10.not.i = icmp ne i32 %i.p, -1
-  %or.cond.not.i = select i1 %.not9.i, i1 true, i1 %.not10.not.i
+  %or.cond.not.i = select i1 %.not8.i, i1 true, i1 %.not10.not.i
   br i1 %or.cond.not.i, label %bb.d, label %futex_validate_input.exit.thread33
 
 bb.d:                                             ; preds = %futex_flags_valid.exit
@@ -401,23 +400,22 @@ bb.l:                                             ; preds = %bb.k
   %i.am = and i32 %i.ah, 3                        ; 2 uses
   %i.an = lshr i32 %i.ah, 3
   %i.ao = and i32 %i.an, 16
-  %8 = shl nuw nsw i32 %i.ah, 5
-  %i.ap = and i32 %8, 128                         ; 2 uses
+  %8 = or disjoint i32 %i.ao, %i.am
+  %i.ap = and i32 %i.ah, 4
+  %.not8.i.i.i = icmp eq i32 %i.ap, 0             ; 2 uses
+  %.1.v.i.i.i = select i1 %.not8.i.i.i, i32 16, i32 144
+  %.1.i.i41.i = xor i32 %8, %.1.v.i.i.i
   %9 = shl nuw nsw i32 %i.ah, 6
   %10 = and i32 %9, 512
-  %11 = or disjoint i32 %10, %i.ao
-  %12 = or disjoint i32 %11, %i.am
-  %13 = or disjoint i32 %12, %i.ap
-  %.2.i.i.i = xor i32 %13, 16
+  %.2.i.i.i = or disjoint i32 %.1.i.i41.i, %10
   %i.aq = call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #8, !srcloc !13 ; 0 uses
   %.not.i.i.i = icmp eq i32 %i.am, 2
   br i1 %.not.i.i.i, label %futex_flags_valid.exit.i.i, label %futex_parse_waitv.exit.thread.i
 
 futex_flags_valid.exit.i.i:                       ; preds = %bb.l
-  %.not9.i.i.i = icmp eq i32 %i.ap, 0
   %i.ar = load i32, ptr @nr_node_ids, align 4
   %.not10.not.i.i.i = icmp ne i32 %i.ar, -1
-  %or.cond.not.i.i.i = select i1 %.not9.i.i.i, i1 true, i1 %.not10.not.i.i.i
+  %or.cond.not.i.i.i = select i1 %.not8.i.i.i, i1 true, i1 %.not10.not.i.i.i
   br i1 %or.cond.not.i.i.i, label %bb.m, label %futex_parse_waitv.exit.thread.i
 
 bb.m:                                             ; preds = %futex_flags_valid.exit.i.i
@@ -518,29 +516,30 @@ bb.b:                                             ; preds = %bb.a
   %i.m = and i32 %i.k, 3
   %i.n = lshr i32 %i.k, 3
   %i.o = and i32 %i.n, 16
-  %1 = shl nuw nsw i32 %i.k, 5
-  %i.p = and i32 %1, 128                          ; 2 uses
+  %1 = or disjoint i32 %i.o, 2
+  %i.p = and i32 %i.k, 4
+  %.not8.i.i.i = icmp eq i32 %i.p, 0              ; 2 uses
+  %.1.v.i.i.i = select i1 %.not8.i.i.i, i32 16, i32 144
+  %.1.i.i.i = xor i32 %1, %.1.v.i.i.i
   %2 = shl nuw nsw i32 %i.k, 6
   %3 = and i32 %2, 512
-  %4 = or disjoint i32 %i.o, %3
-  %5 = or disjoint i32 %4, %i.p
   %i.q = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #8, !srcloc !13 ; 0 uses
   %.not.i.i.i = icmp eq i32 %i.m, 2
   br i1 %.not.i.i.i, label %futex_flags_valid.exit.i.i, label %__se_sys_futex_wake.exit
 
 futex_flags_valid.exit.i.i:                       ; preds = %bb.b
-  %.not9.i.i.i = icmp eq i32 %i.p, 0
   %i.r = load i32, ptr @nr_node_ids, align 4
   %.not10.not.i.i.i = icmp ne i32 %i.r, -1
-  %or.cond.not.i.i.i = select i1 %.not9.i.i.i, i1 true, i1 %.not10.not.i.i.i
+  %or.cond.not.i.i.i = select i1 %.not8.i.i.i, i1 true, i1 %.not10.not.i.i.i
   %.not.i9.i.i = icmp ult i64 %i.d, 4294967296
   %or.cond.i.i = and i1 %.not.i9.i.i, %or.cond.not.i.i.i
   br i1 %or.cond.i.i, label %bb.c, label %__se_sys_futex_wake.exit
 
 bb.c:                                             ; preds = %futex_flags_valid.exit.i.i
-  %6 = xor i32 %5, 274
+  %.2.i.i.i = or disjoint i32 %3, %.1.i.i.i
+  %4 = or disjoint i32 %.2.i.i.i, 256
   %i.s = trunc nuw i64 %i.d to i32
-  %i.t = tail call i32 @futex_wake(ptr noundef %i.i, i32 noundef %6, ptr noundef null, i32 noundef %i.j, i32 noundef %i.s) #11
+  %i.t = tail call i32 @futex_wake(ptr noundef %i.i, i32 noundef %4, ptr noundef null, i32 noundef %i.j, i32 noundef %i.s) #11
   %i.u = sext i32 %i.t to i64
   br label %__se_sys_futex_wake.exit
 
@@ -572,27 +571,28 @@ bb.b:                                             ; preds = %bb.a
   %i.n = and i32 %i.l, 3
   %i.o = lshr i32 %i.l, 3
   %i.p = and i32 %i.o, 16
-  %1 = shl nuw nsw i32 %i.l, 5
-  %i.q = and i32 %1, 128                          ; 2 uses
+  %1 = or disjoint i32 %i.p, 2
+  %i.q = and i32 %i.l, 4
+  %.not8.i.i.i = icmp eq i32 %i.q, 0              ; 2 uses
+  %.1.v.i.i.i = select i1 %.not8.i.i.i, i32 16, i32 144
+  %.1.i.i.i = xor i32 %1, %.1.v.i.i.i
   %2 = shl nuw nsw i32 %i.l, 6
   %3 = and i32 %2, 512
-  %4 = or disjoint i32 %i.p, %3
-  %5 = or disjoint i32 %4, %i.q
   %i.r = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #8, !srcloc !13 ; 0 uses
   %.not.i.i.i = icmp eq i32 %i.n, 2
   br i1 %.not.i.i.i, label %futex_flags_valid.exit.i.i, label %__se_sys_futex_wake.exit
 
 futex_flags_valid.exit.i.i:                       ; preds = %bb.b
-  %.not9.i.i.i = icmp eq i32 %i.q, 0
   %i.s = load i32, ptr @nr_node_ids, align 4
   %.not10.not.i.i.i = icmp ne i32 %i.s, -1
-  %or.cond.not.i.i.i = select i1 %.not9.i.i.i, i1 true, i1 %.not10.not.i.i.i
+  %or.cond.not.i.i.i = select i1 %.not8.i.i.i, i1 true, i1 %.not10.not.i.i.i
   br i1 %or.cond.not.i.i.i, label %bb.c, label %__se_sys_futex_wake.exit
 
 bb.c:                                             ; preds = %futex_flags_valid.exit.i.i
-  %6 = xor i32 %5, 274
+  %.2.i.i.i = or disjoint i32 %3, %.1.i.i.i
+  %4 = or disjoint i32 %.2.i.i.i, 256
   %i.t = trunc i64 %i.e to i32
-  %i.u = tail call i32 @futex_wake(ptr noundef %i.j, i32 noundef %6, ptr noundef null, i32 noundef %i.k, i32 noundef %i.t) #11
+  %i.u = tail call i32 @futex_wake(ptr noundef %i.j, i32 noundef %4, ptr noundef null, i32 noundef %i.k, i32 noundef %i.t) #11
   %i.v = sext i32 %i.u to i64
   br label %__se_sys_futex_wake.exit
 
@@ -639,23 +639,22 @@ bb.b:                                             ; preds = %bb.a
   %i.g = and i32 %i.c, 3                          ; 2 uses
   %i.h = lshr i32 %i.c, 3
   %i.i = and i32 %i.h, 16
-  %8 = shl nuw nsw i32 %i.c, 5
-  %i.j = and i32 %8, 128                          ; 2 uses
+  %8 = or disjoint i32 %i.i, %i.g
+  %i.j = and i32 %i.c, 4
+  %.not8.i.i = icmp eq i32 %i.j, 0                ; 2 uses
+  %.1.v.i.i = select i1 %.not8.i.i, i32 16, i32 144
+  %.1.i.i = xor i32 %8, %.1.v.i.i
   %9 = shl nuw nsw i32 %i.c, 6
   %10 = and i32 %9, 512
-  %11 = or disjoint i32 %i.i, %10
-  %12 = or disjoint i32 %11, %i.g
-  %13 = or disjoint i32 %12, %i.j
-  %.2.i.i = xor i32 %13, 16                       ; 2 uses
+  %.2.i.i = or disjoint i32 %.1.i.i, %10          ; 2 uses
   %i.k = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #8, !srcloc !13
   %.not.i.i = icmp eq i32 %i.g, 2
   br i1 %.not.i.i, label %futex_flags_valid.exit.i, label %__do_sys_futex_wait.exit
 
 futex_flags_valid.exit.i:                         ; preds = %bb.b
-  %.not9.i.i = icmp eq i32 %i.j, 0
   %i.l = load i32, ptr @nr_node_ids, align 4
   %.not10.not.i.i = icmp ne i32 %i.l, -1
-  %or.cond.not.i.i = select i1 %.not9.i.i, i1 true, i1 %.not10.not.i.i
+  %or.cond.not.i.i = select i1 %.not8.i.i, i1 true, i1 %.not10.not.i.i
   %i.m = or i64 %2, %1
   %i.n = icmp ult i64 %i.m, 4294967296
   %or.cond35.i = and i1 %i.n, %or.cond.not.i.i
@@ -827,23 +826,22 @@ bb.c:                                             ; preds = %bb.b
   %i.o = and i32 %i.j, 3                          ; 2 uses
   %i.p = lshr i32 %i.j, 3
   %i.q = and i32 %i.p, 16
-  %5 = shl nuw nsw i32 %i.j, 5
-  %i.r = and i32 %5, 128                          ; 2 uses
+  %5 = or disjoint i32 %i.q, %i.o
+  %i.r = and i32 %i.j, 4
+  %.not8.i.i.i = icmp eq i32 %i.r, 0              ; 2 uses
+  %.1.v.i.i.i = select i1 %.not8.i.i.i, i32 16, i32 144
+  %.1.i.i.i = xor i32 %5, %.1.v.i.i.i
   %6 = shl nuw nsw i32 %i.j, 6
   %7 = and i32 %6, 512
-  %8 = or disjoint i32 %7, %i.q
-  %9 = or disjoint i32 %8, %i.o
-  %10 = or disjoint i32 %9, %i.r                  ; 2 uses
-  %.2.i.i.i = xor i32 %10, 16                     ; 2 uses
+  %.2.i.i.i = or disjoint i32 %.1.i.i.i, %7       ; 3 uses
   %i.s = call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #8 ; 0 uses
   %.not.i.i.i = icmp eq i32 %i.o, 2
   br i1 %.not.i.i.i, label %futex_flags_valid.exit.i.i, label %bb.h
 
 futex_flags_valid.exit.i.i:                       ; preds = %bb.c
-  %.not9.i.i.i = icmp eq i32 %i.r, 0
   %i.t = load i32, ptr @nr_node_ids, align 4
   %.not10.not.i.i.i = icmp ne i32 %i.t, -1
-  %or.cond.not.i.i.i = select i1 %.not9.i.i.i, i1 true, i1 %.not10.not.i.i.i
+  %or.cond.not.i.i.i = select i1 %.not8.i.i.i, i1 true, i1 %.not10.not.i.i.i
   br i1 %or.cond.not.i.i.i, label %bb.d, label %bb.h
 
 bb.d:                                             ; preds = %futex_flags_valid.exit.i.i
@@ -871,21 +869,21 @@ bb.f:                                             ; preds = %bb.e
   %i.ad = and i32 %i.y, 3                         ; 2 uses
   %i.ae = lshr i32 %i.y, 3
   %i.af = and i32 %i.ae, 16
-  %11 = shl nuw nsw i32 %i.y, 5
-  %i.ag = and i32 %11, 128                        ; 2 uses
-  %12 = shl nuw nsw i32 %i.y, 6
-  %13 = and i32 %12, 512
-  %14 = or disjoint i32 %13, %i.af
-  %15 = or disjoint i32 %14, %i.ad
-  %i.ah = or disjoint i32 %15, %i.ag
+  %8 = or disjoint i32 %i.af, %i.ad
+  %i.ag = and i32 %i.y, 4
+  %.not8.i.i.1.i = icmp eq i32 %i.ag, 0           ; 2 uses
+  %.1.v.i.i.1.i = select i1 %.not8.i.i.1.i, i32 16, i32 144
+  %.1.i.i.1.i = xor i32 %8, %.1.v.i.i.1.i
+  %9 = shl nuw nsw i32 %i.y, 6
+  %10 = and i32 %9, 512
+  %i.ah = or disjoint i32 %.1.i.i.1.i, %10
   %.not.i.i.1.i = icmp eq i32 %i.ad, 2
   br i1 %.not.i.i.1.i, label %futex_flags_valid.exit.i.1.i, label %bb.h
 
 futex_flags_valid.exit.i.1.i:                     ; preds = %bb.f
-  %.not9.i.i.1.i = icmp eq i32 %i.ag, 0
   %i.ai = load i32, ptr @nr_node_ids, align 4
   %.not10.not.i.i.1.i = icmp ne i32 %i.ai, -1
-  %or.cond.not.i.i.1.i = select i1 %.not9.i.i.1.i, i1 true, i1 %.not10.not.i.i.1.i
+  %or.cond.not.i.i.1.i = select i1 %.not8.i.i.1.i, i1 true, i1 %.not10.not.i.i.1.i
   %i.aj = load i64, ptr %4, align 8
   %.not.i27.i.1.i = icmp ult i64 %i.aj, 4294967296
   %or.cond20.i = select i1 %or.cond.not.i.i.1.i, i1 %.not.i27.i.1.i, i1 false
@@ -894,7 +892,7 @@ futex_flags_valid.exit.i.1.i:                     ; preds = %bb.f
 bb.g:                                             ; preds = %futex_flags_valid.exit.i.1.i
   %i.ak = load i64, ptr %i.h, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
-  %.not13.i = icmp eq i32 %10, %i.ah
+  %.not13.i = icmp eq i32 %.2.i.i.i, %i.ah
   br i1 %.not13.i, label %bb.i, label %__do_sys_futex_requeue.exit
 
 bb.h:                                             ; preds = %futex_flags_valid.exit.i.1.i, %bb.f, %bb.e, %copy_from_user.exit.i.1.i, %bb.d, %futex_flags_valid.exit.i.i, %bb.c, %bb.b, %copy_from_user.exit.i.i

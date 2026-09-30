@@ -204,14 +204,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.fr46.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cn, %bb.b ]
   %storemerge25.lcssa = phi ptr [ %.fr29, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.fr46.i27.lcssa, 12      ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %3 = or disjoint i64 %i.i, 1                    ; 2 uses
-  %i.o = getelementptr inbounds nuw [12 x i8], ptr %.fr28, i64 %3
+  %i.o = getelementptr inbounds nuw [12 x i8], ptr %.fr28, i64 %i.k
   %i.p = getelementptr inbounds nuw [12 x i8], ptr %.fr28, i64 %i.j
   br label %bb.c
 
@@ -252,7 +251,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %3, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ae = icmp sgt i64 %.1.i.i.i, %.012.i.i
   br i1 %i.ae, label %.lr.ph.i.i.i.i17, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN8interpol10base_pointIfEESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS2_11spline_baseIfEC1IP16CurveAnchorPointEET_SH_EUlRKS4_SJ_E_EEEvSH_T0_SM_T1_T2_.exit.i.i
 
@@ -655,14 +654,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.fr46.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cn, %bb.b ]
   %storemerge25.lcssa = phi ptr [ %.fr29, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.fr46.i27.lcssa, 12      ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %3 = or disjoint i64 %i.i, 1                    ; 2 uses
-  %i.o = getelementptr inbounds nuw [12 x i8], ptr %.fr28, i64 %3
+  %i.o = getelementptr inbounds nuw [12 x i8], ptr %.fr28, i64 %i.k
   %i.p = getelementptr inbounds nuw [12 x i8], ptr %.fr28, i64 %i.j
   br label %bb.c
 
@@ -703,7 +701,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %3, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ae = icmp sgt i64 %.1.i.i.i, %.012.i.i
   br i1 %i.ae, label %.lr.ph.i.i.i.i17, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN8interpol10base_pointIfEESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS2_11spline_baseIfEC1IP16CurveAnchorPointEET_SH_RKNS2_6limitsIfEESL_bEUlRKS4_SN_E_EEEvSH_T0_SQ_T1_T2_.exit.i.i
 
@@ -1106,14 +1104,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.fr46.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cn, %bb.b ]
   %storemerge25.lcssa = phi ptr [ %.fr29, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.h = udiv exact i64 %.fr46.i27.lcssa, 12      ; 3 uses
-  %i.i = add nsw i64 %i.h, -2                     ; 2 uses
+  %i.i = add nsw i64 %i.h, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %i.h, -1
+  %i.k = add nsw i64 %i.h, -1                     ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %i.h, 1
   %i.n = icmp eq i64 %i.m, 0
-  %3 = or disjoint i64 %i.i, 1                    ; 2 uses
-  %i.o = getelementptr inbounds nuw [12 x i8], ptr %.fr28, i64 %3
+  %i.o = getelementptr inbounds nuw [12 x i8], ptr %.fr28, i64 %i.k
   %i.p = getelementptr inbounds nuw [12 x i8], ptr %.fr28, i64 %i.j
   br label %bb.c
 
@@ -1154,7 +1151,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %3, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ae = icmp sgt i64 %.1.i.i.i, %.012.i.i
   br i1 %i.ae, label %.lr.ph.i.i.i.i17, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN8interpol10base_pointIfEESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS2_11spline_baseIfEC1INS1_IPNS2_5pointIfEES6_ISG_SaISG_EEEEEET_SL_RKNS2_6limitsIfEESP_bEUlRKS4_SR_E_EEEvSL_T0_SU_T1_T2_.exit.i.i
 

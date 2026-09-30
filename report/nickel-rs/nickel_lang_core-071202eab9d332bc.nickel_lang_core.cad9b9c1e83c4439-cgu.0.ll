@@ -206,9 +206,8 @@ bb.d:                                             ; preds = %_ZN16nickel_lang_co
   %i.an = and i64 %i.al, 72057594037927935        ; 3 uses
   %i.ao = icmp ne i64 %i.an, 0
   tail call void @llvm.assume(i1 %i.ao)
-  %i.ap = add nuw nsw i64 %i.an, 1
-  %3 = or disjoint i64 %i.ap, 288230376151711744
-  store i64 %3, ptr %0, align 8
+  %i.ap = add nuw nsw i64 %i.an, 288230376151711745
+  store i64 %i.ap, ptr %0, align 8
   %i.aq = icmp eq i64 %i.an, 72057594037927935
   br i1 %i.aq, label %bb.e, label %bb.g, !prof !147
 
