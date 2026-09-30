@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !17830, !noalias !17816
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 92, !dbg !17830
   %.sroa.0.0.copyload.i = load i32, ptr %i.i, align 4, !dbg !17830, !alias.scope !17812, !noalias !17815
-  %i.j = trunc i32 %.sroa.0.0.copyload.i to i1, !dbg !17831
+  %i.j = trunc i32 %.sroa.0.0.copyload.i to i1, !dbg !17831 ; 2 uses
   br i1 %i.j, label %bb.c, label %bb.i, !dbg !17831
 
 bb.c:                                             ; preds = %bb.b
@@ -226,7 +226,7 @@ bb.d:                                             ; preds = %bb.c
   %i.o = load i64, ptr %i.b, align 8, !dbg !17837, !range !869, !noalias !17821, !noundef !859
   %i.p = trunc nuw i64 %i.o to i1, !dbg !17838
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !17839
-  %i.r = load i64, ptr %i.q, align 8, !dbg !17839, !range !1014, !noalias !17821, !noundef !859 ; 4 uses
+  %i.r = load i64, ptr %i.q, align 8, !dbg !17839, !range !1014, !noalias !17821, !noundef !859 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 16, !dbg !17839 ; 2 uses
   br i1 %i.p, label %bb.f, label %bb.g, !dbg !17838, !prof !880
 
@@ -257,76 +257,74 @@ _RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_ser
   store ptr %i.u, ptr %.sroa.4.0..sroa_idx16.i, align 8, !dbg !17850, !noalias !17816
   %.sroa.5.0..sroa_idx18.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !17850
   store i64 %i.l, ptr %.sroa.5.0..sroa_idx18.i, align 8, !dbg !17850, !noalias !17816
-  %4 = icmp eq i64 %i.r, -9223372036854775808, !dbg !17851
-  br label %bb.j, !dbg !17852
+  br label %bb.j, !dbg !17851
 
 bb.i:                                             ; preds = %bb.b
-  store i64 -9223372036854775808, ptr %i.c, align 8, !dbg !17853, !noalias !17816
-  br label %bb.j, !dbg !17854
+  store i64 -9223372036854775808, ptr %i.c, align 8, !dbg !17852, !noalias !17816
+  br label %bb.j, !dbg !17853
 
 bb.j:                                             ; preds = %bb.i, %_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire00Bb_.exit.i
-  %5 = phi i1 [ true, %bb.i ], [ %4, %_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire00Bb_.exit.i ]
-  %i.w = getelementptr inbounds nuw i8, ptr %1, i64 80, !dbg !17855
-  %.sroa.05.0.copyload.i = load i32, ptr %i.w, align 8, !dbg !17855, !alias.scope !17812, !noalias !17815
-  %i.x = trunc i32 %.sroa.05.0.copyload.i to i1, !dbg !17856
-  br i1 %i.x, label %bb.k, label %_RNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0B9_.exit, !dbg !17856
+  %i.w = getelementptr inbounds nuw i8, ptr %1, i64 80, !dbg !17854
+  %.sroa.05.0.copyload.i = load i32, ptr %i.w, align 8, !dbg !17854, !alias.scope !17812, !noalias !17815
+  %i.x = trunc i32 %.sroa.05.0.copyload.i to i1, !dbg !17855
+  br i1 %i.x, label %bb.k, label %_RNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0B9_.exit, !dbg !17855
 
 bb.k:                                             ; preds = %bb.j
-  %.sroa.57.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 88, !dbg !17855
-  %.sroa.57.0.copyload.i = load i32, ptr %.sroa.57.0..sroa_idx.i, align 8, !dbg !17855, !alias.scope !17812, !noalias !17815 ; 2 uses
-  %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 84, !dbg !17855
-  %.sroa.46.0.copyload.i = load i32, ptr %.sroa.46.0..sroa_idx.i, align 4, !dbg !17855, !alias.scope !17812, !noalias !17815
-  %i.y = zext i32 %.sroa.46.0.copyload.i to i64, !dbg !17857 ; 3 uses
-  %i.z = zext i32 %.sroa.57.0.copyload.i to i64, !dbg !17858 ; 5 uses
-  %i.aa = add nuw nsw i64 %i.y, %i.z, !dbg !17859 ; 2 uses
-  %.not.i10.i = icmp samesign ugt i64 %i.aa, %3, !dbg !17860
-  br i1 %.not.i10.i, label %bb.m, label %bb.l, !dbg !17860, !prof !880
+  %.sroa.57.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 88, !dbg !17854
+  %.sroa.57.0.copyload.i = load i32, ptr %.sroa.57.0..sroa_idx.i, align 8, !dbg !17854, !alias.scope !17812, !noalias !17815 ; 2 uses
+  %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 84, !dbg !17854
+  %.sroa.46.0.copyload.i = load i32, ptr %.sroa.46.0..sroa_idx.i, align 4, !dbg !17854, !alias.scope !17812, !noalias !17815
+  %i.y = zext i32 %.sroa.46.0.copyload.i to i64, !dbg !17856 ; 3 uses
+  %i.z = zext i32 %.sroa.57.0.copyload.i to i64, !dbg !17857 ; 5 uses
+  %i.aa = add nuw nsw i64 %i.y, %i.z, !dbg !17858 ; 2 uses
+  %.not.i10.i = icmp samesign ugt i64 %i.aa, %3, !dbg !17859
+  br i1 %.not.i10.i, label %bb.m, label %bb.l, !dbg !17859, !prof !880
 
 bb.l:                                             ; preds = %bb.k
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 %i.y, !dbg !17861
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !17862, !noalias !17823
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 %i.y, !dbg !17860
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !17861, !noalias !17823
   invoke void @_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.z, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
-          to label %.noexc.i unwind label %bb.q, !dbg !17862, !noalias !17816
+          to label %.noexc.i unwind label %bb.q, !dbg !17861, !noalias !17816
 
 .noexc.i:                                         ; preds = %bb.l
-  %i.ac = load i64, ptr %i.a, align 8, !dbg !17862, !range !869, !noalias !17823, !noundef !859
-  %i.ad = trunc nuw i64 %i.ac to i1, !dbg !17863
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !17864
-  %i.af = load i64, ptr %i.ae, align 8, !dbg !17864, !range !1014, !noalias !17823, !noundef !859 ; 4 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !17864 ; 2 uses
-  br i1 %i.ad, label %bb.n, label %bb.o, !dbg !17863, !prof !880
+  %i.ac = load i64, ptr %i.a, align 8, !dbg !17861, !range !869, !noalias !17823, !noundef !859
+  %i.ad = trunc nuw i64 %i.ac to i1, !dbg !17862
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !17863
+  %i.af = load i64, ptr %i.ae, align 8, !dbg !17863, !range !1014, !noalias !17823, !noundef !859 ; 4 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !17863 ; 2 uses
+  br i1 %i.ad, label %bb.n, label %bb.o, !dbg !17862, !prof !880
 
 bb.m:                                             ; preds = %bb.k
   invoke void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.y, i64 noundef %i.aa, i64 noundef range(i64 0, -9223372036854775808) %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #35
-          to label %.noexc12.i unwind label %bb.q, !dbg !17865, !noalias !17816
+          to label %.noexc12.i unwind label %bb.q, !dbg !17864, !noalias !17816
 
 .noexc12.i:                                       ; preds = %bb.m
-  unreachable, !dbg !17865
+  unreachable, !dbg !17864
 
 bb.n:                                             ; preds = %.noexc.i
-  %i.ah = load i64, ptr %i.ag, align 8, !dbg !17866, !noalias !17823
+  %i.ah = load i64, ptr %i.ag, align 8, !dbg !17865, !noalias !17823
   invoke void @_RNvNtCsgZ49sUHp3tW_5alloc7raw_vec12handle_error(i64 noundef %i.af, i64 %i.ah) #36
-          to label %.noexc13.i unwind label %bb.q, !dbg !17867, !noalias !17816
+          to label %.noexc13.i unwind label %bb.q, !dbg !17866, !noalias !17816
 
 .noexc13.i:                                       ; preds = %bb.n
-  unreachable, !dbg !17867
+  unreachable, !dbg !17866
 
 bb.o:                                             ; preds = %.noexc.i
-  %i.ai = load ptr, ptr %i.ag, align 8, !dbg !17868, !noalias !17823, !nonnull !859, !noundef !859 ; 3 uses
-  %i.aj = icmp samesign uge i64 %i.af, %i.z, !dbg !17869
-  tail call void @llvm.assume(i1 %i.aj), !dbg !17870
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !17871, !noalias !17823
-  %.not3.i11.i = icmp eq i32 %.sroa.57.0.copyload.i, 0, !dbg !17872
-  br i1 %.not3.i11.i, label %_RNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0B9_.exit, label %bb.p, !dbg !17872
+  %i.ai = load ptr, ptr %i.ag, align 8, !dbg !17867, !noalias !17823, !nonnull !859, !noundef !859 ; 3 uses
+  %i.aj = icmp samesign uge i64 %i.af, %i.z, !dbg !17868
+  tail call void @llvm.assume(i1 %i.aj), !dbg !17869
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !17870, !noalias !17823
+  %.not3.i11.i = icmp eq i32 %.sroa.57.0.copyload.i, 0, !dbg !17871
+  br i1 %.not3.i11.i, label %_RNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0B9_.exit, label %bb.p, !dbg !17871
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ai, ptr nonnull readonly align 1 %i.ab, i64 %i.z, i1 false), !dbg !17873, !noalias !17824
-  br label %_RNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0B9_.exit, !dbg !17874
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ai, ptr nonnull readonly align 1 %i.ab, i64 %i.z, i1 false), !dbg !17872, !noalias !17824
+  br label %_RNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0B9_.exit, !dbg !17873
 
 bb.q:                                             ; preds = %bb.n, %bb.m, %bb.l
   %i.ak = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  br i1 %5, label %common.resume, label %bb.r, !dbg !17851
+  br i1 %i.j, label %bb.r, label %common.resume, !dbg !17874
 
 bb.r:                                             ; preds = %bb.q
   invoke void @_RNvXs1_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVechENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
@@ -729,49 +727,49 @@ begin_hunk_1_@llvm.smax.i32
 !17762 = distinct !DISubprogram(name: "copy_to_nonoverlapping<u8>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core3ptr9const_ptrPh22copy_to_nonoverlappingCsfISxE4fmY1Y_14polars_parquet", scope: !939, file: !937, line: 1247, type: !860, scopeLine: 1247, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
 !17763 = distinct !DILocation(line: 454, column: 36, scope: !17760, inlinedAt: !17750)
 !17764 = distinct !DILocation(line: 1252, column: 18, scope: !17762, inlinedAt: !17763)
-!17765 = distinct !DILocation(line: 132, column: 5, scope: !17720, inlinedAt: !17721)
-!17766 = distinct !DISubprogram(name: "map<polars_parquet::parquet::metadata::compact::ByteRange, alloc::vec::Vec<u8, alloc::alloc::Global>, polars_parquet::parquet::metadata::file_metadata_serde::chunk_to_wire::{closure#0}::{closure_env#1}>", linkageName: "_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata7compact9ByteRangeE3mapINtNtCsgZ49sUHp3tW_5alloc3vec3VechENCNCNvNtBM_19file_metadata_serde13chunk_to_wire0s_0EBQ_", scope: !868, file: !866, line: 1160, type: !860, scopeLine: 1160, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17767 = distinct !DILocation(line: 131, column: 32, scope: !17720, inlinedAt: !17721)
-!17768 = distinct !DISubprogram(name: "resolve", linkageName: "_RNvMNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata7compactNtB2_9ByteRange7resolve", scope: !17819, file: !17817, line: 44, type: !860, scopeLine: 44, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17769 = distinct !DISubprogram(name: "{closure#1}", linkageName: "_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0s_0Bb_", scope: !17820, file: !1258, line: 131, type: !860, scopeLine: 131, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17770 = distinct !DILexicalBlock(scope: !17766, file: !866, line: 1165, column: 13)
-!17771 = distinct !DILocation(line: 1165, column: 29, scope: !17770, inlinedAt: !17767)
-!17772 = distinct !DILocation(line: 131, column: 42, scope: !17769, inlinedAt: !17771)
-!17773 = distinct !DISubprogram(name: "index<u8>", linkageName: "_RNvXs2_NtNtCscgRAwXFJnXP_4core5slice5indexINtNtNtB9_3ops5range5RangejEINtB5_10SliceIndexShE5indexCsfISxE4fmY1Y_14polars_parquet", scope: !903, file: !899, line: 435, type: !860, scopeLine: 435, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17774 = distinct !DISubprogram(name: "index<u8, core::ops::range::Range<usize>>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core5slice5indexShINtNtNtB6_3ops5index5IndexINtNtBI_5range5RangejEE5indexCsfISxE4fmY1Y_14polars_parquet", scope: !902, file: !899, line: 18, type: !860, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17775 = distinct !DILocation(line: 45, column: 13, scope: !17768, inlinedAt: !17772)
-!17776 = distinct !DILocation(line: 19, column: 15, scope: !17774, inlinedAt: !17775)
-!17777 = distinct !DISubprogram(name: "get_offset_len_noubcheck<u8>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core5slice5index24get_offset_len_noubcheckhECsfISxE4fmY1Y_14polars_parquet", scope: !901, file: !899, line: 82, type: !860, scopeLine: 82, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17778 = distinct !DILexicalBlock(scope: !17777, file: !899, line: 87, column: 5)
-!17779 = distinct !DILocation(line: 441, column: 24, scope: !17773, inlinedAt: !17776)
-!17780 = distinct !{!17780, !"_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0s_0Bb_"}
-!17781 = distinct !{!17781, !17780, !"_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0s_0Bb_: argument 1"}
-!17782 = distinct !{!17782, !17780, !"_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0s_0Bb_: argument 0"}
-!17783 = distinct !DISubprogram(name: "with_capacity_in<alloc::alloc::Global>", linkageName: "_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsfISxE4fmY1Y_14polars_parquet", scope: !927, file: !925, line: 433, type: !860, scopeLine: 433, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17784 = distinct !DISubprogram(name: "with_capacity_in<u8, alloc::alloc::Global>", linkageName: "_RNvMs3_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVechE16with_capacity_inCsfISxE4fmY1Y_14polars_parquet", scope: !928, file: !925, line: 175, type: !860, scopeLine: 175, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17785 = distinct !DISubprogram(name: "with_capacity_in<u8, alloc::alloc::Global>", linkageName: "_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE16with_capacity_inCsfISxE4fmY1Y_14polars_parquet", scope: !920, file: !917, line: 976, type: !860, scopeLine: 976, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17786 = distinct !DISubprogram(name: "to_vec<u8, alloc::alloc::Global>", linkageName: "_RINvXs_NvMNtCsgZ49sUHp3tW_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECsfISxE4fmY1Y_14polars_parquet", scope: !1217, file: !1213, line: 446, type: !860, scopeLine: 446, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17787 = distinct !DILexicalBlock(scope: !17786, file: !1213, line: 447, column: 17)
-!17788 = distinct !DISubprogram(name: "to_vec_in<u8, alloc::alloc::Global>", linkageName: "_RINvMNtCsgZ49sUHp3tW_5alloc5sliceSh9to_vec_inNtNtB5_5alloc6GlobalECsfISxE4fmY1Y_14polars_parquet", scope: !1215, file: !1213, line: 396, type: !860, scopeLine: 396, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17789 = distinct !DISubprogram(name: "to_vec<u8>", linkageName: "_RNvMNtCsgZ49sUHp3tW_5alloc5sliceSh6to_vecCsfISxE4fmY1Y_14polars_parquet", scope: !1215, file: !1213, line: 372, type: !860, scopeLine: 372, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17790 = distinct !DILocation(line: 131, column: 58, scope: !17769, inlinedAt: !17771)
-!17791 = distinct !DILocation(line: 376, column: 14, scope: !17789, inlinedAt: !17790)
-!17792 = distinct !DILocation(line: 400, column: 16, scope: !17788, inlinedAt: !17791)
-!17793 = distinct !DILocation(line: 448, column: 29, scope: !17787, inlinedAt: !17792)
-!17794 = distinct !DILocation(line: 977, column: 20, scope: !17785, inlinedAt: !17793)
-!17795 = distinct !DILocation(line: 177, column: 20, scope: !17784, inlinedAt: !17794)
-!17796 = distinct !DILexicalBlock(scope: !17783, file: !925, line: 442, column: 13)
-!17797 = distinct !DISubprogram(name: "needs_to_grow<alloc::alloc::Global>", linkageName: "_RNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner13needs_to_growCsfISxE4fmY1Y_14polars_parquet", scope: !927, file: !925, line: 766, type: !860, scopeLine: 766, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17798 = distinct !DILexicalBlock(scope: !17783, file: !925, line: 435, column: 13)
-!17799 = distinct !DILocation(line: 438, column: 50, scope: !17798, inlinedAt: !17795)
-!17800 = distinct !DISubprogram(name: "assert_unchecked", linkageName: "_RNvNtCscgRAwXFJnXP_4core4hint16assert_unchecked", scope: !1076, file: !1075, line: 202, type: !860, scopeLine: 202, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17801 = distinct !DILocation(line: 438, column: 21, scope: !17798, inlinedAt: !17795)
-!17802 = distinct !DILexicalBlock(scope: !17787, file: !1213, line: 448, column: 17)
-!17803 = distinct !DISubprogram(name: "copy_nonoverlapping<u8>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr19copy_nonoverlappinghECsfISxE4fmY1Y_14polars_parquet", scope: !882, file: !885, line: 531, type: !860, scopeLine: 531, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17804 = distinct !DISubprogram(name: "copy_to_nonoverlapping<u8>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core3ptr9const_ptrPh22copy_to_nonoverlappingCsfISxE4fmY1Y_14polars_parquet", scope: !939, file: !937, line: 1247, type: !860, scopeLine: 1247, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
-!17805 = distinct !DILocation(line: 454, column: 36, scope: !17802, inlinedAt: !17792)
-!17806 = distinct !DILocation(line: 1252, column: 18, scope: !17804, inlinedAt: !17805)
-!17807 = distinct !DILocation(line: 810, column: 1, scope: !126, inlinedAt: !17765)
+!17765 = distinct !DISubprogram(name: "map<polars_parquet::parquet::metadata::compact::ByteRange, alloc::vec::Vec<u8, alloc::alloc::Global>, polars_parquet::parquet::metadata::file_metadata_serde::chunk_to_wire::{closure#0}::{closure_env#1}>", linkageName: "_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata7compact9ByteRangeE3mapINtNtCsgZ49sUHp3tW_5alloc3vec3VechENCNCNvNtBM_19file_metadata_serde13chunk_to_wire0s_0EBQ_", scope: !868, file: !866, line: 1160, type: !860, scopeLine: 1160, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17766 = distinct !DILocation(line: 131, column: 32, scope: !17720, inlinedAt: !17721)
+!17767 = distinct !DISubprogram(name: "resolve", linkageName: "_RNvMNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata7compactNtB2_9ByteRange7resolve", scope: !17819, file: !17817, line: 44, type: !860, scopeLine: 44, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17768 = distinct !DISubprogram(name: "{closure#1}", linkageName: "_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0s_0Bb_", scope: !17820, file: !1258, line: 131, type: !860, scopeLine: 131, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17769 = distinct !DILexicalBlock(scope: !17765, file: !866, line: 1165, column: 13)
+!17770 = distinct !DILocation(line: 1165, column: 29, scope: !17769, inlinedAt: !17766)
+!17771 = distinct !DILocation(line: 131, column: 42, scope: !17768, inlinedAt: !17770)
+!17772 = distinct !DISubprogram(name: "index<u8>", linkageName: "_RNvXs2_NtNtCscgRAwXFJnXP_4core5slice5indexINtNtNtB9_3ops5range5RangejEINtB5_10SliceIndexShE5indexCsfISxE4fmY1Y_14polars_parquet", scope: !903, file: !899, line: 435, type: !860, scopeLine: 435, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17773 = distinct !DISubprogram(name: "index<u8, core::ops::range::Range<usize>>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core5slice5indexShINtNtNtB6_3ops5index5IndexINtNtBI_5range5RangejEE5indexCsfISxE4fmY1Y_14polars_parquet", scope: !902, file: !899, line: 18, type: !860, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17774 = distinct !DILocation(line: 45, column: 13, scope: !17767, inlinedAt: !17771)
+!17775 = distinct !DILocation(line: 19, column: 15, scope: !17773, inlinedAt: !17774)
+!17776 = distinct !DISubprogram(name: "get_offset_len_noubcheck<u8>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core5slice5index24get_offset_len_noubcheckhECsfISxE4fmY1Y_14polars_parquet", scope: !901, file: !899, line: 82, type: !860, scopeLine: 82, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17777 = distinct !DILexicalBlock(scope: !17776, file: !899, line: 87, column: 5)
+!17778 = distinct !DILocation(line: 441, column: 24, scope: !17772, inlinedAt: !17775)
+!17779 = distinct !{!17779, !"_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0s_0Bb_"}
+!17780 = distinct !{!17780, !17779, !"_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0s_0Bb_: argument 1"}
+!17781 = distinct !{!17781, !17779, !"_RNCNCNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8metadata19file_metadata_serde13chunk_to_wire0s_0Bb_: argument 0"}
+!17782 = distinct !DISubprogram(name: "with_capacity_in<alloc::alloc::Global>", linkageName: "_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsfISxE4fmY1Y_14polars_parquet", scope: !927, file: !925, line: 433, type: !860, scopeLine: 433, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17783 = distinct !DISubprogram(name: "with_capacity_in<u8, alloc::alloc::Global>", linkageName: "_RNvMs3_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVechE16with_capacity_inCsfISxE4fmY1Y_14polars_parquet", scope: !928, file: !925, line: 175, type: !860, scopeLine: 175, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17784 = distinct !DISubprogram(name: "with_capacity_in<u8, alloc::alloc::Global>", linkageName: "_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE16with_capacity_inCsfISxE4fmY1Y_14polars_parquet", scope: !920, file: !917, line: 976, type: !860, scopeLine: 976, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17785 = distinct !DISubprogram(name: "to_vec<u8, alloc::alloc::Global>", linkageName: "_RINvXs_NvMNtCsgZ49sUHp3tW_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECsfISxE4fmY1Y_14polars_parquet", scope: !1217, file: !1213, line: 446, type: !860, scopeLine: 446, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17786 = distinct !DILexicalBlock(scope: !17785, file: !1213, line: 447, column: 17)
+!17787 = distinct !DISubprogram(name: "to_vec_in<u8, alloc::alloc::Global>", linkageName: "_RINvMNtCsgZ49sUHp3tW_5alloc5sliceSh9to_vec_inNtNtB5_5alloc6GlobalECsfISxE4fmY1Y_14polars_parquet", scope: !1215, file: !1213, line: 396, type: !860, scopeLine: 396, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17788 = distinct !DISubprogram(name: "to_vec<u8>", linkageName: "_RNvMNtCsgZ49sUHp3tW_5alloc5sliceSh6to_vecCsfISxE4fmY1Y_14polars_parquet", scope: !1215, file: !1213, line: 372, type: !860, scopeLine: 372, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17789 = distinct !DILocation(line: 131, column: 58, scope: !17768, inlinedAt: !17770)
+!17790 = distinct !DILocation(line: 376, column: 14, scope: !17788, inlinedAt: !17789)
+!17791 = distinct !DILocation(line: 400, column: 16, scope: !17787, inlinedAt: !17790)
+!17792 = distinct !DILocation(line: 448, column: 29, scope: !17786, inlinedAt: !17791)
+!17793 = distinct !DILocation(line: 977, column: 20, scope: !17784, inlinedAt: !17792)
+!17794 = distinct !DILocation(line: 177, column: 20, scope: !17783, inlinedAt: !17793)
+!17795 = distinct !DILexicalBlock(scope: !17782, file: !925, line: 442, column: 13)
+!17796 = distinct !DISubprogram(name: "needs_to_grow<alloc::alloc::Global>", linkageName: "_RNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner13needs_to_growCsfISxE4fmY1Y_14polars_parquet", scope: !927, file: !925, line: 766, type: !860, scopeLine: 766, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17797 = distinct !DILexicalBlock(scope: !17782, file: !925, line: 435, column: 13)
+!17798 = distinct !DILocation(line: 438, column: 50, scope: !17797, inlinedAt: !17794)
+!17799 = distinct !DISubprogram(name: "assert_unchecked", linkageName: "_RNvNtCscgRAwXFJnXP_4core4hint16assert_unchecked", scope: !1076, file: !1075, line: 202, type: !860, scopeLine: 202, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17800 = distinct !DILocation(line: 438, column: 21, scope: !17797, inlinedAt: !17794)
+!17801 = distinct !DILexicalBlock(scope: !17786, file: !1213, line: 448, column: 17)
+!17802 = distinct !DISubprogram(name: "copy_nonoverlapping<u8>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr19copy_nonoverlappinghECsfISxE4fmY1Y_14polars_parquet", scope: !882, file: !885, line: 531, type: !860, scopeLine: 531, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17803 = distinct !DISubprogram(name: "copy_to_nonoverlapping<u8>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core3ptr9const_ptrPh22copy_to_nonoverlappingCsfISxE4fmY1Y_14polars_parquet", scope: !939, file: !937, line: 1247, type: !860, scopeLine: 1247, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
+!17804 = distinct !DILocation(line: 454, column: 36, scope: !17801, inlinedAt: !17791)
+!17805 = distinct !DILocation(line: 1252, column: 18, scope: !17803, inlinedAt: !17804)
+!17806 = distinct !DILocation(line: 132, column: 5, scope: !17720, inlinedAt: !17721)
+!17807 = distinct !DILocation(line: 810, column: 1, scope: !126, inlinedAt: !17806)
 !17808 = distinct !DILocation(line: 810, column: 1, scope: !128, inlinedAt: !17807)
 !17809 = distinct !DILexicalBlock(scope: !17714, file: !1258, line: 128, column: 5)
 !17810 = distinct !DILexicalBlock(scope: !17809, file: !1258, line: 136, column: 5)
@@ -787,8 +785,8 @@ begin_hunk_1_@llvm.smax.i32
 !17820 = !DINamespace(name: "{closure#0}", scope: !17814)
 !17821 = !{!17740, !17739, !17723, !17722, !17717}
 !17822 = !{!17740, !17723, !17717}
-!17823 = !{!17782, !17781, !17723, !17722, !17717}
-!17824 = !{!17782, !17723, !17717}
+!17823 = !{!17781, !17780, !17723, !17722, !17717}
+!17824 = !{!17781, !17723, !17717}
 !17825 = !DILocation(line: 128, column: 9, scope: !17714)
 !17826 = !DILocation(line: 745, column: 15, scope: !17715, inlinedAt: !17811)
 !17827 = !DILocation(line: 745, column: 9, scope: !17715, inlinedAt: !17811)
@@ -815,35 +813,35 @@ begin_hunk_1_@llvm.smax.i32
 !17848 = !DILocation(line: 552, column: 14, scope: !17761, inlinedAt: !17764)
 !17849 = !DILocation(line: 452, column: 17, scope: !17760, inlinedAt: !17750)
 !17850 = !DILocation(line: 1165, column: 24, scope: !17728, inlinedAt: !17725)
-!17851 = !DILocation(line: 810, column: 1, scope: !126, inlinedAt: !17765)
-!17852 = !DILocation(line: 1165, column: 33, scope: !17724, inlinedAt: !17725)
-!17853 = !DILocation(line: 1166, column: 21, scope: !17724, inlinedAt: !17725)
-!17854 = !DILocation(line: 1168, column: 5, scope: !17724, inlinedAt: !17725)
-!17855 = !DILocation(line: 131, column: 20, scope: !17720, inlinedAt: !17721)
-!17856 = !DILocation(line: 1164, column: 9, scope: !17766, inlinedAt: !17767)
-!17857 = !DILocation(line: 45, column: 14, scope: !17768, inlinedAt: !17772)
-!17858 = !DILocation(line: 45, column: 60, scope: !17768, inlinedAt: !17772)
-!17859 = !DILocation(line: 45, column: 36, scope: !17768, inlinedAt: !17772)
-!17860 = !DILocation(line: 438, column: 16, scope: !17773, inlinedAt: !17776)
-!17861 = !DILocation(line: 89, column: 24, scope: !17778, inlinedAt: !17779)
-!17862 = !DILocation(line: 434, column: 15, scope: !17783, inlinedAt: !17795)
-!17863 = !DILocation(line: 434, column: 9, scope: !17783, inlinedAt: !17795)
-!17864 = !DILocation(line: 0, scope: !17783, inlinedAt: !17795)
-!17865 = !DILocation(line: 443, column: 13, scope: !17773, inlinedAt: !17776)
-!17866 = !DILocation(line: 442, column: 17, scope: !17783, inlinedAt: !17795)
-!17867 = !DILocation(line: 442, column: 25, scope: !17796, inlinedAt: !17795)
-!17868 = !DILocation(line: 435, column: 16, scope: !17783, inlinedAt: !17795)
-!17869 = !DILocation(line: 767, column: 9, scope: !17797, inlinedAt: !17799)
-!17870 = !DILocation(line: 210, column: 9, scope: !17800, inlinedAt: !17801)
-!17871 = !DILocation(line: 443, column: 9, scope: !17783, inlinedAt: !17795)
-!17872 = !DILocation(line: 452, column: 20, scope: !17802, inlinedAt: !17792)
-!17873 = !DILocation(line: 552, column: 14, scope: !17803, inlinedAt: !17806)
-!17874 = !DILocation(line: 452, column: 17, scope: !17802, inlinedAt: !17792)
+!17851 = !DILocation(line: 1165, column: 33, scope: !17724, inlinedAt: !17725)
+!17852 = !DILocation(line: 1166, column: 21, scope: !17724, inlinedAt: !17725)
+!17853 = !DILocation(line: 1168, column: 5, scope: !17724, inlinedAt: !17725)
+!17854 = !DILocation(line: 131, column: 20, scope: !17720, inlinedAt: !17721)
+!17855 = !DILocation(line: 1164, column: 9, scope: !17765, inlinedAt: !17766)
+!17856 = !DILocation(line: 45, column: 14, scope: !17767, inlinedAt: !17771)
+!17857 = !DILocation(line: 45, column: 60, scope: !17767, inlinedAt: !17771)
+!17858 = !DILocation(line: 45, column: 36, scope: !17767, inlinedAt: !17771)
+!17859 = !DILocation(line: 438, column: 16, scope: !17772, inlinedAt: !17775)
+!17860 = !DILocation(line: 89, column: 24, scope: !17777, inlinedAt: !17778)
+!17861 = !DILocation(line: 434, column: 15, scope: !17782, inlinedAt: !17794)
+!17862 = !DILocation(line: 434, column: 9, scope: !17782, inlinedAt: !17794)
+!17863 = !DILocation(line: 0, scope: !17782, inlinedAt: !17794)
+!17864 = !DILocation(line: 443, column: 13, scope: !17772, inlinedAt: !17775)
+!17865 = !DILocation(line: 442, column: 17, scope: !17782, inlinedAt: !17794)
+!17866 = !DILocation(line: 442, column: 25, scope: !17795, inlinedAt: !17794)
+!17867 = !DILocation(line: 435, column: 16, scope: !17782, inlinedAt: !17794)
+!17868 = !DILocation(line: 767, column: 9, scope: !17796, inlinedAt: !17798)
+!17869 = !DILocation(line: 210, column: 9, scope: !17799, inlinedAt: !17800)
+!17870 = !DILocation(line: 443, column: 9, scope: !17782, inlinedAt: !17794)
+!17871 = !DILocation(line: 452, column: 20, scope: !17801, inlinedAt: !17791)
+!17872 = !DILocation(line: 552, column: 14, scope: !17802, inlinedAt: !17805)
+!17873 = !DILocation(line: 452, column: 17, scope: !17801, inlinedAt: !17791)
+!17874 = !DILocation(line: 810, column: 1, scope: !126, inlinedAt: !17806)
 !17875 = !DILocation(line: 810, column: 1, scope: !127, inlinedAt: !17808)
 !17876 = !DILocation(line: 128, column: 48, scope: !17720, inlinedAt: !17721)
 !17877 = !DILocation(line: 0, scope: !17713)
 !17878 = !DILocation(line: 131, scope: !17720, inlinedAt: !17721)
-!17879 = !DILocation(line: 0, scope: !17766, inlinedAt: !17767)
+!17879 = !DILocation(line: 0, scope: !17765, inlinedAt: !17766)
 !17880 = !DILocation(line: 1165, column: 24, scope: !17719, inlinedAt: !17813)
 !17881 = !DILocation(line: 128, column: 52, scope: !17720, inlinedAt: !17721)
 !17882 = !DILocation(line: 132, column: 5, scope: !17720, inlinedAt: !17721)

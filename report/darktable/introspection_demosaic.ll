@@ -205,7 +205,7 @@ bb.it:                                            ; preds = %bb.is
   %i.cci = insertelement <4 x i32> poison, i32 %smin1238, i64 0
   %i.ccj = shufflevector <4 x i32> %i.cci, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.cck = add <4 x i32> %i.ccj, %i.cca
-  %i.ccl = add i32 %smin1238, %i.ccb
+  %i.ccl = add i32 %smin1238, %i.ccb              ; 5 uses
   %i.ccm = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.cck, <4 x i32> <i32 7, i32 11, i32 10, i32 14>) ; 4 uses
   %i.ccn = add i32 %smin1238, %indvars.iv1201
   %i.cco = call i32 @llvm.smax.i32(i32 %i.ccn, i32 9)
@@ -217,7 +217,7 @@ bb.it:                                            ; preds = %bb.is
   %i.cct = add i32 %smin1238, -3
   %i.ccu = sext i32 %i.cct to i64
   %i.ccv = tail call i32 @llvm.smax.i32(i32 %i.ccl, i32 14)
-  %smax1762.i = zext nneg i32 %i.ccv to i64       ; 6 uses
+  %smax1762.i = zext nneg i32 %i.ccv to i64       ; 5 uses
   %i.ccw = trunc i64 %indvars.iv1583.i to i32     ; 2 uses
   %i.ccx = add i32 %i.ccw, 122
   %i.ccy = tail call i32 @llvm.smin.i32(i32 %i.ccx, i32 %i.cbd) ; 6 uses
@@ -256,30 +256,29 @@ bb.it:                                            ; preds = %bb.is
   %i.cef = add nsw i64 %i.cee, -7
   %scevgep2052 = getelementptr i8, ptr %scevgep2049, i64 %i.ccf
   %scevgep2056 = getelementptr i8, ptr %scevgep2055, i64 %i.ccg
-  %6 = add nsw i64 %smax1762.i, -13               ; 8 uses
-  %i.ceg = add nsw i64 %smax1762.i, -14           ; 4 uses
+  %i.ceg = add nsw i64 %smax1762.i, -13           ; 8 uses
   %i.ceh = extractelement <4 x i32> %i.ccm, i64 2
   %i.cei = zext nneg i32 %i.ceh to i64
   %i.cej = extractelement <4 x i32> %i.ccm, i64 1
   %i.cek = zext nneg i32 %i.cej to i64
-  %xtraiter4755 = and i64 %6, 7                   ; 3 uses
-  %7 = icmp ult i64 %i.ceg, 7
-  %unroll_iter4759 = and i64 %6, -8
+  %xtraiter4755 = and i64 %i.ceg, 7               ; 3 uses
+  %6 = icmp slt i32 %i.ccl, 21
+  %unroll_iter4759 = and i64 %i.ceg, -8
   %lcmp.mod4757.not = icmp eq i64 %xtraiter4755, 0
   %lcmp.mod4758 = icmp ne i64 %xtraiter4755, 0
-  %xtraiter4761 = and i64 %6, 7                   ; 3 uses
-  %8 = icmp ult i64 %i.ceg, 7
-  %unroll_iter4765 = and i64 %6, -8
+  %xtraiter4761 = and i64 %i.ceg, 7               ; 3 uses
+  %7 = icmp slt i32 %i.ccl, 21
+  %unroll_iter4765 = and i64 %i.ceg, -8
   %lcmp.mod4763.not = icmp eq i64 %xtraiter4761, 0
   %lcmp.mod4764 = icmp ne i64 %xtraiter4761, 0
-  %xtraiter4767 = and i64 %6, 7                   ; 3 uses
-  %9 = icmp ult i64 %i.ceg, 7
-  %unroll_iter4771 = and i64 %6, -8
+  %xtraiter4767 = and i64 %i.ceg, 7               ; 3 uses
+  %8 = icmp slt i32 %i.ccl, 21
+  %unroll_iter4771 = and i64 %i.ceg, -8
   %lcmp.mod4769.not = icmp eq i64 %xtraiter4767, 0
   %lcmp.mod4770 = icmp ne i64 %xtraiter4767, 0
-  %xtraiter4773 = and i64 %6, 7                   ; 3 uses
-  %10 = icmp ult i64 %i.ceg, 7
-  %unroll_iter4777 = and i64 %6, -8
+  %xtraiter4773 = and i64 %i.ceg, 7               ; 3 uses
+  %9 = icmp slt i32 %i.ccl, 21
+  %unroll_iter4777 = and i64 %i.ceg, -8
   %lcmp.mod4775.not = icmp eq i64 %xtraiter4773, 0
   %lcmp.mod4776 = icmp ne i64 %xtraiter4773, 0
   %i.cel = extractelement <4 x i32> %i.ccm, i64 3
@@ -332,7 +331,7 @@ bb.iu:                                            ; preds = %._crit_edge1503.spl
   %i.cfb = mul i32 %indvar2019, 384
   %i.cfc = add i32 %i.cch, %i.cfb
   %smin1235 = call i32 @llvm.smin.i32(i32 %indvars.iv1722.i, i32 %i.aqk) ; 7 uses
-  %i.cfd = add i32 %smin1235, %indvars.iv1724.i   ; 3 uses
+  %i.cfd = add i32 %smin1235, %indvars.iv1724.i   ; 4 uses
   %i.cfe = call i32 @llvm.umax.i32(i32 %i.cfd, i32 14)
   %umax1236 = zext i32 %i.cfe to i64
   %i.cff = add i32 %smin1235, %indvars.iv1226
@@ -341,7 +340,7 @@ bb.iu:                                            ; preds = %._crit_edge1503.spl
   %i.cfh = add i32 %smin1235, %indvars.iv1216
   %i.cfi = call i32 @llvm.umax.i32(i32 %i.cfh, i32 11)
   %umax1218 = zext i32 %i.cfi to i64
-  %i.cfj = add i32 %smin1235, %indvars.iv1206     ; 2 uses
+  %i.cfj = add i32 %smin1235, %indvars.iv1206     ; 3 uses
   %i.cfk = call i32 @llvm.smax.i32(i32 %i.cfj, i32 10)
   %smax1208 = zext nneg i32 %i.cfk to i64
   %i.cfl = add i32 %smin1235, -8
@@ -744,8 +743,8 @@ bb.ky:                                            ; preds = %._crit_edge2012.i
   %lcmp.mod4752 = trunc i32 %smax4748 to i1
   %i.dqf = call i32 @llvm.smax.i32(i32 %i.cfj, i32 10)
   %i.dqg = zext nneg i32 %i.dqf to i64
-  %i.dqh = add nsw i64 %i.dqg, -9                 ; 3 uses
-  %min.iters.check2547 = icmp ult i64 %i.dqh, 8
+  %i.dqh = add nsw i64 %i.dqg, -9                 ; 2 uses
+  %min.iters.check2547 = icmp slt i32 %i.cfj, 17
   %n.vec2549 = and i64 %i.dqh, -8                 ; 3 uses
   %i.dqi = add nsw i64 %n.vec2549, 9
   %cmp.n2563 = icmp eq i64 %i.dqh, %n.vec2549
@@ -1148,7 +1147,7 @@ scalar.ph2546:                                    ; preds = %scalar.ph2546.prehe
   br i1 %i.eav, label %.preheader1237.lr.ph.us.i, label %.lr.ph1427.split.i.preheader
 
 .lr.ph1427.split.i.preheader:                     ; preds = %.preheader1259.preheader.i
-  br i1 %7, label %.lr.ph1427.split.i.epil.preheader, label %.lr.ph1427.split.i
+  br i1 %6, label %.lr.ph1427.split.i.epil.preheader, label %.lr.ph1427.split.i
 
 .preheader1260.i:                                 ; preds = %.preheader1260.lr.ph.i, %._crit_edge1418.i
   %indvars.iv1700.i = phi i64 [ %i.eaw, %._crit_edge1418.i ], [ 10, %.preheader1260.lr.ph.i ] ; 7 uses
@@ -1551,7 +1550,7 @@ begin_hunk_3_@process:bb.a
   br i1 %epil.iter4762.cmp.not, label %.lr.ph1427.split.2.i.preheader, label %.lr.ph1427.split.1.i.epil, !llvm.loop !217
 
 .lr.ph1427.split.2.i.preheader:                   ; preds = %.lr.ph1427.split.1.i.epil, %.lr.ph1427.split.2.i.preheader.unr-lcssa
-  br i1 %9, label %.lr.ph1427.split.2.i.epil.preheader, label %.lr.ph1427.split.2.i
+  br i1 %8, label %.lr.ph1427.split.2.i.epil.preheader, label %.lr.ph1427.split.2.i
 
 .preheader1237.lr.ph.us.1.i:                      ; preds = %._crit_edge1425.us.i, %._crit_edge1425.us.1.i
   %indvar4538 = phi i64 [ %indvar.next4539, %._crit_edge1425.us.1.i ], [ 0, %._crit_edge1425.us.i ] ; 2 uses
@@ -1680,7 +1679,7 @@ begin_hunk_3_@process:bb.a
   br i1 %epil.iter4768.cmp.not, label %.lr.ph1427.split.3.i.preheader, label %.lr.ph1427.split.2.i.epil, !llvm.loop !218
 
 .lr.ph1427.split.3.i.preheader:                   ; preds = %.lr.ph1427.split.2.i.epil, %.lr.ph1427.split.3.i.preheader.unr-lcssa
-  br i1 %10, label %.lr.ph1427.split.3.i.epil.preheader, label %.lr.ph1427.split.3.i
+  br i1 %9, label %.lr.ph1427.split.3.i.epil.preheader, label %.lr.ph1427.split.3.i
 
 .preheader1237.lr.ph.us.2.i:                      ; preds = %._crit_edge1425.us.1.i, %._crit_edge1425.us.2.i
   %indvar4543 = phi i64 [ %indvar.next4544, %._crit_edge1425.us.2.i ], [ 0, %._crit_edge1425.us.1.i ] ; 2 uses
@@ -1914,7 +1913,7 @@ begin_hunk_3_@process:bb.a
   br i1 %epil.iter4756.cmp.not, label %.lr.ph1427.split.1.i.preheader, label %.lr.ph1427.split.i.epil, !llvm.loop !219
 
 .lr.ph1427.split.1.i.preheader:                   ; preds = %.lr.ph1427.split.i.epil, %.lr.ph1427.split.1.i.preheader.unr-lcssa
-  br i1 %8, label %.lr.ph1427.split.1.i.epil.preheader, label %.lr.ph1427.split.1.i
+  br i1 %7, label %.lr.ph1427.split.1.i.epil.preheader, label %.lr.ph1427.split.1.i
 
 .preheader1264.i:                                 ; preds = %._crit_edge1482.i
   %i.epz = icmp sgt i32 %i.dpz, 26
@@ -1928,8 +1927,8 @@ begin_hunk_3_@process:bb.a
   %scevgep2046 = getelementptr i8, ptr %scevgep2045, i64 %i.cet
   %i.eqa = call i32 @llvm.umax.i32(i32 %i.cfd, i32 14)
   %i.eqb = zext i32 %i.eqa to i64
-  %i.eqc = add nsw i64 %i.eqb, -13                ; 3 uses
-  %min.iters.check2078 = icmp ult i64 %i.eqc, 8
+  %i.eqc = add nsw i64 %i.eqb, -13                ; 2 uses
+  %min.iters.check2078 = icmp ult i32 %i.cfd, 21
   %i.eqd = trunc nuw i64 %i.cfa to i32
   %mul.result2024 = shl i32 %i.eqd, 2
   %mul.overflow2025 = icmp samesign ugt i64 %i.cfa, 1073741823
@@ -2332,7 +2331,7 @@ bb.h:                                             ; preds = %.split.2.2
   %i.ek = shl nuw nsw i32 %.tr.i, 1
   %i.el = lshr i32 %4, %i.ek
   %i.em = and i32 %i.el, 3                        ; 3 uses
-  %i.en = add i64 %i.v, %i.ei
+  %i.en = add nsw i64 %i.v, %i.ei
   %.idx351 = shl i64 %i.en, 4                     ; 3 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 %.idx351
   %i.ep = add nsw i64 %i.w, %i.ei                 ; 2 uses

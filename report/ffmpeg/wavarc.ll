@@ -205,11 +205,10 @@ get_urice.exit195.i:                              ; preds = %bb.ac, %.lr.ph.i.i1
   %i.nm = getelementptr inbounds nuw [280 x i8], ptr %i.bq, i64 %i.fn ; 4 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.nh, i32 1)
   %wide.trip.count257.i = zext nneg i32 %smax.i to i64 ; 6 uses
-  %i.nn = add nsw i64 %wide.trip.count257.i, -1   ; 2 uses
+  %i.nn = add nuw nsw i64 %wide.trip.count257.i, 17179869183
   %min.iters.check296 = icmp slt i32 %i.nh, 16
-  %i.no = trunc nsw i64 %i.nn to i34
+  %i.no = trunc i64 %i.nn to i34
   %mul.result = shl nsw i34 %i.no, 2
-  %mul.overflow = icmp ugt i64 %i.nn, 4294967295
   %n.vec298 = and i64 %wide.trip.count257.i, 120  ; 3 uses
   %cmp.n309 = icmp eq i64 %n.vec298, %wide.trip.count257.i
   %xtraiter = and i64 %wide.trip.count257.i, 1
@@ -276,17 +275,14 @@ get_srice.exit.i:                                 ; preds = %bb.ae, %.lr.ph.i.i.
   %i.os = shl nuw nsw i64 %indvars.iv259.i, 2
   %i.ot = add nuw i64 %i.os, 276
   %i.ou = trunc i64 %i.ot to i34                  ; 2 uses
-  br i1 %.not242.i, label %._crit_edge.i, label %.lr.ph223.i
+  br i1 %.not242.i, label %._crit_edge.i, label %vector.scevcheck
 
-.lr.ph223.i:                                      ; preds = %.preheader203.i
+vector.scevcheck:                                 ; preds = %.preheader203.i
   %4 = add nuw nsw i64 %indvars.iv259.i, 69       ; 4 uses
-  br i1 %min.iters.check296, label %scalar.ph295.preheader, label %vector.scevcheck
-
-vector.scevcheck:                                 ; preds = %.lr.ph223.i
   %i.ov = sub i34 %i.ou, %mul.result
   %i.ow = icmp sgt i34 %i.ov, %i.ou
-  %5 = or i1 %i.ow, %mul.overflow
-  br i1 %5, label %scalar.ph295.preheader, label %vector.body299
+  %or.cond = select i1 %min.iters.check296, i1 true, i1 %i.ow
+  br i1 %or.cond, label %scalar.ph295.preheader, label %vector.body299
 
 vector.body299:                                   ; preds = %vector.scevcheck, %vector.body299
   %index300 = phi i64 [ %index.next307, %vector.body299 ], [ 0, %vector.scevcheck ] ; 3 uses
@@ -319,9 +315,9 @@ middle.block308:                                  ; preds = %vector.body299
   %i.pk = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   br i1 %cmp.n309, label %._crit_edge.loopexit.i, label %scalar.ph295.preheader
 
-scalar.ph295.preheader:                           ; preds = %vector.scevcheck, %.lr.ph223.i, %middle.block308
-  %indvars.iv254.i.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph223.i ], [ %n.vec298, %middle.block308 ] ; 5 uses
-  %.0123221.i.ph = phi i32 [ 15, %vector.scevcheck ], [ 15, %.lr.ph223.i ], [ %i.pk, %middle.block308 ] ; 2 uses
+scalar.ph295.preheader:                           ; preds = %vector.scevcheck, %middle.block308
+  %indvars.iv254.i.ph = phi i64 [ %n.vec298, %middle.block308 ], [ 0, %vector.scevcheck ] ; 5 uses
+  %.0123221.i.ph = phi i32 [ %i.pk, %middle.block308 ], [ 15, %vector.scevcheck ] ; 2 uses
   br i1 %lcmp.mod.not, label %scalar.ph295.prol.loopexit, label %scalar.ph295.prol
 
 scalar.ph295.prol:                                ; preds = %scalar.ph295.preheader

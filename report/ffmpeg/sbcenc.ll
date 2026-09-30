@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.gy = load ptr, ptr %i.fl, align 8, !tbaa !83
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 2
   store i8 %.sink.i, ptr %i.gz, align 1, !tbaa !84
-  %i.ha = load ptr, ptr %i.fl, align 8, !tbaa !83 ; 3 uses
+  %i.ha = load ptr, ptr %i.fl, align 8, !tbaa !83 ; 4 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 1
   %i.hc = load i8, ptr %i.hb, align 1, !tbaa !84
   store i8 %i.hc, ptr %i.a, align 1, !tbaa !84
@@ -214,11 +214,11 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   store i8 %i.he, ptr %i.hf, align 1, !tbaa !84
   %i.hg = getelementptr inbounds nuw i8, ptr %i.ha, i64 4
   %i.hh = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.hi = load i32, ptr %i.hh, align 8, !tbaa !85 ; 2 uses
+  %i.hi = load i32, ptr %i.hh, align 8, !tbaa !85 ; 3 uses
   %i.hj = icmp slt i32 %i.hi, 4
-  %spec.select.i.i = select i1 %i.hj, ptr null, ptr %i.hg ; 5 uses
+  %spec.select.i.i = select i1 %i.hj, ptr null, ptr %i.hg ; 4 uses
   %i.hk = tail call i32 @llvm.smax.i32(i32 %i.hi, i32 4)
-  %i.hl = zext nneg i32 %i.hk to i64              ; 2 uses
+  %i.hl = zext nneg i32 %i.hk to i64
   %i.hm = getelementptr i8, ptr %spec.select.i.i, i64 %i.hl
   %i.hn = getelementptr i8, ptr %i.hm, i64 -4     ; 3 uses
   %i.ho = load i32, ptr %i.h, align 4, !tbaa !34
@@ -232,12 +232,11 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.hs, label %put_bits.exit.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %4 = and i64 %i.hl, 2147483644
-  %.not127.i = icmp eq i64 %4, 4
-  br i1 %.not127.i, label %bb.t, label %bb.s
+  %4 = icmp sgt i32 %i.hi, 7
+  br i1 %4, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %i.ht = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 4
+  %i.ht = getelementptr inbounds nuw i8, ptr %i.ha, i64 8
   br label %put_bits.exit.i
 
 bb.t:                                             ; preds = %bb.r

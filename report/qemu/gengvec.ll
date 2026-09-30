@@ -202,8 +202,6 @@ define dso_local void @gen_neon_sqshli(i32 noundef %0, i32 noundef %1, i32 nound
 bb.a:
   %i.a = icmp ult i32 %0, 4
   tail call void @llvm.assume(i1 %i.a)
-  %6 = icmp sgt i64 %3, -1
-  tail call void @llvm.assume(i1 %6)
   %i.b = shl nuw nsw i32 8, %0
   %i.c = zext nneg i32 %i.b to i64
   %i.d = icmp samesign ule i64 %3, %i.c
@@ -296,8 +294,6 @@ define dso_local void @gen_neon_uqshli(i32 noundef %0, i32 noundef %1, i32 nound
 bb.a:
   %i.a = icmp ult i32 %0, 4
   tail call void @llvm.assume(i1 %i.a)
-  %6 = icmp sgt i64 %3, -1
-  tail call void @llvm.assume(i1 %6)
   %i.b = shl nuw nsw i32 8, %0
   %i.c = zext nneg i32 %i.b to i64
   %i.d = icmp samesign ule i64 %3, %i.c
@@ -388,8 +384,6 @@ define dso_local void @gen_neon_sqshlui(i32 noundef %0, i32 noundef %1, i32 noun
 bb.a:
   %i.a = icmp ult i32 %0, 4
   tail call void @llvm.assume(i1 %i.a)
-  %6 = icmp sgt i64 %3, -1
-  tail call void @llvm.assume(i1 %6)
   %i.b = shl nuw nsw i32 8, %0
   %i.c = zext nneg i32 %i.b to i64
   %i.d = icmp samesign ule i64 %3, %i.c

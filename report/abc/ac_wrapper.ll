@@ -205,7 +205,7 @@ _ZN3acd10acdXX_impl17get_decompositionEPh.exit:   ; preds = %_ZN3acd10acdXX_impl
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @acdXX_evaluate(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @acdXX_evaluate(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %"class.acd::acd66_impl", align 8   ; 15 uses
   %4 = alloca %"class.acd::acdXX_impl", align 8   ; 17 uses
@@ -528,7 +528,7 @@ _ZN3acd10acdXX_impl18find_decompositionEv.exit:   ; preds = %.lr.ph.i, %.critedg
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @acdXX_decompose(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @acdXX_decompose(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %4 = alloca %"class.acd::acdXX_impl", align 8   ; 22 uses
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -931,17 +931,15 @@ bb.k:                                             ; preds = %_ZN5kitty7has_varIN
   br i1 %.not92.i, label %_ZN3acd21ac_decomposition_impl24adjust_truth_table_on_dcERN5kitty18static_truth_tableILj11ELb0EEES4_jj.exit, label %.preheader85.us.preheader.i
 
 .preheader85.us.preheader.i:                      ; preds = %bb.k
-  %smax.i23 = call i32 @llvm.smax.i32(i32 %i.lr, i32 1)
-  %wide.trip.count.i24 = zext nneg i32 %smax.i23 to i64 ; 4 uses
-  %4 = add nsw i64 %wide.trip.count.i24, -1       ; 2 uses
+  %smax.i23 = call i32 @llvm.smax.i32(i32 %i.lr, i32 1) ; 2 uses
+  %wide.trip.count.i24 = zext nneg i32 %smax.i23 to i64 ; 3 uses
+  %4 = add nsw i32 %smax.i23, -1                  ; 2 uses
   %i.lt = shl nuw nsw i64 %wide.trip.count.i24, 3 ; 4 uses
   %scevgep158 = getelementptr i8, ptr %2, i64 %i.lt
   %scevgep161 = getelementptr i8, ptr %2, i64 %i.lt
   %scevgep164 = getelementptr i8, ptr %3, i64 %i.lt
   %scevgep167 = getelementptr i8, ptr %3, i64 %i.lt
   %min.iters.check = icmp slt i32 %i.lr, 8
-  %5 = trunc nsw i64 %4 to i32                    ; 2 uses
-  %6 = icmp ugt i64 %4, 4294967295
   %n.vec = and i64 %wide.trip.count.i24, 2147483646
   br label %.preheader85.us.i
 
@@ -968,11 +966,10 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %v
 vector.scevcheck:                                 ; preds = %.preheader85.us.i
   %i.lz = add i32 %i.lr, %.08088.us.i
   %i.ma = xor i32 %.08088.us.i, -1
-  %7 = icmp ult i32 %i.ma, %5
+  %5 = icmp ugt i32 %4, %i.ma
   %i.mb = xor i32 %i.lz, -1
-  %8 = icmp ult i32 %i.mb, %5
-  %9 = or i1 %8, %6
-  %i.mc = or i1 %7, %9
+  %6 = icmp ugt i32 %4, %i.mb
+  %i.mc = or i1 %5, %6
   br i1 %i.mc, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

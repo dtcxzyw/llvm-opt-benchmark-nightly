@@ -168,7 +168,7 @@ bb.a:
   %i.a = alloca [512 x i8], align 16              ; 20 uses
   %i.b = ptrtoaddr ptr %i.a to i64                ; 3 uses
   %i.c = alloca [8 x i8], align 1                 ; 27 uses
-  %i.d = alloca [8 x i8], align 1                 ; 27 uses
+  %i.d = alloca [8 x i8], align 1                 ; 26 uses
   %i.e = alloca i32, align 4                      ; 33 uses
   %i.f = alloca i32, align 4                      ; 17 uses
   %i.g = alloca ptr, align 8                      ; 55 uses
@@ -571,7 +571,7 @@ bb.bh:                                            ; preds = %._crit_edge1684
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bg
-  %.promoted1686 = phi i32 [ %i.is, %bb.bh ], [ %i.km, %bb.bg ] ; 8 uses
+  %.promoted1686 = phi i32 [ %i.is, %bb.bh ], [ %i.km, %bb.bg ] ; 7 uses
   %i.kn = icmp samesign ult i32 %.promoted1686, 1000 ; 2 uses
   %i.ko = icmp samesign ugt i32 %.promoted1686, 99
   %i.kp = icmp samesign ugt i32 %.promoted1686, 9
@@ -584,7 +584,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
   %i.ku = urem i16 %.lhs.trunc, 10
   %i.kv = trunc nuw nsw i16 %i.ku to i8
   %i.kw = or disjoint i8 %i.kv, 48
-  %i.kx = zext nneg i32 %i.ks to i64              ; 5 uses
+  %i.kx = zext nneg i32 %i.ks to i64              ; 4 uses
   %i.ky = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.kx
   store i8 %i.kw, ptr %i.ky, align 1, !tbaa !9
   %i.kz = icmp samesign ult i32 %i.ks, 4
@@ -599,40 +599,29 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
   %i.lf = getelementptr i8, ptr %i.le, i64 -1
   store i8 %i.ld, ptr %i.lf, align 1, !tbaa !9
   %i.lg = icmp eq i32 %i.ks, 4
-  br i1 %i.lg, label %._crit_edge1691, label %.lr.ph1690.1
+  br i1 %i.lg, label %._crit_edge1691, label %.lr.ph1690.2.a
 
-.lr.ph1690.1:                                     ; preds = %.lr.ph1690
-  %5 = add nsw i64 %i.kx, -2                      ; 2 uses
-  %6 = udiv i32 %.promoted1686, 100
-  %7 = urem i32 %6, 10
-  %8 = trunc nuw nsw i32 %7 to i8
-  %9 = or disjoint i8 %8, 48
-  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 %5
-  store i8 %9, ptr %10, align 1, !tbaa !9
-  br i1 %i.kn, label %._crit_edge1691, label %.lr.ph1690.2.a
-
-.lr.ph1690.2.a:                                   ; preds = %.lr.ph1690.1
-  %i.lh = udiv i32 %.promoted1686, 1000
+.lr.ph1690.2.a:                                   ; preds = %.lr.ph1690
+  %i.lh = udiv i32 %.promoted1686, 100
   %i.li = urem i32 %i.lh, 10
   %i.lj = trunc nuw nsw i32 %i.li to i8
   %i.lk = or disjoint i8 %i.lj, 48
   %i.ll = getelementptr i8, ptr %i.d, i64 %i.kx
-  %i.lm = getelementptr i8, ptr %i.ll, i64 -3
+  %i.lm = getelementptr i8, ptr %i.ll, i64 -2
   store i8 %i.lk, ptr %i.lm, align 1, !tbaa !9
-  %11 = icmp ult i64 %5, 5
-  br i1 %11, label %._crit_edge1691, label %.lr.ph1690.3
+  br i1 %i.kn, label %._crit_edge1691, label %.lr.ph1690.3
 
 .lr.ph1690.3:                                     ; preds = %.lr.ph1690.2.a
-  %i.ln = udiv i32 %.promoted1686, 10000
+  %i.ln = udiv i32 %.promoted1686, 1000
   %i.lo = urem i32 %i.ln, 10
   %i.lp = trunc nuw nsw i32 %i.lo to i8
   %i.lq = or disjoint i8 %i.lp, 48
   %i.lr = getelementptr i8, ptr %i.d, i64 %i.kx
-  %i.ls = getelementptr i8, ptr %i.lr, i64 -4
+  %i.ls = getelementptr i8, ptr %i.lr, i64 -3
   store i8 %i.lq, ptr %i.ls, align 1, !tbaa !9
   br label %._crit_edge1691
 
-._crit_edge1691:                                  ; preds = %.lr.ph1690, %.lr.ph1690.1, %.lr.ph1690.2.a, %.lr.ph1690.3, %bb.bi
+._crit_edge1691:                                  ; preds = %.lr.ph1690, %.lr.ph1690.2.a, %.lr.ph1690.3, %bb.bi
   %i.lt = ptrtoint ptr %.1739.lcssa to i64        ; 2 uses
   %i.lu = ptrtoint ptr %.07382128 to i64
   %i.lv = sub i64 %i.lt, %i.lu

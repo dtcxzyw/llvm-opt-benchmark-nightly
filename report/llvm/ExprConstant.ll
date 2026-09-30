@@ -205,9 +205,7 @@ _ZNK5clang17PartialDiagnosticlsIjEERKS0_RKT_.exit.i.i: ; preds = %_ZNK5clang19St
   br label %_ZN5clang18OptionalDiagnosticlsIjEERS0_RKT_.exit.i
 
 _ZNK4llvm6APSInt11getExtValueEv.exit.thread.i:    ; preds = %_ZNK4llvm6APSInt11getExtValueEv.exit.i, %bb.p
-  %i.dc = phi i64 [ %i.cl, %_ZNK4llvm6APSInt11getExtValueEv.exit.i ], [ 0, %bb.p ] ; 5 uses
-  %9 = icmp sgt i64 %i.dc, -1
-  call void @llvm.assume(i1 %9)
+  %i.dc = phi i64 [ %i.cl, %_ZNK4llvm6APSInt11getExtValueEv.exit.i ], [ 0, %bb.p ] ; 4 uses
   %i.dd = add i32 %i.bn, %i.bm
   %i.de = zext i32 %i.dd to i64
   %.not.i = icmp samesign ult i64 %i.dc, %i.de

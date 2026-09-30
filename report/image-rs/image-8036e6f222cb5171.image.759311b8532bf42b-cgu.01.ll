@@ -205,11 +205,11 @@ _RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_1
   br i1 %i.bz, label %_RNvMsc_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAhj40_E10triple_mutCsa5QsYiPB8Gl_5image.exit.i.i.i.i.i.i, label %_RNvMsc_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAhj40_E6tripleCsa5QsYiPB8Gl_5image.exit.i.i
 
 _RNvMsc_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAhj40_E10triple_mutCsa5QsYiPB8Gl_5image.exit.i.i.i.i.i.i: ; preds = %_RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_12ResizableVechE3lenCsa5QsYiPB8Gl_5image.exit11.thread.i.i, %_RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_12ResizableVechE3lenCsa5QsYiPB8Gl_5image.exit11.i.i
-  %.sink252 = phi i64 [ %i.bx, %_RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_12ResizableVechE3lenCsa5QsYiPB8Gl_5image.exit11.i.i ], [ %i.bv, %_RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_12ResizableVechE3lenCsa5QsYiPB8Gl_5image.exit11.thread.i.i ] ; 7 uses
+  %.sink252 = phi i64 [ %i.bx, %_RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_12ResizableVechE3lenCsa5QsYiPB8Gl_5image.exit11.i.i ], [ %i.bv, %_RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_12ResizableVechE3lenCsa5QsYiPB8Gl_5image.exit11.thread.i.i ] ; 6 uses
   %.sink.i.i.i.i.i.i.i = phi i64 [ %i.bv, %_RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_12ResizableVechE3lenCsa5QsYiPB8Gl_5image.exit11.i.i ], [ 64, %_RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_12ResizableVechE3lenCsa5QsYiPB8Gl_5image.exit11.thread.i.i ]
   %i.ca = add nuw nsw i64 %.sink252, 64
-  %..i3.i.i = call noundef i64 @llvm.umin.i64(i64 %i.bq, i64 %i.ca) ; 5 uses
-  %i.cb = sub nuw nsw i64 %..i3.i.i, %.sink252    ; 5 uses
+  %..i3.i.i = call noundef i64 @llvm.umin.i64(i64 %i.bq, i64 %i.ca) ; 4 uses
+  %i.cb = sub nuw nsw i64 %..i3.i.i, %.sink252    ; 6 uses
   %i.cc = sub i64 %.sink.i.i.i.i.i.i.i, %.sink252
   %.not.i.i.i.i.i.i = icmp ult i64 %i.cc, %i.cb
   br i1 %.not.i.i.i.i.i.i, label %bb.l, label %_RINvCs8zlGlznUR0G_8smallvec10infallibleuECsa5QsYiPB8Gl_5image.exit.i.i.i.i.i
@@ -384,9 +384,8 @@ _RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_1
 bb.s:                                             ; preds = %_RNvXsc_NtCsdsTQD3x2eOp_3exr2ioINtCs8zlGlznUR0G_8smallvec8SmallVecAhj40_EINtB5_12ResizableVechE6resizeCsa5QsYiPB8Gl_5image.exit.i.i
   %i.dv = load ptr, ptr %i.bt, align 8, !nonnull !5
   %.sink12.i.i14.i.i = select i1 %i.ds, ptr %i.dv, ptr %.sroa.4.0..sroa_idx.i
-  %3 = sub nuw i64 %..i3.i.i, %.sink252
   %i.dw = getelementptr inbounds nuw i8, ptr %.sink12.i.i14.i.i, i64 %.sink252
-  %i.dx = invoke noundef ptr @_RNvXso_NtCslM68MWqqr2K_4lebe2ioINtNtCsdsTQD3x2eOp_3exr2io8PeekReadINtBw_8TrackingINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEEEINtB5_10ReadEndianB1Z_E28read_from_little_endian_intoCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %1, ptr noalias nofree noundef nonnull %i.dw, i64 noundef range(i64 0, -9223372036854775808) %3)
+  %i.dx = invoke noundef ptr @_RNvXso_NtCslM68MWqqr2K_4lebe2ioINtNtCsdsTQD3x2eOp_3exr2io8PeekReadINtBw_8TrackingINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEEEINtB5_10ReadEndianB1Z_E28read_from_little_endian_intoCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %1, ptr noalias nofree noundef nonnull %i.dw, i64 noundef range(i64 0, -9223372036854775808) %i.cb)
           to label %.noexc10.i unwind label %.loopexit.split-lp.loopexit.i, !noalias !5380 ; 2 uses
 
 .noexc10.i:                                       ; preds = %bb.s

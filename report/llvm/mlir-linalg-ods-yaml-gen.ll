@@ -205,18 +205,16 @@ bb.f:                                             ; preds = %bb.ew, %.lr.ph.i
   %i.cw = ptrtoint ptr %.sroa.9.0 to i64          ; 2 uses
   %i.cx = ptrtoint ptr %.sroa.071.0 to i64        ; 2 uses
   %i.cy = sub i64 %i.cw, %i.cx                    ; 2 uses
-  %i.cz = sdiv exact i64 %i.cy, 1256              ; 6 uses
+  %i.cz = sdiv exact i64 %i.cy, 1256              ; 5 uses
   %.not.i.i = icmp ugt i64 %i.cz, %indvars.iv.i
   br i1 %.not.i.i, label %_ZN4llvm4yaml15IsResizableBaseISt6vectorIN12_GLOBAL__N_114LinalgOpConfigESaIS4_EEE7elementERNS0_2IOERS6_m.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.da = add nuw nsw i64 %indvars.iv.i, 1
-  %i.db = sub nuw nsw i64 %i.da, %i.cz            ; 5 uses
+  %i.db = sub nuw i64 %i.da, %i.cz                ; 5 uses
   %i.dc = ptrtoint ptr %.sroa.14.0 to i64         ; 2 uses
   %i.dd = sub i64 %i.dc, %i.cw
   %i.de = sdiv exact i64 %i.dd, 1256              ; 2 uses
-  %35 = icmp samesign ult i64 %i.cz, 7343449073928962
-  call void @llvm.assume(i1 %35)
   %i.df = sub nuw nsw i64 7343449073928961, %i.cz
   %i.dg = icmp ule i64 %i.de, %i.df
   call void @llvm.assume(i1 %i.dg)

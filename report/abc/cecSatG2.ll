@@ -205,13 +205,11 @@ bb.a:
   br i1 %i.d, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader20
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64   ; 5 uses
-  %min.iters.check = icmp slt i32 %i.a, 8
-  %i.e = add nsw i32 %smax, -17
-  %i.f = icmp ult i32 %i.e, -16
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %i.f
-  br i1 %or.cond, label %.lr.ph.preheader70, label %vector.ph
+  %i.e = add i32 %i.a, -17
+  %i.f = icmp ult i32 %i.e, -9
+  br i1 %i.f, label %.lr.ph.preheader70, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %wide.trip.count, 24           ; 3 uses
@@ -277,13 +275,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.d, label %.lr.ph26.preheader, label %.loopexit
 
 .lr.ph26.preheader:                               ; preds = %.preheader
-  %smax34 = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 2 uses
+  %smax34 = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
   %wide.trip.count35 = zext nneg i32 %smax34 to i64 ; 5 uses
-  %min.iters.check47 = icmp slt i32 %i.a, 8
-  %i.ad = add nsw i32 %smax34, -17
-  %i.ae = icmp ult i32 %i.ad, -16
-  %or.cond66 = select i1 %min.iters.check47, i1 true, i1 %i.ae
-  br i1 %or.cond66, label %.lr.ph26.preheader67, label %vector.ph48
+  %i.ad = add i32 %i.a, -17
+  %i.ae = icmp ult i32 %i.ad, -9
+  br i1 %i.ae, label %.lr.ph26.preheader67, label %vector.ph48
 
 vector.ph48:                                      ; preds = %.lr.ph26.preheader
   %n.vec49 = and i64 %wide.trip.count35, 24       ; 3 uses
@@ -686,13 +682,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.m
   br i1 %i.aa, label %.lr.ph.preheader.i, label %Cec4_ManSimHashKey.exit
 
 .lr.ph.preheader.i:                               ; preds = %.preheader20.i
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.x, i32 1) ; 2 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.x, i32 1)
   %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 5 uses
-  %min.iters.check93 = icmp slt i32 %i.x, 8
-  %i.ab = add nsw i32 %smax.i, -17
-  %i.ac = icmp ult i32 %i.ab, -16
-  %or.cond = select i1 %min.iters.check93, i1 true, i1 %i.ac
-  br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.ph94
+  %i.ab = add i32 %i.x, -17
+  %i.ac = icmp ult i32 %i.ab, -9
+  br i1 %i.ac, label %.lr.ph.i.preheader, label %vector.ph94
 
 vector.ph94:                                      ; preds = %.lr.ph.preheader.i
   %n.vec95 = and i64 %wide.trip.count.i, 24       ; 3 uses
@@ -758,13 +752,11 @@ middle.block105:                                  ; preds = %vector.body96
   br i1 %i.aa, label %.lr.ph26.preheader.i, label %Cec4_ManSimHashKey.exit
 
 .lr.ph26.preheader.i:                             ; preds = %.preheader.i
-  %smax34.i = tail call i32 @llvm.smax.i32(i32 %i.x, i32 1) ; 2 uses
+  %smax34.i = tail call i32 @llvm.smax.i32(i32 %i.x, i32 1)
   %wide.trip.count35.i = zext nneg i32 %smax34.i to i64 ; 5 uses
-  %min.iters.check = icmp slt i32 %i.x, 8
-  %i.ba = add nsw i32 %smax34.i, -17
-  %i.bb = icmp ult i32 %i.ba, -16
-  %or.cond112 = select i1 %min.iters.check, i1 true, i1 %i.bb
-  br i1 %or.cond112, label %.lr.ph26.i.preheader, label %vector.ph
+  %i.ba = add i32 %i.x, -17
+  %i.bb = icmp ult i32 %i.ba, -9
+  br i1 %i.bb, label %.lr.ph26.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph26.preheader.i
   %n.vec = and i64 %wide.trip.count35.i, 24       ; 3 uses

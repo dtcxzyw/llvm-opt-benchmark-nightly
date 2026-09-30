@@ -205,13 +205,13 @@ bb.ad:                                            ; preds = %bb.ac
   %i.kl = extractelement <2 x i32> %i.ke, i64 1   ; 2 uses
   %i.km = call i32 @llvm.umin.i32(i32 %i.kl, i32 8000)
   %umin.i = zext nneg i32 %i.km to i64            ; 3 uses
-  %i.kn = sub nsw i64 8001, %umin.i               ; 3 uses
+  %i.kn = sub nuw nsw i64 8001, %umin.i           ; 3 uses
   %xtraiter188 = and i64 %i.kn, 1
   %i.ko = icmp samesign ugt i32 %i.kl, 7999
   br i1 %i.ko, label %.epil.preheader187, label %.new
 
 .new:                                             ; preds = %bb.ad
-  %unroll_iter194 = and i64 %i.kn, -2
+  %unroll_iter194 = and i64 %i.kn, 8190
   br label %bb.af
 
 .unr-lcssa:                                       ; preds = %bb.af
@@ -319,17 +319,16 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ms = load i32, ptr %i.mr, align 8, !tbaa !160
   %i.mt = add i32 %i.ms, 1
   store i32 %i.mt, ptr %i.mr, align 8, !tbaa !160
-  %i.mu = extractelement <2 x i32> %i.mn, i64 1
-  %i.mv = call i32 @llvm.umin.i32(i32 %i.mu, i32 8000) ; 2 uses
+  %i.mu = extractelement <2 x i32> %i.mn, i64 1   ; 2 uses
+  %i.mv = call i32 @llvm.umin.i32(i32 %i.mu, i32 8000)
   %umin553.i = zext nneg i32 %i.mv to i64         ; 4 uses
-  %i.mw = sub nsw i64 8001, %umin553.i            ; 2 uses
+  %i.mw = sub nuw nsw i64 8001, %umin553.i        ; 2 uses
   %xtraiter199 = and i64 %i.mw, 3                 ; 3 uses
-  %1 = add nsw i32 %i.mv, -7998
-  %2 = icmp ult i32 %1, 3
-  br i1 %2, label %.epil.preheader198, label %.new196
+  %1 = icmp samesign ugt i32 %i.mu, 7997
+  br i1 %1, label %.epil.preheader198, label %.new196
 
 .new196:                                          ; preds = %bb.ak
-  %unroll_iter205 = and i64 %i.mw, -4
+  %unroll_iter205 = and i64 %i.mw, 8188
   br label %bb.am
 
 .unr-lcssa197:                                    ; preds = %bb.am

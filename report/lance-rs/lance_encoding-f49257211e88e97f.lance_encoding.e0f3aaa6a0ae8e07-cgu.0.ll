@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %bb.c
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ec = load ptr, ptr %i.eb, align 8, !nonnull !75, !noundef !75 ; 7 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.ee = load i64, ptr %i.ed, align 8, !noundef !75 ; 9 uses
+  %i.ee = load i64, ptr %i.ed, align 8, !noundef !75 ; 8 uses
   %i.ef = icmp eq i64 %i.ee, 0
   %.not21.i.i = icmp eq i64 %i.ee, 1
   br i1 %i.ef, label %_RNvNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive6sparse20push_coalesced_range.exit513.us.preheader, label %.preheader.i.i
@@ -608,9 +608,7 @@ bb.cj:                                            ; preds = %_RINvNtCscI6d9CVNmL
 .preheader.i.i493.thread:                         ; preds = %.preheader.i.i
   %.val14.i.i640 = load i64, ptr %i.ec, align 8, !alias.scope !57898, !noalias !57899, !noundef !75
   %i.jk = icmp ult i64 %.val14.i.i640, %.pre.i.i490
-  %i.jl = zext i1 %i.jk to i64                    ; 2 uses
-  %7 = icmp samesign uge i64 %i.ee, %i.jl
-  call void @llvm.assume(i1 %7)
+  %i.jl = zext i1 %i.jk to i64
   %.phi.trans.insert.i.i641 = getelementptr inbounds nuw i8, ptr %.sroa.0145.0574, i64 8
   %.pre.i.i495642 = load i64, ptr %.phi.trans.insert.i.i641, align 8, !alias.scope !57900, !noalias !57901
   br label %_RINvMNtCscI6d9CVNmLh_4core5sliceSy15partition_pointNCNvNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive6sparse19select_position_sets4_0EBZ_.exit

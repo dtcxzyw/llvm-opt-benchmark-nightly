@@ -204,7 +204,7 @@ bb.cf:                                            ; preds = %bb.ce
   %i.ja = sext i32 %i.iz to i64
   %i.jb = sext i32 %i.iy to i64
   %i.jc = sub nsw i64 %i.ja, %i.jb
-  %i.jd = call i64 @llvm.abs.i64(i64 %i.jc, i1 true) ; 5 uses
+  %i.jd = call i64 @llvm.abs.i64(i64 %i.jc, i1 true) ; 4 uses
   %i.je = icmp slt i32 %i.iy, 0
   %.not148 = icmp eq i32 %i.iz, 0
   %or.cond214 = and i1 %i.je, %.not148
@@ -234,9 +234,7 @@ bb.ci:                                            ; preds = %bb.ch
 bb.cj:                                            ; preds = %bb.ci
   %i.jm = sext i32 %i.jh to i64
   %i.jn = icmp slt i64 %i.jd, %i.jm
-  %2 = icmp samesign ult i64 %i.jd, 2147483648
-  %or.cond = and i1 %2, %i.jn
-  br i1 %or.cond, label %bb.ck, label %bb.cn
+  br i1 %i.jn, label %bb.ck, label %bb.cn
 
 .thread:                                          ; preds = %bb.cg, %bb.ci
   %.old2 = icmp samesign ult i64 %i.jd, 2147483648

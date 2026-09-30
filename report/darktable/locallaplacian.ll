@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = zext nneg i32 %3 to i64                  ; 4 uses
   %i.o = sext i32 %i.l to i64                     ; 3 uses
   %wide.trip.count486 = zext nneg i32 %2 to i64   ; 2 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 10 uses
-  %7 = add nsw i64 %wide.trip.count, -1           ; 2 uses
+  %wide.trip.count = zext nneg i32 %1 to i64      ; 9 uses
+  %7 = add nsw i32 %1, -1
   %i.p = mul nuw nsw i64 %wide.trip.count486, %wide.trip.count
   %i.q = shl i64 %i.p, 4
   %i.r = getelementptr i8, ptr %0, i64 %i.q
@@ -216,8 +216,6 @@ bb.b:                                             ; preds = %bb.a
   %i.u = shl nuw nsw i64 %wide.trip.count, 2
   %scevgep592 = getelementptr i8, ptr %i.i, i64 %i.u
   %min.iters.check = icmp samesign ult i32 %1, 5
-  %8 = trunc nsw i64 %7 to i32
-  %9 = icmp ugt i64 %7, 4294967295
   %min.iters.check594 = icmp samesign ult i32 %1, 33
   %i.v = and i64 %wide.trip.count, 31             ; 2 uses
   %i.w = icmp eq i64 %i.v, 0
@@ -232,27 +230,24 @@ bb.b:                                             ; preds = %bb.a
 
 iter.check:                                       ; preds = %.preheader440, %.unr-lcssa
   %indvars.iv483 = phi i64 [ 0, %.preheader440 ], [ %indvars.iv.next484, %.unr-lcssa ] ; 4 uses
-  %10 = trunc i64 %indvars.iv483 to i32
-  %11 = mul i32 %i.l, %10
-  %i.ab = add i32 %11, %i.t
-  %12 = sext i32 %i.ab to i64
-  %13 = shl nsw i64 %12, 2                        ; 2 uses
-  %scevgep591 = getelementptr i8, ptr %i.i, i64 %13
-  %scevgep593 = getelementptr i8, ptr %scevgep592, i64 %13
-  %14 = mul nuw nsw i64 %indvars.iv483, %i.m      ; 10 uses
-  %15 = trunc i64 %indvars.iv483 to i32
-  %i.ac = add i32 %3, %15
-  %16 = mul i32 %i.ac, %i.l
-  %invariant.op = add i32 %3, %16                 ; 9 uses
-  br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
+  %8 = mul nuw nsw i64 %indvars.iv483, %i.m       ; 10 uses
+  %9 = trunc i64 %indvars.iv483 to i32
+  %i.ab = add i32 %3, %9
+  %10 = mul i32 %i.ab, %i.l
+  %invariant.op = add i32 %3, %10                 ; 9 uses
+  %i.ac = add i32 %invariant.op, %7
+  %11 = icmp slt i32 %i.ac, %invariant.op
+  %or.cond716 = select i1 %min.iters.check, i1 true, i1 %11
+  br i1 %or.cond716, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
-vector.scevcheck:                                 ; preds = %iter.check
-  %17 = add i32 %invariant.op, %8
-  %18 = icmp slt i32 %17, %invariant.op
-  %19 = or i1 %18, %9
-  br i1 %19, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %iter.check
+  %12 = trunc i64 %indvars.iv483 to i32
+  %13 = mul i32 %i.l, %12
+  %14 = add i32 %13, %i.t
+  %15 = sext i32 %14 to i64
+  %16 = shl nsw i64 %15, 2                        ; 2 uses
+  %scevgep593 = getelementptr i8, ptr %scevgep592, i64 %16
+  %scevgep591 = getelementptr i8, ptr %i.i, i64 %16
   %bound0 = icmp ult ptr %0, %scevgep593
   %bound1 = icmp ult ptr %scevgep591, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -266,10 +261,10 @@ vector.body:                                      ; preds = %vector.main.loop.it
   %i.ad = or disjoint i64 %index, 8
   %i.ae = or disjoint i64 %index, 16
   %i.af = or disjoint i64 %index, 24
-  %i.ag = add nuw nsw i64 %index, %14
-  %i.ah = add nuw nsw i64 %i.ad, %14
-  %i.ai = add nuw nsw i64 %i.ae, %14
-  %i.aj = add nuw nsw i64 %i.af, %14
+  %i.ag = add nuw nsw i64 %index, %8
+  %i.ah = add nuw nsw i64 %i.ad, %8
+  %i.ai = add nuw nsw i64 %i.ae, %8
+  %i.aj = add nuw nsw i64 %i.af, %8
   %i.ak = shl nuw nsw i64 %i.ag, 4
   %i.al = shl nuw nsw i64 %i.ah, 4
   %i.am = shl nuw nsw i64 %i.ai, 4
@@ -308,9 +303,9 @@ vector.body:                                      ; preds = %vector.main.loop.it
 vec.epilog.iter.check:                            ; preds = %vector.body
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !25
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vec.epilog.vector.body, %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check
-  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec601, %vec.epilog.vector.body ] ; 4 uses
-  %i.be = sub i64 %wide.trip.count, %indvars.iv.ph
+vec.epilog.scalar.ph.preheader:                   ; preds = %vec.epilog.vector.body, %iter.check, %vector.memcheck, %vec.epilog.iter.check
+  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec601, %vec.epilog.vector.body ] ; 4 uses
+  %i.be = sub nsw i64 %wide.trip.count, %indvars.iv.ph
   %xtraiter = and i64 %i.be, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
@@ -318,7 +313,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph.prol
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %vec.epilog.scalar.ph.prol ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %vec.epilog.scalar.ph.prol ], [ 0, %vec.epilog.scalar.ph.preheader ]
-  %i.bf = add nuw nsw i64 %indvars.iv.prol, %14
+  %i.bf = add nuw nsw i64 %indvars.iv.prol, %8
   %.idx.prol = shl nuw nsw i64 %i.bf, 4
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.prol
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !21
@@ -335,7 +330,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next.prol, %vec.epilog.scalar.ph.prol ]
-  %i.bm = sub i64 %indvars.iv.ph, %wide.trip.count
+  %i.bm = sub nsw i64 %indvars.iv.ph, %wide.trip.count
   %i.bn = icmp ugt i64 %i.bm, -4
   br i1 %i.bn, label %.unr-lcssa, label %vec.epilog.scalar.ph
 
@@ -345,7 +340,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index602 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next605, %vec.epilog.vector.body ] ; 3 uses
-  %i.bo = add nuw nsw i64 %index602, %14
+  %i.bo = add nuw nsw i64 %index602, %8
   %i.bp = shl nuw nsw i64 %i.bo, 4
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 %i.bp
   %wide.vec603 = load <16 x float>, ptr %i.bq, align 4, !tbaa !21, !alias.scope !214, !noalias !215
@@ -389,7 +384,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %vec.epilog.scalar.ph ], [ %indvars.iv.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 6 uses
-  %i.ck = add nuw nsw i64 %indvars.iv, %14
+  %i.ck = add nuw nsw i64 %indvars.iv, %8
   %.idx = shl nuw nsw i64 %i.ck, 4
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.cm = load float, ptr %i.cl, align 4, !tbaa !21
@@ -400,7 +395,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.cq = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.cp
   store float %i.cn, ptr %i.cq, align 4, !tbaa !21
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.cr = add nuw nsw i64 %indvars.iv.next, %14
+  %i.cr = add nuw nsw i64 %indvars.iv.next, %8
   %.idx.1 = shl nuw nsw i64 %i.cr, 4
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.1
   %i.ct = load float, ptr %i.cs, align 4, !tbaa !21
@@ -411,7 +406,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.cx = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.cw
   store float %i.cu, ptr %i.cx, align 4, !tbaa !21
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.cy = add nuw nsw i64 %indvars.iv.next.1, %14
+  %i.cy = add nuw nsw i64 %indvars.iv.next.1, %8
   %.idx.2 = shl nuw nsw i64 %i.cy, 4
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.2
   %i.da = load float, ptr %i.cz, align 4, !tbaa !21
@@ -422,7 +417,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.de = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.dd
   store float %i.db, ptr %i.de, align 4, !tbaa !21
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %i.df = add nuw nsw i64 %indvars.iv.next.2, %14
+  %i.df = add nuw nsw i64 %indvars.iv.next.2, %8
   %.idx.3 = shl nuw nsw i64 %i.df, 4
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.3
   %i.dh = load float, ptr %i.dg, align 4, !tbaa !21
@@ -825,7 +820,7 @@ bb.ab:                                            ; preds = %bb.b, %bb.a
   %i.pk = zext nneg i32 %1 to i64
   %wide.trip.count542 = zext nneg i32 %2 to i64   ; 4 uses
   %wide.trip.count527 = zext nneg i32 %3 to i64   ; 14 uses
-  %wide.trip.count532 = zext nneg i32 %1 to i64   ; 10 uses
+  %wide.trip.count532 = zext nneg i32 %1 to i64   ; 9 uses
   %i.pl = mul nsw i64 %i.pj, %wide.trip.count527
   %i.pm = add nsw i64 %i.pl, %i.pg
   %i.pn = shl i64 %i.pm, 2
@@ -837,7 +832,7 @@ bb.ab:                                            ; preds = %bb.b, %bb.a
   %scevgep609 = getelementptr i8, ptr %0, i64 4
   %i.pr = add i32 %i.pc, -4
   %i.ps = sub nsw i64 %i.pj, %i.pg                ; 7 uses
-  %20 = add nsw i64 %wide.trip.count532, -1       ; 2 uses
+  %17 = add nsw i32 %1, -1
   %i.pt = mul nuw nsw i64 %wide.trip.count542, %wide.trip.count532
   %i.pu = shl i64 %i.pt, 4
   %i.pv = getelementptr i8, ptr %0, i64 %i.pu
@@ -876,8 +871,6 @@ bb.ab:                                            ; preds = %bb.b, %bb.a
   %n.vec706 = and i64 %wide.trip.count527, 1073741820 ; 3 uses
   %cmp.n713 = icmp eq i64 %n.vec706, %wide.trip.count527
   %min.iters.check648 = icmp samesign ult i32 %1, 5
-  %21 = trunc nsw i64 %20 to i32
-  %22 = icmp ugt i64 %20, 4294967295
   %min.iters.check650 = icmp samesign ult i32 %1, 33
   %i.qp = and i64 %wide.trip.count532, 31         ; 2 uses
   %i.qq = icmp eq i64 %i.qp, 0
@@ -1072,16 +1065,13 @@ bb.ad:                                            ; preds = %bb.ad, %.new
 iter.check666:                                    ; preds = %vec.epilog.scalar.ph702.prol.loopexit, %vec.epilog.scalar.ph702, %vec.epilog.middle.block712, %middle.block698
   %i.tz = mul nuw nsw i64 %indvars.iv539, %i.pk   ; 10 uses
   %i.ua = trunc nsw i64 %i.rl to i32
-  %invariant.op473.a = add i32 %3, %i.ua          ; 9 uses
-  br i1 %min.iters.check648, label %vec.epilog.scalar.ph667.preheader, label %vector.scevcheck639
+  %invariant.op473 = add i32 %3, %i.ua            ; 9 uses
+  %invariant.op473.a = add i32 %invariant.op473, %17
+  %18 = icmp slt i32 %invariant.op473.a, %invariant.op473
+  %or.cond718 = select i1 %min.iters.check648, i1 true, i1 %18
+  br i1 %or.cond718, label %vec.epilog.scalar.ph667.preheader, label %vector.memcheck640
 
-vector.scevcheck639:                              ; preds = %iter.check666
-  %23 = add i32 %invariant.op473.a, %21
-  %24 = icmp slt i32 %23, %invariant.op473.a
-  %25 = or i1 %24, %22
-  br i1 %25, label %vec.epilog.scalar.ph667.preheader, label %vector.memcheck640
-
-vector.memcheck640:                               ; preds = %vector.scevcheck639
+vector.memcheck640:                               ; preds = %iter.check666
   %bound0645 = icmp ult ptr %0, %scevgep644
   %bound1646 = icmp ult ptr %scevgep642, %scevgep641
   %found.conflict647 = and i1 %bound0645, %bound1646
@@ -1120,7 +1110,7 @@ vector.body653:                                   ; preds = %vector.main.loop.it
   %i.us = fmul reassoc nsz arcp contract afn <8 x float> %strided.vec660, splat (float f0x3C23D70A)
   %i.ut = fmul reassoc nsz arcp contract afn <8 x float> %strided.vec662, splat (float f0x3C23D70A)
   %i.uu = trunc nuw nsw i64 %index654 to i32
-  %i.uv = add i32 %invariant.op473.a, %i.uu
+  %i.uv = add i32 %invariant.op473, %i.uu
   %i.uw = sext i32 %i.uv to i64
   %i.ux = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.uw ; 4 uses
   %i.uy = getelementptr inbounds nuw i8, ptr %i.ux, i64 32
@@ -1137,9 +1127,9 @@ vector.body653:                                   ; preds = %vector.main.loop.it
 vec.epilog.iter.check668:                         ; preds = %vector.body653
   br i1 %min.epilog.iters.check669, label %vec.epilog.scalar.ph667.preheader, label %vec.epilog.ph670, !prof !25
 
-vec.epilog.scalar.ph667.preheader:                ; preds = %vec.epilog.vector.body672, %iter.check666, %vector.scevcheck639, %vector.memcheck640, %vec.epilog.iter.check668
-  %indvars.iv529.ph = phi i64 [ 0, %iter.check666 ], [ 0, %vector.scevcheck639 ], [ 0, %vector.memcheck640 ], [ %n.vec652, %vec.epilog.iter.check668 ], [ %n.vec671, %vec.epilog.vector.body672 ] ; 4 uses
-  %i.vc = sub i64 %wide.trip.count532, %indvars.iv529.ph
+vec.epilog.scalar.ph667.preheader:                ; preds = %vec.epilog.vector.body672, %iter.check666, %vector.memcheck640, %vec.epilog.iter.check668
+  %indvars.iv529.ph = phi i64 [ 0, %iter.check666 ], [ 0, %vector.memcheck640 ], [ %n.vec652, %vec.epilog.iter.check668 ], [ %n.vec671, %vec.epilog.vector.body672 ] ; 4 uses
+  %i.vc = sub nsw i64 %wide.trip.count532, %indvars.iv529.ph
   %xtraiter719 = and i64 %i.vc, 3                 ; 2 uses
   %lcmp.mod720.not = icmp eq i64 %xtraiter719, 0
   br i1 %lcmp.mod720.not, label %vec.epilog.scalar.ph667.prol.loopexit, label %vec.epilog.scalar.ph667.prol
@@ -1153,7 +1143,7 @@ vec.epilog.scalar.ph667.prol:                     ; preds = %vec.epilog.scalar.p
   %i.vf = load float, ptr %i.ve, align 4, !tbaa !21
   %i.vg = fmul reassoc nsz arcp contract afn float %i.vf, f0x3C23D70A
   %i.vh = trunc nuw nsw i64 %indvars.iv529.prol to i32
-  %.reass474.prol = add i32 %invariant.op473.a, %i.vh
+  %.reass474.prol = add i32 %invariant.op473, %i.vh
   %i.vi = sext i32 %.reass474.prol to i64
   %i.vj = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.vi
   store float %i.vg, ptr %i.vj, align 4, !tbaa !21
@@ -1164,7 +1154,7 @@ vec.epilog.scalar.ph667.prol:                     ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph667.prol.loopexit:            ; preds = %vec.epilog.scalar.ph667.prol, %vec.epilog.scalar.ph667.preheader
   %indvars.iv529.unr = phi i64 [ %indvars.iv529.ph, %vec.epilog.scalar.ph667.preheader ], [ %indvars.iv.next530.prol, %vec.epilog.scalar.ph667.prol ]
-  %i.vk = sub i64 %indvars.iv529.ph, %wide.trip.count532
+  %i.vk = sub nsw i64 %indvars.iv529.ph, %wide.trip.count532
   %i.vl = icmp ugt i64 %i.vk, -4
   br i1 %i.vl, label %.unr-lcssa722, label %vec.epilog.scalar.ph667
 
@@ -1181,7 +1171,7 @@ vec.epilog.vector.body672:                        ; preds = %vec.epilog.vector.b
   %strided.vec675 = shufflevector <16 x float> %wide.vec674, <16 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 12>
   %i.vp = fmul reassoc nsz arcp contract afn <4 x float> %strided.vec675, splat (float f0x3C23D70A)
   %i.vq = trunc nuw nsw i64 %index673 to i32
-  %i.vr = add i32 %invariant.op473.a, %i.vq
+  %i.vr = add i32 %invariant.op473, %i.vq
   %i.vs = sext i32 %i.vr to i64
   %i.vt = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.vs
   store <4 x float> %i.vp, ptr %i.vt, align 4, !tbaa !21, !alias.scope !222
@@ -1338,7 +1328,7 @@ vec.epilog.scalar.ph667:                          ; preds = %vec.epilog.scalar.p
   %i.xz = load float, ptr %i.xy, align 4, !tbaa !21
   %i.ya = fmul reassoc nsz arcp contract afn float %i.xz, f0x3C23D70A
   %i.yb = trunc nuw nsw i64 %indvars.iv529 to i32
-  %.reass474 = add i32 %invariant.op473.a, %i.yb
+  %.reass474 = add i32 %invariant.op473, %i.yb
   %i.yc = sext i32 %.reass474 to i64
   %i.yd = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.yc
   store float %i.ya, ptr %i.yd, align 4, !tbaa !21
@@ -1349,7 +1339,7 @@ vec.epilog.scalar.ph667:                          ; preds = %vec.epilog.scalar.p
   %i.yg = load float, ptr %i.yf, align 4, !tbaa !21
   %i.yh = fmul reassoc nsz arcp contract afn float %i.yg, f0x3C23D70A
   %i.yi = trunc nuw nsw i64 %indvars.iv.next530 to i32
-  %.reass474.1 = add i32 %invariant.op473.a, %i.yi
+  %.reass474.1 = add i32 %invariant.op473, %i.yi
   %i.yj = sext i32 %.reass474.1 to i64
   %i.yk = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.yj
   store float %i.yh, ptr %i.yk, align 4, !tbaa !21
@@ -1360,7 +1350,7 @@ vec.epilog.scalar.ph667:                          ; preds = %vec.epilog.scalar.p
   %i.yn = load float, ptr %i.ym, align 4, !tbaa !21
   %i.yo = fmul reassoc nsz arcp contract afn float %i.yn, f0x3C23D70A
   %i.yp = trunc nuw nsw i64 %indvars.iv.next530.1 to i32
-  %.reass474.2 = add i32 %invariant.op473.a, %i.yp
+  %.reass474.2 = add i32 %invariant.op473, %i.yp
   %i.yq = sext i32 %.reass474.2 to i64
   %i.yr = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.yq
   store float %i.yo, ptr %i.yr, align 4, !tbaa !21
@@ -1371,7 +1361,7 @@ vec.epilog.scalar.ph667:                          ; preds = %vec.epilog.scalar.p
   %i.yu = load float, ptr %i.yt, align 4, !tbaa !21
   %i.yv = fmul reassoc nsz arcp contract afn float %i.yu, f0x3C23D70A
   %i.yw = trunc nuw nsw i64 %indvars.iv.next530.2 to i32
-  %.reass474.3 = add i32 %invariant.op473.a, %i.yw
+  %.reass474.3 = add i32 %invariant.op473, %i.yw
   %i.yx = sext i32 %.reass474.3 to i64
   %i.yy = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.yx
   store float %i.yv, ptr %i.yy, align 4, !tbaa !21

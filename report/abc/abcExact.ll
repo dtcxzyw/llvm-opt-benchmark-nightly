@@ -205,16 +205,16 @@ Vec_IntSetEntry.exit:                             ; preds = %bb.f, %Vec_IntGrow.
 bb.l:                                             ; preds = %.lr.ph121, %Vec_IntSetEntry.exit93
   %indvars.iv142 = phi i64 [ %i.an, %.lr.ph121 ], [ %indvars.iv.next143, %Vec_IntSetEntry.exit93 ] ; 2 uses
   %i.bm = phi i32 [ %.promoted128, %.lr.ph121 ], [ %i.di, %Vec_IntSetEntry.exit93 ] ; 4 uses
-  %storemerge100124 = phi ptr [ %.promoted122, %.lr.ph121 ], [ %storemerge100125, %Vec_IntSetEntry.exit93 ] ; 6 uses
+  %storemerge100124 = phi ptr [ %.promoted122, %.lr.ph121 ], [ %storemerge100125, %Vec_IntSetEntry.exit93 ] ; 5 uses
   %indvars.iv.next143 = add nsw i64 %indvars.iv142, -1 ; 3 uses
   %i.bn = shl nuw nsw i64 %indvars.iv.next143, 2
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 %i.bn ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 5
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !43  ; 2 uses
-  %i.br = sext i8 %i.bq to i32                    ; 5 uses
+  %i.br = sext i8 %i.bq to i32                    ; 4 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bo, i64 6
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !43  ; 2 uses
-  %i.bu = sext i8 %i.bt to i32                    ; 5 uses
+  %i.bu = sext i8 %i.bt to i32                    ; 4 uses
   %i.bv = sext i8 %i.bq to i64                    ; 2 uses
   %i.bw = getelementptr inbounds [4 x i8], ptr %storemerge100124, i64 %i.bv
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !15
@@ -228,33 +228,24 @@ bb.l:                                             ; preds = %.lr.ph121, %Vec_Int
   br i1 %.not.i.not.i60, label %Vec_IntSetEntry.exit76, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !47  ; 3 uses
-  %3 = shl nsw i32 %i.ce, 1                       ; 3 uses
-  %.not.i61 = icmp sgt i32 %3, %i.br
-  %.not.i.i.not.i62 = icmp sle i32 %i.ce, %i.br   ; 2 uses
-  br i1 %.not.i61, label %5, label %4
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !47  ; 2 uses
+  %.not.i61 = icmp sgt i32 %i.ce, %i.br
+  br i1 %.not.i61, label %Vec_IntGrow.exit.i.i67, label %Vec_IntGrow.exit.sink.split.i.i64
 
-4:                                                ; preds = %bb.m
-  br i1 %.not.i.i.not.i62, label %Vec_IntGrow.exit.sink.split.i.i64, label %Vec_IntGrow.exit.i.i67
-
-5:                                                ; preds = %bb.m
-  %.not.i22.i.i74 = icmp slt i32 %i.ce, %3
-  %or.cond = and i1 %.not.i.i.not.i62, %.not.i22.i.i74
-  br i1 %or.cond, label %Vec_IntGrow.exit.sink.split.i.i64, label %Vec_IntGrow.exit.i.i67
-
-Vec_IntGrow.exit.sink.split.i.i64:                ; preds = %5, %4
-  %.sink163 = phi i32 [ %i.cd, %4 ], [ %3, %5 ]   ; 2 uses
-  %i.cf = sext i32 %.sink163 to i64
+Vec_IntGrow.exit.sink.split.i.i64:                ; preds = %bb.m
+  %3 = shl nsw i32 %i.ce, 1
+  %. = tail call i32 @llvm.smax.i32(i32 %3, i32 %i.cd) ; 2 uses
+  %i.cf = sext i32 %. to i64
   %i.cg = shl nsw i64 %i.cf, 2
   %i.ch = tail call ptr @realloc(ptr noundef nonnull %storemerge100124, i64 noundef %i.cg) #29
-  store i32 %.sink163, ptr %i.d, align 8, !tbaa !47
+  store i32 %., ptr %i.d, align 8, !tbaa !47
   br label %Vec_IntGrow.exit.i.i67
 
-Vec_IntGrow.exit.i.i67:                           ; preds = %Vec_IntGrow.exit.sink.split.i.i64, %5, %4
-  %storemerge100127 = phi ptr [ %i.ch, %Vec_IntGrow.exit.sink.split.i.i64 ], [ %storemerge100124, %5 ], [ %storemerge100124, %4 ] ; 2 uses
+Vec_IntGrow.exit.i.i67:                           ; preds = %bb.m, %Vec_IntGrow.exit.sink.split.i.i64
+  %storemerge101127 = phi ptr [ %i.ch, %Vec_IntGrow.exit.sink.split.i.i64 ], [ %storemerge100124, %bb.m ] ; 2 uses
   %i.ci = sext i32 %i.bm to i64
   %i.cj = shl nsw i64 %i.ci, 2
-  %scevgep.i.i70 = getelementptr i8, ptr %storemerge100127, i64 %i.cj
+  %scevgep.i.i70 = getelementptr i8, ptr %storemerge101127, i64 %i.cj
   %i.ck = sub i32 %i.br, %i.bm
   %i.cl = zext i32 %i.ck to i64
   %i.cm = shl nuw nsw i64 %i.cl, 2
@@ -264,7 +255,7 @@ Vec_IntGrow.exit.i.i67:                           ; preds = %Vec_IntGrow.exit.si
 
 Vec_IntSetEntry.exit76:                           ; preds = %bb.l, %Vec_IntGrow.exit.i.i67
   %i.co = phi i32 [ %i.bm, %bb.l ], [ %i.cd, %Vec_IntGrow.exit.i.i67 ] ; 4 uses
-  %storemerge100126 = phi ptr [ %storemerge100124, %bb.l ], [ %storemerge100127, %Vec_IntGrow.exit.i.i67 ] ; 7 uses
+  %storemerge100126 = phi ptr [ %storemerge100124, %bb.l ], [ %storemerge101127, %Vec_IntGrow.exit.i.i67 ] ; 6 uses
   %i.cp = getelementptr inbounds [4 x i8], ptr %storemerge100126, i64 %i.bv
   store i32 %i.cc, ptr %i.cp, align 4, !tbaa !15
   %i.cq = sext i8 %i.bt to i64                    ; 2 uses
@@ -279,33 +270,24 @@ Vec_IntSetEntry.exit76:                           ; preds = %bb.l, %Vec_IntGrow.
   br i1 %.not.i.not.i77, label %Vec_IntSetEntry.exit93, label %bb.n
 
 bb.n:                                             ; preds = %Vec_IntSetEntry.exit76
-  %i.cy = load i32, ptr %i.d, align 8, !tbaa !47  ; 3 uses
-  %6 = shl nsw i32 %i.cy, 1                       ; 3 uses
-  %.not.i78 = icmp sgt i32 %6, %i.bu
-  %.not.i.i.not.i79 = icmp sle i32 %i.cy, %i.bu   ; 2 uses
-  br i1 %.not.i78, label %8, label %7
+  %i.cy = load i32, ptr %i.d, align 8, !tbaa !47  ; 2 uses
+  %.not.i78 = icmp sgt i32 %i.cy, %i.bu
+  br i1 %.not.i78, label %Vec_IntGrow.exit.i.i84, label %Vec_IntGrow.exit.sink.split.i.i81
 
-7:                                                ; preds = %bb.n
-  br i1 %.not.i.i.not.i79, label %Vec_IntGrow.exit.sink.split.i.i81, label %Vec_IntGrow.exit.i.i84
-
-8:                                                ; preds = %bb.n
-  %.not.i22.i.i91 = icmp slt i32 %i.cy, %6
-  %or.cond103 = and i1 %.not.i.i.not.i79, %.not.i22.i.i91
-  br i1 %or.cond103, label %Vec_IntGrow.exit.sink.split.i.i81, label %Vec_IntGrow.exit.i.i84
-
-Vec_IntGrow.exit.sink.split.i.i81:                ; preds = %8, %7
-  %.sink166 = phi i32 [ %i.cx, %7 ], [ %6, %8 ]   ; 2 uses
-  %i.cz = sext i32 %.sink166 to i64
+Vec_IntGrow.exit.sink.split.i.i81:                ; preds = %bb.n
+  %4 = shl nsw i32 %i.cy, 1
+  %.167 = tail call i32 @llvm.smax.i32(i32 %4, i32 %i.cx) ; 2 uses
+  %i.cz = sext i32 %.167 to i64
   %i.da = shl nsw i64 %i.cz, 2
   %i.db = tail call ptr @realloc(ptr noundef nonnull %storemerge100126, i64 noundef %i.da) #29
-  store i32 %.sink166, ptr %i.d, align 8, !tbaa !47
+  store i32 %.167, ptr %i.d, align 8, !tbaa !47
   br label %Vec_IntGrow.exit.i.i84
 
-Vec_IntGrow.exit.i.i84:                           ; preds = %Vec_IntGrow.exit.sink.split.i.i81, %8, %7
-  %storemerge100123 = phi ptr [ %i.db, %Vec_IntGrow.exit.sink.split.i.i81 ], [ %storemerge100126, %8 ], [ %storemerge100126, %7 ] ; 2 uses
+Vec_IntGrow.exit.i.i84:                           ; preds = %bb.n, %Vec_IntGrow.exit.sink.split.i.i81
+  %storemerge101123 = phi ptr [ %i.db, %Vec_IntGrow.exit.sink.split.i.i81 ], [ %storemerge100126, %bb.n ] ; 2 uses
   %i.dc = sext i32 %i.co to i64
   %i.dd = shl nsw i64 %i.dc, 2
-  %scevgep.i.i87 = getelementptr i8, ptr %storemerge100123, i64 %i.dd
+  %scevgep.i.i87 = getelementptr i8, ptr %storemerge101123, i64 %i.dd
   %i.de = sub nsw i32 %i.bu, %i.co
   %i.df = zext i32 %i.de to i64
   %i.dg = shl nuw nsw i64 %i.df, 2
@@ -315,7 +297,7 @@ Vec_IntGrow.exit.i.i84:                           ; preds = %Vec_IntGrow.exit.si
 
 Vec_IntSetEntry.exit93:                           ; preds = %Vec_IntSetEntry.exit76, %Vec_IntGrow.exit.i.i84
   %i.di = phi i32 [ %i.co, %Vec_IntSetEntry.exit76 ], [ %i.cx, %Vec_IntGrow.exit.i.i84 ] ; 2 uses
-  %storemerge100125 = phi ptr [ %storemerge100126, %Vec_IntSetEntry.exit76 ], [ %storemerge100123, %Vec_IntGrow.exit.i.i84 ] ; 4 uses
+  %storemerge100125 = phi ptr [ %storemerge100126, %Vec_IntSetEntry.exit76 ], [ %storemerge101123, %Vec_IntGrow.exit.i.i84 ] ; 4 uses
   %i.dj = getelementptr inbounds [4 x i8], ptr %storemerge100125, i64 %i.cq
   store i32 %i.cw, ptr %i.dj, align 4, !tbaa !15
   %i.dk = icmp samesign ugt i64 %indvars.iv142, 1
