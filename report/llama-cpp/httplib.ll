@@ -205,7 +205,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define noundef zeroext i1 @_ZN7httplib2ws4impl20read_websocket_frameERNS_6StreamERNS0_6OpcodeERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERbbm(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr nofree noundef nonnull writeonly align 1 captures(none) dereferenceable(1) %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr nofree noundef nonnull writeonly align 1 captures(none) dereferenceable(1) %3, i1 noundef zeroext %4, i64 noundef %5) local_unnamed_addr #7 {
 bb.a:
   %i.a = alloca [2 x i8], align 1                 ; 5 uses
-  %i.b = alloca [2 x i8], align 1                 ; 5 uses
+  %i.b = alloca [2 x i8], align 2                 ; 4 uses
   %i.c = alloca [8 x i8], align 1                 ; 12 uses
   %i.d = alloca [4 x i8], align 4                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
@@ -263,13 +263,9 @@ bb.g:                                             ; preds = %bb.f
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = call noundef i64 %i.x(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr noundef nonnull %i.b, i64 noundef 2)
   %.not70 = icmp eq i64 %i.y, 2
-  %6 = load i8, ptr %i.b, align 1
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 8
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %10 = load i8, ptr %9, align 1
-  %i.z = zext i8 %10 to i64
-  %11 = or disjoint i64 %8, %i.z
+  %6 = load i16, ptr %i.b, align 2
+  %7 = call i16 @llvm.bswap.i16(i16 %6)
+  %i.z = zext i16 %7 to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   br i1 %.not70, label %bb.i, label %bb.n
 
@@ -326,7 +322,7 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %.preheader86.preheader, %bb.f, %bb.g
-  %.3 = phi i64 [ %11, %bb.g ], [ %i.bo, %.preheader86.preheader ], [ %i.p, %bb.f ] ; 5 uses
+  %.3 = phi i64 [ %i.z, %bb.g ], [ %i.bo, %.preheader86.preheader ], [ %i.p, %bb.f ] ; 5 uses
   %i.bp = icmp ugt i64 %.3, %5
   br i1 %i.bp, label %bb.n, label %bb.j
 

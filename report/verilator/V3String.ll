@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %i.d = alloca [64 x i32], align 16              ; 6 uses
+  %i.d = alloca [64 x i32], align 16              ; 8 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.f = load i8, ptr %i.e, align 8, !tbaa !64, !range !65, !noundef !66
@@ -452,7 +452,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49: ; preds = %bb.
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit46
   %.034.in = phi i64 [ %i.bq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit46 ], [ %2, %bb.c ]
-  %.033 = phi ptr [ %i.br, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit46 ], [ %1, %bb.c ] ; 4 uses
+  %.033 = phi ptr [ %i.br, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit46 ], [ %1, %bb.c ] ; 6 uses
   %.034 = trunc i64 %.034.in to i32               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #33
   %i.by = add nsw i32 %.034, -64
@@ -460,70 +460,60 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %.not138, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %.sroa.0.0.copyload.pre = load i32, ptr %0, align 8, !tbaa !68
+  %.sroa.7.0..sroa_idx.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
+  %.sroa.7.0.copyload.pre = load i32, ptr %.sroa.7.0..sroa_idx.phi.trans.insert, align 4, !tbaa !68
+  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.bz = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 48
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %.sroa.27.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.sroa.31.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %.promoted.a = load i32, ptr %0, align 8, !tbaa !68
-  %.sroa.7.0..sroa_idx.promoted = load i32, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !68
-  %.sroa.11.0..sroa_idx.promoted = load i32, ptr %.sroa.11.0..sroa_idx, align 8, !tbaa !68
-  %.sroa.15.0..sroa_idx.promoted = load i32, ptr %.sroa.15.0..sroa_idx, align 4, !tbaa !68
-  %.sroa.19.0..sroa_idx.promoted = load i32, ptr %.sroa.19.0..sroa_idx, align 8, !tbaa !68
-  %.sroa.23.0..sroa_idx.promoted = load i32, ptr %.sroa.23.0..sroa_idx, align 4, !tbaa !68
-  %.sroa.27.0..sroa_idx.promoted = load i32, ptr %.sroa.27.0..sroa_idx, align 8, !tbaa !68
-  %.sroa.31.0..sroa_idx.promoted = load i32, ptr %.sroa.31.0..sroa_idx, align 4, !tbaa !68
+  %.promoted.a = load i32, ptr %.sroa.11.0..sroa_idx, align 8, !tbaa !68
+  %.sroa.7.0..sroa_idx.promoted = load i32, ptr %.sroa.15.0..sroa_idx, align 4, !tbaa !68
+  %.sroa.11.0..sroa_idx.promoted = load i32, ptr %.sroa.19.0..sroa_idx, align 8, !tbaa !68
+  %.sroa.15.0..sroa_idx.promoted = load i32, ptr %.sroa.23.0..sroa_idx, align 4, !tbaa !68
+  %.sroa.19.0..sroa_idx.promoted = load i32, ptr %.sroa.27.0..sroa_idx, align 8, !tbaa !68
+  %.sroa.23.0..sroa_idx.promoted = load i32, ptr %.sroa.31.0..sroa_idx, align 4, !tbaa !68
+  %.sroa.27.0..sroa_idx.promoted = load i32, ptr %0, align 8, !tbaa !68
+  %.sroa.31.0..sroa_idx.promoted = load i32, ptr %.sroa.7.0..sroa_idx.phi.trans.insert, align 4, !tbaa !68
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph, %.preheader76.preheader
-  %i.ca = phi i32 [ %.sroa.31.0..sroa_idx.promoted, %.lr.ph ], [ %i.ed, %.preheader76.preheader ] ; 2 uses
-  %i.cb = phi i32 [ %.sroa.27.0..sroa_idx.promoted, %.lr.ph ], [ %i.ec, %.preheader76.preheader ] ; 2 uses
-  %i.cc = phi i32 [ %.sroa.23.0..sroa_idx.promoted, %.lr.ph ], [ %i.eb, %.preheader76.preheader ] ; 2 uses
-  %i.cd = phi i32 [ %.sroa.19.0..sroa_idx.promoted, %.lr.ph ], [ %i.ea, %.preheader76.preheader ] ; 2 uses
-  %i.ce = phi i32 [ %.sroa.15.0..sroa_idx.promoted, %.lr.ph ], [ %i.dz, %.preheader76.preheader ] ; 2 uses
-  %i.cf = phi i32 [ %.sroa.11.0..sroa_idx.promoted, %.lr.ph ], [ %i.dy, %.preheader76.preheader ] ; 2 uses
-  %i.cg = phi i32 [ %.sroa.7.0..sroa_idx.promoted, %.lr.ph ], [ %i.dx, %.preheader76.preheader ] ; 2 uses
-  %.sroa.0.0.copyload227 = phi i32 [ %.promoted.a, %.lr.ph ], [ %i.dw, %.preheader76.preheader ] ; 2 uses
-  %.027139.a = phi i32 [ 0, %.lr.ph ], [ %indvars.iv.next160.15, %.preheader76.preheader ] ; 3 uses
-  %7 = sext i32 %.027139.a to i64                 ; 2 uses
-  %8 = getelementptr i8, ptr %.033, i64 %7
-  %9 = load <32 x i8>, ptr %8, align 1, !tbaa !26 ; 4 uses
-  %10 = shufflevector <32 x i8> %9, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %11 = zext <8 x i8> %10 to <8 x i32>
-  %12 = shufflevector <32 x i8> %9, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %13 = zext <8 x i8> %12 to <8 x i32>
-  %14 = shl nuw nsw <8 x i32> %13, splat (i32 8)
-  %15 = or disjoint <8 x i32> %14, %11
-  %16 = shufflevector <32 x i8> %9, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %17 = zext <8 x i8> %16 to <8 x i32>
-  %18 = shl nuw nsw <8 x i32> %17, splat (i32 16)
-  %19 = or disjoint <8 x i32> %15, %18
-  %20 = shufflevector <32 x i8> %9, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %21 = zext <8 x i8> %20 to <8 x i32>
-  %22 = shl nuw <8 x i32> %21, splat (i32 24)
-  %23 = or disjoint <8 x i32> %19, %22
-  store <8 x i32> %23, ptr %i.d, align 16, !tbaa !68
-  %i.ch = getelementptr i8, ptr %.033, i64 %7
-  %i.ci = getelementptr i8, ptr %i.ch, i64 32
-  %24 = load <32 x i8>, ptr %i.ci, align 1, !tbaa !26 ; 4 uses
-  %25 = shufflevector <32 x i8> %24, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %26 = zext <8 x i8> %25 to <8 x i32>
-  %27 = shufflevector <32 x i8> %24, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %28 = zext <8 x i8> %27 to <8 x i32>
-  %29 = shl nuw nsw <8 x i32> %28, splat (i32 8)
-  %30 = or disjoint <8 x i32> %29, %26
-  %31 = shufflevector <32 x i8> %24, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %32 = zext <8 x i8> %31 to <8 x i32>
-  %33 = shl nuw nsw <8 x i32> %32, splat (i32 16)
-  %34 = or disjoint <8 x i32> %30, %33
-  %35 = shufflevector <32 x i8> %24, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %36 = zext <8 x i8> %35 to <8 x i32>
-  %37 = shl nuw <8 x i32> %36, splat (i32 24)
-  %38 = or disjoint <8 x i32> %34, %37
-  store <8 x i32> %38, ptr %i.bz, align 16, !tbaa !68
+  %i.ca = phi i32 [ %.sroa.31.0..sroa_idx.promoted, %.lr.ph ], [ %i.dx, %.preheader76.preheader ]
+  %i.cb = phi i32 [ %.sroa.27.0..sroa_idx.promoted, %.lr.ph ], [ %i.dw, %.preheader76.preheader ]
+  %i.cc = phi i32 [ %.sroa.23.0..sroa_idx.promoted, %.lr.ph ], [ %i.ed, %.preheader76.preheader ] ; 2 uses
+  %i.cd = phi i32 [ %.sroa.19.0..sroa_idx.promoted, %.lr.ph ], [ %i.ec, %.preheader76.preheader ] ; 2 uses
+  %i.ce = phi i32 [ %.sroa.15.0..sroa_idx.promoted, %.lr.ph ], [ %i.eb, %.preheader76.preheader ] ; 2 uses
+  %i.cf = phi i32 [ %.sroa.11.0..sroa_idx.promoted, %.lr.ph ], [ %i.ea, %.preheader76.preheader ] ; 2 uses
+  %i.cg = phi i32 [ %.sroa.7.0..sroa_idx.promoted, %.lr.ph ], [ %i.dz, %.preheader76.preheader ] ; 2 uses
+  %.sroa.0.0.copyload227 = phi i32 [ %.promoted.a, %.lr.ph ], [ %i.dy, %.preheader76.preheader ] ; 2 uses
+  %.027139.a = phi i32 [ %.sroa.7.0.copyload.pre, %.lr.ph ], [ %i.dx, %.preheader76.preheader ]
+  %.sroa.0.0.copyload = phi i32 [ %.sroa.0.0.copyload.pre, %.lr.ph ], [ %i.dw, %.preheader76.preheader ]
+  %.027139 = phi i32 [ 0, %.lr.ph ], [ %indvars.iv.next160.15, %.preheader76.preheader ] ; 3 uses
+  %8 = sext i32 %.027139 to i64                   ; 4 uses
+  %9 = getelementptr i8, ptr %.033, i64 %8
+  %10 = load <4 x i32>, ptr %9, align 1
+  %11 = call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %10)
+  store <4 x i32> %11, ptr %i.d, align 16, !tbaa !68
+  %i.ch = getelementptr i8, ptr %.033, i64 %8
+  %i.ci = getelementptr i8, ptr %i.ch, i64 16
+  %12 = load <4 x i32>, ptr %i.ci, align 1
+  %13 = call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %12)
+  store <4 x i32> %13, ptr %7, align 16, !tbaa !68
+  %14 = getelementptr i8, ptr %.033, i64 %8
+  %15 = getelementptr i8, ptr %14, i64 32
+  %16 = load <4 x i32>, ptr %15, align 1
+  %17 = call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %16)
+  store <4 x i32> %17, ptr %i.bz, align 16, !tbaa !68
+  %18 = getelementptr i8, ptr %.033, i64 %8
+  %19 = getelementptr i8, ptr %18, i64 48
+  %20 = load <4 x i32>, ptr %19, align 1
+  %21 = call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %20)
+  store <4 x i32> %21, ptr %.sroa.7.0..sroa_idx, align 16, !tbaa !68
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #33
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.c, i8 0, i64 64, i1 false)
   br label %.preheader
@@ -531,14 +521,14 @@ bb.r:                                             ; preds = %.lr.ph, %.preheader
 .preheader:                                       ; preds = %bb.r, %.split.us
   %indvars.iv170 = phi i64 [ 0, %bb.r ], [ %indvars.iv.next171, %.split.us ] ; 3 uses
   %.038.i136 = phi ptr [ %i.d, %bb.r ], [ %.us-phi, %.split.us ] ; 2 uses
-  %.lcssa9197134 = phi i32 [ %i.cd, %bb.r ], [ %.sroa.19.0, %.split.us ] ; 2 uses
-  %.lcssa9099133 = phi i32 [ %i.cc, %bb.r ], [ %.sroa.23.0, %.split.us ] ; 2 uses
-  %.lcssa89102132 = phi i32 [ %i.cb, %bb.r ], [ %.sroa.27.0, %.split.us ] ; 2 uses
-  %.lcssa105131 = phi i32 [ %i.ca, %bb.r ], [ %.sroa.31.0, %.split.us ] ; 2 uses
-  %.lcssa95108130 = phi i32 [ %.sroa.0.0.copyload227, %bb.r ], [ %.sroa.0.0, %.split.us ] ; 2 uses
-  %.lcssa94111129 = phi i32 [ %i.cg, %bb.r ], [ %.sroa.7.0, %.split.us ] ; 2 uses
-  %.lcssa93114128 = phi i32 [ %i.cf, %bb.r ], [ %.sroa.11.0, %.split.us ] ; 2 uses
-  %.lcssa92117127 = phi i32 [ %i.ce, %bb.r ], [ %.sroa.15.0, %.split.us ] ; 2 uses
+  %.lcssa9197134 = phi i32 [ %i.cf, %bb.r ], [ %.sroa.19.0, %.split.us ] ; 2 uses
+  %.lcssa9099133 = phi i32 [ %i.ce, %bb.r ], [ %.sroa.23.0, %.split.us ] ; 2 uses
+  %.lcssa89102132 = phi i32 [ %i.cd, %bb.r ], [ %.sroa.27.0, %.split.us ] ; 2 uses
+  %.lcssa105131 = phi i32 [ %i.cc, %bb.r ], [ %.sroa.31.0, %.split.us ] ; 2 uses
+  %.lcssa95108130 = phi i32 [ %.sroa.0.0.copyload, %bb.r ], [ %.sroa.0.0, %.split.us ] ; 2 uses
+  %.lcssa94111129 = phi i32 [ %.027139.a, %bb.r ], [ %.sroa.7.0, %.split.us ] ; 2 uses
+  %.lcssa93114128 = phi i32 [ %.sroa.0.0.copyload227, %bb.r ], [ %.sroa.11.0, %.split.us ] ; 2 uses
+  %.lcssa92117127 = phi i32 [ %i.cg, %bb.r ], [ %.sroa.15.0, %.split.us ] ; 2 uses
   %i.cj = icmp eq i64 %indvars.iv170, 0
   br i1 %i.cj, label %.preheader.split.us, label %.preheader.split.preheader
 
@@ -608,23 +598,23 @@ bb.r:                                             ; preds = %.lr.ph, %.preheader
   br i1 %exitcond173.not, label %.preheader76.preheader, label %.preheader, !llvm.loop !6
 
 .preheader76.preheader:                           ; preds = %.split.us
-  %i.dw = add i32 %.sroa.0.0.copyload227, %.sroa.0.0 ; 2 uses
+  %i.dw = add i32 %i.cb, %.sroa.0.0               ; 3 uses
   store i32 %i.dw, ptr %0, align 8, !tbaa !68
-  %i.dx = add i32 %i.cg, %.sroa.7.0               ; 2 uses
-  store i32 %i.dx, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !68
-  %i.dy = add i32 %i.cf, %.sroa.11.0              ; 2 uses
+  %i.dx = add i32 %i.ca, %.sroa.7.0               ; 3 uses
+  store i32 %i.dx, ptr %.sroa.7.0..sroa_idx.phi.trans.insert, align 4, !tbaa !68
+  %i.dy = add i32 %.sroa.0.0.copyload227, %.sroa.11.0 ; 2 uses
   store i32 %i.dy, ptr %.sroa.11.0..sroa_idx, align 8, !tbaa !68
-  %i.dz = add i32 %i.ce, %.sroa.15.0              ; 2 uses
+  %i.dz = add i32 %i.cg, %.sroa.15.0              ; 2 uses
   store i32 %i.dz, ptr %.sroa.15.0..sroa_idx, align 4, !tbaa !68
-  %i.ea = add i32 %i.cd, %.sroa.19.0              ; 2 uses
+  %i.ea = add i32 %i.cf, %.sroa.19.0              ; 2 uses
   store i32 %i.ea, ptr %.sroa.19.0..sroa_idx, align 8, !tbaa !68
-  %i.eb = add i32 %i.cc, %.sroa.23.0              ; 2 uses
+  %i.eb = add i32 %i.ce, %.sroa.23.0              ; 2 uses
   store i32 %i.eb, ptr %.sroa.23.0..sroa_idx, align 4, !tbaa !68
-  %i.ec = add i32 %i.cb, %.sroa.27.0              ; 2 uses
+  %i.ec = add i32 %i.cd, %.sroa.27.0              ; 2 uses
   store i32 %i.ec, ptr %.sroa.27.0..sroa_idx, align 8, !tbaa !68
-  %i.ed = add i32 %i.ca, %.sroa.31.0              ; 2 uses
+  %i.ed = add i32 %i.cc, %.sroa.31.0              ; 2 uses
   store i32 %i.ed, ptr %.sroa.31.0..sroa_idx, align 4, !tbaa !68
-  %indvars.iv.next160.15 = add i32 %.027139.a, 64 ; 3 uses
+  %indvars.iv.next160.15 = add i32 %.027139, 64   ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #33
   %.not = icmp sgt i32 %indvars.iv.next160.15, %i.by
   br i1 %.not, label %._crit_edge.loopexit, label %bb.r
@@ -698,7 +688,7 @@ bb.r:                                             ; preds = %.lr.ph, %.preheader
   br i1 %exitcond.not, label %.split.us, label %.preheader.split, !llvm.loop !5
 
 ._crit_edge.loopexit:                             ; preds = %.preheader76.preheader
-  %i.gm = add nuw nsw i32 %.027139.a, 64
+  %i.gm = add nuw nsw i32 %.027139, 64
   %i.gn = zext nneg i32 %indvars.iv.next160.15 to i64
   br label %._crit_edge
 
@@ -1100,6 +1090,9 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #30
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree nounwind }

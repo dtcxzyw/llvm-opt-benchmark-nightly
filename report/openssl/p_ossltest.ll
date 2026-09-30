@@ -204,49 +204,42 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not20, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = load ptr, ptr %i.a, align 8, !tbaa !25   ; 4 uses
+  %i.e = load ptr, ptr %i.a, align 8, !tbaa !25   ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 11 ; 2 uses
-  %2 = load i8, ptr %i.f, align 1, !tbaa !8
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 12 ; 2 uses
-  %6 = load i8, ptr %5, align 1, !tbaa !8
-  %i.g = zext i8 %6 to i32
-  %7 = or disjoint i32 %4, %i.g                   ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 9
-  %8 = load i8, ptr %i.h, align 1, !tbaa !8
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 8
-  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 10
-  %11 = load i8, ptr %i.i, align 1, !tbaa !8
-  %12 = zext i8 %11 to i32
-  %13 = or disjoint i32 %10, %12                  ; 2 uses
+  %2 = load i16, ptr %i.f, align 1
+  %3 = call i16 @llvm.bswap.i16(i16 %2)           ; 3 uses
+  %i.g = zext i16 %3 to i32                       ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 12
+  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 9
+  %4 = load i16, ptr %i.i, align 1
+  %5 = call i16 @llvm.bswap.i16(i16 %4)           ; 2 uses
+  %6 = zext i16 %5 to i32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 %13, ptr %i.j, align 8, !tbaa !29
+  store i32 %6, ptr %i.j, align 8, !tbaa !29
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = load i32, ptr %i.k, align 8, !tbaa !28
   %.not21 = icmp eq i32 %i.l, 0
   br i1 %.not21, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = zext nneg i32 %7 to i64
+  %i.m = zext i16 %3 to i64
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.m, ptr %i.n, align 8, !tbaa !27
-  %i.o = icmp samesign ugt i32 %13, 769
+  %i.o = icmp ugt i16 %5, 769
   br i1 %i.o, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = icmp samesign ult i32 %7, 16
+  %i.p = icmp ult i16 %3, 16
   br i1 %i.p, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = add nsw i32 %7, -16                      ; 3 uses
+  %i.q = add nsw i32 %i.g, -16                    ; 3 uses
   %i.r = lshr i32 %i.q, 8
   %i.s = trunc nuw i32 %i.r to i8
   store i8 %i.s, ptr %i.f, align 1, !tbaa !8
   %i.t = trunc i32 %i.q to i8
-  store i8 %i.t, ptr %5, align 1, !tbaa !8
-  %i.u = add nuw nsw i32 %7, 20
+  store i8 %i.t, ptr %i.h, align 1, !tbaa !8
+  %i.u = add nuw nsw i32 %i.g, 20
   %i.v = and i32 %i.u, 131056
   %i.w = sub nsw i32 %i.v, %i.q
   %i.x = zext i32 %i.w to i64
@@ -501,6 +494,9 @@ define internal void @ossl_drbg_clear_seed(ptr nofree readnone captures(none) %0
 bb.a:
   ret void
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9

@@ -204,42 +204,24 @@ bb.b:                                             ; preds = %bb.a
   br label %select.unfold.sink.split
 
 _ZN4uuid4Uuid11get_version17h2910ef5f0f59be2eE.exit: ; preds = %bb.a
-  %2 = load i8, ptr %1, align 1, !alias.scope !105, !noundef !6
-  %3 = zext i8 %2 to i64
-  %4 = shl nuw nsw i64 %3, 52
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %6 = load i8, ptr %5, align 1, !alias.scope !105, !noundef !6
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 44
-  %9 = or disjoint i64 %8, %4
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %11 = load i8, ptr %10, align 1, !alias.scope !105, !noundef !6
-  %12 = zext i8 %11 to i64
-  %13 = shl nuw nsw i64 %12, 36
-  %14 = or disjoint i64 %9, %13
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %16 = load i8, ptr %15, align 1, !alias.scope !105, !noundef !6
-  %i.az = zext i8 %16 to i64
+  %2 = load i32, ptr %1, align 1, !alias.scope !105
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  %i.az = zext i32 %3 to i64
   %i.ba = shl nuw nsw i64 %i.az, 28
-  %17 = or disjoint i64 %14, %i.ba
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bc = load i8, ptr %i.bb, align 1, !alias.scope !105, !noundef !6
   %i.bd = zext i8 %i.bc to i64
   %i.be = shl nuw nsw i64 %i.bd, 20
-  %18 = or disjoint i64 %17, %i.be
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 5
   %i.bg = load i8, ptr %i.bf, align 1, !alias.scope !105, !noundef !6
   %i.bh = zext i8 %i.bg to i64
   %i.bi = shl nuw nsw i64 %i.bh, 12
-  %19 = or disjoint i64 %18, %i.bi
   %i.bj = and i8 %i.b, 15
   %i.bk = zext nneg i8 %i.bj to i64
   %i.bl = shl nuw nsw i64 %i.bk, 8
-  %20 = or disjoint i64 %19, %i.bl
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 7
   %i.bn = load i8, ptr %i.bm, align 1, !alias.scope !105, !noundef !6
   %i.bo = zext i8 %i.bn to i64
-  %21 = or i64 %20, %i.bo
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bq = load i8, ptr %i.bp, align 1, !alias.scope !105, !noundef !6
   %i.br = and i8 %i.bq, 63
@@ -249,25 +231,29 @@ _ZN4uuid4Uuid11get_version17h2910ef5f0f59be2eE.exit: ; preds = %bb.a
   %i.bv = load i8, ptr %i.bu, align 1, !alias.scope !105, !noundef !6
   %i.bw = zext i8 %i.bv to i16
   %i.bx = or disjoint i16 %i.bt, %i.bw
-  %i.by = add nsw i64 %21, -122192928000000000    ; 2 uses
+  %4 = or disjoint i64 %i.bl, -122192928000000000
+  %5 = add nuw nsw i64 %4, %i.be
+  %6 = add nsw i64 %5, %i.ba
+  %7 = or disjoint i64 %6, %i.bo
+  %i.by = add nsw i64 %7, %i.bi                   ; 2 uses
   %i.bz = udiv i64 %i.by, 10000000
   %i.ca = urem i64 %i.by, 10000000
   br label %select.unfold.sink.split
 
 bb.c:                                             ; preds = %bb.a
-  %22 = load i8, ptr %1, align 1, !noundef !6
-  %i.cb = zext i8 %22 to i64
-  %i.cc = shl nuw nsw i64 %i.cb, 40
-  %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %8 = load i32, ptr %1, align 1
+  %9 = tail call i32 @llvm.bswap.i32(i32 %8)
+  %i.cb = zext i32 %9 to i64
+  %i.cc = shl nuw nsw i64 %i.cb, 16
+  %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ce = load i8, ptr %i.cd, align 1, !noundef !6
   %i.cf = zext i8 %i.ce to i64
-  %i.cg = shl nuw nsw i64 %i.cf, 32
-  %23 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %24 = load i32, ptr %23, align 1
-  %25 = tail call i32 @llvm.bswap.i32(i32 %24)
-  %i.ch = zext i32 %25 to i64
-  %op.rdx = or disjoint i64 %i.cg, %i.ch
-  %op.rdx27 = or disjoint i64 %op.rdx, %i.cc      ; 2 uses
+  %i.cg = shl nuw nsw i64 %i.cf, 8
+  %10 = or disjoint i64 %i.cc, %i.cg
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 5
+  %12 = load i8, ptr %11, align 1, !noundef !6
+  %i.ch = zext i8 %12 to i64
+  %op.rdx27 = or disjoint i64 %10, %i.ch          ; 2 uses
   %i.ci = udiv i64 %op.rdx27, 1000
   %i.cj = urem i64 %op.rdx27, 1000
   br label %select.unfold.sink.split
@@ -300,45 +286,20 @@ select.unfold:                                    ; preds = %select.unfold.sink.
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN4uuid4Uuid9as_fields17hfb520e6d7f1cfd4aE(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias noundef readonly align 1 captures(address, read_provenance) dereferenceable(16) %1) unnamed_addr #5 personality ptr @rust_eh_personality {
 bb.a:
-  %2 = load i8, ptr %1, align 1, !noundef !6
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw i32 %3, 24
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %6 = load i8, ptr %5, align 1, !noundef !6
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw nsw i32 %7, 16
-  %9 = or disjoint i32 %8, %4
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %11 = load i8, ptr %10, align 1, !noundef !6
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 8
-  %14 = or disjoint i32 %9, %13
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %16 = load i8, ptr %15, align 1, !noundef !6
-  %17 = zext i8 %16 to i32
-  %18 = or disjoint i32 %14, %17
+  %2 = load i32, ptr %1, align 1
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %19 = load i8, ptr %i.a, align 1, !noundef !6
-  %20 = zext i8 %19 to i16
-  %21 = shl nuw i16 %20, 8
-  %22 = getelementptr inbounds nuw i8, ptr %1, i64 5
-  %23 = load i8, ptr %22, align 1, !noundef !6
-  %24 = zext i8 %23 to i16
-  %25 = or disjoint i16 %21, %24
+  %4 = load i16, ptr %i.a, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %26 = load i8, ptr %i.b, align 1, !noundef !6
-  %27 = zext i8 %26 to i16
-  %28 = shl nuw i16 %27, 8
-  %29 = getelementptr inbounds nuw i8, ptr %1, i64 7
-  %30 = load i8, ptr %29, align 1, !noundef !6
-  %31 = zext i8 %30 to i16
-  %32 = or disjoint i16 %28, %31
+  %6 = load i16, ptr %i.b, align 1
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %18, ptr %0, align 8
+  store i32 %3, ptr %0, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i16 %25, ptr %i.d, align 4
+  store i16 %5, ptr %i.d, align 4
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i16 %32, ptr %i.e, align 2
+  store i16 %7, ptr %i.e, align 2
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.c, ptr %i.f, align 8
   ret void
@@ -740,6 +701,9 @@ declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #15
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

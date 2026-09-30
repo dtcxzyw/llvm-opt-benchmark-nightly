@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag, %bb.ae
   %.1.i = phi i32 [ %i.gy, %bb.ag ], [ %i.gq, %bb.ae ] ; 2 uses
-  %.090.i.i = phi ptr [ %i.gv, %bb.ag ], [ %i.go, %bb.ae ] ; 7 uses
+  %.090.i.i = phi ptr [ %i.gv, %bb.ag ], [ %i.go, %bb.ae ] ; 6 uses
   %.not.i.i = icmp ult ptr %.090.i.i, %i.gm
   br i1 %.not.i.i, label %bb.ai, label %ZSTDv05_decodeSeqHeaders.exit.thread.i
 
@@ -227,14 +227,10 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.hi, label %ZSTDv05_decodeSeqHeaders.exit.thread.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %5 = getelementptr inbounds nuw i8, ptr %.090.i.i, i64 2
-  %6 = load i8, ptr %5, align 1, !tbaa !27
-  %7 = zext i8 %6 to i64
-  %i.hj = getelementptr inbounds nuw i8, ptr %.090.i.i, i64 1
-  %8 = load i8, ptr %i.hj, align 1, !tbaa !27
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw nsw i64 %9, 8
-  %11 = or disjoint i64 %10, %7
+  %i.hj = getelementptr i8, ptr %.090.i.i, i64 1
+  %5 = load i16, ptr %i.hj, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %7 = zext i16 %6 to i64
   br label %bb.an
 
 bb.al:                                            ; preds = %bb.ai
@@ -254,7 +250,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am, %bb.ak
   %.191.i.i = phi ptr [ %i.hh, %bb.ak ], [ %i.hk, %bb.am ] ; 2 uses
-  %.089.i.i = phi i64 [ %11, %bb.ak ], [ %i.hs, %bb.am ]
+  %.089.i.i = phi i64 [ %7, %bb.ak ], [ %i.hs, %bb.am ]
   %i.ht = getelementptr inbounds nuw i8, ptr %.191.i.i, i64 %.089.i.i ; 16 uses
   %i.hu = getelementptr inbounds i8, ptr %i.gm, i64 -3
   %i.hv = icmp ugt ptr %i.ht, %i.hu
@@ -657,7 +653,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.lr.ph, %bb.l
   %.160125 = phi i64 [ %i.m, %.lr.ph ], [ %i.an, %bb.l ] ; 2 uses
   %.061124 = phi ptr [ %1, %.lr.ph ], [ %i.al, %bb.l ] ; 7 uses
-  %.164123 = phi ptr [ %i.l, %.lr.ph ], [ %i.am, %bb.l ] ; 5 uses
+  %.164123 = phi ptr [ %i.l, %.lr.ph ], [ %i.am, %bb.l ] ; 4 uses
   %i.p = load i8, ptr %.164123, align 1, !tbaa !27
   %i.q = zext i8 %i.p to i32                      ; 2 uses
   %i.r = lshr i32 %i.q, 6                         ; 2 uses
@@ -673,15 +669,11 @@ bb.d:                                             ; preds = %.lr.ph, %bb.l
 bb.e:                                             ; preds = %bb.d
   %i.s = shl nuw nsw i32 %i.q, 16
   %i.t = and i32 %i.s, 458752
-  %5 = getelementptr inbounds nuw i8, ptr %.164123, i64 2
-  %6 = load i8, ptr %5, align 1, !tbaa !27
-  %7 = zext i8 %6 to i32
-  %8 = or disjoint i32 %i.t, %7
-  %i.u = getelementptr inbounds nuw i8, ptr %.164123, i64 1
-  %9 = load i8, ptr %i.u, align 1, !tbaa !27
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 8
-  %i.v = or disjoint i32 %11, %8
+  %i.u = getelementptr i8, ptr %.164123, i64 1
+  %5 = load i16, ptr %i.u, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %7 = zext i16 %6 to i32
+  %i.v = or disjoint i32 %i.t, %7
   %i.w = zext nneg i32 %i.v to i64
   br label %bb.f
 
@@ -1084,7 +1076,7 @@ bb.e:                                             ; preds = %bb.c
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.thread88
   %.03373 = phi i64 [ %i.v, %.thread88 ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.03472 = phi i64 [ %i.u, %.thread88 ], [ %i.b, %.lr.ph.preheader ] ; 2 uses
-  %.03671 = phi ptr [ %i.t, %.thread88 ], [ %i.d, %.lr.ph.preheader ] ; 5 uses
+  %.03671 = phi ptr [ %i.t, %.thread88 ], [ %i.d, %.lr.ph.preheader ] ; 4 uses
   %i.e = load i8, ptr %.03671, align 1, !tbaa !27
   %i.f = zext i8 %i.e to i32                      ; 2 uses
   %i.g = lshr i32 %i.f, 6
@@ -1100,15 +1092,11 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %.lr.ph
   %i.h = shl nuw nsw i32 %i.f, 16
   %i.i = and i32 %i.h, 458752
-  %4 = getelementptr inbounds nuw i8, ptr %.03671, i64 2
-  %5 = load i8, ptr %4, align 1, !tbaa !27
-  %6 = zext i8 %5 to i32
-  %7 = or disjoint i32 %i.i, %6
-  %i.j = getelementptr inbounds nuw i8, ptr %.03671, i64 1
-  %8 = load i8, ptr %i.j, align 1, !tbaa !27
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 8
-  %i.k = or disjoint i32 %10, %7                  ; 2 uses
+  %i.j = getelementptr i8, ptr %.03671, i64 1
+  %4 = load i16, ptr %i.j, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %6 = zext i16 %5 to i32
+  %i.k = or disjoint i32 %i.i, %6                 ; 2 uses
   %i.l = zext nneg i32 %i.k to i64                ; 2 uses
   %i.m = add i64 %.03472, -3                      ; 2 uses
   %i.n = icmp ult i64 %i.m, %i.l
@@ -1262,15 +1250,11 @@ bb.i:                                             ; preds = %ZSTDv05_checkContin
 bb.j:                                             ; preds = %bb.i
   %i.aa = shl nuw nsw i32 %i.y, 16
   %i.ab = and i32 %i.aa, 458752
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %6 = load i8, ptr %5, align 1, !tbaa !27
-  %7 = zext i8 %6 to i32
-  %8 = or disjoint i32 %i.ab, %7
-  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %9 = load i8, ptr %i.ac, align 1, !tbaa !27
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 8
-  %i.ad = or disjoint i32 %11, %8
+  %i.ac = getelementptr i8, ptr %3, i64 1
+  %5 = load i16, ptr %i.ac, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %7 = zext i16 %6 to i32
+  %i.ad = or disjoint i32 %i.ab, %7
   %i.ae = zext nneg i32 %i.ad to i64
   br label %bb.k
 
@@ -1672,6 +1656,9 @@ declare i64 @llvm.umin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #23
 
 ; Function Attrs: nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #24

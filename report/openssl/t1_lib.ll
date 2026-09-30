@@ -205,20 +205,15 @@ bb.c:                                             ; preds = %.lr.ph, %bb.d
   br i1 %i.g, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = load ptr, ptr %0, align 8, !tbaa !219    ; 3 uses
-  %4 = load i8, ptr %i.h, align 1, !tbaa !139
-  %5 = zext i8 %4 to i16
-  %6 = shl nuw i16 %5, 8
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !139
-  %9 = zext i8 %8 to i16
-  %10 = or disjoint i16 %6, %9
+  %i.h = load ptr, ptr %0, align 8, !tbaa !219    ; 2 uses
+  %4 = load i16, ptr %i.h, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 2
   store ptr %i.i, ptr %0, align 8, !tbaa !219
   %i.j = add i64 %.val.i.i37, -2                  ; 2 uses
   store i64 %i.j, ptr %i.a, align 8, !tbaa !218
   %i.k = getelementptr inbounds nuw [2 x i8], ptr %i.e, i64 %.034
-  store i16 %10, ptr %i.k, align 2, !tbaa !153
+  store i16 %5, ptr %i.k, align 2, !tbaa !153
   %i.l = add nuw nsw i64 %.034, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.l, %spec.select
   br i1 %exitcond.not, label %.critedge.thread, label %bb.c, !llvm.loop !4
@@ -296,20 +291,15 @@ bb.f:                                             ; preds = %bb.g, %.preheader.i
   br i1 %i.s, label %.critedge.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.t = load ptr, ptr %1, align 8, !tbaa !219    ; 3 uses
-  %3 = load i8, ptr %i.t, align 1, !tbaa !139
-  %4 = zext i8 %3 to i16
-  %5 = shl nuw i16 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.t, i64 1
-  %7 = load i8, ptr %6, align 1, !tbaa !139
-  %8 = zext i8 %7 to i16
-  %9 = or disjoint i16 %5, %8
+  %i.t = load ptr, ptr %1, align 8, !tbaa !219    ; 2 uses
+  %3 = load i16, ptr %i.t, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 2
   store ptr %i.u, ptr %1, align 8, !tbaa !219
   %i.v = add i64 %.val.i.i37.i, -2                ; 2 uses
   store i64 %i.v, ptr %i.k, align 8, !tbaa !218
   %i.w = getelementptr inbounds nuw [2 x i8], ptr %i.q, i64 %.034.i
-  store i16 %9, ptr %i.w, align 2, !tbaa !153
+  store i16 %4, ptr %i.w, align 2, !tbaa !153
   %i.x = add nuw nsw i64 %.034.i, 1               ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.x, %spec.select.i
   br i1 %exitcond.not.i, label %.critedge.thread.i, label %bb.f, !llvm.loop !4
@@ -352,20 +342,15 @@ bb.k:                                             ; preds = %bb.l, %.preheader.i
   br i1 %i.ae, label %.critedge.i21, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.af = load ptr, ptr %1, align 8, !tbaa !219   ; 3 uses
-  %10 = load i8, ptr %i.af, align 1, !tbaa !139
-  %11 = zext i8 %10 to i16
-  %12 = shl nuw i16 %11, 8
-  %13 = getelementptr inbounds nuw i8, ptr %i.af, i64 1
-  %14 = load i8, ptr %13, align 1, !tbaa !139
-  %15 = zext i8 %14 to i16
-  %16 = or disjoint i16 %12, %15
+  %i.af = load ptr, ptr %1, align 8, !tbaa !219   ; 2 uses
+  %5 = load i16, ptr %i.af, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 2
   store ptr %i.ag, ptr %1, align 8, !tbaa !219
   %i.ah = add i64 %.val.i.i37.i17, -2             ; 2 uses
   store i64 %i.ah, ptr %i.k, align 8, !tbaa !218
   %i.ai = getelementptr inbounds nuw [2 x i8], ptr %i.ac, i64 %.034.i18
-  store i16 %16, ptr %i.ai, align 2, !tbaa !153
+  store i16 %6, ptr %i.ai, align 2, !tbaa !153
   %i.aj = add nuw nsw i64 %.034.i18, 1            ; 2 uses
   %exitcond.not.i19 = icmp eq i64 %i.aj, %spec.select.i14
   br i1 %exitcond.not.i19, label %.critedge.thread.i20, label %bb.k, !llvm.loop !4
@@ -767,6 +752,9 @@ declare i64 @llvm.umin.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

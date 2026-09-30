@@ -115,7 +115,7 @@ bb.a:
 define dso_local zeroext i16 @i2c_get16(ptr nofree noundef readonly captures(none) %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
-  %i.b = alloca [2 x i8], align 2                 ; 6 uses
+  %i.b = alloca [2 x i8], align 2                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store i16 0, ptr %i.b, align 2, !annotation !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -132,15 +132,10 @@ bb.a:
   %i.k = load i8, ptr %i.f, align 8
   call void %i.j(ptr noundef %i.h, i8 noundef zeroext %i.k, ptr noundef nonnull %i.b, i16 noundef zeroext 2) #6, !inline_history !10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %2 = load i8, ptr %i.b, align 2
-  %3 = zext i8 %2 to i16
-  %4 = shl nuw i16 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %6 = load i8, ptr %5, align 1
-  %7 = zext i8 %6 to i16
-  %8 = or disjoint i16 %4, %7
+  %2 = load i16, ptr %i.b, align 2
+  %3 = call i16 @llvm.bswap.i16(i16 %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
-  ret i16 %8
+  ret i16 %3
 }
 
 ; Function Attrs: nounwind sspstrong uwtable

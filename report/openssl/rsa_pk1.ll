@@ -205,15 +205,11 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.h
   %indvars.iv = phi i64 [ 0, %bb.g ], [ %indvars.iv.next, %bb.h ] ; 3 uses
   %.08497 = phi i32 [ 0, %bb.g ], [ %i.ah, %bb.h ]
-  %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv ; 2 uses
-  %7 = load i8, ptr %i.y, align 2, !tbaa !8
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 8
-  %10 = getelementptr i8, ptr %i.y, i64 1
-  %11 = load i8, ptr %10, align 1, !tbaa !8
-  %i.z = zext i8 %11 to i32
-  %12 = or disjoint i32 %9, %i.z
-  %i.aa = and i32 %12, %i.x                       ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv
+  %7 = load i16, ptr %i.y, align 2
+  %8 = call i16 @llvm.bswap.i16(i16 %7)
+  %i.z = zext i16 %8 to i32
+  %i.aa = and i32 %i.x, %i.z                      ; 2 uses
   %i.ab = icmp samesign ult i32 %i.aa, %i.p
   %.neg.i.i = sext i1 %i.ab to i32                ; 2 uses
   %i.ac = call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %.neg.i.i) #7, !srcloc !10
@@ -616,24 +612,27 @@ declare void @HMAC_CTX_free(ptr noundef) local_unnamed_addr #2
 
 declare void @EVP_MD_free(ptr noundef) local_unnamed_addr #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #4
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #4
+declare void @llvm.assume(i1 noundef) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #5
+declare i64 @llvm.usub.sat.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #5
+declare i64 @llvm.umin.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.and.v4i32(<4 x i32>) #5
+declare i32 @llvm.vector.reduce.and.v4i32(<4 x i32>) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #6 = { nounwind }
 attributes #7 = { nounwind memory(none) }
 

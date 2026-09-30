@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   tail call void @luaL_checkstack(ptr noundef %0, i32 noundef 1, ptr noundef nonnull @.str.9) #9
-  %i.e = load ptr, ptr %1, align 8, !tbaa !21     ; 47 uses
+  %i.e = load ptr, ptr %1, align 8, !tbaa !21     ; 29 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !9     ; 7 uses
   %i.g = zext i8 %i.f to i32                      ; 3 uses
   switch i8 %i.f, label %bb.bj [
@@ -288,14 +288,10 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.ae = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  %2 = load i8, ptr %i.ae, align 1, !tbaa !9
-  %3 = zext i8 %2 to i64
-  %4 = shl nuw nsw i64 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %6 = load i8, ptr %5, align 1, !tbaa !9
-  %i.af = zext i8 %6 to i64
-  %7 = or disjoint i64 %4, %i.af
-  tail call void @lua_pushinteger(ptr noundef %0, i64 noundef %7) #9
+  %2 = load i16, ptr %i.ae, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.af = zext i16 %3 to i64
+  tail call void @lua_pushinteger(ptr noundef %0, i64 noundef %i.af) #9
   %i.ag = load ptr, ptr %1, align 8, !tbaa !21
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 3
   store ptr %i.ah, ptr %1, align 8, !tbaa !21
@@ -393,44 +389,9 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %i.bz = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  %8 = load i8, ptr %i.bz, align 1, !tbaa !9
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw i64 %9, 56
-  %11 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %12 = load i8, ptr %11, align 1, !tbaa !9
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 48
-  %15 = or disjoint i64 %14, %10
-  %16 = getelementptr inbounds nuw i8, ptr %i.e, i64 3
-  %17 = load i8, ptr %16, align 1, !tbaa !9
-  %18 = zext i8 %17 to i64
-  %19 = shl nuw nsw i64 %18, 40
-  %20 = or disjoint i64 %15, %19
-  %21 = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %22 = load i8, ptr %21, align 1, !tbaa !9
-  %23 = zext i8 %22 to i64
-  %24 = shl nuw nsw i64 %23, 32
-  %25 = or disjoint i64 %20, %24
-  %26 = getelementptr inbounds nuw i8, ptr %i.e, i64 5
-  %27 = load i8, ptr %26, align 1, !tbaa !9
-  %28 = zext i8 %27 to i64
-  %29 = shl nuw nsw i64 %28, 24
-  %30 = or disjoint i64 %25, %29
-  %31 = getelementptr inbounds nuw i8, ptr %i.e, i64 6
-  %32 = load i8, ptr %31, align 1, !tbaa !9
-  %33 = zext i8 %32 to i64
-  %34 = shl nuw nsw i64 %33, 16
-  %35 = or disjoint i64 %30, %34
-  %36 = getelementptr inbounds nuw i8, ptr %i.e, i64 7
-  %37 = load i8, ptr %36, align 1, !tbaa !9
-  %38 = zext i8 %37 to i64
-  %39 = shl nuw nsw i64 %38, 8
-  %40 = or i64 %35, %39
-  %41 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %42 = load i8, ptr %41, align 1, !tbaa !9
-  %43 = zext i8 %42 to i64
-  %44 = or i64 %40, %43
-  tail call void @lua_pushinteger(ptr noundef %0, i64 noundef %44) #9
+  %4 = load i64, ptr %i.bz, align 1
+  %5 = tail call i64 @llvm.bswap.i64(i64 %4)
+  tail call void @lua_pushinteger(ptr noundef %0, i64 noundef %5) #9
   %i.ca = load ptr, ptr %1, align 8, !tbaa !21
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 9
   store ptr %i.cb, ptr %1, align 8, !tbaa !21
@@ -451,44 +412,9 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y
   %i.ch = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  %45 = load i8, ptr %i.ch, align 1, !tbaa !9
-  %46 = zext i8 %45 to i64
-  %47 = shl nuw i64 %46, 56
-  %48 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %49 = load i8, ptr %48, align 1, !tbaa !9
-  %50 = zext i8 %49 to i64
-  %51 = shl nuw nsw i64 %50, 48
-  %52 = or disjoint i64 %51, %47
-  %53 = getelementptr inbounds nuw i8, ptr %i.e, i64 3
-  %54 = load i8, ptr %53, align 1, !tbaa !9
-  %55 = zext i8 %54 to i64
-  %56 = shl nuw nsw i64 %55, 40
-  %57 = or disjoint i64 %52, %56
-  %58 = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %59 = load i8, ptr %58, align 1, !tbaa !9
-  %60 = zext i8 %59 to i64
-  %61 = shl nuw nsw i64 %60, 32
-  %62 = or disjoint i64 %57, %61
-  %63 = getelementptr inbounds nuw i8, ptr %i.e, i64 5
-  %64 = load i8, ptr %63, align 1, !tbaa !9
-  %65 = zext i8 %64 to i64
-  %66 = shl nuw nsw i64 %65, 24
-  %67 = or disjoint i64 %62, %66
-  %68 = getelementptr inbounds nuw i8, ptr %i.e, i64 6
-  %69 = load i8, ptr %68, align 1, !tbaa !9
-  %70 = zext i8 %69 to i64
-  %71 = shl nuw nsw i64 %70, 16
-  %72 = or disjoint i64 %67, %71
-  %73 = getelementptr inbounds nuw i8, ptr %i.e, i64 7
-  %74 = load i8, ptr %73, align 1, !tbaa !9
-  %75 = zext i8 %74 to i64
-  %76 = shl nuw nsw i64 %75, 8
-  %77 = or i64 %72, %76
-  %78 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %79 = load i8, ptr %78, align 1, !tbaa !9
-  %80 = zext i8 %79 to i64
-  %81 = or i64 %77, %80
-  %i.ci = sitofp i64 %81 to double
+  %6 = load i64, ptr %i.ch, align 1
+  %7 = tail call i64 @llvm.bswap.i64(i64 %6)
+  %i.ci = sitofp i64 %7 to double
   tail call void @lua_pushnumber(ptr noundef %0, double noundef %i.ci) #9
   %i.cj = load ptr, ptr %1, align 8, !tbaa !21
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 9
@@ -623,14 +549,10 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.an
   %i.el = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  %82 = load i8, ptr %i.el, align 1, !tbaa !9
-  %83 = zext i8 %82 to i64
-  %84 = shl nuw nsw i64 %83, 8
-  %85 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %86 = load i8, ptr %85, align 1, !tbaa !9
-  %i.em = zext i8 %86 to i64
-  %87 = or disjoint i64 %84, %i.em                ; 2 uses
-  %i.en = add nuw nsw i64 %87, 3                  ; 3 uses
+  %8 = load i16, ptr %i.el, align 1
+  %9 = tail call i16 @llvm.bswap.i16(i16 %8)
+  %i.em = zext i16 %9 to i64                      ; 2 uses
+  %i.en = add nuw nsw i64 %i.em, 3                ; 3 uses
   %i.eo = icmp ult i64 %i.ei, %i.en
   br i1 %i.eo, label %bb.aq, label %bb.ar
 
@@ -641,7 +563,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.ap
   %i.eq = getelementptr inbounds nuw i8, ptr %i.e, i64 3
-  tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull %i.eq, i64 noundef %87) #9
+  tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull %i.eq, i64 noundef %i.em) #9
   %i.er = load ptr, ptr %1, align 8, !tbaa !21
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 %i.en
   store ptr %i.es, ptr %1, align 8, !tbaa !21
@@ -699,18 +621,14 @@ bb.ay:                                            ; preds = %bb.ax
 
 bb.az:                                            ; preds = %bb.ax
   %i.fn = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  %88 = load i8, ptr %i.fn, align 1, !tbaa !9
-  %89 = zext i8 %88 to i64
-  %90 = shl nuw nsw i64 %89, 8
-  %91 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %92 = load i8, ptr %91, align 1, !tbaa !9
-  %i.fo = zext i8 %92 to i64
-  %93 = or disjoint i64 %90, %i.fo
+  %10 = load i16, ptr %i.fn, align 1
+  %11 = tail call i16 @llvm.bswap.i16(i16 %10)
+  %i.fo = zext i16 %11 to i64
   %i.fp = getelementptr inbounds nuw i8, ptr %i.e, i64 3
   store ptr %i.fp, ptr %1, align 8, !tbaa !21
   %i.fq = add i64 %i.fk, -3
   store i64 %i.fq, ptr %i.a, align 8, !tbaa !22
-  tail call void @mp_decode_to_lua_array(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %93)
+  tail call void @mp_decode_to_lua_array(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %i.fo)
   br label %bb.bu
 
 bb.ba:                                            ; preds = %bb.c
@@ -747,18 +665,14 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %bb.bd
   %i.gd = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  %94 = load i8, ptr %i.gd, align 1, !tbaa !9
-  %95 = zext i8 %94 to i64
-  %96 = shl nuw nsw i64 %95, 8
-  %97 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %98 = load i8, ptr %97, align 1, !tbaa !9
-  %i.ge = zext i8 %98 to i64
-  %99 = or disjoint i64 %96, %i.ge
+  %12 = load i16, ptr %i.gd, align 1
+  %13 = tail call i16 @llvm.bswap.i16(i16 %12)
+  %i.ge = zext i16 %13 to i64
   %i.gf = getelementptr inbounds nuw i8, ptr %i.e, i64 3
   store ptr %i.gf, ptr %1, align 8, !tbaa !21
   %i.gg = add i64 %i.ga, -3
   store i64 %i.gg, ptr %i.a, align 8, !tbaa !22
-  tail call void @mp_decode_to_lua_hash(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %99)
+  tail call void @mp_decode_to_lua_hash(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %i.ge)
   br label %bb.bu
 
 bb.bg:                                            ; preds = %bb.c
@@ -1161,10 +1075,13 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.bswap.i64(i64) #6
+declare i16 @llvm.bswap.i16(i16) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #6
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

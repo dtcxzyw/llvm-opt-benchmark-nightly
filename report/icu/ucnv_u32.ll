@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.a, %bb.ac
 define internal noundef range(i32 0, 1114112) i32 @_ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 10 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !17   ; 2 uses
   %.not = icmp ult ptr %i.b, %i.d
@@ -234,27 +234,19 @@ bb.c:                                             ; preds = %bb.b
   br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b
-  %2 = load i8, ptr %i.b, align 1, !tbaa !25
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw i32 %3, 24
-  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %5 = load i8, ptr %i.r, align 1, !tbaa !25
-  %i.s = zext i8 %5 to i32
-  %6 = shl nuw nsw i32 %i.s, 16
-  %7 = or disjoint i32 %6, %4                     ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %9 = load i8, ptr %8, align 1, !tbaa !25
-  %i.t = zext i8 %9 to i32
-  %i.u = shl nuw nsw i32 %i.t, 8
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %11 = load i8, ptr %10, align 1, !tbaa !25
-  %12 = zext i8 %11 to i32
-  %i.v = or disjoint i32 %i.u, %12
-  %13 = or disjoint i32 %i.v, %7                  ; 2 uses
+  %2 = load i16, ptr %i.b, align 1                ; 2 uses
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %4 = load i16, ptr %i.r, align 1
+  %i.s = zext i16 %2 to i32
+  %i.t = zext i16 %4 to i32
+  %i.u = shl nuw i32 %i.t, 16
+  %i.v = or disjoint i32 %i.u, %i.s
+  %5 = tail call i32 @llvm.bswap.i32(i32 %i.v)    ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   store ptr %i.w, ptr %i.a, align 8, !tbaa !15
-  %i.x = icmp ugt i32 %7, 1114111
-  %i.y = and i32 %13, 2095104
+  %i.x = icmp ugt i16 %3, 16
+  %i.y = and i32 %5, 2095104
   %i.z = icmp eq i32 %i.y, 55296
   %or.cond = select i1 %i.x, i1 true, i1 %i.z
   br i1 %or.cond, label %bb.e, label %bb.f
@@ -276,7 +268,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.sink.split, %bb.d
-  %.0 = phi i32 [ %13, %bb.d ], [ 65535, %.sink.split ]
+  %.0 = phi i32 [ %5, %bb.d ], [ 65535, %.sink.split ]
   ret i32 %.0
 }
 
@@ -679,7 +671,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !15   ; 10 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !15   ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !17   ; 2 uses
   %.not.i = icmp ult ptr %i.f, %i.h
@@ -707,29 +699,16 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode.exit.sink.split
 
 bb.e:                                             ; preds = %bb.c
-  %2 = load i8, ptr %i.f, align 1, !tbaa !25
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw i32 %3, 24
-  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !25
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw nsw i32 %7, 16
-  %9 = or disjoint i32 %8, %4                     ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.f, i64 2
-  %11 = load i8, ptr %10, align 1, !tbaa !25
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 8
-  %14 = getelementptr inbounds nuw i8, ptr %i.f, i64 3
-  %15 = load i8, ptr %14, align 1, !tbaa !25
-  %16 = zext i8 %15 to i32
-  %17 = or disjoint i32 %13, %16
-  %18 = or disjoint i32 %17, %9                   ; 2 uses
+  %2 = load i32, ptr %i.f, align 1                ; 2 uses
+  %3 = trunc i32 %2 to i16
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %5 = tail call i32 @llvm.bswap.i32(i32 %2)      ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 4
   store ptr %i.t, ptr %i.e, align 8, !tbaa !15
-  %i.u = icmp ugt i32 %9, 1114111
-  %i.v = and i32 %18, 2095104
+  %i.u = icmp ugt i16 %4, 16
+  %i.v = and i32 %5, 2095104
   %i.w = icmp eq i32 %i.v, 55296
-  %or.cond.i = select i1 %i.u, i1 true, i1 %i.w
+  %or.cond.i = or i1 %i.u, %i.w
   br i1 %or.cond.i, label %bb.f, label %_ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode.exit
 
 bb.f:                                             ; preds = %bb.e
@@ -795,9 +774,15 @@ _ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode.e
   br label %_ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode.exit
 
 _ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode.exit: ; preds = %_ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode.exit.sink.split, %bb.j, %bb.e, %bb.a
-  %.0 = phi i32 [ %i.aq, %bb.j ], [ -9, %bb.a ], [ %18, %bb.e ], [ 65535, %_ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode.exit.sink.split ]
+  %.0 = phi i32 [ %i.aq, %bb.j ], [ -9, %bb.a ], [ %5, %bb.e ], [ 65535, %_ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode.exit.sink.split ]
   ret i32 %.0
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #6
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -805,6 +790,7 @@ attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

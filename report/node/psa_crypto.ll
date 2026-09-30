@@ -202,15 +202,11 @@ bb.d:                                             ; preds = %bb.c
   %i.l = load i16, ptr %i.k, align 2, !tbaa !137
   %i.m = zext i16 %i.l to i32
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %2 = load i8, ptr %i.n, align 4, !tbaa !138
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw i32 %3, 24
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 5
-  %6 = load i8, ptr %5, align 1, !tbaa !139
-  %i.o = zext i8 %6 to i32
-  %i.p = shl nuw nsw i32 %i.o, 16
-  %7 = or disjoint i32 %4, %i.m
-  %i.q = or disjoint i32 %7, %i.p
+  %2 = load i16, ptr %i.n, align 4
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.o = zext i16 %3 to i32
+  %i.p = shl nuw i32 %i.o, 16
+  %i.q = or disjoint i32 %i.p, %i.m
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.q, ptr %i.r, align 8, !tbaa !108
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -613,7 +609,7 @@ bb.a:
   %1 = alloca %struct.psa_crypto_driver_pake_inputs_s, align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef nonnull align 8 dereferenceable(88) %i.a, i64 88, i1 false), !tbaa.struct !141
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef nonnull align 8 dereferenceable(88) %i.a, i64 88, i1 false), !tbaa.struct !139
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !98
   %i.d = icmp eq i64 %i.c, 0
@@ -1016,6 +1012,9 @@ declare i64 @llvm.umin.i64(i64, i64) #18
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #18
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #18
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1180,8 +1179,6 @@ attributes #20 = { nounwind }
 !135 = !{!96, !6, i64 0}
 !136 = !{!96, !6, i64 8}
 !137 = !{!96, !18, i64 6}
-!138 = !{!96, !5, i64 4}
-!139 = !{!96, !5, i64 5}
-!140 = !{!21, !21, i64 0}
-!141 = !{i64 0, i64 8, !140, i64 8, i64 8, !27, i64 16, i64 8, !140, i64 24, i64 8, !27, i64 32, i64 8, !140, i64 40, i64 8, !27, i64 48, i64 2, !34, i64 50, i64 2, !34, i64 52, i64 4, !7, i64 56, i64 4, !7, i64 60, i64 4, !7, i64 64, i64 4, !7, i64 68, i64 4, !7, i64 72, i64 4, !7, i64 76, i64 1, !29, i64 77, i64 1, !29, i64 78, i64 2, !34, i64 80, i64 4, !7}
+!138 = !{!21, !21, i64 0}
+!139 = !{i64 0, i64 8, !138, i64 8, i64 8, !27, i64 16, i64 8, !138, i64 24, i64 8, !27, i64 32, i64 8, !138, i64 40, i64 8, !27, i64 48, i64 2, !34, i64 50, i64 2, !34, i64 52, i64 4, !7, i64 56, i64 4, !7, i64 60, i64 4, !7, i64 64, i64 4, !7, i64 68, i64 4, !7, i64 72, i64 4, !7, i64 76, i64 1, !29, i64 77, i64 1, !29, i64 78, i64 2, !34, i64 80, i64 4, !7}
 end_hunk_2

@@ -204,15 +204,10 @@ ares_buf_fetch.exit:                              ; preds = %bb.c
   br i1 %or.cond3, label %ares_buf_consume.exit, label %bb.d
 
 bb.d:                                             ; preds = %ares_buf_fetch.exit
-  %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.g ; 2 uses
-  %2 = load i8, ptr %i.l, align 1, !tbaa !19
-  %3 = zext i8 %2 to i16
-  %4 = shl nuw i16 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.l, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !19
-  %7 = zext i8 %6 to i16
-  %8 = or disjoint i16 %4, %7
-  store i16 %8, ptr %1, align 2, !tbaa !27
+  %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.g
+  %2 = load i16, ptr %i.l, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  store i16 %3, ptr %1, align 2, !tbaa !27
   %i.m = add i64 %i.g, 2
   store i64 %i.m, ptr %i.f, align 8, !tbaa !16
   br label %ares_buf_consume.exit
@@ -613,6 +608,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #14

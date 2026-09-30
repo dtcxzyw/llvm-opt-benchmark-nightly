@@ -10,8 +10,8 @@ define dso_local noundef i32 @LLVMFuzzerTestOneInput(ptr noundef %0, i64 noundef
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %2 = alloca %struct.date_mode, align 8          ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #5
   %i.b = icmp ult i64 %1, 5
   br i1 %i.b, label %bb.c, label %bb.b
 
@@ -29,19 +29,14 @@ bb.b:                                             ; preds = %bb.a
   %i.l = zext i1 %i.k to i32
   %spec.select = add nuw nsw i32 %i.l, %i.j       ; 2 uses
   store i32 %spec.select, ptr %i.a, align 4, !tbaa !13
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %4 = load i8, ptr %i.g, align 1, !tbaa !12
-  %5 = zext i8 %4 to i16
-  %6 = shl nuw i16 %5, 8
+  %3 = load i16, ptr %i.g, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %7 = load i8, ptr %3, align 1, !tbaa !12
-  %8 = zext i8 %7 to i16
-  %9 = or disjoint i16 %6, %8
   %i.n = add i64 %1, -4
-  %i.o = tail call ptr @xmemdupz(ptr noundef nonnull %i.m, i64 noundef %i.n) #4 ; 2 uses
-  %i.p = call i64 @approxidate_careful(ptr noundef %i.o, ptr noundef nonnull %i.a) #4
-  call void @free(ptr noundef %i.o) #4
-  %i.q = call { i64, ptr } @date_mode_from_type(i32 noundef %spec.select) #4 ; 2 uses
+  %i.o = tail call ptr @xmemdupz(ptr noundef nonnull %i.m, i64 noundef %i.n) #5 ; 2 uses
+  %i.p = call i64 @approxidate_careful(ptr noundef %i.o, ptr noundef nonnull %i.a) #5
+  call void @free(ptr noundef %i.o) #5
+  %i.q = call { i64, ptr } @date_mode_from_type(i32 noundef %spec.select) #5 ; 2 uses
   %i.r = extractvalue { i64, ptr } %i.q, 0
   %i.s = extractvalue { i64, ptr } %i.q, 1        ; 2 uses
   store i64 %i.r, ptr %2, align 8, !tbaa !13
@@ -49,15 +44,15 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.s, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !16
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.f, ptr %i.t, align 4, !tbaa !18
-  %i.u = sext i16 %9 to i32
+  %i.u = sext i16 %4 to i32
   %i.v = load i64, ptr %2, align 8
-  %i.w = call ptr @show_date(i64 noundef %i.p, i32 noundef %i.u, i64 %i.v, ptr %i.s) #4 ; 0 uses
-  call void @date_mode_release(ptr noundef nonnull %2) #4
+  %i.w = call ptr @show_date(i64 noundef %i.p, i32 noundef %i.u, i64 %i.v, ptr %i.s) #5 ; 0 uses
+  call void @date_mode_release(ptr noundef nonnull %2) #5
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 0
 }
 
@@ -80,11 +75,15 @@ declare ptr @show_date(i64 noundef, i32 noundef, i64, ptr) local_unnamed_addr #2
 
 declare void @date_mode_release(ptr noundef) local_unnamed_addr #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #4
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nounwind }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

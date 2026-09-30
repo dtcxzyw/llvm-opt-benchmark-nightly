@@ -127,7 +127,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.aa
-  %.032114 = phi ptr [ %0, %.lr.ph ], [ %i.dh, %bb.aa ] ; 6 uses
+  %.032114 = phi ptr [ %0, %.lr.ph ], [ %i.dh, %bb.aa ] ; 5 uses
   %.074113 = phi i32 [ %1, %.lr.ph ], [ %i.di, %bb.aa ]
   %i.r = load i8, ptr %.032114, align 1, !tbaa !8
   %i.s = icmp eq i8 %i.r, 28
@@ -144,16 +144,12 @@ bb.c:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %.032114, i64 2
   %i.w = load i8, ptr %i.v, align 1, !tbaa !8     ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.032114, i64 3
-  %16 = load i8, ptr %i.x, align 1, !tbaa !8
-  %17 = zext i8 %16 to i32
-  %18 = shl nuw nsw i32 %17, 8
-  %19 = getelementptr inbounds nuw i8, ptr %.032114, i64 4
-  %20 = load i8, ptr %19, align 1, !tbaa !8
-  %i.y = zext i8 %20 to i32
-  %21 = or disjoint i32 %18, %i.y
+  %16 = load i16, ptr %i.x, align 1
+  %17 = call i16 @llvm.bswap.i16(i16 %16)
+  %i.y = zext i16 %17 to i32
   %i.z = getelementptr inbounds nuw i8, ptr %.032114, i64 5 ; 3 uses
   %i.aa = add nsw i32 %.074113, -5                ; 2 uses
-  %.sroa.speculated = call i32 @llvm.umin.i32(i32 %i.aa, i32 %21) ; 5 uses
+  %.sroa.speculated = call i32 @llvm.umin.i32(i32 %i.aa, i32 %i.y) ; 5 uses
   %i.ab = icmp eq i8 %i.u, 2
   br i1 %i.ab, label %bb.d, label %.critedge2._crit_edge
 
@@ -554,6 +550,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #12

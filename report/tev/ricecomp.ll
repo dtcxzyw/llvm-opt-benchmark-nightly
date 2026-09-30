@@ -205,13 +205,9 @@ bb.i:                                             ; preds = %.sink.split, %bb.h
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @fits_rdecomp_short(ptr nofree noundef readonly captures(address) %0, i32 noundef %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = load i8, ptr %0, align 1, !tbaa !10
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw nsw i32 %6, 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %9 = load i8, ptr %8, align 1, !tbaa !10
-  %i.a = zext i8 %9 to i32
-  %10 = or disjoint i32 %7, %i.a
+  %5 = load i16, ptr %0, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %i.a = zext i16 %6 to i32
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %i.c = sext i32 %1 to i64
   %i.d = getelementptr inbounds i8, ptr %i.b, i64 %i.c
@@ -226,7 +222,7 @@ bb.b:                                             ; preds = %.loopexit, %bb.a
   %.0120 = phi i32 [ 0, %bb.a ], [ %.4124, %.loopexit ] ; 10 uses
   %.0112 = phi i32 [ 8, %bb.a ], [ %.5117, %.loopexit ] ; 2 uses
   %.0108 = phi i32 [ %i.h, %bb.a ], [ %.7, %.loopexit ] ; 2 uses
-  %.0 = phi i32 [ %10, %bb.a ], [ %.3, %.loopexit ] ; 9 uses
+  %.0 = phi i32 [ %i.a, %bb.a ], [ %.3, %.loopexit ] ; 9 uses
   %i.i = icmp slt i32 %.0120, %3
   br i1 %i.i, label %bb.c, label %bb.g
 
@@ -629,13 +625,16 @@ declare i16 @llvm.ctlz.i16(i16, i1 immarg) #4
 declare i8 @llvm.ctlz.i8(i8, i1 immarg) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

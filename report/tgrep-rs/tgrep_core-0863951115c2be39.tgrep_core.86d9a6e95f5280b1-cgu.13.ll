@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.g, align 8
   %.sroa.424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %.sroa.525.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.pre = load i8, ptr %1, align 1
   %i.h = add nsw i64 %2, -3
   br label %bb.h
 
@@ -253,21 +252,18 @@ bb.g:                                             ; preds = %bb.f, %bb.c
   ret void
 
 bb.h:                                             ; preds = %bb.b, %bb.n
-  %3 = phi i8 [ %.pre, %bb.b ], [ %4, %bb.n ]
-  %.sroa.0.044 = phi ptr [ %1, %bb.b ], [ %i.q, %bb.n ] ; 2 uses
+  %.sroa.0.044 = phi ptr [ %1, %bb.b ], [ %i.q, %bb.n ] ; 3 uses
   %.sroa.10.042 = phi i64 [ 0, %bb.b ], [ %i.r, %bb.n ] ; 4 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.044, i64 1 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.044, i64 1
   %i.r = add nuw nsw i64 %.sroa.10.042, 1
-  %4 = load i8, ptr %i.q, align 1, !noundef !4    ; 2 uses
+  %3 = load i16, ptr %.sroa.0.044, align 1
+  %4 = call i16 @llvm.bswap.i16(i16 %3)
+  %i.s = zext i16 %4 to i32
+  %i.t = shl nuw nsw i32 %i.s, 8
   %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.044, i64 2
   %6 = load i8, ptr %5, align 1, !noundef !4
-  %i.s = zext i8 %3 to i32
-  %i.t = shl nuw nsw i32 %i.s, 16
-  %7 = zext i8 %4 to i32
-  %8 = shl nuw nsw i32 %7, 8
-  %9 = or disjoint i32 %8, %i.t
   %i.u = zext i8 %6 to i32
-  %i.v = or disjoint i32 %9, %i.u                 ; 2 uses
+  %i.v = or disjoint i32 %i.t, %i.u               ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvMNtCsbDKHzkXHCUM_9hashbrown11rustc_entryINtNtB4_3map7HashMapmNtNtCsbzNSmZPCnTx_10tgrep_core7trigram12TrigramMasksINtNtCsf3Ta7LF998c_4core4hash18BuildHasherDefaultNtB12_13TrigramHasherEE11rustc_entryB14_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.d, i32 noundef %i.v)
           to label %bb.i unwind label %bb.q
@@ -406,33 +402,28 @@ bb.d:                                             ; preds = %.split.us, %.split
   %.sroa.565.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.470.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %.sroa.571.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.pre = load i8, ptr %1, align 1
   %i.k = add nsw i64 %2, -3
   br label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %bb.b
   %.sroa.458.0..sroa_idx115 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %.sroa.559.0..sroa_idx116 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %.pre101 = load i8, ptr %1, align 1
   %i.l = add nsw i64 %2, -3
   br label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.backedge.us
-  %3 = phi i8 [ %4, %.backedge.us ], [ %.pre101, %.lr.ph.split.us.preheader ]
-  %.sroa.042.097.us = phi ptr [ %i.m, %.backedge.us ], [ %1, %.lr.ph.split.us.preheader ] ; 2 uses
+  %.sroa.042.097.us = phi ptr [ %i.m, %.backedge.us ], [ %1, %.lr.ph.split.us.preheader ] ; 3 uses
   %.sroa.10.095.us = phi i64 [ %i.n, %.backedge.us ], [ 0, %.lr.ph.split.us.preheader ] ; 4 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.042.097.us, i64 1 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.042.097.us, i64 1
   %i.n = add nuw nsw i64 %.sroa.10.095.us, 1
-  %4 = load i8, ptr %i.m, align 1, !noundef !4    ; 2 uses
+  %3 = load i16, ptr %.sroa.042.097.us, align 1
+  %4 = call i16 @llvm.bswap.i16(i16 %3)
+  %i.o = zext i16 %4 to i32
+  %i.p = shl nuw nsw i32 %i.o, 8
   %5 = getelementptr inbounds nuw i8, ptr %.sroa.042.097.us, i64 2
   %6 = load i8, ptr %5, align 1, !noundef !4
-  %i.o = zext i8 %3 to i32
-  %i.p = shl nuw nsw i32 %i.o, 16
-  %7 = zext i8 %4 to i32
-  %8 = shl nuw nsw i32 %7, 8
-  %9 = or disjoint i32 %8, %i.p
   %i.q = zext i8 %6 to i32
-  %i.r = or disjoint i32 %9, %i.q
+  %i.r = or disjoint i32 %i.p, %i.q
   %i.s = trunc i64 %.sroa.10.095.us to i8
   %i.t = and i8 %i.s, 7
   %i.u = shl nuw i8 1, %i.t
@@ -498,21 +489,21 @@ bb.i:                                             ; preds = %bb.g
   ret void
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %.backedge
-  %10 = phi i8 [ %11, %.backedge ], [ %.pre, %.lr.ph.split.preheader ] ; 3 uses
-  %.sroa.042.097 = phi ptr [ %i.am, %.backedge ], [ %1, %.lr.ph.split.preheader ] ; 2 uses
+  %.sroa.042.097 = phi ptr [ %i.am, %.backedge ], [ %1, %.lr.ph.split.preheader ] ; 3 uses
   %.sroa.10.095 = phi i64 [ %i.an, %.backedge ], [ 0, %.lr.ph.split.preheader ] ; 4 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.042.097, i64 1 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.042.097, i64 1
   %i.an = add nuw nsw i64 %.sroa.10.095, 1
-  %11 = load i8, ptr %i.am, align 1, !noundef !4  ; 4 uses
-  %12 = getelementptr inbounds nuw i8, ptr %.sroa.042.097, i64 2
-  %13 = load i8, ptr %12, align 1, !noundef !4    ; 3 uses
-  %14 = zext i8 %10 to i32
-  %15 = shl nuw nsw i32 %14, 16
-  %16 = zext i8 %11 to i32
-  %17 = shl nuw nsw i32 %16, 8
-  %18 = or disjoint i32 %17, %15
-  %i.ao = zext i8 %13 to i32
-  %i.ap = or disjoint i32 %18, %i.ao              ; 2 uses
+  %7 = load i16, ptr %.sroa.042.097, align 1      ; 3 uses
+  %8 = call i16 @llvm.bswap.i16(i16 %7)
+  %9 = zext i16 %8 to i32
+  %10 = shl nuw nsw i32 %9, 8
+  %11 = trunc i16 %7 to i8                        ; 2 uses
+  %12 = lshr i16 %7, 8
+  %13 = trunc nuw i16 %12 to i8                   ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.042.097, i64 2
+  %15 = load i8, ptr %14, align 1, !noundef !4    ; 3 uses
+  %i.ao = zext i8 %15 to i32
+  %i.ap = or disjoint i32 %10, %i.ao              ; 2 uses
   %i.aq = trunc i64 %.sroa.10.095 to i8
   %i.ar = and i8 %i.aq, 7
   %i.as = shl nuw i8 1, %i.ar                     ; 2 uses
@@ -530,18 +521,18 @@ bb.j:                                             ; preds = %.lr.ph.split
 
 bb.k:                                             ; preds = %.lr.ph.split, %bb.j
   %.sroa.0.0 = phi i8 [ %i.az, %bb.j ], [ 0, %.lr.ph.split ]
-  %i.ba = add i8 %10, -65
+  %i.ba = add i8 %11, -65
   %i.bb = icmp ult i8 %i.ba, 26
   %i.bc = select i1 %i.bb, i8 32, i8 0
-  %.sroa.06.0 = or i8 %i.bc, %10
-  %i.bd = add i8 %11, -65
+  %.sroa.06.0 = or i8 %i.bc, %11
+  %i.bd = add i8 %13, -65
   %i.be = icmp ult i8 %i.bd, 26
   %i.bf = select i1 %i.be, i8 32, i8 0
-  %.sroa.07.0 = or i8 %i.bf, %11
-  %i.bg = add i8 %13, -65
+  %.sroa.07.0 = or i8 %i.bf, %13
+  %i.bg = add i8 %15, -65
   %i.bh = icmp ult i8 %i.bg, 26
   %i.bi = select i1 %i.bh, i8 32, i8 0
-  %.sroa.08.0 = or i8 %i.bi, %13
+  %.sroa.08.0 = or i8 %i.bi, %15
   %i.bj = zext i8 %.sroa.06.0 to i32
   %i.bk = shl nuw nsw i32 %i.bj, 16
   %i.bl = zext i8 %.sroa.07.0 to i32
@@ -680,7 +671,6 @@ bb.b:                                             ; preds = %bb.a
   store ptr inttoptr (i64 4 to ptr), ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   store i64 0, ptr %i.h, align 8
-  %.pre = load i8, ptr %1, align 1
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a
@@ -708,21 +698,18 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   ret void
 
 bb.g:                                             ; preds = %bb.b, %bb.i
-  %3 = phi i8 [ %.pre, %bb.b ], [ %4, %bb.i ]
-  %.sroa.0.019 = phi ptr [ %1, %bb.b ], [ %i.m, %bb.i ] ; 2 uses
+  %.sroa.0.019 = phi ptr [ %1, %bb.b ], [ %i.m, %bb.i ] ; 3 uses
   %.sroa.5.018 = phi i64 [ %2, %bb.b ], [ %i.l, %bb.i ] ; 2 uses
   %i.l = add nsw i64 %.sroa.5.018, -1
-  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.019, i64 1 ; 2 uses
-  %4 = load i8, ptr %i.m, align 1, !noundef !4    ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.019, i64 1
+  %3 = load i16, ptr %.sroa.0.019, align 1
+  %4 = call i16 @llvm.bswap.i16(i16 %3)
+  %i.n = zext i16 %4 to i32
+  %i.o = shl nuw nsw i32 %i.n, 8
   %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.019, i64 2
   %6 = load i8, ptr %5, align 1, !noundef !4
-  %i.n = zext i8 %3 to i32
-  %i.o = shl nuw nsw i32 %i.n, 16
-  %7 = zext i8 %4 to i32
-  %8 = shl nuw nsw i32 %7, 8
-  %9 = or disjoint i32 %8, %i.o
   %i.p = zext i8 %6 to i32
-  %i.q = or disjoint i32 %9, %i.p                 ; 2 uses
+  %i.q = or disjoint i32 %i.o, %i.p               ; 2 uses
   %i.r = invoke noundef zeroext i1 @_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMapmuNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE6insertCsbzNSmZPCnTx_10tgrep_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.b, i32 noundef %i.q)
           to label %bb.h unwind label %bb.d
 
@@ -1087,6 +1074,9 @@ declare i32 @llvm.umin.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #15
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s
   %i.bq = load ptr, ptr %i.bc, align 8, !nonnull !10, !noundef !10
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 2
   store i8 %i.bn, ptr %i.br, align 1
-  %i.bs = load ptr, ptr %i.bc, align 8, !nonnull !10, !noundef !10 ; 3 uses
+  %i.bs = load ptr, ptr %i.bc, align 8, !nonnull !10, !noundef !10 ; 2 uses
   %i.bt = load i64, ptr %i.bd, align 8, !noundef !10 ; 4 uses
   switch i64 %i.bt, label %bb.u [
     i64 0, label %.invoke
@@ -239,18 +239,14 @@ bb.v:                                             ; preds = %bb.t
   unreachable
 
 bb.w:                                             ; preds = %bb.u
-  %2 = load i8, ptr %i.bs, align 1, !alias.scope !1545, !noundef !10
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 16
-  %5 = getelementptr inbounds nuw i8, ptr %i.bs, i64 1
-  %6 = load i8, ptr %5, align 1, !alias.scope !1545, !noundef !10
-  %i.ca = zext i8 %6 to i32
+  %2 = load i16, ptr %i.bs, align 1, !alias.scope !1545
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.ca = zext i16 %3 to i32
   %i.cb = shl nuw nsw i32 %i.ca, 8
-  %7 = or disjoint i32 %i.cb, %4
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bs, i64 2
   %i.cd = load i8, ptr %i.cc, align 1, !alias.scope !1545, !noundef !10
   %i.ce = zext i8 %i.cd to i32
-  %i.cf = or disjoint i32 %7, %i.ce
+  %i.cf = or disjoint i32 %i.cb, %i.ce
   %i.cg = invoke noundef i8 @_RNvYINtNtNtCs1eA6bChxBZF_5bytes3buf5chain5ChainNtNtB9_5bytes5BytesINtNtB7_4take4TakeQRShEENtNtB7_8buf_impl3Buf6get_u8Cs4KPtkQIfQGm_13libp2p_webrtc(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %1)
           to label %bb.x unwind label %bb.m
 

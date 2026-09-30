@@ -83,7 +83,7 @@ bb.a:
 define noundef signext range(i8 0, 2) i8 @_ZNK6icu_7822CharsetRecog_UTF_16_BE5matchEPNS_9InputTextEPNS_12CharsetMatchE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !12   ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !12   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.d = load i32, ptr %i.c, align 8, !tbaa !13   ; 4 uses
   %i.e = tail call i32 @llvm.smin.i32(i32 %i.d, i32 30)
@@ -92,22 +92,17 @@ bb.a:
   br i1 %i.g, label %.lr.ph.preheader, label %.thread
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %3 = load i8, ptr %i.b, align 1, !tbaa !14
-  %4 = zext i8 %3 to i16
-  %5 = shl nuw i16 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %7 = load i8, ptr %6, align 1, !tbaa !14
-  %8 = zext i8 %7 to i16
-  %9 = or disjoint i16 %5, %8                     ; 3 uses
-  switch i16 %9, label %_ZN6icu_78L16adjustConfidenceEDsi.exit.peel [
-    i16 -257, label %.thread
+  %3 = load i16, ptr %i.b, align 1                ; 3 uses
+  switch i16 %3, label %_ZN6icu_78L16adjustConfidenceEDsi.exit.peel [
+    i16 -2, label %.thread
     i16 0, label %.thread.fold.split
   ]
 
 _ZN6icu_78L16adjustConfidenceEDsi.exit.peel:      ; preds = %.lr.ph.preheader
-  %i.h = add i16 %9, -32
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.h = add i16 %4, -32
   %or.cond.i.peel = icmp ult i16 %i.h, 224
-  %i.i = icmp eq i16 %9, 10
+  %i.i = icmp eq i16 %3, 2560
   %or.cond5.i.peel = or i1 %i.i, %or.cond.i.peel
   %spec.select.i.peel = select i1 %or.cond5.i.peel, i32 20, i32 10 ; 2 uses
   %i.j = icmp samesign ugt i32 %i.d, 3
@@ -116,15 +111,9 @@ _ZN6icu_78L16adjustConfidenceEDsi.exit.peel:      ; preds = %.lr.ph.preheader
 .lr.ph.peel.next:                                 ; preds = %_ZN6icu_78L16adjustConfidenceEDsi.exit.peel, %_ZN6icu_78L16adjustConfidenceEDsi.exit
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN6icu_78L16adjustConfidenceEDsi.exit ], [ 2, %_ZN6icu_78L16adjustConfidenceEDsi.exit.peel ] ; 2 uses
   %.03135 = phi i32 [ %i.q, %_ZN6icu_78L16adjustConfidenceEDsi.exit ], [ %spec.select.i.peel, %_ZN6icu_78L16adjustConfidenceEDsi.exit.peel ] ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv ; 2 uses
-  %11 = load i8, ptr %10, align 1, !tbaa !14
-  %12 = zext i8 %11 to i16
-  %13 = shl nuw i16 %12, 8
-  %i.k = getelementptr inbounds nuw i8, ptr %10, i64 1
-  %14 = load i8, ptr %i.k, align 1, !tbaa !14
-  %15 = zext i8 %14 to i16
-  %16 = or disjoint i16 %13, %15                  ; 3 uses
-  %i.l = icmp eq i16 %16, 0
+  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv
+  %5 = load i16, ptr %i.k, align 1                ; 3 uses
+  %i.l = icmp eq i16 %5, 0
   br i1 %i.l, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph.peel.next
@@ -132,9 +121,10 @@ bb.b:                                             ; preds = %.lr.ph.peel.next
   br label %_ZN6icu_78L16adjustConfidenceEDsi.exit
 
 bb.c:                                             ; preds = %.lr.ph.peel.next
-  %i.n = add i16 %16, -32
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %i.n = add i16 %6, -32
   %or.cond.i = icmp ult i16 %i.n, 224
-  %i.o = icmp eq i16 %16, 10
+  %i.o = icmp eq i16 %5, 2560
   %or.cond5.i = or i1 %i.o, %or.cond.i
   %i.p = add nuw nsw i32 %.03135, 10
   %spec.select.i = select i1 %or.cond5.i, i32 %i.p, i32 %.03135
@@ -149,7 +139,7 @@ _ZN6icu_78L16adjustConfidenceEDsi.exit:           ; preds = %bb.b, %bb.c
   %i.r = trunc nuw i64 %indvars.iv.next to i32
   %i.s = icmp sgt i32 %i.f, %i.r
   %or.cond = select i1 %switch, i1 %i.s, i1 false
-  br i1 %or.cond, label %.lr.ph.peel.next, label %.thread, !llvm.loop !17
+  br i1 %or.cond, label %.lr.ph.peel.next, label %.thread, !llvm.loop !16
 
 .thread.fold.split:                               ; preds = %.lr.ph.preheader
   br label %.thread
@@ -216,13 +206,13 @@ bb.b:                                             ; preds = %.lr.ph.preheader
 
 bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !14
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !18
   %i.o = icmp eq i8 %i.n, 0
   br i1 %i.o, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !14
+  %i.q = load i8, ptr %i.p, align 1, !tbaa !18
   %i.r = icmp eq i8 %i.q, 0
   %spec.select = select i1 %i.r, i32 0, i32 100
   br label %.thread
@@ -257,7 +247,7 @@ _ZN6icu_78L16adjustConfidenceEDsi.exit:           ; preds = %bb.e, %bb.f
   %i.aa = trunc nuw i64 %indvars.iv.next to i32
   %i.ab = icmp sgt i32 %i.f, %i.aa
   %or.cond = select i1 %switch, i1 %i.ab, i1 false
-  br i1 %or.cond, label %.lr.ph.peel.next, label %.thread, !llvm.loop !18
+  br i1 %or.cond, label %.lr.ph.peel.next, label %.thread, !llvm.loop !17
 
 .thread:                                          ; preds = %_ZN6icu_78L16adjustConfidenceEDsi.exit, %.lr.ph.preheader, %_ZN6icu_78L16adjustConfidenceEDsi.exit.peel, %bb.a, %bb.c, %bb.d, %bb.b
   %.3 = phi i32 [ %spec.select, %bb.d ], [ 100, %bb.b ], [ 100, %bb.c ], [ 10, %bb.a ], [ 0, %.lr.ph.preheader ], [ %spec.select.i.peel, %_ZN6icu_78L16adjustConfidenceEDsi.exit.peel ], [ %i.z, %_ZN6icu_78L16adjustConfidenceEDsi.exit ] ; 2 uses
@@ -410,6 +400,9 @@ declare i32 @llvm.smin.i32(i32, i32) #8
 declare i32 @llvm.umin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -445,12 +438,12 @@ attributes #10 = { noreturn nounwind }
 !11 = !{!"_ZTSN6icu_789InputTextE", !9, i64 0, !5, i64 8, !10, i64 16, !4, i64 24, !9, i64 32, !9, i64 40, !5, i64 48}
 !12 = !{!11, !9, i64 40}
 !13 = !{!11, !5, i64 48}
-!14 = !{!4, !4, i64 0}
-!15 = !{!"llvm.loop.mustprogress"}
-!16 = !{!"llvm.loop.peeled.count", i32 1}
-!17 = distinct !{!17, !15, !16}
-!18 = distinct !{!18, !15, !16}
-!19 = distinct !{!19, !15}
+!14 = !{!"llvm.loop.mustprogress"}
+!15 = !{!"llvm.loop.peeled.count", i32 1}
+!16 = distinct !{!16, !14, !15}
+!17 = distinct !{!17, !14, !15}
+!18 = !{!4, !4, i64 0}
+!19 = distinct !{!19, !14}
 !20 = !{!"vtable pointer", !3, i64 0}
 !21 = !{!20, !20, i64 0}
 end_hunk_0

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.e,
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @get_interesting_appn(ptr noundef %0) #0 {
 bb.a:
-  %i.a = alloca [14 x i8], align 4                ; 13 uses
+  %i.a = alloca [14 x i8], align 4                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !40   ; 8 uses
@@ -330,39 +330,27 @@ bb.m:                                             ; preds = %._crit_edge
 
 bb.n:                                             ; preds = %bb.m
   %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  %1 = load i8, ptr %i.au, align 1, !tbaa !38
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw nsw i32 %2, 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %5 = load i8, ptr %4, align 2, !tbaa !38
-  %i.av = zext i8 %5 to i32
-  %6 = or disjoint i32 %3, %i.av
+  %1 = load i16, ptr %i.au, align 1
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %i.av = zext i16 %2 to i32
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %7 = load i8, ptr %i.aw, align 1, !tbaa !38
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 8
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %11 = load i8, ptr %10, align 4, !tbaa !38
-  %i.ax = zext i8 %11 to i32
-  %12 = or disjoint i32 %9, %i.ax
+  %3 = load i16, ptr %i.aw, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.ax = zext i16 %4 to i32
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  %13 = load i8, ptr %i.ay, align 1, !tbaa !38
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %17 = load i8, ptr %16, align 2, !tbaa !38
-  %i.az = zext i8 %17 to i32
-  %18 = or disjoint i32 %15, %i.az
+  %5 = load i16, ptr %i.ay, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %i.az = zext i16 %6 to i32
   %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !38  ; 2 uses
   %i.bc = zext i8 %i.bb to i32
   %i.bd = load ptr, ptr %0, align 8, !tbaa !34    ; 6 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 44
-  store i32 %6, ptr %i.be, align 4, !tbaa !54
+  store i32 %i.av, ptr %i.be, align 4, !tbaa !54
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bd, i64 48
-  store i32 %12, ptr %i.bf, align 4, !tbaa !54
+  store i32 %i.ax, ptr %i.bf, align 4, !tbaa !54
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 52
-  store i32 %18, ptr %i.bg, align 4, !tbaa !54
+  store i32 %i.az, ptr %i.bg, align 4, !tbaa !54
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bd, i64 56
   store i32 %i.bc, ptr %i.bh, align 4, !tbaa !54
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bd, i64 40
@@ -765,7 +753,7 @@ bb.r:                                             ; preds = %bb.q, %._crit_edge1
   %.3.lcssa188 = phi i64 [ %.3.lcssa200, %bb.r ], [ %i.ab, %bb.h ]
   %.3114.lcssa187 = phi ptr [ %.3114.lcssa199, %bb.r ], [ %i.ac, %bb.h ]
   %.0123177186 = phi i32 [ %.0123, %bb.r ], [ 0, %bb.h ] ; 4 uses
-  %.3122 = phi ptr [ %i.dk, %bb.r ], [ null, %bb.h ] ; 13 uses
+  %.3122 = phi ptr [ %i.dk, %bb.r ], [ null, %bb.h ] ; 10 uses
   %.1118 = phi i64 [ %i.do, %bb.r ], [ %i.ag, %bb.h ] ; 5 uses
   store ptr null, ptr %i.c, align 8, !tbaa !60
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 540
@@ -814,39 +802,27 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.eg = getelementptr inbounds nuw i8, ptr %.3122, i64 5
-  %1 = load i8, ptr %i.eg, align 1, !tbaa !38
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw nsw i32 %2, 8
-  %4 = getelementptr inbounds nuw i8, ptr %.3122, i64 6
-  %5 = load i8, ptr %4, align 1, !tbaa !38
-  %i.eh = zext i8 %5 to i32
-  %6 = or disjoint i32 %3, %i.eh
+  %1 = load i16, ptr %i.eg, align 1
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %i.eh = zext i16 %2 to i32
   %i.ei = getelementptr inbounds nuw i8, ptr %.3122, i64 7
-  %7 = load i8, ptr %i.ei, align 1, !tbaa !38
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 8
-  %10 = getelementptr inbounds nuw i8, ptr %.3122, i64 8
-  %11 = load i8, ptr %10, align 1, !tbaa !38
-  %i.ej = zext i8 %11 to i32
-  %12 = or disjoint i32 %9, %i.ej
+  %3 = load i16, ptr %i.ei, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.ej = zext i16 %4 to i32
   %i.ek = getelementptr inbounds nuw i8, ptr %.3122, i64 9
-  %13 = load i8, ptr %i.ek, align 1, !tbaa !38
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = getelementptr inbounds nuw i8, ptr %.3122, i64 10
-  %17 = load i8, ptr %16, align 1, !tbaa !38
-  %i.el = zext i8 %17 to i32
-  %18 = or disjoint i32 %15, %i.el
+  %5 = load i16, ptr %i.ek, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %i.el = zext i16 %6 to i32
   %i.em = getelementptr inbounds nuw i8, ptr %.3122, i64 11
   %i.en = load i8, ptr %i.em, align 1, !tbaa !38  ; 2 uses
   %i.eo = zext i8 %i.en to i32
   %i.ep = load ptr, ptr %0, align 8, !tbaa !34    ; 6 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 44
-  store i32 %6, ptr %i.eq, align 4, !tbaa !54
+  store i32 %i.eh, ptr %i.eq, align 4, !tbaa !54
   %i.er = getelementptr inbounds nuw i8, ptr %i.ep, i64 48
-  store i32 %12, ptr %i.er, align 4, !tbaa !54
+  store i32 %i.ej, ptr %i.er, align 4, !tbaa !54
   %i.es = getelementptr inbounds nuw i8, ptr %i.ep, i64 52
-  store i32 %18, ptr %i.es, align 4, !tbaa !54
+  store i32 %i.el, ptr %i.es, align 4, !tbaa !54
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 56
   store i32 %i.eo, ptr %i.et, align 4, !tbaa !54
   %i.eu = getelementptr inbounds nuw i8, ptr %i.ep, i64 40
@@ -1249,28 +1225,18 @@ bb.g:                                             ; preds = %bb.f
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 378 ; 2 uses
   store i8 %i.z, ptr %i.aa, align 2, !tbaa !65
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %4 = load i8, ptr %i.ab, align 1, !tbaa !38
-  %5 = zext i8 %4 to i16
-  %6 = shl nuw i16 %5, 8
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 9
-  %8 = load i8, ptr %7, align 1, !tbaa !38
-  %9 = zext i8 %8 to i16
+  %4 = load i16, ptr %i.ab, align 1
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 380 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 10
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 11
-  %11 = or disjoint i16 %6, %9                    ; 2 uses
-  store i16 %11, ptr %i.ac, align 4, !tbaa !66
-  %12 = load i8, ptr %i.ad, align 1, !tbaa !38
-  %13 = zext i8 %12 to i16
-  %14 = shl nuw i16 %13, 8
-  %15 = load i8, ptr %10, align 1, !tbaa !38
-  %16 = zext i8 %15 to i16
-  %17 = or disjoint i16 %14, %16                  ; 2 uses
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)      ; 2 uses
+  store i16 %5, ptr %i.ac, align 4, !tbaa !66
+  %6 = load i16, ptr %i.ad, align 1
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)      ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 382
-  store i16 %17, ptr %i.ae, align 2, !tbaa !67
+  store i16 %7, ptr %i.ae, align 2, !tbaa !67
   %.not = icmp eq i8 %i.t, 1
-  %i.af = insertelement <2 x i16> poison, i16 %11, i64 0
-  %i.ag = insertelement <2 x i16> %i.af, i16 %17, i64 1
+  %i.af = insertelement <2 x i16> poison, i16 %5, i64 0
+  %i.ag = insertelement <2 x i16> %i.af, i16 %7, i64 1
   br i1 %.not, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -1466,6 +1432,9 @@ bb.v:                                             ; preds = %.sink.split, %bb.k
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #5

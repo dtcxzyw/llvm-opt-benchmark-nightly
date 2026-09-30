@@ -205,19 +205,14 @@ bb.a:
 .lr.ph.split.i:                                   ; preds = %.lr.ph.split.i.preheader, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderINtNtNtBa_2io4util4TakeQINtNtB28_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4i_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i
   %i.d = phi i64 [ %i.m, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderINtNtNtBa_2io4util4TakeQINtNtB28_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4i_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i ], [ %.sroa.53.0.copyload, %.lr.ph.split.i.preheader ] ; 2 uses
   %i.e = phi i64 [ %i.h, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderINtNtNtBa_2io4util4TakeQINtNtB28_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4i_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i ], [ %.sroa.4.0.copyload, %.lr.ph.split.i.preheader ]
-  %i.f = phi ptr [ %i.g, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderINtNtNtBa_2io4util4TakeQINtNtB28_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4i_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i ], [ %.sroa.0.0.copyload, %.lr.ph.split.i.preheader ] ; 3 uses
+  %i.f = phi ptr [ %i.g, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderINtNtNtBa_2io4util4TakeQINtNtB28_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4i_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i ], [ %.sroa.0.0.copyload, %.lr.ph.split.i.preheader ] ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.51.0.copyload
   %i.h = sub nuw i64 %i.e, %.sroa.51.0.copyload   ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1706)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1707)
-  %2 = load i8, ptr %i.f, align 1, !alias.scope !1709, !noalias !1710, !noundef !7
-  %3 = zext i8 %2 to i16
-  %4 = shl nuw i16 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 1
-  %6 = load i8, ptr %5, align 1, !alias.scope !1709, !noalias !1710, !noundef !7
-  %7 = zext i8 %6 to i16
-  %8 = or disjoint i16 %4, %7                     ; 2 uses
-  %i.i = zext i16 %8 to i32                       ; 2 uses
+  %2 = load i16, ptr %i.f, align 1, !alias.scope !1709, !noalias !1710
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)      ; 2 uses
+  %i.i = zext i16 %3 to i32                       ; 2 uses
   %i.j = load i32, ptr %i.b, align 4, !noalias !1711, !noundef !7
   %.not3.i.i.i = icmp ugt i32 %i.j, %i.i
   br i1 %.not3.i.i.i, label %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderINtNtNtBa_2io4util4TakeQINtNtB28_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4i_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i, label %bb.b
@@ -229,7 +224,7 @@ bb.b:                                             ; preds = %.lr.ph.split.i
 
 _RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderINtNtNtBa_2io4util4TakeQINtNtB28_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4i_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i: ; preds = %bb.b, %.lr.ph.split.i
   %i.l = getelementptr inbounds nuw [2 x i8], ptr %.sroa.8.0.copyload, i64 %i.d
-  store i16 %8, ptr %i.l, align 2, !noalias !1712
+  store i16 %3, ptr %i.l, align 2, !noalias !1712
   %i.m = add i64 %i.d, 1                          ; 2 uses
   %.not.i.i = icmp ugt i64 %.sroa.51.0.copyload, %i.h
   br i1 %.not.i.i, label %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter11ChunksExacthENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBZ_8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2m_15LosslessDecoderINtNtNtBa_2io4util4TakeQINtNtB3q_6cursor6CursorB2c_EEE18read_huffman_codes0NCINvNvBT_8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB56_3VectE14extend_trustedINtB1J_3MapB3_B2h_EE0E0E0ECsa5QsYiPB8Gl_5image.exit, label %.lr.ph.split.i
@@ -291,19 +286,14 @@ bb.a:
 .lr.ph.split.i:                                   ; preds = %.lr.ph.split.i.preheader, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderQINtNtNtBa_2io4util4TakeQINtNtB29_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4j_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i
   %i.d = phi i64 [ %i.m, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderQINtNtNtBa_2io4util4TakeQINtNtB29_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4j_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i ], [ %.sroa.53.0.copyload, %.lr.ph.split.i.preheader ] ; 2 uses
   %i.e = phi i64 [ %i.h, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderQINtNtNtBa_2io4util4TakeQINtNtB29_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4j_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i ], [ %.sroa.4.0.copyload, %.lr.ph.split.i.preheader ]
-  %i.f = phi ptr [ %i.g, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderQINtNtNtBa_2io4util4TakeQINtNtB29_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4j_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i ], [ %.sroa.0.0.copyload, %.lr.ph.split.i.preheader ] ; 3 uses
+  %i.f = phi ptr [ %i.g, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderQINtNtNtBa_2io4util4TakeQINtNtB29_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4j_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i ], [ %.sroa.0.0.copyload, %.lr.ph.split.i.preheader ] ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.51.0.copyload
   %i.h = sub nuw i64 %i.e, %.sroa.51.0.copyload   ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1725)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1726)
-  %2 = load i8, ptr %i.f, align 1, !alias.scope !1728, !noalias !1729, !noundef !7
-  %3 = zext i8 %2 to i16
-  %4 = shl nuw i16 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 1
-  %6 = load i8, ptr %5, align 1, !alias.scope !1728, !noalias !1729, !noundef !7
-  %7 = zext i8 %6 to i16
-  %8 = or disjoint i16 %4, %7                     ; 2 uses
-  %i.i = zext i16 %8 to i32                       ; 2 uses
+  %2 = load i16, ptr %i.f, align 1, !alias.scope !1728, !noalias !1729
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)      ; 2 uses
+  %i.i = zext i16 %3 to i32                       ; 2 uses
   %i.j = load i32, ptr %i.b, align 4, !noalias !1730, !noundef !7
   %.not3.i.i.i = icmp ugt i32 %i.j, %i.i
   br i1 %.not3.i.i.i, label %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderQINtNtNtBa_2io4util4TakeQINtNtB29_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4j_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i, label %bb.b
@@ -315,7 +305,7 @@ bb.b:                                             ; preds = %.lr.ph.split.i
 
 _RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB14_15LosslessDecoderQINtNtNtBa_2io4util4TakeQINtNtB29_6cursor6CursorBU_EEE18read_huffman_codes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4j_3VectE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter11ChunksExacthEBZ_EE0E0E0Csa5QsYiPB8Gl_5image.exit.i: ; preds = %bb.b, %.lr.ph.split.i
   %i.l = getelementptr inbounds nuw [2 x i8], ptr %.sroa.8.0.copyload, i64 %i.d
-  store i16 %8, ptr %i.l, align 2, !noalias !1731
+  store i16 %3, ptr %i.l, align 2, !noalias !1731
   %i.m = add i64 %i.d, 1                          ; 2 uses
   %.not.i.i = icmp ugt i64 %.sroa.51.0.copyload, %i.h
   br i1 %.not.i.i, label %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter11ChunksExacthENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBZ_8adapters3map8map_foldRShtuNCNvMNtCsksn9slvsHfS_10image_webp8losslessINtB2m_15LosslessDecoderQINtNtNtBa_2io4util4TakeQINtNtB3r_6cursor6CursorB2c_EEE18read_huffman_codes0NCINvNvBT_8for_each4calltNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB57_3VectE14extend_trustedINtB1J_3MapB3_B2h_EE0E0E0ECsa5QsYiPB8Gl_5image.exit, label %.lr.ph.split.i
@@ -718,17 +708,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.sroa.01.0.i = phi i64 [ 0, %bb.b ], [ %i.n, %bb.c ] ; 2 uses
-  %i.j = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.sroa.01.0.i ; 2 uses
-  %.val8.i = load i8, ptr %i.j, align 1, !noalias !1824, !noundef !7
-  %3 = getelementptr i8, ptr %i.j, i64 1
-  %.val9.i = load i8, ptr %3, align 1, !noalias !1824, !noundef !7 ; 2 uses
-  %.sroa.2.0.insert.ext.i.i.i = zext i8 %.val8.i to i16
-  %.sroa.2.0.insert.shift.i.i.i = shl nuw i16 %.sroa.2.0.insert.ext.i.i.i, 8
-  %.sroa.0.0.insert.ext.i.i.i = zext i8 %.val9.i to i16
-  %.sroa.0.0.insert.insert.i.i.i = or disjoint i16 %.sroa.2.0.insert.shift.i.i.i, %.sroa.0.0.insert.ext.i.i.i
+  %i.j = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.sroa.01.0.i
+  %.val8.i = load i16, ptr %i.j, align 1, !noalias !1824 ; 2 uses
+  %3 = call i16 @llvm.bswap.i16(i16 %.val8.i)
+  %4 = lshr i16 %.val8.i, 8
+  %5 = trunc nuw i16 %4 to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1824
   store i64 2, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !1824
-  store i16 %.sroa.0.0.insert.insert.i.i.i, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !1824
+  store i16 %3, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !1824
   call void @llvm.experimental.noalias.scope.decl(metadata !1825)
   call void @llvm.experimental.noalias.scope.decl(metadata !1826)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1827
@@ -738,7 +725,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   call void @llvm.experimental.noalias.scope.decl(metadata !1828)
   call void @llvm.experimental.noalias.scope.decl(metadata !1829)
   store i64 1, ptr %i.b, align 8, !alias.scope !1830, !noalias !1831
-  call void @_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator8for_each4callhNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB1Y_3VechE14extend_trustedINtNtNtB11_8adapters7flatten7FlatMapINtNtNtBb_5slice4iter4IterAhj2_EB3R_NCNvXs3_NtNtCsa5QsYiPB8Gl_5image6codecs3pngINtB49_10PngEncoderQB2o_ENtNtNtB4d_2io7encoder12ImageEncoder11write_image0EE0E0INtB7_5FnMutTuhEE8call_mutB4d_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.i, i8 noundef %.val9.i)
+  call void @_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator8for_each4callhNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB1Y_3VechE14extend_trustedINtNtNtB11_8adapters7flatten7FlatMapINtNtNtBb_5slice4iter4IterAhj2_EB3R_NCNvXs3_NtNtCsa5QsYiPB8Gl_5image6codecs3pngINtB49_10PngEncoderQB2o_ENtNtNtB4d_2io7encoder12ImageEncoder11write_image0EE0E0INtB7_5FnMutTuhEE8call_mutB4d_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.i, i8 noundef %5)
   store i64 2, ptr %i.b, align 8, !alias.scope !1830, !noalias !1831
   call void @llvm.experimental.noalias.scope.decl(metadata !1832)
   %i.k = load ptr, ptr %i.a, align 8, !alias.scope !1833, !noalias !1834, !nonnull !7, !noundef !7
@@ -1139,6 +1126,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #24

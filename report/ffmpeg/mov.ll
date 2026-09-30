@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.p, %bb.q, %bb.t,
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -2147483648, 1) i32 @mov_read_dfla(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 %2, i64 %3) #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 7 uses
+  %i.a = alloca [4 x i8], align 1                 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !36   ; 2 uses
@@ -249,18 +249,14 @@ bb.f:                                             ; preds = %bb.d
   %i.u = load i8, ptr %i.a, align 1, !tbaa !94    ; 2 uses
   %i.v = and i8 %i.u, 127
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %4 = load i8, ptr %i.w, align 1, !tbaa !94
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw nsw i32 %5, 16
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %8 = load i8, ptr %7, align 1, !tbaa !94
-  %i.x = zext i8 %8 to i32
+  %4 = load i16, ptr %i.w, align 1
+  %5 = call i16 @llvm.bswap.i16(i16 %4)
+  %i.x = zext i16 %5 to i32
   %i.y = shl nuw nsw i32 %i.x, 8
-  %9 = or disjoint i32 %i.y, %6
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !94
   %i.ab = zext i8 %i.aa to i32
-  %i.ac = or disjoint i32 %9, %i.ab
+  %i.ac = or disjoint i32 %i.y, %i.ab
   %i.ad = icmp ne i8 %i.v, 0
   %i.ae = icmp ne i32 %i.ac, 34
   %or.cond4 = select i1 %i.ad, i1 true, i1 %i.ae

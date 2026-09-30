@@ -204,7 +204,7 @@ bb.a:
   %i.a = tail call i32 @llvm.umax.i32(i32 %2, i32 128)
   %i.b = add i32 %i.a, 1
   %i.c = zext i32 %i.b to i64
-  %i.d = tail call noundef ptr @_ZN6LibRaw6callocEmm(ptr noundef nonnull align 8 dereferenceable(768512) %0, i64 noundef %i.c, i64 noundef 1) ; 19 uses
+  %i.d = tail call noundef ptr @_ZN6LibRaw6callocEmm(ptr noundef nonnull align 8 dereferenceable(768512) %0, i64 noundef %i.c, i64 noundef 1) ; 18 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 381592
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !79   ; 2 uses
   %i.g = zext i32 %2 to i64
@@ -236,14 +236,10 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   br i1 %i.q, label %bb.e, label %bb.o
 
 bb.e:                                             ; preds = %bb.d
-  %3 = load i8, ptr %i.d, align 1, !tbaa !92
-  %4 = zext i8 %3 to i64
-  %5 = shl nuw nsw i64 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  %7 = load i8, ptr %6, align 1, !tbaa !92
-  %i.r = zext i8 %7 to i64
-  %8 = or disjoint i64 %5, %i.r
-  store i64 %8, ptr %i.o, align 8, !tbaa !93
+  %3 = load i16, ptr %i.d, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.r = zext i16 %4 to i64
+  store i64 %i.r, ptr %i.o, align 8, !tbaa !93
   br label %bb.o
 
 bb.f:                                             ; preds = %bb.c, %bb.b
@@ -645,6 +641,9 @@ declare i32 @llvm.umin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.exp2.f32(float) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

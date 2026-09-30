@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %.lr.ph486, %bb.ec
   %i.bu = phi i32 [ 0, %.lr.ph486 ], [ %i.ll, %bb.ec ] ; 3 uses
   %.1239483 = phi i1 [ %.0238, %.lr.ph486 ], [ %.21, %bb.ec ] ; 12 uses
   %.1250481 = phi i32 [ %.0249, %.lr.ph486 ], [ %.8257, %bb.ec ] ; 20 uses
-  %.0273477 = phi i16 [ 14, %.lr.ph486 ], [ %14, %bb.ec ]
+  %.0273477 = phi i16 [ 14, %.lr.ph486 ], [ %9, %bb.ec ]
   %.1281475 = phi i32 [ 0, %.lr.ph486 ], [ %.22302, %bb.ec ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
   store ptr null, ptr %i.d, align 8, !tbaa !66
@@ -212,17 +212,12 @@ bb.o:                                             ; preds = %.lr.ph486, %bb.ec
   %i.bw = shl i16 %i.bv, 1
   %i.bx = sub i16 %i.v, %i.bw
   %i.by = zext i16 %i.bx to i64
-  %8 = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.by ; 2 uses
-  %9 = load i8, ptr %8, align 1, !tbaa !39
-  %10 = zext i8 %9 to i16
-  %11 = shl nuw i16 %10, 8
-  %i.bz = getelementptr inbounds nuw i8, ptr %8, i64 1
-  %12 = load i8, ptr %i.bz, align 1, !tbaa !39
-  %13 = zext i8 %12 to i16
-  %14 = or disjoint i16 %11, %13                  ; 5 uses
-  %i.ca = zext i16 %14 to i32                     ; 4 uses
-  %.not352 = icmp ule i16 %i.br, %14
-  %i.cb = icmp ult i16 %14, %.0273477
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.by
+  %8 = load i16, ptr %i.bz, align 1
+  %9 = call i16 @llvm.bswap.i16(i16 %8)           ; 5 uses
+  %i.ca = zext i16 %9 to i32                      ; 4 uses
+  %.not352 = icmp ule i16 %i.br, %9
+  %i.cb = icmp ult i16 %9, %.0273477
   %or.cond416 = or i1 %.not352, %i.cb
   br i1 %or.cond416, label %bb.p, label %bb.q
 
@@ -231,7 +226,7 @@ bb.p:                                             ; preds = %bb.o
   br label %.thread119
 
 bb.q:                                             ; preds = %bb.o
-  %i.cc = zext i16 %14 to i64
+  %i.cc = zext i16 %9 to i64
   %i.cd = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.cc ; 5 uses
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !39
   %i.cf = zext i8 %i.ce to i16
@@ -465,22 +460,17 @@ bb.al:                                            ; preds = %bb.aj
 
 bb.am:                                            ; preds = %bb.az, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.az ] ; 5 uses
-  %.0115226.i = phi i16 [ 14, %.lr.ph.i ], [ %21, %bb.az ]
+  %.0115226.i = phi i16 [ 14, %.lr.ph.i ], [ %11, %bb.az ]
   %i.fs = trunc nuw i64 %indvars.iv.i to i16
   %i.ft = shl i16 %i.fs, 1
   %i.fu = sub i16 %i.fa, %i.ft
   %i.fv = zext i16 %i.fu to i64
-  %15 = getelementptr inbounds nuw i8, ptr %i.ex, i64 %i.fv ; 2 uses
-  %16 = load i8, ptr %15, align 1, !tbaa !39
-  %17 = zext i8 %16 to i16
-  %18 = shl nuw i16 %17, 8
-  %i.fw = getelementptr inbounds nuw i8, ptr %15, i64 1
-  %19 = load i8, ptr %i.fw, align 1, !tbaa !39
-  %20 = zext i8 %19 to i16
-  %21 = or disjoint i16 %18, %20                  ; 5 uses
-  %i.fx = zext i16 %21 to i32                     ; 4 uses
-  %.not145.i = icmp ule i16 %i.fp, %21
-  %i.fy = icmp ult i16 %21, %.0115226.i
+  %i.fw = getelementptr inbounds nuw i8, ptr %i.ex, i64 %i.fv
+  %10 = load i16, ptr %i.fw, align 1
+  %11 = call i16 @llvm.bswap.i16(i16 %10)         ; 5 uses
+  %i.fx = zext i16 %11 to i32                     ; 4 uses
+  %.not145.i = icmp ule i16 %i.fp, %11
+  %i.fy = icmp ult i16 %11, %.0115226.i
   %or.cond160.i = or i1 %.not145.i, %i.fy
   br i1 %or.cond160.i, label %bb.an, label %bb.ao
 
@@ -491,7 +481,7 @@ bb.an:                                            ; preds = %bb.am
   br label %hfsplus_check_attribute.exit.thread30
 
 bb.ao:                                            ; preds = %bb.am
-  %i.gb = zext i16 %21 to i64                     ; 2 uses
+  %i.gb = zext i16 %11 to i64                     ; 2 uses
   %i.gc = add nuw nsw i64 %i.gb, 14               ; 2 uses
   %.not146.i = icmp samesign ult i64 %i.gc, %i.fr
   br i1 %.not146.i, label %bb.aq, label %bb.ap
@@ -894,7 +884,7 @@ bb.a:
   %2 = alloca %struct.hfsPlusResourceHeader, align 16 ; 7 uses
   %3 = alloca %struct.hfsPlusResourceMap, align 1 ; 5 uses
   %4 = alloca %struct.hfsPlusResourceType, align 1 ; 6 uses
-  %5 = alloca %struct.hfsPlusReferenceEntry, align 1 ; 6 uses
+  %5 = alloca %struct.hfsPlusReferenceEntry, align 1 ; 5 uses
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
@@ -1030,18 +1020,14 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 5
-  %6 = load i8, ptr %i.am, align 1, !tbaa !39
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 16
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 6
-  %10 = load i8, ptr %9, align 1, !tbaa !39
-  %i.an = zext i8 %10 to i64
+  %6 = load i16, ptr %i.am, align 1
+  %7 = call i16 @llvm.bswap.i16(i16 %6)
+  %i.an = zext i16 %7 to i64
   %i.ao = shl nuw nsw i64 %i.an, 8
-  %11 = or disjoint i64 %i.ao, %8
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 7
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !39
   %i.ar = zext i8 %i.aq to i64
-  %i.as = or disjoint i64 %11, %i.ar
+  %i.as = or disjoint i64 %i.ao, %i.ar
   %i.at = load i32, ptr %2, align 16, !tbaa !122
   %i.au = zext i32 %i.at to i64
   %i.av = add nuw nsw i64 %i.as, %i.au

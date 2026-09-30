@@ -205,42 +205,32 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
 
 .lr.ph.i.lver.orig:                               ; preds = %bb.aw, %.lr.ph.i.lver.orig
   %.05059.i.lver.orig = phi i32 [ %i.ea, %.lr.ph.i.lver.orig ], [ 0, %bb.aw ]
-  %.05158.i.lver.orig = phi ptr [ %i.eb, %.lr.ph.i.lver.orig ], [ %i.cr, %bb.aw ] ; 8 uses
-  %3 = load i8, ptr %.05158.i.lver.orig, align 1, !tbaa !40
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw nsw i32 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 1 ; 2 uses
-  %7 = load i8, ptr %6, align 1, !tbaa !40
-  %i.dn = zext i8 %7 to i32
-  %8 = or disjoint i32 %5, %i.dn
-  %i.do = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 2
-  %9 = load i8, ptr %i.do, align 1, !tbaa !40
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 8
-  %i.dp = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 3
-  %12 = load i8, ptr %i.dp, align 1, !tbaa !40
-  %13 = zext i8 %12 to i32
-  %14 = or disjoint i32 %11, %13                  ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 4 ; 2 uses
-  %16 = load i8, ptr %15, align 1, !tbaa !40
-  %i.dq = zext i8 %16 to i32
-  %17 = shl nuw nsw i32 %i.dq, 8
-  %18 = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 5 ; 2 uses
-  %19 = load i8, ptr %18, align 1, !tbaa !40
-  %i.dr = zext i8 %19 to i32
-  %20 = or disjoint i32 %17, %i.dr
-  %i.ds = sub nsw i32 %8, %14                     ; 2 uses
-  %i.dt = sub nsw i32 %20, %14                    ; 2 uses
+  %.05158.i.lver.orig = phi ptr [ %i.eb, %.lr.ph.i.lver.orig ], [ %i.cr, %bb.aw ] ; 7 uses
+  %3 = load i16, ptr %.05158.i.lver.orig, align 1
+  %4 = call i16 @llvm.bswap.i16(i16 %3)
+  %i.dn = zext i16 %4 to i32
+  %i.do = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 1
+  %i.dp = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 2
+  %5 = load i16, ptr %i.dp, align 1
+  %6 = call i16 @llvm.bswap.i16(i16 %5)
+  %i.dq = zext i16 %6 to i32                      ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 4 ; 2 uses
+  %8 = load i16, ptr %7, align 1
+  %9 = call i16 @llvm.bswap.i16(i16 %8)
+  %i.dr = zext i16 %9 to i32
+  %10 = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 5
+  %i.ds = sub nsw i32 %i.dn, %i.dq                ; 2 uses
+  %i.dt = sub nsw i32 %i.dr, %i.dq                ; 2 uses
   %i.du = lshr i32 %i.ds, 8
   %i.dv = trunc i32 %i.du to i8
   store i8 %i.dv, ptr %.05158.i.lver.orig, align 1, !tbaa !40
   %i.dw = trunc i32 %i.ds to i8
-  store i8 %i.dw, ptr %6, align 1, !tbaa !40
+  store i8 %i.dw, ptr %i.do, align 1, !tbaa !40
   %i.dx = lshr i32 %i.dt, 8
   %i.dy = trunc i32 %i.dx to i8
-  store i8 %i.dy, ptr %15, align 1, !tbaa !40
+  store i8 %i.dy, ptr %7, align 1, !tbaa !40
   %i.dz = trunc i32 %i.dt to i8
-  store i8 %i.dz, ptr %18, align 1, !tbaa !40
+  store i8 %i.dz, ptr %10, align 1, !tbaa !40
   %i.ea = add nuw i32 %.05059.i.lver.orig, 1      ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 %.1.i
   %exitcond.not.i.lver.orig = icmp eq i32 %i.ea, %i.cu
@@ -642,6 +632,9 @@ declare i3 @llvm.bitreverse.i3(i3) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #14

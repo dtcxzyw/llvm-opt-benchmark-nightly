@@ -204,15 +204,10 @@ bb.v:                                             ; preds = %bb.u
   %i.ie = add i32 %i.hf, 224
   %i.if = add i32 %i.ie, %i.hy
   %i.ig = sext i32 %i.if to i64
-  %5 = getelementptr i8, ptr %0, i64 %i.ig        ; 2 uses
-  %.val = load i8, ptr %5, align 1
-  %i.ih = getelementptr i8, ptr %5, i64 1
-  %.val101 = load i8, ptr %i.ih, align 1
-  %6 = zext i8 %.val to i16
-  %7 = shl nuw i16 %6, 8
-  %8 = zext i8 %.val101 to i16
-  %9 = or disjoint i16 %7, %8
-  switch i16 %9, label %bb.z [
+  %i.ih = getelementptr i8, ptr %0, i64 %i.ig
+  %.val = load i16, ptr %i.ih, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %.val)
+  switch i16 %5, label %bb.z [
     i16 -21846, label %bb.w
     i16 -7968, label %bb.x
     i16 -8022, label %bb.x
@@ -533,6 +528,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1

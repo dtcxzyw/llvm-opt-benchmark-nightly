@@ -204,14 +204,9 @@ bb.w:                                             ; preds = %.thread115, %.split
 define range(i32 0, 18) i32 @Xz_ParseHeader(ptr nofree noundef captures(none) initializes((0, 2)) %0, ptr noundef %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 6 ; 2 uses
-  %2 = load i8, ptr %i.a, align 1, !tbaa !11
-  %3 = zext i8 %2 to i16
-  %4 = shl nuw i16 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 7
-  %6 = load i8, ptr %5, align 1, !tbaa !11
-  %7 = zext i8 %6 to i16
-  %8 = or disjoint i16 %4, %7
-  store i16 %8, ptr %0, align 2, !tbaa !38
+  %2 = load i16, ptr %i.a, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  store i16 %3, ptr %0, align 2, !tbaa !38
   %i.b = tail call i32 @CrcCalc(ptr noundef nonnull %i.a, i64 noundef 2) #10
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load i32, ptr %i.c, align 1, !tbaa !11
@@ -614,7 +609,6 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 580 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 584 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 585
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 586
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 6 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
@@ -631,7 +625,6 @@ bb.a:
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 577
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 582 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 583
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
@@ -781,13 +774,9 @@ bb.p:                                             ; preds = %bb.o
   br label %.backedge
 
 bb.q:                                             ; preds = %bb.n
-  %9 = load i8, ptr %i.ae, align 2, !tbaa !11
-  %10 = zext i8 %9 to i16
-  %11 = shl nuw i16 %10, 8
-  %12 = load i8, ptr %8, align 1, !tbaa !11
-  %13 = zext i8 %12 to i16
-  %14 = or disjoint i16 %11, %13
-  store i16 %14, ptr %i.l, align 8, !tbaa !38
+  %7 = load i16, ptr %i.ae, align 2
+  %8 = call i16 @llvm.bswap.i16(i16 %7)
+  store i16 %8, ptr %i.l, align 8, !tbaa !38
   %i.cj = call i32 @CrcCalc(ptr noundef nonnull %i.ae, i64 noundef 2) #10
   %i.ck = load i32, ptr %i.o, align 8, !tbaa !11
   %.not.i = icmp eq i32 %i.cj, %i.ck
@@ -1136,14 +1125,9 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %i.hz, label %bb.ba, label %.thread336
 
 bb.ba:                                            ; preds = %bb.az
-  %15 = zext i16 %i.hq to i32
-  %16 = load i8, ptr %i.o, align 8, !tbaa !11
-  %17 = zext i8 %16 to i32
-  %18 = shl nuw nsw i32 %17, 8
-  %19 = load i8, ptr %7, align 1, !tbaa !11
-  %20 = zext i8 %19 to i32
-  %21 = or disjoint i32 %18, %20
-  %i.ia = icmp eq i32 %21, %15
+  %9 = load i16, ptr %i.o, align 8
+  %10 = call i16 @llvm.bswap.i16(i16 %9)
+  %i.ia = icmp eq i16 %10, %i.hq
   br i1 %i.ia, label %Xz_CheckFooter.exit, label %.thread336
 
 Xz_CheckFooter.exit:                              ; preds = %bb.ba
@@ -1316,6 +1300,9 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #8

@@ -205,7 +205,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local range(i32 0, 2) i32 @flac__encode_file(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef %5, ptr noundef byval(%struct.encode_options_t) align 8 %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [10 x i8], align 1                ; 14 uses
+  %i.a = alloca [10 x i8], align 2                ; 6 uses
   %7 = alloca %struct.stat, align 8               ; 5 uses
   %8 = alloca %struct.stat, align 8               ; 5 uses
   %9 = alloca %struct.stat, align 8               ; 5 uses
@@ -608,15 +608,7 @@ fread.inline.exit.i.lr.ph.i:                      ; preds = %bb.dr
   %i.ru = icmp ne i32 %.sroa.4499.0.copyload, 0   ; 2 uses
   %.fr.i = freeze i32 %.sroa.3497.0.copyload
   %i.rv = icmp ne i32 %.fr.i, 0                   ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.rw = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   %i.rx = getelementptr inbounds nuw i8, ptr %7, i64 24
   br label %fread.inline.exit.i.i376
 
@@ -802,16 +794,13 @@ bb.ed:                                            ; preds = %fread.inline.exit.i
   br i1 %i.ur, label %read_sane_extended.exit.thread, label %read_bytes.exit.i471
 
 read_bytes.exit.i471:                             ; preds = %bb.ed
-  %23 = load i8, ptr %i.a, align 1, !tbaa !29     ; 2 uses
-  %24 = zext i8 %23 to i16
-  %25 = shl nuw i16 %24, 8
-  %26 = load i8, ptr %15, align 1, !tbaa !29
-  %27 = zext i8 %26 to i16
-  %28 = or disjoint i16 %25, %27                  ; 2 uses
-  %29 = icmp slt i8 %23, 0
-  %i.us = add i16 %28, -16446
+  %15 = load i16, ptr %i.a, align 2               ; 2 uses
+  %16 = call i16 @llvm.bswap.i16(i16 %15)         ; 2 uses
+  %17 = and i16 %15, 128
+  %18 = icmp ne i16 %17, 0
+  %i.us = add i16 %16, -16446
   %i.ut = icmp ult i16 %i.us, -63
-  %or.cond5.i = select i1 %29, i1 true, i1 %i.ut
+  %or.cond5.i = or i1 %18, %i.ut
   br i1 %or.cond5.i, label %read_sane_extended.exit.thread, label %bb.ee
 
 read_sane_extended.exit.thread:                   ; preds = %read_bytes.exit.i471, %bb.ed
@@ -822,41 +811,13 @@ read_sane_extended.exit.thread:                   ; preds = %read_bytes.exit.i47
   br label %.thread.i382
 
 bb.ee:                                            ; preds = %read_bytes.exit.i471
-  %i.uv = sub nuw nsw i16 16446, %28
-  %30 = load i8, ptr %i.rw, align 1, !tbaa !29
-  %31 = zext i8 %30 to i64
-  %32 = shl nuw i64 %31, 56
-  %33 = load i8, ptr %16, align 1, !tbaa !29
-  %34 = zext i8 %33 to i64
-  %35 = shl nuw nsw i64 %34, 48
-  %36 = or disjoint i64 %35, %32
-  %37 = load i8, ptr %17, align 1, !tbaa !29
-  %38 = zext i8 %37 to i64
-  %39 = shl nuw nsw i64 %38, 40
-  %40 = or disjoint i64 %36, %39
-  %41 = load i8, ptr %18, align 1, !tbaa !29
-  %42 = zext i8 %41 to i64
-  %43 = shl nuw nsw i64 %42, 32
-  %44 = or disjoint i64 %40, %43
-  %45 = load i8, ptr %19, align 1, !tbaa !29
-  %46 = zext i8 %45 to i64
-  %47 = shl nuw nsw i64 %46, 24
-  %48 = or disjoint i64 %44, %47
-  %49 = load i8, ptr %20, align 1, !tbaa !29
-  %50 = zext i8 %49 to i64
-  %51 = shl nuw nsw i64 %50, 16
-  %52 = or disjoint i64 %48, %51
-  %53 = load i8, ptr %21, align 1, !tbaa !29
-  %54 = zext i8 %53 to i64
-  %55 = shl nuw nsw i64 %54, 8
-  %56 = or i64 %52, %55
-  %57 = load i8, ptr %22, align 1, !tbaa !29
-  %58 = zext i8 %57 to i64
-  %59 = or i64 %56, %58                           ; 2 uses
+  %i.uv = sub nuw nsw i16 16446, %16
+  %19 = load i64, ptr %i.rw, align 2
+  %20 = call i64 @llvm.bswap.i64(i64 %19)         ; 2 uses
   %i.uw = zext nneg i16 %i.uv to i64              ; 2 uses
-  %i.ux = lshr i64 %59, %i.uw
+  %i.ux = lshr i64 %20, %i.uw
   %i.uy = add nsw i64 %i.uw, -1
-  %i.uz = lshr i64 %59, %i.uy
+  %i.uz = lshr i64 %20, %i.uy
   %i.va = and i64 %i.uz, 1
   %i.vb = add nuw i64 %i.va, %i.ux
   %i.vc = trunc i64 %i.vb to i32                  ; 2 uses
@@ -1257,6 +1218,9 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #11

@@ -205,34 +205,26 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit
 
 bb.d:                                             ; preds = %bb.a
-  %i.ah = inttoptr i64 %0 to ptr                  ; 6 uses
-  %3 = load i8, ptr %i.ah, align 1
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw nsw i32 %4, 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.ah, i64 1
-  %7 = load i8, ptr %6, align 1
-  %i.ai = zext i8 %7 to i32
+  %i.ah = inttoptr i64 %0 to ptr                  ; 4 uses
+  %3 = load i16, ptr %i.ah, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.ai = zext i16 %4 to i32
   %i.aj = shl nuw nsw i32 %i.ai, 8
-  %8 = or disjoint i32 %i.aj, %5
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 2
   %i.al = load i8, ptr %i.ak, align 1
   %i.am = zext i8 %i.al to i32
-  %i.an = or disjoint i32 %8, %i.am
+  %i.an = or disjoint i32 %i.aj, %i.am
   %i.ao = uitofp nneg i32 %i.an to double
   %i.ap = fmul nnan double %i.ao, f0x4170000000000000
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ah, i64 3
-  %9 = load i8, ptr %i.aq, align 1
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 16
-  %12 = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
-  %13 = load i8, ptr %12, align 1
-  %i.ar = zext i8 %13 to i32
+  %5 = load i16, ptr %i.aq, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %i.ar = zext i16 %6 to i32
   %i.as = shl nuw nsw i32 %i.ar, 8
-  %14 = or disjoint i32 %i.as, %11
   %i.at = getelementptr inbounds nuw i8, ptr %i.ah, i64 5
   %i.au = load i8, ptr %i.at, align 1
   %i.av = zext i8 %i.au to i32
-  %i.aw = or disjoint i32 %14, %i.av
+  %i.aw = or disjoint i32 %i.as, %i.av
   %i.ax = uitofp nneg i32 %i.aw to double
   %i.ay = fadd double %i.ap, %i.ax
   br label %.loopexit
@@ -634,6 +626,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

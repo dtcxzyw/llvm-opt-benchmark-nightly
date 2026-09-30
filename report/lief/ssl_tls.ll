@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.b
-  %.0 = phi ptr [ %2, %bb.b ], [ %i.m, %bb.e ]    ; 16 uses
+  %.0 = phi ptr [ %2, %bb.b ], [ %i.m, %bb.e ]    ; 15 uses
   %i.n = ptrtoint ptr %i.a to i64                 ; 10 uses
   %i.o = ptrtoint ptr %.0 to i64
   %i.p = sub i64 %i.n, %i.o
@@ -273,18 +273,14 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %.0, i64 97
-  %4 = load i8, ptr %i.ax, align 1, !tbaa !72
-  %5 = zext i8 %4 to i64
-  %6 = shl nuw nsw i64 %5, 16
-  %7 = getelementptr inbounds nuw i8, ptr %.0, i64 98
-  %8 = load i8, ptr %7, align 1, !tbaa !72
-  %i.ay = zext i8 %8 to i64
+  %4 = load i16, ptr %i.ax, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %i.ay = zext i16 %5 to i64
   %i.az = shl nuw nsw i64 %i.ay, 8
-  %9 = or disjoint i64 %i.az, %6
   %i.ba = getelementptr inbounds nuw i8, ptr %.0, i64 99
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !72
   %i.bc = zext i8 %i.bb to i64
-  %i.bd = or disjoint i64 %9, %i.bc               ; 4 uses
+  %i.bd = or disjoint i64 %i.az, %i.bc            ; 4 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.0, i64 100 ; 3 uses
   %.not.i = icmp eq i64 %i.bd, 0
   br i1 %.not.i, label %bb.q, label %bb.l
@@ -322,7 +318,7 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.p, %bb.k
   %i.bn = phi i8 [ %.pre, %bb.p ], [ %i.x, %bb.k ]
-  %.1.i = phi ptr [ %i.bm, %bb.p ], [ %i.be, %bb.k ] ; 9 uses
+  %.1.i = phi ptr [ %i.bm, %bb.p ], [ %i.be, %bb.k ] ; 8 uses
   switch i8 %i.bn, label %bb.z [
     i8 0, label %bb.r
     i8 1, label %bb.x
@@ -335,18 +331,14 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bq, label %ssl_tls12_session_load.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %10 = load i8, ptr %.1.i, align 1, !tbaa !72
-  %11 = zext i8 %10 to i64
-  %12 = shl nuw nsw i64 %11, 16
-  %13 = getelementptr inbounds nuw i8, ptr %.1.i, i64 1
-  %14 = load i8, ptr %13, align 1, !tbaa !72
-  %i.br = zext i8 %14 to i64
+  %6 = load i16, ptr %.1.i, align 1
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %i.br = zext i16 %7 to i64
   %i.bs = shl nuw nsw i64 %i.br, 8
-  %15 = or disjoint i64 %i.bs, %12
   %i.bt = getelementptr inbounds nuw i8, ptr %.1.i, i64 2
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !72
   %i.bv = zext i8 %i.bu to i64
-  %i.bw = or disjoint i64 %15, %i.bv              ; 6 uses
+  %i.bw = or disjoint i64 %i.bs, %i.bv            ; 6 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i64 %i.bw, ptr %i.bx, align 8, !tbaa !59
   %i.by = getelementptr inbounds nuw i8, ptr %.1.i, i64 3 ; 4 uses

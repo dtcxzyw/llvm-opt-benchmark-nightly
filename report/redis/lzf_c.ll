@@ -25,19 +25,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %.lr.ph, label %.thread.thread297
 
 .lr.ph:                                           ; preds = %bb.b
-  %4 = load i8, ptr %0, align 1, !tbaa !15
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw nsw i32 %5, 8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !15
-  %i.j = zext i8 %8 to i32
-  %9 = or disjoint i32 %6, %i.j
+  %4 = load i16, ptr %0, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %i.j = zext i16 %5 to i32
   %i.k = ptrtoint ptr %i.c to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %.thread
   %.0199306 = phi i32 [ 0, %.lr.ph ], [ %.3, %.thread ] ; 6 uses
-  %.0202305 = phi i32 [ %9, %.lr.ph ], [ %.3205, %.thread ] ; 2 uses
+  %.0202305 = phi i32 [ %i.j, %.lr.ph ], [ %.3205, %.thread ] ; 2 uses
   %.0206304 = phi ptr [ %i.g, %.lr.ph ], [ %.4210, %.thread ] ; 9 uses
   %.0213303 = phi ptr [ %0, %.lr.ph ], [ %.3216, %.thread ] ; 26 uses
   %i.l = shl i32 %.0202305, 8
@@ -318,20 +314,16 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
 
 bb.ac:                                            ; preds = %bb.ab
   %i.ev = getelementptr inbounds i8, ptr %i.eu, i64 -2 ; 2 uses
-  %10 = load i8, ptr %i.ev, align 1, !tbaa !15
-  %11 = zext i8 %10 to i32
-  %12 = getelementptr inbounds i8, ptr %i.eu, i64 -1 ; 2 uses
-  %13 = load i8, ptr %12, align 1, !tbaa !15
-  %i.ew = zext i8 %13 to i32
-  %14 = shl nuw nsw i32 %11, 16
+  %6 = load i16, ptr %i.ev, align 1
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %i.ew = zext i16 %7 to i32                      ; 2 uses
   %i.ex = shl nuw nsw i32 %i.ew, 8
-  %15 = or disjoint i32 %i.ex, %14                ; 2 uses
+  %8 = getelementptr inbounds i8, ptr %i.eu, i64 -1
   %i.ey = load i8, ptr %i.eu, align 1, !tbaa !15
   %i.ez = zext i8 %i.ey to i32
-  %i.fa = or disjoint i32 %15, %i.ez              ; 3 uses
-  %16 = lshr exact i32 %15, 8
+  %i.fa = or disjoint i32 %i.ex, %i.ez            ; 3 uses
   %.neg262 = mul i32 %i.fa, 65531
-  %i.fb = add i32 %.neg262, %16
+  %i.fb = add i32 %.neg262, %i.ew
   %i.fc = and i32 %i.fb, 65535
   %i.fd = zext nneg i32 %i.fc to i64
   %i.fe = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.fd
@@ -346,7 +338,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.fl = and i32 %i.fk, 65535
   %i.fm = zext nneg i32 %i.fl to i64
   %i.fn = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.fm
-  store ptr %12, ptr %i.fn, align 8, !tbaa !18
+  store ptr %8, ptr %i.fn, align 8, !tbaa !18
   br label %.thread
 
 bb.ad:                                            ; preds = %bb.e, %bb.d, %bb.c
@@ -505,6 +497,9 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #2
 
 attributes #0 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

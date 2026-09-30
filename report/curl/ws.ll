@@ -202,13 +202,9 @@ bb.ar:                                            ; preds = %._crit_edge, %.thre
 
 bb.as:                                            ; preds = %bb.aq
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 26
-  %5 = load i8, ptr %i.bd, align 2, !tbaa !110
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 27
-  %9 = load i8, ptr %8, align 1, !tbaa !110
-  %i.be = zext i8 %9 to i64
-  %10 = or disjoint i64 %7, %i.be
+  %5 = load i16, ptr %i.bd, align 2
+  %6 = call i16 @llvm.bswap.i16(i16 %5)
+  %i.be = zext i16 %6 to i64
   br label %bb.ay
 
 bb.at:                                            ; preds = %bb.aq
@@ -276,7 +272,7 @@ bb.ax:                                            ; preds = %.loopexit87.i, %bb.
   br label %bb.bp
 
 bb.ay:                                            ; preds = %bb.av, %bb.as, %bb.ar
-  %.sink.i = phi i64 [ %i.cr, %bb.av ], [ %10, %bb.as ], [ %i.bc, %bb.ar ]
+  %.sink.i = phi i64 [ %i.cr, %bb.av ], [ %i.be, %bb.as ], [ %i.bc, %bb.ar ]
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i64 %.sink.i, ptr %i.cs, align 8, !tbaa !107
   store i32 0, ptr %0, align 8, !tbaa !141
@@ -678,6 +674,9 @@ declare i32 @Curl_http_setup_conn(ptr noundef, ptr noundef) local_unnamed_addr #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

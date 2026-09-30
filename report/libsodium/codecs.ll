@@ -204,20 +204,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %.preheader.preheader, label %.preheader102.preheader
 
 .preheader102.preheader:                          ; preds = %bb.b
-  %3 = load i8, ptr %2, align 1
-  %4 = getelementptr i8, ptr %2, i64 1
-  %5 = load i8, ptr %4, align 1
-  %6 = or i8 %5, %3
-  %.not130 = icmp ne i8 %6, 0                     ; 4 uses
+  %3 = load i16, ptr %2, align 1
+  %.not130 = icmp ne i16 %3, 0                    ; 4 uses
   %.2 = sext i1 %.not130 to i32
   %not..not130 = xor i1 %.not130, true
   %.1 = zext i1 %not..not130 to i32
   %i.n = getelementptr i8, ptr %2, i64 2
-  %7 = load i8, ptr %i.n, align 1
-  %8 = getelementptr i8, ptr %2, i64 3
-  %9 = load i8, ptr %8, align 1
-  %10 = or i8 %9, %7
-  %i.o = icmp eq i8 %10, 0
+  %4 = load i16, ptr %i.n, align 1
+  %i.o = icmp eq i16 %4, 0
   br i1 %i.o, label %bb.h, label %.preheader102.2
 
 .preheader.preheader:                             ; preds = %bb.b
@@ -620,11 +614,8 @@ bb.h:                                             ; preds = %.preheader102.prehe
   %.2.1 = phi i32 [ %spec.select.1, %bb.h ], [ -1, %.preheader102.preheader ] ; 3 uses
   %.1.1 = phi i32 [ %i.fa, %bb.h ], [ 0, %.preheader102.preheader ] ; 3 uses
   %i.fb = getelementptr i8, ptr %2, i64 4
-  %11 = load i8, ptr %i.fb, align 1
-  %12 = getelementptr i8, ptr %2, i64 5
-  %13 = load i8, ptr %12, align 1
-  %14 = or i8 %13, %11
-  %i.fc = icmp eq i8 %14, 0
+  %5 = load i16, ptr %i.fb, align 1
+  %i.fc = icmp eq i16 %5, 0
   br i1 %i.fc, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.preheader102.2
@@ -645,11 +636,8 @@ bb.j:                                             ; preds = %.preheader102.2
   %.2.2 = phi i32 [ %spec.select.2, %bb.j ], [ -1, %bb.i ] ; 3 uses
   %.1.2 = phi i32 [ %i.fg, %bb.j ], [ 0, %bb.i ]  ; 3 uses
   %i.fh = getelementptr i8, ptr %2, i64 6
-  %15 = load i8, ptr %i.fh, align 1
-  %16 = getelementptr i8, ptr %2, i64 7
-  %17 = load i8, ptr %16, align 1
-  %18 = or i8 %17, %15
-  %i.fi = icmp eq i8 %18, 0
+  %6 = load i16, ptr %i.fh, align 1
+  %i.fi = icmp eq i16 %6, 0
   br i1 %i.fi, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.preheader102.3
@@ -670,11 +658,8 @@ bb.l:                                             ; preds = %.preheader102.3
   %.2.3 = phi i32 [ %spec.select.3, %bb.l ], [ -1, %bb.k ] ; 3 uses
   %.1.3 = phi i32 [ %i.fm, %bb.l ], [ 0, %bb.k ]  ; 3 uses
   %i.fn = getelementptr i8, ptr %2, i64 8
-  %19 = load i8, ptr %i.fn, align 1
-  %20 = getelementptr i8, ptr %2, i64 9
-  %21 = load i8, ptr %20, align 1
-  %22 = or i8 %21, %19
-  %i.fo = icmp eq i8 %22, 0
+  %7 = load i16, ptr %i.fn, align 1
+  %i.fo = icmp eq i16 %7, 0
   br i1 %i.fo, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.preheader102.4
@@ -695,11 +680,8 @@ bb.n:                                             ; preds = %.preheader102.4
   %.2.4 = phi i32 [ %spec.select.4, %bb.n ], [ -1, %bb.m ] ; 3 uses
   %.1.4 = phi i32 [ %i.fs, %bb.n ], [ 0, %bb.m ]  ; 3 uses
   %i.ft = getelementptr i8, ptr %2, i64 10
-  %23 = load i8, ptr %i.ft, align 1
-  %24 = getelementptr i8, ptr %2, i64 11
-  %25 = load i8, ptr %24, align 1
-  %26 = or i8 %25, %23
-  %i.fu = icmp eq i8 %26, 0
+  %8 = load i16, ptr %i.ft, align 1
+  %i.fu = icmp eq i16 %8, 0
   br i1 %i.fu, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %.preheader102.5
@@ -720,11 +702,8 @@ bb.p:                                             ; preds = %.preheader102.5
   %.2.5 = phi i32 [ %spec.select.5, %bb.p ], [ -1, %bb.o ] ; 3 uses
   %.1.5 = phi i32 [ %i.fy, %bb.p ], [ 0, %bb.o ]  ; 3 uses
   %i.fz = getelementptr i8, ptr %2, i64 12
-  %27 = load i8, ptr %i.fz, align 1
-  %28 = getelementptr i8, ptr %2, i64 13
-  %29 = load i8, ptr %28, align 1
-  %30 = or i8 %29, %27
-  %i.ga = icmp eq i8 %30, 0
+  %9 = load i16, ptr %i.fz, align 1
+  %i.ga = icmp eq i16 %9, 0
   br i1 %i.ga, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %.preheader102.6
@@ -745,11 +724,8 @@ bb.r:                                             ; preds = %.preheader102.6
   %.2.6 = phi i32 [ %spec.select.6, %bb.r ], [ -1, %bb.q ] ; 3 uses
   %.1.6 = phi i32 [ %i.ge, %bb.r ], [ 0, %bb.q ]  ; 3 uses
   %i.gf = getelementptr i8, ptr %2, i64 14
-  %31 = load i8, ptr %i.gf, align 1
-  %32 = getelementptr i8, ptr %2, i64 15
-  %33 = load i8, ptr %32, align 1
-  %34 = or i8 %33, %31
-  %i.gg = icmp eq i8 %34, 0
+  %10 = load i16, ptr %i.gf, align 1
+  %i.gg = icmp eq i16 %10, 0
   br i1 %i.gg, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %.preheader102.7
@@ -812,15 +788,11 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %.3.us = phi ptr [ %.2100109.us, %bb.v ], [ %i.gz, %bb.w ] ; 5 uses
   %i.ha = shl i32 %.266110.us, 1
   %i.hb = sext i32 %i.ha to i64
-  %35 = getelementptr i8, ptr %2, i64 %i.hb       ; 2 uses
-  %36 = load i8, ptr %35, align 1                 ; 4 uses
-  %i.hc = getelementptr i8, ptr %35, i64 1
-  %37 = load i8, ptr %i.hc, align 1               ; 2 uses
+  %i.hc = getelementptr i8, ptr %2, i64 %i.hb
+  %11 = load i16, ptr %i.hc, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
-  %38 = zext i8 %36 to i32                        ; 3 uses
-  %39 = shl nuw nsw i32 %38, 8
-  %i.hd = zext i8 %37 to i32                      ; 3 uses
-  %40 = or disjoint i32 %39, %i.hd
+  %12 = tail call i16 @llvm.bswap.i16(i16 %11)    ; 5 uses
+  %i.hd = zext i16 %12 to i32                     ; 4 uses
   %i.he = and i32 %i.hd, 15                       ; 3 uses
   %i.hf = icmp samesign ult i32 %i.he, 10
   %i.hg = or disjoint i32 %i.he, 48
@@ -828,34 +800,36 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.hi = select i1 %i.hf, i32 %i.hg, i32 %i.hh
   %i.hj = trunc nuw nsw i32 %i.hi to i8
   store i8 %i.hj, ptr %i.a, align 1
-  %.not.i83.us = icmp samesign ult i32 %40, 16
+  %.not.i83.us = icmp ult i16 %12, 16
   br i1 %.not.i83.us, label %.lr.ph.i87.us, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.hk = lshr i32 %i.hd, 4                       ; 2 uses
-  %i.hl = icmp ult i8 %37, -96
-  %i.hm = or disjoint i32 %i.hk, 48
-  %i.hn = add nuw nsw i32 %i.hk, 87
+  %i.hk = lshr i32 %i.hd, 4
+  %13 = and i32 %i.hk, 15                         ; 3 uses
+  %i.hl = icmp samesign ult i32 %13, 10
+  %i.hm = or disjoint i32 %13, 48
+  %i.hn = add nuw nsw i32 %13, 87
   %i.ho = select i1 %i.hl, i32 %i.hm, i32 %i.hn
   %i.hp = trunc nuw nsw i32 %i.ho to i8
   store i8 %i.hp, ptr %i.gs, align 1
-  %.not.i83.us.1 = icmp eq i8 %36, 0
+  %.not.i83.us.1 = icmp ult i16 %12, 256
   br i1 %.not.i83.us.1, label %.lr.ph.i87.us, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.hq = and i32 %38, 15                         ; 3 uses
+  %14 = lshr i32 %i.hd, 8
+  %i.hq = and i32 %14, 15                         ; 3 uses
   %i.hr = icmp samesign ult i32 %i.hq, 10
   %i.hs = or disjoint i32 %i.hq, 48
   %i.ht = add nuw nsw i32 %i.hq, 87
   %i.hu = select i1 %i.hr, i32 %i.hs, i32 %i.ht
   %i.hv = trunc nuw nsw i32 %i.hu to i8
   store i8 %i.hv, ptr %i.gt, align 1
-  %.not.i83.us.2 = icmp ult i8 %36, 16
+  %.not.i83.us.2 = icmp ult i16 %12, 4096
   br i1 %.not.i83.us.2, label %.lr.ph.i87.us, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.hw = lshr i32 %38, 4                         ; 2 uses
-  %i.hx = icmp ult i8 %36, -96
+  %i.hw = lshr i32 %i.hd, 12                      ; 2 uses
+  %i.hx = icmp ult i16 %12, -24576
   %i.hy = or disjoint i32 %i.hw, 48
   %i.hz = add nuw nsw i32 %i.hw, 87
   %i.ia = select i1 %i.hx, i32 %i.hy, i32 %i.hz
@@ -946,15 +920,11 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.3 = phi ptr [ %.2100109, %bb.ae ], [ %i.jc, %bb.af ] ; 5 uses
   %i.jd = shl nuw nsw i32 %.266110, 1
   %i.je = zext nneg i32 %i.jd to i64
-  %41 = getelementptr i8, ptr %2, i64 %i.je       ; 2 uses
-  %42 = load i8, ptr %41, align 1                 ; 4 uses
-  %i.jf = getelementptr i8, ptr %41, i64 1
-  %43 = load i8, ptr %i.jf, align 1               ; 2 uses
+  %i.jf = getelementptr i8, ptr %2, i64 %i.je
+  %15 = load i16, ptr %i.jf, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
-  %44 = zext i8 %42 to i32                        ; 3 uses
-  %45 = shl nuw nsw i32 %44, 8
-  %i.jg = zext i8 %43 to i32                      ; 3 uses
-  %46 = or disjoint i32 %45, %i.jg
+  %16 = tail call i16 @llvm.bswap.i16(i16 %15)    ; 5 uses
+  %i.jg = zext i16 %16 to i32                     ; 4 uses
   %i.jh = and i32 %i.jg, 15                       ; 3 uses
   %i.ji = icmp samesign ult i32 %i.jh, 10
   %i.jj = or disjoint i32 %i.jh, 48
@@ -962,34 +932,36 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.jl = select i1 %i.ji, i32 %i.jj, i32 %i.jk
   %i.jm = trunc nuw nsw i32 %i.jl to i8
   store i8 %i.jm, ptr %i.a, align 1
-  %.not.i83 = icmp samesign ult i32 %46, 16
+  %.not.i83 = icmp ult i16 %16, 16
   br i1 %.not.i83, label %.lr.ph.i87, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.jn = lshr i32 %i.jg, 4                       ; 2 uses
-  %i.jo = icmp ult i8 %43, -96
-  %i.jp = or disjoint i32 %i.jn, 48
-  %i.jq = add nuw nsw i32 %i.jn, 87
+  %i.jn = lshr i32 %i.jg, 4
+  %17 = and i32 %i.jn, 15                         ; 3 uses
+  %i.jo = icmp samesign ult i32 %17, 10
+  %i.jp = or disjoint i32 %17, 48
+  %i.jq = add nuw nsw i32 %17, 87
   %i.jr = select i1 %i.jo, i32 %i.jp, i32 %i.jq
   %i.js = trunc nuw nsw i32 %i.jr to i8
   store i8 %i.js, ptr %i.gv, align 1
-  %.not.i83.1 = icmp eq i8 %42, 0
+  %.not.i83.1 = icmp ult i16 %16, 256
   br i1 %.not.i83.1, label %.lr.ph.i87, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.jt = and i32 %44, 15                         ; 3 uses
+  %18 = lshr i32 %i.jg, 8
+  %i.jt = and i32 %18, 15                         ; 3 uses
   %i.ju = icmp samesign ult i32 %i.jt, 10
   %i.jv = or disjoint i32 %i.jt, 48
   %i.jw = add nuw nsw i32 %i.jt, 87
   %i.jx = select i1 %i.ju, i32 %i.jv, i32 %i.jw
   %i.jy = trunc nuw nsw i32 %i.jx to i8
   store i8 %i.jy, ptr %i.gw, align 1
-  %.not.i83.2 = icmp ult i8 %42, 16
+  %.not.i83.2 = icmp ult i16 %16, 4096
   br i1 %.not.i83.2, label %.lr.ph.i87, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.jz = lshr i32 %44, 4                         ; 2 uses
-  %i.ka = icmp ult i8 %42, -96
+  %i.jz = lshr i32 %i.jg, 12                      ; 2 uses
+  %i.ka = icmp ult i16 %16, -24576
   %i.kb = or disjoint i32 %i.jz, 48
   %i.kc = add nuw nsw i32 %i.jz, 87
   %i.kd = select i1 %i.ka, i32 %i.kb, i32 %i.kc
@@ -1075,6 +1047,9 @@ declare ptr @__memmove_chk(ptr noundef, ptr noundef, i64 noundef, i64 noundef) l
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #12

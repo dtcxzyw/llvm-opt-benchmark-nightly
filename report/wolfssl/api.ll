@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.critedge659
   %i.dy = load i8, ptr %i.dx, align 1, !tbaa !16
   %i.dz = icmp eq i8 %i.dy, 13
   %i.ea = sext i32 %.3 to i64
-  %i.eb = getelementptr i8, ptr %0, i64 %i.ea     ; 3 uses
+  %i.eb = getelementptr i8, ptr %0, i64 %i.ea     ; 2 uses
   br i1 %i.dz, label %bb.f, label %.critedge165
 
 bb.f:                                             ; preds = %.thread
@@ -214,21 +214,17 @@ bb.f:                                             ; preds = %.thread
   %i.ef = add i32 %.3, 7
   %i.eg = add i32 %i.ef, %i.ee                    ; 2 uses
   %i.eh = sext i32 %i.eg to i64
-  %1 = getelementptr inbounds i8, ptr %0, i64 %i.eh ; 2 uses
-  %.val = load i8, ptr %1, align 1, !tbaa !16
-  %i.ei = getelementptr i8, ptr %1, i64 1
-  %.val664 = load i8, ptr %i.ei, align 1, !tbaa !16
-  %2 = zext i8 %.val to i32
-  %3 = shl nuw nsw i32 %2, 8
-  %4 = zext i8 %.val664 to i32
-  %5 = or disjoint i32 %3, %4                     ; 2 uses
+  %i.ei = getelementptr inbounds i8, ptr %0, i64 %i.eh
+  %.val = load i16, ptr %i.ei, align 1            ; 2 uses
   %i.ej = add i32 %i.eg, 2                        ; 3 uses
-  %i.ek = icmp ne i32 %5, 0
+  %i.ek = icmp ne i16 %.val, 0
   %or.cond685 = and i1 %i.du, %i.ek
   br i1 %or.cond685, label %.critedge167.preheader, label %.critedge
 
 .critedge167.preheader:                           ; preds = %bb.f
-  %i.el = add nsw i32 %i.ej, %5
+  %1 = call i16 @llvm.bswap.i16(i16 %.val)
+  %2 = zext i16 %1 to i32
+  %i.el = add nsw i32 %i.ej, %2
   %i.em = sext i32 %i.ej to i64
   %i.en = sext i32 %i.el to i64
   br label %.critedge167
@@ -293,14 +289,10 @@ bb.k:                                             ; preds = %bb.i, %bb.g
   br i1 %i.fj, label %.critedge167, label %.critedge.loopexit, !llvm.loop !184
 
 .critedge165:                                     ; preds = %.thread
-  %.val665 = load i8, ptr %i.eb, align 1, !tbaa !16
-  %6 = zext i8 %.val665 to i32
-  %7 = shl nuw nsw i32 %6, 8
-  %8 = getelementptr i8, ptr %i.eb, i64 1
-  %.val666 = load i8, ptr %8, align 1, !tbaa !16
-  %i.fk = zext i8 %.val666 to i32
-  %9 = or disjoint i32 %7, %i.fk
-  %i.fl = add nsw i32 %9, %i.dv                   ; 3 uses
+  %.val665 = load i16, ptr %i.eb, align 1
+  %3 = call i16 @llvm.bswap.i16(i16 %.val665)
+  %i.fk = zext i16 %3 to i32
+  %i.fl = add nsw i32 %i.dv, %i.fk                ; 3 uses
   %i.fm = load i32, ptr %i.cs, align 8, !tbaa !76
   %i.fn = icmp slt i32 %i.fl, %i.fm
   br i1 %i.fn, label %.lr.ph, label %.critedge
@@ -683,7 +675,7 @@ declare i32 @test_wolfSSL_CTX_set_alpn_protos_inval_ext() #2
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @test_tls_multi_handshakes_one_record() #0 {
 bb.a:
-  %0 = alloca %struct.test_memio_ctx, align 8     ; 12 uses
+  %0 = alloca %struct.test_memio_ctx, align 8     ; 11 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca ptr, align 8                      ; 10 uses
@@ -785,17 +777,12 @@ bb.c:                                             ; preds = %.critedge
 
 .critedge518:                                     ; preds = %.critedge516
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(65536) %i.e, i8 0, i64 65536, i1 false)
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %.val = load i8, ptr %1, align 1, !tbaa !16
-  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %.val538 = load i8, ptr %i.av, align 4, !tbaa !16
-  %2 = zext i8 %.val to i16
-  %3 = shl nuw i16 %2, 8
-  %4 = zext i8 %.val538 to i16
-  %5 = or disjoint i16 %3, %4                     ; 3 uses
-  %i.aw = zext i16 %5 to i32
+  %i.av = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %.val = load i16, ptr %i.av, align 1
+  %1 = call i16 @llvm.bswap.i16(i16 %.val)        ; 3 uses
+  %i.aw = zext i16 %1 to i32
   %i.ax = add nuw nsw i32 %i.aw, 5                ; 7 uses
-  %i.ay = icmp ult i16 %5, -4
+  %i.ay = icmp ult i16 %1, -4
   br i1 %i.ay, label %.critedge522, label %bb.d
 
 bb.d:                                             ; preds = %.critedge518
@@ -841,7 +828,7 @@ bb.d:                                             ; preds = %.critedge518
   br label %.critedge523
 
 .critedge524:                                     ; preds = %.critedge522
-  %i.bu = zext i16 %5 to i64
+  %i.bu = zext i16 %1 to i64
   %i.bv = add nuw nsw i64 %i.bu, 5
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.e, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.bv, i1 false)
   %.not499554 = icmp samesign ult i32 %i.ax, %i.bl
@@ -851,17 +838,12 @@ bb.d:                                             ; preds = %.critedge518
   %.0556 = phi i32 [ %i.cb, %.critedge530 ], [ %i.ax, %.critedge524 ] ; 2 uses
   %.0432555 = phi i32 [ %i.ck, %.critedge530 ], [ %i.ax, %.critedge524 ] ; 2 uses
   %i.bw = sext i32 %.0556 to i64
-  %6 = getelementptr inbounds i8, ptr %0, i64 %i.bw ; 2 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %6, i64 3
-  %.val541 = load i8, ptr %i.bx, align 1, !tbaa !16
-  %i.by = getelementptr i8, ptr %6, i64 4
-  %.val542 = load i8, ptr %i.by, align 1, !tbaa !16
-  %7 = zext i8 %.val541 to i16
-  %8 = shl nuw i16 %7, 8
-  %9 = zext i8 %.val542 to i16
-  %10 = or disjoint i16 %8, %9                    ; 2 uses
+  %i.bx = getelementptr inbounds i8, ptr %0, i64 %i.bw
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 3
+  %.val541 = load i16, ptr %i.by, align 1
+  %2 = call i16 @llvm.bswap.i16(i16 %.val541)     ; 2 uses
   %i.bz = add nsw i32 %.0556, 5                   ; 2 uses
-  %i.ca = zext i16 %10 to i32                     ; 2 uses
+  %i.ca = zext i16 %2 to i32                      ; 2 uses
   %i.cb = add nsw i32 %i.bz, %i.ca                ; 4 uses
   %.not492.not = icmp sgt i32 %i.cb, %i.bl
   br i1 %.not492.not, label %bb.e, label %.critedge526
@@ -904,7 +886,7 @@ bb.f:                                             ; preds = %.critedge526
   %i.cv = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cu
   %i.cw = sext i32 %i.bz to i64
   %i.cx = getelementptr inbounds i8, ptr %0, i64 %i.cw
-  %i.cy = zext i16 %10 to i64
+  %i.cy = zext i16 %2 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cv, ptr nonnull align 1 %i.cx, i64 %i.cy, i1 false)
   %.not499 = icmp slt i32 %i.cb, %i.bl
   br i1 %.not499, label %.lr.ph, label %.critedge531, !llvm.loop !187

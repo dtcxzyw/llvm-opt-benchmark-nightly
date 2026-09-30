@@ -178,17 +178,12 @@ bb.n:                                             ; preds = %bb.a, %bb.e, %bb.f,
   %i.bk = load i32, ptr @bufflength, align 4, !tbaa !7
   %i.bl = add nsw i32 %i.bk, -2
   store i32 %i.bl, ptr @bufflength, align 4, !tbaa !7
-  %i.bm = load ptr, ptr @inbuff, align 8, !tbaa !34 ; 3 uses
+  %i.bm = load ptr, ptr @inbuff, align 8, !tbaa !34 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 2
   store ptr %i.bn, ptr @inbuff, align 8, !tbaa !34
-  %1 = load i8, ptr %i.bm, align 1, !tbaa !35
-  %2 = zext i8 %1 to i16
-  %3 = shl nuw i16 %2, 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.bm, i64 1
-  %5 = load i8, ptr %4, align 1, !tbaa !35
-  %6 = zext i8 %5 to i16
-  %7 = or disjoint i16 %3, %6
-  %i.bo = sext i16 %7 to i32
+  %1 = load i16, ptr %i.bm, align 1
+  %2 = call i16 @llvm.bswap.i16(i16 %1)
+  %i.bo = sext i16 %2 to i32
   %i.bp = add i32 %i.c, %i.bo
   %i.bq = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   store i32 1, ptr %i.bq, align 8, !tbaa !26
@@ -287,17 +282,12 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = load i32, ptr @bufflength, align 4, !tbaa !7
   %i.ae = add nsw i32 %i.ad, -2
   store i32 %i.ae, ptr @bufflength, align 4, !tbaa !7
-  %i.af = load ptr, ptr @inbuff, align 8, !tbaa !34 ; 3 uses
+  %i.af = load ptr, ptr @inbuff, align 8, !tbaa !34 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 2
   store ptr %i.ag, ptr @inbuff, align 8, !tbaa !34
-  %1 = load i8, ptr %i.af, align 1, !tbaa !35
-  %2 = zext i8 %1 to i16
-  %3 = shl nuw i16 %2, 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.af, i64 1
-  %5 = load i8, ptr %4, align 1, !tbaa !35
-  %6 = zext i8 %5 to i16
-  %7 = or disjoint i16 %3, %6
-  %i.ah = sext i16 %7 to i32
+  %1 = load i16, ptr %i.af, align 1
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %i.ah = sext i16 %2 to i32
   %i.ai = add i32 %i.b, %i.ah
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   store i32 1, ptr %i.aj, align 8, !tbaa !26
@@ -471,6 +461,9 @@ bb.l:                                             ; preds = %bb.k, %bb.f, %bb.c
 
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #6

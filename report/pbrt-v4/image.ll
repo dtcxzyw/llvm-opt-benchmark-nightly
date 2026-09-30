@@ -205,23 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond7, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = load i8, ptr %0, align 1, !tbaa !37
-  %6 = zext i8 %5 to i32
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !37
-  %9 = zext i8 %8 to i32
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %11 = load i8, ptr %10, align 1, !tbaa !37
-  %12 = zext i8 %11 to i32
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %14 = load i8, ptr %13, align 1, !tbaa !37
-  %15 = zext i8 %14 to i32
-  %16 = shl nuw i32 %6, 24
-  %17 = shl nuw nsw i32 %9, 16
-  %18 = or disjoint i32 %17, %16
-  %19 = shl nuw nsw i32 %12, 8
-  %20 = or disjoint i32 %18, %19
-  %21 = or disjoint i32 %20, %15
+  %5 = load i32, ptr %0, align 1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.h = load i32, ptr %i.g, align 1              ; 2 uses
   %i.i = tail call i32 @llvm.bswap.i32(i32 %i.h)  ; 3 uses
@@ -252,7 +236,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.x = icmp ugt i8 %i.r, 1
-  %i.y = icmp ne i32 %21, 1903126886
+  %i.y = icmp ne i32 %5, 1718185841
   %or.cond9 = or i1 %i.y, %i.x
   br i1 %or.cond9, label %.loopexit, label %bb.f
 
@@ -655,15 +639,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit225.i: ; preds = %
 
 _ZNK4pbrt13ColorEncoding13ToFloatLinearEf.exit.i.us: ; preds = %.lr.ph.i, %bb.fj
   %indvars.iv.i.us = phi i64 [ %indvars.iv.next.i.us, %bb.fj ], [ 0, %.lr.ph.i ] ; 2 uses
-  %.sroa.0471.1513.i.us = phi ptr [ %i.akk, %bb.fj ], [ %.sroa.0471.0515.i, %.lr.ph.i ] ; 3 uses
-  %123 = load i8, ptr %.sroa.0471.1513.i.us, align 1, !tbaa !37, !noalias !732
-  %124 = zext i8 %123 to i32
-  %125 = shl nuw nsw i32 %124, 8
-  %126 = getelementptr inbounds nuw i8, ptr %.sroa.0471.1513.i.us, i64 1
-  %127 = load i8, ptr %126, align 1, !tbaa !37, !noalias !732
-  %128 = zext i8 %127 to i32
-  %129 = or disjoint i32 %125, %128
-  %i.aki = uitofp nneg i32 %129 to float
+  %.sroa.0471.1513.i.us = phi ptr [ %i.akk, %bb.fj ], [ %.sroa.0471.0515.i, %.lr.ph.i ] ; 2 uses
+  %123 = load i16, ptr %.sroa.0471.1513.i.us, align 1, !noalias !732
+  %124 = call i16 @llvm.bswap.i16(i16 %123)
+  %i.aki = uitofp i16 %124 to float
   %i.akj = fdiv float %i.aki, 6.553500e+04
   %.sroa.0469.0.insert.insert.i.us = add nuw nsw i64 %indvars.iv.i.us, %.sroa.2470.0.insert.shift.i
   invoke void @_ZN4pbrt5Image10SetChannelENS_6Point2IiEEif(ptr noundef nonnull align 8 dereferenceable(152) %39, i64 %.sroa.0469.0.insert.insert.i.us, i32 noundef 0, float noundef %i.akj)
@@ -684,15 +663,10 @@ bb.fj:                                            ; preds = %_ZNK4pbrt13ColorEnc
 
 .lr.ph.i.split.us978:                             ; preds = %.lr.ph.i, %bb.fk
   %indvars.iv.i.us979 = phi i64 [ %indvars.iv.next.i.us984, %bb.fk ], [ 0, %.lr.ph.i ] ; 2 uses
-  %.sroa.0471.1513.i.us980 = phi ptr [ %i.aks, %bb.fk ], [ %.sroa.0471.0515.i, %.lr.ph.i ] ; 3 uses
-  %130 = load i8, ptr %.sroa.0471.1513.i.us980, align 1, !tbaa !37, !noalias !732
-  %131 = zext i8 %130 to i32
-  %132 = shl nuw nsw i32 %131, 8
-  %133 = getelementptr inbounds nuw i8, ptr %.sroa.0471.1513.i.us980, i64 1
-  %134 = load i8, ptr %133, align 1, !tbaa !37, !noalias !732
-  %135 = zext i8 %134 to i32
-  %136 = or disjoint i32 %132, %135
-  %i.akp = uitofp nneg i32 %136 to float
+  %.sroa.0471.1513.i.us980 = phi ptr [ %i.aks, %bb.fk ], [ %.sroa.0471.0515.i, %.lr.ph.i ] ; 2 uses
+  %125 = load i16, ptr %.sroa.0471.1513.i.us980, align 1, !noalias !732
+  %126 = call i16 @llvm.bswap.i16(i16 %125)
+  %i.akp = uitofp i16 %126 to float
   %i.akq = fdiv float %i.akp, 6.553500e+04
   %i.akr = invoke noundef float @_ZNK4pbrt17sRGBColorEncoding13ToFloatLinearEf(ptr noundef nonnull align 1 dereferenceable(1) %i.akd, float noundef %i.akq)
           to label %_ZNK4pbrt13ColorEncoding13ToFloatLinearEf.exit.i.us981 unwind label %.split.split.us, !noalias !732
@@ -760,15 +734,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit228.i: ; preds = %
 
 .lr.ph.i.split:                                   ; preds = %.lr.ph.i, %bb.fo
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.fo ], [ 0, %.lr.ph.i ] ; 2 uses
-  %.sroa.0471.1513.i = phi ptr [ %i.alk, %bb.fo ], [ %.sroa.0471.0515.i, %.lr.ph.i ] ; 3 uses
-  %137 = load i8, ptr %.sroa.0471.1513.i, align 1, !tbaa !37, !noalias !732
-  %138 = zext i8 %137 to i32
-  %139 = shl nuw nsw i32 %138, 8
-  %140 = getelementptr inbounds nuw i8, ptr %.sroa.0471.1513.i, i64 1
-  %141 = load i8, ptr %140, align 1, !tbaa !37, !noalias !732
-  %142 = zext i8 %141 to i32
-  %143 = or disjoint i32 %139, %142
-  %i.alh = uitofp nneg i32 %143 to float
+  %.sroa.0471.1513.i = phi ptr [ %i.alk, %bb.fo ], [ %.sroa.0471.0515.i, %.lr.ph.i ] ; 2 uses
+  %127 = load i16, ptr %.sroa.0471.1513.i, align 1, !noalias !732
+  %128 = call i16 @llvm.bswap.i16(i16 %127)
+  %i.alh = uitofp i16 %128 to float
   %i.ali = fdiv float %i.alh, 6.553500e+04
   %i.alj = invoke noundef float @_ZNK4pbrt18GammaColorEncoding13ToFloatLinearEf(ptr noundef nonnull align 4 dereferenceable(5124) %i.akd, float noundef %i.ali)
           to label %_ZNK4pbrt13ColorEncoding13ToFloatLinearEf.exit.i unwind label %.split.split, !noalias !732
@@ -1171,10 +1140,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit275.3.i: ; preds =
 bb.hl:                                            ; preds = %bb.ib, %.lr.ph528.i
   %indvars.iv560.i = phi i64 [ 0, %.lr.ph528.i ], [ %indvars.iv.next561.i, %bb.ib ] ; 2 uses
   %.sroa.0443.1526.i = phi ptr [ %.sroa.0443.0531.i, %.lr.ph528.i ], [ %i.bpx, %bb.ib ] ; 2 uses
-  %144 = load <8 x i8>, ptr %.sroa.0443.1526.i, align 1, !tbaa !37, !noalias !732
-  %145 = freeze <8 x i8> %144
-  %146 = bitcast <8 x i8> %145 to <4 x i16>
-  %i.bpf = call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %146)
+  %129 = load <4 x i16>, ptr %.sroa.0443.1526.i, align 1, !noalias !732
+  %i.bpf = call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %129)
   %i.bpg = uitofp <4 x i16> %i.bpf to <4 x float> ; 4 uses
   %i.bph = extractelement <4 x float> %i.bpg, i64 0
   %i.bpi = fdiv float %i.bph, 6.553500e+04        ; 3 uses
@@ -1577,36 +1544,19 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit305.2.i: ; preds =
 
 bb.ir:                                            ; preds = %bb.jd, %.lr.ph520.i
   %indvars.iv551.i = phi i64 [ 0, %.lr.ph520.i ], [ %indvars.iv.next552.i, %bb.jd ] ; 2 uses
-  %.sroa.0426.1518.i = phi ptr [ %.sroa.0426.0523.i, %.lr.ph520.i ], [ %i.cem, %bb.jd ] ; 7 uses
-  %147 = load i8, ptr %.sroa.0426.1518.i, align 1, !tbaa !37, !noalias !732
-  %148 = zext i8 %147 to i32
-  %149 = shl nuw nsw i32 %148, 8
-  %150 = getelementptr inbounds nuw i8, ptr %.sroa.0426.1518.i, i64 1
-  %151 = load i8, ptr %150, align 1, !tbaa !37, !noalias !732
-  %152 = zext i8 %151 to i32
-  %153 = or disjoint i32 %149, %152
-  %i.ceb = uitofp nneg i32 %153 to float
+  %.sroa.0426.1518.i = phi ptr [ %.sroa.0426.0523.i, %.lr.ph520.i ], [ %i.cem, %bb.jd ] ; 3 uses
+  %130 = load i16, ptr %.sroa.0426.1518.i, align 1, !noalias !732
+  %131 = call i16 @llvm.bswap.i16(i16 %130)
+  %i.ceb = uitofp i16 %131 to float
   %i.cec = fdiv float %i.ceb, 6.553500e+04        ; 3 uses
-  %154 = getelementptr inbounds nuw i8, ptr %.sroa.0426.1518.i, i64 2
-  %155 = load i8, ptr %154, align 1, !tbaa !37, !noalias !732
-  %156 = zext i8 %155 to i32
-  %157 = shl nuw nsw i32 %156, 8
-  %i.ced = getelementptr inbounds nuw i8, ptr %.sroa.0426.1518.i, i64 3
-  %158 = load i8, ptr %i.ced, align 1, !tbaa !37, !noalias !732
-  %159 = zext i8 %158 to i32
-  %160 = or disjoint i32 %157, %159
-  %161 = uitofp nneg i32 %160 to float
-  %i.cee = fdiv float %161, 6.553500e+04          ; 3 uses
-  %162 = getelementptr inbounds nuw i8, ptr %.sroa.0426.1518.i, i64 4
-  %163 = load i8, ptr %162, align 1, !tbaa !37, !noalias !732
-  %164 = zext i8 %163 to i32
-  %165 = shl nuw nsw i32 %164, 8
-  %166 = getelementptr inbounds nuw i8, ptr %.sroa.0426.1518.i, i64 5
-  %167 = load i8, ptr %166, align 1, !tbaa !37, !noalias !732
-  %168 = zext i8 %167 to i32
-  %169 = or disjoint i32 %165, %168
-  %170 = uitofp nneg i32 %169 to float
-  %i.cef = fdiv float %170, 6.553500e+04          ; 3 uses
+  %i.ced = getelementptr inbounds nuw i8, ptr %.sroa.0426.1518.i, i64 2
+  %132 = load <2 x i16>, ptr %i.ced, align 1, !noalias !732
+  %133 = call <2 x i16> @llvm.bswap.v2i16(<2 x i16> %132)
+  %134 = uitofp <2 x i16> %133 to <2 x float>     ; 2 uses
+  %135 = extractelement <2 x float> %134, i64 0
+  %i.cee = fdiv float %135, 6.553500e+04          ; 3 uses
+  %136 = extractelement <2 x float> %134, i64 1
+  %i.cef = fdiv float %136, 6.553500e+04          ; 3 uses
   %.sroa.0424.0.insert.insert.i = add nuw nsw i64 %indvars.iv551.i, %.sroa.2425.0.insert.shift.i ; 3 uses
   switch i32 %i.cdg, label %bb.it [
     i32 1, label %bb.iu
@@ -2009,6 +1959,12 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 declare void @llvm.experimental.noalias.scope.decl(metadata) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -2025,9 +1981,6 @@ declare i64 @llvm.smax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #20
@@ -2064,6 +2017,9 @@ declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i16> @llvm.bswap.v4i16(<4 x i16>) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i16> @llvm.bswap.v2i16(<2 x i16>) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr>, <4 x i1>, <4 x float>) #31

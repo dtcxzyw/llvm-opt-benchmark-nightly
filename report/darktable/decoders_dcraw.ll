@@ -205,8 +205,8 @@ declare void @_ZSt9terminatev() local_unnamed_addr #5
 define noundef range(i32 0, 2) i32 @_ZN6LibRaw11ljpeg_startEP5jheadi(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr nofree noundef captures(none) initializes((0, 640)) %1, i32 noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
-  %i.b = tail call noalias noundef nonnull dereferenceable(65536) ptr @_Znwm(i64 noundef 65536) #17 ; 22 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 4 uses
+  %i.b = tail call noalias noundef nonnull dereferenceable(65536) ptr @_Znwm(i64 noundef 65536) #17 ; 21 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(65536) %i.b, i8 0, i64 65536, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(640) %1, i8 0, i64 640, i1 false)
@@ -231,7 +231,6 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader133:                                    ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
@@ -312,13 +311,9 @@ bb.i:                                             ; preds = %bb.h
   %i.at = load i8, ptr %i.c, align 1, !tbaa !99
   %i.au = zext i8 %i.at to i32                    ; 2 uses
   %i.av = or disjoint i32 %i.as, %i.au            ; 3 uses
-  %4 = load i8, ptr %i.l, align 1, !tbaa !99
-  %5 = zext i8 %4 to i16
-  %6 = shl nuw i16 %5, 8
-  %7 = load i8, ptr %3, align 1, !tbaa !99
-  %8 = zext i8 %7 to i16
-  %9 = or disjoint i16 %6, %8
-  %i.aw = add i16 %9, -2                          ; 4 uses
+  %3 = load i16, ptr %i.l, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.aw = add i16 %4, -2                          ; 4 uses
   %i.ax = icmp samesign ult i32 %i.av, 65281
   br i1 %i.ax, label %_ZNSt6vectorIhSaIhEED2Ev.exit124, label %bb.j
 
@@ -349,22 +344,14 @@ bb.l:                                             ; preds = %bb.k
   ]
 
 vector.body:                                      ; preds = %bb.l
-  %wide.vec = load <32 x i8>, ptr %i.y, align 1, !tbaa !99
-  %10 = freeze <32 x i8> %wide.vec
-  %11 = bitcast <32 x i8> %10 to <16 x i16>
-  %wide.vec182 = load <32 x i8>, ptr %i.z, align 1, !tbaa !99
-  %12 = freeze <32 x i8> %wide.vec182
-  %13 = bitcast <32 x i8> %12 to <16 x i16>
-  %wide.vec185 = load <32 x i8>, ptr %i.aa, align 1, !tbaa !99
-  %14 = freeze <32 x i8> %wide.vec185
-  %15 = bitcast <32 x i8> %14 to <16 x i16>
-  %wide.vec188 = load <32 x i8>, ptr %i.ab, align 1, !tbaa !99
-  %16 = freeze <32 x i8> %wide.vec188
-  %17 = bitcast <32 x i8> %16 to <16 x i16>
-  %i.bf = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %11)
-  %i.bg = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %13)
-  %i.bh = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %15)
-  %i.bi = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %17)
+  %wide.load = load <16 x i16>, ptr %i.y, align 1
+  %wide.load181 = load <16 x i16>, ptr %i.z, align 1
+  %wide.load182 = load <16 x i16>, ptr %i.aa, align 1
+  %wide.load183 = load <16 x i16>, ptr %i.ab, align 1
+  %i.bf = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.load)
+  %i.bg = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.load181)
+  %i.bh = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.load182)
+  %i.bi = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.load183)
   store <16 x i16> %i.bf, ptr %i.m, align 8, !tbaa !97
   store <16 x i16> %i.bg, ptr %i.ac, align 8, !tbaa !97
   store <16 x i16> %i.bh, ptr %i.ad, align 8, !tbaa !97
@@ -386,10 +373,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.l
   %i.bp = load i8, ptr %i.b, align 1, !tbaa !99
   %i.bq = zext i8 %i.bp to i32
   store i32 %i.bq, ptr %i.o, align 4, !tbaa !124
-  %18 = load <4 x i8>, ptr %i.c, align 1, !tbaa !99
-  %19 = freeze <4 x i8> %18
-  %20 = bitcast <4 x i8> %19 to <2 x i16>
-  %i.br = tail call <2 x i16> @llvm.bswap.v2i16(<2 x i16> %20)
+  %5 = load <2 x i16>, ptr %i.c, align 1
+  %i.br = tail call <2 x i16> @llvm.bswap.v2i16(<2 x i16> %5)
   %i.bs = zext <2 x i16> %i.br to <2 x i32>
   store <2 x i32> %i.bs, ptr %i.t, align 8, !tbaa !120
   %i.bt = load i8, ptr %i.v, align 1, !tbaa !99
@@ -463,13 +448,10 @@ bb.u:                                             ; preds = %bb.l
   br label %.critedge
 
 bb.v:                                             ; preds = %bb.l
-  %21 = load i8, ptr %i.b, align 1, !tbaa !99
-  %22 = zext i8 %21 to i32
-  %23 = shl nuw nsw i32 %22, 8
-  %24 = load i8, ptr %i.c, align 1, !tbaa !99
-  %i.dc = zext i8 %24 to i32
-  %25 = or disjoint i32 %23, %i.dc
-  store i32 %25, ptr %i.d, align 4, !tbaa !122
+  %6 = load i16, ptr %i.b, align 1
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %i.dc = zext i16 %7 to i32
+  store i32 %i.dc, ptr %i.d, align 4, !tbaa !122
   br label %.critedge
 
 .critedge:                                        ; preds = %.lr.ph, %bb.t, %vector.body, %bb.r, %bb.l, %bb.u, %bb.v, %bb.p, %bb.o, %bb.n, %bb.q

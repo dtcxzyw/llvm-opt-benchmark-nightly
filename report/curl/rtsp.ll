@@ -204,18 +204,14 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.ch, label %.thread, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.ci = tail call ptr @curlx_dyn_ptr(ptr noundef nonnull %1) #5 ; 3 uses
+  %i.ci = tail call ptr @curlx_dyn_ptr(ptr noundef nonnull %1) #5 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 2
-  %5 = load i8, ptr %i.cj, align 1, !tbaa !75
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 8
-  %8 = getelementptr inbounds nuw i8, ptr %i.ci, i64 3
-  %9 = load i8, ptr %8, align 1, !tbaa !75
-  %i.ck = zext i8 %9 to i64
-  %10 = or disjoint i64 %7, %i.ck                 ; 2 uses
-  %i.cl = add nuw nsw i64 %10, 4
+  %5 = load i16, ptr %i.cj, align 1               ; 2 uses
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %i.ck = zext i16 %6 to i64
+  %i.cl = add nuw nsw i64 %i.ck, 4
   store i64 %i.cl, ptr %i.f, align 8, !tbaa !113
-  %i.cm = icmp eq i64 %10, 0
+  %i.cm = icmp eq i16 %5, 0
   br i1 %i.cm, label %bb.aa, label %bb.ad
 
 bb.aa:                                            ; preds = %bb.z
@@ -394,6 +390,9 @@ declare i64 @llvm.umin.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

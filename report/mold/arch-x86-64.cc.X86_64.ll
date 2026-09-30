@@ -205,7 +205,7 @@ _ZNK4mold6SymbolINS_6X86_64EE23is_remaining_undef_weakEv.exit: ; preds = %bb.n, 
 
 _ZNK4mold6SymbolINS_6X86_64EE8get_typeEv.exit.thread: ; preds = %bb.m, %bb.j, %_ZNK4mold6SymbolINS_6X86_64EE23is_remaining_undef_weakEv.exit, %_ZNK4mold6SymbolINS_6X86_64EE8get_typeEv.exit
   %.0.copyload.i221 = load i64, ptr %i.al, align 1
-  %i.dq = getelementptr inbounds nuw i8, ptr %2, i64 %.0.copyload.i221 ; 58 uses
+  %i.dq = getelementptr inbounds nuw i8, ptr %2, i64 %.0.copyload.i221 ; 56 uses
   %i.dr = call noundef i64 @_ZNK4mold6SymbolINS_6X86_64EE8get_addrERNS_7ContextIS1_EEl(ptr noundef nonnull align 8 dereferenceable(36) %i.az, ptr noundef nonnull align 8 dereferenceable(14448) %1, i64 noundef 0) ; 17 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   %.0.copyload.i222 = load i64, ptr %i.ds, align 1 ; 29 uses
@@ -529,32 +529,22 @@ bb.ao:                                            ; preds = %_ZNK4mold6SymbolINS
 
 bb.ap:                                            ; preds = %bb.ao
   %i.iw = getelementptr inbounds i8, ptr %i.dq, i64 -2
-  %6 = load i8, ptr %i.iw, align 1, !tbaa !343
-  %7 = zext i8 %6 to i16
-  %8 = shl nuw i16 %7, 8
-  %9 = getelementptr inbounds i8, ptr %i.dq, i64 -1
-  %10 = load i8, ptr %9, align 1, !tbaa !343
-  %11 = zext i8 %10 to i16
-  %trunc.i = or disjoint i16 %8, %11
-  switch i16 %trunc.i, label %_ZNK4mold6SymbolINS_6X86_64EE23is_pcrel_linktime_constERNS_7ContextIS1_EE.exit.thread435 [
-    i16 -235, label %_ZN4moldL15relax_gotpcrelxEPhRKNS_6ElfRelINS_6X86_64EEE.exit.thread
-    i16 -219, label %_ZN4moldL15relax_gotpcrelxEPhRKNS_6ElfRelINS_6X86_64EEE.exit.thread.fold.split
+  %6 = load i16, ptr %i.iw, align 1
+  switch i16 %6, label %_ZNK4mold6SymbolINS_6X86_64EE23is_pcrel_linktime_constERNS_7ContextIS1_EE.exit.thread435 [
+    i16 5631, label %_ZN4moldL15relax_gotpcrelxEPhRKNS_6ElfRelINS_6X86_64EEE.exit.thread
+    i16 9727, label %_ZN4moldL15relax_gotpcrelxEPhRKNS_6ElfRelINS_6X86_64EEE.exit.thread.fold.split
   ]
 
 bb.aq:                                            ; preds = %bb.ao
   %i.ix = getelementptr inbounds i8, ptr %i.dq, i64 -3
-  %12 = load i8, ptr %i.ix, align 1, !tbaa !343
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 16
-  %15 = getelementptr inbounds i8, ptr %i.dq, i64 -2
-  %16 = load i8, ptr %15, align 1, !tbaa !343
-  %i.iy = zext i8 %16 to i32
+  %7 = load i16, ptr %i.ix, align 1
+  %8 = call i16 @llvm.bswap.i16(i16 %7)
+  %i.iy = zext i16 %8 to i32
   %i.iz = shl nuw nsw i32 %i.iy, 8
-  %17 = or disjoint i32 %i.iz, %14
   %i.ja = getelementptr inbounds i8, ptr %i.dq, i64 -1
   %i.jb = load i8, ptr %i.ja, align 1, !tbaa !343
   %i.jc = zext i8 %i.jb to i32
-  %i.jd = or disjoint i32 %17, %i.jc
+  %i.jd = or disjoint i32 %i.iz, %i.jc
   switch i32 %i.jd, label %_ZNK4mold6SymbolINS_6X86_64EE23is_pcrel_linktime_constERNS_7ContextIS1_EE.exit.thread435 [
     i32 4754181, label %_ZN4moldL15relax_gotpcrelxEPhRKNS_6ElfRelINS_6X86_64EEE.exit.thread
     i32 4754189, label %bb.ar
@@ -887,18 +877,14 @@ _ZNK4mold6SymbolINS_6X86_64EE9has_gottpERNS_7ContextIS1_EE.exit271: ; preds = %_
 
 bb.bt:                                            ; preds = %_ZNK4mold6SymbolINS_6X86_64EE9has_gottpERNS_7ContextIS1_EE.exit271
   %i.nq = getelementptr inbounds i8, ptr %i.dq, i64 -3 ; 2 uses
-  %18 = load i8, ptr %i.nq, align 1, !tbaa !343
-  %19 = zext i8 %18 to i32
-  %20 = shl nuw nsw i32 %19, 16
-  %21 = getelementptr inbounds i8, ptr %i.dq, i64 -2 ; 2 uses
-  %22 = load i8, ptr %21, align 1, !tbaa !343
-  %i.nr = zext i8 %22 to i32
+  %9 = load i16, ptr %i.nq, align 1
+  %10 = call i16 @llvm.bswap.i16(i16 %9)
+  %i.nr = zext i16 %10 to i32
   %i.ns = shl nuw nsw i32 %i.nr, 8
-  %23 = or disjoint i32 %i.ns, %20
   %i.nt = getelementptr inbounds i8, ptr %i.dq, i64 -1 ; 2 uses
   %i.nu = load i8, ptr %i.nt, align 1, !tbaa !343
   %i.nv = zext i8 %i.nu to i32
-  %i.nw = or disjoint i32 %23, %i.nv
+  %i.nw = or disjoint i32 %i.ns, %i.nv
   switch i32 %i.nw, label %_ZN4moldL19relax_tlsdesc_to_ieEPhRKNS_6ElfRelINS_6X86_64EEE.exit [
     i32 4754693, label %bb.cj
     i32 4754701, label %bb.bu
@@ -977,7 +963,8 @@ bb.cj:                                            ; preds = %bb.ci, %bb.bt, %bb.
   %i.oa = lshr i32 %.0.i272.ph, 16
   %i.ob = trunc nuw nsw i32 %i.oa to i8
   store i8 %i.ob, ptr %i.nq, align 1, !tbaa !343
-  store i8 -117, ptr %21, align 1, !tbaa !343
+  %11 = getelementptr inbounds i8, ptr %i.dq, i64 -2
+  store i8 -117, ptr %11, align 1, !tbaa !343
   %i.oc = trunc i32 %.0.i272.ph to i8
   store i8 %i.oc, ptr %i.nt, align 1, !tbaa !343
   %i.od = load ptr, ptr %i.ae, align 8, !tbaa !338
@@ -1013,18 +1000,14 @@ _ZNK4mold6SymbolINS_6X86_64EE14get_gottp_addrERNS_7ContextIS1_EE.exit277: ; pred
 _ZNK4mold6SymbolINS_6X86_64EE9has_gottpERNS_7ContextIS1_EE.exit271.thread: ; preds = %bb.bs, %_ZNK4mold6SymbolINS_6X86_64EE9has_gottpERNS_7ContextIS1_EE.exit271
   %i.ot = icmp eq i32 %.0.copyload.i229, 34
   %i.ou = getelementptr inbounds i8, ptr %i.dq, i64 -3 ; 2 uses
-  %24 = load i8, ptr %i.ou, align 1, !tbaa !343
-  %25 = zext i8 %24 to i32
-  %26 = shl nuw nsw i32 %25, 16
-  %27 = getelementptr inbounds i8, ptr %i.dq, i64 -2 ; 2 uses
-  %28 = load i8, ptr %27, align 1, !tbaa !343
-  %i.ov = zext i8 %28 to i32
+  %12 = load i16, ptr %i.ou, align 1
+  %13 = call i16 @llvm.bswap.i16(i16 %12)
+  %i.ov = zext i16 %13 to i32
   %i.ow = shl nuw nsw i32 %i.ov, 8
-  %29 = or disjoint i32 %i.ow, %26
   %i.ox = getelementptr inbounds i8, ptr %i.dq, i64 -1 ; 2 uses
   %i.oy = load i8, ptr %i.ox, align 1, !tbaa !343
   %i.oz = zext i8 %i.oy to i32
-  %i.pa = or disjoint i32 %29, %i.oz              ; 2 uses
+  %i.pa = or disjoint i32 %i.ow, %i.oz            ; 2 uses
   br i1 %i.ot, label %bb.cl, label %bb.db
 
 bb.cl:                                            ; preds = %_ZNK4mold6SymbolINS_6X86_64EE9has_gottpERNS_7ContextIS1_EE.exit271.thread
@@ -1171,7 +1154,8 @@ bb.dr:                                            ; preds = %bb.dq, %bb.cm, %bb.
   %i.pe = lshr i32 %.0.i278.ph, 16
   %i.pf = trunc nuw nsw i32 %i.pe to i8
   store i8 %i.pf, ptr %i.ou, align 1, !tbaa !343
-  store i8 -57, ptr %27, align 1, !tbaa !343
+  %14 = getelementptr inbounds i8, ptr %i.dq, i64 -2
+  store i8 -57, ptr %14, align 1, !tbaa !343
   %i.pg = trunc i32 %.0.i278.ph to i8
   store i8 %i.pg, ptr %i.ox, align 1, !tbaa !343
   %i.ph = load i64, ptr %i.ag, align 8, !tbaa !478
@@ -1574,18 +1558,14 @@ define internal fastcc noundef range(i32 0, 4835272) i32 @_ZN4moldL14relax_gottp
 bb.a:
   %i.a = icmp eq i32 %.8.val, 22
   %i.b = getelementptr inbounds i8, ptr %0, i64 -3
-  %1 = load i8, ptr %i.b, align 1, !tbaa !343
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw nsw i32 %2, 16
-  %4 = getelementptr inbounds i8, ptr %0, i64 -2
-  %5 = load i8, ptr %4, align 1, !tbaa !343
-  %i.c = zext i8 %5 to i32
+  %1 = load i16, ptr %i.b, align 1
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %i.c = zext i16 %2 to i32
   %i.d = shl nuw nsw i32 %i.c, 8
-  %6 = or disjoint i32 %i.d, %3
   %i.e = getelementptr inbounds i8, ptr %0, i64 -1
   %i.f = load i8, ptr %i.e, align 1, !tbaa !343
   %i.g = zext i8 %i.f to i32
-  %i.h = or disjoint i32 %6, %i.g                 ; 2 uses
+  %i.h = or disjoint i32 %i.d, %i.g               ; 2 uses
   br i1 %i.a, label %bb.b, label %bb.r
 
 bb.b:                                             ; preds = %bb.a
@@ -1986,6 +1966,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #22

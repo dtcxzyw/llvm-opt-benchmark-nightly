@@ -205,7 +205,7 @@ Xz_GetUnpackSize.exit:                            ; preds = %bb.d, %bb.e, %bb.c
 ; Function Attrs: nounwind uwtable
 define i32 @Xzs_ReadBackward(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 4                ; 11 uses
+  %i.a = alloca [12 x i8], align 4                ; 10 uses
   %i.b = alloca [1024 x i8], align 16             ; 7 uses
   %i.c = alloca i16, align 2                      ; 5 uses
   %5 = alloca %struct.CSecToRead, align 8         ; 6 uses
@@ -235,7 +235,6 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 10 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 24
@@ -366,14 +365,10 @@ bb.p:                                             ; preds = %bb.k
   br label %.thread74.sink.split
 
 bb.q:                                             ; preds = %.thread162.i, %bb.e
-  %8 = load i8, ptr %i.m, align 4, !tbaa !8
-  %9 = zext i8 %8 to i16
-  %10 = shl nuw i16 %9, 8
-  %11 = load i8, ptr %7, align 1, !tbaa !8
-  %12 = zext i8 %11 to i16
-  %13 = or disjoint i16 %10, %12                  ; 2 uses
-  store i16 %13, ptr %6, align 8, !tbaa !33
-  %i.bh = icmp ult i16 %13, 16
+  %7 = load i16, ptr %i.m, align 4
+  %8 = call i16 @llvm.bswap.i16(i16 %7)           ; 2 uses
+  store i16 %8, ptr %6, align 8, !tbaa !33
+  %i.bh = icmp ult i16 %8, 16
   br i1 %i.bh, label %bb.r, label %.thread74.sink.split
 
 bb.r:                                             ; preds = %bb.q
@@ -750,6 +745,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7

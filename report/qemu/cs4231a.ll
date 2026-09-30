@@ -204,17 +204,13 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not46, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 535
-  %5 = load i8, ptr %4, align 1
-  %6 = zext i8 %5 to i32
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 534
-  %7 = load i8, ptr %i.p, align 2
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 8
-  %10 = or disjoint i32 %9, %6
+  %i.p = getelementptr i8, ptr %0, i64 534
+  %4 = load i16, ptr %i.p, align 2
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %6 = zext i16 %5 to i32
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 576
   %i.r = load i32, ptr %i.q, align 16
-  %i.s = shl i32 %10, %i.r
+  %i.s = shl i32 %6, %i.r
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 588
   %i.u = load i32, ptr %i.t, align 4
   %i.v = sub i32 %i.s, %i.u                       ; 2 uses
@@ -476,6 +472,9 @@ declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.dz = load ptr, ptr %i.c, align 8, !tbaa !15  ; 4 uses
   %i.ea = getelementptr i8, ptr %i.dz, i64 32
   %i.eb = load i64, ptr %i.e, align 8, !tbaa !118 ; 2 uses
-  %i.ec = getelementptr i8, ptr %i.ea, i64 %i.eb  ; 8 uses
+  %i.ec = getelementptr i8, ptr %i.ea, i64 %i.eb  ; 7 uses
   %i.ed = load i64, ptr %i.d, align 8, !tbaa !118
   %i.ee = sub i64 %i.ed, %i.eb
   %i.ef = load i32, ptr %i.b, align 4, !tbaa !10
@@ -261,13 +261,9 @@ bb.aw:                                            ; preds = %bb.ar
   br label %bb.ba
 
 bb.ax:                                            ; preds = %bb.ar
-  %2 = load i8, ptr %i.ec, align 1, !tbaa !109
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 8
-  %5 = getelementptr i8, ptr %i.ec, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !109
-  %i.fe = zext i8 %6 to i32
-  %7 = or disjoint i32 %4, %i.fe
+  %2 = load i16, ptr %i.ec, align 1
+  %3 = call i16 @llvm.bswap.i16(i16 %2)
+  %i.fe = zext i16 %3 to i32
   br label %bb.ba
 
 bb.ay:                                            ; preds = %bb.ar
@@ -280,7 +276,7 @@ bb.az:                                            ; preds = %bb.ar
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq
-  %.031.i.i = phi i32 [ 0, %bb.ar ], [ %i.fb, %bb.av ], [ 0, %bb.au ], [ 0, %bb.at ], [ 0, %bb.as ], [ %i.fd, %bb.aw ], [ %7, %bb.ax ], [ %i.ff, %bb.ay ], [ %i.fh, %bb.az ], [ 0, %bb.aq ] ; 2 uses
+  %.031.i.i = phi i32 [ 0, %bb.ar ], [ %i.fb, %bb.av ], [ 0, %bb.au ], [ 0, %bb.at ], [ 0, %bb.as ], [ %i.fd, %bb.aw ], [ %i.fe, %bb.ax ], [ %i.ff, %bb.ay ], [ %i.fh, %bb.az ], [ 0, %bb.aq ] ; 2 uses
   %i.fi = load i32, ptr %i.dz, align 8, !tbaa !109 ; 2 uses
   %.not.i.i12.i = icmp sgt i32 %i.fi, -1
   br i1 %.not.i.i12.i, label %bb.bb, label %Py_DECREF.exit.i13.i
@@ -683,14 +679,17 @@ declare i64 @llvm.smax.i64(i64, i64) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #8
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

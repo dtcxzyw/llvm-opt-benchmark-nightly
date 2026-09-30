@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.lr.ph.us, %bb.q
   %.0159343.us = phi ptr [ %i.ag, %.lr.ph.us ], [ %i.jp, %bb.q ] ; 3 uses
   %.0160342.us = phi ptr [ %i.af, %.lr.ph.us ], [ %i.jo, %bb.q ] ; 3 uses
   %.0161341.us = phi ptr [ %i.ae, %.lr.ph.us ], [ %i.jn, %bb.q ] ; 2 uses
-  %.2173340.us = phi ptr [ %.1172348.us, %.lr.ph.us ], [ %i.gt, %bb.q ] ; 17 uses
+  %.2173340.us = phi ptr [ %.1172348.us, %.lr.ph.us ], [ %i.gt, %bb.q ] ; 16 uses
   %i.al = add i64 %.2153345.us, 3                 ; 2 uses
   %i.am = icmp ugt i64 %i.al, %2
   br i1 %i.am, label %.thread306, label %bb.e
@@ -221,17 +221,12 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ar, label %.thread306, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %5 = load i8, ptr %.2173340.us, align 1, !tbaa !27
-  %6 = zext i8 %5 to i16
-  %7 = shl nuw i16 %6, 8                          ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 1
-  %9 = load i8, ptr %8, align 1, !tbaa !27
-  %10 = zext i8 %9 to i16
-  %11 = or disjoint i16 %7, %10                   ; 2 uses
+  %5 = load i16, ptr %.2173340.us, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)      ; 2 uses
   %i.as = zext nneg i8 %i.ao to i32               ; 2 uses
   %i.at = lshr i32 %i.as, 2                       ; 16 uses
   %.neg106.i.us = shl nsw i32 -32, %i.at          ; 12 uses
-  %i.au = zext i16 %11 to i32
+  %i.au = zext i16 %6 to i32
   %i.av = shl nuw nsw i32 %i.as, 4
   %i.aw = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 3 ; 2 uses
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !27
@@ -242,41 +237,40 @@ bb.g:                                             ; preds = %bb.f
   %i.bb = shl nuw nsw i32 %i.ba, %i.at
   %i.bc = add nsw i32 %.neg106.i.us, %i.au        ; 2 uses
   %i.bd = add nsw i32 %i.bb, %i.bc                ; 2 uses
-  %12 = trunc i32 %i.bd to i16                    ; 2 uses
-  store i16 %12, ptr %.8..8..8..sroa_idx493, align 8, !tbaa !26
-  %13 = load i8, ptr %i.aw, align 1, !tbaa !27
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 2
-  %i.be = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 4 ; 2 uses
-  %16 = load i8, ptr %i.be, align 1, !tbaa !27
-  %17 = lshr i8 %16, 6
-  %18 = zext nneg i8 %17 to i32
-  %.masked97.i.us = and i32 %15, 60
-  %19 = or disjoint i32 %.masked97.i.us, %18
-  %20 = shl nuw nsw i32 %19, %i.at
-  %21 = add nsw i32 %i.bd, %.neg106.i.us          ; 2 uses
-  %22 = add nsw i32 %20, %21                      ; 3 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 5
-  %24 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 6 ; 2 uses
-  %25 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 7 ; 2 uses
-  %26 = add nsw i32 %22, %.neg106.i.us
-  %27 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 8
-  %28 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 9 ; 2 uses
-  %29 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 10 ; 2 uses
-  %30 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 11
-  %31 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 12 ; 2 uses
-  %32 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 13 ; 2 uses
-  %i.bf = trunc i32 %22 to i16                    ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 4 ; 2 uses
+  %8 = add nsw i32 %i.bd, %.neg106.i.us           ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 5
+  %10 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 6 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 7 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 8
+  %12 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 9 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 10 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 11
+  %15 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 12 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %.2173340.us, i64 13 ; 2 uses
+  %17 = trunc i32 %i.bd to i16                    ; 2 uses
+  store i16 %17, ptr %.8..8..8..sroa_idx493, align 8, !tbaa !26
+  %18 = load i8, ptr %i.aw, align 1, !tbaa !27
+  %19 = zext i8 %18 to i32
+  %20 = shl nuw nsw i32 %19, 2
+  %21 = load i8, ptr %7, align 1, !tbaa !27
+  %22 = lshr i8 %21, 6
+  %23 = zext nneg i8 %22 to i32
+  %.masked97.i.us = and i32 %20, 60
+  %24 = or disjoint i32 %.masked97.i.us, %23
+  %25 = shl nuw nsw i32 %24, %i.at
+  %26 = add nsw i32 %25, %8                       ; 3 uses
+  %i.bf = trunc i32 %26 to i16                    ; 2 uses
   store i16 %i.bf, ptr %.16..16..16..sroa_idx501, align 16, !tbaa !26
-  %i.bg = load i8, ptr %i.be, align 1, !tbaa !27
+  %i.bg = load i8, ptr %7, align 1, !tbaa !27
   %i.bh = and i8 %i.bg, 63
   %i.bi = zext nneg i8 %i.bh to i32
   %i.bj = add nsw i32 %i.bi, -32
   %i.bk = shl nsw i32 %i.bj, %i.at
-  %i.bl = add nsw i32 %i.bk, %22                  ; 2 uses
+  %i.bl = add nsw i32 %i.bk, %26                  ; 2 uses
   %i.bm = trunc i32 %i.bl to i16                  ; 2 uses
   store i16 %i.bm, ptr %.24..24..24..sroa_idx506, align 8, !tbaa !26
-  %i.bn = load i8, ptr %23, align 1, !tbaa !27    ; 2 uses
+  %i.bn = load i8, ptr %9, align 1, !tbaa !27     ; 2 uses
   %i.bo = lshr i8 %i.bn, 2
   %i.bp = zext nneg i8 %i.bo to i32
   %i.bq = shl nuw nsw i32 %i.bp, %i.at
@@ -284,28 +278,29 @@ bb.g:                                             ; preds = %bb.f
   %i.bs = trunc i32 %i.br to i16
   %i.bt = zext i8 %i.bn to i32
   %i.bu = shl nuw nsw i32 %i.bt, 4
-  %i.bv = load i8, ptr %24, align 1, !tbaa !27
+  %i.bv = load i8, ptr %10, align 1, !tbaa !27
   %i.bw = lshr i8 %i.bv, 4
   %i.bx = zext nneg i8 %i.bw to i32
   %.masked98.i.us = and i32 %i.bu, 48
   %i.by = or disjoint i32 %.masked98.i.us, %i.bx
   %i.bz = shl nuw nsw i32 %i.by, %i.at
-  %i.ca = add nsw i32 %i.bz, %21                  ; 2 uses
+  %i.ca = add nsw i32 %i.bz, %8                   ; 2 uses
   %i.cb = trunc i32 %i.ca to i16                  ; 2 uses
   store i16 %i.cb, ptr %.10..10..10..sroa_idx, align 2, !tbaa !26
-  %i.cc = load i8, ptr %24, align 1, !tbaa !27
+  %i.cc = load i8, ptr %10, align 1, !tbaa !27
   %i.cd = zext i8 %i.cc to i32
   %i.ce = shl nuw nsw i32 %i.cd, 2
-  %i.cf = load i8, ptr %25, align 1, !tbaa !27
+  %i.cf = load i8, ptr %i.be, align 1, !tbaa !27
   %i.cg = lshr i8 %i.cf, 6
   %i.ch = zext nneg i8 %i.cg to i32
   %.masked99.i.us = and i32 %i.ce, 60
   %i.ci = or disjoint i32 %.masked99.i.us, %i.ch
   %i.cj = shl nuw nsw i32 %i.ci, %i.at
-  %i.ck = add nsw i32 %26, %i.cj                  ; 2 uses
+  %27 = add nsw i32 %26, %.neg106.i.us
+  %i.ck = add nsw i32 %27, %i.cj                  ; 2 uses
   %i.cl = trunc i32 %i.ck to i16                  ; 2 uses
   store i16 %i.cl, ptr %.18..18..18..sroa_idx, align 2, !tbaa !26
-  %i.cm = load i8, ptr %25, align 1, !tbaa !27
+  %i.cm = load i8, ptr %i.be, align 1, !tbaa !27
   %i.cn = and i8 %i.cm, 63
   %i.co = zext nneg i8 %i.cn to i32
   %i.cp = shl nuw nsw i32 %i.co, %i.at
@@ -313,7 +308,7 @@ bb.g:                                             ; preds = %bb.f
   %i.cr = add nsw i32 %i.cq, %i.cp                ; 2 uses
   %i.cs = trunc i32 %i.cr to i16                  ; 2 uses
   store i16 %i.cs, ptr %.26..26..26..sroa_idx, align 2, !tbaa !26
-  %i.ct = load i8, ptr %27, align 1, !tbaa !27    ; 2 uses
+  %i.ct = load i8, ptr %11, align 1, !tbaa !27    ; 2 uses
   %i.cu = lshr i8 %i.ct, 2
   %i.cv = zext nneg i8 %i.cu to i32
   %i.cw = shl nuw nsw i32 %i.cv, %i.at
@@ -322,7 +317,7 @@ bb.g:                                             ; preds = %bb.f
   %i.cz = trunc i32 %i.cy to i16
   %i.da = zext i8 %i.ct to i32
   %i.db = shl nuw nsw i32 %i.da, 4
-  %i.dc = load i8, ptr %28, align 1, !tbaa !27
+  %i.dc = load i8, ptr %12, align 1, !tbaa !27
   %i.dd = lshr i8 %i.dc, 4
   %i.de = zext nneg i8 %i.dd to i32
   %.masked100.i.us = and i32 %i.db, 48
@@ -332,10 +327,10 @@ bb.g:                                             ; preds = %bb.f
   %i.di = add nsw i32 %i.dh, %i.dg                ; 2 uses
   %i.dj = trunc i32 %i.di to i16                  ; 2 uses
   store i16 %i.dj, ptr %.12..12..12..sroa_idx, align 4, !tbaa !26
-  %i.dk = load i8, ptr %28, align 1, !tbaa !27
+  %i.dk = load i8, ptr %12, align 1, !tbaa !27
   %i.dl = zext i8 %i.dk to i32
   %i.dm = shl nuw nsw i32 %i.dl, 2
-  %i.dn = load i8, ptr %29, align 1, !tbaa !27
+  %i.dn = load i8, ptr %13, align 1, !tbaa !27
   %i.do = lshr i8 %i.dn, 6
   %i.dp = zext nneg i8 %i.do to i32
   %.masked101.i.us = and i32 %i.dm, 60
@@ -345,7 +340,7 @@ bb.g:                                             ; preds = %bb.f
   %i.dt = add nsw i32 %i.ds, %i.dr                ; 2 uses
   %i.du = trunc i32 %i.dt to i16                  ; 2 uses
   store i16 %i.du, ptr %.20..20..20..sroa_idx, align 4, !tbaa !26
-  %i.dv = load i8, ptr %29, align 1, !tbaa !27
+  %i.dv = load i8, ptr %13, align 1, !tbaa !27
   %i.dw = and i8 %i.dv, 63
   %i.dx = zext nneg i8 %i.dw to i32
   %i.dy = shl nuw nsw i32 %i.dx, %i.at
@@ -353,7 +348,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ea = add nsw i32 %i.dz, %i.dy                ; 2 uses
   %i.eb = trunc i32 %i.ea to i16                  ; 2 uses
   store i16 %i.eb, ptr %.28..28..28..sroa_idx, align 4, !tbaa !26
-  %i.ec = load i8, ptr %30, align 1, !tbaa !27    ; 2 uses
+  %i.ec = load i8, ptr %14, align 1, !tbaa !27    ; 2 uses
   %i.ed = lshr i8 %i.ec, 2
   %i.ee = zext nneg i8 %i.ed to i32
   %i.ef = shl nuw nsw i32 %i.ee, %i.at
@@ -362,7 +357,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ei = trunc i32 %i.eh to i16
   %i.ej = zext i8 %i.ec to i32
   %i.ek = shl nuw nsw i32 %i.ej, 4
-  %i.el = load i8, ptr %31, align 1, !tbaa !27
+  %i.el = load i8, ptr %15, align 1, !tbaa !27
   %i.em = lshr i8 %i.el, 4
   %i.en = zext nneg i8 %i.em to i32
   %.masked102.i.us = and i32 %i.ek, 48
@@ -372,10 +367,10 @@ bb.g:                                             ; preds = %bb.f
   %i.er = add nsw i32 %i.eq, %i.ep
   %i.es = trunc i32 %i.er to i16                  ; 2 uses
   store i16 %i.es, ptr %.14..14..14..sroa_idx, align 2, !tbaa !26
-  %i.et = load i8, ptr %31, align 1, !tbaa !27
+  %i.et = load i8, ptr %15, align 1, !tbaa !27
   %i.eu = zext i8 %i.et to i32
   %i.ev = shl nuw nsw i32 %i.eu, 2
-  %i.ew = load i8, ptr %32, align 1, !tbaa !27
+  %i.ew = load i8, ptr %16, align 1, !tbaa !27
   %i.ex = lshr i8 %i.ew, 6
   %i.ey = zext nneg i8 %i.ex to i32
   %.masked103.i.us = and i32 %i.ev, 60
@@ -385,18 +380,18 @@ bb.g:                                             ; preds = %bb.f
   %i.fc = add nsw i32 %i.fb, %i.fa
   %i.fd = trunc i32 %i.fc to i16                  ; 2 uses
   store i16 %i.fd, ptr %.22..22..22..sroa_idx, align 2, !tbaa !26
-  %i.fe = load i8, ptr %32, align 1, !tbaa !27
+  %i.fe = load i8, ptr %16, align 1, !tbaa !27
   %i.ff = and i8 %i.fe, 63
   %i.fg = zext nneg i8 %i.ff to i32
   %i.fh = shl nuw nsw i32 %i.fg, %i.at
   %i.fi = add nsw i32 %i.ea, %.neg106.i.us
   %i.fj = add nsw i32 %i.fi, %i.fh
   %i.fk = trunc i32 %i.fj to i16
-  %i.fl = insertelement <16 x i16> poison, i16 %11, i64 0
+  %i.fl = insertelement <16 x i16> poison, i16 %6, i64 0
   %i.fm = insertelement <16 x i16> %i.fl, i16 %i.bs, i64 1
   %i.fn = insertelement <16 x i16> %i.fm, i16 %i.cz, i64 2
   %i.fo = insertelement <16 x i16> %i.fn, i16 %i.ei, i64 3
-  %i.fp = insertelement <16 x i16> %i.fo, i16 %12, i64 4
+  %i.fp = insertelement <16 x i16> %i.fo, i16 %17, i64 4
   %i.fq = insertelement <16 x i16> %i.fp, i16 %i.cb, i64 5
   %i.fr = insertelement <16 x i16> %i.fq, i16 %i.dj, i64 6
   %i.fs = insertelement <16 x i16> %i.fr, i16 %i.es, i64 7
@@ -410,8 +405,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ga = insertelement <16 x i16> %i.fz, i16 %i.fk, i64 15 ; 3 uses
   %i.gb = xor <16 x i16> %i.ga, splat (i16 -1)
   %i.gc = and <16 x i16> %i.ga, splat (i16 32767)
-  %33 = insertelement <16 x i16> %i.ga, i16 %7, i64 0
-  %i.gd = icmp slt <16 x i16> %33, zeroinitializer
+  %i.gd = icmp slt <16 x i16> %i.ga, zeroinitializer
   %i.ge = select <16 x i1> %i.gd, <16 x i16> %i.gc, <16 x i16> %i.gb ; 3 uses
   %i.gf = shufflevector <16 x i16> %i.ge, <16 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   store <8 x i16> %i.gf, ptr %i.a, align 16, !tbaa !26
@@ -792,6 +786,9 @@ declare i16 @llvm.umax.i16(i16, i16) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v8i32(<8 x i32>) #4

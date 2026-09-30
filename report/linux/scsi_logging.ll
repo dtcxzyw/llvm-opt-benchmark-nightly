@@ -202,13 +202,9 @@ bb.b:                                             ; preds = %bb.a
 
 .thread:                                          ; preds = %bb.b
   %i.h = getelementptr i8, ptr %2, i64 8
-  %3 = load i8, ptr %i.h, align 1
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw nsw i32 %4, 8
-  %6 = getelementptr i8, ptr %2, i64 9
-  %7 = load i8, ptr %6, align 1
-  %i.i = zext i8 %7 to i32
-  %8 = or disjoint i32 %5, %i.i
+  %3 = load i16, ptr %i.h, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.i = zext i16 %4 to i32
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
@@ -226,7 +222,7 @@ bb.d:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.e:                                             ; preds = %.thread, %bb.d
-  %.156 = phi i32 [ %8, %.thread ], [ %i.q, %bb.d ] ; 3 uses
+  %.156 = phi i32 [ %i.i, %.thread ], [ %i.q, %bb.d ] ; 3 uses
   %i.r = call zeroext i1 @scsi_opcode_sa_name(i32 noundef %i.d, i32 noundef %.156, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #10
   br i1 %i.r, label %bb.m, label %bb.f
 
@@ -627,6 +623,9 @@ declare dso_local zeroext i1 @scsi_normalize_sense(ptr noundef, i32 noundef, ptr
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #7

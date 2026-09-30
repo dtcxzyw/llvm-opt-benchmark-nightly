@@ -204,7 +204,7 @@ bb.ax:                                            ; preds = %bb.k, %bb.k
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw
-  %.0183 = phi ptr [ %i.jd, %bb.aw ], [ %i.je, %bb.ax ] ; 7 uses
+  %.0183 = phi ptr [ %i.jd, %bb.aw ], [ %i.je, %bb.ax ] ; 6 uses
   %i.jf = load i8, ptr %.0183, align 1, !tbaa !21
   switch i8 %i.jf, label %bb.bc [
     i8 98, label %bb.az
@@ -232,11 +232,8 @@ bb.ba:                                            ; preds = %bb.ay, %bb.ay, %bb.
 
 bb.bb:                                            ; preds = %bb.ay, %bb.ay, %bb.ay
   %i.ji = getelementptr inbounds nuw i8, ptr %.0183, i64 1
-  %5 = load i8, ptr %i.ji, align 1, !tbaa !21
-  %6 = getelementptr inbounds nuw i8, ptr %.0183, i64 2
-  %7 = load i8, ptr %6, align 1, !tbaa !21
-  %8 = or i8 %7, %5
-  %i.jj = icmp eq i8 %8, 0
+  %5 = load i16, ptr %i.ji, align 1
+  %i.jj = icmp eq i16 %5, 0
   %i.jk = zext i1 %i.jj to i32
   store i32 %i.jk, ptr %i.c, align 4, !tbaa !12
   %i.jl = getelementptr inbounds nuw i8, ptr %.0183, i64 5

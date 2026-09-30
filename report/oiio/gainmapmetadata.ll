@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !47)
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !10, !noalias !47
-  %i.h = load ptr, ptr %1, align 8, !tbaa !13, !noalias !47 ; 4 uses
+  %i.h = load ptr, ptr %1, align 8, !tbaa !13, !noalias !47 ; 3 uses
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j                       ; 5 uses
@@ -223,20 +223,15 @@ _ZN8ultrahdr13streamReadU16ERKSt6vectorIhSaIhEERtRm.exit: ; preds = %bb.c
   br i1 %.not, label %.thread, label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  %3 = load i8, ptr %i.h, align 1, !tbaa !12, !noalias !47
-  %4 = zext i8 %3 to i16
-  %5 = shl nuw i16 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 1
-  %7 = load i8, ptr %6, align 1, !tbaa !12, !noalias !47
-  %8 = zext i8 %7 to i16
-  %9 = or disjoint i16 %5, %8                     ; 2 uses
+  %3 = load i16, ptr %i.h, align 1, !noalias !47  ; 2 uses
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
   store i64 2, ptr %i.a, align 8, !tbaa !15, !noalias !47
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(264) %0, i8 0, i64 264, i1 false), !alias.scope !47
-  %.not130 = icmp eq i16 %9, 0
+  %.not130 = icmp eq i16 %3, 0
   br i1 %.not130, label %bb.e, label %.thread
 
 .thread:                                          ; preds = %_ZN8ultrahdr13streamReadU16ERKSt6vectorIhSaIhEERtRm.exit, %bb.d
-  %.0170173176 = phi i16 [ %9, %bb.d ], [ -1, %_ZN8ultrahdr13streamReadU16ERKSt6vectorIhSaIhEERtRm.exit ]
+  %.0170173176 = phi i16 [ %4, %bb.d ], [ -1, %_ZN8ultrahdr13streamReadU16ERKSt6vectorIhSaIhEERtRm.exit ]
   store i32 6, ptr %0, align 4, !tbaa !18
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 1, ptr %i.p, align 4, !tbaa !19
@@ -637,6 +632,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #10

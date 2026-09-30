@@ -204,28 +204,20 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %4 = load i8, ptr %0, align 1, !tbaa !23
-  %5 = zext i8 %4 to i64
-  %6 = shl nuw nsw i64 %5, 8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !23
-  %i.c = zext i8 %8 to i64
-  %9 = or disjoint i64 %6, %i.c
+  %4 = load i16, ptr %0, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %i.c = zext i16 %5 to i64
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.a
-  %10 = load i8, ptr %0, align 1, !tbaa !23
-  %11 = zext i8 %10 to i64
-  %12 = shl nuw nsw i64 %11, 16
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %14 = load i8, ptr %13, align 1, !tbaa !23
-  %i.d = zext i8 %14 to i64
+  %6 = load i16, ptr %0, align 1
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %i.d = zext i16 %7 to i64
   %i.e = shl nuw nsw i64 %i.d, 8
-  %15 = or disjoint i64 %i.e, %12
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.g = load i8, ptr %i.f, align 1, !tbaa !23
   %i.h = zext i8 %i.g to i64
-  %i.i = or disjoint i64 %15, %i.h
+  %i.i = or disjoint i64 %i.e, %i.h
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
@@ -235,7 +227,7 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
-  %.0 = phi i64 [ %i.b, %bb.b ], [ %9, %bb.c ], [ %i.i, %bb.d ], [ %i.l, %bb.e ]
+  %.0 = phi i64 [ %i.b, %bb.b ], [ %i.c, %bb.c ], [ %i.i, %bb.d ], [ %i.l, %bb.e ]
   %i.m = add i64 %2, 1                            ; 3 uses
   %i.n = shl nuw nsw i64 %1, 3
   %i.o = shl nuw nsw i64 1, %i.n                  ; 6 uses
@@ -609,6 +601,9 @@ declare i64 @ossl_quic_vlint_decode_unchecked(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

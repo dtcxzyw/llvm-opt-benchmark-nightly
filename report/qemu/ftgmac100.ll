@@ -202,7 +202,7 @@ declare ptr @qemu_get_queue(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind sspstrong uwtable
 define internal range(i64 0, 4294967296) i64 @ftgmac100_read(ptr noundef %0, i64 noundef %1, i32 %2) #0 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.37, i32 noundef 15, ptr noundef nonnull @__func__.FTGMAC100) #7 ; 18 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.37, i32 noundef 15, ptr noundef nonnull @__func__.FTGMAC100) #7 ; 17 uses
   %trunc = trunc i64 %1 to i8
   switch i8 %trunc, label %bb.u [
     i8 0, label %bb.b
@@ -241,13 +241,9 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 816
-  %3 = load i8, ptr %i.h, align 16
-  %4 = zext i8 %3 to i64
-  %5 = shl nuw nsw i64 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 817
-  %7 = load i8, ptr %6, align 1
-  %i.i = zext i8 %7 to i64
-  %8 = or disjoint i64 %5, %i.i
+  %3 = load i16, ptr %i.h, align 16
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.i = zext i16 %4 to i64
   br label %bb.w
 
 bb.e:                                             ; preds = %bb.a
@@ -356,7 +352,7 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.u, %bb.v, %bb.s, %bb.t, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.0 = phi i64 [ 0, %bb.s ], [ %i.d, %bb.b ], [ %i.g, %bb.c ], [ %8, %bb.d ], [ %i.m, %bb.e ], [ %i.p, %bb.f ], [ %i.s, %bb.g ], [ %i.v, %bb.h ], [ %i.y, %bb.i ], [ %i.ab, %bb.j ], [ %i.ae, %bb.k ], [ %i.ah, %bb.l ], [ %i.ak, %bb.m ], [ %i.an, %bb.n ], [ %i.aq, %bb.o ], [ %i.at, %bb.p ], [ %i.aw, %bb.q ], [ %i.az, %bb.r ], [ 0, %bb.t ], [ 0, %bb.v ], [ 0, %bb.u ]
+  %.0 = phi i64 [ 0, %bb.s ], [ %i.d, %bb.b ], [ %i.g, %bb.c ], [ %i.i, %bb.d ], [ %i.m, %bb.e ], [ %i.p, %bb.f ], [ %i.s, %bb.g ], [ %i.v, %bb.h ], [ %i.y, %bb.i ], [ %i.ab, %bb.j ], [ %i.ae, %bb.k ], [ %i.ah, %bb.l ], [ %i.ak, %bb.m ], [ %i.an, %bb.n ], [ %i.aq, %bb.o ], [ %i.at, %bb.p ], [ %i.aw, %bb.q ], [ %i.az, %bb.r ], [ 0, %bb.t ], [ 0, %bb.v ], [ 0, %bb.u ]
   ret i64 %.0
 }
 

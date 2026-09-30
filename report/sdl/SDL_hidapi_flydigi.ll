@@ -91,7 +91,7 @@ bb.a:
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
   %i.c = alloca [64 x i8], align 16               ; 5 uses
   %i.d = alloca [6 x i8], align 1                 ; 5 uses
-  %i.e = alloca [64 x i8], align 16               ; 12 uses
+  %i.e = alloca [64 x i8], align 16               ; 11 uses
   %i.f = alloca [12 x i8], align 1                ; 4 uses
   %i.g = alloca [64 x i8], align 16               ; 12 uses
   %i.h = alloca [9 x i8], align 1                 ; 4 uses
@@ -334,23 +334,18 @@ bb.y:                                             ; preds = %bb.x, %bb.s
   br label %HIDAPI_DriverFlydigi_InitControllerV2.exit
 
 GetReply.exit.i:                                  ; preds = %bb.w
-  %1 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %2 = load i8, ptr %1, align 16
-  %3 = zext i8 %2 to i16
   %i.cq = getelementptr inbounds nuw i8, ptr %i.e, i64 15
-  %4 = load i8, ptr %i.cq, align 1
-  %5 = zext i8 %4 to i16
-  %6 = shl nuw i16 %5, 8
-  %7 = or disjoint i16 %6, %3                     ; 2 uses
+  %1 = load i16, ptr %i.cq, align 1
+  %2 = call i16 @llvm.bswap.i16(i16 %1)           ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  store i16 %7, ptr %i.cr, align 8
+  store i16 %2, ptr %i.cr, align 8
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 34 ; 2 uses
   %i.ct = load i16, ptr %i.cs, align 2            ; 2 uses
   %switch.selectcmp.i = icmp eq i16 %i.ct, 9217
   %switch.select.i = select i1 %switch.selectcmp.i, i32 28993, i32 0
   %switch.selectcmp13.i = icmp eq i16 %i.ct, 9473
   %switch.select14.i = select i1 %switch.selectcmp13.i, i32 28721, i32 %switch.select.i
-  %i.cu = zext i16 %7 to i32
+  %i.cu = zext i16 %2 to i32
   %i.cv = icmp samesign ugt i32 %switch.select14.i, %i.cu
   br i1 %i.cv, label %bb.z, label %bb.aa
 
@@ -752,6 +747,9 @@ declare i32 @SDL_HIDAPI_SendRumble(ptr noundef, ptr noundef, i32 noundef) local_
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

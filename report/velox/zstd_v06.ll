@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.e, %bb.f, %bb.g,
 bb.j:                                             ; preds = %.lr.ph, %bb.r
   %.157113 = phi i64 [ %gepdiff, %.lr.ph ], [ %i.bf, %bb.r ] ; 2 uses
   %.058112 = phi ptr [ %1, %.lr.ph ], [ %i.bd, %bb.r ] ; 7 uses
-  %.161111 = phi ptr [ %i.ae, %.lr.ph ], [ %i.be, %bb.r ] ; 5 uses
+  %.161111 = phi ptr [ %i.ae, %.lr.ph ], [ %i.be, %bb.r ] ; 4 uses
   %i.ag = load i8, ptr %.161111, align 1, !tbaa !26 ; 2 uses
   %i.ah = lshr i8 %i.ag, 6                        ; 2 uses
   switch i8 %i.ah, label %bb.k [
@@ -221,15 +221,11 @@ bb.k:                                             ; preds = %bb.j
   %i.ai = and i8 %i.ag, 7
   %i.aj = zext nneg i8 %i.ai to i64
   %i.ak = shl nuw nsw i64 %i.aj, 16
-  %i.al = getelementptr inbounds nuw i8, ptr %.161111, i64 1
-  %5 = load i8, ptr %i.al, align 1, !tbaa !26
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 8
-  %8 = getelementptr inbounds nuw i8, ptr %.161111, i64 2
-  %9 = load i8, ptr %8, align 1, !tbaa !26
-  %i.am = zext i8 %9 to i64
-  %10 = or disjoint i64 %7, %i.am
-  %i.an = or disjoint i64 %10, %i.ak
+  %i.al = getelementptr i8, ptr %.161111, i64 1
+  %5 = load i16, ptr %i.al, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %i.am = zext i16 %6 to i64
+  %i.an = or disjoint i64 %i.ak, %i.am
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k
@@ -632,7 +628,7 @@ bb.f:                                             ; preds = %bb.d
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.thread107
   %.04391 = phi i64 [ %i.af, %.thread107 ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.14690 = phi i64 [ %i.ae, %.thread107 ], [ %i.l, %.lr.ph.preheader ] ; 2 uses
-  %.14889 = phi ptr [ %i.ad, %.thread107 ], [ %i.n, %.lr.ph.preheader ] ; 5 uses
+  %.14889 = phi ptr [ %i.ad, %.thread107 ], [ %i.n, %.lr.ph.preheader ] ; 4 uses
   %i.o = load i8, ptr %.14889, align 1, !tbaa !26 ; 2 uses
   %i.p = lshr i8 %i.o, 6
   switch i8 %i.p, label %bb.g [
@@ -648,15 +644,11 @@ bb.g:                                             ; preds = %.lr.ph
   %i.q = and i8 %i.o, 7
   %i.r = zext nneg i8 %i.q to i64
   %i.s = shl nuw nsw i64 %i.r, 16
-  %i.t = getelementptr inbounds nuw i8, ptr %.14889, i64 1
-  %4 = load i8, ptr %i.t, align 1, !tbaa !26
-  %5 = zext i8 %4 to i64
-  %6 = shl nuw nsw i64 %5, 8
-  %7 = getelementptr inbounds nuw i8, ptr %.14889, i64 2
-  %8 = load i8, ptr %7, align 1, !tbaa !26
-  %i.u = zext i8 %8 to i64
-  %9 = or disjoint i64 %6, %i.u
-  %i.v = or disjoint i64 %9, %i.s                 ; 3 uses
+  %i.t = getelementptr i8, ptr %.14889, i64 1
+  %4 = load i16, ptr %i.t, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %i.u = zext i16 %5 to i64
+  %i.v = or disjoint i64 %i.s, %i.u               ; 3 uses
   %i.w = add i64 %.14690, -3                      ; 2 uses
   %i.x = icmp ugt i64 %i.v, %i.w
   br i1 %i.x, label %bb.h, label %bb.i
@@ -878,15 +870,11 @@ ZSTDv06_getcBlockSize.exit:                       ; preds = %bb.q
   %i.az = and i8 %i.aw, 7
   %i.ba = zext nneg i8 %i.az to i64
   %i.bb = shl nuw nsw i64 %i.ba, 16
-  %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %5 = load i8, ptr %i.bc, align 1, !tbaa !26
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 8
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %9 = load i8, ptr %8, align 1, !tbaa !26
-  %i.bd = zext i8 %9 to i64
-  %10 = or disjoint i64 %7, %i.bd
-  %i.be = or disjoint i64 %10, %i.bb
+  %i.bc = getelementptr i8, ptr %3, i64 1
+  %5 = load i16, ptr %i.bc, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %i.bd = zext i16 %6 to i64
+  %i.be = or disjoint i64 %i.bb, %i.bd
   br label %ZSTDv06_getcBlockSize.exit.thread73
 
 ZSTDv06_getcBlockSize.exit.thread:                ; preds = %bb.q
@@ -1288,6 +1276,9 @@ declare i64 @llvm.umin.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #24
 
 ; Function Attrs: nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #25

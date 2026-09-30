@@ -23,67 +23,40 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load i8, ptr %0, align 1, !tbaa !9         ; 2 uses
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw i32 %3, 24
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !9         ; 2 uses
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw nsw i32 %7, 16
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %10 = load i8, ptr %9, align 1, !tbaa !9
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 8
-  %13 = or disjoint i32 %8, %4
-  %14 = or disjoint i32 %13, %12                  ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %16 = load i8, ptr %15, align 1, !tbaa !9
-  %17 = zext i8 %16 to i32
-  %18 = or disjoint i32 %14, %17                  ; 3 uses
+  %2 = load i32, ptr %0, align 1                  ; 3 uses
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)      ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %19 = load i8, ptr %i.c, align 1, !tbaa !9
-  %20 = zext i8 %19 to i32
-  %21 = shl nuw i32 %20, 24
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %23 = load i8, ptr %22, align 1, !tbaa !9
-  %24 = zext i8 %23 to i32
-  %25 = shl nuw nsw i32 %24, 16
-  %26 = or disjoint i32 %25, %21
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %28 = load i8, ptr %27, align 1, !tbaa !9
-  %29 = zext i8 %28 to i32
-  %30 = shl nuw nsw i32 %29, 8
-  %31 = or disjoint i32 %26, %30
-  %32 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %33 = load i8, ptr %32, align 1, !tbaa !9
-  %34 = zext i8 %33 to i32
-  %35 = or disjoint i32 %31, %34
-  %i.d = icmp eq i32 %18, -1991225785
+  %4 = load i32, ptr %i.c, align 1
+  %i.d = icmp eq i32 %2, 1196314761
   br i1 %i.d, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %or.cond3 = icmp eq i32 %14, -2556160
+  %5 = and i32 %3, -256
+  %or.cond3 = icmp eq i32 %5, -2556160
   br i1 %or.cond3, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  switch i32 %18, label %bb.e [
+  switch i32 %3, label %bb.e [
     i32 1296891946, label %bb.h
     i32 1229531648, label %bb.h
   ]
 
 bb.e:                                             ; preds = %bb.d
-  %i.e = icmp eq i32 %18, 1380533830
-  %i.f = icmp eq i32 %35, 1464156752
+  %i.e = icmp eq i32 %2, 1179011410
+  %i.f = icmp eq i32 %4, 1346520407
   %or.cond7 = select i1 %i.e, i1 %i.f, i1 false
   br i1 %or.cond7, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.g = icmp eq i8 %2, 80
+  %.mask = and i32 %3, -16777216
+  %i.g = icmp eq i32 %.mask, 1342177280
   br i1 %i.g, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %36 = add i8 %6, -53
-  %or.cond9 = icmp ult i8 %36, 3
+  %6 = lshr i32 %3, 16
+  %7 = and i32 %6, 255
+  %8 = add nsw i32 %7, -53
+  %or.cond9 = icmp ult i32 %8, 3
   %spec.select = select i1 %or.cond9, i32 4, i32 5
   br label %bb.h
 
@@ -134,78 +107,57 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load i8, ptr %0, align 1, !tbaa !9         ; 2 uses
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw i32 %3, 24
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !9         ; 2 uses
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw nsw i32 %7, 16
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %10 = load i8, ptr %9, align 1, !tbaa !9
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 8
-  %13 = or disjoint i32 %8, %4
-  %14 = or disjoint i32 %13, %12                  ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %16 = load i8, ptr %15, align 1, !tbaa !9
-  %17 = zext i8 %16 to i32
-  %18 = or disjoint i32 %14, %17                  ; 3 uses
+  %2 = load i32, ptr %0, align 1                  ; 3 uses
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)      ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %19 = load i8, ptr %i.c, align 1, !tbaa !9
-  %20 = zext i8 %19 to i32
-  %21 = shl nuw i32 %20, 24
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %23 = load i8, ptr %22, align 1, !tbaa !9
-  %24 = zext i8 %23 to i32
-  %25 = shl nuw nsw i32 %24, 16
-  %26 = or disjoint i32 %25, %21
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %28 = load i8, ptr %27, align 1, !tbaa !9
-  %29 = zext i8 %28 to i32
-  %30 = shl nuw nsw i32 %29, 8
-  %31 = or disjoint i32 %26, %30
-  %32 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %33 = load i8, ptr %32, align 1, !tbaa !9
-  %34 = zext i8 %33 to i32
-  %35 = or disjoint i32 %31, %34
-  %i.d = icmp eq i32 %18, -1991225785
+  %4 = load i32, ptr %i.c, align 1
+  %i.d = icmp eq i32 %2, 1196314761
   br i1 %i.d, label %WebPGetImageReader.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %or.cond3.i = icmp eq i32 %14, -2556160
+  %5 = and i32 %3, -256
+  %or.cond3.i = icmp eq i32 %5, -2556160
   br i1 %or.cond3.i, label %WebPGetImageReader.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  switch i32 %18, label %bb.e [
+  switch i32 %3, label %bb.e [
     i32 1296891946, label %WebPGetImageReader.exit
     i32 1229531648, label %WebPGetImageReader.exit
   ]
 
 bb.e:                                             ; preds = %bb.d
-  %i.e = icmp eq i32 %18, 1380533830
-  %i.f = icmp eq i32 %35, 1464156752
+  %i.e = icmp eq i32 %2, 1179011410
+  %i.f = icmp eq i32 %4, 1346520407
   %or.cond7.i = select i1 %i.e, i1 %i.f, i1 false
-  br i1 %or.cond7.i, label %WebPGetImageReader.exit, label %bb.f
+  br i1 %or.cond7.i, label %WebPGetImageReader.exit, label %6
 
-bb.f:                                             ; preds = %bb.e
-  %36 = icmp eq i8 %2, 80
-  %37 = add i8 %6, -53
-  %or.cond9.i = icmp ult i8 %37, 3
-  %or.cond = select i1 %36, i1 %or.cond9.i, i1 false
-  br i1 %or.cond, label %WebPGetImageReader.exit, label %bb.g
+6:                                                ; preds = %bb.e
+  %.mask.i = and i32 %3, -16777216
+  %7 = icmp eq i32 %.mask.i, 1342177280
+  br i1 %7, label %bb.f, label %bb.g
 
-bb.g:                                             ; preds = %bb.a, %bb.f
+bb.f:                                             ; preds = %6
+  %8 = lshr i32 %3, 16
+  %9 = and i32 %8, 255
+  %10 = add nsw i32 %9, -53
+  %or.cond9.i = icmp ult i32 %10, 3
+  br i1 %or.cond9.i, label %WebPGetImageReader.exit, label %bb.g
+
+bb.g:                                             ; preds = %bb.a, %6, %bb.f
   br label %WebPGetImageReader.exit
 
-WebPGetImageReader.exit:                          ; preds = %bb.f, %bb.b, %bb.e, %bb.d, %bb.d, %bb.c, %bb.g
+WebPGetImageReader.exit:                          ; preds = %bb.b, %bb.f, %bb.e, %bb.d, %bb.d, %bb.c, %bb.g
   %.0.i = phi ptr [ @FailReader, %bb.g ], [ @ReadWebP, %bb.e ], [ @ReadPNM, %bb.f ], [ @ReadJPEG, %bb.c ], [ @ReadTIFF, %bb.d ], [ @ReadTIFF, %bb.d ], [ @ReadPNG, %bb.b ]
   ret ptr %.0.i
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #3
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}
@@ -220,5 +172,4 @@ attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
-!9 = !{!5, !5, i64 0}
 end_hunk_0

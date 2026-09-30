@@ -204,15 +204,11 @@ bb.o:                                             ; preds = %bb.m
   %i.bf = getelementptr i8, ptr %i.be, i64 4
   store i32 %i.bc, ptr %i.bf, align 4
   %i.bg = getelementptr i8, ptr %0, i64 171
-  %1 = load i8, ptr %i.bg, align 1
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw nsw i32 %2, 8
-  %4 = getelementptr i8, ptr %0, i64 172
-  %5 = load i8, ptr %4, align 4
-  %i.bh = zext i8 %5 to i32
-  %6 = or disjoint i32 %3, %i.bh
+  %1 = load i16, ptr %i.bg, align 1
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %i.bh = zext i16 %2 to i32
   %i.bi = getelementptr i8, ptr %i.be, i64 8
-  store i32 %6, ptr %i.bi, align 4
+  store i32 %i.bh, ptr %i.bi, align 4
   %i.bj = getelementptr i8, ptr %0, i64 173
   %i.bk = load i8, ptr %i.bj, align 1
   %i.bl = lshr i8 %i.bk, 4
@@ -575,6 +571,9 @@ declare dso_local void @input_mt_report_pointer_emulation(ptr noundef, i1 nounde
 
 ; Function Attrs: noredzone null_pointer_is_valid
 declare dso_local void @input_event(ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7

@@ -202,22 +202,14 @@ bb.bm:                                            ; preds = %bb.bl
 
 bb.bn:                                            ; preds = %bb.bm, %bb.bl
   %i.ds = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %4 = load i8, ptr %i.ds, align 1, !tbaa !76
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw nsw i32 %5, 8
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  %8 = load i8, ptr %7, align 1, !tbaa !76
-  %i.dt = zext i8 %8 to i32
-  %9 = or disjoint i32 %6, %i.dt
+  %4 = load i16, ptr %i.ds, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %i.dt = zext i16 %5 to i32
   %i.du = getelementptr inbounds nuw i8, ptr %2, i64 3
-  %10 = load i8, ptr %i.du, align 1, !tbaa !76
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 8
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %14 = load i8, ptr %13, align 1, !tbaa !76
-  %i.dv = zext i8 %14 to i32
-  %15 = or disjoint i32 %12, %i.dv
-  tail call void (ptr, ptr, ...) @Curl_infof(ptr noundef nonnull %0, ptr noundef nonnull @.str.90, i32 noundef %9, i32 noundef %15) #8
+  %6 = load i16, ptr %i.du, align 1
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %i.dv = zext i16 %7 to i32
+  tail call void (ptr, ptr, ...) @Curl_infof(ptr noundef nonnull %0, ptr noundef nonnull @.str.90, i32 noundef %i.dt, i32 noundef %i.dv) #8
   br label %.loopexit
 
 bb.bo:                                            ; preds = %bb.bi

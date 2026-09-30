@@ -204,29 +204,14 @@ bb.o:                                             ; preds = %bb.n
   %i.bs = add i32 %i.br, %i.bp
   %i.bt = shl nsw i32 %i.bs, 1
   %i.bu = sext i32 %i.bt to i64
-  %i.bv = getelementptr inbounds i8, ptr %i.be, i64 %i.bu ; 3 uses
-  br i1 %.not88, label %10, label %2
+  %i.bv = getelementptr inbounds i8, ptr %i.be, i64 %i.bu
+  %2 = load i16, ptr %i.bv, align 1               ; 2 uses
+  %3 = call i16 @llvm.bswap.i16(i16 %2)
+  %.074 = select i1 %.not88, i16 %2, i16 %3       ; 2 uses
+  %4 = icmp eq i16 %.074, -1
+  br i1 %4, label %bb.q, label %bb.p
 
-2:                                                ; preds = %bb.o
-  %3 = load i8, ptr %i.bv, align 1, !tbaa !43
-  %4 = zext i8 %3 to i16
-  %5 = shl nuw i16 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.bv, i64 1
-  %7 = load i8, ptr %6, align 1, !tbaa !43
-  %8 = zext i8 %7 to i16
-  %9 = or disjoint i16 %5, %8
-  br label %12
-
-10:                                               ; preds = %bb.o
-  %11 = load i16, ptr %i.bv, align 1
-  br label %12
-
-12:                                               ; preds = %10, %2
-  %.074 = phi i16 [ %9, %2 ], [ %11, %10 ]        ; 2 uses
-  %13 = icmp eq i16 %.074, -1
-  br i1 %13, label %bb.q, label %bb.p
-
-bb.p:                                             ; preds = %12
+bb.p:                                             ; preds = %bb.o
   %i.bw = add nuw i16 %.074, 1
   %i.bx = zext i16 %i.bw to i64                   ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 520
@@ -235,8 +220,8 @@ bb.p:                                             ; preds = %12
   %i.ca = select i1 %.not93, i64 %i.bx, i64 1
   br label %bb.q
 
-bb.q:                                             ; preds = %12, %bb.p
-  %.1 = phi i64 [ %i.ca, %bb.p ], [ 1, %12 ]
+bb.q:                                             ; preds = %bb.o, %bb.p
+  %.1 = phi i64 [ %i.ca, %bb.p ], [ 1, %bb.o ]
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 528
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !47 ; 2 uses
   %i.cd = getelementptr inbounds nuw [24 x i8], ptr %i.cc, i64 %.1

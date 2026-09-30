@@ -202,14 +202,10 @@ tls_rt_type.exit.thread64:                        ; preds = %bb.i, %tls_rt_type.
   br i1 %i.t, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %tls_rt_type.exit.thread64
-  %7 = load i8, ptr %3, align 1, !tbaa !105
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 8
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %11 = load i8, ptr %10, align 1, !tbaa !105
-  %i.u = zext i8 %11 to i32
-  %12 = or disjoint i32 %9, %i.u                  ; 2 uses
-  %i.v = call ptr @SSL_alert_desc_string_long(i32 noundef %12) #11
+  %7 = load i16, ptr %3, align 1
+  %8 = call i16 @llvm.bswap.i16(i16 %7)
+  %i.u = zext i16 %8 to i32                       ; 2 uses
+  %i.v = call ptr @SSL_alert_desc_string_long(i32 noundef %i.u) #11
   br label %bb.n
 
 tls_rt_type.exit.thread:                          ; preds = %bb.i, %bb.j, %tls_rt_type.exit
@@ -226,7 +222,7 @@ bb.m:                                             ; preds = %tls_rt_type.exit.th
 bb.n:                                             ; preds = %bb.l, %tls_rt_type.exit.thread64, %bb.m, %tls_rt_type.exit.thread, %tls_rt_type.exit.thread61, %bb.k
   %.04659 = phi ptr [ %.04663, %bb.k ], [ %.04663, %tls_rt_type.exit.thread61 ], [ %.04666, %bb.l ], [ %.04666, %tls_rt_type.exit.thread64 ], [ %.04660, %bb.m ], [ %.04660, %tls_rt_type.exit.thread ]
   %.047 = phi ptr [ @.str.49, %bb.k ], [ @.str.47, %tls_rt_type.exit.thread61 ], [ %i.v, %bb.l ], [ @.str.47, %tls_rt_type.exit.thread64 ], [ %i.y, %bb.m ], [ @.str.47, %tls_rt_type.exit.thread ]
-  %.0 = phi i32 [ %i.s, %bb.k ], [ 0, %tls_rt_type.exit.thread61 ], [ %12, %bb.l ], [ 0, %tls_rt_type.exit.thread64 ], [ %i.x, %bb.m ], [ 0, %tls_rt_type.exit.thread ]
+  %.0 = phi i32 [ %i.s, %bb.k ], [ 0, %tls_rt_type.exit.thread61 ], [ %i.u, %bb.l ], [ 0, %tls_rt_type.exit.thread64 ], [ %i.x, %bb.m ], [ 0, %tls_rt_type.exit.thread ]
   %i.z = select i1 %.not55, ptr @.str.52, ptr @.str.51
   %i.aa = call i32 (ptr, i64, ptr, ...) @curl_msnprintf(ptr noundef nonnull %i.b, i64 noundef 1024, ptr noundef nonnull @.str.50, ptr noundef nonnull %.048, ptr noundef nonnull %i.z, ptr noundef %.04659, ptr noundef %.047, i32 noundef %.0) #11
   %i.ab = sext i32 %i.aa to i64
@@ -628,6 +624,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

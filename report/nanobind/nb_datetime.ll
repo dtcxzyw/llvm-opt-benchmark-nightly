@@ -63,14 +63,10 @@ _ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit: ; preds = %bb.e
 
 _ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread: ; preds = %bb.d, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 25
-  %4 = load i8, ptr %i.k, align 1
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw nsw i32 %5, 8
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 26
-  %8 = load i8, ptr %7, align 2
-  %i.l = zext i8 %8 to i32
-  %9 = or disjoint i32 %6, %i.l
-  store i32 %9, ptr %3, align 4
+  %4 = load i16, ptr %i.k, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %i.l = zext i16 %5 to i32
+  store i32 %i.l, ptr %3, align 4
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 27
   %i.n = load i8, ptr %i.m, align 1
   %i.o = zext i8 %i.n to i32
@@ -97,18 +93,14 @@ _ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit.thread: ; preds = %bb.d, %_Z
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 20
   store i32 %i.ae, ptr %i.af, align 4
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %10 = load i8, ptr %i.ag, align 8
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 16
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 33
-  %14 = load i8, ptr %13, align 1
-  %i.ah = zext i8 %14 to i32
+  %6 = load i16, ptr %i.ag, align 8
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %i.ah = zext i16 %7 to i32
   %i.ai = shl nuw nsw i32 %i.ah, 8
-  %15 = or disjoint i32 %i.ai, %12
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 34
   %i.ak = load i8, ptr %i.aj, align 2
   %i.al = zext i8 %i.ak to i32
-  %i.am = or disjoint i32 %15, %i.al
+  %i.am = or disjoint i32 %i.ai, %i.al
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i32 %i.am, ptr %i.an, align 4
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 35
@@ -139,14 +131,10 @@ _ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit65: ; preds = %bb.h
 
 _ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit65.thread: ; preds = %bb.g, %_ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit65
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 25
-  %16 = load i8, ptr %i.aw, align 1
-  %17 = zext i8 %16 to i32
-  %18 = shl nuw nsw i32 %17, 8
-  %19 = getelementptr inbounds nuw i8, ptr %1, i64 26
-  %20 = load i8, ptr %19, align 2
-  %i.ax = zext i8 %20 to i32
-  %21 = or disjoint i32 %18, %i.ax
-  store i32 %21, ptr %3, align 4
+  %8 = load i16, ptr %i.aw, align 1
+  %9 = tail call i16 @llvm.bswap.i16(i16 %8)
+  %i.ax = zext i16 %9 to i32
+  store i32 %i.ax, ptr %3, align 4
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 27
   %i.az = load i8, ptr %i.ay, align 1
   %i.ba = zext i8 %i.az to i32
@@ -195,18 +183,14 @@ _ZL18PyObject_TypeCheckP7_objectP11_typeobject.exit68.thread: ; preds = %bb.j, %
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %i.bu, ptr %i.bv, align 4
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %22 = load i8, ptr %i.bw, align 4
-  %23 = zext i8 %22 to i32
-  %24 = shl nuw nsw i32 %23, 16
-  %25 = getelementptr inbounds nuw i8, ptr %1, i64 29
-  %26 = load i8, ptr %25, align 1
-  %i.bx = zext i8 %26 to i32
+  %10 = load i16, ptr %i.bw, align 4
+  %11 = tail call i16 @llvm.bswap.i16(i16 %10)
+  %i.bx = zext i16 %11 to i32
   %i.by = shl nuw nsw i32 %i.bx, 8
-  %27 = or disjoint i32 %i.by, %24
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 30
   %i.ca = load i8, ptr %i.bz, align 2
   %i.cb = zext i8 %i.ca to i32
-  %i.cc = or disjoint i32 %27, %i.cb
+  %i.cc = or disjoint i32 %i.by, %i.cb
   %i.cd = getelementptr inbounds nuw i8, ptr %3, i64 12
   store i32 %i.cc, ptr %i.cd, align 4
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 31
@@ -414,6 +398,9 @@ declare i32 @llvm.ctpop.i32(i32) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.cttz.i32(i32, i1 immarg) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #4
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -205,28 +205,18 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 18
-  %2 = load i8, ptr %i.d, align 1, !tbaa !55
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 19
-  %6 = load i8, ptr %5, align 1, !tbaa !55
-  %7 = zext i8 %6 to i32
-  %8 = or disjoint i32 %4, %7
-  %.not14 = icmp eq i32 %8, 1028
+  %2 = load i16, ptr %i.d, align 1
+  %.not14 = icmp eq i16 %2, 1028
   br i1 %.not14, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %9 = load i8, ptr %i.e, align 1, !tbaa !55
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 8
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 25
-  %13 = load i8, ptr %12, align 1, !tbaa !55
-  %i.f = zext i8 %13 to i32
-  %14 = or disjoint i32 %11, %i.f
+  %3 = load i16, ptr %i.e, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.f = zext i16 %4 to i32
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 26
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.i = tail call noundef zeroext i1 @_ZN11OpenImageIO4v3_115decode_iptc_iimEPKviRNS0_9ImageSpecE(ptr noundef nonnull %i.g, i32 noundef %14, ptr noundef nonnull align 8 dereferenceable(160) %i.h) ; 0 uses
+  %i.i = tail call noundef zeroext i1 @_ZN11OpenImageIO4v3_115decode_iptc_iimEPKviRNS0_9ImageSpecE(ptr noundef nonnull %i.g, i32 noundef %i.f, ptr noundef nonnull align 8 dereferenceable(160) %i.h) ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.b, %bb.a, %bb.d
@@ -628,6 +618,9 @@ declare i64 @llvm.smax.i64(i64, i64) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #27
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

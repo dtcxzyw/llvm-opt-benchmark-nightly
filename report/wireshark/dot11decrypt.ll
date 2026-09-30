@@ -204,14 +204,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr i8, ptr %1, i64 1
-  %.val95 = load i8, ptr %i.e, align 1
-  %4 = getelementptr i8, ptr %1, i64 2
-  %.val96 = load i8, ptr %4, align 1
-  %5 = zext i8 %.val95 to i16
-  %6 = shl nuw i16 %5, 8
-  %7 = zext i8 %.val96 to i16
-  %8 = or disjoint i16 %6, %7
-  switch i16 %8, label %.critedge [
+  %.val95 = load i16, ptr %i.e, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %.val95)
+  switch i16 %4, label %.critedge [
     i16 85, label %bb.d
     i16 0, label %bb.d
   ]
@@ -614,13 +609,13 @@ declare i32 @gcry_md_setkey(ptr noundef, ptr noundef, i64 noundef) local_unnamed
 declare i32 @gcry_mac_read(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.bswap.i16(i16) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #12

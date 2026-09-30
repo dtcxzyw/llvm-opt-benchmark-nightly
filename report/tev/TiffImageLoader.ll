@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %.from.442
   %i.aj = extractvalue { i64, i64 } %i.ai, 1      ; 2 uses
   %i.ak = sub i64 %.sroa.4.0.i.i4.i, %i.aj        ; 3 uses
-  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %.pn17.i, i64 %i.aj ; 8 uses
+  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %.pn17.i, i64 %i.aj ; 7 uses
   %i.al = icmp ult i64 %i.ak, 4
   br i1 %i.al, label %bb.g, label %bb.e
 
@@ -299,25 +299,19 @@ bb.j:                                             ; preds = %bb.h
 .from.453:                                        ; preds = %bb.f
   store i8 1, ptr %.reload.addr730, align 1, !tbaa !153
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 2
-  %18 = load i8, ptr %i.bf, align 1, !tbaa !80
-  %19 = zext i8 %18 to i32
-  %20 = shl nuw nsw i32 %19, 8
-  %21 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 3
-  %22 = load i8, ptr %21, align 1, !tbaa !80
-  %23 = zext i8 %22 to i32
-  %24 = or disjoint i32 %20, %23
+  %18 = load i16, ptr %i.bf, align 1
+  %19 = tail call i16 @llvm.bswap.i16(i16 %18)
   br label %bb.k
 
 .from.450:                                        ; preds = %.thread
   store i8 0, ptr %.reload.addr730, align 1, !tbaa !153
   %i.bg = getelementptr i8, ptr %.sroa.0.0.i, i64 2
   %i.bh = load i16, ptr %i.bg, align 1
-  %25 = zext i16 %i.bh to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %.from.450, %.from.453
-  %26 = phi i32 [ %24, %.from.453 ], [ %25, %.from.450 ]
-  %.not93 = icmp eq i32 %26, 42
+  %.in = phi i16 [ %19, %.from.453 ], [ %i.bh, %.from.450 ]
+  %.not93 = icmp eq i16 %.in, 42
   br i1 %.not93, label %bb.p, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
