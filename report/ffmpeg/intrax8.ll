@@ -204,12 +204,10 @@ bb.z:                                             ; preds = %bb.y
   %i.mg = add nsw i32 %i.mf, %.sink.i161
   %i.mh = mul nsw i32 %i.mg, %i.ma
   %i.mi = add nsw i32 %i.mh, 4
-  %i.mj = ashr i32 %i.mi, 3                       ; 3 uses
-  %2 = icmp ugt i32 %i.mj, 255
-  %isnotneg.i = icmp sgt i32 %i.mj, -1
-  %3 = sext i1 %isnotneg.i to i8
-  %i.mk = trunc nuw i32 %i.mj to i8
-  %.0.i = select i1 %2, i8 %3, i8 %i.mk           ; 8 uses
+  %i.mj = ashr i32 %i.mi, 3
+  %2 = tail call i32 @llvm.smax.i32(i32 %i.mj, i32 0)
+  %.0.i165 = tail call i32 @llvm.umin.i32(i32 %2, i32 255)
+  %i.mk = trunc nuw i32 %.0.i165 to i8            ; 8 uses
   %i.ml = getelementptr inbounds nuw i8, ptr %0, i64 608
   %i.mm = zext nneg i32 %1 to i64
   %i.mn = getelementptr inbounds nuw [8 x i8], ptr %i.ml, i64 %i.mm
@@ -221,21 +219,21 @@ bb.z:                                             ; preds = %bb.y
   %i.mt = getelementptr inbounds nuw [4 x i8], ptr %i.mr, i64 %i.ms
   %i.mu = load i32, ptr %i.mt, align 4, !tbaa !39
   %i.mv = sext i32 %i.mu to i64                   ; 7 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.mo, i8 %.0.i, i64 8, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.mo, i8 %i.mk, i64 8, i1 false)
   %i.mw = getelementptr inbounds i8, ptr %i.mo, i64 %i.mv ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.mw, i8 %.0.i, i64 8, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.mw, i8 %i.mk, i64 8, i1 false)
   %i.mx = getelementptr inbounds i8, ptr %i.mw, i64 %i.mv ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.mx, i8 %.0.i, i64 8, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.mx, i8 %i.mk, i64 8, i1 false)
   %i.my = getelementptr inbounds i8, ptr %i.mx, i64 %i.mv ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.my, i8 %.0.i, i64 8, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.my, i8 %i.mk, i64 8, i1 false)
   %i.mz = getelementptr inbounds i8, ptr %i.my, i64 %i.mv ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.mz, i8 %.0.i, i64 8, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.mz, i8 %i.mk, i64 8, i1 false)
   %i.na = getelementptr inbounds i8, ptr %i.mz, i64 %i.mv ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.na, i8 %.0.i, i64 8, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.na, i8 %i.mk, i64 8, i1 false)
   %i.nb = getelementptr inbounds i8, ptr %i.na, i64 %i.mv ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.nb, i8 %.0.i, i64 8, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.nb, i8 %i.mk, i64 8, i1 false)
   %i.nc = getelementptr inbounds i8, ptr %i.nb, i64 %i.mv
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.nc, i8 %.0.i, i64 8, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(8) %i.nc, i8 %i.mk, i64 8, i1 false)
   br label %bb.al
 
 bb.aa:                                            ; preds = %bb.y
@@ -637,6 +635,9 @@ declare i32 @llvm.umin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #5
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

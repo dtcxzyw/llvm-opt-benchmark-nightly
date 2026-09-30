@@ -205,26 +205,22 @@ bb.bs:                                            ; preds = %bb.br
   %i.ri = uitofp i8 %i.rh to float                ; 2 uses
   %i.rj = load float, ptr %i.qw, align 4, !tbaa !47
   %i.rk = tail call nsz float @llvm.fmuladd.f32(float %i.ri, float %i.rj, float %i.ri)
-  %i.rl = fptosi float %i.rk to i32               ; 3 uses
-  %.not.i433 = icmp ult i32 %i.rl, 256
-  %isnotneg.i434 = icmp sgt i32 %i.rl, -1
-  %4 = sext i1 %isnotneg.i434 to i8
-  %i.rm = trunc nuw i32 %i.rl to i8
-  %.0.i435 = select i1 %.not.i433, i8 %i.rm, i8 %4
+  %i.rl = fptosi float %i.rk to i32
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.rl, i32 0)
+  %.0.i435438 = tail call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %i.rm = trunc nuw i32 %.0.i435438 to i8
   %i.rn = getelementptr inbounds i8, ptr %i.aj, i64 %i.rf
-  store i8 %.0.i435, ptr %i.rn, align 1, !tbaa !68
+  store i8 %i.rm, ptr %i.rn, align 1, !tbaa !68
   %i.ro = load i8, ptr %i.rg, align 1, !tbaa !68
   %i.rp = uitofp i8 %i.ro to float                ; 2 uses
   %i.rq = load float, ptr %i.qx, align 8, !tbaa !47
   %i.rr = tail call nsz float @llvm.fmuladd.f32(float %i.rp, float %i.rq, float %i.rp)
-  %i.rs = fptosi float %i.rr to i32               ; 3 uses
-  %.not.i = icmp ult i32 %i.rs, 256
-  %isnotneg.i = icmp sgt i32 %i.rs, -1
-  %5 = sext i1 %isnotneg.i to i8
-  %i.rt = trunc nuw i32 %i.rs to i8
-  %.0.i = select i1 %.not.i, i8 %i.rt, i8 %5
+  %i.rs = fptosi float %i.rr to i32
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.rs, i32 0)
+  %.0.i439 = tail call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.rt = trunc nuw i32 %.0.i439 to i8
   %i.ru = getelementptr inbounds i8, ptr %i.al, i64 %i.rf
-  store i8 %.0.i, ptr %i.ru, align 1, !tbaa !68
+  store i8 %i.rt, ptr %i.ru, align 1, !tbaa !68
   %.pre611 = load i32, ptr %i.ba, align 8, !tbaa !67
   br label %bb.bt
 
@@ -627,6 +623,9 @@ declare ptr @ff_make_pixel_format_list(ptr noundef) local_unnamed_addr #2
 declare i32 @llvm.fshl.i32(i32, i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.uadd.sat.i8(i8, i8) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -640,6 +639,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12

@@ -112,14 +112,12 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 %index
   %wide.load15 = load <16 x i8>, ptr %i.m, align 1, !tbaa !9
   %i.n = sext <16 x i8> %wide.load15 to <16 x i32>
-  %i.o = add nsw <16 x i32> %i.n, %i.l            ; 3 uses
-  %5 = icmp ugt <16 x i32> %i.o, splat (i32 255)
-  %6 = icmp sgt <16 x i32> %i.o, splat (i32 -1)
-  %7 = sext <16 x i1> %6 to <16 x i8>
-  %i.p = trunc nuw <16 x i32> %i.o to <16 x i8>
-  %8 = select <16 x i1> %5, <16 x i8> %7, <16 x i8> %i.p
+  %i.o = add nsw <16 x i32> %i.n, %i.l
+  %5 = tail call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.o, <16 x i32> zeroinitializer)
+  %6 = tail call <16 x i32> @llvm.umin.v16i32(<16 x i32> %5, <16 x i32> splat (i32 255))
+  %i.p = trunc nuw <16 x i32> %6 to <16 x i8>
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %index
-  store <16 x i8> %8, ptr %i.q, align 1, !tbaa !9
+  store <16 x i8> %i.p, ptr %i.q, align 1, !tbaa !9
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.r = icmp eq i64 %index.next, %n.vec
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !53
@@ -145,14 +143,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.u = getelementptr inbounds nuw i8, ptr %i.e, i64 %index17
   %wide.load19 = load <4 x i8>, ptr %i.u, align 1, !tbaa !9
   %i.v = sext <4 x i8> %wide.load19 to <4 x i32>
-  %i.w = add nsw <4 x i32> %i.v, %i.t             ; 3 uses
-  %9 = icmp ugt <4 x i32> %i.w, splat (i32 255)
-  %10 = icmp sgt <4 x i32> %i.w, splat (i32 -1)
-  %11 = sext <4 x i1> %10 to <4 x i8>
-  %i.x = trunc nuw <4 x i32> %i.w to <4 x i8>
-  %12 = select <4 x i1> %9, <4 x i8> %11, <4 x i8> %i.x
+  %i.w = add nsw <4 x i32> %i.v, %i.t
+  %7 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.w, <4 x i32> zeroinitializer)
+  %8 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %7, <4 x i32> splat (i32 255))
+  %i.x = trunc nuw <4 x i32> %8 to <4 x i8>
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %index17
-  store <4 x i8> %12, ptr %i.y, align 1, !tbaa !9
+  store <4 x i8> %i.x, ptr %i.y, align 1, !tbaa !9
   %index.next20 = add nuw i64 %index17, 4         ; 2 uses
   %i.z = icmp eq i64 %index.next20, %n.vec16
   br i1 %i.z, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !54
@@ -174,14 +170,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ad = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.ph
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !9
   %i.af = sext i8 %i.ae to i32
-  %i.ag = add nsw i32 %i.af, %i.ac                ; 3 uses
-  %13 = icmp ugt i32 %i.ag, 255
-  %isnotneg.i.prol = icmp sgt i32 %i.ag, -1
-  %14 = sext i1 %isnotneg.i.prol to i8
-  %i.ah = trunc nuw i32 %i.ag to i8
-  %.0.i.prol = select i1 %13, i8 %14, i8 %i.ah
+  %i.ag = add nsw i32 %i.af, %i.ac
+  %9 = tail call i32 @llvm.smax.i32(i32 %i.ag, i32 0)
+  %.0.i11.prol = tail call i32 @llvm.umin.i32(i32 %9, i32 255)
+  %i.ah = trunc nuw i32 %.0.i11.prol to i8
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.ph
-  store i8 %.0.i.prol, ptr %i.ai, align 1, !tbaa !9
+  store i8 %i.ah, ptr %i.ai, align 1, !tbaa !9
   %indvars.iv.next.prol = or disjoint i64 %indvars.iv.ph, 1
   br label %.lr.ph.prol.loopexit
 
@@ -199,14 +193,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ao = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !9
   %i.aq = sext i8 %i.ap to i32
-  %i.ar = add nsw i32 %i.aq, %i.an                ; 3 uses
-  %15 = icmp ugt i32 %i.ar, 255
-  %isnotneg.i = icmp sgt i32 %i.ar, -1
-  %16 = sext i1 %isnotneg.i to i8
-  %i.as = trunc nuw i32 %i.ar to i8
-  %.0.i = select i1 %15, i8 %16, i8 %i.as
+  %i.ar = add nsw i32 %i.aq, %i.an
+  %10 = tail call i32 @llvm.smax.i32(i32 %i.ar, i32 0)
+  %.0.i11 = tail call i32 @llvm.umin.i32(i32 %10, i32 255)
+  %i.as = trunc nuw i32 %.0.i11 to i8
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
-  store i8 %.0.i, ptr %i.at, align 1, !tbaa !9
+  store i8 %i.as, ptr %i.at, align 1, !tbaa !9
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next
   %i.av = load i8, ptr %i.au, align 1, !tbaa !9
@@ -214,14 +206,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ax = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !9
   %i.az = sext i8 %i.ay to i32
-  %i.ba = add nsw i32 %i.az, %i.aw                ; 3 uses
-  %17 = icmp ugt i32 %i.ba, 255
-  %isnotneg.i.1 = icmp sgt i32 %i.ba, -1
-  %18 = sext i1 %isnotneg.i.1 to i8
-  %i.bb = trunc nuw i32 %i.ba to i8
-  %.0.i.1 = select i1 %17, i8 %18, i8 %i.bb
+  %i.ba = add nsw i32 %i.az, %i.aw
+  %11 = tail call i32 @llvm.smax.i32(i32 %i.ba, i32 0)
+  %.0.i11.1 = tail call i32 @llvm.umin.i32(i32 %11, i32 255)
+  %i.bb = trunc nuw i32 %.0.i11.1 to i8
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next
-  store i8 %.0.i.1, ptr %i.bc, align 1, !tbaa !9
+  store i8 %i.bb, ptr %i.bc, align 1, !tbaa !9
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !55
@@ -623,6 +613,24 @@ declare i32 @ff_set_common_formats2(ptr noundef, ptr noundef, ptr noundef, ptr n
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i32> @llvm.smax.v16i32(<16 x i32>, <16 x i32>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i32> @llvm.umin.v16i32(<16 x i32>, <16 x i32>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #7
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

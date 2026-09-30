@@ -205,12 +205,14 @@ bb.g:                                             ; preds = %_ZNK2OT18glyf_accel
 .lr.ph535:                                        ; preds = %bb.g
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 9 uses
   %.sroa_idx447 = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 6 uses
+  %.sroa.15433.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 15 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 28 ; 6 uses
   %.sroa_idx451 = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 6 uses
+  %.sroa.15433.0..sroa_idx434 = getelementptr inbounds nuw i8, ptr %3, i64 36 ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 52 ; 15 uses
   %.sroa_idx455 = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 18 uses
-  %.sroa.15433.0..sroa_idx436 = getelementptr inbounds nuw i8, ptr %3, i64 60 ; 6 uses
+  %.sroa.15433.0..sroa_idx436 = getelementptr inbounds nuw i8, ptr %3, i64 60 ; 12 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 6 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 68 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 3 uses
@@ -245,7 +247,9 @@ bb.h:                                             ; preds = %.lr.ph535, %.loopex
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 80
   %i.bw = load <2 x float>, ptr %i.bq, align 4, !tbaa !304
   %i.bx = load <2 x float>, ptr %i.bv, align 8, !tbaa !304
-  %i.by = fmul <2 x float> %i.bw, %i.bx           ; 17 uses
+  %i.by = fmul <2 x float> %i.bw, %i.bx           ; 5 uses
+  %10 = extractelement <2 x float> %i.by, i64 1   ; 11 uses
+  %11 = extractelement <2 x float> %i.by, i64 0   ; 11 uses
   %i.bz = load i8, ptr %i.bd, align 8, !tbaa !353, !range !380, !noundef !293
   %i.ca = trunc nuw i8 %i.bz to i1
   br i1 %i.ca, label %bb.x, label %bb.i, !prof !268
@@ -255,8 +259,9 @@ bb.i:                                             ; preds = %.lr.ph
 
 bb.j:                                             ; preds = %bb.i
   store i32 1, ptr %i.bd, align 8
-  store <2 x float> %i.by, ptr %.sroa_idx447, align 4
-  %i.cb = load ptr, ptr %i.be, align 8, !tbaa !352 ; 8 uses
+  store float %11, ptr %.sroa_idx447, align 4
+  store float %10, ptr %.sroa.15433.0..sroa_idx, align 8, !tbaa !304
+  %i.cb = load ptr, ptr %i.be, align 8, !tbaa !352 ; 9 uses
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !338 ; 6 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !339 ; 2 uses
@@ -320,7 +325,9 @@ _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i98: ; preds = %bb.o,
 
 _ZN17hb_draw_session_t7move_toEff.exit99:         ; preds = %bb.j, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i98
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cb, i64 28
-  store <2 x float> %i.by, ptr %i.dd, align 4, !tbaa !304
+  store float %11, ptr %i.dd, align 4, !tbaa !360
+  %12 = getelementptr inbounds nuw i8, ptr %i.cb, i64 32
+  store float %10, ptr %12, align 8, !tbaa !730
   br label %_ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit95
 
 bb.p:                                             ; preds = %bb.i
@@ -335,7 +342,8 @@ bb.q:                                             ; preds = %bb.p
   store i32 1, ptr %i.bd, align 8
   store <2 x float> %i.di, ptr %.sroa_idx447, align 4, !tbaa !304
   store i32 1, ptr %i.bg, align 4
-  store <2 x float> %i.by, ptr %.sroa_idx455, align 8
+  store float %11, ptr %.sroa_idx455, align 8
+  store float %10, ptr %.sroa.15433.0..sroa_idx436, align 4, !tbaa !304
   %i.dj = load ptr, ptr %i.be, align 8, !tbaa !352 ; 8 uses
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !338 ; 6 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
@@ -405,7 +413,8 @@ _ZN17hb_draw_session_t7move_toEff.exit:           ; preds = %bb.q, %_ZN15hb_draw
 
 bb.w:                                             ; preds = %bb.p
   store i32 1, ptr %i.bf, align 4
-  store <2 x float> %i.by, ptr %.sroa_idx451, align 8
+  store float %11, ptr %.sroa_idx451, align 8
+  store float %10, ptr %.sroa.15433.0..sroa_idx434, align 4, !tbaa !304
   br label %_ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit95
 
 bb.x:                                             ; preds = %.lr.ph
@@ -419,7 +428,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.eo = load i8, ptr %i.bh, align 8, !tbaa !353, !range !380, !noundef !293
   %i.ep = trunc nuw i8 %i.eo to i1
-  %i.eq = load ptr, ptr %i.be, align 8, !tbaa !352 ; 8 uses
+  %i.eq = load ptr, ptr %i.be, align 8, !tbaa !352 ; 10 uses
   br i1 %i.ep, label %bb.aa, label %bb.ad
 
 bb.aa:                                            ; preds = %bb.z
@@ -454,11 +463,11 @@ bb.ac:                                            ; preds = %_ZN17hb_draw_sessio
 
 _ZN15hb_draw_funcs_t13emit_cubic_toEPvR15hb_draw_state_tffffff.exit: ; preds = %_ZN17hb_draw_session_t8cubic_toEffffff.exit, %bb.ac
   %i.fg = phi ptr [ %i.ff, %bb.ac ], [ null, %_ZN17hb_draw_session_t8cubic_toEffffff.exit ]
-  %10 = extractelement <2 x float> %i.by, i64 0
-  %11 = extractelement <2 x float> %i.by, i64 1
-  call void %i.fb(ptr noundef nonnull align 8 dereferenceable(72) %i.ev, ptr noundef %i.ex, ptr noundef nonnull align 4 dereferenceable(48) %i.ey, float noundef %i.er, float noundef %i.es, float noundef %i.et, float noundef %i.eu, float noundef %10, float noundef %11, ptr noundef %i.fg) #63, !inline_history !34
-  %i.fh = getelementptr inbounds nuw i8, ptr %i.eq, i64 28
-  store <2 x float> %i.by, ptr %i.fh, align 4, !tbaa !304
+  call void %i.fb(ptr noundef nonnull align 8 dereferenceable(72) %i.ev, ptr noundef %i.ex, ptr noundef nonnull align 4 dereferenceable(48) %i.ey, float noundef %i.er, float noundef %i.es, float noundef %i.et, float noundef %i.eu, float noundef %11, float noundef %10, ptr noundef %i.fg) #63, !inline_history !34
+  %13 = getelementptr inbounds nuw i8, ptr %i.eq, i64 28
+  store float %11, ptr %13, align 4, !tbaa !360
+  %i.fh = getelementptr inbounds nuw i8, ptr %i.eq, i64 32
+  store float %10, ptr %i.fh, align 8, !tbaa !730
   store i8 0, ptr %i.bh, align 8, !tbaa !570
   br label %bb.ag
 
@@ -492,11 +501,11 @@ bb.af:                                            ; preds = %_ZN17hb_draw_sessio
 
 _ZN15hb_draw_funcs_t17emit_quadratic_toEPvR15hb_draw_state_tffff.exit: ; preds = %_ZN17hb_draw_session_t12quadratic_toEffff.exit123, %bb.af
   %i.fv = phi ptr [ %i.fu, %bb.af ], [ null, %_ZN17hb_draw_session_t12quadratic_toEffff.exit123 ]
-  %12 = extractelement <2 x float> %i.by, i64 0
-  %13 = extractelement <2 x float> %i.by, i64 1
-  call void %i.fq(ptr noundef nonnull align 8 dereferenceable(72) %i.fk, ptr noundef %i.fm, ptr noundef nonnull align 4 dereferenceable(48) %i.fn, float noundef %i.fi, float noundef %i.fj, float noundef %12, float noundef %13, ptr noundef %i.fv) #63, !inline_history !37
-  %i.fw = getelementptr inbounds nuw i8, ptr %i.eq, i64 28
-  store <2 x float> %i.by, ptr %i.fw, align 4, !tbaa !304
+  call void %i.fq(ptr noundef nonnull align 8 dereferenceable(72) %i.fk, ptr noundef %i.fm, ptr noundef nonnull align 4 dereferenceable(48) %i.fn, float noundef %i.fi, float noundef %i.fj, float noundef %11, float noundef %10, ptr noundef %i.fv) #63, !inline_history !37
+  %14 = getelementptr inbounds nuw i8, ptr %i.eq, i64 28
+  store float %11, ptr %14, align 4, !tbaa !360
+  %i.fw = getelementptr inbounds nuw i8, ptr %i.eq, i64 32
+  store float %10, ptr %i.fw, align 8, !tbaa !730
   br label %bb.ag
 
 bb.ag:                                            ; preds = %_ZN15hb_draw_funcs_t17emit_quadratic_toEPvR15hb_draw_state_tffff.exit, %_ZN15hb_draw_funcs_t13emit_cubic_toEPvR15hb_draw_state_tffffff.exit
@@ -550,7 +559,7 @@ bb.ak:                                            ; preds = %bb.x
   br i1 %.not.i77, label %bb.ao, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %i.gs = load ptr, ptr %i.be, align 8, !tbaa !352 ; 4 uses
+  %i.gs = load ptr, ptr %i.be, align 8, !tbaa !352 ; 5 uses
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !338 ; 4 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gs, i64 8
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !339 ; 2 uses
@@ -578,16 +587,17 @@ bb.an:                                            ; preds = %_ZN17hb_draw_sessio
 
 _ZN15hb_draw_funcs_t12emit_line_toEPvR15hb_draw_state_tff.exit156: ; preds = %_ZN17hb_draw_session_t7line_toEff.exit, %bb.an
   %i.he = phi ptr [ %i.hd, %bb.an ], [ null, %_ZN17hb_draw_session_t7line_toEff.exit ]
-  %14 = extractelement <2 x float> %i.by, i64 0
-  %15 = extractelement <2 x float> %i.by, i64 1
-  call void %i.gz(ptr noundef nonnull align 8 dereferenceable(72) %i.gt, ptr noundef %i.gv, ptr noundef nonnull align 4 dereferenceable(48) %i.gw, float noundef %14, float noundef %15, ptr noundef %i.he) #63, !inline_history !35
-  %i.hf = getelementptr inbounds nuw i8, ptr %i.gs, i64 28
-  store <2 x float> %i.by, ptr %i.hf, align 4, !tbaa !304
+  call void %i.gz(ptr noundef nonnull align 8 dereferenceable(72) %i.gt, ptr noundef %i.gv, ptr noundef nonnull align 4 dereferenceable(48) %i.gw, float noundef %11, float noundef %10, ptr noundef %i.he) #63, !inline_history !35
+  %15 = getelementptr inbounds nuw i8, ptr %i.gs, i64 28
+  store float %11, ptr %15, align 4, !tbaa !360
+  %i.hf = getelementptr inbounds nuw i8, ptr %i.gs, i64 32
+  store float %10, ptr %i.hf, align 8, !tbaa !730
   br label %_ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit95
 
 bb.ao:                                            ; preds = %bb.ak
   store i32 1, ptr %i.bg, align 4
-  store <2 x float> %i.by, ptr %.sroa_idx455, align 8
+  store float %11, ptr %.sroa_idx455, align 8
+  store float %10, ptr %.sroa.15433.0..sroa_idx436, align 4, !tbaa !304
   br label %_ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit95
 
 _ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit95: ; preds = %_ZN17hb_draw_session_t7move_toEff.exit99, %_ZN17hb_draw_session_t7move_toEff.exit, %bb.w, %bb.ag, %_ZN15hb_draw_funcs_t17emit_quadratic_toEPvR15hb_draw_state_tffff.exit154, %_ZN15hb_draw_funcs_t12emit_line_toEPvR15hb_draw_state_tff.exit156, %bb.ao
@@ -629,7 +639,9 @@ bb.as:                                            ; preds = %.lr.ph528
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hs, i64 80
   %i.hu = load <2 x float>, ptr %i.hk, align 4, !tbaa !304
   %i.hv = load <2 x float>, ptr %i.ht, align 8, !tbaa !304
-  %i.hw = fmul <2 x float> %i.hu, %i.hv           ; 17 uses
+  %i.hw = fmul <2 x float> %i.hu, %i.hv           ; 5 uses
+  %16 = extractelement <2 x float> %i.hw, i64 1   ; 11 uses
+  %17 = extractelement <2 x float> %i.hw, i64 0   ; 11 uses
   %i.hx = load i8, ptr %i.bd, align 8, !tbaa !353, !range !380, !noundef !293
   %i.hy = trunc nuw i8 %i.hx to i1
   br i1 %i.hy, label %bb.bi, label %bb.at, !prof !268
@@ -639,8 +651,9 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %bb.at
   store i32 1, ptr %i.bd, align 8
-  store <2 x float> %i.hw, ptr %.sroa_idx447, align 4
-  %i.hz = load ptr, ptr %i.be, align 8, !tbaa !352 ; 8 uses
+  store float %17, ptr %.sroa_idx447, align 4
+  store float %16, ptr %.sroa.15433.0..sroa_idx, align 8, !tbaa !304
+  %i.hz = load ptr, ptr %i.be, align 8, !tbaa !352 ; 9 uses
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !338 ; 6 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.hz, i64 8
   %i.ic = load ptr, ptr %i.ib, align 8, !tbaa !339 ; 2 uses
@@ -704,7 +717,9 @@ _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i106: ; preds = %bb.a
 
 _ZN17hb_draw_session_t7move_toEff.exit107:        ; preds = %bb.au, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i106
   %i.jb = getelementptr inbounds nuw i8, ptr %i.hz, i64 28
-  store <2 x float> %i.hw, ptr %i.jb, align 4, !tbaa !304
+  store float %17, ptr %i.jb, align 4, !tbaa !360
+  %18 = getelementptr inbounds nuw i8, ptr %i.hz, i64 32
+  store float %16, ptr %18, align 8, !tbaa !730
   br label %.critedge
 
 bb.ba:                                            ; preds = %bb.at
@@ -719,7 +734,8 @@ bb.bb:                                            ; preds = %bb.ba
   store i32 1, ptr %i.bd, align 8
   store <2 x float> %i.jg, ptr %.sroa_idx447, align 4, !tbaa !304
   store i32 1, ptr %i.bg, align 4
-  store <2 x float> %i.hw, ptr %.sroa_idx455, align 8
+  store float %17, ptr %.sroa_idx455, align 8
+  store float %16, ptr %.sroa.15433.0..sroa_idx436, align 4, !tbaa !304
   %i.jh = load ptr, ptr %i.be, align 8, !tbaa !352 ; 8 uses
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !338 ; 6 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %i.jh, i64 8
@@ -789,7 +805,8 @@ _ZN17hb_draw_session_t7move_toEff.exit103:        ; preds = %bb.bb, %_ZN15hb_dra
 
 bb.bh:                                            ; preds = %bb.ba
   store i32 1, ptr %i.bf, align 4
-  store <2 x float> %i.hw, ptr %.sroa_idx451, align 8
+  store float %17, ptr %.sroa_idx451, align 8
+  store float %16, ptr %.sroa.15433.0..sroa_idx434, align 4, !tbaa !304
   br label %.critedge
 
 bb.bi:                                            ; preds = %bb.as
@@ -803,7 +820,7 @@ bb.bj:                                            ; preds = %bb.bi
 bb.bk:                                            ; preds = %bb.bj
   %i.km = load i8, ptr %i.bh, align 8, !tbaa !353, !range !380, !noundef !293
   %i.kn = trunc nuw i8 %i.km to i1
-  %i.ko = load ptr, ptr %i.be, align 8, !tbaa !352 ; 8 uses
+  %i.ko = load ptr, ptr %i.be, align 8, !tbaa !352 ; 10 uses
   br i1 %i.kn, label %bb.bl, label %bb.bo
 
 bb.bl:                                            ; preds = %bb.bk
@@ -838,11 +855,11 @@ bb.bn:                                            ; preds = %_ZN17hb_draw_sessio
 
 _ZN15hb_draw_funcs_t13emit_cubic_toEPvR15hb_draw_state_tffffff.exit173: ; preds = %_ZN17hb_draw_session_t8cubic_toEffffff.exit118, %bb.bn
   %i.le = phi ptr [ %i.ld, %bb.bn ], [ null, %_ZN17hb_draw_session_t8cubic_toEffffff.exit118 ]
-  %16 = extractelement <2 x float> %i.hw, i64 0
-  %17 = extractelement <2 x float> %i.hw, i64 1
-  call void %i.kz(ptr noundef nonnull align 8 dereferenceable(72) %i.kt, ptr noundef %i.kv, ptr noundef nonnull align 4 dereferenceable(48) %i.kw, float noundef %i.kp, float noundef %i.kq, float noundef %i.kr, float noundef %i.ks, float noundef %16, float noundef %17, ptr noundef %i.le) #63, !inline_history !34
-  %i.lf = getelementptr inbounds nuw i8, ptr %i.ko, i64 28
-  store <2 x float> %i.hw, ptr %i.lf, align 4, !tbaa !304
+  call void %i.kz(ptr noundef nonnull align 8 dereferenceable(72) %i.kt, ptr noundef %i.kv, ptr noundef nonnull align 4 dereferenceable(48) %i.kw, float noundef %i.kp, float noundef %i.kq, float noundef %i.kr, float noundef %i.ks, float noundef %17, float noundef %16, ptr noundef %i.le) #63, !inline_history !34
+  %19 = getelementptr inbounds nuw i8, ptr %i.ko, i64 28
+  store float %17, ptr %19, align 4, !tbaa !360
+  %i.lf = getelementptr inbounds nuw i8, ptr %i.ko, i64 32
+  store float %16, ptr %i.lf, align 8, !tbaa !730
   store i8 0, ptr %i.bh, align 8, !tbaa !570
   br label %bb.br
 
@@ -876,11 +893,11 @@ bb.bq:                                            ; preds = %_ZN17hb_draw_sessio
 
 _ZN15hb_draw_funcs_t17emit_quadratic_toEPvR15hb_draw_state_tffff.exit175: ; preds = %_ZN17hb_draw_session_t12quadratic_toEffff.exit127, %bb.bq
   %i.lt = phi ptr [ %i.ls, %bb.bq ], [ null, %_ZN17hb_draw_session_t12quadratic_toEffff.exit127 ]
-  %18 = extractelement <2 x float> %i.hw, i64 0
-  %19 = extractelement <2 x float> %i.hw, i64 1
-  call void %i.lo(ptr noundef nonnull align 8 dereferenceable(72) %i.li, ptr noundef %i.lk, ptr noundef nonnull align 4 dereferenceable(48) %i.ll, float noundef %i.lg, float noundef %i.lh, float noundef %18, float noundef %19, ptr noundef %i.lt) #63, !inline_history !37
-  %i.lu = getelementptr inbounds nuw i8, ptr %i.ko, i64 28
-  store <2 x float> %i.hw, ptr %i.lu, align 4, !tbaa !304
+  call void %i.lo(ptr noundef nonnull align 8 dereferenceable(72) %i.li, ptr noundef %i.lk, ptr noundef nonnull align 4 dereferenceable(48) %i.ll, float noundef %i.lg, float noundef %i.lh, float noundef %17, float noundef %16, ptr noundef %i.lt) #63, !inline_history !37
+  %20 = getelementptr inbounds nuw i8, ptr %i.ko, i64 28
+  store float %17, ptr %20, align 4, !tbaa !360
+  %i.lu = getelementptr inbounds nuw i8, ptr %i.ko, i64 32
+  store float %16, ptr %i.lu, align 8, !tbaa !730
   br label %bb.br
 
 bb.br:                                            ; preds = %_ZN15hb_draw_funcs_t17emit_quadratic_toEPvR15hb_draw_state_tffff.exit175, %_ZN15hb_draw_funcs_t13emit_cubic_toEPvR15hb_draw_state_tffffff.exit173
@@ -934,7 +951,7 @@ bb.bv:                                            ; preds = %bb.bi
   br i1 %.not.i58, label %bb.bz, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  %i.mq = load ptr, ptr %i.be, align 8, !tbaa !352 ; 4 uses
+  %i.mq = load ptr, ptr %i.be, align 8, !tbaa !352 ; 5 uses
   %i.mr = load ptr, ptr %i.mq, align 8, !tbaa !338 ; 4 uses
   %i.ms = getelementptr inbounds nuw i8, ptr %i.mq, i64 8
   %i.mt = load ptr, ptr %i.ms, align 8, !tbaa !339 ; 2 uses
@@ -962,16 +979,17 @@ bb.by:                                            ; preds = %_ZN17hb_draw_sessio
 
 _ZN15hb_draw_funcs_t12emit_line_toEPvR15hb_draw_state_tff.exit186: ; preds = %_ZN17hb_draw_session_t7line_toEff.exit134, %bb.by
   %i.nc = phi ptr [ %i.nb, %bb.by ], [ null, %_ZN17hb_draw_session_t7line_toEff.exit134 ]
-  %20 = extractelement <2 x float> %i.hw, i64 0
-  %21 = extractelement <2 x float> %i.hw, i64 1
-  call void %i.mx(ptr noundef nonnull align 8 dereferenceable(72) %i.mr, ptr noundef %i.mt, ptr noundef nonnull align 4 dereferenceable(48) %i.mu, float noundef %20, float noundef %21, ptr noundef %i.nc) #63, !inline_history !35
-  %i.nd = getelementptr inbounds nuw i8, ptr %i.mq, i64 28
-  store <2 x float> %i.hw, ptr %i.nd, align 4, !tbaa !304
+  call void %i.mx(ptr noundef nonnull align 8 dereferenceable(72) %i.mr, ptr noundef %i.mt, ptr noundef nonnull align 4 dereferenceable(48) %i.mu, float noundef %17, float noundef %16, ptr noundef %i.nc) #63, !inline_history !35
+  %21 = getelementptr inbounds nuw i8, ptr %i.mq, i64 28
+  store float %17, ptr %21, align 4, !tbaa !360
+  %i.nd = getelementptr inbounds nuw i8, ptr %i.mq, i64 32
+  store float %16, ptr %i.nd, align 8, !tbaa !730
   br label %.critedge
 
 bb.bz:                                            ; preds = %bb.bv
   store i32 1, ptr %i.bg, align 4
-  store <2 x float> %i.hw, ptr %.sroa_idx455, align 8
+  store float %17, ptr %.sroa_idx455, align 8
+  store float %16, ptr %.sroa.15433.0..sroa_idx436, align 4, !tbaa !304
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.ar, %.preheader, %bb.bz, %_ZN15hb_draw_funcs_t12emit_line_toEPvR15hb_draw_state_tff.exit186, %_ZN15hb_draw_funcs_t17emit_quadratic_toEPvR15hb_draw_state_tffff.exit184, %bb.br, %bb.bh, %_ZN17hb_draw_session_t7move_toEff.exit103, %_ZN17hb_draw_session_t7move_toEff.exit107
@@ -990,7 +1008,9 @@ bb.bz:                                            ; preds = %bb.bv
   %i.nk = getelementptr inbounds nuw i8, ptr %i.nj, i64 80
   %i.nl = load <2 x float>, ptr %i.nf, align 4, !tbaa !304
   %i.nm = load <2 x float>, ptr %i.nk, align 8, !tbaa !304
-  %i.nn = fmul <2 x float> %i.nl, %i.nm           ; 17 uses
+  %i.nn = fmul <2 x float> %i.nl, %i.nm           ; 5 uses
+  %22 = extractelement <2 x float> %i.nn, i64 1   ; 11 uses
+  %23 = extractelement <2 x float> %i.nn, i64 0   ; 11 uses
   %i.no = load i8, ptr %i.bd, align 8, !tbaa !353, !range !380, !noundef !293
   %i.np = trunc nuw i8 %i.no to i1
   br i1 %i.np, label %bb.cp, label %bb.ca, !prof !268
@@ -1000,8 +1020,9 @@ bb.ca:                                            ; preds = %.lr.ph531
 
 bb.cb:                                            ; preds = %bb.ca
   store i32 1, ptr %i.bd, align 8
-  store <2 x float> %i.nn, ptr %.sroa_idx447, align 4
-  %i.nq = load ptr, ptr %i.be, align 8, !tbaa !352 ; 8 uses
+  store float %23, ptr %.sroa_idx447, align 4
+  store float %22, ptr %.sroa.15433.0..sroa_idx, align 8, !tbaa !304
+  %i.nq = load ptr, ptr %i.be, align 8, !tbaa !352 ; 9 uses
   %i.nr = load ptr, ptr %i.nq, align 8, !tbaa !338 ; 6 uses
   %i.ns = getelementptr inbounds nuw i8, ptr %i.nq, i64 8
   %i.nt = load ptr, ptr %i.ns, align 8, !tbaa !339 ; 2 uses
@@ -1065,7 +1086,9 @@ _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i114: ; preds = %bb.c
 
 _ZN17hb_draw_session_t7move_toEff.exit115:        ; preds = %bb.cb, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i114
   %i.os = getelementptr inbounds nuw i8, ptr %i.nq, i64 28
-  store <2 x float> %i.nn, ptr %i.os, align 4, !tbaa !304
+  store float %23, ptr %i.os, align 4, !tbaa !360
+  %24 = getelementptr inbounds nuw i8, ptr %i.nq, i64 32
+  store float %22, ptr %24, align 8, !tbaa !730
   br label %_ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit
 
 bb.ch:                                            ; preds = %bb.ca
@@ -1080,7 +1103,8 @@ bb.ci:                                            ; preds = %bb.ch
   store i32 1, ptr %i.bd, align 8
   store <2 x float> %i.ox, ptr %.sroa_idx447, align 4, !tbaa !304
   store i32 1, ptr %i.bg, align 4
-  store <2 x float> %i.nn, ptr %.sroa_idx455, align 8
+  store float %23, ptr %.sroa_idx455, align 8
+  store float %22, ptr %.sroa.15433.0..sroa_idx436, align 4, !tbaa !304
   %i.oy = load ptr, ptr %i.be, align 8, !tbaa !352 ; 8 uses
   %i.oz = load ptr, ptr %i.oy, align 8, !tbaa !338 ; 6 uses
   %i.pa = getelementptr inbounds nuw i8, ptr %i.oy, i64 8
@@ -1150,7 +1174,8 @@ _ZN17hb_draw_session_t7move_toEff.exit111:        ; preds = %bb.ci, %_ZN15hb_dra
 
 bb.co:                                            ; preds = %bb.ch
   store i32 1, ptr %i.bf, align 4
-  store <2 x float> %i.nn, ptr %.sroa_idx451, align 8
+  store float %23, ptr %.sroa_idx451, align 8
+  store float %22, ptr %.sroa.15433.0..sroa_idx434, align 4, !tbaa !304
   br label %_ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit
 
 bb.cp:                                            ; preds = %.lr.ph531
@@ -1164,7 +1189,7 @@ bb.cq:                                            ; preds = %bb.cp
 bb.cr:                                            ; preds = %bb.cq
   %i.qd = load i8, ptr %i.bh, align 8, !tbaa !353, !range !380, !noundef !293
   %i.qe = trunc nuw i8 %i.qd to i1
-  %i.qf = load ptr, ptr %i.be, align 8, !tbaa !352 ; 8 uses
+  %i.qf = load ptr, ptr %i.be, align 8, !tbaa !352 ; 10 uses
   br i1 %i.qe, label %bb.cs, label %bb.cv
 
 bb.cs:                                            ; preds = %bb.cr
@@ -1199,11 +1224,11 @@ bb.cu:                                            ; preds = %_ZN17hb_draw_sessio
 
 _ZN15hb_draw_funcs_t13emit_cubic_toEPvR15hb_draw_state_tffffff.exit203: ; preds = %_ZN17hb_draw_session_t8cubic_toEffffff.exit120, %bb.cu
   %i.qv = phi ptr [ %i.qu, %bb.cu ], [ null, %_ZN17hb_draw_session_t8cubic_toEffffff.exit120 ]
-  %22 = extractelement <2 x float> %i.nn, i64 0
-  %23 = extractelement <2 x float> %i.nn, i64 1
-  call void %i.qq(ptr noundef nonnull align 8 dereferenceable(72) %i.qk, ptr noundef %i.qm, ptr noundef nonnull align 4 dereferenceable(48) %i.qn, float noundef %i.qg, float noundef %i.qh, float noundef %i.qi, float noundef %i.qj, float noundef %22, float noundef %23, ptr noundef %i.qv) #63, !inline_history !34
-  %i.qw = getelementptr inbounds nuw i8, ptr %i.qf, i64 28
-  store <2 x float> %i.nn, ptr %i.qw, align 4, !tbaa !304
+  call void %i.qq(ptr noundef nonnull align 8 dereferenceable(72) %i.qk, ptr noundef %i.qm, ptr noundef nonnull align 4 dereferenceable(48) %i.qn, float noundef %i.qg, float noundef %i.qh, float noundef %i.qi, float noundef %i.qj, float noundef %23, float noundef %22, ptr noundef %i.qv) #63, !inline_history !34
+  %25 = getelementptr inbounds nuw i8, ptr %i.qf, i64 28
+  store float %23, ptr %25, align 4, !tbaa !360
+  %i.qw = getelementptr inbounds nuw i8, ptr %i.qf, i64 32
+  store float %22, ptr %i.qw, align 8, !tbaa !730
   store i8 0, ptr %i.bh, align 8, !tbaa !570
   br label %bb.cy
 
@@ -1237,11 +1262,11 @@ bb.cx:                                            ; preds = %_ZN17hb_draw_sessio
 
 _ZN15hb_draw_funcs_t17emit_quadratic_toEPvR15hb_draw_state_tffff.exit205: ; preds = %_ZN17hb_draw_session_t12quadratic_toEffff.exit131, %bb.cx
   %i.rk = phi ptr [ %i.rj, %bb.cx ], [ null, %_ZN17hb_draw_session_t12quadratic_toEffff.exit131 ]
-  %24 = extractelement <2 x float> %i.nn, i64 0
-  %25 = extractelement <2 x float> %i.nn, i64 1
-  call void %i.rf(ptr noundef nonnull align 8 dereferenceable(72) %i.qz, ptr noundef %i.rb, ptr noundef nonnull align 4 dereferenceable(48) %i.rc, float noundef %i.qx, float noundef %i.qy, float noundef %24, float noundef %25, ptr noundef %i.rk) #63, !inline_history !37
-  %i.rl = getelementptr inbounds nuw i8, ptr %i.qf, i64 28
-  store <2 x float> %i.nn, ptr %i.rl, align 4, !tbaa !304
+  call void %i.rf(ptr noundef nonnull align 8 dereferenceable(72) %i.qz, ptr noundef %i.rb, ptr noundef nonnull align 4 dereferenceable(48) %i.rc, float noundef %i.qx, float noundef %i.qy, float noundef %23, float noundef %22, ptr noundef %i.rk) #63, !inline_history !37
+  %26 = getelementptr inbounds nuw i8, ptr %i.qf, i64 28
+  store float %23, ptr %26, align 4, !tbaa !360
+  %i.rl = getelementptr inbounds nuw i8, ptr %i.qf, i64 32
+  store float %22, ptr %i.rl, align 8, !tbaa !730
   br label %bb.cy
 
 bb.cy:                                            ; preds = %_ZN15hb_draw_funcs_t17emit_quadratic_toEPvR15hb_draw_state_tffff.exit205, %_ZN15hb_draw_funcs_t13emit_cubic_toEPvR15hb_draw_state_tffffff.exit203
@@ -1295,7 +1320,7 @@ bb.dc:                                            ; preds = %bb.cp
   br i1 %.not.i, label %bb.dg, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
-  %i.sh = load ptr, ptr %i.be, align 8, !tbaa !352 ; 4 uses
+  %i.sh = load ptr, ptr %i.be, align 8, !tbaa !352 ; 5 uses
   %i.si = load ptr, ptr %i.sh, align 8, !tbaa !338 ; 4 uses
   %i.sj = getelementptr inbounds nuw i8, ptr %i.sh, i64 8
   %i.sk = load ptr, ptr %i.sj, align 8, !tbaa !339 ; 2 uses
@@ -1323,16 +1348,17 @@ bb.df:                                            ; preds = %_ZN17hb_draw_sessio
 
 _ZN15hb_draw_funcs_t12emit_line_toEPvR15hb_draw_state_tff.exit216: ; preds = %_ZN17hb_draw_session_t7line_toEff.exit136, %bb.df
   %i.st = phi ptr [ %i.ss, %bb.df ], [ null, %_ZN17hb_draw_session_t7line_toEff.exit136 ]
-  %26 = extractelement <2 x float> %i.nn, i64 0
-  %27 = extractelement <2 x float> %i.nn, i64 1
-  call void %i.so(ptr noundef nonnull align 8 dereferenceable(72) %i.si, ptr noundef %i.sk, ptr noundef nonnull align 4 dereferenceable(48) %i.sl, float noundef %26, float noundef %27, ptr noundef %i.st) #63, !inline_history !35
-  %i.su = getelementptr inbounds nuw i8, ptr %i.sh, i64 28
-  store <2 x float> %i.nn, ptr %i.su, align 4, !tbaa !304
+  call void %i.so(ptr noundef nonnull align 8 dereferenceable(72) %i.si, ptr noundef %i.sk, ptr noundef nonnull align 4 dereferenceable(48) %i.sl, float noundef %23, float noundef %22, ptr noundef %i.st) #63, !inline_history !35
+  %27 = getelementptr inbounds nuw i8, ptr %i.sh, i64 28
+  store float %23, ptr %27, align 4, !tbaa !360
+  %i.su = getelementptr inbounds nuw i8, ptr %i.sh, i64 32
+  store float %22, ptr %i.su, align 8, !tbaa !730
   br label %_ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit
 
 bb.dg:                                            ; preds = %bb.dc
   store i32 1, ptr %i.bg, align 4
-  store <2 x float> %i.nn, ptr %.sroa_idx455, align 8
+  store float %23, ptr %.sroa_idx455, align 8
+  store float %22, ptr %.sroa.15433.0..sroa_idx436, align 4, !tbaa !304
   br label %_ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit
 
 _ZN2OT9glyf_impl14path_builder_t13consume_pointERK15contour_point_t.exit: ; preds = %_ZN17hb_draw_session_t7move_toEff.exit115, %_ZN17hb_draw_session_t7move_toEff.exit111, %bb.co, %bb.cy, %_ZN15hb_draw_funcs_t17emit_quadratic_toEPvR15hb_draw_state_tffff.exit214, %_ZN15hb_draw_funcs_t12emit_line_toEPvR15hb_draw_state_tff.exit216, %bb.dg

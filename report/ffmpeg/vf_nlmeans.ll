@@ -202,14 +202,12 @@ vector.body:                                      ; preds = %.preheader.i.i, %ve
   %wide.load86 = load <4 x float>, ptr %i.fg, align 4, !tbaa !29, !alias.scope !92, !noalias !93
   %i.fm = fdiv nsz <4 x float> %i.fl, %wide.load86
   %i.fn = fadd nsz <4 x float> %i.fm, splat (float 5.000000e-01)
-  %i.fo = fptosi <4 x float> %i.fn to <4 x i32>   ; 3 uses
-  %3 = icmp ult <4 x i32> %i.fo, splat (i32 256)
-  %4 = icmp sgt <4 x i32> %i.fo, splat (i32 -1)
-  %5 = sext <4 x i1> %4 to <4 x i8>
-  %i.fp = trunc nuw <4 x i32> %i.fo to <4 x i8>
-  %6 = select <4 x i1> %3, <4 x i8> %i.fp, <4 x i8> %5
+  %i.fo = fptosi <4 x float> %i.fn to <4 x i32>
+  %3 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.fo, <4 x i32> zeroinitializer)
+  %4 = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %3, <4 x i32> splat (i32 255))
+  %i.fp = trunc nuw <4 x i32> %4 to <4 x i8>
   %i.fq = getelementptr inbounds nuw i8, ptr %.02634.i.i, i64 %index
-  store <4 x i8> %6, ptr %i.fq, align 1, !tbaa !55, !alias.scope !97, !noalias !94
+  store <4 x i8> %i.fp, ptr %i.fq, align 1, !tbaa !55, !alias.scope !97, !noalias !94
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.fr = icmp eq i64 %index.next, %n.vec
   br i1 %i.fr, label %middle.block, label %vector.body, !llvm.loop !76
@@ -246,14 +244,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.gg = load float, ptr %i.fx, align 4, !tbaa !29
   %i.gh = fdiv nsz float %i.gf, %i.gg
   %i.gi = fadd nsz float %i.gh, 5.000000e-01
-  %i.gj = fptosi float %i.gi to i32               ; 3 uses
-  %.not.i.i.i = icmp ult i32 %i.gj, 256
-  %isnotneg.i.i.i = icmp sgt i32 %i.gj, -1
-  %7 = sext i1 %isnotneg.i.i.i to i8
-  %i.gk = trunc nuw i32 %i.gj to i8
-  %.0.i.i.i = select i1 %.not.i.i.i, i8 %i.gk, i8 %7
+  %i.gj = fptosi float %i.gi to i32
+  %5 = call i32 @llvm.smax.i32(i32 %i.gj, i32 0)
+  %.0.i30.i.i = call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.gk = trunc nuw i32 %.0.i30.i.i to i8
   %i.gl = getelementptr inbounds nuw i8, ptr %.02634.i.i, i64 %indvars.iv.i.i
-  store i8 %.0.i.i.i, ptr %i.gl, align 1, !tbaa !55
+  store i8 %i.gk, ptr %i.gl, align 1, !tbaa !55
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %scalar.ph, !llvm.loop !78
@@ -655,6 +651,15 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #6
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

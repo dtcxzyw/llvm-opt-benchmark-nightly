@@ -174,37 +174,35 @@ bb.a:
   %i.bw = insertelement <2 x float> poison, float %i.bv, i64 0
   %i.bx = shufflevector <2 x float> %i.bw, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.by = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bx, <2 x float> %i.aa, <2 x float> %i.bo)
-  %i.bz = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aw, <2 x float> %i.bx, <2 x float> %i.by) ; 2 uses
-  %4 = fcmp nsz ogt <2 x float> %i.bz, zeroinitializer
-  %5 = tail call nsz float @llvm.fmuladd.f32(float %i.bv, float %i.ac, float %i.bj)
-  %6 = tail call nsz float @llvm.fmuladd.f32(float %i.y, float %i.bv, float %5) ; 2 uses
-  %7 = fcmp nsz ogt float %6, 0.000000e+00
-  %i.ca = fmul nnan nsz float %6, 2.550000e+02
+  %i.bz = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aw, <2 x float> %i.bx, <2 x float> %i.by) ; 3 uses
+  %4 = extractelement <2 x float> %i.bz, i64 0
+  %5 = fmul nnan nsz float %4, 2.550000e+02
+  %6 = fptosi float %5 to i32
+  %7 = fcmp nsz ogt <2 x float> %i.bz, zeroinitializer ; 2 uses
+  %8 = extractelement <2 x float> %i.bz, i64 1
+  %i.ca = fmul nnan nsz float %8, 2.550000e+02
   %i.cb = fptosi float %i.ca to i32
-  %8 = select i1 %7, i32 %i.cb, i32 0             ; 3 uses
-  %9 = fmul nnan nsz <2 x float> %i.bz, splat (float 2.550000e+02)
-  %10 = fptosi <2 x float> %9 to <2 x i32>
-  %11 = select <2 x i1> %4, <2 x i32> %10, <2 x i32> zeroinitializer ; 3 uses
-  %12 = extractelement <2 x i32> %11, i64 0       ; 2 uses
-  %isnotneg.i121 = icmp sgt i32 %12, -1
-  %13 = sext i1 %isnotneg.i121 to i8
-  %i.cc = trunc nuw i32 %12 to i8
-  %14 = icmp ult <2 x i32> %11, splat (i32 256)   ; 2 uses
-  %i.cd = extractelement <2 x i1> %14, i64 0
-  %.0.i122 = select i1 %i.cd, i8 %i.cc, i8 %13
+  %9 = tail call nsz float @llvm.fmuladd.f32(float %i.bv, float %i.ac, float %i.bj)
+  %10 = tail call nsz float @llvm.fmuladd.f32(float %i.y, float %i.bv, float %9) ; 2 uses
+  %11 = fcmp nsz ogt float %10, 0.000000e+00
+  %12 = fmul nnan nsz float %10, 2.550000e+02
+  %13 = fptosi float %12 to i32
+  %14 = tail call i32 @llvm.smax.i32(i32 %6, i32 0)
+  %15 = tail call i32 @llvm.umin.i32(i32 %14, i32 255)
+  %i.cc = trunc nuw i32 %15 to i8
+  %i.cd = extractelement <2 x i1> %7, i64 0
+  %.0.i122 = select i1 %i.cd, i8 %i.cc, i8 0
   store i8 %.0.i122, ptr %gep, align 1, !tbaa !51
-  %15 = extractelement <2 x i32> %11, i64 1       ; 2 uses
-  %isnotneg.i118 = icmp sgt i32 %15, -1
-  %16 = sext i1 %isnotneg.i118 to i8
-  %i.ce = trunc nuw i32 %15 to i8
-  %i.cf = extractelement <2 x i1> %14, i64 1
-  %.0.i119 = select i1 %i.cf, i8 %i.ce, i8 %16
+  %16 = tail call i32 @llvm.smax.i32(i32 %i.cb, i32 0)
+  %17 = tail call i32 @llvm.umin.i32(i32 %16, i32 255)
+  %i.ce = trunc nuw i32 %17 to i8
+  %i.cf = extractelement <2 x i1> %7, i64 1
+  %.0.i119 = select i1 %i.cf, i8 %i.ce, i8 0
   store i8 %.0.i119, ptr %gep136, align 1, !tbaa !51
-  %.not.i114 = icmp ult i32 %8, 256
-  %isnotneg.i115 = icmp sgt i32 %8, -1
-  %17 = sext i1 %isnotneg.i115 to i8
-  %i.cg = trunc nuw i32 %8 to i8
-  %.0.i116 = select i1 %.not.i114, i8 %i.cg, i8 %17
+  %18 = tail call i32 @llvm.smax.i32(i32 %13, i32 0)
+  %19 = tail call i32 @llvm.umin.i32(i32 %18, i32 255)
+  %i.cg = trunc nuw i32 %19 to i8
+  %.0.i116 = select i1 %11, i8 %i.cg, i8 0
   store i8 %.0.i116, ptr %gep138, align 1, !tbaa !51
   %i.ch = load i32, ptr %i.ao, align 8, !tbaa !53
   %.not113 = icmp eq i32 %i.ch, 0
@@ -213,14 +211,12 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.ci = fsub nsz float 1.000000e+00, %i.bv
   %i.cj = fmul nsz float %i.ci, 2.550000e+02
-  %i.ck = fptosi float %i.cj to i32               ; 3 uses
-  %.not.i = icmp ult i32 %i.ck, 256
-  %isnotneg.i = icmp sgt i32 %i.ck, -1
-  %18 = sext i1 %isnotneg.i to i8
-  %i.cl = trunc nuw i32 %i.ck to i8
-  %.0.i = select i1 %.not.i, i8 %i.cl, i8 %18
+  %i.ck = fptosi float %i.cj to i32
+  %20 = tail call i32 @llvm.smax.i32(i32 %i.ck, i32 0)
+  %.0.i126 = tail call i32 @llvm.umin.i32(i32 %20, i32 255)
+  %i.cl = trunc nuw i32 %.0.i126 to i8
   %gep140 = getelementptr i8, ptr %invariant.gep139, i64 %i.be
-  store i8 %.0.i, ptr %gep140, align 1, !tbaa !51
+  store i8 %i.cl, ptr %gep140, align 1, !tbaa !51
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
@@ -278,6 +274,12 @@ bb.c:                                             ; preds = %bb.b
 declare ptr @av_pix_fmt_desc_get(i32 noundef) local_unnamed_addr #0
 
 declare ptr @av_default_item_name(ptr noundef) #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4

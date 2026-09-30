@@ -205,10 +205,10 @@ define void @b3World_Explode(i32 %0, ptr nofree noundef readonly captures(none) 
 bb.a:
   %2 = alloca %struct.b3RecArgs_WorldExplode, align 8 ; 6 uses
   %3 = alloca %struct.ExplosionContext, align 8   ; 6 uses
-  %4 = alloca %struct.b3AABB, align 16            ; 5 uses
+  %4 = alloca %struct.b3AABB, align 16            ; 6 uses
   %i.a = load i64, ptr %1, align 8, !tbaa !632
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.019.0.copyload = load <2 x float>, ptr %i.b, align 8, !tbaa !142 ; 2 uses
+  %.sroa.019.0.copyload = load <2 x float>, ptr %i.b, align 8, !tbaa !142 ; 3 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.d = load <4 x float>, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !142 ; 4 uses
@@ -250,22 +250,24 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.5.0..sroa_idx21 = getelementptr inbounds nuw i8, ptr %3, i64 16
   store <4 x float> %i.d, ptr %.sroa.5.0..sroa_idx21, align 8, !tbaa !142
   %i.t = extractelement <4 x float> %i.d, i64 2
-  %i.u = fadd float %i.e, %i.t                    ; 2 uses
+  %i.u = fadd float %i.e, %i.t                    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
-  %5 = shufflevector <2 x float> %.sroa.019.0.copyload, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
-  %6 = shufflevector <4 x float> %5, <4 x float> %i.d, <4 x i32> <i32 0, i32 1, i32 4, i32 0> ; 2 uses
+  %.sroa.01.4.vec.extract.i = extractelement <2 x float> %.sroa.019.0.copyload, i64 1
+  %5 = shufflevector <2 x float> %.sroa.019.0.copyload, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 0>
+  %6 = shufflevector <4 x float> %5, <4 x float> %i.d, <4 x i32> <i32 0, i32 1, i32 4, i32 3> ; 2 uses
   %i.v = insertelement <4 x float> poison, float %i.u, i64 0
   %i.w = shufflevector <4 x float> %i.v, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.x = fsub <4 x float> %6, %i.w
   %i.y = fadd <4 x float> %6, %i.w
   %i.z = shufflevector <4 x float> %i.x, <4 x float> %i.y, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
   store <4 x float> %i.z, ptr %4, align 16, !tbaa !142, !alias.scope !635
+  %7 = fadd float %.sroa.01.4.vec.extract.i, %i.u
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %7 = shufflevector <4 x float> %5, <4 x float> %i.d, <2 x i32> <i32 1, i32 4>
-  %8 = insertelement <2 x float> poison, float %i.u, i64 0
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
-  %10 = fadd <2 x float> %7, %9
-  store <2 x float> %10, ptr %i.aa, align 16, !tbaa !142, !alias.scope !635
+  store float %7, ptr %i.aa, align 16, !tbaa !310, !alias.scope !635
+  %8 = extractelement <4 x float> %i.d, i64 0
+  %9 = fadd float %8, %i.u
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 20
+  store float %9, ptr %10, align 4, !tbaa !311, !alias.scope !635
   %i.ab = getelementptr i8, ptr %i.h, i64 -3808
   %i.ac = call i64 @b3DynamicTree_Query(ptr noundef nonnull %i.ab, ptr noundef nonnull byval(%struct.b3AABB) align 8 %4, i64 noundef %i.a, i1 noundef zeroext false, ptr noundef nonnull @ExplosionCallback, ptr noundef nonnull %3) #21 ; 0 uses
   store i8 0, ptr %i.i, align 1, !tbaa !76

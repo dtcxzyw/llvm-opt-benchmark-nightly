@@ -142,7 +142,7 @@ bb.c:                                             ; preds = %.lr.ph127, %.loopex
 
 .lr.ph124:                                        ; preds = %.preheader, %float2rgbe.exit
   %indvars.iv138 = phi i64 [ %indvars.iv.next139, %float2rgbe.exit ], [ 0, %.preheader ] ; 4 uses
-  %.3122 = phi ptr [ %i.cb, %float2rgbe.exit ], [ %.2125, %.preheader ] ; 2 uses
+  %.3122 = phi ptr [ %i.cb, %float2rgbe.exit ], [ %.2125, %.preheader ] ; 5 uses
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv138
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !53 ; 3 uses
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.bd, i64 %indvars.iv138
@@ -160,32 +160,43 @@ bb.c:                                             ; preds = %.lr.ph127, %.loopex
 bb.d:                                             ; preds = %.lr.ph124
   %i.bw = call nsz float @frexpf(float noundef %..i, ptr noundef nonnull %i.b) #7
   %i.bx = fmul nsz float %i.bw, 2.560000e+02
-  %i.by = fdiv nsz float %i.bx, %..i              ; 2 uses
-  %i.bz = fmul nsz float %i.br, %i.by
+  %i.by = fdiv nsz float %i.bx, %..i              ; 3 uses
+  %i.bz = fmul nsz float %i.bn, %i.by
   %i.ca = fptosi float %i.bz to i32
-  %4 = load i32, ptr %i.b, align 4, !tbaa !51     ; 2 uses
-  %5 = add nsw i32 %4, 128
-  %6 = insertelement <4 x float> poison, float %i.bn, i64 0
-  %7 = insertelement <4 x float> %6, float %i.bp, i64 1
-  %8 = insertelement <2 x float> poison, float %i.by, i64 0
-  %9 = insertelement <4 x i32> poison, i32 %i.ca, i64 2 ; 2 uses
-  %10 = insertelement <4 x i32> %9, i32 %5, i64 3
-  %11 = shufflevector <2 x float> %8, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
-  %12 = fmul nsz <4 x float> %7, %11
-  %13 = fptosi <4 x float> %12 to <4 x i32>       ; 2 uses
-  %14 = shufflevector <4 x i32> %13, <4 x i32> %10, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
-  %15 = icmp ult <4 x i32> %14, splat (i32 256)
-  %16 = insertelement <4 x i32> %9, i32 %4, i64 3
-  %17 = shufflevector <4 x i32> %13, <4 x i32> %16, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %18 = icmp sgt <4 x i32> %17, <i32 -1, i32 -1, i32 -1, i32 -129>
-  %19 = sext <4 x i1> %18 to <4 x i8>
-  %20 = trunc <4 x i32> %14 to <4 x i8>
-  %21 = select <4 x i1> %15, <4 x i8> %20, <4 x i8> %19
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.ca, i32 0)
+  %.0.i3738.i = tail call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %.0.i37.i = trunc nuw i32 %.0.i3738.i to i8
+  %5 = fmul nsz float %i.bp, %i.by
+  %6 = fptosi float %5 to i32
+  %7 = tail call i32 @llvm.smax.i32(i32 %6, i32 0)
+  %.0.i3439.i = tail call i32 @llvm.umin.i32(i32 %7, i32 255)
+  %.0.i34.i = trunc nuw i32 %.0.i3439.i to i8
+  %8 = fmul nsz float %i.br, %i.by
+  %9 = fptosi float %8 to i32
+  %10 = tail call i32 @llvm.smax.i32(i32 %9, i32 0)
+  %.0.i3140.i = tail call i32 @llvm.umin.i32(i32 %10, i32 255)
+  %.0.i31.i = trunc nuw i32 %.0.i3140.i to i8
+  %11 = load i32, ptr %i.b, align 4, !tbaa !51    ; 2 uses
+  %12 = add nsw i32 %11, 128                      ; 2 uses
+  %.not.i.i = icmp ult i32 %12, 256
+  %isnotneg.i.i = icmp sgt i32 %11, -129
+  %13 = sext i1 %isnotneg.i.i to i8
+  %14 = trunc nuw i32 %12 to i8
+  %.0.i.i = select i1 %.not.i.i, i8 %14, i8 %13
   br label %float2rgbe.exit
 
 float2rgbe.exit:                                  ; preds = %.lr.ph124, %bb.d
-  %22 = phi <4 x i8> [ %21, %bb.d ], [ zeroinitializer, %.lr.ph124 ]
-  store <4 x i8> %22, ptr %.3122, align 1, !tbaa !54
+  %.0.i.sink.i = phi i8 [ %.0.i.i, %bb.d ], [ 0, %.lr.ph124 ]
+  %.0.i31.sink.i = phi i8 [ %.0.i31.i, %bb.d ], [ 0, %.lr.ph124 ]
+  %.0.i34.sink.i = phi i8 [ %.0.i34.i, %bb.d ], [ 0, %.lr.ph124 ]
+  %.0.i37.sink.i = phi i8 [ %.0.i37.i, %bb.d ], [ 0, %.lr.ph124 ]
+  %15 = getelementptr inbounds nuw i8, ptr %.3122, i64 3
+  store i8 %.0.i.sink.i, ptr %15, align 1, !tbaa !54
+  %16 = getelementptr inbounds nuw i8, ptr %.3122, i64 2
+  store i8 %.0.i31.sink.i, ptr %16, align 1, !tbaa !54
+  %17 = getelementptr inbounds nuw i8, ptr %.3122, i64 1
+  store i8 %.0.i34.sink.i, ptr %17, align 1, !tbaa !54
+  store i8 %.0.i37.sink.i, ptr %.3122, align 1, !tbaa !54
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   %i.cb = getelementptr inbounds nuw i8, ptr %.3122, i64 4 ; 2 uses
   %indvars.iv.next139 = add nuw nsw i64 %indvars.iv138, 1 ; 2 uses
@@ -220,7 +231,7 @@ bb.e:                                             ; preds = %bb.c
   %indvars.iv = phi i64 [ %indvars.iv.next, %float2rgbe.exit86 ], [ 0, %bb.e ] ; 5 uses
   %i.cr = load ptr, ptr %i.d, align 8, !tbaa !31
   %i.cs = shl nuw nsw i64 %indvars.iv, 2
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.cs
+  %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.cs ; 4 uses
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv
   %i.cv = load float, ptr %i.cu, align 4, !tbaa !53 ; 3 uses
   %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.bd, i64 %indvars.iv
@@ -238,32 +249,43 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %.lr.ph
   %i.de = call nsz float @frexpf(float noundef %..i69, ptr noundef nonnull %i.a) #7
   %i.df = fmul nsz float %i.de, 2.560000e+02
-  %i.dg = fdiv nsz float %i.df, %..i69            ; 2 uses
-  %i.dh = fmul nsz float %i.cz, %i.dg
+  %i.dg = fdiv nsz float %i.df, %..i69            ; 3 uses
+  %i.dh = fmul nsz float %i.cv, %i.dg
   %i.di = fptosi float %i.dh to i32
-  %23 = load i32, ptr %i.a, align 4, !tbaa !51    ; 2 uses
-  %24 = add nsw i32 %23, 128
-  %25 = insertelement <4 x float> poison, float %i.cv, i64 0
-  %26 = insertelement <4 x float> %25, float %i.cx, i64 1
-  %27 = insertelement <2 x float> poison, float %i.dg, i64 0
-  %28 = insertelement <4 x i32> poison, i32 %i.di, i64 2 ; 2 uses
-  %29 = insertelement <4 x i32> %28, i32 %24, i64 3
-  %30 = shufflevector <2 x float> %27, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
-  %31 = fmul nsz <4 x float> %26, %30
-  %32 = fptosi <4 x float> %31 to <4 x i32>       ; 2 uses
-  %33 = shufflevector <4 x i32> %32, <4 x i32> %29, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
-  %34 = icmp ult <4 x i32> %33, splat (i32 256)
-  %35 = insertelement <4 x i32> %28, i32 %23, i64 3
-  %36 = shufflevector <4 x i32> %32, <4 x i32> %35, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %37 = icmp sgt <4 x i32> %36, <i32 -1, i32 -1, i32 -1, i32 -129>
-  %38 = sext <4 x i1> %37 to <4 x i8>
-  %39 = trunc <4 x i32> %33 to <4 x i8>
-  %40 = select <4 x i1> %34, <4 x i8> %39, <4 x i8> %38
+  %18 = tail call i32 @llvm.smax.i32(i32 %i.di, i32 0)
+  %.0.i3738.i70 = tail call i32 @llvm.umin.i32(i32 %18, i32 255)
+  %.0.i37.i71 = trunc nuw i32 %.0.i3738.i70 to i8
+  %19 = fmul nsz float %i.cx, %i.dg
+  %20 = fptosi float %19 to i32
+  %21 = tail call i32 @llvm.smax.i32(i32 %20, i32 0)
+  %.0.i3439.i72 = tail call i32 @llvm.umin.i32(i32 %21, i32 255)
+  %.0.i34.i73 = trunc nuw i32 %.0.i3439.i72 to i8
+  %22 = fmul nsz float %i.cz, %i.dg
+  %23 = fptosi float %22 to i32
+  %24 = tail call i32 @llvm.smax.i32(i32 %23, i32 0)
+  %.0.i3140.i74 = tail call i32 @llvm.umin.i32(i32 %24, i32 255)
+  %.0.i31.i75 = trunc nuw i32 %.0.i3140.i74 to i8
+  %25 = load i32, ptr %i.a, align 4, !tbaa !51    ; 2 uses
+  %26 = add nsw i32 %25, 128                      ; 2 uses
+  %.not.i.i76 = icmp ult i32 %26, 256
+  %isnotneg.i.i77 = icmp sgt i32 %25, -129
+  %27 = sext i1 %isnotneg.i.i77 to i8
+  %28 = trunc nuw i32 %26 to i8
+  %.0.i.i78 = select i1 %.not.i.i76, i8 %28, i8 %27
   br label %float2rgbe.exit86
 
 float2rgbe.exit86:                                ; preds = %.lr.ph, %bb.f
-  %41 = phi <4 x i8> [ %40, %bb.f ], [ zeroinitializer, %.lr.ph ]
-  store <4 x i8> %41, ptr %i.ct, align 1, !tbaa !54
+  %.0.i.sink.i79 = phi i8 [ %.0.i.i78, %bb.f ], [ 0, %.lr.ph ]
+  %.0.i31.sink.i80 = phi i8 [ %.0.i31.i75, %bb.f ], [ 0, %.lr.ph ]
+  %.0.i34.sink.i81 = phi i8 [ %.0.i34.i73, %bb.f ], [ 0, %.lr.ph ]
+  %.0.i37.sink.i82 = phi i8 [ %.0.i37.i71, %bb.f ], [ 0, %.lr.ph ]
+  %29 = getelementptr inbounds nuw i8, ptr %i.ct, i64 3
+  store i8 %.0.i.sink.i79, ptr %29, align 1, !tbaa !54
+  %30 = getelementptr inbounds nuw i8, ptr %i.ct, i64 2
+  store i8 %.0.i31.sink.i80, ptr %30, align 1, !tbaa !54
+  %31 = getelementptr inbounds nuw i8, ptr %i.ct, i64 1
+  store i8 %.0.i34.sink.i81, ptr %31, align 1, !tbaa !54
+  store i8 %.0.i37.sink.i82, ptr %i.ct, align 1, !tbaa !54
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dj = load i32, ptr %i.i, align 8, !tbaa !29  ; 2 uses
@@ -665,6 +687,9 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #6
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
