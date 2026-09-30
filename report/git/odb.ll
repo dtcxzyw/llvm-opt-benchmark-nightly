@@ -204,8 +204,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = shl i32 %2, 1
-  %i.d = and i32 %i.c, 6
-  %.1 = xor i32 %i.d, 6
+  %3 = and i32 %i.c, 2
+  %i.d = and i32 %2, 2
+  %.not9 = icmp eq i32 %i.d, 0
+  %.1.v = select i1 %.not9, i32 6, i32 2
+  %.1 = xor i32 %.1.v, %3
   %i.e = tail call i32 @odb_read_object_info_extended(ptr noundef %0, ptr noundef %1, ptr noundef null, i32 noundef %.1)
   %i.f = icmp sgt i32 %i.e, -1
   %i.g = zext i1 %i.f to i32

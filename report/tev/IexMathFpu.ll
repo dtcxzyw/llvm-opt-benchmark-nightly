@@ -202,18 +202,21 @@ bb.a:
   %i.e = and i16 %i.d, 63
   %i.f = zext nneg i16 %i.e to i32
   %i.g = lshr i32 %i.c, 7
-  %i.h = and i32 %i.g, %i.f                       ; 4 uses
+  %i.h = and i32 %i.g, %i.f                       ; 5 uses
   %i.i = lshr i32 %i.h, 3
-  %i.j = and i32 %i.h, 4
-  %i.k = and i32 %i.i, 3
-  %0 = or disjoint i32 %i.k, %i.j
-  %.2 = xor i32 %0, 7                             ; 2 uses
+  %i.j = and i32 %i.i, 1
+  %i.k = and i32 %i.h, 16
+  %.not11 = icmp eq i32 %i.k, 0
+  %.1.v = select i1 %.not11, i32 3, i32 1
+  %.2 = xor i32 %.1.v, %i.j
+  %0 = and i32 %i.h, 4
+  %i.l = or disjoint i32 %.2, %0
   %.not13 = icmp samesign ult i32 %i.h, 32
-  %i.l = or disjoint i32 %.2, 8
-  %.3.a = select i1 %.not13, i32 %i.l, i32 %.2
+  %.3.a = select i1 %.not13, i32 12, i32 4
+  %.3 = xor i32 %i.l, %.3.a
   %i.m = shl nuw nsw i32 %i.h, 4
   %i.n = and i32 %i.m, 16
-  %i.o = or disjoint i32 %.3.a, %i.n
+  %i.o = or disjoint i32 %.3, %i.n
   %.4 = xor i32 %i.o, 16
   ret i32 %.4
 }

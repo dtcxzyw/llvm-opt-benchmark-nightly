@@ -205,7 +205,7 @@ Vec_WecInit.exit.i.i:                             ; preds = %bb.ar, %Cbs3_ManGro
 
 .critedge.i.i:                                    ; preds = %Vec_WecInit.exit.i.i, %bb.cc
   %.val1625.i.i = phi i32 [ %.val16.i.i, %bb.cc ], [ %.val1618.i.i, %Vec_WecInit.exit.i.i ]
-  %indvars.iv20.i.i = phi i64 [ %indvars.iv.next21.i.i, %bb.cc ], [ 2, %Vec_WecInit.exit.i.i ] ; 10 uses
+  %indvars.iv20.i.i = phi i64 [ %indvars.iv.next21.i.i, %bb.cc ], [ 2, %Vec_WecInit.exit.i.i ] ; 11 uses
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.cc ], [ 3, %Vec_WecInit.exit.i.i ] ; 2 uses
   %.val15.i.i = load ptr, ptr %i.bc, align 8, !tbaa !36 ; 2 uses
   %i.hq = getelementptr inbounds nuw [4 x i8], ptr %.val15.i.i, i64 %indvars.iv20.i.i
@@ -213,7 +213,11 @@ Vec_WecInit.exit.i.i:                             ; preds = %bb.ar, %Cbs3_ManGro
   %i.hs = getelementptr inbounds nuw [4 x i8], ptr %.val15.i.i, i64 %indvars.iv.i.i
   %i.ht = load i32, ptr %i.hs, align 4, !tbaa !40 ; 5 uses
   %.not.i.i = icmp eq i32 %i.hr, 0
-  br i1 %.not.i.i, label %bb.cc, label %bb.as
+  br i1 %.not.i.i, label %.critedge.i._crit_edge.i, label %bb.as
+
+.critedge.i._crit_edge.i:                         ; preds = %.critedge.i.i
+  %.pre17.i = trunc i64 %indvars.iv20.i.i to i32
+  br label %bb.cc
 
 bb.as:                                            ; preds = %.critedge.i.i
   %i.hu = load i32, ptr %i.ai, align 4, !tbaa !41 ; 2 uses
@@ -521,7 +525,7 @@ Vec_WecPushTwo.exit57.i.i.i:                      ; preds = %Vec_WecGrow.exit.i5
   %.val.i54.i.i.i = load ptr, ptr %i.aj, align 8, !tbaa !43
   %i.mh = sext i32 %i.hr to i64
   %i.mi = getelementptr inbounds [16 x i8], ptr %.val.i54.i.i.i, i64 %i.mh
-  %i.mj = trunc nuw nsw i64 %indvars.iv20.i.i to i32 ; 2 uses
+  %i.mj = trunc i64 %indvars.iv20.i.i to i32      ; 3 uses
   call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.mi, i32 noundef %i.mj, i32 noundef %i.kc)
   %i.mk = load i32, ptr %i.ai, align 4, !tbaa !41 ; 2 uses
   %.not.i58.i.i.i = icmp sgt i32 %i.mk, %i.ht
@@ -576,12 +580,12 @@ Cbs3_ManAddConstr.exit.i.i:                       ; preds = %Vec_WecGrow.exit.i6
   %.val16.pre.i.i = load i32, ptr %i.ah, align 4, !tbaa !34
   br label %bb.cc
 
-bb.cc:                                            ; preds = %Cbs3_ManAddConstr.exit.i.i, %.critedge.i.i
-  %.val16.i.i = phi i32 [ %.val1625.i.i, %.critedge.i.i ], [ %.val16.pre.i.i, %Cbs3_ManAddConstr.exit.i.i ] ; 2 uses
-  %indvars.iv.next21.i.i = add nuw nsw i64 %indvars.iv20.i.i, 2 ; 2 uses
-  %11 = or disjoint i64 %indvars.iv.next21.i.i, 1
-  %12 = sext i32 %.val16.i.i to i64
-  %i.nd = icmp slt i64 %11, %12
+bb.cc:                                            ; preds = %Cbs3_ManAddConstr.exit.i.i, %.critedge.i._crit_edge.i
+  %.pre-phi.i = phi i32 [ %.pre17.i, %.critedge.i._crit_edge.i ], [ %i.mj, %Cbs3_ManAddConstr.exit.i.i ]
+  %.val16.i.i = phi i32 [ %.val1625.i.i, %.critedge.i._crit_edge.i ], [ %.val16.pre.i.i, %Cbs3_ManAddConstr.exit.i.i ] ; 2 uses
+  %indvars.iv.next21.i.i = add nuw nsw i64 %indvars.iv20.i.i, 2
+  %11 = add i32 %.pre-phi.i, 3
+  %i.nd = icmp slt i32 %11, %.val16.i.i
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 2
   br i1 %i.nd, label %.critedge.i.i, label %Cbs3_ManToSolver2.exit, !llvm.loop !131
 

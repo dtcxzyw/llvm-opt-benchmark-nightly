@@ -204,10 +204,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = load i32, ptr %i.b, align 4, !tbaa !29
+  %i.f = load i32, ptr %i.b, align 4, !tbaa !29   ; 2 uses
   %i.g = lshr i32 %i.f, 1
-  %i.h = and i32 %i.g, 3
-  %.1 = xor i32 %i.h, 3
+  %.lobit = and i32 %i.g, 1
+  %i.h = and i32 %i.f, 4
+  %.not19 = icmp eq i32 %i.h, 0
+  %.1.v = select i1 %.not19, i32 3, i32 1
+  %.1 = xor i32 %.1.v, %.lobit
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !122
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 32
