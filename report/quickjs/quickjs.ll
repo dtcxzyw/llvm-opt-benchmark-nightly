@@ -205,11 +205,18 @@ bb.n:                                             ; preds = %bb.i, %bb.h, %bb.g
 
 .preheader.i:                                     ; preds = %bb.n
   %.not43 = icmp eq i64 %i.j, 0
-  br i1 %.not43, label %.loopexit, label %.lr.ph.i
+  br i1 %.not43, label %.loopexit, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %.preheader.i, %bb.w
-  %.02444.i = phi i64 [ %i.cc, %bb.w ], [ 0, %.preheader.i ] ; 2 uses
-  %.02543.i = phi i64 [ %i.ca, %bb.w ], [ 0, %.preheader.i ] ; 3 uses
+.lr.ph.i.preheader:                               ; preds = %.preheader.i
+  %5 = add i64 %i.j, -2
+  %6 = lshr exact i64 %5, 1
+  %umin = call i64 @llvm.umin.i64(i64 %i.k, i64 %6) ; 2 uses
+  %7 = add nuw i64 %umin, 1
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.w
+  %.02444.i = phi i64 [ %i.cc, %bb.w ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
+  %.02543.i = phi i64 [ %i.ca, %bb.w ], [ 0, %.lr.ph.i.preheader ] ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.i, i64 %.02444.i ; 2 uses
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !218 ; 4 uses
   %i.bf = zext i8 %i.be to i32                    ; 3 uses
@@ -277,18 +284,16 @@ bb.w:                                             ; preds = %u8a_hex_nibble.exit
   %i.bx = shl nuw nsw i32 %.0.i.i, 4
   %i.by = or i32 %.0.i37.i, %i.bx
   %i.bz = trunc i32 %i.by to i8
-  %i.ca = add nuw i64 %.02543.i, 1                ; 2 uses
+  %i.ca = add nuw nsw i64 %.02543.i, 1
   %i.cb = getelementptr inbounds nuw i8, ptr %i.w, i64 %.02543.i
   store i8 %i.bz, ptr %i.cb, align 1, !tbaa !218
-  %i.cc = add i64 %.02444.i, 2                    ; 2 uses
-  %5 = icmp ult i64 %i.cc, %i.j
-  %6 = icmp samesign ult i64 %.02543.i, %i.k
-  %7 = select i1 %5, i1 %6, i1 false
-  br i1 %7, label %.lr.ph.i, label %.loopexit
+  %i.cc = add nuw i64 %.02444.i, 2
+  %exitcond.not = icmp eq i64 %.02543.i, %umin
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.i
 
 .loopexit:                                        ; preds = %u8a_hex_nibble.exit38.i, %bb.w, %bb.n, %.preheader.i
   %.not35 = phi i1 [ true, %.preheader.i ], [ false, %bb.n ], [ %or.cond.not.i, %bb.w ], [ %or.cond.not.i, %u8a_hex_nibble.exit38.i ]
-  %.2.i = phi i64 [ 0, %.preheader.i ], [ 0, %bb.n ], [ 0, %u8a_hex_nibble.exit38.i ], [ %i.ca, %bb.w ]
+  %.2.i = phi i64 [ 0, %.preheader.i ], [ 0, %bb.n ], [ 0, %u8a_hex_nibble.exit38.i ], [ %7, %bb.w ]
   %i.cd = load ptr, ptr %i.m, align 8, !tbaa !232
   %i.ce = getelementptr inbounds i8, ptr %i.i, i64 -28 ; 2 uses
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !191 ; 2 uses

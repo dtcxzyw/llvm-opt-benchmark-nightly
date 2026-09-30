@@ -205,7 +205,7 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4, !tbaa !44
   %i.d = xor i32 %1, -1
   %i.e = add i32 %i.c, %i.d                       ; 2 uses
-  %i.f = shl nuw i32 1, %i.e                      ; 5 uses
+  %i.f = shl nuw i32 1, %i.e                      ; 10 uses
   %i.g = getelementptr i8, ptr %2, i64 8          ; 16 uses
   %i.h = getelementptr i8, ptr %2, i64 12         ; 3 uses
   %.val119157 = load i32, ptr %i.g, align 8, !tbaa !72
@@ -221,7 +221,7 @@ bb.a:
   %i.n = shl i32 8, %i.e
   %i.o = icmp slt i32 %i.f, 3
   %i.p = add nsw i32 %i.f, -1                     ; 2 uses
-  %i.q = shl nuw i32 1, %i.a
+  %i.q = shl nuw i32 1, %i.a                      ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.not106 = icmp eq i32 %3, 0                    ; 2 uses
@@ -232,13 +232,22 @@ bb.a:
   %i.x = sext i32 %1 to i64
   %i.y = getelementptr inbounds [4 x i8], ptr %i.w, i64 %i.x ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 41344 ; 2 uses
+  %4 = add nsw i32 %i.f, -2                       ; 2 uses
+  %5 = tail call i32 @llvm.umax.i32(i32 %4, i32 1) ; 2 uses
+  %invariant.op29 = sub i32 2, %i.f
+  %invariant.op30 = add i32 %5, 1
+  %6 = sub nsw i32 2, %i.f
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.f, i64 0
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert5 = insertelement <4 x i32> poison, i32 %i.q, i64 0
+  %broadcast.splat6 = shufflevector <4 x i32> %broadcast.splatinsert5, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op = sub i32 2, %i.f
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph163, %bb.v
-  %.079161 = phi i32 [ 1, %.lr.ph163 ], [ %i.jf, %bb.v ] ; 2 uses
-  %.080160 = phi i32 [ 0, %.lr.ph163 ], [ %.4, %bb.v ] ; 4 uses
-  %.086159 = phi i32 [ 0, %.lr.ph163 ], [ %.490, %bb.v ] ; 4 uses
+  %.079161 = phi i32 [ 1, %.lr.ph163 ], [ %i.jf, %bb.v ] ; 3 uses
+  %.080160 = phi i32 [ 0, %.lr.ph163 ], [ %.4, %bb.v ] ; 5 uses
+  %.086159 = phi i32 [ 0, %.lr.ph163 ], [ %.490, %bb.v ] ; 5 uses
   %i.aa = load i32, ptr %i.j, align 8, !tbaa !50
   %.not = icmp eq i32 %i.aa, 0
   br i1 %.not, label %bb.e, label %.preheader
@@ -292,25 +301,73 @@ bb.e:                                             ; preds = %bb.b
 bb.f:                                             ; preds = %bb.e
   %.val113 = load i32, ptr %i.l, align 8, !tbaa !64
   %.val114 = load ptr, ptr %i.m, align 8, !tbaa !63
-  %i.am = tail call fastcc i32 @qdm2_get_vlc(ptr noundef %2, i32 %.val113, ptr %.val114, i32 noundef 1, i32 noundef 2)
-  %i.an = add nsw i32 %i.am, %.079161             ; 3 uses
+  %i.am = tail call fastcc i32 @qdm2_get_vlc(ptr noundef %2, i32 %.val113, ptr %.val114, i32 noundef 1, i32 noundef 2) ; 2 uses
+  %i.an = add nsw i32 %i.am, %.079161             ; 4 uses
   %.not104148 = icmp slt i32 %i.an, %i.p
-  br i1 %.not104148, label %.loopexit, label %.lr.ph153
+  br i1 %.not104148, label %.loopexit, label %.lr.ph153.preheader
 
-.lr.ph153:                                        ; preds = %bb.f, %.lr.ph153
-  %.2151 = phi i32 [ %.reass.reass, %.lr.ph153 ], [ %i.an, %bb.f ]
-  %.383150 = phi i32 [ %i.ap, %.lr.ph153 ], [ %.080160, %bb.f ]
-  %.389149 = phi i32 [ %i.ao, %.lr.ph153 ], [ %.086159, %bb.f ]
+.lr.ph153.preheader:                              ; preds = %bb.f
+  %7 = add i32 %i.am, %.079161                    ; 2 uses
+  %.reass = add i32 %7, %invariant.op29
+  %8 = tail call i32 @llvm.smin.i32(i32 %.reass, i32 %4)
+  %.reass31 = add i32 %7, %invariant.op30
+  %9 = add i32 %i.f, %8
+  %10 = sub i32 %.reass31, %9
+  %11 = udiv i32 %10, %5
+  %12 = add i32 %11, 1                            ; 3 uses
+  %min.iters.check = icmp ult i32 %12, 8
+  br i1 %min.iters.check, label %.lr.ph153.preheader12, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph153.preheader
+  %n.vec = and i32 %12, -8                        ; 3 uses
+  %13 = mul i32 %n.vec, %6
+  %14 = add i32 %i.an, %13                        ; 2 uses
+  %15 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.080160, i64 0
+  %16 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.086159, i64 0
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
+  %vec.phi = phi <4 x i32> [ %15, %vector.ph ], [ %19, %vector.body ]
+  %vec.phi7 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %20, %vector.body ]
+  %vec.phi8 = phi <4 x i32> [ %16, %vector.ph ], [ %17, %vector.body ]
+  %vec.phi9 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %18, %vector.body ]
+  %17 = add <4 x i32> %vec.phi8, %broadcast.splat ; 2 uses
+  %18 = add <4 x i32> %vec.phi9, %broadcast.splat ; 2 uses
+  %19 = add <4 x i32> %vec.phi, %broadcast.splat6 ; 2 uses
+  %20 = add <4 x i32> %vec.phi7, %broadcast.splat6 ; 2 uses
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %21 = icmp eq i32 %index.next, %n.vec
+  br i1 %21, label %middle.block, label %vector.body, !llvm.loop !207
+
+middle.block:                                     ; preds = %vector.body
+  %bin.rdx = add <4 x i32> %20, %19
+  %22 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %bin.rdx10 = add <4 x i32> %18, %17
+  %23 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx10) ; 2 uses
+  %cmp.n = icmp eq i32 %12, %n.vec
+  br i1 %cmp.n, label %.loopexit, label %.lr.ph153.preheader12
+
+.lr.ph153.preheader12:                            ; preds = %.lr.ph153.preheader, %middle.block
+  %.2151.ph = phi i32 [ %i.an, %.lr.ph153.preheader ], [ %14, %middle.block ]
+  %.383150.ph = phi i32 [ %.080160, %.lr.ph153.preheader ], [ %22, %middle.block ]
+  %.389149.ph = phi i32 [ %.086159, %.lr.ph153.preheader ], [ %23, %middle.block ]
+  br label %.lr.ph153
+
+.lr.ph153:                                        ; preds = %.lr.ph153.preheader12, %.lr.ph153
+  %.2151 = phi i32 [ %.reass.reass, %.lr.ph153 ], [ %.2151.ph, %.lr.ph153.preheader12 ]
+  %.383150 = phi i32 [ %i.ap, %.lr.ph153 ], [ %.383150.ph, %.lr.ph153.preheader12 ]
+  %.389149 = phi i32 [ %i.ao, %.lr.ph153 ], [ %.389149.ph, %.lr.ph153.preheader12 ]
   %.reass.reass = add i32 %.2151, %invariant.op   ; 3 uses
   %i.ao = add nsw i32 %.389149, %i.f              ; 2 uses
   %i.ap = add nsw i32 %.383150, %i.q              ; 2 uses
   %.not104 = icmp slt i32 %.reass.reass, %i.p
-  br i1 %.not104, label %.loopexit, label %.lr.ph153, !llvm.loop !207
+  br i1 %.not104, label %.loopexit, label %.lr.ph153, !llvm.loop !208
 
-.loopexit:                                        ; preds = %.lr.ph153, %bb.f, %._crit_edge
-  %.490 = phi i32 [ %.187.lcssa, %._crit_edge ], [ %.086159, %bb.f ], [ %i.ao, %.lr.ph153 ] ; 2 uses
-  %.4 = phi i32 [ %.181.lcssa, %._crit_edge ], [ %.080160, %bb.f ], [ %i.ap, %.lr.ph153 ] ; 3 uses
-  %.3 = phi i32 [ %i.al, %._crit_edge ], [ %i.an, %bb.f ], [ %.reass.reass, %.lr.ph153 ] ; 3 uses
+.loopexit:                                        ; preds = %.lr.ph153, %middle.block, %bb.f, %._crit_edge
+  %.490 = phi i32 [ %.187.lcssa, %._crit_edge ], [ %.086159, %bb.f ], [ %23, %middle.block ], [ %i.ao, %.lr.ph153 ] ; 2 uses
+  %.4 = phi i32 [ %.181.lcssa, %._crit_edge ], [ %.080160, %bb.f ], [ %22, %middle.block ], [ %i.ap, %.lr.ph153 ] ; 3 uses
+  %.3 = phi i32 [ %i.al, %._crit_edge ], [ %i.an, %bb.f ], [ %14, %middle.block ], [ %.reass.reass, %.lr.ph153 ] ; 3 uses
   %i.aq = load i32, ptr %i.r, align 8, !tbaa !41
   %.not105 = icmp slt i32 %.490, %i.aq
   br i1 %.not105, label %bb.g, label %.critedge
@@ -659,7 +716,7 @@ bb.v:                                             ; preds = %qdm2_fft_init_coeff
   %.val119 = load i32, ptr %i.g, align 8, !tbaa !72
   %.val120 = load i32, ptr %i.h, align 4, !tbaa !70
   %i.jg = icmp sgt i32 %.val120, %.val119
-  br i1 %i.jg, label %bb.b, label %.critedge, !llvm.loop !208
+  br i1 %i.jg, label %bb.b, label %.critedge, !llvm.loop !209
 
 .critedge.sink.split:                             ; preds = %bb.e, %bb.c
   %.str.34.sink = phi ptr [ @.str.34, %bb.c ], [ @.str.35, %bb.e ]
@@ -712,6 +769,12 @@ declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #5
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -938,6 +1001,7 @@ attributes #12 = { cold }
 !204 = distinct !{!204, !34}
 !205 = !{!"llvm.loop.peeled.count", i32 1}
 !206 = distinct !{!206, !34}
-!207 = distinct !{!207, !34}
-!208 = distinct !{!208, !34}
+!207 = distinct !{!207, !34, !51, !52}
+!208 = distinct !{!208, !34, !52, !51}
+!209 = distinct !{!209, !34}
 end_hunk_0

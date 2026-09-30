@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   br i1 %i.cr, label %.preheader.us, label %._crit_edge139.loopexit, !llvm.loop !71
 
 ._crit_edge.us:                                   ; preds = %bb.e
-  %i.cs = trunc nsw i64 %indvars.iv.next155 to i32 ; 3 uses
+  %i.cs = trunc nuw nsw i64 %indvars.iv.next155 to i32 ; 3 uses
   %i.ct = sub nsw i32 %i.ai, %i.cs                ; 2 uses
   %i.cu = icmp sgt i32 %i.ct, 0
   br i1 %i.cu, label %bb.f, label %bb.g

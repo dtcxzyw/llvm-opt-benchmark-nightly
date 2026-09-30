@@ -202,12 +202,12 @@ bb.i:                                             ; preds = %.lr.ph34
 .lr.ph:                                           ; preds = %bb.i
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 96
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !109
+  %8 = zext nneg i32 %i.h to i64
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.k
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %8 = trunc nuw i64 %indvars.iv.next to i32
-  %9 = icmp sgt i32 %i.h, %8
+  %9 = icmp samesign ult i64 %indvars.iv.next, %8
   br i1 %9, label %bb.k, label %.loopexit, !llvm.loop !224
 
 bb.k:                                             ; preds = %.lr.ph, %bb.j

@@ -200,8 +200,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.gs, %bb.a
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.gs ], [ %2, %bb.a ] ; 2 uses
-  %.0195 = phi i64 [ %i.rs, %bb.gs ], [ 0, %bb.a ] ; 88 uses
+  %.0195 = phi i64 [ 0, %bb.a ], [ %i.rs, %bb.gs ] ; 88 uses
   %i.g = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.0195, i64 2400), !nosanitize !14 ; 2 uses
   %i.h = extractvalue { i64, i1 } %i.g, 0, !nosanitize !14 ; 2 uses
   %i.i = extractvalue { i64, i1 } %i.g, 1, !nosanitize !14
@@ -604,7 +603,6 @@ bb.gr:                                            ; preds = %bb.gq
   br label %bb.gs, !nosanitize !14
 
 bb.gs:                                            ; preds = %bb.gr, %bb.gq
-  %indvars.iv.next = add i64 %indvars.iv, -64
   br label %bb.b, !llvm.loop !29
 
 bb.gt:                                            ; preds = %bb.f
@@ -613,13 +611,12 @@ bb.gt:                                            ; preds = %bb.f
   br label %bb.gu
 
 bb.gu:                                            ; preds = %bb.jg, %bb.gt
-  %indvars.iv272 = phi i64 [ %indvars.iv.next273, %bb.jg ], [ %indvars.iv, %bb.gt ] ; 2 uses
-  %.1 = phi i64 [ %i.aam, %bb.jg ], [ %.0195, %bb.gt ] ; 27 uses
-  %.0194 = phi i64 [ %i.aak, %bb.jg ], [ 0, %bb.gt ] ; 2 uses
-  %.0193 = phi i64 [ %i.aae, %bb.jg ], [ 0, %bb.gt ] ; 2 uses
-  %.0192 = phi i64 [ %i.aag, %bb.jg ], [ 0, %bb.gt ] ; 3 uses
-  %.0191 = phi i64 [ %i.aah, %bb.jg ], [ 0, %bb.gt ] ; 2 uses
-  %.0190 = phi i64 [ %i.aab, %bb.jg ], [ 0, %bb.gt ] ; 2 uses
+  %.1 = phi i64 [ %.0195, %bb.gt ], [ %i.aam, %bb.jg ] ; 27 uses
+  %.0194 = phi i64 [ 0, %bb.gt ], [ %i.aak, %bb.jg ] ; 2 uses
+  %.0193 = phi i64 [ 0, %bb.gt ], [ %i.aae, %bb.jg ] ; 2 uses
+  %.0192 = phi i64 [ 0, %bb.gt ], [ %i.aag, %bb.jg ] ; 3 uses
+  %.0191 = phi i64 [ 0, %bb.gt ], [ %i.aah, %bb.jg ] ; 2 uses
+  %.0190 = phi i64 [ 0, %bb.gt ], [ %i.aab, %bb.jg ] ; 2 uses
   %i.ru = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.1, i64 72), !nosanitize !14 ; 2 uses
   %i.rv = extractvalue { i64, i1 } %i.ru, 0, !nosanitize !14
   %i.rw = extractvalue { i64, i1 } %i.ru, 1, !nosanitize !14
@@ -1022,7 +1019,6 @@ bb.jf:                                            ; preds = %bb.je
   br label %bb.jg, !nosanitize !14
 
 bb.jg:                                            ; preds = %bb.jf, %bb.je
-  %indvars.iv.next273 = add i64 %indvars.iv272, -32
   br label %bb.gu, !llvm.loop !30
 
 bb.jh:                                            ; preds = %bb.gw
@@ -1041,7 +1037,7 @@ bb.ji:                                            ; preds = %bb.jh
 
 bb.jj:                                            ; preds = %bb.ji, %bb.jh
   %i.aav = call { i64, i1 } @llvm.usub.with.overflow.i64(i64 %2, i64 %.1), !nosanitize !14 ; 2 uses
-  %i.aaw = extractvalue { i64, i1 } %i.aav, 0, !nosanitize !14
+  %i.aaw = extractvalue { i64, i1 } %i.aav, 0, !nosanitize !14 ; 2 uses
   %i.aax = extractvalue { i64, i1 } %i.aav, 1, !nosanitize !14 ; 2 uses
   br i1 %i.aax, label %bb.jk, label %bb.jl, !prof !17, !nosanitize !14
 
@@ -1133,8 +1129,8 @@ bb.jw:                                            ; preds = %bb.jv
   br label %bb.jx, !nosanitize !14
 
 bb.jx:                                            ; preds = %bb.jw, %bb.jv
-  %exitcond.not = icmp eq i64 %.0, %indvars.iv272
-  br i1 %exitcond.not, label %bb.jy, label %bb.jz
+  %3 = icmp ult i64 %.0, %i.aaw
+  br i1 %3, label %bb.jz, label %bb.jy
 
 bb.jy:                                            ; preds = %bb.jx
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
@@ -1192,7 +1188,7 @@ bb.kh:                                            ; preds = %bb.kf, %bb.kg
   %i.acm = load i32, ptr %i.acj, align 4, !tbaa !23
   %i.acn = lshr i32 %.0196, 8
   %i.aco = xor i32 %i.acm, %i.acn
-  %i.acp = add i64 %.0, 1
+  %i.acp = add nuw i64 %.0, 1
   br label %bb.jv, !llvm.loop !31
 }
 

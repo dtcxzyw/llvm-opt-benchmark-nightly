@@ -205,20 +205,25 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 %4
   %i.e = icmp samesign eq i64 %4, 0
-  br i1 %i.e, label %._crit_edge, label %.lr.ph
+  br i1 %i.e, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %bb.d
+  %5 = lshr exact i64 %2, 1
+  %6 = lshr exact i64 %2, 1
+  br label %.lr.ph
 
 bb.e:                                             ; preds = %bb.b
   store i32 2, ptr %0, align 8
   br label %bb.f
 
-.lr.ph:                                           ; preds = %bb.d, %bb.v
-  %.sroa.059.091 = phi ptr [ %i.f, %bb.v ], [ %3, %bb.d ] ; 2 uses
-  %.sroa.860.090 = phi i64 [ %i.g, %bb.v ], [ 0, %bb.d ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.v
+  %.sroa.059.091 = phi ptr [ %i.f, %bb.v ], [ %3, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.860.090 = phi i64 [ %i.g, %bb.v ], [ 0, %.lr.ph.preheader ] ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.059.091, i64 1 ; 2 uses
   %i.g = add nuw i64 %.sroa.860.090, 1
-  %i.h = shl i64 %.sroa.860.090, 1                ; 5 uses
-  %5 = icmp ult i64 %i.h, %2
-  br i1 %5, label %bb.g, label %bb.l
+  %i.h = shl nuw i64 %.sroa.860.090, 1            ; 4 uses
+  %exitcond.not = icmp eq i64 %.sroa.860.090, %5
+  br i1 %exitcond.not, label %bb.l, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.v, %bb.d
   store i32 3, ptr %0, align 8
@@ -269,9 +274,9 @@ bb.m:                                             ; preds = %bb.j
 bb.n:                                             ; preds = %bb.i, %bb.k, %bb.j
   %.sroa.862.sroa.0.0.ph = phi i8 [ %i.n, %bb.j ], [ %i.o, %bb.k ], [ %i.m, %bb.i ]
   %i.p = shl nuw i8 %.sroa.862.sroa.0.0.ph, 4
-  %i.q = or disjoint i64 %i.h, 1                  ; 4 uses
-  %6 = icmp ult i64 %i.q, %2
-  br i1 %6, label %bb.o, label %bb.t
+  %i.q = or disjoint i64 %i.h, 1                  ; 3 uses
+  %exitcond105.not = icmp eq i64 %.sroa.860.090, %6
+  br i1 %exitcond105.not, label %bb.t, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %i.q
@@ -349,20 +354,25 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 %3
   %i.h = icmp samesign eq i64 %3, 0
-  br i1 %i.h, label %._crit_edge, label %.lr.ph
+  br i1 %i.h, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %bb.e
+  %4 = lshr exact i64 %.val52, 1
+  %5 = lshr exact i64 %.val52, 1
+  br label %.lr.ph
 
 bb.f:                                             ; preds = %bb.c
   store i32 2, ptr %0, align 8
   br label %bb.w
 
-.lr.ph:                                           ; preds = %bb.e, %bb.v
-  %.sroa.0.092 = phi ptr [ %i.i, %bb.v ], [ %2, %bb.e ] ; 2 uses
-  %.sroa.861.091 = phi i64 [ %i.j, %bb.v ], [ 0, %bb.e ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.v
+  %.sroa.0.092 = phi ptr [ %i.i, %bb.v ], [ %2, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.861.091 = phi i64 [ %i.j, %bb.v ], [ 0, %.lr.ph.preheader ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.092, i64 1 ; 2 uses
   %i.j = add nuw i64 %.sroa.861.091, 1
-  %i.k = shl i64 %.sroa.861.091, 1                ; 5 uses
-  %4 = icmp ult i64 %i.k, %.val52
-  br i1 %4, label %bb.i, label %.invoke
+  %i.k = shl nuw i64 %.sroa.861.091, 1            ; 4 uses
+  %exitcond.not = icmp eq i64 %.sroa.861.091, %4
+  br i1 %exitcond.not, label %.invoke, label %bb.i
 
 ._crit_edge:                                      ; preds = %bb.v, %bb.e
   store i32 3, ptr %0, align 8
@@ -427,9 +437,9 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.k, %bb.m, %bb.l
   %.sroa.863.sroa.0.0.ph = phi i8 [ %i.s, %bb.l ], [ %i.t, %bb.m ], [ %i.r, %bb.k ]
   %i.u = shl nuw i8 %.sroa.863.sroa.0.0.ph, 4
-  %i.v = or disjoint i64 %i.k, 1                  ; 4 uses
-  %5 = icmp ult i64 %i.v, %.val52
-  br i1 %5, label %bb.p, label %.invoke
+  %i.v = or disjoint i64 %i.k, 1                  ; 3 uses
+  %exitcond106.not = icmp eq i64 %.sroa.861.091, %5
+  br i1 %exitcond106.not, label %.invoke, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.w = getelementptr inbounds nuw i8, ptr %.val, i64 %i.v
