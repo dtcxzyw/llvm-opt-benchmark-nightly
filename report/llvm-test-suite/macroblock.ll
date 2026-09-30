@@ -205,9 +205,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 15544
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !48   ; 10 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !48   ; 9 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 15548
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !50   ; 17 uses
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !50   ; 16 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 15536
   %i.o = load i32, ptr %i.n, align 8, !tbaa !47
   %i.p = add nsw i32 %i.o, -1
@@ -440,7 +440,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.de = getelementptr inbounds [64 x i8], ptr @IntraChromaPrediction.block_pos, i64 %i.db
   %i.df = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.dh = sext i32 %i.k to i64                    ; 2 uses
+  %i.dh = sext i32 %i.k to i64                    ; 3 uses
   %i.di = shl nsw i64 %i.dh, 1                    ; 4 uses
   %i.dj = icmp slt i32 %i.m, 1                    ; 6 uses
   %i.dk = icmp slt i32 %i.k, 1                    ; 4 uses
@@ -455,7 +455,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.ds = icmp sgt i32 %i.dm, 1
   %i.dt = add nsw i32 %i.dm, -2
   %i.du = ashr i32 %i.m, 1                        ; 7 uses
-  %i.dv = sext i32 %i.m to i64
+  %i.dv = sext i32 %i.m to i64                    ; 2 uses
   %i.dw = getelementptr [2 x i8], ptr %i.b, i64 %i.dv
   %i.dx = getelementptr i8, ptr %i.dw, i64 -2
   %i.dy = add nsw i32 %i.du, -1
@@ -858,15 +858,13 @@ begin_hunk_1_@IntraChromaPrediction:bb.a
   store <4 x i32> %i.bkb, ptr getelementptr inbounds nuw (i8, ptr @diff, i64 48), align 16, !tbaa !9
   %i.bkc = call i32 @distortion4x4(ptr noundef nonnull @diff) #17
   %i.bkd = add nsw i32 %i.bkc, %.2523.us.us.us.1  ; 3 uses
-  %indvars.iv.next715.1 = add nuw i64 %indvars.iv714.1, 4 ; 2 uses
-  %indvars.1 = trunc i64 %indvars.iv.next715.1 to i32
-  %5 = icmp sgt i32 %i.k, %indvars.1
+  %indvars.iv.next715.1 = add nuw nsw i64 %indvars.iv714.1, 4 ; 2 uses
+  %5 = icmp slt i64 %indvars.iv.next715.1, %i.dh
   br i1 %5, label %.preheader432.us.us.us.1, label %._crit_edge524.us.us.us.1, !llvm.loop !265
 
 ._crit_edge524.us.us.us.1:                        ; preds = %.preheader432.us.us.us.1
-  %indvars.iv.next728.1 = add nuw i64 %indvars.iv727.1, 4 ; 2 uses
-  %indvars743.1 = trunc i64 %indvars.iv.next728.1 to i32
-  %6 = icmp sgt i32 %i.m, %indvars743.1
+  %indvars.iv.next728.1 = add nuw nsw i64 %indvars.iv727.1, 4 ; 2 uses
+  %6 = icmp slt i64 %indvars.iv.next728.1, %i.dv
   br i1 %6, label %.preheader433.us.us.us.1, label %.split537.us, !llvm.loop !266
 
 .split537.us:                                     ; preds = %._crit_edge524.us.us.us.1, %bb.cl

@@ -204,7 +204,7 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 32 uses
-  br label %bb.v
+  br label %bb.b
 
 .loopexit:                                        ; preds = %bb.w, %bb.a
   %.sroa.015.0 = phi i64 [ 0, %bb.a ], [ %i.il, %bb.w ] ; 2 uses
@@ -218,10 +218,12 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 4 uses
   br label %bb.c
 
-bb.b:                                             ; preds = %bb.w
-  %i.g = add nuw nsw i64 %.sroa.015.1149, 50      ; 2 uses
+bb.b:                                             ; preds = %.preheader, %bb.w
+  %.sroa.015.1 = phi i64 [ %i.il, %bb.w ], [ 0, %.preheader ] ; 4 uses
+  %.sroa.0.1 = phi i64 [ %i.cc, %bb.w ], [ 0, %.preheader ] ; 3 uses
+  %i.g = add nuw nsw i64 %.sroa.015.1, 26         ; 2 uses
   %.not41 = icmp samesign ugt i64 %i.g, %2
-  br i1 %.not41, label %bb.u, label %bb.v, !prof !194
+  br i1 %.not41, label %bb.u, label %bb.v, !prof !11
 
 ._crit_edge:                                      ; preds = %bb.s, %.loopexit
   %.sroa.0.2.lcssa = phi i64 [ %.sroa.0.0, %.loopexit ], [ %i.ay, %bb.s ] ; 11 uses
@@ -384,19 +386,17 @@ bb.t:                                             ; preds = %bb.r
   unreachable
 
 bb.u:                                             ; preds = %bb.b
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.il, i64 noundef %i.g, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @45) #19
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.015.1, i64 noundef %i.g, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @45) #19
   unreachable
 
-bb.v:                                             ; preds = %.preheader, %bb.b
-  %.sroa.0.1150 = phi i64 [ 0, %.preheader ], [ %i.cc, %bb.b ] ; 3 uses
-  %.sroa.015.1149 = phi i64 [ 0, %.preheader ], [ %i.il, %bb.b ] ; 3 uses
-  %i.cc = add nuw i64 %.sroa.0.1150, 32           ; 4 uses
+bb.v:                                             ; preds = %bb.b
+  %i.cc = add nuw i64 %.sroa.0.1, 32              ; 4 uses
   %.not42 = icmp ugt i64 %i.cc, %4
   br i1 %.not42, label %bb.x, label %bb.w, !prof !11
 
 bb.w:                                             ; preds = %bb.v
-  %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.015.1149 ; 4 uses
-  %i.ce = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.0.1150 ; 32 uses
+  %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.015.1 ; 4 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.0.1 ; 32 uses
   %.val51 = load i64, ptr %i.cd, align 1
   %i.cf = tail call noundef i64 @llvm.bswap.i64(i64 %.val51) ; 8 uses
   %i.cg = lshr i64 %i.cf, 58
@@ -595,12 +595,12 @@ bb.w:                                             ; preds = %bb.v
   %i.ij = load i8, ptr %i.ii, align 1, !noundef !5
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ce, i64 31
   store i8 %i.ij, ptr %i.ik, align 1
-  %i.il = add nuw nsw i64 %.sroa.015.1149, 24     ; 4 uses
+  %i.il = add nuw nsw i64 %.sroa.015.1, 24        ; 3 uses
   %.old1.not = icmp samesign ugt i64 %i.il, %i.a
   br i1 %.old1.not, label %.loopexit, label %bb.b
 
 bb.x:                                             ; preds = %bb.v
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.0.1150, i64 noundef %i.cc, i64 noundef %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @44) #19
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.0.1, i64 noundef %i.cc, i64 noundef %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @44) #19
   unreachable
 }
 
@@ -914,5 +914,4 @@ attributes #21 = { inlinehint }
 !191 = !{!121, !118, !120, !67, !68, !69}
 !192 = !{!124, !123, !69}
 !193 = !{!125, !121, !118, !119, !67, !68, !70}
-!194 = !{!"branch_weights", i32 4001, i32 3995999}
 end_hunk_0
