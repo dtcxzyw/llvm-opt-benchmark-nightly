@@ -204,16 +204,12 @@ bb.ah:                                            ; preds = %bb.ag
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !100
   %i.df = load i64, ptr %i.b, align 8, !tbaa !21
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dc, ptr align 1 %i.de, i64 %i.df, i1 false)
-  %i.dg = load ptr, ptr %1, align 8, !tbaa !97    ; 3 uses
-  %6 = load i8, ptr %i.dg, align 1, !tbaa !105
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 8
-  %9 = getelementptr inbounds nuw i8, ptr %i.dg, i64 1
-  %10 = load i8, ptr %9, align 1, !tbaa !105
-  %i.dh = zext i8 %10 to i64
-  %11 = or disjoint i64 %8, %i.dh
+  %i.dg = load ptr, ptr %1, align 8, !tbaa !97    ; 2 uses
+  %6 = load i16, ptr %i.dg, align 1
+  %7 = call i16 @llvm.bswap.i16(i16 %6)
+  %i.dh = zext i16 %7 to i64
   %i.di = load i64, ptr %i.b, align 8, !tbaa !21
-  %i.dj = add i64 %11, %i.di                      ; 2 uses
+  %i.dj = add i64 %i.di, %i.dh                    ; 2 uses
   %i.dk = lshr i64 %i.dj, 8
   %i.dl = trunc i64 %i.dk to i8
   store i8 %i.dl, ptr %i.dg, align 1, !tbaa !105

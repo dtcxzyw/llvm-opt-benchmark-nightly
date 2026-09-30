@@ -204,18 +204,14 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8
   %i.c = ashr i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %2 = load i8, ptr %i.d, align 1
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 16
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 7
-  %6 = load i8, ptr %5, align 1
-  %i.e = zext i8 %6 to i32
+  %2 = load i16, ptr %i.d, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.e = zext i16 %3 to i32
   %i.f = shl nuw nsw i32 %i.e, 8
-  %7 = or disjoint i32 %i.f, %4
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load i8, ptr %i.g, align 1
   %i.i = zext i8 %i.h to i32
-  %i.j = or disjoint i32 %7, %i.i                 ; 4 uses
+  %i.j = or disjoint i32 %i.f, %i.i               ; 4 uses
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %bb.b, label %bb.c
 

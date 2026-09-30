@@ -202,15 +202,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = add nuw i32 %1, 2
   %i.d = sext i32 %i.c to i64
-  %5 = getelementptr i8, ptr %0, i64 %i.d         ; 2 uses
-  %.val = load i8, ptr %5, align 1
-  %i.e = getelementptr i8, ptr %5, i64 1
-  %.val14 = load i8, ptr %i.e, align 1
-  %6 = zext i8 %.val to i16
-  %7 = shl nuw i16 %6, 8
-  %8 = zext i8 %.val14 to i16
-  %9 = or disjoint i16 %7, %8
-  %cond = icmp eq i16 %9, 2048
+  %i.e = getelementptr i8, ptr %0, i64 %i.d
+  %.val = load i16, ptr %i.e, align 1
+  %cond = icmp eq i16 %.val, 8
   br i1 %cond, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b

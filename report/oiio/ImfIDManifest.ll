@@ -205,16 +205,12 @@ bb.i:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !32 ; 2 uses
   %i.ak = icmp ugt i64 %i.aj, 255
   %i.al = load ptr, ptr %i.ag, align 8, !tbaa !33 ; 2 uses
-  %11 = load i8, ptr %i.al, align 1, !tbaa !34
-  %12 = zext i8 %11 to i64                        ; 2 uses
-  br i1 %i.ak, label %bb.j, label %bb.l
+  br i1 %i.ak, label %bb.j, label %13
 
 bb.j:                                             ; preds = %bb.i
-  %13 = shl nuw nsw i64 %12, 8
-  %14 = getelementptr inbounds nuw i8, ptr %i.al, i64 1
-  %15 = load i8, ptr %14, align 1, !tbaa !34
-  %i.am = zext i8 %15 to i64
-  %16 = or disjoint i64 %13, %i.am
+  %11 = load i16, ptr %i.al, align 1
+  %12 = call i16 @llvm.bswap.i16(i16 %11)
+  %i.am = zext i16 %12 to i64
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.n
@@ -222,9 +218,14 @@ bb.k:                                             ; preds = %bb.n
           cleanup
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit301
 
-bb.l:                                             ; preds = %bb.i, %bb.j
-  %.089 = phi i64 [ %16, %bb.j ], [ %12, %bb.i ]  ; 2 uses
-  %.088 = phi i64 [ 2, %bb.j ], [ 1, %bb.i ]      ; 4 uses
+13:                                               ; preds = %bb.i
+  %14 = load i8, ptr %i.al, align 1, !tbaa !34
+  %15 = zext i8 %14 to i64
+  br label %bb.l
+
+bb.l:                                             ; preds = %13, %bb.j
+  %.089 = phi i64 [ %i.am, %bb.j ], [ %15, %13 ]  ; 2 uses
+  %.088 = phi i64 [ 2, %bb.j ], [ 1, %13 ]        ; 4 uses
   %i.ao = icmp ugt i64 %.089, %i.aj
   br i1 %i.ao, label %bb.m, label %bb.p
 
@@ -268,9 +269,10 @@ bb.p:                                             ; preds = %bb.l
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc127, %bb.p
   %i.aw = phi ptr [ %i.au, %.noexc127 ], [ %i.r, %bb.p ] ; 2 uses
-  switch i64 %spec.select.i.i.i, label %bb.r [
-    i64 1, label %bb.q
-    i64 0, label %bb.s
+  %trunc = trunc nuw i64 %spec.select.i.i.i to i16
+  switch i16 %trunc, label %bb.r [
+    i16 1, label %bb.q
+    i16 0, label %bb.s
   ]
 
 bb.q:                                             ; preds = %._crit_edge.i.i.i
@@ -671,6 +673,9 @@ declare i64 @llvm.smax.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #29
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #29

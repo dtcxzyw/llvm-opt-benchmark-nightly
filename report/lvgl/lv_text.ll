@@ -113,7 +113,7 @@ bb.i:                                             ; preds = %bb.h, %bb.f, %bb.a
 define internal i32 @lv_text_utf8_conv_wc(i32 noundef %0) #2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
-  %i.b = alloca [4 x i8], align 1                 ; 7 uses
+  %i.b = alloca [4 x i8], align 4                 ; 4 uses
   store i32 %0, ptr %i.a, align 4, !tbaa !10
   %i.c = and i32 %0, 128
   %.not = icmp eq i32 %i.c, 0
@@ -122,26 +122,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   %i.d = call ptr @lv_memcpy(ptr noundef nonnull %i.b, ptr noundef nonnull %i.a, i64 noundef 4) #11 ; 0 uses
-  %1 = load i8, ptr %i.b, align 1, !tbaa !9
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw i32 %2, 24
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %5 = load i8, ptr %4, align 1, !tbaa !9
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw nsw i32 %6, 16
-  %8 = or disjoint i32 %7, %3
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %10 = load i8, ptr %9, align 1, !tbaa !9
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 8
-  %13 = or disjoint i32 %8, %12                   ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %15 = load i8, ptr %14, align 1, !tbaa !9       ; 2 uses
-  %16 = zext i8 %15 to i32
-  %17 = or disjoint i32 %13, %16
-  %i.e = icmp eq i8 %15, 0
-  %i.f = lshr exact i32 %13, 8
-  %spec.select = select i1 %i.e, i32 %i.f, i32 %17 ; 3 uses
+  %1 = load i32, ptr %i.b, align 4
+  %2 = call i32 @llvm.bswap.i32(i32 %1)           ; 3 uses
+  %3 = and i32 %2, 255
+  %i.e = icmp eq i32 %3, 0
+  %i.f = lshr exact i32 %2, 8
+  %spec.select = select i1 %i.e, i32 %i.f, i32 %2 ; 3 uses
   %i.g = and i32 %spec.select, 255
   %i.h = icmp eq i32 %i.g, 0
   %i.i = lshr exact i32 %spec.select, 8
@@ -542,6 +528,9 @@ declare void @lv_memset(ptr noundef, i8 noundef zeroext, i64 noundef) local_unna
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10

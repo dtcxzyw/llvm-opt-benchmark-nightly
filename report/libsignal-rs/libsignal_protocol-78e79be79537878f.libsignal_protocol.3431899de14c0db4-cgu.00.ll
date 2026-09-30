@@ -204,29 +204,25 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 bb.j:                                             ; preds = %bb.h
-  %i.ad = extractvalue { ptr, i64 } %i.aa, 0      ; 5 uses
-  %.val.i.i.i.i.i = load i8, ptr %i.ad, align 1, !alias.scope !1130, !noalias !1131, !noundef !6
-  %i.ae = zext i8 %.val.i.i.i.i.i to i64
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 1
+  %i.ad = extractvalue { ptr, i64 } %i.aa, 0      ; 4 uses
+  %.val.i.i.i.i.i = load i16, ptr %i.ad, align 1, !alias.scope !1130, !noalias !1131
+  %3 = call i16 @llvm.bswap.i16(i16 %.val.i.i.i.i.i)
+  %i.ae = zext i16 %3 to i64
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 2
   %.val.i.1.i.i.i.i = load i8, ptr %i.af, align 1, !alias.scope !1130, !noalias !1131, !noundef !6
   %i.ag = zext i8 %.val.i.1.i.i.i.i to i64
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 2
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 3
   %.val.i.2.i.i.i.i = load i8, ptr %i.ah, align 1, !alias.scope !1130, !noalias !1131, !noundef !6
-  %3 = shl nuw nsw i64 %i.ae, 16
-  %4 = shl nuw nsw i64 %i.ag, 8
-  %5 = or disjoint i64 %4, %3
   %i.ai = zext i8 %.val.i.2.i.i.i.i to i64
-  %6 = or disjoint i64 %5, %i.ai
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 3
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
   %.val.i.3.i.i.i.i = load i8, ptr %i.aj, align 1, !alias.scope !1130, !noalias !1131, !noundef !6
-  %7 = zext i8 %.val.i.3.i.i.i.i to i64
-  %8 = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
-  %.val.i.4.i.i.i.i = load i8, ptr %8, align 1, !alias.scope !1130, !noalias !1131, !noundef !6
-  %i.ak = shl nuw nsw i64 %6, 16
-  %9 = shl nuw nsw i64 %7, 8
-  %i.al = zext i8 %.val.i.4.i.i.i.i to i64
-  %10 = or disjoint i64 %9, %i.al
-  %i.am = or disjoint i64 %10, %i.ak
+  %4 = shl nuw nsw i64 %i.ae, 24
+  %5 = shl nuw nsw i64 %i.ag, 16
+  %6 = or disjoint i64 %4, %5
+  %i.ak = shl nuw nsw i64 %i.ai, 8
+  %7 = or disjoint i64 %6, %i.ak
+  %i.al = zext i8 %.val.i.3.i.i.i.i to i64
+  %i.am = or disjoint i64 %7, %i.al
   %i.an = urem i64 %i.am, 100000                  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1127
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !1120
@@ -628,6 +624,9 @@ declare i64 @llvm.umin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #15
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

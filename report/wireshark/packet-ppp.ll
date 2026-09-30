@@ -202,15 +202,11 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.h = sext i32 %i.a to i64
-  %5 = getelementptr i8, ptr %0, i64 %i.h         ; 2 uses
-  %.val = load i8, ptr %5, align 1
-  %i.i = getelementptr i8, ptr %5, i64 1
-  %.val29 = load i8, ptr %i.i, align 1
-  %6 = zext i8 %.val to i32
-  %7 = shl nuw nsw i32 %6, 8
-  %i.j = zext i8 %.val29 to i32
-  %8 = or disjoint i32 %7, %i.j
-  %i.k = tail call zeroext i1 @try_capture_dissector(ptr noundef nonnull @.str.22, i32 noundef %8, ptr noundef %0, i32 noundef %i.f, i32 noundef %2, ptr noundef %3, ptr noundef %4)
+  %i.i = getelementptr i8, ptr %0, i64 %i.h
+  %.val = load i16, ptr %i.i, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %.val)
+  %i.j = zext i16 %5 to i32
+  %i.k = tail call zeroext i1 @try_capture_dissector(ptr noundef nonnull @.str.22, i32 noundef %i.j, ptr noundef %0, i32 noundef %i.f, i32 noundef %2, ptr noundef %3, ptr noundef %4)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.a, %bb.e, %bb.c
@@ -612,6 +608,9 @@ declare i32 @llvm.smin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #5
 
 attributes #0 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

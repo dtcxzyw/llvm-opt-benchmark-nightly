@@ -204,28 +204,24 @@ bb.k:                                             ; preds = %.thread.i
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.l
   %.0609780.i = phi i32 [ %i.ct, %bb.l ], [ 0, %.preheader.i ] ; 2 uses
   %i.cm = zext nneg i32 %.0609780.i to i64
-  %i.cn = getelementptr i8, ptr %.0620.i89, i64 %i.cm ; 3 uses
+  %i.cn = getelementptr i8, ptr %.0620.i89, i64 %i.cm ; 2 uses
   %i.co = getelementptr i8, ptr %i.cn, i64 3
-  %3 = load i8, ptr %i.co, align 1, !tbaa !55
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw nsw i32 %4, 8
-  %6 = getelementptr i8, ptr %i.cn, i64 4
-  %7 = load i8, ptr %6, align 1, !tbaa !55
-  %i.cp = zext i8 %7 to i32
-  %8 = or disjoint i32 %5, %i.cp                  ; 4 uses
+  %3 = load i16, ptr %i.co, align 1               ; 2 uses
+  %4 = call i16 @llvm.bswap.i16(i16 %3)
+  %i.cp = zext i16 %4 to i32                      ; 3 uses
   %i.cq = load i8, ptr %i.cn, align 1, !tbaa !55
   %i.cr = icmp eq i8 %i.cq, 23
   %i.cs = add nsw i32 %.0609780.i, 5              ; 3 uses
   br i1 %i.cr, label %.thread767.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i
-  %i.ct = add nuw nsw i32 %i.cs, %8               ; 2 uses
+  %i.ct = add nuw nsw i32 %i.cs, %i.cp            ; 2 uses
   %i.cu = add nuw nsw i32 %i.ct, 5
   %.not705.i = icmp sgt i32 %i.cu, %i.cl
   br i1 %.not705.i, label %.thread767.thread.i, label %.lr.ph.i
 
 .thread767.i:                                     ; preds = %.lr.ph.i
-  %.not.i = icmp eq i32 %8, 0
+  %.not.i = icmp eq i16 %3, 0
   br i1 %.not.i, label %.thread767.thread.i, label %.critedge746.i
 
 .thread767.thread.i:                              ; preds = %bb.l, %.thread767.i, %.preheader.i
@@ -239,7 +235,7 @@ bb.l:                                             ; preds = %.lr.ph.i
   br label %test_tls13_cipher_fuzz_once.exit.sink.split
 
 .critedge746.i:                                   ; preds = %.thread767.i
-  %i.da = add nsw i32 %8, %i.cs                   ; 2 uses
+  %i.da = add nsw i32 %i.cs, %i.cp                ; 2 uses
   %.not709.not.i = icmp sgt i32 %i.da, %i.cl
   br i1 %.not709.not.i, label %.critedge744.i, label %.critedge748.i
 
@@ -261,7 +257,7 @@ bb.l:                                             ; preds = %.lr.ph.i
 
 bb.m:                                             ; preds = %.critedge748.i
   %i.di = load i32, ptr %i.f, align 4, !tbaa !48
-  %i.dj = urem i32 %i.di, %8
+  %i.dj = urem i32 %i.di, %i.cp
   %i.dk = add nsw i32 %i.dj, %i.cs
   %i.dl = sext i32 %i.dk to i64
   %i.dm = call i32 @wc_RNG_GenerateByte(ptr noundef nonnull %0, ptr noundef nonnull %i.e) #11 ; 2 uses
@@ -663,6 +659,9 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

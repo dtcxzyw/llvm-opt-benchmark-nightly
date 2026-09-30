@@ -205,20 +205,40 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph53.new
   %.151 = phi ptr [ %i.ai, %.lr.ph53.new ], [ %i.av, %bb.b ] ; 3 uses
   %niter87 = phi i64 [ 0, %.lr.ph53.new ], [ %niter87.next.1, %bb.b ]
   %i.ao = shl nuw nsw i64 %indvars.iv63, 2
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ao
-  %3 = load <4 x i8>, ptr %i.ap, align 1, !tbaa !77
-  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
-  %5 = bitcast <4 x i8> %4 to i32
-  %i.aq = sext i32 %5 to i64
+  %3 = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ao ; 3 uses
+  %4 = load i16, ptr %3, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %6 = zext i16 %5 to i32
+  %7 = shl nuw nsw i32 %6, 8
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %9 = load i8, ptr %8, align 1, !tbaa !77
+  %10 = zext i8 %9 to i32
+  %11 = or disjoint i32 %7, %10
+  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 3
+  %12 = load i8, ptr %i.ap, align 1, !tbaa !77
+  %13 = zext i8 %12 to i32
+  %14 = shl nuw i32 %13, 24
+  %15 = or disjoint i32 %11, %14
+  %i.aq = sext i32 %15 to i64
   %i.ar = getelementptr inbounds nuw i8, ptr %.151, i64 8
   store i64 %i.aq, ptr %.151, align 8, !tbaa !66
   %indvars.iv.next64 = shl i64 %indvars.iv63, 2
-  %i.as = getelementptr inbounds nuw i8, ptr %i.am, i64 %indvars.iv.next64
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 4
-  %6 = load <4 x i8>, ptr %i.at, align 1, !tbaa !77
-  %7 = shufflevector <4 x i8> %6, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
-  %8 = bitcast <4 x i8> %7 to i32
-  %i.au = sext i32 %8 to i64
+  %16 = getelementptr inbounds nuw i8, ptr %i.am, i64 %indvars.iv.next64 ; 3 uses
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 4
+  %18 = load i16, ptr %17, align 1
+  %19 = tail call i16 @llvm.bswap.i16(i16 %18)
+  %20 = zext i16 %19 to i32
+  %21 = shl nuw nsw i32 %20, 8
+  %i.as = getelementptr inbounds nuw i8, ptr %16, i64 6
+  %22 = load i8, ptr %i.as, align 1, !tbaa !77
+  %23 = zext i8 %22 to i32
+  %24 = or disjoint i32 %21, %23
+  %i.at = getelementptr inbounds nuw i8, ptr %16, i64 7
+  %25 = load i8, ptr %i.at, align 1, !tbaa !77
+  %26 = zext i8 %25 to i32
+  %27 = shl nuw i32 %26, 24
+  %28 = or disjoint i32 %24, %27
+  %i.au = sext i32 %28 to i64
   %i.av = getelementptr inbounds nuw i8, ptr %.151, i64 16 ; 3 uses
   store i64 %i.au, ptr %i.ar, align 8, !tbaa !66
   %indvars.iv.next64.1 = add nuw nsw i64 %indvars.iv63, 2 ; 2 uses
@@ -236,11 +256,21 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph53.new
   %lcmp.mod85 = trunc i32 %i.aj to i1
   tail call void @llvm.assume(i1 %lcmp.mod85)
   %i.aw = shl nuw nsw i64 %indvars.iv63.epil.init, 2
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.aw
-  %9 = load <4 x i8>, ptr %i.ax, align 1, !tbaa !77
-  %10 = shufflevector <4 x i8> %9, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
-  %11 = bitcast <4 x i8> %10 to i32
-  %i.ay = sext i32 %11 to i64
+  %29 = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.aw ; 3 uses
+  %30 = load i16, ptr %29, align 1
+  %31 = tail call i16 @llvm.bswap.i16(i16 %30)
+  %32 = zext i16 %31 to i32
+  %33 = shl nuw nsw i32 %32, 8
+  %34 = getelementptr inbounds nuw i8, ptr %29, i64 2
+  %35 = load i8, ptr %34, align 1, !tbaa !77
+  %36 = zext i8 %35 to i32
+  %37 = or disjoint i32 %33, %36
+  %i.ax = getelementptr inbounds nuw i8, ptr %29, i64 3
+  %38 = load i8, ptr %i.ax, align 1, !tbaa !77
+  %39 = zext i8 %38 to i32
+  %40 = shl nuw i32 %39, 24
+  %41 = or disjoint i32 %37, %40
+  %i.ay = sext i32 %41 to i64
   %i.az = getelementptr inbounds nuw i8, ptr %.151.epil.init, i64 8
   store i64 %i.ay, ptr %.151.epil.init, align 8, !tbaa !66
   br label %._crit_edge54
@@ -642,6 +672,9 @@ declare ptr @strcat(ptr noalias noundef returned, ptr noalias noundef readonly c
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #20

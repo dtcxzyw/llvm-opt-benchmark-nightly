@@ -42,7 +42,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr getelementptr inbounds nuw inrange(-16, 96) (i8, ptr @_ZTVN5draco30AttributeQuantizationTransformE, i64 16), ptr %i.a, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i32 -1, ptr %i.b, align 8, !tbaa !57
+  store i32 -1, ptr %i.b, align 8, !tbaa !56
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.c, i8 0, i64 28, i1 false)
   ret void
@@ -60,14 +60,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !58
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !57
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = sext i32 %2 to i64
-  %i.f = load ptr, ptr %i.d, align 8, !tbaa !61
+  %i.f = load ptr, ptr %i.d, align 8, !tbaa !60
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.e
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !28
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 28
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !62
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !61
   %.not = icmp eq i32 %i.j, 9
   br label %bb.c
 
@@ -84,9 +84,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !44
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  %3 = load i8, ptr %i.c, align 8, !tbaa !45
-  %4 = icmp ult i8 %3, 2
-  br i1 %4, label %bb.b, label %bb.c
+  %3 = load i16, ptr %i.c, align 8
+  %4 = and i16 %3, 254
+  %5 = icmp eq i16 %4, 0
+  br i1 %5, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %0, align 8, !tbaa !9
@@ -112,9 +113,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !44
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  %3 = load i8, ptr %i.c, align 8, !tbaa !45
-  %4 = icmp ugt i8 %3, 1
-  br i1 %4, label %bb.b, label %bb.c
+  %3 = load i16, ptr %i.c, align 8
+  %4 = and i16 %3, 254
+  %.not = icmp eq i16 %4, 0
+  br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %0, align 8, !tbaa !9
@@ -156,7 +158,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !46
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !45
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -165,7 +167,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !44
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 64
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !63
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !62
   %i.j = tail call noundef zeroext i1 @_ZN5draco30AttributeQuantizationTransform16DecodeParametersERKNS_14PointAttributeEPNS_13DecoderBufferE(ptr noundef nonnull align 8 dereferenceable(44) %i.e, ptr noundef nonnull align 8 dereferenceable(112) %.0, ptr noundef %i.i)
   ret i1 %i.j
 }
@@ -180,7 +182,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = tail call noundef ptr @_ZN5draco26SequentialAttributeDecoder20GetPortableAttributeEv(ptr noundef nonnull align 8 dereferenceable(40) %0)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !46
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !45
   %i.e = tail call noundef zeroext i1 @_ZN5draco30AttributeQuantizationTransform25InverseTransformAttributeERKNS_14PointAttributeEPS1_(ptr noundef nonnull align 8 dereferenceable(44) %i.a, ptr noundef nonnull align 8 dereferenceable(112) %i.b, ptr noundef %i.d)
   ret i1 %i.e
 }
@@ -194,13 +196,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr getelementptr inbounds nuw inrange(-16, 96) (i8, ptr @_ZTVN5draco30AttributeQuantizationTransformE, i64 16), ptr %i.a, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !47   ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !46   ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i.i, label %_ZN5draco30AttributeQuantizationTransformD2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !48
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !47
   %i.f = ptrtoint ptr %i.e to i64
   %i.g = ptrtoint ptr %i.c to i64
   %i.h = sub i64 %i.f, %i.g
@@ -210,7 +212,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN5draco30AttributeQuantizationTransformD2Ev.exit: ; preds = %bb.a, %bb.b
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN5draco33SequentialIntegerAttributeDecoderE, i64 16), ptr %0, align 8, !tbaa !9
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !50   ; 3 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !49   ; 3 uses
   %.not.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i.i, label %_ZNSt10unique_ptrIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEESt14default_deleteIS2_EED2Ev.exit.i, label %_ZNKSt14default_deleteIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEEEclEPS2_.exit.i.i
 
@@ -218,7 +220,7 @@ _ZNKSt14default_deleteIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEEEclEPS
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !9
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = load ptr, ptr %i.l, align 8
-  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(8) %i.j) #7, !inline_history !64
+  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(8) %i.j) #7, !inline_history !63
   br label %_ZNSt10unique_ptrIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEESt14default_deleteIS2_EED2Ev.exit.i
 
 _ZNSt10unique_ptrIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEESt14default_deleteIS2_EED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEEEclEPS2_.exit.i.i, %_ZN5draco30AttributeQuantizationTransformD2Ev.exit
@@ -243,23 +245,23 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr getelementptr inbounds nuw inrange(-16, 96) (i8, ptr @_ZTVN5draco30AttributeQuantizationTransformE, i64 16), ptr %i.a, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !47   ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !46   ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i.i.i, label %_ZN5draco30AttributeQuantizationTransformD2Ev.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !48
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !47
   %i.f = ptrtoint ptr %i.e to i64
   %i.g = ptrtoint ptr %i.c to i64
   %i.h = sub i64 %i.f, %i.g
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.h) #6, !inline_history !66
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.h) #6, !inline_history !65
   br label %_ZN5draco30AttributeQuantizationTransformD2Ev.exit.i
 
 _ZN5draco30AttributeQuantizationTransformD2Ev.exit.i: ; preds = %bb.b, %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN5draco33SequentialIntegerAttributeDecoderE, i64 16), ptr %0, align 8, !tbaa !9
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !50   ; 3 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !49   ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i.i.i, label %_ZNSt10unique_ptrIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEESt14default_deleteIS2_EED2Ev.exit.i.i, label %_ZNKSt14default_deleteIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEEEclEPS2_.exit.i.i.i
 
@@ -267,7 +269,7 @@ _ZNKSt14default_deleteIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEEEclEPS
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !9
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = load ptr, ptr %i.l, align 8
-  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(8) %i.j) #7, !inline_history !65
+  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(8) %i.j) #7, !inline_history !64
   br label %_ZNSt10unique_ptrIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEESt14default_deleteIS2_EED2Ev.exit.i.i
 
 _ZNSt10unique_ptrIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEESt14default_deleteIS2_EED2Ev.exit.i.i: ; preds = %_ZNKSt14default_deleteIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEEEclEPS2_.exit.i.i.i, %_ZN5draco30AttributeQuantizationTransformD2Ev.exit.i
@@ -278,7 +280,7 @@ _ZNSt10unique_ptrIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEESt14default
   br i1 %.not.i.i.i.i, label %_ZN5draco38SequentialQuantizationAttributeDecoderD2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt10unique_ptrIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEESt14default_deleteIS2_EED2Ev.exit.i.i
-  tail call void @_ZNKSt14default_deleteIN5draco14PointAttributeEEclEPS1_(ptr noundef nonnull align 8 dereferenceable(8) %i.n, ptr noundef nonnull %i.o), !inline_history !66
+  tail call void @_ZNKSt14default_deleteIN5draco14PointAttributeEEclEPS1_(ptr noundef nonnull align 8 dereferenceable(8) %i.n, ptr noundef nonnull %i.o), !inline_history !65
   br label %_ZN5draco38SequentialQuantizationAttributeDecoderD2Ev.exit
 
 _ZN5draco38SequentialQuantizationAttributeDecoderD2Ev.exit: ; preds = %_ZNSt10unique_ptrIN5draco37PredictionSchemeTypedDecoderInterfaceIiiEESt14default_deleteIS2_EED2Ev.exit.i.i, %bb.c
@@ -302,9 +304,9 @@ declare void @_ZN5draco33SequentialIntegerAttributeDecoder25CreateIntPredictionS
 define linkonce_odr noundef i32 @_ZNK5draco33SequentialIntegerAttributeDecoder21GetNumValueComponentsEv(ptr noundef nonnull align 8 dereferenceable(48) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !46
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !45
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %i.d = load i8, ptr %i.c, align 8, !tbaa !67
+  %i.d = load i8, ptr %i.c, align 8, !tbaa !66
   %i.e = zext i8 %i.d to i32
   ret i32 %i.e
 }
@@ -317,19 +319,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !69   ; 4 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !68   ; 4 uses
   %.not.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i, label %_ZNSt10unique_ptrIN5draco22AttributeTransformDataESt14default_deleteIS1_EED2Ev.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !72   ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !71   ; 3 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.e, null
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNKSt14default_deleteIN5draco22AttributeTransformDataEEclEPS1_.exit.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !73
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !72
   %i.h = ptrtoint ptr %i.g to i64
   %i.i = ptrtoint ptr %i.e to i64
   %i.j = sub i64 %i.h, %i.i
@@ -342,13 +344,13 @@ _ZNKSt14default_deleteIN5draco22AttributeTransformDataEEclEPS1_.exit.i.i: ; pred
 
 _ZNSt10unique_ptrIN5draco22AttributeTransformDataESt14default_deleteIS1_EED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteIN5draco22AttributeTransformDataEEclEPS1_.exit.i.i, %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !76   ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !75   ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.l, null
   br i1 %.not.i.i.i.i.i, label %_ZN5draco15IndexTypeVectorINS_9IndexTypeIjNS_20PointIndex_tag_type_EEENS1_IjNS_29AttributeValueIndex_tag_type_EEEED2Ev.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt10unique_ptrIN5draco22AttributeTransformDataESt14default_deleteIS1_EED2Ev.exit.i
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !77
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !76
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = ptrtoint ptr %i.l to i64
   %i.q = sub i64 %i.o, %i.p
@@ -357,18 +359,18 @@ bb.e:                                             ; preds = %_ZNSt10unique_ptrIN
 
 _ZN5draco15IndexTypeVectorINS_9IndexTypeIjNS_20PointIndex_tag_type_EEENS1_IjNS_29AttributeValueIndex_tag_type_EEEED2Ev.exit.i: ; preds = %bb.e, %_ZNSt10unique_ptrIN5draco22AttributeTransformDataESt14default_deleteIS1_EED2Ev.exit.i
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !78   ; 4 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !77   ; 4 uses
   %.not.i1.i = icmp eq ptr %i.s, null
   br i1 %.not.i1.i, label %_ZN5draco14PointAttributeD2Ev.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5draco15IndexTypeVectorINS_9IndexTypeIjNS_20PointIndex_tag_type_EEENS1_IjNS_29AttributeValueIndex_tag_type_EEEED2Ev.exit.i
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !72   ; 3 uses
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !71   ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNKSt14default_deleteIN5draco10DataBufferEEclEPS1_.exit.i.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !73
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !72
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = ptrtoint ptr %i.t to i64
   %i.y = sub i64 %i.w, %i.x
@@ -451,38 +453,37 @@ attributes #7 = { nounwind }
 !42 = !{!"_ZTSSt10unique_ptrIN5draco14PointAttributeESt14default_deleteIS1_EE", !41, i64 0}
 !43 = !{!"_ZTSN5draco26SequentialAttributeDecoderE", !36, i64 8, !27, i64 16, !5, i64 24, !42, i64 32}
 !44 = !{!43, !36, i64 8}
-!45 = !{!26, !4, i64 72}
-!46 = !{!43, !27, i64 16}
-!47 = !{!12, !11, i64 0}
-!48 = !{!12, !11, i64 16}
-!49 = !{!"p1 _ZTSN5draco37PredictionSchemeTypedDecoderInterfaceIiiEE", !10, i64 0}
-!50 = !{!49, !49, i64 0}
-!51 = !{!"_ZTSN5draco18AttributeTransformE"}
-!52 = !{!"_ZTSNSt12_Vector_baseIfSaIfEE12_Vector_implE", !12, i64 0}
-!53 = !{!"_ZTSSt12_Vector_baseIfSaIfEE", !52, i64 0}
-!54 = !{!"_ZTSSt6vectorIfSaIfEE", !53, i64 0}
-!55 = !{!"float", !4, i64 0}
-!56 = !{!"_ZTSN5draco30AttributeQuantizationTransformE", !51, i64 0, !5, i64 8, !54, i64 16, !55, i64 40}
-!57 = !{!56, !5, i64 8}
-!58 = !{!26, !13, i64 8}
-!59 = !{!"p1 _ZTSSt10unique_ptrIN5draco14PointAttributeESt14default_deleteIS1_EE", !10, i64 0}
-!60 = !{!"_ZTSNSt12_Vector_baseISt10unique_ptrIN5draco14PointAttributeESt14default_deleteIS2_EESaIS5_EE17_Vector_impl_dataE", !59, i64 0, !59, i64 8, !59, i64 16}
-!61 = !{!60, !59, i64 0}
-!62 = !{!35, !32, i64 28}
-!63 = !{!26, !24, i64 64}
-!64 = distinct !{null, null, null}
-!65 = distinct !{ptr @_ZN5draco38SequentialQuantizationAttributeDecoderD2Ev, null, null, null}
-!66 = !{ptr @_ZN5draco38SequentialQuantizationAttributeDecoderD2Ev}
-!67 = !{!35, !4, i64 24}
-!68 = !{!"p1 _ZTSN5draco22AttributeTransformDataE", !10, i64 0}
-!69 = !{!68, !68, i64 0}
-!70 = !{!"p1 omnipotent char", !10, i64 0}
-!71 = !{!"_ZTSNSt12_Vector_baseIhSaIhEE17_Vector_impl_dataE", !70, i64 0, !70, i64 8, !70, i64 16}
-!72 = !{!71, !70, i64 0}
-!73 = !{!71, !70, i64 16}
-!74 = !{!"p1 _ZTSN5draco9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEE", !10, i64 0}
-!75 = !{!"_ZTSNSt12_Vector_baseIN5draco9IndexTypeIjNS0_29AttributeValueIndex_tag_type_EEESaIS3_EE17_Vector_impl_dataE", !74, i64 0, !74, i64 8, !74, i64 16}
-!76 = !{!75, !74, i64 0}
-!77 = !{!75, !74, i64 16}
-!78 = !{!29, !29, i64 0}
+!45 = !{!43, !27, i64 16}
+!46 = !{!12, !11, i64 0}
+!47 = !{!12, !11, i64 16}
+!48 = !{!"p1 _ZTSN5draco37PredictionSchemeTypedDecoderInterfaceIiiEE", !10, i64 0}
+!49 = !{!48, !48, i64 0}
+!50 = !{!"_ZTSN5draco18AttributeTransformE"}
+!51 = !{!"_ZTSNSt12_Vector_baseIfSaIfEE12_Vector_implE", !12, i64 0}
+!52 = !{!"_ZTSSt12_Vector_baseIfSaIfEE", !51, i64 0}
+!53 = !{!"_ZTSSt6vectorIfSaIfEE", !52, i64 0}
+!54 = !{!"float", !4, i64 0}
+!55 = !{!"_ZTSN5draco30AttributeQuantizationTransformE", !50, i64 0, !5, i64 8, !53, i64 16, !54, i64 40}
+!56 = !{!55, !5, i64 8}
+!57 = !{!26, !13, i64 8}
+!58 = !{!"p1 _ZTSSt10unique_ptrIN5draco14PointAttributeESt14default_deleteIS1_EE", !10, i64 0}
+!59 = !{!"_ZTSNSt12_Vector_baseISt10unique_ptrIN5draco14PointAttributeESt14default_deleteIS2_EESaIS5_EE17_Vector_impl_dataE", !58, i64 0, !58, i64 8, !58, i64 16}
+!60 = !{!59, !58, i64 0}
+!61 = !{!35, !32, i64 28}
+!62 = !{!26, !24, i64 64}
+!63 = distinct !{null, null, null}
+!64 = distinct !{ptr @_ZN5draco38SequentialQuantizationAttributeDecoderD2Ev, null, null, null}
+!65 = !{ptr @_ZN5draco38SequentialQuantizationAttributeDecoderD2Ev}
+!66 = !{!35, !4, i64 24}
+!67 = !{!"p1 _ZTSN5draco22AttributeTransformDataE", !10, i64 0}
+!68 = !{!67, !67, i64 0}
+!69 = !{!"p1 omnipotent char", !10, i64 0}
+!70 = !{!"_ZTSNSt12_Vector_baseIhSaIhEE17_Vector_impl_dataE", !69, i64 0, !69, i64 8, !69, i64 16}
+!71 = !{!70, !69, i64 0}
+!72 = !{!70, !69, i64 16}
+!73 = !{!"p1 _ZTSN5draco9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEE", !10, i64 0}
+!74 = !{!"_ZTSNSt12_Vector_baseIN5draco9IndexTypeIjNS0_29AttributeValueIndex_tag_type_EEESaIS3_EE17_Vector_impl_dataE", !73, i64 0, !73, i64 8, !73, i64 16}
+!75 = !{!74, !73, i64 0}
+!76 = !{!74, !73, i64 16}
+!77 = !{!29, !29, i64 0}
 end_hunk_0

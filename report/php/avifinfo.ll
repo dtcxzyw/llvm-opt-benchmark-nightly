@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.u
   %i.dd = load ptr, ptr %i.d, align 8, !tbaa !21  ; 3 uses
   %i.de = load ptr, ptr %10, align 8, !tbaa !20   ; 4 uses
-  %i.df = tail call ptr %i.dd(ptr noundef %i.de, i64 noundef 8) #8, !inline_history !60 ; 9 uses
+  %i.df = tail call ptr %i.dd(ptr noundef %i.de, i64 noundef 8) #8, !inline_history !60 ; 7 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.df, null
   br i1 %.not.i.i.i.i.i, label %ParseIpco.exit.thread197.i.i.i, label %AvifInfoInternalReadBigEndian.exit.i.i.i.i
 
@@ -213,41 +213,33 @@ AvifInfoInternalReadBigEndian.exit.i.i.i.i:       ; preds = %bb.v
   %i.dg = load i64, ptr %i.f, align 8, !tbaa !23
   %i.dh = add i64 %i.dg, 8                        ; 2 uses
   store i64 %i.dh, ptr %i.f, align 8, !tbaa !23
-  %12 = load i8, ptr %i.df, align 1, !tbaa !29
-  %13 = getelementptr inbounds nuw i8, ptr %i.df, i64 1
-  %14 = load i8, ptr %13, align 1, !tbaa !29
+  %12 = load i16, ptr %i.df, align 1
+  %13 = tail call i16 @llvm.bswap.i16(i16 %12)
+  %14 = zext i16 %13 to i32
   %i.di = getelementptr inbounds nuw i8, ptr %i.df, i64 2
   %i.dj = load i8, ptr %i.di, align 1, !tbaa !29
   %i.dk = getelementptr inbounds nuw i8, ptr %i.df, i64 3
   %i.dl = load i8, ptr %i.dk, align 1, !tbaa !29
   %i.dm = getelementptr inbounds nuw i8, ptr %i.df, i64 4
-  %15 = load i8, ptr %i.dm, align 1, !tbaa !29
-  %i.dn = zext i8 %15 to i32
-  %i.do = getelementptr inbounds nuw i8, ptr %i.df, i64 5
+  %15 = load i16, ptr %i.dm, align 1
+  %16 = tail call i16 @llvm.bswap.i16(i16 %15)
+  %i.dn = zext i16 %16 to i32
+  %i.do = getelementptr inbounds nuw i8, ptr %i.df, i64 6
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !29
   %i.dq = zext i8 %i.dp to i32
-  %i.dr = shl nuw nsw i32 %i.dn, 16
+  %i.dr = shl nuw i32 %i.dn, 16
   %i.ds = shl nuw nsw i32 %i.dq, 8
-  %16 = or disjoint i32 %i.ds, %i.dr
-  %17 = getelementptr inbounds nuw i8, ptr %i.df, i64 6
-  %18 = load i8, ptr %17, align 1, !tbaa !29
-  %19 = zext i8 %18 to i32
-  %i.dt = or disjoint i32 %16, %19
-  %20 = shl nuw i32 %i.dt, 8
+  %i.dt = or disjoint i32 %i.dr, %i.ds
   %i.du = getelementptr inbounds nuw i8, ptr %i.df, i64 7
   %i.dv = load i8, ptr %i.du, align 1, !tbaa !29
   %i.dw = zext i8 %i.dv to i32
-  %i.dx = or disjoint i32 %20, %i.dw              ; 2 uses
-  %21 = zext i8 %12 to i32
-  %i.dy = zext i8 %14 to i32
-  %i.dz = shl nuw nsw i32 %21, 16
+  %i.dx = or disjoint i32 %i.dt, %i.dw            ; 2 uses
+  %i.dy = zext i8 %i.dj to i32
+  %i.dz = shl nuw i32 %14, 16
   %i.ea = shl nuw nsw i32 %i.dy, 8
-  %22 = or disjoint i32 %i.ea, %i.dz
-  %23 = zext i8 %i.dj to i32
-  %i.eb = or disjoint i32 %22, %23
-  %24 = shl nuw i32 %i.eb, 8
+  %i.eb = or disjoint i32 %i.dz, %i.ea
   %i.ec = zext i8 %i.dl to i32
-  %i.ed = or disjoint i32 %24, %i.ec              ; 2 uses
+  %i.ed = or disjoint i32 %i.eb, %i.ec            ; 2 uses
   %i.ee = icmp ne i32 %i.ed, 0
   %i.ef = icmp ne i32 %i.dx, 0
   %or.cond.i.i.i.i = select i1 %i.ee, i1 %i.ef, i1 false
@@ -650,7 +642,7 @@ bb.bf:                                            ; preds = %bb.s
 bb.bg:                                            ; preds = %bb.bf
   %i.kt = load ptr, ptr %i.d, align 8, !tbaa !21  ; 6 uses
   %i.ku = load ptr, ptr %10, align 8, !tbaa !20   ; 7 uses
-  %i.kv = tail call ptr %i.kt(ptr noundef %i.ku, i64 noundef 4) #8, !inline_history !66 ; 5 uses
+  %i.kv = tail call ptr %i.kt(ptr noundef %i.ku, i64 noundef 4) #8, !inline_history !66 ; 4 uses
   %.not.i.i101.i.i = icmp eq ptr %i.kv, null
   br i1 %.not.i.i101.i.i, label %.loopexit.i.i.loopexit294, label %AvifInfoInternalReadBigEndian.exit.i.i.i
 
@@ -658,23 +650,19 @@ AvifInfoInternalReadBigEndian.exit.i.i.i:         ; preds = %bb.bg
   %i.kw = load i64, ptr %i.f, align 8, !tbaa !23
   %i.kx = add i64 %i.kw, 4                        ; 3 uses
   store i64 %i.kx, ptr %i.f, align 8, !tbaa !23
-  %25 = load i8, ptr %i.kv, align 1, !tbaa !29
-  %i.ky = zext i8 %25 to i32
-  %i.kz = getelementptr inbounds nuw i8, ptr %i.kv, i64 1
+  %17 = load i16, ptr %i.kv, align 1
+  %18 = tail call i16 @llvm.bswap.i16(i16 %17)
+  %i.ky = zext i16 %18 to i32
+  %i.kz = getelementptr inbounds nuw i8, ptr %i.kv, i64 2
   %i.la = load i8, ptr %i.kz, align 1, !tbaa !29
   %i.lb = zext i8 %i.la to i32
-  %i.lc = shl nuw nsw i32 %i.ky, 16
+  %i.lc = shl nuw i32 %i.ky, 16
   %i.ld = shl nuw nsw i32 %i.lb, 8
-  %26 = or disjoint i32 %i.ld, %i.lc
-  %27 = getelementptr inbounds nuw i8, ptr %i.kv, i64 2
-  %28 = load i8, ptr %27, align 1, !tbaa !29
-  %29 = zext i8 %28 to i32
-  %i.le = or disjoint i32 %26, %29
-  %30 = shl nuw i32 %i.le, 8
+  %i.le = or disjoint i32 %i.lc, %i.ld
   %i.lf = getelementptr inbounds nuw i8, ptr %i.kv, i64 3
   %i.lg = load i8, ptr %i.lf, align 1, !tbaa !29
   %i.lh = zext i8 %i.lg to i32
-  %i.li = or disjoint i32 %30, %i.lh              ; 2 uses
+  %i.li = or disjoint i32 %i.le, %i.lh            ; 2 uses
   %i.lj = load i32, ptr %i.ad, align 4, !tbaa !42
   %i.lk = and i32 %i.lj, 1                        ; 4 uses
   %i.ll = add nuw nsw i32 %i.lk, 1                ; 2 uses
@@ -1076,6 +1064,9 @@ bb.p:                                             ; preds = %._crit_edge, %bb.n
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7

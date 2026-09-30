@@ -205,21 +205,17 @@ bb.k:                                             ; preds = %bb.g, %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.ad = getelementptr i8, ptr %1, i64 25
-  %2 = load i8, ptr %i.ad, align 1, !tbaa !19
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 8
-  %5 = getelementptr i8, ptr %1, i64 26
-  %6 = load i8, ptr %5, align 2, !tbaa !19
-  %i.ae = zext i8 %6 to i32
-  %7 = or disjoint i32 %4, %i.ae                  ; 2 uses
+  %2 = load i16, ptr %i.ad, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.ae = zext i16 %3 to i32                      ; 2 uses
   %i.af = getelementptr i8, ptr %0, i64 168
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !63 ; 2 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !90
-  %i.ai = tail call i64 %i.ah(ptr noundef nonnull %i.ag, i32 noundef range(i32 0, 65536) %7) #9, !inline_history !116
+  %i.ai = tail call i64 %i.ah(ptr noundef nonnull %i.ag, i32 noundef range(i32 0, 65536) %i.ae) #9, !inline_history !116
   %i.aj = getelementptr i8, ptr %0, i64 176
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !64 ; 2 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !90
-  %i.am = tail call i64 %i.al(ptr noundef nonnull %i.ak, i32 noundef range(i32 0, 65536) %7) #9, !inline_history !116
+  %i.am = tail call i64 %i.al(ptr noundef nonnull %i.ak, i32 noundef range(i32 0, 65536) %i.ae) #9, !inline_history !116
   %i.an = getelementptr i8, ptr %0, i64 120
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !120
   %i.ap = sub i64 %i.ai, %i.ao                    ; 5 uses
@@ -622,21 +618,17 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %.critedge
   %i.aa = getelementptr i8, ptr %2, i64 25
-  %3 = load i8, ptr %i.aa, align 1, !tbaa !19
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw nsw i32 %4, 8
-  %6 = getelementptr i8, ptr %2, i64 26
-  %7 = load i8, ptr %6, align 1, !tbaa !19
-  %i.ab = zext i8 %7 to i32
-  %8 = or disjoint i32 %5, %i.ab                  ; 2 uses
+  %3 = load i16, ptr %i.aa, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.ab = zext i16 %4 to i32                      ; 2 uses
   %i.ac = getelementptr i8, ptr %1, i64 168
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !63 ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !90
-  %i.af = tail call i64 %i.ae(ptr noundef nonnull %i.ad, i32 noundef range(i32 0, 65536) %8) #9, !inline_history !138
+  %i.af = tail call i64 %i.ae(ptr noundef nonnull %i.ad, i32 noundef range(i32 0, 65536) %i.ab) #9, !inline_history !138
   %i.ag = getelementptr i8, ptr %1, i64 176
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !64 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !90
-  %i.aj = tail call i64 %i.ai(ptr noundef nonnull %i.ah, i32 noundef range(i32 0, 65536) %8) #9, !inline_history !138
+  %i.aj = tail call i64 %i.ai(ptr noundef nonnull %i.ah, i32 noundef range(i32 0, 65536) %i.ab) #9, !inline_history !138
   %i.ak = getelementptr i8, ptr %1, i64 160
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !91 ; 2 uses
   %i.am = icmp sgt i32 %i.al, -1
@@ -1038,6 +1030,9 @@ declare i64 @llvm.smax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

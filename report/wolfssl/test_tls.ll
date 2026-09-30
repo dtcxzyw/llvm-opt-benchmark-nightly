@@ -204,40 +204,34 @@ bb.j:                                             ; preds = %.critedge539
 
 .critedge543:                                     ; preds = %.critedge539
   %i.dl = getelementptr inbounds nuw i8, ptr %i.bz, i64 3 ; 2 uses
-  %1 = load i8, ptr %i.dl, align 1, !tbaa !20
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw nsw i32 %2, 8
-  %i.dm = getelementptr inbounds nuw i8, ptr %i.bz, i64 4 ; 2 uses
-  %4 = load i8, ptr %i.dm, align 1, !tbaa !20
-  %5 = zext i8 %4 to i32
-  %6 = or disjoint i32 %3, %5
-  %i.dn = add nsw i32 %6, -1                      ; 2 uses
+  %1 = load i16, ptr %i.dl, align 1
+  %2 = call i16 @llvm.bswap.i16(i16 %1)
+  %3 = zext i16 %2 to i32
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.bz, i64 4
+  %i.dn = add nsw i32 %3, -1                      ; 2 uses
   %i.do = lshr i32 %i.dn, 8
   %i.dp = trunc i32 %i.do to i8
   store i8 %i.dp, ptr %i.dl, align 1, !tbaa !20
   %i.dq = trunc i32 %i.dn to i8
   store i8 %i.dq, ptr %i.dm, align 1, !tbaa !20
   %i.dr = getelementptr inbounds nuw i8, ptr %i.bz, i64 6 ; 2 uses
-  %7 = load i8, ptr %i.dr, align 1, !tbaa !20
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 16
-  %10 = getelementptr inbounds nuw i8, ptr %i.bz, i64 7 ; 2 uses
-  %11 = load i8, ptr %10, align 1, !tbaa !20
-  %i.ds = zext i8 %11 to i32
+  %4 = load i16, ptr %i.dr, align 1
+  %5 = call i16 @llvm.bswap.i16(i16 %4)
+  %i.ds = zext i16 %5 to i32
   %i.dt = shl nuw nsw i32 %i.ds, 8
-  %12 = or disjoint i32 %i.dt, %9
+  %6 = getelementptr inbounds nuw i8, ptr %i.bz, i64 7
   %i.du = getelementptr inbounds nuw i8, ptr %i.bz, i64 8 ; 2 uses
   %i.dv = load i8, ptr %i.du, align 1, !tbaa !20
   %i.dw = zext i8 %i.dv to i32
-  %13 = or disjoint i32 %12, %i.dw
-  %i.dx = add nsw i32 %13, -1                     ; 3 uses
+  %7 = add nsw i32 %i.dw, -1                      ; 2 uses
+  %i.dx = add nsw i32 %7, %i.dt                   ; 2 uses
   %i.dy = lshr i32 %i.dx, 16
   %i.dz = trunc i32 %i.dy to i8
   store i8 %i.dz, ptr %i.dr, align 1, !tbaa !20
   %i.ea = lshr i32 %i.dx, 8
   %i.eb = trunc i32 %i.ea to i8
-  store i8 %i.eb, ptr %10, align 1, !tbaa !20
-  %i.ec = trunc i32 %i.dx to i8
+  store i8 %i.eb, ptr %6, align 1, !tbaa !20
+  %i.ec = trunc i32 %7 to i8
   store i8 %i.ec, ptr %i.du, align 1, !tbaa !20
   %i.ed = add nsw i32 %i.de, -1                   ; 2 uses
   %i.ee = lshr i32 %i.ed, 8
@@ -640,21 +634,17 @@ bb.f:                                             ; preds = %.preheader, %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.ac = zext nneg i32 %.0 to i64
-  %4 = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ac ; 3 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 3
-  %.val61 = load i8, ptr %i.ad, align 1, !tbaa !20
-  %i.ae = getelementptr i8, ptr %4, i64 4
-  %.val62 = load i8, ptr %i.ae, align 1, !tbaa !20
-  %5 = zext i8 %.val61 to i32
-  %6 = shl nuw nsw i32 %5, 8
-  %i.af = zext i8 %.val62 to i32
-  %7 = or disjoint i32 %6, %i.af
-  %i.ag = add nuw nsw i32 %i.ab, %7               ; 6 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ac ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 3
+  %.val61 = load i16, ptr %i.ae, align 1
+  %4 = call i16 @llvm.bswap.i16(i16 %.val61)
+  %i.af = zext i16 %4 to i32
+  %i.ag = add nuw nsw i32 %i.ab, %i.af            ; 6 uses
   %i.ah = icmp sgt i32 %i.ag, %i.z
   br i1 %i.ah, label %.thread70, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ai = load i8, ptr %4, align 1, !tbaa !20
+  %i.ai = load i8, ptr %i.ad, align 1, !tbaa !20
   %i.aj = icmp eq i8 %i.ai, 20
   br i1 %i.aj, label %bb.i, label %bb.f, !llvm.loop !62
 
@@ -665,21 +655,17 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.am = zext nneg i32 %i.ag to i64
-  %i.an = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.am ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.am ; 2 uses
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !20
   %.not59 = icmp eq i8 %i.ao, 22
   br i1 %.not59, label %bb.k, label %.thread70
 
 bb.k:                                             ; preds = %bb.j
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 3
-  %.val = load i8, ptr %i.ap, align 1, !tbaa !20
-  %8 = getelementptr i8, ptr %i.an, i64 4
-  %.val60 = load i8, ptr %8, align 1, !tbaa !20
-  %9 = zext i8 %.val to i32
-  %10 = shl nuw nsw i32 %9, 8
-  %i.aq = zext i8 %.val60 to i32
-  %11 = or disjoint i32 %10, %i.aq
-  %i.ar = add nuw nsw i32 %11, 5                  ; 2 uses
+  %.val = load i16, ptr %i.ap, align 1
+  %5 = call i16 @llvm.bswap.i16(i16 %.val)
+  %i.aq = zext i16 %5 to i32
+  %i.ar = add nuw nsw i32 %i.aq, 5                ; 2 uses
   %i.as = add nuw nsw i32 %i.ar, %i.ag
   %i.at = icmp sgt i32 %i.as, %i.z
   br i1 %i.at, label %.thread70, label %.thread70.sink.split
@@ -1080,6 +1066,9 @@ declare i32 @wolfssl_local_GetRecordSize(ptr noundef, i32 noundef, i32 noundef) 
 
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #9

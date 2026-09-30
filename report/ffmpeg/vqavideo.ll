@@ -101,7 +101,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.v = load ptr, ptr %i.c, align 8, !tbaa !33
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 72
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !63   ; 5 uses
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !63   ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 10
   %i.z = load i8, ptr %i.y, align 1, !tbaa !34    ; 2 uses
   %i.aa = zext i8 %i.z to i32                     ; 2 uses
@@ -119,12 +119,9 @@ bb.g:                                             ; preds = %bb.e
   store i32 %i.ai, ptr %i.aj, align 4, !tbaa !41
   %i.ak = getelementptr inbounds nuw i8, ptr %i.b, i64 1136
   store i32 %i.ai, ptr %i.ak, align 8, !tbaa !42
-  %1 = getelementptr inbounds nuw i8, ptr %i.x, i64 14
-  %2 = load i8, ptr %1, align 1, !tbaa !34
-  %i.al = getelementptr inbounds nuw i8, ptr %i.x, i64 15
-  %3 = load i8, ptr %i.al, align 1, !tbaa !34
-  %4 = or i8 %3, %2
-  %i.am = icmp eq i8 %4, 0
+  %i.al = getelementptr inbounds nuw i8, ptr %i.x, i64 14
+  %1 = load i16, ptr %i.al, align 1
+  %i.am = icmp eq i16 %1, 0
   %spec.select = select i1 %i.am, i32 39, i32 11
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i32 %spec.select, ptr %i.an, align 8, !tbaa !43

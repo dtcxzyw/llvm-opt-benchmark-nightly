@@ -20,17 +20,16 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define zeroext i16 @Curl_read16_be(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = load i8, ptr %0, align 1, !tbaa !8
-  %2 = zext i8 %1 to i16
-  %3 = shl nuw i16 %2, 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %5 = load i8, ptr %4, align 1, !tbaa !8
-  %6 = zext i8 %5 to i16
-  %7 = or disjoint i16 %3, %6
-  ret i16 %7
+  %1 = load i16, ptr %0, align 1
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  ret i16 %2
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #1
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -44,5 +43,4 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
-!8 = !{!4, !4, i64 0}
 end_hunk_0

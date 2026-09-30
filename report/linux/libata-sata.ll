@@ -204,18 +204,14 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %bb.bs
   %i.il = getelementptr i8, ptr %0, i64 3854
-  %1 = load i8, ptr %i.il, align 2
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw nsw i32 %2, 16
-  %4 = getelementptr i8, ptr %0, i64 3855
-  %5 = load i8, ptr %4, align 1
-  %i.im = zext i8 %5 to i32
+  %1 = load i16, ptr %i.il, align 2
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %i.im = zext i16 %2 to i32
   %i.in = shl nuw nsw i32 %i.im, 8
-  %6 = or disjoint i32 %i.in, %3
   %i.io = getelementptr i8, ptr %0, i64 3856
   %i.ip = load i8, ptr %i.io, align 16
   %i.iq = zext i8 %i.ip to i32
-  %i.ir = or disjoint i32 %6, %i.iq
+  %i.ir = or disjoint i32 %i.in, %i.iq
   br label %bb.bx
 
 ata_eh_read_log_10h.exit:                         ; preds = %bb.bq, %.critedge
@@ -433,6 +429,9 @@ declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #10
 
 attributes #0 = { fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

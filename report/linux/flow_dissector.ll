@@ -204,16 +204,11 @@ __skb_header_pointer.exit111.i:                   ; preds = %bb.et
   br i1 %.not88.not.i, label %.critedge94.i, label %__skb_header_pointer.exit111.thread135.i
 
 __skb_header_pointer.exit111.thread135.i:         ; preds = %__skb_header_pointer.exit111.i, %bb.ev
-  %.0.i108138.i = phi ptr [ %i.sr, %__skb_header_pointer.exit111.i ], [ %i.c, %bb.ev ] ; 2 uses
-  %31 = getelementptr i8, ptr %.0.i108138.i, i64 2
-  %32 = load i8, ptr %31, align 1
-  %33 = zext i8 %32 to i16
-  %34 = shl nuw i16 %33, 8
-  %i.ss = getelementptr i8, ptr %.0.i108138.i, i64 3
-  %35 = load i8, ptr %i.ss, align 1
-  %36 = zext i8 %35 to i16
-  %trunc.i = or disjoint i16 %34, %36
-  switch i16 %trunc.i, label %bb.ex [
+  %.0.i108138.i = phi ptr [ %i.sr, %__skb_header_pointer.exit111.i ], [ %i.c, %bb.ev ]
+  %i.ss = getelementptr i8, ptr %.0.i108138.i, i64 2
+  %31 = load i16, ptr %i.ss, align 1
+  %32 = call i16 @llvm.bswap.i16(i16 %31)
+  switch i16 %32, label %bb.ex [
     i16 33, label %.sink.split.i
     i16 87, label %bb.ew
   ]

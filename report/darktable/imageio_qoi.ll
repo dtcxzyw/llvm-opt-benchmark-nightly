@@ -202,23 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond7, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = load i8, ptr %0, align 1, !tbaa !16
-  %6 = zext i8 %5 to i32
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !16
-  %9 = zext i8 %8 to i32
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %11 = load i8, ptr %10, align 1, !tbaa !16
-  %12 = zext i8 %11 to i32
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %14 = load i8, ptr %13, align 1, !tbaa !16
-  %15 = zext i8 %14 to i32
-  %16 = shl nuw i32 %6, 24
-  %17 = shl nuw nsw i32 %9, 16
-  %18 = or disjoint i32 %17, %16
-  %19 = shl nuw nsw i32 %12, 8
-  %20 = or disjoint i32 %18, %19
-  %21 = or disjoint i32 %20, %15
+  %5 = load i32, ptr %0, align 1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.h = load i32, ptr %i.g, align 1              ; 2 uses
   %i.i = tail call i32 @llvm.bswap.i32(i32 %i.h)  ; 3 uses
@@ -249,7 +233,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.x = icmp ugt i8 %i.r, 1
-  %i.y = icmp ne i32 %21, 1903126886
+  %i.y = icmp ne i32 %5, 1718185841
   %or.cond9 = select i1 %i.x, i1 true, i1 %i.y
   br i1 %or.cond9, label %.loopexit, label %bb.f
 

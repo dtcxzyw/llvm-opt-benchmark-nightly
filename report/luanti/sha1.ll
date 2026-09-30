@@ -40,7 +40,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @_ZN4SHA17processEv(ptr nofree noundef nonnull align 4 captures(none) dereferenceable(92) %0) local_unnamed_addr #3 align 2 {
 .lr.ph.preheader:
-  %i.a = alloca [80 x i32], align 16              ; 7 uses
+  %i.a = alloca [80 x i32], align 16              ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.b = load i32, ptr %0, align 4, !tbaa !15     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
@@ -52,40 +52,24 @@ define dso_local void @_ZN4SHA17processEv(ptr nofree noundef nonnull align 4 cap
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !12   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %1 = load <32 x i8>, ptr %i.k, align 4, !tbaa !19 ; 4 uses
-  %2 = shufflevector <32 x i8> %1, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %3 = zext <8 x i8> %2 to <8 x i32>
-  %4 = shl nuw <8 x i32> %3, splat (i32 24)
-  %5 = shufflevector <32 x i8> %1, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %6 = zext <8 x i8> %5 to <8 x i32>
-  %7 = shl nuw nsw <8 x i32> %6, splat (i32 16)
-  %8 = or disjoint <8 x i32> %7, %4
-  %9 = shufflevector <32 x i8> %1, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %10 = zext <8 x i8> %9 to <8 x i32>
-  %11 = shl nuw nsw <8 x i32> %10, splat (i32 8)
-  %12 = or disjoint <8 x i32> %8, %11
-  %13 = shufflevector <32 x i8> %1, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %14 = zext <8 x i8> %13 to <8 x i32>
-  %15 = or disjoint <8 x i32> %12, %14
-  store <8 x i32> %15, ptr %i.a, align 16, !tbaa !10
+  %1 = load <4 x i32>, ptr %i.k, align 4
+  %2 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %1)
+  store <4 x i32> %2, ptr %i.a, align 16, !tbaa !10
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %5 = load <4 x i32>, ptr %3, align 4
+  %6 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %5)
+  store <4 x i32> %6, ptr %4, align 16, !tbaa !10
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %16 = load <32 x i8>, ptr %i.l, align 4, !tbaa !19 ; 4 uses
-  %17 = shufflevector <32 x i8> %16, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %18 = zext <8 x i8> %17 to <8 x i32>
-  %19 = shl nuw <8 x i32> %18, splat (i32 24)
-  %20 = shufflevector <32 x i8> %16, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %21 = zext <8 x i8> %20 to <8 x i32>
-  %22 = shl nuw nsw <8 x i32> %21, splat (i32 16)
-  %23 = or disjoint <8 x i32> %22, %19
-  %24 = shufflevector <32 x i8> %16, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %25 = zext <8 x i8> %24 to <8 x i32>
-  %26 = shl nuw nsw <8 x i32> %25, splat (i32 8)
-  %27 = or disjoint <8 x i32> %23, %26
-  %28 = shufflevector <32 x i8> %16, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %29 = zext <8 x i8> %28 to <8 x i32>
-  %30 = or disjoint <8 x i32> %27, %29
-  store <8 x i32> %30, ptr %i.m, align 16, !tbaa !10
+  %7 = load <4 x i32>, ptr %i.l, align 4
+  %8 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %7)
+  store <4 x i32> %8, ptr %i.m, align 16, !tbaa !10
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 68
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %11 = load <4 x i32>, ptr %9, align 4
+  %12 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %11)
+  store <4 x i32> %12, ptr %10, align 16, !tbaa !10
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader
@@ -121,7 +105,7 @@ define dso_local void @_ZN4SHA17processEv(ptr nofree noundef nonnull align 4 cap
   store i32 %i.an, ptr %i.ab, align 4, !tbaa !10
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, 80
-  br i1 %exitcond.not.1, label %.preheader, label %.lr.ph, !llvm.loop !21
+  br i1 %exitcond.not.1, label %.preheader, label %.lr.ph, !llvm.loop !20
 
 .preheader:                                       ; preds = %.lr.ph, %bb.g
   %indvars.iv70 = phi i64 [ %indvars.iv.next71, %bb.g ], [ 0, %.lr.ph ] ; 5 uses
@@ -178,7 +162,7 @@ bb.g:                                             ; preds = %bb.c, %bb.f, %bb.e,
   %i.bk = tail call noundef i32 @llvm.fshl.i32(i32 %.05462, i32 %.05462, i32 30) ; 2 uses
   %indvars.iv.next71 = add nuw nsw i64 %indvars.iv70, 1 ; 2 uses
   %exitcond73.not = icmp eq i64 %indvars.iv.next71, 80
-  br i1 %exitcond73.not, label %bb.h, label %.preheader, !llvm.loop !22
+  br i1 %exitcond73.not, label %bb.h, label %.preheader, !llvm.loop !21
 
 bb.h:                                             ; preds = %bb.g
   %i.bl = add i32 %i.bj, %i.b
@@ -334,29 +318,29 @@ _ZN4SHA18addBytesEPKcj.exit13:                    ; preds = %_ZN4SHA18addBytesEP
   %i.aj = sub i32 56, %i.ag
   %i.ak = zext i32 %i.aj to i64
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ak ; 8 uses
-  store i8 0, ptr %i.al, align 1, !tbaa !19
+  store i8 0, ptr %i.al, align 1, !tbaa !22
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 1
-  store i8 0, ptr %i.am, align 1, !tbaa !19
+  store i8 0, ptr %i.am, align 1, !tbaa !22
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 2
-  store i8 0, ptr %i.an, align 1, !tbaa !19
+  store i8 0, ptr %i.an, align 1, !tbaa !22
   %i.ao = trunc nuw nsw i32 %i.ah to i8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.al, i64 3
-  store i8 %i.ao, ptr %i.ap, align 1, !tbaa !19
+  store i8 %i.ao, ptr %i.ap, align 1, !tbaa !22
   %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 4
   %i.ar = lshr i32 %i.ai, 24
   %i.as = trunc nuw i32 %i.ar to i8
-  store i8 %i.as, ptr %i.aq, align 1, !tbaa !19
+  store i8 %i.as, ptr %i.aq, align 1, !tbaa !22
   %i.at = lshr i32 %i.ai, 16
   %i.au = trunc i32 %i.at to i8
   %i.av = getelementptr inbounds nuw i8, ptr %i.al, i64 5
-  store i8 %i.au, ptr %i.av, align 1, !tbaa !19
+  store i8 %i.au, ptr %i.av, align 1, !tbaa !22
   %i.aw = lshr i32 %i.ai, 8
   %i.ax = trunc i32 %i.aw to i8
   %i.ay = getelementptr inbounds nuw i8, ptr %i.al, i64 6
-  store i8 %i.ax, ptr %i.ay, align 1, !tbaa !19
+  store i8 %i.ax, ptr %i.ay, align 1, !tbaa !22
   %i.az = trunc i32 %i.ai to i8
   %i.ba = getelementptr inbounds nuw i8, ptr %i.al, i64 7
-  store i8 %i.az, ptr %i.ba, align 1, !tbaa !19
+  store i8 %i.az, ptr %i.ba, align 1, !tbaa !22
   %i.bb = sub i32 64, %i.ag                       ; 2 uses
   %i.bc = add i32 %i.af, %i.bb
   store i32 %i.bc, ptr %i.b, align 4, !tbaa !14
@@ -393,86 +377,86 @@ _ZN4SHA18addBytesEPKcj.exit19:                    ; preds = %bb.i, %_ZN4SHA18add
   %i.bo = load i32, ptr %0, align 4, !tbaa !15    ; 4 uses
   %i.bp = lshr i32 %i.bo, 24
   %i.bq = trunc nuw i32 %i.bp to i8
-  store i8 %i.bq, ptr %1, align 1, !tbaa !19
+  store i8 %i.bq, ptr %1, align 1, !tbaa !22
   %i.br = lshr i32 %i.bo, 16
   %i.bs = trunc i32 %i.br to i8
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %i.bs, ptr %i.bt, align 1, !tbaa !19
+  store i8 %i.bs, ptr %i.bt, align 1, !tbaa !22
   %i.bu = lshr i32 %i.bo, 8
   %i.bv = trunc i32 %i.bu to i8
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %i.bv, ptr %i.bw, align 1, !tbaa !19
+  store i8 %i.bv, ptr %i.bw, align 1, !tbaa !22
   %i.bx = trunc i32 %i.bo to i8
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %i.bx, ptr %i.by, align 1, !tbaa !19
+  store i8 %i.bx, ptr %i.by, align 1, !tbaa !22
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !16 ; 4 uses
   %i.cc = lshr i32 %i.cb, 24
   %i.cd = trunc nuw i32 %i.cc to i8
-  store i8 %i.cd, ptr %i.bz, align 1, !tbaa !19
+  store i8 %i.cd, ptr %i.bz, align 1, !tbaa !22
   %i.ce = lshr i32 %i.cb, 16
   %i.cf = trunc i32 %i.ce to i8
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %i.cf, ptr %i.cg, align 1, !tbaa !19
+  store i8 %i.cf, ptr %i.cg, align 1, !tbaa !22
   %i.ch = lshr i32 %i.cb, 8
   %i.ci = trunc i32 %i.ch to i8
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 6
-  store i8 %i.ci, ptr %i.cj, align 1, !tbaa !19
+  store i8 %i.ci, ptr %i.cj, align 1, !tbaa !22
   %i.ck = trunc i32 %i.cb to i8
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %i.ck, ptr %i.cl, align 1, !tbaa !19
+  store i8 %i.ck, ptr %i.cl, align 1, !tbaa !22
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !17 ; 4 uses
   %i.cp = lshr i32 %i.co, 24
   %i.cq = trunc nuw i32 %i.cp to i8
-  store i8 %i.cq, ptr %i.cm, align 1, !tbaa !19
+  store i8 %i.cq, ptr %i.cm, align 1, !tbaa !22
   %i.cr = lshr i32 %i.co, 16
   %i.cs = trunc i32 %i.cr to i8
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 9
-  store i8 %i.cs, ptr %i.ct, align 1, !tbaa !19
+  store i8 %i.cs, ptr %i.ct, align 1, !tbaa !22
   %i.cu = lshr i32 %i.co, 8
   %i.cv = trunc i32 %i.cu to i8
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 10
-  store i8 %i.cv, ptr %i.cw, align 1, !tbaa !19
+  store i8 %i.cv, ptr %i.cw, align 1, !tbaa !22
   %i.cx = trunc i32 %i.co to i8
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 11
-  store i8 %i.cx, ptr %i.cy, align 1, !tbaa !19
+  store i8 %i.cx, ptr %i.cy, align 1, !tbaa !22
   %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.db = load i32, ptr %i.da, align 4, !tbaa !18 ; 4 uses
   %i.dc = lshr i32 %i.db, 24
   %i.dd = trunc nuw i32 %i.dc to i8
-  store i8 %i.dd, ptr %i.cz, align 1, !tbaa !19
+  store i8 %i.dd, ptr %i.cz, align 1, !tbaa !22
   %i.de = lshr i32 %i.db, 16
   %i.df = trunc i32 %i.de to i8
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 13
-  store i8 %i.df, ptr %i.dg, align 1, !tbaa !19
+  store i8 %i.df, ptr %i.dg, align 1, !tbaa !22
   %i.dh = lshr i32 %i.db, 8
   %i.di = trunc i32 %i.dh to i8
   %i.dj = getelementptr inbounds nuw i8, ptr %1, i64 14
-  store i8 %i.di, ptr %i.dj, align 1, !tbaa !19
+  store i8 %i.di, ptr %i.dj, align 1, !tbaa !22
   %i.dk = trunc i32 %i.db to i8
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 15
-  store i8 %i.dk, ptr %i.dl, align 1, !tbaa !19
+  store i8 %i.dk, ptr %i.dl, align 1, !tbaa !22
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !12 ; 4 uses
   %i.dp = lshr i32 %i.do, 24
   %i.dq = trunc nuw i32 %i.dp to i8
-  store i8 %i.dq, ptr %i.dm, align 1, !tbaa !19
+  store i8 %i.dq, ptr %i.dm, align 1, !tbaa !22
   %i.dr = lshr i32 %i.do, 16
   %i.ds = trunc i32 %i.dr to i8
   %i.dt = getelementptr inbounds nuw i8, ptr %1, i64 17
-  store i8 %i.ds, ptr %i.dt, align 1, !tbaa !19
+  store i8 %i.ds, ptr %i.dt, align 1, !tbaa !22
   %i.du = lshr i32 %i.do, 8
   %i.dv = trunc i32 %i.du to i8
   %i.dw = getelementptr inbounds nuw i8, ptr %1, i64 18
-  store i8 %i.dv, ptr %i.dw, align 1, !tbaa !19
+  store i8 %i.dv, ptr %i.dw, align 1, !tbaa !22
   %i.dx = trunc i32 %i.do to i8
   %i.dy = getelementptr inbounds nuw i8, ptr %1, i64 19
-  store i8 %i.dx, ptr %i.dy, align 1, !tbaa !19
+  store i8 %i.dx, ptr %i.dy, align 1, !tbaa !22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }
@@ -486,6 +470,9 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #5
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #5
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #5
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -498,7 +485,7 @@ attributes #6 = { nounwind }
 !llvm.ident = !{!4}
 !llvm.errno.tbaa = !{!9}
 
-!0 = distinct !{!0, !20}
+!0 = distinct !{!0, !19}
 !1 = !{i32 8, !"PIC Level", i32 2}
 !2 = !{i32 7, !"PIE Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
@@ -517,8 +504,8 @@ attributes #6 = { nounwind }
 !16 = !{!11, !7, i64 4}
 !17 = !{!11, !7, i64 8}
 !18 = !{!11, !7, i64 12}
-!19 = !{!6, !6, i64 0}
-!20 = !{!"llvm.loop.mustprogress"}
-!21 = distinct !{!21, !20}
-!22 = distinct !{!22, !20}
+!19 = !{!"llvm.loop.mustprogress"}
+!20 = distinct !{!20, !19}
+!21 = distinct !{!21, !19}
+!22 = !{!6, !6, i64 0}
 end_hunk_0

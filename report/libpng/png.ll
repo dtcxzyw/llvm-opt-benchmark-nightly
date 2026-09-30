@@ -205,53 +205,47 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %.03440 = phi ptr [ %i.y, %bb.e ], [ %i.d, %.lr.ph.preheader ] ; 8 uses
+  %.03440 = phi ptr [ %i.y, %bb.e ], [ %i.d, %.lr.ph.preheader ] ; 6 uses
   %.03539 = phi i32 [ %i.x, %bb.e ], [ 0, %.lr.ph.preheader ]
-  %4 = load i8, ptr %.03440, align 1, !tbaa !28
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr inbounds nuw i8, ptr %.03440, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !28
-  %i.e = zext i8 %8 to i32
-  %i.f = shl nuw nsw i32 %i.e, 16
-  %9 = or disjoint i32 %i.f, %6
-  %i.g = getelementptr inbounds nuw i8, ptr %.03440, i64 2
+  %4 = load i32, ptr %.03440, align 1
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)      ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.03440, i64 4
+  %7 = load i16, ptr %6, align 1
+  %8 = tail call i16 @llvm.bswap.i16(i16 %7)
+  %i.e = zext i16 %8 to i32
+  %i.f = shl nuw i32 %i.e, 16
+  %i.g = getelementptr inbounds nuw i8, ptr %.03440, i64 6
   %i.h = load i8, ptr %i.g, align 1, !tbaa !28
   %i.i = zext i8 %i.h to i32
   %i.j = shl nuw nsw i32 %i.i, 8
-  %i.k = or disjoint i32 %9, %i.j
-  %i.l = getelementptr inbounds nuw i8, ptr %.03440, i64 3
+  %i.k = or disjoint i32 %i.f, %i.j
+  %i.l = getelementptr inbounds nuw i8, ptr %.03440, i64 7
   %i.m = load i8, ptr %i.l, align 1, !tbaa !28
-  %i.n = zext i8 %i.m to i32
+  %i.n = zext i8 %i.m to i32                      ; 2 uses
   %i.o = or disjoint i32 %i.k, %i.n               ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %.03440, i64 4
-  %11 = getelementptr inbounds nuw i8, ptr %.03440, i64 7
-  %12 = load i32, ptr %10, align 1, !tbaa !28
-  %13 = load i8, ptr %11, align 1, !tbaa !28
-  %14 = tail call i32 @llvm.bswap.i32(i32 %12)    ; 2 uses
-  %i.p = icmp ugt i32 %14, %2
+  %i.p = icmp ugt i32 %i.o, %2
   br i1 %i.p, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.q = getelementptr inbounds nuw i8, ptr %.03440, i64 8
   %i.r = load i32, ptr %i.q, align 1
   %i.s = tail call i32 @llvm.bswap.i32(i32 %i.r)
-  %i.t = sub nuw i32 %2, %14
+  %i.t = sub nuw i32 %2, %i.o
   %i.u = icmp ugt i32 %i.s, %i.t
   br i1 %i.u, label %.critedge, label %bb.c
 
 .critedge:                                        ; preds = %bb.b, %.lr.ph
-  %i.v = zext i32 %i.o to i64
+  %i.v = zext i32 %5 to i64
   tail call fastcc void @png_icc_profile_error(ptr noundef %0, ptr noundef %1, i64 noundef %i.v, ptr noundef nonnull @.str.36)
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
-  %15 = and i8 %13, 3
-  %.not = icmp eq i8 %15, 0
+  %9 = and i32 %i.n, 3
+  %.not = icmp eq i32 %9, 0
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.w = zext i32 %i.o to i64
+  %i.w = zext i32 %5 to i64
   tail call fastcc void @png_icc_profile_error(ptr noundef %0, ptr noundef %1, i64 noundef %i.w, ptr noundef nonnull @.str.37)
   br label %bb.e
 
@@ -654,14 +648,17 @@ declare i32 @llvm.smax.i32(i32, i32) #19
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #19
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.floor.v2f64(<2 x double>) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #19

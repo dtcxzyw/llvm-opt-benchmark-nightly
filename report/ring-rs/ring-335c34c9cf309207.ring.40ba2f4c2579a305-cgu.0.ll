@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.am, label %_RINvMs_NtCsjVYLllkLn3D_9untrusted5inputNtB5_5Input8read_allNvNtNtCs5yxAJGbRKSL_4ring2io3der30bit_string_with_no_unused_bitsBB_NtNtNtB11_5error11unspecified11UnspecifiedEB11_.exit, label %bb.f
 
 bb.m:                                             ; preds = %bb.f
-  %i.an = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.r ; 6 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.r ; 5 uses
   store i64 %i.s, ptr %i.a, align 8, !alias.scope !459, !noalias !457
   %.not.i = icmp ne i8 %i.i, -95
   %.not.i10 = icmp eq i64 %.sroa.019.0.i.i, 0
@@ -238,7 +238,7 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.w, %bb.v, %bb.p
   %i.aw = phi i64 [ 2, %bb.p ], [ 3, %bb.v ], [ 4, %bb.w ] ; 2 uses
-  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.av, %bb.p ], [ %i.bd, %bb.v ], [ %6, %bb.w ] ; 3 uses
+  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.av, %bb.p ], [ %i.bd, %bb.v ], [ %i.bf, %bb.w ] ; 3 uses
   %i.ax = add nuw nsw i64 %.sroa.019.0.i.i.i.i.i, %i.aw ; 2 uses
   %.not.i.i.i.i.i.i = icmp samesign ugt i64 %i.ax, %.sroa.019.0.i.i
   br i1 %.not.i.i.i.i.i.i, label %_RINvMs_NtCsjVYLllkLn3D_9untrusted5inputNtB5_5Input8read_allNvNtNtCs5yxAJGbRKSL_4ring2io3der30bit_string_with_no_unused_bitsBB_NtNtNtB11_5error11unspecified11UnspecifiedEB11_.exit, label %bb.x, !prof !28
@@ -263,14 +263,11 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.t
   %i.be = getelementptr inbounds nuw i8, ptr %i.an, i64 2
-  %1 = load i8, ptr %i.be, align 1, !noalias !460, !noundef !15 ; 2 uses
-  %2 = zext i8 %1 to i64
-  %3 = getelementptr inbounds nuw i8, ptr %i.an, i64 3
-  %4 = load i8, ptr %3, align 1, !noalias !460, !noundef !15
-  %i.bf = zext i8 %4 to i64
-  %5 = shl nuw nsw i64 %2, 8
-  %6 = or disjoint i64 %5, %i.bf
-  %i.bg = icmp eq i8 %1, 0
+  %1 = load i16, ptr %i.be, align 1, !noalias !460 ; 2 uses
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %i.bf = zext i16 %2 to i64
+  %3 = and i16 %1, 255
+  %i.bg = icmp eq i16 %3, 0
   br i1 %i.bg, label %_RINvMs_NtCsjVYLllkLn3D_9untrusted5inputNtB5_5Input8read_allNvNtNtCs5yxAJGbRKSL_4ring2io3der30bit_string_with_no_unused_bitsBB_NtNtNtB11_5error11unspecified11UnspecifiedEB11_.exit, label %bb.r
 
 bb.x:                                             ; preds = %bb.r
@@ -673,7 +670,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.k, %bb.j, %bb.d
   %i.n = phi i64 [ 2, %bb.d ], [ 3, %bb.j ], [ 4, %bb.k ] ; 2 uses
-  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.m, %bb.d ], [ %i.u, %bb.j ], [ %8, %bb.k ] ; 2 uses
+  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.m, %bb.d ], [ %i.u, %bb.j ], [ %i.w, %bb.k ] ; 2 uses
   %i.o = add nuw nsw i64 %.sroa.019.0.i.i.i.i.i, %i.n ; 2 uses
   %.not.i.i.i.i.i.i = icmp samesign ule i64 %i.o, %2
   %.not.i.i.i.i = icmp eq i8 %i.f, 48
@@ -700,14 +697,11 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.h
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %3 = load i8, ptr %i.v, align 1, !noalias !1529, !noundef !15 ; 2 uses
-  %4 = zext i8 %3 to i64
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %6 = load i8, ptr %5, align 1, !noalias !1529, !noundef !15
-  %i.w = zext i8 %6 to i64
-  %7 = shl nuw nsw i64 %4, 8
-  %8 = or disjoint i64 %7, %i.w
-  %i.x = icmp eq i8 %3, 0
+  %3 = load i16, ptr %i.v, align 1, !noalias !1529 ; 2 uses
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.w = zext i16 %4 to i64
+  %5 = and i16 %3, 255
+  %i.x = icmp eq i16 %5, 0
   br i1 %i.x, label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring3rsa7keypairNtB4_7KeyPair8from_der0B8_.exit.thread.i, label %bb.f
 
 bb.l:                                             ; preds = %bb.f
@@ -1110,7 +1104,7 @@ bb.a:
   %i.c = alloca [32 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2236
   call fastcc void @_RNvNtCs5yxAJGbRKSL_4ring5pkcs811unwrap_key_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) getelementptr inbounds nuw (i8, ptr @241, i64 7), i64 noundef 5, i8 noundef range(i8 0, 3) 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2)
-  %i.d = load ptr, ptr %i.c, align 8, !noalias !2236, !noundef !15 ; 7 uses
+  %i.d = load ptr, ptr %i.c, align 8, !noalias !2236, !noundef !15 ; 6 uses
   %i.e = icmp eq ptr %i.d, null
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -1156,7 +1150,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.m, %bb.l, %bb.f
   %i.r = phi i64 [ 2, %bb.f ], [ 3, %bb.l ], [ 4, %bb.m ] ; 2 uses
-  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.q, %bb.f ], [ %i.z, %bb.l ], [ %8, %bb.m ] ; 2 uses
+  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.q, %bb.f ], [ %i.z, %bb.l ], [ %i.ab, %bb.m ] ; 2 uses
   %i.s = add nuw nsw i64 %.sroa.019.0.i.i.i.i.i, %i.r
   %.not.i.i.i.i = icmp eq i8 %i.j, 4
   %i.t = icmp eq i64 %i.s, %.sroa.420.0.copyload.i
@@ -1183,14 +1177,11 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.j
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 2
-  %3 = load i8, ptr %i.aa, align 1, !noalias !2237, !noundef !15 ; 2 uses
-  %4 = zext i8 %3 to i64
-  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 3
-  %6 = load i8, ptr %5, align 1, !noalias !2237, !noundef !15
-  %i.ab = zext i8 %6 to i64
-  %7 = shl nuw nsw i64 %4, 8
-  %8 = or disjoint i64 %7, %i.ab
-  %i.ac = icmp eq i8 %3, 0
+  %3 = load i16, ptr %i.aa, align 1, !noalias !2237 ; 2 uses
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.ab = zext i16 %4 to i64
+  %5 = and i16 %3, 255
+  %i.ac = icmp eq i16 %5, 0
   br i1 %i.ac, label %bb.n, label %bb.h
 
 bb.n:                                             ; preds = %bb.b, %bb.m, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.d, %bb.c
@@ -1593,7 +1584,7 @@ bb.a:
   %i.d = alloca [32 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2325
   call fastcc void @_RNvNtCs5yxAJGbRKSL_4ring5pkcs811unwrap_key_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) getelementptr inbounds nuw (i8, ptr @241, i64 7), i64 noundef 5, i8 noundef range(i8 0, 3) 1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2)
-  %i.e = load ptr, ptr %i.d, align 8, !noalias !2325, !noundef !15 ; 7 uses
+  %i.e = load ptr, ptr %i.d, align 8, !noalias !2325, !noundef !15 ; 6 uses
   %i.f = icmp eq ptr %i.e, null
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -1639,7 +1630,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.m, %bb.l, %bb.f
   %i.s = phi i64 [ 2, %bb.f ], [ 3, %bb.l ], [ 4, %bb.m ] ; 2 uses
-  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.r, %bb.f ], [ %i.aa, %bb.l ], [ %8, %bb.m ] ; 3 uses
+  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.r, %bb.f ], [ %i.aa, %bb.l ], [ %i.ac, %bb.m ] ; 3 uses
   %i.t = add nuw nsw i64 %.sroa.019.0.i.i.i.i.i, %i.s
   %.not.i.i.i.i = icmp eq i8 %i.k, 4
   %i.u = icmp eq i64 %i.t, %.sroa.420.0.copyload.i
@@ -1666,14 +1657,11 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.j
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %3 = load i8, ptr %i.ab, align 1, !noalias !2326, !noundef !15 ; 2 uses
-  %4 = zext i8 %3 to i64
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 3
-  %6 = load i8, ptr %5, align 1, !noalias !2326, !noundef !15
-  %i.ac = zext i8 %6 to i64
-  %7 = shl nuw nsw i64 %4, 8
-  %8 = or disjoint i64 %7, %i.ac
-  %i.ad = icmp eq i8 %3, 0
+  %3 = load i16, ptr %i.ab, align 1, !noalias !2326 ; 2 uses
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.ac = zext i16 %4 to i64
+  %5 = and i16 %3, 255
+  %i.ad = icmp eq i16 %5, 0
   br i1 %i.ad, label %bb.n, label %bb.h
 
 bb.n:                                             ; preds = %bb.b, %bb.m, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.d, %bb.c
@@ -2076,7 +2064,7 @@ _RNvNtCs5yxAJGbRKSL_4ring5pkcs810unwrap_key.exit.i: ; preds = %_RNvNtNtNtCs5yxAJ
   %i.q = sub nuw i64 %i.n, %i.l                   ; 5 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.l ; 2 uses
   call fastcc void @_RNvNtCs5yxAJGbRKSL_4ring5pkcs811unwrap_key_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.r, i64 noundef %i.q, i8 noundef 0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef range(i64 0, -9223372036854775808) %3)
-  %i.s = load ptr, ptr %i.b, align 8, !noalias !2604, !noundef !15 ; 7 uses
+  %i.s = load ptr, ptr %i.b, align 8, !noalias !2604, !noundef !15 ; 6 uses
   %i.t = icmp eq ptr %i.s, null
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   br i1 %i.t, label %bb.d, label %bb.e
@@ -2123,7 +2111,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.o, %bb.n, %bb.h
   %i.ag = phi i64 [ 2, %bb.h ], [ 3, %bb.n ], [ 4, %bb.o ] ; 2 uses
-  %.sroa.019.0.i.i.i.i.i.i = phi i64 [ %i.af, %bb.h ], [ %i.an, %bb.n ], [ %11, %bb.o ] ; 2 uses
+  %.sroa.019.0.i.i.i.i.i.i = phi i64 [ %i.af, %bb.h ], [ %i.an, %bb.n ], [ %i.ap, %bb.o ] ; 2 uses
   %i.ah = add nuw nsw i64 %.sroa.019.0.i.i.i.i.i.i, %i.ag ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp ule i64 %i.ah, %.sroa.4.0.copyload.i
   %.not.i.i.i.i.i = icmp eq i8 %i.y, 48
@@ -2150,14 +2138,11 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.l
   %i.ao = getelementptr inbounds nuw i8, ptr %i.s, i64 2
-  %6 = load i8, ptr %i.ao, align 1, !noalias !2613, !noundef !15 ; 2 uses
-  %7 = zext i8 %6 to i64
-  %8 = getelementptr inbounds nuw i8, ptr %i.s, i64 3
-  %9 = load i8, ptr %8, align 1, !noalias !2613, !noundef !15
-  %i.ap = zext i8 %9 to i64
-  %10 = shl nuw nsw i64 %7, 8
-  %11 = or disjoint i64 %10, %i.ap
-  %i.aq = icmp eq i8 %6, 0
+  %6 = load i16, ptr %i.ao, align 1, !noalias !2613 ; 2 uses
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %i.ap = zext i16 %7 to i64
+  %8 = and i16 %6, 255
+  %i.aq = icmp eq i16 %8, 0
   br i1 %i.aq, label %_RNvNtNtCs5yxAJGbRKSL_4ring2ec7suite_b19key_pair_from_pkcs8.exit.thread, label %bb.j
 
 bb.p:                                             ; preds = %bb.j
@@ -2560,7 +2545,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.k, %bb.j, %bb.d
   %i.j = phi i64 [ 2, %bb.d ], [ 3, %bb.j ], [ 4, %bb.k ] ; 2 uses
-  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.i, %bb.d ], [ %i.q, %bb.j ], [ %11, %bb.k ] ; 2 uses
+  %.sroa.019.0.i.i.i.i.i = phi i64 [ %i.i, %bb.d ], [ %i.q, %bb.j ], [ %i.s, %bb.k ] ; 2 uses
   %i.k = add nuw nsw i64 %.sroa.019.0.i.i.i.i.i, %i.j ; 2 uses
   %.not.i.i.i.i.i.i = icmp samesign ule i64 %i.k, %5
   %.not.i.i.i.i = icmp eq i8 %i.b, 48
@@ -2587,14 +2572,11 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.h
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 2
-  %6 = load i8, ptr %i.r, align 1, !noalias !4335, !noundef !15 ; 2 uses
-  %7 = zext i8 %6 to i64
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 3
-  %9 = load i8, ptr %8, align 1, !noalias !4335, !noundef !15
-  %i.s = zext i8 %9 to i64
-  %10 = shl nuw nsw i64 %7, 8
-  %11 = or disjoint i64 %10, %i.s
-  %i.t = icmp eq i8 %6, 0
+  %6 = load i16, ptr %i.r, align 1, !noalias !4335 ; 2 uses
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %i.s = zext i16 %7 to i64
+  %8 = and i16 %6, 255
+  %i.t = icmp eq i16 %8, 0
   br i1 %i.t, label %_RNCNvNtCs5yxAJGbRKSL_4ring5pkcs811unwrap_key_0B5_.exit.thread.i, label %bb.f
 
 bb.l:                                             ; preds = %bb.f
@@ -2997,7 +2979,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.k, %bb.j, %bb.d
   %i.k = phi i64 [ 2, %bb.d ], [ 3, %bb.j ], [ 4, %bb.k ] ; 2 uses
-  %.sroa.019.0.i.i.i.i.i.i = phi i64 [ %i.j, %bb.d ], [ %i.r, %bb.j ], [ %12, %bb.k ] ; 2 uses
+  %.sroa.019.0.i.i.i.i.i.i = phi i64 [ %i.j, %bb.d ], [ %i.r, %bb.j ], [ %i.t, %bb.k ] ; 2 uses
   %i.l = add nuw nsw i64 %.sroa.019.0.i.i.i.i.i.i, %i.k ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp ule i64 %i.l, %2
   %.not.i.i.i.i.i = icmp eq i8 %i.c, 48
@@ -3024,14 +3006,11 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.h
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %7 = load i8, ptr %i.s, align 1, !alias.scope !6238, !noalias !6239, !noundef !15 ; 2 uses
-  %8 = zext i8 %7 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %10 = load i8, ptr %9, align 1, !alias.scope !6238, !noalias !6239, !noundef !15
-  %i.t = zext i8 %10 to i64
-  %11 = shl nuw nsw i64 %8, 8
-  %12 = or disjoint i64 %11, %i.t
-  %i.u = icmp eq i8 %7, 0
+  %7 = load i16, ptr %i.s, align 1, !alias.scope !6238, !noalias !6239 ; 2 uses
+  %8 = tail call i16 @llvm.bswap.i16(i16 %7)
+  %i.t = zext i16 %8 to i64
+  %9 = and i16 %7, 255
+  %i.u = icmp eq i16 %9, 0
   br i1 %i.u, label %bb.r, label %bb.f
 
 bb.l:                                             ; preds = %bb.f
@@ -3432,6 +3411,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #38
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #29
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #29

@@ -204,7 +204,7 @@ default.unreachable45:                            ; preds = %bb.a
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load i8, ptr %0, align 8, !tbaa !55      ; 2 uses
+  %i.b = load i8, ptr %0, align 8, !tbaa !55
   %i.c = zext nneg i8 %i.b to i32
   %i.d = shl nuw i32 1, %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
@@ -238,13 +238,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.s, label %.lr.ph.i.i.i, label %_ZN4Ptex4v2_419PtexSeparableKernel5flipUEv.exit, !llvm.loop !120
 
 _ZN4Ptex4v2_419PtexSeparableKernel5flipUEv.exit:  ; preds = %.lr.ph.i.i.i, %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %3 = load i8, ptr %2, align 1, !tbaa !56
-  %.sroa.2.0.insert.ext.i.i.i = zext i8 %i.b to i16
-  %.sroa.2.0.insert.shift.i.i.i = shl nuw i16 %.sroa.2.0.insert.ext.i.i.i, 8
-  %.sroa.0.0.insert.ext.i.i.i = zext i8 %3 to i16
-  %.sroa.0.0.insert.insert.i.i.i = or disjoint i16 %.sroa.2.0.insert.shift.i.i.i, %.sroa.0.0.insert.ext.i.i.i
-  store i16 %.sroa.0.0.insert.insert.i.i.i, ptr %0, align 8, !tbaa !50
+  %2 = load i16, ptr %0, align 8
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  store i16 %3, ptr %0, align 8, !tbaa !50
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.u = load i32, ptr %i.t, align 8, !tbaa !28
   store i32 %i.u, ptr %i.e, align 4, !tbaa !28
@@ -333,7 +329,7 @@ _ZN4Ptex4v2_419PtexSeparableKernel5flipUEv.exit9: ; preds = %.lr.ph.i.i.i5, %bb.
 
 bb.d:                                             ; preds = %bb.a
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.bm = load i8, ptr %i.bl, align 1, !tbaa !56  ; 2 uses
+  %i.bm = load i8, ptr %i.bl, align 1, !tbaa !56
   %i.bn = zext nneg i8 %i.bm to i32
   %i.bo = shl nuw i32 1, %i.bn
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -367,12 +363,9 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.cd, label %.lr.ph.i.i.i20, label %_ZN4Ptex4v2_419PtexSeparableKernel5flipVEv.exit24, !llvm.loop !120
 
 _ZN4Ptex4v2_419PtexSeparableKernel5flipVEv.exit24: ; preds = %.lr.ph.i.i.i20, %bb.d
-  %4 = load i8, ptr %0, align 8, !tbaa !55
-  %.sroa.2.0.insert.ext.i.i.i25 = zext i8 %4 to i16
-  %.sroa.2.0.insert.shift.i.i.i26 = shl nuw i16 %.sroa.2.0.insert.ext.i.i.i25, 8
-  %.sroa.0.0.insert.ext.i.i.i27 = zext i8 %i.bm to i16
-  %.sroa.0.0.insert.insert.i.i.i28 = or disjoint i16 %.sroa.2.0.insert.shift.i.i.i26, %.sroa.0.0.insert.ext.i.i.i27
-  store i16 %.sroa.0.0.insert.insert.i.i.i28, ptr %0, align 8, !tbaa !50
+  %4 = load i16, ptr %0, align 8
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  store i16 %5, ptr %0, align 8, !tbaa !50
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !28
   store i32 %i.bu, ptr %i.ce, align 4, !tbaa !28
@@ -773,6 +766,9 @@ declare void @_ZSt9terminatev() local_unnamed_addr #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.smin.i8(i8, i8) #4

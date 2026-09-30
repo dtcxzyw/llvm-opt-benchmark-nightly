@@ -202,7 +202,7 @@ declare void @timer_del(ptr noundef) local_unnamed_addr #1
 define internal fastcc void @sdhci_send_command(ptr noundef initializes((3422, 3424), (3432, 3434)) %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.SDRequest, align 4          ; 6 uses
-  %i.a = alloca [16 x i8], align 16               ; 11 uses
+  %i.a = alloca [16 x i8], align 16               ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %1, i8 0, i64 12, i1 false), !annotation !12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
@@ -300,18 +300,14 @@ bb.j:                                             ; preds = %bb.e
   %i.aj = call i32 @llvm.bswap.i32(i32 %.val)     ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 3400
   store i32 %i.aj, ptr %i.ak, align 8
-  %2 = load i8, ptr %i.a, align 16
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 16
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %6 = load i8, ptr %5, align 1
-  %i.al = zext i8 %6 to i32
+  %2 = load i16, ptr %i.a, align 16
+  %3 = call i16 @llvm.bswap.i16(i16 %2)
+  %i.al = zext i16 %3 to i32
   %i.am = shl nuw nsw i32 %i.al, 8
-  %7 = or disjoint i32 %i.am, %4
   %i.an = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.ao = load i8, ptr %i.an, align 2
   %i.ap = zext i8 %i.ao to i32
-  %i.aq = or disjoint i32 %7, %i.ap               ; 2 uses
+  %i.aq = or disjoint i32 %i.am, %i.ap            ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 3404
   store i32 %i.aq, ptr %i.ar, align 4
   %i.as = load i32, ptr @trace_events_enabled_count, align 4
@@ -713,6 +709,9 @@ declare i64 @llvm.fshl.i64(i64, i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #5
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }

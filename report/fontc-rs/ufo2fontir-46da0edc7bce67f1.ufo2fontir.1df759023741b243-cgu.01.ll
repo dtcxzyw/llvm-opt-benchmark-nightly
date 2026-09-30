@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.aa, %.noexc
   %i.ee = add i64 %.sroa.01.0.i.i.i, %i.ed
   %i.ef = and i64 %i.ee, %i.dv
   %i.eg = sub nsw i64 0, %i.ef
-  %i.eh = getelementptr inbounds [1960 x i8], ptr %i.dw, i64 %i.eg ; 70 uses
+  %i.eh = getelementptr inbounds [1960 x i8], ptr %i.dw, i64 %i.eg ; 69 uses
   %i.ei = getelementptr inbounds i8, ptr %i.eh, i64 -1960
   %i.ej = invoke noundef zeroext i1 @_RNvXCsbDKHzkXHCUM_9hashbrownNtNtCsgCecv3eZDcN_5alloc6string6StringINtB2_10EquivalentRBq_E10equivalentCs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dd, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1960) %i.ei)
           to label %.noexc557 unwind label %.loopexit
@@ -607,18 +607,13 @@ _RNCNvXs0_NtCs2zvA5OmMqFb_10ufo2fontir6sourceNtB7_18StaticMetadataWorkINtNtCsgdm
 
 bb.hk:                                            ; preds = %_RNCNvXs0_NtCs2zvA5OmMqFb_10ufo2fontir6sourceNtB7_18StaticMetadataWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtCs3v5ql5U6hxj_6fontir13orchestration7ContextNtB1W_6WorkIdNtNtB1Y_5error5ErrorE4execsg_0B9_.exit
   %i.uj = getelementptr inbounds i8, ptr %i.eh, i64 -11
-  %.val552 = load i8, ptr %i.uj, align 1, !noundef !4
-  %3 = getelementptr i8, ptr %i.eh, i64 -10
-  %.val553 = load i8, ptr %3, align 2, !noundef !4
-  %4 = zext i8 %.val552 to i16
-  %5 = shl nuw i16 %4, 8
-  %6 = zext i8 %.val553 to i16
-  %7 = or disjoint i16 %5, %6
+  %.val552 = load i16, ptr %i.uj, align 1
+  %3 = call i16 @llvm.bswap.i16(i16 %.val552)
   br label %bb.hl
 
 bb.hl:                                            ; preds = %bb.hk, %_RNCNvXs0_NtCs2zvA5OmMqFb_10ufo2fontir6sourceNtB7_18StaticMetadataWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtCs3v5ql5U6hxj_6fontir13orchestration7ContextNtB1W_6WorkIdNtNtB1Y_5error5ErrorE4execsg_0B9_.exit
   %.sroa.0231.0 = phi i16 [ 0, %_RNCNvXs0_NtCs2zvA5OmMqFb_10ufo2fontir6sourceNtB7_18StaticMetadataWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtCs3v5ql5U6hxj_6fontir13orchestration7ContextNtB1W_6WorkIdNtNtB1Y_5error5ErrorE4execsg_0B9_.exit ], [ 1, %bb.hk ]
-  %.sroa.5232.0 = phi i16 [ undef, %_RNCNvXs0_NtCs2zvA5OmMqFb_10ufo2fontir6sourceNtB7_18StaticMetadataWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtCs3v5ql5U6hxj_6fontir13orchestration7ContextNtB1W_6WorkIdNtNtB1Y_5error5ErrorE4execsg_0B9_.exit ], [ %7, %bb.hk ]
+  %.sroa.5232.0 = phi i16 [ undef, %_RNCNvXs0_NtCs2zvA5OmMqFb_10ufo2fontir6sourceNtB7_18StaticMetadataWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtCs3v5ql5U6hxj_6fontir13orchestration7ContextNtB1W_6WorkIdNtNtB1Y_5error5ErrorE4execsg_0B9_.exit ], [ %3, %bb.hk ]
   %i.uk = getelementptr inbounds nuw i8, ptr %i.ar, i64 564
   store i16 %.sroa.0231.0, ptr %i.uk, align 4
   %i.ul = getelementptr inbounds nuw i8, ptr %i.ar, i64 566
@@ -1019,6 +1014,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.vector.reduce.or.v8i16(<8 x i16>) #18

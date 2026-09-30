@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN4Luau7CodeGen3A6413IrRegAllocA645SpillESaIS4_EE9push_backEOS4_.exit47
-  %.095 = phi ptr [ %i.x, %.lr.ph ], [ %i.ej, %_ZNSt6vectorIN4Luau7CodeGen3A6413IrRegAllocA645SpillESaIS4_EE9push_backEOS4_.exit47 ] ; 11 uses
+  %.095 = phi ptr [ %i.x, %.lr.ph ], [ %i.ej, %_ZNSt6vectorIN4Luau7CodeGen3A6413IrRegAllocA645SpillESaIS4_EE9push_backEOS4_.exit47 ] ; 10 uses
   %i.ag = load ptr, ptr %i.a, align 8, !tbaa !51, !nonnull !43, !align !52
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   %i.ai = load i32, ptr %.095, align 4, !tbaa !154
@@ -258,22 +258,19 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.j
   store i8 1, ptr %i.ao, align 1, !tbaa !98
   %i.bi = load i32, ptr %.095, align 4, !tbaa !154 ; 2 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %.095, i64 6 ; 2 uses
-  %2 = load i8, ptr %i.bj, align 2, !tbaa !71     ; 2 uses
-  %3 = load i8, ptr %i.be, align 1, !tbaa !155    ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %.095, i64 6
+  %2 = load i16, ptr %i.be, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %4 = zext i16 %3 to i64
+  %5 = shl nuw nsw i64 %4, 32                     ; 2 uses
   %i.bk = load ptr, ptr %i.ad, align 8, !tbaa !76 ; 3 uses
   %i.bl = load ptr, ptr %i.ae, align 8, !tbaa !77
   %.not.i.i38 = icmp eq ptr %i.bk, %i.bl
   br i1 %.not.i.i38, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %.sroa.678.0.insert.ext = zext i8 %3 to i64
-  %.sroa.678.0.insert.shift = shl nuw nsw i64 %.sroa.678.0.insert.ext, 40
-  %.sroa.572.0.insert.ext = zext i8 %2 to i64
-  %.sroa.572.0.insert.shift = shl nuw nsw i64 %.sroa.572.0.insert.ext, 32
   %.sroa.067.0.insert.ext = zext i32 %i.bi to i64
-  %.sroa.572.0.insert.insert = or disjoint i64 %.sroa.572.0.insert.shift, %.sroa.067.0.insert.ext
-  %.sroa.067.0.insert.insert = or disjoint i64 %.sroa.572.0.insert.insert, %.sroa.678.0.insert.shift
+  %.sroa.067.0.insert.insert = or disjoint i64 %5, %.sroa.067.0.insert.ext
   store i64 %.sroa.067.0.insert.insert, ptr %i.bk, align 4
   %i.bm = load ptr, ptr %i.ad, align 8, !tbaa !76
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
@@ -304,13 +301,8 @@ _ZNKSt6vectorIN4Luau7CodeGen3A6413IrRegAllocA645SpillESaIS4_EE12_M_check_lenEmPK
   %i.by = shl nuw nsw i64 %i.bx, 3
   %i.bz = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.by) #19 ; 4 uses
   %i.ca = getelementptr inbounds i8, ptr %i.bz, i64 %i.br ; 2 uses
-  %.sroa.678.0.insert.ext80 = zext i8 %3 to i64
-  %.sroa.678.0.insert.shift81 = shl nuw nsw i64 %.sroa.678.0.insert.ext80, 40
-  %.sroa.572.0.insert.ext74 = zext i8 %2 to i64
-  %.sroa.572.0.insert.shift75 = shl nuw nsw i64 %.sroa.572.0.insert.ext74, 32
   %.sroa.067.0.insert.ext69 = zext i32 %i.bi to i64
-  %.sroa.572.0.insert.insert77 = or disjoint i64 %.sroa.572.0.insert.shift75, %.sroa.067.0.insert.ext69
-  %.sroa.067.0.insert.insert71 = or disjoint i64 %.sroa.572.0.insert.insert77, %.sroa.678.0.insert.shift81
+  %.sroa.067.0.insert.insert71 = or disjoint i64 %5, %.sroa.067.0.insert.ext69
   store i64 %.sroa.067.0.insert.insert71, ptr %i.ca, align 4
   %i.cb = icmp sgt i64 %i.br, 0
   br i1 %i.cb, label %bb.o, label %_ZNSt6vectorIN4Luau7CodeGen3A6413IrRegAllocA645SpillESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i
@@ -401,22 +393,18 @@ _ZN4Luau7CodeGen10IrFunction21recordRestoreLocationEjNS0_20ValueRestoreLocationE
   %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.0.0.copyload to i56
   store i56 %.sroa.0.0.extract.trunc.i, ptr %i.dk, align 4
   %i.dl = load i32, ptr %.095, align 4, !tbaa !154 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.095, i64 6
-  %5 = load i8, ptr %4, align 2, !tbaa !71        ; 2 uses
-  %6 = load i8, ptr %i.be, align 1, !tbaa !155    ; 2 uses
+  %6 = load i16, ptr %i.be, align 1
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %8 = zext i16 %7 to i64
+  %9 = shl nuw nsw i64 %8, 32                     ; 2 uses
   %i.dm = load ptr, ptr %i.ad, align 8, !tbaa !76 ; 3 uses
   %i.dn = load ptr, ptr %i.ae, align 8, !tbaa !77
   %.not.i.i40 = icmp eq ptr %i.dm, %i.dn
   br i1 %.not.i.i40, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %_ZN4Luau7CodeGen10IrFunction21recordRestoreLocationEjNS0_20ValueRestoreLocationE.exit
-  %.sroa.6.0.insert.ext = zext i8 %6 to i64
-  %.sroa.6.0.insert.shift = shl nuw nsw i64 %.sroa.6.0.insert.ext, 40
-  %.sroa.5.0.insert.ext = zext i8 %5 to i64
-  %.sroa.5.0.insert.shift = shl nuw nsw i64 %.sroa.5.0.insert.ext, 32
   %.sroa.0.0.insert.ext = zext i32 %i.dl to i64
-  %.sroa.5.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.shift, %.sroa.0.0.insert.ext
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.insert, %.sroa.6.0.insert.shift
+  %.sroa.0.0.insert.insert = or disjoint i64 %9, %.sroa.0.0.insert.ext
   store i64 %.sroa.0.0.insert.insert, ptr %i.dm, align 4
   %i.do = load ptr, ptr %i.ad, align 8, !tbaa !76
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 8
@@ -447,13 +435,8 @@ _ZNKSt6vectorIN4Luau7CodeGen3A6413IrRegAllocA645SpillESaIS4_EE12_M_check_lenEmPK
   %i.ea = shl nuw nsw i64 %i.dz, 3
   %i.eb = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ea) #19 ; 4 uses
   %i.ec = getelementptr inbounds i8, ptr %i.eb, i64 %i.dt ; 2 uses
-  %.sroa.6.0.insert.ext58 = zext i8 %6 to i64
-  %.sroa.6.0.insert.shift59 = shl nuw nsw i64 %.sroa.6.0.insert.ext58, 40
-  %.sroa.5.0.insert.ext53 = zext i8 %5 to i64
-  %.sroa.5.0.insert.shift54 = shl nuw nsw i64 %.sroa.5.0.insert.ext53, 32
   %.sroa.0.0.insert.ext49 = zext i32 %i.dl to i64
-  %.sroa.5.0.insert.insert56 = or disjoint i64 %.sroa.5.0.insert.shift54, %.sroa.0.0.insert.ext49
-  %.sroa.0.0.insert.insert51 = or disjoint i64 %.sroa.5.0.insert.insert56, %.sroa.6.0.insert.shift59
+  %.sroa.0.0.insert.insert51 = or disjoint i64 %9, %.sroa.0.0.insert.ext49
   store i64 %.sroa.0.0.insert.insert51, ptr %i.ec, align 4
   %i.ed = icmp sgt i64 %i.dt, 0
   br i1 %i.ed, label %bb.y, label %_ZNSt6vectorIN4Luau7CodeGen3A6413IrRegAllocA645SpillESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i44
@@ -855,6 +838,9 @@ declare i64 @llvm.umin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #15
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

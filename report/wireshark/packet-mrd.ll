@@ -153,21 +153,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr i8, ptr %1, i64 240
-  %i.t = load ptr, ptr %i.s, align 8              ; 3 uses
-  %4 = load i8, ptr %i.t, align 1
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr i8, ptr %i.t, i64 1
-  %8 = load i8, ptr %7, align 1
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %6
-  %12 = getelementptr i8, ptr %i.t, i64 2
-  %13 = load i8, ptr %12, align 1
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = or disjoint i32 %11, %15
-  %i.u = icmp eq i32 %16, -536870912
+  %i.t = load ptr, ptr %i.s, align 8
+  %4 = load i32, ptr %i.t, align 1
+  %5 = and i32 %4, 16777215
+  %i.u = icmp eq i32 %5, 224
   br i1 %i.u, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

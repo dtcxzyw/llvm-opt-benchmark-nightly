@@ -205,37 +205,32 @@ bb.qf:                                            ; preds = %bb.qe
 
 .preheader58.i:                                   ; preds = %bb.qf, %.preheader58.i
   %.04164.i = phi i64 [ %i.asq, %.preheader58.i ], [ 0, %bb.qf ]
-  %.04263.i = phi ptr [ %i.aso, %.preheader58.i ], [ %i.arn, %bb.qf ] ; 6 uses
+  %.04263.i = phi ptr [ %i.aso, %.preheader58.i ], [ %i.arn, %bb.qf ] ; 5 uses
   %.04462.i = phi ptr [ %i.asp, %.preheader58.i ], [ %i.arp, %bb.qf ] ; 2 uses
-  %133 = getelementptr inbounds nuw i8, ptr %.04263.i, i64 1
-  %134 = load i8, ptr %.04263.i, align 1, !tbaa !75
-  %135 = getelementptr inbounds nuw i8, ptr %.04263.i, i64 2
-  %136 = load i8, ptr %133, align 1, !tbaa !75
-  %i.asb = getelementptr inbounds nuw i8, ptr %.04263.i, i64 3
-  %137 = load i8, ptr %135, align 1, !tbaa !75
-  %i.asc = getelementptr inbounds nuw i8, ptr %.04263.i, i64 4
-  %138 = load i8, ptr %i.asb, align 1, !tbaa !75
-  %i.asd = load i8, ptr %i.asc, align 1, !tbaa !75
-  %.sroa.17.0.insert.ext156.i = zext i8 %134 to i64
-  %.sroa.17.0.insert.shift157.i = shl nuw nsw i64 %.sroa.17.0.insert.ext156.i, 32
-  %.sroa.15.0.insert.ext137.i = zext i8 %136 to i64
-  %.sroa.15.0.insert.shift138.i = shl nuw nsw i64 %.sroa.15.0.insert.ext137.i, 24
-  %.sroa.15.0.insert.insert140.i = or disjoint i64 %.sroa.15.0.insert.shift138.i, %.sroa.17.0.insert.shift157.i ; 2 uses
-  %.sroa.13.0.insert.ext118.i = zext i8 %137 to i64
-  %.sroa.13.0.insert.shift119.i = shl nuw nsw i64 %.sroa.13.0.insert.ext118.i, 16
-  %.sroa.13.0.insert.insert121.i = or disjoint i64 %.sroa.15.0.insert.insert140.i, %.sroa.13.0.insert.shift119.i ; 2 uses
+  %133 = load i16, ptr %.04263.i, align 1
+  %134 = call i16 @llvm.bswap.i16(i16 %133)       ; 2 uses
+  %135 = zext i16 %134 to i64
+  %136 = shl nuw nsw i64 %135, 24
+  %i.asb = getelementptr inbounds nuw i8, ptr %.04263.i, i64 2
+  %i.asc = getelementptr inbounds nuw i8, ptr %.04263.i, i64 3
+  %i.asd = load i8, ptr %i.asb, align 1, !tbaa !75
+  %137 = getelementptr inbounds nuw i8, ptr %.04263.i, i64 4
+  %138 = load i8, ptr %i.asc, align 1, !tbaa !75
+  %139 = load i8, ptr %137, align 1, !tbaa !75
+  %.sroa.13.0.insert.ext118.i = zext i8 %i.asd to i64
+  %.sroa.13.0.insert.shift119.i = shl nuw nsw i64 %.sroa.13.0.insert.ext118.i, 16 ; 2 uses
+  %.sroa.13.0.insert.insert121.i = or disjoint i64 %136, %.sroa.13.0.insert.shift119.i
   %.sroa.11.0.insert.ext99.i = zext i8 %138 to i64
   %.sroa.11.0.insert.shift100.i = shl nuw nsw i64 %.sroa.11.0.insert.ext99.i, 8 ; 2 uses
-  %.sroa.11.0.insert.insert102.i = or disjoint i64 %.sroa.13.0.insert.insert121.i, %.sroa.11.0.insert.shift100.i
-  %.sroa.0.0.insert.ext84.i = zext i8 %i.asd to i64
+  %.sroa.11.0.insert.insert102.i = or disjoint i64 %.sroa.13.0.insert.shift119.i, %.sroa.11.0.insert.shift100.i
+  %.sroa.0.0.insert.ext84.i = zext i8 %139 to i64
   %.sroa.0.0.insert.insert86.i = or disjoint i64 %.sroa.11.0.insert.shift100.i, %.sroa.0.0.insert.ext84.i
   %i.ase = trunc nuw i64 %.sroa.0.0.insert.insert86.i to i16
   %i.asf = lshr i64 %.sroa.11.0.insert.insert102.i, 10
-  %i.asg = trunc i64 %i.asf to i16
+  %i.asg = trunc nuw nsw i64 %i.asf to i16
   %i.ash = lshr i64 %.sroa.13.0.insert.insert121.i, 20
   %i.asi = trunc i64 %i.ash to i16
-  %139 = lshr i64 %.sroa.15.0.insert.insert140.i, 30
-  %140 = trunc nuw nsw i64 %139 to i16
+  %140 = lshr i16 %134, 6
   %i.asj = insertelement <4 x i16> poison, i16 %140, i64 0
   %i.ask = insertelement <4 x i16> %i.asj, i16 %i.asi, i64 1
   %i.asl = insertelement <4 x i16> %i.ask, i16 %i.asg, i64 2
@@ -636,6 +631,9 @@ declare i16 @llvm.umax.i16(i16, i16) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #17

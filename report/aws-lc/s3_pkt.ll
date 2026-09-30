@@ -202,16 +202,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ad = phi ptr [ %.pre, %bb.f ], [ %i.w, %bb.e ]
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 669
   tail call void @_ZN4bssl19ssl_do_msg_callbackEPK6ssl_stiiNS_4SpanIKhEE(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 21, ptr nonnull %i.ae, i64 2) #6
-  %i.af = load ptr, ptr %i.r, align 8, !tbaa !62  ; 2 uses
+  %i.af = load ptr, ptr %i.r, align 8, !tbaa !62
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 669
-  %1 = load i8, ptr %i.ag, align 1, !tbaa !161
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw nsw i32 %2, 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.af, i64 670
-  %5 = load i8, ptr %4, align 1, !tbaa !161
-  %i.ah = zext i8 %5 to i32
-  %6 = or disjoint i32 %3, %i.ah
-  tail call void @_ZN4bssl20ssl_do_info_callbackEPK6ssl_stii(ptr noundef nonnull %0, i32 noundef 16392, i32 noundef %6) #6
+  %1 = load i16, ptr %i.ag, align 1
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %i.ah = zext i16 %2 to i32
+  tail call void @_ZN4bssl20ssl_do_info_callbackEPK6ssl_stii(ptr noundef nonnull %0, i32 noundef 16392, i32 noundef %i.ah) #6
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.d, %bb.g, %bb.c
@@ -249,6 +245,9 @@ declare i64 @llvm.umin.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #4
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

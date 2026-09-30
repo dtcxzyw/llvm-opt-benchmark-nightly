@@ -204,36 +204,15 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.i
   br i1 %i.m, label %.lr.ph.i.i, label %find_pseudo_merge.exit.thread, !llvm.loop !130
 
 bb.f:                                             ; preds = %bb.c
-  %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.g ; 5 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.n, i64 4
-  %5 = load i32, ptr %4, align 1
-  %6 = tail call i32 @llvm.bswap.i32(i32 %5)
-  %7 = zext i32 %6 to i64
-  %8 = shl nuw i64 %7, 32                         ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %10 = load i8, ptr %9, align 1, !tbaa !46
-  %11 = zext i8 %10 to i64
-  %12 = shl nuw nsw i64 %11, 24
-  %13 = getelementptr inbounds nuw i8, ptr %i.n, i64 9
-  %14 = load i8, ptr %13, align 1, !tbaa !46
-  %15 = zext i8 %14 to i64
-  %16 = shl nuw nsw i64 %15, 16
-  %17 = or disjoint i64 %16, %12
-  %18 = getelementptr inbounds nuw i8, ptr %i.n, i64 10
-  %19 = load i8, ptr %18, align 1, !tbaa !46
-  %20 = zext i8 %19 to i64
-  %21 = shl nuw nsw i64 %20, 8
-  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 11
-  %22 = load i8, ptr %i.o, align 1, !tbaa !46
-  %23 = zext i8 %22 to i64
-  %24 = or disjoint i64 %17, %23
-  %25 = or disjoint i64 %24, %21
-  %26 = or disjoint i64 %25, %8                   ; 2 uses
-  %.not38 = icmp sgt i64 %8, -1
+  %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.g
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 4
+  %.val.i.i = load i64, ptr %i.o, align 1
+  %4 = tail call i64 @llvm.bswap.i64(i64 %.val.i.i) ; 3 uses
+  %.not38 = icmp sgt i64 %4, -1
   br i1 %.not38, label %bb.r, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.p = and i64 %26, 9223372036854775807         ; 4 uses
+  %i.p = and i64 %4, 9223372036854775807          ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !83   ; 4 uses
   %.not.i46 = icmp ult i64 %i.p, %i.r
@@ -311,15 +290,9 @@ st_mult.exit.i:                                   ; preds = %st_mult.exit.i.lr.p
   %indvars.iv = phi i64 [ 0, %st_mult.exit.i.lr.ph ], [ %indvars.iv.next, %bb.q ] ; 2 uses
   %.03387 = phi i32 [ 0, %st_mult.exit.i.lr.ph ], [ %spec.select, %bb.q ] ; 3 uses
   %i.am = shl nuw nsw i64 %indvars.iv, 3
-  %27 = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.am ; 2 uses
-  %28 = load i32, ptr %27, align 1
-  %i.an = getelementptr inbounds nuw i8, ptr %27, i64 4
-  %29 = load i32, ptr %i.an, align 1
-  %30 = zext i32 %28 to i64
-  %31 = zext i32 %29 to i64
-  %32 = shl nuw i64 %31, 32
-  %33 = or disjoint i64 %32, %30
-  %op.rdx = tail call i64 @llvm.bswap.i64(i64 %33) ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.am
+  %.val.i = load i64, ptr %i.an, align 1
+  %op.rdx = tail call i64 @llvm.bswap.i64(i64 %.val.i) ; 3 uses
   %i.ao = load i64, ptr %i.q, align 8, !tbaa !83  ; 2 uses
   %.not15.i = icmp ult i64 %op.rdx, %i.ao
   br i1 %.not15.i, label %nth_pseudo_merge_ext.exit, label %bb.o
@@ -354,7 +327,7 @@ bb.q:                                             ; preds = %nth_pseudo_merge_ex
 
 bb.r:                                             ; preds = %bb.f
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.aw = tail call fastcc ptr @pseudo_merge_at(ptr noundef %0, ptr noundef nonnull %i.av, i64 noundef %26) ; 2 uses
+  %i.aw = tail call fastcc ptr @pseudo_merge_at(ptr noundef %0, ptr noundef nonnull %i.av, i64 noundef %4) ; 2 uses
   %.not39 = icmp eq ptr %i.aw, null
   br i1 %.not39, label %find_pseudo_merge.exit.thread, label %bb.s
 
@@ -757,14 +730,14 @@ declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64, i64) #11
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #11
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #12
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.bswap.i64(i64) #11
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #12
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

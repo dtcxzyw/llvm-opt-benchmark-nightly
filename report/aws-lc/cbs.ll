@@ -205,20 +205,13 @@ bb.a:
   br i1 %i.c, label %CBS_get_u16.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %0, align 8, !tbaa !14     ; 3 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !14     ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 2
   store ptr %i.e, ptr %0, align 8, !tbaa !14
   %i.f = add i64 %i.b, -2
   store i64 %i.f, ptr %i.a, align 8, !tbaa !15
-  %2 = load i8, ptr %i.d, align 1, !tbaa !18
-  %3 = zext i8 %2 to i16
-  %4 = shl nuw i16 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !18
-  %7 = zext i8 %6 to i16
-  %8 = or disjoint i16 %4, %7
-  %9 = tail call noundef i16 @llvm.bswap.i16(i16 %8)
-  store i16 %9, ptr %1, align 2, !tbaa !20
+  %2 = load i16, ptr %i.d, align 1
+  store i16 %2, ptr %1, align 2, !tbaa !20
   br label %CBS_get_u16.exit.thread
 
 CBS_get_u16.exit.thread:                          ; preds = %bb.a, %bb.b
@@ -308,28 +301,24 @@ bb.a:
   br i1 %i.c, label %CBS_get_u32.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %0, align 8, !tbaa !14     ; 5 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !14     ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   store ptr %i.e, ptr %0, align 8, !tbaa !14
   %i.f = add i64 %i.b, -4
   store i64 %i.f, ptr %i.a, align 8, !tbaa !15
-  %2 = load i8, ptr %i.d, align 1, !tbaa !18
-  %i.g = zext i8 %2 to i32
-  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 1
+  %2 = load i16, ptr %i.d, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.g = zext i16 %3 to i32
+  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 2
   %i.i = load i8, ptr %i.h, align 1, !tbaa !18
   %i.j = zext i8 %i.i to i32
-  %i.k = shl nuw nsw i32 %i.g, 16
+  %i.k = shl nuw i32 %i.g, 16
   %i.l = shl nuw nsw i32 %i.j, 8
-  %3 = or disjoint i32 %i.l, %i.k
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 2
-  %5 = load i8, ptr %4, align 1, !tbaa !18
-  %6 = zext i8 %5 to i32
-  %i.m = or disjoint i32 %3, %6
-  %7 = shl nuw i32 %i.m, 8
+  %i.m = or disjoint i32 %i.k, %i.l
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 3
   %i.o = load i8, ptr %i.n, align 1, !tbaa !18
   %i.p = zext i8 %i.o to i32
-  %i.q = or disjoint i32 %7, %i.p
+  %i.q = or disjoint i32 %i.m, %i.p
   %i.r = tail call noundef i32 @llvm.bswap.i32(i32 %i.q)
   store i32 %i.r, ptr %1, align 4, !tbaa !21
   br label %CBS_get_u32.exit.thread

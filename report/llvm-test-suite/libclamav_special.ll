@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca i8, align 1                       ; 4 uses
   %i.d = alloca i32, align 4                      ; 7 uses
   %i.e = alloca [14 x i8], align 1                ; 6 uses
-  %i.f = alloca [4 x i8], align 1                 ; 10 uses
+  %i.f = alloca [4 x i8], align 1                 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #5
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.4) #5
   %i.g = call i32 @cli_readn(i32 noundef %0, ptr noundef nonnull %i.f, i32 noundef 2) #5
@@ -227,7 +227,6 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.preheader
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 2
-  %1 = getelementptr inbounds nuw i8, ptr %i.f, i64 3
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   br label %bb.c
 
@@ -251,12 +250,12 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.v = icmp eq i8 %i.r, -2
   %or.cond11 = select i1 %i.q, i1 %i.v, i1 false
-  %2 = load i8, ptr %i.n, align 1                 ; 2 uses
-  %3 = icmp eq i8 %2, 0
-  %or.cond19 = select i1 %or.cond11, i1 %3, i1 false
-  %4 = load i8, ptr %1, align 1                   ; 2 uses
-  %or.cond15 = icmp ult i8 %4, 2
-  %or.cond39 = select i1 %or.cond19, i1 %or.cond15, i1 false ; 2 uses
+  %1 = load i16, ptr %i.n, align 1                ; 2 uses
+  %2 = call i16 @llvm.bswap.i16(i16 %1)           ; 2 uses
+  %3 = zext i16 %2 to i64
+  %4 = and i16 %1, -257
+  %5 = icmp eq i16 %4, 0
+  %or.cond39 = select i1 %or.cond11, i1 %5, i1 false ; 2 uses
   %.not45 = xor i1 %i.q, true
   %brmerge = or i1 %or.cond39, %.not45
   br i1 %brmerge, label %.loopexit.split.loop.exit54, label %bb.f
@@ -266,15 +265,11 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.w, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %5 = zext i8 %2 to i64
-  %6 = shl nuw nsw i64 %5, 8
-  %7 = zext i8 %4 to i64
-  %8 = or disjoint i64 %6, %7                     ; 2 uses
-  %i.x = icmp samesign ult i64 %8, 2
+  %i.x = icmp ult i16 %2, 2
   br i1 %i.x, label %.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.y = add nsw i64 %8, -2
+  %i.y = add nsw i64 %3, -2
   %i.z = call i64 @lseek(i32 noundef %0, i64 noundef 0, i32 noundef 1) #5
   %i.aa = add nsw i64 %i.y, %i.z                  ; 2 uses
   %i.ab = load i8, ptr %i.j, align 1, !tbaa !15

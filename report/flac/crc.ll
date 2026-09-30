@@ -128,15 +128,10 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.024 = phi i16 [ %i.bh, %.lr.ph ], [ 0, %bb.a ]
   %.01823 = phi i32 [ %i.bj, %.lr.ph ], [ %1, %bb.a ]
-  %.02022 = phi ptr [ %i.bi, %.lr.ph ], [ %0, %bb.a ] ; 9 uses
-  %2 = load i8, ptr %.02022, align 1, !tbaa !8
-  %3 = zext i8 %2 to i16
-  %4 = shl nuw i16 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %.02022, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !8
-  %7 = zext i8 %6 to i16
-  %8 = or disjoint i16 %4, %7
-  %i.n = xor i16 %8, %.024
+  %.02022 = phi ptr [ %i.bi, %.lr.ph ], [ %0, %bb.a ] ; 8 uses
+  %2 = load i16, ptr %.02022, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.n = xor i16 %3, %.024
   %i.o = zext i16 %i.n to i32                     ; 2 uses
   %i.p = lshr i32 %i.o, 8
   %i.q = zext nneg i32 %i.p to i64
@@ -386,11 +381,15 @@ bb.a:
   ret i16 %.0.lcssa
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #1
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #1
+declare void @llvm.assume(i1 noundef) #2
 
 attributes #0 = { nofree norecurse nosync nounwind sspstrong memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #2 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

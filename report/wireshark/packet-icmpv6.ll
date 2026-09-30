@@ -204,20 +204,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.o = tail call ptr @wmem_file_scope()
   %i.p = load i32, ptr @proto_icmpv6, align 4
-  %i.q = tail call ptr @p_get_proto_data(ptr noundef %i.o, ptr noundef %1, i32 noundef %i.p, i32 noundef 0) ; 3 uses
+  %i.q = tail call ptr @p_get_proto_data(ptr noundef %i.o, ptr noundef %1, i32 noundef %i.p, i32 noundef 0) ; 2 uses
   %.not28 = icmp eq ptr %i.q, null
   br i1 %.not28, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   store i16 0, ptr %i.g, align 8
-  %5 = load i8, ptr %i.q, align 1
-  %6 = zext i8 %5 to i16
-  %7 = shl nuw i16 %6, 8
-  %8 = getelementptr i8, ptr %i.q, i64 1
-  %9 = load i8, ptr %8, align 1
-  %10 = zext i8 %9 to i16
-  %11 = or disjoint i16 %7, %10
-  store i16 %11, ptr %i.k, align 8
+  %5 = load i16, ptr %i.q, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  store i16 %6, ptr %i.k, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
@@ -619,6 +614,9 @@ declare double @exp2(double) local_unnamed_addr
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @ldexp(double, i32) local_unnamed_addr #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #4
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

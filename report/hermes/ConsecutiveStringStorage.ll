@@ -205,20 +205,16 @@ _ZSt8_DestroyIPN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryEEvT_S5_.exit.i
 
 bb.d:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.017.i.i, i64 8
-  %.sroa.011.0.copyload.i.i = load ptr, ptr %i.am, align 8, !tbaa !58, !noalias !286 ; 3 uses
+  %.sroa.011.0.copyload.i.i = load ptr, ptr %i.am, align 8, !tbaa !58, !noalias !286 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #15, !noalias !286
-  %18 = load i8, ptr %.sroa.011.0.copyload.i.i, align 1, !tbaa !59, !noalias !284
-  %19 = zext i8 %18 to i32
-  %20 = shl nuw nsw i32 %19, 16
-  %21 = getelementptr inbounds nuw i8, ptr %.sroa.011.0.copyload.i.i, i64 1
-  %22 = load i8, ptr %21, align 1, !tbaa !59, !noalias !284
-  %i.an = zext i8 %22 to i32
+  %18 = load i16, ptr %.sroa.011.0.copyload.i.i, align 1, !noalias !284
+  %19 = call i16 @llvm.bswap.i16(i16 %18)
+  %i.an = zext i16 %19 to i32
   %i.ao = shl nuw nsw i32 %i.an, 8
-  %23 = or disjoint i32 %i.ao, %20
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.011.0.copyload.i.i, i64 2
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !59, !noalias !284
   %i.ar = zext i8 %i.aq to i32
-  %i.as = or disjoint i32 %23, %i.ar
+  %i.as = or disjoint i32 %i.ao, %i.ar
   store i32 %i.as, ptr %i.f, align 4, !tbaa !13, !noalias !286
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #15, !noalias !288
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #15, !noalias !288
@@ -362,7 +358,7 @@ bb.g:                                             ; preds = %.loopexit.i.i, %.lr
 
 bb.h:                                             ; preds = %bb.g
   %i.ch = getelementptr inbounds nuw i8, ptr %.0177.i.i, i64 8
-  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !54, !noalias !287 ; 2 uses
+  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !54, !noalias !287
   %.not36146156.i.i = icmp eq i64 %i.cf, 0
   br i1 %.not36146156.i.i, label %.loopexit.i.i, label %.lr.ph.i17.i
 
@@ -380,12 +376,12 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZNK4llvh6detail12DenseSetImplIjNS_8DenseMapIjNS0_13DenseSetEmptyENS_12DenseMapInfoIjEENS0_12DenseSetPairIjEEEES5_E5countERKj.exit.i.i, %.lr.ph.i17.i
-  %.033148.i.i = phi i64 [ %.033.ph167.i.i, %.lr.ph.i17.i ], [ %i.cn, %_ZNK4llvh6detail12DenseSetImplIjNS_8DenseMapIjNS0_13DenseSetEmptyENS_12DenseMapInfoIjEENS0_12DenseSetPairIjEEEES5_E5countERKj.exit.i.i ] ; 3 uses
+  %.033148.i.i = phi i64 [ %.033.ph167.i.i, %.lr.ph.i17.i ], [ %i.cn, %_ZNK4llvh6detail12DenseSetImplIjNS_8DenseMapIjNS0_13DenseSetEmptyENS_12DenseMapInfoIjEENS0_12DenseSetPairIjEEEES5_E5countERKj.exit.i.i ] ; 2 uses
   %.034147.i.i = phi i32 [ %.034.ph166.i.i, %.lr.ph.i17.i ], [ %i.cu, %_ZNK4llvh6detail12DenseSetImplIjNS_8DenseMapIjNS0_13DenseSetEmptyENS_12DenseMapInfoIjEENS0_12DenseSetPairIjEEEES5_E5countERKj.exit.i.i ]
   %i.cn = add nsw i64 %.033148.i.i, -1            ; 6 uses
-  %i.co = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.cn ; 4 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.cn ; 5 uses
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !59, !noalias !287
-  %i.cq = zext i8 %i.cp to i32                    ; 2 uses
+  %i.cq = zext i8 %i.cp to i32
   %i.cr = add i32 %.034147.i.i, %i.cq
   %i.cs = mul i32 %i.cr, 1025                     ; 2 uses
   %i.ct = lshr i32 %i.cs, 6
@@ -395,16 +391,14 @@ bb.i:                                             ; preds = %_ZNK4llvh6detail12D
   br i1 %.not37.i.i, label %.critedge.i.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %24 = shl nuw nsw i32 %i.cq, 16
-  %25 = getelementptr inbounds nuw i8, ptr %i.ci, i64 %.033148.i.i
-  %26 = load i8, ptr %25, align 1, !tbaa !59, !noalias !287
-  %i.cw = zext i8 %26 to i32
+  %20 = load i16, ptr %i.co, align 1, !noalias !287
+  %21 = call i16 @llvm.bswap.i16(i16 %20)
+  %i.cw = zext i16 %21 to i32
   %i.cx = shl nuw nsw i32 %i.cw, 8
-  %27 = or disjoint i32 %i.cx, %24
   %i.cy = getelementptr inbounds nuw i8, ptr %i.co, i64 2
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !59, !noalias !287
   %i.da = zext i8 %i.cz to i32
-  %i.db = or disjoint i32 %27, %i.da              ; 3 uses
+  %i.db = or disjoint i32 %i.cx, %i.da            ; 3 uses
   br i1 %i.cl, label %_ZNK4llvh6detail12DenseSetImplIjNS_8DenseMapIjNS0_13DenseSetEmptyENS_12DenseMapInfoIjEENS0_12DenseSetPairIjEEEES5_E5countERKj.exit.i.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -805,6 +799,9 @@ declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #12

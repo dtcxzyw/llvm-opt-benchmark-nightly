@@ -13,8 +13,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define void @Init_gb18030() local_unnamed_addr #0 {
 bb.a:
-  tail call void @rb_register_transcoder(ptr noundef nonnull @rb_from_GB18030) #3
-  tail call void @rb_register_transcoder(ptr noundef nonnull @rb_to_GB18030) #3
+  tail call void @rb_register_transcoder(ptr noundef nonnull @rb_from_GB18030) #4
+  tail call void @rb_register_transcoder(ptr noundef nonnull @rb_to_GB18030) #4
   ret void
 }
 
@@ -65,15 +65,15 @@ bb.a:
   %i.b = trunc i64 %i.a to i32                    ; 3 uses
   %i.c = and i32 %i.b, 131072
   %.not = icmp eq i32 %i.c, 0
-  %6 = load i8, ptr %1, align 1, !tbaa !10
-  %7 = zext i8 %6 to i32                          ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %9 = load i8, ptr %8, align 1, !tbaa !10
-  %10 = zext i8 %9 to i32                         ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %6 = load i8, ptr %1, align 1, !tbaa !10
+  %7 = zext i8 %6 to i32
   %i.d = mul nuw nsw i32 %7, 10
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !10
+  %10 = zext i8 %9 to i32
   %i.e = add nuw nsw i32 %i.d, %10
   %i.f = mul nuw nsw i32 %i.e, 126
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 2
@@ -90,9 +90,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %11 = shl nuw nsw i32 %7, 8
-  %12 = or disjoint i32 %11, %10
-  %reass.sub15 = sub i32 %12, %i.b
+  %11 = load i16, ptr %1, align 1
+  %12 = tail call i16 @llvm.bswap.i16(i16 %11)
+  %13 = zext i16 %12 to i32
+  %reass.sub15 = sub i32 %13, %i.b
   %i.q = add i32 %reass.sub15, 24055
   br label %bb.d
 
@@ -231,10 +232,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   ret i64 %.0
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #3
+
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

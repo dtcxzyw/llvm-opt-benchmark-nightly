@@ -205,28 +205,10 @@ bb.a:
   %2 = alloca %"class.folly::IPAddressV4", align 4 ; 2 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !28
-  %7 = load i8, ptr %0, align 4, !tbaa !28
-  %8 = zext i8 %7 to i16
-  %9 = shl nuw i16 %8, 8
-  %10 = zext i8 %6 to i16
-  %11 = or disjoint i16 %9, %10                   ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %13 = load i8, ptr %12, align 1, !tbaa !28      ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %15 = load i8, ptr %14, align 2, !tbaa !28      ; 2 uses
-  %16 = zext i8 %15 to i32
-  %17 = shl nuw nsw i32 %16, 8
-  %18 = zext i8 %13 to i32
-  %19 = or disjoint i32 %17, %18
-  %20 = zext i16 %11 to i32
-  %21 = shl nuw i32 %20, 16
-  %22 = or disjoint i32 %19, %21
-  %23 = icmp ne i32 %22, 536936448
-  %i.a = icmp eq i16 %11, 8194
-  %24 = and i1 %i.a, %23
-  br i1 %24, label %_ZN5follyL10unpackIntoEPKhPtm.exit, label %bb.b
+  %5 = load i32, ptr %0, align 4                  ; 3 uses
+  %6 = and i32 %5, 65535
+  %i.a = icmp eq i32 %6, 544
+  br i1 %i.a, label %_ZN5follyL10unpackIntoEPKhPtm.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call ptr @__cxa_allocate_exception(i64 16) #33 ; 3 uses
@@ -323,10 +305,12 @@ bb.f:                                             ; preds = %.sink.split, %_ZNKS
   br label %bb.g
 
 _ZN5follyL10unpackIntoEPKhPtm.exit:               ; preds = %bb.a
-  %25 = zext i8 %15 to i16
-  %26 = shl nuw i16 %25, 8
-  %27 = zext i8 %13 to i16
-  %i.y = or disjoint i16 %26, %27
+  %7 = lshr i32 %5, 24
+  %8 = trunc nuw nsw i32 %7 to i16
+  %sh.diff = lshr i32 %5, 8
+  %tr.sh.diff = trunc i32 %sh.diff to i16
+  %9 = and i16 %tr.sh.diff, -256
+  %i.y = or disjoint i16 %9, %8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !28
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 4

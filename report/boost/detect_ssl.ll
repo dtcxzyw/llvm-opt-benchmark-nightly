@@ -204,7 +204,7 @@ declare void @_ZN5boost4asio10io_contextC1Ev(ptr noundef nonnull align 8 derefer
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN5boost5beast10detect_sslINS0_4test12basic_streamINS_4asio15any_io_executorEEENS0_17basic_flat_bufferISaIcEEEEEbRT_RT0_RNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #5 comdat {
 bb.a:
-  %i.a = alloca [9 x i8], align 1                 ; 11 uses
+  %i.a = alloca [9 x i8], align 1                 ; 9 uses
   %3 = alloca %"class.boost::asio::mutable_buffer", align 8 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
@@ -214,8 +214,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.pre = load ptr, ptr %i.c, align 8, !tbaa !117
-  %.3..3..3..3..3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %.4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %.4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   %.5..5..5..5..5..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   br label %_ZNK5boost6system10error_codecvbEv.exit.thread16
 
@@ -241,13 +240,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.o, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.3..3..3..3..3..i = load i8, ptr %.3..3..3..3..3..sroa_idx, align 1, !tbaa !35
-  %4 = zext i8 %.3..3..3..3..3..i to i32
-  %5 = shl nuw nsw i32 %4, 8
-  %.4..4..4..4..4..i = load i8, ptr %.4..4..4..4..4..sroa_idx, align 1, !tbaa !35
-  %6 = zext i8 %.4..4..4..4..4..i to i32
-  %7 = or disjoint i32 %5, %6                     ; 2 uses
-  %i.p = icmp samesign ult i32 %7, 34
+  %.3..3..3..3..3..i = load i16, ptr %.4..4..4..4..4..sroa_idx, align 1
+  %4 = call i16 @llvm.bswap.i16(i16 %.3..3..3..3..3..i) ; 2 uses
+  %i.p = icmp ult i16 %4, 34
   br i1 %i.p, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -264,21 +259,18 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.r, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
+  %i.s = zext i16 %4 to i32
   %.6..6..6..6..6..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %.6..6..6..6..6..i = load i8, ptr %.6..6..6..6..6..sroa_idx, align 1, !tbaa !35
-  %i.s = zext i8 %.6..6..6..6..6..i to i32
-  %8 = shl nuw nsw i32 %i.s, 16
-  %.7..7..7..7..7..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %.7..7..7..7..7..i = load i8, ptr %.7..7..7..7..7..sroa_idx, align 1, !tbaa !35
-  %i.t = zext i8 %.7..7..7..7..7..i to i32
+  %.6..6..6..6..6..i = load i16, ptr %.6..6..6..6..6..sroa_idx, align 1
+  %5 = call i16 @llvm.bswap.i16(i16 %.6..6..6..6..6..i)
+  %i.t = zext i16 %5 to i32
   %i.u = shl nuw nsw i32 %i.t, 8
-  %9 = or disjoint i32 %i.u, %8
   %.8..8..8..8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.8..8..8..8..8..i = load i8, ptr %.8..8..8..8..8..sroa_idx, align 1, !tbaa !35
   %i.v = zext i8 %.8..8..8..8..8..i to i32
-  %10 = or disjoint i32 %9, %i.v
-  %i.w = add nuw nsw i32 %10, 4
-  %i.x = icmp samesign ule i32 %i.w, %7
+  %6 = add nuw nsw i32 %i.v, 4
+  %i.w = add nuw nsw i32 %6, %i.u
+  %i.x = icmp samesign ule i32 %i.w, %i.s
   br label %.thread
 
 .thread:                                          ; preds = %bb.b, %bb.d, %bb.f, %bb.h
@@ -681,7 +673,7 @@ define linkonce_odr hidden void @_ZN5boost5beast6detail13detect_ssl_opINS0_4test
 bb.a:
   %4 = alloca %"struct.boost::beast::test::basic_stream<>::run_read_op", align 8 ; 4 uses
   %5 = alloca %"struct.boost::beast::test::basic_stream<>::run_read_op", align 8 ; 4 uses
-  %i.a = alloca [9 x i8], align 1                 ; 11 uses
+  %i.a = alloca [9 x i8], align 1                 ; 9 uses
   %6 = alloca %"class.boost::asio::mutable_buffer", align 8 ; 5 uses
   %7 = alloca %"class.boost::asio::mutable_buffer", align 8 ; 5 uses
   %i.b = alloca i8, align 1                       ; 5 uses
@@ -726,14 +718,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %.3..3..3..3..3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %.3..3..3..3..3..i = load i8, ptr %.3..3..3..3..3..sroa_idx, align 1, !tbaa !35
-  %8 = zext i8 %.3..3..3..3..3..i to i32
-  %9 = shl nuw nsw i32 %8, 8
-  %.4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %.4..4..4..4..4..i = load i8, ptr %.4..4..4..4..4..sroa_idx, align 1, !tbaa !35
-  %i.o = zext i8 %.4..4..4..4..4..i to i32
-  %10 = or disjoint i32 %9, %i.o                  ; 2 uses
-  %i.p = icmp samesign ult i32 %10, 34
+  %.3..3..3..3..3..i = load i16, ptr %.3..3..3..3..3..sroa_idx, align 1
+  %8 = tail call i16 @llvm.bswap.i16(i16 %.3..3..3..3..3..i) ; 2 uses
+  %i.o = zext i16 %8 to i32
+  %i.p = icmp ult i16 %8, 34
   br i1 %i.p, label %_ZN5boost5beast6detail19is_tls_client_helloINS_4asio14mutable_bufferEEENS_5logic7triboolERKT_.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -752,20 +740,16 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.6..6..6..6..6..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %.6..6..6..6..6..i = load i8, ptr %.6..6..6..6..6..sroa_idx, align 1, !tbaa !35
-  %11 = zext i8 %.6..6..6..6..6..i to i32
-  %12 = shl nuw nsw i32 %11, 16
-  %.7..7..7..7..7..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %.7..7..7..7..7..i = load i8, ptr %.7..7..7..7..7..sroa_idx, align 1, !tbaa !35
-  %i.s = zext i8 %.7..7..7..7..7..i to i32
+  %.6..6..6..6..6..i = load i16, ptr %.6..6..6..6..6..sroa_idx, align 1
+  %9 = tail call i16 @llvm.bswap.i16(i16 %.6..6..6..6..6..i)
+  %i.s = zext i16 %9 to i32
   %i.t = shl nuw nsw i32 %i.s, 8
-  %13 = or disjoint i32 %i.t, %12
   %.8..8..8..8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.8..8..8..8..8..i = load i8, ptr %.8..8..8..8..8..sroa_idx, align 1, !tbaa !35
   %i.u = zext i8 %.8..8..8..8..8..i to i32
-  %14 = or disjoint i32 %13, %i.u
-  %i.v = add nuw nsw i32 %14, 4
-  %i.w = icmp samesign ule i32 %i.v, %10
+  %10 = add nuw nsw i32 %i.u, 4
+  %i.v = add nuw nsw i32 %10, %i.t
+  %i.w = icmp samesign ule i32 %i.v, %i.o
   %spec.select.i = zext i1 %i.w to i32
   br label %_ZN5boost5beast6detail19is_tls_client_helloINS_4asio14mutable_bufferEEENS_5logic7triboolERKT_.exit
 
@@ -1166,6 +1150,9 @@ declare i64 @llvm.umax.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #29

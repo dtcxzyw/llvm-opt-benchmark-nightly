@@ -205,21 +205,22 @@ bb.j:                                             ; preds = %.lr.ph, %_ZNSt3__11
   %i.au = load ptr, ptr %i.at, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.ah, i64 1
   %.pn.i = select i1 %i.as, ptr %i.au, ptr %i.av  ; 2 uses
-  %12 = load i8, ptr %.pn.i, align 1, !tbaa !42
-  %13 = zext i8 %12 to i64                        ; 2 uses
-  br i1 %i.aq, label %bb.k, label %bb.l
+  br i1 %i.aq, label %bb.k, label %14
 
 bb.k:                                             ; preds = %bb.j
-  %14 = shl nuw nsw i64 %13, 8
-  %.0.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 1
-  %15 = load i8, ptr %.0.i, align 1, !tbaa !42
-  %i.aw = zext i8 %15 to i64
-  %16 = or disjoint i64 %14, %i.aw
+  %12 = load i16, ptr %.pn.i, align 1
+  %13 = call i16 @llvm.bswap.i16(i16 %12)
+  %i.aw = zext i16 %13 to i64
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.j, %bb.k
-  %.088 = phi i64 [ %16, %bb.k ], [ %13, %bb.j ]  ; 2 uses
-  %.087 = phi i64 [ 2, %bb.k ], [ 1, %bb.j ]      ; 4 uses
+14:                                               ; preds = %bb.j
+  %15 = load i8, ptr %.pn.i, align 1, !tbaa !42
+  %16 = zext i8 %15 to i64
+  br label %bb.l
+
+bb.l:                                             ; preds = %14, %bb.k
+  %.088 = phi i64 [ %i.aw, %bb.k ], [ %16, %14 ]  ; 2 uses
+  %.087 = phi i64 [ 2, %bb.k ], [ 1, %14 ]        ; 4 uses
   %i.ax = icmp ugt i64 %.088, %i.ap
   br i1 %i.ax, label %bb.m, label %bb.q
 
@@ -620,6 +621,9 @@ declare i64 @llvm.umax.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #29
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #29

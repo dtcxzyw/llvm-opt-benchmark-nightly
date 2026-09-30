@@ -201,7 +201,7 @@ bb.dc:                                            ; preds = %bb.da
   br i1 %i.io, label %bb.dg, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
-  %i.ip = load ptr, ptr %i.g, align 8, !tbaa !21  ; 4 uses
+  %i.ip = load ptr, ptr %i.g, align 8, !tbaa !21  ; 3 uses
   %i.iq = load ptr, ptr %i.h, align 8, !tbaa !21  ; 2 uses
   %.not8541358 = icmp ugt ptr %i.ip, %i.iq
   br i1 %.not8541358, label %._crit_edge1363.thread, label %.lr.ph1362
@@ -211,22 +211,18 @@ bb.dd:                                            ; preds = %bb.dc
   br label %bb.de
 
 bb.de:                                            ; preds = %.lr.ph1362, %select.unfold
-  %.01360 = phi ptr [ %i.ip, %.lr.ph1362 ], [ %i.iy, %select.unfold ] ; 3 uses
+  %.01360 = phi ptr [ %i.ip, %.lr.ph1362 ], [ %i.iy, %select.unfold ] ; 2 uses
   %.25531359 = phi i32 [ %.1552, %.lr.ph1362 ], [ %.5.ph, %select.unfold ] ; 3 uses
-  %12 = load i8, ptr %.01360, align 1, !tbaa !19
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %15 = getelementptr inbounds nuw i8, ptr %.01360, i64 1
-  %16 = load i8, ptr %15, align 1, !tbaa !19
-  %i.is = zext i8 %16 to i32
-  %17 = or disjoint i32 %14, %i.is                ; 4 uses
-  %18 = icmp ult i32 %17, %i.an
-  br i1 %18, label %bb.df, label %select.unfold
+  %12 = load i16, ptr %.01360, align 1
+  %13 = call i16 @llvm.bswap.i16(i16 %12)
+  %i.is = zext i16 %13 to i32                     ; 4 uses
+  %14 = icmp ugt i32 %i.an, %i.is
+  br i1 %14, label %bb.df, label %select.unfold
 
 bb.df:                                            ; preds = %bb.de
   %i.it = icmp slt i32 %.25531359, 0
-  %spec.select904 = select i1 %i.it, i32 %17, i32 %.25531359
-  %i.iu = shl nuw nsw i32 %17, 1
+  %spec.select904 = select i1 %i.it, i32 %i.is, i32 %.25531359
+  %i.iu = shl nuw nsw i32 %i.is, 1
   %i.iv = zext nneg i32 %i.iu to i64
   %i.iw = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.iv
   %i.ix = load i64, ptr %i.iw, align 8, !tbaa !31
@@ -244,17 +240,13 @@ select.unfold:                                    ; preds = %bb.df, %bb.de
   br i1 %i.iz, label %._crit_edge1363.thread, label %.thread967
 
 ._crit_edge1363.thread:                           ; preds = %bb.dd, %._crit_edge1363
-  %19 = load i8, ptr %i.ip, align 1, !tbaa !19
-  %20 = zext i8 %19 to i32
-  %21 = shl nuw nsw i32 %20, 8
-  %22 = getelementptr inbounds nuw i8, ptr %i.ip, i64 1
-  %23 = load i8, ptr %22, align 1, !tbaa !19
-  %i.ja = zext i8 %23 to i32
-  %24 = or disjoint i32 %21, %i.ja
+  %15 = load i16, ptr %i.ip, align 1
+  %16 = call i16 @llvm.bswap.i16(i16 %15)
+  %i.ja = zext i16 %16 to i32
   br label %.thread967
 
 .thread967:                                       ; preds = %bb.df, %._crit_edge1363, %._crit_edge1363.thread, %bb.db
-  %.8.ph = phi i32 [ %i.in, %bb.db ], [ %.5.ph, %._crit_edge1363 ], [ %24, %._crit_edge1363.thread ], [ %17, %bb.df ]
+  %.8.ph = phi i32 [ %i.in, %bb.db ], [ %.5.ph, %._crit_edge1363 ], [ %i.ja, %._crit_edge1363.thread ], [ %i.is, %bb.df ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #6
   br label %bb.dh
@@ -656,6 +648,9 @@ declare void @php_pcre2_match_data_free(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr captures(none)) local_unnamed_addr #4

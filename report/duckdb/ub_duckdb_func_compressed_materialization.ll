@@ -205,21 +205,17 @@ define internal noundef i32 @_ZN6duckdb12_GLOBAL__N_114StringCompressIjEET_RKNS_
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %1 = load i8, ptr %i.b, align 2, !tbaa !76
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %i.c = load i8, ptr %2, align 1, !tbaa !76
-  %3 = load i8, ptr %i.a, align 4, !tbaa !76
-  %4 = load i32, ptr %0, align 8, !tbaa !76
-  %.sroa.7.0.insert.ext.i = zext i8 %3 to i32
-  %.sroa.7.0.insert.shift.i = shl nuw i32 %.sroa.7.0.insert.ext.i, 24
-  %.sroa.6.0.insert.ext.i = zext i8 %i.c to i32
-  %.sroa.6.0.insert.shift.i = shl nuw nsw i32 %.sroa.6.0.insert.ext.i, 16
-  %.sroa.5.0.insert.ext.i = zext i8 %1 to i32
+  %i.c = load i8, ptr %i.b, align 2, !tbaa !76
+  %1 = load i16, ptr %i.a, align 4
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %.sroa.7.0.insert.ext.i = zext i16 %2 to i32
+  %.sroa.7.0.insert.shift.i = shl nuw i32 %.sroa.7.0.insert.ext.i, 16
+  %3 = load i32, ptr %0, align 8, !tbaa !76
+  %.sroa.5.0.insert.ext.i = zext i8 %i.c to i32
   %.sroa.5.0.insert.shift.i = shl nuw nsw i32 %.sroa.5.0.insert.ext.i, 8
-  %.sroa.0.0.insert.ext.i = and i32 %4, 255
-  %.sroa.6.0.insert.insert.i = or disjoint i32 %.sroa.6.0.insert.shift.i, %.sroa.5.0.insert.shift.i
-  %.sroa.5.0.insert.insert.i = or disjoint i32 %.sroa.6.0.insert.insert.i, %.sroa.7.0.insert.shift.i
-  %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.5.0.insert.insert.i, %.sroa.0.0.insert.ext.i
+  %.sroa.6.0.insert.insert.i = or disjoint i32 %.sroa.7.0.insert.shift.i, %.sroa.5.0.insert.shift.i
+  %.sroa.0.0.insert.ext.i = and i32 %3, 255
+  %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.6.0.insert.insert.i, %.sroa.0.0.insert.ext.i
   ret i32 %.sroa.0.0.insert.insert.i
 }
 
@@ -622,38 +618,24 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.e = load i8, ptr %i.d, align 1, !tbaa !76
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %1 = load i8, ptr %i.f, align 8, !tbaa !76
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %3 = load i8, ptr %2, align 1, !tbaa !76
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %5 = load i8, ptr %4, align 2, !tbaa !76
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %7 = load i8, ptr %6, align 1, !tbaa !76
-  %i.g = load i8, ptr %i.a, align 4, !tbaa !76
-  %i.h = load i32, ptr %0, align 8, !tbaa !76
-  %.sroa.11.0.insert.ext.i = zext i8 %i.g to i64
-  %.sroa.11.0.insert.shift.i = shl nuw i64 %.sroa.11.0.insert.ext.i, 56
-  %.sroa.10.0.insert.ext.i = zext i8 %7 to i64
-  %.sroa.10.0.insert.shift.i = shl nuw nsw i64 %.sroa.10.0.insert.ext.i, 48
-  %.sroa.9.0.insert.ext.i = zext i8 %5 to i64
-  %.sroa.9.0.insert.shift.i = shl nuw nsw i64 %.sroa.9.0.insert.ext.i, 40
-  %.sroa.8.0.insert.ext.i = zext i8 %3 to i64
-  %.sroa.8.0.insert.shift.i = shl nuw nsw i64 %.sroa.8.0.insert.ext.i, 32
-  %.sroa.7.0.insert.ext.i = zext i8 %1 to i64
-  %.sroa.7.0.insert.shift.i = shl nuw nsw i64 %.sroa.7.0.insert.ext.i, 24
+  %i.g = load i8, ptr %i.f, align 8, !tbaa !76
+  %i.h = load i32, ptr %i.a, align 4
+  %1 = tail call i32 @llvm.bswap.i32(i32 %i.h)
+  %.sroa.10.0.insert.ext.i = zext i32 %1 to i64
+  %.sroa.10.0.insert.shift.i = shl nuw i64 %.sroa.10.0.insert.ext.i, 32
+  %2 = load i32, ptr %0, align 8, !tbaa !76
+  %.sroa.8.0.insert.ext.i = zext i8 %i.g to i64
+  %.sroa.8.0.insert.shift.i = shl nuw nsw i64 %.sroa.8.0.insert.ext.i, 24
+  %.sroa.7.0.insert.insert.i = or disjoint i64 %.sroa.10.0.insert.shift.i, %.sroa.8.0.insert.shift.i
   %.sroa.6.0.insert.ext.i = zext i8 %i.e to i64
   %.sroa.6.0.insert.shift.i = shl nuw nsw i64 %.sroa.6.0.insert.ext.i, 16
   %.sroa.5.0.insert.ext.i = zext i8 %i.c to i64
   %.sroa.5.0.insert.shift.i = shl nuw nsw i64 %.sroa.5.0.insert.ext.i, 8
-  %8 = and i32 %i.h, 255
-  %.sroa.0.0.insert.ext.i = zext nneg i32 %8 to i64
-  %.sroa.10.0.insert.insert.i = or disjoint i64 %.sroa.6.0.insert.shift.i, %.sroa.5.0.insert.shift.i
-  %.sroa.9.0.insert.insert.i = or disjoint i64 %.sroa.10.0.insert.insert.i, %.sroa.7.0.insert.shift.i
-  %.sroa.8.0.insert.insert.i = or disjoint i64 %.sroa.9.0.insert.insert.i, %.sroa.8.0.insert.shift.i
-  %.sroa.7.0.insert.insert.i = or disjoint i64 %.sroa.8.0.insert.insert.i, %.sroa.9.0.insert.shift.i
-  %.sroa.5.0.insert.mask.i = or i64 %.sroa.7.0.insert.insert.i, %.sroa.10.0.insert.shift.i
-  %.sroa.0.0.insert.mask.i = or i64 %.sroa.5.0.insert.mask.i, %.sroa.11.0.insert.shift.i
-  %.sroa.0.0.insert.insert.i = or i64 %.sroa.0.0.insert.mask.i, %.sroa.0.0.insert.ext.i
+  %.sroa.8.0.insert.insert.i = or disjoint i64 %.sroa.7.0.insert.insert.i, %.sroa.6.0.insert.shift.i
+  %3 = and i32 %2, 255
+  %.sroa.0.0.insert.ext.i = zext nneg i32 %3 to i64
+  %.sroa.0.0.insert.mask.i = or disjoint i64 %.sroa.8.0.insert.insert.i, %.sroa.5.0.insert.shift.i
+  %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.0.0.insert.mask.i, %.sroa.0.0.insert.ext.i
   ret i64 %.sroa.0.0.insert.insert.i
 }
 
@@ -1056,13 +1038,16 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #20
 declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.usub.sat.i8(i8, i8) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i8> @llvm.usub.sat.v2i8(<2 x i8>, <2 x i8>) #19

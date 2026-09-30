@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr i8, ptr %1, i64 136
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !33   ; 7 uses
-  %i.c = getelementptr i8, ptr %3, i64 1          ; 2 uses
+  %i.c = getelementptr i8, ptr %3, i64 1
   %i.d = icmp eq ptr %i.c, %4
   br i1 %i.d, label %bb.c, label %bb.f
 
@@ -232,13 +232,9 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d
   br i1 %or.cond, label %bb.y, label %bb.z
 
 bb.f:                                             ; preds = %bb.b
-  %6 = load i8, ptr %3, align 1, !tbaa !16        ; 2 uses
-  %7 = zext i8 %6 to i16
-  %8 = shl nuw i16 %7, 8
-  %9 = load i8, ptr %i.c, align 1, !tbaa !16      ; 2 uses
-  %10 = zext i8 %9 to i16
-  %trunc = or disjoint i16 %8, %10
-  switch i16 %trunc, label %bb.s [
+  %6 = load i16, ptr %3, align 1                  ; 3 uses
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  switch i16 %7, label %bb.s [
     i16 -257, label %bb.g
     i16 15360, label %bb.i
     i16 -2, label %bb.m
@@ -336,7 +332,8 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.z
 
 bb.s:                                             ; preds = %bb.f
-  %i.ar = icmp eq i8 %6, 0
+  %8 = and i16 %6, 255
+  %i.ar = icmp eq i16 %8, 0
   br i1 %i.ar, label %bb.t, label %bb.w
 
 bb.t:                                             ; preds = %bb.s
@@ -360,9 +357,9 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   br label %bb.z
 
 bb.w:                                             ; preds = %bb.s
-  %11 = icmp ne i8 %9, 0
+  %9 = icmp ugt i16 %6, 255
   %i.bb = icmp ne i32 %2, 0
-  %or.cond20 = or i1 %i.bb, %11
+  %or.cond20 = or i1 %i.bb, %9
   br i1 %or.cond20, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
@@ -765,21 +762,16 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
   %i.q = phi ptr [ %i.t, %bb.d ], [ %i.g, %bb.c ] ; 4 uses
-  %i.r = phi ptr [ %i.u, %bb.d ], [ %i.a, %bb.c ] ; 3 uses
+  %i.r = phi ptr [ %i.u, %bb.d ], [ %i.a, %bb.c ] ; 2 uses
   %i.s = icmp ult ptr %i.q, %4
   br i1 %i.s, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %.lr.ph
-  %5 = load i8, ptr %i.r, align 1, !tbaa !16
-  %6 = zext i8 %5 to i16
-  %7 = shl nuw i16 %6, 8
-  %8 = getelementptr i8, ptr %i.r, i64 1
-  %9 = load i8, ptr %8, align 1, !tbaa !16
-  %10 = zext i8 %9 to i16
-  %11 = or disjoint i16 %7, %10
+  %5 = load i16, ptr %i.r, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
   %i.t = getelementptr i8, ptr %i.q, i64 2        ; 2 uses
   store ptr %i.t, ptr %3, align 8, !tbaa !26
-  store i16 %11, ptr %i.q, align 2, !tbaa !19
+  store i16 %6, ptr %i.q, align 2, !tbaa !19
   %i.u = getelementptr i8, ptr %i.r, i64 2        ; 3 uses
   store ptr %i.u, ptr %1, align 8, !tbaa !15
   %i.v = icmp ult ptr %i.u, %.023
@@ -1181,6 +1173,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.fshl.i8(i8, i8, i8) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #12
 
 attributes #0 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -205,13 +205,9 @@ bb.c:                                             ; preds = %.split
   br label %bb.h
 
 bb.d:                                             ; preds = %.split
-  %3 = load i8, ptr %2, align 1, !tbaa !43
-  %4 = zext i8 %3 to i64
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !43
-  %i.k = zext i8 %6 to i64
-  %7 = shl nuw nsw i64 %4, 8
-  %8 = or disjoint i64 %7, %i.k
+  %3 = load i16, ptr %2, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.k = zext i16 %4 to i64
   br label %bb.h
 
 bb.e:                                             ; preds = %.split
@@ -233,7 +229,7 @@ bb.g:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.038 = phi i64 [ %i.h, %bb.b ], [ %i.j, %bb.c ], [ %8, %bb.d ], [ %i.m, %bb.e ], [ %i.p, %bb.f ] ; 2 uses
+  %.038 = phi i64 [ %i.h, %bb.b ], [ %i.j, %bb.c ], [ %i.k, %bb.d ], [ %i.m, %bb.e ], [ %i.p, %bb.f ] ; 2 uses
   %i.q = and i32 %i.b, 4096
   %.not = icmp eq i32 %i.q, 0
   br i1 %.not, label %bb.i, label %.split.i

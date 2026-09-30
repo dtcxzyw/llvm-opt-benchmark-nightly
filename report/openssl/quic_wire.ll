@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.v = tail call i64 @ossl_quic_vlint_decode_unchecked(ptr noundef nonnull %i.l) #10 ; 5 uses
   %i.w = load ptr, ptr %0, align 8, !tbaa !44
-  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.t ; 10 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.t ; 8 uses
   store ptr %i.x, ptr %0, align 8, !tbaa !44
   %i.y = load i64, ptr %i.a, align 8, !tbaa !43
   %i.z = sub i64 %i.y, %i.t                       ; 3 uses
@@ -226,24 +226,14 @@ PACKET_get_1.exit:                                ; preds = %ossl_quic_wire_deco
   %i.ah = load i32, ptr %i.x, align 1
   store i32 %i.ah, ptr %i.ag, align 1
   %i.ai = getelementptr inbounds nuw i8, ptr %i.x, i64 4
-  %2 = load i8, ptr %i.ai, align 1, !tbaa !45
-  %3 = zext i8 %2 to i16
-  %4 = shl nuw i16 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.x, i64 5
-  %6 = load i8, ptr %5, align 1, !tbaa !45
-  %7 = zext i8 %6 to i16
-  %8 = or disjoint i16 %4, %7
+  %2 = load i16, ptr %i.ai, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.x, i64 6
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ak, ptr noundef nonnull align 1 dereferenceable(16) %i.aj, i64 range(i64 0, 4294967296) 16, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.x, i64 22
-  %9 = load i8, ptr %i.al, align 1, !tbaa !45
-  %10 = zext i8 %9 to i16
-  %11 = shl nuw i16 %10, 8
-  %12 = getelementptr inbounds nuw i8, ptr %i.x, i64 23
-  %13 = load i8, ptr %12, align 1, !tbaa !45
-  %14 = zext i8 %13 to i16
-  %15 = or disjoint i16 %11, %14
+  %4 = load i16, ptr %i.al, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
   %i.am = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   %i.an = load i8, ptr %i.am, align 1, !tbaa !45  ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.x, i64 25 ; 2 uses
@@ -268,9 +258,9 @@ bb.h:                                             ; preds = %bb.g
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.as
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ax, ptr noundef nonnull align 1 dereferenceable(16) %i.ay, i64 range(i64 0, 4294967296) 16, i1 false)
-  store i16 %8, ptr %1, align 2, !tbaa !65
+  store i16 %3, ptr %1, align 2, !tbaa !65
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i16 %15, ptr %i.az, align 2, !tbaa !66
+  store i16 %5, ptr %i.az, align 2, !tbaa !66
   store i8 %i.an, ptr %i.ar, align 2, !tbaa !67
   br label %ossl_quic_wire_decode_transport_param_bytes.exit.thread
 
@@ -318,6 +308,9 @@ declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i2 @llvm.bitreverse.i2(i2) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #9
 
 attributes #0 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

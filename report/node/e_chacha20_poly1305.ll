@@ -205,23 +205,19 @@ bb.t:                                             ; preds = %bb.s
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 148 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(13) %i.am, ptr noundef nonnull align 1 dereferenceable(13) %3, i64 13, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 11
-  %4 = load i8, ptr %i.an, align 1, !tbaa !16
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw nsw i32 %5, 8
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 12
-  %8 = load i8, ptr %7, align 1, !tbaa !16
-  %i.ao = zext i8 %8 to i32
-  %9 = or disjoint i32 %6, %i.ao                  ; 3 uses
+  %4 = load i16, ptr %i.an, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)      ; 2 uses
+  %i.ao = zext i16 %5 to i32                      ; 2 uses
   %i.ap = tail call i32 @EVP_CIPHER_CTX_is_encrypting(ptr noundef nonnull %0) #8
   %.not103 = icmp eq i32 %i.ap, 0
   br i1 %.not103, label %bb.u, label %bb.w
 
 bb.u:                                             ; preds = %bb.t
-  %i.aq = icmp samesign ult i32 %9, 16
+  %i.aq = icmp ult i16 %5, 16
   br i1 %i.aq, label %.critedge, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.ar = add nsw i32 %9, -16                     ; 3 uses
+  %i.ar = add nsw i32 %i.ao, -16                  ; 3 uses
   %i.as = lshr i32 %i.ar, 8
   %i.at = trunc nuw i32 %i.as to i8
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 159
@@ -232,7 +228,7 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.t
-  %.0 = phi i32 [ %9, %bb.t ], [ %i.ar, %bb.v ]
+  %.0 = phi i32 [ %i.ao, %bb.t ], [ %i.ar, %bb.v ]
   %i.ax = zext nneg i32 %.0 to i64
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 200
   store i64 %i.ax, ptr %i.ay, align 8, !tbaa !22
@@ -291,6 +287,9 @@ declare ptr @CRYPTO_memdup(ptr noundef, i64 noundef, ptr noundef, i32 noundef) l
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

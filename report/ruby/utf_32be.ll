@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define void @Init_utf_32be() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @rb_enc_register(ptr noundef nonnull @.str, ptr noundef nonnull @encoding_UTF_32BE) #5 ; 0 uses
+  %i.a = tail call i32 @rb_enc_register(ptr noundef nonnull @.str, ptr noundef nonnull @encoding_UTF_32BE) #6 ; 0 uses
   ret void
 }
 
@@ -38,21 +38,15 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
-  %3 = load i8, ptr %0, align 1, !tbaa !10
-  %4 = zext i8 %3 to i32
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !10
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw nsw i32 %4, 16
-  %9 = shl nuw nsw i32 %7, 8
-  %10 = or disjoint i32 %9, %8                    ; 2 uses
-  %i.h = icmp samesign ult i32 %10, 4352
+  %3 = load i16, ptr %0, align 1                  ; 2 uses
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.h = icmp ult i16 %4, 17
   br i1 %i.h, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.j = load i8, ptr %i.i, align 1, !tbaa !10
-  %i.k = icmp eq i32 %10, 0
+  %i.k = icmp eq i16 %3, 0
   %i.l = and i8 %i.j, -8
   %i.m = icmp eq i8 %i.l, -40
   %or.cond = and i1 %i.k, %i.m
@@ -104,23 +98,19 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
 define internal range(i32 0, -2147483648) i32 @utf32be_mbc_to_code(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1, ptr nofree readnone captures(none) %2) #2 {
 bb.a:
-  %3 = load i8, ptr %0, align 1, !tbaa !10
-  %i.a = zext i8 %3 to i32
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %3 = load i16, ptr %0, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.a = zext i16 %4 to i32
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.c = load i8, ptr %i.b, align 1, !tbaa !10
   %i.d = zext i8 %i.c to i32
-  %i.e = shl nuw nsw i32 %i.a, 16
+  %i.e = shl nuw i32 %i.a, 16
   %i.f = shl nuw nsw i32 %i.d, 8
-  %4 = or disjoint i32 %i.f, %i.e
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %6 = load i8, ptr %5, align 1, !tbaa !10
-  %7 = zext i8 %6 to i32
-  %i.g = or disjoint i32 %4, %7
-  %8 = shl nuw nsw i32 %i.g, 8
+  %i.g = or disjoint i32 %i.e, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 3
   %i.i = load i8, ptr %i.h, align 1, !tbaa !10
   %i.j = zext i8 %i.i to i32
-  %i.k = or disjoint i32 %8, %i.j
+  %i.k = or disjoint i32 %i.g, %i.j
   ret i32 %i.k
 }
 
@@ -194,7 +184,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %i.v = tail call i32 @onigenc_unicode_mbc_case_fold(ptr noundef %4, i32 noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3) #5
+  %i.v = tail call i32 @onigenc_unicode_mbc_case_fold(ptr noundef %4, i32 noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3) #6
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -207,7 +197,7 @@ declare i32 @onigenc_unicode_apply_all_case_fold(i32 noundef, ptr noundef, ptr n
 ; Function Attrs: nounwind sspstrong uwtable
 define internal i32 @utf32be_get_case_fold_codes_by_str(i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) #0 {
 bb.a:
-  %i.a = tail call i32 @onigenc_unicode_get_case_fold_codes_by_str(ptr noundef %4, i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) #5
+  %i.a = tail call i32 @onigenc_unicode_get_case_fold_codes_by_str(ptr noundef %4, i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) #6
   ret i32 %i.a
 }
 
@@ -245,12 +235,16 @@ declare i32 @onigenc_unicode_mbc_case_fold(ptr noundef, i32 noundef, ptr noundef
 
 declare i32 @onigenc_unicode_get_case_fold_codes_by_str(ptr noundef, i32 noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #5
+
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.ai = phi i32 [ %i.ae, %bb.k ], [ %i.ah, %bb.l ] ; 4 uses
   %i.aj = sub nuw nsw i32 %i.s, %i.u              ; 2 uses
   %i.ak = zext nneg i32 %i.u to i64
-  %i.al = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.ak ; 4 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.ak ; 3 uses
   %i.am = icmp samesign ult i32 %i.aj, %i.ai
   br i1 %i.am, label %bb.bd, label %bb.n
 
@@ -217,18 +217,14 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 5
-  %1 = load i8, ptr %i.an, align 1
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw nsw i32 %2, 16
-  %4 = getelementptr inbounds nuw i8, ptr %i.al, i64 6
-  %5 = load i8, ptr %4, align 1
-  %i.ao = zext i8 %5 to i32
+  %1 = load i16, ptr %i.an, align 1
+  %2 = tail call i16 @llvm.bswap.i16(i16 %1)
+  %i.ao = zext i16 %2 to i32
   %i.ap = shl nuw nsw i32 %i.ao, 8
-  %6 = or disjoint i32 %i.ap, %3
   %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 7
   %i.ar = load i8, ptr %i.aq, align 1
   %i.as = zext i8 %i.ar to i32
-  %i.at = or disjoint i32 %6, %i.as               ; 5 uses
+  %i.at = or disjoint i32 %i.ap, %i.as            ; 5 uses
   %.not67.i = icmp ne i32 %i.at, 0
   %i.au = and i32 %i.at, 16712191
   %.not68.i = icmp eq i32 %i.au, 0

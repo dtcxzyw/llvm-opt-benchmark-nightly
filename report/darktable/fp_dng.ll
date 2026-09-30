@@ -205,27 +205,23 @@ _Z17__DNG_HalfToFloatt.exit.i:                    ; preds = %bb.bb, %bb.ba, %bb.
 
 .lr.ph68.i:                                       ; preds = %_Z17__DNG_FP24ToFloatPKh.exit.i, %.lr.ph68.preheader.i
   %indvars.iv78.i = phi i64 [ %i.tf, %.lr.ph68.preheader.i ], [ %indvars.iv.next79.i, %_Z17__DNG_FP24ToFloatPKh.exit.i ] ; 3 uses
-  %.04766.i = phi ptr [ %i.te, %.lr.ph68.preheader.i ], [ %i.uc, %_Z17__DNG_FP24ToFloatPKh.exit.i ] ; 4 uses
+  %.04766.i = phi ptr [ %i.te, %.lr.ph68.preheader.i ], [ %i.uc, %_Z17__DNG_FP24ToFloatPKh.exit.i ] ; 3 uses
   %.165.i = phi float [ 0.000000e+00, %.lr.ph68.preheader.i ], [ %.1..cast.i, %_Z17__DNG_FP24ToFloatPKh.exit.i ] ; 2 uses
   %i.tg = load i8, ptr %.04766.i, align 1, !tbaa !133
   %i.th = zext i8 %i.tg to i32                    ; 2 uses
   %i.ti = lshr i32 %i.th, 7                       ; 3 uses
   %i.tj = and i32 %i.th, 127                      ; 2 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %.04766.i, i64 1
-  %2 = load i8, ptr %i.tk, align 1, !tbaa !133
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %.04766.i, i64 2
-  %6 = load i8, ptr %5, align 1, !tbaa !133
-  %i.tl = zext i8 %6 to i32
-  %7 = or disjoint i32 %4, %i.tl                  ; 5 uses
+  %2 = load i16, ptr %i.tk, align 1               ; 3 uses
+  %3 = call i16 @llvm.bswap.i16(i16 %2)
+  %i.tl = zext i16 %3 to i32                      ; 3 uses
   switch i32 %i.tj, label %bb.bg [
     i32 0, label %bb.bc
     i32 127, label %bb.be
   ]
 
 bb.bc:                                            ; preds = %.lr.ph68.i
-  %i.tm = icmp eq i32 %7, 0
+  %i.tm = icmp eq i16 %2, 0
   br i1 %i.tm, label %bb.bd, label %._crit_edge.i.i163
 
 bb.bd:                                            ; preds = %bb.bc
@@ -233,16 +229,16 @@ bb.bd:                                            ; preds = %bb.bc
   br label %_Z17__DNG_FP24ToFloatPKh.exit.i
 
 ._crit_edge.i.i163:                               ; preds = %bb.bc
-  %.masked.numleadingzeros.i56.i = call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %7, i1 true) ; 2 uses
+  %.masked.numleadingzeros.i56.i = call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.tl, i1 true) ; 2 uses
   %i.to = sub nsw i32 16, %.masked.numleadingzeros.i56.i
   %.masked.leadingonepos.i57.i = xor i32 %.masked.numleadingzeros.i56.i, 31
   %.lr.ph.tripcount.i.i = sub nuw nsw i32 16, %.masked.leadingonepos.i57.i
-  %i.tp = shl nuw i32 %7, %.lr.ph.tripcount.i.i
+  %i.tp = shl nuw i32 %i.tl, %.lr.ph.tripcount.i.i
   %i.tq = and i32 %i.tp, 65535
   br label %bb.bg
 
 bb.be:                                            ; preds = %.lr.ph68.i
-  %i.tr = icmp eq i32 %7, 0
+  %i.tr = icmp eq i16 %2, 0
   br i1 %i.tr, label %bb.bf, label %_Z17__DNG_FP24ToFloatPKh.exit.i
 
 bb.bf:                                            ; preds = %bb.be
@@ -252,13 +248,13 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %._crit_edge.i.i163, %.lr.ph68.i
   %.121.i58.i = phi i32 [ %i.to, %._crit_edge.i.i163 ], [ %i.tj, %.lr.ph68.i ]
-  %.1.i59.i = phi i32 [ %i.tq, %._crit_edge.i.i163 ], [ %7, %.lr.ph68.i ]
+  %.1.i59.i = phi i32 [ %i.tq, %._crit_edge.i.i163 ], [ %i.tl, %.lr.ph68.i ]
   %i.tu = shl nuw nsw i32 %.1.i59.i, 7
   %i.tv = shl nuw i32 %i.ti, 31
   %i.tw = shl nsw i32 %.121.i58.i, 23
   %i.tx = add nsw i32 %i.tw, 536870912
-  %i.ty = or i32 %i.tx, %i.tv
-  %i.tz = or i32 %i.ty, %i.tu
+  %i.ty = or i32 %i.tv, %i.tx
+  %i.tz = or disjoint i32 %i.ty, %i.tu
   br label %_Z17__DNG_FP24ToFloatPKh.exit.i
 
 _Z17__DNG_FP24ToFloatPKh.exit.i:                  ; preds = %bb.bg, %bb.bf, %bb.be, %bb.bd
@@ -661,27 +657,23 @@ _Z17__DNG_HalfToFloatt.exit.i:                    ; preds = %bb.ap, %bb.ao, %bb.
 
 .lr.ph68.i:                                       ; preds = %_Z17__DNG_FP24ToFloatPKh.exit.i, %.lr.ph68.preheader.i
   %indvars.iv78.i = phi i64 [ %i.in, %.lr.ph68.preheader.i ], [ %indvars.iv.next79.i, %_Z17__DNG_FP24ToFloatPKh.exit.i ] ; 3 uses
-  %.04766.i = phi ptr [ %i.im, %.lr.ph68.preheader.i ], [ %i.jk, %_Z17__DNG_FP24ToFloatPKh.exit.i ] ; 4 uses
+  %.04766.i = phi ptr [ %i.im, %.lr.ph68.preheader.i ], [ %i.jk, %_Z17__DNG_FP24ToFloatPKh.exit.i ] ; 3 uses
   %.165.i = phi float [ 0.000000e+00, %.lr.ph68.preheader.i ], [ %.1..cast.i, %_Z17__DNG_FP24ToFloatPKh.exit.i ] ; 2 uses
   %i.io = load i8, ptr %.04766.i, align 1, !tbaa !133
   %i.ip = zext i8 %i.io to i32                    ; 2 uses
   %i.iq = lshr i32 %i.ip, 7                       ; 3 uses
   %i.ir = and i32 %i.ip, 127                      ; 2 uses
   %i.is = getelementptr inbounds nuw i8, ptr %.04766.i, i64 1
-  %2 = load i8, ptr %i.is, align 1, !tbaa !133
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw nsw i32 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %.04766.i, i64 2
-  %6 = load i8, ptr %5, align 1, !tbaa !133
-  %i.it = zext i8 %6 to i32
-  %7 = or disjoint i32 %4, %i.it                  ; 5 uses
+  %2 = load i16, ptr %i.is, align 1               ; 3 uses
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.it = zext i16 %3 to i32                      ; 3 uses
   switch i32 %i.ir, label %bb.au [
     i32 0, label %bb.aq
     i32 127, label %bb.as
   ]
 
 bb.aq:                                            ; preds = %.lr.ph68.i
-  %i.iu = icmp eq i32 %7, 0
+  %i.iu = icmp eq i16 %2, 0
   br i1 %i.iu, label %bb.ar, label %._crit_edge.i.i
 
 bb.ar:                                            ; preds = %bb.aq
@@ -689,16 +681,16 @@ bb.ar:                                            ; preds = %bb.aq
   br label %_Z17__DNG_FP24ToFloatPKh.exit.i
 
 ._crit_edge.i.i:                                  ; preds = %bb.aq
-  %.masked.numleadingzeros.i56.i = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %7, i1 true) ; 2 uses
+  %.masked.numleadingzeros.i56.i = tail call range(i32 16, 33) i32 @llvm.ctlz.i32(i32 %i.it, i1 true) ; 2 uses
   %i.iw = sub nsw i32 16, %.masked.numleadingzeros.i56.i
   %.masked.leadingonepos.i57.i = xor i32 %.masked.numleadingzeros.i56.i, 31
   %.lr.ph.tripcount.i.i = sub nuw nsw i32 16, %.masked.leadingonepos.i57.i
-  %i.ix = shl nuw i32 %7, %.lr.ph.tripcount.i.i
+  %i.ix = shl nuw i32 %i.it, %.lr.ph.tripcount.i.i
   %i.iy = and i32 %i.ix, 65535
   br label %bb.au
 
 bb.as:                                            ; preds = %.lr.ph68.i
-  %i.iz = icmp eq i32 %7, 0
+  %i.iz = icmp eq i16 %2, 0
   br i1 %i.iz, label %bb.at, label %_Z17__DNG_FP24ToFloatPKh.exit.i
 
 bb.at:                                            ; preds = %bb.as
@@ -708,13 +700,13 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %._crit_edge.i.i, %.lr.ph68.i
   %.121.i58.i = phi i32 [ %i.iw, %._crit_edge.i.i ], [ %i.ir, %.lr.ph68.i ]
-  %.1.i59.i = phi i32 [ %i.iy, %._crit_edge.i.i ], [ %7, %.lr.ph68.i ]
+  %.1.i59.i = phi i32 [ %i.iy, %._crit_edge.i.i ], [ %i.it, %.lr.ph68.i ]
   %i.jc = shl nuw nsw i32 %.1.i59.i, 7
   %i.jd = shl nuw i32 %i.iq, 31
   %i.je = shl nsw i32 %.121.i58.i, 23
   %i.jf = add nsw i32 %i.je, 536870912
-  %i.jg = or i32 %i.jf, %i.jd
-  %i.jh = or i32 %i.jg, %i.jc
+  %i.jg = or i32 %i.jd, %i.jf
+  %i.jh = or disjoint i32 %i.jg, %i.jc
   br label %_Z17__DNG_FP24ToFloatPKh.exit.i
 
 _Z17__DNG_FP24ToFloatPKh.exit.i:                  ; preds = %bb.au, %bb.at, %bb.as, %bb.ar
@@ -994,6 +986,9 @@ declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #9

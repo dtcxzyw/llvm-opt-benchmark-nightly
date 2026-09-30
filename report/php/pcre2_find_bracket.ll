@@ -133,7 +133,7 @@ bb.j:                                             ; preds = %bb.e
   br label %.split.us.split.us
 
 .split.us.split:                                  ; preds = %.split.us, %.split.us.split.backedge
-  %.058.us = phi ptr [ %.058.us.be, %.split.us.split.backedge ], [ %0, %.split.us ] ; 17 uses
+  %.058.us = phi ptr [ %.058.us.be, %.split.us.split.backedge ], [ %0, %.split.us ] ; 16 uses
   %i.ar = load i8, ptr %.058.us, align 1, !tbaa !12 ; 7 uses
   switch i8 %i.ar, label %bb.m [
     i8 0, label %.split86.us
@@ -230,14 +230,10 @@ bb.q:                                             ; preds = %bb.n, %bb.n, %bb.n,
 
 bb.r:                                             ; preds = %bb.n, %bb.n, %bb.n, %bb.n
   %i.bx = getelementptr inbounds nuw i8, ptr %.058.us, i64 3
-  %3 = load i8, ptr %i.bx, align 1, !tbaa !12
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw nsw i32 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %.058.us, i64 4
-  %7 = load i8, ptr %6, align 1, !tbaa !12
-  %i.by = zext i8 %7 to i32
-  %8 = or disjoint i32 %5, %i.by
-  %.not66.us = icmp eq i32 %8, %2
+  %3 = load i16, ptr %i.bx, align 1
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.by = zext i16 %4 to i32
+  %.not66.us = icmp eq i32 %2, %i.by
   br i1 %.not66.us, label %.split86.us, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -269,7 +265,7 @@ bb.u:                                             ; preds = %bb.m
   br label %.split.us.split.backedge
 
 .split:                                           ; preds = %bb.a, %.split.backedge
-  %.058 = phi ptr [ %.058.be, %.split.backedge ], [ %0, %bb.a ] ; 18 uses
+  %.058 = phi ptr [ %.058.be, %.split.backedge ], [ %0, %bb.a ] ; 17 uses
   %i.co = load i8, ptr %.058, align 1, !tbaa !12  ; 8 uses
   switch i8 %i.co, label %bb.x [
     i8 0, label %.split86.us
@@ -345,14 +341,10 @@ bb.aa:                                            ; preds = %bb.x
 
 bb.ab:                                            ; preds = %bb.aa, %bb.aa, %bb.aa, %bb.aa
   %i.dn = getelementptr inbounds nuw i8, ptr %.058, i64 3
-  %9 = load i8, ptr %i.dn, align 1, !tbaa !12
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 8
-  %12 = getelementptr inbounds nuw i8, ptr %.058, i64 4
-  %13 = load i8, ptr %12, align 1, !tbaa !12
-  %i.do = zext i8 %13 to i32
-  %14 = or disjoint i32 %11, %i.do
-  %.not66 = icmp eq i32 %14, %2
+  %5 = load i16, ptr %i.dn, align 1
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %i.do = zext i16 %6 to i32
+  %.not66 = icmp eq i32 %2, %i.do
   br i1 %.not66, label %.split86.us, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
@@ -429,7 +421,11 @@ bb.ai:                                            ; preds = %bb.ah
   ret ptr %.us-phi
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #1
+
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

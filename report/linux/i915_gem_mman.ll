@@ -81,14 +81,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr i8, ptr %0, i64 1656
-  %3 = load i8, ptr %i.f, align 8
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw nsw i32 %4, 8
-  %6 = getelementptr i8, ptr %0, i64 1657
-  %7 = load i8, ptr %6, align 1
-  %8 = zext i8 %7 to i32
-  %9 = or disjoint i32 %5, %8
-  %i.g = icmp samesign ugt i32 %9, 3072
+  %3 = load i16, ptr %i.f, align 8
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %i.g = icmp ugt i16 %4, 3072
   br i1 %i.g, label %bb.v, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -490,6 +485,9 @@ declare i64 @llvm.smax.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #9

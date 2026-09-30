@@ -205,24 +205,20 @@ bb.bx:                                            ; preds = %.thread279.i
   br i1 %or.cond18.i, label %bb.by, label %.thread289.i
 
 bb.by:                                            ; preds = %bb.bx
-  %i.ju = load ptr, ptr %i.ab, align 8, !tbaa !66 ; 8 uses
+  %i.ju = load ptr, ptr %i.ab, align 8, !tbaa !66 ; 7 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 4 ; 2 uses
   store ptr %i.jv, ptr %i.ab, align 8, !tbaa !66
   %i.jw = load i32, ptr %i.ju, align 1, !tbaa !63
   %i.jx = getelementptr inbounds nuw i8, ptr %i.ju, i64 7
   store ptr %i.jx, ptr %i.ab, align 8, !tbaa !66
-  %6 = load i8, ptr %i.jv, align 1, !tbaa !63
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw nsw i32 %7, 16
-  %9 = getelementptr inbounds nuw i8, ptr %i.ju, i64 5
-  %10 = load i8, ptr %9, align 1, !tbaa !63
-  %i.jy = zext i8 %10 to i32
+  %6 = load i16, ptr %i.jv, align 1
+  %7 = call i16 @llvm.bswap.i16(i16 %6)
+  %i.jy = zext i16 %7 to i32
   %i.jz = shl nuw nsw i32 %i.jy, 8
-  %11 = or disjoint i32 %i.jz, %8
   %i.ka = getelementptr inbounds nuw i8, ptr %i.ju, i64 6
   %i.kb = load i8, ptr %i.ka, align 1, !tbaa !63
   %i.kc = zext i8 %i.kb to i32
-  %i.kd = or disjoint i32 %11, %i.kc
+  %i.kd = or disjoint i32 %i.jz, %i.kc
   %.not216.i = icmp eq i32 %i.jw, 1179603536
   %.not217.i = icmp eq i32 %i.kd, 4803653
   %or.cond239.i = select i1 %.not216.i, i1 %.not217.i, i1 false

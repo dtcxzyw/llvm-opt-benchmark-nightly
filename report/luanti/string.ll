@@ -204,7 +204,7 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string.0", align 8 ; 14 uses
   %7 = alloca %"class.std::__cxx11::basic_string.0", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string.0", align 8 ; 14 uses
-  %i.e = alloca [4 x i8], align 4                 ; 9 uses
+  %i.e = alloca [4 x i8], align 2                 ; 9 uses
   %i.f = load ptr, ptr %0, align 8, !tbaa !58     ; 3 uses
   %i.g = load i8, ptr %i.f, align 1, !tbaa !73
   %i.h = icmp eq i8 %i.g, 35
@@ -214,12 +214,12 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val10 = load i64, ptr %i.i, align 8, !tbaa !59 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #2
-  store i8 0, ptr %i.e, align 4, !tbaa !73
+  store i8 0, ptr %i.e, align 2, !tbaa !73
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 1
   store i8 0, ptr %i.j, align 1, !tbaa !73
-  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 2
+  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 2 ; 2 uses
   store i8 0, ptr %i.k, align 2, !tbaa !73
-  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 3
+  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 3 ; 2 uses
   store i8 %3, ptr %i.l, align 1, !tbaa !73
   switch i64 %.val10, label %bb.c [
     i64 9, label %.lr.ph.split.us.i.preheader
@@ -340,9 +340,18 @@ bb.r:                                             ; preds = %bb.q, %bb.o, %.lr.p
   br i1 %exitcond.not.i, label %.critedge45.i, label %.lr.ph.split.i, !llvm.loop !120
 
 .critedge45.i:                                    ; preds = %bb.m, %bb.r
-  %9 = load <4 x i8>, ptr %i.e, align 4, !tbaa !73
-  %10 = shufflevector <4 x i8> %9, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
-  store <4 x i8> %10, ptr %1, align 4, !tbaa !131
+  %9 = load i16, ptr %i.e, align 2
+  %10 = tail call i16 @llvm.bswap.i16(i16 %9)
+  %11 = zext i16 %10 to i32
+  %12 = shl nuw nsw i32 %11, 8
+  %13 = load i8, ptr %i.k, align 2, !tbaa !73
+  %14 = zext i8 %13 to i32
+  %15 = or disjoint i32 %12, %14
+  %16 = load i8, ptr %i.l, align 1, !tbaa !73
+  %17 = zext i8 %16 to i32
+  %18 = shl nuw i32 %17, 24
+  %19 = or disjoint i32 %15, %18
+  store i32 %19, ptr %1, align 4, !tbaa !131
   br label %_ZL19parseHexColorStringRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERN5video6SColorEh.exit
 
 _ZL19parseHexColorStringRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERN5video6SColorEh.exit: ; preds = %bb.e, %bb.j, %bb.p, %bb.c, %.critedge45.i
@@ -743,6 +752,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #30
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #31
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #29

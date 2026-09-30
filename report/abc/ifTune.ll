@@ -205,14 +205,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %2 = load i8, ptr %i.e, align 1, !tbaa !30
-  %3 = zext i8 %2 to i64
-  %4 = shl nuw nsw i64 %3, 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %6 = load i8, ptr %5, align 1, !tbaa !30
-  %i.f = zext i8 %6 to i64
-  %7 = or disjoint i64 %4, %i.f
-  %i.g = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.26, i64 noundef %7) ; 0 uses
+  %2 = load i16, ptr %i.e, align 1
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  %i.f = zext i16 %3 to i64
+  %i.g = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.26, i64 noundef %i.f) ; 0 uses
   %i.h = icmp sgt i32 %1, 0
   br i1 %i.h, label %.lr.ph, label %.lr.ph119.preheader
 
@@ -257,14 +253,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = load i8, ptr %i.p, align 1, !tbaa !30
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw nsw i64 %9, 8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %12 = load i8, ptr %11, align 1, !tbaa !30
-  %i.q = zext i8 %12 to i64
-  %13 = or disjoint i64 %10, %i.q
-  %i.r = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.30, i64 noundef %13) ; 0 uses
+  %4 = load i16, ptr %i.p, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %i.q = zext i16 %5 to i64
+  %i.r = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.30, i64 noundef %i.q) ; 0 uses
   %i.s = add nsw i32 %1, 2                        ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.u = load i8, ptr %i.t, align 1, !tbaa !30    ; 2 uses
@@ -348,14 +340,10 @@ bb.o:                                             ; preds = %bb.n, %bb.l, %bb.m
   %putchar106.3 = tail call i32 @putchar(i32 %.sink150) ; 0 uses
   %i.an = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.34) ; 0 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %14 = load i8, ptr %i.ao, align 1, !tbaa !30
-  %15 = zext i8 %14 to i64
-  %16 = shl nuw nsw i64 %15, 8
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %18 = load i8, ptr %17, align 1, !tbaa !30
-  %i.ap = zext i8 %18 to i64
-  %19 = or disjoint i64 %16, %i.ap
-  %i.aq = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.35, i64 noundef %19) ; 0 uses
+  %6 = load i16, ptr %i.ao, align 1
+  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
+  %i.ap = zext i16 %7 to i64
+  %i.aq = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.35, i64 noundef %i.ap) ; 0 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !30  ; 3 uses
   %i.at = zext i8 %i.as to i32                    ; 2 uses
@@ -442,14 +430,10 @@ bb.ad:                                            ; preds = %bb.ab, %bb.y, %bb.a
 
 bb.ae:                                            ; preds = %bb.a
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %20 = load i8, ptr %i.bk, align 1, !tbaa !30
-  %21 = zext i8 %20 to i64
-  %22 = shl nuw nsw i64 %21, 8
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %24 = load i8, ptr %23, align 1, !tbaa !30
-  %i.bl = zext i8 %24 to i64
-  %25 = or disjoint i64 %22, %i.bl
-  %i.bm = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.38, i64 noundef %25) ; 0 uses
+  %8 = load i16, ptr %i.bk, align 1
+  %9 = tail call i16 @llvm.bswap.i16(i16 %8)
+  %i.bl = zext i16 %9 to i64
+  %i.bm = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.38, i64 noundef %i.bl) ; 0 uses
   %i.bn = add nsw i32 %1, 2                       ; 9 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !30  ; 2 uses
@@ -533,14 +517,10 @@ bb.aq:                                            ; preds = %bb.ap, %bb.an, %bb.
   %putchar97.3 = tail call i32 @putchar(i32 %.sink157) ; 0 uses
   %i.ci = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.34) ; 0 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %26 = load i8, ptr %i.cj, align 1, !tbaa !30
-  %27 = zext i8 %26 to i64
-  %28 = shl nuw nsw i64 %27, 8
-  %29 = getelementptr inbounds nuw i8, ptr %0, i64 13
-  %30 = load i8, ptr %29, align 1, !tbaa !30
-  %i.ck = zext i8 %30 to i64
-  %31 = or disjoint i64 %28, %i.ck
-  %i.cl = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.39, i64 noundef %31) ; 0 uses
+  %10 = load i16, ptr %i.cj, align 1
+  %11 = tail call i16 @llvm.bswap.i16(i16 %10)
+  %i.ck = zext i16 %11 to i64
+  %i.cl = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.39, i64 noundef %i.ck) ; 0 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !30  ; 2 uses
   switch i8 %i.cn, label %bb.as [
@@ -943,7 +923,7 @@ Vec_IntPush.exit:                                 ; preds = %.lr.ph383.Vec_IntPu
   %i.eu = getelementptr i8, ptr %i.et, i64 8
   %.val246 = load ptr, ptr %i.eu, align 8, !tbaa !178
   %i.ev = sext i32 %.0191390 to i64
-  %i.ew = getelementptr inbounds i8, ptr %.val246, i64 %i.ev ; 16 uses
+  %i.ew = getelementptr inbounds i8, ptr %.val246, i64 %i.ev ; 11 uses
   %i.ex = load i8, ptr %i.ew, align 1, !tbaa !30
   switch i8 %i.ex, label %bb.fc [
     i8 0, label %bb.s
@@ -954,14 +934,10 @@ Vec_IntPush.exit:                                 ; preds = %.lr.ph383.Vec_IntPu
 bb.s:                                             ; preds = %.critedge4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ew, i64 5
-  %1 = load i8, ptr %i.ey, align 1, !tbaa !30
-  %2 = zext i8 %1 to i64
-  %3 = shl nuw nsw i64 %2, 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.ew, i64 6
-  %5 = load i8, ptr %4, align 1, !tbaa !30
-  %i.ez = zext i8 %5 to i64
-  %6 = or disjoint i64 %3, %i.ez
-  %i.fa = mul nuw i64 %6, 281479271743489
+  %1 = load i16, ptr %i.ey, align 1
+  %2 = call i16 @llvm.bswap.i16(i16 %1)
+  %i.ez = zext i16 %2 to i64
+  %i.fa = mul nuw i64 %i.ez, 281479271743489
   store i64 %i.fa, ptr %i.a, align 8, !tbaa !37
   %.val222 = load i32, ptr %i.at, align 4, !tbaa !58
   %i.fb = call i32 @Kit_TruthToGia(ptr noundef nonnull %i.l, ptr noundef nonnull %i.a, i32 noundef %.val222, ptr noundef nonnull %i.aw, ptr noundef nonnull %i.as, i32 noundef 1) #26
@@ -1172,14 +1148,10 @@ bb.ax:                                            ; preds = %.sink.split, %bb.an
 bb.ay:                                            ; preds = %bb.ax
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
   %i.ho = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
-  %7 = load i8, ptr %i.ho, align 1, !tbaa !30
-  %8 = zext i8 %7 to i64
-  %9 = shl nuw nsw i64 %8, 8
-  %10 = getelementptr inbounds nuw i8, ptr %i.ew, i64 9
-  %11 = load i8, ptr %10, align 1, !tbaa !30
-  %i.hp = zext i8 %11 to i64
-  %12 = or disjoint i64 %9, %i.hp
-  %i.hq = mul nuw i64 %12, 281479271743489
+  %3 = load i16, ptr %i.ho, align 1
+  %4 = call i16 @llvm.bswap.i16(i16 %3)
+  %i.hp = zext i16 %4 to i64
+  %i.hq = mul nuw i64 %i.hp, 281479271743489
   store i64 %i.hq, ptr %i.b, align 8, !tbaa !37
   %.val220 = load i32, ptr %i.fh, align 4, !tbaa !58
   %i.hr = call i32 @Kit_TruthToGia(ptr noundef nonnull %i.l, ptr noundef nonnull %i.b, i32 noundef %.val220, ptr noundef nonnull %i.aw, ptr noundef nonnull %i.fg, i32 noundef 1) #26
@@ -1461,14 +1433,10 @@ Vec_IntPush.exit307:                              ; preds = %.Vec_IntPush.exit30
   store i32 %i.hr, ptr %i.ki, align 4, !tbaa !31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ew, i64 10
-  %13 = load i8, ptr %i.kj, align 1, !tbaa !30
-  %14 = zext i8 %13 to i64
-  %15 = shl nuw nsw i64 %14, 8
-  %16 = getelementptr inbounds nuw i8, ptr %i.ew, i64 11
-  %17 = load i8, ptr %16, align 1, !tbaa !30
-  %i.kk = zext i8 %17 to i64
-  %18 = or disjoint i64 %15, %i.kk
-  %i.kl = mul nuw i64 %18, 281479271743489
+  %5 = load i16, ptr %i.kj, align 1
+  %6 = call i16 @llvm.bswap.i16(i16 %5)
+  %i.kk = zext i16 %6 to i64
+  %i.kl = mul nuw i64 %i.kk, 281479271743489
   store i64 %i.kl, ptr %i.c, align 8, !tbaa !37
   %.val218 = load i32, ptr %i.fh, align 4, !tbaa !58
   %i.km = call i32 @Kit_TruthToGia(ptr noundef nonnull %i.l, ptr noundef nonnull %i.c, i32 noundef %.val218, ptr noundef nonnull %i.aw, ptr noundef nonnull %i.fg, i32 noundef 1) #26
@@ -1690,14 +1658,10 @@ bb.dr:                                            ; preds = %.sink.split525, %bb
 bb.ds:                                            ; preds = %bb.dr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #26
   %i.na = getelementptr inbounds nuw i8, ptr %i.ew, i64 10
-  %19 = load i8, ptr %i.na, align 1, !tbaa !30
-  %20 = zext i8 %19 to i64
-  %21 = shl nuw nsw i64 %20, 8
-  %22 = getelementptr inbounds nuw i8, ptr %i.ew, i64 11
-  %23 = load i8, ptr %22, align 1, !tbaa !30
-  %i.nb = zext i8 %23 to i64
-  %24 = or disjoint i64 %21, %i.nb
-  %i.nc = mul nuw i64 %24, 281479271743489
+  %7 = load i16, ptr %i.na, align 1
+  %8 = call i16 @llvm.bswap.i16(i16 %7)
+  %i.nb = zext i16 %8 to i64
+  %i.nc = mul nuw i64 %i.nb, 281479271743489
   store i64 %i.nc, ptr %i.d, align 8, !tbaa !37
   %.val216 = load i32, ptr %i.kt, align 4, !tbaa !58
   %i.nd = call i32 @Kit_TruthToGia(ptr noundef nonnull %i.l, ptr noundef nonnull %i.d, i32 noundef %.val216, ptr noundef nonnull %i.aw, ptr noundef nonnull %i.ks, i32 noundef 1) #26
@@ -1915,14 +1879,10 @@ bb.ew:                                            ; preds = %.sink.split537, %bb
 bb.ex:                                            ; preds = %bb.ew
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
   %i.pd = getelementptr inbounds nuw i8, ptr %i.ew, i64 12
-  %25 = load i8, ptr %i.pd, align 1, !tbaa !30
-  %26 = zext i8 %25 to i64
-  %27 = shl nuw nsw i64 %26, 8
-  %28 = getelementptr inbounds nuw i8, ptr %i.ew, i64 13
-  %29 = load i8, ptr %28, align 1, !tbaa !30
-  %i.pe = zext i8 %29 to i64
-  %30 = or disjoint i64 %27, %i.pe
-  %i.pf = mul nuw i64 %30, 281479271743489
+  %9 = load i16, ptr %i.pd, align 1
+  %10 = call i16 @llvm.bswap.i16(i16 %9)
+  %i.pe = zext i16 %10 to i64
+  %i.pf = mul nuw i64 %i.pe, 281479271743489
   store i64 %i.pf, ptr %i.e, align 8, !tbaa !37
   %.val214 = load i32, ptr %i.kt, align 4, !tbaa !58
   %i.pg = call i32 @Kit_TruthToGia(ptr noundef nonnull %i.l, ptr noundef nonnull %i.e, i32 noundef %.val214, ptr noundef nonnull %i.aw, ptr noundef nonnull %i.ks, i32 noundef 1) #26
@@ -2323,6 +2283,9 @@ declare i32 @llvm.smin.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #23

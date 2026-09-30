@@ -205,19 +205,15 @@ bb.b:                                             ; preds = %.lr.ph, %Ptngc_writ
   %i.h = phi i32 [ %.pre, %.lr.ph ], [ %i.ai, %Ptngc_writebits.exit ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %Ptngc_writebits.exit ] ; 2 uses
   %.035 = phi i32 [ %2, %.lr.ph ], [ %i.aj, %Ptngc_writebits.exit ] ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv ; 3 uses
-  %4 = load i8, ptr %i.i, align 1, !tbaa !16
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw nsw i32 %5, 16
-  %7 = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !16
-  %i.j = zext i8 %8 to i32
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv ; 2 uses
+  %4 = load i16, ptr %i.i, align 1
+  %5 = tail call i16 @llvm.bswap.i16(i16 %4)
+  %i.j = zext i16 %5 to i32
   %i.k = shl nuw nsw i32 %i.j, 8
-  %9 = or disjoint i32 %i.k, %6
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 2
   %i.m = load i8, ptr %i.l, align 1, !tbaa !16
   %i.n = zext i8 %i.m to i32
-  %i.o = or disjoint i32 %9, %i.n
+  %i.o = or disjoint i32 %i.k, %i.n
   %i.p = shl i32 %i.h, 24
   %i.q = add nsw i32 %i.g, 24                     ; 3 uses
   store i32 %i.q, ptr %i.b, align 4, !tbaa !11
@@ -620,7 +616,13 @@ declare i32 @llvm.smax.i32(i32, i32) #6
 declare i32 @llvm.umax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
@@ -654,9 +656,6 @@ declare <8 x i32> @llvm.masked.gather.v8i32.v8p0(<8 x ptr>, <8 x i1>, <8 x i32>)
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v8i32.v8p0(<8 x i32>, <8 x ptr>, <8 x i1>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }

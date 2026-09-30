@@ -36,16 +36,12 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %3 = load i8, ptr %i.e, align 1                 ; 2 uses
-  %4 = zext i8 %3 to i16
-  %5 = shl nuw i16 %4, 8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %7 = load i8, ptr %6, align 1
-  %8 = zext i8 %7 to i16
-  %9 = or disjoint i16 %5, %8
-  %10 = icmp ult i16 %9, 2
-  %11 = icmp ugt i8 %3, 15
-  %or.cond5.i = or i1 %11, %10
+  %3 = load i16, ptr %i.e, align 1                ; 2 uses
+  %4 = tail call i16 @llvm.bswap.i16(i16 %3)
+  %5 = icmp ult i16 %4, 2
+  %6 = and i16 %3, 240
+  %7 = icmp ne i16 %6, 0
+  %or.cond5.i = or i1 %5, %7
   br i1 %or.cond5.i, label %select.unfold, label %_is_sslv3_handshake.exit
 
 _is_sslv3_handshake.exit:                         ; preds = %bb.d
@@ -55,12 +51,12 @@ _is_sslv3_handshake.exit:                         ; preds = %bb.d
   br i1 %.not30, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %_is_sslv3_handshake.exit
-  %i.h = tail call i32 @get_log_level() #2
+  %i.h = tail call i32 @get_log_level() #3
   %i.i = icmp sgt i32 %i.h, 3
   br i1 %i.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str, ptr noundef nonnull @__func__.tls_is_handshake, ptr noundef %2) #2
+  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str, ptr noundef nonnull @__func__.tls_is_handshake, ptr noundef %2) #3
   br label %bb.g
 
 bb.g:                                             ; preds = %_is_sslv3_handshake.exit, %bb.f, %bb.e
@@ -70,7 +66,7 @@ bb.g:                                             ; preds = %_is_sslv3_handshake
   br i1 %.not31, label %bb.w, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void (ptr, i64, i64, i64, ptr, ...) @_log_flag_hex(ptr noundef nonnull %0, i64 noundef %1, i64 noundef -1, i64 noundef -1, ptr noundef nonnull @.str.1, ptr noundef %2) #2
+  tail call void (ptr, i64, i64, i64, ptr, ...) @_log_flag_hex(ptr noundef nonnull %0, i64 noundef %1, i64 noundef -1, i64 noundef -1, ptr noundef nonnull @.str.1, ptr noundef %2) #3
   br label %bb.w
 
 select.unfold:                                    ; preds = %bb.d, %bb.c, %bb.b
@@ -83,21 +79,17 @@ bb.i:                                             ; preds = %select.unfold
 
 bb.j:                                             ; preds = %bb.i
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %12 = load i8, ptr %i.m, align 1
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 16
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %16 = load i8, ptr %15, align 1
-  %i.n = zext i8 %16 to i32
+  %8 = load i16, ptr %i.m, align 1
+  %9 = tail call i16 @llvm.bswap.i16(i16 %8)      ; 2 uses
+  %i.n = zext i16 %9 to i32
   %i.o = shl nuw nsw i32 %i.n, 8
-  %17 = or disjoint i32 %i.o, %14                 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 3
   %i.q = load i8, ptr %i.p, align 1
   %i.r = zext i8 %i.q to i32
-  %i.s = or disjoint i32 %17, %i.r
+  %i.s = or disjoint i32 %i.o, %i.r
   %i.t = icmp samesign ult i32 %i.s, 2
-  %i.u = icmp samesign ugt i32 %17, 4095
-  %or.cond.i = select i1 %i.t, i1 true, i1 %i.u
+  %i.u = icmp ugt i16 %9, 15
+  %or.cond.i = or i1 %i.u, %i.t
   br i1 %or.cond.i, label %bb.r, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -113,12 +105,12 @@ _is_tls_handshake.exit:                           ; preds = %bb.k
   br i1 %.not33, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %_is_tls_handshake.exit
-  %i.z = tail call i32 @get_log_level() #2
+  %i.z = tail call i32 @get_log_level() #3
   %i.aa = icmp sgt i32 %i.z, 3
   br i1 %i.aa, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.tls_is_handshake, ptr noundef %2) #2
+  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.tls_is_handshake, ptr noundef %2) #3
   br label %bb.n
 
 bb.n:                                             ; preds = %_is_tls_handshake.exit, %bb.m, %bb.l
@@ -128,7 +120,7 @@ bb.n:                                             ; preds = %_is_tls_handshake.e
   br i1 %.not34, label %bb.w, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  tail call void (ptr, i64, i64, i64, ptr, ...) @_log_flag_hex(ptr noundef nonnull %0, i64 noundef %1, i64 noundef -1, i64 noundef -1, ptr noundef nonnull @.str.3, ptr noundef %2) #2
+  tail call void (ptr, i64, i64, i64, ptr, ...) @_log_flag_hex(ptr noundef nonnull %0, i64 noundef %1, i64 noundef -1, i64 noundef -1, ptr noundef nonnull @.str.3, ptr noundef %2) #3
   br label %bb.w
 
 .thread52:                                        ; preds = %bb.a, %select.unfold
@@ -138,12 +130,12 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not37, label %bb.w, label %bb.p
 
 bb.p:                                             ; preds = %.thread52
-  %i.af = tail call i32 @get_log_level() #2
+  %i.af = tail call i32 @get_log_level() #3
   %i.ag = icmp sgt i32 %i.af, 3
   br i1 %i.ag, label %bb.q, label %bb.w
 
 bb.q:                                             ; preds = %bb.p
-  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.4, ptr noundef nonnull @__func__.tls_is_handshake, ptr noundef %2) #2
+  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.4, ptr noundef nonnull @__func__.tls_is_handshake, ptr noundef %2) #3
   br label %bb.w
 
 bb.r:                                             ; preds = %bb.k, %bb.i, %bb.j
@@ -153,12 +145,12 @@ bb.r:                                             ; preds = %bb.k, %bb.i, %bb.j
   br i1 %.not35, label %bb.u, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.aj = tail call i32 @get_log_level() #2
+  %i.aj = tail call i32 @get_log_level() #3
   %i.ak = icmp sgt i32 %i.aj, 3
   br i1 %i.ak, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.5, ptr noundef nonnull @__func__.tls_is_handshake, ptr noundef %2) #2
+  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.5, ptr noundef nonnull @__func__.tls_is_handshake, ptr noundef %2) #3
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.r, %bb.t, %bb.s
@@ -168,7 +160,7 @@ bb.u:                                             ; preds = %bb.r, %bb.t, %bb.s
   br i1 %.not36, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  tail call void (ptr, i64, i64, i64, ptr, ...) @_log_flag_hex(ptr noundef nonnull %0, i64 noundef %1, i64 noundef -1, i64 noundef -1, ptr noundef nonnull @.str.6, ptr noundef %2) #2
+  tail call void (ptr, i64, i64, i64, ptr, ...) @_log_flag_hex(ptr noundef nonnull %0, i64 noundef %1, i64 noundef -1, i64 noundef -1, ptr noundef nonnull @.str.6, ptr noundef %2) #3
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.u, %bb.v, %.thread52, %bb.q, %bb.p, %bb.n, %bb.o, %bb.g, %bb.h
@@ -182,9 +174,13 @@ declare void @log_var(i32 noundef, ptr noundef, ...) local_unnamed_addr #1
 
 declare void @_log_flag_hex(ptr noundef, i64 noundef, i64 noundef, i64 noundef, ptr noundef, ...) local_unnamed_addr #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #2
+
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { nounwind }
+attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6}
 !llvm.ident = !{!7}

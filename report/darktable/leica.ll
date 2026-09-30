@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 8 uses
   %i.c = alloca i32, align 4                      ; 9 uses
   %i.d = alloca i64, align 8                      ; 4 uses
-  %i.e = alloca [10 x i8], align 1                ; 9 uses
+  %i.e = alloca [10 x i8], align 1                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
@@ -251,15 +251,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.ai = call noundef i32 %i.af(ptr noundef nonnull align 8 dereferenceable(8) %i.ac, i64 noundef -2, i32 noundef 1), !call_target !104 ; 0 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 6
-  %4 = load i8, ptr %i.aj, align 1, !tbaa !74
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw nsw i32 %5, 8
-  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 7
-  %8 = load i8, ptr %7, align 1, !tbaa !74
-  %i.ak = zext i8 %8 to i32
-  %9 = or disjoint i32 %6, %i.ak                  ; 7 uses
-  %trunc = trunc nuw i32 %9 to i16
-  switch i16 %trunc, label %.thread [
+  %4 = load i16, ptr %i.aj, align 1
+  %5 = call i16 @llvm.bswap.i16(i16 %4)           ; 2 uses
+  %i.ak = zext i16 %5 to i32                      ; 6 uses
+  switch i16 %5, label %.thread [
     i16 0, label %sub_0
     i16 2560, label %.thread110
     i16 2304, label %.thread110
@@ -293,7 +288,7 @@ sub_0117:                                         ; preds = %sub_0, %.tail
   br i1 %i.au, label %.thread, label %.thread110
 
 .thread:                                          ; preds = %bb.c, %.tail116, %.tail
-  %.072109 = phi i32 [ %9, %bb.c ], [ -3, %.tail ], [ -3, %.tail116 ]
+  %.072109 = phi i32 [ %i.ak, %bb.c ], [ -3, %.tail ], [ -3, %.tail116 ]
   %i.av = load ptr, ptr %i.f, align 8, !tbaa !78  ; 2 uses
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !85
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 40
@@ -303,7 +298,7 @@ sub_0117:                                         ; preds = %sub_0, %.tail
   br label %.thread110
 
 .thread110:                                       ; preds = %bb.b, %sub_0117, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %.tail116, %.thread
-  %.1 = phi i32 [ %spec.select, %bb.b ], [ 0, %.tail116 ], [ %.072109, %.thread ], [ %9, %bb.c ], [ %9, %bb.c ], [ %9, %bb.c ], [ %9, %bb.c ], [ %9, %bb.c ], [ 0, %sub_0117 ] ; 2 uses
+  %.1 = phi i32 [ %spec.select, %bb.b ], [ 0, %.tail116 ], [ %.072109, %.thread ], [ %i.ak, %bb.c ], [ %i.ak, %bb.c ], [ %i.ak, %bb.c ], [ %i.ak, %bb.c ], [ %i.ak, %bb.c ], [ 0, %sub_0117 ] ; 2 uses
   %.0 = phi i64 [ %1, %bb.b ], [ %1, %.tail116 ], [ %i.ba, %.thread ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %bb.c ], [ %1, %sub_0117 ] ; 3 uses
   call void @_ZN6LibRaw20setLeicaBodyFeaturesEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %.1)
   %i.bb = call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 3 uses
@@ -705,6 +700,9 @@ declare i64 @llvm.umin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.bswap.i16(i16) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
