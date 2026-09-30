@@ -205,16 +205,16 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %._crit_edge.i.i, %.lr.ph49.i.i
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph49.i.i ], [ %indvars.iv.next.i.i, %._crit_edge.i.i ] ; 3 uses
   %.03646.i.i = phi double [ 0.000000e+00, %.lr.ph49.i.i ], [ %i.ch, %._crit_edge.i.i ]
-  %i.bu = trunc i64 %indvars.iv.i.i to i32        ; 5 uses
+  %i.bu = trunc i64 %indvars.iv.i.i to i32        ; 6 uses
   %i.bv = add i32 %.reass.i.reass.reass, %i.bu
   %spec.select.i.i = call i32 @llvm.smax.i32(i32 %i.bv, i32 0) ; 2 uses
   %i.bw = call i32 @llvm.smin.i32(i32 %i.bu, i32 %i.bt) ; 2 uses
   %.not3942.i.i = icmp sgt i32 %spec.select.i.i, %i.bw
-  %.pre.i.i = uitofp nsz nneg i32 %i.bu to double ; 2 uses
   br i1 %.not3942.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.k
-  %i.bx = call nsz fastcc double @fact(double noundef %.pre.i.i)
+  %1 = uitofp nsz nneg i32 %i.bu to double
+  %i.bx = call nsz fastcc double @fact(double noundef %1)
   %i.by = xor i32 %i.bu, -1
   %i.bz = add i32 %i.bp, %i.by                    ; 2 uses
   %i.ca = uitofp nneg i32 %i.bz to double
@@ -227,7 +227,8 @@ bb.k:                                             ; preds = %._crit_edge.i.i, %.
   %.034.lcssa.i.i = phi double [ 0.000000e+00, %bb.k ], [ %i.cz, %bb.l ]
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %indvars.iv.i.i
   %i.cf = load double, ptr %i.ce, align 8, !tbaa !67
-  %exp2.i.i = call nnan nsz double @llvm.exp2.f64(double %.pre.i.i)
+  %2 = call i32 @llvm.umin.i32(i32 %i.bu, i32 1024)
+  %exp2.i.i = call nnan nsz double @llvm.ldexp.f64.i32(double 1.000000e+00, i32 %2)
   %i.cg = fmul nsz double %exp2.i.i, %i.cf
   %i.ch = call nsz double @llvm.fmuladd.f64(double %i.cg, double %.034.lcssa.i.i, double %.03646.i.i) ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
@@ -277,16 +278,16 @@ coef_sf2zf.exit.loopexit.i:                       ; preds = %._crit_edge.i.i
 bb.m:                                             ; preds = %._crit_edge.i53.i, %.lr.ph49.i41.i
   %indvars.iv.i43.i = phi i64 [ 0, %.lr.ph49.i41.i ], [ %indvars.iv.next.i56.i, %._crit_edge.i53.i ] ; 3 uses
   %.03646.i44.i = phi double [ 0.000000e+00, %.lr.ph49.i41.i ], [ %i.dr, %._crit_edge.i53.i ]
-  %i.de = trunc i64 %indvars.iv.i43.i to i32      ; 5 uses
+  %i.de = trunc i64 %indvars.iv.i43.i to i32      ; 6 uses
   %i.df = add i32 %.reass35.i.reass.reass, %i.de
   %spec.select.i45.i = call i32 @llvm.smax.i32(i32 %i.df, i32 0) ; 2 uses
   %i.dg = call i32 @llvm.smin.i32(i32 %i.de, i32 %i.dd) ; 2 uses
   %.not3942.i46.i = icmp sgt i32 %spec.select.i45.i, %i.dg
-  %.pre.i47.i = uitofp nsz nneg i32 %i.de to double ; 2 uses
   br i1 %.not3942.i46.i, label %._crit_edge.i53.i, label %.lr.ph.i48.i
 
 .lr.ph.i48.i:                                     ; preds = %bb.m
-  %i.dh = call nsz fastcc double @fact(double noundef %.pre.i47.i)
+  %3 = uitofp nsz nneg i32 %i.de to double
+  %i.dh = call nsz fastcc double @fact(double noundef %3)
   %i.di = xor i32 %i.de, -1
   %i.dj = add i32 %i.br, %i.di                    ; 2 uses
   %i.dk = uitofp nneg i32 %i.dj to double
@@ -299,8 +300,9 @@ bb.m:                                             ; preds = %._crit_edge.i53.i, 
   %.034.lcssa.i54.i = phi double [ 0.000000e+00, %bb.m ], [ %i.ej, %bb.n ]
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %indvars.iv.i43.i
   %i.dp = load double, ptr %i.do, align 8, !tbaa !67
-  %exp2.i55.i = call nnan nsz double @llvm.exp2.f64(double %.pre.i47.i)
-  %i.dq = fmul nsz double %exp2.i55.i, %i.dp
+  %4 = call i32 @llvm.umin.i32(i32 %i.de, i32 1024)
+  %exp2.i54.i = call nnan nsz double @llvm.ldexp.f64.i32(double 1.000000e+00, i32 %4)
+  %i.dq = fmul nsz double %exp2.i54.i, %i.dp
   %i.dr = call nsz double @llvm.fmuladd.f64(double %i.dq, double %.034.lcssa.i54.i, double %.03646.i44.i) ; 2 uses
   %indvars.iv.next.i56.i = add nuw nsw i64 %indvars.iv.i43.i, 1 ; 2 uses
   %exitcond.not.i57.i = icmp eq i64 %indvars.iv.next.i56.i, %wide.trip.count.i42.i
@@ -703,7 +705,10 @@ declare i32 @llvm.smax.i32(i32, i32) #9
 declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.exp2.f64(double) #9
+declare i32 @llvm.umin.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.ldexp.f64.i32(double, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.fshl.i64(i64, i64, i64) #9

@@ -205,11 +205,12 @@ bb.k:                                             ; preds = %bb.e, %bb.i, %bb.j,
 .preheader507:                                    ; preds = %.preheader508, %.preheader507
   %indvars.iv665 = phi i64 [ 0, %.preheader508 ], [ %i.cn, %.preheader507 ] ; 10 uses
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv665
-  %i.bk = trunc nuw nsw i64 %indvars.iv665 to i32
-  %i.bl = uitofp nsz nneg i32 %i.bk to double     ; 14 uses
+  %i.bk = trunc nuw nsw i64 %indvars.iv665 to i32 ; 2 uses
+  %i.bl = uitofp nsz nneg i32 %i.bk to double     ; 13 uses
   %i.bm = tail call nsz double @llvm.pow.f64(double 0.000000e+00, double %i.bl)
   %i.bn = fadd nsz double %i.bm, 1.000000e+00
-  %exp2 = tail call nsz double @llvm.exp2.f64(double %i.bl)
+  %1 = tail call i32 @llvm.umin.i32(i32 %i.bk, i32 1024)
+  %exp2 = tail call nsz double @llvm.ldexp.f64.i32(double 1.000000e+00, i32 %1)
   %i.bo = fadd nsz double %exp2, %i.bn
   %i.bp = tail call nsz double @llvm.pow.f64(double 3.000000e+00, double %i.bl)
   %i.bq = fadd nsz double %i.bp, %i.bo
@@ -241,11 +242,12 @@ bb.k:                                             ; preds = %bb.e, %bb.i, %bb.j,
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv665
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 40
   %i.cn = add nuw nsw i64 %indvars.iv665, 1       ; 3 uses
-  %i.co = trunc nuw nsw i64 %i.cn to i32
-  %i.cp = uitofp nsz nneg i32 %i.co to double     ; 14 uses
+  %i.co = trunc nuw nsw i64 %i.cn to i32          ; 2 uses
+  %i.cp = uitofp nsz nneg i32 %i.co to double     ; 13 uses
   %i.cq = tail call nsz double @llvm.pow.f64(double 0.000000e+00, double %i.cp)
   %i.cr = fadd nsz double %i.cq, 1.000000e+00
-  %exp2802 = tail call nsz double @llvm.exp2.f64(double %i.cp)
+  %2 = tail call i32 @llvm.umin.i32(i32 %i.co, i32 1024)
+  %exp2802 = tail call nsz double @llvm.ldexp.f64.i32(double 1.000000e+00, i32 %2)
   %i.cs = fadd nsz double %exp2802, %i.cr
   %i.ct = tail call nsz double @llvm.pow.f64(double 3.000000e+00, double %i.cp)
   %i.cu = fadd nsz double %i.ct, %i.cs
@@ -277,11 +279,12 @@ bb.k:                                             ; preds = %bb.e, %bb.i, %bb.j,
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv665
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 80
   %i.dr = trunc i64 %indvars.iv665 to i32
-  %i.ds = add i32 %i.dr, 2
-  %i.dt = uitofp nsz nneg i32 %i.ds to double     ; 14 uses
+  %i.ds = add i32 %i.dr, 2                        ; 2 uses
+  %i.dt = uitofp nsz nneg i32 %i.ds to double     ; 13 uses
   %i.du = tail call nsz double @llvm.pow.f64(double 0.000000e+00, double %i.dt)
   %i.dv = fadd nsz double %i.du, 1.000000e+00
-  %exp2808 = tail call nsz double @llvm.exp2.f64(double %i.dt)
+  %3 = tail call i32 @llvm.umin.i32(i32 %i.ds, i32 1024)
+  %exp2808 = tail call nsz double @llvm.ldexp.f64.i32(double 1.000000e+00, i32 %3)
   %i.dw = fadd nsz double %exp2808, %i.dv
   %i.dx = tail call nsz double @llvm.pow.f64(double 3.000000e+00, double %i.dt)
   %i.dy = fadd nsz double %i.dx, %i.dw
@@ -313,11 +316,12 @@ bb.k:                                             ; preds = %bb.e, %bb.i, %bb.j,
   %i.et = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv665
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 120
   %i.ev = trunc i64 %indvars.iv665 to i32
-  %i.ew = add i32 %i.ev, 3
-  %i.ex = uitofp nsz nneg i32 %i.ew to double     ; 14 uses
+  %i.ew = add i32 %i.ev, 3                        ; 2 uses
+  %i.ex = uitofp nsz nneg i32 %i.ew to double     ; 13 uses
   %i.ey = tail call nsz double @llvm.pow.f64(double 0.000000e+00, double %i.ex)
   %i.ez = fadd nsz double %i.ey, 1.000000e+00
-  %exp2814 = tail call nsz double @llvm.exp2.f64(double %i.ex)
+  %4 = tail call i32 @llvm.umin.i32(i32 %i.ew, i32 1024)
+  %exp2814 = tail call nsz double @llvm.ldexp.f64.i32(double 1.000000e+00, i32 %4)
   %i.fa = fadd nsz double %exp2814, %i.ez
   %i.fb = tail call nsz double @llvm.pow.f64(double 3.000000e+00, double %i.ex)
   %i.fc = fadd nsz double %i.fb, %i.fa
@@ -349,11 +353,12 @@ bb.k:                                             ; preds = %bb.e, %bb.i, %bb.j,
   %i.fx = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv665
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 160
   %i.fz = trunc i64 %indvars.iv665 to i32
-  %i.ga = add i32 %i.fz, 4
-  %i.gb = uitofp nsz nneg i32 %i.ga to double     ; 14 uses
+  %i.ga = add i32 %i.fz, 4                        ; 2 uses
+  %i.gb = uitofp nsz nneg i32 %i.ga to double     ; 13 uses
   %i.gc = tail call nsz double @llvm.pow.f64(double 0.000000e+00, double %i.gb)
   %i.gd = fadd nsz double %i.gc, 1.000000e+00
-  %exp2820 = tail call nsz double @llvm.exp2.f64(double %i.gb)
+  %5 = tail call i32 @llvm.umin.i32(i32 %i.ga, i32 1024)
+  %exp2820 = tail call nsz double @llvm.ldexp.f64.i32(double 1.000000e+00, i32 %5)
   %i.ge = fadd nsz double %exp2820, %i.gd
   %i.gf = tail call nsz double @llvm.pow.f64(double 3.000000e+00, double %i.gb)
   %i.gg = fadd nsz double %i.gf, %i.ge
@@ -754,6 +759,12 @@ declare i32 @llvm.ctlz.i32(i32, i1 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.exp2.f64(double) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.ldexp.f64.i32(double, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4
