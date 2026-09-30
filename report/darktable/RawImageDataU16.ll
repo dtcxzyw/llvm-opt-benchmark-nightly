@@ -205,11 +205,11 @@ bb.b:                                             ; preds = %bb.a
   %i.x = tail call { ptr, i32 } @_ZN8rawspeed11TableLookUp8getTableEi(ptr noundef nonnull align 8 dereferenceable(40) %i.r, i32 noundef 0) ; 2 uses
   %.fca.0.extract26 = extractvalue { ptr, i32 } %i.x, 0 ; 15 uses
   %.fca.1.extract27 = extractvalue { ptr, i32 } %i.x, 1 ; 3 uses
-  %3 = icmp sge i32 %1, %2                        ; 2 uses
   br i1 %i.w, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %3, label %.loopexit, label %.lr.ph160
+  %3 = icmp slt i32 %1, %2
+  br i1 %3, label %.lr.ph160, label %.loopexit
 
 .lr.ph160:                                        ; preds = %bb.c
   %i.y = load i32, ptr %i.e, align 8, !tbaa !94
@@ -345,7 +345,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %niter189.ncmp.1, label %._crit_edge157.unr-lcssa, label %.lr.ph.new, !llvm.loop !202
 
 bb.d:                                             ; preds = %bb.b
-  %brmerge = or i1 %3, %i.p
+  %4 = icmp sge i32 %1, %2
+  %brmerge = or i1 %4, %i.p
   br i1 %brmerge, label %.loopexit, label %.preheader.lr.ph.split
 
 .preheader.lr.ph.split:                           ; preds = %bb.d

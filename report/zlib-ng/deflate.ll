@@ -204,19 +204,20 @@ bb.f:                                             ; preds = %bb.e
 deflateStateCheck.exit:                           ; preds = %bb.f
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 48
   %i.ak = load i32, ptr %i.aj, align 16, !tbaa !42
-  %i.al = add i32 %i.ak, -9
-  %or.cond.i = icmp ult i32 %i.al, -8             ; 2 uses
-  %brmerge = or i1 %or.cond.i, %.not
-  %.mux = select i1 %or.cond.i, i32 -2, i32 0
-  br i1 %brmerge, label %deflateStateCheck.exit.thread, label %.lr.ph109.outer
+  %i.al = add i32 %i.ak, -1
+  %or.cond.i = icmp ult i32 %i.al, 8
+  br i1 %or.cond.i, label %3, label %deflateStateCheck.exit.thread
 
-.lr.ph109.outer:                                  ; preds = %deflateStateCheck.exit, %.thread
-  %i.am = phi i1 [ false, %.thread ], [ true, %deflateStateCheck.exit ]
-  %.036106.ph = phi i32 [ %.036106, %.thread ], [ 0, %deflateStateCheck.exit ]
-  %.140105.ph = phi i64 [ %i.at, %.thread ], [ 0, %deflateStateCheck.exit ]
-  %.072104.ph = phi ptr [ %.17390, %.thread ], [ null, %deflateStateCheck.exit ]
-  %.074103.ph = phi ptr [ %.17588, %.thread ], [ null, %deflateStateCheck.exit ]
-  %.076102.ph = phi ptr [ %.17786, %.thread ], [ null, %deflateStateCheck.exit ]
+3:                                                ; preds = %deflateStateCheck.exit
+  br i1 %.not, label %bb.k, label %.lr.ph109.outer
+
+.lr.ph109.outer:                                  ; preds = %3, %.thread
+  %i.am = phi i1 [ false, %.thread ], [ true, %3 ]
+  %.036106.ph = phi i32 [ %.036106, %.thread ], [ 0, %3 ]
+  %.140105.ph = phi i64 [ %i.at, %.thread ], [ 0, %3 ]
+  %.072104.ph = phi ptr [ %.17390, %.thread ], [ null, %3 ]
+  %.074103.ph = phi ptr [ %.17588, %.thread ], [ null, %3 ]
+  %.076102.ph = phi ptr [ %.17786, %.thread ], [ null, %3 ]
   br label %.lr.ph109
 
 .lr.ph109:                                        ; preds = %.lr.ph109.outer, %bb.j
@@ -261,9 +262,9 @@ deflateSetParamPre.exit:                          ; preds = %bb.i, %bb.h, %bb.g
 
 bb.j:                                             ; preds = %deflateSetParamPre.exit.thread94, %deflateSetParamPre.exit
   %.13793 = phi i32 [ 1, %deflateSetParamPre.exit.thread94 ], [ %.036106, %deflateSetParamPre.exit ] ; 2 uses
-  %.17391 = phi ptr [ %.072104, %deflateSetParamPre.exit.thread94 ], [ %.173, %deflateSetParamPre.exit ] ; 3 uses
-  %.17589 = phi ptr [ %.074103, %deflateSetParamPre.exit.thread94 ], [ %.175, %deflateSetParamPre.exit ] ; 5 uses
-  %.17787 = phi ptr [ %.076102, %deflateSetParamPre.exit.thread94 ], [ %.177, %deflateSetParamPre.exit ] ; 5 uses
+  %.17391 = phi ptr [ %.072104, %deflateSetParamPre.exit.thread94 ], [ %.173, %deflateSetParamPre.exit ] ; 2 uses
+  %.17589 = phi ptr [ %.074103, %deflateSetParamPre.exit.thread94 ], [ %.175, %deflateSetParamPre.exit ] ; 2 uses
+  %.17787 = phi ptr [ %.076102, %deflateSetParamPre.exit.thread94 ], [ %.177, %deflateSetParamPre.exit ] ; 2 uses
   %i.aq = add nuw i64 %.140105, 1                 ; 2 uses
   %exitcond116.not = icmp eq i64 %i.aq, %2
   br i1 %exitcond116.not, label %._crit_edge110, label %.lr.ph109, !llvm.loop !141
@@ -289,41 +290,42 @@ bb.j:                                             ; preds = %deflateSetParamPre.
 
 ._crit_edge110:                                   ; preds = %bb.j
   %i.au = icmp eq i32 %.13793, 0
-  %i.av = select i1 %i.au, i32 0, i32 -6          ; 2 uses
+  %i.av = select i1 %i.au, i32 0, i32 -6
   br i1 %i.am, label %bb.k, label %deflateStateCheck.exit.thread
 
-bb.k:                                             ; preds = %._crit_edge110
-  %i.aw = icmp ne ptr %.17787, null
-  %i.ax = icmp ne ptr %.17589, null
+bb.k:                                             ; preds = %3, %._crit_edge110
+  %.036.lcssa132 = phi i32 [ %i.av, %._crit_edge110 ], [ 0, %3 ] ; 2 uses
+  %.072.lcssa131 = phi ptr [ %.17391, %._crit_edge110 ], [ null, %3 ] ; 2 uses
+  %.074.lcssa130 = phi ptr [ %.17589, %._crit_edge110 ], [ null, %3 ] ; 3 uses
+  %.076.lcssa129 = phi ptr [ %.17787, %._crit_edge110 ], [ null, %3 ] ; 3 uses
+  %i.aw = icmp ne ptr %.076.lcssa129, null        ; 3 uses
+  %i.ax = icmp ne ptr %.074.lcssa130, null        ; 3 uses
   %or.cond = select i1 %i.aw, i1 true, i1 %i.ax
   br i1 %or.cond, label %bb.l, label %bb.w
 
 bb.l:                                             ; preds = %bb.k
-  %3 = icmp eq ptr %.17787, null                  ; 2 uses
-  br i1 %3, label %bb.m, label %bb.n
+  br i1 %i.aw, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ad, i64 176
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.l
-  %i.az = getelementptr inbounds nuw i8, ptr %.17787, i64 8
+  %i.az = getelementptr inbounds nuw i8, ptr %.076.lcssa129, i64 8
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !104
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %.076.lcssa127158164 = phi ptr [ null, %bb.m ], [ %.17787, %bb.n ]
   %.in = phi ptr [ %i.ay, %bb.m ], [ %i.ba, %bb.n ]
   %i.bb = load i32, ptr %.in, align 4, !tbaa !87
-  %4 = icmp eq ptr %.17589, null                  ; 2 uses
-  br i1 %4, label %bb.p, label %bb.q
+  br i1 %i.ax, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ad, i64 180
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
-  %i.bd = getelementptr inbounds nuw i8, ptr %.17589, i64 8
+  %i.bd = getelementptr inbounds nuw i8, ptr %.074.lcssa130, i64 8
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !104
   br label %bb.r
 
@@ -335,36 +337,36 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %.not49, label %bb.w, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  br i1 %3, label %bb.u, label %bb.t
+  br i1 %i.aw, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %i.bh = getelementptr inbounds nuw i8, ptr %.076.lcssa127158164, i64 24
+  %i.bh = getelementptr inbounds nuw i8, ptr %.076.lcssa129, i64 24
   store i32 -2, ptr %i.bh, align 8, !tbaa !100
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  br i1 %4, label %bb.w, label %bb.v
+  br i1 %i.ax, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.bi = getelementptr inbounds nuw i8, ptr %.17589, i64 24
+  %i.bi = getelementptr inbounds nuw i8, ptr %.074.lcssa130, i64 24
   store i32 -2, ptr %i.bi, align 8, !tbaa !100
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.r, %bb.v, %bb.u, %bb.k
-  %.1 = phi i32 [ %i.av, %bb.k ], [ -2, %bb.u ], [ -2, %bb.v ], [ %i.av, %bb.r ] ; 2 uses
-  %.not52 = icmp eq ptr %.17391, null
+  %.1 = phi i32 [ %.036.lcssa132, %bb.k ], [ -2, %bb.u ], [ -2, %bb.v ], [ %.036.lcssa132, %bb.r ] ; 2 uses
+  %.not52 = icmp eq ptr %.072.lcssa131, null
   br i1 %.not52, label %deflateStateCheck.exit.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.bj = getelementptr inbounds nuw i8, ptr %.17391, i64 8
+  %i.bj = getelementptr inbounds nuw i8, ptr %.072.lcssa131, i64 8
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !104
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !87
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ad, i64 56
   store i32 %i.bl, ptr %i.bm, align 8, !tbaa !54
   br label %deflateStateCheck.exit.thread
 
-deflateStateCheck.exit.thread:                    ; preds = %.thread, %deflateStateCheck.exit, %bb.w, %bb.x, %bb.e, %bb.f, %bb.b, %bb.c, %._crit_edge, %bb.d, %._crit_edge110
-  %.0 = phi i32 [ %.1, %bb.w ], [ %.mux, %deflateStateCheck.exit ], [ -5, %._crit_edge110 ], [ -2, %bb.d ], [ -2, %._crit_edge ], [ -2, %bb.c ], [ -2, %bb.b ], [ -2, %bb.f ], [ -2, %bb.e ], [ %.1, %bb.x ], [ -5, %.thread ]
+deflateStateCheck.exit.thread:                    ; preds = %.thread, %bb.w, %bb.x, %bb.e, %bb.f, %bb.b, %bb.c, %._crit_edge, %bb.d, %._crit_edge110, %deflateStateCheck.exit
+  %.0 = phi i32 [ %.1, %bb.w ], [ -2, %deflateStateCheck.exit ], [ -5, %._crit_edge110 ], [ -2, %bb.d ], [ -2, %._crit_edge ], [ -2, %bb.c ], [ -2, %bb.b ], [ -2, %bb.f ], [ -2, %bb.e ], [ %.1, %bb.x ], [ -5, %.thread ]
   ret i32 %.0
 }
 
