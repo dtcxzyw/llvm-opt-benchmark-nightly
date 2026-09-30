@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.180 = phi i64 [ %.062, %.lr.ph.preheader ], [ %i.r, %.lr.ph ]
+  %.180 = phi i64 [ %.062, %.lr.ph.preheader ], [ %i.r, %.lr.ph ] ; 4 uses
   %.16479 = phi ptr [ %.063, %.lr.ph.preheader ], [ %i.q, %.lr.ph ] ; 3 uses
   %.06578 = phi ptr [ %2, %.lr.ph.preheader ], [ %i.p, %.lr.ph ] ; 5 uses
   %i.l = phi <16 x i8> [ %i.i, %.lr.ph.preheader ], [ %i.o, %.lr.ph ]
@@ -216,7 +216,7 @@ bb.j:                                             ; preds = %bb.i
   %i.o = load <16 x i8>, ptr %.16479, align 1
   %i.p = getelementptr inbounds nuw i8, ptr %.06578, i64 16 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.16479, i64 16
-  %i.r = add i64 %.180, -16                       ; 5 uses
+  %i.r = add i64 %.180, -16                       ; 4 uses
   %i.s = icmp ugt i64 %i.r, 15
   br i1 %i.s, label %.lr.ph, label %._crit_edge
 
@@ -224,7 +224,6 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not, label %bb.p, label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge
-  %6 = or disjoint i64 %i.r, 16                   ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.06578, i64 15
   %i.u = load i8, ptr %i.t, align 1, !tbaa !33    ; 5 uses
   %i.v = zext i8 %i.u to i32                      ; 2 uses
@@ -234,7 +233,7 @@ bb.k:                                             ; preds = %._crit_edge
 bb.l:                                             ; preds = %bb.k
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.202, i32 noundef %i.v, i64 noundef %i.r) #19
   %i.x = load i64, ptr %1, align 8, !tbaa !9
-  %i.y = sub i64 %i.x, %6
+  %i.y = sub i64 %i.x, %.180
   store i64 %i.y, ptr %1, align 8, !tbaa !9
   br label %bb.q
 
@@ -261,12 +260,12 @@ bb.o:                                             ; preds = %.lr.ph84
   %i.af = zext i8 %i.ae to i32
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.203, i32 noundef %i.af, i32 noundef %i.v) #19
   %i.ag = load i64, ptr %1, align 8, !tbaa !9
-  %i.ah = sub i64 %i.ag, %6
+  %i.ah = sub i64 %i.ag, %.180
   store i64 %i.ah, ptr %1, align 8, !tbaa !9
   br label %bb.q
 
 ._crit_edge85:                                    ; preds = %bb.n, %bb.m
-  %i.ai = add nuw nsw i64 %6, %i.z
+  %i.ai = add nuw nsw i64 %.180, %i.z
   br label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge85, %._crit_edge

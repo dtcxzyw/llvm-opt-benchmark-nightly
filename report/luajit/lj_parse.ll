@@ -205,8 +205,8 @@ bb.fq:                                            ; preds = %var_add.exit108
 lex_check.exit:                                   ; preds = %var_add.exit108
   call void @lj_lex_next(ptr noundef nonnull %0) #12
   %i.akq = select i1 %i.aid, i32 72, i32 88
-  %i.akr = shl i32 %i.adi, 8
-  %i.aks = add i32 %i.akr, 768                    ; 3 uses
+  %i.akr = shl i32 %i.adi, 8                      ; 2 uses
+  %i.aks = add i32 %i.akr, 768                    ; 2 uses
   %i.akt = or disjoint i32 %i.aks, %i.akq
   %i.aku = or i32 %i.akt, 2147418112
   %i.akv = call fastcc i32 @bcemit_INS(ptr noundef nonnull %i.adg, i32 noundef %i.aku), !inline_history !130 ; 3 uses
@@ -408,7 +408,8 @@ fscope_continue.exit:                             ; preds = %jmp_patchins.exit96
   %i.aok = or i32 %i.aks, %i.aoj
   %i.aol = or i32 %i.aok, 196608
   %i.aom = call fastcc i32 @bcemit_INS(ptr noundef nonnull %i.adg, i32 noundef %i.aol), !inline_history !130 ; 0 uses
-  %i.aon = or i32 %i.aks, 2147418194
+  %27 = add i32 %i.akr, 850
+  %i.aon = or i32 %27, 2147418112
   %i.aoo = call fastcc i32 @bcemit_INS(ptr noundef nonnull %i.adg, i32 noundef %i.aon), !inline_history !130 ; 3 uses
   %i.aop = load ptr, ptr %i.amz, align 8, !tbaa !74 ; 2 uses
   %i.aoq = add i32 %i.aoo, -1
@@ -811,9 +812,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.cb = and i32 %i.bv, 65280
   %i.cc = shl nuw nsw i32 %i.bw, 16
-  %i.cd = add nuw nsw i32 %i.cc, 65536
-  %5 = or disjoint i32 %i.cd, %i.cb
-  %i.ce = or disjoint i32 %5, 44
+  %i.cd = add nuw nsw i32 %i.cc, 65580
+  %i.ce = or disjoint i32 %i.cd, %i.cb
   store i32 %i.ce, ptr %i.bu, align 4, !tbaa !88
   br label %bcemit_nil.exit
 

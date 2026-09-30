@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.f
   %i.ag = trunc i64 %i.af to i32
   %i.ah = and i32 %i.e, -50397184
   %i.ai = and i32 %i.ag, 65535
-  %i.aj = or disjoint i32 %i.ah, %i.ai
+  %i.aj = or disjoint i32 %i.ai, %i.ah
   %i.ak = xor i32 %i.aj, 50397183
   %i.al = getelementptr inbounds nuw i8, ptr %i.ab, i64 8196
   store i32 %i.ak, ptr %i.al, align 4

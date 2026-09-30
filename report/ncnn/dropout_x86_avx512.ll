@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.y, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.noexc, %.lr.ph
-  %.03855 = phi i32 [ %i.ar, %.lr.ph ], [ 0, %.noexc ]
+  %.03855 = phi i32 [ %i.ar, %.lr.ph ], [ 0, %.noexc ] ; 2 uses
   %.03954 = phi ptr [ %i.aq, %.lr.ph ], [ %i.u, %.noexc ] ; 3 uses
   %i.z = load <16 x i16>, ptr %.03954, align 1, !tbaa !43 ; 2 uses
   %i.aa = shufflevector <16 x i16> <i16 0, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison, i16 0, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <16 x i16> %i.z, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27> ; 2 uses
@@ -225,8 +225,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ap = shufflevector <4 x i64> %i.ao, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x i64> %i.ap, ptr %.03954, align 1, !tbaa !43
   %i.aq = getelementptr inbounds nuw i8, ptr %.03954, i64 32 ; 2 uses
-  %i.ar = add nuw nsw i32 %.03855, 16             ; 3 uses
-  %6 = or disjoint i32 %i.ar, 15
+  %i.ar = add nuw nsw i32 %.03855, 16             ; 2 uses
+  %6 = add nuw i32 %.03855, 31
   %i.as = load i32, ptr %5, align 4, !tbaa !39    ; 2 uses
   %i.at = icmp slt i32 %6, %i.as
   br i1 %i.at, label %.lr.ph, label %._crit_edge, !llvm.loop !75
@@ -401,7 +401,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ef = trunc nuw i32 %i.ee to i16
   store i16 %i.ef, ptr %.14058, align 2, !tbaa !81
   %i.eg = getelementptr inbounds nuw i8, ptr %.14058, i64 2
-  %i.eh = add nuw nsw i32 %.259, 1                ; 2 uses
+  %i.eh = add nsw i32 %.259, 1                    ; 2 uses
   %exitcond.not = icmp eq i32 %i.eh, %i.bs
   br i1 %exitcond.not, label %._crit_edge62, label %vec.epilog.scalar.ph, !llvm.loop !78
 

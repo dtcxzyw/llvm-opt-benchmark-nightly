@@ -90,8 +90,8 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   %i.an = shl i64 %i.p, 5
   %i.ao = mul i64 %i.an, %spec.store.select
   %.0.v = select i1 %.not65, i64 16, i64 17
-  %.0 = lshr i64 %i.ao, %.0.v                     ; 2 uses
-  %i.ap = add nuw nsw i64 %.0, 1                  ; 5 uses
+  %.0 = lshr i64 %i.ao, %.0.v                     ; 3 uses
+  %i.ap = add nuw nsw i64 %.0, 1                  ; 4 uses
   %i.aq = and i64 %i.ap, 7
   %.not67 = icmp eq i64 %i.aq, 0
   br i1 %.not67, label %bb.k, label %bb.n
@@ -104,7 +104,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not68, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %1 = or disjoint i64 %i.ap, 1
+  %1 = add nuw nsw i64 %.0, 2
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k

@@ -205,7 +205,7 @@ define internal fastcc void @dradb2(i32 noundef %0, i32 noundef %1, ptr nofree n
 bb.a:
   %i.a = mul i32 %1, %0                           ; 3 uses
   %i.b = shl i32 %0, 1                            ; 5 uses
-  %i.c = add nsw i32 %i.b, -1                     ; 5 uses
+  %i.c = add nsw i32 %i.b, -1                     ; 2 uses
   %i.d = icmp sgt i32 %1, 0                       ; 3 uses
   br i1 %i.d, label %.lr.ph.preheader, label %._crit_edge
 
@@ -256,9 +256,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = sub nsw i64 %i.g, %i.aa                ; 3 uses
   %i.ab = trunc i64 %n.vec to i32                 ; 2 uses
   %i.ac = shl i32 %i.ab, 1
-  %invariant.op = or disjoint i32 2, %i.c
-  %invariant.op369 = or disjoint i32 4, %i.c
-  %invariant.op371 = or disjoint i32 6, %i.c
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -270,21 +267,21 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.vec = load <8 x float>, ptr %i.ag, align 4, !alias.scope !1123
   %strided.vec = shufflevector <8 x float> %wide.vec, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %i.ah = or disjoint i32 %i.c, %i.ae
-  %.reass = or disjoint i32 %i.ae, %invariant.op
-  %.reass370 = or disjoint i32 %i.ae, %invariant.op369
-  %.reass372 = or disjoint i32 %i.ae, %invariant.op371
   %5 = sext i32 %i.ah to i64
-  %6 = sext i32 %.reass to i64
-  %i.ai = sext i32 %.reass370 to i64
-  %7 = sext i32 %.reass372 to i64
-  %8 = getelementptr inbounds [4 x i8], ptr %2, i64 %5 ; 2 uses
-  %9 = getelementptr inbounds [4 x i8], ptr %2, i64 %6 ; 2 uses
-  %i.aj = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ai ; 2 uses
-  %10 = getelementptr inbounds [4 x i8], ptr %2, i64 %7 ; 2 uses
-  %i.ak = load float, ptr %8, align 4, !alias.scope !1123
+  %6 = getelementptr inbounds [4 x i8], ptr %2, i64 %5 ; 2 uses
+  %7 = sext i32 %i.ae to i64
+  %8 = getelementptr [4 x i8], ptr %2, i64 %7
+  %9 = getelementptr i8, ptr %8, i64 12           ; 2 uses
+  %i.ai = sext i32 %i.ae to i64
+  %10 = getelementptr [4 x i8], ptr %2, i64 %i.ai
+  %11 = getelementptr i8, ptr %10, i64 20         ; 2 uses
+  %12 = sext i32 %i.ae to i64
+  %i.aj = getelementptr [4 x i8], ptr %2, i64 %12
+  %13 = getelementptr i8, ptr %i.aj, i64 28       ; 2 uses
+  %i.ak = load float, ptr %6, align 4, !alias.scope !1123
   %i.al = load float, ptr %9, align 4, !alias.scope !1123
-  %i.am = load float, ptr %i.aj, align 4, !alias.scope !1123
-  %i.an = load float, ptr %10, align 4, !alias.scope !1123
+  %i.am = load float, ptr %11, align 4, !alias.scope !1123
+  %i.an = load float, ptr %13, align 4, !alias.scope !1123
   %i.ao = insertelement <4 x float> poison, float %i.ak, i64 0
   %i.ap = insertelement <4 x float> %i.ao, float %i.al, i64 1
   %i.aq = insertelement <4 x float> %i.ap, float %i.am, i64 2
@@ -294,10 +291,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x float> %i.as, ptr %i.at, align 4, !alias.scope !1124, !noalias !1123
   %wide.vec189 = load <8 x float>, ptr %i.ag, align 4, !alias.scope !1123
   %strided.vec190 = shufflevector <8 x float> %wide.vec189, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %i.au = load float, ptr %8, align 4, !alias.scope !1123
+  %i.au = load float, ptr %6, align 4, !alias.scope !1123
   %i.av = load float, ptr %9, align 4, !alias.scope !1123
-  %i.aw = load float, ptr %i.aj, align 4, !alias.scope !1123
-  %i.ax = load float, ptr %10, align 4, !alias.scope !1123
+  %i.aw = load float, ptr %11, align 4, !alias.scope !1123
+  %i.ax = load float, ptr %13, align 4, !alias.scope !1123
   %i.ay = insertelement <4 x float> poison, float %i.au, i64 0
   %i.az = insertelement <4 x float> %i.ay, float %i.av, i64 1
   %i.ba = insertelement <4 x float> %i.az, float %i.aw, i64 2

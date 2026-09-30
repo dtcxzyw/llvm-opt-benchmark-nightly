@@ -204,12 +204,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 6912
-  %i.s = load i64, ptr %i.r, align 8
-  %i.t = add i64 %i.s, -1                         ; 2 uses
+  %i.s = load i64, ptr %i.r, align 8              ; 2 uses
+  %i.t = add i64 %i.s, -1
   %i.u = inttoptr i64 %i.t to ptr                 ; 2 uses
   %i.v = load i64, ptr %i.h, align 8              ; 3 uses
-  %4 = or disjoint i64 %i.t, 1
-  %i.w = icmp eq i64 %i.v, %4
+  %i.w = icmp eq i64 %i.v, %i.s
   br i1 %i.w, label %_ZNK2v88internal6String6EqualsENS0_6TaggedIS1_EE.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d

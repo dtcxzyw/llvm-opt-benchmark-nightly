@@ -205,10 +205,10 @@ bb.a:
   %i.j = or i1 %i.h, %i.i                         ; 2 uses
   %i.k = lshr exact i32 %.v.i, 2
   %i.l = shl nsw i32 %i.g, 3
-  %i.m = and i32 %i.l, 8                          ; 4 uses
-  %i.n = xor i32 %i.m, 8                          ; 3 uses
+  %i.m = and i32 %i.l, 8                          ; 5 uses
+  %i.n = xor i32 %i.m, 8                          ; 2 uses
   %i.o = or disjoint i32 %i.m, 16                 ; 2 uses
-  %5 = or disjoint i32 %i.n, 16                   ; 2 uses
+  %5 = xor i32 %i.m, 24                           ; 2 uses
   %wide.trip.count = zext nneg i32 %i.k to i64    ; 3 uses
   %min.iters.check = icmp eq i32 %.v.v.i, 0
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -429,10 +429,10 @@ bb.a:
   %i.n = select i1 %i.m, i32 -1, i32 1            ; 3 uses
   %i.o = lshr exact i32 %.v.i, 2
   %i.p = shl nuw nsw i32 %i.g, 3
-  %i.q = and i32 %i.p, 8                          ; 4 uses
-  %i.r = xor i32 %i.q, 8                          ; 3 uses
+  %i.q = and i32 %i.p, 8                          ; 5 uses
+  %i.r = xor i32 %i.q, 8                          ; 2 uses
   %i.s = or disjoint i32 %i.q, 16                 ; 2 uses
-  %5 = or disjoint i32 %i.r, 16                   ; 2 uses
+  %5 = xor i32 %i.q, 24                           ; 2 uses
   %i.t = zext nneg i32 %i.j to i64                ; 2 uses
   %i.u = zext nneg i32 %i.o to i64                ; 2 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.t ; 6 uses

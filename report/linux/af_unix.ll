@@ -204,22 +204,23 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.w = shl nuw nsw i32 %1, 1
-  %i.x = and i32 %i.w, 2
-  %2 = lshr i32 %i.c, 1                           ; 2 uses
-  %3 = or disjoint i32 %2, %i.x                   ; 2 uses
+  %2 = and i32 %i.w, 2
+  %i.x = and i32 %i.c, 2
+  %.not58 = icmp eq i32 %i.x, 0
+  %.1.v = select i1 %.not58, i32 2, i32 3         ; 2 uses
+  %.1 = xor i32 %.1.v, %2                         ; 2 uses
   %i.y = getelementptr i8, ptr %i.j, i64 872      ; 2 uses
   tail call void @_raw_spin_lock(ptr noundef %i.y) #18
   %i.z = getelementptr i8, ptr %i.j, i64 575      ; 2 uses
   %i.aa = load i8, ptr %i.z, align 1
-  %i.ab = trunc nuw nsw i32 %3 to i8
-  %4 = xor i8 %i.ab, 2
-  %i.ac = or i8 %i.aa, %4
+  %i.ab = trunc nuw nsw i32 %.1 to i8
+  %i.ac = or i8 %i.aa, %i.ab
   store volatile i8 %i.ac, ptr %i.z, align 1
   tail call void @_raw_spin_unlock(ptr noundef %i.y) #18
   %i.ad = getelementptr i8, ptr %i.j, i64 688
   %i.ae = load ptr, ptr %i.ad, align 8
   tail call void %i.ae(ptr noundef nonnull %i.j) #18
-  %i.af = icmp eq i32 %3, 1
+  %i.af = icmp eq i32 %.1, 3
   br i1 %i.af, label %sock_flag.exit.i, label %bb.h
 
 sock_flag.exit.i:                                 ; preds = %bb.g
@@ -230,7 +231,8 @@ sock_flag.exit.i:                                 ; preds = %bb.g
   br i1 %.not.i, label %bb.i, label %.sink.split
 
 bb.h:                                             ; preds = %bb.g
-  %.not59 = icmp eq i32 %2, 0
+  %3 = and i32 %.1.v, 1
+  %.not59 = icmp eq i32 %3, 0
   br i1 %.not59, label %bb.i, label %sock_flag.exit.i63
 
 sock_flag.exit.i63:                               ; preds = %bb.h

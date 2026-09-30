@@ -202,15 +202,18 @@ find_device.exit.i:                               ; preds = %bb.b
   br i1 %.not.i, label %do_suspend.exit, label %bb.c
 
 bb.c:                                             ; preds = %find_device.exit.i
-  %i.g = load i32, ptr %i.a, align 4
+  %i.g = load i32, ptr %i.a, align 4              ; 2 uses
   %i.h = tail call i32 @dm_suspended_md(ptr noundef nonnull %i.f) #21
   %.not22.i = icmp eq i32 %i.h, 0
   br i1 %.not22.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
+  %3 = and i32 %i.g, 2048
+  %.not21.i = icmp eq i32 %3, 0
   %i.i = lshr i32 %i.g, 10
-  %i.j = and i32 %i.i, 3
-  %.1.i = xor i32 %i.j, 1
+  %i.j = and i32 %i.i, 1
+  %.1.v.i = select i1 %.not21.i, i32 1, i32 3
+  %.1.i = xor i32 %.1.v.i, %i.j
   %i.k = tail call i32 @dm_suspend(ptr noundef nonnull %i.f, i32 noundef %.1.i) #21 ; 2 uses
   %.not23.i = icmp eq i32 %i.k, 0
   br i1 %.not23.i, label %bb.e, label %bb.f
@@ -248,15 +251,18 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not91.i, label %.thread118.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.s = load i32, ptr %i.a, align 4
+  %i.s = load i32, ptr %i.a, align 4              ; 2 uses
   %i.t = tail call i32 @dm_suspended_md(ptr noundef %i.n) #21
   %.not94.i = icmp eq i32 %i.t, 0
   br i1 %.not94.i, label %bb.k, label %bb.q
 
 bb.k:                                             ; preds = %bb.j
+  %4 = and i32 %i.s, 2048
+  %.not93.i = icmp eq i32 %4, 0
   %i.u = lshr i32 %i.s, 10
-  %i.v = and i32 %i.u, 3
-  %.177.i = xor i32 %i.v, 1
+  %i.v = and i32 %i.u, 1
+  %.177.v.i = select i1 %.not93.i, i32 1, i32 3
+  %.177.i = xor i32 %.177.v.i, %i.v
   %i.w = tail call i32 @dm_suspend(ptr noundef %i.n, i32 noundef %.177.i) #21 ; 2 uses
   %.not95.i = icmp eq i32 %i.w, 0
   br i1 %.not95.i, label %bb.q, label %bb.l

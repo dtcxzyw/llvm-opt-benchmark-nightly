@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCsaKJjC
 bb.c:                                             ; preds = %.backedge.i, %bb.b
   %.sroa.0.048.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.048.be.i, %.backedge.i ] ; 14 uses
   %.sroa.012.0.i = phi ptr [ %i.q, %bb.b ], [ %i.ab, %.backedge.i ] ; 9 uses
-  %.sroa.07.0.i = phi i64 [ %i.p, %bb.b ], [ %i.aa, %.backedge.i ] ; 5 uses
+  %.sroa.07.0.i = phi i64 [ %i.p, %bb.b ], [ %i.aa, %.backedge.i ] ; 6 uses
   %i.r = lshr i64 %.sroa.07.0.i, 1                ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
   %i.t = icmp eq i64 %i.s, 31
@@ -316,9 +316,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %.not.unshifted.i = xor i64 %i.ac, %.sroa.07.0.i
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.x, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %.sroa.07.0.i, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.x, i64 %4
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -468,11 +468,10 @@ _RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc4listINtB4_5BlockINtNtCsj6eKBz9Db1c_4core6result6ResultNtNtCsdsTQD3x2eOp_3exr5block17UncompressedBlockNtNtB1z_5error5ErrorEE9wait_nextCsa5QsYiPB8Gl_5image.exit.i: ; preds = %_RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.m
   %.lcssa.i.i = phi ptr [ %i.aq, %bb.m ], [ %i.aw, %_RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.ay = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.ay, 2
   %i.az = load atomic ptr, ptr %.lcssa.i.i monotonic, align 8, !noalias !2809
-  %6 = icmp ne ptr %i.az, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.az, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.ay
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !2809
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !2809
   br label %bb.o

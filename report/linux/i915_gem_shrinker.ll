@@ -70,10 +70,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = tail call zeroext i1 @intel_vm_no_concurrent_access_wa(ptr noundef %1) #10
+  %7 = select i1 %i.h, i64 12, i64 4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %7 = phi i1 [ false, %bb.a ], [ %i.h, %bb.b ]
+  %.2.v.i = phi i64 [ 4, %bb.a ], [ %7, %bb.b ]
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_i915_gem_shrink, i64 8), i1 false) #9
           to label %trace_i915_gem_shrink.exit [label %arch_test_bit.exit.i.i], !srcloc !22
 
@@ -164,9 +165,7 @@ bb.k:                                             ; preds = %bb.j
   %i.an = shl nuw nsw i64 %i.x, 1
   %i.ao = and i64 %i.an, 4
   %i.ap = or disjoint i64 %i.ao, %.lobit.i
-  %.1.i.a = xor i64 %i.ap, 4                      ; 2 uses
-  %8 = or disjoint i64 %.1.i.a, 8
-  %.2.i = select i1 %7, i64 %8, i64 %.1.i.a
+  %.1.i.a = xor i64 %i.ap, %.2.v.i
   %i.aq = lshr i32 %.076, 1
   %i.ar = and i32 %i.aq, 2
   %i.as = lshr i32 %.076, 4
@@ -396,7 +395,7 @@ i915_gem_object_lock.exit.thread:                 ; preds = %bb.ac, %.sink.split
   br label %bb.ak
 
 bb.ad:                                            ; preds = %bb.y, %i915_gem_object_get.exit.i.i, %i915_gem_object_get.exit.i.i, %bb.u
-  %i.dg = call i32 @i915_gem_object_unbind(ptr noundef nonnull %i.be, i64 noundef %.2.i) #10
+  %i.dg = call i32 @i915_gem_object_unbind(ptr noundef nonnull %i.be, i64 noundef %.1.i.a) #10
   %i.dh = icmp eq i32 %i.dg, 0
   br i1 %i.dh, label %bb.ae, label %bb.ag
 

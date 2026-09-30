@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = or i32 %.0.copyload.i, 15
-  %i.i = add nuw nsw i32 %i.h, 1                  ; 2 uses
+  %i.h = or i32 %.0.copyload.i, 15                ; 2 uses
+  %i.i = add nuw nsw i32 %i.h, 1
   %i.j = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.i) ; 2 uses
-  %3 = or disjoint i32 %i.i, -2147483648
+  %3 = add nuw nsw i32 %i.h, -2147483647
   %i.k = zext i32 %1 to i64                       ; 3 uses
   %.val181 = load ptr, ptr %i.a, align 8, !tbaa !13
   %i.l = getelementptr inbounds nuw i8, ptr %.val181, i64 %i.k
@@ -610,10 +610,10 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %i.cn = or i32 %i.o, 15
-  %i.co = add nuw nsw i32 %i.cn, 1                ; 2 uses
+  %i.cn = or i32 %i.o, 15                         ; 2 uses
+  %i.co = add nuw nsw i32 %i.cn, 1
   %i.cp = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.co) ; 2 uses
-  %4 = or disjoint i32 %i.co, -2147483648
+  %4 = add nuw nsw i32 %i.cn, -2147483647
   %i.cq = zext i32 %i.c to i64                    ; 4 uses
   %.val382 = load ptr, ptr %i.e, align 8, !tbaa !13
   %i.cr = getelementptr inbounds nuw i8, ptr %.val382, i64 %i.cq
@@ -1016,10 +1016,10 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.l
-  %i.ct = or i32 %i.n, 15
-  %i.cu = add nuw nsw i32 %i.ct, 1                ; 2 uses
+  %i.ct = or i32 %i.n, 15                         ; 2 uses
+  %i.cu = add nuw nsw i32 %i.ct, 1
   %i.cv = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.cu) ; 2 uses
-  %5 = or disjoint i32 %i.cu, -2147483648
+  %5 = add nuw nsw i32 %i.ct, -2147483647
   %i.cw = zext i32 %i.c to i64                    ; 4 uses
   %.val655 = load ptr, ptr %i.d, align 8, !tbaa !13
   %i.cx = getelementptr inbounds nuw i8, ptr %.val655, i64 %i.cw

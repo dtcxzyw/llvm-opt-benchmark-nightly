@@ -92,10 +92,10 @@ bb.g:                                             ; preds = %bb.f
   %i.o = load i32, ptr %i.n, align 8, !tbaa !27   ; 2 uses
   %i.p = shl i32 %i.o, 3
   %i.q = and i32 %i.p, 8
-  %4 = lshr i32 %i.o, 1
-  %5 = and i32 %4, 4                              ; 2 uses
-  %6 = or disjoint i32 %i.q, %5
-  %.1.i = xor i32 %6, 8                           ; 3 uses
+  %4 = and i32 %i.o, 8
+  %.not42.i = icmp eq i32 %4, 0
+  %.1.v.i = select i1 %.not42.i, i32 8, i32 12    ; 2 uses
+  %.1.i = xor i32 %.1.v.i, %i.q                   ; 3 uses
   %i.r = load i16, ptr %i.l, align 2, !tbaa !30
   switch i16 %i.r, label %bb.w [
     i16 2, label %count_addr_bits.exit.loopexit.i
@@ -219,6 +219,7 @@ bb.i:                                             ; preds = %bb.h, %count_addr_b
   br i1 %i.dg, label %.thread.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
+  %5 = and i32 %.1.v.i, 4
   %.not.i.i = icmp eq i32 %5, 0
   br i1 %.not.i.i, label %bb.l, label %bb.k
 
@@ -255,7 +256,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.dq = zext i1 %i.dp to i32
   %spec.select51.i.i = or disjoint i32 %spec.select.i.i, %i.dq ; 2 uses
   %i.dr = icmp eq i32 %i.do, 10
-  %i.ds = or i32 %spec.select51.i.i, 2
+  %i.ds = or disjoint i32 %spec.select51.i.i, 2
   %.2.i.i = select i1 %i.dr, i32 %i.ds, i32 %spec.select51.i.i ; 4 uses
   %i.dt = and i32 %.pre.i.i, 3
   %.not44.i.i = icmp eq i32 %i.dt, 0

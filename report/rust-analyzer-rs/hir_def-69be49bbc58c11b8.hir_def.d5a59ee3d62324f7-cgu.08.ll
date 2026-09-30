@@ -205,9 +205,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.fl = zext i8 %i.fk to i64
   %i.fm = getelementptr inbounds nuw i8, ptr @5, i64 %i.fl
   %i.fn = load i8, ptr %i.fm, align 1, !noalias !634, !noundef !5
-  %i.fo = add i8 %i.fn, 1
-  %i.fp = tail call i8 @llvm.umin.i8(i8 %i.fo, i8 64) ; 2 uses
-  %4 = or i8 %i.fp, -64
+  %i.fo = add i8 %i.fn, -63
+  %i.fp = tail call i8 @llvm.umax.i8(i8 %i.fo, i8 -64) ; 2 uses
   %i.fq = and i8 %i.fp, 63
   %i.fr = icmp eq i8 %i.fq, 0
   br i1 %i.fr, label %bb.aj, label %bb.ak
@@ -222,7 +221,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !634
-  store i8 %4, ptr %i.f, align 1, !noalias !634
+  store i8 %i.fp, ptr %i.f, align 1, !noalias !634
   %i.ft = call noundef ptr @_RNvYINtNtNtCsjsNuU4yXw23_3fst3raw15counting_writer14CountingWriterINtNtCsbSS6DM8SDEO_5alloc3vec3VechEENtNtNtCshzWfHUSfYae_4core2io5write5Write9write_allCsileJQcQObtj_7hir_def(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !634
   br label %_RINvMs4_NtNtCsjsNuU4yXw23_3fst3raw4nodeNtB6_13StateAnyTrans7compileQINtNtB8_15counting_writer14CountingWriterINtNtCsbSS6DM8SDEO_5alloc3vec3VechEEECsileJQcQObtj_7hir_def.exit
@@ -455,11 +454,11 @@ _RINvNtNtCsjsNuU4yXw23_3fst3raw4node10pack_deltaQQINtNtB4_15counting_writer14Cou
 bb.ax:                                            ; preds = %_RINvNtNtCsjsNuU4yXw23_3fst3raw4node10pack_deltaQQINtNtB4_15counting_writer14CountingWriterINtNtCsbSS6DM8SDEO_5alloc3vec3VechEEECsileJQcQObtj_7hir_def.exit.i
   %i.ic = zext i8 %.sroa.5.0.copyload23 to i64
   %i.id = getelementptr inbounds nuw i8, ptr @5, i64 %i.ic
-  %i.ie = load i8, ptr %i.id, align 1, !noalias !639, !noundef !5
-  %i.if = add i8 %i.ie, 1                         ; 2 uses
-  %5 = icmp ugt i8 %i.if, 63
-  %6 = or disjoint i8 %i.if, -128
-  %i.ig = select i1 %5, i8 -128, i8 %6            ; 2 uses
+  %i.ie = load i8, ptr %i.id, align 1, !noalias !639, !noundef !5 ; 2 uses
+  %i.if = add i8 %i.ie, -63
+  %4 = icmp ult i8 %i.if, -64
+  %5 = add nsw i8 %i.ie, -127
+  %i.ig = select i1 %4, i8 -128, i8 %5            ; 2 uses
   %i.ih = and i8 %i.ig, 63
   %i.ii = icmp eq i8 %i.ih, 0
   br i1 %i.ii, label %bb.ay, label %bb.az
@@ -860,9 +859,6 @@ declare hidden noundef zeroext i1 @_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNt
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { ptr, ptr } @_RNvXsG_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_4IterINtNtCs33K2ylI4knu_10hir_expand5files13InFileWrapperNtBP_9HirFileIdINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9MacroCallEENtBP_11MacroCallIdENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCsileJQcQObtj_7hir_def(ptr noalias nofree noundef align 8 dereferenceable(40)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umin.i8(i8, i8) #34
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #34

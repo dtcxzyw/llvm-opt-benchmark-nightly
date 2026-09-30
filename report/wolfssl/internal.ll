@@ -205,7 +205,7 @@ DecodeSigAlg.exit.thread.i.i.i.1:                 ; preds = %DecodeSigAlg.exit.i
 bb.h:                                             ; preds = %DecodeSigAlg.exit.thread.i.i.i.1, %bb.g, %DecodeSigAlg.exit.i.i.i.1
   %.1.i.i.i.1 = phi i32 [ %.1.i.i.i, %DecodeSigAlg.exit.i.i.i.1 ], [ %i.at, %DecodeSigAlg.exit.thread.i.i.i.1 ], [ %i.as, %bb.g ] ; 3 uses
   %indvars.iv.next.i.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.i, 4 ; 2 uses
-  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %HashSigAlgoCoverage.exit.i.i.unr-lcssa, label %.lr.ph.i.i.i, !llvm.loop !2
 
@@ -266,8 +266,8 @@ bb.j:                                             ; preds = %HashSigAlgoCoverage
   br label %.lr.ph.i
 
 bb.k:                                             ; preds = %.lr.ph.i
-  %i.be = add i16 %.08.i, 2                       ; 2 uses
-  %5 = or disjoint i16 %i.be, 1
+  %i.be = add i16 %.08.i, 2
+  %5 = add i16 %.08.i, 3
   %i.bf = icmp ult i16 %5, %storemerge.in.sroa.speculated.i.i
   br i1 %i.bf, label %.lr.ph.i, label %InServerCertReqHashSigAlgo.exit.thread, !llvm.loop !401
 
@@ -276,7 +276,7 @@ InServerCertReqHashSigAlgo.exit.thread:           ; preds = %bb.k
   br label %.thread147
 
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.preheader.i
-  %.08.i = phi i16 [ %i.be, %bb.k ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
+  %.08.i = phi i16 [ %i.be, %bb.k ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
   %i.bg = zext i16 %.08.i to i64
   %i.bh = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.bg
   %i.bi = load i16, ptr %i.bh, align 1
@@ -679,7 +679,7 @@ DecodeSigAlg.exit.thread.i.i.1:                   ; preds = %DecodeSigAlg.exit.i
 bb.i:                                             ; preds = %DecodeSigAlg.exit.thread.i.i.1, %bb.h, %DecodeSigAlg.exit.i.i.1
   %.1.i.i.1 = phi i32 [ %.1.i.i, %DecodeSigAlg.exit.i.i.1 ], [ %i.ao, %DecodeSigAlg.exit.thread.i.i.1 ], [ %i.an, %bb.h ] ; 3 uses
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
-  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %HashSigAlgoCoverage.exit.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !2
 
@@ -1082,7 +1082,7 @@ bb.c:                                             ; preds = %.lr.ph, %SupportedH
   %i.w = phi i8 [ %.0.i, %.lr.ph ], [ %i.bo, %SupportedHashSigAlgo.exit.thread ] ; 13 uses
   %i.x = phi i8 [ %.sink, %.lr.ph ], [ %i.bp, %SupportedHashSigAlgo.exit.thread ] ; 14 uses
   %.04389 = phi i32 [ -501, %.lr.ph ], [ %.2.ph, %SupportedHashSigAlgo.exit.thread ] ; 12 uses
-  %.04488 = phi i32 [ 0, %.lr.ph ], [ %i.bq, %SupportedHashSigAlgo.exit.thread ] ; 2 uses
+  %.04488 = phi i32 [ 0, %.lr.ph ], [ %i.bq, %SupportedHashSigAlgo.exit.thread ] ; 3 uses
   %i.y = zext i32 %.04488 to i64
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 %i.y ; 3 uses
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !52   ; 2 uses
@@ -1154,13 +1154,13 @@ bb.i:                                             ; preds = %bb.h
   br label %.lr.ph.i
 
 bb.j:                                             ; preds = %.lr.ph.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %4 = or disjoint i64 %indvars.iv.next.i, 1
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2
+  %4 = add nuw nsw i64 %indvars.iv.i, 3
   %i.au = icmp samesign ult i64 %4, %i.at
   br i1 %i.au, label %.lr.ph.i, label %SupportedHashSigAlgo.exit.thread, !llvm.loop !4
 
 .lr.ph.i:                                         ; preds = %bb.j, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.j ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.j ] ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 %indvars.iv.i
   %i.aw = load i16, ptr %i.av, align 1
   %i.ax = load i16, ptr %i.z, align 1
@@ -1240,8 +1240,8 @@ SupportedHashSigAlgo.exit.thread:                 ; preds = %bb.j, %bb.k, %bb.m,
   %i.bo = phi i8 [ %i.w, %.preheader.i ], [ %i.w, %bb.p ], [ %.069, %IsAtLeastTLSv1_2.exit.thread ], [ %i.w, %bb.m ], [ %i.w, %bb.l ], [ %i.w, %MatchSigAlgo.exit ], [ %i.w, %switch.lookup ], [ %i.w, %DecodeSigAlg.exit ], [ %i.w, %.thread.i ], [ %i.w, %bb.k ], [ %i.w, %bb.i ], [ %i.w, %.split ], [ %i.w, %bb.j ]
   %i.bp = phi i8 [ %i.x, %.preheader.i ], [ %i.x, %bb.p ], [ %.068, %IsAtLeastTLSv1_2.exit.thread ], [ %i.x, %bb.m ], [ %i.x, %bb.l ], [ %i.x, %MatchSigAlgo.exit ], [ %i.x, %switch.lookup ], [ %i.x, %DecodeSigAlg.exit ], [ %i.x, %.thread.i ], [ %i.x, %bb.k ], [ %i.x, %bb.i ], [ %i.x, %.split ], [ %i.x, %bb.j ]
   %.2.ph = phi i32 [ %.04389, %.preheader.i ], [ %.04389, %bb.p ], [ 0, %IsAtLeastTLSv1_2.exit.thread ], [ 0, %bb.m ], [ %.04389, %bb.l ], [ %.04389, %MatchSigAlgo.exit ], [ %.04389, %switch.lookup ], [ %.04389, %DecodeSigAlg.exit ], [ %.04389, %.thread.i ], [ %.04389, %bb.k ], [ %.04389, %bb.i ], [ %.04389, %.split ], [ %.04389, %bb.j ] ; 2 uses
-  %i.bq = add i32 %.04488, 2                      ; 2 uses
-  %5 = or disjoint i32 %i.bq, 1
+  %i.bq = add i32 %.04488, 2
+  %5 = add i32 %.04488, 3
   %i.br = icmp ult i32 %5, %2
   br i1 %i.br, label %bb.c, label %.loopexit, !llvm.loop !484
 
@@ -1291,13 +1291,13 @@ bb.c:                                             ; preds = %bb.b
   br label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %2 = or disjoint i64 %indvars.iv.next, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  %2 = add nuw nsw i64 %indvars.iv, 3
   %i.o = icmp samesign ult i64 %2, %i.n
   br i1 %i.o, label %.lr.ph, label %.loopexit, !llvm.loop !4
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv
   %i.q = load i16, ptr %i.p, align 1
   %i.r = load i16, ptr %1, align 1

@@ -204,13 +204,13 @@ bb.o:                                             ; preds = %bb.k, %bb.n
   %.33868 = phi i32 [ %i.ah, %bb.n ], [ %.23867, %bb.k ] ; 4 uses
   %.33731 = phi i32 [ %i.ag, %bb.n ], [ %.23730, %bb.k ] ; 3 uses
   %.33567 = phi i32 [ %i.af, %bb.n ], [ %.23566, %bb.k ] ; 3 uses
-  %.33527 = phi i8 [ %i.ai, %bb.n ], [ %.23526, %bb.k ] ; 2 uses
+  %.33527 = phi i8 [ %i.ai, %bb.n ], [ %.23526, %bb.k ] ; 3 uses
   %i.aj = lshr i32 %.33567, 28                    ; 2 uses
   %i.ak = load i32, ptr @hf_gsm_a_gm_acc_tech_type, align 4
   %i.al = call ptr @proto_tree_add_bits_item(ptr noundef %i.x, i32 noundef %i.ak, ptr noundef %0, i32 noundef %.13704, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.am = add i32 %.13704, 4
   %i.an = shl i32 %.33567, 4                      ; 2 uses
-  %i.ao = add i8 %.33527, -4                      ; 3 uses
+  %i.ao = add i8 %.33527, -4                      ; 2 uses
   %i.ap = icmp ult i8 %i.ao, 7
   br i1 %i.ap, label %bb.p, label %bb.s
 
@@ -231,14 +231,14 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.aw = or i32 %i.av, %i.an
   %i.ax = add i32 %.33731, -1
   %i.ay = add i32 %.33868, 1
-  %7 = or disjoint i8 %i.ao, 8
+  %7 = add nuw nsw i8 %.33527, 4
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.o, %bb.r
   %.43869 = phi i32 [ %i.ay, %bb.r ], [ %.33868, %bb.o ] ; 6 uses
   %.43732 = phi i32 [ %i.ax, %bb.r ], [ %.33731, %bb.o ] ; 5 uses
   %.43568 = phi i32 [ %i.aw, %bb.r ], [ %i.an, %bb.o ] ; 4 uses
-  %.43528 = phi i8 [ %7, %bb.r ], [ %i.ao, %bb.o ] ; 2 uses
+  %.43528 = phi i8 [ %7, %bb.r ], [ %i.ao, %bb.o ] ; 3 uses
   %i.az = lshr i32 %.43568, 25                    ; 3 uses
   %i.ba = load i32, ptr @hf_gsm_a_gm_acc_cap_struct_len, align 4
   %i.bb = call ptr @proto_tree_add_bits_item(ptr noundef %i.x, i32 noundef %i.ba, ptr noundef %0, i32 noundef %i.am, i32 noundef 7, i32 noundef 0) ; 0 uses
@@ -248,7 +248,7 @@ bb.s:                                             ; preds = %bb.o, %bb.r
   call void @proto_item_set_len(ptr noundef %i.bc, i32 noundef %i.be)
   %i.bf = add i32 %.13704, 11                     ; 4 uses
   %i.bg = shl i32 %.43568, 7                      ; 4 uses
-  %i.bh = add i8 %.43528, -7                      ; 6 uses
+  %i.bh = add i8 %.43528, -7                      ; 5 uses
   %i.bi = icmp eq i32 %i.aj, 15
   br i1 %i.bi, label %.preheader4320, label %bb.ay
 
@@ -383,14 +383,14 @@ bb.ai:                                            ; preds = %bb.ae, %bb.ah
   %.93874 = phi i32 [ %i.dc, %bb.ah ], [ %.63871, %bb.ae ] ; 5 uses
   %.93737 = phi i32 [ %i.db, %bb.ah ], [ %.63734, %bb.ae ] ; 4 uses
   %.93573 = phi i32 [ %i.da, %bb.ah ], [ %i.ca, %bb.ae ] ; 3 uses
-  %.93533 = phi i8 [ %i.dd, %bb.ah ], [ %.63530, %bb.ae ] ; 2 uses
+  %.93533 = phi i8 [ %i.dd, %bb.ah ], [ %.63530, %bb.ae ] ; 3 uses
   %i.de = lshr i32 %.93573, 28
   %i.df = load i32, ptr @hf_gsm_a_gm_acc_tech_type, align 4
   %i.dg = call ptr @proto_tree_add_bits_item(ptr noundef %i.x, i32 noundef %i.df, ptr noundef %0, i32 noundef %i.by, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.dh = add i32 %.23705, 5                      ; 3 uses
   %i.di = add nsw i32 %.13495, -5                 ; 2 uses
   %i.dj = shl i32 %.93573, 4                      ; 3 uses
-  %i.dk = add i8 %.93533, -4                      ; 5 uses
+  %i.dk = add i8 %.93533, -4                      ; 4 uses
   %i.dl = icmp ult i32 %i.di, 3
   br i1 %i.dl, label %.loopexit, label %bb.aj
 
@@ -417,14 +417,14 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.dv = add i32 %.93874, 1
   %.not4298 = icmp ne i8 %i.dk, 0
   %.4304 = zext i1 %.not4298 to i32
-  %8 = or disjoint i8 %i.dk, 8
+  %8 = add nuw nsw i8 %.93533, 4
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.aj, %bb.am
   %.103875 = phi i32 [ %i.dv, %bb.am ], [ %.93874, %bb.aj ] ; 6 uses
   %.103738 = phi i32 [ %i.du, %bb.am ], [ %.93737, %bb.aj ] ; 4 uses
   %.103574 = phi i32 [ %i.dt, %bb.am ], [ %i.dj, %bb.aj ]
-  %.103534 = phi i8 [ %8, %bb.am ], [ %i.dk, %bb.aj ] ; 2 uses
+  %.103534 = phi i8 [ %8, %bb.am ], [ %i.dk, %bb.aj ] ; 3 uses
   %.33501 = phi i32 [ %.4304, %bb.am ], [ 0, %bb.aj ] ; 2 uses
   %i.dw = call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %i.dh, i32 noundef 3) ; 5 uses
   %i.dx = zext i8 %i.dw to i32                    ; 2 uses
@@ -483,7 +483,7 @@ bb.as:                                            ; preds = %bb.ao, %bb.ap, %bb.
   %i.en = add i32 %.23705, 8                      ; 2 uses
   %i.eo = add nsw i32 %.13495, -8                 ; 2 uses
   %i.ep = shl i32 %.103574, 3                     ; 3 uses
-  %i.eq = add i8 %.103534, -3                     ; 5 uses
+  %i.eq = add i8 %.103534, -3                     ; 4 uses
   %i.er = icmp ult i32 %i.eo, 2
   br i1 %i.er, label %.loopexit, label %bb.at
 
@@ -509,7 +509,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.fa = add i32 %.103738, -1
   %i.fb = add i32 %.103875, 1
   %.4305 = zext nneg i8 %i.eq to i32
-  %9 = or disjoint i8 %i.eq, 8
+  %9 = add nuw nsw i8 %.103534, 5
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.at, %bb.aw
@@ -567,7 +567,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %i.fx = add i32 %.43869, 1
   %.not4225 = icmp ne i8 %i.bh, 0
   %.4306 = zext i1 %.not4225 to i32
-  %10 = or disjoint i8 %i.bh, 8
+  %10 = add nuw nsw i8 %.43528, 1
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.az, %bb.bc
@@ -970,8 +970,8 @@ bb.dk:                                            ; preds = %bb.dj
 bb.dl:                                            ; preds = %bb.dj
   %i.ly = add nsw i32 %.6, -6
   %i.lz = shl i32 %.243588, 1                     ; 3 uses
-  %i.ma = trunc nuw i32 %.243548 to i8
-  %i.mb = add i8 %i.ma, -1                        ; 4 uses
+  %i.ma = trunc nuw i32 %.243548 to i8            ; 2 uses
+  %i.mb = add i8 %i.ma, -1                        ; 3 uses
   %i.mc = add i32 %.73710, 6                      ; 2 uses
   %i.md = icmp ult i32 %i.ly, 5
   br i1 %i.md, label %.thread, label %bb.dm
@@ -997,7 +997,7 @@ bb.dp:                                            ; preds = %bb.do, %bb.dn
   %i.ml = or i32 %i.mk, %i.lz
   %i.mm = add i32 %.243752, -1
   %i.mn = add i32 %.243889, 1
-  %11 = or disjoint i8 %i.mb, 8
+  %11 = add nuw nsw i8 %i.ma, 7
   br label %bb.dq
 
 bb.dq:                                            ; preds = %bb.dm, %bb.dp
@@ -1068,8 +1068,8 @@ bb.dy:                                            ; preds = %bb.dx
 
 bb.dz:                                            ; preds = %bb.dx
   %i.nn = shl i32 %.273591, 1                     ; 3 uses
-  %i.no = trunc nuw i32 %.273551 to i8
-  %i.np = add i8 %i.no, -1                        ; 4 uses
+  %i.no = trunc nuw i32 %.273551 to i8            ; 2 uses
+  %i.np = add i8 %i.no, -1                        ; 3 uses
   %i.nq = icmp ult i32 %.7, 6
   br i1 %i.nq, label %.thread, label %bb.ea
 
@@ -1094,7 +1094,7 @@ bb.ed:                                            ; preds = %bb.ec, %bb.eb
   %i.ny = or i32 %i.nx, %i.nn
   %i.nz = add i32 %.273755, -1
   %i.oa = add i32 %.273892, 1
-  %12 = or disjoint i8 %i.np, 8
+  %12 = add nuw nsw i8 %i.no, 7
   br label %bb.ee
 
 bb.ee:                                            ; preds = %bb.ea, %bb.ed
@@ -1203,8 +1203,8 @@ bb.es:                                            ; preds = %bb.er
 
 bb.et:                                            ; preds = %bb.er
   %i.pp = shl i32 %.313595, 1                     ; 3 uses
-  %i.pq = trunc nuw i32 %.313555 to i8
-  %i.pr = add i8 %i.pq, -1                        ; 4 uses
+  %i.pq = trunc nuw i32 %.313555 to i8            ; 2 uses
+  %i.pr = add i8 %i.pq, -1                        ; 3 uses
   %i.ps = icmp ult i32 %.8, 5
   br i1 %i.ps, label %.thread, label %bb.eu
 
@@ -1229,26 +1229,26 @@ bb.ex:                                            ; preds = %bb.ew, %bb.ev
   %i.qa = or i32 %i.pz, %i.pp
   %i.qb = add i32 %.313759, -1
   %i.qc = add i32 %.313896, 1
-  %13 = or disjoint i8 %i.pr, 8
+  %13 = add nuw nsw i8 %i.pq, 7
   br label %bb.ey
 
 bb.ey:                                            ; preds = %bb.eu, %bb.ex
   %.323897 = phi i32 [ %i.qc, %bb.ex ], [ %.313896, %bb.eu ] ; 5 uses
   %.323760 = phi i32 [ %i.qb, %bb.ex ], [ %.313759, %bb.eu ] ; 4 uses
   %.323596 = phi i32 [ %i.qa, %bb.ex ], [ %i.pp, %bb.eu ]
-  %.323556 = phi i8 [ %13, %bb.ex ], [ %i.pr, %bb.eu ] ; 2 uses
+  %.323556 = phi i8 [ %13, %bb.ex ], [ %i.pr, %bb.eu ] ; 4 uses
   %i.qd = load i32, ptr @hf_gsm_a_gm_sms_value, align 4
   %i.qe = call ptr @proto_tree_add_bits_item(ptr noundef %i.ld, i32 noundef %i.qd, ptr noundef %0, i32 noundef %i.ph, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.qf = add i32 %.93712, 5                      ; 2 uses
   %i.qg = add nsw i32 %.8, -5
   %i.qh = shl i32 %.323596, 4                     ; 3 uses
-  %i.qi = add i8 %.323556, -4                     ; 4 uses
+  %i.qi = add i8 %.323556, -4                     ; 2 uses
   %i.qj = icmp ult i32 %i.qg, 4
   br i1 %i.qj, label %.thread, label %bb.ez
 
 bb.ez:                                            ; preds = %bb.ey
   %i.qk = icmp ult i8 %i.qi, 4
-  br i1 %i.qk, label %bb.fa, label %bb.fd
+  br i1 %i.qk, label %bb.fa, label %14
 
 bb.fa:                                            ; preds = %bb.ez
   %i.ql = icmp eq i32 %.323760, 0
@@ -1267,20 +1267,22 @@ bb.fc:                                            ; preds = %bb.fb, %bb.fa
   %i.qr = or i32 %i.qq, %i.qh
   %i.qs = add i32 %.323760, -1
   %i.qt = add i32 %.323897, 1
-  %14 = or disjoint i8 %i.qi, 8
   br label %bb.fd
 
-bb.fd:                                            ; preds = %bb.ez, %bb.fc
-  %.333898 = phi i32 [ %i.qt, %bb.fc ], [ %.323897, %bb.ez ]
-  %.333761 = phi i32 [ %i.qs, %bb.fc ], [ %.323760, %bb.ez ]
-  %.333597 = phi i32 [ %i.qr, %bb.fc ], [ %i.qh, %bb.ez ]
-  %.333557 = phi i8 [ %14, %bb.fc ], [ %i.qi, %bb.ez ]
+14:                                               ; preds = %bb.ez
+  %15 = add i8 %.323556, -8
+  br label %bb.fd
+
+bb.fd:                                            ; preds = %14, %bb.fc
+  %.333898 = phi i32 [ %i.qt, %bb.fc ], [ %.323897, %14 ]
+  %.333761 = phi i32 [ %i.qs, %bb.fc ], [ %.323760, %14 ]
+  %.333597 = phi i32 [ %i.qr, %bb.fc ], [ %i.qh, %14 ]
+  %.333557 = phi i8 [ %.323556, %bb.fc ], [ %15, %14 ]
   %i.qu = load i32, ptr @hf_gsm_a_gm_sm_value, align 4
   %i.qv = call ptr @proto_tree_add_bits_item(ptr noundef %i.ld, i32 noundef %i.qu, ptr noundef %0, i32 noundef %i.qf, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.qw = add i32 %.93712, 9
   %i.qx = add nsw i32 %.8, -9
   %i.qy = shl i32 %.333597, 4
-  %15 = add i8 %.333557, -4
   br label %bb.fe
 
 bb.fe:                                            ; preds = %bb.fd, %bb.es
@@ -1288,7 +1290,7 @@ bb.fe:                                            ; preds = %bb.fd, %bb.es
   %.343762 = phi i32 [ %.313759, %bb.es ], [ %.333761, %bb.fd ] ; 4 uses
   %.103713 = phi i32 [ %i.ph, %bb.es ], [ %i.qw, %bb.fd ] ; 3 uses
   %.343598 = phi i32 [ %i.pm, %bb.es ], [ %i.qy, %bb.fd ] ; 3 uses
-  %.343558 = phi i8 [ %i.po, %bb.es ], [ %15, %bb.fd ] ; 3 uses
+  %.343558 = phi i8 [ %i.po, %bb.es ], [ %.333557, %bb.fd ] ; 3 uses
   %.9 = phi i32 [ %i.pl, %bb.es ], [ %i.qx, %bb.fd ] ; 4 uses
   %i.qz = icmp eq i32 %.9, 0
   br i1 %i.qz, label %.thread, label %bb.ff
@@ -1339,8 +1341,8 @@ bb.fl:                                            ; preds = %bb.fk
 
 bb.fm:                                            ; preds = %bb.fk
   %i.rt = shl i32 %.353599, 1                     ; 3 uses
-  %i.ru = trunc nuw i32 %.353559 to i8
-  %i.rv = add i8 %i.ru, -1                        ; 4 uses
+  %i.ru = trunc nuw i32 %.353559 to i8            ; 2 uses
+  %i.rv = add i8 %i.ru, -1                        ; 3 uses
   %i.rw = icmp ult i32 %.9, 6
   br i1 %i.rw, label %.thread, label %bb.fn
 
@@ -1365,7 +1367,7 @@ bb.fq:                                            ; preds = %bb.fp, %bb.fo
   %i.se = or i32 %i.sd, %i.rt
   %i.sf = add i32 %.353763, -1
   %i.sg = add i32 %.353900, 1
-  %16 = or disjoint i8 %i.rv, 8
+  %16 = add nuw nsw i8 %i.ru, 7
   br label %bb.fr
 
 bb.fr:                                            ; preds = %bb.fn, %bb.fq
@@ -1436,8 +1438,8 @@ bb.fz:                                            ; preds = %bb.fy
 
 bb.ga:                                            ; preds = %bb.fy
   %i.tg = shl i32 %.383602, 1                     ; 3 uses
-  %i.th = trunc nuw i32 %.383562 to i8
-  %i.ti = add i8 %i.th, -1                        ; 4 uses
+  %i.th = trunc nuw i32 %.383562 to i8            ; 2 uses
+  %i.ti = add i8 %i.th, -1                        ; 3 uses
   %i.tj = add i32 %.113714, 1                     ; 2 uses
   %i.tk = icmp ult i32 %.10, 6
   br i1 %i.tk, label %.thread, label %bb.gb
@@ -1463,7 +1465,7 @@ bb.ge:                                            ; preds = %bb.gd, %bb.gc
   %i.ts = or i32 %i.tr, %i.tg
   %i.tt = add i32 %.383766, -1
   %i.tu = add i32 %.383903, 1
-  %17 = or disjoint i8 %i.ti, 8
+  %17 = add nuw nsw i8 %i.th, 7
   br label %bb.gf
 
 bb.gf:                                            ; preds = %bb.gb, %bb.ge
@@ -1572,8 +1574,8 @@ bb.gt:                                            ; preds = %bb.gs
 
 bb.gu:                                            ; preds = %bb.gs
   %i.vj = shl i32 %.423606, 1                     ; 3 uses
-  %i.vk = trunc nuw i32 %.42 to i8
-  %i.vl = add i8 %i.vk, -1                        ; 4 uses
+  %i.vk = trunc nuw i32 %.42 to i8                ; 2 uses
+  %i.vl = add i8 %i.vk, -1                        ; 3 uses
   %i.vm = icmp ult i32 %.11, 3
   br i1 %i.vm, label %.thread, label %bb.gv
 
@@ -1598,7 +1600,7 @@ bb.gy:                                            ; preds = %bb.gx, %bb.gw
   %i.vu = or i32 %i.vt, %i.vj
   %i.vv = add i32 %.423770, -1
   %i.vw = add i32 %.423907, 1
-  %18 = or disjoint i8 %i.vl, 8
+  %18 = add nuw nsw i8 %i.vk, 7
   br label %bb.gz
 
 bb.gz:                                            ; preds = %bb.gv, %bb.gy
@@ -2001,8 +2003,8 @@ bb.kc:                                            ; preds = %bb.kb
 
 bb.kd:                                            ; preds = %bb.kb
   %i.aek = shl i32 %.583622, 1                    ; 3 uses
-  %i.ael = trunc nuw i32 %.58 to i8
-  %i.aem = add i8 %i.ael, -1                      ; 5 uses
+  %i.ael = trunc nuw i32 %.58 to i8               ; 2 uses
+  %i.aem = add i8 %i.ael, -1                      ; 4 uses
   %i.aen = add i32 %.143717, 8
   %i.aeo = and i32 %.13, -2
   %i.aep = icmp eq i32 %i.aeo, 8
@@ -2030,14 +2032,14 @@ bb.kh:                                            ; preds = %bb.kg, %bb.kf
   %i.aey = add i32 %.583786, -1
   %i.aez = add i32 %.583923, 1
   %.4308 = zext nneg i8 %i.aem to i32
-  %19 = or disjoint i8 %i.aem, 8
+  %19 = add nuw nsw i8 %i.ael, 7
   br label %bb.ki
 
 bb.ki:                                            ; preds = %bb.ke, %bb.kh
   %.593924 = phi i32 [ %i.aez, %bb.kh ], [ %.583923, %bb.ke ] ; 7 uses
   %.593787 = phi i32 [ %i.aey, %bb.kh ], [ %.583786, %bb.ke ] ; 5 uses
   %.593623 = phi i32 [ %i.aex, %bb.kh ], [ %i.aek, %bb.ke ] ; 2 uses
-  %.59 = phi i8 [ %19, %bb.kh ], [ %i.aem, %bb.ke ] ; 2 uses
+  %.59 = phi i8 [ %19, %bb.kh ], [ %i.aem, %bb.ke ] ; 3 uses
   %.29 = phi i32 [ %.4308, %bb.kh ], [ 0, %bb.ke ] ; 2 uses
   %i.afa = load i32, ptr @hf_gsm_a_gm_extended_dtm_gprs_multi_slot_class, align 4
   %i.afb = xor i32 %.29, -1
@@ -2051,7 +2053,7 @@ bb.ki:                                            ; preds = %bb.ke, %bb.kh
   %i.afj = add i32 %.143717, 10                   ; 2 uses
   %i.afk = add nsw i32 %.13, -10                  ; 2 uses
   %i.afl = shl i32 %.593623, 2                    ; 4 uses
-  %i.afm = add i8 %.59, -2                        ; 6 uses
+  %i.afm = add i8 %.59, -2                        ; 5 uses
   %i.afn = icmp ult i8 %.13485, 4
   br i1 %i.afn, label %bb.kj, label %bb.kp
 
@@ -2081,7 +2083,7 @@ bb.kn:                                            ; preds = %bb.km, %bb.kl
   %i.afx = add i32 %.593787, -1
   %i.afy = add i32 %.593924, 1
   %.4309 = zext nneg i8 %i.afm to i32
-  %20 = or disjoint i8 %i.afm, 8
+  %20 = add nuw nsw i8 %.59, 6
   br label %bb.ko
 
 bb.ko:                                            ; preds = %bb.kk, %bb.kn
@@ -2198,8 +2200,8 @@ bb.lc:                                            ; preds = %bb.lb
 
 bb.ld:                                            ; preds = %bb.lb
   %i.ahv = shl i32 %.633627, 1                    ; 3 uses
-  %i.ahw = trunc nuw i32 %.63 to i8
-  %i.ahx = add i8 %i.ahw, -1                      ; 5 uses
+  %i.ahw = trunc nuw i32 %.63 to i8               ; 2 uses
+  %i.ahx = add i8 %i.ahw, -1                      ; 4 uses
   %i.ahy = and i32 %.14, -2
   %i.ahz = icmp eq i32 %i.ahy, 2
   br i1 %i.ahz, label %.thread, label %bb.le
@@ -2226,7 +2228,7 @@ bb.lh:                                            ; preds = %bb.lg, %bb.lf
   %i.aii = add i32 %.633791, -1
   %i.aij = add i32 %.633928, 1
   %.4310 = zext nneg i8 %i.ahx to i32
-  %21 = or disjoint i8 %i.ahx, 8
+  %21 = add nuw nsw i8 %i.ahw, 7
   br label %bb.li
 
 bb.li:                                            ; preds = %bb.le, %bb.lh
@@ -2426,7 +2428,7 @@ bb.mi:                                            ; preds = %bb.me, %bb.mh
   %.703935 = phi i32 [ %i.alk, %bb.mh ], [ %.693934, %bb.me ] ; 6 uses
   %.703798 = phi i32 [ %i.alj, %bb.mh ], [ %.693797, %bb.me ] ; 4 uses
   %.703634 = phi i32 [ %i.ali, %bb.mh ], [ %.693633, %bb.me ] ; 2 uses
-  %.70 = phi i8 [ %i.all, %bb.mh ], [ %.69, %bb.me ] ; 2 uses
+  %.70 = phi i8 [ %i.all, %bb.mh ], [ %.69, %bb.me ] ; 3 uses
   %.37 = phi i32 [ %.4311, %bb.mh ], [ 0, %bb.me ] ; 2 uses
   %i.alm = load i32, ptr @hf_gsm_a_gm_gmsk_multislot_power_profile, align 4
   %i.aln = xor i32 %.37, -1
@@ -2436,7 +2438,7 @@ bb.mi:                                            ; preds = %bb.me, %bb.mh
   %i.alr = call ptr @proto_tree_add_uint(ptr noundef %i.x, i32 noundef %i.alm, ptr noundef %0, i32 noundef %i.alo, i32 noundef %i.alp, i32 noundef %i.alq) ; 0 uses
   %i.als = add i32 %.173720, 2
   %i.alt = shl i32 %.703634, 2                    ; 3 uses
-  %i.alu = add i8 %.70, -2                        ; 5 uses
+  %i.alu = add i8 %.70, -2                        ; 4 uses
   %i.alv = and i32 %.16, -2
   %i.alw = icmp eq i32 %i.alv, 2
   br i1 %i.alw, label %.thread, label %bb.mj
@@ -2463,7 +2465,7 @@ bb.mm:                                            ; preds = %bb.ml, %bb.mk
   %i.amf = add i32 %.703798, -1
   %i.amg = add i32 %.703935, 1
   %.4312 = zext nneg i8 %i.alu to i32
-  %22 = or disjoint i8 %i.alu, 8
+  %22 = add nuw nsw i8 %.70, 6
   br label %bb.mn
 
 bb.mn:                                            ; preds = %bb.mj, %bb.mm
@@ -2667,8 +2669,8 @@ bb.nq:                                            ; preds = %bb.np, %bb.no
   %i.apn = add i32 %.173720, 10                   ; 3 uses
   %i.apo = add nsw i32 %.16, -10                  ; 2 uses
   %i.app = shl i32 %.763640, 1                    ; 4 uses
-  %i.apq = trunc nuw i32 %.76 to i8
-  %i.apr = add i8 %i.apq, -1                      ; 5 uses
+  %i.apq = trunc nuw i32 %.76 to i8               ; 2 uses
+  %i.apr = add i8 %i.apq, -1                      ; 4 uses
   br i1 %i.apm, label %bb.oj, label %bb.nr
 
 bb.nr:                                            ; preds = %bb.nq
@@ -2696,7 +2698,7 @@ bb.nv:                                            ; preds = %bb.nu, %bb.nt
   %i.aqa = or i32 %i.apz, %i.app
   %i.aqb = add i32 %.763804, -1
   %i.aqc = add i32 %.763941, 1
-  %23 = or disjoint i8 %i.apr, 8
+  %23 = add nuw nsw i8 %i.apq, 7
   br label %bb.nw
 
 bb.nw:                                            ; preds = %bb.ns, %bb.nv
@@ -2746,8 +2748,8 @@ bb.oc:                                            ; preds = %bb.ob, %bb.oa
   %i.aqu = add i32 %.173720, 14                   ; 3 uses
   %i.aqv = add nsw i32 %.16, -14                  ; 2 uses
   %i.aqw = shl i32 %.783642, 1                    ; 4 uses
-  %i.aqx = trunc nuw i32 %.78 to i8
-  %i.aqy = add i8 %i.aqx, -1                      ; 5 uses
+  %i.aqx = trunc nuw i32 %.78 to i8               ; 2 uses
+  %i.aqy = add i8 %i.aqx, -1                      ; 4 uses
   br i1 %i.aqt, label %bb.oj, label %bb.od
 
 bb.od:                                            ; preds = %bb.oc
@@ -2775,7 +2777,7 @@ bb.oh:                                            ; preds = %bb.og, %bb.of
   %i.arh = or i32 %i.arg, %i.aqw
   %i.ari = add i32 %.783806, -1
   %i.arj = add i32 %.783943, 1
-  %24 = or disjoint i8 %i.aqy, 8
+  %24 = add nuw nsw i8 %i.aqx, 7
   br label %bb.oi
 
 bb.oi:                                            ; preds = %bb.oe, %bb.oh
@@ -2917,8 +2919,8 @@ bb.pc:                                            ; preds = %bb.pb
 
 bb.pd:                                            ; preds = %bb.pb
   %i.atk = shl i32 %.833647, 1                    ; 3 uses
-  %i.atl = trunc nuw i32 %.83 to i8
-  %i.atm = add i8 %i.atl, -1                      ; 4 uses
+  %i.atl = trunc nuw i32 %.83 to i8               ; 2 uses
+  %i.atm = add i8 %i.atl, -1                      ; 3 uses
   %i.atn = icmp ult i32 %i.ath, 3
   br i1 %i.atn, label %.thread, label %bb.pe
 
@@ -2943,7 +2945,7 @@ bb.ph:                                            ; preds = %bb.pg, %bb.pf
   %i.atv = or i32 %i.atu, %i.atk
   %i.atw = add i32 %.833811, -1
   %i.atx = add i32 %.833948, 1
-  %25 = or disjoint i8 %i.atm, 8
+  %25 = add nuw nsw i8 %i.atl, 7
   br label %bb.pi
 
 bb.pi:                                            ; preds = %bb.pe, %bb.ph
@@ -3183,12 +3185,12 @@ bb.qs:                                            ; preds = %bb.qo, %bb.qr
   %.913956 = phi i32 [ %i.axl, %bb.qr ], [ %.903955, %bb.qo ] ; 5 uses
   %.913819 = phi i32 [ %i.axk, %bb.qr ], [ %.903818, %bb.qo ] ; 4 uses
   %.913655 = phi i32 [ %i.axj, %bb.qr ], [ %i.awz, %bb.qo ]
-  %.91 = phi i8 [ %i.axm, %bb.qr ], [ %.90, %bb.qo ] ; 2 uses
+  %.91 = phi i8 [ %i.axm, %bb.qr ], [ %.90, %bb.qo ] ; 3 uses
   %i.axn = load i32, ptr @hf_gsm_a_gm_rac_ul_egprs2, align 4
   %i.axo = call ptr @proto_tree_add_bits_item(ptr noundef %i.x, i32 noundef %i.axn, ptr noundef %0, i32 noundef %i.awy, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.axp = add i32 %.193722, 6                    ; 2 uses
   %i.axq = shl i32 %.913655, 2                    ; 3 uses
-  %i.axr = add i8 %.91, -2                        ; 4 uses
+  %i.axr = add i8 %.91, -2                        ; 3 uses
   %i.axs = icmp eq i32 %i.axa, 6
   br i1 %i.axs, label %.thread, label %bb.qt
 
@@ -3213,7 +3215,7 @@ bb.qw:                                            ; preds = %bb.qv, %bb.qu
   %i.aya = or i32 %i.axz, %i.axq
   %i.ayb = add i32 %.913819, -1
   %i.ayc = add i32 %.913956, 1
-  %26 = or disjoint i8 %i.axr, 8
+  %26 = add nuw nsw i8 %.91, 6
   br label %bb.qx
 
 bb.qx:                                            ; preds = %bb.qt, %bb.qw
@@ -3411,8 +3413,8 @@ bb.sa:                                            ; preds = %bb.rz, %bb.ry
   %i.bbe = add i32 %.193722, 14                   ; 3 uses
   %i.bbf = add nsw i32 %.18, -14                  ; 2 uses
   %i.bbg = shl i32 %.973661, 1                    ; 4 uses
-  %i.bbh = trunc nuw i32 %.97 to i8
-  %i.bbi = add i8 %i.bbh, -1                      ; 5 uses
+  %i.bbh = trunc nuw i32 %.97 to i8               ; 2 uses
+  %i.bbi = add i8 %i.bbh, -1                      ; 4 uses
   br i1 %i.bbd, label %bb.sm, label %bb.sb
 
 bb.sb:                                            ; preds = %bb.sa
@@ -3440,20 +3442,20 @@ bb.sf:                                            ; preds = %bb.se, %bb.sd
   %i.bbr = or i32 %i.bbq, %i.bbg
   %i.bbs = add i32 %.973825, -1
   %i.bbt = add i32 %.973962, 1
-  %27 = or disjoint i8 %i.bbi, 8
+  %27 = add nuw nsw i8 %i.bbh, 7
   br label %bb.sg
 
 bb.sg:                                            ; preds = %bb.sc, %bb.sf
   %.983963 = phi i32 [ %i.bbt, %bb.sf ], [ %.973962, %bb.sc ] ; 5 uses
   %.983826 = phi i32 [ %i.bbs, %bb.sf ], [ %.973825, %bb.sc ] ; 4 uses
   %.983662 = phi i32 [ %i.bbr, %bb.sf ], [ %i.bbg, %bb.sc ]
-  %.98 = phi i8 [ %27, %bb.sf ], [ %i.bbi, %bb.sc ] ; 2 uses
+  %.98 = phi i8 [ %27, %bb.sf ], [ %i.bbi, %bb.sc ] ; 3 uses
   %i.bbu = load i32, ptr @hf_gsm_a_gm_rac_alt_efta_multi_slot_class, align 4
   %i.bbv = call ptr @proto_tree_add_bits_item(ptr noundef %i.x, i32 noundef %i.bbu, ptr noundef %0, i32 noundef %i.bbe, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.bbw = add i32 %.193722, 18                   ; 2 uses
   %i.bbx = add nsw i32 %.18, -18
   %i.bby = shl i32 %.983662, 4                    ; 3 uses
-  %i.bbz = add i8 %.98, -4                        ; 4 uses
+  %i.bbz = add i8 %.98, -4                        ; 3 uses
   %i.bca = icmp ult i32 %i.bbx, 3
   br i1 %i.bca, label %.thread, label %bb.sh
 
@@ -3478,7 +3480,7 @@ bb.sk:                                            ; preds = %bb.sj, %bb.si
   %i.bci = or i32 %i.bch, %i.bby
   %i.bcj = add i32 %.983826, -1
   %i.bck = add i32 %.983963, 1
-  %28 = or disjoint i8 %i.bbz, 8
+  %28 = add nuw nsw i8 %.98, 4
   br label %bb.sl
 
 bb.sl:                                            ; preds = %bb.sh, %bb.sk
@@ -3881,8 +3883,8 @@ bb.wl:                                            ; preds = %bb.wk, %bb.wj
   %.117 = phi i32 [ 8, %bb.wj ], [ %i.bml, %bb.wk ] ; 2 uses
   %i.bmm = icmp sgt i32 %.1173681, -1
   %i.bmn = add i32 %.203723, 18                   ; 3 uses
-  %i.bmo = trunc nuw i32 %.117 to i8
-  %i.bmp = add i8 %i.bmo, -1                      ; 5 uses
+  %i.bmo = trunc nuw i32 %.117 to i8              ; 2 uses
+  %i.bmp = add i8 %i.bmo, -1                      ; 4 uses
   br i1 %i.bmm, label %bb.wy, label %bb.wm
 
 bb.wm:                                            ; preds = %bb.wl
@@ -3911,7 +3913,7 @@ bb.wq:                                            ; preds = %bb.wp, %bb.wo
   %i.bmz = or i32 %i.bmy, %i.bmq
   %i.bna = add i32 %.1173845, -1
   %i.bnb = add i32 %.1173982, 1
-  %29 = or disjoint i8 %i.bmp, 8
+  %29 = add nuw nsw i8 %i.bmo, 7
   br label %bb.wr
 
 bb.wr:                                            ; preds = %bb.wn, %bb.wq
@@ -4002,19 +4004,19 @@ bb.xd:                                            ; preds = %bb.wz, %bb.xc
   %.1213986 = phi i32 [ %i.bog, %bb.xc ], [ %.1203985, %bb.wz ] ; 5 uses
   %.1213849 = phi i32 [ %i.bof, %bb.xc ], [ %.1203848, %bb.wz ] ; 4 uses
   %.1213685 = phi i32 [ %i.boe, %bb.xc ], [ %.1203684, %bb.wz ]
-  %.121 = phi i8 [ %i.boh, %bb.xc ], [ %.120, %bb.wz ] ; 2 uses
+  %.121 = phi i8 [ %i.boh, %bb.xc ], [ %.120, %bb.wz ] ; 4 uses
   %i.boi = load i32, ptr @hf_gsm_a_gm_rac_dlmc_max_bandwidth, align 4
   %i.boj = call ptr @proto_tree_add_bits_item(ptr noundef %i.x, i32 noundef %i.boi, ptr noundef %0, i32 noundef %.213724, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.bok = add i32 %.213724, 2                    ; 2 uses
   %i.bol = add nsw i32 %i.bnv, -2
   %i.bom = shl i32 %.1213685, 2                   ; 3 uses
-  %i.bon = add i8 %.121, -2                       ; 4 uses
+  %i.bon = add i8 %.121, -2                       ; 2 uses
   %i.boo = icmp ult i32 %i.bol, 6
   br i1 %i.boo, label %.thread, label %bb.xe
 
 bb.xe:                                            ; preds = %bb.xd
   %i.bop = icmp ult i8 %i.bon, 6
-  br i1 %i.bop, label %bb.xf, label %bb.xi
+  br i1 %i.bop, label %bb.xf, label %30
 
 bb.xf:                                            ; preds = %bb.xe
   %i.boq = icmp eq i32 %.1213849, 0
@@ -4033,25 +4035,27 @@ bb.xh:                                            ; preds = %bb.xg, %bb.xf
   %i.bow = or i32 %i.bov, %i.bom
   %i.box = add i32 %.1213849, -1
   %i.boy = add i32 %.1213986, 1
-  %30 = or disjoint i8 %i.bon, 8
   br label %bb.xi
 
-bb.xi:                                            ; preds = %bb.xe, %bb.xh
-  %.1223987 = phi i32 [ %i.boy, %bb.xh ], [ %.1213986, %bb.xe ] ; 5 uses
-  %.1223850 = phi i32 [ %i.box, %bb.xh ], [ %.1213849, %bb.xe ] ; 4 uses
-  %.1223686 = phi i32 [ %i.bow, %bb.xh ], [ %i.bom, %bb.xe ]
-  %.122 = phi i8 [ %30, %bb.xh ], [ %i.bon, %bb.xe ] ; 2 uses
+30:                                               ; preds = %bb.xe
+  %31 = add i8 %.121, -8
+  br label %bb.xi
+
+bb.xi:                                            ; preds = %30, %bb.xh
+  %.1223987 = phi i32 [ %i.boy, %bb.xh ], [ %.1213986, %30 ] ; 5 uses
+  %.1223850 = phi i32 [ %i.box, %bb.xh ], [ %.1213849, %30 ] ; 4 uses
+  %.1223686 = phi i32 [ %i.bow, %bb.xh ], [ %i.bom, %30 ]
+  %.122 = phi i8 [ %.121, %bb.xh ], [ %31, %30 ]  ; 5 uses
   %i.boz = load i32, ptr @hf_gsm_a_gm_rac_dlmc_max_nb_dl_ts, align 4
   %i.bpa = call ptr @proto_tree_add_bits_item(ptr noundef %i.x, i32 noundef %i.boz, ptr noundef %0, i32 noundef %i.bok, i32 noundef 6, i32 noundef 0) ; 0 uses
   %i.bpb = add i32 %.213724, 8                    ; 2 uses
   %i.bpc = add nsw i32 %i.bnv, -8
   %i.bpd = shl i32 %.1223686, 6                   ; 3 uses
-  %31 = add i8 %.122, -6                          ; 4 uses
   %i.bpe = icmp ult i32 %i.bpc, 3
   br i1 %i.bpe, label %.thread, label %bb.xj
 
 bb.xj:                                            ; preds = %bb.xi
-  %i.bpf = icmp ult i8 %31, 3
+  %i.bpf = icmp ult i8 %.122, 3
   br i1 %i.bpf, label %bb.xk, label %bb.xn
 
 bb.xk:                                            ; preds = %bb.xj
@@ -4065,20 +4069,20 @@ bb.xl:                                            ; preds = %bb.xk
 bb.xm:                                            ; preds = %bb.xl, %bb.xk
   %i.bpi = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.1223987)
   %i.bpj = zext i8 %i.bpi to i32
-  %narrow4289 = sub nuw nsw i8 30, %.122
+  %narrow4289 = sub nuw nsw i8 24, %.122
   %i.bpk = zext nneg i8 %narrow4289 to i32
   %i.bpl = shl nuw i32 %i.bpj, %i.bpk
   %i.bpm = or i32 %i.bpl, %i.bpd
   %i.bpn = add i32 %.1223850, -1
   %i.bpo = add i32 %.1223987, 1
-  %i.bpp = or disjoint i8 %31, 8
+  %i.bpp = or disjoint i8 %.122, 8
   br label %bb.xn
 
 bb.xn:                                            ; preds = %bb.xj, %bb.xm
   %.1233988 = phi i32 [ %i.bpo, %bb.xm ], [ %.1223987, %bb.xj ]
   %.1233851 = phi i32 [ %i.bpn, %bb.xm ], [ %.1223850, %bb.xj ]
   %.1233687 = phi i32 [ %i.bpm, %bb.xm ], [ %i.bpd, %bb.xj ]
-  %.123 = phi i8 [ %i.bpp, %bb.xm ], [ %31, %bb.xj ]
+  %.123 = phi i8 [ %i.bpp, %bb.xm ], [ %.122, %bb.xj ]
   %i.bpq = load i32, ptr @hf_gsm_a_gm_rac_dlmc_max_nb_dl_carriers, align 4
   %i.bpr = call ptr @proto_tree_add_bits_item(ptr noundef %i.x, i32 noundef %i.bpq, ptr noundef %0, i32 noundef %i.bpb, i32 noundef 3, i32 noundef 0) ; 0 uses
   %i.bps = add i32 %.213724, 11
@@ -4456,7 +4460,7 @@ bb.zo:                                            ; preds = %.lr.ph, %bb.zn
   %.1363864 = phi i32 [ %.243752, %bb.dl ], [ %.283756, %bb.ee ], [ %.273755, %bb.dz ], [ %.323760, %bb.ey ], [ %.43732, %bb.ay ], [ %.133741, %bb.bi ], [ %.183746, %.loopexit4322 ], [ %.193747, %bb.ce ], [ %.203748, %bb.ck ], [ %.213749, %bb.cq ], [ %.223750, %bb.cw ], [ %.233751, %bb.dd ], [ %.263754, %bb.dr ], [ %.303758, %bb.el ], [ %.343762, %bb.fe ], [ %.373765, %bb.fs ], [ %.413769, %bb.gm ], [ %.473775, %bb.hs ], [ %.483776, %bb.hz ], [ %.503778, %bb.if ], [ %.513779, %bb.il ], [ %.523780, %bb.ir ], [ %.533781, %bb.ix ], [ %.543782, %bb.jd ], [ %.553783, %bb.jj ], [ %.563784, %bb.jp ], [ %.573785, %bb.jv ], [ %.613789, %bb.kp ], [ %.623790, %bb.kv ], [ %.653793, %bb.lj ], [ %.663794, %bb.lq ], [ %.673795, %bb.lw ], [ %.693797, %bb.md ], [ %.703798, %bb.mi ], [ %.713799, %bb.mn ], [ %.723800, %bb.mt ], [ %.733801, %bb.my ], [ %.743802, %bb.ne ], [ %.753803, %bb.nk ], [ %.803808, %bb.oj ], [ %.813809, %bb.op ], [ %.823810, %bb.ov ], [ %.863814, %bb.pp ], [ %.873815, %bb.pv ], [ %.883816, %bb.qb ], [ %.893817, %bb.qh ], [ %.903818, %bb.qn ], [ %.913819, %bb.qs ], [ %.923820, %bb.qx ], [ %.933821, %bb.rd ], [ %.943822, %bb.rj ], [ %.953823, %bb.ro ], [ %.963824, %bb.ru ], [ %.1003828, %bb.sm ], [ %.1013829, %bb.ss ], [ %.1023830, %bb.sy ], [ %.1033831, %bb.te ], [ %.1043832, %bb.tk ], [ %.1053833, %bb.tq ], [ %.1063834, %bb.tw ], [ %.1073835, %bb.uc ], [ %.1083836, %bb.ui ], [ %.1093837, %bb.un ], [ %.1103838, %bb.ut ], [ %.1113839, %bb.uz ], [ %.1123840, %bb.vf ], [ %.1133841, %bb.vl ], [ %.1143842, %bb.vr ], [ %.1153843, %bb.vx ], [ %.1243852, %bb.xo ], [ %.1253853, %bb.xu ], [ %.1263854, %bb.ya ], [ %.1273855, %bb.yf ], [ %.1303858, %bb.ys ], [ %.1313859, %bb.yy ], [ %.1323860, %bb.ze ], [ %.1333861, %bb.zk ], [ %.1283856, %bb.ym ], [ %.1163844, %bb.wf ], [ %.1203848, %bb.wy ], [ %.1213849, %bb.xd ], [ %.1223850, %bb.xi ], [ %.1173845, %bb.wm ], [ %.1183846, %bb.wr ], [ %.973825, %bb.sb ], [ %.983826, %bb.sg ], [ %.833811, %bb.pd ], [ %.843812, %bb.pi ], [ %.763804, %bb.nr ], [ %.773805, %bb.nw ], [ %.783806, %bb.od ], [ %.633791, %bb.ld ], [ %.583786, %bb.kd ], [ %.593787, %bb.kj ], [ %.423770, %bb.gu ], [ %.433771, %bb.gz ], [ %.443772, %bb.hf ], [ %.453773, %bb.hm ], [ %.383766, %bb.ga ], [ %.393767, %bb.gf ], [ %.353763, %bb.fm ], [ %.313759, %bb.et ], [ %.53733, %.preheader4320 ], [ %.63734, %.preheader ], [ %.123740, %.loopexit ], [ %.1353863, %bb.zo ] ; 3 uses
   %.243727 = phi i32 [ %i.mc, %bb.dl ], [ %i.od, %bb.ee ], [ %i.ng, %bb.dz ], [ %i.qf, %bb.ey ], [ %i.bf, %bb.ay ], [ %i.gp, %bb.bi ], [ %.73710, %.loopexit4322 ], [ %i.ir, %bb.ce ], [ %i.jg, %bb.ck ], [ %i.jv, %bb.cq ], [ %i.kk, %bb.cw ], [ %i.kz, %bb.dd ], [ %.83711, %bb.dr ], [ %.93712, %bb.el ], [ %.103713, %bb.fe ], [ %.113714, %bb.fs ], [ %.123715, %bb.gm ], [ %.133716, %bb.hs ], [ %i.yq, %bb.hz ], [ %.143717, %bb.if ], [ %i.aac, %bb.il ], [ %i.aar, %bb.ir ], [ %i.abg, %bb.ix ], [ %i.abv, %bb.jd ], [ %i.ack, %bb.jj ], [ %i.acz, %bb.jp ], [ %i.ado, %bb.jv ], [ %.153718, %bb.kp ], [ %i.agz, %bb.kv ], [ %.163719, %bb.lj ], [ %i.aji, %bb.lq ], [ %i.ajz, %bb.lw ], [ %.173720, %bb.md ], [ %i.als, %bb.mi ], [ %i.amn, %bb.mn ], [ %i.and, %bb.mt ], [ %i.anu, %bb.my ], [ %i.aok, %bb.ne ], [ %i.aoz, %bb.nk ], [ %.183721, %bb.oj ], [ %i.asd, %bb.op ], [ %i.ass, %bb.ov ], [ %.193722, %bb.pp ], [ %i.avf, %bb.pv ], [ %i.avu, %bb.qb ], [ %i.awj, %bb.qh ], [ %i.awy, %bb.qn ], [ %i.axp, %bb.qs ], [ %i.ayf, %bb.qx ], [ %i.ayv, %bb.rd ], [ %i.azk, %bb.rj ], [ %i.baa, %bb.ro ], [ %i.baq, %bb.ru ], [ %.203723, %bb.sm ], [ %i.bde, %bb.ss ], [ %i.bdt, %bb.sy ], [ %i.bei, %bb.te ], [ %i.bex, %bb.tk ], [ %i.bfm, %bb.tq ], [ %i.bgb, %bb.tw ], [ %i.bgq, %bb.uc ], [ %i.bhf, %bb.ui ], [ %i.bhw, %bb.un ], [ %i.bim, %bb.ut ], [ %i.bjb, %bb.uz ], [ %i.bjq, %bb.vf ], [ %i.bkf, %bb.vl ], [ %i.bku, %bb.vr ], [ %i.blj, %bb.vx ], [ %.223725, %bb.xo ], [ %i.bqj, %bb.xu ], [ %i.bqy, %bb.ya ], [ %i.brp, %bb.yf ], [ %.233726, %bb.ys ], [ %i.btn, %bb.yy ], [ %i.buc, %bb.ze ], [ %i.bur, %bb.zk ], [ %i.brp, %bb.ym ], [ %i.blx, %bb.wf ], [ %.213724, %bb.wy ], [ %i.bok, %bb.xd ], [ %i.bpb, %bb.xi ], [ %i.bmn, %bb.wm ], [ %i.bne, %bb.wr ], [ %i.bbe, %bb.sb ], [ %i.bbw, %bb.sg ], [ %i.atg, %bb.pd ], [ %i.aua, %bb.pi ], [ %i.apn, %bb.nr ], [ %i.aqf, %bb.nw ], [ %i.aqu, %bb.od ], [ %i.ahn, %bb.ld ], [ %i.aen, %bb.kd ], [ %i.afj, %bb.kj ], [ %i.vb, %bb.gu ], [ %i.wb, %bb.gz ], [ %i.wr, %bb.hf ], [ %i.xi, %bb.hm ], [ %i.tj, %bb.ga ], [ %i.tx, %bb.gf ], [ %i.rl, %bb.fm ], [ %i.ph, %bb.et ], [ %.23705, %.preheader4320 ], [ %i.by, %.preheader ], [ %.43707, %.loopexit ], [ %i.bur, %bb.zo ]
   %.1363700 = phi i32 [ %i.lz, %bb.dl ], [ %i.oe, %bb.ee ], [ %i.nn, %bb.dz ], [ %i.qh, %bb.ey ], [ %i.bg, %bb.ay ], [ %i.gq, %bb.bi ], [ %.183582, %.loopexit4322 ], [ %i.is, %bb.ce ], [ %i.jh, %bb.ck ], [ %i.jw, %bb.cq ], [ %i.kl, %bb.cw ], [ %i.lb, %bb.dd ], [ %.263590, %bb.dr ], [ %.303594, %bb.el ], [ %.343598, %bb.fe ], [ %.373601, %bb.fs ], [ %.413605, %bb.gm ], [ %.473611, %bb.hs ], [ %i.ys, %bb.hz ], [ %.503614, %bb.if ], [ %i.aad, %bb.il ], [ %i.aas, %bb.ir ], [ %i.abh, %bb.ix ], [ %i.abw, %bb.jd ], [ %i.acl, %bb.jj ], [ %i.ada, %bb.jp ], [ %i.adp, %bb.jv ], [ %.613625, %bb.kp ], [ %i.aha, %bb.kv ], [ %.653629, %bb.lj ], [ %i.ajk, %bb.lq ], [ %i.akb, %bb.lw ], [ %.693633, %bb.md ], [ %i.alt, %bb.mi ], [ %i.amo, %bb.mn ], [ %i.anf, %bb.mt ], [ %i.anv, %bb.my ], [ %i.aol, %bb.ne ], [ %i.apa, %bb.nk ], [ %.803644, %bb.oj ], [ %i.ase, %bb.op ], [ %i.ast, %bb.ov ], [ %.863650, %bb.pp ], [ %i.avg, %bb.pv ], [ %i.avv, %bb.qb ], [ %i.awk, %bb.qh ], [ %i.awz, %bb.qn ], [ %i.axq, %bb.qs ], [ %i.ayg, %bb.qx ], [ %i.ayw, %bb.rd ], [ %i.azl, %bb.rj ], [ %i.bab, %bb.ro ], [ %i.bar, %bb.ru ], [ %.1003664, %bb.sm ], [ %i.bdf, %bb.ss ], [ %i.bdu, %bb.sy ], [ %i.bej, %bb.te ], [ %i.bey, %bb.tk ], [ %i.bfn, %bb.tq ], [ %i.bgc, %bb.tw ], [ %i.bgr, %bb.uc ], [ %i.bhg, %bb.ui ], [ %i.bhx, %bb.un ], [ %i.bin, %bb.ut ], [ %i.bjc, %bb.uz ], [ %i.bjr, %bb.vf ], [ %i.bkg, %bb.vl ], [ %i.bkv, %bb.vr ], [ %i.blk, %bb.vx ], [ %.1243688, %bb.xo ], [ %i.bqk, %bb.xu ], [ %i.bqz, %bb.ya ], [ %i.brr, %bb.yf ], [ %.1303694, %bb.ys ], [ %i.bto, %bb.yy ], [ %i.bud, %bb.ze ], [ %i.but, %bb.zk ], [ %.1283692, %bb.ym ], [ %i.bma, %bb.wf ], [ %.1203684, %bb.wy ], [ %i.bom, %bb.xd ], [ %i.bpd, %bb.xi ], [ %i.bmq, %bb.wm ], [ %i.bnf, %bb.wr ], [ %i.bbg, %bb.sb ], [ %i.bby, %bb.sg ], [ %i.atk, %bb.pd ], [ %i.aub, %bb.pi ], [ %i.app, %bb.nr ], [ %i.aqg, %bb.nw ], [ %i.aqw, %bb.od ], [ %i.ahv, %bb.ld ], [ %i.aek, %bb.kd ], [ %i.afl, %bb.kj ], [ %i.vj, %bb.gu ], [ %i.wc, %bb.gz ], [ %i.ws, %bb.hf ], [ %i.xk, %bb.hm ], [ %i.tg, %bb.ga ], [ %i.ty, %bb.gf ], [ %i.rt, %bb.fm ], [ %i.pp, %bb.et ], [ %.53569, %.preheader4320 ], [ %i.ca, %.preheader ], [ %.123576, %.loopexit ], [ %i.bvh, %bb.zo ]
-  %.136 = phi i8 [ %i.mb, %bb.dl ], [ %i.of, %bb.ee ], [ %i.np, %bb.dz ], [ %i.qi, %bb.ey ], [ %i.bh, %bb.ay ], [ %i.gr, %bb.bi ], [ %.183542, %.loopexit4322 ], [ %.193543, %bb.ce ], [ %.203544, %bb.ck ], [ %.213545, %bb.cq ], [ %.223546, %bb.cw ], [ %.233547, %bb.dd ], [ %.263550, %bb.dr ], [ %.303554, %bb.el ], [ %.343558, %bb.fe ], [ %.373561, %bb.fs ], [ %.41, %bb.gm ], [ %.47, %bb.hs ], [ %.48, %bb.hz ], [ %.50, %bb.if ], [ %.51, %bb.il ], [ %.52, %bb.ir ], [ %.53, %bb.ix ], [ %.54, %bb.jd ], [ %.55, %bb.jj ], [ %.56, %bb.jp ], [ %.57, %bb.jv ], [ %.61, %bb.kp ], [ %.62, %bb.kv ], [ %.65, %bb.lj ], [ %.66, %bb.lq ], [ %i.akc, %bb.lw ], [ %.69, %bb.md ], [ %i.alu, %bb.mi ], [ %i.amp, %bb.mn ], [ %.72, %bb.mt ], [ %i.anw, %bb.my ], [ %.74, %bb.ne ], [ %.75, %bb.nk ], [ %.80, %bb.oj ], [ %.81, %bb.op ], [ %.82, %bb.ov ], [ %.86, %bb.pp ], [ %.87, %bb.pv ], [ %.88, %bb.qb ], [ %.89, %bb.qh ], [ %.90, %bb.qn ], [ %i.axr, %bb.qs ], [ %i.ayh, %bb.qx ], [ %.93, %bb.rd ], [ %.94, %bb.rj ], [ %i.bac, %bb.ro ], [ %.96, %bb.ru ], [ %.100, %bb.sm ], [ %.101, %bb.ss ], [ %.102, %bb.sy ], [ %.103, %bb.te ], [ %.104, %bb.tk ], [ %.105, %bb.tq ], [ %.106, %bb.tw ], [ %.107, %bb.uc ], [ %.108, %bb.ui ], [ %i.bhy, %bb.un ], [ %.110, %bb.ut ], [ %.111, %bb.uz ], [ %.112, %bb.vf ], [ %.113, %bb.vl ], [ %.114, %bb.vr ], [ %.115, %bb.vx ], [ %.124, %bb.xo ], [ %.125, %bb.xu ], [ %.126, %bb.ya ], [ %i.brs, %bb.yf ], [ %.130, %bb.ys ], [ %.131, %bb.yy ], [ %.132, %bb.ze ], [ %.133, %bb.zk ], [ %.128, %bb.ym ], [ %.116, %bb.wf ], [ %.120, %bb.wy ], [ %i.bon, %bb.xd ], [ %31, %bb.xi ], [ %i.bmp, %bb.wm ], [ %i.bng, %bb.wr ], [ %i.bbi, %bb.sb ], [ %i.bbz, %bb.sg ], [ %i.atm, %bb.pd ], [ %i.auc, %bb.pi ], [ %i.apr, %bb.nr ], [ %i.aqh, %bb.nw ], [ %i.aqy, %bb.od ], [ %i.ahx, %bb.ld ], [ %i.aem, %bb.kd ], [ %i.afm, %bb.kj ], [ %i.vl, %bb.gu ], [ %i.wd, %bb.gz ], [ %.44, %bb.hf ], [ %.45, %bb.hm ], [ %i.ti, %bb.ga ], [ %i.tz, %bb.gf ], [ %i.rv, %bb.fm ], [ %i.pr, %bb.et ], [ %.53529, %.preheader4320 ], [ %.63530, %.preheader ], [ %.123536, %.loopexit ], [ %i.bvj, %bb.zo ] ; 2 uses
+  %.136 = phi i8 [ %i.mb, %bb.dl ], [ %i.of, %bb.ee ], [ %i.np, %bb.dz ], [ %i.qi, %bb.ey ], [ %i.bh, %bb.ay ], [ %i.gr, %bb.bi ], [ %.183542, %.loopexit4322 ], [ %.193543, %bb.ce ], [ %.203544, %bb.ck ], [ %.213545, %bb.cq ], [ %.223546, %bb.cw ], [ %.233547, %bb.dd ], [ %.263550, %bb.dr ], [ %.303554, %bb.el ], [ %.343558, %bb.fe ], [ %.373561, %bb.fs ], [ %.41, %bb.gm ], [ %.47, %bb.hs ], [ %.48, %bb.hz ], [ %.50, %bb.if ], [ %.51, %bb.il ], [ %.52, %bb.ir ], [ %.53, %bb.ix ], [ %.54, %bb.jd ], [ %.55, %bb.jj ], [ %.56, %bb.jp ], [ %.57, %bb.jv ], [ %.61, %bb.kp ], [ %.62, %bb.kv ], [ %.65, %bb.lj ], [ %.66, %bb.lq ], [ %i.akc, %bb.lw ], [ %.69, %bb.md ], [ %i.alu, %bb.mi ], [ %i.amp, %bb.mn ], [ %.72, %bb.mt ], [ %i.anw, %bb.my ], [ %.74, %bb.ne ], [ %.75, %bb.nk ], [ %.80, %bb.oj ], [ %.81, %bb.op ], [ %.82, %bb.ov ], [ %.86, %bb.pp ], [ %.87, %bb.pv ], [ %.88, %bb.qb ], [ %.89, %bb.qh ], [ %.90, %bb.qn ], [ %i.axr, %bb.qs ], [ %i.ayh, %bb.qx ], [ %.93, %bb.rd ], [ %.94, %bb.rj ], [ %i.bac, %bb.ro ], [ %.96, %bb.ru ], [ %.100, %bb.sm ], [ %.101, %bb.ss ], [ %.102, %bb.sy ], [ %.103, %bb.te ], [ %.104, %bb.tk ], [ %.105, %bb.tq ], [ %.106, %bb.tw ], [ %.107, %bb.uc ], [ %.108, %bb.ui ], [ %i.bhy, %bb.un ], [ %.110, %bb.ut ], [ %.111, %bb.uz ], [ %.112, %bb.vf ], [ %.113, %bb.vl ], [ %.114, %bb.vr ], [ %.115, %bb.vx ], [ %.124, %bb.xo ], [ %.125, %bb.xu ], [ %.126, %bb.ya ], [ %i.brs, %bb.yf ], [ %.130, %bb.ys ], [ %.131, %bb.yy ], [ %.132, %bb.ze ], [ %.133, %bb.zk ], [ %.128, %bb.ym ], [ %.116, %bb.wf ], [ %.120, %bb.wy ], [ %i.bon, %bb.xd ], [ %.122, %bb.xi ], [ %i.bmp, %bb.wm ], [ %i.bng, %bb.wr ], [ %i.bbi, %bb.sb ], [ %i.bbz, %bb.sg ], [ %i.atm, %bb.pd ], [ %i.auc, %bb.pi ], [ %i.apr, %bb.nr ], [ %i.aqh, %bb.nw ], [ %i.aqy, %bb.od ], [ %i.ahx, %bb.ld ], [ %i.aem, %bb.kd ], [ %i.afm, %bb.kj ], [ %i.vl, %bb.gu ], [ %i.wd, %bb.gz ], [ %.44, %bb.hf ], [ %.45, %bb.hm ], [ %i.ti, %bb.ga ], [ %i.tz, %bb.gf ], [ %i.rv, %bb.fm ], [ %i.pr, %bb.et ], [ %.53529, %.preheader4320 ], [ %.63530, %.preheader ], [ %.123536, %.loopexit ], [ %i.bvj, %bb.zo ] ; 2 uses
   %.23488 = phi i8 [ %.034864359, %bb.dl ], [ %.034864359, %bb.ee ], [ %.034864359, %bb.dz ], [ %.034864359, %bb.ey ], [ %.034864359, %bb.ay ], [ %.034864359, %bb.bi ], [ %.034864359, %.loopexit4322 ], [ %.034864359, %bb.ce ], [ %.034864359, %bb.ck ], [ %.034864359, %bb.cq ], [ %.034864359, %bb.cw ], [ %.034864359, %bb.dd ], [ %.034864359, %bb.dr ], [ %.034864359, %bb.el ], [ %.034864359, %bb.fe ], [ %.034864359, %bb.fs ], [ %.034864359, %bb.gm ], [ %.13487, %bb.hs ], [ %.13487, %bb.hz ], [ %.13487, %bb.if ], [ %.13487, %bb.il ], [ %.13487, %bb.ir ], [ %.13487, %bb.ix ], [ %.13487, %bb.jd ], [ %.13487, %bb.jj ], [ %.13487, %bb.jp ], [ %.13487, %bb.jv ], [ %.13487, %bb.kp ], [ %.13487, %bb.kv ], [ %.13487, %bb.lj ], [ %.13487, %bb.lq ], [ %.13487, %bb.lw ], [ %.13487, %bb.md ], [ %.13487, %bb.mi ], [ %.13487, %bb.mn ], [ %.13487, %bb.mt ], [ %.13487, %bb.my ], [ %.13487, %bb.ne ], [ %.13487, %bb.nk ], [ %.13487, %bb.oj ], [ %.13487, %bb.op ], [ %.13487, %bb.ov ], [ %.13487, %bb.pp ], [ %.13487, %bb.pv ], [ %.13487, %bb.qb ], [ %.13487, %bb.qh ], [ %.13487, %bb.qn ], [ %.13487, %bb.qs ], [ %.13487, %bb.qx ], [ %.13487, %bb.rd ], [ %.13487, %bb.rj ], [ %.13487, %bb.ro ], [ %.13487, %bb.ru ], [ %.13487, %bb.sm ], [ %.13487, %bb.ss ], [ %.13487, %bb.sy ], [ %.13487, %bb.te ], [ %.13487, %bb.tk ], [ %.13487, %bb.tq ], [ %.13487, %bb.tw ], [ %.13487, %bb.uc ], [ %.13487, %bb.ui ], [ %.13487, %bb.un ], [ %.13487, %bb.ut ], [ %.13487, %bb.uz ], [ %.13487, %bb.vf ], [ %.13487, %bb.vl ], [ %.13487, %bb.vr ], [ %.13487, %bb.vx ], [ %.13487, %bb.xo ], [ %.13487, %bb.xu ], [ %.13487, %bb.ya ], [ %.13487, %bb.yf ], [ %.13487, %bb.ys ], [ %.13487, %bb.yy ], [ %.13487, %bb.ze ], [ %.13487, %bb.zk ], [ %.13487, %bb.ym ], [ %.13487, %bb.wf ], [ %.13487, %bb.wy ], [ %.13487, %bb.xd ], [ %.13487, %bb.xi ], [ %.13487, %bb.wm ], [ %.13487, %bb.wr ], [ %.13487, %bb.sb ], [ %.13487, %bb.sg ], [ %.13487, %bb.pd ], [ %.13487, %bb.pi ], [ %.13487, %bb.nr ], [ %.13487, %bb.nw ], [ %.13487, %bb.od ], [ %.13487, %bb.ld ], [ %.13487, %bb.kd ], [ %.13487, %bb.kj ], [ %.034864359, %bb.gu ], [ %i.vy, %bb.gz ], [ %i.vy, %bb.hf ], [ %i.vy, %bb.hm ], [ %.034864359, %bb.ga ], [ %.034864359, %bb.gf ], [ %.034864359, %bb.fm ], [ %.034864359, %bb.et ], [ %.034864359, %.preheader ], [ %.034864359, %.loopexit ], [ %.034864359, %.preheader4320 ], [ %.13487, %bb.zo ]
   %.2 = phi i8 [ %.034844360, %bb.dl ], [ %.034844360, %bb.ee ], [ %.034844360, %bb.dz ], [ %.034844360, %bb.ey ], [ %.034844360, %bb.ay ], [ %.034844360, %bb.bi ], [ %.034844360, %.loopexit4322 ], [ %.034844360, %bb.ce ], [ %.034844360, %bb.ck ], [ %.034844360, %bb.cq ], [ %.034844360, %bb.cw ], [ %.034844360, %bb.dd ], [ %.034844360, %bb.dr ], [ %.034844360, %bb.el ], [ %.034844360, %bb.fe ], [ %.034844360, %bb.fs ], [ %.034844360, %bb.gm ], [ %.13485, %bb.hs ], [ %.13485, %bb.hz ], [ %.13485, %bb.if ], [ %.13485, %bb.il ], [ %.13485, %bb.ir ], [ %.13485, %bb.ix ], [ %.13485, %bb.jd ], [ %.13485, %bb.jj ], [ %.13485, %bb.jp ], [ %.13485, %bb.jv ], [ %.13485, %bb.kp ], [ %.13485, %bb.kv ], [ %.13485, %bb.lj ], [ %.13485, %bb.lq ], [ %.13485, %bb.lw ], [ %.13485, %bb.md ], [ %.13485, %bb.mi ], [ %.13485, %bb.mn ], [ %.13485, %bb.mt ], [ %.13485, %bb.my ], [ %.13485, %bb.ne ], [ %.13485, %bb.nk ], [ %.13485, %bb.oj ], [ %.13485, %bb.op ], [ %.13485, %bb.ov ], [ %.13485, %bb.pp ], [ %.13485, %bb.pv ], [ %.13485, %bb.qb ], [ %.13485, %bb.qh ], [ %.13485, %bb.qn ], [ %.13485, %bb.qs ], [ %.13485, %bb.qx ], [ %.13485, %bb.rd ], [ %.13485, %bb.rj ], [ %.13485, %bb.ro ], [ %.13485, %bb.ru ], [ %.13485, %bb.sm ], [ %.13485, %bb.ss ], [ %.13485, %bb.sy ], [ %.13485, %bb.te ], [ %.13485, %bb.tk ], [ %.13485, %bb.tq ], [ %.13485, %bb.tw ], [ %.13485, %bb.uc ], [ %.13485, %bb.ui ], [ %.13485, %bb.un ], [ %.13485, %bb.ut ], [ %.13485, %bb.uz ], [ %.13485, %bb.vf ], [ %.13485, %bb.vl ], [ %.13485, %bb.vr ], [ %.13485, %bb.vx ], [ %.13485, %bb.xo ], [ %.13485, %bb.xu ], [ %.13485, %bb.ya ], [ %.13485, %bb.yf ], [ %.13485, %bb.ys ], [ %.13485, %bb.yy ], [ %.13485, %bb.ze ], [ %.13485, %bb.zk ], [ %.13485, %bb.ym ], [ %.13485, %bb.wf ], [ %.13485, %bb.wy ], [ %.13485, %bb.xd ], [ %.13485, %bb.xi ], [ %.13485, %bb.wm ], [ %.13485, %bb.wr ], [ %.13485, %bb.sb ], [ %.13485, %bb.sg ], [ %.13485, %bb.pd ], [ %.13485, %bb.pi ], [ %.13485, %bb.nr ], [ %.13485, %bb.nw ], [ %.13485, %bb.od ], [ %.13485, %bb.ld ], [ %.13485, %bb.kd ], [ %.13485, %bb.kj ], [ %.034844360, %bb.gu ], [ %.034844360, %bb.gz ], [ %.034844360, %bb.hf ], [ %i.xf, %bb.hm ], [ %.034844360, %bb.ga ], [ %.034844360, %bb.gf ], [ %.034844360, %bb.fm ], [ %.034844360, %bb.et ], [ %.034844360, %.preheader ], [ %.034844360, %.loopexit ], [ %.034844360, %.preheader4320 ], [ %.13485, %bb.zo ]
   %i.bvk = shl i32 %.1363864, 3

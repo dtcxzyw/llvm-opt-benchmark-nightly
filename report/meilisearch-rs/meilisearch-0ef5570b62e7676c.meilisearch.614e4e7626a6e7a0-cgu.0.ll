@@ -205,6 +205,7 @@ bb.a:
   br i1 %i.l, label %._crit_edge.thread, label %bb.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader
+  %14 = add nuw nsw i64 %.sroa.065.0522419, 8
   %i.m = icmp samesign ult i64 %.sroa.065.0522419, 4088
   br i1 %i.m, label %.lr.ph.preheader, label %bb.cu
 
@@ -607,15 +608,14 @@ bb.ct:                                            ; preds = %bb.cp
   unreachable
 
 .lr.ph.preheader:                                 ; preds = %bb.a, %.lr.ph
-  %.sroa.065.0522419 = phi i64 [ %i.jm, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
+  %.sroa.065.0522419 = phi i64 [ %14, %.lr.ph ], [ 0, %bb.a ] ; 4 uses
   %i.ji = lshr exact i64 %.sroa.065.0522419, 3
   %i.jj = getelementptr inbounds nuw i8, ptr %10, i64 %i.ji
   %i.jk = load i8, ptr %i.jj, align 1, !noundef !45
   %i.jl = zext i8 %i.jk to i64
   call void @_ZN6brotli3enc26compress_fragment_two_pass15BrotliWriteBits17he01f177c2434efb8E(i64 noundef 8, i64 noundef %i.jl, ptr noalias noundef nonnull align 8 dereferenceable(8) %11, ptr noalias noundef nonnull align 1 %12, i64 noundef %13)
-  %i.jm = add nuw nsw i64 %.sroa.065.0522419, 8   ; 2 uses
-  %14 = or disjoint i64 %i.jm, 7
-  %i.jn = icmp ult i64 %14, %i.i
+  %i.jm = add nuw nsw i64 %.sroa.065.0522419, 15
+  %i.jn = icmp ult i64 %i.jm, %i.i
   br i1 %i.jn, label %.lr.ph, label %._crit_edge
 
 bb.cu:                                            ; preds = %.lr.ph

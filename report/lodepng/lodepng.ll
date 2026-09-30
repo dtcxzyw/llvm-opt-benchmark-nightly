@@ -205,7 +205,7 @@ vec.epilog.middle.block647:                       ; preds = %vec.epilog.vector.b
   br i1 %i.u, label %.lr.ph812.i, label %.loopexit736.i
 
 .lr.ph812.i:                                      ; preds = %.preheader737.i, %.lr.ph812.i
-  %.13795.i = phi i64 [ %i.aat, %.lr.ph812.i ], [ 0, %.preheader737.i ] ; 4 uses
+  %.13795.i = phi i64 [ %i.aat, %.lr.ph812.i ], [ 0, %.preheader737.i ] ; 5 uses
   %i.zq = phi <8 x i8> [ %i.aas, %.lr.ph812.i ], [ zeroinitializer, %.preheader737.i ] ; 3 uses
   %i.zr = phi <8 x i8> [ %i.zx, %.lr.ph812.i ], [ zeroinitializer, %.preheader737.i ] ; 3 uses
   %i.zs = getelementptr inbounds nuw i8, ptr %.02789, i64 %.13795.i
@@ -236,8 +236,8 @@ vec.epilog.middle.block647:                       ; preds = %vec.epilog.vector.b
   %i.aar = select <8 x i1> %i.aaq, <8 x i8> %i.zr, <8 x i8> %i.aam
   %i.aas = add <8 x i8> %i.zy, %i.aar             ; 2 uses
   store <8 x i8> %i.aas, ptr %i.zw, align 1, !tbaa !35
-  %i.aat = add nuw nsw i64 %.13795.i, 8           ; 3 uses
-  %5 = or disjoint i64 %i.aat, 7
+  %i.aat = add nuw nsw i64 %.13795.i, 8           ; 2 uses
+  %5 = add nuw nsw i64 %.13795.i, 15
   %i.aau = icmp samesign ult i64 %5, %i.n
   br i1 %i.aau, label %.lr.ph812.i, label %.loopexit736.i, !llvm.loop !939
 
@@ -309,7 +309,7 @@ vec.epilog.middle.block647:                       ; preds = %vec.epilog.vector.b
   br i1 %i.adc, label %.lr.ph793.i, label %.loopexit736.i, !llvm.loop !940
 
 .lr.ph778.i:                                      ; preds = %.preheader741.i, %.lr.ph778.i
-  %.15769.i = phi i64 [ %i.aef, %.lr.ph778.i ], [ 0, %.preheader741.i ] ; 4 uses
+  %.15769.i = phi i64 [ %i.aef, %.lr.ph778.i ], [ 0, %.preheader741.i ] ; 5 uses
   %i.add = phi <4 x i8> [ %i.aee, %.lr.ph778.i ], [ zeroinitializer, %.preheader741.i ] ; 3 uses
   %i.ade = phi <4 x i8> [ %i.adk, %.lr.ph778.i ], [ zeroinitializer, %.preheader741.i ] ; 3 uses
   %i.adf = getelementptr inbounds nuw i8, ptr %.02789, i64 %.15769.i
@@ -339,8 +339,8 @@ vec.epilog.middle.block647:                       ; preds = %vec.epilog.vector.b
   %i.aed = select <4 x i1> %i.aec, <4 x i8> %i.ade, <4 x i8> %i.adz
   %i.aee = add <4 x i8> %i.aed, %i.adl            ; 2 uses
   store <4 x i8> %i.aee, ptr %i.adj, align 1, !tbaa !35
-  %i.aef = add nuw nsw i64 %.15769.i, 4           ; 3 uses
-  %6 = or disjoint i64 %i.aef, 3
+  %i.aef = add nuw nsw i64 %.15769.i, 4           ; 2 uses
+  %6 = add nuw nsw i64 %.15769.i, 7
   %i.aeg = icmp samesign ult i64 %6, %i.n
   br i1 %i.aeg, label %.lr.ph778.i, label %.loopexit736.i, !llvm.loop !941
 
@@ -412,7 +412,7 @@ vec.epilog.middle.block647:                       ; preds = %vec.epilog.vector.b
   br i1 %i.agk, label %.lr.ph767.i, label %.loopexit736.i, !llvm.loop !942
 
 .lr.ph758.i:                                      ; preds = %.preheader745.i, %.lr.ph758.i
-  %.17753.i = phi i64 [ %i.ahr, %.lr.ph758.i ], [ 0, %.preheader745.i ] ; 5 uses
+  %.17753.i = phi i64 [ %i.ahr, %.lr.ph758.i ], [ 0, %.preheader745.i ] ; 6 uses
   %i.agl = phi <2 x i8> [ %i.ahl, %.lr.ph758.i ], [ zeroinitializer, %.preheader745.i ] ; 3 uses
   %i.agm = phi <2 x i8> [ %i.agr, %.lr.ph758.i ], [ zeroinitializer, %.preheader745.i ] ; 3 uses
   %i.agn = getelementptr inbounds nuw i8, ptr %.02789, i64 %.17753.i
@@ -447,8 +447,8 @@ vec.epilog.middle.block647:                       ; preds = %vec.epilog.vector.b
   %i.ahp = getelementptr inbounds nuw i8, ptr %i.aho, i64 1
   %i.ahq = extractelement <2 x i8> %i.ahl, i64 1
   store i8 %i.ahq, ptr %i.ahp, align 1, !tbaa !35
-  %i.ahr = add nuw nsw i64 %.17753.i, 2           ; 3 uses
-  %7 = or disjoint i64 %i.ahr, 1
+  %i.ahr = add nuw nsw i64 %.17753.i, 2           ; 2 uses
+  %7 = add nuw nsw i64 %.17753.i, 3
   %i.ahs = icmp samesign ult i64 %7, %i.n
   br i1 %i.ahs, label %.lr.ph758.i, label %.loopexit736.i, !llvm.loop !943
 

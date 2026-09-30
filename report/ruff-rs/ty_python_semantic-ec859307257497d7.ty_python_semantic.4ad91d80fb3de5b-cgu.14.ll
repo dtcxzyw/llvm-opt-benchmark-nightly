@@ -204,11 +204,11 @@ bb.u:                                             ; preds = %bb.z, %bb.s
   %i.ck = zext i8 %i.cf to i64
   %i.cl = add nsw i64 %i.ck, -192
   %spec.store.select.i.i = call i64 @llvm.umin.i64(i64 %i.cl, i64 16)
-  %.sroa.0.0.i.i = select i1 %i.cj, i64 %spec.store.select.i.i, i64 %i.ci ; 7 uses
+  %.sroa.0.0.i.i = select i1 %i.cj, i64 %spec.store.select.i.i, i64 %i.ci ; 8 uses
   %i.cm = icmp ugt i8 %i.cf, -49
   %i.cn = load ptr, ptr %i.cd, align 8, !alias.scope !13665, !noalias !13651
   %.sroa.01.0.i.i = select i1 %i.cm, ptr %i.cn, ptr %i.cd ; 4 uses
-  %i.co = add nuw nsw i64 %.sroa.0.0.i.i, 9       ; 4 uses
+  %i.co = add nuw nsw i64 %.sroa.0.0.i.i, 9       ; 3 uses
   %i.cp = icmp samesign ult i64 %.sroa.0.0.i.i, 8
   br i1 %i.cp, label %bb.x, label %bb.v
 
@@ -222,7 +222,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.cs, label %_RINvMNtCsj8vhLppEnlJ_8char_str4reprNtB3_4Repr24from_exact_joined_slicesReECsoTR8nlGN3X_18ty_python_semantic.exit.thread.i, label %_RINvMNtCsj8vhLppEnlJ_8char_str4reprNtB3_4Repr24from_exact_joined_slicesReECsoTR8nlGN3X_18ty_python_semantic.exit.thread79.i
 
 _RINvMNtCsj8vhLppEnlJ_8char_str4reprNtB3_4Repr24from_exact_joined_slicesReECsoTR8nlGN3X_18ty_python_semantic.exit.thread79.i: ; preds = %bb.w
-  %6 = or disjoint i64 %i.co, -3458764513820540928 ; 2 uses
+  %6 = add nuw nsw i64 %.sroa.0.0.i.i, -3458764513820540919 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !13667
   %i.ct = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 %6, ptr %i.ct, align 8, !noalias !13667

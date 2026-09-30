@@ -204,7 +204,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 5 uses
   %.090103 = phi ptr [ %0, %.lr.ph.preheader ], [ %i.as, %.lr.ph ] ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
   %i.e = load i64, ptr %i.d, align 1, !tbaa !37
@@ -250,8 +250,8 @@ bb.a:
   %i.ar = getelementptr inbounds nuw i8, ptr %.090103, i64 16
   store <8 x i16> %i.aq, ptr %i.ar, align 1, !tbaa !37
   %i.as = getelementptr inbounds nuw i8, ptr %.090103, i64 32 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 8 ; 3 uses
-  %6 = or disjoint i64 %indvars.iv.next, 7
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
+  %6 = add nuw nsw i64 %indvars.iv, 15
   %i.at = icmp samesign ult i64 %6, %i.c
   br i1 %i.at, label %.lr.ph, label %.loopexit.loopexit, !llvm.loop !403
 
@@ -268,7 +268,7 @@ bb.a:
 .lr.ph107:                                        ; preds = %.loopexit
   %i.aw = sext i32 %5 to i64
   %i.ax = zext nneg i32 %.192 to i64
-  %wide.trip.count = zext nneg i32 %4 to i64
+  %wide.trip.count = zext i32 %4 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph107, %bb.b

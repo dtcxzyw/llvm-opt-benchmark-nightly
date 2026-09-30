@@ -205,7 +205,7 @@ bb.dc:                                            ; preds = %bb.cz, %bb.db, %bb.
 
 .critedge18:                                      ; preds = %.critedge18.lr.ph, %bb.dh
   %.val198398 = phi i32 [ %.val198362, %.critedge18.lr.ph ], [ %.val198, %bb.dh ] ; 4 uses
-  %indvars.iv391 = phi i64 [ 0, %.critedge18.lr.ph ], [ %indvars.iv.next392, %bb.dh ] ; 2 uses
+  %indvars.iv391 = phi i64 [ 0, %.critedge18.lr.ph ], [ %indvars.iv.next392, %bb.dh ] ; 3 uses
   %.0156364 = phi i32 [ 0, %.critedge18.lr.ph ], [ %.1, %bb.dh ] ; 6 uses
   %i.us = getelementptr inbounds nuw [4 x i8], ptr %.val189, i64 %indvars.iv391 ; 2 uses
   %i.ut = load i32, ptr %i.us, align 4, !tbaa !60 ; 2 uses
@@ -266,10 +266,10 @@ bb.dg:                                            ; preds = %bb.df
 bb.dh:                                            ; preds = %.critedge18, %bb.dd, %bb.de, %bb.df, %bb.dg
   %.val198 = phi i32 [ %.val198398, %.critedge18 ], [ %.val198398, %bb.dd ], [ %.val198.pre, %bb.dg ], [ %.val198398, %bb.df ], [ %.val198398, %bb.de ] ; 2 uses
   %.1 = phi i32 [ %.0156364, %.critedge18 ], [ %.0156364, %bb.dd ], [ %i.vy, %bb.dg ], [ %.0156364, %bb.df ], [ %.0156364, %bb.de ] ; 2 uses
-  %indvars.iv.next392 = add nuw nsw i64 %indvars.iv391, 2 ; 2 uses
-  %3 = or disjoint i64 %indvars.iv.next392, 1
-  %4 = sext i32 %.val198 to i64
-  %i.wa = icmp slt i64 %3, %4
+  %indvars.iv.next392 = add nuw nsw i64 %indvars.iv391, 2
+  %3 = trunc i64 %indvars.iv391 to i32
+  %4 = add i32 %3, 3
+  %i.wa = icmp slt i32 %4, %.val198
   br i1 %i.wa, label %.critedge18, label %._crit_edge, !llvm.loop !325
 
 ._crit_edge:                                      ; preds = %bb.dh, %.preheader
@@ -672,25 +672,24 @@ Vec_IntStart.exit93:                              ; preds = %Vec_IntAlloc.exit.t
 .critedge.lr.ph:                                  ; preds = %Vec_IntStart.exit93
   %i.ar = getelementptr i8, ptr %1, i64 8
   %.val68 = load ptr, ptr %i.ar, align 8, !tbaa !82 ; 3 uses
-  %2 = zext nneg i32 %.val71108 to i64
-  %3 = add nsw i64 %2, -2                         ; 2 uses
-  %4 = lshr i64 %3, 1                             ; 2 uses
-  %5 = add nuw i64 %4, 1                          ; 2 uses
-  %i.as = icmp eq i64 %4, 0
+  %2 = add nsw i32 %.val71108, -2                 ; 2 uses
+  %3 = lshr i32 %2, 1                             ; 2 uses
+  %4 = add nuw i32 %3, 1                          ; 2 uses
+  %i.as = icmp eq i32 %3, 0
   br i1 %i.as, label %.critedge.epil.preheader, label %.critedge.lr.ph.new
 
 .critedge.lr.ph.new:                              ; preds = %.critedge.lr.ph
-  %unroll_iter = and i64 %5, -2
+  %unroll_iter = and i32 %4, -2
   br label %.critedge
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %.critedge
-  %6 = and i64 %3, 2
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
+  %5 = and i32 %2, 2
+  %lcmp.mod.not.not = icmp eq i32 %5, 0
   br i1 %lcmp.mod.not.not, label %.critedge.epil.preheader, label %.preheader
 
 .critedge.epil.preheader:                         ; preds = %.preheader.loopexit.unr-lcssa, %.critedge.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.critedge.lr.ph ], [ %indvars.iv.next.1, %.preheader.loopexit.unr-lcssa ]
-  %lcmp.mod176 = trunc i64 %5 to i1
+  %lcmp.mod176 = trunc i32 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod176)
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %.val68, i64 %indvars.iv.epil.init ; 2 uses
   %i.au = load i32, ptr %i.at, align 4, !tbaa !60
@@ -716,7 +715,7 @@ Vec_IntStart.exit93:                              ; preds = %Vec_IntAlloc.exit.t
 
 .critedge:                                        ; preds = %.critedge, %.critedge.lr.ph.new
   %indvars.iv = phi i64 [ 0, %.critedge.lr.ph.new ], [ %indvars.iv.next.1, %.critedge ] ; 3 uses
-  %niter = phi i64 [ 0, %.critedge.lr.ph.new ], [ %niter.next.1, %.critedge ]
+  %niter = phi i32 [ 0, %.critedge.lr.ph.new ], [ %niter.next.1, %.critedge ]
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %.val68, i64 %indvars.iv ; 2 uses
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !60
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 4
@@ -739,8 +738,8 @@ Vec_IntStart.exit93:                              ; preds = %Vec_IntAlloc.exit.t
   %i.bv = getelementptr inbounds [4 x i8], ptr %.val72163167, i64 %i.bu
   store i32 1, ptr %i.bv, align 4, !tbaa !60
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
-  %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
+  %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
+  %niter.ncmp.1.not = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %.preheader.loopexit.unr-lcssa, label %.critedge, !llvm.loop !328
 
 bb.e:                                             ; preds = %.lr.ph114, %bb.ad
