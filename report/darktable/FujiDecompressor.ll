@@ -204,8 +204,8 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_ev
   %.1.i67.i.i.i.i.i.i = select i1 %i.se, i32 %i.rv, i32 %i.rn
   %.0.i68.i.i.i.i.i.i = select i1 %i.sc, i32 %i.rn, i32 %i.rh
   %i.sf = shl nuw nsw i32 %i.rc, 1
-  %i.sg = add nuw nsw i32 %.0.i68.i.i.i.i.i.i, %i.sf
-  %i.sh = add nuw nsw i32 %i.sg, %.1.i67.i.i.i.i.i.i
+  %i.sg = add nuw nsw i32 %.0.i68.i.i.i.i.i.i, %.1.i67.i.i.i.i.i.i
+  %i.sh = add nuw nsw i32 %i.sg, %i.sf
   %i.si = lshr i32 %i.sh, 2
   br label %"_ZZN8rawspeed12_GLOBAL__N_121fuji_compressed_block19xtrans_decode_blockEiENK3$_0clENS0_8xt_linesEiRSt5arrayINS0_8int_pairELm41EEiii.exit.i.i.i.i.i"
 
@@ -283,8 +283,8 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_ev
   %.1.i.i.i.i.i.i.i = select i1 %i.tx, i32 %i.to, i32 %i.tg
   %.0.i.i.i.i.i.i.i = select i1 %i.tv, i32 %i.tg, i32 %i.ta
   %i.ty = shl nuw nsw i32 %i.sv, 1
-  %i.tz = add nuw nsw i32 %.0.i.i.i.i.i.i.i, %i.ty
-  %i.ua = add nuw nsw i32 %i.tz, %.1.i.i.i.i.i.i.i
+  %i.tz = add nuw nsw i32 %.0.i.i.i.i.i.i.i, %.1.i.i.i.i.i.i.i
+  %i.ua = add nuw nsw i32 %i.tz, %i.ty
   %i.ub = lshr i32 %i.ua, 2
   %i.uc = sub nsw i32 %i.sv, %i.to
   %i.ud = load i32, ptr %i.on, align 8, !tbaa !94 ; 2 uses
@@ -687,8 +687,8 @@ bb.ci:                                            ; preds = %"_ZZN8rawspeed12_GL
   %.1.i.i.i.i108.i.i.i = select i1 %i.aww, i32 %i.awn, i32 %i.awd
   %.0.i.i.i.i109.i.i.i = select i1 %i.awu, i32 %i.awd, i32 %i.avx
   %i.awx = shl nuw nsw i32 %i.avs, 1
-  %i.awy = add nuw nsw i32 %.0.i.i.i.i109.i.i.i, %i.awx
-  %i.awz = add nuw nsw i32 %i.awy, %.1.i.i.i.i108.i.i.i
+  %i.awy = add nuw nsw i32 %.0.i.i.i.i109.i.i.i, %.1.i.i.i.i108.i.i.i
+  %i.awz = add nuw nsw i32 %i.awy, %i.awx
   %i.axa = lshr i32 %i.awz, 2
   %i.axb = sub nsw i32 %i.avs, %i.awn
   %i.axc = load i32, ptr %i.on, align 8, !tbaa !94 ; 2 uses

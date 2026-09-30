@@ -204,8 +204,8 @@ bb.eu:                                            ; preds = %bb.et
   %.0.copyload.i3200 = load i32, ptr %i.aaw, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3200) #7, !srcloc !19
   %i.aax = select i1 %.not2910, i32 %i.q, i32 %.0.copyload.i3200 ; 3 uses
-  %i.aay = add i32 %i.aav, -1
-  %i.aaz = add i32 %i.aay, %i.aax                 ; 2 uses
+  %i.aay = add i32 %i.aav, %i.aax
+  %i.aaz = add i32 %i.aay, -1                     ; 2 uses
   %.not2912 = icmp ugt i32 %i.aaz, %i.aax
   br i1 %.not2912, label %.preheader.preheader, label %.loopexit
 

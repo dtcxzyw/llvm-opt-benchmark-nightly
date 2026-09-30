@@ -61,11 +61,11 @@ bb.a:
   %i.d = shl nuw nsw i32 %i.c, 13
   %i.e = add nuw nsw i32 %i.d, 939524096
   %i.f = icmp samesign ult i16 %i.b, 1024
-  %1 = select i1 %i.f, i32 0, i32 %i.e
   %i.g = icmp samesign ugt i16 %i.b, 31743
   %i.h = select i1 %i.g, i32 939524096, i32 0
-  %i.i = add nuw nsw i32 %1, %i.h
-  %i.j = or disjoint i32 %i.i, %i.a
+  %i.i = add nuw nsw i32 %i.e, %i.h
+  %1 = select i1 %i.f, i32 0, i32 %i.i
+  %i.j = or disjoint i32 %1, %i.a
   %i.k = bitcast i32 %i.j to float
   ret float %i.k
 }

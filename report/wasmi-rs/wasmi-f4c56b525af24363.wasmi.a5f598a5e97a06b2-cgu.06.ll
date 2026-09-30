@@ -202,36 +202,36 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_INtNtNtCskKLDkoKarTP_4core3num7nonzero7NonZerolEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2A_2Ip6decode9IpDecoderEB2I_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_INtNtNtCskKLDkoKarTP_4core3num7nonzero7NonZerolEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2A_2Ip6decode9IpDecoderEB2I_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsp_NtCs6kx5fqqPdgs_8wasmi_ir6decodelNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 4 uses
   %i.b = trunc i64 %i.a to i1                     ; 2 uses
   %i.c = and i64 %i.a, 65280
   %.not.i = icmp ult i64 %i.a, 4294967296
-  %.sroa.4.1.i = select i1 %i.b, i64 %i.c, i64 256
   %narrow = or i1 %.not.i, %i.b                   ; 2 uses
   %.sroa.61.0.insert.shift.i = and i64 %i.a, -4294967296
-  %spec.select = select i1 %narrow, i64 0, i64 %.sroa.61.0.insert.shift.i
   %spec.select17 = zext i1 %narrow to i64
-  %.sroa.5.0.insert.insert = or disjoint i64 %spec.select, %.sroa.4.1.i
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.insert, %spec.select17
+  %1 = or disjoint i64 %.sroa.61.0.insert.shift.i, 256
+  %2 = select i1 %narrow, i64 256, i64 %1
+  %.sroa.5.0.insert.insert18 = select i1 %i.b, i64 %i.c, i64 %2
+  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.insert18, %spec.select17
   ret i64 %.sroa.0.0.insert.insert
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_INtNtNtCskKLDkoKarTP_4core3num7nonzero7NonZeromEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2A_2Ip6decode9IpDecoderEB2I_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_INtNtNtCskKLDkoKarTP_4core3num7nonzero7NonZeromEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2A_2Ip6decode9IpDecoderEB2I_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 4 uses
   %i.b = trunc i64 %i.a to i1                     ; 2 uses
   %i.c = and i64 %i.a, 65280
   %.not.i = icmp ult i64 %i.a, 4294967296
-  %.sroa.4.1.i = select i1 %i.b, i64 %i.c, i64 256
   %narrow = or i1 %.not.i, %i.b                   ; 2 uses
   %.sroa.61.0.insert.shift.i = and i64 %i.a, -4294967296
-  %spec.select = select i1 %narrow, i64 0, i64 %.sroa.61.0.insert.shift.i
   %spec.select17 = zext i1 %narrow to i64
-  %.sroa.5.0.insert.insert = or disjoint i64 %spec.select, %.sroa.4.1.i
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.insert, %spec.select17
+  %1 = or disjoint i64 %.sroa.61.0.insert.shift.i, 256
+  %2 = select i1 %narrow, i64 256, i64 %1
+  %.sroa.5.0.insert.insert18 = select i1 %i.b, i64 %i.c, i64 %2
+  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.insert18, %spec.select17
   ret i64 %.sroa.0.0.insert.insert
 }
 

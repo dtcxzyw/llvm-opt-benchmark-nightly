@@ -205,15 +205,15 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i:     ; preds = %_ZN4llvm5APIntC2ERK
   %.pre.i.i = load i64, ptr %.sink.i.i, align 8
   %i.cx = icmp eq i32 %i.cw, 1
   %i.cy = shl i64 %.pre.i.i, 1
-  %storemerge.i.i.i = select i1 %i.cx, i64 0, i64 %i.cy
   %i.cz = sub nsw i32 0, %i.cw
   %i.da = and i32 %i.cz, 63
   %i.db = zext nneg i32 %i.da to i64
   %i.dc = lshr i64 -1, %i.db
   %i.dd = icmp eq i32 %i.cw, 0
   %.04.i.i.i.i = select i1 %i.dd, i64 0, i64 %i.dc, !prof !214
-  %i.de = and i64 %.04.i.i.i.i, %storemerge.i.i.i
-  store i64 %i.de, ptr %10, align 8, !tbaa !100, !alias.scope !814
+  %i.de = and i64 %.04.i.i.i.i, %i.cy
+  %13 = select i1 %i.cx, i64 0, i64 %i.de
+  store i64 %13, ptr %10, align 8, !tbaa !100, !alias.scope !814
   br label %_ZN4llvm5APIntD2Ev.exit28
 
 bb.r:                                             ; preds = %_ZN4llvm5APIntC2ERKS0_.exit.i.i
@@ -241,15 +241,15 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i22:   ; preds = %_ZN4llvm5APIntC2ERK
   %.pre.i.i24 = load i64, ptr %.sink.i.i23, align 8
   %i.dk = icmp eq i32 %i.dj, 1
   %i.dl = shl i64 %.pre.i.i24, 1
-  %storemerge.i.i.i25 = select i1 %i.dk, i64 0, i64 %i.dl
   %i.dm = sub nsw i32 0, %i.dj
   %i.dn = and i32 %i.dm, 63
   %i.do = zext nneg i32 %i.dn to i64
   %i.dp = lshr i64 -1, %i.do
   %i.dq = icmp eq i32 %i.dj, 0
   %.04.i.i.i.i26 = select i1 %i.dq, i64 0, i64 %i.dp, !prof !214
-  %i.dr = and i64 %.04.i.i.i.i26, %storemerge.i.i.i25
-  store i64 %i.dr, ptr %11, align 8, !tbaa !100, !alias.scope !817
+  %i.dr = and i64 %.04.i.i.i.i26, %i.dl
+  %14 = select i1 %i.dk, i64 0, i64 %i.dr
+  store i64 %14, ptr %11, align 8, !tbaa !100, !alias.scope !817
   br label %bb.u
 
 bb.t:                                             ; preds = %_ZN4llvm5APIntC2ERKS0_.exit.i.i20

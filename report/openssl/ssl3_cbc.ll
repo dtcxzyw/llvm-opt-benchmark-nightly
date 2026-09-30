@@ -204,8 +204,8 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag, %bb.
   %i.dy = and i32 %i.dx, %i.dt
   %i.dz = or i32 %i.dy, %i.dv
   %i.ea = trunc nuw i32 %i.dz to i8
-  %11 = select i1 %i.dr, i8 0, i8 %i.ea
-  %12 = and i8 %11, %i.dd                         ; 2 uses
+  %11 = and i8 %i.dd, %i.ea
+  %12 = select i1 %i.dr, i8 0, i8 %11             ; 2 uses
   %.not234 = icmp samesign ult i64 %.0199288, %i.cx
   br i1 %.not234, label %bb.aj, label %bb.ai
 

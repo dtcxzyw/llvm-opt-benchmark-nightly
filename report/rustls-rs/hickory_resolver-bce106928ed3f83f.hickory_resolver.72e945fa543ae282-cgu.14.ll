@@ -202,11 +202,11 @@ bb.a:
   %i.a = zext i8 %1 to i32                        ; 2 uses
   %i.b = icmp ult i8 %1, 32
   %i.c = lshr i32 -1, %i.a
-  %spec.select = select i1 %i.b, i32 %i.c, i32 0
   %i.d = icmp ult i8 %1, 31
   %i.e = lshr i32 2147483647, %i.a
   %.sroa.03.0 = select i1 %i.d, i32 %i.e, i32 0
-  %i.f = xor i32 %.sroa.03.0, %spec.select
+  %i.f = xor i32 %.sroa.03.0, %i.c
+  %2 = select i1 %i.b, i32 %i.f, i32 0
   %.val8 = load i32, ptr %0, align 1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
   %.val9 = load i8, ptr %i.g, align 1, !noundef !4
@@ -216,7 +216,7 @@ bb.a:
   %i.k = shl nsw i32 -1, %i.i
   %.sroa.0.0.i14 = select i1 %i.j, i32 %i.k, i32 0
   %i.l = tail call i32 @llvm.bswap.i32(i32 %.val8)
-  %i.m = and i32 %i.l, %i.f
+  %i.m = and i32 %i.l, %2
   %i.n = and i32 %i.m, %.sroa.0.0.i14
   %i.o = icmp ne i32 %i.n, 0
   ret i1 %i.o
