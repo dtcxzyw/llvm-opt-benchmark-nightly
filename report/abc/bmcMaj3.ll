@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.lr.ph47, %bb.g, %b
   br i1 %.not37.not, label %bb.b, label %._crit_edge54, !llvm.loop !242
 
 ._crit_edge54:                                    ; preds = %._crit_edge, %bb.a
-  %i.bl = phi i32 [ %i.o, %bb.a ], [ %i.bk, %._crit_edge ] ; 11 uses
+  %i.bl = phi i32 [ %i.o, %bb.a ], [ %i.bk, %._crit_edge ] ; 12 uses
   %.lcssa44 = phi ptr [ %i.n, %bb.a ], [ %i.bj, %._crit_edge ] ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.lcssa44, i64 16
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !55
@@ -222,18 +222,18 @@ bb.i:                                             ; preds = %._crit_edge54
 bb.j:                                             ; preds = %bb.i
   %i.br = icmp slt i32 %i.bl, 7
   %i.bs = add nsw i32 %i.bl, -6
-  %i.bt = shl nuw i32 1, %i.bs                    ; 2 uses
+  %i.bt = shl nuw i32 1, %i.bs
   %i.bu = select i1 %i.br, i32 1, i32 %i.bt       ; 9 uses
   %i.bv = icmp sgt i32 %i.bu, 0                   ; 2 uses
   br i1 %i.bv, label %.lr.ph.preheader.i.i, label %Abc_TtNot.exit.i.a
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.j
+  %wide.trip.count.i.i = zext nneg i32 %i.bu to i64 ; 3 uses
   %min.iters.check86 = icmp ult i32 %i.bu, 4
   br i1 %min.iters.check86, label %.lr.ph.i.i, label %vector.ph87
 
 vector.ph87:                                      ; preds = %.lr.ph.preheader.i.i
-  %3 = and i32 %i.bu, 2147483644
-  %n.vec88 = zext nneg i32 %3 to i64
+  %n.vec87 = and i64 %wide.trip.count.i.i, 2147483644
   br label %vector.body89
 
 vector.body89:                                    ; preds = %vector.body89, %vector.ph87
@@ -247,15 +247,15 @@ vector.body89:                                    ; preds = %vector.body89, %vec
   store <2 x i64> %i.by, ptr %i.bw, align 8, !tbaa !26
   store <2 x i64> %i.bz, ptr %i.bx, align 8, !tbaa !26
   %index.next92 = add nuw i64 %index90, 4         ; 2 uses
-  %i.ca = icmp eq i64 %index.next92, %n.vec88
-  br i1 %i.ca, label %Abc_TtNot.exit.i.a, label %vector.body89, !llvm.loop !243
+  %i.ca = icmp eq i64 %index.next92, %n.vec87
+  br i1 %i.ca, label %Abc_TtNot.exit.i, label %vector.body89, !llvm.loop !243
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.preheader.i.i
   %i.cb = load i64, ptr %i.bq, align 8, !tbaa !26
   %i.cc = xor i64 %i.cb, -1
   store i64 %i.cc, ptr %i.bq, align 8, !tbaa !26
   %exitcond.not.i.i = icmp eq i32 %i.bu, 1
-  br i1 %exitcond.not.i.i, label %Abc_TtNot.exit.i.a, label %.lr.ph.i.i.1
+  br i1 %exitcond.not.i.i, label %Abc_TtNot.exit.i, label %.lr.ph.i.i.1
 
 .lr.ph.i.i.1:                                     ; preds = %.lr.ph.i.i
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 2 uses
@@ -263,22 +263,27 @@ vector.body89:                                    ; preds = %vector.body89, %vec
   %i.cf = xor i64 %i.ce, -1
   store i64 %i.cf, ptr %i.cd, align 8, !tbaa !26
   %exitcond.not.i.i.1 = icmp eq i32 %i.bu, 2
-  br i1 %exitcond.not.i.i.1, label %Abc_TtNot.exit.i.a, label %.lr.ph.i.i.2
+  br i1 %exitcond.not.i.i.1, label %Abc_TtNot.exit.i, label %.lr.ph.i.i.2
 
 .lr.ph.i.i.2:                                     ; preds = %.lr.ph.i.i.1
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bq, i64 16 ; 2 uses
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !26
   %i.ci = xor i64 %i.ch, -1
   store i64 %i.ci, ptr %i.cg, align 8, !tbaa !26
-  br label %Abc_TtNot.exit.i.a
+  br label %Abc_TtNot.exit.i
 
-Abc_TtNot.exit.i.a:                               ; preds = %vector.body89, %.lr.ph.i.i, %.lr.ph.i.i.1, %.lr.ph.i.i.2, %bb.j
-  %4 = icmp samesign ugt i32 %i.bl, 5
-  %i.cj = add nsw i32 %i.bl, -2                   ; 6 uses
+Abc_TtNot.exit.i:                                 ; preds = %vector.body89, %.lr.ph.i.i, %.lr.ph.i.i.1, %.lr.ph.i.i.2
+  %3 = add nsw i32 %i.bl, -2                      ; 3 uses
+  %4 = icmp slt i32 %i.bl, 2
+  br i1 %4, label %bb.k, label %.lr.ph.i58.i
+
+Abc_TtNot.exit.i.a:                               ; preds = %bb.j
+  %i.cj = add nsw i32 %i.bl, -2                   ; 2 uses
   %i.ck = icmp slt i32 %i.bl, 2
-  br i1 %i.ck, label %bb.k, label %5
+  br i1 %i.ck, label %bb.k, label %Abc_TtNot.exit67.i
 
-bb.k:                                             ; preds = %Abc_TtNot.exit.i.a
+bb.k:                                             ; preds = %Abc_TtNot.exit.i.a, %Abc_TtNot.exit.i
+  %5 = phi i32 [ %i.cj, %Abc_TtNot.exit.i.a ], [ %3, %Abc_TtNot.exit.i ]
   %i.cl = load i64, ptr %i.bq, align 8, !tbaa !26
   %i.cm = trunc i64 %i.cl to i32
   %i.cn = and i32 %i.cm, 15                       ; 2 uses
@@ -290,20 +295,14 @@ bb.k:                                             ; preds = %Abc_TtNot.exit.i.a
   store i8 %.0.i.i.i, ptr %i.a, align 16, !tbaa !74
   br label %Abc_TtWriteHexRev.exit.i
 
-5:                                                ; preds = %Abc_TtNot.exit.i.a
-  %6 = icmp samesign ult i32 %i.bl, 7
-  %7 = select i1 %6, i32 1, i32 %i.bt             ; 2 uses
-  %.not26.i.i = icmp slt i32 %7, 1
-  br i1 %.not26.i.i, label %Abc_TtWriteHexRev.exit.i, label %.lr.ph.i58.i
-
-.lr.ph.i58.i:                                     ; preds = %5
-  %8 = zext nneg i32 %7 to i64                    ; 2 uses
-  %.idx.i.i = shl nuw nsw i64 %8, 3
+.lr.ph.i58.i:                                     ; preds = %Abc_TtNot.exit.i
+  %6 = icmp samesign ugt i32 %i.bl, 5
+  %.idx.i.i = shl nuw nsw i64 %wide.trip.count.i.i, 3
   %i.cs = getelementptr i8, ptr %i.bq, i64 %.idx.i.i
   %.01825.i.i = getelementptr i8, ptr %i.cs, i64 -8
-  %notmask.i.i = shl nsw i32 -1, %i.cj
+  %notmask.i.i = shl nsw i32 -1, %3
   %i.ct = xor i32 %notmask.i.i, -1
-  %i.cu = select i1 %4, i32 15, i32 %i.ct         ; 2 uses
+  %i.cu = select i1 %6, i32 15, i32 %i.ct         ; 2 uses
   %i.cv = zext nneg i32 %i.cu to i64              ; 9 uses
   %i.cw = add nuw nsw i64 %i.cv, 1                ; 2 uses
   %min.iters.check105 = icmp eq i32 %i.cu, 0
@@ -331,7 +330,7 @@ bb.l:                                             ; preds = %.loopexit.i.i, %.lr
   br i1 %min.iters.check105, label %scalar.ph104.preheader, label %vector.memcheck96
 
 vector.memcheck96:                                ; preds = %bb.l
-  %i.cz = sub i64 %8, %indvar98
+  %i.cz = sub i64 %wide.trip.count.i.i, %indvar98
   %i.da = shl i64 %i.cz, 3
   %scevgep100 = getelementptr i8, ptr %i.bq, i64 %i.da
   %i.db = getelementptr i8, ptr %.01927.i.i, i64 %i.cv
@@ -440,7 +439,8 @@ scalar.ph104:                                     ; preds = %scalar.ph104.prol.l
   %exitcond96.not.i.1 = icmp eq ptr %i.ep, %scevgep95.i
   br i1 %exitcond96.not.i.1, label %.loopexit.i.i, label %scalar.ph104, !llvm.loop !249
 
-Abc_TtWriteHexRev.exit.i:                         ; preds = %.loopexit.i.i, %5, %bb.k
+Abc_TtWriteHexRev.exit.i:                         ; preds = %.loopexit.i.i, %bb.k
+  %7 = phi i32 [ %5, %bb.k ], [ %3, %.loopexit.i.i ] ; 5 uses
   br i1 %i.bv, label %.lr.ph.preheader.i61.i, label %Abc_TtNot.exit67.i
 
 .lr.ph.preheader.i61.i:                           ; preds = %Abc_TtWriteHexRev.exit.i
@@ -658,8 +658,8 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %exitcond.not.i.1 = icmp eq ptr %i.ib, %scevgep.i
   br i1 %exitcond.not.i.1, label %.loopexit.i79.i, label %scalar.ph, !llvm.loop !255
 
-Abc_TtNot.exit67.i:                               ; preds = %.loopexit.i79.i, %vector.body126, %.lr.ph.i63.i, %.lr.ph.i63.i.1, %.lr.ph.i63.i.2, %bb.n, %bb.m, %Abc_TtWriteHexRev.exit.i
-  %.pre-phi.i = phi i32 [ %i.cj, %vector.body126 ], [ %i.cj, %Abc_TtWriteHexRev.exit.i ], [ %i.fq, %bb.n ], [ %i.fq, %bb.m ], [ %i.cj, %.lr.ph.i63.i ], [ %i.cj, %.lr.ph.i63.i.2 ], [ %i.cj, %.lr.ph.i63.i.1 ], [ %i.fq, %.loopexit.i79.i ]
+Abc_TtNot.exit67.i:                               ; preds = %.loopexit.i79.i, %vector.body126, %.lr.ph.i63.i, %.lr.ph.i63.i.1, %.lr.ph.i63.i.2, %bb.n, %bb.m, %Abc_TtWriteHexRev.exit.i, %Abc_TtNot.exit.i.a
+  %.pre-phi.i = phi i32 [ %i.cj, %Abc_TtNot.exit.i.a ], [ %7, %vector.body126 ], [ %i.fq, %bb.n ], [ %i.fq, %bb.m ], [ %7, %Abc_TtWriteHexRev.exit.i ], [ %7, %.lr.ph.i63.i ], [ %7, %.lr.ph.i63.i.2 ], [ %7, %.lr.ph.i63.i.1 ], [ %i.fq, %.loopexit.i79.i ]
   %i.in = shl nuw i32 1, %.pre-phi.i
   %i.io = sext i32 %i.in to i64
   %i.ip = getelementptr inbounds i8, ptr %i.a, i64 %i.io

@@ -205,7 +205,7 @@ bb.lm:                                            ; preds = %bb.kp
   br label %bb.ln
 
 bb.ln:                                            ; preds = %bb.kr, %bb.lk, %bb.lm
-  %i.bpg = icmp sgt i32 %2, 100
+  %i.bpg = icmp sgt i32 %2, 100                   ; 4 uses
   br i1 %i.bpg, label %bb.lo, label %bb.lp
 
 bb.lo:                                            ; preds = %bb.ln
@@ -472,8 +472,7 @@ bb.md:                                            ; preds = %.noexc594
           to label %.noexc596 unwind label %.loopexit.split-lp1442.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !599
 
 bb.me:                                            ; preds = %.noexc594
-  %28 = icmp samesign ugt i32 %2, 100
-  br i1 %28, label %bb.mf, label %.thread122.i
+  br i1 %i.bpg, label %bb.mf, label %.thread122.i
 
 bb.mf:                                            ; preds = %bb.me
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z) #26
@@ -876,7 +875,6 @@ bb.nf:                                            ; preds = %bb.ne, %.noexc620
 
 .lr.ph126.i:                                      ; preds = %.preheader.i
   %i.bzn = icmp samesign ugt i32 %2, 106
-  %29 = icmp samesign ugt i32 %2, 100             ; 2 uses
   %i.bzo = getelementptr inbounds nuw i8, ptr %i.x, i64 4
   %i.bzp = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.bzq = icmp samesign ugt i32 %2, 109
@@ -1246,7 +1244,7 @@ bb.nw:                                            ; preds = %bb.nm
           to label %.noexc641 unwind label %.loopexit.split-lp1442.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit, !inline_history !599
 
 .noexc641:                                        ; preds = %.noexc640
-  br i1 %29, label %bb.nx, label %bb.nz
+  br i1 %i.bpg, label %bb.nx, label %bb.nz
 
 bb.nx:                                            ; preds = %.noexc641
   %i.cew = getelementptr inbounds nuw i8, ptr %i.ccl, i64 40 ; 3 uses
@@ -1343,7 +1341,7 @@ bb.nz:                                            ; preds = %.noexc641
 
 .noexc648:                                        ; preds = %.noexc647
   %i.cgn = getelementptr inbounds nuw i8, ptr %i.ccl, i64 152 ; 2 uses
-  br i1 %29, label %bb.oa, label %bb.ob
+  br i1 %i.bpg, label %bb.oa, label %bb.ob
 
 bb.oa:                                            ; preds = %.noexc648
   %i.cgo = load ptr, ptr %0, align 8, !tbaa !33

@@ -205,7 +205,7 @@ bb.da:                                            ; preds = %bb.cz, %_ZNSt7__cxx
   %i.yl = getelementptr inbounds nuw i8, ptr %16, i64 88
   %i.ym = load double, ptr %i.yl, align 8, !tbaa !622 ; 2 uses
   %i.yn = fcmp ogt double %i.ym, 1.000000e-03
-  %i.yo = icmp sgt i32 %2, 2                      ; 8 uses
+  %i.yo = icmp sgt i32 %2, 2                      ; 13 uses
   %or.cond = or i1 %i.yo, %i.yn
   br i1 %or.cond, label %bb.db, label %bb.dg
 
@@ -608,8 +608,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit581: ; preds = %bb
 .thread1137:                                      ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i558, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit578, %bb.fy
   %i.ajx = load i64, ptr %i.g, align 8, !tbaa !288
   %i.ajy = icmp ne i64 %i.ajx, 0
-  %60 = icmp samesign ugt i32 %2, 2               ; 5 uses
-  %or.cond20 = or i1 %60, %i.ajy
+  %or.cond20 = or i1 %i.yo, %i.ajy
   br i1 %or.cond20, label %bb.hc, label %bb.hd
 
 bb.hc:                                            ; preds = %.thread1137
@@ -629,11 +628,11 @@ bb.he:                                            ; preds = %bb.hd
 bb.hf:                                            ; preds = %bb.he
   %i.akb = load i8, ptr %i.ou, align 1, !tbaa !460, !range !395, !noundef !326
   %i.akc = trunc nuw i8 %i.akb to i1
-  %or.cond22 = or i1 %60, %i.akc
+  %or.cond22 = or i1 %i.yo, %i.akc
   br i1 %or.cond22, label %bb.hh, label %bb.hi
 
 bb.hg:                                            ; preds = %bb.he
-  br i1 %60, label %bb.hh, label %bb.hi
+  br i1 %i.yo, label %bb.hh, label %bb.hi
 
 bb.hh:                                            ; preds = %bb.hg, %bb.hf, %bb.hd
   invoke void @_ZN3fmt3v125printIJRmS2_EEEvRSoNS0_7fstringIJDpT_EE1tEDpOS5_(ptr noundef nonnull align 8 dereferenceable(8) %19, ptr nonnull @.str.157, i64 34, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f)
@@ -642,7 +641,7 @@ bb.hh:                                            ; preds = %bb.hg, %bb.hf, %bb.
 bb.hi:                                            ; preds = %bb.hh, %bb.hf, %bb.hg
   %i.akd = load i64, ptr %i.h, align 8, !tbaa !288 ; 2 uses
   %i.ake = icmp ne i64 %i.akd, 0
-  %or.cond25 = or i1 %60, %i.ake
+  %or.cond25 = or i1 %i.yo, %i.ake
   br i1 %or.cond25, label %bb.hj, label %bb.hm
 
 bb.hj:                                            ; preds = %bb.hi
@@ -671,7 +670,7 @@ bb.hm:                                            ; preds = %bb.hi, %bb.hk
   %i.akm = sub i64 %i.akk, %i.akl                 ; 2 uses
   %i.akn = ashr exact i64 %i.akm, 3               ; 2 uses
   %i.ako = icmp ugt i64 %i.akn, 49
-  %or.cond28 = or i1 %60, %i.ako
+  %or.cond28 = or i1 %i.yo, %i.ako
   br i1 %or.cond28, label %bb.hn, label %bb.mr
 
 bb.hn:                                            ; preds = %bb.hm

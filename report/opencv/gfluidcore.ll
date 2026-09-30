@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %.noexc13, %bb.b
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc13 ], [ %i.e, %bb.b ] ; 2 uses
   %i.j = phi ptr [ %.pre.i.i, %.noexc13 ], [ %i.d, %bb.b ] ; 3 uses
   %i.k = phi ptr [ %i.i, %.noexc13 ], [ null, %bb.b ] ; 8 uses
-  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 4
+  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 4                     ; 2 uses
   br i1 %i.m, label %bb.e, label %bb.f, !prof !146
 
 bb.e:                                             ; preds = %bb.d
@@ -294,8 +294,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i17: ; preds = %bb.k
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.l ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.l, 4
-  br i1 %6, label %bb.l, label %bb.m, !prof !164
+  br i1 %i.m, label %bb.l, label %bb.m, !prof !164
 
 bb.l:                                             ; preds = %.noexc20
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ai, ptr align 4 %i.k, i64 %i.l, i1 false)
@@ -698,8 +697,8 @@ bb.d:                                             ; preds = %.noexc13, %bb.b
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc13 ], [ %i.e, %bb.b ] ; 2 uses
   %i.j = phi ptr [ %.pre.i.i, %.noexc13 ], [ %i.d, %bb.b ] ; 3 uses
   %i.k = phi ptr [ %i.i, %.noexc13 ], [ null, %bb.b ] ; 8 uses
-  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 4
+  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 4                     ; 2 uses
   br i1 %i.m, label %bb.e, label %bb.f, !prof !146
 
 bb.e:                                             ; preds = %bb.d
@@ -787,8 +786,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i17: ; preds = %bb.k
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.l ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.l, 4
-  br i1 %6, label %bb.l, label %bb.m, !prof !164
+  br i1 %i.m, label %bb.l, label %bb.m, !prof !164
 
 bb.l:                                             ; preds = %.noexc20
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ai, ptr align 4 %i.k, i64 %i.l, i1 false)
@@ -1191,8 +1189,8 @@ bb.d:                                             ; preds = %.noexc13, %bb.b
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc13 ], [ %i.e, %bb.b ] ; 2 uses
   %i.j = phi ptr [ %.pre.i.i, %.noexc13 ], [ %i.d, %bb.b ] ; 3 uses
   %i.k = phi ptr [ %i.i, %.noexc13 ], [ null, %bb.b ] ; 8 uses
-  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 4
+  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 4                     ; 2 uses
   br i1 %i.m, label %bb.e, label %bb.f, !prof !146
 
 bb.e:                                             ; preds = %bb.d
@@ -1280,8 +1278,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i17: ; preds = %bb.k
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.l ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.l, 4
-  br i1 %6, label %bb.l, label %bb.m, !prof !164
+  br i1 %i.m, label %bb.l, label %bb.m, !prof !164
 
 bb.l:                                             ; preds = %.noexc20
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ai, ptr align 4 %i.k, i64 %i.l, i1 false)
@@ -1684,8 +1681,8 @@ bb.d:                                             ; preds = %.noexc13, %bb.b
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc13 ], [ %i.e, %bb.b ] ; 2 uses
   %i.j = phi ptr [ %.pre.i.i, %.noexc13 ], [ %i.d, %bb.b ] ; 3 uses
   %i.k = phi ptr [ %i.i, %.noexc13 ], [ null, %bb.b ] ; 8 uses
-  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 4
+  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 4                     ; 2 uses
   br i1 %i.m, label %bb.e, label %bb.f, !prof !146
 
 bb.e:                                             ; preds = %bb.d
@@ -1773,8 +1770,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i17: ; preds = %bb.k
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.l ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.l, 4
-  br i1 %6, label %bb.l, label %bb.m, !prof !164
+  br i1 %i.m, label %bb.l, label %bb.m, !prof !164
 
 bb.l:                                             ; preds = %.noexc20
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ai, ptr align 4 %i.k, i64 %i.l, i1 false)
@@ -2177,8 +2173,8 @@ bb.d:                                             ; preds = %.noexc13, %bb.b
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc13 ], [ %i.e, %bb.b ] ; 2 uses
   %i.j = phi ptr [ %.pre.i.i, %.noexc13 ], [ %i.d, %bb.b ] ; 3 uses
   %i.k = phi ptr [ %i.i, %.noexc13 ], [ null, %bb.b ] ; 8 uses
-  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 4
+  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 4                     ; 2 uses
   br i1 %i.m, label %bb.e, label %bb.f, !prof !146
 
 bb.e:                                             ; preds = %bb.d
@@ -2266,8 +2262,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i17: ; preds = %bb.k
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.l ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.l, 4
-  br i1 %6, label %bb.l, label %bb.m, !prof !164
+  br i1 %i.m, label %bb.l, label %bb.m, !prof !164
 
 bb.l:                                             ; preds = %.noexc20
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ai, ptr align 4 %i.k, i64 %i.l, i1 false)
@@ -2670,8 +2665,8 @@ bb.d:                                             ; preds = %.noexc13, %bb.b
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc13 ], [ %i.e, %bb.b ] ; 2 uses
   %i.j = phi ptr [ %.pre.i.i, %.noexc13 ], [ %i.d, %bb.b ] ; 3 uses
   %i.k = phi ptr [ %i.i, %.noexc13 ], [ null, %bb.b ] ; 8 uses
-  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 4
+  %i.l = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 4                     ; 2 uses
   br i1 %i.m, label %bb.e, label %bb.f, !prof !146
 
 bb.e:                                             ; preds = %bb.d
@@ -2759,8 +2754,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i17: ; preds = %bb.k
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.l ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.l, 4
-  br i1 %6, label %bb.l, label %bb.m, !prof !164
+  br i1 %i.m, label %bb.l, label %bb.m, !prof !164
 
 bb.l:                                             ; preds = %.noexc20
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ai, ptr align 4 %i.k, i64 %i.l, i1 false)
@@ -3163,8 +3157,8 @@ bb.h:                                             ; preds = %.noexc16, %bb.f
   %.pre-phi.i = phi i64 [ %.pre2.i, %.noexc16 ], [ %i.q, %bb.f ] ; 2 uses
   %i.v = phi ptr [ %.pre.i, %.noexc16 ], [ %i.p, %bb.f ] ; 3 uses
   %i.w = phi ptr [ %i.u, %.noexc16 ], [ null, %bb.f ] ; 8 uses
-  %i.x = sub i64 %.pre-phi.i, %.pre-phi4.i        ; 10 uses
-  %i.y = icmp sgt i64 %i.x, 4
+  %i.x = sub i64 %.pre-phi.i, %.pre-phi4.i        ; 9 uses
+  %i.y = icmp sgt i64 %i.x, 4                     ; 2 uses
   br i1 %i.y, label %bb.i, label %bb.j, !prof !146
 
 bb.i:                                             ; preds = %bb.h
@@ -3252,8 +3246,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i: ; preds = %bb.o
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.x ; 4 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %6, i64 48
   store ptr %i.aw, ptr %i.ax, align 8, !tbaa !141
-  %7 = icmp samesign ugt i64 %i.x, 4
-  br i1 %7, label %bb.p, label %bb.q, !prof !164
+  br i1 %i.y, label %bb.p, label %bb.q, !prof !164
 
 bb.p:                                             ; preds = %.noexc21
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.au, ptr align 4 %i.w, i64 %i.x, i1 false)
@@ -3656,8 +3649,8 @@ bb.g:                                             ; preds = %.noexc11, %_ZN2cv6d
   %.pre-phi.i = phi i64 [ %.pre2.i, %.noexc11 ], [ %i.o, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 2 uses
   %i.t = phi ptr [ %.pre.i, %.noexc11 ], [ %i.n, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 5 uses
   %i.u = phi ptr [ %i.s, %.noexc11 ], [ null, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 8 uses
-  %i.v = sub i64 %.pre-phi.i, %.pre-phi4.i        ; 10 uses
-  %i.w = icmp sgt i64 %i.v, 4
+  %i.v = sub i64 %.pre-phi.i, %.pre-phi4.i        ; 9 uses
+  %i.w = icmp sgt i64 %i.v, 4                     ; 2 uses
   br i1 %i.w, label %bb.h, label %bb.i, !prof !146
 
 bb.h:                                             ; preds = %bb.g
@@ -3727,8 +3720,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i: ; preds = %bb.l
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.v ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.am, ptr %i.an, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.v, 4
-  br i1 %6, label %bb.m, label %bb.n, !prof !164
+  br i1 %i.w, label %bb.m, label %bb.n, !prof !164
 
 bb.m:                                             ; preds = %.noexc13
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ak, ptr align 4 %i.u, i64 %i.v, i1 false)
@@ -4131,8 +4123,8 @@ bb.g:                                             ; preds = %.noexc11, %_ZN2cv6d
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc11 ], [ %i.o, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 2 uses
   %i.t = phi ptr [ %.pre.i.i, %.noexc11 ], [ %i.n, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 5 uses
   %i.u = phi ptr [ %i.s, %.noexc11 ], [ null, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 8 uses
-  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.w = icmp sgt i64 %i.v, 4
+  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.w = icmp sgt i64 %i.v, 4                     ; 2 uses
   br i1 %i.w, label %bb.h, label %bb.i, !prof !146
 
 bb.h:                                             ; preds = %bb.g
@@ -4203,8 +4195,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i13: ; preds = %bb.l
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.v ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.am, ptr %i.an, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.v, 4
-  br i1 %6, label %bb.m, label %bb.n, !prof !164
+  br i1 %i.w, label %bb.m, label %bb.n, !prof !164
 
 bb.m:                                             ; preds = %.noexc16
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ak, ptr align 4 %i.u, i64 %i.v, i1 false)
@@ -4607,8 +4598,8 @@ bb.g:                                             ; preds = %.noexc11, %_ZN2cv6d
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc11 ], [ %i.o, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 2 uses
   %i.t = phi ptr [ %.pre.i.i, %.noexc11 ], [ %i.n, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 5 uses
   %i.u = phi ptr [ %i.s, %.noexc11 ], [ null, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 8 uses
-  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.w = icmp sgt i64 %i.v, 4
+  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.w = icmp sgt i64 %i.v, 4                     ; 2 uses
   br i1 %i.w, label %bb.h, label %bb.i, !prof !146
 
 bb.h:                                             ; preds = %bb.g
@@ -4679,8 +4670,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i13: ; preds = %bb.l
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.v ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.am, ptr %i.an, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.v, 4
-  br i1 %6, label %bb.m, label %bb.n, !prof !164
+  br i1 %i.w, label %bb.m, label %bb.n, !prof !164
 
 bb.m:                                             ; preds = %.noexc16
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ak, ptr align 4 %i.u, i64 %i.v, i1 false)
@@ -5083,8 +5073,8 @@ bb.g:                                             ; preds = %.noexc11, %_ZN2cv6d
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc11 ], [ %i.o, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 2 uses
   %i.t = phi ptr [ %.pre.i.i, %.noexc11 ], [ %i.n, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 5 uses
   %i.u = phi ptr [ %i.s, %.noexc11 ], [ null, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 8 uses
-  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.w = icmp sgt i64 %i.v, 4
+  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.w = icmp sgt i64 %i.v, 4                     ; 2 uses
   br i1 %i.w, label %bb.h, label %bb.i, !prof !146
 
 bb.h:                                             ; preds = %bb.g
@@ -5155,8 +5145,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i13: ; preds = %bb.l
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.v ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.am, ptr %i.an, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.v, 4
-  br i1 %6, label %bb.m, label %bb.n, !prof !164
+  br i1 %i.w, label %bb.m, label %bb.n, !prof !164
 
 bb.m:                                             ; preds = %.noexc16
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ak, ptr align 4 %i.u, i64 %i.v, i1 false)
@@ -5559,8 +5548,8 @@ bb.g:                                             ; preds = %.noexc11, %_ZN2cv6d
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc11 ], [ %i.o, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 2 uses
   %i.t = phi ptr [ %.pre.i.i, %.noexc11 ], [ %i.n, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 5 uses
   %i.u = phi ptr [ %i.s, %.noexc11 ], [ null, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 8 uses
-  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.w = icmp sgt i64 %i.v, 4
+  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.w = icmp sgt i64 %i.v, 4                     ; 2 uses
   br i1 %i.w, label %bb.h, label %bb.i, !prof !146
 
 bb.h:                                             ; preds = %bb.g
@@ -5631,8 +5620,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i13: ; preds = %bb.l
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.v ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.am, ptr %i.an, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.v, 4
-  br i1 %6, label %bb.m, label %bb.n, !prof !164
+  br i1 %i.w, label %bb.m, label %bb.n, !prof !164
 
 bb.m:                                             ; preds = %.noexc16
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ak, ptr align 4 %i.u, i64 %i.v, i1 false)
@@ -6035,8 +6023,8 @@ bb.g:                                             ; preds = %.noexc11, %_ZN2cv6d
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc11 ], [ %i.o, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 2 uses
   %i.t = phi ptr [ %.pre.i.i, %.noexc11 ], [ %i.n, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 5 uses
   %i.u = phi ptr [ %i.s, %.noexc11 ], [ null, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 8 uses
-  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.w = icmp sgt i64 %i.v, 4
+  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.w = icmp sgt i64 %i.v, 4                     ; 2 uses
   br i1 %i.w, label %bb.h, label %bb.i, !prof !146
 
 bb.h:                                             ; preds = %bb.g
@@ -6107,8 +6095,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i13: ; preds = %bb.l
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.v ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.am, ptr %i.an, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.v, 4
-  br i1 %6, label %bb.m, label %bb.n, !prof !164
+  br i1 %i.w, label %bb.m, label %bb.n, !prof !164
 
 bb.m:                                             ; preds = %.noexc16
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ak, ptr align 4 %i.u, i64 %i.v, i1 false)
@@ -6511,8 +6498,8 @@ bb.g:                                             ; preds = %.noexc11, %_ZN2cv6d
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc11 ], [ %i.o, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 2 uses
   %i.t = phi ptr [ %.pre.i.i, %.noexc11 ], [ %i.n, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 5 uses
   %i.u = phi ptr [ %i.s, %.noexc11 ], [ null, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit ] ; 8 uses
-  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.w = icmp sgt i64 %i.v, 4
+  %i.v = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.w = icmp sgt i64 %i.v, 4                     ; 2 uses
   br i1 %i.w, label %bb.h, label %bb.i, !prof !146
 
 bb.h:                                             ; preds = %bb.g
@@ -6583,8 +6570,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i13: ; preds = %bb.l
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.v ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 48
   store ptr %i.am, ptr %i.an, align 8, !tbaa !141
-  %6 = icmp samesign ugt i64 %i.v, 4
-  br i1 %6, label %bb.m, label %bb.n, !prof !164
+  br i1 %i.w, label %bb.m, label %bb.n, !prof !164
 
 bb.m:                                             ; preds = %.noexc16
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ak, ptr align 4 %i.u, i64 %i.v, i1 false)
@@ -6987,8 +6973,8 @@ bb.i:                                             ; preds = %.noexc20, %_ZN2cv6d
   %.pre-phi.i.i = phi i64 [ %.pre12.i.i, %.noexc20 ], [ %i.s, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit18 ] ; 2 uses
   %i.x = phi ptr [ %.pre.i.i, %.noexc20 ], [ %i.r, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit18 ] ; 5 uses
   %i.y = phi ptr [ %i.w, %.noexc20 ], [ null, %_ZN2cv6detail11get_in_metaINS_7GScalarEEENSt9enable_ifIXntsr15is_nongapi_typeIT_EE5valueENS0_8MetaTypeIS4_E4typeEE4typeERKSt6vectorINS_4util7variantIJNSB_9monostateENS_8GMatDescENS_11GScalarDescENS_10GArrayDescENS_11GOpaqueDescENS_10GFrameDescEEEESaISJ_EERKSA_INS_4GArgESaISO_EEi.exit18 ] ; 8 uses
-  %i.z = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 10 uses
-  %i.aa = icmp sgt i64 %i.z, 4
+  %i.z = sub i64 %.pre-phi.i.i, %.pre-phi14.i.i   ; 9 uses
+  %i.aa = icmp sgt i64 %i.z, 4                    ; 2 uses
   br i1 %i.aa, label %bb.j, label %bb.k, !prof !146
 
 bb.j:                                             ; preds = %bb.i
@@ -7061,8 +7047,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i22: ; preds = %bb.n
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.z ; 4 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 48
   store ptr %i.aq, ptr %i.ar, align 8, !tbaa !141
-  %7 = icmp samesign ugt i64 %i.z, 4
-  br i1 %7, label %bb.o, label %bb.p, !prof !164
+  br i1 %i.aa, label %bb.o, label %bb.p, !prof !164
 
 bb.o:                                             ; preds = %.noexc25
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ao, ptr align 4 %i.y, i64 %i.z, i1 false)

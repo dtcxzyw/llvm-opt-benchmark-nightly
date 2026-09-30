@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i.i.i = phi i1 [ %i.j, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %.pre, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i ], [ %i.d, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %i.i, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i ], [ null, %bb.a ] ; 8 uses
-  %i.m = sub i64 %.pre-phi, %.pre-phi14           ; 10 uses
-  %i.n = icmp sgt i64 %i.m, 4
+  %i.m = sub i64 %.pre-phi, %.pre-phi14           ; 9 uses
+  %i.n = icmp sgt i64 %i.m, 4                     ; 2 uses
   br i1 %i.n, label %bb.d, label %bb.e, !prof !64
 
 bb.d:                                             ; preds = %bb.c
@@ -261,8 +261,7 @@ _ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %_ZN7testing
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.m ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.aa, ptr %i.ab, align 8, !tbaa !40
-  %2 = icmp samesign ugt i64 %i.m, 4
-  br i1 %2, label %bb.g, label %bb.h, !prof !73
+  br i1 %i.n, label %bb.g, label %bb.h, !prof !73
 
 bb.g:                                             ; preds = %.noexc1
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.y, ptr align 4 %i.l, i64 %i.m, i1 false)
@@ -665,8 +664,8 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i.i.i.i = phi i1 [ %i.j, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %.pre, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i ], [ %i.d, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %i.i, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i ], [ null, %bb.a ] ; 8 uses
-  %i.m = sub i64 %.pre-phi, %.pre-phi14           ; 10 uses
-  %i.n = icmp sgt i64 %i.m, 4
+  %i.m = sub i64 %.pre-phi, %.pre-phi14           ; 9 uses
+  %i.n = icmp sgt i64 %i.m, 4                     ; 2 uses
   br i1 %i.n, label %bb.d, label %bb.e, !prof !64
 
 bb.d:                                             ; preds = %bb.c
@@ -721,8 +720,7 @@ _ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i.i: ; preds = %_ZN7testi
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.m ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.aa, ptr %i.ab, align 8, !tbaa !40
-  %2 = icmp samesign ugt i64 %i.m, 4
-  br i1 %2, label %bb.g, label %bb.h, !prof !73
+  br i1 %i.n, label %bb.g, label %bb.h, !prof !73
 
 bb.g:                                             ; preds = %.noexc1
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.y, ptr align 4 %i.l, i64 %i.m, i1 false)
@@ -802,8 +800,8 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i.i.i = phi i1 [ %i.j, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %.pre, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i ], [ %i.d, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %i.i, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i ], [ null, %bb.a ] ; 8 uses
-  %i.m = sub i64 %.pre-phi, %.pre-phi14           ; 10 uses
-  %i.n = icmp sgt i64 %i.m, 4
+  %i.m = sub i64 %.pre-phi, %.pre-phi14           ; 9 uses
+  %i.n = icmp sgt i64 %i.m, 4                     ; 2 uses
   br i1 %i.n, label %bb.d, label %bb.e, !prof !64
 
 bb.d:                                             ; preds = %bb.c
@@ -858,8 +856,7 @@ _ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %_ZN7testing
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.m ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.aa, ptr %i.ab, align 8, !tbaa !40
-  %2 = icmp samesign ugt i64 %i.m, 4
-  br i1 %2, label %bb.g, label %bb.h, !prof !73
+  br i1 %i.n, label %bb.g, label %bb.h, !prof !73
 
 bb.g:                                             ; preds = %.noexc1
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.y, ptr align 4 %i.l, i64 %i.m, i1 false)

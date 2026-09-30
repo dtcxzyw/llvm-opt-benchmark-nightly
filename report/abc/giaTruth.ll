@@ -205,8 +205,8 @@ bb.a:
   store ptr %i.g, ptr %i.h, align 8, !tbaa !38
   %i.i = icmp slt i32 %1, 7
   %i.j = add nsw i32 %1, -6
-  %i.k = shl nuw i32 1, %i.j                      ; 2 uses
-  %i.l = select i1 %i.i, i32 1, i32 %i.k          ; 2 uses
+  %i.k = shl nuw i32 1, %i.j
+  %i.l = select i1 %i.i, i32 1, i32 %i.k          ; 4 uses
   %i.m = tail call noalias dereferenceable_or_null(48) ptr @calloc(i64 noundef 1, i64 noundef 48) #27 ; 12 uses
   store i32 %i.l, ptr %i.m, align 8, !tbaa !80
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
@@ -423,9 +423,7 @@ bb.r:                                             ; preds = %bb.h, %Vec_IntPush.
   %i.cn = icmp samesign ugt i32 %1, 5
   %i.co = add nsw i32 %1, -2
   %i.cp = icmp slt i32 %1, 2
-  %2 = icmp samesign ult i32 %1, 7
-  %3 = select i1 %2, i32 1, i32 %i.k              ; 2 uses
-  %i.cq = zext nneg i32 %3 to i64
+  %i.cq = zext nneg i32 %i.l to i64
   %.idx.i = shl nuw nsw i64 %i.cq, 3
   %notmask.i = shl nsw i32 -1, %i.co
   %i.cr = xor i32 %notmask.i, -1
@@ -463,7 +461,7 @@ Abc_TtPrintHexRev.exit.us:                        ; preds = %.lr.ph70, %Abc_TtPr
   br i1 %i.dp, label %Abc_TtPrintHexRev.exit.us, label %._crit_edge, !llvm.loop !182
 
 .lr.ph70.split:                                   ; preds = %.lr.ph70
-  %.not22.i = icmp slt i32 %3, 1
+  %.not22.i = icmp slt i32 %i.l, 1
   br i1 %.not22.i, label %Abc_TtPrintHexRev.exit.us72, label %.lr.ph.i
 
 Abc_TtPrintHexRev.exit.us72:                      ; preds = %.lr.ph70.split, %Abc_TtPrintHexRev.exit.us72

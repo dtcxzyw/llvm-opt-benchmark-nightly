@@ -205,8 +205,8 @@ define void @Dau_PrintNpnFunction(ptr nofree noundef captures(none) %0, i32 noun
 bb.a:
   %i.a = icmp slt i32 %3, 7
   %i.b = add nsw i32 %3, -6
-  %i.c = shl nuw i32 1, %i.b                      ; 3 uses
-  %i.d = select i1 %i.a, i32 1, i32 %i.c          ; 11 uses
+  %i.c = shl nuw i32 1, %i.b
+  %i.d = select i1 %i.a, i32 1, i32 %i.c          ; 15 uses
   %.not = icmp eq i32 %6, 0                       ; 2 uses
   br i1 %.not, label %.critedge, label %bb.b
 
@@ -254,13 +254,15 @@ bb.c:                                             ; preds = %._crit_edge
   br label %Abc_TtPrintHexRev.exit
 
 bb.d:                                             ; preds = %._crit_edge
-  %7 = icmp samesign ult i32 %3, 7
-  %8 = select i1 %7, i32 1, i32 %i.c              ; 2 uses
-  %.not22.i = icmp slt i32 %8, 1
-  br i1 %.not22.i, label %Abc_TtPrintHexRev.exit, label %.lr.ph.i26
+  %.not22.i = icmp slt i32 %i.d, 1
+  br i1 %.not22.i, label %Abc_TtPrintHexRev.exit.thread, label %.lr.ph.i26
+
+Abc_TtPrintHexRev.exit.thread:                    ; preds = %bb.d
+  %7 = tail call fastcc i32 @Vec_MemHashInsert(ptr noundef %0, ptr noundef %2)
+  br label %Abc_TtNot.exit
 
 .lr.ph.i26:                                       ; preds = %bb.d
-  %i.z = zext nneg i32 %8 to i64
+  %i.z = zext nneg i32 %i.d to i64
   %.idx.i = shl nuw nsw i64 %i.z, 3
   %i.aa = getelementptr i8, ptr %2, i64 %.idx.i
   %.01521.i = getelementptr i8, ptr %i.aa, i64 -8
@@ -296,9 +298,9 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %i.an = icmp sgt i64 %indvars.iv.i, 0
   br i1 %i.an, label %bb.f, label %.loopexit.i, !llvm.loop !12
 
-Abc_TtPrintHexRev.exit:                           ; preds = %.loopexit.i, %bb.c, %bb.d
-  %i.ao = tail call fastcc i32 @Vec_MemHashInsert(ptr noundef %0, ptr noundef %2)
-  %i.ap = icmp sgt i32 %i.d, 0                    ; 2 uses
+Abc_TtPrintHexRev.exit:                           ; preds = %.loopexit.i, %bb.c
+  %i.ao = tail call fastcc i32 @Vec_MemHashInsert(ptr noundef %0, ptr noundef %2) ; 5 uses
+  %i.ap = icmp sgt i32 %i.d, 0
   br i1 %i.ap, label %.lr.ph.preheader.i, label %Abc_TtNot.exit
 
 .lr.ph.preheader.i:                               ; preds = %Abc_TtPrintHexRev.exit
@@ -355,8 +357,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bh = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.bh, label %.lr.ph, label %._crit_edge, !llvm.loop !171
 
-Abc_TtNot.exit:                                   ; preds = %vector.body, %.lr.ph.i27, %.lr.ph.i27.1, %.lr.ph.i27.2, %Abc_TtPrintHexRev.exit
-  %i.bi = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.41, i32 noundef %i.ao) ; 0 uses
+Abc_TtNot.exit:                                   ; preds = %vector.body, %.lr.ph.i27, %.lr.ph.i27.1, %.lr.ph.i27.2, %Abc_TtPrintHexRev.exit.thread, %Abc_TtPrintHexRev.exit
+  %8 = phi i1 [ false, %Abc_TtPrintHexRev.exit.thread ], [ false, %Abc_TtPrintHexRev.exit ], [ true, %.lr.ph.i27 ], [ true, %.lr.ph.i27.2 ], [ true, %.lr.ph.i27.1 ], [ true, %vector.body ]
+  %9 = phi i32 [ %7, %Abc_TtPrintHexRev.exit.thread ], [ %i.ao, %Abc_TtPrintHexRev.exit ], [ %i.ao, %.lr.ph.i27 ], [ %i.ao, %.lr.ph.i27.2 ], [ %i.ao, %.lr.ph.i27.1 ], [ %i.ao, %vector.body ]
+  %i.bi = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.41, i32 noundef %9) ; 0 uses
   %i.bj = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.42) ; 0 uses
   %i.bk = load ptr, ptr @stdout, align 8, !tbaa !27 ; 2 uses
   br i1 %i.s, label %bb.g, label %bb.h
@@ -373,13 +377,11 @@ bb.g:                                             ; preds = %Abc_TtNot.exit
   br label %Abc_TtPrintHexRev.exit45
 
 bb.h:                                             ; preds = %Abc_TtNot.exit
-  %9 = icmp samesign ult i32 %3, 7
-  %10 = select i1 %9, i32 1, i32 %i.c             ; 2 uses
-  %.not22.i30 = icmp slt i32 %10, 1
+  %.not22.i30 = icmp slt i32 %i.d, 1
   br i1 %.not22.i30, label %Abc_TtPrintHexRev.exit45, label %.lr.ph.i31
 
 .lr.ph.i31:                                       ; preds = %bb.h
-  %i.br = zext nneg i32 %10 to i64
+  %i.br = zext nneg i32 %i.d to i64
   %.idx.i32 = shl nuw nsw i64 %i.br, 3
   %i.bs = getelementptr i8, ptr %2, i64 %.idx.i32
   %.01521.i33 = getelementptr i8, ptr %i.bs, i64 -8
@@ -475,7 +477,7 @@ Abc_TtPrintHexRev.exit45.thread:                  ; preds = %vector.body80, %.lr
 
 Abc_TtPrintHexRev.exit45:                         ; preds = %.loopexit.i40, %bb.h, %bb.g
   %i.cx = tail call fastcc i32 @Vec_MemHashInsert(ptr noundef %0, ptr noundef %2) ; 2 uses
-  br i1 %i.ap, label %Abc_TtPrintHexRev.exit45..lr.ph.preheader.i53_crit_edge, label %Abc_TtNot.exit59
+  br i1 %8, label %Abc_TtPrintHexRev.exit45..lr.ph.preheader.i53_crit_edge, label %Abc_TtNot.exit59
 
 Abc_TtPrintHexRev.exit45..lr.ph.preheader.i53_crit_edge: ; preds = %Abc_TtPrintHexRev.exit45
   %.pre = zext nneg i32 %i.d to i64
@@ -542,8 +544,8 @@ bb.a:
   %i.a = alloca [32 x i32], align 16              ; 6 uses
   %i.b = icmp slt i32 %1, 7
   %i.c = add nsw i32 %1, -6
-  %i.d = shl nuw i32 1, %i.c                      ; 2 uses
-  %i.e = select i1 %i.b, i32 1, i32 %i.d          ; 10 uses
+  %i.d = shl nuw i32 1, %i.c
+  %i.e = select i1 %i.b, i32 1, i32 %i.d          ; 12 uses
   %i.f = tail call fastcc ptr @Vec_MemAllocForTTSimple(i32 noundef %1) ; 8 uses
   %i.g = sext i32 %i.e to i64
   %i.h = shl nsw i64 %i.g, 3                      ; 4 uses
@@ -946,13 +948,11 @@ bb.n:                                             ; preds = %._crit_edge149
   br label %Abc_TtPrintHexRev.exit
 
 bb.o:                                             ; preds = %._crit_edge149
-  %3 = icmp samesign ult i32 %1, 7
-  %4 = select i1 %3, i32 1, i32 %i.d              ; 2 uses
-  %.not22.i = icmp slt i32 %4, 1
+  %.not22.i = icmp slt i32 %i.e, 1
   br i1 %.not22.i, label %Abc_TtPrintHexRev.exit, label %.lr.ph.i124
 
 .lr.ph.i124:                                      ; preds = %bb.o
-  %i.if = zext nneg i32 %4 to i64
+  %i.if = zext nneg i32 %i.e to i64
   %.idx.i125 = shl nuw nsw i64 %i.if, 3
   %i.ig = getelementptr i8, ptr %i.k, i64 %.idx.i125
   %.01521.i = getelementptr i8, ptr %i.ig, i64 -8

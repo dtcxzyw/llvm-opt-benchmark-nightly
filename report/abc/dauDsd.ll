@@ -205,7 +205,7 @@ bb.a:
   %i.c = alloca [12 x i32], align 16              ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #31
-  %i.d = icmp slt i32 %2, 7
+  %i.d = icmp slt i32 %2, 7                       ; 3 uses
   %i.e = add nsw i32 %2, -6                       ; 2 uses
   %i.f = shl nuw i32 1, %i.e                      ; 3 uses
   %i.g = select i1 %i.d, i32 1, i32 %i.f          ; 8 uses
@@ -399,7 +399,6 @@ bb.b:                                             ; preds = %Vec_IntSelectSortCo
   %i.bk = getelementptr inbounds i8, ptr %1, i64 %.idx.i ; 2 uses
   %i.bl = icmp sgt i32 %i.g, 0                    ; 4 uses
   %wide.trip.count59.i = zext i32 %i.g to i64     ; 2 uses
-  %4 = icmp samesign ult i32 %2, 7                ; 2 uses
   %i.bm = sext i32 %i.f to i64
   %.idx.i.i = shl nsw i64 %i.bm, 3
   %i.bn = getelementptr inbounds i8, ptr %i.a, i64 %.idx.i.i ; 2 uses
@@ -593,7 +592,7 @@ scalar.ph232.2:                                   ; preds = %scalar.ph232.1
   br i1 %i.eg, label %.preheader.us.i, label %Abc_TtCofactor0p.exit, !llvm.loop !11
 
 Abc_TtCofactor0p.exit:                            ; preds = %._crit_edge.us.i, %vector.body222, %scalar.ph214, %scalar.ph214.2, %bb.d, %bb.f, %bb.g, %.preheader.lr.ph.i
-  br i1 %4, label %.lr.ph.split.us.i, label %.lr.ph.split.i
+  br i1 %i.d, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %Abc_TtCofactor0p.exit
   %i.eh = load i64, ptr %i.a, align 16, !tbaa !45 ; 12 uses
@@ -896,7 +895,7 @@ scalar.ph202.2:                                   ; preds = %scalar.ph202.1
   br i1 %i.iu, label %.preheader.us.i65, label %Abc_TtCofactor1p.exit, !llvm.loop !13
 
 Abc_TtCofactor1p.exit:                            ; preds = %._crit_edge.us.i69, %vector.body195, %scalar.ph189, %scalar.ph189.2, %bb.l, %bb.n, %bb.o, %.preheader.lr.ph.i60
-  br i1 %4, label %.lr.ph.split.us.i106, label %.lr.ph.split.i77
+  br i1 %i.d, label %.lr.ph.split.us.i106, label %.lr.ph.split.i77
 
 .lr.ph.split.us.i106:                             ; preds = %Abc_TtCofactor1p.exit
   %i.iv = load i64, ptr %i.a, align 16, !tbaa !45 ; 12 uses
@@ -1299,8 +1298,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31
   %i.e = icmp slt i32 %3, 7
   %i.f = add nsw i32 %3, -6
-  %i.g = shl nuw i32 1, %i.f                      ; 2 uses
-  %i.h = select i1 %i.e, i32 1, i32 %i.g          ; 13 uses
+  %i.g = shl nuw i32 1, %i.f
+  %i.h = select i1 %i.e, i32 1, i32 %i.g          ; 15 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !53
   %i.k = tail call i32 @Dau_DsdCheck1Step(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %3, ptr noundef %i.j) ; 14 uses
@@ -1332,13 +1331,11 @@ bb.d:                                             ; preds = %bb.c
   br label %Abc_TtWriteHexRev.exit
 
 bb.e:                                             ; preds = %bb.c
-  %4 = icmp samesign ult i32 %3, 7
-  %5 = select i1 %4, i32 1, i32 %i.g              ; 2 uses
-  %.not26.i = icmp slt i32 %5, 1
+  %.not26.i = icmp slt i32 %i.h, 1
   br i1 %.not26.i, label %Abc_TtWriteHexRev.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e
-  %i.ac = zext nneg i32 %5 to i64                 ; 2 uses
+  %i.ac = zext nneg i32 %i.h to i64               ; 2 uses
   %.idx.i = shl nuw nsw i64 %i.ac, 3
   %i.ad = getelementptr i8, ptr %1, i64 %.idx.i
   %.01825.i = getelementptr i8, ptr %i.ad, i64 -8

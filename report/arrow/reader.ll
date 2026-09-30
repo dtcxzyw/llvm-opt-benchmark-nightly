@@ -204,7 +204,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i..noexc22_crit_edge: ; pre
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 %i.cf
   %i.cm = getelementptr inbounds nuw i8, ptr %12, i64 48
   store ptr %i.cl, ptr %i.cm, align 8, !tbaa !332
-  %i.cn = sub i64 %.pre-phi, %.pre-phi59          ; 30 uses
+  %i.cn = sub i64 %.pre-phi, %.pre-phi59          ; 29 uses
   %i.co = icmp sgt i64 %i.cn, 4
   br i1 %i.co, label %bb.w, label %bb.x, !prof !137
 
@@ -353,7 +353,7 @@ bb.ai:                                            ; preds = %_ZNSt15__new_alloca
   br label %common.resume.i
 
 bb.aj:                                            ; preds = %.thread, %bb.ah, %bb.ag, %bb.af
-  %i.dv = phi i1 [ false, %bb.ah ], [ false, %bb.ag ], [ true, %bb.af ], [ false, %.thread ] ; 4 uses
+  %i.dv = phi i1 [ false, %bb.ah ], [ false, %bb.ag ], [ true, %bb.af ], [ false, %.thread ] ; 5 uses
   %i.dw = phi ptr [ %i.dp, %bb.ah ], [ %i.dp, %bb.ag ], [ %i.dp, %bb.af ], [ %i.dk, %.thread ]
   %i.dx = phi ptr [ %i.do, %bb.ah ], [ %i.do, %bb.ag ], [ %i.do, %bb.af ], [ %i.dj, %.thread ]
   %i.dy = phi ptr [ %i.dn, %bb.ah ], [ %i.dn, %bb.ag ], [ %i.dn, %bb.af ], [ null, %.thread ] ; 4 uses
@@ -551,8 +551,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = 
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gh, i64 %i.cn ; 4 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %i.fd, i64 56
   store ptr %i.gj, ptr %i.gk, align 8, !tbaa !332, !noalias !810
-  %13 = icmp samesign ugt i64 %i.cn, 4
-  br i1 %13, label %bb.av, label %bb.aw, !prof !160
+  br i1 %i.dv, label %bb.av, label %bb.aw, !prof !160
 
 bb.av:                                            ; preds = %.noexc4.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.gh, ptr align 4 %i.fw, i64 %i.cn, i1 false), !noalias !810
