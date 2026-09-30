@@ -204,37 +204,31 @@ bb.aw:                                            ; preds = %bb.aw, %.preheader.
   %i.ix = mul nsw i32 %i.iw, 91881
   %i.iy = add nsw i32 %i.ix, 32768
   %i.iz = ashr i32 %i.iy, 16
-  %i.ja = add nsw i32 %i.iz, %i.im                ; 3 uses
-  %4 = icmp ugt i32 %i.ja, 255
-  %isnotneg.i11.i.i.i.i = icmp sgt i32 %i.ja, -1
-  %5 = sext i1 %isnotneg.i11.i.i.i.i to i8
-  %i.jb = trunc nuw i32 %i.ja to i8
-  %.0.i12.i.i.i.i = select i1 %4, i8 %5, i8 %i.jb
-  store i8 %.0.i12.i.i.i.i, ptr %i.ij, align 1, !tbaa !75
+  %i.ja = add nsw i32 %i.iz, %i.im
+  %4 = call i32 @llvm.smax.i32(i32 %i.ja, i32 0)
+  %.0.i1213.i.i.i.i = call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %i.jb = trunc nuw i32 %.0.i1213.i.i.i.i to i8
+  store i8 %i.jb, ptr %i.ij, align 1, !tbaa !75
   %i.jc = mul nsw i32 %i.is, -22554
   %.neg.i.i.i.i = mul nsw i32 %i.iw, -46802
   %i.jd = add nsw i32 %i.jc, 32768
   %i.je = add nsw i32 %i.jd, %.neg.i.i.i.i
   %i.jf = ashr i32 %i.je, 16
-  %i.jg = add nsw i32 %i.jf, %i.im                ; 3 uses
-  %6 = icmp ugt i32 %i.jg, 255
-  %isnotneg.i9.i.i.i.i = icmp sgt i32 %i.jg, -1
-  %7 = sext i1 %isnotneg.i9.i.i.i.i to i8
-  %i.jh = trunc nuw i32 %i.jg to i8
-  %.0.i10.i.i.i.i = select i1 %6, i8 %7, i8 %i.jh
+  %i.jg = add nsw i32 %i.jf, %i.im
+  %5 = call i32 @llvm.smax.i32(i32 %i.jg, i32 0)
+  %.0.i1014.i.i.i.i = call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.jh = trunc nuw i32 %.0.i1014.i.i.i.i to i8
   %i.ji = getelementptr inbounds nuw i8, ptr %i.ij, i64 1
-  store i8 %.0.i10.i.i.i.i, ptr %i.ji, align 1, !tbaa !75
+  store i8 %i.jh, ptr %i.ji, align 1, !tbaa !75
   %i.jj = mul nsw i32 %i.is, 116130
   %i.jk = add nsw i32 %i.jj, 32768
   %i.jl = ashr i32 %i.jk, 16
-  %i.jm = add nsw i32 %i.jl, %i.im                ; 3 uses
-  %8 = icmp ugt i32 %i.jm, 255
-  %isnotneg.i.i.i.i.i = icmp sgt i32 %i.jm, -1
-  %9 = sext i1 %isnotneg.i.i.i.i.i to i8
-  %i.jn = trunc nuw i32 %i.jm to i8
-  %.0.i.i.i.i.i = select i1 %8, i8 %9, i8 %i.jn
+  %i.jm = add nsw i32 %i.jl, %i.im
+  %6 = call i32 @llvm.smax.i32(i32 %i.jm, i32 0)
+  %.0.i15.i.i.i.i = call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.jn = trunc nuw i32 %.0.i15.i.i.i.i to i8
   %i.jo = getelementptr inbounds nuw i8, ptr %i.ij, i64 2
-  store i8 %.0.i.i.i.i.i, ptr %i.jo, align 1, !tbaa !75
+  store i8 %i.jn, ptr %i.jo, align 1, !tbaa !75
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
   br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i, label %bb.aw, !llvm.loop !50
@@ -637,13 +631,16 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #5
 declare i32 @llvm.bswap.i32(i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #5

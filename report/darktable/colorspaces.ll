@@ -205,21 +205,20 @@ bb.b:                                             ; preds = %bb.a
   %i.cm = shufflevector <2 x double> %i.cl, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   %i.cn = fdiv reassoc nsz arcp contract afn <4 x double> %i.ap, %i.cm
   store <4 x double> %i.cn, ptr %i.o, align 8, !tbaa !17
-  %5 = tail call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v2f64(double %i.bl, <2 x double> %i.az) ; 3 uses
   %i.co = shufflevector <2 x double> %i.aq, <2 x double> %i.az, <4 x i32> <i32 1, i32 poison, i32 3, i32 2>
   %i.cp = shufflevector <2 x double> %i.ar, <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.cq = shufflevector <4 x double> %i.co, <4 x double> %i.cp, <4 x i32> <i32 0, i32 5, i32 2, i32 3>
   %i.cr = shufflevector <2 x double> %i.cl, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %5 = tail call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v2f64(double %i.bl, <2 x double> %i.az) ; 3 uses
   %i.cs = insertelement <2 x double> %i.cr, double %5, i64 1
   %i.ct = shufflevector <2 x double> %i.cs, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.cu = fdiv reassoc nsz arcp contract afn <4 x double> %i.cq, %i.ct
   store <4 x double> %i.cu, ptr %i.p, align 8, !tbaa !17
   %i.cv = fdiv reassoc nsz arcp contract afn double %i.bl, %5
   store double %i.cv, ptr %i.ba, align 8, !tbaa !17
-  %6 = insertelement <4 x double> poison, double %i.ca, i64 0
-  %7 = shufflevector <2 x double> %i.cl, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %8 = shufflevector <4 x double> %6, <4 x double> %7, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
-  %i.cw = insertelement <4 x double> %8, double %5, i64 3
+  %6 = shufflevector <2 x double> %i.cl, <2 x double> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
+  %7 = insertelement <4 x double> %6, double %i.ca, i64 0
+  %i.cw = insertelement <4 x double> %7, double %5, i64 3
   %i.cx = fdiv reassoc nsz arcp contract afn <4 x double> splat (double 1.000000e+00), %i.cw
   store <4 x double> %i.cx, ptr %4, align 8, !tbaa !17
   br label %.split.us

@@ -205,25 +205,19 @@ bb.bk:                                            ; preds = %bb.bi
   %i.agg = sub nsw i32 %.066.lcssa.i.i, %i.agf
   %i.agh = sdiv i32 %i.agg, %i.lv
   %i.agi = add nsw i32 %i.agh, 1                  ; 2 uses
-  %i.agj = add i32 %i.agi, %i.afv                 ; 3 uses
-  %i.agk = add i32 %i.agi, %i.afu                 ; 3 uses
-  %.not.i195.i = icmp ult i32 %i.agk, 256
-  %isnotneg.i196.i = icmp sgt i32 %i.agk, -1
-  %4 = sext i1 %isnotneg.i196.i to i8
-  %i.agl = trunc nuw i32 %i.agk to i8
-  %.0.i197.i = select i1 %.not.i195.i, i8 %i.agl, i8 %4 ; 2 uses
-  %.not.i.i = icmp ult i32 %i.agj, 256
-  %isnotneg.i.i = icmp sgt i32 %i.agj, -1
-  %5 = sext i1 %isnotneg.i.i to i8
-  %i.agm = trunc nuw i32 %i.agj to i8
-  %.0.i.i = select i1 %.not.i.i, i8 %i.agm, i8 %5 ; 2 uses
+  %i.agj = add i32 %i.agi, %i.afv
+  %i.agk = add i32 %i.agi, %i.afu
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.agk, i32 0)
+  %.0.i197157.i = tail call i32 @llvm.umin.i32(i32 %4, i32 255) ; 3 uses
+  %i.agl = trunc nuw i32 %.0.i197157.i to i8
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.agj, i32 0)
+  %.0.i158.i = tail call i32 @llvm.umin.i32(i32 %5, i32 255) ; 2 uses
+  %i.agm = trunc nuw i32 %.0.i158.i to i8
   br i1 %i.lw, label %.preheader.lr.ph.i336.i, label %calc_lsq_max_fit_error.exit.thread.i
 
 .preheader.lr.ph.i336.i:                          ; preds = %bb.bk
-  %6 = zext i8 %.0.i.i to i32
-  %7 = zext i8 %.0.i197.i to i32                  ; 2 uses
-  %i.agn = sub nsw i32 %6, %7                     ; 2 uses
-  %i.ago = add nuw nsw i32 %7, 1                  ; 2 uses
+  %i.agn = sub nsw i32 %.0.i158.i, %.0.i197157.i  ; 2 uses
+  %i.ago = add nuw nsw i32 %.0.i197157.i, 1       ; 2 uses
   br i1 %i.lx, label %.preheader.us.i339.preheader.i, label %calc_lsq_max_fit_error.exit360.i
 
 .preheader.us.i339.preheader.i:                   ; preds = %.preheader.lr.ph.i336.i
@@ -334,9 +328,9 @@ bb.bm:                                            ; preds = %bb.bm, %.preheader.
 calc_lsq_max_fit_error.exit360.i:                 ; preds = %._crit_edge.us.i358.i, %calc_lsq_max_fit_error.exit.thread.i, %calc_lsq_max_fit_error.exit.i, %.preheader.lr.ph.i336.i
   %i.ait = phi i32 [ %spec.select.i46, %calc_lsq_max_fit_error.exit.thread.i ], [ %.0159261.i, %calc_lsq_max_fit_error.exit.i ], [ %.0159261.i, %.preheader.lr.ph.i336.i ], [ %.3.us.i355.i, %._crit_edge.us.i358.i ]
   %i.aiu = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i
-  store i8 %.0.i197.i, ptr %i.aiu, align 1, !tbaa !72
+  store i8 %i.agl, ptr %i.aiu, align 1, !tbaa !72
   %i.aiv = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i
-  store i8 %.0.i.i, ptr %i.aiv, align 1, !tbaa !72
+  store i8 %i.agm, ptr %i.aiv, align 1, !tbaa !72
   br label %bb.bn
 
 bb.bn:                                            ; preds = %calc_lsq_max_fit_error.exit360.i, %leastsquares.exit.i, %bb.bg

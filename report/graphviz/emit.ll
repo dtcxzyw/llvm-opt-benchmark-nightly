@@ -205,7 +205,7 @@ bb.ks:                                            ; preds = %bb.kr, %bb.kq
   %i.alt = getelementptr inbounds nuw [16 x i8], ptr %i.akl, i64 %i.als
   %i.alu = load <2 x double>, ptr %i.alt, align 8, !tbaa !110 ; 3 uses
   %i.alv = getelementptr inbounds nuw [16 x i8], ptr %i.akm, i64 %i.akq ; 2 uses
-  %i.alw = getelementptr inbounds nuw [16 x i8], ptr %i.akm, i64 %i.alp ; 3 uses
+  %i.alw = getelementptr inbounds nuw [16 x i8], ptr %i.akm, i64 %i.alp ; 2 uses
   %i.alx = fsub <2 x double> %i.aks, %i.alr       ; 3 uses
   %i.aly = extractelement <2 x double> %i.alx, i64 0
   %i.alz = extractelement <2 x double> %i.alx, i64 1
@@ -227,7 +227,6 @@ computeoffset_qr.exit.i:                          ; preds = %bb.kt, %bb.ks
   %.022.i.i = phi double [ %sqrt.i499.i, %bb.kt ], [ %i.ama, %bb.ks ]
   %i.amh = phi <2 x double> [ %i.amc, %bb.kt ], [ %i.alx, %bb.ks ] ; 2 uses
   %i.ami = fdiv double 2.000000e+00, %.022.i.i
-  %.sroa.496.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.alw, i64 8
   %i.amj = getelementptr inbounds nuw [16 x i8], ptr %i.akm, i64 %.0408597.i
   %i.amk = getelementptr inbounds nuw [16 x i8], ptr %i.akn, i64 %.0408597.i
   %i.aml = getelementptr inbounds nuw [16 x i8], ptr %i.akn, i64 %i.akq
@@ -236,11 +235,8 @@ computeoffset_qr.exit.i:                          ; preds = %bb.kt, %bb.ks
   %i.amo = shufflevector <2 x double> %i.amn, <2 x double> poison, <2 x i32> zeroinitializer
   %i.amp = fneg <2 x double> %i.amh
   %i.amq = shufflevector <2 x double> %i.amh, <2 x double> %i.amp, <2 x i32> <i32 1, i32 2>
-  %i.amr = fmul <2 x double> %i.amo, %i.amq       ; 3 uses
-  %19 = extractelement <2 x double> %i.amr, i64 0
-  store double %19, ptr %i.alw, align 8, !tbaa !110
-  %20 = extractelement <2 x double> %i.amr, i64 1
-  store double %20, ptr %.sroa.496.0..sroa_idx.i, align 8, !tbaa !110
+  %i.amr = fmul <2 x double> %i.amo, %i.amq       ; 2 uses
+  store <2 x double> %i.amr, ptr %i.alw, align 8, !tbaa !110
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.alv, ptr noundef nonnull align 8 dereferenceable(16) %i.alw, i64 16, i1 false), !tbaa.struct !120
   %i.ams = load <2 x double>, ptr %i.amj, align 8, !tbaa !110
   %i.amt = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aiy, <2 x double> %i.ams, <2 x double> %i.akp)

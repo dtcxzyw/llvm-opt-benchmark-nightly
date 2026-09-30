@@ -204,22 +204,18 @@ vector.body179:                                   ; preds = %vector.memcheck173,
   %i.xf = getelementptr inbounds nuw i8, ptr %i.xe, i64 16
   %wide.load181 = load <4 x i32>, ptr %i.xe, align 4, !tbaa !96, !alias.scope !101
   %wide.load182 = load <4 x i32>, ptr %i.xf, align 4, !tbaa !96, !alias.scope !101
-  %i.xg = add <4 x i32> %wide.load181, splat (i32 128) ; 3 uses
-  %i.xh = add <4 x i32> %wide.load182, splat (i32 128) ; 3 uses
-  %2 = icmp ult <4 x i32> %i.xg, splat (i32 256)
-  %3 = icmp ult <4 x i32> %i.xh, splat (i32 256)
-  %4 = icmp sgt <4 x i32> %i.xg, splat (i32 -1)
-  %5 = icmp sgt <4 x i32> %i.xh, splat (i32 -1)
-  %6 = sext <4 x i1> %4 to <4 x i8>
-  %7 = sext <4 x i1> %5 to <4 x i8>
-  %i.xi = trunc nuw <4 x i32> %i.xg to <4 x i8>
-  %i.xj = trunc nuw <4 x i32> %i.xh to <4 x i8>
-  %8 = select <4 x i1> %2, <4 x i8> %i.xi, <4 x i8> %6
-  %9 = select <4 x i1> %3, <4 x i8> %i.xj, <4 x i8> %7
+  %i.xg = add <4 x i32> %wide.load181, splat (i32 128)
+  %i.xh = add <4 x i32> %wide.load182, splat (i32 128)
+  %2 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.xg, <4 x i32> zeroinitializer)
+  %3 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.xh, <4 x i32> zeroinitializer)
+  %4 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %2, <4 x i32> splat (i32 255))
+  %5 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %3, <4 x i32> splat (i32 255))
+  %i.xi = trunc nuw <4 x i32> %4 to <4 x i8>
+  %i.xj = trunc nuw <4 x i32> %5 to <4 x i8>
   %i.xk = getelementptr inbounds nuw i8, ptr %i.wz, i64 %index180 ; 2 uses
   %i.xl = getelementptr inbounds nuw i8, ptr %i.xk, i64 4
-  store <4 x i8> %8, ptr %i.xk, align 1, !tbaa !29, !alias.scope !102, !noalias !101
-  store <4 x i8> %9, ptr %i.xl, align 1, !tbaa !29, !alias.scope !102, !noalias !101
+  store <4 x i8> %i.xi, ptr %i.xk, align 1, !tbaa !29, !alias.scope !102, !noalias !101
+  store <4 x i8> %i.xj, ptr %i.xl, align 1, !tbaa !29, !alias.scope !102, !noalias !101
   %index.next183 = add nuw i64 %index180, 8       ; 2 uses
   %i.xm = icmp eq i64 %index.next183, %n.vec178
   br i1 %i.xm, label %middle.block184, label %vector.body179, !llvm.loop !65
@@ -234,14 +230,12 @@ scalar.ph175.preheader:                           ; preds = %vector.memcheck173,
 scalar.ph175.prol:                                ; preds = %scalar.ph175.preheader
   %i.xn = getelementptr inbounds nuw [4 x i8], ptr %i.xc, i64 %indvars.iv142.i.ph
   %i.xo = load i32, ptr %i.xn, align 4, !tbaa !96
-  %i.xp = add i32 %i.xo, 128                      ; 3 uses
-  %.not.i.i.prol = icmp ult i32 %i.xp, 256
-  %isnotneg.i.i.prol = icmp sgt i32 %i.xp, -1
-  %10 = sext i1 %isnotneg.i.i.prol to i8
-  %i.xq = trunc nuw i32 %i.xp to i8
-  %.0.i.i81.prol = select i1 %.not.i.i.prol, i8 %i.xq, i8 %10
+  %i.xp = add i32 %i.xo, 128
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.xp, i32 0)
+  %.0.i89.i.prol = tail call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.xq = trunc nuw i32 %.0.i89.i.prol to i8
   %i.xr = getelementptr inbounds nuw i8, ptr %i.wz, i64 %indvars.iv142.i.ph
-  store i8 %.0.i.i81.prol, ptr %i.xr, align 1, !tbaa !29
+  store i8 %i.xq, ptr %i.xr, align 1, !tbaa !29
   %indvars.iv.next143.i.prol = or disjoint i64 %indvars.iv142.i.ph, 1
   br label %scalar.ph175.prol.loopexit
 
@@ -259,25 +253,21 @@ scalar.ph175:                                     ; preds = %scalar.ph175.prol.l
   %indvars.iv142.i = phi i64 [ %indvars.iv.next143.i.1, %scalar.ph175 ], [ %indvars.iv142.i.unr, %scalar.ph175.prol.loopexit ] ; 4 uses
   %i.xt = getelementptr inbounds nuw [4 x i8], ptr %i.xc, i64 %indvars.iv142.i
   %i.xu = load i32, ptr %i.xt, align 4, !tbaa !96
-  %i.xv = add i32 %i.xu, 128                      ; 3 uses
-  %.not.i.i = icmp ult i32 %i.xv, 256
-  %isnotneg.i.i = icmp sgt i32 %i.xv, -1
-  %11 = sext i1 %isnotneg.i.i to i8
-  %i.xw = trunc nuw i32 %i.xv to i8
-  %.0.i.i81 = select i1 %.not.i.i, i8 %i.xw, i8 %11
+  %i.xv = add i32 %i.xu, 128
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.xv, i32 0)
+  %.0.i89.i = tail call i32 @llvm.umin.i32(i32 %7, i32 255)
+  %i.xw = trunc nuw i32 %.0.i89.i to i8
   %i.xx = getelementptr inbounds nuw i8, ptr %i.wz, i64 %indvars.iv142.i
-  store i8 %.0.i.i81, ptr %i.xx, align 1, !tbaa !29
+  store i8 %i.xw, ptr %i.xx, align 1, !tbaa !29
   %indvars.iv.next143.i = add nuw nsw i64 %indvars.iv142.i, 1 ; 2 uses
   %i.xy = getelementptr inbounds nuw [4 x i8], ptr %i.xc, i64 %indvars.iv.next143.i
   %i.xz = load i32, ptr %i.xy, align 4, !tbaa !96
-  %i.ya = add i32 %i.xz, 128                      ; 3 uses
-  %.not.i.i.1 = icmp ult i32 %i.ya, 256
-  %isnotneg.i.i.1 = icmp sgt i32 %i.ya, -1
-  %12 = sext i1 %isnotneg.i.i.1 to i8
-  %i.yb = trunc nuw i32 %i.ya to i8
-  %.0.i.i81.1 = select i1 %.not.i.i.1, i8 %i.yb, i8 %12
+  %i.ya = add i32 %i.xz, 128
+  %8 = tail call i32 @llvm.smax.i32(i32 %i.ya, i32 0)
+  %.0.i89.i.1 = tail call i32 @llvm.umin.i32(i32 %8, i32 255)
+  %i.yb = trunc nuw i32 %.0.i89.i.1 to i8
   %i.yc = getelementptr inbounds nuw i8, ptr %i.wz, i64 %indvars.iv.next143.i
-  store i8 %.0.i.i81.1, ptr %i.yc, align 1, !tbaa !29
+  store i8 %i.yb, ptr %i.yc, align 1, !tbaa !29
   %indvars.iv.next143.i.1 = add nuw nsw i64 %indvars.iv142.i, 2 ; 2 uses
   %exitcond146.not.i.1 = icmp eq i64 %indvars.iv.next143.i.1, %wide.trip.count145.i
   br i1 %exitcond146.not.i.1, label %._crit_edge115.i, label %scalar.ph175, !llvm.loop !67
@@ -532,7 +522,16 @@ declare i32 @llvm.umin.i32(i32, i32) #6
 declare i32 @llvm.abs.i32(i32, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #6
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

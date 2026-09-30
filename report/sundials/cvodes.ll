@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [4 x double], align 16            ; 8 uses
   %i.b = alloca [4 x double], align 16            ; 8 uses
   %i.c = alloca [4 x double], align 16            ; 8 uses
-  %i.d = alloca [4 x double], align 16            ; 8 uses
+  %i.d = alloca [4 x double], align 16            ; 7 uses
   %i.e = alloca [4 x [4 x double]], align 16      ; 11 uses
   %i.f = alloca [5 x double], align 16            ; 8 uses
   %i.g = alloca [6 x [4 x double]], align 16      ; 17 uses
@@ -608,7 +608,6 @@ bb.fd:                                            ; preds = %bb.ey, %bb.fb, %bb.
   %i.wm = getelementptr inbounds nuw i8, ptr %i.g, i64 88
   %i.wn = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.wo = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.wp = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %gep364.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %gep364.1.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 72
@@ -1011,11 +1010,8 @@ bb.no:                                            ; preds = %bb.nn
   %i.ciw = select <2 x i1> %i.ciu, <2 x double> %i.civ, <2 x double> zeroinitializer
   %i.cix = insertelement <2 x double> poison, double %.0299376.i.i.i, i64 0
   %i.ciy = shufflevector <2 x double> %i.cix, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ciz = fadd <2 x double> %i.ciy, %i.ciw       ; 10 uses
-  %6 = extractelement <2 x double> %i.ciz, i64 0
-  store double %6, ptr %i.wo, align 8, !tbaa !29
-  %7 = extractelement <2 x double> %i.ciz, i64 1
-  store double %7, ptr %5, align 16, !tbaa !29
+  %i.ciz = fadd <2 x double> %i.ciy, %i.ciw       ; 9 uses
+  store <2 x double> %i.ciz, ptr %i.wo, align 8, !tbaa !29
   %i.cja = fmul <2 x double> %i.ciz, %i.ciz       ; 3 uses
   %i.cjb = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ciz, <2 x double> %i.chg, <2 x double> %i.chh)
   %i.cjc = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cja, <2 x double> %i.cjb, <2 x double> %i.chi)

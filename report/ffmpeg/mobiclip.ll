@@ -205,20 +205,16 @@ vector.body:                                      ; preds = %._crit_edge
   %wide.load68 = load <4 x i32>, ptr %i.hn, align 4, !tbaa !41
   %i.ho = ashr <4 x i32> %wide.load67, splat (i32 6)
   %i.hp = ashr <4 x i32> %wide.load68, splat (i32 6)
-  %i.hq = add nsw <4 x i32> %i.ho, %i.hl          ; 3 uses
-  %i.hr = add nsw <4 x i32> %i.hp, %i.hm          ; 3 uses
-  %5 = icmp ugt <4 x i32> %i.hq, splat (i32 255)
-  %6 = icmp ugt <4 x i32> %i.hr, splat (i32 255)
-  %7 = icmp sgt <4 x i32> %i.hq, splat (i32 -1)
-  %8 = icmp sgt <4 x i32> %i.hr, splat (i32 -1)
-  %9 = sext <4 x i1> %7 to <4 x i8>
-  %10 = sext <4 x i1> %8 to <4 x i8>
-  %i.hs = trunc nuw <4 x i32> %i.hq to <4 x i8>
-  %i.ht = trunc nuw <4 x i32> %i.hr to <4 x i8>
-  %11 = select <4 x i1> %5, <4 x i8> %9, <4 x i8> %i.hs
-  %12 = select <4 x i1> %6, <4 x i8> %10, <4 x i8> %i.ht
-  store <4 x i8> %11, ptr %.08834, align 1, !tbaa !46
-  store <4 x i8> %12, ptr %i.hk, align 1, !tbaa !46
+  %i.hq = add nsw <4 x i32> %i.ho, %i.hl
+  %i.hr = add nsw <4 x i32> %i.hp, %i.hm
+  %5 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.hq, <4 x i32> zeroinitializer)
+  %6 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.hr, <4 x i32> zeroinitializer)
+  %7 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %5, <4 x i32> splat (i32 255))
+  %8 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %6, <4 x i32> splat (i32 255))
+  %i.hs = trunc nuw <4 x i32> %7 to <4 x i8>
+  %i.ht = trunc nuw <4 x i32> %8 to <4 x i8>
+  store <4 x i8> %i.hs, ptr %.08834, align 1, !tbaa !46
+  store <4 x i8> %i.ht, ptr %i.hk, align 1, !tbaa !46
   br i1 %i.ha, label %middle.block, label %vector.body.1
 
 vector.body.1:                                    ; preds = %vector.body
@@ -234,20 +230,16 @@ vector.body.1:                                    ; preds = %vector.body
   %wide.load68.1 = load <4 x i32>, ptr %i.hz, align 4, !tbaa !41
   %i.ia = ashr <4 x i32> %wide.load67.1, splat (i32 6)
   %i.ib = ashr <4 x i32> %wide.load68.1, splat (i32 6)
-  %i.ic = add nsw <4 x i32> %i.ia, %i.hw          ; 3 uses
-  %i.id = add nsw <4 x i32> %i.ib, %i.hx          ; 3 uses
-  %13 = icmp ugt <4 x i32> %i.ic, splat (i32 255)
-  %14 = icmp ugt <4 x i32> %i.id, splat (i32 255)
-  %15 = icmp sgt <4 x i32> %i.ic, splat (i32 -1)
-  %16 = icmp sgt <4 x i32> %i.id, splat (i32 -1)
-  %17 = sext <4 x i1> %15 to <4 x i8>
-  %18 = sext <4 x i1> %16 to <4 x i8>
-  %i.ie = trunc nuw <4 x i32> %i.ic to <4 x i8>
-  %i.if = trunc nuw <4 x i32> %i.id to <4 x i8>
-  %19 = select <4 x i1> %13, <4 x i8> %17, <4 x i8> %i.ie
-  %20 = select <4 x i1> %14, <4 x i8> %18, <4 x i8> %i.if
-  store <4 x i8> %19, ptr %i.hu, align 1, !tbaa !46
-  store <4 x i8> %20, ptr %i.hv, align 1, !tbaa !46
+  %i.ic = add nsw <4 x i32> %i.ia, %i.hw
+  %i.id = add nsw <4 x i32> %i.ib, %i.hx
+  %9 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ic, <4 x i32> zeroinitializer)
+  %10 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.id, <4 x i32> zeroinitializer)
+  %11 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %9, <4 x i32> splat (i32 255))
+  %12 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %10, <4 x i32> splat (i32 255))
+  %i.ie = trunc nuw <4 x i32> %11 to <4 x i8>
+  %i.if = trunc nuw <4 x i32> %12 to <4 x i8>
+  store <4 x i8> %i.ie, ptr %i.hu, align 1, !tbaa !46
+  store <4 x i8> %i.if, ptr %i.hv, align 1, !tbaa !46
   br label %middle.block
 
 middle.block:                                     ; preds = %vector.body.1, %vector.body
@@ -294,13 +286,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %gep63 = getelementptr [4 x i8], ptr %invariant.gep62, i64 %indvars.iv45
   %i.is = load i32, ptr %gep63, align 4, !tbaa !41
   %i.it = ashr i32 %i.is, 6
-  %i.iu = add nsw i32 %i.it, %i.ir                ; 3 uses
-  %21 = icmp ugt i32 %i.iu, 255
-  %isnotneg.i = icmp sgt i32 %i.iu, -1
-  %22 = sext i1 %isnotneg.i to i8
-  %i.iv = trunc nuw i32 %i.iu to i8
-  %.0.i = select i1 %21, i8 %22, i8 %i.iv
-  store i8 %.0.i, ptr %i.ip, align 1, !tbaa !46
+  %i.iu = add nsw i32 %i.it, %i.ir
+  %13 = tail call i32 @llvm.smax.i32(i32 %i.iu, i32 0)
+  %.0.i26 = tail call i32 @llvm.umin.i32(i32 %13, i32 255)
+  %i.iv = trunc nuw i32 %.0.i26 to i8
+  store i8 %i.iv, ptr %i.ip, align 1, !tbaa !46
   %indvars.iv.next46 = add nuw nsw i64 %indvars.iv45, 1 ; 2 uses
   %exitcond49.not = icmp eq i64 %indvars.iv.next46, %i.gw
   br i1 %exitcond49.not, label %.loopexit, label %scalar.ph, !llvm.loop !168
@@ -702,6 +692,12 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #10
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

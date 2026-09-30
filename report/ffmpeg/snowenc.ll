@@ -205,12 +205,9 @@ bb.bc:                                            ; preds = %bb.bb
   %i.bby = add nsw i64 %.p.i.us.us.us.i, %i.bbt
   %i.bbz = sext i32 %.1163.lcssa.i.us.us.us.i to i64
   %i.bca = sdiv i64 %i.bby, %i.bbz
-  %i.bcb = trunc i64 %i.bca to i32                ; 3 uses
-  %.not.i179.i.us.us.us.i = icmp ult i32 %i.bcb, 256
-  %isnotneg.i.i.us.us.us.i = icmp sgt i32 %i.bcb, -1
-  %20 = sext i1 %isnotneg.i.i.us.us.us.i to i32
-  %.0.i.i.us.us.us.i = select i1 %.not.i179.i.us.us.us.i, i32 %i.bcb, i32 %20
-  %21 = and i32 %.0.i.i.us.us.us.i, 255
+  %i.bcb = trunc i64 %i.bca to i32
+  %20 = tail call i32 @llvm.smax.i32(i32 %i.bcb, i32 0)
+  %21 = tail call i32 @llvm.umin.i32(i32 %20, i32 255)
   br label %get_dc.exit.us.us.us.i
 
 get_dc.exit.us.us.us.i:                           ; preds = %bb.bc, %bb.bb

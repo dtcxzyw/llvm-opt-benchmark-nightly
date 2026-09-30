@@ -204,16 +204,13 @@ bb.u:                                             ; preds = %.lr.ph275, %bb.u
   %i.go = load i8, ptr %i.gn, align 1, !tbaa !43
   %i.gp = sext i8 %i.go to i32
   %i.gq = load i32, ptr %i.ge, align 8, !tbaa !30
-  %i.gr = add nsw i32 %i.gq, %i.gp                ; 3 uses
-  %.not.i226 = icmp ult i32 %i.gr, 256
-  %isnotneg.i227 = icmp sgt i32 %i.gr, -1
-  %4 = sext i1 %isnotneg.i227 to i8
-  %i.gs = trunc nuw i32 %i.gr to i8
-  %.0.i228 = select i1 %.not.i226, i8 %i.gs, i8 %4 ; 2 uses
-  %5 = zext i8 %.0.i228 to i32
-  store i32 %5, ptr %i.ge, align 8, !tbaa !30
+  %i.gr = add nsw i32 %i.gq, %i.gp
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.gr, i32 0)
+  %.0.i228246 = tail call i32 @llvm.umin.i32(i32 %4, i32 255) ; 2 uses
+  %i.gs = trunc nuw i32 %.0.i228246 to i8
+  store i32 %.0.i228246, ptr %i.ge, align 8, !tbaa !30
   %i.gt = getelementptr inbounds nuw i8, ptr %.0191274, i64 1
-  store i8 %.0.i228, ptr %.0191274, align 1, !tbaa !43
+  store i8 %i.gs, ptr %.0191274, align 1, !tbaa !43
   %i.gu = load ptr, ptr %i.gd, align 8, !tbaa !42
   %i.gv = and i32 %i.gj, 15
   %i.gw = zext nneg i32 %i.gv to i64
@@ -221,16 +218,13 @@ bb.u:                                             ; preds = %.lr.ph275, %bb.u
   %i.gy = load i8, ptr %i.gx, align 1, !tbaa !43
   %i.gz = sext i8 %i.gy to i32
   %i.ha = load i32, ptr %i.gg, align 4, !tbaa !30
-  %i.hb = add nsw i32 %i.ha, %i.gz                ; 3 uses
-  %.not.i224 = icmp ult i32 %i.hb, 256
-  %isnotneg.i = icmp sgt i32 %i.hb, -1
-  %6 = sext i1 %isnotneg.i to i8
-  %i.hc = trunc nuw i32 %i.hb to i8
-  %.0.i225 = select i1 %.not.i224, i8 %i.hc, i8 %6 ; 2 uses
-  %7 = zext i8 %.0.i225 to i32
-  store i32 %7, ptr %i.gg, align 4, !tbaa !30
+  %i.hb = add nsw i32 %i.ha, %i.gz
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.hb, i32 0)
+  %.0.i225247 = tail call i32 @llvm.umin.i32(i32 %5, i32 255) ; 2 uses
+  %i.hc = trunc nuw i32 %.0.i225247 to i8
+  store i32 %.0.i225247, ptr %i.gg, align 4, !tbaa !30
   %i.hd = getelementptr inbounds nuw i8, ptr %.0191274, i64 2 ; 2 uses
-  store i8 %.0.i225, ptr %i.gt, align 1, !tbaa !43
+  store i8 %i.hc, ptr %i.gt, align 1, !tbaa !43
   %i.he = icmp ult ptr %i.hd, %i.gc
   br i1 %i.he, label %bb.u, label %.loopexit, !llvm.loop !60
 

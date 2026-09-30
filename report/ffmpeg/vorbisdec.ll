@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.lr.ph165, %bb.v
   %i.jf = icmp slt i32 %i.ir, 0
   %i.jg = sub i32 0, %i.je
   %.0118.p = select i1 %i.jf, i32 %i.jg, i32 %i.je
-  %.0118 = add i32 %.0118.p, %i.iq                ; 8 uses
+  %.0118 = add i32 %.0118.p, %i.iq                ; 6 uses
   %i.jh = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv175
   %i.ji = load i16, ptr %i.jh, align 2, !tbaa !93 ; 3 uses
   %i.jj = zext i16 %i.ji to i32                   ; 5 uses
@@ -231,12 +231,10 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.jp = xor i32 %i.jj, -1
-  %i.jq = add nsw i32 %i.jp, %i.k                 ; 3 uses
-  %.not.i149 = icmp ult i32 %i.jq, 65536
-  %isnotneg.i150 = icmp sgt i32 %i.jq, -1
-  %3 = sext i1 %isnotneg.i150 to i16
-  %i.jr = trunc nuw i32 %i.jq to i16
-  %.0.i151 = select i1 %.not.i149, i16 %i.jr, i16 %3
+  %i.jq = add nsw i32 %i.jp, %i.k
+  %3 = tail call i32 @llvm.smax.i32(i32 %i.jq, i32 0)
+  %.0.i151156 = tail call i32 @llvm.umin.i32(i32 %3, i32 65535)
+  %i.jr = trunc nuw i32 %.0.i151156 to i16
   br label %bb.v
 
 bb.r:                                             ; preds = %bb.o
@@ -247,36 +245,30 @@ bb.r:                                             ; preds = %bb.o
 bb.s:                                             ; preds = %bb.r
   %i.jt = add nuw nsw i32 %i.jj, 1
   %i.ju = lshr exact i32 %i.jt, 1
-  %i.jv = sub i32 %.0118, %i.ju                   ; 3 uses
-  %.not.i146 = icmp ult i32 %i.jv, 65536
-  %isnotneg.i147 = icmp sgt i32 %i.jv, -1
-  %4 = sext i1 %isnotneg.i147 to i16
-  %i.jw = trunc nuw i32 %i.jv to i16
-  %.0.i148 = select i1 %.not.i146, i16 %i.jw, i16 %4
+  %i.jv = sub i32 %.0118, %i.ju
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.jv, i32 0)
+  %.0.i148157 = tail call i32 @llvm.umin.i32(i32 %4, i32 65535)
+  %i.jw = trunc nuw i32 %.0.i148157 to i16
   br label %bb.v
 
 bb.t:                                             ; preds = %bb.r
   %i.jx = lshr exact i32 %i.jj, 1
-  %i.jy = add i32 %i.jx, %.0118                   ; 3 uses
-  %.not.i143 = icmp ult i32 %i.jy, 65536
-  %isnotneg.i144 = icmp sgt i32 %i.jy, -1
-  %5 = sext i1 %isnotneg.i144 to i16
-  %i.jz = trunc nuw i32 %i.jy to i16
-  %.0.i145 = select i1 %.not.i143, i16 %i.jz, i16 %5
+  %i.jy = add i32 %i.jx, %.0118
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.jy, i32 0)
+  %.0.i145158 = tail call i32 @llvm.umin.i32(i32 %5, i32 65535)
+  %i.jz = trunc nuw i32 %.0.i145158 to i16
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.n
   %i.ka = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv175
   store i32 0, ptr %i.ka, align 4, !tbaa !43
-  %.not.i142 = icmp ult i32 %.0118, 65536
-  %isnotneg.i = icmp sgt i32 %.0118, -1
-  %6 = sext i1 %isnotneg.i to i16
-  %i.kb = trunc nuw i32 %.0118 to i16
-  %.0.i = select i1 %.not.i142, i16 %i.kb, i16 %6
+  %6 = tail call i32 @llvm.smax.i32(i32 %.0118, i32 0)
+  %.0.i159 = tail call i32 @llvm.umin.i32(i32 %6, i32 65535)
+  %i.kb = trunc nuw i32 %.0.i159 to i16
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.p, %bb.u, %bb.s, %bb.t, %bb.q
-  %.0.i.sink = phi i16 [ %.0.i, %bb.u ], [ %.0.i148, %bb.s ], [ %.0.i145, %bb.t ], [ %.0.i151, %bb.q ], [ %i.ji, %bb.p ]
+  %.0.i.sink = phi i16 [ %i.kb, %bb.u ], [ %i.jw, %bb.s ], [ %i.jz, %bb.t ], [ %i.jr, %bb.q ], [ %i.ji, %bb.p ]
   %i.kc = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %indvars.iv175
   store i16 %.0.i.sink, ptr %i.kc, align 2, !tbaa !93
   %indvars.iv.next176 = add nuw nsw i64 %indvars.iv175, 1 ; 2 uses

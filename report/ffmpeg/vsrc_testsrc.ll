@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.b
   %.0246328 = phi i32 [ 0, %.preheader321.lr.ph ], [ %i.kt, %bb.z ] ; 2 uses
   %i.ay = uitofp nsz nneg i32 %.0246328 to float
   %i.az = fmul nsz float %i.ak, %i.ay
-  %i.ba = fptosi float %i.az to i32               ; 6 uses
-  %i.bb = call i32 @llvm.smax.i32(i32 %i.ba, i32 0) ; 6 uses
+  %i.ba = fptosi float %i.az to i32
+  %i.bb = call i32 @llvm.smax.i32(i32 %i.ba, i32 0) ; 8 uses
   %i.bc = call i32 @llvm.umin.i32(i32 %i.bb, i32 65535)
   %i.bd = trunc nuw i32 %i.bc to i16
   %i.be = call i32 @llvm.umin.i32(i32 %i.bb, i32 16383)
@@ -219,15 +219,10 @@ bb.d:                                             ; preds = %bb.b
   %i.bl = trunc nuw nsw i32 %i.bk to i16
   %i.bm = call i32 @llvm.umin.i32(i32 %i.bb, i32 255)
   %i.bn = trunc nuw i32 %i.bm to i8
-  %.not.i = icmp ult i32 %i.ba, 256
-  %isnotneg.i = icmp sgt i32 %i.ba, -1            ; 2 uses
-  %2 = sext i1 %isnotneg.i to i8
-  %i.bo = trunc nuw i32 %i.ba to i8
-  %.0.i = select i1 %.not.i, i8 %i.bo, i8 %2
-  %.not.i259 = icmp ult i32 %i.ba, 65536
-  %3 = sext i1 %isnotneg.i to i16
-  %i.bp = trunc nuw i32 %i.ba to i16
-  %.0.i261 = select i1 %.not.i259, i16 %i.bp, i16 %3
+  %.0.i323 = call i32 @llvm.umin.i32(i32 %i.bb, i32 255)
+  %i.bo = trunc nuw i32 %.0.i323 to i8
+  %.0.i261326 = call i32 @llvm.umin.i32(i32 %i.bb, i32 65535)
+  %i.bp = trunc nuw i32 %.0.i261326 to i16
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader321, %bb.y
@@ -236,8 +231,8 @@ bb.d:                                             ; preds = %bb.b
   %.0247325 = phi i32 [ 0, %.preheader321 ], [ %i.ks, %bb.y ] ; 2 uses
   %i.bq = uitofp nsz nneg i32 %.0247325 to float
   %i.br = fmul nsz float %i.ak, %i.bq
-  %i.bs = fptosi float %i.br to i32               ; 6 uses
-  %i.bt = call i32 @llvm.smax.i32(i32 %i.bs, i32 0) ; 6 uses
+  %i.bs = fptosi float %i.br to i32
+  %i.bt = call i32 @llvm.smax.i32(i32 %i.bs, i32 0) ; 8 uses
   %i.bu = call i32 @llvm.umin.i32(i32 %i.bt, i32 65535)
   %i.bv = trunc nuw i32 %i.bu to i16
   %i.bw = call i32 @llvm.umin.i32(i32 %i.bt, i32 16383)
@@ -250,15 +245,10 @@ bb.d:                                             ; preds = %bb.b
   %i.cd = trunc nuw nsw i32 %i.cc to i16
   %i.ce = call i32 @llvm.umin.i32(i32 %i.bt, i32 255)
   %i.cf = trunc nuw i32 %i.ce to i8
-  %.not.i253 = icmp ult i32 %i.bs, 256
-  %isnotneg.i254 = icmp sgt i32 %i.bs, -1         ; 2 uses
-  %4 = sext i1 %isnotneg.i254 to i8
-  %i.cg = trunc nuw i32 %i.bs to i8
-  %.0.i255 = select i1 %.not.i253, i8 %i.cg, i8 %4
-  %.not.i262 = icmp ult i32 %i.bs, 65536
-  %5 = sext i1 %isnotneg.i254 to i16
-  %i.ch = trunc nuw i32 %i.bs to i16
-  %.0.i264 = select i1 %.not.i262, i16 %i.ch, i16 %5
+  %.0.i255322 = call i32 @llvm.umin.i32(i32 %i.bt, i32 255)
+  %i.cg = trunc nuw i32 %.0.i255322 to i8
+  %.0.i264325 = call i32 @llvm.umin.i32(i32 %i.bt, i32 65535)
+  %i.ch = trunc nuw i32 %.0.i264325 to i16
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader, %bb.x
@@ -275,28 +265,26 @@ bb.f:                                             ; preds = %bb.e
   %i.cm = sext i32 %i.cl to i64                   ; 2 uses
   %i.cn = uitofp nsz nneg i32 %.0248322 to float
   %i.co = fmul nsz float %i.ak, %i.cn
-  %i.cp = fptosi float %i.co to i32               ; 5 uses
-  %isnotneg.i266 = icmp sgt i32 %i.cp, -1         ; 2 uses
+  %i.cp = fptosi float %i.co to i32
+  %2 = call i32 @llvm.smax.i32(i32 %i.cp, i32 0)  ; 2 uses
   %i.cq = load i8, ptr %i.a, align 1, !tbaa !61
   %i.cr = zext i8 %i.cq to i64                    ; 2 uses
   br i1 %i.ad, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.cs = getelementptr inbounds i8, ptr %i.ck, i64 %i.cm ; 4 uses
-  %.not.i256 = icmp ult i32 %i.cp, 256
-  %6 = sext i1 %isnotneg.i266 to i8
-  %i.ct = trunc nuw i32 %i.cp to i8
-  %.0.i258 = select i1 %.not.i256, i8 %i.ct, i8 %6
+  %.0.i258321 = call i32 @llvm.umin.i32(i32 %2, i32 255)
+  %i.ct = trunc nuw i32 %.0.i258321 to i8
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cs, i64 %i.cr
-  store i8 %.0.i258, ptr %i.cu, align 1, !tbaa !61
+  store i8 %i.ct, ptr %i.cu, align 1, !tbaa !61
   %i.cv = load i8, ptr %i.au, align 1, !tbaa !61
   %i.cw = zext i8 %i.cv to i64
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cs, i64 %i.cw
-  store i8 %.0.i255, ptr %i.cx, align 1, !tbaa !61
+  store i8 %i.cg, ptr %i.cx, align 1, !tbaa !61
   %i.cy = load i8, ptr %i.av, align 1, !tbaa !61
   %i.cz = zext i8 %i.cy to i64
   %i.da = getelementptr inbounds nuw i8, ptr %i.cs, i64 %i.cz
-  store i8 %.0.i, ptr %i.da, align 1, !tbaa !61
+  store i8 %i.bo, ptr %i.da, align 1, !tbaa !61
   br i1 %i.aw, label %bb.h, label %bb.x
 
 bb.h:                                             ; preds = %bb.g
@@ -308,20 +296,18 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f
   %i.de = getelementptr inbounds [2 x i8], ptr %i.ck, i64 %i.cm ; 4 uses
-  %.not.i265 = icmp ult i32 %i.cp, 65536
-  %7 = sext i1 %isnotneg.i266 to i16
-  %i.df = trunc nuw i32 %i.cp to i16
-  %.0.i267 = select i1 %.not.i265, i16 %i.df, i16 %7
+  %.0.i267324 = call i32 @llvm.umin.i32(i32 %2, i32 65535)
+  %i.df = trunc nuw i32 %.0.i267324 to i16
   %i.dg = getelementptr inbounds nuw [2 x i8], ptr %i.de, i64 %i.cr
-  store i16 %.0.i267, ptr %i.dg, align 2, !tbaa !63
+  store i16 %i.df, ptr %i.dg, align 2, !tbaa !63
   %i.dh = load i8, ptr %i.au, align 1, !tbaa !61
   %i.di = zext i8 %i.dh to i64
   %i.dj = getelementptr inbounds nuw [2 x i8], ptr %i.de, i64 %i.di
-  store i16 %.0.i264, ptr %i.dj, align 2, !tbaa !63
+  store i16 %i.ch, ptr %i.dj, align 2, !tbaa !63
   %i.dk = load i8, ptr %i.av, align 1, !tbaa !61
   %i.dl = zext i8 %i.dk to i64
   %i.dm = getelementptr inbounds nuw [2 x i8], ptr %i.de, i64 %i.dl
-  store i16 %.0.i261, ptr %i.dm, align 2, !tbaa !63
+  store i16 %i.bp, ptr %i.dm, align 2, !tbaa !63
   br i1 %i.aw, label %bb.j, label %bb.x
 
 bb.j:                                             ; preds = %bb.i

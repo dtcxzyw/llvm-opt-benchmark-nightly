@@ -204,37 +204,31 @@ tm2_update_block.exit.us.i:                       ; preds = %GET_TOK.exit159.3.i
 .lr.ph.i73:                                       ; preds = %.preheader.i71, %.lr.ph.i73
   %indvars.iv326.i = phi i64 [ %indvars.iv.next327.i, %.lr.ph.i73 ], [ 0, %.preheader.i71 ] ; 4 uses
   %i.bkq = getelementptr inbounds nuw [4 x i8], ptr %.0215314.i, i64 %indvars.iv326.i
-  %i.bkr = load i32, ptr %i.bkq, align 4, !tbaa !43 ; 5 uses
+  %i.bkr = load i32, ptr %i.bkq, align 4, !tbaa !43 ; 3 uses
   %i.bks = lshr i64 %indvars.iv326.i, 1
   %i.bkt = and i64 %i.bks, 2147483647             ; 2 uses
   %i.bku = getelementptr inbounds nuw [4 x i8], ptr %.0213315.i, i64 %i.bkt
   %i.bkv = load i32, ptr %i.bku, align 4, !tbaa !43
   %i.bkw = getelementptr inbounds nuw [4 x i8], ptr %.0211316.i, i64 %i.bkt
   %i.bkx = load i32, ptr %i.bkw, align 4, !tbaa !43
-  %i.bky = add i32 %i.bkx, %i.bkr                 ; 3 uses
-  %.not.i232.i = icmp ult i32 %i.bky, 256
-  %isnotneg.i233.i = icmp sgt i32 %i.bky, -1
-  %6 = sext i1 %isnotneg.i233.i to i8
-  %i.bkz = trunc nuw i32 %i.bky to i8
-  %.0.i234.i = select i1 %.not.i232.i, i8 %i.bkz, i8 %6
+  %i.bky = add i32 %i.bkx, %i.bkr
+  %6 = call i32 @llvm.smax.i32(i32 %i.bky, i32 0)
+  %.0.i234280.i = call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.bkz = trunc nuw i32 %.0.i234280.i to i8
   %i.bla = mul nuw nsw i64 %indvars.iv326.i, 3
   %i.blb = getelementptr inbounds nuw i8, ptr %.0210317.i, i64 %i.bla ; 3 uses
-  store i8 %.0.i234.i, ptr %i.blb, align 1, !tbaa !42
-  %.not.i229.i = icmp ult i32 %i.bkr, 256
-  %isnotneg.i230.i = icmp sgt i32 %i.bkr, -1
-  %7 = sext i1 %isnotneg.i230.i to i8
-  %i.blc = trunc nuw i32 %i.bkr to i8
-  %.0.i231.i = select i1 %.not.i229.i, i8 %i.blc, i8 %7
+  store i8 %i.bkz, ptr %i.blb, align 1, !tbaa !42
+  %7 = call i32 @llvm.smax.i32(i32 %i.bkr, i32 0)
+  %.0.i231281.i = call i32 @llvm.umin.i32(i32 %7, i32 255)
+  %i.blc = trunc nuw i32 %.0.i231281.i to i8
   %i.bld = getelementptr inbounds nuw i8, ptr %i.blb, i64 1
-  store i8 %.0.i231.i, ptr %i.bld, align 1, !tbaa !42
-  %i.ble = add i32 %i.bkv, %i.bkr                 ; 3 uses
-  %.not.i.i = icmp ult i32 %i.ble, 256
-  %isnotneg.i.i = icmp sgt i32 %i.ble, -1
-  %8 = sext i1 %isnotneg.i.i to i8
-  %i.blf = trunc nuw i32 %i.ble to i8
-  %.0.i.i = select i1 %.not.i.i, i8 %i.blf, i8 %8
+  store i8 %i.blc, ptr %i.bld, align 1, !tbaa !42
+  %i.ble = add i32 %i.bkv, %i.bkr
+  %8 = call i32 @llvm.smax.i32(i32 %i.ble, i32 0)
+  %.0.i282.i = call i32 @llvm.umin.i32(i32 %8, i32 255)
+  %i.blf = trunc nuw i32 %.0.i282.i to i8
   %i.blg = getelementptr inbounds nuw i8, ptr %i.blb, i64 2
-  store i8 %.0.i.i, ptr %i.blg, align 1, !tbaa !42
+  store i8 %i.blf, ptr %i.blg, align 1, !tbaa !42
   %indvars.iv.next327.i = add nuw nsw i64 %indvars.iv326.i, 1 ; 2 uses
   %exitcond330.not.i = icmp eq i64 %indvars.iv.next327.i, %wide.trip.count329.i
   br i1 %exitcond330.not.i, label %._crit_edge.i, label %.lr.ph.i73, !llvm.loop !80

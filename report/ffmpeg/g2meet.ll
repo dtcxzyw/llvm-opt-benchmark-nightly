@@ -205,38 +205,32 @@ bb.w:                                             ; preds = %bb.v, %bb.w
   %i.eg = mul nsw i32 %i.ed, 91881
   %i.eh = add nsw i32 %i.eg, 32768
   %i.ei = ashr i32 %i.eh, 16
-  %i.ej = add nsw i32 %i.ei, %i.dt                ; 3 uses
-  %12 = icmp ugt i32 %i.ej, 255
-  %isnotneg.i13.i = icmp sgt i32 %i.ej, -1
-  %13 = sext i1 %isnotneg.i13.i to i8
-  %i.ek = trunc nuw i32 %i.ej to i8
-  %.0.i14.i = select i1 %12, i8 %13, i8 %i.ek
+  %i.ej = add nsw i32 %i.ei, %i.dt
+  %12 = tail call i32 @llvm.smax.i32(i32 %i.ej, i32 0)
+  %.0.i1415.i = tail call i32 @llvm.umin.i32(i32 %12, i32 255)
+  %i.ek = trunc nuw i32 %.0.i1415.i to i8
   %i.el = getelementptr inbounds nuw i8, ptr %i.ef, i64 %i.ax
-  store i8 %.0.i14.i, ptr %i.el, align 1, !tbaa !31
+  store i8 %i.ek, ptr %i.el, align 1, !tbaa !31
   %i.em = mul nsw i32 %i.dz, -22554
   %.neg.i = mul nsw i32 %i.ed, -46802
   %i.en = add nsw i32 %i.em, 32768
   %i.eo = add i32 %i.en, %.neg.i
   %i.ep = ashr i32 %i.eo, 16
-  %i.eq = add nsw i32 %i.ep, %i.dt                ; 3 uses
-  %14 = icmp ugt i32 %i.eq, 255
-  %isnotneg.i11.i = icmp sgt i32 %i.eq, -1
-  %15 = sext i1 %isnotneg.i11.i to i8
-  %i.er = trunc nuw i32 %i.eq to i8
-  %.0.i12.i = select i1 %14, i8 %15, i8 %i.er
+  %i.eq = add nsw i32 %i.ep, %i.dt
+  %13 = tail call i32 @llvm.smax.i32(i32 %i.eq, i32 0)
+  %.0.i1216.i = tail call i32 @llvm.umin.i32(i32 %13, i32 255)
+  %i.er = trunc nuw i32 %.0.i1216.i to i8
   %i.es = getelementptr inbounds nuw i8, ptr %i.ef, i64 1
-  store i8 %.0.i12.i, ptr %i.es, align 1, !tbaa !31
+  store i8 %i.er, ptr %i.es, align 1, !tbaa !31
   %i.et = mul nsw i32 %i.dz, 116130
   %i.eu = add nsw i32 %i.et, 32768
   %i.ev = ashr i32 %i.eu, 16
-  %i.ew = add nsw i32 %i.ev, %i.dt                ; 3 uses
-  %16 = icmp ugt i32 %i.ew, 255
-  %isnotneg.i.i = icmp sgt i32 %i.ew, -1
-  %17 = sext i1 %isnotneg.i.i to i8
-  %i.ex = trunc nuw i32 %i.ew to i8
-  %.0.i.i133 = select i1 %16, i8 %17, i8 %i.ex
+  %i.ew = add nsw i32 %i.ev, %i.dt
+  %14 = tail call i32 @llvm.smax.i32(i32 %i.ew, i32 0)
+  %.0.i17.i = tail call i32 @llvm.umin.i32(i32 %14, i32 255)
+  %i.ex = trunc nuw i32 %.0.i17.i to i8
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ef, i64 %i.az
-  store i8 %.0.i.i133, ptr %i.ey, align 1, !tbaa !31
+  store i8 %i.ex, ptr %i.ey, align 1, !tbaa !31
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond.not, label %bb.x, label %bb.w, !llvm.loop !153

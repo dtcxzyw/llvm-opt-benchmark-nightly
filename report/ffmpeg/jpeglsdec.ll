@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %.lr.ph436, %.loopex
   %i.hy = mul nsw i32 %i.hx, 359
   %i.hz = add nsw i32 %i.hy, 490
   %i.ia = ashr i32 %i.hz, 8
-  %i.ib = sub nsw i32 %i.ht, %i.ia                ; 3 uses
+  %i.ib = sub nsw i32 %i.ht, %i.ia
   %i.ic = getelementptr i8, ptr %i.hr, i64 1      ; 2 uses
   %i.id = load i8, ptr %i.ic, align 1, !tbaa !13
   %i.ie = zext i8 %i.id to i32
@@ -214,29 +214,23 @@ bb.ak:                                            ; preds = %.lr.ph436, %.loopex
   %i.ih = add nsw i32 %.neg, 30
   %i.ii = add nsw i32 %i.ih, %i.ig
   %i.ij = ashr i32 %i.ii, 8
-  %i.ik = sub nsw i32 %i.ht, %i.ij                ; 3 uses
+  %i.ik = sub nsw i32 %i.ht, %i.ij
   %i.il = mul nsw i32 %i.if, 454
   %i.im = add nsw i32 %i.il, 574
   %i.in = ashr i32 %i.im, 8
-  %i.io = add nsw i32 %i.in, %i.ht                ; 3 uses
-  %1 = icmp ugt i32 %i.ib, 255
-  %isnotneg.i346 = icmp sgt i32 %i.ib, -1
-  %2 = sext i1 %isnotneg.i346 to i8
-  %i.ip = trunc nuw i32 %i.ib to i8
-  %.0.i347 = select i1 %1, i8 %2, i8 %i.ip
-  store i8 %.0.i347, ptr %i.hr, align 1, !tbaa !13
-  %3 = icmp ugt i32 %i.ik, 255
-  %isnotneg.i344 = icmp sgt i32 %i.ik, -1
-  %4 = sext i1 %isnotneg.i344 to i8
-  %i.iq = trunc nuw i32 %i.ik to i8
-  %.0.i345 = select i1 %3, i8 %4, i8 %i.iq
-  store i8 %.0.i345, ptr %i.ic, align 1, !tbaa !13
-  %5 = icmp ugt i32 %i.io, 255
-  %isnotneg.i = icmp sgt i32 %i.io, -1
-  %6 = sext i1 %isnotneg.i to i8
-  %i.ir = trunc nuw i32 %i.io to i8
-  %.0.i343 = select i1 %5, i8 %6, i8 %i.ir
-  store i8 %.0.i343, ptr %i.hu, align 1, !tbaa !13
+  %i.io = add nsw i32 %i.in, %i.ht
+  %1 = tail call i32 @llvm.smax.i32(i32 %i.ib, i32 0)
+  %.0.i347394 = tail call i32 @llvm.umin.i32(i32 %1, i32 255)
+  %i.ip = trunc nuw i32 %.0.i347394 to i8
+  store i8 %i.ip, ptr %i.hr, align 1, !tbaa !13
+  %2 = tail call i32 @llvm.smax.i32(i32 %i.ik, i32 0)
+  %.0.i345395 = tail call i32 @llvm.umin.i32(i32 %2, i32 255)
+  %i.iq = trunc nuw i32 %.0.i345395 to i8
+  store i8 %i.iq, ptr %i.ic, align 1, !tbaa !13
+  %3 = tail call i32 @llvm.smax.i32(i32 %i.io, i32 0)
+  %.0.i343396 = tail call i32 @llvm.umin.i32(i32 %3, i32 255)
+  %i.ir = trunc nuw i32 %.0.i343396 to i8
+  store i8 %i.ir, ptr %i.hu, align 1, !tbaa !13
   %indvars.iv.next468 = add nsw i64 %indvars.iv467, 3
   %i.is = add nsw i64 %indvars.iv467, 5           ; 2 uses
   %i.it = icmp slt i64 %i.is, %i.fm

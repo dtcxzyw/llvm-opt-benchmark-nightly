@@ -202,13 +202,11 @@ bb.c:                                             ; preds = %bb.b
   %i.dp = tail call nsz float @llvm.fmuladd.f32(float %i.dn, float %i.dj, float %i.do)
   %i.dq = tail call nsz float @llvm.fmuladd.f32(float %i.dj, float 4.000000e+00, float 1.000000e+00)
   %i.dr = fdiv nsz float %i.dp, %i.dq
-  %i.ds = fptosi float %i.dr to i32               ; 3 uses
-  %.not.i.peel = icmp ult i32 %i.ds, 256
-  %isnotneg.i.peel = icmp sgt i32 %i.ds, -1
-  %4 = sext i1 %isnotneg.i.peel to i8
-  %i.dt = trunc nuw i32 %i.ds to i8
-  %.0.i.peel = select i1 %.not.i.peel, i8 %i.dt, i8 %4
-  store i8 %.0.i.peel, ptr %.0303363, align 1, !tbaa !64
+  %i.ds = fptosi float %i.dr to i32
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.ds, i32 0)
+  %.0.i362.peel = tail call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %i.dt = trunc nuw i32 %.0.i362.peel to i8
+  store i8 %i.dt, ptr %.0303363, align 1, !tbaa !64
   br i1 %exitcond.peel.not, label %._crit_edge, label %.peel.next
 
 .peel.next:                                       ; preds = %.lr.ph
@@ -306,14 +304,12 @@ bb.d:                                             ; preds = %.peel.next, %bb.d
   %i.gn = tail call nsz float @llvm.fmuladd.f32(float %i.gl, float %i.gh, float %i.gm)
   %i.go = tail call nsz float @llvm.fmuladd.f32(float %i.gh, float 4.000000e+00, float 1.000000e+00)
   %i.gp = fdiv nsz float %i.gn, %i.go
-  %i.gq = fptosi float %i.gp to i32               ; 3 uses
-  %.not.i = icmp ult i32 %i.gq, 256
-  %isnotneg.i = icmp sgt i32 %i.gq, -1
-  %5 = sext i1 %isnotneg.i to i8
-  %i.gr = trunc nuw i32 %i.gq to i8
-  %.0.i = select i1 %.not.i, i8 %i.gr, i8 %5
+  %i.gq = fptosi float %i.gp to i32
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.gq, i32 0)
+  %.0.i362 = tail call i32 @llvm.umin.i32(i32 %5, i32 255)
+  %i.gr = trunc nuw i32 %.0.i362 to i8
   %i.gs = getelementptr inbounds nuw i8, ptr %.0303363, i64 %indvars.iv
-  store i8 %.0.i, ptr %i.gs, align 1, !tbaa !64
+  store i8 %i.gr, ptr %i.gs, align 1, !tbaa !64
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !62
 

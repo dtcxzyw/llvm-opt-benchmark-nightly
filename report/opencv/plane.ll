@@ -205,20 +205,16 @@ bb.n:                                             ; preds = %._crit_edge231
   %i.gf = mul i64 %i.ge, %indvars.iv255
   %.sink.idx.i137 = select i1 %i.gc, i64 0, i64 %i.gf
   %.sink.i138 = getelementptr inbounds nuw i8, ptr %i.gd, i64 %.sink.idx.i137
-  %i.gg = getelementptr inbounds nuw [12 x i8], ptr %.sink.i138, i64 %indvars.iv252 ; 3 uses
-  %.sroa.11165.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gg, i64 4
+  %i.gg = getelementptr inbounds nuw [12 x i8], ptr %.sink.i138, i64 %indvars.iv252 ; 2 uses
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gg, i64 8
   %i.gh = sitofp i32 %.1.lcssa to float           ; 3 uses
   %i.gi = insertelement <2 x double> poison, double %i.ga, i64 0
   %i.gj = shufflevector <2 x double> %i.gi, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gk = fmul <2 x double> %i.gj, %i.fy
-  %i.gl = fptrunc <2 x double> %i.gk to <2 x float> ; 6 uses
+  %i.gl = fptrunc <2 x double> %i.gk to <2 x float> ; 5 uses
   %i.gm = fmul double %i.ga, %i.fx
   %i.gn = fptrunc double %i.gm to float           ; 5 uses
-  %6 = extractelement <2 x float> %i.gl, i64 0
-  store float %6, ptr %i.gg, align 4
-  %7 = extractelement <2 x float> %i.gl, i64 1
-  store float %7, ptr %.sroa.11165.0..sroa_idx, align 4
+  store <2 x float> %i.gl, ptr %i.gg, align 4
   store float %i.gn, ptr %.sroa.18.0..sroa_idx, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   %i.go = insertelement <2 x float> poison, float %i.gh, i64 0
@@ -621,7 +617,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = fdiv nnan double 1.000000e+00, %i.d
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 44
   %.sroa.516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 52
@@ -635,11 +631,9 @@ bb.b:                                             ; preds = %bb.a
   %i.o = insertelement <4 x double> poison, double %i.e, i64 0
   %i.p = shufflevector <4 x double> %i.o, <4 x double> poison, <4 x i32> zeroinitializer
   %i.q = fmul <4 x double> %i.p, %i.n
-  %i.r = fptrunc <4 x double> %i.q to <4 x float> ; 5 uses
-  %4 = extractelement <4 x float> %i.r, i64 0
-  store float %4, ptr %i.g, align 8
-  %5 = extractelement <4 x float> %i.r, i64 1
-  store float %5, ptr %.sroa.415.0..sroa_idx, align 4
+  %i.r = fptrunc <4 x double> %i.q to <4 x float> ; 4 uses
+  %4 = shufflevector <4 x float> %i.r, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  store <2 x float> %4, ptr %i.g, align 8
   %i.s = extractelement <4 x float> %i.r, i64 2   ; 2 uses
   store float %i.s, ptr %.sroa.516.0..sroa_idx, align 8
   %i.t = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.j, <4 x float> %i.r, <4 x float> zeroinitializer)

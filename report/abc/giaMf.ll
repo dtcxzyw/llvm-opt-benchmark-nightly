@@ -205,23 +205,22 @@ bb.i:                                             ; preds = %._crit_edge82, %bb.
   %i.be = load i32, ptr %5, align 4, !tbaa !24    ; 4 uses
   call fastcc void @Abc_Tt7IsopCover(ptr noundef nonnull %i.b, ptr noundef nonnull %i.ak, ptr noundef %i.f, ptr noundef %4, ptr noundef %5)
   %i.bf = load i32, ptr %5, align 4, !tbaa !24    ; 2 uses
-  %i.bg = load <2 x i64>, ptr %0, align 8, !tbaa !19
-  %i.bh = load <2 x i64>, ptr %i.e, align 16, !tbaa !19 ; 2 uses
-  %6 = xor <2 x i64> %i.bh, splat (i64 -1)
-  %7 = and <2 x i64> %i.bg, %6
-  %8 = load <2 x i64>, ptr %i.q, align 8, !tbaa !19
-  %9 = load <2 x i64>, ptr %i.f, align 16, !tbaa !19 ; 2 uses
-  %i.bi = xor <2 x i64> %9, splat (i64 -1)
-  %i.bj = and <2 x i64> %8, %i.bi
-  %i.bk = or <2 x i64> %i.bj, %7
+  %i.bg = load <2 x i64>, ptr %i.e, align 16, !tbaa !19 ; 2 uses
+  %i.bh = load <2 x i64>, ptr %i.f, align 16, !tbaa !19 ; 2 uses
+  %6 = load <2 x i64>, ptr %0, align 8, !tbaa !19
+  %7 = load <2 x i64>, ptr %i.q, align 8, !tbaa !19
+  %8 = xor <2 x i64> %i.bg, splat (i64 -1)
+  %9 = and <2 x i64> %6, %8
+  %i.bi = xor <2 x i64> %i.bh, splat (i64 -1)
+  %i.bj = and <2 x i64> %7, %i.bi
+  %i.bk = or <2 x i64> %i.bj, %9
   store <2 x i64> %i.bk, ptr %i.c, align 16, !tbaa !19
   call fastcc void @Abc_Tt7IsopCover(ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef %i.g, ptr noundef %4, ptr noundef %5)
-  %i.bl = load <2 x i64>, ptr %i.g, align 16, !tbaa !19 ; 2 uses
-  %10 = or <2 x i64> %i.bl, %i.bh
-  store <2 x i64> %10, ptr %3, align 8, !tbaa !19
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %12 = or <2 x i64> %i.bl, %9
-  store <2 x i64> %12, ptr %11, align 8, !tbaa !19
+  %i.bl = load <2 x i64>, ptr %i.g, align 16, !tbaa !19
+  %10 = shufflevector <2 x i64> %i.bl, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %11 = shufflevector <2 x i64> %i.bg, <2 x i64> %i.bh, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = or <4 x i64> %10, %11
+  store <4 x i64> %12, ptr %3, align 8, !tbaa !19
   %i.bm = icmp slt i32 %i.bd, %i.be
   br i1 %i.bm, label %.lr.ph.preheader, label %.preheader
 

@@ -204,14 +204,12 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bk
   %i.rj = add i32 %i.ra, %i.qx
   %i.rk = tail call i32 @llvm.umin.i32(i32 %i.im, i32 %i.rj) ; 5 uses
   store i32 %i.rk, ptr %i.ds, align 8, !tbaa !34
-  %i.rl = add i32 %i.ri, %.0544761                ; 4 uses
-  %.not.i630 = icmp ult i32 %i.rl, 65536
-  %isnotneg.i631 = icmp sgt i32 %i.rl, -1
-  %5 = sext i1 %isnotneg.i631 to i16
-  %i.rm = trunc nuw i32 %i.rl to i16
-  %.0.i632 = select i1 %.not.i630, i16 %i.rm, i16 %5
+  %i.rl = add i32 %i.ri, %.0544761                ; 2 uses
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.rl, i32 0)
+  %.0.i632745 = tail call i32 @llvm.umin.i32(i32 %5, i32 65535)
+  %i.rm = trunc nuw i32 %.0.i632745 to i16
   %i.rn = getelementptr inbounds nuw [2 x i8], ptr %i.qz, i64 %indvars.iv796
-  store i16 %.0.i632, ptr %i.rn, align 2, !tbaa !83
+  store i16 %i.rm, ptr %i.rn, align 2, !tbaa !83
   %indvars.iv.next797 = add nuw nsw i64 %indvars.iv796, 1 ; 2 uses
   %exitcond800.not = icmp eq i64 %indvars.iv.next797, %wide.trip.count799
   br i1 %exitcond800.not, label %bb.bl, label %bb.bk, !llvm.loop !52
@@ -260,14 +258,12 @@ bb.bn:                                            ; preds = %bb.bn, %bb.bm
   %i.sq = add i32 %i.sh, %i.qx
   %i.sr = tail call i32 @llvm.umin.i32(i32 %i.im, i32 %i.sq) ; 5 uses
   store i32 %i.sr, ptr %i.ds, align 8, !tbaa !34
-  %i.ss = add i32 %i.sp, %.0544761.1              ; 4 uses
-  %.not.i630.1 = icmp ult i32 %i.ss, 65536
-  %isnotneg.i631.1 = icmp sgt i32 %i.ss, -1
-  %6 = sext i1 %isnotneg.i631.1 to i16
-  %i.st = trunc nuw i32 %i.ss to i16
-  %.0.i632.1 = select i1 %.not.i630.1, i16 %i.st, i16 %6
+  %i.ss = add i32 %i.sp, %.0544761.1              ; 2 uses
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.ss, i32 0)
+  %.0.i632745.1 = tail call i32 @llvm.umin.i32(i32 %6, i32 65535)
+  %i.st = trunc nuw i32 %.0.i632745.1 to i16
   %i.su = getelementptr inbounds nuw [2 x i8], ptr %i.sg, i64 %indvars.iv796.1
-  store i16 %.0.i632.1, ptr %i.su, align 2, !tbaa !83
+  store i16 %i.st, ptr %i.su, align 2, !tbaa !83
   %indvars.iv.next797.1 = add nuw nsw i64 %indvars.iv796.1, 1 ; 2 uses
   %exitcond800.1.not = icmp eq i64 %indvars.iv.next797.1, %wide.trip.count799.1
   br i1 %exitcond800.1.not, label %bb.bo, label %bb.bn, !llvm.loop !52
@@ -316,14 +312,12 @@ bb.bq:                                            ; preds = %bb.bq, %bb.bp
   %i.tx = add i32 %i.to, %i.qx
   %i.ty = tail call i32 @llvm.umin.i32(i32 %i.im, i32 %i.tx) ; 5 uses
   store i32 %i.ty, ptr %i.ds, align 8, !tbaa !34
-  %i.tz = add i32 %i.tw, %.0544761.2              ; 4 uses
-  %.not.i630.2 = icmp ult i32 %i.tz, 65536
-  %isnotneg.i631.2 = icmp sgt i32 %i.tz, -1
-  %7 = sext i1 %isnotneg.i631.2 to i16
-  %i.ua = trunc nuw i32 %i.tz to i16
-  %.0.i632.2 = select i1 %.not.i630.2, i16 %i.ua, i16 %7
+  %i.tz = add i32 %i.tw, %.0544761.2              ; 2 uses
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.tz, i32 0)
+  %.0.i632745.2 = tail call i32 @llvm.umin.i32(i32 %7, i32 65535)
+  %i.ua = trunc nuw i32 %.0.i632745.2 to i16
   %i.ub = getelementptr inbounds nuw [2 x i8], ptr %i.tn, i64 %indvars.iv796.2
-  store i16 %.0.i632.2, ptr %i.ub, align 2, !tbaa !83
+  store i16 %i.ua, ptr %i.ub, align 2, !tbaa !83
   %indvars.iv.next797.2 = add nuw nsw i64 %indvars.iv796.2, 1 ; 2 uses
   %exitcond800.2.not = icmp eq i64 %indvars.iv.next797.2, %wide.trip.count799.2
   br i1 %exitcond800.2.not, label %.thread686, label %bb.bq, !llvm.loop !52
@@ -353,16 +347,14 @@ bb.br:                                            ; preds = %.thread686
   %i.us = tail call i32 @llvm.bswap.i32(i32 %i.ur)
   %i.ut = and i32 %i.ul, 7
   %i.uu = shl i32 %i.us, %i.ut
-  %i.uv = lshr i32 %i.uu, %i.qy                   ; 4 uses
+  %i.uv = lshr i32 %i.uu, %i.qy                   ; 2 uses
   %i.uw = add i32 %i.ul, %i.qx
   %i.ux = tail call i32 @llvm.umin.i32(i32 %i.im, i32 %i.uw) ; 4 uses
   store i32 %i.ux, ptr %i.ds, align 8, !tbaa !34
-  %.not.i = icmp ult i32 %i.uv, 65536
-  %isnotneg.i = icmp sgt i32 %i.uv, -1
-  %8 = sext i1 %isnotneg.i to i16
-  %i.uy = trunc nuw i32 %i.uv to i16
-  %.0.i = select i1 %.not.i, i16 %i.uy, i16 %8
-  store i16 %.0.i, ptr %i.un, align 8, !tbaa !83
+  %8 = tail call i32 @llvm.smax.i32(i32 %i.uv, i32 0)
+  %.0.i746 = tail call i32 @llvm.umin.i32(i32 %8, i32 65535)
+  %i.uy = trunc nuw i32 %.0.i746 to i16
+  store i16 %i.uy, ptr %i.un, align 8, !tbaa !83
   %i.uz = lshr i32 %i.ux, 3
   %i.va = zext nneg i32 %i.uz to i64
   %i.vb = getelementptr inbounds nuw i8, ptr %i.in, i64 %i.va
@@ -374,14 +366,12 @@ bb.br:                                            ; preds = %.thread686
   %i.vh = add i32 %i.ux, %i.qx
   %i.vi = tail call i32 @llvm.umin.i32(i32 %i.im, i32 %i.vh)
   store i32 %i.vi, ptr %i.ds, align 8, !tbaa !34
-  %i.vj = add i32 %i.vg, %i.uv                    ; 3 uses
-  %.not.i.1 = icmp ult i32 %i.vj, 65536
-  %isnotneg.i.1 = icmp sgt i32 %i.vj, -1
-  %9 = sext i1 %isnotneg.i.1 to i16
-  %i.vk = trunc nuw i32 %i.vj to i16
-  %.0.i.1 = select i1 %.not.i.1, i16 %i.vk, i16 %9
+  %i.vj = add i32 %i.vg, %i.uv
+  %9 = tail call i32 @llvm.smax.i32(i32 %i.vj, i32 0)
+  %.0.i746.1 = tail call i32 @llvm.umin.i32(i32 %9, i32 65535)
+  %i.vk = trunc nuw i32 %.0.i746.1 to i16
   %i.vl = getelementptr inbounds nuw i8, ptr %i.ou, i64 5138
-  store i16 %.0.i.1, ptr %i.vl, align 2, !tbaa !83
+  store i16 %i.vk, ptr %i.vl, align 2, !tbaa !83
   %.not609 = icmp eq i32 %i.uj, 0
   br i1 %.not609, label %.thread691, label %bb.bs
 
@@ -783,6 +773,9 @@ declare i64 @llvm.umin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
