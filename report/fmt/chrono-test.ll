@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bn, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.bo = add i32 %i.ay, %.neg.i.i
+  %i.bo = add nsw i32 %i.ay, %.neg.i.i
   %i.bp = add i32 %i.bo, %i.g
   %xtraiter = and i32 %i.bm, 7                    ; 3 uses
   %i.bq = sub i32 %2, %i.bp
@@ -608,7 +608,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bn, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.bo = add i32 %i.ay, %.neg.i.i
+  %i.bo = add nsw i32 %i.ay, %.neg.i.i
   %i.bp = add i32 %i.bo, %i.g
   %xtraiter = and i32 %i.bm, 7                    ; 3 uses
   %i.bq = sub i32 %2, %i.bp
@@ -1011,7 +1011,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bn, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.bo = add i32 %i.ay, %.neg.i.i
+  %i.bo = add nsw i32 %i.ay, %.neg.i.i
   %i.bp = add i32 %i.bo, %i.g
   %xtraiter = and i32 %i.bm, 7                    ; 3 uses
   %i.bq = sub i32 %2, %i.bp
@@ -1414,7 +1414,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bn, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.bo = add i32 %i.ay, %.neg.i.i
+  %i.bo = add nsw i32 %i.ay, %.neg.i.i
   %i.bp = add i32 %i.bo, %i.g
   %xtraiter = and i32 %i.bm, 7                    ; 3 uses
   %i.bq = sub i32 %2, %i.bp
@@ -1817,7 +1817,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bn, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.bo = add i32 %i.ay, %.neg.i.i
+  %i.bo = add nsw i32 %i.ay, %.neg.i.i
   %i.bp = add i32 %i.bo, %i.g
   %xtraiter = and i32 %i.bm, 7                    ; 3 uses
   %i.bq = sub i32 %2, %i.bp
@@ -2220,7 +2220,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bn, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.bo = add i32 %i.ay, %.neg.i.i
+  %i.bo = add nsw i32 %i.ay, %.neg.i.i
   %i.bp = add i32 %i.bo, %i.g
   %xtraiter = and i32 %i.bm, 7                    ; 3 uses
   %i.bq = sub i32 %2, %i.bp
@@ -2623,7 +2623,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bq, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.br = add i32 %i.bb, %.neg.i.i
+  %i.br = add nsw i32 %i.bb, %.neg.i.i
   %i.bs = add i32 %i.br, %i.j
   %xtraiter = and i32 %i.bp, 7                    ; 3 uses
   %i.bt = sub i32 %2, %i.bs
@@ -3026,7 +3026,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bq, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.br = add i32 %i.bb, %.neg.i.i
+  %i.br = add nsw i32 %i.bb, %.neg.i.i
   %i.bs = add i32 %i.br, %i.j
   %xtraiter = and i32 %i.bp, 7                    ; 3 uses
   %i.bt = sub i32 %2, %i.bs
@@ -3429,7 +3429,7 @@ bb.j:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bp, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.j
-  %i.bq = add i32 %i.ba, %.neg.i.i
+  %i.bq = add nsw i32 %i.ba, %.neg.i.i
   %i.br = add i32 %i.bq, %i.i
   %xtraiter = and i32 %i.bo, 7                    ; 3 uses
   %i.bs = sub i32 %2, %i.br
@@ -3832,7 +3832,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bq, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.br = add i32 %i.bb, %.neg.i.i
+  %i.br = add nsw i32 %i.bb, %.neg.i.i
   %i.bs = add i32 %i.br, %i.j
   %xtraiter = and i32 %i.bp, 7                    ; 3 uses
   %i.bt = sub i32 %2, %i.bs
@@ -4235,7 +4235,7 @@ bb.k:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bn, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.k
-  %i.bo = add i32 %i.ay, %.neg.i.i
+  %i.bo = add nsw i32 %i.ay, %.neg.i.i
   %i.bp = add i32 %i.bo, %i.g
   %xtraiter = and i32 %i.bm, 7                    ; 3 uses
   %i.bq = sub i32 %2, %i.bp
@@ -4638,7 +4638,7 @@ bb.j:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bp, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.j
-  %i.bq = add i32 %i.ba, %.neg.i.i
+  %i.bq = add nsw i32 %i.ba, %.neg.i.i
   %i.br = add i32 %i.bq, %i.i
   %xtraiter = and i32 %i.bo, 7                    ; 3 uses
   %i.bs = sub i32 %2, %i.br
@@ -5041,7 +5041,7 @@ bb.j:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bp, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.j
-  %i.bq = add i32 %i.ba, %.neg.i.i
+  %i.bq = add nsw i32 %i.ba, %.neg.i.i
   %i.br = add i32 %i.bq, %i.i
   %xtraiter = and i32 %i.bo, 7                    ; 3 uses
   %i.bs = sub i32 %2, %i.br
@@ -5444,7 +5444,7 @@ bb.j:                                             ; preds = %_ZN3fmt3v126detail6
   br i1 %i.bp, label %_ZN3fmt3v126detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
 tailrecurse.i.preheader:                          ; preds = %bb.j
-  %i.bq = add i32 %i.ba, %.neg.i.i
+  %i.bq = add nsw i32 %i.ba, %.neg.i.i
   %i.br = add i32 %i.bq, %i.i
   %xtraiter = and i32 %i.bo, 7                    ; 3 uses
   %i.bs = sub i32 %2, %i.br

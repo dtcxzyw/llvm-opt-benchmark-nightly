@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.eh, label %.lr.ph18.preheader.i19.i.i, label %.loopexit886
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
-  %i.ei = zext i32 %.0.lcssa.i18.i.i to i64       ; 4 uses
+  %i.ei = zext nneg i32 %.0.lcssa.i18.i.i to i64  ; 4 uses
   %i.ej = sub nsw i64 %i.dr, %i.ei
   %xtraiter1397 = and i64 %i.ej, 7                ; 2 uses
   %lcmp.mod1398.not = icmp eq i64 %xtraiter1397, 0

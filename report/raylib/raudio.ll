@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @ma_is_loopback_supported(i32 noundef %0) local_unnamed_addr #1 {
+define hidden noundef range(i32 0, 2) i32 @ma_is_loopback_supported(i32 noundef %0) local_unnamed_addr #1 {
 bb.a:
   %cond = icmp eq i32 %0, 0
   %. = zext i1 %cond to i32
@@ -608,7 +608,7 @@ ma_lpf1_process_pcm_frame_s16.exit:               ; preds = %ma_lpf1_process_pcm
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @ma_lpf1_get_latency(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #1 {
+define hidden noundef range(i32 0, 2) i32 @ma_lpf1_get_latency(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = icmp ne ptr %0, null
   %. = zext i1 %i.a to i32
@@ -1011,7 +1011,7 @@ ma_hpf1_process_pcm_frame_s16.exit:               ; preds = %ma_hpf1_process_pcm
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @ma_hpf1_get_latency(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #1 {
+define hidden noundef range(i32 0, 2) i32 @ma_hpf1_get_latency(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = icmp ne ptr %0, null
   %. = zext i1 %i.a to i32
@@ -1414,7 +1414,7 @@ bb.eb:                                            ; preds = %bb.ea
   br i1 %.not685, label %.lr.ph35.preheader.i.i.i.i, label %drmp3_L3_intensity_stereo_band.exit.i.i.i
 
 .lr.ph35.preheader.i.i.i.i:                       ; preds = %._crit_edge.i.i.i73.i
-  %i.ayh = zext i32 %.0.lcssa.i.i.i.i to i64      ; 4 uses
+  %i.ayh = zext nneg i32 %.0.lcssa.i.i.i.i to i64 ; 4 uses
   %wide.trip.count.i41.i.i.i = zext i8 %i.avs to i64 ; 2 uses
   %i.ayi = sub nsw i64 %wide.trip.count.i41.i.i.i, %i.ayh ; 3 uses
   %min.iters.check674 = icmp ult i64 %i.ayi, 4
@@ -1817,7 +1817,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define internal range(i32 0, 2) i32 @drmp3__on_seek_stdio(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) #9 {
+define internal noundef range(i32 0, 2) i32 @drmp3__on_seek_stdio(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) #9 {
 bb.a:
   %switch.selectcmp = icmp eq i32 %2, 2
   %switch.select = select i1 %switch.selectcmp, i32 2, i32 0
@@ -2220,7 +2220,7 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define internal range(i32 0, 2) i32 @drwav__on_seek_stdio(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) #9 {
+define internal noundef range(i32 0, 2) i32 @drwav__on_seek_stdio(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) #9 {
 bb.a:
   %switch.selectcmp = icmp eq i32 %2, 2
   %switch.select = select i1 %switch.selectcmp, i32 2, i32 0

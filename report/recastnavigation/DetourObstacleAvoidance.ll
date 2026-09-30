@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   %i.hj = insertelement <2 x float> %i.hi, float %i.ah, i64 1
   %i.hk = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.hh, <2 x float> %i.hj, <2 x float> %i.hf)
   store <2 x float> %i.hk, ptr %i.gw, align 8, !tbaa !24
-  %i.hl = add nsw i32 %i.ab, -5
+  %i.hl = add nuw nsw i32 %i.ab, -5
   %i.hm = uitofp nneg i32 %i.hl to float
   %i.hn = fdiv float %i.hm, %i.bh                 ; 2 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %i.a, i64 88
@@ -228,7 +228,7 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   %i.id = insertelement <2 x float> %i.ic, float %i.ah, i64 1
   %i.ie = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ib, <2 x float> %i.id, <2 x float> %i.hz)
   store <2 x float> %i.ie, ptr %i.hq, align 8, !tbaa !24
-  %i.if = add nsw i32 %i.ab, -6
+  %i.if = add nuw nsw i32 %i.ab, -6
   %i.ig = uitofp nneg i32 %i.if to float
   %i.ih = fdiv float %i.ig, %i.bh                 ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.a, i64 104
@@ -386,7 +386,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.lj = shufflevector <2 x float> %i.li, <2 x float> poison, <2 x i32> zeroinitializer
   %i.lk = fmul <2 x float> %i.lj, %i.au
   store <2 x float> %i.lk, ptr %i.lh, align 8, !tbaa !24
-  %i.ll = add nsw i32 %i.ab, -5
+  %i.ll = add nuw nsw i32 %i.ab, -5
   %i.lm = uitofp nneg i32 %i.ll to float
   %i.ln = fdiv float %i.lm, %i.bh
   %i.lo = getelementptr inbounds nuw i8, ptr %i.a, i64 48
@@ -394,7 +394,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.lq = shufflevector <2 x float> %i.lp, <2 x float> poison, <2 x i32> zeroinitializer
   %i.lr = fmul <2 x float> %i.lq, %i.bg
   store <2 x float> %i.lr, ptr %i.lo, align 16, !tbaa !24
-  %i.ls = add nsw i32 %i.ab, -6
+  %i.ls = add nuw nsw i32 %i.ab, -6
   %i.lt = uitofp nneg i32 %i.ls to float
   %i.lu = fdiv float %i.lt, %i.bh
   %i.lv = getelementptr inbounds nuw i8, ptr %i.a, i64 56

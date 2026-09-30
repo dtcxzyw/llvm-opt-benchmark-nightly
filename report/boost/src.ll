@@ -206,7 +206,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.bl = add i64 %i.f, -1
   %.neg178 = sext i1 %i.i to i64
-  %i.bm = add i64 %i.bl, %.neg178
+  %i.bm = add nsw i64 %i.bl, %.neg178
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %bb.e

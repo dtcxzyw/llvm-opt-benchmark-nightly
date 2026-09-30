@@ -204,9 +204,9 @@ ff_bufqueue_add.exit:                             ; preds = %bb.e, %bb.f
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.b
-  %.pre-phi = phi i32 [ %.pre101, %.loopexit.loopexit ], [ %i.m, %bb.b ] ; 2 uses
-  %i.ap = phi i32 [ %.pre, %.loopexit.loopexit ], [ %i.o, %bb.b ]
-  %.val.i87 = phi i16 [ %i.ag, %.loopexit.loopexit ], [ %i.l, %bb.b ] ; 2 uses
+  %.pre-phi = phi i32 [ %i.m, %bb.b ], [ %.pre101, %.loopexit.loopexit ] ; 2 uses
+  %i.ap = phi i32 [ %i.o, %bb.b ], [ %.pre, %.loopexit.loopexit ]
+  %.val.i87 = phi i16 [ %i.l, %bb.b ], [ %i.ag, %.loopexit.loopexit ] ; 2 uses
   %i.aq = icmp sgt i32 %i.ap, %.pre-phi
   br i1 %i.aq, label %bb.g, label %bb.q
 

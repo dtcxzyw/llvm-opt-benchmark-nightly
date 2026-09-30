@@ -204,13 +204,13 @@ bb.bp:                                            ; preds = %bb.bl, %bb.bi, %bb.
   %i.oz = zext nneg i32 %narrow265 to i64         ; 4 uses
   %i.pa = zext nneg i32 %i.oy to i64
   %wide.trip.count.i = select i1 %.not.i222, i64 32, i64 %i.pa ; 2 uses
-  %i.pb = sub nsw i64 %wide.trip.count.i, %i.oz   ; 3 uses
-  %min.iters.check = icmp ult i64 %i.pb, 4
+  %i.pb = sub nuw nsw i64 %wide.trip.count.i, %i.oz ; 3 uses
+  %min.iters.check = icmp samesign ult i64 %i.pb, 4
   br i1 %min.iters.check, label %.lr.ph.i223.preheader, label %vector.ph322
 
 vector.ph322:                                     ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %i.pb, -4                      ; 3 uses
-  %i.pc = add nsw i64 %n.vec, %i.oz
+  %n.vec = and i64 %i.pb, 32764                   ; 3 uses
+  %i.pc = add nuw nsw i64 %n.vec, %i.oz
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.mo, i64 0 ; 3 uses
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert327 = insertelement <4 x float> poison, float %.0, i64 0
@@ -313,13 +313,13 @@ middle.block332:                                  ; preds = %vector.body329
   %i.rs = zext nneg i32 %narrow to i64            ; 8 uses
   %i.rt = zext nneg i32 %i.rr to i64              ; 2 uses
   %wide.trip.count.i229 = select i1 %.not.i227, i64 32, i64 %i.rt ; 2 uses
-  %i.ru = sub nsw i64 %wide.trip.count.i229, %i.rs ; 3 uses
-  %min.iters.check353 = icmp ult i64 %i.ru, 4
+  %i.ru = sub nuw nsw i64 %wide.trip.count.i229, %i.rs ; 3 uses
+  %min.iters.check353 = icmp samesign ult i64 %i.ru, 4
   br i1 %min.iters.check353, label %.lr.ph.i230.preheader, label %vector.ph354
 
 vector.ph354:                                     ; preds = %.lr.ph.preheader.i228
-  %n.vec355 = and i64 %i.ru, -4                   ; 3 uses
-  %i.rv = add nsw i64 %n.vec355, %i.rs
+  %n.vec355 = and i64 %i.ru, 32764                ; 3 uses
+  %i.rv = add nuw nsw i64 %n.vec355, %i.rs
   %broadcast.splatinsert356 = insertelement <4 x float> poison, float %i.rn, i64 0 ; 3 uses
   %broadcast.splat357 = shufflevector <4 x float> %broadcast.splatinsert356, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert362 = insertelement <4 x float> poison, float %.0, i64 0
@@ -493,13 +493,13 @@ bb.bu:                                            ; preds = %bb.bs, %bb.bq
   %i.vu = and i16 %i.vt, 1
   %.not.i236 = icmp eq i16 %i.vu, 0
   %wide.trip.count.i238 = select i1 %.not.i236, i64 32, i64 %i.rt ; 2 uses
-  %i.vv = sub nsw i64 %wide.trip.count.i238, %i.rs ; 3 uses
-  %min.iters.check334 = icmp ult i64 %i.vv, 4
+  %i.vv = sub nuw nsw i64 %wide.trip.count.i238, %i.rs ; 3 uses
+  %min.iters.check334 = icmp samesign ult i64 %i.vv, 4
   br i1 %min.iters.check334, label %.lr.ph.i239.preheader, label %vector.ph335
 
 vector.ph335:                                     ; preds = %.lr.ph.preheader.i237
-  %n.vec336 = and i64 %i.vv, -4                   ; 3 uses
-  %i.vw = add nsw i64 %n.vec336, %i.rs
+  %n.vec336 = and i64 %i.vv, 32764                ; 3 uses
+  %i.vw = add nuw nsw i64 %n.vec336, %i.rs
   %broadcast.splatinsert337 = insertelement <4 x float> poison, float %.0139, i64 0 ; 3 uses
   %broadcast.splat338 = shufflevector <4 x float> %broadcast.splatinsert337, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert343 = insertelement <4 x float> poison, float %.0, i64 0

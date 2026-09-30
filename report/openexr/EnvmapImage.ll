@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.f = sitofp i32 %i.e to float
   %i.g = fcmp ogt float %i.d, %i.f
   %.neg.i = sext i1 %i.g to i32
-  %.neg5.i = sub i32 %.neg.i, %i.e
+  %.neg5.i = sub nsw i32 %.neg.i, %i.e
   br label %_ZN9Imath_3_25floorIfEEiT_.exit
 
 _ZN9Imath_3_25floorIfEEiT_.exit:                  ; preds = %bb.b, %bb.c
@@ -240,7 +240,7 @@ bb.e:                                             ; preds = %_ZN9Imath_3_25floor
   %i.ae = sitofp i32 %i.ad to float
   %i.af = fcmp ogt float %i.ac, %i.ae
   %.neg.i46 = sext i1 %i.af to i32
-  %.neg5.i47 = sub i32 %.neg.i46, %i.ad
+  %.neg5.i47 = sub nsw i32 %.neg.i46, %i.ad
   br label %_ZN9Imath_3_25floorIfEEiT_.exit48
 
 _ZN9Imath_3_25floorIfEEiT_.exit48:                ; preds = %bb.d, %bb.e

@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.h, %.loopexit68
 }
 
 ; Function Attrs: mustprogress uwtable
-define zeroext range(i8 0, 2) i8 @rocksdb_key_may_exist(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, ptr nofree noundef writeonly captures(none) %4, ptr nofree noundef writeonly captures(none) %5, ptr noundef %6, i64 noundef %7, ptr nofree noundef writeonly captures(address_is_null) %8) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
+define noundef zeroext range(i8 0, 2) i8 @rocksdb_key_may_exist(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, ptr nofree noundef writeonly captures(none) %4, ptr nofree noundef writeonly captures(none) %5, ptr noundef %6, i64 noundef %7, ptr nofree noundef writeonly captures(address_is_null) %8) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -336,7 +336,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31: ; preds = %_ZN
 }
 
 ; Function Attrs: mustprogress uwtable
-define zeroext range(i8 0, 2) i8 @rocksdb_key_may_exist_cf(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3, i64 noundef %4, ptr nofree noundef writeonly captures(none) %5, ptr nofree noundef writeonly captures(none) %6, ptr noundef %7, i64 noundef %8, ptr nofree noundef writeonly captures(address_is_null) %9) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
+define noundef zeroext range(i8 0, 2) i8 @rocksdb_key_may_exist_cf(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3, i64 noundef %4, ptr nofree noundef writeonly captures(none) %5, ptr nofree noundef writeonly captures(none) %6, ptr noundef %7, i64 noundef %8, ptr nofree noundef writeonly captures(address_is_null) %9) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -739,7 +739,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define zeroext range(i8 0, 2) i8 @rocksdb_wal_iter_valid(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
+define noundef zeroext range(i8 0, 2) i8 @rocksdb_wal_iter_valid(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !436    ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !118
@@ -1142,7 +1142,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6: ; preds = %bb.f
 }
 
 ; Function Attrs: mustprogress uwtable
-define range(i32 -1, 1) i32 @rocksdb_property_int(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+define noundef range(i32 -1, 1) i32 @rocksdb_property_int(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
 bb.a:
   %3 = alloca %"class.rocksdb::Slice", align 8    ; 5 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !278    ; 2 uses
@@ -1170,7 +1170,7 @@ _ZN7rocksdb5SliceC2EPKc.exit:                     ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define range(i32 -1, 1) i32 @rocksdb_property_int_cf(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #2 {
+define noundef range(i32 -1, 1) i32 @rocksdb_property_int_cf(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #2 {
 bb.a:
   %4 = alloca %"class.rocksdb::Slice", align 8    ; 5 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !278    ; 2 uses
@@ -1573,7 +1573,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define zeroext range(i8 0, 2) i8 @rocksdb_iter_valid(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
+define noundef zeroext range(i8 0, 2) i8 @rocksdb_iter_valid(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !431    ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !118
@@ -1976,7 +1976,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define range(i64 -2147483648, 2147483648) i64 @rocksdb_options_checksum_handoff_file_types_count(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
+define noundef range(i64 -2147483648, 2147483648) i64 @rocksdb_options_checksum_handoff_file_types_count(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 640
   %i.b = load i64, ptr %i.a, align 8, !tbaa !87
@@ -2034,7 +2034,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define range(i64 -2147483648, 2147483648) i64 @rocksdb_options_calculate_sst_write_lifetime_hint_set_count(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
+define noundef range(i64 -2147483648, 2147483648) i64 @rocksdb_options_calculate_sst_write_lifetime_hint_set_count(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 744
   %i.b = load i64, ptr %i.a, align 8, !tbaa !87
@@ -2437,7 +2437,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6: ; preds = %bb.f
 }
 
 ; Function Attrs: mustprogress uwtable
-define range(i32 -1, 1) i32 @rocksdb_optimistictransactiondb_property_int(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+define noundef range(i32 -1, 1) i32 @rocksdb_optimistictransactiondb_property_int(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
 bb.a:
   %3 = alloca %"class.rocksdb::Slice", align 8    ; 5 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !1313   ; 2 uses
@@ -2840,7 +2840,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6: ; preds = %bb.f
 }
 
 ; Function Attrs: mustprogress uwtable
-define range(i32 -1, 1) i32 @rocksdb_transactiondb_property_int(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
+define noundef range(i32 -1, 1) i32 @rocksdb_transactiondb_property_int(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
 bb.a:
   %3 = alloca %"class.rocksdb::Slice", align 8    ; 5 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !1316   ; 2 uses

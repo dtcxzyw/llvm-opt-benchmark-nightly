@@ -204,14 +204,14 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 2) i32 @ossl_hpke_kdf_extract(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @ossl_hpke_kdf_extract(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc i32 @kdf_derive(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef 1, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef null, i64 noundef 0)
   ret i32 %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 0, 2) i32 @kdf_derive(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef range(i32 1, 3) %3, ptr noundef %4, i64 noundef %5, ptr noundef %6, i64 noundef %7, ptr noundef %8, i64 noundef %9) unnamed_addr #0 {
+define internal fastcc noundef range(i32 0, 2) i32 @kdf_derive(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef range(i32 1, 3) %3, ptr noundef %4, i64 noundef %5, ptr noundef %6, i64 noundef %7, ptr noundef %8, i64 noundef %9) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
   %10 = alloca [5 x %struct.ossl_param_st], align 16 ; 6 uses
@@ -283,7 +283,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 2) i32 @ossl_hpke_kdf_expand(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @ossl_hpke_kdf_expand(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc i32 @kdf_derive(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef 2, ptr noundef null, i64 noundef 0, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6)
   ret i32 %i.a
@@ -355,7 +355,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
 
 bb.k:                                             ; preds = %bb.i
   %i.r = load i64, ptr %i.a, align 8, !tbaa !14
-  %i.s = call fastcc range(i32 0, 2) i32 @kdf_derive(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef 1, ptr noundef %3, i64 noundef %4, ptr noundef nonnull %i.h, i64 noundef %i.r, ptr noundef null, i64 noundef 0)
+  %i.s = call fastcc noundef range(i32 0, 2) i32 @kdf_derive(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef 1, ptr noundef %3, i64 noundef %4, ptr noundef nonnull %i.h, i64 noundef %i.r, ptr noundef null, i64 noundef 0)
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -465,7 +465,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h,
 
 bb.l:                                             ; preds = %bb.j
   %i.u = load i64, ptr %i.a, align 8, !tbaa !14
-  %i.v = call fastcc range(i32 0, 2) i32 @kdf_derive(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef 2, ptr noundef null, i64 noundef 0, ptr noundef %3, i64 noundef %4, ptr noundef nonnull %i.j, i64 noundef %i.u)
+  %i.v = call fastcc noundef range(i32 0, 2) i32 @kdf_derive(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef 2, ptr noundef null, i64 noundef 0, ptr noundef %3, i64 noundef %4, ptr noundef nonnull %i.j, i64 noundef %i.u)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k

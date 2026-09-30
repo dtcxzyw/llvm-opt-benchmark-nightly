@@ -5,7 +5,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @cmsysString_isalnum(i8 noundef signext %0) local_unnamed_addr #0 {
+define dso_local noundef range(i32 0, 2) i32 @cmsysString_isalnum(i8 noundef signext %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = and i8 %0, -33
   %i.b = add i8 %i.a, -65
@@ -18,7 +18,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @cmsysString_isalpha(i8 noundef signext %0) local_unnamed_addr #0 {
+define dso_local noundef range(i32 0, 2) i32 @cmsysString_isalpha(i8 noundef signext %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = and i8 %0, -33
   %i.b = add i8 %i.a, -65
@@ -28,7 +28,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @cmsysString_isdigit(i8 noundef signext %0) local_unnamed_addr #0 {
+define dso_local noundef range(i32 0, 2) i32 @cmsysString_isdigit(i8 noundef signext %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = add i8 %0, -48
   %i.b = icmp ult i8 %i.a, 10
@@ -37,7 +37,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @cmsysString_islower(i8 noundef signext %0) local_unnamed_addr #0 {
+define dso_local noundef range(i32 0, 2) i32 @cmsysString_islower(i8 noundef signext %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = add i8 %0, -97
   %i.b = icmp ult i8 %i.a, 26
@@ -46,7 +46,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @cmsysString_isupper(i8 noundef signext %0) local_unnamed_addr #0 {
+define dso_local noundef range(i32 0, 2) i32 @cmsysString_isupper(i8 noundef signext %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = add i8 %0, -65
   %i.b = icmp ult i8 %i.a, 26
@@ -55,7 +55,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local range(i32 0, 256) i32 @cmsysString_isascii(i8 noundef signext %0) local_unnamed_addr #0 {
+define dso_local noundef range(i32 0, 256) i32 @cmsysString_isascii(i8 noundef signext %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = and i8 %0, -128
   %i.b = xor i8 %i.a, -128
@@ -131,7 +131,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @cmsysString_isprint(i8 noundef signext %0) local_unnamed_addr #0 {
+define dso_local noundef range(i32 0, 2) i32 @cmsysString_isprint(i8 noundef signext %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = add i8 %0, -32
   %i.b = icmp ult i8 %i.a, 95

@@ -203,7 +203,7 @@ scalar.ph297:                                     ; preds = %scalar.ph297.prehea
 
 .preheader39:                                     ; preds = %.loopexit41
   %i.mk = icmp sgt i32 %i.cx, 0
-  %i.ml = add i32 %i.cx, 3                        ; 2 uses
+  %i.ml = add i32 %i.cx, 3                        ; 3 uses
   br i1 %i.mk, label %.lr.ph68.preheader, label %.lr.ph72
 
 .lr.ph68.preheader:                               ; preds = %.preheader39
@@ -211,8 +211,8 @@ scalar.ph297:                                     ; preds = %scalar.ph297.prehea
   %i.mm = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.mm to i64
   %i.mn = zext nneg i32 %smax to i64              ; 3 uses
-  %i.mo = add nsw i64 %i.mn, -3                   ; 3 uses
-  %min.iters.check314 = icmp ult i64 %i.mo, 128
+  %i.mo = add nsw i64 %i.mn, -3                   ; 2 uses
+  %min.iters.check314 = icmp slt i32 %i.ml, 131
   br i1 %min.iters.check314, label %.lr.ph68.preheader348, label %vector.scevcheck307
 
 vector.scevcheck307:                              ; preds = %.lr.ph68.preheader
@@ -615,7 +615,7 @@ scalar.ph332:                                     ; preds = %scalar.ph332.prehea
 
 .preheader44:                                     ; preds = %.loopexit46
   %i.nc = icmp sgt i32 %i.db, 0
-  %i.nd = add i32 %i.db, 7                        ; 2 uses
+  %i.nd = add i32 %i.db, 7                        ; 3 uses
   br i1 %i.nc, label %.lr.ph73.preheader, label %.lr.ph77
 
 .lr.ph73.preheader:                               ; preds = %.preheader44
@@ -623,8 +623,8 @@ scalar.ph332:                                     ; preds = %scalar.ph332.prehea
   %i.ne = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ne to i64
   %i.nf = zext nneg i32 %smax to i64              ; 3 uses
-  %i.ng = add nsw i64 %i.nf, -7                   ; 3 uses
-  %min.iters.check349 = icmp ult i64 %i.ng, 128
+  %i.ng = add nsw i64 %i.nf, -7                   ; 2 uses
+  %min.iters.check349 = icmp slt i32 %i.nd, 135
   br i1 %min.iters.check349, label %.lr.ph73.preheader383, label %vector.scevcheck342
 
 vector.scevcheck342:                              ; preds = %.lr.ph73.preheader
@@ -1027,7 +1027,7 @@ scalar.ph338:                                     ; preds = %scalar.ph338.prehea
 
 .preheader44:                                     ; preds = %.loopexit46
   %i.oi = icmp sgt i32 %i.db, 0
-  %i.oj = add i32 %i.db, 15                       ; 2 uses
+  %i.oj = add i32 %i.db, 15                       ; 3 uses
   br i1 %i.oi, label %.lr.ph73.preheader, label %.lr.ph77
 
 .lr.ph73.preheader:                               ; preds = %.preheader44
@@ -1035,8 +1035,8 @@ scalar.ph338:                                     ; preds = %scalar.ph338.prehea
   %i.ok = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ok to i64
   %i.ol = zext nneg i32 %smax to i64              ; 3 uses
-  %i.om = add nsw i64 %i.ol, -15                  ; 3 uses
-  %min.iters.check355 = icmp ult i64 %i.om, 128
+  %i.om = add nsw i64 %i.ol, -15                  ; 2 uses
+  %min.iters.check355 = icmp slt i32 %i.oj, 143
   br i1 %min.iters.check355, label %.lr.ph73.preheader389, label %vector.scevcheck348
 
 vector.scevcheck348:                              ; preds = %.lr.ph73.preheader
@@ -1439,7 +1439,7 @@ begin_hunk_3_@intra_pred_5_9:bb.a
 
 .preheader45:                                     ; preds = %.loopexit47
   %i.qu = icmp sgt i32 %i.db, 0
-  %i.qv = add i32 %i.db, 31                       ; 2 uses
+  %i.qv = add i32 %i.db, 31                       ; 3 uses
   br i1 %i.qu, label %.lr.ph74.preheader, label %.lr.ph78
 
 .lr.ph74.preheader:                               ; preds = %.preheader45
@@ -1447,8 +1447,8 @@ begin_hunk_3_@intra_pred_5_9:bb.a
   %i.qw = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.qw to i64
   %i.qx = zext nneg i32 %smax to i64              ; 3 uses
-  %i.qy = add nsw i64 %i.qx, -31                  ; 3 uses
-  %min.iters.check397 = icmp ult i64 %i.qy, 128
+  %i.qy = add nsw i64 %i.qx, -31                  ; 2 uses
+  %min.iters.check397 = icmp slt i32 %i.qv, 159
   br i1 %min.iters.check397, label %.lr.ph74.preheader431, label %vector.scevcheck390
 
 vector.scevcheck390:                              ; preds = %.lr.ph74.preheader
@@ -1851,7 +1851,7 @@ scalar.ph296:                                     ; preds = %scalar.ph296.prehea
 
 .preheader38:                                     ; preds = %.loopexit40
   %i.mk = icmp sgt i32 %i.cx, 0
-  %i.ml = add i32 %i.cx, 3                        ; 2 uses
+  %i.ml = add i32 %i.cx, 3                        ; 3 uses
   br i1 %i.mk, label %.lr.ph67.preheader, label %.lr.ph71
 
 .lr.ph67.preheader:                               ; preds = %.preheader38
@@ -1859,8 +1859,8 @@ scalar.ph296:                                     ; preds = %scalar.ph296.prehea
   %i.mm = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.mm to i64
   %i.mn = zext nneg i32 %smax to i64              ; 3 uses
-  %i.mo = add nsw i64 %i.mn, -3                   ; 3 uses
-  %min.iters.check313 = icmp ult i64 %i.mo, 128
+  %i.mo = add nsw i64 %i.mn, -3                   ; 2 uses
+  %min.iters.check313 = icmp slt i32 %i.ml, 131
   br i1 %min.iters.check313, label %.lr.ph67.preheader347, label %vector.scevcheck306
 
 vector.scevcheck306:                              ; preds = %.lr.ph67.preheader
@@ -2263,7 +2263,7 @@ scalar.ph331:                                     ; preds = %scalar.ph331.prehea
 
 .preheader43:                                     ; preds = %.loopexit45
   %i.nc = icmp sgt i32 %i.db, 0
-  %i.nd = add i32 %i.db, 7                        ; 2 uses
+  %i.nd = add i32 %i.db, 7                        ; 3 uses
   br i1 %i.nc, label %.lr.ph72.preheader, label %.lr.ph76
 
 .lr.ph72.preheader:                               ; preds = %.preheader43
@@ -2271,8 +2271,8 @@ scalar.ph331:                                     ; preds = %scalar.ph331.prehea
   %i.ne = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ne to i64
   %i.nf = zext nneg i32 %smax to i64              ; 3 uses
-  %i.ng = add nsw i64 %i.nf, -7                   ; 3 uses
-  %min.iters.check348 = icmp ult i64 %i.ng, 128
+  %i.ng = add nsw i64 %i.nf, -7                   ; 2 uses
+  %min.iters.check348 = icmp slt i32 %i.nd, 135
   br i1 %min.iters.check348, label %.lr.ph72.preheader382, label %vector.scevcheck341
 
 vector.scevcheck341:                              ; preds = %.lr.ph72.preheader
@@ -2675,7 +2675,7 @@ scalar.ph337:                                     ; preds = %scalar.ph337.prehea
 
 .preheader43:                                     ; preds = %.loopexit45
   %i.oi = icmp sgt i32 %i.db, 0
-  %i.oj = add i32 %i.db, 15                       ; 2 uses
+  %i.oj = add i32 %i.db, 15                       ; 3 uses
   br i1 %i.oi, label %.lr.ph72.preheader, label %.lr.ph76
 
 .lr.ph72.preheader:                               ; preds = %.preheader43
@@ -2683,8 +2683,8 @@ scalar.ph337:                                     ; preds = %scalar.ph337.prehea
   %i.ok = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ok to i64
   %i.ol = zext nneg i32 %smax to i64              ; 3 uses
-  %i.om = add nsw i64 %i.ol, -15                  ; 3 uses
-  %min.iters.check354 = icmp ult i64 %i.om, 128
+  %i.om = add nsw i64 %i.ol, -15                  ; 2 uses
+  %min.iters.check354 = icmp slt i32 %i.oj, 143
   br i1 %min.iters.check354, label %.lr.ph72.preheader388, label %vector.scevcheck347
 
 vector.scevcheck347:                              ; preds = %.lr.ph72.preheader
@@ -3087,7 +3087,7 @@ begin_hunk_7_@intra_pred_5_10:bb.a
 
 .preheader44:                                     ; preds = %.loopexit46
   %i.qu = icmp sgt i32 %i.db, 0
-  %i.qv = add i32 %i.db, 31                       ; 2 uses
+  %i.qv = add i32 %i.db, 31                       ; 3 uses
   br i1 %i.qu, label %.lr.ph73.preheader, label %.lr.ph77
 
 .lr.ph73.preheader:                               ; preds = %.preheader44
@@ -3095,8 +3095,8 @@ begin_hunk_7_@intra_pred_5_10:bb.a
   %i.qw = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.qw to i64
   %i.qx = zext nneg i32 %smax to i64              ; 3 uses
-  %i.qy = add nsw i64 %i.qx, -31                  ; 3 uses
-  %min.iters.check396 = icmp ult i64 %i.qy, 128
+  %i.qy = add nsw i64 %i.qx, -31                  ; 2 uses
+  %min.iters.check396 = icmp slt i32 %i.qv, 159
   br i1 %min.iters.check396, label %.lr.ph73.preheader430, label %vector.scevcheck389
 
 vector.scevcheck389:                              ; preds = %.lr.ph73.preheader
@@ -3499,7 +3499,7 @@ scalar.ph296:                                     ; preds = %scalar.ph296.prehea
 
 .preheader38:                                     ; preds = %.loopexit40
   %i.mk = icmp sgt i32 %i.cx, 0
-  %i.ml = add i32 %i.cx, 3                        ; 2 uses
+  %i.ml = add i32 %i.cx, 3                        ; 3 uses
   br i1 %i.mk, label %.lr.ph67.preheader, label %.lr.ph71
 
 .lr.ph67.preheader:                               ; preds = %.preheader38
@@ -3507,8 +3507,8 @@ scalar.ph296:                                     ; preds = %scalar.ph296.prehea
   %i.mm = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.mm to i64
   %i.mn = zext nneg i32 %smax to i64              ; 3 uses
-  %i.mo = add nsw i64 %i.mn, -3                   ; 3 uses
-  %min.iters.check313 = icmp ult i64 %i.mo, 128
+  %i.mo = add nsw i64 %i.mn, -3                   ; 2 uses
+  %min.iters.check313 = icmp slt i32 %i.ml, 131
   br i1 %min.iters.check313, label %.lr.ph67.preheader347, label %vector.scevcheck306
 
 vector.scevcheck306:                              ; preds = %.lr.ph67.preheader
@@ -3911,7 +3911,7 @@ scalar.ph331:                                     ; preds = %scalar.ph331.prehea
 
 .preheader43:                                     ; preds = %.loopexit45
   %i.nc = icmp sgt i32 %i.db, 0
-  %i.nd = add i32 %i.db, 7                        ; 2 uses
+  %i.nd = add i32 %i.db, 7                        ; 3 uses
   br i1 %i.nc, label %.lr.ph72.preheader, label %.lr.ph76
 
 .lr.ph72.preheader:                               ; preds = %.preheader43
@@ -3919,8 +3919,8 @@ scalar.ph331:                                     ; preds = %scalar.ph331.prehea
   %i.ne = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ne to i64
   %i.nf = zext nneg i32 %smax to i64              ; 3 uses
-  %i.ng = add nsw i64 %i.nf, -7                   ; 3 uses
-  %min.iters.check348 = icmp ult i64 %i.ng, 128
+  %i.ng = add nsw i64 %i.nf, -7                   ; 2 uses
+  %min.iters.check348 = icmp slt i32 %i.nd, 135
   br i1 %min.iters.check348, label %.lr.ph72.preheader382, label %vector.scevcheck341
 
 vector.scevcheck341:                              ; preds = %.lr.ph72.preheader
@@ -4323,7 +4323,7 @@ scalar.ph337:                                     ; preds = %scalar.ph337.prehea
 
 .preheader43:                                     ; preds = %.loopexit45
   %i.oi = icmp sgt i32 %i.db, 0
-  %i.oj = add i32 %i.db, 15                       ; 2 uses
+  %i.oj = add i32 %i.db, 15                       ; 3 uses
   br i1 %i.oi, label %.lr.ph72.preheader, label %.lr.ph76
 
 .lr.ph72.preheader:                               ; preds = %.preheader43
@@ -4331,8 +4331,8 @@ scalar.ph337:                                     ; preds = %scalar.ph337.prehea
   %i.ok = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ok to i64
   %i.ol = zext nneg i32 %smax to i64              ; 3 uses
-  %i.om = add nsw i64 %i.ol, -15                  ; 3 uses
-  %min.iters.check354 = icmp ult i64 %i.om, 128
+  %i.om = add nsw i64 %i.ol, -15                  ; 2 uses
+  %min.iters.check354 = icmp slt i32 %i.oj, 143
   br i1 %min.iters.check354, label %.lr.ph72.preheader388, label %vector.scevcheck347
 
 vector.scevcheck347:                              ; preds = %.lr.ph72.preheader
@@ -4735,7 +4735,7 @@ begin_hunk_11_@intra_pred_5_12:bb.a
 
 .preheader44:                                     ; preds = %.loopexit46
   %i.qu = icmp sgt i32 %i.db, 0
-  %i.qv = add i32 %i.db, 31                       ; 2 uses
+  %i.qv = add i32 %i.db, 31                       ; 3 uses
   br i1 %i.qu, label %.lr.ph73.preheader, label %.lr.ph77
 
 .lr.ph73.preheader:                               ; preds = %.preheader44
@@ -4743,8 +4743,8 @@ begin_hunk_11_@intra_pred_5_12:bb.a
   %i.qw = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.qw to i64
   %i.qx = zext nneg i32 %smax to i64              ; 3 uses
-  %i.qy = add nsw i64 %i.qx, -31                  ; 3 uses
-  %min.iters.check396 = icmp ult i64 %i.qy, 128
+  %i.qy = add nsw i64 %i.qx, -31                  ; 2 uses
+  %min.iters.check396 = icmp slt i32 %i.qv, 159
   br i1 %min.iters.check396, label %.lr.ph73.preheader430, label %vector.scevcheck389
 
 vector.scevcheck389:                              ; preds = %.lr.ph73.preheader
@@ -5147,7 +5147,7 @@ scalar.ph295:                                     ; preds = %scalar.ph295.prehea
 
 .preheader38:                                     ; preds = %.loopexit40
   %i.mn = icmp sgt i32 %i.cy, 0
-  %i.mo = add i32 %i.cy, 3                        ; 2 uses
+  %i.mo = add i32 %i.cy, 3                        ; 4 uses
   br i1 %i.mn, label %iter.check, label %.lr.ph71
 
 iter.check:                                       ; preds = %.preheader38
@@ -5155,8 +5155,8 @@ iter.check:                                       ; preds = %.preheader38
   %i.mp = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.mp to i64
   %i.mq = zext nneg i32 %smax to i64              ; 3 uses
-  %i.mr = add nsw i64 %i.mq, -3                   ; 7 uses
-  %min.iters.check308 = icmp ugt i64 %i.mr, 7
+  %i.mr = add nsw i64 %i.mq, -3                   ; 5 uses
+  %min.iters.check308 = icmp sgt i32 %i.mo, 10
   %ident.check306.not = icmp eq i32 %i.aw, 1
   %or.cond339 = select i1 %min.iters.check308, i1 %ident.check306.not, i1 false
   br i1 %or.cond339, label %vector.memcheck, label %.lr.ph67.preheader
@@ -5170,7 +5170,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %diff.check, label %.lr.ph67.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check309 = icmp ult i64 %i.mr, 32
+  %min.iters.check309 = icmp slt i32 %i.mo, 35
   br i1 %min.iters.check309, label %vec.epilog.ph, label %vector.ph310
 
 vector.ph310:                                     ; preds = %vector.main.loop.iter.check
@@ -5573,7 +5573,7 @@ scalar.ph326:                                     ; preds = %scalar.ph326.prehea
 
 .preheader43:                                     ; preds = %.loopexit45
   %i.nl = icmp sgt i32 %i.dc, 0
-  %i.nm = add i32 %i.dc, 7                        ; 2 uses
+  %i.nm = add i32 %i.dc, 7                        ; 4 uses
   br i1 %i.nl, label %iter.check, label %.lr.ph76
 
 iter.check:                                       ; preds = %.preheader43
@@ -5581,8 +5581,8 @@ iter.check:                                       ; preds = %.preheader43
   %i.nn = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.nn to i64
   %i.no = zext nneg i32 %smax to i64              ; 3 uses
-  %i.np = add nsw i64 %i.no, -7                   ; 7 uses
-  %min.iters.check339 = icmp ugt i64 %i.np, 7
+  %i.np = add nsw i64 %i.no, -7                   ; 5 uses
+  %min.iters.check339 = icmp sgt i32 %i.nm, 14
   %ident.check337.not = icmp eq i32 %i.ay, 1
   %or.cond370 = select i1 %min.iters.check339, i1 %ident.check337.not, i1 false
   br i1 %or.cond370, label %vector.memcheck, label %.lr.ph72.preheader
@@ -5596,7 +5596,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %diff.check, label %.lr.ph72.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check340 = icmp ult i64 %i.np, 32
+  %min.iters.check340 = icmp slt i32 %i.nm, 39
   br i1 %min.iters.check340, label %vec.epilog.ph, label %vector.ph341
 
 vector.ph341:                                     ; preds = %vector.main.loop.iter.check
@@ -5999,7 +5999,7 @@ scalar.ph325:                                     ; preds = %scalar.ph325.prehea
 
 .preheader43:                                     ; preds = %.loopexit45
   %i.ox = icmp sgt i32 %i.dc, 0
-  %i.oy = add i32 %i.dc, 15                       ; 2 uses
+  %i.oy = add i32 %i.dc, 15                       ; 4 uses
   br i1 %i.ox, label %iter.check, label %.lr.ph76
 
 iter.check:                                       ; preds = %.preheader43
@@ -6007,8 +6007,8 @@ iter.check:                                       ; preds = %.preheader43
   %i.oz = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.oz to i64
   %i.pa = zext nneg i32 %smax to i64              ; 3 uses
-  %i.pb = add nsw i64 %i.pa, -15                  ; 7 uses
-  %min.iters.check338 = icmp ugt i64 %i.pb, 7
+  %i.pb = add nsw i64 %i.pa, -15                  ; 5 uses
+  %min.iters.check338 = icmp sgt i32 %i.oy, 22
   %ident.check336.not = icmp eq i32 %i.ay, 1
   %or.cond369 = select i1 %min.iters.check338, i1 %ident.check336.not, i1 false
   br i1 %or.cond369, label %vector.memcheck, label %.lr.ph72.preheader
@@ -6022,7 +6022,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %diff.check, label %.lr.ph72.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check339 = icmp ult i64 %i.pb, 32
+  %min.iters.check339 = icmp slt i32 %i.oy, 47
   br i1 %min.iters.check339, label %vec.epilog.ph, label %vector.ph340
 
 vector.ph340:                                     ; preds = %vector.main.loop.iter.check
@@ -6425,7 +6425,7 @@ begin_hunk_15_@intra_pred_5_8:bb.a
 
 .preheader44:                                     ; preds = %.loopexit46
   %i.rz = icmp sgt i32 %i.dc, 0
-  %i.sa = add i32 %i.dc, 31                       ; 2 uses
+  %i.sa = add i32 %i.dc, 31                       ; 4 uses
   br i1 %i.rz, label %iter.check, label %.lr.ph77
 
 iter.check:                                       ; preds = %.preheader44
@@ -6433,8 +6433,8 @@ iter.check:                                       ; preds = %.preheader44
   %i.sb = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.sb to i64
   %i.sc = zext nneg i32 %smax to i64              ; 3 uses
-  %i.sd = add nsw i64 %i.sc, -31                  ; 7 uses
-  %min.iters.check364 = icmp ugt i64 %i.sd, 7
+  %i.sd = add nsw i64 %i.sc, -31                  ; 5 uses
+  %min.iters.check364 = icmp sgt i32 %i.sa, 38
   %ident.check362.not = icmp eq i32 %i.ay, 1
   %or.cond395 = select i1 %min.iters.check364, i1 %ident.check362.not, i1 false
   br i1 %or.cond395, label %vector.memcheck, label %.lr.ph73.preheader
@@ -6448,7 +6448,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %diff.check, label %.lr.ph73.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check365 = icmp ult i64 %i.sd, 32
+  %min.iters.check365 = icmp slt i32 %i.sa, 63
   br i1 %min.iters.check365, label %vec.epilog.ph, label %vector.ph366
 
 vector.ph366:                                     ; preds = %vector.main.loop.iter.check

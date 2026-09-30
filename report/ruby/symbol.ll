@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @rb_is_const_id(i64 noundef %0) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @rb_is_const_id(i64 noundef %0) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ugt i64 %0, 171
   %i.b = and i64 %0, 14
@@ -215,7 +215,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @rb_is_class_id(i64 noundef %0) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @rb_is_class_id(i64 noundef %0) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ugt i64 %0, 171
   %i.b = and i64 %0, 14
@@ -226,7 +226,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @rb_is_global_id(i64 noundef %0) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @rb_is_global_id(i64 noundef %0) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ugt i64 %0, 171
   %i.b = and i64 %0, 14
@@ -237,7 +237,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @rb_is_instance_id(i64 noundef %0) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @rb_is_instance_id(i64 noundef %0) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ugt i64 %0, 171
   %i.b = and i64 %0, 14
@@ -267,7 +267,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @rb_is_local_id(i64 noundef %0) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @rb_is_local_id(i64 noundef %0) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ugt i64 %0, 171
   %i.b = and i64 %0, 14
@@ -278,7 +278,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @rb_is_junk_id(i64 noundef %0) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @rb_is_junk_id(i64 noundef %0) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ugt i64 %0, 171
   %i.b = and i64 %0, 14

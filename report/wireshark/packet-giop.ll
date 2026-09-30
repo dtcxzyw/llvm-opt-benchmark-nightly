@@ -205,6 +205,7 @@ bb.e:                                             ; preds = %giop_getline.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e
   %i.u = and i32 %i.o, 2147483646
+  %invariant.op.i.i = add nsw i64 %i.q, -1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.l, %.lr.ph.i.i
@@ -261,8 +262,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.at = getelementptr i8, ptr %i.r, i64 %i.as
   store i8 %i.aq, ptr %i.at, align 1
   %indvars.iv.next39.i.i = add nuw nsw i64 %indvars.iv38.i.i, 2 ; 2 uses
-  %0 = or disjoint i64 %indvars.iv.next39.i.i, 1
-  %i.au = icmp samesign ult i64 %0, %i.q
+  %i.au = icmp ult i64 %indvars.iv.next39.i.i, %invariant.op.i.i
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 2
   br i1 %i.au, label %bb.f, label %string_to_IOR.exit.i, !llvm.loop !39
 

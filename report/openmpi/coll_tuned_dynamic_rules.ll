@@ -203,7 +203,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define range(i32 -1, 1) i32 @ompi_coll_tuned_dump_msg_rule(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #2 {
+define noundef range(i32 -1, 1) i32 @ompi_coll_tuned_dump_msg_rule(ptr nofree noundef readnone captures(address_is_null) %0) local_unnamed_addr #2 {
 bb.a:
   %.not = icmp eq ptr %0, null
   %. = sext i1 %.not to i32
@@ -211,7 +211,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define range(i32 -1, 1) i32 @ompi_coll_tuned_dump_com_rule(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #2 {
+define noundef range(i32 -1, 1) i32 @ompi_coll_tuned_dump_com_rule(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #2 {
 .loopexit:
   %.not = icmp eq ptr %0, null
   %spec.select = sext i1 %.not to i32
@@ -219,7 +219,7 @@ define range(i32 -1, 1) i32 @ompi_coll_tuned_dump_com_rule(ptr nofree noundef re
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define range(i32 -1, 1) i32 @ompi_coll_tuned_dump_alg_rule(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #2 {
+define noundef range(i32 -1, 1) i32 @ompi_coll_tuned_dump_alg_rule(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #2 {
 .loopexit:
   %.not = icmp eq ptr %0, null
   %spec.select = sext i1 %.not to i32
@@ -227,7 +227,7 @@ define range(i32 -1, 1) i32 @ompi_coll_tuned_dump_alg_rule(ptr nofree noundef re
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define range(i32 -1, 1) i32 @ompi_coll_tuned_dump_all_rules(ptr nofree noundef readnone captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #2 {
+define noundef range(i32 -1, 1) i32 @ompi_coll_tuned_dump_all_rules(ptr nofree noundef readnone captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #2 {
 .loopexit:
   %.not = icmp eq ptr %0, null
   %spec.select = sext i1 %.not to i32

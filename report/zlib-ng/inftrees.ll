@@ -203,6 +203,7 @@ bb.aj:                                            ; preds = %._crit_edge257
   %i.ht = shl nuw i32 1, %i.by                    ; 2 uses
   %i.hu = add i32 %i.ht, -1
   %i.hv = load ptr, ptr %3, align 8, !tbaa !21
+  %invariant.op = add nsw i32 %.0232331, -1
   %i.hw = trunc i32 %i.by to i8
   br label %.outer
 
@@ -242,10 +243,9 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.an
 
 bb.am:                                            ; preds = %bb.ak
-  %6 = add nuw nsw i32 %i.id, 1
-  %7 = icmp samesign ult i32 %6, %.0232331        ; 2 uses
-  %. = select i1 %7, i16 %i.ic, i16 0
-  %.223 = select i1 %7, i8 0, i8 96
+  %6 = icmp ugt i32 %invariant.op, %i.id          ; 2 uses
+  %. = select i1 %6, i16 %i.ic, i16 0
+  %.223 = select i1 %6, i8 0, i8 96
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al

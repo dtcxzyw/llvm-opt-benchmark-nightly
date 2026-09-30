@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEcNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i8 noundef signext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEcNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i8 noundef signext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIcEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i8 noundef signext %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -241,7 +241,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEaNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i8 noundef signext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEaNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i8 noundef signext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIaEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i8 noundef signext %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -280,7 +280,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEhNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i8 noundef zeroext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEhNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i8 noundef zeroext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIhEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i8 noundef zeroext %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -319,7 +319,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEsNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i16 noundef signext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEsNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i16 noundef signext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIsEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i16 noundef signext %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -358,7 +358,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEtNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i16 noundef zeroext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEtNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i16 noundef zeroext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgItEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i16 noundef zeroext %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -396,7 +396,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEiNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i32 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEiNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i32 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIiEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i32 noundef %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -435,7 +435,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEjNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i32 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEjNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i32 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIjEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i32 noundef %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -474,7 +474,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplElNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplElNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIlEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -512,7 +512,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEmNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEmNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgImEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -551,7 +551,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplExNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplExNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIxEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -589,7 +589,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEyNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEyNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIyEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 noundef %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -620,7 +620,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplENS0_6int128ENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i128 %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplENS0_6int128ENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i128 %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgINS0_6int128EEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i128 %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8
@@ -653,7 +653,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplENS0_7uint128ENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 %0, i64 %1, i64 %2, i32 %3, ptr noundef %4) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplENS0_7uint128ENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 %0, i64 %1, i64 %2, i32 %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgINS0_7uint128EEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 %0, i64 %1, i64 %2, i32 %3, ptr noundef %4)
   %i.b = zext i1 %i.a to i8
@@ -1056,7 +1056,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplERKNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplERKNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !71
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1092,7 +1092,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplESt17basic_string_viewIwSt11char_traitsIwEENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 %0, ptr nofree readonly captures(none) %1, i64 %2, i32 %3, ptr noundef %4) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplESt17basic_string_viewIwSt11char_traitsIwEENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i64 %0, ptr nofree readonly captures(none) %1, i64 %2, i32 %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_116ConvertStringArgEPKwmNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(ptr noundef %1, i64 noundef %0, i64 %2, i32 %3, ptr noundef %4)
   %i.b = zext i1 %i.a to i8
@@ -1402,7 +1402,7 @@ _ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEPKcNS1_24FormatCo
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEwNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i32 noundef signext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
+define dso_local noundef range(i8 0, 2) i8 @_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplEwNS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i32 noundef signext %0, i64 %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13ConvertIntArgIwEEbT_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(i32 noundef signext %0, i64 %1, i32 %2, ptr noundef %3)
   %i.b = zext i1 %i.a to i8

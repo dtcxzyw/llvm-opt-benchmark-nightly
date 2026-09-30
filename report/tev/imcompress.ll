@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %._crit_edge
 .lr.ph343.preheader:                              ; preds = %bb.r
   %smax389 = tail call i32 @llvm.smax.i32(i32 %2, i32 3)
   %wide.trip.count390 = zext nneg i32 %smax389 to i64 ; 2 uses
-  %i.bj = add nsw i64 %wide.trip.count390, -2     ; 3 uses
-  %min.iters.check458 = icmp ult i64 %i.bj, 4
+  %i.bj = add nsw i64 %wide.trip.count390, -2     ; 2 uses
+  %min.iters.check458 = icmp slt i32 %2, 6
   br i1 %min.iters.check458, label %.lr.ph343.preheader468, label %vector.ph459
 
 vector.ph459:                                     ; preds = %.lr.ph343.preheader

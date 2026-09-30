@@ -69,7 +69,7 @@ _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size
   %i.n = tail call noundef i64 @_RNvXNtCsiVHPhtDv1FH_6memchr3extPhNtB2_7Pointer8distanceCs9BeaGo73rC4_16ruff_source_file(ptr noundef %i.m, ptr noundef nonnull readonly %0) ; 2 uses
   %.not.i = icmp ult i64 %i.n, %i.b
   tail call void @llvm.assume(i1 %.not.i)
-  %.sroa.6.0.extract.trunc.i = trunc i64 %i.n to i32
+  %.sroa.6.0.extract.trunc.i = trunc nuw i64 %i.n to i32
   %i.o = add nuw i32 %.sroa.6.0.extract.trunc.i, 1
   br label %bb.g
 

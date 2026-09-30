@@ -204,7 +204,7 @@ declare void @w2c_hermes_void0x20llvh0x3A0x3ASetVector0x3Chermes0x3A0x3AInstruct
 declare void @w2c_hermes_hermes0x3A0x3AIRBuilder0x3A0x3AcreateHBCReifyArgumentsInst0x28hermes0x3A0x3AAllocStackInst0x2A0x29(ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i32 0, 2) i32 @w2c_hermes_hermes0x3A0x3Ahbc0x3A0x3ALoadParameters0x3A0x3ArunOnFunction0x28hermes0x3A0x3AFunction0x2A0x29(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+define hidden noundef range(i32 0, 2) i32 @w2c_hermes_hermes0x3A0x3Ahbc0x3A0x3ALoadParameters0x3A0x3ArunOnFunction0x28hermes0x3A0x3AFunction0x2A0x29(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !17   ; 4 uses
@@ -607,7 +607,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
 declare void @w2c_hermes_llvh0x3A0x3ADenseMap0x3Cunsigned0x20int0x2C0x20hermes0x3A0x3AInstruction0x2A0x2C0x20llvh0x3A0x3ADenseMapInfo0x3Cunsigned0x20int0x3E0x2C0x20llvh0x3A0x3Adetail0x3A0x3ADenseMapPair0x3Cunsigned0x20int0x2C0x20hermes0x3A0x3AInstruction0x2A0x3E0x3E0x3A0x3Agrow0x28unsigned0x20int0x29(ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i32 0, 2) i32 @w2c_hermes_hermes0x3A0x3Ahbc0x3A0x3AInsertProfilePoint0x3A0x3ArunOnFunction0x28hermes0x3A0x3AFunction0x2A0x29(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+define hidden noundef range(i32 0, 2) i32 @w2c_hermes_hermes0x3A0x3Ahbc0x3A0x3AInsertProfilePoint0x3A0x3ArunOnFunction0x28hermes0x3A0x3AFunction0x2A0x29(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !17   ; 3 uses

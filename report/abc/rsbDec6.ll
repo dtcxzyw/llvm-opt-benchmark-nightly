@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %.neg28.i.i = sext i1 %i.bl to i32
   %reass.sub.i.i = or disjoint i32 %i.aw, 63
   %i.bm = sub nuw i32 %reass.sub.i.i, %.4.i.i54
-  %i.bn = add i32 %i.bm, %.neg28.i.i
+  %i.bn = add nsw i32 %i.bm, %.neg28.i.i
   br label %Abc_TtFindLastBit.exit
 
 Abc_TtFindLastBit.exit:                           ; preds = %select.unfold.i, %bb.d, %bb.f, %Abc_TtFindFirstBit.exit
@@ -328,7 +328,7 @@ bb.k:                                             ; preds = %bb.j
   %.neg28.i.i90 = sext i1 %i.dq to i32
   %reass.sub.i.i91 = or disjoint i32 %i.db, 63
   %i.dr = sub nuw i32 %reass.sub.i.i91, %.4.i.i89
-  %i.ds = add i32 %i.dr, %.neg28.i.i90
+  %i.ds = add nsw i32 %i.dr, %.neg28.i.i90
   br label %Abc_TtFindLastZero.exit
 
 Abc_TtFindLastZero.exit:                          ; preds = %select.unfold.i76, %bb.i, %bb.k, %Abc_TtFindFirstZero.exit

@@ -205,12 +205,12 @@ reset_block_bap.exit.i.i:                         ; preds = %._crit_edge27.split
   %i.agp = zext i1 %.not58.i.i to i64             ; 4 uses
   %i.agq = add nuw i32 %i.agk, 1
   %wide.trip.count.i24.i = zext i32 %i.agq to i64 ; 2 uses
-  %i.agr = sub nsw i64 %wide.trip.count.i24.i, %i.agp ; 3 uses
-  %min.iters.check439 = icmp ult i64 %i.agr, 8
+  %i.agr = sub nuw nsw i64 %wide.trip.count.i24.i, %i.agp ; 3 uses
+  %min.iters.check439 = icmp samesign ult i64 %i.agr, 8
   br i1 %min.iters.check439, label %scalar.ph438.preheader, label %vector.ph440
 
 vector.ph440:                                     ; preds = %.lr.ph74.i.i
-  %n.vec441 = and i64 %i.agr, -8                  ; 3 uses
+  %n.vec441 = and i64 %i.agr, 4294967288          ; 3 uses
   %i.ags = or disjoint i64 %n.vec441, %i.agp
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.ago, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
