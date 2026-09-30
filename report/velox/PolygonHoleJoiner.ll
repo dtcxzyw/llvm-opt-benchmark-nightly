@@ -205,13 +205,14 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %scevgep = getelementptr i8, ptr %0, i64 48
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %indvar.i = phi i64 [ 0, %.lr.ph.i ], [ %indvar.next.i, %bb.d ] ; 2 uses
   %.sroa.0.020.i.idx = phi i64 [ 48, %.lr.ph.i ], [ %.sroa.0.020.i.add, %bb.d ] ; 2 uses
-  %.pn19.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.020.i.ptr, %bb.d ] ; 5 uses
-  %.sroa.0.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.020.i.idx ; 6 uses
+  %.pn19.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.020.i.ptr, %bb.d ] ; 4 uses
+  %.sroa.0.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.020.i.idx ; 5 uses
   %i.f = load <2 x double>, ptr %.sroa.0.020.i.ptr, align 8, !tbaa !124 ; 3 uses
   %shift = shufflevector <2 x double> %i.f, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.f, %shift
@@ -223,15 +224,11 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.k, label %.loopexit.i, label %bb.c
 
 .loopexit.i:                                      ; preds = %bb.b
-  %4 = add nuw i64 %indvar.i, 1                   ; 2 uses
-  %5 = mul nuw nsw i64 %4, 48
-  %.neg.i = mul nsw i64 %4, -48
-  %i.l = add nsw i64 %.neg.i, 48                  ; 2 uses
-  %scevgep22.i = getelementptr i8, ptr %.pn19.i, i64 %i.l
-  %scevgep.i = getelementptr i8, ptr %.sroa.0.020.i.ptr, i64 %i.l
+  %.neg.i = mul nuw nsw i64 %indvar.i, 48
+  %i.l = add nuw nsw i64 %.neg.i, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.020.i.ptr, i64 48, i1 false), !tbaa.struct !156
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 8 dereferenceable(1) %scevgep22.i, i64 %5, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.l, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false), !tbaa.struct !156
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.d
@@ -331,20 +328,20 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %.lr.ph.i28
-  %indvar.i29 = phi i64 [ 0, %.lr.ph.i28 ], [ %indvar.next.i43, %bb.i ] ; 3 uses
+  %indvar.i29 = phi i64 [ 0, %.lr.ph.i28 ], [ %indvar.next.i43, %bb.i ] ; 2 uses
   %.sroa.0.020.i30 = phi ptr [ %.sroa.0.017.i26, %.lr.ph.i28 ], [ %.sroa.0.0.i41, %bb.i ] ; 8 uses
   %.pn19.i31 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.020.i30, %bb.i ] ; 5 uses
   %i.am = mul nuw i64 %indvar.i29, 48
-  %i.an = add i64 %i.am, 48
-  %i.ao = udiv i64 %i.an, 48                      ; 2 uses
-  %6 = icmp samesign ugt i64 %indvar.i29, 384307168202282324 ; 2 uses
-  %7 = select i1 %6, i64 0, i64 48
-  %.neg.i33 = mul i64 %i.ao, -48
-  %8 = add i64 %.neg.i33, %7                      ; 2 uses
-  %scevgep.i34 = getelementptr i8, ptr %.sroa.0.020.i30, i64 %8
-  %scevgep22.i35 = getelementptr i8, ptr %.pn19.i31, i64 %8
-  %9 = zext i1 %6 to i64
-  %i.ap = add nuw nsw i64 %i.ao, %9
+  %i.an = add i64 %i.am, 48                       ; 3 uses
+  %i.ao = udiv exact i64 %i.an, 48
+  %4 = icmp ne i64 %i.an, 0                       ; 2 uses
+  %umin.neg.i32 = sext i1 %4 to i64
+  %5 = select i1 %4, i64 48, i64 0
+  %6 = sub i64 %5, %i.an                          ; 2 uses
+  %scevgep.i34 = getelementptr i8, ptr %.sroa.0.020.i30, i64 %6
+  %scevgep22.i35 = getelementptr i8, ptr %.pn19.i31, i64 %6
+  %7 = add nuw nsw i64 %i.ao, 1
+  %i.ap = add nsw i64 %7, %umin.neg.i32
   %i.aq = mul nuw i64 %i.ap, 48
   %i.ar = load <2 x double>, ptr %.sroa.0.020.i30, align 8, !tbaa !124 ; 3 uses
   %shift68 = shufflevector <2 x double> %i.ar, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -747,13 +744,14 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %scevgep = getelementptr i8, ptr %0, i64 48
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %indvar.i = phi i64 [ 0, %.lr.ph.i ], [ %indvar.next.i, %bb.d ] ; 2 uses
   %.sroa.0.020.i.idx = phi i64 [ 48, %.lr.ph.i ], [ %.sroa.0.020.i.add, %bb.d ] ; 2 uses
-  %.pn19.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.020.i.ptr, %bb.d ] ; 5 uses
-  %.sroa.0.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.020.i.idx ; 6 uses
+  %.pn19.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.020.i.ptr, %bb.d ] ; 4 uses
+  %.sroa.0.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.020.i.idx ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 64
   %i.h = load <2 x double>, ptr %i.g, align 8, !tbaa !124 ; 3 uses
   %shift = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -766,15 +764,11 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.m, label %.loopexit.i, label %bb.c
 
 .loopexit.i:                                      ; preds = %bb.b
-  %4 = add nuw i64 %indvar.i, 1                   ; 2 uses
-  %5 = mul nuw nsw i64 %4, 48
-  %.neg.i = mul nsw i64 %4, -48
-  %i.n = add nsw i64 %.neg.i, 48                  ; 2 uses
-  %scevgep22.i = getelementptr i8, ptr %.pn19.i, i64 %i.n
-  %scevgep.i = getelementptr i8, ptr %.sroa.0.020.i.ptr, i64 %i.n
+  %.neg.i = mul nuw nsw i64 %indvar.i, 48
+  %i.n = add nuw nsw i64 %.neg.i, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.020.i.ptr, i64 48, i1 false), !tbaa.struct !156
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 8 dereferenceable(1) %scevgep22.i, i64 %5, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.n, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false), !tbaa.struct !156
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.d
@@ -883,20 +877,20 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %.lr.ph.i30
-  %indvar.i31 = phi i64 [ 0, %.lr.ph.i30 ], [ %indvar.next.i46, %bb.i ] ; 3 uses
+  %indvar.i31 = phi i64 [ 0, %.lr.ph.i30 ], [ %indvar.next.i46, %bb.i ] ; 2 uses
   %.sroa.0.020.i32 = phi ptr [ %.sroa.0.017.i28, %.lr.ph.i30 ], [ %.sroa.0.0.i44, %bb.i ] ; 8 uses
   %.pn19.i33 = phi ptr [ %0, %.lr.ph.i30 ], [ %.sroa.0.020.i32, %bb.i ] ; 5 uses
   %i.at = mul nuw i64 %indvar.i31, 48
-  %i.au = add i64 %i.at, 48
-  %i.av = udiv i64 %i.au, 48                      ; 2 uses
-  %6 = icmp samesign ugt i64 %indvar.i31, 384307168202282324 ; 2 uses
-  %7 = select i1 %6, i64 0, i64 48
-  %.neg.i35 = mul i64 %i.av, -48
-  %8 = add i64 %.neg.i35, %7                      ; 2 uses
-  %scevgep.i36 = getelementptr i8, ptr %.sroa.0.020.i32, i64 %8
-  %scevgep22.i37 = getelementptr i8, ptr %.pn19.i33, i64 %8
-  %9 = zext i1 %6 to i64
-  %i.aw = add nuw nsw i64 %i.av, %9
+  %i.au = add i64 %i.at, 48                       ; 3 uses
+  %i.av = udiv exact i64 %i.au, 48
+  %4 = icmp ne i64 %i.au, 0                       ; 2 uses
+  %umin.neg.i34 = sext i1 %4 to i64
+  %5 = select i1 %4, i64 48, i64 0
+  %6 = sub i64 %5, %i.au                          ; 2 uses
+  %scevgep.i36 = getelementptr i8, ptr %.sroa.0.020.i32, i64 %6
+  %scevgep22.i37 = getelementptr i8, ptr %.pn19.i33, i64 %6
+  %7 = add nuw nsw i64 %i.av, 1
+  %i.aw = add nsw i64 %7, %umin.neg.i34
   %i.ax = mul nuw i64 %i.aw, 48
   %i.ay = getelementptr inbounds nuw i8, ptr %.pn19.i33, i64 64
   %i.az = load <2 x double>, ptr %i.ay, align 8, !tbaa !124 ; 3 uses
