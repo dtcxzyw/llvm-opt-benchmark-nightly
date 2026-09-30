@@ -205,23 +205,23 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h, %bb.i
   %i.ba = phi i32 [ %i.az, %bb.i ], [ 0, %bb.h ]
   %i.bb = sub nsw i32 0, %1
-  %i.bc = ashr i32 %i.bb, %i.ba                   ; 2 uses
-  %3 = sub nsw i32 0, %i.bc                       ; 2 uses
+  %i.bc = ashr i32 %i.bb, %i.ba                   ; 3 uses
   %.not.i = icmp eq i32 %i.bc, 0
   br i1 %.not.i, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.bd = sdiv i32 2147483647, %3
+  %i.bd = sdiv i32 -2147483647, %i.bc
   %i.be = icmp sgt i32 %i.as, %i.bd
   br i1 %i.be, label %image_get_linesize.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.bf = mul nsw i32 %i.as, %3                   ; 2 uses
+  %i.bf = mul i32 %i.bc, %i.as                    ; 2 uses
+  %3 = sub i32 0, %i.bf
   %i.bg = and i64 %i.e, 4
   %.not24.i = icmp eq i64 %i.bg, 0
-  %4 = add nsw i32 %i.bf, 7
+  %4 = sub i32 7, %i.bf
   %i.bh = ashr i32 %4, 3
-  %.0.i = select i1 %.not24.i, i32 %i.bf, i32 %i.bh
+  %.0.i = select i1 %.not24.i, i32 %3, i32 %i.bh
   br label %image_get_linesize.exit
 
 image_get_linesize.exit:                          ; preds = %bb.l, %bb.k, %av_image_fill_max_pixsteps.exit, %bb.a, %bb.b
@@ -344,21 +344,21 @@ bb.h:                                             ; preds = %av_image_fill_max_p
 
 bb.i:                                             ; preds = %av_image_fill_max_pixsteps.exit.split.preheader, %bb.h
   %i.az = phi i32 [ %i.ay, %bb.h ], [ 0, %av_image_fill_max_pixsteps.exit.split.preheader ]
-  %i.ba = ashr i32 %i.as, %i.az                   ; 2 uses
-  %3 = sub nsw i32 0, %i.ba                       ; 2 uses
+  %i.ba = ashr i32 %i.as, %i.az                   ; 3 uses
   %.not.i = icmp eq i32 %i.ba, 0
   br i1 %.not.i, label %image_get_linesize.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bb = sdiv i32 2147483647, %3
+  %i.bb = sdiv i32 -2147483647, %i.ba
   %i.bc = icmp sgt i32 %i.au, %i.bb
   br i1 %i.bc, label %image_get_linesize.exit.thread, label %image_get_linesize.exit
 
 image_get_linesize.exit:                          ; preds = %bb.i, %bb.j
-  %i.bd = mul nsw i32 %i.au, %3                   ; 2 uses
-  %4 = add nsw i32 %i.bd, 7
+  %i.bd = mul i32 %i.ba, %i.au                    ; 2 uses
+  %3 = sub i32 0, %i.bd
+  %4 = sub i32 7, %i.bd
   %i.be = ashr i32 %4, 3
-  %.0.i = select i1 %.not24.i, i32 %i.bd, i32 %i.be ; 3 uses
+  %.0.i = select i1 %.not24.i, i32 %3, i32 %i.be  ; 3 uses
   %i.bf = icmp slt i32 %.0.i, 0
   br i1 %i.bf, label %image_get_linesize.exit.thread, label %av_image_fill_max_pixsteps.exit.split.1
 
@@ -379,21 +379,21 @@ bb.k:                                             ; preds = %av_image_fill_max_p
 
 bb.l:                                             ; preds = %av_image_fill_max_pixsteps.exit.split.1, %bb.k
   %i.bn = phi i32 [ %i.bm, %bb.k ], [ 0, %av_image_fill_max_pixsteps.exit.split.1 ]
-  %i.bo = ashr i32 %i.as, %i.bn                   ; 2 uses
-  %5 = sub nsw i32 0, %i.bo                       ; 2 uses
+  %i.bo = ashr i32 %i.as, %i.bn                   ; 3 uses
   %.not.i.1 = icmp eq i32 %i.bo, 0
   br i1 %.not.i.1, label %image_get_linesize.exit.1, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bp = sdiv i32 2147483647, %5
+  %i.bp = sdiv i32 -2147483647, %i.bo
   %i.bq = icmp sgt i32 %i.bh, %i.bp
   br i1 %i.bq, label %image_get_linesize.exit.thread, label %image_get_linesize.exit.1
 
 image_get_linesize.exit.1:                        ; preds = %bb.m, %bb.l
-  %i.br = mul nsw i32 %i.bh, %5                   ; 2 uses
-  %6 = add nsw i32 %i.br, 7
+  %i.br = mul i32 %i.bo, %i.bh                    ; 2 uses
+  %5 = sub i32 0, %i.br
+  %6 = sub i32 7, %i.br
   %i.bs = ashr i32 %6, 3
-  %.0.i.1 = select i1 %.not24.i, i32 %i.br, i32 %i.bs ; 3 uses
+  %.0.i.1 = select i1 %.not24.i, i32 %5, i32 %i.bs ; 3 uses
   %i.bt = icmp slt i32 %.0.i.1, 0
   br i1 %i.bt, label %image_get_linesize.exit.thread, label %av_image_fill_max_pixsteps.exit.split.2
 
@@ -415,21 +415,21 @@ bb.n:                                             ; preds = %av_image_fill_max_p
 
 bb.o:                                             ; preds = %av_image_fill_max_pixsteps.exit.split.2, %bb.n
   %i.cc = phi i32 [ %i.cb, %bb.n ], [ 0, %av_image_fill_max_pixsteps.exit.split.2 ]
-  %i.cd = ashr i32 %i.as, %i.cc                   ; 2 uses
-  %7 = sub nsw i32 0, %i.cd                       ; 2 uses
+  %i.cd = ashr i32 %i.as, %i.cc                   ; 3 uses
   %.not.i.2 = icmp eq i32 %i.cd, 0
   br i1 %.not.i.2, label %image_get_linesize.exit.2, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ce = sdiv i32 2147483647, %7
+  %i.ce = sdiv i32 -2147483647, %i.cd
   %i.cf = icmp sgt i32 %i.bw, %i.ce
   br i1 %i.cf, label %image_get_linesize.exit.thread, label %image_get_linesize.exit.2
 
 image_get_linesize.exit.2:                        ; preds = %bb.p, %bb.o
-  %i.cg = mul nsw i32 %i.bw, %7                   ; 2 uses
-  %8 = add nsw i32 %i.cg, 7
+  %i.cg = mul i32 %i.cd, %i.bw                    ; 2 uses
+  %7 = sub i32 0, %i.cg
+  %8 = sub i32 7, %i.cg
   %i.ch = ashr i32 %8, 3
-  %.0.i.2 = select i1 %.not24.i, i32 %i.cg, i32 %i.ch ; 3 uses
+  %.0.i.2 = select i1 %.not24.i, i32 %7, i32 %i.ch ; 3 uses
   %i.ci = icmp slt i32 %.0.i.2, 0
   br i1 %i.ci, label %image_get_linesize.exit.thread, label %av_image_fill_max_pixsteps.exit.split.3
 
@@ -451,21 +451,21 @@ bb.q:                                             ; preds = %av_image_fill_max_p
 
 bb.r:                                             ; preds = %av_image_fill_max_pixsteps.exit.split.3, %bb.q
   %i.cr = phi i32 [ %i.cq, %bb.q ], [ 0, %av_image_fill_max_pixsteps.exit.split.3 ]
-  %i.cs = ashr i32 %i.as, %i.cr                   ; 2 uses
-  %9 = sub nsw i32 0, %i.cs                       ; 2 uses
+  %i.cs = ashr i32 %i.as, %i.cr                   ; 3 uses
   %.not.i.3 = icmp eq i32 %i.cs, 0
   br i1 %.not.i.3, label %image_get_linesize.exit.3, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.ct = sdiv i32 2147483647, %9
+  %i.ct = sdiv i32 -2147483647, %i.cs
   %i.cu = icmp sgt i32 %i.cl, %i.ct
   br i1 %i.cu, label %image_get_linesize.exit.thread, label %image_get_linesize.exit.3
 
 image_get_linesize.exit.3:                        ; preds = %bb.s, %bb.r
-  %i.cv = mul nsw i32 %i.cl, %9                   ; 2 uses
-  %10 = add nsw i32 %i.cv, 7
+  %i.cv = mul i32 %i.cs, %i.cl                    ; 2 uses
+  %9 = sub i32 0, %i.cv
+  %10 = sub i32 7, %i.cv
   %i.cw = ashr i32 %10, 3
-  %.0.i.3 = select i1 %.not24.i, i32 %i.cv, i32 %i.cw ; 3 uses
+  %.0.i.3 = select i1 %.not24.i, i32 %9, i32 %i.cw ; 3 uses
   %i.cx = icmp slt i32 %.0.i.3, 0
   br i1 %i.cx, label %image_get_linesize.exit.thread, label %bb.t
 
