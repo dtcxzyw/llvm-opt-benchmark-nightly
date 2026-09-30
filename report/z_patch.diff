@@ -1,0 +1,90 @@
+diff --git a/llvm/include/llvm/Analysis/ConstraintSystem.h b/llvm/include/llvm/Analysis/ConstraintSystem.h
+index 11f40de9968c5..c14e0fbd8b9cf 100644
+--- a/llvm/include/llvm/Analysis/ConstraintSystem.h
++++ b/llvm/include/llvm/Analysis/ConstraintSystem.h
+@@ -155,6 +155,9 @@ class ConstraintSystem {
+   LLVM_ABI std::pair<ConstraintSystem, RowTy>
+   getSubSystem(ArrayRef<Entry> R) const;
+ 
++  /// Returns true if a single row of the system implies \p R.
++  LLVM_ABI bool isImpliedBySingleRow(ArrayRef<Entry> R) const;
++
+   LLVM_ABI bool isConditionImplied(RowTy R) const;
+   LLVM_ABI bool isConditionImpliedInSubSystem(ArrayRef<Entry> R) const;
+ 
+diff --git a/llvm/lib/Analysis/ConstraintSystem.cpp b/llvm/lib/Analysis/ConstraintSystem.cpp
+index 85ac780b5f720..c659b4de3bb13 100644
+--- a/llvm/lib/Analysis/ConstraintSystem.cpp
++++ b/llvm/lib/Analysis/ConstraintSystem.cpp
+@@ -279,6 +279,21 @@ ConstraintSystem::getSubSystem(ArrayRef<Entry> R) const {
+   return {std::move(SubSystem), std::move(NewR)};
+ }
+ 
++bool ConstraintSystem::isImpliedBySingleRow(ArrayRef<Entry> R) const {
++  int64_t C = getConstant(R);
++  if (hasConstantEntry(R))
++    R = R.drop_front();
++  return any_of(Constraints, [&](ArrayRef<Entry> Row) {
++    if (getConstant(Row) > C)
++      return false;
++    if (hasConstantEntry(Row))
++      Row = Row.drop_front();
++    return equal(Row, R, [](const Entry &A, const Entry &B) {
++      return A.Id == B.Id && A.Coefficient == B.Coefficient;
++    });
++  });
++}
++
+ bool ConstraintSystem::isConditionImplied(RowTy R) const {
+   // If all variable coefficients are 0, we have 'C >= 0'. If the constant is >=
+   // 0, R is always true, regardless of the system.
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index ae5f85374ad39..0870db6c004ca 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -2265,6 +2265,11 @@ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+   LLVM_DEBUG(dbgs() << "Adding '"; dumpUnpackedICmp(dbgs(), Pred, A, B);
+              dbgs() << "'\n");
+   auto &CSToUse = getCS(R.IsSigned);
++  // A row implied by a single existing row adds no information. Rows in the
++  // system are removed in reverse order, so the existing row outlives R.
++  if (!R.isEq() && NewVariables.empty() &&
++      CSToUse.isImpliedBySingleRow(R.Coefficients))
++    return;
+   bool Added = CSToUse.addRow(R.Coefficients, R.NumVars);
+   if (!Added)
+     return;
+diff --git a/llvm/unittests/Analysis/ConstraintSystemTest.cpp b/llvm/unittests/Analysis/ConstraintSystemTest.cpp
+index a40131d4d2809..edd7fdd89aac3 100644
+--- a/llvm/unittests/Analysis/ConstraintSystemTest.cpp
++++ b/llvm/unittests/Analysis/ConstraintSystemTest.cpp
+@@ -169,6 +169,29 @@ TEST(ConstraintSolverTest, IsConditionImplied) {
+   }
+ }
+ 
++TEST(ConstraintSolverTest, IsImpliedBySingleRow) {
++  ConstraintSystem CS;
++  // x - y <= 0, y <= 5
++  addVariableRow(CS, {0, 1, -1});
++  addVariableRow(CS, {5, 0, 1});
++
++  // The same row, or one with a larger constant.
++  EXPECT_TRUE(CS.isImpliedBySingleRow(toRow({0, 1, -1})));
++  EXPECT_TRUE(CS.isImpliedBySingleRow(toRow({1, 1, -1})));
++  EXPECT_TRUE(CS.isImpliedBySingleRow(toRow({5, 0, 1})));
++  EXPECT_TRUE(CS.isImpliedBySingleRow(toRow({7, 0, 1})));
++  // A smaller constant.
++  EXPECT_FALSE(CS.isImpliedBySingleRow(toRow({-1, 1, -1})));
++  EXPECT_FALSE(CS.isImpliedBySingleRow(toRow({4, 0, 1})));
++  // Different coefficients.
++  EXPECT_FALSE(CS.isImpliedBySingleRow(toRow({0, 2, -2})));
++  EXPECT_FALSE(CS.isImpliedBySingleRow(toRow({0, -1, 1})));
++  EXPECT_FALSE(CS.isImpliedBySingleRow(toRow({5, 1, 1})));
++  // x <= 5 is implied by both rows together, but not by a single one.
++  EXPECT_TRUE(isConditionImplied(CS, {5, 1, 0}));
++  EXPECT_FALSE(CS.isImpliedBySingleRow(toRow({5, 1, 0})));
++}
++
+ TEST(ConstraintSolverTest, IsConditionImpliedOverflow) {
+   ConstraintSystem CS;
+   // Make sure isConditionImplied returns false when there is an overflow.
