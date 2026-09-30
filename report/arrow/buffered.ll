@@ -202,7 +202,7 @@ bb.a:
   %i.c = icmp sgt i64 %i.b, -1
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.e = load i64, ptr %i.d, align 8, !tbaa !97   ; 2 uses
-  br i1 %i.c, label %bb.b, label %._crit_edge
+  br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 120
@@ -210,19 +210,17 @@ bb.b:                                             ; preds = %bb.a
   %i.h = add i64 %i.e, %i.b
   %i.i = sub i64 %i.h, %i.g
   %.sroa.speculated30 = tail call i64 @llvm.smin.i64(i64 %i.i, i64 %2)
-  br label %._crit_edge
+  br label %bb.c
 
-._crit_edge:                                      ; preds = %bb.a, %bb.b
+bb.c:                                             ; preds = %bb.a, %bb.b
   %.041 = phi i64 [ %.sroa.speculated30, %bb.b ], [ %2, %bb.a ] ; 6 uses
   %8 = getelementptr inbounds nuw i8, ptr %1, i64 136 ; 3 uses
   %9 = icmp eq i64 %i.e, 0
-  br i1 %9, label %bb.c, label %bb.g
-
-bb.c:                                             ; preds = %._crit_edge
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !74
+  %i.k = load i64, ptr %i.j, align 8
   %i.l = icmp slt i64 %.041, %i.k
-  br i1 %i.l, label %_ZN5arrow6StatusD2Ev.exit, label %bb.g
+  %or.cond = select i1 %9, i1 %i.l, i1 false
+  br i1 %or.cond, label %_ZN5arrow6StatusD2Ev.exit, label %bb.g
 
 _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
@@ -258,7 +256,7 @@ _ZN5arrow6StatusD2Ev.exit16:                      ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   br label %bb.g
 
-bb.g:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit16, %bb.c, %._crit_edge
+bb.g:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit16, %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !104
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 24
@@ -576,7 +574,7 @@ bb.e:                                             ; preds = %bb.a
   %i.h = load i64, ptr %i.g, align 8, !tbaa !76
   %i.i = tail call i64 @llvm.smin.i64(i64 %i.h, i64 %2) ; 10 uses
   %i.j = icmp sgt i64 %i.i, 0
-  br i1 %i.j, label %bb.f, label %8
+  br i1 %i.j, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -591,34 +589,28 @@ bb.f:                                             ; preds = %bb.e
   %i.r = load i64, ptr %i.g, align 8, !tbaa !97
   %i.s = sub nsw i64 %i.r, %i.i
   store i64 %i.s, ptr %i.g, align 8, !tbaa !97
-  br label %8
+  br label %bb.g
 
-8:                                                ; preds = %bb.f, %bb.e
-  %9 = sub nsw i64 %2, %i.i                       ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %11 = load i64, ptr %10, align 8, !tbaa !96     ; 2 uses
-  %12 = icmp sgt i64 %11, -1
-  br i1 %12, label %bb.g, label %13
+bb.g:                                             ; preds = %bb.f, %bb.e
+  %8 = sub nsw i64 %2, %i.i                       ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 128
+  %10 = load i64, ptr %9, align 8, !tbaa !96      ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 3 uses
+  %i.u = load i64, ptr %i.t, align 8
+  %i.v = sub nsw i64 %10, %i.u
+  %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %i.v, i64 %8)
+  %11 = icmp slt i64 %10, 0
+  %.0 = select i1 %11, i64 %8, i64 %.sroa.speculated ; 4 uses
+  %12 = icmp eq i64 %.0, 0
+  br i1 %12, label %bb.h, label %bb.i
 
-bb.g:                                             ; preds = %8
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 120
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !95
-  %i.v = sub nsw i64 %11, %i.u
-  %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %i.v, i64 %9)
-  br label %13
-
-13:                                               ; preds = %bb.g, %8
-  %.0 = phi i64 [ %.sroa.speculated, %bb.g ], [ %9, %8 ] ; 4 uses
-  %14 = icmp eq i64 %.0, 0
-  br i1 %14, label %bb.h, label %bb.i
-
-bb.h:                                             ; preds = %13
+bb.h:                                             ; preds = %bb.g
   store ptr null, ptr %0, align 8, !tbaa !58
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.i, ptr %i.w, align 8, !tbaa !76
   br label %bb.q
 
-bb.i:                                             ; preds = %13
+bb.i:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.y = load i64, ptr %i.x, align 8, !tbaa !74
   %.not = icmp slt i64 %.0, %i.y
@@ -644,10 +636,9 @@ bb.j:                                             ; preds = %bb.i
 .thread:                                          ; preds = %bb.j
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.am = load i64, ptr %i.al, align 8, !tbaa !76 ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
-  %i.an = load i64, ptr %15, align 8, !tbaa !95
+  %i.an = load i64, ptr %i.t, align 8, !tbaa !95
   %i.ao = add nsw i64 %i.an, %i.am
-  store i64 %i.ao, ptr %15, align 8, !tbaa !95
+  store i64 %i.ao, ptr %i.t, align 8, !tbaa !95
   store i64 0, ptr %i.g, align 8, !tbaa !97
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 40
   store i64 0, ptr %i.ap, align 8, !tbaa !72

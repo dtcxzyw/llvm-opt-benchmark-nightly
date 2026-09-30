@@ -205,24 +205,22 @@ bb.x:                                             ; preds = %.lr.ph
   %i.dj = load ptr, ptr %i.g, align 8             ; 2 uses
   %i.dk = load ptr, ptr %i.k, align 8
   %i.dl = icmp eq ptr %i.dj, %i.dk
-  br i1 %i.dl, label %bb.y, label %3
+  br i1 %i.dl, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   %i.dm = load i32, ptr %i.j, align 8
   %i.dn = and i32 %i.dm, 32
   %.not.i25 = icmp eq i32 %i.dn, 0
-  br i1 %.not.i25, label %3, label %common.ret
+  br i1 %.not.i25, label %bb.z, label %common.ret
 
-3:                                                ; preds = %bb.y, %bb.x
-  %4 = icmp eq i8 %1, 1
-  br i1 %4, label %bb.aa, label %bb.z
-
-bb.z:                                             ; preds = %3
+bb.z:                                             ; preds = %bb.y, %bb.x
+  %3 = icmp eq i8 %1, 1
   %i.do = load ptr, ptr %i.h, align 8
   %i.dp = icmp eq ptr %i.dj, %i.do
-  br i1 %i.dp, label %bb.aa, label %common.ret
+  %or.cond.i = select i1 %3, i1 true, i1 %i.dp
+  br i1 %or.cond.i, label %bb.aa, label %common.ret
 
-bb.aa:                                            ; preds = %bb.z, %3
+bb.aa:                                            ; preds = %bb.z
   %i.dq = load i8, ptr %i.m, align 4, !range !38, !noundef !39
   %i.dr = trunc nuw i8 %i.dq to i1
   br i1 %i.dr, label %common.ret, label %bb.ab

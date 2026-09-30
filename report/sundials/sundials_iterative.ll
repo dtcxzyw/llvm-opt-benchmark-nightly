@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sundials/original/sundials_iterative?download=true
-loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -148,7 +148,7 @@ bb.a:
   %i.a = add nsw i32 %2, -1                       ; 2 uses
   %i.b = sub nsw i32 %2, %3
   %i.c = tail call i32 @llvm.smax.i32(i32 %i.b, i32 0) ; 2 uses
-  %i.d = tail call i32 @llvm.smin.i32(i32 %2, i32 %3) ; 5 uses
+  %i.d = tail call i32 @llvm.smin.i32(i32 %2, i32 %3) ; 6 uses
   %i.e = add nsw i32 %i.d, 1                      ; 2 uses
   %i.f = sext i32 %2 to i64
   %i.g = getelementptr inbounds [8 x i8], ptr %0, i64 %i.f ; 9 uses
@@ -172,13 +172,51 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %i.r, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.c
-  %i.s = sext i32 %i.a to i64
-  %i.t = zext nneg i32 %i.d to i64
-  br label %bb.d
+  %i.s = sext i32 %i.a to i64                     ; 3 uses
+  %i.t = zext nneg i32 %i.d to i64                ; 5 uses
+  %xtraiter = and i64 %i.t, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.d:                                             ; preds = %.lr.ph, %bb.d
-  %indvars.iv = phi i64 [ %i.t, %.lr.ph ], [ %indvars.iv.next.a, %bb.d ] ; 4 uses
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, -1 ; 4 uses
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
+  %indvars.iv.next.prol = add nsw i64 %i.t, -1    ; 4 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next.prol
+  %8 = load double, ptr %7, align 8, !tbaa !14    ; 2 uses
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next.prol
+  %10 = load ptr, ptr %9, align 8, !tbaa !12
+  %11 = getelementptr inbounds [8 x i8], ptr %10, i64 %i.s
+  store double %8, ptr %11, align 8, !tbaa !14
+  %12 = fneg double %8
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.t
+  store double %12, ptr %13, align 8, !tbaa !14
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next.prol
+  %15 = load ptr, ptr %14, align 8, !tbaa !10
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.t
+  store ptr %15, ptr %16, align 8, !tbaa !10
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
+  %indvars.iv.unr = phi i64 [ %i.t, %.lr.ph ], [ %indvars.iv.next.prol, %.prol.loopexit.unr-lcssa ]
+  %17 = icmp eq i32 %i.d, 1
+  br i1 %17, label %._crit_edge, label %bb.d
+
+bb.d:                                             ; preds = %.prol.loopexit, %bb.d
+  %indvars.iv = phi i64 [ %indvars.iv.next.a, %bb.d ], [ %indvars.iv.unr, %.prol.loopexit ] ; 5 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 5 uses
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next
+  %19 = load double, ptr %18, align 8, !tbaa !14  ; 2 uses
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next
+  %21 = load ptr, ptr %20, align 8, !tbaa !12
+  %22 = getelementptr inbounds [8 x i8], ptr %21, i64 %i.s
+  store double %19, ptr %22, align 8, !tbaa !14
+  %23 = fneg double %19
+  %24 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv
+  store double %23, ptr %24, align 8, !tbaa !14
+  %25 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next
+  %26 = load ptr, ptr %25, align 8, !tbaa !10
+  %27 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv
+  store ptr %26, ptr %27, align 8, !tbaa !10
+  %indvars.iv.next.a = add nsw i64 %indvars.iv, -2 ; 4 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next.a
   %i.v = load double, ptr %i.u, align 8, !tbaa !14 ; 2 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next.a
@@ -186,16 +224,16 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.y = getelementptr inbounds [8 x i8], ptr %i.x, i64 %i.s
   store double %i.v, ptr %i.y, align 8, !tbaa !14
   %i.z = fneg double %i.v
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next
   store double %i.z, ptr %i.aa, align 8, !tbaa !14
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next.a
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !10
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv.next
   store ptr %i.ac, ptr %i.ad, align 8, !tbaa !10
-  %7 = icmp samesign ugt i64 %indvars.iv, 1
-  br i1 %7, label %bb.d, label %._crit_edge
+  %28 = icmp sgt i64 %indvars.iv, 2
+  br i1 %28, label %bb.d, label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.d, %bb.c
+._crit_edge:                                      ; preds = %.prol.loopexit, %bb.d, %bb.c
   store double 1.000000e+00, ptr %5, align 8, !tbaa !14
   %i.ae = load ptr, ptr %i.g, align 8, !tbaa !10  ; 2 uses
   store ptr %i.ae, ptr %6, align 8, !tbaa !10

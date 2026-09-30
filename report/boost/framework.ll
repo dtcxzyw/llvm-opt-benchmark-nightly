@@ -204,12 +204,12 @@ bb.a:
   %i.a = tail call noundef nonnull align 8 dereferenceable(400) ptr @_ZN5boost9unit_test9framework17master_test_suiteEv() ; 2 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !45     ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !46   ; 8 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !46   ; 9 uses
+  %2 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
   %.not11.i.i = icmp eq ptr %i.b, %i.d
   br i1 %.not11.i.i, label %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i, label %.lr.ph.i.preheader.preheader.i.i
 
 .lr.ph.i.preheader.preheader.i.i:                 ; preds = %bb.a
-  %2 = ptrtoaddr ptr %i.d to i64
   %i.e = ptrtoaddr ptr %i.b to i64
   %i.f = sub i64 %2, %i.e
   %scevgep.i.i = getelementptr i8, ptr %i.b, i64 %i.f
@@ -227,33 +227,43 @@ _ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i.i: ; 
   br i1 %.not.i.i, label %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i, label %.lr.ph.i.preheader.i.i, !llvm.loop !506
 
 _ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i: ; preds = %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i.i, %.lr.ph.i.preheader.i.i, %bb.a
-  %.010.i.i = phi ptr [ %i.b, %bb.a ], [ %scevgep.i.i, %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i.i ], [ %.012.i.i, %.lr.ph.i.preheader.i.i ] ; 2 uses
+  %.010.i.i = phi ptr [ %i.b, %bb.a ], [ %scevgep.i.i, %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i.i ], [ %.012.i.i, %.lr.ph.i.preheader.i.i ] ; 3 uses
   %.not.i5.i.not.i = icmp ugt ptr %i.d, %.010.i.i ; 2 uses
   %spec.store.select.i.i.i = select i1 %.not.i5.i.not.i, ptr %.010.i.i, ptr %i.d ; 4 uses
   store ptr %spec.store.select.i.i.i, ptr %1, align 8
-  br i1 %.not.i5.i.not.i, label %.lr.ph.i.preheader.i3.i, label %_ZN5boost9unit_test13basic_cstringIKcE4trimES3_.exit
+  br i1 %.not.i5.i.not.i, label %.lr.ph.i.preheader.preheader.i3.i, label %_ZN5boost9unit_test13basic_cstringIKcE4trimES3_.exit
 
-.lr.ph.i.preheader.i3.i:                          ; preds = %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i, %.lr.ph.i.preheader.i3.i
-  %.0.i.i = phi ptr [ %i.j, %.lr.ph.i.preheader.i3.i ], [ %i.d, %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i ] ; 7 uses
+.lr.ph.i.preheader.preheader.i3.i:                ; preds = %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i
+  %3 = ptrtoaddr ptr %.010.i.i to i64
+  %reass.sub.i = sub i64 %3, %2
+  %4 = getelementptr i8, ptr %i.d, i64 %reass.sub.i
+  %scevgep.i4.i = getelementptr i8, ptr %4, i64 1
+  br label %.lr.ph.i.preheader.i3.i
+
+.lr.ph.i.preheader.i3.i:                          ; preds = %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i10.i, %.lr.ph.i.preheader.preheader.i3.i
+  %.0.i.i = phi ptr [ %i.j, %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i10.i ], [ %i.d, %.lr.ph.i.preheader.preheader.i3.i ] ; 2 uses
   %i.j = getelementptr inbounds i8, ptr %.0.i.i, i64 -1 ; 3 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !60
-  %3 = icmp ne i8 %i.k, 34
-  %.not8.i.i.a = icmp eq ptr %i.j, %spec.store.select.i.i.i
-  %or.cond = or i1 %3, %.not8.i.i.a
-  br i1 %or.cond, label %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i, label %.lr.ph.i.preheader.i3.i, !llvm.loop !507
+  %.not8.i.i.a = icmp eq i8 %i.k, 34
+  br i1 %.not8.i.i.a, label %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i10.i, label %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i
 
-_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i: ; preds = %.lr.ph.i.preheader.i3.i
-  store ptr %.0.i.i, ptr %i.c, align 8, !tbaa !46
-  %.not.i9.i.i = icmp ugt ptr %.0.i.i, %spec.store.select.i.i.i
+_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i10.i: ; preds = %.lr.ph.i.preheader.i3.i
+  %.not8.i.i = icmp eq ptr %i.j, %spec.store.select.i.i.i
+  br i1 %.not8.i.i, label %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i, label %.lr.ph.i.preheader.i3.i, !llvm.loop !507
+
+_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i: ; preds = %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i10.i, %.lr.ph.i.preheader.i3.i
+  %.013.i.i = phi ptr [ %.0.i.i, %.lr.ph.i.preheader.i3.i ], [ %scevgep.i4.i, %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.i10.i ] ; 6 uses
+  store ptr %.013.i.i, ptr %i.c, align 8, !tbaa !46
+  %.not.i9.i.i = icmp ugt ptr %.013.i.i, %spec.store.select.i.i.i
   br i1 %.not.i9.i.i, label %_ZN5boost9unit_test13basic_cstringIKcE4trimES3_.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i
-  store ptr %.0.i.i, ptr %1, align 8, !tbaa !45
+  store ptr %.013.i.i, ptr %1, align 8, !tbaa !45
   br label %_ZN5boost9unit_test13basic_cstringIKcE4trimES3_.exit
 
 _ZN5boost9unit_test13basic_cstringIKcE4trimES3_.exit: ; preds = %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i, %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i, %bb.b
-  %i.l = phi ptr [ %i.d, %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i ], [ %.0.i.i, %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i ], [ %.0.i.i, %bb.b ]
-  %i.m = phi ptr [ %i.d, %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i ], [ %spec.store.select.i.i.i, %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i ], [ %.0.i.i, %bb.b ] ; 2 uses
+  %i.l = phi ptr [ %i.d, %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i ], [ %.013.i.i, %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i ], [ %.013.i.i, %bb.b ]
+  %i.m = phi ptr [ %i.d, %_ZN5boost9unit_test13basic_cstringIKcE9trim_leftES3_.exit.i ], [ %spec.store.select.i.i.i, %_ZN5boost9unit_test9ut_detail20bcs_char_traits_implIKcE4findEPS3_mc.exit.thread.i.i ], [ %.013.i.i, %bb.b ] ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.o = ptrtoint ptr %i.l to i64
   %i.p = ptrtoint ptr %i.m to i64

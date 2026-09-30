@@ -202,10 +202,18 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 45
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 48
-  br i1 %i.m, label %_ZNK2v84base6VectorIKhE6lengthEv.exit, label %bb.e, !prof !5
+  %1 = load i32, ptr %i.s, align 8
+  br i1 %i.m, label %_ZNK2v84base6VectorIKhE6lengthEv.exit.preheader, label %bb.e, !prof !5
 
-_ZNK2v84base6VectorIKhE6lengthEv.exit:            ; preds = %.lr.ph, %.thread
-  %i.t = phi i32 [ %i.ae, %.thread ], [ %.promoted, %.lr.ph ] ; 2 uses
+_ZNK2v84base6VectorIKhE6lengthEv.exit.preheader:  ; preds = %.lr.ph
+  %.promoted12 = load i64, ptr %i.o, align 8
+  %.promoted11 = load i32, ptr %i.p, align 8
+  br label %_ZNK2v84base6VectorIKhE6lengthEv.exit
+
+_ZNK2v84base6VectorIKhE6lengthEv.exit:            ; preds = %_ZNK2v84base6VectorIKhE6lengthEv.exit.preheader, %.thread
+  %2 = phi i64 [ %i.aw, %.thread ], [ %.promoted12, %_ZNK2v84base6VectorIKhE6lengthEv.exit.preheader ]
+  %3 = phi i32 [ %i.av, %.thread ], [ %.promoted11, %_ZNK2v84base6VectorIKhE6lengthEv.exit.preheader ]
+  %i.t = phi i32 [ %i.ae, %.thread ], [ %.promoted, %_ZNK2v84base6VectorIKhE6lengthEv.exit.preheader ] ; 2 uses
   %.not = icmp slt i32 %i.t, %i.n
   br i1 %.not, label %bb.g, label %bb.f
 
@@ -265,16 +273,13 @@ _ZN2v88internal12_GLOBAL__N_111DecodeEntryENS_4base6VectorIKhEEPiPNS0_18Position
   %i.as = and i64 %i.ak, 1
   %i.at = sub nsw i64 0, %i.as
   %i.au = xor i64 %i.ar, %i.at
-  %1 = load i32, ptr %i.p, align 8
-  %i.av = add nsw i32 %1, %i.am
+  %i.av = add nsw i32 %3, %i.am                   ; 2 uses
   store i32 %i.av, ptr %i.p, align 8
-  %2 = load i64, ptr %i.o, align 8
-  %i.aw = add nsw i64 %2, %i.au                   ; 3 uses
+  %i.aw = add nsw i64 %2, %i.au                   ; 4 uses
   store i64 %i.aw, ptr %i.o, align 8
   store i8 %i.aq, ptr %i.q, align 4
   store i8 %i.ap, ptr %i.r, align 1
-  %3 = load i32, ptr %i.s, align 8
-  switch i32 %3, label %.thread [
+  switch i32 %1, label %.thread [
     i32 2, label %._crit_edge
     i32 0, label %bb.i
     i32 1, label %bb.j

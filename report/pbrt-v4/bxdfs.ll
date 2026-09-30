@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %bb.d, %bb.a, %bb.e
 define linkonce_odr dso_local { <2 x float>, float } @_ZNK4pbrt17PiecewiseLinear2DILm2EE6InvertIJffEEENS_8PLSampleENS_6Point2IfEEDpT_(ptr noundef nonnull align 8 dereferenceable(168) %0, <2 x float> %1, float noundef %2, float noundef %3) local_unnamed_addr #1 comdat align 2 {
 _ZN4pstd5arrayIfLi2EEC2ESt16initializer_listIfE.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %4 = load ptr, ptr %i.b, align 8                ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.d = load i32, ptr %i.a, align 8, !tbaa !98   ; 3 uses
   %i.e = icmp eq i32 %i.d, 1
@@ -215,8 +216,7 @@ bb.a:                                             ; preds = %_ZN4pstd5arrayIfLi2
   %i.f = zext i32 %i.d to i64
   %i.g = add nsw i64 %i.f, -2                     ; 2 uses
   %i.h = icmp ugt i32 %i.d, 2
-  %.pre = load ptr, ptr %i.b, align 8, !tbaa !157
-  %i.i = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !150  ; 2 uses
   br i1 %i.h, label %.lr.ph.i91, label %_ZN4pbrt12FindIntervalIZNKS_17PiecewiseLinear2DILm2EE6InvertIJffEEENS_8PLSampleENS_6Point2IfEEDpT_EUljE_EEmmRKT_.exit
 
@@ -277,8 +277,7 @@ bb.c:                                             ; preds = %bb.b
   %i.an = zext i32 %i.al to i64
   %i.ao = add nsw i64 %i.an, -2                   ; 2 uses
   %i.ap = icmp ugt i32 %i.al, 2
-  %.pre160 = load ptr, ptr %i.b, align 8, !tbaa !157
-  %i.aq = getelementptr inbounds nuw i8, ptr %.pre160, i64 40
+  %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !150 ; 2 uses
   br i1 %i.ap, label %.lr.ph.i91.1, label %_ZN4pbrt12FindIntervalIZNKS_17PiecewiseLinear2DILm2EE6InvertIJffEEENS_8PLSampleENS_6Point2IfEEDpT_EUljE_EEmmRKT_.exit.1
 
@@ -585,7 +584,8 @@ bb.e:                                             ; preds = %bb.d, %_ZN4pbrt12Fi
 define linkonce_odr dso_local noundef float @_ZNK4pbrt17PiecewiseLinear2DILm3EE8EvaluateIJfffEEEfNS_6Point2IfEEDpT_(ptr noundef nonnull align 8 dereferenceable(176) %0, <2 x float> %1, float noundef %2, float noundef %3, float noundef %4) local_unnamed_addr #1 comdat align 2 {
 _ZN4pstd5arrayIfLi3EEC2ESt16initializer_listIfE.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %5 = load ptr, ptr %i.b, align 8                ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.d = load i32, ptr %i.a, align 8, !tbaa !98   ; 3 uses
   %i.e = icmp eq i32 %i.d, 1
@@ -595,8 +595,7 @@ bb.a:                                             ; preds = %_ZN4pstd5arrayIfLi3
   %i.f = zext i32 %i.d to i64
   %i.g = add nsw i64 %i.f, -2                     ; 2 uses
   %i.h = icmp ugt i32 %i.d, 2
-  %.pre = load ptr, ptr %i.b, align 8, !tbaa !157
-  %i.i = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !150  ; 2 uses
   br i1 %i.h, label %.lr.ph.i66, label %_ZN4pbrt12FindIntervalIZNKS_17PiecewiseLinear2DILm3EE8EvaluateIJfffEEEfNS_6Point2IfEEDpT_EUljE_EEmmRKT_.exit
 
@@ -657,8 +656,7 @@ bb.c:                                             ; preds = %bb.b
   %i.an = zext i32 %i.al to i64
   %i.ao = add nsw i64 %i.an, -2                   ; 2 uses
   %i.ap = icmp ugt i32 %i.al, 2
-  %.pre97 = load ptr, ptr %i.b, align 8, !tbaa !157
-  %i.aq = getelementptr inbounds nuw i8, ptr %.pre97, i64 40
+  %i.aq = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !150 ; 2 uses
   br i1 %i.ap, label %.lr.ph.i66.1, label %_ZN4pbrt12FindIntervalIZNKS_17PiecewiseLinear2DILm3EE8EvaluateIJfffEEEfNS_6Point2IfEEDpT_EUljE_EEmmRKT_.exit.1
 
@@ -721,8 +719,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bx = zext i32 %i.bv to i64
   %i.by = add nsw i64 %i.bx, -2                   ; 2 uses
   %i.bz = icmp ugt i32 %i.bv, 2
-  %.pre101 = load ptr, ptr %i.b, align 8, !tbaa !157
-  %i.ca = getelementptr inbounds nuw i8, ptr %.pre101, i64 72
+  %i.ca = getelementptr inbounds nuw i8, ptr %5, i64 72
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !150 ; 2 uses
   br i1 %i.bz, label %.lr.ph.i66.2, label %_ZN4pbrt12FindIntervalIZNKS_17PiecewiseLinear2DILm3EE8EvaluateIJfffEEEfNS_6Point2IfEEDpT_EUljE_EEmmRKT_.exit.2
 
@@ -1125,7 +1122,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.a
 define linkonce_odr dso_local noundef float @_ZNK4pbrt17PiecewiseLinear2DILm2EE8EvaluateIJffEEEfNS_6Point2IfEEDpT_(ptr noundef nonnull align 8 dereferenceable(168) %0, <2 x float> %1, float noundef %2, float noundef %3) local_unnamed_addr #1 comdat align 2 {
 _ZN4pstd5arrayIfLi2EEC2ESt16initializer_listIfE.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %4 = load ptr, ptr %i.b, align 8                ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.d = load i32, ptr %i.a, align 8, !tbaa !98   ; 3 uses
   %i.e = icmp eq i32 %i.d, 1
@@ -1135,8 +1133,7 @@ bb.a:                                             ; preds = %_ZN4pstd5arrayIfLi2
   %i.f = zext i32 %i.d to i64
   %i.g = add nsw i64 %i.f, -2                     ; 2 uses
   %i.h = icmp ugt i32 %i.d, 2
-  %.pre = load ptr, ptr %i.b, align 8, !tbaa !157
-  %i.i = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !150  ; 2 uses
   br i1 %i.h, label %.lr.ph.i65, label %_ZN4pbrt12FindIntervalIZNKS_17PiecewiseLinear2DILm2EE8EvaluateIJffEEEfNS_6Point2IfEEDpT_EUljE_EEmmRKT_.exit
 
@@ -1197,8 +1194,7 @@ bb.c:                                             ; preds = %bb.b
   %i.an = zext i32 %i.al to i64
   %i.ao = add nsw i64 %i.an, -2                   ; 2 uses
   %i.ap = icmp ugt i32 %i.al, 2
-  %.pre92 = load ptr, ptr %i.b, align 8, !tbaa !157
-  %i.aq = getelementptr inbounds nuw i8, ptr %.pre92, i64 40
+  %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !150 ; 2 uses
   br i1 %i.ap, label %.lr.ph.i65.1, label %_ZN4pbrt12FindIntervalIZNKS_17PiecewiseLinear2DILm2EE8EvaluateIJffEEEfNS_6Point2IfEEDpT_EUljE_EEmmRKT_.exit.1
 

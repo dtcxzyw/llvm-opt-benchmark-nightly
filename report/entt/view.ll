@@ -205,6 +205,9 @@ _ZNK4entt17basic_common_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELb0ELm2EL
   %.not6.i9 = icmp eq i64 %i.b, 1
   %.add = add nuw nsw i64 %.idx, 8
   %.07.i22.ptr = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %1 = load ptr, ptr %.07.i22.ptr, align 8        ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %.critedge4
@@ -290,9 +293,6 @@ _ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit.i14: ; preds =
   br i1 %i.be, label %bb.h, label %.critedge4
 
 _ZN4entt8internal6all_ofIPKPKNS_16basic_sparse_setINS_6entityESaIS3_EEES9_S3_EEbT_T0_T1_.exit16: ; preds = %bb.h, %_ZN4entt8internal6all_ofIPKPKNS_16basic_sparse_setINS_6entityESaIS3_EEES9_S3_EEbT_T0_T1_.exit
-  %1 = load ptr, ptr %.07.i22.ptr, align 8, !tbaa !126 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bf = load ptr, ptr %3, align 8, !tbaa !127
   %i.bg = load ptr, ptr %2, align 8, !tbaa !103   ; 2 uses
   %i.bh = ptrtoint ptr %i.bf to i64

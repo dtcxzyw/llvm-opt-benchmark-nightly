@@ -204,25 +204,23 @@ _ZNK25btTranslationalLimitMotor14needApplyForceEi.exit: ; preds = %bb.c, %bb.d
   %i.s = phi i32 [ 0, %bb.c ], [ 1, %bb.d ]       ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 884
   %i.u = load i32, ptr %i.t, align 4, !tbaa !47
-  %i.v = icmp eq i32 %i.u, 0
-  br i1 %i.v, label %2, label %bb.e
-
-2:                                                ; preds = %_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit
+  %2 = icmp eq i32 %i.u, 0
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 813
-  %4 = load i8, ptr %3, align 1, !tbaa !19, !range !44, !noundef !39
-  %5 = icmp eq i8 %4, 0
-  br i1 %5, label %_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit.1, label %bb.e
+  %4 = load i8, ptr %3, align 1, !range !44
+  %i.v = icmp eq i8 %4, 0
+  %or.cond46 = select i1 %2, i1 %i.v, i1 false
+  br i1 %or.cond46, label %_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit.1, label %bb.e
 
-bb.e:                                             ; preds = %2, %_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit
+bb.e:                                             ; preds = %_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit
   %i.w = add nuw nsw i32 %i.s, 1                  ; 2 uses
   store i32 %i.w, ptr %1, align 4, !tbaa !66
   %i.x = add nsw i32 %i.r, -1                     ; 2 uses
   store i32 %i.x, ptr %i.k, align 4, !tbaa !67
   br label %_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit.1
 
-_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit.1: ; preds = %bb.e, %2
-  %i.y = phi i32 [ %i.x, %bb.e ], [ %i.r, %2 ]
-  %i.z = phi i32 [ %i.w, %bb.e ], [ %i.s, %2 ]
+_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit.1: ; preds = %_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit, %bb.e
+  %i.y = phi i32 [ %i.x, %bb.e ], [ %i.r, %_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit ]
+  %i.z = phi i32 [ %i.w, %bb.e ], [ %i.s, %_ZNK25btTranslationalLimitMotor14needApplyForceEi.exit ]
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 888
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !47
   %i.ac = icmp eq i32 %i.ab, 0

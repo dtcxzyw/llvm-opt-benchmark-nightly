@@ -205,29 +205,27 @@ bb.cv:                                            ; preds = %bb.cu
 
 bb.cw:                                            ; preds = %bb.cm
   switch i32 %i.bn, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE14set_bad_repeatEPNS0_14re_syntax_baseE.exit [
-    i32 18, label %12
-    i32 22, label %12
-    i32 23, label %12
-    i32 24, label %12
-    i32 25, label %12
+    i32 18, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit
+    i32 22, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit
+    i32 23, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit
+    i32 24, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit
+    i32 25, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit
   ]
 
-12:                                               ; preds = %bb.cw, %bb.cw, %bb.cw, %bb.cw, %bb.cw
-  %13 = getelementptr inbounds nuw i8, ptr %.0220462, i64 304
-  %14 = load i32, ptr %13, align 8, !tbaa !307    ; 2 uses
-  %15 = icmp ugt i32 %14, 63
-  br i1 %15, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit.thread.a, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit
-
-_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit: ; preds = %12
-  %i.ov = zext nneg i32 %14 to i64
+_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit: ; preds = %bb.cw, %bb.cw, %bb.cw, %bb.cw, %bb.cw
+  %12 = getelementptr inbounds nuw i8, ptr %.0220462, i64 304
+  %13 = load i32, ptr %12, align 8, !tbaa !307    ; 2 uses
+  %14 = icmp ugt i32 %13, 63
+  %i.ov = zext nneg i32 %13 to i64
   %i.ow = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.ox = load i64, ptr %i.ow, align 8, !tbaa !290 ; 2 uses
+  %i.ox = load i64, ptr %i.ow, align 8            ; 2 uses
   %i.oy = shl nuw i64 1, %i.ov                    ; 2 uses
-  %i.oz = and i64 %i.ox, %i.oy
-  %.not366 = icmp eq i64 %i.oz, 0
-  br i1 %.not366, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit.thread356, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit.thread.a
+  %i.oz = and i64 %i.oy, %i.ox
+  %15 = icmp ne i64 %i.oz, 0
+  %.0.i320 = select i1 %14, i1 true, i1 %15
+  br i1 %.0.i320, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit.thread.a, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit.thread356
 
-_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit.thread.a: ; preds = %12, %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit
+_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit.thread.a: ; preds = %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit
   br i1 %.not.i338, label %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13set_all_masksEPhh.exit328, label %bb.cx
 
 bb.cx:                                            ; preds = %_ZN5boost13re_detail_60019basic_regex_creatorIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE13is_bad_repeatEPNS0_14re_syntax_baseE.exit.thread.a

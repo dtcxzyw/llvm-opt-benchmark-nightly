@@ -205,9 +205,9 @@ bb.h:                                             ; preds = %bb.g, %_ZNSt7__cxx1
 bb.i:                                             ; preds = %bb.e
   unreachable
 
-._crit_edge:                                      ; preds = %.lr.ph, %4, %bb.a, %bb.a
-  %.06.i22 = phi i64 [ 0, %bb.a ], [ 0, %bb.a ], [ %.06.i.ph, %4 ], [ %.06.i.ph, %.lr.ph ]
-  %.015.lcssa = phi i64 [ 0, %bb.a ], [ 0, %bb.a ], [ %i.v, %.lr.ph ], [ %7, %4 ]
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a, %bb.a
+  %.06.i22 = phi i64 [ 0, %bb.a ], [ 0, %bb.a ], [ %.06.i.ph, %.lr.ph ]
+  %.015.lcssa = phi i64 [ 0, %bb.a ], [ 0, %bb.a ], [ %.lcssa, %.lr.ph ]
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.06.i22
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 168
@@ -225,15 +225,13 @@ bb.i:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %bb.b, %bb.a
   %exitcond.not = phi i1 [ false, %bb.b ], [ true, %bb.a ]
-  %.06.i.ph = phi i64 [ 2, %bb.b ], [ 1, %bb.a ]  ; 2 uses
+  %.06.i.ph = phi i64 [ 2, %bb.b ], [ 1, %bb.a ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.v = load i64, ptr %i.u, align 8, !tbaa !144  ; 2 uses
-  br i1 %exitcond.not, label %._crit_edge, label %4
-
-4:                                                ; preds = %.lr.ph
+  %4 = load i64, ptr %i.u, align 8, !tbaa !144    ; 2 uses
   %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %6 = load i64, ptr %5, align 8, !tbaa !144
-  %7 = add i64 %6, %i.v
+  %i.v = load i64, ptr %5, align 8
+  %6 = add i64 %i.v, %4
+  %.lcssa = select i1 %exitcond.not, i64 %4, i64 %6
   br label %._crit_edge
 }
 

@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %.sink.split.i57, %.critedge.i56, %bb.bf
   store i8 %i.oc, ptr %i.of, align 1, !tbaa !114
-  %i.ok = load i32, ptr %i.gr, align 8, !tbaa !111
+  %i.ok = load i32, ptr %i.gr, align 8
   %.not.i.i59 = icmp eq i32 %i.ok, 0
   br i1 %.not.i.i59, label %bb.bh, label %_ZN6Gluco26Solver14setDecisionVarEibb.exit60
 
@@ -608,21 +608,19 @@ _ZN6Gluco26Solver13ResetJustDataEb.exit:          ; preds = %bb.b, %bb.a
   store i32 0, ptr %i.b, align 8, !tbaa !122
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1148 ; 3 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !98
-  %.not = icmp eq i32 %i.r, 0
-  br i1 %.not, label %bb.d, label %4
+  %.not = icmp ne i32 %i.r, 0
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
+  %5 = load i8, ptr %4, align 8, !range !82
+  %6 = trunc nuw i8 %5 to i1
+  %or.cond = select i1 %.not, i1 %6, i1 false
+  br i1 %or.cond, label %bb.c, label %bb.d
 
-4:                                                ; preds = %_ZN6Gluco26Solver13ResetJustDataEb.exit
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 264
-  %6 = load i8, ptr %5, align 8, !tbaa !87, !range !82, !noundef !83
-  %7 = trunc nuw i8 %6 to i1
-  br i1 %7, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %4
+bb.c:                                             ; preds = %_ZN6Gluco26Solver13ResetJustDataEb.exit
   %puts55 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.14) ; 0 uses
   tail call void @exit(i32 noundef -1) #35
   unreachable
 
-bb.d:                                             ; preds = %4, %_ZN6Gluco26Solver13ResetJustDataEb.exit
+bb.d:                                             ; preds = %_ZN6Gluco26Solver13ResetJustDataEb.exit
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   store i32 0, ptr %i.s, align 8, !tbaa !118
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 452 ; 2 uses
@@ -800,8 +798,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %_ZNK6Gluco26Solver12withinBudgetEv.exit.thread
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 264
-  %i.dc = load i8, ptr %8, align 8, !tbaa !87, !range !82, !noundef !83
+  %i.dc = load i8, ptr %4, align 8, !tbaa !87, !range !82, !noundef !83
   %i.dd = trunc nuw i8 %i.dc to i1
   br i1 %i.dd, label %bb.s, label %bb.v
 

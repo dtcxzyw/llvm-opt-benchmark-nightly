@@ -202,30 +202,26 @@ _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs2AWtUsOyxgP_3std2io
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.u = load i64, ptr %i.t, align 8, !noundef !4 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.w = load i64, ptr %i.v, align 8, !noundef !4 ; 3 uses
-  %3 = icmp eq i64 %i.u, %i.w
-  br i1 %3, label %4, label %bb.b
-
-4:                                                ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs2AWtUsOyxgP_3std2io10IoSliceMutENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1y_8adapters3map8map_foldRBQ_jjNCNvXs3_NtNtBS_8buffered9bufreaderINtB30_9BufReaderNtNtNtBU_3net3tcp9TcpStreamENtBS_4Read13read_vectored0NCINvXsK_NtB1w_5accumjNtB4I_3Sum3sumINtB2i_3MapBF_B2S_EE0E0ECshzDG46PUpLf_10lsp_server.exit
+  %3 = load i64, ptr %i.v, align 8, !noundef !4   ; 3 uses
+  %4 = icmp ne i64 %i.u, %3
   %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !noundef !4
-  %.not = icmp ult i64 %.sroa.0.0.i, %6
-  br i1 %.not, label %bb.b, label %bb.e
+  %i.w = load i64, ptr %5, align 8                ; 2 uses
+  %.not = icmp ult i64 %.sroa.0.0.i, %i.w
+  %or.cond = select i1 %4, i1 true, i1 %.not
+  br i1 %or.cond, label %bb.b, label %bb.e
 
-bb.b:                                             ; preds = %4, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs2AWtUsOyxgP_3std2io10IoSliceMutENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1y_8adapters3map8map_foldRBQ_jjNCNvXs3_NtNtBS_8buffered9bufreaderINtB30_9BufReaderNtNtNtBU_3net3tcp9TcpStreamENtBS_4Read13read_vectored0NCINvXsK_NtB1w_5accumjNtB4I_3Sum3sumINtB2i_3MapBF_B2S_EE0E0ECshzDG46PUpLf_10lsp_server.exit
+bb.b:                                             ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs2AWtUsOyxgP_3std2io10IoSliceMutENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1y_8adapters3map8map_foldRBQ_jjNCNvXs3_NtNtBS_8buffered9bufreaderINtB30_9BufReaderNtNtNtBU_3net3tcp9TcpStreamENtBS_4Read13read_vectored0NCINvXsK_NtB1w_5accumjNtB4I_3Sum3sumINtB2i_3MapBF_B2S_EE0E0ECshzDG46PUpLf_10lsp_server.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !144)
-  %.not.i = icmp ult i64 %i.u, %i.w
+  %.not.i = icmp ult i64 %i.u, %3
   %.pre.i = load ptr, ptr %0, align 8, !alias.scope !144, !noalias !145 ; 3 uses
   br i1 %.not.i, label %_RINvMNtNtNtNtCs2AWtUsOyxgP_3std2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQNtNtNtBb_3net3tcp9TcpStreamECshzDG46PUpLf_10lsp_server.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !146
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = load i64, ptr %7, align 8, !alias.scope !144, !noalias !145, !noundef !4
   store ptr %.pre.i, ptr %i.a, align 8, !noalias !146
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %8, ptr %i.y, align 8, !noalias !146
+  store i64 %i.w, ptr %i.y, align 8, !noalias !146
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   store i64 0, ptr %i.z, align 8, !noalias !146
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
@@ -251,13 +247,13 @@ bb.d:                                             ; preds = %bb.c
   br label %_RINvMNtNtNtNtCs2AWtUsOyxgP_3std2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQNtNtNtBb_3net3tcp9TcpStreamECshzDG46PUpLf_10lsp_server.exit
 
 _RINvMNtNtNtNtCs2AWtUsOyxgP_3std2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQNtNtNtBb_3net3tcp9TcpStreamECshzDG46PUpLf_10lsp_server.exit: ; preds = %bb.b, %bb.d
-  %i.ah = phi i64 [ %i.w, %bb.b ], [ %i.ae, %bb.d ]
+  %i.ah = phi i64 [ %3, %bb.b ], [ %i.ae, %bb.d ]
   %i.ai = phi i64 [ %i.u, %bb.b ], [ 0, %bb.d ]   ; 2 uses
   %i.aj = sub nuw i64 %i.ah, %i.ai                ; 2 uses
   %i.ak = icmp eq ptr %.pre.i, null
   br i1 %i.ak, label %bb.f, label %bb.g
 
-bb.e:                                             ; preds = %4
+bb.e:                                             ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs2AWtUsOyxgP_3std2io10IoSliceMutENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1y_8adapters3map8map_foldRBQ_jjNCNvXs3_NtNtBS_8buffered9bufreaderINtB30_9BufReaderNtNtNtBU_3net3tcp9TcpStreamENtBS_4Read13read_vectored0NCINvXsK_NtB1w_5accumjNtB4I_3Sum3sumINtB2i_3MapBF_B2S_EE0E0ECshzDG46PUpLf_10lsp_server.exit
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, i8 0, i64 16, i1 false)
   %i.am = tail call { i64, ptr } @_RNvXs_NtNtCs2AWtUsOyxgP_3std3net3tcpNtB4_9TcpStreamNtNtB8_2io4Read13read_vectored(ptr noalias noundef nonnull align 4 dereferenceable(4) %i.al, ptr noalias noundef nonnull align 8 %1, i64 noundef %2)

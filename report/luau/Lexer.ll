@@ -205,10 +205,10 @@ _ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfac
   %i.k = load i32, ptr %i.j, align 8, !tbaa !35   ; 4 uses
   %i.l = zext i32 %i.k to i64                     ; 3 uses
   %.not.i.i = icmp eq i32 %i.k, 0
+  %.pre.i = load ptr, ptr %1, align 8             ; 6 uses
   br i1 %.not.i.i, label %_ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i, label %.lr.ph.i.i.a
 
 .lr.ph.i.i.a:                                     ; preds = %_ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EE14rehash_if_fullERKS3_.exit
-  %2 = load ptr, ptr %1, align 8, !tbaa !36       ; 5 uses
   %xtraiter = and i64 %i.l, 3                     ; 3 uses
   %i.m = icmp ult i32 %i.k, 4
   br i1 %i.m, label %.epil.preheader, label %.lr.ph.i.i.new
@@ -229,10 +229,10 @@ _ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfac
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.epil.preheader
-  %.09.i.i.epil = phi i64 [ %.09.i.i.epil.init, %.epil.preheader ], [ %i.s, %bb.d ] ; 2 uses
-  %.078.i.i.epil = phi i32 [ %.078.i.i.epil.init, %.epil.preheader ], [ %i.r, %bb.d ]
-  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.d ]
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i.epil
+  %.09.i.i.epil = phi i64 [ %i.s, %bb.d ], [ %.09.i.i.epil.init, %.epil.preheader ] ; 2 uses
+  %.078.i.i.epil = phi i32 [ %i.r, %bb.d ], [ %.078.i.i.epil.init, %.epil.preheader ]
+  %epil.iter = phi i64 [ %epil.iter.next, %bb.d ], [ 0, %.epil.preheader ]
+  %i.n = getelementptr inbounds nuw i8, ptr %.pre.i, i64 %.09.i.i.epil
   %i.o = load i8, ptr %i.n, align 1, !tbaa !22
   %i.p = zext i8 %i.o to i32
   %i.q = xor i32 %.078.i.i.epil, %i.p
@@ -251,24 +251,24 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i.i.n
   %.09.i.i = phi i64 [ 0, %.lr.ph.i.i.new ], [ %i.ar, %bb.e ] ; 5 uses
   %.078.i.i = phi i32 [ -2128831035, %.lr.ph.i.i.new ], [ %i.aq, %bb.e ]
   %niter = phi i64 [ 0, %.lr.ph.i.i.new ], [ %niter.next.3, %bb.e ]
-  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i
+  %i.u = getelementptr inbounds nuw i8, ptr %.pre.i, i64 %.09.i.i
   %i.v = load i8, ptr %i.u, align 1, !tbaa !22
   %i.w = zext i8 %i.v to i32
   %i.x = xor i32 %.078.i.i, %i.w
   %i.y = mul i32 %i.x, 16777619
-  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i
+  %i.z = getelementptr inbounds nuw i8, ptr %.pre.i, i64 %.09.i.i
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 1
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !22
   %i.ac = zext i8 %i.ab to i32
   %i.ad = xor i32 %i.y, %i.ac
   %i.ae = mul i32 %i.ad, 16777619
-  %i.af = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i
+  %i.af = getelementptr inbounds nuw i8, ptr %.pre.i, i64 %.09.i.i
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 2
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !22
   %i.ai = zext i8 %i.ah to i32
   %i.aj = xor i32 %i.ae, %i.ai
   %i.ak = mul i32 %i.aj, 16777619
-  %i.al = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i
+  %i.al = getelementptr inbounds nuw i8, ptr %.pre.i, i64 %.09.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 3
   %i.an = load i8, ptr %i.am, align 1, !tbaa !22
   %i.ao = zext i8 %i.an to i32
@@ -285,6 +285,7 @@ _ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i: ; preds = %._crit_edge
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.au = load i32, ptr %i.at, align 8, !tbaa !35 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %2 = load ptr, ptr %i.av, align 8
   %i.aw = zext i32 %i.au to i64
   br label %bb.f
 
@@ -300,8 +301,7 @@ bb.f:                                             ; preds = %_ZNKSt8equal_toIN4L
 
 _ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.i: ; preds = %bb.f
   %i.bb = load ptr, ptr %i.ax, align 8, !tbaa !36
-  %3 = load ptr, ptr %i.av, align 8, !tbaa !36
-  %bcmp.i.i.i = tail call i32 @bcmp(ptr %i.bb, ptr %3, i64 %i.aw)
+  %bcmp.i.i.i = tail call i32 @bcmp(ptr %i.bb, ptr %2, i64 %i.aw)
   %i.bc = icmp eq i32 %bcmp.i.i.i, 0
   br i1 %i.bc, label %bb.g, label %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread.i
 
@@ -318,8 +318,7 @@ _ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread.i: ; preds =
 
 _ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit27.i: ; preds = %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread.i
   %i.bg = load ptr, ptr %i.ax, align 8, !tbaa !36
-  %4 = load ptr, ptr %1, align 8, !tbaa !36
-  %bcmp.i.i26.i = tail call i32 @bcmp(ptr %i.bg, ptr %4, i64 %i.l)
+  %bcmp.i.i26.i = tail call i32 @bcmp(ptr %i.bg, ptr %.pre.i, i64 %i.l)
   %i.bh = icmp eq i32 %bcmp.i.i26.i, 0
   br i1 %i.bh, label %_ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EE13insert_unsafeERKS3_.exit, label %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit27.thread.i
 
@@ -722,7 +721,7 @@ _ZN4Luau7isSpaceEc.exit:                          ; preds = %_ZN4Luau5Lexer10con
 define dso_local void @_ZN4Luau5Lexer16readQuotedStringEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.Luau::Lexeme") align 8 captures(none) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(120) %1) local_unnamed_addr #9 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !66   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !66   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 8 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !65   ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
@@ -748,23 +747,22 @@ _ZNK4Luau5Lexer6peekchEv.exit4:                   ; preds = %bb.a, %bb.b
   br i1 %i.q, label %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph, label %_ZNK4Luau5Lexer6peekchEv.exit3.thread
 
 _ZNK4Luau5Lexer6peekchEv.exit3.lr.ph:             ; preds = %_ZNK4Luau5Lexer6peekchEv.exit4
-  %i.r = load ptr, ptr %1, align 8, !tbaa !63     ; 6 uses
+  %i.r = load ptr, ptr %1, align 8, !tbaa !63     ; 5 uses
   br label %_ZNK4Luau5Lexer6peekchEv.exit3
 
 _ZNK4Luau5Lexer6peekchEv.exit3:                   ; preds = %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph, %_ZN4Luau5Lexer21readBackslashInStringEv.exit
   %i.s = phi i32 [ %i.f, %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph ], [ %i.bh, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 12 uses
-  %2 = phi i32 [ %i.b, %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph ], [ %.promoted.i26, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 14 uses
-  %i.t = phi i32 [ %i.b, %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph ], [ %i.bi, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 8 uses
-  %3 = phi i64 [ %i.p, %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph ], [ %i.bk, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 2 uses
-  %i.u = phi i32 [ %i.o, %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph ], [ %i.bj, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 11 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 %3
-  %i.w = load i8, ptr %i.v, align 1, !tbaa !22
+  %2 = phi i64 [ %i.p, %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph ], [ %i.bk, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ]
+  %i.t = phi i32 [ %i.o, %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph ], [ %i.bj, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 11 uses
+  %i.u = phi i32 [ %i.b, %_ZNK4Luau5Lexer6peekchEv.exit3.lr.ph ], [ %i.bi, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 15 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 %2
+  %i.w = load i8, ptr %i.v, align 1, !tbaa !22    ; 2 uses
   %.not = icmp eq i8 %i.w, %i.n
   br i1 %.not, label %.loopexit, label %_ZNK4Luau5Lexer6peekchEv.exit
 
 _ZNK4Luau5Lexer6peekchEv.exit3.thread:            ; preds = %_ZN4Luau5Lexer21readBackslashInStringEv.exit, %_ZNK4Luau5Lexer6peekchEv.exit4
   %i.x = phi i32 [ %i.f, %_ZNK4Luau5Lexer6peekchEv.exit4 ], [ %i.bh, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 2 uses
-  %i.y = phi i32 [ %i.b, %_ZNK4Luau5Lexer6peekchEv.exit4 ], [ %.promoted.i26, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 2 uses
+  %i.y = phi i32 [ %i.b, %_ZNK4Luau5Lexer6peekchEv.exit4 ], [ %i.bi, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 2 uses
   %.lcssa = phi i32 [ %i.o, %_ZNK4Luau5Lexer6peekchEv.exit4 ], [ %i.bj, %_ZN4Luau5Lexer21readBackslashInStringEv.exit ] ; 2 uses
   %.not17 = icmp eq i8 %i.n, 0
   br i1 %.not17, label %_ZNK4Luau5Lexer6peekchEv.exit3.thread..loopexit_crit_edge, label %_ZNK4Luau5Lexer6peekchEv.exit.thread
@@ -774,9 +772,7 @@ _ZNK4Luau5Lexer6peekchEv.exit3.thread..loopexit_crit_edge: ; preds = %_ZNK4Luau5
   br label %.loopexit
 
 _ZNK4Luau5Lexer6peekchEv.exit:                    ; preds = %_ZNK4Luau5Lexer6peekchEv.exit3
-  %4 = getelementptr inbounds nuw i8, ptr %i.r, i64 %3
-  %5 = load i8, ptr %4, align 1, !tbaa !22
-  switch i8 %5, label %bb.h [
+  switch i8 %i.w, label %bb.h [
     i8 0, label %_ZNK4Luau5Lexer6peekchEv.exit.thread
     i8 13, label %_ZNK4Luau5Lexer6peekchEv.exit.thread
     i8 10, label %_ZNK4Luau5Lexer6peekchEv.exit.thread
@@ -785,8 +781,8 @@ _ZNK4Luau5Lexer6peekchEv.exit:                    ; preds = %_ZNK4Luau5Lexer6pee
 
 _ZNK4Luau5Lexer6peekchEv.exit.thread:             ; preds = %_ZNK4Luau5Lexer6peekchEv.exit, %_ZNK4Luau5Lexer6peekchEv.exit, %_ZNK4Luau5Lexer6peekchEv.exit, %_ZNK4Luau5Lexer6peekchEv.exit3.thread
   %i.z = phi i32 [ %i.x, %_ZNK4Luau5Lexer6peekchEv.exit3.thread ], [ %i.s, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %i.s, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %i.s, %_ZNK4Luau5Lexer6peekchEv.exit ]
-  %i.aa = phi i32 [ %i.y, %_ZNK4Luau5Lexer6peekchEv.exit3.thread ], [ %2, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %2, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %2, %_ZNK4Luau5Lexer6peekchEv.exit ]
-  %i.ab = phi i32 [ %.lcssa, %_ZNK4Luau5Lexer6peekchEv.exit3.thread ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit ]
+  %i.aa = phi i32 [ %i.y, %_ZNK4Luau5Lexer6peekchEv.exit3.thread ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit ]
+  %i.ab = phi i32 [ %.lcssa, %_ZNK4Luau5Lexer6peekchEv.exit3.thread ], [ %i.t, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %i.t, %_ZNK4Luau5Lexer6peekchEv.exit ], [ %i.t, %_ZNK4Luau5Lexer6peekchEv.exit ]
   %i.ac = sub i32 %i.ab, %i.z
   %.sroa.414.0.insert.ext = zext i32 %i.ac to i64
   %.sroa.414.0.insert.shift = shl nuw i64 %.sroa.414.0.insert.ext, 32
@@ -795,7 +791,7 @@ _ZNK4Luau5Lexer6peekchEv.exit.thread:             ; preds = %_ZNK4Luau5Lexer6pee
   br label %bb.i
 
 bb.c:                                             ; preds = %_ZNK4Luau5Lexer6peekchEv.exit
-  %i.ad = add i32 %i.u, 1                         ; 4 uses
+  %i.ad = add i32 %i.t, 1                         ; 4 uses
   store i32 %i.ad, ptr %i.c, align 8, !tbaa !65
   %i.ae = zext i32 %i.ad to i64                   ; 2 uses
   %i.af = icmp ugt i64 %i.i, %i.ae
@@ -812,7 +808,7 @@ _ZNK4Luau5Lexer6peekchEv.exit2.i:                 ; preds = %bb.c
   ]
 
 bb.d:                                             ; preds = %_ZNK4Luau5Lexer6peekchEv.exit2.i
-  %i.ai = add i32 %i.u, 2                         ; 4 uses
+  %i.ai = add i32 %i.t, 2                         ; 4 uses
   store i32 %i.ai, ptr %i.c, align 8, !tbaa !65
   %i.aj = zext i32 %i.ai to i64                   ; 2 uses
   %i.ak = icmp ugt i64 %i.i, %i.aj
@@ -825,14 +821,14 @@ _ZNK4Luau5Lexer6peekchEv.exit1.i:                 ; preds = %bb.d
   br i1 %i.an, label %_ZN4Luau5Lexer10consumeAnyEv.exit4.i, label %_ZN4Luau5Lexer21readBackslashInStringEv.exit
 
 _ZN4Luau5Lexer10consumeAnyEv.exit4.i:             ; preds = %_ZNK4Luau5Lexer6peekchEv.exit1.i
-  %i.ao = add i32 %2, 1                           ; 3 uses
+  %i.ao = add i32 %i.u, 1                         ; 2 uses
   store i32 %i.ao, ptr %i.a, align 4, !tbaa !66
-  %i.ap = add i32 %i.u, 3                         ; 3 uses
+  %i.ap = add i32 %i.t, 3                         ; 3 uses
   store i32 %i.ap, ptr %i.e, align 8, !tbaa !67
   br label %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split
 
 bb.e:                                             ; preds = %_ZNK4Luau5Lexer6peekchEv.exit2.i
-  %i.aq = add i32 %i.u, 2                         ; 4 uses
+  %i.aq = add i32 %i.t, 2                         ; 4 uses
   store i32 %i.aq, ptr %i.c, align 8, !tbaa !65
   %i.ar = zext i32 %i.aq to i64                   ; 2 uses
   %i.as = icmp ugt i64 %i.i, %i.ar
@@ -840,8 +836,8 @@ bb.e:                                             ; preds = %_ZNK4Luau5Lexer6pee
 
 _ZNK4Luau5Lexer6peekchEv.exit.i:                  ; preds = %bb.e, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i
   %i.at = phi i32 [ %i.ba, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ], [ %i.s, %bb.e ] ; 2 uses
-  %.promoted.i28 = phi i32 [ %.promoted.i29, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ], [ %2, %bb.e ] ; 2 uses
-  %i.au = phi i32 [ %i.bb, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ], [ %2, %bb.e ] ; 3 uses
+  %.promoted.i28 = phi i32 [ %.promoted.i29, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ], [ %i.u, %bb.e ] ; 2 uses
+  %i.au = phi i32 [ %i.bb, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ], [ %i.u, %bb.e ] ; 2 uses
   %i.av = phi i64 [ %i.bc, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ], [ %i.ar, %bb.e ]
   %storemerge5.i = phi i32 [ %.pre-phi9.i, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ], [ %i.aq, %bb.e ] ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.av
@@ -870,39 +866,37 @@ _ZN4Luau5Lexer10consumeAnyEv.exit3.i:             ; preds = %bb.f, %._ZN4Luau5Le
   %i.ba = phi i32 [ %i.at, %._ZN4Luau5Lexer10consumeAnyEv.exit3_crit_edge.i ], [ %i.az, %bb.f ] ; 2 uses
   %.promoted.i29 = phi i32 [ %.promoted.i28, %._ZN4Luau5Lexer10consumeAnyEv.exit3_crit_edge.i ], [ %i.ay, %bb.f ] ; 2 uses
   %.pre-phi9.i = phi i32 [ %.pre8.i, %._ZN4Luau5Lexer10consumeAnyEv.exit3_crit_edge.i ], [ %i.az, %bb.f ] ; 4 uses
-  %i.bb = phi i32 [ %i.au, %._ZN4Luau5Lexer10consumeAnyEv.exit3_crit_edge.i ], [ %i.ay, %bb.f ] ; 2 uses
+  %i.bb = phi i32 [ %i.au, %._ZN4Luau5Lexer10consumeAnyEv.exit3_crit_edge.i ], [ %i.ay, %bb.f ]
   store i32 %.pre-phi9.i, ptr %i.c, align 8, !tbaa !65
   %i.bc = zext i32 %.pre-phi9.i to i64            ; 2 uses
   %i.bd = icmp ugt i64 %i.i, %i.bc
   br i1 %i.bd, label %_ZNK4Luau5Lexer6peekchEv.exit.i, label %_ZN4Luau5Lexer21readBackslashInStringEv.exit, !llvm.loop !4
 
 ._ZN4Luau5Lexer10consumeAnyEv.exit_crit_edge.i:   ; preds = %_ZNK4Luau5Lexer6peekchEv.exit2.i
-  %.pre6.i = add i32 %i.u, 2
+  %.pre6.i = add i32 %i.t, 2
   br label %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split
 
 bb.g:                                             ; preds = %_ZNK4Luau5Lexer6peekchEv.exit2.i
-  %i.be = add i32 %i.t, 1                         ; 3 uses
+  %i.be = add i32 %i.u, 1                         ; 2 uses
   store i32 %i.be, ptr %i.a, align 4, !tbaa !66
-  %i.bf = add i32 %i.u, 2                         ; 3 uses
+  %i.bf = add i32 %i.t, 2                         ; 3 uses
   store i32 %i.bf, ptr %i.e, align 8, !tbaa !67
   br label %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split
 
 bb.h:                                             ; preds = %_ZNK4Luau5Lexer6peekchEv.exit
-  %i.bg = add i32 %i.u, 1
+  %i.bg = add i32 %i.t, 1
   br label %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split
 
 _ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split: ; preds = %_ZN4Luau5Lexer10consumeAnyEv.exit4.i, %._ZN4Luau5Lexer10consumeAnyEv.exit_crit_edge.i, %bb.g, %bb.h
   %.sink.i.sink = phi i32 [ %i.bg, %bb.h ], [ %i.ap, %_ZN4Luau5Lexer10consumeAnyEv.exit4.i ], [ %.pre6.i, %._ZN4Luau5Lexer10consumeAnyEv.exit_crit_edge.i ], [ %i.bf, %bb.g ] ; 2 uses
   %.ph = phi i32 [ %i.s, %bb.h ], [ %i.ap, %_ZN4Luau5Lexer10consumeAnyEv.exit4.i ], [ %i.s, %._ZN4Luau5Lexer10consumeAnyEv.exit_crit_edge.i ], [ %i.bf, %bb.g ]
-  %.promoted.i26.ph = phi i32 [ %2, %bb.h ], [ %i.ao, %_ZN4Luau5Lexer10consumeAnyEv.exit4.i ], [ %2, %._ZN4Luau5Lexer10consumeAnyEv.exit_crit_edge.i ], [ %i.be, %bb.g ]
-  %.ph50 = phi i32 [ %i.t, %bb.h ], [ %i.ao, %_ZN4Luau5Lexer10consumeAnyEv.exit4.i ], [ %i.t, %._ZN4Luau5Lexer10consumeAnyEv.exit_crit_edge.i ], [ %i.be, %bb.g ]
+  %.ph50 = phi i32 [ %i.u, %bb.h ], [ %i.ao, %_ZN4Luau5Lexer10consumeAnyEv.exit4.i ], [ %i.u, %._ZN4Luau5Lexer10consumeAnyEv.exit_crit_edge.i ], [ %i.be, %bb.g ]
   store i32 %.sink.i.sink, ptr %i.c, align 8, !tbaa !65
   br label %_ZN4Luau5Lexer21readBackslashInStringEv.exit
 
 _ZN4Luau5Lexer21readBackslashInStringEv.exit:     ; preds = %_ZN4Luau5Lexer10consumeAnyEv.exit3.i, %_ZNK4Luau5Lexer6peekchEv.exit.i, %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split, %bb.e, %_ZNK4Luau5Lexer6peekchEv.exit1.i, %bb.d, %_ZNK4Luau5Lexer6peekchEv.exit2.i, %bb.c
   %i.bh = phi i32 [ %i.s, %bb.c ], [ %.ph, %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split ], [ %i.s, %bb.e ], [ %i.s, %_ZNK4Luau5Lexer6peekchEv.exit1.i ], [ %i.s, %bb.d ], [ %i.s, %_ZNK4Luau5Lexer6peekchEv.exit2.i ], [ %i.at, %_ZNK4Luau5Lexer6peekchEv.exit.i ], [ %i.ba, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ] ; 2 uses
-  %.promoted.i26 = phi i32 [ %2, %bb.c ], [ %.promoted.i26.ph, %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split ], [ %2, %bb.e ], [ %2, %_ZNK4Luau5Lexer6peekchEv.exit1.i ], [ %2, %bb.d ], [ %2, %_ZNK4Luau5Lexer6peekchEv.exit2.i ], [ %.promoted.i28, %_ZNK4Luau5Lexer6peekchEv.exit.i ], [ %.promoted.i29, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ] ; 2 uses
-  %i.bi = phi i32 [ %i.t, %bb.c ], [ %.ph50, %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split ], [ %i.t, %bb.e ], [ %i.t, %_ZNK4Luau5Lexer6peekchEv.exit1.i ], [ %i.t, %bb.d ], [ %i.t, %_ZNK4Luau5Lexer6peekchEv.exit2.i ], [ %i.au, %_ZNK4Luau5Lexer6peekchEv.exit.i ], [ %i.bb, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ]
+  %i.bi = phi i32 [ %i.u, %bb.c ], [ %.ph50, %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split ], [ %i.u, %bb.e ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit1.i ], [ %i.u, %bb.d ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit2.i ], [ %.promoted.i28, %_ZNK4Luau5Lexer6peekchEv.exit.i ], [ %.promoted.i29, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ] ; 2 uses
   %i.bj = phi i32 [ %i.ad, %bb.c ], [ %.sink.i.sink, %_ZN4Luau5Lexer21readBackslashInStringEv.exit.sink.split ], [ %i.aq, %bb.e ], [ %i.ai, %_ZNK4Luau5Lexer6peekchEv.exit1.i ], [ %i.ai, %bb.d ], [ %i.ad, %_ZNK4Luau5Lexer6peekchEv.exit2.i ], [ %storemerge5.i, %_ZNK4Luau5Lexer6peekchEv.exit.i ], [ %.pre-phi9.i, %_ZN4Luau5Lexer10consumeAnyEv.exit3.i ] ; 3 uses
   %i.bk = zext i32 %i.bj to i64                   ; 2 uses
   %i.bl = icmp ugt i64 %i.i, %i.bk
@@ -911,8 +905,8 @@ _ZN4Luau5Lexer21readBackslashInStringEv.exit:     ; preds = %_ZN4Luau5Lexer10con
 .loopexit:                                        ; preds = %_ZNK4Luau5Lexer6peekchEv.exit3, %_ZNK4Luau5Lexer6peekchEv.exit3.thread..loopexit_crit_edge
   %i.bm = phi ptr [ %.pre, %_ZNK4Luau5Lexer6peekchEv.exit3.thread..loopexit_crit_edge ], [ %i.r, %_ZNK4Luau5Lexer6peekchEv.exit3 ]
   %i.bn = phi i32 [ %i.x, %_ZNK4Luau5Lexer6peekchEv.exit3.thread..loopexit_crit_edge ], [ %i.s, %_ZNK4Luau5Lexer6peekchEv.exit3 ]
-  %i.bo = phi i32 [ %i.y, %_ZNK4Luau5Lexer6peekchEv.exit3.thread..loopexit_crit_edge ], [ %2, %_ZNK4Luau5Lexer6peekchEv.exit3 ]
-  %i.bp = phi i32 [ %.lcssa, %_ZNK4Luau5Lexer6peekchEv.exit3.thread..loopexit_crit_edge ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit3 ] ; 2 uses
+  %i.bo = phi i32 [ %i.y, %_ZNK4Luau5Lexer6peekchEv.exit3.thread..loopexit_crit_edge ], [ %i.u, %_ZNK4Luau5Lexer6peekchEv.exit3 ]
+  %i.bp = phi i32 [ %.lcssa, %_ZNK4Luau5Lexer6peekchEv.exit3.thread..loopexit_crit_edge ], [ %i.t, %_ZNK4Luau5Lexer6peekchEv.exit3 ] ; 2 uses
   %i.bq = add i32 %i.bp, 1                        ; 2 uses
   store i32 %i.bq, ptr %i.c, align 8, !tbaa !65
   %i.br = sub i32 %i.bq, %i.bn
@@ -1315,11 +1309,12 @@ _ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfac
 
 bb.d:                                             ; preds = %.lr.ph, %bb.h
   %.025 = phi i64 [ 0, %.lr.ph ], [ %i.bw, %bb.h ] ; 2 uses
-  %i.w = getelementptr inbounds nuw [16 x i8], ptr %.pre29, i64 %.025 ; 6 uses
+  %i.w = getelementptr inbounds nuw [16 x i8], ptr %.pre29, i64 %.025 ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.y = load i32, ptr %i.x, align 8, !tbaa !35   ; 5 uses
   %i.z = load i32, ptr %.sroa.18.24..sroa_idx, align 8, !tbaa !35
   %i.aa = icmp eq i32 %i.y, %i.z
+  %.pre.i.pre = load ptr, ptr %i.w, align 8       ; 7 uses
   br i1 %i.aa, label %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit, label %._ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread_crit_edge
 
 ._ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread_crit_edge: ; preds = %bb.d
@@ -1327,10 +1322,9 @@ bb.d:                                             ; preds = %.lr.ph, %bb.h
   br label %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread
 
 _ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit: ; preds = %bb.d
-  %1 = load ptr, ptr %i.w, align 8, !tbaa !36
   %i.ab = load ptr, ptr %i.e, align 8, !tbaa !36
   %i.ac = zext i32 %i.y to i64                    ; 2 uses
-  %bcmp.i.i = tail call i32 @bcmp(ptr %1, ptr %i.ab, i64 %i.ac)
+  %bcmp.i.i = tail call i32 @bcmp(ptr %.pre.i.pre, ptr %i.ab, i64 %i.ac)
   %i.ad = icmp eq i32 %bcmp.i.i, 0
   br i1 %i.ad, label %bb.h, label %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread
 
@@ -1339,12 +1333,7 @@ _ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread: ; preds = %
   %.not.i.i = icmp eq i32 %i.y, 0
   br i1 %.not.i.i, label %_ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i.preheader, label %.lr.ph.i.i12.a
 
-_ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i.preheader: ; preds = %._crit_edge.loopexit.i.i, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread
-  %.07.lcssa.i.pn.i.ph = phi i64 [ %i.am, %._crit_edge.loopexit.i.i ], [ 2166136261, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread ]
-  br label %_ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i
-
 .lr.ph.i.i12.a:                                   ; preds = %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread
-  %2 = load ptr, ptr %i.w, align 8, !tbaa !36     ; 5 uses
   %i.ae = add nsw i64 %.pre-phi, -1
   %xtraiter42 = and i64 %.pre-phi, 3              ; 3 uses
   %i.af = icmp ult i64 %i.ae, 3
@@ -1353,6 +1342,10 @@ _ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i.preheader: ; preds = %.
 .lr.ph.i.i12.new:                                 ; preds = %.lr.ph.i.i12.a
   %unroll_iter47 = and i64 %.pre-phi, 4294967292
   br label %bb.f
+
+_ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i.preheader: ; preds = %._crit_edge.loopexit.i.i, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread
+  %.07.lcssa.i.pn.i.ph = phi i64 [ %i.am, %._crit_edge.loopexit.i.i ], [ 2166136261, %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread ]
+  br label %_ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i
 
 ._crit_edge.loopexit.i.i.unr-lcssa:               ; preds = %bb.f
   %lcmp.mod44.not = icmp eq i64 %xtraiter42, 0
@@ -1366,10 +1359,10 @@ _ZNK4Luau12AstNameTable9EntryHashclERKNS0_5EntryE.exit.i.preheader: ; preds = %.
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.epil.preheader
-  %.09.i.i.epil = phi i64 [ %.09.i.i.epil.init, %.epil.preheader ], [ %i.al, %bb.e ] ; 2 uses
-  %.078.i.i.epil = phi i32 [ %.078.i.i.epil.init, %.epil.preheader ], [ %i.ak, %bb.e ]
-  %epil.iter43 = phi i64 [ 0, %.epil.preheader ], [ %epil.iter43.next, %bb.e ]
-  %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i.epil
+  %.09.i.i.epil = phi i64 [ %i.al, %bb.e ], [ %.09.i.i.epil.init, %.epil.preheader ] ; 2 uses
+  %.078.i.i.epil = phi i32 [ %i.ak, %bb.e ], [ %.078.i.i.epil.init, %.epil.preheader ]
+  %epil.iter43 = phi i64 [ %epil.iter43.next, %bb.e ], [ 0, %.epil.preheader ]
+  %i.ag = getelementptr inbounds nuw i8, ptr %.pre.i.pre, i64 %.09.i.i.epil
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !22
   %i.ai = zext i8 %i.ah to i32
   %i.aj = xor i32 %.078.i.i.epil, %i.ai
@@ -1388,24 +1381,24 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.i12
   %.09.i.i = phi i64 [ 0, %.lr.ph.i.i12.new ], [ %i.bk, %bb.f ] ; 5 uses
   %.078.i.i = phi i32 [ -2128831035, %.lr.ph.i.i12.new ], [ %i.bj, %bb.f ]
   %niter48 = phi i64 [ 0, %.lr.ph.i.i12.new ], [ %niter48.next.3, %bb.f ]
-  %i.an = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i
+  %i.an = getelementptr inbounds nuw i8, ptr %.pre.i.pre, i64 %.09.i.i
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !22
   %i.ap = zext i8 %i.ao to i32
   %i.aq = xor i32 %.078.i.i, %i.ap
   %i.ar = mul i32 %i.aq, 16777619
-  %i.as = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i
+  %i.as = getelementptr inbounds nuw i8, ptr %.pre.i.pre, i64 %.09.i.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 1
   %i.au = load i8, ptr %i.at, align 1, !tbaa !22
   %i.av = zext i8 %i.au to i32
   %i.aw = xor i32 %i.ar, %i.av
   %i.ax = mul i32 %i.aw, 16777619
-  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i
+  %i.ay = getelementptr inbounds nuw i8, ptr %.pre.i.pre, i64 %.09.i.i
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 2
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !22
   %i.bb = zext i8 %i.ba to i32
   %i.bc = xor i32 %i.ax, %i.bb
   %i.bd = mul i32 %i.bc, 16777619
-  %i.be = getelementptr inbounds nuw i8, ptr %2, i64 %.09.i.i
+  %i.be = getelementptr inbounds nuw i8, ptr %.pre.i.pre, i64 %.09.i.i
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 3
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !22
   %i.bh = zext i8 %i.bg to i32
@@ -1442,8 +1435,7 @@ _ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread.i: ; preds =
 
 _ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit27.i: ; preds = %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit.thread.i
   %i.bs = load ptr, ptr %i.bl, align 8, !tbaa !36
-  %3 = load ptr, ptr %i.w, align 8, !tbaa !36
-  %bcmp.i.i26.i = tail call i32 @bcmp(ptr %i.bs, ptr %3, i64 %.pre-phi)
+  %bcmp.i.i26.i = tail call i32 @bcmp(ptr %i.bs, ptr %.pre.i.pre, i64 %.pre-phi)
   %i.bt = icmp eq i32 %bcmp.i.i26.i, 0
   br i1 %i.bt, label %_ZN4Luau6detail14DenseHashTableINS_12AstNameTable5EntryES3_S3_NS0_16ItemInterfaceSetIS3_EENS2_9EntryHashESt8equal_toIS3_EE13insert_unsafeERKS3_.exit, label %_ZNKSt8equal_toIN4Luau12AstNameTable5EntryEEclERKS2_S5_.exit27.thread.i
 

@@ -186,51 +186,44 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !159
   %i.d = zext nneg i32 %i.a to i64                ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.d
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !160   ; 4 uses
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !160   ; 2 uses
   %.not.i = icmp eq i8 %i.f, 0
   br i1 %.not.i, label %_ZN7CaDiCaL8Internal5fixedEi.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sext i8 %i.f to i32
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 712
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !162
   %i.i = getelementptr inbounds nuw [16 x i8], ptr %i.h, i64 %i.d
   %i.j = load i32, ptr %i.i, align 8, !tbaa !164
   %.not9.i = icmp eq i32 %i.j, 0
-  %spec.select.i = select i1 %.not9.i, i32 %2, i32 0
   br label %_ZN7CaDiCaL8Internal5fixedEi.exit
 
 _ZN7CaDiCaL8Internal5fixedEi.exit:                ; preds = %bb.a, %bb.b
-  %.0.i = phi i32 [ 0, %bb.a ], [ %spec.select.i, %bb.b ] ; 2 uses
-  %i.k = icmp slt i32 %1, 0                       ; 2 uses
-  %3 = sub nsw i32 0, %.0.i
-  %spec.select10.i = select i1 %i.k, i32 %3, i32 %.0.i
-  %.not = icmp eq i32 %spec.select10.i, 0
-  br i1 %.not, label %4, label %bb.d
+  %.0.i = phi i1 [ false, %bb.a ], [ %.not9.i, %bb.b ]
+  %i.k = icmp slt i32 %1, 0
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 324
+  %3 = load i32, ptr %2, align 4
+  %.not = icmp eq i32 %3, 0
+  %or.cond = select i1 %.0.i, i1 true, i1 %.not
+  br i1 %or.cond, label %bb.d, label %bb.c
 
-4:                                                ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 324
-  %6 = load i32, ptr %5, align 4, !tbaa !161
-  %.not7 = icmp eq i32 %6, 0
-  br i1 %.not7, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %4
+bb.c:                                             ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
   tail call void @_ZN7CaDiCaL8Internal9backtrackEi(ptr noundef nonnull align 8 dereferenceable(7288) %0, i32 noundef 0)
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !159
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.d
   %.pre16 = load i8, ptr %.phi.trans.insert, align 1, !tbaa !160
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %4, %_ZN7CaDiCaL8Internal5fixedEi.exit
-  %7 = phi i8 [ %.pre16, %bb.c ], [ %i.f, %4 ], [ %i.f, %_ZN7CaDiCaL8Internal5fixedEi.exit ] ; 2 uses
+bb.d:                                             ; preds = %bb.c, %_ZN7CaDiCaL8Internal5fixedEi.exit
+  %4 = phi i8 [ %.pre16, %bb.c ], [ %i.f, %_ZN7CaDiCaL8Internal5fixedEi.exit ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 552
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !13
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.d ; 2 uses
-  %.not.i10 = icmp eq i8 %7, 0
+  %.not.i10 = icmp eq i8 %4, 0
   br i1 %.not.i10, label %_ZN7CaDiCaL8Internal5fixedEi.exit15, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = sext i8 %7 to i32
+  %i.o = sext i8 %4 to i32
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 712
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !162
   %i.r = getelementptr inbounds nuw [16 x i8], ptr %i.q, i64 %i.d

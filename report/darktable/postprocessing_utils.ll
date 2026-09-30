@@ -205,7 +205,7 @@ bb.a:
   %i.f = load i16, ptr %i.e, align 2, !tbaa !103
   %i.g = zext i16 %i.f to i32
   %i.h = mul nuw i32 %i.g, %i.d                   ; 6 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 136672 ; 7 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 136672 ; 6 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 136688
   %i.k = load i32, ptr %i.j, align 8, !tbaa !80   ; 5 uses
   %.not = icmp eq i32 %i.k, 0
@@ -376,13 +376,27 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.b, %bb.a
   %i.du = load <4 x i32>, ptr %i.i, align 8
-  %2 = load i32, ptr %i.i, align 8, !tbaa !80
-  %.fr = freeze <4 x i32> %i.du
+  %.fr = freeze <4 x i32> %i.du                   ; 5 uses
   %i.dv = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.dw = bitcast <4 x i1> %i.dv to i4
   %i.dx = icmp eq i4 %i.dw, 0
   %.not86 = icmp eq i32 %i.h, 0                   ; 2 uses
-  br i1 %i.dx, label %.preheader72, label %3
+  br i1 %i.dx, label %.preheader72, label %.preheader79
+
+.preheader79:                                     ; preds = %bb.k
+  br i1 %.not86, label %.loopexit, label %.preheader78.lr.ph
+
+.preheader78.lr.ph:                               ; preds = %.preheader79
+  %2 = load ptr, ptr %i.a, align 8, !tbaa !79
+  %wide.trip.count104 = zext i32 %i.h to i64
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %6 = extractelement <4 x i32> %.fr, i64 0
+  %7 = extractelement <4 x i32> %.fr, i64 1
+  %8 = extractelement <4 x i32> %.fr, i64 2
+  %9 = extractelement <4 x i32> %.fr, i64 3
+  br label %.preheader73
 
 .preheader72:                                     ; preds = %bb.k
   br i1 %.not86, label %.loopexit, label %.preheader.lr.ph
@@ -442,33 +456,16 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv104.ph = phi i64 [ 0, %.preheader.lr.ph ], [ %n.vec, %middle.block ]
   br label %.preheader
 
-3:                                                ; preds = %bb.k
-  br i1 %.not86, label %.loopexit, label %.preheader73.lr.ph
-
-.preheader73.lr.ph:                               ; preds = %3
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !79
-  %wide.trip.count98 = zext i32 %i.h to i64
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 136676
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 136680
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 136684
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %11 = load i32, ptr %5, align 4
-  %12 = load i32, ptr %7, align 8
-  %13 = load i32, ptr %9, align 4
-  br label %.preheader73
-
-.preheader73:                                     ; preds = %.preheader73.lr.ph, %bb.s
-  %indvars.iv95 = phi i64 [ 0, %.preheader73.lr.ph ], [ %indvars.iv.next96, %bb.s ] ; 2 uses
-  %i.eu = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv95 ; 5 uses
+.preheader73:                                     ; preds = %.preheader78.lr.ph, %bb.s
+  %indvars.iv95 = phi i64 [ 0, %.preheader78.lr.ph ], [ %indvars.iv.next96, %bb.s ] ; 2 uses
+  %i.eu = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv95 ; 5 uses
   %i.ev = load i16, ptr %i.eu, align 2, !tbaa !12 ; 2 uses
   %.not68 = icmp eq i16 %i.ev, 0
   br i1 %.not68, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %.preheader73
   %i.ew = zext i16 %i.ev to i32
-  %i.ex = sub i32 %i.ew, %2
+  %i.ex = sub i32 %i.ew, %6
   %i.ey = sitofp reassoc nsz arcp contract afn i32 %i.ex to float
   %i.ez = load float, ptr %1, align 4, !tbaa !81
   %i.fa = fmul reassoc nsz arcp contract afn float %i.ez, %i.ey
@@ -487,9 +484,9 @@ bb.m:                                             ; preds = %.preheader73, %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.fh = zext i16 %i.fg to i32
-  %i.fi = sub i32 %i.fh, %11
+  %i.fi = sub i32 %i.fh, %7
   %i.fj = sitofp reassoc nsz arcp contract afn i32 %i.fi to float
-  %i.fk = load float, ptr %6, align 4, !tbaa !81
+  %i.fk = load float, ptr %3, align 4, !tbaa !81
   %i.fl = fmul reassoc nsz arcp contract afn float %i.fk, %i.fj
   %i.fm = fptosi float %i.fl to i32
   %i.fn = tail call i32 @llvm.smax.i32(i32 %i.fm, i32 0)
@@ -506,9 +503,9 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 bb.p:                                             ; preds = %bb.o
   %i.fs = zext i16 %i.fr to i32
-  %i.ft = sub i32 %i.fs, %12
+  %i.ft = sub i32 %i.fs, %8
   %i.fu = sitofp reassoc nsz arcp contract afn i32 %i.ft to float
-  %i.fv = load float, ptr %8, align 4, !tbaa !81
+  %i.fv = load float, ptr %4, align 4, !tbaa !81
   %i.fw = fmul reassoc nsz arcp contract afn float %i.fv, %i.fu
   %i.fx = fptosi float %i.fw to i32
   %i.fy = tail call i32 @llvm.smax.i32(i32 %i.fx, i32 0)
@@ -525,9 +522,9 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.q
   %i.gd = zext i16 %i.gc to i32
-  %i.ge = sub i32 %i.gd, %13
+  %i.ge = sub i32 %i.gd, %9
   %i.gf = sitofp reassoc nsz arcp contract afn i32 %i.ge to float
-  %i.gg = load float, ptr %10, align 4, !tbaa !81
+  %i.gg = load float, ptr %5, align 4, !tbaa !81
   %i.gh = fmul reassoc nsz arcp contract afn float %i.gg, %i.gf
   %i.gi = fptosi float %i.gh to i32
   %i.gj = tail call i32 @llvm.smax.i32(i32 %i.gi, i32 0)
@@ -538,7 +535,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %indvars.iv.next96 = add nuw nsw i64 %indvars.iv95, 1 ; 2 uses
-  %exitcond99.not = icmp eq i64 %indvars.iv.next96, %wide.trip.count98
+  %exitcond99.not = icmp eq i64 %indvars.iv.next96, %wide.trip.count104
   br i1 %exitcond99.not, label %.loopexit, label %.preheader73, !llvm.loop !100
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
@@ -556,7 +553,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %exitcond108.not = icmp eq i64 %indvars.iv.next105, %wide.trip.count107
   br i1 %exitcond108.not, label %.loopexit, label %.preheader, !llvm.loop !101
 
-.loopexit:                                        ; preds = %bb.j, %bb.s, %.preheader, %middle.block, %.preheader76, %3, %.preheader72
+.loopexit:                                        ; preds = %bb.j, %bb.s, %.preheader, %middle.block, %.preheader76, %.preheader79, %.preheader72
   ret void
 }
 

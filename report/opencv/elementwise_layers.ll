@@ -204,19 +204,17 @@ bb.af:                                            ; preds = %bb.z
 bb.ag:                                            ; preds = %bb.af
   %i.cc = and i32 %i.bi, 31                       ; 2 uses
   switch i32 %i.cc, label %bb.am [
-    i32 11, label %23
-    i32 4, label %23
+    i32 11, label %bb.ah
+    i32 4, label %bb.ah
   ]
 
-23:                                               ; preds = %bb.ag, %bb.ag
-  %24 = load float, ptr %i.g, align 8, !tbaa !547
-  %25 = fcmp une float %24, 1.000000e+00
-  br i1 %25, label %bb.am, label %bb.ah
-
-bb.ah:                                            ; preds = %23
-  %i.cd = load float, ptr %i.h, align 8, !tbaa !546
+bb.ah:                                            ; preds = %bb.ag, %bb.ag
+  %23 = load float, ptr %i.g, align 8, !tbaa !547
+  %24 = fcmp une float %23, 1.000000e+00
+  %i.cd = load float, ptr %i.h, align 8
   %i.ce = fcmp une float %i.cd, 0.000000e+00
-  br i1 %i.ce, label %bb.am, label %bb.ai
+  %or.cond.i = select i1 %24, i1 true, i1 %i.ce
+  br i1 %or.cond.i, label %bb.am, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.cf = load float, ptr %i.i, align 4, !tbaa !548 ; 2 uses
@@ -422,7 +420,7 @@ middle.block164:                                  ; preds = %vector.body159
   %exitcond.not.i.3 = icmp eq i64 %i.fk, %i.ck
   br i1 %exitcond.not.i.3, label %_ZN2cv3dnn22ElementWiseIntDispatchINS0_12PowerFunctorEE5applyERKS2_RKNS_3MatERS6_.exit, label %.lr.ph.i, !llvm.loop !1292
 
-bb.am:                                            ; preds = %bb.af, %bb.ah, %bb.ag, %23, %bb.ai
+bb.am:                                            ; preds = %bb.af, %bb.ag, %bb.ah, %bb.ai
   %i.fl = and i32 %i.bi, 4095
   switch i32 %i.fl, label %.thread [
     i32 5, label %bb.an
@@ -613,7 +611,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #21
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit100
 
-_ZN2cv3dnn22ElementWiseIntDispatchINS0_12PowerFunctorEE5applyERKS2_RKNS_3MatERS6_.exit: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %scalar.ph.prol.loopexit, %scalar.ph, %middle.block164, %middle.block, %bb.ak, %bb.al, %bb.k, %bb.ay, %_ZNSt6vectorIfSaIfEED2Ev.exit
+_ZN2cv3dnn22ElementWiseIntDispatchINS0_12PowerFunctorEE5applyERKS2_RKNS_3MatERS6_.exit: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %scalar.ph.prol.loopexit, %scalar.ph, %middle.block164, %middle.block, %bb.al, %bb.ak, %bb.k, %bb.ay, %_ZNSt6vectorIfSaIfEED2Ev.exit
   %i.gi = add nuw i64 %.0127, 1                   ; 2 uses
   %i.gj = load ptr, ptr %i.d, align 8, !tbaa !245
   %i.gk = load ptr, ptr %5, align 8, !tbaa !246   ; 2 uses

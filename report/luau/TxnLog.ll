@@ -204,8 +204,14 @@ _ZN4Luau12DenseHashMapIPKNS_4TypeESt10unique_ptrINS_11PendingTypeESt14default_de
 .lr.ph:                                           ; preds = %_ZN4Luau12DenseHashMapIPKNS_4TypeESt10unique_ptrINS_11PendingTypeESt14default_deleteIS5_EENS_16DenseHashPointerESt8equal_toIS3_EE5beginEv.exit
   %i.j = load ptr, ptr %1, align 8, !tbaa !111    ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %6 = load i64, ptr %i.k, align 8
+  %7 = icmp eq i64 %6, 0
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %8 = load ptr, ptr %i.l, align 8                ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %9 = load i64, ptr %i.m, align 8
+  %10 = add i64 %9, -1                            ; 2 uses
+  %11 = load ptr, ptr %0, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
   br label %bb.f
 
@@ -286,46 +292,36 @@ bb.i:                                             ; preds = %_ZN4Luau3getINS_9Un
 
 bb.j:                                             ; preds = %bb.i
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !129
-  %i.ax = icmp eq i32 %i.aw, 2
-  br i1 %i.ax, label %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit85, label %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit.thread
+  %12 = icmp ne i32 %i.aw, 2
+  %brmerge = select i1 %12, i1 true, i1 %7
+  %i.ax = icmp eq ptr %i.av, %8
+  %or.cond = select i1 %brmerge, i1 true, i1 %i.ax
+  br i1 %or.cond, label %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit.thread, label %bb.k
 
-_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit85: ; preds = %bb.j
-  %6 = load i64, ptr %i.k, align 8, !tbaa !139
-  %7 = icmp eq i64 %6, 0
-  br i1 %7, label %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit.thread, label %8
-
-8:                                                ; preds = %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit85
-  %9 = load ptr, ptr %i.l, align 8, !tbaa !112    ; 2 uses
-  %10 = icmp eq ptr %i.av, %9
-  br i1 %10, label %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit.thread, label %bb.k
-
-bb.k:                                             ; preds = %8
-  %11 = load i64, ptr %i.m, align 8, !tbaa !110
-  %12 = add i64 %11, -1                           ; 2 uses
+bb.k:                                             ; preds = %bb.j
   %i.ay = ptrtoint ptr %i.av to i64
   %i.az = mul i64 %i.ay, -4658895280553007687     ; 2 uses
   %i.ba = lshr i64 %i.az, 31
   %i.bb = xor i64 %i.ba, %i.az
-  %13 = load ptr, ptr %0, align 8, !tbaa !111
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.n, %bb.k
   %.pn.i.i = phi i64 [ %i.bb, %bb.k ], [ %i.bh, %bb.n ]
   %.01828.i.i = phi i64 [ 0, %bb.k ], [ %i.bg, %bb.n ]
-  %.01929.i.i = and i64 %.pn.i.i, %12             ; 2 uses
-  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %13, i64 %.01929.i.i ; 2 uses
+  %.01929.i.i = and i64 %.pn.i.i, %10             ; 2 uses
+  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %11, i64 %.01929.i.i ; 2 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !112 ; 2 uses
   %i.be = icmp eq ptr %i.bd, %i.av
   br i1 %i.be, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bf = icmp eq ptr %i.bd, %9
+  %i.bf = icmp eq ptr %i.bd, %8
   br i1 %i.bf, label %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bg = add i64 %.01828.i.i, 1                  ; 3 uses
   %i.bh = add i64 %i.bg, %.01929.i.i
-  %.not.i.i86 = icmp ugt i64 %i.bg, %12
+  %.not.i.i86 = icmp ugt i64 %i.bg, %10
   br i1 %.not.i.i86, label %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit.thread, label %bb.l, !llvm.loop !7
 
 bb.o:                                             ; preds = %bb.l
@@ -375,7 +371,7 @@ _ZNK4Luau9TypeLevel8subsumesERKS0_.exit.thread168: ; preds = %bb.r, %_ZNK4Luau9T
   store i8 1, ptr %i.an, align 8, !tbaa !125
   br label %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit.thread
 
-_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit.thread: ; preds = %bb.m, %bb.n, %_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit85, %8, %bb.i, %bb.j, %bb.g, %bb.h, %_ZN4Luau3getINS_9Unifiable5BoundIPKNS_4TypeEEEEEPKT_S5_.exit89, %_ZNK4Luau9TypeLevel8subsumesERKS0_.exit.thread, %_ZNK4Luau9TypeLevel8subsumesERKS0_.exit.thread168, %bb.p, %bb.o, %_ZN4Luau3getINS_9Unifiable5BoundIPKNS_4TypeEEEEEPKT_S5_.exit, %bb.f
+_ZN4Luau6get_ifINS_8FreeTypeEJNS_9Unifiable5BoundIPKNS_4TypeEEENS2_5ErrorIS6_EES1_NS_11GenericTypeENS_13PrimitiveTypeENS_13SingletonTypeENS_11BlockedTypeENS_20PendingExpansionTypeENS_12FunctionTypeENS_9TableTypeENS_13MetatableTypeENS_10ExternTypeENS_7AnyTypeENS_9UnionTypeENS_16IntersectionTypeENS_8LazyTypeENS_11UnknownTypeENS_9NeverTypeENS_12NegationTypeENS_12NoRefineTypeENS_24TypeFunctionInstanceTypeEEEEPKT_PKNS_7VariantIJDpT0_EEE.exit.thread: ; preds = %bb.m, %bb.n, %bb.j, %bb.i, %bb.g, %bb.h, %_ZN4Luau3getINS_9Unifiable5BoundIPKNS_4TypeEEEEEPKT_S5_.exit89, %_ZNK4Luau9TypeLevel8subsumesERKS0_.exit.thread, %_ZNK4Luau9TypeLevel8subsumesERKS0_.exit.thread168, %bb.p, %bb.o, %_ZN4Luau3getINS_9Unifiable5BoundIPKNS_4TypeEEEEEPKT_S5_.exit, %bb.f
   %i.cc = add i64 %.sroa.6157.0183, 1
   %umax.i = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %i.cc) ; 3 uses
   %i.cd = add i64 %umax.i, -1                     ; 2 uses

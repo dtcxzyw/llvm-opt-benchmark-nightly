@@ -204,22 +204,20 @@ _ZNK3gmx13PropagatorTageqERKS0_.exit.thread:      ; preds = %bb.b, %_ZNK3gmx13Pr
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !72
   %.not.i.i.i = icmp ne ptr %i.m, null
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 208 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8
+  %5 = load ptr, ptr %i.n, align 8
+  %.not.i.i1.i = icmp ne ptr %5, null
+  %or.cond.i = select i1 %.not.i.i.i, i1 %.not.i.i1.i, i1 false
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
+  %i.o = load ptr, ptr %6, align 8
   %.not.i.i1.i.a = icmp ne ptr %i.o, null
-  %or.cond.i.a = select i1 %.not.i.i.i, i1 %.not.i.i1.i.a, i1 false
-  br i1 %or.cond.i.a, label %_ZNK3gmx20PropagatorConnection23hasStartVelocityScalingEv.exit, label %_ZNK3gmx20PropagatorConnection23hasStartVelocityScalingEv.exit.thread
+  %or.cond.i.a = select i1 %or.cond.i, i1 %.not.i.i1.i.a, i1 false
+  br i1 %or.cond.i.a, label %_ZNKSt8functionIFviN3gmx15ScaleVelocitiesEEEclEiS1_.exit, label %_ZNK3gmx20PropagatorConnection23hasStartVelocityScalingEv.exit.thread
 
-_ZNK3gmx20PropagatorConnection23hasStartVelocityScalingEv.exit: ; preds = %_ZNK3gmx13PropagatorTageqERKS0_.exit.thread
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
-  %6 = load ptr, ptr %5, align 8, !tbaa !72
-  %.not.i.i2.i.not = icmp eq ptr %6, null
-  br i1 %.not.i.i2.i.not, label %_ZNK3gmx20PropagatorConnection23hasStartVelocityScalingEv.exit.thread, label %_ZNKSt8functionIFviN3gmx15ScaleVelocitiesEEEclEiS1_.exit
-
-_ZNK3gmx20PropagatorConnection23hasStartVelocityScalingEv.exit.thread: ; preds = %_ZNK3gmx13PropagatorTageqERKS0_.exit.thread, %_ZNK3gmx20PropagatorConnection23hasStartVelocityScalingEv.exit
+_ZNK3gmx20PropagatorConnection23hasStartVelocityScalingEv.exit.thread: ; preds = %_ZNK3gmx13PropagatorTageqERKS0_.exit.thread
   tail call void @_ZN3gmx8internal13assertHandlerEPKcS2_S2_S2_i(ptr noundef nonnull @.str.48, ptr noundef nonnull @.str.49, ptr noundef nonnull @"__PRETTY_FUNCTION__._ZZN3gmx23NoseHooverChainsElement21connectWithPropagatorERKNS_20PropagatorConnectionERKNS_13PropagatorTagEENK3$_0clEv", ptr noundef nonnull @.str.7, i32 noundef 703) #30
   unreachable
 
-_ZNKSt8functionIFviN3gmx15ScaleVelocitiesEEEclEiS1_.exit: ; preds = %_ZNK3gmx20PropagatorConnection23hasStartVelocityScalingEv.exit
+_ZNKSt8functionIFviN3gmx15ScaleVelocitiesEEEclEiS1_.exit: ; preds = %_ZNK3gmx13PropagatorTageqERKS0_.exit.thread
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !304
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 64
@@ -234,7 +232,7 @@ _ZNKSt8functionIFviN3gmx15ScaleVelocitiesEEEclEiS1_.exit: ; preds = %_ZNK3gmx20P
   call void %i.v(ptr noundef nonnull align 8 dereferenceable(32) %i.t, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b), !inline_history !564
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.w = load ptr, ptr %5, align 8, !tbaa !72
+  %i.w = load ptr, ptr %6, align 8, !tbaa !72
   %.not.i.i7 = icmp eq ptr %i.w, null
   br i1 %.not.i.i7, label %bb.c, label %_ZNKSt8functionIFN3gmx8ArrayRefIfEEvEEclEv.exit
 

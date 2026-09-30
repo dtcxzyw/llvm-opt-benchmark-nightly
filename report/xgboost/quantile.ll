@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 5688
 inline.NumDeleted: 1647
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 27
-loop-unroll.NumUnrolled: 30
+loop-unroll.NumRuntimeUnrolled: 28
+loop-unroll.NumUnrolled: 31
 begin_hunk_0_@_ZN7xgboost6common19HostSketchContainerC2EPKNS_7ContextEiNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEESt6vectorImSaImEEb:bb.a
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit68.i: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit.i
@@ -205,8 +205,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEmiES7_.exit.i: ; preds = %bb.a
-  %i.b = sub i64 %4, %2                           ; 5 uses
-  %i.c = icmp slt i64 %i.b, 0
+  %i.b = sub i64 %4, %2
+  %6 = freeze i64 %i.b                            ; 8 uses
+  %i.c = icmp slt i64 %6, 0
   br i1 %i.c, label %bb.c, label %_ZNSt6vectorIN7xgboost11FeatureTypeESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
 
 bb.c:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEmiES7_.exit.i
@@ -217,47 +218,80 @@ bb.c:                                             ; preds = %_ZNK7xgboost6common
   unreachable
 
 _ZNSt6vectorIN7xgboost11FeatureTypeESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEmiES7_.exit.i
-  %.not.i.i = icmp eq i64 %i.b, 0
+  %.not.i.i = icmp eq i64 %6, 0
   br i1 %.not.i.i, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %_ZNSt6vectorIN7xgboost11FeatureTypeESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
-  %i.d = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.b) #30
-          to label %.noexc7 unwind label %bb.f    ; 3 uses
+  %i.d = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %6) #30
+          to label %.noexc7 unwind label %bb.f    ; 5 uses
 
 .noexc7:                                          ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i
   store ptr %i.d, ptr %0, align 8, !tbaa !186
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.b
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 %6
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.e, ptr %i.f, align 8, !tbaa !187
-  %i.g = load i64, ptr %1, align 8, !tbaa !383
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %umax.i.i.i.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.g, i64 %2)
-  br label %bb.d
+  %i.g = load i64, ptr %1, align 8, !tbaa !383    ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %umax.i.i.i.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.g, i64 %2) ; 2 uses
+  %xtraiter = and i64 %6, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
 
-bb.d:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a, %.noexc7
-  %.011.i.i.i.i.i.i.i.i.i = phi ptr [ %i.d, %.noexc7 ], [ %i.l, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a ] ; 2 uses
-  %.0410.i.i.i.i.i.i.i.i.i = phi i64 [ %i.b, %.noexc7 ], [ %i.m, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a ] ; 2 uses
-  %.sroa.3.09.i.i.i.i.i.i.i.i.i = phi i64 [ %2, %.noexc7 ], [ %i.k, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a ] ; 3 uses
+.prol.preheader:                                  ; preds = %.noexc7
+  %exitcond.not.i.i.i.i.i.i.i.i.i.prol.not = icmp ult i64 %2, %i.g
+  br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.prol.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.prol, label %bb.e, !prof !75
+
+_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.prol: ; preds = %.prol.preheader
+  %7 = load ptr, ptr %i.h, align 8, !tbaa !384
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %2
+  %9 = load i8, ptr %8, align 1, !tbaa !183
+  store i8 %9, ptr %i.d, align 1, !tbaa !183
+  %10 = add i64 %2, 1
+  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 1 ; 2 uses
+  %12 = add nsw i64 %6, -1
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.prol, %.noexc7
+  %.011.i.i.i.i.i.i.i.i.i.unr = phi ptr [ %i.d, %.noexc7 ], [ %11, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.prol ]
+  %.0410.i.i.i.i.i.i.i.i.i.unr = phi i64 [ %6, %.noexc7 ], [ %12, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.prol ]
+  %.sroa.3.09.i.i.i.i.i.i.i.i.i.unr = phi i64 [ %2, %.noexc7 ], [ %10, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.prol ]
+  %.lcssa.unr = phi ptr [ poison, %.noexc7 ], [ %11, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.prol ]
+  %13 = icmp eq i64 %6, 1
+  br i1 %13, label %.loopexit, label %bb.d
+
+bb.d:                                             ; preds = %.prol.loopexit, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a
+  %.011.i.i.i.i.i.i.i.i.i = phi ptr [ %i.l, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a ], [ %.011.i.i.i.i.i.i.i.i.i.unr, %.prol.loopexit ] ; 3 uses
+  %.0410.i.i.i.i.i.i.i.i.i = phi i64 [ %i.m, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a ], [ %.0410.i.i.i.i.i.i.i.i.i.unr, %.prol.loopexit ] ; 2 uses
+  %.sroa.3.09.i.i.i.i.i.i.i.i.i = phi i64 [ %i.k, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a ], [ %.sroa.3.09.i.i.i.i.i.i.i.i.i.unr, %.prol.loopexit ] ; 4 uses
   %exitcond.not.i.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.3.09.i.i.i.i.i.i.i.i.i, %umax.i.i.i.i.i.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i.i.i.i.i.i, label %bb.e, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a, !prof !73
+  br i1 %exitcond.not.i.i.i.i.i.i.i.i.i, label %bb.e, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i, !prof !73
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.d, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i, %.prol.preheader
   tail call void @_ZSt9terminatev() #32
   unreachable
 
-_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a: ; preds = %bb.d
-  %6 = load ptr, ptr %i.h, align 8, !tbaa !384
-  %i.i = getelementptr inbounds nuw i8, ptr %6, i64 %.sroa.3.09.i.i.i.i.i.i.i.i.i
+_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i: ; preds = %bb.d
+  %14 = load ptr, ptr %i.h, align 8, !tbaa !384   ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 %.sroa.3.09.i.i.i.i.i.i.i.i.i
+  %16 = load i8, ptr %15, align 1, !tbaa !183
+  store i8 %16, ptr %.011.i.i.i.i.i.i.i.i.i, align 1, !tbaa !183
+  %17 = add i64 %.sroa.3.09.i.i.i.i.i.i.i.i.i, 1  ; 2 uses
+  %exitcond.not.i.i.i.i.i.i.i.i.i.1 = icmp eq i64 %17, %umax.i.i.i.i.i.i.i.i.i
+  br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.1, label %bb.e, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a, !prof !73
+
+_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i
+  %18 = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i.i.i.i.i, i64 1
+  %i.i = getelementptr inbounds nuw i8, ptr %14, i64 %17
   %i.j = load i8, ptr %i.i, align 1, !tbaa !183
-  store i8 %i.j, ptr %.011.i.i.i.i.i.i.i.i.i, align 1, !tbaa !183
-  %i.k = add i64 %.sroa.3.09.i.i.i.i.i.i.i.i.i, 1
-  %i.l = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i.i.i.i.i, i64 1 ; 2 uses
-  %i.m = add nsw i64 %.0410.i.i.i.i.i.i.i.i.i, -1
-  %i.n = icmp sgt i64 %.0410.i.i.i.i.i.i.i.i.i, 1
+  store i8 %i.j, ptr %18, align 1, !tbaa !183
+  %i.k = add i64 %.sroa.3.09.i.i.i.i.i.i.i.i.i, 2
+  %i.l = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i.i.i.i.i, i64 2 ; 2 uses
+  %i.m = add nsw i64 %.0410.i.i.i.i.i.i.i.i.i, -2
+  %i.n = icmp sgt i64 %.0410.i.i.i.i.i.i.i.i.i, 2
   br i1 %i.n, label %bb.d, label %.loopexit, !llvm.loop !381
 
-.loopexit:                                        ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a, %_ZNSt6vectorIN7xgboost11FeatureTypeESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
-  %.0.lcssa.i.i.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorIN7xgboost11FeatureTypeESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.l, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a ]
+.loopexit:                                        ; preds = %.prol.loopexit, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a, %_ZNSt6vectorIN7xgboost11FeatureTypeESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
+  %.0.lcssa.i.i.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorIN7xgboost11FeatureTypeESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %.lcssa.unr, %.prol.loopexit ], [ %i.l, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEELb1EEppEv.exit.i.i.i.i.i.i.i.i.i.a ]
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.0.lcssa.i.i.i.i.i.i.i.i.i, ptr %i.o, align 8, !tbaa !188
   ret void

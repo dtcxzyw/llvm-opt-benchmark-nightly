@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_ZNK20AstUserAlloca
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !188  ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 64 ; 2 uses
   %.not1315.i = icmp eq ptr %i.r, %i.s
-  br i1 %.not1315.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not1315.i, label %bb.f, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c
   %i.t = load i32, ptr @_ZN12VNUser1InUse12s_userCntGblE, align 4, !tbaa !26
@@ -227,22 +227,20 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.i
 bb.e:                                             ; preds = %bb.d
   %i.ac = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.09.016.i) #27 ; 2 uses
   %.not13.i = icmp eq ptr %i.ac, %i.s
-  br i1 %.not13.i, label %._crit_edge.i, label %bb.d
+  br i1 %.not13.i, label %bb.f, label %bb.d
 
-._crit_edge.i:                                    ; preds = %bb.e, %bb.c
-  br i1 %i.p, label %bb.f, label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit
-
-bb.f:                                             ; preds = %._crit_edge.i
+bb.f:                                             ; preds = %bb.e, %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %i.h, i64 107
-  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !198, !range !72, !noundef !73
+  %i.ae = load i8, ptr %i.ad, align 1, !range !72
   %i.af = trunc nuw i8 %i.ae to i1
-  br i1 %i.af, label %.loopexit, label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit
+  %or.cond.i = select i1 %i.p, i1 %i.af, i1 false
+  br i1 %or.cond.i, label %.loopexit, label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit
 
 .loopexit:                                        ; preds = %bb.d, %bb.f
   tail call fastcc void @_ZN12_GLOBAL__N_116MergeCondVisitor8mergeEndEv(ptr noundef nonnull align 8 dereferenceable(120) %0)
   br label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit
 
-_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit: ; preds = %bb.f, %._crit_edge.i, %.loopexit, %_ZNK20AstUserAllocatorBaseI11AstNodeStmtN12_GLOBAL__N_114StmtPropertiesELi3EEclEPKS0_.exit
+_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit: ; preds = %bb.f, %.loopexit, %_ZNK20AstUserAllocatorBaseI11AstNodeStmtN12_GLOBAL__N_114StmtPropertiesELi3EEclEPKS0_.exit
   %.0 = xor i1 %i.k, true
   ret i1 %.0
 }
@@ -552,7 +550,7 @@ _ZN7AstNode7foreachIZN12_GLOBAL__N_116MergeCondVisitor9addToListEP11AstNodeStmtP
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !188 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cb, i64 64 ; 2 uses
   %.not1315.i = icmp eq ptr %i.cg, %i.ch
-  br i1 %.not1315.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not1315.i, label %bb.ai, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN7AstNode7foreachIZN12_GLOBAL__N_116MergeCondVisitor9addToListEP11AstNodeStmtP11AstNodeExprEUlPK9AstVarRefE_EEvOT_.exit
   %i.ci = load i32, ptr @_ZN12VNUser1InUse12s_userCntGblE, align 4, !tbaa !26
@@ -575,23 +573,21 @@ bb.ag:                                            ; preds = %bb.ah, %.lr.ph.i
 bb.ah:                                            ; preds = %bb.ag
   %i.cr = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.09.016.i) #27 ; 2 uses
   %.not13.i = icmp eq ptr %i.cr, %i.ch
-  br i1 %.not13.i, label %._crit_edge.i, label %bb.ag
+  br i1 %.not13.i, label %bb.ai, label %bb.ag
 
-._crit_edge.i:                                    ; preds = %bb.ah, %_ZN7AstNode7foreachIZN12_GLOBAL__N_116MergeCondVisitor9addToListEP11AstNodeStmtP11AstNodeExprEUlPK9AstVarRefE_EEvOT_.exit
-  br i1 %i.ce, label %bb.ai, label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit
-
-bb.ai:                                            ; preds = %._crit_edge.i
+bb.ai:                                            ; preds = %bb.ah, %_ZN7AstNode7foreachIZN12_GLOBAL__N_116MergeCondVisitor9addToListEP11AstNodeStmtP11AstNodeExprEUlPK9AstVarRefE_EEvOT_.exit
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cb, i64 107
-  %i.ct = load i8, ptr %i.cs, align 1, !tbaa !198, !range !72, !noundef !73
+  %i.ct = load i8, ptr %i.cs, align 1, !range !72
   %i.cu = trunc nuw i8 %i.ct to i1
-  br i1 %i.cu, label %.loopexit, label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit
+  %or.cond.i = select i1 %i.ce, i1 %i.cu, i1 false
+  br i1 %or.cond.i, label %.loopexit, label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit
 
 .loopexit:                                        ; preds = %bb.ag, %bb.ai
   call void @_ZN15VNUserInUseBase8clearcntEiRjRKb(i32 noundef 1, ptr noundef nonnull align 4 dereferenceable(4) @_ZN12VNUser1InUse12s_userCntGblE, ptr noundef nonnull align 1 dereferenceable(1) @_ZN12VNUser1InUse10s_userBusyE)
   store i8 0, ptr %i.cc, align 8, !tbaa !251
   br label %bb.at
 
-_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit: ; preds = %bb.ai, %._crit_edge.i
+_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit: ; preds = %bb.ai
   store ptr %1, ptr %i.b, align 8, !tbaa !133
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %2, ptr %i.cv, align 8, !tbaa !147
@@ -632,7 +628,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !188 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dg, i64 64 ; 2 uses
   %.not1315.i27 = icmp eq ptr %i.dn, %i.do
-  br i1 %.not1315.i27, label %._crit_edge.i34, label %.lr.ph.i28
+  br i1 %.not1315.i27, label %bb.an, label %.lr.ph.i28
 
 .lr.ph.i28:                                       ; preds = %bb.ak
   %i.dp = load i32, ptr @_ZN12VNUser1InUse12s_userCntGblE, align 4, !tbaa !26
@@ -655,18 +651,16 @@ bb.al:                                            ; preds = %bb.am, %.lr.ph.i28
 bb.am:                                            ; preds = %bb.al
   %i.dy = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.09.016.i29) #27 ; 2 uses
   %.not13.i33 = icmp eq ptr %i.dy, %i.do
-  br i1 %.not13.i33, label %._crit_edge.i34, label %bb.al
+  br i1 %.not13.i33, label %bb.an, label %bb.al
 
-._crit_edge.i34:                                  ; preds = %bb.am, %bb.ak
-  br i1 %i.dl, label %bb.an, label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit35
-
-bb.an:                                            ; preds = %._crit_edge.i34
+bb.an:                                            ; preds = %bb.am, %bb.ak
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dg, i64 107
-  %i.ea = load i8, ptr %i.dz, align 1, !tbaa !198, !range !72, !noundef !73
+  %i.ea = load i8, ptr %i.dz, align 1, !range !72
   %i.eb = trunc nuw i8 %i.ea to i1
-  br i1 %i.eb, label %.thread, label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit35
+  %or.cond.i35 = select i1 %i.dl, i1 %i.eb, i1 false
+  br i1 %or.cond.i35, label %.thread, label %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit35
 
-_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit35: ; preds = %bb.an, %._crit_edge.i34
+_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit35: ; preds = %bb.an
   %i.ec = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_116MergeCondVisitor18isSimplifiableNodeEP7AstNode(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %i.cz)
   br i1 %i.ec, label %bb.aq, label %bb.ao
 
@@ -692,7 +686,7 @@ bb.aq:                                            ; preds = %bb.ap, %_ZNK12_GLOB
   %.not.i26 = icmp eq ptr %i.ei, null
   br i1 %.not.i26, label %.thread, label %.lr.ph
 
-.thread:                                          ; preds = %_ZN7AstNode4castI11AstNodeStmtS_EEPT_PT0_.exit, %bb.aj, %bb.ao, %bb.aq, %.lr.ph, %bb.an, %bb.al, %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit, %bb.a
+.thread:                                          ; preds = %_ZN7AstNode4castI11AstNodeStmtS_EEPT_PT0_.exit, %bb.aj, %bb.an, %bb.ao, %bb.aq, %.lr.ph, %bb.al, %_ZNK12_GLOBAL__N_114StmtProperties18writesConditionVarEb.exit, %bb.a
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 100 ; 2 uses
   %i.ek = load i32, ptr %i.ej, align 4, !tbaa !151
   %i.el = add i32 %i.ek, 1

@@ -204,15 +204,13 @@ bb.au:                                            ; preds = %bb.i, %bb.i, %bb.i,
   %i.dd = trunc nuw i8 %i.dc to i1
   %.not.i = icmp ne i8 %i.p, 25
   %or.cond.not.i = or i1 %.not.i, %i.dd
-  br i1 %or.cond.not.i, label %14, label %bb.aw
+  %14 = getelementptr inbounds nuw i8, ptr %i.o, i64 284
+  %15 = load i8, ptr %14, align 4
+  %16 = icmp ugt i8 %15, 13
+  %or.cond114.i = select i1 %or.cond.not.i, i1 %16, i1 false
+  br i1 %or.cond114.i, label %bb.av, label %bb.aw
 
-14:                                               ; preds = %bb.au
-  %15 = getelementptr inbounds nuw i8, ptr %i.o, i64 284
-  %16 = load i8, ptr %15, align 4, !tbaa !789
-  %17 = icmp ugt i8 %16, 13
-  br i1 %17, label %bb.av, label %bb.aw
-
-bb.av:                                            ; preds = %14
+bb.av:                                            ; preds = %bb.au
   %i.de = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   store ptr @_ZN6duckdb28ArrowVarcharToStringViewData10InitializeERNS_15ArrowAppendDataERKNS_11LogicalTypeEm, ptr %i.de, align 8, !tbaa !787
   %i.df = getelementptr inbounds nuw i8, ptr %i.o, i64 24
@@ -221,7 +219,7 @@ bb.av:                                            ; preds = %14
   store ptr @_ZN6duckdb28ArrowVarcharToStringViewData8FinalizeERNS_15ArrowAppendDataERKNS_11LogicalTypeEP10ArrowArray, ptr %i.dg, align 8, !tbaa !167
   br label %_ZN6duckdbL26InitializeFunctionPointersERNS_15ArrowAppendDataERKNS_11LogicalTypeE.exit
 
-bb.aw:                                            ; preds = %14, %bb.au
+bb.aw:                                            ; preds = %bb.au
   %i.dh = getelementptr inbounds nuw i8, ptr %i.o, i64 280
   %i.di = load i8, ptr %i.dh, align 8, !tbaa !168
   %i.dj = icmp eq i8 %i.di, 1

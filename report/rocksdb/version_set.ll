@@ -205,14 +205,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.an = trunc i64 %i.am to i32
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !1091
-  %.not50 = icmp sle i32 %i.ap, %i.an             ; 2 uses
+  %.not50 = icmp sle i32 %i.ap, %i.an
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 176
   %i.ar = load i64, ptr %i.aq, align 8
-  %.not51 = icmp uge i64 %.039.lcssa, %i.ar       ; 2 uses
-  %.not234 = select i1 %.not50, i1 true, i1 %.not51
+  %.not51 = icmp uge i64 %.039.lcssa, %i.ar
+  %.not234 = select i1 %.not50, i1 true, i1 %.not51 ; 2 uses
   %.sink = select i1 %.not234, i64 %.039.lcssa, i64 0 ; 3 uses
-  %.046 = select i1 %.not50, i1 true, i1 %.not51
-  %i.as = getelementptr inbounds nuw i8, ptr %0, i64 4216
+  %i.as = getelementptr inbounds nuw i8, ptr %0, i64 4216 ; 3 uses
   store i64 %.sink, ptr %i.as, align 8, !tbaa !1090
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 2800
   %i.au = load i32, ptr %i.at, align 16, !tbaa !850 ; 2 uses
@@ -234,7 +233,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.bd, label %._crit_edge, label %.lr.ph, !llvm.loop !2127
 
 .lr.ph87:                                         ; preds = %._crit_edge
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4216 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !284
   %i.bg = sext i32 %i.au to i64                   ; 2 uses
@@ -367,12 +365,12 @@ vec.epilog.middle.block230:                       ; preds = %vec.epilog.vector.b
 .loopexit:                                        ; preds = %.lr.ph74, %middle.block209, %vec.epilog.middle.block230, %bb.e, %bb.d
   %.241 = phi i64 [ %.04383, %bb.d ], [ 0, %bb.e ], [ %i.cn, %vec.epilog.middle.block230 ], [ %i.cg, %middle.block209 ], [ %i.cr, %.lr.ph74 ] ; 2 uses
   %i.cu = icmp eq i64 %indvars.iv, %i.bg
-  %or.cond = and i1 %.046, %i.cu
+  %or.cond = and i1 %.not234, %i.cu
   br i1 %or.cond, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.loopexit
   %i.cv = add i64 %i.bi, %.241                    ; 2 uses
-  store i64 %i.cv, ptr %2, align 8, !tbaa !1090
+  store i64 %i.cv, ptr %i.as, align 8, !tbaa !1090
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.loopexit
@@ -514,7 +512,7 @@ bb.i:                                             ; preds = %._crit_edge80
   %i.et = fmul double %i.es, %i.eo
   %i.eu = fptoui double %i.et to i64
   %i.ev = add i64 %i.cw, %i.eu                    ; 2 uses
-  store i64 %i.ev, ptr %2, align 8, !tbaa !1090
+  store i64 %i.ev, ptr %i.as, align 8, !tbaa !1090
   br label %.thread
 
 .thread:                                          ; preds = %bb.h, %._crit_edge80, %bb.i, %bb.g
@@ -917,21 +915,19 @@ bb.b:                                             ; preds = %.lr.ph.preheader.i,
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 3192 ; 5 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !256
   %.not.i.i.i = icmp eq ptr %i.f, %i.d
-  br i1 %.not.i.i.i, label %_ZN7rocksdb10autovectorISt4pairIiPNS_12FileMetaDataEELm8EE5clearEv.exit, label %_ZSt8_DestroyIPSt4pairIiPN7rocksdb12FileMetaDataEES4_EvT_S6_RSaIT0_E.exit.i.i.i
+  br i1 %.not.i.i.i, label %bb.c, label %_ZSt8_DestroyIPSt4pairIiPN7rocksdb12FileMetaDataEES4_EvT_S6_RSaIT0_E.exit.i.i.i
 
 _ZSt8_DestroyIPSt4pairIiPN7rocksdb12FileMetaDataEES4_EvT_S6_RSaIT0_E.exit.i.i.i: ; preds = %bb.b
   store ptr %i.d, ptr %i.e, align 8, !tbaa !256
-  br label %_ZN7rocksdb10autovectorISt4pairIiPNS_12FileMetaDataEELm8EE5clearEv.exit
+  br label %bb.c
 
-_ZN7rocksdb10autovectorISt4pairIiPNS_12FileMetaDataEELm8EE5clearEv.exit: ; preds = %bb.b, %_ZSt8_DestroyIPSt4pairIiPN7rocksdb12FileMetaDataEES4_EvT_S6_RSaIT0_E.exit.i.i.i
-  %4 = icmp eq i64 %2, 0
-  br i1 %4, label %bb.q, label %bb.c
-
-bb.c:                                             ; preds = %_ZN7rocksdb10autovectorISt4pairIiPNS_12FileMetaDataEELm8EE5clearEv.exit
+bb.c:                                             ; preds = %bb.b, %_ZSt8_DestroyIPSt4pairIiPN7rocksdb12FileMetaDataEES4_EvT_S6_RSaIT0_E.exit.i.i.i
+  %4 = icmp ne i64 %2, 0
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2704
-  %i.h = load i8, ptr %i.g, align 16, !tbaa !849
+  %i.h = load i8, ptr %i.g, align 16
   %.not = icmp eq i8 %i.h, 0
-  br i1 %.not, label %bb.d, label %bb.q
+  %or.cond32 = select i1 %4, i1 %.not, i1 false
+  br i1 %or.cond32, label %bb.d, label %bb.q
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #42
@@ -1138,7 +1134,7 @@ _ZN7rocksdb6StatusD2Ev.exit:                      ; preds = %.loopexit31, %_ZNKS
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #42
   br label %bb.q
 
-bb.q:                                             ; preds = %_ZN7rocksdb10autovectorISt4pairIiPNS_12FileMetaDataEELm8EE5clearEv.exit, %bb.c, %_ZN7rocksdb6StatusD2Ev.exit
+bb.q:                                             ; preds = %bb.c, %_ZN7rocksdb6StatusD2Ev.exit
   ret void
 
 _ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i17: ; preds = %bb.p

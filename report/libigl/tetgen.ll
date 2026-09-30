@@ -205,7 +205,9 @@ bb.u:                                             ; preds = %bb.e, %._crit_edge1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define noundef zeroext i1 @_ZN10tetgenmesh21valid_constrained_f32EPNS_7trifaceEPdS2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(69984) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree readnone captures(none) %2, ptr nofree readnone captures(none) %3) local_unnamed_addr #22 align 2 {
 .preheader68:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 68688 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 68688
+  %4 = load i32, ptr %i.a, align 8
+  %5 = sext i32 %4 to i64                         ; 3 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !231    ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !220  ; 2 uses
@@ -237,8 +239,6 @@ _ZN10tetgenmesh9tsspivot1ERNS_7trifaceERNS_4faceE.exit: ; preds = %.preheader68
   br i1 %.not49, label %_ZN10tetgenmesh9tsspivot1ERNS_7trifaceERNS_4faceE.exit.thread, label %bb.a
 
 bb.a:                                             ; preds = %_ZN10tetgenmesh9tsspivot1ERNS_7trifaceERNS_4faceE.exit
-  %4 = load i32, ptr %i.a, align 8, !tbaa !239
-  %5 = sext i32 %4 to i64
   %i.y = getelementptr [4 x i8], ptr %i.x, i64 %5
   %i.z = getelementptr i8, ptr %i.y, i64 4
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !59
@@ -281,9 +281,7 @@ _ZN10tetgenmesh9tsspivot1ERNS_7trifaceERNS_4faceE.exit.1: ; preds = %_ZN10tetgen
   br i1 %.not49.1, label %_ZN10tetgenmesh9tsspivot1ERNS_7trifaceERNS_4faceE.exit.thread.1, label %bb.b
 
 bb.b:                                             ; preds = %_ZN10tetgenmesh9tsspivot1ERNS_7trifaceERNS_4faceE.exit.1
-  %6 = load i32, ptr %i.a, align 8, !tbaa !239
-  %7 = sext i32 %6 to i64
-  %i.ba = getelementptr [4 x i8], ptr %i.az, i64 %7
+  %i.ba = getelementptr [4 x i8], ptr %i.az, i64 %5
   %i.bb = getelementptr i8, ptr %i.ba, i64 4
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !59
   %i.bd = and i32 %i.bc, 4
@@ -325,9 +323,7 @@ _ZN10tetgenmesh9tsspivot1ERNS_7trifaceERNS_4faceE.exit.2: ; preds = %_ZN10tetgen
   br i1 %.not49.2, label %.preheader, label %bb.c
 
 bb.c:                                             ; preds = %_ZN10tetgenmesh9tsspivot1ERNS_7trifaceERNS_4faceE.exit.2
-  %8 = load i32, ptr %i.a, align 8, !tbaa !239
-  %9 = sext i32 %8 to i64
-  %i.bz = getelementptr [4 x i8], ptr %i.by, i64 %9
+  %i.bz = getelementptr [4 x i8], ptr %i.by, i64 %5
   %i.ca = getelementptr i8, ptr %i.bz, i64 4
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !59
   %i.cc = and i32 %i.cb, 4

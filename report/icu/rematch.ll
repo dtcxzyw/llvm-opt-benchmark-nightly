@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.i = load i64, ptr %i.h, align 8, !tbaa !83   ; 2 uses
   %i.j = icmp eq i64 %i.i, 0
-  br i1 %i.j, label %bb.e, label %2
+  br i1 %i.j, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -212,32 +212,26 @@ bb.e:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.n = load i64, ptr %i.m, align 8, !tbaa !84
   %i.o = icmp eq i64 %i.l, %i.n
-  br i1 %i.o, label %bb.f, label %2
+  br i1 %i.o, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 28
   %i.q = load i32, ptr %i.p, align 4, !tbaa !85
   %i.r = sext i32 %i.q to i64
   %i.s = icmp eq i64 %i.l, %i.r
-  br i1 %i.s, label %bb.g, label %2
+  br i1 %i.s, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.t = tail call noundef signext i8 @_ZN6icu_7812RegexMatcher14findUsingChunkER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(336) %0, ptr noundef nonnull align 4 dereferenceable(4) %1)
   br label %.thread242
 
-2:                                                ; preds = %bb.f, %bb.e, %bb.d
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %4 = load i64, ptr %3, align 8, !tbaa !90       ; 4 uses
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %6, label %bb.h
-
-6:                                                ; preds = %2
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %8 = load i64, ptr %7, align 8, !tbaa !63
-  br label %bb.h
-
-bb.h:                                             ; preds = %6, %2
-  %.0137 = phi i64 [ %8, %6 ], [ %4, %2 ]         ; 5 uses
+bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %3 = load i64, ptr %2, align 8, !tbaa !90       ; 4 uses
+  %4 = icmp eq i64 %3, 0
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %6 = load i64, ptr %5, align 8
+  %.0137 = select i1 %4, i64 %6, i64 %3           ; 5 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 130 ; 15 uses
   %i.v = load i8, ptr %i.u, align 2, !tbaa !26
   %.not186 = icmp eq i8 %i.v, 0
@@ -245,10 +239,10 @@ bb.h:                                             ; preds = %6, %2
   br i1 %.not186, label %bb.x, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  store i64 %4, ptr %i.w, align 8, !tbaa !27
+  store i64 %3, ptr %i.w, align 8, !tbaa !27
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.y = load i64, ptr %i.x, align 8, !tbaa !80
-  %i.z = icmp eq i64 %i.y, %4
+  %i.z = icmp eq i64 %i.y, %3
   br i1 %i.z, label %bb.j, label %bb.z
 
 bb.j:                                             ; preds = %bb.i
@@ -546,8 +540,7 @@ _ZN6icu_7812RegexMatcher21findProgressInterruptElR10UErrorCode.exit: ; preds = %
   br i1 %i.er, label %bb.ae, label %.thread242, !llvm.loop !143
 
 bb.av:                                            ; preds = %bb.ad
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.es = load i64, ptr %9, align 8, !tbaa !63
+  %i.es = load i64, ptr %5, align 8, !tbaa !63
   %i.et = icmp sgt i64 %.1138, %i.es
   br i1 %i.et, label %bb.aw, label %bb.ax
 

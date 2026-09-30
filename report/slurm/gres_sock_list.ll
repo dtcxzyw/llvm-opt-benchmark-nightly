@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.l = load i32, ptr %i.k, align 4              ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.n = load i16, ptr %i.m, align 8              ; 4 uses
+  %i.n = load i16, ptr %i.m, align 8              ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.p = load i16, ptr %i.o, align 8              ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -258,7 +258,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ao = getelementptr inbounds nuw i8, ptr %i.j, i64 88 ; 7 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.j, i64 120 ; 3 uses
-  %i.ar = zext i16 %i.n to i32                    ; 4 uses
+  %i.ar = zext i16 %i.n to i32                    ; 2 uses
   %.not114.i = icmp eq i16 %i.n, 0
   %i.as = zext i16 %i.p to i32                    ; 6 uses
   %i.at = and i32 %i.l, 65535                     ; 3 uses
@@ -275,12 +275,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .lr.ph.split.us.split.us.preheader.i:             ; preds = %.lr.ph.split.us.i
   %i.ax = zext i16 %i.p to i64                    ; 2 uses
+  %2 = add nsw i32 %i.as, -1
+  %3 = add nsw i32 %i.ar, -1
   %wide.trip.count135.i = zext i16 %i.n to i64
-  %min.iters.check = icmp ult i16 %i.n, 16
-  %n.vec = and i32 %i.ar, 65520                   ; 3 uses
-  %broadcast.splatinsert47 = insertelement <16 x i32> poison, i32 %i.as, i64 0
-  %broadcast.splat48 = shufflevector <16 x i32> %broadcast.splatinsert47, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
-  %cmp.n = icmp eq i32 %n.vec, %i.ar
   br label %.lr.ph.split.us.split.us.i
 
 .lr.ph.split.us.split.us.i:                       ; preds = %..loopexit_crit_edge.us.us.i, %.lr.ph.split.us.split.us.preheader.i
@@ -312,62 +309,23 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 .preheader.us.us.i:                               ; preds = %bb.i
   %i.bi = load ptr, ptr %i.a, align 8             ; 4 uses
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %i.aw ; 3 uses
-  br i1 %.not112.i, label %.lr.ph77.split.split.split.us.us.us.i, label %.lr.ph75.us.us.us.us.i
+  br i1 %.not112.i, label %.lr.ph77.split.split.split.us.split.us96.us.i.a, label %.lr.ph75.us.us.us.us.i
 
-.lr.ph77.split.split.split.us.us.us.i:            ; preds = %.preheader.us.us.i
-  br i1 %.not113.i, label %.lr.ph77.split.split.split.us.split.us96.us.i.a, label %.lr.ph75.us84.us.us.us.i
+.lr.ph77.split.split.split.us.split.us96.us.i.a:  ; preds = %.preheader.us.us.i
+  br i1 %.not113.i, label %vector.body, label %.lr.ph75.us84.us.us.us.i
 
-.lr.ph77.split.split.split.us.split.us96.us.i.a:  ; preds = %.lr.ph77.split.split.split.us.us.us.i
-  %2 = load i32, ptr %i.bj, align 4
-  %invariant.op.us.us.i = add i32 %2, 1           ; 2 uses
-  br i1 %min.iters.check, label %.lr.ph75.us84.us97.us.i.preheader, label %vector.ph
+vector.body:                                      ; preds = %.lr.ph77.split.split.split.us.split.us96.us.i.a
+  %4 = load i32, ptr %i.bj, align 4               ; 2 uses
+  %invariant.op.us.us.i = add i32 %4, 1
+  %5 = add i32 %4, %i.as
+  %smin.i = call i32 @llvm.smin.i32(i32 %2, i32 %invariant.op.us.us.i)
+  %6 = sub i32 %5, %smin.i
+  %7 = udiv i32 %6, %i.as
+  %.not174.i = icmp ugt i32 %7, %3
+  br i1 %.not174.i, label %..loopexit_crit_edge.us.us.i, label %_pick_core_group.exit.us.i, !llvm.loop !24
 
-vector.ph:                                        ; preds = %.lr.ph77.split.split.split.us.split.us96.us.i.a
-  %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %invariant.op.us.us.i, i64 0
-  %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body.interim, %vector.ph
-  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body.interim ]
-  %vec.ind = phi <16 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>, %vector.ph ], [ %vec.ind.next, %vector.body.interim ] ; 2 uses
-  %3 = mul nuw <16 x i32> %vec.ind, %broadcast.splat48
-  %4 = sub <16 x i32> %broadcast.splat, %3
-  %5 = icmp slt <16 x i32> %4, %broadcast.splat48
-  %6 = freeze <16 x i1> %5
-  %7 = bitcast <16 x i1> %6 to i16
-  %.not49 = icmp eq i16 %7, 0
-  br i1 %.not49, label %vector.body.interim, label %_pick_core_group.exit.us.i.preheader
-
-_pick_core_group.exit.us.i.preheader:             ; preds = %vector.body, %.lr.ph75.us84.us97.us.i
-  br label %_pick_core_group.exit.us.i
-
-vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add nuw nsw <16 x i32> %vec.ind, splat (i32 16)
-  %index.next = add nuw i32 %index, 16            ; 2 uses
-  %8 = icmp eq i32 %index.next, %n.vec
-  br i1 %8, label %middle.block, label %vector.body, !llvm.loop !24
-
-middle.block:                                     ; preds = %vector.body.interim
-  br i1 %cmp.n, label %..loopexit_crit_edge.us.us.i, label %.lr.ph75.us84.us97.us.i.preheader
-
-.lr.ph75.us84.us97.us.i.preheader:                ; preds = %.lr.ph77.split.split.split.us.split.us96.us.i.a, %middle.block
-  %.06176.us85.us98.us.i.ph = phi i32 [ 0, %.lr.ph77.split.split.split.us.split.us96.us.i.a ], [ %n.vec, %middle.block ]
-  br label %.lr.ph75.us84.us97.us.i
-
-.lr.ph75.us84.us97.us.i:                          ; preds = %.lr.ph75.us84.us97.us.i.preheader, %..critedge_crit_edge.split.us.split.us88.us.us.i
-  %.06176.us85.us98.us.i = phi i32 [ %11, %..critedge_crit_edge.split.us.split.us88.us.us.i ], [ %.06176.us85.us98.us.i.ph, %.lr.ph75.us84.us97.us.i.preheader ] ; 2 uses
-  %9 = mul nuw i32 %.06176.us85.us98.us.i, %i.as
-  %.reass.us.us.i = sub i32 %invariant.op.us.us.i, %9
-  %10 = icmp slt i32 %.reass.us.us.i, %i.as
-  br i1 %10, label %_pick_core_group.exit.us.i.preheader, label %..critedge_crit_edge.split.us.split.us88.us.us.i, !llvm.loop !25
-
-..critedge_crit_edge.split.us.split.us88.us.us.i: ; preds = %.lr.ph75.us84.us97.us.i
-  %11 = add nuw nsw i32 %.06176.us85.us98.us.i, 1 ; 2 uses
-  %exitcond152.not.i = icmp eq i32 %11, %i.ar
-  br i1 %exitcond152.not.i, label %..loopexit_crit_edge.us.us.i, label %.lr.ph75.us84.us97.us.i, !llvm.loop !26
-
-.lr.ph75.us84.us.us.us.i:                         ; preds = %.lr.ph77.split.split.split.us.us.us.i, %..critedge_crit_edge.split.us.split.us.us.us.us.us.i
-  %.06176.us85.us.us.us.i = phi i32 [ %i.bv, %..critedge_crit_edge.split.us.split.us.us.us.us.us.i ], [ 0, %.lr.ph77.split.split.split.us.us.us.i ] ; 2 uses
+.lr.ph75.us84.us.us.us.i:                         ; preds = %.lr.ph77.split.split.split.us.split.us96.us.i.a, %..critedge_crit_edge.split.us.split.us.us.us.us.us.i
+  %.06176.us85.us.us.us.i = phi i32 [ %i.bv, %..critedge_crit_edge.split.us.split.us.us.us.us.us.i ], [ 0, %.lr.ph77.split.split.split.us.split.us96.us.i.a ] ; 2 uses
   %i.bk = mul nuw i32 %.06176.us85.us.us.us.i, %i.as
   %invariant.op59 = sub i32 1, %i.bk
   br label %_pick_core_group.exit.us.us.us.us.us.us.i
@@ -390,17 +348,17 @@ bb.j:                                             ; preds = %bb.j, %_pick_core_g
   call void @slurm_bit_set(ptr noundef %i.br, i64 noundef %i.bt) #5
   %indvars.iv.next146.i = add nuw nsw i64 %indvars.iv145.i, 1 ; 2 uses
   %exitcond150.not.i = icmp eq i64 %indvars.iv.next146.i, %i.s
-  br i1 %exitcond150.not.i, label %._crit_edge.us.us.us.us.us.us.i, label %bb.j, !llvm.loop !27
+  br i1 %exitcond150.not.i, label %._crit_edge.us.us.us.us.us.us.i, label %bb.j, !llvm.loop !25
 
 ._crit_edge.us.us.us.us.us.us.i:                  ; preds = %bb.j
   %.reass183.i.reass.reass = add i32 %i.bl, %invariant.op59
   %i.bu = icmp slt i32 %.reass183.i.reass.reass, %i.as
-  br i1 %i.bu, label %_pick_core_group.exit.us.us.us.us.us.us.i, label %..critedge_crit_edge.split.us.split.us.us.us.us.us.i, !llvm.loop !25
+  br i1 %i.bu, label %_pick_core_group.exit.us.us.us.us.us.us.i, label %..critedge_crit_edge.split.us.split.us.us.us.us.us.i, !llvm.loop !24
 
 ..critedge_crit_edge.split.us.split.us.us.us.us.us.i: ; preds = %._crit_edge.us.us.us.us.us.us.i
   %i.bv = add nuw nsw i32 %.06176.us85.us.us.us.i, 1 ; 2 uses
   %exitcond151.not.i = icmp eq i32 %i.bv, %i.ar
-  br i1 %exitcond151.not.i, label %..loopexit_crit_edge.us.us.i, label %.lr.ph75.us84.us.us.us.i, !llvm.loop !28
+  br i1 %exitcond151.not.i, label %..loopexit_crit_edge.us.us.i, label %.lr.ph75.us84.us.us.us.i, !llvm.loop !26
 
 .lr.ph75.us.us.us.us.i:                           ; preds = %.preheader.us.us.i, %.critedge.us.us.us.us.i
   %indvars.iv131.i = phi i64 [ %indvars.iv.next132.i, %.critedge.us.us.us.us.i ], [ 0, %.preheader.us.us.i ] ; 2 uses
@@ -441,7 +399,7 @@ bb.l:                                             ; preds = %.lr.ph.split.i.us.u
 bb.m:                                             ; preds = %bb.l, %.lr.ph.split.i.us.us.us.us.us.i
   %indvars.iv.next.i.us.us.us.us.us.i = add nsw i64 %indvars.iv.i.us.us.us.us.us.i, 1 ; 2 uses
   %i.ci = icmp slt i64 %indvars.iv.next.i.us.us.us.us.us.i, %i.bw
-  br i1 %i.ci, label %.lr.ph.split.i.us.us.us.us.us.i, label %.outer._crit_edge.loopexit.i.us.us.us.us.us.i, !llvm.loop !29
+  br i1 %i.ci, label %.lr.ph.split.i.us.us.us.us.us.i, label %.outer._crit_edge.loopexit.i.us.us.us.us.us.i, !llvm.loop !27
 
 .outer.i.us.us.us.us.us.i:                        ; preds = %bb.l
   %i.cj = trunc nsw i64 %indvars.iv.i.us.us.us.us.us.i to i32 ; 2 uses
@@ -453,7 +411,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.split
   %i.cn = sext i32 %i.cl to i64
   %i.co = icmp sgt i64 %i.bw, %i.cn
   %i.cp = select i1 %i.cm, i1 %i.co, i1 false
-  br i1 %i.cp, label %.lr.ph.split.preheader.i.us.us.us.us.us.i, label %_pick_core_group.exit.us79.us.us.us.us.loopexit.i, !llvm.loop !29
+  br i1 %i.cp, label %.lr.ph.split.preheader.i.us.us.us.us.us.i, label %_pick_core_group.exit.us79.us.us.us.us.loopexit.i, !llvm.loop !27
 
 .outer._crit_edge.loopexit.i.us.us.us.us.us.i:    ; preds = %bb.m
   %i.cq = trunc nuw nsw i64 %indvars.iv23.i.us.us.us.us.us.i to i32
@@ -486,16 +444,16 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.us.us
   call void @slurm_bit_set(ptr noundef %i.cy, i64 noundef %i.da) #5
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.s
-  br i1 %exitcond.not.i, label %._crit_edge.us.us.us.us109.us.i, label %bb.n, !llvm.loop !27
+  br i1 %exitcond.not.i, label %._crit_edge.us.us.us.us109.us.i, label %bb.n, !llvm.loop !25
 
 ._crit_edge.us.us.us.us109.us.i:                  ; preds = %bb.n
   %.reass.i.reass.reass.reass = add i32 %i.cs, %invariant.op ; 2 uses
   %i.db = icmp slt i32 %.reass.i.reass.reass.reass, %i.as
-  br i1 %i.db, label %bb.k, label %.critedge.us.us.us.us.i, !llvm.loop !25
+  br i1 %i.db, label %bb.k, label %.critedge.us.us.us.us.i, !llvm.loop !24
 
 .critedge.us.us.us.us.i:                          ; preds = %._crit_edge.us.us.us.us109.us.i, %_pick_core_group.exit.us79.us.us.us.us.i
   %exitcond136.not.i = icmp eq i64 %indvars.iv.next132.i, %wide.trip.count135.i
-  br i1 %exitcond136.not.i, label %..loopexit_crit_edge.us.us.i, label %.lr.ph75.us.us.us.us.i, !llvm.loop !28
+  br i1 %exitcond136.not.i, label %..loopexit_crit_edge.us.us.i, label %.lr.ph75.us.us.us.us.i, !llvm.loop !26
 
 bb.o:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
@@ -524,12 +482,12 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   br label %..loopexit_crit_edge.us.us.i
 
-..loopexit_crit_edge.us.us.i:                     ; preds = %.critedge.us.us.us.us.i, %..critedge_crit_edge.split.us.split.us.us.us.us.us.i, %..critedge_crit_edge.split.us.split.us88.us.us.i, %middle.block, %bb.q, %bb.h, %.lr.ph.split.us.split.us.i
+..loopexit_crit_edge.us.us.i:                     ; preds = %.critedge.us.us.us.us.i, %..critedge_crit_edge.split.us.split.us.us.us.us.us.i, %bb.q, %vector.body, %bb.h, %.lr.ph.split.us.split.us.i
   %indvars.iv.next154.i = add nuw nsw i64 %indvars.iv153.i, 1 ; 2 uses
   %i.dm = load i16, ptr %i.am, align 8
   %i.dn = zext i16 %i.dm to i64
   %i.do = icmp samesign ult i64 %indvars.iv.next154.i, %i.dn
-  br i1 %i.do, label %.lr.ph.split.us.split.us.i, label %_pick_restricted_cores.exit, !llvm.loop !30
+  br i1 %i.do, label %.lr.ph.split.us.split.us.i, label %_pick_restricted_cores.exit, !llvm.loop !28
 
 .lr.ph.split.us.split.i:                          ; preds = %.lr.ph.split.us.i, %.preheader.us.i
   %indvars.iv157.i = phi i64 [ %indvars.iv.next158.i, %.preheader.us.i ], [ 0, %.lr.ph.split.us.i ] ; 4 uses
@@ -589,7 +547,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.ej = load i16, ptr %i.am, align 8
   %i.ek = zext i16 %i.ej to i64
   %i.el = icmp samesign ult i64 %indvars.iv.next158.i, %i.ek
-  br i1 %i.el, label %.lr.ph.split.us.split.i, label %_pick_restricted_cores.exit, !llvm.loop !30
+  br i1 %i.el, label %.lr.ph.split.us.split.i, label %_pick_restricted_cores.exit, !llvm.loop !28
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %.preheader.i
   %indvars.iv161.i = phi i64 [ %indvars.iv.next162.i, %.preheader.i ], [ 0, %.lr.ph.i ] ; 4 uses
@@ -644,7 +602,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   br label %.preheader.i
 
-_pick_core_group.exit.us.i:                       ; preds = %_pick_core_group.exit.us.i.preheader, %_pick_core_group.exit.us.i
+_pick_core_group.exit.us.i:                       ; preds = %vector.body, %_pick_core_group.exit.us.i
   br label %_pick_core_group.exit.us.i
 
 .preheader.i:                                     ; preds = %bb.ac, %bb.z, %bb.y, %.lr.ph.split.i
@@ -652,7 +610,7 @@ _pick_core_group.exit.us.i:                       ; preds = %_pick_core_group.ex
   %i.fg = load i16, ptr %i.am, align 8
   %i.fh = zext i16 %i.fg to i64
   %i.fi = icmp samesign ult i64 %indvars.iv.next162.i, %i.fh
-  br i1 %i.fi, label %.lr.ph.split.i, label %_pick_restricted_cores.exit, !llvm.loop !30
+  br i1 %i.fi, label %.lr.ph.split.i, label %_pick_restricted_cores.exit, !llvm.loop !28
 
 _pick_restricted_cores.exit:                      ; preds = %..loopexit_crit_edge.us.us.i, %.preheader.us.i, %.preheader.i, %bb.f
   call void @slurm_xfree(ptr noundef nonnull %i.a) #5
@@ -823,13 +781,16 @@ bb.n:                                             ; preds = %bb.l, %bb.m, %bb.h
   %i.ax = load i32, ptr %i.z, align 8
   %i.ay = sext i32 %i.ax to i64
   %i.az = icmp slt i64 %indvars.iv.next, %i.ay
-  br i1 %i.az, label %bb.h, label %._crit_edge, !llvm.loop !33
+  br i1 %i.az, label %bb.h, label %._crit_edge, !llvm.loop !29
 }
 
 declare ptr @slurm_bit_fmt(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #4
@@ -871,14 +832,10 @@ attributes #5 = { nounwind }
 !21 = distinct !{!21, !8, !9}
 !22 = !{i8 0, i8 2}
 !23 = !{}
-!24 = distinct !{!24, !8, !9, !31, !32}
+!24 = distinct !{!24, !8, !9}
 !25 = distinct !{!25, !8, !9}
-!26 = distinct !{!26, !8, !9, !31}
+!26 = distinct !{!26, !8, !9}
 !27 = distinct !{!27, !8, !9}
 !28 = distinct !{!28, !8, !9}
 !29 = distinct !{!29, !8, !9}
-!30 = distinct !{!30, !8, !9}
-!31 = !{!"llvm.loop.isvectorized", i32 1}
-!32 = !{!"llvm.loop.unroll.runtime.disable"}
-!33 = distinct !{!33, !8, !9}
 end_hunk_0

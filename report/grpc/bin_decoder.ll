@@ -60,11 +60,11 @@ bb.a:
   %1 = alloca %"class.absl::lts_20250512::log_internal::LogMessage", align 8 ; 8 uses
   %2 = alloca %"class.absl::lts_20250512::log_internal::LogMessage", align 8 ; 8 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !12
-  %.not = icmp eq ptr %i.b, null                  ; 3 uses
+  %.not = icmp eq ptr %i.b, null                  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i64, ptr %i.c, align 8              ; 3 uses
-  %i.e = and i64 %i.d, 255                        ; 2 uses
-  %i.f = select i1 %.not, i64 %i.e, i64 %i.d      ; 2 uses
+  %i.d = load i64, ptr %i.c, align 8              ; 2 uses
+  %i.e = and i64 %i.d, 255
+  %i.f = select i1 %.not, i64 %i.e, i64 %i.d      ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 9
@@ -87,8 +87,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
   %.023.lcssa = phi i64 [ 0, %bb.a ], [ 0, %bb.b ], [ %.02333, %.lr.ph ] ; 4 uses
-  %spec.select = select i1 %.not, i64 %i.e, i64 %i.d
-  %i.p = sub i64 %spec.select, %.023.lcssa
+  %i.p = sub i64 %i.f, %.023.lcssa
   %i.q = icmp ugt i64 %i.p, 2
   br i1 %i.q, label %bb.c, label %bb.e, !prof !15
 

@@ -205,24 +205,22 @@ bb.e:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %i.o, i64 %storemerge25.i
   %i.v = load i8, ptr %i.u, align 1, !tbaa !129   ; 2 uses
   %i.w = icmp eq i8 %i.v, 92
-  br i1 %i.w, label %bb.f, label %9
+  br i1 %i.w, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph.i
   %i.x = load i8, ptr %i.i, align 8, !tbaa !353, !range !150, !noundef !73
   %not..i = xor i8 %i.x, 1
   br label %.critedge.i
 
-9:                                                ; preds = %.lr.ph.i
-  %10 = icmp eq i8 %i.v, %i.r
-  br i1 %10, label %bb.g, label %.critedge.i
-
-bb.g:                                             ; preds = %9
-  %i.y = load i8, ptr %i.i, align 8, !tbaa !353, !range !150, !noundef !73
+bb.g:                                             ; preds = %.lr.ph.i
+  %9 = icmp ne i8 %i.v, %i.r
+  %i.y = load i8, ptr %i.i, align 8, !range !150
   %i.z = trunc nuw i8 %i.y to i1
-  br i1 %i.z, label %.critedge.i, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit.thread.sink.split.sink.split, !llvm.loop !28
+  %or.cond.i = select i1 %9, i1 true, i1 %i.z
+  br i1 %or.cond.i, label %.critedge.i, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit.thread.sink.split.sink.split, !llvm.loop !28
 
-.critedge.i:                                      ; preds = %bb.g, %9, %bb.f
-  %.020.i = phi i8 [ %not..i, %bb.f ], [ 0, %9 ], [ 0, %bb.g ]
+.critedge.i:                                      ; preds = %bb.g, %bb.f
+  %.020.i = phi i8 [ %not..i, %bb.f ], [ 0, %bb.g ]
   store i8 %.020.i, ptr %i.i, align 8, !tbaa !353
   %storemerge.i = add nuw i64 %storemerge25.i, 1  ; 3 uses
   store i64 %storemerge.i, ptr %i.l, align 8, !tbaa !65
@@ -625,24 +623,22 @@ bb.d:                                             ; preds = %bb.c
   %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 %storemerge25.i
   %i.y = load i8, ptr %i.x, align 1, !tbaa !129   ; 2 uses
   %i.z = icmp eq i8 %i.y, 92
-  br i1 %i.z, label %bb.e, label %2
+  br i1 %i.z, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.aa = load i8, ptr %i.j, align 8, !tbaa !353, !range !150, !noundef !73
   %not..i = xor i8 %i.aa, 1
   br label %.critedge.i
 
-2:                                                ; preds = %.lr.ph.i
-  %3 = icmp eq i8 %i.y, %i.u
-  br i1 %3, label %bb.f, label %.critedge.i
-
-bb.f:                                             ; preds = %2
-  %i.ab = load i8, ptr %i.j, align 8, !tbaa !353, !range !150, !noundef !73
+bb.f:                                             ; preds = %.lr.ph.i
+  %2 = icmp ne i8 %i.y, %i.u
+  %i.ab = load i8, ptr %i.j, align 8, !range !150
   %i.ac = trunc nuw i8 %i.ab to i1
-  br i1 %i.ac, label %.critedge.i, label %.loopexit, !llvm.loop !28
+  %or.cond.i = select i1 %2, i1 true, i1 %i.ac
+  br i1 %or.cond.i, label %.critedge.i, label %.loopexit, !llvm.loop !28
 
-.critedge.i:                                      ; preds = %bb.f, %2, %bb.e
-  %.020.i = phi i8 [ %not..i, %bb.e ], [ 0, %2 ], [ 0, %bb.f ]
+.critedge.i:                                      ; preds = %bb.f, %bb.e
+  %.020.i = phi i8 [ %not..i, %bb.e ], [ 0, %bb.f ]
   store i8 %.020.i, ptr %i.j, align 8, !tbaa !353
   %storemerge.i = add nuw i64 %storemerge25.i, 1  ; 3 uses
   store i64 %storemerge.i, ptr %i.q, align 8, !tbaa !65

@@ -205,18 +205,25 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.
 _ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.thread
   %i.l = getelementptr inbounds i8, ptr %i.j, i64 -4
   %i.m = load i32, ptr %i.l, align 4, !tbaa !52
-  %1 = icmp eq i32 %i.m, 0
-  br i1 %1, label %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit.thread, label %bb.b
+  %1 = icmp ne i32 %i.m, 0
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 5561
+  %3 = load i8, ptr %2, align 1, !range !770
+  %4 = trunc nuw i8 %3 to i1
+  %or.cond = select i1 %1, i1 true, i1 %4
+  br i1 %or.cond, label %bb.b, label %5
 
-_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit.thread: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.thread, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit
+_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit.thread: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.thread
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 5561
   %i.o = load i8, ptr %i.n, align 1, !tbaa !772, !range !770, !noundef !62
   %i.p = trunc nuw i8 %i.o to i1
+  br i1 %i.p, label %bb.b, label %5
+
+5:                                                ; preds = %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit.thread
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit.thread, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
-  %2 = phi i1 [ %i.p, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit.thread ], [ true, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit ], [ true, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ]
-  ret i1 %2
+bb.b:                                             ; preds = %5, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit.thread, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
+  %6 = phi i1 [ true, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit.thread ], [ true, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit ], [ true, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ false, %5 ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress uwtable

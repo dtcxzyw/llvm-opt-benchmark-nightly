@@ -204,8 +204,8 @@ bb.a:
 ._crit_edge:                                      ; preds = %bb.a, %bb.c
   %i.m = phi i32 [ %.sroa.0.0.i, %bb.c ], [ %i.l, %bb.a ]
   switch i32 %i.m, label %.thread [
-    i32 0, label %2
-    i32 1, label %5
+    i32 0, label %bb.d
+    i32 1, label %bb.m
   ]
 
 bb.b:                                             ; preds = %.thread, %bb.e
@@ -230,16 +230,14 @@ bb.c:                                             ; preds = %bb.a
   store i32 %.sroa.3.0, ptr %i.q, align 4
   br label %._crit_edge
 
-2:                                                ; preds = %._crit_edge
-  %3 = load i32, ptr %1, align 8, !range !24, !noundef !5
-  %4 = trunc nuw i32 %3 to i1
-  br i1 %4, label %bb.d, label %.thread
-
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %._crit_edge
+  %2 = load i32, ptr %1, align 8, !range !24, !noundef !5
+  %3 = trunc nuw i32 %2 to i1
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.v = load i32, ptr %i.u, align 4, !noundef !5
+  %i.v = load i32, ptr %i.u, align 4
   %i.w = icmp eq i32 %i.v, 0
-  br i1 %i.w, label %bb.e, label %.thread
+  %or.cond17 = select i1 %3, i1 %i.w, i1 false
+  br i1 %or.cond17, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.x = invoke noundef nonnull align 8 ptr @_RNvMso_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_10Properties5empty()
@@ -299,18 +297,16 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs79ICTHwG85D_12regex_syntax3hir10Re
   %.pn = phi { ptr, i32 } [ %.pn.i, %.body ], [ %i.n, %bb.b ]
   resume { ptr, i32 } %.pn
 
-5:                                                ; preds = %._crit_edge
-  %6 = load i32, ptr %1, align 8, !range !24, !noundef !5
-  %7 = trunc nuw i32 %6 to i1
-  br i1 %7, label %bb.m, label %.thread
-
-bb.m:                                             ; preds = %5
+bb.m:                                             ; preds = %._crit_edge
+  %4 = load i32, ptr %1, align 8, !range !24, !noundef !5
+  %5 = trunc nuw i32 %4 to i1
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.ae = load i32, ptr %i.ad, align 4, !noundef !5
+  %i.ae = load i32, ptr %i.ad, align 4
   %i.af = icmp eq i32 %i.ae, 1
-  br i1 %i.af, label %bb.n, label %.thread
+  %or.cond20 = select i1 %5, i1 %i.af, i1 false
+  br i1 %or.cond20, label %bb.n, label %.thread
 
-.thread:                                          ; preds = %._crit_edge, %bb.d, %2, %5, %bb.m
+.thread:                                          ; preds = %._crit_edge, %bb.d, %bb.m
   %i.ag = invoke noundef nonnull align 8 ptr @_RNvMso_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_10Properties10repetition(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
           to label %bb.p unwind label %bb.b
 
