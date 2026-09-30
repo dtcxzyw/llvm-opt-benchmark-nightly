@@ -205,8 +205,15 @@ bb.cg:                                            ; preds = %bb.ce
   %i.gf = icmp ne i16 %i.ge, 0
   %or.cond7.i = select i1 %or.cond.i, i1 %i.gf, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #30
-  %.sroa.0245.0.extract.trunc = select i1 %or.cond7.i, i16 %i.gc, i16 0
-  %.sroa.4.0.extract.trunc = select i1 %or.cond.i, i16 %i.ge, i16 0
+  %40 = zext i16 %i.ge to i32
+  %41 = shl nuw i32 %40, 16
+  %42 = zext i16 %i.gc to i32
+  %.sroa.0.0.insert.ext.i = select i1 %or.cond7.i, i32 %42, i32 0
+  %43 = or disjoint i32 %.sroa.0.0.insert.ext.i, %41
+  %.sroa.0.0.insert.insert10.i = select i1 %or.cond.i, i32 %43, i32 0 ; 2 uses
+  %.sroa.0245.0.extract.trunc = trunc i32 %.sroa.0.0.insert.insert10.i to i16
+  %.sroa.4.0.extract.shift = lshr i32 %.sroa.0.0.insert.insert10.i, 16
+  %.sroa.4.0.extract.trunc = trunc nuw i32 %.sroa.4.0.extract.shift to i16
   %i.gg = getelementptr inbounds nuw i8, ptr %1, i64 3232
   %i.gh = call noundef i32 @_ZN12lldb_private18process_gdb_remote28GDBRemoteCommunicationClient18SetSTDIOWindowSizeEtt(ptr noundef nonnull align 8 dereferenceable(1289) %i.gg, i16 noundef zeroext %.sroa.0245.0.extract.trunc, i16 noundef zeroext %.sroa.4.0.extract.trunc) #30 ; 0 uses
   br label %bb.ch
