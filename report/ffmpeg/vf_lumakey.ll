@@ -202,9 +202,9 @@ vector.body:                                      ; preds = %.preheader, %pred.s
   %i.bn = icmp slt <8 x i32> %broadcast.splat89, %i.bj
   %i.bo = icmp sgt <8 x i32> %broadcast.splat91, %i.bj
   %i.bp = select <8 x i1> %i.bm, <8 x i1> %i.bn, <8 x i1> zeroinitializer
-  %i.bq = select <8 x i1> %i.bp, <8 x i1> %i.bo, <8 x i1> zeroinitializer ; 2 uses
+  %i.bq = select <8 x i1> %i.bp, <8 x i1> %i.bo, <8 x i1> zeroinitializer ; 3 uses
   %i.br = xor <8 x i1> %i.bk, splat (i1 true)
-  %i.bs = select <8 x i1> %i.bq, <8 x i1> %i.br, <8 x i1> zeroinitializer ; 10 uses
+  %i.bs = select <8 x i1> %i.bq, <8 x i1> %i.br, <8 x i1> zeroinitializer ; 9 uses
   %i.bt = extractelement <8 x i1> %i.bs, i64 0
   br i1 %i.bt, label %pred.sdiv.if, label %pred.sdiv.continue
 
@@ -310,7 +310,7 @@ pred.sdiv.if106:                                  ; preds = %pred.sdiv.continue1
 pred.sdiv.continue107:                            ; preds = %pred.sdiv.if106, %pred.sdiv.continue105
   %i.dw = phi <8 x i32> [ %i.dp, %pred.sdiv.continue105 ], [ %i.dv, %pred.sdiv.if106 ]
   %i.dx = trunc <8 x i32> %i.dw to <8 x i16>
-  %i.dy = select <8 x i1> %i.bq, <8 x i1> %i.bk, <8 x i1> zeroinitializer ; 10 uses
+  %i.dy = select <8 x i1> %i.bq, <8 x i1> %i.bk, <8 x i1> zeroinitializer ; 9 uses
   %i.dz = extractelement <8 x i1> %i.dy, i64 0
   br i1 %i.dz, label %pred.sdiv.if108, label %pred.sdiv.continue109
 
@@ -418,8 +418,7 @@ pred.sdiv.continue123:                            ; preds = %pred.sdiv.if122, %p
   %i.gd = sub nsw <8 x i32> %broadcast.splat93, %i.gc
   %i.ge = trunc <8 x i32> %i.gd to <8 x i16>
   %i.gf = xor <8 x i1> %i.bm, splat (i1 true)
-  %4 = or <8 x i1> %i.bs, %i.gf
-  %i.gg = or <8 x i1> %4, %i.dy                   ; 8 uses
+  %i.gg = or <8 x i1> %i.bq, %i.gf                ; 8 uses
   %predphi = select <8 x i1> %i.bs, <8 x i16> %i.dx, <8 x i16> zeroinitializer
   %predphi124 = select <8 x i1> %i.dy, <8 x i16> %i.ge, <8 x i16> %predphi ; 8 uses
   %i.gh = extractelement <8 x i1> %i.gg, i64 0

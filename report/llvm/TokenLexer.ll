@@ -204,7 +204,7 @@ _ZNK5clang9MacroInfo15getParameterNumEPKNS_14IdentifierInfoE.exit.thread: ; pred
   %i.fb = lshr i8 %i.ey, 2
   %.lobit = and i8 %i.fb, 1
   %i.fc = select i1 %i.dw, i8 4, i8 2
-  %i.fd = or disjoint i8 %i.fc, %.lobit
+  %i.fd = or disjoint i8 %.lobit, %i.fc
   %i.fe = or disjoint i8 %i.fd, %i.fa
   store i8 %i.fe, ptr %i.n, align 8
   br label %_ZN5clang21VAOptExpansionContext26hasPlaceholderBeforeRParenEv.exit

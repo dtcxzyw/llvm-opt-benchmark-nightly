@@ -205,13 +205,12 @@ bb.d:                                             ; preds = %.lr.ph93
 
 .lr.ph106:                                        ; preds = %.loopexit76
   %.not42 = icmp eq i8 %.fr, 0                    ; 2 uses
-  %4 = select i1 %.not42, i32 0, i32 2
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 195
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !513
   %i.ay = zext i8 %i.ax to i32
-  %i.az = select i1 %i.as, i32 6, i32 8
-  %5 = add nuw nsw i32 %i.az, %4
-  %invariant.op109 = add nuw nsw i32 %5, %i.ay    ; 2 uses
+  %i.az = select i1 %i.as, i32 8, i32 10
+  %4 = select i1 %.not42, i32 6, i32 %i.az
+  %invariant.op109 = add nuw nsw i32 %4, %i.ay    ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 196
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 193 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 194 ; 2 uses

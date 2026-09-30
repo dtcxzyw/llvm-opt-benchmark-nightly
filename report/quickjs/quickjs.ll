@@ -205,10 +205,9 @@ bb.bc:                                            ; preds = %string_skip_char.ex
 bb.bd:                                            ; preds = %bb.bc
   %i.aaj = icmp slt i32 %.019.i125.i.lcssa, 100
   %i.aak = select i1 %i.aaj, i32 1900, i32 0
-  %5 = add nsw i32 %i.aak, %.019.i125.i.lcssa
   %i.aal = icmp slt i32 %.019.i125.i.lcssa, 50
-  %i.aam = select i1 %i.aal, i32 100, i32 0
-  %i.aan = add nsw i32 %5, %i.aam
+  %i.aam = select i1 %i.aal, i32 2000, i32 %i.aak
+  %i.aan = add nsw i32 %i.aam, %.019.i125.i.lcssa
   store i32 %i.aan, ptr %i.d, align 16, !tbaa !191
   br label %string_skip_until.exit.i
 
@@ -564,10 +563,9 @@ bb.bx:                                            ; preds = %bb.bw
   %i.afh = load i32, ptr %i.afg, align 4, !tbaa !191 ; 3 uses
   %i.afi = icmp slt i32 %i.afh, 100
   %i.afj = select i1 %i.afi, i32 1900, i32 0
-  %6 = add nsw i32 %i.afj, %i.afh
   %i.afk = icmp slt i32 %i.afh, 50
-  %i.afl = select i1 %i.afk, i32 100, i32 0
-  %i.afm = add nsw i32 %6, %i.afl
+  %i.afl = select i1 %i.afk, i32 2000, i32 %i.afj
+  %i.afm = add i32 %i.afl, %i.afh
   store i32 %i.afm, ptr %i.d, align 16, !tbaa !191
   %i.afn = load i32, ptr %i.b, align 4, !tbaa !191
   br label %thread-pre-split.sink.split.i
@@ -584,10 +582,9 @@ bb.bz:                                            ; preds = %bb.br
   %i.afs = load i32, ptr %i.afr, align 4, !tbaa !191 ; 3 uses
   %i.aft = icmp slt i32 %i.afs, 100
   %i.afu = select i1 %i.aft, i32 1900, i32 0
-  %7 = add nsw i32 %i.afu, %i.afs
   %i.afv = icmp slt i32 %i.afs, 50
-  %i.afw = select i1 %i.afv, i32 100, i32 0
-  %i.afx = add nsw i32 %7, %i.afw
+  %i.afw = select i1 %i.afv, i32 2000, i32 %i.afu
+  %i.afx = add i32 %i.afw, %i.afs
   store i32 %i.afx, ptr %i.d, align 16, !tbaa !191
   %i.afy = load i32, ptr %i.b, align 4, !tbaa !191
   %i.afz = getelementptr inbounds nuw i8, ptr %i.b, i64 4

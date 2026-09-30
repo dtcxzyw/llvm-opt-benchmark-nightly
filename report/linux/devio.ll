@@ -204,7 +204,7 @@ checkintf.exit.checkintf.exit.thread_crit_edge:   ; preds = %checkintf.exit
 
 checkintf.exit.thread:                            ; preds = %checkintf.exit.checkintf.exit.thread_crit_edge, %arch_test_bit.exit.i
   %i.au = phi ptr [ %.pre, %checkintf.exit.checkintf.exit.thread_crit_edge ], [ %.pre41, %arch_test_bit.exit.i ] ; 2 uses
-  %.not.i30 = icmp samesign ult i32 %i.d, 128     ; 3 uses
+  %.not.i30 = icmp samesign ult i32 %i.d, 128     ; 2 uses
   %.v.i = select i1 %.not.i30, i64 1112, i64 984
   %i.av = getelementptr i8, ptr %i.au, i64 %.v.i
   %i.aw = and i32 %i.d, 15
@@ -236,10 +236,10 @@ check_reset_of_active_ep.exit:                    ; preds = %checkintf.exit.thre
   %i.bi = shl i32 %.val, 8
   %i.bj = shl nuw nsw i32 %i.d, 15                ; 2 uses
   %i.bk = and i32 %i.bj, 491520
-  %.sink52 = select i1 %.not.i30, i32 %i.bj, i32 %i.bk
-  %.sink51 = select i1 %.not.i30, i32 -1073741824, i32 -1073741696
-  %2 = or i32 %.sink52, %i.bi
-  %i.bl = or i32 %2, %.sink51
+  %2 = or disjoint i32 %i.bj, -1073741824
+  %3 = or disjoint i32 %i.bk, -1073741696
+  %4 = select i1 %.not.i30, i32 %2, i32 %3
+  %i.bl = or i32 %4, %i.bi
   %i.bm = tail call i32 @usb_clear_halt(ptr noundef %i.bh, i32 noundef %i.bl) #16
   br label %findintfep.exit.thread
 

@@ -205,10 +205,9 @@ bb.av:                                            ; preds = %_ZN4llvm9VPBuilder1
   store i32 %i.vi, ptr %8, align 4
   %i.vj = trunc i32 %i.cy to i8
   %i.vk = and i8 %i.vj, 63
-  %i.vl = select i1 %i.vg, i8 64, i8 0
-  %28 = or disjoint i8 %i.vl, %i.vk
-  %i.vm = select i1 %spec.select.i190, i8 -128, i8 0
-  %i.vn = or disjoint i8 %28, %i.vm
+  %i.vl = select i1 %spec.select.i190, i8 -128, i8 0
+  %i.vm = select i1 %i.vg, i8 -64, i8 %i.vl
+  %i.vn = or disjoint i8 %i.vm, %i.vk
   store i8 %i.vn, ptr %9, align 2
   call void @_ZN4llvm9VPIRFlags15FastMathFlagsTyC1ERKNS_13FastMathFlagsE(ptr noundef nonnull align 1 dereferenceable(1) %i.bi, ptr noundef nonnull align 4 dereferenceable(4) %8) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %8)

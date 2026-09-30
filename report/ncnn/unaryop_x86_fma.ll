@@ -202,9 +202,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ab = fcmp fast ogt <8 x float> %i.aa, zeroinitializer
   %i.ac = select <8 x i1> %i.ab, <8 x float> splat (float 1.000000e+00), <8 x float> zeroinitializer
   %i.ad = fcmp fast olt <8 x float> %i.aa, zeroinitializer
-  %i.ae = select <8 x i1> %i.ad, <8 x float> splat (float 1.000000e+00), <8 x float> zeroinitializer
-  %6 = fsub fast <8 x float> %i.ac, %i.ae
-  store <8 x float> %6, ptr %.03045, align 1, !tbaa !41
+  %i.ae = select fast <8 x i1> %i.ad, <8 x float> splat (float -1.000000e+00), <8 x float> %i.ac
+  store <8 x float> %i.ae, ptr %.03045, align 1, !tbaa !41
   %i.af = getelementptr inbounds nuw i8, ptr %.03045, i64 32 ; 2 uses
   %i.ag = add nuw nsw i32 %.046, 8                ; 3 uses
   %i.ah = or disjoint i32 %i.ag, 7
@@ -322,9 +321,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.cb = fcmp fast ogt <4 x float> %i.ca, zeroinitializer
   %i.cc = select <4 x i1> %i.cb, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
   %i.cd = fcmp fast olt <4 x float> %i.ca, zeroinitializer
-  %i.ce = select <4 x i1> %i.cd, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
-  %7 = fsub fast <4 x float> %i.cc, %i.ce
-  store <4 x float> %7, ptr %.13148, align 16, !tbaa !41
+  %i.ce = select fast <4 x i1> %i.cd, <4 x float> splat (float -1.000000e+00), <4 x float> %i.cc
+  store <4 x float> %i.ce, ptr %.13148, align 16, !tbaa !41
   %i.cf = getelementptr inbounds nuw i8, ptr %.13148, i64 16 ; 2 uses
   %i.cg = add nuw nsw i32 %.149, 4                ; 3 uses
   %i.ch = or disjoint i32 %i.cg, 3
@@ -727,15 +725,13 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = shufflevector <8 x i16> %i.ab, <8 x i16> %i.ac, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.ae = bitcast <16 x i16> %i.ad to <8 x float> ; 2 uses
   %i.af = fcmp fast ogt <8 x float> %i.ae, zeroinitializer
-  %6 = select <8 x i1> %i.af, <8 x float> splat (float 1.000000e+00), <8 x float> zeroinitializer
   %i.ag = fcmp fast olt <8 x float> %i.ae, zeroinitializer
-  %7 = select <8 x i1> %i.ag, <8 x float> splat (float 1.000000e+00), <8 x float> zeroinitializer
-  %8 = fsub fast <8 x float> %6, %7
-  %9 = bitcast <8 x float> %8 to <8 x i32>        ; 2 uses
-  %i.ah = shufflevector <8 x i32> %9, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.ai = shufflevector <8 x i32> %9, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %i.aj = lshr <4 x i32> %i.ah, splat (i32 16)
-  %i.ak = lshr <4 x i32> %i.ai, splat (i32 16)
+  %6 = select <8 x i1> %i.af, <8 x i32> splat (i32 1065353216), <8 x i32> zeroinitializer
+  %7 = select <8 x i1> %i.ag, <8 x i32> splat (i32 -1082130432), <8 x i32> %6 ; 2 uses
+  %i.ah = shufflevector <8 x i32> %7, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.ai = shufflevector <8 x i32> %7, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %i.aj = lshr exact <4 x i32> %i.ah, splat (i32 16)
+  %i.ak = lshr exact <4 x i32> %i.ai, splat (i32 16)
   %i.al = call <8 x i16> @llvm.x86.sse41.packusdw(<4 x i32> %i.aj, <4 x i32> %i.ak)
   store <8 x i16> %i.al, ptr %.03051, align 1, !tbaa !41
   %i.am = getelementptr inbounds nuw i8, ptr %.03051, i64 16 ; 2 uses
@@ -842,13 +838,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.cb = shufflevector <8 x i16> <i16 0, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <8 x i16> %i.ca, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11>
   %i.cc = bitcast <8 x i16> %i.cb to <4 x float>  ; 2 uses
   %i.cd = fcmp fast ogt <4 x float> %i.cc, zeroinitializer
-  %10 = select <4 x i1> %i.cd, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
   %i.ce = fcmp fast olt <4 x float> %i.cc, zeroinitializer
-  %11 = select <4 x i1> %i.ce, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
-  %12 = fsub fast <4 x float> %10, %11
-  %13 = bitcast <4 x float> %12 to <4 x i32>
-  %14 = lshr <4 x i32> %13, splat (i32 16)
-  %i.cf = call <8 x i16> @llvm.x86.sse41.packusdw(<4 x i32> %14, <4 x i32> poison)
+  %8 = select <4 x i1> %i.cd, <4 x i32> splat (i32 16256), <4 x i32> zeroinitializer
+  %9 = select <4 x i1> %i.ce, <4 x i32> splat (i32 49024), <4 x i32> %8
+  %i.cf = call <8 x i16> @llvm.x86.sse41.packusdw(<4 x i32> %9, <4 x i32> poison)
   %i.cg = bitcast <8 x i16> %i.cf to <2 x i64>
   %i.ch = extractelement <2 x i64> %i.cg, i64 0
   store i64 %i.ch, ptr %.13154, align 1, !tbaa !41

@@ -202,12 +202,11 @@ bb.s:                                             ; preds = %bb.q
   %i.cl = shl i32 %i.ch, %i.ck
   %i.cm = zext i16 %i.bt to i32
   %i.cn = load i8, ptr %2, align 8
-  %.not263 = icmp eq i8 %i.cn, 0                  ; 2 uses
+  %.not263 = icmp eq i8 %i.cn, 0
   %.neg358 = shl i32 %.neg357, 1
-  %.neg359 = select i1 %.not263, i32 0, i32 %.neg358
-  %i.co = add i32 %.neg359, %i.cm
-  %.neg = select i1 %.not263, i32 0, i32 -2
-  %i.cp = add i32 %i.co, %.neg
+  %i.co = add i32 %.neg358, -2
+  %.neg = select i1 %.not263, i32 0, i32 %i.co
+  %i.cp = add i32 %.neg, %i.cm
   %.not264 = icmp slt i32 %i.cl, %i.cp
   br i1 %.not264, label %bb.w, label %bb.t
 

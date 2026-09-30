@@ -205,20 +205,19 @@ define dso_local noundef ptr @_ZN5clang12ConstantExpr6CreateERKNS_10ASTContextEP
 bb.a:
   %i.a = icmp eq i32 %2, 2
   %i.b = icmp eq i32 %2, 1
-  %i.c = select i1 %i.b, i64 8, i64 0
-  %i.d = select i1 %i.a, i64 80, i64 24
-  %4 = add nuw nsw i64 %i.d, %i.c                 ; 3 uses
+  %i.c = select i1 %i.a, i64 80, i64 24
+  %i.d = select i1 %i.b, i64 32, i64 %i.c         ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2632 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !153  ; 3 uses
   %i.g = ptrtoint ptr %i.f to i64
-  %i.h = add i64 %4, %i.g                         ; 2 uses
+  %i.h = add i64 %i.d, %i.g                       ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2640
   %i.j = load i64, ptr %i.i, align 8, !tbaa !154
   %i.k = icmp ult i64 %i.h, %i.j
   br i1 %i.k, label %_ZNK5clang10ASTContext8AllocateEmj.exit, label %_ZNK5clang10ASTContext8AllocateEmj.exit.thread, !prof !68
 
 _ZNK5clang10ASTContext8AllocateEmj.exit.thread:   ; preds = %bb.a
-  %i.l = tail call noundef nonnull ptr @_ZN4llvm20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096ELm128ELm8EE12AllocateSlowEmmNS_5AlignE(ptr noundef nonnull align 8 dereferenceable(80) %i.e, i64 noundef %4, i64 noundef %4, i8 3)
+  %i.l = tail call noundef nonnull ptr @_ZN4llvm20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096ELm128ELm8EE12AllocateSlowEmmNS_5AlignE(ptr noundef nonnull align 8 dereferenceable(80) %i.e, i64 noundef %i.d, i64 noundef %i.d, i8 3)
   br label %bb.b
 
 _ZNK5clang10ASTContext8AllocateEmj.exit:          ; preds = %bb.a
@@ -257,9 +256,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   br label %_ZN5clang12ConstantExpr14getStorageKindERKNS_7APValueE.exit.thread
 
-_ZN5clang12ConstantExpr14getStorageKindERKNS_7APValueE.exit.thread: ; preds = %bb.a, %bb.a, %bb.c, %bb.b
-  %.0.i8 = phi i32 [ 1, %bb.b ], [ 0, %bb.a ], [ 0, %bb.a ], [ 2, %bb.c ]
-  %i.e = phi i64 [ 32, %bb.b ], [ 24, %bb.a ], [ 24, %bb.a ], [ 80, %bb.c ] ; 3 uses
+_ZN5clang12ConstantExpr14getStorageKindERKNS_7APValueE.exit.thread: ; preds = %bb.c, %bb.b, %bb.a, %bb.a
+  %.0.i8 = phi i32 [ 0, %bb.a ], [ 2, %bb.c ], [ 0, %bb.a ], [ 1, %bb.b ]
+  %i.e = phi i64 [ 24, %bb.a ], [ 80, %bb.c ], [ 24, %bb.a ], [ 32, %bb.b ] ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2632 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !153  ; 3 uses
   %i.h = ptrtoint ptr %i.g to i64
@@ -347,20 +346,19 @@ define dso_local noundef ptr @_ZN5clang12ConstantExpr11CreateEmptyERKNS_10ASTCon
 bb.a:
   %i.a = icmp eq i32 %1, 2
   %i.b = icmp eq i32 %1, 1
-  %i.c = select i1 %i.b, i64 8, i64 0
-  %i.d = select i1 %i.a, i64 80, i64 24
-  %2 = add nuw nsw i64 %i.d, %i.c                 ; 3 uses
+  %i.c = select i1 %i.a, i64 80, i64 24
+  %i.d = select i1 %i.b, i64 32, i64 %i.c         ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2632 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !153  ; 3 uses
   %i.g = ptrtoint ptr %i.f to i64
-  %i.h = add i64 %2, %i.g                         ; 2 uses
+  %i.h = add i64 %i.d, %i.g                       ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2640
   %i.j = load i64, ptr %i.i, align 8, !tbaa !154
   %i.k = icmp ult i64 %i.h, %i.j
   br i1 %i.k, label %_ZNK5clang10ASTContext8AllocateEmj.exit, label %_ZNK5clang10ASTContext8AllocateEmj.exit.thread, !prof !68
 
 _ZNK5clang10ASTContext8AllocateEmj.exit.thread:   ; preds = %bb.a
-  %i.l = tail call noundef nonnull ptr @_ZN4llvm20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096ELm128ELm8EE12AllocateSlowEmmNS_5AlignE(ptr noundef nonnull align 8 dereferenceable(80) %i.e, i64 noundef %2, i64 noundef %2, i8 3)
+  %i.l = tail call noundef nonnull ptr @_ZN4llvm20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096ELm128ELm8EE12AllocateSlowEmmNS_5AlignE(ptr noundef nonnull align 8 dereferenceable(80) %i.e, i64 noundef %i.d, i64 noundef %i.d, i8 3)
   br label %bb.b
 
 _ZNK5clang10ASTContext8AllocateEmj.exit:          ; preds = %bb.a

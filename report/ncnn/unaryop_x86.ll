@@ -204,9 +204,8 @@ middle.block:                                     ; preds = %vector.body
   %i.bt = fcmp fast ogt <4 x float> %i.bs, zeroinitializer
   %i.bu = select <4 x i1> %i.bt, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
   %i.bv = fcmp fast olt <4 x float> %i.bs, zeroinitializer
-  %i.bw = select <4 x i1> %i.bv, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
-  %6 = fsub fast <4 x float> %i.bu, %i.bw
-  store <4 x float> %6, ptr %.02536, align 16, !tbaa !46
+  %i.bw = select fast <4 x i1> %i.bv, <4 x float> splat (float -1.000000e+00), <4 x float> %i.bu
+  store <4 x float> %i.bw, ptr %.02536, align 16, !tbaa !46
   %i.bx = getelementptr inbounds nuw i8, ptr %.02536, i64 16 ; 2 uses
   %i.by = add nuw nsw i32 %.037, 4                ; 3 uses
   %i.bz = or disjoint i32 %i.by, 3
@@ -609,9 +608,8 @@ middle.block:                                     ; preds = %vector.body
   %i.ce = fcmp fast ogt <4 x float> %i.cd, zeroinitializer
   %i.cf = select <4 x i1> %i.ce, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
   %i.cg = fcmp fast olt <4 x float> %i.cd, zeroinitializer
-  %i.ch = select <4 x i1> %i.cg, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
-  %6 = fsub fast <4 x float> %i.cf, %i.ch
-  %i.ci = bitcast <4 x float> %6 to <8 x i16>
+  %i.ch = select fast <4 x i1> %i.cg, <4 x float> splat (float -1.000000e+00), <4 x float> %i.cf
+  %i.ci = bitcast <4 x float> %i.ch to <8 x i16>
   %i.cj = shufflevector <8 x i16> %i.ci, <8 x i16> poison, <8 x i32> <i32 1, i32 3, i32 poison, i32 poison, i32 5, i32 7, i32 poison, i32 poison>
   %i.ck = bitcast <8 x i16> %i.cj to <4 x float>
   %i.cl = shufflevector <4 x float> %i.ck, <4 x float> poison, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>

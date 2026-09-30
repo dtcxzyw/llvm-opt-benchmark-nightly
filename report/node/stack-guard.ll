@@ -204,16 +204,18 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 58672 ; 2 uses
   tail call void @_ZN2v84base14RecursiveMutex4LockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #5
-  %2 = insertelement <12 x i32> poison, i32 %1, i64 0
-  %3 = shufflevector <12 x i32> %2, <12 x i32> poison, <12 x i32> zeroinitializer
-  %4 = icmp sgt <12 x i32> %3, <i32 -1, i32 0, i32 1, i32 1, i32 0, i32 0, i32 1, i32 1, i32 0, i32 1, i32 0, i32 0>
-  %5 = bitcast <12 x i1> %4 to i12
-  %6 = zext i12 %5 to i32
+  %2 = icmp sgt i32 %1, -1
+  %3 = zext i1 %2 to i32
+  %4 = icmp sgt i32 %1, 0
+  %5 = icmp samesign ugt i32 %1, 1
+  %6 = select i1 %5, i32 4094, i32 3378
+  %7 = select i1 %4, i32 %6, i32 0
+  %8 = or disjoint i32 %7, %3
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8              ; 3 uses
   %i.e = and i32 %i.d, 1
   %.not = icmp eq i32 %i.e, 0
-  %spec.store.select = select i1 %.not, i32 %6, i32 1 ; 2 uses
+  %spec.store.select = select i1 %.not, i32 %8, i32 1 ; 2 uses
   %i.f = and i32 %spec.store.select, %i.d
   %i.g = xor i32 %spec.store.select, -1
   %i.h = and i32 %i.d, %i.g                       ; 5 uses
@@ -461,16 +463,18 @@ bb.e:                                             ; preds = %bb.c, %_ZNSt10uniqu
   %i.ab = load ptr, ptr %0, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 58672 ; 2 uses
   call void @_ZN2v84base14RecursiveMutex4LockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ac) #5
-  %26 = insertelement <12 x i32> poison, i32 %1, i64 0
-  %27 = shufflevector <12 x i32> %26, <12 x i32> poison, <12 x i32> zeroinitializer
-  %28 = icmp sgt <12 x i32> %27, <i32 -1, i32 0, i32 1, i32 1, i32 0, i32 0, i32 1, i32 1, i32 0, i32 1, i32 0, i32 0>
-  %29 = bitcast <12 x i1> %28 to i12
-  %30 = zext i12 %29 to i32
+  %26 = icmp sgt i32 %1, -1
+  %27 = zext i1 %26 to i32
+  %28 = icmp sgt i32 %1, 0
+  %29 = icmp samesign ugt i32 %1, 1
+  %30 = select i1 %29, i32 4094, i32 3378
+  %31 = select i1 %28, i32 %30, i32 0
+  %32 = or disjoint i32 %31, %27
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.ae = load i32, ptr %i.ad, align 8            ; 3 uses
   %i.af = and i32 %i.ae, 1
   %.not.i164 = icmp eq i32 %i.af, 0
-  %spec.store.select.i = select i1 %.not.i164, i32 %30, i32 1 ; 2 uses
+  %spec.store.select.i = select i1 %.not.i164, i32 %32, i32 1 ; 2 uses
   %i.ag = and i32 %spec.store.select.i, %i.ae     ; 12 uses
   %i.ah = xor i32 %spec.store.select.i, -1
   %i.ai = and i32 %i.ae, %i.ah                    ; 5 uses
@@ -873,6 +877,7 @@ _ZN2v88internal7tracing12ScopedTracerD2Ev.exit217: ; preds = %bb.by, %bb.bz, %bb
 bb.cb:                                            ; preds = %_ZN2v88internal7tracing12ScopedTracerD2Ev.exit217, %bb.bt
   %i.qc = and i32 %i.ag, 512
   %.not259 = icmp eq i32 %i.qc, 0
+  %33 = and i32 %i.ag, 16
   br i1 %.not259, label %bb.cj, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
@@ -977,8 +982,7 @@ _ZN2v88internal7tracing12ScopedTracerD2Ev.exit223: ; preds = %bb.cg, %bb.ch, %bb
   br label %bb.cj
 
 bb.cj:                                            ; preds = %_ZN2v88internal7tracing12ScopedTracerD2Ev.exit223, %bb.cb
-  %31 = and i32 %i.ag, 16
-  %.not260 = icmp eq i32 %31, 0
+  %.not260 = icmp eq i32 %33, 0
   br i1 %.not260, label %bb.cr, label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj

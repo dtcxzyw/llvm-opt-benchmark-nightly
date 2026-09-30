@@ -205,15 +205,15 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i.i:   ; preds = %_ZN4llvm5APIntC2ERK
   %.pre.i.i.i = load i64, ptr %.sink.i.i.i, align 8
   %i.afj = icmp eq i32 %i.afi, 1
   %i.afk = shl i64 %.pre.i.i.i, 1
-  %storemerge.i.i.i.i = select i1 %i.afj, i64 0, i64 %i.afk
   %i.afl = sub nsw i32 0, %i.afi
   %i.afm = and i32 %i.afl, 63
   %i.afn = zext nneg i32 %i.afm to i64
   %i.afo = lshr i64 -1, %i.afn
   %i.afp = icmp eq i32 %i.afi, 0
   %.04.i.i.i.i.i = select i1 %i.afp, i64 0, i64 %i.afo, !prof !648
-  %i.afq = and i64 %.04.i.i.i.i.i, %storemerge.i.i.i.i
-  store i64 %i.afq, ptr %54, align 8, !tbaa !357, !alias.scope !3237
+  %i.afq = and i64 %.04.i.i.i.i.i, %i.afk
+  %256 = select i1 %i.afj, i64 0, i64 %i.afq
+  store i64 %256, ptr %54, align 8, !tbaa !357, !alias.scope !3237
   br label %_ZNK4llvm5APIntlsEj.exit.i
 
 bb.ii:                                            ; preds = %_ZN4llvm5APIntC2ERKS0_.exit.i.i.i
@@ -273,15 +273,15 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i9.i:  ; preds = %_ZN4llvm5APIntC2ERK
   %.pre.i.i11.i = load i64, ptr %.sink.i.i10.i, align 8
   %i.agf = icmp eq i32 %i.age, 1
   %i.agg = shl i64 %.pre.i.i11.i, 1
-  %storemerge.i.i.i12.i = select i1 %i.agf, i64 0, i64 %i.agg
   %i.agh = sub nsw i32 0, %i.age
   %i.agi = and i32 %i.agh, 63
   %i.agj = zext nneg i32 %i.agi to i64
   %i.agk = lshr i64 -1, %i.agj
   %i.agl = icmp eq i32 %i.age, 0
   %.04.i.i.i.i13.i = select i1 %i.agl, i64 0, i64 %i.agk, !prof !648
-  %i.agm = and i64 %.04.i.i.i.i13.i, %storemerge.i.i.i12.i
-  store i64 %i.agm, ptr %55, align 8, !tbaa !357, !alias.scope !3240
+  %i.agm = and i64 %.04.i.i.i.i13.i, %i.agg
+  %257 = select i1 %i.agf, i64 0, i64 %i.agm
+  store i64 %257, ptr %55, align 8, !tbaa !357, !alias.scope !3240
   br label %_ZNK4llvm5APIntlsEj.exit14.i
 
 bb.in:                                            ; preds = %_ZN4llvm5APIntC2ERKS0_.exit.i.i7.i
@@ -684,15 +684,15 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i:     ; preds = %_ZN4llvm5APIntC2ERK
   %.pre.i.i = load i64, ptr %.sink.i.i, align 8
   %i.m = icmp eq i32 %i.l, 1
   %i.n = shl i64 %.pre.i.i, 1
-  %storemerge.i.i.i = select i1 %i.m, i64 0, i64 %i.n
   %i.o = sub nsw i32 0, %i.l
   %i.p = and i32 %i.o, 63
   %i.q = zext nneg i32 %i.p to i64
   %i.r = lshr i64 -1, %i.q
   %i.s = icmp eq i32 %i.l, 0
   %.04.i.i.i.i = select i1 %i.s, i64 0, i64 %i.r, !prof !648
-  %i.t = and i64 %.04.i.i.i.i, %storemerge.i.i.i
-  store i64 %i.t, ptr %7, align 8, !tbaa !357, !alias.scope !4912
+  %i.t = and i64 %.04.i.i.i.i, %i.n
+  %8 = select i1 %i.m, i64 0, i64 %i.t
+  store i64 %8, ptr %7, align 8, !tbaa !357, !alias.scope !4912
   br label %_ZNK4llvm5APIntlsEj.exit
 
 bb.b:                                             ; preds = %_ZN4llvm5APIntC2ERKS0_.exit.i.i

@@ -204,13 +204,11 @@ bb.c:                                             ; preds = %bb.b, %bb.b
   %i.bs = zext i1 %.not.i.i to i8
   %.inv.i.i = icmp ult i8 %i.br, 2
   %i.bt = select i1 %.inv.i.i, i8 0, i8 2
-  %11 = or disjoint i8 %i.bt, %i.bs
   %i.bu = icmp ugt i8 %i.br, 2
-  %i.bv = select i1 %i.bu, i8 4, i8 0
-  %12 = or disjoint i8 %11, %i.bv
+  %i.bv = select i1 %i.bu, i8 6, i8 %i.bt
   %i.bw = icmp ugt i8 %i.br, 3
-  %i.bx = select i1 %i.bw, i8 8, i8 0
-  %i.by = or disjoint i8 %12, %i.bx
+  %i.bx = select i1 %i.bw, i8 14, i8 %i.bv
+  %i.by = or disjoint i8 %i.bx, %i.bs
   store i8 %i.by, ptr %i.aw, align 8, !tbaa !13
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bl, i64 16 ; 2 uses
   %i.ca = load i32, ptr %i.bz, align 8, !tbaa !14

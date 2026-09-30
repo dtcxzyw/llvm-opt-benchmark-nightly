@@ -204,12 +204,11 @@ bb.p:                                             ; preds = %_ZN12lldb_private21
   %i.bc = and i32 %i.aq, -2147483648
   %i.bd = and i32 %i.ba, 268435455
   %i.be = icmp eq i32 %.014.i, %.013
-  %i.bf = select i1 %i.be, i32 1073741824, i32 0
-  %4 = or disjoint i32 %i.bf, %i.bc
-  %i.bg = select i1 %.not22.i.not.not, i32 0, i32 536870912
-  %i.bh = select i1 %.not23.i.not, i32 0, i32 268435456
-  %i.bi = or disjoint i32 %4, %i.bg
-  %i.bj = or disjoint i32 %i.bi, %i.bh
+  %i.bf = select i1 %.not22.i.not.not, i32 0, i32 536870912
+  %i.bg = select i1 %.not23.i.not, i32 0, i32 268435456
+  %i.bh = select i1 %i.be, i32 1610612736, i32 %i.bf
+  %i.bi = or disjoint i32 %i.bh, %i.bc
+  %i.bj = or disjoint i32 %i.bi, %i.bg
   %i.bk = or disjoint i32 %i.bj, %i.bd            ; 3 uses
   store i32 %i.bk, ptr %i.bb, align 4, !tbaa !12
   %.not12.i = icmp eq i32 %i.bk, %i.ba

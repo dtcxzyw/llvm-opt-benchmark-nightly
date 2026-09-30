@@ -1,0 +1,223 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 3ca4974a2d661..ced5098f84abb 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -583,15 +583,56 @@ bool InstCombinerImpl::SimplifyAssociativeOrCommutative(BinaryOperator &I) {
+         continue;
+       }
+ 
+-      // Transform: "(A op B) op C" ==> "(C op A) op B" if "C op A" simplifies.
++      // Group selects when either condition implies the other. This can expose
++      // the select folds in SimplifySelectsFeedingBinaryOp.
++      auto haveImpliedSelectConditions = [&](Value *X, Value *Y) {
++        auto *XSel = dyn_cast<SelectInst>(X);
++        auto *YSel = dyn_cast<SelectInst>(Y);
++        if (!XSel || !YSel ||
++            XSel->getCondition()->getType() != YSel->getCondition()->getType())
++          return false;
++        Value *XCond = XSel->getCondition();
++        Value *YCond = YSel->getCondition();
++        // Either arm of either select may determine the other's condition.
++        return isImpliedCondition(XCond, YCond, DL).has_value() ||
++               isImpliedCondition(XCond, YCond, DL, false).has_value() ||
++               isImpliedCondition(YCond, XCond, DL).has_value() ||
++               isImpliedCondition(YCond, XCond, DL, false).has_value();
++      };
++
++      auto reassociateSelects = [&](BinaryOperator *Inner, Value *A,
++                                    Value *C) -> Value * {
++        // Keep an existing pair of related selects together to avoid
++        // repeatedly regrouping three selects.
++        if (!Inner->hasOneUse() || !haveImpliedSelectConditions(A, C) ||
++            haveImpliedSelectConditions(Inner->getOperand(0),
++                                        Inner->getOperand(1)) ||
++            (isa<FPMathOperator>(&I) && !Inner->isAssociative()))
++          return nullptr;
++
++        auto *NewOp = BinaryOperator::Create(Opcode, A, C);
++        if (isa<FPMathOperator>(&I)) {
++          FastMathFlags FMF = I.getFastMathFlags() & Inner->getFastMathFlags();
++          NewOp->setFastMathFlags(FMF);
++          I.setFastMathFlags(FMF);
++        }
++        InsertNewInstWith(NewOp, I.getIterator());
++        return NewOp;
++      };
++
++      // Transform: "(A op B) op C" ==> "(C op A) op B" if "C op A"
++      // simplifies, or group "A op C" if those are related selects.
+       if (Op0 && Op0->getOpcode() == Opcode) {
+         Value *A = Op0->getOperand(0);
+         Value *B = Op0->getOperand(1);
+         Value *C = I.getOperand(1);
+ 
+         // Does "C op A" simplify?
+-        if (Value *V = simplifyBinOp(Opcode, C, A, SQ.getWithInstruction(&I))) {
+-          // It simplifies to V.  Form "V op B".
++        Value *V = simplifyBinOp(Opcode, C, A, SQ.getWithInstruction(&I));
++        if (!V)
++          V = reassociateSelects(Op0, A, C);
++        if (V) {
++          // Form "V op B".
+           replaceOperand(I, 0, V);
+           replaceOperand(I, 1, B);
+           // Conservatively clear the optional flags, since they may not be
+@@ -604,15 +645,19 @@ bool InstCombinerImpl::SimplifyAssociativeOrCommutative(BinaryOperator &I) {
+         }
+       }
+ 
+-      // Transform: "A op (B op C)" ==> "B op (C op A)" if "C op A" simplifies.
++      // Transform: "A op (B op C)" ==> "B op (C op A)" if "C op A"
++      // simplifies, or group "A op C" if those are related selects.
+       if (Op1 && Op1->getOpcode() == Opcode) {
+         Value *A = I.getOperand(0);
+         Value *B = Op1->getOperand(0);
+         Value *C = Op1->getOperand(1);
+ 
+         // Does "C op A" simplify?
+-        if (Value *V = simplifyBinOp(Opcode, C, A, SQ.getWithInstruction(&I))) {
+-          // It simplifies to V.  Form "B op V".
++        Value *V = simplifyBinOp(Opcode, C, A, SQ.getWithInstruction(&I));
++        if (!V)
++          V = reassociateSelects(Op1, A, C);
++        if (V) {
++          // Form "B op V".
+           replaceOperand(I, 0, B);
+           replaceOperand(I, 1, V);
+           // Conservatively clear the optional flags, since they may not be
+@@ -1442,8 +1487,54 @@ Value *InstCombinerImpl::SimplifySelectsFeedingBinaryOp(BinaryOperator &I,
+       return NewSel;
+   }
+ 
+-  if (!True || !False)
++  if (!True || !False) {
++    // When the conditions differ, one arm of a select may determine the other
++    // select's value and simplify the binop. Keep the other arm as a binop.
++    if (LHSIsSelect && RHSIsSelect && A != D && LHS->hasOneUse() &&
++        RHS->hasOneUse()) {
++      auto foldImpliedSelectArm = [&](SelectInst *Outer, Value *Other,
++                                      bool OuterIsLHS) -> Value * {
++        Value *OuterCond = Outer->getCondition();
++        auto simplifyArm = [&](Value *Arm, bool CondIsTrue) -> Value * {
++          Value *OtherArm =
++              simplifySelectWithImpliedCond(Other, OuterCond, CondIsTrue);
++          if (OtherArm == Other)
++            return nullptr;
++          return OuterIsLHS ? simplifyBinOp(Opcode, Arm, OtherArm, FMF, Q)
++                            : simplifyBinOp(Opcode, OtherArm, Arm, FMF, Q);
++        };
++
++        Value *NewTrue = simplifyArm(Outer->getTrueValue(), true);
++        Value *NewFalse = simplifyArm(Outer->getFalseValue(), false);
++        if (!NewTrue && !NewFalse)
++          return nullptr;
++
++        auto createArm = [&](Value *Arm) {
++          return (OuterIsLHS || I.isCommutative())
++                     ? Builder.CreateBinOp(Opcode, Arm, Other)
++                     : Builder.CreateBinOp(Opcode, Other, Arm);
++        };
++        if (!NewTrue)
++          NewTrue = createArm(Outer->getTrueValue());
++        if (!NewFalse)
++          NewFalse = createArm(Outer->getFalseValue());
++
++        Value *NewV =
++            Builder.CreateSelect(OuterCond, NewTrue, NewFalse, I.getName());
++        if (auto *NewSI = dyn_cast<SelectInst>(NewV))
++          NewSI->copyMetadata(*Outer, {LLVMContext::MD_prof,
++                                       LLVMContext::MD_unpredictable,
++                                       LLVMContext::MD_dbg});
++        return NewV;
++      };
++
++      if (Value *V = foldImpliedSelectArm(cast<SelectInst>(RHS), LHS, false))
++        return V;
++      if (Value *V = foldImpliedSelectArm(cast<SelectInst>(LHS), RHS, true))
++        return V;
++    }
+     return nullptr;
++  }
+ 
+   Value *NewSI = Builder.CreateSelect(Cond, True, False, I.getName(), SI);
+   NewSI->takeName(&I);
+diff --git a/llvm/test/Transforms/InstCombine/logical-select-inseltpoison.ll b/llvm/test/Transforms/InstCombine/logical-select-inseltpoison.ll
+index ba2b623a47d6a..0145d0e977e06 100644
+--- a/llvm/test/Transforms/InstCombine/logical-select-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/logical-select-inseltpoison.ll
+@@ -426,11 +426,8 @@ define i1 @bools_multi_uses2(i1 %a, i1 %b, i1 %c) {
+ 
+ define i1 @bools_multi_uses2_logical(i1 %a, i1 %b, i1 %c) {
+ ; CHECK-LABEL: @bools_multi_uses2_logical(
+-; CHECK-NEXT:    [[NOT:%.*]] = xor i1 [[C:%.*]], true
+-; CHECK-NEXT:    [[AND1:%.*]] = select i1 [[NOT]], i1 [[A:%.*]], i1 false
+-; CHECK-NEXT:    [[AND2:%.*]] = select i1 [[C]], i1 [[B:%.*]], i1 false
+-; CHECK-NEXT:    [[OR:%.*]] = select i1 [[C]], i1 [[B]], i1 [[A]]
+-; CHECK-NEXT:    [[ADD:%.*]] = xor i1 [[AND1]], [[AND2]]
++; CHECK-NEXT:    [[OR:%.*]] = select i1 [[C:%.*]], i1 [[B:%.*]], i1 [[A:%.*]]
++; CHECK-NEXT:    [[ADD:%.*]] = select i1 [[C]], i1 [[B]], i1 [[A]]
+ ; CHECK-NEXT:    [[AND3:%.*]] = select i1 [[OR]], i1 [[ADD]], i1 false
+ ; CHECK-NEXT:    ret i1 [[AND3]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/logical-select.ll b/llvm/test/Transforms/InstCombine/logical-select.ll
+index 568a6b6f31948..2590a432872ca 100644
+--- a/llvm/test/Transforms/InstCombine/logical-select.ll
++++ b/llvm/test/Transforms/InstCombine/logical-select.ll
+@@ -431,11 +431,8 @@ define i1 @bools_multi_uses2(i1 %a, i1 %b, i1 %c) {
+ 
+ define i1 @bools_multi_uses2_logical(i1 %a, i1 %b, i1 %c) {
+ ; CHECK-LABEL: @bools_multi_uses2_logical(
+-; CHECK-NEXT:    [[NOT:%.*]] = xor i1 [[C:%.*]], true
+-; CHECK-NEXT:    [[AND1:%.*]] = select i1 [[NOT]], i1 [[A:%.*]], i1 false
+-; CHECK-NEXT:    [[AND2:%.*]] = select i1 [[C]], i1 [[B:%.*]], i1 false
+-; CHECK-NEXT:    [[OR:%.*]] = select i1 [[C]], i1 [[B]], i1 [[A]]
+-; CHECK-NEXT:    [[ADD:%.*]] = xor i1 [[AND1]], [[AND2]]
++; CHECK-NEXT:    [[OR:%.*]] = select i1 [[C:%.*]], i1 [[B:%.*]], i1 [[A:%.*]]
++; CHECK-NEXT:    [[ADD:%.*]] = select i1 [[C]], i1 [[B]], i1 [[A]]
+ ; CHECK-NEXT:    [[AND3:%.*]] = select i1 [[OR]], i1 [[ADD]], i1 false
+ ; CHECK-NEXT:    ret i1 [[AND3]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/select-sum.ll b/llvm/test/Transforms/InstCombine/select-sum.ll
+new file mode 100644
+index 0000000000000..3b9a917ba01bc
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/select-sum.ll
+@@ -0,0 +1,38 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes=instcombine -S | FileCheck %s
++
++target datalayout = "e-p:64:64-p1:16:16-p2:32:32:32-p3:64:64:64"
++
++; Test transform of:
++;   ((P == A ? X : Def) + Base) + (P == B ? Y : 0)
++; into:
++;   Base + (P == A ? X : (Def + (P == B ? Y : 0))
++define i32 @test_sum_selects(i32 %p, i32 %x, i32 %y, i32 %default, i32 %base) !prof !0 {
++; CHECK-LABEL: define i32 @test_sum_selects(
++; CHECK-SAME: i32 [[P:%.*]], i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[DEFAULT:%.*]], i32 [[BASE:%.*]]) !prof [[PROF0:![0-9]+]] {
++; CHECK-NEXT:    [[C0:%.*]] = icmp eq i32 [[P]], 288
++; CHECK-NEXT:    [[C1:%.*]] = icmp eq i32 [[P]], 128
++; CHECK-NEXT:    [[SEL1:%.*]] = select i1 [[C1]], i32 [[Y]], i32 0, !prof [[PROF1:![0-9]+]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[DEFAULT]], [[SEL1]]
++; CHECK-NEXT:    [[TMP2:%.*]] = select i1 [[C0]], i32 [[X]], i32 [[TMP1]], !prof [[PROF2:![0-9]+]]
++; CHECK-NEXT:    [[SUM2:%.*]] = add i32 [[TMP2]], [[BASE]]
++; CHECK-NEXT:    ret i32 [[SUM2]]
++;
++  %c0 = icmp eq i32 %p, 288
++  %sel0 = select i1 %c0, i32 %x, i32 %default, !prof !1
++  %c1 = icmp eq i32 %p, 128
++  %sel1 = select i1 %c1, i32 %y, i32 0, !prof !2
++  %sum1 = add i32 %sel0, %base
++  %sum2 = add i32 %sum1, %sel1
++  ret i32 %sum2
++}
++
++!0 = !{!"function_entry_count", i64 1000}
++!1 = !{!"branch_weights", i32 10, i32 90}
++!2 = !{!"branch_weights", i32 20, i32 80}
++
++;.
++; CHECK: [[PROF0]] = !{!"function_entry_count", i64 1000}
++; CHECK: [[PROF1]] = !{!"branch_weights", i32 20, i32 80}
++; CHECK: [[PROF2]] = !{!"branch_weights", i32 10, i32 90}
++;.

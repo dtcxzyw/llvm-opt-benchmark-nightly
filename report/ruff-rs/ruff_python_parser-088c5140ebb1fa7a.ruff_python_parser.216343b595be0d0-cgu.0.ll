@@ -205,8 +205,8 @@ bb.ga:                                            ; preds = %bb.fw
 bb.gb:                                            ; preds = %bb.fw, %bb.ga
   %.sroa.11.0.i = phi i32 [ %.val150.i, %bb.fw ], [ %i.qe, %bb.ga ] ; 3 uses
   %i.qg = and i16 %i.ia, 2                        ; 2 uses
-  %.not.i.i273.i = icmp eq i16 %i.qg, 0           ; 6 uses
-  %.not.i2.i.i = trunc i16 %i.ia to i1            ; 6 uses
+  %.not.i.i273.i = icmp eq i16 %i.qg, 0           ; 7 uses
+  %.not.i2.i.i = trunc i16 %i.ia to i1            ; 5 uses
   %..i.i = select i1 %.not.i2.i.i, ptr @643, ptr @642
   %.1.i.i = select i1 %.not.i2.i.i, ptr @641, ptr @640 ; 2 uses
   %.sroa.5.0.i.i.neg = select i1 %.not.i.i273.i, i64 -1, i64 -3
@@ -430,7 +430,7 @@ bb.gq:                                            ; preds = %bb.gp, %.split7.i28
   call void @llvm.experimental.noalias.scope.decl(metadata !710), !noalias !623
   call void @llvm.experimental.noalias.scope.decl(metadata !711), !noalias !623
   %i.sy = icmp samesign ult i64 %i.sw, 64
-  br i1 %i.sy, label %3, label %bb.gr
+  br i1 %i.sy, label %.peel.next.i.i.i, label %bb.gr
 
 bb.gr:                                            ; preds = %bb.gq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !712
@@ -671,27 +671,19 @@ _RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.thread.
   %.sroa.02.0.vec.insert.i.i.i = insertelement <16 x i8> <i8 poison, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef>, i8 %i.sz, i64 0
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsiVHPhtDv1FH_6memchr6memmem6FinderECsb6FLkjZuKG_18ruff_python_parser.exit15.i.i
 
-3:                                                ; preds = %bb.gq
-  %4 = load i8, ptr %.sroa.0.0.i274.i, align 1, !alias.scope !727, !noalias !728, !noundef !15
-  %5 = zext i8 %4 to i32                          ; 2 uses
-  br i1 %.not.i.i273.i, label %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i, label %.peel.next.i.i.i
+.peel.next.i.i.i:                                 ; preds = %bb.gq
+  %3 = load i8, ptr %.sroa.0.0.i274.i, align 1, !alias.scope !727, !noalias !728, !noundef !15
+  %4 = zext i8 %3 to i32                          ; 2 uses
+  %i.vu = shl nuw nsw i32 %4, 2
+  %5 = select i1 %.not.i2.i.i, i32 102, i32 117
+  %i.vv = add nuw nsw i32 %5, %i.vu
+  %.sroa.6.1.lcssa.i.neg.i.i = select i1 %.not.i.i273.i, i32 2147483647, i32 2147483644
+  %i.vw = select i1 %.not.i.i273.i, i32 %4, i32 %i.vv
+  %6 = ptrtoint ptr %i.sx to i64
+  %7 = icmp samesign ugt i64 %.sroa.5.0.i.i, %i.sw
+  br i1 %7, label %_RNvNtCsiVHPhtDv1FH_6memchr6memmem4find.exit.i.thread, label %.lr.ph.i.i.i.i
 
-.peel.next.i.i.i:                                 ; preds = %3
-  %6 = select i1 %.not.i2.i.i, i32 68, i32 78
-  %i.vu = shl nuw nsw i32 %5, 2
-  %i.vv = add nuw nsw i32 %6, %i.vu
-  %i.vw = select i1 %.not.i2.i.i, i32 34, i32 39
-  %7 = add nuw nsw i32 %i.vv, %i.vw
-  br label %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i
-
-_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i: ; preds = %.peel.next.i.i.i, %3
-  %.sroa.6.1.lcssa.i.neg.i.i = phi i32 [ -1, %3 ], [ -4, %.peel.next.i.i.i ]
-  %.sroa.0.1.lcssa.i.i.i = phi i32 [ %5, %3 ], [ %7, %.peel.next.i.i.i ]
-  %8 = ptrtoint ptr %i.sx to i64
-  %9 = icmp samesign ugt i64 %.sroa.5.0.i.i, %i.sw
-  br i1 %9, label %_RNvNtCsiVHPhtDv1FH_6memchr6memmem4find.exit.i.thread, label %.lr.ph.i.i.i.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i
+.lr.ph.i.i.i.i:                                   ; preds = %.peel.next.i.i.i
   %i.vx = load i8, ptr %i.sx, align 1, !alias.scope !729, !noalias !730, !noundef !15
   %i.vy = zext i8 %i.vx to i32                    ; 2 uses
   br i1 %.not.i.i273.i, label %.preheader.i.preheader.i.i.i, label %.lr.ph.i.i.i.i.2
@@ -718,7 +710,7 @@ _RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i: ; 
 .preheader.i.i.i.i:                               ; preds = %bb.hl, %.preheader.i.preheader.i.i.i
   %.sroa.013.1.i.i.i.i = phi i32 [ %i.wu, %bb.hl ], [ %.lcssa2235, %.preheader.i.preheader.i.i.i ] ; 2 uses
   %.sroa.0.0.i.i.i.i = phi ptr [ %i.wv, %bb.hl ], [ %i.sx, %.preheader.i.preheader.i.i.i ] ; 6 uses
-  %i.wl = icmp eq i32 %.sroa.0.1.lcssa.i.i.i, %.sroa.013.1.i.i.i.i
+  %i.wl = icmp eq i32 %i.vw, %.sroa.013.1.i.i.i.i
   br i1 %i.wl, label %bb.hk, label %bb.hj, !prof !14
 
 bb.hj:                                            ; preds = %.noexc296.i, %.preheader.i.i.i.i
@@ -737,7 +729,7 @@ bb.hl:                                            ; preds = %bb.hj
   %i.wo = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %.sroa.5.0.i.i
   %i.wp = load i8, ptr %i.wo, align 1, !alias.scope !729, !noalias !730, !noundef !15
   %i.wq = zext i8 %i.wn to i32
-  %.neg.i.i = mul nsw i32 %.sroa.6.1.lcssa.i.neg.i.i, %i.wq
+  %.neg.i.i = mul i32 %.sroa.6.1.lcssa.i.neg.i.i, %i.wq
   %i.wr = add i32 %.neg.i.i, %.sroa.013.1.i.i.i.i
   %i.ws = shl i32 %i.wr, 1
   %i.wt = zext i8 %i.wp to i32
@@ -747,7 +739,7 @@ bb.hl:                                            ; preds = %bb.hj
 
 _RNvNtCsiVHPhtDv1FH_6memchr6memmem4find.exit.i.thread281: ; preds = %.noexc296.i
   %i.ww = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64
-  %i.wx = sub i64 %i.ww, %8
+  %i.wx = sub i64 %i.ww, %6
   br label %bb.hm
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsiVHPhtDv1FH_6memchr6memmem6FinderECsb6FLkjZuKG_18ruff_python_parser.exit15.i.i: ; preds = %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.thread.i.i.i.i, %.noexc295.i, %_RNvMNtNtNtNtCsiVHPhtDv1FH_6memchr4arch6x86_644sse210packedpairNtB2_6Finder14with_pair_impl.exit.i.i.i.i
@@ -848,7 +840,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCsb6FLkjZuKG_18ruff_python_parser
   store i64 %i.xr, ptr %i.df, align 8, !alias.scope !737, !noalias !738
   br label %_RNvNtCsiVHPhtDv1FH_6memchr6memmem4find.exit.i.thread
 
-_RNvNtCsiVHPhtDv1FH_6memchr6memmem4find.exit.i.thread: ; preds = %bb.hj, %_RNvMsi_NtCsb6FLkjZuKG_18ruff_python_parser5errorNtB5_26UnsupportedSyntaxErrorKind14is_unsupported.exit.i.i, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCsb6FLkjZuKG_18ruff_python_parser5error22UnsupportedSyntaxErrorE8push_mutBI_.exit.i.i, %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i, %_RNvNtCsiVHPhtDv1FH_6memchr6memmem4find.exit.i
+_RNvNtCsiVHPhtDv1FH_6memchr6memmem4find.exit.i.thread: ; preds = %bb.hj, %_RNvMsi_NtCsb6FLkjZuKG_18ruff_python_parser5errorNtB5_26UnsupportedSyntaxErrorKind14is_unsupported.exit.i.i, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCsb6FLkjZuKG_18ruff_python_parser5error22UnsupportedSyntaxErrorE8push_mutBI_.exit.i.i, %.peel.next.i.i.i, %_RNvNtCsiVHPhtDv1FH_6memchr6memmem4find.exit.i
   call void @llvm.experimental.noalias.scope.decl(metadata !741), !noalias !623
   %.val.i.i = load ptr, ptr %i.cg, align 8, !alias.scope !742, !noalias !627, !nonnull !15, !noundef !15 ; 7 uses
   %.val1.i.i = load i64, ptr %i.cf, align 8, !alias.scope !742, !noalias !627, !noundef !15 ; 11 uses

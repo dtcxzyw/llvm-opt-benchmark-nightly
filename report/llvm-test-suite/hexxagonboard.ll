@@ -202,9 +202,9 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.ap = icmp ne i32 %.061264, 9                 ; 2 uses
   %i.aq = add nuw nsw i32 %.061264, 5             ; 2 uses
   %i.ar = add nsw i32 %.061264, -4                ; 2 uses
-  %i.as = mul nuw nsw i32 %i.ao, 9
-  %.1.i179.v = select i1 %i.ak, i32 -17, i32 -14
-  %i.at = add nsw i32 %.1.i179.v, %i.as           ; 2 uses
+  %i.as = mul nuw nsw i32 %i.ao, 9                ; 2 uses
+  %.1.i179.v = select i1 %i.ak, i32 -17, i32 -14  ; 2 uses
+  %i.at = add nsw i32 %.1.i179.v, %i.as
   %i.au = sext i1 %i.r to i32
   %not..i181 = xor i1 %i.f, true                  ; 3 uses
   %i.av = sext i1 %not..i181 to i32
@@ -220,7 +220,8 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %.2.i214 = add nsw i32 %i.bb, %i.ay
   %.3.i216 = add nsw i32 %.2.i214, %.2.i214.v     ; 3 uses
   %i.bc = icmp eq i32 %.061264, 7
-  %invariant.op.a = add i32 %i.at, %.3.i182
+  %invariant.op = add nsw i32 %.1.i179.v, %i.as
+  %invariant.op.a = add i32 %invariant.op, %.3.i182
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.d

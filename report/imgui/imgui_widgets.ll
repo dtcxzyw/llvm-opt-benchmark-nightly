@@ -205,43 +205,45 @@ declare noundef zeroext i1 @_ZN5ImGui8ShortcutEiij(i32 noundef, i32 noundef, i32
 define internal fastcc noundef zeroext i1 @_ZL24InputTextFilterCharacterP12ImGuiContextP19ImGuiInputTextStatePjPFiP26ImGuiInputTextCallbackDataEPvb(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, i1 noundef zeroext %5) unnamed_addr #5 {
 bb.a:
   %6 = alloca %struct.ImGuiInputTextCallbackData, align 8 ; 14 uses
-  %i.a = load i32, ptr %2, align 4, !tbaa !208    ; 4 uses
+  %i.a = load i32, ptr %2, align 4, !tbaa !208
+  %.fr = freeze i32 %i.a                          ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !389  ; 12 uses
-  %i.d = icmp ult i32 %i.a, 32                    ; 2 uses
+  %i.d = icmp ult i32 %.fr, 32                    ; 2 uses
   br i1 %i.d, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = icmp eq i32 %i.a, 10                     ; 2 uses
+  %i.e = icmp eq i32 %.fr, 10                     ; 2 uses
   %i.f = and i32 %i.c, 67108864                   ; 2 uses
-  %i.g = icmp ne i32 %i.f, 0                      ; 2 uses
-  %7 = select i1 %i.e, i1 %i.g, i1 false          ; 2 uses
+  %i.g = icmp ne i32 %i.f, 0                      ; 3 uses
   %or.cond = and i1 %5, %i.e
   br i1 %or.cond, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp eq i32 %i.f, 0
-  br i1 %i.h, label %bb.d, label %bb.e
+  br i1 %i.h, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c
   store i32 32, ptr %2, align 4, !tbaa !208
-  br label %bb.e
+  br label %.thread
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.0130 = phi i32 [ 32, %bb.d ], [ 10, %bb.c ], [ %i.a, %bb.b ] ; 3 uses
-  %.0127.shrunk = phi i1 [ true, %bb.d ], [ %7, %bb.c ], [ %7, %bb.b ]
-  %i.i = icmp eq i32 %.0130, 10
+bb.e:                                             ; preds = %bb.b
+  %i.i = icmp eq i32 %.fr, 10
   %i.j = select i1 %i.i, i1 %i.g, i1 false
-  %8 = or i1 %.0127.shrunk, %i.j
-  %i.k = icmp eq i32 %.0130, 9
+  %i.k = icmp eq i32 %.fr, 9
   %i.l = and i32 %i.c, 32
   %i.m = icmp ne i32 %i.l, 0
-  %i.n = select i1 %i.k, i1 %i.m, i1 false
-  %9 = or i1 %i.n, %8
-  br i1 %9, label %bb.f, label %.critedge
+  %i.n = select i1 %i.k, i1 %i.m, i1 %i.j
+  %7 = select i1 %i.e, i1 %i.g, i1 %i.n
+  br label %.thread
 
-bb.f:                                             ; preds = %bb.e, %bb.a
-  %.1131 = phi i32 [ %.0130, %bb.e ], [ %i.a, %bb.a ] ; 7 uses
+.thread:                                          ; preds = %bb.c, %bb.d, %bb.e
+  %.0127.shrunk169 = phi i1 [ %7, %bb.e ], [ %i.g, %bb.c ], [ true, %bb.d ]
+  %.0130168 = phi i32 [ %.fr, %bb.e ], [ 10, %bb.c ], [ 32, %bb.d ]
+  br i1 %.0127.shrunk169, label %bb.f, label %.critedge
+
+bb.f:                                             ; preds = %.thread, %bb.a
+  %.1131 = phi i32 [ %.0130168, %.thread ], [ %.fr, %bb.a ] ; 7 uses
   br i1 %5, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -421,8 +423,8 @@ bb.v:                                             ; preds = %bb.u, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #41
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.p, %bb.p, %bb.p, %bb.n, %switch.early.test156, %switch.early.test, %.critedge162, %bb.h, %bb.g, %bb.e, %bb.u, %bb.v
-  %.5138 = phi i1 [ false, %bb.e ], [ false, %bb.g ], [ false, %bb.n ], [ true, %bb.v ], [ false, %bb.u ], [ false, %.critedge162 ], [ false, %bb.h ], [ false, %switch.early.test156 ], [ false, %switch.early.test ], [ false, %bb.p ], [ false, %bb.p ], [ false, %bb.p ]
+.critedge:                                        ; preds = %bb.p, %bb.p, %bb.p, %bb.n, %switch.early.test156, %switch.early.test, %.critedge162, %bb.h, %bb.g, %.thread, %bb.u, %bb.v
+  %.5138 = phi i1 [ false, %.thread ], [ false, %bb.g ], [ false, %bb.n ], [ true, %bb.v ], [ false, %bb.u ], [ false, %.critedge162 ], [ false, %bb.h ], [ false, %switch.early.test156 ], [ false, %switch.early.test ], [ false, %bb.p ], [ false, %bb.p ], [ false, %bb.p ]
   ret i1 %.5138
 }
 

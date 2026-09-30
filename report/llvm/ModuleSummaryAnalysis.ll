@@ -205,13 +205,12 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %bb.
   %i.pg = and i1 %i.pc, %not..i
   %i.ph = call noundef i32 @_ZNK4llvm12GlobalObject18getVCallVisibilityEv(ptr noundef nonnull align 8 dereferenceable(89) %i.lh) #23
   %i.pi = zext i1 %i.pc to i32
-  %35 = select i1 %i.pg, i32 2, i32 0
-  %i.pj = select i1 %i.pf, i32 4, i32 0
+  %i.pj = select i1 %i.pg, i32 2, i32 0
   %i.pk = shl i32 %i.ph, 3
   %i.pl = and i32 %i.pk, 24
-  %36 = or disjoint i32 %i.pj, %i.pi
-  %i.pm = or disjoint i32 %36, %35
-  %.sroa.062.0.insert.ext.i = or disjoint i32 %i.pm, %i.pl
+  %35 = select i1 %i.pf, i32 4, i32 %i.pj
+  %i.pm = or disjoint i32 %i.pl, %i.pi
+  %.sroa.062.0.insert.ext.i = or disjoint i32 %i.pm, %35
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   call void @llvm.experimental.noalias.scope.decl(metadata !645)
   %i.pn = load i32, ptr %i.gl, align 8, !tbaa !189, !noalias !645 ; 3 uses

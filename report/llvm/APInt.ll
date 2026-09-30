@@ -204,10 +204,10 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i:         ; preds = %_ZN4llvm5APIntD2Ev.
   %i.df = zext nneg i32 %i.de to i64
   %i.dg = lshr i64 -1, %i.df
   %i.dh = icmp eq i32 %i.cn, 0
-  %.04.i.i = select i1 %i.dh, i64 0, i64 %i.dg, !prof !27
-  %5 = and i64 %storemerge.i, %.04.i.i            ; 3 uses
-  store i64 %5, ptr %0, align 8, !tbaa !24
-  %i.di = inttoptr i64 %5 to ptr
+  %5 = and i64 %storemerge.i, %i.dg
+  %6 = select i1 %i.dh, i64 0, i64 %5, !prof !27  ; 3 uses
+  store i64 %6, ptr %0, align 8, !tbaa !24
+  %i.di = inttoptr i64 %6 to ptr
   br label %_ZN4llvm5APIntlSEj.exit
 
 .lr.ph.i.i28:                                     ; preds = %_ZN4llvm5APIntD2Ev.exit
@@ -288,7 +288,7 @@ _ZN4llvm5APInt11shlSlowCaseEj.exit:               ; preds = %.lr.ph.i, %.lr.ph.i
   br label %_ZN4llvm5APIntlSEj.exit
 
 _ZN4llvm5APIntlSEj.exit:                          ; preds = %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i, %_ZN4llvm5APInt11shlSlowCaseEj.exit
-  %i.ex = phi i64 [ %5, %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i ], [ %i.da, %_ZN4llvm5APInt11shlSlowCaseEj.exit ]
+  %i.ex = phi i64 [ %6, %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i ], [ %i.da, %_ZN4llvm5APInt11shlSlowCaseEj.exit ]
   %i.ey = phi ptr [ %i.di, %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i ], [ %i.cs, %_ZN4llvm5APInt11shlSlowCaseEj.exit ] ; 5 uses
   %i.ez = load i32, ptr %i.a, align 8, !tbaa !23
   %i.fa = icmp ult i32 %i.ez, 65

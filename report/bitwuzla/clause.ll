@@ -204,9 +204,6 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 3636
   %i.k = load i32, ptr %i.j, align 4
   %.not = icmp sgt i32 %spec.select, %i.k
-  %3 = select i1 %1, i32 2048, i32 0
-  %4 = select i1 %1, i1 %.not, i1 false
-  %.021 = select i1 %4, i32 0, i32 256
   %sext42 = shl i64 %i.g, 30                      ; 2 uses
   %i.l = ashr exact i64 %sext42, 30
   %i.m = and i64 %i.l, -4
@@ -224,8 +221,9 @@ bb.a:
   store i64 %i.v, ptr %i.t, align 8, !tbaa !167
   store i64 %i.v, ptr %i.r, align 8, !tbaa !14
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 3 uses
-  %5 = or disjoint i32 %3, %.021                  ; 2 uses
-  store i32 %5, ptr %i.w, align 8
+  %3 = select i1 %.not, i32 2048, i32 2304
+  %4 = select i1 %1, i32 %3, i32 256              ; 2 uses
+  store i32 %4, ptr %i.w, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 12 ; 2 uses
   store i32 %spec.select, ptr %i.x, align 4, !tbaa !9
   %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 4 uses
@@ -421,7 +419,7 @@ _ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx
   br label %_ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE9push_backERKS2_.exit
 
 _ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE9push_backERKS2_.exit: ; preds = %_ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, %bb.d
-  %i.cp = phi i32 [ %i.co, %_ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %5, %bb.d ]
+  %i.cp = phi i32 [ %i.co, %_ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %4, %bb.d ]
   %or.cond.i = icmp eq i32 %i.cp, 2048
   br i1 %or.cond.i, label %bb.i, label %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread
 

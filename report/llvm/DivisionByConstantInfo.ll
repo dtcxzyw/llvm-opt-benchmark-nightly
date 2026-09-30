@@ -202,9 +202,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i:         ; preds = %.critedge
   %i.cc = zext nneg i32 %i.cb to i64
   %i.cd = lshr i64 -1, %i.cc
   %i.ce = icmp eq i32 %i.bv, 0
-  %.04.i.i = select i1 %i.ce, i64 0, i64 %i.cd, !prof !13
-  %15 = and i64 %storemerge.i, %.04.i.i
-  store i64 %15, ptr %11, align 8, !tbaa !10
+  %15 = and i64 %storemerge.i, %i.cd
+  %16 = select i1 %i.ce, i64 0, i64 %15, !prof !13
+  store i64 %16, ptr %11, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit
 
 bb.n:                                             ; preds = %.critedge
@@ -226,9 +226,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i15:       ; preds = %_ZN4llvm5APIntlSEj.
   %i.cm = zext nneg i32 %i.cl to i64
   %i.cn = lshr i64 -1, %i.cm
   %i.co = icmp eq i32 %i.cf, 0
-  %.04.i.i17 = select i1 %i.co, i64 0, i64 %i.cn, !prof !13
-  %16 = and i64 %storemerge.i16, %.04.i.i17
-  store i64 %16, ptr %12, align 8, !tbaa !10
+  %17 = and i64 %storemerge.i16, %i.cn
+  %18 = select i1 %i.co, i64 0, i64 %17, !prof !13
+  store i64 %18, ptr %12, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit18
 
 bb.o:                                             ; preds = %_ZN4llvm5APIntlSEj.exit
@@ -260,9 +260,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i19:       ; preds = %bb.q
   %i.da = zext nneg i32 %i.cz to i64
   %i.db = lshr i64 -1, %i.da
   %i.dc = icmp eq i32 %i.ct, 0
-  %.04.i.i21 = select i1 %i.dc, i64 0, i64 %i.db, !prof !13
-  %17 = and i64 %storemerge.i20, %.04.i.i21
-  store i64 %17, ptr %13, align 8, !tbaa !10
+  %19 = and i64 %storemerge.i20, %i.db
+  %20 = select i1 %i.dc, i64 0, i64 %19, !prof !13
+  store i64 %20, ptr %13, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit22
 
 bb.r:                                             ; preds = %bb.q
@@ -284,9 +284,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i23:       ; preds = %_ZN4llvm5APIntlSEj.
   %i.dk = zext nneg i32 %i.dj to i64
   %i.dl = lshr i64 -1, %i.dk
   %i.dm = icmp eq i32 %i.dd, 0
-  %.04.i.i25 = select i1 %i.dm, i64 0, i64 %i.dl, !prof !13
-  %18 = and i64 %storemerge.i24, %.04.i.i25
-  store i64 %18, ptr %14, align 8, !tbaa !10
+  %21 = and i64 %storemerge.i24, %i.dl
+  %22 = select i1 %i.dm, i64 0, i64 %21, !prof !13
+  store i64 %22, ptr %14, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit26
 
 bb.s:                                             ; preds = %_ZN4llvm5APIntlSEj.exit22
@@ -689,9 +689,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i:         ; preds = %bb.z
   %i.en = zext nneg i32 %i.em to i64
   %i.eo = lshr i64 -1, %i.en
   %i.ep = icmp eq i32 %i.eg, 0
-  %.04.i.i = select i1 %i.ep, i64 0, i64 %i.eo, !prof !13
-  %30 = and i64 %storemerge.i, %.04.i.i
-  store i64 %30, ptr %14, align 8, !tbaa !10
+  %30 = and i64 %storemerge.i, %i.eo
+  %31 = select i1 %i.ep, i64 0, i64 %30, !prof !13
+  store i64 %31, ptr %14, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit
 
 bb.aa:                                            ; preds = %bb.z
@@ -714,9 +714,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i48:       ; preds = %_ZN4llvm5APIntlSEj.
   %i.ey = zext nneg i32 %i.ex to i64
   %i.ez = lshr i64 -1, %i.ey
   %i.fa = icmp eq i32 %i.er, 0
-  %.04.i.i50 = select i1 %i.fa, i64 0, i64 %i.ez, !prof !13
-  %31 = and i64 %storemerge.i49, %.04.i.i50
-  store i64 %31, ptr %15, align 8, !tbaa !10
+  %32 = and i64 %storemerge.i49, %i.ez
+  %33 = select i1 %i.fa, i64 0, i64 %32, !prof !13
+  store i64 %33, ptr %15, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit51
 
 bb.ab:                                            ; preds = %_ZN4llvm5APIntlSEj.exit
@@ -740,9 +740,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i52:       ; preds = %bb.ac
   %i.fh = zext nneg i32 %i.fg to i64
   %i.fi = lshr i64 -1, %i.fh
   %i.fj = icmp eq i32 %i.eg, 0
-  %.04.i.i54 = select i1 %i.fj, i64 0, i64 %i.fi, !prof !13
-  %32 = and i64 %storemerge.i53, %.04.i.i54
-  store i64 %32, ptr %14, align 8, !tbaa !10
+  %34 = and i64 %storemerge.i53, %i.fi
+  %35 = select i1 %i.fj, i64 0, i64 %34, !prof !13
+  store i64 %35, ptr %14, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit55
 
 bb.ad:                                            ; preds = %bb.ac
@@ -764,9 +764,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i56:       ; preds = %_ZN4llvm5APIntlSEj.
   %i.fr = zext nneg i32 %i.fq to i64
   %i.fs = lshr i64 -1, %i.fr
   %i.ft = icmp eq i32 %i.fk, 0
-  %.04.i.i58 = select i1 %i.ft, i64 0, i64 %i.fs, !prof !13
-  %33 = and i64 %storemerge.i57, %.04.i.i58
-  store i64 %33, ptr %15, align 8, !tbaa !10
+  %36 = and i64 %storemerge.i57, %i.fs
+  %37 = select i1 %i.ft, i64 0, i64 %36, !prof !13
+  store i64 %37, ptr %15, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit59
 
 bb.ae:                                            ; preds = %_ZN4llvm5APIntlSEj.exit55
@@ -900,9 +900,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i66:       ; preds = %bb.ar
   %i.hf = zext nneg i32 %i.he to i64
   %i.hg = lshr i64 -1, %i.hf
   %i.hh = icmp eq i32 %i.gy, 0
-  %.04.i.i68 = select i1 %i.hh, i64 0, i64 %i.hg, !prof !13
-  %34 = and i64 %storemerge.i67, %.04.i.i68
-  store i64 %34, ptr %16, align 8, !tbaa !10
+  %38 = and i64 %storemerge.i67, %i.hg
+  %39 = select i1 %i.hh, i64 0, i64 %38, !prof !13
+  store i64 %39, ptr %16, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit69
 
 bb.as:                                            ; preds = %bb.ar
@@ -925,9 +925,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i70:       ; preds = %_ZN4llvm5APIntlSEj.
   %i.hq = zext nneg i32 %i.hp to i64
   %i.hr = lshr i64 -1, %i.hq
   %i.hs = icmp eq i32 %i.hj, 0
-  %.04.i.i72 = select i1 %i.hs, i64 0, i64 %i.hr, !prof !13
-  %35 = and i64 %storemerge.i71, %.04.i.i72
-  store i64 %35, ptr %17, align 8, !tbaa !10
+  %40 = and i64 %storemerge.i71, %i.hr
+  %41 = select i1 %i.hs, i64 0, i64 %40, !prof !13
+  store i64 %41, ptr %17, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit73
 
 bb.at:                                            ; preds = %_ZN4llvm5APIntlSEj.exit69
@@ -963,9 +963,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i74:       ; preds = %bb.aw
   %i.ie = zext nneg i32 %i.id to i64
   %i.if = lshr i64 -1, %i.ie
   %i.ig = icmp eq i32 %i.hx, 0
-  %.04.i.i76 = select i1 %i.ig, i64 0, i64 %i.if, !prof !13
-  %36 = and i64 %storemerge.i75, %.04.i.i76
-  store i64 %36, ptr %16, align 8, !tbaa !10
+  %42 = and i64 %storemerge.i75, %i.if
+  %43 = select i1 %i.ig, i64 0, i64 %42, !prof !13
+  store i64 %43, ptr %16, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit77
 
 bb.ax:                                            ; preds = %bb.aw
@@ -987,9 +987,9 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i78:       ; preds = %_ZN4llvm5APIntlSEj.
   %i.io = zext nneg i32 %i.in to i64
   %i.ip = lshr i64 -1, %i.io
   %i.iq = icmp eq i32 %i.ih, 0
-  %.04.i.i80 = select i1 %i.iq, i64 0, i64 %i.ip, !prof !13
-  %37 = and i64 %storemerge.i79, %.04.i.i80
-  store i64 %37, ptr %17, align 8, !tbaa !10
+  %44 = and i64 %storemerge.i79, %i.ip
+  %45 = select i1 %i.iq, i64 0, i64 %44, !prof !13
+  store i64 %45, ptr %17, align 8, !tbaa !10
   br label %_ZN4llvm5APIntlSEj.exit81
 
 bb.ay:                                            ; preds = %_ZN4llvm5APIntlSEj.exit77

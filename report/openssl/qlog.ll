@@ -202,7 +202,7 @@ is_name_char.exit43:                              ; preds = %bb.f
 
 is_name_char.exit.thread:                         ; preds = %is_name_char.exit43, %is_name_char.exit43, %is_name_char.exit, %is_name_char.exit, %lex_peek_char.exit.thread, %bb.f, %lex_peek_char.exit39, %bb.e
   %.sroa.0103.0 = phi ptr [ %.021.i, %is_name_char.exit43 ], [ %i.o, %is_name_char.exit ], [ %i.o, %lex_peek_char.exit39 ], [ %i.o, %bb.e ], [ %.021.i, %bb.f ], [ %.021.i, %lex_peek_char.exit.thread ], [ %i.o, %is_name_char.exit ], [ %.021.i, %is_name_char.exit43 ] ; 9 uses
-  %.0.shrunk = phi i1 [ true, %is_name_char.exit43 ], [ %i.n, %is_name_char.exit ], [ %i.n, %lex_peek_char.exit39 ], [ %i.n, %bb.e ], [ true, %bb.f ], [ true, %lex_peek_char.exit.thread ], [ %i.n, %is_name_char.exit ], [ true, %is_name_char.exit43 ] ; 14 uses
+  %.0.shrunk = phi i1 [ true, %is_name_char.exit43 ], [ %i.n, %is_name_char.exit ], [ %i.n, %lex_peek_char.exit39 ], [ %i.n, %bb.e ], [ true, %bb.f ], [ true, %lex_peek_char.exit.thread ], [ %i.n, %is_name_char.exit ], [ true, %is_name_char.exit43 ] ; 8 uses
   %i.ab = ptrtoint ptr %.0.i35.ptr to i64         ; 2 uses
   %i.ac = ptrtoint ptr %.sroa.0103.0 to i64       ; 2 uses
   %i.ad = sub i64 %i.ab, %i.ac                    ; 2 uses
@@ -216,20 +216,8 @@ lex_match.exit:                                   ; preds = %is_name_char.exit.t
 
 bb.g:                                             ; preds = %lex_match.exit
   %i.ae = and i64 %.sroa.0.0, -255
-  %masksel.i = select i1 %.0.shrunk, i64 2, i64 0
-  %storemerge.i.i = or disjoint i64 %masksel.i, %i.ae
-  %masksel176.i = select i1 %.0.shrunk, i64 4, i64 0
-  %storemerge.i61.i = or disjoint i64 %storemerge.i.i, %masksel176.i
-  %masksel177.i = select i1 %.0.shrunk, i64 8, i64 0
-  %storemerge.i76.i = or disjoint i64 %storemerge.i61.i, %masksel177.i
-  %masksel178.i = select i1 %.0.shrunk, i64 16, i64 0
-  %storemerge.i91.i = or disjoint i64 %storemerge.i76.i, %masksel178.i
-  %masksel179.i = select i1 %.0.shrunk, i64 32, i64 0
-  %masksel180.i = select i1 %.0.shrunk, i64 64, i64 0
-  %.masked = or disjoint i64 %storemerge.i91.i, %masksel179.i
-  %2 = or i64 %.masked, %masksel180.i
-  %masksel181.i = select i1 %.0.shrunk, i64 128, i64 0
-  %storemerge.i136.i = or disjoint i64 %2, %masksel181.i
+  %masksel181.i = select i1 %.0.shrunk, i64 254, i64 0
+  %storemerge.i136.i = or disjoint i64 %masksel181.i, %i.ae
   br label %.backedge.backedge
 
 lex_match.exit.thread:                            ; preds = %is_name_char.exit.thread, %lex_match.exit

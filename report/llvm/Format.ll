@@ -205,18 +205,14 @@ bb.c:                                             ; preds = %bb.a, %bb.a
   %i.o = and i64 %i.m, -516097
   %i.p = icmp sgt i8 %spec.store.select, 1
   %i.q = icmp sgt i8 %spec.store.select, 2
-  %2 = select i1 %i.q, i64 32768, i64 0
-  %3 = select i1 %i.e, i64 65536, i64 0
   %i.r = icmp sgt i8 %spec.store.select, 4
-  %4 = select i1 %i.r, i64 131072, i64 0
   %i.s = icmp sgt i8 %spec.store.select, 5
-  %i.t = select i1 %i.s, i64 262144, i64 0
-  %i.u = select i1 %i.p, i64 24576, i64 %i.n
-  %5 = or disjoint i64 %i.u, %2
-  %6 = or disjoint i64 %5, %3
-  %7 = or disjoint i64 %6, %4
-  %8 = or disjoint i64 %7, %i.t
-  %i.v = or i64 %8, %i.o
+  %i.t = select i1 %i.p, i64 24576, i64 %i.n
+  %i.u = select i1 %i.q, i64 57344, i64 %i.t
+  %2 = select i1 %i.e, i64 122880, i64 %i.u
+  %3 = select i1 %i.r, i64 253952, i64 %2
+  %4 = select i1 %i.s, i64 516096, i64 %3
+  %i.v = or i64 %4, %i.o
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c

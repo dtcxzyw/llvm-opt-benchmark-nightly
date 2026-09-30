@@ -202,9 +202,8 @@ bb.ak:                                            ; preds = %bb.aj
   %.not.i.i119 = icmp eq i8 %i.gb, 2
   %i.ge = select i1 %.not.i.i119, i16 0, i16 -32768
   %i.gf = icmp eq i8 %i.gb, 1
-  %i.gg = select i1 %i.gf, i16 16384, i16 0
-  %8 = or disjoint i16 %i.ge, %i.gd
-  %i.gh = or disjoint i16 %8, %i.gg
+  %i.gg = select i1 %i.gf, i16 -16384, i16 %i.ge
+  %i.gh = or disjoint i16 %i.gg, %i.gd
   %i.gi = or disjoint i16 %i.gh, 4608
   br label %tcp_ecn_make_synack.exit.sink.split
 

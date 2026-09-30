@@ -204,7 +204,7 @@ select.unfold70:                                  ; preds = %bb.k, %bb.l, %.lr.p
   br i1 %or.cond74, label %bb.af, label %riscv_iommu_report_fault.exit
 
 bb.af:                                            ; preds = %select.unfold70
-  %.not75 = icmp eq i32 %2, 0                     ; 2 uses
+  %.not75 = icmp eq i32 %2, 0
   %i.ei = and i32 %3, 1
   %. = xor i32 %i.ei, 3
   %i.ej = zext nneg i32 %. to i64
@@ -212,12 +212,11 @@ bb.af:                                            ; preds = %select.unfold70
   %i.el = or disjoint i64 %.4.i.ph, %i.ek
   %i.em = load i64, ptr %i.t, align 8             ; 2 uses
   %i.en = shl i64 %i.em, 40
-  %9 = select i1 %.not75, i64 0, i64 4294967296
-  %10 = or disjoint i64 %i.en, %9
-  %11 = lshr i64 %i.em, 12
-  %12 = and i64 %11, 4294963200
-  %i.eo = select i1 %.not75, i64 0, i64 %12
-  %i.ep = or disjoint i64 %i.eo, %10
+  %9 = lshr i64 %i.em, 12
+  %10 = and i64 %9, 4294963200
+  %11 = or disjoint i64 %10, 4294967296
+  %i.eo = select i1 %.not75, i64 0, i64 %11
+  %i.ep = or disjoint i64 %i.en, %i.eo
   %storemerge.i = or disjoint i64 %i.ep, %i.el
   store i64 %storemerge.i, ptr %6, align 8
   %i.eq = getelementptr inbounds nuw i8, ptr %6, i64 16
@@ -620,7 +619,7 @@ riscv_iommu_pri.exit:                             ; preds = %trace_riscv_iommu_p
   br label %bb.cj
 
 bb.ch:                                            ; preds = %riscv_iommu_iot_update.exit, %riscv_iommu_iot_update.exit.thread
-  %i.me = phi i1 [ %i.v, %riscv_iommu_iot_update.exit.thread ], [ %i.y, %riscv_iommu_iot_update.exit ] ; 2 uses
+  %i.me = phi i1 [ %i.v, %riscv_iommu_iot_update.exit.thread ], [ %i.y, %riscv_iommu_iot_update.exit ]
   %.091120123 = phi i32 [ 260, %riscv_iommu_iot_update.exit.thread ], [ %.9.i.ph, %riscv_iommu_iot_update.exit ] ; 3 uses
   %i.mf = load i32, ptr %i.l, align 8             ; 2 uses
   %i.mg = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -647,12 +646,11 @@ bb.ci:                                            ; preds = %bb.ch
   %i.mp = or disjoint i64 %.0, %i.mo
   %i.mq = load i64, ptr %1, align 8               ; 2 uses
   %i.mr = shl i64 %i.mq, 40
-  %8 = select i1 %i.me, i64 4294967296, i64 0
-  %9 = or disjoint i64 %i.mr, %8
-  %10 = lshr i64 %i.mq, 12
-  %11 = and i64 %10, 4294963200
-  %i.ms = select i1 %i.me, i64 %11, i64 0
-  %i.mt = or disjoint i64 %i.ms, %9
+  %8 = lshr i64 %i.mq, 12
+  %9 = and i64 %8, 4294963200
+  %10 = or disjoint i64 %9, 4294967296
+  %i.ms = select i1 %i.me, i64 %10, i64 0
+  %i.mt = or disjoint i64 %i.mr, %i.ms
   %storemerge.i = add nuw nsw i64 %i.mt, %i.mp
   store i64 %storemerge.i, ptr %4, align 8
   %i.mu = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -1055,7 +1053,7 @@ bb.s:                                             ; preds = %bb.q, %bb.o, %bb.n,
   %.063.i = phi i32 [ %i.cd, %bb.o ], [ 4, %riscv_iommu_pext_u64.exit.i ], [ %i.ag, %bb.g ], [ %i.ag, %bb.f ], [ %i.ba, %bb.k ], [ 4, %bb.h ], [ 2, %bb.j ], [ 4, %bb.i ], [ 4, %bb.l ], [ %i.bv, %bb.m ], [ %i.ca, %bb.n ], [ %i.cq, %bb.q ]
   %i.ct = load i64, ptr %i.m, align 8             ; 3 uses
   %i.cu = and i64 %i.ct, 17592169267200
-  %.not85.i = icmp eq i64 %i.cu, 0                ; 2 uses
+  %.not85.i = icmp eq i64 %i.cu, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
   %i.cv = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 0, ptr %i.cv, align 8
@@ -1076,12 +1074,11 @@ bb.u:                                             ; preds = %bb.t, %bb.t, %bb.t,
   %i.cz = zext nneg i32 %.064.i to i64
   %i.da = or disjoint i64 %i.cz, 51539607552
   %i.db = shl i64 %i.ct, 40
-  %6 = select i1 %.not85.i, i64 0, i64 4294967296
-  %7 = or disjoint i64 %6, %i.db
   %i.dc = lshr i64 %i.ct, 12
   %i.dd = and i64 %i.dc, 4294963200
-  %i.de = select i1 %.not85.i, i64 0, i64 %i.dd
-  %i.df = or disjoint i64 %7, %i.de
+  %6 = or disjoint i64 %i.dd, 4294967296
+  %i.de = select i1 %.not85.i, i64 0, i64 %6
+  %i.df = or disjoint i64 %i.de, %i.db
   %storemerge.i.i = or disjoint i64 %i.df, %i.da
   store i64 %storemerge.i.i, ptr %5, align 8
   %i.dg = getelementptr inbounds nuw i8, ptr %5, i64 16

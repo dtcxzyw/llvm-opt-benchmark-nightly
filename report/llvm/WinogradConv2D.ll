@@ -204,13 +204,13 @@ bb.aw:                                            ; preds = %bb.av
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.jq, align 8 ; 10 uses
   %i.jr = select i1 %i.jl, i64 1, i64 %i.jo       ; 6 uses
   %i.js = select i1 %i.jj, i64 1, i64 %i.jo       ; 6 uses
-  %20 = call ptr @_ZNK4mlir10ShapedType14getElementTypeEv(ptr noundef nonnull align 8 dereferenceable(16) %15) #16 ; 2 uses
-  %21 = add i64 %i.jg, -1
-  %22 = select i1 %i.jl, i64 0, i64 %21           ; 2 uses
-  %i.jt = add i64 %22, %i.jr                      ; 2 uses
-  %i.ju = add i64 %i.jg, -1
-  %23 = select i1 %i.jj, i64 0, i64 %i.ju         ; 2 uses
-  %i.jv = add i64 %23, %i.js                      ; 2 uses
+  %20 = select i1 %i.jl, i64 1, i64 %i.jg         ; 2 uses
+  %21 = select i1 %i.jj, i64 1, i64 %i.jg         ; 2 uses
+  %22 = call ptr @_ZNK4mlir10ShapedType14getElementTypeEv(ptr noundef nonnull align 8 dereferenceable(16) %15) #16 ; 2 uses
+  %i.jt = add i64 %20, %i.jr
+  %i.ju = add i64 %i.jt, -1                       ; 2 uses
+  %23 = add i64 %21, %i.js
+  %i.jv = add i64 %23, -1                         ; 2 uses
   %.not.i269 = icmp eq i64 %i.ja, 0
   br i1 %.not.i269, label %_ZN4llvm16divideCeilSignedIlllEET1_T_T0_.exit, label %bb.ax
 
@@ -257,29 +257,31 @@ _ZN4llvm16divideCeilSignedIlllEET1_T_T0_.exit274: ; preds = %_ZN4llvm16divideCei
   %.0.i272 = phi i64 [ 0, %_ZN4llvm16divideCeilSignedIlllEET1_T_T0_.exit ], [ %i.ki, %bb.bb ], [ %i.kj, %bb.bc ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
-  store i64 %i.jt, ptr %i.a, align 8, !tbaa !53
+  store i64 %i.ju, ptr %i.a, align 8, !tbaa !53
   %i.kk = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.jv, ptr %i.kk, align 8, !tbaa !53
   %i.kl = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i64 %i.im, ptr %i.kl, align 8, !tbaa !53
   %i.km = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i64 %i.ig, ptr %i.km, align 8, !tbaa !53
-  %i.kn = call ptr @_ZN4mlir16RankedTensorType3getEN4llvm8ArrayRefIlEENS_4TypeENS_9AttributeE(ptr nonnull %i.a, i64 4, ptr %20, ptr null) #16
+  %i.kn = call ptr @_ZN4mlir16RankedTensorType3getEN4llvm8ArrayRefIlEENS_4TypeENS_9AttributeE(ptr nonnull %i.a, i64 4, ptr %22, ptr null) #16
   store ptr %i.kn, ptr %17, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.ko = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.kp = call { ptr, i64 } @_ZNK4mlir16RankedTensorType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %17) #16 ; 2 uses
   %i.kq = extractvalue { ptr, i64 } %i.kp, 0
   %i.kr = extractvalue { ptr, i64 } %i.kp, 1
-  %i.ks = call ptr @_ZN4mlir6tensor7EmptyOp6createERNS_9OpBuilderENS_8LocationEN4llvm8ArrayRefIlEENS_4TypeENS_9AttributeE(ptr noundef nonnull align 8 dereferenceable(32) %i.ko, ptr %.sroa.0.0.copyload.i.i, ptr %i.kq, i64 %i.kr, ptr %20, ptr null) #16
+  %i.ks = call ptr @_ZN4mlir6tensor7EmptyOp6createERNS_9OpBuilderENS_8LocationEN4llvm8ArrayRefIlEENS_4TypeENS_9AttributeE(ptr noundef nonnull align 8 dereferenceable(32) %i.ko, ptr %.sroa.0.0.copyload.i.i, ptr %i.kq, i64 %i.kr, ptr %22, ptr null) #16
   %i.kt = getelementptr inbounds i8, ptr %i.ks, i64 -16
   %.sroa.059.0.copyload = load ptr, ptr %17, align 8, !tbaa !55
   %i.ku = call ptr @_ZN4mlir6linalg25WinogradFilterTransformOp6createERNS_9OpBuilderENS_8LocationENS_4TypeENS_5ValueES6_NS0_17WinogradConv2DFmrE(ptr noundef nonnull align 8 dereferenceable(32) %i.ko, ptr %.sroa.0.0.copyload.i.i, ptr %.sroa.059.0.copyload, ptr %.sroa.0.0.copyload.i.i.i171, ptr nonnull %i.kt, i32 noundef %2) #16
   %i.kv = call ptr @_ZNK4mlir10ShapedType14getElementTypeEv(ptr noundef nonnull align 8 dereferenceable(16) %14) #16 ; 2 uses
   %i.kw = mul nsw i64 %.0.i270, %i.jr             ; 3 uses
-  %i.kx = add nsw i64 %22, %i.kw                  ; 2 uses
+  %24 = add nsw i64 %20, -1
+  %i.kx = add nsw i64 %24, %i.kw                  ; 2 uses
   %i.ky = mul nsw i64 %.0.i272, %i.js             ; 3 uses
-  %i.kz = add nsw i64 %23, %i.ky                  ; 2 uses
+  %25 = add nsw i64 %21, -1
+  %i.kz = add nsw i64 %25, %i.ky                  ; 2 uses
   %.not155 = icmp eq i64 %i.kx, %i.ir
   %.not156 = icmp eq i64 %i.kz, %i.it
   %or.cond161 = select i1 %.not155, i1 %.not156, i1 false
@@ -301,7 +303,7 @@ bb.bd:                                            ; preds = %_ZN4llvm16divideCei
 bb.be:                                            ; preds = %_ZN4llvm16divideCeilSignedIlllEET1_T_T0_.exit274, %bb.bd
   %.sroa.0325.0 = phi ptr [ %.sroa.0.0.copyload.i.i.i, %_ZN4llvm16divideCeilSignedIlllEET1_T_T0_.exit274 ], [ %i.ld, %bb.bd ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
-  store i64 %i.jt, ptr %i.c, align 8, !tbaa !53
+  store i64 %i.ju, ptr %i.c, align 8, !tbaa !53
   %i.le = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 %i.jv, ptr %i.le, align 8, !tbaa !53
   %i.lf = getelementptr inbounds nuw i8, ptr %i.c, i64 16
