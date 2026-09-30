@@ -205,6 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.t = icmp sgt i32 %i.e, 7
   %i.u = and i32 %i.e, -8
+  %5 = zext nneg i32 %i.d to i64
   br label %bb.k
 
 ._crit_edge326.i:                                 ; preds = %._crit_edge323.i, %.preheader266.i
@@ -492,9 +493,8 @@ bb.t:                                             ; preds = %bb.r, %bb.q, %bb.p,
 
 ._crit_edge323.i:                                 ; preds = %bb.s, %.preheader.i
   %indvars.iv.next345.i = add nuw nsw i64 %indvars.iv344.i, 8 ; 2 uses
-  %5 = trunc i64 %indvars.iv.next345.i to i32
-  %6 = or disjoint i32 %5, 7
-  %7 = icmp slt i32 %6, %i.d
+  %6 = or disjoint i64 %indvars.iv.next345.i, 7
+  %7 = icmp samesign ult i64 %6, %5
   br i1 %7, label %bb.k, label %._crit_edge326.i, !llvm.loop !138
 
 bb.u:                                             ; preds = %bb.t, %bb.j
@@ -560,6 +560,7 @@ bb.ab:                                            ; preds = %bb.c
   %i.gp = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.gq = icmp sgt i32 %i.e, 3
   %i.gr = and i32 %i.e, -4
+  %8 = zext nneg i32 %i.d to i64
   br label %bb.aj
 
 ._crit_edge289.i:                                 ; preds = %._crit_edge.i, %.preheader268.i
@@ -731,9 +732,8 @@ bb.ao:                                            ; preds = %bb.am, %bb.al, %bb.
 
 ._crit_edge.i:                                    ; preds = %bb.an, %.preheader267.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %8 = trunc i64 %indvars.iv.next.i to i32
-  %9 = or disjoint i32 %8, 3
-  %10 = icmp slt i32 %9, %i.d
+  %9 = or disjoint i64 %indvars.iv.next.i, 3
+  %10 = icmp samesign ult i64 %9, %8
   br i1 %10, label %bb.aj, label %._crit_edge289.i, !llvm.loop !141
 
 bb.ap:                                            ; preds = %bb.ao, %bb.ai

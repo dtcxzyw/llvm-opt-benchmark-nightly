@@ -205,6 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge4.lr.ph:                                 ; preds = %bb.c
   %.val43 = load ptr, ptr %i.c, align 8, !tbaa !17
+  %2 = zext nneg i32 %.val51 to i64
   br label %.critedge4
 
 .critedge4:                                       ; preds = %.critedge4.lr.ph, %.critedge4
@@ -215,9 +216,8 @@ bb.c:                                             ; preds = %bb.b
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !18
   %i.ay = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.27, i32 noundef %i.av, i32 noundef %i.ax) ; 0 uses
   %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 2 ; 2 uses
-  %2 = trunc i64 %indvars.iv.next64 to i32
-  %3 = or disjoint i32 %2, 1
-  %4 = icmp slt i32 %3, %.val51
+  %3 = or disjoint i64 %indvars.iv.next64, 1
+  %4 = icmp samesign ult i64 %3, %2
   br i1 %4, label %.critedge4, label %.loopexit, !llvm.loop !151
 
 .loopexit:                                        ; preds = %.critedge4, %bb.c

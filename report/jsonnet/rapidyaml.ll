@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.ak = add i64 %.06873, 1                      ; 2 uses
+  %i.ak = add nuw i64 %.06873, 1                  ; 2 uses
   %i.al = icmp ult i64 %i.ak, %3
   br i1 %i.al, label %bb.g, label %bb.h
 
@@ -217,7 +217,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.ap = add i64 %.06873, 2                      ; 2 uses
+  %i.ap = add nuw i64 %.06873, 2                  ; 2 uses
   %i.aq = icmp ult i64 %i.ap, %3
   br i1 %i.aq, label %bb.i, label %bb.j
 
@@ -228,8 +228,8 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.at = add i64 %.06873, 3                      ; 2 uses
-  %i.au = add i64 %.075, 4                        ; 2 uses
+  %i.at = add nuw i64 %.06873, 3                  ; 2 uses
+  %i.au = add nuw i64 %.075, 4                    ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.06774, i64 4 ; 2 uses
   %i.aw = icmp ult i64 %i.au, %1
   br i1 %i.aw, label %.lr.ph, label %._crit_edge, !llvm.loop !378

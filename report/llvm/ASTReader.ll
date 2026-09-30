@@ -205,14 +205,16 @@ bb.iw:                                            ; preds = %bb.bb
 bb.ix:                                            ; preds = %bb.iw
   %i.awf = add i32 %i.awe, -1                     ; 2 uses
   %.not1417 = icmp eq i32 %i.awf, 0
-  br i1 %.not1417, label %_ZNK5clang13serialization10ModuleFile8isModuleEv.exit.thread.jt2, label %.lr.ph1380
+  br i1 %.not1417, label %_ZNK5clang13serialization10ModuleFile8isModuleEv.exit.thread.jt2, label %.lr.ph1380.preheader
 
-.lr.ph1380:                                       ; preds = %bb.ix, %_ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit753
-  %.012331378 = phi i32 [ %72, %_ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit753 ], [ 0, %bb.ix ] ; 3 uses
-  %70 = or disjoint i32 %.012331378, 1
-  %71 = zext i32 %.012331378 to i64
+.lr.ph1380.preheader:                             ; preds = %bb.ix
+  %70 = zext i32 %i.awf to i64
+  br label %.lr.ph1380
+
+.lr.ph1380:                                       ; preds = %.lr.ph1380.preheader, %_ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit753
+  %indvars.iv1460 = phi i64 [ 0, %.lr.ph1380.preheader ], [ %indvars.iv.next1461, %_ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit753 ] ; 3 uses
   %i.awg = load ptr, ptr %30, align 8, !tbaa !872
-  %i.awh = getelementptr inbounds nuw [8 x i8], ptr %i.awg, i64 %71
+  %i.awh = getelementptr inbounds nuw [8 x i8], ptr %i.awg, i64 %indvars.iv1460
   %i.awi = load i64, ptr %i.awh, align 8, !tbaa !167
   %i.awj = trunc i64 %i.awi to i32                ; 3 uses
   %i.awk = icmp eq i32 %i.awj, 0
@@ -295,11 +297,11 @@ bb.jd:                                            ; preds = %_ZNK5clang9ASTReade
   br label %_ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit
 
 _ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit: ; preds = %bb.jc, %bb.jd
-  %72 = add i32 %.012331378, 2                    ; 2 uses
-  %73 = zext i32 %70 to i64
-  %74 = load ptr, ptr %30, align 8, !tbaa !872
-  %75 = getelementptr inbounds nuw [8 x i8], ptr %74, i64 %73
-  %i.axm = load i64, ptr %75, align 8, !tbaa !167 ; 2 uses
+  %indvars.iv.next1461 = add nuw nsw i64 %indvars.iv1460, 2 ; 2 uses
+  %71 = load ptr, ptr %30, align 8, !tbaa !872
+  %72 = getelementptr inbounds nuw [8 x i8], ptr %71, i64 %indvars.iv1460
+  %73 = getelementptr inbounds nuw i8, ptr %72, i64 8
+  %i.axm = load i64, ptr %73, align 8, !tbaa !167 ; 2 uses
   %i.axn = load i64, ptr %i.cg, align 8, !tbaa !1047
   %i.axo = icmp eq i64 %i.axn, 0
   br i1 %i.axo, label %bb.jf, label %bb.je
@@ -351,7 +353,7 @@ bb.ji:                                            ; preds = %_ZN5clang9ASTReader
   br label %_ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit753
 
 _ZN4llvm23SmallVectorTemplateBaseIjLb1EE9push_backEj.exit753: ; preds = %bb.jh, %bb.ji
-  %i.ayk = icmp ult i32 %72, %i.awf
+  %i.ayk = icmp samesign ult i64 %indvars.iv.next1461, %70
   br i1 %i.ayk, label %.lr.ph1380, label %_ZNK5clang13serialization10ModuleFile8isModuleEv.exit.thread, !llvm.loop !4436
 
 bb.jj:                                            ; preds = %bb.bb
@@ -754,21 +756,20 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %2 = zext i32 %i.d to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit
-  %.09 = phi i32 [ 0, %.lr.ph ], [ %4, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit ] ; 3 uses
-  %2 = or disjoint i32 %.09, 1
-  %3 = zext i32 %.09 to i64
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit ] ; 3 uses
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !872
-  %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %3
+  %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv
   %i.i = load i32, ptr %i.h, align 4, !tbaa !952
   %i.j = tail call i64 @_ZN5clang9ASTReader14DecodeSelectorEj(ptr noundef nonnull align 8 dereferenceable(16376) %0, i32 noundef %i.i) ; 2 uses
-  %4 = add i32 %.09, 2                            ; 2 uses
-  %5 = zext i32 %2 to i64
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !872
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %5
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !952  ; 2 uses
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv
+  %3 = getelementptr inbounds nuw i8, ptr %i.l, i64 4
+  %i.m = load i32, ptr %3, align 4, !tbaa !952    ; 2 uses
   %i.n = load i32, ptr %i.e, align 8, !tbaa !873  ; 2 uses
   %i.o = load i32, ptr %i.f, align 4, !tbaa !874
   %.not.i7 = icmp ult i32 %i.n, %i.o
@@ -791,7 +792,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit
 
 _ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit: ; preds = %bb.d, %bb.e
-  %i.u = icmp ult i32 %4, %i.d
+  %i.u = icmp samesign ult i64 %indvars.iv.next, %2
   br i1 %i.u, label %bb.c, label %._crit_edge, !llvm.loop !55
 
 ._crit_edge:                                      ; preds = %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit, %bb.b
@@ -939,21 +940,20 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %2 = zext i32 %i.e to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit.i, %.lr.ph.i
-  %.09.i = phi i32 [ 0, %.lr.ph.i ], [ %4, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit.i ] ; 3 uses
-  %2 = or disjoint i32 %.09.i, 1
-  %3 = zext i32 %.09.i to i64
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit.i ] ; 3 uses
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !872
-  %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %3
+  %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv.i
   %i.j = load i32, ptr %i.i, align 4, !tbaa !952
   %i.k = tail call i64 @_ZN5clang9ASTReader14DecodeSelectorEj(ptr noundef nonnull align 8 dereferenceable(16376) %i.a, i32 noundef %i.j) ; 2 uses
-  %4 = add i32 %.09.i, 2                          ; 2 uses
-  %5 = zext i32 %2 to i64
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %i.l = load ptr, ptr %i.b, align 8, !tbaa !872
-  %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %5
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !952  ; 2 uses
+  %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i
+  %3 = getelementptr inbounds nuw i8, ptr %i.m, i64 4
+  %i.n = load i32, ptr %3, align 4, !tbaa !952    ; 2 uses
   %i.o = load i32, ptr %i.f, align 8, !tbaa !873  ; 2 uses
   %i.p = load i32, ptr %i.g, align 4, !tbaa !874
   %.not.i7.i = icmp ult i32 %i.o, %i.p
@@ -976,7 +976,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit.i
 
 _ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit.i: ; preds = %bb.e, %bb.d
-  %i.v = icmp ult i32 %4, %i.e
+  %i.v = icmp samesign ult i64 %indvars.iv.next.i, %2
   br i1 %i.v, label %bb.c, label %._crit_edge.i, !llvm.loop !55
 
 ._crit_edge.i:                                    ; preds = %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang8SelectorENS2_14SourceLocationEELb1EE9push_backES5_.exit.i, %bb.b

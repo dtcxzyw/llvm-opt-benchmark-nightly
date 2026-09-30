@@ -61,13 +61,14 @@ bb.c:                                             ; preds = %bb.a
   %.sext = sext i16 %i.o to i32                   ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   %i.q = load i32, ptr %i.p, align 8, !tbaa !39   ; 4 uses
-  %2 = add nsw i32 %i.q, -2
   %i.r = icmp sgt i32 %i.q, 2
   br i1 %i.r, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.c
+  %2 = add nsw i32 %i.q, -2
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !40
+  %3 = zext nneg i32 %2 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.g
@@ -91,8 +92,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.d, %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next to i32
-  %4 = icmp sgt i32 %2, %3
+  %4 = icmp samesign ult i64 %indvars.iv.next, %3
   br i1 %4, label %bb.d, label %.loopexit, !llvm.loop !32
 
 bb.h:                                             ; preds = %bb.e, %bb.f
