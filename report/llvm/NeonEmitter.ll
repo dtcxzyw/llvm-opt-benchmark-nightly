@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
-  %.0 = phi i8 [ 112, %bb.b ], [ %i.ac, %bb.d ], [ 102, %bb.c ] ; 5 uses
+  %.0 = phi i8 [ 112, %bb.b ], [ %i.ac, %bb.d ], [ 102, %bb.c ] ; 4 uses
   %i.ad = icmp eq i32 %3, 1
-  br i1 %i.ad, label %bb.f, label %5
+  br i1 %i.ad, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   switch i8 %.0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit [
@@ -218,14 +218,12 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.f, %bb.f
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit
 
-5:                                                ; preds = %bb.e
-  br i1 %i.c, label %bb.h, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit
-
-bb.h:                                             ; preds = %5
+bb.h:                                             ; preds = %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 160
-  %i.af = load i64, ptr %i.ae, align 8, !tbaa !38
+  %i.af = load i64, ptr %i.ae, align 8
   %i.ag = icmp eq i64 %i.af, 4
-  br i1 %i.ag, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit
+  %or.cond43 = select i1 %i.c, i1 %i.ag, i1 false
+  br i1 %or.cond43, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20: ; preds = %bb.h
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 152
@@ -245,8 +243,8 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   store i8 0, ptr %i.an, align 8, !tbaa !39
   br label %bb.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds = %bb.h, %bb.f, %bb.g, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20, %5
-  %.2.ph = phi i8 [ %.0, %bb.f ], [ %.0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20 ], [ %.0, %5 ], [ 105, %bb.g ], [ %.0, %bb.h ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds = %bb.f, %bb.g, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20, %bb.h
+  %.2.ph = phi i8 [ %.0, %bb.f ], [ %.0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20 ], [ %.0, %bb.h ], [ 105, %bb.g ]
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store ptr %i.ap, ptr %0, align 8, !tbaa !35
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses

@@ -204,12 +204,9 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = load i64, ptr %i.k, align 8, !tbaa !13
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.l, i64 %3) ; 2 uses
+  %5 = load ptr, ptr %0, align 8
   %.not1318 = icmp eq i64 %.sroa.speculated, 0
-  br i1 %.not1318, label %._crit_edge22, label %.lr.ph20.preheader
-
-.lr.ph20.preheader:                               ; preds = %._crit_edge
-  %5 = load ptr, ptr %0, align 8, !tbaa !12
-  br label %.lr.ph20
+  br i1 %.not1318, label %._crit_edge22, label %.lr.ph20
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.01117 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.af, %.lr.ph ] ; 3 uses
@@ -244,8 +241,8 @@ bb.b:                                             ; preds = %.lr.ph20
   %.not13 = icmp eq i64 %.010, 0
   br i1 %.not13, label %._crit_edge22, label %.lr.ph20, !llvm.loop !55
 
-.lr.ph20:                                         ; preds = %.lr.ph20.preheader, %bb.b
-  %.010.in19 = phi i64 [ %.010, %bb.b ], [ %.sroa.speculated, %.lr.ph20.preheader ]
+.lr.ph20:                                         ; preds = %._crit_edge, %bb.b
+  %.010.in19 = phi i64 [ %.010, %bb.b ], [ %.sroa.speculated, %._crit_edge ]
   %.010 = add i64 %.010.in19, -1                  ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 %.010
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !15
@@ -340,12 +337,9 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = load i64, ptr %i.k, align 8, !tbaa !13
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.l, i64 %3) ; 2 uses
+  %5 = load ptr, ptr %0, align 8
   %.not1419 = icmp eq i64 %.sroa.speculated, 0
-  br i1 %.not1419, label %._crit_edge23, label %.lr.ph21.preheader
-
-.lr.ph21.preheader:                               ; preds = %._crit_edge
-  %5 = load ptr, ptr %0, align 8, !tbaa !12
-  br label %.lr.ph21
+  br i1 %.not1419, label %._crit_edge23, label %.lr.ph21
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.01218 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.af, %.lr.ph ] ; 3 uses
@@ -380,8 +374,8 @@ bb.b:                                             ; preds = %.lr.ph21
   %.not14 = icmp eq i64 %.011, 0
   br i1 %.not14, label %._crit_edge23, label %.lr.ph21, !llvm.loop !58
 
-.lr.ph21:                                         ; preds = %.lr.ph21.preheader, %bb.b
-  %.011.in20 = phi i64 [ %.011, %bb.b ], [ %.sroa.speculated, %.lr.ph21.preheader ]
+.lr.ph21:                                         ; preds = %._crit_edge, %bb.b
+  %.011.in20 = phi i64 [ %.011, %bb.b ], [ %.sroa.speculated, %._crit_edge ]
   %.011 = add i64 %.011.in20, -1                  ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 %.011
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !15
@@ -784,9 +778,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.l
-  %3 = phi i64 [ 0, %bb.d ], [ %i.q, %bb.l ]      ; 2 uses
   %.sroa.0.066 = phi ptr [ %.sroa.0.0.copyload, %bb.d ], [ %i.t, %bb.l ] ; 6 uses
-  %.sroa.15.065.a = phi i64 [ %i.d, %bb.d ], [ %i.u, %bb.l ] ; 5 uses
+  %.sroa.15.065 = phi i64 [ %i.d, %bb.d ], [ %i.u, %bb.l ] ; 5 uses
+  %.sroa.15.065.a = phi i64 [ 0, %bb.d ], [ %i.q, %bb.l ] ; 2 uses
   %i.g = load i8, ptr %.sroa.0.066, align 1, !tbaa !15 ; 6 uses
   %i.h = icmp sgt i8 %i.g, 47
   br i1 %i.h, label %bb.f, label %.thread55
@@ -816,22 +810,22 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f
   br i1 %.not, label %bb.k, label %.thread55
 
 bb.k:                                             ; preds = %bb.j
-  %i.o = mul i64 %3, %i.f
+  %i.o = mul i64 %.sroa.15.065.a, %i.f
   %i.p = zext nneg i32 %i.n to i64
   %i.q = add i64 %i.o, %i.p                       ; 3 uses
   store i64 %i.q, ptr %2, align 8, !tbaa !31
   %i.r = udiv i64 %i.q, %i.f
-  %i.s = icmp ult i64 %i.r, %3
+  %i.s = icmp ult i64 %i.r, %.sroa.15.065.a
   br i1 %i.s, label %.thread59, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.066, i64 1 ; 2 uses
-  %i.u = add i64 %.sroa.15.065.a, -1              ; 2 uses
+  %i.u = add i64 %.sroa.15.065, -1                ; 2 uses
   %i.v = icmp eq i64 %i.u, 0
   br i1 %i.v, label %.thread55, label %bb.e
 
 .thread55:                                        ; preds = %bb.h, %bb.e, %bb.j, %bb.i, %bb.l
-  %.sroa.15.0.lcssa = phi i64 [ %.sroa.15.065.a, %bb.h ], [ %.sroa.15.065.a, %bb.e ], [ %.sroa.15.065.a, %bb.j ], [ %.sroa.15.065.a, %bb.i ], [ 0, %bb.l ] ; 2 uses
+  %.sroa.15.0.lcssa = phi i64 [ %.sroa.15.065, %bb.h ], [ %.sroa.15.065, %bb.e ], [ %.sroa.15.065, %bb.j ], [ %.sroa.15.065, %bb.i ], [ 0, %bb.l ] ; 2 uses
   %.sroa.0.0.lcssa = phi ptr [ %.sroa.0.066, %bb.h ], [ %.sroa.0.066, %bb.e ], [ %.sroa.0.066, %bb.j ], [ %.sroa.0.066, %bb.i ], [ %i.t, %bb.l ]
   %i.w = icmp eq i64 %i.d, %.sroa.15.0.lcssa
   br i1 %i.w, label %.thread59, label %bb.m
@@ -1157,9 +1151,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.l, %bb.d
-  %5 = phi i64 [ 0, %bb.d ], [ %i.q, %bb.l ]      ; 2 uses
   %.sroa.0.066.i = phi ptr [ %.sroa.0.0.copyload.i, %bb.d ], [ %i.t, %bb.l ] ; 2 uses
-  %.sroa.15.065.i.a = phi i64 [ %i.d, %bb.d ], [ %i.u, %bb.l ]
+  %.sroa.15.065.i = phi i64 [ %i.d, %bb.d ], [ %i.u, %bb.l ]
+  %.sroa.15.065.i.a = phi i64 [ 0, %bb.d ], [ %i.q, %bb.l ] ; 2 uses
   %i.g = load i8, ptr %.sroa.0.066.i, align 1, !tbaa !15 ; 6 uses
   %i.h = icmp sgt i8 %i.g, 47
   br i1 %i.h, label %bb.f, label %_ZN4llvh22consumeUnsignedIntegerERNS_9StringRefEjRy.exit.thread
@@ -1189,17 +1183,17 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f
   br i1 %.not.i, label %bb.k, label %_ZN4llvh22consumeUnsignedIntegerERNS_9StringRefEjRy.exit.thread
 
 bb.k:                                             ; preds = %bb.j
-  %i.o = mul i64 %5, %i.f
+  %i.o = mul i64 %.sroa.15.065.i.a, %i.f
   %i.p = zext nneg i32 %i.n to i64
   %i.q = add i64 %i.o, %i.p                       ; 3 uses
   store i64 %i.q, ptr %3, align 8, !tbaa !31
   %i.r = udiv i64 %i.q, %i.f
-  %i.s = icmp ult i64 %i.r, %5
+  %i.s = icmp ult i64 %i.r, %.sroa.15.065.i.a
   br i1 %i.s, label %_ZN4llvh22consumeUnsignedIntegerERNS_9StringRefEjRy.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.066.i, i64 1
-  %i.u = add i64 %.sroa.15.065.i.a, -1            ; 2 uses
+  %i.u = add i64 %.sroa.15.065.i, -1              ; 2 uses
   %i.v = icmp eq i64 %i.u, 0
   br i1 %i.v, label %_ZN4llvh22consumeUnsignedIntegerERNS_9StringRefEjRy.exit.thread, label %bb.e
 

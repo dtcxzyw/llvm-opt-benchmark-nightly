@@ -205,22 +205,20 @@ _ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i.i: ; preds = %bb.d, %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.j = load i32, ptr %i.i, align 8, !tbaa !6    ; 2 uses
   %i.k = and i32 %i.j, 1
-  %.not.i.i.a = icmp eq i32 %i.k, 0
-  br i1 %.not.i.i.a, label %_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE26InternalMergeFromWithArenaENS0_8internal18InternalVisibilityEPNS0_5ArenaERKS8_.exit.i.i, label %2
+  %.not.i.i = icmp eq i32 %i.k, 0
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %3 = load i32, ptr %2, align 8
+  %.not.i.i.a = icmp eq i32 %3, 0
+  %or.cond.i = select i1 %.not.i.i, i1 true, i1 %.not.i.i.a
+  br i1 %or.cond.i, label %_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE26InternalMergeFromWithArenaENS0_8internal18InternalVisibilityEPNS0_5ArenaERKS8_.exit.i.i, label %bb.e
 
-2:                                                ; preds = %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %4 = load i32, ptr %3, align 8, !tbaa !17
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE26InternalMergeFromWithArenaENS0_8internal18InternalVisibilityEPNS0_5ArenaERKS8_.exit.i.i, label %bb.e
-
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @_ZN6google8protobuf8internal20RepeatedPtrFieldBase9MergeFromINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKS2_PNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(16) %i.m, ptr noundef nonnull align 8 dereferenceable(16) %i.l, ptr noundef %.0.i.i.i.i)
   br label %_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE26InternalMergeFromWithArenaENS0_8internal18InternalVisibilityEPNS0_5ArenaERKS8_.exit.i.i
 
-_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE26InternalMergeFromWithArenaENS0_8internal18InternalVisibilityEPNS0_5ArenaERKS8_.exit.i.i: ; preds = %bb.e, %2, %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i.i
+_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE26InternalMergeFromWithArenaENS0_8internal18InternalVisibilityEPNS0_5ArenaERKS8_.exit.i.i: ; preds = %bb.e, %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i.i
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !6
   %i.p = or i32 %i.o, %i.j

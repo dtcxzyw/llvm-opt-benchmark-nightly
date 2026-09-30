@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %bb.v, %.lr.ph.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.t, %.lr.ph.i.i.i.i.i.i.i.i
-  %i.id = phi i32 [ %.promoted20.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %10, %bb.t ] ; 12 uses
-  %i.ie = phi i32 [ %.promoted19.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %11, %bb.t ] ; 12 uses
-  %.pre.i.i.i18.i.i.i.i.i.i.i.i = phi i8 [ %.phi.trans.insert.i.i.i.promoted.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.pre.i.i.i17.i.i.i.i.i.i.i.i, %bb.t ] ; 9 uses
-  %i.if = phi i8 [ %.promoted16.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %12, %bb.t ] ; 3 uses
+  %i.id = phi i32 [ %.promoted20.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %10, %bb.t ] ; 9 uses
+  %i.ie = phi i32 [ %.promoted19.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %11, %bb.t ] ; 9 uses
+  %.pre.i.i.i18.i.i.i.i.i.i.i.i = phi i8 [ %.phi.trans.insert.i.i.i.promoted.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.not.i.i.i18.i.i.i.i.i.i.i.i, %bb.t ] ; 7 uses
+  %i.if = phi i8 [ %.promoted16.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %12, %bb.t ] ; 4 uses
   %i.ig = phi i8 [ %.promoted15.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %13, %bb.t ]
   %i.ih = phi i64 [ %.lcssa1930.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.jw, %bb.t ] ; 2 uses
   %i.ii = phi ptr [ %i.ib, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.js, %bb.t ] ; 6 uses
@@ -301,26 +301,23 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %bb.h
   %i.jy = trunc nuw i8 %i.if to i1
-  br i1 %i.jy, label %bb.m, label %7
+  %7 = trunc nuw i8 %.pre.i.i.i18.i.i.i.i.i.i.i.i to i1 ; 3 uses
+  br i1 %i.jy, label %bb.m, label %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i
 
-7:                                                ; preds = %bb.l
-  %8 = icmp eq i32 %.sroa.4.0.i.ph.i.i.i.i.i.i.i.i.i.i, 10
-  br i1 %8, label %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i, label %bb.t
-
-.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i:     ; preds = %7
-  %.pre.i.i.i.i.i.i.i.i = trunc nuw i8 %.pre.i.i.i18.i.i.i.i.i.i.i.i to i1
-  br i1 %.pre.i.i.i.i.i.i.i.i, label %bb.t, label %bb.u
+.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i:     ; preds = %bb.p, %bb.l
+  %8 = icmp ne i32 %.sroa.4.0.i.ph.i.i.i.i.i.i.i.i.i.i, 10
+  %or.cond5.i.i.i.i.i.i.i.i.i.i.i = select i1 %8, i1 true, i1 %7
+  br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i, label %bb.t, label %bb.u
 
 bb.m:                                             ; preds = %bb.l
-  %9 = trunc nuw i8 %.pre.i.i.i18.i.i.i.i.i.i.i.i to i1 ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i = xor i8 %.pre.i.i.i18.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.jz = icmp ne i32 %.sroa.4.0.i.ph.i.i.i.i.i.i.i.i.i.i, 61
-  %or.cond.not.i.i.i.i.i.i.i.i.i.i.i = or i1 %i.jz, %9
+  %or.cond.not.i.i.i.i.i.i.i.i.i.i.i = or i1 %i.jz, %7
   br i1 %or.cond.not.i.i.i.i.i.i.i.i.i.i.i, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %i.ka = icmp ne i32 %.sroa.4.0.i.ph.i.i.i.i.i.i.i.i.i.i, 44
-  %or.cond2.not.i.i.i.i.i.i.i.i.i.i.i = or i1 %i.ka, %9
+  %or.cond2.not.i.i.i.i.i.i.i.i.i.i.i = or i1 %i.ka, %7
   br i1 %or.cond2.not.i.i.i.i.i.i.i.i.i.i.i, label %bb.p, label %bb.q
 
 bb.o:                                             ; preds = %bb.m
@@ -329,10 +326,8 @@ bb.o:                                             ; preds = %bb.m
   br label %bb.t
 
 bb.p:                                             ; preds = %bb.n
-  switch i32 %.sroa.4.0.i.ph.i.i.i.i.i.i.i.i.i.i, label %bb.t [
-    i32 34, label %bb.r
-    i32 10, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i
-  ]
+  %9 = icmp eq i32 %.sroa.4.0.i.ph.i.i.i.i.i.i.i.i.i.i, 34
+  br i1 %9, label %bb.r, label %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i
 
 bb.q:                                             ; preds = %bb.n
   %i.kc = add i32 %i.id, 1                        ; 2 uses
@@ -347,15 +342,12 @@ bb.s:                                             ; preds = %bb.r
   store i8 %.not.i.i.i.i.i.i.i.i.i.i.i, ptr %.phi.trans.insert.i.i.i.i.i.i.i.i.i.i.i, align 2, !alias.scope !3455, !noalias !3449
   br label %bb.t
 
-._crit_edge.i.i.i.i.i.i.i.i.i.i.i:                ; preds = %bb.p
-  br i1 %9, label %bb.t, label %bb.u
-
-bb.t:                                             ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i, %7, %bb.k, %bb.j, %bb.i
-  %10 = phi i32 [ %i.id, %bb.i ], [ %i.id, %bb.o ], [ %i.kc, %bb.q ], [ %i.id, %bb.k ], [ %i.id, %bb.s ], [ %i.id, %bb.j ], [ %i.id, %bb.p ], [ %i.id, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i ], [ %i.id, %7 ], [ %i.id, %bb.r ], [ %i.id, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ]
-  %11 = phi i32 [ %i.ie, %bb.i ], [ %i.kb, %bb.o ], [ %i.ie, %bb.q ], [ %i.ie, %bb.k ], [ %i.ie, %bb.s ], [ %i.ie, %bb.j ], [ %i.ie, %bb.p ], [ %i.ie, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ie, %7 ], [ %i.ie, %bb.r ], [ %i.ie, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ]
-  %.pre.i.i.i17.i.i.i.i.i.i.i.i = phi i8 [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %bb.i ], [ 0, %bb.o ], [ 0, %bb.q ], [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %bb.k ], [ %.not.i.i.i.i.i.i.i.i.i.i.i, %bb.s ], [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %bb.j ], [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %bb.p ], [ 1, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i ], [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %7 ], [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %bb.r ], [ 1, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ]
-  %12 = phi i8 [ %i.if, %bb.i ], [ 1, %bb.o ], [ 1, %bb.q ], [ 1, %bb.k ], [ 1, %bb.s ], [ %i.if, %bb.j ], [ 1, %bb.p ], [ 1, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %7 ], [ 1, %bb.r ], [ 0, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ]
-  %13 = phi i8 [ 0, %bb.i ], [ 0, %bb.o ], [ 0, %bb.q ], [ 0, %bb.k ], [ 0, %bb.s ], [ 1, %bb.j ], [ 0, %bb.p ], [ 0, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %7 ], [ 0, %bb.r ], [ 0, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ]
+bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q, %bb.o, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i, %bb.k, %bb.j, %bb.i
+  %10 = phi i32 [ %i.id, %bb.i ], [ %i.id, %bb.o ], [ %i.kc, %bb.q ], [ %i.id, %bb.s ], [ %i.id, %bb.k ], [ %i.id, %bb.j ], [ %i.id, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ], [ %i.id, %bb.r ]
+  %11 = phi i32 [ %i.ie, %bb.i ], [ %i.kb, %bb.o ], [ %i.ie, %bb.q ], [ %i.ie, %bb.s ], [ %i.ie, %bb.k ], [ %i.ie, %bb.j ], [ %i.ie, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ], [ %i.ie, %bb.r ]
+  %.not.i.i.i18.i.i.i.i.i.i.i.i = phi i8 [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %bb.i ], [ 0, %bb.o ], [ 0, %bb.q ], [ %.not.i.i.i.i.i.i.i.i.i.i.i, %bb.s ], [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %bb.k ], [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %bb.j ], [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ], [ %.pre.i.i.i18.i.i.i.i.i.i.i.i, %bb.r ]
+  %12 = phi i8 [ %i.if, %bb.i ], [ 1, %bb.o ], [ 1, %bb.q ], [ 1, %bb.s ], [ 1, %bb.k ], [ %i.if, %bb.j ], [ %i.if, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ], [ 1, %bb.r ]
+  %13 = phi i8 [ 0, %bb.i ], [ 0, %bb.o ], [ 0, %bb.q ], [ 0, %bb.s ], [ 0, %bb.k ], [ 1, %bb.j ], [ 0, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i ], [ 0, %bb.r ]
   %i.ke = icmp eq ptr %i.js, %i.hy
   br i1 %i.ke, label %._RNvXs8_NtNtCs4NRVxsYgnAr_4core3str7patternINtB5_19MultiCharEqSearcherNCNvCs8tXP7kmbVnZ_22influxdb_line_protocol11split_lines0ENtB5_8Searcher4nextCs92BnbMq7p8c_15influxdb3_write.exit.loopexit_crit_edge.i.i.i.i.i.i.i.i, label %bb.e
 
@@ -363,7 +355,7 @@ bb.t:                                             ; preds = %._crit_edge.i.i.i.i
   store i64 %i.jw, ptr %i.ef, align 8, !alias.scope !3466, !noalias !3449
   br label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalNCNvCs8tXP7kmbVnZ_22influxdb_line_protocol11split_lines0E7get_endCs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i.i
 
-bb.u:                                             ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i, %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i
+bb.u:                                             ; preds = %.._crit_edge.i.i.i_crit_edge.i.i.i.i.i.i.i.i
   store i64 %i.jw, ptr %i.ef, align 8, !alias.scope !3466, !noalias !3449
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.eg, i8 0, i64 11, i1 false), !alias.scope !3455, !noalias !3449
   store i64 %i.jw, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !3447, !noalias !3441

@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
   %spec.select.i.i = select i1 %or.cond.i.i, i64 65536, i64 0
   br label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit
 
-_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit: ; preds = %.thread19, %9, %bb.c, %bb.b
-  %.0 = phi i64 [ %spec.select.i.i, %bb.c ], [ 65536, %bb.b ], [ 65536, %9 ], [ 65536, %.thread19 ]
+_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit: ; preds = %.thread19, %bb.m, %bb.c, %bb.b
+  %.0 = phi i64 [ %spec.select.i.i, %bb.c ], [ 65536, %bb.b ], [ 65536, %.thread19 ], [ 65536, %bb.m ]
   %i.g = load ptr, ptr %0, align 8, !tbaa !747, !nonnull !310, !align !313 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -367,47 +367,42 @@ _ZN5boost4asio19basic_stream_socketINS0_2ip3tcpENS0_15any_io_executorEE16async_w
 bb.k:                                             ; preds = %bb.a
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !722
-  %i.bx = add i64 %i.bw, %2                       ; 3 uses
+  %i.bx = add i64 %i.bw, %2                       ; 4 uses
   store i64 %i.bx, ptr %i.bv, align 8, !tbaa !722
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.bz = load i64, ptr %i.by, align 8, !tbaa !290 ; 3 uses
+  %i.bz = load i64, ptr %i.by, align 8, !tbaa !290 ; 2 uses
   %i.ca = and i64 %i.bz, 1
-  %.not.i.i9 = icmp eq i64 %i.ca, 0               ; 2 uses
-  br i1 %.not.i.i9, label %_ZNK5boost6system10error_codecvbEv.exit, label %bb.l
+  %.not.i.i9 = icmp eq i64 %i.ca, 0
+  br i1 %.not.i.i9, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.cb = icmp eq i64 %i.bz, 1
-  br i1 %i.cb, label %5, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit15
+  br i1 %i.cb, label %.thread19, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit15
 
-5:                                                ; preds = %bb.l
+bb.m:                                             ; preds = %bb.k
+  %5 = icmp ne i64 %2, 0
+  %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.cd = load i64, ptr %i.cc, align 8
+  %.not = icmp ult i64 %i.bx, %i.cd
+  %or.cond.not25 = select i1 %5, i1 %.not, i1 false
+  br i1 %or.cond.not25, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit15
+
+.thread19:                                        ; preds = %bb.l
   %6 = load i32, ptr %1, align 8, !tbaa !403
   %7 = icmp ne i32 %6, 0
-  br label %_ZNK5boost6system10error_codecvbEv.exit
-
-_ZNK5boost6system10error_codecvbEv.exit:          ; preds = %bb.k, %5
-  %.0.i.i = phi i1 [ %7, %5 ], [ false, %bb.k ]
   %8 = icmp ne i64 %2, 0
-  %or.cond.not = or i1 %8, %.0.i.i
-  br i1 %or.cond.not, label %bb.m, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit15
-
-bb.m:                                             ; preds = %_ZNK5boost6system10error_codecvbEv.exit
-  %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.cd = load i64, ptr %i.cc, align 8, !tbaa !471
-  %.not = icmp ult i64 %i.bx, %i.cd
-  br i1 %.not, label %9, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit15
-
-9:                                                ; preds = %bb.m
-  br i1 %.not.i.i9, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit, label %.thread19
-
-.thread19:                                        ; preds = %9
-  %10 = icmp eq i64 %i.bz, 1
+  %or.cond.not28 = or i1 %8, %7
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %10 = load i64, ptr %9, align 8
+  %11 = icmp ult i64 %i.bx, %10
+  %or.cond.not2529 = select i1 %or.cond.not28, i1 %11, i1 false
   %i.ce = load i32, ptr %1, align 8
   %.fr.i.i11 = freeze i32 %i.ce
   %.not.i.i12 = icmp eq i32 %.fr.i.i11, 0
-  %or.cond.i.i13 = and i1 %10, %.not.i.i12
+  %or.cond.i.i13 = and i1 %or.cond.not2529, %.not.i.i12
   br i1 %or.cond.i.i13, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit15
 
-_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit15: ; preds = %bb.l, %.thread19, %bb.m, %_ZNK5boost6system10error_codecvbEv.exit
+_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit15: ; preds = %.thread19, %bb.l, %bb.m
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.unpack.i.i = load i64, ptr %i.cf, align 8, !tbaa !727 ; 3 uses
   %.elt3.i.i = getelementptr inbounds nuw i8, ptr %0, i64 48

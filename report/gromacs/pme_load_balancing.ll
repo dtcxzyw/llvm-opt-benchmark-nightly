@@ -205,24 +205,22 @@ _ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 364
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !341 ; 2 uses
   switch i32 %i.bs, label %_ZN3gmx20pmeTuningIsSupportedE22CoulombInteractionTypebRKNS_18SimulationWorkloadE.exit.thread [
-    i32 3, label %_ZL8usingPmeRK22CoulombInteractionType.exit.i
-    i32 14, label %_ZL8usingPmeRK22CoulombInteractionType.exit.i
-    i32 13, label %_ZL8usingPmeRK22CoulombInteractionType.exit.i
-    i32 15, label %_ZL8usingPmeRK22CoulombInteractionType.exit.i
-    i32 5, label %_ZL8usingPmeRK22CoulombInteractionType.exit.i
+    i32 3, label %bb.d
+    i32 14, label %bb.d
+    i32 13, label %bb.d
+    i32 15, label %bb.d
+    i32 5, label %bb.d
   ]
 
-_ZL8usingPmeRK22CoulombInteractionType.exit.i:    ; preds = %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit, %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit, %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit, %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit, %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit
+bb.d:                                             ; preds = %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit, %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit, %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit, %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit, %_ZN3gmxL10getCutoffsERK10t_inputrecPA3_KfRK19interaction_const_tRKNS_18nonbonded_verlet_tE.exit
   %12 = load i8, ptr %i.d, align 1, !tbaa !12, !range !13, !noundef !14
   %13 = trunc nuw i8 %12 to i1
-  br i1 %13, label %_ZN3gmx20pmeTuningIsSupportedE22CoulombInteractionTypebRKNS_18SimulationWorkloadE.exit, label %bb.d
-
-bb.d:                                             ; preds = %_ZL8usingPmeRK22CoulombInteractionType.exit.i
-  %i.bt = load i8, ptr %i.a, align 1, !tbaa !329, !range !13, !noundef !14
+  %i.bt = load i8, ptr %i.a, align 1, !range !13
   %i.bu = trunc nuw i8 %i.bt to i1
-  br i1 %i.bu, label %_ZN3gmx20pmeTuningIsSupportedE22CoulombInteractionTypebRKNS_18SimulationWorkloadE.exit, label %_ZN3gmx20pmeTuningIsSupportedE22CoulombInteractionTypebRKNS_18SimulationWorkloadE.exit.thread
+  %or.cond8.i = select i1 %13, i1 true, i1 %i.bu
+  br i1 %or.cond8.i, label %_ZN3gmx20pmeTuningIsSupportedE22CoulombInteractionTypebRKNS_18SimulationWorkloadE.exit, label %_ZN3gmx20pmeTuningIsSupportedE22CoulombInteractionTypebRKNS_18SimulationWorkloadE.exit.thread
 
-_ZN3gmx20pmeTuningIsSupportedE22CoulombInteractionTypebRKNS_18SimulationWorkloadE.exit: ; preds = %_ZL8usingPmeRK22CoulombInteractionType.exit.i, %bb.d
+_ZN3gmx20pmeTuningIsSupportedE22CoulombInteractionTypebRKNS_18SimulationWorkloadE.exit: ; preds = %bb.d
   %i.bv = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !15, !range !13, !noundef !14
   %i.bx = trunc nuw i8 %i.bw to i1

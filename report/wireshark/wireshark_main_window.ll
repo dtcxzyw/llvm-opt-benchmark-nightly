@@ -204,8 +204,13 @@ bb.aj:                                            ; preds = %bb.ai
 .lr.ph119:                                        ; preds = %bb.aj
   %i.cq = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cr = load ptr, ptr %i.cq, align 8            ; 8 uses
-  %min.iters.check = icmp ult i64 %i.co, 50
+  %min.iters.check = icmp ult i64 %i.co, 51
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+
+scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %vector.scevcheck, %.lr.ph119
+  %.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph119 ], [ %n.vec, %vector.body ]
+  %.0118.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph119 ], [ %i.dk, %vector.body ]
+  br label %scalar.ph
 
 vector.scevcheck:                                 ; preds = %.lr.ph119
   %i.cs = add nsw i64 %i.co, -1                   ; 4 uses
@@ -240,8 +245,11 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec.a = and i64 %i.co, 8589934588            ; 4 uses
-  %i.dk = trunc i64 %n.vec.a to i32
+  %n.vec.a = and i64 %i.co, 3                     ; 2 uses
+  %14 = icmp eq i64 %n.vec.a, 0
+  %15 = select i1 %14, i64 4, i64 %n.vec.a
+  %n.vec = sub nsw i64 %i.co, %15                 ; 3 uses
+  %i.dk = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -271,19 +279,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x ptr> %i.ed, ptr %i.ef, align 8, !alias.scope !371, !noalias !370
   store <2 x ptr> %i.ee, ptr %i.eg, align 8, !alias.scope !371, !noalias !370
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.eh = icmp eq i64 %index.next, %n.vec.a
-  br i1 %i.eh, label %middle.block, label %vector.body, !llvm.loop !366
+  %i.eh = icmp eq i64 %index.next, %n.vec
+  br i1 %i.eh, label %scalar.ph.preheader, label %vector.body, !llvm.loop !366
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.co, %n.vec.a
-  br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
-
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph119, %middle.block
-  %.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph119 ], [ %n.vec.a, %middle.block ]
-  %.0118.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph119 ], [ %i.dk, %middle.block ]
-  br label %scalar.ph
-
-._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %bb.aj
+._crit_edge:                                      ; preds = %scalar.ph, %bb.aj
   %i.ei = load ptr, ptr getelementptr inbounds nuw (i8, ptr @global_capture_opts, i64 360), align 8
   %i.ej = invoke i32 @wtap_pcapng_file_type_subtype()
           to label %bb.ak unwind label %bb.ar

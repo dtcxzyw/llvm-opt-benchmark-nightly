@@ -115,7 +115,7 @@ _ZN7meshoptL11hashBucketsEm.exit:                 ; preds = %bb.b
   %.not = icmp eq ptr %1, null
   %i.o = add i64 %.0.i, -1                        ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 16
   br label %bb.c
 
 ._crit_edge.loopexit:                             ; preds = %bb.j
@@ -142,7 +142,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.v = phi i32 [ %i.t, %bb.d ], [ %i.u, %bb.e ] ; 2 uses
-  %i.w = zext i32 %i.v to i64                     ; 3 uses
+  %i.w = zext i32 %i.v to i64                     ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.w ; 2 uses
   %i.y = load i32, ptr %i.x, align 4, !tbaa !31
   %.not28 = icmp eq i32 %i.y, -1
@@ -151,13 +151,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.f
   %i.z = load i64, ptr %i.p, align 8, !tbaa !22   ; 3 uses
   %i.aa = icmp ugt i64 %i.z, 3
+  %.pre.i = load ptr, ptr %4, align 8             ; 3 uses
+  %6 = load i64, ptr %i.q, align 8                ; 2 uses
+  %7 = mul i64 %6, %i.w                           ; 2 uses
   br i1 %i.aa, label %.lr.ph.i.preheader.i.i, label %_ZNK7meshopt12VertexHasher4hashEj.exit.i
 
 .lr.ph.i.preheader.i.i:                           ; preds = %bb.g
-  %6 = load ptr, ptr %4, align 8, !tbaa !21
-  %7 = load i64, ptr %i.q, align 8, !tbaa !23
-  %8 = mul i64 %7, %i.w
-  %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 %8 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.pre.i, i64 %7 ; 2 uses
   %i.ac = add i64 %i.z, -4                        ; 2 uses
   %i.ad = lshr i64 %i.ac, 2                       ; 2 uses
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 2 uses
@@ -217,28 +217,22 @@ _ZN7meshoptL11hashUpdate4EjPKhm.exit.loopexit.i.i: ; preds = %_ZN7meshoptL11hash
   %i.bf = and i64 %i.o, %i.be
   br label %_ZNK7meshopt12VertexHasher4hashEj.exit.i
 
-_ZNK7meshopt12VertexHasher4hashEj.exit.i:         ; preds = %bb.g, %_ZN7meshoptL11hashUpdate4EjPKhm.exit.loopexit.i.i
+_ZNK7meshopt12VertexHasher4hashEj.exit.i:         ; preds = %_ZN7meshoptL11hashUpdate4EjPKhm.exit.loopexit.i.i, %bb.g
   %.0.lcssa.i.i.i = phi i64 [ %i.bf, %_ZN7meshoptL11hashUpdate4EjPKhm.exit.loopexit.i.i ], [ 0, %bb.g ] ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.pre.i, i64 %7
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %.0.lcssa.i.i.i
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !31 ; 2 uses
   %i.bi = icmp eq i32 %i.bh, -1
-  br i1 %i.bi, label %_ZN7meshoptL10hashLookupIjNS_12VertexHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread, label %.lr.ph
+  br i1 %i.bi, label %_ZN7meshoptL10hashLookupIjNS_12VertexHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread, label %bb.h
 
-.lr.ph:                                           ; preds = %_ZNK7meshopt12VertexHasher4hashEj.exit.i
-  %9 = load ptr, ptr %4, align 8, !tbaa !21       ; 2 uses
-  %10 = load i64, ptr %i.q, align 8, !tbaa !23    ; 2 uses
-  %11 = mul i64 %10, %i.w
-  %12 = getelementptr inbounds nuw i8, ptr %9, i64 %11
-  br label %bb.h
-
-bb.h:                                             ; preds = %.lr.ph, %bb.i
-  %.pr = phi i32 [ %i.bh, %.lr.ph ], [ %i.br, %bb.i ]
-  %.02311.i39 = phi i64 [ %.0.lcssa.i.i.i, %.lr.ph ], [ %i.bp, %bb.i ]
-  %.02212.i38 = phi i64 [ 0, %.lr.ph ], [ %i.bn, %bb.i ]
+bb.h:                                             ; preds = %_ZNK7meshopt12VertexHasher4hashEj.exit.i, %bb.i
+  %.pr = phi i32 [ %i.br, %bb.i ], [ %i.bh, %_ZNK7meshopt12VertexHasher4hashEj.exit.i ]
+  %.02311.i39 = phi i64 [ %i.bp, %bb.i ], [ %.0.lcssa.i.i.i, %_ZNK7meshopt12VertexHasher4hashEj.exit.i ]
+  %.02212.i38 = phi i64 [ %i.bn, %bb.i ], [ 0, %_ZNK7meshopt12VertexHasher4hashEj.exit.i ]
   %i.bj = zext i32 %.pr to i64                    ; 2 uses
-  %i.bk = mul i64 %10, %i.bj
-  %i.bl = getelementptr inbounds nuw i8, ptr %9, i64 %i.bk
-  %bcmp.i.i = tail call i32 @bcmp(ptr %i.bl, ptr %12, i64 %i.z)
+  %i.bk = mul i64 %6, %i.bj
+  %i.bl = getelementptr inbounds nuw i8, ptr %.pre.i, i64 %i.bk
+  %bcmp.i.i = tail call i32 @bcmp(ptr %i.bl, ptr %8, i64 %i.z)
   %i.bm = icmp eq i32 %bcmp.i.i, 0
   br i1 %i.bm, label %_ZN7meshoptL10hashLookupIjNS_12VertexHasherEEEPT_S3_mRKT0_RKS2_S8_.exit, label %bb.i
 
@@ -641,19 +635,16 @@ bb.d:                                             ; preds = %_ZN7meshoptL10hashL
   br i1 %i.cb, label %_ZNK7meshopt12VertexHasher4hashEj.exit.i.i, label %bb.g
 
 _ZNK7meshopt12VertexHasher4hashEj.exit.i.i:       ; preds = %.lr.ph37.i.split
-  %i.cc = load i32, ptr %i.o, align 4, !tbaa !31  ; 2 uses
-  %i.cd = icmp eq i32 %i.cc, -1
-  br i1 %i.cd, label %_ZN7meshoptL10hashLookupIjNS_12VertexHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %_ZNK7meshopt12VertexHasher4hashEj.exit.i.i
   %8 = mul i64 %6, %i.by
   %9 = getelementptr inbounds nuw i8, ptr %3, i64 %8
-  br label %bb.e
+  %i.cc = load i32, ptr %i.o, align 4, !tbaa !31  ; 2 uses
+  %i.cd = icmp eq i32 %i.cc, -1
+  br i1 %i.cd, label %_ZN7meshoptL10hashLookupIjNS_12VertexHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i, label %bb.e
 
-bb.e:                                             ; preds = %bb.f, %.lr.ph.i
-  %.pr.i = phi i32 [ %i.cc, %.lr.ph.i ], [ %i.cm, %bb.f ] ; 2 uses
-  %.02311.i35.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ck, %bb.f ]
-  %.02212.i34.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ci, %bb.f ]
+bb.e:                                             ; preds = %_ZNK7meshopt12VertexHasher4hashEj.exit.i.i, %bb.f
+  %.pr.i = phi i32 [ %i.cm, %bb.f ], [ %i.cc, %_ZNK7meshopt12VertexHasher4hashEj.exit.i.i ] ; 2 uses
+  %.02311.i35.i = phi i64 [ %i.ck, %bb.f ], [ 0, %_ZNK7meshopt12VertexHasher4hashEj.exit.i.i ]
+  %.02212.i34.i = phi i64 [ %i.ci, %bb.f ], [ 0, %_ZNK7meshopt12VertexHasher4hashEj.exit.i.i ]
   %i.ce = zext i32 %.pr.i to i64
   %i.cf = mul i64 %6, %i.ce
   %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 %i.cf

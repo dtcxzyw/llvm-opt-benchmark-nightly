@@ -204,10 +204,15 @@ _ZN4ojph5local9param_qcd28trim_non_existing_componentsEj.exit: ; preds = %.lr.ph
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.k = load ptr, ptr %i.j, align 8
   %.0.i.i = select i1 %i.i, ptr %0, ptr %i.k      ; 3 uses
-  %.not9.i.i.a = icmp eq ptr %.0.i.i, null
+  %.not9.i.i = icmp eq ptr %.0.i.i, null
+  %3 = load i8, ptr %2, align 8
+  %.not9.i.i.a = icmp eq i8 %3, 1
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 72
+  %4 = load ptr, ptr %i.l, align 8
+  %.0.i137 = select i1 %.not9.i.i.a, ptr %2, ptr %4 ; 3 uses
+  %.not9.i = icmp eq ptr %.0.i137, null
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  br i1 %.not9.i.i.a, label %._crit_edge.thread, label %.lr.ph.i.i.preheader.preheader
+  br i1 %.not9.i.i, label %._crit_edge.thread, label %.lr.ph.i.i.preheader.preheader
 
 .lr.ph.i.i.preheader.preheader:                   ; preds = %.lr.ph
   %wide.trip.count = zext i16 %i.b to i64
@@ -321,11 +326,6 @@ _ZN4ojph5local9param_qcd7get_qccEj.exit:          ; preds = %.lr.ph.i.i, %bb.f
   br i1 %i.aw, label %bb.g, label %_ZN4ojph5local9param_qcd7get_qccEj.exit.thread
 
 bb.g:                                             ; preds = %_ZN4ojph5local9param_qcd7get_qccEj.exit
-  %3 = load i8, ptr %2, align 8, !tbaa !62
-  %4 = icmp eq i8 %3, 1
-  %5 = load ptr, ptr %i.l, align 8
-  %.0.i137 = select i1 %4, ptr %2, ptr %5         ; 3 uses
-  %.not9.i = icmp eq ptr %.0.i137, null
   br i1 %.not9.i, label %_ZNK4ojph5local9param_cod7get_cocEj.exit, label %.lr.ph.i138
 
 .lr.ph.i138:                                      ; preds = %bb.g, %bb.h
@@ -728,7 +728,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %.05.i, i64 6
   %i.b = load i8, ptr %i.a, align 2, !tbaa !107, !range !108, !noundef !109
   %.not6.not.i.not = icmp eq i8 %i.b, 0
-  br i1 %.not6.not.i.not, label %bb.c, label %2
+  br i1 %.not6.not.i.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %.05.i, i64 8
@@ -736,27 +736,25 @@ bb.c:                                             ; preds = %bb.b
   %.not.i = icmp eq ptr %i.d, null
   br i1 %.not.i, label %_ZNK4ojph5local9param_nlt14is_any_enabledEv.exit, label %bb.b, !llvm.loop !11
 
-2:                                                ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
-  %4 = load i8, ptr %3, align 2, !tbaa !107, !range !108, !noundef !109
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %bb.d, label %.thread
-
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.b
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
+  %3 = load i8, ptr %2, align 2, !tbaa !107, !range !108, !noundef !109 ; 2 uses
+  %4 = trunc nuw i8 %3 to i1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !106
+  %i.f = load i8, ptr %i.e, align 1               ; 2 uses
   %i.g = icmp eq i8 %i.f, 0
-  br i1 %i.g, label %bb.e, label %bb.f
+  %or.cond110 = select i1 %4, i1 %i.g, i1 false
+  br i1 %or.cond110, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  store i8 0, ptr %3, align 2, !tbaa !107
+  store i8 0, ptr %2, align 2, !tbaa !107
   br label %.thread
 
 bb.f:                                             ; preds = %bb.d
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %7 = load i8, ptr %6, align 1, !tbaa !106
-  %8 = icmp eq i8 %7, 3
-  br i1 %8, label %bb.g, label %.thread
+  %5 = trunc nuw i8 %3 to i1
+  %6 = icmp eq i8 %i.f, 3
+  %or.cond113 = select i1 %5, i1 %6, i1 false
+  br i1 %or.cond113, label %bb.g, label %.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 2 uses
@@ -765,7 +763,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not123, label %.loopexit, label %.preheader108.lr.ph
 
 .preheader108.lr.ph:                              ; preds = %bb.g
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %7 = load ptr, ptr %i.j, align 8                ; 3 uses
   %wide.trip.count133 = zext i16 %i.i to i64
   br label %.preheader108
 
@@ -811,8 +810,7 @@ bb.j:                                             ; preds = %_ZN4ojph5local9para
   br i1 %i.u, label %bb.k, label %.critedge
 
 bb.k:                                             ; preds = %bb.j
-  %9 = load ptr, ptr %i.j, align 8, !tbaa !33
-  %i.v = getelementptr inbounds nuw [3 x i8], ptr %9, i64 %indvars.iv131
+  %i.v = getelementptr inbounds nuw [3 x i8], ptr %7, i64 %indvars.iv131
   %i.w = load i8, ptr %i.v, align 1, !tbaa !35    ; 2 uses
   %i.x = and i8 %i.w, 127
   %narrow.i = add nuw i8 %i.x, 1
@@ -827,8 +825,7 @@ bb.l:                                             ; preds = %bb.k
   br label %.critedge
 
 bb.m:                                             ; preds = %_ZN4ojph5local9param_nlt14get_nlt_objectEj.exit.thread
-  %10 = load ptr, ptr %i.j, align 8, !tbaa !33
-  %i.ad = getelementptr inbounds nuw [3 x i8], ptr %10, i64 %indvars.iv131
+  %i.ad = getelementptr inbounds nuw [3 x i8], ptr %7, i64 %indvars.iv131
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !35  ; 2 uses
   %i.af = and i8 %i.ae, 127
   %narrow.i82 = add nuw i8 %i.af, 1
@@ -837,8 +834,7 @@ bb.m:                                             ; preds = %_ZN4ojph5local9para
   br label %.critedge
 
 bb.n:                                             ; preds = %_ZN4ojph5local9param_nlt14get_nlt_objectEj.exit
-  %11 = load ptr, ptr %i.j, align 8, !tbaa !33
-  %i.ah = getelementptr inbounds nuw [3 x i8], ptr %11, i64 %indvars.iv131
+  %i.ah = getelementptr inbounds nuw [3 x i8], ptr %7, i64 %indvars.iv131
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !35
   %i.aj = getelementptr inbounds nuw i8, ptr %.06.i.i, i64 4
   store i8 %i.ai, ptr %i.aj, align 4, !tbaa !105
@@ -865,7 +861,7 @@ bb.p:                                             ; preds = %._crit_edge
   br i1 %i.k, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.p
-  store i8 0, ptr %3, align 2, !tbaa !107
+  store i8 0, ptr %2, align 2, !tbaa !107
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 40
   %wide.trip.count138 = zext i16 %i.i to i64
@@ -969,7 +965,7 @@ bb.w:                                             ; preds = %bb.v, %_ZN4ojph5loc
   %exitcond139.not = icmp eq i64 %indvars.iv.next136, %wide.trip.count138
   br i1 %exitcond139.not, label %.loopexit.loopexit, label %.preheader, !llvm.loop !229
 
-.thread:                                          ; preds = %2, %bb.e, %bb.f
+.thread:                                          ; preds = %bb.e, %bb.f
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.ca = load i16, ptr %i.bz, align 4, !tbaa !31 ; 3 uses
   %.not = icmp eq i16 %i.ca, 0
@@ -977,6 +973,7 @@ bb.w:                                             ; preds = %bb.v, %_ZN4ojph5loc
 
 .preheader109.lr.ph:                              ; preds = %.thread
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %8 = load ptr, ptr %i.cb, align 8
   %wide.trip.count = zext i16 %i.ca to i64
   br label %.preheader109
 
@@ -1005,8 +1002,7 @@ _ZN4ojph5local9param_nlt14get_nlt_objectEj.exit95: ; preds = %bb.x
   br i1 %i.cj, label %bb.z, label %_ZN4ojph5local9param_nlt14get_nlt_objectEj.exit95.thread
 
 bb.z:                                             ; preds = %_ZN4ojph5local9param_nlt14get_nlt_objectEj.exit95
-  %12 = load ptr, ptr %i.cb, align 8, !tbaa !33
-  %i.ck = getelementptr inbounds nuw [3 x i8], ptr %12, i64 %indvars.iv
+  %i.ck = getelementptr inbounds nuw [3 x i8], ptr %8, i64 %indvars.iv
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !35
   %i.cm = getelementptr inbounds nuw i8, ptr %.06.i.i91, i64 4
   store i8 %i.cl, ptr %i.cm, align 4, !tbaa !105

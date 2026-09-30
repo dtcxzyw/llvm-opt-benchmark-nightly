@@ -204,32 +204,27 @@ declare void @_ZSt9terminatev() local_unnamed_addr #8
 define dso_local noundef zeroext i1 @_ZNK14cmConfigureLog22IsAnyLogVersionEnabledERKSt6vectorIjSaIjEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(584) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #9 align 2 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !22     ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %3 = load ptr, ptr %2, align 8, !tbaa !22       ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !22   ; 2 uses
-  %.not14 = icmp eq ptr %i.a, %i.c
-  br i1 %.not14, label %.critedge, label %.lr.ph
+  %4 = load ptr, ptr %i.b, align 8, !tbaa !22     ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %i.c = load ptr, ptr %5, align 8                ; 2 uses
+  %6 = icmp ne ptr %i.a, %4
+  %7 = icmp ne ptr %3, %i.c
+  %or.cond15 = select i1 %6, i1 %7, i1 false
+  br i1 %or.cond15, label %bb.b, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %4 = load ptr, ptr %3, align 8, !tbaa !22
-  %5 = load ptr, ptr %2, align 8, !tbaa !22
-  br label %6
-
-6:                                                ; preds = %.lr.ph, %bb.f
-  %.sroa.05.016 = phi ptr [ %4, %.lr.ph ], [ %.sroa.05.1, %bb.f ] ; 4 uses
-  %.sroa.09.015 = phi ptr [ %i.a, %.lr.ph ], [ %.sroa.09.1, %bb.f ] ; 3 uses
-  %.not13 = icmp eq ptr %.sroa.05.016, %5
-  br i1 %.not13, label %.critedge, label %bb.b
-
-bb.b:                                             ; preds = %6
-  %i.d = load i32, ptr %.sroa.09.015, align 4, !tbaa !50 ; 2 uses
-  %i.e = load i32, ptr %.sroa.05.016, align 4, !tbaa !50 ; 2 uses
+bb.b:                                             ; preds = %bb.a, %bb.f
+  %.sroa.05.017 = phi ptr [ %.sroa.05.1, %bb.f ], [ %3, %bb.a ] ; 3 uses
+  %.sroa.09.016 = phi ptr [ %.sroa.09.1, %bb.f ], [ %i.a, %bb.a ] ; 3 uses
+  %i.d = load i32, ptr %.sroa.09.016, align 4, !tbaa !50 ; 2 uses
+  %i.e = load i32, ptr %.sroa.05.017, align 4, !tbaa !50 ; 2 uses
   %i.f = icmp ult i32 %i.d, %i.e
   br i1 %i.f, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.09.015, i64 4
+  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.09.016, i64 4
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -237,18 +232,20 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.05.016, i64 4
+  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.05.017, i64 4
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c
-  %.sroa.09.1 = phi ptr [ %i.g, %bb.c ], [ %.sroa.09.015, %bb.e ] ; 2 uses
-  %.sroa.05.1 = phi ptr [ %.sroa.05.016, %bb.c ], [ %i.i, %bb.e ]
-  %.not = icmp eq ptr %.sroa.09.1, %i.c
-  br i1 %.not, label %.critedge, label %6, !llvm.loop !85
+  %.sroa.09.1 = phi ptr [ %i.g, %bb.c ], [ %.sroa.09.016, %bb.e ] ; 2 uses
+  %.sroa.05.1 = phi ptr [ %.sroa.05.017, %bb.c ], [ %i.i, %bb.e ] ; 2 uses
+  %8 = icmp ne ptr %.sroa.09.1, %4
+  %9 = icmp ne ptr %.sroa.05.1, %i.c
+  %or.cond = select i1 %8, i1 %9, i1 false
+  br i1 %or.cond, label %bb.b, label %.critedge, !llvm.loop !85
 
-.critedge:                                        ; preds = %bb.d, %6, %bb.f, %bb.a
-  %.0 = phi i1 [ false, %bb.a ], [ false, %6 ], [ false, %bb.f ], [ true, %bb.d ]
-  ret i1 %.0
+.critedge:                                        ; preds = %bb.d, %bb.f, %bb.a
+  %or.cond.lcssa = phi i1 [ false, %bb.a ], [ false, %bb.f ], [ true, %bb.d ]
+  ret i1 %or.cond.lcssa
 }
 
 ; Function Attrs: mustprogress uwtable

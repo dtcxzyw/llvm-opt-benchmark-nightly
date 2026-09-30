@@ -133,16 +133,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %i.f, i64 5
   %i.v = load i64, ptr %i.u, align 8, !tbaa !14   ; 2 uses
   store i64 %i.v, ptr %0, align 8, !tbaa !15
-  %i.w = icmp ult i8 %i.h, -31
-  br i1 %i.w, label %3, label %bb.f
-
-3:                                                ; preds = %bb.c
+  %3 = icmp ult i8 %i.h, -31
+  %or.cond = select i1 %3, i1 %i.d, i1 false
   %4 = add i64 %i.v, 1
-  %or.cond = icmp ult i64 %4, 72057594037927937
-  %or.cond10 = select i1 %i.d, i1 %or.cond, i1 false
-  br i1 %or.cond10, label %bb.d, label %bb.f
+  %i.w = icmp ult i64 %4, 72057594037927937
+  %or.cond12 = select i1 %or.cond, i1 %i.w, i1 false
+  br i1 %or.cond12, label %bb.d, label %bb.f
 
-bb.d:                                             ; preds = %3
+bb.d:                                             ; preds = %bb.c
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 10
   %.val = load i32, ptr %i.x, align 4, !tbaa !9   ; 2 uses
   switch i32 %.val, label %bb.e [
@@ -217,8 +215,8 @@ _ZN8NArchive5NLzmaL12CheckDicSizeEPKh.exit:       ; preds = %bb.d, %bb.d, %bb.d,
   %spec.select.i = or i1 %i.y, %or.cond.lcssa.i
   br label %bb.f
 
-bb.f:                                             ; preds = %_ZN8NArchive5NLzmaL12CheckDicSizeEPKh.exit, %3, %bb.c
-  %5 = phi i1 [ %spec.select.i, %_ZN8NArchive5NLzmaL12CheckDicSizeEPKh.exit ], [ false, %3 ], [ false, %bb.c ]
+bb.f:                                             ; preds = %_ZN8NArchive5NLzmaL12CheckDicSizeEPKh.exit, %bb.c
+  %5 = phi i1 [ false, %bb.c ], [ %spec.select.i, %_ZN8NArchive5NLzmaL12CheckDicSizeEPKh.exit ]
   ret i1 %5
 }
 

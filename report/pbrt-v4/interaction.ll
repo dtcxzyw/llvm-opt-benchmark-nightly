@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a, %bb.b
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %17 = load float, ptr %i.af, align 8, !tbaa !848
+  %17 = load <4 x float>, ptr %i.af, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !223
   store i64 %i.ah, ptr %11, align 8, !tbaa !223
@@ -254,8 +254,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b
   %i.bm = load ptr, ptr %i.bd, align 8, !tbaa !166
   %i.bn = load i64, ptr %i.be, align 8, !tbaa !205
   %i.bo = call noundef float @_ZN4pbrt16InvertCatmullRomEN4pstd4spanIKfEES3_f(ptr %i.bk, i64 %i.bl, ptr %i.bm, i64 %i.bn, float noundef %.0.i.1.i)
-  %18 = insertelement <2 x float> poison, float %17, i64 0
-  %i.bp = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.bp = shufflevector <4 x float> %17, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bq = fmul <2 x float> %i.bp, %i.aj           ; 2 uses
   %i.br = fcmp ogt <2 x float> %i.bq, zeroinitializer
   %i.bs = select <2 x i1> %i.br, <2 x float> %i.bq, <2 x float> zeroinitializer ; 2 uses

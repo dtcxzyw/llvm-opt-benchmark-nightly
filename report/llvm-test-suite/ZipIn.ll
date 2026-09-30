@@ -205,8 +205,8 @@ bb.a:
 _ZN7CBufferIhE11SetCapacityEm.exit:               ; preds = %bb.a
   %i.l = call noalias noundef nonnull dereferenceable(65578) ptr @_Znam(i64 noundef 65578) #20 ; 4 uses
   %i.m = load i64, ptr %i.f, align 8, !tbaa !38   ; 3 uses
-  %i.n = call i64 @llvm.umin.i64(i64 %i.m, i64 65578) ; 3 uses
-  %i.o = trunc nuw nsw i64 %i.n to i32            ; 3 uses
+  %i.n = call i64 @llvm.umin.i64(i64 %i.m, i64 65578) ; 4 uses
+  %i.o = trunc nuw nsw i64 %i.n to i32            ; 2 uses
   %i.p = icmp ult i64 %i.m, 22
   br i1 %i.p, label %_ZN7CBufferIhED2Ev.exit, label %bb.b
 
@@ -264,11 +264,9 @@ bb.i:                                             ; preds = %bb.g, %bb.f
   br label %_ZN7CBufferIhED2Ev.exit87
 
 .lr.ph:                                           ; preds = %bb.h
-  %2 = add nsw i32 %i.o, -22                      ; 2 uses
+  %2 = add nuw nsw i64 %i.n, 4294967274
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %3 = zext i32 %2 to i64
-  %smin = call i32 @llvm.smin.i32(i32 %2, i32 0)
-  %4 = add nsw i32 %smin, -1
+  %3 = and i64 %2, 4294967295
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph, %bb.u
@@ -445,7 +443,7 @@ bb.u:                                             ; preds = %bb.j, %.thread
   br i1 %i.cn, label %.loopexit, label %bb.j, !llvm.loop !120
 
 .loopexit:                                        ; preds = %bb.u, %_ZN8NArchive4NZip10CInArchive8TryEcd64EyRNS0_7CCdInfoE.exit, %bb.r, %bb.s, %bb.t
-  %.0119 = phi i32 [ %i.by, %bb.t ], [ %i.bb, %_ZN8NArchive4NZip10CInArchive8TryEcd64EyRNS0_7CCdInfoE.exit ], [ %i.bq, %bb.r ], [ %i.by, %bb.s ], [ %4, %bb.u ]
+  %.0119 = phi i32 [ %i.by, %bb.t ], [ %i.bb, %_ZN8NArchive4NZip10CInArchive8TryEcd64EyRNS0_7CCdInfoE.exit ], [ %i.bq, %bb.r ], [ %i.by, %bb.s ], [ -1, %bb.u ]
   %.0.lobit = lshr i32 %.0119, 31
   br label %_ZN7CBufferIhED2Ev.exit
 
@@ -847,9 +845,6 @@ declare i64 @strlen(ptr captures(none)) local_unnamed_addr #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17

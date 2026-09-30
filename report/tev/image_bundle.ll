@@ -204,23 +204,21 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.010.017.i, i64 12
   %i.h = load i32, ptr %i.g, align 4, !tbaa !96
   %.not.i = icmp eq i32 %i.h, 0
-  br i1 %.not.i, label %_ZNK3jxl13ImageMetadata4FindENS_12ExtraChannelE.exit, label %bb.b
+  br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.017.i, i64 96 ; 2 uses
   %.not15.i = icmp eq ptr %i.i, %i.f
   br i1 %.not15.i, label %_ZNK3jxl11ImageBundle11VerifySizesEv.exit, label %.lr.ph.i
 
-_ZNK3jxl13ImageMetadata4FindENS_12ExtraChannelE.exit: ; preds = %.lr.ph.i
+bb.c:                                             ; preds = %.lr.ph.i
   %2 = load i32, ptr %1, align 8, !tbaa !15
   %.not12 = icmp eq i32 %2, 0
-  br i1 %.not12, label %_ZNK3jxl11ImageBundle11VerifySizesEv.exit, label %bb.c
-
-bb.c:                                             ; preds = %_ZNK3jxl13ImageMetadata4FindENS_12ExtraChannelE.exit
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !16
+  %i.k = load i32, ptr %i.j, align 4
   %.not13 = icmp eq i32 %i.k, 0
-  br i1 %.not13, label %_ZNK3jxl11ImageBundle11VerifySizesEv.exit, label %bb.d
+  %or.cond = select i1 %.not12, i1 true, i1 %.not13
+  br i1 %or.cond, label %_ZNK3jxl11ImageBundle11VerifySizesEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 4 uses
@@ -342,8 +340,8 @@ bb.q:                                             ; preds = %.lr.ph.i15
   %i.bn = icmp eq i64 %.0.i18.i, %i.bm
   br i1 %i.bn, label %bb.p, label %_ZNK3jxl11ImageBundle11VerifySizesEv.exit
 
-_ZNK3jxl11ImageBundle11VerifySizesEv.exit:        ; preds = %bb.b, %bb.p, %bb.q, %.lr.ph.i15, %bb.m, %_ZNK3jxl11ImageBundle5ysizeEv.exit.i, %bb.o, %_ZNK3jxl13ImageMetadata4FindENS_12ExtraChannelE.exit, %bb.c, %bb.a
-  %.sroa.020.0 = phi i32 [ 1, %_ZNK3jxl13ImageMetadata4FindENS_12ExtraChannelE.exit ], [ 1, %bb.q ], [ 0, %_ZNK3jxl11ImageBundle5ysizeEv.exit.i ], [ 1, %bb.a ], [ 1, %bb.c ], [ 1, %bb.o ], [ 0, %bb.m ], [ 0, %bb.p ], [ 1, %.lr.ph.i15 ], [ 1, %bb.b ]
+_ZNK3jxl11ImageBundle11VerifySizesEv.exit:        ; preds = %bb.b, %bb.p, %bb.q, %.lr.ph.i15, %bb.m, %_ZNK3jxl11ImageBundle5ysizeEv.exit.i, %bb.o, %bb.c, %bb.a
+  %.sroa.020.0 = phi i32 [ 1, %bb.c ], [ 1, %bb.q ], [ 1, %bb.o ], [ 1, %bb.a ], [ 0, %_ZNK3jxl11ImageBundle5ysizeEv.exit.i ], [ 0, %bb.m ], [ 0, %bb.p ], [ 1, %.lr.ph.i15 ], [ 1, %bb.b ]
   ret i32 %.sroa.020.0
 }
 

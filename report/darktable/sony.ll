@@ -205,15 +205,15 @@ define void @_ZN6LibRaw19process_Sony_0x9050EPhty(ptr noundef nonnull align 8 de
 bb.a:
   %i.a = alloca [4 x i8], align 1                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 3600 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 3600 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 3668 ; 2 uses
   %i.d = load i16, ptr %i.c, align 4, !tbaa !91   ; 2 uses
   %i.e = icmp eq i16 %i.d, 0
+  %.pre = load i16, ptr %i.b, align 8             ; 2 uses
   br i1 %i.e, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %4 = load i16, ptr %i.b, align 8, !tbaa !89
-  %.off = add i16 %4, -1
+  %.off = add i16 %.pre, -1
   %switch = icmp ult i16 %.off, 2
   br i1 %switch, label %.critedge, label %bb.c
 
@@ -226,15 +226,12 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1200 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1354 ; 4 uses
   %i.i = load i16, ptr %i.h, align 2, !tbaa !88   ; 2 uses
-  %.not127.a = icmp eq i16 %i.i, 40               ; 2 uses
-  br i1 %.not127.a, label %bb.i, label %5
+  %.not127 = icmp eq i16 %i.i, 40                 ; 2 uses
+  %.not127.a = icmp eq i16 %.pre, 1
+  %or.cond = select i1 %.not127, i1 true, i1 %.not127.a
+  br i1 %or.cond, label %bb.i, label %bb.d
 
-5:                                                ; preds = %.thread
-  %6 = load i16, ptr %i.b, align 8, !tbaa !89
-  %.not128 = icmp eq i16 %6, 1
-  br i1 %.not128, label %bb.i, label %bb.d
-
-bb.d:                                             ; preds = %5
+bb.d:                                             ; preds = %.thread
   %i.j = icmp ult i16 %2, 2
   br i1 %i.j, label %.critedge, label %bb.e
 
@@ -293,7 +290,7 @@ bb.h:                                             ; preds = %bb.g
   store float %i.ap, ptr %i.aq, align 4, !tbaa !160
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.g, %bb.h, %5, %.thread
+bb.i:                                             ; preds = %bb.g, %bb.h, %.thread
   switch i16 %i.f, label %bb.t [
     i16 2, label %bb.j
     i16 3, label %bb.j
@@ -420,7 +417,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.i
   %i.ep = add i64 %3, -291
   %i.eq = icmp ult i64 %i.ep, -3
-  %or.cond6 = and i1 %i.eq, %.not127.a
+  %or.cond6 = and i1 %i.eq, %.not127
   br i1 %or.cond6, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n

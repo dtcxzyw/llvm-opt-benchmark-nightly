@@ -205,7 +205,7 @@ _ZNSt10lock_guardIRKN11OpenImageIO4v3_110ImageInputEED2Ev.exit9: ; preds = %_ZN1
 define hidden noundef zeroext i1 @_ZN11OpenImageIO4v3_18webp_pvt9WebpInput13read_subimageEib(ptr noundef nonnull align 8 dereferenceable(360) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 6 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !116  ; 4 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !116  ; 3 uses
   %i.c = icmp eq i32 %i.b, %1
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.not, label %bb.c, label %_ZN11OpenImageIO4v3_18webp_pvt9WebpInput16iter_to_subimageEi.exit
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  br i1 %2, label %3, label %bb.d
+  br i1 %2, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -232,16 +232,14 @@ bb.e:                                             ; preds = %bb.d
   store i32 %1, ptr %i.a, align 8, !tbaa !116
   br label %_ZN11OpenImageIO4v3_18webp_pvt9WebpInput16iter_to_subimageEi.exit
 
-3:                                                ; preds = %bb.c
-  %4 = add nsw i32 %1, -1
-  %5 = icmp eq i32 %i.b, %4
-  br i1 %5, label %bb.f, label %bb.h
-
-bb.f:                                             ; preds = %3
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 348
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !124
-  %i.n = icmp eq i32 %i.m, %i.b
-  br i1 %i.n, label %bb.g, label %bb.h
+bb.f:                                             ; preds = %bb.c
+  %3 = add nsw i32 %1, -1                         ; 2 uses
+  %4 = icmp eq i32 %i.b, %3
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 348 ; 3 uses
+  %i.m = load i32, ptr %i.l, align 4
+  %i.n = icmp eq i32 %i.m, %3
+  %or.cond18 = select i1 %4, i1 %i.n, i1 false
+  br i1 %or.cond18, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -256,7 +254,7 @@ bb.g:                                             ; preds = %bb.f
   store i32 %1, ptr %i.a, align 8, !tbaa !116
   br label %bb.i
 
-bb.h:                                             ; preds = %bb.f, %3
+bb.h:                                             ; preds = %bb.f
   %i.t = icmp eq i32 %i.b, %1
   br i1 %i.t, label %bb.i, label %bb.j
 
@@ -266,9 +264,8 @@ bb.i:                                             ; preds = %.thread, %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   store i32 -1, ptr %i.a, align 8, !tbaa !116
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 348 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 256
-  store i32 -1, ptr %6, align 4, !tbaa !124
+  store i32 -1, ptr %i.l, align 4, !tbaa !124
   %i.w = icmp sgt i32 %1, -1
   br i1 %i.w, label %.lr.ph, label %_ZN11OpenImageIO4v3_18webp_pvt9WebpInput16iter_to_subimageEi.exit
 
@@ -292,7 +289,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ae = load i32, ptr %i.a, align 8, !tbaa !116 ; 3 uses
-  store i32 %i.ae, ptr %6, align 4, !tbaa !124
+  store i32 %i.ae, ptr %i.l, align 4, !tbaa !124
   %i.af = icmp slt i32 %i.ae, %1
   br i1 %i.af, label %bb.k, label %_ZN11OpenImageIO4v3_18webp_pvt9WebpInput16iter_to_subimageEi.exit, !llvm.loop !304
 

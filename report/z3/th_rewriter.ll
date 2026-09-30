@@ -205,19 +205,17 @@ _ZNK3app13get_family_idEv.exit.thread.i.i:        ; preds = %bb.d, %_ZNK3app13ge
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 472
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !382
   %i.ai = icmp eq i32 %i.af, %i.ah
-  br i1 %i.ai, label %_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.i, label %_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.thread.i
-
-_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.i: ; preds = %_ZNK3app13get_family_idEv.exit.thread.i.i
   %6 = getelementptr inbounds nuw i8, ptr %0, i64 4604
-  %7 = load i8, ptr %6, align 4, !tbaa !370, !range !295, !noundef !279
+  %7 = load i8, ptr %6, align 4, !range !295
   %8 = trunc nuw i8 %7 to i1
-  br i1 %8, label %_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.thread25.i, label %_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.thread.i
+  %or.cond.i = select i1 %i.ai, i1 %8, i1 false
+  br i1 %or.cond.i, label %_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.thread25.i, label %_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.thread.i
 
-_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.thread25.i: ; preds = %_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.i, %bb.d
+_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.thread25.i: ; preds = %_ZNK3app13get_family_idEv.exit.thread.i.i, %bb.d
   %i.aj = invoke fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_115th_rewriter_cfg10unify_coreEP3appP4exprR7obj_refIS3_11ast_managerES8_S8_Rb(ptr noundef nonnull align 8 dereferenceable(4610) %0, ptr noundef nonnull %i.l, ptr noundef %i.n, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 1 dereferenceable(1) %i.c)
           to label %_ZN12_GLOBAL__N_115th_rewriter_cfg5unifyEP4exprS2_RP9func_declR7obj_refIS1_11ast_managerES9_S9_Rb.exit unwind label %bb.m
 
-_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.thread.i: ; preds = %_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.i, %_ZNK3app13get_family_idEv.exit.thread.i.i, %bb.b
+_ZNK12_GLOBAL__N_115th_rewriter_cfg15is_arith_bv_appEP4expr.exit.thread.i: ; preds = %_ZNK3app13get_family_idEv.exit.thread.i.i, %bb.b
   %i.ak = getelementptr inbounds nuw i8, ptr %i.n, i64 4
   %i.al = load i32, ptr %i.ak, align 4
   %i.am = and i32 %i.al, 65535

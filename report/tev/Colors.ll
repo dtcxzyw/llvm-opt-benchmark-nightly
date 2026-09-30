@@ -205,13 +205,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN3tev23convertColorspaceMatrixERKNSt3__15arrayIN7nanogui5ArrayIfLm2EEELm4EEES7_NS_16ERenderingIntentENS0_8optionalIS4_EE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.nanogui::Matrix") align 4 captures(none) %0, ptr noundef nonnull align 4 dereferenceable(32) %1, ptr noundef nonnull align 4 dereferenceable(32) %2, i32 noundef %3, i64 %4, i8 %5) local_unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 .lr.ph.i.i.i.i:
-  %.sroa.015 = alloca [2 x float], align 8        ; 2 uses
   %6 = alloca %"struct.nanogui::Matrix", align 16 ; 6 uses
   %7 = alloca %"struct.nanogui::Matrix", align 4  ; 4 uses
   %8 = alloca %"struct.nanogui::Matrix", align 16 ; 10 uses
   %9 = alloca %"struct.nanogui::Matrix", align 16 ; 9 uses
   %10 = alloca %"struct.nanogui::Matrix", align 16 ; 10 uses
-  store i64 %4, ptr %.sroa.015, align 8
+  %11 = bitcast i64 %4 to <2 x float>
   %i.a = bitcast i64 %4 to <2 x float>
   %i.b = load float, ptr %1, align 4, !tbaa !59
   %i.c = load float, ptr %2, align 4, !tbaa !59
@@ -283,8 +282,8 @@ bb.b:                                             ; preds = %bb.a
 .critedge:                                        ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i.1, %.lr.ph.i.i.i.i.2, %.lr.ph.i.i.i.i.3
   %i.ao = trunc nuw i8 %5 to i1
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %spec.select = select i1 %i.ao, ptr %.sroa.015, ptr %i.ap
-  %.sroa.02.0.copyload.pre = load <2 x float>, ptr %spec.select, align 4, !tbaa !88
+  %.val = load <2 x float>, ptr %i.ap, align 4
+  %.sroa.02.0.copyload.pre = select i1 %i.ao, <2 x float> %11, <2 x float> %.val
   br label %.thread
 
 .thread:                                          ; preds = %.critedge, %bb.a

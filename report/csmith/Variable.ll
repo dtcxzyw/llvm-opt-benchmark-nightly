@@ -205,19 +205,17 @@ bb.b:                                             ; preds = %tailrecurse.i
   %i.e = getelementptr inbounds nuw i8, ptr %.tr.i, i64 96
   %i.f = load i8, ptr %i.e, align 8, !tbaa !97, !range !98, !noundef !99
   %i.g = trunc nuw i8 %i.f to i1
-  br i1 %i.g, label %_ZNK8Variable10is_virtualEv.exit, label %_ZNK8Variable10is_virtualEv.exit.thread
+  br i1 %i.g, label %bb.c, label %_ZNK8Variable10is_virtualEv.exit.thread
 
-_ZNK8Variable10is_virtualEv.exit:                 ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b
   %8 = getelementptr inbounds nuw i8, ptr %.tr.i, i64 200
   %9 = load ptr, ptr %8, align 8, !tbaa !108
   %10 = icmp eq ptr %9, null
-  br i1 %10, label %bb.c, label %_ZNK8Variable10is_virtualEv.exit.thread
-
-bb.c:                                             ; preds = %_ZNK8Variable10is_virtualEv.exit
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 96
-  %i.i = load i8, ptr %i.h, align 8, !tbaa !97, !range !98, !noundef !99
+  %i.i = load i8, ptr %i.h, align 8, !range !98
   %i.j = trunc nuw i8 %i.i to i1
-  br i1 %i.j, label %bb.d, label %_ZNK8Variable10is_virtualEv.exit.thread
+  %or.cond = select i1 %10, i1 %i.j, i1 false
+  br i1 %or.cond, label %bb.d, label %_ZNK8Variable10is_virtualEv.exit.thread
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
@@ -620,7 +618,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit51: ; preds = %.lo
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   br label %bb.bs
 
-_ZNK8Variable10is_virtualEv.exit.thread:          ; preds = %bb.b, %bb.c, %_ZNK8Variable10is_virtualEv.exit
+_ZNK8Variable10is_virtualEv.exit.thread:          ; preds = %bb.b, %bb.c
   %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !65
   %i.eg = load i32, ptr %i.ef, align 8, !tbaa !88

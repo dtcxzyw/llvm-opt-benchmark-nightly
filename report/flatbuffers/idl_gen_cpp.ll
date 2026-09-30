@@ -205,26 +205,24 @@ bb.b:                                             ; preds = %bb.a, %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 691
   %i.u = load i8, ptr %i.t, align 1, !tbaa !56, !range !58, !noundef !59
   %i.v = trunc nuw i8 %i.u to i1
-  br i1 %i.v, label %bb.c, label %9
+  br i1 %i.v, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %.not.i.i = icmp ne ptr %i.q, null
   %i.w = add i32 %i.j, -1
   %i.x = icmp ult i32 %i.w, 10
   %i.y = select i1 %.not.i.i, i1 %i.x, i1 false
-  br i1 %i.y, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %9
+  br i1 %i.y, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %bb.d
 
-9:                                                ; preds = %bb.c, %bb.b
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 1468
-  %11 = load i32, ptr %10, align 4, !tbaa !311
-  %12 = icmp sgt i32 %11, 1
-  br i1 %12, label %bb.d, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
-
-bb.d:                                             ; preds = %9
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 1468
+  %10 = load i32, ptr %9, align 4, !tbaa !311
+  %11 = icmp sgt i32 %10, 1
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 1472
-  %i.aa = load i8, ptr %i.z, align 8, !tbaa !295, !range !58, !noundef !59
+  %i.aa = load i8, ptr %i.z, align 8, !range !58
   %i.ab = trunc nuw i8 %i.aa to i1
-  br i1 %i.ab, label %bb.e, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
+  %or.cond.i = select i1 %11, i1 %i.ab, i1 false
+  br i1 %or.cond.i, label %bb.e, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
 bb.e:                                             ; preds = %bb.d
   %.not.i3.i = icmp ne ptr %i.q, null
@@ -233,9 +231,9 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = select i1 %.not.i3.i, i1 %i.ad, i1 false
   br label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
-_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.c, %9, %bb.d, %bb.e
-  %13 = phi i1 [ true, %bb.c ], [ false, %bb.d ], [ false, %9 ], [ %i.ae, %bb.e ]
-  call void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr noundef nonnull align 8 dereferenceable(1649) %1, ptr noundef nonnull align 8 dereferenceable(26) %4, ptr noundef nonnull @.str.7, i1 noundef zeroext %13, i1 noundef zeroext false)
+_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.c, %bb.d, %bb.e
+  %12 = phi i1 [ true, %bb.c ], [ %i.ae, %bb.e ], [ false, %bb.d ]
+  call void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr noundef nonnull align 8 dereferenceable(1649) %1, ptr noundef nonnull align 8 dereferenceable(26) %4, ptr noundef nonnull @.str.7, i1 noundef zeroext %12, i1 noundef zeroext false)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
@@ -638,26 +636,24 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.iq = getelementptr inbounds nuw i8, ptr %0, i64 691
   %i.ir = load i8, ptr %i.iq, align 1, !tbaa !56, !range !58, !noundef !59
   %i.is = trunc nuw i8 %i.ir to i1
-  br i1 %i.is, label %bb.al, label %55
+  br i1 %i.is, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
   %.not.i.i = icmp ne ptr %i.in, null
   %i.it = add i32 %i.ig, -1
   %i.iu = icmp ult i32 %i.it, 10
   %i.iv = select i1 %.not.i.i, i1 %i.iu, i1 false
-  br i1 %i.iv, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %55
+  br i1 %i.iv, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %bb.am
 
-55:                                               ; preds = %bb.al, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %56 = getelementptr inbounds nuw i8, ptr %0, i64 1468
-  %57 = load i32, ptr %56, align 4, !tbaa !311
-  %58 = icmp sgt i32 %57, 1
-  br i1 %58, label %bb.am, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
-
-bb.am:                                            ; preds = %55
+bb.am:                                            ; preds = %bb.al, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %55 = getelementptr inbounds nuw i8, ptr %0, i64 1468
+  %56 = load i32, ptr %55, align 4, !tbaa !311
+  %57 = icmp sgt i32 %56, 1
   %i.iw = getelementptr inbounds nuw i8, ptr %0, i64 1472
-  %i.ix = load i8, ptr %i.iw, align 8, !tbaa !295, !range !58, !noundef !59
+  %i.ix = load i8, ptr %i.iw, align 8, !range !58
   %i.iy = trunc nuw i8 %i.ix to i1
-  br i1 %i.iy, label %bb.an, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
+  %or.cond.i = select i1 %57, i1 %i.iy, i1 false
+  br i1 %or.cond.i, label %bb.an, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
 bb.an:                                            ; preds = %bb.am
   %.not.i3.i = icmp ne ptr %i.in, null
@@ -666,12 +662,12 @@ bb.an:                                            ; preds = %bb.am
   %i.jb = select i1 %.not.i3.i, i1 %i.ja, i1 false
   br label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
-_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.an, %bb.am, %55, %bb.al
-  %59 = phi i1 [ true, %bb.al ], [ false, %bb.am ], [ false, %55 ], [ %i.jb, %bb.an ]
+_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.an, %bb.am, %bb.al
+  %58 = phi i1 [ true, %bb.al ], [ %i.jb, %bb.an ], [ false, %bb.am ]
   %i.jc = getelementptr inbounds nuw i8, ptr %1, i64 277 ; 2 uses
   %i.jd = load i8, ptr %i.jc, align 1, !tbaa !130, !range !58, !noundef !59
   %i.je = trunc nuw i8 %i.jd to i1
-  invoke void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %21, ptr noundef nonnull align 8 dereferenceable(1649) %0, ptr noundef nonnull align 8 dereferenceable(26) %20, ptr noundef nonnull @.str.7, i1 noundef zeroext %59, i1 noundef zeroext %i.je)
+  invoke void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %21, ptr noundef nonnull align 8 dereferenceable(1649) %0, ptr noundef nonnull align 8 dereferenceable(26) %20, ptr noundef nonnull @.str.7, i1 noundef zeroext %58, i1 noundef zeroext %i.je)
           to label %bb.ao unwind label %bb.bg
 
 bb.ao:                                            ; preds = %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
@@ -1074,26 +1070,24 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.po = getelementptr inbounds nuw i8, ptr %0, i64 691
   %i.pp = load i8, ptr %i.po, align 1, !tbaa !56, !range !58, !noundef !59
   %i.pq = trunc nuw i8 %i.pp to i1
-  br i1 %i.pq, label %bb.bk, label %50
+  br i1 %i.pq, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
   %.not.i.i = icmp ne ptr %i.pl, null
   %i.pr = add i32 %i.pe, -1
   %i.ps = icmp ult i32 %i.pr, 10
   %i.pt = select i1 %.not.i.i, i1 %i.ps, i1 false
-  br i1 %i.pt, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %50
+  br i1 %i.pt, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %bb.bl
 
-50:                                               ; preds = %bb.bk, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %51 = getelementptr inbounds nuw i8, ptr %0, i64 1468
-  %52 = load i32, ptr %51, align 4, !tbaa !311
-  %53 = icmp sgt i32 %52, 1
-  br i1 %53, label %bb.bl, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
-
-bb.bl:                                            ; preds = %50
+bb.bl:                                            ; preds = %bb.bk, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %50 = getelementptr inbounds nuw i8, ptr %0, i64 1468
+  %51 = load i32, ptr %50, align 4, !tbaa !311
+  %52 = icmp sgt i32 %51, 1
   %i.pu = getelementptr inbounds nuw i8, ptr %0, i64 1472
-  %i.pv = load i8, ptr %i.pu, align 8, !tbaa !295, !range !58, !noundef !59
+  %i.pv = load i8, ptr %i.pu, align 8, !range !58
   %i.pw = trunc nuw i8 %i.pv to i1
-  br i1 %i.pw, label %bb.bm, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
+  %or.cond.i = select i1 %52, i1 %i.pw, i1 false
+  br i1 %or.cond.i, label %bb.bm, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
 bb.bm:                                            ; preds = %bb.bl
   %.not.i3.i = icmp ne ptr %i.pl, null
@@ -1102,12 +1096,12 @@ bb.bm:                                            ; preds = %bb.bl
   %i.pz = select i1 %.not.i3.i, i1 %i.py, i1 false
   br label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
-_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.bm, %bb.bl, %50, %bb.bk
-  %54 = phi i1 [ true, %bb.bk ], [ false, %bb.bl ], [ false, %50 ], [ %i.pz, %bb.bm ]
+_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.bm, %bb.bl, %bb.bk
+  %53 = phi i1 [ true, %bb.bk ], [ %i.pz, %bb.bm ], [ false, %bb.bl ]
   %i.qa = getelementptr inbounds nuw i8, ptr %1, i64 277 ; 2 uses
   %i.qb = load i8, ptr %i.qa, align 1, !tbaa !130, !range !58, !noundef !59
   %i.qc = trunc nuw i8 %i.qb to i1
-  invoke void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %31, ptr noundef nonnull align 8 dereferenceable(1649) %0, ptr noundef nonnull align 8 dereferenceable(26) %30, ptr noundef nonnull @.str.7, i1 noundef zeroext %54, i1 noundef zeroext %i.qc)
+  invoke void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %31, ptr noundef nonnull align 8 dereferenceable(1649) %0, ptr noundef nonnull align 8 dereferenceable(26) %30, ptr noundef nonnull @.str.7, i1 noundef zeroext %53, i1 noundef zeroext %i.qc)
           to label %.noexc.i384 unwind label %bb.bw
 
 .noexc.i384:                                      ; preds = %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
@@ -1510,26 +1504,24 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.os = getelementptr inbounds nuw i8, ptr %0, i64 691
   %i.ot = load i8, ptr %i.os, align 1, !tbaa !56, !range !58, !noundef !59
   %i.ou = trunc nuw i8 %i.ot to i1
-  br i1 %i.ou, label %bb.ay, label %42
+  br i1 %i.ou, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
   %.not.i.i = icmp ne ptr %i.op, null
   %i.ov = add i32 %i.oi, -1
   %i.ow = icmp ult i32 %i.ov, 10
   %i.ox = select i1 %.not.i.i, i1 %i.ow, i1 false
-  br i1 %i.ox, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %42
+  br i1 %i.ox, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %bb.az
 
-42:                                               ; preds = %bb.ay, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %43 = getelementptr inbounds nuw i8, ptr %0, i64 1468
-  %44 = load i32, ptr %43, align 4, !tbaa !311
-  %45 = icmp sgt i32 %44, 1
-  br i1 %45, label %bb.az, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
-
-bb.az:                                            ; preds = %42
+bb.az:                                            ; preds = %bb.ay, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %42 = getelementptr inbounds nuw i8, ptr %0, i64 1468
+  %43 = load i32, ptr %42, align 4, !tbaa !311
+  %44 = icmp sgt i32 %43, 1
   %i.oy = getelementptr inbounds nuw i8, ptr %0, i64 1472
-  %i.oz = load i8, ptr %i.oy, align 8, !tbaa !295, !range !58, !noundef !59
+  %i.oz = load i8, ptr %i.oy, align 8, !range !58
   %i.pa = trunc nuw i8 %i.oz to i1
-  br i1 %i.pa, label %bb.ba, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
+  %or.cond.i = select i1 %44, i1 %i.pa, i1 false
+  br i1 %or.cond.i, label %bb.ba, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
 bb.ba:                                            ; preds = %bb.az
   %.not.i3.i = icmp ne ptr %i.op, null
@@ -1538,12 +1530,12 @@ bb.ba:                                            ; preds = %bb.az
   %i.pd = select i1 %.not.i3.i, i1 %i.pc, i1 false
   br label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
-_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.ay, %42, %bb.az, %bb.ba
-  %46 = phi i1 [ true, %bb.ay ], [ false, %bb.az ], [ false, %42 ], [ %i.pd, %bb.ba ]
+_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.ay, %bb.az, %bb.ba
+  %45 = phi i1 [ true, %bb.ay ], [ %i.pd, %bb.ba ], [ false, %bb.az ]
   %i.pe = getelementptr inbounds nuw i8, ptr %1, i64 277 ; 2 uses
   %i.pf = load i8, ptr %i.pe, align 1, !tbaa !130, !range !58, !noundef !59
   %i.pg = trunc nuw i8 %i.pf to i1
-  call void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %28, ptr noundef nonnull align 8 dereferenceable(1649) %0, ptr noundef nonnull align 8 dereferenceable(26) %27, ptr noundef nonnull @.str.7, i1 noundef zeroext %46, i1 noundef zeroext %i.pg)
+  call void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %28, ptr noundef nonnull align 8 dereferenceable(1649) %0, ptr noundef nonnull align 8 dereferenceable(26) %27, ptr noundef nonnull @.str.7, i1 noundef zeroext %45, i1 noundef zeroext %i.pg)
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #28
   %i.ph = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 10 uses
   store ptr %i.ph, ptr %29, align 8, !tbaa !31
@@ -1946,26 +1938,24 @@ _ZN11flatbuffers8IsStructERKNS_4TypeE.exit.thread: ; preds = %bb.n, %_ZN11flatbu
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 691
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !56, !range !58, !noundef !59
   %i.fk = trunc nuw i8 %i.fj to i1
-  br i1 %i.fk, label %bb.v, label %33
+  br i1 %i.fk, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %_ZN11flatbuffers8IsStructERKNS_4TypeE.exit.thread
   %.not.i.i = icmp ne ptr %i.dm, null
   %i.fl = add i32 %i.di, -1
   %i.fm = icmp ult i32 %i.fl, 10
   %i.fn = and i1 %i.fm, %.not.i.i
-  br i1 %i.fn, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %33
+  br i1 %i.fn, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %bb.w
 
-33:                                               ; preds = %bb.v, %_ZN11flatbuffers8IsStructERKNS_4TypeE.exit.thread
-  %34 = getelementptr inbounds nuw i8, ptr %0, i64 1468
-  %35 = load i32, ptr %34, align 4, !tbaa !311
-  %36 = icmp sgt i32 %35, 1
-  br i1 %36, label %bb.w, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
-
-bb.w:                                             ; preds = %33
+bb.w:                                             ; preds = %bb.v, %_ZN11flatbuffers8IsStructERKNS_4TypeE.exit.thread
+  %33 = getelementptr inbounds nuw i8, ptr %0, i64 1468
+  %34 = load i32, ptr %33, align 4, !tbaa !311
+  %35 = icmp sgt i32 %34, 1
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 1472
-  %i.fp = load i8, ptr %i.fo, align 8, !tbaa !295, !range !58, !noundef !59
+  %i.fp = load i8, ptr %i.fo, align 8, !range !58
   %i.fq = trunc nuw i8 %i.fp to i1
-  br i1 %i.fq, label %bb.x, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
+  %or.cond.i = select i1 %35, i1 %i.fq, i1 false
+  br i1 %or.cond.i, label %bb.x, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
 bb.x:                                             ; preds = %bb.w
   %.not.i3.i = icmp ne ptr %i.dm, null
@@ -1974,12 +1964,12 @@ bb.x:                                             ; preds = %bb.w
   %i.ft = and i1 %i.fs, %.not.i3.i
   br label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
-_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.x, %bb.w, %33, %bb.v
-  %37 = phi i1 [ true, %bb.v ], [ false, %bb.w ], [ false, %33 ], [ %i.ft, %bb.x ]
+_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.x, %bb.w, %bb.v
+  %36 = phi i1 [ true, %bb.v ], [ %i.ft, %bb.x ], [ false, %bb.w ]
   %i.fu = getelementptr inbounds nuw i8, ptr %1, i64 277
   %i.fv = load i8, ptr %i.fu, align 1, !tbaa !130, !range !58, !noundef !59
   %i.fw = trunc nuw i8 %i.fv to i1
-  invoke void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %16, ptr noundef nonnull align 8 dereferenceable(1649) %0, ptr noundef nonnull align 8 dereferenceable(26) %12, ptr noundef nonnull @.str.7, i1 noundef zeroext %37, i1 noundef zeroext %i.fw)
+  invoke void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %16, ptr noundef nonnull align 8 dereferenceable(1649) %0, ptr noundef nonnull align 8 dereferenceable(26) %12, ptr noundef nonnull @.str.7, i1 noundef zeroext %36, i1 noundef zeroext %i.fw)
           to label %bb.y unwind label %bb.ae
 
 bb.y:                                             ; preds = %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
@@ -2382,26 +2372,24 @@ _ZN11flatbuffers8IsStructERKNS_4TypeE.exit.thread.thread: ; preds = %_ZN11flatbu
   %i.tk = getelementptr inbounds nuw i8, ptr %i.f, i64 691
   %i.tl = load i8, ptr %i.tk, align 1, !tbaa !56, !range !58, !noundef !59
   %i.tm = trunc nuw i8 %i.tl to i1
-  br i1 %i.tm, label %bb.cm, label %49
+  br i1 %i.tm, label %bb.cm, label %bb.cn
 
 bb.cm:                                            ; preds = %_ZN11flatbuffers8IsStructERKNS_4TypeE.exit.thread.thread
   %.not.i.i = icmp ne ptr %i.kh, null
   %i.tn = add i32 %i.kd, -1
   %i.to = icmp ult i32 %i.tn, 10
   %i.tp = and i1 %i.to, %.not.i.i
-  br i1 %i.tp, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %49
+  br i1 %i.tp, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit, label %bb.cn
 
-49:                                               ; preds = %bb.cm, %_ZN11flatbuffers8IsStructERKNS_4TypeE.exit.thread.thread
-  %50 = getelementptr inbounds nuw i8, ptr %i.f, i64 1468
-  %51 = load i32, ptr %50, align 4, !tbaa !311
-  %52 = icmp sgt i32 %51, 1
-  br i1 %52, label %bb.cn, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
-
-bb.cn:                                            ; preds = %49
+bb.cn:                                            ; preds = %bb.cm, %_ZN11flatbuffers8IsStructERKNS_4TypeE.exit.thread.thread
+  %49 = getelementptr inbounds nuw i8, ptr %i.f, i64 1468
+  %50 = load i32, ptr %49, align 4, !tbaa !311
+  %51 = icmp sgt i32 %50, 1
   %i.tq = getelementptr inbounds nuw i8, ptr %i.f, i64 1472
-  %i.tr = load i8, ptr %i.tq, align 8, !tbaa !295, !range !58, !noundef !59
+  %i.tr = load i8, ptr %i.tq, align 8, !range !58
   %i.ts = trunc nuw i8 %i.tr to i1
-  br i1 %i.ts, label %bb.co, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
+  %or.cond.i = select i1 %51, i1 %i.ts, i1 false
+  br i1 %or.cond.i, label %bb.co, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
 bb.co:                                            ; preds = %bb.cn
   %.not.i3.i = icmp ne ptr %i.kh, null
@@ -2410,12 +2398,12 @@ bb.co:                                            ; preds = %bb.cn
   %i.tv = and i1 %i.tu, %.not.i3.i
   br label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
 
-_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.co, %bb.cn, %49, %bb.cm
-  %53 = phi i1 [ true, %bb.cm ], [ false, %bb.cn ], [ false, %49 ], [ %i.tv, %bb.co ]
+_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit: ; preds = %bb.co, %bb.cn, %bb.cm
+  %52 = phi i1 [ true, %bb.cm ], [ %i.tv, %bb.co ], [ false, %bb.cn ]
   %i.tw = getelementptr inbounds nuw i8, ptr %1, i64 277 ; 3 uses
   %i.tx = load i8, ptr %i.tw, align 1, !tbaa !130, !range !58, !noundef !59
   %i.ty = trunc nuw i8 %i.tx to i1
-  invoke void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %35, ptr noundef nonnull align 8 dereferenceable(1649) %i.f, ptr noundef nonnull align 8 dereferenceable(26) %18, ptr noundef nonnull @.str.7, i1 noundef zeroext %53, i1 noundef zeroext %i.ty)
+  invoke void @_ZNK11flatbuffers3cpp12CppGenerator11GenTypeWireB5cxx11ERKNS_4TypeEPKcbb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %35, ptr noundef nonnull align 8 dereferenceable(1649) %i.f, ptr noundef nonnull align 8 dereferenceable(26) %18, ptr noundef nonnull @.str.7, i1 noundef zeroext %52, i1 noundef zeroext %i.ty)
           to label %bb.cp unwind label %bb.ct
 
 bb.cp:                                            ; preds = %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit
@@ -2818,24 +2806,22 @@ bb.kj:                                            ; preds = %bb.ki
   %i.bln = add i32 %i.sv, -1
   %i.blo = icmp ult i32 %i.bln, 10
   %or.cond = and i1 %i.blo, %i.blm
-  br i1 %or.cond, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit.thread2089, label %132
+  br i1 %or.cond, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit.thread2089, label %bb.kk
 
-132:                                              ; preds = %bb.kj
-  %133 = getelementptr inbounds nuw i8, ptr %1, i64 1468
-  %134 = load i32, ptr %133, align 4, !tbaa !311
-  %135 = icmp sgt i32 %134, 1
-  br i1 %135, label %bb.kk, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit.thread.a
-
-bb.kk:                                            ; preds = %132
+bb.kk:                                            ; preds = %bb.kj
+  %132 = getelementptr inbounds nuw i8, ptr %1, i64 1468
+  %133 = load i32, ptr %132, align 4, !tbaa !311
+  %134 = icmp sgt i32 %133, 1
   %i.blp = getelementptr inbounds nuw i8, ptr %1, i64 1472
-  %i.blq = load i8, ptr %i.blp, align 8, !tbaa !295, !range !58, !noundef !59
+  %i.blq = load i8, ptr %i.blp, align 8, !range !58
   %i.blr = trunc nuw i8 %i.blq to i1
+  %or.cond.i = select i1 %134, i1 %i.blr, i1 false
   %i.bls = add i32 %i.sv, -1
   %i.blt = icmp ult i32 %i.bls, 10
-  %or.cond2885 = and i1 %i.blt, %i.blr
+  %or.cond2885 = and i1 %or.cond.i, %i.blt
   br i1 %or.cond2885, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit.thread2089, label %_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit.thread.a
 
-_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit.thread.a: ; preds = %132, %bb.kk
+_ZNK11flatbuffers3cpp12CppGenerator23VectorElementUserFacingERKNS_4TypeE.exit.thread.a: ; preds = %bb.kk
   call void @llvm.lifetime.start.p0(ptr nonnull %76) #28
   %i.blu = getelementptr inbounds nuw i8, ptr %i.sz, i64 208
   invoke void @_ZNK11flatbuffers3cpp12CppGenerator12GenTypeBasicB5cxx11ERKNS_4TypeEb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %76, ptr noundef nonnull align 8 dereferenceable(1649) %1, ptr noundef nonnull align 8 dereferenceable(26) %i.blu, i1 noundef zeroext false)

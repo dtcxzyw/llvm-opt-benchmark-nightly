@@ -202,17 +202,16 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN4llvm9DbgMarker17absorbDebugValuesENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_9DbgRecordELb0ELb0EvLb0EvEELb0ELb0EEEEERS0_b(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(24) %3, i1 noundef zeroext %4) local_unnamed_addr #11 align 2 {
 bb.a:
-  %.not15 = icmp eq ptr %1, %2                    ; 2 uses
-  br i1 %.not15, label %._crit_edge, label %.lr.ph
+  %.not15 = icmp eq ptr %1, %2
+  br i1 %.not15, label %_ZN4llvm12simple_ilistINS_9DbgRecordEJEE6spliceENS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb0ELb0EvLb0EvEELb0ELb0EEERS2_S7_S7_.exit, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.03.0 = select i1 %4, ptr %i.b, ptr %i.c  ; 4 uses
   %i.d = icmp eq ptr %.sroa.03.0, %2
-  %or.cond.i.i.i = or i1 %.not15, %i.d
-  br i1 %or.cond.i.i.i, label %_ZN4llvm12simple_ilistINS_9DbgRecordEJEE6spliceENS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb0ELb0EvLb0EvEELb0ELb0EEERS2_S7_S7_.exit, label %bb.b
+  br i1 %i.d, label %_ZN4llvm12simple_ilistINS_9DbgRecordEJEE6spliceENS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb0ELb0EvLb0EvEELb0ELb0EEERS2_S7_S7_.exit, label %bb.b
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.sroa.011.016 = phi ptr [ %i.g, %.lr.ph ], [ %1, %bb.a ] ; 2 uses
@@ -238,7 +237,7 @@ bb.b:                                             ; preds = %._crit_edge
   store ptr %i.h, ptr %.sroa.03.0, align 8, !tbaa !71
   br label %_ZN4llvm12simple_ilistINS_9DbgRecordEJEE6spliceENS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb0ELb0EvLb0EvEELb0ELb0EEERS2_S7_S7_.exit
 
-_ZN4llvm12simple_ilistINS_9DbgRecordEJEE6spliceENS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb0ELb0EvLb0EvEELb0ELb0EEERS2_S7_S7_.exit: ; preds = %._crit_edge, %bb.b
+_ZN4llvm12simple_ilistINS_9DbgRecordEJEE6spliceENS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb0ELb0EvLb0EvEELb0ELb0EEERS2_S7_S7_.exit: ; preds = %bb.a, %._crit_edge, %bb.b
   ret void
 }
 

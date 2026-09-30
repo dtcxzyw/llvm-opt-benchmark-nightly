@@ -204,18 +204,16 @@ bb.b:                                             ; preds = %.lr.ph.i
 
 .loopexit:                                        ; preds = %bb.b, %bb.a
   %i.n = trunc i32 %i.c to i1
-  br i1 %i.n, label %.critedge, label %2
+  br i1 %i.n, label %.critedge, label %bb.c
 
-2:                                                ; preds = %.loopexit
-  %3 = icmp ult i32 %i.c, 2
-  br i1 %3, label %.critedge, label %bb.c
-
-bb.c:                                             ; preds = %2
-  %i.o = load i32, ptr %0, align 8, !tbaa !28
+bb.c:                                             ; preds = %.loopexit
+  %2 = icmp ugt i32 %i.c, 1
+  %i.o = load i32, ptr %0, align 8
   %i.p = icmp ugt i32 %i.o, 2
+  %or.cond.not23 = select i1 %2, i1 %i.p, i1 false
   %i.q = add i32 %i.k, 2                          ; 2 uses
   %.not12.not15 = icmp ult i32 %i.q, %i.f
-  %or.cond = select i1 %i.p, i1 %.not12.not15, i1 false
+  %or.cond = select i1 %or.cond.not23, i1 %.not12.not15, i1 false
   br i1 %or.cond, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.c
@@ -233,8 +231,8 @@ bb.c:                                             ; preds = %2
   %or.cond25.not = select i1 %.not, i1 %exitcond.not, i1 false
   br i1 %or.cond25.not, label %.lr.ph, label %.critedge, !llvm.loop !84
 
-.critedge:                                        ; preds = %.lr.ph.i, %.lr.ph, %2, %bb.c, %.loopexit
-  %.2 = phi i1 [ true, %2 ], [ %.not, %.lr.ph ], [ false, %.loopexit ], [ true, %bb.c ], [ false, %.lr.ph.i ]
+.critedge:                                        ; preds = %.lr.ph.i, %.lr.ph, %bb.c, %.loopexit
+  %.2 = phi i1 [ true, %bb.c ], [ %.not, %.lr.ph ], [ false, %.loopexit ], [ false, %.lr.ph.i ]
   ret i1 %.2
 }
 

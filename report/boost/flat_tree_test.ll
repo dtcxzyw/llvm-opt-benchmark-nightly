@@ -204,19 +204,13 @@ _ZNK5boost9container3dtl9flat_treeINS1_4pairINS0_4test24movable_and_copyable_int
   %storemerge.i.i.i = phi ptr [ %i.f, %bb.c ], [ %i.c, %bb.b ]
   %i.g = load ptr, ptr %storemerge.i.i.i, align 8, !tbaa !395
   %i.h = load ptr, ptr %1, align 8, !tbaa !384
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !395  ; 2 uses
-  %.not = icmp ugt ptr %i.g, %i.i
-  br i1 %.not, label %6, label %2
-
-2:                                                ; preds = %_ZNK5boost9container3dtl9flat_treeINS1_4pairINS0_4test24movable_and_copyable_intES5_EENS1_9select1stIS5_EESt4lessIS5_ENS0_13stable_vectorIS6_vEEE5beginEv.exit
+  %2 = load ptr, ptr %i.h, align 8, !tbaa !395    ; 2 uses
+  %.not = icmp ule ptr %i.g, %2
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load ptr, ptr %3, align 8, !tbaa !395
-  %5 = icmp ule ptr %i.i, %4
-  br label %6
-
-6:                                                ; preds = %2, %_ZNK5boost9container3dtl9flat_treeINS1_4pairINS0_4test24movable_and_copyable_intES5_EENS1_9select1stIS5_EESt4lessIS5_ENS0_13stable_vectorIS6_vEEE5beginEv.exit
-  %7 = phi i1 [ false, %_ZNK5boost9container3dtl9flat_treeINS1_4pairINS0_4test24movable_and_copyable_intES5_EENS1_9select1stIS5_EESt4lessIS5_ENS0_13stable_vectorIS6_vEEE5beginEv.exit ], [ %5, %2 ]
-  ret i1 %7
+  %i.i = load ptr, ptr %3, align 8
+  %4 = icmp ule ptr %2, %i.i
+  %5 = select i1 %.not, i1 %4, i1 false
+  ret i1 %5
 }
 
 ; Function Attrs: inlinehint mustprogress uwtable
@@ -619,19 +613,13 @@ _ZNK5boost9container3dtl9flat_treeINS0_4test24movable_and_copyable_intENS_11move
   %storemerge.i.i.i = phi ptr [ %i.f, %bb.c ], [ %i.c, %bb.b ]
   %i.g = load ptr, ptr %storemerge.i.i.i, align 8, !tbaa !395
   %i.h = load ptr, ptr %1, align 8, !tbaa !448
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !395  ; 2 uses
-  %.not = icmp ugt ptr %i.g, %i.i
-  br i1 %.not, label %6, label %2
-
-2:                                                ; preds = %_ZNK5boost9container3dtl9flat_treeINS0_4test24movable_and_copyable_intENS_11move_detail8identityIS4_EESt4lessIS4_ENS0_13stable_vectorIS4_vEEE5beginEv.exit
+  %2 = load ptr, ptr %i.h, align 8, !tbaa !395    ; 2 uses
+  %.not = icmp ule ptr %i.g, %2
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load ptr, ptr %3, align 8, !tbaa !395
-  %5 = icmp ule ptr %i.i, %4
-  br label %6
-
-6:                                                ; preds = %2, %_ZNK5boost9container3dtl9flat_treeINS0_4test24movable_and_copyable_intENS_11move_detail8identityIS4_EESt4lessIS4_ENS0_13stable_vectorIS4_vEEE5beginEv.exit
-  %7 = phi i1 [ false, %_ZNK5boost9container3dtl9flat_treeINS0_4test24movable_and_copyable_intENS_11move_detail8identityIS4_EESt4lessIS4_ENS0_13stable_vectorIS4_vEEE5beginEv.exit ], [ %5, %2 ]
-  ret i1 %7
+  %i.i = load ptr, ptr %3, align 8
+  %4 = icmp ule ptr %2, %i.i
+  %5 = select i1 %.not, i1 %4, i1 false
+  ret i1 %5
 }
 
 ; Function Attrs: inlinehint mustprogress uwtable

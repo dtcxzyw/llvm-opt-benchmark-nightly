@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = ashr exact i64 %i.j, 3                   ; 3 uses
+  %i.k = ashr exact i64 %i.j, 3                   ; 2 uses
   %i.l = icmp ult i64 %i.d, %i.k
   br i1 %i.l, label %bb.c, label %bb.d
 
@@ -215,17 +215,13 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.n = phi i64 [ %i.m, %bb.c ], [ %i.d, %bb.b ] ; 3 uses
+  %i.n = phi i64 [ %i.m, %bb.c ], [ %i.d, %bb.b ] ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.p = load i8, ptr %i.o, align 8, !tbaa !434, !range !71, !noundef !72
   %i.q = trunc nuw i8 %i.p to i1
-  %i.r = icmp ult i64 %i.n, %i.k
+  %i.r = icmp ult i64 %i.n, %i.k                  ; 2 uses
   %or.cond = select i1 %i.q, i1 true, i1 %i.r
-  br i1 %or.cond, label %_ZNK4Luau9WeirdIter4goodEv.exit4, label %bb.e
-
-_ZNK4Luau9WeirdIter4goodEv.exit4:                 ; preds = %bb.d
-  %1 = icmp ult i64 %i.n, %i.k
-  br label %_ZNK4Luau9WeirdIter4goodEv.exit
+  br i1 %or.cond, label %_ZNK4Luau9WeirdIter4goodEv.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 32
@@ -284,8 +280,8 @@ thread-pre-split.thread:                          ; preds = %bb.e, %thread-pre-s
   %i.aq = icmp ult i64 %i.ai, %i.ap
   br label %_ZNK4Luau9WeirdIter4goodEv.exit
 
-_ZNK4Luau9WeirdIter4goodEv.exit:                  ; preds = %thread-pre-split.thread16, %thread-pre-split.thread, %bb.a, %_ZNK4Luau9WeirdIter4goodEv.exit4
-  %.0 = phi i1 [ %1, %_ZNK4Luau9WeirdIter4goodEv.exit4 ], [ false, %bb.a ], [ false, %thread-pre-split.thread16 ], [ %i.aq, %thread-pre-split.thread ]
+_ZNK4Luau9WeirdIter4goodEv.exit:                  ; preds = %thread-pre-split.thread16, %bb.d, %thread-pre-split.thread, %bb.a
+  %.0 = phi i1 [ %i.aq, %thread-pre-split.thread ], [ false, %bb.a ], [ false, %thread-pre-split.thread16 ], [ %i.r, %bb.d ]
   ret i1 %.0
 }
 

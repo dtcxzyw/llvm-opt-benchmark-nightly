@@ -202,11 +202,11 @@ bb.a:
     i32 4, label %bb.ab
     i32 5, label %bb.c
     i32 6, label %bb.f
-    i32 7, label %2
-    i32 16, label %2
-    i32 10, label %6
-    i32 11, label %6
-    i32 17, label %6
+    i32 7, label %bb.g
+    i32 16, label %bb.g
+    i32 10, label %bb.h
+    i32 11, label %bb.h
+    i32 17, label %bb.h
     i32 14, label %bb.i
     i32 8, label %bb.i
     i32 18, label %bb.i
@@ -266,28 +266,24 @@ bb.f:                                             ; preds = %bb.a
   %i.q = trunc nuw i8 %i.p to i1
   br label %bb.ab
 
-2:                                                ; preds = %bb.a, %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 237
-  %4 = load i8, ptr %3, align 1, !tbaa !21, !range !24, !noundef !25
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %bb.ab, label %bb.g
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.a, %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 237
+  %3 = load i8, ptr %2, align 1, !tbaa !21, !range !24, !noundef !25
+  %4 = trunc nuw i8 %3 to i1
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 451
-  %i.s = load i8, ptr %i.r, align 1, !tbaa !21, !range !24, !noundef !25
+  %i.s = load i8, ptr %i.r, align 1, !range !24
   %i.t = trunc nuw i8 %i.s to i1
+  %5 = select i1 %4, i1 true, i1 %i.t
   br label %bb.ab
 
-6:                                                ; preds = %bb.a, %bb.a, %bb.a
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 133
-  %8 = load i8, ptr %7, align 1, !tbaa !21, !range !24, !noundef !25
-  %9 = trunc nuw i8 %8 to i1
-  br i1 %9, label %bb.ab, label %bb.h
-
-bb.h:                                             ; preds = %6
+bb.h:                                             ; preds = %bb.a, %bb.a, %bb.a
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 133
+  %7 = load i8, ptr %6, align 1, !tbaa !21, !range !24, !noundef !25
+  %8 = trunc nuw i8 %7 to i1
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 400
-  %i.v = load i8, ptr %i.u, align 8, !tbaa !21, !range !24, !noundef !25
+  %i.v = load i8, ptr %i.u, align 8, !range !24
   %i.w = trunc nuw i8 %i.v to i1
+  %9 = select i1 %8, i1 true, i1 %i.w
   br label %bb.ab
 
 bb.i:                                             ; preds = %bb.a, %bb.a, %bb.a
@@ -453,8 +449,8 @@ bb.z:                                             ; preds = %bb.a
 bb.aa:                                            ; preds = %bb.a
   br label %bb.ab
 
-bb.ab:                                            ; preds = %6, %bb.h, %2, %bb.g, %bb.c, %bb.e, %bb.d, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.f, %bb.b
-  %.0 = phi i1 [ false, %bb.aa ], [ %i.dv, %bb.z ], [ true, %bb.a ], [ %i.c, %bb.b ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ %i.q, %bb.f ], [ true, %bb.d ], [ %i.t, %bb.g ], [ %i.z, %bb.i ], [ %i.w, %bb.h ], [ %i.ac, %bb.j ], [ %i.aj, %bb.k ], [ %i.am, %bb.l ], [ true, %6 ], [ %i.ap, %bb.m ], [ %i.bc, %bb.n ], [ %i.bj, %bb.o ], [ %i.bm, %bb.p ], [ %i.bt, %bb.q ], [ %i.ca, %bb.r ], [ %i.cd, %bb.s ], [ %i.cg, %bb.t ], [ %i.cn, %bb.u ], [ true, %2 ], [ %i.cx, %bb.v ], [ %i.da, %bb.w ], [ %i.dh, %bb.x ], [ %i.do, %bb.y ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ false, %bb.c ], [ %i.o, %bb.e ]
+bb.ab:                                            ; preds = %bb.c, %bb.e, %bb.d, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.b
+  %.0 = phi i1 [ false, %bb.aa ], [ %i.dv, %bb.z ], [ true, %bb.a ], [ %i.c, %bb.b ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ %i.q, %bb.f ], [ %5, %bb.g ], [ %9, %bb.h ], [ %i.z, %bb.i ], [ true, %bb.d ], [ %i.ac, %bb.j ], [ %i.aj, %bb.k ], [ %i.am, %bb.l ], [ %i.o, %bb.e ], [ %i.ap, %bb.m ], [ %i.bc, %bb.n ], [ %i.bj, %bb.o ], [ %i.bm, %bb.p ], [ %i.bt, %bb.q ], [ %i.ca, %bb.r ], [ %i.cd, %bb.s ], [ %i.cg, %bb.t ], [ %i.cn, %bb.u ], [ false, %bb.c ], [ %i.cx, %bb.v ], [ %i.da, %bb.w ], [ %i.dh, %bb.x ], [ %i.do, %bb.y ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ]
   ret i1 %.0
 }
 

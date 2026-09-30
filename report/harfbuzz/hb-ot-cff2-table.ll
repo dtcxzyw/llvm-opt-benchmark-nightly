@@ -205,25 +205,23 @@ _ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i.i.i: ; preds = %bb.f, %
 _ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i: ; preds = %.sink.split.i.i.i, %_ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i.i.i
   %.0.i.i.i = phi i32 [ %i.m, %_ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i.i.i ], [ 0, %.sink.split.i.i.i ]
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4521 ; 2 uses
-  %i.p = load i8, ptr %i.o, align 1, !tbaa !108, !range !129, !noundef !130
+  %3 = load i8, ptr %i.o, align 1, !tbaa !108, !range !129, !noundef !130
+  %4 = trunc nuw i8 %3 to i1
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4522
+  %i.p = load i8, ptr %5, align 2, !range !129
   %i.q = trunc nuw i8 %i.p to i1
-  br i1 %i.q, label %.critedge.i.i, label %3, !prof !127
+  %or.cond.i.i = select i1 %4, i1 true, i1 %i.q, !prof !64
+  br i1 %or.cond.i.i, label %.critedge.i.i, label %_ZN3CFF15cff2_cs_opset_tI23cff2_cs_opset_extents_t20cff2_extents_param_tNS_8number_tE25cff2_path_procs_extents_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit, !prof !64
 
-3:                                                ; preds = %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4522
-  %5 = load i8, ptr %4, align 2, !tbaa !109, !range !129, !noundef !130
-  %6 = trunc nuw i8 %5 to i1
-  br i1 %6, label %.critedge.i.i, label %_ZN3CFF15cff2_cs_opset_tI23cff2_cs_opset_extents_t20cff2_extents_param_tNS_8number_tE25cff2_path_procs_extents_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit, !prof !127
-
-.critedge.i.i:                                    ; preds = %3, %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i
+.critedge.i.i:                                    ; preds = %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.s = load i32, ptr %i.r, align 8, !tbaa !131
   %i.t = add i32 %i.s, 1
   br label %_ZN3CFF15cff2_cs_opset_tI23cff2_cs_opset_extents_t20cff2_extents_param_tNS_8number_tE25cff2_path_procs_extents_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit
 
-_ZN3CFF15cff2_cs_opset_tI23cff2_cs_opset_extents_t20cff2_extents_param_tNS_8number_tE25cff2_path_procs_extents_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit: ; preds = %3, %.critedge.i.i
-  %.sink2.i.i = phi i64 [ 12, %.critedge.i.i ], [ 4492, %3 ]
-  %.0.i.sink.i.i = phi i32 [ %i.t, %.critedge.i.i ], [ %.0.i.i.i, %3 ]
+_ZN3CFF15cff2_cs_opset_tI23cff2_cs_opset_extents_t20cff2_extents_param_tNS_8number_tE25cff2_path_procs_extents_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit: ; preds = %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i, %.critedge.i.i
+  %.sink2.i.i = phi i64 [ 12, %.critedge.i.i ], [ 4492, %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i ]
+  %.0.i.sink.i.i = phi i32 [ %i.t, %.critedge.i.i ], [ %.0.i.i.i, %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i ]
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %.sink2.i.i
   store i32 %.0.i.sink.i.i, ptr %i.u, align 4, !tbaa !136
   store i8 1, ptr %i.o, align 1, !tbaa !108
@@ -626,25 +624,23 @@ _ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i.i.i: ; preds = %bb.f, %
 _ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i: ; preds = %.sink.split.i.i.i, %_ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i.i.i
   %.0.i.i.i = phi i32 [ %i.m, %_ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i.i.i ], [ 0, %.sink.split.i.i.i ]
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4521 ; 2 uses
-  %i.p = load i8, ptr %i.o, align 1, !tbaa !108, !range !129, !noundef !130
+  %3 = load i8, ptr %i.o, align 1, !tbaa !108, !range !129, !noundef !130
+  %4 = trunc nuw i8 %3 to i1
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4522
+  %i.p = load i8, ptr %5, align 2, !range !129
   %i.q = trunc nuw i8 %i.p to i1
-  br i1 %i.q, label %.critedge.i.i, label %3, !prof !127
+  %or.cond.i.i = select i1 %4, i1 true, i1 %i.q, !prof !64
+  br i1 %or.cond.i.i, label %.critedge.i.i, label %_ZN3CFF15cff2_cs_opset_tI20cff2_cs_opset_path_t17cff2_path_param_tNS_8number_tE22cff2_path_procs_path_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit, !prof !64
 
-3:                                                ; preds = %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4522
-  %5 = load i8, ptr %4, align 2, !tbaa !109, !range !129, !noundef !130
-  %6 = trunc nuw i8 %5 to i1
-  br i1 %6, label %.critedge.i.i, label %_ZN3CFF15cff2_cs_opset_tI20cff2_cs_opset_path_t17cff2_path_param_tNS_8number_tE22cff2_path_procs_path_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit, !prof !127
-
-.critedge.i.i:                                    ; preds = %3, %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i
+.critedge.i.i:                                    ; preds = %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.s = load i32, ptr %i.r, align 8, !tbaa !131
   %i.t = add i32 %i.s, 1
   br label %_ZN3CFF15cff2_cs_opset_tI20cff2_cs_opset_path_t17cff2_path_param_tNS_8number_tE22cff2_path_procs_path_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit
 
-_ZN3CFF15cff2_cs_opset_tI20cff2_cs_opset_path_t17cff2_path_param_tNS_8number_tE22cff2_path_procs_path_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit: ; preds = %3, %.critedge.i.i
-  %.sink2.i.i = phi i64 [ 12, %.critedge.i.i ], [ 4492, %3 ]
-  %.0.i.sink.i.i = phi i32 [ %i.t, %.critedge.i.i ], [ %.0.i.i.i, %3 ]
+_ZN3CFF15cff2_cs_opset_tI20cff2_cs_opset_path_t17cff2_path_param_tNS_8number_tE22cff2_path_procs_path_tE15process_vsindexERNS_20cff2_cs_interp_env_tIS3_EERS2_.exit: ; preds = %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i, %.critedge.i.i
+  %.sink2.i.i = phi i64 [ 12, %.critedge.i.i ], [ 4492, %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i ]
+  %.0.i.sink.i.i = phi i32 [ %i.t, %.critedge.i.i ], [ %.0.i.i.i, %_ZN3CFF11arg_stack_tINS_8number_tEE8pop_uintEv.exit.i.i ]
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %.sink2.i.i
   store i32 %.0.i.sink.i.i, ptr %i.u, align 4, !tbaa !136
   store i8 1, ptr %i.o, align 1, !tbaa !108
