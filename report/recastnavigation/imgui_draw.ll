@@ -205,7 +205,7 @@ begin_hunk_0_@_ZL40ImGui_ImplStbTrueType_FontBakedLoadGlyphP11ImFontAtlasP12ImFo
   br i1 %i.bdr, label %.lr.ph143.preheader.i, label %._crit_edge.i
 
 .lr.ph143.preheader.i:                            ; preds = %.loopexit.i
-  %i.bds = zext i32 %.593.i to i64                ; 6 uses
+  %i.bds = zext nneg i32 %.593.i to i64           ; 6 uses
   %i.bdt = sub nsw i64 %i.ayq, %i.bds
   %xtraiter403 = and i64 %i.bdt, 1
   %lcmp.mod404.not = icmp eq i64 %xtraiter403, 0
@@ -497,7 +497,7 @@ bb.iz:                                            ; preds = %._crit_edge.i121, %
   br i1 %i.bjf, label %.lr.ph158.preheader.i, label %._crit_edge.i121
 
 .lr.ph158.preheader.i:                            ; preds = %.loopexit.i119
-  %i.bjg = zext i32 %.5108.i to i64               ; 6 uses
+  %i.bjg = zext nneg i32 %.5108.i to i64          ; 6 uses
   %i.bjh = sub nsw i64 %wide.trip.count203.i, %i.bjg
   %xtraiter411 = and i64 %i.bjh, 1
   %lcmp.mod412.not = icmp eq i64 %xtraiter411, 0

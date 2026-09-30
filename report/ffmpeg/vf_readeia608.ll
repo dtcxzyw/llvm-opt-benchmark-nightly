@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %extract_li
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !52 ; 99 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(19) %i.a, i8 0, i64 19, i1 false)
-  %i.af = add i32 %i.y, 25                        ; 6 uses
+  %i.af = add i32 %i.y, 25                        ; 7 uses
   %i.ag = sext i32 %i.af to i64
   %i.ah = mul nsw i64 %i.ag, 24
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.ae, i8 0, i64 %i.ah, i1 false)
@@ -485,8 +485,7 @@ bb.j:                                             ; preds = %find_black_and_whit
 .lr.ph.preheader.i.i:                             ; preds = %bb.j
   %smax.i116.i = tail call i32 @llvm.smax.i32(i32 %i.af, i32 26)
   %wide.trip.count.i117.i = zext nneg i32 %smax.i116.i to i64 ; 2 uses
-  %4 = add nsw i64 %wide.trip.count.i117.i, -25   ; 3 uses
-  %min.iters.check = icmp ult i64 %4, 5
+  %min.iters.check = icmp slt i32 %i.af, 30
   br i1 %min.iters.check, label %.lr.ph.i118.i.preheader, label %vector.ph
 
 .lr.ph.i118.i.preheader:                          ; preds = %vector.body, %.lr.ph.preheader.i.i
@@ -494,6 +493,7 @@ bb.j:                                             ; preds = %find_black_and_whit
   br label %.lr.ph.i118.i
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i
+  %4 = add nsw i64 %wide.trip.count.i117.i, -25   ; 2 uses
   %i.eg = and i64 %4, 3                           ; 2 uses
   %i.eh = icmp eq i64 %i.eg, 0
   %i.ei = select i1 %i.eh, i64 4, i64 %i.eg

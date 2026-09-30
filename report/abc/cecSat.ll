@@ -204,13 +204,11 @@ bb.a:
   br i1 %i.d, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader20
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64   ; 5 uses
-  %min.iters.check = icmp slt i32 %i.a, 8
-  %i.e = add nsw i32 %smax, -17
-  %i.f = icmp ult i32 %i.e, -16
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %i.f
-  br i1 %or.cond, label %.lr.ph.preheader70, label %vector.ph
+  %i.e = add i32 %i.a, -17
+  %i.f = icmp ult i32 %i.e, -9
+  br i1 %i.f, label %.lr.ph.preheader70, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %wide.trip.count, 24           ; 3 uses
@@ -276,13 +274,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.d, label %.lr.ph26.preheader, label %.loopexit
 
 .lr.ph26.preheader:                               ; preds = %.preheader
-  %smax34 = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 2 uses
+  %smax34 = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
   %wide.trip.count35 = zext nneg i32 %smax34 to i64 ; 5 uses
-  %min.iters.check47 = icmp slt i32 %i.a, 8
-  %i.ad = add nsw i32 %smax34, -17
-  %i.ae = icmp ult i32 %i.ad, -16
-  %or.cond66 = select i1 %min.iters.check47, i1 true, i1 %i.ae
-  br i1 %or.cond66, label %.lr.ph26.preheader67, label %vector.ph48
+  %i.ad = add i32 %i.a, -17
+  %i.ae = icmp ult i32 %i.ad, -9
+  br i1 %i.ae, label %.lr.ph26.preheader67, label %vector.ph48
 
 vector.ph48:                                      ; preds = %.lr.ph26.preheader
   %n.vec49 = and i64 %wide.trip.count35, 24       ; 3 uses
@@ -494,24 +490,21 @@ Abc_PrimeCudd.exit:                               ; preds = %.preheader.i, %bb.f
   %i.y = shl i32 %i.b, 1                          ; 3 uses
   %i.z = icmp sgt i32 %i.b, 0                     ; 2 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.y, i32 1)
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 11 uses
+  %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 10 uses
   %.val140 = load ptr, ptr %i.v, align 8, !tbaa !36 ; 2 uses
   %.not66141 = icmp eq ptr %.val140, null
   br i1 %.not66141, label %.critedge, label %.lr.ph144.a
 
 .lr.ph144.a:                                      ; preds = %.lr.ph
-  %4 = add nsw i64 %wide.trip.count.i, -1         ; 2 uses
-  %min.iters.check153 = icmp slt i32 %i.y, 8
-  %5 = icmp ugt i64 %4, 15
-  %or.cond = select i1 %min.iters.check153, i1 true, i1 %5
+  %4 = add i32 %i.y, -17
+  %or.cond = icmp ult i32 %4, -9
   %n.vec155 = and i64 %wide.trip.count.i, 24      ; 3 uses
   %cmp.n167 = icmp eq i64 %n.vec155, %wide.trip.count.i
   %xtraiter = and i64 %wide.trip.count.i, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %i.aa = add nsw i64 %wide.trip.count.i, -1
-  %min.iters.check = icmp slt i32 %i.y, 8
-  %6 = icmp ugt i64 %4, 15
-  %or.cond170 = select i1 %min.iters.check, i1 true, i1 %6
+  %5 = add i32 %i.y, -17
+  %or.cond170 = icmp ult i32 %5, -9
   %n.vec = and i64 %wide.trip.count.i, 24         ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   %xtraiter184 = and i64 %wide.trip.count.i, 3    ; 2 uses
@@ -524,8 +517,8 @@ bb.g:                                             ; preds = %bb.l
   br i1 %.not66, label %.critedge, label %bb.h, !llvm.loop !150
 
 bb.h:                                             ; preds = %.lr.ph144.a, %bb.g
-  %.val143 = phi ptr [ %.val140, %.lr.ph144.a ], [ %.val, %bb.g ]
-  %indvars.iv142 = phi i64 [ 0, %.lr.ph144.a ], [ %indvars.iv.next, %bb.g ] ; 5 uses
+  %.val143 = phi ptr [ %.val, %bb.g ], [ %.val140, %.lr.ph144.a ]
+  %indvars.iv142 = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %.lr.ph144.a ] ; 5 uses
   %i.ab = getelementptr inbounds nuw [12 x i8], ptr %.val143, i64 %indvars.iv142
   %i.ac = load ptr, ptr %i.c, align 8, !tbaa !78
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %indvars.iv142 ; 2 uses

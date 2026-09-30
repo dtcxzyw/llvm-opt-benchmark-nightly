@@ -202,7 +202,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define dso_local range(i32 0, 2) i32 @LZ4IO_setDictionaryFilename(ptr nofree noundef writeonly captures(none) initializes((44, 48), (56, 64)) %0, ptr noundef %1) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @LZ4IO_setDictionaryFilename(ptr nofree noundef writeonly captures(none) initializes((44, 48), (56, 64)) %0, ptr noundef %1) local_unnamed_addr #8 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %1, ptr %i.a, align 8, !tbaa !22
@@ -214,7 +214,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define dso_local range(i32 0, 2) i32 @LZ4IO_setPassThrough(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, i32 noundef %1) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @LZ4IO_setPassThrough(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, i32 noundef %1) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ne i32 %1, 0
   %i.b = zext i1 %i.a to i32                      ; 2 uses
@@ -223,7 +223,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define dso_local range(i32 0, 2) i32 @LZ4IO_setOverwrite(ptr nofree noundef writeonly captures(none) initializes((4, 8)) %0, i32 noundef %1) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @LZ4IO_setOverwrite(ptr nofree noundef writeonly captures(none) initializes((4, 8)) %0, i32 noundef %1) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ne i32 %1, 0
   %i.b = zext i1 %i.a to i32                      ; 2 uses
@@ -233,7 +233,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define dso_local range(i32 0, 2) i32 @LZ4IO_setTestMode(ptr nofree noundef writeonly captures(none) initializes((8, 12)) %0, i32 noundef %1) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @LZ4IO_setTestMode(ptr nofree noundef writeonly captures(none) initializes((8, 12)) %0, i32 noundef %1) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ne i32 %1, 0
   %i.b = zext i1 %i.a to i32                      ; 2 uses
@@ -292,7 +292,7 @@ bb.c:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define dso_local range(i32 0, 2) i32 @LZ4IO_setBlockMode(ptr nofree noundef writeonly captures(none) initializes((32, 36)) %0, i32 noundef %1) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @LZ4IO_setBlockMode(ptr nofree noundef writeonly captures(none) initializes((32, 36)) %0, i32 noundef %1) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp eq i32 %1, 1
   %i.b = zext i1 %i.a to i32                      ; 2 uses
@@ -302,7 +302,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define dso_local range(i32 0, 2) i32 @LZ4IO_setBlockChecksumMode(ptr nofree noundef writeonly captures(none) initializes((24, 28)) %0, i32 noundef %1) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @LZ4IO_setBlockChecksumMode(ptr nofree noundef writeonly captures(none) initializes((24, 28)) %0, i32 noundef %1) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ne i32 %1, 0
   %i.b = zext i1 %i.a to i32                      ; 2 uses
@@ -312,7 +312,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define dso_local range(i32 0, 2) i32 @LZ4IO_setStreamChecksumMode(ptr nofree noundef writeonly captures(none) initializes((28, 32)) %0, i32 noundef %1) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @LZ4IO_setStreamChecksumMode(ptr nofree noundef writeonly captures(none) initializes((28, 32)) %0, i32 noundef %1) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ne i32 %1, 0
   %i.b = zext i1 %i.a to i32                      ; 2 uses
@@ -339,7 +339,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define dso_local range(i32 0, 2) i32 @LZ4IO_setContentSize(ptr nofree noundef writeonly captures(none) initializes((40, 44)) %0, i32 noundef %1) local_unnamed_addr #8 {
+define dso_local noundef range(i32 0, 2) i32 @LZ4IO_setContentSize(ptr nofree noundef writeonly captures(none) initializes((40, 44)) %0, i32 noundef %1) local_unnamed_addr #8 {
 bb.a:
   %i.a = icmp ne i32 %1, 0
   %i.b = zext i1 %i.a to i32                      ; 2 uses

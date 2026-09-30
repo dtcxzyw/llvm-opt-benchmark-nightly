@@ -205,19 +205,16 @@ bb.bc:                                            ; preds = %bb.ba
   br i1 %i.hh, label %.lr.ph763.preheader, label %.thread688.thread856
 
 .lr.ph763.preheader:                              ; preds = %bb.bc
-  %i.hi = call i32 @llvm.smax.i32(i32 %i.gx, i32 1)
-  %wide.trip.count773 = zext nneg i32 %i.hi to i64 ; 6 uses
+  %i.hi = call i32 @llvm.smax.i32(i32 %i.gx, i32 1) ; 2 uses
+  %wide.trip.count773 = zext nneg i32 %i.hi to i64 ; 5 uses
   %min.iters.check876 = icmp slt i64 %.0.i.i487, 20
   br i1 %min.iters.check876, label %.lr.ph763.preheader944, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph763.preheader
-  %7 = add nsw i64 %wide.trip.count773, -1        ; 2 uses
-  %8 = trunc nsw i64 %7 to i32
-  %i.hj = add i32 %i.gv, %8
+  %7 = add nsw i32 %i.hi, -1
+  %i.hj = add i32 %i.gv, %7
   %i.hk = icmp slt i32 %i.hj, %i.gv
-  %9 = icmp ugt i64 %7, 4294967295
-  %10 = or i1 %i.hk, %9
-  br i1 %10, label %.lr.ph763.preheader944, label %vector.memcheck
+  br i1 %i.hk, label %.lr.ph763.preheader944, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.hl = sext i32 %i.gv to i64

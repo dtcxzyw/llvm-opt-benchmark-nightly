@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = sitofp i32 %i.d to double
   %i.f = fcmp ogt double %i.c, %i.e
   %.neg.i = sext i1 %i.f to i32
-  %.neg5.i = sub i32 %.neg.i, %i.d
+  %.neg5.i = sub nsw i32 %.neg.i, %i.d
   br label %_ZN9Imath_3_25floorIdEEiT_.exit
 
 _ZN9Imath_3_25floorIdEEiT_.exit:                  ; preds = %bb.b, %bb.c
@@ -512,7 +512,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = sitofp i32 %i.d to double
   %i.f = fcmp ogt double %i.c, %i.e
   %.neg.i = sext i1 %i.f to i32
-  %.neg5.i = sub i32 %.neg.i, %i.d
+  %.neg5.i = sub nsw i32 %.neg.i, %i.d
   br label %_ZN9Imath_3_25floorIdEEiT_.exit
 
 _ZN9Imath_3_25floorIdEEiT_.exit:                  ; preds = %bb.b, %bb.c
@@ -790,7 +790,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = sitofp i32 %i.d to double
   %i.f = fcmp ogt double %i.c, %i.e
   %.neg.i = sext i1 %i.f to i32
-  %.neg5.i = sub i32 %.neg.i, %i.d
+  %.neg5.i = sub nsw i32 %.neg.i, %i.d
   br label %_ZN9Imath_3_25floorIdEEiT_.exit
 
 _ZN9Imath_3_25floorIdEEiT_.exit:                  ; preds = %bb.b, %bb.c
@@ -1068,7 +1068,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = sitofp i32 %i.d to double
   %i.f = fcmp ogt double %i.c, %i.e
   %.neg.i = sext i1 %i.f to i32
-  %.neg5.i = sub i32 %.neg.i, %i.d
+  %.neg5.i = sub nsw i32 %.neg.i, %i.d
   br label %_ZN9Imath_3_25floorIdEEiT_.exit
 
 _ZN9Imath_3_25floorIdEEiT_.exit:                  ; preds = %bb.b, %bb.c
@@ -1372,7 +1372,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = sitofp i32 %i.d to double
   %i.f = fcmp ogt double %i.c, %i.e
   %.neg.i = sext i1 %i.f to i32
-  %.neg5.i = sub i32 %.neg.i, %i.d
+  %.neg5.i = sub nsw i32 %.neg.i, %i.d
   br label %_ZN9Imath_3_25floorIdEEiT_.exit
 
 _ZN9Imath_3_25floorIdEEiT_.exit:                  ; preds = %bb.b, %bb.c
@@ -1656,7 +1656,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = sitofp i32 %i.d to double
   %i.f = fcmp ogt double %i.c, %i.e
   %.neg.i = sext i1 %i.f to i32
-  %.neg5.i = sub i32 %.neg.i, %i.d
+  %.neg5.i = sub nsw i32 %.neg.i, %i.d
   br label %_ZN9Imath_3_25floorIdEEiT_.exit
 
 _ZN9Imath_3_25floorIdEEiT_.exit:                  ; preds = %bb.b, %bb.c

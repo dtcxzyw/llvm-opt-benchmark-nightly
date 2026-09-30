@@ -202,10 +202,8 @@ bb.a:
   %i.i = load i32, ptr %i.h, align 4
   %i.j = zext i32 %i.i to i64
   %i.k = icmp ugt i64 %3, %i.j
-  %7 = icmp slt i64 %3, 0
-  %or.cond = or i1 %7, %i.k
   %i.l = icmp slt i32 %0, 0
-  %or.cond3 = or i1 %i.l, %or.cond
+  %or.cond3 = or i1 %i.l, %i.k
   %i.m = icmp slt i64 %1, 1
   %or.cond70 = or i1 %i.m, %or.cond3
   br i1 %or.cond70, label %bb.ah, label %bb.b

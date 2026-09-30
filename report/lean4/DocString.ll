@@ -204,7 +204,7 @@ lean_dec.exit:                                    ; preds = %bb.d, %bb.a, %bb.i,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define zeroext range(i8 0, 2) i8 @l_Lean_Doc_instBEqSuggestionMode_beq(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #2 {
+define noundef zeroext range(i8 0, 2) i8 @l_Lean_Doc_instBEqSuggestionMode_beq(i8 noundef zeroext %0, i8 noundef zeroext %1) local_unnamed_addr #2 {
 lean_dec.exit:
   %i.a = icmp ne i8 %0, 0
   %i.b = icmp eq i8 %1, 0

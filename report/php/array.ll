@@ -205,9 +205,7 @@ bb.t:                                             ; preds = %thread-pre-split
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !25
   %i.be = and i32 %i.bd, 4
   %.not191 = icmp eq i32 %i.be, 0
-  %i.bf = load i64, ptr %i.a, align 8, !tbaa !24  ; 7 uses
-  %2 = icmp sgt i64 %i.bf, -1
-  call void @llvm.assume(i1 %2)
+  %i.bf = load i64, ptr %i.a, align 8, !tbaa !24  ; 6 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bb, i64 28
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !35 ; 3 uses
   %i.bi = zext i32 %i.bh to i64

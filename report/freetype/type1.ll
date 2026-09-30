@@ -204,15 +204,15 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not6775, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.i
-  %i.ac = add i32 %1, 1
+  %i.ac = add i32 %1, 1                           ; 2 uses
   %umax = call i32 @llvm.umax.i32(i32 %i.ac, i32 3)
   %wide.trip.count = zext i32 %umax to i64        ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.054, i64 288
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !227 ; 3 uses
   %.phi.trans.insert78 = getelementptr inbounds nuw i8, ptr %.054, i64 424
   %.pre79 = load ptr, ptr %.phi.trans.insert78, align 8, !tbaa !225 ; 3 uses
-  %i.ad = add nsw i64 %wide.trip.count, -2        ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ad, 4
+  %i.ad = add nsw i64 %wide.trip.count, -2        ; 2 uses
+  %min.iters.check = icmp ult i32 %i.ac, 6
   br i1 %min.iters.check, label %.lr.ph.preheader103, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

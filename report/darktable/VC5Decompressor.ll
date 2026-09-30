@@ -205,7 +205,7 @@ iter.check321:                                    ; preds = %.preheader86
   %i.ja = getelementptr inbounds nuw [2 x i8], ptr %.sroa.1865.32.copyload, i64 %i.iz ; 5 uses
   tail call void @llvm.assume(i1 %i.v)
   tail call void @llvm.assume(i1 %i.w)
-  %i.jb = add nuw i64 %indvars.iv113, 4294967294
+  %i.jb = add nuw nsw i64 %indvars.iv113, 4294967294
   %i.jc = and i64 %i.jb, 4294967295               ; 3 uses
   %i.jd = mul nuw nsw i64 %i.jc, %i.x             ; 5 uses
   %i.je = add nuw nsw i64 %i.jc, 1
@@ -408,7 +408,7 @@ iter.check227:                                    ; preds = %.preheader84
   %i.nb = mul nuw nsw i64 %indvars.iv113, %i.ah
   %i.nc = getelementptr inbounds nuw [2 x i8], ptr %.sroa.1865.32.copyload, i64 %i.nb ; 5 uses
   tail call void @llvm.assume(i1 %i.w)
-  %i.nd = add nuw i64 %indvars.iv113, 4294967295
+  %i.nd = add nuw nsw i64 %indvars.iv113, 4294967295
   %i.ne = and i64 %i.nd, 4294967295               ; 2 uses
   %i.nf = mul nuw nsw i64 %i.ne, %i.x             ; 5 uses
   %i.ng = mul nuw nsw i64 %indvars.iv113, %i.x    ; 5 uses
@@ -811,6 +811,7 @@ bb.b:                                             ; preds = %bb.a
   %broadcast.splatinsert131 = insertelement <4 x i32> poison, i32 %3, i64 0
   %broadcast.splat132 = shufflevector <4 x i32> %broadcast.splatinsert131, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %cmp.n146 = icmp eq i64 %i.av, %n.vec126
+  %invariant.op = sub nuw i64 %i.w, 1
   %invariant.op.a = sub nuw i32 %.sroa.52.72.copyload, 1
   br label %bb.c
 
@@ -1119,8 +1120,7 @@ vec.epilog.middle.block215:                       ; preds = %vec.epilog.vector.b
   %i.in = load i16, ptr %i.im, align 2, !tbaa !290
   %i.io = shl nuw nsw i64 %indvars.iv95, 1        ; 2 uses
   %i.ip = getelementptr inbounds nuw [2 x i8], ptr %i.db, i64 %i.io
-  %6 = or disjoint i64 %i.io, 1
-  %i.iq = icmp samesign ult i64 %6, %i.w
+  %i.iq = icmp ult i64 %i.io, %invariant.op
   tail call void @llvm.assume(i1 %i.iq)
   %i.ir = sext i16 %i.ih to i32                   ; 2 uses
   %i.is = load i16, ptr %i.ij, align 2, !tbaa !290

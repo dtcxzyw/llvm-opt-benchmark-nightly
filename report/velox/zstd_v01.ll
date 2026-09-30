@@ -16,7 +16,7 @@ target triple = "x86_64-pc-linux-gnu"
 @ZSTD_execSequence.dec64table = internal unnamed_addr constant [8 x i32] [i32 8, i32 8, i32 8, i32 7, i32 8, i32 9, i32 10, i32 11], align 16
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define range(i32 0, 2) i32 @ZSTDv01_isError(i64 noundef %0) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @ZSTDv01_isError(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp ugt i64 %0, -120
   %i.b = zext i1 %i.a to i32
@@ -419,11 +419,9 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.ds, label %FSE_decompress.exit.thread.i.i.i.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.dt = call fastcc i64 @FSE_readNCount(ptr noundef %i.l, ptr noundef %i.o, ptr noundef %i.n, ptr noundef nonnull %i.dr, i64 noundef range(i64 0, 128) %i.bo) ; 4 uses
-  %7 = icmp ult i64 %i.dt, -7
+  %i.dt = call fastcc i64 @FSE_readNCount(ptr noundef %i.l, ptr noundef %i.o, ptr noundef %i.n, ptr noundef nonnull %i.dr, i64 noundef range(i64 0, 128) %i.bo) ; 3 uses
   %.not21.i.i.i.i.i = icmp ult i64 %i.dt, %i.bo
-  %or.cond.i.i = and i1 %7, %.not21.i.i.i.i.i
-  br i1 %or.cond.i.i, label %bb.s, label %FSE_decompress.exit.thread.i.i.i.i
+  br i1 %.not21.i.i.i.i.i, label %bb.s, label %FSE_decompress.exit.thread.i.i.i.i
 
 bb.s:                                             ; preds = %bb.r
   %i.du = load i32, ptr %i.o, align 4, !tbaa !14  ; 3 uses

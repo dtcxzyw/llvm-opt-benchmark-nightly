@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
   store i32 %.1231.i, ptr %i.bd, align 4, !tbaa !35
   %i.be = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 12
-  %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 28
+  %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.gep58 = getelementptr inbounds nuw i8, ptr %3, i64 4
   br label %bb.p
 
@@ -229,20 +229,18 @@ bb.p:                                             ; preds = %bb.v, %bb.o
   %i.bt = load float, ptr %i.bs, align 4, !tbaa !37 ; 3 uses
   store float %i.bt, ptr %i.be, align 8, !tbaa !38
   %i.bu = load float, ptr %i.br, align 4, !tbaa !38
-  %9 = sext i32 %i.bi to i64
-  %10 = getelementptr inbounds [8 x i8], ptr %i.x, i64 %9
-  %i.bv = sext i32 %i.bh to i64
-  %i.bw = getelementptr inbounds [8 x i8], ptr %i.x, i64 %i.bv ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.bw, i64 4
-  %12 = load float, ptr %11, align 4, !tbaa !37   ; 2 uses
-  %i.bx = load <2 x float>, ptr %10, align 4, !tbaa !33 ; 2 uses
-  %13 = shufflevector <2 x float> %i.bx, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
-  %14 = insertelement <4 x float> %13, float %i.bu, i64 0
-  %15 = insertelement <4 x float> %14, float %12, i64 3
-  %16 = fneg <4 x float> %15                      ; 3 uses
-  store <4 x float> %16, ptr %i.bf, align 4, !tbaa !33
-  %i.by = load float, ptr %i.bw, align 4, !tbaa !38 ; 2 uses
-  store float %i.by, ptr %i.bg, align 4, !tbaa !37
+  %9 = fneg float %i.bu                           ; 3 uses
+  store float %9, ptr %i.bf, align 4, !tbaa !37
+  %i.bv = sext i32 %i.bi to i64
+  %i.bw = getelementptr inbounds [8 x i8], ptr %i.x, i64 %i.bv
+  %i.bx = load <2 x float>, ptr %i.bw, align 4, !tbaa !33 ; 2 uses
+  %10 = fneg <2 x float> %i.bx                    ; 2 uses
+  store <2 x float> %10, ptr %i.bg, align 16, !tbaa !33
+  %11 = sext i32 %i.bh to i64
+  %12 = getelementptr inbounds [8 x i8], ptr %i.x, i64 %11 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %i.by = load float, ptr %13, align 4, !tbaa !37
+  %14 = load float, ptr %12, align 4, !tbaa !38
   %i.bz = trunc i64 %i.bp to i32
   %i.ca = bitcast i32 %i.bz to float              ; 2 uses
   %i.cb = lshr i64 %i.bp, 32
@@ -250,16 +248,15 @@ bb.p:                                             ; preds = %bb.v, %bb.o
   %i.cd = bitcast i32 %i.cc to float
   %i.ce = fneg float %i.bt
   %i.cf = fmul float %i.ce, %i.cd
-  %17 = extractelement <4 x float> %16, i64 0     ; 2 uses
-  %i.cg = call float @llvm.fmuladd.f32(float %17, float %i.ca, float %i.cf)
+  %i.cg = call float @llvm.fmuladd.f32(float %9, float %i.ca, float %i.cf)
   %i.ch = fcmp olt float %i.cg, 0.000000e+00      ; 3 uses
   %spec.select.i = zext i1 %i.ch to i32
   %.val278.1.i = select i1 %i.ch, float %i.bt, float %i.ca
   %.sroa.gep58.val = load float, ptr %.sroa.gep58, align 4
-  %.val279.1.i = select i1 %i.ch, float %17, float %.sroa.gep58.val
+  %.val279.1.i = select i1 %i.ch, float %9, float %.sroa.gep58.val
   %i.ci = extractelement <2 x float> %i.bx, i64 0
   %i.cj = fmul float %i.ci, %.val279.1.i
-  %i.ck = extractelement <4 x float> %16, i64 2
+  %i.ck = extractelement <2 x float> %10, i64 1
   %i.cl = call float @llvm.fmuladd.f32(float %i.ck, float %.val278.1.i, float %i.cj)
   %i.cm = fcmp olt float %i.cl, 0.000000e+00
   %spec.select.1.i = select i1 %i.cm, i32 2, i32 %spec.select.i ; 2 uses
@@ -268,8 +265,8 @@ bb.p:                                             ; preds = %bb.v, %bb.o
   %.val278.2.i = load float, ptr %i.co, align 8, !tbaa !38
   %i.cp = getelementptr i8, ptr %i.co, i64 4
   %.val279.2.i = load float, ptr %i.cp, align 4, !tbaa !37
-  %i.cq = fmul float %12, %.val279.2.i
-  %i.cr = call float @llvm.fmuladd.f32(float %i.by, float %.val278.2.i, float %i.cq)
+  %i.cq = fmul float %i.by, %.val279.2.i
+  %i.cr = call float @llvm.fmuladd.f32(float %14, float %.val278.2.i, float %i.cq)
   %i.cs = fcmp olt float %i.cr, 0.000000e+00
   %spec.select.2.i = select i1 %i.cs, i32 3, i32 %spec.select.1.i ; 2 uses
   %i.ct = zext nneg i32 %spec.select.2.i to i64

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.al, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
-  %i.am = zext i32 %.0.lcssa.i18.i.i to i64       ; 4 uses
+  %i.am = zext nneg i32 %.0.lcssa.i18.i.i to i64  ; 4 uses
   %i.an = sub nsw i64 %i.v, %i.am
   %xtraiter74 = and i64 %i.an, 7                  ; 2 uses
   %lcmp.mod75.not = icmp eq i64 %xtraiter74, 0
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.di, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
-  %i.dj = zext i32 %.0.lcssa.i18.i.i to i64       ; 4 uses
+  %i.dj = zext nneg i32 %.0.lcssa.i18.i.i to i64  ; 4 uses
   %i.dk = sub nsw i64 %i.cs, %i.dj
   %xtraiter143 = and i64 %i.dk, 7                 ; 2 uses
   %lcmp.mod144.not = icmp eq i64 %xtraiter143, 0
@@ -1011,7 +1011,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.ec, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
-  %i.ed = zext i32 %.0.lcssa.i18.i.i to i64       ; 4 uses
+  %i.ed = zext nneg i32 %.0.lcssa.i18.i.i to i64  ; 4 uses
   %i.ee = sub nsw i64 %i.dm, %i.ed
   %xtraiter311 = and i64 %i.ee, 7                 ; 2 uses
   %lcmp.mod312.not = icmp eq i64 %xtraiter311, 0
@@ -1189,7 +1189,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.gw, label %.lr.ph18.preheader.i19.i.i94, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit104
 
 .lr.ph18.preheader.i19.i.i94:                     ; preds = %.preheader.i17.i.i91
-  %i.gx = zext i32 %.0.lcssa.i18.i.i92 to i64     ; 4 uses
+  %i.gx = zext nneg i32 %.0.lcssa.i18.i.i92 to i64 ; 4 uses
   %i.gy = sub nsw i64 %i.gg, %i.gx
   %xtraiter319 = and i64 %i.gy, 7                 ; 2 uses
   %lcmp.mod320.not = icmp eq i64 %xtraiter319, 0

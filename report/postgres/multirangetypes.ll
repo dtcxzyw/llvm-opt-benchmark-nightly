@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.a, %multirange_g
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @multirange_contains_elem(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @multirange_contains_elem(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -342,7 +342,7 @@ multirange_bsearch_match.exit:                    ; preds = %multirange_elem_bse
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @elem_contained_by_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @elem_contained_by_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -392,7 +392,7 @@ multirange_get_typcache.exit:                     ; preds = %bb.b, %bb.e
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @multirange_contains_range(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @multirange_contains_range(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -526,7 +526,7 @@ multirange_bsearch_match.exit:                    ; preds = %multirange_range_co
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @range_contains_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @range_contains_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -633,7 +633,7 @@ range_bounds_contains.exit:                       ; preds = %bb.e, %bb.d, %bb.b,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @range_contained_by_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @range_contained_by_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -685,7 +685,7 @@ multirange_get_typcache.exit:                     ; preds = %bb.b, %bb.e
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @multirange_contained_by_range(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @multirange_contained_by_range(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -804,7 +804,7 @@ bb.e:                                             ; preds = %.lr.ph
 declare i32 @range_cmp_bounds(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @multirange_eq(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @multirange_eq(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -864,7 +864,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @multirange_ne(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @multirange_ne(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -917,7 +917,7 @@ multirange_get_typcache.exit:                     ; preds = %bb.b, %bb.e
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @range_overlaps_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @range_overlaps_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -1037,7 +1037,7 @@ multirange_bsearch_match.exit:                    ; preds = %multirange_range_ov
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @multirange_overlaps_range(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @multirange_overlaps_range(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -1089,7 +1089,7 @@ multirange_get_typcache.exit:                     ; preds = %bb.b, %bb.e
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @multirange_overlaps_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @multirange_overlaps_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -1492,7 +1492,7 @@ bb.h:                                             ; preds = %bb.a, %bb.b, %multi
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @multirange_contains_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @multirange_contains_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8
@@ -1621,7 +1621,7 @@ range_bounds_contains.exit:                       ; preds = %bb.d, %._crit_edge,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 0, 2) i64 @multirange_contained_by_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local noundef range(i64 0, 2) i64 @multirange_contained_by_multirange(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8

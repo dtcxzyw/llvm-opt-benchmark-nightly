@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load i32, ptr %2, align 8, !tbaa !27
-  %i.j = load i32, ptr %1, align 8, !tbaa !27
-  %i.k = xor i32 %i.i, %i.j
+  %i.i = load i32, ptr %1, align 8, !tbaa !27
+  %i.j = load i32, ptr %2, align 8, !tbaa !27
+  %i.k = xor i32 %i.j, %i.i
   store i32 %i.k, ptr %3, align 8, !tbaa !27
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.m = load i8, ptr %i.l, align 4
@@ -610,9 +610,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load i32, ptr %2, align 8, !tbaa !27
-  %i.j = load i32, ptr %1, align 8, !tbaa !27
-  %i.k = xor i32 %i.i, %i.j
+  %i.i = load i32, ptr %1, align 8, !tbaa !27
+  %i.j = load i32, ptr %2, align 8, !tbaa !27
+  %i.k = xor i32 %i.j, %i.i
   store i32 %i.k, ptr %3, align 8, !tbaa !27
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.m = load i8, ptr %i.l, align 4

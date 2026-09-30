@@ -201,7 +201,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_isnan_REAL(double noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_isnan_REAL(double noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = fcmp uno double %0, 0.000000e+00
   %i.b = zext i1 %i.a to i32
@@ -209,7 +209,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_isnanf_REAL(float noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_isnanf_REAL(float noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = fcmp uno float %0, 0.000000e+00
   %i.b = zext i1 %i.a to i32
@@ -433,7 +433,7 @@ bb.a:
 declare i32 @llvm.abs.i32(i32, i1 immarg) #5
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_isalpha_REAL(i32 noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_isalpha_REAL(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = and i32 %0, -33
   %i.b = add i32 %i.a, -65
@@ -443,7 +443,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_isupper_REAL(i32 noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_isupper_REAL(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = add i32 %0, -65
   %i.b = icmp ult i32 %i.a, 26
@@ -452,7 +452,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_islower_REAL(i32 noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_islower_REAL(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = add i32 %0, -97
   %i.b = icmp ult i32 %i.a, 26
@@ -461,7 +461,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_isalnum_REAL(i32 noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_isalnum_REAL(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = and i32 %0, -33
   %i.b = add i32 %i.a, -65
@@ -474,7 +474,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_isdigit_REAL(i32 noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_isdigit_REAL(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = add i32 %0, -48
   %i.b = icmp ult i32 %i.a, 10
@@ -521,7 +521,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_isgraph_REAL(i32 noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_isgraph_REAL(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = add i32 %0, -33
   %i.b = icmp ult i32 %i.a, 94
@@ -544,7 +544,7 @@ switch.lookup:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_isprint_REAL(i32 noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_isprint_REAL(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = add i32 %0, -32
   %i.b = icmp ult i32 %i.a, 95
@@ -553,7 +553,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_iscntrl_REAL(i32 noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_iscntrl_REAL(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %or.cond = icmp ult i32 %0, 32
   %i.a = icmp eq i32 %0, 127
@@ -583,7 +583,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden range(i32 0, 2) i32 @SDL_isblank_REAL(i32 noundef %0) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @SDL_isblank_REAL(i32 noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = icmp eq i32 %0, 32
   %i.b = icmp eq i32 %0, 9

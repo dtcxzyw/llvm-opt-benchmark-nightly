@@ -204,8 +204,6 @@ define dso_local void @tcg_gen_gvec_shli(i32 noundef %0, i32 noundef %1, i32 nou
 bb.a:
   %i.a = icmp ult i32 %0, 4
   tail call void @llvm.assume(i1 %i.a)
-  %6 = icmp sgt i64 %3, -1
-  tail call void @llvm.assume(i1 %6)
   %i.b = shl nuw nsw i32 8, %0
   %i.c = zext nneg i32 %i.b to i64
   %i.d = icmp samesign ult i64 %3, %i.c
@@ -371,8 +369,6 @@ define dso_local void @tcg_gen_gvec_shri(i32 noundef %0, i32 noundef %1, i32 nou
 bb.a:
   %i.a = icmp ult i32 %0, 4
   tail call void @llvm.assume(i1 %i.a)
-  %6 = icmp sgt i64 %3, -1
-  tail call void @llvm.assume(i1 %6)
   %i.b = shl nuw nsw i32 8, %0
   %i.c = zext nneg i32 %i.b to i64
   %i.d = icmp samesign ult i64 %3, %i.c
@@ -574,8 +570,6 @@ define dso_local void @tcg_gen_gvec_sari(i32 noundef %0, i32 noundef %1, i32 nou
 bb.a:
   %i.a = icmp ult i32 %0, 4
   tail call void @llvm.assume(i1 %i.a)
-  %6 = icmp sgt i64 %3, -1
-  tail call void @llvm.assume(i1 %6)
   %i.b = shl nuw nsw i32 8, %0
   %i.c = zext nneg i32 %i.b to i64
   %i.d = icmp samesign ult i64 %3, %i.c
@@ -733,8 +727,6 @@ define dso_local void @tcg_gen_gvec_rotli(i32 noundef %0, i32 noundef %1, i32 no
 bb.a:
   %i.a = icmp ult i32 %0, 4
   tail call void @llvm.assume(i1 %i.a)
-  %6 = icmp sgt i64 %3, -1
-  tail call void @llvm.assume(i1 %6)
   %i.b = shl nuw nsw i32 8, %0
   %i.c = zext nneg i32 %i.b to i64
   %i.d = icmp samesign ult i64 %3, %i.c
@@ -854,8 +846,6 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @tcg_gen_gvec_rotri(i32 noundef %0, i32 noundef %1, i32 noundef %2, i64 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #1 {
 bb.a:
-  %6 = icmp sgt i64 %3, -1
-  tail call void @llvm.assume(i1 %6)
   %i.a = shl nuw nsw i32 8, %0                    ; 2 uses
   %i.b = zext nneg i32 %i.a to i64                ; 2 uses
   %i.c = icmp samesign ult i64 %3, %i.b

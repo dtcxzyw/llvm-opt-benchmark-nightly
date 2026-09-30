@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 3 uses
-  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -226,8 +226,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.f
   br label %sve_ldN_r.exit
 
 bb.g:                                             ; preds = %bb.f
-  %6 = icmp sgt i64 %.1.i5, -1
-  tail call void @llvm.assume(i1 %6)
   %i.ag = icmp samesign ult i64 %.1.i5, %i.h
   tail call void @llvm.assume(i1 %i.ag)
   %i.ah = trunc i64 %.178.i to i16                ; 2 uses
@@ -630,7 +628,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -651,8 +649,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.f
   br label %sve_ldN_r.exit
 
 bb.g:                                             ; preds = %bb.f
-  %6 = icmp sgt i64 %.1.i5, -1
-  tail call void @llvm.assume(i1 %6)
   %i.ag = icmp samesign ult i64 %.1.i5, %i.h
   tail call void @llvm.assume(i1 %i.ag)
   %i.ah = trunc i64 %.178.i to i16
@@ -1037,7 +1033,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -1058,8 +1054,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.f
   br label %sve_ldN_r.exit
 
 bb.g:                                             ; preds = %bb.f
-  %6 = icmp sgt i64 %.1.i5, -1
-  tail call void @llvm.assume(i1 %6)
   %i.ag = icmp samesign ult i64 %.1.i5, %i.h
   tail call void @llvm.assume(i1 %i.ag)
   %i.ah = trunc i64 %.178.i to i16
@@ -1444,7 +1438,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -1465,8 +1459,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.f
   br label %sve_ldN_r.exit
 
 bb.g:                                             ; preds = %bb.f
-  %6 = icmp sgt i64 %.1.i5, -1
-  tail call void @llvm.assume(i1 %6)
   %i.ag = icmp samesign ult i64 %.1.i5, %i.h
   tail call void @llvm.assume(i1 %i.ag)
   %i.ah = trunc i64 %.178.i to i16
@@ -1869,7 +1861,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -1890,8 +1882,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.f
   br label %sve_ldN_r.exit
 
 bb.g:                                             ; preds = %bb.f
-  %6 = icmp sgt i64 %.1.i5, -1
-  tail call void @llvm.assume(i1 %6)
   %i.ag = icmp samesign ult i64 %.1.i5, %i.h
   tail call void @llvm.assume(i1 %i.ag)
   %i.ah = trunc i64 %.178.i to i16
@@ -2276,7 +2266,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -2297,8 +2287,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.f
   br label %sve_ldN_r.exit
 
 bb.g:                                             ; preds = %bb.f
-  %6 = icmp sgt i64 %.1.i5, -1
-  tail call void @llvm.assume(i1 %6)
   %i.ag = icmp samesign ult i64 %.1.i5, %i.h
   tail call void @llvm.assume(i1 %i.ag)
   %i.ah = trunc i64 %.178.i to i16
@@ -2683,7 +2671,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i5 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -2704,8 +2692,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.f
   br label %sve_ldN_r.exit
 
 bb.g:                                             ; preds = %bb.f
-  %6 = icmp sgt i64 %.1.i5, -1
-  tail call void @llvm.assume(i1 %6)
   %i.ag = icmp samesign ult i64 %.1.i5, %i.h
   tail call void @llvm.assume(i1 %i.ag)
   %i.ah = trunc i64 %.178.i to i16
@@ -3108,7 +3094,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 3 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -3127,8 +3113,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.i
   br label %sve_ldN_r_mte.exit
 
 bb.j:                                             ; preds = %bb.i
-  %6 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %6)
   %i.aw = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = trunc i64 %.178.i to i16                ; 2 uses
@@ -3531,7 +3515,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -3550,8 +3534,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.i
   br label %sve_ldN_r_mte.exit
 
 bb.j:                                             ; preds = %bb.i
-  %6 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %6)
   %i.aw = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = trunc i64 %.178.i to i16
@@ -3954,7 +3936,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -3973,8 +3955,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.i
   br label %sve_ldN_r_mte.exit
 
 bb.j:                                             ; preds = %bb.i
-  %6 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %6)
   %i.aw = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = trunc i64 %.178.i to i16
@@ -4377,7 +4357,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -4396,8 +4376,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.i
   br label %sve_ldN_r_mte.exit
 
 bb.j:                                             ; preds = %bb.i
-  %6 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %6)
   %i.aw = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = trunc i64 %.178.i to i16
@@ -4800,7 +4778,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -4819,8 +4797,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.i
   br label %sve_ldN_r_mte.exit
 
 bb.j:                                             ; preds = %bb.i
-  %6 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %6)
   %i.aw = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = trunc i64 %.178.i to i16
@@ -5223,7 +5199,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -5242,8 +5218,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.i
   br label %sve_ldN_r_mte.exit
 
 bb.j:                                             ; preds = %bb.i
-  %6 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %6)
   %i.aw = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = trunc i64 %.178.i to i16
@@ -5646,7 +5620,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i4, 1
   %exitcond.not.i = icmp eq i64 %.0.i4, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -5665,8 +5639,6 @@ sve_cont_ldst_elements.exit.preheader:            ; preds = %bb.i
   br label %sve_ldN_r_mte.exit
 
 bb.j:                                             ; preds = %bb.i
-  %6 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %6)
   %i.aw = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = trunc i64 %.178.i to i16
@@ -6069,7 +6041,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -6085,8 +6057,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16                ; 3 uses
@@ -6341,7 +6311,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -6357,8 +6327,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16                ; 2 uses
@@ -6621,7 +6589,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -6637,8 +6605,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16                ; 2 uses
@@ -6901,7 +6867,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -6917,8 +6883,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16                ; 2 uses
@@ -7181,7 +7145,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -7197,8 +7161,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16                ; 2 uses
@@ -7461,7 +7423,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -7477,8 +7439,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16                ; 2 uses
@@ -7741,7 +7701,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -7757,8 +7717,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16                ; 2 uses
@@ -8161,7 +8119,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -8175,8 +8133,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16                ; 3 uses
@@ -8521,7 +8477,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -8535,8 +8491,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16                ; 2 uses
@@ -8890,7 +8844,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -8904,8 +8858,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16                ; 2 uses
@@ -9259,7 +9211,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -9273,8 +9225,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16                ; 2 uses
@@ -9628,7 +9578,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -9642,8 +9592,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16                ; 2 uses
@@ -9997,7 +9945,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -10011,8 +9959,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16                ; 2 uses
@@ -10366,7 +10312,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -10380,8 +10326,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16                ; 2 uses
@@ -10784,7 +10728,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i, 1
   %exitcond.not.i = icmp eq i64 %.0.i, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -10800,8 +10744,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16                ; 2 uses
@@ -11035,7 +10977,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i, 1
   %exitcond.not.i = icmp eq i64 %.0.i, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -11051,8 +10993,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16
@@ -11294,7 +11234,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i, 1
   %exitcond.not.i = icmp eq i64 %.0.i, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -11310,8 +11250,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16
@@ -11553,7 +11491,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i, 1
   %exitcond.not.i = icmp eq i64 %.0.i, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -11569,8 +11507,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16
@@ -11812,7 +11748,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i, 1
   %exitcond.not.i = icmp eq i64 %.0.i, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -11828,8 +11764,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16
@@ -12071,7 +12005,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i, 1
   %exitcond.not.i = icmp eq i64 %.0.i, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -12087,8 +12021,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16
@@ -12330,7 +12262,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 5 uses
-  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i, 1
   %exitcond.not.i = icmp eq i64 %.0.i, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -12346,8 +12278,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.g, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.af = icmp samesign ult i64 %.1.i, %i.h
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = trunc i64 %.178.i to i16
@@ -12750,7 +12680,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -12764,8 +12694,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16                ; 2 uses
@@ -13089,7 +13017,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -13103,8 +13031,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16
@@ -13437,7 +13363,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -13451,8 +13377,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16
@@ -13785,7 +13709,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -13799,8 +13723,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16
@@ -14133,7 +14055,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -14147,8 +14069,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16
@@ -14481,7 +14401,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -14495,8 +14415,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16
@@ -14829,7 +14747,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 5 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -14843,8 +14761,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.au, label %bb.j, label %sve_cont_ldst_elements.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.av = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = trunc i64 %.178.i to i16
@@ -15247,7 +15163,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 3 uses
-  %.1.i4 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i4 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -15260,8 +15176,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ab, label %bb.g, label %sve_stN_r.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i4, -1
-  tail call void @llvm.assume(i1 %5)
   %i.ac = icmp samesign ult i64 %.1.i4, %i.h
   tail call void @llvm.assume(i1 %i.ac)
   %i.ad = trunc i64 %.178.i to i16                ; 2 uses
@@ -15664,7 +15578,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i4 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i4 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -15677,8 +15591,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ab, label %bb.g, label %sve_stN_r.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i4, -1
-  tail call void @llvm.assume(i1 %5)
   %i.ac = icmp samesign ult i64 %.1.i4, %i.h
   tail call void @llvm.assume(i1 %i.ac)
   %i.ad = trunc i64 %.178.i to i16
@@ -16058,7 +15970,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i4 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i4 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -16071,8 +15983,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ab, label %bb.g, label %sve_stN_r.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i4, -1
-  tail call void @llvm.assume(i1 %5)
   %i.ac = icmp samesign ult i64 %.1.i4, %i.h
   tail call void @llvm.assume(i1 %i.ac)
   %i.ad = trunc i64 %.178.i to i16
@@ -16452,7 +16362,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.178.i = phi i64 [ %i.w, %bb.d ], [ %.077.i, %bb.c ], [ %.077.i, %bb.b ] ; 4 uses
-  %.1.i4 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 7 uses
+  %.1.i4 = phi i64 [ %i.t, %bb.d ], [ %i.t, %bb.c ], [ %.076.i, %bb.b ] ; 6 uses
   %i.x = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.m
   br i1 %exitcond.not.i, label %bb.f, label %bb.b, !llvm.loop !17
@@ -16465,8 +16375,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ab, label %bb.g, label %sve_stN_r.exit, !prof !85
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp sgt i64 %.1.i4, -1
-  tail call void @llvm.assume(i1 %5)
   %i.ac = icmp samesign ult i64 %.1.i4, %i.h
   tail call void @llvm.assume(i1 %i.ac)
   %i.ad = trunc i64 %.178.i to i16
@@ -16869,7 +16777,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 3 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -16880,8 +16788,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ar, label %bb.j, label %sve_stN_r_mte.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.as = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.as)
   %i.at = trunc i64 %.178.i to i16                ; 2 uses
@@ -17284,7 +17190,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -17295,8 +17201,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ar, label %bb.j, label %sve_stN_r_mte.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.as = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.as)
   %i.at = trunc i64 %.178.i to i16
@@ -17699,7 +17603,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -17710,8 +17614,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ar, label %bb.j, label %sve_stN_r_mte.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.as = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.as)
   %i.at = trunc i64 %.178.i to i16
@@ -18114,7 +18016,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.178.i = phi i64 [ %i.ao, %bb.g ], [ %.077.i, %bb.f ], [ %.077.i, %bb.e ] ; 4 uses
-  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 7 uses
+  %.1.i = phi i64 [ %i.al, %bb.g ], [ %i.al, %bb.f ], [ %.076.i, %bb.e ] ; 6 uses
   %i.ap = add nuw nsw i64 %.0.i3, 1
   %exitcond.not.i = icmp eq i64 %.0.i3, %i.ae
   br i1 %exitcond.not.i, label %bb.i, label %bb.e, !llvm.loop !17
@@ -18125,8 +18027,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ar, label %bb.j, label %sve_stN_r_mte.exit, !prof !85
 
 bb.j:                                             ; preds = %bb.i
-  %5 = icmp sgt i64 %.1.i, -1
-  tail call void @llvm.assume(i1 %5)
   %i.as = icmp samesign ult i64 %.1.i, %i.z
   tail call void @llvm.assume(i1 %i.as)
   %i.at = trunc i64 %.178.i to i16

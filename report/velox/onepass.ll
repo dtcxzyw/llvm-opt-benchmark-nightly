@@ -95,7 +95,7 @@ bb.c:                                             ; preds = %bb.b
   resume { ptr, i32 } %i.e
 
 bb.d:                                             ; preds = %bb.a
-  %i.f = shl i32 %8, 1                            ; 3 uses
+  %i.f = shl i32 %8, 1                            ; 9 uses
   %spec.store.select = tail call i32 @llvm.smax.i32(i32 %i.f, i32 2)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.g = zext nneg i32 %spec.store.select to i64  ; 6 uses
@@ -147,9 +147,9 @@ bb.f:                                             ; preds = %bb.e
   %i.ac = zext nneg i32 %smax to i64
   %i.ad = shl nuw nsw i64 %i.ac, 3
   %i.ae = add nsw i64 %i.ad, -16
-  %i.af = add nsw i64 %i.g, -2                    ; 16 uses
-  %min.iters.check242 = icmp ult i64 %i.af, 4
-  %min.iters.check244 = icmp ult i64 %i.af, 16
+  %i.af = add nsw i64 %i.g, -2                    ; 12 uses
+  %min.iters.check242 = icmp slt i32 %i.f, 6
+  %min.iters.check244 = icmp slt i32 %i.f, 18
   %i.ag = and i64 %i.af, 12
   %n.vec246 = and i64 %i.af, -16                  ; 4 uses
   %i.ah = or disjoint i64 %n.vec246, 2            ; 2 uses
@@ -158,8 +158,8 @@ bb.f:                                             ; preds = %bb.e
   %n.vec268 = and i64 %i.af, -4                   ; 2 uses
   %i.ai = or i64 %i.af, 2
   %cmp.n282 = icmp eq i64 %i.af, %n.vec268
-  %min.iters.check = icmp ult i64 %i.af, 4
-  %min.iters.check226 = icmp ult i64 %i.af, 16
+  %min.iters.check = icmp slt i32 %i.f, 6
+  %min.iters.check226 = icmp slt i32 %i.f, 18
   %i.aj = and i64 %i.af, 12
   %n.vec = and i64 %i.af, -16                     ; 4 uses
   %i.ak = or disjoint i64 %n.vec, 2               ; 2 uses
@@ -493,12 +493,12 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br i1 %or.cond131.not173, label %iter.check305, label %_ZN3re2L13ApplyCapturesEjPKcPS1_i.exit150
 
 iter.check305:                                    ; preds = %bb.w
-  %i.ei = add nsw i64 %i.g, -2                    ; 8 uses
-  %min.iters.check284 = icmp ult i64 %i.ei, 4
+  %i.ei = add nsw i64 %i.g, -2                    ; 6 uses
+  %min.iters.check284 = icmp slt i32 %i.f, 6
   br i1 %min.iters.check284, label %.lr.ph.i145.preheader, label %vector.main.loop.iter.check285
 
 vector.main.loop.iter.check285:                   ; preds = %iter.check305
-  %min.iters.check286 = icmp ult i64 %i.ei, 16
+  %min.iters.check286 = icmp slt i32 %i.f, 18
   br i1 %min.iters.check286, label %vec.epilog.ph309, label %vector.ph287
 
 vector.ph287:                                     ; preds = %vector.main.loop.iter.check285

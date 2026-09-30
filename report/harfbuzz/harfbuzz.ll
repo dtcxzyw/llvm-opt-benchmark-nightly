@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.y, label %.lr.ph18.preheader.i.i, label %_ZN2OT17hb_scalar_cache_t6createEjPS0_.exit
 
 .lr.ph18.preheader.i.i:                           ; preds = %.preheader.i.i
-  %i.z = zext i32 %.0.lcssa.i.i to i64            ; 4 uses
+  %i.z = zext nneg i32 %.0.lcssa.i.i to i64       ; 4 uses
   %wide.trip.count.i.i = zext nneg i16 %i.h to i64 ; 3 uses
   %i.aa = sub nsw i64 %wide.trip.count.i.i, %i.z
   %xtraiter21 = and i64 %i.aa, 7                  ; 2 uses
@@ -339,7 +339,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.bt, label %.lr.ph18.preheader.i19.i, label %_ZN2OT17hb_scalar_cache_t6createEjPS0_.exit
 
 .lr.ph18.preheader.i19.i:                         ; preds = %.preheader.i17.i
-  %i.bu = zext i32 %.0.lcssa.i18.i to i64         ; 4 uses
+  %i.bu = zext nneg i32 %.0.lcssa.i18.i to i64    ; 4 uses
   %i.bv = sub nsw i64 %i.bc, %i.bu
   %xtraiter13 = and i64 %i.bv, 7                  ; 2 uses
   %lcmp.mod14.not = icmp eq i64 %xtraiter13, 0
@@ -742,7 +742,7 @@ _ZNK11hb_buffer_t9group_endIFbRK15hb_glyph_info_tS3_EEEjjRKT_.exit40: ; preds = 
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_aat_layout_get_feature_types(ptr nofree noundef captures(none) %0, i32 noundef %1, ptr nofree noundef captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_aat_layout_get_feature_types(ptr nofree noundef captures(none) %0, i32 noundef %1, ptr nofree noundef captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -928,7 +928,7 @@ _ZNK16hb_lazy_loader_tIN3AAT4featE22hb_table_lazy_loader_tIS1_Lj35ELb0EE9hb_face
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 -32768, 32768) i32 @hb_aat_layout_feature_type_get_name_id(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
+define noundef range(i32 -32768, 32768) i32 @hb_aat_layout_feature_type_get_name_id(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -1331,7 +1331,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.cw, label %bb.ad, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.cx = add i64 %indvars.iv198, %.neg.i
+  %i.cx = add nsw i64 %indvars.iv198, %.neg.i
   %i.cy = and i64 %i.cx, 4294967295
   %i.cz = getelementptr inbounds nuw [20 x i8], ptr %i.bn, i64 %i.cy
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 4
@@ -1734,7 +1734,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define range(i32 0, 2) i32 @hb_version_atleast(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #4 {
+define noundef range(i32 0, 2) i32 @hb_version_atleast(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = mul i32 %0, 10000
   %i.b = mul i32 %1, 100
@@ -2137,7 +2137,7 @@ bb.c:                                             ; preds = %bb.b, %tailrecurse
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_font_get_h_extents(ptr noundef %0, ptr noundef initializes((0, 48)) %1) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_font_get_h_extents(ptr noundef %0, ptr noundef initializes((0, 48)) %1) local_unnamed_addr #0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(48) %1, i8 0, i64 48, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -2180,7 +2180,7 @@ _ZN9hb_font_t18get_font_h_extentsEP17hb_font_extents_tb.exit: ; preds = %bb.c, %
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_font_get_v_extents(ptr noundef %0, ptr noundef initializes((0, 48)) %1) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_font_get_v_extents(ptr noundef %0, ptr noundef initializes((0, 48)) %1) local_unnamed_addr #0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(48) %1, i8 0, i64 48, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -2583,7 +2583,7 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_font_get_glyph_h_origin(ptr noundef %0, i32 noundef %1, ptr noundef initializes((0, 4)) %2, ptr noundef initializes((0, 4)) %3) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_font_get_glyph_h_origin(ptr noundef %0, i32 noundef %1, ptr noundef initializes((0, 4)) %2, ptr noundef initializes((0, 4)) %3) local_unnamed_addr #0 {
 bb.a:
   store i32 0, ptr %3, align 4, !tbaa !324
   store i32 0, ptr %2, align 4, !tbaa !324
@@ -2644,7 +2644,7 @@ _ZN9hb_font_t18get_glyph_h_originEjPiS0_b.exit:   ; preds = %bb.c, %bb.d, %bb.e
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_font_get_glyph_v_origin(ptr noundef %0, i32 noundef %1, ptr noundef initializes((0, 4)) %2, ptr noundef initializes((0, 4)) %3) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_font_get_glyph_v_origin(ptr noundef %0, i32 noundef %1, ptr noundef initializes((0, 4)) %2, ptr noundef initializes((0, 4)) %3) local_unnamed_addr #0 {
 bb.a:
   store i32 0, ptr %3, align 4, !tbaa !324
   store i32 0, ptr %2, align 4, !tbaa !324
@@ -2705,7 +2705,7 @@ _ZN9hb_font_t18get_glyph_v_originEjPiS0_b.exit:   ; preds = %bb.c, %bb.d, %bb.e
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_font_get_glyph_h_origins(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, i32 noundef %5, ptr noundef %6, i32 noundef %7) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_font_get_glyph_h_origins(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, i32 noundef %5, ptr noundef %6, i32 noundef %7) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !638  ; 2 uses
@@ -2810,7 +2810,7 @@ _ZN9hb_font_t19get_glyph_h_originsEjPKjjPijS2_jb.exit: ; preds = %.lr.ph.split.i
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_font_get_glyph_v_origins(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, i32 noundef %5, ptr noundef %6, i32 noundef %7) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_font_get_glyph_v_origins(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, i32 noundef %5, ptr noundef %6, i32 noundef %7) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !638  ; 2 uses
@@ -3213,7 +3213,7 @@ bb.aq:                                            ; preds = %bb.h, %_ZN26hb_pain
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_font_get_glyph_contour_point(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef initializes((0, 4)) %3, ptr noundef initializes((0, 4)) %4) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_font_get_glyph_contour_point(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef initializes((0, 4)) %3, ptr noundef initializes((0, 4)) %4) local_unnamed_addr #0 {
 bb.a:
   store i32 0, ptr %4, align 4, !tbaa !324
   store i32 0, ptr %3, align 4, !tbaa !324
@@ -3366,7 +3366,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_font_draw_glyph_or_fail(ptr noundef nonnull %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_font_draw_glyph_or_fail(ptr noundef nonnull %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN9hb_font_t18draw_glyph_or_failEjP15hb_draw_funcs_tPvb(ptr noundef nonnull align 8 dereferenceable(192) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, i1 noundef zeroext true)
   %i.b = zext i1 %i.a to i32
@@ -3629,7 +3629,7 @@ bb.s:                                             ; preds = %_ZN12hb_outline_tD2
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_font_paint_glyph_or_fail(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_font_paint_glyph_or_fail(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
   %i.b = load float, ptr %i.a, align 4, !tbaa !1017 ; 2 uses
@@ -4032,7 +4032,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_map_is_equal(ptr noundef nonnull %0, ptr noundef nonnull %1) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_map_is_equal(ptr noundef nonnull %0, ptr noundef nonnull %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZNK12hb_hashmap_tIjjLb1EE8is_equalERKS0_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %1)
   %i.b = zext i1 %i.a to i32
@@ -4435,7 +4435,7 @@ _ZNK16hb_lazy_loader_tIN2OT4CPALE22hb_table_lazy_loader_tIS1_Lj37ELb1EE9hb_face_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_color_palette_get_count(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_color_palette_get_count(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -4838,7 +4838,7 @@ _ZNK2OT4GDEF17has_glyph_classesEv.exit:           ; preds = %_ZNK16hb_lazy_loade
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_layout_get_glyph_class(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_layout_get_glyph_class(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -5241,7 +5241,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_layout_table_get_script_tags(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_layout_table_get_script_tags(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc noundef nonnull align 1 dereferenceable(14) ptr @_ZL18get_gsubgpos_tableP9hb_face_tj(ptr noundef %0, i32 noundef %1) ; 3 uses
   %i.b = load i16, ptr %i.a, align 1, !tbaa !283
@@ -5644,7 +5644,7 @@ bb.y:                                             ; preds = %.sink.split, %.thre
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_layout_table_get_feature_tags(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_layout_table_get_feature_tags(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc noundef nonnull align 1 dereferenceable(14) ptr @_ZL18get_gsubgpos_tableP9hb_face_tj(ptr noundef %0, i32 noundef %1) ; 3 uses
   %i.b = load i16, ptr %i.a, align 1, !tbaa !283
@@ -5788,7 +5788,7 @@ _ZNK2OT8GSUBGPOS17get_feature_countEv.exit:       ; preds = %bb.a, %bb.b
   %wide.trip.count = zext i16 %i.j to i64
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.h, %.lr.ph
+bb.c:                                             ; preds = %.lr.ph, %bb.h
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 4 uses
   %i.l = load i16, ptr %i.a, align 1, !tbaa !283
   %cond.i.i21 = icmp eq i16 %i.l, 256
@@ -5854,7 +5854,7 @@ bb.i:                                             ; preds = %.sink.split, %bb.f,
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_layout_script_get_language_tags(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef captures(address_is_null) %4, ptr nofree noundef writeonly captures(address_is_null) %5) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_layout_script_get_language_tags(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef captures(address_is_null) %4, ptr nofree noundef writeonly captures(address_is_null) %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc noundef nonnull align 1 dereferenceable(14) ptr @_ZL18get_gsubgpos_tableP9hb_face_tj(ptr noundef %0, i32 noundef %1) ; 3 uses
   %i.b = load i16, ptr %i.a, align 1, !tbaa !283
@@ -6257,7 +6257,7 @@ bb.l:                                             ; preds = %_ZNK2OT8GSUBGPOS15g
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_layout_language_get_feature_indexes(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(address_is_null) %5, ptr nofree noundef writeonly captures(address_is_null) %6) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_layout_language_get_feature_indexes(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(address_is_null) %5, ptr nofree noundef writeonly captures(address_is_null) %6) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc noundef nonnull align 1 dereferenceable(14) ptr @_ZL18get_gsubgpos_tableP9hb_face_tj(ptr noundef %0, i32 noundef %1) ; 3 uses
   %i.b = load i16, ptr %i.a, align 1, !tbaa !283
@@ -6421,7 +6421,7 @@ _ZNK2OT7LangSys19get_feature_indexesEjPjS1_.exit: ; preds = %.lr.ph.i.i.i.i.prol
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_layout_language_get_feature_tags(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(address_is_null) %5, ptr nofree noundef captures(address_is_null) %6) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_layout_language_get_feature_tags(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(address_is_null) %5, ptr nofree noundef captures(address_is_null) %6) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc noundef nonnull align 1 dereferenceable(14) ptr @_ZL18get_gsubgpos_tableP9hb_face_tj(ptr noundef %0, i32 noundef %1) ; 6 uses
   %i.b = load i16, ptr %i.a, align 1, !tbaa !283
@@ -6819,7 +6819,7 @@ bb.n:                                             ; preds = %.sink.split, %bb.l,
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_layout_feature_get_lookups(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef captures(address_is_null) %4, ptr nofree noundef writeonly captures(address_is_null) %5) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_layout_feature_get_lookups(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef captures(address_is_null) %4, ptr nofree noundef writeonly captures(address_is_null) %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc noundef nonnull align 1 dereferenceable(14) ptr @_ZL18get_gsubgpos_tableP9hb_face_tj(ptr noundef %0, i32 noundef %1) ; 3 uses
   %i.b = load i16, ptr %i.a, align 1, !tbaa !283
@@ -6959,7 +6959,7 @@ hb_ot_layout_feature_with_variations_get_lookups.exit: ; preds = %_ZNK2OT8GSUBGP
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_layout_feature_with_variations_get_lookups(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(address_is_null) %5, ptr nofree noundef writeonly captures(address_is_null) %6) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_layout_feature_with_variations_get_lookups(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(address_is_null) %5, ptr nofree noundef writeonly captures(address_is_null) %6) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc noundef nonnull align 1 dereferenceable(14) ptr @_ZL18get_gsubgpos_tableP9hb_face_tj(ptr noundef %0, i32 noundef %1)
   %i.b = tail call noundef nonnull align 1 dereferenceable(6) ptr @_ZNK2OT8GSUBGPOS21get_feature_variationEjj(ptr noundef nonnull align 1 dereferenceable(14) %i.a, i32 noundef %2, i32 noundef %3) ; 2 uses
@@ -7362,7 +7362,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %wide.trip.count = zext i16 %i.m to i64
   br label %bb.f
 
-bb.f:                                             ; preds = %_ZNK2OT6Script12get_lang_sysEj.exit, %.lr.ph38
+bb.f:                                             ; preds = %.lr.ph38, %_ZNK2OT6Script12get_lang_sysEj.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next, %_ZNK2OT6Script12get_lang_sysEj.exit ] ; 3 uses
   %i.o = load i16, ptr %i.k, align 1, !tbaa !283
   %i.p = tail call noundef i16 @llvm.bswap.i16(i16 %i.o)
@@ -7765,7 +7765,7 @@ _ZNK2OT8GSUBGPOS17get_feature_countEv.exit:       ; preds = %_ZNK16hb_lazy_loade
   %wide.trip.count = zext i16 %i.w to i64
   br label %bb.g
 
-bb.g:                                             ; preds = %.critedge, %.lr.ph
+bb.g:                                             ; preds = %.lr.ph, %.critedge
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 5 uses
   %i.y = load i16, ptr %spec.select.i.i1.i.i, align 1, !tbaa !283
   %cond.i.i66 = icmp eq i16 %i.y, 256
@@ -8168,7 +8168,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_layout_feature_get_characters(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef captures(address_is_null) %4, ptr nofree noundef writeonly captures(address_is_null) %5) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_layout_feature_get_characters(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef captures(address_is_null) %4, ptr nofree noundef writeonly captures(address_is_null) %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc noundef nonnull align 1 dereferenceable(14) ptr @_ZL18get_gsubgpos_tableP9hb_face_tj(ptr noundef %0, i32 noundef %1) ; 6 uses
   %i.b = load i16, ptr %i.a, align 1, !tbaa !283
@@ -8571,7 +8571,7 @@ _ZNK16hb_lazy_loader_tIN2OT4MATHE22hb_table_lazy_loader_tIS1_Lj41ELb1EE9hb_face_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_ot_math_is_glyph_extended_shape(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_ot_math_is_glyph_extended_shape(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -8974,7 +8974,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ba, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
-  %i.bb = zext i32 %.0.lcssa.i18.i.i to i64       ; 4 uses
+  %i.bb = zext nneg i32 %.0.lcssa.i18.i.i to i64  ; 4 uses
   %i.bc = sub nsw i64 %i.ak, %i.bb
   %xtraiter9 = and i64 %i.bc, 7                   ; 2 uses
   %lcmp.mod10.not = icmp eq i64 %xtraiter9, 0
@@ -9377,7 +9377,7 @@ _ZNK16hb_lazy_loader_tIN2OT4fvarE22hb_table_lazy_loader_tIS1_Lj18ELb1EE9hb_face_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_var_get_axis_count(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_var_get_axis_count(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -9780,7 +9780,7 @@ _ZNK2OT4fvar14find_axis_infoEjP21hb_ot_var_axis_info_t.exit: ; preds = %bb.g, %_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 65536) i32 @hb_ot_var_get_named_instance_count(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
+define noundef range(i32 0, 65536) i32 @hb_ot_var_get_named_instance_count(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -10183,7 +10183,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.cu, label %.lr.ph18.preheader.i19.i.i, label %_ZNK2OT18ItemVariationStore12create_cacheEv.exit
 
 .lr.ph18.preheader.i19.i.i:                       ; preds = %.preheader.i17.i.i
-  %i.cv = zext i32 %.0.lcssa.i18.i.i to i64       ; 4 uses
+  %i.cv = zext nneg i32 %.0.lcssa.i18.i.i to i64  ; 4 uses
   %i.cw = sub nsw i64 %i.ce, %i.cv
   %xtraiter292 = and i64 %i.cw, 7                 ; 2 uses
   %lcmp.mod293.not = icmp eq i64 %xtraiter292, 0
@@ -10586,7 +10586,7 @@ _ZN16hb_paint_funcs_t13pop_transformEPv.exit:     ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_paint_color_glyph(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_paint_color_glyph(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1450
@@ -10909,7 +10909,7 @@ _ZN16hb_paint_funcs_t9pop_groupEPv25hb_paint_composite_mode_t.exit: ; preds = %b
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_paint_custom_palette_color(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_paint_custom_palette_color(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1492
@@ -11312,7 +11312,7 @@ _ZN14hb_sparseset_tI23hb_bit_set_invertible_tE9del_rangeEjj.exit: ; preds = %bb.
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_set_is_equal(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_set_is_equal(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %"struct.hb_bit_set_invertible_t::iter_t", align 8 ; 5 uses
   %3 = alloca %"struct.hb_bit_set_invertible_t::iter_t", align 8 ; 5 uses
@@ -11374,7 +11374,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_set_is_subset(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_set_is_subset(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %"struct.hb_bit_set_invertible_t::iter_t", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -11777,7 +11777,7 @@ _ZNK14hb_sparseset_tI23hb_bit_set_invertible_tE10next_rangeEPjS2_.exit: ; preds 
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define range(i32 0, 2) i32 @hb_set_previous_range(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @hb_set_previous_range(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = tail call noundef zeroext i1 @_ZNK23hb_bit_set_invertible_t14previous_rangeEPjS0_(ptr noundef nonnull align 8 dereferenceable(49) %i.a, ptr noundef %1, ptr noundef %2)
@@ -12180,7 +12180,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.dq, label %.lr.ph18.preheader.i19.i.i.i, label %_ZNK12hb_ot_font_t17direction_cache_t22acquire_varStore_cacheERKN2OT18ItemVariationStoreE.exit
 
 .lr.ph18.preheader.i19.i.i.i:                     ; preds = %.preheader.i17.i.i.i
-  %i.dr = zext i32 %.0.lcssa.i18.i.i.i to i64     ; 4 uses
+  %i.dr = zext nneg i32 %.0.lcssa.i18.i.i.i to i64 ; 4 uses
   %i.ds = sub nsw i64 %i.da, %i.dr
   %xtraiter288 = and i64 %i.ds, 7                 ; 2 uses
   %lcmp.mod289.not = icmp eq i64 %xtraiter288, 0
@@ -12510,7 +12510,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.if, label %.lr.ph18.preheader.i19.i.i.i151, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit
 
 .lr.ph18.preheader.i19.i.i.i151:                  ; preds = %.preheader.i17.i.i.i149
-  %i.ig = zext i32 %.0.lcssa.i18.i.i.i150 to i64  ; 4 uses
+  %i.ig = zext nneg i32 %.0.lcssa.i18.i.i.i150 to i64 ; 4 uses
   %i.ih = sub nsw i64 %i.hy, %i.ig
   %xtraiter290 = and i64 %i.ih, 7                 ; 2 uses
   %lcmp.mod291.not = icmp eq i64 %xtraiter290, 0
@@ -12913,7 +12913,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.di, label %.lr.ph18.preheader.i19.i.i.i, label %_ZNK12hb_ot_font_t17direction_cache_t22acquire_varStore_cacheERKN2OT18ItemVariationStoreE.exit
 
 .lr.ph18.preheader.i19.i.i.i:                     ; preds = %.preheader.i17.i.i.i
-  %i.dj = zext i32 %.0.lcssa.i18.i.i.i to i64     ; 4 uses
+  %i.dj = zext nneg i32 %.0.lcssa.i18.i.i.i to i64 ; 4 uses
   %i.dk = sub nsw i64 %i.cs, %i.dj
   %xtraiter279 = and i64 %i.dk, 7                 ; 2 uses
   %lcmp.mod280.not = icmp eq i64 %xtraiter279, 0
@@ -13244,7 +13244,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.hw, label %.lr.ph18.preheader.i19.i.i.i147, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit
 
 .lr.ph18.preheader.i19.i.i.i147:                  ; preds = %.preheader.i17.i.i.i145
-  %i.hx = zext i32 %.0.lcssa.i18.i.i.i146 to i64  ; 4 uses
+  %i.hx = zext nneg i32 %.0.lcssa.i18.i.i.i146 to i64 ; 4 uses
   %i.hy = sub nsw i64 %i.hp, %i.hx
   %xtraiter281 = and i64 %i.hy, 7                 ; 2 uses
   %lcmp.mod282.not = icmp eq i64 %xtraiter281, 0
@@ -13647,7 +13647,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.gf, label %.lr.ph18.preheader.i19.i.i.i, label %_ZNK12hb_ot_font_t14origin_cache_t22acquire_varStore_cacheERKN2OT18ItemVariationStoreE.exit
 
 .lr.ph18.preheader.i19.i.i.i:                     ; preds = %.preheader.i17.i.i.i
-  %i.gg = zext i32 %.0.lcssa.i18.i.i.i to i64     ; 4 uses
+  %i.gg = zext nneg i32 %.0.lcssa.i18.i.i.i to i64 ; 4 uses
   %i.gh = sub nsw i64 %i.fp, %i.gg
   %xtraiter509 = and i64 %i.gh, 7                 ; 2 uses
   %lcmp.mod510.not = icmp eq i64 %xtraiter509, 0
@@ -14050,7 +14050,7 @@ bb.bs:                                            ; preds = %bb.br
   br i1 %i.nn, label %.lr.ph18.preheader.i19.i.i.i251, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit
 
 .lr.ph18.preheader.i19.i.i.i251:                  ; preds = %.preheader.i17.i.i.i249
-  %i.no = zext i32 %.0.lcssa.i18.i.i.i250 to i64  ; 4 uses
+  %i.no = zext nneg i32 %.0.lcssa.i18.i.i.i250 to i64 ; 4 uses
   %i.np = sub nsw i64 %i.ng, %i.no
   %xtraiter511 = and i64 %i.np, 7                 ; 2 uses
   %lcmp.mod512.not = icmp eq i64 %xtraiter511, 0
@@ -14453,7 +14453,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ah, label %.lr.ph18.preheader.i19.i.i.i, label %_ZNK12hb_ot_font_t12draw_cache_t18acquire_gvar_cacheERKN2OT18gvar_accelerator_tE.exit
 
 .lr.ph18.preheader.i19.i.i.i:                     ; preds = %.preheader.i17.i.i.i
-  %i.ai = zext i32 %.0.lcssa.i18.i.i.i to i64     ; 4 uses
+  %i.ai = zext nneg i32 %.0.lcssa.i18.i.i.i to i64 ; 4 uses
   %i.aj = sub nsw i64 %i.aa, %i.ai
   %xtraiter = and i64 %i.aj, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

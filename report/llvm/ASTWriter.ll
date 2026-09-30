@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.d = shl nuw i32 1, %i.c                      ; 3 uses
   %i.e = zext i32 %i.d to i64
   %i.f = add i32 %i.d, -1
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 5 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.j = zext nneg i32 %i.c to i64
   %.pre = load i32, ptr %i.g, align 8, !tbaa !378
   %.pre26 = load i32, ptr %i.h, align 4, !tbaa !379
@@ -271,18 +271,15 @@ _ZN4llvm15BitstreamWriter4EmitEjj.exit:           ; preds = %bb.c, %_ZN4llvm15Bi
 
 ._crit_edge:                                      ; preds = %_ZN4llvm15BitstreamWriter4EmitEjj.exit
   %i.al = trunc nuw nsw i64 %i.ak to i32          ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.am = shl i32 %i.al, %storemerge6.i
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
   %i.an = or i32 %i.aj, %i.am                     ; 2 uses
-  store i32 %i.an, ptr %4, align 4, !tbaa !379
+  store i32 %i.an, ptr %i.h, align 4, !tbaa !379
   %i.ao = add i32 %storemerge6.i, %2              ; 2 uses
   %i.ap = icmp ult i32 %i.ao, 32
   br i1 %i.ap, label %_ZN4llvm15BitstreamWriter4EmitEjj.exit23, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.aq = load ptr, ptr %5, align 8, !tbaa !380, !nonnull !147, !align !148 ; 5 uses
+  %i.aq = load ptr, ptr %i.i, align 8, !tbaa !380, !nonnull !147, !align !148 ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 8 ; 4 uses
   %i.as = load i64, ptr %i.ar, align 8, !tbaa !381 ; 2 uses
   %i.at = add i64 %i.as, 4                        ; 2 uses
@@ -305,19 +302,19 @@ _ZN4llvm15BitstreamWriter9WriteWordEj.exit.i16:   ; preds = %bb.g, %bb.f
   %.pre.i.i.i18 = load i64, ptr %i.ar, align 8, !tbaa !381
   %i.ba = add i64 %.pre.i.i.i18, 4
   store i64 %i.ba, ptr %i.ar, align 8, !tbaa !381
-  %i.bb = load i32, ptr %3, align 8, !tbaa !378   ; 3 uses
+  %i.bb = load i32, ptr %i.g, align 8, !tbaa !378 ; 3 uses
   %.not.i19 = icmp eq i32 %i.bb, 0
   %i.bc = sub i32 32, %i.bb
   %i.bd = lshr i32 %i.al, %i.bc
   %storemerge.i20 = select i1 %.not.i19, i32 0, i32 %i.bd
-  store i32 %storemerge.i20, ptr %4, align 4, !tbaa !379
+  store i32 %storemerge.i20, ptr %i.h, align 4, !tbaa !379
   %i.be = add i32 %i.bb, %2
   %i.bf = and i32 %i.be, 31
   br label %_ZN4llvm15BitstreamWriter4EmitEjj.exit23
 
 _ZN4llvm15BitstreamWriter4EmitEjj.exit23:         ; preds = %._crit_edge, %_ZN4llvm15BitstreamWriter9WriteWordEj.exit.i16
   %storemerge6.i21 = phi i32 [ %i.bf, %_ZN4llvm15BitstreamWriter9WriteWordEj.exit.i16 ], [ %i.ao, %._crit_edge ]
-  store i32 %storemerge6.i21, ptr %3, align 8, !tbaa !378
+  store i32 %storemerge6.i21, ptr %i.g, align 8, !tbaa !378
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvm15BitstreamWriter4EmitEjj.exit23, %bb.b

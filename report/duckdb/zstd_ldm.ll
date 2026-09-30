@@ -204,11 +204,7 @@ bb.bl:                                            ; preds = %_ZN11duckdb_zstdL35
   %i.ma = phi i64 [ %i.z, %_ZN11duckdb_zstdL35ZSTD_ldm_generateSequences_internalEPNS_10ldmState_tEPNS_13rawSeqStore_tEPKNS_11ldmParams_tEPKvm.exit.thread ], [ %.pre104, %_ZN11duckdb_zstdL35ZSTD_ldm_generateSequences_internalEPNS_10ldmState_tEPNS_13rawSeqStore_tEPKNS_11ldmParams_tEPKvm.exit._crit_edge ] ; 2 uses
   %.6.i69 = phi i64 [ %i.aj, %_ZN11duckdb_zstdL35ZSTD_ldm_generateSequences_internalEPNS_10ldmState_tEPNS_13rawSeqStore_tEPKNS_11ldmParams_tEPKvm.exit.thread ], [ %.pre-phi113, %_ZN11duckdb_zstdL35ZSTD_ldm_generateSequences_internalEPNS_10ldmState_tEPNS_13rawSeqStore_tEPKNS_11ldmParams_tEPKvm.exit._crit_edge ]
   %i.mb = icmp ult i64 %i.z, %i.ma
-  br i1 %i.mb, label %bb.bm, label %.split
-
-.split:                                           ; preds = %bb.bl
-  %6 = add i64 %i.aj, %.05588
-  br label %bb.bn
+  br i1 %i.mb, label %bb.bm, label %6
 
 bb.bm:                                            ; preds = %bb.bl
   %i.mc = trunc i64 %.05588 to i32
@@ -220,8 +216,12 @@ bb.bm:                                            ; preds = %bb.bl
   store i32 %i.mh, ptr %i.mf, align 4, !tbaa !35
   br label %bb.bn
 
-bb.bn:                                            ; preds = %bb.bm, %.split
-  %.25778 = phi i64 [ %6, %.split ], [ %.6.i69, %bb.bm ]
+6:                                                ; preds = %bb.bl
+  %7 = add i64 %i.aj, %.05588
+  br label %bb.bn
+
+bb.bn:                                            ; preds = %bb.bm, %6
+  %.25778 = phi i64 [ %7, %6 ], [ %.6.i69, %bb.bm ]
   %i.mi = add nuw nsw i64 %.05887, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.mi, %i.j
   br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !52

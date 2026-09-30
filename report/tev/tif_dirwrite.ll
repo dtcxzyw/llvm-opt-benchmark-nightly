@@ -205,8 +205,7 @@ bb.ap:                                            ; preds = %.thread359
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %.0288 = phi i32 [ %i.dc, %bb.ao ], [ %i.de, %bb.ap ]
-  %.0288.fr = freeze i32 %.0288
-  %.not323 = icmp eq i32 %.0288.fr, 0
+  %.not323 = icmp eq i32 %.0288, 0
   %spec.select = select i1 %.not323, i16 3, i16 4
   br label %.sink.split
 
@@ -609,7 +608,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 declare void @TIFFSwabLong(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal fastcc range(i32 0, 2) i32 @WriteAsLong8(i16 %.120.val, i64 noundef %0) unnamed_addr #3 {
+define internal fastcc noundef range(i32 0, 2) i32 @WriteAsLong8(i16 %.120.val, i64 noundef %0) unnamed_addr #3 {
 bb.a:
   switch i16 %.120.val, label %_WriteAsType.exit [
     i16 1, label %bb.b
@@ -643,7 +642,7 @@ declare i64 @TIFFStripSize64(ptr noundef) local_unnamed_addr #1
 declare i64 @TIFFTileSize64(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal fastcc range(i32 0, 2) i32 @WriteAsLong4(i16 %.120.val, i64 noundef %0) unnamed_addr #3 {
+define internal fastcc noundef range(i32 0, 2) i32 @WriteAsLong4(i16 %.120.val, i64 noundef %0) unnamed_addr #3 {
 bb.a:
   switch i16 %.120.val, label %_WriteAsType.exit [
     i16 1, label %bb.b

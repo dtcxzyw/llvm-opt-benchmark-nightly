@@ -205,8 +205,7 @@ bb.af:                                            ; preds = %bb.ad
   br i1 %.not.us.355.i, label %PickBestCandidate.exit, label %.thread56.i
 
 bb.ag:                                            ; preds = %.preheader.split.us.3.i
-  %10 = icmp eq i32 %.240.3.i, 3
-  br i1 %10, label %bb.ah, label %.thread56.i
+  br i1 %i.ff, label %bb.ah, label %.thread56.i
 
 .thread56.i:                                      ; preds = %bb.ag, %.preheader.split.us.3.thread.i
   call void @WebPMemoryWriterClear(ptr noundef nonnull %i.fa) #14
@@ -280,12 +279,12 @@ bb.am:                                            ; preds = %bb.al
   %i.fa = getelementptr inbounds nuw i8, ptr %5, i64 312 ; 4 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %5, i64 408 ; 7 uses
   %i.fc = load i32, ptr %i.fb, align 8, !tbaa !97
-  %.not43.3.i = icmp eq i32 %i.fc, 0
+  %.not43.3.i = icmp ne i32 %i.fc, 0
   %i.fd = getelementptr inbounds nuw i8, ptr %5, i64 320 ; 3 uses
   %i.fe = load i64, ptr %i.fd, align 16
-  %11 = icmp uge i64 %i.fe, %.2.2.i
-  %i.ff = select i1 %.not43.3.i, i1 true, i1 %11
-  %.240.3.i = select i1 %i.ff, i32 %.240.2.i, i32 3 ; 9 uses
+  %10 = icmp ult i64 %i.fe, %.2.2.i
+  %i.ff = select i1 %.not43.3.i, i1 %10, i1 false ; 3 uses
+  %.240.3.i = select i1 %i.ff, i32 3, i32 %.240.2.i ; 7 uses
   %.idx.i = select i1 %.not64, i64 0, i64 48
   %i.fg = getelementptr inbounds nuw i8, ptr %3, i64 %.idx.i ; 17 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 8 ; 8 uses
@@ -379,8 +378,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not.359.i, label %PickBestCandidate.exit, label %.thread60.i
 
 bb.at:                                            ; preds = %.preheader.split.3.i
-  %12 = icmp eq i32 %.240.3.i, 3
-  br i1 %12, label %bb.au, label %.thread60.i
+  br i1 %i.ff, label %bb.au, label %.thread60.i
 
 .thread60.i:                                      ; preds = %bb.at, %.preheader.split.3.thread.i
   call void @WebPMemoryWriterClear(ptr noundef nonnull %i.fa) #14

@@ -205,25 +205,24 @@ _ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO6SymbolESaIS4_EES4_N9__gnu_cxx17__n
   %i.bi = load i16, ptr %i.bh, align 2, !tbaa !398
   %i.bj = lshr i16 %i.bi, 8                       ; 2 uses
   %i.bk = zext nneg i16 %i.bj to i32              ; 2 uses
-  %trunc117 = trunc nuw i16 %i.bj to i8
-  %trunc117.off = add i8 %trunc117, -1
-  %switch = icmp ult i8 %trunc117.off, -3
+  %1 = add nsw i16 %i.bj, -1
+  %switch = icmp ult i16 %1, 253
   br i1 %switch, label %bb.f, label %_ZN4LIEF5MachO6Symbol22is_valid_index_ordinalEi.exit
 
 bb.f:                                             ; preds = %_ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO6SymbolESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit
   %i.bl = add nsw i32 %i.bk, -1
-  %1 = sext i32 %i.bl to i64                      ; 2 uses
+  %2 = zext nneg i32 %i.bl to i64                 ; 2 uses
   %i.bm = load ptr, ptr %i.q, align 8, !tbaa !401
   %i.bn = load ptr, ptr %i.p, align 8, !tbaa !245 ; 2 uses
   %i.bo = ptrtoint ptr %i.bm to i64
   %i.bp = ptrtoint ptr %i.bn to i64
   %i.bq = sub i64 %i.bo, %i.bp
   %i.br = ashr exact i64 %i.bq, 3
-  %i.bs = icmp ugt i64 %i.br, %1
+  %i.bs = icmp ugt i64 %i.br, %2
   br i1 %i.bs, label %bb.g, label %_ZN4LIEF5MachO6Symbol22is_valid_index_ordinalEi.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %1
+  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %2
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !402
   br label %_ZN4LIEF5MachO6Symbol22is_valid_index_ordinalEi.exit
 
@@ -626,25 +625,24 @@ _ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO6SymbolESaIS4_EES4_N9__gnu_cxx17__n
   %i.bi = load i16, ptr %i.bh, align 2, !tbaa !398
   %i.bj = lshr i16 %i.bi, 8                       ; 2 uses
   %i.bk = zext nneg i16 %i.bj to i32              ; 2 uses
-  %trunc117 = trunc nuw i16 %i.bj to i8
-  %trunc117.off = add i8 %trunc117, -1
-  %switch = icmp ult i8 %trunc117.off, -3
+  %1 = add nsw i16 %i.bj, -1
+  %switch = icmp ult i16 %1, 253
   br i1 %switch, label %bb.f, label %_ZN4LIEF5MachO6Symbol22is_valid_index_ordinalEi.exit
 
 bb.f:                                             ; preds = %_ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO6SymbolESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit
   %i.bl = add nsw i32 %i.bk, -1
-  %1 = sext i32 %i.bl to i64                      ; 2 uses
+  %2 = zext nneg i32 %i.bl to i64                 ; 2 uses
   %i.bm = load ptr, ptr %i.q, align 8, !tbaa !401
   %i.bn = load ptr, ptr %i.p, align 8, !tbaa !245 ; 2 uses
   %i.bo = ptrtoint ptr %i.bm to i64
   %i.bp = ptrtoint ptr %i.bn to i64
   %i.bq = sub i64 %i.bo, %i.bp
   %i.br = ashr exact i64 %i.bq, 3
-  %i.bs = icmp ugt i64 %i.br, %1
+  %i.bs = icmp ugt i64 %i.br, %2
   br i1 %i.bs, label %bb.g, label %_ZN4LIEF5MachO6Symbol22is_valid_index_ordinalEi.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %1
+  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %2
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !402
   br label %_ZN4LIEF5MachO6Symbol22is_valid_index_ordinalEi.exit
 

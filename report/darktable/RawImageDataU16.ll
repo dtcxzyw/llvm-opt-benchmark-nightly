@@ -205,7 +205,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 8, !tbaa !90, !noalias !206
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !94, !noalias !206
-  %i.g = mul nsw i32 %i.f, %i.d                   ; 8 uses
+  %i.g = mul nsw i32 %i.f, %i.d                   ; 9 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 612
   %i.i = load i32, ptr %i.h, align 4, !tbaa !95, !noalias !206 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -217,7 +217,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.n)
   %i.o = icmp sge i32 %i.l, %i.g
   tail call void @llvm.assume(i1 %i.o)
-  %i.p = icmp eq i32 %i.g, 0                      ; 2 uses
+  %i.p = icmp eq i32 %i.g, 0
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 616
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !117  ; 3 uses
   %i.s = load i32, ptr %i.r, align 8, !tbaa !207
@@ -231,11 +231,11 @@ bb.b:                                             ; preds = %bb.a
   %i.x = tail call { ptr, i32 } @_ZN8rawspeed11TableLookUp8getTableEi(ptr noundef nonnull align 8 dereferenceable(40) %i.r, i32 noundef 0) ; 2 uses
   %.fca.0.extract26 = extractvalue { ptr, i32 } %i.x, 0 ; 15 uses
   %.fca.1.extract27 = extractvalue { ptr, i32 } %i.x, 1 ; 3 uses
-  %3 = icmp sge i32 %1, %2                        ; 2 uses
+  %3 = icmp slt i32 %1, %2                        ; 2 uses
   br i1 %i.w, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %3, label %.loopexit, label %.lr.ph160
+  br i1 %3, label %.lr.ph160, label %.loopexit
 
 .lr.ph160:                                        ; preds = %bb.c
   %i.y = load i32, ptr %i.e, align 8, !tbaa !94
@@ -371,8 +371,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %niter189.ncmp.1, label %._crit_edge157.unr-lcssa, label %.lr.ph.new, !llvm.loop !202
 
 bb.d:                                             ; preds = %bb.b
-  %brmerge = or i1 %3, %i.p
-  br i1 %brmerge, label %.loopexit, label %.preheader.lr.ph.split
+  %4 = icmp ne i32 %i.g, 0
+  %or.cond = and i1 %3, %4
+  br i1 %or.cond, label %.preheader.lr.ph.split, label %.loopexit
 
 .preheader.lr.ph.split:                           ; preds = %bb.d
   %i.dh = zext i32 %1 to i64
@@ -380,8 +381,7 @@ bb.d:                                             ; preds = %bb.b
   %i.dj = zext nneg i32 %i.g to i64               ; 2 uses
   %i.dk = zext nneg i32 %i.i to i64
   %xtraiter = and i64 %i.dj, 7                    ; 3 uses
-  %4 = add nsw i32 %i.g, -1
-  %i.dl = icmp ult i32 %4, 7
+  %i.dl = icmp samesign ult i32 %i.g, 8
   %unroll_iter = and i64 %i.dj, 2147483640
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod182 = icmp ne i64 %xtraiter, 0

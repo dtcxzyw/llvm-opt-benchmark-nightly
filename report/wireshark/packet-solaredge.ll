@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-solaredge?download=true
 inline.NumInlined: 4
 inline.NumDeleted: 4
-loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 @.str.384 = private unnamed_addr constant [26 x i8] c"JUPMNGR_READ_JUPPWR_MEAS3\00", align 1
 @.str.385 = private unnamed_addr constant [26 x i8] c"JUPMNGR_READ_JUPPWR_MEAS4\00", align 1
@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = tail call ptr @wmem_file_scope()
-  %i.f = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.e, i64 noundef 24) #7 ; 2 uses
+  %i.f = tail call noalias dereferenceable_or_null(24) ptr @wmem_alloc(ptr noundef %i.e, i64 noundef 24) #8 ; 2 uses
   store i8 0, ptr %i.f, align 8
   %i.g = load i32, ptr @proto_solaredge, align 4
   tail call void @conversation_add_proto_data(ptr noundef %i.a, i32 noundef %i.g, ptr noundef %i.f)
@@ -329,7 +329,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not98, label %solaredge_decrypt.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.as = load i8, ptr %i.ar, align 8, !range !15, !noundef !16
+  %i.as = load i8, ptr %i.ar, align 8, !range !13, !noundef !14
   %i.at = trunc nuw i8 %i.as to i1
   br i1 %i.at, label %bb.g, label %solaredge_decrypt.exit.thread
 
@@ -343,14 +343,14 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.az, label %solaredge_decrypt.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #9
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #9
   %i.ba = add nsw i32 %i.u, -16
   %i.bb = getelementptr i8, ptr %i.aw, i64 16
   %i.bc = zext nneg i32 %i.ba to i64              ; 2 uses
-  %i.bd = tail call ptr @wmem_memdup(ptr noundef %i.av, ptr noundef %i.bb, i64 noundef %i.bc) #9 ; 14 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.h, ptr noundef align 1 dereferenceable(16) %i.aw, i64 noundef 16, i1 noundef false) #8
+  %i.bd = tail call ptr @wmem_memdup(ptr noundef %i.av, ptr noundef %i.bb, i64 noundef %i.bc) #10 ; 11 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.h, ptr noundef align 1 dereferenceable(16) %i.aw, i64 noundef 16, i1 noundef false) #9
   %i.be = call i32 @gcry_cipher_encrypt(ptr noundef %i.ay, ptr noundef nonnull %i.g, i64 noundef 16, ptr noundef nonnull %i.h, i64 noundef 16)
   %.not.i = icmp eq i32 %i.be, 0
   br i1 %.not.i, label %.lr.ph.i, label %solaredge_decrypt.exit
@@ -396,18 +396,15 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.i
 ._crit_edge.i:                                    ; preds = %bb.j
   %i.bu = add nsw i32 %i.u, -22                   ; 4 uses
   %i.bv = zext nneg i32 %i.bu to i64
-  %i.bw = call noalias ptr @wmem_alloc(ptr noundef %i.av, i64 noundef %i.bv) #7 ; 8 uses
+  %i.bw = call noalias ptr @wmem_alloc(ptr noundef %i.av, i64 noundef %i.bv) #8 ; 7 uses
   %.not54.i = icmp eq i16 %i.p, 22
   br i1 %.not54.i, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge.i
   %smax.i = call i32 @llvm.smax.i32(i32 %i.bu, i32 1) ; 2 uses
-  %wide.trip.count60.i = zext nneg i32 %smax.i to i64 ; 7 uses
-  %min.iters.check = icmp ult i16 %i.p, 26
-  %5 = add nsw i32 %smax.i, -5
-  %6 = icmp ult i32 %5, -4
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %6
-  br i1 %or.cond, label %.lr.ph53.i.preheader, label %vector.memcheck
+  %wide.trip.count60.i = zext nneg i32 %smax.i to i64 ; 4 uses
+  %.not45 = icmp eq i16 %i.p, 26
+  br i1 %.not45, label %vector.memcheck, label %vec.epilog.vector.body.a
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.bx = getelementptr i8, ptr %i.bw, i64 %wide.trip.count60.i
@@ -417,94 +414,40 @@ vector.memcheck:                                  ; preds = %iter.check
   %bound0 = icmp ult ptr %i.bw, %i.ca
   %bound1 = icmp ult ptr %i.by, %i.bx
   %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %.lr.ph53.i.preheader, label %vector.main.loop.iter.check
+  br i1 %found.conflict, label %vec.epilog.vector.body.a, label %.lr.ph53.i.prol
 
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check35 = icmp ult i16 %i.p, 54
-  br i1 %min.iters.check35, label %vec.epilog.ph, label %vector.body.preheader
+vec.epilog.vector.body.a:                         ; preds = %iter.check, %vector.memcheck
+  %xtraiter = and i64 %wide.trip.count60.i, 1
+  %5 = icmp ult i16 %i.p, 24
+  br i1 %5, label %.lr.ph53.i.epil.preheader, label %.lr.ph53.i.preheader
 
-vector.body.preheader:                            ; preds = %vector.main.loop.iter.check
-  %7 = getelementptr i8, ptr %i.bd, i64 2
-  %8 = getelementptr i8, ptr %i.bd, i64 18
-  %wide.load37 = load <16 x i8>, ptr %7, align 1, !alias.scope !18
-  %wide.load38 = load <16 x i8>, ptr %8, align 1, !alias.scope !18
-  br label %vector.body
+.lr.ph53.i.preheader:                             ; preds = %vec.epilog.vector.body.a
+  %xtraiter.a = and i64 %wide.trip.count60.i, 2147483646
+  br label %.lr.ph53.i
 
-vector.body:                                      ; preds = %vector.body.preheader, %vector.body
-  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.body.preheader ] ; 3 uses
-  %9 = getelementptr i8, ptr %i.bd, i64 %index    ; 2 uses
-  %10 = getelementptr i8, ptr %9, i64 6
-  %11 = getelementptr i8, ptr %9, i64 22
-  %wide.load = load <16 x i8>, ptr %10, align 1, !alias.scope !18
-  %wide.load36 = load <16 x i8>, ptr %11, align 1, !alias.scope !18
-  %12 = xor <16 x i8> %wide.load37, %wide.load
-  %13 = xor <16 x i8> %wide.load38, %wide.load36
-  %14 = getelementptr i8, ptr %i.bw, i64 %index   ; 2 uses
-  %15 = getelementptr i8, ptr %14, i64 16
-  store <16 x i8> %12, ptr %14, align 1, !alias.scope !19, !noalias !18
-  store <16 x i8> %13, ptr %15, align 1, !alias.scope !19, !noalias !18
-  %index.next = add nuw i64 %index, 32
-  br label %vector.body, !llvm.loop !11
-
-vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check
-  %n.vec39 = and i64 %wide.trip.count60.i, 4      ; 3 uses
-  %16 = getelementptr i8, ptr %i.bd, i64 2
-  %wide.load42 = load <4 x i8>, ptr %16, align 1, !alias.scope !18
-  br label %vec.epilog.vector.body.a
-
-vec.epilog.vector.body.a:                         ; preds = %vec.epilog.vector.body.a, %vec.epilog.ph
-  %index40 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next43, %vec.epilog.vector.body.a ] ; 3 uses
-  %17 = getelementptr i8, ptr %i.bd, i64 %index40
-  %18 = getelementptr i8, ptr %17, i64 6
-  %wide.load41 = load <4 x i8>, ptr %18, align 1, !alias.scope !18
-  %19 = xor <4 x i8> %wide.load42, %wide.load41
-  %20 = getelementptr i8, ptr %i.bw, i64 %index40
-  store <4 x i8> %19, ptr %20, align 1, !alias.scope !19, !noalias !18
-  %index.next43 = add nuw i64 %index40, 4         ; 2 uses
-  %21 = icmp eq i64 %index.next43, %n.vec39
-  br i1 %21, label %vec.epilog.middle.block, label %vec.epilog.vector.body.a, !llvm.loop !12
-
-vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body.a
-  %cmp.n44 = icmp eq i64 %n.vec39, %wide.trip.count60.i
-  br i1 %cmp.n44, label %.loopexit, label %.lr.ph53.i.preheader
-
-.lr.ph53.i.preheader:                             ; preds = %iter.check, %vector.memcheck, %vec.epilog.middle.block
-  %indvars.iv57.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %n.vec39, %vec.epilog.middle.block ] ; 5 uses
-  %xtraiter.a = and i64 %wide.trip.count60.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter.a, 0
-  br i1 %lcmp.mod.not, label %.lr.ph53.i.prol.loopexit, label %.lr.ph53.i.prol
-
-.lr.ph53.i.prol:                                  ; preds = %.lr.ph53.i.preheader
-  %22 = getelementptr i8, ptr %i.bd, i64 %indvars.iv57.i.ph
-  %i.cb = getelementptr i8, ptr %22, i64 6
-  %23 = load i8, ptr %i.cb, align 1
+.lr.ph53.i.prol:                                  ; preds = %vector.memcheck
+  %i.cb = getelementptr i8, ptr %i.bd, i64 6
+  %wide.load41 = load <4 x i8>, ptr %i.cb, align 1, !alias.scope !16
   %i.cc = getelementptr i8, ptr %i.bd, i64 2
-  %24 = load i8, ptr %i.cc, align 1
-  %25 = xor i8 %24, %23
-  %26 = getelementptr i8, ptr %i.bw, i64 %indvars.iv57.i.ph
-  store i8 %25, ptr %26, align 1
-  %indvars.iv.next58.i.prol = or disjoint i64 %indvars.iv57.i.ph, 1
-  br label %.lr.ph53.i.prol.loopexit
+  %wide.load42 = load <4 x i8>, ptr %i.cc, align 1, !alias.scope !16
+  %6 = xor <4 x i8> %wide.load42, %wide.load41
+  store <4 x i8> %6, ptr %i.bw, align 1, !alias.scope !17, !noalias !16
+  br label %.loopexit
 
-.lr.ph53.i.prol.loopexit:                         ; preds = %.lr.ph53.i.prol, %.lr.ph53.i.preheader
-  %indvars.iv57.i.unr = phi i64 [ %indvars.iv57.i.ph, %.lr.ph53.i.preheader ], [ %indvars.iv.next58.i.prol, %.lr.ph53.i.prol ]
-  %27 = add nsw i64 %wide.trip.count60.i, -1
-  %28 = icmp eq i64 %indvars.iv57.i.ph, %27
-  br i1 %28, label %.loopexit, label %.lr.ph53.i
-
-.lr.ph53.i:                                       ; preds = %.lr.ph53.i.prol.loopexit, %.lr.ph53.i
-  %indvars.iv57.i.a = phi i64 [ %indvars.iv.next58.i.1.a, %.lr.ph53.i ], [ %indvars.iv57.i.unr, %.lr.ph53.i.prol.loopexit ] ; 5 uses
-  %i.cd = getelementptr i8, ptr %i.bd, i64 %indvars.iv57.i.a
+.lr.ph53.i:                                       ; preds = %.lr.ph53.i, %.lr.ph53.i.preheader
+  %indvars.iv57.i = phi i64 [ 0, %.lr.ph53.i.preheader ], [ %indvars.iv.next58.i.1, %.lr.ph53.i ] ; 5 uses
+  %indvars.iv57.i.a = phi i64 [ 0, %.lr.ph53.i.preheader ], [ %indvars.iv.next58.i.1.a, %.lr.ph53.i ]
+  %i.cd = getelementptr i8, ptr %i.bd, i64 %indvars.iv57.i
   %i.ce = getelementptr i8, ptr %i.cd, i64 6
   %i.cf = load i8, ptr %i.ce, align 1
-  %i.cg = and i64 %indvars.iv57.i.a, 3
+  %i.cg = and i64 %indvars.iv57.i, 2
   %i.ch = getelementptr i8, ptr %i.bd, i64 %i.cg
   %i.ci = getelementptr i8, ptr %i.ch, i64 2
   %i.cj = load i8, ptr %i.ci, align 1
   %i.ck = xor i8 %i.cj, %i.cf
-  %i.cl = getelementptr i8, ptr %i.bw, i64 %indvars.iv57.i.a
+  %i.cl = getelementptr i8, ptr %i.bw, i64 %indvars.iv57.i
   store i8 %i.ck, ptr %i.cl, align 1
-  %indvars.iv.next58.i = add nuw nsw i64 %indvars.iv57.i.a, 1 ; 3 uses
+  %indvars.iv.next58.i = or disjoint i64 %indvars.iv57.i, 1 ; 3 uses
   %i.cm = getelementptr i8, ptr %i.bd, i64 %indvars.iv.next58.i
   %i.cn = getelementptr i8, ptr %i.cm, i64 6
   %i.co = load i8, ptr %i.cn, align 1
@@ -515,18 +458,39 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ct = xor i8 %i.cs, %i.co
   %i.cu = getelementptr i8, ptr %i.bw, i64 %indvars.iv.next58.i
   store i8 %i.ct, ptr %i.cu, align 1
-  %indvars.iv.next58.i.1.a = add nuw nsw i64 %indvars.iv57.i.a, 2 ; 2 uses
-  %exitcond61.not.i.1 = icmp eq i64 %indvars.iv.next58.i.1.a, %wide.trip.count60.i
-  br i1 %exitcond61.not.i.1, label %.loopexit, label %.lr.ph53.i, !llvm.loop !13
+  %indvars.iv.next58.i.1 = add nuw nsw i64 %indvars.iv57.i, 2 ; 2 uses
+  %indvars.iv.next58.i.1.a = add i64 %indvars.iv57.i.a, 2 ; 2 uses
+  %exitcond61.not.i.1 = icmp eq i64 %indvars.iv.next58.i.1.a, %xtraiter.a
+  br i1 %exitcond61.not.i.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph53.i, !llvm.loop !11
 
 solaredge_decrypt.exit:                           ; preds = %bb.i, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #9
   br label %solaredge_decrypt.exit.thread
 
-.loopexit:                                        ; preds = %.lr.ph53.i.prol.loopexit, %.lr.ph53.i, %vec.epilog.middle.block, %._crit_edge.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #8
+.loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph53.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph53.i.epil.preheader
+
+.lr.ph53.i.epil.preheader:                        ; preds = %.loopexit.loopexit.unr-lcssa, %vec.epilog.vector.body.a
+  %indvars.iv57.i.epil.init = phi i64 [ 0, %vec.epilog.vector.body.a ], [ %indvars.iv.next58.i.1, %.loopexit.loopexit.unr-lcssa ] ; 3 uses
+  %lcmp.mod47 = trunc i32 %smax.i to i1
+  call void @llvm.assume(i1 %lcmp.mod47)
+  %7 = getelementptr i8, ptr %i.bd, i64 %indvars.iv57.i.epil.init
+  %8 = getelementptr i8, ptr %7, i64 6
+  %9 = load i8, ptr %8, align 1
+  %10 = and i64 %indvars.iv57.i.epil.init, 3
+  %11 = getelementptr i8, ptr %i.bd, i64 %10
+  %12 = getelementptr i8, ptr %11, i64 2
+  %13 = load i8, ptr %12, align 1
+  %14 = xor i8 %13, %9
+  %15 = getelementptr i8, ptr %i.bw, i64 %indvars.iv57.i.epil.init
+  store i8 %14, ptr %15, align 1
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.lr.ph53.i.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.lr.ph53.i.prol, %._crit_edge.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #9
   %i.cv = call ptr @tvb_new_child_real_data(ptr noundef %0, ptr noundef %i.bw, i32 noundef %i.bu, i32 noundef %i.bu) ; 3 uses
   %i.cw = call i32 @tvb_get_uint32(ptr noundef %i.cv, i32 noundef 0, i32 noundef -2147483648)
   %i.cx = icmp eq i32 %i.cw, 2035692562
@@ -551,27 +515,27 @@ bb.l:                                             ; preds = %bb.d
 
 tailrecurse.i:                                    ; preds = %bb.an, %bb.l
   %.tr267.i = phi i32 [ 20, %bb.l ], [ %.1.i99, %bb.an ] ; 52 uses
-  %i.dg = tail call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef %.tr267.i), !inline_history !14
+  %i.dg = tail call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef %.tr267.i), !inline_history !12
   %i.dh = add nuw nsw i32 %.tr267.i, 2            ; 2 uses
-  %i.di = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %i.dh), !inline_history !14 ; 0 uses
+  %i.di = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %i.dh), !inline_history !12 ; 0 uses
   %i.dj = add nuw nsw i32 %.tr267.i, 6            ; 2 uses
-  %i.dk = tail call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef %i.dj), !inline_history !14
+  %i.dk = tail call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef %i.dj), !inline_history !12
   %i.dl = load i32, ptr @hf_solaredge_post_device_type, align 4
   %i.dm = zext i16 %i.dk to i32                   ; 3 uses
   %i.dn = add nuw nsw i32 %i.dm, 8
-  %i.do = tail call ptr @proto_tree_add_item(ptr noundef %i.df, i32 noundef %i.dl, ptr noundef %0, i32 noundef %.tr267.i, i32 noundef %i.dn, i32 noundef 0), !inline_history !14
+  %i.do = tail call ptr @proto_tree_add_item(ptr noundef %i.df, i32 noundef %i.dl, ptr noundef %0, i32 noundef %.tr267.i, i32 noundef %i.dn, i32 noundef 0), !inline_history !12
   %i.dp = load i32, ptr @ett_solaredge_packet_post_device, align 4
-  %i.dq = tail call ptr @proto_item_add_subtree(ptr noundef %i.do, i32 noundef %i.dp), !inline_history !14 ; 52 uses
+  %i.dq = tail call ptr @proto_item_add_subtree(ptr noundef %i.do, i32 noundef %i.dp), !inline_history !12 ; 52 uses
   %i.dr = load i32, ptr @hf_solaredge_post_device_type_type, align 4
-  %i.ds = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.dr, ptr noundef %0, i32 noundef %.tr267.i, i32 noundef 2, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.ds = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.dr, ptr noundef %0, i32 noundef %.tr267.i, i32 noundef 2, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.dt = load i32, ptr @hf_solaredge_post_device_id_type, align 4
-  %i.du = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.dt, ptr noundef %0, i32 noundef %i.dh, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.du = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.dt, ptr noundef %0, i32 noundef %i.dh, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.dv = load i32, ptr @hf_solaredge_post_length_type, align 4
-  %i.dw = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.dv, ptr noundef %0, i32 noundef %i.dj, i32 noundef 2, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.dw = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.dv, ptr noundef %0, i32 noundef %i.dj, i32 noundef 2, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.dx = add nuw nsw i32 %.tr267.i, 8            ; 6 uses
   %i.dy = load ptr, ptr %i.j, align 8
-  tail call void @col_append_str(ptr noundef %i.dy, i32 noundef 25, ptr noundef nonnull @.str.527), !inline_history !14
-  tail call void @increment_dissection_depth(ptr noundef %1), !inline_history !14
+  tail call void @col_append_str(ptr noundef %i.dy, i32 noundef 25, ptr noundef nonnull @.str.527), !inline_history !12
+  tail call void @increment_dissection_depth(ptr noundef %1), !inline_history !12
   %i.dz = load ptr, ptr %i.j, align 8             ; 6 uses
   switch i16 %i.dg, label %bb.al [
     i16 0, label %bb.m
@@ -582,200 +546,200 @@ tailrecurse.i:                                    ; preds = %bb.an, %bb.l
   ]
 
 bb.m:                                             ; preds = %tailrecurse.i
-  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.519), !inline_history !14
+  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.519), !inline_history !12
   %i.ea = load i32, ptr @hf_solaredge_post_optimizer_timestamp_type, align 4
-  %i.eb = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ea, ptr noundef %0, i32 noundef %i.dx, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.eb = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ea, ptr noundef %0, i32 noundef %i.dx, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.ec = add nuw nsw i32 %.tr267.i, 12
   %i.ed = load i32, ptr @hf_solaredge_post_optimizer_inverter_type, align 4
-  %i.ee = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ed, ptr noundef %0, i32 noundef %i.ec, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %i.ef = load i8, ptr @global_show_unknown_fields, align 1, !range !15, !noundef !16
+  %i.ee = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ed, ptr noundef %0, i32 noundef %i.ec, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %i.ef = load i8, ptr @global_show_unknown_fields, align 1, !range !13, !noundef !14
   %i.eg = trunc nuw i8 %i.ef to i1
   br i1 %i.eg, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %i.eh = add nuw nsw i32 %.tr267.i, 16
   %i.ei = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.ej = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ei, ptr noundef %0, i32 noundef %i.eh, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.ej = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ei, ptr noundef %0, i32 noundef %i.eh, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ek = add nuw nsw i32 %.tr267.i, 20
   %i.el = load i32, ptr @hf_solaredge_post_optimizer_uptime_type, align 4
-  %i.em = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.el, ptr noundef %0, i32 noundef %i.ek, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.em = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.el, ptr noundef %0, i32 noundef %i.ek, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.en = add nuw nsw i32 %.tr267.i, 24
   %i.eo = load i32, ptr @hf_solaredge_post_optimizer_dc_voltage_panel_type, align 4
-  %i.ep = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.eo, ptr noundef %0, i32 noundef %i.en, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.ep = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.eo, ptr noundef %0, i32 noundef %i.en, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.eq = add nuw nsw i32 %.tr267.i, 28
   %i.er = load i32, ptr @hf_solaredge_post_optimizer_dc_voltage_optimzer_type, align 4
-  %i.es = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.er, ptr noundef %0, i32 noundef %i.eq, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.es = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.er, ptr noundef %0, i32 noundef %i.eq, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.et = add nuw nsw i32 %.tr267.i, 32
   %i.eu = load i32, ptr @hf_solaredge_post_optimizer_dc_current_panel_type, align 4
-  %i.ev = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.eu, ptr noundef %0, i32 noundef %i.et, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.ev = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.eu, ptr noundef %0, i32 noundef %i.et, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.ew = add nuw nsw i32 %.tr267.i, 36
   %i.ex = load i32, ptr @hf_solaredge_post_optimizer_energy_day_type, align 4
-  %i.ey = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ex, ptr noundef %0, i32 noundef %i.ew, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.ey = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ex, ptr noundef %0, i32 noundef %i.ew, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.ez = add nuw nsw i32 %.tr267.i, 40
   %i.fa = load i32, ptr @hf_solaredge_post_optimizer_temperature_type, align 4
-  %i.fb = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fa, ptr noundef %0, i32 noundef %i.ez, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.fb = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fa, ptr noundef %0, i32 noundef %i.ez, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.fc = add nuw nsw i32 %.tr267.i, 44
   br label %bb.am
 
 bb.p:                                             ; preds = %tailrecurse.i
-  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.520), !inline_history !14
+  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.520), !inline_history !12
   %i.fd = load i32, ptr @hf_solaredge_post_singlephase_inverter_timestamp_type, align 4
-  %i.fe = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fd, ptr noundef %0, i32 noundef %i.dx, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.fe = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fd, ptr noundef %0, i32 noundef %i.dx, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.ff = add nuw nsw i32 %.tr267.i, 12
   %i.fg = load i32, ptr @hf_solaredge_post_singlephase_inverter_uptime_type, align 4
-  %i.fh = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fg, ptr noundef %0, i32 noundef %i.ff, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.fh = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fg, ptr noundef %0, i32 noundef %i.ff, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.fi = add nuw nsw i32 %.tr267.i, 16
   %i.fj = load i32, ptr @hf_solaredge_post_singlephase_inverter_interval_type, align 4
-  %i.fk = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fj, ptr noundef %0, i32 noundef %i.fi, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.fk = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fj, ptr noundef %0, i32 noundef %i.fi, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.fl = add nuw nsw i32 %.tr267.i, 20
   %i.fm = load i32, ptr @hf_solaredge_post_singlephase_inverter_temperature_type, align 4
-  %i.fn = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fm, ptr noundef %0, i32 noundef %i.fl, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.fn = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fm, ptr noundef %0, i32 noundef %i.fl, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.fo = add nuw nsw i32 %.tr267.i, 24
   %i.fp = load i32, ptr @hf_solaredge_post_singlephase_inverter_energy_day_type, align 4
-  %i.fq = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fp, ptr noundef %0, i32 noundef %i.fo, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.fq = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fp, ptr noundef %0, i32 noundef %i.fo, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.fr = add nuw nsw i32 %.tr267.i, 28
   %i.fs = load i32, ptr @hf_solaredge_post_singlephase_inverter_energy_interval_type, align 4
-  %i.ft = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fs, ptr noundef %0, i32 noundef %i.fr, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.ft = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fs, ptr noundef %0, i32 noundef %i.fr, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.fu = add nuw nsw i32 %.tr267.i, 32
   %i.fv = load i32, ptr @hf_solaredge_post_singlephase_inverter_ac_voltage_type, align 4
-  %i.fw = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fv, ptr noundef %0, i32 noundef %i.fu, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.fw = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fv, ptr noundef %0, i32 noundef %i.fu, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.fx = add nuw nsw i32 %.tr267.i, 36
   %i.fy = load i32, ptr @hf_solaredge_post_singlephase_inverter_ac_current_type, align 4
-  %i.fz = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fy, ptr noundef %0, i32 noundef %i.fx, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.fz = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.fy, ptr noundef %0, i32 noundef %i.fx, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.ga = add nuw nsw i32 %.tr267.i, 40
   %i.gb = load i32, ptr @hf_solaredge_post_singlephase_inverter_ac_frequency_type, align 4
-  %i.gc = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gb, ptr noundef %0, i32 noundef %i.ga, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %i.gd = load i8, ptr @global_show_unknown_fields, align 1, !range !15, !noundef !16
+  %i.gc = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gb, ptr noundef %0, i32 noundef %i.ga, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %i.gd = load i8, ptr @global_show_unknown_fields, align 1, !range !13, !noundef !14
   %i.ge = trunc nuw i8 %i.gd to i1
   br i1 %i.ge, label %bb.q, label %.thread.i
 
 bb.q:                                             ; preds = %bb.p
   %i.gf = add nuw nsw i32 %.tr267.i, 44
   %i.gg = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.gh = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gg, ptr noundef %0, i32 noundef %i.gf, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %.pre270.i = load i8, ptr @global_show_unknown_fields, align 1, !range !15
+  %i.gh = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gg, ptr noundef %0, i32 noundef %i.gf, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %.pre270.i = load i8, ptr @global_show_unknown_fields, align 1, !range !13
   %i.gi = trunc nuw i8 %.pre270.i to i1
   br i1 %i.gi, label %bb.r, label %.thread.i
 
 bb.r:                                             ; preds = %bb.q
   %i.gj = add nuw nsw i32 %.tr267.i, 48
   %i.gk = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.gl = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gk, ptr noundef %0, i32 noundef %i.gj, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.gl = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gk, ptr noundef %0, i32 noundef %i.gj, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.r, %bb.q, %bb.p
   %i.gm = add nuw nsw i32 %.tr267.i, 52
   %i.gn = load i32, ptr @hf_solaredge_post_singlephase_inverter_dc_voltage_type, align 4
-  %i.go = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gn, ptr noundef %0, i32 noundef %i.gm, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %i.gp = load i8, ptr @global_show_unknown_fields, align 1, !range !15, !noundef !16
+  %i.go = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gn, ptr noundef %0, i32 noundef %i.gm, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %i.gp = load i8, ptr @global_show_unknown_fields, align 1, !range !13, !noundef !14
   %i.gq = trunc nuw i8 %i.gp to i1
   br i1 %i.gq, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.thread.i
   %i.gr = add nuw nsw i32 %.tr267.i, 56
   %i.gs = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.gt = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gs, ptr noundef %0, i32 noundef %i.gr, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.gt = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gs, ptr noundef %0, i32 noundef %i.gr, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %.thread.i
   %i.gu = add nuw nsw i32 %.tr267.i, 60
   %i.gv = load i32, ptr @hf_solaredge_post_singlephase_inverter_energy_total_type, align 4
-  %i.gw = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gv, ptr noundef %0, i32 noundef %i.gu, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %i.gx = load i8, ptr @global_show_unknown_fields, align 1, !range !15, !noundef !16
+  %i.gw = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.gv, ptr noundef %0, i32 noundef %i.gu, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %i.gx = load i8, ptr @global_show_unknown_fields, align 1, !range !13, !noundef !14
   %i.gy = trunc nuw i8 %i.gx to i1
   br i1 %i.gy, label %bb.u, label %.thread281.i
 
 bb.u:                                             ; preds = %bb.t
   %i.gz = add nuw nsw i32 %.tr267.i, 64
   %i.ha = load i32, ptr @hf_solaredge_post_padding_float_type, align 4
-  %i.hb = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ha, ptr noundef %0, i32 noundef %i.gz, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %.pre271.i = load i8, ptr @global_show_unknown_fields, align 1, !range !15
+  %i.hb = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ha, ptr noundef %0, i32 noundef %i.gz, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %.pre271.i = load i8, ptr @global_show_unknown_fields, align 1, !range !13
   %i.hc = trunc nuw i8 %.pre271.i to i1
   br i1 %i.hc, label %bb.v, label %.thread281.i
 
 bb.v:                                             ; preds = %bb.u
   %i.hd = add nuw nsw i32 %.tr267.i, 68
   %i.he = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.hf = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.he, ptr noundef %0, i32 noundef %i.hd, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %.pre272.i = load i8, ptr @global_show_unknown_fields, align 1, !range !15
+  %i.hf = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.he, ptr noundef %0, i32 noundef %i.hd, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %.pre272.i = load i8, ptr @global_show_unknown_fields, align 1, !range !13
   %i.hg = trunc nuw i8 %.pre272.i to i1
   br i1 %i.hg, label %bb.w, label %.thread281.i
 
 bb.w:                                             ; preds = %bb.v
   %i.hh = add nuw nsw i32 %.tr267.i, 72
   %i.hi = load i32, ptr @hf_solaredge_post_padding_float_type, align 4
-  %i.hj = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hi, ptr noundef %0, i32 noundef %i.hh, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %.pre273.i = load i8, ptr @global_show_unknown_fields, align 1, !range !15
+  %i.hj = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hi, ptr noundef %0, i32 noundef %i.hh, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %.pre273.i = load i8, ptr @global_show_unknown_fields, align 1, !range !13
   %i.hk = trunc nuw i8 %.pre273.i to i1
   br i1 %i.hk, label %bb.x, label %.thread281.i
 
 bb.x:                                             ; preds = %bb.w
   %i.hl = add nuw nsw i32 %.tr267.i, 76
   %i.hm = load i32, ptr @hf_solaredge_post_padding_float_type, align 4
-  %i.hn = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hm, ptr noundef %0, i32 noundef %i.hl, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.hn = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hm, ptr noundef %0, i32 noundef %i.hl, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   br label %.thread281.i
 
 .thread281.i:                                     ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %bb.t
   %i.ho = add nuw nsw i32 %.tr267.i, 80
   %i.hp = load i32, ptr @hf_solaredge_post_singlephase_inverter_power_max_type, align 4
-  %i.hq = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hp, ptr noundef %0, i32 noundef %i.ho, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %i.hr = load i8, ptr @global_show_unknown_fields, align 1, !range !15, !noundef !16
+  %i.hq = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hp, ptr noundef %0, i32 noundef %i.ho, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %i.hr = load i8, ptr @global_show_unknown_fields, align 1, !range !13, !noundef !14
   %i.hs = trunc nuw i8 %i.hr to i1
   br i1 %i.hs, label %bb.y, label %.thread286.i
 
 bb.y:                                             ; preds = %.thread281.i
   %i.ht = add nuw nsw i32 %.tr267.i, 84
   %i.hu = load i32, ptr @hf_solaredge_post_padding_float_type, align 4
-  %i.hv = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hu, ptr noundef %0, i32 noundef %i.ht, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %.pre274.i = load i8, ptr @global_show_unknown_fields, align 1, !range !15
+  %i.hv = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hu, ptr noundef %0, i32 noundef %i.ht, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %.pre274.i = load i8, ptr @global_show_unknown_fields, align 1, !range !13
   %i.hw = trunc nuw i8 %.pre274.i to i1
   br i1 %i.hw, label %bb.z, label %.thread286.i
 
 bb.z:                                             ; preds = %bb.y
   %i.hx = add nuw nsw i32 %.tr267.i, 88
   %i.hy = load i32, ptr @hf_solaredge_post_padding_float_type, align 4
-  %i.hz = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hy, ptr noundef %0, i32 noundef %i.hx, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %.pre275.i = load i8, ptr @global_show_unknown_fields, align 1, !range !15
+  %i.hz = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.hy, ptr noundef %0, i32 noundef %i.hx, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %.pre275.i = load i8, ptr @global_show_unknown_fields, align 1, !range !13
   %i.ia = trunc nuw i8 %.pre275.i to i1
   br i1 %i.ia, label %bb.aa, label %.thread286.i
 
 bb.aa:                                            ; preds = %bb.z
   %i.ib = add nuw nsw i32 %.tr267.i, 92
   %i.ic = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.id = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ic, ptr noundef %0, i32 noundef %i.ib, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %.pre276.i = load i8, ptr @global_show_unknown_fields, align 1, !range !15
+  %i.id = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ic, ptr noundef %0, i32 noundef %i.ib, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %.pre276.i = load i8, ptr @global_show_unknown_fields, align 1, !range !13
   %i.ie = trunc nuw i8 %.pre276.i to i1
   br i1 %i.ie, label %bb.ab, label %.thread286.i
 
 bb.ab:                                            ; preds = %bb.aa
   %i.if = add nuw nsw i32 %.tr267.i, 96
   %i.ig = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.ih = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ig, ptr noundef %0, i32 noundef %i.if, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.ih = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ig, ptr noundef %0, i32 noundef %i.if, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   br label %.thread286.i
 
 .thread286.i:                                     ; preds = %bb.ab, %bb.aa, %bb.z, %bb.y, %.thread281.i
   %i.ii = add nuw nsw i32 %.tr267.i, 100
   %i.ij = load i32, ptr @hf_solaredge_post_singlephase_inverter_ac_power_type, align 4
-  %i.ik = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ij, ptr noundef %0, i32 noundef %i.ii, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %i.il = load i8, ptr @global_show_unknown_fields, align 1, !range !15, !noundef !16
+  %i.ik = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ij, ptr noundef %0, i32 noundef %i.ii, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %i.il = load i8, ptr @global_show_unknown_fields, align 1, !range !13, !noundef !14
   %i.im = trunc nuw i8 %i.il to i1
   br i1 %i.im, label %bb.ac, label %.thread287.i
 
 bb.ac:                                            ; preds = %.thread286.i
   %i.in = add nuw nsw i32 %.tr267.i, 104
   %i.io = load i32, ptr @hf_solaredge_post_padding_float_type, align 4
-  %i.ip = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.io, ptr noundef %0, i32 noundef %i.in, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %.pre277.i = load i8, ptr @global_show_unknown_fields, align 1, !range !15
+  %i.ip = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.io, ptr noundef %0, i32 noundef %i.in, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %.pre277.i = load i8, ptr @global_show_unknown_fields, align 1, !range !13
   %i.iq = trunc nuw i8 %.pre277.i to i1
   br i1 %i.iq, label %bb.ad, label %.thread287.i
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ir = add nuw nsw i32 %.tr267.i, 108
   %i.is = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.it = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.is, ptr noundef %0, i32 noundef %i.ir, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.it = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.is, ptr noundef %0, i32 noundef %i.ir, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   br label %.thread287.i
 
 .thread287.i:                                     ; preds = %bb.ad, %bb.ac, %.thread286.i
@@ -783,19 +747,19 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.am
 
 bb.ae:                                            ; preds = %tailrecurse.i
-  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.521), !inline_history !14
+  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.521), !inline_history !12
   %i.iv = add nuw nsw i32 %i.dx, %i.dm
   br label %bb.am
 
 bb.af:                                            ; preds = %tailrecurse.i
-  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.519), !inline_history !14
+  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.519), !inline_history !12
   %i.iw = load i32, ptr @hf_solaredge_post_optimizer_timestamp_type, align 4
-  %i.ix = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.iw, ptr noundef %0, i32 noundef %i.dx, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.ix = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.iw, ptr noundef %0, i32 noundef %i.dx, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.iy = add nuw nsw i32 %.tr267.i, 12
   %i.iz = load i32, ptr @hf_solaredge_post_optimizer_uptime_short_type, align 4
-  %i.ja = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.iz, ptr noundef %0, i32 noundef %i.iy, i32 noundef 2, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.ja = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.iz, ptr noundef %0, i32 noundef %i.iy, i32 noundef 2, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.jb = add nuw nsw i32 %.tr267.i, 14           ; 5 uses
-  %i.jc = tail call ptr @tvb_get_ptr(ptr noundef %0, i32 noundef %i.jb, i32 noundef 6), !inline_history !14 ; 5 uses
+  %i.jc = tail call ptr @tvb_get_ptr(ptr noundef %0, i32 noundef %i.jb, i32 noundef 6), !inline_history !12 ; 5 uses
   %i.jd = load i8, ptr %i.jc, align 1
   %i.je = zext i8 %i.jd to i32
   %i.jf = getelementptr i8, ptr %i.jc, i64 1      ; 2 uses
@@ -808,7 +772,7 @@ bb.af:                                            ; preds = %tailrecurse.i
   %i.jm = fmul nnan float %i.jl, 1.250000e-01     ; 2 uses
   %i.jn = load i32, ptr @hf_solaredge_post_optimizer_dc_voltage_panel_type, align 4
   %i.jo = fpext float %i.jm to double
-  %i.jp = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.jn, ptr noundef %0, i32 noundef %i.jb, i32 noundef 6, float noundef %i.jm, ptr noundef nonnull @.str.528, double noundef %i.jo), !inline_history !14 ; 0 uses
+  %i.jp = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.jn, ptr noundef %0, i32 noundef %i.jb, i32 noundef 6, float noundef %i.jm, ptr noundef nonnull @.str.528, double noundef %i.jo), !inline_history !12 ; 0 uses
   %i.jq = load i8, ptr %i.jf, align 1
   %i.jr = lshr i8 %i.jq, 2
   %i.js = zext nneg i8 %i.jr to i32
@@ -822,7 +786,7 @@ bb.af:                                            ; preds = %tailrecurse.i
   %i.ka = fmul nnan float %i.jz, 1.250000e-01     ; 2 uses
   %i.kb = load i32, ptr @hf_solaredge_post_optimizer_dc_voltage_optimzer_type, align 4
   %i.kc = fpext float %i.ka to double
-  %i.kd = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.kb, ptr noundef %0, i32 noundef %i.jb, i32 noundef 6, float noundef %i.ka, ptr noundef nonnull @.str.528, double noundef %i.kc), !inline_history !14 ; 0 uses
+  %i.kd = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.kb, ptr noundef %0, i32 noundef %i.jb, i32 noundef 6, float noundef %i.ka, ptr noundef nonnull @.str.528, double noundef %i.kc), !inline_history !12 ; 0 uses
   %i.ke = getelementptr i8, ptr %i.jc, i64 3
   %i.kf = load i8, ptr %i.ke, align 1
   %i.kg = zext i8 %i.kf to i32
@@ -836,65 +800,65 @@ bb.af:                                            ; preds = %tailrecurse.i
   %i.ko = fptrunc double %i.kn to float           ; 2 uses
   %i.kp = load i32, ptr @hf_solaredge_post_optimizer_dc_current_optimzer_type, align 4
   %i.kq = fpext float %i.ko to double
-  %i.kr = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.kp, ptr noundef %0, i32 noundef %i.jb, i32 noundef 6, float noundef %i.ko, ptr noundef nonnull @.str.528, double noundef %i.kq), !inline_history !14 ; 0 uses
+  %i.kr = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.kp, ptr noundef %0, i32 noundef %i.jb, i32 noundef 6, float noundef %i.ko, ptr noundef nonnull @.str.528, double noundef %i.kq), !inline_history !12 ; 0 uses
   %i.ks = getelementptr i8, ptr %i.jc, i64 5
   %i.kt = load i16, ptr %i.ks, align 1
   %i.ku = uitofp i16 %i.kt to float
   %i.kv = fmul nnan float %i.ku, 2.500000e-01     ; 2 uses
   %i.kw = load i32, ptr @hf_solaredge_post_optimizer_energy_day_type, align 4
   %i.kx = fpext float %i.kv to double
-  %i.ky = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.kw, ptr noundef %0, i32 noundef %i.jb, i32 noundef 6, float noundef %i.kv, ptr noundef nonnull @.str.528, double noundef %i.kx), !inline_history !14 ; 0 uses
+  %i.ky = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.kw, ptr noundef %0, i32 noundef %i.jb, i32 noundef 6, float noundef %i.kv, ptr noundef nonnull @.str.528, double noundef %i.kx), !inline_history !12 ; 0 uses
   %i.kz = add nuw nsw i32 %.tr267.i, 20           ; 2 uses
-  %i.la = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.kz), !inline_history !14
+  %i.la = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.kz), !inline_history !12
   %i.lb = uitofp i8 %i.la to float
   %i.lc = fmul nnan float %i.lb, 2.000000e+00     ; 2 uses
   %i.ld = load i32, ptr @hf_solaredge_post_optimizer_temperature_type, align 4
   %i.le = fpext float %i.lc to double
-  %i.lf = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.ld, ptr noundef %0, i32 noundef %i.kz, i32 noundef 2, float noundef %i.lc, ptr noundef nonnull @.str.528, double noundef %i.le), !inline_history !14 ; 0 uses
+  %i.lf = tail call ptr (ptr, i32, ptr, i32, i32, float, ptr, ...) @proto_tree_add_float_format_value(ptr noundef %i.dq, i32 noundef %i.ld, ptr noundef %0, i32 noundef %i.kz, i32 noundef 2, float noundef %i.lc, ptr noundef nonnull @.str.528, double noundef %i.le), !inline_history !12 ; 0 uses
   %i.lg = add nuw nsw i32 %.tr267.i, 21
   br label %bb.am
 
 bb.ag:                                            ; preds = %tailrecurse.i
-  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.522), !inline_history !14
+  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.522), !inline_history !12
   %i.lh = load i32, ptr @hf_solaredge_post_event_timestamp_type, align 4
-  %i.li = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.lh, ptr noundef %0, i32 noundef %i.dx, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.li = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.lh, ptr noundef %0, i32 noundef %i.dx, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.lj = add nuw nsw i32 %.tr267.i, 12           ; 2 uses
-  %i.lk = tail call i32 @tvb_get_uint32(ptr noundef %0, i32 noundef %i.lj, i32 noundef -2147483648), !inline_history !14
+  %i.lk = tail call i32 @tvb_get_uint32(ptr noundef %0, i32 noundef %i.lj, i32 noundef -2147483648), !inline_history !12
   %i.ll = load i32, ptr @hf_solaredge_post_event_type_type, align 4
-  %i.lm = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ll, ptr noundef %0, i32 noundef %i.lj, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.lm = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ll, ptr noundef %0, i32 noundef %i.lj, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.ln = add nuw nsw i32 %.tr267.i, 16
   %i.lo = load i32, ptr @hf_solaredge_post_event_event_start_timestamp_type, align 4
-  %i.lp = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.lo, ptr noundef %0, i32 noundef %i.ln, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.lp = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.lo, ptr noundef %0, i32 noundef %i.ln, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.lq = add nuw nsw i32 %.tr267.i, 20           ; 2 uses
   %i.lr = icmp eq i32 %i.lk, 1
   br i1 %i.lr, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
   %i.ls = load i32, ptr @hf_solaredge_post_event_event_timezone_offset_type, align 4
-  %i.lt = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ls, ptr noundef %0, i32 noundef %i.lq, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.lt = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.ls, ptr noundef %0, i32 noundef %i.lq, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   %i.lu = add nuw nsw i32 %.tr267.i, 24
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %.sink289.i = phi i32 [ %i.lu, %bb.ah ], [ %i.lq, %bb.ag ]
   %i.lv = load i32, ptr @hf_solaredge_post_event_event_end_timestamp_type, align 4
-  %i.lw = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.lv, ptr noundef %0, i32 noundef %.sink289.i, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %i.lx = load i8, ptr @global_show_unknown_fields, align 1, !range !15, !noundef !16
+  %i.lw = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.lv, ptr noundef %0, i32 noundef %.sink289.i, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %i.lx = load i8, ptr @global_show_unknown_fields, align 1, !range !13, !noundef !14
   %i.ly = trunc nuw i8 %i.lx to i1
   br i1 %i.ly, label %bb.aj, label %.thread288.i
 
 bb.aj:                                            ; preds = %bb.ai
   %.0.i = add nuw nsw i32 %.tr267.i, 28
   %i.lz = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.ma = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.lz, ptr noundef %0, i32 noundef %.0.i, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
-  %.pre.i = load i8, ptr @global_show_unknown_fields, align 1, !range !15
+  %i.ma = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.lz, ptr noundef %0, i32 noundef %.0.i, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
+  %.pre.i = load i8, ptr @global_show_unknown_fields, align 1, !range !13
   %i.mb = trunc nuw i8 %.pre.i to i1
   br i1 %i.mb, label %bb.ak, label %.thread288.i
 
 bb.ak:                                            ; preds = %bb.aj
   %i.mc = add nuw nsw i32 %.tr267.i, 32
   %i.md = load i32, ptr @hf_solaredge_post_padding_uint32_type, align 4
-  %i.me = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.md, ptr noundef %0, i32 noundef %i.mc, i32 noundef 4, i32 noundef -2147483648), !inline_history !14 ; 0 uses
+  %i.me = tail call ptr @proto_tree_add_item(ptr noundef %i.dq, i32 noundef %i.md, ptr noundef %0, i32 noundef %i.mc, i32 noundef 4, i32 noundef -2147483648), !inline_history !12 ; 0 uses
   br label %.thread288.i
 
 .thread288.i:                                     ; preds = %bb.ak, %bb.aj, %bb.ai
@@ -902,33 +866,33 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.am
 
 bb.al:                                            ; preds = %tailrecurse.i
-  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.529), !inline_history !14
+  tail call void @col_append_str(ptr noundef %i.dz, i32 noundef 25, ptr noundef nonnull @.str.529), !inline_history !12
   %i.mg = add nuw nsw i32 %i.dx, %i.dm
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %.thread288.i, %bb.af, %bb.ae, %.thread287.i, %bb.o
   %.1.i99 = phi i32 [ %i.mg, %bb.al ], [ %i.fc, %bb.o ], [ %i.iu, %.thread287.i ], [ %i.iv, %bb.ae ], [ %i.lg, %bb.af ], [ %i.mf, %.thread288.i ] ; 2 uses
-  tail call void @decrement_dissection_depth(ptr noundef %1), !inline_history !14
+  tail call void @decrement_dissection_depth(ptr noundef %1), !inline_history !12
   %i.mh = icmp samesign ult i32 %.1.i99, %i.u
   br i1 %i.mh, label %bb.an, label %dissect_solaredge_devicedata.exit.loopexit
 
 bb.an:                                            ; preds = %bb.am
   %i.mi = load ptr, ptr %i.j, align 8
-  tail call void @col_append_str(ptr noundef %i.mi, i32 noundef 25, ptr noundef nonnull @.str.530), !inline_history !14
+  tail call void @col_append_str(ptr noundef %i.mi, i32 noundef 25, ptr noundef nonnull @.str.530), !inline_history !12
   br label %tailrecurse.i
 
 bb.ao:                                            ; preds = %bb.d
   %i.mj = load i32, ptr @hf_solaredge_session_key_type, align 4
   %i.mk = tail call ptr @proto_tree_add_item(ptr noundef %i.o, i32 noundef %i.mj, ptr noundef %0, i32 noundef 20, i32 noundef %i.u, i32 noundef 0) ; 0 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
   %i.ml = load i32, ptr @proto_solaredge, align 4
   %i.mm = tail call ptr @conversation_get_proto_data(ptr noundef %4, i32 noundef %i.ml) ; 2 uses
   %.not.i100 = icmp eq ptr %i.mm, null
   br i1 %.not.i100, label %solaredge_set_key.exit, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.mn = load i8, ptr %i.mm, align 8, !range !15, !noundef !16
+  %i.mn = load i8, ptr %i.mm, align 8, !range !13, !noundef !14
   %i.mo = icmp eq i8 %i.mn, 0
   br i1 %i.mo, label %bb.aq, label %solaredge_set_key.exit
 
@@ -1004,8 +968,8 @@ bb.az:                                            ; preds = %bb.ay, %bb.as, %bb.
   br label %solaredge_set_key.exit
 
 solaredge_set_key.exit:                           ; preds = %bb.ao, %bb.ap, %bb.aq, %bb.az
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #9
   %i.nr = add nuw nsw i32 %i.u, 20                ; 2 uses
   br label %dissect_solaredge_devicedata.exit
 
@@ -1024,16 +988,16 @@ dissect_solaredge_devicedata.exit:                ; preds = %dissect_solaredge_d
   %i.nt = load i32, ptr @hf_solaredge_crc_type, align 4
   %i.nu = load i32, ptr @hf_solaredge_crc_status_type, align 4
   %i.nv = call ptr @tvb_get_ptr(ptr noundef %0, i32 noundef 20, i32 noundef %i.u)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %rev.i = call i16 @llvm.bswap.i16(i16 %i.z)
   store i16 %rev.i, ptr %i.a, align 2
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %i.nw = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ac) #10, !srcloc !22
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  %i.nw = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ac) #11, !srcloc !19
   store i32 %i.nw, ptr %i.b, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
-  %i.nx = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.af) #10, !srcloc !23
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
+  %i.nx = call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.af) #11, !srcloc !20
   store i32 %i.nx, ptr %i.c, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
   %rev35.i = call i16 @llvm.bswap.i16(i16 %i.ai)
   store i16 %rev35.i, ptr %i.d, align 2
   %i.ny = call zeroext i16 @crc16_plain_update(i16 noundef zeroext 23130, ptr noundef nonnull %i.a, i64 noundef 2)
@@ -1042,10 +1006,10 @@ dissect_solaredge_devicedata.exit:                ; preds = %dissect_solaredge_d
   %i.ob = call zeroext i16 @crc16_plain_update(i16 noundef zeroext %i.oa, ptr noundef nonnull %i.d, i64 noundef 2)
   %i.oc = zext i16 %i.p to i64
   %i.od = call zeroext i16 @crc16_plain_update(i16 noundef zeroext %i.ob, ptr noundef %i.nv, i64 noundef %i.oc)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %i.oe = zext i16 %i.od to i32
   %i.of = call ptr @proto_tree_add_checksum(ptr noundef %i.o, ptr noundef %0, i32 noundef %.pre-phi, i32 noundef %i.nt, i32 noundef %i.nu, ptr noundef nonnull @ei_solaredge_invalid_crc, ptr noundef %1, i32 noundef %i.oe, i32 noundef -2147483648, i32 noundef 1) ; 0 uses
   %i.og = add nuw nsw i32 %.0, 2
@@ -1165,6 +1129,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #6
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #7
+
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1172,10 +1139,11 @@ attributes #3 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #5 = { null_pointer_is_valid allocsize(2) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { allocsize(1) }
-attributes #8 = { nounwind }
-attributes #9 = { allocsize(2) }
-attributes #10 = { nounwind memory(none) }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #8 = { allocsize(1) }
+attributes #9 = { nounwind }
+attributes #10 = { allocsize(2) }
+attributes #11 = { nounwind memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}
@@ -1186,22 +1154,19 @@ attributes #10 = { nounwind memory(none) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
-!6 = distinct !{!6, !17}
-!7 = distinct !{!7, !17}
+!6 = distinct !{!6, !15}
+!7 = distinct !{!7, !15}
 !8 = distinct !{!8, !"LVerDomain"}
 !9 = distinct !{!9, !8}
 !10 = distinct !{!10, !8}
-!11 = distinct !{!11, !17, !20, !21}
-!12 = distinct !{!12, !17, !20, !21}
-!13 = distinct !{!13, !17, !20}
-!14 = distinct !{null}
-!15 = !{i8 0, i8 2}
-!16 = !{}
-!17 = !{!"llvm.loop.mustprogress"}
-!18 = !{!9}
-!19 = !{!10}
-!20 = !{!"llvm.loop.isvectorized", i32 1}
-!21 = !{!"llvm.loop.unroll.runtime.disable"}
-!22 = !{i64 2151788293}
-!23 = !{i64 2151789036}
+!11 = distinct !{!11, !15, !18}
+!12 = distinct !{null}
+!13 = !{i8 0, i8 2}
+!14 = !{}
+!15 = !{!"llvm.loop.mustprogress"}
+!16 = !{!9}
+!17 = !{!10}
+!18 = !{!"llvm.loop.isvectorized", i32 1}
+!19 = !{i64 2151788293}
+!20 = !{i64 2151789036}
 end_hunk_0

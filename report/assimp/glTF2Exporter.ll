@@ -205,7 +205,7 @@ define linkonce_odr hidden void @_Z25ExtractTranslationSamplerRN5glTF25AssetERNS
 .noexc:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 1028
   %i.b = load i32, ptr %i.a, align 4              ; 4 uses
-  %i.c = zext i32 %i.b to i64                     ; 12 uses
+  %i.c = zext i32 %i.b to i64                     ; 11 uses
   %.not.i.i.i.i = icmp ne i32 %i.b, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.d = shl nuw nsw i64 %i.c, 2
@@ -246,22 +246,15 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i44: ; preds = %.noexc48
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 1032
   %i.r = load ptr, ptr %i.q, align 8              ; 6 uses
   %i.s = fpext float %4 to double                 ; 2 uses
-  %min.iters.check = icmp ult i32 %i.b, 13
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+  %6 = add i32 %i.b, -1431655766
+  %min.iters.check = icmp ult i32 %6, -1431655753
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %vector.scevcheck, %.lr.ph
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %n.vec, %vector.body ]
+scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %vector.body ]
   br label %scalar.ph
 
-vector.scevcheck:                                 ; preds = %.lr.ph
-  %6 = add nsw i64 %i.c, -1                       ; 2 uses
-  %7 = trunc i64 %6 to i32
-  %8 = icmp ugt i32 %7, 1431655764
-  %9 = icmp ugt i64 %6, 4294967295
-  %10 = or i1 %8, %9
-  br i1 %10, label %scalar.ph.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %.lr.ph
   %i.t = shl nuw nsw i64 %i.c, 2
   %i.u = getelementptr i8, ptr %i.e, i64 %i.t     ; 2 uses
   %i.v = mul nuw nsw i64 %i.c, 24
@@ -620,7 +613,7 @@ define linkonce_odr hidden void @_Z22ExtractRotationSamplerRN5glTF25AssetERNSt7_
 .noexc:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 1040
   %i.b = load i32, ptr %i.a, align 8              ; 4 uses
-  %i.c = zext i32 %i.b to i64                     ; 11 uses
+  %i.c = zext i32 %i.b to i64                     ; 12 uses
   %.not.i.i.i.i = icmp ne i32 %i.b, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.d = shl nuw nsw i64 %i.c, 2
@@ -664,15 +657,20 @@ bb.a:                                             ; preds = %_ZNSt6vectorIfSaIfE
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 1048
   %i.r = load ptr, ptr %i.q, align 8              ; 6 uses
   %i.s = fpext float %4 to double                 ; 2 uses
-  %6 = add i32 %i.b, -9
-  %or.cond = icmp ult i32 %6, 1073741816
-  br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
+  %or.cond = icmp ult i32 %i.b, 9
+  br i1 %or.cond, label %scalar.ph.preheader, label %vector.scevcheck
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %vector.body ]
+scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %vector.scevcheck, %.lr.ph
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %n.vec, %vector.body ]
   br label %scalar.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph
+vector.scevcheck:                                 ; preds = %.lr.ph
+  %6 = add nuw nsw i64 %i.c, 4294967295
+  %7 = and i64 %6, 3221225472
+  %mul.overflow.not = icmp eq i64 %7, 0
+  br i1 %mul.overflow.not, label %vector.memcheck, label %scalar.ph.preheader
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.t = shl nuw nsw i64 %i.c, 2
   %i.u = getelementptr i8, ptr %i.e, i64 %i.t     ; 2 uses
   %i.v = shl nuw nsw i64 %i.c, 5
@@ -858,7 +856,7 @@ define linkonce_odr hidden void @_Z19ExtractScaleSamplerRN5glTF25AssetERNSt7__cx
 .noexc:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 1056
   %i.b = load i32, ptr %i.a, align 8              ; 4 uses
-  %i.c = zext i32 %i.b to i64                     ; 12 uses
+  %i.c = zext i32 %i.b to i64                     ; 11 uses
   %.not.i.i.i.i = icmp ne i32 %i.b, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.d = shl nuw nsw i64 %i.c, 2
@@ -899,22 +897,15 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i44: ; preds = %.noexc48
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 1064
   %i.r = load ptr, ptr %i.q, align 8              ; 6 uses
   %i.s = fpext float %4 to double                 ; 2 uses
-  %min.iters.check = icmp ult i32 %i.b, 13
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+  %6 = add i32 %i.b, -1431655766
+  %min.iters.check = icmp ult i32 %6, -1431655753
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %vector.scevcheck, %.lr.ph
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %n.vec, %vector.body ]
+scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %vector.body ]
   br label %scalar.ph
 
-vector.scevcheck:                                 ; preds = %.lr.ph
-  %6 = add nsw i64 %i.c, -1                       ; 2 uses
-  %7 = trunc i64 %6 to i32
-  %8 = icmp ugt i32 %7, 1431655764
-  %9 = icmp ugt i64 %6, 4294967295
-  %10 = or i1 %8, %9
-  br i1 %10, label %scalar.ph.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %.lr.ph
   %i.t = shl nuw nsw i64 %i.c, 2
   %i.u = getelementptr i8, ptr %i.e, i64 %i.t     ; 2 uses
   %i.v = mul nuw nsw i64 %i.c, 24

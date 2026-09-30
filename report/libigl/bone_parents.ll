@@ -23,7 +23,7 @@ bb.a:
   tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %i.b, i64 noundef 1)
   %i.c = load i64, ptr %i.a, align 8, !tbaa !22   ; 11 uses
   %i.d = icmp sgt i64 %i.c, 0
-  br i1 %i.d, label %.lr.ph22, label %._crit_edge23
+  br i1 %i.d, label %.lr.ph22, label %._crit_edge
 
 .lr.ph22:                                         ; preds = %bb.a
   %i.e = load ptr, ptr %1, align 8, !tbaa !13     ; 4 uses
@@ -47,8 +47,11 @@ bb.a:
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.lr.ph.us
 
-.lr.ph.us:                                        ; preds = %._crit_edge.us, %.lr.ph22
-  %indvars.iv25 = phi i64 [ %indvars.iv.next26, %._crit_edge.us ], [ 0, %.lr.ph22 ] ; 3 uses
+._crit_edge:                                      ; preds = %.loopexit, %bb.a
+  ret void
+
+.lr.ph.us:                                        ; preds = %.lr.ph22, %.loopexit
+  %indvars.iv25 = phi i64 [ 0, %.lr.ph22 ], [ %indvars.iv.next23, %.loopexit ] ; 3 uses
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv25 ; 5 uses
   store i32 -1, ptr %i.i, align 4, !tbaa !24
   %i.j = getelementptr [4 x i8], ptr %i.f, i64 %indvars.iv25 ; 4 uses
@@ -100,7 +103,7 @@ bb.c:                                             ; preds = %vector.body, %bb.b
   br i1 %i.aa, label %middle.block, label %vector.body, !llvm.loop !18
 
 middle.block:                                     ; preds = %bb.c
-  br i1 %cmp.n, label %._crit_edge.us, label %scalar.ph.preheader
+  br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.us, %middle.block
   %indvars.iv.ph = phi i64 [ %n.vec, %middle.block ], [ 0, %.lr.ph.us ] ; 5 uses
@@ -126,10 +129,15 @@ scalar.ph.prol.loopexit.unr-lcssa:                ; preds = %bb.d, %scalar.ph.pr
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol.loopexit.unr-lcssa, %scalar.ph.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol.loopexit.unr-lcssa ]
   %i.af = icmp eq i64 %i.c, %.neg
-  br i1 %i.af, label %._crit_edge.us, label %scalar.ph
+  br i1 %i.af, label %.loopexit, label %scalar.ph
 
-scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %2
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %2 ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 4 uses
+.loopexit:                                        ; preds = %scalar.ph.prol.loopexit, %._crit_edge.us, %middle.block
+  %indvars.iv.next23 = add nuw nsw i64 %indvars.iv25, 1 ; 2 uses
+  %exitcond25.not = icmp eq i64 %indvars.iv.next23, %i.c
+  br i1 %exitcond25.not, label %._crit_edge, label %.lr.ph.us, !llvm.loop !19
+
+scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %._crit_edge.us
+  %indvars.iv = phi i64 [ %indvars.iv.next26, %._crit_edge.us ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 4 uses
   %i.ag = load i32, ptr %i.j, align 4, !tbaa !24
   %gep.us = getelementptr [4 x i8], ptr %invariant.gep.us, i64 %indvars.iv
   %i.ah = load i32, ptr %gep.us, align 4, !tbaa !24
@@ -141,31 +149,23 @@ bb.e:                                             ; preds = %scalar.ph
   store i32 %i.aj, ptr %i.i, align 4, !tbaa !24
   br label %scalar.ph.1
 
-scalar.ph.1:                                      ; preds = %bb.e, %scalar.ph
+scalar.ph.1:                                      ; preds = %scalar.ph, %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ak = load i32, ptr %i.j, align 4, !tbaa !24
   %gep.us.1 = getelementptr [4 x i8], ptr %invariant.gep.us, i64 %indvars.iv.next
   %i.al = load i32, ptr %gep.us.1, align 4, !tbaa !24
   %i.am = icmp eq i32 %i.ak, %i.al
-  br i1 %i.am, label %bb.f, label %2
+  br i1 %i.am, label %bb.f, label %._crit_edge.us
 
 bb.f:                                             ; preds = %scalar.ph.1
   %i.an = trunc nuw nsw i64 %indvars.iv.next to i32
   store i32 %i.an, ptr %i.i, align 4, !tbaa !24
-  br label %2
+  br label %._crit_edge.us
 
-2:                                                ; preds = %bb.f, %scalar.ph.1
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %i.c
-  br i1 %exitcond.not.1, label %._crit_edge.us, label %scalar.ph, !llvm.loop !19
-
-._crit_edge.us:                                   ; preds = %scalar.ph.prol.loopexit, %2, %middle.block
-  %indvars.iv.next26 = add nuw nsw i64 %indvars.iv25, 1 ; 2 uses
+._crit_edge.us:                                   ; preds = %bb.f, %scalar.ph.1
+  %indvars.iv.next26 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond28.not = icmp eq i64 %indvars.iv.next26, %i.c
-  br i1 %exitcond28.not, label %._crit_edge23, label %.lr.ph.us, !llvm.loop !20
-
-._crit_edge23:                                    ; preds = %._crit_edge.us, %bb.a
-  ret void
+  br i1 %exitcond28.not, label %.loopexit, label %scalar.ph, !llvm.loop !20
 }
 
 ; Function Attrs: inlinehint mustprogress uwtable
@@ -281,8 +281,8 @@ attributes #8 = { nounwind allocsize(0) }
 !16 = distinct !{!16, !14}
 !17 = distinct !{!17, !14}
 !18 = distinct !{!18, !29, !30, !31}
-!19 = distinct !{!19, !29, !30}
-!20 = distinct !{!20, !29}
+!19 = distinct !{!19, !29}
+!20 = distinct !{!20, !29, !30}
 !21 = !{!"_ZTSN5Eigen12DenseStorageIiLin1ELin1ELin1ELi0EEE", !10, i64 0, !11, i64 8, !11, i64 16}
 !22 = !{!21, !11, i64 8}
 !23 = !{!21, !10, i64 0}

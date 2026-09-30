@@ -205,7 +205,7 @@ bb.bn:                                            ; preds = %bb.ba, %bb.az, %bb.
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -2147483648, 1) i32 @flac_encode_frame(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(none) %3) #1 {
 bb.a:
-  %i.a = alloca [4 x i64], align 16               ; 7 uses
+  %i.a = alloca [4 x i64], align 16               ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !31   ; 70 uses
   %.not = icmp eq ptr %2, null
@@ -608,9 +608,7 @@ estimate_stereo_mode.exit.i:                      ; preds = %bb.ah, %find_optima
   %i.ul = add i64 %i.uh, %i.tv                    ; 2 uses
   %i.um = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i64 %i.ul, ptr %i.um, align 16, !tbaa !77
-  %i.un = add i64 %i.tp, %i.uh                    ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i64 %i.un, ptr %4, align 8, !tbaa !77
+  %i.un = add i64 %i.tp, %i.uh
   %i.uo = icmp ult i64 %i.uj, %i.ui
   %spec.select.i.i = zext i1 %i.uo to i32
   %i.up = tail call i64 @llvm.umin.i64(i64 %i.uj, i64 %i.ui)

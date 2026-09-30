@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %doubleebx.exit222, 
   %.2 = phi i32 [ %i.ec, %doubleebx.exit222 ], [ %i.eg, %bb.al ], [ %i.fr, %bb.av ]
   %i.fs = icmp ult i32 %.1141, -1280
   %i.ft = zext i1 %i.fs to i32
-  %spec.select = add i32 %.2, %i.ft               ; 4 uses
+  %spec.select = add i32 %.2, %i.ft               ; 5 uses
   %i.fu = icmp ugt i32 %spec.select, -3
   br i1 %i.fu, label %doubleebx.exit.thread, label %bb.ax
 
@@ -213,7 +213,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.fw = load i32, ptr %3, align 4, !tbaa !9     ; 3 uses
   %i.fx = zext i32 %i.fw to i64
   %.not174 = icmp eq i32 %i.fw, 0
-  %i.fy = zext i32 %i.fv to i64                   ; 11 uses
+  %i.fy = zext i32 %i.fv to i64                   ; 10 uses
   %.not175 = icmp ugt i32 %i.fv, %i.fw
   %or.cond = select i1 %.not174, i1 true, i1 %.not175
   br i1 %or.cond, label %doubleebx.exit.thread, label %bb.ay
@@ -257,15 +257,12 @@ iter.check:                                       ; preds = %bb.bb
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %7 = add nsw i64 %i.fy, -1                      ; 2 uses
-  %8 = trunc i64 %7 to i32                        ; 2 uses
+  %7 = add i32 %spec.select, 1                    ; 2 uses
   %i.go = xor i32 %i.y, -1
-  %9 = icmp ult i32 %i.go, %8
+  %8 = icmp ugt i32 %7, %i.go
   %i.gp = xor i32 %i.gn, -1
-  %10 = icmp ult i32 %i.gp, %8
-  %i.gq = icmp ugt i64 %7, 4294967295
-  %11 = or i1 %10, %i.gq
-  %i.gr = or i1 %9, %11
+  %i.gq = icmp ugt i32 %7, %i.gp
+  %i.gr = or i1 %8, %i.gq
   br i1 %i.gr, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

@@ -205,7 +205,7 @@ BN_free.exit:                                     ; preds = %bb.h, %bb.i, %bb.c,
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i32 0, 2) i32 @bn_mod_lshift_consttime(ptr nofree noundef captures(address) %0, ptr nofree noundef readonly captures(address) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4) local_unnamed_addr #0 {
+define hidden noundef range(i32 0, 2) i32 @bn_mod_lshift_consttime(ptr nofree noundef captures(address) %0, ptr nofree noundef readonly captures(address) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @BN_copy(ptr noundef %0, ptr noundef %1)
   %.not = icmp eq ptr %i.a, null
@@ -608,7 +608,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 2) i32 @EC_GROUP_get_order(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef captures(address) %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 {
+define noundef range(i32 0, 2) i32 @EC_GROUP_get_order(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef captures(address) %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.b = tail call ptr @BN_copy(ptr noundef %1, ptr noundef nonnull %i.a)
@@ -1011,7 +1011,7 @@ define noundef range(i32 0, 2) i32 @ml_dsa_44_keypair(ptr nofree noundef capture
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 2) i32 @ml_dsa_44_pack_pk_from_sk(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
+define noundef range(i32 0, 2) i32 @ml_dsa_44_pack_pk_from_sk(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %2 = alloca %struct.keccak_ctx_st, align 8      ; 11 uses
   %i.a = alloca [32 x i8], align 32               ; 6 uses
@@ -1398,7 +1398,7 @@ mldsa44_pk_from_sk.exit:                          ; preds = %mld_shake256.exit.i
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 2) i32 @ml_dsa_44_sign(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, ptr nofree noundef readonly captures(address_is_null) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5, i64 noundef %6) #0 {
+define noundef range(i32 0, 2) i32 @ml_dsa_44_sign(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, ptr nofree noundef readonly captures(address_is_null) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5, i64 noundef %6) #0 {
 bb.a:
   %i.a = alloca [332 x i8], align 32              ; 7 uses
   %i.b = alloca [32 x i8], align 32               ; 5 uses
@@ -1801,7 +1801,7 @@ mldsa65_pack_sk_rho_key_tr_s2.exit:               ; preds = %vector.body105
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 2) i32 @ml_dsa_65_pack_pk_from_sk(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
+define noundef range(i32 0, 2) i32 @ml_dsa_65_pack_pk_from_sk(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %2 = alloca %struct.keccak_ctx_st, align 8      ; 11 uses
   %i.a = alloca [32 x i8], align 32               ; 6 uses
@@ -2204,7 +2204,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 2) i32 @ml_dsa_65_sign(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, ptr nofree noundef readonly captures(address_is_null) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5, i64 noundef %6) #0 {
+define noundef range(i32 0, 2) i32 @ml_dsa_65_sign(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, ptr nofree noundef readonly captures(address_is_null) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5, i64 noundef %6) #0 {
 bb.a:
   %i.a = alloca [332 x i8], align 32              ; 7 uses
   %i.b = alloca [32 x i8], align 32               ; 5 uses
@@ -2607,7 +2607,7 @@ mldsa87_pack_sk_rho_key_tr_s2.exit:               ; preds = %mldsa87_polyeta_pac
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 2) i32 @ml_dsa_87_pack_pk_from_sk(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
+define noundef range(i32 0, 2) i32 @ml_dsa_87_pack_pk_from_sk(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %2 = alloca %struct.keccak_ctx_st, align 8      ; 11 uses
   %i.a = alloca [32 x i8], align 32               ; 6 uses
@@ -2893,7 +2893,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 2) i32 @ml_dsa_87_sign(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, ptr nofree noundef readonly captures(address_is_null) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5, i64 noundef %6) #0 {
+define noundef range(i32 0, 2) i32 @ml_dsa_87_sign(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2, ptr nofree noundef readonly captures(address_is_null) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5, i64 noundef %6) #0 {
 bb.a:
   %i.a = alloca [332 x i8], align 32              ; 7 uses
   %i.b = alloca [32 x i8], align 32               ; 5 uses
@@ -3296,7 +3296,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define range(i32 0, 2) i32 @FIPS_mode_set(i32 noundef %0) local_unnamed_addr #17 {
+define noundef range(i32 0, 2) i32 @FIPS_mode_set(i32 noundef %0) local_unnamed_addr #17 {
 bb.a:
   %i.a = icmp eq i32 %0, 0
   %i.b = zext i1 %i.a to i32

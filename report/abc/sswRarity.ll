@@ -205,13 +205,11 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.i = shl nuw i32 %.val.val, 1                 ; 2 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1) ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64   ; 5 uses
-  %min.iters.check = icmp slt i32 %i.i, 8
-  %i.j = add nsw i32 %smax, -129
-  %i.k = icmp ult i32 %i.j, -128
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %i.k
-  br i1 %or.cond, label %.lr.ph.preheader20, label %vector.ph
+  %i.j = add i32 %i.i, -129
+  %i.k = icmp ult i32 %i.j, -121
+  br i1 %i.k, label %.lr.ph.preheader20, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %wide.trip.count, 248          ; 3 uses

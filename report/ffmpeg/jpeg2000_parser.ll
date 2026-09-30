@@ -50,13 +50,13 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %info_marker.exit.thread.i, %.lr.ph.i
-  %i.u = phi i32 [ %.promoted.i, %.lr.ph.i ], [ %i.cd, %info_marker.exit.thread.i ] ; 7 uses
+  %i.u = phi i32 [ %.promoted.i, %.lr.ph.i ], [ %i.cd, %info_marker.exit.thread.i ] ; 6 uses
   %.0156.i = phi i64 [ %i.j, %.lr.ph.i ], [ %.3.i, %info_marker.exit.thread.i ]
   %.097155.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.z, %info_marker.exit.thread.i ] ; 2 uses
   %.098154.i = phi i32 [ 0, %.lr.ph.i ], [ %i.ce, %info_marker.exit.thread.i ] ; 25 uses
   %i.v = shl i64 %.097155.i, 8                    ; 2 uses
-  %6 = zext nneg i32 %.098154.i to i64
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 %6
+  %6 = sext i32 %.098154.i to i64
+  %i.w = getelementptr inbounds i8, ptr %4, i64 %6
   %i.x = load i8, ptr %i.w, align 1, !tbaa !24
   %i.y = zext i8 %i.x to i64
   %i.z = or disjoint i64 %i.v, %i.y               ; 7 uses
@@ -69,33 +69,25 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ab, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %7 = zext i32 %i.u to i64
-  %8 = add nsw i64 %7, -8                         ; 2 uses
   %i.ac = sub i32 %i.n, %.098154.i
-  %i.ad = sext i32 %i.ac to i64                   ; 2 uses
-  %9 = icmp sle i64 %8, %i.ad
-  %10 = icmp ugt i32 %i.u, -2147483641
-  %11 = and i1 %10, %9
-  br i1 %11, label %.thread.i.a, label %12
+  %i.ad = sext i32 %i.ac to i64
+  %7 = zext i32 %i.u to i64
+  %8 = add nsw i64 %7, -8
+  %9 = tail call i64 @llvm.smin.i64(i64 %8, i64 %i.ad) ; 3 uses
+  %10 = icmp sgt i64 %9, 0
+  br i1 %10, label %.thread.i.a, label %bb.g
 
-12:                                               ; preds = %bb.f
-  %spec.select132.i = tail call i64 @llvm.smin.i64(i64 %8, i64 %i.ad) ; 2 uses
-  %spec.select.i = trunc nuw nsw i64 %spec.select132.i to i32
-  %13 = icmp sgt i64 %spec.select132.i, 0
-  br i1 %13, label %.thread.i.a, label %bb.g
-
-.thread.i.a:                                      ; preds = %12, %bb.f
-  %14 = phi i32 [ %spec.select.i, %12 ], [ 2147483647, %bb.f ] ; 3 uses
-  %i.ae = sub i32 %i.u, %14
-  %i.af = add nuw nsw i32 %14, %.098154.i
-  %15 = zext nneg i32 %14 to i64
-  %i.ag = add i64 %i.aa, %15
+.thread.i.a:                                      ; preds = %bb.f
+  %11 = trunc nuw nsw i64 %9 to i32               ; 2 uses
+  %i.ae = sub i32 %i.u, %11
+  %i.af = add nsw i32 %.098154.i, %11
+  %i.ag = add i64 %9, %i.aa
   br label %bb.g
 
-bb.g:                                             ; preds = %.thread.i.a, %12, %bb.e
-  %i.ah = phi i32 [ %i.u, %bb.e ], [ %i.ae, %.thread.i.a ], [ %i.u, %12 ]
-  %.2100.i = phi i32 [ %.098154.i, %bb.e ], [ %i.af, %.thread.i.a ], [ %.098154.i, %12 ]
-  %.2.i = phi i64 [ %i.aa, %bb.e ], [ %i.ag, %.thread.i.a ], [ %i.aa, %12 ]
+bb.g:                                             ; preds = %.thread.i.a, %bb.f, %bb.e
+  %i.ah = phi i32 [ %i.u, %bb.e ], [ %i.ae, %.thread.i.a ], [ %i.u, %bb.f ]
+  %.2100.i = phi i32 [ %.098154.i, %bb.e ], [ %i.af, %.thread.i.a ], [ %.098154.i, %bb.f ]
+  %.2.i = phi i64 [ %i.aa, %bb.e ], [ %i.ag, %.thread.i.a ], [ %i.aa, %bb.f ]
   %i.ai = add i32 %i.ah, -1                       ; 2 uses
   store i32 %i.ai, ptr %i.m, align 8, !tbaa !23
   br label %info_marker.exit.thread.i
@@ -228,7 +220,7 @@ bb.ab:                                            ; preds = %bb.z
   store i8 0, ptr %i.t, align 4, !tbaa !29
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.m, i8 0, i64 9, i1 false)
-  %i.bf = add nuw nsw i32 %.098154.i, 1
+  %i.bf = add nsw i32 %.098154.i, 1
   br label %find_frame_end.exit
 
 .thread129.i:                                     ; preds = %bb.aa, %bb.z, %bb.y
@@ -272,12 +264,12 @@ bb.ah:                                            ; preds = %bb.ag
   %i.bo = trunc nuw nsw i64 %i.ax to i32          ; 3 uses
   %i.bp = add nsw i32 %i.bo, -1                   ; 5 uses
   store i32 %i.bp, ptr %i.m, align 8, !tbaa !23
-  %i.bq = add nuw i32 %.098154.i, %i.bo           ; 2 uses
+  %i.bq = add i32 %.098154.i, %i.bo               ; 2 uses
   %i.br = icmp ult i32 %i.bq, %5
   br i1 %i.br, label %bb.ai, label %info_marker.exit.thread.i
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.bs = add nuw i32 %i.bp, %.098154.i
+  %i.bs = add i32 %i.bp, %.098154.i
   %i.bt = zext i32 %i.bs to i64
   %i.bu = getelementptr inbounds nuw i8, ptr %4, i64 %i.bt
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !24
@@ -303,7 +295,7 @@ info_marker.exit.thread.i:                        ; preds = %bb.aj, %info_marker
   %i.cd = phi i32 [ %i.ai, %bb.g ], [ %i.am, %bb.j ], [ 0, %bb.r ], [ 0, %bb.w ], [ 0, %bb.v ], [ 0, %bb.ac ], [ 0, %bb.u ], [ 0, %.thread129.i ], [ 0, %bb.ae ], [ 0, %bb.ag ], [ %i.bp, %bb.ah ], [ 0, %info_marker.exit.i ], [ %i.cc, %bb.aj ], [ %i.bp, %info_marker.exit128.i ], [ 0, %bb.af ], [ %i.bp, %bb.ai ]
   %.3101.i = phi i32 [ %.2100.i, %bb.g ], [ %.098154.i, %bb.j ], [ %.098154.i, %bb.r ], [ %.098154.i, %bb.w ], [ %.098154.i, %bb.v ], [ %.098154.i, %bb.ac ], [ %.098154.i, %bb.u ], [ %.098154.i, %.thread129.i ], [ %.098154.i, %bb.ae ], [ %.098154.i, %bb.ag ], [ %.098154.i, %bb.ah ], [ %.098154.i, %info_marker.exit.i ], [ %.098154.i, %bb.aj ], [ %.098154.i, %info_marker.exit128.i ], [ %.098154.i, %bb.af ], [ %.098154.i, %bb.ai ]
   %.3.i = phi i64 [ %.2.i, %bb.g ], [ %i.aa, %bb.j ], [ %i.aa, %bb.r ], [ %i.aa, %bb.w ], [ %i.aa, %bb.v ], [ %i.aa, %bb.ac ], [ %i.aa, %bb.u ], [ %i.aa, %.thread129.i ], [ %i.aa, %bb.ae ], [ %i.aa, %bb.ag ], [ %i.aa, %bb.ah ], [ %i.aa, %info_marker.exit.i ], [ %i.aa, %bb.aj ], [ %i.aa, %info_marker.exit128.i ], [ %i.aa, %bb.af ], [ %i.aa, %bb.ai ] ; 2 uses
-  %i.ce = add nuw nsw i32 %.3101.i, 1             ; 2 uses
+  %i.ce = add nsw i32 %.3101.i, 1                 ; 2 uses
   %i.cf = icmp slt i32 %i.ce, %5
   br i1 %i.cf, label %bb.d, label %._crit_edge.i, !llvm.loop !9
 

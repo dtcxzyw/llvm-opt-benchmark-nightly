@@ -205,18 +205,17 @@ bb.a:
   %i.c = alloca [3 x double], align 16            ; 5 uses
   %i.d = alloca [3 x ptr], align 16               ; 12 uses
   %i.e = alloca [3 x double], align 16            ; 9 uses
-  %i.f = alloca [4 x i32], align 16               ; 10 uses
+  %i.f = alloca [4 x i32], align 16               ; 9 uses
   %i.g = icmp sgt i32 %2, 0
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 12
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 4 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 4 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   br label %.lr.ph.i
@@ -234,7 +233,9 @@ bb.a:
   call void @_Z13eval_residualPKdS0_Pd(ptr noundef %1, ptr noundef %0, ptr noundef nonnull %i.e)
   call void @_Z13eval_jacobianPKdS0_PPd(ptr noundef %1, ptr noundef %0, ptr noundef nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #32
-  store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %i.f, align 16, !tbaa !14
+  store i32 0, ptr %i.f, align 16, !tbaa !14
+  store i32 1, ptr %i.l, align 4, !tbaa !14
+  store i32 2, ptr %i.m, align 8, !tbaa !14
   %i.p = load double, ptr %i.a, align 16, !tbaa !13 ; 2 uses
   %i.q = call double @llvm.fabs.f64(double %i.p)
   %i.r = fcmp one double %i.p, 0.000000e+00
@@ -253,7 +254,6 @@ bb.a:
   br i1 %i.y, label %bb.f, label %bb.d
 
 .loopexit.i:                                      ; preds = %bb.d, %bb.e
-  %4 = phi i32 [ 5, %bb.e ], [ 4, %bb.d ]
   %i.z = load ptr, ptr %i.d, align 16, !tbaa !20  ; 4 uses
   %i.aa = load double, ptr %i.z, align 8, !tbaa !13
   %i.ab = load ptr, ptr %i.h, align 8, !tbaa !20  ; 5 uses
@@ -311,7 +311,6 @@ bb.c:                                             ; preds = %bb.b
   %i.bl = load ptr, ptr %i.n, align 16, !tbaa !20
   store ptr %i.bl, ptr %i.h, align 8, !tbaa !20
   store ptr %i.ab, ptr %i.n, align 16, !tbaa !20
-  store i32 %4, ptr %3, align 4, !tbaa !14
   br label %.loopexit.i.1
 
 .loopexit.i.1:                                    ; preds = %bb.c, %bb.b

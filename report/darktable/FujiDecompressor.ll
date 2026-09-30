@@ -204,7 +204,6 @@ switch.lookup:                                    ; preds = %_ZSt4fillIPiiEvT_S1
   %i.pu = load i32, ptr %i.ek, align 4            ; 10 uses
   %i.pv = icmp sgt i32 %i.pu, -1
   %i.pw = load i32, ptr %i.el, align 8            ; 28 uses
-  %12 = icmp sgt i32 %i.pw, -1                    ; 2 uses
   %i.px = load i32, ptr %i.ej, align 8            ; 6 uses
   %i.py = icmp sge i32 %i.px, %i.pu               ; 2 uses
   %i.pz = mul nuw nsw i32 %i.px, %i.pw
@@ -607,7 +606,6 @@ bb.bc:                                            ; preds = %bb.bb, %bb.az
 .preheader.i.i.i.i.i:                             ; preds = %.loopexit141.i.i.i.i.i
   call void @llvm.assume(i1 %i.pt)
   call void @llvm.assume(i1 %i.pv)
-  call void @llvm.assume(i1 %12)
   call void @llvm.assume(i1 %i.py)
   call void @llvm.assume(i1 %i.qa)
   %.val35.i.i.i.i.i = load ptr, ptr %i.og, align 8, !tbaa !136 ; 2 uses
@@ -976,6 +974,7 @@ _ZN8rawspeed12_GLOBAL__N_121fuji_compressed_block18fuji_decode_sampleEiiRSt5arra
 "_ZZN8rawspeed12_GLOBAL__N_121fuji_compressed_block17fuji_decode_blockIZNS1_19xtrans_decode_blockEiE3$_0EEvT_iENKUlSt5arrayINS0_8xt_linesELm2EEiE_clES7_i.exit.i.i.i.i": ; preds = %.loopexit.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   call void @llvm.assume(i1 %i.pt)
+  %12 = icmp sgt i32 %i.pw, -1
   call void @llvm.assume(i1 %12)
   call void @llvm.assume(i1 %i.py)
   call void @llvm.assume(i1 %i.qa)
@@ -1378,7 +1377,7 @@ switch.lookup227:                                 ; preds = %_ZSt4fillIPiiEvT_S1
   %i.auq = load i32, ptr %i.ek, align 4           ; 16 uses
   %i.aur = icmp sgt i32 %i.auq, -1                ; 2 uses
   %i.aus = load i32, ptr %i.el, align 8           ; 31 uses
-  %i.aut = icmp sgt i32 %i.aus, -1                ; 3 uses
+  %i.aut = icmp sgt i32 %i.aus, -1                ; 2 uses
   %i.auu = load i32, ptr %i.ej, align 8           ; 9 uses
   %i.auv = icmp sge i32 %i.auu, %i.auq            ; 3 uses
   %i.auw = mul nuw nsw i32 %i.auu, %i.aus
@@ -1769,7 +1768,6 @@ bb.dd:                                            ; preds = %bb.dc, %bb.da
 .preheader.i.i67.i.i.i:                           ; preds = %.loopexit140.i.i.i.i.i
   call void @llvm.assume(i1 %i.aup)
   call void @llvm.assume(i1 %i.aur)
-  call void @llvm.assume(i1 %i.aut)
   call void @llvm.assume(i1 %i.auv)
   call void @llvm.assume(i1 %i.aux)
   %.val35.i.i68.i.i.i = load ptr, ptr %i.og, align 8, !tbaa !136 ; 2 uses

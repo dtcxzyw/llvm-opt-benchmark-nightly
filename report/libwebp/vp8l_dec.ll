@@ -205,11 +205,11 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.be, label %.lr.ph.preheader.i, label %.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.g
-  %i.bf = shl i32 %i.ai, 2
+  %i.bf = shl i32 %i.ai, 2                        ; 2 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.bf, i32 5) ; 4 uses
   %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 6 uses
-  %i.bg = add nsw i64 %wide.trip.count.i, -4      ; 3 uses
-  %min.iters.check = icmp ult i64 %i.bg, 4
+  %i.bg = add nsw i64 %wide.trip.count.i, -4      ; 2 uses
+  %min.iters.check = icmp slt i32 %i.bf, 8
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i

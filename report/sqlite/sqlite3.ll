@@ -206,7 +206,7 @@ bb.er:                                            ; preds = %bb.ep, %bb.eq
 
 bb.es:                                            ; preds = %bb.er
   %.neg = sext i1 %i.yj to i32
-  %i.yo = add i32 %.0757.lcssa, %.neg
+  %i.yo = add nsw i32 %.0757.lcssa, %.neg
   %i.yp = icmp sgt i32 %i.yo, 0
   br i1 %i.yp, label %bb.et, label %.thread99
 
@@ -609,7 +609,7 @@ bb.p:                                             ; preds = %sqlite3ExprIsVector
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc range(i32 0, 2) i32 @sqlite3IndexAffinityOk(ptr nofree noundef readonly captures(none) %0, i8 noundef signext %1) unnamed_addr #16 {
+define internal fastcc noundef range(i32 0, 2) i32 @sqlite3IndexAffinityOk(ptr nofree noundef readonly captures(none) %0, i8 noundef signext %1) unnamed_addr #16 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !796
@@ -1012,7 +1012,7 @@ fts3GrowSegReaderBuffer.exit:                     ; preds = %sqlite3Fts3PutVarin
   %.4 = phi i64 [ %.0174410, %bb.ba ], [ %spec.select235, %sqlite3Fts3FirstFilter.exit ], [ %i.fg, %bb.bu ], [ %i.fg, %sqlite3Fts3PutVarint.exit ]
   %i.oq = icmp eq i32 %.0173.lcssa, %.0183.lcssa
   %i.or = sext i1 %i.oq to i32
-  %spec.select.i280 = add i32 %.0173.lcssa, %i.or ; 3 uses
+  %spec.select.i280 = add nsw i32 %.0173.lcssa, %i.or ; 3 uses
   %i.os = icmp sgt i32 %spec.select.i280, 0
   br i1 %i.os, label %.preheader.lr.ph.i282, label %fts3SegReaderSort.exit295
 
@@ -1415,7 +1415,7 @@ fts3SegReaderNextDocid.exit:                      ; preds = %bb.g, %.critedge.i,
   %i.cv = load ptr, ptr %1, align 8, !tbaa !2639  ; 3 uses
   %i.cw = icmp eq i32 %.089, %i.g
   %i.cx = sext i1 %i.cw to i32
-  %spec.select.i = add i32 %.089, %i.cx           ; 3 uses
+  %spec.select.i = add nsw i32 %.089, %i.cx       ; 3 uses
   %i.cy = icmp sgt i32 %spec.select.i, 0
   br i1 %i.cy, label %.preheader.lr.ph.i, label %fts3SegReaderSort.exit
 

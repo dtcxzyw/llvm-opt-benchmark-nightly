@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
-  %.145121 = phi i64 [ %i.v, %bb.g ], [ %spec.select, %.lr.ph.preheader ] ; 2 uses
-  %.047120 = phi i64 [ %i.u, %bb.g ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %.145121 = phi i64 [ %spec.select, %.lr.ph.preheader ], [ %i.v, %bb.g ] ; 2 uses
+  %.047120 = phi i64 [ 0, %.lr.ph.preheader ], [ %i.u, %bb.g ] ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 %.145121
   %i.k = load i8, ptr %i.j, align 1, !tbaa !254   ; 3 uses
   %i.l = icmp eq i8 %i.k, 46
@@ -246,8 +246,8 @@ bb.g:                                             ; preds = %bb.e
   %exitcond.not = icmp eq i64 %i.v, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !2402
 
-._crit_edge:                                      ; preds = %bb.g, %.lr.ph
-  %.047.lcssa.ph = phi i64 [ %i.u, %bb.g ], [ %.047120, %.lr.ph ] ; 6 uses
+._crit_edge:                                      ; preds = %.lr.ph, %bb.g
+  %.047.lcssa.ph = phi i64 [ %.047120, %.lr.ph ], [ %i.u, %bb.g ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #58
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   store ptr %i.w, ptr %3, align 8, !tbaa !328

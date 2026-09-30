@@ -205,9 +205,8 @@ bb.a:
   %i.c = load i16, ptr %i.b, align 2, !tbaa !355
   %i.d = lshr i16 %i.c, 8                         ; 2 uses
   %i.e = zext nneg i16 %i.d to i64
-  %trunc = trunc nuw i16 %i.d to i8
-  %trunc.off = add i8 %trunc, -1
-  %switch = icmp ult i8 %trunc.off, -3
+  %7 = add nsw i16 %i.d, -1
+  %switch = icmp ult i16 %7, 253
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8
   %i.h = icmp eq i64 %i.g, 0
