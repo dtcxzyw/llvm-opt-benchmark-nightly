@@ -204,7 +204,11 @@ bb.a:
 
 .preheader48.i:                                   ; preds = %bb.a
   %i.f = icmp sgt i32 %2, 0
-  br i1 %i.f, label %.lr.ph.i, label %.preheader.thread.i
+  br i1 %i.f, label %.lr.ph.preheader.i, label %.preheader.thread.i
+
+.lr.ph.preheader.i:                               ; preds = %.preheader48.i
+  %5 = zext nneg i32 %2 to i64
+  br label %.lr.ph.i
 
 bb.b:                                             ; preds = %bb.a
   %.not47.i = icmp eq ptr %3, null
@@ -219,8 +223,8 @@ bb.c:                                             ; preds = %bb.b
   %i.g = icmp eq i32 %.pre.i, 0
   br i1 %i.g, label %.preheader.thread.i, label %bb.k
 
-.lr.ph.i:                                         ; preds = %.preheader48.i, %bb.j
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.j ], [ 0, %.preheader48.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %bb.j, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.j ] ; 2 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.i ; 4 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !27
   %i.j = call i32 @getClientTypeByName(ptr noundef %i.i) #25 ; 2 uses
@@ -283,8 +287,7 @@ bb.j:                                             ; preds = %bb.g
   %i.ag = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.ab
   store i32 1, ptr %i.ag, align 4, !tbaa !21
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %5 = trunc nuw i64 %indvars.iv.next.i to i32
-  %6 = icmp sgt i32 %2, %5
+  %6 = icmp samesign ult i64 %indvars.iv.next.i, %5
   br i1 %6, label %.lr.ph.i, label %.preheader.i, !llvm.loop !240
 
 bb.k:                                             ; preds = %.preheader.i

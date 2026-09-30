@@ -41,6 +41,8 @@ bb.c:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
   %.not28 = icmp ult i64 %4, 2
+  %9 = add nsw i64 %6, -1
+  %10 = lshr i64 %9, 5                            ; 2 uses
   br i1 %.not28, label %.lr.ph32.split.us, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph32
@@ -51,8 +53,8 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph32.split.us:                                ; preds = %.lr.ph32, %.lr.ph32.split.us
   %i.k = phi i64 [ %i.x, %.lr.ph32.split.us ], [ 0, %.lr.ph32 ] ; 2 uses
-  %.02430.us = phi i64 [ %i.l, %.lr.ph32.split.us ], [ 0, %.lr.ph32 ]
-  %i.l = add i64 %.02430.us, 1                    ; 6 uses
+  %.02430.us = phi i64 [ %i.l, %.lr.ph32.split.us ], [ 0, %.lr.ph32 ] ; 2 uses
+  %i.l = add nuw nsw i64 %.02430.us, 1            ; 6 uses
   %i.m = trunc i64 %i.l to i8
   store i8 %i.m, ptr %i.g, align 1
   %i.n = lshr i64 %i.l, 8
@@ -71,14 +73,14 @@ bb.c:                                             ; preds = %bb.a
   %spec.store.select.us = call i64 @llvm.umin.i64(i64 %i.v, i64 32)
   %i.w = getelementptr i8, ptr %5, i64 %i.k
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.w, ptr noundef nonnull align 16 %i.b, i64 noundef range(i64 -137438953439, 137438953441) %spec.store.select.us, i1 noundef false) #5
-  %i.x = shl i64 %i.l, 5                          ; 2 uses
-  %9 = icmp ult i64 %i.x, %6
-  br i1 %9, label %.lr.ph32.split.us, label %._crit_edge33, !llvm.loop !4
+  %i.x = shl nuw i64 %i.l, 5
+  %exitcond37.not = icmp eq i64 %.02430.us, %10
+  br i1 %exitcond37.not, label %._crit_edge33, label %.lr.ph32.split.us, !llvm.loop !4
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
   %i.y = phi i64 [ %i.av, %._crit_edge ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %.02430 = phi i64 [ %i.z, %._crit_edge ], [ 0, %.lr.ph.preheader ]
-  %i.z = add i64 %.02430, 1                       ; 6 uses
+  %.02430 = phi i64 [ %i.z, %._crit_edge ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %i.z = add nuw nsw i64 %.02430, 1               ; 6 uses
   %i.aa = trunc i64 %i.z to i8
   store i8 %i.aa, ptr %i.g, align 1
   %i.ab = lshr i64 %i.z, 8
@@ -120,9 +122,9 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %spec.store.select = call i64 @llvm.umin.i64(i64 %i.at, i64 32)
   %i.au = getelementptr i8, ptr %5, i64 %i.y
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.au, ptr noundef nonnull align 16 %i.c, i64 noundef range(i64 -137438953439, 137438953441) %spec.store.select, i1 noundef false) #5
-  %i.av = shl i64 %i.z, 5                         ; 2 uses
-  %10 = icmp ult i64 %i.av, %6
-  br i1 %10, label %.lr.ph, label %._crit_edge33, !llvm.loop !4
+  %i.av = shl nuw i64 %i.z, 5
+  %exitcond.not = icmp eq i64 %.02430, %10
+  br i1 %exitcond.not, label %._crit_edge33, label %.lr.ph, !llvm.loop !4
 
 ._crit_edge33:                                    ; preds = %._crit_edge, %.lr.ph32.split.us, %bb.c
   call void @sodium_memzero(ptr noundef nonnull %7, i64 noundef 208) #5
