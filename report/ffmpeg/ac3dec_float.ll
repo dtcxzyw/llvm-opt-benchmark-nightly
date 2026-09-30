@@ -205,7 +205,7 @@ bb.he:                                            ; preds = %bb.hd, %bb.hc, %.lo
   br i1 %.not553.not.i, label %bb.gs, label %._crit_edge808.i, !llvm.loop !109
 
 ._crit_edge808.i:                                 ; preds = %bb.he, %bb.gr
-  %i.bwj = phi i32 [ %i.bqo, %bb.gr ], [ %i.bwh, %bb.he ] ; 14 uses
+  %i.bwj = phi i32 [ %i.bqo, %bb.gr ], [ %i.bwh, %bb.he ] ; 13 uses
   %i.bwk = load i32, ptr %i.di, align 16, !tbaa !222
   %.not554.i = icmp eq i32 %i.bwk, 0
   br i1 %.not554.i, label %.loopexit757.i, label %bb.hf
@@ -320,17 +320,17 @@ iter.check:                                       ; preds = %bb.hg
   %i.bzt = zext i1 %.not547.i to i64              ; 4 uses
   %i.bzu = add nuw i32 %i.bwj, 1
   %wide.trip.count904.i = zext i32 %i.bzu to i64  ; 2 uses
-  %i.bzv = sub nsw i64 %wide.trip.count904.i, %i.bzt ; 7 uses
-  %min.iters.check1107 = icmp ult i64 %i.bzv, 8
+  %i.bzv = sub nuw nsw i64 %wide.trip.count904.i, %i.bzt ; 7 uses
+  %min.iters.check1107 = icmp samesign ult i64 %i.bzv, 8
   br i1 %min.iters.check1107, label %.lr.ph813.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check1108 = icmp ult i64 %i.bzv, 32
+  %min.iters.check1108 = icmp samesign ult i64 %i.bzv, 32
   br i1 %min.iters.check1108, label %vec.epilog.ph, label %vector.ph1109
 
 vector.ph1109:                                    ; preds = %vector.main.loop.iter.check
   %i.bzw = and i64 %i.bzv, 24
-  %n.vec1110 = and i64 %i.bzv, -32                ; 4 uses
+  %n.vec1110 = and i64 %i.bzv, 4294967264         ; 4 uses
   %i.bzx = or disjoint i64 %n.vec1110, %i.bzt
   %.sroa.sel.idx = zext i1 %.not547.i to i64
   %.sroa.sel.sroa.sel.v = select i1 %.not547.i, i64 17, i64 16
@@ -361,7 +361,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block1116
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec1110, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec1119 = and i64 %i.bzv, -8                 ; 3 uses
+  %n.vec1119 = and i64 %i.bzv, 4294967288         ; 3 uses
   %i.cac = or disjoint i64 %n.vec1119, %i.bzt
   %.sroa.sel1379.idx = zext i1 %.not547.i to i64
   %invariant.gep1429 = getelementptr i8, ptr %i.e, i64 %.sroa.sel1379.idx
@@ -702,12 +702,12 @@ bb.ih:                                            ; preds = %bb.id, %.loopexit75
   %i.cfw = zext i1 %.not547.i to i64              ; 4 uses
   %i.cfx = add nuw i32 %i.bwj, 1
   %wide.trip.count922.i = zext i32 %i.cfx to i64  ; 2 uses
-  %i.cfy = sub nsw i64 %wide.trip.count922.i, %i.cfw ; 3 uses
-  %min.iters.check1095 = icmp ult i64 %i.cfy, 8
+  %i.cfy = sub nuw nsw i64 %wide.trip.count922.i, %i.cfw ; 3 uses
+  %min.iters.check1095 = icmp samesign ult i64 %i.cfy, 8
   br i1 %min.iters.check1095, label %scalar.ph1094.preheader, label %vector.ph1096
 
 vector.ph1096:                                    ; preds = %.lr.ph825.i
-  %n.vec1097 = and i64 %i.cfy, -8                 ; 3 uses
+  %n.vec1097 = and i64 %i.cfy, 4294967288         ; 3 uses
   %i.cfz = or disjoint i64 %n.vec1097, %i.cfw
   %invariant.gep1431 = getelementptr [4 x i8], ptr %i.go, i64 %i.cfw
   br label %vector.body1100
@@ -1110,10 +1110,14 @@ bb.jn:                                            ; preds = %.thread740.i, %bb.j
   %indvars.iv.next943.i = add nuw nsw i64 %indvars.iv942.i, 1
   %i.cxj = sext i32 %i.cxi to i64
   %.not578.not.i = icmp slt i64 %indvars.iv942.i, %i.cxj
-  br i1 %.not578.not.i, label %bb.jj, label %._crit_edge846.i, !llvm.loop !122
+  br i1 %.not578.not.i, label %bb.jj, label %._crit_edge846.loopexit.i, !llvm.loop !122
 
-._crit_edge846.i:                                 ; preds = %bb.jn, %.loopexit.i
-  %.lcssa770.i = phi i32 [ %i.bwj, %.loopexit.i ], [ %i.cxi, %bb.jn ]
+._crit_edge846.loopexit.i:                        ; preds = %bb.jn
+  %11 = icmp slt i32 %i.cxi, 1
+  br label %._crit_edge846.i
+
+._crit_edge846.i:                                 ; preds = %._crit_edge846.loopexit.i, %.loopexit.i
+  %.lcssa770.i = phi i1 [ true, %.loopexit.i ], [ %11, %._crit_edge846.loopexit.i ]
   %i.cxk = load i32, ptr %i.ea, align 4, !tbaa !205
   %.not579.i = icmp eq i32 %i.cxk, 0
   br i1 %.not579.i, label %bb.jq, label %bb.jo
@@ -1163,8 +1167,7 @@ bb.jq:                                            ; preds = %bb.jp, %bb.jo, %._c
   store i32 0, ptr %i.hd, align 4, !tbaa !58
   store i32 0, ptr %i.he, align 4, !tbaa !59
   store i32 0, ptr %i.hf, align 4, !tbaa !60
-  %.not28.i.i = icmp slt i32 %.lcssa770.i, 1
-  br i1 %.not28.i.i, label %._crit_edge.i677.i, label %.lr.ph.i672.i.preheader
+  br i1 %.lcssa770.i, label %._crit_edge.i677.i, label %.lr.ph.i672.i.preheader
 
 .lr.ph.i672.i.preheader:                          ; preds = %bb.jq
   %i.cyn = trunc nuw nsw i64 %indvars.iv777 to i32 ; 2 uses

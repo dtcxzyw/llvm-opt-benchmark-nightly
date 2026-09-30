@@ -180,7 +180,7 @@ _ZN8rawspeed10ByteStream6getU32Ev.exit:           ; preds = %_ZN8rawspeed10ByteS
   %i.e = zext i32 %.sroa.235.0.copyload to i64
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.034.0.copyload, i64 4
   %.0.copyload.i.i.i.i.i.i = load i32, ptr %i.f, align 1 ; 2 uses
-  %i.g = tail call i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i.i.i.i) ; 4 uses
+  %i.g = tail call i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i.i.i.i) ; 6 uses
   %i.h = zext i32 %i.g to i64
   %i.i = add nuw nsw i64 %i.h, 8
   %.not.i = icmp samesign ugt i64 %i.i, %i.e
@@ -196,9 +196,9 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %_ZN8rawspeed10ByteS
   tail call void @llvm.assume(i1 %i.k)
   %i.l = icmp sgt i32 %i.g, -1
   tail call void @llvm.assume(i1 %i.l)
-  %i.m = zext nneg i32 %i.j to i64                ; 12 uses
-  %invariant.op = add nsw i64 %i.m, -4
-  %invariant.op305 = add nsw i64 %i.m, -2
+  %i.m = zext nneg i32 %i.j to i64                ; 7 uses
+  %invariant.op = add nsw i64 %i.m, -4            ; 3 uses
+  %invariant.op305 = add nsw i64 %i.m, -2         ; 6 uses
   %.not43306 = icmp eq i32 %.0.copyload.i.i.i.i.i.i, 0
   br i1 %.not43306, label %.critedge, label %.lr.ph
 
@@ -211,7 +211,7 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %_ZN8rawspeed10ByteS
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 132
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 140
-  %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 148
+  %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144
   br label %.outer
 
 .outer:                                           ; preds = %_ZN8rawspeed10ByteStream11setPositionEj.exit.thread, %.lr.ph
@@ -222,8 +222,7 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %_ZN8rawspeed10ByteS
 bb.f:                                             ; preds = %.outer, %_ZN8rawspeed10ByteStream11setPositionEj.exit
   %.sroa.51.0307 = phi i32 [ %i.ag, %_ZN8rawspeed10ByteStream11setPositionEj.exit ], [ %.sroa.51.0307.ph, %.outer ] ; 15 uses
   %i.t = zext i32 %.sroa.51.0307 to i64           ; 2 uses
-  %2 = add nuw nsw i64 %i.t, 4
-  %.not.i.i.i.i.i.i60 = icmp samesign ugt i64 %2, %i.m
+  %.not.i.i.i.i.i.i60 = icmp ult i64 %invariant.op, %i.t
   br i1 %.not.i.i.i.i.i.i60, label %bb.g, label %_ZN8rawspeed10ByteStream6getU32Ev.exit63
 
 bb.g:                                             ; preds = %bb.f
@@ -246,13 +245,13 @@ bb.h:                                             ; preds = %_ZN8rawspeed10ByteS
   unreachable
 
 _ZN8rawspeed10ByteStream6getU32Ev.exit67:         ; preds = %_ZN8rawspeed10ByteStream6getU32Ev.exit63
-  %i.z = add nuw nsw i32 %.sroa.51.0307, 8        ; 2 uses
+  %i.z = add nuw nsw i32 %.sroa.51.0307, 8        ; 3 uses
   %i.aa = icmp ule i32 %.sroa.51.0307, %i.g
   call void @llvm.assume(i1 %i.aa)
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.034.0.copyload, i64 %i.y
   %.0.copyload.i.i.i.i.i.i65 = load i32, ptr %i.ab, align 1 ; 2 uses
   %i.ac = call i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i.i.i.i65) ; 4 uses
-  %i.ad = zext i32 %i.z to i64                    ; 4 uses
+  %i.ad = zext i32 %i.z to i64                    ; 3 uses
   %i.ae = zext i32 %i.ac to i64
   %i.af = add nuw nsw i64 %i.ae, %i.ad
   %.not.i68 = icmp samesign ugt i64 %i.af, %i.m
@@ -283,8 +282,7 @@ bb.k:                                             ; preds = %_ZNK8rawspeed10Byte
   ]
 
 bb.l:                                             ; preds = %bb.k
-  %3 = add nuw nsw i64 %i.ad, 8
-  %.not.i.i70 = icmp samesign ugt i64 %3, %i.m
+  %.not.i.i70 = icmp ugt i32 %i.z, %i.g
   br i1 %.not.i.i70, label %bb.m, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit71
 
 bb.m:                                             ; preds = %bb.l
@@ -313,8 +311,7 @@ _ZN8rawspeed10ByteStream6getU16Ev.exit:           ; preds = %_ZN8rawspeed10ByteS
   %i.aq = zext i16 %i.ap to i32                   ; 3 uses
   store i32 %i.aq, ptr %i.p, align 4, !tbaa !98
   %i.ar = zext nneg i32 %i.am to i64              ; 2 uses
-  %4 = add nuw nsw i64 %i.ar, 2
-  %.not.i.i.i.i.i.i75 = icmp samesign ugt i64 %4, %i.m
+  %.not.i.i.i.i.i.i75 = icmp ult i64 %invariant.op305, %i.ar
   br i1 %.not.i.i.i.i.i.i75, label %bb.o, label %_ZN8rawspeed10ByteStream6getU16Ev.exit78
 
 bb.o:                                             ; preds = %_ZN8rawspeed10ByteStream6getU16Ev.exit
@@ -622,8 +619,7 @@ _ZNSt10unique_ptrIN8rawspeed11TiffRootIFDESt14default_deleteIS1_EED2Ev.exit: ; p
   br label %_ZN8rawspeed10ByteStream11setPositionEj.exit
 
 bb.aq:                                            ; preds = %bb.k
-  %5 = add nuw nsw i64 %i.ad, 4
-  %.not.i.i98 = icmp samesign ugt i64 %5, %i.m
+  %.not.i.i98 = icmp ult i64 %invariant.op, %i.ad
   br i1 %.not.i.i98, label %bb.ar, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit99
 
 bb.ar:                                            ; preds = %bb.aq
@@ -631,47 +627,56 @@ bb.ar:                                            ; preds = %bb.aq
   unreachable
 
 _ZN8rawspeed10ByteStream9skipBytesEj.exit99:      ; preds = %bb.aq
-  %i.df = add nuw nsw i32 %.sroa.51.0307, 12      ; 2 uses
+  %i.df = add nuw nsw i32 %.sroa.51.0307, 12      ; 3 uses
   %i.dg = icmp samesign ule i32 %i.df, %i.j
   call void @llvm.assume(i1 %i.dg)
   %i.dh = zext nneg i32 %i.df to i64              ; 5 uses
-  %6 = add nuw nsw i64 %i.dh, 2                   ; 2 uses
-  %.not.i.i.i.i.i.i100 = icmp samesign ugt i64 %6, %i.m
+  %.not.i.i.i.i.i.i100 = icmp ult i64 %invariant.op305, %i.dh
   br i1 %.not.i.i.i.i.i.i100, label %bb.as, label %_ZN8rawspeed10ByteStream6getU16Ev.exit103
 
-bb.as:                                            ; preds = %_ZN8rawspeed10ByteStream6getU16Ev.exit103.1, %_ZN8rawspeed10ByteStream6getU16Ev.exit103, %_ZN8rawspeed10ByteStream9skipBytesEj.exit99
+bb.as:                                            ; preds = %_ZN8rawspeed10ByteStream6getU16Ev.exit103.2, %_ZN8rawspeed10ByteStream6getU16Ev.exit103.1, %_ZN8rawspeed10ByteStream6getU16Ev.exit103, %_ZN8rawspeed10ByteStream9skipBytesEj.exit99
   call void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_11IOExceptionEEEvPKcz(ptr noundef nonnull @.str.13, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK8rawspeed6Buffer10getSubViewEjj) #15
   unreachable
 
 _ZN8rawspeed10ByteStream6getU16Ev.exit103:        ; preds = %_ZN8rawspeed10ByteStream9skipBytesEj.exit99
+  %indvars.iv.next = add nuw nsw i64 %i.dh, 2     ; 3 uses
+  %2 = icmp samesign ule i64 %indvars.iv.next, %i.m
+  call void @llvm.assume(i1 %2)
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.034.0.copyload, i64 %i.dh
   %.0.copyload.i.i.i.i.i.i101 = load i16, ptr %i.di, align 1
   %i.dj = call i16 @llvm.bswap.i16(i16 %.0.copyload.i.i.i.i.i.i101)
   %i.dk = uitofp i16 %i.dj to float
-  %7 = add nuw nsw i64 %i.dh, 4
-  %.not.i.i.i.i.i.i100.1 = icmp samesign ugt i64 %7, %i.m
+  %.not.i.i.i.i.i.i100.1 = icmp ult i64 %invariant.op305, %indvars.iv.next
   br i1 %.not.i.i.i.i.i.i100.1, label %bb.as, label %_ZN8rawspeed10ByteStream6getU16Ev.exit103.1
 
 _ZN8rawspeed10ByteStream6getU16Ev.exit103.1:      ; preds = %_ZN8rawspeed10ByteStream6getU16Ev.exit103
-  %i.dl = add nuw nsw i64 %i.dh, 6                ; 2 uses
-  %.not.i.i.i.i.i.i100.2 = icmp samesign ugt i64 %i.dl, %i.m
-  %8 = add nuw nsw i64 %i.dh, 8
-  %.not.i.i.i.i.i.i100.3 = icmp samesign ugt i64 %8, %i.m
-  %or.cond = select i1 %.not.i.i.i.i.i.i100.2, i1 true, i1 %.not.i.i.i.i.i.i100.3
-  br i1 %or.cond, label %bb.as, label %_ZN8rawspeed10ByteStream6getU16Ev.exit103.3
+  %i.dl = add nuw nsw i64 %i.dh, 4                ; 3 uses
+  %3 = icmp samesign ule i64 %i.dl, %i.m
+  call void @llvm.assume(i1 %3)
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.034.0.copyload, i64 %indvars.iv.next
+  %.0.copyload.i.i.i.i.i.i101.1 = load i16, ptr %4, align 1
+  %5 = call i16 @llvm.bswap.i16(i16 %.0.copyload.i.i.i.i.i.i101.1)
+  %6 = uitofp i16 %5 to float
+  %.not.i.i.i.i.i.i100.2 = icmp ult i64 %invariant.op305, %i.dl
+  br i1 %.not.i.i.i.i.i.i100.2, label %bb.as, label %_ZN8rawspeed10ByteStream6getU16Ev.exit103.2
 
-_ZN8rawspeed10ByteStream6getU16Ev.exit103.3:      ; preds = %_ZN8rawspeed10ByteStream6getU16Ev.exit103.1
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.034.0.copyload, i64 %6
+_ZN8rawspeed10ByteStream6getU16Ev.exit103.2:      ; preds = %_ZN8rawspeed10ByteStream6getU16Ev.exit103.1
+  %indvars.iv.next.2 = add nuw nsw i64 %i.dh, 6   ; 2 uses
+  %7 = icmp samesign ule i64 %indvars.iv.next.2, %i.m
+  call void @llvm.assume(i1 %7)
+  %.not.i.i.i.i.i.i100.3 = icmp ult i64 %invariant.op305, %indvars.iv.next.2
+  br i1 %.not.i.i.i.i.i.i100.3, label %bb.as, label %_ZN8rawspeed10ByteStream6getU16Ev.exit103.3
+
+_ZN8rawspeed10ByteStream6getU16Ev.exit103.3:      ; preds = %_ZN8rawspeed10ByteStream6getU16Ev.exit103.2
   %i.dm = getelementptr inbounds nuw i8, ptr %.sroa.034.0.copyload, i64 %i.dl
-  %.0.copyload.i.i.i.i.i.i101.3 = load i16, ptr %i.dm, align 1
-  %10 = call i16 @llvm.bswap.i16(i16 %.0.copyload.i.i.i.i.i.i101.3)
-  %11 = uitofp i16 %10 to float
-  %i.dn = load <2 x i16>, ptr %9, align 1
+  %8 = icmp ule i32 %i.df, %i.g
+  call void @llvm.assume(i1 %8)
+  %i.dn = load <2 x i16>, ptr %i.dm, align 1
   %i.do = call <2 x i16> @llvm.bswap.v2i16(<2 x i16> %i.dn)
   %i.dp = uitofp <2 x i16> %i.do to <2 x float>
   store float %i.dk, ptr %i.n, align 8
-  store <2 x float> %i.dp, ptr %.sroa.0.sroa.4.0..sroa_idx, align 4
-  store float %11, ptr %.sroa.0.sroa.6.0..sroa_idx, align 4
+  store float %6, ptr %.sroa.0.sroa.4.0..sroa_idx, align 4
+  store <2 x float> %i.dp, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8
   store i8 1, ptr %.sroa.4.0..sroa_idx107, align 8
   br label %_ZN8rawspeed10ByteStream11setPositionEj.exit
 
