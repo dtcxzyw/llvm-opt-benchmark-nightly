@@ -205,9 +205,8 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
   %i.ar = load i8, ptr %i.aq, align 1, !range !22, !noundef !18
   %i.as = shl nuw nsw i8 %i.ar, 5
   %i.at = or disjoint i8 %i.as, %spec.select
-  %.sroa.0.0 = xor i8 %i.at, 32                   ; 2 uses
-  %9 = or disjoint i8 %.sroa.0.0, 64
-  %.sroa.0.1 = select i1 %.not, i8 %.sroa.0.0, i8 %9
+  %.sroa.0.1.v = select i1 %.not, i8 32, i8 96
+  %.sroa.0.1 = xor i8 %i.at, %.sroa.0.1.v
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.av = load ptr, ptr %i.au, align 8
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %i.ap

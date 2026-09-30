@@ -205,14 +205,13 @@ bb.d:                                             ; preds = %._crit_edge
   br i1 %i.ev, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_RT0_.exit.i.i.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ew = add nsw i64 %spec.select, -2            ; 2 uses
+  %i.ew = add nsw i64 %spec.select, -2
   %i.ex = lshr i64 %i.ew, 1                       ; 3 uses
-  %i.ey = add nsw i64 %spec.select, -1
+  %i.ey = add nsw i64 %spec.select, -1            ; 3 uses
   %i.ez = lshr i64 %i.ey, 1                       ; 2 uses
   %i.fa = and i64 %spec.select, 1
   %i.fb = icmp eq i64 %i.fa, 0
-  %24 = or disjoint i64 %i.ew, 1                  ; 2 uses
-  %i.fc = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %24
+  %i.fc = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %i.ey
   %i.fd = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %i.ex
   br label %bb.f
 
@@ -259,7 +258,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge.i.i.i.i.i
-  %.1.i.i.i.i.i = phi i64 [ %24, %bb.g ], [ %.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i.i = phi i64 [ %i.ey, %bb.g ], [ %.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 3 uses
   %i.fy = icmp sgt i64 %.1.i.i.i.i.i, %.010.i.i.i.i
   br i1 %i.fy, label %.lr.ph.i.i.i.i.i.preheader.i, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_T0_SI_T1_T2_.exit.i.i.i.i
 
@@ -301,15 +300,14 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeE
   br i1 %.not30.i.i.i, label %.lr.ph.i.i.i, label %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_RT0_.exit.i.i.i
-  %i.gl = add nsw i64 %spec.select, -1
+  %i.gl = add nsw i64 %spec.select, -1            ; 4 uses
   %i.gm = lshr i64 %i.gl, 1
   %i.gn = icmp ugt i64 %i.de, 2
   %i.go = and i64 %spec.select, 1
   %i.gp = icmp eq i64 %i.go, 0                    ; 2 uses
-  %i.gq = add nsw i64 %spec.select, -2            ; 3 uses
+  %i.gq = add nsw i64 %spec.select, -2            ; 2 uses
   %i.gr = ashr exact i64 %i.gq, 1                 ; 2 uses
-  %25 = or disjoint i64 %i.gq, 1                  ; 3 uses
-  %i.gs = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %25 ; 2 uses
+  %i.gs = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %i.gl ; 2 uses
   %i.gt = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %i.gr ; 2 uses
   br i1 %i.gn, label %.lr.ph.i.split.us.i.preheader.i, label %.lr.ph.i.split.i.i
 
@@ -371,7 +369,7 @@ bb.j:                                             ; preds = %._crit_edge.i.i17.i
   br label %.lr.ph.i.i.i20.i.us.i.i.preheader
 
 .lr.ph.i.i.i20.i.us.i.i.preheader:                ; preds = %.thread.i.i.us.i.i, %bb.j
-  %.06.i.i.i21.i.us.i.i.ph = phi i64 [ %spec.select.i.i27.i.us.i.i, %bb.j ], [ %25, %.thread.i.i.us.i.i ]
+  %.06.i.i.i21.i.us.i.i.ph = phi i64 [ %spec.select.i.i27.i.us.i.i, %bb.j ], [ %i.gl, %.thread.i.i.us.i.i ]
   br label %.lr.ph.i.i.i20.i.us.i.i
 
 .lr.ph.i.i.i20.i.us.i.i:                          ; preds = %.lr.ph.i.i.i20.i.us.i.i.preheader, %bb.k
@@ -435,7 +433,7 @@ bb.l:                                             ; preds = %_ZSt10__pop_heapIN9
   br label %.lr.ph.i.i.i20.i.us34.i.i
 
 .lr.ph.i.i.i20.i.us34.i.i:                        ; preds = %bb.m, %._crit_edge.i.i17.thread.i.us.i.i
-  %.06.i.i.i21.i.us35.i.i = phi i64 [ %.097.i.i1011.i.i.us37.i.i, %bb.m ], [ %25, %._crit_edge.i.i17.thread.i.us.i.i ] ; 3 uses
+  %.06.i.i.i21.i.us35.i.i = phi i64 [ %.097.i.i1011.i.i.us37.i.i, %bb.m ], [ %i.gl, %._crit_edge.i.i17.thread.i.us.i.i ] ; 3 uses
   %.097.in.i.i.i22.i.us36.i.i = add nsw i64 %.06.i.i.i21.i.us35.i.i, -1
   %.097.i.i1011.i.i.us37.i.i = lshr i64 %.097.in.i.i.i22.i.us36.i.i, 1 ; 3 uses
   %i.ip = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %.097.i.i1011.i.i.us37.i.i ; 2 uses
@@ -838,14 +836,13 @@ bb.bx:                                            ; preds = %.loopexit.i.i.i
   br label %.body.i
 
 bb.by:                                            ; preds = %._crit_edge.i
-  %i.wb = add nsw i64 %spec.select131.i, -2       ; 2 uses
+  %i.wb = add nsw i64 %spec.select131.i, -2
   %i.wc = lshr i64 %i.wb, 1                       ; 3 uses
-  %i.wd = add nsw i64 %spec.select131.i, -1
+  %i.wd = add nsw i64 %spec.select131.i, -1       ; 3 uses
   %i.we = lshr i64 %i.wd, 1                       ; 2 uses
   %i.wf = and i64 %spec.select131.i, 1
   %i.wg = icmp eq i64 %i.wf, 0
-  %26 = or disjoint i64 %i.wb, 1                  ; 2 uses
-  %i.wh = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %26
+  %i.wh = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %i.wd
   %i.wi = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %i.wc
   br label %bb.bz
 
@@ -887,7 +884,7 @@ bb.ca:                                            ; preds = %._crit_edge.i.i.i.i
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca, %._crit_edge.i.i.i.i.i.i
-  %.1.i.i.i.i.i.i = phi i64 [ %26, %bb.ca ], [ %.0.lcssa.i.i.i.i.i.i132, %._crit_edge.i.i.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i.i.i = phi i64 [ %i.wd, %bb.ca ], [ %.0.lcssa.i.i.i.i.i.i132, %._crit_edge.i.i.i.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   store i64 %.sroa.02.0.copyload.i.i.i.i.i, ptr %11, align 8
   store ptr %.sroa.4.0.copyload.i.i.i.i.i131, ptr %i.af, align 8
@@ -925,15 +922,14 @@ bb.cc:                                            ; preds = %.noexc93.i
   br i1 %.not27.i.i.i.i, label %.lr.ph.i.i.i.i134, label %"_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_26SortFileByOverlappingRatioERKNS2_21InternalKeyComparatorERKS6_IPNS2_12FileMetaDataESaISG_EESK_PNS2_11SystemClockEiimPS8_E3$_0EEEvT_SQ_SQ_T0_.exit.i.i.i"
 
 .lr.ph.i.i.i.i134:                                ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_26SortFileByOverlappingRatioERKNS2_21InternalKeyComparatorERKS6_IPNS2_12FileMetaDataESaISG_EESK_PNS2_11SystemClockEiimPS8_E3$_0EEEvT_SQ_RT0_.exit.i.i.i.i"
-  %i.xc = add nsw i64 %spec.select131.i, -1
+  %i.xc = add nsw i64 %spec.select131.i, -1       ; 4 uses
   %i.xd = lshr i64 %i.xc, 1
   %i.xe = icmp ugt i64 %i.de, 2
   %i.xf = and i64 %spec.select131.i, 1
   %i.xg = icmp eq i64 %i.xf, 0                    ; 2 uses
-  %i.xh = add nsw i64 %spec.select131.i, -2       ; 3 uses
+  %i.xh = add nsw i64 %spec.select131.i, -2       ; 2 uses
   %i.xi = ashr exact i64 %i.xh, 1                 ; 2 uses
-  %27 = or disjoint i64 %i.xh, 1                  ; 3 uses
-  %i.xj = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %27 ; 2 uses
+  %i.xj = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %i.xc ; 2 uses
   %i.xk = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %i.xi ; 2 uses
   br i1 %i.xe, label %.lr.ph.i.split.us.i.i.i, label %.lr.ph.i.split.i.i.i
 
@@ -990,7 +986,7 @@ bb.cd:                                            ; preds = %._crit_edge.i.i15.i
   br label %.lr.ph.i.i.i18.i.us.i.i.i.preheader
 
 .lr.ph.i.i.i18.i.us.i.i.i.preheader:              ; preds = %.thread.i.i.us.i.i.i, %bb.cd
-  %.021.i.i.i19.i.us.i.i.i.ph = phi i64 [ %spec.select.i.i25.i.us.i.i.i, %bb.cd ], [ %27, %.thread.i.i.us.i.i.i ]
+  %.021.i.i.i19.i.us.i.i.i.ph = phi i64 [ %spec.select.i.i25.i.us.i.i.i, %bb.cd ], [ %i.xc, %.thread.i.i.us.i.i.i ]
   br label %.lr.ph.i.i.i18.i.us.i.i.i
 
 .lr.ph.i.i.i18.i.us.i.i.i:                        ; preds = %.lr.ph.i.i.i18.i.us.i.i.i.preheader, %bb.ce
@@ -1047,7 +1043,7 @@ bb.cf:                                            ; preds = %"_ZSt10__pop_heapIN
   br label %.lr.ph.i.i.i18.i.us34.i.i.i
 
 .lr.ph.i.i.i18.i.us34.i.i.i:                      ; preds = %bb.cg, %._crit_edge.i.i15.thread.i.us.i.i.i
-  %.021.i.i.i19.i.us35.i.i.i = phi i64 [ %.0922.i.i1011.i.i.us37.i.i.i, %bb.cg ], [ %27, %._crit_edge.i.i15.thread.i.us.i.i.i ] ; 3 uses
+  %.021.i.i.i19.i.us35.i.i.i = phi i64 [ %.0922.i.i1011.i.i.us37.i.i.i, %bb.cg ], [ %i.xc, %._crit_edge.i.i15.thread.i.us.i.i.i ] ; 3 uses
   %.0922.in.i.i.i20.i.us36.i.i.i = add nsw i64 %.021.i.i.i19.i.us35.i.i.i, -1
   %.0922.i.i1011.i.i.us37.i.i.i = lshr i64 %.0922.in.i.i.i20.i.us36.i.i.i, 1 ; 3 uses
   %i.yd = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0172.0, i64 %.0922.i.i1011.i.i.us37.i.i.i ; 2 uses
@@ -1450,14 +1446,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr.i26.lcssa = phi i64 [ %.fr.i23, %.lr.ph ], [ %.fr.i, %bb.b ] ; 3 uses
   %storemerge24.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.016.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i26.lcssa, 4               ; 2 uses
-  %i.l = add nsw i64 %i.k, -2                     ; 2 uses
+  %i.l = add nsw i64 %i.k, -2
   %i.m = lshr i64 %i.l, 1                         ; 3 uses
-  %i.n = add nsw i64 %i.k, -1
+  %i.n = add nsw i64 %i.k, -1                     ; 3 uses
   %i.o = lshr i64 %i.n, 1                         ; 2 uses
   %i.p = and i64 %.fr.i26.lcssa, 16
   %i.q = icmp eq i64 %i.p, 0
-  %10 = or disjoint i64 %i.l, 1                   ; 2 uses
-  %i.r = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %10
+  %i.r = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.n
   %i.s = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.m
   br label %bb.c
 
@@ -1504,7 +1499,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.n, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.aj = icmp sgt i64 %.1.i.i.i.i, %.010.i.i.i
   br i1 %i.aj, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS2_18VersionStorageInfo26UpdateFilesByCompactionPriERKNS2_16ImmutableOptionsERKNS2_16MutableCFOptionsEE3$_0EEEvT_T0_SM_T1_T2_.exit.i.i.i"
 
@@ -1815,14 +1810,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr.i26.lcssa = phi i64 [ %.fr.i23, %.lr.ph ], [ %.fr.i, %bb.b ] ; 3 uses
   %storemerge24.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.016.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i26.lcssa, 4               ; 2 uses
-  %i.l = add nsw i64 %i.k, -2                     ; 2 uses
+  %i.l = add nsw i64 %i.k, -2
   %i.m = lshr i64 %i.l, 1                         ; 3 uses
-  %i.n = add nsw i64 %i.k, -1
+  %i.n = add nsw i64 %i.k, -1                     ; 3 uses
   %i.o = lshr i64 %i.n, 1                         ; 2 uses
   %i.p = and i64 %.fr.i26.lcssa, 16
   %i.q = icmp eq i64 %i.p, 0
-  %10 = or disjoint i64 %i.l, 1                   ; 2 uses
-  %i.r = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %10
+  %i.r = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.n
   %i.s = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.m
   br label %bb.c
 
@@ -1869,7 +1863,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.n, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.aj = icmp sgt i64 %.1.i.i.i.i, %.010.i.i.i
   br i1 %i.aj, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS2_18VersionStorageInfo26UpdateFilesByCompactionPriERKNS2_16ImmutableOptionsERKNS2_16MutableCFOptionsEE3$_1EEEvT_T0_SM_T1_T2_.exit.i.i.i"
 
@@ -2272,14 +2266,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.fr.i26.lcssa = phi i64 [ %.fr.i23, %.lr.ph ], [ %.fr.i, %bb.b ] ; 3 uses
   %storemerge24.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.016.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i26.lcssa, 4               ; 2 uses
-  %i.l = add nsw i64 %i.k, -2                     ; 2 uses
+  %i.l = add nsw i64 %i.k, -2
   %i.m = lshr i64 %i.l, 1                         ; 3 uses
-  %i.n = add nsw i64 %i.k, -1
+  %i.n = add nsw i64 %i.k, -1                     ; 3 uses
   %i.o = lshr i64 %i.n, 1                         ; 2 uses
   %i.p = and i64 %.fr.i26.lcssa, 16
   %i.q = icmp eq i64 %i.p, 0
-  %10 = or disjoint i64 %i.l, 1                   ; 2 uses
-  %i.r = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %10
+  %i.r = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.n
   %i.s = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.m
   br label %bb.c
 
@@ -2326,7 +2319,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.n, %bb.d ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.aj = icmp sgt i64 %.1.i.i.i.i, %.010.i.i.i
   br i1 %i.aj, label %.lr.ph.i.i.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS3_20SortFileByRoundRobinERKNS2_21InternalKeyComparatorEPS6_INS2_11InternalKeyESaISF_EEbiPS8_E3$_0EEEvT_T0_SN_T1_T2_.exit.i.i.i"
 

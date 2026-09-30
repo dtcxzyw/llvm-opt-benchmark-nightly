@@ -56,14 +56,13 @@ bb.b:                                             ; preds = %bb.a
   %i.m = and i32 %i.l, 2
   %i.n = or disjoint i32 %i.m, %i.k
   %i.o = mul nuw nsw i32 %i.f, 63
-  %2 = add nuw nsw i32 %i.o, 63
   %i.p = mul nuw nsw i32 %i.j, 16128
   %i.q = add nuw nsw i32 %i.p, 16128
   %i.r = mul nuw nsw i32 %i.n, 4128768
   %i.s = add nuw nsw i32 %i.r, 4128768
-  %3 = or i32 %i.q, %2
-  %i.t = or i32 %3, %i.s
-  %i.u = or i32 %i.t, -16777216
+  %2 = add nuw nsw i32 %i.o, -16777153
+  %i.t = or i32 %2, %i.q
+  %i.u = or i32 %i.t, %i.s
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b

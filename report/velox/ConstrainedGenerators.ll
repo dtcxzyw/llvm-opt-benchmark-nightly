@@ -205,14 +205,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.n = load i8, ptr %i.m, align 1, !tbaa !75
   %i.o = tail call i8 @llvm.smax.i8(i8 %i.n, i8 1)
   %.sroa.speculated.i.i = shl i8 %i.o, 2
-  %6 = add i8 %.sroa.speculated.i.i, -4
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 120
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !387
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.b
   %i.s = load i32, ptr %i.r, align 4, !tbaa !76
-  %.not.i = icmp ne i32 %i.s, -1
-  %7 = zext i1 %.not.i to i8
-  %spec.select.i = or disjoint i8 %6, %7          ; 2 uses
+  %.not.i = icmp eq i32 %i.s, -1
+  %spec.select.v.i = select i1 %.not.i, i8 -4, i8 -3
+  %spec.select.i = add i8 %spec.select.v.i, %.sroa.speculated.i.i ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 144
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !387
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.b
@@ -615,14 +614,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.n = load i8, ptr %i.m, align 1, !tbaa !75
   %i.o = tail call i8 @llvm.smax.i8(i8 %i.n, i8 1)
   %.sroa.speculated.i.i = shl i8 %i.o, 2
-  %6 = add i8 %.sroa.speculated.i.i, -4
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 120
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !387
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.b
   %i.s = load i32, ptr %i.r, align 4, !tbaa !76
-  %.not.i = icmp ne i32 %i.s, -1
-  %7 = zext i1 %.not.i to i8
-  %spec.select.i = or disjoint i8 %6, %7          ; 2 uses
+  %.not.i = icmp eq i32 %i.s, -1
+  %spec.select.v.i = select i1 %.not.i, i8 -4, i8 -3
+  %spec.select.i = add i8 %spec.select.v.i, %.sroa.speculated.i.i ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 144
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !387
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.b
@@ -1025,12 +1023,12 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %.fr = freeze i64 %i.c                          ; 2 uses
-  %i.d = ashr exact i64 %.fr, 1                   ; 3 uses
+  %i.d = ashr exact i64 %.fr, 1                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 4 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !1452
   %i.h = add nsw i64 %i.d, -1
@@ -1042,7 +1040,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.n = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %3
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %i.f
   br label %.split

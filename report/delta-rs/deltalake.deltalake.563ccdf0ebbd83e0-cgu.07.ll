@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
 
 .backedge.i.i.i:                                  ; preds = %.backedge.i.i.i.backedge, %bb.d
   %.sroa.0.034.i.i.i = phi i32 [ 0, %bb.d ], [ %.sroa.0.034.i.i.i.be, %.backedge.i.i.i.backedge ] ; 16 uses
-  %i.t = load atomic i64, ptr %.val6 acquire, align 8, !noalias !153 ; 5 uses
+  %i.t = load atomic i64, ptr %.val6 acquire, align 8, !noalias !153 ; 6 uses
   %i.u = load atomic ptr, ptr %i.n acquire, align 8, !noalias !153 ; 7 uses
   %i.v = lshr i64 %i.t, 1                         ; 2 uses
   %i.w = and i64 %i.v, 31                         ; 5 uses
@@ -283,9 +283,9 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %.not.unshifted.i.i.i = xor i64 %i.af, %i.t
-  %.not.i.i.i = icmp ugt i64 %.not.unshifted.i.i.i, 63
-  %7 = zext i1 %.not.i.i.i to i64
-  %spec.select.i.i.i = or disjoint i64 %i.ac, %7
+  %.not.i.i.i = icmp ult i64 %.not.unshifted.i.i.i, 64
+  %7 = add i64 %i.t, 3
+  %spec.select.i.i.i = select i1 %.not.i.i.i, i64 %i.ac, i64 %7
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.i
@@ -484,12 +484,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockNtNtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace6export8SpanDataE9wait_nextCs7p2uQeJxui2_9deltalake.exit.i.i.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i, %bb.s
   %.lcssa.i.i.i.i = phi ptr [ %i.av, %bb.s ], [ %i.bb, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ] ; 2 uses
   %i.bd = and i64 %.sroa.01.0.i.i.i, -2
-  %8 = add i64 %i.bd, 2
   %i.be = getelementptr inbounds nuw i8, ptr %.lcssa.i.i.i.i, i64 11408
   %i.bf = load atomic ptr, ptr %i.be monotonic, align 8, !noalias !153
-  %9 = icmp ne ptr %i.bf, null
-  %10 = zext i1 %9 to i64
-  %spec.select17.i.i.i = or disjoint i64 %8, %10
+  %8 = icmp eq ptr %i.bf, null
+  %spec.select17.v.i.i.i = select i1 %8, i64 2, i64 3
+  %spec.select17.i.i.i = add i64 %spec.select17.v.i.i.i, %i.bd
   store atomic ptr %.lcssa.i.i.i.i, ptr %i.n release, align 8, !noalias !153
   store atomic i64 %spec.select17.i.i.i, ptr %.val6 release, align 8, !noalias !153
   br label %bb.v
@@ -892,7 +891,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !11939 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !11939 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !11939 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -970,9 +969,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -1171,12 +1170,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockNtNtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processor12BatchMessageE9wait_nextCs7p2uQeJxui2_9deltalake.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 992
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !11939
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !11939
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !11939
   br label %bb.t

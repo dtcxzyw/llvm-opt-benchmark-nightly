@@ -204,10 +204,10 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.w, label %.split.i, label %.thread.i
 
 .split.i:                                         ; preds = %bb.h
-  %i.x = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.u, i1 true)
-  %switch.tableidx.i = add nsw i32 %i.x, -8       ; 2 uses
-  %4 = icmp ult i32 %switch.tableidx.i, 4
-  br i1 %4, label %switch.lookup.i, label %.thread.i
+  %i.x = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.u, i1 true) ; 2 uses
+  %4 = and i32 %i.x, 28
+  %5 = icmp eq i32 %4, 8
+  br i1 %5, label %switch.lookup.i, label %.thread.i
 
 .thread.i:                                        ; preds = %.split.i, %bb.h
   %i.y = zext nneg i8 %i.m to i32
@@ -246,8 +246,7 @@ bb.l:                                             ; preds = %bb.k
   br label %allwinner_h3_dramc_map_rows.exit
 
 bb.m:                                             ; preds = %switch.lookup.i
-  %5 = or disjoint i32 %switch.tableidx.i, 8
-  %switch.offset.i = zext nneg i32 %5 to i64
+  %switch.offset.i = zext nneg i32 %i.x to i64
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 808
   %i.am = load i64, ptr %i.al, align 8
   %i.an = add nuw nsw i64 %i.o, 5

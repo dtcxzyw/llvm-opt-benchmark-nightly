@@ -205,7 +205,7 @@ bb.a:
 .backedge:                                        ; preds = %.backedge.backedge, %bb.a
   %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ %.sroa.0.0.be, %.backedge.backedge ] ; 13 uses
   %.sroa.06.0 = phi ptr [ %i.c, %bb.a ], [ %.sroa.06.0.be, %.backedge.backedge ] ; 3 uses
-  %.sroa.01.0 = phi i64 [ %i.a, %bb.a ], [ %.sroa.01.0.be, %.backedge.backedge ] ; 5 uses
+  %.sroa.01.0 = phi i64 [ %i.a, %bb.a ], [ %.sroa.01.0.be, %.backedge.backedge ] ; 6 uses
   %i.e = lshr i64 %.sroa.01.0, 1                  ; 2 uses
   %i.f = and i64 %i.e, 31                         ; 3 uses
   %i.g = icmp eq i64 %i.f, 31
@@ -259,9 +259,9 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %.not.unshifted = xor i64 %i.r, %.sroa.01.0
-  %.not = icmp ugt i64 %.not.unshifted, 63
-  %2 = zext i1 %.not to i64
-  %spec.select = or disjoint i64 %i.h, %2
+  %.not = icmp ult i64 %.not.unshifted, 64
+  %2 = add i64 %.sroa.01.0, 3
+  %spec.select = select i1 %.not, i64 %i.h, i64 %2
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
@@ -375,12 +375,11 @@ _ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i: ; preds 
 "_ZN17crossbeam_channel7flavors4list14Block$LT$T$GT$9wait_next17hb40cd5ad7df69fd1E.exit": ; preds = %_ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i, %bb.o
   %.lcssa.i = phi ptr [ %i.am, %bb.o ], [ %i.at, %_ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i ] ; 2 uses
   %i.av = and i64 %.sroa.09.0, -2
-  %3 = add i64 %i.av, 2
   %i.aw = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 3968
   %i.ax = load atomic ptr, ptr %i.aw monotonic, align 8
-  %4 = icmp ne ptr %i.ax, null
-  %5 = zext i1 %4 to i64
-  %spec.select19 = or disjoint i64 %3, %5
+  %3 = icmp eq ptr %i.ax, null
+  %spec.select19.v = select i1 %3, i64 2, i64 3
+  %spec.select19 = add i64 %spec.select19.v, %i.av
   store atomic ptr %.lcssa.i, ptr %i.b release, align 8
   store atomic i64 %spec.select19, ptr %0 release, align 128
   br label %bb.p
@@ -405,7 +404,7 @@ bb.a:
 .backedge:                                        ; preds = %.backedge.backedge, %bb.a
   %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ %.sroa.0.0.be, %.backedge.backedge ] ; 13 uses
   %.sroa.06.0 = phi ptr [ %i.c, %bb.a ], [ %.sroa.06.0.be, %.backedge.backedge ] ; 4 uses
-  %.sroa.01.0 = phi i64 [ %i.a, %bb.a ], [ %.sroa.01.0.be, %.backedge.backedge ] ; 5 uses
+  %.sroa.01.0 = phi i64 [ %i.a, %bb.a ], [ %.sroa.01.0.be, %.backedge.backedge ] ; 6 uses
   %i.e = lshr i64 %.sroa.01.0, 1                  ; 2 uses
   %i.f = and i64 %i.e, 31                         ; 3 uses
   %i.g = icmp eq i64 %i.f, 31
@@ -459,9 +458,9 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %.not.unshifted = xor i64 %i.r, %.sroa.01.0
-  %.not = icmp ugt i64 %.not.unshifted, 63
-  %2 = zext i1 %.not to i64
-  %spec.select = or disjoint i64 %i.h, %2
+  %.not = icmp ult i64 %.not.unshifted, 64
+  %2 = add i64 %.sroa.01.0, 3
+  %spec.select = select i1 %.not, i64 %i.h, i64 %2
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
@@ -574,11 +573,10 @@ _ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i: ; preds 
 "_ZN17crossbeam_channel7flavors4list14Block$LT$T$GT$9wait_next17h5c989e022f7256faE.exit": ; preds = %_ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i, %bb.o
   %.lcssa.i = phi ptr [ %i.al, %bb.o ], [ %i.as, %_ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i ] ; 2 uses
   %i.au = and i64 %.sroa.09.0, -2
-  %3 = add i64 %i.au, 2
   %i.av = load atomic ptr, ptr %.lcssa.i monotonic, align 8
-  %4 = icmp ne ptr %i.av, null
-  %5 = zext i1 %4 to i64
-  %spec.select19 = or disjoint i64 %3, %5
+  %3 = icmp eq ptr %i.av, null
+  %spec.select19.v = select i1 %3, i64 2, i64 3
+  %spec.select19 = add i64 %spec.select19.v, %i.au
   store atomic ptr %.lcssa.i, ptr %i.b release, align 8
   store atomic i64 %spec.select19, ptr %0 release, align 128
   br label %bb.p
@@ -603,7 +601,7 @@ bb.a:
 .backedge:                                        ; preds = %.backedge.backedge, %bb.a
   %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ %.sroa.0.0.be, %.backedge.backedge ] ; 13 uses
   %.sroa.06.0 = phi ptr [ %i.c, %bb.a ], [ %.sroa.06.0.be, %.backedge.backedge ] ; 3 uses
-  %.sroa.01.0 = phi i64 [ %i.a, %bb.a ], [ %.sroa.01.0.be, %.backedge.backedge ] ; 5 uses
+  %.sroa.01.0 = phi i64 [ %i.a, %bb.a ], [ %.sroa.01.0.be, %.backedge.backedge ] ; 6 uses
   %i.e = lshr i64 %.sroa.01.0, 1                  ; 2 uses
   %i.f = and i64 %i.e, 31                         ; 3 uses
   %i.g = icmp eq i64 %i.f, 31
@@ -657,9 +655,9 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %.not.unshifted = xor i64 %i.r, %.sroa.01.0
-  %.not = icmp ugt i64 %.not.unshifted, 63
-  %2 = zext i1 %.not to i64
-  %spec.select = or disjoint i64 %i.h, %2
+  %.not = icmp ult i64 %.not.unshifted, 64
+  %2 = add i64 %.sroa.01.0, 3
+  %spec.select = select i1 %.not, i64 %i.h, i64 %2
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
@@ -773,12 +771,11 @@ _ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i: ; preds 
 "_ZN17crossbeam_channel7flavors4list14Block$LT$T$GT$9wait_next17h2a719d1489cda629E.exit": ; preds = %_ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i, %bb.o
   %.lcssa.i = phi ptr [ %i.am, %bb.o ], [ %i.at, %_ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i ] ; 2 uses
   %i.av = and i64 %.sroa.09.0, -2
-  %3 = add i64 %i.av, 2
   %i.aw = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 3968
   %i.ax = load atomic ptr, ptr %i.aw monotonic, align 8
-  %4 = icmp ne ptr %i.ax, null
-  %5 = zext i1 %4 to i64
-  %spec.select19 = or disjoint i64 %3, %5
+  %3 = icmp eq ptr %i.ax, null
+  %spec.select19.v = select i1 %3, i64 2, i64 3
+  %spec.select19 = add i64 %spec.select19.v, %i.av
   store atomic ptr %.lcssa.i, ptr %i.b release, align 8
   store atomic i64 %spec.select19, ptr %0 release, align 128
   br label %bb.p
@@ -1181,7 +1178,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.0.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.0.i.be, %.backedge.i.backedge ] ; 13 uses
   %.sroa.06.0.i = phi ptr [ %i.t, %bb.b ], [ %.sroa.06.0.i.be, %.backedge.i.backedge ] ; 9 uses
-  %.sroa.01.0.i = phi i64 [ %i.s, %bb.b ], [ %.sroa.01.0.i.be, %.backedge.i.backedge ] ; 5 uses
+  %.sroa.01.0.i = phi i64 [ %i.s, %bb.b ], [ %.sroa.01.0.i.be, %.backedge.i.backedge ] ; 6 uses
   %i.u = lshr i64 %.sroa.01.0.i, 1                ; 2 uses
   %i.v = and i64 %i.u, 31                         ; 6 uses
   %i.w = icmp eq i64 %i.v, 31
@@ -1229,9 +1226,9 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %.not.unshifted.i = xor i64 %i.ah, %.sroa.01.0.i
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.x, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %.sroa.01.0.i, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.x, i64 %4
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -1341,11 +1338,10 @@ _ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i.i: ; pred
 "_ZN17crossbeam_channel7flavors4list14Block$LT$T$GT$9wait_next17h5ed32310db4a0ba7E.exit.i": ; preds = %_ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i.i, %bb.n
   %.lcssa.i.i = phi ptr [ %i.ba, %bb.n ], [ %i.bh, %_ZN15crossbeam_utils7backoff7Backoff6snooze17h37f3776f9cf746f3E.exit.i.i ] ; 2 uses
   %i.bj = and i64 %.sroa.09.0.i, -2
-  %5 = add i64 %i.bj, 2
   %i.bk = load atomic ptr, ptr %.lcssa.i.i monotonic, align 8, !noalias !38876
-  %6 = icmp ne ptr %i.bk, null
-  %7 = zext i1 %6 to i64
-  %spec.select19.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bk, null
+  %spec.select19.v.i = select i1 %5, i64 2, i64 3
+  %spec.select19.i = add i64 %spec.select19.v.i, %i.bj
   store atomic ptr %.lcssa.i.i, ptr %i.o release, align 8, !noalias !38876
   store atomic i64 %spec.select19.i, ptr %1 release, align 128, !noalias !38876
   br label %bb.o
@@ -1748,7 +1744,7 @@ bb.v:                                             ; preds = %bb.a
 bb.w:                                             ; preds = %.backedge.i.i.i, %bb.v
   %.sroa.0.034.i.i.i = phi i32 [ 0, %bb.v ], [ %.sroa.0.034.be.i.i.i, %.backedge.i.i.i ] ; 16 uses
   %.sroa.06.0.i.i.i = phi ptr [ %i.bo, %bb.v ], [ %i.cb, %.backedge.i.i.i ] ; 8 uses
-  %.sroa.01.0.i.i1.i = phi i64 [ %i.bm, %bb.v ], [ %i.ca, %.backedge.i.i.i ] ; 5 uses
+  %.sroa.01.0.i.i1.i = phi i64 [ %i.bm, %bb.v ], [ %i.ca, %.backedge.i.i.i ] ; 6 uses
   %i.bq = lshr i64 %.sroa.01.0.i.i1.i, 1          ; 2 uses
   %i.br = and i64 %i.bq, 31                       ; 5 uses
   %i.bs = icmp eq i64 %i.br, 31
@@ -1831,9 +1827,9 @@ bb.ab:                                            ; preds = %bb.x
 
 bb.ac:                                            ; preds = %bb.ab
   %.not.unshifted.i.i.i = xor i64 %i.cc, %.sroa.01.0.i.i1.i
-  %.not.i.i.i = icmp ugt i64 %.not.unshifted.i.i.i, 63
-  %1 = zext i1 %.not.i.i.i to i64
-  %spec.select.i.i.i = or disjoint i64 %i.bt, %1
+  %.not.i.i.i = icmp ult i64 %.not.unshifted.i.i.i, 64
+  %1 = add i64 %.sroa.01.0.i.i1.i, 3
+  %spec.select.i.i.i = select i1 %.not.i.i.i, i64 %i.bt, i64 %1
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ab
@@ -2027,11 +2023,10 @@ _ZN3std4sync4mpmc5utils7Backoff10spin_heavy17h0a6bfc09333f16a3E.exit.i.i.i.i: ; 
 "_ZN3std4sync4mpmc4list14Block$LT$T$GT$9wait_next17h9b1328182533da9bE.exit.i.i.i": ; preds = %_ZN3std4sync4mpmc5utils7Backoff10spin_heavy17h0a6bfc09333f16a3E.exit.i.i.i.i, %bb.al
   %.lcssa.i.i.i.i = phi ptr [ %i.cr, %bb.al ], [ %i.cx, %_ZN3std4sync4mpmc5utils7Backoff10spin_heavy17h0a6bfc09333f16a3E.exit.i.i.i.i ] ; 2 uses
   %i.cz = and i64 %.sroa.09.0.i.i2.i, -2
-  %2 = add i64 %i.cz, 2
   %i.da = load atomic ptr, ptr %.lcssa.i.i.i.i monotonic, align 8, !noalias !116114
-  %3 = icmp ne ptr %i.da, null
-  %4 = zext i1 %3 to i64
-  %spec.select17.i.i.i = or disjoint i64 %2, %4
+  %2 = icmp eq ptr %i.da, null
+  %spec.select17.v.i.i.i = select i1 %2, i64 2, i64 3
+  %spec.select17.i.i.i = add i64 %spec.select17.v.i.i.i, %i.cz
   store atomic ptr %.lcssa.i.i.i.i, ptr %i.bn release, align 8, !noalias !116114
   store atomic i64 %spec.select17.i.i.i, ptr %.val1 release, align 8, !noalias !116114
   br label %bb.ao

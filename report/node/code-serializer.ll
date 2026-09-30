@@ -205,12 +205,12 @@ _ZNK2v88internal4Code28bytecode_or_interpreter_dataEv.exit.i8: ; preds = %_ZN2v8
   br label %_ZN2v88internal7TryCastINS0_4CodeENS0_6ObjectENS0_6TaggedEQ24HasTryCastImplementationIT1_T_T0_EEEbS5_IS7_EPS5_IS6_E.exit.thread.i5
 
 _ZN2v88internal7TryCastINS0_4CodeENS0_6ObjectENS0_6TaggedEQ24HasTryCastImplementationIT1_T_T0_EEEbS5_IS7_EPS5_IS6_E.exit.thread.i5: ; preds = %_ZNK2v88internal4Code28bytecode_or_interpreter_dataEv.exit.i8, %_ZN2v88internal2IsINS0_4CodeENS0_6ObjectEEEbNS0_6TaggedIT0_EE.exit.i.i6, %bb.c
-  %.sroa.07.0.i = phi i64 [ %i.at, %_ZNK2v88internal4Code28bytecode_or_interpreter_dataEv.exit.i8 ], [ %i.ad, %_ZN2v88internal2IsINS0_4CodeENS0_6ObjectEEEbNS0_6TaggedIT0_EE.exit.i.i6 ], [ %i.ad, %bb.c ] ; 2 uses
+  %.sroa.07.0.i = phi i64 [ %i.at, %_ZNK2v88internal4Code28bytecode_or_interpreter_dataEv.exit.i8 ], [ %i.ad, %_ZN2v88internal2IsINS0_4CodeENS0_6ObjectEEEbNS0_6TaggedIT0_EE.exit.i.i6 ], [ %i.ad, %bb.c ] ; 4 uses
   %i.au = trunc i64 %.sroa.07.0.i to i1
   br i1 %i.au, label %_ZN2v88internal8NullOrIsINS0_15InterpreterDataENS0_6ObjectEEEbNS0_6TaggedIT0_EE.exit.i.i, label %_ZN2v88internal8NullOrIsINS0_15InterpreterDataENS0_6ObjectEEEbNS0_6TaggedIT0_EE.exit.thread.i.i, !prof !25
 
 _ZN2v88internal8NullOrIsINS0_15InterpreterDataENS0_6ObjectEEEbNS0_6TaggedIT0_EE.exit.i.i: ; preds = %_ZN2v88internal7TryCastINS0_4CodeENS0_6ObjectENS0_6TaggedEQ24HasTryCastImplementationIT1_T_T0_EEEbS5_IS7_EPS5_IS6_E.exit.thread.i5
-  %i.av = add nsw i64 %.sroa.07.0.i, -1           ; 3 uses
+  %i.av = add nsw i64 %.sroa.07.0.i, -1           ; 2 uses
   %i.aw = inttoptr i64 %i.av to ptr               ; 2 uses
   %i.ax = load atomic volatile i64, ptr %i.aw monotonic, align 8
   %i.ay = add i64 %i.ax, 11
@@ -230,7 +230,6 @@ _ZNK2v88internal18SharedFunctionInfo16interpreter_dataENS0_17IsolateForSandboxE.
   br i1 %i.bd, label %bb.e, label %_ZN2v88internal15InterpreterData18set_bytecode_arrayENS0_6TaggedINS0_13BytecodeArrayEEENS0_16WriteBarrierModeE.exit
 
 bb.e:                                             ; preds = %_ZNK2v88internal18SharedFunctionInfo16interpreter_dataENS0_17IsolateForSandboxE.exit
-  %2 = or disjoint i64 %i.av, 1                   ; 2 uses
   %i.be = ptrtoint ptr %i.bc to i64               ; 2 uses
   %i.bf = and i64 %i.av, -262144
   %i.bg = inttoptr i64 %i.bf to ptr
@@ -250,14 +249,14 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not39.i.i.i.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @_ZN2v88internal12WriteBarrier40CombinedGenerationalAndSharedBarrierSlowENS0_6TaggedINS0_10HeapObjectEEEmS4_(i64 %2, i64 noundef %i.be, i64 %1) #18
+  tail call void @_ZN2v88internal12WriteBarrier40CombinedGenerationalAndSharedBarrierSlowENS0_6TaggedINS0_10HeapObjectEEEmS4_(i64 %.sroa.07.0.i, i64 noundef %i.be, i64 %1) #18
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   br i1 %.not.i.i.i.i.i, label %_ZN2v88internal15InterpreterData18set_bytecode_arrayENS0_6TaggedINS0_13BytecodeArrayEEENS0_16WriteBarrierModeE.exit, label %bb.i, !prof !14
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %2, i64 %i.be, i64 %1) #18
+  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %.sroa.07.0.i, i64 %i.be, i64 %1) #18
   br label %_ZN2v88internal15InterpreterData18set_bytecode_arrayENS0_6TaggedINS0_13BytecodeArrayEEENS0_16WriteBarrierModeE.exit
 
 _ZNK2v88internal18SharedFunctionInfo18HasInterpreterDataENS0_17IsolateForSandboxE.exit.thread: ; preds = %_ZN2v88internal7TryCastINS0_4CodeENS0_6ObjectENS0_6TaggedEQ24HasTryCastImplementationIT1_T_T0_EEEbS5_IS7_EPS5_IS6_E.exit.thread.i, %_ZNK2v88internal18SharedFunctionInfo18HasInterpreterDataENS0_17IsolateForSandboxE.exit

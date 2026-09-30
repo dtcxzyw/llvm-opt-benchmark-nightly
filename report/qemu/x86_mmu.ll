@@ -202,11 +202,10 @@ is_user.exit.thread:                              ; preds = %is_user.exit, %bb.b
   %i.o = phi i32 [ 0, %bb.b ], [ %spec.select62, %is_user.exit ]
   %i.p = and i32 %i.j, 1
   %i.q = or disjoint i32 %i.o, %i.p
-  %5 = xor i32 %i.q, 3                            ; 2 uses
   %i.r = and i32 %i.j, 3
   %.not9.i = icmp eq i32 %i.r, 0
-  %6 = or disjoint i32 %5, 8
-  %.3.i = select i1 %.not9.i, i32 %5, i32 %6
+  %.3.i.v = select i1 %.not9.i, i32 3, i32 11
+  %.3.i = xor i32 %i.q, %.3.i.v
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 31312
   store i8 1, ptr %i.s, align 16
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 31320
@@ -297,11 +296,10 @@ is_user.exit.thread:                              ; preds = %is_user.exit, %bb.b
   %i.o = phi i32 [ 0, %bb.b ], [ %spec.select67, %is_user.exit ]
   %i.p = and i32 %i.j, 1
   %i.q = or disjoint i32 %i.o, %i.p
-  %.1.i55 = xor i32 %i.q, 1                       ; 2 uses
   %i.r = and i32 %i.j, 3
   %.not9.i = icmp eq i32 %i.r, 0
-  %5 = or disjoint i32 %.1.i55, 8
-  %.3.i = select i1 %.not9.i, i32 %.1.i55, i32 %5
+  %.3.i.v = select i1 %.not9.i, i32 1, i32 9
+  %.3.i = xor i32 %i.q, %.3.i.v
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 17064
   store i64 %.04574, ptr %i.s, align 8
   call void @x86_emul_raise_exception(ptr noundef nonnull %i.c, i32 noundef 14, i32 noundef %.3.i) #6

@@ -205,14 +205,10 @@ bb.c:                                             ; preds = %bb.a
 .critedge.lr.ph:                                  ; preds = %bb.c
   %.not31 = icmp eq i32 %3, 0
   %i.i = getelementptr i8, ptr %i.a, i64 8        ; 2 uses
-  br i1 %.not31, label %.critedge.us, label %.critedge.preheader
-
-.critedge.preheader:                              ; preds = %.critedge.lr.ph
-  %4 = zext nneg i32 %.val35 to i64
-  br label %.critedge
+  br i1 %.not31, label %.critedge.us, label %.critedge
 
 .critedge.us:                                     ; preds = %.critedge.lr.ph, %Gia_ManPrintOneName.exit.us
-  %indvars.iv44 = phi i64 [ %indvars.iv.next45, %Gia_ManPrintOneName.exit.us ], [ 0, %.critedge.lr.ph ] ; 3 uses
+  %indvars.iv44 = phi i64 [ %indvars.iv.next45, %Gia_ManPrintOneName.exit.us ], [ 0, %.critedge.lr.ph ] ; 4 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %.val39, i64 %indvars.iv44 ; 2 uses
   %.027.in.us = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   %.027.us = load i32, ptr %.027.in.us, align 4, !tbaa !75 ; 2 uses
@@ -247,14 +243,14 @@ bb.e:                                             ; preds = %bb.d, %.critedge.us
   br i1 %exitcond.not.i.us, label %Gia_ManPrintOneName.exit.us, label %.lr.ph.i.us, !llvm.loop !4
 
 Gia_ManPrintOneName.exit.us:                      ; preds = %.lr.ph.i.us, %bb.e
-  %indvars.iv.next45 = add nuw nsw i64 %indvars.iv44, 2 ; 2 uses
-  %i.r = trunc i64 %indvars.iv.next45 to i32
-  %5 = or disjoint i32 %i.r, 1
-  %i.s = icmp slt i32 %5, %.val35
+  %indvars.iv.next45 = add nuw nsw i64 %indvars.iv44, 2
+  %i.r = trunc i64 %indvars.iv44 to i32
+  %4 = add i32 %i.r, 3
+  %i.s = icmp slt i32 %4, %.val35
   br i1 %i.s, label %.critedge.us, label %._crit_edge.thread, !llvm.loop !291
 
-.critedge:                                        ; preds = %.critedge.preheader, %Gia_ManPrintOneName.exit
-  %indvars.iv = phi i64 [ 0, %.critedge.preheader ], [ %indvars.iv.next, %Gia_ManPrintOneName.exit ] ; 3 uses
+.critedge:                                        ; preds = %.critedge.lr.ph, %Gia_ManPrintOneName.exit
+  %indvars.iv = phi i64 [ %indvars.iv.next, %Gia_ManPrintOneName.exit ], [ 0, %.critedge.lr.ph ] ; 4 uses
   %i.t = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
   %.reass = sub i32 %invariant.op, %i.t
   %i.u = sext i32 %.reass to i64
@@ -295,9 +291,10 @@ bb.g:                                             ; preds = %bb.f, %.critedge
   br i1 %exitcond.not.i, label %Gia_ManPrintOneName.exit, label %.lr.ph.i, !llvm.loop !4
 
 Gia_ManPrintOneName.exit:                         ; preds = %.lr.ph.i, %bb.g
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %6 = or disjoint i64 %indvars.iv.next, 1
-  %7 = icmp samesign ult i64 %6, %4
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  %5 = trunc i64 %indvars.iv to i32
+  %6 = add i32 %5, 3
+  %7 = icmp slt i32 %6, %.val35
   br i1 %7, label %.critedge, label %._crit_edge.thread, !llvm.loop !291
 
 ._crit_edge:                                      ; preds = %bb.c
@@ -360,12 +357,12 @@ bb.c:                                             ; preds = %bb.a
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.lr.ph, %Gia_ManPrintOneName.exit
-  %indvars.iv = phi i64 [ 0, %.critedge.lr.ph ], [ %indvars.iv.next, %Gia_ManPrintOneName.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.critedge.lr.ph ], [ %indvars.iv.next, %Gia_ManPrintOneName.exit ] ; 3 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %.val56, i64 %indvars.iv ; 2 uses
   %i.v = load i32, ptr %i.u, align 4, !tbaa !75   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   %i.x = load i32, ptr %i.w, align 4, !tbaa !75   ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 4 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.y = icmp samesign ult i64 %indvars.iv.next, %i.t
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %.val56, i64 %indvars.iv.next
   %.in61 = select i1 %i.y, ptr %i.z, ptr %i.q
@@ -435,7 +432,7 @@ bb.g:                                             ; preds = %bb.f, %Gia_ManReadR
 
 Gia_ManPrintOneName.exit:                         ; preds = %.lr.ph.i, %bb.g
   %fwrite = tail call i64 @fwrite(ptr nonnull @.str.143, i64 2, i64 1, ptr %1) ; 0 uses
-  %3 = or disjoint i64 %indvars.iv.next, 1
+  %3 = add nuw nsw i64 %indvars.iv, 3
   %i.bc = icmp samesign ult i64 %3, %i.t
   br i1 %i.bc, label %.critedge, label %._crit_edge.thread, !llvm.loop !292
 
@@ -539,10 +536,10 @@ bb.e:                                             ; preds = %bb.c
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.lr.ph, %.loopexit50
-  %indvars.iv = phi i64 [ 0, %.critedge.lr.ph ], [ %indvars.iv.next, %.loopexit50 ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.critedge.lr.ph ], [ %indvars.iv.next, %.loopexit50 ] ; 3 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %.val48, i64 %indvars.iv
   %i.am = load i32, ptr %i.al, align 4, !tbaa !75 ; 8 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 4 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.an = icmp samesign ult i64 %indvars.iv.next, %i.ak
   br i1 %i.an, label %bb.f, label %bb.g
 
@@ -610,7 +607,7 @@ bb.g:                                             ; preds = %.critedge, %bb.f
   br i1 %exitcond.not.1, label %.loopexit50, label %.lr.ph, !llvm.loop !294
 
 .loopexit50:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %.preheader49, %bb.g
-  %2 = or disjoint i64 %indvars.iv.next, 1
+  %2 = add nuw nsw i64 %indvars.iv, 3
   %i.bu = icmp samesign ult i64 %2, %i.ak
   br i1 %i.bu, label %.critedge, label %._crit_edge.thread, !llvm.loop !295
 

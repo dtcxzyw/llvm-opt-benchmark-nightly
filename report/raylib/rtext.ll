@@ -205,7 +205,7 @@ stbtt__buf_get8.exit:                             ; preds = %stbtt__buf_get8.exi
   %.sroa.073.0325 = phi ptr [ %.sroa.073.0.copyload, %stbtt__buf_get8.exit.lr.ph ], [ %.sroa.073.3299, %.thread ] ; 27 uses
   %.sroa.5.0324 = phi i64 [ %.sroa.5.0.copyload, %stbtt__buf_get8.exit.lr.ph ], [ %.sroa.5.3298, %.thread ] ; 27 uses
   %.0246323 = phi i32 [ 0, %stbtt__buf_get8.exit.lr.ph ], [ %.2248297, %.thread ] ; 26 uses
-  %.0253320 = phi i32 [ 0, %stbtt__buf_get8.exit.lr.ph ], [ %i.pi, %.thread ] ; 45 uses
+  %.0253320 = phi i32 [ 0, %stbtt__buf_get8.exit.lr.ph ], [ %i.pi, %.thread ] ; 44 uses
   %i.ai = load ptr, ptr %4, align 8               ; 6 uses
   %i.aj = add nsw i32 %i.ah, 1                    ; 7 uses
   store i32 %i.aj, ptr %.sroa.469.0..sroa_idx, align 8
@@ -304,22 +304,19 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %stbtt__buf_get8.exit
   %i.bn = icmp slt i32 %.0253320, 2
-  br i1 %i.bn, label %.critedge, label %.preheader.preheader
+  br i1 %i.bn, label %.critedge, label %.preheader
 
-.preheader.preheader:                             ; preds = %bb.l
-  %5 = zext nneg i32 %.0253320 to i64
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv383 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next384, %.preheader ] ; 2 uses
+.preheader:                                       ; preds = %bb.l, %.preheader
+  %indvars.iv383 = phi i64 [ %indvars.iv.next384, %.preheader ], [ 0, %bb.l ] ; 3 uses
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv383 ; 2 uses
   %i.bp = load float, ptr %i.bo, align 8
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bo, i64 4
   %i.br = load float, ptr %i.bq, align 4
   tail call fastcc void @stbtt__csctx_rline_to(ptr noundef %2, float noundef %i.bp, float noundef %i.br)
-  %indvars.iv.next384 = add nuw nsw i64 %indvars.iv383, 2 ; 2 uses
-  %6 = or disjoint i64 %indvars.iv.next384, 1
-  %7 = icmp samesign ult i64 %6, %5
+  %indvars.iv.next384 = add nuw nsw i64 %indvars.iv383, 2
+  %5 = trunc i64 %indvars.iv383 to i32
+  %6 = add i32 %5, 3
+  %7 = icmp slt i32 %6, %.0253320
   br i1 %7, label %.preheader, label %.thread
 
 bb.m:                                             ; preds = %stbtt__buf_get8.exit
@@ -506,34 +503,31 @@ bb.af:                                            ; preds = %stbtt__buf_get8.exi
 
 .lr.ph311.preheader:                              ; preds = %bb.af
   %i.fb = add nsw i32 %.0253320, -6
-  %8 = zext nneg i32 %i.fb to i64
   br label %.lr.ph311
 
 .lr.ph311:                                        ; preds = %.lr.ph311.preheader, %.lr.ph311
-  %indvars.iv374 = phi i64 [ 0, %.lr.ph311.preheader ], [ %indvars.iv.next375, %.lr.ph311 ] ; 2 uses
+  %indvars.iv374 = phi i64 [ 0, %.lr.ph311.preheader ], [ %indvars.iv.next375, %.lr.ph311 ] ; 3 uses
   %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv374 ; 2 uses
   %i.fd = load float, ptr %i.fc, align 8
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fc, i64 4
   %i.ff = load float, ptr %i.fe, align 4
   tail call fastcc void @stbtt__csctx_rline_to(ptr noundef %2, float noundef %i.fd, float noundef %i.ff)
-  %indvars.iv.next375 = add nuw nsw i64 %indvars.iv374, 2 ; 4 uses
-  %9 = or disjoint i64 %indvars.iv.next375, 1
-  %10 = icmp samesign ult i64 %9, %8
+  %indvars.iv.next375 = add nuw nsw i64 %indvars.iv374, 2 ; 3 uses
+  %8 = trunc i64 %indvars.iv374 to i32
+  %9 = add i32 %8, 3                              ; 2 uses
+  %10 = icmp slt i32 %9, %i.fb
   br i1 %10, label %.lr.ph311, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph311
-  %i.fg = trunc nuw nsw i64 %indvars.iv.next375 to i32
+  %i.fg = trunc nuw i64 %indvars.iv.next375 to i32
   %i.fh = add nuw nsw i32 %i.fg, 5                ; 2 uses
-  %.not268 = icmp samesign ult i32 %i.fh, %.0253320
+  %.not268 = icmp slt i32 %i.fh, %.0253320
   br i1 %.not268, label %bb.ag, label %.critedge
 
 bb.ag:                                            ; preds = %._crit_edge
-  %11 = add nuw i32 %.0253320, 2147483640
-  %12 = and i32 %11, 2147483646
-  %narrow = add nuw i32 %12, 3
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next375 ; 4 uses
   %i.fj = load float, ptr %i.fi, align 4
-  %i.fk = zext nneg i32 %narrow to i64
+  %i.fk = zext nneg i32 %9 to i64
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.fk
   %i.fm = load float, ptr %i.fl, align 4
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fi, i64 8

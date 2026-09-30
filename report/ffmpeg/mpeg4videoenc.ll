@@ -205,11 +205,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.c
   %i.at = shl i32 %i.o, 14
-  %7 = add nsw i32 %i.at, 31465472
   %i.au = shl nsw i32 %i.l, 1
   %i.av = and i32 %i.au, 8190
-  %8 = or disjoint i32 %i.av, %7
-  %i.aw = or disjoint i32 %8, 1                   ; 4 uses
+  %7 = add i32 %i.at, 31465473
+  %i.aw = or disjoint i32 %i.av, %7               ; 4 uses
   %i.ax = load i32, ptr %4, align 8, !tbaa !55    ; 2 uses
   %i.ay = load i32, ptr %i.c, align 4, !tbaa !54  ; 4 uses
   %i.az = icmp sgt i32 %i.ay, 30
@@ -343,11 +342,10 @@ put_bits.exit48:                                  ; preds = %bb.q, %bb.u
 
 bb.v:                                             ; preds = %._crit_edge
   %i.dh = shl i32 %i.by, 14
-  %9 = add nsw i32 %i.dh, 32514048
   %i.di = shl nsw i32 %i.bw, 1
   %i.dj = and i32 %i.di, 8190
-  %10 = or disjoint i32 %i.dj, %9
-  %i.dk = or disjoint i32 %10, 1                  ; 4 uses
+  %8 = add i32 %i.dh, 32514049
+  %i.dk = or disjoint i32 %i.dj, %8               ; 4 uses
   %i.dl = load i32, ptr %4, align 8, !tbaa !55    ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %i.dn = load i32, ptr %i.dm, align 4, !tbaa !54 ; 4 uses
@@ -518,19 +516,20 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a, %.critedge
   %indvars.iv154 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next155, %.critedge ] ; 3 uses
-  %i.d = shl nuw nsw i64 %indvars.iv154, 14
-  %i.e = add nuw nsw i64 %i.d, 31465473           ; 3 uses
+  %i.d = shl nuw nsw i64 %indvars.iv154, 14       ; 3 uses
+  %i.e = add nuw nsw i64 %i.d, 31465473           ; 2 uses
   %i.f = shl nuw nsw i64 %indvars.iv154, 7        ; 5 uses
   %i.g = or disjoint i64 %i.f, 8192               ; 3 uses
   %i.h = getelementptr [4 x i8], ptr %i.c, i64 %i.f ; 2 uses
   %i.i = getelementptr i8, ptr %i.h, i64 -4
-  %i.j = trunc i64 %i.e to i32
-  %3 = or disjoint i32 %i.j, 8190
+  %i.j = trunc i64 %i.d to i32
+  %3 = add i32 %i.j, 31473663
   store i32 %3, ptr %i.i, align 4, !tbaa !49
-  %i.k = trunc nuw nsw i64 %i.e to i32            ; 2 uses
-  %4 = or i32 %i.k, 1056766
-  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 32764
-  store i32 %4, ptr %5, align 4, !tbaa !49
+  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 32764
+  %i.k = trunc i64 %i.d to i32
+  %5 = add i32 %i.k, 32522239
+  store i32 %5, ptr %4, align 4, !tbaa !49
+  %6 = trunc nuw nsw i64 %i.e to i32
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.f
   %invariant.gep164 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.g
   br label %bb.c
@@ -548,7 +547,7 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %indvars.iv = phi i64 [ 1, %.preheader ], [ %indvars.iv.next, %bb.c ] ; 4 uses
   %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
   %i.p = shl nuw nsw i32 %indvars.iv.tr, 1
-  %i.q = or i32 %i.p, %i.k                        ; 2 uses
+  %i.q = or i32 %i.p, %6                          ; 2 uses
   %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv
   store i32 %i.q, ptr %gep, align 4, !tbaa !49
   %i.r = or i32 %i.q, 1048576

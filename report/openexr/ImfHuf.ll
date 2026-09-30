@@ -186,14 +186,13 @@ bb.e:                                             ; preds = %.lr.ph.i30.epil.pre
 
 bb.f:                                             ; preds = %._crit_edge.i
   %i.bi = zext nneg i32 %i.bg to i64              ; 2 uses
-  %i.bj = add nsw i64 %i.bi, -2                   ; 2 uses
+  %i.bj = add nsw i64 %i.bi, -2
   %i.bk = lshr i64 %i.bj, 1                       ; 3 uses
-  %3 = lshr i32 %.1.i.lcssa, 1
-  %4 = zext nneg i32 %3 to i64                    ; 2 uses
+  %3 = zext nneg i32 %.1.i.lcssa to i64           ; 3 uses
+  %4 = lshr i64 %3, 1                             ; 2 uses
   %i.bl = and i64 %i.bi, 1
   %i.bm = icmp eq i64 %i.bl, 0
-  %5 = or disjoint i64 %i.bj, 1                   ; 2 uses
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %5
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %3
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.bk
   br label %bb.g
 
@@ -241,7 +240,7 @@ bb.h:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %._crit_edge.i.i.i.i
-  %.128.i.i.i.i = phi i64 [ %5, %bb.h ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.128.i.i.i.i = phi i64 [ %3, %bb.h ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.cl = icmp samesign ugt i64 %.128.i.i.i.i, %.014.i.i.i
   br i1 %i.cl, label %.lr.ph.i.i.i.i.i, label %_ZSt13__adjust_heapIPPmlS0_N9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_412_GLOBAL__N_112FHeapCompareEEEEvT_T0_SA_T1_T2_.exit.i.i.i
 

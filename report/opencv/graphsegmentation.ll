@@ -205,10 +205,9 @@ vector.ph:                                        ; preds = %.lr.ph.i.preheader
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add nuw <2 x i64> %vec.ind, splat (i64 2)
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %index ; 2 uses
   %i.x = or disjoint <2 x i64> %vec.ind, splat (i64 4294967296)
-  %5 = or disjoint <2 x i64> %step.add, splat (i64 4294967296)
+  %5 = add <2 x i64> %vec.ind, splat (i64 4294967298)
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   store <2 x i64> %i.x, ptr %i.w, align 4, !tbaa !37
   store <2 x i64> %5, ptr %i.y, align 4, !tbaa !37
@@ -611,10 +610,9 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add nuw <2 x i64> %vec.ind, splat (i64 2)
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %index ; 2 uses
   %i.j = or disjoint <2 x i64> %vec.ind, splat (i64 4294967296)
-  %2 = or disjoint <2 x i64> %step.add, splat (i64 4294967296)
+  %2 = add <2 x i64> %vec.ind, splat (i64 4294967298)
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   store <2 x i64> %i.j, ptr %i.i, align 4, !tbaa !37
   store <2 x i64> %2, ptr %i.k, align 4, !tbaa !37
@@ -1017,14 +1015,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %.lcssa40 = phi i64 [ %i.c, %.lr.ph ], [ %i.da, %bb.b ]
   %.021.lcssa = phi ptr [ %1, %.lr.ph ], [ %.1.i.i, %bb.b ]
   %i.j = udiv exact i64 %.lcssa40, 12             ; 3 uses
-  %i.k = add nsw i64 %i.j, -2                     ; 2 uses
+  %i.k = add nsw i64 %i.j, -2
   %i.l = lshr i64 %i.k, 1                         ; 3 uses
-  %i.m = add nsw i64 %i.j, -1
+  %i.m = add nsw i64 %i.j, -1                     ; 3 uses
   %i.n = lshr i64 %i.m, 1                         ; 2 uses
   %i.o = and i64 %i.j, 1
   %i.p = icmp eq i64 %i.o, 0
-  %10 = or disjoint i64 %i.k, 1                   ; 2 uses
-  %i.q = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %10
+  %i.q = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %i.m
   %i.r = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %i.l
   br label %bb.c
 
@@ -1067,7 +1064,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %10, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.m, %bb.d ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ai = icmp sgt i64 %.1.i.i.i, %.015.i.i
   br i1 %i.ai, label %.lr.ph.i.i.i.i13, label %_ZSt13__adjust_heapIPN2cv8ximgproc12segmentation4EdgeElS3_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S9_T1_T2_.exit.i.i
 
