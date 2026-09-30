@@ -11,12 +11,13 @@ target triple = "x86_64-unknown-linux-gnu"
 @0 = private unnamed_addr constant [126 x i8] c"\FF\00\00\00\FF\00\00\00\FF\00\00\00\00\00\FF\00\00\00\FF\00\00\00\FF\00\00\00\00\00\FF\00\00\00\FF\00\00\00\FF\00\00\00\00\00\FF\00\00\00\FF\00\00\00\FF\00\00\00\00\00\FF\00\00\00\FF\00\00\00\FF\00\00\00\00\00\FF\00\00\00\FF\00\00\00\FF\00\00\00\00\00\FF\00\00\00\FF\00\00\00\FF\00\00\00\00\00\FF\00\00\00\FF\00\00\00\FF\00\00\00\00\00\FE\00\00\00\00\00\00\00\00\00\00\00\00\00", align 2
 @_RNvNtNtNtCshzWfHUSfYae_4core7unicode12unicode_data11white_space14WHITESPACE_MAP = external local_unnamed_addr global [256 x i8]
 @1 = private unnamed_addr constant [25 x i8] c"\14unknown ValueHint: `\C0\01`\00", align 1
-@2 = private unnamed_addr constant [4 x i8] c"auto", align 1
-@3 = private unnamed_addr constant [6 x i8] c"always", align 1
-@4 = private unnamed_addr constant [5 x i8] c"never", align 1
-@5 = private unnamed_addr constant [20 x i8] c"\11invalid variant: \C0\00", align 1
+@2 = private unnamed_addr constant [3 x i8] c"\00\01\02", align 1
+@3 = private unnamed_addr constant [4 x i8] c"auto", align 1
+@4 = private unnamed_addr constant [6 x i8] c"always", align 1
+@5 = private unnamed_addr constant [5 x i8] c"never", align 1
+@6 = private unnamed_addr constant [20 x i8] c"\11invalid variant: \C0\00", align 1
 @switch.table._RNvXs_NtNtCsaB0tVqiIPBo_12clap_builder4util5colorNtB4_11ColorChoiceNtNtCshzWfHUSfYae_4core3fmt7Display3fmt = private unnamed_addr constant [3 x i8] c"\04\06\05", align 8
-@switch.table._RNvXs_NtNtCsaB0tVqiIPBo_12clap_builder4util5colorNtB4_11ColorChoiceNtNtCshzWfHUSfYae_4core3fmt7Display3fmt.39 = private unnamed_addr constant [3 x ptr] [ptr @2, ptr @3, ptr @4], align 8
+@switch.table._RNvXs_NtNtCsaB0tVqiIPBo_12clap_builder4util5colorNtB4_11ColorChoiceNtNtCshzWfHUSfYae_4core3fmt7Display3fmt.40 = private unnamed_addr constant [3 x ptr] [ptr @3, ptr @4, ptr @5], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMCs74Z8AuVjqbo_8clap_lexNtB3_7RawArgs3newNtNtNtCscAsMj0W7j8b_3std3ffi6os_str8OsStringNtNtBN_3env6ArgsOsECsaB0tVqiIPBo_12clap_builder(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #0 {
@@ -419,7 +420,7 @@ bb.a:
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.05.sroa.0.sroa.4.0..sroa_idx, align 8
   store i64 0, ptr %.sroa.05.sroa.0.sroa.5.0..sroa_idx, align 8
   store i64 -1, ptr %.sroa.05.sroa.4.0..sroa_idx, align 8
-  store ptr @2, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr @3, ptr %.sroa.4.0..sroa_idx, align 8
   store i64 4, ptr %.sroa.5.0..sroa_idx, align 8
   store i8 0, ptr %.sroa.6.0..sroa_idx, align 8
   %i.e = invoke noundef zeroext i1 @_RNvMs_NtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_valueNtB4_13PossibleValue7matches(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i1 noundef zeroext false)
@@ -442,7 +443,7 @@ bb.d:                                             ; preds = %bb.c
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.05.sroa.0.sroa.4.0..sroa_idx, align 8
   store i64 0, ptr %.sroa.05.sroa.0.sroa.5.0..sroa_idx, align 8
   store i64 -1, ptr %.sroa.05.sroa.4.0..sroa_idx, align 8
-  store ptr @3, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr @4, ptr %.sroa.4.0..sroa_idx, align 8
   store i64 6, ptr %.sroa.5.0..sroa_idx, align 8
   store i8 0, ptr %.sroa.6.0..sroa_idx, align 8
   %i.g = invoke noundef zeroext i1 @_RNvMs_NtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_valueNtB4_13PossibleValue7matches(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i1 noundef zeroext false)
@@ -459,7 +460,7 @@ bb.f:                                             ; preds = %bb.e
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.05.sroa.0.sroa.4.0..sroa_idx, align 8
   store i64 0, ptr %.sroa.05.sroa.0.sroa.5.0..sroa_idx, align 8
   store i64 -1, ptr %.sroa.05.sroa.4.0..sroa_idx, align 8
-  store ptr @4, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr @5, ptr %.sroa.4.0..sroa_idx, align 8
   store i64 5, ptr %.sroa.5.0..sroa_idx, align 8
   store i8 0, ptr %.sroa.6.0..sroa_idx, align 8
   %i.h = invoke noundef zeroext i1 @_RNvMs_NtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_valueNtB4_13PossibleValue7matches(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i1 noundef zeroext false)
@@ -475,16 +476,18 @@ bb.g:                                             ; preds = %bb.f
   store ptr %i.c, ptr %i.a, align 8
   %.sroa.434.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_RNvXs1i_NtCshzWfHUSfYae_4core3fmtReNtB6_7Display3fmtCsaB0tVqiIPBo_12clap_builder, ptr %.sroa.434.0..sroa_idx, align 8
-  call void @_RNvNvNtCsbSS6DM8SDEO_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull @5, ptr noundef nonnull %i.a)
+  call void @_RNvNvNtCsbSS6DM8SDEO_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull @6, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g, %bb.e, %bb.c
-  %.lcssa47 = phi i8 [ 0, %bb.c ], [ 1, %bb.e ], [ 2, %bb.g ]
+  %.sroa.0.0.idx47.lcssa48 = phi i64 [ 0, %bb.c ], [ 1, %bb.e ], [ 2, %bb.g ]
+  %.sroa.0.0.ptr.le = getelementptr inbounds nuw i8, ptr @2, i64 %.sroa.0.0.idx47.lcssa48
   call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueEBH_(ptr noalias nofree noundef align 8 dereferenceable(72) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  %3 = load i8, ptr %.sroa.0.0.ptr.le, align 1, !range !16, !noundef !4
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %.lcssa47, ptr %i.i, align 8
+  store i8 %3, ptr %i.i, align 8
   store i64 -1, ptr %0, align 8
   br label %bb.i
 
@@ -772,7 +775,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64       ; 2 uses
   %i.d = zext nneg i8 %i.b to i64
-  %switch.gep32 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs_NtNtCsaB0tVqiIPBo_12clap_builder4util5colorNtB4_11ColorChoiceNtNtCshzWfHUSfYae_4core3fmt7Display3fmt.39, i64 %i.d
+  %switch.gep32 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs_NtNtCsaB0tVqiIPBo_12clap_builder4util5colorNtB4_11ColorChoiceNtNtCshzWfHUSfYae_4core3fmt7Display3fmt.40, i64 %i.d
   %switch.load33 = load ptr, ptr %switch.gep32, align 8 ; 2 uses
   store i64 0, ptr %i.a, align 8
   %.sroa.03.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8

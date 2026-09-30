@@ -205,12 +205,15 @@ begin_hunk_0
 @switch.table._RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb21cast_pixels_by_layoutttEBa_.210 = private unnamed_addr constant [4 x i8] c"\03\04\01\02", align 8
 @switch.table._RINvMs7_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpINtB6_13RgbTransformstE16select_transformINtNtBa_5color4RgbatEEBa_ = private unnamed_addr constant [4 x i8] c" 0\A0\B0", align 8
 @switch.table._RNvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_13CicpTransform17transform_dynamic = private unnamed_addr constant [10 x i8] c"\02\03\00\01\02\03\00\01\00\01", align 1
+@switch.table._RNvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_13CicpTransform17transform_dynamic.211 = private unnamed_addr constant [10 x i16] [i16 560, i16 544, i16 560, i16 544, i16 560, i16 544, i16 560, i16 544, i16 560, i16 544], align 8
+@switch.table._RNvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_13CicpTransform17transform_dynamic.212 = private unnamed_addr constant [10 x i16] [i16 568, i16 552, i16 568, i16 552, i16 568, i16 552, i16 568, i16 552, i16 568, i16 552], align 8
+@switch.table._RNvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_13CicpTransform17transform_dynamic.213 = private unnamed_addr constant [10 x i8] c"\04\03\04\03\04\03\04\03\04\03", align 8
 @switch.table._RNvXsD_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt = private unnamed_addr constant [18 x i8] [i8 5, i8 11, i8 poison, i8 6, i8 7, i8 5, i8 9, i8 6, i8 6, i8 7, i8 12, i8 6, i8 4, i8 12, i8 12, i8 9, i8 8, i8 9], align 8
-@switch.table._RNvXsD_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.211 = private unnamed_addr constant [18 x ptr] [ptr @184, ptr @185, ptr poison, ptr @186, ptr @187, ptr @188, ptr @189, ptr @190, ptr @191, ptr @192, ptr @193, ptr @194, ptr @195, ptr @196, ptr @197, ptr @198, ptr @199, ptr @200], align 8
+@switch.table._RNvXsD_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.214 = private unnamed_addr constant [18 x ptr] [ptr @184, ptr @185, ptr poison, ptr @186, ptr @187, ptr @188, ptr @189, ptr @190, ptr @191, ptr @192, ptr @193, ptr @194, ptr @195, ptr @196, ptr @197, ptr @198, ptr @199, ptr @200], align 8
 @switch.table._RNvXsL_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt = private unnamed_addr constant [18 x i8] [i8 8, i8 5, i8 11, i8 poison, i8 5, i8 7, i8 9, i8 9, i8 5, i8 17, i8 14, i8 9, i8 30, i8 27, i8 6, i8 7, i8 7, i8 7], align 8
-@switch.table._RNvXsL_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.212 = private unnamed_addr constant [18 x ptr] [ptr @201, ptr @184, ptr @185, ptr poison, ptr @202, ptr @187, ptr @203, ptr @189, ptr @204, ptr @205, ptr @206, ptr @207, ptr @208, ptr @209, ptr @210, ptr @211, ptr @212, ptr @213], align 8
+@switch.table._RNvXsL_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.215 = private unnamed_addr constant [18 x ptr] [ptr @201, ptr @184, ptr @185, ptr poison, ptr @202, ptr @187, ptr @203, ptr @189, ptr @204, ptr @205, ptr @206, ptr @207, ptr @208, ptr @209, ptr @210, ptr @211, ptr @212, ptr @213], align 8
 @switch.table._RNvXsv_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt = private unnamed_addr constant [22 x i8] [i8 4, i8 11, i8 poison, i8 4, i8 4, i8 5, i8 7, i8 11, i8 7, i8 3, i8 10, i8 10, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 10], align 8
-@switch.table._RNvXsv_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.213 = private unnamed_addr constant [22 x ptr] [ptr @195, ptr @185, ptr poison, ptr @226, ptr @227, ptr @188, ptr @228, ptr @229, ptr @230, ptr @231, ptr @232, ptr @233, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @234], align 8
+@switch.table._RNvXsv_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.216 = private unnamed_addr constant [22 x ptr] [ptr @195, ptr @185, ptr poison, ptr @226, ptr @227, ptr @188, ptr @228, ptr @229, ptr @230, ptr @231, ptr @232, ptr @233, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @234], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_13CicpTransform16build_transformsfEBa_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(256) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dead_on_return dereferenceable(64) %1, ptr noalias nofree noundef nonnull align 8 captures(address) dead_on_return dereferenceable(64) %2, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dead_on_return dereferenceable(12) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -613,9 +616,9 @@ _RNvXNtNtCsa5QsYiPB8Gl_5image6traits7privateNtB2_15LayoutWithColorINtNtCsj6eKBz9
   %i.ab = phi i1 [ true, %bb.d ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.a ], [ false, %bb.a ]
   %cond = phi i1 [ false, %bb.d ], [ false, %bb.b ], [ false, %bb.c ], [ true, %bb.a ], [ true, %bb.a ]
   %.sroa.0.0.i = phi i8 [ 1, %bb.d ], [ 3, %bb.b ], [ 0, %bb.c ], [ 2, %bb.a ], [ 2, %bb.a ]
-  %.val142 = load i64, ptr %2, align 8, !range !5804, !noundef !4 ; 2 uses
+  %.val142 = load i64, ptr %2, align 8, !range !5804, !noundef !4 ; 5 uses
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_13CicpTransform17transform_dynamic, i64 %.val142
-  %switch.load = load i8, ptr %switch.gep, align 1 ; 3 uses
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
   switch i8 %.sroa.0.0.i, label %default.unreachable889 [
     i8 0, label %bb.f
     i8 2, label %bb.f
@@ -624,7 +627,7 @@ _RNvXNtNtCsa5QsYiPB8Gl_5image6traits7privateNtB2_15LayoutWithColorINtNtCsj6eKBz9
   ]
 
 bb.e:                                             ; preds = %bb.f
-  br i1 %i.ab, label %bb.i, label %3
+  br i1 %i.ab, label %bb.i, label %switch.lookup
 
 bb.f:                                             ; preds = %_RNvXNtNtCsa5QsYiPB8Gl_5image6traits7privateNtB2_15LayoutWithColorINtNtCsj6eKBz9Db1c_4core7convert4FromNtNtB6_5color9ColorTypeE4from.exit, %_RNvXNtNtCsa5QsYiPB8Gl_5image6traits7privateNtB2_15LayoutWithColorINtNtCsj6eKBz9Db1c_4core7convert4FromNtNtB6_5color9ColorTypeE4from.exit
   switch i8 %switch.load, label %bb.e [
@@ -632,11 +635,23 @@ bb.f:                                             ; preds = %_RNvXNtNtCsa5QsYiPB
     i8 2, label %bb.g
   ]
 
-bb.g:                                             ; preds = %bb.f, %bb.f, %3, %3, %bb.i, %bb.i, %4
-  %.sink1135 = phi i64 [ 560, %4 ], [ 528, %bb.i ], [ 544, %3 ], [ 528, %bb.i ], [ 544, %3 ], [ 512, %bb.f ], [ 512, %bb.f ]
-  %.sink1134 = phi i64 [ 568, %4 ], [ 536, %bb.i ], [ 552, %3 ], [ 536, %bb.i ], [ 552, %3 ], [ 520, %bb.f ], [ 520, %bb.f ]
-  %.sroa.023.0 = phi i64 [ 4, %4 ], [ 4, %bb.i ], [ 3, %3 ], [ 4, %bb.i ], [ 3, %3 ], [ 3, %bb.f ], [ 3, %bb.f ]
-  %.sroa.0.0 = phi i64 [ 4, %4 ], [ 3, %bb.i ], [ 4, %3 ], [ 3, %bb.i ], [ 4, %3 ], [ 3, %bb.f ], [ 3, %bb.f ]
+switch.lookup:                                    ; preds = %bb.h, %bb.e
+  %switch.gep1753 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_13CicpTransform17transform_dynamic.211, i64 %.val142
+  %switch.load1754 = load i16, ptr %switch.gep1753, align 2
+  %switch.ext = zext i16 %switch.load1754 to i64
+  %switch.gep1755 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_13CicpTransform17transform_dynamic.212, i64 %.val142
+  %switch.load1756 = load i16, ptr %switch.gep1755, align 2
+  %switch.ext1757 = zext i16 %switch.load1756 to i64
+  %switch.gep1758 = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_13CicpTransform17transform_dynamic.213, i64 %.val142
+  %switch.load1759 = load i8, ptr %switch.gep1758, align 1
+  %switch.ext1760 = zext i8 %switch.load1759 to i64
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.h, %switch.lookup, %bb.f, %bb.f, %bb.i, %bb.i
+  %.sink1135 = phi i64 [ 512, %bb.f ], [ 528, %bb.i ], [ %switch.ext, %switch.lookup ], [ 528, %bb.i ], [ 512, %bb.f ], [ 560, %bb.h ]
+  %.sink1134 = phi i64 [ 520, %bb.f ], [ 536, %bb.i ], [ %switch.ext1757, %switch.lookup ], [ 536, %bb.i ], [ 520, %bb.f ], [ 568, %bb.h ]
+  %.sroa.023.0 = phi i64 [ 3, %bb.f ], [ 4, %bb.i ], [ %switch.ext1760, %switch.lookup ], [ 4, %bb.i ], [ 3, %bb.f ], [ 4, %bb.h ]
+  %.sroa.0.0 = phi i64 [ 3, %bb.f ], [ 3, %bb.i ], [ 4, %switch.lookup ], [ 3, %bb.i ], [ 3, %bb.f ], [ 4, %bb.h ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 %.sink1135
   %i.ad = load ptr, ptr %i.ac, align 8, !nonnull !4, !noundef !4
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 %.sink1134
@@ -741,22 +756,13 @@ bb.g:                                             ; preds = %bb.f, %bb.f, %3, %3
   br label %.lr.ph.split
 
 bb.h:                                             ; preds = %bb.i
-  br i1 %cond, label %3, label %4
+  br i1 %cond, label %switch.lookup, label %bb.g
 
 bb.i:                                             ; preds = %bb.e, %_RNvXNtNtCsa5QsYiPB8Gl_5image6traits7privateNtB2_15LayoutWithColorINtNtCsj6eKBz9Db1c_4core7convert4FromNtNtB6_5color9ColorTypeE4from.exit, %_RNvXNtNtCsa5QsYiPB8Gl_5image6traits7privateNtB2_15LayoutWithColorINtNtCsj6eKBz9Db1c_4core7convert4FromNtNtB6_5color9ColorTypeE4from.exit
   switch i8 %switch.load, label %bb.h [
     i8 0, label %bb.g
     i8 2, label %bb.g
   ]
-
-3:                                                ; preds = %bb.e, %bb.h
-  switch i8 %switch.load, label %4 [
-    i8 1, label %bb.g
-    i8 3, label %bb.g
-  ]
-
-4:                                                ; preds = %bb.h, %3
-  br label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.cb, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
@@ -1160,7 +1166,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %switch.tableidx to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsD_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.211, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsD_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_27CicpTransferCharacteristicsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.214, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsj6eKBz9Db1c_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -1175,7 +1181,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsL_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.212, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsL_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_22CicpMatrixCoefficientsNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.215, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsj6eKBz9Db1c_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -1268,7 +1274,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %switch.tableidx to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsv_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.213, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsv_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB5_18CicpColorPrimariesNtNtCsj6eKBz9Db1c_4core3fmt5Debug3fmt.216, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsj6eKBz9Db1c_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d

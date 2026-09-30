@@ -74,7 +74,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @64 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @60, [16 x i8] c"]\00\00\00\00\00\00\00\10\05\00\00\14\00\00\00" }>, align 8
 @65 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @57, [16 x i8] c"T\00\00\00\00\00\00\00o\00\00\00\01\00\00\00" }>, align 8
 @switch.table._RNvXs_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB4_9PrimitiveNtNtCsdQT5ZjIgVrW_5quote9to_tokens8ToTokens9to_tokens = private unnamed_addr constant [10 x i8] c"\02\03\03\03\05\02\03\03\03\05", align 8
-@switch.table._RNvXs_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB4_9PrimitiveNtNtCsdQT5ZjIgVrW_5quote9to_tokens8ToTokens9to_tokens.15 = private unnamed_addr constant [10 x ptr] [ptr @38, ptr @39, ptr @40, ptr @41, ptr @42, ptr @43, ptr @44, ptr @45, ptr @46, ptr @47], align 8
+@switch.table._RNvXs_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB4_9PrimitiveNtNtCsdQT5ZjIgVrW_5quote9to_tokens8ToTokens9to_tokens.16 = private unnamed_addr constant [10 x ptr] [ptr @38, ptr @39, ptr @40, ptr @41, ptr @42, ptr @43, ptr @44, ptr @45, ptr @46, ptr @47], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtCslNEiUQgeYIG_3syn5errorNtB3_5Error11new_spannedRNtCsghEUimwObfx_11proc_macro25IdentReECsbDPHjAM0yJM_16bytecheck_derive(ptr sret([24 x i8]) align 8 %0, ptr align 8 %1, ptr %2, i64 %3) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -477,7 +477,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.e = zext nneg i8 %.val to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB4_9PrimitiveNtNtCsdQT5ZjIgVrW_5quote9to_tokens8ToTokens9to_tokens.15, i64 %i.e
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB4_9PrimitiveNtNtCsdQT5ZjIgVrW_5quote9to_tokens8ToTokens9to_tokens.16, i64 %i.e
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.f = tail call i32 @_RNvMsi_CsghEUimwObfx_11proc_macro2NtB5_4Span9call_site()
   call void @_RNvMsx_CsghEUimwObfx_11proc_macro2NtB5_5Ident3new(ptr nonnull sret([24 x i8]) align 8 %i.c, ptr nonnull %switch.load3, i64 %switch.ext, i32 %i.f, ptr nonnull align 8 @59)
@@ -880,7 +880,7 @@ bb.k:                                             ; preds = %.noexc14
   %i.br = invoke zeroext i1 @_RINvMs_NtCslNEiUQgeYIG_3syn4pathNtB5_4Path8is_identeEB7_(ptr nonnull align 8 %i.ad, ptr nonnull @16, i64 1)
           to label %bb.l unwind label %.thread28.loopexit.split-lp.i.i.i, !noalias !99
 
-.thread28.loopexit.i.i.i:                         ; preds = %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.9.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.8.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.7.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.6.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.5.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.4.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.3.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.2.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.1.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.i.i.i
+.thread28.loopexit.i.i.i:                         ; preds = %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.9.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.8.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.7.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.6.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.5.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.4.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.3.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.2.i.i.i, %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.1.i.i.i, %.preheader.preheader.i.i.i
   %lpad.loopexit.i.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.thread.i.i.i
@@ -902,17 +902,17 @@ bb.n:                                             ; preds = %bb.l
   br label %.critedge.sink.split.i.i.i
 
 bb.o:                                             ; preds = %bb.m
-  br i1 %i.bs, label %bb.p, label %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.i.i.i
+  br i1 %i.bs, label %bb.p, label %.preheader.preheader.i.i.i
+
+.preheader.preheader.i.i.i:                       ; preds = %bb.o
+  %4 = invoke zeroext i1 @_RINvMs_NtCslNEiUQgeYIG_3syn4pathNtB5_4Path8is_identeEB7_(ptr nonnull align 8 %i.ad, ptr nonnull @38, i64 2)
+          to label %.noexc.i.i.i unwind label %.thread28.loopexit.i.i.i, !noalias !99
 
 bb.p:                                             ; preds = %bb.o
   store i8 1, ptr %.sroa.2.0.copyload, align 1, !noalias !99
   br label %.critedge.sink.split.i.i.i
 
-_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.i.i.i: ; preds = %bb.o
-  %4 = invoke zeroext i1 @_RINvMs_NtCslNEiUQgeYIG_3syn4pathNtB5_4Path8is_identeEB7_(ptr nonnull align 8 %i.ad, ptr nonnull @38, i64 2)
-          to label %.noexc.i.i.i unwind label %.thread28.loopexit.i.i.i, !noalias !99
-
-.noexc.i.i.i:                                     ; preds = %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.i.i.i
+.noexc.i.i.i:                                     ; preds = %.preheader.preheader.i.i.i
   br i1 %4, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCsbDPHjAM0yJM_16bytecheck_derive4repr9PrimitiveENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNCNvMs0_BS_NtBS_4Repr10from_attrss_00EBU_.exit.i.i.i, label %_RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.1.i.i.i
 
 _RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_.exit.i.1.i.i.i: ; preds = %.noexc.i.i.i
@@ -979,8 +979,9 @@ _RNCNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB9_4Repr10from_attrss_00Bb_
   br i1 %i.cb, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCsbDPHjAM0yJM_16bytecheck_derive4repr9PrimitiveENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNCNvMs0_BS_NtBS_4Repr10from_attrss_00EBU_.exit.i.i.i, label %.preheader.10.i.i.i
 
 _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCsbDPHjAM0yJM_16bytecheck_derive4repr9PrimitiveENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNCNvMs0_BS_NtBS_4Repr10from_attrss_00EBU_.exit.i.i.i: ; preds = %.noexc.9.i.i.i, %.noexc.8.i.i.i, %.noexc.7.i.i.i, %.noexc.6.i.i.i, %.noexc.5.i.i.i, %.noexc.4.i.i.i, %.noexc.3.i.i.i, %.noexc.2.i.i.i, %.noexc.1.i.i.i, %.noexc.i.i.i
-  %.sroa.0.0.ptr.lcssa64.i.i.i = phi ptr [ @18, %.noexc.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @18, i64 1), %.noexc.1.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @18, i64 2), %.noexc.2.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @18, i64 3), %.noexc.3.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @18, i64 4), %.noexc.4.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @18, i64 5), %.noexc.5.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @18, i64 6), %.noexc.6.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @18, i64 7), %.noexc.7.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @18, i64 8), %.noexc.8.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @18, i64 9), %.noexc.9.i.i.i ]
-  %i.cc = load i8, ptr %.sroa.0.0.ptr.lcssa64.i.i.i, align 1, !noalias !99
+  %.sroa.0.0.idx.lcssa64.i.i.i = phi i64 [ 0, %.noexc.i.i.i ], [ 1, %.noexc.1.i.i.i ], [ 2, %.noexc.2.i.i.i ], [ 3, %.noexc.3.i.i.i ], [ 4, %.noexc.4.i.i.i ], [ 5, %.noexc.5.i.i.i ], [ 6, %.noexc.6.i.i.i ], [ 7, %.noexc.7.i.i.i ], [ 8, %.noexc.8.i.i.i ], [ 9, %.noexc.9.i.i.i ]
+  %.sroa.0.0.ptr.le.i.i.i = getelementptr inbounds nuw i8, ptr @18, i64 %.sroa.0.0.idx.lcssa64.i.i.i
+  %i.cc = load i8, ptr %.sroa.0.0.ptr.le.i.i.i, align 1, !noalias !99
   store i8 %i.cc, ptr %.sroa.3.0.copyload, align 1, !noalias !99
   br label %.critedge.sink.split.i.i.i
 

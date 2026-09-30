@@ -205,19 +205,19 @@ begin_hunk_0
 @1337 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 3239133862234874103 to ptr), ptr inttoptr (i64 5351549585573144799 to ptr) }>, align 8
 @1338 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 1367968845966073289 to ptr), ptr inttoptr (i64 -9144813007172577570 to ptr) }>, align 8
 @switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst = private unnamed_addr constant [6 x i8] c"\05\0C\0B\0B\04\0E", align 8
-@switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst.2859 = private unnamed_addr constant [6 x ptr] [ptr @1088, ptr @1275, ptr @1276, ptr @1277, ptr @1278, ptr @1279], align 8
+@switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst.2862 = private unnamed_addr constant [6 x ptr] [ptr @1088, ptr @1275, ptr @1276, ptr @1277, ptr @1278, ptr @1279], align 8
 @switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtNtCsj1PC5XHMKi0_12clap_builder6parser7matches12value_source11ValueSourceNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst = private unnamed_addr constant [3 x i8] c"\0C\0B\0B", align 8
-@switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtNtCsj1PC5XHMKi0_12clap_builder6parser7matches12value_source11ValueSourceNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst.2860 = private unnamed_addr constant [3 x ptr] [ptr @1202, ptr @1203, ptr @1204], align 8
+@switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtNtCsj1PC5XHMKi0_12clap_builder6parser7matches12value_source11ValueSourceNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst.2863 = private unnamed_addr constant [3 x ptr] [ptr @1202, ptr @1203, ptr @1204], align 8
 @switch.table._RNvXs3_NtNtCsj1PC5XHMKi0_12clap_builder4util5colorNtB5_11ColorChoiceNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt = private unnamed_addr constant [3 x i8] c"\04\06\05", align 8
-@switch.table._RNvXs3_NtNtCsj1PC5XHMKi0_12clap_builder4util5colorNtB5_11ColorChoiceNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2861 = private unnamed_addr constant [3 x ptr] [ptr @1052, ptr @1053, ptr @1054], align 8
+@switch.table._RNvXs3_NtNtCsj1PC5XHMKi0_12clap_builder4util5colorNtB5_11ColorChoiceNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2864 = private unnamed_addr constant [3 x ptr] [ptr @1052, ptr @1053, ptr @1054], align 8
 @switch.table._RNvXs5_NtNtCsdaEETE4DqmE_13typst_library11foundations7target_NtB5_6TargetNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt = private unnamed_addr constant [3 x i8] c"\05\04\06", align 8
-@switch.table._RNvXs5_NtNtCsdaEETE4DqmE_13typst_library11foundations7target_NtB5_6TargetNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2862 = private unnamed_addr constant [3 x ptr] [ptr @1081, ptr @1082, ptr @1000], align 8
+@switch.table._RNvXs5_NtNtCsdaEETE4DqmE_13typst_library11foundations7target_NtB5_6TargetNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2865 = private unnamed_addr constant [3 x ptr] [ptr @1081, ptr @1082, ptr @1000], align 8
 @switch.table._RNvXsl_NtNtNtCsdaEETE4DqmE_13typst_library4text4font7variantNtB5_9FontStyleNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt = private unnamed_addr constant [3 x i8] c"\06\06\07", align 8
-@switch.table._RNvXsl_NtNtNtCsdaEETE4DqmE_13typst_library4text4font7variantNtB5_9FontStyleNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2863 = private unnamed_addr constant [3 x ptr] [ptr @1287, ptr @686, ptr @1288], align 8
-@switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2866 = private unnamed_addr constant [5 x ptr] [ptr @393, ptr @394, ptr @395, ptr @248, ptr @249], align 8
-@switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2867 = private unnamed_addr constant [5 x i8] c"\03\03\03\04\06", align 8
-@switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870 = private unnamed_addr constant [3 x ptr] [ptr @248, ptr @249, ptr @250], align 8
-@switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2871 = private unnamed_addr constant [3 x i8] c"\04\06\0B", align 8
+@switch.table._RNvXsl_NtNtNtCsdaEETE4DqmE_13typst_library4text4font7variantNtB5_9FontStyleNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2866 = private unnamed_addr constant [3 x ptr] [ptr @1287, ptr @686, ptr @1288], align 8
+@switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2869 = private unnamed_addr constant [5 x ptr] [ptr @393, ptr @394, ptr @395, ptr @248, ptr @249], align 8
+@switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870 = private unnamed_addr constant [5 x i8] c"\03\03\03\04\06", align 8
+@switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2873 = private unnamed_addr constant [3 x ptr] [ptr @248, ptr @249, ptr @250], align 8
+@switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2874 = private unnamed_addr constant [3 x i8] c"\04\06\0B", align 8
 
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvCs2AodJlUx5rK_5typst7compileNtCsgpMJJHpo27b_12typst_bundle6BundleECs9fPPV5zPXBl_5typst(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(40) %0, ptr noundef nonnull %1) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -620,8 +620,9 @@ _RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6der
   br i1 %i.aip, label %_RNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_strB6_.exit.thread.i.i, label %_RNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_strB6_.exit.i.i
 
 _RNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_strB6_.exit.thread.i.i: ; preds = %_RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_str0B8_.exit.i.2.i.i.i, %_RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_str0B8_.exit.i.1.i.i.i, %_RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_str0B8_.exit.i.i.i.i
-  %.ptr.lcssa13.i.i.i = phi ptr [ @871, %_RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_str0B8_.exit.i.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @871, i64 1), %_RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_str0B8_.exit.i.1.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @871, i64 2), %_RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_str0B8_.exit.i.2.i.i.i ]
-  %.val.i.i.i102 = load i8, ptr %.ptr.lcssa13.i.i.i, align 1, !range !40, !noalias !27764, !noundef !28
+  %.idx.lcssa13.i.i.i = phi i64 [ 0, %_RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_str0B8_.exit.i.i.i.i ], [ 1, %_RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_str0B8_.exit.i.1.i.i.i ], [ 2, %_RNCNvYNtNtCs9fPPV5zPXBl_5typst4args7FeatureNtNtCsj1PC5XHMKi0_12clap_builder6derive9ValueEnum8from_str0B8_.exit.i.2.i.i.i ]
+  %.ptr.le.i.i.i = getelementptr inbounds nuw i8, ptr @871, i64 %.idx.lcssa13.i.i.i
+  %.val.i.i.i102 = load i8, ptr %.ptr.le.i.i.i, align 1, !range !40, !noalias !27764, !noundef !28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !27763
   br label %.loopexit74.i.i
 
@@ -1024,10 +1025,10 @@ switch.lookup:                                    ; preds = %bb.a
   %.val.i = load i8, ptr %i.a, align 1, !range !120, !noalias !38658, !noundef !28 ; 2 uses
   store i64 0, ptr %0, align 8, !alias.scope !38659, !noalias !38657
   %i.f = zext nneg i8 %.val.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2866, i64 %i.f
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2869, i64 %i.f
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.g = zext nneg i8 %.val.i to i64
-  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2867, i64 %i.g
+  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870, i64 %i.g
   %switch.load2 = load i8, ptr %switch.gep1, align 1
   %switch.ext = zext i8 %switch.load2 to i64
   %.sroa.101.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -1250,10 +1251,10 @@ switch.lookup:                                    ; preds = %bb.a
   %.val.i = load i8, ptr %i.a, align 1, !range !40, !noalias !38703, !noundef !28 ; 2 uses
   store i64 0, ptr %0, align 8, !alias.scope !38704, !noalias !38702
   %i.f = zext nneg i8 %.val.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870, i64 %i.f
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2873, i64 %i.f
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.g = zext nneg i8 %.val.i to i64
-  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2871, i64 %i.g
+  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2874, i64 %i.g
   %switch.load2 = load i8, ptr %switch.gep1, align 1
   %switch.ext = zext i8 %switch.load2 to i64
   %.sroa.101.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -1656,7 +1657,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %.val to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst.2859, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst.2862, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -1878,7 +1879,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %.val to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtNtCsj1PC5XHMKi0_12clap_builder6parser7matches12value_source11ValueSourceNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst.2860, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtNtNtCsj1PC5XHMKi0_12clap_builder6parser7matches12value_source11ValueSourceNtB6_5Debug3fmtCs9fPPV5zPXBl_5typst.2863, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -2281,7 +2282,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs3_NtNtCsj1PC5XHMKi0_12clap_builder4util5colorNtB5_11ColorChoiceNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2861, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs3_NtNtCsj1PC5XHMKi0_12clap_builder4util5colorNtB5_11ColorChoiceNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2864, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -2684,7 +2685,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs5_NtNtCsdaEETE4DqmE_13typst_library11foundations7target_NtB5_6TargetNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2862, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs5_NtNtCsdaEETE4DqmE_13typst_library11foundations7target_NtB5_6TargetNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2865, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -3087,7 +3088,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsl_NtNtNtCsdaEETE4DqmE_13typst_library4text4font7variantNtB5_9FontStyleNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2863, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsl_NtNtNtCsdaEETE4DqmE_13typst_library4text4font7variantNtB5_9FontStyleNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt.2866, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -3490,8 +3491,9 @@ _RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValu
   br i1 %i.bo, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2q_15EnumValueParserBQ_ENtB2q_16TypedValueParser9parse_refs1_0EBU_.exit, label %bb.ab
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2q_15EnumValueParserBQ_ENtB2q_16TypedValueParser9parse_refs1_0EBU_.exit: ; preds = %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.4, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.3, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.2, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i
-  %.ptr.lcssa18 = phi ptr [ @808, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @808, i64 1), %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1 ], [ getelementptr inbounds nuw (i8, ptr @808, i64 2), %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.2 ], [ getelementptr inbounds nuw (i8, ptr @808, i64 3), %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.3 ], [ getelementptr inbounds nuw (i8, ptr @808, i64 4), %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.4 ]
-  %.val = load i8, ptr %.ptr.lcssa18, align 1, !range !120, !noundef !28
+  %.idx.lcssa18 = phi i64 [ 0, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i ], [ 1, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1 ], [ 2, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.2 ], [ 3, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.3 ], [ 4, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.4 ]
+  %.ptr.le = getelementptr inbounds nuw i8, ptr @808, i64 %.idx.lcssa18
+  %.val = load i8, ptr %.ptr.le, align 1, !range !120, !noundef !28
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %.val, ptr %i.bp, align 1
   br label %bb.av
@@ -3894,8 +3896,9 @@ _RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValu
   br i1 %i.bm, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserBQ_ENtB2k_16TypedValueParser9parse_refs1_0EBU_.exit, label %bb.ab
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserBQ_ENtB2k_16TypedValueParser9parse_refs1_0EBU_.exit: ; preds = %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.2, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i
-  %.ptr.lcssa18 = phi ptr [ @871, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @871, i64 1), %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1 ], [ getelementptr inbounds nuw (i8, ptr @871, i64 2), %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.2 ]
-  %.val = load i8, ptr %.ptr.lcssa18, align 1, !range !40, !noundef !28
+  %.idx.lcssa18 = phi i64 [ 0, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i ], [ 1, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1 ], [ 2, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args7FeatureENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.2 ]
+  %.ptr.le = getelementptr inbounds nuw i8, ptr @871, i64 %.idx.lcssa18
+  %.val = load i8, ptr %.ptr.le, align 1, !range !40, !noundef !28
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %.val, ptr %i.bn, align 1
   br label %bb.av
@@ -4298,10 +4301,10 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %i.g, ptr %0, align 8, !alias.scope !52914
   %.val.i.i.i = load i8, ptr %i.e, align 1, !range !120, !noalias !52915, !noundef !28 ; 2 uses
   %i.h = zext nneg i8 %.val.i.i.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2866, i64 %i.h
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2869, i64 %i.h
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.i = zext nneg i8 %.val.i.i.i to i64
-  %switch.gep3 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2867, i64 %i.i
+  %switch.gep3 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870, i64 %i.i
   %switch.load4 = load i8, ptr %switch.gep3, align 1
   %switch.ext = zext i8 %switch.load4 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !52915
@@ -4366,10 +4369,10 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %i.g, ptr %1, align 8, !alias.scope !52944
   %.val.i.i.i.i = load i8, ptr %i.e, align 1, !range !120, !noalias !52945, !noundef !28 ; 2 uses
   %i.h = zext nneg i8 %.val.i.i.i.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2866, i64 %i.h
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2869, i64 %i.h
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.i = zext nneg i8 %.val.i.i.i.i to i64
-  %switch.gep12 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2867, i64 %i.i
+  %switch.gep12 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870, i64 %i.i
   %switch.load13 = load i8, ptr %switch.gep12, align 1
   %switch.ext = zext i8 %switch.load13 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !52945
@@ -4408,10 +4411,10 @@ switch.lookup14:                                  ; preds = %.loopexit
   %.val.i.i = load i8, ptr %i.m, align 1, !range !120, !noalias !52950, !noundef !28 ; 2 uses
   store i64 0, ptr %0, align 8, !alias.scope !52951, !noalias !52940
   %i.p = zext nneg i8 %.val.i.i to i64
-  %switch.gep15 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2866, i64 %i.p
+  %switch.gep15 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2869, i64 %i.p
   %switch.load16 = load ptr, ptr %switch.gep15, align 8
   %i.q = zext nneg i8 %.val.i.i to i64
-  %switch.gep17 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2867, i64 %i.q
+  %switch.gep17 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args12OutputFormatENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1u_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870, i64 %i.q
   %switch.load18 = load i8, ptr %switch.gep17, align 1
   %switch.ext19 = zext i8 %switch.load18 to i64
   %.sroa.101.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -4814,10 +4817,10 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %i.g, ptr %0, align 8, !alias.scope !53103
   %.val.i.i.i = load i8, ptr %i.e, align 1, !range !40, !noalias !53104, !noundef !28 ; 2 uses
   %i.h = zext nneg i8 %.val.i.i.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870, i64 %i.h
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2873, i64 %i.h
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.i = zext nneg i8 %.val.i.i.i to i64
-  %switch.gep3 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2871, i64 %i.i
+  %switch.gep3 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2874, i64 %i.i
   %switch.load4 = load i8, ptr %switch.gep3, align 1
   %switch.ext = zext i8 %switch.load4 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !53104
@@ -4882,10 +4885,10 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %i.g, ptr %1, align 8, !alias.scope !53133
   %.val.i.i.i.i = load i8, ptr %i.e, align 1, !range !40, !noalias !53134, !noundef !28 ; 2 uses
   %i.h = zext nneg i8 %.val.i.i.i.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870, i64 %i.h
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2873, i64 %i.h
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.i = zext nneg i8 %.val.i.i.i.i to i64
-  %switch.gep12 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2871, i64 %i.i
+  %switch.gep12 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2874, i64 %i.i
   %switch.load13 = load i8, ptr %switch.gep12, align 1
   %switch.ext = zext i8 %switch.load13 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !53134
@@ -4924,10 +4927,10 @@ switch.lookup14:                                  ; preds = %.loopexit
   %.val.i.i = load i8, ptr %i.m, align 1, !range !40, !noalias !53139, !noundef !28 ; 2 uses
   store i64 0, ptr %0, align 8, !alias.scope !53140, !noalias !53129
   %i.p = zext nneg i8 %.val.i.i to i64
-  %switch.gep15 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2870, i64 %i.p
+  %switch.gep15 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2873, i64 %i.p
   %switch.load16 = load ptr, ptr %switch.gep15, align 8
   %i.q = zext nneg i8 %.val.i.i to i64
-  %switch.gep17 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2871, i64 %i.q
+  %switch.gep17 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args7FeatureENCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthB1y_.2874, i64 %i.q
   %switch.load18 = load i8, ptr %switch.gep17, align 1
   %switch.ext19 = zext i8 %switch.load18 to i64
   %.sroa.101.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
