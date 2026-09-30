@@ -202,7 +202,7 @@ bb.aq:                                            ; preds = %bb.af
   %i.ob = add i32 %i.oa, 1                        ; 3 uses
   store i32 %i.ob, ptr %2, align 4
   %.tr.i = trunc i32 %i.ob to i16
-  %i.oc = shl i16 %.tr.i, 3                       ; 18 uses
+  %i.oc = shl i16 %.tr.i, 3                       ; 23 uses
   %i.od = or disjoint i16 %i.oc, 1                ; 7 uses
   %.not.i166 = icmp eq i8 %i.nz, 0
   br i1 %.not.i166, label %cdma2k_message_ORDER_IND.exit, label %bb.ar
@@ -283,7 +283,7 @@ bb.aw:                                            ; preds = %bb.ar
   %i.pw = shl i32 %i.pv, 3
   %i.px = or disjoint i32 %i.pw, 1
   %i.py = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %i.px, i32 noundef 8)
-  %i.pz = add i16 %i.oc, 17                       ; 4 uses
+  %i.pz = add i16 %i.oc, 17                       ; 3 uses
   switch i8 %i.py, label %bb.ax [
     i8 7, label %.thread.i169
     i8 1, label %.thread.i169
@@ -294,7 +294,7 @@ bb.aw:                                            ; preds = %bb.ar
   %i.qa = load i32, ptr @hf_cdma2k_Reserved, align 4
   %i.qb = zext i16 %i.pz to i32
   %i.qc = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.oh, i32 noundef %i.qa, ptr noundef %0, i32 noundef %i.qb, i32 noundef 2, i32 noundef 0) ; 0 uses
-  %4 = or disjoint i16 %i.pz, 2
+  %4 = add i16 %i.oc, 19
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %.thread.i169, %bb.aw
@@ -371,7 +371,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.rp = shl i32 %i.ro, 3
   %i.rq = or disjoint i32 %i.rp, 1
   %i.rr = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %i.rq, i32 noundef 1)
-  %i.rs = add i16 %i.oc, 10                       ; 3 uses
+  %i.rs = add i16 %i.oc, 10                       ; 2 uses
   %i.rt = icmp eq i8 %i.rr, 1
   br i1 %i.rt, label %bb.bd, label %cdma2k_message_ORDER_IND.exit
 
@@ -379,15 +379,15 @@ bb.bd:                                            ; preds = %bb.bc
   %i.ru = load i32, ptr @hf_cdma2k_Rsci, align 4
   %i.rv = zext i16 %i.rs to i32
   %i.rw = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.oh, i32 noundef %i.ru, ptr noundef %0, i32 noundef %i.rv, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %5 = or disjoint i16 %i.rs, 4
+  %5 = add i16 %i.oc, 14
   %i.rx = load i32, ptr @hf_cdma2k_Rsc_End_Time_Unit, align 4
   %i.ry = zext i16 %5 to i32
   %i.rz = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.oh, i32 noundef %i.rx, ptr noundef %0, i32 noundef %i.ry, i32 noundef 2, i32 noundef 0) ; 0 uses
-  %i.sa = add i16 %i.oc, 16                       ; 2 uses
+  %i.sa = add i16 %i.oc, 16
   %i.sb = load i32, ptr @hf_cdma2k_Rsc_End_Time_Value, align 4
   %i.sc = zext i16 %i.sa to i32
   %i.sd = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.oh, i32 noundef %i.sb, ptr noundef %0, i32 noundef %i.sc, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %6 = or disjoint i16 %i.sa, 4
+  %6 = add i16 %i.oc, 20
   br label %cdma2k_message_ORDER_IND.exit
 
 bb.be:                                            ; preds = %bb.ar
@@ -405,7 +405,7 @@ bb.be:                                            ; preds = %bb.ar
   %i.so = shl i32 %i.sn, 3
   %i.sp = or disjoint i32 %i.so, 1
   %i.sq = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %i.sp, i32 noundef 1)
-  %i.sr = add i16 %i.oc, 10                       ; 3 uses
+  %i.sr = add i16 %i.oc, 10                       ; 2 uses
   %i.ss = icmp eq i8 %i.sq, 1
   br i1 %i.ss, label %bb.bf, label %cdma2k_message_ORDER_IND.exit
 
@@ -413,15 +413,15 @@ bb.bf:                                            ; preds = %bb.be
   %i.st = load i32, ptr @hf_cdma2k_Rsci, align 4
   %i.su = zext i16 %i.sr to i32
   %i.sv = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.oh, i32 noundef %i.st, ptr noundef %0, i32 noundef %i.su, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %7 = or disjoint i16 %i.sr, 4
+  %7 = add i16 %i.oc, 14
   %i.sw = load i32, ptr @hf_cdma2k_Rsc_End_Time_Unit, align 4
   %i.sx = zext i16 %7 to i32
   %i.sy = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.oh, i32 noundef %i.sw, ptr noundef %0, i32 noundef %i.sx, i32 noundef 2, i32 noundef 0) ; 0 uses
-  %i.sz = add i16 %i.oc, 16                       ; 2 uses
+  %i.sz = add i16 %i.oc, 16
   %i.ta = load i32, ptr @hf_cdma2k_Rsc_End_Time_Value, align 4
   %i.tb = zext i16 %i.sz to i32
   %i.tc = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.oh, i32 noundef %i.ta, ptr noundef %0, i32 noundef %i.tb, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %8 = or disjoint i16 %i.sz, 4
+  %8 = add i16 %i.oc, 20
   br label %cdma2k_message_ORDER_IND.exit
 
 bb.bg:                                            ; preds = %bb.ar
@@ -588,7 +588,7 @@ cdma2k_message_DATA_BURST_IND.exit:               ; preds = %bb.bh, %._crit_edge
   br label %cdma2k_message_GEN_PAGE_REQ.exit
 
 bb.bm:                                            ; preds = %bb.af
-  %i.wv = shl i32 %i.jt, 3                        ; 4 uses
+  %i.wv = shl i32 %i.jt, 3                        ; 7 uses
   %i.ww = load i32, ptr @hf_cdma2k_OrigMsg, align 4
   %i.wx = and i32 %i.wv, 65528                    ; 4 uses
   %i.wy = lshr exact i32 %i.wx, 3
@@ -605,7 +605,7 @@ bb.bm:                                            ; preds = %bb.af
   %i.xj = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.xb, i32 noundef %i.xh, ptr noundef %0, i32 noundef %i.xi, i32 noundef 8, i32 noundef 0) ; 0 uses
   %i.xk = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %i.xi, i32 noundef 8)
   %i.xl = trunc i32 %i.wv to i16                  ; 3 uses
-  %i.xm = add i16 %i.xl, 12                       ; 3 uses
+  %i.xm = add i16 %i.xl, 12                       ; 2 uses
   %i.xn = tail call i8 @llvm.umin.i8(i8 %i.v, i8 %i.xk) ; 4 uses
   %i.xo = icmp eq i8 %i.xn, 1
   br i1 %i.xo, label %bb.bn, label %bb.bo
@@ -614,17 +614,18 @@ bb.bn:                                            ; preds = %bb.bm
   %i.xp = load i32, ptr @hf_cdma2k_Ext_Scm, align 4
   %i.xq = zext i16 %i.xm to i32
   %i.xr = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.xb, i32 noundef %i.xp, ptr noundef %0, i32 noundef %i.xq, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %9 = or disjoint i16 %i.xm, 1
+  %9 = add i32 %i.wv, 13
   %i.xs = load i32, ptr @hf_cdma2k_Reserved, align 4
-  %10 = zext i16 %9 to i32
+  %10 = and i32 %9, 65533
   %i.xt = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.xb, i32 noundef %i.xs, ptr noundef %0, i32 noundef %10, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.xu = add i32 %i.wv, 14
   %i.xv = load i32, ptr @hf_cdma2k_Sloted_Mode, align 4
-  %i.xw = and i32 %i.xu, 65534                    ; 2 uses
+  %i.xw = and i32 %i.xu, 65534
   %i.xx = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.xb, i32 noundef %i.xv, ptr noundef %0, i32 noundef %i.xw, i32 noundef 1, i32 noundef 0) ; 0 uses
+  %11 = add i32 %i.wv, 15
   %i.xy = load i32, ptr @hf_cdma2k_Reserved, align 4
-  %11 = or disjoint i32 %i.xw, 1
-  %i.xz = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.xb, i32 noundef %i.xy, ptr noundef %0, i32 noundef %11, i32 noundef 5, i32 noundef 0) ; 0 uses
+  %12 = and i32 %11, 65535
+  %i.xz = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.xb, i32 noundef %i.xy, ptr noundef %0, i32 noundef %12, i32 noundef 5, i32 noundef 0) ; 0 uses
   br label %bb.bp
 
 bb.bo:                                            ; preds = %bb.bm
@@ -635,12 +636,13 @@ bb.bo:                                            ; preds = %bb.bm
 bb.bp:                                            ; preds = %bb.bo, %bb.bn
   %.0496.i = add i32 %i.wv, 20
   %i.yb = load i32, ptr @hf_cdma2k_Request_Mode, align 4
-  %i.yc = and i32 %.0496.i, 65532                 ; 2 uses
+  %i.yc = and i32 %.0496.i, 65532
   %i.yd = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.xb, i32 noundef %i.yb, ptr noundef %0, i32 noundef %i.yc, i32 noundef 3, i32 noundef 0) ; 0 uses
+  %13 = add i32 %i.wv, 23
   %i.ye = load i32, ptr @hf_cdma2k_Special_Service, align 4
-  %12 = or disjoint i32 %i.yc, 3                  ; 2 uses
-  %i.yf = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.xb, i32 noundef %i.ye, ptr noundef %0, i32 noundef %12, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.yg = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %12, i32 noundef 1)
+  %14 = and i32 %13, 65535                        ; 2 uses
+  %i.yf = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.xb, i32 noundef %i.ye, ptr noundef %0, i32 noundef %14, i32 noundef 1, i32 noundef 0) ; 0 uses
+  %i.yg = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %14, i32 noundef 1)
   %i.yh = add i16 %i.xl, 24                       ; 2 uses
   %i.yi = icmp eq i8 %i.yg, 1
   br i1 %i.yi, label %bb.bq, label %bb.br
@@ -1043,7 +1045,7 @@ bb.de:                                            ; preds = %bb.af
   %i.anu = shl i32 %i.ant, 3
   %i.anv = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.ans, ptr noundef %0, i32 noundef %i.anu, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.anw = load i32, ptr %2, align 4
-  %i.anx = shl i32 %i.anw, 3                      ; 5 uses
+  %i.anx = shl i32 %i.anw, 3                      ; 7 uses
   %i.any = load i32, ptr @hf_cdma2k_Slot_Cycle_Index, align 4
   %i.anz = and i32 %i.anx, 65528                  ; 2 uses
   %i.aoa = or disjoint i32 %i.anz, 1
@@ -1058,34 +1060,35 @@ bb.de:                                            ; preds = %bb.af
   tail call fastcc void @dissect_cdma2000_scm(ptr noundef %0, ptr noundef %i.anr, i32 noundef %i.aoi)
   %i.aoj = add i32 %i.anx, 20
   %i.aok = load i32, ptr @hf_cdma2k_Request_Mode, align 4
-  %i.aol = and i32 %i.aoj, 65532                  ; 2 uses
+  %i.aol = and i32 %i.aoj, 65532
   %i.aom = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.aok, ptr noundef %0, i32 noundef %i.aol, i32 noundef 3, i32 noundef 0) ; 0 uses
+  %15 = add i32 %i.anx, 23
   %i.aon = load i32, ptr @hf_cdma2k_service_option, align 4
-  %13 = or disjoint i32 %i.aol, 3
-  %i.aoo = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.aon, ptr noundef %0, i32 noundef %13, i32 noundef 16, i32 noundef 0) ; 0 uses
+  %16 = and i32 %15, 65535
+  %i.aoo = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.aon, ptr noundef %0, i32 noundef %16, i32 noundef 16, i32 noundef 0) ; 0 uses
   %i.aop = add i32 %i.anx, 39
   %i.aoq = load i32, ptr @hf_cdma2k_pm, align 4
   %i.aor = and i32 %i.aop, 65535
   %i.aos = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.aoq, ptr noundef %0, i32 noundef %i.aor, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.aot = add i32 %i.anx, 40                     ; 2 uses
+  %i.aot = add i32 %i.anx, 40
   %i.aou = load i32, ptr @hf_cdma2k_Nar_An_Cap, align 4
   %i.aov = and i32 %i.aot, 65528
   %i.aow = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.aou, ptr noundef %0, i32 noundef %i.aov, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.aox = trunc i32 %i.aot to i16                ; 2 uses
-  %14 = or disjoint i16 %i.aox, 1                 ; 2 uses
+  %i.aox = trunc i32 %i.anx to i16                ; 2 uses
+  %17 = add i16 %i.aox, 41                        ; 2 uses
   %i.aoy = icmp ult i8 %i.aoh, 7
   %or.cond.i182 = and i1 %.0.lcssa, %i.aoy
   br i1 %or.cond.i182, label %bb.df, label %bb.dg
 
 bb.df:                                            ; preds = %bb.de
   %i.aoz = load i32, ptr @hf_cdma2k_encryption_supported, align 4
-  %i.apa = zext i16 %14 to i32
+  %i.apa = zext i16 %17 to i32
   %i.apb = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.aoz, ptr noundef %0, i32 noundef %i.apa, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %15 = or disjoint i16 %i.aox, 5
+  %18 = add i16 %i.aox, 45
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df, %bb.de
-  %.0.i183 = phi i16 [ %15, %bb.df ], [ %14, %bb.de ] ; 2 uses
+  %.0.i183 = phi i16 [ %18, %bb.df ], [ %17, %bb.de ] ; 2 uses
   %i.apc = load i32, ptr @hf_cdma2k_num_alt_so, align 4
   %i.apd = zext i16 %.0.i183 to i32               ; 2 uses
   %i.ape = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.apc, ptr noundef %0, i32 noundef %i.apd, i32 noundef 3, i32 noundef 0) ; 0 uses
@@ -1119,19 +1122,19 @@ bb.dh:                                            ; preds = %._crit_edge.i188
   %i.app = zext i16 %.1.lcssa.i to i32            ; 2 uses
   %i.apq = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.apo, ptr noundef %0, i32 noundef %i.app, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.apr = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %i.app, i32 noundef 1)
-  %16 = or disjoint i16 %.1.lcssa.i, 1            ; 2 uses
+  %19 = add i16 %.1.lcssa.i, 1                    ; 2 uses
   %i.aps = icmp eq i8 %i.apr, 1
   br i1 %i.aps, label %bb.di, label %bb.dj
 
 bb.di:                                            ; preds = %bb.dh
   %i.apt = load i32, ptr @hf_cdma2k_Uzid, align 4
-  %i.apu = zext i16 %16 to i32
+  %i.apu = zext i16 %19 to i32
   %i.apv = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.apt, ptr noundef %0, i32 noundef %i.apu, i32 noundef 16, i32 noundef 0) ; 0 uses
   %i.apw = add i16 %.1.lcssa.i, 17
   br label %bb.dj
 
 bb.dj:                                            ; preds = %bb.di, %bb.dh
-  %.2.i192 = phi i16 [ %i.apw, %bb.di ], [ %16, %bb.dh ] ; 10 uses
+  %.2.i192 = phi i16 [ %i.apw, %bb.di ], [ %19, %bb.dh ] ; 10 uses
   %i.apx = load i32, ptr @hf_cdma2k_Ch_Ind, align 4
   %i.apy = zext i16 %.2.i192 to i32
   %i.apz = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.anr, i32 noundef %i.apx, ptr noundef %0, i32 noundef %i.apy, i32 noundef 2, i32 noundef 0) ; 0 uses
@@ -1486,7 +1489,7 @@ bb.ee:                                            ; preds = %bb.af
   %i.azn = add i32 %i.azm, 1                      ; 3 uses
   store i32 %i.azn, ptr %2, align 4
   %.tr.i203 = trunc i32 %i.azn to i16
-  %i.azo = shl i16 %.tr.i203, 3                   ; 33 uses
+  %i.azo = shl i16 %.tr.i203, 3                   ; 39 uses
   %i.azp = or disjoint i16 %i.azo, 1              ; 11 uses
   %.not.i204 = icmp eq i8 %i.azl, 0
   br i1 %.not.i204, label %cdma2k_message_ORDER_CMD.exit, label %bb.ef
@@ -1557,7 +1560,7 @@ bb.ej:                                            ; preds = %bb.ei
   %i.bba = shl i32 %i.baz, 3
   %i.bbb = or disjoint i32 %i.bba, 1
   %i.bbc = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %i.bbb, i32 noundef 1)
-  %i.bbd = add i16 %i.azo, 10                     ; 3 uses
+  %i.bbd = add i16 %i.azo, 10                     ; 2 uses
   %i.bbe = icmp eq i8 %i.bbc, 1
   br i1 %i.bbe, label %bb.ek, label %cdma2k_message_ORDER_CMD.exit
 
@@ -1565,15 +1568,15 @@ bb.ek:                                            ; preds = %bb.ej
   %i.bbf = load i32, ptr @hf_cdma2k_Rsci, align 4
   %i.bbg = zext i16 %i.bbd to i32
   %i.bbh = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bbf, ptr noundef %0, i32 noundef %i.bbg, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %17 = or disjoint i16 %i.bbd, 4
+  %20 = add i16 %i.azo, 14
   %i.bbi = load i32, ptr @hf_cdma2k_Rsc_End_Time_Unit, align 4
-  %i.bbj = zext i16 %17 to i32
+  %i.bbj = zext i16 %20 to i32
   %i.bbk = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bbi, ptr noundef %0, i32 noundef %i.bbj, i32 noundef 2, i32 noundef 0) ; 0 uses
-  %i.bbl = add i16 %i.azo, 16                     ; 2 uses
+  %i.bbl = add i16 %i.azo, 16
   %i.bbm = load i32, ptr @hf_cdma2k_Rsc_End_Time_Value, align 4
   %i.bbn = zext i16 %i.bbl to i32
   %i.bbo = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bbm, ptr noundef %0, i32 noundef %i.bbn, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %18 = or disjoint i16 %i.bbl, 4
+  %21 = add i16 %i.azo, 20
   br label %cdma2k_message_ORDER_CMD.exit
 
 bb.el:                                            ; preds = %bb.ef
@@ -1705,13 +1708,13 @@ bb.ey:                                            ; preds = %bb.ef
   %i.bdx = load i32, ptr @hf_cdma2k_Ordq, align 4
   %i.bdy = zext i16 %i.azp to i32
   %i.bdz = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bdx, ptr noundef %0, i32 noundef %i.bdy, i32 noundef 8, i32 noundef 0) ; 0 uses
-  %i.bea = add i16 %i.azo, 9                      ; 2 uses
+  %i.bea = add i16 %i.azo, 9
   %i.beb = load i32, ptr @hf_cdma2k_Reject_Reason, align 4
   %i.bec = zext i16 %i.bea to i32
   %i.bed = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.beb, ptr noundef %0, i32 noundef %i.bec, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %19 = or disjoint i16 %i.bea, 4
+  %22 = add i16 %i.azo, 13
   %i.bee = load i32, ptr @hf_cdma2k_Rejected_Msg_Type, align 4
-  %i.bef = zext i16 %19 to i32
+  %i.bef = zext i16 %22 to i32
   %i.beg = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bee, ptr noundef %0, i32 noundef %i.bef, i32 noundef 8, i32 noundef 0) ; 0 uses
   %i.beh = add i16 %i.azo, 21
   %i.bei = load i32, ptr @hf_cdma2k_Rejected_Msg_Seq, align 4
@@ -1730,7 +1733,7 @@ bb.ez:                                            ; preds = %bb.ef
   %i.ber = zext i16 %i.bep to i32                 ; 2 uses
   %i.bes = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.beq, ptr noundef %0, i32 noundef %i.ber, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.bet = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %i.ber, i32 noundef 1) ; 2 uses
-  %i.beu = add i16 %i.azo, 10                     ; 3 uses
+  %i.beu = add i16 %i.azo, 10                     ; 2 uses
   %i.bev = icmp eq i8 %i.bet, 1
   br i1 %i.bev, label %bb.fa, label %bb.fb
 
@@ -1739,9 +1742,9 @@ bb.fa:                                            ; preds = %bb.ez
   %i.bex = zext i16 %i.beu to i32                 ; 2 uses
   %i.bey = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bew, ptr noundef %0, i32 noundef %i.bex, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.bez = tail call zeroext i8 @tvb_get_bits8(ptr noundef %0, i32 noundef %i.bex, i32 noundef 1) ; 0 uses
-  %20 = or disjoint i16 %i.beu, 1
+  %23 = add i16 %i.azo, 11
   %i.bfa = load i32, ptr @hf_cdma2k_All_Bcmc_Reason, align 4
-  %i.bfb = zext i16 %20 to i32
+  %i.bfb = zext i16 %23 to i32
   %i.bfc = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bfa, ptr noundef %0, i32 noundef %i.bfb, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.bfd = add i16 %i.azo, 15
   br label %bb.fb
@@ -1853,23 +1856,23 @@ bb.fh:                                            ; preds = %bb.fg
   %i.bhy = load i32, ptr @hf_cdma2k_Max_Rsc_End_Time_Value, align 4
   %i.bhz = zext i16 %i.bhx to i32
   %i.bia = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bhy, ptr noundef %0, i32 noundef %i.bhz, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %i.bib = add i16 %i.azo, 16                     ; 2 uses
+  %i.bib = add i16 %i.azo, 16
   %i.bic = load i32, ptr @hf_cdma2k_Ignore_Qpch, align 4
   %i.bid = zext i16 %i.bib to i32
   %i.bie = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bic, ptr noundef %0, i32 noundef %i.bid, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %21 = or disjoint i16 %i.bib, 1                 ; 2 uses
+  %24 = add i16 %i.azo, 17                        ; 2 uses
   %i.bif = icmp eq i8 %i.bhm, 0
   br i1 %i.bif, label %bb.fi, label %.thread19.i
 
 bb.fi:                                            ; preds = %bb.fh
   %i.big = load i32, ptr @hf_cdma2k_Req_Rsci, align 4
-  %i.bih = zext i16 %21 to i32
+  %i.bih = zext i16 %24 to i32
   %i.bii = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.big, ptr noundef %0, i32 noundef %i.bih, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.bij = add i16 %i.azo, 21
   br label %.thread19.i
 
 .thread19.i:                                      ; preds = %bb.fi, %bb.fh, %bb.fg
-  %.11.i207 = phi i16 [ %i.bij, %bb.fi ], [ %21, %bb.fh ], [ %i.bhs, %bb.fg ] ; 3 uses
+  %.11.i207 = phi i16 [ %i.bij, %bb.fi ], [ %24, %bb.fh ], [ %i.bhs, %bb.fg ] ; 3 uses
   %i.bik = load i32, ptr @hf_cdma2k_Rer_Mode_Incl, align 4
   %i.bil = zext i16 %.11.i207 to i32              ; 2 uses
   %i.bim = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bik, ptr noundef %0, i32 noundef %i.bil, i32 noundef 1, i32 noundef 0) ; 0 uses
@@ -1956,13 +1959,13 @@ bb.fp:                                            ; preds = %bb.ef
   %i.bko = load i32, ptr @hf_cdma2k_Ordq, align 4
   %i.bkp = zext i16 %i.azp to i32
   %i.bkq = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bko, ptr noundef %0, i32 noundef %i.bkp, i32 noundef 8, i32 noundef 0) ; 0 uses
-  %i.bkr = add i16 %i.azo, 9                      ; 2 uses
+  %i.bkr = add i16 %i.azo, 9
   %i.bks = load i32, ptr @hf_cdma2k_Sr_Id_Bitmap, align 4
   %i.bkt = zext i16 %i.bkr to i32
   %i.bku = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bks, ptr noundef %0, i32 noundef %i.bkt, i32 noundef 6, i32 noundef 0) ; 0 uses
-  %22 = or disjoint i16 %i.bkr, 6
+  %25 = add i16 %i.azo, 15
   %i.bkv = load i32, ptr @hf_cdma2k_Service_Status, align 4
-  %i.bkw = zext i16 %22 to i32
+  %i.bkw = zext i16 %25 to i32
   %i.bkx = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.azu, i32 noundef %i.bkv, ptr noundef %0, i32 noundef %i.bkw, i32 noundef 3, i32 noundef 0) ; 0 uses
   %i.bky = add i16 %i.azo, 18                     ; 2 uses
   %i.bkz = zext i16 %i.bky to i32
@@ -1996,7 +1999,7 @@ bb.fs:                                            ; preds = %bb.ef
   br label %cdma2k_message_ORDER_CMD.exit
 
 cdma2k_message_ORDER_CMD.exit:                    ; preds = %bb.ee, %bb.eg, %bb.eh, %bb.ei, %bb.ej, %bb.ek, %.thread5.i, %bb.eu, %bb.ex, %bb.ey, %bb.fc, %bb.ff, %bb.fo, %bb.fp, %bb.fq, %bb.fr, %bb.fs
-  %.15.i205 = phi i16 [ %i.azp, %bb.fs ], [ %i.bag, %bb.eg ], [ %i.bak, %bb.eh ], [ %18, %bb.ek ], [ %i.bbd, %bb.ej ], [ %i.bau, %bb.ei ], [ %.2.i214, %bb.eu ], [ %.2.i214, %.thread5.i ], [ %i.bdw, %bb.ex ], [ %i.bel, %bb.ey ], [ %i.bhi, %bb.ff ], [ %i.bfn, %bb.fc ], [ %i.bkn, %bb.fo ], [ %i.bky, %bb.fp ], [ %i.azp, %bb.ee ], [ %i.blp, %bb.fr ], [ %i.blk, %bb.fq ]
+  %.15.i205 = phi i16 [ %i.azp, %bb.fs ], [ %i.bag, %bb.eg ], [ %i.bak, %bb.eh ], [ %21, %bb.ek ], [ %i.bbd, %bb.ej ], [ %i.bau, %bb.ei ], [ %.2.i214, %bb.eu ], [ %.2.i214, %.thread5.i ], [ %i.bdw, %bb.ex ], [ %i.bel, %bb.ey ], [ %i.bhi, %bb.ff ], [ %i.bfn, %bb.fc ], [ %i.bkn, %bb.fo ], [ %i.bky, %bb.fp ], [ %i.azp, %bb.ee ], [ %i.blp, %bb.fr ], [ %i.blk, %bb.fq ]
   %i.blq = zext i16 %.15.i205 to i32
   %i.blr = add nuw nsw i32 %i.blq, 7
   %storemerge.i206 = lshr i32 %i.blr, 3

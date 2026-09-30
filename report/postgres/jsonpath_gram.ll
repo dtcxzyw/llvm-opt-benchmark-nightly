@@ -202,13 +202,13 @@ makeItemType.exit:                                ; preds = %bb.a, %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 36 ; 2 uses
   store i32 0, ptr %i.k, align 4
   %.not = icmp eq ptr %2, null
-  br i1 %.not, label %.thread, label %.lr.ph
+  br i1 %.not, label %bb.e, label %.lr.ph
 
 .lr.ph:                                           ; preds = %makeItemType.exit
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.m = load i32, ptr %i.l, align 8
   %i.n = icmp sgt i32 %i.m, 0
-  br i1 %i.n, label %.lr.ph57, label %.thread
+  br i1 %i.n, label %.lr.ph57, label %bb.e
 
 .lr.ph57:                                         ; preds = %.lr.ph, %switch.lookup
   %i.o = phi i32 [ %i.ag, %switch.lookup ], [ 0, %.lr.ph ]
@@ -250,7 +250,7 @@ switch.lookup:                                    ; preds = %switch.hole_check
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.makeItemLikeRegex, i64 %i.af
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32
-  %i.ag = or i32 %i.o, %switch.ext                ; 6 uses
+  %i.ag = or i32 %i.o, %switch.ext                ; 5 uses
   store i32 %i.ag, ptr %i.k, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ah = load i32, ptr %i.l, align 8
@@ -271,12 +271,17 @@ bb.d:                                             ; preds = %.critedge
   %i.an = or disjoint i32 %i.am, 4
   br label %.thread
 
-bb.e:                                             ; preds = %.critedge
-  %i.ao = shl nuw nsw i32 %i.ag, 5
-  %i.ap = and i32 %i.ao, 192
-  %i.aq = or disjoint i32 %spec.select.i, %i.ap
-  %.2.i = xor i32 %i.aq, 64
-  %i.ar = and i32 %i.ag, 8
+bb.e:                                             ; preds = %.lr.ph, %makeItemType.exit, %.critedge
+  %spec.select.i64 = phi i32 [ %spec.select.i, %.critedge ], [ 3, %makeItemType.exit ], [ 3, %.lr.ph ]
+  %6 = phi i32 [ %i.ag, %.critedge ], [ 0, %makeItemType.exit ], [ 0, %.lr.ph ] ; 3 uses
+  %i.ao = shl nuw nsw i32 %6, 5
+  %i.ap = and i32 %i.ao, 64
+  %i.aq = or disjoint i32 %spec.select.i64, %i.ap
+  %7 = and i32 %6, 4
+  %.not18.i = icmp eq i32 %7, 0
+  %.2.v.i = select i1 %.not18.i, i32 64, i32 192
+  %.2.i = xor i32 %i.aq, %.2.v.i
+  %i.ar = and i32 %6, 8
   %.not19.i = icmp eq i32 %i.ar, 0
   br i1 %.not19.i, label %.thread, label %bb.f
 
@@ -290,8 +295,8 @@ bb.g:                                             ; preds = %bb.f
   tail call void @errsave_finish(ptr noundef %4, ptr noundef nonnull @.str.3, i32 noundef 711, ptr noundef nonnull @__func__.jspConvertRegexFlags) #5
   br label %jspConvertRegexFlags.exit
 
-.thread:                                          ; preds = %makeItemType.exit, %.lr.ph, %bb.e, %bb.d
-  %.0.ph = phi i32 [ %.2.i, %bb.e ], [ %i.an, %bb.d ], [ 67, %.lr.ph ], [ 67, %makeItemType.exit ]
+.thread:                                          ; preds = %bb.e, %bb.d
+  %.0.ph = phi i32 [ %.2.i, %bb.e ], [ %i.an, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
   %i.av = load i32, ptr %i.h, align 8
   %i.aw = add i32 %i.av, 1
@@ -371,9 +376,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.e = shl i32 %0, 5
-  %i.f = and i32 %i.e, 192
-  %i.g = or disjoint i32 %i.f, %spec.select
-  %.2 = xor i32 %i.g, 64
+  %i.f = and i32 %i.e, 64
+  %i.g = or disjoint i32 %spec.select, %i.f
+  %3 = and i32 %0, 4
+  %.not18 = icmp eq i32 %3, 0
+  %.2.v = select i1 %.not18, i32 64, i32 192
+  %.2 = xor i32 %i.g, %.2.v
   %i.h = and i32 %0, 8
   %.not19 = icmp eq i32 %i.h, 0
   br i1 %.not19, label %bb.f, label %bb.d

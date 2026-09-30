@@ -204,12 +204,12 @@ get_ctl_amp_tlv.exit:                             ; preds = %get_wcaps.exit.i.i,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   %i.ae = lshr i32 %i.ad, 16
   %i.af = and i32 %i.ae, 127
-  %i.ag = mul nuw nsw i32 %i.af, 25
-  %i.ah = add nuw nsw i32 %i.ag, 25               ; 3 uses
+  %i.ag = mul nuw nsw i32 %i.af, 25               ; 2 uses
+  %i.ah = add nuw nsw i32 %i.ag, 25               ; 2 uses
   %i.ai = and i32 %i.ad, 1073741824
   %.not23.i = icmp eq i32 %i.ai, 0
   %or.cond.i = select i1 %.not.i, i1 %.not23.i, i1 false
-  %4 = or disjoint i32 %i.ah, 65536
+  %4 = add nuw nsw i32 %i.ag, 65561
   %.0.i4 = select i1 %or.cond.i, i32 %i.ah, i32 %4
   %i.aj = lshr i32 %i.g, 23
   %i.ak = and i32 %i.aj, 63
@@ -612,12 +612,12 @@ get_wcaps.exit.thread.i.i:                        ; preds = %get_wcaps.exit.i.i,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   %i.am = lshr i32 %i.al, 16
   %i.an = and i32 %i.am, 127
-  %i.ao = mul nuw nsw i32 %i.an, 25
-  %i.ap = add nuw nsw i32 %i.ao, 25               ; 3 uses
+  %i.ao = mul nuw nsw i32 %i.an, 25               ; 2 uses
+  %i.ap = add nuw nsw i32 %i.ao, 25               ; 2 uses
   %i.aq = and i32 %i.al, 1073741824
   %.not23.i = icmp eq i32 %i.aq, 0
   %or.cond.i = select i1 %.not.i, i1 %.not23.i, i1 false
-  %3 = or disjoint i32 %i.ap, 65536
+  %3 = add nuw nsw i32 %i.ao, 65561
   %.0.i = select i1 %or.cond.i, i32 %i.ap, i32 %3
   %i.ar = lshr i32 %i.o, 23
   %i.as = and i32 %i.ar, 63
@@ -1020,10 +1020,10 @@ bb.aq:                                            ; preds = %bb.ap
   %spec.select.i66 = and i32 %i.it, 2             ; 2 uses
   %i.iu = and i32 %i.iq, 64
   %.not17.i = icmp eq i32 %i.iu, 0
+  %7 = and i32 %i.iq, 8                           ; 2 uses
   br i1 %.not17.i, label %bb.as, label %bb.ar
 
 bb.ar:                                            ; preds = %.split.us
-  %7 = and i32 %i.iq, 8
   %.not21.i = icmp eq i32 %7, 0
   %spec.select22.v.i = select i1 %.not21.i, i32 1, i32 13
   %spec.select22.i = or disjoint i32 %spec.select22.v.i, %spec.select.i66
@@ -1032,17 +1032,18 @@ bb.ar:                                            ; preds = %.split.us
 bb.as:                                            ; preds = %.split.us
   %i.iv = lshr i32 %i.iq, 2
   %i.iw = and i32 %i.iv, 4
-  %8 = shl i32 %i.iq, 8
-  %i.ix = and i32 %8, 32768
-  %9 = and i32 %i.iq, 32520
-  %10 = or disjoint i32 %i.iw, %9
-  %11 = or disjoint i32 %10, %i.ix
-  %12 = or disjoint i32 %11, %spec.select.i66
-  %13 = xor i32 %12, 4
+  %8 = or disjoint i32 %i.iw, %7
+  %9 = or disjoint i32 %8, %spec.select.i66
+  %i.ix = and i32 %i.iq, 128
+  %.not20.i = icmp eq i32 %i.ix, 0
+  %.4.v.i = select i1 %.not20.i, i32 4, i32 32772
+  %.4.i = xor i32 %9, %.4.v.i
+  %10 = and i32 %i.iq, 32512
+  %11 = or disjoint i32 %.4.i, %10
   br label %convert_to_spdif_status.exit
 
 convert_to_spdif_status.exit:                     ; preds = %bb.ar, %bb.as
-  %.5.i = phi i32 [ %13, %bb.as ], [ %spec.select22.i, %bb.ar ]
+  %.5.i = phi i32 [ %11, %bb.as ], [ %spec.select22.i, %bb.ar ]
   %i.iy = getelementptr i8, ptr %i.dg, i64 4
   store i32 %.5.i, ptr %i.iy, align 4
   br label %snd_hda_ctl_add.exit.thread
@@ -1445,10 +1446,10 @@ bb.a:
   %spec.select.i = and i32 %i.k, 2                ; 2 uses
   %i.l = and i32 %i.j, 64
   %.not17.i = icmp eq i32 %i.l, 0
+  %2 = and i32 %i.j, 8                            ; 2 uses
   br i1 %.not17.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = and i32 %i.j, 8
   %.not21.i = icmp eq i32 %2, 0
   %spec.select22.v.i = select i1 %.not21.i, i32 1, i32 13
   %spec.select22.i = or disjoint i32 %spec.select22.v.i, %spec.select.i
@@ -1457,17 +1458,18 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.m = lshr i32 %i.j, 2
   %i.n = and i32 %i.m, 4
-  %3 = shl i32 %i.j, 8
-  %i.o = and i32 %3, 32768
-  %4 = and i32 %i.j, 32520
-  %5 = or disjoint i32 %i.n, %4
-  %6 = or disjoint i32 %5, %i.o
-  %7 = or disjoint i32 %6, %spec.select.i
-  %8 = xor i32 %7, 4
+  %3 = or disjoint i32 %i.n, %2
+  %4 = or disjoint i32 %3, %spec.select.i
+  %i.o = and i32 %i.j, 128
+  %.not20.i = icmp eq i32 %i.o, 0
+  %.4.v.i = select i1 %.not20.i, i32 4, i32 32772
+  %.4.i = xor i32 %4, %.4.v.i
+  %5 = and i32 %i.j, 32512
+  %6 = or disjoint i32 %.4.i, %5
   br label %convert_to_spdif_status.exit
 
 convert_to_spdif_status.exit:                     ; preds = %bb.b, %bb.c
-  %.5.i = phi i32 [ %8, %bb.c ], [ %spec.select22.i, %bb.b ]
+  %.5.i = phi i32 [ %6, %bb.c ], [ %spec.select22.i, %bb.b ]
   %i.p = getelementptr i8, ptr %1, i64 72
   store i32 %.5.i, ptr %i.p, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
