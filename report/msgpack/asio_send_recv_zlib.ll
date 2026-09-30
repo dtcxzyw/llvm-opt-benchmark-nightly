@@ -204,8 +204,8 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN5boost4asio6detail9schedulerE, i64 16), ptr %0, align 8, !tbaa !52
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.e = icmp eq i32 %2, 1
-  %i.f = and i32 %2, -65535
-  %.not = icmp eq i32 %i.f, -1525678080           ; 2 uses
+  %i.f = and i32 %2, -65535                       ; 2 uses
+  %.not = icmp eq i32 %i.f, -1525678080
   %i.g = and i32 %2, -65532
   %.not15 = icmp eq i32 %i.g, -1525678080
   %i.h = or i1 %i.e, %.not15
@@ -213,7 +213,7 @@ bb.a:
   %i.i = zext i1 %narrow to i8
   store i8 %i.i, ptr %i.d, align 8, !tbaa !203
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %.not.not = xor i1 %.not, true
+  %.not.not = icmp ne i32 %i.f, -1525678080
   tail call void @_ZN5boost4asio6detail27conditionally_enabled_mutexC2Eb(ptr noundef nonnull align 8 dereferenceable(49) %i.j, i1 noundef zeroext %.not.not)
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   invoke void @_ZN5boost4asio6detail11posix_eventC2Ev(ptr noundef nonnull align 8 dereferenceable(56) %i.k)
@@ -616,7 +616,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN5boost4
   br i1 %i.s, label %bb.ap, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.t = load ptr, ptr %i.r, align 8, !tbaa !326  ; 2 uses
+  %i.t = load ptr, ptr %i.r, align 8, !tbaa !326  ; 3 uses
   store ptr %i.t, ptr %i.d, align 8, !tbaa !328
   %i.u = icmp eq ptr %i.t, null                   ; 2 uses
   %.not = icmp eq ptr %i.r, %i.f                  ; 2 uses
@@ -631,7 +631,9 @@ _ZN5boost4asio6detail8op_queueINS1_19scheduler_operationEE3popEv.exit.thread: ; 
   br i1 %.not, label %bb.e, label %bb.t
 
 bb.d:                                             ; preds = %_ZN5boost4asio6detail8op_queueINS1_19scheduler_operationEE3popEv.exit
-  store i8 0, ptr %i.g, align 8, !tbaa !206
+  %.not41 = icmp ne ptr %i.t, null
+  %8 = zext i1 %.not41 to i8
+  store i8 %8, ptr %i.g, align 8, !tbaa !206
   br label %bb.i
 
 bb.e:                                             ; preds = %_ZN5boost4asio6detail8op_queueINS1_19scheduler_operationEE3popEv.exit.thread

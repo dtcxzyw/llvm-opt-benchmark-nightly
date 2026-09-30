@@ -205,7 +205,7 @@ bb.dr:                                            ; preds = %bb.dm, %bb.dn
 
 bb.ds:                                            ; preds = %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p, %bb.p
   store ptr %i.au, ptr %i.a, align 8, !tbaa !66
-  %i.jz = call i32 @onig_scan_unsigned_number(ptr noundef nonnull %i.a, ptr noundef nonnull %2, ptr noundef nonnull %i.l) ; 5 uses
+  %i.jz = call i32 @onig_scan_unsigned_number(ptr noundef nonnull %i.a, ptr noundef nonnull %2, ptr noundef nonnull %i.l) ; 6 uses
   %or.cond7 = icmp ugt i32 %i.jz, 1000
   br i1 %or.cond7, label %bb.dz, label %bb.dt
 
@@ -217,8 +217,8 @@ bb.dt:                                            ; preds = %bb.ds
 
 bb.du:                                            ; preds = %bb.dt
   %i.kc = getelementptr i8, ptr %3, i64 92
-  %i.kd = load i32, ptr %i.kc, align 4, !tbaa !86
-  %i.ke = icmp sle i32 %i.jz, %i.kd               ; 2 uses
+  %i.kd = load i32, ptr %i.kc, align 4, !tbaa !86 ; 2 uses
+  %i.ke = icmp sle i32 %i.jz, %i.kd
   %i.kf = icmp samesign ult i32 %i.jz, 10
   %or.cond9 = or i1 %i.kf, %i.ke
   br i1 %or.cond9, label %bb.dv, label %bb.dz
@@ -231,7 +231,8 @@ bb.dv:                                            ; preds = %bb.du
   br i1 %.not870, label %bb.dy, label %bb.dw
 
 bb.dw:                                            ; preds = %bb.dv
-  br i1 %i.ke, label %bb.dx, label %.loopexit
+  %.not1235 = icmp sgt i32 %i.jz, %i.kd
+  br i1 %.not1235, label %.loopexit, label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw
   %i.kj = getelementptr i8, ptr %3, i64 168

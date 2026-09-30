@@ -205,9 +205,9 @@ bb.y:                                             ; preds = %bb.d
   %i.ev = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %i.ew = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.ey = load i64, ptr %i.ex, align 8, !range !32 ; 2 uses
+  %i.ey = load i64, ptr %i.ex, align 8, !range !32 ; 3 uses
   %i.ez = icmp ne i64 %i.ey, -9223372036854775807 ; 2 uses
-  %i.fa = icmp ne i64 %i.ey, -9223372036854775808 ; 3 uses
+  %i.fa = icmp ne i64 %i.ey, -9223372036854775808 ; 2 uses
   %i.fb = add i64 %.sroa.016.0, 1                 ; 2 uses
   %i.fc = icmp ult i64 %i.fb, 41
   %i.fd = getelementptr inbounds nuw i8, ptr %i.bi, i64 8 ; 2 uses
@@ -242,6 +242,7 @@ bb.y:                                             ; preds = %bb.d
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.be, i64 256
   %.sroa.27.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.be, i64 264
   %.sroa.29.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.be, i64 280
+  %.not = icmp eq i64 %i.ey, -9223372036854775808
   %spec.select.sroa.sel345.v.sroa.sel.v.sroa.sel.v = select i1 %.not119, ptr %i.bo, ptr %6
   %spec.select.sroa.sel345.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %spec.select.sroa.sel345.v.sroa.sel.v.sroa.sel.v, i64 24
   %.sroa.gep694 = getelementptr inbounds nuw i8, ptr %i.bo, i64 8 ; 2 uses
@@ -644,7 +645,7 @@ bb.cc:                                            ; preds = %bb.am
 
 bb.cd:                                            ; preds = %bb.cc
   call void @llvm.assume(i1 %i.ez)
-  br i1 %i.fa, label %.loopexit562, label %bb.ce
+  br i1 %.not, label %bb.ce, label %.loopexit562
 
 bb.ce:                                            ; preds = %bb.cd
   %i.pf = and i32 %.sroa.15368.0.copyload, 61440
@@ -1047,9 +1048,9 @@ _RNvYINtNtNtCs6JMX4GRUq9U_4core3str7pattern18MultiCharEqPatternRScENtB5_7Pattern
   tail call void @llvm.assume(i1 %i.aj)
   %i.ak = add nsw i32 %.sroa.4.0.i.ph.i.i.i, -43
   %switch.and.i = and i32 %i.ak, -3
-  %switch.selectcmp.i = icmp eq i32 %switch.and.i, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  br i1 %switch.selectcmp.i, label %bb.d, label %bb.f
+  %.not = icmp eq i32 %switch.and.i, 0
+  br i1 %.not, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %_RNvYINtNtNtCs6JMX4GRUq9U_4core3str7pattern18MultiCharEqPatternRScENtB5_7Pattern12is_prefix_ofCsfIwuYbgPzJV_5uu_du.exit
   %.not.i.not = icmp eq i64 %2, 1

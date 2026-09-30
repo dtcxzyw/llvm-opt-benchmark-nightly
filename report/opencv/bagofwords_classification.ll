@@ -205,7 +205,7 @@ bb.a:
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %13 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 21 uses
   %i.a = icmp slt i32 %5, 1
-  %i.b = icmp ne i32 %5, -1                       ; 2 uses
+  %i.b = icmp ne i32 %5, -1
   %or.cond = and i1 %i.a, %i.b
   br i1 %or.cond, label %bb.b, label %bb.g
 
@@ -335,7 +335,8 @@ bb.p:                                             ; preds = %_ZNSt7__cxx1112basi
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %bb.p, %bb.n
   %.sink87 = phi i32 [ 1, %bb.n ], [ 3, %bb.p ]
-  %spec.store.select4 = select i1 %i.b, i32 %5, i32 %.sink87 ; 2 uses
+  %.not = icmp eq i32 %5, -1
+  %spec.store.select4 = select i1 %.not, i32 %.sink87, i32 %5 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
   invoke void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %13)
           to label %bb.q unwind label %bb.t

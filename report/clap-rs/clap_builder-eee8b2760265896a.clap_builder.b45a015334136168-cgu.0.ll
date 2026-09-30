@@ -205,9 +205,9 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr19replac
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 41
   %i.bk = load i8, ptr %i.bj, align 1, !range !34, !noundef !11 ; 2 uses
   %i.bl = trunc nuw i8 %i.bk to i1
-  %i.bm = icmp ne ptr %1, null                    ; 2 uses
+  %i.bm = icmp ne ptr %1, null
   %.sroa.015.0 = and i1 %i.bm, %i.bl              ; 3 uses
-  %i.bn = icmp eq i64 %4, 0                       ; 3 uses
+  %i.bn = icmp eq i64 %4, 0
   %or.cond = or i1 %i.bn, %.sroa.015.0
   br i1 %or.cond, label %bb.h, label %bb.j
 
@@ -252,7 +252,8 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr11push_s
   %i.cc = phi i64 [ %i.by, %bb.i ], [ %i.br, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsfu0rQaTkGUu_12clap_builder.exit.i.i154 ]
   %i.cd = add i64 %i.cc, %.val146
   store i64 %i.cd, ptr %i.bq, align 8, !alias.scope !4082
-  br i1 %i.bm, label %bb.m, label %.thread
+  %.not274 = icmp eq ptr %1, null
+  br i1 %.not274, label %bb.n, label %bb.m
 
 bb.j:                                             ; preds = %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr19replace_newline_var.exit
   %.pre = load i64, ptr %i.bc, align 8, !noalias !11 ; 5 uses
@@ -323,9 +324,9 @@ bb.m:                                             ; preds = %_RNvMNtNtCsfu0rQaTk
   %.not137 = icmp eq i32 %i.cz, 0
   br i1 %.not137, label %bb.o, label %bb.n
 
-bb.n:                                             ; preds = %bb.o, %bb.m, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueEEB1e_.exit
-  %.not7 = xor i1 %i.bn, true
-  %or.cond9 = and i1 %.sroa.015.0, %.not7
+bb.n:                                             ; preds = %bb.o, %bb.m, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueEEB1e_.exit, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr11push_styled.exit
+  %.not = icmp ne i64 %4, 0
+  %or.cond9 = and i1 %.not, %.sroa.015.0
   br i1 %or.cond9, label %bb.be, label %.thread
 
 bb.o:                                             ; preds = %bb.m
@@ -691,11 +692,11 @@ bb.an:                                            ; preds = %_RNvXsp_NtCs4wP2HXf
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueEEB1e_.exit200: ; preds = %_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropBL_.exit.i198, %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %.not = xor i1 %i.bn, true
-  %or.cond3 = and i1 %.sroa.015.0, %.not
+  %.not277 = icmp ne i64 %4, 0
+  %or.cond3 = and i1 %.not277, %.sroa.015.0
   br i1 %or.cond3, label %bb.aq, label %.thread
 
-.thread:                                          ; preds = %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr11push_styled.exit, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_str9StyledStrEBH_.exit218, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueEEB1e_.exit200, %bb.n
+.thread:                                          ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_str9StyledStrEBH_.exit218, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueEEB1e_.exit200, %bb.n
   call void @llvm.experimental.noalias.scope.decl(metadata !4123)
   call void @llvm.experimental.noalias.scope.decl(metadata !4124)
   %.val.i.i201 = load i64, ptr %i.k, align 8, !range !12, !alias.scope !4125, !noundef !11 ; 2 uses

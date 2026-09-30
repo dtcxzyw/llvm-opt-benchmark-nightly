@@ -204,9 +204,9 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit899:       ; preds = %bb.kl, %_ZNSt6vecto
   %.sroa.19.0.lcssa3600 = phi ptr [ %i.asl, %bb.ij ], [ %.sroa.19.02599, %bb.is ], [ %.sroa.19.02599, %bb.iv ], [ %.sroa.19.02599, %bb.ir ], [ %.sroa.19.02599, %.split.us ] ; 4 uses
   %.sroa.01312.0.lcssa3599 = phi ptr [ %i.ask, %bb.ij ], [ %.sroa.01312.02597, %bb.is ], [ %.sroa.01312.02597, %bb.iv ], [ %.sroa.01312.02597, %bb.ir ], [ %.sroa.01312.02597, %.split.us ] ; 7 uses
   %.sroa.47.0.lcssa3598 = phi ptr [ %i.asj, %bb.ij ], [ %.sroa.47.02595, %bb.is ], [ %.sroa.47.02595, %bb.iv ], [ %.sroa.47.02595, %bb.ir ], [ %.sroa.47.02595, %.split.us ] ; 4 uses
-  %.sroa.27.0.lcssa3597 = phi ptr [ %i.asj, %bb.ij ], [ %.sroa.27.02591, %bb.is ], [ %.sroa.27.02591, %bb.iv ], [ %.sroa.27.02591, %bb.ir ], [ %.sroa.27.02591, %.split.us ] ; 5 uses
-  %.sroa.01338.0.lcssa3596 = phi ptr [ %i.asf, %bb.ij ], [ %.sroa.01338.02589, %bb.is ], [ %.sroa.01338.02589, %bb.iv ], [ %.sroa.01338.02589, %bb.ir ], [ %.sroa.01338.02589, %.split.us ] ; 9 uses
-  %i.beh = icmp ne ptr %.sroa.01338.0.lcssa3596, %.sroa.27.0.lcssa3597 ; 2 uses
+  %.sroa.27.0.lcssa3597 = phi ptr [ %i.asj, %bb.ij ], [ %.sroa.27.02591, %bb.is ], [ %.sroa.27.02591, %bb.iv ], [ %.sroa.27.02591, %bb.ir ], [ %.sroa.27.02591, %.split.us ] ; 6 uses
+  %.sroa.01338.0.lcssa3596 = phi ptr [ %i.asf, %bb.ij ], [ %.sroa.01338.02589, %bb.is ], [ %.sroa.01338.02589, %bb.iv ], [ %.sroa.01338.02589, %bb.ir ], [ %.sroa.01338.02589, %.split.us ] ; 10 uses
+  %i.beh = icmp ne ptr %.sroa.01338.0.lcssa3596, %.sroa.27.0.lcssa3597
   %.sroa.0.08.i.i = getelementptr inbounds i8, ptr %.sroa.27.0.lcssa3597, i64 -4 ; 3 uses
   %i.bei = icmp ult ptr %.sroa.01338.0.lcssa3596, %.sroa.0.08.i.i
   %or.cond.i.i = select i1 %i.beh, i1 %i.bei, i1 false
@@ -259,7 +259,8 @@ _ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEE5clearEv.exit: ; preds = %_ZSt7reverseIN9
   store ptr null, ptr %i.aod, align 8, !tbaa !26
   store <2 x ptr> %i.aoq, ptr %i.aoe, align 8, !tbaa !33
   store i64 0, ptr %i.aof, align 8, !tbaa !28
-  br i1 %i.beh, label %.lr.ph2620.preheader, label %._crit_edge2621
+  %.not3291 = icmp eq ptr %.sroa.01338.0.lcssa3596, %.sroa.27.0.lcssa3597
+  br i1 %.not3291, label %._crit_edge2621, label %.lr.ph2620.preheader
 
 .lr.ph2620.preheader:                             ; preds = %_ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEE5clearEv.exit
   %i.bew = ptrtoint ptr %.sroa.27.0.lcssa3597 to i64

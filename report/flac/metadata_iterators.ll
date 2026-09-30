@@ -205,11 +205,9 @@ simple_iterator_copy_file_postfix_.exit:          ; preds = %bb.bo
   %i.hm = load i32, ptr %i.df, align 8, !tbaa !130
   %i.hn = add i32 %i.hm, 1
   store i32 %i.hn, ptr %i.df, align 8, !tbaa !130
-  %i.ho = call fastcc i32 @simple_iterator_pop_(ptr noundef nonnull %0)
-  %.not34 = icmp eq i32 %i.ho, 0                  ; 2 uses
+  %i.ho = call fastcc i32 @simple_iterator_pop_(ptr noundef nonnull %0) ; 2 uses
+  %.not34 = icmp eq i32 %i.ho, 0
   %brmerge = or i1 %.not.i4261, %.not34
-  %not..not34 = xor i1 %.not34, true
-  %.mux = zext i1 %not..not34 to i32
   br i1 %brmerge, label %simple_iterator_pop_.exit, label %bb.bq
 
 simple_iterator_copy_file_postfix_.exit.thread75: ; preds = %.preheader.i
@@ -220,7 +218,7 @@ bb.bq:                                            ; preds = %simple_iterator_cop
   br label %simple_iterator_pop_.exit
 
 simple_iterator_pop_.exit:                        ; preds = %bb.bp, %simple_iterator_copy_file_postfix_.exit, %.critedge.i, %bb.ax, %bb.bk, %bb.aw, %bb.bn, %cleanup_tempfile_.exit.i, %bb.ab, %bb.aa, %bb.t, %bb.u, %bb.p, %bb.l, %bb.j, %bb.ak, %bb.aj, %bb.ag, %bb.af, %bb.h, %read_metadata_block_header_cb_.exit.i.i, %bb.f, %simple_iterator_copy_file_postfix_.exit.thread75, %bb.bq
-  %.025 = phi i32 [ %i.hp, %bb.bq ], [ %.mux, %simple_iterator_copy_file_postfix_.exit ], [ 0, %bb.l ], [ 0, %bb.ag ], [ 0, %bb.h ], [ 0, %bb.ab ], [ 1, %simple_iterator_copy_file_postfix_.exit.thread75 ], [ 0, %bb.f ], [ 0, %read_metadata_block_header_cb_.exit.i.i ], [ 0, %bb.af ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.j ], [ 0, %bb.p ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.aa ], [ 0, %cleanup_tempfile_.exit.i ], [ 0, %bb.bn ], [ 0, %bb.aw ], [ 0, %bb.bk ], [ 0, %bb.ax ], [ 0, %.critedge.i ], [ 0, %bb.bp ]
+  %.025 = phi i32 [ %i.hp, %bb.bq ], [ %i.ho, %simple_iterator_copy_file_postfix_.exit ], [ 0, %bb.l ], [ 0, %bb.ag ], [ 0, %bb.h ], [ 0, %bb.ab ], [ 1, %simple_iterator_copy_file_postfix_.exit.thread75 ], [ 0, %bb.f ], [ 0, %read_metadata_block_header_cb_.exit.i.i ], [ 0, %bb.af ], [ 0, %bb.aj ], [ 0, %bb.ak ], [ 0, %bb.j ], [ 0, %bb.p ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.aa ], [ 0, %cleanup_tempfile_.exit.i ], [ 0, %bb.bn ], [ 0, %bb.aw ], [ 0, %bb.bk ], [ 0, %bb.ax ], [ 0, %.critedge.i ], [ 0, %bb.bp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #32
   ret i32 %.025

@@ -205,16 +205,17 @@ bb.j:                                             ; preds = %_RNvXsp_NtCsgCecv3e
 _RNvXNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB2_8BTreeMapNtCsk6HhtavqUX2_11serde_value5ValueB14_ENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2426)
-  %.sroa.01.0.copyload.i = load ptr, ptr %i.x, align 8, !alias.scope !2426 ; 5 uses
-  %.not.i = icmp ne ptr %.sroa.01.0.copyload.i, null ; 4 uses
+  %.sroa.01.0.copyload.i = load ptr, ptr %i.x, align 8, !alias.scope !2426 ; 6 uses
+  %.not.i = icmp ne ptr %.sroa.01.0.copyload.i, null ; 3 uses
   %.sroa.52.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.52.0.copyload.i = load i64, ptr %.sroa.52.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 5 uses
   %.sroa.17.0 = select i1 %.not.i, i64 %.sroa.4.0.copyload.i, i64 undef ; 2 uses
-  %1 = icmp ne i64 %.sroa.52.0.copyload.i, 0
-  %.not61 = select i1 %.not.i, i1 %1, i1 false
-  br i1 %.not61, label %.lr.ph.preheader, label %._crit_edge
+  %1 = icmp eq i64 %.sroa.52.0.copyload.i, 0
+  %not..not.i = icmp eq ptr %.sroa.01.0.copyload.i, null
+  %.not61 = select i1 %not..not.i, i1 true, i1 %1
+  br i1 %.not61, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_RNvXNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB2_8BTreeMapNtCsk6HhtavqUX2_11serde_value5ValueB14_ENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsat9HgdBb3qc_16shadowsocks_rust.exit
   %i.y = ptrtoint ptr %.sroa.01.0.copyload.i to i64
@@ -274,8 +275,8 @@ bb.k:                                             ; preds = %._crit_edge
   %i.aw = icmp eq i64 %i.av, 0
   br i1 %i.aw, label %.loopexit.i.i.i, label %.lr.ph.i.i.i.i
 
-.loopexit.i.i.i:                                  ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %_RNvMsz_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8IntoIterNtCsk6HhtavqUX2_11serde_value5ValueB17_E10dying_nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i, %bb.k
-  %.sroa.0.0.ph.i.i.i = phi ptr [ %.sroa.01.0.copyload.i, %bb.k ], [ %.sroa.8.2, %_RNvMsz_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8IntoIterNtCsk6HhtavqUX2_11serde_value5ValueB17_E10dying_nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i ], [ %.lcssa100.unr, %.lr.ph.i.i.i.i.prol.loopexit ], [ %i.au, %.lr.ph.i.i.i.i ] ; 3 uses
+.loopexit.i.i.i:                                  ; preds = %_RNvMsz_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8IntoIterNtCsk6HhtavqUX2_11serde_value5ValueB17_E10dying_nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %bb.k
+  %.sroa.0.0.ph.i.i.i = phi ptr [ %.sroa.01.0.copyload.i, %bb.k ], [ %i.au, %.lr.ph.i.i.i.i ], [ %.lcssa100.unr, %.lr.ph.i.i.i.i.prol.loopexit ], [ %.sroa.8.2, %_RNvMsz_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8IntoIterNtCsk6HhtavqUX2_11serde_value5ValueB17_E10dying_nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i ] ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i.i.i, i64 704
   %i.ay = load ptr, ptr %i.ax, align 8, !noalias !2428, !noundef !14 ; 2 uses
   %.not.i.i4.i.i.i.i = icmp eq ptr %i.ay, null

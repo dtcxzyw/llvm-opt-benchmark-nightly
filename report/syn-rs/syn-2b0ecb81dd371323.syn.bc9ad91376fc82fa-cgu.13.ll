@@ -202,8 +202,8 @@ bb.aw:                                            ; preds = %bb.as
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #15, !noalias !1414
   unreachable
 
-common.resume:                                    ; preds = %.body249, %.body289.thread, %.thread483, %bb.mm, %.thread469, %bb.lg, %bb.lp, %bb.mv, %bb.lj, %bb.li, %bb.lh, %bb.mp, %bb.mo, %bb.mn, %.body, %.body239, %.critedge.i.i, %bb.aq, %bb.ar, %bb.as, %bb.bd, %bb.be, %bb.bf, %bb.cs, %bb.ct, %bb.cu, %bb.db, %bb.dc, %bb.dd, %.thread.i17.i, %bb.ek
-  %common.resume.op = phi { ptr, i32 } [ %.pn7.i, %bb.ek ], [ %.pn6689.i.i, %.thread.i17.i ], [ %.pn51.i.i, %.critedge.i.i ], [ %i.fe, %bb.bd ], [ %i.em, %bb.aq ], [ %i.em, %bb.as ], [ %i.em, %bb.ar ], [ %i.fe, %bb.bf ], [ %i.fe, %bb.be ], [ %i.hq, %bb.db ], [ %i.hc, %bb.cs ], [ %i.hc, %bb.cu ], [ %i.hc, %bb.ct ], [ %i.hq, %bb.dd ], [ %i.hq, %bb.dc ], [ %i.tk, %bb.mv ], [ %.pn223413, %.body289.thread ], [ %.pn208, %.body249 ], [ %.pn217, %.body239 ], [ %.pn213, %bb.lg ], [ %.pn215472, %.thread469 ], [ %.pn219, %bb.mm ], [ %.pn221486, %.thread483 ], [ %i.sy, %bb.mn ], [ %i.sy, %bb.mo ], [ %i.rx, %bb.lp ], [ %.pn210, %.body ], [ %i.sy, %bb.mp ], [ %i.rl, %bb.lh ], [ %i.rl, %bb.lj ], [ %i.rl, %bb.li ]
+common.resume:                                    ; preds = %2, %.body289.thread, %.thread483, %bb.mm, %.thread469, %bb.lg, %bb.lp, %bb.mv, %bb.lj, %bb.li, %bb.lh, %bb.mp, %bb.mo, %bb.mn, %.body, %.body239, %.critedge.i.i, %bb.aq, %bb.ar, %bb.as, %bb.bd, %bb.be, %bb.bf, %bb.cs, %bb.ct, %bb.cu, %bb.db, %bb.dc, %bb.dd, %.thread.i17.i, %bb.ek
+  %common.resume.op = phi { ptr, i32 } [ %.pn7.i, %bb.ek ], [ %.pn6689.i.i, %.thread.i17.i ], [ %.pn51.i.i, %.critedge.i.i ], [ %i.fe, %bb.bd ], [ %i.em, %bb.aq ], [ %i.em, %bb.as ], [ %i.em, %bb.ar ], [ %i.fe, %bb.bf ], [ %i.fe, %bb.be ], [ %i.hq, %bb.db ], [ %i.hc, %bb.cs ], [ %i.hc, %bb.cu ], [ %i.hc, %bb.ct ], [ %i.hq, %bb.dd ], [ %i.hq, %bb.dc ], [ %i.tk, %bb.mv ], [ %.pn223413, %.body289.thread ], [ %.pn208, %2 ], [ %.pn217, %.body239 ], [ %.pn213, %bb.lg ], [ %.pn215472, %.thread469 ], [ %.pn219, %bb.mm ], [ %.pn221486, %.thread483 ], [ %i.sy, %bb.mn ], [ %i.sy, %bb.mo ], [ %i.rx, %bb.lp ], [ %.pn210, %.body ], [ %i.sy, %bb.mp ], [ %i.rl, %bb.lh ], [ %i.rl, %bb.lj ], [ %i.rl, %bb.li ]
   resume { ptr, i32 } %common.resume.op
 
 bb.ax:                                            ; preds = %.thread94.i.i
@@ -606,6 +606,9 @@ bb.ew:                                            ; preds = %_RNvNtNtCsgbWeKYPjk
   %i.kp = invoke noundef zeroext i1 @_RINvMs9_NtCsgbWeKYPjk8w_3syn5parseNtB6_11ParseBuffer4peekINvNtB8_5token5ParenNtNtB8_9lookahead11TokenMarkerEEB8_(ptr noundef nonnull align 8 %1)
           to label %bb.ex unwind label %.body289.thread422
 
+2:                                                ; preds = %3, %.body249
+  br i1 %.sroa.0119.3, label %.body289.thread, label %common.resume
+
 .body289.thread422:                               ; preds = %bb.mg, %bb.la, %bb.fe, %bb.fl, %bb.fj, %bb.fh, %bb.ff, %bb.ey, %.backedge
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
@@ -704,7 +707,7 @@ bb.fl:                                            ; preds = %bb.fk
 bb.fm:                                            ; preds = %bb.fl
   %i.la = load i64, ptr %i.bo, align 8, !range !10, !noundef !6 ; 2 uses
   %.not184 = icmp eq i64 %i.la, -1
-  %i.lb = load ptr, ptr %i.jl, align 8            ; 5 uses
+  %i.lb = load ptr, ptr %i.jl, align 8            ; 7 uses
   br i1 %.not184, label %bb.fo, label %bb.fn
 
 bb.fn:                                            ; preds = %bb.fm
@@ -722,7 +725,7 @@ bb.fn:                                            ; preds = %bb.fm
 
 bb.fo:                                            ; preds = %bb.fm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bo)
-  %.not185 = icmp eq ptr %i.lb, null
+  %.not185 = icmp eq ptr %i.lb, null              ; 15 uses
   br i1 %.not185, label %bb.hg, label %bb.fp
 
 bb.fp:                                            ; preds = %bb.fo
@@ -1125,11 +1128,15 @@ bb.hg:                                            ; preds = %bb.hk, %bb.fo
           to label %bb.hl unwind label %bb.hh
 
 .body249:                                         ; preds = %.thread458, %bb.jg, %.loopexit524, %.loopexit.split-lp525, %.thread464.thread, %bb.is, %bb.it, %bb.iu, %.thread464, %bb.kd, %bb.kc, %bb.hn, %bb.hh, %.thread426
-  %.sroa.0119.3.a = phi i1 [ true, %bb.hn ], [ true, %bb.hh ], [ %.sroa.0119.6432, %.thread426 ], [ %.sroa.0119.6432, %bb.kd ], [ %.sroa.0119.6432, %bb.kc ], [ false, %.thread464 ], [ false, %.thread464.thread ], [ true, %bb.is ], [ true, %bb.it ], [ true, %bb.iu ], [ true, %.loopexit524 ], [ false, %.loopexit.split-lp525 ], [ false, %bb.jg ], [ false, %.thread458 ]
+  %.sroa.0119.3 = phi i1 [ true, %bb.hn ], [ true, %bb.hh ], [ %.sroa.0119.6432, %.thread426 ], [ %.sroa.0119.6432, %bb.kd ], [ %.sroa.0119.6432, %bb.kc ], [ false, %.thread464 ], [ false, %.thread464.thread ], [ true, %bb.is ], [ true, %bb.it ], [ true, %bb.iu ], [ true, %.loopexit524 ], [ false, %.loopexit.split-lp525 ], [ false, %bb.jg ], [ false, %.thread458 ]
+  %.sroa.0119.3.a = phi i1 [ %.not185, %bb.hn ], [ %.sroa.0124.2, %bb.hh ], [ %.not185, %.thread426 ], [ %.not185, %bb.kd ], [ %.not185, %bb.kc ], [ %.not185, %.thread464 ], [ %.not185, %.thread464.thread ], [ %.not185, %bb.is ], [ %.not185, %bb.it ], [ %.not185, %bb.iu ], [ %.not185, %.loopexit524 ], [ %.not185, %.loopexit.split-lp525 ], [ %.not185, %bb.jg ], [ %.not185, %.thread458 ]
   %.pn208 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp436, %bb.hn ], [ %i.nu, %bb.hh ], [ %.pn206433, %.thread426 ], [ %.pn206433, %bb.kd ], [ %.pn206433, %bb.kc ], [ %.pn, %.thread464 ], [ %i.pr, %.thread464.thread ], [ %i.oy, %bb.is ], [ %i.oy, %bb.it ], [ %i.oy, %bb.iu ], [ %lpad.loopexit526, %.loopexit524 ], [ %lpad.loopexit.split-lp527, %.loopexit.split-lp525 ], [ %.pn198, %bb.jg ], [ %.pn200463, %.thread458 ] ; 2 uses
-  br i1 %.sroa.0119.3.a, label %.body289.thread, label %common.resume
+  %.not185.not = icmp ne ptr %i.lb, null
+  %or.cond3 = and i1 %.not185.not, %.sroa.0119.3.a
+  br i1 %or.cond3, label %3, label %2
 
 bb.hh:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro27LiteralECsgbWeKYPjk8w_3syn.exit112.i, %bb.hg
+  %.sroa.0124.2 = phi i1 [ false, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro27LiteralECsgbWeKYPjk8w_3syn.exit112.i ], [ %.not185, %bb.hg ]
   %i.nu = landingpad { ptr, i32 }
           cleanup
   br label %.body249
@@ -1532,7 +1539,7 @@ bb.jh:                                            ; preds = %bb.jf
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn5parse11ParseBufferEBF_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.bi)
           to label %bb.js unwind label %.loopexit.split-lp525
 
-bb.ji:                                            ; preds = %.body289.thread, %.thread483, %.body306, %.body309, %bb.lx, %bb.ls, %.body239, %.thread469, %.body282, %.body284, %bb.kr, %bb.km, %.body, %bb.jz, %.body236, %.thread458, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro25IdentECsgbWeKYPjk8w_3syn.exit270, %bb.jo, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro25IdentECsgbWeKYPjk8w_3syn.exit264, %bb.jd, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro25IdentECsgbWeKYPjk8w_3syn.exit, %bb.io, %bb.ik, %.body233
+bb.ji:                                            ; preds = %3, %.body289.thread, %.thread483, %.body306, %.body309, %bb.lx, %bb.ls, %.body239, %.thread469, %.body282, %.body284, %bb.kr, %bb.km, %.body, %bb.jz, %.body236, %.thread458, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro25IdentECsgbWeKYPjk8w_3syn.exit270, %bb.jo, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro25IdentECsgbWeKYPjk8w_3syn.exit264, %bb.jd, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro25IdentECsgbWeKYPjk8w_3syn.exit, %bb.io, %bb.ik, %.body233
   %i.ps = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #15
@@ -1692,6 +1699,10 @@ bb.kd:                                            ; preds = %bb.kc
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0399.0.copyload) ]
   call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.0399.0.copyload, i64 noundef range(i64 1, 0) %.sroa.4400.0.copyload, i64 noundef 1) #14, !noalias !1500
   br label %.body249
+
+3:                                                ; preds = %.body249
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn3lit8LitFloatEBF_(ptr nonnull %i.lb) #16
+          to label %2 unwind label %bb.ji
 
 .critedge230:                                     ; preds = %bb.hm, %bb.ka, %bb.kb, %bb.fn, %bb.hj, %.critedge
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn4expr4ExprEBF_(ptr noalias nofree noundef align 8 dereferenceable(168) %i.bw)
@@ -2095,8 +2106,8 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn5parse11ParseBuffe
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn5parse11ParseBufferEBF_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.bu) #16
           to label %common.resume unwind label %bb.ji
 
-.body289.thread:                                  ; preds = %.body97.i, %bb.mb, %bb.mc, %bb.md, %bb.kv, %bb.kw, %bb.kx, %.body289.thread422, %.body249
-  %.pn223413 = phi { ptr, i32 } [ %lpad.thr_comm, %.body289.thread422 ], [ %.pn208, %.body249 ], [ %i.qw, %bb.kv ], [ %i.qw, %bb.kx ], [ %i.qw, %bb.kw ], [ %i.sj, %bb.md ], [ %i.sj, %bb.mc ], [ %i.sj, %bb.mb ], [ %.pn86.i, %.body97.i ]
+.body289.thread:                                  ; preds = %.body97.i, %bb.mb, %bb.mc, %bb.md, %bb.kv, %bb.kw, %bb.kx, %.body289.thread422, %2
+  %.pn223413 = phi { ptr, i32 } [ %lpad.thr_comm, %.body289.thread422 ], [ %.pn208, %2 ], [ %i.qw, %bb.kv ], [ %i.qw, %bb.kx ], [ %i.qw, %bb.kw ], [ %i.sj, %bb.md ], [ %i.sj, %bb.mc ], [ %i.sj, %bb.mb ], [ %.pn86.i, %.body97.i ]
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn4expr4ExprEBF_(ptr noalias nofree noundef align 8 dereferenceable(168) %i.bw) #16
           to label %common.resume unwind label %bb.ji
 }

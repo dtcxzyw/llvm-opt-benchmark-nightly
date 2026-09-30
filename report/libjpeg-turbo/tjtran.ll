@@ -201,8 +201,8 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.as
   %i.dg = icmp eq i32 %i.dc, 2
   %i.dh = load i8, ptr %i.e, align 1
-  %i.di = and i8 %i.dh, -33
-  %i.dj = icmp ne i8 %i.di, 66                    ; 3 uses
+  %i.di = and i8 %i.dh, -33                       ; 2 uses
+  %i.dj = icmp ne i8 %i.di, 66
   %or.cond28 = select i1 %i.dg, i1 %i.dj, i1 false
   br i1 %or.cond28, label %bb.au, label %bb.av
 
@@ -212,8 +212,9 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   unreachable
 
 bb.av:                                            ; preds = %bb.at
-  %..0478 = select i1 %i.dj, i32 %.0478724, i32 %i.de
-  %.0475. = select i1 %i.dj, i32 %i.de, i32 %.0475725
+  %.not751 = icmp eq i8 %i.di, 66                 ; 2 uses
+  %..0478 = select i1 %.not751, i32 %i.de, i32 %.0478724
+  %.0475. = select i1 %.not751, i32 %.0475725, i32 %i.de
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #16
   br label %bb.bd

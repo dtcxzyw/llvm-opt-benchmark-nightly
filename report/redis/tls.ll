@@ -204,8 +204,8 @@ bb.ac:                                            ; preds = %bb.ab, %.thread118
   %i.bu = phi i1 [ %.not73, %bb.ab ], [ %i.bs, %.thread118 ]
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
   %i.bw = load i16, ptr %i.bv, align 4, !tbaa !119 ; 3 uses
-  %i.bx = and i16 %i.bw, 2
-  %i.by = icmp eq i16 %i.bx, 0                    ; 2 uses
+  %i.bx = and i16 %i.bw, 2                        ; 2 uses
+  %i.by = icmp eq i16 %i.bx, 0
   %or.cond = select i1 %i.by, i1 %i.bt, i1 false
   br i1 %or.cond, label %bb.ad, label %callHandler.exit96
 
@@ -250,6 +250,7 @@ bb.ah:                                            ; preds = %bb.ag
   br label %.critedge
 
 callHandler.exit96:                               ; preds = %bb.af, %bb.ac
+  %2 = phi i16 [ 0, %bb.af ], [ %i.bx, %bb.ac ]
   %i.co = phi i16 [ %i.ci, %bb.af ], [ %i.bw, %bb.ac ] ; 2 uses
   br i1 %i.bu, label %bb.ai, label %callHandler.exit102
 
@@ -295,7 +296,7 @@ bb.am:                                            ; preds = %bb.al
 
 callHandler.exit102:                              ; preds = %bb.ak, %callHandler.exit96
   %i.de = phi i16 [ %i.cy, %bb.ak ], [ %i.co, %callHandler.exit96 ]
-  %.not126 = xor i1 %i.by, true
+  %.not126 = icmp ne i16 %2, 0
   %or.cond5 = select i1 %.not126, i1 %i.bt, i1 false
   br i1 %or.cond5, label %bb.an, label %callHandler.exit108
 

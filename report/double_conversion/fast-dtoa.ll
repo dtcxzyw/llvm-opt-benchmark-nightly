@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %.lr.ph.i.i.i23
   %.04198.i.i = phi i64 [ %i.mb, %.lr.ph100.i.i ], [ 1, %.preheader.i.i19 ] ; 2 uses
   %.04497.i.i = phi i64 [ %i.mk, %.lr.ph100.i.i ], [ %i.jt, %.preheader.i.i19 ]
   %i.ma = mul i64 %.04497.i.i, 10                 ; 2 uses
-  %i.mb = mul i64 %.04198.i.i, 10                 ; 6 uses
+  %i.mb = mul i64 %.04198.i.i, 10                 ; 7 uses
   %i.mc = lshr i64 %i.ma, %i.jo
   %i.md = trunc i64 %i.mc to i8
   %i.me = add i8 %i.md, 48
@@ -213,10 +213,10 @@ bb.y:                                             ; preds = %.lr.ph.i.i.i23
   %i.mi = add nsw i32 %i.mh, 1                    ; 2 uses
   store i32 %i.mi, ptr %5, align 4, !tbaa !21
   %i.mj = add nsw i32 %.299.i.i, -1               ; 2 uses
-  %i.mk = and i64 %i.ma, %i.js                    ; 6 uses
+  %i.mk = and i64 %i.ma, %i.js                    ; 7 uses
   %i.ml = add nsw i32 %.1.i21, -1                 ; 4 uses
   %i.mm = icmp samesign ugt i32 %.299.i.i, 1
-  %i.mn = icmp ugt i64 %i.mk, %i.mb               ; 3 uses
+  %i.mn = icmp ugt i64 %i.mk, %i.mb               ; 2 uses
   %i.mo = select i1 %i.mm, i1 %i.mn, i1 false
   br i1 %i.mo, label %.lr.ph100.i.i, label %._crit_edge101.i.i, !llvm.loop !15
 
@@ -240,9 +240,10 @@ bb.ab:                                            ; preds = %bb.aa
   %i.mt = shl nuw i64 %i.mk, 1
   %i.mu = sub i64 %i.jp, %i.mt
   %i.mv = mul i64 %.04198.i.i, 20
-  %.not31.i59.i.i = icmp ult i64 %i.mu, %i.mv     ; 2 uses
-  %brmerge.i.i.not = select i1 %.not31.i59.i.i, i1 %i.mn, i1 false
-  br i1 %brmerge.i.i.not, label %bb.ad, label %bb.ah
+  %.not31.i59.i.i = icmp uge i64 %i.mu, %i.mv     ; 2 uses
+  %.not = icmp ule i64 %i.mk, %i.mb
+  %brmerge.i.i.not = select i1 %.not31.i59.i.i, i1 true, i1 %.not
+  br i1 %brmerge.i.i.not, label %bb.ah, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.aa
   br i1 %i.mn, label %bb.ad, label %.thread
@@ -316,7 +317,7 @@ bb.ah:                                            ; preds = %bb.ab
   %i.np = sub nsw i32 %i.ml, %i.no
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
-  br i1 %.not31.i59.i.i, label %bb.aj, label %bb.ai
+  br i1 %.not31.i59.i.i, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %.thread34, %_ZN17double_conversionL6Grisu3EdNS_12FastDtoaModeENS_6VectorIcEEPiS3_.exit, %bb.ah
   %.028 = phi i32 [ %i.hy, %_ZN17double_conversionL6Grisu3EdNS_12FastDtoaModeENS_6VectorIcEEPiS3_.exit ], [ %i.np, %bb.ah ], [ %i.nn, %.thread34 ]

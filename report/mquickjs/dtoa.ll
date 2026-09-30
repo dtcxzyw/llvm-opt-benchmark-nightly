@@ -202,19 +202,20 @@ bb.s:                                             ; preds = %mpb_renorm.exit110
   br i1 %i.cg, label %mp_add_ui.exit.thread, label %.lr.ph.i111
 
 .lr.ph.i111:                                      ; preds = %bb.s, %.lr.ph.i111
-  %.01415.i = phi i64 [ %4, %.lr.ph.i111 ], [ 0, %bb.s ] ; 2 uses
+  %.01415.i = phi i64 [ %3, %.lr.ph.i111 ], [ 0, %bb.s ] ; 2 uses
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %.01415.i ; 2 uses
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !19
-  %i.cj = add i32 %i.ci, 1                        ; 2 uses
-  %3 = icmp eq i32 %i.cj, 0                       ; 2 uses
+  %i.cj = add i32 %i.ci, 1                        ; 3 uses
   store i32 %i.cj, ptr %i.ch, align 4, !tbaa !19
-  %4 = add nuw i64 %.01415.i, 1                   ; 2 uses
-  %5 = icmp ult i64 %4, %i.cf
-  %or.cond.not.i = select i1 %5, i1 %3, i1 false
-  br i1 %or.cond.not.i, label %.lr.ph.i111, label %mp_add_ui.exit, !llvm.loop !34
+  %3 = add nuw i64 %.01415.i, 1                   ; 2 uses
+  %4 = icmp uge i64 %3, %i.cf
+  %.not.i112 = icmp ne i32 %i.cj, 0
+  %or.cond.not.i = select i1 %4, i1 true, i1 %.not.i112
+  br i1 %or.cond.not.i, label %mp_add_ui.exit, label %.lr.ph.i111, !llvm.loop !34
 
 mp_add_ui.exit:                                   ; preds = %.lr.ph.i111
-  br i1 %3, label %mp_add_ui.exit.thread, label %bb.t
+  %.not.i112.not = icmp eq i32 %i.cj, 0
+  br i1 %.not.i112.not, label %mp_add_ui.exit.thread, label %bb.t
 
 mp_add_ui.exit.thread:                            ; preds = %bb.s, %mp_add_ui.exit
   %i.ck = add nsw i32 %i.cd, 1

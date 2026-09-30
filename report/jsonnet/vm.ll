@@ -204,13 +204,13 @@ bb.m:                                             ; preds = %bb.l
   %.01216.i.i = phi i64 [ %i.az, %.lr.ph.i.i ], [ 0, %bb.m ] ; 3 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %.01216.i.i
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %.01216.i.i
-  %i.ax = load i32, ptr %i.av, align 4, !tbaa !76
-  %i.ay = load i32, ptr %i.aw, align 4, !tbaa !76
-  %or.cond.not.i = icmp eq i32 %i.ay, %i.ax       ; 2 uses
+  %i.ax = load i32, ptr %i.av, align 4, !tbaa !76 ; 2 uses
+  %i.ay = load i32, ptr %i.aw, align 4, !tbaa !76 ; 2 uses
+  %or.cond.not.i.not = icmp ne i32 %i.ay, %i.ax
   %i.az = add nuw i64 %.01216.i.i, 1              ; 2 uses
-  %exitcond.not.i.i = icmp ne i64 %i.az, %i.an
-  %or.cond.not = select i1 %or.cond.not.i, i1 %exitcond.not.i.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i.i, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, !llvm.loop !15
+  %exitcond.not.i.i = icmp eq i64 %i.az, %i.an
+  %or.cond.not = select i1 %or.cond.not.i.not, i1 true, i1 %exitcond.not.i.i
+  br i1 %or.cond.not, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.loopexit, label %.lr.ph.i.i, !llvm.loop !15
 
 bb.n:                                             ; preds = %bb.i
   %i.ba = tail call ptr @__cxa_allocate_exception(i64 56) #39 ; 3 uses
@@ -348,8 +348,12 @@ bb.u:                                             ; preds = %.sink.split, %_ZNKS
   call void @__cxa_free_exception(ptr %i.bj) #39
   br label %bb.w
 
-_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit: ; preds = %.lr.ph.i.i, %bb.m, %bb.l, %bb.i, %bb.k, %bb.j
-  %.039.shrunk = phi i1 [ %i.ac, %bb.j ], [ %i.ah, %bb.k ], [ true, %bb.i ], [ false, %bb.l ], [ true, %bb.m ], [ %or.cond.not.i, %.lr.ph.i.i ]
+_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.loopexit: ; preds = %.lr.ph.i.i
+  %or.cond.not.i = icmp eq i32 %i.ay, %i.ax
+  br label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
+
+_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit: ; preds = %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.loopexit, %bb.m, %bb.l, %bb.i, %bb.k, %bb.j
+  %.039.shrunk = phi i1 [ %i.ac, %bb.j ], [ %i.ah, %bb.k ], [ true, %bb.i ], [ false, %bb.l ], [ true, %bb.m ], [ %or.cond.not.i, %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.loopexit ]
   %.sroa.2.8.insert.ext.i = zext i1 %.039.shrunk to i64
   %i.cd = inttoptr i64 %.sroa.2.8.insert.ext.i to ptr
   br label %bb.v
@@ -752,16 +756,20 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
   %.01216.i.i = phi i64 [ %i.bk, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.preheader ] ; 3 uses
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %.01216.i.i
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %.01216.i.i
-  %i.bi = load i32, ptr %i.bg, align 4, !tbaa !76
-  %i.bj = load i32, ptr %i.bh, align 4, !tbaa !76
-  %or.cond.not.i = icmp eq i32 %i.bj, %i.bi       ; 2 uses
+  %i.bi = load i32, ptr %i.bg, align 4, !tbaa !76 ; 2 uses
+  %i.bj = load i32, ptr %i.bh, align 4, !tbaa !76 ; 2 uses
+  %or.cond.not.i.not = icmp ne i32 %i.bj, %i.bi
   %i.bk = add nuw i64 %.01216.i.i, 1              ; 2 uses
-  %exitcond.not.i.i = icmp ne i64 %i.bk, %spec.select.i.i.i
-  %or.cond.not = select i1 %or.cond.not.i, i1 %exitcond.not.i.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i.i, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, !llvm.loop !15
+  %exitcond.not.i.i = icmp eq i64 %i.bk, %spec.select.i.i.i
+  %or.cond.not = select i1 %or.cond.not.i.not, i1 true, i1 %exitcond.not.i.i
+  br i1 %or.cond.not, label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.loopexit, label %.lr.ph.i.i, !llvm.loop !15
 
-_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit: ; preds = %.lr.ph.i.i, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit.thread225, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit.thread, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit, %bb.f
-  %i.bl = phi i1 [ false, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit ], [ true, %bb.f ], [ %i.bc, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit.thread225 ], [ false, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit.thread ], [ %or.cond.not.i, %.lr.ph.i.i ]
+_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.loopexit: ; preds = %.lr.ph.i.i
+  %or.cond.not.i = icmp eq i32 %i.bj, %i.bi
+  br label %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
+
+_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit: ; preds = %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.loopexit, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit.thread225, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit.thread, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit, %bb.f
+  %i.bl = phi i1 [ false, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit ], [ true, %bb.f ], [ %i.bc, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit.thread225 ], [ false, %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE6substrEmm.exit.thread ], [ %or.cond.not.i, %_ZSteqIDiSt11char_traitsIDiESaIDiEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.loopexit ]
   %i.bm = icmp eq ptr %i.ay, %i.ac
   br i1 %i.bm, label %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE11_M_is_localEv.exit.i.i
 

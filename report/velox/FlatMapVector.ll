@@ -205,8 +205,8 @@ bb.a:
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = icmp ult i64 %4, 4294967296
-  %i.b = and i64 %4, 65536
-  %i.c = icmp ne i64 %i.b, 0                      ; 2 uses
+  %i.b = and i64 %4, 65536                        ; 2 uses
+  %i.c = icmp ne i64 %i.b, 0
   %i.d = or i1 %i.a, %i.c
   br i1 %i.d, label %bb.c, label %bb.b, !prof !89
 
@@ -235,7 +235,8 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 bb.e:                                             ; preds = %bb.d
-  br i1 %i.c, label %_ZN8facebook5velox10BaseVector12compareNullsEbbNS0_12CompareFlagsE.exit, label %bb.f
+  %.not = icmp eq i64 %i.b, 0
+  br i1 %.not, label %bb.f, label %_ZN8facebook5velox10BaseVector12compareNullsEbbNS0_12CompareFlagsE.exit
 
 bb.f:                                             ; preds = %bb.e
   tail call void @_ZN8facebook5velox6detail14veloxCheckFailINS0_14VeloxUserErrorEPKcEEvRKNS1_18VeloxCheckFailArgsET0_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox10BaseVector12compareNullsEbbNS0_12CompareFlagsEE18veloxCheckFailArgs, ptr noundef nonnull @.str.93) #29

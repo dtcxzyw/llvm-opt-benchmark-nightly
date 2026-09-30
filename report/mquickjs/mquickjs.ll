@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #29
   %i.f = and i32 %4, 2
   %i.g = icmp ne i32 %i.f, 0
-  %i.h = icmp ne i64 %3, 0                        ; 2 uses
+  %i.h = icmp ne i64 %3, 0
   %or.cond3 = and i1 %i.h, %i.g
   br i1 %or.cond3, label %bb.b, label %.loopexit
 
@@ -276,7 +276,8 @@ bb.c:                                             ; preds = %.critedge._crit_edg
   %spec.select61 = phi i32 [ %spec.select57, %.loopexit ], [ %spec.select, %.critedge._crit_edge ]
   %.not4459 = phi i1 [ false, %.loopexit ], [ true, %.critedge._crit_edge ]
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 %3
-  br i1 %i.h, label %.lr.ph65, label %._crit_edge
+  %.not66 = icmp eq i64 %3, 0
+  br i1 %.not66, label %._crit_edge, label %.lr.ph65
 
 .lr.ph65:                                         ; preds = %bb.c
   %i.z = getelementptr i8, ptr %0, i64 152        ; 3 uses
@@ -679,8 +680,8 @@ bb.f:                                             ; preds = %bb.e
 js_parse_pop_val.exit:                            ; preds = %bb.e, %bb.f
   %i.x = trunc i64 %i.s to i32
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.z = load i32, ptr %i.y, align 8, !tbaa !119  ; 3 uses
-  %i.aa = icmp eq i32 %i.z, 61                    ; 2 uses
+  %i.z = load i32, ptr %i.y, align 8, !tbaa !119  ; 4 uses
+  %i.aa = icmp eq i32 %i.z, 61
   %i.ab = add i32 %i.z, -132
   %or.cond = icmp ult i32 %i.ab, 11
   %or.cond43 = or i1 %i.aa, %or.cond
@@ -690,7 +691,7 @@ bb.g:                                             ; preds = %js_parse_pop_val.ex
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !168
   tail call fastcc void @next_token(ptr noundef nonnull %0) #28
-  %.not85 = xor i1 %i.aa, true
+  %.not85 = icmp ne i32 %i.z, 61
   %i.ae = zext i1 %.not85 to i32
   call fastcc void @get_lvalue(ptr noundef nonnull %0, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, i32 noundef %i.ae) #28
   %i.af = shl nuw nsw i32 %i.z, 1
@@ -1093,12 +1094,12 @@ bb.cf:                                            ; preds = %re_parse_expect.exi
   %.1189.i = phi ptr [ %i.vn, %bb.bx ], [ %i.vo, %bb.by ], [ %i.vp, %bb.bz ], [ %i.xb, %re_parse_expect.exit.i ] ; 2 uses
   %.0154.i = phi i32 [ 0, %bb.bx ], [ 1, %bb.by ], [ 0, %bb.bz ], [ %i.wc, %re_parse_expect.exit.i ] ; 5 uses
   %.1.i = phi i32 [ 1073741823, %bb.bx ], [ 1073741823, %bb.by ], [ 1, %bb.bz ], [ %.0153.i, %re_parse_expect.exit.i ] ; 9 uses
-  %i.xc = load i8, ptr %.1189.i, align 1, !tbaa !51
-  %i.xd = icmp eq i8 %i.xc, 63                    ; 2 uses
+  %i.xc = load i8, ptr %.1189.i, align 1, !tbaa !51 ; 2 uses
+  %i.xd = icmp eq i8 %i.xc, 63
   %spec.select205.idx.i = zext i1 %i.xd to i64
   %spec.select205.i = getelementptr inbounds nuw i8, ptr %.1189.i, i64 %spec.select205.idx.i
-  %not..i = xor i1 %i.xd, true                    ; 2 uses
-  %spec.select206.i = zext i1 %not..i to i32      ; 3 uses
+  %.not377 = icmp ne i8 %i.xc, 63                 ; 2 uses
+  %spec.select206.i = zext i1 %.not377 to i32     ; 3 uses
   %i.xe = ptrtoaddr ptr %spec.select205.i to i64
   %i.xf = ptrtoaddr ptr %i.vh to i64
   %i.xg = sub i64 %i.xe, %i.xf
@@ -1282,7 +1283,7 @@ bb.cq:                                            ; preds = %bb.co
   %i.aam = icmp eq i32 %.1.i, 1073741823          ; 2 uses
   %i.aan = shl nuw nsw i32 %.018.lcssa.i193199203.i, 1 ; 3 uses
   %i.aao = zext nneg i32 %.0.i322 to i64          ; 4 uses
-  %i.aap = zext i1 %not..i to i8
+  %i.aap = zext i1 %.not377 to i8
   %i.aaq = or disjoint i8 %i.aap, 14              ; 2 uses
   switch i32 %.1.i, label %bb.cv [
     i32 1073741823, label %bb.cr

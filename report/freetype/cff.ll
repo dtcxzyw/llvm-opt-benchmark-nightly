@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %.not168 = icmp eq i8 %6, 0                     ; 8 uses
+  %.not168 = icmp eq i8 %6, 0                     ; 5 uses
   br i1 %.not168, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -421,7 +421,8 @@ bb.ah:                                            ; preds = %bb.af, %._crit_edge
 
 bb.ai:                                            ; preds = %bb.ah
   %i.by = getelementptr inbounds nuw i8, ptr %3, i64 1400
-  %i.bz = select i1 %.not168, i32 4096, i32 12288
+  %.not168.not = icmp ne i8 %6, 0                 ; 3 uses
+  %i.bz = select i1 %.not168.not, i32 12288, i32 4096
   %i.ca = call fastcc i32 @cff_subfont_load(ptr noundef nonnull %i.d, ptr noundef nonnull %i.by, i32 noundef %.0160, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.bz, ptr noundef nonnull %3, ptr noundef %4) ; 2 uses
   store i32 %i.ca, ptr %i.a, align 4, !tbaa !67
   %.not185 = icmp eq i32 %i.ca, 0
@@ -446,9 +447,9 @@ bb.ak:                                            ; preds = %bb.aj
 bb.al:                                            ; preds = %bb.ak
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 1860 ; 3 uses
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !110
-  %9 = icmp eq i32 %i.ci, 65535
-  %or.cond5.not = and i1 %9, %.not168
-  br i1 %or.cond5.not, label %bb.av, label %bb.am
+  %9 = icmp ne i32 %i.ci, 65535
+  %or.cond5 = or i1 %.not168.not, %9
+  br i1 %or.cond5, label %bb.am, label %bb.av
 
 bb.am:                                            ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
@@ -533,7 +534,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
 
 .lr.ph212:                                        ; preds = %scalar.ph, %middle.block
   %i.de = getelementptr inbounds nuw i8, ptr %3, i64 2864
-  %i.df = select i1 %.not168, i32 4096, i32 16384
+  %i.df = select i1 %.not168.not, i32 16384, i32 4096
   br label %bb.as
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph

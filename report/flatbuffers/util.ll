@@ -202,11 +202,11 @@ define dso_local noundef zeroext i1 @_ZN11flatbuffers19SetGlobalTestLocaleEPKcPN
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
-  %i.b = tail call ptr @setlocale(i32 noundef 6, ptr noundef %0) #22 ; 4 uses
-  %.not = icmp ne ptr %i.b, null                  ; 2 uses
-  %.not9 = icmp ne ptr %1, null
-  %or.cond.not = and i1 %.not9, %.not
-  br i1 %or.cond.not, label %bb.b, label %bb.l
+  %i.b = tail call ptr @setlocale(i32 noundef 6, ptr noundef %0) #22 ; 5 uses
+  %.not.not = icmp eq ptr %i.b, null
+  %.not9 = icmp eq ptr %1, null
+  %or.cond = or i1 %.not9, %.not.not
+  br i1 %or.cond, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
@@ -338,7 +338,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.a
-  ret i1 %.not
+  %.not.not.not = icmp ne ptr %i.b, null
+  ret i1 %.not.not.not
 }
 
 ; Function Attrs: nounwind
@@ -349,11 +350,11 @@ define dso_local noundef zeroext i1 @_ZN11flatbuffers23ReadEnvironmentVariableEP
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
-  %i.b = tail call ptr @getenv(ptr noundef %0) #22 ; 4 uses
-  %.not = icmp ne ptr %i.b, null                  ; 2 uses
-  %.not9 = icmp ne ptr %1, null
-  %or.cond.not = and i1 %.not9, %.not
-  br i1 %or.cond.not, label %bb.b, label %bb.l
+  %i.b = tail call ptr @getenv(ptr noundef %0) #22 ; 5 uses
+  %.not.not = icmp eq ptr %i.b, null
+  %.not9 = icmp eq ptr %1, null
+  %or.cond = or i1 %.not9, %.not.not
+  br i1 %or.cond, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
@@ -485,7 +486,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.a
-  ret i1 %.not
+  %.not.not.not = icmp ne ptr %i.b, null
+  ret i1 %.not.not.not
 }
 
 ; Function Attrs: nofree nounwind memory(read)

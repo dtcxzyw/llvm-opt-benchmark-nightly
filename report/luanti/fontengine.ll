@@ -204,11 +204,11 @@ define dso_local noundef ptr @_ZN10FontEngine8initFontE8FontSpec(ptr noundef non
   %12 = alloca [2 x %"class.std::__cxx11::basic_string"], align 16 ; 23 uses
   %.sroa.0.0.extract.trunc = trunc i64 %1 to i32
   %.sroa.4.0.extract.shift = lshr i64 %1, 32
-  %.sroa.4.0.extract.trunc = trunc i64 %.sroa.4.0.extract.shift to i8 ; 2 uses
+  %.sroa.4.0.extract.trunc = trunc i64 %.sroa.4.0.extract.shift to i8 ; 4 uses
   %.sroa.12.0.extract.shift = lshr i64 %1, 40     ; 3 uses
   %.sroa.12.sroa.4.0.extract.shift402 = lshr i64 %1, 48 ; 3 uses
   %sum.shift = lshr i64 %1, 56                    ; 2 uses
-  %i.o = icmp eq i8 %.sroa.4.0.extract.trunc, 2   ; 6 uses
+  %i.o = icmp eq i8 %.sroa.4.0.extract.trunc, 2   ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
   store ptr %i.p, ptr %2, align 8, !tbaa !51
@@ -510,7 +510,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i15
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit158: ; preds = %bb.r, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i156
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   %i.df = trunc i64 %sum.shift to i1
-  %not. = xor i1 %i.o, true
+  %not. = icmp ne i8 %.sroa.4.0.extract.trunc, 2
   %i.dg = select i1 %not., i1 %i.df, i1 false
   br i1 %i.dg, label %bb.s, label %bb.ay
 
@@ -705,12 +705,11 @@ bb.af:                                            ; preds = %_ZNSt13unordered_ma
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !68
   %i.fl = load ptr, ptr %0, align 8, !tbaa !30
-  %.not418 = xor i1 %i.o, true
   %i.fm = load i16, ptr %i.m, align 2, !tbaa !167
   %i.fn = zext i16 %i.fm to i32
   %i.fo = load i16, ptr %i.n, align 2, !tbaa !167
   %i.fp = zext i16 %i.fo to i32
-  %i.fq = invoke noundef ptr @_ZN3gui10CGUITTFont12createTTFontEPNS_15IGUIEnvironmentEPNS_10SGUITTFaceEjbbjj(ptr noundef %i.fl, ptr noundef %i.fk, i32 noundef %.0390, i1 noundef zeroext true, i1 noundef zeroext %.not418, i32 noundef %i.fn, i32 noundef %i.fp)
+  %i.fq = invoke noundef ptr @_ZN3gui10CGUITTFont12createTTFontEPNS_15IGUIEnvironmentEPNS_10SGUITTFaceEjbbjj(ptr noundef %i.fl, ptr noundef %i.fk, i32 noundef %.0390, i1 noundef zeroext true, i1 noundef zeroext true, i32 noundef %i.fn, i32 noundef %i.fp)
           to label %.noexc185 unwind label %bb.aj, !inline_history !154 ; 4 uses
 
 .noexc185:                                        ; preds = %bb.af
@@ -1113,7 +1112,7 @@ bb.cl:                                            ; preds = %_ZN11StreamProxylsE
 
 bb.cm:                                            ; preds = %bb.cl
   %i.no = load ptr, ptr %0, align 8, !tbaa !30
-  %.not423 = xor i1 %i.o, true
+  %.not423 = icmp ne i8 %.sroa.4.0.extract.trunc, 2
   %i.np = load i16, ptr %i.m, align 2, !tbaa !167
   %i.nq = zext i16 %i.np to i32
   %i.nr = load i16, ptr %i.n, align 2, !tbaa !167

@@ -206,8 +206,8 @@ bb.dx:                                            ; preds = %bb.dw, %bb.dv, %bb.
   %i.rk = getelementptr inbounds nuw i8, ptr %4, i64 103
   %i.rl = load i8, ptr %i.rk, align 1, !tbaa !274
   %i.rm = icmp eq i8 %i.rl, 2
-  %i.rn = load i8, ptr %i.gu, align 4
-  %i.ro = icmp ne i8 %i.rn, 0                     ; 5 uses
+  %i.rn = load i8, ptr %i.gu, align 4             ; 2 uses
+  %i.ro = icmp ne i8 %i.rn, 0                     ; 3 uses
   %i.rp = select i1 %i.rm, i1 %i.ro, i1 false
   %i.rq = zext i1 %i.rp to i32
   %i.rr = load i8, ptr %i.dg, align 1, !tbaa !53  ; 3 uses
@@ -250,6 +250,7 @@ bb.ea:                                            ; preds = %bb.dz, %bb.dy, %bb.
   %i.sl = getelementptr inbounds nuw i8, ptr %4, i64 128
   %i.sm = getelementptr inbounds nuw i8, ptr %4, i64 136
   %i.sn = getelementptr inbounds nuw i8, ptr %4, i64 144
+  %.not = icmp eq i8 %i.rn, 0                     ; 2 uses
   %i.so = icmp eq i32 %.0263.i, 1
   %unroll_iter201 = and i64 %i.rz, 2147483646
   %i.sp = and i32 %.0263.i, 1
@@ -588,10 +589,10 @@ bb.ev:                                            ; preds = %.critedge314.i
   br i1 %i.ww, label %bb.ew, label %qrfLoadAlignment.exit.i
 
 bb.ew:                                            ; preds = %bb.ev
-  %i.wz = load i8, ptr %i.er, align 2, !tbaa !273
-  %i.xa = icmp ne i8 %i.wz, 2                     ; 2 uses
+  %i.wz = load i8, ptr %i.er, align 2, !tbaa !273 ; 2 uses
+  %i.xa = icmp ne i8 %i.wz, 2
   %brmerge.i = select i1 %i.xa, i1 true, i1 %i.si
-  %not..i = xor i1 %i.xa, true
+  %.not79 = icmp eq i8 %i.wz, 2
   br i1 %brmerge.i, label %qrfLoadAlignment.exit.i, label %.lr.ph.i336.i
 
 .lr.ph.i336.i:                                    ; preds = %bb.ew
@@ -646,7 +647,7 @@ bb.fc:                                            ; preds = %.sink.split.i.i, %b
   br i1 %exitcond.not.i337.i, label %qrfLoadAlignment.exit.i, label %bb.ex, !llvm.loop !6
 
 qrfLoadAlignment.exit.i:                          ; preds = %bb.fc, %bb.ew, %bb.ev
-  %i.xw = phi i1 [ false, %bb.ev ], [ %not..i, %bb.ew ], [ true, %bb.fc ] ; 4 uses
+  %i.xw = phi i1 [ false, %bb.ev ], [ %.not79, %bb.ew ], [ true, %bb.fc ] ; 4 uses
   %i.xx = load i8, ptr %i.dg, align 1, !tbaa !53
   switch i8 %i.xx, label %.loopexit.i9 [
     i8 19, label %bb.fd
@@ -673,7 +674,7 @@ bb.fg:                                            ; preds = %bb.ff
   br label %.loopexit.i9
 
 bb.fh:                                            ; preds = %bb.ff
-  br i1 %i.ro, label %bb.fi, label %.loopexit.i9
+  br i1 %.not, label %.loopexit.i9, label %bb.fi
 
 bb.fi:                                            ; preds = %bb.fh
   %i.ya = load ptr, ptr %i.ry, align 8, !tbaa !47
@@ -742,7 +743,7 @@ bb.fp:                                            ; preds = %qrfRTrim.exit342.i,
   br i1 %exitcond434.not.i, label %.loopexit.i9, label %.lr.ph408.i, !llvm.loop !248
 
 bb.fq:                                            ; preds = %bb.fl
-  br i1 %i.ro, label %bb.fr, label %.loopexit.i9
+  br i1 %.not, label %.loopexit.i9, label %bb.fr
 
 bb.fr:                                            ; preds = %bb.fq
   %i.yu = load ptr, ptr %i.ry, align 8, !tbaa !47
@@ -1016,14 +1017,15 @@ bb.gu:                                            ; preds = %bb.gf
   %i.acd = load i32, ptr %i.dy, align 8, !tbaa !279 ; 2 uses
   %i.ace = load ptr, ptr %i.dq, align 8, !tbaa !47
   %i.acf = call i32 @sqlite3_str_length(ptr noundef %i.ace) #20
-  %i.acg = load i32, ptr %i.dl, align 8, !tbaa !29 ; 2 uses
-  %i.ach = icmp ne i32 %i.acg, 0                  ; 2 uses
+  %i.acg = load i32, ptr %i.dl, align 8, !tbaa !29 ; 3 uses
+  %i.ach = icmp ne i32 %i.acg, 0
   %.not201.i = icmp ult i32 %i.acg, %i.acd
   %or.cond.i24 = select i1 %i.ach, i1 %.not201.i, i1 false
   br i1 %or.cond.i24, label %bb.hf, label %bb.gv
 
 bb.gv:                                            ; preds = %bb.gu
-  br i1 %i.ach, label %bb.gw, label %bb.gx
+  %.not80 = icmp eq i32 %i.acg, 0
+  br i1 %.not80, label %bb.gx, label %bb.gw
 
 bb.gw:                                            ; preds = %bb.gv
   %i.aci = load ptr, ptr %i.dq, align 8, !tbaa !47

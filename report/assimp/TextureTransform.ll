@@ -205,17 +205,18 @@ bb.aq:                                            ; preds = %.lr.ph676, %.crited
   %i.jn = getelementptr inbounds nuw [8 x i8], ptr %i.jm, i64 %indvars.iv720
   %i.jo = load ptr, ptr %i.jn, align 8            ; 2 uses
   %i.jp = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0545.0, i64 %indvars.iv720 ; 24 uses
-  %i.jq = getelementptr inbounds nuw i8, ptr %i.jo, i64 112 ; 4 uses
+  %i.jq = getelementptr inbounds nuw i8, ptr %i.jo, i64 112 ; 5 uses
   %i.jr = load <8 x ptr>, ptr %i.jq, align 8
-  %i.js = icmp ne <8 x ptr> %i.jr, splat (ptr null) ; 2 uses
+  %3 = load ptr, ptr %i.jq, align 8
+  %i.js = icmp ne <8 x ptr> %i.jr, splat (ptr null)
   %i.jt = bitcast <8 x i1> %i.js to i8
   %i.ju = call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.jt)
   %i.jv = zext nneg i8 %i.ju to i32               ; 2 uses
   %i.jw = load i32, ptr %i.e, align 4
   %i.jx = add i32 %i.jw, %i.jv
   store i32 %i.jx, ptr %i.e, align 4
-  %3 = extractelement <8 x i1> %i.js, i64 0
-  br i1 %3, label %bb.ar, label %.critedge
+  %.not.i.not = icmp eq ptr %3, null
+  br i1 %.not.i.not, label %.critedge, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   %i.jy = load ptr, ptr %i.jp, align 8            ; 4 uses

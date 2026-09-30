@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
   %i.c = getelementptr inbounds nuw [88 x i8], ptr @ecc_sets, i64 %i.b
   %i.d = load i32, ptr %i.c, align 8, !tbaa !27   ; 7 uses
-  %i.e = icmp ne ptr %1, null                     ; 2 uses
+  %i.e = icmp ne ptr %1, null
   %i.f = icmp eq ptr %2, null                     ; 2 uses
-  %i.g = icmp ne ptr %3, null                     ; 2 uses
+  %i.g = icmp ne ptr %3, null
   %i.h = and i1 %i.e, %i.g
   %or.cond3 = and i1 %i.f, %i.h
   br i1 %or.cond3, label %bb.c, label %bb.d
@@ -216,8 +216,9 @@ bb.c:                                             ; preds = %bb.b
   br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b
-  %.demorgan = and i1 %i.e, %i.g
-  %4 = xor i1 %.demorgan, true
+  %.not56 = icmp eq ptr %1, null
+  %.not57 = icmp eq ptr %3, null
+  %4 = or i1 %.not56, %.not57
   %or.cond7 = or i1 %i.f, %4
   br i1 %or.cond7, label %bb.k, label %bb.e
 

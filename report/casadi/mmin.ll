@@ -202,8 +202,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.t = tail call nsz <2 x double> @llvm.minnum.v2f64(<2 x double> %vec.phi9, <2 x double> %i.r) ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.u = fcmp uno <2 x double> %i.q, %i.r
-  %i.v = bitcast <2 x i1> %i.u to i2
-  %i.w = icmp ne i2 %i.v, 0                       ; 5 uses
+  %i.v = bitcast <2 x i1> %i.u to i2              ; 2 uses
+  %i.w = icmp ne i2 %i.v, 0                       ; 4 uses
   %i.x = icmp eq i64 %index.next, %n.vec
   %i.y = or i1 %i.w, %i.x
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !67
@@ -214,9 +214,10 @@ middle.block:                                     ; preds = %vector.body
   %i.ab = select i1 %i.w, i64 %index, i64 %n.vec
   %rdx.minmax = tail call nsz <2 x double> @llvm.minnum.v2f64(<2 x double> %i.z, <2 x double> %i.aa)
   %i.ac = tail call nsz double @llvm.vector.reduce.fmin.v2f64(<2 x double> %rdx.minmax) ; 2 uses
-  %cmp.n = icmp ne i64 %i.h, %n.vec
-  %.not11 = or i1 %cmp.n, %i.w
-  br i1 %.not11, label %.lr.ph.i.i.preheader12, label %_ZN6casadi11casadi_mminIdEET_PKS1_xx.exit
+  %cmp.n = icmp eq i64 %i.h, %n.vec
+  %5 = icmp eq i2 %i.v, 0
+  %6 = and i1 %cmp.n, %5
+  br i1 %6, label %_ZN6casadi11casadi_mminIdEET_PKS1_xx.exit, label %.lr.ph.i.i.preheader12
 
 .lr.ph.i.i.preheader12:                           ; preds = %.lr.ph.i.i.preheader, %middle.block
   %.08.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.ab, %middle.block ]
@@ -308,8 +309,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.t = tail call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %vec.phi9, <2 x double> %i.r) ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.u = fcmp uno <2 x double> %i.q, %i.r
-  %i.v = bitcast <2 x i1> %i.u to i2
-  %i.w = icmp ne i2 %i.v, 0                       ; 5 uses
+  %i.v = bitcast <2 x i1> %i.u to i2              ; 2 uses
+  %i.w = icmp ne i2 %i.v, 0                       ; 4 uses
   %i.x = icmp eq i64 %index.next, %n.vec
   %i.y = or i1 %i.w, %i.x
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !69
@@ -320,9 +321,10 @@ middle.block:                                     ; preds = %vector.body
   %i.ab = select i1 %i.w, i64 %index, i64 %n.vec
   %rdx.minmax = tail call nsz <2 x double> @llvm.maxnum.v2f64(<2 x double> %i.z, <2 x double> %i.aa)
   %i.ac = tail call nsz double @llvm.vector.reduce.fmax.v2f64(<2 x double> %rdx.minmax) ; 2 uses
-  %cmp.n = icmp ne i64 %i.h, %n.vec
-  %.not11 = or i1 %cmp.n, %i.w
-  br i1 %.not11, label %.lr.ph.i.i.preheader12, label %_ZN6casadi11casadi_mmaxIdEET_PKS1_xx.exit
+  %cmp.n = icmp eq i64 %i.h, %n.vec
+  %5 = icmp eq i2 %i.v, 0
+  %6 = and i1 %cmp.n, %5
+  br i1 %6, label %_ZN6casadi11casadi_mmaxIdEET_PKS1_xx.exit, label %.lr.ph.i.i.preheader12
 
 .lr.ph.i.i.preheader12:                           ; preds = %.lr.ph.i.i.preheader, %middle.block
   %.08.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.ab, %middle.block ]

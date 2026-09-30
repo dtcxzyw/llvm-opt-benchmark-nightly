@@ -205,8 +205,8 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !255    ; 5 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !209  ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !272  ; 4 uses
-  %.not.i = icmp ne ptr %i.d, null                ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !272  ; 5 uses
+  %.not.i = icmp ne ptr %i.d, null
   %i.e = icmp sgt i64 %i.b, 0                     ; 2 uses
   %or.cond.i = and i1 %i.e, %.not.i
   br i1 %or.cond.i, label %.lr.ph.i.preheader, label %_ZN6casadi11casadi_fillIdEEvPT_xS1_.exit
@@ -219,10 +219,10 @@ bb.a:
 _ZN6casadi11casadi_fillIdEEvPT_xS1_.exit:         ; preds = %.lr.ph.i.preheader, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !273
-  %.fr = freeze ptr %i.h                          ; 8 uses
+  %.fr = freeze ptr %i.h                          ; 11 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.j = load i64, ptr %i.i, align 8, !tbaa !279  ; 7 uses
-  %.not.i121 = icmp ne ptr %.fr, null             ; 5 uses
+  %.not.i121 = icmp ne ptr %.fr, null
   %i.k = icmp sgt i64 %i.j, 0                     ; 3 uses
   %or.cond.i122 = and i1 %.not.i121, %i.k
   br i1 %or.cond.i122, label %_ZN6casadi11casadi_fillIdEEvPT_xS1_.exit127.thread, label %_ZN6casadi11casadi_fillIdEEvPT_xS1_.exit127
@@ -244,6 +244,7 @@ _ZN6casadi11casadi_fillIdEEvPT_xS1_.exit127:      ; preds = %_ZN6casadi11casadi_
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %.not.i121.not = icmp eq ptr %.fr, null
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   br label %bb.b
 
@@ -253,7 +254,9 @@ _ZN6casadi11casadi_fillIdEEvPT_xS1_.exit127:      ; preds = %_ZN6casadi11casadi_
 .lr.ph136:                                        ; preds = %.preheader130
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !277
+  %.not.i121.not144 = icmp eq ptr %.fr, null      ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
+  %.not.i.not = icmp eq ptr %i.d, null            ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 3 uses
   br label %bb.m
 
@@ -318,7 +321,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  br i1 %.not.i121, label %bb.j, label %bb.k
+  br i1 %.not.i121.not, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.bc = load ptr, ptr %i.u, align 8, !tbaa !263
@@ -346,8 +349,9 @@ bb.l:                                             ; preds = %bb.f, %bb.k
 .lr.ph140:                                        ; preds = %.preheader
   %i.bj = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !280 ; 3 uses
+  %.not.i121.not147 = icmp eq ptr %.fr, null
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
-  br i1 %.not.i121, label %.lr.ph140.split.preheader, label %._crit_edge
+  br i1 %.not.i121.not147, label %._crit_edge, label %.lr.ph140.split.preheader
 
 .lr.ph140.split.preheader:                        ; preds = %.lr.ph140
   %xtraiter = and i64 %i.j, 1
@@ -366,10 +370,10 @@ bb.m:                                             ; preds = %.lr.ph136, %.thread
   br i1 %i.bp, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  br i1 %.not.i, label %.thread161, label %.thread
+  br i1 %.not.i.not, label %.thread, label %.thread161
 
 bb.o:                                             ; preds = %bb.m
-  br i1 %.not.i121, label %bb.p, label %bb.q
+  br i1 %.not.i121.not144, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bq = load ptr, ptr %i.x, align 8, !tbaa !263
@@ -415,7 +419,7 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   br i1 %i.cs, label %.thread128, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  br i1 %.not.i, label %.thread162, label %.thread128
+  br i1 %.not.i.not, label %.thread128, label %.thread162
 
 .thread162:                                       ; preds = %.thread161, %bb.r
   %i.ct = load ptr, ptr %i.x, align 8, !tbaa !263
@@ -431,7 +435,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %.thread161, %.thread, %bb.q
   %i.db = phi i64 [ %i.cr, %.thread ], [ %i.cb, %bb.q ], [ %i.cn, %.thread161 ]
-  br i1 %.not.i121, label %bb.t, label %.thread128
+  br i1 %.not.i121.not144, label %.thread128, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.dc = load ptr, ptr %i.x, align 8, !tbaa !263

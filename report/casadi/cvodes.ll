@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 912 ; 16 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !66   ; 13 uses
   %i.c = icmp eq i32 %i.b, 2
-  %i.d = icmp ne i32 %1, 1                        ; 2 uses
+  %i.d = icmp ne i32 %1, 1
   %or.cond = and i1 %i.d, %i.c
   br i1 %or.cond, label %cvAdjustAdams.exit, label %bb.b
 
@@ -218,7 +218,8 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %i.d, label %.preheader108.i, label %bb.d
+  %.not = icmp eq i32 %1, 1
+  br i1 %.not, label %bb.d, label %.preheader108.i
 
 .preheader108.i:                                  ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1368
@@ -621,7 +622,7 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph117.i.
   %i.qv = icmp slt i64 %indvars.iv.next151.i.i, %i.qu
   br i1 %i.qv, label %.preheader.i8.i, label %cvAdjustAdams.exit, !llvm.loop !442
 
-cvAdjustAdams.exit:                               ; preds = %._crit_edge124.i.i, %._crit_edge173.i.i, %bb.g, %._crit_edge130.i, %.preheader.lr.ph.i.i, %.preheader95.i.i, %.loopexit98.i.i, %.preheader.i.i, %.loopexit138.i.i, %bb.m, %.preheader100.lr.ph.i, %.preheader101.i, %.loopexit104.i, %.preheader.i, %bb.f, %bb.a, %bb.b
+cvAdjustAdams.exit:                               ; preds = %._crit_edge124.i.i, %._crit_edge173.i.i, %._crit_edge130.i, %bb.g, %.preheader.lr.ph.i.i, %.preheader95.i.i, %.loopexit98.i.i, %.preheader.i.i, %.loopexit138.i.i, %bb.m, %.preheader100.lr.ph.i, %.preheader101.i, %.loopexit104.i, %.preheader.i, %bb.f, %bb.a, %bb.b
   ret void
 }
 

@@ -103,7 +103,7 @@ bb.a:
   %i.b = tail call ptr @ZL_Encoder_getOperationContext(ptr noundef %0) #8
   store ptr %i.b, ptr %3, align 8, !tbaa !17
   %i.c = load ptr, ptr %1, align 8, !tbaa !37     ; 4 uses
-  %i.d = tail call i64 @ZL_Data_numElts(ptr noundef %i.c) #7 ; 14 uses
+  %i.d = tail call i64 @ZL_Data_numElts(ptr noundef %i.c) #7 ; 15 uses
   %i.e = tail call i64 @ZL_Encoder_getLocalIntParam(ptr noundef %0, i32 noundef 47) #7 ; 2 uses
   %.sroa.3.0.extract.shift = lshr i64 %i.e, 32    ; 2 uses
   %.sroa.3.0.extract.trunc = trunc nuw i64 %.sroa.3.0.extract.shift to i32 ; 2 uses
@@ -120,7 +120,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.q
 
 bb.c:                                             ; preds = %bb.a
-  %i.l = icmp ne i64 %i.d, 0                      ; 4 uses
+  %i.l = icmp ne i64 %i.d, 0                      ; 2 uses
   %i.m = icmp eq i64 %i.f, 0                      ; 2 uses
   %i.n = and i1 %i.l, %i.m
   br i1 %i.n, label %bb.d, label %bb.e, !prof !18
@@ -152,7 +152,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.y = call ptr @ZL_Data_rStringLens(ptr noundef %i.c) #7 ; 3 uses
-  br i1 %i.l, label %.lr.ph.preheader, label %._crit_edge.thread
+  %.not270 = icmp eq i64 %i.d, 0                  ; 2 uses
+  br i1 %.not270, label %._crit_edge.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.f
   %xtraiter = and i64 %i.d, 3                     ; 3 uses
@@ -249,7 +250,7 @@ bb.g:                                             ; preds = %._crit_edge
 
 bb.h:                                             ; preds = %._crit_edge.thread
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.bj, i8 0, i64 %i.bi, i1 false)
-  br i1 %i.l, label %.lr.ph251.preheader, label %._crit_edge252
+  br i1 %.not270, label %._crit_edge252, label %.lr.ph251.preheader
 
 .lr.ph251.preheader:                              ; preds = %bb.h
   %xtraiter300 = and i64 %i.d, 1

@@ -31,7 +31,7 @@ bb.a:
   %i.h = alloca [64 x i8], align 16               ; 6 uses
   %i.i = icmp slt i32 %6, 0
   %i.j = load i32, ptr @_ZN7meshoptL20gEncodeVertexVersionE, align 4
-  %i.k = select i1 %i.i, i32 %i.j, i32 %6         ; 2 uses
+  %i.k = select i1 %i.i, i32 %i.j, i32 %6         ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.m = ptrtoint ptr %i.l to i64                 ; 6 uses
   %i.n = ptrtoint ptr %0 to i64
@@ -66,7 +66,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.z = select i1 %i.y, i64 %i.x, i64 256        ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.h, i8 0, i64 64, i1 false)
-  %i.aa = icmp ne i32 %i.k, 0                     ; 7 uses
+  %i.aa = icmp ne i32 %i.k, 0                     ; 2 uses
   %i.ab = icmp sgt i32 %5, 1
   %i.ac = icmp ugt i64 %3, 1
   %i.ad = and i1 %i.ac, %i.ab
@@ -469,8 +469,9 @@ _ZN7meshoptL15estimateChannelEPKhmmmmmii.exit:    ; preds = %.preheader.i.1, %.p
   br i1 %i.vr, label %bb.e, label %.loopexit145, !llvm.loop !25
 
 .loopexit145:                                     ; preds = %_ZN7meshoptL15estimateChannelEPKhmmmmmii.exit, %bb.d
+  %.not202 = icmp eq i32 %i.k, 0                  ; 5 uses
   %i.vs = lshr i64 %4, 2                          ; 3 uses
-  %i.vt = select i1 %i.aa, i64 %i.vs, i64 0       ; 4 uses
+  %i.vt = select i1 %.not202, i64 0, i64 %i.vs    ; 4 uses
   %i.vu = icmp eq i32 %5, 0
   br label %bb.s
 
@@ -535,7 +536,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %.thread92.i, %.lr.ph.i107
   %.054120.i = phi i64 [ 0, %.lr.ph.i107 ], [ %i.awr, %.thread92.i ] ; 17 uses
   %.058119.i = phi ptr [ %i.wh, %.lr.ph.i107 ], [ %.26095.i, %.thread92.i ] ; 8 uses
-  br i1 %i.aa, label %bb.v, label %.thread.i
+  br i1 %.not202, label %.thread.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.ww = lshr i64 %.054120.i, 2
@@ -699,7 +700,7 @@ _ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134.loopexit.unr-lcssa: ; preds = 
   br label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134
 
 _ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134: ; preds = %.lr.ph.i.i.i128.epil.preheader, %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134.loopexit.unr-lcssa, %.thread.i
-  br i1 %i.aa, label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i109, label %.thread79.i
+  br i1 %.not202, label %.thread79.i, label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i109
 
 _ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i109.loopexit.unr-lcssa: ; preds = %.lr.ph.i21.i.i121
   br i1 %lcmp.mod393.not, label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i109, label %.lr.ph.i21.i.i121.epil.preheader
@@ -1102,7 +1103,7 @@ bb.aa:                                            ; preds = %.thread88.i
 .thread79.i:                                      ; preds = %bb.z, %.thread85.i, %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134
   %.081.i = phi i64 [ 1, %.thread85.i ], [ %i.alf, %bb.z ], [ 0, %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134 ]
   %i.alh = getelementptr inbounds nuw [4 x i8], ptr @_ZN7meshoptL7kBitsV1E, i64 %.081.i
-  %i.ali = select i1 %i.aa, ptr %i.alh, ptr @_ZN7meshoptL7kBitsV0E ; 7 uses
+  %i.ali = select i1 %.not202, ptr @_ZN7meshoptL7kBitsV0E, ptr %i.alh ; 7 uses
   %i.alj = ptrtoint ptr %.058119.i to i64
   %i.alk = sub i64 %i.m, %i.alj
   %i.all = icmp ult i64 %i.alk, %i.wl
@@ -1505,7 +1506,7 @@ _ZN7meshoptL17encodeVertexBlockEPhS0_PKhmmS0_S2_ii.exit: ; preds = %.thread92.i
 
 bb.au:                                            ; preds = %bb.s
   %i.aww = add i64 %i.vt, %4                      ; 3 uses
-  %i.awx = select i1 %i.aa, i64 24, i64 32        ; 2 uses
+  %i.awx = select i1 %.not202, i64 32, i64 24     ; 2 uses
   %i.awy = tail call i64 @llvm.umax.i64(i64 %i.aww, i64 %i.awx) ; 2 uses
   %i.awz = ptrtoint ptr %.093 to i64
   %i.axa = sub i64 %i.m, %i.awz
@@ -1908,7 +1909,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   %i.c = add i64 %3, 15                           ; 2 uses
-  %i.d = and i64 %i.c, -16                        ; 2 uses
+  %i.d = and i64 %i.c, -16                        ; 4 uses
   %i.e = icmp eq i32 %7, 0                        ; 4 uses
   %i.f = lshr i64 %4, 2
   %i.g = select i1 %i.e, i64 0, i64 %i.f          ; 2 uses
@@ -1927,7 +1928,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = lshr i64 %i.c, 4
   %i.n = add nuw nsw i64 %i.m, 3
   %i.o = lshr i64 %i.n, 2                         ; 2 uses
-  %.not28.i = icmp eq i64 %i.d, 0                 ; 2 uses
+  %.not28.i = icmp eq i64 %i.d, 0
   %.not.i107 = icmp eq i64 %3, 0                  ; 3 uses
   %i.p = shl i64 %3, 1                            ; 2 uses
   %i.q = mul i64 %3, 3
@@ -1936,6 +1937,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %3 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %3 ; 3 uses
   %i.v = add i64 %3, -1                           ; 6 uses
+  %not..not28.i = icmp ne i64 %i.d, 0
   %xtraiter = and i64 %3, 1
   %i.w = icmp eq i64 %i.v, 0
   %unroll_iter = and i64 %3, -2
@@ -2338,8 +2340,8 @@ bb.p:                                             ; preds = %.lr.ph.i
 
 _ZN7meshoptL16decodeBytesGroupEPKhPhi.exit.i:     ; preds = %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %.lr.ph.i
   %.0.i.i = phi ptr [ %i.oy, %bb.p ], [ %.02331.i, %bb.l ], [ %i.fd, %bb.m ], [ %i.ka, %bb.n ], [ %i.ox, %bb.o ], [ %.02331.i, %.lr.ph.i ] ; 4 uses
-  %i.oz = add nuw i64 %.02430.i, 16               ; 2 uses
-  %.not.i = icmp uge i64 %i.oz, %i.d              ; 2 uses
+  %i.oz = add nuw i64 %.02430.i, 16               ; 3 uses
+  %.not.i = icmp uge i64 %i.oz, %i.d
   %i.pa = ptrtoint ptr %.0.i.i to i64
   %i.pb = sub i64 %i.h, %i.pa
   %i.pc = icmp ult i64 %i.pb, 24
@@ -2347,14 +2349,15 @@ _ZN7meshoptL16decodeBytesGroupEPKhPhi.exit.i:     ; preds = %bb.p, %bb.o, %bb.n,
   br i1 %or.cond.i, label %bb.q, label %.lr.ph.i, !llvm.loop !48
 
 bb.q:                                             ; preds = %_ZN7meshoptL16decodeBytesGroupEPKhPhi.exit.i
-  %.not.not167 = icmp ne ptr %.0.i.i, null
-  %.not.not.not = select i1 %.not.i, i1 %.not.not167, i1 false
-  br i1 %.not.not.not, label %.thread, label %.critedge
+  %.not.not167 = icmp eq ptr %.0.i.i, null
+  %not..not.i = icmp ult i64 %i.oz, %i.d
+  %.not.not.not = select i1 %not..not.i, i1 true, i1 %.not.not167
+  br i1 %.not.not.not, label %.critedge, label %.thread
 
 .thread126:                                       ; preds = %bb.k
-  %.not130.not168 = icmp ne ptr %.189144, null
-  %.not130.not.not = select i1 %.not28.i, i1 %.not130.not168, i1 false
-  br i1 %.not130.not.not, label %.thread, label %.critedge
+  %.not130.not168 = icmp eq ptr %.189144, null
+  %.not130.not.not = select i1 %not..not28.i, i1 true, i1 %.not130.not168
+  br i1 %.not130.not.not, label %.critedge, label %.thread
 
 .thread:                                          ; preds = %bb.h, %bb.i, %.thread126, %bb.q
   %.391112 = phi ptr [ %i.ba, %.thread126 ], [ %.0.i.i, %bb.q ], [ %.189144, %bb.i ], [ %i.ap, %bb.h ] ; 3 uses

@@ -127,7 +127,7 @@ lex_next.exit40:                                  ; preds = %bb.e, %bb.f
   br label %thread-pre-split
 
 thread-pre-split:                                 ; preds = %lex_next.exit40, %lex_next.exit41
-  %i.ab = phi i32 [ %i.k, %lex_next.exit41 ], [ %i.aa, %lex_next.exit40 ] ; 2 uses
+  %i.ab = phi i32 [ %i.k, %lex_next.exit41 ], [ %i.aa, %lex_next.exit40 ] ; 3 uses
   %i.ac = icmp eq i32 %i.ab, 35
   br i1 %i.ac, label %.preheader, label %lex_newline.exit
 
@@ -222,10 +222,10 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 lex_newline.exit:                                 ; preds = %thread-pre-split
-  %i.bg = icmp ne i32 %i.ab, 27                   ; 2 uses
+  %i.bg = icmp ne i32 %i.ab, 27
   %brmerge = or i1 %i.m, %i.bg
-  %not. = xor i1 %i.bg, true
-  %.mux = zext i1 %not. to i32
+  %.not49 = icmp eq i32 %i.ab, 27
+  %.mux = zext i1 %.not49 to i32
   br i1 %brmerge, label %.loopexit, label %.thread
 
 lex_newline.exit.thread:                          ; preds = %bb.o
@@ -628,10 +628,10 @@ lex_savenext.exit.i:                              ; preds = %bb.aj, %bb.ai
 lex_skipeq.exit:                                  ; preds = %lex_savenext.exit.i, %lex_savenext.exit.i.peel
   %.lcssa223 = phi i32 [ %i.dy, %lex_savenext.exit.i.peel ], [ %i.eq, %lex_savenext.exit.i ] ; 2 uses
   %.0.i150.lcssa = phi i32 [ 0, %lex_savenext.exit.i.peel ], [ %.0.i150, %lex_savenext.exit.i ]
-  %.not163 = icmp eq i32 %.lcssa223, 91
   %i.ev = load ptr, ptr %i.b, align 8, !tbaa !44
   store ptr %i.ev, ptr %i.a, align 8, !tbaa !46
-  br i1 %.not163, label %bb.ak, label %.thread.preheader
+  %2 = icmp eq i32 %.lcssa223, 91
+  br i1 %2, label %bb.ak, label %.thread.preheader
 
 bb.ak:                                            ; preds = %lex_skipeq.exit
   tail call fastcc void @lex_longstring(ptr noundef nonnull %0, ptr noundef null, i32 noundef %.0.i150.lcssa)
@@ -757,12 +757,13 @@ lex_savenext.exit.i154:                           ; preds = %bb.at, %bb.as
   br i1 %i.gr, label %.peel.next244, label %lex_skipeq.exit155, !llvm.loop !69
 
 lex_skipeq.exit155:                               ; preds = %lex_savenext.exit.i154, %lex_savenext.exit.i154.peel
-  %.lcssa = phi i32 [ %i.fw, %lex_savenext.exit.i154.peel ], [ %i.go, %lex_savenext.exit.i154 ]
+  %.lcssa = phi i32 [ %i.fw, %lex_savenext.exit.i154.peel ], [ %i.go, %lex_savenext.exit.i154 ] ; 2 uses
   %.0.i151.lcssa = phi i32 [ 0, %lex_savenext.exit.i154.peel ], [ %.0.i151, %lex_savenext.exit.i154 ]
-  %i.gt = icmp ne i32 %.lcssa, 91                 ; 2 uses
+  %i.gt = icmp ne i32 %.lcssa, 91
   %i.gu = sext i1 %i.gt to i32
   %i.gv = xor i32 %.0.i151.lcssa, %i.gu           ; 2 uses
-  br i1 %i.gt, label %bb.av, label %bb.au
+  %.not245 = icmp eq i32 %.lcssa, 91
+  br i1 %.not245, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %lex_skipeq.exit155
   tail call fastcc void @lex_longstring(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %i.gv)

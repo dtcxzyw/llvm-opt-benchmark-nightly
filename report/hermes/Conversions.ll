@@ -132,9 +132,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.q = ptrtoint ptr %i.p to i64                 ; 3 uses
   %i.r = ptrtoint ptr %i.m to i64                 ; 8 uses
   %i.s = sub i64 %i.q, %i.r                       ; 13 uses
-  %i.t = trunc i64 %i.s to i32                    ; 7 uses
-  %i.u = load i32, ptr %i.a, align 4, !tbaa !6    ; 12 uses
-  %i.v = icmp sge i32 %i.u, %i.t                  ; 2 uses
+  %i.t = trunc i64 %i.s to i32                    ; 8 uses
+  %i.u = load i32, ptr %i.a, align 4, !tbaa !6    ; 13 uses
+  %i.v = icmp sge i32 %i.u, %i.t
   %i.w = icmp slt i32 %i.u, 22
   %or.cond = and i1 %i.w, %i.v
   br i1 %or.cond, label %.preheader94, label %bb.l
@@ -377,7 +377,8 @@ middle.block286:                                  ; preds = %vector.body280.1, %
   %.3122.lcssa290 = ptrtoaddr ptr %.3122.lcssa to i64
   store i8 46, ptr %.lcssa195, align 1, !tbaa !32
   %.4127 = getelementptr inbounds nuw i8, ptr %.3122.lcssa, i64 2 ; 7 uses
-  br i1 %i.v, label %.loopexit, label %iter.check309
+  %.not181 = icmp slt i32 %i.u, %i.t
+  br i1 %.not181, label %iter.check309, label %.loopexit
 
 iter.check309:                                    ; preds = %._crit_edge125
   %i.cs = zext nneg i32 %i.u to i64               ; 6 uses

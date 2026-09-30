@@ -205,9 +205,10 @@ bb.i:                                             ; preds = %bb.aq, %bb.as
   br label %.thread65
 
 bb.j:                                             ; preds = %bb.h
-  %i.ad = load i64, ptr %i.j, align 8, !range !8, !noundef !5
-  %i.ae = icmp ne i64 %i.ad, -1                   ; 2 uses
-  br i1 %i.ae, label %bb.k, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs8frGy5WneL6_4fish8complete15CompletionEntryEEB11_.exit
+  %i.ad = load i64, ptr %i.j, align 8, !range !8, !noundef !5 ; 2 uses
+  %i.ae = icmp ne i64 %i.ad, -1
+  %.not84 = icmp eq i64 %i.ad, -1
+  br i1 %.not84, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs8frGy5WneL6_4fish8complete15CompletionEntryEEB11_.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs8frGy5WneL6_4fish8complete16CompleteEntryOptENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.j)
@@ -610,12 +611,12 @@ bb.y:                                             ; preds = %bb.u
 bb.z:                                             ; preds = %bb.y, %bb.w
   %.sroa.029.3.i.i.i.i = phi i32 [ %i.dq, %bb.w ], [ %spec.select.i.i.i.i.mux, %bb.y ]
   %i.dr = invoke noundef i32 @_RNvNtCs8frGy5WneL6_4fish5wutil7waccess(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %.sroa.01.0.i.i.i, i64 noundef %.sroa.3.0.i.i.i, i32 noundef %.sroa.029.3.i.i.i.i)
-          to label %.noexc59 unwind label %.loopexit
+          to label %.noexc59 unwind label %.loopexit ; 2 uses
 
 .noexc59:                                         ; preds = %bb.z
-  %.not75.i.i.i.i = icmp ne i32 %i.dr, -1         ; 2 uses
+  %.not75.i.i.i.i = icmp ne i32 %i.dr, -1
   %brmerge116 = select i1 %.not75.i.i.i.i, i1 true, i1 %.not76.i.i.i.i
-  %not..not75.i.i.i.i = xor i1 %.not75.i.i.i.i, true
+  %.not75.i.i.i.i.not = icmp eq i32 %i.dr, -1
   br i1 %brmerge116, label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCNvNtNtCs8frGy5WneL6_4fish8builtins4path20path_filter_maybe_is0INtB7_5FnMutTRRNtNtNtBU_6shared4misc10InputValueEE8call_mutBW_.exit.i, label %bb.aa
 
 bb.aa:                                            ; preds = %.noexc59, %bb.x
@@ -700,7 +701,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_
   br label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCNvNtNtCs8frGy5WneL6_4fish8builtins4path20path_filter_maybe_is0INtB7_5FnMutTRRNtNtNtBU_6shared4misc10InputValueEE8call_mutBW_.exit.i
 
 _RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCNvNtNtCs8frGy5WneL6_4fish8builtins4path20path_filter_maybe_is0INtB7_5FnMutTRRNtNtNtBU_6shared4misc10InputValueEE8call_mutBW_.exit.i: ; preds = %.noexc59, %bb.q, %bb.ae, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit.i, %bb.af, %bb.ad, %bb.ac, %bb.x, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit113.i.i.i.i, %bb.k
-  %.sroa.016.0.i.i.i.i.shrunk = phi i1 [ %or.cond90.i.i.i.i, %bb.af ], [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit113.i.i.i.i ], [ %not..not75.i.i.i.i, %.noexc59 ], [ false, %bb.ac ], [ false, %bb.ad ], [ %or.cond93.i.i.i.i, %bb.ae ], [ false, %bb.q ], [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit.i ], [ true, %bb.k ], [ true, %bb.x ]
+  %.sroa.016.0.i.i.i.i.shrunk = phi i1 [ %or.cond90.i.i.i.i, %bb.af ], [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit113.i.i.i.i ], [ %.not75.i.i.i.i.not, %.noexc59 ], [ false, %bb.ac ], [ false, %bb.ad ], [ %or.cond93.i.i.i.i, %bb.ae ], [ false, %bb.q ], [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit.i ], [ true, %bb.k ], [ true, %bb.x ]
   %.sroa.016.0.i.i.i.i = zext i1 %.sroa.016.0.i.i.i.i.shrunk to i8
   %.not.i = icmp eq i8 %i.bv, %.sroa.016.0.i.i.i.i
   br i1 %.not.i, label %.split, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared4misc10InputValueENtNtNtNtBb_4iter6traits8iterator8Iterator4findQNCNvNtBW_4path20path_filter_maybe_is0EBY_.exit

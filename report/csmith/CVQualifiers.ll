@@ -204,12 +204,13 @@ bb.o:                                             ; preds = %bb.af, %.critedge, 
   %i.aq = and i64 %.052, 63
   %i.ar = shl nuw i64 1, %i.aq
   %i.as = load i64, ptr %storemerge.i.i.i.i.i, align 8, !tbaa !35
-  %i.at = and i64 %i.as, %i.ar
-  %i.au = icmp ne i64 %i.at, 0                    ; 3 uses
+  %i.at = and i64 %i.as, %i.ar                    ; 2 uses
+  %i.au = icmp ne i64 %i.at, 0                    ; 2 uses
+  %.not71 = icmp eq i64 %i.at, 0
   %i.av = sub nuw i64 %i.p, %.052
-  %3 = icmp ult i64 %i.av, 3
-  %or.cond73.not = select i1 %i.au, i1 %3, i1 false
-  br i1 %or.cond73.not, label %bb.v, label %bb.p
+  %3 = icmp ugt i64 %i.av, 2
+  %or.cond73.not = select i1 %.not71, i1 true, i1 %3
+  br i1 %or.cond73.not, label %bb.p, label %bb.v
 
 bb.p:                                             ; preds = %.peel.next
   %i.aw = load ptr, ptr %i.b, align 8, !tbaa !30  ; 7 uses
@@ -612,12 +613,13 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   %i.x = and i64 %.048, 63
   %i.y = shl nuw i64 1, %i.x
   %i.z = load i64, ptr %storemerge.i.i.i.i.i, align 8, !tbaa !35
-  %i.aa = and i64 %i.z, %i.y
-  %i.ab = icmp ne i64 %i.aa, 0                    ; 3 uses
+  %i.aa = and i64 %i.z, %i.y                      ; 2 uses
+  %i.ab = icmp ne i64 %i.aa, 0                    ; 2 uses
+  %.not48 = icmp eq i64 %i.aa, 0
   %i.ac = sub nuw i64 %i.p, %.048
-  %3 = icmp ult i64 %i.ac, 3
-  %or.cond.not = and i1 %3, %i.ab
-  br i1 %or.cond.not, label %bb.l, label %bb.e
+  %3 = icmp ugt i64 %i.ac, 2
+  %or.cond = or i1 %3, %.not48
+  br i1 %or.cond, label %bb.e, label %bb.l
 
 bb.e:                                             ; preds = %.lr.ph
   %i.ad = load ptr, ptr %i.b, align 8, !tbaa !30  ; 7 uses

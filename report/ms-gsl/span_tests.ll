@@ -205,14 +205,14 @@ _ZNK3gsl7details13span_iteratorIcEdeEv.exit.us.i.i.i.i.i: ; preds = %.lr.ph.i.i.
   br i1 %.not.i1.us.i.i.i.i.i, label %.split23.us.i.i.i.i.i, label %_ZNK3gsl7details13span_iteratorIcEdeEv.exit2.us.i.i.i.i.i, !prof !36
 
 _ZNK3gsl7details13span_iteratorIcEdeEv.exit2.us.i.i.i.i.i: ; preds = %_ZNK3gsl7details13span_iteratorIcEdeEv.exit.us.i.i.i.i.i
-  %i.q = load i8, ptr %i.o, align 1
-  %i.r = load i8, ptr %i.p, align 1
-  %6 = icmp eq i8 %i.q, %i.r                      ; 2 uses
+  %i.q = load i8, ptr %i.o, align 1               ; 2 uses
+  %i.r = load i8, ptr %i.p, align 1               ; 2 uses
+  %.not = icmp ne i8 %i.q, %i.r
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 1 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 1
-  %.not.us.i.i.i.i.i = icmp ne ptr %i.s, %.sroa.317.0.copyload
-  %or.cond.not = select i1 %6, i1 %.not.us.i.i.i.i.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i.i.i.i.i, label %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit
+  %.not.us.i.i.i.i.i = icmp eq ptr %i.s, %.sroa.317.0.copyload
+  %or.cond.not = select i1 %.not, i1 true, i1 %.not.us.i.i.i.i.i
+  br i1 %or.cond.not, label %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit.loopexit73, label %.lr.ph.i.i.i.i.i
 
 .split19.us.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i
   tail call void @_ZN3gsl7details9terminateEv() #34
@@ -315,17 +315,17 @@ _ZNK3gsl7details13span_iteratorIcEdeEv.exit2.us.i.i: ; preds = %_ZNK3gsl7details
   %i.as = load ptr, ptr %i.ab, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 32
   %i.au = load ptr, ptr %i.at, align 8
-  %i.av = call noundef signext i8 %i.au(ptr noundef nonnull align 8 dereferenceable(570) %i.ab, i8 noundef signext %i.aq), !inline_history !385
+  %i.av = call noundef signext i8 %i.au(ptr noundef nonnull align 8 dereferenceable(570) %i.ab, i8 noundef signext %i.aq), !inline_history !385 ; 2 uses
   %i.aw = load ptr, ptr %i.ab, align 8
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
   %i.ay = load ptr, ptr %i.ax, align 8
-  %i.az = call noundef signext i8 %i.ay(ptr noundef nonnull align 8 dereferenceable(570) %i.ab, i8 noundef signext %i.ar), !inline_history !385
-  %7 = icmp eq i8 %i.av, %i.az                    ; 2 uses
+  %i.az = call noundef signext i8 %i.ay(ptr noundef nonnull align 8 dereferenceable(570) %i.ab, i8 noundef signext %i.ar), !inline_history !385 ; 2 uses
+  %.not70 = icmp ne i8 %i.av, %i.az
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ao, i64 1 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ap, i64 1
-  %.not.us.i.i = icmp ne ptr %i.ba, %.sroa.341.0.copyload
-  %or.cond72.not = select i1 %7, i1 %.not.us.i.i, i1 false
-  br i1 %or.cond72.not, label %.lr.ph.i.i, label %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit
+  %.not.us.i.i = icmp eq ptr %i.ba, %.sroa.341.0.copyload
+  %or.cond72.not = select i1 %.not70, i1 true, i1 %.not.us.i.i
+  br i1 %or.cond72.not, label %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit.loopexit, label %.lr.ph.i.i
 
 .split20.us.i.i:                                  ; preds = %.lr.ph.i.i
   call void @_ZN3gsl7details9terminateEv() #34
@@ -342,8 +342,16 @@ bb.i:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32
   resume { ptr, i32 } %i.bc
 
-_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit: ; preds = %_ZNK3gsl7details13span_iteratorIcEdeEv.exit2.us.i.i.i.i.i, %_ZNK3gsl7details13span_iteratorIcEdeEv.exit2.us.i.i, %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit.lr.ph.i.i, %_ZNK3gsl7details13span_iteratorIcEmiIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEElRKNS1_IS6_EE.exit4.i, %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit.lr.ph.i.i.i.i.i, %_ZNK3gsl7details13span_iteratorIcEmiIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEElRKNS1_IS6_EE.exit2.i
-  %.0 = phi i1 [ true, %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit.lr.ph.i.i ], [ false, %_ZNK3gsl7details13span_iteratorIcEmiIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEElRKNS1_IS6_EE.exit2.i ], [ true, %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit.lr.ph.i.i.i.i.i ], [ %7, %_ZNK3gsl7details13span_iteratorIcEdeEv.exit2.us.i.i ], [ false, %_ZNK3gsl7details13span_iteratorIcEmiIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEElRKNS1_IS6_EE.exit4.i ], [ %6, %_ZNK3gsl7details13span_iteratorIcEdeEv.exit2.us.i.i.i.i.i ]
+_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit.loopexit: ; preds = %_ZNK3gsl7details13span_iteratorIcEdeEv.exit2.us.i.i
+  %6 = icmp eq i8 %i.av, %i.az
+  br label %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit
+
+_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit.loopexit73: ; preds = %_ZNK3gsl7details13span_iteratorIcEdeEv.exit2.us.i.i.i.i.i
+  %7 = icmp eq i8 %i.q, %i.r
+  br label %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit
+
+_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit: ; preds = %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit.loopexit73, %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit.loopexit, %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit.lr.ph.i.i, %_ZNK3gsl7details13span_iteratorIcEmiIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEElRKNS1_IS6_EE.exit4.i, %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit.lr.ph.i.i.i.i.i, %_ZNK3gsl7details13span_iteratorIcEmiIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEElRKNS1_IS6_EE.exit2.i
+  %.0 = phi i1 [ true, %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit.lr.ph.i.i ], [ false, %_ZNK3gsl7details13span_iteratorIcEmiIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEElRKNS1_IS6_EE.exit2.i ], [ true, %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit.lr.ph.i.i.i.i.i ], [ %6, %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit.loopexit ], [ false, %_ZNK3gsl7details13span_iteratorIcEmiIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEElRKNS1_IS6_EE.exit4.i ], [ %7, %_ZSt8__equal4IN3gsl7details13span_iteratorIcEES3_EbT_S4_T0_S5_.exit.loopexit73 ]
   ret i1 %.0
 }
 

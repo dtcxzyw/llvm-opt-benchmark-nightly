@@ -204,17 +204,21 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.b, %.lr.ph.i.i.i.i.i
   %.011.i.i.i.i.i = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i ], [ %.val3, %bb.b ] ; 2 uses
   %.0810.i.i.i.i.i = phi ptr [ %i.j, %.lr.ph.i.i.i.i.i ], [ %.val, %bb.b ] ; 2 uses
-  %.08.val.i.i.i.i.i = load ptr, ptr %.0810.i.i.i.i.i, align 8, !tbaa !156
-  %.0.val.i.i.i.i.i = load ptr, ptr %.011.i.i.i.i.i, align 8, !tbaa !156
-  %2 = icmp eq ptr %.08.val.i.i.i.i.i, %.0.val.i.i.i.i.i ; 2 uses
+  %.08.val.i.i.i.i.i = load ptr, ptr %.0810.i.i.i.i.i, align 8, !tbaa !156 ; 2 uses
+  %.0.val.i.i.i.i.i = load ptr, ptr %.011.i.i.i.i.i, align 8, !tbaa !156 ; 2 uses
+  %.not = icmp ne ptr %.08.val.i.i.i.i.i, %.0.val.i.i.i.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i, i64 16 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i, i64 16
-  %.not.i.i.i.i.i = icmp ne ptr %i.j, %.val2
-  %or.cond.not = select i1 %2, i1 %.not.i.i.i.i.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i.i.i.i.i, label %_ZSteqISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit, !llvm.loop !12
+  %.not.i.i.i.i.i = icmp eq ptr %i.j, %.val2
+  %or.cond.not = select i1 %.not, i1 true, i1 %.not.i.i.i.i.i
+  br i1 %or.cond.not, label %_ZSteqISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !12
 
-_ZSteqISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit: ; preds = %.lr.ph.i.i.i.i.i, %bb.a, %bb.b
-  %i.l = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ %2, %.lr.ph.i.i.i.i.i ]
+_ZSteqISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit.loopexit: ; preds = %.lr.ph.i.i.i.i.i
+  %2 = icmp eq ptr %.08.val.i.i.i.i.i, %.0.val.i.i.i.i.i
+  br label %_ZSteqISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit
+
+_ZSteqISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit: ; preds = %_ZSteqISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit.loopexit, %bb.a, %bb.b
+  %i.l = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ %2, %_ZSteqISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EEbRKSt6vectorIT_T0_ESB_.exit.loopexit ]
   ret i1 %i.l
 }
 

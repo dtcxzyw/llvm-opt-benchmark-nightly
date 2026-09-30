@@ -205,11 +205,13 @@ bb.e:                                             ; preds = %bb.b
   br i1 %i.fj, label %.lr.ph317, label %.thread373
 
 ._crit_edge318:                                   ; preds = %bb.w, %bb.q, %bb.k
-  %.lcssa392 = phi i1 [ %6, %bb.k ], [ %10, %bb.q ], [ %12, %bb.w ] ; 2 uses
-  %.lcssa391 = phi i1 [ %narrow, %bb.k ], [ %i.hr, %bb.q ], [ %i.ja, %bb.w ] ; 2 uses
-  %.lcssa = phi i1 [ %5, %bb.k ], [ %8, %bb.q ], [ %11, %bb.w ] ; 2 uses
-  %.not = xor i1 %.lcssa, true                    ; 2 uses
-  %or.cond = select i1 %.not, i1 true, i1 %.lcssa392
+  %.lcssa396 = phi i32 [ %8, %bb.k ], [ %i.hl, %bb.q ], [ %i.iu, %bb.w ] ; 2 uses
+  %.lcssa392 = phi i1 [ %narrow, %bb.k ], [ %i.hr, %bb.q ], [ %i.ja, %bb.w ] ; 2 uses
+  %.lcssa393 = phi i32 [ %6, %bb.k ], [ %i.hc, %bb.q ], [ %i.il, %bb.w ] ; 2 uses
+  %.lcssa = icmp ne i32 %.lcssa393, 0
+  %.lcssa395 = icmp ne i32 %.lcssa396, 0
+  %.not = icmp eq i32 %.lcssa393, 0               ; 2 uses
+  %or.cond = select i1 %.not, i1 true, i1 %.lcssa395
   br i1 %or.cond, label %bb.x, label %.thread373
 
 .lr.ph317:                                        ; preds = %.preheader
@@ -235,10 +237,11 @@ bb.g:                                             ; preds = %bb.f
   %i.fv = icmp eq i8 %i.fq, %i.eu
   %i.fw = icmp eq i8 %i.fm, %i.es
   %i.fx = and i1 %i.fw, %i.fv
+  %5 = zext i1 %i.fx to i32
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %.lr.ph317, %bb.g
-  %5 = phi i1 [ true, %bb.f ], [ true, %.lr.ph317 ], [ %i.fx, %bb.g ] ; 2 uses
+  %6 = phi i32 [ 1, %bb.f ], [ 1, %.lr.ph317 ], [ %5, %bb.g ] ; 2 uses
   %i.fy = icmp eq i8 %i.fm, %i.ew                 ; 2 uses
   %i.fz = icmp eq i8 %i.fo, %i.eu
   %or.cond285 = select i1 %i.fy, i1 %i.fz, i1 false
@@ -253,10 +256,11 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.gc = icmp eq i8 %i.fq, %i.ew
   %i.gd = and i1 %i.fr, %i.gc
+  %7 = zext i1 %i.gd to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.h, %bb.j
-  %6 = phi i1 [ true, %bb.i ], [ true, %bb.h ], [ %i.gd, %bb.j ] ; 2 uses
+  %8 = phi i32 [ 1, %bb.i ], [ 1, %bb.h ], [ %7, %bb.j ] ; 2 uses
   %i.ge = icmp eq i8 %i.fm, %i.es
   %i.gf = icmp eq i8 %i.fo, %i.ew
   %or.cond287 = select i1 %i.ge, i1 %i.gf, i1 false
@@ -300,9 +304,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %.lr.ph317.1
   %i.hb = phi i32 [ 1, %bb.l ], [ 1, %.lr.ph317.1 ], [ %i.ha, %bb.m ]
-  %7 = zext i1 %5 to i32
-  %i.hc = or i32 %i.hb, %7                        ; 2 uses
-  %8 = icmp ne i32 %i.hc, 0
+  %i.hc = or i32 %i.hb, %6                        ; 2 uses
   %i.hd = icmp eq i8 %i.go, %i.ew                 ; 2 uses
   %i.he = icmp eq i8 %i.gq, %i.eu
   %or.cond285.1 = select i1 %i.hd, i1 %i.he, i1 false
@@ -322,9 +324,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %i.hk = phi i32 [ 1, %bb.o ], [ 1, %bb.n ], [ %i.hj, %bb.p ]
-  %9 = zext i1 %6 to i32
-  %i.hl = or i32 %i.hk, %9                        ; 2 uses
-  %10 = icmp ne i32 %i.hl, 0
+  %i.hl = or i32 %i.hk, %8                        ; 2 uses
   %i.hm = icmp eq i8 %i.go, %i.es
   %i.hn = icmp eq i8 %i.gq, %i.ew
   %or.cond287.1 = select i1 %i.hm, i1 %i.hn, i1 false
@@ -370,7 +370,6 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.r, %.lr.ph317.2
   %i.ik = phi i32 [ 1, %bb.r ], [ 1, %.lr.ph317.2 ], [ %i.ij, %bb.s ]
   %i.il = or i32 %i.ik, %i.hc
-  %11 = icmp ne i32 %i.il, 0
   %i.im = icmp eq i8 %i.hx, %i.ew                 ; 2 uses
   %i.in = icmp eq i8 %i.hz, %i.eu
   %or.cond285.2 = select i1 %i.im, i1 %i.in, i1 false
@@ -391,7 +390,6 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
   %i.it = phi i32 [ 1, %bb.u ], [ 1, %bb.t ], [ %i.is, %bb.v ]
   %i.iu = or i32 %i.it, %i.hl
-  %12 = icmp ne i32 %i.iu, 0
   %i.iv = icmp eq i8 %i.hx, %i.es
   %i.iw = icmp eq i8 %i.hz, %i.ew
   %or.cond287.2 = select i1 %i.iv, i1 %i.iw, i1 false
@@ -405,13 +403,13 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
   br label %._crit_edge318
 
 bb.x:                                             ; preds = %._crit_edge318
-  %or.cond6 = select i1 %.not, i1 true, i1 %.lcssa391
+  %or.cond6 = select i1 %.not, i1 true, i1 %.lcssa392
   br i1 %or.cond6, label %bb.y, label %.thread373
 
 bb.y:                                             ; preds = %bb.x
-  %.0244.not = xor i1 %.lcssa392, true
+  %.0244.not = icmp eq i32 %.lcssa396, 0
   %or.cond9.not = select i1 %.lcssa, i1 true, i1 %.0244.not
-  %or.cond11 = select i1 %or.cond9.not, i1 true, i1 %.lcssa391
+  %or.cond11 = select i1 %or.cond9.not, i1 true, i1 %.lcssa392
   br i1 %or.cond11, label %.thread373, label %bb.z
 
 bb.z:                                             ; preds = %bb.y

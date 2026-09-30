@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/crow/original/example_session?download=true
-inline.NumInlined: 13210
+inline.NumInlined: 13211
 inline.NumDeleted: 5212
 loop-unroll.NumCompletelyUnrolled: 29
 loop-unroll.NumRuntimeUnrolled: 4
@@ -205,19 +205,23 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 %.0813.i.i.i
   %i.l = load i8, ptr %i.k, align 1, !tbaa !102
   %i.m = sext i8 %i.l to i32
-  %i.n = tail call i32 @toupper(i32 noundef %i.m) #46
+  %i.n = tail call i32 @toupper(i32 noundef %i.m) #46 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 %.0813.i.i.i
   %i.p = load i8, ptr %i.o, align 1, !tbaa !102
   %i.q = sext i8 %i.p to i32
-  %i.r = tail call i32 @toupper(i32 noundef %i.q) #46
-  %.not10.i.i.i = icmp eq i32 %i.n, %i.r          ; 2 uses
+  %i.r = tail call i32 @toupper(i32 noundef %i.q) #46 ; 2 uses
+  %.not10.i.i.i.not = icmp ne i32 %i.n, %i.r
   %i.s = add nuw i64 %.0813.i.i.i, 1              ; 2 uses
-  %exitcond.not.i.i.i = icmp ne i64 %i.s, %i.f
-  %or.cond.not = select i1 %.not10.i.i.i, i1 %exitcond.not.i.i.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i.i.i, label %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_S6_ENS_10_Select1stEN4crow9ci_key_eqENSB_7ci_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb0EEEE13_M_key_equalsERS8_RKNS_16_Hash_node_valueIS9_Lb1EEE.exit, !llvm.loop !4
+  %exitcond.not.i.i.i = icmp eq i64 %i.s, %i.f
+  %or.cond.not = select i1 %.not10.i.i.i.not, i1 true, i1 %exitcond.not.i.i.i
+  br i1 %or.cond.not, label %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_S6_ENS_10_Select1stEN4crow9ci_key_eqENSB_7ci_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb0EEEE13_M_key_equalsERS8_RKNS_16_Hash_node_valueIS9_Lb1EEE.exit.loopexit, label %.lr.ph.i.i.i, !llvm.loop !4
 
-_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_S6_ENS_10_Select1stEN4crow9ci_key_eqENSB_7ci_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb0EEEE13_M_key_equalsERS8_RKNS_16_Hash_node_valueIS9_Lb1EEE.exit: ; preds = %.lr.ph.i.i.i, %.preheader.i.i.i, %bb.b, %bb.a
-  %i.t = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %.preheader.i.i.i ], [ %.not10.i.i.i, %.lr.ph.i.i.i ]
+_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_S6_ENS_10_Select1stEN4crow9ci_key_eqENSB_7ci_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb0EEEE13_M_key_equalsERS8_RKNS_16_Hash_node_valueIS9_Lb1EEE.exit.loopexit: ; preds = %.lr.ph.i.i.i
+  %.not10.i.i.i = icmp eq i32 %i.n, %i.r
+  br label %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_S6_ENS_10_Select1stEN4crow9ci_key_eqENSB_7ci_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb0EEEE13_M_key_equalsERS8_RKNS_16_Hash_node_valueIS9_Lb1EEE.exit
+
+_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_S6_ENS_10_Select1stEN4crow9ci_key_eqENSB_7ci_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb0EEEE13_M_key_equalsERS8_RKNS_16_Hash_node_valueIS9_Lb1EEE.exit: ; preds = %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_S6_ENS_10_Select1stEN4crow9ci_key_eqENSB_7ci_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb0EEEE13_M_key_equalsERS8_RKNS_16_Hash_node_valueIS9_Lb1EEE.exit.loopexit, %.preheader.i.i.i, %bb.b, %bb.a
+  %i.t = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %.preheader.i.i.i ], [ %.not10.i.i.i, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_S6_ENS_10_Select1stEN4crow9ci_key_eqENSB_7ci_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb0EEEE13_M_key_equalsERS8_RKNS_16_Hash_node_valueIS9_Lb1EEE.exit.loopexit ]
   ret i1 %i.t
 }
 
@@ -620,15 +624,15 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4asio6detail9schedulerE, i64 16), ptr %0, align 8, !tbaa !284
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.e = icmp eq i32 %2, 1
-  %i.f = and i32 %2, -65535
-  %.not = icmp eq i32 %i.f, -1525678080           ; 2 uses
+  %i.f = and i32 %2, -65535                       ; 2 uses
+  %.not = icmp eq i32 %i.f, -1525678080
   %i.g = and i32 %2, -65532
   %.not15 = icmp eq i32 %i.g, -1525678080
   %i.h = or i1 %i.e, %.not15
   %narrow = or i1 %i.h, %.not
   %i.i = zext i1 %narrow to i8
   store i8 %i.i, ptr %i.d, align 8, !tbaa !443
-  %.not.not = xor i1 %.not, true
+  %.not.not = icmp ne i32 %i.f, -1525678080
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   tail call void @_ZN4asio6detail11posix_mutexC2Ev(ptr noundef nonnull align 8 dereferenceable(40) %i.j)
   %i.k = zext i1 %.not.not to i8
@@ -1031,7 +1035,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN4asio6d
   br i1 %i.s, label %bb.ap, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.t = load ptr, ptr %i.r, align 8, !tbaa !416  ; 2 uses
+  %i.t = load ptr, ptr %i.r, align 8, !tbaa !416  ; 3 uses
   store ptr %i.t, ptr %i.d, align 8, !tbaa !430
   %i.u = icmp eq ptr %i.t, null                   ; 2 uses
   %.not = icmp eq ptr %i.r, %i.f                  ; 2 uses
@@ -1046,7 +1050,9 @@ _ZN4asio6detail8op_queueINS0_19scheduler_operationEE3popEv.exit.thread: ; preds 
   br i1 %.not, label %bb.e, label %bb.t
 
 bb.d:                                             ; preds = %_ZN4asio6detail8op_queueINS0_19scheduler_operationEE3popEv.exit
-  store i8 0, ptr %i.g, align 8, !tbaa !452
+  %.not41 = icmp ne ptr %i.t, null
+  %8 = zext i1 %.not41 to i8
+  store i8 %8, ptr %i.g, align 8, !tbaa !452
   br label %bb.i
 
 bb.e:                                             ; preds = %_ZN4asio6detail8op_queueINS0_19scheduler_operationEE3popEv.exit.thread
@@ -1449,7 +1455,7 @@ bb.ed:                                            ; preds = %_ZNSt6vectorImSaImE
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4crow6Router9get_errorB5cxx11ERKNS_21routing_handle_resultE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(3656) %1, ptr noundef nonnull align 8 dereferenceable(137) %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::vector.36", align 8    ; 10 uses
+  %3 = alloca %"class.std::vector.36", align 8    ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !97
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1467,7 +1473,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !610  ; 2 uses
   %i.h = icmp eq ptr %i.e, %i.g
-  br i1 %i.h, label %.critedge.a, label %bb.c
+  br i1 %i.h, label %.critedge..critedge.thread_crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = ptrtoint ptr %i.g to i64
@@ -1476,12 +1482,12 @@ bb.c:                                             ; preds = %bb.b
   %i.l = ashr exact i64 %i.k, 3
   %.0818 = add nsw i64 %i.l, -1                   ; 2 uses
   %.not.not19 = icmp eq i64 %.0818, 0
-  br i1 %.not.not19, label %.critedge.a, label %.lr.ph
+  br i1 %.not.not19, label %.critedge..critedge.thread_crit_edge, label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
   %.08 = add i64 %.0820, -1                       ; 2 uses
   %.not.not = icmp eq i64 %.08, 0
-  br i1 %.not.not, label %.critedge.a, label %.lr.ph, !llvm.loop !2251
+  br i1 %.not.not, label %.critedge..critedge.thread_crit_edge, label %.lr.ph, !llvm.loop !2251
 
 bb.e:                                             ; preds = %bb.a
   %i.m = landingpad { ptr, i32 }
@@ -1521,26 +1527,33 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 136
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !125
   %.not.i.i.i.i.not = icmp eq ptr %i.aa, null
-  br i1 %.not.i.i.i.i.not, label %bb.d, label %.critedge.thread, !llvm.loop !2251
+  br i1 %.not.i.i.i.i.not, label %bb.d, label %.critedge.a, !llvm.loop !2251
 
-.critedge.a:                                      ; preds = %bb.d, %bb.c, %bb.b
-  %.not.i.i.i11 = icmp eq ptr %i.e, null
-  br i1 %.not.i.i.i11, label %_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit12, label %.critedge..critedge.thread_crit_edge
+.critedge.a:                                      ; preds = %.lr.ph
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %5 = load ptr, ptr %4, align 8, !tbaa !322
+  %6 = ptrtoint ptr %5 to i64
+  %7 = sub i64 %6, %i.j
+  br label %_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit15.sink.split
 
-.critedge..critedge.thread_crit_edge:             ; preds = %.critedge.a
-  %.pre = ptrtoint ptr %i.e to i64
-  br label %.critedge.thread
+.critedge..critedge.thread_crit_edge:             ; preds = %bb.d, %bb.c, %bb.b
+  %.not.i.i.i14 = icmp eq ptr %i.e, null
+  br i1 %.not.i.i.i14, label %_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit12, label %.critedge.thread
 
-.critedge.thread:                                 ; preds = %.lr.ph, %.critedge..critedge.thread_crit_edge
-  %.pre-phi = phi i64 [ %.pre, %.critedge..critedge.thread_crit_edge ], [ %i.j, %.lr.ph ]
+.critedge.thread:                                 ; preds = %.critedge..critedge.thread_crit_edge
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !322
   %i.ad = ptrtoint ptr %i.ac to i64
-  %4 = sub i64 %i.ad, %.pre-phi
-  call void @_ZdlPvm(ptr noundef nonnull %i.e, i64 noundef %4) #42
+  %8 = ptrtoint ptr %i.e to i64
+  %9 = sub i64 %i.ad, %8
+  br label %_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit15.sink.split
+
+_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit15.sink.split: ; preds = %.critedge.a, %.critedge.thread
+  %.sink = phi i64 [ %9, %.critedge.thread ], [ %7, %.critedge.a ]
+  call void @_ZdlPvm(ptr noundef nonnull %i.e, i64 noundef %.sink) #42
   br label %_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit12
 
-_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit12: ; preds = %.critedge.a, %.critedge.thread
+_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit12: ; preds = %_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit15.sink.split, %.critedge..critedge.thread_crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #41
   ret void
 }

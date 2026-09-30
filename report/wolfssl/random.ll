@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp eq ptr %1, null
-  %i.d = icmp ne i32 %2, 0                        ; 2 uses
+  %i.d = icmp ne i32 %2, 0
   %or.cond = and i1 %i.c, %i.d
   br i1 %or.cond, label %bb.t, label %bb.c
 
@@ -224,7 +224,8 @@ bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   store i8 0, ptr %i.i, align 8, !tbaa !9
   %i.j = tail call i32 @wc_UnLockMutex(ptr noundef nonnull @drbgStateMutex) #9 ; 0 uses
-  %spec.select = select i1 %i.d, i32 36, i32 52   ; 5 uses
+  %.not78 = icmp eq i32 %2, 0
+  %spec.select = select i1 %.not78, i32 52, i32 36 ; 5 uses
   %i.k = load i8, ptr %i.i, align 8, !tbaa !9
   %i.l = icmp eq i8 %i.k, 0
   br i1 %i.l, label %bb.e, label %bb.g
@@ -627,8 +628,8 @@ Hash_DRBG_Reseed.exit:                            ; preds = %bb.f, %.thread.i11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %.thread
 
-.thread:                                          ; preds = %bb.c, %.peel.begin.i, %bb.e, %Hash_DRBG_Reseed.exit, %bb.d
-  %.2 = phi i32 [ %.015.i, %Hash_DRBG_Reseed.exit ], [ 0, %bb.e ], [ %i.dh, %bb.d ], [ 1, %.peel.begin.i ], [ 1, %bb.c ]
+.thread:                                          ; preds = %.peel.begin.i, %bb.c, %bb.e, %Hash_DRBG_Reseed.exit, %bb.d
+  %.2 = phi i32 [ %.015.i, %Hash_DRBG_Reseed.exit ], [ 0, %bb.e ], [ %i.dh, %bb.d ], [ 1, %bb.c ], [ 1, %.peel.begin.i ]
   fence seq_cst
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) %i.c, i8 0, i64 36, i1 false)
   fence seq_cst

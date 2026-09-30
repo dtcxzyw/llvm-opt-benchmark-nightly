@@ -202,12 +202,13 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %0, align 8, !tbaa !21     ; 8 uses
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 %i.d
   %i.h = load i8, ptr %i.g, align 1               ; 3 uses
-  %switch.selectcmp.i = icmp ne i8 %i.h, 43
-  %switch.selectcmp4.i = icmp eq i8 %i.h, 45      ; 2 uses
-  %.not = xor i1 %switch.selectcmp4.i, %switch.selectcmp.i
-  br i1 %.not, label %bb.d, label %bb.c
+  switch i8 %i.h, label %bb.d [
+    i8 45, label %bb.c
+    i8 43, label %bb.c
+  ]
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.b
+  %switch.selectcmp4.i = icmp eq i8 %i.h, 45
   store i64 %i.e, ptr %i.c, align 8, !tbaa !20
   %.pre118 = add i64 %i.d, 2
   br label %bb.d

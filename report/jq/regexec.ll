@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   br i1 %or.cond322, label %adjust_match_param.exit, label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge
-  %i.ar = icmp ult ptr %1, %2                     ; 2 uses
+  %i.ar = icmp ult ptr %1, %2
   %i.as = icmp ult ptr %4, %3
   %or.cond323 = and i1 %i.ar, %i.as
   br i1 %or.cond323, label %adjust_match_param.exit, label %bb.p
@@ -225,9 +225,10 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !80 ; 6 uses
-  %.not299 = icmp ne i32 %i.ay, 0
-  %brmerge.not = and i1 %i.ar, %.not299
-  br i1 %brmerge.not, label %bb.s, label %bb.af
+  %.not299 = icmp eq i32 %i.ay, 0
+  %.not381 = icmp uge ptr %1, %2
+  %brmerge = or i1 %.not381, %.not299
+  br i1 %brmerge, label %bb.af, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.az = and i32 %i.ay, 64

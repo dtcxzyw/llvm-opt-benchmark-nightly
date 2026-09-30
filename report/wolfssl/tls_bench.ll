@@ -202,7 +202,7 @@ bb.aq:                                            ; preds = %mygetopt.exit.threa
   %.0171306710 = phi i32 [ %.0171306711, %bb.ap ], [ %.0171422, %mygetopt.exit.thread ] ; 6 uses
   %.0177325706 = phi i32 [ %.0177325707, %bb.ap ], [ %.0177420, %mygetopt.exit.thread ] ; 2 uses
   %.0179334704 = phi ptr [ %.0179334705, %bb.ap ], [ %.0179419, %mygetopt.exit.thread ]
-  %.0181343702 = phi i32 [ %.0181343703, %bb.ap ], [ %.0181418, %mygetopt.exit.thread ] ; 7 uses
+  %.0181343702 = phi i32 [ %.0181343703, %bb.ap ], [ %.0181418, %mygetopt.exit.thread ] ; 9 uses
   %.0183353700 = phi i32 [ %.0183353701, %bb.ap ], [ %.0183417, %mygetopt.exit.thread ] ; 3 uses
   %.0185362697 = phi i32 [ %.0185362698, %bb.ap ], [ %.0185416, %mygetopt.exit.thread ] ; 3 uses
   %.0187372695 = phi i32 [ %.0187372696, %bb.ap ], [ %.0187415, %mygetopt.exit.thread ]
@@ -325,7 +325,7 @@ SetupSupportedGroups.exit:                        ; preds = %bb.bd, %bb.be
   br i1 %.not231, label %bb.bf, label %.critedge
 
 bb.bf:                                            ; preds = %SetupSupportedGroups.exit, %bb.aq
-  %4 = icmp ne i32 %.0181343702, 0                ; 4 uses
+  %.not1002 = icmp eq i32 %.0181343702, 0         ; 3 uses
   %.not1003 = icmp eq i32 %.0183353700, 0         ; 3 uses
   %i.dl = or i32 %.0181343702, %.0183353700
   %or.cond.not = icmp eq i32 %i.dl, 0
@@ -338,9 +338,10 @@ bb.bf:                                            ; preds = %SetupSupportedGroup
 
 bb.bg:                                            ; preds = %bb.bf
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.do, i8 0, i64 %i.dn, i1 false)
-  %i.dq = icmp eq i32 %.0171306710, 0
-  %or.cond3.not = and i1 %4, %i.dq
-  br i1 %or.cond3.not, label %bb.bh, label %bb.bi
+  %i.dq = icmp eq i32 %.0181343702, 0
+  %4 = icmp ne i32 %.0171306710, 0
+  %or.cond3 = or i1 %i.dq, %4
+  br i1 %or.cond3, label %bb.bi, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.dr = call fastcc i32 @SetupSocketAndListen(ptr noundef nonnull %i.b, i32 noundef %.0177325706)
@@ -476,7 +477,7 @@ bb.bv:                                            ; preds = %bb.bu
   br label %bb.cg
 
 bb.bw:                                            ; preds = %bb.bu
-  br i1 %4, label %bb.bx, label %bb.by
+  br i1 %.not1002, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
   %i.fp = call fastcc i32 @bench_tls_server(ptr noundef nonnull %i.ex)
@@ -634,7 +635,7 @@ bb.co:                                            ; preds = %.lr.ph451
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co, %.lr.ph451
-  br i1 %4, label %bb.cr, label %bb.cq
+  br i1 %.not1002, label %bb.cq, label %bb.cr
 
 bb.cq:                                            ; preds = %bb.cp
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gt, i64 33328
@@ -725,7 +726,7 @@ bb.cv:                                            ; preds = %bb.cu
   br label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv, %bb.cu
-  br i1 %4, label %bb.cy, label %bb.cx
+  br i1 %.not1002, label %bb.cx, label %bb.cy
 
 bb.cx:                                            ; preds = %bb.cw
   %i.ip = load ptr, ptr %i.do, align 8, !tbaa !34
@@ -756,7 +757,7 @@ bb.da:                                            ; preds = %bb.bq, %bb.cz
   br i1 %.not235, label %.critedge, label %bb.bj
 
 .critedge:                                        ; preds = %bb.bj, %.thread, %bb.bf, %bb.bh, %SetupSupportedGroups.exit, %bb.ao, %bb.an, %bb.ah, %ShowCiphers.exit, %mygetopt.exit.thread257
-  %.0181344 = phi i32 [ %.0181418, %bb.an ], [ %.0181418, %mygetopt.exit.thread257 ], [ %.0181418, %ShowCiphers.exit ], [ %.0181418, %bb.ah ], [ %.0181343702, %SetupSupportedGroups.exit ], [ %.0181343703, %bb.ao ], [ 1, %bb.bh ], [ %.0181343702, %bb.bf ], [ %.0181343702, %.thread ], [ %.0181343702, %bb.bj ]
+  %.0181344 = phi i32 [ %.0181418, %bb.an ], [ %.0181418, %mygetopt.exit.thread257 ], [ %.0181418, %ShowCiphers.exit ], [ %.0181418, %bb.ah ], [ %.0181343702, %SetupSupportedGroups.exit ], [ %.0181343703, %bb.ao ], [ %.0181343702, %bb.bh ], [ %.0181343702, %bb.bf ], [ %.0181343702, %.thread ], [ %.0181343702, %bb.bj ]
   %.0171307 = phi i32 [ %.0171422, %bb.an ], [ %.0171422, %mygetopt.exit.thread257 ], [ %.0171422, %ShowCiphers.exit ], [ %.0171422, %bb.ah ], [ %.0171306710, %SetupSupportedGroups.exit ], [ %.0171306711, %bb.ao ], [ 0, %bb.bh ], [ %.0171306710, %bb.bf ], [ %.0171306710, %.thread ], [ %.0171306710, %bb.bj ]
   %.7 = phi i32 [ 2, %bb.an ], [ 0, %mygetopt.exit.thread257 ], [ 0, %ShowCiphers.exit ], [ 2, %bb.ah ], [ 0, %SetupSupportedGroups.exit ], [ 0, %bb.ao ], [ -1, %bb.bh ], [ -125, %bb.bf ], [ %.1208490, %bb.bj ], [ %.6, %.thread ] ; 2 uses
   %.0206 = phi ptr [ null, %bb.an ], [ null, %mygetopt.exit.thread257 ], [ null, %ShowCiphers.exit ], [ null, %bb.ah ], [ null, %SetupSupportedGroups.exit ], [ null, %bb.ao ], [ %i.do, %bb.bh ], [ null, %bb.bf ], [ %i.do, %.thread ], [ %i.do, %bb.bj ] ; 2 uses

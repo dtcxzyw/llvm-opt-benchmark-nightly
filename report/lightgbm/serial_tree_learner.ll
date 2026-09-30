@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %.loopexit
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !195
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.q
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !198 ; 2 uses
-  %9 = icmp eq i32 %i.bn, %.tr6069                ; 2 uses
-  %i.bo = select i1 %9, i32 %i.ah, i32 %i.bn
-  %10 = icmp sgt i8 %i.ad, -1
+  %9 = icmp ne i32 %i.bn, %.tr6069                ; 2 uses
+  %i.bo = select i1 %9, i32 %i.bn, i32 %i.ah
+  %10 = icmp slt i8 %i.ad, 0
   %i.bp = xor i1 %10, %9
   tail call void @_ZN8LightGBM27IntermediateLeafConstraints26GoDownToFindLeavesToUpdateEiRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEEbiRKNS_9SplitInfoEbbjRKS1_ISE_SaISE_EE(ptr noundef nonnull align 8 dereferenceable(144) %0, i32 noundef %i.bo, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(40) %4, i1 noundef zeroext %i.bp, i32 noundef %5, ptr noundef nonnull align 8 dereferenceable(122) %6, i1 noundef zeroext true, i1 noundef zeroext true, i32 noundef %7, ptr noundef nonnull align 8 dereferenceable(24) %8)
   %.pre = load ptr, ptr %i.f, align 8, !tbaa !302 ; 2 uses
@@ -610,14 +610,14 @@ bb.m:                                             ; preds = %.loopexit
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !195
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %i.bx, i64 %i.w
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !198 ; 2 uses
-  %11 = icmp eq i32 %i.bz, %.tr104                ; 2 uses
-  %12 = icmp slt i8 %i.aj, 0
-  %i.ca = xor i1 %12, %11
+  %11 = icmp slt i8 %i.aj, 0
+  %12 = icmp eq i32 %i.bz, %.tr104                ; 2 uses
+  %i.ca = xor i1 %11, %12
   %i.cb = xor i1 %7, %i.ca
   br i1 %i.cb, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.cc = select i1 %11, i32 %i.an, i32 %i.bz
+  %i.cc = select i1 %12, i32 %i.an, i32 %i.bz
   tail call void @_ZN8LightGBM23AdvancedLeafConstraints30GoDownToFindConstrainingLeavesEiiibjjRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEEPNS_26FeatureMinOrMaxConstraintsEj(ptr noundef nonnull align 8 dereferenceable(144) %0, i32 noundef %1, i32 noundef %i.z, i32 noundef %i.cc, i1 noundef zeroext %7, i32 noundef %.095, i32 noundef %.08993, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(40) %5, ptr noundef %6, i32 noundef %10)
   br label %bb.o
 
@@ -1020,14 +1020,12 @@ bb.l:                                             ; preds = %bb.k
 _ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit: ; preds = %_ZN8LightGBM27IntermediateLeafConstraints24ShouldKeepGoingLeftRightEiRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEE.exit, %bb.k, %bb.l
   %.sroa.5.0.i = phi i16 [ 257, %bb.k ], [ 257, %_ZN8LightGBM27IntermediateLeafConstraints24ShouldKeepGoingLeftRightEiRKSt6vectorIiSaIiEERKS1_IjSaIjEERKS1_IbSaIbEE.exit ], [ %i.ca, %bb.l ] ; 2 uses
   %i.cb = trunc i16 %.3.i to i1                   ; 2 uses
-  %.not56 = xor i1 %i.cb, true
   %i.cc = trunc i16 %.sroa.5.0.i to i1
-  %.not = xor i1 %i.cc, true
-  %i.cd = and i16 %.3.i, 256
-  %12 = icmp ne i16 %i.cd, 0                      ; 2 uses
-  %or.cond = select i1 %.not, i1 %12, i1 false
-  %or.cond58 = select i1 %.not56, i1 true, i1 %or.cond
-  br i1 %or.cond58, label %bb.p, label %bb.m
+  %i.cd = and i16 %.3.i, 256                      ; 2 uses
+  %12 = icmp eq i16 %i.cd, 0
+  %or.cond = select i1 %i.cc, i1 true, i1 %12
+  %or.cond58 = select i1 %i.cb, i1 %or.cond, i1 false
+  br i1 %or.cond58, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -1052,10 +1050,10 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %_ZN8LightGBM23AdvancedLeafConstraints36LeftRightContainsRelevantInformationEbib.exit
-  %.not78 = xor i1 %12, true
+  %.not86 = icmp eq i16 %i.cd, 0
   %.not54 = icmp samesign ult i16 %.sroa.5.0.i, 256
   %or.cond6 = and i1 %.not54, %i.cb
-  %or.cond79 = select i1 %.not78, i1 true, i1 %or.cond6
+  %or.cond79 = select i1 %.not86, i1 true, i1 %or.cond6
   br i1 %or.cond79, label %.loopexit, label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.p

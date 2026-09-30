@@ -205,12 +205,12 @@ bb.a:
   %3 = alloca %"class.doctest::String", align 8   ; 7 uses
   %4 = alloca %"class.doctest::String", align 8   ; 7 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !65
-  %5 = icmp ne ptr %i.a, null
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i32, ptr %i.b, align 8, !tbaa !283
   %i.d = and i32 %i.c, 256
-  %6 = icmp ne i32 %i.d, 0
-  %spec.select = xor i1 %5, %6                    ; 2 uses
+  %.not = icmp eq i32 %i.d, 0
+  %5 = icmp eq ptr %i.a, null
+  %spec.select = xor i1 %5, %.not                 ; 2 uses
   br i1 %spec.select, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -305,12 +305,12 @@ bb.a:
   %4 = alloca %"class.doctest::String", align 8   ; 7 uses
   %i.a = load i32, ptr %1, align 4, !tbaa !52
   %i.b = load i32, ptr %2, align 4, !tbaa !52
-  %5 = icmp eq i32 %i.a, %i.b
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i32, ptr %i.c, align 4, !tbaa !285
   %i.e = and i32 %i.d, 256
-  %i.f = icmp ne i32 %i.e, 0
-  %spec.select = xor i1 %5, %i.f                  ; 2 uses
+  %.not = icmp eq i32 %i.e, 0
+  %i.f = icmp ne i32 %i.a, %i.b
+  %spec.select = xor i1 %i.f, %.not               ; 2 uses
   br i1 %spec.select, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -713,8 +713,8 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !234
   %i.g = icmp eq i32 %i.f, 5
-  %i.h = load i64, ptr %2, align 8                ; 2 uses
-  %i.i = icmp ne i64 %i.h, -1                     ; 2 uses
+  %i.h = load i64, ptr %2, align 8                ; 3 uses
+  %i.i = icmp ne i64 %i.h, -1
   %or.cond = select i1 %i.g, i1 %i.i, i1 false
   br i1 %or.cond, label %bb.c, label %bb.l
 
@@ -935,7 +935,8 @@ bb.l:                                             ; preds = %bb.b
   %i.bk = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   store i64 0, ptr %i.bk, align 8, !tbaa !56
   store i8 0, ptr %i.bj, align 8, !tbaa !55
-  br i1 %i.i, label %._crit_edge, label %.preheader91
+  %.not119 = icmp eq i64 %i.h, -1
+  br i1 %.not119, label %.preheader91, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.l
   %.pre = load i32, ptr %i.c, align 8, !tbaa !258

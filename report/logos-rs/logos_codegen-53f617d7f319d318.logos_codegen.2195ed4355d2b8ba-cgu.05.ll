@@ -202,16 +202,20 @@ bb.a:
   %.sroa.01.05 = phi i64 [ %i.f, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
   %i.b = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.05
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.sroa.01.05
-  %i.d = load i64, ptr %i.b, align 8
-  %i.e = load i64, ptr %i.c, align 8
-  %.not = icmp eq i64 %i.d, %i.e                  ; 2 uses
+  %i.d = load i64, ptr %i.b, align 8              ; 2 uses
+  %i.e = load i64, ptr %i.c, align 8              ; 2 uses
+  %.not.not = icmp ne i64 %i.d, %i.e
   %i.f = add nuw i64 %.sroa.01.05, 1              ; 2 uses
-  %exitcond.not = icmp ne i64 %i.f, %2
-  %or.cond.not = select i1 %.not, i1 %exitcond.not, i1 false
-  br i1 %or.cond.not, label %.lr.ph, label %._crit_edge
+  %exitcond.not = icmp eq i64 %i.f, %2
+  %or.cond.not = select i1 %.not.not, i1 true, i1 %exitcond.not
+  br i1 %or.cond.not, label %._crit_edge.loopexit, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %.lcssa = phi i1 [ true, %bb.a ], [ %.not, %.lr.ph ]
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.not = icmp eq i64 %i.d, %i.e
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %.lcssa = phi i1 [ true, %bb.a ], [ %.not, %._crit_edge.loopexit ]
   ret i1 %.lcssa
 }
 

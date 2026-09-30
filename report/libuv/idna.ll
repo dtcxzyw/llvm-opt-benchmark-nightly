@@ -202,11 +202,11 @@ bb.m:                                             ; preds = %bb.l
 
 uv__utf8_decode1.exit:                            ; preds = %bb.b, %bb.m
   %.5 = phi ptr [ %i.c, %bb.b ], [ %.4195, %bb.m ] ; 2 uses
-  %.0.i = phi i32 [ %i.e, %bb.b ], [ %i.am, %bb.m ]
-  %i.ar = icmp samesign ult i32 %.0.i, 128        ; 2 uses
+  %.0.i = phi i32 [ %i.e, %bb.b ], [ %i.am, %bb.m ] ; 2 uses
+  %i.ar = icmp samesign ult i32 %.0.i, 128
   %i.as = zext i1 %i.ar to i32
   %.1121 = add i32 %.0120220, %i.as               ; 4 uses
-  %not. = xor i1 %i.ar, true
+  %not. = icmp samesign ugt i32 %.0.i, 127
   %i.at = zext i1 %not. to i32
   %.1104 = add i32 %.0103221, %i.at               ; 4 uses
   %i.au = icmp ult ptr %.5, %1
@@ -609,7 +609,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %.thread145, %bb.m, %bb.o
   %.087144147 = phi i64 [ %.0.lcssa.i, %bb.o ], [ %.0.lcssa.i, %bb.m ], [ %i.w, %.thread145 ] ; 4 uses
   %.0 = phi ptr [ %i.z, %bb.o ], [ %.pr, %bb.m ], [ %i.b, %.thread145 ] ; 3 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %.0, i64 %.087144147 ; 8 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.0, i64 %.087144147 ; 9 uses
   %i.ac = icmp samesign ne i64 %.087144147, 0
   %i.ad = icmp ne i64 %1, 0
   %i.ae = and i1 %i.ac, %i.ad
@@ -764,9 +764,9 @@ uv__get_surrogate_value.exit._crit_edge:          ; preds = %bb.ac, %bb.u, %.thr
   %.090.lcssa = phi ptr [ %0, %bb.p ], [ %.090163, %uv__get_surrogate_value.exit ], [ %.090163, %bb.aa ], [ %.090163, %bb.z ], [ %.090163, %bb.w ], [ %.090163, %bb.x ], [ %.090163, %.thread160 ], [ %.090163, %bb.u ], [ %i.cv, %bb.ac ] ; 2 uses
   %.188.lcssa = phi i64 [ %.087144147, %bb.p ], [ %.188164, %uv__get_surrogate_value.exit ], [ %.188164, %bb.aa ], [ %.188164, %bb.z ], [ %.188164, %bb.w ], [ %.188164, %bb.x ], [ %.188164, %.thread160 ], [ %.188164, %bb.u ], [ %i.cu, %bb.ac ]
   %.395 = phi i64 [ %1, %bb.p ], [ 0, %uv__get_surrogate_value.exit ], [ %.092162, %bb.aa ], [ %.092162, %bb.z ], [ %.092162, %bb.w ], [ %.092162, %bb.x ], [ %.092162, %.thread160 ], [ %.092162, %bb.u ], [ %spec.select119, %bb.ac ] ; 3 uses
-  %.3 = phi ptr [ %.0, %bb.p ], [ %.1165, %uv__get_surrogate_value.exit ], [ %i.cj, %bb.aa ], [ %i.cd, %bb.z ], [ %i.bi, %bb.w ], [ %i.bt, %bb.x ], [ %i.bn, %.thread160 ], [ %i.av, %bb.u ], [ %.2, %bb.ac ] ; 3 uses
-  %i.db = icmp ne ptr %.3, %i.ab                  ; 2 uses
-  %i.dc = icmp ne ptr %3, null                    ; 2 uses
+  %.3 = phi ptr [ %.0, %bb.p ], [ %.1165, %uv__get_surrogate_value.exit ], [ %i.cj, %bb.aa ], [ %i.cd, %bb.z ], [ %i.bi, %bb.w ], [ %i.bt, %bb.x ], [ %i.bn, %.thread160 ], [ %i.av, %bb.u ], [ %.2, %bb.ac ] ; 4 uses
+  %i.db = icmp ne ptr %.3, %i.ab
+  %i.dc = icmp ne ptr %3, null
   %or.cond3 = and i1 %i.dc, %i.db
   br i1 %or.cond3, label %bb.ad, label %bb.ae
 
@@ -779,9 +779,10 @@ bb.ad:                                            ; preds = %uv__get_surrogate_v
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %uv__get_surrogate_value.exit._crit_edge
-  %4 = icmp sgt i64 %.395, -1
-  %or.cond120.not = or i1 %4, %i.db
-  br i1 %or.cond120.not, label %bb.ag, label %bb.af
+  %4 = icmp slt i64 %.395, 0
+  %.not202 = icmp eq ptr %.3, %i.ab
+  %or.cond120 = and i1 %4, %.not202
+  br i1 %or.cond120, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
   %i.dh = load i16, ptr %.090.lcssa, align 2
@@ -792,10 +793,11 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.4 = phi i64 [ %.395, %bb.ae ], [ %spec.select121, %bb.af ] ; 2 uses
   store i8 0, ptr %.3, align 1
-  %.not118 = icmp ne i64 %.4, 0                   ; 2 uses
-  %brmerge.not = and i1 %i.dc, %.not118
-  %.mux = select i1 %.not118, i32 -105, i32 0
-  br i1 %brmerge.not, label %.lr.ph.i125, label %bb.ao
+  %.not118 = icmp eq i64 %.4, 0                   ; 2 uses
+  %.not203 = icmp eq ptr %3, null
+  %brmerge = or i1 %.not203, %.not118
+  %.mux = select i1 %.not118, i32 0, i32 -105
+  br i1 %brmerge, label %bb.ao, label %.lr.ph.i125
 
 .lr.ph.i125:                                      ; preds = %bb.ag, %bb.an
   %.040.i126 = phi i64 [ %.1.i136, %bb.an ], [ 0, %bb.ag ] ; 5 uses

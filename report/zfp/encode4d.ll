@@ -205,14 +205,14 @@ scalar.ph32:                                      ; preds = %scalar.ph32.prehead
   br i1 %exitcond147.not.i, label %.preheader.i, label %scalar.ph32, !llvm.loop !43
 
 .lr.ph112.i:                                      ; preds = %.preheader.i, %stream_write_bit.exit60._crit_edge.i
-  %.1111.i = phi i32 [ %i.cb, %stream_write_bit.exit60._crit_edge.i ], [ %.0.lcssa.i, %.preheader.i ] ; 2 uses
+  %.1111.i = phi i32 [ %i.cb, %stream_write_bit.exit60._crit_edge.i ], [ %.0.lcssa.i, %.preheader.i ] ; 3 uses
   %.148110.i = phi i32 [ %i.ct, %stream_write_bit.exit60._crit_edge.i ], [ %.047130.i16, %.preheader.i ] ; 4 uses
   %.153109.i = phi i32 [ %.3.i, %stream_write_bit.exit60._crit_edge.i ], [ %i.h, %.preheader.i ]
   %.sroa.19.2108.i = phi ptr [ %.sroa.19.4.i, %stream_write_bit.exit60._crit_edge.i ], [ %.sroa.19.1.lcssa.i, %.preheader.i ] ; 3 uses
   %.sroa.13.2107.i = phi i64 [ %.sroa.13.4.i, %stream_write_bit.exit60._crit_edge.i ], [ %.sroa.13.1.lcssa.i, %.preheader.i ]
   %.sroa.0.2106.i = phi i64 [ %.sroa.0.4.i, %stream_write_bit.exit60._crit_edge.i ], [ %.sroa.0.1.lcssa.i, %.preheader.i ] ; 2 uses
   %i.bt = add i32 %.153109.i, -1                  ; 4 uses
-  %i.bu = icmp ne i32 %.1111.i, 0                 ; 2 uses
+  %i.bu = icmp ne i32 %.1111.i, 0
   %i.bv = zext i1 %i.bu to i64
   %i.bw = shl nuw i64 %i.bv, %.sroa.0.2106.i
   %i.bx = add i64 %i.bw, %.sroa.13.2107.i         ; 2 uses
@@ -229,7 +229,8 @@ stream_write_bit.exit59.i:                        ; preds = %bb.g, %.lr.ph112.i
   %.sroa.0.7.i = phi i64 [ 0, %bb.g ], [ %i.by, %.lr.ph112.i ] ; 3 uses
   %.sroa.13.7.i = phi i64 [ 0, %bb.g ], [ %i.bx, %.lr.ph112.i ] ; 3 uses
   %.sroa.19.7.i = phi ptr [ %i.ca, %bb.g ], [ %.sroa.19.2108.i, %.lr.ph112.i ] ; 3 uses
-  br i1 %i.bu, label %bb.h, label %stream_write_bit.exit59._crit_edge.i
+  %.not68 = icmp eq i32 %.1111.i, 0
+  br i1 %.not68, label %stream_write_bit.exit59._crit_edge.i, label %bb.h
 
 bb.h:                                             ; preds = %stream_write_bit.exit59.i
   %i.cb = add i32 %.1111.i, -1
@@ -514,12 +515,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %.lr.ph106.i
 
 .lr.ph106.i:                                      ; preds = %.lr.ph106.i.preheader, %.critedge2.i
-  %.1105.i = phi i32 [ %i.fs, %.critedge2.i ], [ %.1105.i.ph, %.lr.ph106.i.preheader ] ; 2 uses
+  %.1105.i = phi i32 [ %i.fs, %.critedge2.i ], [ %.1105.i.ph, %.lr.ph106.i.preheader ] ; 3 uses
   %.137104.i = phi i32 [ %i.gg, %.critedge2.i ], [ %.036118.i, %.lr.ph106.i.preheader ] ; 4 uses
   %.sroa.21.2103.i = phi ptr [ %.sroa.21.8.i, %.critedge2.i ], [ %.sroa.21.1.lcssa145.i, %.lr.ph106.i.preheader ] ; 3 uses
   %.sroa.15.2102.i = phi i64 [ %.sroa.15.8.i, %.critedge2.i ], [ %.sroa.15.1.lcssa143.i, %.lr.ph106.i.preheader ]
   %.sroa.0.2101.i = phi i64 [ %.sroa.0.8.i37, %.critedge2.i ], [ %.sroa.0.1.lcssa141.i, %.lr.ph106.i.preheader ] ; 2 uses
-  %i.fl = icmp ne i32 %.1105.i, 0                 ; 2 uses
+  %i.fl = icmp ne i32 %.1105.i, 0
   %i.fm = zext i1 %i.fl to i64
   %i.fn = shl nuw i64 %i.fm, %.sroa.0.2101.i
   %i.fo = add i64 %i.fn, %.sroa.15.2102.i         ; 2 uses
@@ -536,7 +537,8 @@ stream_write_bit.exit43.i:                        ; preds = %bb.p, %.lr.ph106.i
   %.sroa.0.7.i35 = phi i64 [ 0, %bb.p ], [ %i.fp, %.lr.ph106.i ] ; 3 uses
   %.sroa.15.7.i = phi i64 [ 0, %bb.p ], [ %i.fo, %.lr.ph106.i ] ; 3 uses
   %.sroa.21.7.i = phi ptr [ %i.fr, %bb.p ], [ %.sroa.21.2103.i, %.lr.ph106.i ] ; 3 uses
-  br i1 %i.fl, label %bb.q, label %.critedge.i
+  %.not67 = icmp eq i32 %.1105.i, 0
+  br i1 %.not67, label %.critedge.i, label %bb.q
 
 bb.q:                                             ; preds = %stream_write_bit.exit43.i
   %i.fs = add i32 %.1105.i, -1

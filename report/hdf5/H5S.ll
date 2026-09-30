@@ -204,12 +204,13 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.ai = icmp eq ptr %1, null
-  %i.aj = icmp ne i32 %0, 0                       ; 2 uses
+  %i.aj = icmp ne i32 %0, 0
   %or.cond = and i1 %i.aj, %i.ai
   br i1 %or.cond, label %bb.o, label %.preheader, !prof !37
 
 .preheader:                                       ; preds = %bb.m
-  br i1 %i.aj, label %.lr.ph, label %._crit_edge
+  %.not97 = icmp eq i32 %0, 0
+  br i1 %.not97, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
   %.not = icmp eq ptr %2, null

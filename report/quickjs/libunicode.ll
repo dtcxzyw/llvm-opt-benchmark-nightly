@@ -184,7 +184,7 @@ bb.a:
   %i.c = alloca [3 x i32], align 4                ; 4 uses
   %i.d = alloca [3 x i32], align 4                ; 4 uses
   %i.e = alloca [3 x i32], align 4                ; 4 uses
-  %i.f = icmp ne i32 %2, 0                        ; 7 uses
+  %i.f = icmp ne i32 %2, 0                        ; 6 uses
   %i.g = lshr i32 %4, 4                           ; 2 uses
   %i.h = and i32 %i.g, 15                         ; 3 uses
   %i.i = shl i32 %4, 8
@@ -253,7 +253,8 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.ab
 
 bb.i:                                             ; preds = %bb.g
-  %i.aj = select i1 %i.f, i32 0, i32 2
+  %.not87 = icmp eq i32 %2, 0
+  %i.aj = select i1 %.not87, i32 2, i32 0
   %i.ak = icmp eq i32 %i.af, %i.aj
   br i1 %i.ak, label %bb.j, label %bb.ab
 
@@ -656,15 +657,15 @@ bb.a:
   %.not59.2 = icmp eq i32 %i.e, 0
   %i.f = or i32 %.147.1, 15868
   %.147.2 = select i1 %.not59.2, i32 %.147.1, i32 %i.f
-  %i.g = and i32 %1, 6
-  %.not52 = icmp eq i32 %i.g, 0                   ; 2 uses
+  %i.g = and i32 %1, 6                            ; 2 uses
+  %.not52 = icmp eq i32 %i.g, 0
   %or.cond61 = or i1 %.not59, %.not52
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 10 uses
   %.phi.trans.insert.i63 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 13 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.k = trunc i32 %1 to i1
-  %.not52.not = xor i1 %.not52, true
+  %.not52.not = icmp ne i32 %i.g, 0
   %or.cond.not = and i1 %.not52.not, %i.k
   br label %bb.b
 
