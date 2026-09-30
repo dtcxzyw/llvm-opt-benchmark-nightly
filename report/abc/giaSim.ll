@@ -205,177 +205,181 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not.i.i, label %bb.ax, label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph.i.i68
-  %7 = trunc nuw nsw i64 %indvars.iv.i67 to i32   ; 3 uses
   %i.df = trunc nuw nsw i64 %indvars.iv.i.i69 to i32
   %i.dg = shl nuw nsw i32 %i.df, 5
   %i.dh = and i32 %i.de, 1
   %.not.i.i.i = icmp eq i32 %i.dh, 0
-  br i1 %.not.i.i.i, label %bb.t, label %bb.ay
+  br i1 %.not.i.i.i, label %bb.t, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.t:                                             ; preds = %bb.s
   %i.di = and i32 %i.de, 2
   %.not.1.i.i.i = icmp eq i32 %i.di, 0
-  br i1 %.not.1.i.i.i, label %bb.u, label %bb.ay
+  br i1 %.not.1.i.i.i, label %bb.u, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.u:                                             ; preds = %bb.t
   %i.dj = and i32 %i.de, 4
   %.not.2.i.i.i = icmp eq i32 %i.dj, 0
-  br i1 %.not.2.i.i.i, label %bb.v, label %bb.ay
+  br i1 %.not.2.i.i.i, label %bb.v, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.v:                                             ; preds = %bb.u
   %i.dk = and i32 %i.de, 8
   %.not.3.i.i.i = icmp eq i32 %i.dk, 0
-  br i1 %.not.3.i.i.i, label %bb.w, label %bb.ay
+  br i1 %.not.3.i.i.i, label %bb.w, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.w:                                             ; preds = %bb.v
   %i.dl = and i32 %i.de, 16
   %.not.4.i.i.i = icmp eq i32 %i.dl, 0
-  br i1 %.not.4.i.i.i, label %bb.x, label %bb.ay
+  br i1 %.not.4.i.i.i, label %bb.x, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.x:                                             ; preds = %bb.w
   %i.dm = and i32 %i.de, 32
   %.not.5.i.i.i = icmp eq i32 %i.dm, 0
-  br i1 %.not.5.i.i.i, label %bb.y, label %bb.ay
+  br i1 %.not.5.i.i.i, label %bb.y, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.y:                                             ; preds = %bb.x
   %i.dn = and i32 %i.de, 64
   %.not.6.i.i.i = icmp eq i32 %i.dn, 0
-  br i1 %.not.6.i.i.i, label %bb.z, label %bb.ay
+  br i1 %.not.6.i.i.i, label %bb.z, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.z:                                             ; preds = %bb.y
   %i.do = and i32 %i.de, 128
   %.not.7.i.i.i = icmp eq i32 %i.do, 0
-  br i1 %.not.7.i.i.i, label %bb.aa, label %bb.ay
+  br i1 %.not.7.i.i.i, label %bb.aa, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.aa:                                            ; preds = %bb.z
   %i.dp = and i32 %i.de, 256
   %.not.8.i.i.i = icmp eq i32 %i.dp, 0
-  br i1 %.not.8.i.i.i, label %bb.ab, label %bb.ay
+  br i1 %.not.8.i.i.i, label %bb.ab, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ab:                                            ; preds = %bb.aa
   %i.dq = and i32 %i.de, 512
   %.not.9.i.i.i = icmp eq i32 %i.dq, 0
-  br i1 %.not.9.i.i.i, label %bb.ac, label %bb.ay
+  br i1 %.not.9.i.i.i, label %bb.ac, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ac:                                            ; preds = %bb.ab
   %i.dr = and i32 %i.de, 1024
   %.not.10.i.i.i = icmp eq i32 %i.dr, 0
-  br i1 %.not.10.i.i.i, label %bb.ad, label %bb.ay
+  br i1 %.not.10.i.i.i, label %bb.ad, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ds = and i32 %i.de, 2048
   %.not.11.i.i.i = icmp eq i32 %i.ds, 0
-  br i1 %.not.11.i.i.i, label %bb.ae, label %bb.ay
+  br i1 %.not.11.i.i.i, label %bb.ae, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ae:                                            ; preds = %bb.ad
   %i.dt = and i32 %i.de, 4096
   %.not.12.i.i.i = icmp eq i32 %i.dt, 0
-  br i1 %.not.12.i.i.i, label %bb.af, label %bb.ay
+  br i1 %.not.12.i.i.i, label %bb.af, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.af:                                            ; preds = %bb.ae
   %i.du = and i32 %i.de, 8192
   %.not.13.i.i.i = icmp eq i32 %i.du, 0
-  br i1 %.not.13.i.i.i, label %bb.ag, label %bb.ay
+  br i1 %.not.13.i.i.i, label %bb.ag, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ag:                                            ; preds = %bb.af
   %i.dv = and i32 %i.de, 16384
   %.not.14.i.i.i = icmp eq i32 %i.dv, 0
-  br i1 %.not.14.i.i.i, label %bb.ah, label %bb.ay
+  br i1 %.not.14.i.i.i, label %bb.ah, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ah:                                            ; preds = %bb.ag
   %i.dw = and i32 %i.de, 32768
   %.not.15.i.i.i = icmp eq i32 %i.dw, 0
-  br i1 %.not.15.i.i.i, label %bb.ai, label %bb.ay
+  br i1 %.not.15.i.i.i, label %bb.ai, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ai:                                            ; preds = %bb.ah
   %i.dx = and i32 %i.de, 65536
   %.not.16.i.i.i = icmp eq i32 %i.dx, 0
-  br i1 %.not.16.i.i.i, label %bb.aj, label %bb.ay
+  br i1 %.not.16.i.i.i, label %bb.aj, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.aj:                                            ; preds = %bb.ai
   %i.dy = and i32 %i.de, 131072
   %.not.17.i.i.i = icmp eq i32 %i.dy, 0
-  br i1 %.not.17.i.i.i, label %bb.ak, label %bb.ay
+  br i1 %.not.17.i.i.i, label %bb.ak, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ak:                                            ; preds = %bb.aj
   %i.dz = and i32 %i.de, 262144
   %.not.18.i.i.i = icmp eq i32 %i.dz, 0
-  br i1 %.not.18.i.i.i, label %bb.al, label %bb.ay
+  br i1 %.not.18.i.i.i, label %bb.al, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.al:                                            ; preds = %bb.ak
   %i.ea = and i32 %i.de, 524288
   %.not.19.i.i.i = icmp eq i32 %i.ea, 0
-  br i1 %.not.19.i.i.i, label %bb.am, label %bb.ay
+  br i1 %.not.19.i.i.i, label %bb.am, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.am:                                            ; preds = %bb.al
   %i.eb = and i32 %i.de, 1048576
   %.not.20.i.i.i = icmp eq i32 %i.eb, 0
-  br i1 %.not.20.i.i.i, label %bb.an, label %bb.ay
+  br i1 %.not.20.i.i.i, label %bb.an, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.an:                                            ; preds = %bb.am
   %i.ec = and i32 %i.de, 2097152
   %.not.21.i.i.i = icmp eq i32 %i.ec, 0
-  br i1 %.not.21.i.i.i, label %bb.ao, label %bb.ay
+  br i1 %.not.21.i.i.i, label %bb.ao, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ao:                                            ; preds = %bb.an
   %i.ed = and i32 %i.de, 4194304
   %.not.22.i.i.i = icmp eq i32 %i.ed, 0
-  br i1 %.not.22.i.i.i, label %bb.ap, label %bb.ay
+  br i1 %.not.22.i.i.i, label %bb.ap, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ap:                                            ; preds = %bb.ao
   %i.ee = and i32 %i.de, 8388608
   %.not.23.i.i.i = icmp eq i32 %i.ee, 0
-  br i1 %.not.23.i.i.i, label %bb.aq, label %bb.ay
+  br i1 %.not.23.i.i.i, label %bb.aq, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.aq:                                            ; preds = %bb.ap
   %i.ef = and i32 %i.de, 16777216
   %.not.24.i.i.i = icmp eq i32 %i.ef, 0
-  br i1 %.not.24.i.i.i, label %bb.ar, label %bb.ay
+  br i1 %.not.24.i.i.i, label %bb.ar, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ar:                                            ; preds = %bb.aq
   %i.eg = and i32 %i.de, 33554432
   %.not.25.i.i.i = icmp eq i32 %i.eg, 0
-  br i1 %.not.25.i.i.i, label %bb.as, label %bb.ay
+  br i1 %.not.25.i.i.i, label %bb.as, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.as:                                            ; preds = %bb.ar
   %i.eh = and i32 %i.de, 67108864
   %.not.26.i.i.i = icmp eq i32 %i.eh, 0
-  br i1 %.not.26.i.i.i, label %bb.at, label %bb.ay
+  br i1 %.not.26.i.i.i, label %bb.at, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.at:                                            ; preds = %bb.as
   %i.ei = and i32 %i.de, 134217728
   %.not.27.i.i.i = icmp eq i32 %i.ei, 0
-  br i1 %.not.27.i.i.i, label %bb.au, label %bb.ay
+  br i1 %.not.27.i.i.i, label %bb.au, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.au:                                            ; preds = %bb.at
   %i.ej = and i32 %i.de, 268435456
   %.not.28.i.i.i = icmp eq i32 %i.ej, 0
-  br i1 %.not.28.i.i.i, label %bb.av, label %bb.ay
+  br i1 %.not.28.i.i.i, label %bb.av, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.av:                                            ; preds = %bb.au
   %i.ek = and i32 %i.de, 536870912
   %.not.29.i.i.i = icmp eq i32 %i.ek, 0
-  br i1 %.not.29.i.i.i, label %bb.aw, label %bb.ay
+  br i1 %.not.29.i.i.i, label %bb.aw, label %Gia_ManSimInfoIsZero.exit.i
 
 bb.aw:                                            ; preds = %bb.av
-  %8 = and i32 %i.de, 1073741824
-  %.not.30.i.i.i = icmp eq i32 %8, 0
-  %spec.select.i.i.i = select i1 %.not.30.i.i.i, i32 31, i32 30
-  br label %bb.ay
+  %7 = lshr exact i32 %i.de, 30
+  %8 = and i32 %7, 1
+  %spec.select.i.i.i = xor i32 %8, 31
+  br label %Gia_ManSimInfoIsZero.exit.i
 
 bb.ax:                                            ; preds = %.lr.ph.i.i68
   %indvars.iv.next.i.i70 = add nuw nsw i64 %indvars.iv.i.i69, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i70, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %Gia_ManSimInfoIsZero.exit.thread.loopexit.i, label %.lr.ph.i.i68, !llvm.loop !136
 
-Gia_ManSimInfoIsZero.exit.thread.loopexit.i:      ; preds = %bb.ax
+Gia_ManSimInfoIsZero.exit.i:                      ; preds = %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s
+  %.06.i.i.i = phi i32 [ 0, %bb.s ], [ 16, %bb.ai ], [ 1, %bb.t ], [ 24, %bb.aq ], [ 2, %bb.u ], [ 20, %bb.am ], [ 3, %bb.v ], [ %spec.select.i.i.i, %bb.aw ], [ 4, %bb.w ], [ 17, %bb.aj ], [ 5, %bb.x ], [ 29, %bb.av ], [ 6, %bb.y ], [ 23, %bb.ap ], [ 7, %bb.z ], [ 28, %bb.au ], [ 8, %bb.aa ], [ 18, %bb.ak ], [ 9, %bb.ab ], [ 27, %bb.at ], [ 10, %bb.ac ], [ 21, %bb.an ], [ 11, %bb.ad ], [ 26, %bb.as ], [ 12, %bb.ae ], [ 19, %bb.al ], [ 13, %bb.af ], [ 25, %bb.ar ], [ 14, %bb.ag ], [ 22, %bb.ao ], [ 15, %bb.ah ]
+  %9 = add nuw nsw i32 %.06.i.i.i, %i.dg          ; 2 uses
+  %10 = icmp sgt i32 %9, -1
+  br i1 %10, label %bb.ay, label %Gia_ManSimInfoIsZero.exit.thread.loopexit.i
+
+Gia_ManSimInfoIsZero.exit.thread.loopexit.i:      ; preds = %bb.ax, %Gia_ManSimInfoIsZero.exit.i
   %indvars.iv.next.i71 = add nuw nsw i64 %indvars.iv.i67, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i71, %wide.trip.count.i
   br i1 %exitcond.not.i, label %Gia_ManCheckPos.exit.thread, label %.lr.ph.preheader.i.i66, !llvm.loop !137
 
-bb.ay:                                            ; preds = %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s
-  %.06.i.i.i = phi i32 [ 0, %bb.s ], [ 16, %bb.ai ], [ 1, %bb.t ], [ 24, %bb.aq ], [ 2, %bb.u ], [ 20, %bb.am ], [ 3, %bb.v ], [ %spec.select.i.i.i, %bb.aw ], [ 4, %bb.w ], [ 17, %bb.aj ], [ 5, %bb.x ], [ 29, %bb.av ], [ 6, %bb.y ], [ 23, %bb.ap ], [ 7, %bb.z ], [ 28, %bb.au ], [ 8, %bb.aa ], [ 18, %bb.ak ], [ 9, %bb.ab ], [ 27, %bb.at ], [ 10, %bb.ac ], [ 21, %bb.an ], [ 11, %bb.ad ], [ 26, %bb.as ], [ 12, %bb.ae ], [ 19, %bb.al ], [ 13, %bb.af ], [ 25, %bb.ar ], [ 14, %bb.ag ], [ 22, %bb.ao ], [ 15, %bb.ah ]
-  %9 = or disjoint i32 %.06.i.i.i, %i.dg
+bb.ay:                                            ; preds = %Gia_ManSimInfoIsZero.exit.i
+  %11 = trunc nuw nsw i64 %indvars.iv.i67 to i32  ; 3 uses
   %i.el = call i32 @Gia_ManRandom(i32 noundef 1) #27 ; 0 uses
   %i.em = load i32, ptr %i.af, align 4, !tbaa !77
   %i.en = icmp sgt i32 %i.em, 0
@@ -391,13 +395,13 @@ bb.ay:                                            ; preds = %bb.aw, %bb.av, %bb.
 
 Gia_ManResetRandom.exit74:                        ; preds = %.lr.ph.i72, %bb.ay
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store i32 %7, ptr %i.es, align 4, !tbaa !70
+  store i32 %11, ptr %i.es, align 4, !tbaa !70
   %i.et = load i32, ptr %i.cb, align 8, !tbaa !32
   %i.eu = load ptr, ptr %i.am, align 8, !tbaa !74
-  %i.ev = call ptr @Gia_ManGenerateCounter(ptr noundef nonnull %0, i32 noundef %.046106, i32 noundef %7, i32 noundef %i.et, i32 noundef %9, ptr noundef %i.eu)
+  %i.ev = call ptr @Gia_ManGenerateCounter(ptr noundef nonnull %0, i32 noundef %.046106, i32 noundef %11, i32 noundef %i.et, i32 noundef %9, ptr noundef %i.eu)
   store ptr %i.ev, ptr %i.ab, align 8, !tbaa !144
   %i.ew = load ptr, ptr %0, align 8, !tbaa !146
-  call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.6, i32 noundef %7, ptr noundef %i.ew, i32 noundef %.046106)
+  call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.6, i32 noundef %11, ptr noundef %i.ew, i32 noundef %.046106)
   %i.ex = load ptr, ptr %i.ab, align 8, !tbaa !144
   %i.ey = call i32 @Gia_ManVerifyCex(ptr noundef nonnull %0, ptr noundef %i.ex, i32 noundef 0) #27
   %.not56 = icmp eq i32 %i.ey, 0

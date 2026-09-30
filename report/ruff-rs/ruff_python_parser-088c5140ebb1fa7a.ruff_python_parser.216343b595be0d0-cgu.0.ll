@@ -205,7 +205,7 @@ _RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit: ; preds = %_RNvMs_NtCsb6FL
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10051)
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 440 ; 6 uses
   %i.cl = load i32, ptr %i.ck, align 8, !alias.scope !10051, !noalias !10052, !noundef !15 ; 4 uses
-  %i.cm = trunc i8 %4 to i1                       ; 3 uses
+  %i.cm = trunc i8 %4 to i1                       ; 2 uses
   %.17.i = select i1 %i.cm, i32 65536, i32 131072
   %.sroa.08.0.i = select i1 %.not, i32 32768, i32 %.17.i
   %i.cn = or i32 %i.cl, %.sroa.08.0.i
@@ -597,7 +597,8 @@ bb.al:                                            ; preds = %bb.ai
           to label %bb.aq unwind label %bb.ap
 
 bb.am:                                            ; preds = %.noexc24.thread188, %.noexc24
-  %..i = select i1 %i.cm, i8 23, i8 21            ; 2 uses
+  %5 = shl nuw nsw i8 %4, 1
+  %..i = xor i8 %5, 21                            ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10080)
   %i.gj = invoke fastcc noundef zeroext i1 @_RNvMs_NtCsb6FLkjZuKG_18ruff_python_parser6parserNtB4_6Parser3eat(ptr noalias noundef nonnull align 8 dereferenceable(464) %1, i8 noundef range(i8 7, 88) %..i)
           to label %.noexc32 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

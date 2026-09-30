@@ -174,29 +174,47 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.t = phi i64 [ %.pre.i, %bb.e ], [ %i.p, %bb.d ]
-  %.fr.i = freeze i64 %i.t                        ; 2 uses
-  %1 = and i64 %.fr.i, 17179869184
-  %.not28.i = icmp eq i64 %1, 0
+  %1 = lshr i64 %i.t, 32
+  %2 = trunc nuw i64 %1 to i32                    ; 2 uses
+  %3 = and i32 %2, 4
+  %.not28.i = icmp eq i32 %3, 0                   ; 2 uses
+  %4 = lshr i32 %2, 1
+  %5 = and i32 %4, 4
+  %..i = or disjoint i32 %5, 16
   %.1.i = select i1 %.not28.i, ptr %i.j, ptr null ; 2 uses
+  %.023.i = select i1 %.not28.i, i32 %..i, i32 20
+  %.023.fr.i = freeze i32 %.023.i                 ; 5 uses
   %.not3034.i = icmp eq ptr %i.n, null
   br i1 %.not3034.i, label %.loopexit.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.f
-  %2 = and i64 %.fr.i, 51539607552
-  %i.u = icmp eq i64 %2, 0
+  %6 = and i32 %.023.fr.i, 4
+  %i.u = icmp eq i32 %6, 0
   br i1 %i.u, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %rev_list_push.exit.us.i
   %.02235.us.i = phi ptr [ %i.af, %rev_list_push.exit.us.i ], [ %i.n, %.lr.ph.i ] ; 2 uses
   %i.v = load ptr, ptr %.02235.us.i, align 8, !tbaa !27 ; 5 uses
-  %i.w = load i64, ptr %i.v, align 8              ; 2 uses
+  %i.w = load i64, ptr %i.v, align 8              ; 3 uses
   %i.x = and i64 %i.w, 68719476736
   %.not31.us.i = icmp eq i64 %i.x, 0
-  br i1 %.not31.us.i, label %bb.g, label %rev_list_push.exit.us.i
+  br i1 %.not31.us.i, label %7, label %rev_list_push.exit.us.i
 
-bb.g:                                             ; preds = %.lr.ph.split.us.i
-  %3 = or disjoint i64 %i.w, 68719476736
-  store i64 %3, ptr %i.v, align 8
+7:                                                ; preds = %.lr.ph.split.us.i
+  %8 = lshr i64 %i.w, 32
+  %9 = trunc nuw i64 %8 to i32                    ; 2 uses
+  %10 = and i32 %.023.fr.i, %9
+  %.not.i.us.i = icmp eq i32 %10, 0
+  br i1 %.not.i.us.i, label %bb.g, label %rev_list_push.exit.us.i
+
+bb.g:                                             ; preds = %7
+  %11 = and i32 %9, 536870895
+  %12 = or i32 %11, %.023.fr.i
+  %13 = zext nneg i32 %12 to i64
+  %14 = shl nuw nsw i64 %13, 32
+  %15 = and i64 %i.w, -2305843004918726657
+  %16 = add nuw nsw i64 %14, %15
+  store i64 %16, ptr %i.v, align 8
   %i.y = load ptr, ptr @the_repository, align 8, !tbaa !21
   %i.z = tail call i32 @repo_parse_commit_gently(ptr noundef %i.y, ptr noundef nonnull %i.v, i32 noundef 0) #5
   %.not8.i.us.i = icmp eq i32 %i.z, 0
@@ -215,7 +233,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.ad, ptr %i.d, align 8, !tbaa !22
   br label %rev_list_push.exit.us.i
 
-rev_list_push.exit.us.i:                          ; preds = %bb.i, %bb.h, %bb.g, %.lr.ph.split.us.i
+rev_list_push.exit.us.i:                          ; preds = %bb.i, %bb.h, %bb.g, %7, %.lr.ph.split.us.i
   %i.ae = getelementptr inbounds nuw i8, ptr %.02235.us.i, i64 8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !42 ; 2 uses
   %.not30.us.i = icmp eq ptr %i.af, null
@@ -224,14 +242,26 @@ rev_list_push.exit.us.i:                          ; preds = %bb.i, %bb.h, %bb.g,
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %rev_list_push.exit.i
   %.02235.i = phi ptr [ %i.ar, %rev_list_push.exit.i ], [ %i.n, %.lr.ph.i ] ; 3 uses
   %i.ag = load ptr, ptr %.02235.i, align 8, !tbaa !27 ; 5 uses
-  %i.ah = load i64, ptr %i.ag, align 8            ; 2 uses
-  %i.ai = and i64 %i.ah, 85899345920
+  %i.ah = load i64, ptr %i.ag, align 8            ; 3 uses
+  %i.ai = and i64 %i.ah, 68719476736
   %or.cond.i = icmp eq i64 %i.ai, 0
-  br i1 %or.cond.i, label %bb.j, label %rev_list_push.exit.i
+  br i1 %or.cond.i, label %17, label %rev_list_push.exit.i
 
-bb.j:                                             ; preds = %.lr.ph.split.i
-  %4 = or disjoint i64 %i.ah, 85899345920
-  store i64 %4, ptr %i.ag, align 8
+17:                                               ; preds = %.lr.ph.split.i
+  %18 = lshr i64 %i.ah, 32
+  %19 = trunc nuw i64 %18 to i32                  ; 2 uses
+  %20 = and i32 %.023.fr.i, %19
+  %.not.i.i = icmp eq i32 %20, 0
+  br i1 %.not.i.i, label %bb.j, label %rev_list_push.exit.i
+
+bb.j:                                             ; preds = %17
+  %21 = and i32 %19, 536870891
+  %22 = or i32 %21, %.023.fr.i
+  %23 = zext nneg i32 %22 to i64
+  %24 = shl nuw nsw i64 %23, 32
+  %25 = and i64 %i.ah, -2305843004918726657
+  %26 = add nuw nsw i64 %24, %25
+  store i64 %26, ptr %i.ag, align 8
   %i.aj = load ptr, ptr @the_repository, align 8, !tbaa !21
   %i.ak = tail call i32 @repo_parse_commit_gently(ptr noundef %i.aj, ptr noundef nonnull %i.ag, i32 noundef 0) #5
   %.not8.i.i = icmp eq i32 %i.ak, 0
@@ -250,7 +280,7 @@ bb.l:                                             ; preds = %bb.k
   store i32 %i.ao, ptr %i.d, align 8, !tbaa !22
   br label %rev_list_push.exit.i
 
-rev_list_push.exit.i:                             ; preds = %bb.l, %bb.k, %bb.j, %.lr.ph.split.i
+rev_list_push.exit.i:                             ; preds = %bb.l, %bb.k, %bb.j, %17, %.lr.ph.split.i
   %i.ap = load ptr, ptr %.02235.i, align 8, !tbaa !27
   tail call fastcc void @mark_common(ptr noundef nonnull %i.b, ptr noundef %i.ap, i32 noundef 1, i32 noundef 0)
   %i.aq = getelementptr inbounds nuw i8, ptr %.02235.i, i64 8

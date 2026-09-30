@@ -204,17 +204,18 @@ heap_page_would_be_all_visible.exit.i.i:          ; preds = %heap_page_would_be_
   br label %bb.ag
 
 .loopexit.i.thread.i.i:                           ; preds = %bb.af, %.loopexit.i.i.i, %BufferGetPage.exit.i.i.i
-  %.364.ph.i.i = phi i8 [ %.162.i.i, %bb.af ], [ %.162.i.i, %.loopexit.i.i.i ], [ 1, %BufferGetPage.exit.i.i.i ]
+  %.364.ph.i.i = phi i8 [ %.162.i.i, %bb.af ], [ %.162.i.i, %.loopexit.i.i.i ], [ 1, %BufferGetPage.exit.i.i.i ] ; 2 uses
   %.4.ph.i.i = phi i32 [ %.160.i.i, %bb.af ], [ %.160.i.i, %.loopexit.i.i.i ], [ 0, %BufferGetPage.exit.i.i.i ]
   store i16 0, ptr %i.dg, align 4
-  %3 = trunc nuw i8 %.364.ph.i.i to i1            ; 2 uses
-  %spec.select.i.i = select i1 %3, i8 3, i8 1
+  %3 = shl nuw nsw i8 %.364.ph.i.i, 1
+  %spec.select.i.i = or disjoint i8 %3, 1
   call void @LockBufferInternal(i32 noundef %i.eh, i32 noundef 3) #6
+  %4 = trunc nuw i8 %.364.ph.i.i to i1
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.loopexit.i.thread.i.i, %heap_page_would_be_all_visible.exit.i.i
   %.472.i.i = phi i32 [ %.4.ph.i.i, %.loopexit.i.thread.i.i ], [ %.4.i.i, %heap_page_would_be_all_visible.exit.i.i ]
-  %.36471.i.i = phi i1 [ %3, %.loopexit.i.thread.i.i ], [ false, %heap_page_would_be_all_visible.exit.i.i ]
+  %.36471.i.i = phi i1 [ %4, %.loopexit.i.thread.i.i ], [ false, %heap_page_would_be_all_visible.exit.i.i ]
   %.1.i.i = phi i8 [ %spec.select.i.i, %.loopexit.i.thread.i.i ], [ 0, %heap_page_would_be_all_visible.exit.i.i ] ; 4 uses
   %i.he = load volatile i32, ptr @CritSectionCount, align 4
   %i.hf = add i32 %i.he, 1

@@ -204,7 +204,7 @@ define internal ptr @stat_filemode(ptr nofree readnone captures(none) %0, ptr no
 bb.a:
   %i.a = alloca [10 x i8], align 8                ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  %i.b = tail call fastcc i32 @_PyLong_AsMode_t(ptr noundef %1) ; 3 uses
+  %i.b = tail call fastcc i32 @_PyLong_AsMode_t(ptr noundef %1) ; 17 uses
   %i.c = icmp eq i32 %i.b, -1
   br i1 %i.c, label %bb.b, label %.split
 
@@ -213,64 +213,104 @@ bb.a:
   %i.e = and i32 %i.d, 15
   %switch.tableidx = add nsw i32 %i.e, -1         ; 2 uses
   %i.f = icmp ult i32 %switch.tableidx, 12
-  br i1 %i.f, label %switch.lookup, label %filetype.exit.a
+  br i1 %i.f, label %switch.lookup, label %filetype.exit
 
 switch.lookup:                                    ; preds = %.split
   %i.g = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.stat_filemode, i64 %i.g
   %switch.load = load i8, ptr %switch.gep, align 1
+  br label %filetype.exit
+
+filetype.exit:                                    ; preds = %.split, %switch.lookup
+  %.0.i = phi i8 [ %switch.load, %switch.lookup ], [ 63, %.split ]
+  store i8 %.0.i, ptr %i.a, align 8, !tbaa !11
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  %3 = and i32 %i.b, 256
+  %.not.i = icmp eq i32 %3, 0
+  %4 = select i1 %.not.i, i8 45, i8 114
+  store i8 %4, ptr %2, align 1, !tbaa !11
+  %5 = and i32 %i.b, 128
+  %.not26.i = icmp eq i32 %5, 0
+  %6 = select i1 %.not26.i, i8 45, i8 119
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  store i8 %6, ptr %7, align 2, !tbaa !11
+  %8 = and i32 %i.b, 2048
+  %.not27.i = icmp eq i32 %8, 0
+  br i1 %.not27.i, label %14, label %9
+
+9:                                                ; preds = %filetype.exit
+  %10 = trunc i32 %i.b to i8
+  %11 = lshr i8 %10, 1
+  %12 = and i8 %11, 32
+  %13 = or disjoint i8 %12, 83
+  br label %17
+
+14:                                               ; preds = %filetype.exit
+  %15 = and i32 %i.b, 64
+  %.not28.i = icmp eq i32 %15, 0
+  %16 = select i1 %.not28.i, i8 45, i8 120
+  br label %17
+
+17:                                               ; preds = %14, %9
+  %.sink.i = phi i8 [ %16, %14 ], [ %13, %9 ]
+  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  store i8 %.sink.i, ptr %18, align 1, !tbaa !11
+  %19 = and i32 %i.b, 32
+  %.not30.i = icmp eq i32 %19, 0
+  %20 = select i1 %.not30.i, i8 45, i8 114
+  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  store i8 %20, ptr %21, align 4, !tbaa !11
+  %22 = and i32 %i.b, 16
+  %.not31.i = icmp eq i32 %22, 0
+  %23 = select i1 %.not31.i, i8 45, i8 119
+  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+  store i8 %23, ptr %24, align 1, !tbaa !11
+  %25 = and i32 %i.b, 1024
+  %.not32.i = icmp eq i32 %25, 0
+  br i1 %.not32.i, label %30, label %26
+
+26:                                               ; preds = %17
+  %.tr.i = trunc i32 %i.b to i8
+  %27 = shl i8 %.tr.i, 2
+  %28 = and i8 %27, 32
+  %29 = or disjoint i8 %28, 83
   br label %filetype.exit.a
 
-filetype.exit.a:                                  ; preds = %.split, %switch.lookup
-  %.0.i.a = phi i8 [ %switch.load, %switch.lookup ], [ 63, %.split ]
-  store i8 %.0.i.a, ptr %i.a, align 8, !tbaa !11
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %3 = insertelement <12 x i32> poison, i32 %i.b, i64 0
-  %4 = shufflevector <12 x i32> %3, <12 x i32> poison, <12 x i32> zeroinitializer
-  %5 = and <12 x i32> %4, <i32 1, i32 512, i32 2, i32 4, i32 8, i32 1024, i32 16, i32 32, i32 64, i32 2048, i32 128, i32 256>
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
+30:                                               ; preds = %17
+  %31 = and i32 %i.b, 8
+  %.not33.i = icmp eq i32 %31, 0
+  %32 = select i1 %.not33.i, i8 45, i8 120
+  br label %filetype.exit.a
+
+filetype.exit.a:                                  ; preds = %30, %26
+  %.0.i.a = phi i8 [ %32, %30 ], [ %29, %26 ]
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %12 = icmp eq <12 x i32> %5, zeroinitializer    ; 12 uses
-  %13 = extractelement <12 x i1> %12, i64 11
-  %14 = select i1 %13, i8 45, i8 114
-  store i8 %14, ptr %2, align 1, !tbaa !11
-  %15 = extractelement <12 x i1> %12, i64 10
-  %16 = select i1 %15, i8 45, i8 119
-  store i8 %16, ptr %6, align 2, !tbaa !11
-  %17 = extractelement <12 x i1> %12, i64 8       ; 2 uses
-  %18 = select i1 %17, i8 45, i8 120
-  %19 = select i1 %17, i8 83, i8 115
-  %20 = extractelement <12 x i1> %12, i64 9
-  %.sink.i = select i1 %20, i8 %18, i8 %19
-  store i8 %.sink.i, ptr %7, align 1, !tbaa !11
-  %21 = extractelement <12 x i1> %12, i64 7
-  %i.i = select i1 %21, i8 45, i8 114
-  store i8 %i.i, ptr %8, align 4, !tbaa !11
-  %22 = extractelement <12 x i1> %12, i64 6
-  %23 = select i1 %22, i8 45, i8 119
-  store i8 %23, ptr %9, align 1, !tbaa !11
-  %24 = extractelement <12 x i1> %12, i64 4       ; 2 uses
-  %25 = select i1 %24, i8 45, i8 120
-  %26 = select i1 %24, i8 83, i8 115
-  %27 = extractelement <12 x i1> %12, i64 5
-  %.sink40.i = select i1 %27, i8 %25, i8 %26
-  store i8 %.sink40.i, ptr %i.h, align 2, !tbaa !11
-  %28 = extractelement <12 x i1> %12, i64 3
-  %i.j = select i1 %28, i8 45, i8 114
-  store i8 %i.j, ptr %10, align 1, !tbaa !11
-  %29 = extractelement <12 x i1> %12, i64 2
-  %30 = select i1 %29, i8 45, i8 119
-  store i8 %30, ptr %11, align 8, !tbaa !11
-  %31 = extractelement <12 x i1> %12, i64 0       ; 2 uses
-  %32 = select i1 %31, i8 45, i8 120
-  %33 = select i1 %31, i8 84, i8 116
-  %34 = extractelement <12 x i1> %12, i64 1
-  %.sink41.i = select i1 %34, i8 %32, i8 %33
+  store i8 %.0.i.a, ptr %i.h, align 2, !tbaa !11
+  %33 = and i32 %i.b, 4
+  %.not35.i = icmp eq i32 %33, 0
+  %i.i = select i1 %.not35.i, i8 45, i8 114
+  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
+  store i8 %i.i, ptr %34, align 1, !tbaa !11
+  %35 = and i32 %i.b, 2
+  %.not36.i = icmp eq i32 %35, 0
+  %i.j = select i1 %.not36.i, i8 45, i8 119
+  %36 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i8 %i.j, ptr %36, align 8, !tbaa !11
+  %37 = and i32 %i.b, 512
+  %.not37.i = icmp eq i32 %37, 0
+  br i1 %.not37.i, label %42, label %38
+
+38:                                               ; preds = %filetype.exit.a
+  %.tr40.i = trunc i32 %i.b to i8
+  %39 = shl i8 %.tr40.i, 5
+  %40 = and i8 %39, 32
+  %41 = or disjoint i8 %40, 84
+  br label %bb.c
+
+42:                                               ; preds = %filetype.exit.a
+  %43 = and i32 %i.b, 1
+  %.not38.i = icmp eq i32 %43, 0
+  %44 = select i1 %.not38.i, i8 45, i8 120
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -284,8 +324,8 @@ bb.b:                                             ; preds = %bb.a
   store i8 119, ptr %i.l, align 8, !tbaa !11
   br label %bb.c
 
-bb.c:                                             ; preds = %.split4, %filetype.exit.a
-  %.sink = phi i8 [ 116, %.split4 ], [ %.sink41.i, %filetype.exit.a ]
+bb.c:                                             ; preds = %42, %38, %.split4
+  %.sink = phi i8 [ 116, %.split4 ], [ %44, %42 ], [ %41, %38 ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   store i8 %.sink, ptr %i.m, align 1, !tbaa !11
   %i.n = call ptr @PyUnicode_FromStringAndSize(ptr noundef nonnull %i.a, i64 noundef 10) #3

@@ -205,18 +205,18 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.f = load i8, ptr %i.e, align 4               ; 2 uses
   %i.g = and i8 %i.f, 4                           ; 2 uses
-  %.not.i = icmp eq i8 %i.g, 0
-  %spec.select.i = select i1 %.not.i, i32 3, i32 67 ; 2 uses
+  %1 = shl nuw nsw i8 %i.g, 4
   %i.h = and i8 %i.f, 64
   %.not2.i = icmp eq i8 %i.h, 0                   ; 3 uses
-  %.sroa.0.0.insert.insert.i17.i.i = or disjoint i32 %spec.select.i, 12
-  %.sroa.014.1.i = select i1 %.not2.i, i32 %spec.select.i, i32 %.sroa.0.0.insert.insert.i17.i.i
+  %.sroa.014.1.v.i = select i1 %.not2.i, i8 3, i8 15
+  %.sroa.014.1.i = or disjoint i8 %.sroa.014.1.v.i, %1
   %.sroa.6.1.i = select i1 %.not2.i, i32 19456, i32 20224
   %.sroa.8.1.i = select i1 %.not2.i, i8 %i.g, i8 4
   %.sroa.8.0.insert.ext.i = zext nneg i8 %.sroa.8.1.i to i32
   %.sroa.8.0.insert.shift.i = shl nuw nsw i32 %.sroa.8.0.insert.ext.i, 16
   %.sroa.6.0.insert.insert.i = or disjoint i32 %.sroa.8.0.insert.shift.i, %.sroa.6.1.i
-  %.sroa.014.0.insert.insert.i = or disjoint i32 %.sroa.6.0.insert.insert.i, %.sroa.014.1.i
+  %.sroa.014.0.insert.ext.i = zext nneg i8 %.sroa.014.1.i to i32
+  %.sroa.014.0.insert.insert.i = or disjoint i32 %.sroa.6.0.insert.insert.i, %.sroa.014.0.insert.ext.i
   br label %_ZNK2v88internal8compiler10turboshaft15TaggedBitcastOp7EffectsEv.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -282,20 +282,20 @@ bb.i:                                             ; preds = %bb.b
 bb.j:                                             ; preds = %bb.b
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.ag = load i8, ptr %i.af, align 1, !range !40, !noundef !36 ; 2 uses
-  %1 = trunc nuw i8 %i.ag to i1
-  %spec.select.i6 = select i1 %1, i32 67, i32 3   ; 2 uses
+  %2 = shl nuw nsw i8 %i.ag, 6
   %spec.select28.i = shl nuw nsw i8 %i.ag, 2
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 25
   %i.ai = load i8, ptr %i.ah, align 1, !range !40, !noundef !36
   %i.aj = trunc nuw i8 %i.ai to i1                ; 3 uses
-  %.sroa.0.0.insert.insert.i17.i.i7 = or disjoint i32 %spec.select.i6, 12
-  %.sroa.013.1.i = select i1 %i.aj, i32 %.sroa.0.0.insert.insert.i17.i.i7, i32 %spec.select.i6
+  %.sroa.013.1.v.i = select i1 %i.aj, i8 15, i8 3
+  %.sroa.013.1.i = or disjoint i8 %.sroa.013.1.v.i, %2
   %.sroa.6.1.i8 = select i1 %i.aj, i32 20224, i32 19456
   %.sroa.8.1.i9 = select i1 %i.aj, i8 4, i8 %spec.select28.i
   %.sroa.8.0.insert.ext.i10 = zext nneg i8 %.sroa.8.1.i9 to i32
   %.sroa.8.0.insert.shift.i11 = shl nuw nsw i32 %.sroa.8.0.insert.ext.i10, 16
   %.sroa.6.0.insert.insert.i12 = or disjoint i32 %.sroa.8.0.insert.shift.i11, %.sroa.6.1.i8
-  %.sroa.013.0.insert.insert.i = or disjoint i32 %.sroa.6.0.insert.insert.i12, %.sroa.013.1.i
+  %.sroa.013.0.insert.ext.i = zext nneg i8 %.sroa.013.1.i to i32
+  %.sroa.013.0.insert.insert.i = or disjoint i32 %.sroa.6.0.insert.insert.i12, %.sroa.013.0.insert.ext.i
   br label %_ZNK2v88internal8compiler10turboshaft15TaggedBitcastOp7EffectsEv.exit
 
 bb.k:                                             ; preds = %bb.b
@@ -308,8 +308,9 @@ bb.k:                                             ; preds = %bb.b
 bb.l:                                             ; preds = %bb.b
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.ao = load i8, ptr %i.an, align 1, !range !40, !noundef !36
-  %2 = trunc nuw i8 %i.ao to i1
-  %.sroa.015.0.insert.insert.i13 = select i1 %2, i32 282447, i32 282383
+  %3 = shl nuw nsw i8 %i.ao, 6
+  %.sroa.015.0.insert.ext.i = zext nneg i8 %3 to i32
+  %.sroa.015.0.insert.insert.i9 = or disjoint i32 %.sroa.015.0.insert.ext.i, 282383
   br label %_ZNK2v88internal8compiler10turboshaft15TaggedBitcastOp7EffectsEv.exit
 
 bb.m:                                             ; preds = %bb.b
@@ -318,12 +319,13 @@ bb.m:                                             ; preds = %bb.b
 bb.n:                                             ; preds = %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.aq = load i8, ptr %i.ap, align 4, !range !40, !noundef !36 ; 2 uses
-  %3 = trunc nuw i8 %i.aq to i1
-  %spec.select.i14 = select i1 %3, i32 67, i32 3
+  %4 = shl nuw nsw i8 %i.aq, 6
+  %spec.select.i10 = or disjoint i8 %4, 3
   %spec.select17.i = shl nuw nsw i8 %i.aq, 2
   %.sroa.512.0.insert.ext.i = zext nneg i8 %spec.select17.i to i32
   %.sroa.512.0.insert.shift.i = shl nuw nsw i32 %.sroa.512.0.insert.ext.i, 16
-  %.sroa.49.0.insert.insert.i = or disjoint i32 %.sroa.512.0.insert.shift.i, %spec.select.i14
+  %.sroa.07.0.insert.ext.i = zext nneg i8 %spec.select.i10 to i32
+  %.sroa.49.0.insert.insert.i = or disjoint i32 %.sroa.512.0.insert.shift.i, %.sroa.07.0.insert.ext.i
   %.sroa.07.0.insert.insert.i = or disjoint i32 %.sroa.49.0.insert.insert.i, 19456
   br label %_ZNK2v88internal8compiler10turboshaft15TaggedBitcastOp7EffectsEv.exit
 
@@ -350,11 +352,12 @@ bb.p:                                             ; preds = %bb.b
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.ay = load i8, ptr %i.ax, align 4
   %i.az = and i8 %i.ay, 4                         ; 2 uses
-  %.not.i18 = icmp eq i8 %i.az, 0
-  %spec.select.i19 = select i1 %.not.i18, i32 3, i32 67
+  %5 = shl nuw nsw i8 %i.az, 4
+  %spec.select.i15 = or disjoint i8 %5, 3
   %.sroa.512.0.insert.ext.i20 = zext nneg i8 %i.az to i32
   %.sroa.512.0.insert.shift.i21 = shl nuw nsw i32 %.sroa.512.0.insert.ext.i20, 16
-  %.sroa.49.0.insert.insert.i22 = or disjoint i32 %.sroa.512.0.insert.shift.i21, %spec.select.i19
+  %.sroa.07.0.insert.ext.i18 = zext nneg i8 %spec.select.i15 to i32
+  %.sroa.49.0.insert.insert.i22 = or disjoint i32 %.sroa.512.0.insert.shift.i21, %.sroa.07.0.insert.ext.i18
   %.sroa.07.0.insert.insert.i23 = or disjoint i32 %.sroa.49.0.insert.insert.i22, 19456
   br label %_ZNK2v88internal8compiler10turboshaft15TaggedBitcastOp7EffectsEv.exit
 
@@ -362,11 +365,12 @@ bb.q:                                             ; preds = %bb.b
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.bb = load i8, ptr %i.ba, align 4
   %i.bc = and i8 %i.bb, 4                         ; 2 uses
-  %.not.i24 = icmp eq i8 %i.bc, 0
-  %spec.select.i25 = select i1 %.not.i24, i32 3, i32 67
+  %6 = shl nuw nsw i8 %i.bc, 4
+  %spec.select.i21 = or disjoint i8 %6, 3
   %.sroa.512.0.insert.ext.i26 = zext nneg i8 %i.bc to i32
   %.sroa.512.0.insert.shift.i27 = shl nuw nsw i32 %.sroa.512.0.insert.ext.i26, 16
-  %.sroa.49.0.insert.insert.i28 = or disjoint i32 %.sroa.512.0.insert.shift.i27, %spec.select.i25
+  %.sroa.07.0.insert.ext.i24 = zext nneg i8 %spec.select.i21 to i32
+  %.sroa.49.0.insert.insert.i28 = or disjoint i32 %.sroa.512.0.insert.shift.i27, %.sroa.07.0.insert.ext.i24
   %.sroa.07.0.insert.insert.i29 = or disjoint i32 %.sroa.49.0.insert.insert.i28, 19456
   br label %_ZNK2v88internal8compiler10turboshaft15TaggedBitcastOp7EffectsEv.exit
 
@@ -375,7 +379,7 @@ bb.r:                                             ; preds = %bb.b
   unreachable
 
 _ZNK2v88internal8compiler10turboshaft15TaggedBitcastOp7EffectsEv.exit: ; preds = %switch.lookup, %bb.b, %bb.a, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %.sroa.0.1 = phi i32 [ %.sroa.014.0.insert.insert.i, %bb.c ], [ %.sroa.021.0.insert.insert.i, %bb.d ], [ %.sroa.0.0.copyload.i, %bb.e ], [ %.sroa.0.0.copyload.i3, %bb.f ], [ %.sroa.0.0.copyload30, %bb.a ], [ %.sroa.015.0.insert.insert.i, %bb.g ], [ %spec.select.i4, %bb.h ], [ %spec.select.i5, %bb.i ], [ %switch.ext, %switch.lookup ], [ %.sroa.013.0.insert.insert.i, %bb.j ], [ %.sroa.09.0.insert.insert.i, %bb.k ], [ %.sroa.015.0.insert.insert.i13, %bb.l ], [ 282383, %bb.m ], [ %.sroa.07.0.insert.insert.i, %bb.n ], [ %.sroa.013.0.insert.insert.i17, %bb.o ], [ %.sroa.07.0.insert.insert.i23, %bb.p ], [ %.sroa.07.0.insert.insert.i29, %bb.q ], [ 487263, %bb.b ]
+  %.sroa.0.1 = phi i32 [ %.sroa.014.0.insert.insert.i, %bb.c ], [ %.sroa.021.0.insert.insert.i, %bb.d ], [ %.sroa.0.0.copyload.i, %bb.e ], [ %.sroa.0.0.copyload.i3, %bb.f ], [ %.sroa.0.0.copyload30, %bb.a ], [ %.sroa.015.0.insert.insert.i, %bb.g ], [ %spec.select.i4, %bb.h ], [ %spec.select.i5, %bb.i ], [ %switch.ext, %switch.lookup ], [ %.sroa.013.0.insert.insert.i, %bb.j ], [ %.sroa.09.0.insert.insert.i, %bb.k ], [ %.sroa.015.0.insert.insert.i9, %bb.l ], [ 282383, %bb.m ], [ %.sroa.07.0.insert.insert.i, %bb.n ], [ %.sroa.013.0.insert.insert.i17, %bb.o ], [ %.sroa.07.0.insert.insert.i23, %bb.p ], [ %.sroa.07.0.insert.insert.i29, %bb.q ], [ 487263, %bb.b ]
   ret i32 %.sroa.0.1
 }
 

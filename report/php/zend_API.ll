@@ -205,11 +205,11 @@ bb.a:
   store ptr %3, ptr %4, align 8, !tbaa !58
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !58
-  %5 = and i32 %i.c, 64
-  %.not = icmp eq i32 %5, 0
-  %6 = select i1 %.not, i32 262, i32 6
+  %5 = shl i32 %i.c, 2
+  %6 = and i32 %5, 256
+  %7 = xor i32 %6, 262
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %6, ptr %i.d, align 8, !tbaa !58
+  store i32 %7, ptr %i.d, align 8, !tbaa !58
   %i.e = load ptr, ptr %0, align 8, !tbaa !58     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
   %i.f = load i8, ptr %1, align 1, !tbaa !58      ; 3 uses
@@ -612,11 +612,11 @@ bb.a:
   store ptr %2, ptr %3, align 8, !tbaa !58
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.b = load i32, ptr %i.a, align 4, !tbaa !58
-  %4 = and i32 %i.b, 64
-  %.not = icmp eq i32 %4, 0
-  %5 = select i1 %.not, i32 262, i32 6
+  %4 = shl i32 %i.b, 2
+  %5 = and i32 %4, 256
+  %6 = xor i32 %5, 262
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %5, ptr %i.c, align 8, !tbaa !58
+  store i32 %6, ptr %i.c, align 8, !tbaa !58
   %i.d = load ptr, ptr %0, align 8, !tbaa !58
   %i.e = call ptr @zend_hash_index_update(ptr noundef %i.d, i64 noundef %1, ptr noundef nonnull %3) #32 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
@@ -811,11 +811,11 @@ bb.a:
   store ptr %1, ptr %2, align 8, !tbaa !58
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.b = load i32, ptr %i.a, align 4, !tbaa !58
-  %3 = and i32 %i.b, 64
-  %.not = icmp eq i32 %3, 0
-  %4 = select i1 %.not, i32 262, i32 6
+  %3 = shl i32 %i.b, 2
+  %4 = and i32 %3, 256
+  %5 = xor i32 %4, 262
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %4, ptr %i.c, align 8, !tbaa !58
+  store i32 %5, ptr %i.c, align 8, !tbaa !58
   %i.d = load ptr, ptr %0, align 8, !tbaa !58
   %i.e = call ptr @zend_hash_next_index_insert(ptr noundef %i.d, ptr noundef nonnull %2) #32
   %.not6 = icmp eq ptr %i.e, null
@@ -1218,11 +1218,11 @@ zend_string_alloc.exit.i:
   store ptr %3, ptr %4, align 8, !tbaa !58
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.b = load i32, ptr %i.a, align 4, !tbaa !58
-  %5 = and i32 %i.b, 64
-  %.not = icmp eq i32 %5, 0
-  %6 = select i1 %.not, i32 262, i32 6
+  %5 = shl i32 %i.b, 2
+  %6 = and i32 %5, 256
+  %7 = xor i32 %6, 262
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %6, ptr %i.c, align 8, !tbaa !58
+  store i32 %7, ptr %i.c, align 8, !tbaa !58
   %i.d = and i64 %2, -8
   %i.e = add i64 %i.d, 32
   %i.f = tail call noalias ptr @_emalloc(i64 noundef %i.e) #35 ; 9 uses
@@ -1625,9 +1625,9 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   %i.du = load i32, ptr %i.aa, align 4, !tbaa !85 ; 3 uses
-  %6 = and i32 %i.du, 1
-  %.not292 = icmp eq i32 %6, 0
-  %spec.select328.v = select i1 %.not292, i32 80, i32 16
+  %6 = shl i32 %i.du, 6
+  %7 = and i32 %6, 64
+  %spec.select328.v = xor i32 %7, 80
   %spec.select328 = or i32 %i.du, %spec.select328.v
   store i32 %spec.select328, ptr %i.aa, align 4, !tbaa !85
   %i.dv = and i32 %i.ds, 16
@@ -2030,7 +2030,7 @@ zval_ptr_dtor_str.exit:                           ; preds = %bb.e, %bb.f, %bb.g
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !78   ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 4
-  %i.y = load i32, ptr %i.x, align 4, !tbaa !58
+  %i.y = load i32, ptr %i.x, align 4, !tbaa !58   ; 2 uses
   %i.z = and i32 %i.y, 64
   %.not.i13 = icmp eq i32 %i.z, 0
   br i1 %.not.i13, label %bb.h, label %zend_string_copy.exit14
@@ -2043,19 +2043,21 @@ bb.h:                                             ; preds = %zval_ptr_dtor_str.e
   br label %zend_string_copy.exit14
 
 zend_string_copy.exit14:                          ; preds = %zval_ptr_dtor_str.exit, %bb.h
-  %5 = phi i32 [ 6, %zval_ptr_dtor_str.exit ], [ 262, %bb.h ]
   %i.ac = phi ptr [ %i.t, %zval_ptr_dtor_str.exit ], [ %.pre, %bb.h ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
   store ptr %i.w, ptr %3, align 8, !tbaa !58
+  %5 = shl i32 %i.y, 2
+  %6 = and i32 %5, 256
+  %7 = xor i32 %6, 262
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %5, ptr %i.ad, align 8, !tbaa !58
+  store i32 %7, ptr %i.ad, align 8, !tbaa !58
   %i.ae = call ptr @zend_hash_next_index_insert(ptr noundef %i.ac, ptr noundef nonnull %3) #32 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
   %i.af = load ptr, ptr %4, align 8, !tbaa !110
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !58 ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
-  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !58
+  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !58 ; 2 uses
   %i.ak = and i32 %i.aj, 64
   %.not.i = icmp eq i32 %i.ak, 0
   br i1 %.not.i, label %bb.i, label %zend_string_copy.exit
@@ -2067,11 +2069,13 @@ bb.i:                                             ; preds = %zend_string_copy.ex
   br label %zend_string_copy.exit
 
 zend_string_copy.exit:                            ; preds = %zend_string_copy.exit14, %bb.i
-  %6 = phi i32 [ 6, %zend_string_copy.exit14 ], [ 262, %bb.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #32
   store ptr %i.ah, ptr %2, align 8, !tbaa !58
+  %8 = shl i32 %i.aj, 2
+  %9 = and i32 %8, 256
+  %10 = xor i32 %9, 262
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %6, ptr %i.an, align 8, !tbaa !58
+  store i32 %10, ptr %i.an, align 8, !tbaa !58
   %i.ao = load ptr, ptr %0, align 8, !tbaa !58
   %i.ap = call ptr @zend_hash_next_index_insert(ptr noundef %i.ao, ptr noundef nonnull %2) #32 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #32
@@ -2474,7 +2478,7 @@ bb.f:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !78   ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 4
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !58
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !58   ; 2 uses
   %i.x = and i32 %i.w, 64
   %.not.i32 = icmp eq i32 %i.x, 0
   br i1 %.not.i32, label %bb.g, label %zend_string_copy.exit33
@@ -2487,12 +2491,14 @@ bb.g:                                             ; preds = %bb.f
   br label %zend_string_copy.exit33
 
 zend_string_copy.exit33:                          ; preds = %bb.f, %bb.g
-  %5 = phi i32 [ 6, %bb.f ], [ 262, %bb.g ]
   %i.aa = phi ptr [ %i.i, %bb.f ], [ %.pre, %bb.g ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
   store ptr %i.u, ptr %3, align 8, !tbaa !58
+  %5 = shl i32 %i.w, 2
+  %6 = and i32 %5, 256
+  %7 = xor i32 %6, 262
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %5, ptr %i.ab, align 8, !tbaa !58
+  store i32 %7, ptr %i.ab, align 8, !tbaa !58
   %i.ac = call ptr @zend_hash_next_index_insert(ptr noundef %i.aa, ptr noundef nonnull %3) #32 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
   br label %bb.h
@@ -2502,7 +2508,7 @@ bb.h:                                             ; preds = %zend_string_copy.ex
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !58 ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 4
-  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !58
+  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !58 ; 2 uses
   %i.ai = and i32 %i.ah, 64
   %.not.i = icmp eq i32 %i.ai, 0
   br i1 %.not.i, label %bb.i, label %zend_string_copy.exit
@@ -2514,11 +2520,13 @@ bb.i:                                             ; preds = %bb.h
   br label %zend_string_copy.exit
 
 zend_string_copy.exit:                            ; preds = %bb.h, %bb.i
-  %6 = phi i32 [ 6, %bb.h ], [ 262, %bb.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #32
   store ptr %i.af, ptr %2, align 8, !tbaa !58
+  %8 = shl i32 %i.ah, 2
+  %9 = and i32 %8, 256
+  %10 = xor i32 %9, 262
   %i.al = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %6, ptr %i.al, align 8, !tbaa !58
+  store i32 %10, ptr %i.al, align 8, !tbaa !58
   %i.am = load ptr, ptr %1, align 8, !tbaa !58
   %i.an = call ptr @zend_hash_next_index_insert(ptr noundef %i.am, ptr noundef nonnull %2) #32 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #32
@@ -2921,11 +2929,11 @@ bb.a:
   store ptr %1, ptr %2, align 8, !tbaa !58
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.b = load i32, ptr %i.a, align 4, !tbaa !58
-  %3 = and i32 %i.b, 64
-  %.not = icmp eq i32 %3, 0
-  %4 = select i1 %.not, i32 262, i32 6
+  %3 = shl i32 %i.b, 2
+  %4 = and i32 %3, 256
+  %5 = xor i32 %4, 262
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %4, ptr %i.c, align 8, !tbaa !58
+  store i32 %5, ptr %i.c, align 8, !tbaa !58
   %i.d = call i32 @zend_try_assign_typed_ref(ptr noundef %0, ptr noundef nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #32
   ret i32 %i.d
@@ -3328,11 +3336,11 @@ zend_string_alloc.exit.i:
   store ptr %4, ptr %5, align 8, !tbaa !58
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.b = load i32, ptr %i.a, align 4, !tbaa !58
-  %6 = and i32 %i.b, 64
-  %.not = icmp eq i32 %6, 0
-  %7 = select i1 %.not, i32 262, i32 6
+  %6 = shl i32 %i.b, 2
+  %7 = and i32 %6, 256
+  %8 = xor i32 %7, 262
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i32 %7, ptr %i.c, align 8, !tbaa !58
+  store i32 %8, ptr %i.c, align 8, !tbaa !58
   %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 520), align 8, !tbaa !118
   store ptr %0, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 520), align 8, !tbaa !118
   %i.e = and i64 %3, -8
@@ -3735,11 +3743,11 @@ bb.m:                                             ; preds = %try_parse_string.ex
   store ptr %.1.i70, ptr %0, align 8, !tbaa !58
   %i.au = getelementptr inbounds nuw i8, ptr %.1.i70, i64 4
   %i.av = load i32, ptr %i.au, align 4, !tbaa !58
-  %3 = and i32 %i.av, 64
-  %.not55 = icmp eq i32 %3, 0
-  %4 = select i1 %.not55, i32 262, i32 6
+  %3 = shl i32 %i.av, 2
+  %4 = and i32 %3, 256
+  %5 = xor i32 %4, 262
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %4, ptr %i.aw, align 8, !tbaa !58
+  store i32 %5, ptr %i.aw, align 8, !tbaa !58
   br label %bb.ad
 
 bb.n:                                             ; preds = %.thread, %bb.j

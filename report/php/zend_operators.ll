@@ -205,10 +205,10 @@ zend_long_to_str.exit:                            ; preds = %bb.f, %zend_print_l
   store ptr %.0.i, ptr %0, align 8, !tbaa !19
   %i.ao = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !19
-  %2 = and i32 %i.ap, 64
-  %.not51 = icmp eq i32 %2, 0
-  %3 = select i1 %.not51, i32 262, i32 6
-  store i32 %3, ptr %i.c, align 8, !tbaa !19
+  %2 = shl i32 %i.ap, 2
+  %3 = and i32 %2, 256
+  %4 = xor i32 %3, 262
+  store i32 %4, ptr %i.c, align 8, !tbaa !19
   br label %.loopexit
 
 zend_string_init.exit.i52:                        ; preds = %zend_unwrap_reference.exit
@@ -494,11 +494,11 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.a, ptr %0, align 8, !tbaa !19
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !19
-  %1 = and i32 %i.c, 64
-  %.not10 = icmp eq i32 %1, 0
-  %2 = select i1 %.not10, i32 262, i32 6
+  %1 = shl i32 %i.c, 2
+  %2 = and i32 %1, 256
+  %3 = xor i32 %2, 262
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %2, ptr %i.d, align 8, !tbaa !19
+  store i32 %3, ptr %i.d, align 8, !tbaa !19
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -901,19 +901,21 @@ i_zval_ptr_dtor.exit214:                          ; preds = %bb.ag, %bb.ae, %bb.
   %i.cl = trunc nuw i8 %.0157 to i1
   store ptr %.0153, ptr %0, align 8, !tbaa !19
   %i.cm = getelementptr inbounds nuw i8, ptr %.0153, i64 4
-  %i.cn = load i32, ptr %i.cm, align 4, !tbaa !19
-  %3 = and i32 %i.cn, 64
-  %.not191 = icmp eq i32 %3, 0                    ; 2 uses
+  %i.cn = load i32, ptr %i.cm, align 4, !tbaa !19 ; 2 uses
   br i1 %i.cl, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %i_zval_ptr_dtor.exit214
-  %4 = select i1 %.not191, i32 262, i32 6
+  %3 = shl i32 %i.cn, 2
+  %4 = and i32 %3, 256
+  %5 = xor i32 %4, 262
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %4, ptr %i.co, align 8, !tbaa !19
+  store i32 %5, ptr %i.co, align 8, !tbaa !19
   br label %bb.ck
 
 bb.am:                                            ; preds = %i_zval_ptr_dtor.exit214
-  br i1 %.not191, label %bb.ao, label %bb.an
+  %6 = and i32 %i.cn, 64
+  %.not190 = icmp eq i32 %6, 0
+  br i1 %.not190, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1003,19 +1005,21 @@ i_zval_ptr_dtor.exit211:                          ; preds = %bb.au, %bb.as, %bb.
   %i.dq = trunc nuw i8 %.2163 to i1
   store ptr %.2152, ptr %0, align 8, !tbaa !19
   %i.dr = getelementptr inbounds nuw i8, ptr %.2152, i64 4
-  %i.ds = load i32, ptr %i.dr, align 4, !tbaa !19
-  %5 = and i32 %i.ds, 64
-  %.not188 = icmp eq i32 %5, 0                    ; 2 uses
+  %i.ds = load i32, ptr %i.dr, align 4, !tbaa !19 ; 2 uses
   br i1 %i.dq, label %bb.az, label %bb.ba
 
 bb.az:                                            ; preds = %i_zval_ptr_dtor.exit211
-  %6 = select i1 %.not188, i32 262, i32 6
+  %7 = shl i32 %i.ds, 2
+  %8 = and i32 %7, 256
+  %9 = xor i32 %8, 262
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %6, ptr %i.dt, align 8, !tbaa !19
+  store i32 %9, ptr %i.dt, align 8, !tbaa !19
   br label %zend_string_release_ex.exit195
 
 bb.ba:                                            ; preds = %i_zval_ptr_dtor.exit211
-  br i1 %.not188, label %bb.bc, label %bb.bb
+  %10 = and i32 %i.ds, 64
+  %.not187 = icmp eq i32 %10, 0
+  br i1 %.not187, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1418,10 +1422,10 @@ bb.v:                                             ; preds = %zend_string_addref.
   call void @zval_ptr_dtor(ptr noundef nonnull %.058.ph) #24
   store ptr %i.ai, ptr %.058.ph, align 8, !tbaa !19
   %i.ay = load i32, ptr %i.al, align 4, !tbaa !19
-  %3 = and i32 %i.ay, 64
-  %.not87.not.i = icmp eq i32 %3, 0               ; 2 uses
-  %4 = select i1 %.not87.not.i, i32 262, i32 6
-  store i32 %4, ptr %i.e, align 8, !tbaa !19
+  %3 = shl i32 %i.ay, 2
+  %4 = and i32 %3, 256                            ; 2 uses
+  %5 = xor i32 %4, 262
+  store i32 %5, ptr %i.e, align 8, !tbaa !19
   %i.az = load i64, ptr %i.aj, align 8, !tbaa !24 ; 9 uses
   %i.ba = icmp eq i64 %i.az, 0
   br i1 %i.ba, label %bb.w, label %bb.x, !prof !54
@@ -1434,7 +1438,8 @@ bb.w:                                             ; preds = %bb.v
   br label %increment_string.exit
 
 bb.x:                                             ; preds = %bb.v
-  br i1 %.not87.not.i, label %bb.y, label %zend_string_init.exit94.i
+  %.not88.not.i = icmp eq i32 %4, 0
+  br i1 %.not88.not.i, label %bb.y, label %zend_string_init.exit94.i
 
 zend_string_init.exit94.i:                        ; preds = %bb.x
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
@@ -1837,10 +1842,10 @@ zend_string_release.exit:                         ; preds = %zend_string_addref.
   call void @zval_ptr_dtor(ptr noundef nonnull %.088.ph) #24
   store ptr %i.ak, ptr %.088.ph, align 8, !tbaa !19
   %i.ay = load i32, ptr %i.al, align 4, !tbaa !19
-  %3 = and i32 %i.ay, 64
-  %.not103 = icmp eq i32 %3, 0
-  %4 = select i1 %.not103, i32 262, i32 6
-  store i32 %4, ptr %i.e, align 8, !tbaa !19
+  %3 = shl i32 %i.ay, 2
+  %4 = and i32 %3, 256
+  %5 = xor i32 %4, 262
+  store i32 %5, ptr %i.e, align 8, !tbaa !19
   br label %fast_long_decrement_function.exit
 
 bb.x:                                             ; preds = %bb.b

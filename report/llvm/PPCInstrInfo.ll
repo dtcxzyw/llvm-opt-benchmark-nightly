@@ -205,14 +205,11 @@ bb.a:
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %i.g = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %i.a, %bb.a ] ; 2 uses
+  %i.g = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %i.a, %bb.a ] ; 3 uses
   %i.h = and i32 %i.g, 131072
   %.not = icmp eq i32 %i.h, 0
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = and i32 %i.g, 65536
-  %.not18 = icmp eq i32 %6, 0                     ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !48   ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
@@ -223,9 +220,12 @@ bb.a:
   br i1 %i.k, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !1375
 
 bb.b:                                             ; preds = %._crit_edge
-  %.neg = select i1 %.not18, i64 -510, i64 -507
+  %6 = and i32 %i.g, 65536
+  %.not19 = icmp eq i32 %6, 0
+  %.neg = select i1 %.not19, i64 -510, i64 -507
   %i.l = getelementptr inbounds [32 x i8], ptr %i.j, i64 %.neg
   tail call void @_ZN4llvm12MachineInstr7setDescERKNS_11MCInstrDescE(ptr noundef nonnull align 8 dereferenceable(80) %1, ptr noundef nonnull align 8 dereferenceable(32) %i.l) #26
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.m = load ptr, ptr %7, align 8, !tbaa !343
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !386  ; 2 uses
@@ -253,10 +253,15 @@ bb.b:                                             ; preds = %._crit_edge
   br label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge
-  %.neg26 = select i1 %.not18, i64 -1418, i64 -1419
-  %i.x = getelementptr inbounds [32 x i8], ptr %i.j, i64 %.neg26
+  %8 = lshr i32 %i.g, 16
+  %9 = and i32 %8, 1
+  %10 = or disjoint i32 %9, 1418
+  %11 = zext nneg i32 %10 to i64
+  %12 = sub nsw i64 0, %11
+  %i.x = getelementptr inbounds [32 x i8], ptr %i.j, i64 %12
   tail call void @_ZN4llvm12MachineInstr7setDescERKNS_11MCInstrDescE(ptr noundef nonnull align 8 dereferenceable(80) %1, ptr noundef nonnull align 8 dereferenceable(32) %i.x) #26
-  %i.y = load ptr, ptr %7, align 8, !tbaa !343
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.y = load ptr, ptr %13, align 8, !tbaa !343
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 32
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !386
   %i.ab = load i32, ptr %2, align 4

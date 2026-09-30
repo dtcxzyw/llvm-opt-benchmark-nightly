@@ -205,16 +205,16 @@ _ZNSt5dequeIPN5folly11AsyncReader12ReadCallback16ZeroCopyMemStore5EntryESaIS5_EE
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef range(i32 16448, 67158209) i32 @_ZN5folly11AsyncSocket21SendMsgParamsCallback15getDefaultFlagsENS_10WriteFlagsEb(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = and i32 %1, 1
-  %.not = icmp eq i32 %3, 0
-  %spec.select = select i1 %.not, i32 16448, i32 49216
+  %3 = shl i32 %1, 15
+  %4 = and i32 %3, 32768
   %i.a = shl i32 %1, 6
   %i.b = and i32 %i.a, 128
-  %spec.select9.a = or disjoint i32 %spec.select, %i.b
+  %spec.select9.a = or disjoint i32 %i.b, %4
   %i.c = shl i32 %1, 23
   %i.d = and i32 %i.c, 67108864
   %spec.select10 = select i1 %2, i32 %i.d, i32 0
-  %.2 = or disjoint i32 %spec.select9.a, %spec.select10
+  %spec.select9 = or disjoint i32 %spec.select9.a, %spec.select10
+  %.2 = or disjoint i32 %spec.select9, 16448
   ret i32 %.2
 }
 
@@ -617,16 +617,16 @@ bb.j:                                             ; preds = %bb.i, %bb.e
   %i.ao = getelementptr inbounds nuw i8, ptr %i.e, i64 1008 ; 3 uses
   %i.ap = load i8, ptr %i.ao, align 8, !tbaa !16262, !range !15896, !noundef !1501
   %i.aq = trunc nuw i8 %i.ap to i1
-  %12 = and i32 %4, 1
-  %.not.i.i = icmp eq i32 %12, 0
-  %spec.select.i.i = select i1 %.not.i.i, i32 16448, i32 49216
+  %12 = shl i32 %4, 15
+  %13 = and i32 %12, 32768
   %i.ar = shl i32 %4, 6
   %i.as = and i32 %i.ar, 128
-  %spec.select9.i.i = or disjoint i32 %spec.select.i.i, %i.as ; 2 uses
   %i.at = shl i32 %4, 23
   %i.au = and i32 %i.at, 67108864
   %spec.select10.i.i = select i1 %i.aq, i32 %i.au, i32 0
-  %.2.i.i = or disjoint i32 %spec.select10.i.i, %spec.select9.i.i
+  %spec.select9.v.i.i = or disjoint i32 %13, %i.as ; 2 uses
+  %spec.select9.i.i = or disjoint i32 %spec.select9.v.i.i, %spec.select10.i.i
+  %.2.i.i = or disjoint i32 %spec.select9.i.i, 16448
   %i.av = load ptr, ptr %i.an, align 8, !tbaa !814
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 40
   %i.ax = load ptr, ptr %i.aw, align 8
@@ -669,10 +669,11 @@ bb.n:                                             ; preds = %bb.m
   %i.bo = getelementptr inbounds nuw i8, ptr %i.e, i64 1024
   store i64 %i.bn, ptr %i.bo, align 8, !tbaa !16279
   %i.bp = load ptr, ptr %i.r, align 8, !tbaa !16258 ; 2 uses
+  %.2.i.i41 = or disjoint i32 %spec.select9.v.i.i, 16448
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !814
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 40
   %i.bs = load ptr, ptr %i.br, align 8
-  %i.bt = invoke noundef i32 %i.bs(ptr noundef nonnull align 8 dereferenceable(8) %i.bp, i32 noundef %4, i32 noundef %spec.select9.i.i)
+  %i.bt = invoke noundef i32 %i.bs(ptr noundef nonnull align 8 dereferenceable(8) %i.bp, i32 noundef %4, i32 noundef %.2.i.i41)
           to label %_ZN5folly11AsyncSocket21SendMsgParamsCallback8getFlagsENS_10WriteFlagsEb.exit43 unwind label %bb.o, !call_target !15885
 
 bb.o:                                             ; preds = %bb.n

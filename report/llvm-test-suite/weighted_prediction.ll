@@ -131,13 +131,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not112, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = and i32 %i.i, 1
-  %.not113 = icmp eq i32 %i.n, 0
-  %1 = select i1 %.not113, i64 4, i64 6
+  %1 = shl i32 %i.i, 1
+  %i.n = and i32 %1, 2
+  %2 = or disjoint i32 %i.n, 4
+  %3 = zext nneg i32 %2 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
-  %wide.trip.count = phi i64 [ %1, %bb.c ], [ 2, %bb.b ], [ 2, %bb.a ] ; 5 uses
+  %wide.trip.count = phi i64 [ %3, %bb.c ], [ 2, %bb.b ], [ 2, %bb.a ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store i32 5, ptr @luma_log_weight_denom, align 4, !tbaa !7
@@ -540,13 +541,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not241, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = and i32 %i.j, 1
-  %.not242 = icmp eq i32 %i.o, 0
-  %0 = select i1 %.not242, i64 4, i64 6
+  %0 = shl i32 %i.j, 1
+  %i.o = and i32 %0, 2
+  %1 = or disjoint i32 %i.o, 4
+  %2 = zext nneg i32 %1 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
-  %wide.trip.count = phi i64 [ %0, %bb.c ], [ 2, %bb.b ], [ 2, %bb.a ] ; 5 uses
+  %wide.trip.count = phi i64 [ %2, %bb.c ], [ 2, %bb.b ], [ 2, %bb.a ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
@@ -949,13 +951,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not125, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = and i32 %i.i, 1
-  %.not126 = icmp eq i32 %i.n, 0
-  %1 = select i1 %.not126, i64 4, i64 6
+  %1 = shl i32 %i.i, 1
+  %i.n = and i32 %1, 2
+  %2 = or disjoint i32 %i.n, 4
+  %3 = zext nneg i32 %2 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
-  %wide.trip.count = phi i64 [ %1, %bb.c ], [ 2, %bb.b ], [ 2, %bb.a ] ; 5 uses
+  %wide.trip.count = phi i64 [ %3, %bb.c ], [ 2, %bb.b ], [ 2, %bb.a ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store i32 5, ptr @luma_log_weight_denom, align 4, !tbaa !7
@@ -1358,13 +1361,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not270, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = and i32 %i.k, 1
-  %.not271 = icmp eq i32 %i.p, 0
-  %1 = select i1 %.not271, i64 4, i64 6
+  %1 = shl i32 %i.k, 1
+  %i.p = and i32 %1, 2
+  %2 = or disjoint i32 %i.p, 4
+  %3 = zext nneg i32 %2 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
-  %wide.trip.count = phi i64 [ %1, %bb.c ], [ 2, %bb.b ], [ 2, %bb.a ] ; 6 uses
+  %wide.trip.count = phi i64 [ %3, %bb.c ], [ 2, %bb.b ], [ 2, %bb.a ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6

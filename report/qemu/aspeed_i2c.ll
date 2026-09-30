@@ -204,11 +204,12 @@ bb.a:
   %i.b = getelementptr i8, ptr %0, i64 808        ; 5 uses
   %.val29 = load ptr, ptr %i.b, align 8           ; 3 uses
   %i.c = getelementptr i8, ptr %.val29, i64 1100
-  %.val29.val = load i32, ptr %i.c, align 4
+  %.val29.val = load i32, ptr %i.c, align 4       ; 2 uses
   %i.d = and i32 %.val29.val, 4
-  %.not.i = icmp eq i32 %i.d, 0                   ; 3 uses
+  %.not.i = icmp eq i32 %i.d, 0                   ; 2 uses
   %..i = select i1 %.not.i, i64 5, i64 6
-  %..i31 = select i1 %.not.i, i64 4, i64 5
+  %1 = lshr i32 %.val29.val, 2
+  %2 = and i32 %1, 1
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -511,10 +512,12 @@ trace_aspeed_i2c_bus_recv.exit129.i:              ; preds = %bb.ae, %bb.ad, %bb.
 
 aspeed_i2c_bus_recv.exit:                         ; preds = %bb.i, %bb.w, %bb.x, %._crit_edge.i, %trace_aspeed_i2c_bus_recv.exit129.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
-  %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %..i31 ; 2 uses
-  %i.ed = load i32, ptr %i.ec, align 4
+  %3 = zext nneg i32 %2 to i64
+  %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %3
+  %4 = getelementptr inbounds nuw i8, ptr %i.ec, i64 16 ; 2 uses
+  %i.ed = load i32, ptr %4, align 4
   %i.ee = or i32 %i.ed, 4
-  store i32 %i.ee, ptr %i.ec, align 4
+  store i32 %i.ee, ptr %4, align 4
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %..i ; 3 uses
   %i.eg = load i32, ptr %i.ef, align 4            ; 2 uses
   %i.eh = and i32 %i.eg, 16
@@ -568,10 +571,12 @@ bb.a:
   %i.d = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.c, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.20, i32 noundef 35, ptr noundef nonnull @__func__.ASPEED_I2C_GET_CLASS) #14
   %.val40 = load ptr, ptr %i.a, align 8           ; 3 uses
   %i.e = getelementptr i8, ptr %.val40, i64 1100
-  %.val40.val = load i32, ptr %i.e, align 4
-  %i.f = and i32 %.val40.val, 4                   ; 3 uses
-  %.not.i = icmp eq i32 %i.f, 0                   ; 3 uses
-  %..i = select i1 %.not.i, i32 4, i32 5          ; 2 uses
+  %.val40.val = load i32, ptr %i.e, align 4       ; 2 uses
+  %1 = lshr i32 %.val40.val, 2
+  %i.f = and i32 %1, 1
+  %..i = or disjoint i32 %i.f, 4                  ; 2 uses
+  %2 = and i32 %.val40.val, 4                     ; 3 uses
+  %.not.i = icmp eq i32 %2, 0                     ; 2 uses
   %..i43 = select i1 %.not.i, i64 3, i64 4
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1408 ; 3 uses
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %..i43
@@ -640,7 +645,7 @@ aspeed_i2c_bus_pkt_mode_en.exit.thread:           ; preds = %bb.c, %bb.d, %aspee
   br label %bb.e
 
 bb.e:                                             ; preds = %aspeed_i2c_bus_pkt_mode_en.exit.thread, %bb.b, %bb.a
-  %.pre-phi = phi i32 [ %.pre54, %aspeed_i2c_bus_pkt_mode_en.exit.thread ], [ %i.f, %bb.b ], [ %i.f, %bb.a ]
+  %.pre-phi = phi i32 [ %.pre54, %aspeed_i2c_bus_pkt_mode_en.exit.thread ], [ %2, %bb.b ], [ %2, %bb.a ]
   %i.an = phi ptr [ %.pre, %aspeed_i2c_bus_pkt_mode_en.exit.thread ], [ %.val40, %bb.b ], [ %.val40, %bb.a ]
   %i.ao = zext nneg i32 %..i to i64
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.ao ; 2 uses
@@ -691,10 +696,12 @@ bb.a:
   %i.c = getelementptr i8, ptr %0, i64 808        ; 17 uses
   %.val = load ptr, ptr %i.c, align 8             ; 2 uses
   %i.d = getelementptr i8, ptr %.val, i64 1100    ; 2 uses
-  %.val.val = load i32, ptr %i.d, align 4
-  %i.e = and i32 %.val.val, 4
-  %.not.i = icmp eq i32 %i.e, 0                   ; 3 uses
-  %..i = select i1 %.not.i, i32 4, i32 5          ; 6 uses
+  %.val.val = load i32, ptr %i.d, align 4         ; 2 uses
+  %1 = lshr i32 %.val.val, 2
+  %i.e = and i32 %1, 1
+  %..i = or disjoint i32 %i.e, 4                  ; 6 uses
+  %2 = and i32 %.val.val, 4
+  %.not.i = icmp eq i32 %2, 0                     ; 2 uses
   %..i180 = select i1 %.not.i, i64 5, i64 6
   %..i182 = select i1 %.not.i, i64 10, i64 21
   %i.f = tail call ptr @object_get_class(ptr noundef %.val) #14
@@ -1097,11 +1104,12 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 808
   %.val45 = load ptr, ptr %i.a, align 8
   %i.b = getelementptr i8, ptr %.val45, i64 1100
-  %.val45.val = load i32, ptr %i.b, align 4
+  %.val45.val = load i32, ptr %i.b, align 4       ; 2 uses
   %i.c = and i32 %.val45.val, 4                   ; 2 uses
-  %.not.i = icmp eq i32 %i.c, 0                   ; 3 uses
+  %.not.i = icmp eq i32 %i.c, 0                   ; 2 uses
   %..i = select i1 %.not.i, i64 5, i64 6
-  %..i50 = select i1 %.not.i, i64 4, i64 5
+  %1 = lshr i32 %.val45.val, 2
+  %2 = and i32 %1, 1
   %..i52 = select i1 %.not.i, i64 10, i64 21
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1408 ; 4 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %..i ; 2 uses
@@ -1160,8 +1168,10 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %i.ak = select i1 %i.aj, ptr @.str.43, ptr @.str.48
   %i.al = tail call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.63, ptr noundef nonnull %i.u, ptr noundef nonnull %.pre-phi, ptr noundef nonnull %i.w, ptr noundef nonnull %i.s, ptr noundef nonnull %i.y, ptr noundef nonnull %i.ae, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.ai, ptr noundef nonnull %i.ak) #14 ; 2 uses
   %i.am = load i32, ptr %i.e, align 4
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %..i50
-  %i.ao = load i32, ptr %i.an, align 4
+  %3 = zext nneg i32 %2 to i64
+  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %3
+  %4 = getelementptr inbounds nuw i8, ptr %i.an, i64 16
+  %i.ao = load i32, ptr %4, align 4
   %i.ap = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i53 = icmp eq i32 %i.ap, 0
   br i1 %.not.i53, label %trace_aspeed_i2c_bus_cmd.exit, label %bb.f, !prof !10
@@ -1564,15 +1574,18 @@ bb.a:
   %i.b = tail call ptr @qdev_get_parent_bus(ptr noundef %i.a) #14
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = tail call ptr @object_dynamic_cast_assert(ptr noundef %i.d, ptr noundef nonnull @.str, ptr noundef nonnull @.str.20, i32 noundef 238, ptr noundef nonnull @__func__.ASPEED_I2C_BUS) #14 ; 20 uses
+  %i.e = tail call ptr @object_dynamic_cast_assert(ptr noundef %i.d, ptr noundef nonnull @.str, ptr noundef nonnull @.str.20, i32 noundef 238, ptr noundef nonnull @__func__.ASPEED_I2C_BUS) #14 ; 19 uses
   %i.f = getelementptr i8, ptr %i.e, i64 808      ; 3 uses
   %.val42 = load ptr, ptr %i.f, align 8           ; 2 uses
   %i.g = getelementptr i8, ptr %.val42, i64 1100  ; 3 uses
-  %.val42.val = load i32, ptr %i.g, align 4
+  %.val42.val = load i32, ptr %i.g, align 4       ; 2 uses
+  %2 = lshr i32 %.val42.val, 2
+  %3 = and i32 %2, 1
+  %..i = or disjoint i32 %3, 4                    ; 2 uses
   %i.h = and i32 %.val42.val, 4
   %.not.i = icmp eq i32 %i.h, 0                   ; 2 uses
   %..i48 = select i1 %.not.i, i64 6, i64 16
-  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 1408
+  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 1408 ; 3 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %..i48
   %i.k = load i32, ptr %i.j, align 4
   br i1 %.not.i, label %bb.k, label %bb.b
@@ -1683,9 +1696,14 @@ bb.l:                                             ; preds = %bb.k
   %i.bm = or disjoint i32 %i.bl, %i.bi
   store i32 %i.bm, ptr %i.bj, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.e, i64 1424 ; 2 uses
-  %i.bo = load i32, ptr %i.bn, align 16
-  %i.bp = or i32 %i.bo, 132
-  store i32 %i.bp, ptr %i.bn, align 16
+  %4 = load i32, ptr %i.bn, align 16
+  %5 = or i32 %4, 128
+  store i32 %5, ptr %i.bn, align 16
+  %6 = zext nneg i32 %..i to i64
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %6 ; 2 uses
+  %i.bo = load i32, ptr %7, align 4
+  %i.bp = or i32 %i.bo, 4
+  store i32 %i.bp, ptr %7, align 4
   %.val.i = load i32, ptr %i.g, align 4
   %i.bq = and i32 %.val.i, 4
   %.not.i50 = icmp eq i32 %i.bq, 0
@@ -1708,10 +1726,11 @@ bb.n:                                             ; preds = %bb.l
   br label %aspeed_i2c_set_state.exit
 
 bb.o:                                             ; preds = %bb.k
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 1424 ; 2 uses
-  %i.bz = load i32, ptr %2, align 8
+  %8 = zext nneg i32 %..i to i64
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %8 ; 2 uses
+  %i.bz = load i32, ptr %9, align 4
   %i.ca = or i32 %i.bz, 16
-  store i32 %i.ca, ptr %2, align 8
+  store i32 %i.ca, ptr %9, align 4
   %.val.i51 = load i32, ptr %i.g, align 4
   %i.cb = and i32 %.val.i51, 4
   %.not.i52 = icmp eq i32 %i.cb, 0

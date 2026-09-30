@@ -19,8 +19,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 7 uses
-  %i.d = load i8, ptr %i.c, align 4, !tbaa !155, !range !156, !noundef !157
-  %i.e = trunc nuw i8 %i.d to i1                  ; 2 uses
+  %i.d = load i8, ptr %i.c, align 4, !tbaa !155, !range !156, !noundef !157 ; 2 uses
+  %i.e = trunc nuw i8 %i.d to i1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3752
   %i.g = load i32, ptr %i.f, align 8
   %.not6 = icmp ne i32 %i.g, 0
@@ -36,8 +36,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not7, label %bb.ab, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %1 = select i1 %i.e, i8 93, i8 125
-  tail call void @_ZN7CaDiCaL8Internal6reportEci(ptr noundef nonnull align 8 dereferenceable(7288) %0, i8 noundef signext %1, i32 noundef 0)
+  %1 = shl nuw nsw i8 %i.d, 5
+  %2 = xor i8 %1, 125
+  tail call void @_ZN7CaDiCaL8Internal6reportEci(ptr noundef nonnull align 8 dereferenceable(7288) %0, i8 noundef signext %2, i32 noundef 0)
   %i.l = load i8, ptr %i.c, align 4, !tbaa !155, !range !156, !noundef !157
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 7248
@@ -160,9 +161,9 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q, %bb.r
   %i.bl = load i8, ptr %i.c, align 4, !tbaa !155, !range !156, !noundef !157
-  %2 = trunc nuw i8 %i.bl to i1
-  %3 = select i1 %2, i8 91, i8 123
-  tail call void @_ZN7CaDiCaL8Internal6reportEci(ptr noundef nonnull align 8 dereferenceable(7288) %0, i8 noundef signext %3, i32 noundef 0)
+  %3 = shl nuw nsw i8 %i.bl, 5
+  %4 = xor i8 %3, 123
+  tail call void @_ZN7CaDiCaL8Internal6reportEci(ptr noundef nonnull align 8 dereferenceable(7288) %0, i8 noundef signext %4, i32 noundef 0)
   %i.bm = load i8, ptr %i.c, align 4, !tbaa !155, !range !156, !noundef !157
   %i.bn = trunc nuw i8 %i.bm to i1
   %i.bo = load ptr, ptr %i.an, align 8, !tbaa !159 ; 13 uses

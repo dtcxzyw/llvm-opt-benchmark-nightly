@@ -204,7 +204,6 @@ bb.n:                                             ; preds = %bb.m
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit unwind label %bb.t, !inline_history !1
 
 bb.o:                                             ; preds = %bb.j, %bb.i
-  %..i = phi i64 [ 1, %bb.j ], [ 5, %bb.i ]
   %.sroa.04.0 = phi ptr [ %i.n, %bb.j ], [ %i.m, %bb.i ] ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.04.0, i64 16 ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !align !9, !noundef !7 ; 4 uses
@@ -212,6 +211,8 @@ bb.o:                                             ; preds = %bb.j, %bb.i
   %i.v = load ptr, ptr %i.u, align 8              ; 3 uses
   store ptr null, ptr %i.s, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.04.0, i64 32
+  %4 = shl nuw nsw i64 %3, 2
+  %..i = or disjoint i64 %4, 1
   store atomic i64 %..i, ptr %i.w release, align 8
   %i.x = load ptr, ptr %0, align 8, !noundef !7
   %.not12 = icmp eq ptr %i.x, null

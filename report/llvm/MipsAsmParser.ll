@@ -204,11 +204,12 @@ bb.d:                                             ; preds = %bb.c
   %i.s = tail call noundef nonnull align 8 dereferenceable(320) ptr @_ZNK4llvm17MCTargetAsmParser6getSTIEv(ptr noundef nonnull align 8 dereferenceable(200) %0) #23
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 240
   %i.u = load i64, ptr %i.t, align 8, !tbaa !58
-  %i.v = and i64 %i.u, 65536                      ; 2 uses
-  %84 = or disjoint i64 %i.v, -131072
-  %.not.i = icmp sle i64 %84, %.sroa.15613.0.copyload
-  %85 = xor i64 %i.v, 131071
-  %i.w = icmp sle i64 %.sroa.15613.0.copyload, %85
+  %84 = lshr i64 %i.u, 16
+  %i.v = and i64 %84, 1                           ; 2 uses
+  %85 = ashr exact i64 -131072, %i.v
+  %.not.i = icmp sle i64 %85, %.sroa.15613.0.copyload
+  %86 = lshr i64 131071, %i.v
+  %i.w = icmp sle i64 %.sroa.15613.0.copyload, %86
   %or.cond723 = and i1 %.not.i, %i.w
   br i1 %or.cond723, label %bb.e, label %_ZN4llvm6isIntNEjl.exit.thread
 
@@ -264,11 +265,12 @@ bb.h:                                             ; preds = %bb.g
   %i.ar = tail call noundef nonnull align 8 dereferenceable(320) ptr @_ZNK4llvm17MCTargetAsmParser6getSTIEv(ptr noundef nonnull align 8 dereferenceable(200) %0) #23
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 240
   %i.at = load i64, ptr %i.as, align 8, !tbaa !58
-  %i.au = and i64 %i.at, 65536                    ; 2 uses
-  %86 = or disjoint i64 %i.au, -131072
-  %.not.i428 = icmp sle i64 %86, %.sroa.15613.0.copyload615
-  %87 = xor i64 %i.au, 131071
-  %i.av = icmp sle i64 %.sroa.15613.0.copyload615, %87
+  %87 = lshr i64 %i.at, 16
+  %i.au = and i64 %87, 1                          ; 2 uses
+  %88 = ashr exact i64 -131072, %i.au
+  %.not.i428 = icmp sle i64 %88, %.sroa.15613.0.copyload615
+  %89 = lshr i64 131071, %i.au
+  %i.av = icmp sle i64 %.sroa.15613.0.copyload615, %89
   %or.cond725 = and i1 %.not.i428, %i.av
   br i1 %or.cond725, label %bb.i, label %_ZN4llvm6isIntNEjl.exit429.thread
 

@@ -205,13 +205,14 @@ _ZNK2cv8FileNode3ptrEv.exit.thread.i.i:           ; preds = %bb.v, %.noexc, %bb.
   br label %_ZNK2cv8FileNodecvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit
 
 bb.w:                                             ; preds = %bb.v
-  %i.bm = and i32 %i.bi, 32
-  %.not10.i.i = icmp eq i32 %i.bm, 0
-  %12 = select i1 %.not10.i.i, i64 1, i64 5
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bg, i64 %12 ; 2 uses
+  %12 = lshr i32 %i.bi, 3
+  %i.bm = and i32 %12, 4
+  %13 = zext nneg i32 %i.bm to i64
+  %14 = getelementptr inbounds nuw i8, ptr %i.bg, i64 %13 ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %14, i64 1
   %.val.i.i = load i32, ptr %i.bn, align 1, !noalias !363
   %i.bo = zext i32 %.val.i.i to i64
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 4 ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %14, i64 5 ; 2 uses
   %i.bq = add nsw i64 %i.bo, -1                   ; 4 uses
   %i.br = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   store ptr %i.br, ptr %8, align 8, !tbaa !40, !alias.scope !363
@@ -614,10 +615,11 @@ bb.b:                                             ; preds = %_ZNK2cv8FileNode3pt
   %i.g = load i8, ptr %i.f, align 1, !tbaa !31
   %i.h = zext i8 %i.g to i32                      ; 2 uses
   %i.i = and i32 %i.h, 7
-  %i.j = and i32 %i.h, 32
-  %.not12 = icmp eq i32 %i.j, 0
-  %1 = select i1 %.not12, i64 1, i64 5
-  %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %1 ; 2 uses
+  %1 = lshr i32 %i.h, 3
+  %i.j = and i32 %1, 4
+  %2 = zext nneg i32 %i.j to i64
+  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 %2
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
   switch i32 %i.i, label %_ZNK2cv8FileNode3ptrEv.exit.thread [
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -658,10 +660,11 @@ bb.b:                                             ; preds = %_ZNK2cv8FileNode3pt
   %i.g = load i8, ptr %i.f, align 1, !tbaa !31
   %i.h = zext i8 %i.g to i32                      ; 2 uses
   %i.i = and i32 %i.h, 7
-  %i.j = and i32 %i.h, 32
-  %.not12 = icmp eq i32 %i.j, 0
-  %1 = select i1 %.not12, i64 1, i64 5
-  %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %1 ; 2 uses
+  %1 = lshr i32 %i.h, 3
+  %i.j = and i32 %1, 4
+  %2 = zext nneg i32 %i.j to i64
+  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 %2
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
   switch i32 %i.i, label %_ZNK2cv8FileNode3ptrEv.exit.thread [
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -703,10 +706,11 @@ bb.b:                                             ; preds = %_ZNK2cv8FileNode3pt
   %i.g = load i8, ptr %i.f, align 1, !tbaa !31
   %i.h = zext i8 %i.g to i32                      ; 2 uses
   %i.i = and i32 %i.h, 7
-  %i.j = and i32 %i.h, 32
-  %.not12 = icmp eq i32 %i.j, 0
-  %1 = select i1 %.not12, i64 1, i64 5
-  %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %1 ; 2 uses
+  %1 = lshr i32 %i.h, 3
+  %i.j = and i32 %1, 4
+  %2 = zext nneg i32 %i.j to i64
+  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 %2
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
   switch i32 %i.i, label %_ZNK2cv8FileNode3ptrEv.exit.thread [
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -747,10 +751,11 @@ bb.b:                                             ; preds = %_ZNK2cv8FileNode3pt
   %i.g = load i8, ptr %i.f, align 1, !tbaa !31
   %i.h = zext i8 %i.g to i32                      ; 2 uses
   %i.i = and i32 %i.h, 7
-  %i.j = and i32 %i.h, 32
-  %.not12 = icmp eq i32 %i.j, 0
-  %1 = select i1 %.not12, i64 1, i64 5
-  %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %1 ; 2 uses
+  %1 = lshr i32 %i.h, 3
+  %i.j = and i32 %1, 4
+  %2 = zext nneg i32 %i.j to i64
+  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 %2
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
   switch i32 %i.i, label %_ZNK2cv8FileNode3ptrEv.exit.thread [
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -790,10 +795,11 @@ bb.b:                                             ; preds = %_ZNK2cv8FileNode3pt
   %i.g = load i8, ptr %i.f, align 1, !tbaa !31
   %i.h = zext i8 %i.g to i32                      ; 2 uses
   %i.i = and i32 %i.h, 7
-  %i.j = and i32 %i.h, 32
-  %.not12.i = icmp eq i32 %i.j, 0
-  %1 = select i1 %.not12.i, i64 1, i64 5
-  %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %1 ; 2 uses
+  %1 = lshr i32 %i.h, 3
+  %i.j = and i32 %1, 4
+  %2 = zext nneg i32 %i.j to i64
+  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 %2
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
   switch i32 %i.i, label %_ZNK2cv8FileNodecvdEv.exit [
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -846,13 +852,14 @@ _ZNK2cv8FileNode3ptrEv.exit.thread:               ; preds = %bb.a, %bb.b, %_ZNK2
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  %i.m = and i32 %i.i, 32
-  %.not10 = icmp eq i32 %i.m, 0
-  %2 = select i1 %.not10, i64 1, i64 5
-  %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 %2 ; 2 uses
+  %2 = lshr i32 %i.i, 3
+  %i.m = and i32 %2, 4
+  %3 = zext nneg i32 %i.m to i64
+  %4 = getelementptr inbounds nuw i8, ptr %i.g, i64 %3 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 1
   %.val = load i32, ptr %i.n, align 1
   %i.o = zext i32 %.val to i64
-  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 4 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 5 ; 2 uses
   %i.q = add nsw i64 %i.o, -1                     ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.r, ptr %0, align 8, !tbaa !40
@@ -1234,10 +1241,11 @@ _ZNK2cv8FileNode5isIntEv.exit:                    ; preds = %_ZNK2cv11FileStorag
   br i1 %i.cx, label %bb.w, label %_ZNK2cv8FileNode6isRealEv.exit
 
 bb.w:                                             ; preds = %_ZNK2cv8FileNode5isIntEv.exit
-  %i.cy = and i8 %i.cv, 32
-  %.not12.i = icmp eq i8 %i.cy, 0
-  %26 = select i1 %.not12.i, i64 1, i64 5
-  %i.cz = getelementptr inbounds nuw i8, ptr %i.cu, i64 %26 ; 2 uses
+  %26 = lshr i8 %i.cv, 3
+  %i.cy = and i8 %26, 4
+  %27 = zext nneg i8 %i.cy to i64
+  %28 = getelementptr inbounds nuw i8, ptr %i.cu, i64 %27
+  %i.cz = getelementptr inbounds nuw i8, ptr %28, i64 1 ; 2 uses
   br i1 %i.bd, label %_ZNK2cv11FileStorage4Impl10getNodePtrEmm.exit148, label %_ZNK2cv8FileNodecviEv.exit
 
 _ZNK2cv11FileStorage4Impl10getNodePtrEmm.exit148: ; preds = %bb.w
@@ -1430,10 +1438,11 @@ _ZNK2cv8FileNode6isRealEv.exit:                   ; preds = %_ZNK2cv8FileNode5is
   br i1 %i.fj, label %_ZNK2cv8FileNodecvdEv.exit, label %_ZNK2cv8FileNode6isRealEv.exit.thread
 
 _ZNK2cv8FileNodecvdEv.exit:                       ; preds = %_ZNK2cv8FileNode6isRealEv.exit
-  %i.fk = and i8 %i.fh, 32
-  %.not12.i125 = icmp eq i8 %i.fk, 0
-  %27 = select i1 %.not12.i125, i64 1, i64 5
-  %i.fl = getelementptr inbounds nuw i8, ptr %i.fg, i64 %27
+  %29 = lshr i8 %i.fh, 3
+  %i.fk = and i8 %29, 4
+  %30 = zext nneg i8 %i.fk to i64
+  %31 = getelementptr inbounds nuw i8, ptr %i.fg, i64 %30
+  %i.fl = getelementptr inbounds nuw i8, ptr %31, i64 1
   %.val13.i126 = load double, ptr %i.fl, align 1  ; 15 uses
   switch i32 %i.aj, label %bb.bj [
     i32 0, label %bb.at
@@ -1836,10 +1845,11 @@ bb.b:                                             ; preds = %_ZNK2cv8FileNode3pt
   %i.h = load i8, ptr %i.g, align 1, !tbaa !31
   %i.i = zext i8 %i.h to i32                      ; 2 uses
   %i.j = and i32 %i.i, 7
-  %i.k = and i32 %i.i, 32
-  %.not12.i = icmp eq i32 %i.k, 0
-  %3 = select i1 %.not12.i, i64 1, i64 5
-  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 %3 ; 2 uses
+  %3 = lshr i32 %i.i, 3
+  %i.k = and i32 %3, 4
+  %4 = zext nneg i32 %i.k to i64
+  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 %4
+  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   switch i32 %i.j, label %_ZNK2cv8FileNodecviEv.exit [
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -1885,10 +1895,11 @@ bb.b:                                             ; preds = %_ZNK2cv8FileNode3pt
   %i.h = load i8, ptr %i.g, align 1, !tbaa !31
   %i.i = zext i8 %i.h to i32                      ; 2 uses
   %i.j = and i32 %i.i, 7
-  %i.k = and i32 %i.i, 32
-  %.not12.i = icmp eq i32 %i.k, 0
-  %3 = select i1 %.not12.i, i64 1, i64 5
-  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 %3 ; 2 uses
+  %3 = lshr i32 %i.i, 3
+  %i.k = and i32 %3, 4
+  %4 = zext nneg i32 %i.k to i64
+  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 %4
+  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   switch i32 %i.j, label %_ZNK2cv8FileNodecvlEv.exit [
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -1935,10 +1946,11 @@ bb.b:                                             ; preds = %_ZNK2cv8FileNode3pt
   %i.h = load i8, ptr %i.g, align 1, !tbaa !31
   %i.i = zext i8 %i.h to i32                      ; 2 uses
   %i.j = and i32 %i.i, 7
-  %i.k = and i32 %i.i, 32
-  %.not12.i = icmp eq i32 %i.k, 0
-  %3 = select i1 %.not12.i, i64 1, i64 5
-  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 %3 ; 2 uses
+  %3 = lshr i32 %i.i, 3
+  %i.k = and i32 %3, 4
+  %4 = zext nneg i32 %i.k to i64
+  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 %4
+  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   switch i32 %i.j, label %_ZNK2cv8FileNodecvdEv.exit [
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -1983,10 +1995,11 @@ bb.b:                                             ; preds = %_ZNK2cv8FileNode3pt
   %i.h = load i8, ptr %i.g, align 1, !tbaa !31
   %i.i = zext i8 %i.h to i32                      ; 2 uses
   %i.j = and i32 %i.i, 7
-  %i.k = and i32 %i.i, 32
-  %.not12.i = icmp eq i32 %i.k, 0
-  %3 = select i1 %.not12.i, i64 1, i64 5
-  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 %3 ; 2 uses
+  %3 = lshr i32 %i.i, 3
+  %i.k = and i32 %3, 4
+  %4 = zext nneg i32 %i.k to i64
+  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 %4
+  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   switch i32 %i.j, label %_ZNK2cv8FileNodecvfEv.exit [
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -2049,13 +2062,14 @@ _ZNK2cv8FileNode3ptrEv.exit.thread.i.i:           ; preds = %bb.b, %_ZNK2cv8File
   br label %_ZNK2cv8FileNodecvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = and i32 %i.j, 32
-  %.not10.i.i = icmp eq i32 %i.n, 0
-  %4 = select i1 %.not10.i.i, i64 1, i64 5
-  %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 %4 ; 2 uses
+  %4 = lshr i32 %i.j, 3
+  %i.n = and i32 %4, 4
+  %5 = zext nneg i32 %i.n to i64
+  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 %5 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %6, i64 1
   %.val.i.i = load i32, ptr %i.o, align 1, !noalias !455
   %i.p = zext i32 %.val.i.i to i64
-  %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 4 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %6, i64 5 ; 2 uses
   %i.r = add nsw i64 %i.p, -1                     ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   store ptr %i.s, ptr %3, align 8, !tbaa !40, !alias.scope !455

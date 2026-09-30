@@ -205,173 +205,177 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.r = shl nuw nsw i32 %i.q, 5
   %i.s = and i32 %i.p, 1
   %.not.i.i = icmp eq i32 %i.s, 0
-  br i1 %.not.i.i, label %bb.c, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.i.i, label %bb.c, label %Gia_ManOutputAsserted.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.t = and i32 %i.p, 2
   %.not.1.i.i = icmp eq i32 %i.t, 0
-  br i1 %.not.1.i.i, label %bb.d, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.1.i.i, label %bb.d, label %Gia_ManOutputAsserted.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.u = and i32 %i.p, 4
   %.not.2.i.i = icmp eq i32 %i.u, 0
-  br i1 %.not.2.i.i, label %bb.e, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.2.i.i, label %bb.e, label %Gia_ManOutputAsserted.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.v = and i32 %i.p, 8
   %.not.3.i.i = icmp eq i32 %i.v, 0
-  br i1 %.not.3.i.i, label %bb.f, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.3.i.i, label %bb.f, label %Gia_ManOutputAsserted.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.w = and i32 %i.p, 16
   %.not.4.i.i = icmp eq i32 %i.w, 0
-  br i1 %.not.4.i.i, label %bb.g, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.4.i.i, label %bb.g, label %Gia_ManOutputAsserted.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.x = and i32 %i.p, 32
   %.not.5.i.i = icmp eq i32 %i.x, 0
-  br i1 %.not.5.i.i, label %bb.h, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.5.i.i, label %bb.h, label %Gia_ManOutputAsserted.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.y = and i32 %i.p, 64
   %.not.6.i.i = icmp eq i32 %i.y, 0
-  br i1 %.not.6.i.i, label %bb.i, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.6.i.i, label %bb.i, label %Gia_ManOutputAsserted.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.z = and i32 %i.p, 128
   %.not.7.i.i = icmp eq i32 %i.z, 0
-  br i1 %.not.7.i.i, label %bb.j, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.7.i.i, label %bb.j, label %Gia_ManOutputAsserted.exit
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = and i32 %i.p, 256
   %.not.8.i.i = icmp eq i32 %i.aa, 0
-  br i1 %.not.8.i.i, label %bb.k, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.8.i.i, label %bb.k, label %Gia_ManOutputAsserted.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.ab = and i32 %i.p, 512
   %.not.9.i.i = icmp eq i32 %i.ab, 0
-  br i1 %.not.9.i.i, label %bb.l, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.9.i.i, label %bb.l, label %Gia_ManOutputAsserted.exit
 
 bb.l:                                             ; preds = %bb.k
   %i.ac = and i32 %i.p, 1024
   %.not.10.i.i = icmp eq i32 %i.ac, 0
-  br i1 %.not.10.i.i, label %bb.m, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.10.i.i, label %bb.m, label %Gia_ManOutputAsserted.exit
 
 bb.m:                                             ; preds = %bb.l
   %i.ad = and i32 %i.p, 2048
   %.not.11.i.i = icmp eq i32 %i.ad, 0
-  br i1 %.not.11.i.i, label %bb.n, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.11.i.i, label %bb.n, label %Gia_ManOutputAsserted.exit
 
 bb.n:                                             ; preds = %bb.m
   %i.ae = and i32 %i.p, 4096
   %.not.12.i.i = icmp eq i32 %i.ae, 0
-  br i1 %.not.12.i.i, label %bb.o, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.12.i.i, label %bb.o, label %Gia_ManOutputAsserted.exit
 
 bb.o:                                             ; preds = %bb.n
   %i.af = and i32 %i.p, 8192
   %.not.13.i.i = icmp eq i32 %i.af, 0
-  br i1 %.not.13.i.i, label %bb.p, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.13.i.i, label %bb.p, label %Gia_ManOutputAsserted.exit
 
 bb.p:                                             ; preds = %bb.o
   %i.ag = and i32 %i.p, 16384
   %.not.14.i.i = icmp eq i32 %i.ag, 0
-  br i1 %.not.14.i.i, label %bb.q, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.14.i.i, label %bb.q, label %Gia_ManOutputAsserted.exit
 
 bb.q:                                             ; preds = %bb.p
   %i.ah = and i32 %i.p, 32768
   %.not.15.i.i = icmp eq i32 %i.ah, 0
-  br i1 %.not.15.i.i, label %bb.r, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.15.i.i, label %bb.r, label %Gia_ManOutputAsserted.exit
 
 bb.r:                                             ; preds = %bb.q
   %i.ai = and i32 %i.p, 65536
   %.not.16.i.i = icmp eq i32 %i.ai, 0
-  br i1 %.not.16.i.i, label %bb.s, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.16.i.i, label %bb.s, label %Gia_ManOutputAsserted.exit
 
 bb.s:                                             ; preds = %bb.r
   %i.aj = and i32 %i.p, 131072
   %.not.17.i.i = icmp eq i32 %i.aj, 0
-  br i1 %.not.17.i.i, label %bb.t, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.17.i.i, label %bb.t, label %Gia_ManOutputAsserted.exit
 
 bb.t:                                             ; preds = %bb.s
   %i.ak = and i32 %i.p, 262144
   %.not.18.i.i = icmp eq i32 %i.ak, 0
-  br i1 %.not.18.i.i, label %bb.u, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.18.i.i, label %bb.u, label %Gia_ManOutputAsserted.exit
 
 bb.u:                                             ; preds = %bb.t
   %i.al = and i32 %i.p, 524288
   %.not.19.i.i = icmp eq i32 %i.al, 0
-  br i1 %.not.19.i.i, label %bb.v, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.19.i.i, label %bb.v, label %Gia_ManOutputAsserted.exit
 
 bb.v:                                             ; preds = %bb.u
   %i.am = and i32 %i.p, 1048576
   %.not.20.i.i = icmp eq i32 %i.am, 0
-  br i1 %.not.20.i.i, label %bb.w, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.20.i.i, label %bb.w, label %Gia_ManOutputAsserted.exit
 
 bb.w:                                             ; preds = %bb.v
   %i.an = and i32 %i.p, 2097152
   %.not.21.i.i = icmp eq i32 %i.an, 0
-  br i1 %.not.21.i.i, label %bb.x, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.21.i.i, label %bb.x, label %Gia_ManOutputAsserted.exit
 
 bb.x:                                             ; preds = %bb.w
   %i.ao = and i32 %i.p, 4194304
   %.not.22.i.i = icmp eq i32 %i.ao, 0
-  br i1 %.not.22.i.i, label %bb.y, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.22.i.i, label %bb.y, label %Gia_ManOutputAsserted.exit
 
 bb.y:                                             ; preds = %bb.x
   %i.ap = and i32 %i.p, 8388608
   %.not.23.i.i = icmp eq i32 %i.ap, 0
-  br i1 %.not.23.i.i, label %bb.z, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.23.i.i, label %bb.z, label %Gia_ManOutputAsserted.exit
 
 bb.z:                                             ; preds = %bb.y
   %i.aq = and i32 %i.p, 16777216
   %.not.24.i.i = icmp eq i32 %i.aq, 0
-  br i1 %.not.24.i.i, label %bb.aa, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.24.i.i, label %bb.aa, label %Gia_ManOutputAsserted.exit
 
 bb.aa:                                            ; preds = %bb.z
   %i.ar = and i32 %i.p, 33554432
   %.not.25.i.i = icmp eq i32 %i.ar, 0
-  br i1 %.not.25.i.i, label %bb.ab, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.25.i.i, label %bb.ab, label %Gia_ManOutputAsserted.exit
 
 bb.ab:                                            ; preds = %bb.aa
   %i.as = and i32 %i.p, 67108864
   %.not.26.i.i = icmp eq i32 %i.as, 0
-  br i1 %.not.26.i.i, label %bb.ac, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.26.i.i, label %bb.ac, label %Gia_ManOutputAsserted.exit
 
 bb.ac:                                            ; preds = %bb.ab
   %i.at = and i32 %i.p, 134217728
   %.not.27.i.i = icmp eq i32 %i.at, 0
-  br i1 %.not.27.i.i, label %bb.ad, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.27.i.i, label %bb.ad, label %Gia_ManOutputAsserted.exit
 
 bb.ad:                                            ; preds = %bb.ac
   %i.au = and i32 %i.p, 268435456
   %.not.28.i.i = icmp eq i32 %i.au, 0
-  br i1 %.not.28.i.i, label %bb.ae, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.28.i.i, label %bb.ae, label %Gia_ManOutputAsserted.exit
 
 bb.ae:                                            ; preds = %bb.ad
   %i.av = and i32 %i.p, 536870912
   %.not.29.i.i = icmp eq i32 %i.av, 0
-  br i1 %.not.29.i.i, label %bb.af, label %Gia_ManOutputAsserted.exit.a
+  br i1 %.not.29.i.i, label %bb.af, label %Gia_ManOutputAsserted.exit
 
 bb.af:                                            ; preds = %bb.ae
-  %4 = and i32 %i.p, 1073741824
-  %.not.30.i.i = icmp eq i32 %4, 0
-  %spec.select.i.i = select i1 %.not.30.i.i, i32 31, i32 30
-  br label %Gia_ManOutputAsserted.exit.a
+  %4 = lshr exact i32 %i.p, 30
+  %5 = and i32 %4, 1
+  %spec.select.i.i = xor i32 %5, 31
+  br label %Gia_ManOutputAsserted.exit
 
 bb.ag:                                            ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %Gia_ManOutputAsserted.exit.thread.loopexit, label %.lr.ph.i, !llvm.loop !101
 
-Gia_ManOutputAsserted.exit.a:                     ; preds = %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
+Gia_ManOutputAsserted.exit:                       ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af
   %.06.i.i = phi i32 [ 0, %bb.b ], [ 16, %bb.r ], [ 1, %bb.c ], [ 24, %bb.z ], [ 2, %bb.d ], [ 20, %bb.v ], [ 3, %bb.e ], [ %spec.select.i.i, %bb.af ], [ 4, %bb.f ], [ 17, %bb.s ], [ 5, %bb.g ], [ 29, %bb.ae ], [ 6, %bb.h ], [ 23, %bb.y ], [ 7, %bb.i ], [ 28, %bb.ad ], [ 8, %bb.j ], [ 18, %bb.t ], [ 9, %bb.k ], [ 27, %bb.ac ], [ 10, %bb.l ], [ 21, %bb.w ], [ 11, %bb.m ], [ 26, %bb.ab ], [ 12, %bb.n ], [ 19, %bb.u ], [ 13, %bb.o ], [ 25, %bb.aa ], [ 14, %bb.p ], [ 22, %bb.x ], [ 15, %bb.q ]
-  %5 = or disjoint i32 %.06.i.i, %i.r
-  %i.aw = tail call ptr @Gia_ManCollectBugTrace(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %5)
+  %6 = add nuw nsw i32 %.06.i.i, %i.r             ; 2 uses
+  %7 = icmp sgt i32 %6, -1
+  br i1 %7, label %Gia_ManOutputAsserted.exit.a, label %Gia_ManOutputAsserted.exit.thread.loopexit
+
+Gia_ManOutputAsserted.exit.a:                     ; preds = %Gia_ManOutputAsserted.exit
+  %i.aw = tail call ptr @Gia_ManCollectBugTrace(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %6)
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %i.aw, ptr %i.ax, align 8, !tbaa !62
   br label %.loopexit
 
-Gia_ManOutputAsserted.exit.thread.loopexit:       ; preds = %bb.ag
+Gia_ManOutputAsserted.exit.thread.loopexit:       ; preds = %bb.ag, %Gia_ManOutputAsserted.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %.lr.ph.preheader.i, !llvm.loop !102

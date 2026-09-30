@@ -205,22 +205,25 @@ bb.f:                                             ; preds = %_ZNSt10lock_guardIS
 
 bb.g:                                             ; preds = %bb.f
   %i.w = load i8, ptr %i.a, align 8, !tbaa !219, !range !38, !noundef !39
-  %i.x = trunc nuw i8 %i.w to i1                  ; 3 uses
+  %i.x = trunc nuw i8 %i.w to i1                  ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.z = load i32, ptr %i.y, align 8, !tbaa !215  ; 3 uses
+  %i.z = load i32, ptr %i.y, align 8, !tbaa !215  ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val = load ptr, ptr %i.aa, align 8, !tbaa !365 ; 3 uses
-  %.not.i.i8 = trunc i32 %i.z to i1               ; 2 uses
-  %2 = select i1 %.not.i.i8, i32 6, i32 2
-  %i.ab = select i1 %i.x, i32 %2, i32 19
+  %2 = shl i32 %i.z, 2
+  %3 = and i32 %2, 4
+  %4 = or disjoint i32 %3, 2
+  %i.ab = select i1 %i.x, i32 %4, i32 19
   %i.ac = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN7doctest5ColorlsERSoNS0_4EnumE(ptr noundef nonnull align 8 dereferenceable(8) %.val, i32 noundef %i.ab)
-          to label %.noexc.a unwind label %bb.m   ; 0 uses
+          to label %.noexc unwind label %bb.m     ; 0 uses
 
-.noexc.a:                                         ; preds = %bb.g
-  %3 = xor i1 %i.x, true
-  %brmerge.i = or i1 %3, %.not.i.i8
-  %.str.480.mux.i = select i1 %i.x, ptr @.str.50, ptr @.str.480
-  br i1 %brmerge.i, label %_ZN7doctest12_GLOBAL__N_115ConsoleReporter22getSuccessOrFailStringEbNS_10assertType4EnumEPKc.exit.i, label %bb.h
+.noexc:                                           ; preds = %bb.g
+  br i1 %i.x, label %.noexc.a, label %_ZN7doctest12_GLOBAL__N_115ConsoleReporter22getSuccessOrFailStringEbNS_10assertType4EnumEPKc.exit.i
+
+.noexc.a:                                         ; preds = %.noexc
+  %5 = and i32 %i.z, 1
+  %.not.i.i.i = icmp eq i32 %5, 0
+  br i1 %.not.i.i.i, label %bb.h, label %_ZN7doctest12_GLOBAL__N_115ConsoleReporter22getSuccessOrFailStringEbNS_10assertType4EnumEPKc.exit.i
 
 bb.h:                                             ; preds = %.noexc.a
   %i.ad = and i32 %i.z, 2
@@ -233,8 +236,8 @@ bb.i:                                             ; preds = %bb.h
   %.str..str.52.i.i.i = select i1 %.not4.i.i.i, ptr @.str, ptr @.str.52
   br label %_ZN7doctest12_GLOBAL__N_115ConsoleReporter22getSuccessOrFailStringEbNS_10assertType4EnumEPKc.exit.i
 
-_ZN7doctest12_GLOBAL__N_115ConsoleReporter22getSuccessOrFailStringEbNS_10assertType4EnumEPKc.exit.i: ; preds = %bb.i, %bb.h, %.noexc.a
-  %.0.i.i = phi ptr [ %.str.480.mux.i, %.noexc.a ], [ @.str.51, %bb.h ], [ %.str..str.52.i.i.i, %bb.i ] ; 2 uses
+_ZN7doctest12_GLOBAL__N_115ConsoleReporter22getSuccessOrFailStringEbNS_10assertType4EnumEPKc.exit.i: ; preds = %bb.i, %bb.h, %.noexc.a, %.noexc
+  %.0.i.i = phi ptr [ @.str.480, %.noexc ], [ @.str.51, %bb.h ], [ @.str.50, %.noexc.a ], [ %.str..str.52.i.i.i, %bb.i ] ; 2 uses
   %i.af = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i.i) #49
   %i.ag = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %.val, ptr noundef nonnull %.0.i.i, i64 noundef %i.af)
           to label %.noexc9 unwind label %bb.m    ; 0 uses
@@ -306,10 +309,10 @@ bb.e:                                             ; preds = %bb.d
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !365, !nonnull !39, !align !304 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 2 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !234
-  %2 = and i32 %i.r, 1
-  %.not.i = icmp eq i32 %2, 0
-  %3 = select i1 %.not.i, i32 2, i32 6
-  %i.s = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN7doctest5ColorlsERSoNS0_4EnumE(ptr noundef nonnull align 8 dereferenceable(8) %i.p, i32 noundef %3)
+  %2 = shl i32 %i.r, 2
+  %3 = and i32 %2, 4
+  %4 = or disjoint i32 %3, 2
+  %i.s = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN7doctest5ColorlsERSoNS0_4EnumE(ptr noundef nonnull align 8 dereferenceable(8) %i.p, i32 noundef %4)
           to label %bb.f unwind label %bb.p       ; 0 uses
 
 bb.f:                                             ; preds = %bb.e

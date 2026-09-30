@@ -204,9 +204,8 @@ bb.p:                                             ; preds = %bb.o
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !30
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 24
   %i.bl = load i32, ptr %i.bk, align 8, !tbaa !92
-  %11 = and i32 %i.bl, 2
-  %12 = icmp eq i32 %11, 0
-  %13 = select i1 %12, i64 16, i64 17
+  %11 = lshr i32 %i.bl, 1
+  %12 = and i32 %11, 1
   %i.bm = load i32, ptr %i.v, align 8, !tbaa !221
   %.not.i83 = icmp eq i32 %i.bm, 0
   br i1 %.not.i83, label %.noexc84, label %bb.q
@@ -220,7 +219,9 @@ bb.q:                                             ; preds = %bb.p
           to label %.noexc85 unwind label %bb.k   ; 0 uses
 
 .noexc85:                                         ; preds = %.noexc84
-  %i.bp = getelementptr inbounds nuw i8, ptr @.str.5, i64 %13
+  %13 = zext nneg i32 %12 to i64
+  %14 = getelementptr inbounds nuw i8, ptr @.str.5, i64 %13
+  %i.bp = getelementptr inbounds nuw i8, ptr %14, i64 16
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !63
   %i.br = invoke noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEcR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %5, i8 noundef signext %i.bq, ptr noundef nonnull align 4 dereferenceable(4) %4)
           to label %.noexc85._ZN6icu_7812_GLOBAL__N_115appendAttributeERNS_10CharStringEc18UColAttributeValueR10UErrorCode.exit87_crit_edge unwind label %bb.k ; 0 uses
@@ -245,9 +246,8 @@ bb.s:                                             ; preds = %bb.r
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !30
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 24
   %i.bz = load i32, ptr %i.by, align 8, !tbaa !92
-  %14 = and i32 %i.bz, 1024
-  %15 = icmp eq i32 %14, 0
-  %16 = select i1 %15, i64 16, i64 17
+  %15 = lshr i32 %i.bz, 10
+  %16 = and i32 %15, 1
   %i.ca = load i32, ptr %i.v, align 8, !tbaa !221
   %.not.i90 = icmp eq i32 %i.ca, 0
   br i1 %.not.i90, label %.noexc91, label %bb.t
@@ -261,7 +261,9 @@ bb.t:                                             ; preds = %bb.s
           to label %.noexc92 unwind label %bb.k   ; 0 uses
 
 .noexc92:                                         ; preds = %.noexc91
-  %i.cd = getelementptr inbounds nuw i8, ptr @.str.5, i64 %16
+  %17 = zext nneg i32 %16 to i64
+  %18 = getelementptr inbounds nuw i8, ptr @.str.5, i64 %17
+  %i.cd = getelementptr inbounds nuw i8, ptr %18, i64 16
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !63
   %i.cf = invoke noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEcR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %5, i8 noundef signext %i.ce, ptr noundef nonnull align 4 dereferenceable(4) %4)
           to label %.noexc92._ZN6icu_7812_GLOBAL__N_115appendAttributeERNS_10CharStringEc18UColAttributeValueR10UErrorCode.exit94_crit_edge unwind label %bb.k ; 0 uses
@@ -286,9 +288,8 @@ bb.v:                                             ; preds = %bb.u
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !30
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 24
   %i.cn = load i32, ptr %i.cm, align 8, !tbaa !92
-  %17 = and i32 %i.cn, 2048
-  %18 = icmp eq i32 %17, 0
-  %19 = select i1 %18, i64 16, i64 17
+  %19 = lshr i32 %i.cn, 11
+  %20 = and i32 %19, 1
   %i.co = load i32, ptr %i.v, align 8, !tbaa !221
   %.not.i97 = icmp eq i32 %i.co, 0
   br i1 %.not.i97, label %.noexc98, label %bb.w
@@ -302,7 +303,9 @@ bb.w:                                             ; preds = %bb.v
           to label %.noexc99 unwind label %bb.k   ; 0 uses
 
 .noexc99:                                         ; preds = %.noexc98
-  %i.cr = getelementptr inbounds nuw i8, ptr @.str.5, i64 %19
+  %21 = zext nneg i32 %20 to i64
+  %22 = getelementptr inbounds nuw i8, ptr @.str.5, i64 %21
+  %i.cr = getelementptr inbounds nuw i8, ptr %22, i64 16
   %i.cs = load i8, ptr %i.cr, align 1, !tbaa !63
   %i.ct = invoke noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEcR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %5, i8 noundef signext %i.cs, ptr noundef nonnull align 4 dereferenceable(4) %4)
           to label %_ZN6icu_7812_GLOBAL__N_115appendAttributeERNS_10CharStringEc18UColAttributeValueR10UErrorCode.exit101 unwind label %bb.k ; 0 uses

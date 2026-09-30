@@ -204,15 +204,17 @@ bb.a:
 define dso_local zeroext range(i8 0, 25) i8 @drm_dp_get_adjust_request_pre_emphasis(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) #2 align 16 prefalign(16) {
 bb.a:
   %i.a = ashr i32 %1, 1
-  %2 = and i32 %1, 1
-  %.not = icmp eq i32 %2, 0
-  %3 = select i1 %.not, i8 2, i8 6
+  %2 = shl i32 %1, 2
+  %3 = and i32 %2, 4
+  %4 = or disjoint i32 %3, 2
   %i.b = sext i32 %i.a to i64
   %i.c = getelementptr i8, ptr %0, i64 %i.b
   %i.d = getelementptr i8, ptr %i.c, i64 4
   %i.e = load i8, ptr %i.d, align 1
-  %4 = lshr i8 %i.e, %3
-  %i.f = shl i8 %4, 3
+  %5 = zext i8 %i.e to i32
+  %6 = lshr i32 %5, %4
+  %.tr = trunc nuw nsw i32 %6 to i8
+  %i.f = shl i8 %.tr, 3
   %i.g = and i8 %i.f, 24
   ret i8 %i.g
 }

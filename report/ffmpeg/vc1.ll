@@ -205,18 +205,28 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 9952
   %i.j = load i32, ptr %i.i, align 16, !tbaa !96
   %.not788 = icmp eq i32 %i.j, 1
-  br i1 %.not788, label %bb.d, label %.critedge
+  br i1 %.not788, label %2, label %.critedge
 
-bb.d:                                             ; preds = %bb.c
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 9956
-  %3 = load i32, ptr %2, align 4, !tbaa !220      ; 2 uses
-  %4 = and i32 %3, 4
-  %.not789 = icmp eq i32 %4, 0
-  %5 = and i32 %3, 1                              ; 2 uses
-  %6 = add nuw nsw i32 %5, 1
-  %.not791 = icmp eq i32 %5, 0
-  %7 = select i1 %.not791, i32 3, i32 7
-  %.sink = select i1 %.not789, i32 %6, i32 %7     ; 2 uses
+2:                                                ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 9956
+  %4 = load i32, ptr %3, align 4, !tbaa !220      ; 3 uses
+  %5 = and i32 %4, 4
+  %.not789 = icmp eq i32 %5, 0
+  br i1 %.not789, label %10, label %6
+
+6:                                                ; preds = %2
+  %7 = shl i32 %4, 2
+  %8 = and i32 %7, 4
+  %9 = or disjoint i32 %8, 3
+  br label %bb.d
+
+10:                                               ; preds = %2
+  %11 = and i32 %4, 1
+  %12 = add nuw nsw i32 %11, 1
+  br label %bb.d
+
+bb.d:                                             ; preds = %10, %6
+  %.sink = phi i32 [ %12, %10 ], [ %9, %6 ]       ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1280
   store i32 %.sink, ptr %i.k, align 16, !tbaa !99
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1056
@@ -334,8 +344,8 @@ bb.l:                                             ; preds = %bb.k
   %i.bw = load i32, ptr %i.bv, align 1, !tbaa !19
   %i.bx = tail call i32 @llvm.bswap.i32(i32 %i.bw)
   %i.by = and i32 %i.bp, 7
-  %i.bz = shl i32 %i.bx, %i.by                    ; 4 uses
-  %i.ca = lshr i32 %i.bz, 29
+  %i.bz = shl i32 %i.bx, %i.by                    ; 3 uses
+  %i.ca = lshr i32 %i.bz, 29                      ; 2 uses
   %i.cb = add i32 %i.bp, 3
   %i.cc = tail call i32 @llvm.umin.i32(i32 %i.br, i32 %i.cb) ; 3 uses
   store i32 %i.cc, ptr %i.bo, align 8, !tbaa !21
@@ -345,11 +355,11 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not797, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %8 = and i32 %i.bz, 1073741824
-  %.not799 = icmp eq i32 %8, 0
-  %9 = select i1 %.not799, i32 3, i32 7
+  %13 = shl nuw nsw i32 %i.ca, 1
+  %14 = and i32 %13, 4
+  %15 = or disjoint i32 %14, 3
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 1280
-  store i32 %9, ptr %i.ce, align 16, !tbaa !99
+  store i32 %15, ptr %i.ce, align 16, !tbaa !99
   br label %bb.v
 
 bb.n:                                             ; preds = %bb.l

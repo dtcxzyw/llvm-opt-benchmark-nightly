@@ -205,11 +205,11 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bz = load i8, ptr %i.by, align 4, !tbaa !25
   %i.ca = and i8 %i.bz, 31
   %i.cb = zext nneg i8 %i.ca to i32
-  %4 = shl nuw i32 1, %i.cb
-  %i.cc = and i32 %4, 6315993
-  %.not100 = icmp eq i32 %i.cc, 0                 ; 2 uses
-  %5 = select i1 %.not100, i32 31, i32 63
-  %i.cd = and i32 %5, %i.bx                       ; 5 uses
+  %4 = lshr i32 6315993, %i.cb
+  %i.cc = and i32 %4, 1                           ; 2 uses
+  %5 = shl nuw nsw i32 %i.cc, 5
+  %6 = or disjoint i32 %5, 31
+  %i.cd = and i32 %6, %i.bx                       ; 5 uses
   %i.ce = icmp eq i32 %3, 0
   %i.cf = icmp ne i32 %i.cd, 0
   %or.cond = select i1 %i.ce, i1 %i.cf, i1 false
@@ -225,7 +225,8 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.cj = load i16, ptr %1, align 8, !tbaa !25    ; 2 uses
   %i.ck = zext i16 %i.cj to i32                   ; 2 uses
-  br i1 %.not100, label %bb.v, label %bb.s
+  %.not.i108 = icmp eq i32 %i.cc, 0
+  br i1 %.not.i108, label %bb.v, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.cl = load ptr, ptr %i.d, align 8, !tbaa !57

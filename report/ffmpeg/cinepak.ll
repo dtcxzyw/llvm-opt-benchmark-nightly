@@ -204,12 +204,14 @@ bb.bj:                                            ; preds = %bb.bh
   %.sink.i.i = phi ptr [ %i.ge, %bb.an ], [ %i.gf, %bb.am ], [ %i.gf, %bb.am ], [ %i.gf, %bb.am ], [ %i.gf, %bb.am ] ; 3 uses
   %i.no = sext i32 %i.he to i64                   ; 10 uses
   %i.np = getelementptr inbounds i8, ptr %i.gg, i64 %i.no ; 6 uses
-  %4 = and i32 %i.gi, 4
-  %.not.i78.i = icmp eq i32 %4, 0                 ; 2 uses
-  %5 = select i1 %.not.i78.i, i64 6, i64 4        ; 4 uses
+  %4 = lshr i32 %i.gi, 1
+  %5 = and i32 %4, 2                              ; 2 uses
+  %6 = xor i32 %5, 6
   %i.nq = and i32 %i.gi, 1
-  %.not63.i.i.a = icmp eq i32 %i.nq, 0            ; 2 uses
-  br i1 %.not.i78.i, label %.split.us.i.i, label %.split.i.i
+  %.not.i78.i = icmp eq i32 %i.nq, 0              ; 2 uses
+  %7 = zext nneg i32 %6 to i64                    ; 4 uses
+  %.not63.i.i.a = icmp eq i32 %5, 0
+  br i1 %.not63.i.i.a, label %.split.us.i.i, label %.split.i.i
 
 .split.us.i.i:                                    ; preds = %.sink.split.i.i, %.thread81.us.i.i
   %.048100.us.i.i = phi ptr [ %.6.us.i.i, %.thread81.us.i.i ], [ %.sink.i.i, %.sink.split.i.i ] ; 14 uses
@@ -217,7 +219,7 @@ bb.bj:                                            ; preds = %bb.bh
   %.05198.us.i.i = phi i32 [ %.15279.us.i.i, %.thread81.us.i.i ], [ 0, %.sink.split.i.i ] ; 2 uses
   %.05397.us.i.i = phi i32 [ %.15477.us.i.i, %.thread81.us.i.i ], [ 0, %.sink.split.i.i ] ; 2 uses
   %.05596.us.i.i = phi ptr [ %.560.us.i.i, %.thread81.us.i.i ], [ %i.gg, %.sink.split.i.i ] ; 4 uses
-  br i1 %.not63.i.i.a, label %.thread.us.i.i, label %bb.bk
+  br i1 %.not.i78.i, label %.thread.us.i.i, label %bb.bk
 
 bb.bk:                                            ; preds = %.split.us.i.i
   %i.nr = lshr i32 %.05198.us.i.i, 1              ; 2 uses
@@ -246,7 +248,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bk
   %.15280.us.i.i = phi i32 [ %.152.us.i.i, %bb.bn ], [ %.05198.us.i.i, %.split.us.i.i ]
   %.15478.us.i.i = phi i32 [ %.154.us.i.i, %bb.bn ], [ %.05397.us.i.i, %.split.us.i.i ]
   %.15676.us.i.i = phi ptr [ %.156.us.i.i, %bb.bn ], [ %.05596.us.i.i, %.split.us.i.i ] ; 8 uses
-  %i.nx = getelementptr inbounds nuw i8, ptr %.15676.us.i.i, i64 %5
+  %i.nx = getelementptr inbounds nuw i8, ptr %.15676.us.i.i, i64 %7
   %i.ny = icmp ugt ptr %i.nx, %i.np
   br i1 %i.ny, label %cinepak_decode_codebook.exit.i, label %.preheader.us.preheader.i.i
 
@@ -361,13 +363,13 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bk
   br i1 %exitcond142.not.i.i, label %cinepak_decode_codebook.exit.i, label %.split.us.i.i, !llvm.loop !41
 
 .split.i.i:                                       ; preds = %.sink.split.i.i
-  br i1 %.not63.i.i.a, label %.thread.us108.i.i, label %.split.split.i.i
+  br i1 %.not.i78.i, label %.thread.us108.i.i, label %.split.split.i.i
 
 .thread.us108.i.i:                                ; preds = %.split.i.i, %.preheader.us112.preheader.i.i.1
   %.048100.us103.i.i = phi ptr [ %scevgep134.3.i.i.1, %.preheader.us112.preheader.i.i.1 ], [ %.sink.i.i, %.split.i.i ] ; 9 uses
   %.05099.us104.i.i = phi i32 [ %i.qv, %.preheader.us112.preheader.i.i.1 ], [ 0, %.split.i.i ]
   %.05596.us107.i.i = phi ptr [ %i.qu, %.preheader.us112.preheader.i.i.1 ], [ %i.gg, %.split.i.i ] ; 10 uses
-  %i.qb = getelementptr inbounds nuw i8, ptr %.05596.us107.i.i, i64 %5
+  %i.qb = getelementptr inbounds nuw i8, ptr %.05596.us107.i.i, i64 %7
   %i.qc = icmp ugt ptr %i.qb, %i.np
   br i1 %i.qc, label %cinepak_decode_codebook.exit.i, label %.preheader.us112.preheader.i.i
 
@@ -387,7 +389,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bk
   %i.qj = load i8, ptr %i.qi, align 1, !tbaa !49
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %scevgep134.2.i.i, i8 %i.qj, i64 3, i1 false), !tbaa !49
   %i.qk = getelementptr inbounds nuw i8, ptr %.05596.us107.i.i, i64 4 ; 2 uses
-  %i.ql = getelementptr inbounds nuw i8, ptr %i.qk, i64 %5
+  %i.ql = getelementptr inbounds nuw i8, ptr %i.qk, i64 %7
   %i.qm = icmp ugt ptr %i.ql, %i.np
   br i1 %i.qm, label %cinepak_decode_codebook.exit.i, label %.preheader.us112.preheader.i.i.1
 
@@ -442,7 +444,7 @@ bb.bq:                                            ; preds = %bb.bp, %.split.spli
   br i1 %.not65.i.i, label %.thread81.i.i, label %.thread.i.i
 
 .thread.i.i:                                      ; preds = %bb.bq
-  %i.rc = getelementptr inbounds nuw i8, ptr %.156.i.i, i64 %5
+  %i.rc = getelementptr inbounds nuw i8, ptr %.156.i.i, i64 %7
   %i.rd = icmp ugt ptr %i.rc, %i.np
   br i1 %i.rd, label %cinepak_decode_codebook.exit.i, label %.preheader.preheader.i.i
 

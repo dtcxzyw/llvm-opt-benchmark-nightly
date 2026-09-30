@@ -75,10 +75,11 @@ bb.a:
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = getelementptr i8, ptr %0, i64 32         ; 2 uses
   %i.j = load i32, ptr %i.i, align 8
-  %3 = and i32 %i.j, 131072
-  %.not = icmp eq i32 %3, 0
-  %4 = select i1 %.not, i8 10, i8 11
-  %i.k = tail call ptr @netfs_create_write_req(ptr noundef %i.h, ptr noundef %i.f, i64 noundef %i.b, i8 noundef signext %4) #5 ; 23 uses
+  %3 = lshr i32 %i.j, 17
+  %4 = trunc i32 %3 to i8
+  %5 = and i8 %4, 1
+  %6 = or disjoint i8 %5, 10
+  %i.k = tail call ptr @netfs_create_write_req(ptr noundef %i.h, ptr noundef %i.f, i64 noundef %i.b, i8 noundef signext %6) #5 ; 23 uses
   %i.l = icmp ugt ptr %i.k, inttoptr (i64 -4096 to ptr)
   br i1 %i.l, label %bb.b, label %bb.c
 

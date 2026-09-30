@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %.lr.ph
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 8
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !131 ; 10 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #18
-  %i.fj = load i32, ptr %i.x, align 4             ; 32 uses
+  %i.fj = load i32, ptr %i.x, align 4             ; 33 uses
   %i.fk = lshr i32 %i.fj, 25
   %i.fl = and i32 %i.fk, 3                        ; 7 uses
   %i.fm = zext nneg i32 %i.fl to i64
@@ -259,16 +259,19 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.gc = icmp eq i32 %i.fl, 3
-  %49 = and i32 %i.fj, 134217728                  ; 2 uses
   br i1 %i.gc, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %.not60.i = icmp eq i32 %49, 0
-  %50 = select i1 %.not60.i, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 2 to ptr)
+  %49 = lshr i32 %i.fj, 27
+  %50 = and i32 %49, 1
+  %51 = xor i32 %50, 3
+  %.sroa.0367.0.insert.ext402 = zext nneg i32 %51 to i64
+  %52 = inttoptr i64 %.sroa.0367.0.insert.ext402 to ptr
   br label %bb.aj
 
 bb.m:                                             ; preds = %bb.k
-  %.not59.i = icmp ne i32 %49, 0
+  %53 = and i32 %i.fj, 134217728
+  %.not59.i = icmp ne i32 %53, 0
   %i.gd = icmp eq i32 %i.fl, 2
   %or.cond.i = and i1 %.not59.i, %i.gd
   br i1 %or.cond.i, label %bb.aj, label %_ZN4llvmplERKNS_5TwineES2_.exit175.i
@@ -624,7 +627,7 @@ _ZN4llvm8ExpectedIN12_GLOBAL__N_128MachOLinkGraphBuilder_x86_6429MachONormalized
   br label %.thread527.jt1
 
 bb.aj:                                            ; preds = %bb.l, %bb.t, %bb.o, %bb.m, %bb.p, %bb.q, %bb.r, %bb.u, %bb.w, %bb.y, %bb.aa, %bb.ab
-  %.sroa.0367.1.ph = phi ptr [ inttoptr (i64 14 to ptr), %bb.ab ], [ %i.gt, %bb.aa ], [ %i.gq, %bb.y ], [ %i.gn, %bb.w ], [ inttoptr (i64 16 to ptr), %bb.u ], [ inttoptr (i64 13 to ptr), %bb.r ], [ inttoptr (i64 12 to ptr), %bb.q ], [ null, %bb.p ], [ inttoptr (i64 1 to ptr), %bb.m ], [ %i.gg, %bb.o ], [ inttoptr (i64 15 to ptr), %bb.t ], [ %50, %bb.l ]
+  %.sroa.0367.1.ph = phi ptr [ inttoptr (i64 14 to ptr), %bb.ab ], [ %i.gt, %bb.aa ], [ %i.gq, %bb.y ], [ %i.gn, %bb.w ], [ inttoptr (i64 16 to ptr), %bb.u ], [ inttoptr (i64 13 to ptr), %bb.r ], [ inttoptr (i64 12 to ptr), %bb.q ], [ null, %bb.p ], [ inttoptr (i64 1 to ptr), %bb.m ], [ %i.gg, %bb.o ], [ inttoptr (i64 15 to ptr), %bb.t ], [ %52, %bb.l ]
   %i.hp = ptrtoint ptr %.sroa.0367.1.ph to i64    ; 2 uses
   %.sroa.0367.0.extract.trunc = trunc i64 %i.hp to i32
   switch i32 %.sroa.0367.0.extract.trunc, label %_ZN4llvm8ExpectedISt5tupleIJhPNS_7jitlink6SymbolEmEEED2Ev.exit.thread [

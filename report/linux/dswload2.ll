@@ -200,9 +200,9 @@ bb.an:                                            ; preds = %bb.al
 bb.ao:                                            ; preds = %bb.an
   %i.cb = getelementptr i8, ptr %0, i64 52
   %i.cc = load i32, ptr %i.cb, align 4
-  %2 = and i32 %i.cc, 1024
-  %.not138 = icmp eq i32 %2, 0
-  %spec.select = select i1 %.not138, i32 72, i32 8
+  %2 = lshr i32 %i.cc, 4
+  %3 = and i32 %2, 64
+  %spec.select = xor i32 %3, 72
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
@@ -221,7 +221,8 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br i1 %.not140, label %bb.aq, label %.thread152
 
 bb.aq:                                            ; preds = %bb.ap
-  %.not141 = icmp samesign ult i32 %.0106, 64
+  %4 = and i32 %.0106, 64
+  %.not141 = icmp eq i32 %4, 0
   br i1 %.not141, label %.thread, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq

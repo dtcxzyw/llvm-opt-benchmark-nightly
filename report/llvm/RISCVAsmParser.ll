@@ -204,7 +204,7 @@ define internal fastcc void @_ZNK12_GLOBAL__N_114RISCVAsmParser24ComputeAvailabl
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, i8 0, i64 48, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !29   ; 51 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !29   ; 52 uses
   %i.c = shl i64 %i.b, 39
   %i.d = and i64 %i.c, 70368744177664
   %i.e = shl i64 %i.b, 38
@@ -479,17 +479,19 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w, %bb.x
   %i.ei = and i64 %i.b, 2147483648
-  %.not79 = icmp eq i64 %i.ei, 0
-  %2 = and i64 %i.b, 4294967296
-  %.not80.a = icmp eq i64 %2, 0                   ; 2 uses
-  br i1 %.not79, label %.thread12, label %bb.z
+  %.not80.a = icmp eq i64 %i.ei, 0
+  br i1 %.not80.a, label %.thread12, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %spec.select221.v = select i1 %.not80.a, i64 288230376151711744, i64 1441151880758558720
+  %2 = shl i64 %i.b, 28
+  %3 = and i64 %2, 1152921504606846976
+  %spec.select221.v = or disjoint i64 %3, 288230376151711744
   br label %.thread4
 
 .thread12:                                        ; preds = %bb.y
-  br i1 %.not80.a, label %.thread5, label %.thread4
+  %4 = and i64 %i.b, 4294967296
+  %.not80 = icmp eq i64 %4, 0
+  br i1 %.not80, label %.thread5, label %.thread4
 
 .thread4:                                         ; preds = %.thread12, %bb.z
   %spec.select221.v.pn = phi i64 [ %spec.select221.v, %bb.z ], [ 1152921504606846976, %.thread12 ]

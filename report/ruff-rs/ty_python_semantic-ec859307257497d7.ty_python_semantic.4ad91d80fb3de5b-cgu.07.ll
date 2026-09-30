@@ -205,7 +205,7 @@ _RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dictNtB5_13TypedDictT
   %.sroa.0.0 = phi i32 [ 0, %bb.b ], [ %spec.select4.i, %bb.c ], [ 0, %bb.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
-  %i.ag = trunc nuw i64 %5 to i1                  ; 2 uses
+  %i.ag = trunc nuw i64 %5 to i1
   br i1 %i.ag, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dictNtB5_13TypedDictType14defining_class.exit.thread
@@ -304,8 +304,9 @@ bb.j:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i)
   %i.av = icmp ult i64 %.val142, 230584300921369396
   call void @llvm.assume(i1 %i.av)
-  %..i.i = select i1 %i.ag, i64 48, i64 16
-  %i.aw = getelementptr inbounds nuw i8, ptr %6, i64 %..i.i
+  %7 = shl nuw nsw i64 %5, 5
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 %7
+  %i.aw = getelementptr inbounds nuw i8, ptr %8, i64 16
   %.sroa.0.0.i.i = load i64, ptr %i.aw, align 8, !noalias !19538, !noundef !15
   %.not.i.i = icmp eq i64 %.val142, %.sroa.0.0.i.i ; 2 uses
   br i1 %.not.i.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterEEB13_.exit4.i, label %_RNvMNtCsj8vhLppEnlJ_8char_str8char_strNtB2_7CharStr15from_static_str.exit.i.i
