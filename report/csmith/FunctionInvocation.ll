@@ -204,15 +204,19 @@ bb.a:
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.0710
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !94
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %i.m = load i32, ptr %i.l, align 8, !tbaa !108
-  %.not.not = icmp ne i32 %i.m, 2                 ; 2 uses
+  %i.m = load i32, ptr %i.l, align 8, !tbaa !108  ; 2 uses
+  %.not.not.not = icmp eq i32 %i.m, 2
   %i.n = add nuw i64 %.0710, 1                    ; 2 uses
-  %exitcond.not = icmp ne i64 %i.n, %i.i
-  %or.cond.not = select i1 %.not.not, i1 %exitcond.not, i1 false
-  br i1 %or.cond.not, label %.lr.ph, label %._crit_edge, !llvm.loop !151
+  %exitcond.not = icmp eq i64 %i.n, %i.i
+  %or.cond.not = select i1 %.not.not.not, i1 true, i1 %exitcond.not
+  br i1 %or.cond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !151
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %.lcssa = phi i1 [ true, %bb.a ], [ %.not.not, %.lr.ph ]
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.not.not = icmp ne i32 %i.m, 2
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %.lcssa = phi i1 [ true, %bb.a ], [ %.not.not, %._crit_edge.loopexit ]
   ret i1 %.lcssa
 }
 

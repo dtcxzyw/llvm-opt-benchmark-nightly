@@ -202,9 +202,9 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.bl
   %i.ae = phi ptr [ getelementptr inbounds nuw (i8, ptr @_RNvNtCsgbWeKYPjk8w_3syn9scan_expr4INIT, i64 1392), %bb.a ], [ %i.dd, %bb.bl ]
-  %.sroa.0.0261 = phi i64 [ 0, %bb.a ], [ %.sroa.0.1, %bb.bl ] ; 4 uses
+  %.sroa.0.0261 = phi i64 [ 0, %bb.a ], [ %.sroa.0.1, %bb.bl ] ; 5 uses
   %.sroa.084.0260 = phi ptr [ @_RNvNtCsgbWeKYPjk8w_3syn9scan_expr4INIT, %bb.a ], [ %.sroa.084.1, %bb.bl ]
-  %i.af = icmp ne i64 %.sroa.0.0261, 0            ; 2 uses
+  %i.af = icmp ne i64 %.sroa.0.0261, 0
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.ap
@@ -266,7 +266,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   call void @_RINvMs9_NtCsgbWeKYPjk8w_3syn5parseNtB6_11ParseBuffer5parseINtNtCsj6eKBz9Db1c_4core6option6OptionNtCs6et67aoV1xO_11proc_macro29TokenTreeEEB8_(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.a, ptr noundef nonnull align 8 %1)
-  %i.au = load i32, ptr %i.a, align 8, !range !1061, !noundef !5 ; 3 uses
+  %i.au = load i32, ptr %i.a, align 8, !range !1061, !noundef !5 ; 4 uses
   %i.av = icmp eq i32 %i.au, -2
   br i1 %i.av, label %bb.y, label %bb.z
 
@@ -327,7 +327,7 @@ bb.l:                                             ; preds = %bb.b
   %i.bf = trunc nuw i64 %i.be to i1
   %.sroa.0194.0.copyload = load ptr, ptr %i.v, align 8 ; 3 uses
   %.sroa.4195.0.copyload = load i64, ptr %.sroa.4187.0..sroa_idx, align 8 ; 3 uses
-  %.sroa.5196.0.copyload = load i8, ptr %.sroa.5188.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.5196.0.copyload = load i8, ptr %.sroa.5188.0..sroa_idx, align 8 ; 4 uses
   br i1 %i.bf, label %bb.ad, label %bb.ae
 
 bb.m:                                             ; preds = %bb.b
@@ -338,7 +338,7 @@ bb.m:                                             ; preds = %bb.b
   %i.bh = trunc nuw i64 %i.bg to i1
   %.sroa.0210.0.copyload = load ptr, ptr %i.u, align 8 ; 3 uses
   %.sroa.4211.0.copyload = load i64, ptr %.sroa.4203.0..sroa_idx, align 8 ; 3 uses
-  %.sroa.5212.0.copyload = load i8, ptr %.sroa.5204.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.5212.0.copyload = load i8, ptr %.sroa.5204.0..sroa_idx, align 8 ; 4 uses
   br i1 %i.bh, label %bb.ah, label %bb.ai
 
 bb.n:                                             ; preds = %bb.b
@@ -431,9 +431,10 @@ bb.y:                                             ; preds = %bb.e
 bb.z:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.429.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4107.0..sroa_idx, i64 28, i1 false)
   store i32 %i.au, ptr %i.o, align 8
-  %i.bu = icmp ne i32 %i.au, -1                   ; 2 uses
+  %i.bu = icmp ne i32 %i.au, -1
   %i.bv = zext i1 %i.bu to i8
-  br i1 %i.bu, label %bb.aa, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn.exit
+  %.not303 = icmp eq i32 %i.au, -1
+  br i1 %.not303, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro29TokenTreeECsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.o)
@@ -472,9 +473,10 @@ bb.ad:                                            ; preds = %bb.l
 
 bb.ae:                                            ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  %i.bw = icmp ne i8 %.sroa.5196.0.copyload, -1   ; 2 uses
+  %i.bw = icmp ne i8 %.sroa.5196.0.copyload, -1
   %i.bx = zext i1 %i.bw to i8
-  br i1 %i.bw, label %bb.af, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs6et67aoV1xO_11proc_macro25IdentEECsgbWeKYPjk8w_3syn.exit
+  %.not302 = icmp eq i8 %.sroa.5196.0.copyload, -1
+  br i1 %.not302, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs6et67aoV1xO_11proc_macro25IdentEECsgbWeKYPjk8w_3syn.exit, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.by = icmp eq i8 %.sroa.5196.0.copyload, 2
@@ -506,9 +508,10 @@ bb.ah:                                            ; preds = %bb.m
 
 bb.ai:                                            ; preds = %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %i.ca = icmp ne i8 %.sroa.5212.0.copyload, -1   ; 2 uses
+  %i.ca = icmp ne i8 %.sroa.5212.0.copyload, -1
   %i.cb = zext i1 %i.ca to i8
-  br i1 %i.ca, label %bb.aj, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn8lifetime8LifetimeEEB11_.exit
+  %.not301 = icmp eq i8 %.sroa.5212.0.copyload, -1
+  br i1 %.not301, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn8lifetime8LifetimeEEB11_.exit, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.cc = icmp eq i8 %.sroa.5212.0.copyload, 2
@@ -533,10 +536,11 @@ bb.al:                                            ; preds = %bb.n
 
 bb.am:                                            ; preds = %bb.n
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.556, i64 24, i1 false)
-  %i.ce = load i64, ptr %i.i, align 8, !range !1064, !noundef !5
-  %i.cf = icmp ne i64 %i.ce, -2                   ; 2 uses
+  %i.ce = load i64, ptr %i.i, align 8, !range !1064, !noundef !5 ; 2 uses
+  %i.cf = icmp ne i64 %i.ce, -2
   %i.cg = zext i1 %i.cf to i8
-  br i1 %i.cf, label %bb.an, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn3lit3LitEEB11_.exit
+  %.not300 = icmp eq i64 %i.ce, -2
+  br i1 %.not300, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn3lit3LitEEB11_.exit, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn3lit3LitEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i)
@@ -730,7 +734,8 @@ bb.bj:                                            ; preds = %.loopexit220
   br label %bb.bl
 
 bb.bk:                                            ; preds = %.loopexit220
-  br i1 %i.af, label %.loopexit, label %bb.bm
+  %.not304 = icmp eq i64 %.sroa.0.0261, 0
+  br i1 %.not304, label %bb.bm, label %.loopexit
 
 bb.bl:                                            ; preds = %bb.bj, %bb.bi, %bb.bh
   %.sroa.084.1 = phi ptr [ %i.cx, %bb.bh ], [ @_RNvNtCsgbWeKYPjk8w_3syn9scan_expr4INIT, %bb.bi ], [ @_RNvNtCsgbWeKYPjk8w_3syn9scan_expr7POSTFIX, %bb.bj ] ; 2 uses

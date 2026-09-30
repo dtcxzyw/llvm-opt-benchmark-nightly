@@ -202,8 +202,9 @@ bb.bw:                                            ; preds = %bb.bv
   %i.ej = load i64, ptr %i.ei, align 8, !alias.scope !993, !noalias !985 ; 6 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.n, i64 72
   %i.el = load ptr, ptr %i.ek, align 8, !alias.scope !993, !noalias !985, !nonnull !7
-  %i.em = load ptr, ptr %i.j, align 8, !alias.scope !983, !noalias !994 ; 2 uses
-  %i.en = icmp eq ptr %i.em, null                 ; 2 uses
+  %i.em = load ptr, ptr %i.j, align 8, !alias.scope !983, !noalias !994 ; 3 uses
+  %i.en = icmp eq ptr %i.em, null
+  %.not = icmp ne ptr %i.em, null
   %i.eo = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 3 uses
   %i.ep = load i8, ptr %i.eo, align 8, !range !995, !alias.scope !983, !noalias !994
   %i.eq = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
@@ -295,8 +296,8 @@ bb.cf:                                            ; preds = %bb.ce
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 64
   %i.fs = load ptr, ptr %i.fr, align 8, !noalias !992, !noundef !7
   %i.ft = icmp ne ptr %i.fs, null                 ; 2 uses
-  %i.fu = xor i1 %i.en, %i.ft
-  br i1 %i.fu, label %bb.cg, label %_RNvXsy_NtNtCsdCDTHl3mYPb_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i.i.i
+  %i.fu = xor i1 %.not, %i.ft
+  br i1 %i.fu, label %_RNvXsy_NtNtCsdCDTHl3mYPb_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i.i.i, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
   br i1 %i.ft, label %bb.ch, label %_RNvXsy_NtNtCsdCDTHl3mYPb_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i.i

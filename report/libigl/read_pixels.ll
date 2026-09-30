@@ -25,8 +25,8 @@ define weak_odr dso_local void @_ZN3igl6opengl11read_pixelsIhEEvjjRN5Eigen6Matri
 bb.a:
   %i.a = zext i32 %0 to i64                       ; 12 uses
   %i.b = zext i32 %1 to i64                       ; 12 uses
-  %i.c = icmp eq i32 %0, 0                        ; 2 uses
-  %i.d = icmp eq i32 %1, 0                        ; 2 uses
+  %i.c = icmp eq i32 %0, 0
+  %i.d = icmp eq i32 %1, 0
   %or.cond.i.i = or i1 %i.c, %i.d                 ; 5 uses
   br i1 %or.cond.i.i, label %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i, label %bb.b
 
@@ -274,8 +274,10 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIhLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   tail call void %i.bt(i32 noundef 0, i32 noundef 0, i32 noundef %0, i32 noundef %1, i32 noundef 6408, i32 noundef 5121, ptr noundef %i.bq)
   %i.bu = load ptr, ptr @glad_glReadPixels, align 8, !tbaa !13
   tail call void %i.bu(i32 noundef 0, i32 noundef 0, i32 noundef %0, i32 noundef %1, i32 noundef 6402, i32 noundef 5121, ptr noundef %i.bs)
-  %or.cond.demorgan = or i1 %i.d, %i.c
-  br i1 %or.cond.demorgan, label %._crit_edge94.split, label %.preheader
+  %.not105 = icmp ne i32 %1, 0
+  %.not106 = icmp ne i32 %0, 0
+  %or.cond = and i1 %.not105, %.not106
+  br i1 %or.cond, label %.preheader, label %._crit_edge94.split
 
 .preheader:                                       ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIhLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit85, %._crit_edge
   %indvars.iv100 = phi i64 [ %indvars.iv.next101, %._crit_edge ], [ 0, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIhLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit85 ] ; 6 uses

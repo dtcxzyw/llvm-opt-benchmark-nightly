@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %RCLASS_SINGLETON_P.
   %i.p = load i64, ptr %i.c, align 8, !tbaa !33
   %i.q = or i64 %i.p, %i.o                        ; 2 uses
   store i64 %i.q, ptr %i.c, align 8, !tbaa !33
-  %i.r = icmp eq i64 %0, 0                        ; 2 uses
-  %i.s = and i64 %0, 7
-  %i.t = icmp ne i64 %i.s, 0                      ; 2 uses
+  %i.r = icmp eq i64 %0, 0
+  %i.s = and i64 %0, 7                            ; 2 uses
+  %i.t = icmp ne i64 %i.s, 0
   %i.u = or i1 %i.r, %i.t
   br i1 %i.u, label %rbimpl_RB_TYPE_P_fastpath.exit.thread, label %rbimpl_RB_TYPE_P_fastpath.exit
 
@@ -223,8 +223,10 @@ bb.d:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %bb.c, %bb.d, %rbimpl_RB_TYPE_P_fastpath.exit
-  %3 = xor i1 %i.t, %i.r
-  br i1 %3, label %RB_OBJ_FROZEN.exit.thread, label %RB_OBJ_FROZEN.exit
+  %.not38 = icmp ne i64 %0, 0
+  %.not39 = icmp eq i64 %i.s, 0
+  %.not3.i = and i1 %.not38, %.not39
+  br i1 %.not3.i, label %RB_OBJ_FROZEN.exit, label %RB_OBJ_FROZEN.exit.thread
 
 RB_OBJ_FROZEN.exit:                               ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.thread
   %i.aa = load i64, ptr %i.m, align 8, !tbaa !33

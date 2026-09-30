@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph108, %_ZN7mes
   %i.aj = and i32 %i.ai, 1048575
   %i.ak = sub nsw i32 %i.ac, %i.aj                ; 2 uses
   %.not85.1 = icmp uge i32 %i.ak, %i.t            ; 2 uses
-  %spec.select.1 = tail call i32 @llvm.umax.i32(i32 %i.ak, i32 %i.t)
+  %spec.select.1 = tail call i32 @llvm.umax.i32(i32 %i.ak, i32 %i.t) ; 2 uses
   %spec.select86.1 = zext i1 %.not85.1 to i32
   %i.al = getelementptr [4 x i8], ptr %.tr89106, i64 %.tr91107
   %i.am = getelementptr i8, ptr %i.al, i64 -4
@@ -223,8 +223,8 @@ bb.b:                                             ; preds = %.lr.ph108, %_ZN7mes
   %i.ay = lshr i64 %i.ax, 40
   %i.az = trunc nuw nsw i64 %i.ay to i32
   %i.ba = and i32 %i.az, 1048575
-  %i.bb = sub nsw i32 %i.at, %i.ba
-  %.not85.2 = icmp ult i32 %i.bb, %spec.select.1  ; 3 uses
+  %i.bb = sub nsw i32 %i.at, %i.ba                ; 2 uses
+  %.not85.2 = icmp ult i32 %i.bb, %spec.select.1  ; 2 uses
   %spec.select86.2 = select i1 %.not85.2, i32 %spec.select86.1, i32 2 ; 3 uses
   %i.bc = lshr i64 %.tr91107, 1
   %i.bd = add i64 %i.d, %i.bc                     ; 2 uses
@@ -467,7 +467,8 @@ _ZN7meshoptL15partitionPointsEPjPKjPKhmm.exit.1.loopexit.unr-lcssa: ; preds = %.
   br label %_ZN7meshoptL15partitionPointsEPjPKjPKhmm.exit.1
 
 _ZN7meshoptL15partitionPointsEPjPKjPKhmm.exit.1:  ; preds = %.lr.ph.i.1.epil.preheader, %_ZN7meshoptL15partitionPointsEPjPKjPKhmm.exit.1.loopexit.unr-lcssa, %_ZN7meshoptL15partitionPointsEPjPKjPKhmm.exit
-  br i1 %.not85.2, label %bb.h, label %_ZN7meshoptL15partitionPointsEPjPKjPKhmm.exit.2
+  %not..not85.2.not = icmp ult i32 %i.bb, %spec.select.1
+  br i1 %not..not85.2.not, label %bb.h, label %_ZN7meshoptL15partitionPointsEPjPKjPKhmm.exit.2
 
 bb.h:                                             ; preds = %_ZN7meshoptL15partitionPointsEPjPKjPKhmm.exit.1
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %6, ptr nonnull align 4 %.tr89106, i64 %i.bg, i1 false)

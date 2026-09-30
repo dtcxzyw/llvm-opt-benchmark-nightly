@@ -205,8 +205,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2413)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2414)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !alias.scope !2415, !noundef !10 ; 2 uses
-  %i.c = icmp ne ptr %i.b, null                   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !alias.scope !2415, !noundef !10 ; 3 uses
+  %i.c = icmp ne ptr %i.b, null
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.e = load i64, ptr %i.d, align 8, !alias.scope !2415 ; 2 uses
   %i.f = icmp eq i64 %i.e, 0
@@ -222,7 +222,8 @@ _RNvXs1_NtCs4YAKbnGhBJc_12arrow_buffer5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesECsc2V0exE7CWf_11lance_arrow.exit
 
 _RNvXs1_NtCs4YAKbnGhBJc_12arrow_buffer5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop.exit.i: ; preds = %bb.a
-  br i1 %i.c, label %bb.b, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesECsc2V0exE7CWf_11lance_arrow.exit
+  %.not = icmp eq ptr %i.b, null
+  br i1 %.not, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesECsc2V0exE7CWf_11lance_arrow.exit, label %bb.b
 
 bb.b:                                             ; preds = %_RNvXs1_NtCs4YAKbnGhBJc_12arrow_buffer5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop.exit.i
   %i.k = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !2417
@@ -625,13 +626,13 @@ bb.aa:                                            ; preds = %bb.b
 bb.ab:                                            ; preds = %bb.aa
   %i.ef = getelementptr inbounds nuw i8, ptr %.tr76, i64 16
   %i.eg = getelementptr inbounds nuw i8, ptr %.tr3477, i64 16
-  %i.eh = load i64, ptr %i.ef, align 8, !noundef !10 ; 2 uses
-  %i.ei = load i64, ptr %i.eg, align 8, !noundef !10
+  %i.eh = load i64, ptr %i.ef, align 8, !noundef !10 ; 3 uses
+  %i.ei = load i64, ptr %i.eg, align 8, !noundef !10 ; 2 uses
   %i.ej = icmp eq ptr %i.eb, %i.ed                ; 2 uses
-  %i.ek = icmp eq i64 %i.eh, %i.ei                ; 2 uses
+  %i.ek = icmp eq i64 %i.eh, %i.ei
   %i.el = and i1 %i.ej, %i.ek
-  %.not20 = xor i1 %i.ek, true
-  %brmerge = or i1 %i.ej, %.not20
+  %.not122 = icmp ne i64 %i.eh, %i.ei
+  %brmerge = or i1 %i.ej, %.not122
   br i1 %brmerge, label %_RNvXsg_NtCs8SUNSmrkv52_12arrow_schema6fieldsNtB5_6FieldsNtNtCscI6d9CVNmLh_4core3cmp9PartialEq2eq.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab

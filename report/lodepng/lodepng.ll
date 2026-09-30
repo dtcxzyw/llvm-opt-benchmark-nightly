@@ -205,8 +205,8 @@ bb.da:                                            ; preds = %bb.cz
 
 .thread.i:                                        ; preds = %bb.cz, %_ZL19huffmanDecodeSymbolP16LodePNGBitReaderPK11HuffmanTree.exit.i
   %.sroa.42.11 = phi i64 [ %.sink175.i, %bb.cz ], [ %.sink.i, %_ZL19huffmanDecodeSymbolP16LodePNGBitReaderPK11HuffmanTree.exit.i ] ; 6 uses
-  %.083143.in.i = phi i16 [ %.0.in.i118.i, %bb.cz ], [ %.0.in.i114.i, %_ZL19huffmanDecodeSymbolP16LodePNGBitReaderPK11HuffmanTree.exit.i ] ; 4 uses
-  %i.ps = icmp ne i16 %.083143.in.i, 256          ; 2 uses
+  %.083143.in.i = phi i16 [ %.0.in.i118.i, %bb.cz ], [ %.0.in.i114.i, %_ZL19huffmanDecodeSymbolP16LodePNGBitReaderPK11HuffmanTree.exit.i ] ; 5 uses
+  %i.ps = icmp ne i16 %.083143.in.i, 256
   %i.pt = icmp ult i16 %.083143.in.i, 286
   %or.cond.i37 = and i1 %i.ps, %i.pt
   br i1 %or.cond.i37, label %bb.db, label %bb.ee
@@ -536,7 +536,8 @@ bb.ed:                                            ; preds = %bb.eb
   br label %_ZL14lodepng_memcpyPvPKvm.exit135.thread.i
 
 bb.ee:                                            ; preds = %.thread.i
-  br i1 %i.ps, label %_ZL20inflateNoCompressionP8ucvectorP16LodePNGBitReaderPK25LodePNGDecompressSettings.exit, label %_ZL14lodepng_memcpyPvPKvm.exit135.thread.i
+  %.not = icmp eq i16 %.083143.in.i, 256
+  br i1 %.not, label %_ZL14lodepng_memcpyPvPKvm.exit135.thread.i, label %_ZL20inflateNoCompressionP8ucvectorP16LodePNGBitReaderPK25LodePNGDecompressSettings.exit
 
 _ZL14lodepng_memcpyPvPKvm.exit135.thread.i:       ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.ee, %.lr.ph.preheader.i133.i, %bb.ed, %bb.da
   %.sroa.42.12 = phi i64 [ %.sink175.i, %bb.da ], [ %.sroa.42.11, %bb.ee ], [ %.sroa.42.13, %bb.ed ], [ %.sroa.42.13, %.lr.ph.preheader.i133.i ], [ %.sroa.42.13, %.lr.ph.i ], [ %.sroa.42.13, %.lr.ph.i.prol.loopexit ] ; 6 uses
@@ -939,13 +940,13 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.1
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !25 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 416
   store i64 %i.ai, ptr %i.aj, align 8, !tbaa !25
-  %i.ak = tail call noalias noundef ptr @malloc(i64 noundef %i.ai) #30 ; 2 uses
+  %i.ak = tail call noalias noundef ptr @malloc(i64 noundef %i.ai) #30 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !28
-  %.not29.2 = icmp ne ptr %i.ak, null             ; 2 uses
+  %.not29.2 = icmp ne ptr %i.ak, null
   %.not30.2 = icmp eq i64 %i.ai, 0                ; 2 uses
   %or.cond.2 = or i1 %.not29.2, %.not30.2
-  %2 = xor i1 %.not29.2, true
+  %2 = icmp eq ptr %i.ak, null
   %brmerge = or i1 %.not30.2, %2
   %.mux = select i1 %or.cond.2, i32 0, i32 83
   br i1 %brmerge, label %.critedge, label %.lr.ph.2
@@ -1348,10 +1349,10 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af, %.thread449
   %i.ea = phi i1 [ false, %bb.af ], [ false, %.thread449 ], [ %spec.select488, %bb.ag ]
-  %i.eb = load i32, ptr %i.h, align 8, !tbaa !148 ; 5 uses
-  %i.ec = icmp eq i32 %i.eb, 3                    ; 2 uses
-  %i.ed = load i32, ptr %8, align 8               ; 2 uses
-  %i.ee = icmp eq i32 %i.ed, 3                    ; 4 uses
+  %i.eb = load i32, ptr %i.h, align 8, !tbaa !148 ; 6 uses
+  %i.ec = icmp eq i32 %i.eb, 3
+  %i.ed = load i32, ptr %8, align 8               ; 3 uses
+  %i.ee = icmp eq i32 %i.ed, 3                    ; 3 uses
   %or.cond = select i1 %i.ec, i1 %i.ee, i1 false
   %i.ef = icmp eq i32 %i.eb, 2
   %or.cond7 = select i1 %i.ef, i1 %i.ee, i1 false
@@ -1383,8 +1384,9 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %.3 = phi i32 [ %.2247, %bb.ah ], [ %spec.select403, %bb.ai ] ; 2 uses
-  %11 = select i1 %i.ec, i1 true, i1 %i.ee
-  %or.cond30 = xor i1 %11, true
+  %.not511 = icmp ne i32 %i.eb, 3
+  %.not512 = icmp ne i32 %i.ed, 3
+  %or.cond30 = select i1 %.not511, i1 %.not512, i1 false
   %or.cond32 = select i1 %or.cond30, i1 %i.ea, i1 false
   br i1 %or.cond32, label %bb.ak, label %bb.al
 
@@ -1488,10 +1490,10 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fo, i64 19
-  %i.gb = load i8, ptr %i.ga, align 1, !tbaa !35
-  %i.gc = icmp eq i8 %i.gb, 89                    ; 2 uses
+  %i.gb = load i8, ptr %i.ga, align 1, !tbaa !35  ; 2 uses
+  %i.gc = icmp eq i8 %i.gb, 89
   %i.gd = zext i1 %i.gc to i32
-  %12 = xor i1 %i.gc, true
+  %11 = icmp ne i8 %i.gb, 89
   br label %_ZL15isRGBICCProfilePKhj.exit431
 
 bb.ay:                                            ; preds = %bb.au
@@ -1514,7 +1516,7 @@ bb.ba:                                            ; preds = %bb.az
 
 _ZL15isRGBICCProfilePKhj.exit431:                 ; preds = %bb.ax, %bb.ba
   %.0.i428463 = phi i32 [ 0, %bb.ba ], [ %i.gd, %bb.ax ]
-  %.0.i430 = phi i1 [ %i.gm, %bb.ba ], [ %12, %bb.ax ]
+  %.0.i430 = phi i1 [ %i.gm, %bb.ba ], [ %11, %bb.ax ]
   br i1 %.0.i430, label %_ZL18checkColorValidity16LodePNGColorTypej.exit.thread, label %bb.bb
 
 bb.bb:                                            ; preds = %_ZL15isRGBICCProfilePKhj.exit431
@@ -1917,12 +1919,12 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.d = load i32, ptr %i.c, align 8, !tbaa !131
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !141
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !141  ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 1048
   %i.h = load i32, ptr %i.g, align 8, !tbaa !133  ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store i32 0, ptr %i.i, align 8, !tbaa !97
-  %i.j = icmp eq i32 %i.f, 0                      ; 2 uses
+  %i.j = icmp eq i32 %i.f, 0
   %i.k = icmp ugt i64 %i.b, 16                    ; 2 uses
   %or.cond.not = select i1 %i.j, i1 true, i1 %i.k ; 2 uses
   %spec.store.select = tail call i32 @llvm.umax.i32(i32 %i.h, i32 8)
@@ -2156,7 +2158,7 @@ bb.n:                                             ; preds = %bb.a
   %i.dt = select i1 %narrow, i32 0, i32 2
   %i.du = select i1 %i.ae, i32 %i.dt, i32 %i.ds
   store i32 %i.du, ptr %0, align 8, !tbaa !93
-  %.not125 = xor i1 %i.j, true
+  %.not125 = icmp ne i32 %i.f, 0
   %.not97.not = select i1 %.not125, i1 %i.k, i1 false
   br i1 %.not97.not, label %bb.o, label %_Z23lodepng_color_mode_copyP16LodePNGColorModePKS_.exit
 

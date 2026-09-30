@@ -203,8 +203,8 @@ bb.et:                                            ; preds = %bb.es
 bb.eu:                                            ; preds = %bb.et
   %i.hk = icmp eq i32 %i.hg, 2
   %i.hl = load i8, ptr %i.j, align 1
-  %i.hm = and i8 %i.hl, -33
-  %i.hn = icmp ne i8 %i.hm, 66                    ; 2 uses
+  %i.hm = and i8 %i.hl, -33                       ; 2 uses
+  %i.hn = icmp ne i8 %i.hm, 66
   %or.cond24 = select i1 %i.hk, i1 %i.hn, i1 false
   br i1 %or.cond24, label %bb.ev, label %bb.ew
 
@@ -214,7 +214,8 @@ bb.ev:                                            ; preds = %bb.eu, %bb.et
   unreachable
 
 bb.ew:                                            ; preds = %bb.eu
-  %restartIntervalRows.restartIntervalBlocks = select i1 %i.hn, ptr @restartIntervalRows, ptr @restartIntervalBlocks
+  %.not1347 = icmp eq i8 %i.hm, 66
+  %restartIntervalRows.restartIntervalBlocks = select i1 %.not1347, ptr @restartIntervalBlocks, ptr @restartIntervalRows
   store i32 %i.hi, ptr %restartIntervalRows.restartIntervalBlocks, align 4, !tbaa !9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #22

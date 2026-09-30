@@ -205,15 +205,15 @@ bb.a:
   %5 = alloca %"class.std::ios_base::failure", align 8 ; 5 uses
   %6 = alloca %"class.std::ios_base::failure", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !209  ; 16 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !209  ; 17 uses
   %.not.i = icmp eq ptr %i.b, null
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.d = load ptr, ptr %i.c, align 8              ; 9 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 10 uses
   br i1 %.not.i, label %.thread51, label %_ZNK5boost9iostreams6detail16direct_streambufINS0_18basic_array_sourceIcEESt11char_traitsIcEE8two_headEv.exit
 
 _ZNK5boost9iostreams6detail16direct_streambufINS0_18basic_array_sourceIcEESt11char_traitsIcEE8two_headEv.exit: ; preds = %bb.a
   %.not2.i = icmp ne ptr %i.d, null
-  %i.e = icmp ne ptr %i.b, %i.d                   ; 3 uses
+  %i.e = icmp ne ptr %i.b, %i.d
   %i.f = and i32 %3, 24
   %i.g = icmp eq i32 %i.f, 24
   %i.h = and i1 %.not2.i, %i.g
@@ -237,7 +237,8 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.ab
 
 bb.e:                                             ; preds = %_ZNK5boost9iostreams6detail16direct_streambufINS0_18basic_array_sourceIcEESt11char_traitsIcEE8two_headEv.exit
-  br i1 %i.e, label %.critedge.thread, label %bb.f
+  %.not65 = icmp eq ptr %i.b, %i.d                ; 2 uses
+  br i1 %.not65, label %bb.f, label %.critedge.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -374,7 +375,7 @@ bb.p:                                             ; preds = %bb.n
   store ptr %i.bf, ptr %i.al, align 8, !tbaa !928
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.az, ptr %i.bh, align 8, !tbaa !930
-  br i1 %i.e, label %.thread51, label %bb.aa
+  br i1 %.not65, label %bb.aa, label %.thread51
 
 .thread51:                                        ; preds = %bb.a, %.critedge.thread, %.split
   %.02853 = phi i64 [ %.02750, %.split ], [ -1, %.critedge.thread ], [ -1, %bb.a ]

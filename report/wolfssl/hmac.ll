@@ -202,15 +202,16 @@ bb.a:
   br i1 %i.a, label %bb.r, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = icmp eq ptr %1, null                     ; 2 uses
-  %i.c = icmp ne i32 %2, 0                        ; 2 uses
+  %i.b = icmp eq ptr %1, null
+  %i.c = icmp ne i32 %2, 0
   %or.cond = and i1 %i.b, %i.c
-  %.not54 = xor i1 %i.c, true
-  %brmerge = or i1 %i.b, %.not54
-  %.mux = select i1 %or.cond, i32 -173, i32 0
-  br i1 %brmerge, label %bb.r, label %bb.c
+  br i1 %or.cond, label %bb.r, label %3
 
-bb.c:                                             ; preds = %bb.b
+3:                                                ; preds = %bb.b
+  %.not52 = icmp eq i32 %2, 0
+  br i1 %.not52, label %bb.r, label %bb.c
+
+bb.c:                                             ; preds = %3
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 777 ; 2 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !12
   %.not = icmp eq i8 %i.e, 0
@@ -289,8 +290,8 @@ bb.q:                                             ; preds = %bb.f
   %i.v = tail call i32 @wc_Sha3_512_Update(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %2) #6
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.b, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.f, %bb.d, %bb.a
-  %.047 = phi i32 [ -173, %bb.f ], [ -173, %bb.a ], [ %i.i, %bb.d ], [ %.mux, %bb.b ], [ %i.v, %bb.q ], [ %i.l, %bb.g ], [ %i.m, %bb.h ], [ %i.n, %bb.i ], [ %i.o, %bb.j ], [ %i.p, %bb.k ], [ %i.q, %bb.l ], [ %i.r, %bb.m ], [ %i.s, %bb.n ], [ %i.t, %bb.o ], [ %i.u, %bb.p ]
+bb.r:                                             ; preds = %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.f, %bb.d, %3, %bb.a, %bb.b
+  %.047 = phi i32 [ 0, %3 ], [ -173, %bb.a ], [ %i.i, %bb.d ], [ -173, %bb.b ], [ %i.v, %bb.q ], [ %i.l, %bb.g ], [ %i.m, %bb.h ], [ %i.n, %bb.i ], [ %i.o, %bb.j ], [ %i.p, %bb.k ], [ %i.q, %bb.l ], [ %i.r, %bb.m ], [ %i.s, %bb.n ], [ %i.t, %bb.o ], [ %i.u, %bb.p ], [ -173, %bb.f ]
   ret i32 %.047
 }
 

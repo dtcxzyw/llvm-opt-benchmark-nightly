@@ -201,7 +201,7 @@ define void @_ZN16OpenColorIO_v2_522FixedFunctionTransform6CreateENS_18FixedFunc
 bb.a:
   %4 = alloca %"class.std::vector.8", align 8     ; 14 uses
   %i.a = icmp eq ptr %2, null
-  %i.b = icmp ne i64 %3, 0                        ; 2 uses
+  %i.b = icmp ne i64 %3, 0
   %or.cond = and i1 %i.a, %i.b
   br i1 %or.cond, label %bb.b, label %bb.e
 
@@ -235,7 +235,8 @@ bb.f:                                             ; preds = %bb.e
 _ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.e
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 0, ptr %i.f, align 8
-  br i1 %i.b, label %bb.g, label %bb.h
+  %.not25 = icmp eq i64 %3, 0
+  br i1 %.not25, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i
   %i.g = shl nuw nsw i64 %3, 3                    ; 2 uses
@@ -638,7 +639,7 @@ define hidden void @_ZN16OpenColorIO_v2_526FixedFunctionTransformImpl9setParamsE
 bb.a:
   %3 = alloca %"class.std::vector.8", align 8     ; 14 uses
   %i.a = icmp eq ptr %1, null
-  %i.b = icmp ne i64 %2, 0                        ; 2 uses
+  %i.b = icmp ne i64 %2, 0
   %or.cond = and i1 %i.a, %i.b
   br i1 %or.cond, label %bb.b, label %bb.e
 
@@ -672,7 +673,8 @@ bb.f:                                             ; preds = %bb.e
 _ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.e
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 0, ptr %i.f, align 8
-  br i1 %i.b, label %bb.g, label %bb.h
+  %.not22 = icmp eq i64 %2, 0
+  br i1 %.not22, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i
   %i.g = shl nuw nsw i64 %2, 3                    ; 2 uses

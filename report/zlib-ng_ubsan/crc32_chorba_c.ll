@@ -200,7 +200,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.c = zext i32 %0 to i64
   %i.d = ptrtoint ptr %1 to i64                   ; 271 uses
-  %i.e = icmp ne ptr %1, null                     ; 106 uses
+  %i.e = icmp ne ptr %1, null                     ; 105 uses
   %i.f = ptrtoint ptr %i.a to i64                 ; 456 uses
   br label %bb.b
 
@@ -603,7 +603,8 @@ bb.afa:                                           ; preds = %bb.aez
   br label %bb.afb, !nosanitize !14
 
 bb.afb:                                           ; preds = %bb.aez, %bb.afa
-  br i1 %i.e, label %bb.afd, label %bb.afc, !prof !13, !nosanitize !14
+  %.not1481 = icmp eq ptr %1, null
+  br i1 %.not1481, label %bb.afc, label %bb.afd, !prof !17, !nosanitize !14
 
 bb.afc:                                           ; preds = %bb.afb
   call void @__ubsan_handle_nonnull_arg(ptr nonnull @425) #6, !nosanitize !14
@@ -799,7 +800,7 @@ bb.a:
   %i.c = zext i32 %0 to i64
   store i64 %i.c, ptr %i.a, align 16, !tbaa !16
   %i.d = ptrtoint ptr %1 to i64                   ; 39 uses
-  %i.e = icmp ne ptr %1, null                     ; 19 uses
+  %i.e = icmp ne ptr %1, null                     ; 18 uses
   %i.f = ptrtoint ptr %i.a to i64                 ; 135 uses
   br label %bb.b
 
@@ -1202,7 +1203,8 @@ bb.jk:                                            ; preds = %bb.jj
   br label %bb.jl, !nosanitize !14
 
 bb.jl:                                            ; preds = %bb.jj, %bb.jk
-  br i1 %i.e, label %bb.jn, label %bb.jm, !prof !13, !nosanitize !14
+  %.not274 = icmp eq ptr %1, null
+  br i1 %.not274, label %bb.jm, label %bb.jn, !prof !17, !nosanitize !14
 
 bb.jm:                                            ; preds = %bb.jl
   call void @__ubsan_handle_nonnull_arg(ptr nonnull @576) #6, !nosanitize !14
@@ -1356,7 +1358,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %i.a, i8 0, i64 72, i1 false)
   %i.b = zext i32 %0 to i64
   %i.c = ptrtoint ptr %1 to i64                   ; 135 uses
-  %i.d = icmp ne ptr %1, null                     ; 56 uses
+  %i.d = icmp ne ptr %1, null                     ; 55 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
@@ -1759,7 +1761,8 @@ bb.ot:                                            ; preds = %bb.os
   br label %bb.ou, !nosanitize !14
 
 bb.ou:                                            ; preds = %bb.os, %bb.ot
-  br i1 %i.d, label %bb.ow, label %bb.ov, !prof !13, !nosanitize !14
+  %.not941 = icmp eq ptr %1, null
+  br i1 %.not941, label %bb.ov, label %bb.ow, !prof !17, !nosanitize !14
 
 bb.ov:                                            ; preds = %bb.ou
   call void @__ubsan_handle_nonnull_arg(ptr nonnull @837) #6, !nosanitize !14

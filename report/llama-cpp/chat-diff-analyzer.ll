@@ -204,13 +204,13 @@ bb.dj:                                            ; preds = %bb.di, %bb.dh, %._c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #27
   %i.te = load ptr, ptr %24, align 8, !tbaa !23
   %i.tf = load i64, ptr %i.tb, align 8, !tbaa !25
-  %i.tg = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %19, ptr noundef %i.te, i64 noundef -1, i64 noundef %i.tf) #27 ; 3 uses
+  %i.tg = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %19, ptr noundef %i.te, i64 noundef -1, i64 noundef %i.tf) #27 ; 4 uses
   %i.th = getelementptr inbounds nuw i8, ptr %19, i64 32 ; 5 uses
   %i.ti = load ptr, ptr %24, align 8, !tbaa !23
   %i.tj = load i64, ptr %i.tb, align 8, !tbaa !25
-  %i.tk = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %i.th, ptr noundef %i.ti, i64 noundef 0, i64 noundef %i.tj) #27 ; 2 uses
-  %i.tl = icmp ne i64 %i.tg, -1                   ; 2 uses
-  %i.tm = icmp eq i64 %i.tk, -1                   ; 2 uses
+  %i.tk = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %i.th, ptr noundef %i.ti, i64 noundef 0, i64 noundef %i.tj) #27 ; 3 uses
+  %i.tl = icmp ne i64 %i.tg, -1
+  %i.tm = icmp eq i64 %i.tk, -1
   %or.cond = and i1 %i.tl, %i.tm
   br i1 %or.cond, label %bb.dk, label %bb.gj
 
@@ -613,8 +613,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit428: ; preds = %bb
   br label %bb.ho
 
 bb.gj:                                            ; preds = %bb.dj
-  %or.cond3.demorgan = or i1 %i.tl, %i.tm
-  br i1 %or.cond3.demorgan, label %bb.hd, label %bb.gk
+  %.not552 = icmp ne i64 %i.tk, -1
+  %.not553 = icmp eq i64 %i.tg, -1
+  %or.cond3 = and i1 %.not553, %.not552
+  br i1 %or.cond3, label %bb.gk, label %bb.hd
 
 bb.gk:                                            ; preds = %bb.gj
   %i.adk = getelementptr inbounds nuw i8, ptr %0, i64 704

@@ -202,10 +202,10 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val11 = load i64, ptr %i.e, align 8, !noundef !69 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.val12 = load ptr, ptr %i.f, align 8, !align !70, !noundef !69 ; 5 uses
+  %.val12 = load ptr, ptr %i.f, align 8, !align !70, !noundef !69 ; 6 uses
   %i.g = icmp ult i64 %.val11, 34937015291116576
   tail call void @llvm.assume(i1 %i.g)
-  %.not.i = icmp ne ptr %.val12, null             ; 3 uses
+  %.not.i = icmp ne ptr %.val12, null             ; 2 uses
   %..i = zext i1 %.not.i to i64
   %i.h = add nuw nsw i64 %.val11, %..i            ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !173)
@@ -334,8 +334,9 @@ bb.k:                                             ; preds = %bb.j
   br label %"_ZN4core3ptr123drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$LP$routes_macros..path..RequestBodyArg$C$syn..token..Comma$RP$$GT$$GT$17h8731f9827789533cE.exit"
 
 "_ZN4core3ptr123drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$LP$routes_macros..path..RequestBodyArg$C$syn..token..Comma$RP$$GT$$GT$17h8731f9827789533cE.exit": ; preds = %bb.k, %bb.j
+  %.not.i.not = icmp eq ptr %.val12, null
   %.sroa.035.0.copyload.pre49 = load i64, ptr %i.d, align 8 ; 3 uses
-  br i1 %.not.i, label %bb.l, label %"_ZN4core3ptr123drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$LP$routes_macros..path..RequestBodyArg$C$syn..token..Comma$RP$$GT$$GT$17h8731f9827789533cE.exit._crit_edge"
+  br i1 %.not.i.not, label %"_ZN4core3ptr123drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$LP$routes_macros..path..RequestBodyArg$C$syn..token..Comma$RP$$GT$$GT$17h8731f9827789533cE.exit._crit_edge", label %bb.l
 
 "_ZN4core3ptr123drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$LP$routes_macros..path..RequestBodyArg$C$syn..token..Comma$RP$$GT$$GT$17h8731f9827789533cE.exit._crit_edge": ; preds = %"_ZN4core3ptr123drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$LP$routes_macros..path..RequestBodyArg$C$syn..token..Comma$RP$$GT$$GT$17h8731f9827789533cE.exit"
   %.sroa.236.0.copyload.pre = load ptr, ptr %i.m, align 8
@@ -738,7 +739,7 @@ split.loopexit.i.i.i.i:                           ; preds = %bb.di
   br label %split.i.i.i.i
 
 split.i.i.i.i:                                    ; preds = %split.loopexit.i.i.i.i, %._crit_edge.i.i.i.i
-  %.sroa.11.i.sroa.7.0.copyload280.i.i.i.i = phi i64 [ %.sroa.11.i.sroa.7.0.copyload280.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ %i.nh, %split.loopexit.i.i.i.i ] ; 4 uses
+  %.sroa.11.i.sroa.7.0.copyload280.i.i.i.i = phi i64 [ %.sroa.11.i.sroa.7.0.copyload280.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ %i.nh, %split.loopexit.i.i.i.i ] ; 5 uses
   %indvars9991071.i.i.i.i = trunc i64 %i.me to i32 ; 2 uses
   %.sroa.091.0.copyload.i.i.i.i.i = load i64, ptr %i.cs, align 8, !noalias !1654 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cp), !noalias !1654
@@ -763,7 +764,7 @@ bb.do:                                            ; preds = %split.i.i.i.i
   %i.nj = inttoptr i64 %.sroa.11.i.sroa.7.0.copyload280.i.i.i.i to ptr ; 4 uses
   %i.nk = icmp ult i64 %.val11.i.i.i.i.i.i, 115292150460684698
   call void @llvm.assume(i1 %i.nk), !noalias !1657
-  %.not.i.i81.i.i.i.i.i = icmp ne i64 %.sroa.11.i.sroa.7.0.copyload280.i.i.i.i, 0 ; 5 uses
+  %.not.i.i81.i.i.i.i.i = icmp ne i64 %.sroa.11.i.sroa.7.0.copyload280.i.i.i.i, 0 ; 4 uses
   %..i.i.i.i.i.i.i = zext i1 %.not.i.i81.i.i.i.i.i to i64
   %i.nl = add nuw nsw i64 %.val11.i.i.i.i.i.i, %..i.i.i.i.i.i.i ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1689), !noalias !1657
@@ -865,8 +866,9 @@ bb.dv:                                            ; preds = %bb.du
           to label %bb.dw unwind label %bb.dq, !noalias !1691
 
 bb.dw:                                            ; preds = %"_ZN103_$LT$alloc..vec..into_iter..IntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdc760380a6ea7deeE.exit.thread.i.i.i.i.i.i"
+  %.not.i.i81.i.i.i.i.i.not = icmp eq i64 %.sroa.11.i.sroa.7.0.copyload280.i.i.i.i, 0
   %.sroa.033.0.copyload.pre46.i.i.i.i.i.i = load i64, ptr %i.cm, align 8, !noalias !1692 ; 3 uses
-  br i1 %.not.i.i81.i.i.i.i.i, label %bb.dx, label %bb.eg
+  br i1 %.not.i.i81.i.i.i.i.i.not, label %bb.eg, label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.cj, ptr noundef nonnull align 8 dereferenceable(72) %i.nj, i64 72, i1 false), !noalias !1691
@@ -1269,7 +1271,7 @@ split1007.loopexit.i.i.i.i:                       ; preds = %bb.ge
   br label %split1007.i.i.i.i
 
 split1007.i.i.i.i:                                ; preds = %split1007.loopexit.i.i.i.i, %._crit_edge1006.i.i.i.i
-  %.sroa.11.sroa.8.0.copyload.i.i.i.i = phi i64 [ %.sroa.11.sroa.8.0.copyload.pre.i.i.i.i, %._crit_edge1006.i.i.i.i ], [ %i.sm, %split1007.loopexit.i.i.i.i ] ; 4 uses
+  %.sroa.11.sroa.8.0.copyload.i.i.i.i = phi i64 [ %.sroa.11.sroa.8.0.copyload.pre.i.i.i.i, %._crit_edge1006.i.i.i.i ], [ %i.sm, %split1007.loopexit.i.i.i.i ] ; 5 uses
   %indvars11301319.i.i.i = trunc i64 %.val1.i15.i.i.i.i.i to i32 ; 2 uses
   %.sroa.0178.0.copyload.i.i.i.i = load i64, ptr %i.du, align 8, !noalias !1603 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ds), !noalias !1603
@@ -1353,7 +1355,7 @@ bb.hb:                                            ; preds = %split1007.i.i.i.i
   %i.tb = inttoptr i64 %.sroa.11.sroa.8.0.copyload.i.i.i.i to ptr ; 4 uses
   %i.tc = icmp ult i64 %.val11.i.i.i.i.i, 30340039594917026
   call void @llvm.assume(i1 %i.tc)
-  %.not.i.i109.i.i.i.i = icmp ne i64 %.sroa.11.sroa.8.0.copyload.i.i.i.i, 0 ; 5 uses
+  %.not.i.i109.i.i.i.i = icmp ne i64 %.sroa.11.sroa.8.0.copyload.i.i.i.i, 0 ; 4 uses
   %..i.i.i.i.i.i = zext i1 %.not.i.i109.i.i.i.i to i64
   %i.td = add nuw nsw i64 %.val11.i.i.i.i.i, %..i.i.i.i.i.i ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1783)
@@ -1455,8 +1457,9 @@ bb.hi:                                            ; preds = %bb.hh
           to label %bb.hj unwind label %bb.hd, !noalias !1785
 
 bb.hj:                                            ; preds = %"_ZN103_$LT$alloc..vec..into_iter..IntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h5761f1c8f7908ecaE.exit.thread.i.i.i.i.i"
+  %.not.i.i109.i.i.i.i.not = icmp eq i64 %.sroa.11.sroa.8.0.copyload.i.i.i.i, 0
   %.sroa.033.0.copyload.pre46.i.i.i.i.i = load i64, ptr %i.dp, align 8, !noalias !1786 ; 3 uses
-  br i1 %.not.i.i109.i.i.i.i, label %bb.hk, label %bb.ht
+  br i1 %.not.i.i109.i.i.i.i.not, label %bb.ht, label %bb.hk
 
 bb.hk:                                            ; preds = %bb.hj
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(296) %i.dm, ptr noundef nonnull align 8 dereferenceable(296) %i.tb, i64 296, i1 false), !noalias !1785

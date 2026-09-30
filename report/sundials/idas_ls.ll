@@ -144,11 +144,11 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %bb.au
 
 bb.h:                                             ; preds = %bb.f
-  %i.j = tail call i32 @SUNLinSolGetType(ptr noundef nonnull %1) #12 ; 5 uses
+  %i.j = tail call i32 @SUNLinSolGetType(ptr noundef nonnull %1) #12 ; 6 uses
   %i.k = icmp ne i32 %i.j, 0                      ; 4 uses
   %i.l = zext i1 %i.k to i32
   %i.m = icmp ne i32 %i.j, 1
-  %i.n = icmp ne i32 %i.j, 3                      ; 4 uses
+  %i.n = icmp ne i32 %i.j, 3                      ; 3 uses
   %i.o = and i1 %i.m, %i.n                        ; 2 uses
   %i.p = zext i1 %i.o to i32
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 704 ; 4 uses
@@ -171,9 +171,10 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %bb.au
 
 bb.k:                                             ; preds = %bb.i
-  %i.aa = icmp eq ptr %2, null                    ; 6 uses
-  %or.cond.not = or i1 %i.aa, %i.n
-  br i1 %or.cond.not, label %bb.m, label %bb.l
+  %i.aa = icmp eq i32 %i.j, 3
+  %3 = icmp ne ptr %2, null                       ; 4 uses
+  %or.cond = and i1 %3, %i.aa
+  br i1 %or.cond, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   tail call void (ptr, i32, i32, ptr, ptr, ptr, ...) @IDAProcessError(ptr noundef nonnull %0, i32 noundef -3, i32 noundef 141, ptr noundef nonnull @__func__.IDASetLinearSolver, ptr noundef nonnull @.str, ptr noundef nonnull @.str.5) #12
@@ -228,7 +229,8 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.au
 
 bb.w:                                             ; preds = %bb.u, %bb.t
-  br i1 %i.aa, label %switch.early.test, label %bb.aa
+  %.not132 = icmp eq ptr %2, null
+  br i1 %.not132, label %switch.early.test, label %bb.aa
 
 switch.early.test:                                ; preds = %bb.w
   switch i32 %i.j, label %bb.x [
@@ -241,7 +243,8 @@ bb.x:                                             ; preds = %switch.early.test
   br label %bb.au
 
 bb.y:                                             ; preds = %bb.m
-  br i1 %i.aa, label %bb.z, label %bb.aa
+  %.not131 = icmp eq ptr %2, null
+  br i1 %.not131, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
   tail call void (ptr, i32, i32, ptr, ptr, ptr, ...) @IDAProcessError(ptr noundef nonnull %0, i32 noundef -3, i32 noundef 183, ptr noundef nonnull @__func__.IDASetLinearSolver, ptr noundef nonnull @.str, ptr noundef nonnull @.str.9) #12
@@ -284,10 +287,9 @@ bb.ae:                                            ; preds = %bb.ac
   store i32 %i.p, ptr %i.az, align 4, !tbaa !36
   %i.ba = getelementptr inbounds nuw i8, ptr %calloc, i64 40
   store ptr %2, ptr %i.ba, align 8, !tbaa !37
-  %not. = xor i1 %i.aa, true
-  %.sink129 = zext i1 %not. to i32
-  %.sink128 = select i1 %i.aa, ptr null, ptr @idaLsDQJac
-  %.sink = select i1 %i.aa, ptr null, ptr %0
+  %.sink129 = zext i1 %3 to i32
+  %.sink128 = select i1 %3, ptr @idaLsDQJac, ptr null
+  %.sink = select i1 %3, ptr %0, ptr null
   %i.bb = getelementptr inbounds nuw i8, ptr %calloc, i64 8
   store i32 %.sink129, ptr %i.bb, align 8, !tbaa !38
   %i.bc = getelementptr inbounds nuw i8, ptr %calloc, i64 16

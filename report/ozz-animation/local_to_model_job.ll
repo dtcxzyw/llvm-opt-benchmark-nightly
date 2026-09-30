@@ -204,8 +204,9 @@ bb.e:                                             ; preds = %.outer, %._crit_edg
 
 ._crit_edge.loopexit:                             ; preds = %bb.f
   %i.er = trunc nuw nsw i64 %indvars.iv.next to i32
+  %2 = icmp sgt i32 %i.hl, %i.hk
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #4
-  br i1 %i.hm, label %.outer, label %_ZNK3ozz9animation15LocalToModelJob8ValidateEv.exit.thread, !llvm.loop !26
+  br i1 %2, label %_ZNK3ozz9animation15LocalToModelJob8ValidateEv.exit.thread, label %.outer, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #4
@@ -299,9 +300,9 @@ bb.e:                                             ; preds = %.outer, %._crit_edg
 bb.f:                                             ; preds = %.lr.ph
   %i.hi = getelementptr inbounds nuw [2 x i8], ptr %i.o, i64 %indvars.iv.next
   %i.hj = load i16, ptr %i.hi, align 2, !tbaa !38
-  %i.hk = sext i16 %i.hj to i32
-  %i.hl = load i32, ptr %i.x, align 8, !tbaa !33
-  %i.hm = icmp sle i32 %i.hl, %i.hk               ; 2 uses
+  %i.hk = sext i16 %i.hj to i32                   ; 2 uses
+  %i.hl = load i32, ptr %i.x, align 8, !tbaa !33  ; 2 uses
+  %i.hm = icmp sle i32 %i.hl, %i.hk
   %i.hn = icmp samesign ult i64 %indvars.iv.next, %i.eq
   %i.ho = select i1 %i.hn, i1 %i.hm, i1 false
   br i1 %i.ho, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !29

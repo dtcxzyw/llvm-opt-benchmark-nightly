@@ -204,15 +204,16 @@ define hidden noundef ptr @_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9schedule
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.b = load i64, ptr %0, align 8, !noalias !390, !noundef !7 ; 2 uses
-  %i.c = icmp ne i64 %i.b, 0                      ; 2 uses
+  %i.b = load i64, ptr %0, align 8, !noalias !390, !noundef !7 ; 3 uses
+  %i.c = icmp ne i64 %i.b, 0
   %..i.i = zext i1 %i.c to i64                    ; 2 uses
   %i.d = sub i64 %i.b, %..i.i
   store atomic i64 %i.d, ptr %0 release, align 8, !noalias !390
   store ptr %1, ptr %i.a, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store i64 %..i.i, ptr %i.e, align 8
-  br i1 %i.c, label %bb.b, label %bb.f
+  %.not = icmp eq i64 %i.b, 0
+  br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !391)
@@ -435,15 +436,16 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !401)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !401
-  %i.j = load i64, ptr %i.b, align 8, !noalias !402, !noundef !7 ; 2 uses
-  %i.k = icmp ne i64 %i.j, 0                      ; 2 uses
+  %i.j = load i64, ptr %i.b, align 8, !noalias !402, !noundef !7 ; 3 uses
+  %i.k = icmp ne i64 %i.j, 0
   %..i.i.i = zext i1 %i.k to i64                  ; 2 uses
   %i.l = sub nuw i64 %i.j, %..i.i.i
   store atomic i64 %i.l, ptr %i.b release, align 8, !noalias !402
   store ptr %i.i, ptr %i.a, align 8, !noalias !401
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store i64 %..i.i.i, ptr %i.m, align 8, !noalias !401
-  br i1 %i.k, label %bb.e, label %bb.i
+  %.not = icmp eq i64 %i.j, 0
+  br i1 %.not, label %bb.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !403)

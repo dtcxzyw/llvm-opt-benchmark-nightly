@@ -205,16 +205,20 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.i.i.i = phi ptr [ %i.m, %.lr.ph.i.i.i.i ], [ %i.i, %.lr.ph.i.i.preheader.i.i ]
   %i.j = phi ptr [ %i.k, %.lr.ph.i.i.i.i ], [ %i.g, %.lr.ph.i.i.preheader.i.i ]
   %i.k = getelementptr inbounds i8, ptr %i.j, i64 -1 ; 3 uses
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !26
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !26    ; 2 uses
   %i.m = getelementptr inbounds i8, ptr %.sroa.0.0.i.i.i, i64 -1 ; 2 uses
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !26
-  %2 = icmp eq i8 %i.l, %i.n                      ; 2 uses
-  %.not.i.i.i.i = icmp ne ptr %i.k, %i.f
-  %or.cond.not = select i1 %2, i1 %.not.i.i.i.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i.i.i.i, label %_ZSt5equalISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEESC_EbT_SD_T0_.exit, !llvm.loop !151
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !26    ; 2 uses
+  %.not = icmp ne i8 %i.l, %i.n
+  %.not.i.i.i.i = icmp eq ptr %i.k, %i.f
+  %or.cond.not = select i1 %.not, i1 true, i1 %.not.i.i.i.i
+  br i1 %or.cond.not, label %_ZSt5equalISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEESC_EbT_SD_T0_.exit.loopexit, label %.lr.ph.i.i.i.i, !llvm.loop !151
 
-_ZSt5equalISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEESC_EbT_SD_T0_.exit: ; preds = %.lr.ph.i.i.i.i, %bb.b, %bb.a
-  %.0 = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ %2, %.lr.ph.i.i.i.i ]
+_ZSt5equalISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEESC_EbT_SD_T0_.exit.loopexit: ; preds = %.lr.ph.i.i.i.i
+  %2 = icmp eq i8 %i.l, %i.n
+  br label %_ZSt5equalISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEESC_EbT_SD_T0_.exit
+
+_ZSt5equalISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEESC_EbT_SD_T0_.exit: ; preds = %_ZSt5equalISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEESC_EbT_SD_T0_.exit.loopexit, %bb.b, %bb.a
+  %.0 = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ %2, %_ZSt5equalISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEESC_EbT_SD_T0_.exit.loopexit ]
   ret i1 %.0
 }
 

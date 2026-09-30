@@ -205,7 +205,7 @@ bb.gk:                                            ; preds = %bb.gj
   %i.bfv = load ptr, ptr %i.bfu, align 8, !tbaa !314, !alias.scope !319 ; 13 uses
   %i.bfw = getelementptr inbounds nuw i8, ptr %0, i64 712
   %i.bfx = load i32, ptr %i.bfw, align 8, !tbaa !315, !alias.scope !319 ; 12 uses
-  %i.bfy = load i32, ptr %1, align 8, !tbaa !74, !noalias !319 ; 30 uses
+  %i.bfy = load i32, ptr %1, align 8, !tbaa !74, !noalias !319 ; 33 uses
   %i.bfz = getelementptr inbounds nuw i8, ptr %1, i64 17 ; 2 uses
   %i.bga = load i8, ptr %i.bfz, align 1, !tbaa !75, !noalias !319 ; 7 uses
   %i.bgb = icmp ult i8 %i.bga, 9
@@ -575,7 +575,7 @@ bb.gp:                                            ; preds = %bb.gm
 
 bb.gq:                                            ; preds = %bb.gm
   %i.boj = icmp eq i8 %i.bga, 2
-  %i.bok = icmp ne i32 %i.bfy, 0                  ; 4 uses
+  %i.bok = icmp ne i32 %i.bfy, 0
   %or.cond257.i = select i1 %i.boj, i1 %i.bok, i1 false
   br i1 %or.cond257.i, label %.lr.ph.i205, label %.loopexit227.i
 
@@ -645,7 +645,8 @@ bb.gq:                                            ; preds = %bb.gm
   ]
 
 .preheader224.i:                                  ; preds = %.loopexit227.i
-  br i1 %i.bok, label %.lr.ph232.i.preheader, label %png_do_gamma.exit
+  %.not = icmp eq i32 %i.bfy, 0
+  br i1 %.not, label %png_do_gamma.exit, label %.lr.ph232.i.preheader
 
 .lr.ph232.i.preheader:                            ; preds = %.preheader224.i
   %xtraiter748 = and i32 %i.bfy, 1
@@ -657,7 +658,8 @@ bb.gq:                                            ; preds = %bb.gm
   br label %.lr.ph232.i
 
 .preheader222.i:                                  ; preds = %.loopexit227.i
-  br i1 %i.bok, label %.lr.ph235.i.preheader, label %png_do_gamma.exit
+  %.not386 = icmp eq i32 %i.bfy, 0
+  br i1 %.not386, label %png_do_gamma.exit, label %.lr.ph235.i.preheader
 
 .lr.ph235.i.preheader:                            ; preds = %.preheader222.i
   %i.bqi = add i32 %i.bfy, -1
@@ -670,7 +672,8 @@ bb.gq:                                            ; preds = %bb.gm
   br label %.lr.ph235.i
 
 .preheader220.i:                                  ; preds = %.loopexit227.i
-  br i1 %i.bok, label %.lr.ph238.i.preheader, label %png_do_gamma.exit
+  %.not387 = icmp eq i32 %i.bfy, 0
+  br i1 %.not387, label %png_do_gamma.exit, label %.lr.ph238.i.preheader
 
 .lr.ph238.i.preheader:                            ; preds = %.preheader220.i
   %i.bqk = add i32 %i.bfy, -1                     ; 2 uses
@@ -1073,7 +1076,7 @@ bb.iu:                                            ; preds = %bb.ir
   br label %.lr.ph.i256
 
 .lr.ph.i256:                                      ; preds = %.lr.ph.i256, %.lr.ph.preheader.i255.new
-  %.075.i = phi i32 [ %i.cxd, %.lr.ph.preheader.i255.new ], [ %.1.i258.1, %.lr.ph.i256 ] ; 2 uses
+  %.075.i = phi i32 [ %i.cxd, %.lr.ph.preheader.i255.new ], [ %.1.i258.1, %.lr.ph.i256 ] ; 3 uses
   %.pn74.i = phi ptr [ %i.cxe, %.lr.ph.preheader.i255.new ], [ %.052.i.1, %.lr.ph.i256 ] ; 2 uses
   %.05373.i = phi ptr [ %i.cxi, %.lr.ph.preheader.i255.new ], [ %.154.i.1, %.lr.ph.i256 ] ; 2 uses
   %niter839 = phi i32 [ 0, %.lr.ph.preheader.i255.new ], [ %niter839.next.1, %.lr.ph.i256 ]
@@ -1084,7 +1087,7 @@ bb.iu:                                            ; preds = %bb.ir
   %i.cxn = trunc nuw i32 %i.cxm to i8
   %i.cxo = and i8 %i.cxn, 15
   store i8 %i.cxo, ptr %.052.i, align 1, !tbaa !26
-  %.not.i257 = icmp ne i32 %.075.i, 0             ; 4 uses
+  %.not.i257 = icmp ne i32 %.075.i, 0             ; 2 uses
   %.154.idx.i = sext i1 %.not.i257 to i64
   %.154.i = getelementptr inbounds i8, ptr %.05373.i, i64 %.154.idx.i ; 2 uses
   %.1.i258 = select i1 %.not.i257, i32 0, i32 4
@@ -1095,10 +1098,10 @@ bb.iu:                                            ; preds = %bb.ir
   %i.cxs = trunc nuw i32 %i.cxr to i8
   %i.cxt = and i8 %i.cxs, 15
   store i8 %i.cxt, ptr %.052.i.1, align 1, !tbaa !26
-  %not..not.i257 = xor i1 %.not.i257, true
-  %.154.idx.i.1 = sext i1 %not..not.i257 to i64
+  %not..not.i258 = icmp eq i32 %.075.i, 0         ; 2 uses
+  %.154.idx.i.1 = sext i1 %not..not.i258 to i64
   %.154.i.1 = getelementptr inbounds i8, ptr %.154.i, i64 %.154.idx.i.1 ; 2 uses
-  %.1.i258.1 = select i1 %.not.i257, i32 4, i32 0 ; 2 uses
+  %.1.i258.1 = select i1 %not..not.i258, i32 0, i32 4 ; 2 uses
   %niter839.next.1 = add nuw i32 %niter839, 2     ; 2 uses
   %niter839.ncmp.1 = icmp eq i32 %niter839.next.1, %unroll_iter838
   br i1 %niter839.ncmp.1, label %.loopexit.i260.loopexit672.unr-lcssa, label %.lr.ph.i256, !llvm.loop !290
@@ -1501,7 +1504,7 @@ bb.h:                                             ; preds = %bb.e
 .lr.ph247:                                        ; preds = %.lr.ph247, %.lr.ph247.preheader.new
   %.pn245 = phi ptr [ %i.bn, %.lr.ph247.preheader.new ], [ %.2195.1, %.lr.ph247 ] ; 2 uses
   %.4204244 = phi ptr [ %i.br, %.lr.ph247.preheader.new ], [ %.5205.1, %.lr.ph247 ] ; 2 uses
-  %.4214243 = phi i32 [ %i.bm, %.lr.ph247.preheader.new ], [ %.5215.1, %.lr.ph247 ] ; 2 uses
+  %.4214243 = phi i32 [ %i.bm, %.lr.ph247.preheader.new ], [ %.5215.1, %.lr.ph247 ] ; 3 uses
   %niter = phi i32 [ 0, %.lr.ph247.preheader.new ], [ %niter.next.1, %.lr.ph247 ]
   %.2195 = getelementptr inbounds i8, ptr %.pn245, i64 -1
   %i.bt = load i8, ptr %.4204244, align 1, !tbaa !26
@@ -1512,7 +1515,7 @@ bb.h:                                             ; preds = %bb.e
   %i.by = or disjoint i32 %i.bw, %i.bx
   %i.bz = trunc i32 %i.by to i8
   store i8 %i.bz, ptr %.2195, align 1, !tbaa !26
-  %.not229 = icmp ne i32 %.4214243, 0             ; 4 uses
+  %.not229 = icmp ne i32 %.4214243, 0             ; 2 uses
   %.5215 = select i1 %.not229, i32 0, i32 4
   %.5205.idx = sext i1 %.not229 to i64
   %.5205 = getelementptr inbounds i8, ptr %.4204244, i64 %.5205.idx ; 2 uses
@@ -1525,8 +1528,8 @@ bb.h:                                             ; preds = %bb.e
   %i.cf = or disjoint i32 %i.cd, %i.ce
   %i.cg = trunc i32 %i.cf to i8
   store i8 %i.cg, ptr %.2195.1, align 1, !tbaa !26
-  %not..not229 = xor i1 %.not229, true
-  %.5215.1 = select i1 %.not229, i32 4, i32 0     ; 2 uses
+  %not..not229 = icmp eq i32 %.4214243, 0         ; 2 uses
+  %.5215.1 = select i1 %not..not229, i32 0, i32 4 ; 2 uses
   %.5205.idx.1 = sext i1 %not..not229 to i64
   %.5205.1 = getelementptr inbounds i8, ptr %.5205, i64 %.5205.idx.1 ; 2 uses
   %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses

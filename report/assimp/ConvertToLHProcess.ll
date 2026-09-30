@@ -204,11 +204,11 @@ bb.d:                                             ; preds = %.lr.ph126, %.split1
   %i.ae = load ptr, ptr %i.ad, align 8            ; 21 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 1192
   %i.ag = load i32, ptr %i.af, align 8
-  %.fr133 = freeze i32 %i.ag                      ; 39 uses
+  %.fr133 = freeze i32 %i.ag                      ; 40 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 1032 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8
   %.not = icmp ne ptr %i.ai, null
-  %i.aj = icmp ne i32 %.fr133, 0                  ; 4 uses
+  %i.aj = icmp ne i32 %.fr133, 0                  ; 3 uses
   %or.cond = and i1 %.not, %i.aj
   br i1 %or.cond, label %.lr.ph106.preheader, label %.loopexit99
 
@@ -260,7 +260,8 @@ bb.d:                                             ; preds = %.lr.ph126, %.split1
   br i1 %exitcond149.not, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.us.preheader, label %.lr.ph108, !llvm.loop !28
 
 .loopexit97:                                      ; preds = %.loopexit99
-  br i1 %i.aj, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.us.preheader, label %.split123.us
+  %.not176 = icmp eq i32 %.fr133, 0
+  br i1 %.not176, label %.split123.us, label %_ZNK10aiAnimMesh16HasTextureCoordsEj.exit.us.preheader
 
 _ZNK10aiAnimMesh16HasTextureCoordsEj.exit.us.preheader: ; preds = %.lr.ph108, %.loopexit97
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ae, i64 1128 ; 2 uses

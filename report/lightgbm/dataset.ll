@@ -205,7 +205,7 @@ bb.a:
   %11 = alloca %"class.std::vector.120", align 16 ; 16 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %14 = alloca %"class.std::vector.64", align 8   ; 13 uses
+  %14 = alloca %"class.std::vector.64", align 8   ; 14 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %17 = alloca %"class.std::vector.120", align 16 ; 10 uses
@@ -381,8 +381,8 @@ bb.m:                                             ; preds = %.thread610
 
 bb.n:                                             ; preds = %.thread610, %bb.d
   %i.bd = phi i1 [ false, %.thread610 ], [ true, %bb.d ]
-  %.lcssa382613 = phi ptr [ %.lcssa382612, %.thread610 ], [ %i.av, %bb.d ]
-  %i.be = phi ptr [ %i.bb, %.thread610 ], [ %i.au, %bb.d ]
+  %.lcssa382613 = phi ptr [ %.lcssa382612, %.thread610 ], [ %i.av, %bb.d ] ; 2 uses
+  %i.be = phi ptr [ %i.bb, %.thread610 ], [ %i.au, %bb.d ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19
   invoke void @_ZN8LightGBM18OneFeaturePerGroupERKSt6vectorIiSaIiEE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.120") align 8 %11, ptr noundef nonnull align 8 dereferenceable(24) %10)
           to label %._crit_edge.i.i unwind label %bb.p
@@ -471,28 +471,37 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 _ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.r
-  br i1 %i.bd, label %bb.t, label %.thread614
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false)
+  %.not477 = icmp eq ptr %.lcssa382613, %i.be
+  br i1 %.not477, label %.thread614, label %bb.t
 
 .thread614:                                       ; preds = %_ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false)
-  br label %bb.ad
+  %20 = getelementptr inbounds nuw i8, ptr %14, i64 8
+  br label %bb.u
 
 bb.t:                                             ; preds = %_ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i
   %i.cm = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ck) #37
-          to label %bb.u unwind label %bb.ab      ; 3 uses
+          to label %.noexc128 unwind label %bb.ab ; 4 uses
 
-bb.u:                                             ; preds = %bb.t
+.noexc128:                                        ; preds = %bb.t
   store ptr %i.cm, ptr %14, align 8, !tbaa !207
-  %20 = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %21 = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.ck ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %14, i64 16
-  store ptr %21, ptr %22, align 8, !tbaa !293
+  %21 = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
+  store ptr %i.cm, ptr %21, align 8, !tbaa !282
+  %22 = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.ck ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %14, i64 16
+  store ptr %22, ptr %23, align 8, !tbaa !293
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.cm, i8 0, i64 %i.ck, i1 false)
-  store ptr %21, ptr %20, align 8, !tbaa !282
+  br label %bb.u
+
+bb.u:                                             ; preds = %.noexc128, %.thread614
+  %24 = phi ptr [ %20, %.thread614 ], [ %21, %.noexc128 ]
+  %.0.i.i.i.i.i.i.i = phi ptr [ null, %.thread614 ], [ %22, %.noexc128 ]
+  store ptr %.0.i.i.i.i.i.i.i, ptr %24, align 8, !tbaa !282
   %i.cn = getelementptr inbounds nuw i8, ptr %9, i64 893
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !582, !range !129, !noundef !130
   %i.cp = trunc nuw i8 %i.co to i1
-  br i1 %i.cp, label %._crit_edge.i.i129, label %bb.ad
+  %brmerge.not = and i1 %i.bd, %i.cp
+  br i1 %brmerge.not, label %._crit_edge.i.i129, label %bb.ad
 
 ._crit_edge.i.i129:                               ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #19
@@ -671,7 +680,7 @@ bb.ac:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #19
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit225
 
-bb.ad:                                            ; preds = %.thread614, %bb.u, %_ZNSt6vectorIS_IiSaIiEESaIS1_EED2Ev.exit
+bb.ad:                                            ; preds = %bb.u, %_ZNSt6vectorIS_IiSaIiEESaIS1_EED2Ev.exit
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 8 uses
   store i32 0, ptr %i.fg, align 8, !tbaa !304
   %i.fh = load ptr, ptr %11, align 16, !tbaa !288 ; 2 uses

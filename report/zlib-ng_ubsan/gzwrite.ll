@@ -200,12 +200,12 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.aq, !nosanitize !12
 
 bb.aq:                                            ; preds = %bb.ao, %bb.ap
-  %i.az = load ptr, ptr %i.x, align 8, !tbaa !26  ; 3 uses
+  %i.az = load ptr, ptr %i.x, align 8, !tbaa !26  ; 4 uses
   %i.ba = and i64 %i.aq, 4294967295               ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.ba
   %i.bc = ptrtoint ptr %i.az to i64, !nosanitize !12 ; 3 uses
   %i.bd = add i64 %i.ba, %i.bc, !nosanitize !12   ; 3 uses
-  %i.be = icmp ne ptr %i.az, null                 ; 2 uses
+  %i.be = icmp ne ptr %i.az, null
   %i.bf = icmp eq i64 %i.bd, 0
   %i.bg = xor i1 %i.be, %i.bf
   %i.bh = icmp uge i64 %i.bd, %i.bc, !nosanitize !12
@@ -217,7 +217,8 @@ bb.ar:                                            ; preds = %bb.aq
   br label %bb.as, !nosanitize !12
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
-  br i1 %i.be, label %bb.au, label %bb.at, !prof !13, !nosanitize !12
+  %.not80 = icmp eq ptr %i.az, null
+  br i1 %.not80, label %bb.at, label %bb.au, !prof !27, !nosanitize !12
 
 bb.at:                                            ; preds = %bb.as
   call void @__ubsan_handle_nonnull_arg(ptr nonnull @136) #13, !nosanitize !12
@@ -620,7 +621,7 @@ bb.cc:                                            ; preds = %bb.cb
   br label %bb.cd, !nosanitize !12
 
 bb.cd:                                            ; preds = %bb.cb, %bb.cc
-  %i.dj = load ptr, ptr %i.ae, align 8, !tbaa !26 ; 3 uses
+  %i.dj = load ptr, ptr %i.ae, align 8, !tbaa !26 ; 4 uses
   br i1 %i.d, label %bb.cf, label %bb.ce, !prof !13, !nosanitize !12
 
 bb.ce:                                            ; preds = %bb.cd
@@ -633,7 +634,7 @@ bb.cf:                                            ; preds = %bb.cd, %bb.ce
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dj, i64 %i.dl
   %i.dn = ptrtoint ptr %i.dj to i64, !nosanitize !12 ; 3 uses
   %i.do = add i64 %i.dl, %i.dn, !nosanitize !12   ; 3 uses
-  %i.dp = icmp ne ptr %i.dj, null                 ; 2 uses
+  %i.dp = icmp ne ptr %i.dj, null
   %i.dq = icmp eq i64 %i.do, 0
   %i.dr = xor i1 %i.dp, %i.dq
   %i.ds = icmp uge i64 %i.do, %i.dn, !nosanitize !12
@@ -654,7 +655,8 @@ bb.ci:                                            ; preds = %bb.ch
   br label %bb.cj, !nosanitize !12
 
 bb.cj:                                            ; preds = %bb.ci, %bb.ch
-  br i1 %i.dp, label %bb.cl, label %bb.ck, !prof !13, !nosanitize !12
+  %.not61 = icmp eq ptr %i.dj, null
+  br i1 %.not61, label %bb.ck, label %bb.cl, !prof !27, !nosanitize !12
 
 bb.ck:                                            ; preds = %bb.cj
   call void @__ubsan_handle_nonnull_arg(ptr nonnull @80) #13, !nosanitize !12
@@ -939,7 +941,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v
 ._crit_edge:                                      ; preds = %bb.s, %bb.w
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 5 uses
   %.not56 = icmp ne i32 %1, 0
-  %i.an = icmp ne i32 %1, 4                       ; 2 uses
+  %i.an = icmp ne i32 %1, 4
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 28
@@ -1109,7 +1111,8 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   br i1 %.not59, label %bb.ay, label %bb.x, !llvm.loop !54
 
 bb.ay:                                            ; preds = %bb.ax
-  br i1 %i.an, label %bb.bc, label %bb.az
+  %.not63 = icmp eq i32 %1, 4
+  br i1 %.not63, label %bb.az, label %bb.bc
 
 bb.az:                                            ; preds = %bb.ay
   br i1 %i.c, label %bb.bb, label %bb.ba, !prof !13, !nosanitize !12

@@ -204,19 +204,20 @@ _RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 ._crit_edge.i:                                    ; preds = %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, %bb.b
   %.sroa.0.0.lcssa.i = phi i64 [ %i.e, %bb.b ], [ %i.l, %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ]
   %.sroa.0.050.lcssa.i = phi i32 [ 0, %bb.b ], [ %i.k, %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], !dbg !12514
-  %i.o = lshr i64 %.sroa.0.0.lcssa.i, 1           ; 2 uses
+  %i.o = lshr i64 %.sroa.0.0.lcssa.i, 1           ; 3 uses
   %i.p = load atomic i64, ptr %0 acquire, align 128, !dbg !12515 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !12516 ; 2 uses
   %i.r = atomicrmw xchg ptr %i.q, ptr null acq_rel, align 8, !dbg !12517 ; 2 uses
-  %i.s = lshr i64 %i.p, 1, !dbg !12518            ; 2 uses
-  %i.t = icmp ne i64 %i.s, %i.o, !dbg !12518      ; 2 uses
+  %i.s = lshr i64 %i.p, 1, !dbg !12518            ; 3 uses
+  %i.t = icmp ne i64 %i.s, %i.o, !dbg !12518
   %i.u = icmp eq ptr %i.r, null
   %or.cond.i = select i1 %i.t, i1 %i.u, i1 false, !dbg !12518
   br i1 %or.cond.i, label %.preheader.i, label %.loopexit.i, !dbg !12518
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i, %._crit_edge.i
   %.sroa.011.0.i = phi ptr [ %i.r, %._crit_edge.i ], [ %i.z, %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i ], !dbg !12519 ; 2 uses
-  br i1 %i.t, label %.lr.ph62.i, label %._crit_edge63.i, !dbg !12520
+  %.not = icmp eq i64 %i.s, %i.o, !dbg !12520
+  br i1 %.not, label %._crit_edge63.i, label %.lr.ph62.i, !dbg !12520
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i
   %.sroa.0.1.i = phi i32 [ %i.y, %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i ], [ %.sroa.0.050.lcssa.i, %._crit_edge.i ], !dbg !12514 ; 6 uses
@@ -619,9 +620,9 @@ switch.lookup:                                    ; preds = %bb.aa
   br label %bb.ac, !dbg !18131
 
 bb.ac:                                            ; preds = %switch.lookup, %thread-pre-split.i
-  %.val94.i = phi i8 [ %.val94.pr.i, %thread-pre-split.i ], [ %switch.masked, %switch.lookup ], !dbg !18133
+  %.val94.i = phi i8 [ %.val94.pr.i, %thread-pre-split.i ], [ %switch.masked, %switch.lookup ], !dbg !18133 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !dbg !18134, !noalias !17989
-  %i.cq = icmp eq i8 %.val94.i, 7, !dbg !18135    ; 3 uses
+  %i.cq = icmp eq i8 %.val94.i, 7, !dbg !18135    ; 2 uses
   %i.cr = invoke noundef zeroext i1 @_RNvXs0_NtCsfUalJnHtWpm_5tonic4bodyNtB5_4BodyNtCshXnn1MjyudA_9http_body4Body13is_end_stream(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.w)
           to label %bb.ad unwind label %.thread133.i, !dbg !18136, !noalias !17987 ; 2 uses
 
@@ -668,8 +669,8 @@ bb.ak:                                            ; preds = %_RINvNtCs3oUPovFnLW
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !dbg !18150, !noalias !17989
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !dbg !18151, !noalias !17989
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %i.o, ptr noundef nonnull align 8 dereferenceable(224) %i.v, i64 224, i1 false), !dbg !18151, !noalias !17989
-  %not..i = xor i1 %i.cq, true, !dbg !18152
-  %..i = and i1 %i.cr, %not..i, !dbg !18152
+  %.not = icmp ne i8 %.val94.i, 7, !dbg !18152
+  %..i = and i1 %.not, %i.cr, !dbg !18152
   invoke void @_RNvMNtCsb6T6P0NKlCh_2h26clientINtB2_11SendRequestINtNtNtCsaCYLheajBls_5hyper5proto2h27SendBufNtNtCs8QTyv2gZm5j_5bytes5bytes5BytesEE12send_requestCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.p, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ad, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(224) %i.o, i1 noundef zeroext %..i)
           to label %bb.an unwind label %bb.w, !dbg !18153, !noalias !17987
 
@@ -1072,7 +1073,7 @@ begin_hunk_2_@llvm.usub.sat.i64
 !4841 = !DILocation(line: 343, column: 9, scope: !404, inlinedAt: !4740)
 !4842 = !DILocation(line: 347, column: 28, scope: !405, inlinedAt: !4740)
 !4843 = !DILocation(line: 4019, column: 23, scope: !406, inlinedAt: !4749)
-!4844 = !DILocation(line: 830, column: 22, scope: !407, inlinedAt: !4748)
+!4844 = !DILocation(line: 166, column: 13, scope: !408, inlinedAt: !4747)
 !4845 = !DILocation(line: 347, column: 47, scope: !405, inlinedAt: !4740)
 !4846 = !DILocation(line: 975, column: 22, scope: !410, inlinedAt: !4751)
 !4847 = !DILocation(line: 976, column: 49, scope: !413, inlinedAt: !4751)
@@ -1100,7 +1101,7 @@ begin_hunk_2_@llvm.usub.sat.i64
 !4869 = !DILocation(line: 343, column: 9, scope: !404, inlinedAt: !4786)
 !4870 = !DILocation(line: 347, column: 28, scope: !405, inlinedAt: !4786)
 !4871 = !DILocation(line: 4019, column: 23, scope: !406, inlinedAt: !4795)
-!4872 = !DILocation(line: 830, column: 22, scope: !407, inlinedAt: !4794)
+!4872 = !DILocation(line: 166, column: 13, scope: !408, inlinedAt: !4793)
 !4873 = !DILocation(line: 347, column: 47, scope: !405, inlinedAt: !4786)
 !4874 = !DILocation(line: 975, column: 22, scope: !410, inlinedAt: !4797)
 !4875 = !DILocation(line: 976, column: 49, scope: !413, inlinedAt: !4797)
@@ -1503,7 +1504,7 @@ begin_hunk_3_@llvm.usub.sat.i64
 !7444 = !DILocation(line: 343, column: 9, scope: !404, inlinedAt: !7399)
 !7445 = !DILocation(line: 347, column: 28, scope: !405, inlinedAt: !7399)
 !7446 = !DILocation(line: 4019, column: 23, scope: !406, inlinedAt: !7408)
-!7447 = !DILocation(line: 830, column: 22, scope: !407, inlinedAt: !7407)
+!7447 = !DILocation(line: 166, column: 13, scope: !408, inlinedAt: !7406)
 !7448 = !DILocation(line: 347, column: 47, scope: !405, inlinedAt: !7399)
 !7449 = !DILocation(line: 975, column: 22, scope: !410, inlinedAt: !7410)
 !7450 = !DILocation(line: 976, column: 49, scope: !413, inlinedAt: !7410)
@@ -1906,7 +1907,7 @@ begin_hunk_4_@llvm.usub.sat.i64
 !18076 = !DILocation(line: 343, column: 9, scope: !404, inlinedAt: !17763)
 !18077 = !DILocation(line: 347, column: 28, scope: !405, inlinedAt: !17763)
 !18078 = !DILocation(line: 4019, column: 23, scope: !406, inlinedAt: !17772)
-!18079 = !DILocation(line: 830, column: 22, scope: !407, inlinedAt: !17771)
+!18079 = !DILocation(line: 166, column: 13, scope: !408, inlinedAt: !17770)
 !18080 = !DILocation(line: 347, column: 47, scope: !405, inlinedAt: !17763)
 !18081 = !DILocation(line: 975, column: 22, scope: !410, inlinedAt: !17774)
 !18082 = !DILocation(line: 976, column: 49, scope: !413, inlinedAt: !17774)

@@ -204,17 +204,18 @@ bb.a:
   br i1 %2, label %bb.z, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call noundef i32 @_ZN7testing8internal17Int32FromEnvOrDieEPKci(ptr noundef %0, i32 noundef -1) ; 6 uses
-  %i.b = tail call noundef i32 @_ZN7testing8internal17Int32FromEnvOrDieEPKci(ptr noundef %1, i32 noundef -1) ; 6 uses
-  %i.c = icmp eq i32 %i.b, -1                     ; 2 uses
+  %i.a = tail call noundef i32 @_ZN7testing8internal17Int32FromEnvOrDieEPKci(ptr noundef %0, i32 noundef -1) ; 7 uses
+  %i.b = tail call noundef i32 @_ZN7testing8internal17Int32FromEnvOrDieEPKci(ptr noundef %1, i32 noundef -1) ; 7 uses
+  %i.c = icmp eq i32 %i.b, -1
   %i.d = and i32 %i.b, %i.a
   %or.cond = icmp eq i32 %i.d, -1
   br i1 %or.cond, label %bb.z, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = icmp ne i32 %i.a, -1                     ; 2 uses
-  %or.cond3.not = or i1 %i.e, %i.c
-  br i1 %or.cond3.not, label %bb.j, label %bb.d
+  %12 = icmp eq i32 %i.a, -1
+  %i.e = icmp ne i32 %i.b, -1
+  %or.cond3 = and i1 %12, %i.e
+  br i1 %or.cond3, label %bb.d, label %bb.j
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #53
@@ -321,7 +322,8 @@ _ZN7testing7MessageD2Ev.exit34:                   ; preds = %bb.i, %_ZNSt7__cxx1
   br label %bb.y
 
 bb.j:                                             ; preds = %bb.c
-  %or.cond5 = and i1 %i.e, %i.c
+  %.not76 = icmp ne i32 %i.a, -1
+  %or.cond5 = and i1 %.not76, %i.c
   br i1 %or.cond5, label %bb.k, label %bb.q
 
 bb.k:                                             ; preds = %bb.j

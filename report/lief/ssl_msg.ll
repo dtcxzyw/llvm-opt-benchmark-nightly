@@ -205,9 +205,9 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
-  %i.h = load i8, ptr %i.e, align 1, !tbaa !34
+  %i.h = load i8, ptr %i.e, align 1, !tbaa !34    ; 2 uses
   %i.i = icmp eq i32 %i.g, 22                     ; 2 uses
-  %i.j = icmp eq i8 %i.h, 0                       ; 4 uses
+  %i.j = icmp eq i8 %i.h, 0                       ; 3 uses
   %or.cond = select i1 %i.i, i1 %i.j, i1 false
   br i1 %or.cond, label %bb.d, label %bb.c
 
@@ -316,9 +316,10 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.i
-  %3 = icmp eq i32 %1, 0
-  %or.cond4.not = or i1 %3, %i.j
-  br i1 %or.cond4.not, label %bb.q, label %bb.p
+  %.not = icmp ne i8 %i.h, 0
+  %3 = icmp ne i32 %1, 0
+  %or.cond4 = and i1 %3, %.not
+  br i1 %or.cond4, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 112

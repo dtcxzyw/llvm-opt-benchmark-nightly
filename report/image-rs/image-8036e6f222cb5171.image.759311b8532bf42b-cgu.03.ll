@@ -205,19 +205,20 @@ _RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 ._crit_edge.i:                                    ; preds = %_RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, %bb.b
   %.sroa.0.0.lcssa.i = phi i64 [ %i.e, %bb.b ], [ %i.l, %_RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ]
   %.sroa.0.050.lcssa.i = phi i32 [ 0, %bb.b ], [ %i.k, %_RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ]
-  %i.o = lshr i64 %.sroa.0.0.lcssa.i, 1           ; 2 uses
+  %i.o = lshr i64 %.sroa.0.0.lcssa.i, 1           ; 3 uses
   %i.p = load atomic i64, ptr %0 acquire, align 128 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.r = atomicrmw xchg ptr %i.q, ptr null acq_rel, align 8 ; 2 uses
-  %i.s = lshr i64 %i.p, 1                         ; 2 uses
-  %i.t = icmp ne i64 %i.s, %i.o                   ; 2 uses
+  %i.s = lshr i64 %i.p, 1                         ; 3 uses
+  %i.t = icmp ne i64 %i.s, %i.o
   %i.u = icmp eq ptr %i.r, null
   %or.cond.i = select i1 %i.t, i1 %i.u, i1 false
   br i1 %or.cond.i, label %.preheader.i, label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i, %._crit_edge.i
   %.sroa.011.0.i = phi ptr [ %i.r, %._crit_edge.i ], [ %i.z, %_RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i ] ; 2 uses
-  br i1 %i.t, label %.lr.ph61.i, label %._crit_edge62.i
+  %.not = icmp eq i64 %i.s, %i.o
+  br i1 %.not, label %._crit_edge62.i, label %.lr.ph61.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %_RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i
   %.sroa.0.1.i = phi i32 [ %i.y, %_RNvMs1_NtNtNtCsaKJjC64KgbL_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i ], [ %.sroa.0.050.lcssa.i, %._crit_edge.i ] ; 6 uses

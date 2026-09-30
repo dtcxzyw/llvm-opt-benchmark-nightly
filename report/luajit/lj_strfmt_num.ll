@@ -204,17 +204,18 @@ nd_mul2k.exit665:                                 ; preds = %bb.aw, %.thread768,
   %.3444762 = phi i32 [ %.3444763782, %nd_div2k.exit ], [ %.3444763782, %bb.bm ], [ %.3444764, %bb.au ], [ %.3444764, %._crit_edge78.i640 ], [ %.3444764, %._crit_edge69.i631 ], [ %.3444763782, %.split815 ], [ %.3444763783, %bb.aw ], [ %.3444763783, %.thread768 ]
   %.sroa.0.7757 = phi i64 [ %.sroa.0.7758788, %nd_div2k.exit ], [ %.sroa.0.7758788, %bb.bm ], [ %.sroa.0.7759, %bb.au ], [ %.sroa.0.7759, %._crit_edge78.i640 ], [ %.sroa.0.7759, %._crit_edge69.i631 ], [ %.sroa.0.7758788, %.split815 ], [ %.sroa.0.7758789, %bb.aw ], [ %.sroa.0.7758789, %.thread768 ]
   %.3459 = phi i32 [ 0, %nd_div2k.exit ], [ %spec.select619, %bb.bm ], [ %i.jg, %bb.au ], [ %.0.lcssa.i, %._crit_edge78.i640 ], [ %.0.lcssa.i, %._crit_edge69.i631 ], [ 0, %.split815 ], [ 0, %bb.aw ], [ 0, %.thread768 ] ; 4 uses
-  %.0449 = phi i32 [ %.4.i, %nd_div2k.exit ], [ %.4.i824, %bb.bm ], [ 0, %bb.au ], [ 0, %._crit_edge78.i640 ], [ 0, %._crit_edge69.i631 ], [ %i.mh, %.split815 ], [ 0, %bb.aw ], [ 0, %.thread768 ] ; 14 uses
+  %.0449 = phi i32 [ %.4.i, %nd_div2k.exit ], [ %.4.i824, %bb.bm ], [ 0, %bb.au ], [ 0, %._crit_edge78.i640 ], [ 0, %._crit_edge69.i631 ], [ %i.mh, %.split815 ], [ 0, %bb.aw ], [ 0, %.thread768 ] ; 15 uses
   br i1 %i.gp, label %bb.bn, label %bb.cv
 
 bb.bn:                                            ; preds = %nd_mul2k.exit665
-  %.not560 = icmp eq i32 %.0449, 0                ; 2 uses
+  %.not560 = icmp eq i32 %.0449, 0
   %.phi.trans.insert = zext i32 %.3459 to i64     ; 2 uses
   %.phi.trans.insert1099 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.phi.trans.insert
   %.pre1100 = load i32, ptr %.phi.trans.insert1099, align 4, !tbaa !17 ; 2 uses
-  %.not561.a = icmp ne i32 %.pre1100, 0
-  %or.cond1190.not = select i1 %.not560, i1 true, i1 %.not561.a
-  br i1 %or.cond1190.not, label %.loopexit888, label %.preheader887
+  %.not561.a = icmp ne i32 %.0449, 0
+  %.not561 = icmp eq i32 %.pre1100, 0
+  %or.cond1190.not = select i1 %.not561.a, i1 %.not561, i1 false
+  br i1 %or.cond1190.not, label %.preheader887, label %.loopexit888
 
 .preheader887:                                    ; preds = %bb.bn, %.preheader887
   %.4460 = phi i32 [ %i.mo, %.preheader887 ], [ 64, %bb.bn ]

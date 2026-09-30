@@ -204,7 +204,7 @@ bb.bk:                                            ; preds = %bb.bj
 bb.bl:                                            ; preds = %.lr.ph336, %.loopexit319
   %indvars.iv379 = phi i64 [ 0, %.lr.ph336 ], [ %indvars.iv.next380, %.loopexit319 ] ; 2 uses
   %.not216.not = phi i1 [ true, %.lr.ph336 ], [ false, %.loopexit319 ]
-  %.0180334 = phi i32 [ 0, %.lr.ph336 ], [ %.1181316, %.loopexit319 ] ; 2 uses
+  %.0180334 = phi i32 [ 0, %.lr.ph336 ], [ %.1181316, %.loopexit319 ] ; 3 uses
   %.0182333 = phi i32 [ 0, %.lr.ph336 ], [ %i.qm, %.loopexit319 ] ; 4 uses
   %i.ms = trunc nuw nsw i64 %indvars.iv379 to i32
   %i.mt = mul i32 %.0193.ph, %i.ms
@@ -277,10 +277,10 @@ stbi__get8.exit278:                               ; preds = %bb.bo, %bb.bp, %stb
   br label %.thread
 
 bb.bt:                                            ; preds = %bb.bm
-  %.not215 = icmp eq i32 %.0180334, 0             ; 2 uses
+  %.not215 = icmp eq i32 %.0180334, 0
   %brmerge = or i1 %.not215, %.not216.not
-  %not..not215 = xor i1 %.not215, true
-  %.mux = zext i1 %not..not215 to i32
+  %.not215.not = icmp ne i32 %.0180334, 0
+  %.mux = zext i1 %.not215.not to i32
   br i1 %brmerge, label %.thread, label %.loopexit319
 
 .thread:                                          ; preds = %bb.bt, %bb.bl, %stbi__get8.exit278
@@ -683,7 +683,7 @@ stbi__check_png_header.exit.thread:               ; preds = %bb.as, %bb.am, %bb.
 
 bb.aw:                                            ; preds = %.preheader393, %.loopexit
   %.0237 = phi i8 [ %.3240, %.loopexit ], [ 0, %.preheader393 ] ; 19 uses
-  %.0234 = phi i8 [ %.1235, %.loopexit ], [ 0, %.preheader393 ] ; 17 uses
+  %.0234 = phi i8 [ %.1235, %.loopexit ], [ 0, %.preheader393 ] ; 18 uses
   %.0231 = phi i32 [ %.1232, %.loopexit ], [ 0, %.preheader393 ] ; 22 uses
   %.0227 = phi i32 [ %.4, %.loopexit ], [ 0, %.preheader393 ] ; 22 uses
   %.0222 = phi i32 [ %.1223, %.loopexit ], [ 0, %.preheader393 ] ; 21 uses
@@ -1086,7 +1086,7 @@ bb.fh:                                            ; preds = %stbi_zlib_decode_ma
   %or.cond5.not262.not267 = and i1 %i.tz, %i.ty
   %i.ua = icmp eq i8 %.0237, 0                    ; 2 uses
   %or.cond7.not264 = select i1 %or.cond5.not262.not267, i1 %i.ua, i1 false
-  %i.ub = icmp ne i8 %.0234, 0                    ; 3 uses
+  %i.ub = icmp ne i8 %.0234, 0
   %or.cond10 = select i1 %or.cond7.not264, i1 true, i1 %i.ub
   %spec.select1502 = select i1 %or.cond10, i32 %i.tx, i32 %i.tw ; 2 uses
   %i.uc = getelementptr inbounds nuw i8, ptr %i.e, i64 12 ; 4 uses
@@ -1098,7 +1098,8 @@ bb.fh:                                            ; preds = %stbi_zlib_decode_ma
   br i1 %.not268, label %.thread375, label %bb.fi
 
 bb.fi:                                            ; preds = %bb.fh
-  br i1 %i.ub, label %bb.fj, label %bb.fm
+  %.not1128 = icmp eq i8 %.0234, 0                ; 2 uses
+  br i1 %.not1128, label %bb.fm, label %bb.fj
 
 bb.fj:                                            ; preds = %bb.fi
   %i.ug = load i32, ptr %i.gn, align 8, !tbaa !141
@@ -1157,7 +1158,7 @@ bb.ft:                                            ; preds = %bb.fs
   br i1 %.not273, label %.thread375, label %bb.fw
 
 bb.fu:                                            ; preds = %bb.fs
-  br i1 %i.ub, label %bb.fv, label %bb.fw
+  br i1 %.not1128, label %bb.fw, label %bb.fv
 
 bb.fv:                                            ; preds = %bb.fu
   %i.uv = load i32, ptr %i.gm, align 8, !tbaa !64

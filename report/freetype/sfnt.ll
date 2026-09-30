@@ -205,11 +205,11 @@ bb.v:                                             ; preds = %bb.r
   %i.et = getelementptr inbounds nuw i8, ptr %4, i64 64
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !137
   %i.ev = add i32 %i.ds, -8
-  %i.ew = tail call fastcc i32 @Load_SBit_Png(ptr noundef %i.eq, i32 noundef 0, i32 noundef 0, i32 noundef 32, ptr noundef nonnull %6, ptr noundef %i.es, ptr noundef %i.eu, i32 noundef %i.ev, i8 noundef zeroext 1, i8 noundef zeroext range(i8 0, 2) %i.bs) ; 2 uses
+  %i.ew = tail call fastcc i32 @Load_SBit_Png(ptr noundef %i.eq, i32 noundef 0, i32 noundef 0, i32 noundef 32, ptr noundef nonnull %6, ptr noundef %i.es, ptr noundef %i.eu, i32 noundef %i.ev, i8 noundef zeroext 1, i8 noundef zeroext range(i8 0, 2) %i.bs) ; 3 uses
   %i.ex = icmp eq i8 %.0125173.i, 0
   %i.ey = trunc i32 %i.bq to i1
   %or.cond.i = or i1 %i.ex, %i.ey
-  %i.ez = icmp ne i32 %i.ew, 0                    ; 2 uses
+  %i.ez = icmp ne i32 %i.ew, 0
   %or.cond3.i = select i1 %or.cond.i, i1 true, i1 %i.ez
   br i1 %or.cond3.i, label %bb.x, label %bb.w
 
@@ -271,7 +271,8 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   tail call void @FT_Stream_ExitFrame(ptr noundef nonnull %4) #27
-  br i1 %i.ez, label %tt_face_load_sbix_image.exit.thread, label %bb.y
+  %.not = icmp eq i32 %i.ew, 0
+  br i1 %.not, label %bb.y, label %tt_face_load_sbix_image.exit.thread
 
 bb.y:                                             ; preds = %bb.x, %.thread153.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27

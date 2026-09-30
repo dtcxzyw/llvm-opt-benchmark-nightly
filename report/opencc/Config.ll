@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.e
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !149 ; 2 uses
   %i.ba = zext i32 %i.ax to i64
   %i.bb = getelementptr inbounds nuw [12 x i8], ptr %i.az, i64 %i.ba
-  %i.bc = load i32, ptr %i.bb, align 4, !tbaa !413
-  %5 = icmp slt i32 %i.bc, 0                      ; 2 uses
+  %i.bc = load i32, ptr %i.bb, align 4, !tbaa !413 ; 2 uses
+  %5 = icmp sgt i32 %i.bc, -1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %bb.f
@@ -229,10 +229,11 @@ bb.h:                                             ; preds = %bb.g
   br i1 %or.cond.i.us.us.us83, label %bb.g, label %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us84, !llvm.loop !1727
 
 _ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us84: ; preds = %bb.h
-  br i1 %5, label %bb.j, label %bb.i
+  br i1 %5, label %bb.i, label %bb.j
 
 .split.us.us.us85:                                ; preds = %bb.g
-  br i1 %5, label %bb.i, label %bb.j
+  %6 = icmp slt i32 %i.bc, 0
+  br i1 %6, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %.split.us.us.us85, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us84, %.lr.ph.us.us
   %i.bl = load i32, ptr %i.aq, align 4, !tbaa !407
@@ -312,8 +313,8 @@ bb.n:                                             ; preds = %bb.m
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !149 ; 2 uses
   %i.cs = zext i32 %i.cp to i64
   %i.ct = getelementptr inbounds nuw [12 x i8], ptr %i.cr, i64 %i.cs
-  %i.cu = load i32, ptr %i.ct, align 4, !tbaa !413
-  %6 = icmp slt i32 %i.cu, 0                      ; 2 uses
+  %i.cu = load i32, ptr %i.ct, align 4, !tbaa !413 ; 2 uses
+  %7 = icmp sgt i32 %i.cu, -1
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.p, %bb.n
@@ -336,10 +337,11 @@ bb.p:                                             ; preds = %bb.o
   br i1 %or.cond.i.us.us.us, label %bb.o, label %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us, !llvm.loop !1727
 
 _ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us: ; preds = %bb.p
-  br i1 %6, label %bb.r, label %bb.q
+  br i1 %7, label %bb.q, label %bb.r
 
 .split.us.us.us:                                  ; preds = %bb.o
-  br i1 %6, label %bb.q, label %bb.r
+  %8 = icmp slt i32 %i.cu, 0
+  br i1 %8, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.split.us.us.us, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us, %.lr.ph.us
   %i.dd = load i32, ptr %i.ci, align 4, !tbaa !407
@@ -429,8 +431,8 @@ bb.v:                                             ; preds = %bb.u
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !149 ; 2 uses
   %i.em = zext i32 %i.ej to i64
   %i.en = getelementptr inbounds nuw [12 x i8], ptr %i.el, i64 %i.em
-  %i.eo = load i32, ptr %i.en, align 4, !tbaa !413
-  %7 = icmp slt i32 %i.eo, 0                      ; 2 uses
+  %i.eo = load i32, ptr %i.en, align 4, !tbaa !413 ; 2 uses
+  %9 = icmp sgt i32 %i.eo, -1
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.x, %bb.v
@@ -453,10 +455,11 @@ bb.x:                                             ; preds = %bb.w
   br i1 %or.cond.i, label %bb.w, label %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit, !llvm.loop !1727
 
 .split:                                           ; preds = %bb.w
-  br i1 %7, label %bb.y, label %bb.z
+  %10 = icmp slt i32 %i.eo, 0
+  br i1 %10, label %bb.y, label %bb.z
 
 _ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit: ; preds = %bb.x
-  br i1 %7, label %bb.z, label %bb.y
+  br i1 %9, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %.split, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit, %.lr.ph
   %i.ex = load i32, ptr %i.ec, align 4, !tbaa !407

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   br label %lean_string_utf8_get_fast.exit
 
 lean_string_utf8_get_fast.exit:                   ; preds = %bb.c, %bb.d
-  %.0.i589 = phi i32 [ %i.n, %bb.c ], [ %i.o, %bb.d ] ; 4 uses
+  %.0.i589 = phi i32 [ %i.n, %bb.c ], [ %i.o, %bb.d ] ; 5 uses
   %i.p = and i32 %.0.i589, -33
   %i.q = add i32 %i.p, -91
   %or.cond1069 = icmp ult i32 %i.q, -26
@@ -607,6 +607,8 @@ lean_alloc_ctor.exit:                             ; preds = %lean_dec_ref.exit53
   br label %lean_dec.exit468.thread.sink.split
 
 bb.db:                                            ; preds = %.critedge435
+  %5 = icmp eq i32 %.0.i589, 94
+  %6 = zext i1 %5 to i8
   switch i32 %.0.i589, label %bb.e [
     i32 94, label %bb.fr
     i32 126, label %bb.dc
@@ -1009,7 +1011,7 @@ lean_dec.exit468.backedge:                        ; preds = %bb.gy, %bb.ej, %lea
   %.0372.be = phi ptr [ %i.ga, %bb.eh ], [ %.0.i673, %bb.jf ], [ %i.oa, %lean_dec.exit.i693.1 ], [ %i.oa, %bb.kf ], [ %.0.i673, %lean_string_utf8_next_fast.exit674 ], [ %i.oa, %bb.kg ], [ %i.oa, %bb.kh ], [ %.0.i673, %bb.jh ], [ %.0.i673, %bb.jg ], [ %.0.i611, %lean_string_utf8_next_fast.exit612 ], [ %.0.i611, %bb.cn ], [ %.0.i611, %bb.co ], [ %.0.i611, %bb.cp ], [ %i.dc, %bb.bm ], [ %i.ga, %bb.ei ], [ %i.jp, %lean_dec.exit.i658.1 ], [ %i.jp, %bb.gw ], [ %i.jp, %bb.gx ], [ %i.ak, %lean_inc.exit463 ], [ %i.dd, %bb.bn ], [ %i.ga, %lean_dec.exit.i.1 ], [ %i.jp, %bb.gy ], [ %i.ga, %bb.ej ]
   %.0355.be = phi ptr [ %i.ft, %bb.eh ], [ %.0355, %bb.jf ], [ %i.nt, %lean_dec.exit.i693.1 ], [ %i.nt, %bb.kf ], [ %.0355, %lean_string_utf8_next_fast.exit674 ], [ %i.nt, %bb.kg ], [ %i.nt, %bb.kh ], [ %.0355, %bb.jh ], [ %.0355, %bb.jg ], [ %.0355, %lean_string_utf8_next_fast.exit612 ], [ %.0355, %bb.cn ], [ %.0355, %bb.co ], [ %.0355, %bb.cp ], [ @l___private_Lake_Util_Version_0__Lake_VerRange_parseM_go___closed__2_value, %bb.bm ], [ %i.ft, %bb.ei ], [ %i.ji, %lean_dec.exit.i658.1 ], [ %i.ji, %bb.gw ], [ %i.ji, %bb.gx ], [ %i.aq, %lean_inc.exit463 ], [ @l___private_Lake_Util_Version_0__Lake_VerRange_parseM_go___closed__2_value, %bb.bn ], [ %i.ft, %lean_dec.exit.i.1 ], [ %i.ji, %bb.gy ], [ %i.ft, %bb.ej ]
   %.0347.be = phi ptr [ %.0347, %bb.eh ], [ %.0347, %bb.jf ], [ %.0347, %lean_dec.exit.i693.1 ], [ %.0347, %bb.kf ], [ %.0347, %lean_string_utf8_next_fast.exit674 ], [ %.0347, %bb.kg ], [ %.0347, %bb.kh ], [ %.0347, %bb.jh ], [ %.0347, %bb.jg ], [ %.0347, %lean_string_utf8_next_fast.exit612 ], [ %.0347, %bb.cn ], [ %.0347, %bb.co ], [ %.0347, %bb.cp ], [ %i.cx, %bb.bm ], [ %.0347, %bb.ei ], [ %.0347, %lean_dec.exit.i658.1 ], [ %.0347, %bb.gw ], [ %.0347, %bb.gx ], [ %.0347, %lean_inc.exit463 ], [ %i.cx, %bb.bn ], [ %.0347, %lean_dec.exit.i.1 ], [ %.0347, %bb.gy ], [ %.0347, %bb.ej ]
-  %.0330.be = phi i8 [ 0, %bb.eh ], [ %.0330, %bb.jf ], [ 0, %lean_dec.exit.i693.1 ], [ 0, %bb.kf ], [ %.0330, %lean_string_utf8_next_fast.exit674 ], [ 0, %bb.kg ], [ 0, %bb.kh ], [ %.0330, %bb.jh ], [ %.0330, %bb.jg ], [ 1, %lean_string_utf8_next_fast.exit612 ], [ 1, %bb.cn ], [ 1, %bb.co ], [ 1, %bb.cp ], [ 1, %bb.bm ], [ 0, %bb.ei ], [ 0, %lean_dec.exit.i658.1 ], [ 0, %bb.gw ], [ 0, %bb.gx ], [ 0, %lean_inc.exit463 ], [ 1, %bb.bn ], [ 0, %lean_dec.exit.i.1 ], [ 0, %bb.gy ], [ 0, %bb.ej ]
+  %.0330.be = phi i8 [ 0, %bb.eh ], [ %.0330, %bb.jf ], [ 0, %lean_dec.exit.i693.1 ], [ 0, %bb.kf ], [ %.0330, %lean_string_utf8_next_fast.exit674 ], [ 0, %bb.kg ], [ 0, %bb.kh ], [ %.0330, %bb.jh ], [ %.0330, %bb.jg ], [ 1, %lean_string_utf8_next_fast.exit612 ], [ 1, %bb.cn ], [ 1, %bb.co ], [ 1, %bb.cp ], [ 1, %bb.bm ], [ 0, %bb.ei ], [ 0, %lean_dec.exit.i658.1 ], [ 0, %bb.gw ], [ 0, %bb.gx ], [ 0, %lean_inc.exit463 ], [ 1, %bb.bn ], [ %6, %lean_dec.exit.i.1 ], [ 0, %bb.gy ], [ 0, %bb.ej ]
   br label %lean_dec.exit468
 
 bb.gz:                                            ; preds = %lean_obj_tag.exit646

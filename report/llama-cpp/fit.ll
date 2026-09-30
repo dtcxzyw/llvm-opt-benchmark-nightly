@@ -205,7 +205,7 @@ bb.mj:                                            ; preds = %bb.mh, %bb.mf
 
 bb.mk:                                            ; preds = %.lr.ph1582, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit974
   %i.aqe = phi i64 [ %i.apg, %.lr.ph1582 ], [ %i.bhc, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit974 ] ; 3 uses
-  %.03151579 = phi i64 [ 0, %.lr.ph1582 ], [ %i.bha, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit974 ] ; 36 uses
+  %.03151579 = phi i64 [ 0, %.lr.ph1582 ], [ %i.bha, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit974 ] ; 37 uses
   %.11578 = phi i64 [ %.0317.lcssa, %.lr.ph1582 ], [ %.6, %_ZNSt6vectorIZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_levelE5ngl_tSaISE_EED2Ev.exit974 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #24
   %.val10.i800 = load ptr, ptr %27, align 8, !tbaa !132 ; 6 uses
@@ -608,8 +608,8 @@ bb.ps:                                            ; preds = %bb.pr, %bb.pq, %bb.
   %i.azn = getelementptr inbounds nuw [12 x i8], ptr %.val528, i64 %.4
   %i.azo = load i32, ptr %i.azn, align 4, !tbaa !138
   %i.azp = load i64, ptr %i.n, align 8, !tbaa !19
-  %i.azq = add i64 %i.azp, -1
-  %i.azr = icmp uge i64 %.03151579, %i.azq        ; 2 uses
+  %i.azq = add i64 %i.azp, -1                     ; 2 uses
+  %i.azr = icmp uge i64 %.03151579, %i.azq
   %i.azs = zext i1 %i.azr to i32
   %i.azt = icmp ugt i32 %i.azo, %i.azs
   br i1 %i.azt, label %bb.pt, label %bb.sh
@@ -734,7 +734,8 @@ bb.py:                                            ; preds = %bb.px
 bb.pz:                                            ; preds = %bb.py, %bb.px, %bb.pw, %.thread1199
   %i.bba = phi ptr [ %i.baw, %bb.pw ], [ %i.baw, %bb.px ], [ %i.baw, %bb.py ], [ %i.bat, %.thread1199 ]
   store ptr %i.bba, ptr %i.apw, align 8, !tbaa !128
-  br i1 %i.azr, label %bb.qd, label %bb.qa
+  %.not1723 = icmp ult i64 %.03151579, %i.azq
+  br i1 %.not1723, label %bb.qa, label %bb.qd
 
 bb.qa:                                            ; preds = %bb.pz
   %i.bbb = load ptr, ptr %10, align 8, !tbaa !48

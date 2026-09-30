@@ -202,19 +202,19 @@ sort_object.exit48:                               ; preds = %bb.f, %bb.g
   br i1 %i.p, label %bb.r, label %.preheader
 
 .preheader:                                       ; preds = %sort_object.exit48
-  %i.q = icmp ne ptr %i.n, null                   ; 2 uses
-  %i.r = icmp ne ptr %i.l, null                   ; 2 uses
+  %i.q = icmp ne ptr %i.n, null
+  %i.r = icmp ne ptr %i.l, null
   %i.s = select i1 %i.q, i1 true, i1 %i.r
   br i1 %i.s, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader, %bb.p
-  %3 = phi i1 [ %i.as, %bb.p ], [ %i.r, %.preheader ]
-  %4 = phi i1 [ %i.ar, %bb.p ], [ %i.q, %.preheader ] ; 2 uses
-  %.03850 = phi ptr [ %.1, %bb.p ], [ %i.l, %.preheader ] ; 9 uses
-  %.03949 = phi ptr [ %.140, %bb.p ], [ %i.n, %.preheader ] ; 7 uses
-  %i.t = select i1 %4, i1 %3, i1 false
-  %.mux = select i1 %4, i32 -1, i32 1
-  br i1 %i.t, label %bb.h, label %bb.i
+  %.03850 = phi ptr [ %.1, %bb.p ], [ %i.l, %.preheader ] ; 10 uses
+  %.03949 = phi ptr [ %.140, %bb.p ], [ %i.n, %.preheader ] ; 8 uses
+  %.not46 = icmp eq ptr %.03949, null             ; 2 uses
+  %.not47 = icmp eq ptr %.03850, null
+  %i.t = select i1 %.not46, i1 true, i1 %.not47
+  %.mux = select i1 %.not46, i32 1, i32 -1
+  br i1 %i.t, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph
   %i.u = getelementptr inbounds nuw i8, ptr %.03949, i64 56
@@ -269,8 +269,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 bb.p:                                             ; preds = %bb.l, %bb.o, %bb.j
   %.140 = phi ptr [ %i.ae, %bb.j ], [ %.03949, %bb.l ], [ %i.ap, %bb.o ] ; 2 uses
   %.1 = phi ptr [ %.03850, %bb.j ], [ %i.aj, %bb.l ], [ %i.aq, %bb.o ] ; 2 uses
-  %i.ar = icmp ne ptr %.140, null                 ; 2 uses
-  %i.as = icmp ne ptr %.1, null                   ; 2 uses
+  %i.ar = icmp ne ptr %.140, null
+  %i.as = icmp ne ptr %.1, null
   %i.at = select i1 %i.ar, i1 true, i1 %i.as
   br i1 %i.at, label %.lr.ph, label %._crit_edge
 
@@ -673,8 +673,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.022 = phi i64 [ %1, %bb.a ], [ %i.e, %bb.b ]  ; 2 uses
   %.0.in = phi ptr [ %i.a, %bb.a ], [ %.0, %bb.b ]
-  %.0 = load ptr, ptr %.0.in, align 8, !tbaa !10  ; 5 uses
-  %i.b = icmp ne ptr %.0, null                    ; 2 uses
+  %.0 = load ptr, ptr %.0.in, align 8, !tbaa !10  ; 6 uses
+  %i.b = icmp ne ptr %.0, null
   %i.c = icmp ne i64 %.022, 0                     ; 2 uses
   %i.d = select i1 %i.b, i1 %i.c, i1 false
   %i.e = add i64 %.022, -1
@@ -684,7 +684,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.c, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %i.b, label %bb.f, label %bb.e
+  %.not = icmp eq ptr %.0, null
+  br i1 %.not, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.f = tail call i32 @cJSON_AddItemToArray(ptr noundef nonnull %0, ptr noundef %2) #12 ; 0 uses

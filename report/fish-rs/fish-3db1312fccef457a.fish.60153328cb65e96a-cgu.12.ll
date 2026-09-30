@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.bf, %_RINvNtCs3o
 
 bb.q:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i, %bb.h
   %i.bd = phi ptr [ %.pre78.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i ], [ %i.s, %bb.h ] ; 2 uses
-  %i.be = phi ptr [ %.pre.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i ], [ %i.k, %bb.h ] ; 5 uses
+  %i.be = phi ptr [ %.pre.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i ], [ %i.k, %bb.h ] ; 6 uses
   %.sroa.010.1.i = phi i32 [ %.sroa.010.0.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i ], [ 0, %bb.h ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !851
   %i.bf = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -224,7 +224,7 @@ bb.q:                                             ; preds = %_RINvNtCs3oUPovFnLW
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.bn = load i8, ptr %i.bm, align 8, !range !31, !alias.scope !850, !noalias !861, !noundef !9
   store i8 %i.bn, ptr %i.bi, align 4, !noalias !851
-  %i.bo = icmp ne ptr %i.be, null                 ; 2 uses
+  %i.bo = icmp ne ptr %i.be, null
   %i.bp = getelementptr inbounds nuw i8, ptr %i.d, i64 39
   %i.bq = zext i1 %i.bo to i8
   store i8 %i.bq, ptr %i.bp, align 1, !noalias !851
@@ -232,7 +232,8 @@ bb.q:                                             ; preds = %_RINvNtCs3oUPovFnLW
   %i.bs = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.bt = zext i1 %i.br to i8
   store i8 %i.bt, ptr %i.bs, align 8, !noalias !851
-  br i1 %i.bo, label %bb.r, label %bb.x
+  %.not = icmp eq ptr %i.be, null
+  br i1 %.not, label %bb.x, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.bu = load ptr, ptr %i.m, align 8, !noalias !851, !nonnull !9, !noundef !9 ; 3 uses
@@ -635,8 +636,8 @@ bb.t:                                             ; preds = %bb.r
   %.not.i = icmp eq i32 %.val23, 0
   br i1 %.not.i, label %bb.b, label %.thread56
 
-.thread56:                                        ; preds = %bb.r, %bb.c, %bb.b, %bb.d, %bb.f, %bb.t, %bb.e, %bb.a
-  %.sroa.0.054 = phi i8 [ 2, %bb.a ], [ 2, %bb.c ], [ 2, %bb.b ], [ 2, %bb.d ], [ 1, %bb.f ], [ 2, %bb.t ], [ 1, %bb.e ], [ 0, %bb.r ] ; 2 uses
+.thread56:                                        ; preds = %bb.c, %bb.b, %bb.d, %bb.f, %bb.t, %bb.e, %bb.r, %bb.a
+  %.sroa.0.054 = phi i8 [ 2, %bb.a ], [ 0, %bb.r ], [ 1, %bb.e ], [ 2, %bb.t ], [ 1, %bb.f ], [ 2, %bb.d ], [ 2, %bb.b ], [ 2, %bb.c ] ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %2, i64 224
   %i.bg = load i32, ptr %i.bf, align 8, !range !37, !noundef !9
   %.not18 = icmp eq i32 %i.bg, 2
@@ -1039,7 +1040,7 @@ bb.cm:                                            ; preds = %.noexc
 
 bb.cn:                                            ; preds = %.noexc86
   %i.hl = invoke noundef align 8 ptr @_RINvCs5UXtnEuoeIl_11fish_common18get_by_sorted_nameNtNtNtNtCs8frGy5WneL6_4fish8builtins6shared4misc11BuiltinDataEBV_(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %i.hh, i64 noundef %i.he, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) @551, i64 noundef 64)
-          to label %bb.cp unwind label %bb.cf
+          to label %bb.cp unwind label %bb.cf     ; 2 uses
 
 bb.co:                                            ; preds = %bb.cj
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr noundef nonnull @135, ptr noundef nonnull inttoptr (i64 101 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @136) #35
@@ -1058,11 +1059,12 @@ bb.co:                                            ; preds = %bb.cj
   br label %bb.cr
 
 bb.cp:                                            ; preds = %bb.cn
-  %.not.i84 = icmp ne ptr %i.hl, null             ; 2 uses
+  %.not.i84 = icmp ne ptr %i.hl, null
   %..i = zext i1 %.not.i84 to i64
   store i64 %..i, ptr %i.cj, align 8, !alias.scope !1564, !noalias !1565
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ci)
-  br i1 %.not.i84, label %bb.cq, label %bb.cr
+  %.not.i84.not = icmp eq ptr %i.hl, null
+  br i1 %.not.i84.not, label %bb.cr, label %bb.cq
 
 bb.cq:                                            ; preds = %.thread, %bb.cp
   store i64 0, ptr %i.ci, align 8

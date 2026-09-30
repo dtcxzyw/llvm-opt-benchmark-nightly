@@ -204,7 +204,7 @@ bb.a:
     #dbg_value(i64 %4, !2851, !DIExpression(), !7326)
     #dbg_value(i64 %5, !2852, !DIExpression(), !7326)
     #dbg_value(i1 %6, !2853, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7326)
-  %i.a = icmp eq i64 %3, 0, !dbg !7477            ; 2 uses
+  %i.a = icmp eq i64 %3, 0, !dbg !7477
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 191
   %i.c = load i8, ptr %i.b, align 1, !range !2015, !alias.scope !7417
   %i.d = trunc nuw i8 %i.c to i1
@@ -244,11 +244,12 @@ _RNvXs4_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr2NtB5_5BBRv2NtB7_17
   br i1 %brmerge.demorgan, label %bb.d, label %bb.e, !dbg !7488
 
 bb.d:                                             ; preds = %_RNvXs4_NtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr2NtB5_5BBRv2NtB7_17CongestionControl14on_packet_sent.exit
+  %.not30 = icmp ne i64 %3, 0, !dbg !7489
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1024
   %i.p = load i32, ptr %i.o, align 8, !range !2876
-  %.not = icmp ne i32 %i.p, -1
-  %or.cond.not37 = select i1 %i.a, i1 %.not, i1 false, !dbg !7489
-  br i1 %or.cond.not37, label %bb.g, label %._crit_edge, !dbg !7489
+  %.not = icmp eq i32 %i.p, -1
+  %or.cond.not37 = select i1 %.not30, i1 true, i1 %.not, !dbg !7489
+  br i1 %or.cond.not37, label %._crit_edge, label %bb.g, !dbg !7489
 
 ._crit_edge:                                      ; preds = %bb.d
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 1120

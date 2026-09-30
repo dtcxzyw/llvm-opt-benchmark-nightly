@@ -205,11 +205,11 @@ bb.a:
   %8 = alloca %"class.cxx20::expected", align 4   ; 7 uses
   %9 = alloca %"class.cxx20::expected.55", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !20
-  %i.c = icmp ugt i8 %i.b, 3                      ; 2 uses
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !20    ; 2 uses
+  %i.c = icmp ugt i8 %i.b, 3
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.e = load i8, ptr %i.d, align 8, !tbaa !20
-  %i.f = icmp ugt i8 %i.e, 3                      ; 2 uses
+  %i.e = load i8, ptr %i.d, align 8, !tbaa !20    ; 2 uses
+  %i.f = icmp ugt i8 %i.e, 3
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !23   ; 3 uses
   %i.i = getelementptr inbounds i8, ptr %i.h, i64 -16 ; 2 uses
@@ -226,8 +226,9 @@ bb.a:
   store ptr %i.l, ptr %i.g, align 8, !tbaa !26
   %.sroa.017.sroa.0.0.extract.trunc = trunc i128 %.sroa.0.0.copyload.i10 to i64 ; 2 uses
   %.sroa.017.sroa.5.0.insert.shift = and i64 %.sroa.017.sroa.0.0.extract.trunc, -4294967296
+  %10 = icmp ult i8 %i.e, 4
   %i.m = and i64 %.sroa.017.sroa.0.0.extract.trunc, 4294967295
-  %.sroa.017.sroa.0.0.insert.insert = select i1 %i.f, i64 %.sroa.017.sroa.5.0.insert.shift, i64 0
+  %.sroa.017.sroa.0.0.insert.insert = select i1 %10, i64 0, i64 %.sroa.017.sroa.5.0.insert.shift
   %.0.i11 = or disjoint i64 %.sroa.017.sroa.0.0.insert.insert, %i.m ; 2 uses
   %i.n = getelementptr inbounds i8, ptr %i.h, i64 -48 ; 2 uses
   %.sroa.0.0.copyload.i12 = load i128, ptr %i.n, align 16, !tbaa !24
@@ -251,10 +252,11 @@ bb.a:
   br label %bb.c
 
 "_ZNO5cxx208expectedINS_4spanIKN8WasmEdge10RefVariantELm18446744073709551615EEENS2_7ErrCodeEE8and_thenIZNS2_8Executor8Executor14runTableCopyOpERNS2_7Runtime12StackManagerERNSB_8Instance13TableInstanceESG_RKNS2_3AST11InstructionEE3$_0EEDaOT_.exit": ; preds = %bb.a
+  %11 = icmp ult i8 %i.b, 4
   %.sroa.015.sroa.0.0.extract.trunc = trunc i128 %.sroa.0.0.copyload.i12 to i64 ; 2 uses
   %i.u = and i64 %.sroa.015.sroa.0.0.extract.trunc, 4294967295
   %.sroa.015.sroa.5.0.insert.shift = and i64 %.sroa.015.sroa.0.0.extract.trunc, -4294967296
-  %.sroa.015.sroa.0.0.insert.insert = select i1 %i.c, i64 %.sroa.015.sroa.5.0.insert.shift, i64 0
+  %.sroa.015.sroa.0.0.insert.insert = select i1 %11, i64 0, i64 %.sroa.015.sroa.5.0.insert.shift
   %.0.i13 = or disjoint i64 %.sroa.015.sroa.0.0.insert.insert, %i.u
   %.val.i.i = load ptr, ptr %i.r, align 8, !noalias !239
   %i.v = getelementptr inbounds nuw i8, ptr %9, i64 16

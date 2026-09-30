@@ -204,14 +204,15 @@ bb.f:                                             ; preds = %_RNCNvCs6SXwsBSuFuw
   call void @_RNvNtCsaKJjC64KgbL_3std3env7args_os(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.bb)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2985)
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
-  %.val.i12 = load ptr, ptr %i.bk, align 8, !alias.scope !2985, !nonnull !13, !noundef !13 ; 3 uses
+  %.val.i12 = load ptr, ptr %i.bk, align 8, !alias.scope !2985, !nonnull !13, !noundef !13 ; 4 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bb, i64 24
-  %.val3.i = load ptr, ptr %i.bl, align 8, !alias.scope !2985, !nonnull !13, !noundef !13 ; 6 uses
-  %i.bm = icmp ne ptr %.val3.i, %.val.i12         ; 2 uses
+  %.val3.i = load ptr, ptr %i.bl, align 8, !alias.scope !2985, !nonnull !13, !noundef !13 ; 7 uses
+  %i.bm = icmp ne ptr %.val3.i, %.val.i12
   %..i.i = zext i1 %i.bm to i64                   ; 2 uses
   %i.bn = getelementptr inbounds nuw [24 x i8], ptr %.val.i12, i64 %..i.i ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2986)
-  br i1 %i.bm, label %.lr.ph.i.i, label %_RNvXs4_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCs6SXwsBSuFuw_4just.exit.thread
+  %.not99 = icmp eq ptr %.val3.i, %.val.i12
+  br i1 %.not99, label %_RNvXs4_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextCs6SXwsBSuFuw_4just.exit.thread, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.f, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECs6SXwsBSuFuw_4just.exit.i.i
   %.sroa.0.011.i.i = phi i64 [ %i.bp, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECs6SXwsBSuFuw_4just.exit.i.i ], [ 0, %bb.f ] ; 2 uses

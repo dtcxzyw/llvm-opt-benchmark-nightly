@@ -205,9 +205,9 @@ _ZSt11__push_heapIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mo
 define internal fastcc void @_ZSt16__insertion_sortIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEEvSJ_SJ_T0_(ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #19 {
 bb.a:
   %2 = alloca %"class.tbb::detail::d1::vector_iterator.506", align 8 ; 4 uses
-  %i.a = load ptr, ptr %0, align 8, !tbaa !241    ; 4 uses
-  %i.b = load ptr, ptr %1, align 8, !tbaa !241
-  %i.c = icmp eq ptr %i.a, %i.b                   ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !241    ; 5 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !241    ; 2 uses
+  %i.c = icmp eq ptr %i.a, %i.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -218,9 +218,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = add i64 %i.e, 1                          ; 2 uses
-  %3 = icmp eq i64 %i.j, %i.g
-  %.not3.i32.not = select i1 %i.c, i1 %3, i1 false
-  br i1 %.not3.i32.not, label %.loopexit, label %.lr.ph
+  %.not = icmp ne ptr %i.a, %i.b
+  %3 = icmp ne i64 %i.j, %i.g
+  %.not3.i32.not = select i1 %.not, i1 true, i1 %3
+  br i1 %.not3.i32.not, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
