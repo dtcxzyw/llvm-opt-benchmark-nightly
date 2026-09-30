@@ -1,0 +1,146 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+index 66c14cfba2056..485f38931c20b 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+@@ -15,6 +15,7 @@
+ #include "llvm/Analysis/CmpInstAnalysis.h"
+ #include "llvm/Analysis/FloatingPointPredicateUtils.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
++#include "llvm/IR/ConstantFold.h"
+ #include "llvm/IR/ConstantRange.h"
+ #include "llvm/IR/DerivedTypes.h"
+ #include "llvm/IR/Instructions.h"
+@@ -4049,7 +4050,33 @@ static Value *foldBitmaskMul(Value *Op0, Value *Op1,
+   return nullptr;
+ }
+ 
++/// (X binop C1) |disjoint C2 -> X binop (C1 binop C2), where binop is add or
++/// xor. A defined disjoint or is equivalent to add and xor, so the operations
++/// can be reassociated.
++static Value *foldDisjointOrOfAddOrXor(Value *BinOp, Value *C,
++                                       InstCombiner::BuilderTy &Builder) {
++  Value *X;
++  Constant *C1, *C2;
++  if (!match(BinOp, m_c_BinOp(m_Value(X), m_Constant(C1))) ||
++      !match(C, m_Constant(C2)))
++    return nullptr;
++
++  auto Opcode = cast<BinaryOperator>(BinOp)->getOpcode();
++  if (Opcode != Instruction::Add && Opcode != Instruction::Xor)
++    return nullptr;
++
++  Constant *NewC = ConstantFoldBinaryInstruction(Opcode, C1, C2);
++  if (!NewC)
++    return nullptr;
++
++  return Builder.CreateBinOp(Opcode, X, NewC);
++}
++
+ Value *InstCombinerImpl::foldDisjointOr(Value *LHS, Value *RHS) {
++  if (Value *Res = foldDisjointOrOfAddOrXor(LHS, RHS, Builder))
++    return Res;
++  if (Value *Res = foldDisjointOrOfAddOrXor(RHS, LHS, Builder))
++    return Res;
+   if (Value *Res = foldBitmaskMul(LHS, RHS, Builder))
+     return Res;
+   if (Value *Res = foldIntegerRepackThroughZExt(LHS, RHS, Builder))
+diff --git a/llvm/test/Transforms/InstCombine/add.ll b/llvm/test/Transforms/InstCombine/add.ll
+index 22472b0114fd7..06797b90c3d35 100644
+--- a/llvm/test/Transforms/InstCombine/add.ll
++++ b/llvm/test/Transforms/InstCombine/add.ll
+@@ -1972,6 +1972,30 @@ define i8 @fold_add_constant_preserve_nuw(i8 %x) {
+   %add = add nuw i8 %or, 12
+   ret i8 %add
+ }
++
++define i32 @disjoint_or_of_add_constant_multiuse(i32 %x, ptr %p) {
++; CHECK-LABEL: @disjoint_or_of_add_constant_multiuse(
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[X:%.*]], 3
++; CHECK-NEXT:    store i32 [[ADD]], ptr [[P:%.*]], align 4
++; CHECK-NEXT:    [[OR:%.*]] = add i32 [[X]], 4
++; CHECK-NEXT:    ret i32 [[OR]]
++;
++  %add = add i32 %x, 3
++  store i32 %add, ptr %p
++  %or = or disjoint i32 %add, 1
++  ret i32 %or
++}
++
++define i8 @disjoint_or_of_nsw_add_constant(i8 %x) {
++; CHECK-LABEL: @disjoint_or_of_nsw_add_constant(
++; CHECK-NEXT:    [[OR:%.*]] = add i8 [[X:%.*]], -127
++; CHECK-NEXT:    ret i8 [[OR]]
++;
++  %add = add nsw i8 %x, 127
++  %or = or disjoint i8 %add, 2
++  ret i8 %or
++}
++
+ define i32 @sdiv_to_udiv(i32 %arg0, i32 %arg1) {
+ ; CHECK-LABEL: @sdiv_to_udiv(
+ ; CHECK-NEXT:    [[T0:%.*]] = shl nuw nsw i32 [[ARG0:%.*]], 8
+diff --git a/llvm/test/Transforms/InstCombine/or-xor.ll b/llvm/test/Transforms/InstCombine/or-xor.ll
+index b05ff15b8b3c8..58326633894dc 100644
+--- a/llvm/test/Transforms/InstCombine/or-xor.ll
++++ b/llvm/test/Transforms/InstCombine/or-xor.ll
+@@ -506,6 +506,60 @@ define i8 @xor_or2(i8 %x) {
+   ret i8 %or
+ }
+ 
++define i32 @xor_disjoint_or_constant(i32 %x) {
++; CHECK-LABEL: @xor_disjoint_or_constant(
++; CHECK-NEXT:    [[OR:%.*]] = xor i32 [[TMP1:%.*]], 1600
++; CHECK-NEXT:    ret i32 [[OR]]
++;
++  %xor = xor i32 %x, 576
++  %or = or disjoint i32 %xor, 1024
++  ret i32 %or
++}
++
++define i32 @xor_disjoint_or_constant_multiuse(i32 %x, ptr %p) {
++; CHECK-LABEL: @xor_disjoint_or_constant_multiuse(
++; CHECK-NEXT:    [[XOR:%.*]] = xor i32 [[X:%.*]], 576
++; CHECK-NEXT:    store i32 [[XOR]], ptr [[P:%.*]], align 4
++; CHECK-NEXT:    [[OR:%.*]] = xor i32 [[X]], 1600
++; CHECK-NEXT:    ret i32 [[OR]]
++;
++  %xor = xor i32 %x, 576
++  store i32 %xor, ptr %p
++  %or = or disjoint i32 1024, %xor
++  ret i32 %or
++}
++
++define <2 x i32> @xor_disjoint_or_constant_vector(<2 x i32> %x) {
++; CHECK-LABEL: @xor_disjoint_or_constant_vector(
++; CHECK-NEXT:    [[OR:%.*]] = xor <2 x i32> [[X:%.*]], <i32 1600, i32 2>
++; CHECK-NEXT:    ret <2 x i32> [[OR]]
++;
++  %xor = xor <2 x i32> <i32 576, i32 3>, %x
++  %or = or disjoint <2 x i32> %xor, <i32 1024, i32 1>
++  ret <2 x i32> %or
++}
++
++define <vscale x 2 x i32> @xor_disjoint_or_constant_scalable_vector(<vscale x 2 x i32> %x) {
++; CHECK-LABEL: @xor_disjoint_or_constant_scalable_vector(
++; CHECK-NEXT:    [[OR:%.*]] = xor <vscale x 2 x i32> [[TMP1:%.*]], splat (i32 1600)
++; CHECK-NEXT:    ret <vscale x 2 x i32> [[OR]]
++;
++  %xor = xor <vscale x 2 x i32> %x, splat (i32 576)
++  %or = or disjoint <vscale x 2 x i32> %xor, splat (i32 1024)
++  ret <vscale x 2 x i32> %or
++}
++
++define i32 @xor_or_constant_not_disjoint(i32 %x) {
++; CHECK-LABEL: @xor_or_constant_not_disjoint(
++; CHECK-NEXT:    [[TMP1:%.*]] = and i32 [[X:%.*]], -1025
++; CHECK-NEXT:    [[OR:%.*]] = xor i32 [[TMP1]], 1600
++; CHECK-NEXT:    ret i32 [[OR]]
++;
++  %xor = xor i32 %x, 576
++  %or = or i32 %xor, 1024
++  ret i32 %or
++}
++
+ define i8 @xor_or_xor(i8 %x) {
+ ; CHECK-LABEL: @xor_or_xor(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = and i8 [[X:%.*]], -8
