@@ -205,12 +205,12 @@ bb.i:                                             ; preds = %._crit_edge.i.i
   br i1 %.not.i.i, label %_ZNSt3__16vectorINS_5arrayINS1_IiLm336EEELm2EEENS_9allocatorIS3_EEEC2Em.exit.i.i.i, label %.lr.ph57.i.i
 
 _ZNSt3__16vectorINS_5arrayINS1_IiLm336EEELm2EEENS_9allocatorIS3_EEE18__construct_at_endEm.exit.i.i.i.i: ; preds = %.lr.ph57.i.i
-  %i.dq = mul nuw i64 %i.bf, 2688                 ; 3 uses
+  %i.dq = mul nuw nsw i64 %i.bf, 2688             ; 3 uses
   %i.dr = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dq) #40 ; 3 uses
   %i.ds = getelementptr inbounds nuw [2688 x i8], ptr %i.dr, i64 %i.bf
-  %i.dt = add i64 %i.dq, -2688
+  %i.dt = add nsw i64 %i.dq, -2688
   %i.du = urem i64 %i.dt, 2688
-  %i.dv = sub nuw i64 %i.dq, %i.du
+  %i.dv = sub nuw nsw i64 %i.dq, %i.du
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.dr, i8 0, i64 %i.dv, i1 false)
   %i.dw = ptrtoint ptr %i.ds to i64
   br label %_ZNSt3__16vectorINS_5arrayINS1_IiLm336EEELm2EEENS_9allocatorIS3_EEEC2Em.exit.i.i.i
@@ -613,7 +613,7 @@ _ZN4AVX212_GLOBAL__N_119ChannelRowProcessorINS0_12ChunkEncoderINS0_14MoreThan14B
   %i.bhp = load i8, ptr %i.bhg, align 1, !tbaa !85
   %i.bhq = getelementptr inbounds nuw i8, ptr %i.bdv, i64 143
   store i8 %i.bhp, ptr %i.bhq, align 1, !tbaa !85
-  %i.bhr = add nuw i64 %.03456.i.i, 1             ; 2 uses
+  %i.bhr = add nuw nsw i64 %.03456.i.i, 1         ; 2 uses
   %exitcond76.not.i.i = icmp eq i64 %i.bhr, %i.bf
   br i1 %exitcond76.not.i.i, label %_ZNSt3__16vectorINS_5arrayINS1_IiLm336EEELm2EEENS_9allocatorIS3_EEE18__construct_at_endEm.exit.i.i.i.i, label %.lr.ph57.i.i, !llvm.loop !1790
 
@@ -1016,12 +1016,12 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i
   br i1 %.not.i.i.i, label %_ZNSt3__16vectorINS_5arrayINS1_IiLm336EEELm2EEENS_9allocatorIS3_EEEC2Em.exit.i.i.i.i, label %.lr.ph50.i.i.i
 
 _ZNSt3__16vectorINS_5arrayINS1_IiLm336EEELm2EEENS_9allocatorIS3_EEE18__construct_at_endEm.exit.i.i.i.i.i: ; preds = %.lr.ph50.i.i.i
-  %i.dq = mul nuw i64 %i.bf, 2688                 ; 3 uses
+  %i.dq = mul nuw nsw i64 %i.bf, 2688             ; 3 uses
   %i.dr = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dq) #40 ; 3 uses
   %i.ds = getelementptr inbounds nuw [2688 x i8], ptr %i.dr, i64 %i.bf
-  %i.dt = add i64 %i.dq, -2688
+  %i.dt = add nsw i64 %i.dq, -2688
   %i.du = urem i64 %i.dt, 2688
-  %i.dv = sub nuw i64 %i.dq, %i.du
+  %i.dv = sub nuw nsw i64 %i.dq, %i.du
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.dr, i8 0, i64 %i.dv, i1 false)
   %i.dw = ptrtoint ptr %i.ds to i64
   br label %_ZNSt3__16vectorINS_5arrayINS1_IiLm336EEELm2EEENS_9allocatorIS3_EEEC2Em.exit.i.i.i.i
@@ -1424,7 +1424,7 @@ _ZN22default_implementation12_GLOBAL__N_119ChannelRowProcessorINS0_12ChunkEncode
   %i.asz = load i8, ptr %i.asq, align 1, !tbaa !85
   %i.ata = getelementptr inbounds nuw i8, ptr %i.apf, i64 143
   store i8 %i.asz, ptr %i.ata, align 1, !tbaa !85
-  %i.atb = add nuw i64 %.03449.i.i.i, 1           ; 2 uses
+  %i.atb = add nuw nsw i64 %.03449.i.i.i, 1       ; 2 uses
   %exitcond63.not.i.i.i = icmp eq i64 %i.atb, %i.bf
   br i1 %exitcond63.not.i.i.i, label %_ZNSt3__16vectorINS_5arrayINS1_IiLm336EEELm2EEENS_9allocatorIS3_EEE18__construct_at_endEm.exit.i.i.i.i.i, label %.lr.ph50.i.i.i, !llvm.loop !2189
 
