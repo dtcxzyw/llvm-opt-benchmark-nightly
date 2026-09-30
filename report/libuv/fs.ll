@@ -202,8 +202,8 @@ bb.en:                                            ; preds = %bb.em
 .split98.us.split.us.i.i:                         ; preds = %bb.eh, %bb.en
   %i.sk = phi i32 [ %i.si, %bb.en ], [ %i.rm, %bb.eh ]
   %.us-phi99.i.i = phi i64 [ %.049103.i.i, %bb.en ], [ %.049103.us.i.i, %bb.eh ] ; 2 uses
-  %.us-phi100.i.i = phi i64 [ %.048104.i.i, %bb.en ], [ %.048104.us.i.i, %bb.eh ] ; 3 uses
-  %i.sl = icmp ne i64 %.us-phi100.i.i, 0
+  %.us-phi100.i.i = phi i64 [ %.048104.i.i, %bb.en ], [ %.048104.us.i.i, %bb.eh ] ; 2 uses
+  %i.sl = icmp ne i64 %.us-phi100.i.i, 0          ; 2 uses
   %or.cond.not.i.i = or i1 %.not121.i.i, %i.sl
   br i1 %or.cond.not.i.i, label %bb.ep, label %bb.eo
 
@@ -217,8 +217,7 @@ bb.eo:                                            ; preds = %.split98.us.split.u
   br label %.lr.ph.i.i
 
 bb.ep:                                            ; preds = %.split98.us.split.us.i.i
-  %.not187.i.i = icmp eq i64 %.us-phi100.i.i, 0
-  br i1 %.not187.i.i, label %uv__fs_sendfile_emul.exit.i, label %.loopexit.thread.i.i
+  br i1 %i.sl, label %.loopexit.thread.i.i, label %uv__fs_sendfile_emul.exit.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.backedge, %.outer.split.i.i
   %i.sm = call i64 @write(i32 noundef %i.ri, ptr noundef nonnull %i.ss, i64 noundef %i.sr) #14 ; 2 uses

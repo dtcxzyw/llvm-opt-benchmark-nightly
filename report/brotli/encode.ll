@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %bb.bl
   %.not.i26.i.i109 = icmp eq ptr %6, null         ; 2 uses
   %i.kh = icmp ne i32 %1, 0
   %i.ki = icmp eq i32 %1, 2                       ; 2 uses
-  %7 = icmp eq i32 %1, 1
+  %7 = icmp ne i32 %1, 1
   %i.kj = getelementptr inbounds nuw i8, ptr %0, i64 1616 ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1624 ; 3 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %0, i64 6872 ; 2 uses
@@ -328,8 +328,8 @@ bb.by:                                            ; preds = %bb.bu
   br i1 %i.mh, label %bb.bz, label %.thread158.i
 
 bb.bz:                                            ; preds = %bb.by
-  %i.mi = load i64, ptr %2, align 8, !tbaa !67    ; 4 uses
-  %i.mj = icmp ne i64 %i.mi, 0
+  %i.mi = load i64, ptr %2, align 8, !tbaa !67    ; 3 uses
+  %i.mj = icmp ne i64 %i.mi, 0                    ; 3 uses
   %or.cond3.i = or i1 %i.kh, %i.mj
   br i1 %or.cond3.i, label %bb.ca, label %.thread158.i
 
@@ -344,9 +344,8 @@ bb.ca:                                            ; preds = %bb.bz
   %i.mq = load i8, ptr %i.kb, align 2, !tbaa !72
   %i.mr = zext i8 %i.mq to i64
   store i64 %i.mr, ptr %i.a, align 8, !tbaa !67
-  %8 = icmp eq i64 %i.mi, 0                       ; 2 uses
-  %or.cond5.i = and i1 %7, %8
-  br i1 %or.cond5.i, label %.sink.split.i, label %bb.cb
+  %or.cond5.not.i = or i1 %7, %i.mj
+  br i1 %or.cond5.not.i, label %bb.cb, label %.sink.split.i
 
 bb.cb:                                            ; preds = %bb.ca
   %i.ms = load i64, ptr %4, align 8, !tbaa !67
@@ -440,7 +439,7 @@ bb.cj:                                            ; preds = %GetHashTable.exit.i
   br label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj, %bb.ci
-  br i1 %8, label %bb.cm, label %bb.cl
+  br i1 %i.mj, label %bb.cl, label %bb.cm
 
 bb.cl:                                            ; preds = %bb.ck
   %i.nx = load ptr, ptr %3, align 8, !tbaa !69
@@ -843,7 +842,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not244, label %bb.k, label %bb.fz
 
 bb.k:                                             ; preds = %bb.j
-  %.not249 = icmp eq i32 %1, 0                    ; 2 uses
+  %.not249 = icmp eq i32 %1, 0                    ; 3 uses
   br i1 %.not249, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -1055,8 +1054,8 @@ bb.ae:                                            ; preds = %bb.ad, %bb.y
   %i.ef = zext i32 %.0.i362 to i64                ; 53 uses
   %i.eg = and i64 %i.j, 4294967295                ; 40 uses
   %i.eh = icmp eq i32 %.0.i362, 0
-  %7 = icmp ne i32 %1, 0
-  %i.ei = and i1 %7, %i.eh                        ; 4 uses
+  %.not249.not = xor i1 %.not249, true
+  %i.ei = and i1 %i.eh, %.not249.not              ; 4 uses
   %i.ej = zext i1 %i.ei to i32                    ; 12 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 1664 ; 2 uses
   %i.el = load i32, ptr %i.ek, align 8, !tbaa !409

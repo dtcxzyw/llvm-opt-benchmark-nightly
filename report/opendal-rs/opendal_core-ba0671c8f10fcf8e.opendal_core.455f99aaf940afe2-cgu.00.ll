@@ -205,16 +205,15 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.915.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 2 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.915.0..sroa_idx, i8 0, i64 24, i1 false)
-  %i.l = load ptr, ptr %1, align 8, !noalias !658, !noundef !11 ; 2 uses
-  %i.m = icmp ne ptr %i.l, null
+  %i.l = load ptr, ptr %1, align 8, !noalias !658, !noundef !11
+  %i.m = icmp ne ptr %i.l, null                   ; 2 uses
   %i.n = zext i1 %i.m to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !659
   store i64 %i.n, ptr %i.b, align 8, !noalias !659
   call fastcc void @_RNvXs2_NtNtCs9k3SxhrAWiO_3std4hash6randomNtB5_13DefaultHasherNtNtCsgxBkk5gSRhY_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 8) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !659
-  %.not.i.i = icmp eq ptr %i.l, null
   %i.o = getelementptr i8, ptr %1, i64 8          ; 2 uses
-  br i1 %.not.i.i, label %bb.d, label %bb.c
+  br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %.val.i.i = load ptr, ptr %i.o, align 8, !noalias !658, !noundef !11
@@ -303,14 +302,13 @@ _RINvXsz_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_10HeaderNameNtNtCsgxBkk5gSRhY_4
   br label %_RINvXsz_NtNtCs76KlaVGnJsc_4http6header4nameNtB6_10HeaderNameNtNtCsgxBkk5gSRhY_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECs5XgW7KoffLW_12opendal_core.exit
 
 bb.e:                                             ; preds = %bb.a
-  %i.cc = load ptr, ptr %1, align 8, !noalias !662, !noundef !11 ; 2 uses
-  %i.cd = icmp ne ptr %i.cc, null
+  %i.cc = load ptr, ptr %1, align 8, !noalias !662, !noundef !11
+  %i.cd = icmp ne ptr %i.cc, null                 ; 2 uses
   %i.ce = zext i1 %i.cd to i64
   %i.cf = xor i64 %i.ce, -3750763034362895579
   %i.cg = mul i64 %i.cf, 2232315406967589409      ; 4 uses
-  %.not.i.i20 = icmp eq ptr %i.cc, null
   %i.ch = getelementptr i8, ptr %1, i64 8         ; 2 uses
-  br i1 %.not.i.i20, label %bb.g, label %bb.f
+  br i1 %i.cd, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %.val.i.i21 = load ptr, ptr %i.ch, align 8, !noalias !662, !noundef !11 ; 3 uses
@@ -437,15 +435,14 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !699)
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.915.0..sroa_idx, i8 0, i64 24, i1 false)
-  %i.n = load i8, ptr %i.m, align 8, !range !23, !alias.scope !700, !noalias !701, !noundef !11 ; 3 uses
-  %i.o = icmp ne i8 %i.n, 2
+  %i.n = load i8, ptr %i.m, align 8, !range !23, !alias.scope !700, !noalias !701, !noundef !11 ; 2 uses
+  %i.o = icmp ne i8 %i.n, 2                       ; 2 uses
   %i.p = zext i1 %i.o to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !702
   store i64 %i.p, ptr %i.c, align 8, !noalias !702
   call fastcc void @_RNvXs2_NtNtCs9k3SxhrAWiO_3std4hash6randomNtB5_13DefaultHasherNtNtCsgxBkk5gSRhY_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.c, i64 noundef 8) #30, !noalias !700
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !702
-  %.not.i.i = icmp eq i8 %i.n, 2
-  br i1 %.not.i.i, label %bb.f, label %bb.c
+  br i1 %i.o, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !703)
@@ -561,13 +558,12 @@ bb.g:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !709)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !710)
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.cp = load i8, ptr %i.co, align 8, !range !23, !alias.scope !711, !noalias !712, !noundef !11 ; 3 uses
-  %i.cq = icmp ne i8 %i.cp, 2
+  %i.cp = load i8, ptr %i.co, align 8, !range !23, !alias.scope !711, !noalias !712, !noundef !11 ; 2 uses
+  %i.cq = icmp ne i8 %i.cp, 2                     ; 2 uses
   %i.cr = zext i1 %i.cq to i64
   %i.cs = xor i64 %i.cr, -3750763034362895579
   %i.ct = mul i64 %i.cs, 2232315406967589409      ; 7 uses
-  %.not.i.i20 = icmp eq i8 %i.cp, 2
-  br i1 %.not.i.i20, label %bb.k, label %bb.h
+  br i1 %i.cq, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %bb.g
   tail call void @llvm.experimental.noalias.scope.decl(metadata !713)

@@ -204,8 +204,8 @@ bb.a:
 
 _ZN7jsonnet8internalL24fodder_has_clean_endlineERKSt6vectorINS0_13FodderElementESaIS2_EE.exit: ; preds = %bb.a
   %i.f = getelementptr inbounds i8, ptr %.val20, i64 -40
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !41   ; 2 uses
-  %i.h = icmp ne i32 %i.g, 1
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !41
+  %i.h = icmp ne i32 %i.g, 1                      ; 2 uses
   %i.i = load i32, ptr %1, align 8                ; 2 uses
   %i.j = icmp eq i32 %i.i, 0
   %or.cond = select i1 %i.h, i1 %i.j, i1 false
@@ -242,10 +242,9 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.j
 
 _ZN7jsonnet8internalL24fodder_has_clean_endlineERKSt6vectorINS0_13FodderElementESaIS2_EE.exit21: ; preds = %_ZN7jsonnet8internalL24fodder_has_clean_endlineERKSt6vectorINS0_13FodderElementESaIS2_EE.exit
-  %3 = icmp eq i32 %i.g, 1
-  %4 = icmp eq i32 %i.i, 2
-  %or.cond24 = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond24, label %bb.e, label %bb.i
+  %3 = icmp ne i32 %i.i, 2
+  %or.cond24 = select i1 %i.h, i1 true, i1 %3
+  br i1 %or.cond24, label %bb.i, label %bb.e
 
 _ZN7jsonnet8internalL24fodder_has_clean_endlineERKSt6vectorINS0_13FodderElementESaIS2_EE.exit21.thread: ; preds = %bb.a
   %.old = load i32, ptr %1, align 8, !tbaa !41

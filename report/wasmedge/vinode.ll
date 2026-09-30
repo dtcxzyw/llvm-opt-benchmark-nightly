@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %_ZNSt11char_traitsI
 
 bb.m:                                             ; preds = %bb.l, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %.preheader
   %.1.i = phi i64 [ -1, %.preheader ], [ %i.bc, %bb.l ], [ -1, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i ] ; 2 uses
-  %.sroa.speculated.i = call i64 @llvm.umin.i64(i64 %i.ay, i64 %.1.i) ; 18 uses
+  %.sroa.speculated.i = call i64 @llvm.umin.i64(i64 %i.ay, i64 %.1.i) ; 17 uses
   %i.bd = sub nuw i64 %i.ay, %.sroa.speculated.i  ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.pre, i64 %.sroa.speculated.i ; 2 uses
   %i.bf = icmp eq i64 %i.bd, 0
@@ -236,8 +236,8 @@ bb.n:                                             ; preds = %.lr.ph
   %.pn263273 = phi ptr [ %.pn263.lcssa, %._crit_edge ], [ %.pn263432, %.lr.ph ] ; 5 uses
   %i.bn = phi i1 [ true, %._crit_edge ], [ false, %.lr.ph ] ; 2 uses
   %i.bo = phi i1 [ %i.bm, %._crit_edge ], [ false, %.lr.ph ] ; 5 uses
-  %18 = icmp eq i64 %.sroa.speculated.i, 0
-  br i1 %18, label %bb.ao, label %bb.o
+  %18 = icmp ne i64 %.sroa.speculated.i, 0        ; 2 uses
+  br i1 %18, label %bb.o, label %bb.ao
 
 bb.o:                                             ; preds = %.critedge
   %i.bp = load i8, ptr %.pre, align 1, !tbaa !46
@@ -465,8 +465,7 @@ bb.as:                                            ; preds = %bb.ao
   %i.ed = load ptr, ptr %1, align 8, !tbaa !66
   store ptr %i.k, ptr %10, align 8, !tbaa !43
   %i.ee = icmp eq ptr %.pre, null
-  %19 = icmp ne i64 %.sroa.speculated.i, 0
-  %or.cond.i.i.i = and i1 %19, %i.ee
+  %or.cond.i.i.i = and i1 %18, %i.ee
   br i1 %or.cond.i.i.i, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as

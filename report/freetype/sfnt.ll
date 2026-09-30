@@ -205,11 +205,11 @@ bb.v:                                             ; preds = %bb.r
   %i.et = getelementptr inbounds nuw i8, ptr %4, i64 64
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !137
   %i.ev = add i32 %i.ds, -8
-  %i.ew = tail call fastcc i32 @Load_SBit_Png(ptr noundef %i.eq, i32 noundef 0, i32 noundef 0, i32 noundef 32, ptr noundef nonnull %6, ptr noundef %i.es, ptr noundef %i.eu, i32 noundef %i.ev, i8 noundef zeroext 1, i8 noundef zeroext range(i8 0, 2) %i.bs) ; 3 uses
+  %i.ew = tail call fastcc i32 @Load_SBit_Png(ptr noundef %i.eq, i32 noundef 0, i32 noundef 0, i32 noundef 32, ptr noundef nonnull %6, ptr noundef %i.es, ptr noundef %i.eu, i32 noundef %i.ev, i8 noundef zeroext 1, i8 noundef zeroext range(i8 0, 2) %i.bs) ; 2 uses
   %i.ex = icmp eq i8 %.0125173.i, 0
   %i.ey = trunc i32 %i.bq to i1
   %or.cond.i = or i1 %i.ex, %i.ey
-  %i.ez = icmp ne i32 %i.ew, 0
+  %i.ez = icmp ne i32 %i.ew, 0                    ; 2 uses
   %or.cond3.i = select i1 %or.cond.i, i1 true, i1 %i.ez
   br i1 %or.cond3.i, label %bb.x, label %bb.w
 
@@ -271,8 +271,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   tail call void @FT_Stream_ExitFrame(ptr noundef nonnull %4) #27
-  %.not148.i = icmp eq i32 %i.ew, 0
-  br i1 %.not148.i, label %bb.y, label %tt_face_load_sbix_image.exit.thread
+  br i1 %i.ez, label %tt_face_load_sbix_image.exit.thread, label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %.thread153.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
@@ -675,10 +674,10 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %.24.val, i64 16
   %i.u = zext nneg i32 %i.r to i64                ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.u ; 2 uses
+  %.not111.not214 = icmp eq i8 %1, 0              ; 2 uses
   %2 = add nsw i32 %i.n, -1                       ; 2 uses
-  %.not114 = icmp eq i8 %1, 0                     ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.0.val, i64 32 ; 3 uses
-  br i1 %.not114, label %.split107.us.split.us, label %.split
+  br i1 %.not111.not214, label %.split107.us.split.us, label %.split
 
 .split107.us.split.us:                            ; preds = %bb.b, %.thread4.split.us.split.us.us.us
   %.091106.us.us = phi ptr [ %i.y, %.thread4.split.us.split.us.us.us ], [ %i.v, %bb.b ] ; 4 uses
@@ -932,7 +931,7 @@ select.unfold:                                    ; preds = %bb.i, %bb.j
 .thread10:                                        ; preds = %.thread4.split, %select.unfold, %.thread4.split.us.split.us.us.us, %bb.d, %.split140.us.split.us
   %.6 = phi i32 [ %.296, %select.unfold ], [ %.094104.us.us.mux, %.split140.us.split.us ], [ %.094104.us.us.mux, %.thread4.split.us.split.us.us.us ], [ %.094104.us.us.mux, %bb.d ], [ %.296, %.thread4.split ]
   %.5 = phi i32 [ %.2, %select.unfold ], [ 0, %.split140.us.split.us ], [ 0, %.thread4.split.us.split.us.us.us ], [ %spec.store.select.us.us, %bb.d ], [ 0, %.thread4.split ] ; 2 uses
-  br i1 %.not114, label %.thread14, label %.thread10.thread21
+  br i1 %.not111.not214, label %.thread14, label %.thread10.thread21
 
 .thread10.thread21:                               ; preds = %.thread, %.thread10
   %.526 = phi i32 [ %.5, %.thread10 ], [ 0, %.thread ]

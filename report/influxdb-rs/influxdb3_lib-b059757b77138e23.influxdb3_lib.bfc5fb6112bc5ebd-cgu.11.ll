@@ -205,14 +205,13 @@ bb.as:                                            ; preds = %bb.l, %bb.m
   %i.fx = getelementptr inbounds nuw i8, ptr %i.cl, i64 24
   store ptr %..i172, ptr %i.fx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ck)
-  %i.fy = load i64, ptr %i.cl, align 8, !range !18, !noundef !8 ; 2 uses
-  %.not49 = icmp ne i64 %i.fy, -1
+  %i.fy = load i64, ptr %i.cl, align 8, !range !18, !noundef !8
+  %.not49 = icmp ne i64 %i.fy, -1                 ; 2 uses
   %or.cond123 = and i1 %.not.i171, %.not49
   br i1 %or.cond123, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %.not = icmp eq i64 %i.fy, -1
-  br i1 %.not, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsgsNUVCRJO2f_13influxdb3_lib.exit, label %bb.ay
+  br i1 %.not49, label %bb.ay, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsgsNUVCRJO2f_13influxdb3_lib.exit
 
 bb.au:                                            ; preds = %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cj)

@@ -202,8 +202,8 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
 bb.ae:                                            ; preds = %bb.ad, %bb.ac, %.critedge144.i, %bb.ab, %bb.aa, %.critedge.i, %bb.z, %bb.x, %bb.s, %bb.q, %bb.n, %bb.m, %bb.l, %bb.k, %bb.i, %bb.e, %bb.c
   %.2.i = phi ptr [ %i.aq, %bb.k ], [ %i.aq, %bb.n ], [ %i.aq, %bb.s ], [ %i.aq, %.critedge.i ], [ %i.aq, %bb.aa ], [ %i.aq, %bb.ab ], [ %i.aq, %bb.ad ], [ %i.aq, %.critedge144.i ], [ %i.aq, %bb.ac ], [ %i.aq, %bb.z ], [ %i.aq, %bb.x ], [ %i.aq, %bb.q ], [ %i.aq, %bb.m ], [ null, %bb.i ], [ null, %bb.c ], [ %i.aq, %bb.l ], [ null, %bb.e ]
   %.194.i = phi ptr [ %.093.i, %bb.k ], [ %.093.i, %bb.n ], [ %.093.i, %bb.s ], [ %.093.i, %.critedge.i ], [ %.093.i, %bb.aa ], [ %.093.i, %bb.ab ], [ %.093.i, %bb.ad ], [ %.093.i, %.critedge144.i ], [ %.093.i, %bb.ac ], [ %.093.i, %bb.z ], [ %.093.i, %bb.x ], [ %.093.i, %bb.q ], [ %.093.i, %bb.m ], [ %.093.i, %bb.i ], [ null, %bb.c ], [ %.093.i, %bb.l ], [ null, %bb.e ]
-  %.192.i = phi i32 [ %i.av, %bb.k ], [ %i.bg, %bb.n ], [ %i.bo, %bb.s ], [ %i.cb, %.critedge.i ], [ %i.cd, %bb.aa ], [ %i.cf, %bb.ab ], [ %i.cl, %bb.ad ], [ %i.ch, %.critedge144.i ], [ %i.cj, %bb.ac ], [ %i.bz, %bb.z ], [ %i.bv, %bb.x ], [ %i.bk, %bb.q ], [ %i.ba, %bb.m ], [ 27, %bb.i ], [ 27, %bb.c ], [ 2, %bb.l ], [ 27, %bb.e ] ; 3 uses
-  %i.cm = icmp ne i32 %.192.i, 0
+  %.192.i = phi i32 [ %i.av, %bb.k ], [ %i.bg, %bb.n ], [ %i.bo, %bb.s ], [ %i.cb, %.critedge.i ], [ %i.cd, %bb.aa ], [ %i.cf, %bb.ab ], [ %i.cl, %bb.ad ], [ %i.ch, %.critedge144.i ], [ %i.cj, %bb.ac ], [ %i.bz, %bb.z ], [ %i.bv, %bb.x ], [ %i.bk, %bb.q ], [ %i.ba, %bb.m ], [ 27, %bb.i ], [ 27, %bb.c ], [ 2, %bb.l ], [ 27, %bb.e ] ; 2 uses
+  %i.cm = icmp ne i32 %.192.i, 0                  ; 2 uses
   %i.cn = load ptr, ptr %i.b, align 8             ; 2 uses
   %i.co = icmp ne ptr %i.cn, null
   %or.cond3.i = select i1 %i.cm, i1 %i.co, i1 false
@@ -334,8 +334,8 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au, %bb.ar, %bb.an, %bb.al, %bb.ai, %bb.ah, %proxy_http_ver_major.exit.i41
-  %.0.i = phi i32 [ %i.dd, %bb.ah ], [ %i.dk, %bb.ai ], [ %i.dt, %bb.an ], [ %i.eg, %bb.av ], [ %i.ee, %bb.au ], [ %i.ea, %bb.ar ], [ %i.dp, %bb.al ], [ 27, %proxy_http_ver_major.exit.i41 ] ; 3 uses
-  %i.eh = icmp ne i32 %.0.i, 0
+  %.0.i = phi i32 [ %i.dd, %bb.ah ], [ %i.dk, %bb.ai ], [ %i.dt, %bb.an ], [ %i.eg, %bb.av ], [ %i.ee, %bb.au ], [ %i.ea, %bb.ar ], [ %i.dp, %bb.al ], [ 27, %proxy_http_ver_major.exit.i41 ] ; 2 uses
+  %i.eh = icmp ne i32 %.0.i, 0                    ; 2 uses
   %i.ei = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.ej = icmp ne ptr %i.ei, null
   %or.cond.i44 = select i1 %i.eh, i1 %i.ej, i1 false
@@ -356,8 +356,7 @@ bb.ay:                                            ; preds = %bb.af, %bb.ae
   %i.en = load ptr, ptr %i.b, align 8, !tbaa !108
   store ptr %i.en, ptr %0, align 8, !tbaa !108
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
-  %.not = icmp eq i32 %.192.i, 0
-  br i1 %.not, label %bb.az, label %bb.bi
+  br i1 %i.cm, label %bb.bi, label %bb.az
 
 .thread:                                          ; preds = %bb.ax, %bb.aw
   %i.eo = load ptr, ptr @Curl_cfree, align 8, !tbaa !33
@@ -365,8 +364,7 @@ bb.ay:                                            ; preds = %bb.af, %bb.ae
   %i.ep = load ptr, ptr %i.a, align 8, !tbaa !108 ; 2 uses
   store ptr %i.ep, ptr %0, align 8, !tbaa !108
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
-  %.not46 = icmp eq i32 %.0.i, 0
-  br i1 %.not46, label %.thread47, label %bb.bi
+  br i1 %i.eh, label %bb.bi, label %.thread47
 
 bb.az:                                            ; preds = %bb.ay
   %.not38 = icmp eq ptr %2, null

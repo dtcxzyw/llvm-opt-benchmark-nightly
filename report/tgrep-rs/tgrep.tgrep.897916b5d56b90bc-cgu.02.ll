@@ -204,9 +204,9 @@ bb.f:                                             ; preds = %bb.e, %bb.a, %bb.c,
   %.sroa.017.0 = phi i8 [ 0, %bb.a ], [ %spec.select27, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 496 ; 2 uses
-  %i.aq = load i64, ptr %i.ap, align 8, !range !15, !noundef !6 ; 2 uses
-  %.not = icmp eq i64 %i.aq, -1
-  br i1 %.not, label %bb.h, label %bb.g
+  %i.aq = load i64, ptr %i.ap, align 8, !range !15, !noundef !6
+  %.not = icmp ne i64 %i.aq, -1                   ; 2 uses
+  br i1 %.not, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   call void @_RNvXs4_NtCsgCecv3eZDcN_5alloc6stringNtB5_6StringNtNtCsf3Ta7LF998c_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ap)
@@ -241,8 +241,7 @@ bb.j:                                             ; preds = %.noexc
   %i.be = or i8 %i.bd, %i.g
   %i.bf = icmp ne i8 %i.be, 0
   %or.cond11.i = select i1 %or.cond5.i, i1 true, i1 %i.bf
-  %.not.i = icmp ne i64 %i.aq, -1
-  %or.cond13.not.i = or i1 %.not.i, %or.cond11.i
+  %or.cond13.not.i = or i1 %.not, %or.cond11.i
   br i1 %or.cond13.not.i, label %_RNvMs0_NtCsbNLsQi0JuJ4_5tgrep6searchNtB5_13SearchOptions18wants_match_detail.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -645,10 +644,10 @@ bb.um:                                            ; preds = %bb.uh, %bb.vo
   %.sroa.0298.0 = phi i8 [ 1, %bb.vo ], [ 0, %bb.uh ] ; 33 uses
   %.sroa.077.2 = phi ptr [ %i.ek, %bb.vo ], [ %.sroa.077.1, %bb.uh ] ; 6 uses
   %i.aya = getelementptr inbounds nuw i8, ptr %.sroa.077.2, i64 16 ; 5 uses
-  %i.ayb = load i64, ptr %i.aya, align 8, !noundef !6 ; 4 uses
+  %i.ayb = load i64, ptr %i.aya, align 8, !noundef !6 ; 3 uses
   %i.ayc = icmp ult i64 %i.ayb, 288230376151711744
   call void @llvm.assume(i1 %i.ayc)
-  %i.ayd = icmp ne i64 %i.ayb, 0
+  %i.ayd = icmp ne i64 %i.ayb, 0                  ; 2 uses
   br i1 %i.og, label %.loopexit1359, label %bb.vp
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3set7HashSetNtNtCsgCecv3eZDcN_5alloc6string6StringEECsbNLsQi0JuJ4_5tgrep.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapRejEECsbNLsQi0JuJ4_5tgrep.exit, %bb.un
@@ -940,8 +939,7 @@ bb.vt:                                            ; preds = %bb.vq
   %i.bah = load ptr, ptr %i.bag, align 8, !nonnull !6, !noundef !6 ; 2 uses
   %.idx1432 = shl nuw nsw i64 %i.ayb, 5
   %i.bai = getelementptr inbounds nuw i8, ptr %i.bah, i64 %.idx1432
-  %10 = icmp eq i64 %i.ayb, 0
-  br i1 %10, label %.loopexit1359, label %.lr.ph1423
+  br i1 %i.ayd, label %.lr.ph1423, label %.loopexit1359
 
 .lr.ph1423:                                       ; preds = %bb.vt
   %i.baj = getelementptr inbounds nuw i8, ptr %i.bb, i64 8

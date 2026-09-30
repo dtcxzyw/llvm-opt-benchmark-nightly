@@ -204,9 +204,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %1, i64 12         ; 2 uses
-  %i.d = load i8, ptr %i.c, align 4, !tbaa !37    ; 4 uses
-  %i.e = icmp ne i8 %i.d, 0                       ; 5 uses
-  %spec.select85 = sext i1 %i.e to i8             ; 6 uses
+  %i.d = load i8, ptr %i.c, align 4, !tbaa !37    ; 3 uses
+  %i.e = icmp ne i8 %i.d, 0                       ; 6 uses
+  %spec.select85 = sext i1 %i.e to i8             ; 5 uses
   %i.f = icmp eq i32 %i.b, 0
   br i1 %i.f, label %bb.c, label %.thread
 
@@ -240,8 +240,7 @@ bb.f:                                             ; preds = %bb.c
   %i.q = zext i8 %i.d to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.r
-  %.not35.i = icmp eq i8 %i.d, 0
-  br i1 %.not35.i, label %.thread, label %.lr.ph.i
+  br i1 %i.e, label %.lr.ph.i, label %.thread
 
 bb.g:                                             ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -264,7 +263,7 @@ style_has_flag.exit:                              ; preds = %.lr.ph.i, %.lr.ph31
   br label %.thread
 
 .thread:                                          ; preds = %bb.g, %bb.e, %bb.d, %bb.f, %bb.a, %style_has_flag.exit, %bb.b
-  %.07091 = phi i8 [ %spec.select85, %bb.b ], [ %spec.select85, %style_has_flag.exit ], [ -1, %bb.a ], [ %spec.select85, %bb.f ], [ %spec.select85, %bb.d ], [ %spec.select85, %bb.e ], [ %spec.select85, %bb.g ]
+  %.07091 = phi i8 [ %spec.select85, %bb.b ], [ %spec.select85, %style_has_flag.exit ], [ -1, %bb.a ], [ 0, %bb.f ], [ %spec.select85, %bb.d ], [ %spec.select85, %bb.e ], [ %spec.select85, %bb.g ]
   %i.ab = phi i1 [ %i.e, %bb.b ], [ %i.e, %style_has_flag.exit ], [ true, %bb.a ], [ false, %bb.f ], [ %i.e, %bb.d ], [ %i.e, %bb.e ], [ true, %bb.g ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 62 ; 5 uses
   %i.ad = load i32, ptr %i.ac, align 2            ; 2 uses

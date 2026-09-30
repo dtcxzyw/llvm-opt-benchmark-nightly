@@ -205,7 +205,7 @@ tg3json__strlen_fallback.exit.i:
   %i.i = alloca i64, align 8                      ; 6 uses
   %i.j = alloca [64 x i8], align 16               ; 8 uses
   %i.k = alloca ptr, align 8                      ; 8 uses
-  %i.l = alloca i64, align 8                      ; 11 uses
+  %i.l = alloca i64, align 8                      ; 10 uses
   %i.m = load i32, ptr %1, align 8, !tbaa !40
   %.not18.i.i = icmp eq i32 %i.m, 6
   br i1 %.not18.i.i, label %.preheader.i.i, label %tg3__json_is_object.exit.thread
@@ -608,7 +608,7 @@ bb.v:                                             ; preds = %tg3__json_is_object
   %i.hf = getelementptr inbounds nuw i8, ptr %i.he, i64 40 ; 2 uses
   call fastcc void @tg3__parse_string(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.gz, ptr noundef nonnull @.str.66, ptr noundef %i.hf, i32 noundef 0, ptr noundef nonnull @.str.65) #21
   call fastcc void @tg3__parse_uint64(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.gz, ptr noundef nonnull @.str.67, ptr noundef %i.i, i32 noundef 1, ptr noundef nonnull @.str.65) #21
-  %i.hg = load i64, ptr %i.i, align 8, !tbaa !30  ; 18 uses
+  %i.hg = load i64, ptr %i.i, align 8, !tbaa !30  ; 17 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %i.he, i64 16
   store i64 %i.hg, ptr %i.hh, align 8, !tbaa !162
   %i.hi = load i32, ptr %i.gj, align 8, !tbaa !163
@@ -843,7 +843,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ah
   %i.kg = load ptr, ptr %0, align 8, !tbaa !144   ; 9 uses
   %i.kh = icmp eq ptr %i.kg, null
-  %i.ki = icmp eq i64 %i.hg, 0
+  %i.ki = icmp eq i64 %i.hg, 0                    ; 3 uses
   %or.cond.i.i955 = or i1 %i.ki, %i.kh
   br i1 %or.cond.i.i955, label %tg3__arena_alloc.exit.i, label %bb.ak
 
@@ -936,10 +936,9 @@ bb.aq:                                            ; preds = %tg3__arena_new_bloc
 tg3__arena_alloc.exit.i:                          ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.ak, %bb.aj
   %.020.i.i = phi ptr [ null, %bb.ak ], [ null, %bb.aj ], [ %i.lv, %bb.aq ], [ null, %bb.ao ], [ null, %bb.an ], [ null, %bb.ap ] ; 8 uses
   %.020.i.i4003 = ptrtoaddr ptr %.020.i.i to i64
-  %7 = icmp eq ptr %.020.i.i, null
-  %i.lx = icmp ne i64 %i.hg, 0                    ; 2 uses
-  %or.cond6.i = select i1 %7, i1 %i.lx, i1 false
-  br i1 %or.cond6.i, label %bb.ar, label %bb.az
+  %i.lx = icmp ne ptr %.020.i.i, null
+  %or.cond6.not.i = or i1 %i.ki, %i.lx
+  br i1 %or.cond6.not.i, label %bb.az, label %bb.ar
 
 bb.ar:                                            ; preds = %tg3__arena_alloc.exit.i
   %i.ly = load ptr, ptr %i.gp, align 8, !tbaa !145 ; 6 uses
@@ -1134,7 +1133,7 @@ bb.ay:                                            ; preds = %.loopexit.i2362, %b
   br label %tg3__parse_buffer.exit
 
 bb.az:                                            ; preds = %tg3__arena_alloc.exit.i
-  br i1 %i.lx, label %iter.check4022, label %tg3__error_push.exit.i
+  br i1 %i.ki, label %tg3__error_push.exit.i, label %iter.check4022
 
 iter.check4022:                                   ; preds = %bb.az
   %i.oi = load ptr, ptr %i.gt, align 8, !tbaa !165 ; 6 uses
@@ -1282,9 +1281,9 @@ bb.ba:                                            ; preds = %bb.v
   br i1 %i.ho, label %bb.ef, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.ba, %bb.w
-  %i.qd = load ptr, ptr %i.hf, align 8, !tbaa !169 ; 28 uses
+  %i.qd = load ptr, ptr %i.hf, align 8, !tbaa !169 ; 27 uses
   %i.qe = ptrtoaddr ptr %i.qd to i64
-  %i.qf = icmp ne ptr %i.qd, null
+  %i.qf = icmp ne ptr %i.qd, null                 ; 2 uses
   %i.qg = icmp ugt i32 %i.hn, 4
   %or.cond.i103.i = and i1 %i.qg, %i.qf
   br i1 %or.cond.i103.i, label %.preheader.i.i952, label %tg3_is_data_uri.exit.thread.i
@@ -1687,8 +1686,7 @@ bb.cj:                                            ; preds = %.loopexit.i.i.i, %b
   br label %tg3__load_external_file.exit.thread.i
 
 bb.ck:                                            ; preds = %tg3_is_data_uri.exit.thread.i
-  %8 = icmp eq ptr %i.qd, null
-  br i1 %8, label %.loopexit.i132.i, label %bb.cl
+  br i1 %i.qf, label %bb.cl, label %.loopexit.i132.i
 
 bb.cl:                                            ; preds = %bb.ck
   %i.aah = zext i32 %i.hn to i64                  ; 12 uses
@@ -2091,7 +2089,6 @@ bb.dn:                                            ; preds = %bb.dm, %bb.dl
   %i.aio = load ptr, ptr %0, align 8, !tbaa !144
   call void (ptr, ptr, i32, i32, ptr, ptr, ...) @tg3__error_pushf(ptr noundef %i.ain, ptr noundef %i.aio, i32 poison, i32 noundef 4, ptr noundef null, ptr noundef nonnull @.str.79, ptr noundef nonnull %i.g, i64 noundef %i.aim, i64 noundef %i.ail) #21
   store ptr null, ptr %i.k, align 8, !tbaa !23
-  store i64 0, ptr %i.l, align 8, !tbaa !30
   br label %tg3__load_external_file.exit.thread.i
 
 tg3__load_external_file.exit.thread.i:            ; preds = %bb.dn, %bb.dj, %bb.di, %bb.dg, %tg3__uri_is_safe.exit.i.i, %bb.df, %bb.dd, %bb.db, %.loopexit.i132.i, %bb.cj, %bb.ch, %bb.cf, %bb.cc

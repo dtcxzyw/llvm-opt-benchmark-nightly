@@ -205,8 +205,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %._crit_edge423
-  %i.db = phi i1 [ false, %bb.q ], [ true, %._crit_edge423 ] ; 4 uses
-  %1 = phi i1 [ true, %bb.q ], [ false, %._crit_edge423 ]
+  %i.db = phi i1 [ false, %bb.q ], [ true, %._crit_edge423 ] ; 5 uses
   %indvars.iv437 = phi i64 [ 0, %bb.q ], [ 1, %._crit_edge423 ] ; 3 uses
   %i.dc = getelementptr inbounds nuw [1792 x i8], ptr %i.cu, i64 %indvars.iv437 ; 5 uses
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %indvars.iv437
@@ -352,7 +351,7 @@ bb.s:                                             ; preds = %.lr.ph412, %bb.s
   br i1 %exitcond436.not, label %._crit_edge423, label %.lr.ph422, !llvm.loop !70
 
 ._crit_edge423:                                   ; preds = %._crit_edge, %bb.r
-  br i1 %1, label %bb.r, label %bb.t, !llvm.loop !71
+  br i1 %i.db, label %bb.t, label %bb.r, !llvm.loop !71
 
 bb.t:                                             ; preds = %._crit_edge423
   %i.gm = getelementptr inbounds nuw i8, ptr %i.bm, i64 356

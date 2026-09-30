@@ -103,7 +103,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.c, label %bb.v
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.f ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   %.not = icmp eq i64 %i.f, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
@@ -156,7 +156,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.u
   %.01725.i = phi i8 [ %.118.i, %bb.h ], [ 1, %bb.d ] ; 4 uses
   %.01924.i = phi ptr [ %i.ar, %bb.h ], [ %.042, %bb.d ] ; 2 uses
   %i.aq = load i8, ptr %.01924.i, align 1, !tbaa !18 ; 2 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %.01924.i, i64 1 ; 4 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %.01924.i, i64 1 ; 3 uses
   switch i8 %i.aq, label %bb.g [
     i8 10, label %bb.e
     i8 13, label %bb.h
@@ -185,7 +185,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
   %.118.i = phi i8 [ %.01725.i, %.lr.ph.i ], [ 0, %bb.g ], [ %.01725.i, %bb.e ], [ 1, %bb.f ]
   %.116.i = phi i1 [ false, %.lr.ph.i ], [ %i.ax, %bb.g ], [ %not..i, %bb.e ], [ false, %bb.f ]
   %.1.i = phi i32 [ %.027.i, %.lr.ph.i ], [ %i.au, %bb.g ], [ %.027.i, %bb.e ], [ %.027.i, %bb.f ] ; 2 uses
-  %i.ay = icmp uge ptr %i.ar, %i.i
+  %i.ay = icmp uge ptr %i.ar, %i.i                ; 2 uses
   %.not22.i = select i1 %.116.i, i1 true, i1 %i.ay
   br i1 %.not22.i, label %_ZL8parseRowPcS_S_i.exit, label %.lr.ph.i, !llvm.loop !59
 
@@ -396,8 +396,7 @@ _ZN8TestCase4TestD2Ev.exit41:                     ; preds = %_ZNSt6vectorIPjSaIS
   br label %bb.u
 
 bb.u:                                             ; preds = %_ZL8copyNameRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit32, %bb.q, %_ZN8TestCase4TestD2Ev.exit41, %_ZN8TestCase4TestD2Ev.exit, %_ZL8copyNameRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit
-  %5 = icmp ult ptr %i.ar, %i.i
-  br i1 %5, label %bb.d, label %._crit_edge, !llvm.loop !61
+  br i1 %i.ay, label %._crit_edge, label %bb.d, !llvm.loop !61
 
 ._crit_edge:                                      ; preds = %bb.u, %bb.c
   call void @_ZdaPv(ptr noundef nonnull %i.g) #21

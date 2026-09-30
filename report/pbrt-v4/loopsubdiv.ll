@@ -205,8 +205,8 @@ bb.o:                                             ; preds = %_ZNSt3setIN4pbrt6SD
 
 bb.p:                                             ; preds = %.lr.ph1764, %_ZNSt3setIN4pbrt6SDEdgeESt4lessIS1_ESaIS1_EE5eraseERKS1_.exit
   %indvars.iv1916 = phi i64 [ 0, %.lr.ph1764 ], [ %indvars.iv.next1917, %_ZNSt3setIN4pbrt6SDEdgeESt4lessIS1_ESaIS1_EE5eraseERKS1_.exit ] ; 4 uses
-  %indvars.iv.next1917 = add nuw nsw i64 %indvars.iv1916, 1 ; 4 uses
-  %i.et = icmp eq i64 %indvars.iv.next1917, 3
+  %indvars.iv.next1917 = add nuw nsw i64 %indvars.iv1916, 1 ; 3 uses
+  %i.et = icmp eq i64 %indvars.iv.next1917, 3     ; 2 uses
   %i.eu = getelementptr inbounds nuw [8 x i8], ptr %i.eq, i64 %indvars.iv1916
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !20 ; 4 uses
   %i.ew = select i1 %i.et, i64 0, i64 %indvars.iv.next1917
@@ -518,8 +518,7 @@ _ZNSt3setIN4pbrt6SDEdgeESt4lessIS1_ESaIS1_EE5eraseERKS1_.exit.sink.split: ; pred
   br label %_ZNSt3setIN4pbrt6SDEdgeESt4lessIS1_ESaIS1_EE5eraseERKS1_.exit
 
 _ZNSt3setIN4pbrt6SDEdgeESt4lessIS1_ESaIS1_EE5eraseERKS1_.exit: ; preds = %.lr.ph.i2.i, %_ZNSt3setIN4pbrt6SDEdgeESt4lessIS1_ESaIS1_EE5eraseERKS1_.exit.sink.split, %bb.r, %.critedge.i.i
-  %exitcond1919.not = icmp eq i64 %indvars.iv.next1917, 3
-  br i1 %exitcond1919.not, label %bb.o, label %bb.p, !llvm.loop !104
+  br i1 %i.et, label %bb.o, label %bb.p, !llvm.loop !104
 
 ._crit_edge1767:                                  ; preds = %bb.ar, %.preheader1643
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #20
@@ -922,8 +921,8 @@ bb.dn:                                            ; preds = %.lr.ph1790, %bb.eq
   %indvars.iv1929 = phi i64 [ 0, %.lr.ph1790 ], [ %indvars.iv.next1930, %bb.eq ] ; 3 uses
   %i.aef = getelementptr inbounds nuw [8 x i8], ptr %i.adz, i64 %indvars.iv1929
   %i.aeg = load ptr, ptr %i.aef, align 8, !tbaa !20 ; 4 uses
-  %indvars.iv.next1930 = add nuw nsw i64 %indvars.iv1929, 1 ; 4 uses
-  %i.aeh = icmp eq i64 %indvars.iv.next1930, 3
+  %indvars.iv.next1930 = add nuw nsw i64 %indvars.iv1929, 1 ; 3 uses
+  %i.aeh = icmp eq i64 %indvars.iv.next1930, 3    ; 2 uses
   %i.aei = select i1 %i.aeh, i64 0, i64 %indvars.iv.next1930
   %i.aej = getelementptr inbounds nuw [8 x i8], ptr %i.adz, i64 %i.aei
   %i.aek = load ptr, ptr %i.aej, align 8, !tbaa !20 ; 4 uses
@@ -1326,8 +1325,7 @@ bb.ep:                                            ; preds = %bb.ek, %bb.eo, %.th
   br label %bb.eq
 
 bb.eq:                                            ; preds = %bb.ep, %bb.dt
-  %exitcond1932.not = icmp eq i64 %indvars.iv.next1930, 3
-  br i1 %exitcond1932.not, label %bb.dm, label %bb.dn, !llvm.loop !119
+  br i1 %i.aeh, label %bb.dm, label %bb.dn, !llvm.loop !119
 
 ._crit_edge1796:                                  ; preds = %_ZNK4pbrt6SDFace4vnumEPNS_8SDVertexE.exit, %._crit_edge1791
   %i.aju = load ptr, ptr %15, align 8, !tbaa !160 ; 3 uses

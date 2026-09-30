@@ -206,7 +206,7 @@ bb.a:
   %i.u = alloca [8 x i8], align 8                 ; 4 uses
   %i.v = alloca [8 x i8], align 8                 ; 4 uses
   %i.w = alloca [8 x i8], align 8                 ; 4 uses
-  %i.x = load i64, ptr %0, align 8, !noundef !5   ; 11 uses
+  %i.x = load i64, ptr %0, align 8, !noundef !5   ; 10 uses
   %i.y = udiv i64 %i.x, 60
   %i.z = urem i64 %i.x, 60                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
@@ -318,17 +318,15 @@ bb.n:                                             ; preds = %bb.l
   br i1 %spec.select157, label %bb.m, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %2 = icmp eq i64 %i.x, 0                        ; 2 uses
+  %2 = icmp ne i64 %i.x, 0
   %i.bj = icmp samesign ugt i32 %i.ay, 1000000
-  %3 = icmp ne i64 %i.x, 0                        ; 2 uses
-  %i.bk = select i1 %2, i1 %i.bj, i1 %3
+  %i.bk = select i1 %2, i1 true, i1 %i.bj
   br i1 %i.bk, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bl = icmp samesign ugt i32 %i.ay, 1000
-  %4 = select i1 %2, i1 %i.bl, i1 %3
   %i.bm = trunc nuw i8 %.sroa.01.2 to i1          ; 2 uses
-  br i1 %4, label %bb.s, label %bb.r
+  br i1 %i.bl, label %bb.s, label %bb.r
 
 bb.q:                                             ; preds = %bb.o
   %i.bn = trunc nuw i8 %.sroa.01.2 to i1

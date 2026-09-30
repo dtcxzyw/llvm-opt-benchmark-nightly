@@ -205,8 +205,8 @@ bb.ad:                                            ; preds = %bb.ab, %_ZNK20btAli
   %i.pj = getelementptr inbounds [4 x i8], ptr %i.nc, i64 %i.pi
   %i.pk = load i32, ptr %i.pj, align 4, !tbaa !275 ; 3 uses
   %i.pl = sext i32 %i.pk to i64                   ; 2 uses
-  %indvars.iv.next689 = add nuw nsw i64 %indvars.iv688, 1 ; 4 uses
-  %i.pm = icmp eq i64 %indvars.iv.next689, 3
+  %indvars.iv.next689 = add nuw nsw i64 %indvars.iv688, 1 ; 3 uses
+  %i.pm = icmp eq i64 %indvars.iv.next689, 3      ; 2 uses
   %i.pn = select i1 %i.pm, i64 0, i64 %indvars.iv.next689
   %i.po = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.pn
   %i.pp = load i32, ptr %i.po, align 4, !tbaa !275
@@ -600,8 +600,7 @@ bb.au:                                            ; preds = %_ZN20btAlignedObjec
   br label %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.1
 
 _ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit.1: ; preds = %bb.ao, %bb.au, %_ZNK20btAlignedObjectArrayIPN10btSoftBody4NodeEE16findLinearSearchERKS2_.exit
-  %exitcond691.not = icmp eq i64 %indvars.iv.next689, 3
-  br i1 %exitcond691.not, label %bb.ac, label %bb.ad, !llvm.loop !897
+  br i1 %i.pm, label %bb.ac, label %bb.ad, !llvm.loop !897
 
 ._crit_edge612.loopexit:                          ; preds = %bb.ac
   %.pre756 = load i32, ptr %i.b, align 4, !tbaa !235
