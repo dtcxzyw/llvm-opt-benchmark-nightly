@@ -200,7 +200,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load i32, ptr %i.f, align 8, !tbaa !17
   %i.i = icmp sgt i32 %i.h, 0
-  br i1 %i.i, label %.lr.ph57, label %.split.us
+  br i1 %i.i, label %.lr.ph57, label %.split.us, !prof !32, !nosanitize !9
 
 .lr.ph57:                                         ; preds = %.lr.ph, %bb.d
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %.lr.ph ] ; 3 uses
@@ -271,7 +271,7 @@ bb.e:                                             ; preds = %bb.a
 declare void @b3Free(ptr noundef, i64 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nounwind uwtable
-define hidden ptr @b3AllocateElement(ptr noundef %0) local_unnamed_addr #0 !func_sanitize !33 {
+define hidden ptr @b3AllocateElement(ptr noundef %0) local_unnamed_addr #0 !func_sanitize !34 {
 bb.a:
   %i.a = icmp ne ptr %0, null, !nosanitize !9
   %i.b = ptrtoint ptr %0 to i64, !nosanitize !9   ; 2 uses
@@ -411,7 +411,7 @@ bb.s:                                             ; preds = %bb.q
   store ptr %i.ao, ptr %i.ar, align 8, !tbaa !23
   %i.bg = add nsw i32 %.060, 1
   %exitcond = icmp eq i32 %.060, %i.x
-  br i1 %exitcond, label %.loopexit, label %.lr.ph.split, !llvm.loop !32
+  br i1 %exitcond, label %.loopexit, label %.lr.ph.split, !llvm.loop !33
 
 .loopexit:                                        ; preds = %bb.s, %bb.k
   %i.bh = and i32 %i.s, 255                       ; 2 uses
@@ -487,7 +487,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.h
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden void @b3FreeElement(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 !func_sanitize !34 {
+define hidden void @b3FreeElement(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 !func_sanitize !35 {
 bb.a:
   %i.a = icmp ne ptr %0, null, !nosanitize !9
   %i.b = ptrtoint ptr %0 to i64, !nosanitize !9   ; 2 uses
@@ -578,7 +578,8 @@ attributes #6 = { nounwind }
 !29 = !{i32 -1056584962, i32 -1195907103}
 !30 = !{i32 -1056584962, i32 -884914999}
 !31 = !{!"branch_weights", i32 127, i32 1}
-!32 = distinct !{!32, !24}
-!33 = !{i32 -1056584962, i32 2066812210}
-!34 = !{i32 -1056584962, i32 732327394}
+!32 = !{!"branch_weights", i32 1048576, i32 1048576}
+!33 = distinct !{!33, !24}
+!34 = !{i32 -1056584962, i32 2066812210}
+!35 = !{i32 -1056584962, i32 732327394}
 end_hunk_0

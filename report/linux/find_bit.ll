@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %.peel.next
 define dso_local i64 @find_next_clump8(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3) #2 align 16 prefalign(16) {
 bb.a:
   %.not.i = icmp ult i64 %3, %2
-  br i1 %.not.i, label %bb.b, label %find_next_bit.exit.thread, !prof !17
+  br i1 %.not.i, label %bb.b, label %find_next_bit.exit.thread, !prof !32
 
 bb.b:                                             ; preds = %bb.a
   %i.a = and i64 %3, 63
@@ -455,4 +455,5 @@ attributes #8 = { noredzone nounwind "no-builtin-wcslen" }
 !29 = distinct !{!29, !15, !31}
 !30 = !{i64 481749}
 !31 = !{!"llvm.loop.peeled.count", i32 1}
+!32 = !{!"branch_weights", i32 4000, i32 2}
 end_hunk_0

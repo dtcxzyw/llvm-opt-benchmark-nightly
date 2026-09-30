@@ -202,7 +202,7 @@ bb.gf:                                            ; preds = %bb.ge
   br label %bb.gm, !nosanitize !13
 
 bb.gg:                                            ; preds = %bb.gd
-  %i.ni = sub nuw nsw i32 %i.ml, %i.cb            ; 6 uses
+  %i.ni = sub nuw nsw i32 %i.ml, %i.cb            ; 5 uses
   %i.nj = call { i32, i1 } @llvm.usub.with.overflow.i32(i32 %i.bx, i32 %i.ni), !nosanitize !13 ; 2 uses
   %i.nk = extractvalue { i32, i1 } %i.nj, 0, !nosanitize !13
   %i.nl = extractvalue { i32, i1 } %i.nj, 1, !nosanitize !13
@@ -229,7 +229,7 @@ bb.gj:                                            ; preds = %bb.gi
 
 bb.gk:                                            ; preds = %bb.gj, %bb.gi
   %i.nu = icmp samesign ult i32 %i.ni, %i.jn
-  br i1 %i.nu, label %bb.gl, label %bb.gm
+  br i1 %i.nu, label %bb.gl, label %bb.hc
 
 bb.gl:                                            ; preds = %bb.gk
   %i.nv = sub nuw nsw i32 %i.jn, %i.ni
@@ -237,11 +237,11 @@ bb.gl:                                            ; preds = %bb.gk
   %i.nx = call fastcc ptr @CHUNKCOPY_SAFE(ptr noundef %.1223, ptr noundef %i.no, i64 noundef %i.nw, ptr noundef %i.bi)
   br label %bb.gm
 
-bb.gm:                                            ; preds = %bb.ge, %bb.gf, %bb.gb, %bb.gc, %bb.gl, %bb.gk
-  %.0389 = phi i32 [ %i.jn, %bb.gb ], [ %i.jn, %bb.gc ], [ %i.nv, %bb.gl ], [ %i.jn, %bb.gk ], [ %i.jn, %bb.ge ], [ %i.jn, %bb.gf ] ; 3 uses
-  %.2224 = phi ptr [ %.1223, %bb.gb ], [ %.1223, %bb.gc ], [ %i.nx, %bb.gl ], [ %.1223, %bb.gk ], [ %.1223, %bb.ge ], [ %.1223, %bb.gf ] ; 4 uses
-  %.0210 = phi i32 [ %i.ml, %bb.gb ], [ %i.ml, %bb.gc ], [ %i.cb, %bb.gl ], [ %i.ni, %bb.gk ], [ %i.ml, %bb.ge ], [ %i.ml, %bb.gf ] ; 3 uses
-  %.0 = phi ptr [ %i.mu, %bb.gb ], [ %i.mu, %bb.gc ], [ %i.cd, %bb.gl ], [ %i.no, %bb.gk ], [ %i.nc, %bb.ge ], [ %i.nc, %bb.gf ] ; 4 uses
+bb.gm:                                            ; preds = %bb.ge, %bb.gf, %bb.gb, %bb.gc, %bb.gl
+  %.0389 = phi i32 [ %i.jn, %bb.gb ], [ %i.jn, %bb.gc ], [ %i.nv, %bb.gl ], [ %i.jn, %bb.gf ], [ %i.jn, %bb.ge ] ; 3 uses
+  %.2224 = phi ptr [ %.1223, %bb.gb ], [ %.1223, %bb.gc ], [ %i.nx, %bb.gl ], [ %.1223, %bb.gf ], [ %.1223, %bb.ge ] ; 3 uses
+  %.0210 = phi i32 [ %i.ml, %bb.gb ], [ %i.ml, %bb.gc ], [ %i.cb, %bb.gl ], [ %i.ml, %bb.gf ], [ %i.ml, %bb.ge ] ; 3 uses
+  %.0 = phi ptr [ %i.mu, %bb.gb ], [ %i.mu, %bb.gc ], [ %i.cd, %bb.gl ], [ %i.nc, %bb.gf ], [ %i.nc, %bb.ge ] ; 3 uses
   %i.ny = icmp ult i32 %.0210, %.0389
   br i1 %i.ny, label %bb.gn, label %bb.hc
 
@@ -371,16 +371,19 @@ bb.hb:                                            ; preds = %bb.ha, %bb.gz
   %i.pn = call fastcc ptr @chunkcopy_safe(ptr noundef %i.ph, ptr noundef nonnull %i.pi, i64 noundef %i.pm, ptr noundef %i.bi)
   br label %bb.iw
 
-bb.hc:                                            ; preds = %bb.gm
-  %i.po = zext nneg i32 %.0389 to i64             ; 2 uses
+bb.hc:                                            ; preds = %bb.gk, %bb.gm
+  %.0440 = phi ptr [ %.0, %bb.gm ], [ %i.no, %bb.gk ] ; 2 uses
+  %.2224439 = phi ptr [ %.2224, %bb.gm ], [ %.1223, %bb.gk ] ; 2 uses
+  %.0389438 = phi i32 [ %.0389, %bb.gm ], [ %i.jn, %bb.gk ]
+  %i.po = zext nneg i32 %.0389438 to i64          ; 2 uses
   br i1 %i.do, label %bb.hd, label %bb.he
 
 bb.hd:                                            ; preds = %bb.hc
-  %i.pp = call fastcc ptr @chunkcopy_safe(ptr noundef %.2224, ptr noundef %.0, i64 noundef %i.po, ptr noundef %i.bi)
+  %i.pp = call fastcc ptr @chunkcopy_safe(ptr noundef %.2224439, ptr noundef %.0440, i64 noundef %i.po, ptr noundef %i.bi)
   br label %bb.iw
 
 bb.he:                                            ; preds = %bb.hc
-  %i.pq = call fastcc ptr @CHUNKCOPY_SAFE(ptr noundef %.2224, ptr noundef %.0, i64 noundef %i.po, ptr noundef %i.bi)
+  %i.pq = call fastcc ptr @CHUNKCOPY_SAFE(ptr noundef %.2224439, ptr noundef %.0440, i64 noundef %i.po, ptr noundef %i.bi)
   br label %bb.iw
 
 bb.hf:                                            ; preds = %bb.fr

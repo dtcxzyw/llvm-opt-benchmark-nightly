@@ -202,12 +202,15 @@ bb.e:                                             ; preds = %bb.a
   ]
 
 bb.f:                                             ; preds = %bb.e
-  %4 = icmp slt i32 %2, 577
   %i.k = lshr i32 %0, 24
   %i.l = and i32 %i.k, 15                         ; 2 uses
   %i.m = icmp samesign ult i32 %i.l, 3
-  %switch.table.SDL_GetYCbCRtoRGBConversionMatrix.6.switch.table.SDL_GetYCbCRtoRGBConversionMatrix.7 = select i1 %4, ptr @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.6, ptr @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.7
-  br i1 %i.m, label %SDL_GetBT601ConversionMatrix.exit.sink.split, label %SDL_GetBT601ConversionMatrix.exit
+  br i1 %i.m, label %4, label %SDL_GetBT601ConversionMatrix.exit
+
+4:                                                ; preds = %bb.f
+  %5 = icmp slt i32 %2, 577
+  %spec.select = select i1 %5, ptr @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.6, ptr @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.7
+  br label %SDL_GetBT601ConversionMatrix.exit.sink.split
 
 bb.g:                                             ; preds = %bb.e, %bb.e
   %i.n = lshr i32 %0, 24
@@ -215,9 +218,9 @@ bb.g:                                             ; preds = %bb.e, %bb.e
   %i.p = icmp samesign ult i32 %i.o, 3
   br i1 %i.p, label %SDL_GetBT601ConversionMatrix.exit.sink.split, label %SDL_GetBT601ConversionMatrix.exit
 
-SDL_GetBT601ConversionMatrix.exit.sink.split:     ; preds = %bb.f, %bb.g, %bb.d, %bb.c, %bb.b
-  %.sink32 = phi i32 [ %i.o, %bb.g ], [ %i.l, %bb.f ], [ %i.i, %bb.d ], [ %i.f, %bb.c ], [ %i.c, %bb.b ]
-  %switch.table.SDL_GetYCbCRtoRGBConversionMatrix.8.sink = phi ptr [ @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.8, %bb.g ], [ %switch.table.SDL_GetYCbCRtoRGBConversionMatrix.6.switch.table.SDL_GetYCbCRtoRGBConversionMatrix.7, %bb.f ], [ @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.8, %bb.d ], [ @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.7, %bb.c ], [ @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.6, %bb.b ]
+SDL_GetBT601ConversionMatrix.exit.sink.split:     ; preds = %4, %bb.g, %bb.d, %bb.c, %bb.b
+  %.sink32 = phi i32 [ %i.l, %4 ], [ %i.o, %bb.g ], [ %i.i, %bb.d ], [ %i.f, %bb.c ], [ %i.c, %bb.b ]
+  %switch.table.SDL_GetYCbCRtoRGBConversionMatrix.8.sink = phi ptr [ %spec.select, %4 ], [ @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.8, %bb.g ], [ @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.8, %bb.d ], [ @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.7, %bb.c ], [ @switch.table.SDL_GetYCbCRtoRGBConversionMatrix.6, %bb.b ]
   %i.q = zext nneg i32 %.sink32 to i64
   %switch.gep30 = getelementptr inbounds nuw [8 x i8], ptr %switch.table.SDL_GetYCbCRtoRGBConversionMatrix.8.sink, i64 %i.q
   %switch.load31 = load ptr, ptr %switch.gep30, align 8

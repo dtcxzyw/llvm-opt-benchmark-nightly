@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = add i32 %i.i, 1                          ; 2 uses
   store i32 %i.j, ptr %i.h, align 8
   %.not16 = icmp eq i64 %1, 0
-  br i1 %.not16, label %._crit_edge, label %.lr.ph
+  br i1 %.not16, label %bb.f, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.split, %bb.g
   %.sroa.0.017 = phi i64 [ %i.k, %bb.g ], [ %1, %.split ] ; 3 uses
@@ -215,8 +215,8 @@ bb.b:                                             ; preds = %bb.a
   %i.o = icmp ult i32 %i.n, %i.j
   br i1 %i.o, label %bb.g, label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.g, %.lr.ph, %.split
-  %.sroa.0.0.lcssa = phi i64 [ 0, %.split ], [ %.sroa.0.017, %.lr.ph ], [ 0, %bb.g ] ; 6 uses
+._crit_edge:                                      ; preds = %bb.g, %.lr.ph
+  %.sroa.0.0.lcssa = phi i64 [ %.sroa.0.017, %.lr.ph ], [ 0, %bb.g ] ; 7 uses
   %.not12 = icmp eq i64 %.sroa.0.0.lcssa, %1
   br i1 %.not12, label %bb.f, label %bb.c
 
@@ -244,8 +244,9 @@ _RNvXs8_NtNtCskKLDkoKarTP_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivej
   tail call void @_RNvMNtCskKLDkoKarTP_4core5sliceSh12rotate_rightCs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef nonnull %i.x, i64 noundef %i.w, i64 noundef 1)
   br label %bb.f
 
-bb.f:                                             ; preds = %._crit_edge, %_RNvXs8_NtNtCskKLDkoKarTP_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE9index_mutCs2Bxje7pdMIr_13libp2p_server.exit
-  ret i64 %.sroa.0.0.lcssa
+bb.f:                                             ; preds = %.split, %._crit_edge, %_RNvXs8_NtNtCskKLDkoKarTP_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE9index_mutCs2Bxje7pdMIr_13libp2p_server.exit
+  %.sroa.0.0.lcssa25 = phi i64 [ %.sroa.0.0.lcssa, %_RNvXs8_NtNtCskKLDkoKarTP_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE9index_mutCs2Bxje7pdMIr_13libp2p_server.exit ], [ %.sroa.0.0.lcssa, %._crit_edge ], [ 0, %.split ]
+  ret i64 %.sroa.0.0.lcssa25
 
 bb.g:                                             ; preds = %.lr.ph
   %i.y = getelementptr inbounds nuw [136 x i8], ptr %i.f, i64 %.sroa.0.017 ; 2 uses
