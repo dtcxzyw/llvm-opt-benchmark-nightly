@@ -204,21 +204,18 @@ split:                                            ; preds = %bb.d, %.preheader.p
   %i.x = phi ptr [ %.pre, %.preheader.preheader._crit_edge ], [ %i.c, %bb.d ] ; 6 uses
   %i.y = sext i32 %i.w to i64
   %i.z = icmp sgt i32 %i.w, 1
-  br i1 %i.z, label %.lr.ph196.preheader, label %.thread.split.loop.exit
-
-.lr.ph196.preheader:                              ; preds = %split
-  %invariant.op = sub nsw i64 %i.y, 1
-  br label %.lr.ph196
+  br i1 %i.z, label %.lr.ph196, label %.thread.split.loop.exit
 
 bb.e:                                             ; preds = %.lr.ph196
-  %i.aa = icmp slt i64 %indvars.iv.next, %invariant.op
+  %1 = add nuw nsw i64 %indvars.iv195, 3          ; 2 uses
+  %i.aa = icmp slt i64 %1, %i.y
   br i1 %i.aa, label %.lr.ph196, label %.thread.split.loop.exit, !llvm.loop !23
 
-.lr.ph196:                                        ; preds = %.lr.ph196.preheader, %bb.e
-  %indvars.iv195.a = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %.lr.ph196.preheader ] ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv195.a, 2 ; 4 uses
-  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv195.a
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4
+.lr.ph196:                                        ; preds = %split, %bb.e
+  %indvars.iv195.a = phi i64 [ %1, %bb.e ], [ 1, %split ]
+  %indvars.iv195 = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %split ] ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv195, 2 ; 3 uses
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv195.a
   %i.ab = load i32, ptr %2, align 4, !tbaa !15    ; 2 uses
   %i.ac = icmp sgt i32 %i.ab, 128
   br i1 %i.ac, label %.thread.split.loop.exit179, label %bb.e, !llvm.loop !23
@@ -234,7 +231,7 @@ bb.e:                                             ; preds = %.lr.ph196
   br label %.thread
 
 .thread:                                          ; preds = %.thread.split.loop.exit179, %.thread.split.loop.exit
-  %indvars.iv189 = phi i64 [ %indvars.iv.lcssa, %.thread.split.loop.exit ], [ %indvars.iv195.a, %.thread.split.loop.exit179 ]
+  %indvars.iv189 = phi i64 [ %indvars.iv.lcssa, %.thread.split.loop.exit ], [ %indvars.iv195, %.thread.split.loop.exit179 ]
   %.3110 = phi i32 [ %i.ad, %.thread.split.loop.exit ], [ %i.ae, %.thread.split.loop.exit179 ] ; 2 uses
   %.156109 = phi i32 [ 1114112, %.thread.split.loop.exit ], [ %i.ab, %.thread.split.loop.exit179 ] ; 2 uses
   %i.af = and i64 %indvars.iv189, 4294967294

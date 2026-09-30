@@ -204,25 +204,24 @@ bb.t:                                             ; preds = %.lr.ph518, %bb.v
   %i.fu = tail call ptr @qdev_get_gpio_in(ptr noundef %i.ft, i32 noundef 3) #7
   tail call void @sysbus_connect_irq(ptr noundef %i.fr, i32 noundef %i.fs, ptr noundef %i.fu) #7
   %i.fv = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.az, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
-  %i.fw = shl nuw nsw i32 %i.fe, 5
-  %i.fx = add nuw nsw i32 %i.fw, 160              ; 5 uses
-  %2 = or disjoint i32 %i.fx, 30
-  %i.fy = tail call ptr @qdev_get_gpio_in(ptr noundef %i.fv, i32 noundef %2) #7
+  %i.fw = shl nuw nsw i32 %i.fe, 5                ; 5 uses
+  %i.fx = add nuw nsw i32 %i.fw, 190
+  %i.fy = tail call ptr @qdev_get_gpio_in(ptr noundef %i.fv, i32 noundef %i.fx) #7
   %i.fz = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.fg, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
   tail call void @qdev_connect_gpio_out(ptr noundef %i.fz, i32 noundef 0, ptr noundef %i.fy) #7
   %i.ga = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.az, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
-  %3 = or disjoint i32 %i.fx, 27
-  %i.gb = tail call ptr @qdev_get_gpio_in(ptr noundef %i.ga, i32 noundef %3) #7
+  %2 = add nuw nsw i32 %i.fw, 187
+  %i.gb = tail call ptr @qdev_get_gpio_in(ptr noundef %i.ga, i32 noundef %2) #7
   %i.gc = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.fg, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
   tail call void @qdev_connect_gpio_out(ptr noundef %i.gc, i32 noundef 1, ptr noundef %i.gb) #7
   %i.gd = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.az, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
-  %4 = or disjoint i32 %i.fx, 26
-  %i.ge = tail call ptr @qdev_get_gpio_in(ptr noundef %i.gd, i32 noundef %4) #7
+  %3 = add nuw nsw i32 %i.fw, 186
+  %i.ge = tail call ptr @qdev_get_gpio_in(ptr noundef %i.gd, i32 noundef %3) #7
   %i.gf = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.fg, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
   tail call void @qdev_connect_gpio_out(ptr noundef %i.gf, i32 noundef 2, ptr noundef %i.ge) #7
   %i.gg = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.az, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
-  %5 = or disjoint i32 %i.fx, 29
-  %i.gh = tail call ptr @qdev_get_gpio_in(ptr noundef %i.gg, i32 noundef %5) #7
+  %4 = add nuw nsw i32 %i.fw, 189
+  %i.gh = tail call ptr @qdev_get_gpio_in(ptr noundef %i.gg, i32 noundef %4) #7
   %i.gi = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.fg, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
   tail call void @qdev_connect_gpio_out(ptr noundef %i.gi, i32 noundef 3, ptr noundef %i.gh) #7
   %i.gj = load i8, ptr %i.bi, align 1, !range !20, !noundef !21
@@ -231,8 +230,8 @@ bb.t:                                             ; preds = %.lr.ph518, %bb.v
 
 bb.u:                                             ; preds = %bb.t
   %i.gl = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.az, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
-  %6 = or disjoint i32 %i.fx, 25
-  %i.gm = tail call ptr @qdev_get_gpio_in(ptr noundef %i.gl, i32 noundef %6) #7
+  %5 = add nuw nsw i32 %i.fw, 185
+  %i.gm = tail call ptr @qdev_get_gpio_in(ptr noundef %i.gl, i32 noundef %5) #7
   %i.gn = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.az, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, i32 noundef 20, ptr noundef nonnull @__func__.SYS_BUS_DEVICE) #7
   %i.go = add nuw nsw i32 %i.fe, %i.cu
   tail call void @sysbus_connect_irq(ptr noundef %i.gn, i32 noundef %i.go, ptr noundef %i.gm) #7
@@ -352,29 +351,28 @@ bb.ae:                                            ; preds = %.lr.ph521, %bb.ae
   %i.ik = add i32 %i.hl, %i.ij
   call void @sysbus_connect_irq(ptr noundef %i.ig, i32 noundef %i.ik, ptr noundef %i.ii) #7
   %i.il = call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.hg, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
-  %i.im = shl nuw nsw i64 %indvars.iv566, 5
-  %7 = add nuw nsw i64 %i.im, 160                 ; 4 uses
-  %i.in = trunc i64 %7 to i32
-  %8 = or disjoint i32 %i.in, 30
-  %i.io = call ptr @qdev_get_gpio_in(ptr noundef %i.il, i32 noundef %8) #7
+  %i.im = shl nuw nsw i64 %indvars.iv566, 5       ; 4 uses
+  %i.in = trunc i64 %i.im to i32
+  %6 = add i32 %i.in, 190
+  %i.io = call ptr @qdev_get_gpio_in(ptr noundef %i.il, i32 noundef %6) #7
   %i.ip = call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.hs, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
   call void @qdev_connect_gpio_out(ptr noundef %i.ip, i32 noundef 0, ptr noundef %i.io) #7
   %i.iq = call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.hg, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
-  %i.ir = trunc i64 %7 to i32
-  %9 = or disjoint i32 %i.ir, 27
-  %i.is = call ptr @qdev_get_gpio_in(ptr noundef %i.iq, i32 noundef %9) #7
+  %i.ir = trunc i64 %i.im to i32
+  %7 = add i32 %i.ir, 187
+  %i.is = call ptr @qdev_get_gpio_in(ptr noundef %i.iq, i32 noundef %7) #7
   %i.it = call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.hs, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
   call void @qdev_connect_gpio_out(ptr noundef %i.it, i32 noundef 1, ptr noundef %i.is) #7
   %i.iu = call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.hg, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
-  %i.iv = trunc i64 %7 to i32
-  %10 = or disjoint i32 %i.iv, 26
-  %i.iw = call ptr @qdev_get_gpio_in(ptr noundef %i.iu, i32 noundef %10) #7
+  %i.iv = trunc i64 %i.im to i32
+  %8 = add i32 %i.iv, 186
+  %i.iw = call ptr @qdev_get_gpio_in(ptr noundef %i.iu, i32 noundef %8) #7
   %i.ix = call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.hs, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
   call void @qdev_connect_gpio_out(ptr noundef %i.ix, i32 noundef 2, ptr noundef %i.iw) #7
   %i.iy = call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.hg, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
-  %i.iz = trunc i64 %7 to i32
-  %11 = or disjoint i32 %i.iz, 29
-  %i.ja = call ptr @qdev_get_gpio_in(ptr noundef %i.iy, i32 noundef %11) #7
+  %i.iz = trunc i64 %i.im to i32
+  %9 = add i32 %i.iz, 189
+  %i.ja = call ptr @qdev_get_gpio_in(ptr noundef %i.iy, i32 noundef %9) #7
   %i.jb = call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.hs, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.40, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #7
   call void @qdev_connect_gpio_out(ptr noundef %i.jb, i32 noundef 3, ptr noundef %i.ja) #7
   %exitcond569.not = icmp eq i64 %indvars.iv.next567, %i.hm

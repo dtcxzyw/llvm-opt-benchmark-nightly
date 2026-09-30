@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
-  %.sroa.05.0.i.i = phi i64 [ %i.f, %bb.b ], [ %.sroa.01.0.i.i.i, %bb.f ] ; 4 uses
+  %.sroa.05.0.i.i = phi i64 [ %i.f, %bb.b ], [ %.sroa.01.0.i.i.i, %bb.f ] ; 3 uses
   %.not.i.i = icmp sgt i64 %.sroa.05.0.i.i, -1
-  %i.g = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 2 uses
+  %i.g = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i, label %_RNvMsg_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtNtNtCs6b9j1MKPRPC_12libp2p_swarm10connection4pool4task7CommandzEE9do_send_bCsbUBnUbUB9bf_14stream_example.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -218,9 +218,8 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.h = add nsw i64 %.sroa.05.0.i.i, 1
-  %1 = or i64 %i.h, -9223372036854775808
-  %i.i = cmpxchg ptr %i.e, i64 %.sroa.05.0.i.i, i64 %1 seq_cst seq_cst, align 8, !noalias !1023 ; 2 uses
+  %i.h = add nuw nsw i64 %i.g, -9223372036854775807
+  %i.i = cmpxchg ptr %i.e, i64 %.sroa.05.0.i.i, i64 %i.h seq_cst seq_cst, align 8, !noalias !1023 ; 2 uses
   %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.i, 1
   %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.i, 0
   br i1 %.sroa.18.0.in.i.i.i, label %bb.g, label %bb.c
@@ -623,9 +622,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.h, %bb.d
-  %.sroa.05.0.i.i.i.i = phi i64 [ %i.i, %bb.d ], [ %.sroa.01.0.i.i.i.i.i, %bb.h ] ; 4 uses
+  %.sroa.05.0.i.i.i.i = phi i64 [ %i.i, %bb.d ], [ %.sroa.01.0.i.i.i.i.i, %bb.h ] ; 3 uses
   %.not.i.i.i.i = icmp sgt i64 %.sroa.05.0.i.i.i.i, -1
-  %i.j = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 2 uses
+  %i.j = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i.i.i, label %_RNvMsg_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtNtNtCs6b9j1MKPRPC_12libp2p_swarm10connection4pool4task26EstablishedConnectionEventzEE8try_sendCsbUBnUbUB9bf_14stream_example.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -640,9 +639,8 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %i.k = add nsw i64 %.sroa.05.0.i.i.i.i, 1
-  %2 = or i64 %i.k, -9223372036854775808
-  %i.l = cmpxchg ptr %i.h, i64 %.sroa.05.0.i.i.i.i, i64 %2 seq_cst seq_cst, align 8, !noalias !1227 ; 2 uses
+  %i.k = add nuw nsw i64 %i.j, -9223372036854775807
+  %i.l = cmpxchg ptr %i.h, i64 %.sroa.05.0.i.i.i.i, i64 %i.k seq_cst seq_cst, align 8, !noalias !1227 ; 2 uses
   %.sroa.18.0.in.i.i.i.i.i = extractvalue { i64, i1 } %i.l, 1
   %.sroa.01.0.i.i.i.i.i = extractvalue { i64, i1 } %i.l, 0
   br i1 %.sroa.18.0.in.i.i.i.i.i, label %bb.i, label %bb.e
@@ -1003,9 +1001,9 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %bb.e
-  %.sroa.05.0.i.i.i.i = phi i64 [ %i.j, %bb.e ], [ %.sroa.01.0.i.i.i.i.i, %bb.i ] ; 4 uses
+  %.sroa.05.0.i.i.i.i = phi i64 [ %i.j, %bb.e ], [ %.sroa.01.0.i.i.i.i.i, %bb.i ] ; 3 uses
   %.not.i.i.i.i = icmp sgt i64 %.sroa.05.0.i.i.i.i, -1
-  %i.k = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 2 uses
+  %i.k = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -1020,9 +1018,8 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %bb.g
-  %i.l = add nsw i64 %.sroa.05.0.i.i.i.i, 1
-  %2 = or i64 %i.l, -9223372036854775808
-  %i.m = cmpxchg ptr %i.i, i64 %.sroa.05.0.i.i.i.i, i64 %2 seq_cst seq_cst, align 8, !noalias !1302 ; 2 uses
+  %i.l = add nuw nsw i64 %i.k, -9223372036854775807
+  %i.m = cmpxchg ptr %i.i, i64 %.sroa.05.0.i.i.i.i, i64 %i.l seq_cst seq_cst, align 8, !noalias !1302 ; 2 uses
   %.sroa.18.0.in.i.i.i.i.i = extractvalue { i64, i1 } %i.m, 1
   %.sroa.01.0.i.i.i.i.i = extractvalue { i64, i1 } %i.m, 0
   br i1 %.sroa.18.0.in.i.i.i.i.i, label %bb.j, label %bb.f
@@ -1350,9 +1347,9 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %bb.e
-  %.sroa.05.0.i.i.i.i = phi i64 [ %i.j, %bb.e ], [ %.sroa.01.0.i.i.i.i.i, %bb.i ] ; 4 uses
+  %.sroa.05.0.i.i.i.i = phi i64 [ %i.j, %bb.e ], [ %.sroa.01.0.i.i.i.i.i, %bb.i ] ; 3 uses
   %.not.i.i.i.i = icmp sgt i64 %.sroa.05.0.i.i.i.i, -1
-  %i.k = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 2 uses
+  %i.k = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 3 uses
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -1367,9 +1364,8 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %bb.g
-  %i.l = add nsw i64 %.sroa.05.0.i.i.i.i, 1
-  %2 = or i64 %i.l, -9223372036854775808
-  %i.m = cmpxchg ptr %i.i, i64 %.sroa.05.0.i.i.i.i, i64 %2 seq_cst seq_cst, align 8, !noalias !1374 ; 2 uses
+  %i.l = add nuw nsw i64 %i.k, -9223372036854775807
+  %i.m = cmpxchg ptr %i.i, i64 %.sroa.05.0.i.i.i.i, i64 %i.l seq_cst seq_cst, align 8, !noalias !1374 ; 2 uses
   %.sroa.18.0.in.i.i.i.i.i = extractvalue { i64, i1 } %i.m, 1
   %.sroa.01.0.i.i.i.i.i = extractvalue { i64, i1 } %i.m, 0
   br i1 %.sroa.18.0.in.i.i.i.i.i, label %bb.j, label %bb.f

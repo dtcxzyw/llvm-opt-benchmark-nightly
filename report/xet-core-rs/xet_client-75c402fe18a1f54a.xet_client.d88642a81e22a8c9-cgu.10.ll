@@ -205,21 +205,20 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %reass.mul = mul i64 %i.b, 28
-  %1 = add i64 %reass.mul, 28                     ; 2 uses
+  %reass.mul = mul i64 %i.b, 28                   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !1616, !nonnull !8, !align !13, !noundef !8 ; 2 uses
   %i.j = getelementptr i8, ptr %i.i, i64 16
   %.val14.i = load i64, ptr %i.j, align 8, !noalias !1616, !noundef !8
-  %2 = or disjoint i64 %1, 3
-  %or.cond.not.i = icmp ult i64 %2, %.val14.i
+  %1 = add i64 %reass.mul, 31
+  %or.cond.not.i = icmp ult i64 %1, %.val14.i
   br i1 %or.cond.not.i, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsiAynQAjgDuT_10xet_client.exit.i, label %bb.e
 
 _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsiAynQAjgDuT_10xet_client.exit.i: ; preds = %bb.c
   %i.k = getelementptr i8, ptr %i.i, i64 8
   %.val.i = load ptr, ptr %i.k, align 8, !noalias !1616, !nonnull !8, !noundef !8
-  %i.l = getelementptr inbounds nuw i8, ptr %.val.i, i64 16
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %1
+  %i.l = getelementptr i8, ptr %.val.i, i64 44
+  %i.m = getelementptr i8, ptr %i.l, i64 %reass.mul
   %.sroa.07.0.copyload.i = load i32, ptr %i.m, align 1, !noalias !1616
   %i.n = zext i32 %.sroa.07.0.copyload.i to i64
   br label %bb.d

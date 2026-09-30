@@ -195,14 +195,14 @@ bb.f:                                             ; preds = %bb.e
   %i.v = and i32 %i.t, 3                          ; 2 uses
   %i.w = lshr i32 %i.t, 3
   %i.x = and i32 %i.w, 16
-  %2 = shl nuw nsw i32 %i.t, 5
-  %i.y = and i32 %2, 128                          ; 2 uses
+  %2 = or disjoint i32 %i.x, %i.v
+  %i.y = and i32 %i.t, 4
+  %.not8.i = icmp eq i32 %i.y, 0                  ; 2 uses
+  %.1.v.i = select i1 %.not8.i, i32 16, i32 144
+  %.1.i = xor i32 %2, %.1.v.i
   %3 = shl nuw nsw i32 %i.t, 6
   %4 = and i32 %3, 512
-  %5 = or disjoint i32 %4, %i.x
-  %6 = or disjoint i32 %5, %i.v
-  %7 = or disjoint i32 %6, %i.y
-  %.2.i = xor i32 %7, 16
+  %.2.i = or disjoint i32 %.1.i, %4
   %i.z = getelementptr i8, ptr %0, i64 32
   store i32 %.2.i, ptr %i.z, align 8
   %i.aa = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #8, !srcloc !12 ; 0 uses
@@ -210,10 +210,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i, label %futex_flags_valid.exit, label %.critedge
 
 futex_flags_valid.exit:                           ; preds = %bb.f
-  %.not9.i = icmp eq i32 %i.y, 0
   %i.ab = load i32, ptr @nr_node_ids, align 4
   %.not10.not.i = icmp ne i32 %i.ab, -1
-  %or.cond.not.i = select i1 %.not9.i, i1 true, i1 %.not10.not.i
+  %or.cond.not.i = select i1 %.not8.i, i1 true, i1 %.not10.not.i
   %.not.i29 = icmp ult i64 %i.n, 4294967296
   %or.cond = select i1 %or.cond.not.i, i1 %.not.i29, i1 false
   %.not.i31 = icmp ult i64 %i.q, 4294967296

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !28923 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !28923 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !28923 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -282,9 +282,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -483,12 +483,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBY_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBU_IB1M_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB3p_5error5ErrorENtNtBY_6marker4SendEL_EEB4k_EE9wait_nextCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 3472
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !28923
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !28923
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !28923
   br label %bb.t
@@ -891,7 +890,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29000 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29000 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29000 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -969,9 +968,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -1170,12 +1169,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBY_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBU_NtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB3h_5error5ErrorENtNtBY_6marker4SendEL_EEB3S_EE9wait_nextCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 3472
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !29000
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !29000
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !29000
   br label %bb.t
@@ -1578,7 +1576,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29077 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29077 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29077 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -1656,9 +1654,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -1857,12 +1855,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBY_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBU_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorENtNtBY_6marker4SendEL_EEB3P_EE9wait_nextCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 3472
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !29077
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !29077
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !29077
   br label %bb.t
@@ -2265,7 +2262,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29164 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29164 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29164 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -2343,9 +2340,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -2544,12 +2541,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel13ParquetFooterNtNtB1x_5error5ErrorEE9wait_nextCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 3472
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !29164
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !29164
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !29164
   br label %bb.t
@@ -2952,7 +2948,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29241 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29241 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29241 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -3030,9 +3026,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -3231,12 +3227,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1x_5error5ErrorEE9wait_nextCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 3968
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !29241
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !29241
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !29241
   br label %bb.t
@@ -3639,7 +3634,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29318 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29318 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29318 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -3717,9 +3712,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -3918,12 +3913,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEE9wait_nextCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 3472
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !29318
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !29318
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !29318
   br label %bb.t
@@ -4326,7 +4320,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29395 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29395 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29395 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -4404,9 +4398,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -4605,12 +4599,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBZ_6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2w_5error5ErrorEEINtNtBZ_3pin3PinIB1T_DNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1w_NtNtBZ_6marker4SendEL_EEEE9wait_nextCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 3968
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !29395
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !29395
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !29395
   br label %bb.t
@@ -5013,7 +5006,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29469 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29469 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29469 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -5091,9 +5084,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -5292,12 +5285,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBZ_6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1U_5error5ErrorEEINtNtBZ_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1w_NtNtBZ_6marker4SendEL_EEEE9wait_nextCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 4464
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !29469
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !29469
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !29469
   br label %bb.t
@@ -5700,7 +5692,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
   %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
-  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29543 ; 5 uses
+  %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29543 ; 6 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29543 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
   %i.s = and i64 %i.r, 31                         ; 6 uses
@@ -5778,9 +5770,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.not.unshifted.i = xor i64 %i.ab, %i.p
-  %.not.i = icmp ugt i64 %.not.unshifted.i, 63
-  %4 = zext i1 %.not.i to i64
-  %spec.select.i = or disjoint i64 %i.y, %4
+  %.not.i = icmp ult i64 %.not.unshifted.i, 64
+  %4 = add i64 %i.p, 3
+  %spec.select.i = select i1 %.not.i, i64 %i.y, i64 %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -5979,12 +5971,11 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 _RNvMs_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB4_5BlockTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBZ_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEINtNtBZ_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1w_NtNtBZ_6marker4SendEL_EEEE9wait_nextCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, %bb.q
   %.lcssa.i.i = phi ptr [ %i.ar, %bb.q ], [ %i.ax, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ] ; 2 uses
   %i.az = and i64 %.sroa.01.0.i, -2
-  %5 = add i64 %i.az, 2
   %i.ba = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 3968
   %i.bb = load atomic ptr, ptr %i.ba monotonic, align 8, !noalias !29543
-  %6 = icmp ne ptr %i.bb, null
-  %7 = zext i1 %6 to i64
-  %spec.select17.i = or disjoint i64 %5, %7
+  %5 = icmp eq ptr %i.bb, null
+  %spec.select17.v.i = select i1 %5, i64 2, i64 3
+  %spec.select17.i = add i64 %spec.select17.v.i, %i.az
   store atomic ptr %.lcssa.i.i, ptr %i.l release, align 8, !noalias !29543
   store atomic i64 %spec.select17.i, ptr %1 release, align 128, !noalias !29543
   br label %bb.t

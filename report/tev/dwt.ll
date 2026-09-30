@@ -163,12 +163,12 @@ bb.b:                                             ; preds = %.lr.ph226, %.loopex
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
-  %.0177218 = phi i32 [ 0, %.lr.ph ], [ %i.bz, %bb.c ] ; 2 uses
-  %i.bz = add i32 %.0177218, 8                    ; 3 uses
+  %.0177218 = phi i32 [ 0, %.lr.ph ], [ %i.bz, %bb.c ] ; 3 uses
+  %i.bz = add i32 %.0177218, 8                    ; 2 uses
   %i.ca = zext i32 %.0177218 to i64
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ca
   tail call void %2(ptr noundef %i.cb, ptr noundef %i.av, i32 noundef %i.bj, i32 noundef %i.by, i32 noundef %i.g, i32 noundef 8) #15, !callees !106
-  %4 = or disjoint i32 %i.bz, 7
+  %4 = add i32 %.0177218, 15
   %i.cc = icmp ult i32 %4, %i.be
   br i1 %i.cc, label %bb.c, label %._crit_edge, !llvm.loop !98
 
@@ -571,14 +571,15 @@ bb.ab:                                            ; preds = %bb.aa, %opj_dwt_get
   %i.qi = icmp eq i32 %i.ii, 1
   %or.cond3.i211.i = and i1 %i.qh, %i.qi
   %i.qj = icmp slt i32 %i.lb, %i.ld               ; 2 uses
-  %i.qk = shl i32 %i.ii, 3                        ; 2 uses
-  %i.ql = add i32 %i.qk, -8                       ; 4 uses
+  %i.qk = shl i32 %i.ii, 3                        ; 3 uses
+  %i.ql = add i32 %i.qk, -8                       ; 3 uses
   %.not320.us.i.i = icmp sgt i32 %i.ii, 0         ; 2 uses
   %i.qm = zext i32 %i.ql to i64                   ; 3 uses
   %i.qn = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.qm
   %i.qo = or disjoint i64 %i.qm, 1                ; 2 uses
   %i.qp = trunc nuw i64 %i.qo to i32
   %i.qq = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.qo
+  %5 = add i32 %i.qk, -6
   %i.qr = or disjoint i64 %i.qm, 3                ; 2 uses
   %i.qs = trunc nuw i64 %i.qr to i32
   %i.qt = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.qr
@@ -586,19 +587,17 @@ bb.ab:                                            ; preds = %bb.aa, %opj_dwt_get
   %i.qv = zext i32 %i.qu to i64
   %.in321.us.us.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.qv
   %i.qw = icmp slt i32 %i.le, %i.lg               ; 2 uses
-  %i.qx = shl i32 %.0181299.i, 3                  ; 4 uses
-  %i.qy = add i32 %i.qx, -4                       ; 6 uses
+  %i.qx = shl i32 %.0181299.i, 3                  ; 5 uses
+  %i.qy = add i32 %i.qx, -4                       ; 3 uses
   %i.qz = zext i32 %i.qy to i64
-  %5 = or disjoint i32 %i.qy, 1                   ; 2 uses
-  %6 = or disjoint i32 %i.qy, 2                   ; 2 uses
-  %7 = or disjoint i32 %i.qy, 3                   ; 2 uses
+  %6 = add i32 %i.qx, -3                          ; 2 uses
+  %7 = add i32 %i.qx, -2                          ; 3 uses
+  %8 = add i32 %i.qx, -1                          ; 3 uses
   %.in315.us370.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.qz ; 3 uses
-  %8 = add i32 %i.qx, -2
-  %.in315.v.us369.2.i.i = zext i32 %8 to i64
+  %.in315.v.us369.2.i.i = zext i32 %7 to i64
   %.in315.us370.2.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in315.v.us369.2.i.i
   %i.ra = getelementptr inbounds nuw i8, ptr %.in315.us370.i.i, i64 8
-  %9 = add i32 %i.qx, -1
-  %.in315.v.us369.3.i.i = zext i32 %9 to i64
+  %.in315.v.us369.3.i.i = zext i32 %8 to i64
   %.in315.us370.3.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in315.v.us369.3.i.i
   %i.rb = getelementptr inbounds nuw i8, ptr %.in315.us370.i.i, i64 12
   %i.rc = icmp sgt i32 %.0181299.i, 1
@@ -1001,8 +1000,8 @@ bb.br:                                            ; preds = %bb.bj
   %.in319.ph.v.1.i.i = zext i32 %.in319.ph.v.v.1.i.i to i64
   %.in319.ph.1.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in319.ph.v.1.i.i
   %i.aoy = load i32, ptr %.in319.ph.1.i.i, align 4, !tbaa !46
-  %.in319.ph.v.v.2.i.i.v = select i1 %.not318.i.i, i32 %i.ant, i32 %i.ql
-  %.in319.ph.v.v.2.i.i = or disjoint i32 %.in319.ph.v.v.2.i.i.v, 2
+  %9 = or disjoint i32 %i.ant, 2
+  %.in319.ph.v.v.2.i.i = select i1 %.not318.i.i, i32 %9, i32 %5
   %.in319.ph.v.2.i.i = zext i32 %.in319.ph.v.v.2.i.i to i64
   %.in319.ph.2.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in319.ph.v.2.i.i
   %i.aoz = load i32, ptr %.in319.ph.2.i.i, align 4, !tbaa !46
@@ -1084,7 +1083,7 @@ bb.br:                                            ; preds = %bb.bj
   %.in315.v.us.i.i = zext i32 %.in315.v.v.us.i.i to i64
   %.in315.us.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in315.v.us.i.i
   %i.aqq = load i32, ptr %.in315.us.i.i, align 4, !tbaa !46
-  %.in315.v.v.us.1.i.i = select i1 %.not314.i.i, i32 5, i32 %5
+  %.in315.v.v.us.1.i.i = select i1 %.not314.i.i, i32 5, i32 %6
   %.in315.v.us.1.i.i = zext i32 %.in315.v.v.us.1.i.i to i64
   %.in315.us.1.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in315.v.us.1.i.i
   %i.aqr = load i32, ptr %.in315.us.1.i.i, align 4, !tbaa !46
@@ -1097,7 +1096,7 @@ bb.br:                                            ; preds = %bb.bj
   %i.aqy = add <2 x i32> %i.aqx, %i.aqs
   store <2 x i32> %i.aqy, ptr %i.hg, align 4, !tbaa !46
   %i.aqz = load i32, ptr %i.hn, align 4, !tbaa !46
-  %.in315.v.v.us.2.i.i = select i1 %.not314.i.i, i32 6, i32 %6
+  %.in315.v.v.us.2.i.i = select i1 %.not314.i.i, i32 6, i32 %7
   %.in315.v.us.2.i.i = zext i32 %.in315.v.v.us.2.i.i to i64
   %.in315.us.2.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in315.v.us.2.i.i
   %i.ara = load i32, ptr %.in315.us.2.i.i, align 4, !tbaa !46
@@ -1107,7 +1106,7 @@ bb.br:                                            ; preds = %bb.bj
   %i.are = add i32 %i.ard, %i.aqz
   store i32 %i.are, ptr %i.hn, align 4, !tbaa !46
   %i.arf = load i32, ptr %i.ho, align 4, !tbaa !46
-  %.in315.v.v.us.3.i.i = select i1 %.not314.i.i, i32 7, i32 %7
+  %.in315.v.v.us.3.i.i = select i1 %.not314.i.i, i32 7, i32 %8
   %.in315.v.us.3.i.i = zext i32 %.in315.v.v.us.3.i.i to i64
   %.in315.us.3.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in315.v.us.3.i.i
   %i.arg = load i32, ptr %.in315.us.3.i.i, align 4, !tbaa !46
@@ -1132,7 +1131,7 @@ bb.br:                                            ; preds = %bb.bj
   %i.arp = load i32, ptr %.in315.i.i, align 4, !tbaa !46
   %i.arq = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.arl ; 3 uses
   %i.arr = or disjoint i32 %i.aqf, 5
-  %.in315.v.v.1.i.i = select i1 %.not314.i.i, i32 %i.arr, i32 %5
+  %.in315.v.v.1.i.i = select i1 %.not314.i.i, i32 %i.arr, i32 %6
   %.in315.v.1.i.i = zext i32 %.in315.v.v.1.i.i to i64
   %.in315.1.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in315.v.1.i.i
   %i.ars = load i32, ptr %.in315.1.i.i, align 4, !tbaa !46
@@ -1147,7 +1146,7 @@ bb.br:                                            ; preds = %bb.bj
   %i.asa = getelementptr inbounds nuw i8, ptr %i.arn, i64 8 ; 2 uses
   %i.asb = load i32, ptr %i.asa, align 4, !tbaa !46
   %i.asc = or disjoint i32 %i.aqf, 6
-  %.in315.v.v.2.i.i = select i1 %.not314.i.i, i32 %i.asc, i32 %6
+  %.in315.v.v.2.i.i = select i1 %.not314.i.i, i32 %i.asc, i32 %7
   %.in315.v.2.i.i = zext i32 %.in315.v.v.2.i.i to i64
   %.in315.2.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in315.v.2.i.i
   %i.asd = load i32, ptr %.in315.2.i.i, align 4, !tbaa !46
@@ -1160,7 +1159,7 @@ bb.br:                                            ; preds = %bb.bj
   %i.asj = getelementptr inbounds nuw i8, ptr %i.arn, i64 12 ; 2 uses
   %i.ask = load i32, ptr %i.asj, align 4, !tbaa !46
   %i.asl = or disjoint i32 %i.aqf, 7
-  %.in315.v.v.3.i.i = select i1 %.not314.i.i, i32 %i.asl, i32 %7
+  %.in315.v.v.3.i.i = select i1 %.not314.i.i, i32 %i.asl, i32 %8
   %.in315.v.3.i.i = zext i32 %.in315.v.v.3.i.i to i64
   %.in315.3.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %.in315.v.3.i.i
   %i.asm = load i32, ptr %.in315.3.i.i, align 4, !tbaa !46
@@ -1563,7 +1562,7 @@ bb.d:                                             ; preds = %.loopexit.i, %.lr.p
 
 bb.e:                                             ; preds = %._crit_edge.i, %.lr.ph325.i
   %indvar = phi i64 [ %indvar.next, %._crit_edge.i ], [ 0, %.lr.ph325.i ] ; 3 uses
-  %.0224324.i = phi i32 [ %i.jo, %._crit_edge.i ], [ 0, %.lr.ph325.i ]
+  %.0224324.i = phi i32 [ %i.jo, %._crit_edge.i ], [ 0, %.lr.ph325.i ] ; 2 uses
   %.0226323.i = phi ptr [ %i.jn, %._crit_edge.i ], [ %i.bk, %.lr.ph325.i ] ; 14 uses
   %i.dx = mul i64 %i.ch, %indvar                  ; 5 uses
   %scevgep132 = getelementptr i8, ptr %i.dj, i64 %i.dx ; 4 uses
@@ -1862,8 +1861,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 ._crit_edge.i:                                    ; preds = %scalar.ph, %bb.e
   %i.jn = getelementptr inbounds nuw [4 x i8], ptr %.0226323.i, i64 %i.bw ; 2 uses
-  %i.jo = add i32 %.0224324.i, 8                  ; 3 uses
-  %7 = or disjoint i32 %i.jo, 7
+  %i.jo = add i32 %.0224324.i, 8                  ; 2 uses
+  %7 = add i32 %.0224324.i, 15
   %i.jp = icmp ult i32 %7, %i.db
   %indvar.next = add i64 %indvar, 1
   br i1 %i.jp, label %bb.e, label %.loopexit311.i, !llvm.loop !277
@@ -2266,7 +2265,7 @@ bb.al:                                            ; preds = %bb.ak, %opj_dwt_get
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ap, %.lr.ph.i19
-  %.0158266.i = phi i32 [ 0, %.lr.ph.i19 ], [ %.pre-phi.i21, %bb.ap ] ; 15 uses
+  %.0158266.i = phi i32 [ 0, %.lr.ph.i19 ], [ %.pre-phi.i21, %bb.ap ] ; 16 uses
   %i.aaf = or disjoint i32 %.0158266.i, 7         ; 2 uses
   %.not177.i = icmp uge i32 %i.aaf, %i.ya
   %i.aag = icmp ult i32 %.0158266.i, %i.yc
@@ -2319,8 +2318,8 @@ bb.ao:                                            ; preds = %.lr.ph.i198.i
   br label %opj_dwt_decode_partial_97.exit
 
 bb.ap:                                            ; preds = %.lr.ph.i198.i, %._crit_edge282.i
-  %.pre-phi.i21 = phi i32 [ %.pre.i, %._crit_edge282.i ], [ %i.abd, %.lr.ph.i198.i ] ; 3 uses
-  %8 = or disjoint i32 %.pre-phi.i21, 7           ; 2 uses
+  %.pre-phi.i21 = phi i32 [ %.pre.i, %._crit_edge282.i ], [ %i.abd, %.lr.ph.i198.i ] ; 2 uses
+  %8 = add i32 %.0158266.i, 15                    ; 2 uses
   %i.abh = icmp ult i32 %8, %i.ve
   br i1 %i.abh, label %bb.am, label %._crit_edge.i16, !llvm.loop !295
 

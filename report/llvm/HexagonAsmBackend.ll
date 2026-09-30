@@ -202,12 +202,11 @@ _ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit827: ; preds = %bb.bk, 
 
 bb.bm:                                            ; preds = %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit827
   %i.agb = trunc i64 %.sroa.212.103 to i32
-  %i.agc = add nuw nsw i32 %i.agb, 2000
-  %3 = or disjoint i32 %i.agc, 65536
+  %i.agc = add nuw nsw i32 %i.agb, 67536
   br label %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit827.thread
 
 _ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit827.thread: ; preds = %bb.h, %bb.i, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit827, %bb.bm
-  %.sroa.2.0 = phi i32 [ %3, %bb.bm ], [ 0, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit827 ], [ 0, %bb.i ], [ 0, %bb.h ]
+  %.sroa.2.0 = phi i32 [ %i.agc, %bb.bm ], [ 0, %_ZN4llvm12StringSwitchIjjE4CaseENS_13StringLiteralEj.exit827 ], [ 0, %bb.i ], [ 0, %bb.h ]
   ret i32 %.sroa.2.0
 }
 

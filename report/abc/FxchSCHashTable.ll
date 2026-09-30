@@ -202,8 +202,8 @@ middle.block:                                     ; preds = %vector.body
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.lr.ph, %Vec_IntDrop.exit111
-  %.val104161 = phi i32 [ %.val104127, %.critedge.lr.ph ], [ %.val104, %Vec_IntDrop.exit111 ] ; 3 uses
-  %indvars.iv153 = phi i64 [ 0, %.critedge.lr.ph ], [ %indvars.iv.next154, %Vec_IntDrop.exit111 ] ; 5 uses
+  %.val104161 = phi i32 [ %.val104127, %.critedge.lr.ph ], [ %.val104, %Vec_IntDrop.exit111 ] ; 2 uses
+  %indvars.iv153 = phi i64 [ 0, %.critedge.lr.ph ], [ %indvars.iv.next154, %Vec_IntDrop.exit111 ] ; 6 uses
   %i.db = or disjoint i64 %indvars.iv153, 1       ; 3 uses
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %.val106, i64 %indvars.iv153
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !41 ; 2 uses
@@ -220,11 +220,7 @@ bb.m:                                             ; preds = %.critedge
   %i.dj = icmp eq i32 %i.dd, %.pre160
   %i.dk = icmp eq i32 %i.df, %i.dg
   %or.cond = select i1 %i.dj, i1 %i.dk, i1 false
-  br i1 %or.cond, label %bb.n, label %.Vec_IntDrop.exit111_crit_edge
-
-.Vec_IntDrop.exit111_crit_edge:                   ; preds = %bb.m
-  %.pre164 = sext i32 %.val104161 to i64
-  br label %Vec_IntDrop.exit111
+  br i1 %or.cond, label %bb.n, label %Vec_IntDrop.exit111
 
 bb.n:                                             ; preds = %.critedge, %bb.m
   %i.dl = add nsw i32 %.val104161, -1             ; 3 uses
@@ -249,7 +245,7 @@ Vec_IntDrop.exit:                                 ; preds = %.lr.ph.i, %bb.n
   %i.du = phi i32 [ %i.dl, %bb.n ], [ %i.dr, %.lr.ph.i ]
   %i.dv = add nsw i32 %i.du, -1                   ; 3 uses
   store i32 %i.dv, ptr %i.cy, align 4, !tbaa !23
-  %i.dw = sext i32 %i.dv to i64                   ; 2 uses
+  %i.dw = sext i32 %i.dv to i64
   %i.dx = icmp slt i64 %indvars.iv153, %i.dw
   br i1 %i.dx, label %.lr.ph.i108, label %Vec_IntDrop.exit111
 
@@ -261,16 +257,16 @@ Vec_IntDrop.exit:                                 ; preds = %.lr.ph.i, %bb.n
   %i.ea = getelementptr inbounds nuw [4 x i8], ptr %.val106, i64 %indvars.iv.i109
   store i32 %i.dz, ptr %i.ea, align 4, !tbaa !41
   %i.eb = load i32, ptr %i.cy, align 4, !tbaa !23 ; 2 uses
-  %i.ec = sext i32 %i.eb to i64                   ; 2 uses
+  %i.ec = sext i32 %i.eb to i64
   %i.ed = icmp slt i64 %indvars.iv.next.i110, %i.ec
   br i1 %i.ed, label %.lr.ph.i108, label %Vec_IntDrop.exit111, !llvm.loop !0
 
-Vec_IntDrop.exit111:                              ; preds = %.lr.ph.i108, %.Vec_IntDrop.exit111_crit_edge, %Vec_IntDrop.exit
-  %.pre-phi = phi i64 [ %.pre164, %.Vec_IntDrop.exit111_crit_edge ], [ %i.dw, %Vec_IntDrop.exit ], [ %i.ec, %.lr.ph.i108 ]
-  %.val104 = phi i32 [ %.val104161, %.Vec_IntDrop.exit111_crit_edge ], [ %i.dv, %Vec_IntDrop.exit ], [ %i.eb, %.lr.ph.i108 ] ; 2 uses
-  %indvars.iv.next154 = add nuw nsw i64 %indvars.iv153, 2 ; 2 uses
-  %7 = or disjoint i64 %indvars.iv.next154, 1
-  %i.ee = icmp slt i64 %7, %.pre-phi
+Vec_IntDrop.exit111:                              ; preds = %.lr.ph.i108, %Vec_IntDrop.exit, %bb.m
+  %.val104 = phi i32 [ %.val104161, %bb.m ], [ %i.dv, %Vec_IntDrop.exit ], [ %i.eb, %.lr.ph.i108 ] ; 3 uses
+  %indvars.iv.next154 = add nuw nsw i64 %indvars.iv153, 2
+  %7 = trunc i64 %indvars.iv153 to i32
+  %8 = add i32 %7, 3
+  %i.ee = icmp slt i32 %8, %.val104
   br i1 %i.ee, label %.critedge, label %._crit_edge130, !llvm.loop !61
 
 ._crit_edge130:                                   ; preds = %Vec_IntDrop.exit111, %._crit_edge125

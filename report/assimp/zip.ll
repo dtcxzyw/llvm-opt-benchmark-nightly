@@ -158,7 +158,7 @@ bb.a:
   br label %.lr.ph
 
 .preheader.loopexit:                              ; preds = %.lr.ph
-  %i.h = zext nneg i32 %i.be to i64
+  %i.h = zext i32 %i.be to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %.preheader67
@@ -205,7 +205,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.172 = phi i32 [ %i.bd, %.lr.ph ], [ %.05488, %.lr.ph.preheader ]
   %.15671 = phi i32 [ %i.bc, %.lr.ph ], [ %.05587, %.lr.ph.preheader ]
-  %.05870 = phi i32 [ %i.be, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %.05870 = phi i32 [ %i.be, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.16269 = phi ptr [ %i.bf, %.lr.ph ], [ %.06185, %.lr.ph.preheader ] ; 9 uses
   %i.r = load i8, ptr %.16269, align 1
   %i.s = zext i8 %i.r to i32
@@ -246,10 +246,10 @@ bb.a:
   %i.bb = zext i8 %i.ba to i32
   %i.bc = add i32 %i.ax, %i.bb                    ; 3 uses
   %i.bd = add i32 %i.ay, %i.bc                    ; 2 uses
-  %i.be = add nuw nsw i32 %.05870, 8              ; 3 uses
+  %i.be = add nuw i32 %.05870, 8                  ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.16269, i64 8 ; 2 uses
-  %3 = or disjoint i32 %i.be, 7
-  %i.bg = icmp samesign ult i32 %3, %i.g
+  %3 = add nuw i32 %.05870, 15
+  %i.bg = icmp ult i32 %3, %i.g
   br i1 %i.bg, label %.lr.ph, label %.preheader.loopexit
 
 .lr.ph80:                                         ; preds = %.lr.ph80.prol.loopexit, %.lr.ph80
@@ -652,7 +652,7 @@ bb.fp:                                            ; preds = %.thread1655
   br label %.lr.ph1813
 
 .preheader.loopexit:                              ; preds = %.lr.ph1813
-  %i.akm = zext nneg i32 %i.amj to i64
+  %i.akm = zext i32 %i.amj to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %.preheader1714
@@ -699,7 +699,7 @@ bb.fp:                                            ; preds = %.thread1655
 .lr.ph1813:                                       ; preds = %.lr.ph1813.preheader, %.lr.ph1813
   %.11812 = phi i32 [ %i.ami, %.lr.ph1813 ], [ %.08221831, %.lr.ph1813.preheader ]
   %.18241811 = phi i32 [ %i.amh, %.lr.ph1813 ], [ %.08231830, %.lr.ph1813.preheader ]
-  %.08261810 = phi i32 [ %i.amj, %.lr.ph1813 ], [ 0, %.lr.ph1813.preheader ]
+  %.08261810 = phi i32 [ %i.amj, %.lr.ph1813 ], [ 0, %.lr.ph1813.preheader ] ; 2 uses
   %.18301809 = phi ptr [ %i.amk, %.lr.ph1813 ], [ %.08291828, %.lr.ph1813.preheader ] ; 9 uses
   %i.akw = load i8, ptr %.18301809, align 1
   %i.akx = zext i8 %i.akw to i32
@@ -740,10 +740,10 @@ bb.fp:                                            ; preds = %.thread1655
   %i.amg = zext i8 %i.amf to i32
   %i.amh = add i32 %i.amc, %i.amg                 ; 3 uses
   %i.ami = add i32 %i.amd, %i.amh                 ; 2 uses
-  %i.amj = add nuw nsw i32 %.08261810, 8          ; 3 uses
+  %i.amj = add nuw i32 %.08261810, 8              ; 2 uses
   %i.amk = getelementptr inbounds nuw i8, ptr %.18301809, i64 8 ; 2 uses
-  %7 = or disjoint i32 %i.amj, 7
-  %i.aml = icmp samesign ult i32 %7, %i.akl
+  %7 = add nuw i32 %.08261810, 15
+  %i.aml = icmp ult i32 %7, %i.akl
   br i1 %i.aml, label %.lr.ph1813, label %.preheader.loopexit
 
 .lr.ph1822:                                       ; preds = %.lr.ph1822.prol.loopexit, %.lr.ph1822
@@ -1146,10 +1146,9 @@ bb.c:                                             ; preds = %bb.b
   %i.w = lshr i32 %i.d, 7
   %.lobit = and i32 %i.w, 1
   %i.x = or disjoint i32 %i.v, %.lobit
-  %3 = xor i32 %i.x, 1                            ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 319592
-  %4 = or disjoint i32 %3, 16
-  %spec.select27 = select i1 %i.h, i32 %4, i32 %3
+  %spec.select27.v = select i1 %i.h, i32 17, i32 1
+  %spec.select27 = xor i32 %i.x, %spec.select27.v
   store i32 %spec.select27, ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.aa = load i64, ptr %i.z, align 8
@@ -1552,9 +1551,8 @@ bb.w:                                             ; preds = %bb.t
   %i.bv = lshr i32 %i.az, 7
   %.lobit = and i32 %i.bv, 1
   %i.bw = or disjoint i32 %i.bu, %.lobit
-  %5 = xor i32 %i.bw, 1                           ; 2 uses
-  %6 = or disjoint i32 %5, 16
-  %.025 = select i1 %i.bg, i32 %6, i32 %5
+  %.025.v = select i1 %i.bg, i32 17, i32 1
+  %.025 = xor i32 %i.bw, %.025.v
   %i.bx = load i8, ptr %.014.i, align 1
   %i.by = icmp eq i8 %i.bx, 0
   br i1 %i.by, label %bb.x, label %zip_basename.exit

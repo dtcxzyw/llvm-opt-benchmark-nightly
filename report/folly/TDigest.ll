@@ -204,12 +204,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 3                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
@@ -219,7 +219,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.l
   br label %.split
@@ -622,14 +622,13 @@ bb.k:                                             ; preds = %bb.f, %bb.g
 
 bb.l:                                             ; preds = %._crit_edge210
   %i.bg = udiv exact i64 %i.be, 24                ; 3 uses
-  %i.bh = add nsw i64 %i.bg, -2                   ; 2 uses
+  %i.bh = add nsw i64 %i.bg, -2
   %i.bi = lshr i64 %i.bh, 1                       ; 3 uses
-  %i.bj = add nsw i64 %i.bg, -1
+  %i.bj = add nsw i64 %i.bg, -1                   ; 3 uses
   %i.bk = lshr i64 %i.bj, 1                       ; 2 uses
   %i.bl = and i64 %i.bg, 1
   %i.bm = icmp eq i64 %i.bl, 0
-  %4 = or disjoint i64 %i.bh, 1                   ; 2 uses
-  %i.bn = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0130.1, i64 %4
+  %i.bn = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0130.1, i64 %i.bj
   %i.bo = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0130.1, i64 %i.bi
   br label %bb.m
 
@@ -672,7 +671,7 @@ bb.n:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %4, %bb.n ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.bj, %bb.n ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.cf = icmp sgt i64 %.1.i.i.i, %.07.i.i
   br i1 %i.cf, label %.lr.ph.i.i.i.i74, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN5folly7TDigest9mergeImplIPKS3_EES3_NS2_5RangeIT_EEE6CursorSt6vectorISA_SaISA_EEEElSA_NS0_5__ops15_Iter_less_iterEEvS8_T0_SI_T1_T2_.exit.i.i
 
@@ -1075,14 +1074,13 @@ bb.k:                                             ; preds = %bb.f, %bb.g
 
 bb.l:                                             ; preds = %._crit_edge210
   %i.bj = udiv exact i64 %i.bh, 24                ; 3 uses
-  %i.bk = add nsw i64 %i.bj, -2                   ; 2 uses
+  %i.bk = add nsw i64 %i.bj, -2
   %i.bl = lshr i64 %i.bk, 1                       ; 3 uses
-  %i.bm = add nsw i64 %i.bj, -1
+  %i.bm = add nsw i64 %i.bj, -1                   ; 3 uses
   %i.bn = lshr i64 %i.bm, 1                       ; 2 uses
   %i.bo = and i64 %i.bj, 1
   %i.bp = icmp eq i64 %i.bo, 0
-  %4 = or disjoint i64 %i.bk, 1                   ; 2 uses
-  %i.bq = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0130.1, i64 %4
+  %i.bq = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0130.1, i64 %i.bm
   %i.br = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0130.1, i64 %i.bl
   br label %bb.m
 
@@ -1125,7 +1123,7 @@ bb.n:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %._crit_edge.i.i.i
-  %.1.i.i.i = phi i64 [ %4, %bb.n ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
+  %.1.i.i.i = phi i64 [ %i.bm, %bb.n ], [ %.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ci = icmp sgt i64 %.1.i.i.i, %.07.i.i
   br i1 %i.ci, label %.lr.ph.i.i.i.i74, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN5folly7TDigest9mergeImplIPPKS3_EES3_NS2_5RangeIT_EEE6CursorSt6vectorISB_SaISB_EEEElSB_NS0_5__ops15_Iter_less_iterEEvS9_T0_SJ_T1_T2_.exit.i.i
 

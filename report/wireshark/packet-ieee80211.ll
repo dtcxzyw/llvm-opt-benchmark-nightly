@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.f, %bb.e
   %indvars.iv.i = phi i32 [ 0, %bb.e ], [ %i.ac, %bb.f ]
-  %.098110.i = phi i32 [ 4, %bb.e ], [ %i.ab, %bb.f ] ; 3 uses
+  %.098110.i = phi i32 [ 4, %bb.e ], [ %i.ab, %bb.f ] ; 4 uses
   %i.u = load i32, ptr @ett_tag_wapi_param_set_akm_tree, align 4
   %i.v = call ptr @proto_item_add_subtree(ptr noundef %i.s, i32 noundef %i.u) ; 2 uses
   %i.w = load i32, ptr @hf_ieee80211_tag_wapi_param_set_akm_suite_oui, align 4
@@ -213,7 +213,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %i.y = or disjoint i32 %.098110.i, 3
   %i.z = load i32, ptr @hf_ieee80211_tag_wapi_param_set_akm_suite_type, align 4
   %i.aa = call ptr @proto_tree_add_item_ret_uint8(ptr noundef %i.v, i32 noundef %i.z, ptr noundef %0, i32 noundef %i.y, i32 noundef 1, i32 noundef -2147483648, ptr noundef nonnull %i.c) ; 0 uses
-  %i.ab = add nuw nsw i32 %.098110.i, 4           ; 3 uses
+  %i.ab = add nuw nsw i32 %.098110.i, 4           ; 2 uses
   %i.ac = add nuw nsw i32 %indvars.iv.i, 1        ; 3 uses
   %i.ad = load ptr, ptr %i.t, align 8
   %i.ae = load i8, ptr %i.c, align 1
@@ -236,7 +236,7 @@ bb.h:                                             ; preds = %bb.d
   br label %dissect_wapi_param_set.exit
 
 bb.i:                                             ; preds = %bb.g
-  %4 = or disjoint i32 %i.ab, 2                   ; 2 uses
+  %4 = add nuw i32 %.098110.i, 6                  ; 2 uses
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.j, ptr noundef nonnull @.str.10410)
   %i.al = load i16, ptr %i.b, align 2
   %.not116.i = icmp eq i16 %i.al, 0
@@ -639,7 +639,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = load i32, ptr @ett_addr, align 4
   %i.d = tail call ptr @proto_tree_add_mac48_detail(ptr noundef nonnull @mac_ta, ptr noundef nonnull @mac_addr, i32 noundef %i.c, ptr noundef %0, ptr noundef %2, i32 noundef %3) ; 0 uses
-  %i.e = add nuw nsw i32 %3, 6                    ; 13 uses
+  %i.e = add nuw nsw i32 %3, 6                    ; 11 uses
   %i.f = tail call i32 @tvb_captured_length_remaining(ptr noundef %0, i32 noundef %i.e)
   %i.g = icmp ult i32 %i.f, 8
   br i1 %i.g, label %bb.b, label %bb.c
@@ -654,7 +654,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = and i8 %i.j, 15                          ; 7 uses
   %i.l = add nuw nsw i32 %3, 12
   %i.m = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.l) ; 3 uses
-  %i.n = add nuw nsw i32 %3, 14
+  %i.n = add nuw nsw i32 %3, 14                   ; 4 uses
   %i.o = tail call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef %i.n)
   %i.p = icmp ult i8 %i.m, -64
   %i.q = getelementptr i8, ptr %1, i64 8          ; 2 uses
@@ -695,8 +695,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.not.i, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e
-  %5 = or disjoint i32 %i.e, 8                    ; 4 uses
-  %i.an = call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef %5)
+  %i.an = call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef %i.n)
   %i.ao = lshr i16 %i.an, 12
   %i.ap = and i16 %i.ao, 7                        ; 2 uses
   switch i16 %i.ap, label %bb.i [
@@ -726,18 +725,16 @@ bb.j:                                             ; preds = %bb.e
   %i.az = load i32, ptr @hf_ieee80211_he_trigger_common_info, align 4
   %i.ba = load i32, ptr @ett_he_trigger_base_common_info, align 4
   %i.bb = call ptr @proto_tree_add_bitmask_with_flags(ptr noundef %i.am, ptr noundef %0, i32 noundef range(i32 16, 23) %i.e, i32 noundef %i.az, i32 noundef %i.ba, ptr noundef nonnull @common_info_headers, i32 noundef -2147483648, i32 noundef 1) ; 0 uses
-  %.pre.i = or disjoint i32 %i.e, 8
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g
-  %.pre-phi.i = phi i32 [ %5, %bb.g ], [ %5, %bb.h ], [ %5, %bb.i ], [ %.pre.i, %bb.j ] ; 2 uses
   %cond.i = icmp eq i8 %i.k, 5
   br i1 %cond.i, label %bb.l, label %add_trigger_common_info.exit
 
 bb.l:                                             ; preds = %bb.k
   %i.bc = load i32, ptr @hf_ieee80211_he_trigger_bar_ctrl, align 4
   %i.bd = load i32, ptr @ett_he_trigger_bar_ctrl, align 4
-  %i.be = call ptr @proto_tree_add_bitmask_with_flags(ptr noundef %i.am, ptr noundef %0, i32 noundef range(i32 24, 31) %.pre-phi.i, i32 noundef %i.bc, i32 noundef %i.bd, ptr noundef nonnull @he_trig_frm_bar_ctrl_fields, i32 noundef -2147483648, i32 noundef 1) ; 0 uses
+  %i.be = call ptr @proto_tree_add_bitmask_with_flags(ptr noundef %i.am, ptr noundef %0, i32 noundef range(i32 24, 31) %i.n, i32 noundef %i.bc, i32 noundef %i.bd, ptr noundef nonnull @he_trig_frm_bar_ctrl_fields, i32 noundef -2147483648, i32 noundef 1) ; 0 uses
   %i.bf = add nuw nsw i32 %3, 16
   %i.bg = load i32, ptr @hf_ieee80211_he_trigger_bar_info, align 4
   %i.bh = load i32, ptr @ett_he_trigger_bar_info, align 4
@@ -746,7 +743,7 @@ bb.l:                                             ; preds = %bb.k
   br label %add_trigger_common_info.exit
 
 add_trigger_common_info.exit:                     ; preds = %bb.k, %bb.l
-  %.037.i = phi i32 [ %i.bj, %bb.l ], [ %.pre-phi.i, %bb.k ]
+  %.037.i = phi i32 [ %i.bj, %bb.l ], [ %i.n, %bb.k ]
   %.0.i = phi i32 [ 12, %bb.l ], [ 8, %bb.k ]     ; 2 uses
   %i.bk = load ptr, ptr %i.b, align 8
   %i.bl = sub nuw nsw i32 %.037.i, %i.e
@@ -1149,7 +1146,7 @@ get_or_create_conversation_data.exit:             ; preds = %bb.a, %bb.b
 .lr.ph:                                           ; preds = %get_or_create_conversation_data.exit, %bb.c
   %i.p = phi i32 [ %2, %bb.c ], [ 94, %get_or_create_conversation_data.exit ]
   %.021 = phi i16 [ %i.t, %bb.c ], [ 16, %get_or_create_conversation_data.exit ] ; 2 uses
-  %.01820 = phi i32 [ %i.u, %bb.c ], [ 92, %get_or_create_conversation_data.exit ] ; 3 uses
+  %.01820 = phi i32 [ %i.u, %bb.c ], [ 92, %get_or_create_conversation_data.exit ] ; 4 uses
   %i.q = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %.01820, i32 noundef 0)
   %i.r = zext i16 %i.q to i32
   %i.s = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.p)
@@ -1158,9 +1155,9 @@ get_or_create_conversation_data.exit:             ; preds = %bb.a, %bb.b
 
 bb.c:                                             ; preds = %.lr.ph
   %i.t = add i16 %.021, 8                         ; 2 uses
-  %i.u = add i32 %.01820, 8                       ; 3 uses
+  %i.u = add i32 %.01820, 8                       ; 2 uses
   %i.v = tail call i32 @tvb_captured_length(ptr noundef %0)
-  %2 = or disjoint i32 %i.u, 2                    ; 2 uses
+  %2 = add i32 %.01820, 10                        ; 2 uses
   %i.w = icmp ugt i32 %i.v, %2
   br i1 %i.w, label %.lr.ph, label %.critedge, !llvm.loop !227
 

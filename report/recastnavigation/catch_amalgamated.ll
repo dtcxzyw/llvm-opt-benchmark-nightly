@@ -205,18 +205,18 @@ bb.a:
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
   %i.d = sub i64 %i.b, %i.c                       ; 2 uses
-  %i.e = ashr i64 %i.d, 3                         ; 3 uses
+  %i.e = ashr i64 %i.d, 3                         ; 4 uses
   %i.f = add nsw i64 %i.e, -1
   %i.g = lshr i64 %i.f, 1
   %i.h = icmp sgt i64 %i.e, 2
   %i.i = and i64 %i.d, 8
   %i.j = icmp eq i64 %i.i, 0                      ; 2 uses
-  %i.k = add nsw i64 %i.e, -2                     ; 3 uses
+  %i.k = add nsw i64 %i.e, -2                     ; 2 uses
   %i.l = ashr exact i64 %i.k, 1                   ; 2 uses
   br i1 %i.h, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %4 = or disjoint i64 %i.k, 1                    ; 2 uses
+  %4 = add nsw i64 %i.e, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %4
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.l
   br label %.lr.ph.split.us
@@ -379,12 +379,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
+  %i.d = ashr exact i64 %i.c, 3                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
@@ -394,7 +394,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.l
   br label %.split
@@ -797,12 +797,12 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %.fr = freeze i64 %i.c                          ; 2 uses
-  %i.d = ashr exact i64 %.fr, 3                   ; 3 uses
+  %i.d = ashr exact i64 %.fr, 3                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 3 uses
+  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
@@ -812,7 +812,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.f, 1                    ; 2 uses
+  %3 = add nsw i64 %i.d, -1                       ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.l
   br label %.split
@@ -1215,14 +1215,13 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %.lcssa124 = phi i64 [ %i.d, %.lr.ph ], [ %i.ke, %bb.b ] ; 2 uses
   %.lcssa122 = phi i64 [ %i.c, %.lr.ph ], [ %i.kd, %bb.b ] ; 2 uses
   %storemerge41.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.072.1.i.i, %bb.b ]
-  %i.i = add nsw i64 %.lcssa124, -2               ; 2 uses
+  %i.i = add nsw i64 %.lcssa124, -2
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
-  %i.k = add nsw i64 %.lcssa124, -1
+  %i.k = add nsw i64 %.lcssa124, -1               ; 3 uses
   %i.l = lshr i64 %i.k, 1                         ; 2 uses
   %i.m = and i64 %.lcssa122, 16
   %i.n = icmp eq i64 %i.m, 0
-  %3 = or disjoint i64 %i.i, 1                    ; 2 uses
-  %i.o = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %3
+  %i.o = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.k
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.j
   br label %bb.c
 
@@ -1325,7 +1324,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ %3, %bb.g ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %i.k, %bb.g ], [ %.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.bd = icmp sgt i64 %.1.i.i.i.i, %.010.i.i.i
   br i1 %i.bd, label %.lr.ph.i.i.preheader.i.i.i, label %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5Catch14TestCaseHandleESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_9sortTestsERKNS2_7IConfigERKS7_E3$_0EEEvT_T0_SJ_T1_T2_.exit.i.i.i"
 
@@ -1728,12 +1727,12 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
-  %.fr = freeze i64 %i.c                          ; 4 uses
+  %.fr = freeze i64 %i.c                          ; 5 uses
   %i.d = icmp slt i64 %.fr, 2
   br i1 %i.d, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = add nsw i64 %.fr, -2                     ; 3 uses
+  %i.e = add nsw i64 %.fr, -2                     ; 2 uses
   %i.f = lshr i64 %i.e, 1                         ; 2 uses
   %i.g = add nsw i64 %.fr, -1
   %i.h = lshr i64 %i.g, 1                         ; 4 uses
@@ -1743,7 +1742,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %.split.preheader, label %.split.us
 
 .split.preheader:                                 ; preds = %bb.b
-  %3 = or disjoint i64 %i.e, 1                    ; 2 uses
+  %3 = add nsw i64 %.fr, -1                       ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %3
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.k
   br label %.split

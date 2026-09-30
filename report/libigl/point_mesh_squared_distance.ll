@@ -205,19 +205,18 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %.fr = freeze i64 %i.c                          ; 3 uses
-  %i.d = ashr i64 %.fr, 4                         ; 6 uses
+  %i.d = ashr i64 %.fr, 4                         ; 7 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4CGAL25AABB_triangle_primitive_3INS2_16Simple_cartesianIdEENS1_IPNS2_10Triangle_3IS5_EESt6vectorIS7_SaIS7_EEEESt17integral_constantIbLb0EEEES9_ISF_SaISF_EEEENS0_5__ops15_Iter_comp_iterIZNKS2_13AABB_traits_3IS5_SF_NS2_7DefaultEE16Split_primitivesclISJ_EEvT_SR_RKNS2_6Bbox_3EEUlRKSF_SW_E_EEEvSR_SR_RT0_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
+  %i.f = add nsw i64 %i.d, -2
   %i.g = lshr i64 %i.f, 1                         ; 3 uses
-  %i.h = add nsw i64 %i.d, -1
+  %i.h = add nsw i64 %i.d, -1                     ; 3 uses
   %i.i = lshr i64 %i.h, 1                         ; 2 uses
   %i.j = and i64 %.fr, 16
   %i.k = icmp eq i64 %i.j, 0
-  %4 = or disjoint i64 %i.f, 1                    ; 2 uses
-  %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %4
+  %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.h
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.g
   br label %bb.c
 
@@ -258,7 +257,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i
-  %.1.i.i = phi i64 [ %4, %bb.d ], [ %.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+  %.1.i.i = phi i64 [ %i.h, %bb.d ], [ %.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
   %i.ab = icmp sgt i64 %.1.i.i, %.010.i
   br i1 %i.ab, label %.lr.ph.i.i.i, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4CGAL25AABB_triangle_primitive_3INS2_16Simple_cartesianIdEENS1_IPNS2_10Triangle_3IS5_EESt6vectorIS7_SaIS7_EEEESt17integral_constantIbLb0EEEES9_ISF_SaISF_EEEElSF_NS0_5__ops15_Iter_comp_iterIZNKS2_13AABB_traits_3IS5_SF_NS2_7DefaultEE16Split_primitivesclISJ_EEvT_SR_RKNS2_6Bbox_3EEUlRKSF_SW_E_EEEvSR_T0_SZ_T1_T2_.exit.i
 
@@ -297,13 +296,13 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4CGAL25AABB_triangle_primitiv
   %i.an = icmp sgt i64 %i.d, 2
   %i.ao = and i64 %.fr, 16
   %i.ap = icmp eq i64 %i.ao, 0                    ; 2 uses
-  %i.aq = add nsw i64 %i.d, -2                    ; 3 uses
+  %i.aq = add nsw i64 %i.d, -2                    ; 2 uses
   %i.ar = ashr exact i64 %i.aq, 1                 ; 2 uses
   br i1 %i.an, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %5 = or disjoint i64 %i.aq, 1                   ; 2 uses
-  %i.as = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %5
+  %4 = add nsw i64 %i.d, -1                       ; 2 uses
+  %i.as = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %4
   %i.at = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.ar
   br label %.lr.ph.split.us
 
@@ -348,7 +347,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i10.l
   br label %.lr.ph.i.i.i13.us.preheader
 
 .lr.ph.i.i.i13.us.preheader:                      ; preds = %.thread.i.us, %bb.g
-  %.019.i.i.i14.us.ph = phi i64 [ %spec.select.i.i23.us, %bb.g ], [ %5, %.thread.i.us ]
+  %.019.i.i.i14.us.ph = phi i64 [ %spec.select.i.i23.us, %bb.g ], [ %4, %.thread.i.us ]
   br label %.lr.ph.i.i.i13.us
 
 .lr.ph.i.i.i13.us:                                ; preds = %.lr.ph.i.i.i13.us.preheader, %bb.h
@@ -744,19 +743,18 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %.fr = freeze i64 %i.c                          ; 3 uses
-  %i.d = ashr i64 %.fr, 4                         ; 6 uses
+  %i.d = ashr i64 %.fr, 4                         ; 7 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4CGAL25AABB_triangle_primitive_3INS2_16Simple_cartesianIdEENS1_IPNS2_10Triangle_3IS5_EESt6vectorIS7_SaIS7_EEEESt17integral_constantIbLb0EEEES9_ISF_SaISF_EEEENS0_5__ops15_Iter_comp_iterIZNKS2_13AABB_traits_3IS5_SF_NS2_7DefaultEE16Split_primitivesclISJ_EEvT_SR_RKNS2_6Bbox_3EEUlRKSF_SW_E0_EEEvSR_SR_RT0_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
+  %i.f = add nsw i64 %i.d, -2
   %i.g = lshr i64 %i.f, 1                         ; 3 uses
-  %i.h = add nsw i64 %i.d, -1
+  %i.h = add nsw i64 %i.d, -1                     ; 3 uses
   %i.i = lshr i64 %i.h, 1                         ; 2 uses
   %i.j = and i64 %.fr, 16
   %i.k = icmp eq i64 %i.j, 0
-  %4 = or disjoint i64 %i.f, 1                    ; 2 uses
-  %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %4
+  %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.h
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.g
   br label %bb.c
 
@@ -799,7 +797,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i
-  %.1.i.i = phi i64 [ %4, %bb.d ], [ %.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+  %.1.i.i = phi i64 [ %i.h, %bb.d ], [ %.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
   %i.ad = icmp sgt i64 %.1.i.i, %.010.i
   br i1 %i.ad, label %.lr.ph.i.i.i, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4CGAL25AABB_triangle_primitive_3INS2_16Simple_cartesianIdEENS1_IPNS2_10Triangle_3IS5_EESt6vectorIS7_SaIS7_EEEESt17integral_constantIbLb0EEEES9_ISF_SaISF_EEEElSF_NS0_5__ops15_Iter_comp_iterIZNKS2_13AABB_traits_3IS5_SF_NS2_7DefaultEE16Split_primitivesclISJ_EEvT_SR_RKNS2_6Bbox_3EEUlRKSF_SW_E0_EEEvSR_T0_SZ_T1_T2_.exit.i
 
@@ -843,13 +841,13 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4CGAL25AABB_triangle_primitiv
   %i.ar = icmp sgt i64 %i.d, 2
   %i.as = and i64 %.fr, 16
   %i.at = icmp eq i64 %i.as, 0                    ; 2 uses
-  %i.au = add nsw i64 %i.d, -2                    ; 3 uses
+  %i.au = add nsw i64 %i.d, -2                    ; 2 uses
   %i.av = ashr exact i64 %i.au, 1                 ; 2 uses
   br i1 %i.ar, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %5 = or disjoint i64 %i.au, 1                   ; 2 uses
-  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %5
+  %4 = add nsw i64 %i.d, -1                       ; 2 uses
+  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %4
   %i.ax = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.av
   br label %.lr.ph.split.us
 
@@ -898,7 +896,7 @@ bb.h:                                             ; preds = %._crit_edge.i.i10.l
   br label %.lr.ph.i.i.i13.us.preheader
 
 .lr.ph.i.i.i13.us.preheader:                      ; preds = %.thread.i.us, %bb.h
-  %.019.i.i.i14.us.ph = phi i64 [ %spec.select.i.i23.us, %bb.h ], [ %5, %.thread.i.us ]
+  %.019.i.i.i14.us.ph = phi i64 [ %spec.select.i.i23.us, %bb.h ], [ %4, %.thread.i.us ]
   br label %.lr.ph.i.i.i13.us
 
 .lr.ph.i.i.i13.us:                                ; preds = %.lr.ph.i.i.i13.us.preheader, %bb.i
@@ -1301,19 +1299,18 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %.fr = freeze i64 %i.c                          ; 3 uses
-  %i.d = ashr i64 %.fr, 4                         ; 6 uses
+  %i.d = ashr i64 %.fr, 4                         ; 7 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4CGAL25AABB_triangle_primitive_3INS2_16Simple_cartesianIdEENS1_IPNS2_10Triangle_3IS5_EESt6vectorIS7_SaIS7_EEEESt17integral_constantIbLb0EEEES9_ISF_SaISF_EEEENS0_5__ops15_Iter_comp_iterIZNKS2_13AABB_traits_3IS5_SF_NS2_7DefaultEE16Split_primitivesclISJ_EEvT_SR_RKNS2_6Bbox_3EEUlRKSF_SW_E1_EEEvSR_SR_RT0_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, -2                     ; 2 uses
+  %i.f = add nsw i64 %i.d, -2
   %i.g = lshr i64 %i.f, 1                         ; 3 uses
-  %i.h = add nsw i64 %i.d, -1
+  %i.h = add nsw i64 %i.d, -1                     ; 3 uses
   %i.i = lshr i64 %i.h, 1                         ; 2 uses
   %i.j = and i64 %.fr, 16
   %i.k = icmp eq i64 %i.j, 0
-  %4 = or disjoint i64 %i.f, 1                    ; 2 uses
-  %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %4
+  %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.h
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.g
   br label %bb.c
 
@@ -1356,7 +1353,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i
-  %.1.i.i = phi i64 [ %4, %bb.d ], [ %.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+  %.1.i.i = phi i64 [ %i.h, %bb.d ], [ %.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
   %i.ad = icmp sgt i64 %.1.i.i, %.010.i
   br i1 %i.ad, label %.lr.ph.i.i.i, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4CGAL25AABB_triangle_primitive_3INS2_16Simple_cartesianIdEENS1_IPNS2_10Triangle_3IS5_EESt6vectorIS7_SaIS7_EEEESt17integral_constantIbLb0EEEES9_ISF_SaISF_EEEElSF_NS0_5__ops15_Iter_comp_iterIZNKS2_13AABB_traits_3IS5_SF_NS2_7DefaultEE16Split_primitivesclISJ_EEvT_SR_RKNS2_6Bbox_3EEUlRKSF_SW_E1_EEEvSR_T0_SZ_T1_T2_.exit.i
 
@@ -1400,13 +1397,13 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4CGAL25AABB_triangle_primitiv
   %i.ar = icmp sgt i64 %i.d, 2
   %i.as = and i64 %.fr, 16
   %i.at = icmp eq i64 %i.as, 0                    ; 2 uses
-  %i.au = add nsw i64 %i.d, -2                    ; 3 uses
+  %i.au = add nsw i64 %i.d, -2                    ; 2 uses
   %i.av = ashr exact i64 %i.au, 1                 ; 2 uses
   br i1 %i.ar, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %5 = or disjoint i64 %i.au, 1                   ; 2 uses
-  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %5
+  %4 = add nsw i64 %i.d, -1                       ; 2 uses
+  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %4
   %i.ax = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.av
   br label %.lr.ph.split.us
 
@@ -1455,7 +1452,7 @@ bb.h:                                             ; preds = %._crit_edge.i.i10.l
   br label %.lr.ph.i.i.i13.us.preheader
 
 .lr.ph.i.i.i13.us.preheader:                      ; preds = %.thread.i.us, %bb.h
-  %.019.i.i.i14.us.ph = phi i64 [ %spec.select.i.i23.us, %bb.h ], [ %5, %.thread.i.us ]
+  %.019.i.i.i14.us.ph = phi i64 [ %spec.select.i.i23.us, %bb.h ], [ %4, %.thread.i.us ]
   br label %.lr.ph.i.i.i13.us
 
 .lr.ph.i.i.i13.us:                                ; preds = %.lr.ph.i.i.i13.us.preheader, %bb.i
