@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %.not14 = icmp ult i8 %i.p, 8
   br i1 %.not14, label %bb.g, label %bb.f
 
-bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
+bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   store i16 %i.c, ptr %0, align 2, !tbaa !28
   %i.q = trunc i32 %5 to i8
   %i.r = add i8 %i.q, 3

@@ -205,6 +205,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
 .lr.ph.i:                                         ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread17.i
   %i.cw = load i64, ptr %i.bn, align 8
   %.fr922 = freeze i64 %i.cw                      ; 3 uses
+  %9 = load ptr, ptr %i.bm, align 8
   %i.cx = icmp eq i64 %.fr922, 0
   br i1 %i.cx, label %.lr.ph.i.split.us, label %.lr.ph.i.split
 
@@ -233,7 +234,6 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit13.i: ; preds = %.lr.ph.i.split
   %i.di = getelementptr inbounds nuw i8, ptr %i.de, i64 32
-  %9 = load ptr, ptr %i.bm, align 8
   %i.dj = load ptr, ptr %i.di, align 8
   %bcmp.i12.i = tail call i32 @bcmp(ptr %i.dj, ptr %9, i64 %.fr922)
   %i.dk = icmp eq i32 %bcmp.i12.i, 0

@@ -205,7 +205,7 @@ bb.au:                                            ; preds = %bb.at
   %i.fd = sub nsw i64 %i.fa, %i.fc
   %scevgep = getelementptr i8, ptr %.0485, i64 %i.fd
   %scevgep743 = getelementptr i8, ptr %1, i64 10
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, ptr noundef nonnull align 2 dereferenceable(1) %scevgep743, i64 %i.fc, i1 false), !tbaa !21
+  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %scevgep, ptr align 2 %scevgep743, i64 %i.fc, i1 false), !tbaa !21
   %i.fe = sub nsw i64 %i.fa, %i.fc
   %i.ff = getelementptr i8, ptr %.0485, i64 %i.fe
   %scevgep745.a = getelementptr i8, ptr %i.ff, i64 -2
