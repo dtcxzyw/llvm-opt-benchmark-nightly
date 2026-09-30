@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %extract32.exit, %bb
 define dso_local void @gicv3_redist_send_sgi(ptr noundef %0, i32 noundef %1, i32 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 4 uses
-  %i.b = icmp slt i32 %2, 32
+  %i.b = icmp slt i32 %2, 32                      ; 2 uses
   br i1 %i.b, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -319,8 +319,7 @@ bb.m:                                             ; preds = %bb.l
   br label %trace_gicv3_redist_send_sgi.exit
 
 trace_gicv3_redist_send_sgi.exit:                 ; preds = %.critedge, %bb.k, %bb.l, %bb.m
-  %or.cond.i = icmp samesign ult i32 %2, 32
-  br i1 %or.cond.i, label %deposit32.exit, label %bb.n
+  br i1 %i.b, label %deposit32.exit, label %bb.n
 
 bb.n:                                             ; preds = %trace_gicv3_redist_send_sgi.exit
   tail call void @__assert_fail(ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.8, i32 noundef 649, ptr noundef nonnull @__PRETTY_FUNCTION__.deposit32) #6

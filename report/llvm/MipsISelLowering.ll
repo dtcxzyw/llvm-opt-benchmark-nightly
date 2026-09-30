@@ -205,7 +205,7 @@ bb.ay:                                            ; preds = %bb.a
   %i.kj = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.val65 = load i32, ptr %i.kj, align 8, !tbaa !1110
   %i.kk = getelementptr i8, ptr %i.ki, i64 344
-  %.val66 = load i32, ptr %i.kk, align 8          ; 3 uses
+  %.val66 = load i32, ptr %i.kk, align 8          ; 2 uses
   %i.kl = getelementptr i8, ptr %i.ki, i64 375
   %.val67 = load i8, ptr %i.kl, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %20)
@@ -228,7 +228,7 @@ bb.ay:                                            ; preds = %bb.a
 _ZNK4llvm13MipsSubtarget16hasExtractInsertEv.exit.i115: ; preds = %bb.ay
   %i.ko = and i32 %.val66, -4
   %or.cond.i.i.i116 = icmp eq i32 %i.ko, 4
-  %i.kp = icmp sgt i32 %.val66, 12
+  %i.kp = icmp sgt i32 %.val66, 12                ; 2 uses
   %spec.select.i.i.i117 = or i1 %i.kp, %or.cond.i.i.i116
   br i1 %spec.select.i.i.i117, label %bb.az, label %_ZL16performORCombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit
 
@@ -611,17 +611,14 @@ _ZNK4llvm14ConstantSDNode12getSExtValueEv.exit160.i: ; preds = %bb.bw, %bb.bv
   %.0.i.i.i158.i = phi i64 [ %.0.i.i.i.i159.i, %bb.bv ], [ %i.qv, %bb.bw ]
   %i.qw = xor i64 %.0.i.i.i158.i, %i.qp
   %i.qx = icmp eq i64 %i.qw, -1
-  br i1 %i.qx, label %66, label %_ZL16performORCombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit
+  br i1 %i.qx, label %bb.bx, label %_ZL16performORCombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit
 
-66:                                               ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit160.i
-  %67 = add nuw nsw i32 %i.og, %i.oe              ; 2 uses
-  %68 = icmp samesign ult i32 %67, 65
-  br i1 %68, label %bb.bx, label %_ZL16performORCombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit
-
-bb.bx:                                            ; preds = %66
-  %69 = icmp samesign ugt i32 %.val66, 12
-  %i.qy = icmp samesign ult i32 %67, 33
-  %or.cond133.i.a = select i1 %69, i1 true, i1 %i.qy
+bb.bx:                                            ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit160.i
+  %66 = add nuw nsw i32 %i.og, %i.oe              ; 2 uses
+  %67 = icmp samesign ult i32 %66, 65
+  %i.qy = icmp samesign ult i32 %66, 33
+  %or.cond133.i = select i1 %i.kp, i1 true, i1 %i.qy
+  %or.cond133.i.a = select i1 %67, i1 %or.cond133.i, i1 false
   br i1 %or.cond133.i.a, label %bb.by, label %_ZL16performORCombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit
 
 bb.by:                                            ; preds = %bb.bx
@@ -829,9 +826,9 @@ _ZNK4llvm8TypeSizecvmEv.exit197.i:                ; preds = %_ZNK4llvm3EVT13getS
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #27
   br label %_ZL16performORCombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit
 
-_ZL16performORCombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit: ; preds = %bb.ay, %_ZNK4llvm13MipsSubtarget16hasExtractInsertEv.exit.i115, %bb.bb, %bb.bc, %bb.be, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i120, %_ZN4llvm16isShiftedMask_64Em.exit.i.i123, %bb.bf, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit133.i, %bb.bg, %bb.bh, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i130, %_ZN4llvm16isShiftedMask_64Em.exit.i140.i, %bb.bm, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit143.i, %_ZN4llvm16isShiftedMask_64Em.exit.i147.i, %bb.bn, %bb.bo, %.critedge.i137, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit160.i, %66, %bb.bx, %bb.bz, %bb.ca, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit170.i, %_ZNK4llvm8TypeSizecvmEv.exit197.i
-  %.sroa.32.5.i = phi i32 [ 0, %_ZNK4llvm13MipsSubtarget16hasExtractInsertEv.exit.i115 ], [ 0, %bb.ay ], [ 0, %bb.bo ], [ 0, %bb.bb ], [ 0, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit160.i ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit.i147.i ], [ 0, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i130 ], [ 0, %bb.bn ], [ %.fca.1.extract.i136, %_ZNK4llvm8TypeSizecvmEv.exit197.i ], [ 0, %bb.ca ], [ 0, %bb.bz ], [ 0, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit170.i ], [ 0, %bb.bc ], [ 0, %bb.bh ], [ 0, %bb.bm ], [ 0, %66 ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit143.i ], [ 0, %bb.bx ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit.i140.i ], [ %.sroa.32.2.i, %.critedge.i137 ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i120 ], [ 0, %bb.be ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit.i.i123 ], [ 0, %bb.bf ], [ %.fca.1.extract59.i, %bb.bg ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit133.i ]
-  %.sroa.086.5.i = phi ptr [ null, %_ZNK4llvm13MipsSubtarget16hasExtractInsertEv.exit.i115 ], [ null, %bb.ay ], [ null, %bb.bo ], [ null, %bb.bb ], [ null, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit160.i ], [ null, %_ZN4llvm16isShiftedMask_64Em.exit.i147.i ], [ null, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i130 ], [ null, %bb.bn ], [ %.fca.0.extract.i135, %_ZNK4llvm8TypeSizecvmEv.exit197.i ], [ null, %bb.ca ], [ null, %bb.bz ], [ null, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit170.i ], [ null, %bb.bc ], [ null, %bb.bh ], [ null, %bb.bm ], [ null, %66 ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit143.i ], [ null, %bb.bx ], [ null, %_ZN4llvm16isShiftedMask_64Em.exit.i140.i ], [ %.sroa.086.2.i, %.critedge.i137 ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i120 ], [ null, %bb.be ], [ null, %_ZN4llvm16isShiftedMask_64Em.exit.i.i123 ], [ null, %bb.bf ], [ %.fca.0.extract58.i, %bb.bg ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit133.i ]
+_ZL16performORCombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit: ; preds = %bb.ay, %_ZNK4llvm13MipsSubtarget16hasExtractInsertEv.exit.i115, %bb.bb, %bb.bc, %bb.be, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i120, %_ZN4llvm16isShiftedMask_64Em.exit.i.i123, %bb.bf, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit133.i, %bb.bg, %bb.bh, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i130, %_ZN4llvm16isShiftedMask_64Em.exit.i140.i, %bb.bm, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit143.i, %_ZN4llvm16isShiftedMask_64Em.exit.i147.i, %bb.bn, %bb.bo, %.critedge.i137, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit160.i, %bb.bx, %bb.bz, %bb.ca, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit170.i, %_ZNK4llvm8TypeSizecvmEv.exit197.i
+  %.sroa.32.5.i = phi i32 [ 0, %_ZNK4llvm13MipsSubtarget16hasExtractInsertEv.exit.i115 ], [ 0, %bb.ay ], [ 0, %bb.bo ], [ 0, %bb.bb ], [ 0, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit160.i ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit.i147.i ], [ 0, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i130 ], [ 0, %bb.bn ], [ %.fca.1.extract.i136, %_ZNK4llvm8TypeSizecvmEv.exit197.i ], [ 0, %bb.ca ], [ 0, %bb.bz ], [ 0, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit170.i ], [ 0, %bb.bc ], [ 0, %bb.bh ], [ 0, %bb.bm ], [ 0, %bb.bx ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit143.i ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit133.i ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit.i140.i ], [ %.sroa.32.2.i, %.critedge.i137 ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i120 ], [ 0, %bb.be ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit.i.i123 ], [ 0, %bb.bf ], [ %.fca.1.extract59.i, %bb.bg ]
+  %.sroa.086.5.i = phi ptr [ null, %_ZNK4llvm13MipsSubtarget16hasExtractInsertEv.exit.i115 ], [ null, %bb.ay ], [ null, %bb.bo ], [ null, %bb.bb ], [ null, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit160.i ], [ null, %_ZN4llvm16isShiftedMask_64Em.exit.i147.i ], [ null, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i130 ], [ null, %bb.bn ], [ %.fca.0.extract.i135, %_ZNK4llvm8TypeSizecvmEv.exit197.i ], [ null, %bb.ca ], [ null, %bb.bz ], [ null, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit170.i ], [ null, %bb.bc ], [ null, %bb.bh ], [ null, %bb.bm ], [ null, %bb.bx ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit143.i ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit133.i ], [ null, %_ZN4llvm16isShiftedMask_64Em.exit.i140.i ], [ %.sroa.086.2.i, %.critedge.i137 ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i120 ], [ null, %bb.be ], [ null, %_ZN4llvm16isShiftedMask_64Em.exit.i.i123 ], [ null, %bb.bf ], [ %.fca.0.extract58.i, %bb.bg ]
   call void @llvm.lifetime.end.p0(ptr nonnull %20)
   call void @llvm.lifetime.end.p0(ptr nonnull %21)
   call void @llvm.lifetime.end.p0(ptr nonnull %23)

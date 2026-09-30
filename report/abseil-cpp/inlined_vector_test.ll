@@ -205,7 +205,7 @@ _ZN7testing16ElementsAreArrayISt6vectorIiSaIiEEEEDTcl16ElementsAreArraycldtfp_5b
   call void @llvm.experimental.noalias.scope.decl(metadata !1757)
   %i.ln = ptrtoint ptr %.sroa.91248.0 to i64
   %i.lo = ptrtoint ptr %.sroa.01244.0 to i64
-  %i.lp = sub i64 %i.ln, %i.lo                    ; 15 uses
+  %i.lp = sub i64 %i.ln, %i.lo                    ; 14 uses
   %.not.i.i.i.i.i.i237 = icmp eq ptr %.sroa.91248.0, %.sroa.01244.0
   br i1 %.not.i.i.i.i.i.i237, label %bb.ao, label %bb.aj
 
@@ -225,7 +225,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %bb.aj
           to label %.noexc242 unwind label %.loopexit1379 ; 6 uses
 
 .noexc242:                                        ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i
-  %i.ls = icmp samesign ugt i64 %i.lp, 4
+  %i.ls = icmp samesign ugt i64 %i.lp, 4          ; 2 uses
   br i1 %i.ls, label %bb.ak, label %bb.al, !prof !318
 
 bb.ak:                                            ; preds = %.noexc242
@@ -250,8 +250,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i: ; preds = %bb.ak, %b
   store ptr %i.lv, ptr %15, align 8, !tbaa !320, !alias.scope !1757
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lv, i64 %i.lp ; 2 uses
   store ptr %i.lw, ptr %i.ab, align 8, !tbaa !321, !alias.scope !1757
-  %66 = icmp samesign ugt i64 %i.lp, 4
-  br i1 %66, label %bb.am, label %bb.an, !prof !318
+  br i1 %i.ls, label %bb.am, label %bb.an, !prof !318
 
 bb.am:                                            ; preds = %.noexc1.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.lv, ptr nonnull align 4 %i.lr, i64 %i.lp, i1 false), !noalias !1757
@@ -654,7 +653,7 @@ _ZN7testing16ElementsAreArrayISt6vectorIiSaIiEEEEDTcl16ElementsAreArraycldtfp_5b
   call void @llvm.experimental.noalias.scope.decl(metadata !1764)
   %i.zf = ptrtoint ptr %.sroa.91223.0 to i64
   %i.zg = ptrtoint ptr %.sroa.01219.0 to i64
-  %i.zh = sub i64 %i.zf, %i.zg                    ; 15 uses
+  %i.zh = sub i64 %i.zf, %i.zg                    ; 14 uses
   %.not.i.i.i.i.i.i308 = icmp eq ptr %.sroa.91223.0, %.sroa.01219.0
   br i1 %.not.i.i.i.i.i.i308, label %bb.dt, label %bb.do
 
@@ -674,7 +673,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i309: ; preds = %bb.do
           to label %.noexc330 unwind label %.loopexit1404 ; 6 uses
 
 .noexc330:                                        ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i309
-  %i.zk = icmp samesign ugt i64 %i.zh, 4
+  %i.zk = icmp samesign ugt i64 %i.zh, 4          ; 2 uses
   br i1 %i.zk, label %bb.dp, label %bb.dq, !prof !318
 
 bb.dp:                                            ; preds = %.noexc330
@@ -699,8 +698,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i318: ; preds = %bb.dp,
   store ptr %i.zn, ptr %23, align 8, !tbaa !320, !alias.scope !1764
   %i.zo = getelementptr inbounds nuw i8, ptr %i.zn, i64 %i.zh ; 2 uses
   store ptr %i.zo, ptr %i.aj, align 8, !tbaa !321, !alias.scope !1764
-  %67 = icmp samesign ugt i64 %i.zh, 4
-  br i1 %67, label %bb.dr, label %bb.ds, !prof !318
+  br i1 %i.zk, label %bb.dr, label %bb.ds, !prof !318
 
 bb.dr:                                            ; preds = %.noexc1.i321
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.zn, ptr nonnull align 4 %i.zj, i64 %i.zh, i1 false), !noalias !1764
@@ -1103,7 +1101,7 @@ _ZN7testing16ElementsAreArrayISt6vectorIiSaIiEEEEDTcl16ElementsAreArraycldtfp_5b
   call void @llvm.experimental.noalias.scope.decl(metadata !1771)
   %i.amq = ptrtoint ptr %.sroa.91203.0 to i64
   %i.amr = ptrtoint ptr %.sroa.01199.0 to i64
-  %i.ams = sub i64 %i.amq, %i.amr                 ; 15 uses
+  %i.ams = sub i64 %i.amq, %i.amr                 ; 14 uses
   %.not.i.i.i.i.i.i418 = icmp eq ptr %.sroa.91203.0, %.sroa.01199.0
   br i1 %.not.i.i.i.i.i.i418, label %bb.go, label %bb.gj
 
@@ -1123,7 +1121,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i419: ; preds = %bb.gj
           to label %.noexc440 unwind label %.loopexit1424 ; 6 uses
 
 .noexc440:                                        ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i419
-  %i.amv = icmp samesign ugt i64 %i.ams, 4
+  %i.amv = icmp samesign ugt i64 %i.ams, 4        ; 2 uses
   br i1 %i.amv, label %bb.gk, label %bb.gl, !prof !318
 
 bb.gk:                                            ; preds = %.noexc440
@@ -1148,8 +1146,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i428: ; preds = %bb.gk,
   store ptr %i.amy, ptr %32, align 8, !tbaa !320, !alias.scope !1771
   %i.amz = getelementptr inbounds nuw i8, ptr %i.amy, i64 %i.ams ; 2 uses
   store ptr %i.amz, ptr %i.at, align 8, !tbaa !321, !alias.scope !1771
-  %68 = icmp samesign ugt i64 %i.ams, 4
-  br i1 %68, label %bb.gm, label %bb.gn, !prof !318
+  br i1 %i.amv, label %bb.gm, label %bb.gn, !prof !318
 
 bb.gm:                                            ; preds = %.noexc1.i431
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.amy, ptr nonnull align 4 %i.amu, i64 %i.ams, i1 false), !noalias !1771
@@ -1552,7 +1549,7 @@ _ZN7testing16ElementsAreArrayISt6vectorIiSaIiEEEEDTcl16ElementsAreArraycldtfp_5b
   call void @llvm.experimental.noalias.scope.decl(metadata !1777)
   %i.atn = ptrtoint ptr %.sroa.91188.0 to i64
   %i.ato = ptrtoint ptr %.sroa.01184.0 to i64
-  %i.atp = sub i64 %i.atn, %i.ato                 ; 15 uses
+  %i.atp = sub i64 %i.atn, %i.ato                 ; 14 uses
   %.not.i.i.i.i.i.i539 = icmp eq ptr %.sroa.91188.0, %.sroa.01184.0
   br i1 %.not.i.i.i.i.i.i539, label %bb.ja, label %bb.iv
 
@@ -1572,7 +1569,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i540: ; preds = %bb.iv
           to label %.noexc561 unwind label %.loopexit1439 ; 6 uses
 
 .noexc561:                                        ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i540
-  %i.ats = icmp samesign ugt i64 %i.atp, 4
+  %i.ats = icmp samesign ugt i64 %i.atp, 4        ; 2 uses
   br i1 %i.ats, label %bb.iw, label %bb.ix, !prof !318
 
 bb.iw:                                            ; preds = %.noexc561
@@ -1597,8 +1594,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i549: ; preds = %bb.iw,
   store ptr %i.atv, ptr %41, align 8, !tbaa !320, !alias.scope !1777
   %i.atw = getelementptr inbounds nuw i8, ptr %i.atv, i64 %i.atp ; 2 uses
   store ptr %i.atw, ptr %i.bd, align 8, !tbaa !321, !alias.scope !1777
-  %69 = icmp samesign ugt i64 %i.atp, 4
-  br i1 %69, label %bb.iy, label %bb.iz, !prof !318
+  br i1 %i.ats, label %bb.iy, label %bb.iz, !prof !318
 
 bb.iy:                                            ; preds = %.noexc1.i552
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.atv, ptr nonnull align 4 %i.atr, i64 %i.atp, i1 false), !noalias !1777
@@ -2001,7 +1997,7 @@ _ZN7testing16ElementsAreArrayISt6vectorIiSaIiEEEEDTcl16ElementsAreArraycldtfp_5b
   call void @llvm.experimental.noalias.scope.decl(metadata !1799)
   %i.bji = ptrtoint ptr %.sroa.91162.0 to i64
   %i.bjj = ptrtoint ptr %.sroa.01158.0 to i64
-  %i.bjk = sub i64 %i.bji, %i.bjj                 ; 15 uses
+  %i.bjk = sub i64 %i.bji, %i.bjj                 ; 14 uses
   %.not.i.i.i.i.i.i662 = icmp eq ptr %.sroa.91162.0, %.sroa.01158.0
   br i1 %.not.i.i.i.i.i.i662, label %bb.mx, label %bb.ms
 
@@ -2021,7 +2017,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i663: ; preds = %bb.ms
           to label %.noexc684 unwind label %.loopexit1467 ; 6 uses
 
 .noexc684:                                        ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i663
-  %i.bjn = icmp samesign ugt i64 %i.bjk, 4
+  %i.bjn = icmp samesign ugt i64 %i.bjk, 4        ; 2 uses
   br i1 %i.bjn, label %bb.mt, label %bb.mu, !prof !318
 
 bb.mt:                                            ; preds = %.noexc684
@@ -2046,8 +2042,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i672: ; preds = %bb.mt,
   store ptr %i.bjq, ptr %52, align 8, !tbaa !320, !alias.scope !1799
   %i.bjr = getelementptr inbounds nuw i8, ptr %i.bjq, i64 %i.bjk ; 2 uses
   store ptr %i.bjr, ptr %i.ch, align 8, !tbaa !321, !alias.scope !1799
-  %70 = icmp samesign ugt i64 %i.bjk, 4
-  br i1 %70, label %bb.mv, label %bb.mw, !prof !318
+  br i1 %i.bjn, label %bb.mv, label %bb.mw, !prof !318
 
 bb.mv:                                            ; preds = %.noexc1.i675
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bjq, ptr nonnull align 4 %i.bjm, i64 %i.bjk, i1 false), !noalias !1799
@@ -2450,7 +2445,7 @@ _ZN7testing16ElementsAreArrayISt6vectorIiSaIiEEEEDTcl16ElementsAreArraycldtfp_5b
   call void @llvm.experimental.noalias.scope.decl(metadata !1805)
   %i.bwr = ptrtoint ptr %.sroa.9.0 to i64
   %i.bws = ptrtoint ptr %.sroa.0.0 to i64
-  %i.bwt = sub i64 %i.bwr, %i.bws                 ; 15 uses
+  %i.bwt = sub i64 %i.bwr, %i.bws                 ; 14 uses
   %.not.i.i.i.i.i.i782 = icmp eq ptr %.sroa.9.0, %.sroa.0.0
   br i1 %.not.i.i.i.i.i.i782, label %bb.qk, label %bb.qf
 
@@ -2470,7 +2465,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i783: ; preds = %bb.qf
           to label %.noexc804 unwind label %.loopexit1492 ; 6 uses
 
 .noexc804:                                        ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i783
-  %i.bww = icmp samesign ugt i64 %i.bwt, 4
+  %i.bww = icmp samesign ugt i64 %i.bwt, 4        ; 2 uses
   br i1 %i.bww, label %bb.qg, label %bb.qh, !prof !318
 
 bb.qg:                                            ; preds = %.noexc804
@@ -2495,8 +2490,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i792: ; preds = %bb.qg,
   store ptr %i.bwz, ptr %60, align 8, !tbaa !320, !alias.scope !1805
   %i.bxa = getelementptr inbounds nuw i8, ptr %i.bwz, i64 %i.bwt ; 2 uses
   store ptr %i.bxa, ptr %i.cu, align 8, !tbaa !321, !alias.scope !1805
-  %71 = icmp samesign ugt i64 %i.bwt, 4
-  br i1 %71, label %bb.qi, label %bb.qj, !prof !318
+  br i1 %i.bww, label %bb.qi, label %bb.qj, !prof !318
 
 bb.qi:                                            ; preds = %.noexc1.i795
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bwz, ptr nonnull align 4 %i.bwv, i64 %i.bwt, i1 false), !noalias !1805
@@ -2899,8 +2893,8 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i.i.i = phi i1 [ %i.i, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.j = phi ptr [ %.pre, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i ], [ %i.c, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %i.h, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i ], [ null, %bb.a ] ; 8 uses
-  %i.l = sub i64 %.pre-phi, %.pre-phi14           ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 4
+  %i.l = sub i64 %.pre-phi, %.pre-phi14           ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 4                     ; 2 uses
   br i1 %i.m, label %bb.d, label %bb.e, !prof !224
 
 bb.d:                                             ; preds = %bb.c
@@ -2950,8 +2944,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %_ZN7testing
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.v, ptr %i.w, align 8, !tbaa !321
-  %2 = icmp samesign ugt i64 %i.l, 4
-  br i1 %2, label %bb.g, label %bb.h, !prof !318
+  br i1 %i.m, label %bb.g, label %bb.h, !prof !318
 
 bb.g:                                             ; preds = %.noexc1
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.t, ptr align 4 %i.k, i64 %i.l, i1 false)
@@ -3354,7 +3347,7 @@ _ZN7testing16ElementsAreArrayISt6vectorIiSaIiEEEEDTcl16ElementsAreArraycldtfp_5b
   call void @llvm.experimental.noalias.scope.decl(metadata !3724)
   %i.ku = ptrtoint ptr %.sroa.9.0 to i64
   %i.kv = ptrtoint ptr %.sroa.0.0 to i64
-  %i.kw = sub i64 %i.ku, %i.kv                    ; 15 uses
+  %i.kw = sub i64 %i.ku, %i.kv                    ; 14 uses
   %.not.i.i.i.i.i.i106 = icmp eq ptr %.sroa.9.0, %.sroa.0.0
   br i1 %.not.i.i.i.i.i.i106, label %bb.cl, label %bb.cg
 
@@ -3374,7 +3367,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %bb.cg
           to label %.noexc110 unwind label %.loopexit224 ; 6 uses
 
 .noexc110:                                        ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i
-  %i.kz = icmp samesign ugt i64 %i.kw, 4
+  %i.kz = icmp samesign ugt i64 %i.kw, 4          ; 2 uses
   br i1 %i.kz, label %bb.ch, label %bb.ci, !prof !318
 
 bb.ch:                                            ; preds = %.noexc110
@@ -3399,8 +3392,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i: ; preds = %bb.ch, %b
   store ptr %i.lc, ptr %20, align 8, !tbaa !320, !alias.scope !3724
   %i.ld = getelementptr inbounds nuw i8, ptr %i.lc, i64 %i.kw ; 2 uses
   store ptr %i.ld, ptr %i.s, align 8, !tbaa !321, !alias.scope !3724
-  %23 = icmp samesign ugt i64 %i.kw, 4
-  br i1 %23, label %bb.cj, label %bb.ck, !prof !318
+  br i1 %i.kz, label %bb.cj, label %bb.ck, !prof !318
 
 bb.cj:                                            ; preds = %.noexc1.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.lc, ptr nonnull align 4 %i.ky, i64 %i.kw, i1 false), !noalias !3724

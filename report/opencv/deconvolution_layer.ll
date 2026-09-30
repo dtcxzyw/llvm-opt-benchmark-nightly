@@ -205,13 +205,12 @@ bb.ev:                                            ; preds = %bb.eu
   %i.pb = getelementptr inbounds nuw i8, ptr %6, i64 152 ; 6 uses
   %i.pc = ptrtoint ptr %.0.i.i.i.i.i602 to i64    ; 2 uses
   %i.pd = ptrtoint ptr %.sroa.0545.0600 to i64
-  %i.pe = sub i64 %i.pc, %i.pd                    ; 11 uses
+  %i.pe = sub i64 %i.pc, %i.pd                    ; 10 uses
   %i.pf = getelementptr inbounds nuw i8, ptr %6, i64 168 ; 4 uses
   %i.pg = getelementptr inbounds nuw i8, ptr %6, i64 160 ; 3 uses
-  %i.ph = icmp sgt i64 %i.pe, 4
+  %i.ph = icmp sgt i64 %i.pe, 4                   ; 2 uses
   %i.pi = icmp eq i64 %i.pe, 4                    ; 2 uses
-  %67 = icmp ugt i64 %i.pe, 9223372036854775804
-  %i.pj = icmp samesign ugt i64 %i.pe, 4
+  %i.pj = icmp ugt i64 %i.pe, 9223372036854775804
   %i.pk = getelementptr inbounds nuw i8, ptr %6, i64 184
   %i.pl = getelementptr inbounds nuw i8, ptr %6, i64 188
   %i.pm = getelementptr inbounds nuw i8, ptr %7, i64 4
@@ -614,7 +613,7 @@ bb.ig:                                            ; preds = %bb.if, %bb.ie, %bb.
   br i1 %i.acp, label %bb.ih, label %bb.im
 
 bb.ih:                                            ; preds = %bb.ig
-  br i1 %67, label %.invoke1333, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i425, !prof !118
+  br i1 %i.pj, label %.invoke1333, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i425, !prof !118
 
 .invoke1333:                                      ; preds = %bb.ih, %bb.hp, %bb.gx, %bb.gf, %bb.fn
   invoke void @_ZSt28__throw_bad_array_new_lengthv() #24
@@ -628,7 +627,7 @@ _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i425: ; preds = %bb.ih
           to label %.noexc428 unwind label %.loopexit ; 4 uses
 
 .noexc428:                                        ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i425
-  br i1 %i.pj, label %bb.ii, label %bb.ij, !prof !119
+  br i1 %i.ph, label %bb.ii, label %bb.ij, !prof !119
 
 bb.ii:                                            ; preds = %.noexc428
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.acq, ptr align 4 %.sroa.0545.0600, i64 %i.pe, i1 false)

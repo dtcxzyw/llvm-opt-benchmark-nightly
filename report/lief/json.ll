@@ -204,8 +204,8 @@ _ZNSt12_Vector_baseIPN4LIEF3DEX4TypeESaIS3_EEC2EmRKS4_.exit.i: ; preds = %_ZNSt1
   %.not.i.i.i.i.i = phi i1 [ %i.i, %_ZNSt15__new_allocatorIPN4LIEF3DEX4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.j = phi ptr [ %.pre, %_ZNSt15__new_allocatorIPN4LIEF3DEX4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ %i.c, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %i.h, %_ZNSt15__new_allocatorIPN4LIEF3DEX4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.l = sub i64 %.pre-phi, %.pre-phi8            ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 8
+  %i.l = sub i64 %.pre-phi, %.pre-phi8            ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 8                     ; 2 uses
   br i1 %i.m, label %bb.d, label %bb.e, !prof !63
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIPN4LIEF3DEX4TypeESaIS3_EEC2EmRKS4_.exit.i
@@ -249,8 +249,7 @@ _ZNSt12_Vector_baseIPN4LIEF3DEX4TypeESaIS3_EEC2EmRKS4_.exit.i.i: ; preds = %_ZNS
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.v, ptr %i.w, align 8, !tbaa !80
-  %2 = icmp samesign ugt i64 %i.l, 8
-  br i1 %2, label %bb.h, label %bb.i, !prof !90
+  br i1 %i.m, label %bb.h, label %bb.i, !prof !90
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIPN4LIEF3DEX4TypeESaIS3_EEC2EmRKS4_.exit.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.t, ptr align 8 %i.k, i64 %i.l, i1 false)
@@ -325,8 +324,8 @@ _ZNSt12_Vector_baseIPN4LIEF3DEX4TypeESaIS3_EEC2EmRKS4_.exit.i: ; preds = %_ZNSt1
   %.not.i.i.i.i.i = phi i1 [ %i.i, %_ZNSt15__new_allocatorIPN4LIEF3DEX4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.j = phi ptr [ %.pre, %_ZNSt15__new_allocatorIPN4LIEF3DEX4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ %i.c, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %i.h, %_ZNSt15__new_allocatorIPN4LIEF3DEX4TypeEE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.l = sub i64 %.pre-phi, %.pre-phi9            ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 8
+  %i.l = sub i64 %.pre-phi, %.pre-phi9            ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 8                     ; 2 uses
   br i1 %i.m, label %bb.d, label %bb.e, !prof !63
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIPN4LIEF3DEX4TypeESaIS3_EEC2EmRKS4_.exit.i
@@ -370,8 +369,7 @@ _ZNSt12_Vector_baseIPN4LIEF3DEX4TypeESaIS3_EEC2EmRKS4_.exit.i.i: ; preds = %_ZNS
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.v, ptr %i.w, align 8, !tbaa !80
-  %2 = icmp samesign ugt i64 %i.l, 8
-  br i1 %2, label %bb.h, label %bb.i, !prof !90
+  br i1 %i.m, label %bb.h, label %bb.i, !prof !90
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIPN4LIEF3DEX4TypeESaIS3_EEC2EmRKS4_.exit.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.t, ptr align 8 %i.k, i64 %i.l, i1 false)
@@ -774,8 +772,8 @@ _ZNSt12_Vector_baseIPN4LIEF3DEX7MapItemESaIS3_EEC2EmRKS4_.exit.i: ; preds = %_ZN
   %.not.i.i.i.i.i = phi i1 [ %i.i, %_ZNSt15__new_allocatorIPN4LIEF3DEX7MapItemEE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.j = phi ptr [ %.pre, %_ZNSt15__new_allocatorIPN4LIEF3DEX7MapItemEE8allocateEmPKv.exit.i.i.i.i ], [ %i.c, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %i.h, %_ZNSt15__new_allocatorIPN4LIEF3DEX7MapItemEE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.l = sub i64 %.pre-phi, %.pre-phi8            ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 8
+  %i.l = sub i64 %.pre-phi, %.pre-phi8            ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 8                     ; 2 uses
   br i1 %i.m, label %bb.d, label %bb.e, !prof !63
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIPN4LIEF3DEX7MapItemESaIS3_EEC2EmRKS4_.exit.i
@@ -819,8 +817,7 @@ _ZNSt12_Vector_baseIPN4LIEF3DEX7MapItemESaIS3_EEC2EmRKS4_.exit.i.i: ; preds = %_
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.v, ptr %i.w, align 8, !tbaa !96
-  %2 = icmp samesign ugt i64 %i.l, 8
-  br i1 %2, label %bb.h, label %bb.i, !prof !90
+  br i1 %i.m, label %bb.h, label %bb.i, !prof !90
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIPN4LIEF3DEX7MapItemESaIS3_EEC2EmRKS4_.exit.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.t, ptr align 8 %i.k, i64 %i.l, i1 false)
@@ -895,8 +892,8 @@ _ZNSt12_Vector_baseIPN4LIEF3DEX7MapItemESaIS3_EEC2EmRKS4_.exit.i: ; preds = %_ZN
   %.not.i.i.i.i.i = phi i1 [ %i.i, %_ZNSt15__new_allocatorIPN4LIEF3DEX7MapItemEE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.j = phi ptr [ %.pre, %_ZNSt15__new_allocatorIPN4LIEF3DEX7MapItemEE8allocateEmPKv.exit.i.i.i.i ], [ %i.c, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %i.h, %_ZNSt15__new_allocatorIPN4LIEF3DEX7MapItemEE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.l = sub i64 %.pre-phi, %.pre-phi9            ; 10 uses
-  %i.m = icmp sgt i64 %i.l, 8
+  %i.l = sub i64 %.pre-phi, %.pre-phi9            ; 9 uses
+  %i.m = icmp sgt i64 %i.l, 8                     ; 2 uses
   br i1 %i.m, label %bb.d, label %bb.e, !prof !63
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIPN4LIEF3DEX7MapItemESaIS3_EEC2EmRKS4_.exit.i
@@ -940,8 +937,7 @@ _ZNSt12_Vector_baseIPN4LIEF3DEX7MapItemESaIS3_EEC2EmRKS4_.exit.i.i: ; preds = %_
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.v, ptr %i.w, align 8, !tbaa !96
-  %2 = icmp samesign ugt i64 %i.l, 8
-  br i1 %2, label %bb.h, label %bb.i, !prof !90
+  br i1 %i.m, label %bb.h, label %bb.i, !prof !90
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIPN4LIEF3DEX7MapItemESaIS3_EEC2EmRKS4_.exit.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.t, ptr align 8 %i.k, i64 %i.l, i1 false)

@@ -205,7 +205,7 @@ bb.dy:                                            ; preds = %bb.eh, %bb.eg, %bb.
   br label %bb.dz
 
 bb.dz:                                            ; preds = %.lr.ph1046, %bb.ei
-  %.21044 = phi i32 [ %.1, %.lr.ph1046 ], [ %i.yd, %bb.ei ] ; 9 uses
+  %.21044 = phi i32 [ %.1, %.lr.ph1046 ], [ %i.yd, %bb.ei ] ; 8 uses
   %i.un = load i8, ptr %i.um, align 4, !tbaa !48
   %i.uo = add i8 %i.un, -3
   %spec.select.i.i351 = icmp ult i8 %i.uo, -2
@@ -213,7 +213,7 @@ bb.dz:                                            ; preds = %.lr.ph1046, %bb.ei
 
 bb.ea:                                            ; preds = %bb.dz
   %i.up = load i32, ptr %i.to, align 8, !tbaa !47
-  %.fr.i.i353 = freeze i32 %i.up                  ; 9 uses
+  %.fr.i.i353 = freeze i32 %i.up                  ; 8 uses
   %.not.i354 = icmp slt i32 %.21044, %.fr.i.i353
   br i1 %.not.i354, label %_ZNK8V3Number6bitIs0Ei.exit365, label %bb.eb
 
@@ -237,11 +237,11 @@ tailrecurse.preheader.i.i355:                     ; preds = %bb.eb
   %i.va = shl nuw nsw i64 1, %i.uz
   %i.vb = and i64 %i.va, %i.ux
   %i.vc = icmp eq i64 %i.vb, 0
-  br i1 %i.vc, label %_ZNK8V3Number6bitIs0Ei.exit365.thread, label %25
+  br i1 %i.vc, label %_ZNK8V3Number6bitIs0Ei.exit365.thread, label %tailrecurse.preheader.i
 
 _ZNK8V3Number6bitIs0Ei.exit365:                   ; preds = %bb.ea
   %i.vd = icmp samesign ult i32 %.fr.i.i353, 129
-  %i.ve = load ptr, ptr %1, align 8               ; 2 uses
+  %i.ve = load ptr, ptr %1, align 8               ; 4 uses
   %spec.select.i9.i361 = select i1 %i.vd, ptr %1, ptr %i.ve
   %i.vf = lshr i32 %.21044, 5
   %i.vg = zext nneg i32 %i.vf to i64
@@ -256,7 +256,7 @@ _ZNK8V3Number6bitIs0Ei.exit365:                   ; preds = %bb.ea
   %i.vm = shl nuw nsw i64 1, %i.vl
   %i.vn = and i64 %i.vm, %i.vj
   %i.vo = icmp eq i64 %i.vn, 0
-  br i1 %i.vo, label %_ZNK8V3Number6bitIs0Ei.exit365.thread, label %25
+  br i1 %i.vo, label %_ZNK8V3Number6bitIs0Ei.exit365.thread, label %_ZNK12V3NumberData3numEv.exit.i376
 
 _ZNK8V3Number6bitIs0Ei.exit365.thread:            ; preds = %bb.eb, %tailrecurse.preheader.i.i355, %_ZNK8V3Number6bitIs0Ei.exit365
   %i.vp = load i64, ptr %i.aw, align 8, !tbaa !28 ; 4 uses
@@ -293,14 +293,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit371: ; preds = %_Z
   store i8 48, ptr %i.vy, align 1, !tbaa !29
   br label %bb.ei
 
-25:                                               ; preds = %_ZNK8V3Number6bitIs0Ei.exit365, %tailrecurse.preheader.i.i355
-  %26 = phi ptr [ %i.ve, %_ZNK8V3Number6bitIs0Ei.exit365 ], [ %i.ut, %tailrecurse.preheader.i.i355 ] ; 2 uses
-  %.not.i374 = icmp samesign ult i32 %.21044, %.fr.i.i353
-  br i1 %.not.i374, label %_ZNK12V3NumberData3numEv.exit.i376, label %tailrecurse.preheader.i
-
-_ZNK12V3NumberData3numEv.exit.i376:               ; preds = %25
+_ZNK12V3NumberData3numEv.exit.i376:               ; preds = %_ZNK8V3Number6bitIs0Ei.exit365
   %i.vz = icmp samesign ult i32 %.fr.i.i353, 129
-  %spec.select.i10.i = select i1 %i.vz, ptr %1, ptr %26
+  %spec.select.i10.i = select i1 %i.vz, ptr %1, ptr %i.ve
   %i.wa = lshr i32 %.21044, 5
   %i.wb = zext nneg i32 %i.wa to i64
   %i.wc = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i10.i, i64 %i.wb ; 2 uses
@@ -356,11 +351,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit385: ; preds = %_Z
   store i8 49, ptr %i.wt, align 1, !tbaa !29
   br label %bb.ei
 
-tailrecurse.preheader.i:                          ; preds = %25, %_ZNK12V3NumberData3numEv.exit.i376, %_ZNK8V3Number6bitIs1Ei.exit
+tailrecurse.preheader.i:                          ; preds = %tailrecurse.preheader.i.i355, %_ZNK12V3NumberData3numEv.exit.i376, %_ZNK8V3Number6bitIs1Ei.exit
+  %25 = phi ptr [ %i.ve, %_ZNK8V3Number6bitIs1Ei.exit ], [ %i.ve, %_ZNK12V3NumberData3numEv.exit.i376 ], [ %i.ut, %tailrecurse.preheader.i.i355 ]
   %i.wu = add nsw i32 %.fr.i.i353, -1
   %spec.select.i = call i32 @llvm.umin.i32(i32 %.21044, i32 %i.wu) ; 2 uses
   %i.wv = icmp samesign ult i32 %.fr.i.i353, 129
-  %spec.select.i9.i387 = select i1 %i.wv, ptr %1, ptr %26
+  %spec.select.i9.i387 = select i1 %i.wv, ptr %1, ptr %25
   %i.ww = lshr i32 %spec.select.i, 5
   %i.wx = zext nneg i32 %i.ww to i64
   %i.wy = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i9.i387, i64 %i.wx ; 2 uses
