@@ -202,7 +202,6 @@ bb.g:                                             ; preds = %bb.f
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.ah = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  %umax230 = call i64 @llvm.umax.i64(i64 %i.j, i64 2)
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph215, %bb.y
@@ -342,7 +341,7 @@ _ZNSt12__shared_ptrIN12lldb_private11OptionValueELN9__gnu_cxx12_Lock_policyE2EED
 bb.y:                                             ; preds = %_ZNSt12__shared_ptrIN12lldb_private11OptionValueELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.bw = add nuw i64 %.075213, 1                 ; 2 uses
   %i.bx = add i32 %.1157212, 1
-  %exitcond231.not = icmp eq i64 %i.bw, %umax230
+  %exitcond231.not = icmp eq i64 %i.bw, %i.j
   br i1 %exitcond231.not, label %.critedge, label %bb.h, !llvm.loop !90
 
 bb.z:                                             ; preds = %bb.c
@@ -599,7 +598,6 @@ _ZN4llvm10to_integerIjEEbNS_9StringRefERT_j.exit105: ; preds = %bb.as
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.fi = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.fj = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 3 uses
-  %umax226 = call i64 @llvm.umax.i64(i64 %i.j, i64 2)
   br label %bb.at
 
 .thread179:                                       ; preds = %_ZN4llvm10to_integerIjEEbNS_9StringRefERT_j.exit105, %_ZN4llvm10to_integerIjEEbNS_9StringRefERT_j.exit105.thread
@@ -829,7 +827,7 @@ _ZNSt12__shared_ptrIN12lldb_private11OptionValueELN9__gnu_cxx12_Lock_policyE2EED
 bb.bu:                                            ; preds = %_ZNSt12__shared_ptrIN12lldb_private11OptionValueELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit118
   %i.hv = add nuw i64 %.060204, 1                 ; 2 uses
   %i.hw = add i32 %.0160202, 1
-  %exitcond227.not = icmp eq i64 %i.hv, %umax226
+  %exitcond227.not = icmp eq i64 %i.hv, %i.j
   br i1 %exitcond227.not, label %.critedge, label %bb.at, !llvm.loop !98
 
 bb.bv:                                            ; preds = %bb.ap

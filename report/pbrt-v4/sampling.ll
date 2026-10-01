@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not.i.not.i.i, label %_ZSt10accumulateIPKfdET0_T_S3_S2_.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = mul i64 %2, 12                           ; 3 uses
+  %i.g = mul i64 %2, 12                           ; 4 uses
   %i.h = icmp eq i64 %i.g, 0
   br i1 %i.h, label %.lr.ph.i.preheader, label %_ZN4pstd3pmr21polymorphic_allocatorIN4pbrt10AliasTable3BinEE15allocate_objectIS4_EEPT_m.exit.i.i.i
 
@@ -357,8 +357,7 @@ bb.g:                                             ; preds = %_ZSt10accumulateIPK
 
 vector.memcheck:                                  ; preds = %bb.g
   %i.bq = getelementptr nuw i8, ptr %i.bp, i64 4
-  %4 = mul i64 %2, 12
-  %i.br = getelementptr i8, ptr %i.bp, i64 %4
+  %i.br = getelementptr i8, ptr %i.bp, i64 %i.g
   %i.bs = getelementptr i8, ptr %i.br, i64 -4
   %bound0 = icmp ult ptr %i.bq, %i.x
   %bound1 = icmp ult ptr %1, %i.bs

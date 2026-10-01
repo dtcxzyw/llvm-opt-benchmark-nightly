@@ -202,7 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = add i64 %i.b, -1                         ; 2 uses
   %i.d = lshr i64 %i.c, 32                        ; 2 uses
-  %i.e = trunc nuw i64 %i.d to i32                ; 2 uses
+  %i.e = trunc nuw i64 %i.d to i32                ; 3 uses
   %i.f = getelementptr i8, ptr %.val, i64 8
   %i.g = load i32, ptr %i.f, align 8              ; 3 uses
   %.not55.i = icmp ugt i32 %i.g, %i.e
@@ -222,9 +222,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not60.i24, label %__cache_seq_start.exit, label %.lr.ph
 
 .preheader.i:                                     ; preds = %.lr.ph, %bb.c
-  %i.m = add i32 %i.e, 1                          ; 3 uses
-  %2 = icmp ult i32 %i.m, %i.g
-  br i1 %2, label %.lr.ph27, label %..critedge_crit_edge.i
+  %i.m = add i32 %i.g, -1                         ; 2 uses
+  %exitcond.not.i18 = icmp eq i32 %i.m, %i.e
+  br i1 %exitcond.not.i18, label %..critedge_crit_edge.i, label %.lr.ph27
 
 .lr.ph.i:                                         ; preds = %.lr.ph
   %i.n = add i32 %.0464.i25, -1                   ; 2 uses
@@ -239,18 +239,17 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not57.i, label %.preheader.i, label %.lr.ph.i, !llvm.loop !84
 
 bb.d:                                             ; preds = %.lr.ph27
-  %3 = add i32 %i.p, 1                            ; 3 uses
-  %4 = icmp ult i32 %3, %i.g
-  br i1 %4, label %.lr.ph27, label %..critedge_crit_edge.i, !llvm.loop !85
+  %exitcond.not.i = icmp eq i32 %2, %i.m
+  br i1 %exitcond.not.i, label %..critedge_crit_edge.i, label %.lr.ph27, !llvm.loop !85
 
 ..critedge_crit_edge.i:                           ; preds = %bb.d, %.preheader.i
-  %.lcssa = phi i32 [ %i.m, %.preheader.i ], [ %3, %bb.d ]
-  %.pre.i = zext i32 %.lcssa to i64
+  %.pre.i = zext i32 %i.g to i64
   br label %.critedge.i
 
 .lr.ph27:                                         ; preds = %.preheader.i, %bb.d
-  %i.p = phi i32 [ %3, %bb.d ], [ %i.m, %.preheader.i ] ; 2 uses
-  %i.q = zext i32 %i.p to i64                     ; 2 uses
+  %i.p = phi i32 [ %2, %bb.d ], [ %i.e, %.preheader.i ]
+  %2 = add i32 %i.p, 1                            ; 3 uses
+  %i.q = zext i32 %2 to i64                       ; 2 uses
   %i.r = getelementptr [8 x i8], ptr %i.i, i64 %i.q
   %i.s = load volatile ptr, ptr %i.r, align 8     ; 2 uses
   %.not58.i = icmp eq ptr %i.s, null

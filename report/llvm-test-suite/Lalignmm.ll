@@ -33,8 +33,8 @@ bb.a:
   %i.h = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.g) #13 ; 6 uses
   %i.i = trunc i64 %i.h to i32                    ; 16 uses
   %i.j = load ptr, ptr %1, align 8, !tbaa !10
-  %i.k = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #13 ; 8 uses
-  %i.l = trunc i64 %i.k to i32                    ; 22 uses
+  %i.k = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #13 ; 9 uses
+  %i.l = trunc i64 %i.k to i32                    ; 21 uses
   %i.m = add i32 %i.i, 200
   %i.n = add i32 %i.m, %i.l                       ; 2 uses
   %i.o = tail call ptr @AllocateCharMtx(i32 noundef %4, i32 noundef %i.n) #12 ; 9 uses
@@ -296,7 +296,7 @@ scalar.ph277:                                     ; preds = %scalar.ph277.prehea
   %i.dh = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   store ptr %i.y, ptr %i.dh, align 8, !tbaa !19
   %i.di = add i32 %i.i, -1                        ; 9 uses
-  %i.dj = add i32 %i.l, -1                        ; 7 uses
+  %i.dj = add nsw i32 %i.l, -1                    ; 6 uses
   %i.dk = load i32, ptr @reccycle, align 4, !tbaa !7
   %i.dl = add nsw i32 %i.dk, 1
   store i32 %i.dl, ptr @reccycle, align 4, !tbaa !7
@@ -699,17 +699,15 @@ scalar.ph517.prol.loopexit:                       ; preds = %scalar.ph517.prol, 
 
 .lr.ph64.i:                                       ; preds = %scalar.ph517.prol.loopexit, %scalar.ph517, %middle.block538
   %i.yi = getelementptr i8, ptr %i.ua, i64 -4     ; 3 uses
-  %12 = tail call i32 @llvm.smin.i32(i32 %i.dj, i32 1)
-  %13 = xor i32 %12, -1
-  %14 = add i32 %13, %i.l                         ; 2 uses
-  %15 = zext i32 %14 to i64                       ; 2 uses
-  %i.yj = add nuw nsw i64 %15, 1                  ; 2 uses
-  %min.iters.check553 = icmp ult i32 %14, 19
+  %12 = add i64 %i.k, 4294967294
+  %13 = and i64 %12, 4294967295                   ; 3 uses
+  %i.yj = add nuw nsw i64 %13, 1                  ; 2 uses
+  %min.iters.check553 = icmp samesign ult i64 %13, 19
   br i1 %min.iters.check553, label %scalar.ph552.preheader, label %vector.memcheck554
 
 vector.memcheck554:                               ; preds = %.lr.ph64.i
   %i.yk = shl nuw nsw i64 %i.pg, 2                ; 4 uses
-  %i.yl = shl nuw nsw i64 %15, 2                  ; 2 uses
+  %i.yl = shl nuw nsw i64 %13, 2                  ; 2 uses
   %i.ym = add nsw i64 %i.yk, -4
   %i.yn = sub nsw i64 %i.ym, %i.yl
   %i.yo = getelementptr i8, ptr %i.hn, i64 %i.yn  ; 2 uses
@@ -1112,8 +1110,8 @@ bb.a:
   %i.h = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.g) #13 ; 6 uses
   %i.i = trunc i64 %i.h to i32                    ; 16 uses
   %i.j = load ptr, ptr %1, align 8, !tbaa !10
-  %i.k = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #13 ; 8 uses
-  %i.l = trunc i64 %i.k to i32                    ; 22 uses
+  %i.k = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #13 ; 9 uses
+  %i.l = trunc i64 %i.k to i32                    ; 21 uses
   %i.m = add i32 %i.i, 200
   %i.n = add i32 %i.m, %i.l                       ; 2 uses
   %i.o = tail call ptr @AllocateCharMtx(i32 noundef %8, i32 noundef %i.n) #12 ; 9 uses
@@ -1375,7 +1373,7 @@ scalar.ph281:                                     ; preds = %scalar.ph281.prehea
   %i.dh = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   store ptr %i.y, ptr %i.dh, align 8, !tbaa !19
   %i.di = add i32 %i.i, -1                        ; 9 uses
-  %i.dj = add i32 %i.l, -1                        ; 7 uses
+  %i.dj = add nsw i32 %i.l, -1                    ; 6 uses
   %i.dk = load i32, ptr @reccycle, align 4, !tbaa !7
   %i.dl = add nsw i32 %i.dk, 1
   store i32 %i.dl, ptr @reccycle, align 4, !tbaa !7
@@ -1778,17 +1776,15 @@ scalar.ph521.prol.loopexit:                       ; preds = %scalar.ph521.prol, 
 
 .lr.ph64.i:                                       ; preds = %scalar.ph521.prol.loopexit, %scalar.ph521, %middle.block542
   %i.yi = getelementptr i8, ptr %i.ua, i64 -4     ; 3 uses
-  %16 = tail call i32 @llvm.smin.i32(i32 %i.dj, i32 1)
-  %17 = xor i32 %16, -1
-  %18 = add i32 %17, %i.l                         ; 2 uses
-  %19 = zext i32 %18 to i64                       ; 2 uses
-  %i.yj = add nuw nsw i64 %19, 1                  ; 2 uses
-  %min.iters.check557 = icmp ult i32 %18, 19
+  %16 = add i64 %i.k, 4294967294
+  %17 = and i64 %16, 4294967295                   ; 3 uses
+  %i.yj = add nuw nsw i64 %17, 1                  ; 2 uses
+  %min.iters.check557 = icmp samesign ult i64 %17, 19
   br i1 %min.iters.check557, label %scalar.ph556.preheader, label %vector.memcheck558
 
 vector.memcheck558:                               ; preds = %.lr.ph64.i
   %i.yk = shl nuw nsw i64 %i.pg, 2                ; 4 uses
-  %i.yl = shl nuw nsw i64 %19, 2                  ; 2 uses
+  %i.yl = shl nuw nsw i64 %17, 2                  ; 2 uses
   %i.ym = add nsw i64 %i.yk, -4
   %i.yn = sub nsw i64 %i.ym, %i.yl
   %i.yo = getelementptr i8, ptr %i.hn, i64 %i.yn  ; 2 uses
@@ -2190,9 +2186,6 @@ declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11

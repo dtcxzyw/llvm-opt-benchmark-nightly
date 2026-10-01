@@ -205,16 +205,15 @@ bb.y:                                             ; preds = %bb.x
 .lr.ph603:                                        ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(320) %2, i8 0, i64 320, i1 false)
-  %i.cy = call i32 @llvm.umin.i32(i32 %.3327, i32 20) ; 2 uses
+  %i.cy = call i32 @llvm.umin.i32(i32 %.3327, i32 20)
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 384256
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 433512
-  %wide.trip.count = zext nneg i32 %i.cy to i64   ; 4 uses
+  %wide.trip.count = zext nneg i32 %i.cy to i64   ; 5 uses
   br label %bb.z
 
 .lr.ph609:                                        ; preds = %bb.ab
   call void @qsort(ptr noundef nonnull %2, i64 noundef %wide.trip.count, i64 noundef 16, ptr noundef nonnull @_Z14ifd_size_t_cmpPKvS0_)
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 384256 ; 2 uses
-  %wide.trip.count657 = zext nneg i32 %i.cy to i64
   %min.iters.check = icmp ult i32 %.3327, 9
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -326,7 +325,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %indvars.iv654
   store i32 %i.fs, ptr %i.ft, align 4, !tbaa !74
   %indvars.iv.next655 = add nuw nsw i64 %indvars.iv654, 1 ; 2 uses
-  %exitcond658.not = icmp eq i64 %indvars.iv.next655, %wide.trip.count657
+  %exitcond658.not = icmp eq i64 %indvars.iv.next655, %wide.trip.count
   br i1 %exitcond658.not, label %._crit_edge610, label %scalar.ph, !llvm.loop !288
 
 bb.ac:                                            ; preds = %._crit_edge610, %bb.y, %bb.x

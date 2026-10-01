@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.a, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 9 uses
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 10 uses
   %i.b = add nsw i64 %wide.trip.count, -1         ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.c = icmp ult i32 %2, 4
@@ -412,7 +412,6 @@ bb.d:                                             ; preds = %bb.d, %.new
   %i.db = fneg double %i.da
   %i.dc = load double, ptr %3, align 8, !tbaa !46 ; 2 uses
   %i.dd = fsub double %i.da, %i.cx
-  %wide.trip.count181 = zext nneg i32 %2 to i64
   br label %bb.g
 
 .lr.ph156:                                        ; preds = %._crit_edge146
@@ -535,7 +534,7 @@ bb.g:                                             ; preds = %.lr.ph151, %bb.g
   %i.fn = tail call double @llvm.fmuladd.f64(double %i.fk, double %i.fk, double %i.fm)
   %i.fo = fadd double %.0119149, %i.fn            ; 2 uses
   %indvars.iv.next178 = add nuw nsw i64 %indvars.iv177, 1 ; 2 uses
-  %exitcond182.not = icmp eq i64 %indvars.iv.next178, %wide.trip.count181
+  %exitcond182.not = icmp eq i64 %indvars.iv.next178, %wide.trip.count
   br i1 %exitcond182.not, label %._crit_edge152, label %bb.g, !llvm.loop !506
 
 bb.h:                                             ; preds = %._crit_edge152, %._crit_edge157
@@ -938,7 +937,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph138
   %i.ds = fsub double %sqrt.1, %i.cj              ; 2 uses
   %i.dt = tail call double @llvm.fmuladd.f64(double %i.ds, double %i.ds, double %i.dj) ; 3 uses
   %indvars.iv.next157.1 = add nuw nsw i64 %indvars.iv156, 2 ; 3 uses
-  %niter194.next.1 = add i64 %niter194, 2         ; 2 uses
+  %niter194.next.1 = add nuw nsw i64 %niter194, 2 ; 2 uses
   %niter194.ncmp.1 = icmp eq i64 %niter194.next.1, %unroll_iter193
   br i1 %niter194.ncmp.1, label %._crit_edge139.unr-lcssa, label %bb.b, !llvm.loop !15
 

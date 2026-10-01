@@ -205,11 +205,13 @@ bb.ab:                                            ; preds = %._crit_edge
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !155
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 1712
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !156
-  %i.cn = zext nneg i32 %1 to i64
-  %i.co = shl nuw nsw i64 %i.cn, 3                ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ci, i8 0, i64 %i.co, i1 false), !tbaa !65
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ck, i8 0, i64 %i.co, i1 false), !tbaa !65
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.cm, i8 0, i64 %i.co, i1 false), !tbaa !65
+  %5 = add nsw i32 %1, -1
+  %i.cn = zext nneg i32 %5 to i64
+  %i.co = shl nuw nsw i64 %i.cn, 3
+  %6 = add nuw nsw i64 %i.co, 8                   ; 3 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ci, i8 0, i64 %6, i1 false), !tbaa !65
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ck, i8 0, i64 %6, i1 false), !tbaa !65
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.cm, i8 0, i64 %6, i1 false), !tbaa !65
   br label %.lr.ph196
 
 .lr.ph196:                                        ; preds = %bb.ab, %.lr.ph193

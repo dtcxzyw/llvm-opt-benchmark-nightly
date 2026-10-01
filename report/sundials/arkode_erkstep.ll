@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !40   ; 4 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !40   ; 3 uses
   %i.f = icmp slt i32 %i.e, 1
   br i1 %i.f, label %bb.d, label %bb.e
 
@@ -257,18 +257,15 @@ bb.l:                                             ; preds = %bb.k
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !35
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !73
-  %1 = zext nneg i32 %i.e to i64
-  %wide.trip.count = zext nneg i32 %i.e to i64    ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.e to i64    ; 3 uses
   br label %.preheader44
 
 .preheader44:                                     ; preds = %.preheader44.lr.ph, %.loopexit64
-  %indvars.iv = phi i64 [ 0, %.preheader44.lr.ph ], [ %indvars.iv.next, %.loopexit64 ] ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.preheader44.lr.ph ], [ %indvars.iv.next, %.loopexit64 ] ; 6 uses
   %.048 = phi i32 [ 1, %.preheader44.lr.ph ], [ %spec.select.lcssa, %.loopexit64 ] ; 2 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !74   ; 2 uses
-  %2 = add nuw i64 %indvars.iv, 1
-  %3 = tail call i64 @llvm.umax.i64(i64 %2, i64 %wide.trip.count)
-  %i.z = sub i64 %3, %indvars.iv                  ; 3 uses
+  %i.z = sub nsw i64 %wide.trip.count, %indvars.iv ; 3 uses
   %min.iters.check = icmp ult i64 %i.z, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -319,8 +316,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ap = fcmp ogt double %i.ao, f0x3D719799812DEA11
   %spec.select = select i1 %i.ap, i32 0, i32 %.146 ; 2 uses
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
-  %4 = icmp samesign ult i64 %indvars.iv.next51, %1
-  br i1 %4, label %scalar.ph, label %.loopexit64, !llvm.loop !168
+  %exitcond.not = icmp eq i64 %indvars.iv.next51, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit64, label %scalar.ph, !llvm.loop !168
 
 .loopexit64:                                      ; preds = %scalar.ph, %middle.block
   %spec.select.lcssa = phi i32 [ %rdx.select, %middle.block ], [ %spec.select, %scalar.ph ] ; 2 uses
@@ -721,9 +718,6 @@ declare void @llvm.assume(i1 noundef) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #8

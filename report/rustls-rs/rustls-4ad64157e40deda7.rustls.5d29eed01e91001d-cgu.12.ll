@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rustls-rs/original/rustls-4ad64157e40deda7.rustls.5d29eed01e91001d-cgu.12?download=true
 inline.NumInlined: 771
 inline.NumDeleted: 266
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort8unstable7ipnsortTmjENvYBT_NtNtB8_3cmp10PartialOrd2ltECs7ZUl82OSlxp_6rustls:bb.a
   %.val6 = load i64, ptr %i.i, align 8            ; 2 uses
   %i.j = icmp eq i32 %.val5, %.val7
@@ -204,30 +204,18 @@ bb.e:                                             ; preds = %_RINvNtNtNtCsj6eKBz
   tail call fastcc void @_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort8unstable9quicksort9quicksortTmmENvYB17_NtNtBa_3cmp10PartialOrd2ltECs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 4 %0, i64 noundef %1, ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable_or_null(8) null, i32 noundef %i.z, ptr noalias nofree noundef nonnull %2)
   br label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE7reverseCs7ZUl82OSlxp_6rustls.exit
 
-_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE7reverseCs7ZUl82OSlxp_6rustls.exit: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i, %middle.block, %bb.a, %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTmmENvYB12_NtNtB8_3cmp10PartialOrd2ltECs7ZUl82OSlxp_6rustls.exit.thread, %bb.e
+_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE7reverseCs7ZUl82OSlxp_6rustls.exit: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a, %bb.a, %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTmmENvYB12_NtNtB8_3cmp10PartialOrd2ltECs7ZUl82OSlxp_6rustls.exit.thread, %bb.e
   ret void
 
 _RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.preheader.i.i: ; preds = %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTmmENvYB12_NtNtB8_3cmp10PartialOrd2ltECs7ZUl82OSlxp_6rustls.exit.thread
-  %i.aa = lshr i64 %1, 1                          ; 5 uses
+  %i.aa = lshr i64 %1, 1                          ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !806)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !807)
-  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %1 ; 4 uses
-  %min.iters.check = icmp samesign ult i64 %1, 32
-  br i1 %min.iters.check, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a, label %vector.scevcheck
+  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %1 ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %1, 4
+  br i1 %min.iters.check, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit, label %vector.ph
 
-vector.scevcheck:                                 ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.preheader.i.i
-  %3 = add nsw i64 %i.aa, -1                      ; 2 uses
-  %4 = shl nuw nsw i64 %1, 3
-  %5 = getelementptr i8, ptr %0, i64 %4
-  %scevgep = getelementptr i8, ptr %5, i64 -8     ; 2 uses
-  %mul.result.neg = mul nsw i64 %3, -8
-  %mul.overflow = icmp ugt i64 %3, 2305843009213693951
-  %6 = getelementptr i8, ptr %scevgep, i64 %mul.result.neg
-  %7 = icmp ugt ptr %6, %scevgep
-  %8 = or i1 %7, %mul.overflow
-  br i1 %8, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.scevcheck
+vector.ph:                                        ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.preheader.i.i
   %n.vec = and i64 %i.aa, 576460752303423486      ; 3 uses
   br label %vector.body
 
@@ -246,53 +234,26 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %interleaved.vec, ptr %i.ag, align 4, !alias.scope !809, !noalias !806
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !804
+  br i1 %i.ah, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a, label %vector.body, !llvm.loop !804
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.aa, %n.vec
-  br i1 %cmp.n, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE7reverseCs7ZUl82OSlxp_6rustls.exit, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a
+_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a: ; preds = %vector.body
+  %lcmp.mod.not = icmp eq i64 %i.aa, %n.vec
+  br i1 %lcmp.mod.not, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE7reverseCs7ZUl82OSlxp_6rustls.exit, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit
 
-_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a: ; preds = %vector.scevcheck, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.preheader.i.i, %middle.block
-  %.sroa.0.016.i.i.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.preheader.i.i ], [ %n.vec, %middle.block ] ; 5 uses
-  %.neg = or disjoint i64 %.sroa.0.016.i.i.ph, 1
-  %9 = and i64 %1, 2
-  %lcmp.mod.not = icmp eq i64 %9, 0
-  br i1 %lcmp.mod.not, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol
-
-_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a
-  %10 = xor i64 %.sroa.0.016.i.i.ph, -1
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.016.i.i.ph ; 2 uses
-  %12 = getelementptr [8 x i8], ptr %i.ab, i64 %10 ; 2 uses
-  %13 = load i64, ptr %12, align 4, !alias.scope !809, !noalias !806
-  %14 = load <2 x i32>, ptr %11, align 4, !alias.scope !808, !noalias !807
-  store i64 %13, ptr %11, align 4, !alias.scope !808, !noalias !807
-  store <2 x i32> %14, ptr %12, align 4, !alias.scope !809, !noalias !806
-  %15 = or disjoint i64 %.sroa.0.016.i.i.ph, 1
-  br label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit
-
-_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a
-  %.sroa.0.016.i.i.unr = phi i64 [ %.sroa.0.016.i.i.ph, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a ], [ %15, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol ]
-  %16 = icmp eq i64 %i.aa, %.neg
-  br i1 %16, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE7reverseCs7ZUl82OSlxp_6rustls.exit, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i
+_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.preheader.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a
+  %.sroa.0.016.i.i.unr = phi i64 [ 0, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.preheader.i.i ], [ %n.vec, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.preheader.a ]
+  br label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i
 
 _RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i
-  %.sroa.0.016.i.i = phi i64 [ %i.an, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i ], [ %.sroa.0.016.i.i.unr, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit ] ; 5 uses
+  %.sroa.0.016.i.i = phi i64 [ %i.an, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i ], [ %.sroa.0.016.i.i.unr, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i.prol.loopexit ] ; 3 uses
   %i.ai = xor i64 %.sroa.0.016.i.i, -1
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.016.i.i ; 2 uses
-  %18 = getelementptr [8 x i8], ptr %i.ab, i64 %i.ai ; 2 uses
-  %19 = load i64, ptr %18, align 4, !alias.scope !809, !noalias !806
-  %20 = load <2 x i32>, ptr %17, align 4, !alias.scope !808, !noalias !807
-  store i64 %19, ptr %17, align 4, !alias.scope !808, !noalias !807
-  store <2 x i32> %20, ptr %18, align 4, !alias.scope !809, !noalias !806
-  %21 = sub i64 -2, %.sroa.0.016.i.i
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.016.i.i
-  %22 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
-  %i.ak = getelementptr [8 x i8], ptr %i.ab, i64 %21 ; 2 uses
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.016.i.i ; 2 uses
+  %i.ak = getelementptr [8 x i8], ptr %i.ab, i64 %i.ai ; 2 uses
   %i.al = load i64, ptr %i.ak, align 4, !alias.scope !809, !noalias !806
-  %i.am = load <2 x i32>, ptr %22, align 4, !alias.scope !808, !noalias !807
-  store i64 %i.al, ptr %22, align 4, !alias.scope !808, !noalias !807
+  %i.am = load <2 x i32>, ptr %i.aj, align 4, !alias.scope !808, !noalias !807
+  store i64 %i.al, ptr %i.aj, align 4, !alias.scope !808, !noalias !807
   store <2 x i32> %i.am, ptr %i.ak, align 4, !alias.scope !809, !noalias !806
-  %i.an = add nuw nsw i64 %.sroa.0.016.i.i, 2     ; 2 uses
+  %i.an = add nuw nsw i64 %.sroa.0.016.i.i, 1     ; 2 uses
   %exitcond.not.i.i.1 = icmp eq i64 %i.an, %i.aa
   br i1 %exitcond.not.i.i.1, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE7reverseCs7ZUl82OSlxp_6rustls.exit, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit11.i.i, !llvm.loop !805
 }
@@ -695,7 +656,7 @@ begin_hunk_1_@llvm.umax.i64
 !802 = distinct !{!802, !"_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE7reverseCs7ZUl82OSlxp_6rustls"}
 !803 = distinct !{!803, !802, !"_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE7reverseCs7ZUl82OSlxp_6rustls: argument 0"}
 !804 = distinct !{!804, !810, !811}
-!805 = distinct !{!805, !810}
+!805 = distinct !{!805, !811, !810}
 !806 = !{!800}
 !807 = !{!801}
 !808 = !{!800, !803}

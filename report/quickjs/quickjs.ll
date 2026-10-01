@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.sink.split, %bb.i
 ; Function Attrs: nounwind uwtable
 define internal fastcc { i64, i64 } @js_sub_string(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) unnamed_addr #2 {
 bb.a:
-  %i.a = sub i32 %3, %2                           ; 9 uses
+  %i.a = sub i32 %3, %2                           ; 8 uses
   %i.b = icmp eq i32 %2, 0
   br i1 %i.b, label %bb.b, label %bb.d
 
@@ -608,7 +608,7 @@ bb.am:                                            ; preds = %bb.al
   store i64 %i.hx, ptr %i.gs, align 8, !tbaa !196
   %i.hy = getelementptr inbounds i8, ptr %i.gz, i64 -4
   store i32 1, ptr %i.hy, align 4, !tbaa !191
-  %i.hz = zext nneg i32 %i.a to i64               ; 2 uses
+  %i.hz = zext nneg i32 %i.a to i64               ; 3 uses
   store i64 %i.hz, ptr %i.gz, align 8
   %i.ia = getelementptr inbounds nuw i8, ptr %i.gz, i64 8
   store i32 0, ptr %i.ia, align 8, !tbaa !249
@@ -617,7 +617,6 @@ bb.am:                                            ; preds = %bb.al
   %i.id = getelementptr inbounds nuw i8, ptr %i.gz, i64 24 ; 3 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %i.gz, i64 32
   %i.if = sext i32 %2 to i64
-  %wide.trip.count147 = zext nneg i32 %i.a to i64
   br label %bb.an
 
 bb.an:                                            ; preds = %.lr.ph127, %str8.exit
@@ -687,7 +686,7 @@ str8.exit:                                        ; preds = %str16.exit90, %bb.a
   %i.je = getelementptr inbounds nuw i8, ptr %.0.i.i91, i64 %indvars.iv144
   store i8 %i.it, ptr %i.je, align 1, !tbaa !218
   %indvars.iv.next145 = add nuw nsw i64 %indvars.iv144, 1 ; 2 uses
-  %exitcond148.not = icmp eq i64 %indvars.iv.next145, %wide.trip.count147
+  %exitcond148.not = icmp eq i64 %indvars.iv.next145, %i.hz
   br i1 %exitcond148.not, label %._crit_edge128, label %bb.an, !llvm.loop !1491
 
 ._crit_edge128:                                   ; preds = %str8.exit
@@ -1090,7 +1089,7 @@ define internal fastcc ptr @js_bigint_add(ptr noundef %0, ptr nofree noundef rea
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !191    ; 6 uses
   %i.b = load i32, ptr %2, align 4, !tbaa !191    ; 6 uses
-  %..i = tail call noundef i32 @llvm.smax.i32(i32 %i.a, i32 %i.b) ; 7 uses
+  %..i = tail call noundef i32 @llvm.smax.i32(i32 %i.a, i32 %i.b) ; 9 uses
   %..i91 = tail call noundef i32 @llvm.smin.i32(i32 %i.a, i32 %i.b) ; 6 uses
   %i.c = icmp sgt i32 %..i, 32768
   br i1 %i.c, label %bb.b, label %bb.c
@@ -1358,8 +1357,8 @@ bb.m:                                             ; preds = %._crit_edge
   %i.eg = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 3 uses
   %i.eh = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.a) ; 3 uses
   %smin = sext i32 %i.eh to i64                   ; 4 uses
-  %i.ei = tail call i32 @llvm.smax.i32(i32 %i.a, i32 %i.b) ; 3 uses
-  %i.ej = sub i32 %i.ei, %i.eh
+  %i.ei = tail call i32 @llvm.smax.i32(i32 %i.a, i32 %i.b)
+  %i.ej = sub i32 %..i, %i.eh
   %.neg176 = add i32 %i.eh, 1
   %xtraiter170 = and i32 %i.ej, 1
   %lcmp.mod171.not = icmp eq i32 %xtraiter170, 0
@@ -1384,7 +1383,7 @@ bb.m:                                             ; preds = %._crit_edge
   %.lcssa166.unr = phi i32 [ poison, %.lr.ph122 ], [ %i.es, %.prol.loopexit.unr-lcssa ]
   %indvars.iv140.unr = phi i64 [ %smin, %.lr.ph122 ], [ %indvars.iv.next141.prol, %.prol.loopexit.unr-lcssa ]
   %.286120.unr = phi i32 [ %.084.lcssa, %.lr.ph122 ], [ %i.es, %.prol.loopexit.unr-lcssa ]
-  %i.eu = icmp eq i32 %i.ei, %.neg176
+  %i.eu = icmp eq i32 %..i, %.neg176
   br i1 %i.eu, label %.loopexit, label %.lr.ph122.new
 
 .lr.ph122.new:                                    ; preds = %.prol.loopexit, %.lr.ph122.new

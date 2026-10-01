@@ -204,14 +204,14 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 5 uses
   store i32 16, ptr %i.f, align 4, !tbaa !208
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !160  ; 4 uses
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !160  ; 3 uses
   %i.i = icmp ugt i32 %i.h, 1
   br i1 %i.i, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
-  %wide.trip.count = zext i32 %i.h to i64
+  %wide.trip.count = zext i32 %i.h to i64         ; 2 uses
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.d
@@ -512,8 +512,6 @@ _ZN6bufferIP4exprLb0ELj16EE6expandEv.exit.i96:    ; preds = %.noexc101, %._crit_
   store ptr %i.bj, ptr %i.cu, align 8, !tbaa !162
   %i.cv = add i32 %i.cr, 1                        ; 2 uses
   store i32 %i.cv, ptr %i.e, align 8, !tbaa !207
-  %umax = call i32 @llvm.umax.i32(i32 %i.h, i32 2)
-  %wide.trip.count259 = zext i32 %umax to i64
   br label %bb.n
 
 ._crit_edge241:                                   ; preds = %bb.t
@@ -810,7 +808,7 @@ bb.t:                                             ; preds = %_ZN6bufferIP4exprLb
   %i.gg = add i32 %i.gc, 1                        ; 2 uses
   store i32 %i.gg, ptr %i.e, align 8, !tbaa !207
   %indvars.iv.next257 = add nuw nsw i64 %indvars.iv256, 1 ; 2 uses
-  %exitcond260.not = icmp eq i64 %indvars.iv.next257, %wide.trip.count259
+  %exitcond260.not = icmp eq i64 %indvars.iv.next257, %wide.trip.count
   br i1 %exitcond260.not, label %._crit_edge241, label %bb.n, !llvm.loop !305
 
 bb.u:                                             ; preds = %bb.p, %bb.o

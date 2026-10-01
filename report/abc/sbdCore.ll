@@ -205,8 +205,7 @@ bb.ba:                                            ; preds = %bb.ay
   br label %.lr.ph
 
 .lr.ph159.preheader:                              ; preds = %bb.bf
-  %wide.trip.count219 = zext nneg i32 %2 to i64
-  %wide.trip.count214 = zext nneg i32 %2 to i64
+  %wide.trip.count214 = zext nneg i32 %2 to i64   ; 2 uses
   br label %.lr.ph159
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.bf
@@ -261,7 +260,7 @@ bb.bf:                                            ; preds = %.lr.ph
 
 .loopexit134:                                     ; preds = %bb.bu, %.lr.ph159
   %indvars.iv.next210 = add nuw nsw i64 %indvars.iv209, 1
-  %exitcond220.not = icmp eq i64 %indvars.iv.next217, %wide.trip.count219
+  %exitcond220.not = icmp eq i64 %indvars.iv.next217, %wide.trip.count214
   br i1 %exitcond220.not, label %.lr.ph161.preheader, label %.lr.ph159, !llvm.loop !294
 
 .lr.ph161.preheader:                              ; preds = %.loopexit134
