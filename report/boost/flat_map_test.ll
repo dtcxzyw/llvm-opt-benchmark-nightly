@@ -205,18 +205,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -619,18 +620,19 @@ bb.a:
   %.0121.us.unr = phi ptr [ %0, %.lr.ph123.split.us.preheader.preheader ], [ %i.ah, %.lr.ph123.split.us.preheader.prol ]
   %.069120.us.unr = phi ptr [ %i.d, %.lr.ph123.split.us.preheader.preheader ], [ %i.ag, %.lr.ph123.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.af, 7
-  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader
+  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader.preheader.new
 
-.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader.prol.loopexit, %.lr.ph123.split.us.preheader
-  %.0121.us = phi ptr [ %i.al, %.lr.ph123.split.us.preheader ], [ %.0121.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %.069120.us = phi ptr [ %i.ak, %.lr.ph123.split.us.preheader ], [ %.069120.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069120.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph123.split.us.preheader.preheader.new:       ; preds = %.lr.ph123.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx203 = shl i64 %2, 4
+  br label %.lr.ph123.split.us.preheader
+
+.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader, %.lr.ph123.split.us.preheader.preheader.new
+  %.0121.us = phi ptr [ %.0121.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph123.split.us.preheader ]
+  %.069120.us = phi ptr [ %.069120.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph123.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069120.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx203
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0121.us, i64 8 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -1033,18 +1035,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -1447,18 +1450,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -1861,18 +1865,19 @@ bb.a:
   %.0121.us.unr = phi ptr [ %0, %.lr.ph123.split.us.preheader.preheader ], [ %i.ah, %.lr.ph123.split.us.preheader.prol ]
   %.069120.us.unr = phi ptr [ %i.d, %.lr.ph123.split.us.preheader.preheader ], [ %i.ag, %.lr.ph123.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.af, 7
-  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader
+  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader.preheader.new
 
-.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader.prol.loopexit, %.lr.ph123.split.us.preheader
-  %.0121.us = phi ptr [ %i.al, %.lr.ph123.split.us.preheader ], [ %.0121.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %.069120.us = phi ptr [ %i.ak, %.lr.ph123.split.us.preheader ], [ %.069120.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069120.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph123.split.us.preheader.preheader.new:       ; preds = %.lr.ph123.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx203 = shl i64 %2, 4
+  br label %.lr.ph123.split.us.preheader
+
+.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader, %.lr.ph123.split.us.preheader.preheader.new
+  %.0121.us = phi ptr [ %.0121.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph123.split.us.preheader ]
+  %.069120.us = phi ptr [ %.069120.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph123.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069120.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx203
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0121.us, i64 8 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -2275,18 +2280,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -2689,18 +2695,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -3103,18 +3110,19 @@ bb.a:
   %.0121.us.unr = phi ptr [ %0, %.lr.ph123.split.us.preheader.preheader ], [ %i.ah, %.lr.ph123.split.us.preheader.prol ]
   %.069120.us.unr = phi ptr [ %i.d, %.lr.ph123.split.us.preheader.preheader ], [ %i.ag, %.lr.ph123.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.af, 7
-  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader
+  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader.preheader.new
 
-.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader.prol.loopexit, %.lr.ph123.split.us.preheader
-  %.0121.us = phi ptr [ %i.al, %.lr.ph123.split.us.preheader ], [ %.0121.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %.069120.us = phi ptr [ %i.ak, %.lr.ph123.split.us.preheader ], [ %.069120.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069120.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph123.split.us.preheader.preheader.new:       ; preds = %.lr.ph123.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx203 = shl i64 %2, 4
+  br label %.lr.ph123.split.us.preheader
+
+.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader, %.lr.ph123.split.us.preheader.preheader.new
+  %.0121.us = phi ptr [ %.0121.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph123.split.us.preheader ]
+  %.069120.us = phi ptr [ %.069120.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph123.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069120.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx203
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0121.us, i64 8 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -3517,18 +3525,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -3931,18 +3940,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -4345,18 +4355,19 @@ bb.a:
   %.0121.us.unr = phi ptr [ %0, %.lr.ph123.split.us.preheader.preheader ], [ %i.ah, %.lr.ph123.split.us.preheader.prol ]
   %.069120.us.unr = phi ptr [ %i.d, %.lr.ph123.split.us.preheader.preheader ], [ %i.ag, %.lr.ph123.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.af, 7
-  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader
+  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader.preheader.new
 
-.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader.prol.loopexit, %.lr.ph123.split.us.preheader
-  %.0121.us = phi ptr [ %i.al, %.lr.ph123.split.us.preheader ], [ %.0121.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %.069120.us = phi ptr [ %i.ak, %.lr.ph123.split.us.preheader ], [ %.069120.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069120.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph123.split.us.preheader.preheader.new:       ; preds = %.lr.ph123.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx203 = shl i64 %2, 4
+  br label %.lr.ph123.split.us.preheader
+
+.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader, %.lr.ph123.split.us.preheader.preheader.new
+  %.0121.us = phi ptr [ %.0121.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph123.split.us.preheader ]
+  %.069120.us = phi ptr [ %.069120.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph123.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069120.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx203
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0121.us, i64 8 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -4759,18 +4770,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -5173,18 +5185,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -5587,18 +5600,19 @@ bb.a:
   %.0121.us.unr = phi ptr [ %0, %.lr.ph123.split.us.preheader.preheader ], [ %i.ah, %.lr.ph123.split.us.preheader.prol ]
   %.069120.us.unr = phi ptr [ %i.d, %.lr.ph123.split.us.preheader.preheader ], [ %i.ag, %.lr.ph123.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.af, 7
-  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader
+  br i1 %i.ai, label %._crit_edge124, label %.lr.ph123.split.us.preheader.preheader.new
 
-.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader.prol.loopexit, %.lr.ph123.split.us.preheader
-  %.0121.us = phi ptr [ %i.al, %.lr.ph123.split.us.preheader ], [ %.0121.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %.069120.us = phi ptr [ %i.ak, %.lr.ph123.split.us.preheader ], [ %.069120.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069120.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph123.split.us.preheader.preheader.new:       ; preds = %.lr.ph123.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx203 = shl i64 %2, 4
+  br label %.lr.ph123.split.us.preheader
+
+.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader, %.lr.ph123.split.us.preheader.preheader.new
+  %.0121.us = phi ptr [ %.0121.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph123.split.us.preheader ]
+  %.069120.us = phi ptr [ %.069120.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph123.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069120.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx203
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0121.us, i64 8 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
@@ -6001,18 +6015,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.ah, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.ag, %.lr.ph124.split.us.preheader.prol ]
   %i.ai = icmp ult i64 %i.ad, 56
-  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.ai, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.al, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.ak, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx206 = shl i64 %2, 4
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.al, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.ak, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx206
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %2
   %i.al = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.al, %i.aa
