@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g, %bb.f
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 108
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !74   ; 11 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !74   ; 9 uses
   %i.p = icmp slt i32 %i.o, 1
   br i1 %i.p, label %bb.j, label %bb.k
 
@@ -278,18 +278,15 @@ bb.w:                                             ; preds = %bb.n, %bb.p
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !64
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !112
-  %1 = zext nneg i32 %i.o to i64
-  %wide.trip.count = zext nneg i32 %i.o to i64    ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.o to i64    ; 3 uses
   br label %.preheader104
 
 .preheader104:                                    ; preds = %.preheader104.lr.ph, %.loopexit185
-  %indvars.iv = phi i64 [ 0, %.preheader104.lr.ph ], [ %indvars.iv.next, %.loopexit185 ] ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.preheader104.lr.ph ], [ %indvars.iv.next, %.loopexit185 ] ; 6 uses
   %.0109 = phi i32 [ 1, %.preheader104.lr.ph ], [ %spec.select.lcssa, %.loopexit185 ] ; 2 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !113 ; 2 uses
-  %2 = add nuw i64 %indvars.iv, 1
-  %3 = tail call i64 @llvm.umax.i64(i64 %2, i64 %wide.trip.count)
-  %i.ao = sub i64 %3, %indvars.iv                 ; 3 uses
+  %i.ao = sub nsw i64 %wide.trip.count, %indvars.iv ; 3 uses
   %min.iters.check = icmp ult i64 %i.ao, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -340,8 +337,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.be = fcmp ogt double %i.bd, f0x3D19000000000000
   %spec.select = select i1 %i.be, i32 0, i32 %.1107 ; 2 uses
   %indvars.iv.next130 = add nuw nsw i64 %indvars.iv129, 1 ; 2 uses
-  %4 = icmp samesign ult i64 %indvars.iv.next130, %1
-  br i1 %4, label %scalar.ph, label %.loopexit185, !llvm.loop !238
+  %exitcond.not = icmp eq i64 %indvars.iv.next130, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit185, label %scalar.ph, !llvm.loop !238
 
 .loopexit185:                                     ; preds = %scalar.ph, %middle.block
   %spec.select.lcssa = phi i32 [ %rdx.select, %middle.block ], [ %spec.select, %scalar.ph ] ; 2 uses
@@ -423,9 +420,8 @@ bb.y:                                             ; preds = %bb.y, %.lr.ph.new
 
 .lr.ph121:                                        ; preds = %._crit_edge112
   %i.cd = getelementptr inbounds nuw i8, ptr %i.b, i64 120
-  %5 = zext nneg i32 %i.o to i64
   %wide.trip.count150.a = zext nneg i32 %i.o to i64
-  %wide.trip.count144 = zext nneg i32 %i.o to i64
+  %wide.trip.count144 = zext nneg i32 %i.o to i64 ; 2 uses
   br label %bb.aa
 
 bb.z:                                             ; preds = %._crit_edge112
@@ -435,7 +431,7 @@ bb.z:                                             ; preds = %._crit_edge112
 .loopexit101:                                     ; preds = %scalar.ph168, %middle.block179, %bb.aa
   %.6.lcssa = phi i32 [ %.5120, %bb.aa ], [ %rdx.select181, %middle.block179 ], [ %spec.select97, %scalar.ph168 ] ; 2 uses
   %indvars.iv.next140 = add nuw nsw i64 %indvars.iv139, 1
-  %exitcond151.not = icmp eq i64 %indvars.iv.next147, %wide.trip.count150.a
+  %exitcond151.not = icmp eq i64 %indvars.iv.next147, %wide.trip.count144
   br i1 %exitcond151.not, label %._crit_edge122, label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph121, %.loopexit101
@@ -445,7 +441,7 @@ bb.aa:                                            ; preds = %.lr.ph121, %.loopex
   %i.ce = xor i64 %indvars.iv146, -1
   %i.cf = add nsw i64 %i.ce, %wide.trip.count137  ; 3 uses
   %indvars.iv.next147 = add nuw nsw i64 %indvars.iv146, 1 ; 3 uses
-  %i.cg = icmp samesign ult i64 %indvars.iv.next147, %5
+  %i.cg = icmp samesign ult i64 %indvars.iv.next147, %wide.trip.count150.a
   br i1 %i.cg, label %.lr.ph117, label %.loopexit101
 
 .lr.ph117:                                        ; preds = %bb.aa
@@ -846,9 +842,6 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #7

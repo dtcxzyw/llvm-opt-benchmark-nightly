@@ -205,9 +205,10 @@ vec.epilog.middle.block269:                       ; preds = %vec.epilog.vector.b
   br i1 %.not106, label %.loopexit76, label %.lr.ph102.preheader
 
 .lr.ph102.preheader:                              ; preds = %.preheader
-  %i.dl = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.dl = zext nneg i32 %3 to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %.367.lcssa, i8 48, i64 %i.dl, i1 false), !tbaa !34
-  %scevgep137 = getelementptr i8, ptr %.367.lcssa, i64 %i.dl
+  %5 = zext nneg i32 %3 to i64
+  %scevgep137 = getelementptr i8, ptr %.367.lcssa, i64 %5
   br label %.loopexit76
 
 .lr.ph98:                                         ; preds = %.lr.ph98.prol.loopexit, %.lr.ph98
@@ -610,7 +611,7 @@ tg3json_array_get.exit.thread.us:                 ; preds = %tg3json_array_get.e
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 56
   store i32 0, ptr %i.bw, align 8, !tbaa !179
   %i.bx = add nuw i64 %.03810.us, 4               ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.split.us.loopexit3.unr-lcssa, label %tg3json_array_get.exit.thread.us, !llvm.loop !576
 

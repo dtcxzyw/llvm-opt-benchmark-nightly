@@ -205,9 +205,10 @@ vec.epilog.middle.block269:                       ; preds = %vec.epilog.vector.b
   br i1 %.not106, label %.loopexit76, label %.lr.ph102.preheader
 
 .lr.ph102.preheader:                              ; preds = %.preheader
-  %i.dl = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.dl = zext nneg i32 %3 to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %.367.lcssa, i8 48, i64 %i.dl, i1 false), !tbaa !30
-  %scevgep137 = getelementptr i8, ptr %.367.lcssa, i64 %i.dl
+  %5 = zext nneg i32 %3 to i64
+  %scevgep137 = getelementptr i8, ptr %.367.lcssa, i64 %5
   br label %.loopexit76
 
 .lr.ph98:                                         ; preds = %.lr.ph98.prol.loopexit, %.lr.ph98

@@ -205,7 +205,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.g, ptr %i.h, align 4, !tbaa !64
   tail call void @_Z20printStringNoNewlinePSt6vectorI9t_inpfileSaIS0_EEPKc(ptr noundef %1, ptr noundef nonnull @.str.14)
-  %i.i = tail call noundef i32 @_Z8get_eintPSt6vectorI9t_inpfileSaIS0_EEPKciP14WarningHandler(ptr noundef %1, ptr noundef nonnull @.str.15, i32 noundef 1, ptr noundef %3) ; 4 uses
+  %i.i = tail call noundef i32 @_Z8get_eintPSt6vectorI9t_inpfileSaIS0_EEPKciP14WarningHandler(ptr noundef %1, ptr noundef nonnull @.str.15, i32 noundef 1, ptr noundef %3) ; 3 uses
   %i.j = icmp slt i32 %i.i, 1
   br i1 %i.j, label %bb.b, label %bb.e
 
@@ -227,7 +227,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.m = zext nneg i32 %i.i to i64                ; 9 uses
+  %i.m = zext nneg i32 %i.i to i64                ; 10 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !18   ; 3 uses
   %i.p = load ptr, ptr %i.l, align 8, !tbaa !19   ; 2 uses
@@ -297,7 +297,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.al = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.al, align 8, !tbaa !30
   store i8 0, ptr %i.ak, align 8, !tbaa !15
-  %i.am = add i64 %.057.i.i.i.i.i.prol, -1        ; 2 uses
+  %i.am = add nsw i64 %.057.i.i.i.i.i.prol, -1    ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -360,7 +360,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.bl = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 232
   store i64 0, ptr %i.bl, align 8, !tbaa !30
   store i8 0, ptr %i.bk, align 8, !tbaa !15
-  %i.bm = add i64 %.057.i.i.i.i.i, -8             ; 2 uses
+  %i.bm = add nsw i64 %.057.i.i.i.i.i, -8         ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 256 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.bm, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph, label %.lr.ph.i.i.i.i.i, !llvm.loop !57
@@ -373,7 +373,6 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #18
   %i.bp = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 7 uses
-  %wide.trip.count = zext nneg i32 %i.i to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph, %bb.bf
@@ -725,7 +724,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.fs = getelementptr inbounds nuw i8, ptr %i.bs, i64 88
   store float %i.fr, ptr %i.fs, align 8, !tbaa !76
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.m
   br i1 %exitcond.not, label %._crit_edge, label %bb.j, !llvm.loop !58
 
 ._crit_edge:                                      ; preds = %bb.bf

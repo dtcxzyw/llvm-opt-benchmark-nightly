@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   store i8 %i.aj, ptr %i.af, align 1
   store i8 %i.ag, ptr %i.ai, align 1
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !12
 
@@ -608,22 +608,18 @@ bb.dz:                                            ; preds = %bb.dy
 proto_item_set_generated.exit198.i.i:             ; preds = %bb.dz, %bb.dy, %proto_item_set_generated.exit.i.i
   %i.anr = load i32, ptr @hf_oss_sod_par_timestamp, align 4
   %i.ans = tail call ptr @proto_tree_add_item(ptr noundef %i.and, i32 noundef %i.anr, ptr noundef nonnull %i.ald, i32 noundef 0, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
-  %i.ant = icmp ugt i32 %i.alt, 4
-  br i1 %i.ant, label %.lr.ph210.preheader.i.i, label %dissect_opensafety_ssdo_payload.exit.i
-
-.lr.ph210.preheader.i.i:                          ; preds = %proto_item_set_generated.exit198.i.i
   %7 = lshr exact i32 %i.alt, 2
-  %umax.i.i = tail call i32 @llvm.umax.i32(i32 %7, i32 2)
-  br label %.lr.ph210.i.i
+  %i.ant = icmp ugt i32 %i.alt, 4
+  br i1 %i.ant, label %.lr.ph210.i.i, label %dissect_opensafety_ssdo_payload.exit.i
 
-.lr.ph210.i.i:                                    ; preds = %.lr.ph210.i.i, %.lr.ph210.preheader.i.i
-  %.0185209.i.i = phi i32 [ %i.any, %.lr.ph210.i.i ], [ 1, %.lr.ph210.preheader.i.i ] ; 3 uses
+.lr.ph210.i.i:                                    ; preds = %proto_item_set_generated.exit198.i.i, %.lr.ph210.i.i
+  %.0185209.i.i = phi i32 [ %i.any, %.lr.ph210.i.i ], [ 1, %proto_item_set_generated.exit198.i.i ] ; 3 uses
   %i.anu = shl nuw i32 %.0185209.i.i, 2           ; 2 uses
   %i.anv = tail call i32 @tvb_get_letohl(ptr noundef nonnull %i.ald, i32 noundef %i.anu) ; 2 uses
   %i.anw = load i32, ptr @hf_oss_sod_par_checksum, align 4
   %i.anx = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.and, i32 noundef %i.anw, ptr noundef nonnull %i.ald, i32 noundef %i.anu, i32 noundef 4, i32 noundef %i.anv, ptr noundef nonnull @.str.401, i32 noundef %.0185209.i.i, i32 noundef %i.anv) ; 0 uses
   %i.any = add nuw nsw i32 %.0185209.i.i, 1       ; 2 uses
-  %exitcond213.not.i.i = icmp eq i32 %i.any, %umax.i.i
+  %exitcond213.not.i.i = icmp eq i32 %i.any, %7
   br i1 %exitcond213.not.i.i, label %dissect_opensafety_ssdo_payload.exit.i, label %.lr.ph210.i.i, !llvm.loop !14
 
 .lr.ph207.i.i:                                    ; preds = %.preheader.i.i, %.loopexit203.i.i
@@ -1025,9 +1021,6 @@ declare i8 @llvm.fshl.i8(i8, i8, i8) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #10

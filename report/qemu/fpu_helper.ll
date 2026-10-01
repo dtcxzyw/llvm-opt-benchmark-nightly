@@ -205,7 +205,7 @@ bb.a:
 
 iter.check:                                       ; preds = %.split
   %i.i = sext i32 %spec.store.select to i64       ; 5 uses
-  %i.j = sub nsw i64 16, %i.i                     ; 13 uses
+  %i.j = sub nsw i64 16, %i.i                     ; 12 uses
   %i.k = sub nsw i64 15, %i.i                     ; 2 uses
   %i.l = sub i32 15, %spec.store.select           ; 2 uses
   %i.m = trunc i64 %i.k to i32
@@ -256,7 +256,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.j, %n.vec
-  br i1 %cmp.n, label %iter.check76, label %vec.epilog.iter.check
+  br i1 %cmp.n, label %vector.scevcheck60, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.w, 0
@@ -286,7 +286,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n58 = icmp eq i64 %i.j, %n.vec54
-  br i1 %cmp.n58, label %iter.check76, label %vec.epilog.scalar.ph.preheader
+  br i1 %cmp.n58, label %vector.scevcheck60, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 15, %iter.check ], [ 15, %vector.memcheck ], [ %i.x, %vec.epilog.iter.check ], [ %i.aj, %vec.epilog.middle.block ]
@@ -294,15 +294,15 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector
 
 .preheader20.us28.preheader:                      ; preds = %.split
   %i.at = zext nneg i32 %spec.store.select to i64 ; 2 uses
-  %4 = zext nneg i32 %spec.store.select to i64    ; 2 uses
-  %5 = sub nsw i64 16, %i.at                      ; 2 uses
-  %xtraiter = and i64 %5, 3                       ; 3 uses
+  %narrow = sub nuw nsw i32 16, %spec.store.select ; 2 uses
+  %4 = zext nneg i32 %narrow to i64               ; 4 uses
+  %xtraiter = and i64 %4, 3                       ; 3 uses
   %i.au = add nsw i32 %spec.store.select, -13
   %i.av = icmp ult i32 %i.au, 3
   br i1 %i.av, label %.epil.preheader, label %.preheader20.us28.preheader.new
 
 .preheader20.us28.preheader.new:                  ; preds = %.preheader20.us28.preheader
-  %unroll_iter = and i64 %5, -4
+  %unroll_iter = and i64 %4, 28
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.preheader20.us28.preheader.new
@@ -370,15 +370,13 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %..preheader_crit_edge.us.preheader, label %bb.c, !llvm.loop !80
 
 ..preheader_crit_edge.us.preheader:               ; preds = %bb.c, %..preheader_crit_edge.us.preheader.unr-lcssa
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %1, i8 0, i64 %4, i1 false)
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.at, i64 15)
-  %6 = sub nuw nsw i64 16, %umin                  ; 3 uses
-  %xtraiter99 = and i64 %6, 1
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %1, i8 0, i64 %i.at, i1 false)
+  %xtraiter99 = and i64 %4, 1
   %i.ca = icmp eq i32 %i.c, 15
   br i1 %i.ca, label %.epil.preheader98, label %..preheader_crit_edge.us.preheader.new
 
 ..preheader_crit_edge.us.preheader.new:           ; preds = %..preheader_crit_edge.us.preheader
-  %unroll_iter103 = and i64 %6, 30
+  %unroll_iter103 = and i64 %4, 30
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %..preheader_crit_edge.us.preheader.new
@@ -411,7 +409,7 @@ bb.d:                                             ; preds = %bb.d, %..preheader_
 
 .epil.preheader98:                                ; preds = %..preheader_crit_edge.us.preheader.1.unr-lcssa, %..preheader_crit_edge.us.preheader
   %indvars.iv39.1.epil.init = phi i64 [ 15, %..preheader_crit_edge.us.preheader ], [ %indvars.iv.next40.1.1, %..preheader_crit_edge.us.preheader.1.unr-lcssa ]
-  %lcmp.mod102 = trunc i64 %6 to i1
+  %lcmp.mod102 = trunc i32 %narrow to i1
   tail call void @llvm.assume(i1 %lcmp.mod102)
   %i.cp = add nuw nsw i64 %indvars.iv39.1.epil.init, 16 ; 2 uses
   %i.cq = trunc nsw i64 %i.cp to i32
@@ -425,7 +423,7 @@ bb.d:                                             ; preds = %bb.d, %..preheader_
 
 ..preheader_crit_edge.us.preheader.1:             ; preds = %..preheader_crit_edge.us.preheader.1.unr-lcssa, %.epil.preheader98
   %scevgep.1 = getelementptr i8, ptr %1, i64 16
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.1, i8 0, i64 %4, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.1, i8 0, i64 %i.at, i1 false)
   br label %.split27.us.split
 
 ..preheader_crit_edge:                            ; preds = %..preheader_crit_edge.preheader, %..preheader_crit_edge
@@ -453,13 +451,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store i8 %i.dh, ptr %i.di, align 1
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %.not.not = icmp sgt i64 %indvars.iv, %i.i
-  br i1 %.not.not, label %vec.epilog.scalar.ph, label %iter.check76, !llvm.loop !82
+  br i1 %.not.not, label %vec.epilog.scalar.ph, label %vector.scevcheck60, !llvm.loop !82
 
-iter.check76:                                     ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
-  %min.iters.check63 = icmp ult i64 %i.j, 8
-  br i1 %min.iters.check63, label %..preheader_crit_edge.preheader, label %vector.scevcheck60
-
-vector.scevcheck60:                               ; preds = %iter.check76
+vector.scevcheck60:                               ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block
   %i.dj = sub nsw i64 15, %i.i                    ; 2 uses
   %i.dk = sub i32 31, %spec.store.select          ; 2 uses
   %i.dl = trunc i64 %i.dj to i32
@@ -542,8 +536,8 @@ vec.epilog.middle.block86:                        ; preds = %vec.epilog.vector.b
   %cmp.n87 = icmp eq i64 %i.j, %n.vec81
   br i1 %cmp.n87, label %.split27.us.split, label %..preheader_crit_edge.preheader
 
-..preheader_crit_edge.preheader:                  ; preds = %iter.check76, %vector.scevcheck60, %vector.memcheck61, %vec.epilog.iter.check78, %vec.epilog.middle.block86
-  %indvars.iv.1.ph = phi i64 [ 15, %iter.check76 ], [ 15, %vector.scevcheck60 ], [ 15, %vector.memcheck61 ], [ %i.dw, %vec.epilog.iter.check78 ], [ %i.ei, %vec.epilog.middle.block86 ]
+..preheader_crit_edge.preheader:                  ; preds = %vector.scevcheck60, %vector.memcheck61, %vec.epilog.iter.check78, %vec.epilog.middle.block86
+  %indvars.iv.1.ph = phi i64 [ 15, %vector.scevcheck60 ], [ 15, %vector.memcheck61 ], [ %i.dw, %vec.epilog.iter.check78 ], [ %i.ei, %vec.epilog.middle.block86 ]
   br label %..preheader_crit_edge
 
 .split27.us.split:                                ; preds = %..preheader_crit_edge, %middle.block73, %vec.epilog.middle.block86, %..preheader_crit_edge.us.preheader.1, %.preheader20.us.preheader

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
   %i.ag = zext nneg i32 %i.af to i64
   %i.ah = shl nuw nsw i64 %i.ag, 3
   %i.ai = alloca i8, i64 %i.ah, align 16          ; 9 uses
-  %i.aj = zext nneg i32 %2 to i64                 ; 6 uses
+  %i.aj = zext nneg i32 %2 to i64                 ; 8 uses
   %i.ak = getelementptr [8 x i8], ptr %i.ai, i64 %i.aj ; 16 uses
   %wide.trip.count = zext nneg i32 %i.g to i64
   br label %.lr.ph
@@ -316,7 +316,6 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph618:                                        ; preds = %bb.l
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %.promoted619 = load ptr, ptr %i.cr, align 8, !tbaa !86
-  %wide.trip.count661 = zext nneg i32 %2 to i64
   br label %bb.n
 
 .backedge:                                        ; preds = %.backedge.backedge, %.lr.ph612
@@ -507,7 +506,7 @@ bb.n:                                             ; preds = %.lr.ph618, %bb.n
   store i32 %i.n, ptr %i.gr, align 4, !tbaa !94
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gd, i64 60 ; 2 uses
   %indvars.iv.next658 = add nuw nsw i64 %indvars.iv657, 1 ; 2 uses
-  %exitcond662.not = icmp eq i64 %indvars.iv.next658, %wide.trip.count661
+  %exitcond662.not = icmp eq i64 %indvars.iv.next658, %i.aj
   br i1 %exitcond662.not, label %..loopexit606_crit_edge, label %bb.n, !llvm.loop !289
 
 bb.o:                                             ; preds = %bb.h
@@ -588,7 +587,6 @@ bb.o:                                             ; preds = %bb.h
   store ptr %i.kv, ptr %i.il, align 8, !tbaa !88
   %i.ip = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %.promoted629 = load ptr, ptr %i.ip, align 8, !tbaa !86
-  %wide.trip.count672 = zext nneg i32 %2 to i64
   br label %bb.s
 
 bb.p:                                             ; preds = %.lr.ph624, %bb.r
@@ -712,7 +710,7 @@ bb.s:                                             ; preds = %.lr.ph628, %bb.s
   store i32 %i.n, ptr %i.lp, align 4, !tbaa !94
   %i.lq = getelementptr inbounds nuw i8, ptr %i.kw, i64 80 ; 2 uses
   %indvars.iv.next669 = add nuw nsw i64 %indvars.iv668, 1 ; 2 uses
-  %exitcond673.not = icmp eq i64 %indvars.iv.next669, %wide.trip.count672
+  %exitcond673.not = icmp eq i64 %indvars.iv.next669, %i.aj
   br i1 %exitcond673.not, label %..loopexit604_crit_edge, label %bb.s, !llvm.loop !291
 
 ..loopexit604_crit_edge:                          ; preds = %bb.s
@@ -957,11 +955,10 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph134.preheader:                              ; preds = %.lr.ph134.preheader.unr-lcssa, %.epil.preheader
   %.lcssa200 = phi ptr [ %i.ba, %.lr.ph134.preheader.unr-lcssa ], [ %i.ac, %.epil.preheader ]
   store ptr %.lcssa200, ptr %i.q, align 8, !tbaa !88
-  %i.ad = zext nneg i32 %2 to i64
+  %i.ad = zext nneg i32 %2 to i64                 ; 3 uses
   %i.ae = shl nuw nsw i64 %i.ad, 3
   %i.af = alloca i8, i64 %i.ae, align 16          ; 3 uses
   %i.ag = add nsw i32 %2, -1                      ; 4 uses
-  %wide.trip.count = zext nneg i32 %2 to i64
   %.phi.trans.insert = zext nneg i32 %i.ag to i64
   %.phi.trans.insert173 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.phi.trans.insert
   %i.ah = load <2 x float>, ptr %.phi.trans.insert173, align 4, !tbaa !15
@@ -1006,7 +1003,6 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %.promoted139 = load ptr, ptr %i.bd, align 8, !tbaa !86
   %.promoted141 = load ptr, ptr %i.be, align 8, !tbaa !88
-  %wide.trip.count163 = zext nneg i32 %2 to i64
   %.phi.trans.insert176 = zext nneg i32 %i.ag to i64
   %.phi.trans.insert177 = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %.phi.trans.insert176
   %i.bf = load <2 x float>, ptr %.phi.trans.insert177, align 8, !tbaa !15
@@ -1045,7 +1041,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph134
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
   store float %i.by, ptr %i.bz, align 4, !tbaa !90
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond158.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond158.not = icmp eq i64 %indvars.iv.next, %i.ad
   br i1 %exitcond158.not, label %.lr.ph137, label %.lr.ph134, !llvm.loop !295
 
 bb.f:                                             ; preds = %bb.i
@@ -1127,7 +1123,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.du = getelementptr inbounds nuw i8, ptr %i.cc, i64 12 ; 2 uses
   %indvars.iv.next160 = add nuw nsw i64 %indvars.iv159, 1 ; 2 uses
   %i.dv = trunc nuw nsw i64 %indvars.iv159 to i32
-  %exitcond164.not = icmp eq i64 %indvars.iv.next160, %wide.trip.count163
+  %exitcond164.not = icmp eq i64 %indvars.iv.next160, %i.ad
   br i1 %exitcond164.not, label %bb.f, label %bb.g, !llvm.loop !296
 
 .lr.ph145:                                        ; preds = %bb.b
