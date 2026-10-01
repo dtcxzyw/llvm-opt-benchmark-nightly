@@ -205,8 +205,8 @@ _ZSt22__chunk_insertion_sortIPPN12_GLOBAL__N_18CHRScopeElN9__gnu_cxx5__ops15_Ite
   br i1 %.not52.i283.i.i.i.i, label %._crit_edge.i307.i.i.i.i, label %.lr.ph.i284.i.i.i.i
 
 .lr.ph.i284.i.i.i.i:                              ; preds = %.lr.ph.i25.i.i.i.i
-  %.idx.i285.i.i.i.i = shl i64 %.022.i26.i.i.i.i, 3 ; 16 uses
-  %.idx46.i286.i.i.i.i = shl nsw i64 %.022.i26.i.i.i.i, 4 ; 2 uses
+  %.idx.i285.i.i.i.i = shl i64 %.022.i26.i.i.i.i, 3 ; 15 uses
+  %.idx46.i286.i.i.i.i = shl i64 %.022.i26.i.i.i.i, 4 ; 2 uses
   %.not47.i287.i.i.i.i = icmp eq i64 %.idx.i285.i.i.i.i, %.idx46.i286.i.i.i.i
   br i1 %.not47.i287.i.i.i.i, label %._crit_edge.i.us.preheader.i334.i.i.i.i, label %.lr.ph.i.preheader.i288.i.i.i.i
 
@@ -264,12 +264,11 @@ _ZSt22__chunk_insertion_sortIPPN12_GLOBAL__N_18CHRScopeElN9__gnu_cxx5__ops15_Ite
   br i1 %.not.us.i340.us.i.i.i.i, label %._crit_edge.i307.i.i.i.i, label %._crit_edge.i.us.i335.us.i.i.i.i, !llvm.loop !6
 
 ._crit_edge.i.us.i335.i.i.i.i:                    ; preds = %._crit_edge.i.us.i335.i.preheader.i.i.i, %._crit_edge.i.us.i335.i.i.i.i
-  %.054.us.i336.i.i.i.i = phi ptr [ %20, %._crit_edge.i.us.i335.i.i.i.i ], [ %.val7.i86.i, %._crit_edge.i.us.i335.i.preheader.i.i.i ]
+  %.054.us.i336.i.i.i.i = phi ptr [ %i.tb, %._crit_edge.i.us.i335.i.i.i.i ], [ %.val7.i86.i, %._crit_edge.i.us.i335.i.preheader.i.i.i ]
   %.01953.us.i337.i.i.i.i = phi ptr [ %i.tc, %._crit_edge.i.us.i335.i.i.i.i ], [ %i.kt, %._crit_edge.i.us.i335.i.preheader.i.i.i ]
-  %20 = getelementptr inbounds i8, ptr %.054.us.i336.i.i.i.i, i64 %.idx.i285.i.i.i.i ; 3 uses
-  %i.tb = getelementptr inbounds i8, ptr %.01953.us.i337.i.i.i.i, i64 %.idx.i285.i.i.i.i
-  %i.tc = getelementptr inbounds i8, ptr %i.tb, i64 %.idx.i285.i.i.i.i ; 2 uses
-  %i.td = ptrtoint ptr %20 to i64
+  %i.tb = getelementptr inbounds i8, ptr %.054.us.i336.i.i.i.i, i64 %.idx.i285.i.i.i.i ; 3 uses
+  %i.tc = getelementptr inbounds i8, ptr %.01953.us.i337.i.i.i.i, i64 %.idx.i285.i.i.i.i ; 2 uses
+  %i.td = ptrtoint ptr %i.tb to i64
   %i.te = sub i64 %i.la, %i.td
   %i.tf = ashr exact i64 %i.te, 3                 ; 2 uses
   %.not.us.i340.i.i.i.i = icmp slt i64 %i.tf, %i.sf
@@ -358,7 +357,7 @@ _ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_i
 
 ._crit_edge.i307.i.i.i.i:                         ; preds = %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i305.i.i.i.i, %._crit_edge.i.us.i335.i.i.i.i, %._crit_edge.i.us.i335.i.us.i.i.i, %._crit_edge.i.us.i335.us.i.i.i.i, %._crit_edge.i.us.i335.us.us.i.i.i.i, %.lr.ph.i25.i.i.i.i
   %.019.lcssa.i308.i.i.i.i = phi ptr [ %i.kt, %.lr.ph.i25.i.i.i.i ], [ %i.sx, %._crit_edge.i.us.i335.us.i.i.i.i ], [ %i.tc, %._crit_edge.i.us.i335.i.i.i.i ], [ %i.sk, %._crit_edge.i.us.i335.i.us.i.i.i ], [ %i.sr, %._crit_edge.i.us.i335.us.us.i.i.i.i ], [ %i.uc, %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i305.i.i.i.i ] ; 2 uses
-  %.0.lcssa.i309.i.i.i.i = phi ptr [ %.val7.i86.i, %.lr.ph.i25.i.i.i.i ], [ %i.sv, %._crit_edge.i.us.i335.us.i.i.i.i ], [ %20, %._crit_edge.i.us.i335.i.i.i.i ], [ %i.si, %._crit_edge.i.us.i335.i.us.i.i.i ], [ %i.sp, %._crit_edge.i.us.i335.us.us.i.i.i.i ], [ %i.th, %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i305.i.i.i.i ] ; 3 uses
+  %.0.lcssa.i309.i.i.i.i = phi ptr [ %.val7.i86.i, %.lr.ph.i25.i.i.i.i ], [ %i.sv, %._crit_edge.i.us.i335.us.i.i.i.i ], [ %i.tb, %._crit_edge.i.us.i335.i.i.i.i ], [ %i.si, %._crit_edge.i.us.i335.i.us.i.i.i ], [ %i.sp, %._crit_edge.i.us.i335.us.us.i.i.i.i ], [ %i.th, %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i305.i.i.i.i ] ; 3 uses
   %.lcssa50.i310.i.i.i.i = phi i64 [ %i.kr, %.lr.ph.i25.i.i.i.i ], [ %i.ta, %._crit_edge.i.us.i335.us.i.i.i.i ], [ %i.tf, %._crit_edge.i.us.i335.i.i.i.i ], [ %i.sn, %._crit_edge.i.us.i335.i.us.i.i.i ], [ %i.su, %._crit_edge.i.us.i335.us.us.i.i.i.i ], [ %i.ue, %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i305.i.i.i.i ]
   %.sroa.speculated.i311.i.i.i.i = call i64 @llvm.smin.i64(i64 range(i64 -9223372036854775808, 2305843009213693949) %.022.i26.i.i.i.i, i64 %.lcssa50.i310.i.i.i.i) ; 2 uses
   %.idx48.i312.i.i.i.i = shl nsw i64 %.sroa.speculated.i311.i.i.i.i, 3
@@ -761,8 +760,8 @@ _ZSt22__chunk_insertion_sortIPPN12_GLOBAL__N_18CHRScopeElN9__gnu_cxx5__ops15_Ite
   br i1 %.not52.i122.i.i.i.i, label %._crit_edge.i146.i.i.i.i, label %.lr.ph.i123.i.i.i.i
 
 .lr.ph.i123.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i.i
-  %.idx.i124.i.i.i.i = shl i64 %.022.i.i.i.i.i, 3 ; 16 uses
-  %.idx46.i125.i.i.i.i = shl nsw i64 %.022.i.i.i.i.i, 4 ; 2 uses
+  %.idx.i124.i.i.i.i = shl i64 %.022.i.i.i.i.i, 3 ; 15 uses
+  %.idx46.i125.i.i.i.i = shl i64 %.022.i.i.i.i.i, 4 ; 2 uses
   %.not47.i126.i.i.i.i = icmp eq i64 %.idx.i124.i.i.i.i, %.idx46.i125.i.i.i.i
   br i1 %.not47.i126.i.i.i.i, label %._crit_edge.i.us.preheader.i173.i.i.i.i, label %.lr.ph.i.preheader.i127.i.i.i.i
 
@@ -820,12 +819,11 @@ _ZSt22__chunk_insertion_sortIPPN12_GLOBAL__N_18CHRScopeElN9__gnu_cxx5__ops15_Ite
   br i1 %.not.us.i179.us.i.i.i.i, label %._crit_edge.i146.i.i.i.i, label %._crit_edge.i.us.i174.us.i.i.i.i, !llvm.loop !6
 
 ._crit_edge.i.us.i174.i.i.i.i:                    ; preds = %._crit_edge.i.us.i174.i.preheader.i.i.i, %._crit_edge.i.us.i174.i.i.i.i
-  %.054.us.i175.i.i.i.i = phi ptr [ %21, %._crit_edge.i.us.i174.i.i.i.i ], [ %i.kz, %._crit_edge.i.us.i174.i.preheader.i.i.i ]
+  %.054.us.i175.i.i.i.i = phi ptr [ %i.afj, %._crit_edge.i.us.i174.i.i.i.i ], [ %i.kz, %._crit_edge.i.us.i174.i.preheader.i.i.i ]
   %.01953.us.i176.i.i.i.i = phi ptr [ %i.afk, %._crit_edge.i.us.i174.i.i.i.i ], [ %i.kt, %._crit_edge.i.us.i174.i.preheader.i.i.i ]
-  %21 = getelementptr inbounds i8, ptr %.054.us.i175.i.i.i.i, i64 %.idx.i124.i.i.i.i ; 3 uses
-  %i.afj = getelementptr inbounds i8, ptr %.01953.us.i176.i.i.i.i, i64 %.idx.i124.i.i.i.i
-  %i.afk = getelementptr inbounds i8, ptr %i.afj, i64 %.idx.i124.i.i.i.i ; 2 uses
-  %i.afl = ptrtoint ptr %21 to i64
+  %i.afj = getelementptr inbounds i8, ptr %.054.us.i175.i.i.i.i, i64 %.idx.i124.i.i.i.i ; 3 uses
+  %i.afk = getelementptr inbounds i8, ptr %.01953.us.i176.i.i.i.i, i64 %.idx.i124.i.i.i.i ; 2 uses
+  %i.afl = ptrtoint ptr %i.afj to i64
   %i.afm = sub i64 %i.ko, %i.afl
   %i.afn = ashr exact i64 %i.afm, 3               ; 2 uses
   %.not.us.i179.i.i.i.i = icmp slt i64 %i.afn, %i.aen
@@ -914,7 +912,7 @@ _ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_i
 
 ._crit_edge.i146.i.i.i.i:                         ; preds = %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i144.i.i.i.i, %._crit_edge.i.us.i174.i.i.i.i, %._crit_edge.i.us.i174.i.us.i.i.i, %._crit_edge.i.us.i174.us.i.i.i.i, %._crit_edge.i.us.i174.us.us.i.i.i.i, %.lr.ph.i.i.i.i.i
   %.019.lcssa.i147.i.i.i.i = phi ptr [ %i.kt, %.lr.ph.i.i.i.i.i ], [ %i.aff, %._crit_edge.i.us.i174.us.i.i.i.i ], [ %i.afk, %._crit_edge.i.us.i174.i.i.i.i ], [ %i.aes, %._crit_edge.i.us.i174.i.us.i.i.i ], [ %i.aez, %._crit_edge.i.us.i174.us.us.i.i.i.i ], [ %i.agk, %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i144.i.i.i.i ] ; 2 uses
-  %.0.lcssa.i148.i.i.i.i = phi ptr [ %i.kz, %.lr.ph.i.i.i.i.i ], [ %i.afd, %._crit_edge.i.us.i174.us.i.i.i.i ], [ %21, %._crit_edge.i.us.i174.i.i.i.i ], [ %i.aeq, %._crit_edge.i.us.i174.i.us.i.i.i ], [ %i.aex, %._crit_edge.i.us.i174.us.us.i.i.i.i ], [ %i.afp, %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i144.i.i.i.i ] ; 3 uses
+  %.0.lcssa.i148.i.i.i.i = phi ptr [ %i.kz, %.lr.ph.i.i.i.i.i ], [ %i.afd, %._crit_edge.i.us.i174.us.i.i.i.i ], [ %i.afj, %._crit_edge.i.us.i174.i.i.i.i ], [ %i.aeq, %._crit_edge.i.us.i174.i.us.i.i.i ], [ %i.aex, %._crit_edge.i.us.i174.us.us.i.i.i.i ], [ %i.afp, %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i144.i.i.i.i ] ; 3 uses
   %.lcssa50.i149.i.i.i.i = phi i64 [ %i.xi, %.lr.ph.i.i.i.i.i ], [ %i.afi, %._crit_edge.i.us.i174.us.i.i.i.i ], [ %i.afn, %._crit_edge.i.us.i174.i.i.i.i ], [ %i.aev, %._crit_edge.i.us.i174.i.us.i.i.i ], [ %i.afc, %._crit_edge.i.us.i174.us.us.i.i.i.i ], [ %i.agm, %_ZSt12__move_mergeIPPN12_GLOBAL__N_18CHRScopeES3_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbS2_S2_EEEET0_T_SB_SB_SB_SA_T1_.exit.i144.i.i.i.i ]
   %.sroa.speculated.i150.i.i.i.i = call i64 @llvm.smin.i64(i64 range(i64 -9223372036854775808, 2305843009213693949) %.022.i.i.i.i.i, i64 %.lcssa50.i149.i.i.i.i) ; 2 uses
   %.idx48.i151.i.i.i.i = shl nsw i64 %.sroa.speculated.i150.i.i.i.i, 3

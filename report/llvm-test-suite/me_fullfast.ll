@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %bb.am
   %i.ahf = icmp sgt i32 %i.ahe, 0
   %i.ahg = load i32, ptr @img_cr_padded_size_x, align 4, !tbaa !7
   %i.ahh = sub nsw i32 %i.ahg, %i.ahe
-  %i.ahi = sext i32 %i.ahh to i64                 ; 10 uses
+  %i.ahi = sext i32 %i.ahh to i64                 ; 3 uses
   br i1 %i.ahf, label %.preheader545.us.preheader, label %._crit_edge610.preheader
 
 ._crit_edge610.preheader:                         ; preds = %.preheader545.lr.ph
@@ -218,6 +218,7 @@ bb.an:                                            ; preds = %bb.am
 
 ._crit_edge610.preheader.new:                     ; preds = %._crit_edge610.preheader
   %unroll_iter = and i32 %i.ahl, 2147483640
+  %2 = shl nsw i64 %i.ahi, 4
   br label %._crit_edge610
 
 .preheader545.us.preheader:                       ; preds = %.preheader545.lr.ph
@@ -596,16 +597,9 @@ bb.ao:                                            ; preds = %bb.ao, %.epil.prehe
   br i1 %i.apo, label %.preheader545.us, label %._crit_edge621, !llvm.loop !152
 
 ._crit_edge610:                                   ; preds = %._crit_edge610, %._crit_edge610.preheader.new
-  %.11615 = phi ptr [ %.10634, %._crit_edge610.preheader.new ], [ %9, %._crit_edge610 ]
+  %.11615 = phi ptr [ %.10634, %._crit_edge610.preheader.new ], [ %3, %._crit_edge610 ]
   %niter = phi i32 [ 0, %._crit_edge610.preheader.new ], [ %niter.next.7, %._crit_edge610 ]
-  %2 = getelementptr inbounds [2 x i8], ptr %.11615, i64 %i.ahi
-  %3 = getelementptr inbounds [2 x i8], ptr %2, i64 %i.ahi
-  %4 = getelementptr inbounds [2 x i8], ptr %3, i64 %i.ahi
-  %5 = getelementptr inbounds [2 x i8], ptr %4, i64 %i.ahi
-  %6 = getelementptr inbounds [2 x i8], ptr %5, i64 %i.ahi
-  %7 = getelementptr inbounds [2 x i8], ptr %6, i64 %i.ahi
-  %8 = getelementptr inbounds [2 x i8], ptr %7, i64 %i.ahi
-  %9 = getelementptr inbounds [2 x i8], ptr %8, i64 %i.ahi ; 3 uses
+  %3 = getelementptr inbounds i8, ptr %.11615, i64 %2 ; 3 uses
   %niter.next.7 = add i32 %niter, 8               ; 2 uses
   %niter.ncmp.7.not = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7.not, label %._crit_edge621.loopexit963.unr-lcssa, label %._crit_edge610, !llvm.loop !152
@@ -615,7 +609,7 @@ bb.ao:                                            ; preds = %bb.ao, %.epil.prehe
   br i1 %lcmp.mod.not, label %._crit_edge621, label %._crit_edge610.epil.preheader
 
 ._crit_edge610.epil.preheader:                    ; preds = %._crit_edge621.loopexit963.unr-lcssa, %._crit_edge610.preheader
-  %.11615.epil.init = phi ptr [ %.10634, %._crit_edge610.preheader ], [ %9, %._crit_edge621.loopexit963.unr-lcssa ]
+  %.11615.epil.init = phi ptr [ %.10634, %._crit_edge610.preheader ], [ %3, %._crit_edge621.loopexit963.unr-lcssa ]
   %lcmp.mod1019 = icmp ne i32 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod1019)
   br label %._crit_edge610.epil
@@ -630,7 +624,7 @@ bb.ao:                                            ; preds = %bb.ao, %.epil.prehe
 
 ._crit_edge621:                                   ; preds = %._crit_edge621.loopexit963.unr-lcssa, %._crit_edge610.epil, %._crit_edge610.us, %.preheader547
   %.16.lcssa = phi ptr [ %.15506633, %.preheader547 ], [ %.lcssa979, %._crit_edge610.us ], [ %.15506633, %._crit_edge610.epil ], [ %.15506633, %._crit_edge621.loopexit963.unr-lcssa ] ; 2 uses
-  %.11.lcssa = phi ptr [ %.10634, %.preheader547 ], [ %i.apm, %._crit_edge610.us ], [ %9, %._crit_edge621.loopexit963.unr-lcssa ], [ %i.app, %._crit_edge610.epil ]
+  %.11.lcssa = phi ptr [ %.10634, %.preheader547 ], [ %i.apm, %._crit_edge610.us ], [ %3, %._crit_edge621.loopexit963.unr-lcssa ], [ %i.app, %._crit_edge610.epil ]
   %.4455.lcssa = phi i32 [ 0, %.preheader547 ], [ %.lcssa969, %._crit_edge610.us ], [ 0, %._crit_edge610.epil ], [ 0, %._crit_edge621.loopexit963.unr-lcssa ]
   %.4449.lcssa = phi i32 [ 0, %.preheader547 ], [ %.lcssa972, %._crit_edge610.us ], [ 0, %._crit_edge610.epil ], [ 0, %._crit_edge621.loopexit963.unr-lcssa ]
   %.4443.lcssa = phi i32 [ 0, %.preheader547 ], [ %.lcssa975, %._crit_edge610.us ], [ 0, %._crit_edge610.epil ], [ 0, %._crit_edge621.loopexit963.unr-lcssa ]
@@ -690,7 +684,7 @@ bb.ao:                                            ; preds = %bb.ao, %.epil.prehe
   %i.aqx = icmp sgt i32 %i.aqw, 0
   %i.aqy = load i32, ptr @img_cr_padded_size_x, align 4, !tbaa !7
   %i.aqz = sub nsw i32 %i.aqy, %i.aqw
-  %i.ara = sext i32 %i.aqz to i64                 ; 10 uses
+  %i.ara = sext i32 %i.aqz to i64                 ; 3 uses
   br i1 %i.aqx, label %.preheader545.us.1.preheader, label %._crit_edge610.1.preheader
 
 ._crit_edge610.1.preheader:                       ; preds = %.preheader545.lr.ph.1
@@ -703,6 +697,7 @@ bb.ao:                                            ; preds = %bb.ao, %.epil.prehe
 
 ._crit_edge610.1.preheader.new:                   ; preds = %._crit_edge610.1.preheader
   %unroll_iter1083 = and i32 %i.ard, 2147483640
+  %4 = shl nsw i64 %i.ara, 4
   br label %._crit_edge610.1
 
 .preheader545.us.1.preheader:                     ; preds = %.preheader545.lr.ph.1
@@ -732,16 +727,9 @@ bb.ao:                                            ; preds = %bb.ao, %.epil.prehe
   br label %.preheader545.us.1
 
 ._crit_edge610.1:                                 ; preds = %._crit_edge610.1, %._crit_edge610.1.preheader.new
-  %.11615.1 = phi ptr [ %.10634.1, %._crit_edge610.1.preheader.new ], [ %17, %._crit_edge610.1 ]
+  %.11615.1 = phi ptr [ %.10634.1, %._crit_edge610.1.preheader.new ], [ %5, %._crit_edge610.1 ]
   %niter1084 = phi i32 [ 0, %._crit_edge610.1.preheader.new ], [ %niter1084.next.7, %._crit_edge610.1 ]
-  %10 = getelementptr inbounds [2 x i8], ptr %.11615.1, i64 %i.ara
-  %11 = getelementptr inbounds [2 x i8], ptr %10, i64 %i.ara
-  %12 = getelementptr inbounds [2 x i8], ptr %11, i64 %i.ara
-  %13 = getelementptr inbounds [2 x i8], ptr %12, i64 %i.ara
-  %14 = getelementptr inbounds [2 x i8], ptr %13, i64 %i.ara
-  %15 = getelementptr inbounds [2 x i8], ptr %14, i64 %i.ara
-  %16 = getelementptr inbounds [2 x i8], ptr %15, i64 %i.ara
-  %17 = getelementptr inbounds [2 x i8], ptr %16, i64 %i.ara ; 3 uses
+  %5 = getelementptr inbounds i8, ptr %.11615.1, i64 %4 ; 3 uses
   %niter1084.next.7 = add i32 %niter1084, 8       ; 2 uses
   %niter1084.ncmp.7.not = icmp eq i32 %niter1084.next.7, %unroll_iter1083
   br i1 %niter1084.ncmp.7.not, label %._crit_edge621.1.loopexit962.unr-lcssa, label %._crit_edge610.1, !llvm.loop !152
@@ -1100,7 +1088,7 @@ bb.ap:                                            ; preds = %bb.ap, %.epil.prehe
   br i1 %lcmp.mod1080.not, label %._crit_edge621.1, label %._crit_edge610.1.epil.preheader
 
 ._crit_edge610.1.epil.preheader:                  ; preds = %._crit_edge621.1.loopexit962.unr-lcssa, %._crit_edge610.1.preheader
-  %.11615.1.epil.init = phi ptr [ %.10634.1, %._crit_edge610.1.preheader ], [ %17, %._crit_edge621.1.loopexit962.unr-lcssa ]
+  %.11615.1.epil.init = phi ptr [ %.10634.1, %._crit_edge610.1.preheader ], [ %5, %._crit_edge621.1.loopexit962.unr-lcssa ]
   %lcmp.mod1082 = icmp ne i32 %xtraiter1078, 0
   call void @llvm.assume(i1 %lcmp.mod1082)
   br label %._crit_edge610.1.epil
@@ -1115,7 +1103,7 @@ bb.ap:                                            ; preds = %bb.ap, %.epil.prehe
 
 ._crit_edge621.1:                                 ; preds = %._crit_edge621.1.loopexit962.unr-lcssa, %._crit_edge610.1.epil, %._crit_edge610.us.1, %.preheader547.1
   %.16.lcssa.1 = phi ptr [ %.15506633.1, %.preheader547.1 ], [ %.lcssa993, %._crit_edge610.us.1 ], [ %.15506633.1, %._crit_edge610.1.epil ], [ %.15506633.1, %._crit_edge621.1.loopexit962.unr-lcssa ]
-  %.11.lcssa.1 = phi ptr [ %.10634.1, %.preheader547.1 ], [ %i.aze, %._crit_edge610.us.1 ], [ %17, %._crit_edge621.1.loopexit962.unr-lcssa ], [ %i.azh, %._crit_edge610.1.epil ]
+  %.11.lcssa.1 = phi ptr [ %.10634.1, %.preheader547.1 ], [ %i.aze, %._crit_edge610.us.1 ], [ %5, %._crit_edge621.1.loopexit962.unr-lcssa ], [ %i.azh, %._crit_edge610.1.epil ]
   %.4455.lcssa.1 = phi i32 [ 0, %.preheader547.1 ], [ %.lcssa983, %._crit_edge610.us.1 ], [ 0, %._crit_edge610.1.epil ], [ 0, %._crit_edge621.1.loopexit962.unr-lcssa ]
   %.4449.lcssa.1 = phi i32 [ 0, %.preheader547.1 ], [ %.lcssa986, %._crit_edge610.us.1 ], [ 0, %._crit_edge610.1.epil ], [ 0, %._crit_edge621.1.loopexit962.unr-lcssa ]
   %.4443.lcssa.1 = phi i32 [ 0, %.preheader547.1 ], [ %.lcssa989, %._crit_edge610.us.1 ], [ 0, %._crit_edge610.1.epil ], [ 0, %._crit_edge621.1.loopexit962.unr-lcssa ]

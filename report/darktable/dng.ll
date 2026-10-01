@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %.not498 = icmp eq i32 %.fr237, 2               ; 2 uses
   %i.bp = load ptr, ptr %i.v, align 8, !tbaa !78  ; 17 uses
   %.not23.i = icmp eq ptr %i.bp, null
-  %i.bq = zext i32 %.fr237 to i64                 ; 97 uses
+  %i.bq = zext i32 %.fr237 to i64                 ; 109 uses
   br i1 %.not23.i, label %.split190.us, label %.split190
 
 .split190.us:                                     ; preds = %bb.j
@@ -235,31 +235,37 @@ bb.j:                                             ; preds = %bb.i
   %unroll_iter885 = and i64 %i.bq, 2147483644
   %lcmp.mod883.not = icmp eq i64 %xtraiter881, 0
   %lcmp.mod884 = icmp ne i64 %xtraiter881, 0
+  %.idx862 = shl nuw nsw i64 %i.bq, 2
   %xtraiter897 = and i64 %i.bq, 3                 ; 3 uses
   %i.ch = icmp ult i32 %.fr237, 4
   %unroll_iter901 = and i64 %i.bq, 2147483644
   %lcmp.mod899.not = icmp eq i64 %xtraiter897, 0
   %lcmp.mod900 = icmp ne i64 %xtraiter897, 0
+  %.idx863 = shl nuw nsw i64 %i.bq, 2
   %xtraiter904 = and i64 %i.bq, 3                 ; 3 uses
   %i.ci = icmp ult i32 %.fr237, 4
   %unroll_iter908 = and i64 %i.bq, 2147483644
   %lcmp.mod906.not = icmp eq i64 %xtraiter904, 0
   %lcmp.mod907 = icmp ne i64 %xtraiter904, 0
+  %.idx864 = shl nuw nsw i64 %i.bq, 2
   %xtraiter911 = and i64 %i.bq, 3                 ; 3 uses
   %i.cj = icmp ult i32 %.fr237, 4
   %unroll_iter915 = and i64 %i.bq, 2147483644
   %lcmp.mod913.not = icmp eq i64 %xtraiter911, 0
   %lcmp.mod914 = icmp ne i64 %xtraiter911, 0
+  %.idx865 = shl nuw nsw i64 %i.bq, 2
   %xtraiter918 = and i64 %i.bq, 3                 ; 3 uses
   %i.ck = icmp ult i32 %.fr237, 4
   %unroll_iter922 = and i64 %i.bq, 2147483644
   %lcmp.mod920.not = icmp eq i64 %xtraiter918, 0
   %lcmp.mod921 = icmp ne i64 %xtraiter918, 0
+  %.idx866 = shl nuw nsw i64 %i.bq, 2
   %xtraiter925 = and i64 %i.bq, 3                 ; 3 uses
   %i.cl = icmp ult i32 %.fr237, 4
   %unroll_iter929 = and i64 %i.bq, 2147483644
   %lcmp.mod927.not = icmp eq i64 %xtraiter925, 0
   %lcmp.mod928 = icmp ne i64 %xtraiter925, 0
+  %.idx867 = shl nuw nsw i64 %i.bq, 2
   %xtraiter932 = and i64 %i.bq, 3                 ; 3 uses
   %i.cm = icmp ult i32 %.fr237, 4
   %unroll_iter936 = and i64 %i.bq, 2147483644
@@ -279,7 +285,7 @@ bb.j:                                             ; preds = %bb.i
   %i.cp = load i16, ptr %i.k, align 8, !tbaa !79
   %i.cq = zext i16 %i.cp to i32
   %i.cr = icmp ult i32 %i.co, %i.cq
-  br i1 %i.cr, label %bb.k, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread
+  br i1 %i.cr, label %bb.k, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread
 
 bb.k:                                             ; preds = %.preheader.us.us.us
   %i.cs = load i16, ptr %i.t, align 2, !tbaa !80
@@ -387,11 +393,11 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us: ; preds = %bb.l, %_ZN
   %.pre327 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre334 = zext i16 %.pre327 to i32
   %i.fe = icmp samesign ult i32 %i.co, %.pre334
-  br i1 %i.fe, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.thread, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread
+  br i1 %i.fe, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.thread, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.thread: ; preds = %bb.k, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us
   %i.ff = phi i32 [ %i.bt, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us ], [ %i.bs, %bb.k ] ; 6 uses
-  %i.fg = getelementptr inbounds nuw [2 x i8], ptr %.0128188.us.us.us, i64 %i.bq ; 6 uses
+  %i.fg = getelementptr inbounds nuw [2 x i8], ptr %.0128188.us.us.us, i64 %i.bq ; 13 uses
   %i.fh = load i16, ptr %i.t, align 2, !tbaa !80
   %i.fi = zext i16 %i.fh to i32
   %i.fj = icmp ult i32 %i.ff, %i.fi
@@ -464,6 +470,10 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.thread: ; preds = %bb.
   %niter902.ncmp.3 = icmp eq i64 %niter902.next.3, %unroll_iter901
   br i1 %niter902.ncmp.3, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.unr-lcssa, label %.lr.ph.i.us.us.us.us.us.1.new, !llvm.loop !0
 
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread: ; preds = %.preheader.us.us.us, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us
+  %2 = getelementptr inbounds nuw i8, ptr %.0128188.us.us.us, i64 %.idx862
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread
+
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.unr-lcssa: ; preds = %.lr.ph.i.us.us.us.us.us.1.new
   br i1 %lcmp.mod899.not, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1, label %.epil.preheader896
 
@@ -497,24 +507,35 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1: ; preds = %bb.m, %_
   %.pre328 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre335 = zext i16 %.pre328 to i32
   %i.ht = icmp samesign ult i32 %i.co, %.pre335
-  br i1 %i.ht, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread
+  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.fg, i64 %i.bq
+  br i1 %i.ht, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.thread, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1
   %i.hu = phi i32 [ %i.bv, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1 ], [ %i.bu, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.thread ] ; 6 uses
-  %2 = getelementptr inbounds nuw [2 x i8], ptr %i.fg, i64 %i.bq ; 7 uses
   %i.hv = load i16, ptr %i.t, align 2, !tbaa !80
   %i.hw = zext i16 %i.hv to i32
   %i.hx = icmp ult i32 %i.hu, %i.hw
-  br i1 %i.hx, label %.lr.ph.i.us.us.us.us.us.2, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a
+  br i1 %i.hx, label %.lr.ph.i.us.us.us.us.us.2, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507
+
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503
+  %4 = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.idx863
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a
 
 .lr.ph.i.us.us.us.us.us.2:                        ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503
   %i.hy = load ptr, ptr %i.u, align 8, !tbaa !82  ; 5 uses
-  br i1 %i.ci, label %.epil.preheader903, label %.lr.ph.i.us.us.us.us.us.2.new.a
+  br i1 %i.ci, label %.epil.preheader903, label %.lr.ph.i.us.us.us.us.us.2.new
 
-.lr.ph.i.us.us.us.us.us.2.new.a:                  ; preds = %.lr.ph.i.us.us.us.us.us.2, %.lr.ph.i.us.us.us.us.us.2.new.a
-  %indvars.iv.i.us.us.us.us.us.2 = phi i64 [ %indvars.iv.next.i.us.us.us.us.us.2.3, %.lr.ph.i.us.us.us.us.us.2.new.a ], [ 0, %.lr.ph.i.us.us.us.us.us.2 ] ; 6 uses
-  %niter909 = phi i64 [ %niter909.next.3, %.lr.ph.i.us.us.us.us.us.2.new.a ], [ 0, %.lr.ph.i.us.us.us.us.us.2 ]
-  %i.hz = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %indvars.iv.i.us.us.us.us.us.2
+.lr.ph.i.us.us.us.us.us.2.new:                    ; preds = %.lr.ph.i.us.us.us.us.us.2
+  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.fg, i64 %i.bq
+  %6 = getelementptr inbounds nuw [2 x i8], ptr %i.fg, i64 %i.bq
+  %7 = getelementptr inbounds nuw [2 x i8], ptr %i.fg, i64 %i.bq
+  %8 = getelementptr inbounds nuw [2 x i8], ptr %i.fg, i64 %i.bq
+  br label %.lr.ph.i.us.us.us.us.us.2.new.a
+
+.lr.ph.i.us.us.us.us.us.2.new.a:                  ; preds = %.lr.ph.i.us.us.us.us.us.2.new.a, %.lr.ph.i.us.us.us.us.us.2.new
+  %indvars.iv.i.us.us.us.us.us.2 = phi i64 [ 0, %.lr.ph.i.us.us.us.us.us.2.new ], [ %indvars.iv.next.i.us.us.us.us.us.2.3, %.lr.ph.i.us.us.us.us.us.2.new.a ] ; 6 uses
+  %niter909 = phi i64 [ 0, %.lr.ph.i.us.us.us.us.us.2.new ], [ %niter909.next.3, %.lr.ph.i.us.us.us.us.us.2.new.a ]
+  %i.hz = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %indvars.iv.i.us.us.us.us.us.2
   %i.ia = load i16, ptr %i.hz, align 2, !tbaa !81
   %i.ib = zext i16 %i.ia to i64
   %i.ic = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.ib
@@ -528,7 +549,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503: ; preds =
   %i.ik = getelementptr inbounds nuw [2 x i8], ptr %i.ij, i64 %indvars.iv.i.us.us.us.us.us.2
   store i16 %i.id, ptr %i.ik, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.2 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.2, 1 ; 2 uses
-  %i.il = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %indvars.iv.next.i.us.us.us.us.us.2
+  %i.il = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %indvars.iv.next.i.us.us.us.us.us.2
   %i.im = load i16, ptr %i.il, align 2, !tbaa !81
   %i.in = zext i16 %i.im to i64
   %i.io = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.in
@@ -542,7 +563,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503: ; preds =
   %i.iw = getelementptr inbounds nuw [2 x i8], ptr %i.iv, i64 %indvars.iv.next.i.us.us.us.us.us.2
   store i16 %i.ip, ptr %i.iw, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.2.1 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.2, 2 ; 2 uses
-  %i.ix = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %indvars.iv.next.i.us.us.us.us.us.2.1
+  %i.ix = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %indvars.iv.next.i.us.us.us.us.us.2.1
   %i.iy = load i16, ptr %i.ix, align 2, !tbaa !81
   %i.iz = zext i16 %i.iy to i64
   %i.ja = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.iz
@@ -556,7 +577,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503: ; preds =
   %i.ji = getelementptr inbounds nuw [2 x i8], ptr %i.jh, i64 %indvars.iv.next.i.us.us.us.us.us.2.1
   store i16 %i.jb, ptr %i.ji, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.2.2 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.2, 3 ; 2 uses
-  %i.jj = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %indvars.iv.next.i.us.us.us.us.us.2.2
+  %i.jj = getelementptr inbounds nuw [2 x i8], ptr %8, i64 %indvars.iv.next.i.us.us.us.us.us.2.2
   %i.jk = load i16, ptr %i.jj, align 2, !tbaa !81
   %i.jl = zext i16 %i.jk to i64
   %i.jm = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.jl
@@ -574,18 +595,24 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503: ; preds =
   %niter909.ncmp.3 = icmp eq i64 %niter909.next.3, %unroll_iter908
   br i1 %niter909.ncmp.3, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.unr-lcssa, label %.lr.ph.i.us.us.us.us.us.2.new.a, !llvm.loop !0
 
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread
+  %.ph505 = phi ptr [ %2, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread ], [ %3, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1 ]
+  %9 = getelementptr inbounds nuw [2 x i8], ptr %.ph505, i64 %i.bq
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread
+
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.unr-lcssa: ; preds = %.lr.ph.i.us.us.us.us.us.2.new.a
   br i1 %lcmp.mod906.not, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2, label %.epil.preheader903
 
 .epil.preheader903:                               ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.unr-lcssa, %.lr.ph.i.us.us.us.us.us.2
   %indvars.iv.i.us.us.us.us.us.2.epil.init = phi i64 [ 0, %.lr.ph.i.us.us.us.us.us.2 ], [ %indvars.iv.next.i.us.us.us.us.us.2.3, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.unr-lcssa ]
   call void @llvm.assume(i1 %lcmp.mod907)
+  %10 = getelementptr inbounds nuw [2 x i8], ptr %i.fg, i64 %i.bq
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.epil.preheader903
   %indvars.iv.i.us.us.us.us.us.2.epil = phi i64 [ %indvars.iv.i.us.us.us.us.us.2.epil.init, %.epil.preheader903 ], [ %indvars.iv.next.i.us.us.us.us.us.2.epil, %bb.n ] ; 3 uses
   %epil.iter905 = phi i64 [ 0, %.epil.preheader903 ], [ %epil.iter905.next, %bb.n ]
-  %i.jv = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %indvars.iv.i.us.us.us.us.us.2.epil
+  %i.jv = getelementptr inbounds nuw [2 x i8], ptr %10, i64 %indvars.iv.i.us.us.us.us.us.2.epil
   %i.jw = load i16, ptr %i.jv, align 2, !tbaa !81
   %i.jx = zext i16 %i.jw to i64
   %i.jy = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.jx
@@ -607,11 +634,12 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2: ; preds = %bb.n, %_
   %.pre329 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre337 = zext i16 %.pre329 to i32
   %i.kh = icmp samesign ult i32 %i.co, %.pre337
-  br i1 %i.kh, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread
+  %11 = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.idx864 ; 2 uses
+  br i1 %i.kh, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread
 
-_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2
-  %i.ki = phi i32 [ %i.bx, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2 ], [ %i.bw, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1.thread503 ] ; 6 uses
-  %3 = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.bq ; 6 uses
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2
+  %i.ki = phi i32 [ %i.bw, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507 ], [ %i.bx, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2 ] ; 6 uses
+  %12 = phi ptr [ %4, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507 ], [ %11, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2 ] ; 7 uses
   %i.kj = load i16, ptr %i.t, align 2, !tbaa !80
   %i.kk = zext i16 %i.kj to i32
   %i.kl = icmp ult i32 %i.ki, %i.kk
@@ -624,7 +652,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a: ; preds
 .lr.ph.i.us.us.us.us.us.3.new:                    ; preds = %.lr.ph.i.us.us.us.us.us.3, %.lr.ph.i.us.us.us.us.us.3.new
   %indvars.iv.i.us.us.us.us.us.3 = phi i64 [ %indvars.iv.next.i.us.us.us.us.us.3.3, %.lr.ph.i.us.us.us.us.us.3.new ], [ 0, %.lr.ph.i.us.us.us.us.us.3 ] ; 6 uses
   %niter916 = phi i64 [ %niter916.next.3, %.lr.ph.i.us.us.us.us.us.3.new ], [ 0, %.lr.ph.i.us.us.us.us.us.3 ]
-  %i.kn = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv.i.us.us.us.us.us.3
+  %i.kn = getelementptr inbounds nuw [2 x i8], ptr %12, i64 %indvars.iv.i.us.us.us.us.us.3
   %i.ko = load i16, ptr %i.kn, align 2, !tbaa !81
   %i.kp = zext i16 %i.ko to i64
   %i.kq = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.kp
@@ -638,7 +666,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a: ; preds
   %i.ky = getelementptr inbounds nuw [2 x i8], ptr %i.kx, i64 %indvars.iv.i.us.us.us.us.us.3
   store i16 %i.kr, ptr %i.ky, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.3 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.3, 1 ; 2 uses
-  %i.kz = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv.next.i.us.us.us.us.us.3
+  %i.kz = getelementptr inbounds nuw [2 x i8], ptr %12, i64 %indvars.iv.next.i.us.us.us.us.us.3
   %i.la = load i16, ptr %i.kz, align 2, !tbaa !81
   %i.lb = zext i16 %i.la to i64
   %i.lc = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.lb
@@ -652,7 +680,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a: ; preds
   %i.lk = getelementptr inbounds nuw [2 x i8], ptr %i.lj, i64 %indvars.iv.next.i.us.us.us.us.us.3
   store i16 %i.ld, ptr %i.lk, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.3.1 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.3, 2 ; 2 uses
-  %i.ll = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv.next.i.us.us.us.us.us.3.1
+  %i.ll = getelementptr inbounds nuw [2 x i8], ptr %12, i64 %indvars.iv.next.i.us.us.us.us.us.3.1
   %i.lm = load i16, ptr %i.ll, align 2, !tbaa !81
   %i.ln = zext i16 %i.lm to i64
   %i.lo = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.ln
@@ -666,7 +694,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a: ; preds
   %i.lw = getelementptr inbounds nuw [2 x i8], ptr %i.lv, i64 %indvars.iv.next.i.us.us.us.us.us.3.1
   store i16 %i.lp, ptr %i.lw, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.3.2 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.3, 3 ; 2 uses
-  %i.lx = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv.next.i.us.us.us.us.us.3.2
+  %i.lx = getelementptr inbounds nuw [2 x i8], ptr %12, i64 %indvars.iv.next.i.us.us.us.us.us.3.2
   %i.ly = load i16, ptr %i.lx, align 2, !tbaa !81
   %i.lz = zext i16 %i.ly to i64
   %i.ma = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.lz
@@ -695,7 +723,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3.unr-lcssa: ; preds =
 bb.o:                                             ; preds = %bb.o, %.epil.preheader910
   %indvars.iv.i.us.us.us.us.us.3.epil = phi i64 [ %indvars.iv.i.us.us.us.us.us.3.epil.init, %.epil.preheader910 ], [ %indvars.iv.next.i.us.us.us.us.us.3.epil, %bb.o ] ; 3 uses
   %epil.iter912 = phi i64 [ 0, %.epil.preheader910 ], [ %epil.iter912.next, %bb.o ]
-  %i.mj = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv.i.us.us.us.us.us.3.epil
+  %i.mj = getelementptr inbounds nuw [2 x i8], ptr %12, i64 %indvars.iv.i.us.us.us.us.us.3.epil
   %i.mk = load i16, ptr %i.mj, align 2, !tbaa !81
   %i.ml = zext i16 %i.mk to i64
   %i.mm = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.ml
@@ -717,11 +745,11 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3: ; preds = %bb.o, %_
   %.pre330 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre339 = zext i16 %.pre330 to i32
   %i.mv = icmp samesign ult i32 %i.co, %.pre339
-  br i1 %i.mv, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3.thread511, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread
+  br i1 %i.mv, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3.thread511, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3.thread511: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3
   %i.mw = phi i32 [ %i.bz, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3 ], [ %i.by, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread507.a ] ; 6 uses
-  %i.mx = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %i.bq ; 6 uses
+  %i.mx = getelementptr inbounds nuw [2 x i8], ptr %12, i64 %i.bq ; 13 uses
   %i.my = load i16, ptr %i.t, align 2, !tbaa !80
   %i.mz = zext i16 %i.my to i32
   %i.na = icmp ult i32 %i.mw, %i.mz
@@ -794,6 +822,11 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3.thread511: ; preds =
   %niter923.ncmp.3 = icmp eq i64 %niter923.next.3, %unroll_iter922
   br i1 %niter923.ncmp.3, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.unr-lcssa, label %.lr.ph.i.us.us.us.us.us.4.new, !llvm.loop !0
 
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3
+  %13 = phi ptr [ %12, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3 ], [ %9, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2.thread ], [ %11, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2 ]
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 %.idx865
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread
+
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.unr-lcssa: ; preds = %.lr.ph.i.us.us.us.us.us.4.new
   br i1 %lcmp.mod920.not, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4, label %.epil.preheader917
 
@@ -827,24 +860,35 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4: ; preds = %bb.p, %_
   %.pre331 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre341 = zext i16 %.pre331 to i32
   %i.pk = icmp samesign ult i32 %i.co, %.pre341
+  %15 = getelementptr inbounds nuw [2 x i8], ptr %i.mx, i64 %i.bq
   br i1 %i.pk, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3.thread511, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4
   %i.pl = phi i32 [ %i.cb, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4 ], [ %i.ca, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3.thread511 ] ; 6 uses
-  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.mx, i64 %i.bq ; 6 uses
   %i.pm = load i16, ptr %i.t, align 2, !tbaa !80
   %i.pn = zext i16 %i.pm to i32
   %i.po = icmp ult i32 %i.pl, %i.pn
-  br i1 %i.po, label %.lr.ph.i.us.us.us.us.us.5, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519.a
+  br i1 %i.po, label %.lr.ph.i.us.us.us.us.us.5, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519
+
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515
+  %16 = getelementptr inbounds nuw i8, ptr %i.mx, i64 %.idx866
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519.a
 
 .lr.ph.i.us.us.us.us.us.5:                        ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515
   %i.pp = load ptr, ptr %i.u, align 8, !tbaa !82  ; 5 uses
-  br i1 %i.cl, label %.epil.preheader924, label %.lr.ph.i.us.us.us.us.us.5.new.a
+  br i1 %i.cl, label %.epil.preheader924, label %.lr.ph.i.us.us.us.us.us.5.new
 
-.lr.ph.i.us.us.us.us.us.5.new.a:                  ; preds = %.lr.ph.i.us.us.us.us.us.5, %.lr.ph.i.us.us.us.us.us.5.new.a
-  %indvars.iv.i.us.us.us.us.us.5 = phi i64 [ %indvars.iv.next.i.us.us.us.us.us.5.3, %.lr.ph.i.us.us.us.us.us.5.new.a ], [ 0, %.lr.ph.i.us.us.us.us.us.5 ] ; 6 uses
-  %niter930 = phi i64 [ %niter930.next.3, %.lr.ph.i.us.us.us.us.us.5.new.a ], [ 0, %.lr.ph.i.us.us.us.us.us.5 ]
-  %i.pq = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv.i.us.us.us.us.us.5
+.lr.ph.i.us.us.us.us.us.5.new:                    ; preds = %.lr.ph.i.us.us.us.us.us.5
+  %17 = getelementptr inbounds nuw [2 x i8], ptr %i.mx, i64 %i.bq
+  %18 = getelementptr inbounds nuw [2 x i8], ptr %i.mx, i64 %i.bq
+  %19 = getelementptr inbounds nuw [2 x i8], ptr %i.mx, i64 %i.bq
+  %20 = getelementptr inbounds nuw [2 x i8], ptr %i.mx, i64 %i.bq
+  br label %.lr.ph.i.us.us.us.us.us.5.new.a
+
+.lr.ph.i.us.us.us.us.us.5.new.a:                  ; preds = %.lr.ph.i.us.us.us.us.us.5.new.a, %.lr.ph.i.us.us.us.us.us.5.new
+  %indvars.iv.i.us.us.us.us.us.5 = phi i64 [ 0, %.lr.ph.i.us.us.us.us.us.5.new ], [ %indvars.iv.next.i.us.us.us.us.us.5.3, %.lr.ph.i.us.us.us.us.us.5.new.a ] ; 6 uses
+  %niter930 = phi i64 [ 0, %.lr.ph.i.us.us.us.us.us.5.new ], [ %niter930.next.3, %.lr.ph.i.us.us.us.us.us.5.new.a ]
+  %i.pq = getelementptr inbounds nuw [2 x i8], ptr %17, i64 %indvars.iv.i.us.us.us.us.us.5
   %i.pr = load i16, ptr %i.pq, align 2, !tbaa !81
   %i.ps = zext i16 %i.pr to i64
   %i.pt = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.ps
@@ -858,7 +902,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515: ; preds =
   %i.qb = getelementptr inbounds nuw [2 x i8], ptr %i.qa, i64 %indvars.iv.i.us.us.us.us.us.5
   store i16 %i.pu, ptr %i.qb, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.5 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.5, 1 ; 2 uses
-  %i.qc = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv.next.i.us.us.us.us.us.5
+  %i.qc = getelementptr inbounds nuw [2 x i8], ptr %18, i64 %indvars.iv.next.i.us.us.us.us.us.5
   %i.qd = load i16, ptr %i.qc, align 2, !tbaa !81
   %i.qe = zext i16 %i.qd to i64
   %i.qf = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.qe
@@ -872,7 +916,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515: ; preds =
   %i.qn = getelementptr inbounds nuw [2 x i8], ptr %i.qm, i64 %indvars.iv.next.i.us.us.us.us.us.5
   store i16 %i.qg, ptr %i.qn, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.5.1 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.5, 2 ; 2 uses
-  %i.qo = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv.next.i.us.us.us.us.us.5.1
+  %i.qo = getelementptr inbounds nuw [2 x i8], ptr %19, i64 %indvars.iv.next.i.us.us.us.us.us.5.1
   %i.qp = load i16, ptr %i.qo, align 2, !tbaa !81
   %i.qq = zext i16 %i.qp to i64
   %i.qr = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.qq
@@ -886,7 +930,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515: ; preds =
   %i.qz = getelementptr inbounds nuw [2 x i8], ptr %i.qy, i64 %indvars.iv.next.i.us.us.us.us.us.5.1
   store i16 %i.qs, ptr %i.qz, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.5.2 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.5, 3 ; 2 uses
-  %i.ra = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv.next.i.us.us.us.us.us.5.2
+  %i.ra = getelementptr inbounds nuw [2 x i8], ptr %20, i64 %indvars.iv.next.i.us.us.us.us.us.5.2
   %i.rb = load i16, ptr %i.ra, align 2, !tbaa !81
   %i.rc = zext i16 %i.rb to i64
   %i.rd = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.rc
@@ -904,9 +948,9 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515: ; preds =
   %niter930.ncmp.3 = icmp eq i64 %niter930.next.3, %unroll_iter929
   br i1 %niter930.ncmp.3, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.unr-lcssa, label %.lr.ph.i.us.us.us.us.us.5.new.a, !llvm.loop !0
 
-_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.3, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.1, %.preheader.us.us.us, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.2, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %.0128188.us.us.us, i64 %i.bq
-  %i.rm = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %i.bq
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread
+  %.ph517 = phi ptr [ %14, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread ], [ %15, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4 ]
+  %i.rm = getelementptr inbounds nuw [2 x i8], ptr %.ph517, i64 %i.bq
   br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.unr-lcssa: ; preds = %.lr.ph.i.us.us.us.us.us.5.new.a
@@ -915,12 +959,13 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.unr-lcssa: ; preds =
 .epil.preheader924:                               ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.unr-lcssa, %.lr.ph.i.us.us.us.us.us.5
   %indvars.iv.i.us.us.us.us.us.5.epil.init = phi i64 [ 0, %.lr.ph.i.us.us.us.us.us.5 ], [ %indvars.iv.next.i.us.us.us.us.us.5.3, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.unr-lcssa ]
   call void @llvm.assume(i1 %lcmp.mod928)
+  %21 = getelementptr inbounds nuw [2 x i8], ptr %i.mx, i64 %i.bq
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.q, %.epil.preheader924
   %indvars.iv.i.us.us.us.us.us.5.epil = phi i64 [ %indvars.iv.i.us.us.us.us.us.5.epil.init, %.epil.preheader924 ], [ %indvars.iv.next.i.us.us.us.us.us.5.epil, %bb.q ] ; 3 uses
   %epil.iter926 = phi i64 [ 0, %.epil.preheader924 ], [ %epil.iter926.next, %bb.q ]
-  %i.rn = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv.i.us.us.us.us.us.5.epil
+  %i.rn = getelementptr inbounds nuw [2 x i8], ptr %21, i64 %indvars.iv.i.us.us.us.us.us.5.epil
   %i.ro = load i16, ptr %i.rn, align 2, !tbaa !81
   %i.rp = zext i16 %i.ro to i64
   %i.rq = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.rp
@@ -942,18 +987,19 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5: ; preds = %bb.q, %_
   %.pre332 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre343 = zext i16 %.pre332 to i32
   %i.rz = icmp samesign ult i32 %i.co, %.pre343
+  %22 = getelementptr inbounds nuw i8, ptr %i.mx, i64 %.idx867 ; 2 uses
   br i1 %i.rz, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519.a, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread
 
-_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5
-  %i.sa = phi i32 [ %i.cd, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5 ], [ %i.cc, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.4.thread515 ] ; 6 uses
-  %6 = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.bq ; 12 uses
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5
+  %i.sa = phi i32 [ %i.cc, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519 ], [ %i.cd, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5 ] ; 6 uses
+  %23 = phi ptr [ %16, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519 ], [ %22, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5 ] ; 12 uses
   %i.sb = load i16, ptr %i.t, align 2, !tbaa !80
   %i.sc = zext i16 %i.sb to i32
   %i.sd = icmp ult i32 %i.sa, %i.sc
   br i1 %i.sd, label %.lr.ph.i.us.us.us.us.us.6, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread523
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread523: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519.a
-  %i.se = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.bq
+  %i.se = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %i.bq
   br label %bb.s
 
 .lr.ph.i.us.us.us.us.us.6:                        ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread519.a
@@ -963,7 +1009,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread523: ; preds =
 .lr.ph.i.us.us.us.us.us.6.new:                    ; preds = %.lr.ph.i.us.us.us.us.us.6, %.lr.ph.i.us.us.us.us.us.6.new
   %indvars.iv.i.us.us.us.us.us.6 = phi i64 [ %indvars.iv.next.i.us.us.us.us.us.6.3, %.lr.ph.i.us.us.us.us.us.6.new ], [ 0, %.lr.ph.i.us.us.us.us.us.6 ] ; 6 uses
   %niter937 = phi i64 [ %niter937.next.3, %.lr.ph.i.us.us.us.us.us.6.new ], [ 0, %.lr.ph.i.us.us.us.us.us.6 ]
-  %i.sg = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %indvars.iv.i.us.us.us.us.us.6
+  %i.sg = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %indvars.iv.i.us.us.us.us.us.6
   %i.sh = load i16, ptr %i.sg, align 2, !tbaa !81
   %i.si = zext i16 %i.sh to i64
   %i.sj = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.si
@@ -977,7 +1023,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread523: ; preds =
   %i.sr = getelementptr inbounds nuw [2 x i8], ptr %i.sq, i64 %indvars.iv.i.us.us.us.us.us.6
   store i16 %i.sk, ptr %i.sr, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.6 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.6, 1 ; 2 uses
-  %i.ss = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %indvars.iv.next.i.us.us.us.us.us.6
+  %i.ss = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %indvars.iv.next.i.us.us.us.us.us.6
   %i.st = load i16, ptr %i.ss, align 2, !tbaa !81
   %i.su = zext i16 %i.st to i64
   %i.sv = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.su
@@ -991,7 +1037,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread523: ; preds =
   %i.td = getelementptr inbounds nuw [2 x i8], ptr %i.tc, i64 %indvars.iv.next.i.us.us.us.us.us.6
   store i16 %i.sw, ptr %i.td, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.6.1 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.6, 2 ; 2 uses
-  %i.te = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %indvars.iv.next.i.us.us.us.us.us.6.1
+  %i.te = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %indvars.iv.next.i.us.us.us.us.us.6.1
   %i.tf = load i16, ptr %i.te, align 2, !tbaa !81
   %i.tg = zext i16 %i.tf to i64
   %i.th = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.tg
@@ -1005,7 +1051,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread523: ; preds =
   %i.tp = getelementptr inbounds nuw [2 x i8], ptr %i.to, i64 %indvars.iv.next.i.us.us.us.us.us.6.1
   store i16 %i.ti, ptr %i.tp, align 2, !tbaa !81
   %indvars.iv.next.i.us.us.us.us.us.6.2 = or disjoint i64 %indvars.iv.i.us.us.us.us.us.6, 3 ; 2 uses
-  %i.tq = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %indvars.iv.next.i.us.us.us.us.us.6.2
+  %i.tq = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %indvars.iv.next.i.us.us.us.us.us.6.2
   %i.tr = load i16, ptr %i.tq, align 2, !tbaa !81
   %i.ts = zext i16 %i.tr to i64
   %i.tt = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.ts
@@ -1024,12 +1070,8 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread523: ; preds =
   br i1 %niter937.ncmp.3, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.unr-lcssa, label %.lr.ph.i.us.us.us.us.us.6.new, !llvm.loop !0
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread
-  %i.uc = phi ptr [ %i.rm, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread ], [ %2, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5 ]
-  %7 = getelementptr inbounds nuw [2 x i8], ptr %i.uc, i64 %i.bq
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %i.bq
-  %9 = getelementptr inbounds nuw [2 x i8], ptr %8, i64 %i.bq
-  %10 = getelementptr inbounds nuw [2 x i8], ptr %9, i64 %i.bq
-  %i.ud = getelementptr inbounds nuw [2 x i8], ptr %10, i64 %i.bq
+  %i.uc = phi ptr [ %i.rm, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5.thread ], [ %22, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.5 ]
+  %i.ud = getelementptr inbounds nuw [2 x i8], ptr %i.uc, i64 %i.bq
   br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.7
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.unr-lcssa: ; preds = %.lr.ph.i.us.us.us.us.us.6.new
@@ -1043,7 +1085,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.unr-lcssa: ; preds =
 bb.r:                                             ; preds = %bb.r, %.epil.preheader931
   %indvars.iv.i.us.us.us.us.us.6.epil = phi i64 [ %indvars.iv.i.us.us.us.us.us.6.epil.init, %.epil.preheader931 ], [ %indvars.iv.next.i.us.us.us.us.us.6.epil, %bb.r ] ; 3 uses
   %epil.iter933 = phi i64 [ 0, %.epil.preheader931 ], [ %epil.iter933.next, %bb.r ]
-  %i.ue = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %indvars.iv.i.us.us.us.us.us.6.epil
+  %i.ue = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %indvars.iv.i.us.us.us.us.us.6.epil
   %i.uf = load i16, ptr %i.ue, align 2, !tbaa !81
   %i.ug = zext i16 %i.uf to i64
   %i.uh = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.ug
@@ -1065,7 +1107,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6: ; preds = %bb.r, %_
   %.pre333 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre345 = zext i16 %.pre333 to i32
   %i.uq = icmp samesign ult i32 %i.co, %.pre345
-  %i.ur = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.bq ; 2 uses
+  %i.ur = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %i.bq ; 2 uses
   br i1 %i.uq, label %bb.s, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.7
 
 bb.s:                                             ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6.thread523, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.6
@@ -1081,10 +1123,10 @@ bb.s:                                             ; preds = %_ZN6LibRaw16adobe_c
   br i1 %i.cn, label %.epil.preheader938, label %.lr.ph.i.us.us.us.us.us.7.new
 
 .lr.ph.i.us.us.us.us.us.7.new:                    ; preds = %.lr.ph.i.us.us.us.us.us.7
-  %i.uy = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.bq
-  %i.uz = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.bq
-  %i.va = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.bq
-  %i.vb = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.bq
+  %i.uy = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %i.bq
+  %i.uz = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %i.bq
+  %i.va = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %i.bq
+  %i.vb = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %i.bq
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %.lr.ph.i.us.us.us.us.us.7.new
@@ -1156,7 +1198,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.7.loopexit.unr-lcssa: 
 .epil.preheader938:                               ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.7.loopexit.unr-lcssa, %.lr.ph.i.us.us.us.us.us.7
   %indvars.iv.i.us.us.us.us.us.7.epil.init = phi i64 [ 0, %.lr.ph.i.us.us.us.us.us.7 ], [ %indvars.iv.next.i.us.us.us.us.us.7.3, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.us.us.7.loopexit.unr-lcssa ]
   call void @llvm.assume(i1 %lcmp.mod942)
-  %i.wy = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.bq
+  %i.wy = getelementptr inbounds nuw [2 x i8], ptr %23, i64 %i.bq
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.u, %.epil.preheader938
@@ -1559,16 +1601,25 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us.us206.us.7: ; preds = %.lr.ph.i.us.us
   %i.ahw = add i32 %i.bm, 6                       ; 2 uses
   %i.ahx = add i32 %i.bm, 7                       ; 2 uses
   %i.ahy = add i32 %i.bm, 7                       ; 2 uses
-  br i1 %.not498, label %.preheader, label %.preheader.us213
+  br i1 %.not498, label %.preheader, label %.preheader.us213.preheader
 
-.preheader.us213:                                 ; preds = %.split190, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.7
-  %.058189.us214 = phi i32 [ %i.aml, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.7 ], [ 0, %.split190 ] ; 3 uses
-  %.0128188.us215 = phi ptr [ %i.amk, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.7 ], [ %i.z, %.split190 ] ; 3 uses
+.preheader.us213.preheader:                       ; preds = %.split190
+  %.idx = shl nuw nsw i64 %i.bq, 2
+  %.idx857 = shl nuw nsw i64 %i.bq, 2
+  %.idx858 = shl nuw nsw i64 %i.bq, 2
+  %.idx859 = shl nuw nsw i64 %i.bq, 2
+  %.idx860 = shl nuw nsw i64 %i.bq, 2
+  %.idx861 = shl nuw nsw i64 %i.bq, 2
+  br label %.preheader.us213
+
+.preheader.us213:                                 ; preds = %.preheader.us213.preheader, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.7
+  %.058189.us214 = phi i32 [ %i.aml, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.7 ], [ 0, %.preheader.us213.preheader ] ; 3 uses
+  %.0128188.us215 = phi ptr [ %i.amk, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.7 ], [ %i.z, %.preheader.us213.preheader ] ; 3 uses
   %i.ahz = add i32 %i.bn, %.058189.us214          ; 16 uses
   %i.aia = load i16, ptr %i.k, align 8, !tbaa !79
   %i.aib = zext i16 %i.aia to i32
   %i.aic = icmp ult i32 %i.ahz, %i.aib
-  br i1 %i.aic, label %bb.ad, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread
+  br i1 %i.aic, label %bb.ad, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread
 
 bb.ad:                                            ; preds = %.preheader.us213
   %i.aid = load i16, ptr %i.t, align 2, !tbaa !80
@@ -1589,15 +1640,23 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us: ; preds = %bb.ad
   %.pre306 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre361 = zext i16 %.pre306 to i32
   %i.aio = icmp samesign ult i32 %i.ahz, %.pre361
-  br i1 %i.aio, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.thread, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread
+  br i1 %i.aio, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.thread, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.thread: ; preds = %bb.ad, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us
   %i.aip = phi i32 [ %i.ahm, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us ], [ %i.ahl, %bb.ad ] ; 2 uses
-  %i.aiq = getelementptr inbounds nuw [2 x i8], ptr %.0128188.us215, i64 %i.bq ; 2 uses
+  %i.aiq = getelementptr inbounds nuw [2 x i8], ptr %.0128188.us215, i64 %i.bq ; 5 uses
   %i.air = load i16, ptr %i.t, align 2, !tbaa !80
   %i.ais = zext i16 %i.air to i32                 ; 2 uses
   %i.ait = icmp ult i32 %i.aip, %i.ais
-  br i1 %i.ait, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a
+  br i1 %i.ait, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679
+
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.thread
+  %24 = getelementptr inbounds nuw [2 x i8], ptr %i.aiq, i64 %i.bq
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a
+
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread: ; preds = %.preheader.us213, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us
+  %25 = getelementptr inbounds nuw i8, ptr %.0128188.us215, i64 %.idx
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.thread
   %i.aiu = load i16, ptr %i.aiq, align 2, !tbaa !81
@@ -1612,18 +1671,28 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1: ; preds = %_ZN6LibRaw16adobe
   %.pre307 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre363 = zext i16 %.pre307 to i32
   %i.ajc = icmp samesign ult i32 %i.ahz, %.pre363
-  br i1 %i.ajc, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread
+  %26 = getelementptr inbounds nuw [2 x i8], ptr %i.aiq, i64 %i.bq ; 2 uses
+  br i1 %i.ajc, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread
 
-_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.thread, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1
-  %i.ajd = phi i32 [ %i.aho, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1 ], [ %i.ahn, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.thread ] ; 2 uses
-  %11 = getelementptr inbounds nuw [2 x i8], ptr %i.aiq, i64 %i.bq ; 3 uses
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1
+  %i.ajd = phi i32 [ %i.ahn, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679 ], [ %i.aho, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1 ] ; 2 uses
+  %27 = phi ptr [ %24, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679 ], [ %26, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1 ]
   %i.aje = load i16, ptr %i.t, align 2, !tbaa !80
   %i.ajf = zext i16 %i.aje to i32                 ; 2 uses
   %i.ajg = icmp ult i32 %i.ajd, %i.ajf
-  br i1 %i.ajg, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683.a
+  br i1 %i.ajg, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683
+
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a
+  %28 = getelementptr inbounds nuw i8, ptr %i.aiq, i64 %.idx857
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683.a
+
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread
+  %.ph681 = phi ptr [ %25, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread ], [ %26, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1 ]
+  %29 = getelementptr inbounds nuw [2 x i8], ptr %.ph681, i64 %i.bq
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a
-  %i.ajh = load i16, ptr %11, align 2, !tbaa !81
+  %i.ajh = load i16, ptr %27, align 2, !tbaa !81
   %i.aji = zext i16 %i.ajh to i64
   %i.ajj = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.aji
   %i.ajk = load i16, ptr %i.ajj, align 2, !tbaa !81
@@ -1635,18 +1704,19 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2: ; preds = %_ZN6LibRaw16adobe
   %.pre308 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre365 = zext i16 %.pre308 to i32
   %i.ajp = icmp samesign ult i32 %i.ahz, %.pre365
-  br i1 %i.ajp, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683.a, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread
+  %30 = getelementptr inbounds nuw i8, ptr %i.aiq, i64 %.idx858 ; 2 uses
+  br i1 %i.ajp, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683.a, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread
 
-_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2
-  %i.ajq = phi i32 [ %i.ahq, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2 ], [ %i.ahp, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1.thread679.a ] ; 2 uses
-  %12 = getelementptr inbounds nuw [2 x i8], ptr %11, i64 %i.bq ; 2 uses
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2
+  %i.ajq = phi i32 [ %i.ahp, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683 ], [ %i.ahq, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2 ] ; 2 uses
+  %31 = phi ptr [ %28, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683 ], [ %30, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2 ] ; 3 uses
   %i.ajr = load i16, ptr %i.t, align 2, !tbaa !80
   %i.ajs = zext i16 %i.ajr to i32                 ; 2 uses
   %i.ajt = icmp ult i32 %i.ajq, %i.ajs
   br i1 %i.ajt, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3.thread687
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683.a
-  %i.aju = load i16, ptr %12, align 2, !tbaa !81
+  %i.aju = load i16, ptr %31, align 2, !tbaa !81
   %i.ajv = zext i16 %i.aju to i64
   %i.ajw = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.ajv
   %i.ajx = load i16, ptr %i.ajw, align 2, !tbaa !81
@@ -1658,15 +1728,24 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3: ; preds = %_ZN6LibRaw16adobe
   %.pre309 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre367 = zext i16 %.pre309 to i32
   %i.akc = icmp samesign ult i32 %i.ahz, %.pre367
-  br i1 %i.akc, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3.thread687, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread
+  br i1 %i.akc, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3.thread687, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3.thread687: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683.a, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3
   %i.akd = phi i32 [ %i.ahs, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3 ], [ %i.ahr, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread683.a ] ; 2 uses
-  %i.ake = getelementptr inbounds nuw [2 x i8], ptr %12, i64 %i.bq ; 2 uses
+  %i.ake = getelementptr inbounds nuw [2 x i8], ptr %31, i64 %i.bq ; 5 uses
   %i.akf = load i16, ptr %i.t, align 2, !tbaa !80
   %i.akg = zext i16 %i.akf to i32                 ; 2 uses
   %i.akh = icmp ult i32 %i.akd, %i.akg
-  br i1 %i.akh, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691.a
+  br i1 %i.akh, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691
+
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3.thread687
+  %32 = getelementptr inbounds nuw [2 x i8], ptr %i.ake, i64 %i.bq
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691.a
+
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3
+  %33 = phi ptr [ %31, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3 ], [ %29, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2.thread ], [ %30, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2 ]
+  %34 = getelementptr inbounds nuw i8, ptr %33, i64 %.idx859
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3.thread687
   %i.aki = load i16, ptr %i.ake, align 2, !tbaa !81
@@ -1681,23 +1760,28 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4: ; preds = %_ZN6LibRaw16adobe
   %.pre310 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre369 = zext i16 %.pre310 to i32
   %i.akq = icmp samesign ult i32 %i.ahz, %.pre369
+  %35 = getelementptr inbounds nuw [2 x i8], ptr %i.ake, i64 %i.bq ; 2 uses
   br i1 %i.akq, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691.a, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread
 
-_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3.thread687, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4
-  %i.akr = phi i32 [ %i.ahu, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4 ], [ %i.aht, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3.thread687 ] ; 2 uses
-  %13 = getelementptr inbounds nuw [2 x i8], ptr %i.ake, i64 %i.bq ; 2 uses
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4
+  %i.akr = phi i32 [ %i.aht, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691 ], [ %i.ahu, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4 ] ; 2 uses
+  %36 = phi ptr [ %32, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691 ], [ %35, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4 ]
   %i.aks = load i16, ptr %i.t, align 2, !tbaa !80
   %i.akt = zext i16 %i.aks to i32                 ; 2 uses
   %i.aku = icmp ult i32 %i.akr, %i.akt
-  br i1 %i.aku, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695.a
+  br i1 %i.aku, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695
 
-_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.3, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.1, %.preheader.us213, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.2, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4
-  %14 = getelementptr inbounds nuw [2 x i8], ptr %.0128188.us215, i64 %i.bq
-  %i.akv = getelementptr inbounds nuw [2 x i8], ptr %14, i64 %i.bq
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691.a
+  %37 = getelementptr inbounds nuw i8, ptr %i.ake, i64 %.idx860
+  br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695.a
+
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread
+  %.ph693 = phi ptr [ %34, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread ], [ %35, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4 ]
+  %i.akv = getelementptr inbounds nuw [2 x i8], ptr %.ph693, i64 %i.bq
   br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6.thread
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691.a
-  %i.akw = load i16, ptr %13, align 2, !tbaa !81
+  %i.akw = load i16, ptr %36, align 2, !tbaa !81
   %i.akx = zext i16 %i.akw to i64
   %i.aky = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.akx
   %i.akz = load i16, ptr %i.aky, align 2, !tbaa !81
@@ -1709,31 +1793,28 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5: ; preds = %_ZN6LibRaw16adobe
   %.pre311 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre371 = zext i16 %.pre311 to i32
   %i.ale = icmp samesign ult i32 %i.ahz, %.pre371
+  %38 = getelementptr inbounds nuw i8, ptr %i.ake, i64 %.idx861 ; 2 uses
   br i1 %i.ale, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695.a, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6.thread
 
-_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691.a, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5
-  %i.alf = phi i32 [ %i.ahw, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5 ], [ %i.ahv, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.4.thread691.a ] ; 2 uses
-  %15 = getelementptr inbounds nuw [2 x i8], ptr %13, i64 %i.bq ; 3 uses
+_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695.a: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5
+  %i.alf = phi i32 [ %i.ahv, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695 ], [ %i.ahw, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5 ] ; 2 uses
+  %39 = phi ptr [ %37, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695 ], [ %38, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5 ] ; 3 uses
   %i.alg = load i16, ptr %i.t, align 2, !tbaa !80
   %i.alh = zext i16 %i.alg to i32                 ; 2 uses
   %i.ali = icmp ult i32 %i.alf, %i.alh
   br i1 %i.ali, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6.thread699
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6.thread699: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695.a
-  %i.alj = getelementptr inbounds nuw [2 x i8], ptr %15, i64 %i.bq
+  %i.alj = getelementptr inbounds nuw [2 x i8], ptr %39, i64 %i.bq
   br label %bb.ae
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6.thread: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread
-  %i.alk = phi ptr [ %i.akv, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread ], [ %11, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5 ]
-  %16 = getelementptr inbounds nuw [2 x i8], ptr %i.alk, i64 %i.bq
-  %17 = getelementptr inbounds nuw [2 x i8], ptr %16, i64 %i.bq
-  %18 = getelementptr inbounds nuw [2 x i8], ptr %17, i64 %i.bq
-  %19 = getelementptr inbounds nuw [2 x i8], ptr %18, i64 %i.bq
-  %i.all = getelementptr inbounds nuw [2 x i8], ptr %19, i64 %i.bq
+  %i.alk = phi ptr [ %i.akv, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread ], [ %38, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5 ]
+  %i.all = getelementptr inbounds nuw [2 x i8], ptr %i.alk, i64 %i.bq
   br label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.7
 
 _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6: ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.5.thread695.a
-  %i.alm = load i16, ptr %15, align 2, !tbaa !81
+  %i.alm = load i16, ptr %39, align 2, !tbaa !81
   %i.aln = zext i16 %i.alm to i64
   %i.alo = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.aln
   %i.alp = load i16, ptr %i.alo, align 2, !tbaa !81
@@ -1745,7 +1826,7 @@ _ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6: ; preds = %_ZN6LibRaw16adobe
   %.pre312 = load i16, ptr %i.k, align 8, !tbaa !79
   %.pre373 = zext i16 %.pre312 to i32
   %i.alu = icmp samesign ult i32 %i.ahz, %.pre373
-  %i.alv = getelementptr inbounds nuw [2 x i8], ptr %15, i64 %i.bq ; 2 uses
+  %i.alv = getelementptr inbounds nuw [2 x i8], ptr %39, i64 %i.bq ; 2 uses
   br i1 %i.alu, label %bb.ae, label %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.7
 
 bb.ae:                                            ; preds = %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6.thread699, %_ZN6LibRaw16adobe_copy_pixelEjjPPt.exit.us179.us.6

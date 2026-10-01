@@ -205,9 +205,10 @@ _ZN3jxl8weighted5StateC2ERKNS0_6HeaderEmm.exit:   ; preds = %bb.cg, %bb.ch, %bb.
   br i1 %.not223.i.a, label %.preheader.i, label %.lr.ph212.i
 
 .lr.ph212.i:                                      ; preds = %_ZN3jxl8weighted5StateC2ERKNS0_6HeaderEmm.exit
-  %i.zx = lshr i64 %i.yc, 2
+  %i.zx = lshr i64 %i.yc, 2                       ; 2 uses
   %i.zy = getelementptr inbounds nuw i8, ptr %.sroa.0117.0217.i, i64 40
-  %i.zz = sub nsw i64 0, %i.zx                    ; 4 uses
+  %i.zz = sub nsw i64 0, %i.zx                    ; 3 uses
+  %.idx99.i = mul i64 %i.zx, -8
   %i.aaa = load i64, ptr %i.yd, align 8, !tbaa !347 ; 2 uses
   %.not224.i.a = icmp eq i64 %i.aaa, 0
   br i1 %.not224.i.a, label %.preheader.i, label %.lr.ph212.split.i
@@ -430,16 +431,16 @@ _ZN3jxl8weighted5StateC2ERKNS0_6HeaderEmm.exit:   ; preds = %bb.cg, %bb.ch, %bb.
   %i.aec = load ptr, ptr %i.zy, align 8, !tbaa !342
   %i.aed = load i64, ptr %i.yb, align 8, !tbaa !341
   %i.aee = mul i64 %i.aed, %.094210.i
-  %i.aef = getelementptr inbounds nuw i8, ptr %i.aec, i64 %i.aee ; 5 uses
+  %i.aef = getelementptr inbounds nuw i8, ptr %i.aec, i64 %i.aee ; 6 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.aef, i64 64) ]
   %.not225.i = icmp eq i64 %i.aeb, 0
   br i1 %.not225.i, label %_ZN3jxl8weighted5State12UpdateErrorsElmmm.exit._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph212.split.i
   %.not186.i.a = icmp eq i64 %.094210.i, 0        ; 2 uses
-  %i.aeg = getelementptr [4 x i8], ptr %i.aef, i64 %i.zz ; 3 uses
+  %i.aeg = getelementptr [4 x i8], ptr %i.aef, i64 %i.zz ; 2 uses
   %i.aeh = icmp ugt i64 %.094210.i, 1
-  %invariant.gep208.i = getelementptr [4 x i8], ptr %i.aeg, i64 %i.zz
+  %invariant.gep207.i = getelementptr i8, ptr %i.aef, i64 %.idx99.i
   %i.aei = and i64 %.094210.i, 1
   %.not.i102.i = icmp eq i64 %i.aei, 0            ; 4 uses
   br label %bb.ct
@@ -512,7 +513,7 @@ bb.cz:                                            ; preds = %bb.cy, %bb.cx
   br i1 %i.aeh, label %bb.da, label %bb.db
 
 bb.da:                                            ; preds = %bb.cz
-  %gep209.i = getelementptr [4 x i8], ptr %invariant.gep208.i, i64 %.093202.i
+  %gep209.i = getelementptr [4 x i8], ptr %invariant.gep207.i, i64 %.093202.i
   %i.afj = load i32, ptr %gep209.i, align 4, !tbaa !215
   %i.afk = sext i32 %i.afj to i64
   br label %bb.db

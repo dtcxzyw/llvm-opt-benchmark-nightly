@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not47, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 4                           ; 11 uses
+  %.idx = shl i64 %3, 4                           ; 9 uses
   %.idx41 = shl i64 %3, 5                         ; 2 uses
   %.not42 = icmp eq i64 %.idx, %.idx41
   br i1 %.not42, label %.critedge.i.us.preheader, label %.lr.ph.i.preheader
@@ -213,6 +213,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 16
   %i.g = icmp eq i64 %.idx, 16
+  %4 = shl i64 %3, 5
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPN6Assimp4D3DS10aiFloatKeyESt6vectorIS4_SaIS4_EEEES5_NS0_5__ops15_Iter_less_iterEET0_T_SD_SD_SD_SC_T1_.exit.us
@@ -237,8 +238,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPN6Assimp4D3DS10aiFloatKeyESt6vectorIS4_SaIS4_EEEES5_NS0_5__ops15_Iter_less_iterEET0_T_SD_SD_SD_SC_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPN6Assimp4D3DS10aiFloatKeyESt6vectorIS4_SaIS4_EEEES5_NS0_5__ops15_Iter_less_iterEET0_T_SD_SD_SD_SC_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %4 = getelementptr inbounds i8, ptr %.049.us, i64 %.idx
-  %i.k = getelementptr inbounds i8, ptr %4, i64 %.idx ; 2 uses
+  %i.k = getelementptr inbounds i8, ptr %.049.us, i64 %4 ; 2 uses
   %i.l = ptrtoint ptr %i.h to i64
   %i.m = sub i64 %i.b, %i.l
   %i.n = ashr exact i64 %i.m, 4                   ; 2 uses
@@ -641,7 +641,7 @@ bb.a:
   br i1 %.not47, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 5                           ; 11 uses
+  %.idx = shl i64 %3, 5                           ; 9 uses
   %.idx41 = shl i64 %3, 6                         ; 2 uses
   %.not42 = icmp eq i64 %.idx, %.idx41
   br i1 %.not42, label %.critedge.i.us.preheader, label %.lr.ph.i.preheader
@@ -649,6 +649,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 32
   %i.g = icmp eq i64 %.idx, 32
+  %4 = shl i64 %3, 6
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIP9aiQuatKeySt6vectorIS2_SaIS2_EEEES3_NS0_5__ops15_Iter_less_iterEET0_T_SB_SB_SB_SA_T1_.exit.us
@@ -673,8 +674,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIP9aiQuatKeySt6vectorIS2_SaIS2_EEEES3_NS0_5__ops15_Iter_less_iterEET0_T_SB_SB_SB_SA_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIP9aiQuatKeySt6vectorIS2_SaIS2_EEEES3_NS0_5__ops15_Iter_less_iterEET0_T_SB_SB_SB_SA_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %4 = getelementptr inbounds i8, ptr %.049.us, i64 %.idx
-  %i.k = getelementptr inbounds i8, ptr %4, i64 %.idx ; 2 uses
+  %i.k = getelementptr inbounds i8, ptr %.049.us, i64 %4 ; 2 uses
   %i.l = ptrtoint ptr %i.h to i64
   %i.m = sub i64 %i.b, %i.l
   %i.n = ashr exact i64 %i.m, 5                   ; 2 uses

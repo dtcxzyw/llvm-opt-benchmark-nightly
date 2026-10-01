@@ -205,18 +205,19 @@ bb.a:
   %.0123.us.unr = phi ptr [ %0, %.lr.ph125.split.us.preheader.preheader ], [ %i.y, %.lr.ph125.split.us.preheader.prol ]
   %.069122.us.unr = phi ptr [ %i.d, %.lr.ph125.split.us.preheader.preheader ], [ %i.x, %.lr.ph125.split.us.preheader.prol ]
   %i.z = icmp ult i64 %i.u, 56
-  br i1 %i.z, label %._crit_edge126, label %.lr.ph125.split.us.preheader
+  br i1 %i.z, label %._crit_edge126, label %.lr.ph125.split.us.preheader.preheader.new
 
-.lr.ph125.split.us.preheader:                     ; preds = %.lr.ph125.split.us.preheader.prol.loopexit, %.lr.ph125.split.us.preheader
-  %.0123.us = phi ptr [ %i.ac, %.lr.ph125.split.us.preheader ], [ %.0123.us.unr, %.lr.ph125.split.us.preheader.prol.loopexit ]
-  %.069122.us = phi ptr [ %i.ab, %.lr.ph125.split.us.preheader ], [ %.069122.us.unr, %.lr.ph125.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069122.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph125.split.us.preheader.preheader.new:       ; preds = %.lr.ph125.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx175 = shl i64 %2, 4
+  br label %.lr.ph125.split.us.preheader
+
+.lr.ph125.split.us.preheader:                     ; preds = %.lr.ph125.split.us.preheader, %.lr.ph125.split.us.preheader.preheader.new
+  %.0123.us = phi ptr [ %.0123.us.unr, %.lr.ph125.split.us.preheader.preheader.new ], [ %i.ac, %.lr.ph125.split.us.preheader ]
+  %.069122.us = phi ptr [ %.069122.us.unr, %.lr.ph125.split.us.preheader.preheader.new ], [ %i.ab, %.lr.ph125.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069122.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx175
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %2
   %i.ac = getelementptr inbounds nuw i8, ptr %.0123.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.ac, %i.r
@@ -619,18 +620,19 @@ bb.a:
   %.0123.us.unr = phi ptr [ %0, %.lr.ph125.split.us.preheader.preheader ], [ %i.y, %.lr.ph125.split.us.preheader.prol ]
   %.069122.us.unr = phi ptr [ %i.d, %.lr.ph125.split.us.preheader.preheader ], [ %i.x, %.lr.ph125.split.us.preheader.prol ]
   %i.z = icmp ult i64 %i.u, 56
-  br i1 %i.z, label %._crit_edge126, label %.lr.ph125.split.us.preheader
+  br i1 %i.z, label %._crit_edge126, label %.lr.ph125.split.us.preheader.preheader.new
 
-.lr.ph125.split.us.preheader:                     ; preds = %.lr.ph125.split.us.preheader.prol.loopexit, %.lr.ph125.split.us.preheader
-  %.0123.us = phi ptr [ %i.ac, %.lr.ph125.split.us.preheader ], [ %.0123.us.unr, %.lr.ph125.split.us.preheader.prol.loopexit ]
-  %.069122.us = phi ptr [ %i.ab, %.lr.ph125.split.us.preheader ], [ %.069122.us.unr, %.lr.ph125.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %.069122.us, i64 %2
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %2
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph125.split.us.preheader.preheader.new:       ; preds = %.lr.ph125.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 5
+  %.idx175 = shl i64 %2, 4
+  br label %.lr.ph125.split.us.preheader
+
+.lr.ph125.split.us.preheader:                     ; preds = %.lr.ph125.split.us.preheader, %.lr.ph125.split.us.preheader.preheader.new
+  %.0123.us = phi ptr [ %.0123.us.unr, %.lr.ph125.split.us.preheader.preheader.new ], [ %i.ac, %.lr.ph125.split.us.preheader ]
+  %.069122.us = phi ptr [ %.069122.us.unr, %.lr.ph125.split.us.preheader.preheader.new ], [ %i.ab, %.lr.ph125.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069122.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx175
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %2 ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %2
   %i.ac = getelementptr inbounds nuw i8, ptr %.0123.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.ac, %i.r

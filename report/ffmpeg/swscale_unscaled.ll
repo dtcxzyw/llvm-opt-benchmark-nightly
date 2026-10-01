@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bj = load i32, ptr %i.bi, align 8, !tbaa !53
   %.fr109 = freeze i32 %i.bj                      ; 10 uses
   %i.bk = ashr exact i32 %i.ax, 1                 ; 2 uses
-  %i.bl = sext i32 %i.bk to i64                   ; 8 uses
+  %i.bl = sext i32 %i.bk to i64                   ; 7 uses
   %i.bm = ashr exact i32 %i.h, 1                  ; 2 uses
   %i.bn = sext i32 %i.bm to i64                   ; 4 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 10 uses
@@ -480,6 +480,7 @@ bb.d:                                             ; preds = %._crit_edge90.us.us
 
 .lr.ph94.split.split.preheader.new:               ; preds = %.lr.ph94.split.split.preheader
   %unroll_iter = and i32 %4, 2147483646
+  %.idx = shl nsw i64 %i.bl, 2
   br label %.lr.ph94.split.split
 
 ._crit_edge.us103.preheader:                      ; preds = %.lr.ph94.split
@@ -527,17 +528,16 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.a
   unreachable
 
 .lr.ph94.split.split:                             ; preds = %.lr.ph94.split.split, %.lr.ph94.split.split.preheader.new
-  %i.go = phi ptr [ %.promoted, %.lr.ph94.split.split.preheader.new ], [ %8, %.lr.ph94.split.split ]
+  %i.go = phi ptr [ %.promoted, %.lr.ph94.split.split.preheader.new ], [ %7, %.lr.ph94.split.split ]
   %.06193 = phi i32 [ 0, %.lr.ph94.split.split.preheader.new ], [ %i.gt, %.lr.ph94.split.split ]
   %niter = phi i32 [ 0, %.lr.ph94.split.split.preheader.new ], [ %niter.next.1, %.lr.ph94.split.split ]
-  %7 = getelementptr inbounds [2 x i8], ptr %i.go, i64 %i.bl
   %i.gp = load ptr, ptr %i.bo, align 8, !tbaa !58
   %i.gq = load ptr, ptr %i.bp, align 8, !tbaa !58
   %i.gr = getelementptr inbounds [2 x i8], ptr %i.gp, i64 %i.bt
   store ptr %i.gr, ptr %i.bo, align 8, !tbaa !58
   %i.gs = getelementptr inbounds [2 x i8], ptr %i.gq, i64 %i.bv
   store ptr %i.gs, ptr %i.bp, align 8, !tbaa !58
-  %8 = getelementptr inbounds [2 x i8], ptr %7, i64 %i.bl ; 3 uses
+  %7 = getelementptr inbounds i8, ptr %i.go, i64 %.idx ; 3 uses
   %i.gt = add nuw nsw i32 %.06193, 2              ; 2 uses
   %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
@@ -577,7 +577,7 @@ bb.f:                                             ; preds = %._crit_edge.us103.e
   br i1 %lcmp.mod.not, label %._crit_edge95, label %.lr.ph94.split.split.epil.preheader
 
 .lr.ph94.split.split.epil.preheader:              ; preds = %._crit_edge95.loopexit184.unr-lcssa, %.lr.ph94.split.split.preheader
-  %.epil.init = phi ptr [ %.promoted, %.lr.ph94.split.split.preheader ], [ %8, %._crit_edge95.loopexit184.unr-lcssa ]
+  %.epil.init = phi ptr [ %.promoted, %.lr.ph94.split.split.preheader ], [ %7, %._crit_edge95.loopexit184.unr-lcssa ]
   %.06193.epil.init = phi i32 [ 0, %.lr.ph94.split.split.preheader ], [ %i.gt, %._crit_edge95.loopexit184.unr-lcssa ]
   %lcmp.mod187 = trunc i32 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod187)
@@ -596,7 +596,7 @@ bb.g:                                             ; preds = %.lr.ph94.split.spli
   br label %._crit_edge95
 
 ._crit_edge95:                                    ; preds = %._crit_edge95.loopexit184.unr-lcssa, %bb.g, %.lr.ph94.split.split.epil.preheader, %._crit_edge95.loopexit182.unr-lcssa, %bb.f, %._crit_edge.us103.epil.preheader, %bb.d
-  %.us-phi = phi ptr [ %i.ek, %bb.d ], [ %i.gy, %._crit_edge.us103.epil.preheader ], [ %i.gl, %._crit_edge95.loopexit182.unr-lcssa ], [ %i.gy, %bb.f ], [ %8, %._crit_edge95.loopexit184.unr-lcssa ], [ %i.he, %bb.g ], [ %i.he, %.lr.ph94.split.split.epil.preheader ]
+  %.us-phi = phi ptr [ %i.ek, %bb.d ], [ %i.gy, %._crit_edge.us103.epil.preheader ], [ %i.gl, %._crit_edge95.loopexit182.unr-lcssa ], [ %i.gy, %bb.f ], [ %7, %._crit_edge95.loopexit184.unr-lcssa ], [ %i.he, %bb.g ], [ %i.he, %.lr.ph94.split.split.epil.preheader ]
   store ptr %.us-phi, ptr %1, align 8, !tbaa !58
   br label %bb.h
 
@@ -999,17 +999,20 @@ bb.a:
   %.pre99 = load i32, ptr %.phi.trans.insert98, align 4, !tbaa !16
   %.pre100 = load ptr, ptr %i.d, align 8, !tbaa !58 ; 2 uses
   %i.f = ashr i32 %.pre, 1
-  %i.g = sext i32 %i.f to i64                     ; 9 uses
+  %i.g = sext i32 %i.f to i64                     ; 2 uses
   %i.h = ashr i32 %.pre96, 1
-  %i.i = sext i32 %i.h to i64                     ; 9 uses
+  %i.i = sext i32 %i.h to i64                     ; 2 uses
   %i.j = ashr i32 %.pre99, 1
-  %i.k = sext i32 %i.j to i64                     ; 9 uses
+  %i.k = sext i32 %i.j to i64                     ; 2 uses
   %xtraiter = and i32 %4, 7                       ; 3 uses
   %i.l = icmp ult i32 %4, 8
   br i1 %i.l, label %.loopexit50.us.epil.preheader, label %.loopexit50.us.preheader.new
 
 .loopexit50.us.preheader.new:                     ; preds = %.loopexit50.us.preheader
   %unroll_iter = and i32 %4, 2147483640
+  %8 = shl nsw i64 %i.g, 4
+  %9 = shl nsw i64 %i.i, 4
+  %10 = shl nsw i64 %i.k, 4
   br label %.loopexit50.us
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph57.split.us
@@ -1082,34 +1085,13 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   br i1 %exitcond75.not, label %._crit_edge, label %.lr.ph.us.us, !llvm.loop !921
 
 .loopexit50.us:                                   ; preds = %.loopexit50.us, %.loopexit50.us.preheader.new
-  %i.bf = phi ptr [ %.pre100, %.loopexit50.us.preheader.new ], [ %31, %.loopexit50.us ]
-  %i.bg = phi ptr [ %.pre97, %.loopexit50.us.preheader.new ], [ %30, %.loopexit50.us ]
-  %i.bh = phi ptr [ %.pre95, %.loopexit50.us.preheader.new ], [ %29, %.loopexit50.us ]
+  %i.bf = phi ptr [ %.pre100, %.loopexit50.us.preheader.new ], [ %13, %.loopexit50.us ]
+  %i.bg = phi ptr [ %.pre97, %.loopexit50.us.preheader.new ], [ %12, %.loopexit50.us ]
+  %i.bh = phi ptr [ %.pre95, %.loopexit50.us.preheader.new ], [ %11, %.loopexit50.us ]
   %niter = phi i32 [ 0, %.loopexit50.us.preheader.new ], [ %niter.next.7, %.loopexit50.us ]
-  %8 = getelementptr inbounds [2 x i8], ptr %i.bh, i64 %i.g
-  %9 = getelementptr inbounds [2 x i8], ptr %i.bg, i64 %i.i
-  %10 = getelementptr inbounds [2 x i8], ptr %i.bf, i64 %i.k
-  %11 = getelementptr inbounds [2 x i8], ptr %8, i64 %i.g
-  %12 = getelementptr inbounds [2 x i8], ptr %9, i64 %i.i
-  %13 = getelementptr inbounds [2 x i8], ptr %10, i64 %i.k
-  %14 = getelementptr inbounds [2 x i8], ptr %11, i64 %i.g
-  %15 = getelementptr inbounds [2 x i8], ptr %12, i64 %i.i
-  %16 = getelementptr inbounds [2 x i8], ptr %13, i64 %i.k
-  %17 = getelementptr inbounds [2 x i8], ptr %14, i64 %i.g
-  %18 = getelementptr inbounds [2 x i8], ptr %15, i64 %i.i
-  %19 = getelementptr inbounds [2 x i8], ptr %16, i64 %i.k
-  %20 = getelementptr inbounds [2 x i8], ptr %17, i64 %i.g
-  %21 = getelementptr inbounds [2 x i8], ptr %18, i64 %i.i
-  %22 = getelementptr inbounds [2 x i8], ptr %19, i64 %i.k
-  %23 = getelementptr inbounds [2 x i8], ptr %20, i64 %i.g
-  %24 = getelementptr inbounds [2 x i8], ptr %21, i64 %i.i
-  %25 = getelementptr inbounds [2 x i8], ptr %22, i64 %i.k
-  %26 = getelementptr inbounds [2 x i8], ptr %23, i64 %i.g
-  %27 = getelementptr inbounds [2 x i8], ptr %24, i64 %i.i
-  %28 = getelementptr inbounds [2 x i8], ptr %25, i64 %i.k
-  %29 = getelementptr inbounds [2 x i8], ptr %26, i64 %i.g ; 3 uses
-  %30 = getelementptr inbounds [2 x i8], ptr %27, i64 %i.i ; 3 uses
-  %31 = getelementptr inbounds [2 x i8], ptr %28, i64 %i.k ; 3 uses
+  %11 = getelementptr inbounds i8, ptr %i.bh, i64 %8 ; 3 uses
+  %12 = getelementptr inbounds i8, ptr %i.bg, i64 %9 ; 3 uses
+  %13 = getelementptr inbounds i8, ptr %i.bf, i64 %10 ; 3 uses
   %niter.next.7 = add i32 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.sink.split.loopexit129.unr-lcssa, label %.loopexit50.us, !llvm.loop !921
@@ -1127,17 +1109,20 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   %.pre107 = load i32, ptr %.phi.trans.insert106, align 4, !tbaa !16
   %.pre108 = load ptr, ptr %i.d, align 8, !tbaa !58 ; 2 uses
   %i.bi = ashr i32 %.pre101, 1
-  %i.bj = sext i32 %i.bi to i64                   ; 9 uses
+  %i.bj = sext i32 %i.bi to i64                   ; 2 uses
   %i.bk = ashr i32 %.pre104, 1
-  %i.bl = sext i32 %i.bk to i64                   ; 9 uses
+  %i.bl = sext i32 %i.bk to i64                   ; 2 uses
   %i.bm = ashr i32 %.pre107, 1
-  %i.bn = sext i32 %i.bm to i64                   ; 9 uses
+  %i.bn = sext i32 %i.bm to i64                   ; 2 uses
   %xtraiter141 = and i32 %4, 7                    ; 3 uses
   %i.bo = icmp ult i32 %4, 8
   br i1 %i.bo, label %.preheader.epil.preheader, label %.preheader.preheader.new
 
 .preheader.preheader.new:                         ; preds = %.preheader.preheader
   %unroll_iter154 = and i32 %4, 2147483640
+  %14 = shl nsw i64 %i.bj, 4
+  %15 = shl nsw i64 %i.bl, 4
+  %16 = shl nsw i64 %i.bn, 4
   br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.lr.ph57.split
@@ -1212,34 +1197,13 @@ bb.d:                                             ; preds = %bb.a
   unreachable
 
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
-  %i.df = phi ptr [ %.pre108, %.preheader.preheader.new ], [ %55, %.preheader ]
-  %i.dg = phi ptr [ %.pre105, %.preheader.preheader.new ], [ %54, %.preheader ]
-  %i.dh = phi ptr [ %.pre102, %.preheader.preheader.new ], [ %53, %.preheader ]
+  %i.df = phi ptr [ %.pre108, %.preheader.preheader.new ], [ %19, %.preheader ]
+  %i.dg = phi ptr [ %.pre105, %.preheader.preheader.new ], [ %18, %.preheader ]
+  %i.dh = phi ptr [ %.pre102, %.preheader.preheader.new ], [ %17, %.preheader ]
   %niter155 = phi i32 [ 0, %.preheader.preheader.new ], [ %niter155.next.7, %.preheader ]
-  %32 = getelementptr inbounds [2 x i8], ptr %i.dh, i64 %i.bj
-  %33 = getelementptr inbounds [2 x i8], ptr %i.dg, i64 %i.bl
-  %34 = getelementptr inbounds [2 x i8], ptr %i.df, i64 %i.bn
-  %35 = getelementptr inbounds [2 x i8], ptr %32, i64 %i.bj
-  %36 = getelementptr inbounds [2 x i8], ptr %33, i64 %i.bl
-  %37 = getelementptr inbounds [2 x i8], ptr %34, i64 %i.bn
-  %38 = getelementptr inbounds [2 x i8], ptr %35, i64 %i.bj
-  %39 = getelementptr inbounds [2 x i8], ptr %36, i64 %i.bl
-  %40 = getelementptr inbounds [2 x i8], ptr %37, i64 %i.bn
-  %41 = getelementptr inbounds [2 x i8], ptr %38, i64 %i.bj
-  %42 = getelementptr inbounds [2 x i8], ptr %39, i64 %i.bl
-  %43 = getelementptr inbounds [2 x i8], ptr %40, i64 %i.bn
-  %44 = getelementptr inbounds [2 x i8], ptr %41, i64 %i.bj
-  %45 = getelementptr inbounds [2 x i8], ptr %42, i64 %i.bl
-  %46 = getelementptr inbounds [2 x i8], ptr %43, i64 %i.bn
-  %47 = getelementptr inbounds [2 x i8], ptr %44, i64 %i.bj
-  %48 = getelementptr inbounds [2 x i8], ptr %45, i64 %i.bl
-  %49 = getelementptr inbounds [2 x i8], ptr %46, i64 %i.bn
-  %50 = getelementptr inbounds [2 x i8], ptr %47, i64 %i.bj
-  %51 = getelementptr inbounds [2 x i8], ptr %48, i64 %i.bl
-  %52 = getelementptr inbounds [2 x i8], ptr %49, i64 %i.bn
-  %53 = getelementptr inbounds [2 x i8], ptr %50, i64 %i.bj ; 3 uses
-  %54 = getelementptr inbounds [2 x i8], ptr %51, i64 %i.bl ; 3 uses
-  %55 = getelementptr inbounds [2 x i8], ptr %52, i64 %i.bn ; 3 uses
+  %17 = getelementptr inbounds i8, ptr %i.dh, i64 %14 ; 3 uses
+  %18 = getelementptr inbounds i8, ptr %i.dg, i64 %15 ; 3 uses
+  %19 = getelementptr inbounds i8, ptr %i.df, i64 %16 ; 3 uses
   %niter155.next.7 = add nuw nsw i32 %niter155, 8 ; 2 uses
   %niter155.ncmp.7 = icmp eq i32 %niter155.next.7, %unroll_iter154
   br i1 %niter155.ncmp.7, label %._crit_edge.sink.split.loopexit.unr-lcssa, label %.preheader, !llvm.loop !921
@@ -1249,9 +1213,9 @@ bb.d:                                             ; preds = %bb.a
   br i1 %lcmp.mod149.not, label %._crit_edge.sink.split, label %.preheader.epil.preheader
 
 .preheader.epil.preheader:                        ; preds = %._crit_edge.sink.split.loopexit.unr-lcssa, %.preheader.preheader
-  %.epil.init144 = phi ptr [ %.pre108, %.preheader.preheader ], [ %55, %._crit_edge.sink.split.loopexit.unr-lcssa ]
-  %.epil.init146 = phi ptr [ %.pre105, %.preheader.preheader ], [ %54, %._crit_edge.sink.split.loopexit.unr-lcssa ]
-  %.epil.init148 = phi ptr [ %.pre102, %.preheader.preheader ], [ %53, %._crit_edge.sink.split.loopexit.unr-lcssa ]
+  %.epil.init144 = phi ptr [ %.pre108, %.preheader.preheader ], [ %19, %._crit_edge.sink.split.loopexit.unr-lcssa ]
+  %.epil.init146 = phi ptr [ %.pre105, %.preheader.preheader ], [ %18, %._crit_edge.sink.split.loopexit.unr-lcssa ]
+  %.epil.init148 = phi ptr [ %.pre102, %.preheader.preheader ], [ %17, %._crit_edge.sink.split.loopexit.unr-lcssa ]
   %lcmp.mod153 = icmp ne i32 %xtraiter141, 0
   tail call void @llvm.assume(i1 %lcmp.mod153)
   br label %.preheader.epil
@@ -1273,9 +1237,9 @@ bb.d:                                             ; preds = %bb.a
   br i1 %lcmp.mod.not, label %._crit_edge.sink.split, label %.loopexit50.us.epil.preheader
 
 .loopexit50.us.epil.preheader:                    ; preds = %._crit_edge.sink.split.loopexit129.unr-lcssa, %.loopexit50.us.preheader
-  %.epil.init = phi ptr [ %.pre100, %.loopexit50.us.preheader ], [ %31, %._crit_edge.sink.split.loopexit129.unr-lcssa ]
-  %.epil.init134 = phi ptr [ %.pre97, %.loopexit50.us.preheader ], [ %30, %._crit_edge.sink.split.loopexit129.unr-lcssa ]
-  %.epil.init136 = phi ptr [ %.pre95, %.loopexit50.us.preheader ], [ %29, %._crit_edge.sink.split.loopexit129.unr-lcssa ]
+  %.epil.init = phi ptr [ %.pre100, %.loopexit50.us.preheader ], [ %13, %._crit_edge.sink.split.loopexit129.unr-lcssa ]
+  %.epil.init134 = phi ptr [ %.pre97, %.loopexit50.us.preheader ], [ %12, %._crit_edge.sink.split.loopexit129.unr-lcssa ]
+  %.epil.init136 = phi ptr [ %.pre95, %.loopexit50.us.preheader ], [ %11, %._crit_edge.sink.split.loopexit129.unr-lcssa ]
   %lcmp.mod140 = icmp ne i32 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod140)
   br label %.loopexit50.us.epil
@@ -1293,9 +1257,9 @@ bb.d:                                             ; preds = %bb.a
   br i1 %epil.iter.cmp.not, label %._crit_edge.sink.split, label %.loopexit50.us.epil, !llvm.loop !924
 
 ._crit_edge.sink.split:                           ; preds = %._crit_edge.sink.split.loopexit129.unr-lcssa, %.loopexit50.us.epil, %._crit_edge.sink.split.loopexit.unr-lcssa, %.preheader.epil
-  %.lcssa.sink = phi ptr [ %i.dl, %.preheader.epil ], [ %53, %._crit_edge.sink.split.loopexit.unr-lcssa ], [ %29, %._crit_edge.sink.split.loopexit129.unr-lcssa ], [ %i.dr, %.loopexit50.us.epil ]
-  %.lcssa114.sink = phi ptr [ %i.dm, %.preheader.epil ], [ %54, %._crit_edge.sink.split.loopexit.unr-lcssa ], [ %30, %._crit_edge.sink.split.loopexit129.unr-lcssa ], [ %i.ds, %.loopexit50.us.epil ]
-  %.lcssa115.sink = phi ptr [ %i.dn, %.preheader.epil ], [ %55, %._crit_edge.sink.split.loopexit.unr-lcssa ], [ %31, %._crit_edge.sink.split.loopexit129.unr-lcssa ], [ %i.dt, %.loopexit50.us.epil ]
+  %.lcssa.sink = phi ptr [ %i.dl, %.preheader.epil ], [ %17, %._crit_edge.sink.split.loopexit.unr-lcssa ], [ %11, %._crit_edge.sink.split.loopexit129.unr-lcssa ], [ %i.dr, %.loopexit50.us.epil ]
+  %.lcssa114.sink = phi ptr [ %i.dm, %.preheader.epil ], [ %18, %._crit_edge.sink.split.loopexit.unr-lcssa ], [ %12, %._crit_edge.sink.split.loopexit129.unr-lcssa ], [ %i.ds, %.loopexit50.us.epil ]
+  %.lcssa115.sink = phi ptr [ %i.dn, %.preheader.epil ], [ %19, %._crit_edge.sink.split.loopexit.unr-lcssa ], [ %13, %._crit_edge.sink.split.loopexit129.unr-lcssa ], [ %i.dt, %.loopexit50.us.epil ]
   store ptr %.lcssa.sink, ptr %0, align 8, !tbaa !58
   store ptr %.lcssa114.sink, ptr %i.c, align 8, !tbaa !58
   store ptr %.lcssa115.sink, ptr %i.d, align 8, !tbaa !58

@@ -205,7 +205,7 @@ bb.a:
   store i32 0, ptr %i.f, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.g, align 4, !tbaa !56
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !2622 ; 2 uses
   %i.k = shl i32 %i.j, 1
@@ -373,15 +373,16 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not86, label %_ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_13OMPFromClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.bc = load i32, ptr %i.i, align 8, !tbaa !2622 ; 2 uses
+  %i.bc = load i32, ptr %i.i, align 8, !tbaa !2622
   %i.bd = zext i32 %i.bc to i64                   ; 2 uses
-  %.idx100 = shl nuw nsw i64 %i.bd, 3
-  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx100 ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.bd
-  %.not63.i96 = icmp eq i32 %i.bc, 0
+  %.idx100 = shl nuw nsw i64 %i.bd, 3             ; 2 uses
+  %.idx.i.i = shl nuw nsw i64 %i.bd, 4            ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx.i.i
+  %.not63.i96 = icmp samesign eq i64 %.idx100, %.idx.i.i
   br i1 %.not63.i96, label %_ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_13OMPFromClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit, label %.lr.ph99
 
 .lr.ph99:                                         ; preds = %bb.p
+  %12 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx100
   %i.be = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
@@ -391,7 +392,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph99, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit
-  %.061.i97 = phi ptr [ %11, %.lr.ph99 ], [ %i.eu, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
+  %.061.i97 = phi ptr [ %12, %.lr.ph99 ], [ %i.eu, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
   %i.bk = load ptr, ptr %.061.i97, align 8, !tbaa !979 ; 4 uses
   %.not64.i = icmp eq ptr %i.bk, null
   br i1 %.not64.i, label %bb.aa, label %bb.r
@@ -584,7 +585,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit: ; preds = %bb.ac, %bb.ab, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.eu = getelementptr inbounds nuw i8, ptr %.061.i97, i64 8 ; 2 uses
-  %.not63.i = icmp eq ptr %i.eu, %12
+  %.not63.i = icmp eq ptr %i.eu, %11
   br i1 %.not63.i, label %_ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_13OMPFromClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit, label %bb.q
 
 _ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_13OMPFromClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit: ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit, %bb.p
@@ -987,13 +988,11 @@ bb.i:                                             ; preds = %bb.h, %.critedge54
   %i.af = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.af, align 4, !tbaa !56
   %i.ag = load i32, ptr %i.d, align 8, !tbaa !2637 ; 2 uses
-  %i.ah = zext i32 %i.ag to i64                   ; 5 uses
-  %.idx106.a = shl nuw nsw i64 %i.ah, 3
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx106.a
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.ah
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.ah
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.ah ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.ah
+  %i.ah = zext i32 %i.ag to i64                   ; 2 uses
+  %.idx106.a = shl nuw nsw i64 %i.ah, 5
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx106.a ; 2 uses
+  %.idx106 = shl nuw nsw i64 %i.ah, 3
+  %9 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.idx106
   %.not51101 = icmp eq i32 %i.ag, 0
   br i1 %.not51101, label %._crit_edge105, label %.lr.ph104
 
@@ -1047,7 +1046,7 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit: ; preds = %._crit_edge105, 
   br label %bb.x
 
 bb.k:                                             ; preds = %.lr.ph104, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit72
-  %.049102 = phi ptr [ %11, %.lr.ph104 ], [ %i.en, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit72 ] ; 2 uses
+  %.049102 = phi ptr [ %i.ai, %.lr.ph104 ], [ %i.en, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit72 ] ; 2 uses
   %i.bc = load ptr, ptr %.049102, align 8, !tbaa !979 ; 4 uses
   %.not52 = icmp eq ptr %i.bc, null
   br i1 %.not52, label %bb.u, label %bb.l
@@ -1240,7 +1239,7 @@ bb.w:                                             ; preds = %bb.u
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit72: ; preds = %bb.w, %bb.v, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.en = getelementptr inbounds nuw i8, ptr %.049102, i64 8 ; 2 uses
-  %.not51 = icmp eq ptr %i.en, %12
+  %.not51 = icmp eq ptr %i.en, %9
   br i1 %.not51, label %._crit_edge105.loopexit, label %bb.k
 
 bb.x:                                             ; preds = %bb.h, %_ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit
@@ -1643,12 +1642,10 @@ _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit: ; pred
   br label %.critedge32
 
 .critedge32:                                      ; preds = %.critedge32.loopexit, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit
-  %i.ac = phi i64 [ %i.ab, %.critedge32.loopexit ], [ 0, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ] ; 5 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.ac
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ac
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ac
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.ac
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.ac
+  %i.ac = phi i64 [ %i.ab, %.critedge32.loopexit ], [ 0, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ] ; 2 uses
+  %3 = shl nuw nsw i64 %i.ac, 5
+  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 %3
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ac
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !979 ; 4 uses
   %.not.i34 = icmp eq ptr %i.ae, null
   br i1 %.not.i34, label %_ZZN5clang4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEEN25ConstraintExprTransformer13TransformExprEPS4_.exit35.thread, label %bb.h
@@ -1857,7 +1854,7 @@ bb.a:
   store i32 0, ptr %i.f, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %8, i64 12 ; 3 uses
   store i32 16, ptr %i.g, align 4, !tbaa !56
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !2670 ; 2 uses
   %i.k = shl i32 %i.j, 1
@@ -2025,15 +2022,16 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not93, label %_ZN5clang12CXXScopeSpecD2Ev.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.bc = load i32, ptr %i.i, align 8, !tbaa !2670 ; 2 uses
+  %i.bc = load i32, ptr %i.i, align 8, !tbaa !2670
   %i.bd = zext i32 %i.bc to i64                   ; 2 uses
-  %.idx107 = shl nuw nsw i64 %i.bd, 3
-  %13 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx107 ; 2 uses
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %i.bd
-  %.not63.i103 = icmp eq i32 %i.bc, 0
+  %.idx107 = shl nuw nsw i64 %i.bd, 3             ; 2 uses
+  %.idx.i.i = shl nuw nsw i64 %i.bd, 4            ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx.i.i
+  %.not63.i103 = icmp samesign eq i64 %.idx107, %.idx.i.i
   br i1 %.not63.i103, label %_ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_12OMPMapClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit, label %.lr.ph106
 
 .lr.ph106:                                        ; preds = %bb.p
+  %14 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx107
   %i.be = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
@@ -2043,7 +2041,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph106, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit
-  %.061.i104 = phi ptr [ %13, %.lr.ph106 ], [ %i.eu, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
+  %.061.i104 = phi ptr [ %14, %.lr.ph106 ], [ %i.eu, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
   %i.bk = load ptr, ptr %.061.i104, align 8, !tbaa !979 ; 4 uses
   %.not64.i = icmp eq ptr %i.bk, null
   br i1 %.not64.i, label %bb.aa, label %bb.r
@@ -2236,7 +2234,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit: ; preds = %bb.ac, %bb.ab, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.eu = getelementptr inbounds nuw i8, ptr %.061.i104, i64 8 ; 2 uses
-  %.not63.i = icmp eq ptr %i.eu, %14
+  %.not63.i = icmp eq ptr %i.eu, %13
   br i1 %.not63.i, label %_ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_12OMPMapClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit, label %bb.q
 
 _ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_12OMPMapClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit: ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit, %bb.p
@@ -2639,13 +2637,11 @@ bb.i:                                             ; preds = %bb.h, %.critedge58
   %i.af = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.af, align 4, !tbaa !56
   %i.ag = load i32, ptr %i.d, align 8, !tbaa !2723 ; 2 uses
-  %i.ah = zext i32 %i.ag to i64                   ; 5 uses
-  %.idx111.a = shl nuw nsw i64 %i.ah, 3
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx111.a
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.ah
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.ah
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.ah ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.ah
+  %i.ah = zext i32 %i.ag to i64                   ; 2 uses
+  %.idx111.a = shl nuw nsw i64 %i.ah, 5
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx111.a ; 2 uses
+  %.idx111 = shl nuw nsw i64 %i.ah, 3
+  %9 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.idx111
   %.not55106 = icmp eq i32 %i.ag, 0
   br i1 %.not55106, label %._crit_edge110, label %.lr.ph109
 
@@ -2703,7 +2699,7 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit: ; preds = %._crit_edge110, 
   br label %bb.x
 
 bb.k:                                             ; preds = %.lr.ph109, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit77
-  %.053107 = phi ptr [ %11, %.lr.ph109 ], [ %i.eq, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit77 ] ; 2 uses
+  %.053107 = phi ptr [ %i.ai, %.lr.ph109 ], [ %i.eq, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit77 ] ; 2 uses
   %i.bf = load ptr, ptr %.053107, align 8, !tbaa !979 ; 4 uses
   %.not56 = icmp eq ptr %i.bf, null
   br i1 %.not56, label %bb.u, label %bb.l
@@ -2896,7 +2892,7 @@ bb.w:                                             ; preds = %bb.u
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit77: ; preds = %bb.w, %bb.v, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.eq = getelementptr inbounds nuw i8, ptr %.053107, i64 8 ; 2 uses
-  %.not55 = icmp eq ptr %i.eq, %12
+  %.not55 = icmp eq ptr %i.eq, %9
   br i1 %.not55, label %._crit_edge110.loopexit, label %bb.k
 
 bb.x:                                             ; preds = %bb.h, %_ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit
@@ -3299,13 +3295,11 @@ bb.i:                                             ; preds = %bb.h, %.critedge54
   %i.af = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.af, align 4, !tbaa !56
   %i.ag = load i32, ptr %i.d, align 8, !tbaa !2742 ; 2 uses
-  %i.ah = zext i32 %i.ag to i64                   ; 5 uses
-  %.idx106.a = shl nuw nsw i64 %i.ah, 3
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx106.a
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.ah
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.ah
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.ah ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.ah
+  %i.ah = zext i32 %i.ag to i64                   ; 2 uses
+  %.idx106.a = shl nuw nsw i64 %i.ah, 5
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx106.a ; 2 uses
+  %.idx106 = shl nuw nsw i64 %i.ah, 3
+  %9 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.idx106
   %.not51101 = icmp eq i32 %i.ag, 0
   br i1 %.not51101, label %._crit_edge105, label %.lr.ph104
 
@@ -3359,7 +3353,7 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit: ; preds = %._crit_edge105, 
   br label %bb.x
 
 bb.k:                                             ; preds = %.lr.ph104, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit72
-  %.049102 = phi ptr [ %11, %.lr.ph104 ], [ %i.en, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit72 ] ; 2 uses
+  %.049102 = phi ptr [ %i.ai, %.lr.ph104 ], [ %i.en, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit72 ] ; 2 uses
   %i.bc = load ptr, ptr %.049102, align 8, !tbaa !979 ; 4 uses
   %.not52 = icmp eq ptr %i.bc, null
   br i1 %.not52, label %bb.u, label %bb.l
@@ -3552,7 +3546,7 @@ bb.w:                                             ; preds = %bb.u
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit72: ; preds = %bb.w, %bb.v, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.en = getelementptr inbounds nuw i8, ptr %.049102, i64 8 ; 2 uses
-  %.not51 = icmp eq ptr %i.en, %12
+  %.not51 = icmp eq ptr %i.en, %9
   br i1 %.not51, label %._crit_edge105.loopexit, label %bb.k
 
 bb.x:                                             ; preds = %bb.h, %_ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit
@@ -3736,7 +3730,7 @@ bb.a:
   store i32 0, ptr %i.f, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.g, align 4, !tbaa !56
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !2746 ; 2 uses
   %i.k = shl i32 %i.j, 1
@@ -3904,15 +3898,16 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not86, label %_ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_11OMPToClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.bc = load i32, ptr %i.i, align 8, !tbaa !2746 ; 2 uses
+  %i.bc = load i32, ptr %i.i, align 8, !tbaa !2746
   %i.bd = zext i32 %i.bc to i64                   ; 2 uses
-  %.idx100 = shl nuw nsw i64 %i.bd, 3
-  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx100 ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.bd
-  %.not63.i96 = icmp eq i32 %i.bc, 0
+  %.idx100 = shl nuw nsw i64 %i.bd, 3             ; 2 uses
+  %.idx.i.i = shl nuw nsw i64 %i.bd, 4            ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx.i.i
+  %.not63.i96 = icmp samesign eq i64 %.idx100, %.idx.i.i
   br i1 %.not63.i96, label %_ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_11OMPToClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit, label %.lr.ph99
 
 .lr.ph99:                                         ; preds = %bb.p
+  %12 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx100
   %i.be = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
@@ -3922,7 +3917,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph99, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit
-  %.061.i97 = phi ptr [ %11, %.lr.ph99 ], [ %i.eu, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
+  %.061.i97 = phi ptr [ %12, %.lr.ph99 ], [ %i.eu, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
   %i.bk = load ptr, ptr %.061.i97, align 8, !tbaa !979 ; 4 uses
   %.not64.i = icmp eq ptr %i.bk, null
   br i1 %.not64.i, label %bb.aa, label %bb.r
@@ -4115,7 +4110,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit: ; preds = %bb.ac, %bb.ab, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.eu = getelementptr inbounds nuw i8, ptr %.061.i97, i64 8 ; 2 uses
-  %.not63.i = icmp eq ptr %i.eu, %12
+  %.not63.i = icmp eq ptr %i.eu, %11
   br i1 %.not63.i, label %_ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_11OMPToClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit, label %bb.q
 
 _ZN5clang34transformOMPMappableExprListClauseIZNS_4Sema29SubstConceptTemplateArgumentsEPKNS_25ConceptSpecializationExprEPKNS_4ExprERKNS_30MultiLevelTemplateArgumentListEE25ConstraintExprTransformerNS_11OMPToClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPS5_EERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESP_.exit: ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit, %bb.p
@@ -4518,7 +4513,7 @@ bb.a:
   store i32 0, ptr %i.f, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.g, align 4, !tbaa !56
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !2622 ; 2 uses
   %i.k = shl i32 %i.j, 1
@@ -4645,22 +4640,23 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not78, label %_ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_13OMPFromClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.aw = load i32, ptr %i.i, align 8, !tbaa !2622 ; 2 uses
+  %i.aw = load i32, ptr %i.i, align 8, !tbaa !2622
   %i.ax = zext i32 %i.aw to i64                   ; 2 uses
-  %.idx91 = shl nuw nsw i64 %i.ax, 3
-  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx91 ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.ax
-  %.not63.i87 = icmp eq i32 %i.aw, 0
+  %.idx91 = shl nuw nsw i64 %i.ax, 3              ; 2 uses
+  %.idx.i.i = shl nuw nsw i64 %i.ax, 4            ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx.i.i
+  %.not63.i87 = icmp samesign eq i64 %.idx91, %.idx.i.i
   br i1 %.not63.i87, label %_ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_13OMPFromClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit, label %.lr.ph90
 
 .lr.ph90:                                         ; preds = %bb.l
+  %12 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx91
   %i.ay = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph90, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit
-  %.061.i88 = phi ptr [ %11, %.lr.ph90 ], [ %i.de, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
+  %.061.i88 = phi ptr [ %12, %.lr.ph90 ], [ %i.de, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
   %i.bb = load ptr, ptr %.061.i88, align 8, !tbaa !979 ; 5 uses
   %.not64.i = icmp eq ptr %i.bb, null
   br i1 %.not64.i, label %bb.t, label %bb.n
@@ -4790,7 +4786,7 @@ bb.v:                                             ; preds = %bb.t
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit: ; preds = %bb.v, %bb.u, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.de = getelementptr inbounds nuw i8, ptr %.061.i88, i64 8 ; 2 uses
-  %.not63.i = icmp eq ptr %i.de, %12
+  %.not63.i = icmp eq ptr %i.de, %11
   br i1 %.not63.i, label %_ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_13OMPFromClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit, label %bb.m
 
 _ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_13OMPFromClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit: ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit, %bb.l
@@ -5193,13 +5189,11 @@ bb.g:                                             ; preds = %bb.f, %.critedge54
   %i.ac = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.ac, align 4, !tbaa !56
   %i.ad = load i32, ptr %i.d, align 8, !tbaa !2637 ; 2 uses
-  %i.ae = zext i32 %i.ad to i64                   ; 5 uses
-  %.idx100.a = shl nuw nsw i64 %i.ae, 3
-  %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx100.a
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.ae
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.ae
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.ae ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.ae
+  %i.ae = zext i32 %i.ad to i64                   ; 2 uses
+  %.idx100.a = shl nuw nsw i64 %i.ae, 5
+  %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx100.a ; 2 uses
+  %.idx100 = shl nuw nsw i64 %i.ae, 3
+  %9 = getelementptr inbounds nuw i8, ptr %i.af, i64 %.idx100
   %.not5195 = icmp eq i32 %i.ad, 0
   br i1 %.not5195, label %._crit_edge99, label %.lr.ph98
 
@@ -5250,7 +5244,7 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit: ; preds = %._crit_edge99, %
   br label %bb.s
 
 bb.i:                                             ; preds = %.lr.ph98, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit70
-  %.04996 = phi ptr [ %11, %.lr.ph98 ], [ %i.da, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit70 ] ; 2 uses
+  %.04996 = phi ptr [ %i.af, %.lr.ph98 ], [ %i.da, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit70 ] ; 2 uses
   %i.aw = load ptr, ptr %.04996, align 8, !tbaa !979 ; 5 uses
   %.not52 = icmp eq ptr %i.aw, null
   br i1 %.not52, label %bb.p, label %bb.j
@@ -5380,7 +5374,7 @@ bb.r:                                             ; preds = %bb.p
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit70: ; preds = %bb.r, %bb.q, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.da = getelementptr inbounds nuw i8, ptr %.04996, i64 8 ; 2 uses
-  %.not51 = icmp eq ptr %i.da, %12
+  %.not51 = icmp eq ptr %i.da, %9
   br i1 %.not51, label %._crit_edge99.loopexit, label %bb.i
 
 bb.s:                                             ; preds = %bb.f, %_ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit
@@ -5783,12 +5777,10 @@ _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit: ; pred
   br label %.critedge32
 
 .critedge32:                                      ; preds = %.critedge32.loopexit, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit
-  %i.z = phi i64 [ %i.y, %.critedge32.loopexit ], [ 0, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ] ; 5 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.z
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.z
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.z
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.z
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.z
+  %i.z = phi i64 [ %i.y, %.critedge32.loopexit ], [ 0, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ] ; 2 uses
+  %3 = shl nuw nsw i64 %i.z, 5
+  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 %3
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.z
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !979
   %i.ac = call fastcc i64 @_ZN5clang13TreeTransformIN12_GLOBAL__N_120TemplateInstantiatorEE13TransformExprEPNS_4ExprE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %i.ab) ; 2 uses
   %i.ad = icmp eq i64 %i.ac, 1
@@ -5928,7 +5920,7 @@ bb.a:
   store i32 0, ptr %i.f, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %8, i64 12 ; 3 uses
   store i32 16, ptr %i.g, align 4, !tbaa !56
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !2670 ; 2 uses
   %i.k = shl i32 %i.j, 1
@@ -6055,22 +6047,23 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not85, label %_ZN5clang12CXXScopeSpecD2Ev.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.aw = load i32, ptr %i.i, align 8, !tbaa !2670 ; 2 uses
+  %i.aw = load i32, ptr %i.i, align 8, !tbaa !2670
   %i.ax = zext i32 %i.aw to i64                   ; 2 uses
-  %.idx98 = shl nuw nsw i64 %i.ax, 3
-  %13 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx98 ; 2 uses
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %i.ax
-  %.not63.i94 = icmp eq i32 %i.aw, 0
+  %.idx98 = shl nuw nsw i64 %i.ax, 3              ; 2 uses
+  %.idx.i.i = shl nuw nsw i64 %i.ax, 4            ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx.i.i
+  %.not63.i94 = icmp samesign eq i64 %.idx98, %.idx.i.i
   br i1 %.not63.i94, label %_ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_12OMPMapClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit, label %.lr.ph97
 
 .lr.ph97:                                         ; preds = %bb.l
+  %14 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx98
   %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph97, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit
-  %.061.i95 = phi ptr [ %13, %.lr.ph97 ], [ %i.de, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
+  %.061.i95 = phi ptr [ %14, %.lr.ph97 ], [ %i.de, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
   %i.bb = load ptr, ptr %.061.i95, align 8, !tbaa !979 ; 5 uses
   %.not64.i = icmp eq ptr %i.bb, null
   br i1 %.not64.i, label %bb.t, label %bb.n
@@ -6200,7 +6193,7 @@ bb.v:                                             ; preds = %bb.t
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit: ; preds = %bb.v, %bb.u, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.de = getelementptr inbounds nuw i8, ptr %.061.i95, i64 8 ; 2 uses
-  %.not63.i = icmp eq ptr %i.de, %14
+  %.not63.i = icmp eq ptr %i.de, %13
   br i1 %.not63.i, label %_ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_12OMPMapClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit, label %bb.m
 
 _ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_12OMPMapClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit: ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit, %bb.l
@@ -6603,13 +6596,11 @@ bb.g:                                             ; preds = %bb.f, %.critedge58
   %i.ac = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.ac, align 4, !tbaa !56
   %i.ad = load i32, ptr %i.d, align 8, !tbaa !2723 ; 2 uses
-  %i.ae = zext i32 %i.ad to i64                   ; 5 uses
-  %.idx105.a = shl nuw nsw i64 %i.ae, 3
-  %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx105.a
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.ae
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.ae
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.ae ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.ae
+  %i.ae = zext i32 %i.ad to i64                   ; 2 uses
+  %.idx105.a = shl nuw nsw i64 %i.ae, 5
+  %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx105.a ; 2 uses
+  %.idx105 = shl nuw nsw i64 %i.ae, 3
+  %9 = getelementptr inbounds nuw i8, ptr %i.af, i64 %.idx105
   %.not55100 = icmp eq i32 %i.ad, 0
   br i1 %.not55100, label %._crit_edge104, label %.lr.ph103
 
@@ -6664,7 +6655,7 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit: ; preds = %._crit_edge104, 
   br label %bb.s
 
 bb.i:                                             ; preds = %.lr.ph103, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit75
-  %.053101 = phi ptr [ %11, %.lr.ph103 ], [ %i.dd, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit75 ] ; 2 uses
+  %.053101 = phi ptr [ %i.af, %.lr.ph103 ], [ %i.dd, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit75 ] ; 2 uses
   %i.az = load ptr, ptr %.053101, align 8, !tbaa !979 ; 5 uses
   %.not56 = icmp eq ptr %i.az, null
   br i1 %.not56, label %bb.p, label %bb.j
@@ -6794,7 +6785,7 @@ bb.r:                                             ; preds = %bb.p
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit75: ; preds = %bb.r, %bb.q, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.dd = getelementptr inbounds nuw i8, ptr %.053101, i64 8 ; 2 uses
-  %.not55 = icmp eq ptr %i.dd, %12
+  %.not55 = icmp eq ptr %i.dd, %9
   br i1 %.not55, label %._crit_edge104.loopexit, label %bb.i
 
 bb.s:                                             ; preds = %bb.f, %_ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit
@@ -7197,13 +7188,11 @@ bb.g:                                             ; preds = %bb.f, %.critedge54
   %i.ac = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.ac, align 4, !tbaa !56
   %i.ad = load i32, ptr %i.d, align 8, !tbaa !2742 ; 2 uses
-  %i.ae = zext i32 %i.ad to i64                   ; 5 uses
-  %.idx100.a = shl nuw nsw i64 %i.ae, 3
-  %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx100.a
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.ae
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.ae
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.ae ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.ae
+  %i.ae = zext i32 %i.ad to i64                   ; 2 uses
+  %.idx100.a = shl nuw nsw i64 %i.ae, 5
+  %i.af = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx100.a ; 2 uses
+  %.idx100 = shl nuw nsw i64 %i.ae, 3
+  %9 = getelementptr inbounds nuw i8, ptr %i.af, i64 %.idx100
   %.not5195 = icmp eq i32 %i.ad, 0
   br i1 %.not5195, label %._crit_edge99, label %.lr.ph98
 
@@ -7254,7 +7243,7 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit: ; preds = %._crit_edge99, %
   br label %bb.s
 
 bb.i:                                             ; preds = %.lr.ph98, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit70
-  %.04996 = phi ptr [ %11, %.lr.ph98 ], [ %i.da, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit70 ] ; 2 uses
+  %.04996 = phi ptr [ %i.af, %.lr.ph98 ], [ %i.da, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit70 ] ; 2 uses
   %i.aw = load ptr, ptr %.04996, align 8, !tbaa !979 ; 5 uses
   %.not52 = icmp eq ptr %i.aw, null
   br i1 %.not52, label %bb.p, label %bb.j
@@ -7384,7 +7373,7 @@ bb.r:                                             ; preds = %bb.p
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit70: ; preds = %bb.r, %bb.q, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.da = getelementptr inbounds nuw i8, ptr %.04996, i64 8 ; 2 uses
-  %.not51 = icmp eq ptr %i.da, %12
+  %.not51 = icmp eq ptr %i.da, %9
   br i1 %.not51, label %._crit_edge99.loopexit, label %bb.i
 
 bb.s:                                             ; preds = %bb.f, %_ZN4llvm11SmallVectorIPN5clang4ExprELj16EED2Ev.exit
@@ -7545,7 +7534,7 @@ bb.a:
   store i32 0, ptr %i.f, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 3 uses
   store i32 16, ptr %i.g, align 4, !tbaa !56
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !2746 ; 2 uses
   %i.k = shl i32 %i.j, 1
@@ -7672,22 +7661,23 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not78, label %_ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_11OMPToClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.aw = load i32, ptr %i.i, align 8, !tbaa !2746 ; 2 uses
+  %i.aw = load i32, ptr %i.i, align 8, !tbaa !2746
   %i.ax = zext i32 %i.aw to i64                   ; 2 uses
-  %.idx91 = shl nuw nsw i64 %i.ax, 3
-  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx91 ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.ax
-  %.not63.i87 = icmp eq i32 %i.aw, 0
+  %.idx91 = shl nuw nsw i64 %i.ax, 3              ; 2 uses
+  %.idx.i.i = shl nuw nsw i64 %i.ax, 4            ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx.i.i
+  %.not63.i87 = icmp samesign eq i64 %.idx91, %.idx.i.i
   br i1 %.not63.i87, label %_ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_11OMPToClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit, label %.lr.ph90
 
 .lr.ph90:                                         ; preds = %bb.l
+  %12 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx91
   %i.ay = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph90, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit
-  %.061.i88 = phi ptr [ %11, %.lr.ph90 ], [ %i.de, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
+  %.061.i88 = phi ptr [ %12, %.lr.ph90 ], [ %i.de, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit ] ; 2 uses
   %i.bb = load ptr, ptr %.061.i88, align 8, !tbaa !979 ; 5 uses
   %.not64.i = icmp eq ptr %i.bb, null
   br i1 %.not64.i, label %bb.t, label %bb.n
@@ -7817,7 +7807,7 @@ bb.v:                                             ; preds = %bb.t
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit: ; preds = %bb.v, %bb.u, %_ZN5clang13UnresolvedSetILj8EED2Ev.exit
   %i.de = getelementptr inbounds nuw i8, ptr %.061.i88, i64 8 ; 2 uses
-  %.not63.i = icmp eq ptr %i.de, %12
+  %.not63.i = icmp eq ptr %i.de, %11
   br i1 %.not63.i, label %_ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_11OMPToClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit, label %bb.m
 
 _ZN5clang34transformOMPMappableExprListClauseIN12_GLOBAL__N_120TemplateInstantiatorENS_11OMPToClauseEEEbRNS_13TreeTransformIT_EEPNS_25OMPMappableExprListClauseIT0_EERN4llvm15SmallVectorImplIPNS_4ExprEEERNS_12CXXScopeSpecERNS_19DeclarationNameInfoESH_.exit: ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit, %bb.l

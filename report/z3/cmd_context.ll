@@ -205,21 +205,21 @@ bb.ad:                                            ; preds = %_ZNK8obj_markI4expr
 bb.ae:                                            ; preds = %.lr.ph350
   %.not.i100 = icmp ugt i32 %i.dq, %i.de
   %i.ds = load i32, ptr %i.dl, align 4, !tbaa !1316
-  %i.dt = zext i32 %i.ds to i64                   ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.dk, i64 %i.dt
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.dt ; 2 uses
+  %i.dt = zext i32 %i.ds to i64
+  %.idx.i.i6.i = shl nuw nsw i64 %i.dt, 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.dk, i64 %.idx.i.i6.i ; 2 uses
   br i1 %.not.i100, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.du = add i32 %i.dq, -1
   %i.dv = zext i32 %i.du to i64
-  %i.dw = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.dv
+  %i.dw = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.dv
   br label %bb.ah
 
 bb.ag:                                            ; preds = %bb.ae
   %i.dx = add i32 %i.dq, %i.dn
   %i.dy = zext i32 %i.dx to i64
-  %i.dz = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.dy
+  %i.dz = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.dy
   br label %bb.ah
 
 bb.ah:                                            ; preds = %.lr.ph350, %bb.ag, %bb.af

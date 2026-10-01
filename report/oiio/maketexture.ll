@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 12
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !135
   %i.ae = mul nsw i32 %i.ad, %i.i
-  %i.af = sext i32 %i.ae to i64                   ; 8 uses
+  %i.af = sext i32 %i.ae to i64                   ; 5 uses
   %i.ag = sext i32 %i.m to i64                    ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !178 ; 2 uses
@@ -229,6 +229,9 @@ bb.j:                                             ; preds = %bb.i
   %i.av = sext i32 %i.i to i64                    ; 2 uses
   %i.aw = zext nneg i32 %i.i to i64               ; 2 uses
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ag, i64 1)
+  %.idx155 = shl nsw i64 %i.af, 2
+  %.idx = shl nsw i64 %i.af, 2
+  %.idx153 = shl nsw i64 %i.af, 2
   br label %bb.o
 
 _ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit67: ; preds = %._crit_edge117, %bb.j
@@ -263,16 +266,14 @@ bb.o:                                             ; preds = %.lr.ph, %._crit_edg
   br i1 %.not.i68, label %_ZN11OpenImageIO4v3_1L14halve_scanlineIN9Imath_3_14halfEEEvPKT_imPf.exit88.thread, label %.preheader.lr.ph.i
 
 _ZN11OpenImageIO4v3_1L14halve_scanlineIN9Imath_3_14halfEEEvPKT_imPf.exit88.thread: ; preds = %bb.o
-  %4 = getelementptr inbounds nuw [2 x i8], ptr %.053119, i64 %i.af
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.af
+  %4 = getelementptr inbounds nuw i8, ptr %.053119, i64 %.idx153
   br label %._crit_edge117
 
 .preheader.lr.ph.i:                               ; preds = %bb.o
   br i1 %i.au, label %.preheader.i, label %.preheader.lr.ph.thread
 
 .preheader.lr.ph.thread:                          ; preds = %.preheader.lr.ph.i
-  %6 = getelementptr inbounds nuw [2 x i8], ptr %.053119, i64 %i.af
-  %7 = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %i.af
+  %5 = getelementptr inbounds nuw i8, ptr %.053119, i64 %.idx155
   br label %._crit_edge117
 
 .preheader.i:                                     ; preds = %.preheader.lr.ph.i, %._crit_edge.i
@@ -488,8 +489,7 @@ _ZNK9Imath_3_14halfcvfEv.exit22.i84:              ; preds = %bb.ak, %bb.aj, %bb.
   br i1 %exitcond.not.i86, label %._crit_edge.i87, label %bb.aa, !llvm.loop !1345
 
 _ZN11OpenImageIO4v3_1L14halve_scanlineIN9Imath_3_14halfEEEvPKT_imPf.exit88: ; preds = %._crit_edge.i87
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %.053119, i64 %i.af
-  %9 = getelementptr inbounds nuw [2 x i8], ptr %8, i64 %i.af
+  %6 = getelementptr inbounds nuw i8, ptr %.053119, i64 %.idx
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %_ZN11OpenImageIO4v3_1L14halve_scanlineIN9Imath_3_14halfEEEvPKT_imPf.exit88, %._crit_edge.us
@@ -600,7 +600,7 @@ _ZN9Imath_3_14halfC2Ef.exit.us:                   ; preds = %bb.av, %bb.au, %bb.
   br i1 %exitcond131.not, label %._crit_edge117, label %.preheader.us, !llvm.loop !1347
 
 ._crit_edge117:                                   ; preds = %._crit_edge.us, %.preheader.lr.ph.thread, %_ZN11OpenImageIO4v3_1L14halve_scanlineIN9Imath_3_14halfEEEvPKT_imPf.exit88.thread
-  %i.gn = phi ptr [ %5, %_ZN11OpenImageIO4v3_1L14halve_scanlineIN9Imath_3_14halfEEEvPKT_imPf.exit88.thread ], [ %7, %.preheader.lr.ph.thread ], [ %9, %._crit_edge.us ]
+  %i.gn = phi ptr [ %4, %_ZN11OpenImageIO4v3_1L14halve_scanlineIN9Imath_3_14halfEEEvPKT_imPf.exit88.thread ], [ %5, %.preheader.lr.ph.thread ], [ %6, %._crit_edge.us ]
   %.152.lcssa = phi ptr [ %.051120, %_ZN11OpenImageIO4v3_1L14halve_scanlineIN9Imath_3_14halfEEEvPKT_imPf.exit88.thread ], [ %.051120, %.preheader.lr.ph.thread ], [ %i.gl, %._crit_edge.us ]
   %i.go = add nuw i64 %.050121, 1                 ; 2 uses
   %exitcond133.not = icmp eq i64 %i.go, %i.al

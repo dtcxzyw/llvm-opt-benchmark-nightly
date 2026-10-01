@@ -205,6 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.s = getelementptr inbounds i8, ptr %0, i64 %.idx.i ; 2 uses
   %i.t = icmp sgt i32 %i.g, 0                     ; 2 uses
   %wide.trip.count59.i = zext i32 %i.g to i64     ; 19 uses
+  %.idx = shl nuw nsw i64 %i.r, 4
   %wide.trip.count = zext nneg i32 %1 to i64
   %i.u = sub i64 %.idx.i, %i.a
   %i.v = sub i64 %.idx.i, %i.a
@@ -488,7 +489,7 @@ bb.i:                                             ; preds = %.lr.ph.i173
 Abc_TtEqual.exit:                                 ; preds = %.lr.ph.i173
   %i.dj = getelementptr inbounds nuw [224 x i8], ptr %4, i64 %indvars.iv ; 10 uses
   store ptr %.0145447, ptr %i.dj, align 16, !tbaa !24
-  %i.dk = getelementptr inbounds [8 x i8], ptr %.0145447, i64 %i.r ; 15 uses
+  %i.dk = getelementptr inbounds [8 x i8], ptr %.0145447, i64 %i.r ; 16 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   store ptr %i.dk, ptr %i.dl, align 8, !tbaa !25
   br i1 %i.q, label %bb.j, label %bb.k
@@ -692,7 +693,7 @@ scalar.ph611.epil.preheader:                      ; preds = %.lr.ph.preheader.i1
   %i.go = getelementptr inbounds [8 x i8], ptr %i.dk, i64 %i.r
   %i.gp = getelementptr inbounds nuw i8, ptr %i.dj, i64 16
   store ptr %i.go, ptr %i.gp, align 16, !tbaa !26
-  %i.gq = getelementptr inbounds [8 x i8], ptr %i.dk, i64 %i.r ; 7 uses
+  %i.gq = getelementptr inbounds [8 x i8], ptr %i.dk, i64 %i.r ; 6 uses
   br i1 %or.cond877, label %.lr.ph.i192.preheader, label %vector.body
 
 .lr.ph.i192.preheader:                            ; preds = %.lr.ph.preheader.i190
@@ -781,7 +782,7 @@ Abc_TtXor.exit.loopexit.unr-lcssa:                ; preds = %.lr.ph.i192
   br i1 %epil.iter939.cmp.not, label %Abc_TtXor.exit, label %.lr.ph.i192.epil, !llvm.loop !95
 
 Abc_TtXor.exit:                                   ; preds = %vector.body, %Abc_TtXor.exit.loopexit.unr-lcssa, %.lr.ph.i192.epil
-  %6 = getelementptr inbounds [8 x i8], ptr %i.gq, i64 %i.r
+  %6 = getelementptr inbounds nuw i8, ptr %i.dk, i64 %.idx
   %i.ie = getelementptr inbounds nuw i8, ptr %i.dj, i64 24
   store i32 1, ptr %i.ie, align 8, !tbaa !16
   %i.if = shl nuw nsw i64 %indvars.iv, 1          ; 2 uses

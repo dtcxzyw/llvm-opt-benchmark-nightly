@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.j
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %.thread110
-  %.1.i158 = phi i64 [ %i.bw, %.thread110 ], [ %i.bo, %bb.l ] ; 16 uses
+  %.1.i158 = phi i64 [ %i.bw, %.thread110 ], [ %i.bo, %bb.l ] ; 12 uses
   %.2156 = phi i1 [ false, %.thread110 ], [ true, %bb.l ]
   %i.bx = phi i64 [ 0, %.thread110 ], [ %i.bo, %bb.l ]
   %i.by = sub i64 %i.l, %i.bj                     ; 3 uses
@@ -264,17 +264,18 @@ _ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9containe
   %.0127.us.i.i.unr = phi ptr [ %0, %.lr.ph129.i.i ], [ %i.co, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i.prol ]
   %.069126.us.i.i.unr = phi ptr [ %i.ck, %.lr.ph129.i.i ], [ %i.cn, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i.prol ]
   %i.cp = icmp ult i64 %i.cm, 7
-  br i1 %i.cp, label %_ZN5boost7movelib15detail_adaptive23merge_blocks_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEES4_SD_EEvT_T0_T1_NS0_9iter_sizeISG_E4typeESJ_SJ_SJ_SJ_T2_.exit.i, label %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i
+  br i1 %i.cp, label %_ZN5boost7movelib15detail_adaptive23merge_blocks_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEES4_SD_EEvT_T0_T1_NS0_9iter_sizeISG_E4typeESJ_SJ_SJ_SJ_T2_.exit.i, label %.lr.ph129.i.i.new
 
-_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i: ; preds = %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i.prol.loopexit, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i
-  %.0127.us.i.i = phi ptr [ %i.cu, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i ], [ %.0127.us.i.i.unr, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i.prol.loopexit ]
-  %.069126.us.i.i = phi ptr [ %i.ct, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i ], [ %.069126.us.i.i.unr, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i.prol.loopexit ]
-  %4 = getelementptr inbounds nuw i8, ptr %.069126.us.i.i, i64 %.1.i158
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %.1.i158
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 %.1.i158
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %.1.i158
-  %i.cq = getelementptr inbounds nuw i8, ptr %7, i64 %.1.i158
-  %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 %.1.i158
+.lr.ph129.i.i.new:                                ; preds = %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i.prol.loopexit
+  %4 = shl i64 %.1.i158, 2
+  %5 = shl i64 %.1.i158, 1
+  br label %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i
+
+_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i: ; preds = %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i, %.lr.ph129.i.i.new
+  %.0127.us.i.i = phi ptr [ %.0127.us.i.i.unr, %.lr.ph129.i.i.new ], [ %i.cu, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i ]
+  %.069126.us.i.i = phi ptr [ %.069126.us.i.i.unr, %.lr.ph129.i.i.new ], [ %i.ct, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i ]
+  %i.cq = getelementptr inbounds nuw i8, ptr %.069126.us.i.i, i64 %4
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 %5
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 %.1.i158 ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 %.1.i158
   %i.cu = getelementptr inbounds nuw i8, ptr %.0127.us.i.i, i64 8 ; 2 uses
@@ -677,7 +678,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5boost7movelib15detail_adaptive18lblock_for_combineImEET_S3_S3_S3_Rb.exit: ; preds = %bb.c, %bb.e, %.critedge.i
   %.1 = phi i1 [ true, %bb.e ], [ false, %.critedge.i ], [ true, %bb.c ] ; 8 uses
-  %.1.i = phi i64 [ %i.s, %bb.e ], [ %i.w, %.critedge.i ], [ %i.p, %bb.c ] ; 20 uses
+  %.1.i = phi i64 [ %i.s, %bb.e ], [ %i.w, %.critedge.i ], [ %i.p, %bb.c ] ; 16 uses
   %i.x = and i64 %.0130164, 1
   %i.y = icmp eq i64 %i.x, 0                      ; 6 uses
   %i.z = urem i64 %i.d, %i.r                      ; 2 uses
@@ -703,11 +704,16 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i:                                         ; preds = %bb.g
   %i.af = urem i64 %.0165, %.1.i                  ; 2 uses
-  br i1 %.1, label %_ZN5boost7movelib15detail_adaptive28adaptive_sort_combine_blocksIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEES4_SD_NS0_13adaptive_xbufIS3_S4_mEEEEvT_T0_T1_NS0_9iter_sizeISI_E4typeESL_SL_bbRT3_T2_b.exit, label %.lr.ph.split.i
+  br i1 %.1, label %_ZN5boost7movelib15detail_adaptive28adaptive_sort_combine_blocksIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEES4_SD_NS0_13adaptive_xbufIS3_S4_mEEEEvT_T0_T1_NS0_9iter_sizeISI_E4typeESL_SL_bbRT3_T2_b.exit, label %.lr.ph.split.i.preheader
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i, %._crit_edge130.i.i
-  %.073105.i = phi i64 [ %i.bd, %._crit_edge130.i.i ], [ 0, %.lr.ph.i ] ; 2 uses
-  %.074104.i = phi ptr [ %spec.select.i, %._crit_edge130.i.i ], [ %i.c, %.lr.ph.i ] ; 5 uses
+.lr.ph.split.i.preheader:                         ; preds = %.lr.ph.i
+  %7 = shl i64 %.1.i, 2
+  %8 = shl i64 %.1.i, 1
+  br label %.lr.ph.split.i
+
+.lr.ph.split.i:                                   ; preds = %.lr.ph.split.i.preheader, %._crit_edge130.i.i
+  %.073105.i = phi i64 [ %i.bd, %._crit_edge130.i.i ], [ 0, %.lr.ph.split.i.preheader ] ; 2 uses
+  %.074104.i = phi ptr [ %spec.select.i, %._crit_edge130.i.i ], [ %i.c, %.lr.ph.split.i.preheader ] ; 5 uses
   %i.ag = icmp eq i64 %.073105.i, %i.aa
   %i.ah = select i1 %i.ag, i64 %spec.select.i.i, i64 %i.r ; 2 uses
   %i.ai = sub i64 %i.ah, %i.af
@@ -747,12 +753,8 @@ _ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9containe
 _ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i: ; preds = %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i.prol.loopexit, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i
   %.0127.us.i.i = phi ptr [ %i.aw, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i ], [ %.0127.us.i.i.unr, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i.prol.loopexit ]
   %.069126.us.i.i = phi ptr [ %i.av, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i ], [ %.069126.us.i.i.unr, %_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEEEET_SE_SE_SE_PbT0_.exit.us.i.i.prol.loopexit ]
-  %7 = getelementptr inbounds nuw i8, ptr %.069126.us.i.i, i64 %.1.i
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %.1.i
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.1.i
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 %.1.i
-  %i.as = getelementptr inbounds nuw i8, ptr %10, i64 %.1.i
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %.1.i
+  %i.as = getelementptr inbounds nuw i8, ptr %.069126.us.i.i, i64 %7
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %8
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %.1.i ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %.1.i
   %i.aw = getelementptr inbounds nuw i8, ptr %.0127.us.i.i, i64 8 ; 2 uses
@@ -1155,18 +1157,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.u, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.t, %.lr.ph124.split.us.preheader.prol ]
   %i.v = icmp ult i64 %i.q, 28
-  br i1 %i.v, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.v, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.y, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.x, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %2
-  %i.w = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 4
+  %.idx169 = shl i64 %2, 3
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.y, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.x, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx169
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %2 ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %2
   %i.y = getelementptr inbounds nuw i8, ptr %.0122.us, i64 32 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.y, %i.n
@@ -1569,18 +1572,19 @@ bb.a:
   %.0121.us.unr = phi ptr [ %0, %.lr.ph123.split.us.preheader.preheader ], [ %i.u, %.lr.ph123.split.us.preheader.prol ]
   %.069120.us.unr = phi ptr [ %i.d, %.lr.ph123.split.us.preheader.preheader ], [ %i.t, %.lr.ph123.split.us.preheader.prol ]
   %i.v = icmp ult i64 %i.s, 7
-  br i1 %i.v, label %._crit_edge124, label %.lr.ph123.split.us.preheader
+  br i1 %i.v, label %._crit_edge124, label %.lr.ph123.split.us.preheader.preheader.new
 
-.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader.prol.loopexit, %.lr.ph123.split.us.preheader
-  %.0121.us = phi ptr [ %i.y, %.lr.ph123.split.us.preheader ], [ %.0121.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %.069120.us = phi ptr [ %i.x, %.lr.ph123.split.us.preheader ], [ %.069120.us.unr, %.lr.ph123.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %.069120.us, i64 %2
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %2
-  %i.w = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph123.split.us.preheader.preheader.new:       ; preds = %.lr.ph123.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 4
+  %.idx166 = shl i64 %2, 3
+  br label %.lr.ph123.split.us.preheader
+
+.lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123.split.us.preheader, %.lr.ph123.split.us.preheader.preheader.new
+  %.0121.us = phi ptr [ %.0121.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.y, %.lr.ph123.split.us.preheader ]
+  %.069120.us = phi ptr [ %.069120.us.unr, %.lr.ph123.split.us.preheader.preheader.new ], [ %i.x, %.lr.ph123.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069120.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx166
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %2 ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %2
   %i.y = getelementptr inbounds nuw i8, ptr %.0121.us, i64 8 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.y, %i.n
@@ -1983,18 +1987,19 @@ bb.a:
   %.0122.us.unr = phi ptr [ %0, %.lr.ph124.split.us.preheader.preheader ], [ %i.u, %.lr.ph124.split.us.preheader.prol ]
   %.069121.us.unr = phi ptr [ %i.d, %.lr.ph124.split.us.preheader.preheader ], [ %i.t, %.lr.ph124.split.us.preheader.prol ]
   %i.v = icmp ult i64 %i.q, 56
-  br i1 %i.v, label %._crit_edge125, label %.lr.ph124.split.us.preheader
+  br i1 %i.v, label %._crit_edge125, label %.lr.ph124.split.us.preheader.preheader.new
 
-.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader.prol.loopexit, %.lr.ph124.split.us.preheader
-  %.0122.us = phi ptr [ %i.y, %.lr.ph124.split.us.preheader ], [ %.0122.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %.069121.us = phi ptr [ %i.x, %.lr.ph124.split.us.preheader ], [ %.069121.us.unr, %.lr.ph124.split.us.preheader.prol.loopexit ]
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %.069121.us, i64 %2
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %2
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %2
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %2
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %2
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %2
-  %i.w = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %2 ; 2 uses
+.lr.ph124.split.us.preheader.preheader.new:       ; preds = %.lr.ph124.split.us.preheader.prol.loopexit
+  %7 = shl i64 %2, 4
+  %.idx169 = shl i64 %2, 3
+  br label %.lr.ph124.split.us.preheader
+
+.lr.ph124.split.us.preheader:                     ; preds = %.lr.ph124.split.us.preheader, %.lr.ph124.split.us.preheader.preheader.new
+  %.0122.us = phi ptr [ %.0122.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.y, %.lr.ph124.split.us.preheader ]
+  %.069121.us = phi ptr [ %.069121.us.unr, %.lr.ph124.split.us.preheader.preheader.new ], [ %i.x, %.lr.ph124.split.us.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %.069121.us, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx169
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %2 ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %2
   %i.y = getelementptr inbounds nuw i8, ptr %.0122.us, i64 64 ; 2 uses
   %.not77.us.7 = icmp eq ptr %i.y, %i.n

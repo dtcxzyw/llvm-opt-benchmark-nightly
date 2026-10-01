@@ -205,7 +205,7 @@ bb.ey:                                            ; preds = %.split187.us.i.i, %
   %i.cyi = load i8, ptr %i.cyh, align 1, !tbaa !32
   %.fr216.i.i = freeze i8 %i.cyi                  ; 11 uses
   %i.cyj = zext i8 %.fr216.i.i to i64             ; 19 uses
-  %i.cyk = sub nsw i64 0, %i.cyj                  ; 12 uses
+  %i.cyk = sub nsw i64 0, %i.cyj                  ; 8 uses
   %.not214.i.i = icmp eq i8 %.fr216.i.i, 0
   br i1 %.not214.i.i, label %.split.preheader.i.i, label %.split.us.preheader.i.i
 
@@ -217,16 +217,12 @@ bb.ey:                                            ; preds = %.split187.us.i.i, %
   br i1 %.not164.us.i.i, label %.lr.ph.us.i.i, label %.loopexit300.i.i
 
 .split.preheader.i.i:                             ; preds = %bb.ey
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %.0136192.i.i, i64 %i.cyk
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %.0135193.i.i, i64 %i.cyk
   %.not164.i.i = icmp ne i32 %.sroa.14.0.i.i, 0
   %spec.select301.i.i = zext i1 %.not164.i.i to i32
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.cyk
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.cyk
   %.not164.1.i.i = icmp ne i32 %.sroa.8.0.i.i, 0
   %.sroa.8.5.i.i = zext i1 %.not164.1.i.i to i32
-  %i.cyo = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.cyk
-  %i.cyp = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %i.cyk
+  %i.cyo = getelementptr inbounds nuw [4 x i8], ptr %.0136192.i.i, i64 %i.cyk
+  %i.cyp = getelementptr inbounds nuw [4 x i8], ptr %.0135193.i.i, i64 %i.cyk
   %.not164.2.i.i = icmp ne i32 %.sroa.0.0.i.i, 0
   %spec.select302.i.i = zext i1 %.not164.2.i.i to i32
   br label %.split187.us.i.i

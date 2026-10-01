@@ -205,9 +205,9 @@ bb.ak:                                            ; preds = %bb.g
   %i.em = getelementptr inbounds nuw i8, ptr %i.ag, i64 80 ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.ag, i64 20 ; 2 uses
   %i.eo = load i32, ptr %i.en, align 4, !tbaa !345
-  %i.ep = zext i32 %i.eo to i64                   ; 3 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %i.ep
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ep
+  %i.ep = zext i32 %i.eo to i64
+  %.idx.i.i = shl nuw nsw i64 %i.ep, 4            ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.em, i64 %.idx.i.i
   %.not.i84.i = icmp eq i32 %i.el, 0
   br i1 %.not.i84.i, label %_Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.thread.i, label %.lr.ph.preheader.i85.i
 
@@ -222,7 +222,7 @@ bb.ak:                                            ; preds = %bb.g
 
 .lr.ph.i87.i:                                     ; preds = %bb.ao, %.lr.ph.i87.outer.i
   %indvars.iv.i88.i = phi i64 [ %indvars.iv.next.i92.i, %bb.ao ], [ %indvars.iv.i88.ph.i, %.lr.ph.i87.outer.i ] ; 3 uses
-  %i.eq = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.i88.i
+  %i.eq = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.i88.i
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !104 ; 2 uses
   %i.es = invoke noundef zeroext i1 @_ZNK8ast_mark9is_markedEP3ast(ptr noundef nonnull align 8 dereferenceable(56) %3, ptr noundef %i.er)
           to label %.noexc98.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.i
@@ -277,14 +277,14 @@ _Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.i: ; pr
 _Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100._Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.thread_crit_edge.i: ; preds = %_Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.i
   %.pre35.i = load i32, ptr %i.en, align 4, !tbaa !345
   %.pre36.i = zext i32 %.pre35.i to i64
+  %.pre37.i = shl nuw nsw i64 %.pre36.i, 4
   br label %_Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.thread.i
 
 _Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.thread.i: ; preds = %_Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100._Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.thread_crit_edge.i, %bb.ak
-  %.pre-phi.i = phi i64 [ %.pre36.i, %_Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100._Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.thread_crit_edge.i ], [ %i.ep, %bb.ak ] ; 2 uses
+  %.pre-phi.i = phi i64 [ %.pre37.i, %_Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100._Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.thread_crit_edge.i ], [ %.idx.i.i, %bb.ak ]
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ag, i64 76
   %i.fh = load i32, ptr %i.fg, align 4, !tbaa !491 ; 2 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %.pre-phi.i
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.pre-phi.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.em, i64 %.pre-phi.i
   %.not.i101.i = icmp eq i32 %i.fh, 0
   br i1 %.not.i101.i, label %_Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit117.thread.i, label %.lr.ph.preheader.i102.i
 
@@ -299,7 +299,7 @@ _Z17for_each_ast_argsI4exprEbR10ptr_vectorI3astER8ast_markjPKPT_.exit100.thread.
 
 .lr.ph.i104.i:                                    ; preds = %bb.as, %.lr.ph.i104.outer.i
   %indvars.iv.i105.i = phi i64 [ %indvars.iv.next.i109.i, %bb.as ], [ %indvars.iv.i105.ph.i, %.lr.ph.i104.outer.i ] ; 3 uses
-  %i.fi = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv.i105.i
+  %i.fi = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.i105.i
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !104 ; 2 uses
   %i.fk = invoke noundef zeroext i1 @_ZNK8ast_mark9is_markedEP3ast(ptr noundef nonnull align 8 dereferenceable(56) %3, ptr noundef %i.fj)
           to label %.noexc115.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.i

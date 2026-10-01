@@ -205,7 +205,7 @@ bb.a:
   %.not217.i = icmp eq i64 %3, 0
   %.not218.i = icmp eq i64 %2, 0
   %i.b = mul nsw i64 %6, %2
-  %i.c = sub nsw i64 %7, %i.b                     ; 11 uses
+  %i.c = sub nsw i64 %7, %i.b                     ; 5 uses
   %i.d = mul i64 %7, %3                           ; 2 uses
   %i.e = sub nsw i64 %8, %i.d                     ; 2 uses
   %i.f = mul nsw i64 %8, %4
@@ -235,6 +235,8 @@ bb.a:
   %xtraiter34 = and i64 %3, 7                     ; 3 uses
   %i.o = icmp ult i64 %3, 8
   %unroll_iter39 = and i64 %3, -8
+  %10 = shl i64 %7, 5
+  %.idx = shl i64 %7, 4
   %lcmp.mod36.not = icmp eq i64 %xtraiter34, 0
   %lcmp.mod38 = icmp ne i64 %xtraiter34, 0
   br label %.preheader113.i
@@ -306,37 +308,33 @@ pad_block_double.exit.us132.i:                    ; preds = %pad_block_double.ex
   %niter40 = phi i64 [ %niter40.next.7, %pad_block_double.exit.us132.i ], [ 0, %pad_block_double.exit.us132.i.preheader ]
   %.idx84.us126.i = shl i64 %.064117.us124.i, 5
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 %.idx84.us126.i
-  %10 = getelementptr inbounds [8 x i8], ptr %.271116.us125.i, i64 %i.c
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 128 dereferenceable(32) %i.ao, i8 0, i64 32, i1 false)
   %i.ap = shl i64 %.064117.us124.i, 5
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ap
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
-  %11 = getelementptr inbounds [8 x i8], ptr %10, i64 %i.c
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 32 dereferenceable(32) %i.ar, i8 0, i64 32, i1 false)
   %i.as = shl i64 %.064117.us124.i, 5
   %i.at = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.as
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 64
-  %12 = getelementptr inbounds [8 x i8], ptr %11, i64 %i.c
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(32) %i.au, i8 0, i64 32, i1 false)
   %i.av = shl i64 %.064117.us124.i, 5
   %i.aw = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.av
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 96
-  %13 = getelementptr inbounds [8 x i8], ptr %12, i64 %i.c
+  %11 = getelementptr inbounds i8, ptr %.271116.us125.i, i64 %10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 32 dereferenceable(32) %i.ax, i8 0, i64 32, i1 false)
   %i.ay = shl i64 %.064117.us124.i, 5
   %i.az = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ay
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 128
-  %14 = getelementptr inbounds [8 x i8], ptr %13, i64 %i.c
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 128 dereferenceable(32) %i.ba, i8 0, i64 32, i1 false)
   %i.bb = shl i64 %.064117.us124.i, 5
   %i.bc = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.bb
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 160
-  %15 = getelementptr inbounds [8 x i8], ptr %14, i64 %i.c
+  %12 = getelementptr inbounds i8, ptr %11, i64 %.idx
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 32 dereferenceable(32) %i.bd, i8 0, i64 32, i1 false)
   %i.be = shl i64 %.064117.us124.i, 5
   %i.bf = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.be
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 192
-  %i.bh = getelementptr inbounds [8 x i8], ptr %15, i64 %i.c ; 2 uses
+  %i.bh = getelementptr inbounds [8 x i8], ptr %12, i64 %i.c ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(32) %i.bg, i8 0, i64 32, i1 false)
   %i.bi = shl i64 %.064117.us124.i, 5
   %i.bj = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.bi
