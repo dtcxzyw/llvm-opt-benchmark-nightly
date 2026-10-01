@@ -205,6 +205,7 @@ bb.q:                                             ; preds = %bb.o
 
 .lr.ph19.preheader.i:                             ; preds = %.preheader.i
   %.pre20.i = load ptr, ptr %9, align 8, !tbaa !641
+  %14 = zext i32 %.tr122 to i64
   br label %.lr.ph19.i
 
 .lr.ph.i74:                                       ; preds = %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i75, %.lr.ph.preheader.i72
@@ -248,17 +249,16 @@ _ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i75: ; preds = %.noexc, %bb
   br i1 %i.cp, label %.lr.ph.i74, label %.preheader.i, !llvm.loop !24
 
 .lr.ph19.i:                                       ; preds = %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i, %.lr.ph19.preheader.i
-  %14 = phi ptr [ %i.cx, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i ], [ %.pre20.i, %.lr.ph19.preheader.i ] ; 4 uses
-  %.018.i = phi i32 [ %16, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i ], [ 1, %.lr.ph19.preheader.i ] ; 2 uses
-  %15 = zext i32 %.018.i to i64
-  %i.cq = getelementptr inbounds nuw [4 x i8], ptr %.tr123, i64 %15
-  %i.cr = icmp eq ptr %14, null
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i ], [ 1, %.lr.ph19.preheader.i ] ; 2 uses
+  %15 = phi ptr [ %i.cx, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i ], [ %.pre20.i, %.lr.ph19.preheader.i ] ; 4 uses
+  %i.cq = getelementptr inbounds nuw [4 x i8], ptr %.tr123, i64 %indvars.iv
+  %i.cr = icmp eq ptr %15, null
   br i1 %i.cr, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph19.i
-  %i.cs = getelementptr inbounds i8, ptr %14, i64 -4
+  %i.cs = getelementptr inbounds i8, ptr %15, i64 -4
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !38 ; 2 uses
-  %i.cu = getelementptr inbounds i8, ptr %14, i64 -8
+  %i.cu = getelementptr inbounds i8, ptr %15, i64 -8
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !38
   %i.cw = icmp eq i32 %i.ct, %i.cv
   br i1 %i.cw, label %bb.u, label %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i
@@ -274,7 +274,7 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph19.i
   br label %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i
 
 _ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i: ; preds = %.noexc79, %bb.t
-  %i.cx = phi ptr [ %.pre.i13.i, %.noexc79 ], [ %14, %bb.t ] ; 3 uses
+  %i.cx = phi ptr [ %.pre.i13.i, %.noexc79 ], [ %15, %bb.t ] ; 3 uses
   %i.cy = phi i32 [ %.pre2.i15.i, %.noexc79 ], [ %i.ct, %bb.t ] ; 2 uses
   %i.cz = getelementptr inbounds i8, ptr %i.cx, i64 -4
   %i.da = zext i32 %i.cy to i64
@@ -283,8 +283,8 @@ _ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i: ; preds = %.noexc79, %
   store i32 %i.dc, ptr %i.db, align 4, !tbaa !38
   %i.dd = add i32 %i.cy, 1
   store i32 %i.dd, ptr %i.cz, align 4, !tbaa !38
-  %16 = add i32 %.018.i, 2                        ; 2 uses
-  %i.de = icmp ult i32 %16, %.tr122
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %i.de = icmp samesign ult i64 %indvars.iv.next, %14
   br i1 %i.de, label %.lr.ph19.i, label %.lr.ph.preheader.i81, !llvm.loop !25
 
 .lr.ph.preheader.i81:                             ; preds = %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i, %.preheader.i
@@ -296,6 +296,7 @@ _ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i: ; preds = %.noexc79, %
 
 .lr.ph19.preheader.i88:                           ; preds = %.preheader.i86
   %.pre20.i89 = load ptr, ptr %11, align 8, !tbaa !641
+  %16 = zext i32 %.tr124 to i64
   br label %.lr.ph19.i90
 
 .lr.ph.i83:                                       ; preds = %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i85, %.lr.ph.preheader.i81
@@ -339,10 +340,9 @@ _ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i85: ; preds = %.noexc99, %
   br i1 %i.dw, label %.lr.ph.i83, label %.preheader.i86, !llvm.loop !24
 
 .lr.ph19.i90:                                     ; preds = %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i92, %.lr.ph19.preheader.i88
+  %indvars.iv192 = phi i64 [ %indvars.iv.next193, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i92 ], [ 1, %.lr.ph19.preheader.i88 ] ; 2 uses
   %17 = phi ptr [ %i.ee, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i92 ], [ %.pre20.i89, %.lr.ph19.preheader.i88 ] ; 4 uses
-  %.018.i91 = phi i32 [ %19, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i92 ], [ 1, %.lr.ph19.preheader.i88 ] ; 2 uses
-  %18 = zext i32 %.018.i91 to i64
-  %i.dx = getelementptr inbounds nuw [4 x i8], ptr %.tr125, i64 %18
+  %i.dx = getelementptr inbounds nuw [4 x i8], ptr %.tr125, i64 %indvars.iv192
   %i.dy = icmp eq ptr %17, null
   br i1 %i.dy, label %bb.y, label %bb.x
 
@@ -374,8 +374,8 @@ _ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i92: ; preds = %.noexc100
   store i32 %i.ej, ptr %i.ei, align 4, !tbaa !38
   %i.ek = add i32 %i.ef, 1
   store i32 %i.ek, ptr %i.eg, align 4, !tbaa !38
-  %19 = add i32 %.018.i91, 2                      ; 2 uses
-  %i.el = icmp ult i32 %19, %.tr124
+  %indvars.iv.next193 = add nuw nsw i64 %indvars.iv192, 2 ; 2 uses
+  %i.el = icmp samesign ult i64 %indvars.iv.next193, %16
   br i1 %i.el, label %.lr.ph19.i90, label %_ZN8psort_nwIN3smt9theory_pb10psort_exprEE5splitEjPKN3sat7literalER7svectorIS5_jESA_.exit101, !llvm.loop !25
 
 _ZN8psort_nwIN3smt9theory_pb10psort_exprEE5splitEjPKN3sat7literalER7svectorIS5_jESA_.exit101: ; preds = %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit16.i92, %.preheader.i86
