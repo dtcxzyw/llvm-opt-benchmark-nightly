@@ -205,7 +205,7 @@ _ZNSt3__114__split_bufferIjRNS_9allocatorIjEEEC2EmmS3_.exit.i: ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.l = shl nuw nsw i64 %i.h, 2
   %i.m = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.l) #32
-          to label %.noexc10 unwind label %bb.e   ; 7 uses
+          to label %.noexc10 unwind label %bb.e   ; 6 uses
 
 .noexc10:                                         ; preds = %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEEC2EmmS3_.exit.i
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.h
@@ -215,18 +215,14 @@ _ZNSt3__114__split_bufferIjRNS_9allocatorIjEEEC2EmmS3_.exit.i: ; preds = %bb.b
   br i1 %.not4.i.i.i.i.i.i.i.i, label %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8ne180100Ev.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.noexc10
-  %i.q = ptrtoaddr ptr %i.o to i64                ; 2 uses
-  %2 = ptrtoaddr ptr %i.m to i64
+  %i.q = ptrtoaddr ptr %i.o to i64
   %i.r = ptrtoaddr ptr %i.p to i64
   %i.s = add i64 %i.q, -4
   %i.t = sub i64 %i.s, %i.r                       ; 2 uses
   %i.u = lshr i64 %i.t, 2
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 44
-  %3 = sub i64 %2, %i.q
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.preheader64, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.t, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader64, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.v, 9223372036854775800      ; 3 uses
@@ -629,7 +625,7 @@ begin_hunk_1_@llvm.umin.i64
 !710 = distinct !{!710, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8ne180100INS_16reverse_iteratorIPjEES6_S6_EENS_4pairIT_T1_EES8_T0_S9_"}
 !711 = distinct !{!711, !710, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8ne180100INS_16reverse_iteratorIPjEES6_S6_EENS_4pairIT_T1_EES8_T0_S9_: argument 0"}
 !712 = distinct !{!712, !142, !143, !144}
-!713 = distinct !{!713, !142, !143}
+!713 = distinct !{!713, !142, !144, !143}
 !714 = distinct !{!714, !"_ZNSt3__16__moveB8ne180100INS_17_ClassicAlgPolicyENS_16reverse_iteratorIPjEES4_S4_EENS_4pairIT0_T2_EES6_T1_S7_"}
 !715 = distinct !{!715, !714, !"_ZNSt3__16__moveB8ne180100INS_17_ClassicAlgPolicyENS_16reverse_iteratorIPjEES4_S4_EENS_4pairIT0_T2_EES6_T1_S7_: argument 0"}
 !716 = distinct !{!716, !"_ZNSt3__123__dispatch_copy_or_moveB8ne180100INS_17_ClassicAlgPolicyENS_11__move_loopIS1_EENS_14__move_trivialENS_16reverse_iteratorIPjEES7_S7_EENS_4pairIT2_T4_EES9_T3_SA_"}

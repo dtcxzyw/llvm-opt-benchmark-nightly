@@ -204,7 +204,7 @@ define linkonce_odr void @_ZNSt6vectorISt5tupleIJmmEESaIS1_EE17_M_realloc_insert
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !291  ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !292    ; 11 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !292    ; 8 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -227,7 +227,7 @@ _ZNKSt6vectorISt5tupleIJmmEESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 4
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #25 ; 11 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #25 ; 8 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 2 uses
   %i.r = load i64, ptr %3, align 8, !tbaa !176
   store i64 %i.r, ptr %i.q, align 8, !tbaa !325
@@ -239,23 +239,13 @@ _ZNKSt6vectorISt5tupleIJmmEESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt5tupleIJmmEESaIS1_EE12_M_check_lenEmPKc.exit
   %i.u = add i64 %i.m, -16
-  %i.v = sub i64 %i.u, %i.e                       ; 3 uses
+  %i.v = sub i64 %i.u, %i.e                       ; 2 uses
   %i.w = lshr i64 %i.v, 4
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.v, 240
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader79, label %vector.memcheck
+  %min.iters.check = icmp ult i64 %i.v, 112
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader79, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %4 = and i64 %i.v, -16
-  %5 = add i64 %4, 16                             ; 2 uses
-  %6 = getelementptr i8, ptr %i.p, i64 %5
-  %7 = getelementptr i8, ptr %i.c, i64 %5
-  %bound0 = icmp ult ptr %i.p, %7
-  %bound1 = icmp ult ptr %i.c, %6
-  %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %.lr.ph.i.i.i.preheader79, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
   %n.vec = and i64 %i.x, 2305843009213693944      ; 3 uses
   %i.y = shl i64 %n.vec, 4                        ; 2 uses
   %i.z = getelementptr i8, ptr %i.p, i64 %i.y     ; 2 uses
@@ -284,9 +274,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.x, %n.vec
   br i1 %cmp.n, label %_ZNSt6vectorISt5tupleIJmmEESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i.preheader79
 
-.lr.ph.i.i.i.preheader79:                         ; preds = %vector.memcheck, %.lr.ph.i.i.i.preheader, %middle.block
-  %.012.i.i.i.ph = phi ptr [ %i.p, %vector.memcheck ], [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.z, %middle.block ]
-  %.0911.i.i.i.ph = phi ptr [ %i.c, %vector.memcheck ], [ %i.c, %.lr.ph.i.i.i.preheader ], [ %i.aa, %middle.block ]
+.lr.ph.i.i.i.preheader79:                         ; preds = %.lr.ph.i.i.i.preheader, %middle.block
+  %.012.i.i.i.ph = phi ptr [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.z, %middle.block ]
+  %.0911.i.i.i.ph = phi ptr [ %i.c, %.lr.ph.i.i.i.preheader ], [ %i.aa, %middle.block ]
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader79, %.lr.ph.i.i.i
@@ -689,7 +679,7 @@ begin_hunk_1_@llvm.umax.i64
 !678 = distinct !{!678, !677, !"_ZSt19__relocate_object_aISt5tupleIJmmEES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !679 = distinct !{!679, !677, !"_ZSt19__relocate_object_aISt5tupleIJmmEES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !680 = distinct !{!680, !221, !689, !690}
-!681 = distinct !{!681, !221, !689}
+!681 = distinct !{!681, !221, !690, !689}
 !682 = distinct !{!682, !"_ZSt19__relocate_object_aISt5tupleIJmmEES1_SaIS1_EEvPT_PT0_RT1_"}
 !683 = distinct !{!683, !682, !"_ZSt19__relocate_object_aISt5tupleIJmmEES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !684 = distinct !{!684, !682, !"_ZSt19__relocate_object_aISt5tupleIJmmEES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}

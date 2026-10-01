@@ -169,7 +169,7 @@ _ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIiEEEENS_19__allocation_re
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ad, i8 0, i64 16, i1 false)
   %i.ag = invoke noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #20
-          to label %.noexc10 unwind label %bb.i   ; 7 uses
+          to label %.noexc10 unwind label %bb.i   ; 6 uses
 
 .noexc10:                                         ; preds = %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIiEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 4 ; 3 uses
@@ -180,18 +180,14 @@ _ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIiEEEENS_19__allocation_re
   br i1 %.not4.i.i.i.i.i.i.i.i.i, label %_ZNSt3__114__split_bufferIiRNS_9allocatorIiEEE5clearB8ne180100Ev.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %.noexc10
-  %i.ak = ptrtoaddr ptr %i.ai to i64              ; 2 uses
-  %4 = ptrtoaddr ptr %i.ag to i64
+  %i.ak = ptrtoaddr ptr %i.ai to i64
   %i.al = ptrtoaddr ptr %i.aj to i64
   %i.am = add i64 %i.ak, -4
   %i.an = sub i64 %i.am, %i.al                    ; 2 uses
   %i.ao = lshr i64 %i.an, 2
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.an, 44
-  %5 = sub i64 %4, %i.ak
-  %diff.check = icmp ugt i64 %5, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader33, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.an, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader33, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.ap, 9223372036854775800     ; 3 uses
@@ -594,7 +590,7 @@ define linkonce_odr hidden ptr @_ZNSt3__16vectorIiNS_9allocatorIiEEE6insertENS_1
 bb.a:
   %3 = alloca %"struct.std::__1::__split_buffer", align 8 ; 9 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !73     ; 3 uses
-  %i.b = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.c = ptrtoint ptr %i.a to i64                 ; 3 uses
   %i.d = sub i64 %i.b, %i.c                       ; 4 uses
   %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 10 uses
@@ -740,7 +736,7 @@ bb.m:                                             ; preds = %_ZNSt3__114__split_
 
 bb.n:                                             ; preds = %bb.m, %_ZNSt3__114__split_bufferIiRNS_9allocatorIiEEE5clearB8ne180100Ev.exit.i.i, %_ZNSt3__14moveB8ne180100IPiS1_EET0_T_S3_S2_.exit.i, %_ZNSt3__114__split_bufferIiRNS_9allocatorIiEEEC2EmmS3_.exit
   %i.ba = phi ptr [ %i.az, %bb.m ], [ %i.az, %_ZNSt3__114__split_bufferIiRNS_9allocatorIiEEE5clearB8ne180100Ev.exit.i.i ], [ %i.at, %_ZNSt3__14moveB8ne180100IPiS1_EET0_T_S3_S2_.exit.i ], [ %i.at, %_ZNSt3__114__split_bufferIiRNS_9allocatorIiEEEC2EmmS3_.exit ]
-  %i.bb = phi ptr [ %i.ay, %bb.m ], [ %i.ay, %_ZNSt3__114__split_bufferIiRNS_9allocatorIiEEE5clearB8ne180100Ev.exit.i.i ], [ %i.ax, %_ZNSt3__14moveB8ne180100IPiS1_EET0_T_S3_S2_.exit.i ], [ %i.aq, %_ZNSt3__114__split_bufferIiRNS_9allocatorIiEEEC2EmmS3_.exit ] ; 8 uses
+  %i.bb = phi ptr [ %i.ay, %bb.m ], [ %i.ay, %_ZNSt3__114__split_bufferIiRNS_9allocatorIiEEE5clearB8ne180100Ev.exit.i.i ], [ %i.ax, %_ZNSt3__14moveB8ne180100IPiS1_EET0_T_S3_S2_.exit.i ], [ %i.aq, %_ZNSt3__114__split_bufferIiRNS_9allocatorIiEEEC2EmmS3_.exit ] ; 7 uses
   %i.bc = load i32, ptr %2, align 4, !tbaa !71
   store i32 %i.bc, ptr %i.bb, align 4, !tbaa !71
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 4 ; 2 uses
@@ -749,17 +745,13 @@ bb.n:                                             ; preds = %bb.m, %_ZNSt3__114_
   br i1 %.not4.i.i.i.i.i.i.i, label %_ZNSt3__142__uninitialized_allocator_move_if_noexceptB8ne180100INS_9allocatorIiEENS_16reverse_iteratorIPiEES5_ivEET1_RT_T0_S9_S6_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %bb.n
-  %4 = ptrtoaddr ptr %i.bb to i64
   %i.bf = ptrtoaddr ptr %i.be to i64
   %i.bg = add i64 %i.b, -4
   %i.bh = sub i64 %i.bg, %i.bf                    ; 2 uses
   %i.bi = lshr i64 %i.bh, 2
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bh, 44
-  %5 = sub i64 %4, %i.b
-  %diff.check = icmp ugt i64 %5, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader47, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.bh, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader47, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.bj, 9223372036854775800     ; 3 uses
@@ -1162,7 +1154,7 @@ attributes #22 = { nounwind }
 !152 = distinct !{!152, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8ne180100INS_16reverse_iteratorIPiEES6_S6_EENS_4pairIT_T1_EES8_T0_S9_"}
 !153 = distinct !{!153, !152, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8ne180100INS_16reverse_iteratorIPiEES6_S6_EENS_4pairIT_T1_EES8_T0_S9_: argument 0"}
 !154 = distinct !{!154, !74, !75, !76}
-!155 = distinct !{!155, !74, !75}
+!155 = distinct !{!155, !74, !76, !75}
 !156 = !{!153, !151, !149, !147}
 !157 = !{!44, !32, i64 72}
 !158 = distinct !{!158, !"_ZNSt3__16__moveB8ne180100INS_17_ClassicAlgPolicyENS_16reverse_iteratorIPiEES4_S4_EENS_4pairIT0_T2_EES6_T1_S7_"}
@@ -1200,7 +1192,7 @@ attributes #22 = { nounwind }
 !190 = distinct !{!190, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8ne180100INS_16reverse_iteratorIPiEES6_S6_EENS_4pairIT_T1_EES8_T0_S9_"}
 !191 = distinct !{!191, !190, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8ne180100INS_16reverse_iteratorIPiEES6_S6_EENS_4pairIT_T1_EES8_T0_S9_: argument 0"}
 !192 = distinct !{!192, !74, !75, !76}
-!193 = distinct !{!193, !74, !75}
+!193 = distinct !{!193, !74, !76, !75}
 !194 = !{!114, !114, i64 0}
 !195 = !{!191, !189, !187, !185}
 !196 = distinct !{!196, !74}

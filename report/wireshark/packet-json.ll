@@ -205,30 +205,22 @@ bb.ao:                                            ; preds = %bb.an
   %i.ey = load i32, ptr %i.e, align 4
   %i.ez = add i32 %i.ey, 3
   %i.fa = sext i32 %i.ez to i64
-  %i.fb = call noalias ptr @g_malloc0_n(i64 noundef %i.fa, i64 noundef 8) #18 ; 9 uses
-  %11 = ptrtoaddr ptr %i.fb to i64
+  %i.fb = call noalias ptr @g_malloc0_n(i64 noundef %i.fa, i64 noundef 8) #18 ; 8 uses
   store ptr %.2132.i, ptr %i.fb, align 8
   %i.fc = getelementptr i8, ptr %i.fb, i64 8
   store ptr %i.eu, ptr %i.fc, align 8
   %i.fd = load i32, ptr %i.e, align 4             ; 4 uses
   %i.fe = icmp sgt i32 %i.fd, 0
-  %.pre.i = load ptr, ptr %i.f, align 8           ; 6 uses
-  %.pre.i183 = ptrtoaddr ptr %.pre.i to i64
+  %.pre.i = load ptr, ptr %i.f, align 8           ; 5 uses
   br i1 %i.fe, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.ao
   %wide.trip.count.i = zext nneg i32 %i.fd to i64 ; 5 uses
   %i.ff = add nsw i32 %i.fd, -2147483647
-  %or.cond186 = icmp ult i32 %i.ff, -2147483621
-  br i1 %or.cond186, label %scalar.ph.preheader, label %vector.memcheck
+  %or.cond186 = icmp ult i32 %i.ff, -2147483627
+  br i1 %or.cond186, label %scalar.ph.preheader, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.i
-  %12 = sub i64 %11, %.pre.i183
-  %13 = add i64 %12, 15
-  %diff.check = icmp ult i64 %13, 31
-  br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.i
   %n.vec = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   br label %vector.body
 
@@ -252,8 +244,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   br i1 %cmp.n, label %._crit_edge.i, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
-  %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 5 uses
+scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.block
+  %indvars.iv.i.ph = phi i64 [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 5 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol

@@ -202,25 +202,21 @@ bb.c:                                             ; preds = %bb.a
 
 _ZNSt12_Vector_baseIN5video6SColorESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.ab = shl nuw nsw i64 %i.t, 2
-  %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #22 ; 7 uses
+  %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #22 ; 6 uses
   %i.ad = load ptr, ptr %i.l, align 8, !tbaa !30  ; 8 uses
   %i.ae = load ptr, ptr %i.m, align 8, !tbaa !31  ; 3 uses
   %.not10.i.i.i.i = icmp eq ptr %i.ad, %i.ae
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN5video6SColorESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN5video6SColorESaIS1_EE11_M_allocateEm.exit.i
-  %11 = ptrtoaddr ptr %i.ad to i64                ; 2 uses
-  %i.af = ptrtoaddr ptr %i.ac to i64
-  %i.ag = ptrtoaddr ptr %i.ae to i64
-  %i.ah = add i64 %i.ag, -4
-  %i.ai = sub i64 %i.ah, %11                      ; 2 uses
+  %i.af = ptrtoaddr ptr %i.ae to i64
+  %i.ag = ptrtoaddr ptr %i.ad to i64
+  %i.ah = add i64 %i.af, -4
+  %i.ai = sub i64 %i.ah, %i.ag                    ; 2 uses
   %i.aj = lshr i64 %i.ai, 2
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ai, 44
-  %12 = sub i64 %11, %i.af
-  %diff.check = icmp ugt i64 %12, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader232, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.ai, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader232, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
   %n.vec = and i64 %i.ak, 9223372036854775800     ; 3 uses
@@ -623,7 +619,7 @@ bb.c:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEpLEw.exit
   %i.aa = load ptr, ptr %i.q, align 8, !tbaa !30  ; 7 uses
   %i.ab = ptrtoint ptr %i.v to i64                ; 2 uses
-  %i.ac = ptrtoint ptr %i.aa to i64               ; 4 uses
+  %i.ac = ptrtoint ptr %i.aa to i64               ; 3 uses
   %i.ad = sub i64 %i.ab, %i.ac                    ; 3 uses
   %i.ae = icmp eq i64 %i.ad, 9223372036854775804
   br i1 %i.ae, label %bb.e, label %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i
@@ -642,7 +638,7 @@ _ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   %.not.i.i.i = icmp ne i64 %i.aj, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.ak = shl nuw nsw i64 %i.aj, 2
-  %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #22 ; 8 uses
+  %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #22 ; 7 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ad
   %i.an = load i32, ptr %i.t, align 4, !tbaa !25
   store i32 %i.an, ptr %i.am, align 4, !tbaa !25
@@ -650,16 +646,12 @@ _ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN5video6SColorESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i
-  %3 = ptrtoaddr ptr %i.al to i64
   %i.ao = add i64 %i.ab, -4
   %i.ap = sub i64 %i.ao, %i.ac                    ; 2 uses
   %i.aq = lshr i64 %i.ap, 2
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ap, 44
-  %4 = sub i64 %i.ac, %3
-  %diff.check = icmp ugt i64 %4, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader10, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.ap, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader10, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.preheader
   %n.vec = and i64 %i.ar, 9223372036854775800     ; 3 uses
@@ -824,7 +816,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.ah = ptrtoint ptr %i.q to i64                ; 2 uses
-  %i.ai = ptrtoint ptr %i.o to i64                ; 4 uses
+  %i.ai = ptrtoint ptr %i.o to i64                ; 3 uses
   %i.aj = sub i64 %i.ah, %i.ai                    ; 4 uses
   %i.ak = icmp eq i64 %i.aj, 9223372036854775804
   br i1 %i.ak, label %bb.i, label %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i2
@@ -840,7 +832,7 @@ _ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i2: ; preds = %b
   %i.ao = tail call i64 @llvm.umin.i64(i64 %i.am, i64 2305843009213693951)
   %i.ap = select i1 %i.an, i64 2305843009213693951, i64 %i.ao ; 2 uses
   %i.aq = shl nuw nsw i64 %i.ap, 2
-  %i.ar = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aq) #22 ; 7 uses
+  %i.ar = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aq) #22 ; 6 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.aj
   %i.at = load i32, ptr %i.ae, align 4, !tbaa !25
   store i32 %i.at, ptr %i.as, align 4, !tbaa !25
@@ -848,12 +840,8 @@ _ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i2: ; preds = %b
   %i.av = sub i64 %i.au, %i.ai                    ; 2 uses
   %i.aw = lshr i64 %i.av, 2
   %i.ax = add nuw nsw i64 %i.aw, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.av, 44
-  %2 = ptrtoaddr ptr %i.ar to i64
-  %3 = sub i64 %i.ai, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i6.preheader, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.av, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i6.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i2
   %n.vec = and i64 %i.ax, 9223372036854775800     ; 3 uses
@@ -1256,7 +1244,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.b
   %i.ce = load ptr, ptr %0, align 8, !tbaa !30    ; 7 uses
-  %i.cf = ptrtoint ptr %i.ce to i64               ; 4 uses
+  %i.cf = ptrtoint ptr %i.ce to i64               ; 3 uses
   %i.cg = sub i64 %i.k, %i.cf
   %i.ch = ashr exact i64 %i.cg, 2                 ; 4 uses
   %i.ci = sub nsw i64 2305843009213693951, %i.ch
@@ -1282,22 +1270,18 @@ bb.p:                                             ; preds = %_ZNKSt6vectorIN5vid
   br label %_ZNSt12_Vector_baseIN5video6SColorESaIS1_EE11_M_allocateEm.exit
 
 _ZNSt12_Vector_baseIN5video6SColorESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit, %bb.p
-  %i.cq = phi ptr [ %i.cp, %bb.p ], [ null, %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit ] ; 7 uses
+  %i.cq = phi ptr [ %i.cp, %bb.p ], [ null, %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit ] ; 6 uses
   %.not11.i.i.i.i.i59 = icmp eq ptr %i.ce, %1
   br i1 %.not11.i.i.i.i.i59, label %_ZSt34__uninitialized_move_if_noexcept_aIPN5video6SColorES2_SaIS1_EET0_T_S5_S4_RT1_.exit, label %.lr.ph.i.i.i.i.i60.preheader
 
 .lr.ph.i.i.i.i.i60.preheader:                     ; preds = %_ZNSt12_Vector_baseIN5video6SColorESaIS1_EE11_M_allocateEm.exit
-  %4 = ptrtoaddr ptr %i.cq to i64
   %i.cr = ptrtoaddr ptr %1 to i64
   %i.cs = add i64 %i.cr, -4
   %i.ct = sub i64 %i.cs, %i.cf                    ; 2 uses
   %i.cu = lshr i64 %i.ct, 2
   %i.cv = add nuw nsw i64 %i.cu, 1                ; 2 uses
-  %min.iters.check158 = icmp ult i64 %i.ct, 44
-  %5 = sub i64 %i.cf, %4
-  %diff.check156 = icmp ugt i64 %5, -32
-  %or.cond210 = or i1 %min.iters.check158, %diff.check156
-  br i1 %or.cond210, label %.lr.ph.i.i.i.i.i60.preheader215, label %vector.ph159
+  %min.iters.check158 = icmp ult i64 %i.ct, 28
+  br i1 %min.iters.check158, label %.lr.ph.i.i.i.i.i60.preheader215, label %vector.ph159
 
 vector.ph159:                                     ; preds = %.lr.ph.i.i.i.i.i60.preheader
   %n.vec160 = and i64 %i.cv, 9223372036854775800  ; 3 uses
@@ -1574,7 +1558,7 @@ attributes #25 = { noreturn nounwind }
 !50 = distinct !{!50, !49, !"_ZSt19__relocate_object_aIN5video6SColorES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !51 = distinct !{!51, !49, !"_ZSt19__relocate_object_aIN5video6SColorES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !52 = distinct !{!52, !37, !38, !39}
-!53 = distinct !{!53, !37, !38}
+!53 = distinct !{!53, !37, !39, !38}
 !54 = distinct !{!54, !37}
 !55 = distinct !{!55, !"_ZSt19__relocate_object_aIN5video6SColorES1_SaIS1_EEvPT_PT0_RT1_"}
 !56 = distinct !{!56, !55, !"_ZSt19__relocate_object_aIN5video6SColorES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
@@ -1599,14 +1583,14 @@ attributes #25 = { noreturn nounwind }
 !75 = distinct !{!75, !74, !"_ZSt19__relocate_object_aIN5video6SColorES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !76 = distinct !{!76, !74, !"_ZSt19__relocate_object_aIN5video6SColorES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !77 = distinct !{!77, !37, !38, !39}
-!78 = distinct !{!78, !37, !38}
+!78 = distinct !{!78, !37, !39, !38}
 !79 = !{!75}
 !80 = !{!76}
 !81 = distinct !{!81, !"_ZSt19__relocate_object_aIN5video6SColorES1_SaIS1_EEvPT_PT0_RT1_"}
 !82 = distinct !{!82, !81, !"_ZSt19__relocate_object_aIN5video6SColorES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !83 = distinct !{!83, !81, !"_ZSt19__relocate_object_aIN5video6SColorES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !84 = distinct !{!84, !37, !38, !39}
-!85 = distinct !{!85, !37, !38}
+!85 = distinct !{!85, !37, !39, !38}
 !86 = !{!82}
 !87 = !{!83}
 !88 = distinct !{!88, !37, !38, !39}
@@ -1640,7 +1624,7 @@ attributes #25 = { noreturn nounwind }
 !116 = distinct !{!116, !37, !38, !39}
 !117 = distinct !{!117, !37, !38}
 !118 = distinct !{!118, !37, !38, !39}
-!119 = distinct !{!119, !37, !38}
+!119 = distinct !{!119, !37, !39, !38}
 !120 = distinct !{!120, !37, !38, !39}
 !121 = distinct !{!121, !37, !38}
 !122 = distinct !{!122, !37, !38, !39}

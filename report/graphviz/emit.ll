@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 362
 inline.NumDeleted: 122
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@gvrender_end_anchor
 
 ; Function Attrs: nounwind uwtable
@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.cq = tail call i32 @shapeOf(ptr noundef nonnull %1) #27
   %i.cr = load ptr, ptr %i.b, align 8, !tbaa !87
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 32
-  %i.ct = load <2 x double>, ptr %i.cs, align 8, !tbaa !110 ; 16 uses
+  %i.ct = load <2 x double>, ptr %i.cs, align 8, !tbaa !110 ; 14 uses
   %i.cu = extractelement <2 x double> %i.ct, i64 0 ; 4 uses
   %i.cv = load ptr, ptr @N_style, align 8, !tbaa !167
   %i.cw = tail call ptr @late_nnstring(ptr noundef nonnull %1, ptr noundef %i.cv, ptr noundef nonnull @.str.13) #27 ; 2 uses
@@ -282,12 +282,12 @@ isRect.exit.thread.i:                             ; preds = %bb.x, %isRect.exit.
 
 bb.y:                                             ; preds = %isRect.exit.thread.i
   %i.eb = icmp ult i64 %i.dk, 3
-  %spec.select190.i = select i1 %i.eb, i64 1, i64 %i.dk ; 15 uses
+  %spec.select190.i = select i1 %i.eb, i64 1, i64 %i.dk ; 10 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.di, i64 8 ; 2 uses
   %i.ed = load i64, ptr %i.ec, align 8, !tbaa !325
   %i.ee = tail call i64 @llvm.umax.i64(i64 %i.ed, i64 1) ; 3 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.di, i64 56
-  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !326 ; 7 uses
+  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !326 ; 4 uses
   %i.eh = tail call ptr @agget(ptr noundef nonnull %1, ptr noundef nonnull @.str.70) #27 ; 2 uses
   %.not184.i = icmp eq ptr %i.eh, null
   br i1 %.not184.i, label %bb.aa, label %bb.z
@@ -338,7 +338,7 @@ gv_calloc.exit.i:                                 ; preds = %bb.ab
   br label %.loopexit.sink.split.i
 
 bb.ad:                                            ; preds = %bb.aa
-  %i.fe = load i64, ptr %i.dj, align 8, !tbaa !321 ; 5 uses
+  %i.fe = load i64, ptr %i.dj, align 8, !tbaa !321 ; 4 uses
   %i.ff = icmp ult i64 %i.fe, 3
   br i1 %i.ff, label %bb.ae, label %bb.aj
 
@@ -432,7 +432,7 @@ middle.block85:                                   ; preds = %vector.body80
   br i1 %exitcond216.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !311
 
 bb.aj:                                            ; preds = %bb.af, %bb.ae, %bb.ad
-  %i.go = add i64 %i.ee, -1                       ; 2 uses
+  %i.go = add i64 %i.ee, -1
   %i.gp = mul i64 %i.fe, %i.go                    ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %i.al, i64 356
   store i32 2, ptr %i.gq, align 4, !tbaa !122
@@ -504,48 +504,16 @@ bb.ap:                                            ; preds = %bb.ao
   unreachable
 
 bb.aq:                                            ; preds = %bb.ao
-  %i.hm = tail call noalias ptr @calloc(i64 noundef %spec.select190.i, i64 noundef 16) #28 ; 13 uses
+  %i.hm = tail call noalias ptr @calloc(i64 noundef %spec.select190.i, i64 noundef 16) #28 ; 6 uses
   %i.hn = icmp eq ptr %i.hm, null
   br i1 %i.hn, label %bb.ar, label %gv_calloc.exit196.preheader.i
 
 gv_calloc.exit196.preheader.i:                    ; preds = %bb.aq
-  %invariant.gep208.i = getelementptr [16 x i8], ptr %i.eg, i64 %i.gp ; 8 uses
-  %min.iters.check = icmp ult i64 %spec.select190.i, 28
-  br i1 %min.iters.check, label %gv_calloc.exit196.i.preheader.a, label %vector.scevcheck
+  %invariant.gep208.i = getelementptr [16 x i8], ptr %i.eg, i64 %i.gp ; 3 uses
+  %min.iters.check = icmp ult i64 %spec.select190.i, 4
+  br i1 %min.iters.check, label %gv_calloc.exit196.i.prol.loopexit, label %vector.ph
 
-vector.scevcheck:                                 ; preds = %gv_calloc.exit196.preheader.i
-  %2 = add nsw i64 %spec.select190.i, -1          ; 2 uses
-  %mul.result = shl i64 %2, 4
-  %mul.overflow = icmp ugt i64 %2, 1152921504606846975
-  %3 = getelementptr i8, ptr %invariant.gep208.i, i64 %mul.result
-  %4 = icmp ult ptr %3, %invariant.gep208.i
-  %5 = or i1 %4, %mul.overflow
-  br i1 %5, label %gv_calloc.exit196.i.preheader.a, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
-  %6 = shl nuw i64 %spec.select190.i, 4           ; 3 uses
-  %7 = getelementptr i8, ptr %i.hm, i64 %6
-  %8 = getelementptr i8, ptr %7, i64 -8
-  %9 = mul i64 %i.fe, %i.go
-  %10 = shl i64 %9, 4                             ; 2 uses
-  %11 = add i64 %10, %6                           ; 2 uses
-  %12 = getelementptr i8, ptr %i.eg, i64 %11
-  %13 = getelementptr i8, ptr %12, i64 -8
-  %14 = getelementptr i8, ptr %i.hm, i64 8
-  %15 = getelementptr i8, ptr %i.hm, i64 %6
-  %16 = getelementptr i8, ptr %i.eg, i64 %10
-  %17 = getelementptr i8, ptr %16, i64 8
-  %18 = getelementptr i8, ptr %i.eg, i64 %11
-  %bound0 = icmp ult ptr %i.hm, %13
-  %bound1 = icmp ult ptr %invariant.gep208.i, %8
-  %found.conflict = and i1 %bound0, %bound1
-  %bound072 = icmp ult ptr %14, %18
-  %bound173 = icmp ult ptr %17, %15
-  %found.conflict74 = and i1 %bound072, %bound173
-  %conflict.rdx = or i1 %found.conflict, %found.conflict74
-  br i1 %conflict.rdx, label %gv_calloc.exit196.i.preheader.a, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %gv_calloc.exit196.preheader.i
   %n.vec = and i64 %spec.select190.i, 1152921504606846974 ; 3 uses
   br label %vector.body
 
@@ -564,32 +532,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x double> %i.hs, ptr %i.hu, align 8
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.hv = icmp eq i64 %index.next, %n.vec
-  br i1 %i.hv, label %middle.block, label %vector.body, !llvm.loop !313
+  br i1 %i.hv, label %gv_calloc.exit196.i.preheader.a, label %vector.body, !llvm.loop !313
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %spec.select190.i, %n.vec
-  br i1 %cmp.n, label %.loopexit.i, label %gv_calloc.exit196.i.preheader.a
+gv_calloc.exit196.i.preheader.a:                  ; preds = %vector.body
+  %lcmp.mod93.not = icmp eq i64 %spec.select190.i, %n.vec
+  br i1 %lcmp.mod93.not, label %.loopexit.i, label %gv_calloc.exit196.i.prol.loopexit
 
-gv_calloc.exit196.i.preheader.a:                  ; preds = %vector.memcheck, %vector.scevcheck, %gv_calloc.exit196.preheader.i, %middle.block
-  %.0210.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %gv_calloc.exit196.preheader.i ], [ %n.vec, %middle.block ] ; 5 uses
-  %.neg = or disjoint i64 %.0210.i.ph, 1
-  %xtraiter92 = and i64 %spec.select190.i, 1
-  %lcmp.mod93.not = icmp eq i64 %xtraiter92, 0
-  br i1 %lcmp.mod93.not, label %gv_calloc.exit196.i.prol.loopexit, label %gv_calloc.exit196.i.prol
-
-gv_calloc.exit196.i.prol:                         ; preds = %gv_calloc.exit196.i.preheader.a
-  %gep209.i.prol = getelementptr [16 x i8], ptr %invariant.gep208.i, i64 %.0210.i.ph
-  %19 = getelementptr inbounds nuw [16 x i8], ptr %i.hm, i64 %.0210.i.ph
-  %20 = load <2 x double>, ptr %gep209.i.prol, align 8, !tbaa !110
-  %21 = fadd <2 x double> %i.ct, %20
-  store <2 x double> %21, ptr %19, align 8, !tbaa !110
-  %22 = or disjoint i64 %.0210.i.ph, 1
-  br label %gv_calloc.exit196.i.prol.loopexit
-
-gv_calloc.exit196.i.prol.loopexit:                ; preds = %gv_calloc.exit196.i.prol, %gv_calloc.exit196.i.preheader.a
-  %.0210.i.unr = phi i64 [ %.0210.i.ph, %gv_calloc.exit196.i.preheader.a ], [ %22, %gv_calloc.exit196.i.prol ]
-  %23 = icmp eq i64 %spec.select190.i, %.neg
-  br i1 %23, label %.loopexit.i, label %gv_calloc.exit196.i
+gv_calloc.exit196.i.prol.loopexit:                ; preds = %gv_calloc.exit196.preheader.i, %gv_calloc.exit196.i.preheader.a
+  %.0210.i.unr = phi i64 [ 0, %gv_calloc.exit196.preheader.i ], [ %n.vec, %gv_calloc.exit196.i.preheader.a ]
+  br label %gv_calloc.exit196.i
 
 bb.ar:                                            ; preds = %bb.aq
   %i.hw = load ptr, ptr @stderr, align 8, !tbaa !17
@@ -599,19 +550,13 @@ bb.ar:                                            ; preds = %bb.aq
   unreachable
 
 gv_calloc.exit196.i:                              ; preds = %gv_calloc.exit196.i.prol.loopexit, %gv_calloc.exit196.i
-  %.0210.i = phi i64 [ %i.ic, %gv_calloc.exit196.i ], [ %.0210.i.unr, %gv_calloc.exit196.i.prol.loopexit ] ; 4 uses
-  %gep209.i = getelementptr [16 x i8], ptr %invariant.gep208.i, i64 %.0210.i
-  %24 = getelementptr inbounds nuw [16 x i8], ptr %i.hm, i64 %.0210.i
-  %25 = load <2 x double>, ptr %gep209.i, align 8, !tbaa !110
-  %26 = fadd <2 x double> %i.ct, %25
-  store <2 x double> %26, ptr %24, align 8, !tbaa !110
-  %27 = add nuw nsw i64 %.0210.i, 1               ; 2 uses
-  %gep209.i.1 = getelementptr [16 x i8], ptr %invariant.gep208.i, i64 %27
-  %i.hz = getelementptr inbounds nuw [16 x i8], ptr %i.hm, i64 %27
+  %.0210.i = phi i64 [ %i.ic, %gv_calloc.exit196.i ], [ %.0210.i.unr, %gv_calloc.exit196.i.prol.loopexit ] ; 3 uses
+  %gep209.i.1 = getelementptr [16 x i8], ptr %invariant.gep208.i, i64 %.0210.i
+  %i.hz = getelementptr inbounds nuw [16 x i8], ptr %i.hm, i64 %.0210.i
   %i.ia = load <2 x double>, ptr %gep209.i.1, align 8, !tbaa !110
   %i.ib = fadd <2 x double> %i.ct, %i.ia
   store <2 x double> %i.ib, ptr %i.hz, align 8, !tbaa !110
-  %i.ic = add nuw nsw i64 %.0210.i, 2             ; 2 uses
+  %i.ic = add nuw nsw i64 %.0210.i, 1             ; 2 uses
   %exitcond215.not.i.1 = icmp eq i64 %i.ic, %spec.select190.i
   br i1 %exitcond215.not.i.1, label %.loopexit.i, label %gv_calloc.exit196.i, !llvm.loop !314
 
@@ -670,9 +615,9 @@ gv_calloc.exit192.i.epil.preheader:               ; preds = %.loopexit.i.loopexi
   store <2 x double> %i.iz, ptr %i.ix, align 8, !tbaa !110
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %gv_calloc.exit192.i.epil.preheader, %.loopexit.i.loopexit90.unr-lcssa, %gv_calloc.exit196.i.prol.loopexit, %gv_calloc.exit196.i, %.lr.ph.i, %middle.block, %middle.block85, %.loopexit.sink.split.i, %bb.ai
-  %.2172.i = phi i64 [ 0, %bb.ai ], [ 2, %.loopexit.sink.split.i ], [ %i.el, %middle.block85 ], [ %spec.select190.i, %middle.block ], [ %i.el, %.lr.ph.i ], [ %spec.select190.i, %gv_calloc.exit196.i.prol.loopexit ], [ %spec.select190.i, %gv_calloc.exit196.i ], [ %i.el, %.loopexit.i.loopexit90.unr-lcssa ], [ %i.el, %gv_calloc.exit192.i.epil.preheader ] ; 2 uses
-  %.2.i = phi ptr [ %i.gd, %bb.ai ], [ %.sink231.i, %.loopexit.sink.split.i ], [ %i.gd, %middle.block85 ], [ %i.hm, %middle.block ], [ %i.gd, %.lr.ph.i ], [ %i.hm, %gv_calloc.exit196.i.prol.loopexit ], [ %i.hm, %gv_calloc.exit196.i ], [ %i.gu, %.loopexit.i.loopexit90.unr-lcssa ], [ %i.gu, %gv_calloc.exit192.i.epil.preheader ] ; 3 uses
+.loopexit.i:                                      ; preds = %gv_calloc.exit192.i.epil.preheader, %.loopexit.i.loopexit90.unr-lcssa, %gv_calloc.exit196.i, %.lr.ph.i, %gv_calloc.exit196.i.preheader.a, %middle.block85, %.loopexit.sink.split.i, %bb.ai
+  %.2172.i = phi i64 [ 0, %bb.ai ], [ 2, %.loopexit.sink.split.i ], [ %i.el, %middle.block85 ], [ %spec.select190.i, %gv_calloc.exit196.i.preheader.a ], [ %i.el, %.lr.ph.i ], [ %spec.select190.i, %gv_calloc.exit196.i ], [ %i.el, %.loopexit.i.loopexit90.unr-lcssa ], [ %i.el, %gv_calloc.exit192.i.epil.preheader ] ; 2 uses
+  %.2.i = phi ptr [ %i.gd, %bb.ai ], [ %.sink231.i, %.loopexit.sink.split.i ], [ %i.gd, %middle.block85 ], [ %i.hm, %gv_calloc.exit196.i.preheader.a ], [ %i.gd, %.lr.ph.i ], [ %i.hm, %gv_calloc.exit196.i ], [ %i.gu, %.loopexit.i.loopexit90.unr-lcssa ], [ %i.gu, %gv_calloc.exit192.i.epil.preheader ] ; 3 uses
   %i.ja = and i32 %i.ak, 8192
   %.not188.i = icmp eq i32 %i.ja, 0
   br i1 %.not188.i, label %bb.at, label %bb.au
@@ -1075,7 +1020,7 @@ begin_hunk_1_@llvm.sqrt.v2f64
 !311 = distinct !{!311, !114, !185, !184}
 !312 = distinct !{!312, !114}
 !313 = distinct !{!313, !114, !184, !185}
-!314 = distinct !{!314, !114, !184}
+!314 = distinct !{!314, !114, !185, !184}
 !315 = !{!155, !150, i64 16}
 !316 = !{!45, !31, i64 192}
 !317 = !{!155, !90, i64 136}

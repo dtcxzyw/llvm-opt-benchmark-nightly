@@ -205,8 +205,7 @@ bb.a:
   %.sroa.541.0.copyload = load i64, ptr %.sroa.541.0..sroa_idx, align 8 ; 2 uses
   %.sroa.743.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.743.0.copyload = load i64, ptr %.sroa.743.0..sroa_idx, align 8
-  %.sroa.031.0.copyload = load ptr, ptr %1, align 8 ; 7 uses
-  %.sroa.031.0.copyload46 = ptrtoaddr ptr %.sroa.031.0.copyload to i64
+  %.sroa.031.0.copyload = load ptr, ptr %1, align 8 ; 6 uses
   %.sroa.533.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.533.0.copyload = load i64, ptr %.sroa.533.0..sroa_idx, align 8 ; 10 uses
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -244,17 +243,13 @@ bb.e:                                             ; preds = %_ZN5Eigen8internal2
   br i1 %.not, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %bb.c, %bb.e
-  %i.k = phi ptr [ %i.j, %bb.e ], [ %i.f, %bb.c ] ; 10 uses
-  %6 = ptrtoaddr ptr %i.k to i64
+  %i.k = phi ptr [ %i.j, %bb.e ], [ %i.f, %bb.c ] ; 9 uses
   %.in = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload, i64 8
   %i.l = load i64, ptr %.in, align 8, !tbaa !107  ; 6 uses
-  %min.iters.check = icmp ult i64 %.sroa.533.0.copyload, 10
-  %ident.check.not = icmp ne i64 %i.l, 1
-  %or.cond.not49 = select i1 %min.iters.check, i1 true, i1 %ident.check.not
-  %7 = sub i64 %.sroa.031.0.copyload46, %6
-  %diff.check = icmp ugt i64 %7, -32
-  %or.cond48 = select i1 %or.cond.not49, i1 true, i1 %diff.check
-  br i1 %or.cond48, label %.lr.ph.i.i.i.i.i.i.i.i.preheader50, label %vector.ph
+  %min.iters.check = icmp ugt i64 %.sroa.533.0.copyload, 3
+  %ident.check.not = icmp eq i64 %i.l, 1
+  %or.cond48 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
+  br i1 %or.cond48, label %vector.ph, label %.lr.ph.i.i.i.i.i.i.i.i.preheader50
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %.sroa.533.0.copyload, 2305843009213693948 ; 3 uses
@@ -657,21 +652,16 @@ bb.e:                                             ; preds = %_ZN5Eigen8internal2
   br i1 %.not, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %bb.c, %bb.e
-  %i.m = phi ptr [ %i.l, %bb.e ], [ %i.h, %bb.c ] ; 10 uses
-  %6 = ptrtoaddr ptr %i.m to i64
-  %i.n = load ptr, ptr %1, align 8, !tbaa !554    ; 7 uses
-  %7 = ptrtoaddr ptr %i.n to i64
+  %i.m = phi ptr [ %i.l, %bb.e ], [ %i.h, %bb.c ] ; 9 uses
+  %i.n = load ptr, ptr %1, align 8, !tbaa !554    ; 6 uses
   %.pn.in = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.pn = load ptr, ptr %.pn.in, align 8, !tbaa !148, !nonnull !86, !align !123
   %.in = getelementptr inbounds nuw i8, ptr %.pn, i64 8
   %i.o = load i64, ptr %.in, align 8, !tbaa !107  ; 6 uses
-  %min.iters.check = icmp ult i64 %i.c, 10
-  %ident.check.not = icmp ne i64 %i.o, 1
-  %or.cond.not48 = select i1 %min.iters.check, i1 true, i1 %ident.check.not
-  %8 = sub i64 %7, %6
-  %diff.check = icmp ugt i64 %8, -32
-  %or.cond47 = select i1 %or.cond.not48, i1 true, i1 %diff.check
-  br i1 %or.cond47, label %.lr.ph.i.i.i.i.i.i.i.i.preheader49, label %vector.ph
+  %min.iters.check = icmp ugt i64 %i.c, 3
+  %ident.check.not = icmp eq i64 %i.o, 1
+  %or.cond47 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
+  br i1 %or.cond47, label %vector.ph, label %.lr.ph.i.i.i.i.i.i.i.i.preheader49
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.c, 2305843009213693948      ; 3 uses
@@ -839,18 +829,13 @@ bb.e:                                             ; preds = %_ZN5Eigen8internal2
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.thread, %bb.e
   %i.p = phi ptr [ %i.k, %.thread ], [ %i.o, %bb.e ] ; 4 uses
-  %i.q = phi ptr [ %i.i, %.thread ], [ %i.n, %bb.e ] ; 10 uses
-  %6 = ptrtoaddr ptr %i.q to i64
-  %i.r = load ptr, ptr %2, align 8, !tbaa !140    ; 7 uses
-  %7 = ptrtoaddr ptr %i.r to i64
+  %i.q = phi ptr [ %i.i, %.thread ], [ %i.n, %bb.e ] ; 9 uses
+  %i.r = load ptr, ptr %2, align 8, !tbaa !140    ; 6 uses
   %i.s = load i64, ptr %i.p, align 8, !tbaa !99   ; 6 uses
-  %min.iters.check = icmp ult i64 %i.d, 10
-  %ident.check.not = icmp ne i64 %i.s, 1
-  %or.cond.not70 = select i1 %min.iters.check, i1 true, i1 %ident.check.not
-  %8 = sub i64 %7, %6
-  %diff.check = icmp ugt i64 %8, -32
-  %or.cond67 = select i1 %or.cond.not70, i1 true, i1 %diff.check
-  br i1 %or.cond67, label %.lr.ph.i.i.i.i.i.i.i.i.preheader73, label %vector.ph
+  %min.iters.check = icmp ugt i64 %i.d, 3
+  %ident.check.not = icmp eq i64 %i.s, 1
+  %or.cond67 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
+  br i1 %or.cond67, label %vector.ph, label %.lr.ph.i.i.i.i.i.i.i.i.preheader73
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.d, 2305843009213693948      ; 3 uses

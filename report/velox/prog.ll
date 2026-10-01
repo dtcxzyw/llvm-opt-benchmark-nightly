@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.j = load ptr, ptr %i.c, align 8, !tbaa !105  ; 9 uses
   %i.k = ptrtoint ptr %i.e to i64                 ; 2 uses
-  %i.l = ptrtoint ptr %i.j to i64                 ; 4 uses
+  %i.l = ptrtoint ptr %i.j to i64                 ; 3 uses
   %i.m = sub i64 %i.k, %i.l                       ; 3 uses
   %i.n = icmp eq i64 %i.m, 9223372036854775800
   br i1 %i.n, label %bb.e, label %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i
@@ -224,7 +224,7 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.d
   %.not.i.i.i = icmp ne i64 %i.s, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.t = shl nuw nsw i64 %i.s, 3
-  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #26 ; 10 uses
+  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #26 ; 9 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.m ; 2 uses
   store i32 %1, ptr %i.v, align 4, !tbaa !103
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 4
@@ -233,16 +233,12 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.d
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i
-  %3 = ptrtoaddr ptr %i.u to i64
   %i.x = add i64 %i.k, -8
   %i.y = sub i64 %i.x, %i.l                       ; 3 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 5 uses
   %min.iters.check = icmp ult i64 %i.y, 24
-  %4 = sub i64 %i.l, %3
-  %diff.check = icmp ugt i64 %4, -128
-  %or.cond22 = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond22, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check7 = icmp ult i64 %i.y, 120
@@ -488,7 +484,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1072 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !109  ; 9 uses
   %i.e = ptrtoint ptr %i.d to i64                 ; 3 uses
-  %i.f = ptrtoint ptr %i.b to i64                 ; 4 uses
+  %i.f = ptrtoint ptr %i.b to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f                       ; 6 uses
   %i.h = ashr i64 %i.g, 5                         ; 2 uses
   %i.i = icmp sgt i64 %i.h, 0
@@ -657,7 +653,7 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.m
   %.not.i.i.i = icmp ne i64 %i.bn, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.bo = shl nuw nsw i64 %i.bn, 3
-  %i.bp = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bo) #26 ; 10 uses
+  %i.bp = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bo) #26 ; 9 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.g ; 2 uses
   store i32 %1, ptr %i.bq, align 4, !tbaa !103
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 4
@@ -666,16 +662,12 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.m
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i
-  %2 = ptrtoaddr ptr %i.bp to i64
   %i.bs = add i64 %i.e, -8
   %i.bt = sub i64 %i.bs, %i.f                     ; 3 uses
   %i.bu = lshr i64 %i.bt, 3
   %i.bv = add nuw nsw i64 %i.bu, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.bt, 24
-  %3 = sub i64 %i.f, %2
-  %diff.check = icmp ugt i64 %3, -128
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check41 = icmp ult i64 %i.bt, 120
@@ -1078,7 +1070,7 @@ begin_hunk_1_@llvm.experimental.cttz.elts.i64.v32i1
 !202 = distinct !{!202, !200, !"_ZSt19__relocate_object_aISt4pairIiiES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !203 = distinct !{!203, !96, !106, !107}
 !204 = distinct !{!204, !96, !106, !107}
-!205 = distinct !{!205, !96, !106}
+!205 = distinct !{!205, !96, !107, !106}
 !206 = !{!201}
 !207 = !{!202}
 !208 = distinct !{!208, !96}
@@ -1087,7 +1079,7 @@ begin_hunk_1_@llvm.experimental.cttz.elts.i64.v32i1
 !211 = distinct !{!211, !209, !"_ZSt19__relocate_object_aISt4pairIiiES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !212 = distinct !{!212, !96, !106, !107}
 !213 = distinct !{!213, !96, !106, !107}
-!214 = distinct !{!214, !96, !106}
+!214 = distinct !{!214, !96, !107, !106}
 !215 = !{!210}
 !216 = !{!211}
 !217 = distinct !{!217, !"_ZSt19__relocate_object_aISt4pairIiiES1_SaIS1_EEvPT_PT0_RT1_"}

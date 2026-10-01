@@ -205,8 +205,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -1, 1) i32 @H5D__bt2_idx_insert(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree readnone captures(none) %2) #1 {
 bb.a:
-  %3 = alloca %struct.H5D_bt2_ud_t, align 8       ; 11 uses
-  %4 = ptrtoaddr ptr %3 to i64
+  %3 = alloca %struct.H5D_bt2_ud_t, align 8       ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.a = load i8, ptr @H5D_init_g, align 1, !tbaa !9, !range !10, !noundef !11
   %i.b = trunc nuw i8 %i.a to i1
@@ -290,14 +289,10 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 .lr.ph:                                           ; preds = %bb.j
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !53 ; 3 uses
+  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !53 ; 2 uses
   %i.ar = zext i32 %i.aa to i64                   ; 3 uses
-  %min.iters.check = icmp ult i32 %i.aa, 8
-  %5 = ptrtoaddr ptr %i.aq to i64
-  %6 = sub i64 %5, %4
-  %diff.check = icmp ugt i64 %6, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
+  %min.iters.check = icmp ult i32 %i.aa, 4
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %i.ar, 4294967292              ; 3 uses
@@ -355,12 +350,11 @@ bb.l:                                             ; preds = %bb.d, %bb.f, %bb.k,
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -1, 1) i32 @H5D__bt2_idx_get_addr(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1) #1 {
 bb.a:
-  %2 = alloca %struct.H5D_bt2_ud_t, align 8       ; 8 uses
-  %3 = ptrtoaddr ptr %2 to i64
-  %4 = alloca %struct.H5D_chunk_rec_t, align 8    ; 6 uses
+  %2 = alloca %struct.H5D_bt2_ud_t, align 8       ; 7 uses
+  %3 = alloca %struct.H5D_chunk_rec_t, align 8    ; 6 uses
   %i.a = alloca i8, align 1                       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.b = load i8, ptr @H5D_init_g, align 1, !tbaa !9, !range !10, !noundef !11
   %i.c = trunc nuw i8 %i.b to i1
@@ -405,11 +399,11 @@ bb.g:                                             ; preds = %bb.e, %bb.c
   %i.w = load ptr, ptr %i.h, align 8, !tbaa !18   ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 2232
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !19
-  %i.z = getelementptr inbounds nuw i8, ptr %4, i64 280 ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 280 ; 2 uses
   store i64 -1, ptr %i.z, align 8, !tbaa !57
-  %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 264 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 264 ; 2 uses
   store i64 0, ptr %i.aa, align 8, !tbaa !58
-  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 272 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 272 ; 2 uses
   store i32 0, ptr %i.ab, align 8, !tbaa !59
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 280
   store i64 -1, ptr %i.ac, align 8, !tbaa !51
@@ -423,14 +417,10 @@ bb.g:                                             ; preds = %bb.e, %bb.c
 
 .lr.ph:                                           ; preds = %bb.g
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !53 ; 3 uses
+  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !53 ; 2 uses
   %i.aj = zext i32 %i.af to i64                   ; 3 uses
-  %min.iters.check = icmp ult i32 %i.af, 8
-  %5 = ptrtoaddr ptr %i.ai to i64
-  %6 = sub i64 %5, %3
-  %diff.check = icmp ugt i64 %6, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
+  %min.iters.check = icmp ult i32 %i.af, 4
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %i.aj, 4294967292              ; 3 uses
@@ -470,7 +460,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %bb.g
   store i8 0, ptr %i.a, align 1, !tbaa !9
-  %i.at = call i32 @H5B2_find(ptr noundef %i.y, ptr noundef nonnull %2, ptr noundef nonnull %i.a, ptr noundef nonnull @H5D__bt2_found_cb, ptr noundef nonnull %4) #14
+  %i.at = call i32 @H5B2_find(ptr noundef %i.y, ptr noundef nonnull %2, ptr noundef nonnull %i.a, ptr noundef nonnull @H5D__bt2_found_cb, ptr noundef nonnull %3) #14
   %i.au = icmp slt i32 %i.at, 0
   br i1 %i.au, label %bb.h, label %bb.i
 
@@ -527,7 +517,7 @@ bb.m:                                             ; preds = %bb.i
 bb.n:                                             ; preds = %bb.d, %bb.f, %bb.h, %bb.k, %bb.l, %bb.m, %bb.a
   %.0 = phi i32 [ -1, %bb.f ], [ -1, %bb.h ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %bb.m ], [ -1, %bb.d ], [ 0, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   ret i32 %.0
 }
@@ -655,8 +645,7 @@ bb.i:                                             ; preds = %bb.d, %bb.f, %bb.h,
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -1, 1) i32 @H5D__bt2_idx_remove(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #1 {
 bb.a:
-  %2 = alloca %struct.H5D_bt2_ud_t, align 8       ; 7 uses
-  %3 = ptrtoaddr ptr %2 to i64
+  %2 = alloca %struct.H5D_bt2_ud_t, align 8       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   %i.a = load i8, ptr @H5D_init_g, align 1, !tbaa !9, !range !10, !noundef !11
   %i.b = trunc nuw i8 %i.a to i1
@@ -711,14 +700,10 @@ bb.g:                                             ; preds = %bb.e, %bb.c
 
 .lr.ph:                                           ; preds = %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !94 ; 3 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !94 ; 2 uses
   %i.ae = zext i32 %i.aa to i64                   ; 3 uses
-  %min.iters.check = icmp ult i32 %i.aa, 8
-  %4 = ptrtoaddr ptr %i.ad to i64
-  %5 = sub i64 %4, %3
-  %diff.check = icmp ugt i64 %5, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
+  %min.iters.check = icmp ult i32 %i.aa, 4
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %i.ae, 4294967292              ; 3 uses
@@ -1121,17 +1106,17 @@ attributes #14 = { nounwind }
 !80 = !{!76, !4, i64 16}
 !81 = !{!76, !4, i64 17}
 !82 = distinct !{!82, !54, !55, !56}
-!83 = distinct !{!83, !54, !55}
+!83 = distinct !{!83, !54, !56, !55}
 !84 = !{!43, !22, i64 264}
 !85 = !{!43, !5, i64 272}
 !86 = distinct !{!86, !54, !55, !56}
-!87 = distinct !{!87, !54, !55}
+!87 = distinct !{!87, !54, !56, !55}
 !88 = !{!49, !45, i64 0}
 !89 = !{!49, !46, i64 8}
 !90 = !{!49, !8, i64 52}
 !91 = !{!49, !5, i64 24}
 !92 = distinct !{!92, !54, !55, !56}
-!93 = distinct !{!93, !54, !55}
+!93 = distinct !{!93, !54, !56, !55}
 !94 = !{!47, !31, i64 16}
 !95 = distinct !{!95, !54}
 !96 = !{!"branch_weights", i32 2002, i32 2000}

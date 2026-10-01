@@ -204,8 +204,8 @@ declare void @qemu_log(ptr noundef, ...) local_unnamed_addr #1
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @xlnx_csu_dma_src_notify(ptr noundef %0) #0 {
 bb.a:
-  %i.a = alloca [4096 x i8], align 16             ; 10 uses
-  %i.b = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.4, i32 noundef 54, ptr noundef nonnull @__func__.XLNX_CSU_DMA) #6 ; 25 uses
+  %i.a = alloca [4096 x i8], align 16             ; 8 uses
+  %i.b = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.4, i32 noundef 54, ptr noundef nonnull @__func__.XLNX_CSU_DMA) #6 ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 1280 ; 6 uses
   %i.d = load ptr, ptr %i.c, align 16
@@ -230,12 +230,9 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1264
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 1344
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 1290 ; 2 uses
-  %i.t = getelementptr i8, ptr %i.b, i64 1328     ; 6 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 1328 ; 5 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 1320 ; 2 uses
   %.val.pre = load i32, ptr %i.h, align 4
-  %scevgep = getelementptr i8, ptr %i.b, i64 1332
-  %scevgep60 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %bound1 = icmp ult ptr %i.a, %scevgep
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %xlnx_csu_dma_advance.exit
@@ -333,25 +330,16 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.be, label %xlnx_csu_dma_read.exit, label %.lr.ph.split.us.split.i.i
 
 .lr.ph.split.us.split.i.i:                        ; preds = %.lr.ph.split.us.i.i
-  %.promoted.i.i = load i32, ptr %i.t, align 16   ; 3 uses
-  %i.bi = zext nneg i32 %i.z to i64               ; 3 uses
+  %.promoted.i.i = load i32, ptr %i.t, align 16   ; 2 uses
+  %i.bi = zext nneg i32 %i.z to i64               ; 2 uses
   %i.bj = call i64 @llvm.umax.i64(i64 %i.bi, i64 4)
   %i.bk = add nsw i64 %i.bj, -1
   %i.bl = lshr i64 %i.bk, 2
   %i.bm = add nuw nsw i64 %i.bl, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.y, 29
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.split.us.split.i.i
-  %umax = call i64 @llvm.umax.i64(i64 %i.bi, i64 4)
-  %1 = add nsw i64 %umax, -1
-  %2 = and i64 %1, -4
-  %scevgep61 = getelementptr i8, ptr %scevgep60, i64 %2
-  %bound0 = icmp ult ptr %i.t, %scevgep61
-  %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.split.us.split.i.i
   %n.vec = and i64 %i.bm, 9223372036854775800     ; 3 uses
   %i.bn = shl i64 %n.vec, 2
   %i.bo = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.promoted.i.i, i64 0
@@ -364,24 +352,24 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bp = shl nuw i64 %index, 2
   %i.bq = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bp ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
-  %wide.load = load <4 x i32>, ptr %i.bq, align 16, !alias.scope !20
-  %wide.load63 = load <4 x i32>, ptr %i.br, align 16, !alias.scope !20
+  %wide.load = load <4 x i32>, ptr %i.bq, align 16
+  %wide.load63 = load <4 x i32>, ptr %i.br, align 16
   %i.bs = add <4 x i32> %wide.load, %vec.phi      ; 2 uses
   %i.bt = add <4 x i32> %wide.load63, %vec.phi62  ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.bu = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bu, label %middle.block, label %vector.body, !llvm.loop !16
+  br i1 %i.bu, label %middle.block, label %vector.body, !llvm.loop !14
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.bt, %i.bs
   %i.bv = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  store i32 %i.bv, ptr %i.t, align 16, !alias.scope !23, !noalias !20
+  store i32 %i.bv, ptr %i.t, align 16
   %cmp.n = icmp eq i64 %i.bm, %n.vec
   br i1 %cmp.n, label %xlnx_csu_dma_read.exit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.split.us.split.i.i, %middle.block
-  %indvars.iv29.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.split.us.split.i.i ], [ %i.bn, %middle.block ]
-  %.ph = phi i32 [ %.promoted.i.i, %vector.memcheck ], [ %.promoted.i.i, %.lr.ph.split.us.split.i.i ], [ %i.bv, %middle.block ]
+scalar.ph.preheader:                              ; preds = %.lr.ph.split.us.split.i.i, %middle.block
+  %indvars.iv29.i.i.ph = phi i64 [ 0, %.lr.ph.split.us.split.i.i ], [ %i.bn, %middle.block ]
+  %.ph = phi i32 [ %.promoted.i.i, %.lr.ph.split.us.split.i.i ], [ %i.bv, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -393,7 +381,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i32 %i.bz, ptr %i.t, align 16
   %indvars.iv.next30.i.i = add nuw nsw i64 %indvars.iv29.i.i, 4 ; 2 uses
   %i.ca = icmp samesign ult i64 %indvars.iv.next30.i.i, %i.bi
-  br i1 %i.ca, label %scalar.ph, label %xlnx_csu_dma_read.exit, !llvm.loop !18
+  br i1 %i.ca, label %scalar.ph, label %xlnx_csu_dma_read.exit, !llvm.loop !15
 
 .lr.ph.split.i.i:                                 ; preds = %bb.j, %.lr.ph.split.preheader.i.i
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.split.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.j ] ; 2 uses
@@ -503,7 +491,7 @@ xlnx_csu_dma_done.exit.i:                         ; preds = %bb.s, %bb.r
 
 xlnx_csu_dma_advance.exit:                        ; preds = %bb.q, %xlnx_csu_dma_done.exit.i
   %.not = icmp eq i32 %i.cw, %i.cv
-  br i1 %.not, label %.critedge, label %bb.b, !llvm.loop !19
+  br i1 %.not, label %.critedge, label %bb.b, !llvm.loop !16
 
 .critedge:                                        ; preds = %bb.c, %xlnx_csu_dma_advance.exit, %bb.b, %bb.a
   %i.dv = getelementptr i8, ptr %i.b, i64 1348    ; 2 uses
@@ -629,14 +617,9 @@ attributes #7 = { noreturn nounwind }
 !11 = !{!"llvm.loop.mustprogress"}
 !12 = distinct !{!12, !11}
 !13 = distinct !{!13, !11}
-!14 = distinct !{!14, !"LVerDomain"}
-!15 = distinct !{!15, !14}
-!16 = distinct !{!16, !11, !21, !22}
-!17 = distinct !{!17, !14}
-!18 = distinct !{!18, !11, !21}
-!19 = distinct !{!19, !11}
-!20 = !{!15}
-!21 = !{!"llvm.loop.isvectorized", i32 1}
-!22 = !{!"llvm.loop.unroll.runtime.disable"}
-!23 = !{!17}
+!14 = distinct !{!14, !11, !17, !18}
+!15 = distinct !{!15, !11, !18, !17}
+!16 = distinct !{!16, !11}
+!17 = !{!"llvm.loop.isvectorized", i32 1}
+!18 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

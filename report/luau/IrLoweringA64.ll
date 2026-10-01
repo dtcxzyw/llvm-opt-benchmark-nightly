@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.b
   %.09.i = select i1 %i.i, i32 %i.h, i32 %i.j     ; 2 uses
   %i.k = zext i32 %.09.i to i64
   %i.l = shl nuw nsw i64 %i.k, 2
-  %i.m = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.l) #19 ; 5 uses
-  %i.n = load ptr, ptr %0, align 8, !tbaa !68     ; 7 uses
+  %i.m = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.l) #19 ; 4 uses
+  %i.n = load ptr, ptr %0, align 8, !tbaa !68     ; 6 uses
   %i.o = load i32, ptr %i.a, align 8, !tbaa !67   ; 3 uses
   %i.p = zext i32 %i.o to i64
   %.idx.i = shl nuw nsw i64 %i.p, 2               ; 2 uses
@@ -215,16 +215,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not11.i.i.i.i.i, label %_ZSt18uninitialized_moveIPN4Luau7CodeGen4IrOpES3_ET0_T_S5_S4_.exit.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.c
-  %2 = ptrtoaddr ptr %i.n to i64
-  %3 = ptrtoaddr ptr %i.m to i64
   %i.r = add nsw i64 %.idx.i, -4                  ; 2 uses
   %i.s = lshr exact i64 %i.r, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
-  %4 = sub i64 %2, %3
-  %diff.check = icmp ugt i64 %4, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader23, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.r, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader23, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.preheader
   %n.vec = and i64 %i.t, 9223372036854775800      ; 3 uses
@@ -627,7 +622,7 @@ begin_hunk_1_@llvm.umin.i64
 !284 = !{!"_ZTS5Proto", !6, i64 0, !6, i64 1, !6, i64 2, !6, i64 3, !6, i64 4, !6, i64 5, !6, i64 6, !6, i64 7, !277, i64 8, !84, i64 16, !278, i64 24, !84, i64 32, !10, i64 40, !22, i64 48, !79, i64 56, !84, i64 64, !279, i64 72, !280, i64 80, !281, i64 88, !281, i64 96, !79, i64 104, !79, i64 112, !10, i64 120, !282, i64 128, !7, i64 136, !7, i64 140, !7, i64 144, !7, i64 148, !7, i64 152, !7, i64 156, !7, i64 160, !7, i64 164, !7, i64 168, !7, i64 172, !283, i64 176, !7, i64 184, !7, i64 188, !155, i64 192, !155, i64 200, !22, i64 208}
 !285 = !{!284, !7, i64 136}
 !286 = distinct !{!286, !57, !200, !201}
-!287 = distinct !{!287, !57, !200}
+!287 = distinct !{!287, !57, !201, !200}
 !288 = distinct !{!288, !291}
 !289 = distinct !{!289, !57}
 !290 = !{!60, !7, i64 12}

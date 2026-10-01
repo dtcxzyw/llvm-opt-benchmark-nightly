@@ -143,15 +143,13 @@ bb.a:
   br i1 %.not, label %bb.ad, label %zend_string_alloc.exit
 
 zend_string_alloc.exit:                           ; preds = %bb.a
-  %i.b = load ptr, ptr %0, align 8, !tbaa !14     ; 3 uses
-  %2 = ptrtoaddr ptr %i.b to i64
+  %i.b = load ptr, ptr %0, align 8, !tbaa !14     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 24 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.e = load i64, ptr %i.d, align 8, !tbaa !18
   %i.f = and i64 %i.e, -8
   %i.g = add i64 %i.f, 32
-  %i.h = tail call noalias ptr @_emalloc(i64 noundef %i.g) #9 ; 8 uses
-  %3 = ptrtoaddr ptr %i.h to i64
+  %i.h = tail call noalias ptr @_emalloc(i64 noundef %i.g) #9 ; 7 uses
   store i32 1, ptr %i.h, align 4, !tbaa !19
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   store i32 22, ptr %i.i, align 4, !tbaa !14
@@ -191,10 +189,7 @@ zend_string_alloc.exit:                           ; preds = %bb.a
 
 iter.check:                                       ; preds = %.lr.ph.split.us.split.us
   %min.iters.check = icmp ult i64 %i.n, 4
-  %4 = sub i64 %2, %3
-  %diff.check = icmp ugt i64 %4, -32
-  %or.cond108 = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond108, label %.lr.ph.split.us.split.us.split.us.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.split.us.split.us.split.us.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check101 = icmp ult i64 %i.n, 32
@@ -597,7 +592,7 @@ attributes #10 = { nounwind allocsize(1) }
 !25 = !{!16, !16, i64 0}
 !26 = distinct !{!26, !24, !30, !31}
 !27 = distinct !{!27, !24, !30, !31}
-!28 = distinct !{!28, !24, !30}
+!28 = distinct !{!28, !24, !31, !30}
 !29 = distinct !{!29, !24}
 !30 = !{!"llvm.loop.isvectorized", i32 1}
 !31 = !{!"llvm.loop.unroll.runtime.disable"}

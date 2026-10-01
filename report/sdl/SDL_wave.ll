@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 32
 inline.NumDeleted: 16
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@MS_ADPCM_Decode:bb.a
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.o
   br i1 %exitcond.not.i, label %MS_ADPCM_DecodeBlockHeader.exit.thread, label %bb.l, !llvm.loop !22
@@ -205,14 +205,14 @@ bb.e:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.m = load i16, ptr %i.l, align 8
   %i.n = zext i16 %i.m to i64
-  %i.o = zext i16 %i.k to i64                     ; 15 uses
-  %i.p = shl nuw nsw i64 %i.o, 2                  ; 9 uses
+  %i.o = zext i16 %i.k to i64                     ; 12 uses
+  %i.p = shl nuw nsw i64 %i.o, 2                  ; 8 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.r = load i32, ptr %i.q, align 8
   %i.s = zext i32 %i.r to i64                     ; 2 uses
-  %i.t = shl nuw nsw i64 %i.o, 1                  ; 3 uses
+  %i.t = shl nuw nsw i64 %i.o, 1                  ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.v = load ptr, ptr %i.u, align 8              ; 2 uses
+  %i.v = load ptr, ptr %i.u, align 8
   %i.w = load i64, ptr %i.a, align 8              ; 3 uses
   %i.x = udiv i64 -1, %i.h
   %.not6.i = icmp ugt i64 %i.x, %i.t
@@ -233,12 +233,12 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.ac = lshr exact i64 %i.z, 1
-  %i.ad = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %i.z) #7 ; 13 uses
+  %i.ad = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %i.z) #7 ; 9 uses
   %.not37 = icmp eq ptr %i.ad, null
   br i1 %.not37, label %bb.z, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ae = tail call noalias ptr @SDL_calloc_REAL(i64 noundef %i.o, i64 noundef 1) #9 ; 12 uses
+  %i.ae = tail call noalias ptr @SDL_calloc_REAL(i64 noundef %i.o, i64 noundef 1) #9 ; 7 uses
   %.not38 = icmp eq ptr %i.ae, null
   br i1 %.not38, label %bb.j, label %.preheader
 
@@ -252,16 +252,11 @@ bb.i:                                             ; preds = %bb.h
   %.not.i40 = icmp eq i16 %i.k, 0                 ; 2 uses
   %i.ai = add nsw i64 %i.s, -1
   %i.aj = add nsw i64 %i.p, -4
-  %scevgep140 = getelementptr i8, ptr %i.ad, i64 %i.t
-  %scevgep142 = getelementptr i8, ptr %i.ae, i64 %i.o ; 2 uses
-  %3 = getelementptr i8, ptr %i.v, i64 %i.p
-  %scevgep143 = getelementptr i8, ptr %3, i64 -1
-  %min.iters.check = icmp ult i16 %i.k, 9
+  %min.iters.check = icmp ult i16 %i.k, 5
   %i.ak = and i64 %i.o, 3                         ; 2 uses
   %i.al = icmp eq i64 %i.ak, 0
   %i.am = select i1 %i.al, i64 4, i64 %i.ak
   %n.vec = sub nsw i64 %i.o, %i.am                ; 3 uses
-  %4 = add nsw i64 %i.o, -1
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.i
@@ -270,15 +265,15 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %.lr.ph, %bb.y
   %.0111 = phi i64 [ %i.w, %.lr.ph ], [ %i.er, %bb.y ]
-  %.sroa.68.0110 = phi i64 [ 0, %.lr.ph ], [ %.065.lcssa.i, %bb.y ] ; 7 uses
-  %.sroa.40.0109 = phi i64 [ 0, %.lr.ph ], [ %i.eq, %bb.y ] ; 3 uses
+  %.sroa.68.0110 = phi i64 [ 0, %.lr.ph ], [ %.065.lcssa.i, %bb.y ] ; 5 uses
+  %.sroa.40.0109 = phi i64 [ 0, %.lr.ph ], [ %i.eq, %bb.y ] ; 2 uses
   %.sroa.23.0108 = phi i64 [ %i.h, %.lr.ph ], [ %.sroa.23.2, %bb.y ] ; 2 uses
-  %i.an = getelementptr i8, ptr %i.v, i64 %.sroa.40.0109 ; 10 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.v, i64 %.sroa.40.0109 ; 6 uses
   %i.ao = tail call i64 @llvm.umin.i64(i64 %.0111, i64 %i.n) ; 2 uses
   %i.ap = sub i64 %i.ac, %.sroa.68.0110
   %i.aq = mul i64 %.sroa.23.0108, %i.o
   %i.ar = icmp ult i64 %i.ap, %i.aq
-  br i1 %i.ar, label %bb.l, label %5
+  br i1 %i.ar, label %bb.l, label %.lr.ph.i.preheader.a
 
 bb.l:                                             ; preds = %bb.k
   tail call void @SDL_free_REAL(ptr noundef nonnull %i.ad) #7
@@ -286,29 +281,11 @@ bb.l:                                             ; preds = %bb.k
   %i.as = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.77) #7
   br label %bb.z
 
-5:                                                ; preds = %bb.k
-  br i1 %.not.i40, label %IMA_ADPCM_DecodeBlockHeader.exit, label %.lr.ph.i.preheader.a
-
-.lr.ph.i.preheader.a:                             ; preds = %5
-  br i1 %min.iters.check, label %.lr.ph.i.preheader154, label %vector.memcheck
+.lr.ph.i.preheader.a:                             ; preds = %bb.k
+  br i1 %.not.i40, label %IMA_ADPCM_DecodeBlockHeader.exit, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader.a
-  %6 = shl i64 %.sroa.68.0110, 1                  ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.ad, i64 %6  ; 2 uses
-  %scevgep141 = getelementptr i8, ptr %scevgep140, i64 %6 ; 2 uses
-  %scevgep144 = getelementptr i8, ptr %scevgep143, i64 %.sroa.40.0109 ; 2 uses
-  %bound0 = icmp ult ptr %scevgep, %scevgep142
-  %bound1 = icmp ult ptr %i.ae, %scevgep141
-  %found.conflict = and i1 %bound0, %bound1
-  %bound0145 = icmp ult ptr %scevgep, %scevgep144
-  %bound1146 = icmp ult ptr %i.an, %scevgep141
-  %found.conflict147 = and i1 %bound0145, %bound1146
-  %conflict.rdx = or i1 %found.conflict, %found.conflict147
-  %bound0148 = icmp ult ptr %i.ae, %scevgep144
-  %bound1149 = icmp ult ptr %i.an, %scevgep142
-  %found.conflict150 = and i1 %bound0148, %bound1149
-  %conflict.rdx151 = or i1 %conflict.rdx, %found.conflict150
-  br i1 %conflict.rdx151, label %.lr.ph.i.preheader154, label %vector.ph
+  br i1 %min.iters.check, label %.lr.ph.i.prol.loopexit, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %i.at = add i64 %.sroa.68.0110, %n.vec
@@ -325,87 +302,52 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ba = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.aw
   %i.bb = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ax
   %i.bc = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ay
-  %wide.vec = load <8 x i16>, ptr %i.az, align 1, !alias.scope !36
+  %wide.vec = load <8 x i16>, ptr %i.az, align 1
   %strided.vec = shufflevector <8 x i16> %wide.vec, <8 x i16> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %i.bd = getelementptr [2 x i8], ptr %i.au, i64 %index
-  store <4 x i16> %strided.vec, ptr %i.bd, align 2, !alias.scope !37, !noalias !38
+  store <4 x i16> %strided.vec, ptr %i.bd, align 2
   %i.be = getelementptr i8, ptr %i.az, i64 2
   %i.bf = getelementptr i8, ptr %i.ba, i64 6
   %i.bg = getelementptr i8, ptr %i.bb, i64 10
   %i.bh = getelementptr i8, ptr %i.bc, i64 14
-  %i.bi = load i8, ptr %i.be, align 1, !alias.scope !36
-  %i.bj = load i8, ptr %i.bf, align 1, !alias.scope !36
-  %i.bk = load i8, ptr %i.bg, align 1, !alias.scope !36
-  %i.bl = load i8, ptr %i.bh, align 1, !alias.scope !36
+  %i.bi = load i8, ptr %i.be, align 1
+  %i.bj = load i8, ptr %i.bf, align 1
+  %i.bk = load i8, ptr %i.bg, align 1
+  %i.bl = load i8, ptr %i.bh, align 1
   %i.bm = insertelement <4 x i8> poison, i8 %i.bi, i64 0
   %i.bn = insertelement <4 x i8> %i.bm, i8 %i.bj, i64 1
   %i.bo = insertelement <4 x i8> %i.bn, i8 %i.bk, i64 2
   %i.bp = insertelement <4 x i8> %i.bo, i8 %i.bl, i64 3
   %i.bq = getelementptr inbounds nuw i8, ptr %i.ae, i64 %index
-  store <4 x i8> %i.bp, ptr %i.bq, align 1, !alias.scope !39, !noalias !36
+  store <4 x i8> %i.bp, ptr %i.bq, align 1
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.br = icmp eq i64 %index.next, %n.vec
-  br i1 %i.br, label %.lr.ph.i.preheader154, label %vector.body, !llvm.loop !30
+  br i1 %i.br, label %.lr.ph.i.prol.loopexit, label %vector.body, !llvm.loop !26
 
-.lr.ph.i.preheader154:                            ; preds = %vector.body, %vector.memcheck, %.lr.ph.i.preheader.a
-  %.sroa.68.2.ph = phi i64 [ %.sroa.68.0110, %vector.memcheck ], [ %.sroa.68.0110, %.lr.ph.i.preheader.a ], [ %i.at, %vector.body ] ; 3 uses
-  %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader.a ], [ %n.vec, %vector.body ] ; 6 uses
-  %7 = sub nsw i64 %i.o, %indvars.iv.i.ph
-  %xtraiter = and i64 %7, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
-
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader154
-  %8 = shl nuw nsw i64 %indvars.iv.i.ph, 2
-  %9 = getelementptr inbounds nuw i8, ptr %i.an, i64 %8 ; 2 uses
-  %10 = load i16, ptr %9, align 1
-  %11 = add i64 %.sroa.68.2.ph, 1                 ; 2 uses
-  %12 = getelementptr inbounds nuw [2 x i8], ptr %i.ad, i64 %.sroa.68.2.ph
-  store i16 %10, ptr %12, align 2
-  %13 = getelementptr i8, ptr %9, i64 2
-  %14 = load i8, ptr %13, align 1
-  %15 = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv.i.ph
-  store i8 %14, ptr %15, align 1
-  %indvars.iv.next.i.prol = add nuw nsw i64 %indvars.iv.i.ph, 1
-  br label %.lr.ph.i.prol.loopexit
-
-.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader154
-  %.lcssa.unr = phi i64 [ poison, %.lr.ph.i.preheader154 ], [ %11, %.lr.ph.i.prol ]
-  %.sroa.68.2.unr = phi i64 [ %.sroa.68.2.ph, %.lr.ph.i.preheader154 ], [ %11, %.lr.ph.i.prol ]
-  %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %.lr.ph.i.preheader154 ], [ %indvars.iv.next.i.prol, %.lr.ph.i.prol ]
-  %16 = icmp eq i64 %indvars.iv.i.ph, %4
-  br i1 %16, label %IMA_ADPCM_DecodeBlockHeader.exit, label %.lr.ph.i
+.lr.ph.i.prol.loopexit:                           ; preds = %vector.body, %vector.memcheck
+  %.sroa.68.2.unr = phi i64 [ %.sroa.68.0110, %vector.memcheck ], [ %i.at, %vector.body ]
+  %indvars.iv.i.unr = phi i64 [ 0, %vector.memcheck ], [ %n.vec, %vector.body ]
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %.sroa.68.2 = phi i64 [ %i.bv, %.lr.ph.i ], [ %.sroa.68.2.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %.lr.ph.i ], [ %indvars.iv.i.unr, %.lr.ph.i.prol.loopexit ] ; 4 uses
-  %17 = shl nuw nsw i64 %indvars.iv.i, 2
-  %18 = getelementptr inbounds nuw i8, ptr %i.an, i64 %17 ; 2 uses
-  %19 = load i16, ptr %18, align 1
-  %20 = getelementptr inbounds nuw [2 x i8], ptr %i.ad, i64 %.sroa.68.2
-  store i16 %19, ptr %20, align 2
-  %21 = getelementptr i8, ptr %18, i64 2
-  %22 = load i8, ptr %21, align 1
-  %23 = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv.i
-  store i8 %22, ptr %23, align 1
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.bs = shl nuw nsw i64 %indvars.iv.next.i, 2
+  %.sroa.68.2 = phi i64 [ %i.bv, %.lr.ph.i ], [ %.sroa.68.2.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %.lr.ph.i ], [ %indvars.iv.i.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
+  %i.bs = shl nuw nsw i64 %indvars.iv.i, 2
   %i.bt = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.bs ; 2 uses
   %i.bu = load i16, ptr %i.bt, align 1
-  %i.bv = add i64 %.sroa.68.2, 2                  ; 2 uses
-  %i.bw = getelementptr [2 x i8], ptr %i.ad, i64 %.sroa.68.2
-  %24 = getelementptr i8, ptr %i.bw, i64 2
-  store i16 %i.bu, ptr %24, align 2
+  %i.bv = add i64 %.sroa.68.2, 1                  ; 2 uses
+  %i.bw = getelementptr inbounds nuw [2 x i8], ptr %i.ad, i64 %.sroa.68.2
+  store i16 %i.bu, ptr %i.bw, align 2
   %i.bx = getelementptr i8, ptr %i.bt, i64 2
   %i.by = load i8, ptr %i.bx, align 1
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv.next.i
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv.i
   store i8 %i.by, ptr %i.bz, align 1
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
+  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.i.1, %i.o
-  br i1 %exitcond.not.1, label %IMA_ADPCM_DecodeBlockHeader.exit, label %.lr.ph.i, !llvm.loop !31
+  br i1 %exitcond.not.1, label %IMA_ADPCM_DecodeBlockHeader.exit, label %.lr.ph.i, !llvm.loop !27
 
-IMA_ADPCM_DecodeBlockHeader.exit:                 ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %5
-  %.sroa.68.3 = phi i64 [ %.sroa.68.0110, %5 ], [ %.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %i.bv, %.lr.ph.i ] ; 3 uses
+IMA_ADPCM_DecodeBlockHeader.exit:                 ; preds = %.lr.ph.i, %.lr.ph.i.preheader.a
+  %.sroa.68.3 = phi i64 [ %.sroa.68.0110, %.lr.ph.i.preheader.a ], [ %i.bv, %.lr.ph.i ] ; 3 uses
   %i.ca = add nsw i64 %.sroa.23.0108, -1          ; 4 uses
   %i.cb = sub nsw i64 %i.ao, %i.p                 ; 3 uses
   %spec.select.i = tail call i64 @llvm.smin.i64(i64 %i.ai, i64 %i.ca) ; 2 uses
@@ -517,12 +459,12 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   store i16 %.025.i.us.i, ptr %i.dx, align 2
   %i.dy = add nuw nsw i64 %.07277.us.i, 1         ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.dy, %i.cm
-  br i1 %exitcond.not.i, label %bb.t, label %bb.p, !llvm.loop !32
+  br i1 %exitcond.not.i, label %bb.t, label %bb.p, !llvm.loop !28
 
 bb.t:                                             ; preds = %bb.s
   %indvars.iv.next.i43 = add nuw nsw i64 %indvars.iv.i42, 1 ; 2 uses
   %exitcond94.not.i = icmp eq i64 %indvars.iv.next.i43, %i.o
-  br i1 %exitcond94.not.i, label %._crit_edge.us.i, label %bb.o, !llvm.loop !33
+  br i1 %exitcond94.not.i, label %._crit_edge.us.i, label %bb.o, !llvm.loop !29
 
 ._crit_edge.us.i:                                 ; preds = %bb.t
   %i.dz = mul nuw nsw i64 %i.cm, %i.o
@@ -530,7 +472,7 @@ bb.t:                                             ; preds = %bb.s
   %i.eb = sub i64 %.sroa.23.1, %i.cm              ; 2 uses
   %i.ec = sub nuw nsw i64 %.385.us.i, %i.cm       ; 2 uses
   %i.ed = icmp sgt i64 %i.ec, 0
-  br i1 %i.ed, label %.lr.ph.us.i, label %IMA_ADPCM_DecodeBlockData.exit, !llvm.loop !34
+  br i1 %i.ed, label %.lr.ph.us.i, label %IMA_ADPCM_DecodeBlockData.exit, !llvm.loop !30
 
 .lr.ph87.split.i:                                 ; preds = %.lr.ph87.i, %.lr.ph87.split.i
   %i.ee = phi i64 [ %i.eg, %.lr.ph87.split.i ], [ %i.ca, %.lr.ph87.i ]
@@ -539,7 +481,7 @@ bb.t:                                             ; preds = %bb.s
   %i.eg = sub i64 %i.ee, %i.ef                    ; 2 uses
   %i.eh = sub nuw nsw i64 %.385.i, %i.ef          ; 2 uses
   %i.ei = icmp sgt i64 %i.eh, 0
-  br i1 %i.ei, label %.lr.ph87.split.i, label %IMA_ADPCM_DecodeBlockData.exit, !llvm.loop !34
+  br i1 %i.ei, label %.lr.ph87.split.i, label %IMA_ADPCM_DecodeBlockData.exit, !llvm.loop !30
 
 IMA_ADPCM_DecodeBlockData.exit:                   ; preds = %._crit_edge.us.i, %.lr.ph87.split.i, %bb.n
   %.sroa.23.2 = phi i64 [ %i.ca, %bb.n ], [ %i.eg, %.lr.ph87.split.i ], [ %i.eb, %._crit_edge.us.i ] ; 2 uses
@@ -578,7 +520,7 @@ bb.y:                                             ; preds = %IMA_ADPCM_DecodeBlo
   %i.es = icmp sgt i64 %.sroa.23.2, 0
   %i.et = icmp uge i64 %i.er, %i.p
   %i.eu = select i1 %i.es, i1 %i.et, i1 false
-  br i1 %i.eu, label %bb.k, label %.loopexit, !llvm.loop !35
+  br i1 %i.eu, label %bb.k, label %.loopexit, !llvm.loop !31
 
 .loopexit:                                        ; preds = %bb.y, %.preheader, %bb.x
   %.098 = phi i64 [ %i.ep, %bb.x ], [ %i.z, %.preheader ], [ %i.z, %bb.y ]
@@ -981,7 +923,7 @@ bb.v:                                             ; preds = %bb.s, %bb.t
   store i16 %i.bq, ptr %i.bs, align 2
   %i.bt = add nuw nsw i64 %.06074, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.bt, %i.bc
-  br i1 %exitcond.not, label %bb.w, label %bb.s, !llvm.loop !40
+  br i1 %exitcond.not, label %bb.w, label %bb.s, !llvm.loop !32
 
 bb.w:                                             ; preds = %bb.v
   %i.bu = load i32, ptr %i.ah, align 8            ; 2 uses
@@ -1384,19 +1326,11 @@ attributes #9 = { nounwind allocsize(0,1) }
 !23 = distinct !{!23, !3}
 !24 = distinct !{!24, !3}
 !25 = distinct !{!25, !3}
-!26 = distinct !{!26, !"LVerDomain"}
-!27 = distinct !{!27, !26}
-!28 = distinct !{!28, !26}
-!29 = distinct !{!29, !26}
-!30 = distinct !{!30, !3, !4, !5}
-!31 = distinct !{!31, !3, !4}
+!26 = distinct !{!26, !3, !4, !5}
+!27 = distinct !{!27, !3, !5, !4}
+!28 = distinct !{!28, !3}
+!29 = distinct !{!29, !3}
+!30 = distinct !{!30, !3}
+!31 = distinct !{!31, !3}
 !32 = distinct !{!32, !3}
-!33 = distinct !{!33, !3}
-!34 = distinct !{!34, !3}
-!35 = distinct !{!35, !3}
-!36 = !{!27}
-!37 = !{!28}
-!38 = !{!29, !27}
-!39 = !{!29}
-!40 = distinct !{!40, !3}
 end_hunk_2

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt3__114__split_bufferIN3jxl5TokenERNS_9allocatorIS2_EEEC2EmmS5_.exit.i: ; preds = %bb.b
   %i.w = shl i64 %i.m, 9
-  %i.x = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #23 ; 9 uses
+  %i.x = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #23 ; 8 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.n
   %i.z = load ptr, ptr %i.j, align 8, !tbaa !41   ; 7 uses
   %i.aa = load ptr, ptr %6, align 8, !tbaa !40    ; 6 uses
@@ -213,18 +213,14 @@ _ZNSt3__114__split_bufferIN3jxl5TokenERNS_9allocatorIS2_EEEC2EmmS5_.exit.i: ; pr
   br i1 %.not4.i.i.i.i.i.i.i.i, label %_ZNSt3__114__split_bufferIN3jxl5TokenERNS_9allocatorIS2_EEE5clearB8nn180100Ev.exit.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt3__114__split_bufferIN3jxl5TokenERNS_9allocatorIS2_EEEC2EmmS5_.exit.i
-  %10 = ptrtoaddr ptr %i.z to i64                 ; 2 uses
-  %i.ab = ptrtoaddr ptr %i.x to i64
-  %i.ac = ptrtoaddr ptr %i.aa to i64
-  %i.ad = add i64 %10, -8
-  %i.ae = sub i64 %i.ad, %i.ac                    ; 3 uses
+  %i.ab = ptrtoaddr ptr %i.aa to i64
+  %i.ac = ptrtoaddr ptr %i.z to i64
+  %i.ad = add i64 %i.ac, -8
+  %i.ae = sub i64 %i.ad, %i.ab                    ; 3 uses
   %i.af = lshr i64 %i.ae, 3
   %i.ag = add nuw nsw i64 %i.af, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.ae, 24
-  %11 = sub i64 %i.ab, %10
-  %diff.check = icmp ugt i64 %11, -128
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check293 = icmp ult i64 %i.ae, 120
@@ -627,7 +623,7 @@ attributes #27 = { noreturn nounwind "no-builtin-fread" "no-builtin-fwrite" }
 !140 = distinct !{!140, !139, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8nn180100INS_16reverse_iteratorIPN3jxl5TokenEEES8_S8_EENS_4pairIT_T1_EESA_T0_SB_: argument 0"}
 !141 = distinct !{!141, !26, !29, !30}
 !142 = distinct !{!142, !26, !29, !30}
-!143 = distinct !{!143, !26, !29}
+!143 = distinct !{!143, !26, !30, !29}
 !144 = distinct !{!144, !"_ZN3jxl6N_AVX221NumNonZero8x8ExceptDCEPKiPi"}
 !145 = distinct !{!145, !144, !"_ZN3jxl6N_AVX221NumNonZero8x8ExceptDCEPKiPi: argument 0"}
 !146 = distinct !{!146, !144, !"_ZN3jxl6N_AVX221NumNonZero8x8ExceptDCEPKiPi: argument 1"}
