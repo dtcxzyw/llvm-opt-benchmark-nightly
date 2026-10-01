@@ -205,12 +205,12 @@ bb.i:                                             ; preds = %bb.e
 
 bb.j:                                             ; preds = %bb.i
   %i.m = tail call ptr @ACLCreateUnlinkedUser()   ; 7 uses
-  %i.n = load i32, ptr %i.a, align 4, !tbaa !22   ; 7 uses
+  %i.n = load i32, ptr %i.a, align 4, !tbaa !22   ; 6 uses
   %.not5964 = icmp sgt i32 %i.n, 0                ; 3 uses
   br i1 %.not5964, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %wide.trip.count = zext nneg i32 %i.n to i64
+  %wide.trip.count = zext nneg i32 %i.n to i64    ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.s
@@ -279,16 +279,15 @@ bb.r:                                             ; preds = %bb.q
   br label %.lr.ph73.preheader
 
 .lr.ph73.preheader:                               ; preds = %bb.q, %bb.r
-  %wide.trip.count80 = zext nneg i32 %i.n to i64
   br label %.lr.ph73
 
 .lr.ph73:                                         ; preds = %.lr.ph73.preheader, %.lr.ph73
-  %indvars.iv77 = phi i64 [ 0, %.lr.ph73.preheader ], [ %indvars.iv.next78, %.lr.ph73 ] ; 2 uses
+  %indvars.iv77 = phi i64 [ %indvars.iv.next78, %.lr.ph73 ], [ 0, %.lr.ph73.preheader ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv77
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !40
   tail call void @sdsfree(ptr noundef %i.al) #25
   %indvars.iv.next78 = add nuw nsw i64 %indvars.iv77, 1 ; 2 uses
-  %exitcond81.not = icmp eq i64 %indvars.iv.next78, %wide.trip.count80
+  %exitcond81.not = icmp eq i64 %indvars.iv.next78, %wide.trip.count
   br i1 %exitcond81.not, label %.sink.split, label %.lr.ph73, !llvm.loop !228
 
 bb.s:                                             ; preds = %sdslen.exit, %bb.p

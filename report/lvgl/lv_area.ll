@@ -202,8 +202,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .lr.ph130:                                        ; preds = %._crit_edge.thread
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %7 = tail call i64 @llvm.umax.i64(i64 %1, i64 1) ; 2 uses
-  %min.iters.check186 = icmp ult i64 %1, 12
+  %min.iters.check186 = icmp ult i64 %1, 10
   br i1 %min.iters.check186, label %scalar.ph185.preheader, label %vector.scevcheck173
 
 vector.scevcheck173:                              ; preds = %.lr.ph130
@@ -215,7 +214,7 @@ vector.scevcheck173:                              ; preds = %.lr.ph130
   br i1 %i.af, label %scalar.ph185.preheader, label %vector.memcheck187
 
 vector.memcheck187:                               ; preds = %vector.scevcheck173
-  %i.ag = shl nuw nsw i64 %7, 3                   ; 2 uses
+  %i.ag = shl nuw nsw i64 %1, 3                   ; 2 uses
   %i.ah = getelementptr i8, ptr %0, i64 %i.ag
   %i.ai = getelementptr i8, ptr %i.ah, i64 -4
   %i.aj = getelementptr i8, ptr %0, i64 4
@@ -231,7 +230,7 @@ vector.memcheck187:                               ; preds = %vector.scevcheck173
   br i1 %conflict.rdx194, label %scalar.ph185.preheader, label %vector.ph195
 
 vector.ph195:                                     ; preds = %vector.memcheck187
-  %n.vec196 = and i64 %7, 8589934590              ; 3 uses
+  %n.vec196 = and i64 %1, 8589934590              ; 3 uses
   %broadcast.splatinsert197 = insertelement <2 x i32> poison, i32 %3, i64 0
   %broadcast.splatinsert199 = insertelement <2 x i32> poison, i32 %4, i64 0
   %i.am = shufflevector <2 x i32> %broadcast.splatinsert197, <2 x i32> %broadcast.splatinsert199, <4 x i32> <i32 0, i32 2, i32 0, i32 2>
@@ -633,9 +632,6 @@ declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

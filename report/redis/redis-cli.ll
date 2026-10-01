@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.sink.split, %bb.m,
   %i.bp = trunc i64 %i.bo to i32                  ; 8 uses
   %i.bq = load i32, ptr getelementptr inbounds nuw (i8, ptr @config, i64 596), align 4, !tbaa !91 ; 3 uses
   %i.br = add nsw i32 %i.bq, 1                    ; 2 uses
-  %i.bs = sdiv i32 %i.bp, %i.br                   ; 7 uses
+  %i.bs = sdiv i32 %i.bp, %i.br                   ; 5 uses
   %i.bt = icmp slt i32 %i.bs, 3
   br i1 %i.bt, label %bb.o, label %bb.p
 
@@ -414,14 +414,13 @@ clusterManagerNodeArrayAdd.exit:                  ; preds = %bb.ab
   %i.ea = phi i1 [ false, %.preheader463 ], [ false, %.preheader463.thread ], [ true, %..loopexit_crit_edge.us ]
   %.0274.lcssa748 = phi i32 [ %.1275, %.preheader463 ], [ 0, %.preheader463.thread ], [ %.1275, %..loopexit_crit_edge.us ] ; 6 uses
   %.0276.lcssa = phi i32 [ 0, %.preheader463 ], [ 0, %.preheader463.thread ], [ %.2278.us, %..loopexit_crit_edge.us ]
-  %i.eb = zext nneg i32 %i.bs to i64              ; 2 uses
+  %i.eb = zext nneg i32 %i.bs to i64              ; 4 uses
   %i.ec = getelementptr [8 x i8], ptr %i.bx, i64 %i.eb ; 4 uses
   %i.ed = sub nsw i32 %.0276.lcssa, %i.bs         ; 4 uses
   %i.ee = uitofp nneg i32 %i.bs to float
   %i.ef = fdiv float 1.638400e+04, %i.ee
   %i.eg = add nsw i32 %i.bs, -1
-  %5 = zext nneg i32 %i.eg to i64
-  %wide.trip.count667 = zext nneg i32 %i.bs to i64
+  %wide.trip.count667 = zext nneg i32 %i.eg to i64
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph552, %._crit_edge547
@@ -435,7 +434,7 @@ bb.ad:                                            ; preds = %.lr.ph552, %._crit_
   %i.el = fpext float %i.ek to double
   %i.em = call i64 @lround(double noundef %i.el) #32, !tbaa !24 ; 2 uses
   %i.en = icmp sgt i64 %i.em, 16384
-  %i.eo = icmp eq i64 %indvars.iv664, %5
+  %i.eo = icmp eq i64 %indvars.iv664, %wide.trip.count667
   %or.cond366 = select i1 %i.en, i1 true, i1 %i.eo
   %.0262 = select i1 %or.cond366, i64 16383, i64 %i.em
   %.1263 = call i64 @llvm.smax.i64(i64 %.0262, i64 %.0265548) ; 6 uses
@@ -509,7 +508,7 @@ bb.ad:                                            ; preds = %.lr.ph552, %._crit_
   store i32 1, ptr %i.fp, align 8, !tbaa !101
   %i.fq = add nuw nsw i64 %.1263, 1
   %indvars.iv.next665 = add nuw nsw i64 %indvars.iv664, 1 ; 2 uses
-  %exitcond668.not = icmp eq i64 %indvars.iv.next665, %wide.trip.count667
+  %exitcond668.not = icmp eq i64 %indvars.iv.next665, %i.eb
   br i1 %exitcond668.not, label %._crit_edge553, label %bb.ad, !llvm.loop !242
 
 ._crit_edge553:                                   ; preds = %._crit_edge547
@@ -531,7 +530,6 @@ bb.ad:                                            ; preds = %.lr.ph552, %._crit_
   %i.fy = sext i32 %i.fs to i64
   %i.fz = getelementptr inbounds [8 x i8], ptr %i.ec, i64 %i.fy
   store ptr %i.fr, ptr %i.fz, align 8, !tbaa !97
-  %wide.trip.count681 = zext nneg i32 %i.bs to i64
   br label %.lr.ph570.preheader
 
 .lr.ph570.preheader:                              ; preds = %._crit_edge557, %bb.am
@@ -652,7 +650,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %.4273 = phi ptr [ %.2271, %bb.ae ], [ %i.ha, %bb.ai ], [ %.3272423, %bb.al ], [ %.2271, %._crit_edge563 ] ; 2 uses
   %.4260 = phi i32 [ %.2258, %bb.ae ], [ %.2258, %bb.ai ], [ %i.hc, %bb.al ], [ %.2258, %._crit_edge563 ] ; 3 uses
   %indvars.iv.next678 = add nuw nsw i64 %indvars.iv677, 1 ; 2 uses
-  %exitcond682.not = icmp eq i64 %indvars.iv.next678, %wide.trip.count681
+  %exitcond682.not = icmp eq i64 %indvars.iv.next678, %i.eb
   br i1 %exitcond682.not, label %._crit_edge571, label %.lr.ph570, !llvm.loop !244
 
 ._crit_edge571:                                   ; preds = %.thread426

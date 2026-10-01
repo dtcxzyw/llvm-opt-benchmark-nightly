@@ -205,17 +205,16 @@ bb.t:                                             ; preds = %._crit_edge.thread
           to label %_ZNSt6vectorIN4bzla8bitblast7AigNodeESaIS2_EE9push_backERKS2_.exit unwind label %bb.f
 
 _ZNSt6vectorIN4bzla8bitblast7AigNodeESaIS2_EE9push_backERKS2_.exit: ; preds = %.noexc81, %bb.t
+  %10 = add nuw nsw i64 %i.g, 1
+  %11 = lshr i64 %10, 1
   br i1 %i.as, label %.lr.ph104, label %._crit_edge105
 
 .lr.ph104:                                        ; preds = %_ZNSt6vectorIN4bzla8bitblast7AigNodeESaIS2_EE9push_backERKS2_.exit
-  %10 = add nuw nsw i64 %i.g, 1
-  %11 = lshr i64 %10, 1
   %i.ba = add nsw i64 %i.g, -2
   %i.bb = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.be = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
-  %umax = call i64 @llvm.umax.i64(i64 %11, i64 2)
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph104, %._crit_edge101
@@ -263,7 +262,7 @@ _ZNSt5tupleIJRN4bzla8bitblast7AigNodeES3_EEaSIS2_S2_EENSt9enable_ifIXcl12__assig
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
   %i.br = add nuw nsw i64 %.047102, 1             ; 2 uses
   %i.bs = add i64 %.046103, -1
-  %exitcond107.not = icmp eq i64 %i.br, %umax
+  %exitcond107.not = icmp eq i64 %i.br, %11
   br i1 %exitcond107.not, label %._crit_edge105, label %bb.u, !llvm.loop !1731
 
 bb.x:                                             ; preds = %bb.u

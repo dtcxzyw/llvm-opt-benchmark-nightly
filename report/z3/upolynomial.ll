@@ -205,8 +205,8 @@ _ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit:  ; preds = %bb.u, %bb.t, %.preh
 
 .loopexit:                                        ; preds = %_ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit, %_ZN11upolynomial12core_manager10checkpointEv.exit
   %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 1 ; 2 uses
-  %6 = icmp samesign ult i64 %indvars.iv.next80, %i.ax
-  br i1 %6, label %bb.p, label %bb.l, !llvm.loop !145
+  %exitcond83.not = icmp eq i64 %indvars.iv.next80, %i.ax
+  br i1 %exitcond83.not, label %bb.l, label %bb.p, !llvm.loop !145
 
 _ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit.sink.split: ; preds = %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i47, %.critedge.i.i, %.critedge.thread.loopexit.i.i, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i32, %._crit_edge.i.i38, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i, %._crit_edge.i.i
   %.sink98 = phi ptr [ %i.l, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i32 ], [ %i.b, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i ], [ %.pre.i.i, %._crit_edge.i.i ], [ %.pre.i.i39, %._crit_edge.i.i38 ], [ %.pr.pre.i.i51, %.critedge.i.i ], [ %i.bi, %.critedge.thread.loopexit.i.i ], [ %i.be, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i47 ]
@@ -321,8 +321,7 @@ bb.e:                                             ; preds = %_ZNK6vectorI3mpzLb0
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %1, i32 2)
-  %wide.trip.count = zext i32 %umax to i64
+  %wide.trip.count = zext i32 %1 to i64
   br label %bb.i
 
 ._crit_edge:                                      ; preds = %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit

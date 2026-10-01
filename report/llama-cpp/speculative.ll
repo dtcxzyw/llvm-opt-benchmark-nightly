@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %"class.std::vector.83", align 8    ; 9 uses
   %4 = alloca %"class.std::vector.83", align 8    ; 9 uses
   %i.b = alloca float, align 4                    ; 5 uses
-  %i.c = load i32, ptr %1, align 8, !tbaa !429    ; 7 uses
+  %i.c = load i32, ptr %1, align 8, !tbaa !429    ; 6 uses
   %i.d = icmp slt i32 %i.c, 1
   br i1 %i.d, label %_ZNSt6vectorIiSaIiEED2Ev.exit216, label %bb.b
 
@@ -248,7 +248,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !431
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %wide.trip.count = zext nneg i32 %i.c to i64    ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.c to i64    ; 5 uses
   br label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.n
@@ -257,11 +257,10 @@ bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !410  ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1720 ; 6 uses
-  %5 = zext nneg i32 %i.c to i64                  ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 1572 ; 5 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !415
   %i.ac = sext i32 %i.ab to i64
-  %i.ad = mul nsw i64 %i.ac, %5                   ; 4 uses
+  %i.ad = mul nsw i64 %i.ac, %wide.trip.count     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31
   store float 0.000000e+00, ptr %i.a, align 4, !tbaa !198
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 1728 ; 2 uses
@@ -275,7 +274,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.al, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge
-  %i.am = sub nuw nsw i64 %i.ad, %i.ak
+  %i.am = sub nuw i64 %i.ad, %i.ak
   invoke void @_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf(ptr noundef nonnull align 8 dereferenceable(24) %i.z, ptr %i.af, i64 noundef %i.am, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
           to label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit unwind label %bb.r
 
@@ -368,7 +367,7 @@ _ZNSt6vectorIfSaIfEE6resizeEmRKf.exit:            ; preds = %_ZSt8_DestroyIPffEv
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 1568 ; 8 uses
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !414
   %i.bo = sext i32 %i.bn to i64
-  %i.bp = mul nsw i64 %i.bo, %5                   ; 4 uses
+  %i.bp = mul nsw i64 %i.bo, %wide.trip.count     ; 4 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 1752 ; 2 uses
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !423 ; 2 uses
   %i.bs = load ptr, ptr %i.bl, align 8, !tbaa !421 ; 2 uses
@@ -380,7 +379,7 @@ _ZNSt6vectorIfSaIfEE6resizeEmRKf.exit:            ; preds = %_ZSt8_DestroyIPffEv
   br i1 %i.bx, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %._crit_edge304
-  %i.by = sub nuw nsw i64 %i.bp, %i.bw
+  %i.by = sub nuw i64 %i.bp, %i.bw
   invoke void @_ZNSt6vectorIfSaIfEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.bl, i64 noundef %i.by)
           to label %_ZNSt6vectorIfSaIfEE6resizeEm.exit unwind label %bb.y
 

@@ -204,9 +204,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bf = getelementptr inbounds nuw i8, ptr %13, i64 432
   %i.bg = getelementptr inbounds nuw i8, ptr %13, i64 224
   %i.bh = getelementptr inbounds nuw i8, ptr %13, i64 16
-  %smax128 = call i32 @llvm.smax.i32(i32 %1, i32 1)
   %i.bi = add nsw i32 %1, -1
-  %wide.trip.count129 = zext nneg i32 %smax128 to i64
+  %wide.trip.count129 = zext nneg i32 %1 to i64
   %wide.trip.count138 = zext nneg i32 %i.bi to i64
   br label %bb.p
 
@@ -609,13 +608,13 @@ declare float @llvm.floor.f32(float) #9
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #9

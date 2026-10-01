@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca [256 x i8], align 16              ; 6 uses
   %i.b = alloca [256 x i8], align 16              ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
-  %i.c = tail call i32 @H5Tget_nmembers(i64 noundef %0) #19 ; 7 uses
+  %i.c = tail call i32 @H5Tget_nmembers(i64 noundef %0) #19 ; 4 uses
   %i.d = icmp slt i32 %i.c, 1
   br i1 %i.d, label %.loopexit.thread, label %bb.b
 
@@ -231,16 +231,15 @@ bb.c:                                             ; preds = %bb.b
   %.094 = select i1 %i.h, i64 %H5T_NATIVE_UINT_g.val, i64 %H5T_NATIVE_INT_g.val ; 4 uses
   %i.o = tail call i64 @H5Tget_size(i64 noundef %i.e) #19 ; 2 uses
   %i.p = tail call i64 @H5Tget_size(i64 noundef %.094) #19 ; 2 uses
-  %i.q = zext nneg i32 %i.c to i64                ; 3 uses
+  %i.q = zext nneg i32 %i.c to i64                ; 6 uses
   %i.r = tail call noalias ptr @calloc(i64 noundef %i.q, i64 noundef 8) #24 ; 7 uses
   %i.s = tail call i64 @llvm.umax.i64(i64 %i.p, i64 %i.o)
   %i.t = tail call noalias ptr @calloc(i64 noundef %i.q, i64 noundef %i.s) #24 ; 6 uses
-  %wide.trip.count = zext nneg i32 %i.c to i64
   br label %.lr.ph
 
 bb.d:                                             ; preds = %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.q
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !40
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
@@ -272,17 +271,12 @@ bb.f:                                             ; preds = %._crit_edge
   %i.af = add i64 %4, 3                           ; 3 uses
   %i.ag = icmp ult i64 %i.af, 80
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.af
-  %wide.trip.count163 = zext nneg i32 %i.c to i64
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.n
   %indvars.iv.next160 = add nuw nsw i64 %indvars.iv159, 1 ; 2 uses
-  %exitcond164.not = icmp eq i64 %indvars.iv.next160, %wide.trip.count163
-  br i1 %exitcond164.not, label %.lr.ph152.preheader, label %bb.h, !llvm.loop !41
-
-.lr.ph152.preheader:                              ; preds = %bb.g
-  %wide.trip.count169 = zext nneg i32 %i.c to i64
-  br label %.lr.ph152
+  %exitcond164.not = icmp eq i64 %indvars.iv.next160, %i.q
+  br i1 %exitcond164.not, label %.lr.ph152, label %bb.h, !llvm.loop !41
 
 bb.h:                                             ; preds = %.lr.ph150, %bb.g
   %indvars.iv159 = phi i64 [ 0, %.lr.ph150 ], [ %indvars.iv.next160, %bb.g ] ; 3 uses
@@ -343,13 +337,13 @@ bb.n:                                             ; preds = %bb.m
   %.not118 = icmp eq ptr %i.ba, null
   br i1 %.not118, label %.loopexit, label %bb.g
 
-.lr.ph152:                                        ; preds = %.lr.ph152.preheader, %.lr.ph152
-  %indvars.iv165 = phi i64 [ 0, %.lr.ph152.preheader ], [ %indvars.iv.next166, %.lr.ph152 ] ; 2 uses
+.lr.ph152:                                        ; preds = %bb.g, %.lr.ph152
+  %indvars.iv165 = phi i64 [ %indvars.iv.next166, %.lr.ph152 ], [ 0, %bb.g ] ; 2 uses
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv165
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !31
   %i.bd = call i32 @H5free_memory(ptr noundef %i.bc) #19 ; 0 uses
   %indvars.iv.next166 = add nuw nsw i64 %indvars.iv165, 1 ; 2 uses
-  %exitcond170.not = icmp eq i64 %indvars.iv.next166, %wide.trip.count169
+  %exitcond170.not = icmp eq i64 %indvars.iv.next166, %i.q
   br i1 %exitcond170.not, label %._crit_edge153, label %.lr.ph152, !llvm.loop !42
 
 ._crit_edge153:                                   ; preds = %.lr.ph152
