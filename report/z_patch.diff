@@ -1,0 +1,318 @@
+diff --git a/llvm/include/llvm/Analysis/ConstraintSystem.h b/llvm/include/llvm/Analysis/ConstraintSystem.h
+index c14e0fbd8b9cf..0019e0e9ff589 100644
+--- a/llvm/include/llvm/Analysis/ConstraintSystem.h
++++ b/llvm/include/llvm/Analysis/ConstraintSystem.h
+@@ -79,6 +79,11 @@ class ConstraintSystem {
+   /// Get list of variable names from the Value2Index map.
+   SmallVector<std::string> getVarNamesList() const;
+ 
++  /// Divide the variable coefficients of \p R by their greatest common divisor
++  /// G and round the constant down to a multiple of G. As all variables are
++  /// integers, the resulting row is equivalent to \p R.
++  LLVM_ABI static void normalize(MutableArrayRef<Entry> R);
++
+ public:
+   ConstraintSystem() = default;
+   ConstraintSystem(ArrayRef<Value *> FunctionArgs) {
+@@ -104,6 +109,7 @@ class ConstraintSystem {
+     for (const Entry &E : R)
+       if (E.Coefficient != 0)
+         NewRow.push_back(E);
++    normalize(NewRow);
+     return true;
+   }
+ 
+diff --git a/llvm/lib/Analysis/ConstraintSystem.cpp b/llvm/lib/Analysis/ConstraintSystem.cpp
+index c659b4de3bb13..a819beee9db1a 100644
+--- a/llvm/lib/Analysis/ConstraintSystem.cpp
++++ b/llvm/lib/Analysis/ConstraintSystem.cpp
+@@ -14,6 +14,7 @@
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/MathExtras.h"
+ 
++#include <numeric>
+ #include <string>
+ 
+ using namespace llvm;
+@@ -143,6 +144,7 @@ bool ConstraintSystem::eliminateUsingFM() {
+       }
+       if (Overflow || NR.empty())
+         continue;
++      normalize(NR);
+       Constraints.push_back(std::move(NR));
+       // Give up if the new system gets too big.
+       if (Constraints.size() > 500)
+@@ -154,6 +156,26 @@ bool ConstraintSystem::eliminateUsingFM() {
+   return true;
+ }
+ 
++void ConstraintSystem::normalize(MutableArrayRef<Entry> R) {
++  // The sum of the variable terms is a multiple of G, so it is <= C iff it is
++  // <= floor(C / G) * G.
++  int64_t G = 0;
++  for (const Entry &E : R) {
++    if (E.Id == 0)
++      continue;
++    if (E.Coefficient == std::numeric_limits<int64_t>::min())
++      return;
++    G = std::gcd(G, E.Coefficient);
++    if (G == 1)
++      return;
++  }
++  if (G == 0)
++    return;
++  for (Entry &E : R)
++    E.Coefficient = E.Id == 0 ? divideFloorSigned(E.Coefficient, G)
++                              : E.Coefficient / G;
++}
++
+ bool ConstraintSystem::mayHaveSolutionImpl() {
+   while (!Constraints.empty() && NumVariables > 0) {
+     if (!eliminateUsingFM())
+@@ -300,6 +322,12 @@ bool ConstraintSystem::isConditionImplied(RowTy R) const {
+   if (isConstantOnly(R))
+     return getConstant(R) >= 0;
+ 
++  normalize(R);
++
++  // R is trivially implied if a single row of the system implies it.
++  if (isImpliedBySingleRow(R))
++    return true;
++
+   // If there is no solution with the negation of R added to the system, the
+   // condition must hold based on the existing constraints.
+   R = ConstraintSystem::negate(std::move(R));
+diff --git a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+index 9b6ec5f10aa7a..07ad9a51f1912 100644
+--- a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
++++ b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+@@ -906,9 +906,8 @@ define i1 @add_neg_1_slt(i64 %x, i64 %b) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
+ ; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
+-; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], -1
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[X]], -1
++; CHECK-NEXT:    ret i1 true
+ ;
+   %x.non.neg = icmp sge i64 %x, 0
+   call void @llvm.assume(i1 %x.non.neg)
+@@ -943,9 +942,8 @@ define i1 @add_neg_1_nonneg_from_ult(i64 %x, i64 %c) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ult i64 [[X:%.*]], [[C]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], -1
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[C]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[X]], -1
++; CHECK-NEXT:    ret i1 true
+ ;
+   %x.non.neg = icmp sge i64 %c, 0
+   call void @llvm.assume(i1 %x.non.neg)
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+index 31ae62c564dd6..9d60fc7270482 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+@@ -8,7 +8,7 @@ define i1 @latch_counted_header_check_removable(ptr %p, i64 %n, i64 %lim) {
+ ; CHECK-NEXT:    [[POS:%.*]] = icmp sgt i64 [[N]], 0
+ ; CHECK-NEXT:    br i1 [[POS]], label %[[PH:.*]], label %[[EXIT_0:.*]]
+ ; CHECK:       [[PH]]:
+-; CHECK-NEXT:    [[NM1:%.*]] = add i64 [[N]], -1
++; CHECK-NEXT:    [[NM1:%.*]] = add nsw i64 [[N]], -1
+ ; CHECK-NEXT:    [[G4:%.*]] = shl nuw nsw i64 [[NM1]], 2
+ ; CHECK-NEXT:    [[G:%.*]] = icmp ult i64 [[G4]], [[LIM]]
+ ; CHECK-NEXT:    br i1 [[G]], label %[[LOOP_HEADER:.*]], label %[[EXIT_1:.*]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/large-constant-ints.ll b/llvm/test/Transforms/ConstraintElimination/large-constant-ints.ll
+index 8ee55f98f0e36..08ebd2b4b99ef 100644
+--- a/llvm/test/Transforms/ConstraintElimination/large-constant-ints.ll
++++ b/llvm/test/Transforms/ConstraintElimination/large-constant-ints.ll
+@@ -432,4 +432,54 @@ define i1 @pr68751(i128 %arg) {
+   ret i1 %cmp
+ }
+ 
++; The fact %c.2 is implied by the single row added for %c.1. Multiplying
++; coefficients would overflow during Fourier-Motzkin elimination.
++define i1 @fact_implied_by_single_row_coefficient_overflow(i64 %x, i64 %y) {
++; CHECK-LABEL: @fact_implied_by_single_row_coefficient_overflow(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = shl nuw i64 [[X:%.*]], 33
++; CHECK-NEXT:    [[T:%.*]] = shl nuw i64 [[Y:%.*]], 33
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i64 [[S]], [[T]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp ule i64 [[S]], [[T]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %s = shl nuw i64 %x, 33
++  %t = shl nuw i64 %y, 33
++  %c.1 = icmp ult i64 %s, %t
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp ule i64 %s, %t
++  call void @llvm.assume(i1 %c.2)
++  %c.3 = icmp ule i64 %s, %t
++  ret i1 %c.3
++}
++
++; Combining the rows with coefficients of 2^33 during Fourier-Motzkin
++; elimination would overflow, unless the rows are divided by their GCD first.
++define i1 @transitive_coefficients_divided_by_gcd(i64 %x, i64 %y, i64 %z) {
++; CHECK-LABEL: @transitive_coefficients_divided_by_gcd(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = shl nuw i64 [[X:%.*]], 33
++; CHECK-NEXT:    [[T:%.*]] = shl nuw i64 [[Y:%.*]], 33
++; CHECK-NEXT:    [[U:%.*]] = shl nuw i64 [[Z:%.*]], 33
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i64 [[S]], [[T]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp ule i64 [[T]], [[U]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %s = shl nuw i64 %x, 33
++  %t = shl nuw i64 %y, 33
++  %u = shl nuw i64 %z, 33
++  %c.1 = icmp ule i64 %s, %t
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp ule i64 %t, %u
++  call void @llvm.assume(i1 %c.2)
++  %c.3 = icmp ule i64 %s, %u
++  ret i1 %c.3
++}
++
+ declare void @llvm.assume(i1)
+diff --git a/llvm/test/Transforms/ConstraintElimination/shl.ll b/llvm/test/Transforms/ConstraintElimination/shl.ll
+index a09af84a64b56..4945ba62ce396 100644
+--- a/llvm/test/Transforms/ConstraintElimination/shl.ll
++++ b/llvm/test/Transforms/ConstraintElimination/shl.ll
+@@ -1525,3 +1525,49 @@ entry:
+   %c2 = icmp ule i64 %s, %b
+   ret i1 %c2
+ }
++
++; 2 * %x <= 2 * %y + 1 implies %x <= %y for integers.
++define i1 @shl_tighten_by_gcd(i8 %x, i8 %y) {
++; CHECK-LABEL: @shl_tighten_by_gcd(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = shl nuw i8 [[X:%.*]], 1
++; CHECK-NEXT:    [[B:%.*]] = shl nuw i8 [[Y:%.*]], 1
++; CHECK-NEXT:    [[B_1:%.*]] = add nuw i8 [[B]], 1
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], [[B_1]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[RES:%.*]] = xor i1 true, false
++; CHECK-NEXT:    ret i1 [[RES]]
++;
++entry:
++  %a = shl nuw i8 %x, 1
++  %b = shl nuw i8 %y, 1
++  %b.1 = add nuw i8 %b, 1
++  %c.1 = icmp ule i8 %a, %b.1
++  call void @llvm.assume(i1 %c.1)
++  %t.1 = icmp ule i8 %x, %y
++  %f.1 = icmp ugt i8 %x, %y
++  %res = xor i1 %t.1, %f.1
++  ret i1 %res
++}
++
++; 2 * %x <= 2 * %y + 1 does not imply %x < %y.
++define i1 @shl_tighten_by_gcd_not_strict(i8 %x, i8 %y) {
++; CHECK-LABEL: @shl_tighten_by_gcd_not_strict(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = shl nuw i8 [[X:%.*]], 1
++; CHECK-NEXT:    [[B:%.*]] = shl nuw i8 [[Y:%.*]], 1
++; CHECK-NEXT:    [[B_1:%.*]] = add nuw i8 [[B]], 1
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], [[B_1]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp ult i8 [[X]], [[Y]]
++; CHECK-NEXT:    ret i1 [[C_2]]
++;
++entry:
++  %a = shl nuw i8 %x, 1
++  %b = shl nuw i8 %y, 1
++  %b.1 = add nuw i8 %b, 1
++  %c.1 = icmp ule i8 %a, %b.1
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp ult i8 %x, %y
++  ret i1 %c.2
++}
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/pr38280.ll b/llvm/test/Transforms/PhaseOrdering/X86/pr38280.ll
+index 43f6cf7e51d09..a0c79a30ac9d7 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/pr38280.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/pr38280.ll
+@@ -32,7 +32,7 @@ define void @apply_delta(ptr nocapture noundef %dst, ptr nocapture noundef reado
+ ; CHECK-NEXT:    [[DST_ADDR_130:%.*]] = phi ptr [ [[INCDEC_PTR:%.*]], [[WHILE_BODY4]] ], [ [[DST_ADDR_0_LCSSA]], [[WHILE_COND3_PREHEADER]] ]
+ ; CHECK-NEXT:    [[SRC_ADDR_129:%.*]] = phi ptr [ [[INCDEC_PTR8:%.*]], [[WHILE_BODY4]] ], [ [[SRC_ADDR_0_LCSSA]], [[WHILE_COND3_PREHEADER]] ]
+ ; CHECK-NEXT:    [[COUNT_ADDR_128:%.*]] = phi i64 [ [[DEC:%.*]], [[WHILE_BODY4]] ], [ [[COUNT_ADDR_0_LCSSA]], [[WHILE_COND3_PREHEADER]] ]
+-; CHECK-NEXT:    [[DEC]] = add i64 [[COUNT_ADDR_128]], -1
++; CHECK-NEXT:    [[DEC]] = add nsw i64 [[COUNT_ADDR_128]], -1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = load i8, ptr [[SRC_ADDR_129]], align 1
+ ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i8, ptr [[DST_ADDR_130]], i64 [[NEG_OFFS]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = load i8, ptr [[ARRAYIDX]], align 1
+diff --git a/llvm/unittests/Analysis/ConstraintSystemTest.cpp b/llvm/unittests/Analysis/ConstraintSystemTest.cpp
+index edd7fdd89aac3..726a4cf41424c 100644
+--- a/llvm/unittests/Analysis/ConstraintSystemTest.cpp
++++ b/llvm/unittests/Analysis/ConstraintSystemTest.cpp
+@@ -192,11 +192,61 @@ TEST(ConstraintSolverTest, IsImpliedBySingleRow) {
+   EXPECT_FALSE(CS.isImpliedBySingleRow(toRow({5, 1, 0})));
+ }
+ 
++TEST(ConstraintSolverTest, NormalizeByGCD) {
++  {
++    // 2x = 1 does not have an integer solution.
++    ConstraintSystem CS;
++    addVariableRow(CS, {1, 2});
++    addVariableRow(CS, {-1, -2});
++    EXPECT_FALSE(CS.mayHaveSolution());
++  }
++
++  {
++    // 3x <= 7 implies x <= 2, but not x <= 1.
++    ConstraintSystem CS;
++    addVariableRow(CS, {7, 3});
++    EXPECT_TRUE(isConditionImplied(CS, {2, 1}));
++    EXPECT_FALSE(isConditionImplied(CS, {1, 1}));
++  }
++
++  {
++    // 2x - 2y <= 1 implies x - y <= 0 and 4x - 4y <= 3, but not x - y <= -1.
++    ConstraintSystem CS;
++    addVariableRow(CS, {1, 2, -2});
++    EXPECT_TRUE(isConditionImplied(CS, {0, 1, -1}));
++    EXPECT_TRUE(isConditionImplied(CS, {3, 4, -4}));
++    EXPECT_FALSE(isConditionImplied(CS, {-1, 1, -1}));
++  }
++
++  {
++    // x - y <= 0, x + y <= 1, -x + z <= 0, -x - z <= -1 implies 2x <= 1 and
++    // 2x >= 1 after eliminating y and z, which only has a rational solution.
++    // Rows derived during elimination are normalized as well.
++    ConstraintSystem CS;
++    addVariableRow(CS, {0, 1, -1, 0});
++    addVariableRow(CS, {1, 1, 1, 0});
++    addVariableRow(CS, {0, -1, 0, 1});
++    addVariableRow(CS, {-1, -1, 0, -1});
++    EXPECT_FALSE(CS.mayHaveSolution());
++  }
++
++  {
++    // Coefficients of INT64_MIN are left unchanged.
++    ConstraintSystem CS;
++    int64_t Min = std::numeric_limits<int64_t>::min();
++    addVariableRow(CS, {1, Min, 2});
++    EXPECT_TRUE(CS.isImpliedBySingleRow(toRow({1, Min, 2})));
++  }
++}
++
+ TEST(ConstraintSolverTest, IsConditionImpliedOverflow) {
+   ConstraintSystem CS;
+   // Make sure isConditionImplied returns false when there is an overflow.
+   int64_t Limit = std::numeric_limits<int64_t>::max();
+   addVariableRow(CS, {Limit - 1, Limit - 2, Limit - 3});
+-  EXPECT_FALSE(isConditionImplied(CS, {Limit - 1, Limit - 2, Limit - 3}));
++  EXPECT_FALSE(isConditionImplied(CS, {Limit - 1, Limit - 2, Limit - 4}));
++  // The same row is implied by the single row of the system, without
++  // Fourier-Motzkin elimination.
++  EXPECT_TRUE(isConditionImplied(CS, {Limit - 1, Limit - 2, Limit - 3}));
+ }
+ } // namespace
