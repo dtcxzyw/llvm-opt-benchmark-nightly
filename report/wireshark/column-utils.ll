@@ -204,12 +204,8 @@ bb.p:                                             ; preds = %bb.o, %get_frame_ti
 
 bb.q:                                             ; preds = %bb.p
   %i.ae = getelementptr i8, ptr %i.s, i64 %i.r
-  %i.af = sub nsw i64 %i.t, %i.r                  ; 2 uses
-  %5 = icmp eq i64 %i.af, 1                       ; 2 uses
-  %spec.select.idx = sext i1 %5 to i64
-  %spec.select = getelementptr i8, ptr %i.ae, i64 %spec.select.idx
-  %spec.select50 = select i1 %5, i64 2, i64 %i.af
-  %i.ag = call i64 @g_strlcpy(ptr noundef %spec.select, ptr noundef nonnull @.str.23, i64 noundef %spec.select50) ; 0 uses
+  %i.af = sub nsw i64 %i.t, %i.r
+  %i.ag = call i64 @g_strlcpy(ptr noundef %i.ae, ptr noundef nonnull @.str.23, i64 noundef %i.af) ; 0 uses
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q, %bb.j, %bb.i, %bb.g, %bb.b
