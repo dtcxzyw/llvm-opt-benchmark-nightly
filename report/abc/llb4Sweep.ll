@@ -204,7 +204,7 @@ Vec_IntFill.exit:                                 ; preds = %scalar.ph, %middle.
   %.val = phi ptr [ null, %bb.a ], [ %i.g, %middle.block ], [ %i.g, %scalar.ph ] ; 6 uses
   store i32 %.val24.val, ptr %i.a, align 4, !tbaa !39
   %i.l = getelementptr i8, ptr %0, i64 104
-  %.val3235 = load i32, ptr %i.l, align 8, !tbaa !47 ; 9 uses
+  %.val3235 = load i32, ptr %i.l, align 8, !tbaa !47 ; 8 uses
   %i.m = icmp sgt i32 %.val3235, 0
   br i1 %i.m, label %.lr.ph, label %.critedge2
 
@@ -217,8 +217,9 @@ Vec_IntFill.exit:                                 ; preds = %scalar.ph, %middle.
   %i.r = getelementptr i8, ptr %1, i64 8
   %.val29 = load ptr, ptr %i.r, align 8, !tbaa !34 ; 3 uses
   %.val34.pre = load i32, ptr %i.p, align 4, !tbaa !64 ; 3 uses
+  %3 = add nsw i32 %.val3235, -1                  ; 2 uses
   %xtraiter = and i32 %.val3235, 1
-  %i.s = icmp eq i32 %.val3235, 1
+  %i.s = icmp eq i32 %3, 0
   br i1 %i.s, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
@@ -294,7 +295,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %.val27 = load ptr, ptr %i.bd, align 8, !tbaa !34 ; 3 uses
   %.val33.pre = load i32, ptr %i.bb, align 8, !tbaa !48 ; 3 uses
   %xtraiter45 = and i32 %.val3235, 1
-  %i.be = icmp eq i32 %.val3235, 1
+  %i.be = icmp eq i32 %3, 0
   br i1 %i.be, label %.epil.preheader44, label %.lr.ph39.new
 
 .lr.ph39.new:                                     ; preds = %.lr.ph39
@@ -330,7 +331,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph39.new
   %i.bz = getelementptr inbounds [4 x i8], ptr %.val, i64 %i.by
   store i32 0, ptr %i.bz, align 4, !tbaa !32
   %i.ca = add nuw nsw i32 %.138, 2                ; 2 uses
-  %niter49.next.1 = add i32 %niter49, 2           ; 2 uses
+  %niter49.next.1 = add nuw nsw i32 %niter49, 2   ; 2 uses
   %niter49.ncmp.1.not = icmp eq i32 %niter49.next.1, %unroll_iter48
   br i1 %niter49.ncmp.1.not, label %.critedge2.loopexit.unr-lcssa, label %bb.c, !llvm.loop !1
 
