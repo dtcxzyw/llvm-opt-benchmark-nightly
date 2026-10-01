@@ -204,7 +204,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 9 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !146
   %.not.i.i.i.i.i = icmp eq ptr %i.b, %i.i
   br i1 %.not.i.i.i.i.i, label %bb.c, label %bb.b
@@ -279,6 +279,7 @@ bb.g:                                             ; preds = %_ZN6hermes3hbc28Byt
   %i.ae = load ptr, ptr %i.a, align 8, !tbaa !167
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 1 ; 2 uses
   store ptr %i.af, ptr %i.a, align 8, !tbaa !167
+  %.pre9.i.i4.pre = load ptr, ptr %i.h, align 8, !tbaa !146
   br label %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit.preheader
 
 bb.h:                                             ; preds = %_ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit
@@ -326,21 +327,22 @@ bb.k:                                             ; preds = %_ZNSt6vectorIhSaIhE
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i: ; preds = %bb.k, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i.i
   store ptr %i.ap, ptr %0, align 8, !tbaa !145
   store ptr %i.as, ptr %i.a, align 8, !tbaa !167
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.ao
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.ao ; 2 uses
   store ptr %i.aw, ptr %i.h, align 8, !tbaa !146
   br label %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit.preheader
 
 _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit.preheader: ; preds = %bb.g, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i
+  %.ph = phi ptr [ %i.aw, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ], [ %.pre9.i.i4.pre, %bb.g ]
   %.ph.a = phi ptr [ %i.as, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ], [ %i.af, %bb.g ]
   br label %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit
 
 _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit.preheader, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i
-  %i.ax = phi ptr [ %i.bt, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i ], [ %.ph.a, %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit.preheader ] ; 3 uses
+  %3 = phi ptr [ %4, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i ], [ %.ph, %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit.preheader ] ; 2 uses
+  %i.ax = phi ptr [ %i.bt, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i ], [ %.ph.a, %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit.preheader ] ; 2 uses
   %.07.i.i = phi i32 [ %i.ay, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i ], [ 8, %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit.preheader ]
   %.036.i.i = phi i64 [ %i.bu, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i ], [ %2, %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit.preheader ] ; 2 uses
   %i.ay = add nsw i32 %.07.i.i, -1                ; 2 uses
   %i.az = trunc i64 %.036.i.i to i8               ; 2 uses
-  %3 = load ptr, ptr %i.h, align 8, !tbaa !146
   %.not.i.i.i.i4 = icmp eq ptr %i.ax, %3
   br i1 %.not.i.i.i.i4, label %bb.m, label %bb.l
 
@@ -349,11 +351,12 @@ bb.l:                                             ; preds = %_ZN6hermes3hbc28Byt
   %i.ba = load ptr, ptr %i.a, align 8, !tbaa !167
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 1 ; 2 uses
   store ptr %i.bb, ptr %i.a, align 8, !tbaa !167
+  %.pre8.i.i = load ptr, ptr %i.h, align 8, !tbaa !146
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i
 
 bb.m:                                             ; preds = %_ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit
   %i.bc = load ptr, ptr %0, align 8, !tbaa !145   ; 4 uses
-  %i.bd = ptrtoint ptr %i.ax to i64
+  %i.bd = ptrtoint ptr %3 to i64
   %i.be = ptrtoint ptr %i.bc to i64               ; 2 uses
   %i.bf = sub i64 %i.bd, %i.be                    ; 7 uses
   %i.bg = icmp eq i64 %i.bf, 9223372036854775807
@@ -396,11 +399,12 @@ bb.p:                                             ; preds = %_ZNSt6vectorIhSaIhE
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i10: ; preds = %bb.p, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i.i8
   store ptr %i.bl, ptr %0, align 8, !tbaa !145
   store ptr %i.bo, ptr %i.a, align 8, !tbaa !167
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bk
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bk ; 2 uses
   store ptr %i.bs, ptr %i.h, align 8, !tbaa !146
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i
 
 _ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i:       ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i10, %bb.l
+  %4 = phi ptr [ %.pre8.i.i, %bb.l ], [ %i.bs, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i10 ]
   %i.bt = phi ptr [ %i.bb, %bb.l ], [ %i.bo, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i10 ]
   %i.bu = ashr i64 %.036.i.i, 8
   %.not.i.i = icmp eq i32 %i.ay, 0

@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bp = add i32 %1, -5
   %or.cond3 = icmp ult i32 %i.bp, 2
   %i.bq = getelementptr inbounds nuw i8, ptr %i.j, i64 12 ; 3 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %i.j, i64 48 ; 12 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %i.j, i64 48 ; 14 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.j, i64 60 ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   br label %bb.l
@@ -608,14 +608,15 @@ bb.cc:                                            ; preds = %bb.cb
 
 .preheader1274.preheader:                         ; preds = %bb.cc
   %i.ky = zext i32 %.13996 to i64
+  %.pre2831 = load ptr, ptr %i.br, align 16, !tbaa !32
   br label %.preheader1274
 
 .preheader1274:                                   ; preds = %.preheader1274.preheader, %bb.cg
+  %2 = phi ptr [ %.pre2831, %.preheader1274.preheader ], [ %3, %bb.cg ] ; 5 uses
   %indvars.iv2805 = phi i64 [ 0, %.preheader1274.preheader ], [ %indvars.iv.next2806, %bb.cg ] ; 2 uses
   %indvars.iv.next2806 = add nuw nsw i64 %indvars.iv2805, 1 ; 4 uses
   %i.kz = getelementptr inbounds nuw i8, ptr %.131061, i64 %indvars.iv2805
   %i.la = load i8, ptr %i.kz, align 1, !tbaa !55  ; 2 uses
-  %2 = load ptr, ptr %i.br, align 16, !tbaa !32   ; 3 uses
   %.not1224 = icmp eq ptr %2, null
   br i1 %.not1224, label %bb.cg, label %bb.cd
 
@@ -638,9 +639,11 @@ bb.cf:                                            ; preds = %bb.ce
   %i.li = zext i32 %i.ld to i64
   %i.lj = getelementptr inbounds nuw i8, ptr %i.lc, i64 %i.li
   store i8 %i.la, ptr %i.lj, align 1, !tbaa !55
+  %.pre2830 = load ptr, ptr %i.br, align 16, !tbaa !32
   br label %bb.cg
 
 bb.cg:                                            ; preds = %.preheader1274, %bb.cd, %bb.ce, %bb.cf
+  %3 = phi ptr [ null, %.preheader1274 ], [ %2, %bb.cd ], [ %2, %bb.ce ], [ %.pre2830, %bb.cf ]
   %i.lk = icmp ne i8 %i.la, 0                     ; 2 uses
   %i.ll = icmp samesign ult i64 %indvars.iv.next2806, %i.ky
   %i.lm = select i1 %i.lk, i1 %i.ll, i1 false
@@ -705,26 +708,27 @@ bb.cp:                                            ; preds = %bb.co
 
 .preheader1273.preheader:                         ; preds = %bb.cp
   %i.md = zext i32 %.15998 to i64
+  %.pre2833 = load ptr, ptr %i.br, align 16, !tbaa !32
   br label %.preheader1273
 
 .preheader1273:                                   ; preds = %.preheader1273.preheader, %bb.ct
+  %4 = phi ptr [ %.pre2833, %.preheader1273.preheader ], [ %5, %bb.ct ] ; 5 uses
   %indvars.iv2808 = phi i64 [ 0, %.preheader1273.preheader ], [ %indvars.iv.next2809, %bb.ct ] ; 2 uses
   %indvars.iv.next2809 = add nuw nsw i64 %indvars.iv2808, 1 ; 4 uses
   %i.me = getelementptr inbounds nuw i8, ptr %.151063, i64 %indvars.iv2808
   %i.mf = load i8, ptr %i.me, align 1, !tbaa !55  ; 2 uses
-  %3 = load ptr, ptr %i.br, align 16, !tbaa !32   ; 3 uses
-  %.not1230 = icmp eq ptr %3, null
+  %.not1230 = icmp eq ptr %4, null
   br i1 %.not1230, label %bb.ct, label %bb.cq
 
 bb.cq:                                            ; preds = %.preheader1273
-  %i.mg = getelementptr inbounds nuw i8, ptr %3, i64 56
+  %i.mg = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.mh = load ptr, ptr %i.mg, align 8, !tbaa !102 ; 2 uses
   %.not1231 = icmp eq ptr %i.mh, null
   br i1 %.not1231, label %bb.ct, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
   %i.mi = load i32, ptr %i.ar, align 4, !tbaa !62 ; 3 uses
-  %i.mj = getelementptr inbounds nuw i8, ptr %3, i64 64
+  %i.mj = getelementptr inbounds nuw i8, ptr %4, i64 64
   %i.mk = load i32, ptr %i.mj, align 8, !tbaa !103
   %i.ml = icmp ult i32 %i.mi, %i.mk
   br i1 %i.ml, label %bb.cs, label %bb.ct
@@ -735,9 +739,11 @@ bb.cs:                                            ; preds = %bb.cr
   %i.mn = zext i32 %i.mi to i64
   %i.mo = getelementptr inbounds nuw i8, ptr %i.mh, i64 %i.mn
   store i8 %i.mf, ptr %i.mo, align 1, !tbaa !55
+  %.pre2832 = load ptr, ptr %i.br, align 16, !tbaa !32
   br label %bb.ct
 
 bb.ct:                                            ; preds = %.preheader1273, %bb.cq, %bb.cr, %bb.cs
+  %5 = phi ptr [ null, %.preheader1273 ], [ %4, %bb.cq ], [ %4, %bb.cr ], [ %.pre2832, %bb.cs ]
   %i.mp = icmp ne i8 %i.mf, 0                     ; 2 uses
   %i.mq = icmp samesign ult i64 %indvars.iv.next2809, %i.md
   %i.mr = select i1 %i.mp, i1 %i.mq, i1 false

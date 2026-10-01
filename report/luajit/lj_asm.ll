@@ -205,20 +205,23 @@ bb.a:
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !57   ; 2 uses
   %i.d = zext nneg i32 %1 to i64                  ; 2 uses
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.d
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 200
+  %.pre109 = load i64, ptr %i.f, align 8, !tbaa !84
+  %.pre111 = load i64, ptr %i.g, align 8, !tbaa !85
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph94, %tailrecurse.backedge
   %i.i = phi ptr [ %i.c, %.lr.ph94 ], [ %i.ai, %tailrecurse.backedge ] ; 3 uses
+  %2 = phi i64 [ %.pre111, %.lr.ph94 ], [ %4, %tailrecurse.backedge ]
+  %3 = phi i64 [ %.pre109, %.lr.ph94 ], [ %5, %tailrecurse.backedge ]
   %i.j = phi ptr [ %i.e, %.lr.ph94 ], [ %i.ak, %tailrecurse.backedge ] ; 16 uses
   %i.k = phi i64 [ %i.d, %.lr.ph94 ], [ %i.aj, %tailrecurse.backedge ]
   %.tr7792 = phi i32 [ %1, %.lr.ph94 ], [ %.tr77.be, %tailrecurse.backedge ] ; 5 uses
   %i.l = and i64 %i.k, 63
   %i.m = shl nuw i64 1, %i.l
-  %2 = load i64, ptr %i.f, align 8, !tbaa !84
-  %i.n = or i64 %2, %i.m
+  %i.n = or i64 %3, %i.m                          ; 3 uses
   store i64 %i.n, ptr %i.f, align 8, !tbaa !84
   %i.o = add nuw nsw i32 %.tr7792, -79764919      ; 3 uses
   %i.p = xor i32 %i.o, %.tr7792
@@ -231,8 +234,7 @@ bb.b:                                             ; preds = %.lr.ph94, %tailrecu
   %i.w = and i32 %i.v, 63
   %i.x = zext nneg i32 %i.w to i64
   %i.y = shl nuw i64 1, %i.x
-  %3 = load i64, ptr %i.g, align 8, !tbaa !85
-  %i.z = or i64 %3, %i.y
+  %i.z = or i64 %2, %i.y                          ; 3 uses
   store i64 %i.z, ptr %i.g, align 8, !tbaa !85
   %i.aa = getelementptr inbounds nuw i8, ptr %i.j, i64 6 ; 2 uses
   %i.ab = load i8, ptr %i.aa, align 2, !tbaa !25  ; 2 uses
@@ -258,12 +260,16 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ag, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
+  %.pre110 = load i64, ptr %i.g, align 8, !tbaa !85
+  %.pre = load i64, ptr %i.f, align 8, !tbaa !84
   %i.ah = getelementptr inbounds nuw i8, ptr %i.j, i64 2
   %.pre.a = load ptr, ptr %i.a, align 8, !tbaa !57
   br label %tailrecurse.backedge
 
 tailrecurse.backedge:                             ; preds = %bb.r, %bb.o, %bb.f
   %i.ai = phi ptr [ %.pre.a, %bb.f ], [ %i.i, %bb.o ], [ %i.i, %bb.r ] ; 2 uses
+  %4 = phi i64 [ %.pre110, %bb.f ], [ %i.z, %bb.o ], [ %i.z, %bb.r ]
+  %5 = phi i64 [ %.pre, %bb.f ], [ %i.n, %bb.o ], [ %i.n, %bb.r ]
   %.tr77.be.in.in = phi ptr [ %i.ah, %bb.f ], [ %i.j, %bb.o ], [ %i.j, %bb.r ]
   %.tr77.be.in = load i16, ptr %.tr77.be.in.in, align 2, !tbaa !25 ; 3 uses
   %.tr77.be = zext i16 %.tr77.be.in to i32

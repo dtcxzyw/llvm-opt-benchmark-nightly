@@ -202,7 +202,7 @@ _ZNK14NodeDefManager3getEt.exit:                  ; preds = %bb.d, %bb.e
   %i.ae = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZL19add_area_node_boxesN4core8vector3dIsEES1_P8IGameDefP11EnvironmentRSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS8_EEE9nodeboxes) ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 12 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 9 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 10 uses
   br i1 %.not52409, label %._crit_edge433, label %.preheader344.preheader
 
 .preheader344.preheader:                          ; preds = %.preheader344.lr.ph
@@ -605,19 +605,20 @@ _ZNSt6vectorIN4core8aabbox3dIfEESaIS2_EE5clearEv.exit: ; preds = %_ZNSt7__cxx111
   %i.ir = sitofp nsz i16 %storemerge53401 to float
   %i.is = fmul nnan nsz float %i.ir, 1.000000e+01
   %.pre466 = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.pre468 = load ptr, ptr %i.ah, align 8, !tbaa !71
   %i.it = insertelement <4 x float> %i.bp, float %i.is, i64 0
   %i.iu = shufflevector <4 x float> %i.it, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12emplace_backIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEERS1_DpOT_.exit
-  %i.iv = phi ptr [ %i.kg, %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12emplace_backIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEERS1_DpOT_.exit ], [ %.pre466, %.lr.ph.preheader ] ; 10 uses
+  %7 = phi ptr [ %8, %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12emplace_backIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEERS1_DpOT_.exit ], [ %.pre468, %.lr.ph.preheader ] ; 4 uses
+  %i.iv = phi ptr [ %i.kg, %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12emplace_backIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEERS1_DpOT_.exit ], [ %.pre466, %.lr.ph.preheader ] ; 7 uses
   %.sroa.0166.0396 = phi ptr [ %i.kh, %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12emplace_backIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEERS1_DpOT_.exit ], [ %i.ip, %.lr.ph.preheader ] ; 3 uses
   %i.iw = load <4 x float>, ptr %.sroa.0166.0396, align 4, !tbaa !19
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0166.0396, i64 16
   %i.ix = load <2 x float>, ptr %.sroa.13.0..sroa_idx, align 4, !tbaa !19
   %i.iy = fadd nsz <4 x float> %i.iu, %i.iw       ; 2 uses
   %i.iz = fadd nsz <2 x float> %i.bq, %i.ix       ; 2 uses
-  %7 = load ptr, ptr %i.ah, align 8, !tbaa !71
   %.not.i90 = icmp eq ptr %i.iv, %7
   br i1 %.not.i90, label %bb.ab, label %bb.aa
 
@@ -638,11 +639,12 @@ bb.aa:                                            ; preds = %.lr.ph
   %i.jg = load ptr, ptr %i.ag, align 8, !tbaa !59
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 40 ; 2 uses
   store ptr %i.jh, ptr %i.ag, align 8, !tbaa !59
+  %.pre467 = load ptr, ptr %i.ah, align 8, !tbaa !71
   br label %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12emplace_backIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEERS1_DpOT_.exit
 
 bb.ab:                                            ; preds = %.lr.ph
   %.val.i.i92 = load ptr, ptr %4, align 8, !tbaa !58 ; 5 uses
-  %i.ji = ptrtoint ptr %i.iv to i64
+  %i.ji = ptrtoint ptr %7 to i64
   %i.jj = ptrtoint ptr %.val.i.i92 to i64         ; 2 uses
   %i.jk = sub i64 %i.ji, %i.jj                    ; 3 uses
   %i.jl = icmp eq i64 %i.jk, 9223372036854775800
@@ -654,7 +656,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 _ZNKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12_M_check_lenEmPKc.exit.i.i93: ; preds = %bb.ab
   %i.jm = sdiv exact i64 %i.jk, 40                ; 3 uses
-  %i.jn = icmp eq ptr %i.iv, %.val.i.i92          ; 2 uses
+  %i.jn = icmp eq ptr %7, %.val.i.i92             ; 2 uses
   %.sroa.speculated.i.i.i94 = select i1 %i.jn, i64 1, i64 %i.jm
   %i.jo = add nsw i64 %.sroa.speculated.i.i.i94, %i.jm ; 2 uses
   %i.jp = icmp ult i64 %i.jo, %i.jm
@@ -684,7 +686,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12_M_check_lenEmPKc.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03.i.i.i.i.i98, ptr noundef nonnull readonly align 8 dereferenceable(40) %.092.i.i.i.i.i99, i64 40, i1 false), !tbaa.struct !80, !alias.scope !232
   %i.jz = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i99, i64 40 ; 2 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i98, i64 40 ; 2 uses
-  %.not.i.i.i.i.i100 = icmp eq ptr %i.jz, %i.iv
+  %.not.i.i.i.i.i100 = icmp eq ptr %i.jz, %7
   br i1 %.not.i.i.i.i.i100, label %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit39.i.i101, label %.lr.ph.i.i.i.i.i97, !llvm.loop !0
 
 _ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit39.i.i101: ; preds = %.lr.ph.i.i.i.i.i97, %_ZNKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12_M_check_lenEmPKc.exit.i.i93
@@ -703,11 +705,12 @@ bb.ad:                                            ; preds = %_ZNSt6vectorIN12_GL
 _ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE17_M_realloc_insertIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.ad, %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit39.i.i101
   store ptr %i.jt, ptr %4, align 8, !tbaa !58
   store ptr %i.kb, ptr %i.ag, align 8, !tbaa !59
-  %i.kf = getelementptr inbounds nuw [40 x i8], ptr %i.jt, i64 %i.jr
+  %i.kf = getelementptr inbounds nuw [40 x i8], ptr %i.jt, i64 %i.jr ; 2 uses
   store ptr %i.kf, ptr %i.ah, align 8, !tbaa !71
   br label %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12emplace_backIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEERS1_DpOT_.exit
 
 _ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE12emplace_backIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEERS1_DpOT_.exit: ; preds = %bb.aa, %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE17_M_realloc_insertIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
+  %8 = phi ptr [ %.pre467, %bb.aa ], [ %i.kf, %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE17_M_realloc_insertIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ]
   %i.kg = phi ptr [ %i.jh, %bb.aa ], [ %i.kb, %_ZNSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EE17_M_realloc_insertIJbRiRN4core8vector3dIsEERNS6_8aabbox3dIfEEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ]
   %i.kh = getelementptr inbounds nuw i8, ptr %.sroa.0166.0396, i64 24 ; 2 uses
   %.not337 = icmp eq ptr %i.kh, %i.iq

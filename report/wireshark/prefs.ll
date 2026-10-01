@@ -204,18 +204,19 @@ bb.q:                                             ; preds = %bb.a
   br i1 %.not154195, label %.loopexit, label %.lr.ph198
 
 .lr.ph198:                                        ; preds = %bb.q
-  %i.bw = getelementptr i8, ptr %0, i64 48        ; 3 uses
+  %i.bw = getelementptr i8, ptr %0, i64 48        ; 4 uses
   %i.bx = icmp eq ptr %0, null
   %i.by = getelementptr i8, ptr %0, i64 44
+  %.pre217 = load ptr, ptr %i.bw, align 8         ; 2 uses
   br i1 %i.bx, label %.lr.ph198.split.us, label %.lr.ph198.split
 
 .lr.ph198.split.us:                               ; preds = %.lr.ph198, %bb.r
+  %2 = phi ptr [ %3, %bb.r ], [ %.pre217, %.lr.ph198 ] ; 2 uses
   %.0140196.us = phi ptr [ %.0140.us, %bb.r ], [ %.0140194, %.lr.ph198 ] ; 2 uses
   %i.bz = load ptr, ptr %.0140196.us, align 8
   %i.ca = getelementptr i8, ptr %i.bz, i64 52     ; 2 uses
   %i.cb = load i8, ptr %i.ca, align 4
   %i.cc = zext i8 %i.cb to i32
-  %2 = load ptr, ptr %i.bw, align 8
   %i.cd = load i32, ptr %2, align 4               ; 2 uses
   %.not155.us = icmp eq i32 %i.cd, %i.cc
   br i1 %.not155.us, label %bb.r, label %prefs_get_effect_flags.exit169.us
@@ -223,22 +224,24 @@ bb.q:                                             ; preds = %bb.a
 prefs_get_effect_flags.exit169.us:                ; preds = %.lr.ph198.split.us
   %i.ce = trunc i32 %i.cd to i8
   store i8 %i.ce, ptr %i.ca, align 4
+  %.pre216 = load ptr, ptr %i.bw, align 8
   br label %bb.r
 
 bb.r:                                             ; preds = %prefs_get_effect_flags.exit169.us, %.lr.ph198.split.us
+  %3 = phi ptr [ %.pre216, %prefs_get_effect_flags.exit169.us ], [ %2, %.lr.ph198.split.us ]
   %i.cf = getelementptr i8, ptr %.0140196.us, i64 8
   %.0140.us = load ptr, ptr %i.cf, align 8        ; 2 uses
   %.not154.us = icmp eq ptr %.0140.us, null
   br i1 %.not154.us, label %.loopexit, label %.lr.ph198.split.us, !llvm.loop !24
 
 .lr.ph198.split:                                  ; preds = %.lr.ph198, %bb.s
+  %4 = phi ptr [ %5, %bb.s ], [ %.pre217, %.lr.ph198 ] ; 2 uses
   %.0140196 = phi ptr [ %.0140, %bb.s ], [ %.0140194, %.lr.ph198 ] ; 2 uses
   %i.cg = load ptr, ptr %.0140196, align 8
   %i.ch = getelementptr i8, ptr %i.cg, i64 52     ; 2 uses
   %i.ci = load i8, ptr %i.ch, align 4
   %i.cj = zext i8 %i.ci to i32
-  %3 = load ptr, ptr %i.bw, align 8
-  %i.ck = load i32, ptr %3, align 4
+  %i.ck = load i32, ptr %4, align 4
   %.not155 = icmp eq i32 %i.ck, %i.cj
   br i1 %.not155, label %bb.s, label %prefs_get_effect_flags.exit169
 
@@ -253,9 +256,11 @@ prefs_get_effect_flags.exit169:                   ; preds = %.lr.ph198.split
   %i.cr = load i32, ptr %i.cq, align 4
   %i.cs = trunc i32 %i.cr to i8
   store i8 %i.cs, ptr %i.ch, align 4
+  %.pre = load ptr, ptr %i.bw, align 8
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph198.split, %prefs_get_effect_flags.exit169
+  %5 = phi ptr [ %4, %.lr.ph198.split ], [ %.pre, %prefs_get_effect_flags.exit169 ]
   %i.ct = getelementptr i8, ptr %.0140196, i64 8
   %.0140 = load ptr, ptr %i.ct, align 8           ; 2 uses
   %.not154 = icmp eq ptr %.0140, null

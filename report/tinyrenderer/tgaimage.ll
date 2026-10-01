@@ -55,7 +55,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = trunc i32 %3 to i8
   store i8 %i.c, ptr %i.b, align 8, !tbaa !19
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = mul nsw i32 %2, %1
   %i.f = mul nsw i32 %i.e, %3                     ; 3 uses
   %i.g = sext i32 %i.f to i64                     ; 3 uses
@@ -68,11 +68,11 @@ bb.a:
 
 _ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i = icmp eq i32 %i.f, 0             ; 2 uses
+  %.not.i.i.i.i = icmp eq i32 %i.f, 0
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.thread.i, label %.noexc17
 
 .noexc17:                                         ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i
-  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #13 ; 3 uses
+  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #13 ; 4 uses
   store ptr %i.i, ptr %i.d, align 8, !tbaa !20
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.g ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -81,7 +81,8 @@ _ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
   br label %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.thread.i
 
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i, %.noexc17
-  %i.l = phi ptr [ %i.j, %.noexc17 ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ]
+  %5 = phi ptr [ %i.i, %.noexc17 ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 3 uses
+  %i.l = phi ptr [ %i.j, %.noexc17 ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.l, ptr %i.m, align 8, !tbaa !22
   %i.n = icmp sgt i32 %2, 0
@@ -89,30 +90,39 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIhSaI
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.thread.i
   %i.o = icmp slt i32 %1, 1
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %brmerge = or i1 %i.o, %.not.i.i.i.i
-  br i1 %brmerge, label %._crit_edge22.split, label %.preheader
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %6 = icmp eq ptr %i.l, %5
+  %or.cond = select i1 %i.o, i1 true, i1 %6
+  br i1 %or.cond, label %._crit_edge22.split, label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
+  %.pre30 = phi ptr [ %.pre3035, %._crit_edge ], [ %5, %.preheader.lr.ph ] ; 3 uses
+  %.pre28 = phi ptr [ %.pre2831, %._crit_edge ], [ %i.l, %.preheader.lr.ph ] ; 3 uses
+  %7 = phi ptr [ %9, %._crit_edge ], [ %5, %.preheader.lr.ph ] ; 3 uses
+  %8 = phi ptr [ %10, %._crit_edge ], [ %i.l, %.preheader.lr.ph ]
   %.01620 = phi i32 [ %i.r, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 3 uses
-  %5 = load ptr, ptr %i.p, align 8, !tbaa !22
-  %6 = load ptr, ptr %i.d, align 8, !tbaa !20
-  %i.q = icmp eq ptr %5, %6
+  %i.q = icmp eq ptr %8, %7
   br i1 %i.q, label %._crit_edge, label %.lr.ph.split
 
 ._crit_edge22.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.thread.i
   ret void
 
 ._crit_edge:                                      ; preds = %_ZN8TGAImage3setEiiRK8TGAColor.exit, %.preheader
+  %.pre3035 = phi ptr [ %.pre30, %.preheader ], [ %.pre3036, %_ZN8TGAImage3setEiiRK8TGAColor.exit ]
+  %.pre2831 = phi ptr [ %.pre28, %.preheader ], [ %.pre2832, %_ZN8TGAImage3setEiiRK8TGAColor.exit ]
+  %9 = phi ptr [ %7, %.preheader ], [ %13, %_ZN8TGAImage3setEiiRK8TGAColor.exit ]
+  %10 = phi ptr [ %7, %.preheader ], [ %14, %_ZN8TGAImage3setEiiRK8TGAColor.exit ]
   %i.r = add nuw nsw i32 %.01620, 1               ; 2 uses
   %exitcond27.not = icmp eq i32 %i.r, %2
   br i1 %exitcond27.not, label %._crit_edge22.split, label %.preheader, !llvm.loop !49
 
 .lr.ph.split:                                     ; preds = %.preheader, %_ZN8TGAImage3setEiiRK8TGAColor.exit
+  %.pre3037 = phi ptr [ %.pre3036, %_ZN8TGAImage3setEiiRK8TGAColor.exit ], [ %.pre30, %.preheader ] ; 2 uses
+  %.pre2833 = phi ptr [ %.pre2832, %_ZN8TGAImage3setEiiRK8TGAColor.exit ], [ %.pre28, %.preheader ] ; 2 uses
+  %11 = phi ptr [ %13, %_ZN8TGAImage3setEiiRK8TGAColor.exit ], [ %.pre30, %.preheader ] ; 5 uses
+  %12 = phi ptr [ %14, %_ZN8TGAImage3setEiiRK8TGAColor.exit ], [ %.pre28, %.preheader ] ; 2 uses
   %.019 = phi i32 [ %i.ad, %_ZN8TGAImage3setEiiRK8TGAColor.exit ], [ 0, %.preheader ] ; 3 uses
-  %7 = load ptr, ptr %i.p, align 8, !tbaa !22
-  %8 = load ptr, ptr %i.d, align 8, !tbaa !20     ; 2 uses
-  %i.s = icmp eq ptr %7, %8
+  %i.s = icmp eq ptr %12, %11
   br i1 %i.s, label %_ZN8TGAImage3setEiiRK8TGAColor.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.split
@@ -130,12 +140,18 @@ bb.c:                                             ; preds = %bb.b
   %i.y = zext i8 %i.x to i32
   %i.z = mul nsw i32 %i.w, %i.y
   %i.aa = sext i32 %i.z to i64
-  %i.ab = getelementptr inbounds i8, ptr %8, i64 %i.aa
+  %i.ab = getelementptr inbounds i8, ptr %11, i64 %i.aa
   %i.ac = zext i8 %i.x to i64
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ab, ptr nonnull readonly align 8 dereferenceable(5) %.sroa.018, i64 %i.ac, i1 false)
+  %.pre = load ptr, ptr %i.p, align 8, !tbaa !22  ; 2 uses
+  %.pre29 = load ptr, ptr %i.d, align 8, !tbaa !20 ; 2 uses
   br label %_ZN8TGAImage3setEiiRK8TGAColor.exit
 
 _ZN8TGAImage3setEiiRK8TGAColor.exit:              ; preds = %.lr.ph.split, %bb.b, %bb.c
+  %.pre3036 = phi ptr [ %.pre3037, %.lr.ph.split ], [ %.pre3037, %bb.b ], [ %.pre29, %bb.c ] ; 2 uses
+  %.pre2832 = phi ptr [ %.pre2833, %.lr.ph.split ], [ %.pre2833, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
+  %13 = phi ptr [ %11, %.lr.ph.split ], [ %11, %bb.b ], [ %.pre29, %bb.c ] ; 2 uses
+  %14 = phi ptr [ %11, %.lr.ph.split ], [ %12, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
   %i.ad = add nuw nsw i32 %.019, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.ad, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !50

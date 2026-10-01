@@ -201,12 +201,13 @@ bb.a:
   %.sroa.0.16..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i, i64 16
   %i.ak = zext i32 %2 to i64
   %wide.trip.count58 = zext i32 %3 to i64
+  %.pre60 = load ptr, ptr %1, align 8, !tbaa !14
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph51, %bb.d
+  %5 = phi ptr [ %.pre60, %.lr.ph51 ], [ %6, %bb.d ] ; 3 uses
   %indvars.iv55 = phi i64 [ %i.ak, %.lr.ph51 ], [ %indvars.iv.next56, %bb.d ] ; 2 uses
   %.04249 = phi i32 [ %2, %.lr.ph51 ], [ %.1, %bb.d ] ; 3 uses
-  %5 = load ptr, ptr %1, align 8, !tbaa !14       ; 2 uses
   %i.al = getelementptr inbounds nuw [36 x i8], ptr %5, i64 %indvars.iv55 ; 5 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16 ; 2 uses
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %i.aj
@@ -232,9 +233,11 @@ bb.c:                                             ; preds = %bb.b
   store i32 %i.aw, ptr %.sroa.5.0..sroa_idx.i.i, align 4, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   %i.ay = add i32 %.04249, 1
+  %.pre = load ptr, ptr %1, align 8, !tbaa !14
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %6 = phi ptr [ %.pre, %bb.c ], [ %5, %bb.b ]
   %.1 = phi i32 [ %i.ay, %bb.c ], [ %.04249, %bb.b ] ; 2 uses
   %indvars.iv.next56 = add nuw nsw i64 %indvars.iv55, 1 ; 2 uses
   %exitcond59.not = icmp eq i64 %indvars.iv.next56, %wide.trip.count58

@@ -205,7 +205,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 344 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 352 ; 3 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 352 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 16 ; 2 uses
   %i.s = load float, ptr %i.n, align 8, !tbaa !198 ; 2 uses
   %i.t = fcmp ogt float %i.s, 0.000000e+00
@@ -228,26 +228,32 @@ _ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitG
   %i.z = load i64, ptr %i.u, align 8, !tbaa !168  ; 2 uses
   %i.aa = add i64 %i.z, %i.d                      ; 2 uses
   %i.ab = icmp ult i64 %i.aa, %i.l
-  br i1 %i.ab, label %._crit_edge.i.us.i.i.i, label %"_ZSt10__invoke_rIvRZN13sentencepiece16TrainerInterface13LoadSentencesEvE3$_1JEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES5_E4typeEOS6_DpOS7_.exit"
+  br i1 %i.ab, label %._crit_edge.i.us.peel.next.i.i.i, label %"_ZSt10__invoke_rIvRZN13sentencepiece16TrainerInterface13LoadSentencesEvE3$_1JEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES5_E4typeEOS6_DpOS7_.exit"
 
-._crit_edge.i.us.i.i.i:                           ; preds = %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.peel.i.i.i, %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i
-  %i.ac = phi i64 [ %i.af, %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i ], [ %i.z, %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.peel.i.i.i ]
-  %.04.us.i.i.i.a = phi i64 [ %i.ag, %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i ], [ %i.aa, %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.peel.i.i.i ] ; 2 uses
-  %2 = getelementptr inbounds nuw [40 x i8], ptr %i.h, i64 %.04.us.i.i.i.a
+._crit_edge.i.us.peel.next.i.i.i:                 ; preds = %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.peel.i.i.i
+  %.pre7.i.i.i = load i64, ptr %i.q, align 8, !tbaa !199
+  br label %._crit_edge.i.us.i.i.i
+
+._crit_edge.i.us.i.i.i:                           ; preds = %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i, %._crit_edge.i.us.peel.next.i.i.i
+  %i.ac = phi i64 [ %i.z, %._crit_edge.i.us.peel.next.i.i.i ], [ %i.af, %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i ]
+  %.04.us.i.i.i.a = phi i64 [ %.pre7.i.i.i, %._crit_edge.i.us.peel.next.i.i.i ], [ %4, %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i ] ; 2 uses
+  %.04.us.i.i.i = phi i64 [ %i.aa, %._crit_edge.i.us.peel.next.i.i.i ], [ %i.ag, %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i ] ; 2 uses
+  %2 = getelementptr inbounds nuw [40 x i8], ptr %i.h, i64 %.04.us.i.i.i
   %3 = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %.pre.i.us.i.i.i = load i64, ptr %3, align 8, !tbaa !168
-  %i.ad = load i64, ptr %i.q, align 8, !tbaa !199
-  %i.ae = icmp ult i64 %.pre.i.us.i.i.i, %i.ad
+  %i.ad = load i64, ptr %3, align 8, !tbaa !168
+  %i.ae = icmp ult i64 %i.ad, %.04.us.i.i.i.a
   br i1 %i.ae, label %bb.c, label %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i
 
 bb.c:                                             ; preds = %._crit_edge.i.us.i.i.i
   store i64 0, ptr %3, align 8, !tbaa !168
+  %.pre.i.i.i = load i64, ptr %i.q, align 8, !tbaa !199
   %.pre.i.i.i.a = load i64, ptr %i.u, align 8, !tbaa !168
   br label %_ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i
 
 _ZN13sentencepiece10AddDPNoiseIlEEvRKNS_11TrainerSpecEPN4absl12lts_202605266BitGenEPT_.exit.us.i.i.i: ; preds = %bb.c, %._crit_edge.i.us.i.i.i
   %i.af = phi i64 [ %.pre.i.i.i.a, %bb.c ], [ %i.ac, %._crit_edge.i.us.i.i.i ] ; 2 uses
-  %i.ag = add i64 %i.af, %.04.us.i.i.i.a          ; 2 uses
+  %4 = phi i64 [ %.pre.i.i.i, %bb.c ], [ %.04.us.i.i.i.a, %._crit_edge.i.us.i.i.i ]
+  %i.ag = add i64 %i.af, %.04.us.i.i.i            ; 2 uses
   %i.ah = icmp ult i64 %i.ag, %i.l
   br i1 %i.ah, label %._crit_edge.i.us.i.i.i, label %"_ZSt10__invoke_rIvRZN13sentencepiece16TrainerInterface13LoadSentencesEvE3$_1JEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES5_E4typeEOS6_DpOS7_.exit", !llvm.loop !853
 

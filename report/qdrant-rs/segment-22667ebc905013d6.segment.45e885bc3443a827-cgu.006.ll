@@ -204,13 +204,15 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.val10.i.a = load i64, ptr %i.g, align 8, !noundef !7 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %.val10.i.a = load i64, ptr %i.g, align 8
   %.val.i = load ptr, ptr %3, align 8, !nonnull !7
+  %.val10.i.pre = load i64, ptr %i.g, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map19filter_map_try_foldmmINtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropmEINtNtBa_6result6ResultB1g_zENCNCNvMNtNtNtCs607s0NAIaWN_7segment5index10hnsw_index19graph_layers_healerNtB2O_17GraphLayersHealer17save_into_builder00NCINvNtB1l_16in_place_collect24write_in_place_with_dropmE0E0B2U_.exit
   %i.h = phi ptr [ %i.d, %.lr.ph ], [ %i.x, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map19filter_map_try_foldmmINtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropmEINtNtBa_6result6ResultB1g_zENCNCNvMNtNtNtCs607s0NAIaWN_7segment5index10hnsw_index19graph_layers_healerNtB2O_17GraphLayersHealer17save_into_builder00NCINvNtB1l_16in_place_collect24write_in_place_with_dropmE0E0B2U_.exit ]
+  %.val10.i = phi i64 [ %.val10.i.a, %.lr.ph ], [ %.val10.i18, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map19filter_map_try_foldmmINtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropmEINtNtBa_6result6ResultB1g_zENCNCNvMNtNtNtCs607s0NAIaWN_7segment5index10hnsw_index19graph_layers_healerNtB2O_17GraphLayersHealer17save_into_builder00NCINvNtB1l_16in_place_collect24write_in_place_with_dropmE0E0B2U_.exit ] ; 3 uses
   %i.i = phi ptr [ %i.e, %.lr.ph ], [ %i.w, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map19filter_map_try_foldmmINtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropmEINtNtBa_6result6ResultB1g_zENCNCNvMNtNtNtCs607s0NAIaWN_7segment5index10hnsw_index19graph_layers_healerNtB2O_17GraphLayersHealer17save_into_builder00NCINvNtB1l_16in_place_collect24write_in_place_with_dropmE0E0B2U_.exit ] ; 2 uses
   %.sroa.4.014 = phi ptr [ %2, %.lr.ph ], [ %.pn2.i, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map19filter_map_try_foldmmINtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropmEINtNtBa_6result6ResultB1g_zENCNCNvMNtNtNtCs607s0NAIaWN_7segment5index10hnsw_index19graph_layers_healerNtB2O_17GraphLayersHealer17save_into_builder00NCINvNtB1l_16in_place_collect24write_in_place_with_dropmE0E0B2U_.exit ] ; 4 uses
   %i.j = load i32, ptr %i.i, align 4, !noundef !7
@@ -220,11 +222,11 @@ bb.b:                                             ; preds = %.lr.ph, %_RNCINvNtN
   store ptr %1, ptr %i.a, align 8
   store ptr %.sroa.4.014, ptr %i.f, align 8
   %i.l = zext i32 %i.j to i64                     ; 3 uses
-  %i.m = icmp ugt i64 %.val10.i.a, %i.l
+  %i.m = icmp ugt i64 %.val10.i, %i.l
   br i1 %i.m, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.l, i64 noundef %.val10.i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #23
+  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.l, i64 noundef %.val10.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #23
           to label %.noexc.i unwind label %bb.g
 
 .noexc.i:                                         ; preds = %bb.c
@@ -263,6 +265,7 @@ bb.h:                                             ; preds = %bb.g
 _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map19filter_map_try_foldmmINtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropmEINtNtBa_6result6ResultB1g_zENCNCNvMNtNtNtCs607s0NAIaWN_7segment5index10hnsw_index19graph_layers_healerNtB2O_17GraphLayersHealer17save_into_builder00NCINvNtB1l_16in_place_collect24write_in_place_with_dropmE0E0B2U_.exit: ; preds = %bb.d, %bb.e
   %i.w = phi ptr [ %.pre17, %bb.e ], [ %i.k, %bb.d ] ; 2 uses
   %i.x = phi ptr [ %.pre, %bb.e ], [ %i.h, %bb.d ] ; 2 uses
+  %.val10.i18 = phi i64 [ %.val10.i.pre, %bb.e ], [ %.val10.i, %bb.d ]
   %.pn2.i = phi ptr [ %i.s, %bb.e ], [ %.sroa.4.014, %bb.d ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.not = icmp eq ptr %i.w, %i.x

@@ -202,14 +202,15 @@ bb.hi:                                            ; preds = %.lr.ph2723, %bb.hm
   %i.azm = trunc nuw nsw i64 %indvars.iv3072 to i32
   %i.azn = mul i32 %i.azj, %i.azm
   %i.azo = sext i32 %i.azn to i64
-  %i.azp = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %i.azo
+  %i.azp = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %i.azo ; 2 uses
   %i.azq = mul nsw i64 %indvars.iv3072, %i.azk
+  %.pre3170 = load double, ptr %i.azp, align 8, !tbaa !116
   %invariant.gep3458.a = getelementptr [8 x i8], ptr %i.aa, i64 %i.azq
   br label %bb.hj
 
 bb.hj:                                            ; preds = %bb.hi, %bb.hl
+  %19 = phi double [ %.pre3170, %bb.hi ], [ %20, %bb.hl ] ; 4 uses
   %indvars.iv3067 = phi i64 [ 1, %bb.hi ], [ %indvars.iv.next3068, %bb.hl ] ; 3 uses
-  %19 = load double, ptr %i.azp, align 8, !tbaa !116 ; 3 uses
   %i.azr = fcmp oge double %19, 0.000000e+00
   %i.azs = fneg double %19
   %i.azt = select i1 %i.azr, double %19, double %i.azs ; 2 uses
@@ -237,9 +238,11 @@ bb.hk:                                            ; preds = %bb.hj
   %i.bak = xor i1 %i.baj, %i.bai
   %i.bal = select i1 %i.bak, double %i.bae, double %.neg2239
   store double %i.bal, ptr %gep3459.a, align 8, !tbaa !116
+  %.pre3169 = load double, ptr %i.azp, align 8, !tbaa !116
   br label %bb.hl
 
 bb.hl:                                            ; preds = %bb.hj, %bb.hk
+  %20 = phi double [ %19, %bb.hj ], [ %.pre3169, %bb.hk ]
   %indvars.iv.next3068 = add nuw nsw i64 %indvars.iv3067, 1 ; 2 uses
   %exitcond3071.not = icmp eq i64 %indvars.iv.next3068, %indvars.iv3072
   br i1 %exitcond3071.not, label %bb.hm, label %bb.hj, !llvm.loop !52
@@ -435,17 +438,18 @@ bb.hs:                                            ; preds = %.lr.ph2699, %bb.hw
   %i.bdt = trunc nuw nsw i64 %indvars.iv3052 to i32
   %i.bdu = mul i32 %i.bdq, %i.bdt
   %i.bdv = sext i32 %i.bdu to i64
-  %i.bdw = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %i.bdv
+  %i.bdw = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %i.bdv ; 2 uses
   %i.bdx = mul nsw i64 %indvars.iv3052, %i.bdr
+  %.pre3166 = load double, ptr %i.bdw, align 8, !tbaa !116
   %invariant.gep3452.a = getelementptr [8 x i8], ptr %i.aa, i64 %i.bdx
   br label %bb.ht
 
 bb.ht:                                            ; preds = %bb.hs, %bb.hv
+  %21 = phi double [ %.pre3166, %bb.hs ], [ %22, %bb.hv ] ; 4 uses
   %indvars.iv3047 = phi i64 [ 1, %bb.hs ], [ %indvars.iv.next3048, %bb.hv ] ; 3 uses
-  %20 = load double, ptr %i.bdw, align 8, !tbaa !116 ; 3 uses
-  %i.bdy = fcmp oge double %20, 0.000000e+00
-  %i.bdz = fneg double %20
-  %i.bea = select i1 %i.bdy, double %20, double %i.bdz ; 2 uses
+  %i.bdy = fcmp oge double %21, 0.000000e+00
+  %i.bdz = fneg double %21
+  %i.bea = select i1 %i.bdy, double %21, double %i.bdz ; 2 uses
   %i.beb = trunc nuw nsw i64 %indvars.iv3047 to i32
   %i.bec = mul i32 %i.bdq, %i.beb
   %i.bed = sext i32 %i.bec to i64
@@ -470,9 +474,11 @@ bb.hu:                                            ; preds = %bb.ht
   %i.ber = xor i1 %i.beq, %i.bep
   %i.bes = select i1 %i.ber, double %i.bel, double %.neg2207
   store double %i.bes, ptr %gep3453.a, align 8, !tbaa !116
+  %.pre3165 = load double, ptr %i.bdw, align 8, !tbaa !116
   br label %bb.hv
 
 bb.hv:                                            ; preds = %bb.ht, %bb.hu
+  %22 = phi double [ %21, %bb.ht ], [ %.pre3165, %bb.hu ]
   %indvars.iv.next3048 = add nuw nsw i64 %indvars.iv3047, 1 ; 2 uses
   %exitcond3051.not = icmp eq i64 %indvars.iv.next3048, %indvars.iv3052
   br i1 %exitcond3051.not, label %bb.hw, label %bb.ht, !llvm.loop !57

@@ -205,18 +205,18 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph63.new
   %indvars.iv76 = phi i64 [ 1, %.lr.ph67 ], [ %indvars.iv.next77, %.loopexit55 ] ; 4 uses
   %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1 ; 2 uses
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv83 ; 7 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 2 ; 3 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 2 ; 4 uses
+  %.pre95 = load i16, ptr %i.ci, align 2, !tbaa !42 ; 3 uses
   %i.cj = sub nsw i64 %indvars.iv83, %wide.trip.count
   %i.ck = and i64 %i.cj, 1
   %lcmp.mod110.not.not = icmp eq i64 %i.ck, 0
   br i1 %lcmp.mod110.not.not, label %.prol.preheader107, label %.prol.loopexit108
 
 .prol.preheader107:                               ; preds = %.lr.ph65
-  %1 = load i16, ptr %i.ci, align 2, !tbaa !42
   %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv76 ; 3 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 2
   %i.cn = load i16, ptr %i.cm, align 2, !tbaa !42
-  %i.co = icmp ult i16 %1, %i.cn
+  %i.co = icmp ult i16 %.pre95, %i.cn
   br i1 %i.co, label %bb.f, label %.prol.loopexit108.unr-lcssa
 
 bb.f:                                             ; preds = %.prol.preheader107
@@ -224,20 +224,23 @@ bb.f:                                             ; preds = %.prol.preheader107
   %i.cq = load i32, ptr %i.cl, align 2, !tbaa !39
   store i32 %i.cq, ptr %i.ch, align 2, !tbaa !39
   store i32 %i.cp, ptr %i.cl, align 2, !tbaa !39
+  %.pre94.prol = load i16, ptr %i.ci, align 2, !tbaa !42
   br label %.prol.loopexit108.unr-lcssa
 
 .prol.loopexit108.unr-lcssa:                      ; preds = %bb.f, %.prol.preheader107
+  %1 = phi i16 [ %.pre95, %.prol.preheader107 ], [ %.pre94.prol, %bb.f ]
   %indvars.iv.next79.prol = add nuw nsw i64 %indvars.iv76, 1
   br label %.prol.loopexit108
 
 .prol.loopexit108:                                ; preds = %.prol.loopexit108.unr-lcssa, %.lr.ph65
+  %.unr114 = phi i16 [ %.pre95, %.lr.ph65 ], [ %1, %.prol.loopexit108.unr-lcssa ]
   %indvars.iv78.unr = phi i64 [ %indvars.iv76, %.lr.ph65 ], [ %indvars.iv.next79.prol, %.prol.loopexit108.unr-lcssa ]
   %i.cr = icmp eq i64 %i.ar, %indvars.iv83
   br i1 %i.cr, label %.loopexit55, label %.lr.ph65.new
 
 .lr.ph65.new:                                     ; preds = %.prol.loopexit108, %bb.j
+  %2 = phi i16 [ %4, %bb.j ], [ %.unr114, %.prol.loopexit108 ] ; 2 uses
   %indvars.iv78 = phi i64 [ %indvars.iv.next79.1, %bb.j ], [ %indvars.iv78.unr, %.prol.loopexit108 ] ; 3 uses
-  %2 = load i16, ptr %i.ci, align 2, !tbaa !42
   %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv78 ; 3 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 2
   %i.cu = load i16, ptr %i.ct, align 2, !tbaa !42
@@ -249,10 +252,11 @@ bb.g:                                             ; preds = %.lr.ph65.new
   %i.cx = load i32, ptr %i.cs, align 2, !tbaa !39
   store i32 %i.cx, ptr %i.ch, align 2, !tbaa !39
   store i32 %i.cw, ptr %i.cs, align 2, !tbaa !39
+  %.pre94 = load i16, ptr %i.ci, align 2, !tbaa !42
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph65.new, %bb.g
-  %3 = load i16, ptr %i.ci, align 2, !tbaa !42
+  %3 = phi i16 [ %2, %.lr.ph65.new ], [ %.pre94, %bb.g ] ; 2 uses
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv78 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 6
   %i.da = load i16, ptr %i.cz, align 2, !tbaa !42
@@ -265,9 +269,11 @@ bb.i:                                             ; preds = %bb.h
   %i.de = load i32, ptr %i.dc, align 2, !tbaa !39
   store i32 %i.de, ptr %i.ch, align 2, !tbaa !39
   store i32 %i.dd, ptr %i.dc, align 2, !tbaa !39
+  %.pre94.1 = load i16, ptr %i.ci, align 2, !tbaa !42
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
+  %4 = phi i16 [ %3, %bb.h ], [ %.pre94.1, %bb.i ]
   %indvars.iv.next79.1 = add nuw nsw i64 %indvars.iv78, 2 ; 2 uses
   %exitcond82.not.1 = icmp eq i64 %indvars.iv.next79.1, %wide.trip.count81
   br i1 %exitcond82.not.1, label %.loopexit55, label %.lr.ph65.new

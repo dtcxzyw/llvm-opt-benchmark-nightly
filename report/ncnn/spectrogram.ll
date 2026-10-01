@@ -204,16 +204,12 @@ scalar.ph154:                                     ; preds = %scalar.ph154.prol.l
   %indvar.next = add i32 %indvar, 1
   br i1 %i.cv, label %.noexc39.us, label %._crit_edge
 
-.lr.ph75.splitthread-pre-split:                   ; preds = %.loopexit
-  %.pr = load i32, ptr %i.q, align 4, !tbaa !37
-  br label %.lr.ph75.split
-
-.lr.ph75.split:                                   ; preds = %.lr.ph75, %.lr.ph75.splitthread-pre-split
-  %i.cw = phi i32 [ %.pr, %.lr.ph75.splitthread-pre-split ], [ 1, %.lr.ph75 ]
-  %i.cx = phi i32 [ %i.gi, %.lr.ph75.splitthread-pre-split ], [ %i.m, %.lr.ph75 ] ; 4 uses
-  %.074 = phi i32 [ %i.gj, %.lr.ph75.splitthread-pre-split ], [ %i.n, %.lr.ph75 ] ; 2 uses
+.lr.ph75.split:                                   ; preds = %.lr.ph75, %.loopexit
+  %i.cw = phi i32 [ %6, %.loopexit ], [ %i.m, %.lr.ph75 ] ; 4 uses
+  %i.cx = phi i32 [ %i.gi, %.loopexit ], [ 1, %.lr.ph75 ]
+  %.074 = phi i32 [ %i.gj, %.loopexit ], [ %i.n, %.lr.ph75 ] ; 2 uses
   %i.cy = add i32 %.074, %i.e                     ; 4 uses
-  %i.cz = icmp eq i32 %i.cw, 0
+  %i.cz = icmp eq i32 %i.cx, 0
   br i1 %i.cz, label %.noexc39, label %bb.c
 
 .noexc39:                                         ; preds = %.lr.ph75.split
@@ -405,15 +401,17 @@ bb.c:                                             ; preds = %.lr.ph75.split
   %i.gg = sext i32 %i.gf to i64
   %i.gh = shl nsw i64 %i.gg, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.ge, ptr align 4 %i.gb, i64 %i.gh, i1 false)
+  %.pre = load i32, ptr %i.q, align 4, !tbaa !37
   %.pre.a = load i32, ptr %i.b, align 4, !tbaa !49
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %.noexc39, %bb.c
-  %i.gi = phi i32 [ %.pre.a, %bb.c ], [ %i.cx, %.noexc39 ], [ %i.cx, %middle.block ], [ %i.cx, %.lr.ph ], [ %i.cx, %.lr.ph.prol.loopexit ] ; 2 uses
+  %6 = phi i32 [ %.pre.a, %bb.c ], [ %i.cw, %.noexc39 ], [ %i.cw, %middle.block ], [ %i.cw, %.lr.ph ], [ %i.cw, %.lr.ph.prol.loopexit ] ; 2 uses
+  %i.gi = phi i32 [ %.pre, %bb.c ], [ 0, %.noexc39 ], [ 0, %middle.block ], [ 0, %.lr.ph ], [ 0, %.lr.ph.prol.loopexit ]
   %i.gj = add nuw i32 %.074, 1                    ; 2 uses
-  %i.gk = add i32 %i.gi, 1
+  %i.gk = add i32 %6, 1
   %i.gl = icmp ult i32 %i.gj, %i.gk
-  br i1 %i.gl, label %.lr.ph75.splitthread-pre-split, label %._crit_edge, !llvm.loop !91
+  br i1 %i.gl, label %.lr.ph75.split, label %._crit_edge, !llvm.loop !91
 
 ._crit_edge:                                      ; preds = %.loopexit, %..loopexit_crit_edge.us, %.lr.ph75.split.us, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.k)

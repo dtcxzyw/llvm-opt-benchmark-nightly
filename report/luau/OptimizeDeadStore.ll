@@ -205,7 +205,7 @@ _ZNK4Luau12DenseHashSetIjSt4hashIjESt8equal_toIjEE8containsERKj.exit.thread545.i
   %i.yt = ptrtoint ptr %i.yr to i64
   %i.yu = sub i64 %i.ys, %i.yt
   %i.yv = lshr exact i64 %i.yu, 6                 ; 2 uses
-  %i.yw = trunc i64 %i.yv to i32                  ; 16 uses
+  %i.yw = trunc i64 %i.yv to i32                  ; 15 uses
   store i32 %i.yw, ptr %i.b, align 4, !tbaa !34
   %i.yx = trunc nuw i8 %i.yq to i1
   %i.yy = load i64, ptr %i.nc, align 8
@@ -349,7 +349,6 @@ _ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i
   br i1 %or.cond.i.i.i, label %_ZSt6removeIPjjET_S1_S1_RKT0_.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i, %bb.dg
-  %19 = phi i32 [ %20, %bb.dg ], [ %i.yw, %_ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i ]
   %i.aat = phi i32 [ %i.aax, %bb.dg ], [ %i.yw, %_ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i ] ; 2 uses
   %.01733.i.i.i = phi ptr [ %.017.i.i.i, %bb.dg ], [ %.01730.i.i.i, %_ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i ] ; 2 uses
   %.032.i.i.i = phi ptr [ %.1.i.i.i, %bb.dg ], [ %.028.i.i.i.i.i, %_ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i ] ; 3 uses
@@ -360,12 +359,11 @@ _ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i
 bb.df:                                            ; preds = %.lr.ph.i.i.i
   store i32 %i.aau, ptr %.032.i.i.i, align 4, !tbaa !34
   %i.aaw = getelementptr inbounds nuw i8, ptr %.032.i.i.i, i64 4
-  %.pre858.i = load i32, ptr %i.b, align 4, !tbaa !34 ; 2 uses
+  %.pre858.i = load i32, ptr %i.b, align 4, !tbaa !34
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df, %.lr.ph.i.i.i
-  %20 = phi i32 [ %19, %.lr.ph.i.i.i ], [ %.pre858.i, %bb.df ] ; 2 uses
-  %i.aax = phi i32 [ %i.aat, %.lr.ph.i.i.i ], [ %.pre858.i, %bb.df ]
+  %i.aax = phi i32 [ %i.aat, %.lr.ph.i.i.i ], [ %.pre858.i, %bb.df ] ; 2 uses
   %.1.i.i.i = phi ptr [ %.032.i.i.i, %.lr.ph.i.i.i ], [ %i.aaw, %bb.df ]
   %.017.i.i.i = getelementptr inbounds nuw i8, ptr %.01733.i.i.i, i64 4 ; 2 uses
   %.not.i.i266.i = icmp eq ptr %.017.i.i.i, %i.zp
@@ -377,7 +375,7 @@ _ZSt6removeIPjjET_S1_S1_RKT0_.exit.loopexit.i:    ; preds = %bb.dg
 
 _ZSt6removeIPjjET_S1_S1_RKT0_.exit.i:             ; preds = %_ZSt6removeIPjjET_S1_S1_RKT0_.exit.loopexit.i, %_ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i, %._crit_edge._crit_edge52.i.i.i.i.i, %._crit_edge.i.i.i.i.i
   %i.aay = phi i32 [ %.pre860.i.a, %_ZSt6removeIPjjET_S1_S1_RKT0_.exit.loopexit.i ], [ %i.zn, %_ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i ], [ %i.zn, %._crit_edge._crit_edge52.i.i.i.i.i ], [ %i.zn, %._crit_edge.i.i.i.i.i ]
-  %i.aaz = phi i32 [ %20, %_ZSt6removeIPjjET_S1_S1_RKT0_.exit.loopexit.i ], [ %i.yw, %_ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i ], [ %i.yw, %._crit_edge._crit_edge52.i.i.i.i.i ], [ %i.yw, %._crit_edge.i.i.i.i.i ]
+  %i.aaz = phi i32 [ %i.aax, %_ZSt6removeIPjjET_S1_S1_RKT0_.exit.loopexit.i ], [ %i.yw, %_ZSt9__find_ifIPjN9__gnu_cxx5__ops16_Iter_equals_valIKjEEET_S6_S6_T0_.exit.i.i.i ], [ %i.yw, %._crit_edge._crit_edge52.i.i.i.i.i ], [ %i.yw, %._crit_edge.i.i.i.i.i ]
   %i.aba = add i32 %i.aay, -1
   %i.abb = zext i32 %i.aba to i64
   %i.abc = getelementptr inbounds nuw [4 x i8], ptr %i.zm, i64 %i.abb

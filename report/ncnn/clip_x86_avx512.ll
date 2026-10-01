@@ -202,9 +202,11 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 208
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 212
   %i.p = sext i32 %i.k to i64
+  %.pre59 = load i32, ptr %5, align 4, !tbaa !22
   br label %.noexc
 
 .noexc:                                           ; preds = %.noexc.lr.ph, %bb.d
+  %6 = phi i32 [ %.pre59, %.noexc.lr.ph ], [ %8, %bb.d ] ; 2 uses
   %i.q = phi i32 [ %i.j, %.noexc.lr.ph ], [ %i.au, %bb.d ]
   %indvars.iv = phi i64 [ %i.p, %.noexc.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
   %i.r = load ptr, ptr %3, align 8, !tbaa !42, !noalias !59
@@ -219,7 +221,6 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = load float, ptr %i.o, align 4, !tbaa !40
   %i.ab = insertelement <16 x float> poison, float %i.aa, i64 0
   %i.ac = shufflevector <16 x float> %i.ab, <16 x float> poison, <16 x i32> zeroinitializer ; 2 uses
-  %6 = load i32, ptr %5, align 4, !tbaa !22       ; 2 uses
   %i.ad = icmp sgt i32 %6, 15
   br i1 %i.ad, label %.lr.ph, label %._crit_edge
 
@@ -238,14 +239,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.al, label %.lr.ph, label %._crit_edge, !llvm.loop !58
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.noexc
+  %7 = phi i32 [ %6, %.noexc ], [ %i.ak, %.lr.ph ] ; 3 uses
   %.038.lcssa = phi ptr [ %i.w, %.noexc ], [ %i.ah, %.lr.ph ] ; 2 uses
   %.037.lcssa = phi i32 [ 0, %.noexc ], [ %i.ai, %.lr.ph ] ; 2 uses
-  %.lcssa = phi i32 [ %6, %.noexc ], [ %i.ak, %.lr.ph ] ; 2 uses
-  %i.am = icmp slt i32 %.037.lcssa, %.lcssa
+  %i.am = icmp slt i32 %.037.lcssa, %7
   br i1 %i.am, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.an = sub nuw nsw i32 %.lcssa, %.037.lcssa
+  %i.an = sub nuw nsw i32 %7, %.037.lcssa
   %notmask = shl nsw i32 -1, %i.an
   %i.ao = trunc i32 %notmask to i16
   %i.ap = xor i16 %i.ao, -1
@@ -255,9 +256,11 @@ bb.c:                                             ; preds = %._crit_edge
   %i.at = call fast noundef nofpclass(nan inf) <16 x float> @llvm.x86.avx512.min.ps.512(<16 x float> nofpclass(nan inf) %i.as, <16 x float> nofpclass(nan inf) %i.ac, i32 4)
   call void @llvm.masked.store.v16f32.p0(<16 x float> nofpclass(nan inf) %i.at, ptr align 1 %.038.lcssa, <16 x i1> %i.aq)
   %.pre = load i32, ptr %i.b, align 4, !tbaa !22
+  %.pre58 = load i32, ptr %5, align 4, !tbaa !22
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %._crit_edge
+  %8 = phi i32 [ %.pre58, %bb.c ], [ %7, %._crit_edge ]
   %i.au = phi i32 [ %.pre, %bb.c ], [ %i.q, %._crit_edge ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1
   %i.av = sext i32 %i.au to i64

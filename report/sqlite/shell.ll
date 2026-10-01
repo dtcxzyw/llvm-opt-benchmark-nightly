@@ -206,7 +206,8 @@ shell_check_oom.exit.preheader:                   ; preds = %.critedge
   br i1 %.not4654, label %shell_check_oom.exit._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %shell_check_oom.exit.preheader
-  %i.ao = tail call ptr @__ctype_b_loc() #47
+  %i.ao = tail call ptr @__ctype_b_loc() #47      ; 2 uses
+  %.pre57 = load ptr, ptr %i.ao, align 8, !tbaa !132
   br label %bb.g
 
 bb.f:                                             ; preds = %.critedge
@@ -214,8 +215,8 @@ bb.f:                                             ; preds = %.critedge
   unreachable
 
 bb.g:                                             ; preds = %.lr.ph, %shell_check_oom.exit
+  %2 = phi ptr [ %.pre57, %.lr.ph ], [ %3, %shell_check_oom.exit ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %shell_check_oom.exit ] ; 3 uses
-  %2 = load ptr, ptr %i.ao, align 8, !tbaa !132
   %i.ap = getelementptr inbounds nuw i8, ptr %.039.lcssa, i64 %indvars.iv
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !52
   %i.ar = zext i8 %i.aq to i64
@@ -228,9 +229,11 @@ bb.g:                                             ; preds = %.lr.ph, %shell_chec
 bb.h:                                             ; preds = %bb.g
   %i.av = getelementptr inbounds nuw i8, ptr %i.al, i64 %indvars.iv
   store i8 32, ptr %i.av, align 1, !tbaa !52
+  %.pre = load ptr, ptr %i.ao, align 8, !tbaa !132
   br label %shell_check_oom.exit
 
 shell_check_oom.exit:                             ; preds = %bb.g, %bb.h
+  %3 = phi ptr [ %2, %bb.g ], [ %.pre, %bb.h ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.al, i64 %indvars.iv.next
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !52
@@ -489,7 +492,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 19 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 17 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -581,7 +584,11 @@ bb.i:                                             ; preds = %import_getc.exit137
 bb.j:                                             ; preds = %bb.i, %import_getc.exit137.peel
   %i.an = icmp eq i32 %i.aj, %i.af
   %or.cond.peel = and i1 %i.ag, %i.an
-  br i1 %or.cond.peel, label %.split.us, label %bb.k
+  br i1 %or.cond.peel, label %..split.us.loopexit256_crit_edge, label %bb.k
+
+..split.us.loopexit256_crit_edge:                 ; preds = %bb.j
+  %.pre291.pre = load ptr, ptr %i.d, align 8, !tbaa !679
+  br label %.split.us
 
 bb.k:                                             ; preds = %bb.j
   %i.ao = icmp eq i32 %i.aj, 34
@@ -702,6 +709,7 @@ bb.s:                                             ; preds = %bb.r, %import_getc.
 
 bb.t:                                             ; preds = %.outer.split
   %i.cc = tail call i32 @fgetc(ptr noundef nonnull %i.cb)
+  %.pre = load ptr, ptr %i.d, align 8, !tbaa !679
   br label %import_getc.exit137
 
 bb.u:                                             ; preds = %.outer.split
@@ -729,6 +737,7 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit
 
 import_getc.exit137:                              ; preds = %bb.t, %bb.w
+  %.pre291295 = phi ptr [ %.pre, %bb.t ], [ null, %bb.w ]
   %.0.i134 = phi i32 [ %i.cc, %bb.t ], [ %i.cj, %bb.w ] ; 3 uses
   %i.cl = icmp eq i32 %.0.i134, %i.aa
   br i1 %i.cl, label %bb.x, label %bb.y
@@ -744,17 +753,17 @@ bb.y:                                             ; preds = %bb.x, %import_getc.
   %or.cond = and i1 %i.ag, %i.co
   br i1 %or.cond, label %.split.us, label %.thread342
 
-.split.us:                                        ; preds = %bb.j, %bb.y
-  %.pre = load ptr, ptr %i.d, align 8, !tbaa !679 ; 2 uses
-  %.not.i138 = icmp eq ptr %.pre, null
+.split.us:                                        ; preds = %..split.us.loopexit256_crit_edge, %bb.y
+  %1 = phi ptr [ %.pre291.pre, %..split.us.loopexit256_crit_edge ], [ %.pre291295, %bb.y ] ; 2 uses
+  %.not.i138 = icmp eq ptr %1, null
   br i1 %.not.i138, label %.split.us.thread, label %bb.z
 
 bb.z:                                             ; preds = %.split.us
-  %i.cp = tail call i32 @fgetc(ptr noundef nonnull %.pre)
+  %i.cp = tail call i32 @fgetc(ptr noundef nonnull %1)
   %i.cq = trunc i32 %i.cp to i8
   br label %import_getc.exit142
 
-.split.us.thread:                                 ; preds = %bb.o, %bb.s, %.split.us
+.split.us.thread:                                 ; preds = %bb.s, %bb.o, %.split.us
   %i.cr = load ptr, ptr %i.e, align 8, !tbaa !681 ; 2 uses
   %.not9.i140 = icmp eq ptr %i.cr, null
   br i1 %.not9.i140, label %import_getc.exit142, label %bb.aa

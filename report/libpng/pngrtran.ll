@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.g
 
 .preheader466.lr.ph:                              ; preds = %.lr.ph505.epil.preheader, %.preheader466.lr.ph.loopexit.unr-lcssa, %bb.w
   %i.fu = tail call noalias ptr @png_calloc(ptr noundef nonnull %0, i64 noundef 6152) #11 ; 6 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 952 ; 2 uses
+  %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 952 ; 3 uses
   %wide.trip.count621 = zext nneg i32 %2 to i64
   br label %.preheader466
 
@@ -354,11 +354,12 @@ bb.ac:                                            ; preds = %.preheader463.us.us
   %i.ij = getelementptr inbounds nuw [3 x i8], ptr %1, i64 %i.ii
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ih, ptr noundef nonnull align 1 dereferenceable(3) %i.ij, i64 3, i1 false), !tbaa.struct !126
   %i.ik = zext i8 %.447.us.us.us.us to i64
+  %.pre653 = load ptr, ptr %i.fv, align 8, !tbaa !34
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ah, %.preheader.us.us.us.us
+  %6 = phi ptr [ %7, %bb.ah ], [ %.pre653, %.preheader.us.us.us.us ] ; 2 uses
   %indvars.iv618 = phi i64 [ %indvars.iv.next619, %bb.ah ], [ 0, %.preheader.us.us.us.us ] ; 4 uses
-  %6 = load ptr, ptr %i.fv, align 8, !tbaa !34    ; 2 uses
   %i.il = getelementptr inbounds nuw i8, ptr %6, i64 %indvars.iv618 ; 2 uses
   %i.im = load i8, ptr %i.il, align 1, !tbaa !26  ; 2 uses
   %i.in = load ptr, ptr %i.fa, align 8, !tbaa !127 ; 2 uses
@@ -378,7 +379,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.it = phi i8 [ %.pre653.a, %bb.ae ], [ %i.im, %bb.ad ]
-  %i.iu = phi ptr [ %.pre652.a, %bb.ae ], [ %6, %bb.ad ]
+  %i.iu = phi ptr [ %.pre652.a, %bb.ae ], [ %6, %bb.ad ] ; 2 uses
   %i.iv = zext i8 %i.it to i32
   %i.iw = icmp eq i32 %i.ic, %i.iv
   br i1 %i.iw, label %bb.ag, label %bb.ah
@@ -389,9 +390,11 @@ bb.ag:                                            ; preds = %bb.af
   %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 %i.id
   %i.ja = load i8, ptr %i.iz, align 1, !tbaa !26
   store i8 %i.ja, ptr %i.ix, align 1, !tbaa !26
+  %.pre652 = load ptr, ptr %i.fv, align 8, !tbaa !34
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
+  %7 = phi ptr [ %.pre652, %bb.ag ], [ %i.iu, %bb.af ]
   %indvars.iv.next619 = add nuw nsw i64 %indvars.iv618, 1 ; 2 uses
   %exitcond622.not = icmp eq i64 %indvars.iv.next619, %wide.trip.count621
   br i1 %exitcond622.not, label %..loopexit_crit_edge.us.us.us.us, label %bb.ad, !llvm.loop !115
@@ -794,7 +797,7 @@ bb.bs:                                            ; preds = %bb.bq, %bb.br, %bb.
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.bs
-  %i.jz = getelementptr inbounds nuw i8, ptr %0, i64 616
+  %i.jz = getelementptr inbounds nuw i8, ptr %0, i64 616 ; 2 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %0, i64 800
   %i.kb = getelementptr inbounds nuw i8, ptr %0, i64 736
   %i.kc = getelementptr inbounds nuw i8, ptr %0, i64 304
@@ -804,11 +807,12 @@ bb.bs:                                            ; preds = %bb.bq, %bb.br, %bb.
   %i.kg = zext i8 %.sroa.6.1 to i32
   %i.kh = zext i8 %.sroa.10.1 to i32
   %wide.trip.count = zext i16 %i.hc to i64
+  %.pre533 = load i16, ptr %i.jz, align 8, !tbaa !51
   br label %bb.bt
 
 bb.bt:                                            ; preds = %.lr.ph, %bb.ca
+  %1 = phi i16 [ %.pre533, %.lr.ph ], [ %2, %bb.ca ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ca ] ; 6 uses
-  %1 = load i16, ptr %i.jz, align 8, !tbaa !51
   %i.ki = zext i16 %1 to i64
   %i.kj = icmp samesign ult i64 %indvars.iv, %i.ki
   br i1 %i.kj, label %bb.bu, label %bb.bz
@@ -829,6 +833,7 @@ bb.bv:                                            ; preds = %bb.bu
   store i8 %.sroa.6175.1, ptr %.sroa.6175.0..sroa_idx, align 1, !tbaa !26
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kn, i64 2
   store i8 %.sroa.9.1, ptr %.sroa.9.0..sroa_idx, align 1, !tbaa !26
+  %.pre532 = load i16, ptr %i.jz, align 8, !tbaa !51
   br label %bb.ca
 
 bb.bw:                                            ; preds = %bb.bu
@@ -974,6 +979,7 @@ bb.bz:                                            ; preds = %bb.bu, %bb.bt
   br label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz, %bb.bx, %bb.by, %bb.bv
+  %2 = phi i16 [ %1, %bb.bz ], [ %1, %bb.bx ], [ %1, %bb.by ], [ %.pre532, %bb.bv ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.bt, !llvm.loop !178
@@ -1268,17 +1274,18 @@ bb.cz:                                            ; preds = %bb.cy
   br i1 %.not501, label %._crit_edge490, label %.lr.ph489
 
 .lr.ph489:                                        ; preds = %bb.cz
-  %i.um = getelementptr inbounds nuw i8, ptr %0, i64 800
+  %i.um = getelementptr inbounds nuw i8, ptr %0, i64 800 ; 2 uses
   %i.un = and i16 %i.ue, 255
   %i.uo = and i16 %i.uh, 255
   %i.up = and i16 %i.uk, 255
   %wide.trip.count511 = zext i16 %i.ua to i64
+  %.pre537 = load ptr, ptr %i.um, align 8, !tbaa !56
   br label %bb.da
 
 bb.da:                                            ; preds = %.lr.ph489, %bb.dd
+  %3 = phi ptr [ %.pre537, %.lr.ph489 ], [ %4, %bb.dd ] ; 3 uses
   %indvars.iv508 = phi i64 [ 0, %.lr.ph489 ], [ %indvars.iv.next509, %bb.dd ] ; 4 uses
-  %2 = load ptr, ptr %i.um, align 8, !tbaa !56
-  %i.uq = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv508 ; 3 uses
+  %i.uq = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv508 ; 3 uses
   %i.ur = load i8, ptr %i.uq, align 1, !tbaa !26  ; 3 uses
   switch i8 %i.ur, label %bb.dc [
     i8 0, label %bb.db
@@ -1292,6 +1299,7 @@ bb.db:                                            ; preds = %bb.da
   store i8 %i.ui, ptr %.sroa.5.0..sroa_idx, align 1, !tbaa !26
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.us, i64 2
   store i8 %i.ul, ptr %.sroa.7.0..sroa_idx, align 1, !tbaa !26
+  %.pre536 = load ptr, ptr %i.um, align 8, !tbaa !56
   br label %bb.dd
 
 bb.dc:                                            ; preds = %bb.da
@@ -1345,6 +1353,7 @@ bb.dc:                                            ; preds = %bb.da
   br label %bb.dd
 
 bb.dd:                                            ; preds = %bb.da, %bb.db, %bb.dc
+  %4 = phi ptr [ %3, %bb.da ], [ %.pre536, %bb.db ], [ %3, %bb.dc ]
   %indvars.iv.next509 = add nuw nsw i64 %indvars.iv508, 1 ; 2 uses
   %exitcond512.not = icmp eq i64 %indvars.iv.next509, %wide.trip.count511
   br i1 %exitcond512.not, label %._crit_edge490.loopexit, label %bb.da, !llvm.loop !180

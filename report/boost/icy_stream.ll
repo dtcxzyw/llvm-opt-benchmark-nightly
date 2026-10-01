@@ -204,7 +204,7 @@ bb.cq:                                            ; preds = %bb.cp
   br label %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i.i
 
 _ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i.i: ; preds = %bb.cq, %bb.cp
-  %i.nv = phi ptr [ %.pre1831.a, %bb.cq ], [ %i.nl, %bb.cp ]
+  %i.nv = phi ptr [ %i.nl, %bb.cp ], [ %.pre1831.a, %bb.cq ]
   %i.nw = add i64 %i.nu, %.021.i.i.i              ; 2 uses
   %i.nx = getelementptr inbounds nuw i8, ptr %.sroa.07.020.i.i.i, i64 %i.nu
   %i.ny = sub nuw nsw i64 %.sroa.6.019.i.i.i, %i.nu ; 2 uses
@@ -607,7 +607,7 @@ _ZNSt18condition_variable4waitIZN5boost5beast4test12basic_streamINS1_4asio15any_
 bb.g:                                             ; preds = %_ZNSt18condition_variable4waitIZN5boost5beast4test12basic_streamINS1_4asio15any_io_executorEE9read_someINS2_15buffers_adaptorISt5arrayINS5_14mutable_bufferELm2EEE8subrangeILb1EEEEEmRKT_RNS1_6system10error_codeEEUlvE_EEvRSt11unique_lockISt5mutexESG_.exit
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 264
   %i.as = load i64, ptr %i.ar, align 8, !tbaa !148 ; 2 uses
-  %i.at = load ptr, ptr %1, align 8, !tbaa !169   ; 2 uses
+  %i.at = load ptr, ptr %1, align 8, !tbaa !169   ; 3 uses
   %i.au = load ptr, ptr %i.i, align 8, !tbaa !170 ; 2 uses
   %.not18.i.i = icmp ne i64 %i.as, 0
   %i.av = icmp ne ptr %i.at, %i.au
@@ -622,6 +622,7 @@ bb.g:                                             ; preds = %_ZNSt18condition_va
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i, %.lr.ph.i.i
+  %4 = phi ptr [ %i.at, %.lr.ph.i.i ], [ %5, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ] ; 2 uses
   %.023.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.bi, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ]
   %.sroa.414.022.i.i = phi ptr [ %i.at, %.lr.ph.i.i ], [ %i.bd, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ] ; 4 uses
   %.sroa.09.021.i.i = phi ptr [ %i.ap, %.lr.ph.i.i ], [ %i.bj, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ] ; 2 uses
@@ -629,7 +630,6 @@ bb.h:                                             ; preds = %_ZN5boost4asio6deta
   %.sroa.03.0.copyload.i.i.i = load ptr, ptr %.sroa.414.022.i.i, align 8, !tbaa !75 ; 2 uses
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.414.022.i.i, i64 8
   %.sroa.6.0.copyload.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !tbaa !37 ; 3 uses
-  %4 = load ptr, ptr %1, align 8, !tbaa !169
   %i.az = icmp eq ptr %.sroa.414.022.i.i, %4
   br i1 %i.az, label %bb.i, label %bb.j
 
@@ -661,9 +661,11 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.03.0.i.i.i, ptr align 1 %.sroa.09.021.i.i, i64 %i.bh, i1 false)
+  %.pre.i.i = load ptr, ptr %1, align 8, !tbaa !169
   br label %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i
 
 _ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i: ; preds = %bb.m, %bb.l
+  %5 = phi ptr [ %4, %bb.l ], [ %.pre.i.i, %bb.m ]
   %i.bi = add i64 %i.bh, %.023.i.i                ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.09.021.i.i, i64 %i.bh
   %i.bk = sub nuw i64 %.sroa.6.020.i.i, %i.bh     ; 2 uses
@@ -1066,7 +1068,7 @@ bb.l:                                             ; preds = %bb.k, %bb.b
 
 bb.m:                                             ; preds = %bb.l
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
-  %i.av = load ptr, ptr %i.au, align 8, !tbaa !169 ; 2 uses
+  %i.av = load ptr, ptr %i.au, align 8, !tbaa !169 ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !170 ; 2 uses
   %.not = icmp eq ptr %i.av, %i.ax
@@ -1080,6 +1082,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i, %.lr.ph.i.i
+  %9 = phi ptr [ %i.av, %.lr.ph.i.i ], [ %10, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ] ; 2 uses
   %.021.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.bl, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ]
   %.sroa.07.020.i.i = phi ptr [ %i.az, %.lr.ph.i.i ], [ %i.bm, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ] ; 2 uses
   %.sroa.6.019.i.i = phi i64 [ %i.ay, %.lr.ph.i.i ], [ %i.bn, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ] ; 2 uses
@@ -1087,7 +1090,6 @@ bb.n:                                             ; preds = %_ZN5boost4asio6deta
   %.sroa.03.0.copyload.i.i.i = load ptr, ptr %.sroa.412.018.i.i, align 8, !tbaa !75 ; 2 uses
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.412.018.i.i, i64 8
   %.sroa.6.0.copyload.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !tbaa !37 ; 3 uses
-  %9 = load ptr, ptr %i.au, align 8, !tbaa !169
   %i.bc = icmp eq ptr %.sroa.412.018.i.i, %9
   br i1 %i.bc, label %bb.o, label %bb.p
 
@@ -1119,9 +1121,11 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 bb.s:                                             ; preds = %bb.r
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.03.0.i.i.i, ptr align 1 %.sroa.07.020.i.i, i64 %i.bk, i1 false)
+  %.pre.i.i = load ptr, ptr %i.au, align 8, !tbaa !169
   br label %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i
 
 _ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i: ; preds = %bb.s, %bb.r
+  %10 = phi ptr [ %9, %bb.r ], [ %.pre.i.i, %bb.s ]
   %i.bl = add i64 %i.bk, %.021.i.i                ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.07.020.i.i, i64 %i.bk
   %i.bn = sub nuw nsw i64 %.sroa.6.019.i.i, %i.bk ; 2 uses
@@ -1524,7 +1528,7 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %_ZNK5boost6system10
 bb.g:                                             ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
   %i.al = getelementptr inbounds nuw i8, ptr %i.w, i64 264
   %i.am = load i64, ptr %i.al, align 8, !tbaa !148 ; 2 uses
-  %i.an = load ptr, ptr %i.ak, align 8, !tbaa !169 ; 2 uses
+  %i.an = load ptr, ptr %i.ak, align 8, !tbaa !169 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !170 ; 2 uses
   %.not18.i.i = icmp ne i64 %i.am, 0
@@ -1542,6 +1546,7 @@ bb.g:                                             ; preds = %_ZNSt10lock_guardIS
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i, %.lr.ph.i.i
+  %9 = phi ptr [ %i.an, %.lr.ph.i.i ], [ %10, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ] ; 2 uses
   %.023.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.bf, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ]
   %.sroa.414.022.i.i = phi ptr [ %i.an, %.lr.ph.i.i ], [ %i.ba, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ] ; 4 uses
   %.sroa.09.021.i.i = phi ptr [ %i.ah, %.lr.ph.i.i ], [ %i.bg, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ] ; 2 uses
@@ -1549,7 +1554,6 @@ bb.h:                                             ; preds = %_ZN5boost4asio6deta
   %.sroa.03.0.copyload.i.i.i = load ptr, ptr %.sroa.414.022.i.i, align 8, !tbaa !75 ; 2 uses
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.414.022.i.i, i64 8
   %.sroa.6.0.copyload.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !tbaa !37 ; 3 uses
-  %9 = load ptr, ptr %i.ak, align 8, !tbaa !169
   %i.aw = icmp eq ptr %.sroa.414.022.i.i, %9
   br i1 %i.aw, label %bb.i, label %bb.j
 
@@ -1581,9 +1585,11 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.03.0.i.i.i, ptr align 1 %.sroa.09.021.i.i, i64 %i.be, i1 false)
+  %.pre.i.i = load ptr, ptr %i.ak, align 8, !tbaa !169
   br label %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i
 
 _ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i: ; preds = %bb.m, %bb.l
+  %10 = phi ptr [ %9, %bb.l ], [ %.pre.i.i, %bb.m ]
   %i.bf = add i64 %i.be, %.023.i.i                ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.09.021.i.i, i64 %i.be
   %i.bh = sub nuw i64 %.sroa.6.020.i.i, %i.be     ; 2 uses

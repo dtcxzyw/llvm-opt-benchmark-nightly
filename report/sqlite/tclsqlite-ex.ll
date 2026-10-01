@@ -206,7 +206,7 @@ bb.du:                                            ; preds = %bb.dt
   br label %.thread1244
 
 .thread1244:                                      ; preds = %bb.ds, %bb.dt, %bb.du
-  %.09461246 = phi ptr [ %i.ro, %bb.du ], [ %i.ro, %bb.dt ], [ @.str.223, %bb.ds ] ; 3 uses
+  %.09461246 = phi ptr [ %i.ro, %bb.du ], [ %i.ro, %bb.dt ], [ @.str.223, %bb.ds ] ; 4 uses
   %.0945 = phi ptr [ %i.ru, %bb.du ], [ @.str.6, %bb.dt ], [ @.str.6, %bb.ds ] ; 2 uses
   %i.rv = load ptr, ptr @tclStubsPtr, align 8, !tbaa !98
   %i.rw = getelementptr inbounds nuw i8, ptr %i.rv, i64 344
@@ -513,14 +513,18 @@ bb.ep:                                            ; preds = %.lr.ph1442, %bb.fb
   store ptr %i.xg, ptr %i.wf, align 8, !tbaa !66
   %i.xh = load i8, ptr %i.xg, align 1, !tbaa !29  ; 2 uses
   %.not11521430 = icmp eq i8 %i.xh, 0
-  br i1 %.not11521430, label %._crit_edge1435, label %.lr.ph1434
+  br i1 %.not11521430, label %._crit_edge1435, label %.lr.ph1434.preheader
 
-.lr.ph1434:                                       ; preds = %bb.ep, %bb.et
-  %i.xi = phi i8 [ %i.xt, %bb.et ], [ %i.xh, %bb.ep ]
-  %.09431432 = phi ptr [ %i.xs, %bb.et ], [ %i.xg, %bb.ep ] ; 6 uses
-  %.19541431 = phi i32 [ %.2955, %bb.et ], [ 0, %bb.ep ] ; 3 uses
-  %6 = load i8, ptr %.09461246, align 1, !tbaa !29
-  %i.xj = icmp eq i8 %i.xi, %6
+.lr.ph1434.preheader:                             ; preds = %bb.ep
+  %.pre1489 = load i8, ptr %.09461246, align 1, !tbaa !29
+  br label %.lr.ph1434
+
+.lr.ph1434:                                       ; preds = %.lr.ph1434.preheader, %bb.et
+  %i.xi = phi i8 [ %7, %bb.et ], [ %.pre1489, %.lr.ph1434.preheader ] ; 3 uses
+  %6 = phi i8 [ %i.xt, %bb.et ], [ %i.xh, %.lr.ph1434.preheader ]
+  %.09431432 = phi ptr [ %i.xs, %bb.et ], [ %i.xg, %.lr.ph1434.preheader ] ; 6 uses
+  %.19541431 = phi i32 [ %.2955, %bb.et ], [ 0, %.lr.ph1434.preheader ] ; 3 uses
+  %i.xj = icmp eq i8 %6, %i.xi
   br i1 %i.xj, label %bb.eq, label %bb.et
 
 bb.eq:                                            ; preds = %.lr.ph1434
@@ -532,6 +536,7 @@ bb.er:                                            ; preds = %bb.eq
   store i8 0, ptr %.09431432, align 1, !tbaa !29
   %i.xm = add nsw i32 %.19541431, 1               ; 4 uses
   %i.xn = icmp slt i32 %i.xm, %i.tr
+  %.pre1488 = load i8, ptr %.09461246, align 1, !tbaa !29 ; 2 uses
   br i1 %i.xn, label %bb.es, label %bb.et
 
 bb.es:                                            ; preds = %bb.er
@@ -543,6 +548,7 @@ bb.es:                                            ; preds = %bb.er
   br label %bb.et
 
 bb.et:                                            ; preds = %.lr.ph1434, %bb.eq, %bb.es, %bb.er
+  %7 = phi i8 [ %.pre1488, %bb.es ], [ %.pre1488, %bb.er ], [ %i.xi, %bb.eq ], [ %i.xi, %.lr.ph1434 ]
   %.2955 = phi i32 [ %i.xm, %bb.es ], [ %i.xm, %bb.er ], [ %.19541431, %bb.eq ], [ %.19541431, %.lr.ph1434 ] ; 2 uses
   %.1944 = phi ptr [ %i.xr, %bb.es ], [ %.09431432, %bb.er ], [ %.09431432, %bb.eq ], [ %.09431432, %.lr.ph1434 ]
   %i.xs = getelementptr inbounds nuw i8, ptr %.1944, i64 1 ; 2 uses

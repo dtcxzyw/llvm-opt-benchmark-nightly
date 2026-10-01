@@ -205,8 +205,9 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %.not191, label %._crit_edge184, label %.lr.ph183
 
 .lr.ph183:                                        ; preds = %._crit_edge179
-  %i.ei = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %i.ei = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %i.q, i64 32
+  %.pre195 = load ptr, ptr %i.ei, align 8, !tbaa !471
   br label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph178, %bb.h
@@ -233,30 +234,32 @@ bb.h:                                             ; preds = %.lr.ph178, %bb.h
           to label %bb.l unwind label %bb.m
 
 bb.i:                                             ; preds = %.lr.ph183, %bb.k
-  %.0181 = phi i64 [ 0, %.lr.ph183 ], [ %i.ff, %bb.k ] ; 3 uses
-  %.0110180.a = phi i64 [ 0, %.lr.ph183 ], [ %.1, %bb.k ] ; 4 uses
-  %3 = load ptr, ptr %i.ei, align 8, !tbaa !471
-  %i.ev = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %.0181 ; 2 uses
+  %3 = phi ptr [ %.pre195, %.lr.ph183 ], [ %4, %bb.k ] ; 2 uses
+  %.0110180.a = phi i64 [ 0, %.lr.ph183 ], [ %i.ff, %bb.k ] ; 3 uses
+  %.0110180 = phi i64 [ 0, %.lr.ph183 ], [ %.1, %bb.k ] ; 4 uses
+  %i.ev = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %.0110180.a ; 2 uses
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !381
   %.not127 = icmp eq i32 %i.ew, -1
   br i1 %.not127, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.ex = load ptr, ptr %i.f, align 8, !tbaa !471
-  %i.ey = getelementptr inbounds nuw [16 x i8], ptr %i.ex, i64 %.0110180.a
+  %i.ey = getelementptr inbounds nuw [16 x i8], ptr %i.ex, i64 %.0110180
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ey, ptr noundef nonnull align 4 dereferenceable(16) %i.ev, i64 16, i1 false)
   %i.ez = load ptr, ptr %i.ej, align 8, !tbaa !624
-  %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 %.0181
+  %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 %.0110180.a
   %i.fb = load i8, ptr %i.fa, align 1, !tbaa !403
   %i.fc = load ptr, ptr %i.g, align 8, !tbaa !624
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 %.0110180.a
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 %.0110180
   store i8 %i.fb, ptr %i.fd, align 1, !tbaa !403
-  %i.fe = add i64 %.0110180.a, 1
+  %i.fe = add i64 %.0110180, 1
+  %.pre = load ptr, ptr %i.ei, align 8, !tbaa !471
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.1 = phi i64 [ %i.fe, %bb.j ], [ %.0110180.a, %bb.i ]
-  %i.ff = add nuw i64 %.0181, 1                   ; 2 uses
+  %4 = phi ptr [ %.pre, %bb.j ], [ %3, %bb.i ]
+  %.1 = phi i64 [ %i.fe, %bb.j ], [ %.0110180, %bb.i ]
+  %i.ff = add nuw i64 %.0110180.a, 1              ; 2 uses
   %exitcond193.not = icmp eq i64 %i.ff, %i.eh
   br i1 %exitcond193.not, label %._crit_edge184, label %bb.i, !llvm.loop !7829
 
@@ -659,8 +662,9 @@ bb.b:                                             ; preds = %.lr.ph54, %._crit_e
   br i1 %.not57, label %._crit_edge51, label %.lr.ph50
 
 .lr.ph50:                                         ; preds = %._crit_edge
-  %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 40
+  %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 24
+  %.pre60 = load ptr, ptr %i.n, align 8, !tbaa !624
   br label %bb.i
 
 bb.c:                                             ; preds = %.lr.ph, %.critedge
@@ -726,8 +730,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %exitcond59.not, label %._crit_edge55, label %bb.b, !llvm.loop !7845
 
 bb.i:                                             ; preds = %.lr.ph50, %.critedge44
+  %2 = phi ptr [ %.pre60, %.lr.ph50 ], [ %3, %.critedge44 ] ; 5 uses
   %.048 = phi i64 [ 0, %.lr.ph50 ], [ %i.bn, %.critedge44 ] ; 3 uses
-  %2 = load ptr, ptr %i.n, align 8, !tbaa !624
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 %.048 ; 2 uses
   %i.at = load i8, ptr %i.as, align 1, !tbaa !403 ; 2 uses
   %i.au = and i8 %i.at, 2
@@ -766,9 +770,11 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.bm = and i8 %i.at, -3
   store i8 %i.bm, ptr %i.as, align 1, !tbaa !403
+  %.pre = load ptr, ptr %i.n, align 8, !tbaa !624
   br label %.critedge44
 
 .critedge44:                                      ; preds = %bb.l, %bb.m, %bb.j, %bb.k, %bb.i
+  %3 = phi ptr [ %2, %bb.l ], [ %.pre, %bb.m ], [ %2, %bb.j ], [ %2, %bb.k ], [ %2, %bb.i ]
   %i.bn = add nuw i64 %.048, 1                    ; 2 uses
   %exitcond58.not = icmp eq i64 %i.bn, %i.m
   br i1 %exitcond58.not, label %._crit_edge51, label %bb.i, !llvm.loop !7846

@@ -205,26 +205,27 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !151, !nonnull !65, !align !152
   %i.h = sext i32 %i.a to i64                     ; 2 uses
   %i.i = load ptr, ptr %i.g, align 8, !tbaa !27
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.h ; 2 uses
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.h ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.val, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !153, !nonnull !65, !align !152
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !27
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.h ; 2 uses
   %i.o = sext i32 %.val5 to i64
   %wide.trip.count.i.i.i = sext i32 %.val6 to i64
+  %.pre18.i.i.i = load double, ptr %i.j, align 8, !tbaa !39
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i.i.i
+  %4 = phi double [ %.pre18.i.i.i, %.lr.ph.i.i.i ], [ %6, %bb.f ] ; 2 uses
   %indvars.iv.i.i.i = phi i64 [ %i.o, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.f ] ; 3 uses
   %i.p = getelementptr inbounds [4 x i8], ptr %i.c, i64 %indvars.iv.i.i.i
   %i.q = load float, ptr %i.p, align 4, !tbaa !37
   %i.r = tail call noundef float @llvm.fabs.f32(float %i.q)
-  %i.s = fpext float %i.r to double               ; 2 uses
+  %i.s = fpext float %i.r to double               ; 3 uses
   %i.t = getelementptr inbounds [4 x i8], ptr %i.e, i64 %indvars.iv.i.i.i
   %i.u = load float, ptr %i.t, align 4, !tbaa !37
   %i.v = tail call noundef float @llvm.fabs.f32(float %i.u)
   %i.w = fpext float %i.v to double               ; 2 uses
-  %4 = load double, ptr %i.j, align 8, !tbaa !39
   %i.x = fcmp olt double %4, %i.s
   br i1 %i.x, label %bb.c, label %bb.d
 
@@ -233,15 +234,18 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %5 = phi double [ %i.s, %bb.c ], [ %4, %bb.b ]
   %i.y = load double, ptr %i.n, align 8, !tbaa !39
   %i.z = fcmp olt double %i.y, %i.w
   br i1 %i.z, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   store double %i.w, ptr %i.n, align 8, !tbaa !39
+  %.pre.i.i.i = load double, ptr %i.j, align 8, !tbaa !39
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
+  %6 = phi double [ %.pre.i.i.i, %bb.e ], [ %5, %bb.d ]
   %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
   br i1 %exitcond.not.i.i.i, label %"_ZSt10__invoke_rIvRZN8LightGBM19GradientDiscretizer19DiscretizeGradientsEiPKfS3_E3$_0JiiiEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES7_E4typeEOS8_DpOS9_.exit", label %bb.b, !llvm.loop !147

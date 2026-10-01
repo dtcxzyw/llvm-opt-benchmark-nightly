@@ -203,7 +203,7 @@ emit_byte.exit29:                                 ; preds = %emit_byte.exit, %bb
 
 .lr.ph:                                           ; preds = %emit_byte.exit29
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 328
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 308 ; 2 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 308 ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 412
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 420
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 120
@@ -211,13 +211,14 @@ emit_byte.exit29:                                 ; preds = %emit_byte.exit, %bb
   %i.ao = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 416
   %i.aq = getelementptr inbounds nuw i8, ptr %i.b, i64 248
+  %.pre32 = load i32, ptr %i.aj, align 4, !tbaa !40
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.k
+  %2 = phi i32 [ %.pre32, %.lr.ph ], [ %4, %bb.k ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 4 uses
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !44 ; 2 uses
-  %2 = load i32, ptr %i.aj, align 4, !tbaa !40
   %i.at = icmp eq i32 %2, 0
   br i1 %i.at, label %bb.i, label %bb.g
 
@@ -242,11 +243,12 @@ bb.i:                                             ; preds = %bb.f, %bb.h
   store i32 0, ptr %i.bd, align 4, !tbaa !49
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv
   store i32 0, ptr %i.be, align 4, !tbaa !49
-  %.pre.a = load i32, ptr %i.aj, align 4, !tbaa !40
+  %.pre.a = load i32, ptr %i.aj, align 4, !tbaa !40 ; 2 uses
   %i.bf = icmp eq i32 %.pre.a, 0
   br i1 %i.bf, label %bb.j, label %.thread
 
 .thread:                                          ; preds = %bb.g, %bb.h, %bb.i
+  %3 = phi i32 [ %.pre.a, %bb.i ], [ %2, %bb.h ], [ %2, %bb.g ]
   %i.bg = load i32, ptr %i.ap, align 8, !tbaa !50
   %.not = icmp eq i32 %i.bg, 0
   br i1 %.not, label %bb.k, label %bb.j
@@ -258,9 +260,11 @@ bb.j:                                             ; preds = %.thread, %bb.i
   %i.bk = getelementptr inbounds [8 x i8], ptr %i.aq, i64 %i.bj
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !48
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %i.bl, i8 0, i64 256, i1 false)
+  %.pre = load i32, ptr %i.aj, align 4, !tbaa !40
   br label %bb.k
 
 bb.k:                                             ; preds = %.thread, %bb.j
+  %4 = phi i32 [ %3, %.thread ], [ %.pre, %bb.j ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bm = load i32, ptr %i.af, align 4, !tbaa !43
   %i.bn = sext i32 %i.bm to i64

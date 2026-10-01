@@ -205,34 +205,37 @@ _ZN6casadi12casadi_qr_mvIdEEvPKxPKT_S5_PS3_x.exit65.us: ; preds = %._crit_edge46
   br i1 %.not55.not64.i.us, label %.lr.ph67.i.us, label %.loopexit.i.us
 
 .lr.ph67.i.us:                                    ; preds = %.lr.ph71.i.us
-  %i.dz = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %.15170.i.us ; 2 uses
+  %i.dz = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %.15170.i.us ; 3 uses
+  %.pre94 = load double, ptr %i.dz, align 8, !tbaa !119
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.e, %.lr.ph67.i.us
+  %11 = phi double [ %.pre94, %.lr.ph67.i.us ], [ %12, %bb.e ] ; 2 uses
   %.1.in65.i.us = phi i64 [ %i.dw, %.lr.ph67.i.us ], [ %.166.i.us, %bb.e ] ; 2 uses
   %.166.i.us = add nsw i64 %.1.in65.i.us, -1      ; 3 uses
   %i.ea = getelementptr [8 x i8], ptr %i.m, i64 %.1.in65.i.us
   %i.eb = load i64, ptr %i.ea, align 8, !tbaa !167 ; 2 uses
   %i.ec = icmp eq i64 %i.eb, %.15170.i.us
   %i.ed = getelementptr inbounds [8 x i8], ptr %6, i64 %.166.i.us
-  %11 = load double, ptr %i.ed, align 8, !tbaa !119 ; 2 uses
-  %i.ee = load double, ptr %i.dz, align 8, !tbaa !119 ; 2 uses
+  %i.ee = load double, ptr %i.ed, align 8, !tbaa !119 ; 2 uses
   br i1 %i.ec, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.ef = getelementptr inbounds [8 x i8], ptr %10, i64 %i.eb ; 2 uses
   %i.eg = load double, ptr %i.ef, align 8, !tbaa !119
-  %i.eh = fneg double %11
-  %i.ei = tail call double @llvm.fmuladd.f64(double %i.eh, double %i.ee, double %i.eg)
+  %i.eh = fneg double %i.ee
+  %i.ei = tail call double @llvm.fmuladd.f64(double %i.eh, double %11, double %i.eg)
   store double %i.ei, ptr %i.ef, align 8, !tbaa !119
+  %.pre = load double, ptr %i.dz, align 8, !tbaa !119
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.ej = fdiv double %i.ee, %11
+  %i.ej = fdiv double %11, %i.ee                  ; 2 uses
   store double %i.ej, ptr %i.dz, align 8, !tbaa !119
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
+  %12 = phi double [ %i.ej, %bb.d ], [ %.pre, %bb.c ]
   %.not55.not.i.us = icmp sgt i64 %.166.i.us, %i.dy
   br i1 %.not55.not.i.us, label %bb.b, label %.loopexit.i.us, !llvm.loop !465
 

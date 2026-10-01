@@ -205,8 +205,9 @@ bb.h:                                             ; preds = %.lr.ph, %bb.h
 .lr.ph386.preheader:                              ; preds = %._crit_edge
   %i.eo = load ptr, ptr %i.m, align 8, !tbaa !33
   tail call fastcc void @_ZN2cv5arucoL6ptsortEPNS0_2ptEi(ptr noundef %i.eo, i32 noundef %.val320)
-  %.val328 = load ptr, ptr %i.m, align 8, !tbaa !33
+  %.val328 = load ptr, ptr %i.m, align 8, !tbaa !33 ; 2 uses
   %wide.trip.count411 = zext nneg i32 %.val320 to i64
+  %.val325.pre443 = load i64, ptr %2, align 8, !tbaa !32
   br label %.lr.ph386
 
 ._crit_edge387:                                   ; preds = %bb.m
@@ -215,11 +216,11 @@ bb.h:                                             ; preds = %.lr.ph, %bb.h
   br i1 %i.ep, label %bb.ao, label %bb.n
 
 .lr.ph386:                                        ; preds = %.lr.ph386.preheader, %bb.m
+  %.val326 = phi ptr [ %.val328, %.lr.ph386.preheader ], [ %.val326448, %bb.m ] ; 4 uses
+  %.val325 = phi i64 [ %.val325.pre443, %.lr.ph386.preheader ], [ %.val325444, %bb.m ] ; 4 uses
   %indvars.iv408 = phi i64 [ 1, %.lr.ph386.preheader ], [ %indvars.iv.next409, %bb.m ] ; 3 uses
   %.0287384 = phi i32 [ 1, %.lr.ph386.preheader ], [ %.1288, %bb.m ] ; 4 uses
   %.0348382 = phi ptr [ %.val328, %.lr.ph386.preheader ], [ %i.er, %bb.m ] ; 2 uses
-  %.val325 = load i64, ptr %2, align 8, !tbaa !32 ; 2 uses
-  %.val326 = load ptr, ptr %i.m, align 8, !tbaa !33 ; 2 uses
   %i.eq = mul i64 %.val325, %indvars.iv408
   %i.er = getelementptr inbounds nuw i8, ptr %.val326, i64 %i.eq ; 4 uses
   %i.es = load i16, ptr %i.er, align 4, !tbaa !36
@@ -245,13 +246,19 @@ bb.k:                                             ; preds = %bb.j
   %i.fa = mul i64 %.val325, %i.ez
   %i.fb = getelementptr inbounds nuw i8, ptr %.val326, i64 %i.fa
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.fb, ptr noundef nonnull align 4 dereferenceable(12) %i.er, i64 12, i1 false)
+  %.val325.pre = load i64, ptr %2, align 8, !tbaa !32
+  %.val326.pre = load ptr, ptr %i.m, align 8, !tbaa !33
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
+  %.val326449 = phi ptr [ %.val326.pre, %bb.k ], [ %.val326, %bb.j ]
+  %.val325445 = phi i64 [ %.val325.pre, %bb.k ], [ %.val325, %bb.j ]
   %i.fc = add nsw i32 %.0287384, 1
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.i
+  %.val326448 = phi ptr [ %.val326449, %bb.l ], [ %.val326, %bb.i ]
+  %.val325444 = phi i64 [ %.val325445, %bb.l ], [ %.val325, %bb.i ]
   %.1288 = phi i32 [ %i.fc, %bb.l ], [ %.0287384, %bb.i ] ; 10 uses
   %indvars.iv.next409 = add nuw nsw i64 %indvars.iv408, 1 ; 2 uses
   %exitcond412.not = icmp eq i64 %indvars.iv.next409, %wide.trip.count411

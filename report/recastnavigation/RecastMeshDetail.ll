@@ -205,6 +205,7 @@ bb.bm:                                            ; preds = %_ZL23seedArrayWithP
   br i1 %i.xc, label %.lr.ph206.i, label %_ZL13getHeightDataP9rcContextRK20rcCompactHeightfieldPKtiS5_iR13rcHeightPatchR12rcTempVectorIiEi.exit
 
 .lr.ph206.i:                                      ; preds = %bb.bm
+  %.pre232.i = load ptr, ptr %i.ak, align 8, !tbaa !66 ; 2 uses
   %i.xd = add i32 %i.gh, %i.z
   %i.xe = add i32 %i.gk, %i.z
   br label %bb.bn
@@ -217,10 +218,11 @@ bb.bm:                                            ; preds = %_ZL23seedArrayWithP
 
 bb.bn:                                            ; preds = %.loopexit.i, %.lr.ph206.i
   %i.xi = phi i64 [ %i.xb, %.lr.ph206.i ], [ %i.abe, %.loopexit.i ] ; 4 uses
+  %.pre.i159236.i = phi ptr [ %.pre232.i, %.lr.ph206.i ], [ %.pre.i159238.i, %.loopexit.i ] ; 2 uses
+  %8 = phi ptr [ %.pre232.i, %.lr.ph206.i ], [ %12, %.loopexit.i ] ; 6 uses
   %i.xj = phi i64 [ 0, %.lr.ph206.i ], [ %i.xg, %.loopexit.i ]
   %i.xk = phi i32 [ 0, %.lr.ph206.i ], [ %i.xf, %.loopexit.i ]
   %.0129204.i = phi i32 [ 0, %.lr.ph206.i ], [ %.1130.i, %.loopexit.i ] ; 2 uses
-  %8 = load ptr, ptr %i.ak, align 8, !tbaa !66    ; 4 uses
   %i.xl = getelementptr inbounds [4 x i8], ptr %8, i64 %i.xj
   %i.xm = load i32, ptr %i.xl, align 4, !tbaa !68
   %i.xn = sext i32 %i.xk to i64
@@ -242,17 +244,22 @@ bb.bp:                                            ; preds = %bb.bo
   %i.xx = shl i64 %i.xi, 2
   %i.xy = add i64 %i.xx, -3072
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %8, ptr nonnull align 4 %i.xw, i64 %i.xy, i1 false)
+  %.pre231.i = load ptr, ptr %i.ak, align 8, !tbaa !66 ; 2 uses
   %.pre231.i.a = load i64, ptr %7, align 8, !tbaa !67
   br label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i
 
 _ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i: ; preds = %bb.bp, %bb.bo
+  %.pre.i159235.i = phi ptr [ %.pre231.i, %bb.bp ], [ %.pre.i159236.i, %bb.bo ]
   %i.xz = phi i64 [ %.pre231.i.a, %bb.bp ], [ %i.xi, %bb.bo ]
+  %9 = phi ptr [ %.pre231.i, %bb.bp ], [ %8, %bb.bo ]
   %i.ya = add nsw i64 %i.xz, -768                 ; 2 uses
   store i64 %i.ya, ptr %7, align 8, !tbaa !67
   br label %bb.bq
 
 bb.bq:                                            ; preds = %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i, %bb.bn
   %i.yb = phi i64 [ %i.ya, %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i ], [ %i.xi, %bb.bn ] ; 2 uses
+  %.pre.i159234.i = phi ptr [ %.pre.i159235.i, %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i ], [ %.pre.i159236.i, %bb.bn ]
+  %10 = phi ptr [ %9, %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i ], [ %8, %bb.bn ]
   %.1130.i = phi i32 [ 0, %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i ], [ %i.xt, %bb.bn ] ; 2 uses
   %i.yc = load ptr, ptr %i.ep, align 8, !tbaa !137
   %i.yd = sext i32 %i.xs to i64
@@ -262,7 +269,9 @@ bb.bq:                                            ; preds = %_ZN12rcVectorBaseIi
 
 bb.br:                                            ; preds = %bb.bx, %bb.bq
   %i.yg = phi i64 [ %i.yb, %bb.bq ], [ %i.abe, %bb.bx ] ; 3 uses
+  %.pre.i159.i = phi ptr [ %.pre.i159234.i, %bb.bq ], [ %.pre.i159238.i, %bb.bx ] ; 4 uses
   %i.yh = phi i64 [ %i.yb, %bb.bq ], [ %i.abf, %bb.bx ] ; 5 uses
+  %11 = phi ptr [ %10, %bb.bq ], [ %12, %bb.bx ]  ; 3 uses
   %indvars.iv227.i = phi i64 [ 0, %bb.bq ], [ %indvars.iv.next228.i, %bb.bx ] ; 4 uses
   %i.yi = load i32, ptr %i.yf, align 4
   %i.yj = and i32 %i.yi, 16777215
@@ -314,11 +323,7 @@ bb.bu:                                            ; preds = %bb.bt
   %i.zp = add nsw i64 %i.yh, 3                    ; 5 uses
   %i.zq = load i64, ptr %i.aj, align 8, !tbaa !124 ; 3 uses
   %.not.i.i.i156.i = icmp sgt i64 %i.zp, %i.zq
-  br i1 %.not.i.i.i156.i, label %bb.bv, label %._ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit_crit_edge.i157.i
-
-._ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit_crit_edge.i157.i: ; preds = %bb.bu
-  %.pre.i159.i = load ptr, ptr %i.ak, align 8, !tbaa !66
-  br label %_ZL5push3R12rcTempVectorIiEiii.exit169.i
+  br i1 %.not.i.i.i156.i, label %bb.bv, label %_ZL5push3R12rcTempVectorIiEiii.exit169.i
 
 bb.bv:                                            ; preds = %bb.bu
   %i.zr = icmp sgt i64 %i.zq, 4611686018427387902
@@ -422,8 +427,8 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i.i165.i: ; pre
   store i64 %.0.i.i.i.i161.i, ptr %i.aj, align 8, !tbaa !124
   br label %_ZL5push3R12rcTempVectorIiEiii.exit169.i
 
-_ZL5push3R12rcTempVectorIiEiii.exit169.i:         ; preds = %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i.i165.i, %._ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit_crit_edge.i157.i
-  %i.aba = phi ptr [ %.pre.i159.i, %._ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit_crit_edge.i157.i ], [ %i.zu, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i.i165.i ]
+_ZL5push3R12rcTempVectorIiEiii.exit169.i:         ; preds = %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i.i165.i, %bb.bu
+  %i.aba = phi ptr [ %i.zu, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i.i165.i ], [ %.pre.i159.i, %bb.bu ] ; 3 uses
   store i64 %i.zp, ptr %7, align 8, !tbaa !67
   %i.abb = getelementptr [4 x i8], ptr %i.aba, i64 %i.yh ; 3 uses
   store i32 %i.yr, ptr %i.abb, align 4, !tbaa !68
@@ -435,7 +440,9 @@ _ZL5push3R12rcTempVectorIiEiii.exit169.i:         ; preds = %_ZN12rcVectorBaseIi
 
 bb.bx:                                            ; preds = %_ZL5push3R12rcTempVectorIiEiii.exit169.i, %bb.bt, %bb.bs, %bb.br
   %i.abe = phi i64 [ %i.zp, %_ZL5push3R12rcTempVectorIiEiii.exit169.i ], [ %i.yg, %bb.br ], [ %i.yg, %bb.bs ], [ %i.yg, %bb.bt ] ; 3 uses
+  %.pre.i159238.i = phi ptr [ %i.aba, %_ZL5push3R12rcTempVectorIiEiii.exit169.i ], [ %.pre.i159.i, %bb.br ], [ %.pre.i159.i, %bb.bs ], [ %.pre.i159.i, %bb.bt ] ; 2 uses
   %i.abf = phi i64 [ %i.zp, %_ZL5push3R12rcTempVectorIiEiii.exit169.i ], [ %i.yh, %bb.br ], [ %i.yh, %bb.bs ], [ %i.yh, %bb.bt ]
+  %12 = phi ptr [ %i.aba, %_ZL5push3R12rcTempVectorIiEiii.exit169.i ], [ %11, %bb.br ], [ %11, %bb.bs ], [ %11, %bb.bt ] ; 2 uses
   %indvars.iv.next228.i = add nuw nsw i64 %indvars.iv227.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next228.i, 4
   br i1 %exitcond.not.i, label %.loopexit.i, label %bb.br

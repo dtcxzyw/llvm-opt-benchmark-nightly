@@ -204,10 +204,10 @@ bb.o:                                             ; preds = %bb.n
   %i.br = load i8, ptr %i.k, align 4, !tbaa !15, !range !40, !noundef !41
   %i.bs = trunc nuw i8 %i.br to i1
   %i.bt = load ptr, ptr %i.n, align 8, !tbaa !17  ; 4 uses
+  %2 = load i32, ptr %i.i, align 8, !tbaa !16     ; 4 uses
   br i1 %i.bs, label %.lr.ph40.split.us.i, label %Dict__get_index.exit.thread.i
 
 .lr.ph40.split.us.i:                              ; preds = %.lr.ph40.i
-  %2 = load i32, ptr %i.i, align 8, !tbaa !16     ; 3 uses
   %wide.trip.count.i = zext i32 %i.bq to i64      ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
   %i.bu = icmp eq i32 %i.bq, 1
@@ -293,23 +293,25 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph.i
 
 Dict__get_index.exit.thread.i:                    ; preds = %.lr.ph40.i, %Dict__set_index.exit.i
   %i.cz = phi i32 [ %i.df, %Dict__set_index.exit.i ], [ %i.bq, %.lr.ph40.i ]
+  %3 = phi i32 [ %5, %Dict__set_index.exit.i ], [ %2, %.lr.ph40.i ] ; 2 uses
   %indvars.iv45.i = phi i64 [ %indvars.iv.next46.i, %Dict__set_index.exit.i ], [ 0, %.lr.ph40.i ] ; 2 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %indvars.iv45.i ; 2 uses
-  %4 = load i32, ptr %3, align 4, !tbaa !25       ; 2 uses
-  %i.da = load i32, ptr %i.i, align 8, !tbaa !16
-  %i.db = icmp eq i32 %4, %i.da
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %indvars.iv45.i ; 2 uses
+  %i.da = load i32, ptr %4, align 4, !tbaa !25    ; 2 uses
+  %i.db = icmp eq i32 %i.da, %3
   br i1 %i.db, label %Dict__set_index.exit.i, label %bb.v
 
 bb.v:                                             ; preds = %Dict__get_index.exit.thread.i
-  %i.dc = zext i32 %4 to i64
+  %i.dc = zext i32 %i.da to i64
   %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.bp, i64 %i.dc
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !25
-  store i32 %i.de, ptr %3, align 4, !tbaa !25
+  store i32 %i.de, ptr %4, align 4, !tbaa !25
+  %.pre.i = load i32, ptr %i.i, align 8, !tbaa !16
   %.pre.i.a = load i32, ptr %i.x, align 4, !tbaa !14
   br label %Dict__set_index.exit.i
 
 Dict__set_index.exit.i:                           ; preds = %bb.v, %Dict__get_index.exit.thread.i
   %i.df = phi i32 [ %.pre.i.a, %bb.v ], [ %i.cz, %Dict__get_index.exit.thread.i ] ; 2 uses
+  %5 = phi i32 [ %.pre.i, %bb.v ], [ %3, %Dict__get_index.exit.thread.i ]
   %indvars.iv.next46.i = add nuw nsw i64 %indvars.iv45.i, 1 ; 2 uses
   %i.dg = zext i32 %i.df to i64
   %i.dh = icmp samesign ult i64 %indvars.iv.next46.i, %i.dg

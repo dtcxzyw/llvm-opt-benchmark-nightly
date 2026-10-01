@@ -205,24 +205,27 @@ _ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj
 
 .lr.ph.i:                                         ; preds = %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE14cbeginValueOffEv.exit.i
   %.promoted.i = load i64, ptr %1, align 8
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
+  %.pre12.i = load i64, ptr %i.l, align 8, !tbaa !1156
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE9ValueIterIKS8_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS8_10NodeStructEEENS8_12ValueOffPredEKlEppEv.exit.i, %.lr.ph.i
+  %7 = phi i64 [ %.pre12.i, %.lr.ph.i ], [ %8, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE9ValueIterIKS8_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS8_10NodeStructEEENS8_12ValueOffPredEKlEppEv.exit.i ] ; 2 uses
   %.sroa.5.011.i = phi ptr [ %.sroa.2.1.i.i, %.lr.ph.i ], [ %.sroa.5.3.i, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE9ValueIterIKS8_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS8_10NodeStructEEENS8_12ValueOffPredEKlEppEv.exit.i ] ; 2 uses
   %i.m = phi i64 [ %.promoted.i, %.lr.ph.i ], [ %i.r, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE9ValueIterIKS8_St23_Rb_tree_const_iteratorISt4pairIKNS0_4math5CoordENS8_10NodeStructEEENS8_12ValueOffPredEKlEppEv.exit.i ] ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.5.011.i, i64 56
-  %7 = load i64, ptr %i.n, align 8, !tbaa !1156
-  %i.o = load i64, ptr %i.l, align 8, !tbaa !1156
-  %i.p = icmp eq i64 %7, %i.o
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !1156
+  %i.p = icmp eq i64 %i.o, %7
   br i1 %i.p, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.q = add i64 %i.m, 68719476736                ; 2 uses
   store i64 %i.q, ptr %1, align 8, !tbaa !3370
+  %.pre.i = load i64, ptr %i.l, align 8, !tbaa !1156
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
+  %8 = phi i64 [ %.pre.i, %bb.d ], [ %7, %bb.c ]
   %i.r = phi i64 [ %i.q, %bb.d ], [ %i.m, %bb.c ]
   %i.s = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.5.011.i) #36 ; 3 uses
   %.not3.i.i.i3.i = icmp eq ptr %i.s, %i.d

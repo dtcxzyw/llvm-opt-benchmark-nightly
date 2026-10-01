@@ -204,16 +204,17 @@ bb.c:                                             ; preds = %bb.b
   br i1 %brmerge.not, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 5017 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 5017 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 11856 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 11552
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 12656 ; 2 uses
+  %.pre37 = load i8, ptr %i.m, align 1            ; 2 uses
   br i1 %i.c, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.d, %bb.i
   %i.q = phi i64 [ %i.ad, %bb.i ], [ 0, %bb.d ]   ; 4 uses
+  %3 = phi i8 [ %4, %bb.i ], [ %.pre37, %bb.d ]   ; 4 uses
   %indvars.iv31 = phi i64 [ %indvars.iv.next32, %bb.i ], [ 3, %bb.d ] ; 4 uses
-  %3 = load i8, ptr %i.m, align 1
   %i.r = icmp ult i8 %3, 3
   br i1 %i.r, label %bb.e, label %bb.g
 
@@ -242,19 +243,21 @@ bb.h:                                             ; preds = %bb.g
   %i.ab = shl nuw nsw i64 1, %indvars.iv31
   %i.ac = or i64 %i.q, %i.ab                      ; 2 uses
   store i64 %i.ac, ptr %2, align 8
+  %.pre36 = load i8, ptr %i.m, align 1
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e
   %i.ad = phi i64 [ %i.ac, %bb.h ], [ %i.q, %bb.g ], [ %i.q, %bb.f ], [ %i.q, %bb.e ]
+  %4 = phi i8 [ %.pre36, %bb.h ], [ %3, %bb.g ], [ %3, %bb.f ], [ %3, %bb.e ]
   %indvars.iv.next32 = add nuw nsw i64 %indvars.iv31, 1 ; 2 uses
   %exitcond34.not = icmp eq i64 %indvars.iv.next32, 32
   br i1 %exitcond34.not, label %.loopexit, label %.split.us, !llvm.loop !34
 
 .split:                                           ; preds = %bb.d, %bb.m
   %i.ae = phi i64 [ %i.ao, %bb.m ], [ 0, %bb.d ]  ; 3 uses
+  %5 = phi i8 [ %6, %bb.m ], [ %.pre37, %bb.d ]   ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 3, %bb.d ] ; 4 uses
-  %4 = load i8, ptr %i.m, align 1
-  %i.af = icmp ult i8 %4, 3
+  %i.af = icmp ult i8 %5, 3
   br i1 %i.af, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %.split
@@ -275,10 +278,12 @@ bb.l:                                             ; preds = %bb.k
   %i.am = shl nuw nsw i64 1, %indvars.iv
   %i.an = or i64 %i.ae, %i.am                     ; 2 uses
   store i64 %i.an, ptr %2, align 8
+  %.pre = load i8, ptr %i.m, align 1
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l, %bb.j
   %i.ao = phi i64 [ %i.ae, %bb.k ], [ %i.an, %bb.l ], [ %i.ae, %bb.j ]
+  %6 = phi i8 [ %5, %bb.k ], [ %.pre, %bb.l ], [ %5, %bb.j ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 32
   br i1 %exitcond.not, label %.loopexit, label %.split, !llvm.loop !34

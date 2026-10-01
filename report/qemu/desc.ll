@@ -205,10 +205,11 @@ bb.l:                                             ; preds = %bb.c
   br i1 %.not.i93, label %.loopexit.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader34.i
-  %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5648
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 5652
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 5720
+  %.pre45.i = load ptr, ptr %i.y, align 8
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -222,8 +223,8 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.q, %.lr.ph.i
   %i.af = phi i8 [ %i.x, %.lr.ph.i ], [ %i.as, %bb.q ]
+  %7 = phi ptr [ %.pre45.i, %.lr.ph.i ], [ %8, %bb.q ] ; 2 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.q ] ; 4 uses
-  %7 = load ptr, ptr %i.y, align 8
   %i.ag = getelementptr inbounds nuw [32 x i8], ptr %7, i64 %indvars.iv.i
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 1
   %i.ai = load i8, ptr %i.ah, align 1
@@ -245,6 +246,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ar, label %._crit_edge45.i, label %bb.p
 
 ._crit_edge45.i:                                  ; preds = %bb.o
+  %.pre.i = load ptr, ptr %i.y, align 8
   %.pre.i.a = load i8, ptr %i.w, align 2
   br label %bb.q
 
@@ -253,7 +255,8 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 bb.q:                                             ; preds = %._crit_edge45.i, %bb.n
-  %i.as = phi i8 [ %.pre.i.a, %._crit_edge45.i ], [ %i.af, %bb.n ] ; 2 uses
+  %i.as = phi i8 [ %i.af, %bb.n ], [ %.pre.i.a, %._crit_edge45.i ] ; 2 uses
+  %8 = phi ptr [ %7, %bb.n ], [ %.pre.i, %._crit_edge45.i ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.at = zext i8 %i.as to i64
   %i.au = icmp samesign ult i64 %indvars.iv.next.i, %i.at

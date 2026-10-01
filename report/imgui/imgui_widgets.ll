@@ -205,11 +205,12 @@ define internal fastcc void @_ZN5ImGuiL12TabBarLayoutEP11ImGuiTabBar(ptr noundef
 
 .lr.ph:                                           ; preds = %.preheader
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 52
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %.pre = load ptr, ptr %i.p, align 8, !tbaa !569 ; 2 uses
+  %.pre506 = load i32, ptr %i.q, align 4, !tbaa !563
   br label %bb.a
 
 ._crit_edge:                                      ; preds = %bb.l, %.preheader
@@ -222,15 +223,15 @@ define internal fastcc void @_ZN5ImGuiL12TabBarLayoutEP11ImGuiTabBar(ptr noundef
 bb.a:                                             ; preds = %.lr.ph, %bb.l
   %i.u = phi i32 [ %i.n, %.lr.ph ], [ %i.bj, %bb.l ] ; 2 uses
   %i.v = phi ptr [ %.pre, %.lr.ph ], [ %i.bk, %bb.l ] ; 3 uses
+  %9 = phi i32 [ %.pre506, %.lr.ph ], [ %11, %bb.l ] ; 4 uses
   %i.w = phi ptr [ %.pre, %.lr.ph ], [ %i.bl, %bb.l ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 3 uses
   %.0326444 = phi i32 [ 0, %.lr.ph ], [ %.1327, %bb.l ] ; 7 uses
   %.0332443 = phi i1 [ false, %.lr.ph ], [ %.4, %bb.l ] ; 4 uses
   %i.x = getelementptr inbounds nuw [44 x i8], ptr %i.w, i64 %indvars.iv ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %9 = load i32, ptr %i.y, align 4, !tbaa !593
-  %i.z = load i32, ptr %i.q, align 4, !tbaa !563
-  %i.aa = icmp slt i32 %9, %i.z
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !593
+  %i.aa = icmp slt i32 %i.z, %9
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 40
   %i.ac = load i8, ptr %i.ab, align 4, !range !184
   %i.ad = trunc nuw i8 %i.ac to i1
@@ -274,11 +275,13 @@ bb.h:                                             ; preds = %bb.a
 bb.i:                                             ; preds = %bb.h
   %i.am = getelementptr inbounds [44 x i8], ptr %i.w, i64 %.pre528.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(41) %i.am, ptr noundef nonnull align 4 dereferenceable(41) %i.x, i64 41, i1 false), !tbaa.struct !597
+  %.pre505 = load i32, ptr %i.q, align 4, !tbaa !563
   %.pre505.a = load ptr, ptr %i.p, align 8, !tbaa !569
   br label %._crit_edge527
 
 ._crit_edge527:                                   ; preds = %bb.h, %bb.i
   %i.an = phi ptr [ %.pre505.a, %bb.i ], [ %i.v, %bb.h ] ; 4 uses
+  %10 = phi i32 [ %.pre505, %bb.i ], [ %9, %bb.h ]
   %i.ao = getelementptr inbounds [44 x i8], ptr %i.an, i64 %.pre528.a ; 2 uses
   %i.ap = trunc i32 %.0326444 to i16
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 38
@@ -323,6 +326,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge5
 bb.l:                                             ; preds = %bb.f, %bb.g, %bb.k
   %i.bj = phi i32 [ %.pre506.a, %bb.k ], [ %i.u, %bb.g ], [ %i.u, %bb.f ] ; 3 uses
   %i.bk = phi ptr [ %i.an, %bb.k ], [ %i.v, %bb.g ], [ %i.v, %bb.f ]
+  %11 = phi i32 [ %10, %bb.k ], [ %9, %bb.g ], [ %9, %bb.f ]
   %i.bl = phi ptr [ %i.an, %bb.k ], [ %i.w, %bb.g ], [ %i.w, %bb.f ]
   %.4 = phi i1 [ %.3, %bb.k ], [ %.0332443, %bb.g ], [ %.0332443, %bb.f ] ; 2 uses
   %.1327 = phi i32 [ %i.bi, %bb.k ], [ %.0326444, %bb.g ], [ %.0326444, %bb.f ] ; 2 uses

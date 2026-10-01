@@ -205,15 +205,16 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %.not93.i.i, label %.loopexit.i.i, label %.lr.ph127.i.i
 
 .lr.ph127.i.i:                                    ; preds = %bb.bn
-  %i.kw = getelementptr inbounds nuw i8, ptr %.286130.i.i, i64 72
+  %i.kw = getelementptr inbounds nuw i8, ptr %.286130.i.i, i64 72 ; 2 uses
+  %.pre153.i.i = load ptr, ptr %i.kw, align 8, !tbaa !100
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.br, %.lr.ph127.i.i
   %i.kx = phi i64 [ %i.kv, %.lr.ph127.i.i ], [ %i.lg, %bb.br ] ; 2 uses
-  %4 = phi i64 [ 0, %.lr.ph127.i.i ], [ %i.li, %bb.br ]
+  %4 = phi ptr [ %.pre153.i.i, %.lr.ph127.i.i ], [ %6, %bb.br ] ; 3 uses
+  %5 = phi i64 [ 0, %.lr.ph127.i.i ], [ %i.li, %bb.br ]
   %.4126.i.i = phi i32 [ 0, %.lr.ph127.i.i ], [ %i.lh, %bb.br ]
-  %5 = load ptr, ptr %i.kw, align 8, !tbaa !100
-  %i.ky = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %4
+  %i.ky = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %5
   %i.kz = load ptr, ptr %i.ky, align 8, !tbaa !95 ; 3 uses
   %i.la = getelementptr inbounds nuw i8, ptr %i.kz, i64 152
   %i.lb = load i8, ptr %i.la, align 8, !tbaa !97, !range !10, !noundef !11
@@ -228,11 +229,13 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bp
   call fastcc void @H5C__prep_for_file_close__compute_fd_heights_real(ptr noundef nonnull %i.kz, i32 noundef 1)
+  %.pre.i.i = load ptr, ptr %i.kw, align 8, !tbaa !100
   %.pre.i.i.a = load i64, ptr %i.ku, align 8, !tbaa !88
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp, %bb.bo
   %i.lg = phi i64 [ %i.kx, %bb.bo ], [ %i.kx, %bb.bp ], [ %.pre.i.i.a, %bb.bq ] ; 2 uses
+  %6 = phi ptr [ %4, %bb.bo ], [ %4, %bb.bp ], [ %.pre.i.i, %bb.bq ]
   %i.lh = add i32 %.4126.i.i, 1                   ; 2 uses
   %i.li = zext i32 %i.lh to i64                   ; 2 uses
   %i.lj = icmp ugt i64 %i.lg, %i.li
@@ -635,16 +638,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not16, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.m = add i32 %1, 1
+  %.pre17 = load ptr, ptr %i.l, align 8, !tbaa !100
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.f
   %i.n = phi i64 [ %i.k, %.lr.ph ], [ %i.v, %bb.f ] ; 2 uses
-  %2 = phi i64 [ 0, %.lr.ph ], [ %i.x, %bb.f ]
+  %2 = phi ptr [ %.pre17, %.lr.ph ], [ %4, %bb.f ] ; 3 uses
+  %3 = phi i64 [ 0, %.lr.ph ], [ %i.x, %bb.f ]
   %.015 = phi i32 [ 0, %.lr.ph ], [ %i.w, %bb.f ]
-  %3 = load ptr, ptr %i.l, align 8, !tbaa !100
-  %i.o = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %2
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %3
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !95   ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 152
   %i.r = load i8, ptr %i.q, align 8, !tbaa !97, !range !10, !noundef !11
@@ -659,11 +663,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   tail call fastcc void @H5C__prep_for_file_close__compute_fd_heights_real(ptr noundef nonnull %i.p, i32 noundef %i.m)
+  %.pre = load ptr, ptr %i.l, align 8, !tbaa !100
   %.pre.a = load i64, ptr %i.j, align 8, !tbaa !88
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %i.v = phi i64 [ %.pre.a, %bb.e ], [ %i.n, %bb.d ], [ %i.n, %bb.c ] ; 2 uses
+  %4 = phi ptr [ %.pre, %bb.e ], [ %2, %bb.d ], [ %2, %bb.c ]
   %i.w = add i32 %.015, 1                         ; 2 uses
   %i.x = zext i32 %i.w to i64                     ; 2 uses
   %i.y = icmp ugt i64 %i.v, %i.x

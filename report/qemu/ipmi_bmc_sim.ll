@@ -204,13 +204,9 @@ rsp_buffer_push.exit:                             ; preds = %bb.f, %bb.g
   store i8 -58, ptr %i.ag, align 2
   br label %.loopexit
 
-.lr.ph.splitthread-pre-split:                     ; preds = %rsp_buffer_push.exit31
-  %.pr = load i32, ptr %i.y, align 4
-  br label %.lr.ph.split
-
-.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
-  %i.aj = phi i32 [ %.pr, %.lr.ph.splitthread-pre-split ], [ %i.ah, %.lr.ph ] ; 3 uses
-  %.032 = phi i32 [ %i.as, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph ] ; 2 uses
+.lr.ph.split:                                     ; preds = %.lr.ph, %rsp_buffer_push.exit31
+  %i.aj = phi i32 [ %4, %rsp_buffer_push.exit31 ], [ %i.ah, %.lr.ph ] ; 4 uses
+  %.032 = phi i32 [ %i.as, %rsp_buffer_push.exit31 ], [ 0, %.lr.ph ] ; 2 uses
   %i.ak = icmp ugt i32 %i.aj, 299
   br i1 %i.ak, label %bb.h, label %bb.i
 
@@ -228,12 +224,14 @@ bb.i:                                             ; preds = %.lr.ph.split
   store i32 %i.aq, ptr %i.y, align 4
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 %i.ap
   store i8 %i.ao, ptr %i.ar, align 1
+  %.pre = load i32, ptr %i.y, align 4
   br label %rsp_buffer_push.exit31
 
 rsp_buffer_push.exit31:                           ; preds = %bb.h, %bb.i
+  %4 = phi i32 [ %i.aj, %bb.h ], [ %.pre, %bb.i ]
   %i.as = add nuw i32 %.032, 1                    ; 2 uses
   %exitcond.not = icmp eq i32 %i.as, %i.x
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.splitthread-pre-split, !llvm.loop !25
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split, !llvm.loop !25
 
 .loopexit:                                        ; preds = %rsp_buffer_push.exit31, %.lr.ph.split.us, %rsp_buffer_push.exit, %bb.d, %bb.b
   ret void

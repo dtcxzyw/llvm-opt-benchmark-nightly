@@ -205,37 +205,40 @@ bb.ad:                                            ; preds = %bb.ab
   br i1 %i.jq, label %.lr.ph440, label %._crit_edge441
 
 .lr.ph440:                                        ; preds = %.preheader386
-  %i.jr = getelementptr inbounds nuw [8 x i8], ptr %.0, i64 %indvars.iv520
+  %i.jr = getelementptr inbounds nuw [8 x i8], ptr %.0, i64 %indvars.iv520 ; 2 uses
+  %.pre555 = load ptr, ptr %i.jr, align 8, !tbaa !101
   br label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph440, %bb.ag
   %i.js = phi i32 [ %i.jp, %.lr.ph440 ], [ %i.kc, %bb.ag ]
   %i.jt = phi i32 [ %i.jp, %.lr.ph440 ], [ %i.kd, %bb.ag ]
+  %4 = phi ptr [ %.pre555, %.lr.ph440 ], [ %6, %bb.ag ] ; 2 uses
   %indvars.iv517 = phi i64 [ 0, %.lr.ph440 ], [ %indvars.iv.next518, %bb.ag ] ; 3 uses
-  %.1439 = phi i32 [ %.0314446, %.lr.ph440 ], [ %.2, %bb.ag ] ; 2 uses
-  %.1316438.a = phi i32 [ %.0315445, %.lr.ph440 ], [ %.2317, %bb.ag ] ; 3 uses
-  %4 = load ptr, ptr %i.jr, align 8, !tbaa !101
+  %.1316438.a = phi i32 [ %.0314446, %.lr.ph440 ], [ %.2, %bb.ag ] ; 2 uses
+  %.1316438 = phi i32 [ %.0315445, %.lr.ph440 ], [ %.2317, %bb.ag ] ; 3 uses
   %i.ju = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv517
   %i.jv = load i32, ptr %i.ju, align 4, !tbaa !11 ; 2 uses
   %i.jw = icmp sgt i32 %i.jv, 0
   br i1 %i.jw, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  %i.jx = sext i32 %.1316438.a to i64
+  %i.jx = sext i32 %.1316438 to i64
   %i.jy = getelementptr inbounds [4 x i8], ptr %i.io, i64 %i.jx
   store i32 %i.jv, ptr %i.jy, align 4, !tbaa !11
   %i.jz = trunc nuw nsw i64 %indvars.iv517 to i32
   %i.ka = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.id, ptr noundef nonnull @.str.9, i32 noundef %i.jz) #13 ; 0 uses
+  %5 = add nsw i32 %.1316438, 1
   %i.kb = add nsw i32 %.1316438.a, 1
-  %5 = add nsw i32 %.1439, 1
+  %.pre554 = load ptr, ptr %i.jr, align 8, !tbaa !101
   %.pre554.a = load i32, ptr %i.bf, align 4, !tbaa !67 ; 2 uses
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ae, %bb.af
   %i.kc = phi i32 [ %.pre554.a, %bb.af ], [ %i.js, %bb.ae ] ; 2 uses
   %i.kd = phi i32 [ %.pre554.a, %bb.af ], [ %i.jt, %bb.ae ] ; 2 uses
-  %.2317 = phi i32 [ %i.kb, %bb.af ], [ %.1316438.a, %bb.ae ] ; 2 uses
-  %.2 = phi i32 [ %5, %bb.af ], [ %.1439, %bb.ae ] ; 2 uses
+  %6 = phi ptr [ %.pre554, %bb.af ], [ %4, %bb.ae ]
+  %.2317 = phi i32 [ %5, %bb.af ], [ %.1316438, %bb.ae ] ; 2 uses
+  %.2 = phi i32 [ %i.kb, %bb.af ], [ %.1316438.a, %bb.ae ] ; 2 uses
   %indvars.iv.next518 = add nuw nsw i64 %indvars.iv517, 1 ; 2 uses
   %i.ke = sext i32 %i.kd to i64
   %i.kf = icmp slt i64 %indvars.iv.next518, %i.ke

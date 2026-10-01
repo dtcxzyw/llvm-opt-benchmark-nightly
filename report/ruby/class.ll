@@ -202,6 +202,7 @@ rb_scan_args_keyword_p.exit.thread:               ; preds = %bb.b, %bb.c, %.spli
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 16
   %wide.trip.count = zext nneg i32 %i.b to i64
+  %.pre134 = load i32, ptr %3, align 8
   br label %bb.d
 
 .preheader:                                       ; preds = %bb.i, %.preheader115
@@ -216,8 +217,8 @@ rb_scan_args_keyword_p.exit.thread:               ; preds = %bb.b, %bb.c, %.spli
   br label %bb.j
 
 bb.d:                                             ; preds = %.lr.ph, %bb.i
+  %4 = phi i32 [ %.pre134, %.lr.ph ], [ %6, %bb.i ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
-  %4 = load i32, ptr %3, align 8                  ; 3 uses
   %i.ap = icmp ult i32 %4, 41
   br i1 %i.ap, label %bb.e, label %bb.f
 
@@ -225,7 +226,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aq = load ptr, ptr %i.ak, align 8
   %i.ar = zext nneg i32 %4 to i64
   %i.as = getelementptr i8, ptr %i.aq, i64 %i.ar
-  %i.at = add nuw nsw i32 %4, 8
+  %i.at = add nuw nsw i32 %4, 8                   ; 2 uses
   store i32 %i.at, ptr %3, align 8
   br label %bb.g
 
@@ -236,6 +237,7 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
+  %5 = phi i32 [ %i.at, %bb.e ], [ %4, %bb.f ]
   %i.aw = phi ptr [ %i.as, %bb.e ], [ %i.au, %bb.f ]
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !163 ; 2 uses
   %.not109 = icmp eq ptr %i.ax, null
@@ -245,9 +247,11 @@ bb.h:                                             ; preds = %bb.g
   %i.ay = getelementptr [8 x i8], ptr %2, i64 %indvars.iv
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !19
   store i64 %i.az, ptr %i.ax, align 8, !tbaa !19
+  %.pre = load i32, ptr %3, align 8
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
+  %6 = phi i32 [ %.pre, %bb.h ], [ %5, %bb.g ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader, label %bb.d, !llvm.loop !160
@@ -372,20 +376,21 @@ bb.ac:                                            ; preds = %bb.z, %bb.ab, %bb.a
 .lr.ph125:                                        ; preds = %bb.ac
   %i.cm = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %.pre136 = load i32, ptr %3, align 8
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph125, %bb.ai
-  %.5123.a = phi i32 [ %.4, %.lr.ph125 ], [ %i.da, %bb.ai ] ; 2 uses
-  %.284122.a = phi i32 [ 0, %.lr.ph125 ], [ %i.db, %bb.ai ]
-  %5 = load i32, ptr %3, align 8                  ; 3 uses
-  %i.co = icmp ult i32 %5, 41
+  %.5123.a = phi i32 [ %.pre136, %.lr.ph125 ], [ %8, %bb.ai ] ; 4 uses
+  %.284122.a = phi i32 [ %.4, %.lr.ph125 ], [ %i.da, %bb.ai ] ; 2 uses
+  %.284122 = phi i32 [ 0, %.lr.ph125 ], [ %i.db, %bb.ai ]
+  %i.co = icmp ult i32 %.5123.a, 41
   br i1 %i.co, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
   %i.cp = load ptr, ptr %i.cn, align 8
-  %i.cq = zext nneg i32 %5 to i64
+  %i.cq = zext nneg i32 %.5123.a to i64
   %i.cr = getelementptr i8, ptr %i.cp, i64 %i.cq
-  %i.cs = add nuw nsw i32 %5, 8
+  %i.cs = add nuw nsw i32 %.5123.a, 8             ; 2 uses
   store i32 %i.cs, ptr %3, align 8
   br label %bb.ag
 
@@ -396,21 +401,24 @@ bb.af:                                            ; preds = %bb.ad
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
+  %7 = phi i32 [ %i.cs, %bb.ae ], [ %.5123.a, %bb.af ]
   %i.cv = phi ptr [ %i.cr, %bb.ae ], [ %i.ct, %bb.af ]
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !163 ; 2 uses
   %.not106 = icmp eq ptr %i.cw, null
   br i1 %.not106, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.cx = sext i32 %.5123.a to i64
+  %i.cx = sext i32 %.284122.a to i64
   %i.cy = getelementptr [8 x i8], ptr %2, i64 %i.cx
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !19
   store i64 %i.cz, ptr %i.cw, align 8, !tbaa !19
+  %.pre135 = load i32, ptr %3, align 8
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  %i.da = add i32 %.5123.a, 1                     ; 2 uses
-  %i.db = add nuw nsw i32 %.284122.a, 1           ; 2 uses
+  %8 = phi i32 [ %.pre135, %bb.ah ], [ %7, %bb.ag ]
+  %i.da = add i32 %.284122.a, 1                   ; 2 uses
+  %i.db = add nuw nsw i32 %.284122, 1             ; 2 uses
   %exitcond133.not = icmp eq i32 %i.db, %i.f
   br i1 %exitcond133.not, label %._crit_edge126, label %bb.ad, !llvm.loop !162
 

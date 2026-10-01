@@ -202,8 +202,9 @@ bb.cu:                                            ; preds = %.lr.ph.split.i
   %i.tq = getelementptr inbounds nuw [2 x i8], ptr %i.lh, i64 %i.tp
   %i.tr = getelementptr inbounds nuw [2 x i8], ptr %i.tq, i64 %indvars.iv.i56
   store i16 %i.tl, ptr %i.tr, align 2, !tbaa !18
-  %i.ts = getelementptr inbounds nuw i8, ptr %i.te, i64 8
+  %i.ts = getelementptr inbounds nuw i8, ptr %i.te, i64 8 ; 2 uses
   %i.tt = getelementptr inbounds nuw [4 x i8], ptr @converters, i64 %indvars.iv.i56
+  %2 = load ptr, ptr %i.ts, align 8, !tbaa !31
   br label %.lr.ph.split.i.i
 
 .split.us.i.i:                                    ; preds = %scalar.ph
@@ -219,9 +220,9 @@ bb.cv:                                            ; preds = %bb.cz
 
 .lr.ph.split.i.i:                                 ; preds = %bb.cv, %.lr.ph.i59.i
   %i.tx = phi i16 [ %i.un, %bb.cv ], [ %i.tl, %.lr.ph.i59.i ] ; 2 uses
+  %3 = phi ptr [ %4, %bb.cv ], [ %2, %.lr.ph.i59.i ] ; 3 uses
   %indvars.iv.i60.i = phi i64 [ %indvars.iv.next.i62.i, %bb.cv ], [ 0, %.lr.ph.i59.i ] ; 2 uses
-  %2 = load ptr, ptr %i.ts, align 8, !tbaa !31
-  %i.ty = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %indvars.iv.i60.i
+  %i.ty = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv.i60.i
   %i.tz = load i16, ptr %i.ty, align 2, !tbaa !18 ; 2 uses
   %.not.i61.i = icmp eq i16 %i.tz, 0
   br i1 %.not.i61.i, label %bb.cx, label %bb.cw
@@ -246,11 +247,13 @@ bb.cy:                                            ; preds = %bb.cx
   %i.uj = shl nuw nsw i64 %i.ui, 1
   %i.uk = getelementptr inbounds nuw i8, ptr @stringStore, i64 %i.uj
   %i.ul = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ub, ptr noundef nonnull @.str.49, ptr noundef %i.uc, ptr noundef nonnull %i.ug, ptr noundef nonnull %i.uk) #16 ; 0 uses
+  %.pre.i64.i = load ptr, ptr %i.ts, align 8, !tbaa !31
   %.pre.i64.i.a = load i16, ptr @aliasListsSize, align 2, !tbaa !18
   br label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cy, %bb.cx, %bb.cw
   %i.um = phi i16 [ %i.tx, %bb.cw ], [ %i.tx, %bb.cx ], [ %.pre.i64.i.a, %bb.cy ] ; 2 uses
+  %4 = phi ptr [ %3, %bb.cw ], [ %3, %bb.cx ], [ %.pre.i64.i, %bb.cy ]
   %.0.i.i57 = phi i16 [ %i.ua, %bb.cw ], [ 0, %bb.cx ], [ 0, %bb.cy ]
   %i.un = add i16 %i.um, 1                        ; 5 uses
   store i16 %i.un, ptr @aliasListsSize, align 2, !tbaa !18

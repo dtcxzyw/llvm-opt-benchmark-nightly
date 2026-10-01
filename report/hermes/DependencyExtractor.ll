@@ -205,7 +205,7 @@ bb.a:
 .lr.ph97:                                         ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 8 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   br label %bb.b
 
 .loopexit:                                        ; preds = %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit
@@ -322,22 +322,24 @@ _ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_15MatchNChar8InsnE
   store i8 %i.n, ptr %i.an, align 1, !tbaa !90
   %.idx = shl nuw nsw i64 %.sroa.speculated, 2
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.073.095, i64 %.idx
+  %.pre122 = load ptr, ptr %i.h, align 8, !tbaa !80
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit
-  %i.ap = phi ptr [ %i.bj, %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit ], [ %i.am, %.lr.ph.preheader ] ; 3 uses
-  %.094.a = phi ptr [ %i.bk, %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit ], [ %.sroa.073.095, %.lr.ph.preheader ] ; 2 uses
-  %4 = load i32, ptr %.094.a, align 4, !tbaa !8
+  %i.ap = phi ptr [ %6, %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit ], [ %.pre122, %.lr.ph.preheader ] ; 2 uses
+  %.094.a = phi ptr [ %i.bj, %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit ], [ %i.am, %.lr.ph.preheader ] ; 2 uses
+  %.094 = phi ptr [ %i.bk, %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit ], [ %.sroa.073.095, %.lr.ph.preheader ] ; 2 uses
+  %4 = load i32, ptr %.094, align 4, !tbaa !8
   %5 = trunc i32 %4 to i8                         ; 2 uses
-  %6 = load ptr, ptr %i.h, align 8, !tbaa !80
-  %.not.i.i.i48 = icmp eq ptr %i.ap, %6
+  %.not.i.i.i48 = icmp eq ptr %.094.a, %i.ap
   br i1 %.not.i.i.i48, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph
-  store i8 %5, ptr %i.ap, align 1, !tbaa !90
+  store i8 %5, ptr %.094.a, align 1, !tbaa !90
   %i.aq = load ptr, ptr %i.g, align 8, !tbaa !155
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 1 ; 2 uses
   store ptr %i.ar, ptr %i.g, align 8, !tbaa !155
+  %.pre121 = load ptr, ptr %i.h, align 8, !tbaa !80
   br label %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit
 
 bb.n:                                             ; preds = %.lr.ph
@@ -385,13 +387,14 @@ bb.q:                                             ; preds = %_ZNSt6vectorIhSaIhE
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
   store ptr %i.bb, ptr %3, align 8, !tbaa !84
   store ptr %i.be, ptr %i.g, align 8, !tbaa !155
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.ba
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.ba ; 2 uses
   store ptr %i.bi, ptr %i.h, align 8, !tbaa !80
   br label %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit
 
 _ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit: ; preds = %bb.m, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i
+  %6 = phi ptr [ %.pre121, %bb.m ], [ %i.bi, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ]
   %i.bj = phi ptr [ %i.ar, %bb.m ], [ %i.be, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ]
-  %i.bk = getelementptr inbounds nuw i8, ptr %.094.a, i64 4 ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %.094, i64 4 ; 2 uses
   %.not40 = icmp eq ptr %i.bk, %i.ao
   br i1 %.not40, label %.loopexit, label %.lr.ph
 

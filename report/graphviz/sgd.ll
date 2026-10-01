@@ -204,7 +204,7 @@ bitarray_new.exit179.i:                           ; preds = %bb.ad
 
 .lr.ph254.i:                                      ; preds = %bitarray_new.exit179.i, %bitarray_new.exit179.thread.i
   %i.fs = phi ptr [ %i.fn, %bitarray_new.exit179.thread.i ], [ %i.fr, %bitarray_new.exit179.i ] ; 4 uses
-  %i.ft = phi ptr [ %i.fk, %bitarray_new.exit179.thread.i ], [ %i.fq, %bitarray_new.exit179.i ] ; 4 uses
+  %i.ft = phi ptr [ %i.fk, %bitarray_new.exit179.thread.i ], [ %i.fq, %bitarray_new.exit179.i ] ; 5 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.fv = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.fw = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -256,6 +256,7 @@ bb.ak:                                            ; preds = %.loopexit.i, %.lr.p
 .lr.ph232.i:                                      ; preds = %bb.ak
   %i.gk = load ptr, ptr %i.cb, align 8, !tbaa !73
   %.pre260.i = load ptr, ptr %5, align 8
+  %.pre262.i = load i64, ptr %i.ft, align 8
   br label %bb.al
 
 ._crit_edge233.loopexit.i:                        ; preds = %bb.am
@@ -263,7 +264,7 @@ bb.ak:                                            ; preds = %.loopexit.i, %.lr.p
   br label %._crit_edge233.i
 
 ._crit_edge233.i:                                 ; preds = %._crit_edge233.loopexit.i, %bb.ak
-  %i.gl = phi i64 [ %i.gi, %bb.ak ], [ %i.hj, %._crit_edge233.loopexit.i ] ; 2 uses
+  %i.gl = phi i64 [ %i.gi, %bb.ak ], [ %9, %._crit_edge233.loopexit.i ] ; 2 uses
   %i.gm = phi i64 [ %i.ge, %bb.ak ], [ %.pre262.i.a, %._crit_edge233.loopexit.i ] ; 3 uses
   %.0147.lcssa.i = phi i32 [ 0, %bb.ak ], [ %.1148.i, %._crit_edge233.loopexit.i ] ; 2 uses
   %i.gn = icmp ult i64 %i.gm, %i.gl
@@ -277,22 +278,22 @@ bb.ak:                                            ; preds = %.loopexit.i, %.lr.p
   br label %bb.an
 
 bb.al:                                            ; preds = %bb.am, %.lr.ph232.i
-  %i.gs = phi i64 [ %i.gi, %.lr.ph232.i ], [ %i.hj, %bb.am ]
+  %8 = phi i64 [ %i.gi, %.lr.ph232.i ], [ %9, %bb.am ]
+  %i.gs = phi i64 [ %.pre262.i, %.lr.ph232.i ], [ %i.hj, %bb.am ] ; 3 uses
   %i.gt = phi ptr [ %.pre260.i, %.lr.ph232.i ], [ %i.hk, %bb.am ] ; 4 uses
   %.0146230.i = phi i64 [ %i.ge, %.lr.ph232.i ], [ %i.hl, %bb.am ] ; 2 uses
   %.0147229.i = phi i32 [ 0, %.lr.ph232.i ], [ %.1148.i, %bb.am ] ; 2 uses
   %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.gk, i64 %.0146230.i
-  %8 = load i64, ptr %i.gu, align 8, !tbaa !72    ; 2 uses
-  %i.gv = load i64, ptr %i.ft, align 8            ; 2 uses
+  %i.gv = load i64, ptr %i.gu, align 8, !tbaa !72 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store ptr %i.gt, ptr %4, align 8
-  store i64 %i.gv, ptr %i.fu, align 8
-  %i.gw = icmp ult i64 %i.gv, 65                  ; 2 uses
+  store i64 %i.gs, ptr %i.fu, align 8
+  %i.gw = icmp ult i64 %i.gs, 65                  ; 2 uses
   %.0.i181.i = select i1 %i.gw, ptr %4, ptr %i.gt
-  %i.gx = lshr i64 %8, 3                          ; 2 uses
+  %i.gx = lshr i64 %i.gv, 3                       ; 2 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %.0.i181.i, i64 %i.gx
   %i.gz = load i8, ptr %i.gy, align 1, !tbaa !28
-  %i.ha = trunc i64 %8 to i8
+  %i.ha = trunc i64 %i.gv to i8
   %i.hb = and i8 %i.ha, 7                         ; 2 uses
   %i.hc = lshr i8 %i.gz, %i.hb
   %i.hd = trunc i8 %i.hc to i1
@@ -308,15 +309,17 @@ bitarray_set.exit183.i:                           ; preds = %bb.al
   store i8 %i.hh, ptr %i.hf, align 1, !tbaa !28
   %i.hi = add nsw i32 %.0147229.i, 1
   %.pre259.i = load ptr, ptr %5, align 8
+  %.pre261.i = load i64, ptr %i.ft, align 8
   %.pre261.i.a = load i64, ptr %i.gh, align 8, !tbaa !72
   br label %bb.am
 
 bb.am:                                            ; preds = %bitarray_set.exit183.i, %bb.al
-  %i.hj = phi i64 [ %i.gs, %bb.al ], [ %.pre261.i.a, %bitarray_set.exit183.i ] ; 3 uses
+  %9 = phi i64 [ %8, %bb.al ], [ %.pre261.i.a, %bitarray_set.exit183.i ] ; 3 uses
+  %i.hj = phi i64 [ %i.gs, %bb.al ], [ %.pre261.i, %bitarray_set.exit183.i ]
   %i.hk = phi ptr [ %i.gt, %bb.al ], [ %.pre259.i, %bitarray_set.exit183.i ]
   %.1148.i = phi i32 [ %.0147229.i, %bb.al ], [ %i.hi, %bitarray_set.exit183.i ] ; 2 uses
   %i.hl = add nuw i64 %.0146230.i, 1              ; 2 uses
-  %i.hm = icmp ult i64 %i.hl, %i.hj
+  %i.hm = icmp ult i64 %i.hl, %9
   br i1 %i.hm, label %bb.al, label %._crit_edge233.loopexit.i, !llvm.loop !13
 
 ._crit_edge251.loopexit.i:                        ; preds = %._crit_edge247.i

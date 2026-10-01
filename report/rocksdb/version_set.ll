@@ -205,19 +205,16 @@ bb.l:                                             ; preds = %_ZSt10__pop_heapIN9
   %i.ih = icmp eq i64 %i.gr, 0
   %or.cond38.i.i.i = select i1 %i.gq, i1 %i.ih, i1 false
   %i.ii = getelementptr inbounds nuw i8, ptr %.sroa.0172.0, i64 8 ; 3 uses
-  br i1 %or.cond38.i.i.i, label %.lr.ph.i.split.split.us.i.i, label %.lr.ph.i.split.split.i.preheader.i
-
-.lr.ph.i.split.split.i.preheader.i:               ; preds = %.lr.ph.i.split.i.i
-  %.pre.i = load ptr, ptr %i.ii, align 8, !tbaa !1053
-  br label %.lr.ph.i.split.split.i.i
+  %.pre15.i = load ptr, ptr %i.ii, align 8, !tbaa !1053 ; 2 uses
+  br i1 %or.cond38.i.i.i, label %.lr.ph.i.split.split.us.i.i, label %.lr.ph.i.split.split.i.i
 
 .lr.ph.i.split.split.us.i.i:                      ; preds = %.lr.ph.i.split.i.i, %bb.n
+  %24 = phi ptr [ %25, %bb.n ], [ %.pre15.i, %.lr.ph.i.split.i.i ] ; 2 uses
   %.sroa.0.031.i.us29.i.i = phi ptr [ %i.iz, %bb.n ], [ %i.eu, %.lr.ph.i.split.i.i ] ; 4 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %.sroa.0.031.i.us29.i.i, i64 8
   %i.ik = load ptr, ptr %i.ij, align 8, !tbaa !1053 ; 2 uses
   %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 128 ; 2 uses
   %i.im = load i64, ptr %i.il, align 8, !tbaa !1042
-  %24 = load ptr, ptr %i.ii, align 8, !tbaa !1053
   %i.in = getelementptr inbounds nuw i8, ptr %24, i64 128
   %i.io = load i64, ptr %i.in, align 8, !tbaa !1042
   %i.ip = icmp ugt i64 %i.im, %i.io
@@ -254,16 +251,18 @@ _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeES
   store i64 %.sroa.03.0.copyload.i13.i.us30.i.i, ptr %i.iy, align 8, !tbaa !533
   %.sroa.14.0..sroa_idx4.i = getelementptr inbounds nuw i8, ptr %i.iy, i64 8
   store ptr %i.ik, ptr %.sroa.14.0..sroa_idx4.i, align 8, !tbaa !347
+  %.pre14.i = load ptr, ptr %i.ii, align 8, !tbaa !1053
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_RT0_.exit.i.loopexit.us39.i.i, %.lr.ph.i.split.split.us.i.i
+  %25 = phi ptr [ %.pre14.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_RT0_.exit.i.loopexit.us39.i.i ], [ %24, %.lr.ph.i.split.split.us.i.i ]
   %i.iz = getelementptr inbounds nuw i8, ptr %.sroa.0.031.i.us29.i.i, i64 16 ; 2 uses
   %.not.i.us43.i.i = icmp ult ptr %i.iz, %.0.i.i.i.i.i.fr
   br i1 %.not.i.us43.i.i, label %.lr.ph.i.split.split.us.i.i, label %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN7rocksdb12_GLOBAL__N_15FsizeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit.i.i, !llvm.loop !2075
 
-.lr.ph.i.split.split.i.i:                         ; preds = %bb.o, %.lr.ph.i.split.split.i.preheader.i
-  %i.ja = phi ptr [ %i.ji, %bb.o ], [ %.pre.i, %.lr.ph.i.split.split.i.preheader.i ] ; 2 uses
-  %.sroa.0.031.i.i.i = phi ptr [ %i.jj, %bb.o ], [ %i.eu, %.lr.ph.i.split.split.i.preheader.i ] ; 4 uses
+.lr.ph.i.split.split.i.i:                         ; preds = %.lr.ph.i.split.i.i, %bb.o
+  %i.ja = phi ptr [ %i.ji, %bb.o ], [ %.pre15.i, %.lr.ph.i.split.i.i ] ; 2 uses
+  %.sroa.0.031.i.i.i = phi ptr [ %i.jj, %bb.o ], [ %i.eu, %.lr.ph.i.split.i.i ] ; 4 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.sroa.0.031.i.i.i, i64 8
   %i.jc = load ptr, ptr %i.jb, align 8, !tbaa !1053 ; 3 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %i.jc, i64 128
@@ -666,14 +665,15 @@ bb.bk:                                            ; preds = %.lr.ph242, %.loopex
 
 .lr.ph240:                                        ; preds = %bb.bk
   %i.ob = load ptr, ptr %i.an, align 8, !tbaa !252 ; 2 uses
-  %i.oc = getelementptr inbounds nuw [8 x i8], ptr %i.ob, i64 %indvars.iv258 ; 2 uses
+  %i.oc = getelementptr inbounds nuw [8 x i8], ptr %i.ob, i64 %indvars.iv258 ; 3 uses
+  %.pre263 = load double, ptr %i.oc, align 8, !tbaa !859
   br label %bb.bl
 
 bb.bl:                                            ; preds = %.lr.ph240, %bb.bn
   %i.od = phi i32 [ %i.nx, %.lr.ph240 ], [ %i.on, %bb.bn ]
   %i.oe = phi i32 [ %i.nx, %.lr.ph240 ], [ %i.oo, %bb.bn ]
+  %6 = phi double [ %.pre263, %.lr.ph240 ], [ %7, %bb.bn ] ; 3 uses
   %indvars.iv255 = phi i64 [ %indvars.iv253, %.lr.ph240 ], [ %indvars.iv.next256, %bb.bn ] ; 3 uses
-  %6 = load double, ptr %i.oc, align 8, !tbaa !859 ; 2 uses
   %i.of = getelementptr inbounds nuw [8 x i8], ptr %i.ob, i64 %indvars.iv255 ; 2 uses
   %i.og = load double, ptr %i.of, align 8, !tbaa !859 ; 2 uses
   %i.oh = fcmp olt double %6, %i.og
@@ -689,12 +689,14 @@ bb.bm:                                            ; preds = %bb.bl
   store i32 %i.om, ptr %i.oj, align 4, !tbaa !269
   store double %6, ptr %i.of, align 8, !tbaa !859
   store i32 %i.ok, ptr %i.ol, align 4, !tbaa !269
+  %.pre262 = load double, ptr %i.oc, align 8, !tbaa !859
   %.pre262.a = load i32, ptr %i.j, align 16, !tbaa !807 ; 2 uses
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bl, %bb.bm
   %i.on = phi i32 [ %i.od, %bb.bl ], [ %.pre262.a, %bb.bm ] ; 2 uses
   %i.oo = phi i32 [ %i.oe, %bb.bl ], [ %.pre262.a, %bb.bm ] ; 2 uses
+  %7 = phi double [ %6, %bb.bl ], [ %.pre262, %bb.bm ]
   %indvars.iv.next256 = add nuw nsw i64 %indvars.iv255, 1 ; 2 uses
   %i.op = add nsw i32 %i.oo, -1
   %i.oq = sext i32 %i.op to i64

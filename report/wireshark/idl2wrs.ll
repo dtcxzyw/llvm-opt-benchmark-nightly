@@ -202,27 +202,29 @@ trimprefix.exit.preheader:                        ; preds = %.loopexit.i, %prepa
   %.0912.i = phi ptr [ %.0912.pr.i, %.lr.ph18.splitthread-pre-split.i ], [ %i.pt, %preparetrimprefix.exit ] ; 2 uses
   %.017.i182 = phi ptr [ %.0.i186, %.lr.ph18.splitthread-pre-split.i ], [ %.015.i181, %preparetrimprefix.exit ] ; 2 uses
   %i.pv = getelementptr i8, ptr %.017.i182, i64 8 ; 2 uses
-  %i.pw = load ptr, ptr %i.pv, align 8
+  %i.pw = load ptr, ptr %i.pv, align 8            ; 2 uses
   %i.px = call i64 @strlen(ptr noundef %i.pw) #19 ; 2 uses
   %.not1013.i = icmp eq ptr %.0912.i, null
   br i1 %.not1013.i, label %.loopexit.i, label %.lr.ph.i183
 
 .lr.ph.i183:                                      ; preds = %.lr.ph18.split.i, %bb.bq
-  %.0914.i.a = phi ptr [ %.09.i185, %bb.bq ], [ %.0912.i, %.lr.ph18.split.i ] ; 2 uses
-  %2 = getelementptr i8, ptr %.0914.i.a, i64 8    ; 2 uses
-  %3 = load ptr, ptr %2, align 8                  ; 2 uses
-  %i.py = load ptr, ptr %i.pv, align 8
-  %i.pz = call i32 @strncmp(ptr noundef %3, ptr noundef %i.py, i64 noundef %i.px) #19
+  %.0914.i.a = phi ptr [ %3, %bb.bq ], [ %i.pw, %.lr.ph18.split.i ] ; 2 uses
+  %.0914.i = phi ptr [ %.09.i185, %bb.bq ], [ %.0912.i, %.lr.ph18.split.i ] ; 2 uses
+  %2 = getelementptr i8, ptr %.0914.i, i64 8      ; 2 uses
+  %i.py = load ptr, ptr %2, align 8               ; 2 uses
+  %i.pz = call i32 @strncmp(ptr noundef %i.py, ptr noundef %.0914.i.a, i64 noundef %i.px) #19
   %.not11.i184 = icmp eq i32 %i.pz, 0
   br i1 %.not11.i184, label %bb.bp, label %bb.bq
 
 bb.bp:                                            ; preds = %.lr.ph.i183
-  %i.qa = getelementptr i8, ptr %3, i64 %i.px
+  %i.qa = getelementptr i8, ptr %i.py, i64 %i.px
   store ptr %i.qa, ptr %2, align 8
+  %.pre.i = load ptr, ptr %i.pv, align 8
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp, %.lr.ph.i183
-  %.09.i185 = load ptr, ptr %.0914.i.a, align 8   ; 2 uses
+  %3 = phi ptr [ %.0914.i.a, %.lr.ph.i183 ], [ %.pre.i, %bb.bp ]
+  %.09.i185 = load ptr, ptr %.0914.i, align 8     ; 2 uses
   %.not10.i = icmp eq ptr %.09.i185, null
   br i1 %.not10.i, label %.loopexit.i, label %.lr.ph.i183, !llvm.loop !16
 

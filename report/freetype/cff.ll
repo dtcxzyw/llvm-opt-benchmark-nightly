@@ -205,7 +205,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !141  ; 6 uses
   store ptr null, ptr %1, align 8, !tbaa !593
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 7 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 8 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !143
   %.not = icmp eq ptr %i.g, null
   br i1 %.not, label %bb.b, label %bb.g
@@ -396,11 +396,15 @@ bb.k:                                             ; preds = %bb.i
   store ptr %i.bz, ptr %i.bx, align 8, !tbaa !127
   %i.cg = load i32, ptr %i.br, align 4, !tbaa !285 ; 2 uses
   %.not91104127 = icmp eq i32 %i.cg, 0
-  br i1 %.not91104127, label %._crit_edge.thread, label %.lr.ph.split
+  br i1 %.not91104127, label %._crit_edge.thread, label %.lr.ph.split.preheader
 
 ._crit_edge.thread:                               ; preds = %.thread124
   store ptr %i.bx, ptr %1, align 8, !tbaa !593
   br label %bb.u
+
+.lr.ph.split.preheader:                           ; preds = %.thread124
+  %.pre112 = load ptr, ptr %i.f, align 8, !tbaa !143
+  br label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %bb.k
   %i.ch = load ptr, ptr %i.f, align 8, !tbaa !143 ; 3 uses
@@ -455,22 +459,22 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.l, !llvm.loop !592
 
-.lr.ph.split:                                     ; preds = %.thread124, %bb.s
-  %i.da = phi i32 [ %i.dw, %bb.s ], [ %i.cg, %.thread124 ] ; 2 uses
-  %.075107 = phi i64 [ %.1, %bb.s ], [ 0, %.thread124 ] ; 5 uses
-  %.076106.a = phi i64 [ %.0135, %bb.s ], [ 0, %.thread124 ] ; 5 uses
-  %.077105.a = phi i64 [ %i.dx, %bb.s ], [ 1, %.thread124 ] ; 5 uses
-  %4 = load ptr, ptr %i.f, align 8, !tbaa !143
-  %i.db = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.077105.a
+.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.s
+  %i.da = phi i32 [ %i.dw, %bb.s ], [ %i.cg, %.lr.ph.split.preheader ] ; 2 uses
+  %4 = phi ptr [ %5, %bb.s ], [ %.pre112, %.lr.ph.split.preheader ] ; 3 uses
+  %.076106.a = phi i64 [ %.1, %bb.s ], [ 0, %.lr.ph.split.preheader ] ; 5 uses
+  %.077105.a = phi i64 [ %.0135, %bb.s ], [ 0, %.lr.ph.split.preheader ] ; 5 uses
+  %.077105 = phi i64 [ %i.dx, %bb.s ], [ 1, %.lr.ph.split.preheader ] ; 5 uses
+  %i.db = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.077105
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !116
   %i.dd = add i64 %i.dc, -1                       ; 2 uses
-  %i.de = icmp ult i64 %i.dd, %.076106.a
+  %i.de = icmp ult i64 %i.dd, %.077105.a
   br i1 %i.de, label %.thread132, label %bb.q
 
 .thread132:                                       ; preds = %.lr.ph.split
-  %i.df = getelementptr inbounds nuw i8, ptr %i.bz, i64 %.076106.a
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 %.075107
-  %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %.077105.a
+  %i.df = getelementptr inbounds nuw i8, ptr %i.bz, i64 %.077105.a
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 %.076106.a
+  %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %.077105
   store ptr %i.dg, ptr %i.dh, align 8, !tbaa !127
   br label %bb.s
 
@@ -478,16 +482,16 @@ bb.q:                                             ; preds = %.lr.ph.split
   %i.di = load i64, ptr %i.bp, align 8, !tbaa !291
   %spec.select = call i64 @llvm.umin.i64(i64 %i.dd, i64 %i.di) ; 4 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.bz, i64 %spec.select
-  %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 %.075107 ; 2 uses
-  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %.077105.a ; 5 uses
+  %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 %.076106.a ; 2 uses
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %.077105 ; 5 uses
   store ptr %i.dk, ptr %i.dl, align 8, !tbaa !127
-  %.not93 = icmp eq i64 %spec.select, %.076106.a
+  %.not93 = icmp eq i64 %spec.select, %.077105.a
   br i1 %.not93, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.dm = getelementptr i8, ptr %i.dl, i64 -8
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !127 ; 2 uses
-  %i.do = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.076106.a
+  %i.do = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.077105.a
   %i.dp = ptrtoint ptr %i.dk to i64
   %i.dq = ptrtoint ptr %i.dn to i64
   %i.dr = sub i64 %i.dp, %i.dq
@@ -497,17 +501,19 @@ bb.r:                                             ; preds = %bb.q
   %i.dt = load ptr, ptr %i.dl, align 8, !tbaa !127
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 1
   store ptr %i.du, ptr %i.dl, align 8, !tbaa !127
-  %i.dv = add i64 %.075107, 1
+  %i.dv = add i64 %.076106.a, 1
+  %.pre = load ptr, ptr %i.f, align 8, !tbaa !143
   %.pre.a = load i32, ptr %i.br, align 4, !tbaa !285
   br label %bb.s
 
 bb.s:                                             ; preds = %.thread132, %bb.q, %bb.r
-  %.0135 = phi i64 [ %spec.select, %bb.r ], [ %spec.select, %bb.q ], [ %.076106.a, %.thread132 ]
+  %.0135 = phi i64 [ %spec.select, %bb.r ], [ %spec.select, %bb.q ], [ %.077105.a, %.thread132 ]
   %i.dw = phi i32 [ %.pre.a, %bb.r ], [ %i.da, %bb.q ], [ %i.da, %.thread132 ] ; 2 uses
-  %.1 = phi i64 [ %i.dv, %bb.r ], [ %.075107, %bb.q ], [ %.075107, %.thread132 ]
-  %i.dx = add nuw nsw i64 %.077105.a, 1
+  %5 = phi ptr [ %.pre, %bb.r ], [ %4, %bb.q ], [ %4, %.thread132 ]
+  %.1 = phi i64 [ %i.dv, %bb.r ], [ %.076106.a, %bb.q ], [ %.076106.a, %.thread132 ]
+  %i.dx = add nuw nsw i64 %.077105, 1
   %i.dy = zext i32 %i.dw to i64
-  %.not91.not = icmp samesign ult i64 %.077105.a, %i.dy
+  %.not91.not = icmp samesign ult i64 %.077105, %i.dy
   br i1 %.not91.not, label %.lr.ph.split, label %._crit_edge, !llvm.loop !592
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.p

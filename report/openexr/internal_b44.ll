@@ -47,7 +47,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %i.h, align 8, !tbaa !43
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.pre = load i16, ptr %i.n, align 8, !tbaa !42  ; 2 uses
   br label %bb.c
 
@@ -77,6 +77,7 @@ bb.c:                                             ; preds = %.lr.ph299, %._crit_
 
 .lr.ph.preheader:                                 ; preds = %bb.c
   %i.ab = load ptr, ptr %i.c, align 8, !tbaa !44
+  %.pre491 = load ptr, ptr %i.o, align 8, !tbaa !46
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %bb.i
@@ -94,10 +95,10 @@ bb.c:                                             ; preds = %.lr.ph299, %._crit_
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
   %i.ah = phi i16 [ %i.w, %.lr.ph.preheader ], [ %i.bd, %bb.i ] ; 2 uses
+  %2 = phi ptr [ %.pre491, %.lr.ph.preheader ], [ %3, %bb.i ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.i ] ; 2 uses
-  %.1178294 = phi ptr [ %.0177296, %.lr.ph.preheader ], [ %.2179, %bb.i ] ; 4 uses
-  %.0181293.a = phi ptr [ %i.ab, %.lr.ph.preheader ], [ %.1182, %bb.i ] ; 4 uses
-  %2 = load ptr, ptr %i.o, align 8, !tbaa !46
+  %.0181293.a = phi ptr [ %.0177296, %.lr.ph.preheader ], [ %.2179, %bb.i ] ; 4 uses
+  %.0181293 = phi ptr [ %i.ab, %.lr.ph.preheader ], [ %.1182, %bb.i ] ; 4 uses
   %i.ai = getelementptr inbounds nuw [48 x i8], ptr %2, i64 %indvars.iv ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 12
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !18
@@ -125,7 +126,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not224, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.az = getelementptr inbounds nuw i8, ptr %.0181293.a, i64 %i.at
+  %i.az = getelementptr inbounds nuw i8, ptr %.0181293, i64 %i.at
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
@@ -136,17 +137,19 @@ bb.h:                                             ; preds = %bb.d, %bb.g
   %.pn225.in = phi i32 [ %i.ba, %bb.g ], [ %.0173297, %bb.d ]
   %.pn225 = zext i32 %.pn225.in to i64
   %.pn = mul i64 %i.ar, %.pn225
-  %.0180 = getelementptr inbounds nuw i8, ptr %.0181293.a, i64 %.pn
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0180, ptr align 1 %.1178294, i64 %i.ar, i1 false)
-  %i.bb = getelementptr inbounds nuw i8, ptr %.1178294, i64 %i.ar
-  %i.bc = getelementptr inbounds nuw i8, ptr %.0181293.a, i64 %i.at
+  %.0180 = getelementptr inbounds nuw i8, ptr %.0181293, i64 %.pn
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0180, ptr align 1 %.0181293.a, i64 %i.ar, i1 false)
+  %i.bb = getelementptr inbounds nuw i8, ptr %.0181293.a, i64 %i.ar
+  %i.bc = getelementptr inbounds nuw i8, ptr %.0181293, i64 %i.at
+  %.pre490 = load ptr, ptr %i.o, align 8, !tbaa !46
   %.pre490.a = load i16, ptr %i.n, align 8, !tbaa !42
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.h, %bb.f
   %i.bd = phi i16 [ %.pre490.a, %bb.h ], [ %i.ah, %bb.f ], [ %i.ah, %.lr.ph ] ; 4 uses
-  %.1182 = phi ptr [ %i.bc, %bb.h ], [ %i.az, %bb.f ], [ %.0181293.a, %.lr.ph ]
-  %.2179 = phi ptr [ %i.bb, %bb.h ], [ %.1178294, %bb.f ], [ %.1178294, %.lr.ph ] ; 2 uses
+  %3 = phi ptr [ %.pre490, %bb.h ], [ %2, %bb.f ], [ %2, %.lr.ph ]
+  %.1182 = phi ptr [ %i.bc, %bb.h ], [ %i.az, %bb.f ], [ %.0181293, %.lr.ph ]
+  %.2179 = phi ptr [ %i.bb, %bb.h ], [ %.0181293.a, %bb.f ], [ %.0181293.a, %.lr.ph ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.be = sext i16 %i.bd to i64
   %i.bf = icmp slt i64 %indvars.iv.next, %i.be

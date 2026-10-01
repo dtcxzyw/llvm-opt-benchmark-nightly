@@ -205,7 +205,11 @@ _ZN9rapidjson8internal19CountDecimalDigit32Ej.exit: ; preds = %bb.a, %bb.b, %bb.
 
 .critedge:                                        ; preds = %bb.t
   %i.u = icmp sgt i32 %.070174, 1
-  br i1 %i.u, label %bb.i, label %.critedge87
+  br i1 %i.u, label %bb.i, label %.critedge87.preheader
+
+.critedge87.preheader:                            ; preds = %.critedge
+  %.pre.pre136 = load i32, ptr %4, align 4, !tbaa !39
+  br label %.critedge87
 
 bb.i:                                             ; preds = %_ZN9rapidjson8internal19CountDecimalDigit32Ej.exit, %.critedge
   %.070174 = phi i32 [ %.0.i, %_ZN9rapidjson8internal19CountDecimalDigit32Ej.exit ], [ %i.as, %.critedge ] ; 3 uses
@@ -351,16 +355,16 @@ bb.w:                                             ; preds = %bb.v
   %.not.i = icmp ult i64 %i.bq, %i.bb
   br i1 %.not.i, label %_ZN9rapidjson8internal10GrisuRoundEPcimmmm.exit96, label %bb.v, !llvm.loop !677
 
-.critedge87:                                      ; preds = %.critedge, %bb.y
-  %.075 = phi i64 [ %i.bs, %bb.y ], [ %2, %.critedge ]
-  %.072 = phi i64 [ %i.bz, %bb.y ], [ %i.l, %.critedge ]
-  %.171 = phi i32 [ %i.ca, %bb.y ], [ 0, %.critedge ] ; 3 uses
+.critedge87:                                      ; preds = %.critedge87.preheader, %bb.y
+  %.pre = phi i32 [ %.pre137, %bb.y ], [ %.pre.pre136, %.critedge87.preheader ] ; 3 uses
+  %.075 = phi i64 [ %i.bs, %bb.y ], [ %2, %.critedge87.preheader ]
+  %.072 = phi i64 [ %i.bz, %bb.y ], [ %i.l, %.critedge87.preheader ]
+  %.171 = phi i32 [ %i.ca, %bb.y ], [ 0, %.critedge87.preheader ] ; 3 uses
   %i.br = mul i64 %.072, 10                       ; 2 uses
   %i.bs = mul i64 %.075, 10                       ; 4 uses
   %i.bt = lshr i64 %i.br, %i.d
   %i.bu = trunc i64 %i.bt to i8                   ; 2 uses
   %.not = icmp eq i8 %i.bu, 0
-  %.pre = load i32, ptr %4, align 4, !tbaa !39    ; 3 uses
   %.not81 = icmp eq i32 %.pre, 0
   %or.cond = select i1 %.not, i1 %.not81, i1 false
   br i1 %or.cond, label %bb.y, label %bb.x
@@ -372,9 +376,11 @@ bb.x:                                             ; preds = %.critedge87
   %i.bx = sext i32 %.pre to i64
   %i.by = getelementptr inbounds i8, ptr %3, i64 %i.bx
   store i8 %i.bv, ptr %i.by, align 1, !tbaa !47
+  %.pre.pre = load i32, ptr %4, align 4, !tbaa !39
   br label %bb.y
 
 bb.y:                                             ; preds = %.critedge87, %bb.x
+  %.pre137 = phi i32 [ %.pre.pre, %bb.x ], [ 0, %.critedge87 ]
   %i.bz = and i64 %i.br, %i.k                     ; 5 uses
   %i.ca = add nsw i32 %.171, -1                   ; 2 uses
   %.not82 = icmp ult i64 %i.bz, %i.bs

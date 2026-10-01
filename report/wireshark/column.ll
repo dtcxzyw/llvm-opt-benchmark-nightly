@@ -204,20 +204,23 @@ get_column_format_matches.exit:                   ; preds = %bb.o, %.sink.split.
   br i1 %.not172, label %._crit_edge169, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %._crit_edge166
-  %i.by = getelementptr i8, ptr %0, i64 16
+  %i.by = getelementptr i8, ptr %0, i64 16        ; 2 uses
   %i.bz = getelementptr i8, ptr %0, i64 24
   %i.ca = getelementptr i8, ptr %0, i64 32
+  %.pre183.pre = load ptr, ptr %i.by, align 8
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.ae
+  %.pre183 = phi ptr [ %.pre183.pre, %.preheader.lr.ph ], [ %.pre183184, %bb.ae ] ; 2 uses
   %indvars.iv180 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next181, %bb.ae ] ; 4 uses
   %.pre.a = trunc nuw i64 %indvars.iv180 to i32
   %i.cb = trunc nuw i64 %indvars.iv180 to i32     ; 2 uses
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.preheader, %bb.ad
+  %.pre183185 = phi ptr [ %.pre183, %.preheader ], [ %.pre183184, %bb.ad ]
+  %1 = phi ptr [ %.pre183, %.preheader ], [ %2, %bb.ad ] ; 2 uses
   %indvars.iv177 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next178, %bb.ad ] ; 4 uses
-  %1 = load ptr, ptr %i.by, align 8
   %i.cc = getelementptr [88 x i8], ptr %1, i64 %indvars.iv180
   %i.cd = getelementptr i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8
@@ -242,9 +245,12 @@ bb.ac:                                            ; preds = %bb.ab
   %i.cm = load ptr, ptr %i.ca, align 8
   %i.cn = getelementptr [4 x i8], ptr %i.cm, i64 %indvars.iv177
   store i32 %.pre-phi, ptr %i.cn, align 4
+  %.pre = load ptr, ptr %i.by, align 8            ; 2 uses
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.aa, %._crit_edge183
+  %.pre183184 = phi ptr [ %.pre183185, %bb.aa ], [ %.pre, %._crit_edge183 ] ; 2 uses
+  %2 = phi ptr [ %1, %bb.aa ], [ %.pre, %._crit_edge183 ]
   %indvars.iv.next178 = add nuw nsw i64 %indvars.iv177, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next178, 49
   br i1 %exitcond.not, label %bb.ae, label %bb.aa, !llvm.loop !19

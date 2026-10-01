@@ -205,18 +205,19 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false), !tbaa.struct !514
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !514
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i, i64 32
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i, i64 32 ; 2 uses
+  %.pre21.i = load i64, ptr %i.h, align 8, !tbaa !505
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
+  %6 = phi i64 [ %.pre21.i, %.lr.ph.i ], [ %7, %bb.d ] ; 2 uses
   %.020.i = phi ptr [ %.09, %.lr.ph.i ], [ %i.o, %bb.d ] ; 4 uses
   %.01819.i = phi ptr [ %.09, %.lr.ph.i ], [ %.1.i, %bb.d ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.020.i, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !503
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 32
-  %6 = load i64, ptr %i.k, align 8, !tbaa !505
-  %i.l = load i64, ptr %i.h, align 8, !tbaa !505
-  %i.m = icmp ugt i64 %6, %i.l
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !505
+  %i.m = icmp ugt i64 %i.l, %6
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -226,9 +227,11 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.01819.i, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !514
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.n = getelementptr inbounds nuw i8, ptr %.01819.i, i64 16
+  %.pre.i = load i64, ptr %i.h, align 8, !tbaa !505
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %7 = phi i64 [ %.pre.i, %bb.c ], [ %6, %bb.b ]
   %.1.i = phi ptr [ %i.n, %bb.c ], [ %.01819.i, %bb.b ] ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.020.i, i64 16 ; 2 uses
   %i.p = ptrtoint ptr %i.o to i64
@@ -631,18 +634,19 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false), !tbaa.struct !1556
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !1556
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i, i64 16
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i, i64 16 ; 2 uses
+  %.pre21.i = load i64, ptr %i.h, align 8, !tbaa !546
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
+  %6 = phi i64 [ %.pre21.i, %.lr.ph.i ], [ %7, %bb.d ] ; 2 uses
   %.020.i = phi ptr [ %.09, %.lr.ph.i ], [ %i.o, %bb.d ] ; 4 uses
   %.01819.i = phi ptr [ %.09, %.lr.ph.i ], [ %.1.i, %bb.d ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.020.i, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !553
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %6 = load i64, ptr %i.k, align 8, !tbaa !546
-  %i.l = load i64, ptr %i.h, align 8, !tbaa !546
-  %i.m = icmp ugt i64 %6, %i.l
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !546
+  %i.m = icmp ugt i64 %i.l, %6
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -652,9 +656,11 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.01819.i, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !1556
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.n = getelementptr inbounds nuw i8, ptr %.01819.i, i64 16
+  %.pre.i = load i64, ptr %i.h, align 8, !tbaa !546
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %7 = phi i64 [ %.pre.i, %bb.c ], [ %6, %bb.b ]
   %.1.i = phi ptr [ %i.n, %bb.c ], [ %.01819.i, %bb.b ] ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.020.i, i64 16 ; 2 uses
   %i.p = ptrtoint ptr %i.o to i64
@@ -1057,18 +1063,19 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false), !tbaa.struct !514
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !514
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i, i64 32
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i, i64 32 ; 2 uses
+  %.pre21.i = load i64, ptr %i.h, align 8, !tbaa !505
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
+  %6 = phi i64 [ %.pre21.i, %.lr.ph.i ], [ %7, %bb.d ] ; 2 uses
   %.020.i = phi ptr [ %.09, %.lr.ph.i ], [ %i.o, %bb.d ] ; 4 uses
   %.01819.i = phi ptr [ %.09, %.lr.ph.i ], [ %.1.i, %bb.d ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.020.i, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !588
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 32
-  %6 = load i64, ptr %i.k, align 8, !tbaa !505
-  %i.l = load i64, ptr %i.h, align 8, !tbaa !505
-  %i.m = icmp ugt i64 %6, %i.l
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !505
+  %i.m = icmp ugt i64 %i.l, %6
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -1078,9 +1085,11 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.01819.i, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !514
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.n = getelementptr inbounds nuw i8, ptr %.01819.i, i64 16
+  %.pre.i = load i64, ptr %i.h, align 8, !tbaa !505
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %7 = phi i64 [ %.pre.i, %bb.c ], [ %6, %bb.b ]
   %.1.i = phi ptr [ %i.n, %bb.c ], [ %.01819.i, %bb.b ] ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.020.i, i64 16 ; 2 uses
   %i.p = ptrtoint ptr %i.o to i64
@@ -1483,18 +1492,19 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false), !tbaa.struct !1767
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !1767
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i, i64 64
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i, i64 64 ; 2 uses
+  %.pre21.i = load i64, ptr %i.h, align 8, !tbaa !610
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
+  %6 = phi i64 [ %.pre21.i, %.lr.ph.i ], [ %7, %bb.d ] ; 2 uses
   %.020.i = phi ptr [ %.09, %.lr.ph.i ], [ %i.o, %bb.d ] ; 4 uses
   %.01819.i = phi ptr [ %.09, %.lr.ph.i ], [ %.1.i, %bb.d ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.020.i, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !608
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 64
-  %6 = load i64, ptr %i.k, align 8, !tbaa !610
-  %i.l = load i64, ptr %i.h, align 8, !tbaa !610
-  %i.m = icmp ugt i64 %6, %i.l
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !610
+  %i.m = icmp ugt i64 %i.l, %6
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -1504,9 +1514,11 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.01819.i, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !1767
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.n = getelementptr inbounds nuw i8, ptr %.01819.i, i64 16
+  %.pre.i = load i64, ptr %i.h, align 8, !tbaa !610
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %7 = phi i64 [ %.pre.i, %bb.c ], [ %6, %bb.b ]
   %.1.i = phi ptr [ %i.n, %bb.c ], [ %.01819.i, %bb.b ] ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.020.i, i64 16 ; 2 uses
   %i.p = ptrtoint ptr %i.o to i64

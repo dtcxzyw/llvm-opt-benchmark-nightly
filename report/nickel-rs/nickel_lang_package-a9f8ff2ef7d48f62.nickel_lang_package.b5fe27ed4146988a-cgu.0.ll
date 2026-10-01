@@ -206,7 +206,7 @@ bb.n:                                             ; preds = %"_ZN3std11collectio
   br i1 %i.dj, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %"_ZN7pubgrub8internal4core15State$LT$DP$GT$21merge_incompatibility28_$u7b$$u7b$closure$u7d$$u7d$17h862bb30a17aeae2dE.exit.us.i"
-  %i.dv = phi ptr [ %i.dw, %"_ZN7pubgrub8internal4core15State$LT$DP$GT$21merge_incompatibility28_$u7b$$u7b$closure$u7d$$u7d$17h862bb30a17aeae2dE.exit.us.i" ], [ %.sroa.08.0435, %.lr.ph.i ] ; 7 uses
+  %i.dv = phi ptr [ %i.dw, %"_ZN7pubgrub8internal4core15State$LT$DP$GT$21merge_incompatibility28_$u7b$$u7b$closure$u7d$$u7d$17h862bb30a17aeae2dE.exit.us.i" ], [ %.sroa.08.0435, %.lr.ph.i ] ; 6 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 4 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !85652)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !85653
@@ -609,7 +609,7 @@ bb.cl:                                            ; preds = %._crit_edge.i.i.i.i
 .lr.ph.i.i.i74:                                   ; preds = %"_ZN3std11collections4hash3map18Entry$LT$K$C$V$GT$10or_default17h1e6b9e53f98ec3c4E.exit"
   %i.qs = getelementptr inbounds i8, ptr %.pn.i64, i64 -16
   %i.qt = load ptr, ptr %i.qs, align 8, !alias.scope !85749, !noalias !85751, !nonnull !41, !noundef !41 ; 7 uses
-  %i.qu = load i32, ptr %i.dv, align 4, !noalias !85752, !noundef !41
+  %i.qu = load i32, ptr %i.dv, align 4, !noalias !85752, !noundef !41 ; 3 uses
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cn, %.lr.ph.i.i.i74
@@ -640,52 +640,55 @@ bb.cn:                                            ; preds = %bb.cm
   br label %.lr.ph.i4.i.i
 
 .lr.ph.i4.i.i:                                    ; preds = %.backedge.i.i.i.1, %.lr.ph.i4.i.i.preheader.new
-  %.sroa.14.1.i.i = phi i64 [ 1, %.lr.ph.i4.i.i.preheader.new ], [ %.sroa.14.2.i.i.1, %.backedge.i.i.i.1 ]
-  %i.rc = phi i64 [ 1, %.lr.ph.i4.i.i.preheader.new ], [ %i.rl, %.backedge.i.i.i.1 ] ; 3 uses
-  %i.rd = phi i64 [ %i.qx, %.lr.ph.i4.i.i.preheader.new ], [ %.sink.i.i.i.1, %.backedge.i.i.i.1 ] ; 4 uses
-  %niter.a = phi i64 [ 0, %.lr.ph.i4.i.i.preheader.new ], [ %niter.next.1, %.backedge.i.i.i.1 ]
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.qt, i64 %i.rd
-  %.val1.i5.i.i = load i32, ptr %2, align 4, !noalias !85753, !noundef !41 ; 2 uses
-  %i.re = load i32, ptr %i.dv, align 4, !noalias !85753, !noundef !41
-  %.not1.i7.i.i = icmp eq i32 %.val1.i5.i.i, %i.re
+  %2 = phi i32 [ %i.qu, %.lr.ph.i4.i.i.preheader.new ], [ %7, %.backedge.i.i.i.1 ] ; 2 uses
+  %i.rc = phi i64 [ 1, %.lr.ph.i4.i.i.preheader.new ], [ %.sroa.14.2.i.i.1, %.backedge.i.i.i.1 ]
+  %i.rd = phi i64 [ 1, %.lr.ph.i4.i.i.preheader.new ], [ %i.rl, %.backedge.i.i.i.1 ] ; 3 uses
+  %niter.a = phi i64 [ %i.qx, %.lr.ph.i4.i.i.preheader.new ], [ %.sink.i.i.i.1, %.backedge.i.i.i.1 ] ; 4 uses
+  %niter = phi i64 [ 0, %.lr.ph.i4.i.i.preheader.new ], [ %niter.next.1, %.backedge.i.i.i.1 ]
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.qt, i64 %niter.a
+  %i.re = load i32, ptr %3, align 4, !noalias !85753, !noundef !41 ; 2 uses
+  %.not1.i7.i.i = icmp eq i32 %i.re, %2
   br i1 %.not1.i7.i.i, label %bb.co, label %bb.cr
 
 bb.co:                                            ; preds = %.lr.ph.i4.i.i
-  %i.rf = add i64 %i.rc, 1                        ; 2 uses
+  %i.rf = add i64 %i.rd, 1                        ; 2 uses
   br label %.backedge.i.i.i
 
 .backedge.i.i.i:                                  ; preds = %bb.cr, %bb.co
-  %.sroa.14.2.i.i = phi i64 [ %i.rf, %bb.co ], [ %.sroa.14.1.i.i, %bb.cr ]
-  %i.rg = phi i64 [ %i.rf, %bb.co ], [ %i.rc, %bb.cr ] ; 3 uses
-  %.sink.i.i.i = add nuw nsw i64 %i.rd, 1         ; 2 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.qt, i64 %.sink.i.i.i
-  %.val1.i5.i.i.1 = load i32, ptr %3, align 4, !noalias !85753, !noundef !41 ; 2 uses
-  %i.rh = load i32, ptr %i.dv, align 4, !noalias !85753, !noundef !41
-  %.not1.i7.i.i.1 = icmp eq i32 %.val1.i5.i.i.1, %i.rh
+  %4 = phi i32 [ %2, %bb.co ], [ %.pre.i, %bb.cr ] ; 2 uses
+  %i.rg = phi i64 [ %i.rf, %bb.co ], [ %i.rc, %bb.cr ]
+  %5 = phi i64 [ %i.rf, %bb.co ], [ %i.rd, %bb.cr ] ; 3 uses
+  %.sink.i.i.i = add nuw nsw i64 %niter.a, 1      ; 2 uses
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.qt, i64 %.sink.i.i.i
+  %i.rh = load i32, ptr %6, align 4, !noalias !85753, !noundef !41 ; 2 uses
+  %.not1.i7.i.i.1 = icmp eq i32 %i.rh, %4
   br i1 %.not1.i7.i.i.1, label %bb.cq, label %bb.cp
 
 bb.cp:                                            ; preds = %.backedge.i.i.i
-  %i.ri = sub i64 %.sink.i.i.i, %i.rg
+  %i.ri = sub i64 %.sink.i.i.i, %5
   %i.rj = getelementptr inbounds nuw [4 x i8], ptr %i.qt, i64 %i.ri
-  store i32 %.val1.i5.i.i.1, ptr %i.rj, align 4, !noalias !85753
+  store i32 %i.rh, ptr %i.rj, align 4, !noalias !85753
+  %.pre.i.1 = load i32, ptr %i.dv, align 4, !noalias !85753
   br label %.backedge.i.i.i.1
 
 bb.cq:                                            ; preds = %.backedge.i.i.i
-  %i.rk = add i64 %i.rg, 1                        ; 2 uses
+  %i.rk = add i64 %5, 1                           ; 2 uses
   br label %.backedge.i.i.i.1
 
 .backedge.i.i.i.1:                                ; preds = %bb.cq, %bb.cp
-  %.sroa.14.2.i.i.1 = phi i64 [ %i.rk, %bb.cq ], [ %.sroa.14.2.i.i, %bb.cp ] ; 3 uses
-  %i.rl = phi i64 [ %i.rk, %bb.cq ], [ %i.rg, %bb.cp ] ; 2 uses
-  %.sink.i.i.i.1 = add nuw nsw i64 %i.rd, 2       ; 2 uses
-  %niter.next.1 = add i64 %niter.a, 2             ; 2 uses
+  %7 = phi i32 [ %4, %bb.cq ], [ %.pre.i.1, %bb.cp ] ; 2 uses
+  %.sroa.14.2.i.i.1 = phi i64 [ %i.rk, %bb.cq ], [ %i.rg, %bb.cp ] ; 3 uses
+  %i.rl = phi i64 [ %i.rk, %bb.cq ], [ %5, %bb.cp ] ; 2 uses
+  %.sink.i.i.i.1 = add nuw nsw i64 %niter.a, 2    ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$10retain_mut12process_loop17h676e777bc7c32104E.exit.i.i.unr-lcssa", label %.lr.ph.i4.i.i
 
 bb.cr:                                            ; preds = %.lr.ph.i4.i.i
-  %i.rm = sub i64 %i.rd, %i.rc
+  %i.rm = sub i64 %niter.a, %i.rd
   %i.rn = getelementptr inbounds nuw [4 x i8], ptr %i.qt, i64 %i.rm
-  store i32 %.val1.i5.i.i, ptr %i.rn, align 4, !noalias !85753
+  store i32 %i.re, ptr %i.rn, align 4, !noalias !85753
+  %.pre.i = load i32, ptr %i.dv, align 4, !noalias !85753
   br label %.backedge.i.i.i
 
 "_ZN5alloc3vec16Vec$LT$T$C$A$GT$10retain_mut12process_loop17h676e777bc7c32104E.exit.i.i.unr-lcssa": ; preds = %.backedge.i.i.i.1
@@ -693,21 +696,21 @@ bb.cr:                                            ; preds = %.lr.ph.i4.i.i
   br i1 %lcmp.mod.not, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$10retain_mut12process_loop17h676e777bc7c32104E.exit.i.i", label %.lr.ph.i4.i.i.epil.preheader
 
 .lr.ph.i4.i.i.epil.preheader:                     ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$10retain_mut12process_loop17h676e777bc7c32104E.exit.i.i.unr-lcssa", %.lr.ph.i4.i.i.preheader
+  %.epil.init = phi i32 [ %i.qu, %.lr.ph.i4.i.i.preheader ], [ %7, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$10retain_mut12process_loop17h676e777bc7c32104E.exit.i.i.unr-lcssa" ]
   %.sroa.14.1.i.i.epil.init = phi i64 [ 1, %.lr.ph.i4.i.i.preheader ], [ %.sroa.14.2.i.i.1, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$10retain_mut12process_loop17h676e777bc7c32104E.exit.i.i.unr-lcssa" ]
   %.epil.init.a = phi i64 [ 1, %.lr.ph.i4.i.i.preheader ], [ %i.rl, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$10retain_mut12process_loop17h676e777bc7c32104E.exit.i.i.unr-lcssa" ] ; 2 uses
   %.epil.init611 = phi i64 [ %i.qx, %.lr.ph.i4.i.i.preheader ], [ %.sink.i.i.i.1, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$10retain_mut12process_loop17h676e777bc7c32104E.exit.i.i.unr-lcssa" ] ; 2 uses
   %lcmp.mod613 = trunc i64 %i.qz to i1
   call void @llvm.assume(i1 %lcmp.mod613)
   %i.ro = getelementptr inbounds nuw [4 x i8], ptr %i.qt, i64 %.epil.init611
-  %.val1.i5.i.i.epil = load i32, ptr %i.ro, align 4, !noalias !85753, !noundef !41 ; 2 uses
-  %i.rp = load i32, ptr %i.dv, align 4, !noalias !85753, !noundef !41
-  %.not1.i7.i.i.epil = icmp eq i32 %.val1.i5.i.i.epil, %i.rp
+  %i.rp = load i32, ptr %i.ro, align 4, !noalias !85753, !noundef !41 ; 2 uses
+  %.not1.i7.i.i.epil = icmp eq i32 %i.rp, %.epil.init
   br i1 %.not1.i7.i.i.epil, label %bb.ct, label %bb.cs
 
 bb.cs:                                            ; preds = %.lr.ph.i4.i.i.epil.preheader
   %i.rq = sub i64 %.epil.init611, %.epil.init.a
   %i.rr = getelementptr inbounds nuw [4 x i8], ptr %i.qt, i64 %i.rq
-  store i32 %.val1.i5.i.i.epil, ptr %i.rr, align 4, !noalias !85753
+  store i32 %i.rp, ptr %i.rr, align 4, !noalias !85753
   br label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$10retain_mut12process_loop17h676e777bc7c32104E.exit.i.i"
 
 bb.ct:                                            ; preds = %.lr.ph.i4.i.i.epil.preheader

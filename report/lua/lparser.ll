@@ -204,20 +204,22 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.d = zext nneg i16 %i.b to i32
-  %i.e = getelementptr i8, ptr %0, i64 16         ; 2 uses
-  %i.f = getelementptr i8, ptr %0, i64 64         ; 2 uses
+  %i.e = getelementptr i8, ptr %0, i64 16         ; 3 uses
+  %i.f = getelementptr i8, ptr %0, i64 64         ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
+  %.val.i.pre61 = load ptr, ptr %i.e, align 8, !tbaa !25
+  %.val35.i.pre64 = load i32, ptr %i.f, align 8, !tbaa !47
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.k, %.lr.ph.i
-  %.03151.in.i.a = phi i32 [ %i.d, %.lr.ph.i ], [ %.03151.i, %bb.k ] ; 2 uses
-  %.03151.i = add nsw i32 %.03151.in.i.a, -1      ; 4 uses
-  %.val.i = load ptr, ptr %i.e, align 8, !tbaa !25
-  %.val35.i = load i32, ptr %i.f, align 8, !tbaa !47
+  %.03151.in.i.a = phi i32 [ %.val35.i.pre64, %.lr.ph.i ], [ %.val35.i65, %bb.k ] ; 4 uses
+  %.val.i = phi ptr [ %.val.i.pre61, %.lr.ph.i ], [ %.val.i62, %bb.k ] ; 4 uses
+  %.03151.in.i = phi i32 [ %i.d, %.lr.ph.i ], [ %.03151.i, %bb.k ] ; 2 uses
+  %.03151.i = add nsw i32 %.03151.in.i, -1        ; 4 uses
   %i.h = getelementptr i8, ptr %.val.i, i64 88
   %.val.val.i = load ptr, ptr %i.h, align 8, !tbaa !48
   %.val.val.val.i = load ptr, ptr %.val.val.i, align 8, !tbaa !54
-  %i.i = add nsw i32 %.val35.i, %.03151.i         ; 3 uses
+  %i.i = add nsw i32 %.03151.in.i.a, %.03151.i    ; 3 uses
   %i.j = sext i32 %i.i to i64
   %i.k = getelementptr inbounds [24 x i8], ptr %.val.val.val.i, i64 %i.j ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 9
@@ -288,10 +290,14 @@ bb.j:                                             ; preds = %bb.i
 .sink.split.i:                                    ; preds = %bb.g, %bb.d
   %.sink.i = phi i32 [ %i.i, %bb.d ], [ -2, %bb.g ]
   store i32 %.sink.i, ptr %i.g, align 8, !tbaa !55
+  %.val.i.pre = load ptr, ptr %i.e, align 8, !tbaa !25
+  %.val35.i.pre = load i32, ptr %i.f, align 8, !tbaa !47
   br label %bb.k
 
 bb.k:                                             ; preds = %.sink.split.i, %bb.h, %bb.g, %bb.d
-  %i.an = icmp samesign ugt i32 %.03151.in.i.a, 1
+  %.val35.i65 = phi i32 [ %.val35.i.pre, %.sink.split.i ], [ %.03151.in.i.a, %bb.h ], [ %.03151.in.i.a, %bb.g ], [ %.03151.in.i.a, %bb.d ]
+  %.val.i62 = phi ptr [ %.val.i.pre, %.sink.split.i ], [ %.val.i, %bb.h ], [ %.val.i, %bb.g ], [ %.val.i, %bb.d ]
+  %i.an = icmp samesign ugt i32 %.03151.in.i, 1
   br i1 %i.an, label %bb.b, label %searchvar.exit
 
 .sink.split:                                      ; preds = %bb.i, %bb.f

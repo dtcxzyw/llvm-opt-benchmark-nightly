@@ -205,7 +205,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !571    ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !163  ; 4 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !159  ; 2 uses
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !159  ; 3 uses
   %.not9.i.i = icmp eq ptr %i.c, %i.d
   br i1 %.not9.i.i, label %_ZN4entt4sinkINS_4sighIFvRNS_14basic_registryINS_6entityESaIS3_EEES3_ESaIN18SnapshotCommonBase6shadowEEEEE10disconnectITnDaXadL_ZNS9_8listenerERS3_S6_S3_EES3_EEvRT0_.exit, label %.lr.ph.i.i
 
@@ -218,10 +218,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i.i
   %i.i = phi ptr [ %i.c, %.lr.ph.i.i ], [ %i.t, %bb.d ] ; 2 uses
-  %.010.i.i = phi i64 [ %i.h, %.lr.ph.i.i ], [ %3, %bb.d ]
-  %3 = add i64 %.010.i.i, -1                      ; 3 uses
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !159
-  %i.j = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %3 ; 3 uses
+  %3 = phi ptr [ %i.d, %.lr.ph.i.i ], [ %5, %bb.d ] ; 2 uses
+  %.010.i.i = phi i64 [ %i.h, %.lr.ph.i.i ], [ %4, %bb.d ]
+  %4 = add i64 %.010.i.i, -1                      ; 3 uses
+  %i.j = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %4 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !161
   %i.m = icmp eq ptr %i.l, @_ZZN4entt8delegateIFvRNS_14basic_registryINS_6entityESaIS2_EEES2_EE7connectITnDaXadL_ZN18SnapshotCommonBase6shadow8listenerERS2_S5_S2_EES2_EEvRT0_ENUlPKvS5_S2_E_8__invokeESF_S5_S2_
@@ -236,11 +236,13 @@ bb.c:                                             ; preds = %bb.b
   %i.r = load ptr, ptr %i.b, align 8, !tbaa !163
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 -16 ; 2 uses
   store ptr %i.s, ptr %i.b, align 8, !tbaa !163
+  %.pre.i.i = load ptr, ptr %i.a, align 8, !tbaa !159
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.t = phi ptr [ %i.s, %bb.c ], [ %i.i, %bb.b ]
-  %.not.i.i = icmp eq i64 %3, 0
+  %5 = phi ptr [ %.pre.i.i, %bb.c ], [ %3, %bb.b ]
+  %.not.i.i = icmp eq i64 %4, 0
   br i1 %.not.i.i, label %_ZN4entt4sinkINS_4sighIFvRNS_14basic_registryINS_6entityESaIS3_EEES3_ESaIN18SnapshotCommonBase6shadowEEEEE10disconnectITnDaXadL_ZNS9_8listenerERS3_S6_S3_EES3_EEvRT0_.exit.loopexit, label %bb.b, !llvm.loop !19
 
 _ZN4entt4sinkINS_4sighIFvRNS_14basic_registryINS_6entityESaIS3_EEES3_ESaIN18SnapshotCommonBase6shadowEEEEE10disconnectITnDaXadL_ZNS9_8listenerERS3_S6_S3_EES3_EEvRT0_.exit.loopexit: ; preds = %bb.d
@@ -643,7 +645,7 @@ define linkonce_odr hidden void @_ZZN4entt8delegateIFvPvEE7connectITnDaXadL_ZNS_
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !163  ; 3 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !159    ; 2 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !159    ; 3 uses
   %.not9.i.i.i.i = icmp eq ptr %i.b, %i.c
   br i1 %.not9.i.i.i.i, label %_ZZN4entt8delegateIFvPvEE7connectITnDaXadL_ZNS_4sinkINS_4sighIFvRNS_14basic_registryINS_6entityESaIS8_EEES8_ESaIN18SnapshotCommonBase6shadowEEEEE7releaseITnDaXadL_ZNSE_8listenerERS8_SB_S8_EESJ_EEvT0_S1_EES8_EEvRSK_ENKUlPKvS1_E_clESN_S1_.exit, label %.lr.ph.i.i.i.i
 
@@ -656,10 +658,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i.i.i.i
   %i.h = phi ptr [ %i.b, %.lr.ph.i.i.i.i ], [ %i.s, %bb.d ] ; 2 uses
-  %.010.i.i.i.i = phi i64 [ %i.g, %.lr.ph.i.i.i.i ], [ %2, %bb.d ]
-  %2 = add i64 %.010.i.i.i.i, -1                  ; 3 uses
-  %3 = load ptr, ptr %1, align 8, !tbaa !159
-  %i.i = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %2 ; 3 uses
+  %2 = phi ptr [ %i.c, %.lr.ph.i.i.i.i ], [ %4, %bb.d ] ; 2 uses
+  %.010.i.i.i.i = phi i64 [ %i.g, %.lr.ph.i.i.i.i ], [ %3, %bb.d ]
+  %3 = add i64 %.010.i.i.i.i, -1                  ; 3 uses
+  %i.i = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %3 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !161
   %i.l = icmp eq ptr %i.k, @_ZZN4entt8delegateIFvRNS_14basic_registryINS_6entityESaIS2_EEES2_EE7connectITnDaXadL_ZN18SnapshotCommonBase6shadow8listenerERS2_S5_S2_EES2_EEvRT0_ENUlPKvS5_S2_E_8__invokeESF_S5_S2_
@@ -674,11 +676,13 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !163
   %i.r = getelementptr inbounds i8, ptr %i.q, i64 -16 ; 2 uses
   store ptr %i.r, ptr %i.a, align 8, !tbaa !163
+  %.pre.i.i.i.i = load ptr, ptr %1, align 8, !tbaa !159
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.s = phi ptr [ %i.r, %bb.c ], [ %i.h, %bb.b ]
-  %.not.i.i.i.i = icmp eq i64 %2, 0
+  %4 = phi ptr [ %.pre.i.i.i.i, %bb.c ], [ %2, %bb.b ]
+  %.not.i.i.i.i = icmp eq i64 %3, 0
   br i1 %.not.i.i.i.i, label %_ZZN4entt8delegateIFvPvEE7connectITnDaXadL_ZNS_4sinkINS_4sighIFvRNS_14basic_registryINS_6entityESaIS8_EEES8_ESaIN18SnapshotCommonBase6shadowEEEEE7releaseITnDaXadL_ZNSE_8listenerERS8_SB_S8_EESJ_EEvT0_S1_EES8_EEvRSK_ENKUlPKvS1_E_clESN_S1_.exit, label %bb.b, !llvm.loop !19
 
 _ZZN4entt8delegateIFvPvEE7connectITnDaXadL_ZNS_4sinkINS_4sighIFvRNS_14basic_registryINS_6entityESaIS8_EEES8_ESaIN18SnapshotCommonBase6shadowEEEEE7releaseITnDaXadL_ZNSE_8listenerERS8_SB_S8_EESJ_EEvT0_S1_EES8_EEvRSK_ENKUlPKvS1_E_clESN_S1_.exit: ; preds = %bb.d, %bb.a

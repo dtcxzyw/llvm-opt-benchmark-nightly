@@ -205,13 +205,14 @@ bb.ak:                                            ; preds = %.sink.split.i.i, %b
   br i1 %.not4464.i.i, label %._crit_edge.i.i, label %.lr.ph.i74.i
 
 .lr.ph.i74.i:                                     ; preds = %bb.ak
-  %i.fb = getelementptr inbounds nuw i8, ptr %.04267.i.i, i64 24
+  %i.fb = getelementptr inbounds nuw i8, ptr %.04267.i.i, i64 24 ; 2 uses
+  %.pre76.i.i = load ptr, ptr %i.fb, align 8, !tbaa !74
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ao, %.lr.ph.i74.i
+  %4 = phi ptr [ %.pre76.i.i, %.lr.ph.i74.i ], [ %5, %bb.ao ] ; 4 uses
   %indvars.iv.i75.i = phi i64 [ %i.eo, %.lr.ph.i74.i ], [ %indvars.iv.next.i76.i, %bb.ao ]
   %indvars.iv.next.i76.i = add nsw i64 %indvars.iv.i75.i, -1 ; 3 uses
-  %4 = load ptr, ptr %i.fb, align 8, !tbaa !74
   %i.fc = getelementptr inbounds [16 x i8], ptr %4, i64 %indvars.iv.next.i76.i ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 12 ; 2 uses
   %i.fe = load i32, ptr %i.fd, align 4, !tbaa !60
@@ -230,6 +231,7 @@ _ZL12isobjclearedP8GCObject.exit.thread.i.i:      ; preds = %bb.am
   %i.fl = and i8 %i.fk, -8
   %i.fm = or disjoint i8 %i.fl, 4
   store i8 %i.fm, ptr %i.fj, align 1, !tbaa !58
+  %.pre.i.i = load ptr, ptr %i.fb, align 8, !tbaa !74
   br label %bb.ao
 
 _ZL12isobjclearedP8GCObject.exit.i.i:             ; preds = %bb.am
@@ -242,6 +244,7 @@ bb.an:                                            ; preds = %_ZL12isobjclearedP8
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %_ZL12isobjclearedP8GCObject.exit.i.i, %_ZL12isobjclearedP8GCObject.exit.thread.i.i, %bb.al
+  %5 = phi ptr [ %.pre.i.i, %_ZL12isobjclearedP8GCObject.exit.thread.i.i ], [ %4, %bb.an ], [ %4, %_ZL12isobjclearedP8GCObject.exit.i.i ], [ %4, %bb.al ]
   %.not44.i.i = icmp eq i64 %indvars.iv.next.i76.i, 0
   br i1 %.not44.i.i, label %._crit_edge.i.i, label %bb.al, !llvm.loop !127
 
@@ -644,15 +647,19 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   %i.az = load i8, ptr %i.ay, align 2, !tbaa !73
   %i.ba = zext nneg i8 %i.az to i32
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 3 uses
   %notmask109.i = shl nsw i32 -1, %i.ba
   %i.bc = xor i32 %notmask109.i, -1
   %i.bd = zext nneg i32 %i.bc to i64              ; 2 uses
-  br i1 %i.aa, label %.split.us.split.us.i, label %.split.split.us.i
+  br i1 %i.aa, label %.split.us.split.us.preheader.i, label %.split.split.us.i
 
-.split.us.split.us.i:                             ; preds = %.loopexit.thread.i, %_ZL11removeentryP7LuaNode.exit.us.us.i
-  %indvars.iv94.i = phi i64 [ %indvars.iv.next95.i, %_ZL11removeentryP7LuaNode.exit.us.us.i ], [ %i.bd, %.loopexit.thread.i ] ; 3 uses
-  %2 = load ptr, ptr %i.bb, align 8, !tbaa !72
+.split.us.split.us.preheader.i:                   ; preds = %.loopexit.thread.i
+  %.pre99.i = load ptr, ptr %i.bb, align 8, !tbaa !72
+  br label %.split.us.split.us.i
+
+.split.us.split.us.i:                             ; preds = %_ZL11removeentryP7LuaNode.exit.us.us.i, %.split.us.split.us.preheader.i
+  %2 = phi ptr [ %.pre99.i, %.split.us.split.us.preheader.i ], [ %3, %_ZL11removeentryP7LuaNode.exit.us.us.i ] ; 3 uses
+  %indvars.iv94.i = phi i64 [ %i.bd, %.split.us.split.us.preheader.i ], [ %indvars.iv.next95.i, %_ZL11removeentryP7LuaNode.exit.us.us.i ] ; 3 uses
   %i.be = getelementptr inbounds [32 x i8], ptr %2, i64 %indvars.iv94.i ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 12
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !77
@@ -670,9 +677,11 @@ bb.o:                                             ; preds = %bb.n
   %i.bm = and i32 %i.bj, -16
   %i.bn = or disjoint i32 %i.bm, 14
   store i32 %i.bn, ptr %i.bi, align 4
+  %.pre98.i = load ptr, ptr %i.bb, align 8, !tbaa !72
   br label %_ZL11removeentryP7LuaNode.exit.us.us.i
 
 _ZL11removeentryP7LuaNode.exit.us.us.i:           ; preds = %bb.o, %bb.n, %.split.us.split.us.i
+  %3 = phi ptr [ %2, %.split.us.split.us.i ], [ %.pre98.i, %bb.o ], [ %2, %bb.n ]
   %indvars.iv.next95.i = add nsw i64 %indvars.iv94.i, -1
   %i.bo = icmp eq i64 %indvars.iv94.i, 0
   br i1 %i.bo, label %.loopexit, label %.split.us.split.us.i, !llvm.loop !148
