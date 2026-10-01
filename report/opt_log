@@ -1,0 +1,8 @@
+duckdb/ub_duckdb_sort.bc: timeout
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/ub_duckdb_sort.bc?download=true
+libigl/rigid_alignment.bc: timeout
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/rigid_alignment.bc?download=true
+velox/union_util.bc: timeout
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/union_util.bc?download=true
+arrow/union_util.bc: timeout
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/union_util.bc?download=true
