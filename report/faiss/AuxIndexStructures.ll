@@ -204,19 +204,16 @@ bb.b:                                             ; preds = %bb.a
   %i.r = load ptr, ptr %i.q, align 8
   tail call void %i.r(ptr noundef nonnull align 8 dereferenceable(48) %i.l)
   %i.s = icmp sgt i32 %i.h, 0
-  br i1 %i.s, label %.lr.ph53, label %.preheader
+  br i1 %i.s, label %.lr.ph53.split.us.preheader, label %.preheader
 
-.lr.ph53:                                         ; preds = %._crit_edge
+.lr.ph53.split.us.preheader:                      ; preds = %._crit_edge
   %wide.trip.count64 = and i64 %i.g, 2147483647   ; 2 uses
-  br i1 %1, label %.lr.ph53.split.us.preheader, label %.lr.ph53.split
-
-.lr.ph53.split.us.preheader:                      ; preds = %.lr.ph53
-  %.pre.a = load ptr, ptr %0, align 8, !tbaa !96
-  br label %.lr.ph53.split.us
+  %.pre.a = load ptr, ptr %0, align 8, !tbaa !96  ; 2 uses
+  br i1 %1, label %.lr.ph53.split.us, label %.lr.ph53.split
 
 .lr.ph53.split.us:                                ; preds = %.lr.ph53.split.us.preheader, %bb.l
-  %i.t = phi ptr [ %.pre.a, %.lr.ph53.split.us.preheader ], [ %i.bj, %bb.l ] ; 2 uses
-  %indvars.iv61 = phi i64 [ 0, %.lr.ph53.split.us.preheader ], [ %indvars.iv.next62, %bb.l ] ; 4 uses
+  %i.t = phi ptr [ %i.bj, %bb.l ], [ %.pre.a, %.lr.ph53.split.us.preheader ] ; 2 uses
+  %indvars.iv61 = phi i64 [ %indvars.iv.next62, %bb.l ], [ 0, %.lr.ph53.split.us.preheader ] ; 4 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv61
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !75   ; 2 uses
   %.not38.us = icmp eq ptr %i.v, null
@@ -370,9 +367,9 @@ bb.o:                                             ; preds = %.lr.ph, %bb.o
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep, ptr align 8 %.pre67, i64 %i.cb, i1 false), !tbaa !22
   br label %._crit_edge57
 
-.lr.ph53.split:                                   ; preds = %.lr.ph53, %bb.q
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.q ], [ 0, %.lr.ph53 ] ; 2 uses
-  %2 = load ptr, ptr %0, align 8, !tbaa !96
+.lr.ph53.split:                                   ; preds = %.lr.ph53.split.us.preheader, %bb.q
+  %2 = phi ptr [ %3, %bb.q ], [ %.pre.a, %.lr.ph53.split.us.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.q ], [ 0, %.lr.ph53.split.us.preheader ] ; 2 uses
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !75 ; 2 uses
   %.not38 = icmp eq ptr %i.cd, null
@@ -380,9 +377,11 @@ bb.o:                                             ; preds = %.lr.ph, %bb.o
 
 bb.p:                                             ; preds = %.lr.ph53.split
   tail call void @_ZN5faiss24RangeSearchPartialResult11copy_resultEb(ptr noundef nonnull align 8 dereferenceable(72) %i.cd, i1 noundef zeroext true)
+  %.pre = load ptr, ptr %0, align 8, !tbaa !96
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.lr.ph53.split
+  %3 = phi ptr [ %.pre, %bb.p ], [ %2, %.lr.ph53.split ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count64
   br i1 %exitcond.not, label %.preheader, label %.lr.ph53.split, !llvm.loop !91
