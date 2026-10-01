@@ -42,7 +42,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %.thread.i.i, label %bb.d, !prof !22
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = add i64 %2, -1
+  %i.l = add nsw i64 %2, -1
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = and i64 %i.l, %i.m
   %.not40.i.i = icmp eq i64 %i.n, 0
@@ -92,7 +92,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %.thread.i.i, label %bb.d, !prof !22
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %1, -1
+  %i.n = add nsw i64 %1, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = add i64 %2, %i.o
   %i.q = and i64 %i.p, %i.n
@@ -143,7 +143,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i, label %.thread.i.i.i, label %bb.d, !prof !22
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %1, -1
+  %i.n = add nsw i64 %1, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = and i64 %i.n, %i.o
   %.not40.i.i.i = icmp eq i64 %i.p, 0
@@ -195,7 +195,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %.thread.i, label %bb.d, !prof !22
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = add i64 %1, -1
+  %i.o = add nsw i64 %1, -1
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = and i64 %i.o, %i.p
   %.not40.i = icmp eq i64 %i.q, 0
@@ -267,7 +267,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %.thread.i.i, label %bb.d, !prof !22
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %1, -1
+  %i.n = add nsw i64 %1, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = add i64 %2, %i.o
   %i.q = and i64 %i.p, %i.n
@@ -318,7 +318,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i, label %.thread.i.i.i, label %bb.d, !prof !22
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %1, -1
+  %i.n = add nsw i64 %1, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = and i64 %i.n, %i.o
   %.not40.i.i.i = icmp eq i64 %i.p, 0
@@ -370,7 +370,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %.thread.i, label %bb.d, !prof !22
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = add i64 %1, -1
+  %i.o = add nsw i64 %1, -1
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = and i64 %i.o, %i.p
   %.not40.i = icmp eq i64 %i.q, 0
@@ -447,7 +447,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i.i, label %.thread.i.i.i, label %bb.f, !prof !22
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = add i64 %2, -1
+  %i.q = add nsw i64 %2, -1
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = add i64 %3, %i.r
   %i.t = and i64 %i.s, %i.q
@@ -509,7 +509,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i.i.i, label %.thread.i.i.i.i, label %bb.f, !prof !22
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = add i64 %2, -1
+  %i.q = add nsw i64 %2, -1
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = and i64 %i.q, %i.r
   %.not40.i.i.i.i = icmp eq i64 %i.s, 0
@@ -570,7 +570,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %.thread.i.i, label %bb.e, !prof !22
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = add i64 %2, -1
+  %i.r = add nsw i64 %2, -1
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = add i64 %3, %i.s
   %i.u = and i64 %i.t, %i.r
@@ -632,7 +632,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i, label %.thread.i.i.i, label %bb.e, !prof !22
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = add i64 %2, -1
+  %i.r = add nsw i64 %2, -1
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = and i64 %i.r, %i.s
   %.not40.i.i.i = icmp eq i64 %i.t, 0
@@ -693,7 +693,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %.thread.i.i, label %bb.e, !prof !22
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = add i64 %2, -1
+  %i.r = add nsw i64 %2, -1
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = add i64 %3, %i.s
   %i.u = and i64 %i.t, %i.r
@@ -755,7 +755,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i, label %.thread.i.i.i, label %bb.e, !prof !22
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = add i64 %2, -1
+  %i.r = add nsw i64 %2, -1
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = and i64 %i.r, %i.s
   %.not40.i.i.i = icmp eq i64 %i.t, 0
@@ -827,7 +827,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i.i, label %.thread.i.i.i, label %bb.g, !prof !22
 
 bb.g:                                             ; preds = %bb.f
-  %i.u = add i64 %3, -1
+  %i.u = add nsw i64 %3, -1
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = add i64 %4, %i.v
   %i.x = and i64 %i.w, %i.u
@@ -900,7 +900,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i.i.i, label %.thread.i.i.i.i, label %bb.g, !prof !22
 
 bb.g:                                             ; preds = %bb.f
-  %i.u = add i64 %3, -1
+  %i.u = add nsw i64 %3, -1
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = and i64 %i.u, %i.v
   %.not40.i.i.i.i = icmp eq i64 %i.w, 0
@@ -1303,7 +1303,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i60, label %.thread.i, label %bb.g, !prof !22
 
 bb.g:                                             ; preds = %bb.f
-  %i.q = add i64 %3, -1
+  %i.q = add nsw i64 %3, -1
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = add i64 %4, %i.r
   %i.t = and i64 %i.s, %i.q
@@ -1356,7 +1356,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not.i65, label %.thread.i64, label %bb.n, !prof !22
 
 bb.n:                                             ; preds = %bb.m
-  %i.ao = add i64 %3, -1
+  %i.ao = add nsw i64 %3, -1
   %i.ap = ptrtoint ptr %i.an to i64
   %i.aq = add i64 %4, %i.ap
   %i.ar = and i64 %i.aq, %i.ao

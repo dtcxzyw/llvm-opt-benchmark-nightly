@@ -205,7 +205,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i: ; pred
   %i.n = zext i1 %i.m to i32
   %bcmp.i.i.fr.i.i = freeze i32 %i.n
   %i.o = icmp eq i32 %bcmp.i.i.fr.i.i, 0
-  %i.p = add i64 %.sroa.59.0.copyload.i, -2
+  %i.p = add nsw i64 %.sroa.59.0.copyload.i, -2
   %spec.select.i.i = select i1 %i.o, i64 %i.p, i64 %.sroa.59.0.copyload.i
   br label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.thread.i.i
 
@@ -608,7 +608,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit: ; preds = 
   %i.f = zext i1 %i.e to i32
   %bcmp.i.i.fr = freeze i32 %i.f
   %i.g = icmp eq i32 %bcmp.i.i.fr, 0
-  %i.h = add i64 %2, -2
+  %i.h = add nsw i64 %2, -2
   %spec.select = select i1 %i.g, i64 %i.h, i64 %2
   br label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.thread
 
@@ -1011,7 +1011,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i: ; preds 
   %i.od = zext i1 %i.oc to i32
   %bcmp.i.i.fr.i = freeze i32 %i.od
   %i.oe = icmp eq i32 %bcmp.i.i.fr.i, 0
-  %i.of = add i64 %i.by, -2
+  %i.of = add nsw i64 %i.by, -2
   %spec.select.i = select i1 %i.oe, i64 %i.of, i64 %i.by
   br label %_RNvMNtCskXtk6F4WjxZ_4just10modulepathNtB2_10Modulepath13from_argument.exit
 
@@ -1414,7 +1414,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread: 
   br label %bb.n
 
 .lr.ph.split.preheader.i.i:                       ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit
-  %i.e = add i64 %2, -2                           ; 6 uses
+  %i.e = add nsw i64 %2, -2                       ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 5 uses
   br label %.lr.ph.split.i.i
 
@@ -1817,7 +1817,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsaKJjC64KgbL_3std4path7PathBufECskX
 
 bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
-  %i.o = add i64 %2, -2                           ; 4 uses
+  %i.o = add nsw i64 %2, -2                       ; 4 uses
   %.sroa.461.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.461.0.copyload = load ptr, ptr %.sroa.461.0..sroa_idx, align 8 ; 4 uses
   %.sroa.562.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -2220,7 +2220,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i: ; pred
   %i.cn = zext i1 %i.cm to i32
   %bcmp.i.i.fr.i.i = freeze i32 %i.cn
   %i.co = icmp eq i32 %bcmp.i.i.fr.i.i, 0
-  %i.cp = add i64 %i.az, -2
+  %i.cp = add nsw i64 %i.az, -2
   %spec.select.i.i = select i1 %i.co, i64 %i.cp, i64 %i.az
   br label %_RNvMNtCskXtk6F4WjxZ_4just10modulepathNtB2_10Modulepath13from_argument.exit.i
 
@@ -2623,7 +2623,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit113: ; preds
   br i1 %i.v, label %.split, label %.thread135
 
 .split21:                                         ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit
-  %i.w = add i64 %1, -4
+  %i.w = add nsw i64 %1, -4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr %0, ptr %i.f, align 8, !captures !36
   %i.x = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -3026,7 +3026,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit: ; preds = 
   br i1 %i.ac, label %bb.o, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i
 
 bb.o:                                             ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit
-  %i.ad = add i64 %.sroa.479.0.copyload, -2
+  %i.ad = add nsw i64 %.sroa.479.0.copyload, -2
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.k

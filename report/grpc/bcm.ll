@@ -205,7 +205,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.cf = getelementptr inbounds nuw i8, ptr %.194.lcssa, i64 %i.bz
   store i8 %i.ce, ptr %i.cf, align 1, !tbaa !80
   %i.cg = add i32 %.3104137, 1
-  %i.ch = add i64 %.299138, -2                    ; 2 uses
+  %i.ch = add nsw i64 %.299138, -2                ; 2 uses
   %i.ci = zext i32 %i.cg to i64                   ; 3 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 %i.ci
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !80
@@ -426,7 +426,7 @@ vec.epilog.scalar.ph301:                          ; preds = %vec.epilog.scalar.p
   store i8 %i.fq, ptr %i.fr, align 1, !tbaa !80
   store i8 %i.fp, ptr %i.fm, align 1, !tbaa !80
   %i.fs = add i32 %.8162, 1
-  %i.ft = add i64 %.5163, -2                      ; 2 uses
+  %i.ft = add nsw i64 %.5163, -2                  ; 2 uses
   %i.fu = zext i32 %i.fs to i64                   ; 3 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %4, i64 %i.fu ; 2 uses
   %i.fw = load i8, ptr %i.fv, align 1, !tbaa !80
@@ -829,7 +829,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.hc = getelementptr inbounds nuw i8, ptr %.163.lcssa, i64 %i.gw
   store i8 %i.hb, ptr %i.hc, align 1, !tbaa !80
   %i.hd = add i32 %.15989, 1
-  %i.he = add i64 %.26688, -2                     ; 2 uses
+  %i.he = add nsw i64 %.26688, -2                 ; 2 uses
   %i.hf = zext i32 %i.hd to i64                   ; 3 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %.161.lcssa, i64 %i.hf
   %i.hh = load i8, ptr %i.hg, align 1, !tbaa !80
@@ -1232,7 +1232,7 @@ bb.c:                                             ; preds = %._crit_edge.i
   %i.ar = getelementptr inbounds nuw i8, ptr %.137.lcssa.i, i64 %i.al
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !80
   %i.as = add i32 %.258.i, 1
-  %i.at = add i64 %.24057.i, -2                   ; 2 uses
+  %i.at = add nsw i64 %.24057.i, -2               ; 2 uses
   %i.au = zext i32 %i.as to i64                   ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.135.lcssa.i, i64 %i.au
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !80
@@ -1360,7 +1360,7 @@ bb.c:                                             ; preds = %._crit_edge
   %i.ar = getelementptr inbounds nuw i8, ptr %.137.lcssa, i64 %i.al
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !80
   %i.as = add i32 %.258, 1
-  %i.at = add i64 %.24057, -2                     ; 2 uses
+  %i.at = add nsw i64 %.24057, -2                 ; 2 uses
   %i.au = zext i32 %i.as to i64                   ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.135.lcssa, i64 %i.au
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !80
@@ -1602,7 +1602,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.cf = getelementptr inbounds nuw i8, ptr %.194.lcssa.i, i64 %i.bz
   store i8 %i.ce, ptr %i.cf, align 1, !tbaa !80
   %i.cg = add i32 %.3104137.i, 1
-  %i.ch = add i64 %.299138.i, -2                  ; 2 uses
+  %i.ch = add nsw i64 %.299138.i, -2              ; 2 uses
   %i.ci = zext i32 %i.cg to i64                   ; 3 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.1.lcssa.i, i64 %i.ci
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !80
@@ -1823,7 +1823,7 @@ vec.epilog.scalar.ph157:                          ; preds = %vec.epilog.scalar.p
   store i8 %i.fq, ptr %i.fr, align 1, !tbaa !80
   store i8 %i.fp, ptr %i.fm, align 1, !tbaa !80
   %i.fs = add i32 %.8162.i, 1
-  %i.ft = add i64 %.5163.i, -2                    ; 2 uses
+  %i.ft = add nsw i64 %.5163.i, -2                ; 2 uses
   %i.fu = zext i32 %i.fs to i64                   ; 3 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %4, i64 %i.fu ; 2 uses
   %i.fw = load i8, ptr %i.fv, align 1, !tbaa !80
@@ -2226,7 +2226,7 @@ bn_wexpand.exit:                                  ; preds = %.bn_wexpand.exit_cr
   %i.cr = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.cs = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.ct = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.cu = add i64 %.158.i, -1                     ; 2 uses
+  %i.cu = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.cu, 0
   br i1 %.not34.i, label %bn_add_words.exit, label %.lr.ph59.i, !llvm.loop !12
 
@@ -2470,7 +2470,7 @@ bb.a:
   %i.bm = getelementptr inbounds nuw i8, ptr %.12956, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %.12757, i64 8
   %i.bo = getelementptr inbounds nuw i8, ptr %.13155, i64 8
-  %i.bp = add i64 %.158, -1                       ; 2 uses
+  %i.bp = add nsw i64 %.158, -1                   ; 2 uses
   %.not34 = icmp eq i64 %i.bp, 0
   br i1 %.not34, label %.loopexit, label %.lr.ph59, !llvm.loop !12
 
@@ -2873,7 +2873,7 @@ bn_wexpand.exit:                                  ; preds = %bn_fits_in_words.ex
   %i.da = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.db = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.dc = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.dd = add i64 %.158.i, -1                     ; 2 uses
+  %i.dd = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.dd, 0
   br i1 %.not34.i, label %bn_sub_words.exit, label %.lr.ph59.i, !llvm.loop !14
 
@@ -3133,7 +3133,7 @@ bb.a:
   %i.bm = getelementptr inbounds nuw i8, ptr %.12956, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %.12757, i64 8
   %i.bo = getelementptr inbounds nuw i8, ptr %.13155, i64 8
-  %i.bp = add i64 %.158, -1                       ; 2 uses
+  %i.bp = add nsw i64 %.158, -1                   ; 2 uses
   %.not34 = icmp eq i64 %i.bp, 0
   br i1 %.not34, label %.loopexit, label %.lr.ph59, !llvm.loop !14
 
@@ -3536,7 +3536,7 @@ bb.au:                                            ; preds = %.lr.ph
   %i.kw = trunc nuw i128 %i.kv to i64             ; 2 uses
   %i.kx = getelementptr inbounds nuw i8, ptr %.14362.i, i64 16
   %i.ky = getelementptr inbounds nuw i8, ptr %.163.i, i64 16
-  %i.kz = add i64 %.14561.i, -2                   ; 2 uses
+  %i.kz = add nsw i64 %.14561.i, -2               ; 2 uses
   %.not49.i.1 = icmp eq i64 %i.kz, 0
   br i1 %.not49.i.1, label %bn_mul_words.exit, label %.lr.ph64.i, !llvm.loop !18
 
@@ -3641,7 +3641,7 @@ bn_mul_words.exit:                                ; preds = %.lr.ph64.i.prol.loo
   %i.nh = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.ni = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.nj = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.nk = add i64 %.158.i, -1                     ; 2 uses
+  %i.nk = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.nk, 0
   br i1 %.not34.i, label %bn_sub_words.exit, label %.lr.ph59.i, !llvm.loop !14
 
@@ -3750,7 +3750,7 @@ bb.av:                                            ; preds = %bn_sub_words.exit
   %i.pt = getelementptr inbounds nuw i8, ptr %.12956.i174, i64 8
   %i.pu = getelementptr inbounds nuw i8, ptr %.12757.i173, i64 8
   %i.pv = getelementptr inbounds nuw i8, ptr %.13155.i175, i64 8
-  %i.pw = add i64 %.158.i172, -1                  ; 2 uses
+  %i.pw = add nsw i64 %.158.i172, -1              ; 2 uses
   %.not34.i177 = icmp eq i64 %i.pw, 0
   br i1 %.not34.i177, label %bn_add_words.exit, label %.lr.ph59.i171, !llvm.loop !12
 
@@ -4153,7 +4153,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bn = trunc nuw i128 %i.bm to i64             ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.14362, i64 16
   %i.bp = getelementptr inbounds nuw i8, ptr %.163, i64 16
-  %i.bq = add i64 %.14561, -2                     ; 2 uses
+  %i.bq = add nsw i64 %.14561, -2                 ; 2 uses
   %.not49.1 = icmp eq i64 %i.bq, 0
   br i1 %.not49.1, label %.loopexit, label %.lr.ph64.new, !llvm.loop !18
 
@@ -4556,7 +4556,7 @@ bb.a:
   %i.bm = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.bo = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.bp = add i64 %.158.i, -1                     ; 2 uses
+  %i.bp = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.bp, 0
   br i1 %.not34.i, label %.lr.ph.i11, label %.lr.ph59.i, !llvm.loop !14
 
@@ -4771,7 +4771,7 @@ bb.a:
   %i.bm = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.bo = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.bp = add i64 %.158.i, -1                     ; 2 uses
+  %i.bp = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.bp, 0
   br i1 %.not34.i, label %.lr.ph.i11, label %.lr.ph59.i, !llvm.loop !14
 
@@ -4990,7 +4990,7 @@ bb.a:
   %i.bm = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.bo = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.bp = add i64 %.158.i, -1                     ; 2 uses
+  %i.bp = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.bp, 0
   br i1 %.not34.i, label %.preheader42.i12, label %.lr.ph59.i, !llvm.loop !14
 
@@ -5101,7 +5101,7 @@ bb.a:
   %i.eb = getelementptr inbounds nuw i8, ptr %.12956.i32, i64 8
   %i.ec = getelementptr inbounds nuw i8, ptr %.12757.i31, i64 8
   %i.ed = getelementptr inbounds nuw i8, ptr %.13155.i33, i64 8
-  %i.ee = add i64 %.158.i30, -1                   ; 2 uses
+  %i.ee = add nsw i64 %.158.i30, -1               ; 2 uses
   %.not34.i35 = icmp eq i64 %i.ee, 0
   br i1 %.not34.i35, label %.lr.ph.i38, label %.lr.ph59.i29, !llvm.loop !12
 
@@ -5314,7 +5314,7 @@ bb.a:
   %i.bm = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.bo = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.bp = add i64 %.158.i, -1                     ; 2 uses
+  %i.bp = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.bp, 0
   br i1 %.not34.i, label %.preheader42.i.i, label %.lr.ph59.i, !llvm.loop !12
 
@@ -5424,7 +5424,7 @@ bb.a:
   %i.eb = getelementptr inbounds nuw i8, ptr %.12956.i.i, i64 8
   %i.ec = getelementptr inbounds nuw i8, ptr %.12757.i.i, i64 8
   %i.ed = getelementptr inbounds nuw i8, ptr %.13155.i.i, i64 8
-  %i.ee = add i64 %.158.i.i, -1                   ; 2 uses
+  %i.ee = add nsw i64 %.158.i.i, -1               ; 2 uses
   %.not34.i.i = icmp eq i64 %i.ee, 0
   br i1 %.not34.i.i, label %.lr.ph.i11.i, label %.lr.ph59.i.i, !llvm.loop !14
 
@@ -5827,7 +5827,7 @@ bb.ae:                                            ; preds = %.preheader, %bn_red
   %i.ft = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.fu = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.fv = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.fw = add i64 %.158.i, -1                     ; 2 uses
+  %i.fw = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.fw, 0
   br i1 %.not34.i, label %.preheader42.i.i, label %.lr.ph59.i, !llvm.loop !12
 
@@ -5949,7 +5949,7 @@ bn_add_words.exit:                                ; preds = %bb.ae
   %i.it = getelementptr inbounds nuw i8, ptr %.12956.i.i, i64 8
   %i.iu = getelementptr inbounds nuw i8, ptr %.12757.i.i, i64 8
   %i.iv = getelementptr inbounds nuw i8, ptr %.13155.i.i, i64 8
-  %i.iw = add i64 %.158.i.i, -1                   ; 2 uses
+  %i.iw = add nsw i64 %.158.i.i, -1               ; 2 uses
   %.not34.i.i = icmp eq i64 %i.iw, 0
   br i1 %.not34.i.i, label %.lr.ph.i11.i, label %.lr.ph59.i.i, !llvm.loop !14
 
@@ -6352,7 +6352,7 @@ bb.v:                                             ; preds = %bn_sqr_small.exit.i
   %i.gy = getelementptr inbounds nuw i8, ptr %.12956.i.i.i, i64 8
   %i.gz = getelementptr inbounds nuw i8, ptr %.12757.i.i.i, i64 8
   %i.ha = getelementptr inbounds nuw i8, ptr %.13155.i.i.i, i64 8
-  %i.hb = add i64 %.158.i.i.i, -1                 ; 2 uses
+  %i.hb = add nsw i64 %.158.i.i.i, -1             ; 2 uses
   %.not34.i.i.i = icmp eq i64 %i.hb, 0
   br i1 %.not34.i.i.i, label %.lr.ph.i11.i.i, label %.lr.ph59.i.i.i, !llvm.loop !14
 
@@ -6552,7 +6552,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.lg = trunc nuw i128 %i.lf to i64             ; 2 uses
   %i.lh = getelementptr inbounds nuw i8, ptr %.14867.i, i64 16
   %i.li = getelementptr inbounds nuw i8, ptr %.168.i, i64 16
-  %i.lj = add i64 %.15066.i, -2                   ; 2 uses
+  %i.lj = add nsw i64 %.15066.i, -2               ; 2 uses
   %.not54.i116.1 = icmp eq i64 %i.lj, 0
   br i1 %.not54.i116.1, label %bn_mul_add_words.exit, label %.lr.ph69.i, !llvm.loop !22
 
@@ -6955,7 +6955,7 @@ scalar.ph323.prol.loopexit:                       ; preds = %scalar.ph323.prol, 
   %i.fc = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.fd = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.fe = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.ff = add i64 %.158.i, -1                     ; 2 uses
+  %i.ff = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.ff, 0
   br i1 %.not34.i, label %.lr.ph.i102, label %.lr.ph59.i, !llvm.loop !14
 
@@ -7146,7 +7146,7 @@ scalar.ph299:                                     ; preds = %scalar.ph299.prol.l
   %i.jg = getelementptr inbounds nuw i8, ptr %.12956.i123, i64 8
   %i.jh = getelementptr inbounds nuw i8, ptr %.12757.i122, i64 8
   %i.ji = getelementptr inbounds nuw i8, ptr %.13155.i124, i64 8
-  %i.jj = add i64 %.158.i121, -1                  ; 2 uses
+  %i.jj = add nsw i64 %.158.i121, -1              ; 2 uses
   %.not34.i126 = icmp eq i64 %i.jj, 0
   br i1 %.not34.i126, label %.lr.ph.i130, label %.lr.ph59.i120, !llvm.loop !14
 
@@ -7549,7 +7549,7 @@ bb.a:
   %i.bm = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.bo = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.bp = add i64 %.158.i, -1                     ; 2 uses
+  %i.bp = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.bp, 0
   br i1 %.not34.i, label %.lr.ph.i11, label %.lr.ph59.i, !llvm.loop !12
 
@@ -7952,7 +7952,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ci = trunc nuw i128 %i.ch to i64             ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.14867, i64 16
   %i.ck = getelementptr inbounds nuw i8, ptr %.168, i64 16
-  %i.cl = add i64 %.15066, -2                     ; 2 uses
+  %i.cl = add nsw i64 %.15066, -2                 ; 2 uses
   %.not54.1 = icmp eq i64 %i.cl, 0
   br i1 %.not54.1, label %.loopexit, label %.lr.ph69.new, !llvm.loop !22
 
@@ -8083,7 +8083,7 @@ bb.a:
   store i64 %i.bl, ptr %i.bm, align 8, !tbaa !96
   %i.bn = getelementptr inbounds nuw i8, ptr %.13953, i64 16
   %i.bo = getelementptr inbounds nuw i8, ptr %.154, i64 32
-  %i.bp = add i64 %.14152, -2                     ; 2 uses
+  %i.bp = add nsw i64 %.14152, -2                 ; 2 uses
   %.not43.1 = icmp eq i64 %i.bp, 0
   br i1 %.not43.1, label %.loopexit, label %.lr.ph55, !llvm.loop !25
 
@@ -8486,7 +8486,7 @@ bb.c:                                             ; preds = %bb.a
   %i.bu = getelementptr inbounds nuw i8, ptr %.12956.i.i, i64 8
   %i.bv = getelementptr inbounds nuw i8, ptr %.12757.i.i, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %.13155.i.i, i64 8
-  %i.bx = add i64 %.158.i.i, -1                   ; 2 uses
+  %i.bx = add nsw i64 %.158.i.i, -1               ; 2 uses
   %.not34.i.i = icmp eq i64 %i.bx, 0
   br i1 %.not34.i.i, label %.lr.ph.i11.i, label %.lr.ph59.i.i, !llvm.loop !14
 
@@ -8889,7 +8889,7 @@ bb.f:                                             ; preds = %bb.c
   %i.br = trunc nuw i128 %i.bq to i64             ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.14362.i, i64 16
   %i.bt = getelementptr inbounds nuw i8, ptr %.163.i, i64 16
-  %i.bu = add i64 %.14561.i, -2                   ; 2 uses
+  %i.bu = add nsw i64 %.14561.i, -2               ; 2 uses
   %.not49.i.1 = icmp eq i64 %i.bu, 0
   br i1 %.not49.i.1, label %bn_mul_words.exit, label %.lr.ph64.i, !llvm.loop !18
 
@@ -9076,7 +9076,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bm = trunc nuw i128 %i.bl to i64             ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.14362.i, i64 16
   %i.bo = getelementptr inbounds nuw i8, ptr %.163.i, i64 16
-  %i.bp = add i64 %.14561.i, -2                   ; 2 uses
+  %i.bp = add nsw i64 %.14561.i, -2               ; 2 uses
   %.not49.i.1 = icmp eq i64 %i.bp, 0
   br i1 %.not49.i.1, label %bn_mul_words.exit, label %.lr.ph64.i, !llvm.loop !18
 
@@ -9479,7 +9479,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bt = trunc nuw i128 %i.bs to i64             ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.14362.i, i64 16
   %i.bv = getelementptr inbounds nuw i8, ptr %.163.i, i64 16
-  %i.bw = add i64 %.14561.i, -2                   ; 2 uses
+  %i.bw = add nsw i64 %.14561.i, -2               ; 2 uses
   %.not49.i.1 = icmp eq i64 %i.bw, 0
   br i1 %.not49.i.1, label %.unr-lcssa, label %.lr.ph64.i, !llvm.loop !18
 
@@ -9594,7 +9594,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ed = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.ee = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.ef = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.eg = add i64 %.158.i, -1                     ; 2 uses
+  %i.eg = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.eg, 0
   br i1 %.not34.i, label %.preheader44.i, label %.lr.ph59.i, !llvm.loop !12
 
@@ -9714,7 +9714,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.gr, ptr %i.gs, align 8, !tbaa !96
   %i.gt = getelementptr inbounds nuw i8, ptr %.13953.i, i64 16
   %i.gu = getelementptr inbounds nuw i8, ptr %.154.i, i64 32
-  %i.gv = add i64 %.14152.i, -2                   ; 2 uses
+  %i.gv = add nsw i64 %.14152.i, -2               ; 2 uses
   %.not43.i51.1 = icmp eq i64 %i.gv, 0
   br i1 %.not43.i51.1, label %.preheader42.i52, label %.lr.ph55.i, !llvm.loop !25
 
@@ -9816,7 +9816,7 @@ bb.b:                                             ; preds = %bb.a
   %i.jd = getelementptr inbounds nuw i8, ptr %.12956.i72, i64 8
   %i.je = getelementptr inbounds nuw i8, ptr %.12757.i71, i64 8
   %i.jf = getelementptr inbounds nuw i8, ptr %.13155.i73, i64 8
-  %i.jg = add i64 %.158.i70, -1                   ; 2 uses
+  %i.jg = add nsw i64 %.158.i70, -1               ; 2 uses
   %.not34.i75 = icmp eq i64 %i.jg, 0
   br i1 %.not34.i75, label %bn_add_words.exit77, label %.lr.ph59.i69, !llvm.loop !12
 
@@ -9940,7 +9940,7 @@ bb.e:                                             ; preds = %bb.c
   %i.br = getelementptr inbounds nuw i8, ptr %.12956.i.i, i64 8
   %i.bs = getelementptr inbounds nuw i8, ptr %.12757.i.i, i64 8
   %i.bt = getelementptr inbounds nuw i8, ptr %.13155.i.i, i64 8
-  %i.bu = add i64 %.158.i.i, -1                   ; 2 uses
+  %i.bu = add nsw i64 %.158.i.i, -1               ; 2 uses
   %.not34.i.i = icmp eq i64 %i.bu, 0
   br i1 %.not34.i.i, label %bn_sub_words.exit.i, label %.lr.ph59.i.i, !llvm.loop !14
 
@@ -10039,7 +10039,7 @@ bn_sub_words.exit.i:                              ; preds = %.lr.ph59.i.i, %.pre
   %i.eg = getelementptr inbounds nuw i8, ptr %.12956.i25.i, i64 8
   %i.eh = getelementptr inbounds nuw i8, ptr %.12757.i24.i, i64 8
   %i.ei = getelementptr inbounds nuw i8, ptr %.13155.i26.i, i64 8
-  %i.ej = add i64 %.158.i23.i, -1                 ; 2 uses
+  %i.ej = add nsw i64 %.158.i23.i, -1             ; 2 uses
   %.not34.i28.i = icmp eq i64 %i.ej, 0
   br i1 %.not34.i28.i, label %bn_sub_words.exit30.i, label %.lr.ph59.i22.i, !llvm.loop !14
 
@@ -10191,7 +10191,7 @@ _ZL16bn_abs_sub_wordsPmPKmS1_mS_.exit:            ; preds = %scalar.ph, %middle.
   %i.hs = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.ht = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.hu = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.hv = add i64 %.158.i, -1                     ; 2 uses
+  %i.hv = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.hv, 0
   br i1 %.not34.i, label %bn_add_words.exit, label %.lr.ph59.i, !llvm.loop !12
 
@@ -10282,7 +10282,7 @@ bn_add_words.exit:                                ; preds = %.lr.ph59.i, %.prehe
   store i64 %i.ka, ptr %.12757.i84, align 8, !tbaa !96
   %i.kd = getelementptr inbounds nuw i8, ptr %.12956.i85, i64 8
   %i.ke = getelementptr i8, ptr %.12757.i84, i64 8
-  %i.kf = add i64 %.158.i83, -1                   ; 2 uses
+  %i.kf = add nsw i64 %.158.i83, -1               ; 2 uses
   %.not34.i88 = icmp eq i64 %i.kf, 0
   br i1 %.not34.i88, label %bn_sub_words.exit, label %.lr.ph59.i82, !llvm.loop !14
 
@@ -10376,7 +10376,7 @@ bn_sub_words.exit:                                ; preds = %.lr.ph59.i82, %.pre
   store i64 %i.mm, ptr %.12956.i103, align 8, !tbaa !96
   %i.mp = getelementptr i8, ptr %.12956.i103, i64 8
   %i.mq = getelementptr inbounds nuw i8, ptr %.12757.i102, i64 8
-  %i.mr = add i64 %.158.i101, -1                  ; 2 uses
+  %i.mr = add nsw i64 %.158.i101, -1              ; 2 uses
   %.not34.i106 = icmp eq i64 %i.mr, 0
   br i1 %.not34.i106, label %bn_add_words.exit108, label %.lr.ph59.i100, !llvm.loop !12
 
@@ -10779,7 +10779,7 @@ bn_big_endian_to_words.exit:                      ; preds = %bb.d, %bb.e
   %i.en = getelementptr inbounds nuw i8, ptr %.12956.i.i, i64 8
   %i.eo = getelementptr inbounds nuw i8, ptr %.12757.i.i, i64 8
   %i.ep = getelementptr inbounds nuw i8, ptr %.13155.i.i, i64 8
-  %i.eq = add i64 %.158.i.i, -1                   ; 2 uses
+  %i.eq = add nsw i64 %.158.i.i, -1               ; 2 uses
   %.not34.i.i = icmp eq i64 %i.eq, 0
   br i1 %.not34.i.i, label %.lr.ph.i11.i, label %.lr.ph59.i.i, !llvm.loop !14
 
@@ -11182,7 +11182,7 @@ ec_felem_non_zero_mask.exit:                      ; preds = %bb.a
   %i.ci = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.cj = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.ck = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.cl = add i64 %.158.i, -1                     ; 2 uses
+  %i.cl = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.cl, 0
   br i1 %.not34.i, label %bn_sub_words.exit, label %.lr.ph59.i, !llvm.loop !14
 
@@ -11585,7 +11585,7 @@ ec_felem_non_zero_mask.exit.i:                    ; preds = %bb.ah
   %i.ij = getelementptr inbounds nuw i8, ptr %.12956.i.i, i64 8
   %i.ik = getelementptr inbounds nuw i8, ptr %.12757.i.i, i64 8
   %i.il = getelementptr inbounds nuw i8, ptr %.13155.i.i, i64 8
-  %i.im = add i64 %.158.i.i, -1                   ; 2 uses
+  %i.im = add nsw i64 %.158.i.i, -1               ; 2 uses
   %.not34.i.i = icmp eq i64 %i.im, 0
   br i1 %.not34.i.i, label %bn_sub_words.exit.i, label %.lr.ph59.i.i, !llvm.loop !14
 
@@ -11988,7 +11988,7 @@ bn_rshift_words.exit:                             ; preds = %bn_big_endian_to_wo
   %i.he = getelementptr inbounds nuw i8, ptr %.12956.i.i, i64 8
   %i.hf = getelementptr inbounds nuw i8, ptr %.12757.i.i, i64 8
   %i.hg = getelementptr inbounds nuw i8, ptr %.13155.i.i, i64 8
-  %i.hh = add i64 %.158.i.i, -1                   ; 2 uses
+  %i.hh = add nsw i64 %.158.i.i, -1               ; 2 uses
   %.not34.i.i = icmp eq i64 %i.hh, 0
   br i1 %.not34.i.i, label %.lr.ph.i11.i, label %.lr.ph59.i.i, !llvm.loop !14
 
@@ -12391,7 +12391,7 @@ bb.a:
   %i.bn = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.bo = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.bp = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.bq = add i64 %.158.i, -1                     ; 2 uses
+  %i.bq = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.bq, 0
   br i1 %.not34.i, label %bn_sub_words.exit, label %.lr.ph59.i, !llvm.loop !14
 
@@ -12794,7 +12794,7 @@ bb.k:                                             ; preds = %bb.j
   %i.gq = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.gr = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.gs = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.gt = add i64 %.158.i, -1                     ; 2 uses
+  %i.gt = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.gt, 0
   br i1 %.not34.i, label %.preheader42.i191, label %.lr.ph59.i, !llvm.loop !12
 
@@ -12895,7 +12895,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ji = getelementptr inbounds nuw i8, ptr %.12956.i211, i64 8
   %i.jj = getelementptr inbounds nuw i8, ptr %.12757.i210, i64 8
   %i.jk = getelementptr inbounds nuw i8, ptr %.13155.i212, i64 8
-  %i.jl = add i64 %.158.i209, -1                  ; 2 uses
+  %i.jl = add nsw i64 %.158.i209, -1              ; 2 uses
   %.not34.i214 = icmp eq i64 %i.jl, 0
   br i1 %.not34.i214, label %.preheader42.i216, label %.lr.ph59.i208, !llvm.loop !14
 
@@ -12987,7 +12987,7 @@ bb.k:                                             ; preds = %bb.j
   store i64 %i.lr, ptr %.12757.i235, align 8, !tbaa !96
   %i.lu = getelementptr inbounds nuw i8, ptr %.12956.i236, i64 8
   %i.lv = getelementptr i8, ptr %.12757.i235, i64 8
-  %i.lw = add i64 %.158.i234, -1                  ; 2 uses
+  %i.lw = add nsw i64 %.158.i234, -1              ; 2 uses
   %.not34.i239 = icmp eq i64 %i.lw, 0
   br i1 %.not34.i239, label %.lr.ph.i243, label %.lr.ph59.i233, !llvm.loop !12
 
@@ -13161,7 +13161,7 @@ scalar.ph411:                                     ; preds = %scalar.ph411, %scal
   store i64 %i.po, ptr %.12956.i264, align 8, !tbaa !96
   %i.pr = getelementptr i8, ptr %.12956.i264, i64 8
   %i.ps = getelementptr inbounds nuw i8, ptr %.12757.i263, i64 8
-  %i.pt = add i64 %.158.i262, -1                  ; 2 uses
+  %i.pt = add nsw i64 %.158.i262, -1              ; 2 uses
   %.not34.i267 = icmp eq i64 %i.pt, 0
   br i1 %.not34.i267, label %bn_add_words.exit269, label %.lr.ph59.i261, !llvm.loop !12
 
@@ -13564,7 +13564,7 @@ bb.g:                                             ; preds = %_ZL21bn_abs_sub_par
   %i.fx = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.fy = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.fz = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.ga = add i64 %.158.i, -1                     ; 2 uses
+  %i.ga = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.ga, 0
   br i1 %.not34.i, label %.preheader42.i176, label %.lr.ph59.i, !llvm.loop !12
 
@@ -13665,7 +13665,7 @@ bb.g:                                             ; preds = %_ZL21bn_abs_sub_par
   %i.ip = getelementptr inbounds nuw i8, ptr %.12956.i196, i64 8
   %i.iq = getelementptr inbounds nuw i8, ptr %.12757.i195, i64 8
   %i.ir = getelementptr inbounds nuw i8, ptr %.13155.i197, i64 8
-  %i.is = add i64 %.158.i194, -1                  ; 2 uses
+  %i.is = add nsw i64 %.158.i194, -1              ; 2 uses
   %.not34.i199 = icmp eq i64 %i.is, 0
   br i1 %.not34.i199, label %.preheader42.i201, label %.lr.ph59.i193, !llvm.loop !14
 
@@ -13757,7 +13757,7 @@ bb.g:                                             ; preds = %_ZL21bn_abs_sub_par
   store i64 %i.ky, ptr %.12757.i220, align 8, !tbaa !96
   %i.lb = getelementptr inbounds nuw i8, ptr %.12956.i221, i64 8
   %i.lc = getelementptr i8, ptr %.12757.i220, i64 8
-  %i.ld = add i64 %.158.i219, -1                  ; 2 uses
+  %i.ld = add nsw i64 %.158.i219, -1              ; 2 uses
   %.not34.i224 = icmp eq i64 %i.ld, 0
   br i1 %.not34.i224, label %.lr.ph.i228, label %.lr.ph59.i218, !llvm.loop !12
 
@@ -13947,7 +13947,7 @@ scalar.ph383:                                     ; preds = %scalar.ph383.prol.l
   store i64 %i.pf, ptr %.12956.i249, align 8, !tbaa !96
   %i.pi = getelementptr i8, ptr %.12956.i249, i64 8
   %i.pj = getelementptr inbounds nuw i8, ptr %.12757.i248, i64 8
-  %i.pk = add i64 %.158.i247, -1                  ; 2 uses
+  %i.pk = add nsw i64 %.158.i247, -1              ; 2 uses
   %.not34.i252 = icmp eq i64 %i.pk, 0
   br i1 %.not34.i252, label %bn_add_words.exit254, label %.lr.ph59.i246, !llvm.loop !12
 
@@ -14350,7 +14350,7 @@ bb.c:                                             ; preds = %._crit_edge.i
   %i.ax = getelementptr inbounds nuw i8, ptr %.137.lcssa.i, i64 %i.ar
   store i8 %i.aw, ptr %i.ax, align 1, !tbaa !80
   %i.ay = add i32 %.258.i, 1
-  %i.az = add i64 %.24057.i, -2                   ; 2 uses
+  %i.az = add nsw i64 %.24057.i, -2               ; 2 uses
   %i.ba = zext i32 %i.ay to i64                   ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.135.lcssa.i, i64 %i.ba
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !80
@@ -14753,7 +14753,7 @@ bb.n:                                             ; preds = %_ZL33ec_GFp_mont_fe
   %i.dv = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.dw = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.dx = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.dy = add i64 %.158.i, -1                     ; 2 uses
+  %i.dy = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.dy, 0
   br i1 %.not34.i, label %bn_add_words.exit, label %.lr.ph59.i, !llvm.loop !12
 
@@ -15156,7 +15156,7 @@ begin_hunk_25_@_ZL32ec_GFp_nistp256_cmp_x_coordinatePK11ec_group_stPK11EC_JACOBI
   %i.kn = getelementptr inbounds nuw i8, ptr %.12956.i, i64 8
   %i.ko = getelementptr inbounds nuw i8, ptr %.12757.i, i64 8
   %i.kp = getelementptr inbounds nuw i8, ptr %.13155.i, i64 8
-  %i.kq = add i64 %.158.i, -1                     ; 2 uses
+  %i.kq = add nsw i64 %.158.i, -1                 ; 2 uses
   %.not34.i = icmp eq i64 %i.kq, 0
   br i1 %.not34.i, label %bn_add_words.exit, label %.lr.ph59.i, !llvm.loop !12
 

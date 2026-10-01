@@ -205,7 +205,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0223.us, 64, !dbg !155354
-  %i.cx = add i64 %.sroa.044.0224.us, -1, !dbg !155355 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0224.us, -1, !dbg !155355 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !155356, !noalias !155171
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !155357
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !155358
@@ -246,7 +246,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0223, 64, !dbg !155354
-  %i.dc = add i64 %.sroa.044.0224, -1, !dbg !155355 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0224, -1, !dbg !155355 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !155356, !noalias !155171
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !155362, !noalias !155174
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !155357
@@ -272,7 +272,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv339, i64 1), !dbg !155364
   %umax351 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !155364 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !155364
-  %i.df = add i64 %.sroa.045.0219, -1, !dbg !155365 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0219, -1, !dbg !155365 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !155366, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0218, !dbg !155366 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !155367, !noundef !4270 ; 3 uses
@@ -367,7 +367,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 2 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0214, 32, !dbg !155376
-  %i.dr = add i64 %.sroa.046.0215, -1, !dbg !155377 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0215, -1, !dbg !155377 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0214, !dbg !155374
   %.sroa.0.0.i90 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !155378
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !155379
@@ -770,7 +770,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0223.us, 64, !dbg !156002
-  %i.cx = add i64 %.sroa.044.0224.us, -1, !dbg !156003 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0224.us, -1, !dbg !156003 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !156004, !noalias !155819
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !156005
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !156006
@@ -811,7 +811,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0223, 64, !dbg !156002
-  %i.dc = add i64 %.sroa.044.0224, -1, !dbg !156003 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0224, -1, !dbg !156003 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !156004, !noalias !155819
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !156010, !noalias !155822
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !156005
@@ -837,7 +837,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv339, i64 1), !dbg !156012
   %umax351 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !156012 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !156012
-  %i.df = add i64 %.sroa.045.0219, -1, !dbg !156013 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0219, -1, !dbg !156013 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !156014, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0218, !dbg !156014 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !156015, !noundef !4270 ; 3 uses
@@ -932,7 +932,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 4 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0214, 32, !dbg !156024
-  %i.dr = add i64 %.sroa.046.0215, -1, !dbg !156025 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0215, -1, !dbg !156025 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0214, !dbg !156022
   %.sroa.0.0.i90 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !156026
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !156027
@@ -1335,7 +1335,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0223.us, 64, !dbg !156650
-  %i.cx = add i64 %.sroa.044.0224.us, -1, !dbg !156651 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0224.us, -1, !dbg !156651 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !156652, !noalias !156467
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !156653
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !156654
@@ -1376,7 +1376,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0223, 64, !dbg !156650
-  %i.dc = add i64 %.sroa.044.0224, -1, !dbg !156651 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0224, -1, !dbg !156651 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !156652, !noalias !156467
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !156658, !noalias !156470
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !156653
@@ -1402,7 +1402,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv339, i64 1), !dbg !156660
   %umax351 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !156660 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !156660
-  %i.df = add i64 %.sroa.045.0219, -1, !dbg !156661 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0219, -1, !dbg !156661 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !156662, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0218, !dbg !156662 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !156663, !noundef !4270 ; 3 uses
@@ -1497,7 +1497,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 8 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0214, 32, !dbg !156672
-  %i.dr = add i64 %.sroa.046.0215, -1, !dbg !156673 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0215, -1, !dbg !156673 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0214, !dbg !156670
   %.sroa.0.0.i90 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !156674
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !156675
@@ -1900,7 +1900,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0223.us, 64, !dbg !157298
-  %i.cx = add i64 %.sroa.044.0224.us, -1, !dbg !157299 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0224.us, -1, !dbg !157299 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !157300, !noalias !157115
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !157301
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !157302
@@ -1941,7 +1941,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0223, 64, !dbg !157298
-  %i.dc = add i64 %.sroa.044.0224, -1, !dbg !157299 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0224, -1, !dbg !157299 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !157300, !noalias !157115
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !157306, !noalias !157118
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !157301
@@ -1967,7 +1967,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv339, i64 1), !dbg !157308
   %umax351 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !157308 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !157308
-  %i.df = add i64 %.sroa.045.0219, -1, !dbg !157309 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0219, -1, !dbg !157309 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !157310, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0218, !dbg !157310 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !157311, !noundef !4270 ; 3 uses
@@ -2062,7 +2062,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 2 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0214, 32, !dbg !157320
-  %i.dr = add i64 %.sroa.046.0215, -1, !dbg !157321 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0215, -1, !dbg !157321 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0214, !dbg !157318
   %.sroa.0.0.i90 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !157322
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !157323
@@ -2465,7 +2465,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0223.us, 64, !dbg !157946
-  %i.cx = add i64 %.sroa.044.0224.us, -1, !dbg !157947 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0224.us, -1, !dbg !157947 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !157948, !noalias !157763
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !157949
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !157950
@@ -2506,7 +2506,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0223, 64, !dbg !157946
-  %i.dc = add i64 %.sroa.044.0224, -1, !dbg !157947 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0224, -1, !dbg !157947 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !157948, !noalias !157763
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !157954, !noalias !157766
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !157949
@@ -2532,7 +2532,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv339, i64 1), !dbg !157956
   %umax351 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !157956 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !157956
-  %i.df = add i64 %.sroa.045.0219, -1, !dbg !157957 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0219, -1, !dbg !157957 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !157958, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0218, !dbg !157958 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !157959, !noundef !4270 ; 3 uses
@@ -2627,7 +2627,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 4 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0214, 32, !dbg !157968
-  %i.dr = add i64 %.sroa.046.0215, -1, !dbg !157969 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0215, -1, !dbg !157969 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0214, !dbg !157966
   %.sroa.0.0.i90 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !157970
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !157971
@@ -3030,7 +3030,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0223.us, 64, !dbg !158594
-  %i.cx = add i64 %.sroa.044.0224.us, -1, !dbg !158595 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0224.us, -1, !dbg !158595 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !158596, !noalias !158411
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !158597
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !158598
@@ -3071,7 +3071,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0223, 64, !dbg !158594
-  %i.dc = add i64 %.sroa.044.0224, -1, !dbg !158595 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0224, -1, !dbg !158595 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !158596, !noalias !158411
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !158602, !noalias !158414
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !158597
@@ -3097,7 +3097,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv339, i64 1), !dbg !158604
   %umax351 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !158604 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !158604
-  %i.df = add i64 %.sroa.045.0219, -1, !dbg !158605 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0219, -1, !dbg !158605 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !158606, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0218, !dbg !158606 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !158607, !noundef !4270 ; 3 uses
@@ -3192,7 +3192,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 8 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0214, 32, !dbg !158616
-  %i.dr = add i64 %.sroa.046.0215, -1, !dbg !158617 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0215, -1, !dbg !158617 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0214, !dbg !158614
   %.sroa.0.0.i90 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !158618
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !158619
@@ -3595,7 +3595,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph224.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes8Int8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0222.us, 64, !dbg !159242
-  %i.cx = add i64 %.sroa.044.0223.us, -1, !dbg !159243 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0223.us, -1, !dbg !159243 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !159244, !noalias !159059
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !159245
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !159246
@@ -3636,7 +3636,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph224.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes8Int8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0222, 64, !dbg !159242
-  %i.dc = add i64 %.sroa.044.0223, -1, !dbg !159243 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0223, -1, !dbg !159243 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !159244, !noalias !159059
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !159250, !noalias !159062
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !159245
@@ -3662,7 +3662,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv338, i64 1), !dbg !159252
   %umax350 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !159252 ; 5 uses
   %i.de = add i64 %.sroa.026.0217, 32, !dbg !159252
-  %i.df = add i64 %.sroa.045.0218, -1, !dbg !159253 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0218, -1, !dbg !159253 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !159254, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0217, !dbg !159254 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !159255, !noundef !4270 ; 3 uses
@@ -3757,7 +3757,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 1 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0213, 32, !dbg !159264
-  %i.dr = add i64 %.sroa.046.0214, -1, !dbg !159265 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0214, -1, !dbg !159265 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0213, !dbg !159262
   %.sroa.0.0.i88 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !159266 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !159267
@@ -4160,7 +4160,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0223.us, 64, !dbg !159894
-  %i.cx = add i64 %.sroa.044.0224.us, -1, !dbg !159895 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0224.us, -1, !dbg !159895 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !159896, !noalias !159711
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !159897
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !159898
@@ -4201,7 +4201,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0223, 64, !dbg !159894
-  %i.dc = add i64 %.sroa.044.0224, -1, !dbg !159895 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0224, -1, !dbg !159895 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !159896, !noalias !159711
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !159902, !noalias !159714
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !159897
@@ -4227,7 +4227,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv339, i64 1), !dbg !159904
   %umax351 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !159904 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !159904
-  %i.df = add i64 %.sroa.045.0219, -1, !dbg !159905 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0219, -1, !dbg !159905 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !159906, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0218, !dbg !159906 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !159907, !noundef !4270 ; 3 uses
@@ -4322,7 +4322,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 2 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0214, 32, !dbg !159916
-  %i.dr = add i64 %.sroa.046.0215, -1, !dbg !159917 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0215, -1, !dbg !159917 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0214, !dbg !159914
   %.sroa.0.0.i90 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !159918
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !159919
@@ -4725,7 +4725,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0223.us, 64, !dbg !160542
-  %i.cx = add i64 %.sroa.044.0224.us, -1, !dbg !160543 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0224.us, -1, !dbg !160543 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !160544, !noalias !160359
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !160545
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !160546
@@ -4766,7 +4766,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0223, 64, !dbg !160542
-  %i.dc = add i64 %.sroa.044.0224, -1, !dbg !160543 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0224, -1, !dbg !160543 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !160544, !noalias !160359
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !160550, !noalias !160362
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !160545
@@ -4792,7 +4792,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv339, i64 1), !dbg !160552
   %umax351 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !160552 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !160552
-  %i.df = add i64 %.sroa.045.0219, -1, !dbg !160553 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0219, -1, !dbg !160553 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !160554, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0218, !dbg !160554 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !160555, !noundef !4270 ; 3 uses
@@ -4887,7 +4887,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 4 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0214, 32, !dbg !160564
-  %i.dr = add i64 %.sroa.046.0215, -1, !dbg !160565 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0215, -1, !dbg !160565 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0214, !dbg !160562
   %.sroa.0.0.i90 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !160566
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !160567
@@ -5290,7 +5290,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0223.us, 64, !dbg !161190
-  %i.cx = add i64 %.sroa.044.0224.us, -1, !dbg !161191 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0224.us, -1, !dbg !161191 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !161192, !noalias !161007
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !161193
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !161194
@@ -5331,7 +5331,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph225.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0223, 64, !dbg !161190
-  %i.dc = add i64 %.sroa.044.0224, -1, !dbg !161191 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0224, -1, !dbg !161191 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !161192, !noalias !161007
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !161198, !noalias !161010
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !161193
@@ -5357,7 +5357,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv339, i64 1), !dbg !161200
   %umax351 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !161200 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !161200
-  %i.df = add i64 %.sroa.045.0219, -1, !dbg !161201 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0219, -1, !dbg !161201 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !161202, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0218, !dbg !161202 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !161203, !noundef !4270 ; 3 uses
@@ -5452,7 +5452,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 8 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0214, 32, !dbg !161212
-  %i.dr = add i64 %.sroa.046.0215, -1, !dbg !161213 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0215, -1, !dbg !161213 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0214, !dbg !161210
   %.sroa.0.0.i90 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !161214
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !161215
@@ -5855,7 +5855,7 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph224.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9UInt8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit.us: ; preds = %bb.a
   %i.cw = add i64 %.sroa.023.0222.us, 64, !dbg !161838
-  %i.cx = add i64 %.sroa.044.0223.us, -1, !dbg !161839 ; 2 uses
+  %i.cx = add nsw i64 %.sroa.044.0223.us, -1, !dbg !161839 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !161840, !noalias !161655
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !161841
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !161842
@@ -5896,7 +5896,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph224.sp
 
 _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9UInt8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.b
   %i.db = add i64 %.sroa.023.0222, 64, !dbg !161838
-  %i.dc = add i64 %.sroa.044.0223, -1, !dbg !161839 ; 2 uses
+  %i.dc = add nsw i64 %.sroa.044.0223, -1, !dbg !161839 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !161840, !noalias !161655
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1536) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(1536) %i.b, i64 1536, i1 false), !dbg !161846, !noalias !161658
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !161841
@@ -5922,7 +5922,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv338, i64 1), !dbg !161848
   %umax350 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !161848 ; 5 uses
   %i.de = add i64 %.sroa.026.0217, 32, !dbg !161848
-  %i.df = add i64 %.sroa.045.0218, -1, !dbg !161849 ; 2 uses
+  %i.df = add nsw i64 %.sroa.045.0218, -1, !dbg !161849 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !161850, !noundef !4270
   %i.dh = add i64 %i.dg, %.sroa.026.0217, !dbg !161850 ; 9 uses
   %i.di = load i64, ptr %i.i, align 8, !dbg !161851, !noundef !4270 ; 3 uses
@@ -6017,7 +6017,7 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   store ptr inttoptr (i64 1 to ptr), ptr %i.cr, align 8
   store i64 0, ptr %i.cs, align 8
   %i.dq = add i64 %.sroa.029.0213, 32, !dbg !161860
-  %i.dr = add i64 %.sroa.046.0214, -1, !dbg !161861 ; 2 uses
+  %i.dr = add nsw i64 %.sroa.046.0214, -1, !dbg !161861 ; 2 uses
   %i.ds = sub i64 %i.dp, %.sroa.029.0213, !dbg !161858
   %.sroa.0.0.i88 = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 32), !dbg !161862 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !161863

@@ -205,7 +205,7 @@ middle.block88:                                   ; preds = %vector.body81
   %.11126.i.i.prol = phi ptr [ %i.x, %.lr.ph28.i.i.prol ], [ %.11126.i.i.ph, %.lr.ph28.i.i.preheader93 ] ; 2 uses
   %.11325.i.i.prol = phi i64 [ %i.s, %.lr.ph28.i.i.prol ], [ %.11325.i.i.ph, %.lr.ph28.i.i.preheader93 ]
   %prol.iter103 = phi i64 [ %prol.iter103.next, %.lr.ph28.i.i.prol ], [ 0, %.lr.ph28.i.i.preheader93 ]
-  %i.s = add i64 %.11325.i.i.prol, -1             ; 2 uses
+  %i.s = add nsw i64 %.11325.i.i.prol, -1         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.127.i.i.prol, i64 1 ; 2 uses
   %i.u = load i8, ptr %.127.i.i.prol, align 1, !tbaa !68
   %i.v = uitofp i8 %i.u to float
@@ -265,7 +265,7 @@ middle.block88:                                   ; preds = %vector.body81
   %i.az = fmul nnan float %i.ay, f0x3B808081
   %i.ba = getelementptr inbounds nuw i8, ptr %.11126.i.i, i64 12
   store float %i.az, ptr %i.av, align 4, !tbaa !94
-  %i.bb = add i64 %.11325.i.i, -4                 ; 2 uses
+  %i.bb = add nsw i64 %.11325.i.i, -4             ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.127.i.i, i64 4
   %i.bd = load i8, ptr %i.aw, align 1, !tbaa !68
   %i.be = uitofp i8 %i.bd to float
@@ -405,7 +405,7 @@ middle.block:                                     ; preds = %vector.body
   %.127.i.i38 = phi ptr [ %i.df, %.lr.ph28.i.i37 ], [ %.127.i.i38.ph, %.lr.ph28.i.i37.preheader96 ] ; 2 uses
   %.11126.i.i39 = phi ptr [ %i.dj, %.lr.ph28.i.i37 ], [ %.11126.i.i39.ph, %.lr.ph28.i.i37.preheader96 ] ; 2 uses
   %.11325.i.i40 = phi i64 [ %i.de, %.lr.ph28.i.i37 ], [ %.11325.i.i40.ph, %.lr.ph28.i.i37.preheader96 ]
-  %i.de = add i64 %.11325.i.i40, -1               ; 2 uses
+  %i.de = add nsw i64 %.11325.i.i40, -1           ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.127.i.i38, i64 2
   %i.dg = load i16, ptr %.127.i.i38, align 2, !tbaa !136
   %i.dh = uitofp i16 %i.dg to float
@@ -808,7 +808,7 @@ _ZN11OpenImageIO4v3_14simd5roundERKNS1_7vfloat4E.exit.i.i: ; preds = %bb.i, %_ZN
   %.173.i.i = phi ptr [ %i.cm, %.lr.ph74.i.i ], [ %.173.i.i.ph, %.lr.ph74.i.i.preheader151 ] ; 2 uses
   %.11472.i.i = phi ptr [ %i.cu, %.lr.ph74.i.i ], [ %.11472.i.i.ph, %.lr.ph74.i.i.preheader151 ] ; 2 uses
   %.11671.i.i = phi i64 [ %i.cl, %.lr.ph74.i.i ], [ %.11671.i.i.ph, %.lr.ph74.i.i.preheader151 ]
-  %i.cl = add i64 %.11671.i.i, -1                 ; 2 uses
+  %i.cl = add nsw i64 %.11671.i.i, -1             ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.173.i.i, i64 4
   %i.cn = load float, ptr %.173.i.i, align 4, !tbaa !94
   %i.co = fmul float %i.cn, 2.550000e+02          ; 2 uses
@@ -929,7 +929,7 @@ _ZN11OpenImageIO4v3_14simd5roundERKNS1_7vfloat4E.exit.i.i63: ; preds = %bb.j, %_
   %.186.i.i = phi ptr [ %i.fa, %.lr.ph87.i.i ], [ %.186.i.i.ph, %.lr.ph87.i.i.preheader154 ] ; 2 uses
   %.11485.i.i = phi ptr [ %i.fi, %.lr.ph87.i.i ], [ %.11485.i.i.ph, %.lr.ph87.i.i.preheader154 ] ; 2 uses
   %.11684.i.i = phi i64 [ %i.ez, %.lr.ph87.i.i ], [ %.11684.i.i.ph, %.lr.ph87.i.i.preheader154 ]
-  %i.ez = add i64 %.11684.i.i, -1                 ; 2 uses
+  %i.ez = add nsw i64 %.11684.i.i, -1             ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.186.i.i, i64 4
   %i.fb = load float, ptr %.186.i.i, align 4, !tbaa !94
   %i.fc = fmul float %i.fb, 6.553500e+04          ; 2 uses
@@ -1332,7 +1332,7 @@ bb.a:
   %.15464.prol = phi ptr [ %i.g, %.lr.ph66.prol ], [ %.053.lcssa, %.lr.ph66.preheader ] ; 2 uses
   %.15663.prol = phi i64 [ %i.b, %.lr.ph66.prol ], [ %.055.lcssa, %.lr.ph66.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph66.prol ], [ 0, %.lr.ph66.preheader ]
-  %i.b = add i64 %.15663.prol, -1                 ; 2 uses
+  %i.b = add nsw i64 %.15663.prol, -1             ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.165.prol, i64 1 ; 2 uses
   %i.d = load i8, ptr %.165.prol, align 1, !tbaa !68
   %i.e = sitofp i8 %i.d to float
@@ -1386,7 +1386,7 @@ bb.a:
   %i.x = fmul nnan float %i.w, f0x3C010204
   %i.y = getelementptr inbounds nuw i8, ptr %.15464, i64 12
   store float %i.x, ptr %i.t, align 4, !tbaa !94
-  %i.z = add i64 %.15663, -4                      ; 2 uses
+  %i.z = add nsw i64 %.15663, -4                  ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.165, i64 4
   %i.ab = load i8, ptr %i.u, align 1, !tbaa !68
   %i.ac = sitofp i8 %i.ab to float
@@ -1789,7 +1789,7 @@ middle.block93:                                   ; preds = %vector.body87
   %.165 = phi ptr [ %i.mo, %.lr.ph66 ], [ %.165.ph, %.lr.ph66.preheader98 ] ; 2 uses
   %.15464 = phi ptr [ %i.ms, %.lr.ph66 ], [ %.15464.ph, %.lr.ph66.preheader98 ] ; 2 uses
   %.15663 = phi i64 [ %i.mn, %.lr.ph66 ], [ %.15663.ph, %.lr.ph66.preheader98 ]
-  %i.mn = add i64 %.15663, -1                     ; 2 uses
+  %i.mn = add nsw i64 %.15663, -1                 ; 2 uses
   %i.mo = getelementptr inbounds nuw i8, ptr %.165, i64 2
   %i.mp = load i16, ptr %.165, align 2, !tbaa !136
   %i.mq = sitofp i16 %i.mp to float
@@ -1826,7 +1826,7 @@ bb.a:
   %.15464.prol = phi ptr [ %i.g, %.lr.ph66.prol ], [ %.053.lcssa, %.lr.ph66.preheader ] ; 2 uses
   %.15663.prol = phi i64 [ %i.b, %.lr.ph66.prol ], [ %.055.lcssa, %.lr.ph66.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph66.prol ], [ 0, %.lr.ph66.preheader ]
-  %i.b = add i64 %.15663.prol, -1                 ; 2 uses
+  %i.b = add nsw i64 %.15663.prol, -1             ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.165.prol, i64 4 ; 2 uses
   %i.d = load i32, ptr %.165.prol, align 4, !tbaa !51
   %i.e = sitofp i32 %i.d to float
@@ -1898,7 +1898,7 @@ bb.a:
   %i.ar = fmul nnan float %i.aq, f0x30000000
   %i.as = getelementptr inbounds nuw i8, ptr %.15464, i64 12
   store float %i.ar, ptr %i.an, align 4, !tbaa !94
-  %i.at = add i64 %.15663, -4                     ; 2 uses
+  %i.at = add nsw i64 %.15663, -4                 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.165, i64 16
   %i.av = load i32, ptr %i.ao, align 4, !tbaa !51
   %i.aw = sitofp i32 %i.av to float
@@ -1935,7 +1935,7 @@ bb.a:
   %.15464.prol = phi ptr [ %i.g, %.lr.ph66.prol ], [ %.053.lcssa, %.lr.ph66.preheader ] ; 2 uses
   %.15663.prol = phi i64 [ %i.b, %.lr.ph66.prol ], [ %.055.lcssa, %.lr.ph66.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph66.prol ], [ 0, %.lr.ph66.preheader ]
-  %i.b = add i64 %.15663.prol, -1                 ; 2 uses
+  %i.b = add nsw i64 %.15663.prol, -1             ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.165.prol, i64 4 ; 2 uses
   %i.d = load i32, ptr %.165.prol, align 4, !tbaa !51
   %i.e = uitofp i32 %i.d to float
@@ -2007,7 +2007,7 @@ bb.a:
   %i.ar = fmul nnan float %i.aq, f0x2F800000
   %i.as = getelementptr inbounds nuw i8, ptr %.15464, i64 12
   store float %i.ar, ptr %i.an, align 4, !tbaa !94
-  %i.at = add i64 %.15663, -4                     ; 2 uses
+  %i.at = add nsw i64 %.15663, -4                 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.165, i64 16
   %i.av = load i32, ptr %i.ao, align 4, !tbaa !51
   %i.aw = uitofp i32 %i.av to float
@@ -2044,7 +2044,7 @@ bb.a:
   %.15464.prol = phi ptr [ %i.g, %.lr.ph66.prol ], [ %.053.lcssa, %.lr.ph66.preheader ] ; 2 uses
   %.15663.prol = phi i64 [ %i.b, %.lr.ph66.prol ], [ %.055.lcssa, %.lr.ph66.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph66.prol ], [ 0, %.lr.ph66.preheader ]
-  %i.b = add i64 %.15663.prol, -1                 ; 2 uses
+  %i.b = add nsw i64 %.15663.prol, -1             ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.165.prol, i64 8 ; 2 uses
   %i.d = load i64, ptr %.165.prol, align 8, !tbaa !106
   %i.e = sitofp i64 %i.d to float
@@ -2116,7 +2116,7 @@ bb.a:
   %i.ar = fmul nnan float %i.aq, f0x20000000
   %i.as = getelementptr inbounds nuw i8, ptr %.15464, i64 12
   store float %i.ar, ptr %i.an, align 4, !tbaa !94
-  %i.at = add i64 %.15663, -4                     ; 2 uses
+  %i.at = add nsw i64 %.15663, -4                 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.165, i64 32
   %i.av = load i64, ptr %i.ao, align 8, !tbaa !106
   %i.aw = sitofp i64 %i.av to float
@@ -2153,7 +2153,7 @@ bb.a:
   %.15464.prol = phi ptr [ %i.g, %.lr.ph66.prol ], [ %.053.lcssa, %.lr.ph66.preheader ] ; 2 uses
   %.15663.prol = phi i64 [ %i.b, %.lr.ph66.prol ], [ %.055.lcssa, %.lr.ph66.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph66.prol ], [ 0, %.lr.ph66.preheader ]
-  %i.b = add i64 %.15663.prol, -1                 ; 2 uses
+  %i.b = add nsw i64 %.15663.prol, -1             ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.165.prol, i64 8 ; 2 uses
   %i.d = load i64, ptr %.165.prol, align 8, !tbaa !106
   %i.e = uitofp i64 %i.d to float
@@ -2225,7 +2225,7 @@ bb.a:
   %i.ar = fmul nnan float %i.aq, f0x1F800000
   %i.as = getelementptr inbounds nuw i8, ptr %.15464, i64 12
   store float %i.ar, ptr %i.an, align 4, !tbaa !94
-  %i.at = add i64 %.15663, -4                     ; 2 uses
+  %i.at = add nsw i64 %.15663, -4                 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.165, i64 32
   %i.av = load i64, ptr %i.ao, align 8, !tbaa !106
   %i.aw = uitofp i64 %i.av to float
@@ -2302,7 +2302,7 @@ bb.a:
   %.15464.prol = phi ptr [ %i.z, %.lr.ph66.prol ], [ %.053.lcssa, %.lr.ph66.preheader ] ; 2 uses
   %.15663.prol = phi i64 [ %i.v, %.lr.ph66.prol ], [ %.055.lcssa, %.lr.ph66.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph66.prol ], [ 0, %.lr.ph66.preheader ]
-  %i.v = add i64 %.15663.prol, -1                 ; 2 uses
+  %i.v = add nsw i64 %.15663.prol, -1             ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.165.prol, i64 8 ; 2 uses
   %i.x = load double, ptr %.165.prol, align 8, !tbaa !78
   %i.y = fptrunc double %i.x to float
@@ -2386,7 +2386,7 @@ bb.a:
   %i.bt = fptrunc double %i.bs to float
   %i.bu = getelementptr inbounds nuw i8, ptr %.15464, i64 12
   store float %i.bt, ptr %i.bq, align 4, !tbaa !94
-  %i.bv = add i64 %.15663, -4                     ; 2 uses
+  %i.bv = add nsw i64 %.15663, -4                 ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.165, i64 32
   %i.bx = load double, ptr %i.br, align 8, !tbaa !78
   %i.by = fptrunc double %i.bx to float
@@ -2789,7 +2789,7 @@ middle.block180:                                  ; preds = %vector.body175
   %.1151 = phi ptr [ %i.nj, %.lr.ph152 ], [ %.1151.ph, %.lr.ph152.preheader185 ] ; 2 uses
   %.192150 = phi ptr [ %i.ns, %.lr.ph152 ], [ %.192150.ph, %.lr.ph152.preheader185 ] ; 2 uses
   %.194149 = phi i64 [ %i.ni, %.lr.ph152 ], [ %.194149.ph, %.lr.ph152.preheader185 ]
-  %i.ni = add i64 %.194149, -1                    ; 2 uses
+  %i.ni = add nsw i64 %.194149, -1                ; 2 uses
   %i.nj = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.nk = load float, ptr %.1151, align 4, !tbaa !94
   %i.nl = fpext float %i.nk to double
@@ -3192,7 +3192,7 @@ begin_hunk_5_@_ZN11OpenImageIO4v3_112convert_typeIfaEEvPKT_PT0_mS5_S5_:bb.a
   %.1151 = phi ptr [ %i.xz, %.lr.ph152 ], [ %.1151.ph, %.lr.ph152.preheader199 ] ; 2 uses
   %.192150 = phi ptr [ %i.yh, %.lr.ph152 ], [ %.192150.ph, %.lr.ph152.preheader199 ] ; 2 uses
   %.194149 = phi i64 [ %i.xy, %.lr.ph152 ], [ %.194149.ph, %.lr.ph152.preheader199 ]
-  %i.xy = add i64 %.194149, -1                    ; 2 uses
+  %i.xy = add nsw i64 %.194149, -1                ; 2 uses
   %i.xz = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.ya = load float, ptr %.1151, align 4, !tbaa !94
   %i.yb = fmul float %i.ya, %i.b                  ; 2 uses
@@ -3595,7 +3595,7 @@ middle.block184:                                  ; preds = %vector.body179
   %.1151 = phi ptr [ %i.sq, %.lr.ph152 ], [ %.1151.ph, %.lr.ph152.preheader189 ] ; 2 uses
   %.192150 = phi ptr [ %i.sy, %.lr.ph152 ], [ %.192150.ph, %.lr.ph152.preheader189 ] ; 2 uses
   %.194149 = phi i64 [ %i.sp, %.lr.ph152 ], [ %.194149.ph, %.lr.ph152.preheader189 ]
-  %i.sp = add i64 %.194149, -1                    ; 2 uses
+  %i.sp = add nsw i64 %.194149, -1                ; 2 uses
   %i.sq = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.sr = load float, ptr %.1151, align 4, !tbaa !94
   %i.ss = fmul float %i.sr, %i.rn                 ; 2 uses
@@ -3998,7 +3998,7 @@ middle.block180:                                  ; preds = %vector.body175
   %.1151 = phi ptr [ %i.nj, %.lr.ph152 ], [ %.1151.ph, %.lr.ph152.preheader185 ] ; 2 uses
   %.192150 = phi ptr [ %i.ns, %.lr.ph152 ], [ %.192150.ph, %.lr.ph152.preheader185 ] ; 2 uses
   %.194149 = phi i64 [ %i.ni, %.lr.ph152 ], [ %.194149.ph, %.lr.ph152.preheader185 ]
-  %i.ni = add i64 %.194149, -1                    ; 2 uses
+  %i.ni = add nsw i64 %.194149, -1                ; 2 uses
   %i.nj = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.nk = load float, ptr %.1151, align 4, !tbaa !94
   %i.nl = fpext float %i.nk to double
@@ -4043,7 +4043,7 @@ bb.a:
   %.15464.prol = phi ptr [ %i.f, %.lr.ph66.prol ], [ %.053.lcssa, %.lr.ph66.preheader ] ; 2 uses
   %.15663.prol = phi i64 [ %i.b, %.lr.ph66.prol ], [ %.055.lcssa, %.lr.ph66.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph66.prol ], [ 0, %.lr.ph66.preheader ]
-  %i.b = add i64 %.15663.prol, -1                 ; 2 uses
+  %i.b = add nsw i64 %.15663.prol, -1             ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.165.prol, i64 4 ; 2 uses
   %i.d = load float, ptr %.165.prol, align 4, !tbaa !94
   %i.e = fpext float %i.d to double
@@ -4127,7 +4127,7 @@ bb.a:
   %i.az = fpext float %i.ay to double
   %i.ba = getelementptr inbounds nuw i8, ptr %.15464, i64 24
   store double %i.az, ptr %i.aw, align 8, !tbaa !78
-  %i.bb = add i64 %.15663, -4                     ; 2 uses
+  %i.bb = add nsw i64 %.15663, -4                 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.165, i64 16
   %i.bd = load float, ptr %i.ax, align 4, !tbaa !94
   %i.be = fpext float %i.bd to double
@@ -4286,7 +4286,7 @@ bb.a:
   %.1151 = phi ptr [ %i.dk, %.lr.ph152 ], [ %.0.lcssa, %.preheader ] ; 2 uses
   %.192150 = phi ptr [ %i.dt, %.lr.ph152 ], [ %.091.lcssa, %.preheader ] ; 2 uses
   %.194149 = phi i64 [ %i.dj, %.lr.ph152 ], [ %.093.lcssa, %.preheader ]
-  %i.dj = add i64 %.194149, -1                    ; 2 uses
+  %i.dj = add nsw i64 %.194149, -1                ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.dl = load float, ptr %.1151, align 4, !tbaa !94
   %i.dm = fpext float %i.dl to double
@@ -4454,7 +4454,7 @@ bb.a:
   %.1151 = phi ptr [ %i.dk, %.lr.ph152 ], [ %.0.lcssa, %.preheader ] ; 2 uses
   %.192150 = phi ptr [ %i.dt, %.lr.ph152 ], [ %.091.lcssa, %.preheader ] ; 2 uses
   %.194149 = phi i64 [ %i.dj, %.lr.ph152 ], [ %.093.lcssa, %.preheader ]
-  %i.dj = add i64 %.194149, -1                    ; 2 uses
+  %i.dj = add nsw i64 %.194149, -1                ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.dl = load float, ptr %.1151, align 4, !tbaa !94
   %i.dm = fpext float %i.dl to double
@@ -4857,7 +4857,7 @@ begin_hunk_8_@_ZN11OpenImageIO4v3_112convert_typeIfcEEvPKT_PT0_mS5_S5_:bb.a
   %.1151 = phi ptr [ %i.xz, %.lr.ph152 ], [ %.1151.ph, %.lr.ph152.preheader199 ] ; 2 uses
   %.192150 = phi ptr [ %i.yh, %.lr.ph152 ], [ %.192150.ph, %.lr.ph152.preheader199 ] ; 2 uses
   %.194149 = phi i64 [ %i.xy, %.lr.ph152 ], [ %.194149.ph, %.lr.ph152.preheader199 ]
-  %i.xy = add i64 %.194149, -1                    ; 2 uses
+  %i.xy = add nsw i64 %.194149, -1                ; 2 uses
   %i.xz = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.ya = load float, ptr %.1151, align 4, !tbaa !94
   %i.yb = fmul float %i.ya, %i.b                  ; 2 uses
@@ -5016,7 +5016,7 @@ bb.a:
   %.1151 = phi ptr [ %i.dc, %.lr.ph152 ], [ %.0.lcssa, %.preheader ] ; 2 uses
   %.192150 = phi ptr [ %i.dk, %.lr.ph152 ], [ %.091.lcssa, %.preheader ] ; 2 uses
   %.194149 = phi i64 [ %i.db, %.lr.ph152 ], [ %.093.lcssa, %.preheader ]
-  %i.db = add i64 %.194149, -1                    ; 2 uses
+  %i.db = add nsw i64 %.194149, -1                ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.dd = load float, ptr %.1151, align 4, !tbaa !94
   %i.de = fmul float %i.dd, %i.b                  ; 2 uses
@@ -5175,7 +5175,7 @@ bb.a:
   %.1151 = phi ptr [ %i.dc, %.lr.ph152 ], [ %.0.lcssa, %.preheader ] ; 2 uses
   %.192150 = phi ptr [ %i.dk, %.lr.ph152 ], [ %.091.lcssa, %.preheader ] ; 2 uses
   %.194149 = phi i64 [ %i.db, %.lr.ph152 ], [ %.093.lcssa, %.preheader ]
-  %i.db = add i64 %.194149, -1                    ; 2 uses
+  %i.db = add nsw i64 %.194149, -1                ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.dd = load float, ptr %.1151, align 4, !tbaa !94
   %i.de = fmul float %i.dd, %i.b                  ; 2 uses

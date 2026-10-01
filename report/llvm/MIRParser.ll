@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.bb, ptr %i.ba, align 8, !tbaa !191
   %i.bc = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 464
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bc, i8 0, i64 16, i1 false)
-  %i.bd = add i64 %.057.i.i.i, -2                 ; 2 uses
+  %i.bd = add nsw i64 %.057.i.i.i, -2             ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 480 ; 2 uses
   %.not.i.i.i.1 = icmp eq i64 %i.bd, 0
   br i1 %.not.i.i.i.1, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml25VirtualRegisterDefinitionEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1765
@@ -312,7 +312,7 @@ _ZNKSt6vectorIN4llvm4yaml25VirtualRegisterDefinitionESaIS2_EE12_M_check_lenEmPKc
   store ptr %i.cx, ptr %i.cw, align 8, !tbaa !191
   %i.cy = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 464
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cy, i8 0, i64 16, i1 false)
-  %i.cz = add i64 %.057.i.i.i27, -2               ; 2 uses
+  %i.cz = add nsw i64 %.057.i.i.i27, -2           ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 480
   %.not.i.i.i28.1 = icmp eq i64 %i.cz, 0
   br i1 %.not.i.i.i28.1, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml25VirtualRegisterDefinitionEmS2_ET_S4_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1765
@@ -715,7 +715,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.aj, ptr %i.ai, align 8, !tbaa !191
   %i.ak = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i8 0, i64 16, i1 false)
-  %i.al = add i64 %.057.i.i.i, -2                 ; 2 uses
+  %i.al = add nsw i64 %.057.i.i.i, -2             ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.1 = icmp eq i64 %i.al, 0
   br i1 %.not.i.i.i.1, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml21MachineFunctionLiveInEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1777
@@ -795,7 +795,7 @@ _ZNKSt6vectorIN4llvm4yaml21MachineFunctionLiveInESaIS2_EE12_M_check_lenEmPKc.exi
   store ptr %i.bn, ptr %i.bm, align 8, !tbaa !191
   %i.bo = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bo, i8 0, i64 16, i1 false)
-  %i.bp = add i64 %.057.i.i.i27, -2               ; 2 uses
+  %i.bp = add nsw i64 %.057.i.i.i27, -2           ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 192
   %.not.i.i.i28.1 = icmp eq i64 %i.bp, 0
   br i1 %.not.i.i.i28.1, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml21MachineFunctionLiveInEmS2_ET_S4_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1777
@@ -1198,7 +1198,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.q, align 8, !tbaa !184
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
-  %i.s = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 48 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1245,7 +1245,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.ai, align 8, !tbaa !184
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
-  %i.ak = add i64 %.057.i.i.i, -4                 ; 2 uses
+  %i.ak = add nsw i64 %.057.i.i.i, -4             ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ak, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml15FlowStringValueEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1789
@@ -1285,7 +1285,7 @@ _ZNKSt6vectorIN4llvm4yaml15FlowStringValueESaIS2_EE12_M_check_lenEmPKc.exit: ; p
   store i64 0, ptr %i.at, align 8, !tbaa !184
   %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false)
-  %i.av = add i64 %.057.i.i.i27.prol, -1          ; 2 uses
+  %i.av = add nsw i64 %.057.i.i.i27.prol, -1      ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 48 ; 2 uses
   %prol.iter43.next = add i64 %prol.iter43, 1     ; 2 uses
   %prol.iter43.cmp.not = icmp eq i64 %prol.iter43.next, %xtraiter41
@@ -1331,7 +1331,7 @@ _ZNKSt6vectorIN4llvm4yaml15FlowStringValueESaIS2_EE12_M_check_lenEmPKc.exit: ; p
   store i64 0, ptr %i.bl, align 8, !tbaa !184
   %i.bm = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bm, i8 0, i64 16, i1 false)
-  %i.bn = add i64 %.057.i.i.i27, -4               ; 2 uses
+  %i.bn = add nsw i64 %.057.i.i.i27, -4           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 192
   %.not.i.i.i28.3 = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i28.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml15FlowStringValueEmS2_ET_S4_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1789
@@ -1734,7 +1734,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.q, align 8, !tbaa !184
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.r, i8 0, i64 40, i1 false)
-  %i.s = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 72 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1781,7 +1781,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.ai, align 8, !tbaa !184
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 248
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.aj, i8 0, i64 40, i1 false)
-  %i.ak = add i64 %.057.i.i.i, -4                 ; 2 uses
+  %i.ak = add nsw i64 %.057.i.i.i, -4             ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 288 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ak, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml21SaveRestorePointEntryEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1815
@@ -1821,7 +1821,7 @@ _ZNKSt6vectorIN4llvm4yaml21SaveRestorePointEntryESaIS2_EE12_M_check_lenEmPKc.exi
   store i64 0, ptr %i.at, align 8, !tbaa !184
   %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.au, i8 0, i64 40, i1 false)
-  %i.av = add i64 %.057.i.i.i27.prol, -1          ; 2 uses
+  %i.av = add nsw i64 %.057.i.i.i27.prol, -1      ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 72 ; 2 uses
   %prol.iter43.next = add i64 %prol.iter43, 1     ; 2 uses
   %prol.iter43.cmp.not = icmp eq i64 %prol.iter43.next, %xtraiter41
@@ -1867,7 +1867,7 @@ _ZNKSt6vectorIN4llvm4yaml21SaveRestorePointEntryESaIS2_EE12_M_check_lenEmPKc.exi
   store i64 0, ptr %i.bl, align 8, !tbaa !184
   %i.bm = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 248
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bm, i8 0, i64 40, i1 false)
-  %i.bn = add i64 %.057.i.i.i27, -4               ; 2 uses
+  %i.bn = add nsw i64 %.057.i.i.i27, -4           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 288
   %.not.i.i.i28.3 = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i28.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml21SaveRestorePointEntryEmS2_ET_S4_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1815
@@ -2270,7 +2270,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.be, ptr %i.bd, align 8, !tbaa !191
   %i.bf = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 512
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i8 0, i64 16, i1 false)
-  %i.bg = add i64 %.057.i.i.i, -2                 ; 2 uses
+  %i.bg = add nsw i64 %.057.i.i.i, -2             ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 528 ; 2 uses
   %.not.i.i.i.1 = icmp eq i64 %i.bg, 0
   br i1 %.not.i.i.i.1, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml23FixedMachineStackObjectEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1844
@@ -2383,7 +2383,7 @@ _ZNKSt6vectorIN4llvm4yaml23FixedMachineStackObjectESaIS2_EE12_M_check_lenEmPKc.e
   store ptr %i.dd, ptr %i.dc, align 8, !tbaa !191
   %i.de = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 512
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.de, i8 0, i64 16, i1 false)
-  %i.df = add i64 %.057.i.i.i27, -2               ; 2 uses
+  %i.df = add nsw i64 %.057.i.i.i27, -2           ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 528
   %.not.i.i.i28.1 = icmp eq i64 %i.df, 0
   br i1 %.not.i.i.i28.1, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml23FixedMachineStackObjectEmS2_ET_S4_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1844
@@ -2786,7 +2786,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.ae, ptr %i.ad, align 8, !tbaa !191
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 304
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.af, i8 0, i64 16, i1 false)
-  %i.ag = add i64 %.057.i.i.i, -1                 ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i, -1             ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 320 ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml18MachineStackObjectEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1862
@@ -2845,7 +2845,7 @@ _ZNKSt6vectorIN4llvm4yaml18MachineStackObjectESaIS2_EE12_M_check_lenEmPKc.exit: 
   store ptr %i.bd, ptr %i.bc, align 8, !tbaa !191
   %i.be = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 304
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.be, i8 0, i64 16, i1 false)
-  %i.bf = add i64 %.057.i.i.i27, -1               ; 2 uses
+  %i.bf = add nsw i64 %.057.i.i.i27, -1           ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 320
   %.not.i.i.i28 = icmp eq i64 %i.bf, 0
   br i1 %.not.i.i.i28, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml18MachineStackObjectEmS2_ET_S4_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1862
@@ -3248,7 +3248,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.bb, ptr %i.ba, align 8, !tbaa !191
   %i.bc = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 368
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bc, i8 0, i64 16, i1 false)
-  %i.bd = add i64 %.057.i.i.i, -2                 ; 2 uses
+  %i.bd = add nsw i64 %.057.i.i.i, -2             ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 384 ; 2 uses
   %.not.i.i.i.1 = icmp eq i64 %i.bd, 0
   br i1 %.not.i.i.i.1, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml16EntryValueObjectEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1878
@@ -3358,7 +3358,7 @@ _ZNKSt6vectorIN4llvm4yaml16EntryValueObjectESaIS2_EE12_M_check_lenEmPKc.exit: ; 
   store ptr %i.cx, ptr %i.cw, align 8, !tbaa !191
   %i.cy = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 368
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cy, i8 0, i64 16, i1 false)
-  %i.cz = add i64 %.057.i.i.i27, -2               ; 2 uses
+  %i.cz = add nsw i64 %.057.i.i.i27, -2           ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 384
   %.not.i.i.i28.1 = icmp eq i64 %i.cz, 0
   br i1 %.not.i.i.i28.1, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml16EntryValueObjectEmS2_ET_S4_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1878
@@ -3761,7 +3761,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.q, align 8, !tbaa !184
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
-  %i.s = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 56 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -3808,7 +3808,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.ai, align 8, !tbaa !184
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 200
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
-  %i.ak = add i64 %.057.i.i.i, -4                 ; 2 uses
+  %i.ak = add nsw i64 %.057.i.i.i, -4             ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 224 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ak, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml12CallSiteInfo10ArgRegPairEmS3_ET_S5_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1904
@@ -3848,7 +3848,7 @@ _ZNKSt6vectorIN4llvm4yaml12CallSiteInfo10ArgRegPairESaIS3_EE12_M_check_lenEmPKc.
   store i64 0, ptr %i.at, align 8, !tbaa !184
   %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false)
-  %i.av = add i64 %.057.i.i.i27.prol, -1          ; 2 uses
+  %i.av = add nsw i64 %.057.i.i.i27.prol, -1      ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 56 ; 2 uses
   %prol.iter43.next = add i64 %prol.iter43, 1     ; 2 uses
   %prol.iter43.cmp.not = icmp eq i64 %prol.iter43.next, %xtraiter41
@@ -3894,7 +3894,7 @@ _ZNKSt6vectorIN4llvm4yaml12CallSiteInfo10ArgRegPairESaIS3_EE12_M_check_lenEmPKc.
   store i64 0, ptr %i.bl, align 8, !tbaa !184
   %i.bm = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 200
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bm, i8 0, i64 16, i1 false)
-  %i.bn = add i64 %.057.i.i.i27, -4               ; 2 uses
+  %i.bn = add nsw i64 %.057.i.i.i27, -4           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 224
   %.not.i.i.i28.3 = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i28.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml12CallSiteInfo10ArgRegPairEmS3_ET_S5_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1904
@@ -4297,7 +4297,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.q, ptr %i.p, align 8, !tbaa !191
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 56
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
-  %i.s = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 80 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -4340,7 +4340,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.ai, ptr %i.ah, align 8, !tbaa !191
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 296
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
-  %i.ak = add i64 %.057.i.i.i, -4                 ; 2 uses
+  %i.ak = add nsw i64 %.057.i.i.i, -4             ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 320 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ak, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml24MachineConstantPoolValueEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1933
@@ -4379,7 +4379,7 @@ _ZNKSt6vectorIN4llvm4yaml24MachineConstantPoolValueESaIS2_EE12_M_check_lenEmPKc.
   store ptr %i.at, ptr %i.as, align 8, !tbaa !191
   %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 56
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false)
-  %i.av = add i64 %.057.i.i.i27.prol, -1          ; 2 uses
+  %i.av = add nsw i64 %.057.i.i.i27.prol, -1      ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 80 ; 2 uses
   %prol.iter43.next = add i64 %prol.iter43, 1     ; 2 uses
   %prol.iter43.cmp.not = icmp eq i64 %prol.iter43.next, %xtraiter41
@@ -4421,7 +4421,7 @@ _ZNKSt6vectorIN4llvm4yaml24MachineConstantPoolValueESaIS2_EE12_M_check_lenEmPKc.
   store ptr %i.bl, ptr %i.bk, align 8, !tbaa !191
   %i.bm = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 296
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bm, i8 0, i64 16, i1 false)
-  %i.bn = add i64 %.057.i.i.i27, -4               ; 2 uses
+  %i.bn = add nsw i64 %.057.i.i.i27, -4           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 320
   %.not.i.i.i28.3 = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i28.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml24MachineConstantPoolValueEmS2_ET_S4_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1933
@@ -4824,7 +4824,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.q, align 8, !tbaa !184
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
-  %i.s = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 48 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -4871,7 +4871,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.ai, align 8, !tbaa !184
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
-  %i.ak = add i64 %.057.i.i.i, -4                 ; 2 uses
+  %i.ak = add nsw i64 %.057.i.i.i, -4             ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ak, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml11StringValueEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1964
@@ -4911,7 +4911,7 @@ _ZNKSt6vectorIN4llvm4yaml11StringValueESaIS2_EE12_M_check_lenEmPKc.exit: ; preds
   store i64 0, ptr %i.at, align 8, !tbaa !184
   %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false)
-  %i.av = add i64 %.057.i.i.i27.prol, -1          ; 2 uses
+  %i.av = add nsw i64 %.057.i.i.i27.prol, -1      ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.08.i.i.i26.prol, i64 48 ; 2 uses
   %prol.iter43.next = add i64 %prol.iter43, 1     ; 2 uses
   %prol.iter43.cmp.not = icmp eq i64 %prol.iter43.next, %xtraiter41
@@ -4957,7 +4957,7 @@ _ZNKSt6vectorIN4llvm4yaml11StringValueESaIS2_EE12_M_check_lenEmPKc.exit: ; preds
   store i64 0, ptr %i.bl, align 8, !tbaa !184
   %i.bm = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bm, i8 0, i64 16, i1 false)
-  %i.bn = add i64 %.057.i.i.i27, -4               ; 2 uses
+  %i.bn = add nsw i64 %.057.i.i.i27, -4           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.08.i.i.i26, i64 192
   %.not.i.i.i28.3 = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i28.3, label %_ZSt27__uninitialized_default_n_aIPN4llvm4yaml11StringValueEmS2_ET_S4_T0_RSaIT1_E.exit30, label %.lr.ph.i.i.i25, !llvm.loop !1964

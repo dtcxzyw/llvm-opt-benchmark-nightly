@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %_ZN5boost9intrusive
   %.01315.i.i.i.i98.prol = phi ptr [ %i.fk, %.prol.preheader ], [ %i.ff, %.lr.ph.i.i.i.i95 ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph.i.i.i.i95 ]
   %i.fg = load ptr, ptr %.in.i.i.i.i96.prol, align 8, !tbaa !920 ; 3 uses
-  %i.fh = add i64 %.016.i.i.i.i97.prol, -1        ; 2 uses
+  %i.fh = add nsw i64 %.016.i.i.i.i97.prol, -1    ; 2 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fg, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i98.prol) ]
   %i.fj = load i32, ptr %i.fi, align 4, !tbaa !259
@@ -243,7 +243,7 @@ bb.y:                                             ; preds = %_ZN5boost9intrusive
   store i32 %i.fw, ptr %i.ft, align 4, !tbaa !259
   %i.fx = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i98, i64 12
   %i.fy = load ptr, ptr %i.fu, align 8, !tbaa !920 ; 2 uses
-  %i.fz = add i64 %.016.i.i.i.i97, -4             ; 2 uses
+  %i.fz = add nsw i64 %.016.i.i.i.i97, -4         ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
   %i.gb = load i32, ptr %i.ga, align 4, !tbaa !259
   store i32 %i.gb, ptr %i.fx, align 4, !tbaa !259
@@ -535,7 +535,7 @@ bb.am:                                            ; preds = %_ZN5boost9intrusive
   %.01315.i.i.i.i145.prol = phi ptr [ %i.ji, %.prol.preheader501 ], [ %i.jd, %.lr.ph.i.i.i.i142 ] ; 3 uses
   %prol.iter505 = phi i64 [ %prol.iter505.next, %.prol.preheader501 ], [ 0, %.lr.ph.i.i.i.i142 ]
   %i.je = load ptr, ptr %.in.i.i.i.i143.prol, align 8, !tbaa !920 ; 3 uses
-  %i.jf = add i64 %.016.i.i.i.i144.prol, -1       ; 2 uses
+  %i.jf = add nsw i64 %.016.i.i.i.i144.prol, -1   ; 2 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %i.je, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i145.prol) ]
   %i.jh = load i32, ptr %i.jg, align 4, !tbaa !259
@@ -573,7 +573,7 @@ bb.am:                                            ; preds = %_ZN5boost9intrusive
   store i32 %i.ju, ptr %i.jr, align 4, !tbaa !259
   %i.jv = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i145, i64 12
   %i.jw = load ptr, ptr %i.js, align 8, !tbaa !920 ; 2 uses
-  %i.jx = add i64 %.016.i.i.i.i144, -4            ; 2 uses
+  %i.jx = add nsw i64 %.016.i.i.i.i144, -4        ; 2 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jw, i64 16
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !259
   store i32 %i.jz, ptr %i.jv, align 4, !tbaa !259
@@ -870,7 +870,7 @@ bb.ba:                                            ; preds = %_ZN5boost9intrusive
   %.01315.i.i.i.i209.prol = phi ptr [ %i.ni, %.prol.preheader506 ], [ %i.nd, %.lr.ph.i.i.i.i206 ] ; 3 uses
   %prol.iter510 = phi i64 [ %prol.iter510.next, %.prol.preheader506 ], [ 0, %.lr.ph.i.i.i.i206 ]
   %i.ne = load ptr, ptr %.in.i.i.i.i207.prol, align 8, !tbaa !920 ; 3 uses
-  %i.nf = add i64 %.016.i.i.i.i208.prol, -1       ; 2 uses
+  %i.nf = add nsw i64 %.016.i.i.i.i208.prol, -1   ; 2 uses
   %i.ng = getelementptr inbounds nuw i8, ptr %i.ne, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i209.prol) ]
   %i.nh = load i32, ptr %i.ng, align 4, !tbaa !259
@@ -908,7 +908,7 @@ bb.ba:                                            ; preds = %_ZN5boost9intrusive
   store i32 %i.nu, ptr %i.nr, align 4, !tbaa !259
   %i.nv = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i209, i64 12
   %i.nw = load ptr, ptr %i.ns, align 8, !tbaa !920 ; 2 uses
-  %i.nx = add i64 %.016.i.i.i.i208, -4            ; 2 uses
+  %i.nx = add nsw i64 %.016.i.i.i.i208, -4        ; 2 uses
   %i.ny = getelementptr inbounds nuw i8, ptr %i.nw, i64 16
   %i.nz = load i32, ptr %i.ny, align 4, !tbaa !259
   store i32 %i.nz, ptr %i.nv, align 4, !tbaa !259
@@ -1280,7 +1280,7 @@ bb.br:                                            ; preds = %_ZN5boost9intrusive
   %.01315.i.i.i.i290.prol = phi ptr [ %i.sg, %.prol.preheader511 ], [ %i.sb, %.lr.ph.i.i.i.i287 ] ; 3 uses
   %prol.iter515 = phi i64 [ %prol.iter515.next, %.prol.preheader511 ], [ 0, %.lr.ph.i.i.i.i287 ]
   %i.sc = load ptr, ptr %.in.i.i.i.i288.prol, align 8, !tbaa !920 ; 3 uses
-  %i.sd = add i64 %.016.i.i.i.i289.prol, -1       ; 2 uses
+  %i.sd = add nsw i64 %.016.i.i.i.i289.prol, -1   ; 2 uses
   %i.se = getelementptr inbounds nuw i8, ptr %i.sc, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i290.prol) ]
   %i.sf = load i32, ptr %i.se, align 4, !tbaa !259
@@ -1318,7 +1318,7 @@ bb.br:                                            ; preds = %_ZN5boost9intrusive
   store i32 %i.ss, ptr %i.sp, align 4, !tbaa !259
   %i.st = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i290, i64 12
   %i.su = load ptr, ptr %i.sq, align 8, !tbaa !920 ; 2 uses
-  %i.sv = add i64 %.016.i.i.i.i289, -4            ; 2 uses
+  %i.sv = add nsw i64 %.016.i.i.i.i289, -4        ; 2 uses
   %i.sw = getelementptr inbounds nuw i8, ptr %i.su, i64 16
   %i.sx = load i32, ptr %i.sw, align 4, !tbaa !259
   store i32 %i.sx, ptr %i.st, align 4, !tbaa !259
@@ -1721,7 +1721,7 @@ _ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_
   %.01417.i.i.i.prol = phi ptr [ %i.l, %.lr.ph.i.i.i.prol ], [ %i.g, %_ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_sizeIT_E4typeES6_S6_.exit.i.i ] ; 3 uses
   %.sroa.0.016.i.i.i.prol = phi ptr [ %i.k, %.lr.ph.i.i.i.prol ], [ %1, %_ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_sizeIT_E4typeES6_S6_.exit.i.i ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %_ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_sizeIT_E4typeES6_S6_.exit.i.i ]
-  %i.h = add i64 %.018.i.i.i.prol, -1             ; 2 uses
+  %i.h = add nsw i64 %.018.i.i.i.prol, -1         ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.prol, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01417.i.i.i.prol) ]
   %i.j = load i32, ptr %i.i, align 4, !tbaa !259
@@ -1759,7 +1759,7 @@ _ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_
   store i32 %i.w, ptr %i.u, align 4, !tbaa !259
   %i.x = load ptr, ptr %i.t, align 8, !tbaa !677  ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 12
-  %i.z = add i64 %.018.i.i.i, -4                  ; 2 uses
+  %i.z = add nsw i64 %.018.i.i.i, -4              ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !259
   store i32 %i.ab, ptr %i.y, align 4, !tbaa !259
@@ -2162,7 +2162,7 @@ middle.block172:                                  ; preds = %vector.body168
 .lr.ph.i.i.i81:                                   ; preds = %.lr.ph.i.i.i81.preheader, %.lr.ph.i.i.i81
   %.012.i.i.i82 = phi i64 [ %i.cy, %.lr.ph.i.i.i81 ], [ %.012.i.i.i82.ph, %.lr.ph.i.i.i81.preheader ]
   %.0511.i.i.i83 = phi ptr [ %i.cz, %.lr.ph.i.i.i81 ], [ %.0511.i.i.i83.ph, %.lr.ph.i.i.i81.preheader ] ; 2 uses
-  %i.cy = add i64 %.012.i.i.i82, -1               ; 2 uses
+  %i.cy = add nsw i64 %.012.i.i.i82, -1           ; 2 uses
   store i32 %.pre.i.i.i80, ptr %.0511.i.i.i83, align 4, !tbaa !259
   %i.cz = getelementptr inbounds nuw i8, ptr %.0511.i.i.i83, i64 4
   %.not.i.i37.i = icmp eq i64 %i.cy, 0
@@ -2565,7 +2565,7 @@ bb.l:                                             ; preds = %_ZN5boost9container
   %.048.i.i.i.prol = phi ptr [ %i.bh, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i.prol = phi ptr [ %i.bg, %.lr.ph.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %prol.iter118 = phi i64 [ %prol.iter118.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
-  %i.bd = add i64 %.09.i.i.i.prol, -1             ; 2 uses
+  %i.bd = add nsw i64 %.09.i.i.i.prol, -1         ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.prol, i64 16
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !259
   store i32 %i.bf, ptr %.048.i.i.i.prol, align 4, !tbaa !259
@@ -2601,7 +2601,7 @@ bb.l:                                             ; preds = %_ZN5boost9container
   store i32 %i.bs, ptr %i.bq, align 4, !tbaa !259
   %i.bt = load ptr, ptr %i.bp, align 8, !tbaa !677 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.048.i.i.i, i64 12
-  %i.bv = add i64 %.09.i.i.i, -4                  ; 2 uses
+  %i.bv = add nsw i64 %.09.i.i.i, -4              ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bt, i64 16
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !259
   store i32 %i.bx, ptr %i.bu, align 4, !tbaa !259
@@ -2694,7 +2694,7 @@ _ZN5boost9container3dtl18insert_range_proxyISaIiESt14_List_iteratorIiEE17copy_n_
   store i32 %i.db, ptr %.01417.i.i.i.prol, align 4, !tbaa !259
   %i.dc = load ptr, ptr %.sroa.0.016.i.i.i.prol, align 8, !tbaa !677 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.01417.i.i.i.prol, i64 4 ; 2 uses
-  %i.de = add i64 %.018.i.i.i.prol, -1            ; 2 uses
+  %i.de = add nsw i64 %.018.i.i.i.prol, -1        ; 2 uses
   %prol.iter115.next = add i64 %prol.iter115, 1   ; 2 uses
   %prol.iter115.cmp.not = icmp eq i64 %prol.iter115.next, %xtraiter113
   br i1 %prol.iter115.cmp.not, label %.lr.ph.i.i48.i.prol.loopexit, label %.lr.ph.i.i48.i.prol, !llvm.loop !3424
@@ -2731,7 +2731,7 @@ _ZN5boost9container3dtl18insert_range_proxyISaIiESt14_List_iteratorIiEE17copy_n_
   store i32 %i.dt, ptr %i.dr, align 4, !tbaa !259
   %i.du = load ptr, ptr %i.dq, align 8, !tbaa !677
   %i.dv = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 16
-  %i.dw = add i64 %.018.i.i.i, -4                 ; 2 uses
+  %i.dw = add nsw i64 %.018.i.i.i, -4             ; 2 uses
   %.not.i.i49.i.3 = icmp eq i64 %i.dw, 0
   br i1 %.not.i.i49.i.3, label %_ZN5boost9container47expand_forward_and_insert_nonempty_middle_allocISaIiEPiNS0_3dtl18insert_range_proxyIS2_St14_List_iteratorIiEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SG_mSB_.exit, label %.lr.ph.i.i48.i, !llvm.loop !108
 
@@ -2776,7 +2776,7 @@ bb.q:                                             ; preds = %_ZN5boost9container
   %.048.i.i.i64.prol = phi ptr [ %i.ek, %.lr.ph.i.i.i62.prol ], [ %.048.i.i.i64.ph, %.lr.ph.i.i.i62.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i65.prol = phi ptr [ %i.ej, %.lr.ph.i.i.i62.prol ], [ %2, %.lr.ph.i.i.i62.preheader ] ; 2 uses
   %prol.iter127 = phi i64 [ %prol.iter127.next, %.lr.ph.i.i.i62.prol ], [ 0, %.lr.ph.i.i.i62.preheader ]
-  %i.eg = add i64 %.09.i.i.i63.prol, -1           ; 2 uses
+  %i.eg = add nsw i64 %.09.i.i.i63.prol, -1       ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i65.prol, i64 16
   %i.ei = load i32, ptr %i.eh, align 4, !tbaa !259
   store i32 %i.ei, ptr %.048.i.i.i64.prol, align 4, !tbaa !259
@@ -2812,7 +2812,7 @@ bb.q:                                             ; preds = %_ZN5boost9container
   store i32 %i.ev, ptr %i.et, align 4, !tbaa !259
   %i.ew = load ptr, ptr %i.es, align 8, !tbaa !677 ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %.048.i.i.i64, i64 12
-  %i.ey = add i64 %.09.i.i.i63, -4                ; 2 uses
+  %i.ey = add nsw i64 %.09.i.i.i63, -4            ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ew, i64 16
   %i.fa = load i32, ptr %i.ez, align 4, !tbaa !259
   store i32 %i.fa, ptr %i.ex, align 4, !tbaa !259
@@ -2841,7 +2841,7 @@ _ZN5boost9container24uninitialized_move_allocISaIiEPiS3_EENS0_3dtl40enable_if_me
   store i32 %i.fh, ptr %.01417.i.i.i68.prol, align 4, !tbaa !259
   %i.fi = load ptr, ptr %.sroa.0.016.i.i.i69.prol, align 8, !tbaa !677 ; 3 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.01417.i.i.i68.prol, i64 4 ; 2 uses
-  %i.fk = add i64 %.018.i.i.i67.prol, -1          ; 2 uses
+  %i.fk = add nsw i64 %.018.i.i.i67.prol, -1      ; 2 uses
   %prol.iter121.next = add i64 %prol.iter121, 1   ; 2 uses
   %prol.iter121.cmp.not = icmp eq i64 %prol.iter121.next, %xtraiter119
   br i1 %prol.iter121.cmp.not, label %.lr.ph.i.i42.i.prol.loopexit, label %.lr.ph.i.i42.i.prol, !llvm.loop !3426
@@ -2879,7 +2879,7 @@ _ZN5boost9container24uninitialized_move_allocISaIiEPiS3_EENS0_3dtl40enable_if_me
   store i32 %i.fz, ptr %i.fx, align 4, !tbaa !259
   %i.ga = load ptr, ptr %i.fw, align 8, !tbaa !677 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %.01417.i.i.i68, i64 16
-  %i.gc = add i64 %.018.i.i.i67, -4               ; 2 uses
+  %i.gc = add nsw i64 %.018.i.i.i67, -4           ; 2 uses
   %.not.i.i43.i.3 = icmp eq i64 %i.gc, 0
   br i1 %.not.i.i43.i.3, label %.lr.ph.i.i47.i.preheader, label %.lr.ph.i.i42.i, !llvm.loop !108
 
@@ -3282,7 +3282,7 @@ bb.j:                                             ; preds = %bb.i
   store i32 %i.bl, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.bm = getelementptr inbounds nuw i8, ptr %.0819.i.i, i64 4 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 4
-  %i.bo = add i64 %.020.i.i, -2                   ; 2 uses
+  %i.bo = add nsw i64 %.020.i.i, -2               ; 2 uses
   %i.bp = load i32, ptr %i.bm, align 4, !tbaa !612
   store i32 %i.bp, ptr %i.bn, align 4, !tbaa !612
   store i32 0, ptr %i.bm, align 4, !tbaa !612
@@ -3388,7 +3388,7 @@ middle.block:                                     ; preds = %vector.body
   %.048.i.i.i.prol = phi ptr [ %i.dc, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i.prol = phi ptr [ %i.db, %.lr.ph.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %prol.iter182 = phi i64 [ %prol.iter182.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
-  %i.cy = add i64 %.09.i.i.i.prol, -1             ; 2 uses
+  %i.cy = add nsw i64 %.09.i.i.i.prol, -1         ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.prol, i64 16
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !259
   store i32 %i.da, ptr %.048.i.i.i.prol, align 4, !tbaa !612
@@ -3424,7 +3424,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.dn, ptr %i.dl, align 4, !tbaa !612
   %i.do = load ptr, ptr %i.dk, align 8, !tbaa !677 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %.048.i.i.i, i64 12
-  %i.dq = add i64 %.09.i.i.i, -4                  ; 2 uses
+  %i.dq = add nsw i64 %.09.i.i.i, -4              ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.do, i64 16
   %i.ds = load i32, ptr %i.dr, align 4, !tbaa !259
   store i32 %i.ds, ptr %i.dp, align 4, !tbaa !612
@@ -3555,7 +3555,7 @@ _ZN5boost9container3dtl18insert_range_proxyISaINS0_4test11movable_intEESt14_List
   store i32 %i.fp, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.fq = load ptr, ptr %i.fl, align 8, !tbaa !677
   %i.fr = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 8
-  %i.fs = add i64 %.018.i.i.i, -2                 ; 2 uses
+  %i.fs = add nsw i64 %.018.i.i.i, -2             ; 2 uses
   %.not.i.i61.i.1 = icmp eq i64 %i.fs, 0
   br i1 %.not.i.i61.i.1, label %_ZN5boost9container47expand_forward_and_insert_nonempty_middle_allocISaINS0_4test11movable_intEEPS3_NS0_3dtl18insert_range_proxyIS4_St14_List_iteratorIiEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SI_mSD_.exit, label %.lr.ph.i.i60.i, !llvm.loop !134
 
@@ -3724,7 +3724,7 @@ middle.block160:                                  ; preds = %vector.body153
   %.048.i.i.i74.prol = phi ptr [ %i.ht, %.lr.ph.i.i.i72.prol ], [ %.048.i.i.i74.ph, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i75.prol = phi ptr [ %i.hs, %.lr.ph.i.i.i72.prol ], [ %2, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %prol.iter196 = phi i64 [ %prol.iter196.next, %.lr.ph.i.i.i72.prol ], [ 0, %.lr.ph.i.i.i72.preheader ]
-  %i.hp = add i64 %.09.i.i.i73.prol, -1           ; 2 uses
+  %i.hp = add nsw i64 %.09.i.i.i73.prol, -1       ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i75.prol, i64 16
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !259
   store i32 %i.hr, ptr %.048.i.i.i74.prol, align 4, !tbaa !612
@@ -3760,7 +3760,7 @@ middle.block160:                                  ; preds = %vector.body153
   store i32 %i.ie, ptr %i.ic, align 4, !tbaa !612
   %i.if = load ptr, ptr %i.ib, align 8, !tbaa !677 ; 2 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %.048.i.i.i74, i64 12
-  %i.ih = add i64 %.09.i.i.i73, -4                ; 2 uses
+  %i.ih = add nsw i64 %.09.i.i.i73, -4            ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.if, i64 16
   %i.ij = load i32, ptr %i.ii, align 4, !tbaa !259
   store i32 %i.ij, ptr %i.ig, align 4, !tbaa !612
@@ -3829,7 +3829,7 @@ _ZN5boost9container24uninitialized_move_allocISaINS0_4test11movable_intEEPS3_S5_
   store i32 %i.ji, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.jj = load ptr, ptr %i.je, align 8, !tbaa !677 ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %.01417.i.i.i83, i64 8
-  %i.jl = add i64 %.018.i.i.i82, -2               ; 2 uses
+  %i.jl = add nsw i64 %.018.i.i.i82, -2           ; 2 uses
   %.not.i.i52.i.1 = icmp eq i64 %i.jl, 0
   br i1 %.not.i.i52.i.1, label %.lr.ph.i.i56.i.preheader, label %.lr.ph.i.i51.i, !llvm.loop !134
 
@@ -4232,7 +4232,7 @@ middle.block197:                                  ; preds = %vector.body193
 .lr.ph.i.i.i87:                                   ; preds = %.lr.ph.i.i.i87.preheader, %.lr.ph.i.i.i87
   %.012.i.i.i88 = phi i64 [ %i.ih, %.lr.ph.i.i.i87 ], [ %.012.i.i.i88.ph, %.lr.ph.i.i.i87.preheader ]
   %.0511.i.i.i89 = phi ptr [ %i.ii, %.lr.ph.i.i.i87 ], [ %.0511.i.i.i89.ph, %.lr.ph.i.i.i87.preheader ] ; 2 uses
-  %i.ih = add i64 %.012.i.i.i88, -1               ; 2 uses
+  %i.ih = add nsw i64 %.012.i.i.i88, -1           ; 2 uses
   store i32 %.pre.i.i.i86, ptr %.0511.i.i.i89, align 4, !tbaa !629
   %i.ii = getelementptr inbounds nuw i8, ptr %.0511.i.i.i89, i64 4
   %.not.i.i.i90 = icmp eq i64 %i.ih, 0
@@ -4635,7 +4635,7 @@ bb.j:                                             ; preds = %bb.i
   store i32 %i.bl, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.bm = getelementptr inbounds nuw i8, ptr %.0819.i.i, i64 4 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 4
-  %i.bo = add i64 %.020.i.i, -2                   ; 2 uses
+  %i.bo = add nsw i64 %.020.i.i, -2               ; 2 uses
   %i.bp = load i32, ptr %i.bm, align 4, !tbaa !629
   store i32 %i.bp, ptr %i.bn, align 4, !tbaa !629
   store i32 0, ptr %i.bm, align 4, !tbaa !629
@@ -4741,7 +4741,7 @@ middle.block:                                     ; preds = %vector.body
   %.048.i.i.i.prol = phi ptr [ %i.dc, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i.prol = phi ptr [ %i.db, %.lr.ph.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %prol.iter182 = phi i64 [ %prol.iter182.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
-  %i.cy = add i64 %.09.i.i.i.prol, -1             ; 2 uses
+  %i.cy = add nsw i64 %.09.i.i.i.prol, -1         ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.prol, i64 16
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !259
   store i32 %i.da, ptr %.048.i.i.i.prol, align 4, !tbaa !629
@@ -4777,7 +4777,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.dn, ptr %i.dl, align 4, !tbaa !629
   %i.do = load ptr, ptr %i.dk, align 8, !tbaa !677 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %.048.i.i.i, i64 12
-  %i.dq = add i64 %.09.i.i.i, -4                  ; 2 uses
+  %i.dq = add nsw i64 %.09.i.i.i, -4              ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.do, i64 16
   %i.ds = load i32, ptr %i.dr, align 4, !tbaa !259
   store i32 %i.ds, ptr %i.dp, align 4, !tbaa !629
@@ -4908,7 +4908,7 @@ _ZN5boost9container3dtl18insert_range_proxyISaINS0_4test24movable_and_copyable_i
   store i32 %i.fp, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.fq = load ptr, ptr %i.fl, align 8, !tbaa !677
   %i.fr = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 8
-  %i.fs = add i64 %.018.i.i.i, -2                 ; 2 uses
+  %i.fs = add nsw i64 %.018.i.i.i, -2             ; 2 uses
   %.not.i.i61.i.1 = icmp eq i64 %i.fs, 0
   br i1 %.not.i.i61.i.1, label %_ZN5boost9container47expand_forward_and_insert_nonempty_middle_allocISaINS0_4test24movable_and_copyable_intEEPS3_NS0_3dtl18insert_range_proxyIS4_St14_List_iteratorIiEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SI_mSD_.exit, label %.lr.ph.i.i60.i, !llvm.loop !157
 
@@ -5077,7 +5077,7 @@ middle.block160:                                  ; preds = %vector.body153
   %.048.i.i.i74.prol = phi ptr [ %i.ht, %.lr.ph.i.i.i72.prol ], [ %.048.i.i.i74.ph, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i75.prol = phi ptr [ %i.hs, %.lr.ph.i.i.i72.prol ], [ %2, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %prol.iter196 = phi i64 [ %prol.iter196.next, %.lr.ph.i.i.i72.prol ], [ 0, %.lr.ph.i.i.i72.preheader ]
-  %i.hp = add i64 %.09.i.i.i73.prol, -1           ; 2 uses
+  %i.hp = add nsw i64 %.09.i.i.i73.prol, -1       ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i75.prol, i64 16
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !259
   store i32 %i.hr, ptr %.048.i.i.i74.prol, align 4, !tbaa !629
@@ -5113,7 +5113,7 @@ middle.block160:                                  ; preds = %vector.body153
   store i32 %i.ie, ptr %i.ic, align 4, !tbaa !629
   %i.if = load ptr, ptr %i.ib, align 8, !tbaa !677 ; 2 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %.048.i.i.i74, i64 12
-  %i.ih = add i64 %.09.i.i.i73, -4                ; 2 uses
+  %i.ih = add nsw i64 %.09.i.i.i73, -4            ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.if, i64 16
   %i.ij = load i32, ptr %i.ii, align 4, !tbaa !259
   store i32 %i.ij, ptr %i.ig, align 4, !tbaa !629
@@ -5182,7 +5182,7 @@ _ZN5boost9container24uninitialized_move_allocISaINS0_4test24movable_and_copyable
   store i32 %i.ji, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.jj = load ptr, ptr %i.je, align 8, !tbaa !677 ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %.01417.i.i.i83, i64 8
-  %i.jl = add i64 %.018.i.i.i82, -2               ; 2 uses
+  %i.jl = add nsw i64 %.018.i.i.i82, -2           ; 2 uses
   %.not.i.i52.i.1 = icmp eq i64 %i.jl, 0
   br i1 %.not.i.i52.i.1, label %.lr.ph.i.i56.i.preheader, label %.lr.ph.i.i51.i, !llvm.loop !157
 
@@ -5585,7 +5585,7 @@ middle.block194:                                  ; preds = %vector.body190
 .lr.ph.i.i.i87:                                   ; preds = %.lr.ph.i.i.i87.preheader, %.lr.ph.i.i.i87
   %.012.i.i.i88 = phi i64 [ %i.ho, %.lr.ph.i.i.i87 ], [ %.012.i.i.i88.ph, %.lr.ph.i.i.i87.preheader ]
   %.0511.i.i.i89 = phi ptr [ %i.hp, %.lr.ph.i.i.i87 ], [ %.0511.i.i.i89.ph, %.lr.ph.i.i.i87.preheader ] ; 2 uses
-  %i.ho = add i64 %.012.i.i.i88, -1               ; 2 uses
+  %i.ho = add nsw i64 %.012.i.i.i88, -1           ; 2 uses
   store i32 %.pre.i.i.i86, ptr %.0511.i.i.i89, align 4, !tbaa !646
   %i.hp = getelementptr inbounds nuw i8, ptr %.0511.i.i.i89, i64 4
   %.not.i.i.i90 = icmp eq i64 %i.ho, 0
@@ -5988,7 +5988,7 @@ bb.j:                                             ; preds = %bb.i
   %.0819.i.i.prol = phi ptr [ %i.bf, %.lr.ph.i.i58.prol ], [ %i.ba, %bb.j ] ; 2 uses
   %.01618.i.i.prol = phi ptr [ %i.bg, %.lr.ph.i.i58.prol ], [ %i.n, %bb.j ] ; 3 uses
   %prol.iter170 = phi i64 [ %prol.iter170.next, %.lr.ph.i.i58.prol ], [ 0, %bb.j ]
-  %i.bb = add i64 %.020.i.i.prol, -1              ; 2 uses
+  %i.bb = add nsw i64 %.020.i.i.prol, -1          ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01618.i.i.prol) ]
   %i.bc = load i32, ptr %.0819.i.i.prol, align 4, !tbaa !646
   store i32 %i.bc, ptr %.01618.i.i.prol, align 4, !tbaa !646
@@ -6032,7 +6032,7 @@ bb.j:                                             ; preds = %bb.i
   store i32 %i.bs, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.bt = getelementptr inbounds nuw i8, ptr %.0819.i.i, i64 12
   %i.bu = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 12
-  %i.bv = add i64 %.020.i.i, -4                   ; 2 uses
+  %i.bv = add nsw i64 %.020.i.i, -4               ; 2 uses
   %i.bw = load i32, ptr %i.bt, align 4, !tbaa !646
   store i32 %i.bw, ptr %i.bu, align 4, !tbaa !646
   %i.bx = add i32 %i.bj, 4
@@ -6118,7 +6118,7 @@ middle.block:                                     ; preds = %vector.body
   %.048.i.i.i.prol = phi ptr [ %i.da, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i.prol = phi ptr [ %i.cz, %.lr.ph.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %prol.iter173 = phi i64 [ %prol.iter173.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
-  %i.cw = add i64 %.09.i.i.i.prol, -1             ; 2 uses
+  %i.cw = add nsw i64 %.09.i.i.i.prol, -1         ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.prol, i64 16
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !259
   store i32 %i.cy, ptr %.048.i.i.i.prol, align 4, !tbaa !646
@@ -6154,7 +6154,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.dl, ptr %i.dj, align 4, !tbaa !646
   %i.dm = load ptr, ptr %i.di, align 8, !tbaa !677 ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.048.i.i.i, i64 12
-  %i.do = add i64 %.09.i.i.i, -4                  ; 2 uses
+  %i.do = add nsw i64 %.09.i.i.i, -4              ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dm, i64 16
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !259
   store i32 %i.dq, ptr %i.dn, align 4, !tbaa !646
@@ -6284,7 +6284,7 @@ _ZN5boost9container3dtl18insert_range_proxyISaINS0_4test12copyable_intEESt14_Lis
   store i32 %i.fn, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.fo = load ptr, ptr %i.fj, align 8, !tbaa !677
   %i.fp = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 8
-  %i.fq = add i64 %.018.i.i.i, -2                 ; 2 uses
+  %i.fq = add nsw i64 %.018.i.i.i, -2             ; 2 uses
   %.not.i.i61.i.1 = icmp eq i64 %i.fq, 0
   br i1 %.not.i.i61.i.1, label %_ZN5boost9container47expand_forward_and_insert_nonempty_middle_allocISaINS0_4test12copyable_intEEPS3_NS0_3dtl18insert_range_proxyIS4_St14_List_iteratorIiEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SI_mSD_.exit, label %.lr.ph.i.i60.i, !llvm.loop !178
 
@@ -6432,7 +6432,7 @@ middle.block152:                                  ; preds = %vector.body145
   %.048.i.i.i74.prol = phi ptr [ %i.hh, %.lr.ph.i.i.i72.prol ], [ %.048.i.i.i74.ph, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i75.prol = phi ptr [ %i.hg, %.lr.ph.i.i.i72.prol ], [ %2, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %prol.iter187 = phi i64 [ %prol.iter187.next, %.lr.ph.i.i.i72.prol ], [ 0, %.lr.ph.i.i.i72.preheader ]
-  %i.hd = add i64 %.09.i.i.i73.prol, -1           ; 2 uses
+  %i.hd = add nsw i64 %.09.i.i.i73.prol, -1       ; 2 uses
   %i.he = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i75.prol, i64 16
   %i.hf = load i32, ptr %i.he, align 4, !tbaa !259
   store i32 %i.hf, ptr %.048.i.i.i74.prol, align 4, !tbaa !646
@@ -6468,7 +6468,7 @@ middle.block152:                                  ; preds = %vector.body145
   store i32 %i.hs, ptr %i.hq, align 4, !tbaa !646
   %i.ht = load ptr, ptr %i.hp, align 8, !tbaa !677 ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %.048.i.i.i74, i64 12
-  %i.hv = add i64 %.09.i.i.i73, -4                ; 2 uses
+  %i.hv = add nsw i64 %.09.i.i.i73, -4            ; 2 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.ht, i64 16
   %i.hx = load i32, ptr %i.hw, align 4, !tbaa !259
   store i32 %i.hx, ptr %i.hu, align 4, !tbaa !646
@@ -6536,7 +6536,7 @@ _ZN5boost9container24uninitialized_move_allocISaINS0_4test12copyable_intEEPS3_S5
   store i32 %i.iw, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.ix = load ptr, ptr %i.is, align 8, !tbaa !677 ; 2 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %.01417.i.i.i83, i64 8
-  %i.iz = add i64 %.018.i.i.i82, -2               ; 2 uses
+  %i.iz = add nsw i64 %.018.i.i.i82, -2           ; 2 uses
   %.not.i.i52.i.1 = icmp eq i64 %i.iz, 0
   br i1 %.not.i.i52.i.1, label %.lr.ph.i.i56.i.preheader, label %.lr.ph.i.i51.i, !llvm.loop !178
 
@@ -6939,7 +6939,7 @@ _ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_
   %.01417.i.i.i.prol = phi ptr [ %i.l, %.lr.ph.i.i.i.prol ], [ %i.g, %_ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_sizeIT_E4typeES6_S6_.exit.i.i ] ; 3 uses
   %.sroa.0.016.i.i.i.prol = phi ptr [ %i.k, %.lr.ph.i.i.i.prol ], [ %1, %_ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_sizeIT_E4typeES6_S6_.exit.i.i ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %_ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_sizeIT_E4typeES6_S6_.exit.i.i ]
-  %i.h = add i64 %.018.i.i.i.prol, -1             ; 2 uses
+  %i.h = add nsw i64 %.018.i.i.i.prol, -1         ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.i.prol, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01417.i.i.i.prol) ]
   %i.j = load i32, ptr %i.i, align 4, !tbaa !259
@@ -6977,7 +6977,7 @@ _ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_
   store i32 %i.w, ptr %i.u, align 4, !tbaa !259
   %i.x = load ptr, ptr %i.t, align 8, !tbaa !677  ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 12
-  %i.z = add i64 %.018.i.i.i, -4                  ; 2 uses
+  %i.z = add nsw i64 %.018.i.i.i, -4              ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !259
   store i32 %i.ab, ptr %i.y, align 4, !tbaa !259
@@ -7380,7 +7380,7 @@ middle.block172:                                  ; preds = %vector.body168
 .lr.ph.i.i.i81:                                   ; preds = %.lr.ph.i.i.i81.preheader, %.lr.ph.i.i.i81
   %.012.i.i.i82 = phi i64 [ %i.cy, %.lr.ph.i.i.i81 ], [ %.012.i.i.i82.ph, %.lr.ph.i.i.i81.preheader ]
   %.0511.i.i.i83 = phi ptr [ %i.cz, %.lr.ph.i.i.i81 ], [ %.0511.i.i.i83.ph, %.lr.ph.i.i.i81.preheader ] ; 2 uses
-  %i.cy = add i64 %.012.i.i.i82, -1               ; 2 uses
+  %i.cy = add nsw i64 %.012.i.i.i82, -1           ; 2 uses
   store i32 %.pre.i.i.i80, ptr %.0511.i.i.i83, align 4, !tbaa !259
   %i.cz = getelementptr inbounds nuw i8, ptr %.0511.i.i.i83, i64 4
   %.not.i.i37.i = icmp eq i64 %i.cy, 0
@@ -7783,7 +7783,7 @@ bb.l:                                             ; preds = %_ZN5boost9container
   %.048.i.i.i.prol = phi ptr [ %i.bh, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i.prol = phi ptr [ %i.bg, %.lr.ph.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %prol.iter118 = phi i64 [ %prol.iter118.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
-  %i.bd = add i64 %.09.i.i.i.prol, -1             ; 2 uses
+  %i.bd = add nsw i64 %.09.i.i.i.prol, -1         ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.prol, i64 16
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !259
   store i32 %i.bf, ptr %.048.i.i.i.prol, align 4, !tbaa !259
@@ -7819,7 +7819,7 @@ bb.l:                                             ; preds = %_ZN5boost9container
   store i32 %i.bs, ptr %i.bq, align 4, !tbaa !259
   %i.bt = load ptr, ptr %i.bp, align 8, !tbaa !677 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.048.i.i.i, i64 12
-  %i.bv = add i64 %.09.i.i.i, -4                  ; 2 uses
+  %i.bv = add nsw i64 %.09.i.i.i, -4              ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bt, i64 16
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !259
   store i32 %i.bx, ptr %i.bu, align 4, !tbaa !259
@@ -7912,7 +7912,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_9allocatorIiLj2ELj0EEESt14_List_
   store i32 %i.db, ptr %.01417.i.i.i.prol, align 4, !tbaa !259
   %i.dc = load ptr, ptr %.sroa.0.016.i.i.i.prol, align 8, !tbaa !677 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.01417.i.i.i.prol, i64 4 ; 2 uses
-  %i.de = add i64 %.018.i.i.i.prol, -1            ; 2 uses
+  %i.de = add nsw i64 %.018.i.i.i.prol, -1        ; 2 uses
   %prol.iter115.next = add i64 %prol.iter115, 1   ; 2 uses
   %prol.iter115.cmp.not = icmp eq i64 %prol.iter115.next, %xtraiter113
   br i1 %prol.iter115.cmp.not, label %.lr.ph.i.i48.i.prol.loopexit, label %.lr.ph.i.i48.i.prol, !llvm.loop !6199
@@ -7949,7 +7949,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_9allocatorIiLj2ELj0EEESt14_List_
   store i32 %i.dt, ptr %i.dr, align 4, !tbaa !259
   %i.du = load ptr, ptr %i.dq, align 8, !tbaa !677
   %i.dv = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 16
-  %i.dw = add i64 %.018.i.i.i, -4                 ; 2 uses
+  %i.dw = add nsw i64 %.018.i.i.i, -4             ; 2 uses
   %.not.i.i49.i.3 = icmp eq i64 %i.dw, 0
   br i1 %.not.i.i49.i.3, label %_ZN5boost9container47expand_forward_and_insert_nonempty_middle_allocINS0_9allocatorIiLj2ELj0EEEPiNS0_3dtl18insert_range_proxyIS3_St14_List_iteratorIiEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SH_mSC_.exit, label %.lr.ph.i.i48.i, !llvm.loop !191
 
@@ -7994,7 +7994,7 @@ bb.q:                                             ; preds = %_ZN5boost9container
   %.048.i.i.i64.prol = phi ptr [ %i.ek, %.lr.ph.i.i.i62.prol ], [ %.048.i.i.i64.ph, %.lr.ph.i.i.i62.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i65.prol = phi ptr [ %i.ej, %.lr.ph.i.i.i62.prol ], [ %2, %.lr.ph.i.i.i62.preheader ] ; 2 uses
   %prol.iter127 = phi i64 [ %prol.iter127.next, %.lr.ph.i.i.i62.prol ], [ 0, %.lr.ph.i.i.i62.preheader ]
-  %i.eg = add i64 %.09.i.i.i63.prol, -1           ; 2 uses
+  %i.eg = add nsw i64 %.09.i.i.i63.prol, -1       ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i65.prol, i64 16
   %i.ei = load i32, ptr %i.eh, align 4, !tbaa !259
   store i32 %i.ei, ptr %.048.i.i.i64.prol, align 4, !tbaa !259
@@ -8030,7 +8030,7 @@ bb.q:                                             ; preds = %_ZN5boost9container
   store i32 %i.ev, ptr %i.et, align 4, !tbaa !259
   %i.ew = load ptr, ptr %i.es, align 8, !tbaa !677 ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %.048.i.i.i64, i64 12
-  %i.ey = add i64 %.09.i.i.i63, -4                ; 2 uses
+  %i.ey = add nsw i64 %.09.i.i.i63, -4            ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ew, i64 16
   %i.fa = load i32, ptr %i.ez, align 4, !tbaa !259
   store i32 %i.fa, ptr %i.ex, align 4, !tbaa !259
@@ -8059,7 +8059,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EEN
   store i32 %i.fh, ptr %.01417.i.i.i68.prol, align 4, !tbaa !259
   %i.fi = load ptr, ptr %.sroa.0.016.i.i.i69.prol, align 8, !tbaa !677 ; 3 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.01417.i.i.i68.prol, i64 4 ; 2 uses
-  %i.fk = add i64 %.018.i.i.i67.prol, -1          ; 2 uses
+  %i.fk = add nsw i64 %.018.i.i.i67.prol, -1      ; 2 uses
   %prol.iter121.next = add i64 %prol.iter121, 1   ; 2 uses
   %prol.iter121.cmp.not = icmp eq i64 %prol.iter121.next, %xtraiter119
   br i1 %prol.iter121.cmp.not, label %.lr.ph.i.i42.i.prol.loopexit, label %.lr.ph.i.i42.i.prol, !llvm.loop !6201
@@ -8097,7 +8097,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EEN
   store i32 %i.fz, ptr %i.fx, align 4, !tbaa !259
   %i.ga = load ptr, ptr %i.fw, align 8, !tbaa !677 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %.01417.i.i.i68, i64 16
-  %i.gc = add i64 %.018.i.i.i67, -4               ; 2 uses
+  %i.gc = add nsw i64 %.018.i.i.i67, -4           ; 2 uses
   %.not.i.i43.i.3 = icmp eq i64 %i.gc, 0
   br i1 %.not.i.i43.i.3, label %.lr.ph.i.i47.i.preheader, label %.lr.ph.i.i42.i, !llvm.loop !191
 
@@ -8500,7 +8500,7 @@ bb.j:                                             ; preds = %bb.i
   store i32 %i.bl, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.bm = getelementptr inbounds nuw i8, ptr %.0819.i.i, i64 4 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 4
-  %i.bo = add i64 %.020.i.i, -2                   ; 2 uses
+  %i.bo = add nsw i64 %.020.i.i, -2               ; 2 uses
   %i.bp = load i32, ptr %i.bm, align 4, !tbaa !612
   store i32 %i.bp, ptr %i.bn, align 4, !tbaa !612
   store i32 0, ptr %i.bm, align 4, !tbaa !612
@@ -8606,7 +8606,7 @@ middle.block:                                     ; preds = %vector.body
   %.048.i.i.i.prol = phi ptr [ %i.dc, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i.prol = phi ptr [ %i.db, %.lr.ph.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %prol.iter182 = phi i64 [ %prol.iter182.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
-  %i.cy = add i64 %.09.i.i.i.prol, -1             ; 2 uses
+  %i.cy = add nsw i64 %.09.i.i.i.prol, -1         ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.prol, i64 16
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !259
   store i32 %i.da, ptr %.048.i.i.i.prol, align 4, !tbaa !612
@@ -8642,7 +8642,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.dn, ptr %i.dl, align 4, !tbaa !612
   %i.do = load ptr, ptr %i.dk, align 8, !tbaa !677 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %.048.i.i.i, i64 12
-  %i.dq = add i64 %.09.i.i.i, -4                  ; 2 uses
+  %i.dq = add nsw i64 %.09.i.i.i, -4              ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.do, i64 16
   %i.ds = load i32, ptr %i.dr, align 4, !tbaa !259
   store i32 %i.ds, ptr %i.dp, align 4, !tbaa !612
@@ -8773,7 +8773,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_9allocatorINS0_4test11movable_in
   store i32 %i.fp, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.fq = load ptr, ptr %i.fl, align 8, !tbaa !677
   %i.fr = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 8
-  %i.fs = add i64 %.018.i.i.i, -2                 ; 2 uses
+  %i.fs = add nsw i64 %.018.i.i.i, -2             ; 2 uses
   %.not.i.i61.i.1 = icmp eq i64 %i.fs, 0
   br i1 %.not.i.i61.i.1, label %_ZN5boost9container47expand_forward_and_insert_nonempty_middle_allocINS0_9allocatorINS0_4test11movable_intELj2ELj0EEEPS4_NS0_3dtl18insert_range_proxyIS5_St14_List_iteratorIiEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SJ_mSE_.exit, label %.lr.ph.i.i60.i, !llvm.loop !203
 
@@ -8942,7 +8942,7 @@ middle.block160:                                  ; preds = %vector.body153
   %.048.i.i.i74.prol = phi ptr [ %i.ht, %.lr.ph.i.i.i72.prol ], [ %.048.i.i.i74.ph, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i75.prol = phi ptr [ %i.hs, %.lr.ph.i.i.i72.prol ], [ %2, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %prol.iter196 = phi i64 [ %prol.iter196.next, %.lr.ph.i.i.i72.prol ], [ 0, %.lr.ph.i.i.i72.preheader ]
-  %i.hp = add i64 %.09.i.i.i73.prol, -1           ; 2 uses
+  %i.hp = add nsw i64 %.09.i.i.i73.prol, -1       ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i75.prol, i64 16
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !259
   store i32 %i.hr, ptr %.048.i.i.i74.prol, align 4, !tbaa !612
@@ -8978,7 +8978,7 @@ middle.block160:                                  ; preds = %vector.body153
   store i32 %i.ie, ptr %i.ic, align 4, !tbaa !612
   %i.if = load ptr, ptr %i.ib, align 8, !tbaa !677 ; 2 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %.048.i.i.i74, i64 12
-  %i.ih = add i64 %.09.i.i.i73, -4                ; 2 uses
+  %i.ih = add nsw i64 %.09.i.i.i73, -4            ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.if, i64 16
   %i.ij = load i32, ptr %i.ii, align 4, !tbaa !259
   store i32 %i.ij, ptr %i.ig, align 4, !tbaa !612
@@ -9047,7 +9047,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_9allocatorINS0_4test11movable_
   store i32 %i.ji, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.jj = load ptr, ptr %i.je, align 8, !tbaa !677 ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %.01417.i.i.i83, i64 8
-  %i.jl = add i64 %.018.i.i.i82, -2               ; 2 uses
+  %i.jl = add nsw i64 %.018.i.i.i82, -2           ; 2 uses
   %.not.i.i52.i.1 = icmp eq i64 %i.jl, 0
   br i1 %.not.i.i52.i.1, label %.lr.ph.i.i56.i.preheader, label %.lr.ph.i.i51.i, !llvm.loop !203
 
@@ -9450,7 +9450,7 @@ middle.block197:                                  ; preds = %vector.body193
 .lr.ph.i.i.i87:                                   ; preds = %.lr.ph.i.i.i87.preheader, %.lr.ph.i.i.i87
   %.012.i.i.i88 = phi i64 [ %i.ih, %.lr.ph.i.i.i87 ], [ %.012.i.i.i88.ph, %.lr.ph.i.i.i87.preheader ]
   %.0511.i.i.i89 = phi ptr [ %i.ii, %.lr.ph.i.i.i87 ], [ %.0511.i.i.i89.ph, %.lr.ph.i.i.i87.preheader ] ; 2 uses
-  %i.ih = add i64 %.012.i.i.i88, -1               ; 2 uses
+  %i.ih = add nsw i64 %.012.i.i.i88, -1           ; 2 uses
   store i32 %.pre.i.i.i86, ptr %.0511.i.i.i89, align 4, !tbaa !629
   %i.ii = getelementptr inbounds nuw i8, ptr %.0511.i.i.i89, i64 4
   %.not.i.i.i90 = icmp eq i64 %i.ih, 0
@@ -9853,7 +9853,7 @@ bb.j:                                             ; preds = %bb.i
   store i32 %i.bl, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.bm = getelementptr inbounds nuw i8, ptr %.0819.i.i, i64 4 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 4
-  %i.bo = add i64 %.020.i.i, -2                   ; 2 uses
+  %i.bo = add nsw i64 %.020.i.i, -2               ; 2 uses
   %i.bp = load i32, ptr %i.bm, align 4, !tbaa !629
   store i32 %i.bp, ptr %i.bn, align 4, !tbaa !629
   store i32 0, ptr %i.bm, align 4, !tbaa !629
@@ -9959,7 +9959,7 @@ middle.block:                                     ; preds = %vector.body
   %.048.i.i.i.prol = phi ptr [ %i.dc, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i.prol = phi ptr [ %i.db, %.lr.ph.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %prol.iter182 = phi i64 [ %prol.iter182.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
-  %i.cy = add i64 %.09.i.i.i.prol, -1             ; 2 uses
+  %i.cy = add nsw i64 %.09.i.i.i.prol, -1         ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.prol, i64 16
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !259
   store i32 %i.da, ptr %.048.i.i.i.prol, align 4, !tbaa !629
@@ -9995,7 +9995,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.dn, ptr %i.dl, align 4, !tbaa !629
   %i.do = load ptr, ptr %i.dk, align 8, !tbaa !677 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %.048.i.i.i, i64 12
-  %i.dq = add i64 %.09.i.i.i, -4                  ; 2 uses
+  %i.dq = add nsw i64 %.09.i.i.i, -4              ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.do, i64 16
   %i.ds = load i32, ptr %i.dr, align 4, !tbaa !259
   store i32 %i.ds, ptr %i.dp, align 4, !tbaa !629
@@ -10126,7 +10126,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_9allocatorINS0_4test24movable_an
   store i32 %i.fp, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.fq = load ptr, ptr %i.fl, align 8, !tbaa !677
   %i.fr = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 8
-  %i.fs = add i64 %.018.i.i.i, -2                 ; 2 uses
+  %i.fs = add nsw i64 %.018.i.i.i, -2             ; 2 uses
   %.not.i.i61.i.1 = icmp eq i64 %i.fs, 0
   br i1 %.not.i.i61.i.1, label %_ZN5boost9container47expand_forward_and_insert_nonempty_middle_allocINS0_9allocatorINS0_4test24movable_and_copyable_intELj2ELj0EEEPS4_NS0_3dtl18insert_range_proxyIS5_St14_List_iteratorIiEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SJ_mSE_.exit, label %.lr.ph.i.i60.i, !llvm.loop !221
 
@@ -10295,7 +10295,7 @@ middle.block160:                                  ; preds = %vector.body153
   %.048.i.i.i74.prol = phi ptr [ %i.ht, %.lr.ph.i.i.i72.prol ], [ %.048.i.i.i74.ph, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i75.prol = phi ptr [ %i.hs, %.lr.ph.i.i.i72.prol ], [ %2, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %prol.iter196 = phi i64 [ %prol.iter196.next, %.lr.ph.i.i.i72.prol ], [ 0, %.lr.ph.i.i.i72.preheader ]
-  %i.hp = add i64 %.09.i.i.i73.prol, -1           ; 2 uses
+  %i.hp = add nsw i64 %.09.i.i.i73.prol, -1       ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i75.prol, i64 16
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !259
   store i32 %i.hr, ptr %.048.i.i.i74.prol, align 4, !tbaa !629
@@ -10331,7 +10331,7 @@ middle.block160:                                  ; preds = %vector.body153
   store i32 %i.ie, ptr %i.ic, align 4, !tbaa !629
   %i.if = load ptr, ptr %i.ib, align 8, !tbaa !677 ; 2 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %.048.i.i.i74, i64 12
-  %i.ih = add i64 %.09.i.i.i73, -4                ; 2 uses
+  %i.ih = add nsw i64 %.09.i.i.i73, -4            ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.if, i64 16
   %i.ij = load i32, ptr %i.ii, align 4, !tbaa !259
   store i32 %i.ij, ptr %i.ig, align 4, !tbaa !629
@@ -10400,7 +10400,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_9allocatorINS0_4test24movable_
   store i32 %i.ji, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.jj = load ptr, ptr %i.je, align 8, !tbaa !677 ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %.01417.i.i.i83, i64 8
-  %i.jl = add i64 %.018.i.i.i82, -2               ; 2 uses
+  %i.jl = add nsw i64 %.018.i.i.i82, -2           ; 2 uses
   %.not.i.i52.i.1 = icmp eq i64 %i.jl, 0
   br i1 %.not.i.i52.i.1, label %.lr.ph.i.i56.i.preheader, label %.lr.ph.i.i51.i, !llvm.loop !221
 
@@ -10803,7 +10803,7 @@ middle.block194:                                  ; preds = %vector.body190
 .lr.ph.i.i.i87:                                   ; preds = %.lr.ph.i.i.i87.preheader, %.lr.ph.i.i.i87
   %.012.i.i.i88 = phi i64 [ %i.ho, %.lr.ph.i.i.i87 ], [ %.012.i.i.i88.ph, %.lr.ph.i.i.i87.preheader ]
   %.0511.i.i.i89 = phi ptr [ %i.hp, %.lr.ph.i.i.i87 ], [ %.0511.i.i.i89.ph, %.lr.ph.i.i.i87.preheader ] ; 2 uses
-  %i.ho = add i64 %.012.i.i.i88, -1               ; 2 uses
+  %i.ho = add nsw i64 %.012.i.i.i88, -1           ; 2 uses
   store i32 %.pre.i.i.i86, ptr %.0511.i.i.i89, align 4, !tbaa !646
   %i.hp = getelementptr inbounds nuw i8, ptr %.0511.i.i.i89, i64 4
   %.not.i.i.i90 = icmp eq i64 %i.ho, 0
@@ -11206,7 +11206,7 @@ bb.j:                                             ; preds = %bb.i
   %.0819.i.i.prol = phi ptr [ %i.bf, %.lr.ph.i.i58.prol ], [ %i.ba, %bb.j ] ; 2 uses
   %.01618.i.i.prol = phi ptr [ %i.bg, %.lr.ph.i.i58.prol ], [ %i.n, %bb.j ] ; 3 uses
   %prol.iter170 = phi i64 [ %prol.iter170.next, %.lr.ph.i.i58.prol ], [ 0, %bb.j ]
-  %i.bb = add i64 %.020.i.i.prol, -1              ; 2 uses
+  %i.bb = add nsw i64 %.020.i.i.prol, -1          ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01618.i.i.prol) ]
   %i.bc = load i32, ptr %.0819.i.i.prol, align 4, !tbaa !646
   store i32 %i.bc, ptr %.01618.i.i.prol, align 4, !tbaa !646
@@ -11250,7 +11250,7 @@ bb.j:                                             ; preds = %bb.i
   store i32 %i.bs, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.bt = getelementptr inbounds nuw i8, ptr %.0819.i.i, i64 12
   %i.bu = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 12
-  %i.bv = add i64 %.020.i.i, -4                   ; 2 uses
+  %i.bv = add nsw i64 %.020.i.i, -4               ; 2 uses
   %i.bw = load i32, ptr %i.bt, align 4, !tbaa !646
   store i32 %i.bw, ptr %i.bu, align 4, !tbaa !646
   %i.bx = add i32 %i.bj, 4
@@ -11336,7 +11336,7 @@ middle.block:                                     ; preds = %vector.body
   %.048.i.i.i.prol = phi ptr [ %i.da, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i.prol = phi ptr [ %i.cz, %.lr.ph.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %prol.iter173 = phi i64 [ %prol.iter173.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
-  %i.cw = add i64 %.09.i.i.i.prol, -1             ; 2 uses
+  %i.cw = add nsw i64 %.09.i.i.i.prol, -1         ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.prol, i64 16
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !259
   store i32 %i.cy, ptr %.048.i.i.i.prol, align 4, !tbaa !646
@@ -11372,7 +11372,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.dl, ptr %i.dj, align 4, !tbaa !646
   %i.dm = load ptr, ptr %i.di, align 8, !tbaa !677 ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.048.i.i.i, i64 12
-  %i.do = add i64 %.09.i.i.i, -4                  ; 2 uses
+  %i.do = add nsw i64 %.09.i.i.i, -4              ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dm, i64 16
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !259
   store i32 %i.dq, ptr %i.dn, align 4, !tbaa !646
@@ -11502,7 +11502,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_9allocatorINS0_4test12copyable_i
   store i32 %i.fn, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.fo = load ptr, ptr %i.fj, align 8, !tbaa !677
   %i.fp = getelementptr inbounds nuw i8, ptr %.01417.i.i.i, i64 8
-  %i.fq = add i64 %.018.i.i.i, -2                 ; 2 uses
+  %i.fq = add nsw i64 %.018.i.i.i, -2             ; 2 uses
   %.not.i.i61.i.1 = icmp eq i64 %i.fq, 0
   br i1 %.not.i.i61.i.1, label %_ZN5boost9container47expand_forward_and_insert_nonempty_middle_allocINS0_9allocatorINS0_4test12copyable_intELj2ELj0EEEPS4_NS0_3dtl18insert_range_proxyIS5_St14_List_iteratorIiEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SJ_mSE_.exit, label %.lr.ph.i.i60.i, !llvm.loop !239
 
@@ -11650,7 +11650,7 @@ middle.block152:                                  ; preds = %vector.body145
   %.048.i.i.i74.prol = phi ptr [ %i.hh, %.lr.ph.i.i.i72.prol ], [ %.048.i.i.i74.ph, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %.sroa.0.07.i.i.i75.prol = phi ptr [ %i.hg, %.lr.ph.i.i.i72.prol ], [ %2, %.lr.ph.i.i.i72.preheader ] ; 2 uses
   %prol.iter187 = phi i64 [ %prol.iter187.next, %.lr.ph.i.i.i72.prol ], [ 0, %.lr.ph.i.i.i72.preheader ]
-  %i.hd = add i64 %.09.i.i.i73.prol, -1           ; 2 uses
+  %i.hd = add nsw i64 %.09.i.i.i73.prol, -1       ; 2 uses
   %i.he = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i75.prol, i64 16
   %i.hf = load i32, ptr %i.he, align 4, !tbaa !259
   store i32 %i.hf, ptr %.048.i.i.i74.prol, align 4, !tbaa !646
@@ -11686,7 +11686,7 @@ middle.block152:                                  ; preds = %vector.body145
   store i32 %i.hs, ptr %i.hq, align 4, !tbaa !646
   %i.ht = load ptr, ptr %i.hp, align 8, !tbaa !677 ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %.048.i.i.i74, i64 12
-  %i.hv = add i64 %.09.i.i.i73, -4                ; 2 uses
+  %i.hv = add nsw i64 %.09.i.i.i73, -4            ; 2 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.ht, i64 16
   %i.hx = load i32, ptr %i.hw, align 4, !tbaa !259
   store i32 %i.hx, ptr %i.hu, align 4, !tbaa !646
@@ -11754,7 +11754,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_9allocatorINS0_4test12copyable
   store i32 %i.iw, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.ix = load ptr, ptr %i.is, align 8, !tbaa !677 ; 2 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %.01417.i.i.i83, i64 8
-  %i.iz = add i64 %.018.i.i.i82, -2               ; 2 uses
+  %i.iz = add nsw i64 %.018.i.i.i82, -2           ; 2 uses
   %.not.i.i52.i.1 = icmp eq i64 %i.iz, 0
   br i1 %.not.i.i52.i.1, label %.lr.ph.i.i56.i.preheader, label %.lr.ph.i.i51.i, !llvm.loop !239
 

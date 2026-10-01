@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ca = and i16 %i.bx, %.lcssa.i.i.i.i.i.i
   %i.cb = sub nsw i64 0, %i.bz
   %i.cc = getelementptr inbounds [16 x i8], ptr %.sroa.010.0.copyload.i.i, i64 %i.cb
-  %i.cd = add i64 %i.bn, -1                       ; 2 uses
+  %i.cd = add nsw i64 %i.bn, -1                   ; 2 uses
   %i.ce = getelementptr inbounds i8, ptr %i.cc, i64 -16
   %i.cf = load i64, ptr %i.ce, align 8, !noalias !6847, !noundef !18
   %.sroa.0.0.i9.i.i = call noundef i64 @llvm.umax.i64(i64 %i.bn, i64 4) ; 3 uses
@@ -608,7 +608,7 @@ bb.a:
   %.sroa.546.0127.prol = phi i64 [ %i.ai, %.lr.ph131.prol ], [ %i.af, %.lr.ph131.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph131.prol ], [ 0, %.lr.ph131.preheader ]
   %i.ah = add i64 %.sroa.045.0128.prol, 4         ; 2 uses
-  %i.ai = add i64 %.sroa.546.0127.prol, -1        ; 2 uses
+  %i.ai = add nsw i64 %.sroa.546.0127.prol, -1    ; 2 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.045.0128.prol
   %.sroa.0.0.copyload.i14.prol = load <4 x double>, ptr %i.aj, align 8, !noalias !7760
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.sroa.045.0128.prol
@@ -653,7 +653,7 @@ bb.a:
   %i.bb = fsub <4 x double> %.sroa.0.0.copyload.i14.2, %.sroa.0.0.copyload.i15.2 ; 2 uses
   %i.bc = tail call <4 x double> @llvm.fma.v4f64(<4 x double> %i.bb, <4 x double> %i.bb, <4 x double> %i.ax)
   %i.bd = add i64 %.sroa.045.0128, 16
-  %i.be = add i64 %.sroa.546.0127, -4             ; 2 uses
+  %i.be = add nsw i64 %.sroa.546.0127, -4         ; 2 uses
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ay
   %.sroa.0.0.copyload.i14.3 = load <4 x double>, ptr %i.bf, align 8, !noalias !7760
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ay
@@ -1056,7 +1056,7 @@ bb.a:
   %.sroa.544.0114.prol = phi i64 [ %i.ac, %.lr.ph118.prol ], [ %i.z, %.lr.ph118.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph118.prol ], [ 0, %.lr.ph118.preheader ]
   %i.ab = add i64 %.sroa.043.0115.prol, 4         ; 2 uses
-  %i.ac = add i64 %.sroa.544.0114.prol, -1        ; 2 uses
+  %i.ac = add nsw i64 %.sroa.544.0114.prol, -1    ; 2 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.043.0115.prol
   %.sroa.0.0.copyload.i14.prol = load <4 x double>, ptr %i.ad, align 8, !noalias !7986
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.sroa.043.0115.prol
@@ -1097,7 +1097,7 @@ bb.a:
   %.sroa.0.0.copyload.i15.2 = load <4 x double>, ptr %i.ar, align 8, !noalias !7987
   %i.as = tail call <4 x double> @llvm.fma.v4f64(<4 x double> %.sroa.0.0.copyload.i14.2, <4 x double> %.sroa.0.0.copyload.i15.2, <4 x double> %i.ao)
   %i.at = add i64 %.sroa.043.0115, 16
-  %i.au = add i64 %.sroa.544.0114, -4             ; 2 uses
+  %i.au = add nsw i64 %.sroa.544.0114, -4         ; 2 uses
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ap
   %.sroa.0.0.copyload.i14.3 = load <4 x double>, ptr %i.av, align 8, !noalias !7986
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ap
@@ -1500,7 +1500,7 @@ bb.a:
   %.sroa.041.0183.prol = phi <8 x float> [ %i.am, %.lr.ph188.prol ], [ zeroinitializer, %.lr.ph188.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph188.prol ], [ 0, %.lr.ph188.preheader ]
   %i.ai = add i64 %.sroa.053.0185.prol, 8         ; 2 uses
-  %i.aj = add i64 %.sroa.554.0186.prol, -1        ; 2 uses
+  %i.aj = add nsw i64 %.sroa.554.0186.prol, -1    ; 2 uses
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.053.0185.prol
   %.sroa.0.0.copyload.i15.prol = load <8 x float>, ptr %i.ak, align 4, !noalias !8130
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.sroa.053.0185.prol
@@ -1548,7 +1548,7 @@ bb.a:
   %i.bc = tail call <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.0.0.copyload.i15.2, <8 x float> %.sroa.0.0.copyload.i16.2, <8 x float> %i.ax)
   %i.bd = tail call <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.0.0.copyload.i16.2, <8 x float> %.sroa.0.0.copyload.i16.2, <8 x float> %i.ay)
   %i.be = add i64 %.sroa.053.0185, 32
-  %i.bf = add i64 %.sroa.554.0186, -4             ; 2 uses
+  %i.bf = add nsw i64 %.sroa.554.0186, -4         ; 2 uses
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.az
   %.sroa.0.0.copyload.i15.3 = load <8 x float>, ptr %i.bg, align 4, !noalias !8130
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.az
@@ -1948,7 +1948,7 @@ bb.a:
   %.sroa.031.0118.prol = phi <8 x float> [ %i.af, %.lr.ph122.prol ], [ zeroinitializer, %.lr.ph122.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph122.prol ], [ 0, %.lr.ph122.preheader ]
   %i.ab = add i64 %.sroa.043.0119.prol, 8         ; 2 uses
-  %i.ac = add i64 %.sroa.544.0120.prol, -1        ; 2 uses
+  %i.ac = add nsw i64 %.sroa.544.0120.prol, -1    ; 2 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.043.0119.prol
   %.sroa.0.0.copyload.i14.prol = load <8 x float>, ptr %i.ad, align 4, !noalias !8163
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.sroa.043.0119.prol
@@ -1989,7 +1989,7 @@ bb.a:
   %.sroa.0.0.copyload.i15.2 = load <8 x float>, ptr %i.ar, align 4, !noalias !8164
   %i.as = tail call <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.0.0.copyload.i14.2, <8 x float> %.sroa.0.0.copyload.i15.2, <8 x float> %i.ao)
   %i.at = add i64 %.sroa.043.0119, 32
-  %i.au = add i64 %.sroa.544.0120, -4             ; 2 uses
+  %i.au = add nsw i64 %.sroa.544.0120, -4         ; 2 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ap
   %.sroa.0.0.copyload.i14.3 = load <8 x float>, ptr %i.av, align 4, !noalias !8163
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ap
@@ -2392,7 +2392,7 @@ bb.a:
   %.sroa.554.0163.prol = phi i64 [ %i.aj, %.lr.ph168.prol ], [ %i.ag, %.lr.ph168.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph168.prol ], [ 0, %.lr.ph168.preheader ]
   %i.ai = add i64 %.sroa.053.0164.prol, 4         ; 2 uses
-  %i.aj = add i64 %.sroa.554.0163.prol, -1        ; 2 uses
+  %i.aj = add nsw i64 %.sroa.554.0163.prol, -1    ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.053.0164.prol
   %.sroa.0.0.copyload.i15.prol = load <4 x double>, ptr %i.ak, align 8, !noalias !8218
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.053.0164.prol
@@ -2440,7 +2440,7 @@ bb.a:
   %i.bc = tail call <4 x double> @llvm.fma.v4f64(<4 x double> %.sroa.0.0.copyload.i15.2, <4 x double> %.sroa.0.0.copyload.i16.2, <4 x double> %i.ax)
   %i.bd = tail call <4 x double> @llvm.fma.v4f64(<4 x double> %.sroa.0.0.copyload.i16.2, <4 x double> %.sroa.0.0.copyload.i16.2, <4 x double> %i.ay)
   %i.be = add i64 %.sroa.053.0164, 16
-  %i.bf = add i64 %.sroa.554.0163, -4             ; 2 uses
+  %i.bf = add nsw i64 %.sroa.554.0163, -4         ; 2 uses
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.az
   %.sroa.0.0.copyload.i15.3 = load <4 x double>, ptr %i.bg, align 8, !noalias !8218
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.az
@@ -2843,7 +2843,7 @@ bb.a:
   %.sroa.026.097.prol = phi <4 x double> [ %i.aj, %.lr.ph101.prol ], [ zeroinitializer, %.lr.ph101.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph101.prol ], [ 0, %.lr.ph101.preheader ]
   %i.ag = add i64 %.sroa.038.098.prol, 4          ; 2 uses
-  %i.ah = add i64 %.sroa.539.099.prol, -1         ; 2 uses
+  %i.ah = add nsw i64 %.sroa.539.099.prol, -1     ; 2 uses
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.038.098.prol
   %.sroa.0.0.copyload.i12.prol = load <4 x double>, ptr %i.ai, align 8, !noalias !8262 ; 2 uses
   %i.aj = tail call <4 x double> @llvm.fma.v4f64(<4 x double> %.sroa.0.0.copyload.i12.prol, <4 x double> %.sroa.0.0.copyload.i12.prol, <4 x double> %.sroa.026.097.prol) ; 3 uses
@@ -2875,7 +2875,7 @@ bb.a:
   %.sroa.0.0.copyload.i12.2 = load <4 x double>, ptr %i.ar, align 8, !noalias !8262 ; 2 uses
   %i.as = tail call <4 x double> @llvm.fma.v4f64(<4 x double> %.sroa.0.0.copyload.i12.2, <4 x double> %.sroa.0.0.copyload.i12.2, <4 x double> %i.ap)
   %i.at = add i64 %.sroa.038.098, 16
-  %i.au = add i64 %.sroa.539.099, -4              ; 2 uses
+  %i.au = add nsw i64 %.sroa.539.099, -4          ; 2 uses
   %i.av = getelementptr [8 x i8], ptr %0, i64 %.sroa.038.098
   %i.aw = getelementptr i8, ptr %i.av, i64 96
   %.sroa.0.0.copyload.i12.3 = load <4 x double>, ptr %i.aw, align 8, !noalias !8262 ; 2 uses
