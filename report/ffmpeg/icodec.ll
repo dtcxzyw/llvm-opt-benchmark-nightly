@@ -44,17 +44,18 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 14
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 18
   %i.o = add nsw i32 %i.b, -8
-  %i.p = zext nneg i32 %i.b to i64
+  %1 = add nsw i32 %i.b, -6
+  %2 = lshr i32 %1, 4
+  %i.p = zext nneg i32 %2 to i64
   %wide.trip.count = zext i16 %i.j to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader, %bb.s
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.s ] ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.s ] ; 8 uses
   %.04170 = phi i32 [ 0, %.preheader ], [ %.1, %bb.s ] ; 3 uses
-  %i.q = shl nuw nsw i64 %indvars.iv, 4           ; 5 uses
-  %1 = add nuw nsw i64 %i.q, 22
-  %.not50 = icmp samesign ugt i64 %1, %i.p
-  br i1 %.not50, label %.critedge, label %bb.f
+  %i.q = shl nuw nsw i64 %indvars.iv, 4           ; 4 uses
+  %exitcond = icmp eq i64 %indvars.iv, %i.p
+  br i1 %exitcond, label %.critedge, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.q

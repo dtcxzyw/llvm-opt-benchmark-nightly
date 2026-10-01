@@ -205,6 +205,7 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.b = add i64 %2, -3
+  %3 = and i64 %2, -4
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.f
@@ -248,7 +249,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.u, label %bb.f, label %.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.v = add i64 %.045, 4                         ; 3 uses
+  %i.v = add nuw i64 %.045, 4                     ; 2 uses
   %i.w = icmp ult i64 %i.v, %i.b
   br i1 %i.w, label %bb.b, label %.loopexit, !llvm.loop !10
 
@@ -257,7 +258,7 @@ bb.f:                                             ; preds = %bb.e
   %.257 = phi i64 [ 0, %bb.a ], [ %i.j, %bb.f ]
   %.253 = phi i64 [ 0, %bb.a ], [ %i.o, %bb.f ]
   %.249 = phi i64 [ 0, %bb.a ], [ %i.t, %bb.f ]
-  %.2 = phi i64 [ 0, %bb.a ], [ %i.v, %bb.f ]     ; 2 uses
+  %.2 = phi i64 [ 0, %bb.a ], [ %3, %bb.f ]       ; 2 uses
   %i.x = icmp ult i64 %.2, %2
   br i1 %i.x, label %.lr.ph, label %._crit_edge
 
@@ -403,7 +404,7 @@ bb.e:                                             ; preds = %bb.d, %bb.a, %bb.b
 bb.f:                                             ; preds = %bb.t, %bb.e
   %.2102 = phi i64 [ %.1101, %bb.e ], [ %i.cv, %bb.t ] ; 3 uses
   %.098 = phi ptr [ %3, %bb.e ], [ %i.bo, %bb.t ] ; 7 uses
-  %.096 = phi i64 [ %4, %bb.e ], [ %i.bp, %bb.t ] ; 6 uses
+  %.096 = phi i64 [ %4, %bb.e ], [ %i.bp, %bb.t ] ; 7 uses
   %.094 = phi ptr [ %5, %bb.e ], [ %i.ce, %bb.t ] ; 2 uses
   %.091 = phi i64 [ %6, %bb.e ], [ %i.cd, %bb.t ] ; 2 uses
   %.083 = phi i64 [ %7, %bb.e ], [ %i.br, %bb.t ]
@@ -414,6 +415,7 @@ bb.f:                                             ; preds = %bb.t, %bb.e
 
 .preheader.i:                                     ; preds = %bb.f
   %i.z = add i64 %.096, -3
+  %8 = and i64 %.096, -4
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.k, %.preheader.i
@@ -457,7 +459,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.as, label %bb.k, label %ZSTD_get1BlockSummary.exit
 
 bb.k:                                             ; preds = %bb.j
-  %i.at = add i64 %.045.i, 4                      ; 3 uses
+  %i.at = add nuw i64 %.045.i, 4                  ; 2 uses
   %i.au = icmp ult i64 %i.at, %i.z
   br i1 %i.au, label %bb.g, label %.loopexit.i, !llvm.loop !10
 
@@ -466,7 +468,7 @@ bb.k:                                             ; preds = %bb.j
   %.257.i = phi i64 [ 0, %bb.f ], [ %i.ah, %bb.k ]
   %.253.i = phi i64 [ 0, %bb.f ], [ %i.am, %bb.k ]
   %.249.i = phi i64 [ 0, %bb.f ], [ %i.ar, %bb.k ]
-  %.2.i = phi i64 [ 0, %bb.f ], [ %i.at, %bb.k ]  ; 2 uses
+  %.2.i = phi i64 [ 0, %bb.f ], [ %8, %bb.k ]     ; 2 uses
   %i.av = icmp ult i64 %.2.i, %.096
   br i1 %i.av, label %.lr.ph.i, label %.critedge
 

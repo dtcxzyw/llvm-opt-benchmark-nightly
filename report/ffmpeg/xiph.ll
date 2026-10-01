@@ -73,7 +73,7 @@ bb.d:                                             ; preds = %bb.c
   %.16885 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   store i32 0, ptr %4, align 4, !tbaa !11
   %i.ah = icmp samesign ugt i32 %1, 3
-  br i1 %i.ah, label %.lr.ph, label %.critedge
+  br i1 %i.ah, label %.lr.ph.preheader, label %.critedge
 
 bb.e:                                             ; preds = %.critedge
   %.168 = getelementptr inbounds nuw i8, ptr %.269.lcssa, i64 1 ; 2 uses
@@ -93,7 +93,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %.lr.ph.1
   %i.an = add nuw nsw i32 %i.ak, 255              ; 3 uses
   store i32 %i.an, ptr %i.ai, align 4, !tbaa !11
-  %i.ao = add nsw i32 %.180.1, 256                ; 3 uses
+  %i.ao = add nuw nsw i32 %.180.1, 256            ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.26979.1, i64 1 ; 2 uses
   %i.aq = icmp slt i32 %i.ao, %1
   br i1 %i.aq, label %.lr.ph.1, label %.critedge.1, !llvm.loop !9
@@ -128,10 +128,20 @@ bb.f:                                             ; preds = %.lr.ph.1
   store ptr %i.bf, ptr %i.bg, align 8, !tbaa !14
   br label %.critedge74
 
-.lr.ph:                                           ; preds = %.preheader75, %bb.g
-  %i.bh = phi i32 [ %i.bk, %bb.g ], [ 0, %.preheader75 ] ; 2 uses
-  %.180 = phi i32 [ %i.bl, %bb.g ], [ 3, %.preheader75 ] ; 2 uses
-  %.26979 = phi ptr [ %i.bm, %bb.g ], [ %.16885, %.preheader75 ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %.preheader75
+  %5 = add nsw i32 %1, -4                         ; 2 uses
+  %6 = lshr i32 %5, 8
+  %7 = zext nneg i32 %6 to i64
+  %8 = getelementptr i8, ptr %0, i64 %7
+  %scevgep = getelementptr i8, ptr %8, i64 2
+  %9 = and i32 %5, -256
+  %10 = add nuw nsw i32 %9, 259
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
+  %i.bh = phi i32 [ %i.bk, %bb.g ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %.180 = phi i32 [ %i.bl, %bb.g ], [ 3, %.lr.ph.preheader ] ; 2 uses
+  %.26979 = phi ptr [ %i.bm, %bb.g ], [ %.16885, %.lr.ph.preheader ] ; 3 uses
   %i.bi = load i8, ptr %.26979, align 1, !tbaa !10
   %i.bj = icmp eq i8 %i.bi, -1
   br i1 %i.bj, label %bb.g, label %.critedge
@@ -139,15 +149,15 @@ bb.f:                                             ; preds = %.lr.ph.1
 bb.g:                                             ; preds = %.lr.ph
   %i.bk = add nuw nsw i32 %i.bh, 255              ; 3 uses
   store i32 %i.bk, ptr %4, align 4, !tbaa !11
-  %i.bl = add nuw nsw i32 %.180, 256              ; 3 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %.26979, i64 1 ; 2 uses
+  %i.bl = add nuw nsw i32 %.180, 256              ; 2 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %.26979, i64 1
   %i.bn = icmp slt i32 %i.bl, %1
   br i1 %i.bn, label %.lr.ph, label %.critedge, !llvm.loop !9
 
 .critedge:                                        ; preds = %.lr.ph, %bb.g, %.preheader75
   %i.bo = phi i32 [ 0, %.preheader75 ], [ %i.bk, %bb.g ], [ %i.bh, %.lr.ph ]
-  %.269.lcssa = phi ptr [ %.16885, %.preheader75 ], [ %i.bm, %bb.g ], [ %.26979, %.lr.ph ] ; 3 uses
-  %.1.lcssa = phi i32 [ 3, %.preheader75 ], [ %i.bl, %bb.g ], [ %.180, %.lr.ph ]
+  %.269.lcssa = phi ptr [ %.16885, %.preheader75 ], [ %scevgep, %bb.g ], [ %.26979, %.lr.ph ] ; 3 uses
+  %.1.lcssa = phi i32 [ 3, %.preheader75 ], [ %10, %bb.g ], [ %.180, %.lr.ph ]
   %i.bp = load i8, ptr %.269.lcssa, align 1, !tbaa !10
   %i.bq = zext i8 %i.bp to i32
   %i.br = add nsw i32 %i.bo, %i.bq                ; 2 uses

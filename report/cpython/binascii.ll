@@ -205,11 +205,16 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.h = tail call ptr @PyBytesWriter_GetData(ptr noundef nonnull %i.f) #6
   %i.i = icmp sgt i64 %.16.val, 0
-  br i1 %i.i, label %.lr.ph, label %._crit_edge
+  br i1 %i.i, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.e, %bb.h
-  %.0294 = phi i64 [ %i.aa, %bb.h ], [ 0, %bb.e ] ; 2 uses
-  %.0303 = phi i64 [ %i.ac, %bb.h ], [ 0, %bb.e ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.e
+  %1 = add nsw i64 %.16.val, -2
+  %2 = lshr exact i64 %1, 1
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
+  %.0294 = phi i64 [ %i.aa, %bb.h ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %.0303 = phi i64 [ %i.ac, %bb.h ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.j = getelementptr i8, ptr %.0.val, i64 %.0303 ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !17
   %i.l = zext i8 %i.k to i64
@@ -238,12 +243,12 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.lr.ph
   %i.y = shl nuw i8 %i.n, 4
   %i.z = or disjoint i8 %i.s, %i.y
-  %i.aa = add i64 %.0294, 1
+  %i.aa = add nuw nsw i64 %.0294, 1
   %i.ab = getelementptr i8, ptr %i.h, i64 %.0294
   store i8 %i.z, ptr %i.ab, align 1, !tbaa !17
-  %i.ac = add i64 %.0303, 2                       ; 2 uses
-  %1 = icmp slt i64 %i.ac, %.16.val
-  br i1 %1, label %.lr.ph, label %._crit_edge, !llvm.loop !73
+  %i.ac = add nuw nsw i64 %.0303, 2
+  %exitcond.not = icmp eq i64 %.0294, %2
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !73
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.e
   %i.ad = tail call ptr @PyBytesWriter_Finish(ptr noundef nonnull %i.f) #6
