@@ -204,15 +204,15 @@ bb.m:                                             ; preds = %bb.q
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterTjjEEECsbNLsQi0JuJ4_5tgrep.exit.i.i.i unwind label %bb.t, !noalias !1044
 
 .lr.ph.i.i.i:                                     ; preds = %bb.l, %bb.s
+  %2 = phi i64 [ %3, %bb.s ], [ 0, %bb.l ]        ; 5 uses
   %i.af = phi ptr [ %i.ax, %bb.s ], [ %i.q, %bb.l ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1046)
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   store ptr %i.ag, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !1046, !noalias !1047
   %i.ah = load i64, ptr %i.af, align 8, !noalias !1048, !noundef !6 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %2 = load i64, ptr %i.ai, align 8, !noalias !1048, !noundef !6 ; 2 uses
-  %i.aj = load i64, ptr %i.n, align 8, !noalias !1043, !noundef !6 ; 5 uses
-  %.not.i.i.i = icmp eq i64 %i.aj, 0
+  %i.aj = load i64, ptr %i.ai, align 8, !noalias !1048, !noundef !6 ; 2 uses
+  %.not.i.i.i = icmp eq i64 %2, 0
   br i1 %.not.i.i.i, label %bb.p, label %bb.o
 
 _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTjjEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsbNLsQi0JuJ4_5tgrep.exit.i.i.i: ; preds = %bb.s, %bb.l
@@ -231,7 +231,7 @@ bb.n:                                             ; preds = %_RNvXs4_NtNtCsgCecv
 
 bb.o:                                             ; preds = %.lr.ph.i.i.i
   %i.al = load ptr, ptr %i.m, align 8, !noalias !1043, !nonnull !6, !noundef !6
-  %i.am = getelementptr [16 x i8], ptr %i.al, i64 %i.aj
+  %i.am = getelementptr [16 x i8], ptr %i.al, i64 %2
   %i.an = getelementptr i8, ptr %i.am, i64 -8     ; 2 uses
   %i.ao = load i64, ptr %i.an, align 8, !noalias !1044, !noundef !6 ; 2 uses
   %.not7.i.i.i = icmp ugt i64 %i.ah, %i.ao
@@ -239,7 +239,7 @@ bb.o:                                             ; preds = %.lr.ph.i.i.i
 
 bb.p:                                             ; preds = %bb.o, %.lr.ph.i.i.i
   %i.ap = load i64, ptr %i.d, align 8, !range !1045, !alias.scope !1049, !noalias !1043, !noundef !6
-  %i.aq = icmp eq i64 %i.aj, %i.ap
+  %i.aq = icmp eq i64 %2, %i.ap
   br i1 %i.aq, label %bb.q, label %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecTjjEE8push_mutCsbNLsQi0JuJ4_5tgrep.exit.i.i.i
 
 bb.q:                                             ; preds = %bb.p
@@ -248,20 +248,22 @@ bb.q:                                             ; preds = %bb.p
 
 _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecTjjEE8push_mutCsbNLsQi0JuJ4_5tgrep.exit.i.i.i: ; preds = %bb.q, %bb.p
   %i.ar = load ptr, ptr %i.m, align 8, !alias.scope !1049, !noalias !1043, !nonnull !6, !noundef !6
-  %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.ar, i64 %i.aj ; 2 uses
+  %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.ar, i64 %2 ; 2 uses
   store i64 %i.ah, ptr %i.as, align 8, !noalias !1044
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
-  store i64 %2, ptr %i.at, align 8, !noalias !1044
-  %i.au = add i64 %i.aj, 1
+  store i64 %i.aj, ptr %i.at, align 8, !noalias !1044
+  %i.au = add i64 %2, 1                           ; 2 uses
   store i64 %i.au, ptr %i.n, align 8, !alias.scope !1049, !noalias !1043
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.o
-  %i.av = call i64 @llvm.umax.i64(i64 %i.ao, i64 %2)
+  %i.av = call i64 @llvm.umax.i64(i64 %i.ao, i64 %i.aj)
   store i64 %i.av, ptr %i.an, align 8, !noalias !1044
+  %.pre.i.i.i = load i64, ptr %i.n, align 8, !noalias !1043
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecTjjEE8push_mutCsbNLsQi0JuJ4_5tgrep.exit.i.i.i
+  %3 = phi i64 [ %i.au, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecTjjEE8push_mutCsbNLsQi0JuJ4_5tgrep.exit.i.i.i ], [ %.pre.i.i.i, %bb.r ]
   %i.aw = load ptr, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !alias.scope !1050, !noalias !1047, !nonnull !6, !noundef !6
   %i.ax = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !1050, !noalias !1047, !nonnull !6, !noundef !6 ; 2 uses
   %i.ay = icmp eq ptr %i.ax, %i.aw

@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit: ; preds = %bb
 
 bb.d:                                             ; preds = %bb.a
   %i.m = sext i32 %4 to i64
-  %i.n = load ptr, ptr %2, align 8, !tbaa !88
+  %i.n = load ptr, ptr %2, align 8, !tbaa !88     ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.m
   %i.p = load i8, ptr %i.o, align 1, !tbaa !87
   %i.q = add i8 %i.p, -53
@@ -217,14 +217,14 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.r, label %.lr.ph, label %._crit_edge.thread
 
 .lr.ph:                                           ; preds = %.preheader, %bb.e
+  %5 = phi ptr [ %.pre, %bb.e ], [ %i.n, %.preheader ]
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ %i.d, %.preheader ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
-  %5 = load ptr, ptr %2, align 8, !tbaa !88
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv.next ; 2 uses
   %i.t = load i8, ptr %i.s, align 1, !tbaa !87
   %i.u = add i8 %i.t, 1
   store i8 %i.u, ptr %i.s, align 1, !tbaa !87
-  %i.v = load ptr, ptr %2, align 8, !tbaa !88
+  %i.v = load ptr, ptr %2, align 8, !tbaa !88     ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %indvars.iv.next ; 2 uses
   %i.x = load i8, ptr %i.w, align 1, !tbaa !87
   %i.y = icmp sgt i8 %i.x, 57
@@ -232,6 +232,7 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %.lr.ph
   store i8 48, ptr %i.w, align 1, !tbaa !87
+  %.pre = load ptr, ptr %2, align 8, !tbaa !88
   %i.z = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.z, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !1095
 
@@ -241,16 +242,17 @@ bb.e:                                             ; preds = %.lr.ph
   %i.ac = add nsw i64 %i.ab, 1
   store i64 %i.ac, ptr %3, align 8, !tbaa !56
   %i.ad = add i32 %4, 1
+  %.pre26 = load ptr, ptr %2, align 8, !tbaa !88, !noalias !1098
   %.pre.a = zext i32 %i.ad to i64
   br label %._crit_edge.thread31
 
 ._crit_edge.thread31:                             ; preds = %.lr.ph, %._crit_edge.thread, %bb.d
   %.pre-phi = phi i64 [ %i.d, %bb.d ], [ %.pre.a, %._crit_edge.thread ], [ %i.d, %.lr.ph ]
+  %6 = phi ptr [ %i.n, %bb.d ], [ %.pre26, %._crit_edge.thread ], [ %i.v, %.lr.ph ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1098)
   %i.ae = load i64, ptr %i.b, align 8, !tbaa !86, !noalias !1098
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.af, ptr %0, align 8, !tbaa !84, !alias.scope !1098
-  %6 = load ptr, ptr %2, align 8, !tbaa !88, !noalias !1098 ; 2 uses
   %spec.select.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %.pre-phi, i64 %i.ae) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24, !noalias !1098
   store i64 %spec.select.i.i.i, ptr %i.a, align 8, !tbaa !56, !noalias !1098

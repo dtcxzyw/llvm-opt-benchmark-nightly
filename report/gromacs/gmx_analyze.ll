@@ -205,7 +205,7 @@ bb.hc:                                            ; preds = %bb.hb
           to label %.noexc342 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 .noexc342:                                        ; preds = %.noexc341
-  %i.chk = load float, ptr %i.chg, align 4, !tbaa !17
+  %i.chk = load float, ptr %i.chg, align 4, !tbaa !17 ; 2 uses
   %i.chl = fcmp ogt float %i.chk, 0.000000e+00
   br i1 %i.chl, label %.preheader41.i, label %bb.hf
 
@@ -218,8 +218,8 @@ bb.hc:                                            ; preds = %bb.hb
   br label %.lr.ph47.split.i
 
 .lr.ph47.split.i:                                 ; preds = %bb.he, %.lr.ph47.split.preheader.i
+  %25 = phi float [ %i.chk, %.lr.ph47.split.preheader.i ], [ %26, %bb.he ] ; 2 uses
   %indvars.iv56.i = phi i64 [ 0, %.lr.ph47.split.preheader.i ], [ %indvars.iv.next57.i, %bb.he ] ; 3 uses
-  %25 = load float, ptr %i.chg, align 4, !tbaa !17
   %i.chn = fcmp ogt float %25, 0.000000e+00
   br i1 %i.chn, label %bb.hd, label %bb.he
 
@@ -229,9 +229,11 @@ bb.hd:                                            ; preds = %.lr.ph47.split.i
   %i.chq = call noundef float @logf(float noundef %i.chp) #23
   %i.chr = getelementptr inbounds nuw [4 x i8], ptr %i.chi, i64 %indvars.iv56.i
   store float %i.chq, ptr %i.chr, align 4, !tbaa !17
+  %.pre.i341 = load float, ptr %i.chg, align 4, !tbaa !17
   br label %bb.he
 
 bb.he:                                            ; preds = %bb.hd, %.lr.ph47.split.i
+  %26 = phi float [ %25, %.lr.ph47.split.i ], [ %.pre.i341, %bb.hd ]
   %indvars.iv.next57.i = add nuw nsw i64 %indvars.iv56.i, 1 ; 2 uses
   %exitcond60.not.i = icmp eq i64 %indvars.iv.next57.i, %wide.trip.count59.i
   br i1 %exitcond60.not.i, label %.loopexit.i331, label %.lr.ph47.split.i, !llvm.loop !110

@@ -205,7 +205,11 @@ bb.b:                                             ; preds = %.lr.ph31, %._crit_e
   %i.ai = mul nsw i32 %i.ah, %i.z
   %i.aj = sext i32 %i.ai to i64                   ; 3 uses
   %i.ak = icmp sgt i32 %i.z, 0
-  br i1 %i.ak, label %.lr.ph, label %._crit_edge
+  br i1 %i.ak, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %.pre38 = load i32, ptr %0, align 8, !tbaa !72
+  br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %bb.g
   %.pre38.a = load i32, ptr %i.a, align 4, !tbaa !74
@@ -219,10 +223,10 @@ bb.b:                                             ; preds = %.lr.ph31, %._crit_e
   %i.ap = icmp slt i32 %i.ao, %i.al
   br i1 %i.ap, label %bb.b, label %._crit_edge32.loopexit, !llvm.loop !564
 
-.lr.ph:                                           ; preds = %bb.b, %bb.g
-  %i.aq = phi i64 [ %i.bl, %bb.g ], [ %i.w, %bb.b ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %bb.b ] ; 7 uses
-  %1 = load i32, ptr %0, align 8, !tbaa !72
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
+  %i.aq = phi i64 [ %i.w, %.lr.ph.preheader ], [ %i.bl, %bb.g ] ; 2 uses
+  %1 = phi i32 [ %.pre38, %.lr.ph.preheader ], [ %2, %bb.g ]
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.g ] ; 7 uses
   switch i32 %1, label %bb.f [
     i32 0, label %bb.c
     i32 1, label %bb.d
@@ -239,6 +243,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ax = load i8, ptr %i.av, align 1, !tbaa !37
   store i8 %i.ax, ptr %i.at, align 1, !tbaa !37
   store i8 %i.aw, ptr %i.av, align 1, !tbaa !37
+  %.pre37 = load i32, ptr %0, align 8, !tbaa !72
   %.pre37.a = load i64, ptr %i.e, align 8, !tbaa !75
   br label %bb.g
 
@@ -272,6 +277,7 @@ bb.f:                                             ; preds = %.lr.ph
 
 bb.g:                                             ; preds = %bb.c, %bb.e, %bb.d
   %i.bl = phi i64 [ %.pre37.a, %bb.c ], [ %i.aq, %bb.e ], [ %i.aq, %bb.d ] ; 4 uses
+  %2 = phi i32 [ %.pre37, %bb.c ], [ 2, %bb.e ], [ 1, %bb.d ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %sext = shl i64 %i.bl, 32
   %i.bm = ashr exact i64 %sext, 32

@@ -202,7 +202,7 @@ _ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_
 
 .lr.ph:                                           ; preds = %_ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_insert_iteratorISt5dequeIS2_SaIS2_EEEET1_T0_SA_S9_.exit
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 4 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 3 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 6 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
@@ -210,7 +210,8 @@ _ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.pre36.pre.a = load ptr, ptr %i.y, align 8, !tbaa !50
+  %.pre36.pre = load ptr, ptr %i.y, align 8, !tbaa !50
+  %.pre36.pre.a = load ptr, ptr %i.z, align 8, !tbaa !51
   br label %bb.i
 
 ._crit_edge:                                      ; preds = %_ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_insert_iteratorISt5dequeIS2_SaIS2_EEEET1_T0_SA_S9_.exit23, %_ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_insert_iteratorISt5dequeIS2_SaIS2_EEEET1_T0_SA_S9_.exit
@@ -256,24 +257,26 @@ _ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePai
   br i1 %i.ay, label %bb.f, label %_ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_insert_iteratorISt5dequeIS2_SaIS2_EEEET1_T0_SA_S9_.exit17, !llvm.loop !427
 
 bb.i:                                             ; preds = %.lr.ph, %_ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_insert_iteratorISt5dequeIS2_SaIS2_EEEET1_T0_SA_S9_.exit23
-  %.pre36 = phi ptr [ %.pre36.pre.a, %.lr.ph ], [ %storemerge, %_ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_insert_iteratorISt5dequeIS2_SaIS2_EEEET1_T0_SA_S9_.exit23 ]
+  %.pre38 = phi ptr [ %.pre36.pre.a, %.lr.ph ], [ %4, %_ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_insert_iteratorISt5dequeIS2_SaIS2_EEEET1_T0_SA_S9_.exit23 ]
+  %.pre36 = phi ptr [ %.pre36.pre, %.lr.ph ], [ %storemerge, %_ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_insert_iteratorISt5dequeIS2_SaIS2_EEEET1_T0_SA_S9_.exit23 ]
   %.033 = phi ptr [ %.031, %.lr.ph ], [ %.0, %_ZSt14__copy_move_a1ILb0EPN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESt20back_insert_iteratorISt5dequeIS2_SaIS2_EEEET1_T0_SA_S9_.exit23 ] ; 2 uses
   %i.az = load ptr, ptr %.033, align 8, !tbaa !23
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS3_EEEaSERKS3_.exit.i.i.i22, %bb.i
-  %i.ba = phi ptr [ %.pre36, %bb.i ], [ %storemerge, %_ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS3_EEEaSERKS3_.exit.i.i.i22 ] ; 3 uses
+  %i.ba = phi ptr [ %.pre38, %bb.i ], [ %4, %_ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS3_EEEaSERKS3_.exit.i.i.i22 ]
+  %3 = phi ptr [ %.pre36, %bb.i ], [ %storemerge, %_ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS3_EEEaSERKS3_.exit.i.i.i22 ] ; 3 uses
   %.07.i.i.i19 = phi i64 [ 32, %bb.i ], [ %i.eq, %_ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS3_EEEaSERKS3_.exit.i.i.i22 ] ; 2 uses
   %.056.i.i.i20 = phi ptr [ %i.az, %bb.i ], [ %i.ep, %_ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS3_EEEaSERKS3_.exit.i.i.i22 ] ; 3 uses
-  %3 = load ptr, ptr %i.z, align 8, !tbaa !51
-  %i.bb = getelementptr inbounds i8, ptr %3, i64 -16
-  %.not.i.i.i.i.i21 = icmp eq ptr %i.ba, %i.bb
+  %i.bb = getelementptr inbounds i8, ptr %i.ba, i64 -16
+  %.not.i.i.i.i.i21 = icmp eq ptr %3, %i.bb
   br i1 %.not.i.i.i.i.i21, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ba, ptr noundef nonnull align 8 dereferenceable(16) %.056.i.i.i20, i64 16, i1 false), !tbaa.struct !46
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %.056.i.i.i20, i64 16, i1 false), !tbaa.struct !46
   %i.bc = load ptr, ptr %i.y, align 8, !tbaa !50
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 16
+  %.pre37 = load ptr, ptr %i.z, align 8, !tbaa !51
   br label %_ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS3_EEEaSERKS3_.exit.i.i.i22
 
 bb.l:                                             ; preds = %bb.j
@@ -288,7 +291,7 @@ bb.l:                                             ; preds = %bb.j
   %i.bl = add nsw i64 %i.bj, %.neg.i.i.i
   %i.bm = shl nsw i64 %i.bl, 5
   %i.bn = load ptr, ptr %i.ad, align 8, !tbaa !20
-  %i.bo = ptrtoint ptr %i.ba to i64
+  %i.bo = ptrtoint ptr %3 to i64
   %i.bp = ptrtoint ptr %i.bn to i64
   %i.bq = sub i64 %i.bo, %i.bp
   %i.br = ashr exact i64 %i.bq, 4
@@ -459,11 +462,12 @@ _ZNSt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS2_EE16_M_push_back_
   store ptr %i.em, ptr %i.ab, align 8, !tbaa !22
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !23 ; 3 uses
   store ptr %i.en, ptr %i.ad, align 8, !tbaa !20
-  %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 512
+  %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 512 ; 2 uses
   store ptr %i.eo, ptr %i.z, align 8, !tbaa !21
   br label %_ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS3_EEEaSERKS3_.exit.i.i.i22
 
 _ZNSt20back_insert_iteratorISt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS3_EEEaSERKS3_.exit.i.i.i22: ; preds = %_ZNSt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS2_EE16_M_push_back_auxIJRKS2_EEEvDpOT_.exit, %bb.k
+  %4 = phi ptr [ %.pre37, %bb.k ], [ %i.eo, %_ZNSt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS2_EE16_M_push_back_auxIJRKS2_EEEvDpOT_.exit ] ; 2 uses
   %storemerge = phi ptr [ %i.bd, %bb.k ], [ %i.en, %_ZNSt5dequeIN7rocksdb18SeqnoToTimeMapping13SeqnoTimePairESaIS2_EE16_M_push_back_auxIJRKS2_EEEvDpOT_.exit ] ; 3 uses
   store ptr %storemerge, ptr %i.y, align 8, !tbaa !50
   %i.ep = getelementptr inbounds nuw i8, ptr %.056.i.i.i20, i64 16

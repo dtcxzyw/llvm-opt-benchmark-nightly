@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
 bb.al:                                            ; preds = %bb.ak, %bb.v
   %i.gv = getelementptr inbounds nuw i8, ptr %i.i, i64 24 ; 4 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 3 uses
-  %i.gx = load ptr, ptr %i.gw, align 8, !tbaa !360 ; 2 uses
+  %i.gx = load ptr, ptr %i.gw, align 8, !tbaa !360 ; 3 uses
   %i.gy = load i32, ptr %i.gv, align 8, !tbaa !366 ; 4 uses
   %i.gz = sext i32 %i.gy to i64
   %.idx.i = mul nsw i64 %i.gz, 12
@@ -233,6 +233,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.v
   br i1 %i.hh, label %.lr.ph.preheader.i.i, label %.preheader.i.i, !llvm.loop !1175
 
 .lr.ph.preheader.i.i:                             ; preds = %.loopexit46.i.i, %.preheader47.i.i
+  %.pre59.i.i = phi ptr [ %i.gx, %.preheader47.i.i ], [ %.pre61.i.i, %.loopexit46.i.i ] ; 2 uses
   %indvars.iv56.i.i = phi i64 [ %i.hg, %.preheader47.i.i ], [ %indvars.iv.next57.i.i, %.loopexit46.i.i ] ; 2 uses
   %indvars.iv.next57.i.i = add nsw i64 %indvars.iv56.i.i, -1 ; 2 uses
   %i.hi = add nsw i64 %indvars.iv.next57.i.i, %i.hf
@@ -245,8 +246,9 @@ bb.al:                                            ; preds = %bb.ak, %bb.v
   br i1 %i.hk, label %.lr.ph54.i.i, label %_ZL34ImGuiListClipper_SortAndFuseRangesR8ImVectorI21ImGuiListClipperRangeEi.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.an, %.lr.ph.preheader.i.i
+  %.pre59.i290.i = phi ptr [ %.pre59.i.i, %.lr.ph.preheader.i.i ], [ %.pre61.i.i, %bb.an ]
+  %10 = phi ptr [ %.pre59.i.i, %.lr.ph.preheader.i.i ], [ %11, %bb.an ] ; 3 uses
   %indvars.iv.i.i = phi i64 [ %i.hf, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.an ] ; 2 uses
-  %10 = load ptr, ptr %i.gw, align 8, !tbaa !360  ; 2 uses
   %i.hl = getelementptr inbounds [12 x i8], ptr %10, i64 %indvars.iv.i.i ; 3 uses
   %i.hm = load i32, ptr %i.hl, align 4, !tbaa !1181
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 3 uses
@@ -261,23 +263,26 @@ bb.am:                                            ; preds = %.lr.ph.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.hl, ptr noundef nonnull align 4 dereferenceable(12) %i.hn, i64 12, i1 false), !tbaa.struct !1189
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.hn, ptr noundef nonnull align 4 dereferenceable(12) %1, i64 12, i1 false), !tbaa.struct !1189
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  %.pre.i.i = load ptr, ptr %i.gw, align 8, !tbaa !360 ; 2 uses
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %.lr.ph.i.i
+  %.pre61.i.i = phi ptr [ %.pre59.i290.i, %.lr.ph.i.i ], [ %.pre.i.i, %bb.am ] ; 3 uses
+  %11 = phi ptr [ %10, %.lr.ph.i.i ], [ %.pre.i.i, %bb.am ]
   %i.hq = icmp slt i64 %indvars.iv.next.i.i, %i.hi
   br i1 %i.hq, label %.lr.ph.i.i, label %.loopexit46.i.i, !llvm.loop !1176
 
 .lr.ph54.i.i:                                     ; preds = %.preheader.i.i, %bb.ap
   %i.hr = phi i32 [ %i.im, %bb.ap ], [ %i.hj, %.preheader.i.i ] ; 2 uses
-  %.053.i.i = phi i32 [ %.0.i.i, %bb.ap ], [ %.051.i.i, %.preheader.i.i ] ; 2 uses
-  %.0.in52.i.i.a = phi i32 [ %.1.i.i, %bb.ap ], [ %i.hc, %.preheader.i.i ] ; 2 uses
-  %11 = load ptr, ptr %i.gw, align 8, !tbaa !360  ; 2 uses
-  %i.hs = sext i32 %.0.in52.i.i.a to i64
-  %i.ht = getelementptr inbounds [12 x i8], ptr %11, i64 %i.hs ; 3 uses
+  %12 = phi ptr [ %13, %bb.ap ], [ %.pre61.i.i, %.preheader.i.i ] ; 3 uses
+  %.0.in52.i.i.a = phi i32 [ %.0.i.i, %bb.ap ], [ %.051.i.i, %.preheader.i.i ] ; 2 uses
+  %.0.in52.i.i = phi i32 [ %.1.i.i, %bb.ap ], [ %i.hc, %.preheader.i.i ] ; 2 uses
+  %i.hs = sext i32 %.0.in52.i.i to i64
+  %i.ht = getelementptr inbounds [12 x i8], ptr %12, i64 %i.hs ; 3 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %i.ht, i64 4 ; 2 uses
   %i.hv = load i32, ptr %i.hu, align 4, !tbaa !1182 ; 2 uses
-  %i.hw = sext i32 %.053.i.i to i64               ; 2 uses
-  %i.hx = getelementptr inbounds [12 x i8], ptr %11, i64 %i.hw ; 4 uses
+  %i.hw = sext i32 %.0.in52.i.i.a to i64          ; 2 uses
+  %i.hx = getelementptr inbounds [12 x i8], ptr %12, i64 %i.hw ; 4 uses
   %i.hy = load i32, ptr %i.hx, align 4, !tbaa !1181 ; 2 uses
   %i.hz = icmp slt i32 %i.hv, %i.hy
   br i1 %i.hz, label %bb.ap, label %bb.ao
@@ -299,11 +304,13 @@ bb.ao:                                            ; preds = %.lr.ph54.i.i
   %i.ik = load i32, ptr %i.gv, align 8, !tbaa !366
   %i.il = add nsw i32 %i.ik, -1                   ; 2 uses
   store i32 %i.il, ptr %i.gv, align 8, !tbaa !366
+  %.pre60.i.i = load ptr, ptr %i.gw, align 8, !tbaa !360
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %.lr.ph54.i.i
   %i.im = phi i32 [ %i.hr, %.lr.ph54.i.i ], [ %i.il, %bb.ao ] ; 3 uses
-  %.1.i.i = phi i32 [ %.053.i.i, %.lr.ph54.i.i ], [ %.0.in52.i.i.a, %bb.ao ] ; 2 uses
+  %13 = phi ptr [ %12, %.lr.ph54.i.i ], [ %.pre60.i.i, %bb.ao ]
+  %.1.i.i = phi i32 [ %.0.in52.i.i.a, %.lr.ph54.i.i ], [ %.0.in52.i.i, %bb.ao ] ; 2 uses
   %.0.i.i = add nsw i32 %.1.i.i, 1                ; 2 uses
   %i.in = icmp slt i32 %.0.i.i, %i.im
   br i1 %i.in, label %.lr.ph54.i.i, label %_ZL34ImGuiListClipper_SortAndFuseRangesR8ImVectorI21ImGuiListClipperRangeEi.exit.i, !llvm.loop !1177
@@ -706,25 +713,30 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 10136 ; 4 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !1356 ; 4 uses
   %i.f = icmp sgt i32 %i.e, 0
-  br i1 %i.f, label %.lr.ph, label %._crit_edge
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 10144 ; 3 uses
+  br i1 %i.f, label %.lr.ph, label %.._crit_edge_crit_edge
+
+.._crit_edge_crit_edge:                           ; preds = %bb.a
+  %.pre524 = load ptr, ptr %2, align 8, !tbaa !487
+  br label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 10144
   %3 = zext nneg i32 %i.e to i64
+  %.pre523 = load ptr, ptr %2, align 8, !tbaa !487
   br label %bb.bh
 
-._crit_edge:                                      ; preds = %bb.bj, %bb.a
-  %i.g = phi i32 [ %i.e, %bb.a ], [ %i.pw, %bb.bj ] ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 10144 ; 2 uses
-  %5 = load ptr, ptr %4, align 8, !tbaa !487      ; 2 uses
+._crit_edge:                                      ; preds = %bb.bj, %.._crit_edge_crit_edge
+  %i.g = phi i32 [ %i.e, %.._crit_edge_crit_edge ], [ %i.pw, %bb.bj ] ; 2 uses
+  %4 = phi ptr [ %.pre524, %.._crit_edge_crit_edge ], [ %7, %bb.bj ] ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 10144
   %i.h = sext i32 %i.g to i64
   %.idx.i = shl nsw i64 %i.h, 5
-  %i.i = getelementptr inbounds i8, ptr %5, i64 %.idx.i
+  %i.i = getelementptr inbounds i8, ptr %4, i64 %.idx.i
   %.not12.i = icmp eq i32 %i.g, 0
   br i1 %.not12.i, label %_ZN5ImGui16CallContextHooksEP12ImGuiContext20ImGuiContextHookType.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %._crit_edge, %bb.c
-  %.013.i = phi ptr [ %i.o, %bb.c ], [ %5, %._crit_edge ] ; 4 uses
+  %.013.i = phi ptr [ %i.o, %bb.c ], [ %4, %._crit_edge ] ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.013.i, i64 4
   %i.k = load i32, ptr %i.j, align 4, !tbaa !491
   %i.l = icmp eq i32 %i.k, 0
@@ -1127,9 +1139,9 @@ _ZN5ImGuiL19UpdateFontsNewFrameEv.exit:           ; preds = %bb.be, %bb.bf, %bb.
 
 bb.bh:                                            ; preds = %.lr.ph, %bb.bj
   %i.pl = phi i32 [ %i.e, %.lr.ph ], [ %i.pw, %bb.bj ] ; 2 uses
+  %6 = phi ptr [ %.pre523, %.lr.ph ], [ %7, %bb.bj ] ; 2 uses
   %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %bb.bj ] ; 3 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %6 = load ptr, ptr %2, align 8, !tbaa !487
   %i.pm = getelementptr inbounds nuw [32 x i8], ptr %6, i64 %indvars.iv.next ; 3 uses
   %i.pn = getelementptr inbounds nuw i8, ptr %i.pm, i64 4
   %i.po = load i32, ptr %i.pn, align 4, !tbaa !491
@@ -1145,10 +1157,12 @@ bb.bi:                                            ; preds = %bb.bh
   %i.pu = load i32, ptr %i.d, align 8, !tbaa !488
   %i.pv = add nsw i32 %i.pu, -1                   ; 2 uses
   store i32 %i.pv, ptr %i.d, align 8, !tbaa !488
+  %.pre = load ptr, ptr %2, align 8, !tbaa !487
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bh, %bb.bi
   %i.pw = phi i32 [ %i.pl, %bb.bh ], [ %i.pv, %bb.bi ] ; 2 uses
+  %7 = phi ptr [ %6, %bb.bh ], [ %.pre, %bb.bi ]  ; 2 uses
   %i.px = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.px, label %bb.bh, label %._crit_edge, !llvm.loop !1337
 
@@ -1551,7 +1565,7 @@ bb.acn:                                           ; preds = %bb.acm
 bb.aco:                                           ; preds = %bb.acl, %bb.acn, %bb.acm
   %.sink768 = phi i8 [ 0, %bb.acm ], [ %i.ezn, %bb.acn ], [ -1, %bb.acl ]
   store i8 %.sink768, ptr %i.eze, align 8, !tbaa !579
-  %i.ezo = load ptr, ptr %4, align 8, !tbaa !487  ; 2 uses
+  %i.ezo = load ptr, ptr %5, align 8, !tbaa !487  ; 2 uses
   %i.ezp = load i32, ptr %i.d, align 8, !tbaa !488 ; 2 uses
   %i.ezq = sext i32 %i.ezp to i64
   %.idx.i421 = shl nsw i64 %i.ezq, 5

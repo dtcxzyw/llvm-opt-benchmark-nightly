@@ -205,7 +205,7 @@ _ZNSt6vectorIN6Assimp3MD57SectionESaIS2_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPN
 
 bb.ak:                                            ; preds = %.lr.ph458, %bb.ct
   %.0205456 = phi i32 [ 0, %.lr.ph458 ], [ %.1206, %bb.ct ] ; 5 uses
-  %.sroa.0351.0455 = phi ptr [ %i.ey, %.lr.ph458 ], [ %i.zi, %bb.ct ] ; 12 uses
+  %.sroa.0351.0455 = phi ptr [ %i.ey, %.lr.ph458 ], [ %i.zi, %bb.ct ] ; 13 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %.sroa.0351.0455, i64 48 ; 4 uses
   %i.hj = load ptr, ptr %i.hi, align 8
   %i.hk = getelementptr inbounds nuw i8, ptr %.sroa.0351.0455, i64 56 ; 2 uses
@@ -477,6 +477,7 @@ bb.az:                                            ; preds = %.loopexit379, %bb.b
 
 .lr.ph420.preheader:                              ; preds = %.lr.ph425
   %i.lt = zext i32 %i.lo to i64
+  %.pre494 = load ptr, ptr %.sroa.0351.0455, align 8
   br label %.lr.ph420
 
 ._crit_edge421.loopexit:                          ; preds = %bb.bb
@@ -491,8 +492,8 @@ bb.az:                                            ; preds = %.loopexit379, %bb.b
 
 .lr.ph420:                                        ; preds = %.lr.ph420.preheader, %bb.bb
   %i.lw = phi i32 [ %i.lq, %.lr.ph420.preheader ], [ %i.mh, %bb.bb ]
+  %12 = phi ptr [ %.pre494, %.lr.ph420.preheader ], [ %13, %bb.bb ] ; 2 uses
   %indvars.iv468 = phi i64 [ %i.lt, %.lr.ph420.preheader ], [ %indvars.iv.next469, %bb.bb ] ; 2 uses
-  %12 = load ptr, ptr %.sroa.0351.0455, align 8
   %i.lx = getelementptr inbounds nuw [20 x i8], ptr %12, i64 %indvars.iv468 ; 2 uses
   %i.ly = getelementptr inbounds nuw i8, ptr %i.lx, i64 4
   %i.lz = load float, ptr %i.ly, align 4          ; 2 uses
@@ -508,11 +509,13 @@ bb.ba:                                            ; preds = %.lr.ph420
   %i.mf = load i32, ptr %i.me, align 4
   %i.mg = add i32 %i.mf, 1
   store i32 %i.mg, ptr %i.me, align 4
+  %.pre493 = load ptr, ptr %.sroa.0351.0455, align 8
   %.pre493.a = load i32, ptr %i.lp, align 4
   br label %bb.bb
 
 bb.bb:                                            ; preds = %.lr.ph420, %bb.ba
   %i.mh = phi i32 [ %i.lw, %.lr.ph420 ], [ %.pre493.a, %bb.ba ] ; 2 uses
+  %13 = phi ptr [ %12, %.lr.ph420 ], [ %.pre493, %bb.ba ]
   %indvars.iv.next469 = add nuw nsw i64 %indvars.iv468, 1 ; 2 uses
   %i.mi = add i32 %i.mh, %i.lo
   %i.mj = zext i32 %i.mi to i64

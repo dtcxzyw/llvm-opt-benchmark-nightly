@@ -205,9 +205,10 @@ bb.ax:                                            ; preds = %cgltf_calc_size.exi
   br i1 %.not1168.i, label %.preheader1059.i, label %.lr.ph1127.i
 
 .lr.ph1127.i:                                     ; preds = %.preheader1061.i
-  %i.kf = getelementptr inbounds nuw i8, ptr %i.aa, i64 176
+  %i.kf = getelementptr inbounds nuw i8, ptr %i.aa, i64 176 ; 2 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %i.aa, i64 152
   %i.kh = getelementptr inbounds nuw i8, ptr %i.aa, i64 144
+  %.pre1211.i = load ptr, ptr %i.kf, align 8
   br label %bb.bl
 
 bb.ay:                                            ; preds = %bb.bk, %.lr.ph1125.i
@@ -317,8 +318,8 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bh
 
 bb.bl:                                            ; preds = %bb.bo, %.lr.ph1127.i
   %i.md = phi i64 [ %i.ke, %.lr.ph1127.i ], [ %i.mn, %bb.bo ]
+  %5 = phi ptr [ %.pre1211.i, %.lr.ph1127.i ], [ %6, %bb.bo ] ; 2 uses
   %.07701126.i = phi i64 [ 0, %.lr.ph1127.i ], [ %i.mo, %bb.bo ] ; 2 uses
-  %5 = load ptr, ptr %i.kf, align 8
   %i.me = getelementptr inbounds nuw [72 x i8], ptr %5, i64 %.07701126.i
   %i.mf = getelementptr inbounds nuw i8, ptr %i.me, i64 16 ; 2 uses
   %i.mg = load ptr, ptr %i.mf, align 8            ; 2 uses
@@ -336,11 +337,13 @@ bb.bn:                                            ; preds = %bb.bm
   %i.ml = getelementptr [160 x i8], ptr %i.mk, i64 %i.mh
   %i.mm = getelementptr i8, ptr %i.ml, i64 -160
   store ptr %i.mm, ptr %i.mf, align 8
+  %.pre1210.i = load ptr, ptr %i.kf, align 8
   %.pre1210.i.a = load i64, ptr %i.kd, align 8
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn, %bb.bl
   %i.mn = phi i64 [ %i.md, %bb.bl ], [ %.pre1210.i.a, %bb.bn ] ; 2 uses
+  %6 = phi ptr [ %5, %bb.bl ], [ %.pre1210.i, %bb.bn ]
   %i.mo = add nuw i64 %.07701126.i, 1             ; 2 uses
   %i.mp = icmp ult i64 %i.mo, %i.mn
   br i1 %i.mp, label %bb.bl, label %.preheader1059.i
@@ -352,9 +355,10 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bl
   br i1 %.not1170.i, label %.preheader1055.i, label %.lr.ph1131.i
 
 .lr.ph1131.i:                                     ; preds = %.preheader1057.i
-  %i.ms = getelementptr inbounds nuw i8, ptr %i.aa, i64 144 ; 2 uses
+  %i.ms = getelementptr inbounds nuw i8, ptr %i.aa, i64 144 ; 3 uses
   %i.mt = getelementptr inbounds nuw i8, ptr %i.aa, i64 168 ; 2 uses
   %i.mu = getelementptr inbounds nuw i8, ptr %i.aa, i64 160 ; 2 uses
+  %.pre1234.i = load ptr, ptr %i.ms, align 8
   br label %bb.eb
 
 bb.bp:                                            ; preds = %bb.ea, %.lr.ph1129.i
@@ -757,9 +761,9 @@ bb.ea:                                            ; preds = %bb.dz, %bb.dx
   br label %.preheader1053.i
 
 bb.eb:                                            ; preds = %bb.eh, %.lr.ph1131.i
+  %7 = phi ptr [ %.pre1234.i, %.lr.ph1131.i ], [ %8, %bb.eh ]
   %.07681130.i = phi i64 [ 0, %.lr.ph1131.i ], [ %i.wb, %bb.eh ] ; 3 uses
-  %6 = load ptr, ptr %i.ms, align 8
-  %i.vg = getelementptr inbounds nuw [160 x i8], ptr %6, i64 %.07681130.i
+  %i.vg = getelementptr inbounds nuw [160 x i8], ptr %7, i64 %.07681130.i
   %i.vh = getelementptr inbounds nuw i8, ptr %i.vg, i64 8 ; 2 uses
   %i.vi = load ptr, ptr %i.vh, align 8            ; 2 uses
   %.not952.i = icmp eq ptr %i.vi, null
@@ -776,7 +780,7 @@ bb.ed:                                            ; preds = %bb.ec
   %i.vn = getelementptr [80 x i8], ptr %i.vm, i64 %i.vj
   %i.vo = getelementptr i8, ptr %i.vn, i64 -80
   store ptr %i.vo, ptr %i.vh, align 8
-  %i.vp = load ptr, ptr %i.ms, align 8
+  %i.vp = load ptr, ptr %i.ms, align 8            ; 2 uses
   %i.vq = getelementptr inbounds nuw [160 x i8], ptr %i.vp, i64 %.07681130.i ; 2 uses
   %i.vr = getelementptr inbounds nuw i8, ptr %i.vq, i64 56
   %i.vs = load i32, ptr %i.vr, align 8
@@ -800,9 +804,11 @@ bb.eg:                                            ; preds = %bb.ef
   %i.vz = getelementptr [80 x i8], ptr %i.vy, i64 %i.vv
   %i.wa = getelementptr i8, ptr %i.vz, i64 -80
   store ptr %i.wa, ptr %i.vt, align 8
+  %.pre1233.i = load ptr, ptr %i.ms, align 8
   br label %bb.eh
 
 bb.eh:                                            ; preds = %bb.eg, %bb.ed
+  %8 = phi ptr [ %i.vp, %bb.ed ], [ %.pre1233.i, %bb.eg ]
   %i.wb = add nuw i64 %.07681130.i, 1             ; 2 uses
   %i.wc = load i64, ptr %i.mq, align 8
   %i.wd = icmp ult i64 %i.wb, %i.wc

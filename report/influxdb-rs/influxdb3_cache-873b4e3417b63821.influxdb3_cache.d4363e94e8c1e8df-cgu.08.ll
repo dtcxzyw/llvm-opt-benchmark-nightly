@@ -204,9 +204,10 @@ bb.w:                                             ; preds = %_RNvMNtNtCsjfzoCD6F
   br i1 %i.bi, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %.pre48 = load i64, ptr %i.bj, align 8
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.ae, %bb.w
@@ -304,17 +305,18 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsjfzoCD6FJrB_12arrow_buffer6buffe
   br label %bb.k
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ae
+  %2 = phi i64 [ %.pre48, %.lr.ph ], [ %3, %bb.ae ] ; 3 uses
   %.sroa.0.046 = phi ptr [ %i.bg, %.lr.ph ], [ %i.bz, %bb.ae ] ; 2 uses
   %.sroa.7.045 = phi i64 [ 0, %.lr.ph ], [ %i.ca, %bb.ae ] ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0.046, i64 4 ; 2 uses
   %i.ca = add nuw nsw i64 %.sroa.7.045, 1
   %i.cb = load i32, ptr %.sroa.0.046, align 4, !noundef !4
   %i.cc = sext i32 %i.cb to i64                   ; 2 uses
-  %2 = load i64, ptr %i.bj, align 8, !noundef !4
   %i.cd = icmp ugt i64 %2, %i.cc
   br i1 %i.cd, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvMNtNtCsjfzoCD6FJrB_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit, %bb.ad, %bb.af
+  %3 = phi i64 [ %.pre47, %_RNvMNtNtCsjfzoCD6FJrB_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit ], [ %2, %bb.ad ], [ %2, %bb.af ]
   %i.ce = icmp eq ptr %i.bz, %i.bh
   br i1 %i.ce, label %._crit_edge, label %bb.ad
 
@@ -355,6 +357,7 @@ _RNvMNtNtCsjfzoCD6FJrB_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder
   %i.cw = load i8, ptr %i.cv, align 1, !noundef !4
   %i.cx = and i8 %i.cw, %i.cu
   store i8 %i.cx, ptr %i.cv, align 1
+  %.pre47 = load i64, ptr %i.bj, align 8
   br label %bb.ae
 
 bb.ai:                                            ; preds = %.body, %bb.l

@@ -113,15 +113,16 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.w = load ptr, ptr %i.v, align 8
+  %4 = load ptr, ptr %i.v, align 8
+  %i.w = load ptr, ptr %0, align 8, !tbaa !18
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
+  %5 = phi ptr [ %i.w, %.lr.ph ], [ %6, %bb.e ]   ; 2 uses
   %.020 = phi i16 [ %.017, %.lr.ph ], [ %.0, %bb.e ]
   %.01419 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.e ] ; 5 uses
-  %4 = load ptr, ptr %0, align 8, !tbaa !18
   %i.x = zext i16 %.020 to i64                    ; 2 uses
-  %i.y = getelementptr inbounds nuw [28 x i8], ptr %4, i64 %i.x ; 2 uses
+  %i.y = getelementptr inbounds nuw [28 x i8], ptr %5, i64 %i.x ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 24
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !25
   %i.ab = icmp eq i32 %i.aa, %1
@@ -136,11 +137,13 @@ bb.d:                                             ; preds = %bb.c
   %i.ad = sext i32 %.01419 to i64
   %i.ae = getelementptr inbounds [8 x i8], ptr %2, i64 %i.ad
   store ptr %i.y, ptr %i.ae, align 8, !tbaa !26
+  %.pre = load ptr, ptr %0, align 8, !tbaa !18
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b
+  %6 = phi ptr [ %.pre, %bb.d ], [ %5, %bb.b ]
   %.1 = phi i32 [ %i.ac, %bb.d ], [ %.01419, %bb.b ] ; 2 uses
-  %i.af = getelementptr inbounds nuw [2 x i8], ptr %i.w, i64 %i.x
+  %i.af = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.x
   %.0 = load i16, ptr %i.af, align 2, !tbaa !22   ; 2 uses
   %.not = icmp eq i16 %.0, -1
   br i1 %.not, label %._crit_edge, label %bb.b

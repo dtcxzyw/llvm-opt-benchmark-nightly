@@ -192,6 +192,7 @@ bb.e:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.p
   %i.u = load i8, ptr %i.t, align 1, !tbaa !20    ; 2 uses
   %i.v = icmp eq i8 %i.u, 0
+  %.pre66 = load ptr, ptr %0, align 8, !tbaa !16  ; 2 uses
   br i1 %i.v, label %map_insert.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e
@@ -203,6 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br label %map_insert.exit
 
 bb.f:                                             ; preds = %bb.i, %.lr.ph.i
+  %3 = phi ptr [ %.pre66, %.lr.ph.i ], [ %4, %bb.i ] ; 2 uses
   %i.y = phi ptr [ %i.s, %.lr.ph.i ], [ %i.an, %bb.i ]
   %i.z = phi i8 [ %i.u, %.lr.ph.i ], [ %i.as, %bb.i ]
   %.03955.i = phi i32 [ %1, %.lr.ph.i ], [ %.1.i, %bb.i ] ; 3 uses
@@ -211,7 +213,6 @@ bb.f:                                             ; preds = %bb.i, %.lr.ph.i
   %.04452.i = phi i64 [ %i.p, %.lr.ph.i ], [ %i.aq, %bb.i ] ; 4 uses
   %i.aa = zext i8 %i.z to i64
   %i.ab = icmp ugt i64 %.04253.i, %i.aa
-  %3 = load ptr, ptr %0, align 8, !tbaa !16
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.04452.i ; 2 uses
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !23 ; 2 uses
   br i1 %i.ab, label %bb.g, label %bb.h
@@ -229,6 +230,7 @@ bb.g:                                             ; preds = %bb.f
   %i.al = zext i8 %i.ak to i64
   store i8 %i.ah, ptr %i.aj, align 1, !tbaa !20
   %.pre.i = load ptr, ptr %i.r, align 8, !tbaa !19
+  %.pre = load ptr, ptr %0, align 8, !tbaa !16
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -236,6 +238,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.am, label %map_insert.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
+  %4 = phi ptr [ %.pre, %bb.g ], [ %3, %bb.h ]    ; 2 uses
   %i.an = phi ptr [ %.pre.i, %bb.g ], [ %i.y, %bb.h ] ; 2 uses
   %.143.i = phi i64 [ %i.al, %bb.g ], [ %.04253.i, %bb.h ]
   %.141.i = phi ptr [ %i.ag, %bb.g ], [ %.04054.i, %bb.h ] ; 2 uses
@@ -249,13 +252,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.at, label %._crit_edge.loopexit.i, label %bb.f
 
 map_insert.exit:                                  ; preds = %bb.e, %._crit_edge.loopexit.i
+  %5 = phi ptr [ %.pre66, %bb.e ], [ %4, %._crit_edge.loopexit.i ]
   %.044.lcssa.i = phi i64 [ %i.p, %bb.e ], [ %i.aq, %._crit_edge.loopexit.i ]
   %.042.lcssa.i = phi i8 [ 1, %bb.e ], [ %i.x, %._crit_edge.loopexit.i ]
   %.040.lcssa.i = phi ptr [ %2, %bb.e ], [ %.141.i, %._crit_edge.loopexit.i ]
   %.039.lcssa.i = phi i32 [ %1, %bb.e ], [ %.1.i, %._crit_edge.loopexit.i ]
   %.044.lcssa.i.fr = freeze i64 %.044.lcssa.i     ; 4 uses
-  %4 = load ptr, ptr %0, align 8, !tbaa !16
-  %i.au = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.044.lcssa.i.fr
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.044.lcssa.i.fr
   store i32 %.039.lcssa.i, ptr %i.au, align 4, !tbaa !23
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !21
@@ -286,6 +289,7 @@ bb.j:                                             ; preds = %bb.c
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.bh
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !20  ; 2 uses
   %i.bn = icmp eq i8 %i.bm, 0
+  %.pre69 = load ptr, ptr %0, align 8, !tbaa !16  ; 2 uses
   br i1 %i.bn, label %map_insert.exit52, label %.lr.ph.i36
 
 .lr.ph.i36:                                       ; preds = %bb.j
@@ -297,6 +301,7 @@ bb.j:                                             ; preds = %bb.c
   br label %map_insert.exit52
 
 bb.k:                                             ; preds = %bb.n, %.lr.ph.i36
+  %6 = phi ptr [ %.pre69, %.lr.ph.i36 ], [ %7, %bb.n ] ; 2 uses
   %i.bq = phi ptr [ %i.bk, %.lr.ph.i36 ], [ %i.cf, %bb.n ]
   %i.br = phi i8 [ %i.bm, %.lr.ph.i36 ], [ %i.ck, %bb.n ]
   %.03955.i37 = phi i32 [ %1, %.lr.ph.i36 ], [ %.1.i43, %bb.n ] ; 3 uses
@@ -305,8 +310,7 @@ bb.k:                                             ; preds = %bb.n, %.lr.ph.i36
   %.04452.i40 = phi i64 [ %i.bh, %.lr.ph.i36 ], [ %i.ci, %bb.n ] ; 4 uses
   %i.bs = zext i8 %i.br to i64
   %i.bt = icmp ugt i64 %.04253.i39, %i.bs
-  %5 = load ptr, ptr %0, align 8, !tbaa !16
-  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.04452.i40 ; 2 uses
+  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.04452.i40 ; 2 uses
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !23 ; 2 uses
   br i1 %i.bt, label %bb.l, label %bb.m
 
@@ -323,6 +327,7 @@ bb.l:                                             ; preds = %bb.k
   %i.cd = zext i8 %i.cc to i64
   store i8 %i.bz, ptr %i.cb, align 1, !tbaa !20
   %.pre.i51 = load ptr, ptr %i.bj, align 8, !tbaa !19
+  %.pre67 = load ptr, ptr %0, align 8, !tbaa !16
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
@@ -330,6 +335,7 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.ce, label %map_insert.exit52.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
+  %7 = phi ptr [ %.pre67, %bb.l ], [ %6, %bb.m ]  ; 2 uses
   %i.cf = phi ptr [ %.pre.i51, %bb.l ], [ %i.bq, %bb.m ] ; 2 uses
   %.143.i41 = phi i64 [ %i.cd, %bb.l ], [ %.04253.i39, %bb.m ]
   %.141.i42 = phi ptr [ %i.by, %bb.l ], [ %.04054.i38, %bb.m ] ; 2 uses
@@ -343,12 +349,12 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.cl, label %._crit_edge.loopexit.i44, label %bb.k
 
 map_insert.exit52:                                ; preds = %bb.j, %._crit_edge.loopexit.i44
+  %8 = phi ptr [ %.pre69, %bb.j ], [ %7, %._crit_edge.loopexit.i44 ]
   %.044.lcssa.i46 = phi i64 [ %i.bh, %bb.j ], [ %i.ci, %._crit_edge.loopexit.i44 ] ; 6 uses
   %.042.lcssa.i47 = phi i8 [ 1, %bb.j ], [ %i.bp, %._crit_edge.loopexit.i44 ]
   %.040.lcssa.i48 = phi ptr [ %2, %bb.j ], [ %.141.i42, %._crit_edge.loopexit.i44 ]
   %.039.lcssa.i49 = phi i32 [ %1, %bb.j ], [ %.1.i43, %._crit_edge.loopexit.i44 ]
-  %6 = load ptr, ptr %0, align 8, !tbaa !16
-  %i.cm = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.044.lcssa.i46
+  %i.cm = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %.044.lcssa.i46
   store i32 %.039.lcssa.i49, ptr %i.cm, align 4, !tbaa !23
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !21

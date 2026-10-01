@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %.lr.ph183
   br i1 %exitcond242.not, label %.loopexit170, label %bb.g
 
 .loopexit170:                                     ; preds = %._crit_edge184, %.preheader169, %.loopexit175
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !33 ; 2 uses
   %.not129 = icmp eq ptr %i.ag, null
   br i1 %.not129, label %.loopexit165, label %.preheader164
@@ -427,12 +427,16 @@ bb.q:                                             ; preds = %.loopexit161
   %i.dl = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.48, i32 noundef %i.dk) #16 ; 0 uses
   %i.dm = load i32, ptr %i.aq, align 8, !tbaa !42 ; 2 uses
   %i.dn = icmp sgt i32 %i.dm, 0
-  br i1 %i.dn, label %.lr.ph217.a, label %._crit_edge218
+  br i1 %i.dn, label %.lr.ph217, label %._crit_edge218
 
-.lr.ph217.a:                                      ; preds = %.lr.ph221, %bb.s
-  %i.do = phi i32 [ %i.dv, %bb.s ], [ %i.dm, %.lr.ph221 ]
-  %indvars.iv269 = phi i64 [ %indvars.iv.next270, %bb.s ], [ 0, %.lr.ph221 ] ; 2 uses
-  %2 = load ptr, ptr %i.af, align 8, !tbaa !33
+.lr.ph217:                                        ; preds = %.lr.ph221
+  %.pre275 = load ptr, ptr %i.af, align 8, !tbaa !33
+  br label %.lr.ph217.a
+
+.lr.ph217.a:                                      ; preds = %.lr.ph217, %bb.s
+  %i.do = phi i32 [ %i.dm, %.lr.ph217 ], [ %i.dv, %bb.s ]
+  %2 = phi ptr [ %.pre275, %.lr.ph217 ], [ %3, %bb.s ] ; 2 uses
+  %indvars.iv269 = phi i64 [ 0, %.lr.ph217 ], [ %indvars.iv.next270, %bb.s ] ; 2 uses
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv272
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !35
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.dq, i64 %indvars.iv269
@@ -442,11 +446,13 @@ bb.q:                                             ; preds = %.loopexit161
 
 bb.r:                                             ; preds = %.lr.ph217.a
   %i.du = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.49, i32 noundef %i.ds) #16 ; 0 uses
+  %.pre = load ptr, ptr %i.af, align 8, !tbaa !33
   %.pre.a = load i32, ptr %i.aq, align 8, !tbaa !42
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph217.a, %bb.r
   %i.dv = phi i32 [ %i.do, %.lr.ph217.a ], [ %.pre.a, %bb.r ] ; 2 uses
+  %3 = phi ptr [ %2, %.lr.ph217.a ], [ %.pre, %bb.r ]
   %indvars.iv.next270 = add nuw nsw i64 %indvars.iv269, 1 ; 2 uses
   %i.dw = sext i32 %i.dv to i64
   %i.dx = icmp slt i64 %indvars.iv.next270, %i.dw

@@ -204,15 +204,16 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %indvars.iv126.i = phi i64 [ %indvars.iv.next127.i, %.loopexit.i ], [ 0, %.preheader68.i ] ; 2 uses
   %indvars.iv121.i = phi i64 [ %indvars.iv.next122.i, %.loopexit.i ], [ 1, %.preheader68.i ] ; 3 uses
   %.05092.i = phi i32 [ %.149.i, %.loopexit.i ], [ %i.q, %.preheader68.i ]
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv126.i
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv126.i ; 2 uses
   %i.as = zext i32 %.05092.i to i64
   %i.at = trunc nuw i64 %indvars.iv121.i to i32
+  %.pre134.i = load ptr, ptr %i.ar, align 8, !tbaa !101
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.j, %.preheader.i
+  %7 = phi ptr [ %.pre134.i, %.preheader.i ], [ %9, %bb.j ] ; 3 uses
   %indvars.iv123.i = phi i64 [ %indvars.iv121.i, %.preheader.i ], [ %indvars.iv.next124.i, %bb.j ] ; 3 uses
   %.04890.i = phi i32 [ %i.at, %.preheader.i ], [ %.149.i, %bb.j ] ; 3 uses
-  %7 = load ptr, ptr %i.ar, align 8, !tbaa !101
   %i.au = load i64, ptr %7, align 8, !tbaa !66
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv123.i
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !101 ; 2 uses
@@ -228,13 +229,16 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.az
   store ptr %i.aw, ptr %i.ba, align 8, !tbaa !101
+  %.pre.i = load ptr, ptr %i.ar, align 8, !tbaa !101
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
+  %8 = phi ptr [ %.pre.i, %bb.h ], [ %7, %bb.g ]
   %i.bb = add i32 %.04890.i, 1
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.f
+  %9 = phi ptr [ %7, %bb.f ], [ %8, %bb.i ]
   %.149.i = phi i32 [ %.04890.i, %bb.f ], [ %i.bb, %bb.i ] ; 4 uses
   %indvars.iv.next124.i = add nuw nsw i64 %indvars.iv123.i, 1 ; 2 uses
   %i.bc = icmp samesign ult i64 %indvars.iv.next124.i, %i.as

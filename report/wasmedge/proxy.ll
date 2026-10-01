@@ -205,9 +205,10 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.b
   %i.s = lshr exact i64 %i.i, 3
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %wide.trip.count = and i64 %i.s, 4294967295
-  %.pre.a = load ptr, ptr %i.t, align 8, !tbaa !53
+  %.pre = load ptr, ptr %i.t, align 8, !tbaa !53
+  %.pre.a = load ptr, ptr %i.u, align 8, !tbaa !113
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit, %bb.b
@@ -230,18 +231,19 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.h unwind label %.loopexit.split-lp
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit
-  %i.ah = phi ptr [ %.pre.a, %.lr.ph ], [ %i.bb, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 5 uses
+  %i.ah = phi ptr [ %.pre.a, %.lr.ph ], [ %10, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 4 uses
+  %8 = phi ptr [ %.pre, %.lr.ph ], [ %i.bb, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 2 uses
-  %8 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %indvars.iv ; 2 uses
-  %9 = load ptr, ptr %i.u, align 8, !tbaa !113
-  %.not.i.i = icmp eq ptr %i.ah, %9
+  %9 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %indvars.iv ; 2 uses
+  %.not.i.i = icmp eq ptr %8, %i.ah
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ah, ptr noundef nonnull align 16 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !47
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %8, ptr noundef nonnull align 16 dereferenceable(16) %9, i64 16, i1 false), !tbaa.struct !47
   %i.ai = load ptr, ptr %i.t, align 8, !tbaa !53
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16 ; 2 uses
   store ptr %i.aj, ptr %i.t, align 8, !tbaa !53
+  %.pre44 = load ptr, ptr %i.u, align 8, !tbaa !113
   br label %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -274,7 +276,7 @@ _ZNKSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv
 
 .noexc27:                                         ; preds = %_ZNKSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.an
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aw, ptr noundef nonnull align 16 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !47
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aw, ptr noundef nonnull align 16 dereferenceable(16) %9, i64 16, i1 false), !tbaa.struct !47
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.ak, %i.ah
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE11_S_relocateEPSD_SG_SG_RSE_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -300,11 +302,12 @@ bb.g:                                             ; preds = %_ZNSt6vectorIN8Wasm
 _ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i: ; preds = %bb.g, %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE11_S_relocateEPSD_SG_SG_RSE_.exit22.i.i.i
   store ptr %i.av, ptr %2, align 8, !tbaa !54
   store ptr %i.az, ptr %i.t, align 8, !tbaa !53
-  %i.ba = getelementptr inbounds nuw [16 x i8], ptr %i.av, i64 %i.at
+  %i.ba = getelementptr inbounds nuw [16 x i8], ptr %i.av, i64 %i.at ; 2 uses
   store ptr %i.ba, ptr %i.u, align 8, !tbaa !113
   br label %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit
 
 _ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit: ; preds = %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i, %bb.d
+  %10 = phi ptr [ %i.ba, %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i ], [ %.pre44, %bb.d ]
   %i.bb = phi ptr [ %i.az, %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i ], [ %i.aj, %bb.d ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -608,9 +611,10 @@ bb.n:                                             ; preds = %.split, %bb.l
 .lr.ph:                                           ; preds = %bb.n
   %i.by = lshr exact i64 %i.bo, 3
   %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %wide.trip.count = and i64 %i.by, 4294967295
-  %.pre.a = load ptr, ptr %i.bz, align 8, !tbaa !53
+  %.pre = load ptr, ptr %i.bz, align 8, !tbaa !53
+  %.pre.a = load ptr, ptr %i.ca, align 8, !tbaa !113
   br label %bb.o
 
 ._crit_edge:                                      ; preds = %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit, %bb.n
@@ -633,18 +637,19 @@ bb.n:                                             ; preds = %.split, %bb.l
           to label %bb.t unwind label %.loopexit.split-lp
 
 bb.o:                                             ; preds = %.lr.ph, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit
-  %i.cn = phi ptr [ %.pre.a, %.lr.ph ], [ %i.dh, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 5 uses
+  %i.cn = phi ptr [ %.pre.a, %.lr.ph ], [ %13, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 4 uses
+  %11 = phi ptr [ %.pre, %.lr.ph ], [ %i.dh, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 2 uses
-  %11 = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %indvars.iv ; 2 uses
-  %12 = load ptr, ptr %i.ca, align 8, !tbaa !113
-  %.not.i.i = icmp eq ptr %i.cn, %12
+  %12 = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %indvars.iv ; 2 uses
+  %.not.i.i = icmp eq ptr %11, %i.cn
   br i1 %.not.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.cn, ptr noundef nonnull align 16 dereferenceable(16) %11, i64 16, i1 false), !tbaa.struct !47
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %11, ptr noundef nonnull align 16 dereferenceable(16) %12, i64 16, i1 false), !tbaa.struct !47
   %i.co = load ptr, ptr %i.bz, align 8, !tbaa !53
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 16 ; 2 uses
   store ptr %i.cp, ptr %i.bz, align 8, !tbaa !53
+  %.pre85 = load ptr, ptr %i.ca, align 8, !tbaa !113
   br label %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit
 
 bb.q:                                             ; preds = %bb.o
@@ -677,7 +682,7 @@ _ZNKSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv
 
 .noexc59:                                         ; preds = %_ZNKSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 %i.ct
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.dc, ptr noundef nonnull align 16 dereferenceable(16) %11, i64 16, i1 false), !tbaa.struct !47
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.dc, ptr noundef nonnull align 16 dereferenceable(16) %12, i64 16, i1 false), !tbaa.struct !47
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.cq, %i.cn
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE11_S_relocateEPSD_SG_SG_RSE_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -703,11 +708,12 @@ bb.s:                                             ; preds = %_ZNSt6vectorIN8Wasm
 _ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i: ; preds = %bb.s, %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE11_S_relocateEPSD_SG_SG_RSE_.exit22.i.i.i
   store ptr %i.db, ptr %2, align 8, !tbaa !54
   store ptr %i.df, ptr %i.bz, align 8, !tbaa !53
-  %i.dg = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %i.cz
+  %i.dg = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %i.cz ; 2 uses
   store ptr %i.dg, ptr %i.ca, align 8, !tbaa !113
   br label %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit
 
 _ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit: ; preds = %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i, %bb.p
+  %13 = phi ptr [ %i.dg, %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i ], [ %.pre85, %bb.p ]
   %i.dh = phi ptr [ %i.df, %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i ], [ %i.cp, %bb.p ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -1110,9 +1116,10 @@ _ZN8WasmEdge15retrieveFuncRefERKNS_10RefVariantE.exit:
 .lr.ph:                                           ; preds = %_ZN8WasmEdge15retrieveFuncRefERKNS_10RefVariantE.exit
   %i.s = lshr exact i64 %i.i, 3
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %wide.trip.count = and i64 %i.s, 4294967295
-  %.pre.a = load ptr, ptr %i.t, align 8, !tbaa !53
+  %.pre = load ptr, ptr %i.t, align 8, !tbaa !53
+  %.pre.a = load ptr, ptr %i.u, align 8, !tbaa !113
   br label %bb.a
 
 ._crit_edge:                                      ; preds = %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit, %_ZN8WasmEdge15retrieveFuncRefERKNS_10RefVariantE.exit
@@ -1135,18 +1142,19 @@ _ZN8WasmEdge15retrieveFuncRefERKNS_10RefVariantE.exit:
           to label %bb.f unwind label %.loopexit.split-lp
 
 bb.a:                                             ; preds = %.lr.ph, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit
-  %i.ah = phi ptr [ %.pre.a, %.lr.ph ], [ %i.bb, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 5 uses
+  %i.ah = phi ptr [ %.pre.a, %.lr.ph ], [ %10, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 4 uses
+  %8 = phi ptr [ %.pre, %.lr.ph ], [ %i.bb, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit ] ; 2 uses
-  %8 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %indvars.iv ; 2 uses
-  %9 = load ptr, ptr %i.u, align 8, !tbaa !113
-  %.not.i.i = icmp eq ptr %i.ah, %9
+  %9 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %indvars.iv ; 2 uses
+  %.not.i.i = icmp eq ptr %8, %i.ah
   br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ah, ptr noundef nonnull align 16 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !47
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %8, ptr noundef nonnull align 16 dereferenceable(16) %9, i64 16, i1 false), !tbaa.struct !47
   %i.ai = load ptr, ptr %i.t, align 8, !tbaa !53
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16 ; 2 uses
   store ptr %i.aj, ptr %i.t, align 8, !tbaa !53
+  %.pre43 = load ptr, ptr %i.u, align 8, !tbaa !113
   br label %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -1179,7 +1187,7 @@ _ZNKSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv
 
 .noexc25:                                         ; preds = %_ZNKSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.an
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aw, ptr noundef nonnull align 16 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !47
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aw, ptr noundef nonnull align 16 dereferenceable(16) %9, i64 16, i1 false), !tbaa.struct !47
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.ak, %i.ah
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE11_S_relocateEPSD_SG_SG_RSE_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -1205,11 +1213,12 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN8Wasm
 _ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i: ; preds = %bb.e, %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE11_S_relocateEPSD_SG_SG_RSE_.exit22.i.i.i
   store ptr %i.av, ptr %2, align 8, !tbaa !54
   store ptr %i.az, ptr %i.t, align 8, !tbaa !53
-  %i.ba = getelementptr inbounds nuw [16 x i8], ptr %i.av, i64 %i.at
+  %i.ba = getelementptr inbounds nuw [16 x i8], ptr %i.av, i64 %i.at ; 2 uses
   store ptr %i.ba, ptr %i.u, align 8, !tbaa !113
   br label %_ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit
 
 _ZN8WasmEdge7Runtime12StackManager4pushIRKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEEEvOT_.exit: ; preds = %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i, %bb.b
+  %10 = phi ptr [ %i.ba, %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i ], [ %.pre43, %bb.b ]
   %i.bb = phi ptr [ %i.az, %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EE17_M_realloc_insertIJRKSD_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_.exit.i.i ], [ %i.aj, %bb.b ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count

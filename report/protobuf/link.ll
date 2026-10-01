@@ -100,10 +100,12 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = zext i16 %.val27 to i64      ; 3 uses
+  %.val29.pre50 = load ptr, ptr %0, align 8, !tbaa !17
   br label %.lr.ph
 
 .preheader:                                       ; preds = %.critedge
   %i.b = shl i32 %.124, 16
+  %.val28.pre53 = load ptr, ptr %0, align 8, !tbaa !17 ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.c = icmp eq i16 %.val27, 1
   br i1 %i.c, label %.lr.ph41.epil.preheader, label %.preheader.new
@@ -113,10 +115,10 @@ bb.a:
   br label %.lr.ph41
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.critedge
+  %.val29 = phi ptr [ %.val29.pre50, %.lr.ph.preheader ], [ %.val2951, %.critedge ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.critedge ] ; 2 uses
   %.02334 = phi i32 [ 0, %.lr.ph.preheader ], [ %.124, %.critedge ] ; 4 uses
   %.02533 = phi ptr [ %1, %.lr.ph.preheader ], [ %.126, %.critedge ] ; 5 uses
-  %.val29 = load ptr, ptr %0, align 8, !tbaa !17
   %i.d = getelementptr inbounds nuw [12 x i8], ptr %.val29, i64 %indvars.iv ; 3 uses
   %i.e = getelementptr i8, ptr %i.d, i64 10
   %.val30 = load i8, ptr %i.e, align 2, !tbaa !10 ; 2 uses
@@ -144,9 +146,11 @@ bb.c:                                             ; preds = %upb_MiniTableField_
   store ptr %i.d, ptr %.02533, align 8, !tbaa !17
   %i.m = getelementptr inbounds nuw i8, ptr %.02533, i64 8
   %i.n = add i32 %.02334, 1
+  %.val29.pre = load ptr, ptr %0, align 8, !tbaa !17
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.b, %bb.b, %bb.c, %upb_MiniTableField_CType.exit
+  %.val2951 = phi ptr [ %.val29.pre, %bb.c ], [ %.val29, %upb_MiniTableField_CType.exit ], [ %.val29, %bb.b ], [ %.val29, %bb.b ]
   %.126 = phi ptr [ %i.m, %bb.c ], [ %.02533, %upb_MiniTableField_CType.exit ], [ %.02533, %bb.b ], [ %.02533, %bb.b ] ; 3 uses
   %.124 = phi i32 [ %i.n, %bb.c ], [ %.02334, %upb_MiniTableField_CType.exit ], [ %.02334, %bb.b ], [ %.02334, %bb.b ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -158,13 +162,13 @@ bb.c:                                             ; preds = %upb_MiniTableField_
   br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %.lr.ph41.epil.preheader
 
 .lr.ph41.epil.preheader:                          ; preds = %._crit_edge.loopexit.unr-lcssa, %.preheader
+  %.val28.epil.init = phi ptr [ %.val28.pre53, %.preheader ], [ %.val2854.1, %._crit_edge.loopexit.unr-lcssa ]
   %indvars.iv45.epil.init = phi i64 [ 0, %.preheader ], [ %indvars.iv.next46.1, %._crit_edge.loopexit.unr-lcssa ]
   %.02239.epil.init = phi i32 [ 0, %.preheader ], [ %.1.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
   %.238.epil.init = phi ptr [ %.126, %.preheader ], [ %.3.1, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod53 = trunc i16 %.val27 to i1
   tail call void @llvm.assume(i1 %lcmp.mod53)
-  %.val28.epil = load ptr, ptr %0, align 8, !tbaa !17
-  %i.o = getelementptr inbounds nuw [12 x i8], ptr %.val28.epil, i64 %indvars.iv45.epil.init ; 2 uses
+  %i.o = getelementptr inbounds nuw [12 x i8], ptr %.val28.epil.init, i64 %indvars.iv45.epil.init ; 2 uses
   %i.p = getelementptr i8, ptr %i.o, i64 10
   %.val32.epil = load i8, ptr %i.p, align 2, !tbaa !10
   %i.q = icmp eq i8 %.val32.epil, 14
@@ -185,11 +189,11 @@ bb.d:                                             ; preds = %.lr.ph41.epil.prehe
   ret i32 %.022.lcssa
 
 .lr.ph41:                                         ; preds = %bb.g, %.preheader.new
+  %.val28 = phi ptr [ %.val28.pre53, %.preheader.new ], [ %.val2854.1, %bb.g ] ; 2 uses
   %indvars.iv45 = phi i64 [ 0, %.preheader.new ], [ %indvars.iv.next46.1, %bb.g ] ; 3 uses
   %.02239 = phi i32 [ 0, %.preheader.new ], [ %.1.1, %bb.g ] ; 2 uses
   %.238 = phi ptr [ %.126, %.preheader.new ], [ %.3.1, %bb.g ] ; 3 uses
   %niter = phi i64 [ 0, %.preheader.new ], [ %niter.next.1, %bb.g ]
-  %.val28 = load ptr, ptr %0, align 8, !tbaa !17
   %i.t = getelementptr inbounds nuw [12 x i8], ptr %.val28, i64 %indvars.iv45 ; 2 uses
   %i.u = getelementptr i8, ptr %i.t, i64 10
   %.val32 = load i8, ptr %i.u, align 2, !tbaa !10
@@ -200,13 +204,14 @@ bb.e:                                             ; preds = %.lr.ph41
   store ptr %i.t, ptr %.238, align 8, !tbaa !17
   %i.w = getelementptr inbounds nuw i8, ptr %.238, i64 8
   %i.x = add i32 %.02239, 1
+  %.val28.pre = load ptr, ptr %0, align 8, !tbaa !17
   br label %.lr.ph41.1
 
 .lr.ph41.1:                                       ; preds = %bb.e, %.lr.ph41
+  %.val2854 = phi ptr [ %.val28.pre, %bb.e ], [ %.val28, %.lr.ph41 ] ; 2 uses
   %.3 = phi ptr [ %i.w, %bb.e ], [ %.238, %.lr.ph41 ] ; 3 uses
   %.1 = phi i32 [ %i.x, %bb.e ], [ %.02239, %.lr.ph41 ] ; 2 uses
-  %.val28.1 = load ptr, ptr %0, align 8, !tbaa !17
-  %i.y = getelementptr inbounds nuw [12 x i8], ptr %.val28.1, i64 %indvars.iv45 ; 2 uses
+  %i.y = getelementptr inbounds nuw [12 x i8], ptr %.val2854, i64 %indvars.iv45 ; 2 uses
   %i.z = getelementptr i8, ptr %i.y, i64 22
   %.val32.1 = load i8, ptr %i.z, align 2, !tbaa !10
   %i.aa = icmp eq i8 %.val32.1, 14
@@ -217,9 +222,11 @@ bb.f:                                             ; preds = %.lr.ph41.1
   store ptr %i.ab, ptr %.3, align 8, !tbaa !17
   %i.ac = getelementptr inbounds nuw i8, ptr %.3, i64 8
   %i.ad = add i32 %.1, 1
+  %.val28.pre.1 = load ptr, ptr %0, align 8, !tbaa !17
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph41.1
+  %.val2854.1 = phi ptr [ %.val28.pre.1, %bb.f ], [ %.val2854, %.lr.ph41.1 ] ; 2 uses
   %.3.1 = phi ptr [ %i.ac, %bb.f ], [ %.3, %.lr.ph41.1 ] ; 2 uses
   %.1.1 = phi i32 [ %i.ad, %bb.f ], [ %.1, %.lr.ph41.1 ] ; 3 uses
   %indvars.iv.next46.1 = add nuw nsw i64 %indvars.iv45, 2 ; 2 uses
@@ -246,6 +253,7 @@ bb.a:
 
 .lr.ph100:                                        ; preds = %.critedge.preheader
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %.val67.pre110 = load ptr, ptr %0, align 8, !tbaa !17
   br label %bb.k
 
 bb.b:                                             ; preds = %.lr.ph, %.critedge87
@@ -336,9 +344,9 @@ upb_MiniTable_SetSubMessage.exit:                 ; preds = %bb.g, %bb.i, %bb.j
 
 bb.k:                                             ; preds = %.lr.ph100, %.critedge
   %.val110 = phi i16 [ %.val66, %.lr.ph100 ], [ %.val, %.critedge ] ; 2 uses
+  %.val67 = phi ptr [ %.val67.pre110, %.lr.ph100 ], [ %.val67111, %.critedge ] ; 3 uses
   %indvars.iv104 = phi i64 [ 0, %.lr.ph100 ], [ %indvars.iv.next105, %.critedge ] ; 2 uses
   %.04598 = phi i32 [ 0, %.lr.ph100 ], [ %.247.ph, %.critedge ] ; 3 uses
-  %.val67 = load ptr, ptr %0, align 8, !tbaa !17
   %i.ae = getelementptr inbounds nuw [12 x i8], ptr %.val67, i64 %indvars.iv104 ; 3 uses
   %i.af = getelementptr i8, ptr %i.ae, i64 10
   %.val71 = load i8, ptr %i.af, align 2, !tbaa !10
@@ -377,11 +385,13 @@ upb_MiniTable_SetSubEnum.exit.thread:             ; preds = %bb.n, %bb.o
   %i.au = shl nuw nsw i64 %i.at, 2
   %i.av = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.au
   store ptr %i.ak, ptr %i.av, align 8, !tbaa !7
+  %.val67.pre = load ptr, ptr %0, align 8, !tbaa !17
   %.val.pre = load i16, ptr %i.a, align 2, !tbaa !14
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.k, %upb_MiniTable_SetSubEnum.exit.thread, %bb.m
   %.val = phi i16 [ %.val110, %bb.m ], [ %.val.pre, %upb_MiniTable_SetSubEnum.exit.thread ], [ %.val110, %bb.k ] ; 2 uses
+  %.val67111 = phi ptr [ %.val67, %bb.m ], [ %.val67.pre, %upb_MiniTable_SetSubEnum.exit.thread ], [ %.val67, %bb.k ]
   %.247.ph = phi i32 [ %i.ah, %bb.m ], [ %i.ah, %upb_MiniTable_SetSubEnum.exit.thread ], [ %.04598, %bb.k ] ; 2 uses
   %indvars.iv.next105 = add nuw nsw i64 %indvars.iv104, 1 ; 2 uses
   %i.aw = zext i16 %.val to i64

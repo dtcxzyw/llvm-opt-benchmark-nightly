@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.f
   %i.j = load ptr, ptr %i.e, align 8, !tbaa !95   ; 2 uses
   %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 88), align 8, !tbaa !102
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 664
-  %i.m = load i32, ptr %i.l, align 8, !tbaa !125  ; 2 uses
+  %i.m = load i32, ptr %i.l, align 8, !tbaa !125  ; 3 uses
   %i.n = icmp sgt i32 %i.m, 0
   br i1 %i.n, label %bb.i, label %bb.j
 
@@ -211,17 +211,18 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
+  %.pre89 = phi i32 [ %i.m, %bb.i ], [ 0, %bb.h ]
   %.061 = phi i32 [ 1, %bb.i ], [ 0, %bb.h ]
   %.not7785 = icmp eq ptr %i.j, null
   br i1 %.not7785, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.j, %bb.l
+  %6 = phi i32 [ %7, %bb.l ], [ %.pre89, %bb.j ]  ; 2 uses
   %.05887 = phi ptr [ %i.v, %bb.l ], [ %i.j, %bb.j ] ; 2 uses
   %.16286 = phi i32 [ %.2, %bb.l ], [ %.061, %bb.j ] ; 3 uses
   %i.o = load ptr, ptr %.05887, align 8, !tbaa !26
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = trunc i64 %i.p to i32                    ; 2 uses
-  %6 = load i32, ptr %i.i, align 4, !tbaa !35
   %.not78 = icmp eq i32 %6, %i.q
   br i1 %.not78, label %bb.l, label %bb.k
 
@@ -231,9 +232,11 @@ bb.k:                                             ; preds = %.lr.ph
   store i32 %i.q, ptr %i.s, align 4, !tbaa !35
   %i.t = add nsw i32 %.16286, 1                   ; 2 uses
   %.not79 = icmp slt i32 %i.t, %i.g
+  %.pre = load i32, ptr %i.i, align 4, !tbaa !35
   br i1 %.not79, label %bb.l, label %.thread
 
 bb.l:                                             ; preds = %.lr.ph, %bb.k
+  %7 = phi i32 [ %.pre, %bb.k ], [ %6, %.lr.ph ]
   %.2 = phi i32 [ %i.t, %bb.k ], [ %.16286, %.lr.ph ]
   %i.u = getelementptr inbounds nuw i8, ptr %.05887, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !87   ; 2 uses

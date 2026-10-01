@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.s = load ptr, ptr @H5T_g.5, align 8, !tbaa !56 ; 5 uses
   %.not = icmp eq ptr %1, null
   %.not59 = icmp eq ptr %2, null                  ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %.not61 = icmp eq ptr %3, null                  ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 4 uses
   %.not63 = icmp eq ptr %5, null                  ; 5 uses
@@ -257,14 +257,15 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.g
   br i1 %i.al, label %.lr.ph.split.us.split.us, label %.loopexit68, !llvm.loop !131
 
 .lr.ph.split.us.split:                            ; preds = %.lr.ph.split.us
+  %.pre113 = load ptr, ptr %i.t, align 8, !tbaa !26 ; 2 uses
   br i1 %.not61, label %.lr.ph.split.us.split.split.us, label %.lr.ph.split.us.split.split
 
 .lr.ph.split.us.split.split.us:                   ; preds = %.lr.ph.split.us.split, %bb.o
+  %7 = phi ptr [ %8, %bb.o ], [ %.pre113, %.lr.ph.split.us.split ] ; 3 uses
   %indvars.iv96 = phi i64 [ %indvars.iv.next97, %bb.o ], [ %i.v, %.lr.ph.split.us.split ] ; 4 uses
   %.047.in70.us.us78 = phi i32 [ %i.bc, %bb.o ], [ %i.q, %.lr.ph.split.us.split ]
   %i.an = phi i32 [ %i.ba, %bb.o ], [ %i.q, %.lr.ph.split.us.split ] ; 4 uses
   %i.ao = getelementptr inbounds nuw [56 x i8], ptr %i.s, i64 %indvars.iv96 ; 4 uses
-  %7 = load ptr, ptr %i.t, align 8, !tbaa !26
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 12
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !32
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 32
@@ -289,9 +290,11 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ao, ptr nonnull align 8 %i.av, i64 %i.ay, i1 false)
   %i.az = add nsw i32 %i.an, -1                   ; 2 uses
   store i32 %i.az, ptr @H5T_g.3, align 8, !tbaa !57
+  %.pre112 = load ptr, ptr %i.t, align 8, !tbaa !26
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %.lr.ph.split.us.split.split.us
+  %8 = phi ptr [ %7, %bb.m ], [ %.pre112, %bb.n ], [ %7, %.lr.ph.split.us.split.split.us ]
   %i.ba = phi i32 [ %i.an, %bb.m ], [ %i.az, %bb.n ], [ %i.an, %.lr.ph.split.us.split.split.us ]
   %indvars.iv.next97 = add nsw i64 %indvars.iv96, -1
   %i.bb = icmp sgt i64 %indvars.iv96, 0
@@ -299,12 +302,12 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %.lr.p
   br i1 %i.bb, label %.lr.ph.split.us.split.split.us, label %.loopexit68, !llvm.loop !131
 
 .lr.ph.split.us.split.split:                      ; preds = %.lr.ph.split.us.split, %bb.t
+  %9 = phi ptr [ %10, %bb.t ], [ %.pre113, %.lr.ph.split.us.split ] ; 4 uses
   %indvars.iv93 = phi i64 [ %indvars.iv.next94, %bb.t ], [ %i.v, %.lr.ph.split.us.split ] ; 4 uses
   %.047.in70.us = phi i32 [ %i.bx, %bb.t ], [ %i.q, %.lr.ph.split.us.split ]
   %i.bd = phi i32 [ %i.bv, %bb.t ], [ %i.q, %.lr.ph.split.us.split ] ; 5 uses
   %i.be = getelementptr inbounds nuw [56 x i8], ptr %i.s, i64 %indvars.iv93 ; 5 uses
-  %8 = load ptr, ptr %i.t, align 8, !tbaa !26
-  %i.bf = getelementptr inbounds nuw i8, ptr %8, i64 12
+  %i.bf = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !32
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 32
   %i.bi = load i32, ptr %i.bh, align 8, !tbaa !77
@@ -337,9 +340,11 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.be, ptr nonnull align 8 %i.bq, i64 %i.bt, i1 false)
   %i.bu = add nsw i32 %i.bd, -1                   ; 2 uses
   store i32 %i.bu, ptr @H5T_g.3, align 8, !tbaa !57
+  %.pre110 = load ptr, ptr %i.t, align 8, !tbaa !26
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.p, %.lr.ph.split.us.split.split
+  %10 = phi ptr [ %9, %bb.r ], [ %9, %bb.p ], [ %9, %.lr.ph.split.us.split.split ], [ %.pre110, %bb.s ]
   %i.bv = phi i32 [ %i.bd, %bb.r ], [ %i.bd, %bb.p ], [ %i.bd, %.lr.ph.split.us.split.split ], [ %i.bu, %bb.s ]
   %indvars.iv.next94 = add nsw i64 %indvars.iv93, -1
   %i.bw = icmp sgt i64 %indvars.iv93, 0
@@ -347,15 +352,16 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.p,
   br i1 %i.bw, label %.lr.ph.split.us.split.split, label %.loopexit68, !llvm.loop !131
 
 .lr.ph.split:                                     ; preds = %.lr.ph
+  %.pre109 = load i8, ptr %1, align 1, !tbaa !31  ; 2 uses
   br i1 %.not59, label %.lr.ph.split.split.us, label %.lr.ph.split.split
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.aa
+  %11 = phi i8 [ %12, %bb.aa ], [ %.pre109, %.lr.ph.split ] ; 4 uses
   %indvars.iv90 = phi i64 [ %indvars.iv.next91, %bb.aa ], [ %i.v, %.lr.ph.split ] ; 4 uses
   %.047.in70.us73 = phi i32 [ %i.cp, %bb.aa ], [ %i.q, %.lr.ph.split ]
   %i.by = phi i32 [ %i.cn, %bb.aa ], [ %i.q, %.lr.ph.split ] ; 5 uses
   %i.bz = getelementptr inbounds nuw [56 x i8], ptr %i.s, i64 %indvars.iv90 ; 5 uses
-  %9 = load i8, ptr %1, align 1, !tbaa !31
-  %.not57.us = icmp eq i8 %9, 0
+  %.not57.us = icmp eq i8 %11, 0
   br i1 %.not57.us, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph.split.split.us
@@ -392,9 +398,11 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.bz, ptr nonnull align 8 %i.ci, i64 %i.cl, i1 false)
   %i.cm = add nsw i32 %i.by, -1                   ; 2 uses
   store i32 %i.cm, ptr @H5T_g.3, align 8, !tbaa !57
+  %.pre108 = load i8, ptr %1, align 1, !tbaa !31
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.w, %bb.u
+  %12 = phi i8 [ %11, %bb.y ], [ %11, %bb.w ], [ %.pre108, %bb.z ], [ %11, %bb.u ]
   %i.cn = phi i32 [ %i.by, %bb.y ], [ %i.by, %bb.w ], [ %i.cm, %bb.z ], [ %i.by, %bb.u ]
   %indvars.iv.next91 = add nsw i64 %indvars.iv90, -1
   %i.co = icmp sgt i64 %indvars.iv90, 0
@@ -402,12 +410,12 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.w,
   br i1 %i.co, label %.lr.ph.split.split.us, label %.loopexit68, !llvm.loop !131
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.ai
+  %13 = phi i8 [ %14, %bb.ai ], [ %.pre109, %.lr.ph.split ] ; 5 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ai ], [ %i.v, %.lr.ph.split ] ; 4 uses
   %.047.in70 = phi i32 [ %i.dm, %bb.ai ], [ %i.q, %.lr.ph.split ]
   %i.cq = phi i32 [ %i.dk, %bb.ai ], [ %i.q, %.lr.ph.split ] ; 6 uses
   %i.cr = getelementptr inbounds nuw [56 x i8], ptr %i.s, i64 %indvars.iv ; 6 uses
-  %10 = load i8, ptr %1, align 1, !tbaa !31
-  %.not57 = icmp eq i8 %10, 0
+  %.not57 = icmp eq i8 %13, 0
   br i1 %.not57, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph.split.split
@@ -453,9 +461,11 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cr, ptr nonnull align 8 %i.df, i64 %i.di, i1 false)
   %i.dj = add nsw i32 %i.cq, -1                   ; 2 uses
   store i32 %i.dj, ptr @H5T_g.3, align 8, !tbaa !57
+  %.pre106 = load i8, ptr %1, align 1, !tbaa !31
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ag, %bb.ae, %bb.ac, %bb.ab, %bb.ah
+  %14 = phi i8 [ %13, %bb.ag ], [ %13, %bb.ae ], [ %13, %bb.ac ], [ %13, %bb.ab ], [ %.pre106, %bb.ah ]
   %i.dk = phi i32 [ %i.cq, %bb.ag ], [ %i.cq, %bb.ae ], [ %i.cq, %bb.ac ], [ %i.cq, %bb.ab ], [ %i.dj, %bb.ah ]
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.dl = icmp sgt i64 %indvars.iv, 0

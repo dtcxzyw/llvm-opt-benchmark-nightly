@@ -204,19 +204,20 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.c = sub i64 %i.a, %i.b
   %i.d = icmp sgt i64 %i.c, 64
-  br i1 %i.d, label %bb.b, label %bb.h
+  br i1 %i.d, label %bb.b, label %4
 
 bb.b:                                             ; preds = %bb.a
+  %.pre21.i = load i32, ptr %0, align 4, !tbaa !34
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a, %bb.b
+  %2 = phi i32 [ %.pre21.i, %bb.b ], [ %3, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a ] ; 2 uses
   %.019.i.idx = phi i64 [ 4, %bb.b ], [ %.019.i.add, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a ] ; 4 uses
   %.pn18.i = phi ptr [ %0, %bb.b ], [ %.019.i.ptr, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a ] ; 3 uses
   %.019.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.019.i.idx ; 4 uses
-  %2 = load i32, ptr %.019.i.ptr, align 4, !tbaa !34 ; 4 uses
-  %i.e = load i32, ptr %0, align 4, !tbaa !34     ; 2 uses
-  %i.f = icmp slt i32 %2, %i.e
+  %i.e = load i32, ptr %.019.i.ptr, align 4, !tbaa !34 ; 6 uses
+  %i.f = icmp slt i32 %i.e, %2
   br i1 %i.f, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -225,17 +226,21 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.019.i.idx, i1 false)
-  br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a
+  br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i
 
 bb.f:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 4
-  store i32 %i.e, ptr %i.h, align 4, !tbaa !34
+  store i32 %2, ptr %i.h, align 4, !tbaa !34
+  br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i
+
+_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i:     ; preds = %bb.f, %bb.e
+  store i32 %i.e, ptr %0, align 4, !tbaa !34
   br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a
 
 bb.g:                                             ; preds = %bb.c
   %i.i = load i32, ptr %.pn18.i, align 4, !tbaa !34 ; 2 uses
-  %i.j = icmp slt i32 %2, %i.i
-  br i1 %i.j, label %.lr.ph.i.i, label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a
+  %i.j = icmp slt i32 %i.e, %i.i
+  br i1 %i.j, label %.lr.ph.i.i, label %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i
   %i.k = phi i32 [ %i.l, %.lr.ph.i.i ], [ %i.i, %bb.g ]
@@ -244,12 +249,17 @@ bb.g:                                             ; preds = %bb.c
   store i32 %i.k, ptr %.0912.i.i, align 4, !tbaa !34
   %.0.i.i = getelementptr inbounds i8, ptr %.013.i.i, i64 -4 ; 2 uses
   %i.l = load i32, ptr %.0.i.i, align 4, !tbaa !34 ; 2 uses
-  %i.m = icmp slt i32 %2, %i.l
-  br i1 %i.m, label %.lr.ph.i.i, label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a, !llvm.loop !71
+  %i.m = icmp slt i32 %i.e, %i.l
+  br i1 %i.m, label %.lr.ph.i.i, label %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i, !llvm.loop !71
 
-_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a:   ; preds = %.lr.ph.i.i, %bb.g, %bb.f, %bb.e
-  %.sink.i = phi ptr [ %0, %bb.f ], [ %0, %bb.e ], [ %.019.i.ptr, %bb.g ], [ %.013.i.i, %.lr.ph.i.i ]
-  store i32 %2, ptr %.sink.i, align 4, !tbaa !34
+_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i: ; preds = %.lr.ph.i.i, %bb.g
+  %.09.lcssa.i.i = phi ptr [ %.019.i.ptr, %bb.g ], [ %.013.i.i, %.lr.ph.i.i ]
+  store i32 %i.e, ptr %.09.lcssa.i.i, align 4, !tbaa !34
+  %.pre.i = load i32, ptr %0, align 4, !tbaa !34
+  br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a
+
+_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i.a:   ; preds = %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i
+  %3 = phi i32 [ %i.e, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i ], [ %.pre.i, %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i ]
   %.019.i.add = add nuw nsw i64 %.019.i.idx, 4    ; 2 uses
   %.not.i = icmp eq i64 %.019.i.add, 64
   br i1 %.not.i, label %_ZSt16__insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit, label %bb.c, !llvm.loop !72
@@ -284,67 +294,82 @@ _ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit
   %.not.i8 = icmp eq ptr %i.u, %1
   br i1 %.not.i8, label %_ZSt26__unguarded_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit, label %.lr.ph.i, !llvm.loop !73
 
-bb.h:                                             ; preds = %bb.a
-  %3 = icmp eq ptr %0, %1
+4:                                                ; preds = %bb.a
+  %5 = icmp eq ptr %0, %1
+  br i1 %5, label %_ZSt26__unguarded_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit, label %bb.h
+
+bb.h:                                             ; preds = %4
   %.016.i13 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %.not17.i = icmp eq ptr %.016.i13, %1
-  %or.cond = select i1 %3, i1 true, i1 %.not17.i
-  br i1 %or.cond, label %_ZSt26__unguarded_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit, label %.lr.ph.i14
+  br i1 %.not17.i, label %_ZSt26__unguarded_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit, label %.lr.ph.i16
 
-.lr.ph.i14:                                       ; preds = %bb.h, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17
-  %.019.i15 = phi ptr [ %.0.i19, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17 ], [ %.016.i13, %bb.h ] ; 6 uses
-  %.pn18.i16 = phi ptr [ %.019.i15, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17 ], [ %0, %bb.h ] ; 4 uses
-  %4 = load i32, ptr %.019.i15, align 4, !tbaa !34 ; 4 uses
-  %i.v = load i32, ptr %0, align 4, !tbaa !34     ; 2 uses
-  %i.w = icmp slt i32 %4, %i.v
+.lr.ph.i16:                                       ; preds = %bb.h
+  %.pre21.i17 = load i32, ptr %0, align 4, !tbaa !34
+  br label %.lr.ph.i14
+
+.lr.ph.i14:                                       ; preds = %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17, %.lr.ph.i16
+  %6 = phi i32 [ %.pre21.i17, %.lr.ph.i16 ], [ %7, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17 ] ; 2 uses
+  %.pn18.i16 = phi ptr [ %.016.i13, %.lr.ph.i16 ], [ %.0.i19, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17 ] ; 6 uses
+  %.pn18.i19 = phi ptr [ %0, %.lr.ph.i16 ], [ %.pn18.i16, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17 ] ; 4 uses
+  %i.v = load i32, ptr %.pn18.i16, align 4, !tbaa !34 ; 6 uses
+  %i.w = icmp slt i32 %i.v, %6
   br i1 %i.w, label %bb.i, label %bb.m
 
 bb.i:                                             ; preds = %.lr.ph.i14
-  %i.x = ptrtoint ptr %.019.i15 to i64
+  %i.x = ptrtoint ptr %.pn18.i16 to i64
   %i.y = sub i64 %i.x, %i.b                       ; 3 uses
   %i.z = ashr exact i64 %i.y, 2                   ; 2 uses
   %i.aa = icmp sgt i64 %i.z, 1
   br i1 %i.aa, label %bb.j, label %bb.k, !prof !74
 
 bb.j:                                             ; preds = %bb.i
-  %i.ab = getelementptr inbounds nuw i8, ptr %.pn18.i16, i64 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %.pn18.i19, i64 8
   %i.ac = sub nsw i64 0, %i.z
   %i.ad = getelementptr inbounds [4 x i8], ptr %i.ab, i64 %i.ac
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ad, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.y, i1 false)
-  br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17
+  br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i29
 
 bb.k:                                             ; preds = %bb.i
   %i.ae = icmp eq i64 %i.y, 4
-  br i1 %i.ae, label %bb.l, label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17
+  br i1 %i.ae, label %bb.l, label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i29
 
 bb.l:                                             ; preds = %bb.k
-  %i.af = getelementptr inbounds nuw i8, ptr %.pn18.i16, i64 4
-  store i32 %i.v, ptr %i.af, align 4, !tbaa !34
+  %i.af = getelementptr inbounds nuw i8, ptr %.pn18.i19, i64 4
+  store i32 %6, ptr %i.af, align 4, !tbaa !34
+  br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i29
+
+_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i29:   ; preds = %bb.l, %bb.k, %bb.j
+  store i32 %i.v, ptr %0, align 4, !tbaa !34
   br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17
 
 bb.m:                                             ; preds = %.lr.ph.i14
-  %i.ag = load i32, ptr %.pn18.i16, align 4, !tbaa !34 ; 2 uses
-  %i.ah = icmp slt i32 %4, %i.ag
-  br i1 %i.ah, label %.lr.ph.i.i21, label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17
+  %i.ag = load i32, ptr %.pn18.i19, align 4, !tbaa !34 ; 2 uses
+  %i.ah = icmp slt i32 %i.v, %i.ag
+  br i1 %i.ah, label %.lr.ph.i.i21, label %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i20
 
 .lr.ph.i.i21:                                     ; preds = %bb.m, %.lr.ph.i.i21
   %i.ai = phi i32 [ %i.aj, %.lr.ph.i.i21 ], [ %i.ag, %bb.m ]
-  %.013.i.i22 = phi ptr [ %.0.i.i24, %.lr.ph.i.i21 ], [ %.pn18.i16, %bb.m ] ; 3 uses
-  %.0912.i.i23 = phi ptr [ %.013.i.i22, %.lr.ph.i.i21 ], [ %.019.i15, %bb.m ]
+  %.013.i.i22 = phi ptr [ %.0.i.i24, %.lr.ph.i.i21 ], [ %.pn18.i19, %bb.m ] ; 3 uses
+  %.0912.i.i23 = phi ptr [ %.013.i.i22, %.lr.ph.i.i21 ], [ %.pn18.i16, %bb.m ]
   store i32 %i.ai, ptr %.0912.i.i23, align 4, !tbaa !34
   %.0.i.i24 = getelementptr inbounds i8, ptr %.013.i.i22, i64 -4 ; 2 uses
   %i.aj = load i32, ptr %.0.i.i24, align 4, !tbaa !34 ; 2 uses
-  %i.ak = icmp slt i32 %4, %i.aj
-  br i1 %i.ak, label %.lr.ph.i.i21, label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17, !llvm.loop !71
+  %i.ak = icmp slt i32 %i.v, %i.aj
+  br i1 %i.ak, label %.lr.ph.i.i21, label %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i20, !llvm.loop !71
 
-_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17:   ; preds = %.lr.ph.i.i21, %bb.m, %bb.l, %bb.k, %bb.j
-  %.sink.i18 = phi ptr [ %0, %bb.l ], [ %0, %bb.j ], [ %0, %bb.k ], [ %.019.i15, %bb.m ], [ %.013.i.i22, %.lr.ph.i.i21 ]
-  store i32 %4, ptr %.sink.i18, align 4, !tbaa !34
-  %.0.i19 = getelementptr inbounds nuw i8, ptr %.019.i15, i64 4 ; 2 uses
+_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i20: ; preds = %.lr.ph.i.i21, %bb.m
+  %.09.lcssa.i.i21 = phi ptr [ %.pn18.i16, %bb.m ], [ %.013.i.i22, %.lr.ph.i.i21 ]
+  store i32 %i.v, ptr %.09.lcssa.i.i21, align 4, !tbaa !34
+  %.pre.i22 = load i32, ptr %0, align 4, !tbaa !34
+  br label %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17
+
+_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17:   ; preds = %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i20, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i29
+  %7 = phi i32 [ %i.v, %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i29 ], [ %.pre.i22, %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i20 ]
+  %.0.i19 = getelementptr inbounds nuw i8, ptr %.pn18.i16, i64 4 ; 2 uses
   %.not.i20 = icmp eq ptr %.0.i19, %1
   br i1 %.not.i20, label %_ZSt26__unguarded_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit, label %.lr.ph.i14, !llvm.loop !72
 
-_ZSt26__unguarded_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit: ; preds = %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17, %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i.a, %bb.h, %_ZSt16__insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit
+_ZSt26__unguarded_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit: ; preds = %_ZSt13move_backwardIPiS0_ET0_T_S2_S1_.exit.i17, %_ZSt25__unguarded_linear_insertIPiN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i.a, %bb.h, %4, %_ZSt16__insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_.exit
   ret void
 }
 

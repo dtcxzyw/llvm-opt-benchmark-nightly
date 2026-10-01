@@ -202,10 +202,11 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !19   ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = zext nneg i32 %i.b to i64
+  %.pre16 = load i32, ptr %i.f, align 8, !tbaa !16
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZN6icu_789UVector3215removeElementAtEi.exit, %bb.a
@@ -213,25 +214,25 @@ bb.a:
   ret i8 %.07.lcssa
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN6icu_789UVector3215removeElementAtEi.exit
+  %2 = phi i32 [ %.pre16, %.lr.ph ], [ %3, %_ZN6icu_789UVector3215removeElementAtEi.exit ] ; 3 uses
   %i.j = phi i32 [ %i.b, %.lr.ph ], [ %i.ab, %_ZN6icu_789UVector3215removeElementAtEi.exit ] ; 3 uses
   %indvars.iv = phi i64 [ %i.i, %.lr.ph ], [ %indvars.iv.next, %_ZN6icu_789UVector3215removeElementAtEi.exit ] ; 3 uses
   %.0713 = phi i8 [ 0, %.lr.ph ], [ %.1, %_ZN6icu_789UVector3215removeElementAtEi.exit ]
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.next
-  %2 = load i32, ptr %i.k, align 4, !tbaa !22
-  %i.l = load i32, ptr %i.f, align 8, !tbaa !16   ; 2 uses
-  %i.m = icmp sgt i32 %i.l, 0
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !22
+  %i.m = icmp sgt i32 %2, 0
   br i1 %i.m, label %.lr.ph.i.preheader, label %.preheader.i
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
-  %zext = zext nneg i32 %i.l to i64
+  %zext = zext nneg i32 %2 to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.c
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv.i
   %i.o = load i32, ptr %i.n, align 4, !tbaa !22
-  %i.p = icmp eq i32 %2, %i.o
+  %i.p = icmp eq i32 %i.l, %i.o
   br i1 %i.p, label %_ZN6icu_789UVector3215removeElementAtEi.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
@@ -248,6 +249,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 ._crit_edge.i:                                    ; preds = %.lr.ph.i8, %.preheader.i
   %.lcssa.i = phi i32 [ %i.r, %.preheader.i ], [ %i.y, %.lr.ph.i8 ] ; 2 uses
   store i32 %.lcssa.i, ptr %i.a, align 8, !tbaa !16
+  %.pre = load i32, ptr %i.f, align 8, !tbaa !16
   br label %_ZN6icu_789UVector3215removeElementAtEi.exit
 
 .lr.ph.i8:                                        ; preds = %.preheader.i, %.lr.ph.i8
@@ -264,6 +266,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %i.aa, label %.lr.ph.i8, label %._crit_edge.i, !llvm.loop !1
 
 _ZN6icu_789UVector3215removeElementAtEi.exit:     ; preds = %.lr.ph.i, %._crit_edge.i
+  %3 = phi i32 [ %.pre, %._crit_edge.i ], [ %2, %.lr.ph.i ]
   %i.ab = phi i32 [ %.lcssa.i, %._crit_edge.i ], [ %i.j, %.lr.ph.i ]
   %.1 = phi i8 [ 1, %._crit_edge.i ], [ %.0713, %.lr.ph.i ] ; 2 uses
   %i.ac = icmp sgt i64 %indvars.iv, 1

@@ -205,7 +205,7 @@ bb.a:
   %i.aw = icmp sgt <2 x i32> %i.w, %i.ad          ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.ba = extractelement <2 x i1> %i.aw, i64 0
   %i.bb = extractelement <2 x i1> %i.aw, i64 1
   %or.cond215 = select i1 %i.bb, i1 true, i1 %i.ba
@@ -398,10 +398,15 @@ _ZNSt3mapIN4core8vector3dIsEEP15MinimapMapblockSt4lessIS2_ESaISt4pairIKS2_S4_EEE
   %i.dx = tail call i16 @llvm.smin.i16(i16 %i.r, i16 %i.dv) ; 2 uses
   %.not58167 = icmp sgt i16 %i.dw, %i.dx
   %or.cond = select i1 %.not56170, i1 true, i1 %.not58167
-  br i1 %or.cond, label %_ZNSt3mapIN4core8vector3dIsEEP15MinimapMapblockSt4lessIS2_ESaISt4pairIKS2_S4_EEE4findERS8_.exit.thread, label %.preheader
+  br i1 %or.cond, label %_ZNSt3mapIN4core8vector3dIsEEP15MinimapMapblockSt4lessIS2_ESaISt4pairIKS2_S4_EEE4findERS8_.exit.thread, label %.preheader.preheader
 
-.preheader:                                       ; preds = %_ZNSt3mapIN4core8vector3dIsEEP15MinimapMapblockSt4lessIS2_ESaISt4pairIKS2_S4_EEE4findERS8_.exit, %._crit_edge169
-  %storemerge55171 = phi i16 [ %i.fa, %._crit_edge169 ], [ %i.cj, %_ZNSt3mapIN4core8vector3dIsEEP15MinimapMapblockSt4lessIS2_ESaISt4pairIKS2_S4_EEE4findERS8_.exit ] ; 3 uses
+.preheader.preheader:                             ; preds = %_ZNSt3mapIN4core8vector3dIsEEP15MinimapMapblockSt4lessIS2_ESaISt4pairIKS2_S4_EEE4findERS8_.exit
+  %.pre201.pre = load ptr, ptr %i.az, align 8, !tbaa !86
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge169
+  %.pre201 = phi ptr [ %.pre201202, %._crit_edge169 ], [ %.pre201.pre, %.preheader.preheader ] ; 2 uses
+  %storemerge55171 = phi i16 [ %i.fa, %._crit_edge169 ], [ %i.cj, %.preheader.preheader ] ; 3 uses
   %i.dy = sub i16 %storemerge55171, %i.ch
   %.sroa.3.0.insert.ext.i100 = zext i16 %i.dy to i48
   %.sroa.3.0.insert.shift.i101 = shl nuw i48 %.sroa.3.0.insert.ext.i100, 32
@@ -413,6 +418,8 @@ _ZNSt3mapIN4core8vector3dIsEEP15MinimapMapblockSt4lessIS2_ESaISt4pairIKS2_S4_EEE
   br label %bb.j
 
 bb.j:                                             ; preds = %.preheader, %bb.l
+  %.pre201203 = phi ptr [ %.pre201, %.preheader ], [ %.pre201202, %bb.l ]
+  %4 = phi ptr [ %.pre201, %.preheader ], [ %5, %bb.l ] ; 2 uses
   %storemerge57168 = phi i16 [ %i.dw, %.preheader ], [ %i.ez, %bb.l ] ; 3 uses
   %i.ed = sub i16 %storemerge57168, %i.du
   %i.ee = sext i16 %i.ed to i64
@@ -421,7 +428,6 @@ bb.j:                                             ; preds = %.preheader, %bb.l
   %i.eg = ashr exact i64 %sext, 29
   %i.eh = getelementptr inbounds i8, ptr %i.dt, i64 %i.eg ; 4 uses
   %i.ei = sub i16 %storemerge57168, %i.n
-  %4 = load ptr, ptr %i.az, align 8, !tbaa !86
   %i.ej = getelementptr inbounds nuw i8, ptr %4, i64 100
   %i.ek = sext i16 %i.ei to i32
   %i.el = add nsw i32 %i.ec, %i.ek
@@ -445,9 +451,12 @@ bb.k:                                             ; preds = %bb.j
   %i.ex = add i16 %i.cr, %i.ew
   %i.ey = getelementptr inbounds nuw i8, ptr %i.en, i64 4
   store i16 %i.ex, ptr %i.ey, align 4, !tbaa !101
+  %.pre = load ptr, ptr %i.az, align 8, !tbaa !86 ; 2 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
+  %.pre201202 = phi ptr [ %.pre, %bb.k ], [ %.pre201203, %bb.j ] ; 2 uses
+  %5 = phi ptr [ %.pre, %bb.k ], [ %4, %bb.j ]
   %i.ez = add i16 %storemerge57168, 1             ; 2 uses
   %.not58 = icmp sgt i16 %i.ez, %i.dx
   br i1 %.not58, label %._crit_edge169, label %bb.j, !llvm.loop !303

@@ -202,10 +202,10 @@ bb.a:
   br i1 %.not13, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %tcf_block_owner_netif_keep_dst.exit
+  %.val = phi i8 [ %.val16, %tcf_block_owner_netif_keep_dst.exit ], [ 1, %bb.a ] ; 2 uses
   %.014 = phi ptr [ %.0, %tcf_block_owner_netif_keep_dst.exit ], [ %.012, %bb.a ] ; 3 uses
   %i.c = getelementptr i8, ptr %.014, i64 24
   %i.d = load i32, ptr %i.c, align 8
-  %.val = load i8, ptr %i.a, align 8, !range !26, !noundef !27
   %i.e = trunc nuw i8 %.val to i1
   %i.f = add i32 %i.d, -3
   %i.g = icmp ult i32 %i.f, -2
@@ -221,9 +221,11 @@ bb.b:                                             ; preds = %.lr.ph
   %i.k = load i64, ptr %.val.val.i, align 64
   %i.l = and i64 %i.k, -131105
   store i64 %i.l, ptr %.val.val.i, align 64
+  %.val.pre = load i8, ptr %i.a, align 8, !range !26
   br label %tcf_block_owner_netif_keep_dst.exit
 
 tcf_block_owner_netif_keep_dst.exit:              ; preds = %.lr.ph, %bb.b
+  %.val16 = phi i8 [ %.val, %.lr.ph ], [ %.val.pre, %bb.b ]
   %.0 = load ptr, ptr %.014, align 8              ; 2 uses
   %.not = icmp eq ptr %.0, %i.b
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !70

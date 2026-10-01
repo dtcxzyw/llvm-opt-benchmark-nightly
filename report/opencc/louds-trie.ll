@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 ._crit_edge:                                      ; preds = %.preheader
   %i.q = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.lcssa, i1 true) ; 2 uses
   %i.r = sub nuw nsw i32 32, %i.q
-  %i.s = zext nneg i32 %i.r to i64                ; 2 uses
+  %i.s = zext nneg i32 %i.r to i64                ; 3 uses
   %i.t = mul i64 %i.b, %i.s
   %i.u = add i64 %i.t, 63                         ; 2 uses
   %i.v = lshr i64 %i.u, 6                         ; 5 uses
@@ -312,6 +312,7 @@ _ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit43: ; preds = %_ZN6marisa8g
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit43, %_ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit
+  %.pre60 = phi i64 [ 0, %_ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit43 ], [ %i.s, %_ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit ]
   %i.bj = load i64, ptr %i.a, align 8, !tbaa !72  ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %i.bj, ptr %i.bk, align 8, !tbaa !42
@@ -333,11 +334,11 @@ bb.d:                                             ; preds = %_ZN6marisa8grimoire
   ret void
 
 bb.e:                                             ; preds = %.lr.ph56, %_ZN6marisa8grimoire6vector10FlatVector3setEmj.exit
-  %.054.a = phi i64 [ 0, %.lr.ph56 ], [ %i.cq, %_ZN6marisa8grimoire6vector10FlatVector3setEmj.exit ] ; 3 uses
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %.054.a
+  %.054.a = phi i64 [ %.pre60, %.lr.ph56 ], [ %4, %_ZN6marisa8grimoire6vector10FlatVector3setEmj.exit ]
+  %.054 = phi i64 [ 0, %.lr.ph56 ], [ %i.cq, %_ZN6marisa8grimoire6vector10FlatVector3setEmj.exit ] ; 3 uses
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %.054
   %3 = load i32, ptr %2, align 4, !tbaa !73
-  %4 = load i64, ptr %i.bn, align 8, !tbaa !40
-  %i.bt = mul i64 %4, %.054.a                     ; 2 uses
+  %i.bt = mul i64 %.054.a, %.054                  ; 2 uses
   %i.bu = lshr i64 %i.bt, 6
   %i.bv = and i64 %i.bt, 63                       ; 4 uses
   %i.bw = shl i64 %i.bq, %i.bv
@@ -350,7 +351,7 @@ bb.e:                                             ; preds = %.lr.ph56, %_ZN6mari
   %i.cd = shl i64 %i.cc, %i.bv
   %i.ce = or i64 %i.ca, %i.cd
   store i64 %i.ce, ptr %i.by, align 8, !tbaa !54
-  %i.cf = load i64, ptr %i.bn, align 8, !tbaa !40
+  %i.cf = load i64, ptr %i.bn, align 8, !tbaa !40 ; 2 uses
   %i.cg = add i64 %i.cf, %i.bv
   %i.ch = icmp ugt i64 %i.cg, 64
   br i1 %i.ch, label %bb.f, label %_ZN6marisa8grimoire6vector10FlatVector3setEmj.exit
@@ -365,10 +366,12 @@ bb.f:                                             ; preds = %bb.e
   %i.co = lshr i64 %i.cc, %i.ci
   %i.cp = or i64 %i.cn, %i.co
   store i64 %i.cp, ptr %i.cl, align 8, !tbaa !54
+  %.pre = load i64, ptr %i.bn, align 8, !tbaa !40
   br label %_ZN6marisa8grimoire6vector10FlatVector3setEmj.exit
 
 _ZN6marisa8grimoire6vector10FlatVector3setEmj.exit: ; preds = %bb.e, %bb.f
-  %i.cq = add nuw i64 %.054.a, 1                  ; 2 uses
+  %4 = phi i64 [ %i.cf, %bb.e ], [ %.pre, %bb.f ]
+  %i.cq = add nuw i64 %.054, 1                    ; 2 uses
   %i.cr = load i64, ptr %i.a, align 8, !tbaa !72
   %i.cs = icmp ult i64 %i.cq, %i.cr
   br i1 %i.cs, label %bb.e, label %._crit_edge57, !llvm.loop !331

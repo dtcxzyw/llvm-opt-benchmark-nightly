@@ -204,6 +204,7 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %.fr36 = freeze i32 %i.b
   %i.n = icmp sgt i32 %.fr36, 5
+  %.pre41 = load ptr, ptr %i.k, align 8, !tbaa !32 ; 3 uses
   br i1 %i.n, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
@@ -213,9 +214,9 @@ bb.a:
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %tm_in_tab.exit.thread.us
   %.pre40.a = phi ptr [ %.pre4043, %tm_in_tab.exit.thread.us ], [ %.pre40.pre, %.lr.ph.split.us.preheader ] ; 4 uses
   %i.o = phi ptr [ %i.af, %tm_in_tab.exit.thread.us ], [ %i.g, %.lr.ph.split.us.preheader ] ; 2 uses
+  %3 = phi ptr [ %4, %tm_in_tab.exit.thread.us ], [ %.pre41, %.lr.ph.split.us.preheader ] ; 4 uses
   %.027.us = phi i32 [ %.1.us, %tm_in_tab.exit.thread.us ], [ 0, %.lr.ph.split.us.preheader ] ; 5 uses
   %.02026.us = phi i64 [ %i.ag, %tm_in_tab.exit.thread.us ], [ 0, %.lr.ph.split.us.preheader ] ; 5 uses
-  %3 = load ptr, ptr %i.k, align 8, !tbaa !32     ; 2 uses
   %.not.us = icmp eq ptr %3, null
   br i1 %.not.us, label %.lr.ph.split.us.tm_in_tab.exit.us_crit_edge, label %bb.b
 
@@ -261,12 +262,14 @@ tm_in_tab.exit.us:                                ; preds = %.lr.ph.i.us, %.lr.p
   br i1 %i.ae, label %._crit_edge, label %tm_in_tab.exit.us.tm_in_tab.exit.thread.us_crit_edge
 
 tm_in_tab.exit.us.tm_in_tab.exit.thread.us_crit_edge: ; preds = %tm_in_tab.exit.us
+  %.pre40 = load ptr, ptr %i.k, align 8, !tbaa !32
   %.pre42 = load ptr, ptr %i.e, align 8, !tbaa !70
   br label %tm_in_tab.exit.thread.us
 
 tm_in_tab.exit.thread.us:                         ; preds = %bb.c, %tm_in_tab.exit.us.tm_in_tab.exit.thread.us_crit_edge, %bb.b
   %.pre4043 = phi ptr [ %i.y, %tm_in_tab.exit.us.tm_in_tab.exit.thread.us_crit_edge ], [ %.pre40.a, %bb.b ], [ %.pre40.a, %bb.c ]
   %i.af = phi ptr [ %.pre42, %tm_in_tab.exit.us.tm_in_tab.exit.thread.us_crit_edge ], [ %i.o, %bb.b ], [ %i.o, %bb.c ] ; 2 uses
+  %4 = phi ptr [ %.pre40, %tm_in_tab.exit.us.tm_in_tab.exit.thread.us_crit_edge ], [ %3, %bb.b ], [ %3, %bb.c ]
   %.1.us = phi i32 [ %i.ab, %tm_in_tab.exit.us.tm_in_tab.exit.thread.us_crit_edge ], [ %.027.us, %bb.b ], [ %.027.us, %bb.c ]
   %i.ag = add nuw i64 %.02026.us, 1               ; 2 uses
   %i.ah = getelementptr [8 x i8], ptr %i.af, i64 %i.f
@@ -276,8 +279,7 @@ tm_in_tab.exit.thread.us:                         ; preds = %bb.c, %tm_in_tab.ex
   br i1 %i.ak, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !66
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  %4 = load ptr, ptr %i.k, align 8, !tbaa !32     ; 2 uses
-  %i.al = icmp eq ptr %4, null
+  %i.al = icmp eq ptr %.pre41, null
   %i.am = load ptr, ptr %i.m, align 8, !tbaa !39  ; 4 uses
   br i1 %i.al, label %.lr.ph.split.split.us, label %.lr.ph.split.split.preheader
 
@@ -352,7 +354,7 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.d ] ; 2 uses
-  %i.bj = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.i
+  %i.bj = getelementptr inbounds nuw [4 x i8], ptr %.pre41, i64 %indvars.iv.i
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !21
   %i.bl = icmp eq i32 %i.bk, %i.bh
   br i1 %i.bl, label %tm_in_tab.exit, label %bb.d

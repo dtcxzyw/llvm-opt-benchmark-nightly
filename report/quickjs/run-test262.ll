@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l, %.critedge38
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden range(i32 0, -2147483648) i32 @longest_match(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3, i32 noundef %4, ptr nofree noundef writeonly captures(address_is_null) %5) local_unnamed_addr #29 {
 bb.a:
-  %i.a = load i8, ptr %1, align 1, !tbaa !27      ; 2 uses
+  %i.a = load i8, ptr %1, align 1, !tbaa !27      ; 3 uses
   %.not = icmp eq i8 %i.a, 0
   br i1 %.not, label %.loopexit, label %bb.b
 
@@ -277,12 +277,12 @@ bb.d:                                             ; preds = %.critedge.us.us
   br i1 %.not36.us.us, label %.loopexit, label %.lr.ph51.split.us.split.us, !llvm.loop !9
 
 .lr.ph51.split.us.split:                          ; preds = %.lr.ph51.split.us, %bb.g
-  %i.v = phi i8 [ %i.am, %bb.g ], [ %i.d, %.lr.ph51.split.us ] ; 3 uses
+  %i.v = phi i8 [ %i.ai, %bb.g ], [ %i.a, %.lr.ph51.split.us ] ; 4 uses
+  %6 = phi i8 [ %i.am, %bb.g ], [ %i.d, %.lr.ph51.split.us ] ; 2 uses
   %.050.us = phi ptr [ %i.al, %bb.g ], [ %i.c, %.lr.ph51.split.us ] ; 4 uses
-  %.02849.us = phi i32 [ %.1.us, %bb.g ], [ 0, %.lr.ph51.split.us ] ; 3 uses
-  %.03048.us.a = phi i32 [ %spec.select.us, %bb.g ], [ %4, %.lr.ph51.split.us ] ; 2 uses
-  %6 = load i8, ptr %1, align 1, !tbaa !27
-  %i.w = icmp eq i8 %i.v, %6
+  %.03048.us.a = phi i32 [ %.1.us, %bb.g ], [ 0, %.lr.ph51.split.us ] ; 3 uses
+  %.03048.us = phi i32 [ %spec.select.us, %bb.g ], [ %4, %.lr.ph51.split.us ] ; 2 uses
+  %i.w = icmp eq i8 %6, %i.v
   br i1 %i.w, label %.preheader.us, label %bb.g
 
 .lr.ph.us:                                        ; preds = %.preheader.us, %bb.e
@@ -309,26 +309,28 @@ bb.e:                                             ; preds = %.lr.ph.us
 .critedge.us:                                     ; preds = %bb.e, %.critedge.us.loopexit.split.loop.exit131, %.preheader.us
   %.029.lcssa.us = phi i32 [ 1, %.preheader.us ], [ %i.ae, %.critedge.us.loopexit.split.loop.exit131 ], [ %i.ab, %bb.e ] ; 3 uses
   %.lcssa.us = phi i64 [ 1, %.preheader.us ], [ %indvars.iv91, %.critedge.us.loopexit.split.loop.exit131 ], [ %indvars.iv.next92, %bb.e ]
-  %i.af = icmp sgt i32 %.029.lcssa.us, %.02849.us
+  %i.af = icmp sgt i32 %.029.lcssa.us, %.03048.us.a
   br i1 %i.af, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.critedge.us
-  store i32 %.03048.us.a, ptr %5, align 4, !tbaa !41
+  store i32 %.03048.us, ptr %5, align 4, !tbaa !41
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 %.lcssa.us
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !27
   %.not40.us = icmp eq i8 %i.ah, 0
   br i1 %.not40.us, label %.loopexit, label %._crit_edge95
 
 ._crit_edge95:                                    ; preds = %bb.f
+  %.pre95 = load i8, ptr %1, align 1, !tbaa !27
   %.pre96 = load i8, ptr %.050.us, align 1, !tbaa !27
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge95, %.critedge.us, %.lr.ph51.split.us.split
-  %i.ai = phi i8 [ %.pre96, %._crit_edge95 ], [ %i.v, %.critedge.us ], [ %i.v, %.lr.ph51.split.us.split ]
-  %.1.us = phi i32 [ %.029.lcssa.us, %._crit_edge95 ], [ %.02849.us, %.critedge.us ], [ %.02849.us, %.lr.ph51.split.us.split ] ; 2 uses
-  %i.aj = icmp eq i8 %i.ai, 10
+  %7 = phi i8 [ %.pre96, %._crit_edge95 ], [ %i.v, %.critedge.us ], [ %6, %.lr.ph51.split.us.split ]
+  %i.ai = phi i8 [ %.pre95, %._crit_edge95 ], [ %i.v, %.critedge.us ], [ %i.v, %.lr.ph51.split.us.split ]
+  %.1.us = phi i32 [ %.029.lcssa.us, %._crit_edge95 ], [ %.03048.us.a, %.critedge.us ], [ %.03048.us.a, %.lr.ph51.split.us.split ] ; 2 uses
+  %i.aj = icmp eq i8 %7, 10
   %i.ak = zext i1 %i.aj to i32
-  %spec.select.us = add nsw i32 %.03048.us.a, %i.ak
+  %spec.select.us = add nsw i32 %.03048.us, %i.ak
   %i.al = getelementptr inbounds nuw i8, ptr %.050.us, i64 1 ; 2 uses
   %i.am = load i8, ptr %i.al, align 1, !tbaa !27  ; 2 uses
   %.not36.us = icmp eq i8 %i.am, 0

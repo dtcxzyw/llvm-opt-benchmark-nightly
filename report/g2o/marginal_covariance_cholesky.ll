@@ -204,22 +204,23 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.k
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %.pre20.i = load i32, ptr %i.e, align 4, !tbaa !60
   %scevgep = getelementptr i8, ptr %0, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.h, %.lr.ph.i
+  %2 = phi i32 [ %.pre20.i, %.lr.ph.i ], [ %5, %bb.h ] ; 2 uses
   %.sroa.0.019.i.idx = phi i64 [ 8, %.lr.ph.i ], [ %.sroa.0.019.i.add, %bb.h ] ; 4 uses
   %.pn18.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.019.i.ptr, %bb.h ] ; 2 uses
   %.sroa.0.019.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.019.i.idx ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 12
-  %2 = load i32, ptr %i.f, align 4, !tbaa !60     ; 2 uses
-  %i.g = load i32, ptr %i.e, align 4, !tbaa !60   ; 2 uses
-  %i.h = icmp sgt i32 %2, %i.g
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !60   ; 2 uses
+  %i.h = icmp sgt i32 %i.g, %2
   br i1 %i.h, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp eq i32 %2, %i.g
+  %i.i = icmp eq i32 %i.g, %2
   br i1 %i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread15.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i: ; preds = %bb.c
@@ -229,7 +230,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixEle
   br i1 %i.l, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread15.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i, %bb.b
-  %i.m = load i64, ptr %.sroa.0.019.i.ptr, align 4, !tbaa !47
+  %i.m = load i64, ptr %.sroa.0.019.i.ptr, align 4, !tbaa !47 ; 2 uses
   %i.n = icmp samesign ugt i64 %.sroa.0.019.i.idx, 8
   br i1 %i.n, label %bb.d, label %bb.e, !prof !98
 
@@ -245,6 +246,8 @@ bb.e:                                             ; preds = %_ZNK9__gnu_cxx5__op
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i: ; preds = %bb.e, %bb.d
   store i64 %i.m, ptr %0, align 4, !tbaa !47
+  %3 = lshr i64 %i.m, 32
+  %4 = trunc nuw i64 %3 to i32
   br label %bb.h
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread15.i: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i, %bb.c
@@ -278,9 +281,11 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclIN3g2o10MatrixElemENS_17__normal_iteratorI
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN3g2o10MatrixElemENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.i.i, %bb.g
   store i64 %i.q, ptr %.sroa.05.0.i.i, align 4, !tbaa !47
+  %.pre.i = load i32, ptr %i.e, align 4, !tbaa !60
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i
+  %5 = phi i32 [ %4, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i ], [ %.pre.i, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i ]
   %.sroa.0.019.i.add = add nuw nsw i64 %.sroa.0.019.i.idx, 8 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.019.i.add, 128
   br i1 %.not.i, label %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_.exit, label %bb.b, !llvm.loop !169
@@ -336,38 +341,39 @@ bb.k:                                             ; preds = %bb.a
   br i1 %.not17.i18, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_.exit, label %.lr.ph.i19
 
 .lr.ph.i19:                                       ; preds = %.preheader.i16
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %.pre20.i20 = load i32, ptr %i.aj, align 4, !tbaa !60
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.s, %.lr.ph.i19
-  %.sroa.0.019.i20 = phi ptr [ %.sroa.0.016.i17, %.lr.ph.i19 ], [ %.sroa.0.0.i29, %bb.s ] ; 7 uses
-  %.pn18.i21 = phi ptr [ %0, %.lr.ph.i19 ], [ %.sroa.0.019.i20, %bb.s ] ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.pn18.i21, i64 12
-  %4 = load i32, ptr %3, align 4, !tbaa !60       ; 2 uses
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !60 ; 2 uses
-  %i.al = icmp sgt i32 %4, %i.ak
+  %6 = phi i32 [ %.pre20.i20, %.lr.ph.i19 ], [ %10, %bb.s ] ; 2 uses
+  %.pn18.i21 = phi ptr [ %.sroa.0.016.i17, %.lr.ph.i19 ], [ %.sroa.0.0.i29, %bb.s ] ; 7 uses
+  %.pn18.i22 = phi ptr [ %0, %.lr.ph.i19 ], [ %.pn18.i21, %bb.s ] ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.pn18.i22, i64 12
+  %i.ak = load i32, ptr %7, align 4, !tbaa !60    ; 2 uses
+  %i.al = icmp sgt i32 %i.ak, %6
   br i1 %i.al, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i34, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.am = icmp eq i32 %4, %i.ak
+  %i.am = icmp eq i32 %i.ak, %6
   br i1 %i.am, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i33, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread15.i22
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i33: ; preds = %bb.m
-  %i.an = load i32, ptr %.sroa.0.019.i20, align 4, !tbaa !59
+  %i.an = load i32, ptr %.pn18.i21, align 4, !tbaa !59
   %i.ao = load i32, ptr %0, align 4, !tbaa !59
   %i.ap = icmp sgt i32 %i.an, %i.ao
   br i1 %i.ap, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i34, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread15.i22
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i34: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i33, %bb.l
-  %i.aq = load i64, ptr %.sroa.0.019.i20, align 4, !tbaa !47
-  %i.ar = ptrtoint ptr %.sroa.0.019.i20 to i64
+  %i.aq = load i64, ptr %.pn18.i21, align 4, !tbaa !47 ; 2 uses
+  %i.ar = ptrtoint ptr %.pn18.i21 to i64
   %i.as = sub i64 %i.ar, %i.b                     ; 3 uses
   %i.at = ashr exact i64 %i.as, 3                 ; 2 uses
   %i.au = icmp sgt i64 %i.at, 1
   br i1 %i.au, label %bb.n, label %bb.o, !prof !98
 
 bb.n:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i34
-  %i.av = getelementptr inbounds nuw i8, ptr %.pn18.i21, i64 16
+  %i.av = getelementptr inbounds nuw i8, ptr %.pn18.i22, i64 16
   %i.aw = sub nsw i64 0, %i.at
   %i.ax = getelementptr inbounds [8 x i8], ptr %i.av, i64 %i.aw
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ax, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.as, i1 false)
@@ -378,24 +384,26 @@ bb.o:                                             ; preds = %_ZNK9__gnu_cxx5__op
   br i1 %i.ay, label %bb.p, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i35
 
 bb.p:                                             ; preds = %bb.o
-  %i.az = getelementptr inbounds nuw i8, ptr %.pn18.i21, i64 8
+  %i.az = getelementptr inbounds nuw i8, ptr %.pn18.i22, i64 8
   %i.ba = load i64, ptr %0, align 4, !tbaa !47
   store i64 %i.ba, ptr %i.az, align 4, !tbaa !47
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i35
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i35: ; preds = %bb.p, %bb.o, %bb.n
   store i64 %i.aq, ptr %0, align 4, !tbaa !47
+  %8 = lshr i64 %i.aq, 32
+  %9 = trunc nuw i64 %8 to i32
   br label %bb.s
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread15.i22: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i33, %bb.m
-  %i.bb = load i64, ptr %.sroa.0.019.i20, align 4, !tbaa !47 ; 3 uses
+  %i.bb = load i64, ptr %.pn18.i21, align 4, !tbaa !47 ; 3 uses
   %.sroa.03.0.extract.trunc.i.i23 = trunc i64 %i.bb to i32
   %.sroa.5.0.extract.shift.i.i24 = lshr i64 %i.bb, 32
   %.sroa.5.0.extract.trunc.i.i25 = trunc nuw i64 %.sroa.5.0.extract.shift.i.i24 to i32 ; 2 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN3g2o10MatrixElemENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.thread.i.i32, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread15.i22
-  %.sroa.05.0.i.i26 = phi ptr [ %.sroa.0.019.i20, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread15.i22 ], [ %.sroa.0.0.i.i27, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN3g2o10MatrixElemENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.thread.i.i32 ] ; 4 uses
+  %.sroa.05.0.i.i26 = phi ptr [ %.pn18.i21, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread15.i22 ], [ %.sroa.0.0.i.i27, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN3g2o10MatrixElemENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.thread.i.i32 ] ; 4 uses
   %.sroa.0.0.i.i27 = getelementptr inbounds i8, ptr %.sroa.05.0.i.i26, i64 -8 ; 3 uses
   %i.bc = getelementptr inbounds i8, ptr %.sroa.05.0.i.i26, i64 -4
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !60 ; 2 uses
@@ -418,10 +426,12 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclIN3g2o10MatrixElemENS_17__normal_iteratorI
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i28: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN3g2o10MatrixElemENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.i.i31, %bb.r
   store i64 %i.bb, ptr %.sroa.05.0.i.i26, align 4, !tbaa !47
+  %.pre.i30 = load i32, ptr %i.aj, align 4, !tbaa !60
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i28, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i35
-  %.sroa.0.0.i29 = getelementptr inbounds nuw i8, ptr %.sroa.0.019.i20, i64 8 ; 2 uses
+  %10 = phi i32 [ %9, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i35 ], [ %.pre.i30, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i28 ]
+  %.sroa.0.0.i29 = getelementptr inbounds nuw i8, ptr %.pn18.i21, i64 8 ; 2 uses
   %.not.i30 = icmp eq ptr %.sroa.0.0.i29, %1
   br i1 %.not.i30, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_.exit, label %bb.l, !llvm.loop !169
 

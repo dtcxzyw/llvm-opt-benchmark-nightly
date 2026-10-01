@@ -204,8 +204,9 @@ bb.bf:                                            ; preds = %bb.bd
   %.sroa.6.0.i.ph = phi ptr [ %.sroa.0.0.copyload.i.i.i.i.i.i, %bb.be ], [ %.sroa.0.0.copyload.i.i.i, %bb.bf ], [ %i.cz, %.lr.ph.i.i ]
   %.sroa.0.0.i.ph = phi ptr [ @_ZN4absl12lts_2026052618container_internal11kSooControlE, %bb.be ], [ %.sroa.0.0.copyload.i.i.i.i, %bb.bf ], [ %i.cy, %.lr.ph.i.i ]
   %i.dc = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 4 uses
-  %i.dd = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 3 uses
-  %.pre.a = load ptr, ptr %i.dc, align 8, !tbaa !75
+  %i.dd = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 4 uses
+  %.pre = load ptr, ptr %i.dc, align 8, !tbaa !75
+  %.pre.a = load ptr, ptr %i.dd, align 8, !tbaa !76
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iteratorppEv.exit
 
 ._crit_edge:                                      ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i, %bb.bc
@@ -224,20 +225,21 @@ bb.bh:                                            ; preds = %_ZN7testing15Assert
   br label %bb.cv
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iteratorppEv.exit: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i, %.lr.ph
-  %i.df = phi ptr [ %.pre.a, %.lr.ph ], [ %i.ec, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i ] ; 5 uses
-  %.sroa.9211.0249.a = phi ptr [ %.sroa.6.0.i.ph, %.lr.ph ], [ %.sroa.9211.1, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i ] ; 3 uses
-  %.sroa.0209.0248.a = phi ptr [ %.sroa.0.0.i.ph, %.lr.ph ], [ %.sroa.0209.1, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i ]
+  %i.df = phi ptr [ %.pre.a, %.lr.ph ], [ %26, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i ] ; 4 uses
+  %.sroa.9211.0249.a = phi ptr [ %.pre, %.lr.ph ], [ %i.ec, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i ] ; 2 uses
+  %.sroa.0209.0248.a = phi ptr [ %.sroa.6.0.i.ph, %.lr.ph ], [ %.sroa.9211.1, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i ] ; 3 uses
+  %.sroa.0209.0248 = phi ptr [ %.sroa.0.0.i.ph, %.lr.ph ], [ %.sroa.0209.1, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %19)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %19, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9211.0249.a, i64 24, i1 false)
-  %26 = load ptr, ptr %i.dd, align 8, !tbaa !76
-  %.not.i108 = icmp eq ptr %i.df, %26
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %19, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0209.0248.a, i64 24, i1 false)
+  %.not.i108 = icmp eq ptr %.sroa.9211.0249.a, %i.df
   br i1 %.not.i108, label %bb.bj, label %bb.bi
 
 bb.bi:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iteratorppEv.exit
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.df, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9211.0249.a, i64 16, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9211.0249.a, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0209.0248.a, i64 16, i1 false)
   %i.dg = load ptr, ptr %i.dc, align 8, !tbaa !75
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 16 ; 2 uses
   store ptr %i.dh, ptr %i.dc, align 8, !tbaa !75
+  %.pre278 = load ptr, ptr %i.dd, align 8, !tbaa !76
   br label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE9push_backERKS3_.exit
 
 bb.bj:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iteratorppEv.exit
@@ -299,15 +301,16 @@ bb.bl:                                            ; preds = %_ZNSt6vectorISt17ba
 _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.bl, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i
   store ptr %i.dt, ptr %17, align 8, !tbaa !77
   store ptr %i.dx, ptr %i.dc, align 8, !tbaa !75
-  %i.eb = getelementptr inbounds nuw [16 x i8], ptr %i.dt, i64 %i.dr
+  %i.eb = getelementptr inbounds nuw [16 x i8], ptr %i.dt, i64 %i.dr ; 2 uses
   store ptr %i.eb, ptr %i.dd, align 8, !tbaa !76
   br label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE9push_backERKS3_.exit
 
 _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE9push_backERKS3_.exit: ; preds = %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, %bb.bi
+  %26 = phi ptr [ %i.eb, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %.pre278, %bb.bi ]
   %i.ec = phi ptr [ %i.dx, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.dh, %bb.bi ]
   call void @llvm.lifetime.end.p0(ptr nonnull %19)
-  %i.ed = getelementptr inbounds nuw i8, ptr %.sroa.0209.0248.a, i64 1 ; 3 uses
-  %i.ee = getelementptr inbounds nuw i8, ptr %.sroa.9211.0249.a, i64 24 ; 2 uses
+  %i.ed = getelementptr inbounds nuw i8, ptr %.sroa.0209.0248, i64 1 ; 3 uses
+  %i.ee = getelementptr inbounds nuw i8, ptr %.sroa.0209.0248.a, i64 24 ; 2 uses
   %i.ef = load i8, ptr %i.ed, align 1, !tbaa !228 ; 2 uses
   %i.eg = icmp slt i8 %i.ef, -1
   br i1 %i.eg, label %.lr.ph.i.i111, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE8iterator21skip_empty_or_deletedEv.exit.i

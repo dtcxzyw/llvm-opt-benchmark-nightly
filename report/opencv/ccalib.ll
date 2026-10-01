@@ -204,7 +204,8 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %.not305, label %._crit_edge299.thread, label %.lr.ph298
 
 .lr.ph298:                                        ; preds = %.preheader287
-  %i.he = getelementptr inbounds nuw i8, ptr %22, i64 24
+  %i.he = getelementptr inbounds nuw i8, ptr %22, i64 24 ; 2 uses
+  %.pre319 = load ptr, ptr %i.he, align 8, !tbaa !110
   br label %bb.ar
 
 bb.aj:                                            ; preds = %bb.ac
@@ -256,10 +257,10 @@ bb.aq:                                            ; preds = %bb.ah
 bb.ar:                                            ; preds = %.lr.ph298, %bb.at
   %i.hl = phi ptr [ %i.hd, %.lr.ph298 ], [ %i.if, %bb.at ] ; 2 uses
   %i.hm = phi ptr [ %i.hc, %.lr.ph298 ], [ %i.ig, %bb.at ] ; 2 uses
-  %49 = phi i64 [ 0, %.lr.ph298 ], [ %i.ii, %bb.at ]
+  %49 = phi ptr [ %.pre319, %.lr.ph298 ], [ %51, %bb.at ] ; 2 uses
+  %50 = phi i64 [ 0, %.lr.ph298 ], [ %i.ii, %bb.at ]
   %.0122297 = phi i32 [ 0, %.lr.ph298 ], [ %i.ih, %bb.at ] ; 2 uses
-  %50 = load ptr, ptr %i.he, align 8, !tbaa !110
-  %i.hn = getelementptr inbounds nuw i8, ptr %50, i64 %49
+  %i.hn = getelementptr inbounds nuw i8, ptr %49, i64 %50
   %i.ho = load i8, ptr %i.hn, align 1, !tbaa !60
   %.not = icmp eq i8 %i.ho, 0
   br i1 %.not, label %bb.as, label %bb.at
@@ -287,6 +288,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.id = load ptr, ptr %i.h, align 8, !tbaa !90
   %i.ie = getelementptr inbounds i8, ptr %i.id, i64 -12
   store ptr %i.ie, ptr %i.h, align 8, !tbaa !90
+  %.pre318 = load ptr, ptr %i.he, align 8, !tbaa !110
   %.pre318.a = load ptr, ptr %i.bf, align 8, !tbaa !103
   %.pre319.a = load ptr, ptr %20, align 8, !tbaa !101
   br label %bb.at
@@ -294,6 +296,7 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.ar, %bb.as
   %i.if = phi ptr [ %i.hl, %bb.ar ], [ %.pre319.a, %bb.as ] ; 3 uses
   %i.ig = phi ptr [ %i.hm, %bb.ar ], [ %.pre318.a, %bb.as ] ; 3 uses
+  %51 = phi ptr [ %49, %bb.ar ], [ %.pre318, %bb.as ]
   %i.ih = add i32 %.0122297, 1                    ; 2 uses
   %i.ii = zext i32 %i.ih to i64                   ; 2 uses
   %i.ij = ptrtoint ptr %i.ig to i64

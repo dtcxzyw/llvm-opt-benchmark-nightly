@@ -202,7 +202,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not183, label %.loopexit.sink.split, label %.thread216
 
 .thread216:                                       ; preds = %bb.y, %.loopexit227
-  %i.cc = phi ptr [ %i.bu, %.loopexit227 ], [ %i.bm, %bb.y ]
+  %i.cc = phi ptr [ %i.bu, %.loopexit227 ], [ %i.bm, %bb.y ] ; 2 uses
   %i.cd = phi ptr [ %.pr, %.loopexit227 ], [ %i.bl, %bb.y ]
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.cf = load i8, ptr %i.ce, align 4, !range !8, !noundef !9
@@ -221,8 +221,8 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %.lr.ph232, %bb.ag
   %i.ck = phi i16 [ %i.ci, %.lr.ph232 ], [ %i.ct, %bb.ag ]
+  %2 = phi ptr [ %i.cc, %.lr.ph232 ], [ %3, %bb.ag ] ; 2 uses
   %indvars.iv236 = phi i64 [ 0, %.lr.ph232 ], [ %indvars.iv.next237, %bb.ag ] ; 3 uses
-  %2 = load ptr, ptr %1, align 8
   %i.cl = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv236
   %i.cm = load i8, ptr %i.cl, align 1, !range !8, !noundef !9
   %i.cn = trunc nuw i8 %i.cm to i1
@@ -236,11 +236,13 @@ bb.af:                                            ; preds = %bb.ae
   %i.cs = sub i64 %i.cr, %i.cq
   store i64 %i.cs, ptr %i.cj, align 8
   store i64 0, ptr %i.cp, align 8
+  %.pre = load ptr, ptr %1, align 8
   %.pre.a = load i16, ptr %i.ch, align 8
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ae, %bb.af
   %i.ct = phi i16 [ %i.ck, %bb.ae ], [ %.pre.a, %bb.af ] ; 2 uses
+  %3 = phi ptr [ %2, %bb.ae ], [ %.pre, %bb.af ]
   %indvars.iv.next237 = add nuw nsw i64 %indvars.iv236, 1 ; 2 uses
   %i.cu = zext i16 %i.ct to i64
   %i.cv = icmp samesign ult i64 %indvars.iv.next237, %i.cu

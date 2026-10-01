@@ -204,7 +204,11 @@ bb.au:                                            ; preds = %bb.ao
   %.not255288 = icmp eq ptr %i.gl, null
   %i.gm = insertelement <2 x ptr> poison, ptr %i.fr, i64 0
   %i.gn = insertelement <2 x ptr> %i.gm, ptr %.0.i.i.i.i.i.i.i, i64 1
-  br i1 %.not255288, label %._crit_edge292, label %.lr.ph291
+  br i1 %.not255288, label %._crit_edge292, label %.lr.ph291.preheader
+
+.lr.ph291.preheader:                              ; preds = %bb.au
+  %.pre313 = load ptr, ptr %1, align 8, !tbaa !316
+  br label %.lr.ph291
 
 ._crit_edge292.loopexit:                          ; preds = %bb.aw
   %i.go = load <2 x ptr>, ptr %8, align 16, !tbaa !403
@@ -220,12 +224,12 @@ bb.au:                                            ; preds = %bb.ao
   store ptr %i.gp, ptr %i.gr, align 8, !tbaa !281
   br label %_ZNSt6vectorIaSaIaEED2Ev.exit
 
-.lr.ph291:                                        ; preds = %bb.au, %bb.aw
-  %.sroa.0207.0289.a = phi ptr [ %i.hb, %bb.aw ], [ %i.gl, %bb.au ] ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.0207.0289.a, i64 8
+.lr.ph291:                                        ; preds = %.lr.ph291.preheader, %bb.aw
+  %.sroa.0207.0289.a = phi ptr [ %15, %bb.aw ], [ %.pre313, %.lr.ph291.preheader ] ; 2 uses
+  %.sroa.0207.0289 = phi ptr [ %i.hb, %bb.aw ], [ %i.gl, %.lr.ph291.preheader ] ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.0207.0289, i64 8
   %14 = load i32, ptr %13, align 4, !tbaa !203
-  %15 = load ptr, ptr %1, align 8, !tbaa !316
-  %i.gs = getelementptr inbounds nuw i8, ptr %15, i64 56
+  %i.gs = getelementptr inbounds nuw i8, ptr %.sroa.0207.0289.a, i64 56
   %i.gt = sext i32 %14 to i64
   %i.gu = load ptr, ptr %i.gs, align 8, !tbaa !178
   %i.gv = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %i.gt
@@ -238,10 +242,12 @@ bb.av:                                            ; preds = %.lr.ph291
   %i.gz = load ptr, ptr %8, align 16, !tbaa !225
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 %i.gy
   store i8 1, ptr %i.ha, align 1, !tbaa !226
+  %.pre = load ptr, ptr %1, align 8, !tbaa !316
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %.lr.ph291
-  %i.hb = load ptr, ptr %.sroa.0207.0289.a, align 8, !tbaa !311 ; 2 uses
+  %15 = phi ptr [ %.pre, %bb.av ], [ %.sroa.0207.0289.a, %.lr.ph291 ]
+  %i.hb = load ptr, ptr %.sroa.0207.0289, align 8, !tbaa !311 ; 2 uses
   %.not255 = icmp eq ptr %i.hb, null
   br i1 %.not255, label %._crit_edge292.loopexit, label %.lr.ph291
 

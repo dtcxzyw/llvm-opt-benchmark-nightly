@@ -205,6 +205,7 @@ bb.cj:                                            ; preds = %bb.cf
   br i1 %.not443, label %get_sample.exit.i.preheader, label %trns_row.exit
 
 get_sample.exit.i.preheader:                      ; preds = %bb.cj
+  %.pre147.i = load i8, ptr %i.l, align 8, !tbaa !51 ; 2 uses
   %xtraiter798 = and i32 %i.ae, 1
   %i.vp = icmp eq i32 %i.ae, 1
   br i1 %i.vp, label %get_sample.exit.i.epil.preheader, label %get_sample.exit.i.preheader.new
@@ -214,11 +215,11 @@ get_sample.exit.i.preheader.new:                  ; preds = %get_sample.exit.i.p
   br label %get_sample.exit.i
 
 get_sample.exit.i:                                ; preds = %bb.cm, %get_sample.exit.i.preheader.new
+  %3 = phi i8 [ %.pre147.i, %get_sample.exit.i.preheader.new ], [ %5, %bb.cm ] ; 2 uses
   %.372116.i = phi ptr [ %1, %get_sample.exit.i.preheader.new ], [ %i.wi, %bb.cm ] ; 3 uses
   %.sroa.592.0115.i = phi i32 [ %i.vo, %get_sample.exit.i.preheader.new ], [ %spec.select96.i.1, %bb.cm ] ; 2 uses
   %.sroa.1395.0114.i = phi ptr [ %i.jy, %get_sample.exit.i.preheader.new ], [ %spec.select.i.1, %bb.cm ] ; 2 uses
   %niter802 = phi i32 [ 0, %get_sample.exit.i.preheader.new ], [ %niter802.next.1, %bb.cm ]
-  %3 = load i8, ptr %i.l, align 8, !tbaa !51
   %i.vq = load i8, ptr %.sroa.1395.0114.i, align 1, !tbaa !51
   %i.vr = sub i32 %.sroa.592.0115.i, %i.um        ; 2 uses
   %i.vs = icmp ugt i32 %i.vr, 7                   ; 2 uses
@@ -235,10 +236,11 @@ get_sample.exit.i:                                ; preds = %bb.cm, %get_sample.
 bb.ck:                                            ; preds = %get_sample.exit.i
   %i.vy = getelementptr inbounds nuw i8, ptr %.372116.i, i64 1
   store i8 0, ptr %i.vy, align 1, !tbaa !51
+  %.pre146.i = load i8, ptr %i.l, align 8, !tbaa !51
   br label %get_sample.exit.i.1
 
 get_sample.exit.i.1:                              ; preds = %bb.ck, %get_sample.exit.i
-  %4 = load i8, ptr %i.l, align 8, !tbaa !51
+  %4 = phi i8 [ %3, %get_sample.exit.i ], [ %.pre146.i, %bb.ck ] ; 2 uses
   %i.vz = load i8, ptr %spec.select.i, align 1, !tbaa !51
   %i.wa = sub i32 %spec.select96.i, %i.um         ; 2 uses
   %i.wb = icmp ugt i32 %i.wa, 7                   ; 2 uses
@@ -255,9 +257,11 @@ get_sample.exit.i.1:                              ; preds = %bb.ck, %get_sample.
 bb.cl:                                            ; preds = %get_sample.exit.i.1
   %i.wh = getelementptr inbounds nuw i8, ptr %.372116.i, i64 3
   store i8 0, ptr %i.wh, align 1, !tbaa !51
+  %.pre146.i.1 = load i8, ptr %i.l, align 8, !tbaa !51
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl, %get_sample.exit.i.1
+  %5 = phi i8 [ %4, %get_sample.exit.i.1 ], [ %.pre146.i.1, %bb.cl ] ; 2 uses
   %i.wi = getelementptr inbounds nuw i8, ptr %.372116.i, i64 4 ; 2 uses
   %niter802.next.1 = add nuw i32 %niter802, 2     ; 2 uses
   %niter802.ncmp.1 = icmp eq i32 %niter802.next.1, %unroll_iter801
@@ -305,6 +309,7 @@ bb.cr:                                            ; preds = %bb.cn
   br i1 %.not443, label %get_sample.exit89.i.preheader, label %trns_row.exit
 
 get_sample.exit89.i.preheader:                    ; preds = %bb.cr
+  %.pre145.i = load i8, ptr %i.l, align 8, !tbaa !51 ; 2 uses
   %xtraiter793 = and i32 %i.ae, 1
   %i.ww = icmp eq i32 %i.ae, 1
   br i1 %i.ww, label %get_sample.exit89.i.epil.preheader, label %get_sample.exit89.i.preheader.new
@@ -314,11 +319,11 @@ get_sample.exit89.i.preheader.new:                ; preds = %get_sample.exit89.i
   br label %get_sample.exit89.i
 
 get_sample.exit89.i:                              ; preds = %bb.cu, %get_sample.exit89.i.preheader.new
+  %6 = phi i8 [ %.pre145.i, %get_sample.exit89.i.preheader.new ], [ %8, %bb.cu ] ; 2 uses
   %.574109.i = phi ptr [ %1, %get_sample.exit89.i.preheader.new ], [ %i.xp, %bb.cu ] ; 3 uses
   %.sroa.5.0108.i = phi i32 [ %i.wv, %get_sample.exit89.i.preheader.new ], [ %spec.select98.i.1, %bb.cu ] ; 2 uses
   %.sroa.13.0107.i = phi ptr [ %i.jy, %get_sample.exit89.i.preheader.new ], [ %spec.select97.i.1, %bb.cu ] ; 2 uses
   %niter797 = phi i32 [ 0, %get_sample.exit89.i.preheader.new ], [ %niter797.next.1, %bb.cu ]
-  %5 = load i8, ptr %i.l, align 8, !tbaa !51
   %i.wx = load i8, ptr %.sroa.13.0107.i, align 1, !tbaa !51
   %i.wy = sub i32 %.sroa.5.0108.i, %i.um          ; 2 uses
   %i.wz = icmp ugt i32 %i.wy, 7                   ; 2 uses
@@ -329,16 +334,17 @@ get_sample.exit89.i:                              ; preds = %bb.cu, %get_sample.
   %i.xb = lshr i32 %i.xa, %.sroa.5.0108.i
   %i.xc = trunc nuw i32 %i.xb to i8
   %i.xd = and i8 %i.xc, %i.wu
-  %i.xe = icmp eq i8 %5, %i.xd
+  %i.xe = icmp eq i8 %6, %i.xd
   br i1 %i.xe, label %bb.cs, label %get_sample.exit89.i.1
 
 bb.cs:                                            ; preds = %get_sample.exit89.i
   %i.xf = getelementptr inbounds nuw i8, ptr %.574109.i, i64 2
   store i16 0, ptr %i.xf, align 1
+  %.pre.i = load i8, ptr %i.l, align 8, !tbaa !51
   br label %get_sample.exit89.i.1
 
 get_sample.exit89.i.1:                            ; preds = %bb.cs, %get_sample.exit89.i
-  %6 = load i8, ptr %i.l, align 8, !tbaa !51
+  %7 = phi i8 [ %6, %get_sample.exit89.i ], [ %.pre.i, %bb.cs ] ; 2 uses
   %i.xg = load i8, ptr %spec.select97.i, align 1, !tbaa !51
   %i.xh = sub i32 %spec.select98.i, %i.um         ; 2 uses
   %i.xi = icmp ugt i32 %i.xh, 7                   ; 2 uses
@@ -349,15 +355,17 @@ get_sample.exit89.i.1:                            ; preds = %bb.cs, %get_sample.
   %i.xk = lshr i32 %i.xj, %spec.select98.i
   %i.xl = trunc nuw i32 %i.xk to i8
   %i.xm = and i8 %i.xl, %i.wu
-  %i.xn = icmp eq i8 %6, %i.xm
+  %i.xn = icmp eq i8 %7, %i.xm
   br i1 %i.xn, label %bb.ct, label %bb.cu
 
 bb.ct:                                            ; preds = %get_sample.exit89.i.1
   %i.xo = getelementptr inbounds nuw i8, ptr %.574109.i, i64 6
   store i16 0, ptr %i.xo, align 1
+  %.pre.i.1 = load i8, ptr %i.l, align 8, !tbaa !51
   br label %bb.cu
 
 bb.cu:                                            ; preds = %bb.ct, %get_sample.exit89.i.1
+  %8 = phi i8 [ %7, %get_sample.exit89.i.1 ], [ %.pre.i.1, %bb.ct ] ; 2 uses
   %i.xp = getelementptr inbounds nuw i8, ptr %.574109.i, i64 8 ; 2 uses
   %niter797.next.1 = add nuw i32 %niter797, 2     ; 2 uses
   %niter797.ncmp.1 = icmp eq i32 %niter797.next.1, %unroll_iter796
@@ -368,18 +376,18 @@ trns_row.exit.loopexit765.unr-lcssa:              ; preds = %bb.cm
   br i1 %lcmp.mod799.not, label %trns_row.exit, label %get_sample.exit.i.epil.preheader
 
 get_sample.exit.i.epil.preheader:                 ; preds = %trns_row.exit.loopexit765.unr-lcssa, %get_sample.exit.i.preheader
+  %.epil.init803 = phi i8 [ %.pre147.i, %get_sample.exit.i.preheader ], [ %5, %trns_row.exit.loopexit765.unr-lcssa ]
   %.372116.i.epil.init = phi ptr [ %1, %get_sample.exit.i.preheader ], [ %i.wi, %trns_row.exit.loopexit765.unr-lcssa ]
   %.sroa.592.0115.i.epil.init = phi i32 [ %i.vo, %get_sample.exit.i.preheader ], [ %spec.select96.i.1, %trns_row.exit.loopexit765.unr-lcssa ]
   %.sroa.1395.0114.i.epil.init = phi ptr [ %i.jy, %get_sample.exit.i.preheader ], [ %spec.select.i.1, %trns_row.exit.loopexit765.unr-lcssa ]
   %lcmp.mod800 = trunc i32 %i.ae to i1
   tail call void @llvm.assume(i1 %lcmp.mod800)
-  %7 = load i8, ptr %i.l, align 8, !tbaa !51
   %i.xq = load i8, ptr %.sroa.1395.0114.i.epil.init, align 1, !tbaa !51
   %i.xr = zext i8 %i.xq to i32
   %i.xs = lshr i32 %i.xr, %.sroa.592.0115.i.epil.init
   %i.xt = trunc nuw i32 %i.xs to i8
   %i.xu = and i8 %i.xt, %i.vn
-  %i.xv = icmp eq i8 %7, %i.xu
+  %i.xv = icmp eq i8 %.epil.init803, %i.xu
   br i1 %i.xv, label %bb.cv, label %trns_row.exit
 
 bb.cv:                                            ; preds = %get_sample.exit.i.epil.preheader
@@ -392,18 +400,18 @@ trns_row.exit.loopexit767.unr-lcssa:              ; preds = %bb.cu
   br i1 %lcmp.mod794.not, label %trns_row.exit, label %get_sample.exit89.i.epil.preheader
 
 get_sample.exit89.i.epil.preheader:               ; preds = %trns_row.exit.loopexit767.unr-lcssa, %get_sample.exit89.i.preheader
+  %.epil.init = phi i8 [ %.pre145.i, %get_sample.exit89.i.preheader ], [ %8, %trns_row.exit.loopexit767.unr-lcssa ]
   %.574109.i.epil.init = phi ptr [ %1, %get_sample.exit89.i.preheader ], [ %i.xp, %trns_row.exit.loopexit767.unr-lcssa ]
   %.sroa.5.0108.i.epil.init = phi i32 [ %i.wv, %get_sample.exit89.i.preheader ], [ %spec.select98.i.1, %trns_row.exit.loopexit767.unr-lcssa ]
   %.sroa.13.0107.i.epil.init = phi ptr [ %i.jy, %get_sample.exit89.i.preheader ], [ %spec.select97.i.1, %trns_row.exit.loopexit767.unr-lcssa ]
   %lcmp.mod795 = trunc i32 %i.ae to i1
   tail call void @llvm.assume(i1 %lcmp.mod795)
-  %8 = load i8, ptr %i.l, align 8, !tbaa !51
   %i.xx = load i8, ptr %.sroa.13.0107.i.epil.init, align 1, !tbaa !51
   %i.xy = zext i8 %i.xx to i32
   %i.xz = lshr i32 %i.xy, %.sroa.5.0108.i.epil.init
   %i.ya = trunc nuw i32 %i.xz to i8
   %i.yb = and i8 %i.ya, %i.wu
-  %i.yc = icmp eq i8 %8, %i.yb
+  %i.yc = icmp eq i8 %.epil.init, %i.yb
   br i1 %i.yc, label %bb.cw, label %trns_row.exit
 
 bb.cw:                                            ; preds = %get_sample.exit89.i.epil.preheader

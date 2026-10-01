@@ -27,13 +27,14 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree nounwind uwtable
 define dso_local void @uriencode_init() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @__ctype_b_loc() #18
+  %i.a = tail call ptr @__ctype_b_loc() #18       ; 2 uses
+  %.pre25 = load ptr, ptr %i.a, align 8, !tbaa !14
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.e
+  %0 = phi ptr [ %.pre25, %bb.a ], [ %1, %bb.e ]  ; 2 uses
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.e ] ; 6 uses
   %.023 = phi ptr [ @uriencode_str, %bb.a ], [ %.1, %bb.e ] ; 4 uses
-  %0 = load ptr, ptr %i.a, align 8, !tbaa !14
   %i.b = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv
   %i.c = load i16, ptr %i.b, align 2, !tbaa !16
   %.fr20 = freeze i16 %i.c
@@ -61,9 +62,11 @@ bb.d:                                             ; preds = %switch.early.test
   %i.h = getelementptr inbounds nuw [8 x i8], ptr @uriencode_map, i64 %indvars.iv
   store ptr %.023, ptr %i.h, align 8, !tbaa !18
   %i.i = getelementptr inbounds nuw i8, ptr %.023, i64 3
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !14
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
+  %1 = phi ptr [ %0, %bb.c ], [ %.pre, %bb.d ]
   %.1 = phi ptr [ %.023, %bb.c ], [ %i.i, %bb.d ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 256

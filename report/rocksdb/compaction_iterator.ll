@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %_ZNSt6vectorIN7rock
 
 bb.ak:                                            ; preds = %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE5clearEv.exit81
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 1136 ; 6 uses
-  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !413
+  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !413 ; 2 uses
   %i.eh = ptrtoint ptr %i.eg to i64
   %i.ei = ptrtoint ptr %i.dx to i64               ; 2 uses
   %i.ej = sub i64 %i.eh, %i.ei
@@ -249,13 +249,14 @@ _ZNSt12_Vector_baseIN7rocksdb10WideColumnESaIS1_EE13_M_deallocateEPS1_m.exit.i: 
   store ptr %i.en, ptr %i.dw, align 8, !tbaa !81
   %i.ew = getelementptr inbounds nuw i8, ptr %i.en, i64 %i.em ; 2 uses
   store ptr %i.ew, ptr %i.dy, align 8, !tbaa !80
-  %i.ex = getelementptr inbounds nuw i8, ptr %i.en, i64 %i.ed
+  %i.ex = getelementptr inbounds nuw i8, ptr %i.en, i64 %i.ed ; 2 uses
   store ptr %i.ex, ptr %i.ef, align 8, !tbaa !413
   %.pre149 = load ptr, ptr %i.c, align 8, !tbaa !464
   %.pre150 = load ptr, ptr %i.e, align 8, !tbaa !464
   br label %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE7reserveEm.exit
 
 _ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseIN7rocksdb10WideColumnESaIS1_EE13_M_deallocateEPS1_m.exit.i, %bb.ak
+  %.pre152 = phi ptr [ %i.ex, %_ZNSt12_Vector_baseIN7rocksdb10WideColumnESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ %i.eg, %bb.ak ]
   %i.ey = phi ptr [ %i.ew, %_ZNSt12_Vector_baseIN7rocksdb10WideColumnESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ %i.ea, %bb.ak ]
   %i.ez = phi ptr [ %.pre150, %_ZNSt12_Vector_baseIN7rocksdb10WideColumnESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ %i.dn, %bb.ak ] ; 2 uses
   %i.fa = phi ptr [ %.pre149, %_ZNSt12_Vector_baseIN7rocksdb10WideColumnESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ %i.do, %bb.ak ] ; 2 uses
@@ -278,20 +279,21 @@ bb.am:                                            ; preds = %_ZNSt12_Vector_base
   br label %bb.bc
 
 .lr.ph141:                                        ; preds = %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE7reserveEm.exit, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE12emplace_backIJRKNS0_5SliceES7_EEERS1_DpOT_.exit
-  %i.fg = phi ptr [ %i.gf, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE12emplace_backIJRKNS0_5SliceES7_EEERS1_DpOT_.exit ], [ %i.ey, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE7reserveEm.exit ] ; 6 uses
-  %.sroa.0118.0140.a = phi ptr [ %i.gg, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE12emplace_backIJRKNS0_5SliceES7_EEERS1_DpOT_.exit ], [ %i.fa, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE7reserveEm.exit ] ; 4 uses
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.0118.0140.a, i64 16 ; 2 uses
-  %14 = load ptr, ptr %i.ef, align 8, !tbaa !413
-  %.not.i84 = icmp eq ptr %i.fg, %14
+  %i.fg = phi ptr [ %14, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE12emplace_backIJRKNS0_5SliceES7_EEERS1_DpOT_.exit ], [ %.pre152, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE7reserveEm.exit ] ; 4 uses
+  %.sroa.0118.0140.a = phi ptr [ %i.gf, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE12emplace_backIJRKNS0_5SliceES7_EEERS1_DpOT_.exit ], [ %i.ey, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE7reserveEm.exit ] ; 3 uses
+  %.sroa.0118.0140 = phi ptr [ %i.gg, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE12emplace_backIJRKNS0_5SliceES7_EEERS1_DpOT_.exit ], [ %i.fa, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE7reserveEm.exit ] ; 4 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.0118.0140, i64 16 ; 2 uses
+  %.not.i84 = icmp eq ptr %.sroa.0118.0140.a, %i.fg
   br i1 %.not.i84, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %.lr.ph141
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fg, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0118.0140.a, i64 16, i1 false), !tbaa.struct !64
-  %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0118.0140.a, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0118.0140, i64 16, i1 false), !tbaa.struct !64
+  %i.fh = getelementptr inbounds nuw i8, ptr %.sroa.0118.0140.a, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fh, ptr noundef nonnull align 8 dereferenceable(16) %13, i64 16, i1 false), !tbaa.struct !64
   %i.fi = load ptr, ptr %i.dy, align 8, !tbaa !80
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 32 ; 2 uses
   store ptr %i.fj, ptr %i.dy, align 8, !tbaa !80
+  %.pre151 = load ptr, ptr %i.ef, align 8, !tbaa !413
   br label %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE12emplace_backIJRKNS0_5SliceES7_EEERS1_DpOT_.exit
 
 bb.ao:                                            ; preds = %.lr.ph141
@@ -324,7 +326,7 @@ _ZNKSt6vectorIN7rocksdb10WideColumnESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; pred
 
 .noexc94:                                         ; preds = %_ZNKSt6vectorIN7rocksdb10WideColumnESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 %i.fn ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fw, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0118.0140.a, i64 16, i1 false), !tbaa.struct !64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fw, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0118.0140, i64 16, i1 false), !tbaa.struct !64
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fx, ptr noundef nonnull align 8 dereferenceable(16) %13, i64 16, i1 false), !tbaa.struct !64
   %.not10.i.i.i.i.i87 = icmp eq ptr %i.fk, %i.fg
@@ -355,13 +357,14 @@ bb.aq:                                            ; preds = %_ZNSt6vectorIN7rock
 _ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE17_M_realloc_insertIJRKNS0_5SliceES7_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.aq, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit33.i.i
   store ptr %i.fv, ptr %i.dw, align 8, !tbaa !81
   store ptr %i.ga, ptr %i.dy, align 8, !tbaa !80
-  %i.ge = getelementptr inbounds nuw [32 x i8], ptr %i.fv, i64 %i.ft
+  %i.ge = getelementptr inbounds nuw [32 x i8], ptr %i.fv, i64 %i.ft ; 2 uses
   store ptr %i.ge, ptr %i.ef, align 8, !tbaa !413
   br label %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE12emplace_backIJRKNS0_5SliceES7_EEERS1_DpOT_.exit
 
 _ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE12emplace_backIJRKNS0_5SliceES7_EEERS1_DpOT_.exit: ; preds = %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE17_M_realloc_insertIJRKNS0_5SliceES7_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.an
+  %14 = phi ptr [ %i.ge, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE17_M_realloc_insertIJRKNS0_5SliceES7_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.pre151, %bb.an ]
   %i.gf = phi ptr [ %i.ga, %_ZNSt6vectorIN7rocksdb10WideColumnESaIS1_EE17_M_realloc_insertIJRKNS0_5SliceES7_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.fj, %bb.an ]
-  %i.gg = getelementptr inbounds nuw i8, ptr %.sroa.0118.0140.a, i64 32 ; 2 uses
+  %i.gg = getelementptr inbounds nuw i8, ptr %.sroa.0118.0140, i64 32 ; 2 uses
   %i.gh = icmp eq ptr %i.gg, %i.ez
   br i1 %i.gh, label %._crit_edge, label %.lr.ph141
 

@@ -204,11 +204,12 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %.pre29 = load ptr, ptr %i.o, align 8, !tbaa !118
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit, %bb.a
-  %.lcssa23 = phi ptr [ %i.d, %bb.a ], [ %i.bq, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit ]
+  %.lcssa23 = phi ptr [ %i.d, %bb.a ], [ %4, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.k, ptr %i.a, align 8, !tbaa !37
   %i.p = getelementptr inbounds nuw i8, ptr %.lcssa23, i64 8 ; 2 uses
@@ -272,15 +273,15 @@ bb.g:                                             ; preds = %._crit_edge
           to label %bb.m unwind label %bb.v
 
 bb.h:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit
-  %i.an = phi ptr [ %i.d, %.lr.ph ], [ %i.bq, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit ]
-  %i.ao = phi ptr [ %i.f, %.lr.ph ], [ %i.br, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit ] ; 5 uses
+  %3 = phi ptr [ %i.d, %.lr.ph ], [ %4, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit ]
+  %i.an = phi ptr [ %.pre29, %.lr.ph ], [ %i.bq, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit ] ; 4 uses
+  %i.ao = phi ptr [ %i.f, %.lr.ph ], [ %i.br, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit ] ; 2 uses
   %.01327 = phi i64 [ 0, %.lr.ph ], [ %i.bs, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit ] ; 2 uses
   %i.ap = getelementptr [8 x i8], ptr %1, i64 %.01327
   %i.aq = getelementptr i8, ptr %i.ap, i64 24
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !21
   %i.as = ptrtoint ptr %i.ar to i64               ; 2 uses
-  %3 = load ptr, ptr %i.o, align 8, !tbaa !118
-  %.not.i.i18 = icmp eq ptr %i.ao, %3
+  %.not.i.i18 = icmp eq ptr %i.ao, %i.an
   br i1 %.not.i.i18, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -288,12 +289,13 @@ bb.i:                                             ; preds = %bb.h
   %i.at = load ptr, ptr %i.e, align 8, !tbaa !146
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8 ; 2 uses
   store ptr %i.au, ptr %i.e, align 8, !tbaa !146
+  %.pre = load ptr, ptr %i.o, align 8, !tbaa !118
   %.pre.a = load ptr, ptr %2, align 8, !tbaa !20
   br label %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit
 
 bb.j:                                             ; preds = %bb.h
   %i.av = load ptr, ptr %0, align 8, !tbaa !117   ; 5 uses
-  %i.aw = ptrtoint ptr %i.ao to i64
+  %i.aw = ptrtoint ptr %i.an to i64
   %i.ax = ptrtoint ptr %i.av to i64               ; 2 uses
   %i.ay = sub i64 %i.aw, %i.ax                    ; 3 uses
   %i.az = icmp eq i64 %i.ay, 9223372036854775800
@@ -322,7 +324,7 @@ _ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = 
 .noexc20:                                         ; preds = %_ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.ay
   store i64 %i.as, ptr %i.bh, align 8, !tbaa !22
-  %.not10.i.i.i.i.i.i = icmp eq ptr %i.av, %i.ao
+  %.not10.i.i.i.i.i.i = icmp eq ptr %i.av, %i.an
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.noexc20, %.lr.ph.i.i.i.i.i.i
@@ -334,7 +336,7 @@ _ZNKSt6vectorIN4lean2ir5valueESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = 
   store i64 %i.bi, ptr %.012.i.i.i.i.i.i, align 8, !tbaa !22, !alias.scope !347, !noalias !348
   %i.bj = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
-  %.not.i.i.i.i.i.i = icmp eq ptr %i.bj, %i.ao
+  %.not.i.i.i.i.i.i = icmp eq ptr %i.bj, %i.an
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !7
 
 _ZNSt6vectorIN4lean2ir5valueESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %.noexc20
@@ -353,15 +355,16 @@ bb.l:                                             ; preds = %_ZNSt6vectorIN4lean
 _ZNSt6vectorIN4lean2ir5valueESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.l, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i
   store ptr %i.bg, ptr %0, align 8, !tbaa !117
   store ptr %i.bl, ptr %i.e, align 8, !tbaa !146
-  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %i.be
+  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %i.be ; 2 uses
   store ptr %i.bp, ptr %i.o, align 8, !tbaa !118
   br label %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit
 
 _ZNSt6vectorIN4lean2ir5valueESaIS2_EE9push_backEOS2_.exit: ; preds = %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, %bb.i
-  %i.bq = phi ptr [ %i.an, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %.pre.a, %bb.i ] ; 3 uses
+  %4 = phi ptr [ %3, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %.pre.a, %bb.i ] ; 3 uses
+  %i.bq = phi ptr [ %i.bp, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %.pre, %bb.i ]
   %i.br = phi ptr [ %i.bl, %_ZNSt6vectorIN4lean2ir5valueESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %i.au, %bb.i ]
   %i.bs = add nuw i64 %.01327, 1                  ; 2 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
+  %i.bt = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !20
   %i.bv = getelementptr i8, ptr %i.bu, i64 8
   %.val.i.i = load i64, ptr %i.bv, align 8, !tbaa !37

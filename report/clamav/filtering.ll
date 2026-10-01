@@ -204,7 +204,7 @@ bb.ef:                                            ; preds = %._crit_edge1031
   %i.wm = getelementptr inbounds nuw i8, ptr %i.sd, i64 8
   %i.wn = getelementptr inbounds nuw i8, ptr %i.sd, i64 9 ; 2 uses
   %i.wo = getelementptr inbounds nuw i8, ptr %i.sa, i64 11 ; 3 uses
-  %i.wp = getelementptr inbounds nuw i8, ptr %i.sd, i64 11 ; 3 uses
+  %i.wp = getelementptr inbounds nuw i8, ptr %i.sd, i64 11 ; 4 uses
   %i.wq = getelementptr inbounds nuw i8, ptr %0, i64 65536 ; 2 uses
   %i.wr = shl nuw i32 1, %i.wk                    ; 3 uses
   %i.ws = trunc i32 %i.wr to i8
@@ -328,11 +328,12 @@ spec_ith_char.exit536:                            ; preds = %spec_ith_char.exit5
 
 .lr.ph1039.split.us.preheader:                    ; preds = %.lr.ph1039
   %i.yi = load i8, ptr %i.wp, align 1, !tbaa !32
-  %.not468.us = icmp ne i8 %i.yi, 0
   br label %.lr.ph1039.split.us
 
 .lr.ph1039.split.us:                              ; preds = %.lr.ph1039.split.us.preheader, %filter_set_end.exit.us
+  %4 = phi i8 [ %5, %filter_set_end.exit.us ], [ %i.yi, %.lr.ph1039.split.us.preheader ] ; 3 uses
   %.11038.us = phi i32 [ %i.yt, %filter_set_end.exit.us ], [ %.01051, %.lr.ph1039.split.us.preheader ] ; 4 uses
+  %.not468.us = icmp ne i8 %4, 0
   %i.yj = icmp eq i32 %.11038.us, %.0.i535
   %or.cond505.us = select i1 %.not468.us, i1 %i.yj, i1 false
   br i1 %or.cond505.us, label %filter_set_end.exit.us, label %bb.es
@@ -352,9 +353,11 @@ bb.es:                                            ; preds = %.lr.ph1039.split.us
 bb.et:                                            ; preds = %bb.es
   %i.ys = and i8 %i.yp, %i.wt
   store i8 %i.ys, ptr %i.yo, align 1, !tbaa !8
+  %.pre1277 = load i8, ptr %i.wp, align 1, !tbaa !32
   br label %filter_set_end.exit.us
 
 filter_set_end.exit.us:                           ; preds = %bb.et, %bb.es, %.lr.ph1039.split.us
+  %5 = phi i8 [ %.pre1277, %bb.et ], [ %4, %bb.es ], [ %4, %.lr.ph1039.split.us ]
   %i.yt = add i32 %.11038.us, 1
   %exitcond1274.not = icmp eq i32 %.11038.us, %i.yd
   br i1 %exitcond1274.not, label %._crit_edge1040, label %.lr.ph1039.split.us
@@ -364,14 +367,9 @@ filter_set_end.exit.us:                           ; preds = %bb.et, %bb.es, %.lr
   %.not1079 = icmp eq i8 %i.yu, 0
   br i1 %.not1079, label %.lr.ph1039.split.split, label %._crit_edge1040
 
-.lr.ph1039.split.splitthread-pre-split:           ; preds = %filter_set_end.exit
-  %4 = add i32 %.11038, 1
-  %.pr = load i8, ptr %i.wo, align 1, !tbaa !32
-  br label %.lr.ph1039.split.split
-
-.lr.ph1039.split.split:                           ; preds = %.lr.ph1039.split, %.lr.ph1039.split.splitthread-pre-split
-  %i.yv = phi i8 [ %.pr, %.lr.ph1039.split.splitthread-pre-split ], [ 0, %.lr.ph1039.split ]
-  %.11038 = phi i32 [ %4, %.lr.ph1039.split.splitthread-pre-split ], [ %.01051, %.lr.ph1039.split ] ; 4 uses
+.lr.ph1039.split.split:                           ; preds = %.lr.ph1039.split, %filter_set_end.exit
+  %i.yv = phi i8 [ %6, %filter_set_end.exit ], [ 0, %.lr.ph1039.split ] ; 2 uses
+  %.11038 = phi i32 [ %7, %filter_set_end.exit ], [ %.01051, %.lr.ph1039.split ] ; 4 uses
   %i.yw = shl nuw nsw i32 %.11038, 8
   %i.yx = or i32 %i.yw, %.03611049
   %.not467.not = icmp eq i8 %i.yv, 0
@@ -397,11 +395,14 @@ bb.ev:                                            ; preds = %bb.eu
 bb.ew:                                            ; preds = %bb.ev
   %i.zg = and i8 %i.zd, %i.wt
   store i8 %i.zg, ptr %i.zc, align 1, !tbaa !8
+  %.pre1279 = load i8, ptr %i.wo, align 1, !tbaa !32
   br label %filter_set_end.exit
 
 filter_set_end.exit:                              ; preds = %bb.ew, %bb.ev, %bb.eu, %.lr.ph1039.split.split
+  %6 = phi i8 [ %.pre1279, %bb.ew ], [ 0, %bb.ev ], [ 0, %bb.eu ], [ %i.yv, %.lr.ph1039.split.split ]
+  %7 = add i32 %.11038, 1
   %exitcond1275.not = icmp eq i32 %.11038, %i.yd
-  br i1 %exitcond1275.not, label %._crit_edge1040, label %.lr.ph1039.split.splitthread-pre-split, !llvm.loop !14
+  br i1 %exitcond1275.not, label %._crit_edge1040, label %.lr.ph1039.split.split, !llvm.loop !14
 
 ._crit_edge1040:                                  ; preds = %filter_set_end.exit.us, %filter_set_end.exit, %.lr.ph1039.split, %.preheader
   %.1.lcssa = phi i32 [ %.01051, %.preheader ], [ %i.yg, %filter_set_end.exit ], [ %i.yg, %.lr.ph1039.split ], [ %i.yg, %filter_set_end.exit.us ]

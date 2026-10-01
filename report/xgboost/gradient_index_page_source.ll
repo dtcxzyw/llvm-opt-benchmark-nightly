@@ -205,6 +205,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph153.split.a
   %i.o = load ptr, ptr %i.i, align 8, !nonnull !126, !align !197 ; 3 uses
+  %.pre9.i = load float, ptr %i.h, align 4        ; 2 uses
   %xtraiter255 = and i64 %i.l, 1
   %i.p = icmp eq i64 %i.l, 1
   br i1 %i.p, label %.epil.preheader.a, label %.lr.ph.i.new
@@ -214,12 +215,12 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i.new
+  %7 = phi float [ %.pre9.i, %.lr.ph.i.new ], [ %9, %bb.f ] ; 2 uses
   %.08.i = phi i64 [ 0, %.lr.ph.i.new ], [ %i.aj, %bb.f ] ; 3 uses
   %niter259 = phi i64 [ 0, %.lr.ph.i.new ], [ %niter259.next.1, %bb.f ]
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.08.i
   %i.r = load float, ptr %i.q, align 4, !tbaa !413, !noalias !1191 ; 2 uses
   %i.s = fcmp ord float %i.r, 0.000000e+00
-  %7 = load float, ptr %i.h, align 4
   %i.t = fcmp une float %i.r, %7
   %i.u = select i1 %i.s, i1 %i.t, i1 false
   br i1 %i.u, label %bb.c, label %bb.d
@@ -230,14 +231,15 @@ bb.c:                                             ; preds = %bb.b
   %i.x = load i64, ptr %i.w, align 8, !tbaa !149
   %i.y = add i64 %i.x, 1
   store i64 %i.y, ptr %i.w, align 8, !tbaa !149
+  %.pre.i = load float, ptr %i.h, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %8 = phi float [ %.pre.i, %bb.c ], [ %7, %bb.b ] ; 2 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.08.i
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %i.ab = load float, ptr %i.aa, align 4, !tbaa !413, !noalias !1191 ; 2 uses
   %i.ac = fcmp ord float %i.ab, 0.000000e+00
-  %8 = load float, ptr %i.h, align 4
   %i.ad = fcmp une float %i.ab, %8
   %i.ae = select i1 %i.ac, i1 %i.ad, i1 false
   br i1 %i.ae, label %bb.e, label %bb.f
@@ -248,9 +250,11 @@ bb.e:                                             ; preds = %bb.d
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !149
   %i.ai = add i64 %i.ah, 1
   store i64 %i.ai, ptr %i.ag, align 8, !tbaa !149
+  %.pre.i.1 = load float, ptr %i.h, align 4
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
+  %9 = phi float [ %.pre.i.1, %bb.e ], [ %8, %bb.d ] ; 2 uses
   %i.aj = add nuw i64 %.08.i, 2                   ; 2 uses
   %niter259.next.1 = add nuw i64 %niter259, 2     ; 2 uses
   %niter259.ncmp.1 = icmp eq i64 %niter259.next.1, %unroll_iter258
@@ -261,14 +265,14 @@ _ZZN7xgboost16GHistIndexMatrix12GetRowCountsINS_4data17DenseAdapterBatchEEEDaRKT
   br i1 %lcmp.mod256.not, label %_ZZN7xgboost16GHistIndexMatrix12GetRowCountsINS_4data17DenseAdapterBatchEEEDaRKT_fiENKUlmE_clEm.exit, label %.epil.preheader.a
 
 .epil.preheader.a:                                ; preds = %_ZZN7xgboost16GHistIndexMatrix12GetRowCountsINS_4data17DenseAdapterBatchEEEDaRKT_fiENKUlmE_clEm.exit.loopexit.unr-lcssa, %.lr.ph.i
+  %.epil.init283 = phi float [ %.pre9.i, %.lr.ph.i ], [ %9, %_ZZN7xgboost16GHistIndexMatrix12GetRowCountsINS_4data17DenseAdapterBatchEEEDaRKT_fiENKUlmE_clEm.exit.loopexit.unr-lcssa ]
   %.08.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.aj, %_ZZN7xgboost16GHistIndexMatrix12GetRowCountsINS_4data17DenseAdapterBatchEEEDaRKT_fiENKUlmE_clEm.exit.loopexit.unr-lcssa ]
   %lcmp.mod257 = trunc i64 %i.l to i1
   tail call void @llvm.assume(i1 %lcmp.mod257)
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.08.i.epil.init
   %i.al = load float, ptr %i.ak, align 4, !tbaa !413, !noalias !1191 ; 2 uses
   %i.am = fcmp ord float %i.al, 0.000000e+00
-  %9 = load float, ptr %i.h, align 4
-  %i.an = fcmp une float %i.al, %9
+  %i.an = fcmp une float %i.al, %.epil.init283
   %i.ao = select i1 %i.am, i1 %i.an, i1 false
   br i1 %i.ao, label %bb.g, label %_ZZN7xgboost16GHistIndexMatrix12GetRowCountsINS_4data17DenseAdapterBatchEEEDaRKT_fiENKUlmE_clEm.exit
 
@@ -438,6 +442,7 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
   br i1 %.not.i.i, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph151.split
+  %.pre9.i.i = load float, ptr %.sroa.2.0.copyload, align 4 ; 2 uses
   %xtraiter250 = and i64 %i.bt, 1
   %i.bw = icmp eq i64 %i.bt, 1
   br i1 %i.bw, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
@@ -447,12 +452,12 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.q, %.lr.ph.i.i.preheader.new
+  %10 = phi float [ %.pre9.i.i, %.lr.ph.i.i.preheader.new ], [ %12, %bb.q ] ; 2 uses
   %.08.i.i = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %i.cq, %bb.q ] ; 3 uses
   %niter254 = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %niter254.next.1, %bb.q ]
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %.08.i.i
   %i.by = load float, ptr %i.bx, align 4, !tbaa !413, !noalias !1195 ; 2 uses
   %i.bz = fcmp ord float %i.by, 0.000000e+00
-  %10 = load float, ptr %.sroa.2.0.copyload, align 4
   %i.ca = fcmp une float %i.by, %10
   %i.cb = select i1 %i.bz, i1 %i.ca, i1 false
   br i1 %i.cb, label %bb.o, label %.lr.ph.i.i.1
@@ -463,14 +468,15 @@ bb.o:                                             ; preds = %.lr.ph.i.i
   %i.ce = load i64, ptr %i.cd, align 8, !tbaa !149
   %i.cf = add i64 %i.ce, 1
   store i64 %i.cf, ptr %i.cd, align 8, !tbaa !149
+  %.pre.i.i = load float, ptr %.sroa.2.0.copyload, align 4
   br label %.lr.ph.i.i.1
 
 .lr.ph.i.i.1:                                     ; preds = %bb.o, %.lr.ph.i.i
+  %11 = phi float [ %.pre.i.i, %bb.o ], [ %10, %.lr.ph.i.i ] ; 2 uses
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %.08.i.i
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 4
   %i.ci = load float, ptr %i.ch, align 4, !tbaa !413, !noalias !1195 ; 2 uses
   %i.cj = fcmp ord float %i.ci, 0.000000e+00
-  %11 = load float, ptr %.sroa.2.0.copyload, align 4
   %i.ck = fcmp une float %i.ci, %11
   %i.cl = select i1 %i.cj, i1 %i.ck, i1 false
   br i1 %i.cl, label %bb.p, label %bb.q
@@ -481,9 +487,11 @@ bb.p:                                             ; preds = %.lr.ph.i.i.1
   %i.co = load i64, ptr %i.cn, align 8, !tbaa !149
   %i.cp = add i64 %i.co, 1
   store i64 %i.cp, ptr %i.cn, align 8, !tbaa !149
+  %.pre.i.i.1 = load float, ptr %.sroa.2.0.copyload, align 4
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.lr.ph.i.i.1
+  %12 = phi float [ %.pre.i.i.1, %bb.p ], [ %11, %.lr.ph.i.i.1 ] ; 2 uses
   %i.cq = add nuw i64 %.08.i.i, 2                 ; 2 uses
   %niter254.next.1 = add nuw i64 %niter254, 2     ; 2 uses
   %niter254.ncmp.1 = icmp eq i64 %niter254.next.1, %unroll_iter253
@@ -494,14 +502,14 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br i1 %lcmp.mod251.not, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit, label %.lr.ph.i.i.epil.preheader
 
 .lr.ph.i.i.epil.preheader:                        ; preds = %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit.loopexit.unr-lcssa, %.lr.ph.i.i.preheader
+  %.epil.init275 = phi float [ %.pre9.i.i, %.lr.ph.i.i.preheader ], [ %12, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit.loopexit.unr-lcssa ]
   %.08.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.cq, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit.loopexit.unr-lcssa ]
   %lcmp.mod252 = trunc i64 %i.bt to i1
   call void @llvm.assume(i1 %lcmp.mod252)
   %i.cr = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %.08.i.i.epil.init
   %i.cs = load float, ptr %i.cr, align 4, !tbaa !413, !noalias !1195 ; 2 uses
   %i.ct = fcmp ord float %i.cs, 0.000000e+00
-  %12 = load float, ptr %.sroa.2.0.copyload, align 4
-  %i.cu = fcmp une float %i.cs, %12
+  %i.cu = fcmp une float %i.cs, %.epil.init275
   %i.cv = select i1 %i.ct, i1 %i.cu, i1 false
   br i1 %i.cv, label %bb.r, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit
 
@@ -566,6 +574,7 @@ bb.s:                                             ; preds = %_ZNSt10unique_ptrIN
   br i1 %.not.i.i65, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit69, label %.lr.ph.i.i66.preheader
 
 .lr.ph.i.i66.preheader:                           ; preds = %.lr.ph149.split
+  %.pre9.i.i67 = load float, ptr %.sroa.2101.0.copyload, align 4 ; 2 uses
   %xtraiter245 = and i64 %i.dk, 1
   %i.dn = icmp eq i64 %i.dk, 1
   br i1 %i.dn, label %.lr.ph.i.i66.epil.preheader, label %.lr.ph.i.i66.preheader.new
@@ -575,12 +584,12 @@ bb.s:                                             ; preds = %_ZNSt10unique_ptrIN
   br label %.lr.ph.i.i66
 
 .lr.ph.i.i66:                                     ; preds = %bb.v, %.lr.ph.i.i66.preheader.new
+  %13 = phi float [ %.pre9.i.i67, %.lr.ph.i.i66.preheader.new ], [ %15, %bb.v ] ; 2 uses
   %.08.i.i67 = phi i64 [ 0, %.lr.ph.i.i66.preheader.new ], [ %i.eh, %bb.v ] ; 3 uses
   %niter249 = phi i64 [ 0, %.lr.ph.i.i66.preheader.new ], [ %niter249.next.1, %bb.v ]
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %.08.i.i67
   %i.dp = load float, ptr %i.do, align 4, !tbaa !413, !noalias !1198 ; 2 uses
   %i.dq = fcmp ord float %i.dp, 0.000000e+00
-  %13 = load float, ptr %.sroa.2101.0.copyload, align 4
   %i.dr = fcmp une float %i.dp, %13
   %i.ds = select i1 %i.dq, i1 %i.dr, i1 false
   br i1 %i.ds, label %bb.t, label %.lr.ph.i.i66.1
@@ -591,14 +600,15 @@ bb.t:                                             ; preds = %.lr.ph.i.i66
   %i.dv = load i64, ptr %i.du, align 8, !tbaa !149
   %i.dw = add i64 %i.dv, 1
   store i64 %i.dw, ptr %i.du, align 8, !tbaa !149
+  %.pre.i.i70 = load float, ptr %.sroa.2101.0.copyload, align 4
   br label %.lr.ph.i.i66.1
 
 .lr.ph.i.i66.1:                                   ; preds = %bb.t, %.lr.ph.i.i66
+  %14 = phi float [ %.pre.i.i70, %bb.t ], [ %13, %.lr.ph.i.i66 ] ; 2 uses
   %i.dx = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %.08.i.i67
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 4
   %i.dz = load float, ptr %i.dy, align 4, !tbaa !413, !noalias !1198 ; 2 uses
   %i.ea = fcmp ord float %i.dz, 0.000000e+00
-  %14 = load float, ptr %.sroa.2101.0.copyload, align 4
   %i.eb = fcmp une float %i.dz, %14
   %i.ec = select i1 %i.ea, i1 %i.eb, i1 false
   br i1 %i.ec, label %bb.u, label %bb.v
@@ -609,9 +619,11 @@ bb.u:                                             ; preds = %.lr.ph.i.i66.1
   %i.ef = load i64, ptr %i.ee, align 8, !tbaa !149
   %i.eg = add i64 %i.ef, 1
   store i64 %i.eg, ptr %i.ee, align 8, !tbaa !149
+  %.pre.i.i70.1 = load float, ptr %.sroa.2101.0.copyload, align 4
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %.lr.ph.i.i66.1
+  %15 = phi float [ %.pre.i.i70.1, %bb.u ], [ %14, %.lr.ph.i.i66.1 ] ; 2 uses
   %i.eh = add nuw i64 %.08.i.i67, 2               ; 2 uses
   %niter249.next.1 = add nuw i64 %niter249, 2     ; 2 uses
   %niter249.ncmp.1 = icmp eq i64 %niter249.next.1, %unroll_iter248
@@ -622,14 +634,14 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br i1 %lcmp.mod246.not, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit69, label %.lr.ph.i.i66.epil.preheader
 
 .lr.ph.i.i66.epil.preheader:                      ; preds = %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit69.loopexit.unr-lcssa, %.lr.ph.i.i66.preheader
+  %.epil.init267 = phi float [ %.pre9.i.i67, %.lr.ph.i.i66.preheader ], [ %15, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit69.loopexit.unr-lcssa ]
   %.08.i.i67.epil.init = phi i64 [ 0, %.lr.ph.i.i66.preheader ], [ %i.eh, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit69.loopexit.unr-lcssa ]
   %lcmp.mod247 = trunc i64 %i.dk to i1
   call void @llvm.assume(i1 %lcmp.mod247)
   %i.ei = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %.08.i.i67.epil.init
   %i.ej = load float, ptr %i.ei, align 4, !tbaa !413, !noalias !1198 ; 2 uses
   %i.ek = fcmp ord float %i.ej, 0.000000e+00
-  %15 = load float, ptr %.sroa.2101.0.copyload, align 4
-  %i.el = fcmp une float %i.ej, %15
+  %i.el = fcmp une float %i.ej, %.epil.init267
   %i.em = select i1 %i.ek, i1 %i.el, i1 false
   br i1 %i.em, label %bb.w, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit69
 
@@ -659,6 +671,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br i1 %.not.i.i70, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit74, label %.lr.ph.i.i71.preheader
 
 .lr.ph.i.i71.preheader:                           ; preds = %.lr.ph147.split
+  %.pre9.i.i74 = load float, ptr %.sroa.2107.0.copyload, align 4 ; 2 uses
   %xtraiter240 = and i64 %i.es, 1
   %i.ev = icmp eq i64 %i.es, 1
   br i1 %i.ev, label %.lr.ph.i.i71.epil.preheader, label %.lr.ph.i.i71.preheader.new
@@ -668,12 +681,12 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br label %.lr.ph.i.i71
 
 .lr.ph.i.i71:                                     ; preds = %bb.z, %.lr.ph.i.i71.preheader.new
+  %16 = phi float [ %.pre9.i.i74, %.lr.ph.i.i71.preheader.new ], [ %18, %bb.z ] ; 2 uses
   %.08.i.i72 = phi i64 [ 0, %.lr.ph.i.i71.preheader.new ], [ %i.fp, %bb.z ] ; 3 uses
   %niter244 = phi i64 [ 0, %.lr.ph.i.i71.preheader.new ], [ %niter244.next.1, %bb.z ]
   %i.ew = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %.08.i.i72
   %i.ex = load float, ptr %i.ew, align 4, !tbaa !413, !noalias !1199 ; 2 uses
   %i.ey = fcmp ord float %i.ex, 0.000000e+00
-  %16 = load float, ptr %.sroa.2107.0.copyload, align 4
   %i.ez = fcmp une float %i.ex, %16
   %i.fa = select i1 %i.ey, i1 %i.ez, i1 false
   br i1 %i.fa, label %bb.x, label %.lr.ph.i.i71.1
@@ -684,14 +697,15 @@ bb.x:                                             ; preds = %.lr.ph.i.i71
   %i.fd = load i64, ptr %i.fc, align 8, !tbaa !149
   %i.fe = add i64 %i.fd, 1
   store i64 %i.fe, ptr %i.fc, align 8, !tbaa !149
+  %.pre.i.i77 = load float, ptr %.sroa.2107.0.copyload, align 4
   br label %.lr.ph.i.i71.1
 
 .lr.ph.i.i71.1:                                   ; preds = %bb.x, %.lr.ph.i.i71
+  %17 = phi float [ %.pre.i.i77, %bb.x ], [ %16, %.lr.ph.i.i71 ] ; 2 uses
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %.08.i.i72
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ff, i64 4
   %i.fh = load float, ptr %i.fg, align 4, !tbaa !413, !noalias !1199 ; 2 uses
   %i.fi = fcmp ord float %i.fh, 0.000000e+00
-  %17 = load float, ptr %.sroa.2107.0.copyload, align 4
   %i.fj = fcmp une float %i.fh, %17
   %i.fk = select i1 %i.fi, i1 %i.fj, i1 false
   br i1 %i.fk, label %bb.y, label %bb.z
@@ -702,9 +716,11 @@ bb.y:                                             ; preds = %.lr.ph.i.i71.1
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !149
   %i.fo = add i64 %i.fn, 1
   store i64 %i.fo, ptr %i.fm, align 8, !tbaa !149
+  %.pre.i.i77.1 = load float, ptr %.sroa.2107.0.copyload, align 4
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %.lr.ph.i.i71.1
+  %18 = phi float [ %.pre.i.i77.1, %bb.y ], [ %17, %.lr.ph.i.i71.1 ] ; 2 uses
   %i.fp = add nuw i64 %.08.i.i72, 2               ; 2 uses
   %niter244.next.1 = add nuw i64 %niter244, 2     ; 2 uses
   %niter244.ncmp.1 = icmp eq i64 %niter244.next.1, %unroll_iter243
@@ -715,14 +731,14 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br i1 %lcmp.mod241.not, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit74, label %.lr.ph.i.i71.epil.preheader
 
 .lr.ph.i.i71.epil.preheader:                      ; preds = %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit74.loopexit.unr-lcssa, %.lr.ph.i.i71.preheader
+  %.epil.init259 = phi float [ %.pre9.i.i74, %.lr.ph.i.i71.preheader ], [ %18, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit74.loopexit.unr-lcssa ]
   %.08.i.i72.epil.init = phi i64 [ 0, %.lr.ph.i.i71.preheader ], [ %i.fp, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit74.loopexit.unr-lcssa ]
   %lcmp.mod242 = trunc i64 %i.es to i1
   call void @llvm.assume(i1 %lcmp.mod242)
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %.08.i.i72.epil.init
   %i.fr = load float, ptr %i.fq, align 4, !tbaa !413, !noalias !1199 ; 2 uses
   %i.fs = fcmp ord float %i.fr, 0.000000e+00
-  %18 = load float, ptr %.sroa.2107.0.copyload, align 4
-  %i.ft = fcmp une float %i.fr, %18
+  %i.ft = fcmp une float %i.fr, %.epil.init259
   %i.fu = select i1 %i.fs, i1 %i.ft, i1 false
   br i1 %i.fu, label %bb.aa, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit74
 
@@ -787,6 +803,7 @@ bb.ab:                                            ; preds = %_ZNSt10unique_ptrIN
   br i1 %.not.i.i75, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit79, label %.lr.ph.i.i76.preheader
 
 .lr.ph.i.i76.preheader:                           ; preds = %.lr.ph145.split
+  %.pre9.i.i81 = load float, ptr %.sroa.2113.0.copyload, align 4 ; 2 uses
   %xtraiter235 = and i64 %i.gj, 1
   %i.gm = icmp eq i64 %i.gj, 1
   br i1 %i.gm, label %.lr.ph.i.i76.epil.preheader, label %.lr.ph.i.i76.preheader.new
@@ -796,12 +813,12 @@ bb.ab:                                            ; preds = %_ZNSt10unique_ptrIN
   br label %.lr.ph.i.i76
 
 .lr.ph.i.i76:                                     ; preds = %bb.ae, %.lr.ph.i.i76.preheader.new
+  %19 = phi float [ %.pre9.i.i81, %.lr.ph.i.i76.preheader.new ], [ %21, %bb.ae ] ; 2 uses
   %.08.i.i77 = phi i64 [ 0, %.lr.ph.i.i76.preheader.new ], [ %i.hg, %bb.ae ] ; 3 uses
   %niter239 = phi i64 [ 0, %.lr.ph.i.i76.preheader.new ], [ %niter239.next.1, %bb.ae ]
   %i.gn = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %.08.i.i77
   %i.go = load float, ptr %i.gn, align 4, !tbaa !413, !noalias !1202 ; 2 uses
   %i.gp = fcmp ord float %i.go, 0.000000e+00
-  %19 = load float, ptr %.sroa.2113.0.copyload, align 4
   %i.gq = fcmp une float %i.go, %19
   %i.gr = select i1 %i.gp, i1 %i.gq, i1 false
   br i1 %i.gr, label %bb.ac, label %.lr.ph.i.i76.1
@@ -812,14 +829,15 @@ bb.ac:                                            ; preds = %.lr.ph.i.i76
   %i.gu = load i64, ptr %i.gt, align 8, !tbaa !149
   %i.gv = add i64 %i.gu, 1
   store i64 %i.gv, ptr %i.gt, align 8, !tbaa !149
+  %.pre.i.i84 = load float, ptr %.sroa.2113.0.copyload, align 4
   br label %.lr.ph.i.i76.1
 
 .lr.ph.i.i76.1:                                   ; preds = %bb.ac, %.lr.ph.i.i76
+  %20 = phi float [ %.pre.i.i84, %bb.ac ], [ %19, %.lr.ph.i.i76 ] ; 2 uses
   %i.gw = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %.08.i.i77
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 4
   %i.gy = load float, ptr %i.gx, align 4, !tbaa !413, !noalias !1202 ; 2 uses
   %i.gz = fcmp ord float %i.gy, 0.000000e+00
-  %20 = load float, ptr %.sroa.2113.0.copyload, align 4
   %i.ha = fcmp une float %i.gy, %20
   %i.hb = select i1 %i.gz, i1 %i.ha, i1 false
   br i1 %i.hb, label %bb.ad, label %bb.ae
@@ -830,9 +848,11 @@ bb.ad:                                            ; preds = %.lr.ph.i.i76.1
   %i.he = load i64, ptr %i.hd, align 8, !tbaa !149
   %i.hf = add i64 %i.he, 1
   store i64 %i.hf, ptr %i.hd, align 8, !tbaa !149
+  %.pre.i.i84.1 = load float, ptr %.sroa.2113.0.copyload, align 4
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %.lr.ph.i.i76.1
+  %21 = phi float [ %.pre.i.i84.1, %bb.ad ], [ %20, %.lr.ph.i.i76.1 ] ; 2 uses
   %i.hg = add nuw i64 %.08.i.i77, 2               ; 2 uses
   %niter239.next.1 = add nuw i64 %niter239, 2     ; 2 uses
   %niter239.ncmp.1 = icmp eq i64 %niter239.next.1, %unroll_iter238
@@ -843,14 +863,14 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br i1 %lcmp.mod236.not, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit79, label %.lr.ph.i.i76.epil.preheader
 
 .lr.ph.i.i76.epil.preheader:                      ; preds = %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit79.loopexit.unr-lcssa, %.lr.ph.i.i76.preheader
+  %.epil.init251 = phi float [ %.pre9.i.i81, %.lr.ph.i.i76.preheader ], [ %21, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit79.loopexit.unr-lcssa ]
   %.08.i.i77.epil.init = phi i64 [ 0, %.lr.ph.i.i76.preheader ], [ %i.hg, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit79.loopexit.unr-lcssa ]
   %lcmp.mod237 = trunc i64 %i.gj to i1
   call void @llvm.assume(i1 %lcmp.mod237)
   %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %.08.i.i77.epil.init
   %i.hi = load float, ptr %i.hh, align 4, !tbaa !413, !noalias !1202 ; 2 uses
   %i.hj = fcmp ord float %i.hi, 0.000000e+00
-  %21 = load float, ptr %.sroa.2113.0.copyload, align 4
-  %i.hk = fcmp une float %i.hi, %21
+  %i.hk = fcmp une float %i.hi, %.epil.init251
   %i.hl = select i1 %i.hj, i1 %i.hk, i1 false
   br i1 %i.hl, label %bb.af, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit79
 
@@ -880,6 +900,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br i1 %.not.i.i80, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit84, label %.lr.ph.i.i81.preheader
 
 .lr.ph.i.i81.preheader:                           ; preds = %.lr.ph143.split
+  %.pre9.i.i88 = load float, ptr %.sroa.2119.0.copyload, align 4 ; 2 uses
   %xtraiter230 = and i64 %i.hr, 1
   %i.hu = icmp eq i64 %i.hr, 1
   br i1 %i.hu, label %.lr.ph.i.i81.epil.preheader, label %.lr.ph.i.i81.preheader.new
@@ -889,12 +910,12 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br label %.lr.ph.i.i81
 
 .lr.ph.i.i81:                                     ; preds = %bb.ai, %.lr.ph.i.i81.preheader.new
+  %22 = phi float [ %.pre9.i.i88, %.lr.ph.i.i81.preheader.new ], [ %24, %bb.ai ] ; 2 uses
   %.08.i.i82 = phi i64 [ 0, %.lr.ph.i.i81.preheader.new ], [ %i.io, %bb.ai ] ; 3 uses
   %niter234 = phi i64 [ 0, %.lr.ph.i.i81.preheader.new ], [ %niter234.next.1, %bb.ai ]
   %i.hv = getelementptr inbounds nuw [4 x i8], ptr %i.ht, i64 %.08.i.i82
   %i.hw = load float, ptr %i.hv, align 4, !tbaa !413, !noalias !1203 ; 2 uses
   %i.hx = fcmp ord float %i.hw, 0.000000e+00
-  %22 = load float, ptr %.sroa.2119.0.copyload, align 4
   %i.hy = fcmp une float %i.hw, %22
   %i.hz = select i1 %i.hx, i1 %i.hy, i1 false
   br i1 %i.hz, label %bb.ag, label %.lr.ph.i.i81.1
@@ -905,14 +926,15 @@ bb.ag:                                            ; preds = %.lr.ph.i.i81
   %i.ic = load i64, ptr %i.ib, align 8, !tbaa !149
   %i.id = add i64 %i.ic, 1
   store i64 %i.id, ptr %i.ib, align 8, !tbaa !149
+  %.pre.i.i91 = load float, ptr %.sroa.2119.0.copyload, align 4
   br label %.lr.ph.i.i81.1
 
 .lr.ph.i.i81.1:                                   ; preds = %bb.ag, %.lr.ph.i.i81
+  %23 = phi float [ %.pre.i.i91, %bb.ag ], [ %22, %.lr.ph.i.i81 ] ; 2 uses
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr %i.ht, i64 %.08.i.i82
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 4
   %i.ig = load float, ptr %i.if, align 4, !tbaa !413, !noalias !1203 ; 2 uses
   %i.ih = fcmp ord float %i.ig, 0.000000e+00
-  %23 = load float, ptr %.sroa.2119.0.copyload, align 4
   %i.ii = fcmp une float %i.ig, %23
   %i.ij = select i1 %i.ih, i1 %i.ii, i1 false
   br i1 %i.ij, label %bb.ah, label %bb.ai
@@ -923,9 +945,11 @@ bb.ah:                                            ; preds = %.lr.ph.i.i81.1
   %i.im = load i64, ptr %i.il, align 8, !tbaa !149
   %i.in = add i64 %i.im, 1
   store i64 %i.in, ptr %i.il, align 8, !tbaa !149
+  %.pre.i.i91.1 = load float, ptr %.sroa.2119.0.copyload, align 4
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %.lr.ph.i.i81.1
+  %24 = phi float [ %.pre.i.i91.1, %bb.ah ], [ %23, %.lr.ph.i.i81.1 ] ; 2 uses
   %i.io = add nuw i64 %.08.i.i82, 2               ; 2 uses
   %niter234.next.1 = add nuw i64 %niter234, 2     ; 2 uses
   %niter234.ncmp.1 = icmp eq i64 %niter234.next.1, %unroll_iter233
@@ -936,14 +960,14 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br i1 %lcmp.mod231.not, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit84, label %.lr.ph.i.i81.epil.preheader
 
 .lr.ph.i.i81.epil.preheader:                      ; preds = %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit84.loopexit.unr-lcssa, %.lr.ph.i.i81.preheader
+  %.epil.init243 = phi float [ %.pre9.i.i88, %.lr.ph.i.i81.preheader ], [ %24, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit84.loopexit.unr-lcssa ]
   %.08.i.i82.epil.init = phi i64 [ 0, %.lr.ph.i.i81.preheader ], [ %i.io, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit84.loopexit.unr-lcssa ]
   %lcmp.mod232 = trunc i64 %i.hr to i1
   call void @llvm.assume(i1 %lcmp.mod232)
   %i.ip = getelementptr inbounds nuw [4 x i8], ptr %i.ht, i64 %.08.i.i82.epil.init
   %i.iq = load float, ptr %i.ip, align 4, !tbaa !413, !noalias !1203 ; 2 uses
   %i.ir = fcmp ord float %i.iq, 0.000000e+00
-  %24 = load float, ptr %.sroa.2119.0.copyload, align 4
-  %i.is = fcmp une float %i.iq, %24
+  %i.is = fcmp une float %i.iq, %.epil.init243
   %i.it = select i1 %i.ir, i1 %i.is, i1 false
   br i1 %i.it, label %bb.aj, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit84
 
@@ -973,6 +997,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br i1 %.not.i.i85, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit89, label %.lr.ph.i.i86.preheader
 
 .lr.ph.i.i86.preheader:                           ; preds = %.lr.ph.split
+  %.pre9.i.i95 = load float, ptr %.sroa.2125.0.copyload, align 4 ; 2 uses
   %xtraiter = and i64 %i.iz, 1
   %i.jc = icmp eq i64 %i.iz, 1
   br i1 %i.jc, label %.lr.ph.i.i86.epil.preheader, label %.lr.ph.i.i86.preheader.new
@@ -982,12 +1007,12 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br label %.lr.ph.i.i86
 
 .lr.ph.i.i86:                                     ; preds = %bb.am, %.lr.ph.i.i86.preheader.new
+  %25 = phi float [ %.pre9.i.i95, %.lr.ph.i.i86.preheader.new ], [ %27, %bb.am ] ; 2 uses
   %.08.i.i87 = phi i64 [ 0, %.lr.ph.i.i86.preheader.new ], [ %i.jw, %bb.am ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.i.i86.preheader.new ], [ %niter.next.1, %bb.am ]
   %i.jd = getelementptr inbounds nuw [4 x i8], ptr %i.jb, i64 %.08.i.i87
   %i.je = load float, ptr %i.jd, align 4, !tbaa !413, !noalias !1204 ; 2 uses
   %i.jf = fcmp ord float %i.je, 0.000000e+00
-  %25 = load float, ptr %.sroa.2125.0.copyload, align 4
   %i.jg = fcmp une float %i.je, %25
   %i.jh = select i1 %i.jf, i1 %i.jg, i1 false
   br i1 %i.jh, label %bb.ak, label %.lr.ph.i.i86.1
@@ -998,14 +1023,15 @@ bb.ak:                                            ; preds = %.lr.ph.i.i86
   %i.jk = load i64, ptr %i.jj, align 8, !tbaa !149
   %i.jl = add i64 %i.jk, 1
   store i64 %i.jl, ptr %i.jj, align 8, !tbaa !149
+  %.pre.i.i98 = load float, ptr %.sroa.2125.0.copyload, align 4
   br label %.lr.ph.i.i86.1
 
 .lr.ph.i.i86.1:                                   ; preds = %bb.ak, %.lr.ph.i.i86
+  %26 = phi float [ %.pre.i.i98, %bb.ak ], [ %25, %.lr.ph.i.i86 ] ; 2 uses
   %i.jm = getelementptr inbounds nuw [4 x i8], ptr %i.jb, i64 %.08.i.i87
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jm, i64 4
   %i.jo = load float, ptr %i.jn, align 4, !tbaa !413, !noalias !1204 ; 2 uses
   %i.jp = fcmp ord float %i.jo, 0.000000e+00
-  %26 = load float, ptr %.sroa.2125.0.copyload, align 4
   %i.jq = fcmp une float %i.jo, %26
   %i.jr = select i1 %i.jp, i1 %i.jq, i1 false
   br i1 %i.jr, label %bb.al, label %bb.am
@@ -1016,9 +1042,11 @@ bb.al:                                            ; preds = %.lr.ph.i.i86.1
   %i.ju = load i64, ptr %i.jt, align 8, !tbaa !149
   %i.jv = add i64 %i.ju, 1
   store i64 %i.jv, ptr %i.jt, align 8, !tbaa !149
+  %.pre.i.i98.1 = load float, ptr %.sroa.2125.0.copyload, align 4
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %.lr.ph.i.i86.1
+  %27 = phi float [ %.pre.i.i98.1, %bb.al ], [ %26, %.lr.ph.i.i86.1 ] ; 2 uses
   %i.jw = add nuw i64 %.08.i.i87, 2               ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -1029,14 +1057,14 @@ _ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data1
   br i1 %lcmp.mod.not, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit89, label %.lr.ph.i.i86.epil.preheader
 
 .lr.ph.i.i86.epil.preheader:                      ; preds = %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit89.loopexit.unr-lcssa, %.lr.ph.i.i86.preheader
+  %.epil.init = phi float [ %.pre9.i.i95, %.lr.ph.i.i86.preheader ], [ %27, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit89.loopexit.unr-lcssa ]
   %.08.i.i87.epil.init = phi i64 [ 0, %.lr.ph.i.i86.preheader ], [ %i.jw, %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit89.loopexit.unr-lcssa ]
   %lcmp.mod229 = trunc i64 %i.iz to i1
   call void @llvm.assume(i1 %lcmp.mod229)
   %i.jx = getelementptr inbounds nuw [4 x i8], ptr %i.jb, i64 %.08.i.i87.epil.init
   %i.jy = load float, ptr %i.jx, align 4, !tbaa !413, !noalias !1204 ; 2 uses
   %i.jz = fcmp ord float %i.jy, 0.000000e+00
-  %27 = load float, ptr %.sroa.2125.0.copyload, align 4
-  %i.ka = fcmp une float %i.jy, %27
+  %i.ka = fcmp une float %i.jy, %.epil.init
   %i.kb = select i1 %i.jz, i1 %i.ka, i1 false
   br i1 %i.kb, label %bb.an, label %_ZN4dmlc12OMPException3RunIZN7xgboost16GHistIndexMatrix12GetRowCountsINS2_4data17DenseAdapterBatchEEEDaRKT_fiEUlmE_JmEEEvS7_DpT0_.exit89
 
