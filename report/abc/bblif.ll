@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #27
   %i.h = add nsw i32 %1, 3
-  %i.i = sext i32 %i.h to i64                     ; 13 uses
+  %i.i = sext i32 %i.h to i64                     ; 9 uses
   %i.j = urem i64 %i.g, %i.i
   %.not = icmp eq i64 %i.j, 0
   br i1 %.not, label %bb.d, label %bb.c
@@ -608,6 +608,8 @@ middle.block222:                                  ; preds = %vector.body215
 
 .preheader83.preheader.new:                       ; preds = %.preheader83.preheader
   %unroll_iter284 = and i32 %i.cf, 2147483640
+  %2 = shl nsw i64 %i.i, 2
+  %3 = shl nsw i64 %i.i, 1
   br label %.preheader83
 
 .preheader83.us117.preheader:                     ; preds = %.lr.ph107.split
@@ -672,17 +674,13 @@ scalar.ph198:                                     ; preds = %scalar.ph198.prehea
   %.072103 = phi ptr [ %0, %.preheader83.preheader.new ], [ %i.gq, %.preheader83 ]
   %niter285 = phi i32 [ 0, %.preheader83.preheader.new ], [ %niter285.next.7, %.preheader83 ]
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ba, i8 -1, i64 %i.l, i1 false)
-  %2 = getelementptr inbounds i8, ptr %.072103, i64 %i.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ba, i8 -1, i64 %i.l, i1 false)
-  %3 = getelementptr inbounds i8, ptr %2, i64 %i.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ba, i8 -1, i64 %i.l, i1 false)
-  %4 = getelementptr inbounds i8, ptr %3, i64 %i.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ba, i8 -1, i64 %i.l, i1 false)
-  %i.gl = getelementptr inbounds i8, ptr %4, i64 %i.i
+  %i.gl = getelementptr inbounds i8, ptr %.072103, i64 %2
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ba, i8 -1, i64 %i.l, i1 false)
-  %5 = getelementptr inbounds i8, ptr %i.gl, i64 %i.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ba, i8 -1, i64 %i.l, i1 false)
-  %i.gm = getelementptr inbounds i8, ptr %5, i64 %i.i
+  %i.gm = getelementptr inbounds i8, ptr %i.gl, i64 %3
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ba, i8 -1, i64 %i.l, i1 false)
   %i.gn = getelementptr inbounds i8, ptr %i.gm, i64 %i.i ; 2 uses
   %i.go = getelementptr inbounds i8, ptr %i.gn, i64 %i.ch

@@ -202,12 +202,11 @@ bb.cm:                                            ; preds = %bb.cl
 
 .lr.ph1321:                                       ; preds = %._crit_edge
   %i.om = getelementptr inbounds nuw i8, ptr %.02511356, i64 80
-  %i.on = zext i32 %i.nd to i64                   ; 4 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.om, i64 %i.on
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.on
+  %i.on = zext i32 %i.nd to i64
+  %.idx.i.i = shl nuw nsw i64 %i.on, 4            ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.om, i64 %.idx.i.i
   %i.oo = getelementptr inbounds nuw i8, ptr %.02401357, i64 80
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.oo, i64 %i.on
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.on
+  %7 = getelementptr inbounds nuw i8, ptr %i.oo, i64 %.idx.i.i
   %wide.trip.count2139 = zext i32 %i.ni to i64
   br label %bb.co
 
@@ -218,9 +217,9 @@ bb.cn:                                            ; preds = %bb.co
 
 bb.co:                                            ; preds = %.lr.ph1321, %bb.cn
   %indvars.iv2136 = phi i64 [ 0, %.lr.ph1321 ], [ %indvars.iv.next2137, %bb.cn ] ; 3 uses
-  %i.op = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv2136
+  %i.op = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv2136
   %i.oq = load ptr, ptr %i.op, align 8, !tbaa !17 ; 2 uses
-  %i.or = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %indvars.iv2136
+  %i.or = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv2136
   %i.os = load ptr, ptr %i.or, align 8, !tbaa !17 ; 2 uses
   %.not287 = icmp eq ptr %i.oq, %i.os
   br i1 %.not287, label %bb.cn, label %.backedge
@@ -231,12 +230,11 @@ bb.co:                                            ; preds = %.lr.ph1321, %bb.cn
 
 .lr.ph1325:                                       ; preds = %._crit_edge1322
   %i.ot = getelementptr inbounds nuw i8, ptr %.02511356, i64 80
-  %i.ou = zext i32 %i.nd to i64                   ; 4 uses
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.ot, i64 %i.ou
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.ou
+  %i.ou = zext i32 %i.nd to i64
+  %.idx.i.i434 = shl nuw nsw i64 %i.ou, 4         ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.ot, i64 %.idx.i.i434
   %i.ov = getelementptr inbounds nuw i8, ptr %.02401357, i64 80
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.ov, i64 %i.ou
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %i.ou
+  %9 = getelementptr inbounds nuw i8, ptr %i.ov, i64 %.idx.i.i434
   %wide.trip.count2144 = zext i32 %i.nn to i64
   br label %bb.cq
 
@@ -247,9 +245,9 @@ bb.cp:                                            ; preds = %bb.cq
 
 bb.cq:                                            ; preds = %.lr.ph1325, %bb.cp
   %indvars.iv2141 = phi i64 [ 0, %.lr.ph1325 ], [ %indvars.iv.next2142, %bb.cp ] ; 3 uses
-  %i.ow = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %indvars.iv2141
+  %i.ow = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %indvars.iv2141
   %i.ox = load ptr, ptr %i.ow, align 8, !tbaa !17 ; 2 uses
-  %i.oy = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %indvars.iv2141
+  %i.oy = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %indvars.iv2141
   %i.oz = load ptr, ptr %i.oy, align 8, !tbaa !17 ; 2 uses
   %.not288 = icmp eq ptr %i.ox, %i.oz
   br i1 %.not288, label %bb.cp, label %.backedge

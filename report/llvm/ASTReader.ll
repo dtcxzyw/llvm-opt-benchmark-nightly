@@ -205,24 +205,20 @@ _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit57: ; pr
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !2170
   %i.gu = call noundef ptr @_ZN5clang9ASTReader11ReadSubExprEv(ptr noundef nonnull align 8 dereferenceable(16376) %i.gt) #36
   %i.gv = load i32, ptr %i.dx, align 8, !tbaa !6437
-  %i.gw = zext i32 %i.gv to i64                   ; 5 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.eg, i64 %i.gw
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.gw
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.gw
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.gw
-  %i.gx = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.gw
+  %i.gw = zext i32 %i.gv to i64                   ; 2 uses
+  %3 = shl nuw nsw i64 %i.gw, 5
+  %4 = getelementptr inbounds nuw i8, ptr %i.eg, i64 %3
+  %i.gx = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.gw
   store ptr %i.gu, ptr %i.gx, align 8, !tbaa !3075
   %i.gy = load ptr, ptr %0, align 8, !tbaa !3117, !nonnull !177, !align !178
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 8
   %i.ha = load ptr, ptr %i.gz, align 8, !tbaa !2170
   %i.hb = call noundef ptr @_ZN5clang9ASTReader11ReadSubExprEv(ptr noundef nonnull align 8 dereferenceable(16376) %i.ha) #36
   %i.hc = load i32, ptr %i.dx, align 8, !tbaa !6437
-  %i.hd = zext i32 %i.hc to i64                   ; 5 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.hd
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.hd
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.hd
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.hd
-  %i.he = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.hd
+  %i.hd = zext i32 %i.hc to i64                   ; 2 uses
+  %5 = shl nuw nsw i64 %i.hd, 5
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 %5
+  %i.he = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.hd
   %i.hf = getelementptr inbounds nuw i8, ptr %i.he, i64 72
   store ptr %i.hb, ptr %i.hf, align 8, !tbaa !3075
   store i32 0, ptr %i.ea, align 8, !tbaa !873

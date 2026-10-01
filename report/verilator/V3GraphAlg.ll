@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %.not55.i, label %._crit_edge.i23, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ak
-  %.idx.i = shl i64 %.069, 3                      ; 12 uses
+  %.idx.i = shl i64 %.069, 3                      ; 10 uses
   %.idx49.i = shl i64 %.069, 4                    ; 2 uses
   %.not50.i = icmp eq i64 %.idx.i, %.idx49.i
   br i1 %.not50.i, label %.critedge.i.us.preheader.i, label %.lr.ph.i.preheader.i
@@ -215,13 +215,12 @@ bb.ak:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %i.hs, label %.critedge.i.us.i.us, label %.critedge.i.us.preheader.i.split, !prof !75
 
 .critedge.i.us.i.us:                              ; preds = %.critedge.i.us.preheader.i, %.critedge.i.us.i.us
-  %.057.us.i.us = phi ptr [ %3, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
+  %.057.us.i.us = phi ptr [ %i.hu, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
   %.sroa.041.056.us.i.us = phi ptr [ %i.ht, %.critedge.i.us.i.us ], [ %0, %.critedge.i.us.preheader.i ] ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %.sroa.041.056.us.i.us, i64 %.idx.i ; 4 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %.057.us.i.us, ptr align 8 %.sroa.041.056.us.i.us, i64 %.idx.i, i1 false)
-  %i.hu = getelementptr inbounds nuw i8, ptr %.057.us.i.us, i64 %.idx.i ; 2 uses
+  %i.hu = getelementptr inbounds nuw i8, ptr %.057.us.i.us, i64 %.idx.i ; 3 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.hu, ptr nonnull align 8 %i.ht, i64 %.idx.i, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %i.hu, i64 %.idx.i ; 2 uses
   %i.hv = ptrtoint ptr %i.ht to i64
   %i.hw = sub i64 %i.a, %i.hv
   %i.hx = ashr exact i64 %i.hw, 3                 ; 2 uses
@@ -238,14 +237,13 @@ bb.ak:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i.us58:                            ; preds = %.critedge.i.us.i.us58.preheader, %.critedge.i.us.i.us58
   %i.hz = phi ptr [ %i.ic, %.critedge.i.us.i.us58 ], [ %.pre, %.critedge.i.us.i.us58.preheader ]
-  %.057.us.i.us59 = phi ptr [ %4, %.critedge.i.us.i.us58 ], [ %2, %.critedge.i.us.i.us58.preheader ] ; 3 uses
+  %.057.us.i.us59 = phi ptr [ %i.ib, %.critedge.i.us.i.us58 ], [ %2, %.critedge.i.us.i.us58.preheader ] ; 2 uses
   %.sroa.041.056.us.i.us60 = phi ptr [ %i.ia, %.critedge.i.us.i.us58 ], [ %0, %.critedge.i.us.i.us58.preheader ]
   %i.ia = getelementptr inbounds nuw i8, ptr %.sroa.041.056.us.i.us60, i64 8 ; 4 uses
   store ptr %i.hz, ptr %.057.us.i.us59, align 8, !tbaa !34
-  %i.ib = getelementptr inbounds nuw i8, ptr %.057.us.i.us59, i64 8
+  %i.ib = getelementptr inbounds nuw i8, ptr %.057.us.i.us59, i64 8 ; 3 uses
   %i.ic = load ptr, ptr %i.ia, align 8, !tbaa !34 ; 2 uses
   store ptr %i.ic, ptr %i.ib, align 8, !tbaa !34
-  %4 = getelementptr inbounds nuw i8, ptr %.057.us.i.us59, i64 16 ; 2 uses
   %i.id = ptrtoint ptr %i.ia to i64
   %i.ie = sub i64 %i.a, %i.id
   %i.if = ashr exact i64 %i.ie, 3                 ; 2 uses
@@ -254,11 +252,10 @@ bb.ak:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i:                                 ; preds = %.critedge.i.us.preheader.i.split, %.critedge.i.us.i
   %.057.us.i = phi ptr [ %i.ih, %.critedge.i.us.i ], [ %2, %.critedge.i.us.preheader.i.split ]
-  %.sroa.041.056.us.i = phi ptr [ %5, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
-  %5 = getelementptr inbounds i8, ptr %.sroa.041.056.us.i, i64 %.idx.i ; 3 uses
-  %i.ig = getelementptr inbounds i8, ptr %.057.us.i, i64 %.idx.i
-  %i.ih = getelementptr inbounds i8, ptr %i.ig, i64 %.idx.i ; 2 uses
-  %i.ii = ptrtoint ptr %5 to i64
+  %.sroa.041.056.us.i = phi ptr [ %i.ig, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
+  %i.ig = getelementptr inbounds i8, ptr %.sroa.041.056.us.i, i64 %.idx.i ; 3 uses
+  %i.ih = getelementptr inbounds i8, ptr %.057.us.i, i64 %.idx.i ; 2 uses
+  %i.ii = ptrtoint ptr %i.ig to i64
   %i.ij = sub i64 %i.a, %i.ii
   %i.ik = ashr exact i64 %i.ij, 3                 ; 2 uses
   %.not.us.i = icmp slt i64 %i.ik, %i.hr
@@ -344,8 +341,8 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %.not.i, label %._crit_edge.i23, label %.lr.ph.i.preheader.i, !llvm.loop !305
 
 ._crit_edge.i23:                                  ; preds = %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP13V3GraphVertexSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph12sortVerticesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i", %.critedge.i.us.i, %.critedge.i.us.i.us58, %.critedge.i.us.i.us, %bb.ak
-  %.sroa.041.0.lcssa.i = phi ptr [ %0, %bb.ak ], [ %i.ht, %.critedge.i.us.i.us ], [ %i.ia, %.critedge.i.us.i.us58 ], [ %5, %.critedge.i.us.i ], [ %i.im, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP13V3GraphVertexSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph12sortVerticesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ] ; 3 uses
-  %.0.lcssa.i = phi ptr [ %2, %bb.ak ], [ %3, %.critedge.i.us.i.us ], [ %4, %.critedge.i.us.i.us58 ], [ %i.ih, %.critedge.i.us.i ], [ %i.jk, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP13V3GraphVertexSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph12sortVerticesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ] ; 2 uses
+  %.sroa.041.0.lcssa.i = phi ptr [ %0, %bb.ak ], [ %i.ht, %.critedge.i.us.i.us ], [ %i.ia, %.critedge.i.us.i.us58 ], [ %i.ig, %.critedge.i.us.i ], [ %i.im, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP13V3GraphVertexSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph12sortVerticesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ] ; 3 uses
+  %.0.lcssa.i = phi ptr [ %2, %bb.ak ], [ %i.hu, %.critedge.i.us.i.us ], [ %i.ib, %.critedge.i.us.i.us58 ], [ %i.ih, %.critedge.i.us.i ], [ %i.jk, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP13V3GraphVertexSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph12sortVerticesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ] ; 2 uses
   %.lcssa53.i = phi i64 [ %i.d, %bb.ak ], [ %i.hx, %.critedge.i.us.i.us ], [ %i.if, %.critedge.i.us.i.us58 ], [ %i.ik, %.critedge.i.us.i ], [ %i.jm, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP13V3GraphVertexSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph12sortVerticesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ]
   %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %.069, i64 %.lcssa53.i) ; 2 uses
   %.idx51.i = shl nsw i64 %.sroa.speculated.i, 3
@@ -748,7 +745,7 @@ bb.ak:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %.not55.i, label %._crit_edge.i23, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ak
-  %.idx.i = shl i64 %.069, 3                      ; 12 uses
+  %.idx.i = shl i64 %.069, 3                      ; 10 uses
   %.idx49.i = shl i64 %.069, 4                    ; 2 uses
   %.not50.i = icmp eq i64 %.idx.i, %.idx49.i
   br i1 %.not50.i, label %.critedge.i.us.preheader.i, label %.lr.ph.i.preheader.i
@@ -758,13 +755,12 @@ bb.ak:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %i.hs, label %.critedge.i.us.i.us, label %.critedge.i.us.preheader.i.split, !prof !75
 
 .critedge.i.us.i.us:                              ; preds = %.critedge.i.us.preheader.i, %.critedge.i.us.i.us
-  %.057.us.i.us = phi ptr [ %3, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
+  %.057.us.i.us = phi ptr [ %i.hu, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
   %.sroa.041.056.us.i.us = phi ptr [ %i.ht, %.critedge.i.us.i.us ], [ %0, %.critedge.i.us.preheader.i ] ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %.sroa.041.056.us.i.us, i64 %.idx.i ; 4 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %.057.us.i.us, ptr align 8 %.sroa.041.056.us.i.us, i64 %.idx.i, i1 false)
-  %i.hu = getelementptr inbounds nuw i8, ptr %.057.us.i.us, i64 %.idx.i ; 2 uses
+  %i.hu = getelementptr inbounds nuw i8, ptr %.057.us.i.us, i64 %.idx.i ; 3 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.hu, ptr nonnull align 8 %i.ht, i64 %.idx.i, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %i.hu, i64 %.idx.i ; 2 uses
   %i.hv = ptrtoint ptr %i.ht to i64
   %i.hw = sub i64 %i.a, %i.hv
   %i.hx = ashr exact i64 %i.hw, 3                 ; 2 uses
@@ -781,14 +777,13 @@ bb.ak:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i.us58:                            ; preds = %.critedge.i.us.i.us58.preheader, %.critedge.i.us.i.us58
   %i.hz = phi ptr [ %i.ic, %.critedge.i.us.i.us58 ], [ %.pre, %.critedge.i.us.i.us58.preheader ]
-  %.057.us.i.us59 = phi ptr [ %4, %.critedge.i.us.i.us58 ], [ %2, %.critedge.i.us.i.us58.preheader ] ; 3 uses
+  %.057.us.i.us59 = phi ptr [ %i.ib, %.critedge.i.us.i.us58 ], [ %2, %.critedge.i.us.i.us58.preheader ] ; 2 uses
   %.sroa.041.056.us.i.us60 = phi ptr [ %i.ia, %.critedge.i.us.i.us58 ], [ %0, %.critedge.i.us.i.us58.preheader ]
   %i.ia = getelementptr inbounds nuw i8, ptr %.sroa.041.056.us.i.us60, i64 8 ; 4 uses
   store ptr %i.hz, ptr %.057.us.i.us59, align 8, !tbaa !38
-  %i.ib = getelementptr inbounds nuw i8, ptr %.057.us.i.us59, i64 8
+  %i.ib = getelementptr inbounds nuw i8, ptr %.057.us.i.us59, i64 8 ; 3 uses
   %i.ic = load ptr, ptr %i.ia, align 8, !tbaa !38 ; 2 uses
   store ptr %i.ic, ptr %i.ib, align 8, !tbaa !38
-  %4 = getelementptr inbounds nuw i8, ptr %.057.us.i.us59, i64 16 ; 2 uses
   %i.id = ptrtoint ptr %i.ia to i64
   %i.ie = sub i64 %i.a, %i.id
   %i.if = ashr exact i64 %i.ie, 3                 ; 2 uses
@@ -797,11 +792,10 @@ bb.ak:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i:                                 ; preds = %.critedge.i.us.preheader.i.split, %.critedge.i.us.i
   %.057.us.i = phi ptr [ %i.ih, %.critedge.i.us.i ], [ %2, %.critedge.i.us.preheader.i.split ]
-  %.sroa.041.056.us.i = phi ptr [ %5, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
-  %5 = getelementptr inbounds i8, ptr %.sroa.041.056.us.i, i64 %.idx.i ; 3 uses
-  %i.ig = getelementptr inbounds i8, ptr %.057.us.i, i64 %.idx.i
-  %i.ih = getelementptr inbounds i8, ptr %i.ig, i64 %.idx.i ; 2 uses
-  %i.ii = ptrtoint ptr %5 to i64
+  %.sroa.041.056.us.i = phi ptr [ %i.ig, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
+  %i.ig = getelementptr inbounds i8, ptr %.sroa.041.056.us.i, i64 %.idx.i ; 3 uses
+  %i.ih = getelementptr inbounds i8, ptr %.057.us.i, i64 %.idx.i ; 2 uses
+  %i.ii = ptrtoint ptr %i.ig to i64
   %i.ij = sub i64 %i.a, %i.ii
   %i.ik = ashr exact i64 %i.ij, 3                 ; 2 uses
   %.not.us.i = icmp slt i64 %i.ik, %i.hr
@@ -887,8 +881,8 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %.not.i, label %._crit_edge.i23, label %.lr.ph.i.preheader.i, !llvm.loop !346
 
 ._crit_edge.i23:                                  ; preds = %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP11V3GraphEdgeSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph9sortEdgesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i", %.critedge.i.us.i, %.critedge.i.us.i.us58, %.critedge.i.us.i.us, %bb.ak
-  %.sroa.041.0.lcssa.i = phi ptr [ %0, %bb.ak ], [ %i.ht, %.critedge.i.us.i.us ], [ %i.ia, %.critedge.i.us.i.us58 ], [ %5, %.critedge.i.us.i ], [ %i.im, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP11V3GraphEdgeSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph9sortEdgesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ] ; 3 uses
-  %.0.lcssa.i = phi ptr [ %2, %bb.ak ], [ %3, %.critedge.i.us.i.us ], [ %4, %.critedge.i.us.i.us58 ], [ %i.ih, %.critedge.i.us.i ], [ %i.jk, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP11V3GraphEdgeSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph9sortEdgesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ] ; 2 uses
+  %.sroa.041.0.lcssa.i = phi ptr [ %0, %bb.ak ], [ %i.ht, %.critedge.i.us.i.us ], [ %i.ia, %.critedge.i.us.i.us58 ], [ %i.ig, %.critedge.i.us.i ], [ %i.im, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP11V3GraphEdgeSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph9sortEdgesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ] ; 3 uses
+  %.0.lcssa.i = phi ptr [ %2, %bb.ak ], [ %i.hu, %.critedge.i.us.i.us ], [ %i.ib, %.critedge.i.us.i.us58 ], [ %i.ih, %.critedge.i.us.i ], [ %i.jk, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP11V3GraphEdgeSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph9sortEdgesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ] ; 2 uses
   %.lcssa53.i = phi i64 [ %i.d, %bb.ak ], [ %i.hx, %.critedge.i.us.i.us ], [ %i.if, %.critedge.i.us.i.us58 ], [ %i.ik, %.critedge.i.us.i ], [ %i.jm, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPP11V3GraphEdgeSt6vectorIS3_SaIS3_EEEES4_NS0_5__ops15_Iter_comp_iterIZN7V3Graph9sortEdgesEvE3$_0EEET0_T_SF_SF_SF_SE_T1_.exit.i" ]
   %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %.069, i64 %.lcssa53.i) ; 2 uses
   %.idx51.i = shl nsw i64 %.sroa.speculated.i, 3

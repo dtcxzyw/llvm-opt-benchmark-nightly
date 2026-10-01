@@ -205,7 +205,7 @@ middle.block446:                                  ; preds = %vector.body439
   %i.fa = getelementptr [2 x i8], ptr %i.ey, i64 %i.ez
   %i.fb = getelementptr i8, ptr %i.fa, i64 -2     ; 2 uses
   %i.fc = icmp sgt i32 %i.j, 0                    ; 2 uses
-  %i.fd = sext i32 %i.j to i64                    ; 7 uses
+  %i.fd = sext i32 %i.j to i64                    ; 4 uses
   %i.fe = shl i32 %.1.lcssa, 5
   %reass.sub = sub i32 32, %i.fe                  ; 3 uses
   %i.ff = ashr i32 %reass.sub, 6
@@ -223,6 +223,7 @@ middle.block446:                                  ; preds = %vector.body439
   %wide.trip.count284 = zext nneg i32 %i.j to i64
   %xtraiter = and i64 %wide.trip.count296, 3      ; 3 uses
   %unroll_iter = and i64 %wide.trip.count296, 2147483644
+  %8 = shl nsw i64 %i.fd, 2
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod516 = icmp ne i64 %xtraiter, 0
   %min.iters.check470 = icmp ult i32 %i.j, 8
@@ -386,22 +387,19 @@ scalar.ph469:                                     ; preds = %scalar.ph469.prehea
   %indvars.iv264 = phi i64 [ %indvars.iv.next265.3, %.preheader ], [ 0, %.preheader.lr.ph.split ] ; 5 uses
   %.1.i96150 = phi ptr [ %i.hp, %.preheader ], [ %.041.i166, %.preheader.lr.ph.split ]
   %niter = phi i64 [ %niter.next.3, %.preheader ], [ 0, %.preheader.lr.ph.split ]
-  %8 = getelementptr inbounds i8, ptr %.1.i96150, i64 %i.fd
   %.reass = mul i64 %indvars.iv264, %factor.op.mul
   %gep = getelementptr [2 x i8], ptr %invariant.gep, i64 %.reass
   store i16 %i.fj, ptr %gep, align 2, !tbaa !34
   %indvars.iv.next265 = or disjoint i64 %indvars.iv264, 1
-  %9 = getelementptr inbounds i8, ptr %8, i64 %i.fd
   %.reass.1 = mul i64 %indvars.iv.next265, %factor.op.mul
   %gep.1 = getelementptr [2 x i8], ptr %invariant.gep, i64 %.reass.1
   store i16 %i.fj, ptr %gep.1, align 2, !tbaa !34
   %indvars.iv.next265.1 = or disjoint i64 %indvars.iv264, 2
-  %10 = getelementptr inbounds i8, ptr %9, i64 %i.fd
   %.reass.2 = mul i64 %indvars.iv.next265.1, %factor.op.mul
   %gep.2 = getelementptr [2 x i8], ptr %invariant.gep, i64 %.reass.2
   store i16 %i.fj, ptr %gep.2, align 2, !tbaa !34
   %indvars.iv.next265.2 = or disjoint i64 %indvars.iv264, 3
-  %i.hp = getelementptr inbounds i8, ptr %10, i64 %i.fd ; 3 uses
+  %i.hp = getelementptr inbounds i8, ptr %.1.i96150, i64 %8 ; 3 uses
   %.reass.3 = mul i64 %indvars.iv.next265.2, %factor.op.mul
   %gep.3 = getelementptr [2 x i8], ptr %invariant.gep, i64 %.reass.3
   store i16 %i.fj, ptr %gep.3, align 2, !tbaa !34
@@ -569,8 +567,8 @@ mip_upsampling_1d_12.exit111:                     ; preds = %._crit_edge180, %bb
 
 .lr.ph200.preheader:                              ; preds = %mip_upsampling_1d_12.exit111
   %i.ka = trunc i64 %5 to i32
-  %sext = shl i64 %5, 32
-  %i.kb = ashr exact i64 %sext, 32                ; 5 uses
+  %sext = shl i64 %5, 32                          ; 2 uses
+  %i.kb = ashr exact i64 %sext, 32                ; 3 uses
   %i.kc = sub nsw i64 0, %i.kb
   %i.kd = mul nsw i32 %i.m, %i.ka
   %i.ke = sext i32 %i.kd to i64
@@ -581,6 +579,7 @@ mip_upsampling_1d_12.exit111:                     ; preds = %._crit_edge180, %bb
   %unroll_iter530 = and i32 %i.ev, -2
   %lcmp.mod527.not = icmp eq i32 %xtraiter525, 0
   %lcmp.mod529 = trunc i32 %i.ev to i1
+  %9 = ashr exact i64 %sext, 30
   br label %.lr.ph200
 
 .lr.ph200:                                        ; preds = %.lr.ph200.preheader, %._crit_edge201
@@ -599,7 +598,7 @@ mip_upsampling_1d_12.exit111:                     ; preds = %._crit_edge180, %bb
 
 .lr.ph192:                                        ; preds = %.lr.ph200, %._crit_edge193
   %.034.i198 = phi i32 [ 0, %.lr.ph200 ], [ %i.ky, %._crit_edge193 ]
-  %.035.i197 = phi ptr [ %.0.i100205, %.lr.ph200 ], [ %12, %._crit_edge193 ] ; 2 uses
+  %.035.i197 = phi ptr [ %.0.i100205, %.lr.ph200 ], [ %10, %._crit_edge193 ] ; 2 uses
   %.036.i196 = phi ptr [ %i.kh, %.lr.ph200 ], [ %i.kl, %._crit_edge193 ]
   %.037.i195 = phi ptr [ %.039.i98202, %.lr.ph200 ], [ %i.kl, %._crit_edge193 ] ; 3 uses
   %i.kl = getelementptr inbounds [2 x i8], ptr %.036.i196, i64 %i.ke ; 5 uses
@@ -628,8 +627,7 @@ mip_upsampling_1d_12.exit111:                     ; preds = %._crit_edge180, %bb
 
 ._crit_edge193:                                   ; preds = %._crit_edge193.unr-lcssa, %.epil.preheader524
   %i.kx = phi ptr [ %i.lk, %._crit_edge193.unr-lcssa ], [ %.1.i101189.epil.init, %.epil.preheader524 ]
-  %11 = getelementptr inbounds [2 x i8], ptr %i.kx, i64 %i.kb
-  %12 = getelementptr inbounds [2 x i8], ptr %11, i64 %i.kb
+  %10 = getelementptr inbounds i8, ptr %i.kx, i64 %9
   %i.ky = add nuw nsw i32 %.034.i198, 1           ; 2 uses
   %exitcond304.not = icmp eq i32 %i.ky, %smax303
   br i1 %exitcond304.not, label %._crit_edge201, label %.lr.ph192, !llvm.loop !765
@@ -1032,7 +1030,7 @@ middle.block446:                                  ; preds = %vector.body439
   %i.fa = getelementptr [2 x i8], ptr %i.ey, i64 %i.ez
   %i.fb = getelementptr i8, ptr %i.fa, i64 -2     ; 2 uses
   %i.fc = icmp sgt i32 %i.j, 0                    ; 2 uses
-  %i.fd = sext i32 %i.j to i64                    ; 7 uses
+  %i.fd = sext i32 %i.j to i64                    ; 4 uses
   %i.fe = shl i32 %.1.lcssa, 5
   %reass.sub = sub i32 32, %i.fe                  ; 3 uses
   %i.ff = ashr i32 %reass.sub, 6
@@ -1050,6 +1048,7 @@ middle.block446:                                  ; preds = %vector.body439
   %wide.trip.count284 = zext nneg i32 %i.j to i64
   %xtraiter = and i64 %wide.trip.count296, 3      ; 3 uses
   %unroll_iter = and i64 %wide.trip.count296, 2147483644
+  %8 = shl nsw i64 %i.fd, 2
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod516 = icmp ne i64 %xtraiter, 0
   %min.iters.check470 = icmp ult i32 %i.j, 8
@@ -1213,22 +1212,19 @@ scalar.ph469:                                     ; preds = %scalar.ph469.prehea
   %indvars.iv264 = phi i64 [ %indvars.iv.next265.3, %.preheader ], [ 0, %.preheader.lr.ph.split ] ; 5 uses
   %.1.i96150 = phi ptr [ %i.hp, %.preheader ], [ %.041.i166, %.preheader.lr.ph.split ]
   %niter = phi i64 [ %niter.next.3, %.preheader ], [ 0, %.preheader.lr.ph.split ]
-  %8 = getelementptr inbounds i8, ptr %.1.i96150, i64 %i.fd
   %.reass = mul i64 %indvars.iv264, %factor.op.mul
   %gep = getelementptr [2 x i8], ptr %invariant.gep, i64 %.reass
   store i16 %i.fj, ptr %gep, align 2, !tbaa !34
   %indvars.iv.next265 = or disjoint i64 %indvars.iv264, 1
-  %9 = getelementptr inbounds i8, ptr %8, i64 %i.fd
   %.reass.1 = mul i64 %indvars.iv.next265, %factor.op.mul
   %gep.1 = getelementptr [2 x i8], ptr %invariant.gep, i64 %.reass.1
   store i16 %i.fj, ptr %gep.1, align 2, !tbaa !34
   %indvars.iv.next265.1 = or disjoint i64 %indvars.iv264, 2
-  %10 = getelementptr inbounds i8, ptr %9, i64 %i.fd
   %.reass.2 = mul i64 %indvars.iv.next265.1, %factor.op.mul
   %gep.2 = getelementptr [2 x i8], ptr %invariant.gep, i64 %.reass.2
   store i16 %i.fj, ptr %gep.2, align 2, !tbaa !34
   %indvars.iv.next265.2 = or disjoint i64 %indvars.iv264, 3
-  %i.hp = getelementptr inbounds i8, ptr %10, i64 %i.fd ; 3 uses
+  %i.hp = getelementptr inbounds i8, ptr %.1.i96150, i64 %8 ; 3 uses
   %.reass.3 = mul i64 %indvars.iv.next265.2, %factor.op.mul
   %gep.3 = getelementptr [2 x i8], ptr %invariant.gep, i64 %.reass.3
   store i16 %i.fj, ptr %gep.3, align 2, !tbaa !34
@@ -1396,8 +1392,8 @@ mip_upsampling_1d_10.exit111:                     ; preds = %._crit_edge180, %bb
 
 .lr.ph200.preheader:                              ; preds = %mip_upsampling_1d_10.exit111
   %i.ka = trunc i64 %5 to i32
-  %sext = shl i64 %5, 32
-  %i.kb = ashr exact i64 %sext, 32                ; 5 uses
+  %sext = shl i64 %5, 32                          ; 2 uses
+  %i.kb = ashr exact i64 %sext, 32                ; 3 uses
   %i.kc = sub nsw i64 0, %i.kb
   %i.kd = mul nsw i32 %i.m, %i.ka
   %i.ke = sext i32 %i.kd to i64
@@ -1408,6 +1404,7 @@ mip_upsampling_1d_10.exit111:                     ; preds = %._crit_edge180, %bb
   %unroll_iter530 = and i32 %i.ev, -2
   %lcmp.mod527.not = icmp eq i32 %xtraiter525, 0
   %lcmp.mod529 = trunc i32 %i.ev to i1
+  %9 = ashr exact i64 %sext, 30
   br label %.lr.ph200
 
 .lr.ph200:                                        ; preds = %.lr.ph200.preheader, %._crit_edge201
@@ -1426,7 +1423,7 @@ mip_upsampling_1d_10.exit111:                     ; preds = %._crit_edge180, %bb
 
 .lr.ph192:                                        ; preds = %.lr.ph200, %._crit_edge193
   %.034.i198 = phi i32 [ 0, %.lr.ph200 ], [ %i.ky, %._crit_edge193 ]
-  %.035.i197 = phi ptr [ %.0.i100205, %.lr.ph200 ], [ %12, %._crit_edge193 ] ; 2 uses
+  %.035.i197 = phi ptr [ %.0.i100205, %.lr.ph200 ], [ %10, %._crit_edge193 ] ; 2 uses
   %.036.i196 = phi ptr [ %i.kh, %.lr.ph200 ], [ %i.kl, %._crit_edge193 ]
   %.037.i195 = phi ptr [ %.039.i98202, %.lr.ph200 ], [ %i.kl, %._crit_edge193 ] ; 3 uses
   %i.kl = getelementptr inbounds [2 x i8], ptr %.036.i196, i64 %i.ke ; 5 uses
@@ -1455,8 +1452,7 @@ mip_upsampling_1d_10.exit111:                     ; preds = %._crit_edge180, %bb
 
 ._crit_edge193:                                   ; preds = %._crit_edge193.unr-lcssa, %.epil.preheader524
   %i.kx = phi ptr [ %i.lk, %._crit_edge193.unr-lcssa ], [ %.1.i101189.epil.init, %.epil.preheader524 ]
-  %11 = getelementptr inbounds [2 x i8], ptr %i.kx, i64 %i.kb
-  %12 = getelementptr inbounds [2 x i8], ptr %11, i64 %i.kb
+  %10 = getelementptr inbounds i8, ptr %i.kx, i64 %9
   %i.ky = add nuw nsw i32 %.034.i198, 1           ; 2 uses
   %exitcond304.not = icmp eq i32 %i.ky, %smax303
   br i1 %exitcond304.not, label %._crit_edge201, label %.lr.ph192, !llvm.loop !1442
@@ -1859,7 +1855,7 @@ middle.block446:                                  ; preds = %vector.body439
   %i.eq = getelementptr i8, ptr %i.eo, i64 %i.ep
   %i.er = getelementptr i8, ptr %i.eq, i64 -1     ; 2 uses
   %i.es = icmp sgt i32 %i.j, 0                    ; 2 uses
-  %i.et = sext i32 %i.j to i64                    ; 7 uses
+  %i.et = sext i32 %i.j to i64                    ; 4 uses
   %i.eu = shl i32 %.1.lcssa, 5
   %reass.sub = sub i32 32, %i.eu                  ; 3 uses
   %i.ev = ashr i32 %reass.sub, 6
@@ -1877,6 +1873,7 @@ middle.block446:                                  ; preds = %vector.body439
   %wide.trip.count284 = zext nneg i32 %i.j to i64
   %xtraiter = and i64 %wide.trip.count296, 3      ; 3 uses
   %unroll_iter = and i64 %wide.trip.count296, 2147483644
+  %8 = shl nsw i64 %i.et, 2
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod516 = icmp ne i64 %xtraiter, 0
   %min.iters.check470 = icmp ult i32 %i.j, 8
@@ -2040,22 +2037,19 @@ scalar.ph469:                                     ; preds = %scalar.ph469.prehea
   %indvars.iv264 = phi i64 [ %indvars.iv.next265.3, %.preheader ], [ 0, %.preheader.lr.ph.split ] ; 5 uses
   %.1.i96150 = phi ptr [ %i.hf, %.preheader ], [ %.041.i166, %.preheader.lr.ph.split ]
   %niter = phi i64 [ %niter.next.3, %.preheader ], [ 0, %.preheader.lr.ph.split ]
-  %8 = getelementptr inbounds i8, ptr %.1.i96150, i64 %i.et
   %.reass = mul i64 %indvars.iv264, %factor.op.mul
   %gep = getelementptr i8, ptr %invariant.gep, i64 %.reass
   store i8 %i.ez, ptr %gep, align 1, !tbaa !40
   %indvars.iv.next265 = or disjoint i64 %indvars.iv264, 1
-  %9 = getelementptr inbounds i8, ptr %8, i64 %i.et
   %.reass.1 = mul i64 %indvars.iv.next265, %factor.op.mul
   %gep.1 = getelementptr i8, ptr %invariant.gep, i64 %.reass.1
   store i8 %i.ez, ptr %gep.1, align 1, !tbaa !40
   %indvars.iv.next265.1 = or disjoint i64 %indvars.iv264, 2
-  %10 = getelementptr inbounds i8, ptr %9, i64 %i.et
   %.reass.2 = mul i64 %indvars.iv.next265.1, %factor.op.mul
   %gep.2 = getelementptr i8, ptr %invariant.gep, i64 %.reass.2
   store i8 %i.ez, ptr %gep.2, align 1, !tbaa !40
   %indvars.iv.next265.2 = or disjoint i64 %indvars.iv264, 3
-  %i.hf = getelementptr inbounds i8, ptr %10, i64 %i.et ; 3 uses
+  %i.hf = getelementptr inbounds i8, ptr %.1.i96150, i64 %8 ; 3 uses
   %.reass.3 = mul i64 %indvars.iv.next265.2, %factor.op.mul
   %gep.3 = getelementptr i8, ptr %invariant.gep, i64 %.reass.3
   store i8 %i.ez, ptr %gep.3, align 1, !tbaa !40
@@ -2223,8 +2217,8 @@ mip_upsampling_1d_8.exit111:                      ; preds = %._crit_edge180, %bb
 
 .lr.ph200.preheader:                              ; preds = %mip_upsampling_1d_8.exit111
   %i.jq = trunc i64 %5 to i32
-  %sext = shl i64 %5, 32
-  %i.jr = ashr exact i64 %sext, 32                ; 5 uses
+  %sext = shl i64 %5, 32                          ; 2 uses
+  %i.jr = ashr exact i64 %sext, 32                ; 3 uses
   %i.js = sub nsw i64 0, %i.jr
   %i.jt = mul nsw i32 %i.m, %i.jq
   %i.ju = sext i32 %i.jt to i64
@@ -2235,6 +2229,7 @@ mip_upsampling_1d_8.exit111:                      ; preds = %._crit_edge180, %bb
   %unroll_iter530 = and i32 %i.el, -2
   %lcmp.mod527.not = icmp eq i32 %xtraiter525, 0
   %lcmp.mod529 = trunc i32 %i.el to i1
+  %9 = ashr exact i64 %sext, 31
   br label %.lr.ph200
 
 .lr.ph200:                                        ; preds = %.lr.ph200.preheader, %._crit_edge201
@@ -2282,8 +2277,7 @@ mip_upsampling_1d_8.exit111:                      ; preds = %._crit_edge180, %bb
 
 ._crit_edge193:                                   ; preds = %._crit_edge193.unr-lcssa, %.epil.preheader524
   %i.kn = phi ptr [ %i.lb, %._crit_edge193.unr-lcssa ], [ %.1.i101189.epil.init, %.epil.preheader524 ]
-  %11 = getelementptr inbounds i8, ptr %i.kn, i64 %i.jr
-  %i.ko = getelementptr inbounds i8, ptr %11, i64 %i.jr
+  %i.ko = getelementptr inbounds i8, ptr %i.kn, i64 %9
   %i.kp = add nuw nsw i32 %.034.i198, 1           ; 2 uses
   %exitcond304.not = icmp eq i32 %i.kp, %smax303
   br i1 %exitcond304.not, label %._crit_edge201, label %.lr.ph192, !llvm.loop !2138

@@ -204,7 +204,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.j = load i64, ptr %i.i, align 8, !tbaa !19   ; 14 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !21   ; 32 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !21   ; 22 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.n = load i64, ptr %i.m, align 8, !tbaa !22
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -487,6 +487,7 @@ bb.a:
   %xtraiter = and i64 %i.f, 7                     ; 3 uses
   %i.es = icmp ult i64 %i.f, 8
   %unroll_iter = and i64 %i.f, 9223372036854775800
+  %5 = shl i64 %i.l, 6
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod214 = icmp ne i64 %xtraiter, 0
   br label %.preheader.us
@@ -495,6 +496,7 @@ bb.a:
   %xtraiter215 = and i64 %i.f, 3                  ; 3 uses
   %i.et = icmp ult i64 %i.f, 4
   %unroll_iter221 = and i64 %i.f, 9223372036854775804
+  %6 = shl i64 %i.l, 5
   %lcmp.mod217.not = icmp eq i64 %xtraiter215, 0
   %lcmp.mod220 = icmp ne i64 %xtraiter215, 0
   br label %.preheader.us.us95
@@ -509,7 +511,7 @@ bb.a:
 
 ._crit_edge.i.us59.us.us:                         ; preds = %.preheader.us.us95, %._crit_edge.i.us59.us.us
   %.056.us60.us.us = phi i64 [ %i.fy, %._crit_edge.i.us59.us.us ], [ 0, %.preheader.us.us95 ] ; 5 uses
-  %.155.us61.us.us = phi ptr [ %8, %._crit_edge.i.us59.us.us ], [ %.04872.us.us97, %.preheader.us.us95 ]
+  %.155.us61.us.us = phi ptr [ %7, %._crit_edge.i.us59.us.us ], [ %.04872.us.us97, %.preheader.us.us95 ]
   %.15054.us62.us.us = phi ptr [ %i.fz, %._crit_edge.i.us59.us.us ], [ %.04971.us.us98, %.preheader.us.us95 ] ; 3 uses
   %niter222 = phi i64 [ %niter222.next.3, %._crit_edge.i.us59.us.us ], [ 0, %.preheader.us.us95 ]
   %i.eu = mul nsw i64 %.056.us60.us.us, %i.h
@@ -521,41 +523,38 @@ bb.a:
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
   store double %i.ey, ptr %i.ez, align 8, !tbaa !27
   %i.fa = or disjoint i64 %.056.us60.us.us, 1
-  %5 = getelementptr inbounds [8 x i8], ptr %.15054.us62.us.us, i64 %i.l ; 3 uses
-  %i.fb = getelementptr inbounds [8 x i8], ptr %.155.us61.us.us, i64 %i.l
+  %i.fb = getelementptr inbounds [8 x i8], ptr %.15054.us62.us.us, i64 %i.l ; 3 uses
   %i.fc = mul nsw i64 %i.fa, %i.h
   %i.fd = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.fc ; 2 uses
-  %i.fe = load double, ptr %5, align 8, !tbaa !27
+  %i.fe = load double, ptr %i.fb, align 8, !tbaa !27
   store double %i.fe, ptr %i.fd, align 8, !tbaa !27
-  %i.ff = getelementptr inbounds [8 x i8], ptr %5, i64 %i.p
+  %i.ff = getelementptr inbounds [8 x i8], ptr %i.fb, i64 %i.p
   %i.fg = load double, ptr %i.ff, align 8, !tbaa !27
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fd, i64 8
   store double %i.fg, ptr %i.fh, align 8, !tbaa !27
   %i.fi = or disjoint i64 %.056.us60.us.us, 2
-  %6 = getelementptr inbounds [8 x i8], ptr %5, i64 %i.l ; 3 uses
-  %i.fj = getelementptr inbounds [8 x i8], ptr %i.fb, i64 %i.l
+  %i.fj = getelementptr inbounds [8 x i8], ptr %i.fb, i64 %i.l ; 3 uses
   %i.fk = mul nsw i64 %i.fi, %i.h
   %i.fl = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.fk ; 2 uses
-  %i.fm = load double, ptr %6, align 8, !tbaa !27
+  %i.fm = load double, ptr %i.fj, align 8, !tbaa !27
   store double %i.fm, ptr %i.fl, align 8, !tbaa !27
-  %i.fn = getelementptr inbounds [8 x i8], ptr %6, i64 %i.p
+  %i.fn = getelementptr inbounds [8 x i8], ptr %i.fj, i64 %i.p
   %i.fo = load double, ptr %i.fn, align 8, !tbaa !27
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fl, i64 8
   store double %i.fo, ptr %i.fp, align 8, !tbaa !27
   %i.fq = or disjoint i64 %.056.us60.us.us, 3
-  %7 = getelementptr inbounds [8 x i8], ptr %6, i64 %i.l ; 3 uses
-  %i.fr = getelementptr inbounds [8 x i8], ptr %i.fj, i64 %i.l
+  %i.fr = getelementptr inbounds [8 x i8], ptr %i.fj, i64 %i.l ; 3 uses
   %i.fs = mul nsw i64 %i.fq, %i.h
   %i.ft = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.fs ; 2 uses
-  %i.fu = load double, ptr %7, align 8, !tbaa !27
+  %i.fu = load double, ptr %i.fr, align 8, !tbaa !27
   store double %i.fu, ptr %i.ft, align 8, !tbaa !27
-  %i.fv = getelementptr inbounds [8 x i8], ptr %7, i64 %i.p
+  %i.fv = getelementptr inbounds [8 x i8], ptr %i.fr, i64 %i.p
   %i.fw = load double, ptr %i.fv, align 8, !tbaa !27
   %i.fx = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
   store double %i.fw, ptr %i.fx, align 8, !tbaa !27
   %i.fy = add nuw nsw i64 %.056.us60.us.us, 4     ; 2 uses
-  %i.fz = getelementptr inbounds [8 x i8], ptr %7, i64 %i.l ; 3 uses
-  %8 = getelementptr inbounds [8 x i8], ptr %i.fr, i64 %i.l ; 3 uses
+  %i.fz = getelementptr inbounds [8 x i8], ptr %i.fr, i64 %i.l ; 3 uses
+  %7 = getelementptr inbounds i8, ptr %.155.us61.us.us, i64 %6 ; 3 uses
   %niter222.next.3 = add nuw nsw i64 %niter222, 4 ; 2 uses
   %niter222.ncmp.3 = icmp eq i64 %niter222.next.3, %unroll_iter221
   br i1 %niter222.ncmp.3, label %._crit_edge.split.split.us.us.us.unr-lcssa, label %._crit_edge.i.us59.us.us, !llvm.loop !87
@@ -565,7 +564,7 @@ bb.a:
 
 ._crit_edge.i.us59.us.us.epil.preheader:          ; preds = %._crit_edge.split.split.us.us.us.unr-lcssa, %.preheader.us.us95
   %.056.us60.us.us.epil.init = phi i64 [ 0, %.preheader.us.us95 ], [ %i.fy, %._crit_edge.split.split.us.us.us.unr-lcssa ]
-  %.155.us61.us.us.epil.init = phi ptr [ %.04872.us.us97, %.preheader.us.us95 ], [ %8, %._crit_edge.split.split.us.us.us.unr-lcssa ]
+  %.155.us61.us.us.epil.init = phi ptr [ %.04872.us.us97, %.preheader.us.us95 ], [ %7, %._crit_edge.split.split.us.us.us.unr-lcssa ]
   %.15054.us62.us.us.epil.init = phi ptr [ %.04971.us.us98, %.preheader.us.us95 ], [ %i.fz, %._crit_edge.split.split.us.us.us.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod220)
   br label %._crit_edge.i.us59.us.us.epil
@@ -592,7 +591,7 @@ bb.a:
 
 ._crit_edge.split.split.us.us.us:                 ; preds = %._crit_edge.i.us59.us.us.epil, %._crit_edge.split.split.us.us.us.unr-lcssa
   %.lcssa201 = phi ptr [ %i.fz, %._crit_edge.split.split.us.us.us.unr-lcssa ], [ %i.gh, %._crit_edge.i.us59.us.us.epil ] ; 2 uses
-  %.lcssa200 = phi ptr [ %8, %._crit_edge.split.split.us.us.us.unr-lcssa ], [ %i.gi, %._crit_edge.i.us59.us.us.epil ] ; 2 uses
+  %.lcssa200 = phi ptr [ %7, %._crit_edge.split.split.us.us.us.unr-lcssa ], [ %i.gi, %._crit_edge.i.us59.us.us.epil ] ; 2 uses
   %i.gj = load ptr, ptr %i.ac, align 8, !tbaa !26
   tail call void %i.gj(ptr noundef %i.b, ptr noundef nonnull %i.s, ptr noundef %.05269.us.us100) #4
   %i.gk = getelementptr inbounds [8 x i8], ptr %.05269.us.us100, i64 %i.ad ; 2 uses
@@ -611,7 +610,7 @@ bb.a:
 
 ._crit_edge.i.us:                                 ; preds = %.preheader.us, %._crit_edge.i.us
   %.056.us81 = phi i64 [ %i.hz, %._crit_edge.i.us ], [ 0, %.preheader.us ] ; 9 uses
-  %.155.us82 = phi ptr [ %16, %._crit_edge.i.us ], [ %.04872.us, %.preheader.us ]
+  %.155.us82 = phi ptr [ %8, %._crit_edge.i.us ], [ %.04872.us, %.preheader.us ]
   %.15054.us83 = phi ptr [ %i.ia, %._crit_edge.i.us ], [ %.04971.us, %.preheader.us ] ; 2 uses
   %niter = phi i64 [ %niter.next.7, %._crit_edge.i.us ], [ 0, %.preheader.us ]
   %i.gn = mul nsw i64 %.056.us81, %i.h
@@ -619,57 +618,50 @@ bb.a:
   %i.gp = load double, ptr %.15054.us83, align 8, !tbaa !27
   store double %i.gp, ptr %i.go, align 8, !tbaa !27
   %i.gq = or disjoint i64 %.056.us81, 1
-  %9 = getelementptr inbounds [8 x i8], ptr %.15054.us83, i64 %i.l ; 2 uses
-  %i.gr = getelementptr inbounds [8 x i8], ptr %.155.us82, i64 %i.l
+  %i.gr = getelementptr inbounds [8 x i8], ptr %.15054.us83, i64 %i.l ; 2 uses
   %i.gs = mul nsw i64 %i.gq, %i.h
   %i.gt = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.gs
-  %i.gu = load double, ptr %9, align 8, !tbaa !27
+  %i.gu = load double, ptr %i.gr, align 8, !tbaa !27
   store double %i.gu, ptr %i.gt, align 8, !tbaa !27
   %i.gv = or disjoint i64 %.056.us81, 2
-  %10 = getelementptr inbounds [8 x i8], ptr %9, i64 %i.l ; 2 uses
-  %i.gw = getelementptr inbounds [8 x i8], ptr %i.gr, i64 %i.l
+  %i.gw = getelementptr inbounds [8 x i8], ptr %i.gr, i64 %i.l ; 2 uses
   %i.gx = mul nsw i64 %i.gv, %i.h
   %i.gy = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.gx
-  %i.gz = load double, ptr %10, align 8, !tbaa !27
+  %i.gz = load double, ptr %i.gw, align 8, !tbaa !27
   store double %i.gz, ptr %i.gy, align 8, !tbaa !27
   %i.ha = or disjoint i64 %.056.us81, 3
-  %11 = getelementptr inbounds [8 x i8], ptr %10, i64 %i.l ; 2 uses
-  %i.hb = getelementptr inbounds [8 x i8], ptr %i.gw, i64 %i.l
+  %i.hb = getelementptr inbounds [8 x i8], ptr %i.gw, i64 %i.l ; 2 uses
   %i.hc = mul nsw i64 %i.ha, %i.h
   %i.hd = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.hc
-  %i.he = load double, ptr %11, align 8, !tbaa !27
+  %i.he = load double, ptr %i.hb, align 8, !tbaa !27
   store double %i.he, ptr %i.hd, align 8, !tbaa !27
   %i.hf = or disjoint i64 %.056.us81, 4
-  %12 = getelementptr inbounds [8 x i8], ptr %11, i64 %i.l ; 2 uses
-  %i.hg = getelementptr inbounds [8 x i8], ptr %i.hb, i64 %i.l
+  %i.hg = getelementptr inbounds [8 x i8], ptr %i.hb, i64 %i.l ; 2 uses
   %i.hh = mul nsw i64 %i.hf, %i.h
   %i.hi = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.hh
-  %i.hj = load double, ptr %12, align 8, !tbaa !27
+  %i.hj = load double, ptr %i.hg, align 8, !tbaa !27
   store double %i.hj, ptr %i.hi, align 8, !tbaa !27
   %i.hk = or disjoint i64 %.056.us81, 5
-  %13 = getelementptr inbounds [8 x i8], ptr %12, i64 %i.l ; 2 uses
-  %i.hl = getelementptr inbounds [8 x i8], ptr %i.hg, i64 %i.l
+  %i.hl = getelementptr inbounds [8 x i8], ptr %i.hg, i64 %i.l ; 2 uses
   %i.hm = mul nsw i64 %i.hk, %i.h
   %i.hn = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.hm
-  %i.ho = load double, ptr %13, align 8, !tbaa !27
+  %i.ho = load double, ptr %i.hl, align 8, !tbaa !27
   store double %i.ho, ptr %i.hn, align 8, !tbaa !27
   %i.hp = or disjoint i64 %.056.us81, 6
-  %14 = getelementptr inbounds [8 x i8], ptr %13, i64 %i.l ; 2 uses
-  %i.hq = getelementptr inbounds [8 x i8], ptr %i.hl, i64 %i.l
+  %i.hq = getelementptr inbounds [8 x i8], ptr %i.hl, i64 %i.l ; 2 uses
   %i.hr = mul nsw i64 %i.hp, %i.h
   %i.hs = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.hr
-  %i.ht = load double, ptr %14, align 8, !tbaa !27
+  %i.ht = load double, ptr %i.hq, align 8, !tbaa !27
   store double %i.ht, ptr %i.hs, align 8, !tbaa !27
   %i.hu = or disjoint i64 %.056.us81, 7
-  %15 = getelementptr inbounds [8 x i8], ptr %14, i64 %i.l ; 2 uses
-  %i.hv = getelementptr inbounds [8 x i8], ptr %i.hq, i64 %i.l
+  %i.hv = getelementptr inbounds [8 x i8], ptr %i.hq, i64 %i.l ; 2 uses
   %i.hw = mul nsw i64 %i.hu, %i.h
   %i.hx = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.hw
-  %i.hy = load double, ptr %15, align 8, !tbaa !27
+  %i.hy = load double, ptr %i.hv, align 8, !tbaa !27
   store double %i.hy, ptr %i.hx, align 8, !tbaa !27
   %i.hz = add nuw nsw i64 %.056.us81, 8           ; 2 uses
-  %i.ia = getelementptr inbounds [8 x i8], ptr %15, i64 %i.l ; 3 uses
-  %16 = getelementptr inbounds [8 x i8], ptr %i.hv, i64 %i.l ; 3 uses
+  %i.ia = getelementptr inbounds [8 x i8], ptr %i.hv, i64 %i.l ; 3 uses
+  %8 = getelementptr inbounds i8, ptr %.155.us82, i64 %5 ; 3 uses
   %niter.next.7 = add nuw nsw i64 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.split.split.us84.unr-lcssa, label %._crit_edge.i.us, !llvm.loop !87
@@ -679,7 +671,7 @@ bb.a:
 
 ._crit_edge.i.us.epil.preheader:                  ; preds = %._crit_edge.split.split.us84.unr-lcssa, %.preheader.us
   %.056.us81.epil.init = phi i64 [ 0, %.preheader.us ], [ %i.hz, %._crit_edge.split.split.us84.unr-lcssa ]
-  %.155.us82.epil.init = phi ptr [ %.04872.us, %.preheader.us ], [ %16, %._crit_edge.split.split.us84.unr-lcssa ]
+  %.155.us82.epil.init = phi ptr [ %.04872.us, %.preheader.us ], [ %8, %._crit_edge.split.split.us84.unr-lcssa ]
   %.15054.us83.epil.init = phi ptr [ %.04971.us, %.preheader.us ], [ %i.ia, %._crit_edge.split.split.us84.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod214)
   br label %._crit_edge.i.us.epil
@@ -702,7 +694,7 @@ bb.a:
 
 ._crit_edge.split.split.us84:                     ; preds = %._crit_edge.i.us.epil, %._crit_edge.split.split.us84.unr-lcssa
   %.lcssa206 = phi ptr [ %i.ia, %._crit_edge.split.split.us84.unr-lcssa ], [ %i.if, %._crit_edge.i.us.epil ] ; 2 uses
-  %.lcssa205 = phi ptr [ %16, %._crit_edge.split.split.us84.unr-lcssa ], [ %i.ig, %._crit_edge.i.us.epil ] ; 2 uses
+  %.lcssa205 = phi ptr [ %8, %._crit_edge.split.split.us84.unr-lcssa ], [ %i.ig, %._crit_edge.i.us.epil ] ; 2 uses
   %i.ih = load ptr, ptr %i.ac, align 8, !tbaa !26
   tail call void %i.ih(ptr noundef %i.b, ptr noundef nonnull %i.s, ptr noundef %.05269.us) #4
   %i.ii = getelementptr inbounds [8 x i8], ptr %.05269.us, i64 %i.ad ; 2 uses

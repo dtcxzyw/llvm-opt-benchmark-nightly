@@ -205,6 +205,7 @@ bb.a:
   %.56..56..sroa_idx328 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %.8..8..sroa_idx318 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.56..56..sroa_idx329 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
+  %12 = shl i64 %3, 2
   %.8..8..sroa_idx314 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.56..56..sroa_idx325 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %.16..16..sroa_idx321 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -607,19 +608,16 @@ middle.block:                                     ; preds = %vector.body
   %.0..0. = load ptr, ptr %i.c, align 16, !tbaa !17
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %.8..8..sroa_idx, i64 56, i1 false), !tbaa !17
   store ptr %.0..0., ptr %.56..56..sroa_idx324, align 8, !tbaa !17
-  %12 = getelementptr inbounds i8, ptr %.1117135, i64 %3
   %.0..0..1 = load ptr, ptr %i.c, align 16, !tbaa !17
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %.8..8..sroa_idx316, i64 56, i1 false), !tbaa !17
   store ptr %.0..0..1, ptr %.56..56..sroa_idx327, align 8, !tbaa !17
-  %13 = getelementptr inbounds i8, ptr %12, i64 %3
   %.0..0..2 = load ptr, ptr %i.c, align 16, !tbaa !17
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %.8..8..sroa_idx317, i64 56, i1 false), !tbaa !17
   store ptr %.0..0..2, ptr %.56..56..sroa_idx328, align 8, !tbaa !17
-  %14 = getelementptr inbounds i8, ptr %13, i64 %3
   %.0..0..3 = load ptr, ptr %i.c, align 16, !tbaa !17 ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %.8..8..sroa_idx318, i64 56, i1 false), !tbaa !17
   store ptr %.0..0..3, ptr %.56..56..sroa_idx329, align 8, !tbaa !17
-  %i.hv = getelementptr inbounds i8, ptr %14, i64 %3 ; 2 uses
+  %i.hv = getelementptr inbounds i8, ptr %.1117135, i64 %12 ; 2 uses
   %i.hw = add nsw i32 %.1114136, 4                ; 2 uses
   %exitcond.not.3 = icmp eq i32 %i.hw, %i.ba
   br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph138.split
@@ -1022,6 +1020,7 @@ bb.a:
   %.56..56..sroa_idx313 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %.8..8..sroa_idx303 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.56..56..sroa_idx314 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
+  %11 = shl i64 %2, 2
   %.8..8..sroa_idx299 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.56..56..sroa_idx310 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %.16..16..sroa_idx306 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -1424,19 +1423,16 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.0..0. = load ptr, ptr %i.c, align 16, !tbaa !17
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %.8..8..sroa_idx, i64 56, i1 false), !tbaa !17
   store ptr %.0..0., ptr %.56..56..sroa_idx309, align 8, !tbaa !17
-  %11 = getelementptr inbounds i8, ptr %.1110128, i64 %2
   %.0..0..1 = load ptr, ptr %i.c, align 16, !tbaa !17
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %.8..8..sroa_idx301, i64 56, i1 false), !tbaa !17
   store ptr %.0..0..1, ptr %.56..56..sroa_idx312, align 8, !tbaa !17
-  %12 = getelementptr inbounds i8, ptr %11, i64 %2
   %.0..0..2 = load ptr, ptr %i.c, align 16, !tbaa !17
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %.8..8..sroa_idx302, i64 56, i1 false), !tbaa !17
   store ptr %.0..0..2, ptr %.56..56..sroa_idx313, align 8, !tbaa !17
-  %13 = getelementptr inbounds i8, ptr %12, i64 %2
   %.0..0..3 = load ptr, ptr %i.c, align 16, !tbaa !17 ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %.8..8..sroa_idx303, i64 56, i1 false), !tbaa !17
   store ptr %.0..0..3, ptr %.56..56..sroa_idx314, align 8, !tbaa !17
-  %i.hi = getelementptr inbounds i8, ptr %13, i64 %2 ; 2 uses
+  %i.hi = getelementptr inbounds i8, ptr %.1110128, i64 %11 ; 2 uses
   %i.hj = add nsw i32 %.1107129, 4                ; 2 uses
   %exitcond.not.3 = icmp eq i32 %i.hj, %i.ax
   br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph131.split
