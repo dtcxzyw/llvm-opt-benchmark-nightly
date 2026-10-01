@@ -205,7 +205,7 @@ middle.block663:                                  ; preds = %vector.body652
 .lr.ph.i.i.i.i.i.i.i208:                          ; preds = %.lr.ph.i.i.i.i.i.i.i208.preheader, %.lr.ph.i.i.i.i.i.i.i208
   %.017.i.i.i.i.i.i.i209 = phi i64 [ %i.cu, %.lr.ph.i.i.i.i.i.i.i208 ], [ %.017.i.i.i.i.i.i.i209.ph, %.lr.ph.i.i.i.i.i.i.i208.preheader ]
   %.01416.i.i.i.i.i.i.i210 = phi ptr [ %i.cv, %.lr.ph.i.i.i.i.i.i.i208 ], [ %.01416.i.i.i.i.i.i.i210.ph, %.lr.ph.i.i.i.i.i.i.i208.preheader ] ; 3 uses
-  %i.cu = add i64 %.017.i.i.i.i.i.i.i209, -1      ; 2 uses
+  %i.cu = add nsw i64 %.017.i.i.i.i.i.i.i209, -1  ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01416.i.i.i.i.i.i.i210) ]
   store i32 %.pre.i.i.i.i.i.i.i207, ptr %.01416.i.i.i.i.i.i.i210, align 4, !tbaa !67, !noalias !1068
   %i.cv = getelementptr inbounds nuw i8, ptr %.01416.i.i.i.i.i.i.i210, i64 4
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %_ZN5boost9intrusive
   %.048.i.i.prol = phi i64 [ %i.z, %.lr.ph.i18.i.prol ], [ %i.b, %.lr.ph.i18.i.preheader ]
   %.sroa.0.07.i.i.prol = phi ptr [ %i.ac, %.lr.ph.i18.i.prol ], [ %1, %.lr.ph.i18.i.preheader ] ; 2 uses
   %prol.iter68 = phi i64 [ %prol.iter68.next, %.lr.ph.i18.i.prol ], [ 0, %.lr.ph.i18.i.preheader ]
-  %i.z = add i64 %.048.i.i.prol, -1               ; 2 uses
+  %i.z = add nsw i64 %.048.i.i.prol, -1           ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.prol, i64 16
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !67
   store i32 %i.ab, ptr %.09.i.i.prol, align 4, !tbaa !67
@@ -639,7 +639,7 @@ bb.i:                                             ; preds = %bb.h
   %.06.i.i24.prol = phi i64 [ %i.ag, %.lr.ph.i.i23.prol ], [ %i.y, %.lr.ph.i.i23.preheader ]
   %.sroa.0.05.i.i.prol = phi ptr [ %i.aj, %.lr.ph.i.i23.prol ], [ %1, %.lr.ph.i.i23.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i23.prol ], [ 0, %.lr.ph.i.i23.preheader ]
-  %i.ag = add i64 %.06.i.i24.prol, -1             ; 2 uses
+  %i.ag = add nsw i64 %.06.i.i24.prol, -1         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.prol, i64 16
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !67
   store i32 %i.ai, ptr %i.af, align 4, !tbaa !67
@@ -677,7 +677,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.aw, ptr %i.au, align 4, !tbaa !67
   %i.ax = load ptr, ptr %i.at, align 8, !tbaa !187 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.am, i64 12
-  %i.az = add i64 %.06.i.i24, -4                  ; 2 uses
+  %i.az = add nsw i64 %.06.i.i24, -4              ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !67
   store i32 %i.bb, ptr %i.ay, align 4, !tbaa !67
@@ -700,7 +700,7 @@ _ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPiEENS0_3dtl38disab
   %.01417.i.i.prol = phi ptr [ %i.bk, %.lr.ph.i15.i.prol ], [ %.0.i, %_ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPiEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES7_mRS8_.exit.i ] ; 3 uses
   %.sroa.0.016.i.i.prol = phi ptr [ %i.bj, %.lr.ph.i15.i.prol ], [ %.sroa.0.0.lcssa.i.i, %_ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPiEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES7_mRS8_.exit.i ] ; 2 uses
   %prol.iter65 = phi i64 [ %prol.iter65.next, %.lr.ph.i15.i.prol ], [ 0, %_ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPiEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES7_mRS8_.exit.i ]
-  %i.bg = add i64 %.018.i.i.prol, -1              ; 2 uses
+  %i.bg = add nsw i64 %.018.i.i.prol, -1          ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i.i.prol, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01417.i.i.prol) ]
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !67
@@ -738,7 +738,7 @@ _ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPiEENS0_3dtl38disab
   store i32 %i.bv, ptr %i.bt, align 4, !tbaa !67
   %i.bw = load ptr, ptr %i.bs, align 8, !tbaa !187 ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %.01417.i.i, i64 12
-  %i.by = add i64 %.018.i.i, -4                   ; 2 uses
+  %i.by = add nsw i64 %.018.i.i, -4               ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !67
   store i32 %i.ca, ptr %i.bx, align 4, !tbaa !67
@@ -766,7 +766,7 @@ _ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPiEENS0_3dtl38disab
   store i32 %i.cm, ptr %i.ck, align 4, !tbaa !67
   %i.cn = load ptr, ptr %i.cj, align 8, !tbaa !187 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.09.i.i, i64 12
-  %i.cp = add i64 %.048.i.i, -4                   ; 2 uses
+  %i.cp = add nsw i64 %.048.i.i, -4               ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cn, i64 16
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !67
   store i32 %i.cr, ptr %i.co, align 4, !tbaa !67
@@ -1169,7 +1169,7 @@ middle.block663:                                  ; preds = %vector.body652
 .lr.ph.i.i.i.i.i.i.i208:                          ; preds = %.lr.ph.i.i.i.i.i.i.i208.preheader, %.lr.ph.i.i.i.i.i.i.i208
   %.017.i.i.i.i.i.i.i209 = phi i64 [ %i.cu, %.lr.ph.i.i.i.i.i.i.i208 ], [ %.017.i.i.i.i.i.i.i209.ph, %.lr.ph.i.i.i.i.i.i.i208.preheader ]
   %.01416.i.i.i.i.i.i.i210 = phi ptr [ %i.cv, %.lr.ph.i.i.i.i.i.i.i208 ], [ %.01416.i.i.i.i.i.i.i210.ph, %.lr.ph.i.i.i.i.i.i.i208.preheader ] ; 3 uses
-  %i.cu = add i64 %.017.i.i.i.i.i.i.i209, -1      ; 2 uses
+  %i.cu = add nsw i64 %.017.i.i.i.i.i.i.i209, -1  ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01416.i.i.i.i.i.i.i210) ]
   store i32 %.pre.i.i.i.i.i.i.i207, ptr %.01416.i.i.i.i.i.i.i210, align 4, !tbaa !67, !noalias !1928
   %i.cv = getelementptr inbounds nuw i8, ptr %.01416.i.i.i.i.i.i.i210, i64 4
@@ -1572,7 +1572,7 @@ middle.block663:                                  ; preds = %vector.body652
 .lr.ph.i.i.i.i.i.i.i208:                          ; preds = %.lr.ph.i.i.i.i.i.i.i208.preheader, %.lr.ph.i.i.i.i.i.i.i208
   %.017.i.i.i.i.i.i.i209 = phi i64 [ %i.cu, %.lr.ph.i.i.i.i.i.i.i208 ], [ %.017.i.i.i.i.i.i.i209.ph, %.lr.ph.i.i.i.i.i.i.i208.preheader ]
   %.01416.i.i.i.i.i.i.i210 = phi ptr [ %i.cv, %.lr.ph.i.i.i.i.i.i.i208 ], [ %.01416.i.i.i.i.i.i.i210.ph, %.lr.ph.i.i.i.i.i.i.i208.preheader ] ; 3 uses
-  %i.cu = add i64 %.017.i.i.i.i.i.i.i209, -1      ; 2 uses
+  %i.cu = add nsw i64 %.017.i.i.i.i.i.i.i209, -1  ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01416.i.i.i.i.i.i.i210) ]
   store i32 %.pre.i.i.i.i.i.i.i207, ptr %.01416.i.i.i.i.i.i.i210, align 4, !tbaa !67, !noalias !2576
   %i.cv = getelementptr inbounds nuw i8, ptr %.01416.i.i.i.i.i.i.i210, i64 4
@@ -1975,7 +1975,7 @@ bb.s:                                             ; preds = %bb.r
   %.016.i.i.i.i.i.i.i.prol = phi i64 [ %i.dw, %.lr.ph.i.i.i.i.i.i.i.prol ], [ %i.dt, %.lr.ph.i.i.i.i.i.i.i.preheader ]
   %.01315.i.i.i.i.i.i.i.prol = phi ptr [ %i.dz, %.lr.ph.i.i.i.i.i.i.i.prol ], [ %i.ds, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 3 uses
   %prol.iter1195 = phi i64 [ %prol.iter1195.next, %.lr.ph.i.i.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.i.preheader ]
-  %i.dw = add i64 %.016.i.i.i.i.i.i.i.prol, -1    ; 2 uses
+  %i.dw = add nsw i64 %.016.i.i.i.i.i.i.i.prol, -1 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i.i.i.i.prol) ]
   store i32 0, ptr %.01315.i.i.i.i.i.i.i.prol, align 4, !tbaa !225, !noalias !2869
   %i.dx = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67, !noalias !2869
@@ -2010,7 +2010,7 @@ bb.s:                                             ; preds = %bb.r
   %i.eh = add i32 %i.ec, 3
   store i32 %i.eh, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67, !noalias !2869
   %i.ei = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i.i.i.i, i64 12
-  %i.ej = add i64 %.016.i.i.i.i.i.i.i, -4         ; 2 uses
+  %i.ej = add nsw i64 %.016.i.i.i.i.i.i.i, -4     ; 2 uses
   store i32 0, ptr %i.ei, align 4, !tbaa !225, !noalias !2869
   %i.ek = add i32 %i.ec, 4
   store i32 %i.ek, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67, !noalias !2869
@@ -2212,7 +2212,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.016.i.i.i.i.i.i.i503.prol = phi i64 [ %i.gl, %.lr.ph.i.i.i.i.i.i.i502.prol ], [ %.016.i.i.i.i.i.i.i503.ph, %.lr.ph.i.i.i.i.i.i.i502.preheader ]
   %.01315.i.i.i.i.i.i.i504.prol = phi ptr [ %i.go, %.lr.ph.i.i.i.i.i.i.i502.prol ], [ %.01315.i.i.i.i.i.i.i504.ph, %.lr.ph.i.i.i.i.i.i.i502.preheader ] ; 3 uses
   %prol.iter1204 = phi i64 [ %prol.iter1204.next, %.lr.ph.i.i.i.i.i.i.i502.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.i502.preheader ]
-  %i.gl = add i64 %.016.i.i.i.i.i.i.i503.prol, -1 ; 2 uses
+  %i.gl = add nsw i64 %.016.i.i.i.i.i.i.i503.prol, -1 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i.i.i.i504.prol) ]
   store i32 0, ptr %.01315.i.i.i.i.i.i.i504.prol, align 4, !tbaa !225, !noalias !2871
   %i.gm = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67, !noalias !2871
@@ -2246,7 +2246,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.gv = add i32 %i.gq, 3
   store i32 %i.gv, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67, !noalias !2871
   %i.gw = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i.i.i.i504, i64 12
-  %i.gx = add i64 %.016.i.i.i.i.i.i.i503, -4      ; 2 uses
+  %i.gx = add nsw i64 %.016.i.i.i.i.i.i.i503, -4  ; 2 uses
   store i32 0, ptr %i.gw, align 4, !tbaa !225, !noalias !2871
   %i.gy = add i32 %i.gq, 4
   store i32 %i.gy, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67, !noalias !2871
@@ -2649,7 +2649,7 @@ bb.h:                                             ; preds = %_ZN5boost9intrusive
   %.048.i.i.prol = phi i64 [ %i.at, %.lr.ph.i18.i.prol ], [ %i.d, %.lr.ph.i18.i.preheader ]
   %.sroa.0.07.i.i.prol = phi ptr [ %i.aw, %.lr.ph.i18.i.prol ], [ %1, %.lr.ph.i18.i.preheader ] ; 2 uses
   %prol.iter90 = phi i64 [ %prol.iter90.next, %.lr.ph.i18.i.prol ], [ 0, %.lr.ph.i18.i.preheader ]
-  %i.at = add i64 %.048.i.i.prol, -1              ; 2 uses
+  %i.at = add nsw i64 %.048.i.i.prol, -1          ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.prol, i64 16
   %i.av = load i32, ptr %i.au, align 4, !tbaa !67
   store i32 %i.av, ptr %.09.i.i.prol, align 4, !tbaa !225
@@ -2681,7 +2681,7 @@ bb.i:                                             ; preds = %bb.h
   %.06.i.i30.prol = phi i64 [ %i.ba, %.lr.ph.i.i29.prol ], [ %i.as, %.lr.ph.i.i29.preheader ]
   %.sroa.0.05.i.i.prol = phi ptr [ %i.bd, %.lr.ph.i.i29.prol ], [ %1, %.lr.ph.i.i29.preheader ] ; 2 uses
   %prol.iter84 = phi i64 [ %prol.iter84.next, %.lr.ph.i.i29.prol ], [ 0, %.lr.ph.i.i29.preheader ]
-  %i.ba = add i64 %.06.i.i30.prol, -1             ; 2 uses
+  %i.ba = add nsw i64 %.06.i.i30.prol, -1         ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.prol, i64 16
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !67
   store i32 %i.bc, ptr %i.az, align 4, !tbaa !225
@@ -2719,7 +2719,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.bq, ptr %i.bo, align 4, !tbaa !225
   %i.br = load ptr, ptr %i.bn, align 8, !tbaa !187 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bg, i64 12
-  %i.bt = add i64 %.06.i.i30, -4                  ; 2 uses
+  %i.bt = add nsw i64 %.06.i.i30, -4              ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !67
   store i32 %i.bv, ptr %i.bs, align 4, !tbaa !225
@@ -2769,7 +2769,7 @@ _ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPNS0_4test11movable
   store i32 %i.ck, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67
   %i.cl = load ptr, ptr %.sroa.0.016.i.i, align 8, !tbaa !187 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.01417.i.i, i64 4
-  %i.cn = add i64 %.018.i.i, -2                   ; 2 uses
+  %i.cn = add nsw i64 %.018.i.i, -2               ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cl, i64 16
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !67
   store i32 %i.cp, ptr %i.cm, align 4, !tbaa !225
@@ -2800,7 +2800,7 @@ _ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPNS0_4test11movable
   store i32 %i.dd, ptr %i.db, align 4, !tbaa !225
   %i.de = load ptr, ptr %i.da, align 8, !tbaa !187 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.09.i.i, i64 12
-  %i.dg = add i64 %.048.i.i, -4                   ; 2 uses
+  %i.dg = add nsw i64 %.048.i.i, -4               ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.de, i64 16
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !67
   store i32 %i.di, ptr %i.df, align 4, !tbaa !225
@@ -3203,7 +3203,7 @@ bb.al:                                            ; preds = %bb.ak
   %.016.i.i.i.i.i.i.i187.prol = phi i64 [ %i.lx, %.lr.ph.i.i.i.i.i.i.i186.prol ], [ %i.lu, %.lr.ph.i.i.i.i.i.i.i186.preheader ]
   %.01315.i.i.i.i.i.i.i188.prol = phi ptr [ %i.ma, %.lr.ph.i.i.i.i.i.i.i186.prol ], [ %i.lt, %.lr.ph.i.i.i.i.i.i.i186.preheader ] ; 3 uses
   %prol.iter378 = phi i64 [ %prol.iter378.next, %.lr.ph.i.i.i.i.i.i.i186.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.i186.preheader ]
-  %i.lx = add i64 %.016.i.i.i.i.i.i.i187.prol, -1 ; 2 uses
+  %i.lx = add nsw i64 %.016.i.i.i.i.i.i.i187.prol, -1 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i.i.i.i188.prol) ]
   store i32 0, ptr %.01315.i.i.i.i.i.i.i188.prol, align 4, !tbaa !225, !noalias !3053
   %i.ly = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67, !noalias !3053
@@ -3238,7 +3238,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.mi = add i32 %i.md, 3
   store i32 %i.mi, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67, !noalias !3053
   %i.mj = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i.i.i.i188, i64 12
-  %i.mk = add i64 %.016.i.i.i.i.i.i.i187, -4      ; 2 uses
+  %i.mk = add nsw i64 %.016.i.i.i.i.i.i.i187, -4  ; 2 uses
   store i32 0, ptr %i.mj, align 4, !tbaa !225, !noalias !3053
   %i.ml = add i32 %i.md, 4
   store i32 %i.ml, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !67, !noalias !3053
@@ -3641,7 +3641,7 @@ bb.s:                                             ; preds = %bb.r
   %.016.i.i.i.i.i.i.i.prol = phi i64 [ %i.dw, %.lr.ph.i.i.i.i.i.i.i.prol ], [ %i.dt, %.lr.ph.i.i.i.i.i.i.i.preheader ]
   %.01315.i.i.i.i.i.i.i.prol = phi ptr [ %i.dz, %.lr.ph.i.i.i.i.i.i.i.prol ], [ %i.ds, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 3 uses
   %prol.iter1195 = phi i64 [ %prol.iter1195.next, %.lr.ph.i.i.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.i.preheader ]
-  %i.dw = add i64 %.016.i.i.i.i.i.i.i.prol, -1    ; 2 uses
+  %i.dw = add nsw i64 %.016.i.i.i.i.i.i.i.prol, -1 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i.i.i.i.prol) ]
   store i32 0, ptr %.01315.i.i.i.i.i.i.i.prol, align 4, !tbaa !237, !noalias !3361
   %i.dx = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67, !noalias !3361
@@ -3676,7 +3676,7 @@ bb.s:                                             ; preds = %bb.r
   %i.eh = add i32 %i.ec, 3
   store i32 %i.eh, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67, !noalias !3361
   %i.ei = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i.i.i.i, i64 12
-  %i.ej = add i64 %.016.i.i.i.i.i.i.i, -4         ; 2 uses
+  %i.ej = add nsw i64 %.016.i.i.i.i.i.i.i, -4     ; 2 uses
   store i32 0, ptr %i.ei, align 4, !tbaa !237, !noalias !3361
   %i.ek = add i32 %i.ec, 4
   store i32 %i.ek, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67, !noalias !3361
@@ -3878,7 +3878,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.016.i.i.i.i.i.i.i503.prol = phi i64 [ %i.gl, %.lr.ph.i.i.i.i.i.i.i502.prol ], [ %.016.i.i.i.i.i.i.i503.ph, %.lr.ph.i.i.i.i.i.i.i502.preheader ]
   %.01315.i.i.i.i.i.i.i504.prol = phi ptr [ %i.go, %.lr.ph.i.i.i.i.i.i.i502.prol ], [ %.01315.i.i.i.i.i.i.i504.ph, %.lr.ph.i.i.i.i.i.i.i502.preheader ] ; 3 uses
   %prol.iter1204 = phi i64 [ %prol.iter1204.next, %.lr.ph.i.i.i.i.i.i.i502.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.i502.preheader ]
-  %i.gl = add i64 %.016.i.i.i.i.i.i.i503.prol, -1 ; 2 uses
+  %i.gl = add nsw i64 %.016.i.i.i.i.i.i.i503.prol, -1 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i.i.i.i504.prol) ]
   store i32 0, ptr %.01315.i.i.i.i.i.i.i504.prol, align 4, !tbaa !237, !noalias !3363
   %i.gm = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67, !noalias !3363
@@ -3912,7 +3912,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.gv = add i32 %i.gq, 3
   store i32 %i.gv, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67, !noalias !3363
   %i.gw = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i.i.i.i504, i64 12
-  %i.gx = add i64 %.016.i.i.i.i.i.i.i503, -4      ; 2 uses
+  %i.gx = add nsw i64 %.016.i.i.i.i.i.i.i503, -4  ; 2 uses
   store i32 0, ptr %i.gw, align 4, !tbaa !237, !noalias !3363
   %i.gy = add i32 %i.gq, 4
   store i32 %i.gy, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67, !noalias !3363
@@ -4315,7 +4315,7 @@ bb.h:                                             ; preds = %_ZN5boost9intrusive
   %.048.i.i.prol = phi i64 [ %i.at, %.lr.ph.i18.i.prol ], [ %i.d, %.lr.ph.i18.i.preheader ]
   %.sroa.0.07.i.i.prol = phi ptr [ %i.aw, %.lr.ph.i18.i.prol ], [ %1, %.lr.ph.i18.i.preheader ] ; 2 uses
   %prol.iter90 = phi i64 [ %prol.iter90.next, %.lr.ph.i18.i.prol ], [ 0, %.lr.ph.i18.i.preheader ]
-  %i.at = add i64 %.048.i.i.prol, -1              ; 2 uses
+  %i.at = add nsw i64 %.048.i.i.prol, -1          ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.prol, i64 16
   %i.av = load i32, ptr %i.au, align 4, !tbaa !67
   store i32 %i.av, ptr %.09.i.i.prol, align 4, !tbaa !237
@@ -4347,7 +4347,7 @@ bb.i:                                             ; preds = %bb.h
   %.06.i.i30.prol = phi i64 [ %i.ba, %.lr.ph.i.i29.prol ], [ %i.as, %.lr.ph.i.i29.preheader ]
   %.sroa.0.05.i.i.prol = phi ptr [ %i.bd, %.lr.ph.i.i29.prol ], [ %1, %.lr.ph.i.i29.preheader ] ; 2 uses
   %prol.iter84 = phi i64 [ %prol.iter84.next, %.lr.ph.i.i29.prol ], [ 0, %.lr.ph.i.i29.preheader ]
-  %i.ba = add i64 %.06.i.i30.prol, -1             ; 2 uses
+  %i.ba = add nsw i64 %.06.i.i30.prol, -1         ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.prol, i64 16
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !67
   store i32 %i.bc, ptr %i.az, align 4, !tbaa !237
@@ -4385,7 +4385,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.bq, ptr %i.bo, align 4, !tbaa !237
   %i.br = load ptr, ptr %i.bn, align 8, !tbaa !187 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bg, i64 12
-  %i.bt = add i64 %.06.i.i30, -4                  ; 2 uses
+  %i.bt = add nsw i64 %.06.i.i30, -4              ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !67
   store i32 %i.bv, ptr %i.bs, align 4, !tbaa !237
@@ -4435,7 +4435,7 @@ _ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPNS0_4test24movable
   store i32 %i.ck, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67
   %i.cl = load ptr, ptr %.sroa.0.016.i.i, align 8, !tbaa !187 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.01417.i.i, i64 4
-  %i.cn = add i64 %.018.i.i, -2                   ; 2 uses
+  %i.cn = add nsw i64 %.018.i.i, -2               ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cl, i64 16
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !67
   store i32 %i.cp, ptr %i.cm, align 4, !tbaa !237
@@ -4466,7 +4466,7 @@ _ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPNS0_4test24movable
   store i32 %i.dd, ptr %i.db, align 4, !tbaa !237
   %i.de = load ptr, ptr %i.da, align 8, !tbaa !187 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.09.i.i, i64 12
-  %i.dg = add i64 %.048.i.i, -4                   ; 2 uses
+  %i.dg = add nsw i64 %.048.i.i, -4               ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.de, i64 16
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !67
   store i32 %i.di, ptr %i.df, align 4, !tbaa !237
@@ -4869,7 +4869,7 @@ bb.al:                                            ; preds = %bb.ak
   %.016.i.i.i.i.i.i.i187.prol = phi i64 [ %i.lx, %.lr.ph.i.i.i.i.i.i.i186.prol ], [ %i.lu, %.lr.ph.i.i.i.i.i.i.i186.preheader ]
   %.01315.i.i.i.i.i.i.i188.prol = phi ptr [ %i.ma, %.lr.ph.i.i.i.i.i.i.i186.prol ], [ %i.lt, %.lr.ph.i.i.i.i.i.i.i186.preheader ] ; 3 uses
   %prol.iter378 = phi i64 [ %prol.iter378.next, %.lr.ph.i.i.i.i.i.i.i186.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.i186.preheader ]
-  %i.lx = add i64 %.016.i.i.i.i.i.i.i187.prol, -1 ; 2 uses
+  %i.lx = add nsw i64 %.016.i.i.i.i.i.i.i187.prol, -1 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.i.i.i.i.i188.prol) ]
   store i32 0, ptr %.01315.i.i.i.i.i.i.i188.prol, align 4, !tbaa !237, !noalias !3655
   %i.ly = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67, !noalias !3655
@@ -4904,7 +4904,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.mi = add i32 %i.md, 3
   store i32 %i.mi, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67, !noalias !3655
   %i.mj = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i.i.i.i188, i64 12
-  %i.mk = add i64 %.016.i.i.i.i.i.i.i187, -4      ; 2 uses
+  %i.mk = add nsw i64 %.016.i.i.i.i.i.i.i187, -4  ; 2 uses
   store i32 0, ptr %i.mj, align 4, !tbaa !237, !noalias !3655
   %i.ml = add i32 %i.md, 4
   store i32 %i.ml, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !67, !noalias !3655
@@ -5307,7 +5307,7 @@ bb.h:                                             ; preds = %_ZN5boost9intrusive
   %.048.i.i.prol = phi i64 [ %i.at, %.lr.ph.i18.i.prol ], [ %i.d, %.lr.ph.i18.i.preheader ]
   %.sroa.0.07.i.i.prol = phi ptr [ %i.aw, %.lr.ph.i18.i.prol ], [ %1, %.lr.ph.i18.i.preheader ] ; 2 uses
   %prol.iter90 = phi i64 [ %prol.iter90.next, %.lr.ph.i18.i.prol ], [ 0, %.lr.ph.i18.i.preheader ]
-  %i.at = add i64 %.048.i.i.prol, -1              ; 2 uses
+  %i.at = add nsw i64 %.048.i.i.prol, -1          ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.prol, i64 16
   %i.av = load i32, ptr %i.au, align 4, !tbaa !67
   store i32 %i.av, ptr %.09.i.i.prol, align 4, !tbaa !249
@@ -5339,7 +5339,7 @@ bb.i:                                             ; preds = %bb.h
   %.06.i.i30.prol = phi i64 [ %i.ba, %.lr.ph.i.i29.prol ], [ %i.as, %.lr.ph.i.i29.preheader ]
   %.sroa.0.05.i.i.prol = phi ptr [ %i.bd, %.lr.ph.i.i29.prol ], [ %1, %.lr.ph.i.i29.preheader ] ; 2 uses
   %prol.iter84 = phi i64 [ %prol.iter84.next, %.lr.ph.i.i29.prol ], [ 0, %.lr.ph.i.i29.preheader ]
-  %i.ba = add i64 %.06.i.i30.prol, -1             ; 2 uses
+  %i.ba = add nsw i64 %.06.i.i30.prol, -1         ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.prol, i64 16
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !67
   store i32 %i.bc, ptr %i.az, align 4, !tbaa !249
@@ -5377,7 +5377,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.bq, ptr %i.bo, align 4, !tbaa !249
   %i.br = load ptr, ptr %i.bn, align 8, !tbaa !187 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bg, i64 12
-  %i.bt = add i64 %.06.i.i30, -4                  ; 2 uses
+  %i.bt = add nsw i64 %.06.i.i30, -4              ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !67
   store i32 %i.bv, ptr %i.bs, align 4, !tbaa !249
@@ -5427,7 +5427,7 @@ _ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPNS0_4test12copyabl
   store i32 %i.ck, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !67
   %i.cl = load ptr, ptr %.sroa.0.016.i.i, align 8, !tbaa !187 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.01417.i.i, i64 4
-  %i.cn = add i64 %.018.i.i, -2                   ; 2 uses
+  %i.cn = add nsw i64 %.018.i.i, -2               ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cl, i64 16
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !67
   store i32 %i.cp, ptr %i.cm, align 4, !tbaa !249
@@ -5458,7 +5458,7 @@ _ZN5boost9container18copy_n_source_destISt14_List_iteratorIiEPNS0_4test12copyabl
   store i32 %i.dd, ptr %i.db, align 4, !tbaa !249
   %i.de = load ptr, ptr %i.da, align 8, !tbaa !187 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.09.i.i, i64 12
-  %i.dg = add i64 %.048.i.i, -4                   ; 2 uses
+  %i.dg = add nsw i64 %.048.i.i, -4               ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.de, i64 16
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !67
   store i32 %i.di, ptr %i.df, align 4, !tbaa !249

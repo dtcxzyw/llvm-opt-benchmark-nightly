@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 .lr.ph.i27:                                       ; preds = %bb.g, %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiED2Ev.exit.i
   %.06.i = phi i64 [ %i.af, %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiED2Ev.exit.i ], [ %i.d, %bb.g ]
-  %i.af = add i64 %.06.i, -1                      ; 3 uses
+  %i.af = add nsw i64 %.06.i, -1                  ; 3 uses
   %i.ag = getelementptr inbounds nuw [40 x i8], ptr %i.b, i64 %i.af ; 2 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !195 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 16 ; 2 uses
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 .lr.ph.i27:                                       ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
   %.06.i = phi i64 [ %i.ac, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %i.d, %bb.g ]
-  %i.ac = add i64 %.06.i, -1                      ; 3 uses
+  %i.ac = add nsw i64 %.06.i, -1                  ; 3 uses
   %i.ad = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %i.ac ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !195 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
@@ -1011,7 +1011,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1050,7 +1050,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -1453,7 +1453,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1492,7 +1492,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -1895,7 +1895,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1934,7 +1934,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -2337,7 +2337,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -2376,7 +2376,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -2779,7 +2779,7 @@ _ZNSt12_Vector_baseIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESa
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i.prol, align 4, !tbaa !453
   %i.t = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i.prol, i64 4
   store i8 1, ptr %i.t, align 4, !tbaa !454
-  %i.u = add i64 %.01113.i.us.i.i.i.i.i.i.prol, -1 ; 2 uses
+  %i.u = add nsw i64 %.01113.i.us.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -2826,7 +2826,7 @@ _ZNSt12_Vector_baseIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESa
   store i32 12345, ptr %i.ak, align 4, !tbaa !453
   %i.al = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i, i64 60
   store i8 1, ptr %i.al, align 4, !tbaa !454
-  %i.am = add i64 %.01113.i.us.i.i.i.i.i.i, -8    ; 2 uses
+  %i.am = add nsw i64 %.01113.i.us.i.i.i.i.i.i, -8 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i.7 = icmp eq i64 %i.am, 0
   br i1 %.not.i.us.i.i.i.i.i.i.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i, label %.lr.ph.i.split.us.i.i.i.i.i.i, !llvm.loop !64
@@ -3229,7 +3229,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -3268,7 +3268,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -3671,7 +3671,7 @@ _ZNSt12_Vector_baseIN4absl12lts_2026052613test_internal23CopyableMovableInstance
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i.prol, align 4, !tbaa !453
   %i.t = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i.prol, i64 4
   store i8 1, ptr %i.t, align 4, !tbaa !454
-  %i.u = add i64 %.01113.i.us.i.i.i.i.i.i.prol, -1 ; 2 uses
+  %i.u = add nsw i64 %.01113.i.us.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -3718,7 +3718,7 @@ _ZNSt12_Vector_baseIN4absl12lts_2026052613test_internal23CopyableMovableInstance
   store i32 12345, ptr %i.ak, align 4, !tbaa !453
   %i.al = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i, i64 60
   store i8 1, ptr %i.al, align 4, !tbaa !454
-  %i.am = add i64 %.01113.i.us.i.i.i.i.i.i, -8    ; 2 uses
+  %i.am = add nsw i64 %.01113.i.us.i.i.i.i.i.i, -8 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i.7 = icmp eq i64 %i.am, 0
   br i1 %.not.i.us.i.i.i.i.i.i.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i, label %.lr.ph.i.split.us.i.i.i.i.i.i, !llvm.loop !78
@@ -4121,7 +4121,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -4160,7 +4160,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -4563,7 +4563,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -4602,7 +4602,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -5005,7 +5005,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -5044,7 +5044,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -5447,7 +5447,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -5486,7 +5486,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -5889,7 +5889,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -5928,7 +5928,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -6331,7 +6331,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -6370,7 +6370,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !199
   store i8 0, ptr %i.ae, align 8, !tbaa !198
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !36
@@ -6773,7 +6773,7 @@ _ZNSt12_Vector_baseIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESa
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.prol, align 4, !tbaa !453
   %i.bq = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.prol, i64 4
   store i8 1, ptr %i.bq, align 4, !tbaa !454
-  %i.br = add i64 %.01113.i.us.i.i.i.i.i.prol, -1 ; 2 uses
+  %i.br = add nsw i64 %.01113.i.us.i.i.i.i.i.prol, -1 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -6820,7 +6820,7 @@ _ZNSt12_Vector_baseIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESa
   store i32 12345, ptr %i.ch, align 4, !tbaa !453
   %i.ci = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i, i64 60
   store i8 1, ptr %i.ci, align 4, !tbaa !454
-  %i.cj = add i64 %.01113.i.us.i.i.i.i.i, -8      ; 2 uses
+  %i.cj = add nsw i64 %.01113.i.us.i.i.i.i.i, -8  ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.7 = icmp eq i64 %i.cj, 0
   br i1 %.not.i.us.i.i.i.i.i.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit, label %.lr.ph.i.split.us.i.i.i.i.i, !llvm.loop !64
@@ -7223,7 +7223,7 @@ _ZNSt12_Vector_baseIN4absl12lts_2026052613test_internal23CopyableMovableInstance
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.prol, align 4, !tbaa !453
   %i.bm = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.prol, i64 4
   store i8 1, ptr %i.bm, align 4, !tbaa !454
-  %i.bn = add i64 %.01113.i.us.i.i.i.i.i.prol, -1 ; 2 uses
+  %i.bn = add nsw i64 %.01113.i.us.i.i.i.i.i.prol, -1 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -7270,7 +7270,7 @@ _ZNSt12_Vector_baseIN4absl12lts_2026052613test_internal23CopyableMovableInstance
   store i32 12345, ptr %i.cd, align 4, !tbaa !453
   %i.ce = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i, i64 60
   store i8 1, ptr %i.ce, align 4, !tbaa !454
-  %i.cf = add i64 %.01113.i.us.i.i.i.i.i, -8      ; 2 uses
+  %i.cf = add nsw i64 %.01113.i.us.i.i.i.i.i, -8  ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.7 = icmp eq i64 %i.cf, 0
   br i1 %.not.i.us.i.i.i.i.i.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit, label %.lr.ph.i.split.us.i.i.i.i.i, !llvm.loop !78
@@ -7673,7 +7673,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESaIS3_EE1
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i.prol, align 4, !tbaa !453
   %i.bc = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i.prol, i64 4
   store i8 1, ptr %i.bc, align 4, !tbaa !454
-  %i.bd = add i64 %.01113.i.us.i.i.i.i.i.i.prol, -1 ; 2 uses
+  %i.bd = add nsw i64 %.01113.i.us.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -7720,7 +7720,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESaIS3_EE1
   store i32 12345, ptr %i.bt, align 4, !tbaa !453
   %i.bu = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i, i64 60
   store i8 1, ptr %i.bu, align 4, !tbaa !454
-  %i.bv = add i64 %.01113.i.us.i.i.i.i.i.i, -8    ; 2 uses
+  %i.bv = add nsw i64 %.01113.i.us.i.i.i.i.i.i, -8 ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i.7 = icmp eq i64 %i.bv, 0
   br i1 %.not.i.us.i.i.i.i.i.i.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i, label %.lr.ph.i.split.us.i.i.i.i.i.i, !llvm.loop !64
@@ -8123,7 +8123,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESaIS3_EE1
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i27.prol, align 4, !tbaa !453
   %i.ss = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i27.prol, i64 4
   store i8 1, ptr %i.ss, align 4, !tbaa !454
-  %i.st = add i64 %.01113.i.us.i.i.i.i.i.i28.prol, -1 ; 2 uses
+  %i.st = add nsw i64 %.01113.i.us.i.i.i.i.i.i28.prol, -1 ; 2 uses
   %i.su = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i27.prol, i64 8 ; 3 uses
   %prol.iter10420.next = add i64 %prol.iter10420, 1 ; 2 uses
   %prol.iter10420.cmp.not = icmp eq i64 %prol.iter10420.next, %xtraiter10418
@@ -8170,7 +8170,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESaIS3_EE1
   store i32 12345, ptr %i.tj, align 4, !tbaa !453
   %i.tk = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i27, i64 60
   store i8 1, ptr %i.tk, align 4, !tbaa !454
-  %i.tl = add i64 %.01113.i.us.i.i.i.i.i.i28, -8  ; 2 uses
+  %i.tl = add nsw i64 %.01113.i.us.i.i.i.i.i.i28, -8 ; 2 uses
   %i.tm = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i27, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i29.7 = icmp eq i64 %i.tl, 0
   br i1 %.not.i.us.i.i.i.i.i.i29.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i30, label %.lr.ph.i.split.us.i.i.i.i.i.i26, !llvm.loop !64
@@ -8573,7 +8573,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESaIS3_EE1
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i328.prol, align 4, !tbaa !453
   %i.akf = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i328.prol, i64 4
   store i8 1, ptr %i.akf, align 4, !tbaa !454
-  %i.akg = add i64 %.01113.i.us.i.i.i.i.i.i329.prol, -1 ; 2 uses
+  %i.akg = add nsw i64 %.01113.i.us.i.i.i.i.i.i329.prol, -1 ; 2 uses
   %i.akh = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i328.prol, i64 8 ; 3 uses
   %prol.iter10432.next = add i64 %prol.iter10432, 1 ; 2 uses
   %prol.iter10432.cmp.not = icmp eq i64 %prol.iter10432.next, %xtraiter10430
@@ -8620,7 +8620,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESaIS3_EE1
   store i32 12345, ptr %i.akw, align 4, !tbaa !453
   %i.akx = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i328, i64 60
   store i8 1, ptr %i.akx, align 4, !tbaa !454
-  %i.aky = add i64 %.01113.i.us.i.i.i.i.i.i329, -8 ; 2 uses
+  %i.aky = add nsw i64 %.01113.i.us.i.i.i.i.i.i329, -8 ; 2 uses
   %i.akz = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i328, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i330.7 = icmp eq i64 %i.aky, 0
   br i1 %.not.i.us.i.i.i.i.i.i330.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i331, label %.lr.ph.i.split.us.i.i.i.i.i.i327, !llvm.loop !64
@@ -9023,7 +9023,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESaIS3_EE1
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i486.prol, align 4, !tbaa !453
   %i.bbz = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i486.prol, i64 4
   store i8 1, ptr %i.bbz, align 4, !tbaa !454
-  %i.bca = add i64 %.01113.i.us.i.i.i.i.i.i487.prol, -1 ; 2 uses
+  %i.bca = add nsw i64 %.01113.i.us.i.i.i.i.i.i487.prol, -1 ; 2 uses
   %i.bcb = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i486.prol, i64 8 ; 3 uses
   %prol.iter10444.next = add i64 %prol.iter10444, 1 ; 2 uses
   %prol.iter10444.cmp.not = icmp eq i64 %prol.iter10444.next, %xtraiter10442
@@ -9070,7 +9070,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal20CopyableOnlyInstanceESaIS3_EE1
   store i32 12345, ptr %i.bcq, align 4, !tbaa !453
   %i.bcr = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i486, i64 60
   store i8 1, ptr %i.bcr, align 4, !tbaa !454
-  %i.bcs = add i64 %.01113.i.us.i.i.i.i.i.i487, -8 ; 2 uses
+  %i.bcs = add nsw i64 %.01113.i.us.i.i.i.i.i.i487, -8 ; 2 uses
   %i.bct = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i486, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i488.7 = icmp eq i64 %i.bcs, 0
   br i1 %.not.i.us.i.i.i.i.i.i488.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i489, label %.lr.ph.i.split.us.i.i.i.i.i.i485, !llvm.loop !64
@@ -9473,7 +9473,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal23CopyableMovableInstanceESaIS3_
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i.prol, align 4, !tbaa !453
   %i.bc = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i.prol, i64 4
   store i8 1, ptr %i.bc, align 4, !tbaa !454
-  %i.bd = add i64 %.01113.i.us.i.i.i.i.i.i.prol, -1 ; 2 uses
+  %i.bd = add nsw i64 %.01113.i.us.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -9520,7 +9520,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal23CopyableMovableInstanceESaIS3_
   store i32 12345, ptr %i.bt, align 4, !tbaa !453
   %i.bu = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i, i64 60
   store i8 1, ptr %i.bu, align 4, !tbaa !454
-  %i.bv = add i64 %.01113.i.us.i.i.i.i.i.i, -8    ; 2 uses
+  %i.bv = add nsw i64 %.01113.i.us.i.i.i.i.i.i, -8 ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i.7 = icmp eq i64 %i.bv, 0
   br i1 %.not.i.us.i.i.i.i.i.i.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i, label %.lr.ph.i.split.us.i.i.i.i.i.i, !llvm.loop !78
@@ -9923,7 +9923,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal23CopyableMovableInstanceESaIS3_
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i27.prol, align 4, !tbaa !453
   %i.sm = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i27.prol, i64 4
   store i8 1, ptr %i.sm, align 4, !tbaa !454
-  %i.sn = add i64 %.01113.i.us.i.i.i.i.i.i28.prol, -1 ; 2 uses
+  %i.sn = add nsw i64 %.01113.i.us.i.i.i.i.i.i28.prol, -1 ; 2 uses
   %i.so = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i27.prol, i64 8 ; 3 uses
   %prol.iter10399.next = add i64 %prol.iter10399, 1 ; 2 uses
   %prol.iter10399.cmp.not = icmp eq i64 %prol.iter10399.next, %xtraiter10397
@@ -9970,7 +9970,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal23CopyableMovableInstanceESaIS3_
   store i32 12345, ptr %i.td, align 4, !tbaa !453
   %i.te = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i27, i64 60
   store i8 1, ptr %i.te, align 4, !tbaa !454
-  %i.tf = add i64 %.01113.i.us.i.i.i.i.i.i28, -8  ; 2 uses
+  %i.tf = add nsw i64 %.01113.i.us.i.i.i.i.i.i28, -8 ; 2 uses
   %i.tg = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i27, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i29.7 = icmp eq i64 %i.tf, 0
   br i1 %.not.i.us.i.i.i.i.i.i29.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i30, label %.lr.ph.i.split.us.i.i.i.i.i.i26, !llvm.loop !78
@@ -10373,7 +10373,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal23CopyableMovableInstanceESaIS3_
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i327.prol, align 4, !tbaa !453
   %i.ajt = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i327.prol, i64 4
   store i8 1, ptr %i.ajt, align 4, !tbaa !454
-  %i.aju = add i64 %.01113.i.us.i.i.i.i.i.i328.prol, -1 ; 2 uses
+  %i.aju = add nsw i64 %.01113.i.us.i.i.i.i.i.i328.prol, -1 ; 2 uses
   %i.ajv = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i327.prol, i64 8 ; 3 uses
   %prol.iter10411.next = add i64 %prol.iter10411, 1 ; 2 uses
   %prol.iter10411.cmp.not = icmp eq i64 %prol.iter10411.next, %xtraiter10409
@@ -10420,7 +10420,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal23CopyableMovableInstanceESaIS3_
   store i32 12345, ptr %i.akk, align 4, !tbaa !453
   %i.akl = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i327, i64 60
   store i8 1, ptr %i.akl, align 4, !tbaa !454
-  %i.akm = add i64 %.01113.i.us.i.i.i.i.i.i328, -8 ; 2 uses
+  %i.akm = add nsw i64 %.01113.i.us.i.i.i.i.i.i328, -8 ; 2 uses
   %i.akn = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i327, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i329.7 = icmp eq i64 %i.akm, 0
   br i1 %.not.i.us.i.i.i.i.i.i329.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i330, label %.lr.ph.i.split.us.i.i.i.i.i.i326, !llvm.loop !78
@@ -10823,7 +10823,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal23CopyableMovableInstanceESaIS3_
   store i32 12345, ptr %.014.i.us.i.i.i.i.i.i486.prol, align 4, !tbaa !453
   %i.bbh = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i486.prol, i64 4
   store i8 1, ptr %i.bbh, align 4, !tbaa !454
-  %i.bbi = add i64 %.01113.i.us.i.i.i.i.i.i487.prol, -1 ; 2 uses
+  %i.bbi = add nsw i64 %.01113.i.us.i.i.i.i.i.i487.prol, -1 ; 2 uses
   %i.bbj = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i486.prol, i64 8 ; 3 uses
   %prol.iter10423.next = add i64 %prol.iter10423, 1 ; 2 uses
   %prol.iter10423.cmp.not = icmp eq i64 %prol.iter10423.next, %xtraiter10421
@@ -10870,7 +10870,7 @@ _ZNSt6vectorIN4absl12lts_2026052613test_internal23CopyableMovableInstanceESaIS3_
   store i32 12345, ptr %i.bby, align 4, !tbaa !453
   %i.bbz = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i486, i64 60
   store i8 1, ptr %i.bbz, align 4, !tbaa !454
-  %i.bca = add i64 %.01113.i.us.i.i.i.i.i.i487, -8 ; 2 uses
+  %i.bca = add nsw i64 %.01113.i.us.i.i.i.i.i.i487, -8 ; 2 uses
   %i.bcb = getelementptr inbounds nuw i8, ptr %.014.i.us.i.i.i.i.i.i486, i64 64 ; 2 uses
   %.not.i.us.i.i.i.i.i.i488.7 = icmp eq i64 %i.bca, 0
   br i1 %.not.i.us.i.i.i.i.i.i488.7, label %_ZN4absl12lts_2026052613test_internal19BaseCountedInstanceD2Ev.exit.loopexit.i489, label %.lr.ph.i.split.us.i.i.i.i.i.i485, !llvm.loop !78

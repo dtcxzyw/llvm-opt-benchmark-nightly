@@ -205,7 +205,7 @@ _ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.
   store ptr %i.dk, ptr %i.dm, align 8, !tbaa !104
   %i.dn = getelementptr inbounds nuw i8, ptr %.07.i.i.i32.i.i, i64 696
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.dn, i8 0, i64 72, i1 false)
-  %i.do = add i64 %.056.i.i.i33.i.i, -2           ; 2 uses
+  %i.do = add nsw i64 %.056.i.i.i33.i.i, -2       ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %.07.i.i.i32.i.i, i64 768
   %.not.i.i.i34.i.i.1 = icmp eq i64 %i.do, 0
   br i1 %.not.i.i.i34.i.i.1, label %_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_114SchemaExporterEmS2_ET_S4_T0_RSaIT1_E.exit35.i.i, label %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaExporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new, !llvm.loop !1186
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 -1, ptr %i.x, align 8, !tbaa !334
   %i.y = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.prol, i64 172
   store i32 -1, ptr %i.y, align 4, !tbaa !335
-  %i.z = add i64 %.01011.i.i.i.i.i.prol, -1       ; 2 uses
+  %i.z = add nsw i64 %.01011.i.i.i.i.i.prol, -1   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.prol, i64 176 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -672,7 +672,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 -1, ptr %i.bc, align 8, !tbaa !334
   %i.bd = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 700
   store i32 -1, ptr %i.bd, align 4, !tbaa !335
-  %i.be = add i64 %.01011.i.i.i.i.i, -4           ; 2 uses
+  %i.be = add nsw i64 %.01011.i.i.i.i.i, -4       ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 704 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.be, 0
   br i1 %.not.i.i.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_114SchemaImporterEmS2_ET_S4_T0_RSaIT1_E.exit.i.i, label %.preheader.i.i, !llvm.loop !1825
@@ -716,7 +716,7 @@ _ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaImporterESaIS2_EE12_M_check_lenEmPKc.
   store i32 -1, ptr %i.bq, align 8, !tbaa !334
   %i.br = getelementptr inbounds nuw i8, ptr %.012.i.i.i42.i.i.prol, i64 172
   store i32 -1, ptr %i.br, align 4, !tbaa !335
-  %i.bs = add i64 %.01011.i.i.i43.i.i.prol, -1    ; 2 uses
+  %i.bs = add nsw i64 %.01011.i.i.i43.i.i.prol, -1 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.012.i.i.i42.i.i.prol, i64 176 ; 2 uses
   %prol.iter595.next = add i64 %prol.iter595, 1   ; 2 uses
   %prol.iter595.cmp.not = icmp eq i64 %prol.iter595.next, %xtraiter593
@@ -779,7 +779,7 @@ _ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaImporterESaIS2_EE12_M_check_lenEmPKc.
   store i32 -1, ptr %i.cv, align 8, !tbaa !334
   %i.cw = getelementptr inbounds nuw i8, ptr %.012.i.i.i42.i.i, i64 700
   store i32 -1, ptr %i.cw, align 4, !tbaa !335
-  %i.cx = add i64 %.01011.i.i.i43.i.i, -4         ; 2 uses
+  %i.cx = add nsw i64 %.01011.i.i.i43.i.i, -4     ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %.012.i.i.i42.i.i, i64 704
   %.not.i.i.i44.i.i.3 = icmp eq i64 %i.cx, 0
   br i1 %.not.i.i.i44.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_114SchemaImporterEmS2_ET_S4_T0_RSaIT1_E.exit45.i.i, label %_ZNKSt6vectorIN5arrow12_GLOBAL__N_114SchemaImporterESaIS2_EE12_M_check_lenEmPKc.exit.i.i.new, !llvm.loop !1825
@@ -1182,7 +1182,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.at = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.at, align 8, !tbaa !94
   store i8 0, ptr %i.as, align 8, !tbaa !95
-  %i.au = add i64 %.057.i.i.i.i.i.prol, -1        ; 2 uses
+  %i.au = add nsw i64 %.057.i.i.i.i.i.prol, -1    ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1221,7 +1221,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.bh = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.bh, align 8, !tbaa !94
   store i8 0, ptr %i.bg, align 8, !tbaa !95
-  %i.bi = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.bi = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.bi, 0
   br i1 %.not.i.i.i.i.i.3, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2EmRKS6_.exit.i66, label %.lr.ph.i.i.i.i.i, !llvm.loop !2125
@@ -1252,7 +1252,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.bp = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i68.prol, i64 8
   store i64 0, ptr %i.bp, align 8, !tbaa !94
   store i8 0, ptr %i.bo, align 8, !tbaa !95
-  %i.bq = add i64 %.057.i.i.i.i.i69.prol, -1      ; 2 uses
+  %i.bq = add nsw i64 %.057.i.i.i.i.i69.prol, -1  ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i68.prol, i64 32 ; 3 uses
   %prol.iter267.next = add i64 %prol.iter267, 1   ; 2 uses
   %prol.iter267.cmp.not = icmp eq i64 %prol.iter267.next, %xtraiter265
@@ -1291,7 +1291,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.cd = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i68, i64 104
   store i64 0, ptr %i.cd, align 8, !tbaa !94
   store i8 0, ptr %i.cc, align 8, !tbaa !95
-  %i.ce = add i64 %.057.i.i.i.i.i69, -4           ; 2 uses
+  %i.ce = add nsw i64 %.057.i.i.i.i.i69, -4       ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i68, i64 128 ; 2 uses
   %.not.i.i.i.i.i70.3 = icmp eq i64 %i.ce, 0
   br i1 %.not.i.i.i.i.i70.3, label %.lr.ph.preheader, label %.lr.ph.i.i.i.i.i67, !llvm.loop !2125

@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %.09.i.i.i.i.i.i.i.i = phi ptr [ %i.cl, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.09.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
   %.068.i.i.i.i.i.i.i.i = phi i64 [ %i.ck, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.068.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.preheader ]
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %.09.i.i.i.i.i.i.i.i, align 8, !tbaa !233
-  %i.ck = add i64 %.068.i.i.i.i.i.i.i.i, -1       ; 2 uses
+  %i.ck = add nsw i64 %.068.i.i.i.i.i.i.i.i, -1   ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 8
   %.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.ck, 0
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZN4llvm10IndexedMapINS_3LLTENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !361
@@ -299,7 +299,7 @@ middle.block:                                     ; preds = %vector.body
   %.09.i.i.i.i.i.i.i = phi ptr [ %i.u, %.lr.ph.i.i.i.i.i.i.i ], [ %.09.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 2 uses
   %.068.i.i.i.i.i.i.i = phi i64 [ %i.t, %.lr.ph.i.i.i.i.i.i.i ], [ %.068.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ]
   store i64 %.sroa.0.0.copyload.i.i, ptr %.09.i.i.i.i.i.i.i, align 8, !tbaa !233
-  %i.t = add i64 %.068.i.i.i.i.i.i.i, -1          ; 2 uses
+  %i.t = add nsw i64 %.068.i.i.i.i.i.i.i, -1      ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i, i64 8
   %.not.i.i.i.i.i.i.i = icmp eq i64 %i.t, 0
   br i1 %.not.i.i.i.i.i.i.i, label %_ZN4llvm10IndexedMapINS_3LLTENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !363
@@ -499,7 +499,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i, ptr %.09.i.i.i.i.i.i.i.prol, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.prol = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.prol, i64 8
   store ptr %.sroa.2.0.copyload.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.prol, align 8
-  %i.p = add i64 %.068.i.i.i.i.i.i.i.prol, -1     ; 2 uses
+  %i.p = add nsw i64 %.068.i.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.prol, i64 16 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -545,7 +545,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i, ptr %i.y, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.7 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i, i64 120
   store ptr %.sroa.2.0.copyload.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.7, align 8
-  %i.z = add i64 %.068.i.i.i.i.i.i.i, -8          ; 2 uses
+  %i.z = add nsw i64 %.068.i.i.i.i.i.i.i, -8      ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i, i64 128
   %.not.i.i.i.i.i.i.i.7 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.i.i.i.i.7, label %_ZN4llvm10IndexedMapISt4pairINS_12PointerUnionIJPKNS_15MCRegisterClassEPKNS_12RegisterBankEEEEPNS_14MachineOperandEENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !3
@@ -818,7 +818,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %.09.i.i.i.i.i.i.i.i.prol, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.prol = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i.prol, i64 8
   store ptr %.sroa.2.0.copyload.i.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.prol, align 8
-  %i.p = add i64 %.068.i.i.i.i.i.i.i.i.prol, -1   ; 2 uses
+  %i.p = add nsw i64 %.068.i.i.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i.prol, i64 16 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -864,7 +864,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.y, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.7 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 120
   store ptr %.sroa.2.0.copyload.i.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.7, align 8
-  %i.z = add i64 %.068.i.i.i.i.i.i.i.i, -8        ; 2 uses
+  %i.z = add nsw i64 %.068.i.i.i.i.i.i.i.i, -8    ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 128
   %.not.i.i.i.i.i.i.i.i.7 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.i.i.i.i.i.7, label %_ZN4llvm10IndexedMapISt4pairINS_12PointerUnionIJPKNS_15MCRegisterClassEPKNS_12RegisterBankEEEEPNS_14MachineOperandEENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !3
@@ -995,7 +995,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %.09.i.i.i.i.i.i.i.i.prol, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.prol = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i.prol, i64 8
   store ptr %.sroa.2.0.copyload.i.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.prol, align 8
-  %i.p = add i64 %.068.i.i.i.i.i.i.i.i.prol, -1   ; 2 uses
+  %i.p = add nsw i64 %.068.i.i.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i.prol, i64 16 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1041,7 +1041,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.y, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.7 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 120
   store ptr %.sroa.2.0.copyload.i.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.7, align 8
-  %i.z = add i64 %.068.i.i.i.i.i.i.i.i, -8        ; 2 uses
+  %i.z = add nsw i64 %.068.i.i.i.i.i.i.i.i, -8    ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 128
   %.not.i.i.i.i.i.i.i.i.7 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.i.i.i.i.i.7, label %_ZN4llvm10IndexedMapISt4pairINS_12PointerUnionIJPKNS_15MCRegisterClassEPKNS_12RegisterBankEEEEPNS_14MachineOperandEENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !3
@@ -1122,7 +1122,7 @@ middle.block:                                     ; preds = %vector.body
   %.09.i.i.i.i.i.i.i.i20 = phi ptr [ %i.ay, %.lr.ph.i.i.i.i.i.i.i.i19 ], [ %.09.i.i.i.i.i.i.i.i20.ph, %.lr.ph.i.i.i.i.i.i.i.i19.preheader ] ; 2 uses
   %.068.i.i.i.i.i.i.i.i21 = phi i64 [ %i.ax, %.lr.ph.i.i.i.i.i.i.i.i19 ], [ %.068.i.i.i.i.i.i.i.i21.ph, %.lr.ph.i.i.i.i.i.i.i.i19.preheader ]
   store i64 %.sroa.0.0.copyload.i.i.i13, ptr %.09.i.i.i.i.i.i.i.i20, align 8, !tbaa !233
-  %i.ax = add i64 %.068.i.i.i.i.i.i.i.i21, -1     ; 2 uses
+  %i.ax = add nsw i64 %.068.i.i.i.i.i.i.i.i21, -1 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i20, i64 8
   %.not.i.i.i.i.i.i.i.i22 = icmp eq i64 %i.ax, 0
   br i1 %.not.i.i.i.i.i.i.i.i22, label %_ZN4llvm10IndexedMapINS_3LLTENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i19, !llvm.loop !377
@@ -1249,7 +1249,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %.09.i.i.i.i.i.i.i.i.prol, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.prol = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i.prol, i64 8
   store ptr %.sroa.2.0.copyload.i.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.prol, align 8
-  %i.p = add i64 %.068.i.i.i.i.i.i.i.i.prol, -1   ; 2 uses
+  %i.p = add nsw i64 %.068.i.i.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i.prol, i64 16 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1295,7 +1295,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.y, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.7 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 120
   store ptr %.sroa.2.0.copyload.i.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.7, align 8
-  %i.z = add i64 %.068.i.i.i.i.i.i.i.i, -8        ; 2 uses
+  %i.z = add nsw i64 %.068.i.i.i.i.i.i.i.i, -8    ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 128
   %.not.i.i.i.i.i.i.i.i.7 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.i.i.i.i.i.7, label %_ZN4llvm10IndexedMapISt4pairINS_12PointerUnionIJPKNS_15MCRegisterClassEPKNS_12RegisterBankEEEEPNS_14MachineOperandEENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !3
@@ -1395,7 +1395,7 @@ middle.block:                                     ; preds = %vector.body
   %.09.i.i.i.i.i.i.i.i24 = phi ptr [ %i.bj, %.lr.ph.i.i.i.i.i.i.i.i23 ], [ %.09.i.i.i.i.i.i.i.i24.ph, %.lr.ph.i.i.i.i.i.i.i.i23.preheader ] ; 2 uses
   %.068.i.i.i.i.i.i.i.i25 = phi i64 [ %i.bi, %.lr.ph.i.i.i.i.i.i.i.i23 ], [ %.068.i.i.i.i.i.i.i.i25.ph, %.lr.ph.i.i.i.i.i.i.i.i23.preheader ]
   store i64 %.sroa.0.0.copyload.i.i.i17, ptr %.09.i.i.i.i.i.i.i.i24, align 8, !tbaa !233
-  %i.bi = add i64 %.068.i.i.i.i.i.i.i.i25, -1     ; 2 uses
+  %i.bi = add nsw i64 %.068.i.i.i.i.i.i.i.i25, -1 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i24, i64 8
   %.not.i.i.i.i.i.i.i.i26 = icmp eq i64 %i.bi, 0
   br i1 %.not.i.i.i.i.i.i.i.i26, label %_ZN4llvm10IndexedMapINS_3LLTENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i23, !llvm.loop !380
@@ -1522,7 +1522,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %.09.i.i.i.i.i.i.i.i.prol, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.prol = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i.prol, i64 8
   store ptr %.sroa.2.0.copyload.i.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.prol, align 8
-  %i.p = add i64 %.068.i.i.i.i.i.i.i.i.prol, -1   ; 2 uses
+  %i.p = add nsw i64 %.068.i.i.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i.prol, i64 16 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1568,7 +1568,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.y, align 8
   %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.7 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 120
   store ptr %.sroa.2.0.copyload.i.i.i, ptr %.sroa.2.0..09.i.i.i.sroa_idx.i.i.i.i.i.7, align 8
-  %i.z = add i64 %.068.i.i.i.i.i.i.i.i, -8        ; 2 uses
+  %i.z = add nsw i64 %.068.i.i.i.i.i.i.i.i, -8    ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 128
   %.not.i.i.i.i.i.i.i.i.7 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.i.i.i.i.i.7, label %_ZN4llvm10IndexedMapISt4pairINS_12PointerUnionIJPKNS_15MCRegisterClassEPKNS_12RegisterBankEEEEPNS_14MachineOperandEENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !3
@@ -1649,7 +1649,7 @@ middle.block:                                     ; preds = %vector.body
   %.09.i.i.i.i.i.i.i.i19 = phi ptr [ %i.ay, %.lr.ph.i.i.i.i.i.i.i.i18 ], [ %.09.i.i.i.i.i.i.i.i19.ph, %.lr.ph.i.i.i.i.i.i.i.i18.preheader ] ; 2 uses
   %.068.i.i.i.i.i.i.i.i20 = phi i64 [ %i.ax, %.lr.ph.i.i.i.i.i.i.i.i18 ], [ %.068.i.i.i.i.i.i.i.i20.ph, %.lr.ph.i.i.i.i.i.i.i.i18.preheader ]
   store i64 %.sroa.0.0.copyload.i.i.i12, ptr %.09.i.i.i.i.i.i.i.i19, align 8, !tbaa !233
-  %i.ax = add i64 %.068.i.i.i.i.i.i.i.i20, -1     ; 2 uses
+  %i.ax = add nsw i64 %.068.i.i.i.i.i.i.i.i20, -1 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i19, i64 8
   %.not.i.i.i.i.i.i.i.i21 = icmp eq i64 %i.ax, 0
   br i1 %.not.i.i.i.i.i.i.i.i21, label %_ZN4llvm10IndexedMapINS_3LLTENS_20VirtReg2IndexFunctorEE6resizeEm.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i18, !llvm.loop !384

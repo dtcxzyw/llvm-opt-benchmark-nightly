@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.y = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.y, align 8, !tbaa !780
   store i8 0, ptr %i.x, align 8, !tbaa !743
-  %i.z = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.z = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -244,7 +244,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.am = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.am, align 8, !tbaa !780
   store i8 0, ptr %i.al, align 8, !tbaa !743
-  %i.an = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.an = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.an, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !77
@@ -647,7 +647,7 @@ bb.b:                                             ; preds = %bb.a
   %.08.i.i.i = phi ptr [ %i.q, %.lr.ph.i.i.i ], [ %i.b, %bb.b ] ; 2 uses
   %.057.i.i.i = phi i64 [ %i.p, %.lr.ph.i.i.i ], [ %1, %bb.b ]
   tail call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %.08.i.i.i) #37
-  %i.p = add i64 %.057.i.i.i, -1                  ; 2 uses
+  %i.p = add nsw i64 %.057.i.i.i, -1              ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 208 ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.p, 0
   br i1 %.not.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN2cv3MatEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !3785
@@ -677,7 +677,7 @@ _ZNKSt6vectorIN2cv3MatESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.c
   %.08.i.i.i31 = phi ptr [ %i.y, %.lr.ph.i.i.i30 ], [ %i.w, %_ZNKSt6vectorIN2cv3MatESaIS1_EE12_M_check_lenEmPKc.exit ] ; 2 uses
   %.057.i.i.i32 = phi i64 [ %i.x, %.lr.ph.i.i.i30 ], [ %1, %_ZNKSt6vectorIN2cv3MatESaIS1_EE12_M_check_lenEmPKc.exit ]
   tail call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %.08.i.i.i31) #37
-  %i.x = add i64 %.057.i.i.i32, -1                ; 2 uses
+  %i.x = add nsw i64 %.057.i.i.i32, -1            ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 208
   %.not.i.i.i33 = icmp eq i64 %i.x, 0
   br i1 %.not.i.i.i33, label %_ZSt27__uninitialized_default_n_aIPN2cv3MatEmS1_ET_S3_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !3785
@@ -1080,7 +1080,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %i.q, align 4, !tbaa !1782
   %i.r = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 24
   store i32 -1, ptr %i.r, align 4, !tbaa !1783
-  %i.s = add i64 %.01012.i.i.i.prol, -1           ; 2 uses
+  %i.s = add nsw i64 %.01012.i.i.i.prol, -1       ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 28 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1127,7 +1127,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %i.ai, align 4, !tbaa !1782
   %i.aj = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 108
   store i32 -1, ptr %i.aj, align 4, !tbaa !1783
-  %i.ak = add i64 %.01012.i.i.i, -4               ; 2 uses
+  %i.ak = add nsw i64 %.01012.i.i.i, -4           ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 112 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ak, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN2cv8KeyPointEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !6621
@@ -1167,7 +1167,7 @@ _ZNKSt6vectorIN2cv8KeyPointESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.c
   store i32 0, ptr %i.at, align 4, !tbaa !1782
   %i.au = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.prol, i64 24
   store i32 -1, ptr %i.au, align 4, !tbaa !1783
-  %i.av = add i64 %.01012.i.i.i32.prol, -1        ; 2 uses
+  %i.av = add nsw i64 %.01012.i.i.i32.prol, -1    ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.prol, i64 28 ; 2 uses
   %prol.iter46.next = add i64 %prol.iter46, 1     ; 2 uses
   %prol.iter46.cmp.not = icmp eq i64 %prol.iter46.next, %xtraiter44
@@ -1213,7 +1213,7 @@ _ZNKSt6vectorIN2cv8KeyPointESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.c
   store i32 0, ptr %i.bl, align 4, !tbaa !1782
   %i.bm = getelementptr inbounds nuw i8, ptr %.013.i.i.i31, i64 108
   store i32 -1, ptr %i.bm, align 4, !tbaa !1783
-  %i.bn = add i64 %.01012.i.i.i32, -4             ; 2 uses
+  %i.bn = add nsw i64 %.01012.i.i.i32, -4         ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.013.i.i.i31, i64 112
   %.not.i.i.i33.3 = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i33.3, label %_ZSt27__uninitialized_default_n_aIPN2cv8KeyPointEmS1_ET_S3_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !6621
@@ -1616,7 +1616,7 @@ bb.b:                                             ; preds = %bb.a
   %.08.i.i.i = phi ptr [ %i.q, %.lr.ph.i.i.i ], [ %i.b, %bb.b ] ; 2 uses
   %.057.i.i.i = phi i64 [ %i.p, %.lr.ph.i.i.i ], [ %1, %bb.b ]
   tail call void @_ZN2cv4UMatC1ENS_14UMatUsageFlagsE(ptr noundef nonnull align 8 dereferenceable(184) %.08.i.i.i, i32 noundef 0) #37
-  %i.p = add i64 %.057.i.i.i, -1                  ; 2 uses
+  %i.p = add nsw i64 %.057.i.i.i, -1              ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 184 ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.p, 0
   br i1 %.not.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN2cv4UMatEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !6669
@@ -1646,7 +1646,7 @@ _ZNKSt6vectorIN2cv4UMatESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.c
   %.08.i.i.i41 = phi ptr [ %i.y, %.lr.ph.i.i.i40 ], [ %i.w, %_ZNKSt6vectorIN2cv4UMatESaIS1_EE12_M_check_lenEmPKc.exit ] ; 2 uses
   %.057.i.i.i42 = phi i64 [ %i.x, %.lr.ph.i.i.i40 ], [ %1, %_ZNKSt6vectorIN2cv4UMatESaIS1_EE12_M_check_lenEmPKc.exit ]
   tail call void @_ZN2cv4UMatC1ENS_14UMatUsageFlagsE(ptr noundef nonnull align 8 dereferenceable(184) %.08.i.i.i41, i32 noundef 0) #37
-  %i.x = add i64 %.057.i.i.i42, -1                ; 2 uses
+  %i.x = add nsw i64 %.057.i.i.i42, -1            ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.08.i.i.i41, i64 184
   %.not.i.i.i43 = icmp eq i64 %i.x, 0
   br i1 %.not.i.i.i43, label %_ZSt27__uninitialized_default_n_aIPN2cv4UMatEmS1_ET_S3_T0_RSaIT1_E.exit45, label %.lr.ph.i.i.i40, !llvm.loop !6669
@@ -2049,7 +2049,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %.013.i.i.i, i8 0, i64 224, i1 false)
   tail call void @_ZN2cv4UMatC1ENS_14UMatUsageFlagsE(ptr noundef nonnull align 8 dereferenceable(184) %i.p, i32 noundef 0) #37
-  %i.q = add i64 %.01012.i.i.i, -1                ; 2 uses
+  %i.q = add nsw i64 %.01012.i.i.i, -1            ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 224 ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.q, 0
   br i1 %.not.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN2cv6detail13ImageFeaturesEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !6868
@@ -2081,7 +2081,7 @@ _ZNKSt6vectorIN2cv6detail13ImageFeaturesESaIS2_EE12_M_check_lenEmPKc.exit: ; pre
   %i.y = getelementptr inbounds nuw i8, ptr %.013.i.i.i41, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %.013.i.i.i41, i8 0, i64 224, i1 false)
   tail call void @_ZN2cv4UMatC1ENS_14UMatUsageFlagsE(ptr noundef nonnull align 8 dereferenceable(184) %i.y, i32 noundef 0) #37
-  %i.z = add i64 %.01012.i.i.i42, -1              ; 2 uses
+  %i.z = add nsw i64 %.01012.i.i.i42, -1          ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.013.i.i.i41, i64 224
   %.not.i.i.i43 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i43, label %_ZSt27__uninitialized_default_n_aIPN2cv6detail13ImageFeaturesEmS2_ET_S4_T0_RSaIT1_E.exit45, label %.lr.ph.i.i.i40, !llvm.loop !6868
@@ -2484,7 +2484,7 @@ bb.b:                                             ; preds = %bb.a
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
   %i.p = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 12
   store <2 x float> zeroinitializer, ptr %i.p, align 4, !tbaa !1450
-  %i.q = add i64 %.01012.i.i.i.prol, -1           ; 2 uses
+  %i.q = add nsw i64 %.01012.i.i.i.prol, -1       ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 68 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -2516,7 +2516,7 @@ bb.b:                                             ; preds = %bb.a
   store <2 x float> zeroinitializer, ptr %i.z, align 4, !tbaa !1450
   %i.aa = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 488
   store <2 x float> zeroinitializer, ptr %i.aa, align 4, !tbaa !1450
-  %i.ab = add i64 %.01012.i.i.i, -8               ; 2 uses
+  %i.ab = add nsw i64 %.01012.i.i.i, -8           ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 544 ; 2 uses
   %.not.i.i.i.7 = icmp eq i64 %i.ab, 0
   br i1 %.not.i.i.i.7, label %_ZSt27__uninitialized_default_n_aIPN2cv15line_descriptor7KeyLineEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !8800
@@ -2551,7 +2551,7 @@ _ZNKSt6vectorIN2cv15line_descriptor7KeyLineESaIS2_EE12_M_check_lenEmPKc.exit: ; 
   %prol.iter46 = phi i64 [ %prol.iter46.next, %.lr.ph.i.i.i30.prol ], [ 0, %_ZNKSt6vectorIN2cv15line_descriptor7KeyLineESaIS2_EE12_M_check_lenEmPKc.exit ]
   %i.aj = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.prol, i64 12
   store <2 x float> zeroinitializer, ptr %i.aj, align 4, !tbaa !1450
-  %i.ak = add i64 %.01012.i.i.i32.prol, -1        ; 2 uses
+  %i.ak = add nsw i64 %.01012.i.i.i32.prol, -1    ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.prol, i64 68 ; 2 uses
   %prol.iter46.next = add i64 %prol.iter46, 1     ; 2 uses
   %prol.iter46.cmp.not = icmp eq i64 %prol.iter46.next, %xtraiter44
@@ -2582,7 +2582,7 @@ _ZNKSt6vectorIN2cv15line_descriptor7KeyLineESaIS2_EE12_M_check_lenEmPKc.exit: ; 
   store <2 x float> zeroinitializer, ptr %i.at, align 4, !tbaa !1450
   %i.au = getelementptr inbounds nuw i8, ptr %.013.i.i.i31, i64 488
   store <2 x float> zeroinitializer, ptr %i.au, align 4, !tbaa !1450
-  %i.av = add i64 %.01012.i.i.i32, -8             ; 2 uses
+  %i.av = add nsw i64 %.01012.i.i.i32, -8         ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.013.i.i.i31, i64 544
   %.not.i.i.i33.7 = icmp eq i64 %i.av, 0
   br i1 %.not.i.i.i33.7, label %_ZSt27__uninitialized_default_n_aIPN2cv15line_descriptor7KeyLineEmS2_ET_S4_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !8800
@@ -2985,7 +2985,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.q, ptr %i.p, align 8, !tbaa !776
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.r, i8 0, i64 32, i1 false)
-  %i.s = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 432 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -3028,7 +3028,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.ai, ptr %i.ah, align 8, !tbaa !776
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 1360
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.aj, i8 0, i64 32, i1 false)
-  %i.ak = add i64 %.057.i.i.i, -4                 ; 2 uses
+  %i.ak = add nsw i64 %.057.i.i.i, -4             ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 1728 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ak, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN2cv4util7variantIJNS0_4gapi3wip4draw4TextENS5_5FTextENS5_4RectENS5_6CircleENS5_4LineENS5_6MosaicENS5_5ImageENS5_4PolyEEEEmSE_ET_SG_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !12946
@@ -3067,7 +3067,7 @@ _ZNKSt6vectorIN2cv4util7variantIJNS0_4gapi3wip4draw4TextENS5_5FTextENS5_4RectENS
   store ptr %i.at, ptr %i.as, align 8, !tbaa !776
   %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.prol, i64 64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.au, i8 0, i64 32, i1 false)
-  %i.av = add i64 %.057.i.i.i32.prol, -1          ; 2 uses
+  %i.av = add nsw i64 %.057.i.i.i32.prol, -1      ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.prol, i64 432 ; 2 uses
   %prol.iter47.next = add i64 %prol.iter47, 1     ; 2 uses
   %prol.iter47.cmp.not = icmp eq i64 %prol.iter47.next, %xtraiter45
@@ -3109,7 +3109,7 @@ _ZNKSt6vectorIN2cv4util7variantIJNS0_4gapi3wip4draw4TextENS5_5FTextENS5_4RectENS
   store ptr %i.bl, ptr %i.bk, align 8, !tbaa !776
   %i.bm = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 1360
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bm, i8 0, i64 32, i1 false)
-  %i.bn = add i64 %.057.i.i.i32, -4               ; 2 uses
+  %i.bn = add nsw i64 %.057.i.i.i32, -4           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 1728
   %.not.i.i.i33.3 = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i33.3, label %_ZSt27__uninitialized_default_n_aIPN2cv4util7variantIJNS0_4gapi3wip4draw4TextENS5_5FTextENS5_4RectENS5_6CircleENS5_4LineENS5_6MosaicENS5_5ImageENS5_4PolyEEEEmSE_ET_SG_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !12946
@@ -3469,7 +3469,7 @@ bb.b:                                             ; preds = %bb.a
   %.057.i.i.i.prol = phi i64 [ %i.p, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
   store i64 0, ptr %.08.i.i.i.prol, align 8, !tbaa !1508
-  %i.p = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.p = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 56 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -3500,7 +3500,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.x, align 8, !tbaa !1508
   %i.y = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 392
   store i64 0, ptr %i.y, align 8, !tbaa !1508
-  %i.z = add i64 %.057.i.i.i, -8                  ; 2 uses
+  %i.z = add nsw i64 %.057.i.i.i, -8              ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 448 ; 2 uses
   %.not.i.i.i.7 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.7, label %_ZSt27__uninitialized_default_n_aIPN2cv4util7variantIJNS1_9monostateENS0_8GMatDescENS0_11GScalarDescENS0_10GArrayDescENS0_11GOpaqueDescENS0_10GFrameDescEEEEmS9_ET_SB_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !12960
@@ -3534,7 +3534,7 @@ _ZNKSt6vectorIN2cv4util7variantIJNS1_9monostateENS0_8GMatDescENS0_11GScalarDescE
   %.057.i.i.i32.prol = phi i64 [ %i.ah, %.lr.ph.i.i.i30.prol ], [ %1, %_ZNKSt6vectorIN2cv4util7variantIJNS1_9monostateENS0_8GMatDescENS0_11GScalarDescENS0_10GArrayDescENS0_11GOpaqueDescENS0_10GFrameDescEEEESaIS9_EE12_M_check_lenEmPKc.exit ]
   %prol.iter47 = phi i64 [ %prol.iter47.next, %.lr.ph.i.i.i30.prol ], [ 0, %_ZNKSt6vectorIN2cv4util7variantIJNS1_9monostateENS0_8GMatDescENS0_11GScalarDescENS0_10GArrayDescENS0_11GOpaqueDescENS0_10GFrameDescEEEESaIS9_EE12_M_check_lenEmPKc.exit ]
   store i64 0, ptr %.08.i.i.i31.prol, align 8, !tbaa !1508
-  %i.ah = add i64 %.057.i.i.i32.prol, -1          ; 2 uses
+  %i.ah = add nsw i64 %.057.i.i.i32.prol, -1      ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.prol, i64 56 ; 2 uses
   %prol.iter47.next = add i64 %prol.iter47, 1     ; 2 uses
   %prol.iter47.cmp.not = icmp eq i64 %prol.iter47.next, %xtraiter45
@@ -3564,7 +3564,7 @@ _ZNKSt6vectorIN2cv4util7variantIJNS1_9monostateENS0_8GMatDescENS0_11GScalarDescE
   store i64 0, ptr %i.ap, align 8, !tbaa !1508
   %i.aq = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 392
   store i64 0, ptr %i.aq, align 8, !tbaa !1508
-  %i.ar = add i64 %.057.i.i.i32, -8               ; 2 uses
+  %i.ar = add nsw i64 %.057.i.i.i32, -8           ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 448
   %.not.i.i.i33.7 = icmp eq i64 %i.ar, 0
   br i1 %.not.i.i.i33.7, label %_ZSt27__uninitialized_default_n_aIPN2cv4util7variantIJNS1_9monostateENS0_8GMatDescENS0_11GScalarDescENS0_10GArrayDescENS0_11GOpaqueDescENS0_10GFrameDescEEEEmS9_ET_SB_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !12960
@@ -3967,7 +3967,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.q, align 8, !tbaa !780
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.r, i8 0, i64 40, i1 false)
-  %i.s = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 72 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -4014,7 +4014,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.ai, align 8, !tbaa !780
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 248
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.aj, i8 0, i64 40, i1 false)
-  %i.ak = add i64 %.057.i.i.i, -4                 ; 2 uses
+  %i.ak = add nsw i64 %.057.i.i.i, -4             ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 288 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ak, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN2cv11GCompileArgEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !12980
@@ -4054,7 +4054,7 @@ _ZNKSt6vectorIN2cv11GCompileArgESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.
   store i64 0, ptr %i.at, align 8, !tbaa !780
   %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.prol, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.au, i8 0, i64 40, i1 false)
-  %i.av = add i64 %.057.i.i.i32.prol, -1          ; 2 uses
+  %i.av = add nsw i64 %.057.i.i.i32.prol, -1      ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.prol, i64 72 ; 2 uses
   %prol.iter51.next = add i64 %prol.iter51, 1     ; 2 uses
   %prol.iter51.cmp.not = icmp eq i64 %prol.iter51.next, %xtraiter49
@@ -4100,7 +4100,7 @@ _ZNKSt6vectorIN2cv11GCompileArgESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.
   store i64 0, ptr %i.bl, align 8, !tbaa !780
   %i.bm = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 248
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bm, i8 0, i64 40, i1 false)
-  %i.bn = add i64 %.057.i.i.i32, -4               ; 2 uses
+  %i.bn = add nsw i64 %.057.i.i.i32, -4           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 288
   %.not.i.i.i33.3 = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i33.3, label %_ZSt27__uninitialized_default_n_aIPN2cv11GCompileArgEmS1_ET_S3_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !12980

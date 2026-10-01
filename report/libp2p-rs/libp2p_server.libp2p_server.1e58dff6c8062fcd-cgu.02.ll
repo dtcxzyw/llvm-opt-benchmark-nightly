@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %_RINvNtNtNtN
   br i1 %.not9, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = sub nuw i64 %i.c, %1
+  %i.d = sub nuw nsw i64 %i.c, %1
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c

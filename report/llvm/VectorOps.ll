@@ -206,7 +206,7 @@ middle.block:                                     ; preds = %vector.body
   %.09.i.i.i.i.i = phi ptr [ %i.dn, %.lr.ph.i.i.i.i.i ], [ %.09.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ] ; 2 uses
   %.068.i.i.i.i.i = phi i64 [ %i.dm, %.lr.ph.i.i.i.i.i ], [ %.068.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader ]
   store i64 %i.bu, ptr %.09.i.i.i.i.i, align 8
-  %i.dm = add i64 %.068.i.i.i.i.i, -1             ; 2 uses
+  %i.dm = add nsw i64 %.068.i.i.i.i.i, -1         ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i, i64 8
   %.not.i.i.i.i.i17 = icmp eq i64 %i.dm, 0
   br i1 %.not.i.i.i.i.i17, label %_ZN4llvm15SmallVectorImplIN4mlir12OpFoldResultEE6assignEmS2_.exit.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !1212

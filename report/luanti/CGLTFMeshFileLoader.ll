@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseIN4core8CMatrix4IfEESaIS2_EEC2EmRKS3_.exit.i: ; preds = %_ZNS
   %i.ad = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 20
   store float 1.000000e+00, ptr %i.ad, align 4, !tbaa !412
   store float 1.000000e+00, ptr %.013.i.i.i.i.i.prol, align 4, !tbaa !412
-  %i.ae = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.ae = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 64 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -260,7 +260,7 @@ _ZNSt12_Vector_baseIN4core8CMatrix4IfEESaIS2_EEC2EmRKS3_.exit.i: ; preds = %_ZNS
   %i.az = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 212
   store float 1.000000e+00, ptr %i.az, align 4, !tbaa !412
   store float 1.000000e+00, ptr %i.av, align 4, !tbaa !412
-  %i.ba = add i64 %.01012.i.i.i.i.i, -4           ; 2 uses
+  %i.ba = add nsw i64 %.01012.i.i.i.i.i, -4       ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 256 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ba, 0
   br i1 %.not.i.i.i.i.i.3, label %_ZNSt6vectorIN4core8CMatrix4IfEESaIS2_EEC2EmRKS3_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !941
@@ -663,7 +663,7 @@ middle.block:                                     ; preds = %vector.body
   %.013.i.i.i.i.i = phi ptr [ %i.ah, %.lr.ph.i.i.i.i.i ], [ %.013.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader219 ] ; 2 uses
   %.01012.i.i.i.i.i = phi i64 [ %i.ag, %.lr.ph.i.i.i.i.i ], [ %.01012.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader219 ]
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %.013.i.i.i.i.i, align 4, !tbaa !412
-  %i.ag = add i64 %.01012.i.i.i.i.i, -1           ; 2 uses
+  %i.ag = add nsw i64 %.01012.i.i.i.i.i, -1       ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN4core10quaternionESaIS1_EEC2EmRKS2_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !1027
@@ -1066,7 +1066,7 @@ bb.b:                                             ; preds = %bb.a
   store <2 x float> zeroinitializer, ptr %i.q, align 4, !tbaa !412
   %i.r = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 36
   store i16 0, ptr %i.r, align 4, !tbaa !1840
-  %i.s = add i64 %.01012.i.i.i.prol, -1           ; 2 uses
+  %i.s = add nsw i64 %.01012.i.i.i.prol, -1       ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 40 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1113,7 +1113,7 @@ bb.b:                                             ; preds = %bb.a
   store <2 x float> zeroinitializer, ptr %i.ai, align 4, !tbaa !412
   %i.aj = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 156
   store i16 0, ptr %i.aj, align 4, !tbaa !1840
-  %i.ak = add i64 %.01012.i.i.i, -4               ; 2 uses
+  %i.ak = add nsw i64 %.01012.i.i.i, -4           ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 160 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ak, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN5video9S3DVertexEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1831
@@ -1153,7 +1153,7 @@ _ZNKSt6vectorIN5video9S3DVertexESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.
   store <2 x float> zeroinitializer, ptr %i.at, align 4, !tbaa !412
   %i.au = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.prol, i64 36
   store i16 0, ptr %i.au, align 4, !tbaa !1840
-  %i.av = add i64 %.01012.i.i.i32.prol, -1        ; 2 uses
+  %i.av = add nsw i64 %.01012.i.i.i32.prol, -1    ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.prol, i64 40 ; 2 uses
   %prol.iter46.next = add i64 %prol.iter46, 1     ; 2 uses
   %prol.iter46.cmp.not = icmp eq i64 %prol.iter46.next, %xtraiter44
@@ -1199,7 +1199,7 @@ _ZNKSt6vectorIN5video9S3DVertexESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.
   store <2 x float> zeroinitializer, ptr %i.bl, align 4, !tbaa !412
   %i.bm = getelementptr inbounds nuw i8, ptr %.013.i.i.i31, i64 156
   store i16 0, ptr %i.bm, align 4, !tbaa !1840
-  %i.bn = add i64 %.01012.i.i.i32, -4             ; 2 uses
+  %i.bn = add nsw i64 %.01012.i.i.i32, -4         ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.013.i.i.i31, i64 160
   %.not.i.i.i33.3 = icmp eq i64 %i.bn, 0
   br i1 %.not.i.i.i33.3, label %_ZSt27__uninitialized_default_n_aIPN5video9S3DVertexEmS1_ET_S3_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !1831

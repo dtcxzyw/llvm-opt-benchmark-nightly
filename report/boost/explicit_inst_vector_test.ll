@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   %.017.i.prol = phi i64 [ %i.u, %.lr.ph.i.prol ], [ %.017.i.ph, %.lr.ph.i.preheader ]
   %.01416.i.prol = phi ptr [ %i.x, %.lr.ph.i.prol ], [ %.01416.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
-  %i.u = add i64 %.017.i.prol, -1                 ; 2 uses
+  %i.u = add nsw i64 %.017.i.prol, -1             ; 2 uses
   %i.v = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.v, ptr %.01416.i.prol, align 4, !tbaa !65
   %i.w = add i32 %i.t, 1                          ; 3 uses
@@ -240,7 +240,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ah = add i32 %i.z, 3
   store i32 %i.ah, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.ai = getelementptr inbounds nuw i8, ptr %.01416.i, i64 12
-  %i.aj = add i64 %.017.i, -4                     ; 2 uses
+  %i.aj = add nsw i64 %.017.i, -4                 ; 2 uses
   %i.ak = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.ak, ptr %i.ai, align 4, !tbaa !65
   %i.al = add i32 %i.z, 4                         ; 2 uses
@@ -343,7 +343,7 @@ middle.block:                                     ; preds = %vector.body
   %.017.i.prol = phi i64 [ %i.u, %.lr.ph.i.prol ], [ %.017.i.ph, %.lr.ph.i.preheader ]
   %.01416.i.prol = phi ptr [ %i.x, %.lr.ph.i.prol ], [ %.01416.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
-  %i.u = add i64 %.017.i.prol, -1                 ; 2 uses
+  %i.u = add nsw i64 %.017.i.prol, -1             ; 2 uses
   %i.v = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.v, ptr %.01416.i.prol, align 4, !tbaa !65
   %i.w = add i32 %i.t, 1                          ; 3 uses
@@ -379,7 +379,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ah = add i32 %i.z, 3
   store i32 %i.ah, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.ai = getelementptr inbounds nuw i8, ptr %.01416.i, i64 12
-  %i.aj = add i64 %.017.i, -4                     ; 2 uses
+  %i.aj = add nsw i64 %.017.i, -4                 ; 2 uses
   %i.ak = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.ak, ptr %i.ai, align 4, !tbaa !65
   %i.al = add i32 %i.z, 4                         ; 2 uses
@@ -681,7 +681,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.w, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.x = getelementptr inbounds nuw i8, ptr %.0919.i.prol, i64 4 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.01618.i.prol, i64 4 ; 2 uses
-  %i.z = add i64 %.020.i.prol, -1                 ; 2 uses
+  %i.z = add nsw i64 %.020.i.prol, -1             ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !215
@@ -723,7 +723,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.ap, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.aq = getelementptr inbounds nuw i8, ptr %.0919.i, i64 16
   %i.ar = getelementptr inbounds nuw i8, ptr %.01618.i, i64 16
-  %i.as = add i64 %.020.i, -4                     ; 2 uses
+  %i.as = add nsw i64 %.020.i, -4                 ; 2 uses
   %.not.i.3 = icmp eq i64 %i.as, 0
   br i1 %.not.i.3, label %_ZN5boost9container33uninitialized_copy_alloc_n_sourceINS0_4test16simple_allocatorINS2_24movable_and_copyable_intEEEPKS4_PS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SB_E4typeERT_SB_mSC_.exit, label %.lr.ph.i, !llvm.loop !216
 
@@ -1126,7 +1126,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %.016.i.prol = phi i64 [ %i.j, %.lr.ph.i.prol ], [ %1, %bb.c ]
   %.01315.i.prol = phi ptr [ %i.m, %.lr.ph.i.prol ], [ %i.g, %bb.c ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %bb.c ]
-  %i.j = add i64 %.016.i.prol, -1                 ; 2 uses
+  %i.j = add nsw i64 %.016.i.prol, -1             ; 2 uses
   store i32 0, ptr %.01315.i.prol, align 4, !tbaa !65
   %i.k = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.l = add i32 %i.k, 1
@@ -1158,7 +1158,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %i.t = add i32 %i.o, 3
   store i32 %i.t, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.u = getelementptr inbounds nuw i8, ptr %.01315.i, i64 12
-  %i.v = add i64 %.016.i, -4                      ; 2 uses
+  %i.v = add nsw i64 %.016.i, -4                  ; 2 uses
   store i32 0, ptr %i.u, align 4, !tbaa !65
   %i.w = add i32 %i.o, 4
   store i32 %i.w, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -1219,7 +1219,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %.016.i.prol = phi i64 [ %i.j, %.lr.ph.i.prol ], [ %1, %bb.c ]
   %.01315.i.prol = phi ptr [ %i.m, %.lr.ph.i.prol ], [ %i.g, %bb.c ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %bb.c ]
-  %i.j = add i64 %.016.i.prol, -1                 ; 2 uses
+  %i.j = add nsw i64 %.016.i.prol, -1             ; 2 uses
   store i32 0, ptr %.01315.i.prol, align 4, !tbaa !65
   %i.k = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.l = add i32 %i.k, 1
@@ -1251,7 +1251,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %i.t = add i32 %i.o, 3
   store i32 %i.t, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.u = getelementptr inbounds nuw i8, ptr %.01315.i, i64 12
-  %i.v = add i64 %.016.i, -4                      ; 2 uses
+  %i.v = add nsw i64 %.016.i, -4                  ; 2 uses
   store i32 0, ptr %i.u, align 4, !tbaa !65
   %i.w = add i32 %i.o, 4
   store i32 %i.w, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -1305,7 +1305,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %.016.i.prol = phi i64 [ %i.j, %.lr.ph.i.prol ], [ %1, %bb.c ]
   %.01315.i.prol = phi ptr [ %i.m, %.lr.ph.i.prol ], [ %i.g, %bb.c ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %bb.c ]
-  %i.j = add i64 %.016.i.prol, -1                 ; 2 uses
+  %i.j = add nsw i64 %.016.i.prol, -1             ; 2 uses
   store i32 0, ptr %.01315.i.prol, align 4, !tbaa !65
   %i.k = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.l = add i32 %i.k, 1
@@ -1337,7 +1337,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %i.t = add i32 %i.o, 3
   store i32 %i.t, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.u = getelementptr inbounds nuw i8, ptr %.01315.i, i64 12
-  %i.v = add i64 %.016.i, -4                      ; 2 uses
+  %i.v = add nsw i64 %.016.i, -4                  ; 2 uses
   store i32 0, ptr %i.u, align 4, !tbaa !65
   %i.w = add i32 %i.o, 4
   store i32 %i.w, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -1391,7 +1391,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %.016.i.prol = phi i64 [ %i.j, %.lr.ph.i.prol ], [ %1, %bb.c ]
   %.01315.i.prol = phi ptr [ %i.m, %.lr.ph.i.prol ], [ %i.g, %bb.c ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %bb.c ]
-  %i.j = add i64 %.016.i.prol, -1                 ; 2 uses
+  %i.j = add nsw i64 %.016.i.prol, -1             ; 2 uses
   store i32 0, ptr %.01315.i.prol, align 4, !tbaa !65
   %i.k = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.l = add i32 %i.k, 1
@@ -1423,7 +1423,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %i.t = add i32 %i.o, 3
   store i32 %i.t, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.u = getelementptr inbounds nuw i8, ptr %.01315.i, i64 12
-  %i.v = add i64 %.016.i, -4                      ; 2 uses
+  %i.v = add nsw i64 %.016.i, -4                  ; 2 uses
   store i32 0, ptr %i.u, align 4, !tbaa !65
   %i.w = add i32 %i.o, 4
   store i32 %i.w, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -1477,7 +1477,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %.017.i.prol = phi i64 [ %i.j, %.lr.ph.i.prol ], [ %1, %bb.c ]
   %.01416.i.prol = phi ptr [ %i.n, %.lr.ph.i.prol ], [ %i.g, %bb.c ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %bb.c ]
-  %i.j = add i64 %.017.i.prol, -1                 ; 2 uses
+  %i.j = add nsw i64 %.017.i.prol, -1             ; 2 uses
   %i.k = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.k, ptr %.01416.i.prol, align 4, !tbaa !65
   %i.l = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -1513,7 +1513,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %i.x = add i32 %i.q, 3
   store i32 %i.x, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.y = getelementptr inbounds nuw i8, ptr %.01416.i, i64 12
-  %i.z = add i64 %.017.i, -4                      ; 2 uses
+  %i.z = add nsw i64 %.017.i, -4                  ; 2 uses
   %i.aa = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.aa, ptr %i.y, align 4, !tbaa !65
   %i.ab = add i32 %i.q, 4
@@ -1568,7 +1568,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %.017.i.prol = phi i64 [ %i.j, %.lr.ph.i.prol ], [ %1, %bb.c ]
   %.01416.i.prol = phi ptr [ %i.n, %.lr.ph.i.prol ], [ %i.g, %bb.c ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %bb.c ]
-  %i.j = add i64 %.017.i.prol, -1                 ; 2 uses
+  %i.j = add nsw i64 %.017.i.prol, -1             ; 2 uses
   %i.k = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.k, ptr %.01416.i.prol, align 4, !tbaa !65
   %i.l = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -1604,7 +1604,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   %i.x = add i32 %i.q, 3
   store i32 %i.x, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.y = getelementptr inbounds nuw i8, ptr %.01416.i, i64 12
-  %i.z = add i64 %.017.i, -4                      ; 2 uses
+  %i.z = add nsw i64 %.017.i, -4                  ; 2 uses
   %i.aa = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.aa, ptr %i.y, align 4, !tbaa !65
   %i.ab = add i32 %i.q, 4
@@ -1795,7 +1795,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   store i32 %i.l, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.m = getelementptr inbounds nuw i8, ptr %.0919.i.prol, i64 4 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.01618.i.prol, i64 4 ; 2 uses
-  %i.o = add i64 %.020.i.prol, -1                 ; 2 uses
+  %i.o = add nsw i64 %.020.i.prol, -1             ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !395
@@ -1836,7 +1836,7 @@ bb.c:                                             ; preds = %_ZN5boost9container
   store i32 %i.ae, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.af = getelementptr inbounds nuw i8, ptr %.0919.i, i64 16
   %i.ag = getelementptr inbounds nuw i8, ptr %.01618.i, i64 16
-  %i.ah = add i64 %.020.i, -4                     ; 2 uses
+  %i.ah = add nsw i64 %.020.i, -4                 ; 2 uses
   %.not.i.3 = icmp eq i64 %i.ah, 0
   br i1 %.not.i.3, label %_ZN5boost9container33uninitialized_copy_alloc_n_sourceINS0_9allocatorINS0_4test24movable_and_copyable_intELj2ELj0EEEPKS4_PS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SB_E4typeERT_SB_mSC_.exit, label %.lr.ph.i, !llvm.loop !9
 
@@ -2239,7 +2239,7 @@ middle.block:                                     ; preds = %vector.body
   %.017.i.prol = phi i64 [ %i.u, %.lr.ph.i.prol ], [ %.017.i.ph, %.lr.ph.i.preheader ]
   %.01416.i.prol = phi ptr [ %i.x, %.lr.ph.i.prol ], [ %.01416.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
-  %i.u = add i64 %.017.i.prol, -1                 ; 2 uses
+  %i.u = add nsw i64 %.017.i.prol, -1             ; 2 uses
   %i.v = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.v, ptr %.01416.i.prol, align 4, !tbaa !65
   %i.w = add i32 %i.t, 1                          ; 3 uses
@@ -2275,7 +2275,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ah = add i32 %i.z, 3
   store i32 %i.ah, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.ai = getelementptr inbounds nuw i8, ptr %.01416.i, i64 12
-  %i.aj = add i64 %.017.i, -4                     ; 2 uses
+  %i.aj = add nsw i64 %.017.i, -4                 ; 2 uses
   %i.ak = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.ak, ptr %i.ai, align 4, !tbaa !65
   %i.al = add i32 %i.z, 4                         ; 2 uses
@@ -2371,7 +2371,7 @@ middle.block:                                     ; preds = %vector.body
   %.017.i.prol = phi i64 [ %i.u, %.lr.ph.i.prol ], [ %.017.i.ph, %.lr.ph.i.preheader ]
   %.01416.i.prol = phi ptr [ %i.x, %.lr.ph.i.prol ], [ %.01416.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
-  %i.u = add i64 %.017.i.prol, -1                 ; 2 uses
+  %i.u = add nsw i64 %.017.i.prol, -1             ; 2 uses
   %i.v = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.v, ptr %.01416.i.prol, align 4, !tbaa !65
   %i.w = add i32 %i.t, 1                          ; 3 uses
@@ -2407,7 +2407,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ah = add i32 %i.z, 3
   store i32 %i.ah, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.ai = getelementptr inbounds nuw i8, ptr %.01416.i, i64 12
-  %i.aj = add i64 %.017.i, -4                     ; 2 uses
+  %i.aj = add nsw i64 %.017.i, -4                 ; 2 uses
   %i.ak = load i32, ptr %2, align 4, !tbaa !65
   store i32 %i.ak, ptr %i.ai, align 4, !tbaa !65
   %i.al = add i32 %i.z, 4                         ; 2 uses
@@ -2692,7 +2692,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.w, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.x = getelementptr inbounds nuw i8, ptr %.0919.i.prol, i64 4 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.01618.i.prol, i64 4 ; 2 uses
-  %i.z = add i64 %.020.i.prol, -1                 ; 2 uses
+  %i.z = add nsw i64 %.020.i.prol, -1             ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !566
@@ -2734,7 +2734,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.ap, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.aq = getelementptr inbounds nuw i8, ptr %.0919.i, i64 16
   %i.ar = getelementptr inbounds nuw i8, ptr %.01618.i, i64 16
-  %i.as = add i64 %.020.i, -4                     ; 2 uses
+  %i.as = add nsw i64 %.020.i, -4                 ; 2 uses
   %.not.i.3 = icmp eq i64 %i.as, 0
   br i1 %.not.i.3, label %_ZN5boost9container33uninitialized_copy_alloc_n_sourceINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPKS4_PS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SB_E4typeERT_SB_mSC_.exit, label %.lr.ph.i, !llvm.loop !567
 
@@ -3137,7 +3137,7 @@ _ZN5boost9container18copy_n_source_destIPKNS0_4test24movable_and_copyable_intEPS
   %.0819.i.i.prol = phi ptr [ %i.dj, %.lr.ph.i14.i.prol ], [ %.0.lcssa.i.i, %_ZN5boost9container18copy_n_source_destIPKNS0_4test24movable_and_copyable_intEPS3_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES9_mRSA_.exit.i ] ; 2 uses
   %.01618.i.i.prol = phi ptr [ %i.dk, %.lr.ph.i14.i.prol ], [ %.0.i, %_ZN5boost9container18copy_n_source_destIPKNS0_4test24movable_and_copyable_intEPS3_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES9_mRSA_.exit.i ] ; 3 uses
   %prol.iter112 = phi i64 [ %prol.iter112.next, %.lr.ph.i14.i.prol ], [ 0, %_ZN5boost9container18copy_n_source_destIPKNS0_4test24movable_and_copyable_intEPS3_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES9_mRSA_.exit.i ]
-  %i.df = add i64 %.020.i.i.prol, -1              ; 2 uses
+  %i.df = add nsw i64 %.020.i.i.prol, -1          ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01618.i.i.prol) ]
   %i.dg = load i32, ptr %.0819.i.i.prol, align 4, !tbaa !65
   store i32 %i.dg, ptr %.01618.i.i.prol, align 4, !tbaa !65
@@ -3182,7 +3182,7 @@ _ZN5boost9container18copy_n_source_destIPKNS0_4test24movable_and_copyable_intEPS
   store i32 %i.dx, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.dy = getelementptr inbounds nuw i8, ptr %.0819.i.i, i64 12
   %i.dz = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 12
-  %i.ea = add i64 %.020.i.i, -4                   ; 2 uses
+  %i.ea = add nsw i64 %.020.i.i, -4               ; 2 uses
   %i.eb = load i32, ptr %i.dy, align 4, !tbaa !65
   store i32 %i.eb, ptr %i.dz, align 4, !tbaa !65
   %i.ec = add i32 %i.do, 4
@@ -3316,7 +3316,7 @@ _ZN5boost9container6copy_nIPKNS0_4test24movable_and_copyable_intEPS3_EENS0_3dtl3
   %.05.i.i21.prol = phi i64 [ %i.fu, %.lr.ph.i21.i.prol ], [ %i.ft, %.lr.ph.i21.i.preheader ]
   %storemerge4.i.i22.prol = phi ptr [ %i.fx, %.lr.ph.i21.i.prol ], [ %.0.lcssa.i20.i, %.lr.ph.i21.i.preheader ] ; 2 uses
   %prol.iter106 = phi i64 [ %prol.iter106.next, %.lr.ph.i21.i.prol ], [ 0, %.lr.ph.i21.i.preheader ]
-  %i.fu = add i64 %.05.i.i21.prol, -1             ; 2 uses
+  %i.fu = add nsw i64 %.05.i.i21.prol, -1         ; 2 uses
   store i32 -2147483648, ptr %storemerge4.i.i22.prol, align 4, !tbaa !65
   %i.fv = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.fw = add i32 %i.fv, -1
@@ -3349,7 +3349,7 @@ _ZN5boost9container6copy_nIPKNS0_4test24movable_and_copyable_intEPS3_EENS0_3dtl3
   %i.gf = add i32 %i.ga, -3
   store i32 %i.gf, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.gg = getelementptr inbounds nuw i8, ptr %storemerge4.i.i22, i64 12
-  %i.gh = add i64 %.05.i.i21, -4                  ; 2 uses
+  %i.gh = add nsw i64 %.05.i.i21, -4              ; 2 uses
   store i32 -2147483648, ptr %i.gg, align 4, !tbaa !65
   %i.gi = add i32 %i.ga, -4
   store i32 %i.gi, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -3752,7 +3752,7 @@ _ZN5boost9container18copy_n_source_destINS0_17constant_iteratorINS0_4test24movab
   %.016.i.i.prol = phi i64 [ %i.cg, %.lr.ph.i19.i.prol ], [ %i.cf, %_ZN5boost9container18copy_n_source_destINS0_17constant_iteratorINS0_4test24movable_and_copyable_intEEEPS4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES9_mRSA_.exit.i ]
   %.01315.i.i.prol = phi ptr [ %i.ck, %.lr.ph.i19.i.prol ], [ %.0.i, %_ZN5boost9container18copy_n_source_destINS0_17constant_iteratorINS0_4test24movable_and_copyable_intEEEPS4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES9_mRSA_.exit.i ] ; 3 uses
   %prol.iter96 = phi i64 [ %prol.iter96.next, %.lr.ph.i19.i.prol ], [ 0, %_ZN5boost9container18copy_n_source_destINS0_17constant_iteratorINS0_4test24movable_and_copyable_intEEEPS4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES9_mRSA_.exit.i ]
-  %i.cg = add i64 %.016.i.i.prol, -1              ; 2 uses
+  %i.cg = add nsw i64 %.016.i.i.prol, -1          ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i.prol) ]
   %i.ch = load i32, ptr %1, align 4, !tbaa !65
   store i32 %i.ch, ptr %.01315.i.i.prol, align 4, !tbaa !65
@@ -3792,7 +3792,7 @@ _ZN5boost9container18copy_n_source_destINS0_17constant_iteratorINS0_4test24movab
   %i.cw = add i32 %i.cp, 3
   store i32 %i.cw, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.cx = getelementptr inbounds nuw i8, ptr %.01315.i.i, i64 12
-  %i.cy = add i64 %.016.i.i, -4                   ; 2 uses
+  %i.cy = add nsw i64 %.016.i.i, -4               ; 2 uses
   %i.cz = load i32, ptr %1, align 4, !tbaa !65
   store i32 %i.cz, ptr %i.cx, align 4, !tbaa !65
   %i.da = add i32 %i.cp, 4
@@ -3842,7 +3842,7 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.i23.i:                                     ; preds = %.lr.ph.i23.i.preheader, %.lr.ph.i23.i
   %.07.i.i = phi ptr [ %i.dj, %.lr.ph.i23.i ], [ %.07.i.i.ph, %.lr.ph.i23.i.preheader ] ; 2 uses
   %.046.i.i = phi i64 [ %i.di, %.lr.ph.i23.i ], [ %.046.i.i.ph, %.lr.ph.i23.i.preheader ]
-  %i.di = add i64 %.046.i.i, -1                   ; 2 uses
+  %i.di = add nsw i64 %.046.i.i, -1               ; 2 uses
   store i32 %.pre.i22.i, ptr %.07.i.i, align 4, !tbaa !65
   %i.dj = getelementptr inbounds nuw i8, ptr %.07.i.i, i64 4 ; 2 uses
   %.not.i24.i = icmp eq i64 %i.di, 0
@@ -3864,7 +3864,7 @@ _ZN5boost9container6copy_nINS0_17constant_iteratorINS0_4test24movable_and_copyab
   %.05.i.i30.prol = phi i64 [ %i.dm, %.lr.ph.i26.i.prol ], [ %i.dk, %.lr.ph.i26.i.preheader ]
   %storemerge4.i.i31.prol = phi ptr [ %i.dp, %.lr.ph.i26.i.prol ], [ %.0.lcssa.i.i28, %.lr.ph.i26.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i26.i.prol ], [ 0, %.lr.ph.i26.i.preheader ]
-  %i.dm = add i64 %.05.i.i30.prol, -1             ; 2 uses
+  %i.dm = add nsw i64 %.05.i.i30.prol, -1         ; 2 uses
   store i32 -2147483648, ptr %storemerge4.i.i31.prol, align 4, !tbaa !65
   %i.dn = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.do = add i32 %i.dn, -1
@@ -3897,7 +3897,7 @@ _ZN5boost9container6copy_nINS0_17constant_iteratorINS0_4test24movable_and_copyab
   %i.dx = add i32 %i.ds, -3
   store i32 %i.dx, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.dy = getelementptr inbounds nuw i8, ptr %storemerge4.i.i31, i64 12
-  %i.dz = add i64 %.05.i.i30, -4                  ; 2 uses
+  %i.dz = add nsw i64 %.05.i.i30, -4              ; 2 uses
   store i32 -2147483648, ptr %i.dy, align 4, !tbaa !65
   %i.ea = add i32 %i.ds, -4
   store i32 %i.ea, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -4088,7 +4088,7 @@ bb.a:
   %.05.i.i.i.prol = phi i64 [ %i.j, %.lr.ph.i.i.i.prol ], [ %i.e, %.lr.ph.i.preheader.i.i ]
   %storemerge4.i.i.i.prol = phi ptr [ %i.m, %.lr.ph.i.i.i.prol ], [ %i.i, %.lr.ph.i.preheader.i.i ] ; 2 uses
   %prol.iter7 = phi i64 [ %prol.iter7.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.preheader.i.i ]
-  %i.j = add i64 %.05.i.i.i.prol, -1              ; 2 uses
+  %i.j = add nsw i64 %.05.i.i.i.prol, -1          ; 2 uses
   store i32 -2147483648, ptr %storemerge4.i.i.i.prol, align 4, !tbaa !65
   %i.k = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.l = add i32 %i.k, -1
@@ -4121,7 +4121,7 @@ bb.a:
   %i.u = add i32 %i.p, -3
   store i32 %i.u, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.v = getelementptr inbounds nuw i8, ptr %storemerge4.i.i.i, i64 12
-  %i.w = add i64 %.05.i.i.i, -4                   ; 2 uses
+  %i.w = add nsw i64 %.05.i.i.i, -4               ; 2 uses
   store i32 -2147483648, ptr %i.v, align 4, !tbaa !65
   %i.x = add i32 %i.p, -4
   store i32 %i.x, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -4245,7 +4245,7 @@ bb.a:
   %.05.i.i.i.prol = phi i64 [ %i.j, %.lr.ph.i.i.i.prol ], [ %i.e, %.lr.ph.i.preheader.i.i ]
   %storemerge4.i.i.i.prol = phi ptr [ %i.m, %.lr.ph.i.i.i.prol ], [ %i.i, %.lr.ph.i.preheader.i.i ] ; 2 uses
   %prol.iter7 = phi i64 [ %prol.iter7.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.preheader.i.i ]
-  %i.j = add i64 %.05.i.i.i.prol, -1              ; 2 uses
+  %i.j = add nsw i64 %.05.i.i.i.prol, -1          ; 2 uses
   store i32 -2147483648, ptr %storemerge4.i.i.i.prol, align 4, !tbaa !65
   %i.k = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.l = add i32 %i.k, -1
@@ -4278,7 +4278,7 @@ bb.a:
   %i.u = add i32 %i.p, -3
   store i32 %i.u, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.v = getelementptr inbounds nuw i8, ptr %storemerge4.i.i.i, i64 12
-  %i.w = add i64 %.05.i.i.i, -4                   ; 2 uses
+  %i.w = add nsw i64 %.05.i.i.i, -4               ; 2 uses
   store i32 -2147483648, ptr %i.v, align 4, !tbaa !65
   %i.x = add i32 %i.p, -4
   store i32 %i.x, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -4401,7 +4401,7 @@ bb.a:
   %.05.i.i.i.prol = phi i64 [ %i.k, %.lr.ph.i.i.i.prol ], [ %i.f, %.lr.ph.i.preheader.i.i ]
   %storemerge4.i.i.i.prol = phi ptr [ %i.n, %.lr.ph.i.i.i.prol ], [ %i.j, %.lr.ph.i.preheader.i.i ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.preheader.i.i ]
-  %i.k = add i64 %.05.i.i.i.prol, -1              ; 2 uses
+  %i.k = add nsw i64 %.05.i.i.i.prol, -1          ; 2 uses
   store i32 -2147483648, ptr %storemerge4.i.i.i.prol, align 4, !tbaa !65
   %i.l = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.m = add i32 %i.l, -1
@@ -4434,7 +4434,7 @@ bb.a:
   %i.v = add i32 %i.q, -3
   store i32 %i.v, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.w = getelementptr inbounds nuw i8, ptr %storemerge4.i.i.i, i64 12
-  %i.x = add i64 %.05.i.i.i, -4                   ; 2 uses
+  %i.x = add nsw i64 %.05.i.i.i, -4               ; 2 uses
   store i32 -2147483648, ptr %i.w, align 4, !tbaa !65
   %i.y = add i32 %i.q, -4
   store i32 %i.y, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
@@ -4837,7 +4837,7 @@ middle.block76:                                   ; preds = %vector.body65
 .lr.ph.i20.i:                                     ; preds = %.lr.ph.i20.i.preheader, %.lr.ph.i20.i
   %.016.i.i = phi i64 [ %i.aw, %.lr.ph.i20.i ], [ %.016.i.i.ph, %.lr.ph.i20.i.preheader ]
   %.01315.i.i = phi ptr [ %i.ax, %.lr.ph.i20.i ], [ %.01315.i.i.ph, %.lr.ph.i20.i.preheader ] ; 3 uses
-  %i.aw = add i64 %.016.i.i, -1                   ; 2 uses
+  %i.aw = add nsw i64 %.016.i.i, -1               ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01315.i.i) ]
   store i32 %.pre.i19.i, ptr %.01315.i.i, align 4, !tbaa !63
   %i.ax = getelementptr inbounds nuw i8, ptr %.01315.i.i, i64 4
@@ -4885,7 +4885,7 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.i25.i:                                     ; preds = %.lr.ph.i25.i.preheader, %.lr.ph.i25.i
   %.07.i.i = phi ptr [ %i.bf, %.lr.ph.i25.i ], [ %.07.i.i.ph, %.lr.ph.i25.i.preheader ] ; 2 uses
   %.046.i.i = phi i64 [ %i.be, %.lr.ph.i25.i ], [ %.046.i.i.ph, %.lr.ph.i25.i.preheader ]
-  %i.be = add i64 %.046.i.i, -1                   ; 2 uses
+  %i.be = add nsw i64 %.046.i.i, -1               ; 2 uses
   store i32 %.pre.i24.i, ptr %.07.i.i, align 4, !tbaa !63
   %i.bf = getelementptr inbounds nuw i8, ptr %.07.i.i, i64 4
   %.not.i26.i = icmp eq i64 %i.be, 0
@@ -5288,7 +5288,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.i.i11.i.i.i,
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.07.i.i.i.i.i = phi i64 [ %i.am, %scalar.ph ], [ %.07.i.i.i.i.i.ph, %scalar.ph.preheader ]
   %.046.i.i.i.i.i = phi ptr [ %i.an, %scalar.ph ], [ %.046.i.i.i.i.i.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.am = add i64 %.07.i.i.i.i.i, -1              ; 2 uses
+  %i.am = add nsw i64 %.07.i.i.i.i.i, -1          ; 2 uses
   store i32 %.pre.i.i12.i.i.i, ptr %.046.i.i.i.i.i, align 4, !tbaa !63, !noalias !804
   %i.an = getelementptr inbounds nuw i8, ptr %.046.i.i.i.i.i, i64 4
   %.not.i35.i.i.i.i = icmp eq i64 %i.am, 0
@@ -5385,7 +5385,7 @@ middle.block57:                                   ; preds = %vector.body46
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i
   %.017.i.i.i.i.i.i = phi i64 [ %i.be, %.lr.ph.i.i.i.i.i.i ], [ %.017.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ]
   %.01416.i.i.i.i.i.i = phi ptr [ %i.bf, %.lr.ph.i.i.i.i.i.i ], [ %.01416.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ] ; 3 uses
-  %i.be = add i64 %.017.i.i.i.i.i.i, -1           ; 2 uses
+  %i.be = add nsw i64 %.017.i.i.i.i.i.i, -1       ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01416.i.i.i.i.i.i) ]
   store i32 %.pre.i.i.i.i.i.i, ptr %.01416.i.i.i.i.i.i, align 4, !tbaa !63, !noalias !804
   %i.bf = getelementptr inbounds nuw i8, ptr %.01416.i.i.i.i.i.i, i64 4
@@ -5788,7 +5788,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.i.i11.i.i.i,
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.07.i.i.i.i.i = phi i64 [ %i.ao, %scalar.ph ], [ %.07.i.i.i.i.i.ph, %scalar.ph.preheader ]
   %.046.i.i.i.i.i = phi ptr [ %i.ap, %scalar.ph ], [ %.046.i.i.i.i.i.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.ao = add i64 %.07.i.i.i.i.i, -1              ; 2 uses
+  %i.ao = add nsw i64 %.07.i.i.i.i.i, -1          ; 2 uses
   store i32 %.pre.i.i12.i.i.i, ptr %.046.i.i.i.i.i, align 4, !tbaa !63, !noalias !831
   %i.ap = getelementptr inbounds nuw i8, ptr %.046.i.i.i.i.i, i64 4
   %.not.i35.i.i.i.i = icmp eq i64 %i.ao, 0
@@ -5885,7 +5885,7 @@ middle.block47:                                   ; preds = %vector.body36
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i
   %.017.i.i.i.i.i.i = phi i64 [ %i.bg, %.lr.ph.i.i.i.i.i.i ], [ %.017.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ]
   %.01416.i.i.i.i.i.i = phi ptr [ %i.bh, %.lr.ph.i.i.i.i.i.i ], [ %.01416.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ] ; 3 uses
-  %i.bg = add i64 %.017.i.i.i.i.i.i, -1           ; 2 uses
+  %i.bg = add nsw i64 %.017.i.i.i.i.i.i, -1       ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01416.i.i.i.i.i.i) ]
   store i32 %.pre.i.i.i.i.i.i, ptr %.01416.i.i.i.i.i.i, align 4, !tbaa !63, !noalias !831
   %i.bh = getelementptr inbounds nuw i8, ptr %.01416.i.i.i.i.i.i, i64 4
@@ -6288,7 +6288,7 @@ _ZN5boost9container18copy_n_source_destIPNS0_4test24movable_and_copyable_intES4_
   %.0819.i.i.prol = phi ptr [ %i.dj, %.lr.ph.i14.i.prol ], [ %.0.lcssa.i.i, %_ZN5boost9container18copy_n_source_destIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES7_mRS8_.exit.i ] ; 2 uses
   %.01618.i.i.prol = phi ptr [ %i.dk, %.lr.ph.i14.i.prol ], [ %.0.i, %_ZN5boost9container18copy_n_source_destIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES7_mRS8_.exit.i ] ; 3 uses
   %prol.iter112 = phi i64 [ %prol.iter112.next, %.lr.ph.i14.i.prol ], [ 0, %_ZN5boost9container18copy_n_source_destIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES7_mRS8_.exit.i ]
-  %i.df = add i64 %.020.i.i.prol, -1              ; 2 uses
+  %i.df = add nsw i64 %.020.i.i.prol, -1          ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.01618.i.i.prol) ]
   %i.dg = load i32, ptr %.0819.i.i.prol, align 4, !tbaa !65
   store i32 %i.dg, ptr %.01618.i.i.prol, align 4, !tbaa !65
@@ -6333,7 +6333,7 @@ _ZN5boost9container18copy_n_source_destIPNS0_4test24movable_and_copyable_intES4_
   store i32 %i.dx, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.dy = getelementptr inbounds nuw i8, ptr %.0819.i.i, i64 12
   %i.dz = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 12
-  %i.ea = add i64 %.020.i.i, -4                   ; 2 uses
+  %i.ea = add nsw i64 %.020.i.i, -4               ; 2 uses
   %i.eb = load i32, ptr %i.dy, align 4, !tbaa !65
   store i32 %i.eb, ptr %i.dz, align 4, !tbaa !65
   %i.ec = add i32 %i.do, 4
@@ -6467,7 +6467,7 @@ _ZN5boost9container6copy_nIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38d
   %.05.i.i21.prol = phi i64 [ %i.fu, %.lr.ph.i21.i.prol ], [ %i.ft, %.lr.ph.i21.i.preheader ]
   %storemerge4.i.i22.prol = phi ptr [ %i.fx, %.lr.ph.i21.i.prol ], [ %.0.lcssa.i20.i, %.lr.ph.i21.i.preheader ] ; 2 uses
   %prol.iter106 = phi i64 [ %prol.iter106.next, %.lr.ph.i21.i.prol ], [ 0, %.lr.ph.i21.i.preheader ]
-  %i.fu = add i64 %.05.i.i21.prol, -1             ; 2 uses
+  %i.fu = add nsw i64 %.05.i.i21.prol, -1         ; 2 uses
   store i32 -2147483648, ptr %storemerge4.i.i22.prol, align 4, !tbaa !65
   %i.fv = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.fw = add i32 %i.fv, -1
@@ -6500,7 +6500,7 @@ _ZN5boost9container6copy_nIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38d
   %i.gf = add i32 %i.ga, -3
   store i32 %i.gf, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63
   %i.gg = getelementptr inbounds nuw i8, ptr %storemerge4.i.i22, i64 12
-  %i.gh = add i64 %.05.i.i21, -4                  ; 2 uses
+  %i.gh = add nsw i64 %.05.i.i21, -4              ; 2 uses
   store i32 -2147483648, ptr %i.gg, align 4, !tbaa !65
   %i.gi = add i32 %i.ga, -4
   store i32 %i.gi, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !63

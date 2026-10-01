@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseISt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEESaIS6_EEC2E
   store float 1.000000e+00, ptr %i.ab, align 8, !tbaa !140
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 96
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.af, i8 0, i64 16, i1 false)
-  %i.ag = add i64 %.057.i.i.i.i.i, -2             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -2         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 112 ; 2 uses
   %.not.i.i.i.i.i.1 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.1, label %_ZNSt6vectorISt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEESaIS6_EEC2EmRKS7_.exit.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !396
@@ -608,7 +608,7 @@ _ZNSt12_Vector_baseISt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES
   store ptr %i.ek, ptr %i.em, align 8, !tbaa !136
   %i.en = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 40
   store i64 0, ptr %i.en, align 8, !tbaa !105
-  %i.eo = add i64 %.057.i.i.i.i.i.prol, -1        ; 2 uses
+  %i.eo = add nsw i64 %.057.i.i.i.i.i.prol, -1    ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 48 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter1237
@@ -659,7 +659,7 @@ _ZNSt12_Vector_baseISt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES
   store ptr %i.fg, ptr %i.fi, align 8, !tbaa !136
   %i.fj = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 184
   store i64 0, ptr %i.fj, align 8, !tbaa !105
-  %i.fk = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.fk = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.i.i138.3 = icmp eq i64 %i.fk, 0
   br i1 %.not.i.i.i.i.i138.3, label %_ZN8DecGraph11CombinationD2Ev.exit140, label %.lr.ph.i.i.i.i.i, !llvm.loop !415
@@ -1062,7 +1062,7 @@ bb.dr:                                            ; preds = %bb.dq
   store i32 -1, ptr %i.alv, align 8, !tbaa !129
   %i.alw = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.prol, i64 44
   store i32 -1, ptr %i.alw, align 4, !tbaa !128
-  %i.alx = add i64 %.057.i.i.i.i.prol, -1         ; 2 uses
+  %i.alx = add nsw i64 %.057.i.i.i.i.prol, -1     ; 2 uses
   %i.aly = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.prol, i64 48 ; 3 uses
   %prol.iter1268.next = add i64 %prol.iter1268, 1 ; 2 uses
   %prol.iter1268.cmp.not = icmp eq i64 %prol.iter1268.next, %xtraiter1266
@@ -1117,7 +1117,7 @@ bb.dr:                                            ; preds = %bb.dq
   store i32 -1, ptr %i.amr, align 8, !tbaa !129
   %i.ams = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 188
   store i32 -1, ptr %i.ams, align 4, !tbaa !128
-  %i.amt = add i64 %.057.i.i.i.i, -4              ; 2 uses
+  %i.amt = add nsw i64 %.057.i.i.i.i, -4          ; 2 uses
   %i.amu = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.i443.3 = icmp eq i64 %i.amt, 0
   br i1 %.not.i.i.i.i443.3, label %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !17
@@ -1520,7 +1520,7 @@ bb.bq:                                            ; preds = %bb.bp
   store i32 -1, ptr %i.yh, align 8, !tbaa !129
   %i.yi = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.prol, i64 44
   store i32 -1, ptr %i.yi, align 4, !tbaa !128
-  %i.yj = add i64 %.057.i.i.i.i.prol, -1          ; 2 uses
+  %i.yj = add nsw i64 %.057.i.i.i.i.prol, -1      ; 2 uses
   %i.yk = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.prol, i64 48 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter913
@@ -1575,7 +1575,7 @@ bb.bq:                                            ; preds = %bb.bp
   store i32 -1, ptr %i.zd, align 8, !tbaa !129
   %i.ze = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 188
   store i32 -1, ptr %i.ze, align 4, !tbaa !128
-  %i.zf = add i64 %.057.i.i.i.i, -4               ; 2 uses
+  %i.zf = add nsw i64 %.057.i.i.i.i, -4           ; 2 uses
   %i.zg = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.i310.3 = icmp eq i64 %i.zf, 0
   br i1 %.not.i.i.i.i310.3, label %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !17
@@ -1978,7 +1978,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 -1, ptr %i.r, align 8, !tbaa !129
   %i.s = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 44
   store i32 -1, ptr %i.s, align 4, !tbaa !128
-  %i.t = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.t = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 48 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -2033,7 +2033,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 -1, ptr %i.an, align 8, !tbaa !129
   %i.ao = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 188
   store i32 -1, ptr %i.ao, align 4, !tbaa !128
-  %i.ap = add i64 %.057.i.i.i, -4                 ; 2 uses
+  %i.ap = add nsw i64 %.057.i.i.i, -4             ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ap, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !17
@@ -2075,7 +2075,7 @@ _ZNKSt6vectorIN8DecGraph12DecisionNodeESaIS1_EE12_M_check_lenEmPKc.exit: ; preds
   store i32 -1, ptr %i.az, align 8, !tbaa !129
   %i.ba = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.prol, i64 44
   store i32 -1, ptr %i.ba, align 4, !tbaa !128
-  %i.bb = add i64 %.057.i.i.i31.prol, -1          ; 2 uses
+  %i.bb = add nsw i64 %.057.i.i.i31.prol, -1      ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.prol, i64 48 ; 2 uses
   %prol.iter42.next = add i64 %prol.iter42, 1     ; 2 uses
   %prol.iter42.cmp.not = icmp eq i64 %prol.iter42.next, %xtraiter40
@@ -2129,7 +2129,7 @@ _ZNKSt6vectorIN8DecGraph12DecisionNodeESaIS1_EE12_M_check_lenEmPKc.exit: ; preds
   store i32 -1, ptr %i.bv, align 8, !tbaa !129
   %i.bw = getelementptr inbounds nuw i8, ptr %.08.i.i.i30, i64 188
   store i32 -1, ptr %i.bw, align 4, !tbaa !128
-  %i.bx = add i64 %.057.i.i.i31, -4               ; 2 uses
+  %i.bx = add nsw i64 %.057.i.i.i31, -4           ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.08.i.i.i30, i64 192
   %.not.i.i.i32.3 = icmp eq i64 %i.bx, 0
   br i1 %.not.i.i.i32.3, label %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34, label %.lr.ph.i.i.i29, !llvm.loop !17

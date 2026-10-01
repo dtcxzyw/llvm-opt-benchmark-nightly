@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   tail call void @_ZdlPvm(ptr noundef nonnull %i.s, i64 noundef %i.x) #35
   br label %.body
 
-_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit.i.i57: ; preds = %bb.c, %bb.d
+_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit.i.i57: ; preds = %bb.d, %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   store ptr %i.n, ptr %i.y, align 8, !tbaa !105
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 7 uses
@@ -245,7 +245,7 @@ bb.j:                                             ; preds = %bb.i
   tail call void @_ZdlPvm(ptr noundef nonnull %i.af, i64 noundef %i.ak) #35
   br label %.body63
 
-_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit.i.i68: ; preds = %bb.g, %bb.h
+_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit.i.i68: ; preds = %bb.h, %bb.g
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   store ptr %i.ab, ptr %i.al, align 8, !tbaa !105
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 5 uses

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.p, ptr %i.q, align 8, !tbaa !797
   %i.r = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 16
   store i64 0, ptr %i.r, align 8, !tbaa !1410
-  %i.s = add i64 %.01012.i.i.i.prol, -1           ; 2 uses
+  %i.s = add nsw i64 %.01012.i.i.i.prol, -1       ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 24 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -244,7 +244,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.p, ptr %i.ae, align 8, !tbaa !797
   %i.af = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 88
   store i64 0, ptr %i.af, align 8, !tbaa !1410
-  %i.ag = add i64 %.01012.i.i.i, -4               ; 2 uses
+  %i.ag = add nsw i64 %.01012.i.i.i, -4           ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPSt4pairISt10error_codemEmS2_ET_S4_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i.new, !llvm.loop !7324
@@ -283,7 +283,7 @@ _ZNKSt6vectorISt4pairISt10error_codemESaIS2_EE12_M_check_lenEmPKc.exit: ; preds 
   store ptr %i.ao, ptr %i.ap, align 8, !tbaa !797
   %i.aq = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.prol, i64 16
   store i64 0, ptr %i.aq, align 8, !tbaa !1410
-  %i.ar = add i64 %.01012.i.i.i32.prol, -1        ; 2 uses
+  %i.ar = add nsw i64 %.01012.i.i.i32.prol, -1    ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.prol, i64 24 ; 2 uses
   %prol.iter48.next = add i64 %prol.iter48, 1     ; 2 uses
   %prol.iter48.cmp.not = icmp eq i64 %prol.iter48.next, %xtraiter46
@@ -321,7 +321,7 @@ _ZNKSt6vectorISt4pairISt10error_codemESaIS2_EE12_M_check_lenEmPKc.exit.new: ; pr
   store ptr %i.ao, ptr %i.bd, align 8, !tbaa !797
   %i.be = getelementptr inbounds nuw i8, ptr %.013.i.i.i31, i64 88
   store i64 0, ptr %i.be, align 8, !tbaa !1410
-  %i.bf = add i64 %.01012.i.i.i32, -4             ; 2 uses
+  %i.bf = add nsw i64 %.01012.i.i.i32, -4         ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.013.i.i.i31, i64 96
   %.not.i.i.i33.3 = icmp eq i64 %i.bf, 0
   br i1 %.not.i.i.i33.3, label %_ZSt27__uninitialized_default_n_aIPSt4pairISt10error_codemEmS2_ET_S4_T0_RSaIT1_E.exit35, label %_ZNKSt6vectorISt4pairISt10error_codemESaIS2_EE12_M_check_lenEmPKc.exit.new, !llvm.loop !7324

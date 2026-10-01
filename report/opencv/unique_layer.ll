@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseIN2cv3MatESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vectorIN
   %.08.i.i.i.i.i = phi ptr [ %i.cw, %.lr.ph.i.i.i.i.i ], [ %i.cr, %.noexc89 ] ; 2 uses
   %.057.i.i.i.i.i = phi i64 [ %i.cv, %.lr.ph.i.i.i.i.i ], [ %i.cn, %.noexc89 ]
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %.08.i.i.i.i.i) #19
-  %i.cv = add i64 %.057.i.i.i.i.i, -1             ; 2 uses
+  %i.cv = add nsw i64 %.057.i.i.i.i.i, -1         ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 208 ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %i.cv, 0
   br i1 %.not.i.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !356
@@ -607,7 +607,7 @@ _ZNSt6vectorISt4pairIihESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %.l
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 4, !tbaa !158
   %i.ep = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 4
   store i8 0, ptr %i.ep, align 4, !tbaa !159
-  %i.eq = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.eq = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter580.next = add i64 %prol.iter580, 1   ; 2 uses
   %prol.iter580.cmp.not = icmp eq i64 %prol.iter580.next, %xtraiter578
@@ -654,7 +654,7 @@ _ZNSt6vectorISt4pairIihESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %.l
   store i32 0, ptr %i.fg, align 4, !tbaa !158
   %i.fh = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 60
   store i8 0, ptr %i.fh, align 4, !tbaa !159
-  %i.fi = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.fi = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.fi, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph318, label %.lr.ph.i.i.i.i.i, !llvm.loop !389
@@ -904,7 +904,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vector
   store i32 0, ptr %.013.i.i.i.i.i169.prol, align 8, !tbaa !169
   %i.ic = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 8
   store i64 0, ptr %i.ic, align 8, !tbaa !170
-  %i.id = add i64 %.01012.i.i.i.i.i170.prol, -1   ; 2 uses
+  %i.id = add nsw i64 %.01012.i.i.i.i.i170.prol, -1 ; 2 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -951,7 +951,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vector
   store i32 0, ptr %i.it, align 8, !tbaa !169
   %i.iu = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 120
   store i64 0, ptr %i.iu, align 8, !tbaa !170
-  %i.iv = add i64 %.01012.i.i.i.i.i170, -8        ; 2 uses
+  %i.iv = add nsw i64 %.01012.i.i.i.i.i170, -8    ; 2 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 128 ; 2 uses
   %.not.i.i.i.i.i171.7 = icmp eq i64 %i.iv, 0
   br i1 %.not.i.i.i.i.i171.7, label %.lr.ph314, label %.lr.ph.i.i.i.i.i168, !llvm.loop !2
@@ -1354,7 +1354,7 @@ _ZNSt6vectorISt4pairIiaESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %.l
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 4, !tbaa !195
   %i.ep = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 4
   store i8 0, ptr %i.ep, align 4, !tbaa !196
-  %i.eq = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.eq = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter580.next = add i64 %prol.iter580, 1   ; 2 uses
   %prol.iter580.cmp.not = icmp eq i64 %prol.iter580.next, %xtraiter578
@@ -1401,7 +1401,7 @@ _ZNSt6vectorISt4pairIiaESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %.l
   store i32 0, ptr %i.fg, align 4, !tbaa !195
   %i.fh = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 60
   store i8 0, ptr %i.fh, align 4, !tbaa !196
-  %i.fi = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.fi = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.fi, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph318, label %.lr.ph.i.i.i.i.i, !llvm.loop !420
@@ -1651,7 +1651,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vector
   store i32 0, ptr %.013.i.i.i.i.i169.prol, align 8, !tbaa !169
   %i.ic = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 8
   store i64 0, ptr %i.ic, align 8, !tbaa !170
-  %i.id = add i64 %.01012.i.i.i.i.i170.prol, -1   ; 2 uses
+  %i.id = add nsw i64 %.01012.i.i.i.i.i170.prol, -1 ; 2 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1698,7 +1698,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vector
   store i32 0, ptr %i.it, align 8, !tbaa !169
   %i.iu = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 120
   store i64 0, ptr %i.iu, align 8, !tbaa !170
-  %i.iv = add i64 %.01012.i.i.i.i.i170, -8        ; 2 uses
+  %i.iv = add nsw i64 %.01012.i.i.i.i.i170, -8    ; 2 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 128 ; 2 uses
   %.not.i.i.i.i.i171.7 = icmp eq i64 %i.iv, 0
   br i1 %.not.i.i.i.i.i171.7, label %.lr.ph314, label %.lr.ph.i.i.i.i.i168, !llvm.loop !2
@@ -2101,7 +2101,7 @@ _ZNSt12_Vector_baseISt4pairIitESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit303
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 4, !tbaa !208
   %i.ep = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 4
   store i16 0, ptr %i.ep, align 4, !tbaa !209
-  %i.eq = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.eq = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -2148,7 +2148,7 @@ _ZNSt12_Vector_baseISt4pairIitESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit303
   store i32 0, ptr %i.fg, align 4, !tbaa !208
   %i.fh = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 60
   store i16 0, ptr %i.fh, align 4, !tbaa !209
-  %i.fi = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.fi = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.fi, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph319, label %.lr.ph.i.i.i.i.i, !llvm.loop !451
@@ -2432,7 +2432,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %.013.i.i.i.i.i169.prol, align 8, !tbaa !169
   %i.iv = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 8
   store i64 0, ptr %i.iv, align 8, !tbaa !170
-  %i.iw = add i64 %.01012.i.i.i.i.i170.prol, -1   ; 2 uses
+  %i.iw = add nsw i64 %.01012.i.i.i.i.i170.prol, -1 ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 16 ; 3 uses
   %prol.iter601.next = add i64 %prol.iter601, 1   ; 2 uses
   %prol.iter601.cmp.not = icmp eq i64 %prol.iter601.next, %xtraiter599
@@ -2479,7 +2479,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %i.jm, align 8, !tbaa !169
   %i.jn = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 120
   store i64 0, ptr %i.jn, align 8, !tbaa !170
-  %i.jo = add i64 %.01012.i.i.i.i.i170, -8        ; 2 uses
+  %i.jo = add nsw i64 %.01012.i.i.i.i.i170, -8    ; 2 uses
   %i.jp = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 128 ; 2 uses
   %.not.i.i.i.i.i171.7 = icmp eq i64 %i.jo, 0
   br i1 %.not.i.i.i.i.i171.7, label %.lr.ph, label %.lr.ph.i.i.i.i.i168, !llvm.loop !2
@@ -2882,7 +2882,7 @@ _ZNSt12_Vector_baseISt4pairIisESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit303
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 4, !tbaa !222
   %i.ep = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 4
   store i16 0, ptr %i.ep, align 4, !tbaa !223
-  %i.eq = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.eq = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -2929,7 +2929,7 @@ _ZNSt12_Vector_baseISt4pairIisESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit303
   store i32 0, ptr %i.fg, align 4, !tbaa !222
   %i.fh = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 60
   store i16 0, ptr %i.fh, align 4, !tbaa !223
-  %i.fi = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.fi = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.fi, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph319, label %.lr.ph.i.i.i.i.i, !llvm.loop !486
@@ -3213,7 +3213,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %.013.i.i.i.i.i169.prol, align 8, !tbaa !169
   %i.iv = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 8
   store i64 0, ptr %i.iv, align 8, !tbaa !170
-  %i.iw = add i64 %.01012.i.i.i.i.i170.prol, -1   ; 2 uses
+  %i.iw = add nsw i64 %.01012.i.i.i.i.i170.prol, -1 ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 16 ; 3 uses
   %prol.iter601.next = add i64 %prol.iter601, 1   ; 2 uses
   %prol.iter601.cmp.not = icmp eq i64 %prol.iter601.next, %xtraiter599
@@ -3260,7 +3260,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %i.jm, align 8, !tbaa !169
   %i.jn = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 120
   store i64 0, ptr %i.jn, align 8, !tbaa !170
-  %i.jo = add i64 %.01012.i.i.i.i.i170, -8        ; 2 uses
+  %i.jo = add nsw i64 %.01012.i.i.i.i.i170, -8    ; 2 uses
   %i.jp = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 128 ; 2 uses
   %.not.i.i.i.i.i171.7 = icmp eq i64 %i.jo, 0
   br i1 %.not.i.i.i.i.i171.7, label %.lr.ph, label %.lr.ph.i.i.i.i.i168, !llvm.loop !2
@@ -3663,7 +3663,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 8, !tbaa !169
   %i.hf = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.hf, align 8, !tbaa !170
-  %i.hg = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.hg = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -3710,7 +3710,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %i.hw, align 8, !tbaa !169
   %i.hx = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 120
   store i64 0, ptr %i.hx, align 8, !tbaa !170
-  %i.hy = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.hy = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.hy, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph, label %.lr.ph.i.i.i.i.i, !llvm.loop !2
@@ -4113,7 +4113,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 8, !tbaa !169
   %i.he = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.he, align 8, !tbaa !170
-  %i.hf = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.hf = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -4160,7 +4160,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %i.hv, align 8, !tbaa !169
   %i.hw = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 120
   store i64 0, ptr %i.hw, align 8, !tbaa !170
-  %i.hx = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.hx = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.hx, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph, label %.lr.ph.i.i.i.i.i, !llvm.loop !2
@@ -4563,7 +4563,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 8, !tbaa !169
   %i.hx = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.hx, align 8, !tbaa !170
-  %i.hy = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.hy = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter586.next = add i64 %prol.iter586, 1   ; 2 uses
   %prol.iter586.cmp.not = icmp eq i64 %prol.iter586.next, %xtraiter584
@@ -4610,7 +4610,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %i.io, align 8, !tbaa !169
   %i.ip = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 120
   store i64 0, ptr %i.ip, align 8, !tbaa !170
-  %i.iq = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.iq = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.iq, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph, label %.lr.ph.i.i.i.i.i, !llvm.loop !2
@@ -5013,7 +5013,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 8, !tbaa !169
   %i.hx = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.hx, align 8, !tbaa !170
-  %i.hy = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.hy = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter591.next = add i64 %prol.iter591, 1   ; 2 uses
   %prol.iter591.cmp.not = icmp eq i64 %prol.iter591.next, %xtraiter589
@@ -5060,7 +5060,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %i.io, align 8, !tbaa !169
   %i.ip = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 120
   store i64 0, ptr %i.ip, align 8, !tbaa !170
-  %i.iq = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.iq = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.iq, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph, label %.lr.ph.i.i.i.i.i, !llvm.loop !2
@@ -5463,7 +5463,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 8, !tbaa !169
   %i.im = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.im, align 8, !tbaa !170
-  %i.in = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.in = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.io = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter600.next = add i64 %prol.iter600, 1   ; 2 uses
   %prol.iter600.cmp.not = icmp eq i64 %prol.iter600.next, %xtraiter598
@@ -5510,7 +5510,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %i.jd, align 8, !tbaa !169
   %i.je = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 120
   store i64 0, ptr %i.je, align 8, !tbaa !170
-  %i.jf = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.jf = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.jf, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph, label %.lr.ph.i.i.i.i.i, !llvm.loop !2
@@ -5913,7 +5913,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit308
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 8, !tbaa !169
   %i.ep = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.ep, align 8, !tbaa !170
-  %i.eq = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.eq = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -5960,7 +5960,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit308
   store i32 0, ptr %i.fg, align 8, !tbaa !169
   %i.fh = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 120
   store i64 0, ptr %i.fh, align 8, !tbaa !170
-  %i.fi = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.fi = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.fi, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph324, label %.lr.ph.i.i.i.i.i, !llvm.loop !2
@@ -6221,7 +6221,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i169: ; preds = %._crit_ed
   store i32 0, ptr %.013.i.i.i.i.i171.prol, align 8, !tbaa !169
   %i.ih = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i171.prol, i64 8
   store i64 0, ptr %i.ih, align 8, !tbaa !170
-  %i.ii = add i64 %.01012.i.i.i.i.i172.prol, -1   ; 2 uses
+  %i.ii = add nsw i64 %.01012.i.i.i.i.i172.prol, -1 ; 2 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i171.prol, i64 16 ; 3 uses
   %prol.iter589.next = add i64 %prol.iter589, 1   ; 2 uses
   %prol.iter589.cmp.not = icmp eq i64 %prol.iter589.next, %xtraiter587
@@ -6268,7 +6268,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i169: ; preds = %._crit_ed
   store i32 0, ptr %i.iy, align 8, !tbaa !169
   %i.iz = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i171, i64 120
   store i64 0, ptr %i.iz, align 8, !tbaa !170
-  %i.ja = add i64 %.01012.i.i.i.i.i172, -8        ; 2 uses
+  %i.ja = add nsw i64 %.01012.i.i.i.i.i172, -8    ; 2 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i171, i64 128 ; 2 uses
   %.not.i.i.i.i.i173.7 = icmp eq i64 %i.ja, 0
   br i1 %.not.i.i.i.i.i173.7, label %.lr.ph320, label %.lr.ph.i.i.i.i.i170, !llvm.loop !2
@@ -6671,7 +6671,7 @@ _ZNSt12_Vector_baseISt4pairIilESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit304
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 8, !tbaa !284
   %i.ep = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.ep, align 8, !tbaa !285
-  %i.eq = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.eq = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -6718,7 +6718,7 @@ _ZNSt12_Vector_baseISt4pairIilESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit304
   store i32 0, ptr %i.fg, align 8, !tbaa !284
   %i.fh = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 120
   store i64 0, ptr %i.fh, align 8, !tbaa !285
-  %i.fi = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.fi = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.fi, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph320, label %.lr.ph.i.i.i.i.i, !llvm.loop !709
@@ -6979,7 +6979,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %.013.i.i.i.i.i169.prol, align 8, !tbaa !169
   %i.ih = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 8
   store i64 0, ptr %i.ih, align 8, !tbaa !170
-  %i.ii = add i64 %.01012.i.i.i.i.i170.prol, -1   ; 2 uses
+  %i.ii = add nsw i64 %.01012.i.i.i.i.i170.prol, -1 ; 2 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 16 ; 3 uses
   %prol.iter585.next = add i64 %prol.iter585, 1   ; 2 uses
   %prol.iter585.cmp.not = icmp eq i64 %prol.iter585.next, %xtraiter583
@@ -7026,7 +7026,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %i.iy, align 8, !tbaa !169
   %i.iz = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 120
   store i64 0, ptr %i.iz, align 8, !tbaa !170
-  %i.ja = add i64 %.01012.i.i.i.i.i170, -8        ; 2 uses
+  %i.ja = add nsw i64 %.01012.i.i.i.i.i170, -8    ; 2 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 128 ; 2 uses
   %.not.i.i.i.i.i171.7 = icmp eq i64 %i.ja, 0
   br i1 %.not.i.i.i.i.i171.7, label %.lr.ph316, label %.lr.ph.i.i.i.i.i168, !llvm.loop !2
@@ -7429,7 +7429,7 @@ _ZNSt12_Vector_baseISt4pairIidESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit302
   store i32 0, ptr %.013.i.i.i.i.i.prol, align 8, !tbaa !293
   %i.ep = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8
   store double 0.000000e+00, ptr %i.ep, align 8, !tbaa !294
-  %i.eq = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.eq = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -7476,7 +7476,7 @@ _ZNSt12_Vector_baseISt4pairIidESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.loopexit302
   store i32 0, ptr %i.fg, align 8, !tbaa !293
   %i.fh = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 120
   store double 0.000000e+00, ptr %i.fh, align 8, !tbaa !294
-  %i.fi = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.fi = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.fi, 0
   br i1 %.not.i.i.i.i.i.7, label %.lr.ph318, label %.lr.ph.i.i.i.i.i, !llvm.loop !739
@@ -7755,7 +7755,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %.013.i.i.i.i.i169.prol, align 8, !tbaa !169
   %i.iu = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 8
   store i64 0, ptr %i.iu, align 8, !tbaa !170
-  %i.iv = add i64 %.01012.i.i.i.i.i170.prol, -1   ; 2 uses
+  %i.iv = add nsw i64 %.01012.i.i.i.i.i170.prol, -1 ; 2 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169.prol, i64 16 ; 3 uses
   %prol.iter593.next = add i64 %prol.iter593, 1   ; 2 uses
   %prol.iter593.cmp.not = icmp eq i64 %prol.iter593.next, %xtraiter591
@@ -7802,7 +7802,7 @@ _ZNSt12_Vector_baseISt4pairIimESaIS1_EEC2EmRKS2_.exit.i: ; preds = %._crit_edge3
   store i32 0, ptr %i.jl, align 8, !tbaa !169
   %i.jm = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 120
   store i64 0, ptr %i.jm, align 8, !tbaa !170
-  %i.jn = add i64 %.01012.i.i.i.i.i170, -8        ; 2 uses
+  %i.jn = add nsw i64 %.01012.i.i.i.i.i170, -8    ; 2 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i169, i64 128 ; 2 uses
   %.not.i.i.i.i.i171.7 = icmp eq i64 %i.jn, 0
   br i1 %.not.i.i.i.i.i171.7, label %.lr.ph, label %.lr.ph.i.i.i.i.i168, !llvm.loop !2
