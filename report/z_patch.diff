@@ -1,0 +1,676 @@
+diff --git a/llvm/lib/CodeGen/ScheduleDAGInstrs.cpp b/llvm/lib/CodeGen/ScheduleDAGInstrs.cpp
+index fad5df58b28d5..7cc31b791507f 100644
+--- a/llvm/lib/CodeGen/ScheduleDAGInstrs.cpp
++++ b/llvm/lib/CodeGen/ScheduleDAGInstrs.cpp
+@@ -85,11 +85,18 @@ static cl::opt<bool>
+ // When Stores and Loads maps together hold this many SUs, a reduction of maps
+ // will be done.
+ static cl::opt<unsigned>
+-    HugeRegion("dag-maps-huge-region", cl::Hidden, cl::init(500),
++    HugeRegion("dag-maps-huge-region", cl::Hidden, cl::init(99999),
+                cl::desc("The limit to use while constructing the DAG "
+                         "prior to scheduling, at which point a trade-off "
+                         "is made to avoid excessive compile time."));
+ 
++static cl::opt<bool> EnableStoreSequencing(
++    "enable-unanalyzable-store-sequencing", cl::Hidden, cl::init(true),
++    cl::desc("Enable the store-sequencing DAG construction algorithm. This can "
++             "eliminate a large number of redundant control dependencies and "
++             "spurious alias analysis queries at the cost of some unnecessary "
++             "dependencies."));
++
+ #if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
+ static cl::opt<bool> SchedPrintCycles(
+     "sched-print-cycles", cl::Hidden, cl::init(false),
+@@ -718,6 +725,70 @@ class ScheduleDAGDependencyBuilder {
+   // convenience.
+   Value2SUsMap FPExceptions;
+ 
++  /// A frontier of unanalyzable memory operations.
++  ///
++  /// As we process memory operations (bottom to top), each new unanalyzable
++  /// memory operation needs to be checked for required control dependencies
++  /// against later memory operations. A naive implementation issues AA calls
++  /// quadratically in the number of memory operations and is therefore
++  /// unacceptable.
++  ///
++  /// To bound the complexity, we only ever consider a frontier of memory
++  /// operations which we frequently clear, modeled by this struct. To ensure
++  /// that we are not missing any necessary control dependencies, we promote
++  /// certain store instructions to what we term 'sequencing stores'. These
++  /// sequencing stores are treated carefully to ensure that all previously seen
++  /// unanalyzable memory operations that do not belong to the frontier
++  /// necessarily transitively succeed the current sequencing store.
++  ///
++  /// By frequently updating the sequencing store, we bound the number of alias
++  /// analysis queries and transitively redundant control dependencies we
++  /// generate. However, doing so we necessarily overconstrain the DAG. Indeed,
++  /// if we were to update the sequencing store every time we see a store
++  /// instruction, the effect would be to linearize the stores.
++  ///
++  /// The conditions we choose to update the sequencing store are as follows:
++  /// 1. If an incoming store instruction refers to an underlying object outside
++  ///    of the set of underlying objects of the current sequencing store;
++  /// 2. If an incoming store instruction precedes an intervening load from an
++  ///    underlying object outside of the set of underlying objects of the
++  ///    current sequencing store (a 'sequencing load').
++  /// In these cases, a BasicAA query will (generally) already induce a
++  /// (transitive) edge from the incoming store to the current sequencing store.
++  /// However, this process introduces spurious (transitive) barrier edges in
++  /// the following cases:
++  /// 1. From all preceding loads to the new sequencing store;
++  /// 2. From the new sequencing store to all stores in the current frontier;
++  /// 3. From all preceding unanalyzable stores to (a subset of) the same base
++  ///    objects, independent of AA results;
++  /// 4. From all preceding analyzable stores, independent of AA results.
++  struct UnanalyzableFrontier {
++    /// The current sequencing store.
++    SUnit *SequencingStore = nullptr;
++    /// The underlying objects of the current sequencing store.
++    UnderlyingObjectsVector BaseObjects;
++    /// The memory operations in the frontier (keyed by UnknownValue).
++    Value2SUsMap Stores, Loads{1 /*TrueMemOrderLatency*/};
++    /// `true` if the frontier contains a load whose underlying objects escape
++    /// #BaseObjects.
++    bool SeenSequencingLoad = false;
++
++    /// Given a store instruction with underlying objects \p Objs, returns true
++    /// if the store should be promoted to a sequencing store and false
++    /// otherwise.
++    bool shouldUpdate(const UnderlyingObjectsVector &Objs);
++    /// Returns true if any of \p Objs does not belong to #BaseObjects.
++    bool escapesBaseObjects(const UnderlyingObjectsVector &Objs);
++    /// Clears the frontier.
++    void clear();
++  };
++
++  /// Track a frontier of unanalyzable memory operations.
++  ///
++  /// FIXME(@cofibrant): For some platforms, a single frontier is too coarse and
++  /// we should be maintaining one frontier per address space.
++  UnanalyzableFrontier Frontier;
++
+   /// For an unanalyzable memory access, this Value is used in maps.
+   UndefValue *UnknownValue;
+ 
+@@ -733,34 +804,74 @@ class ScheduleDAGDependencyBuilder {
+                                RegPressureTracker *RPTracker,
+                                PressureDiffs *PDiffs, LiveIntervals *LIS)
+       : DAG(DAG), AA(AA), RPTracker(RPTracker), PDiffs(PDiffs), LIS(LIS),
+-        Stores(), Loads(1), FPExceptions(),
++        Stores(), Loads(1), FPExceptions(), Frontier(),
+         UnknownValue(UndefValue::get(
+             Type::getVoidTy(DAG.MF.getFunction().getContext()))) {}
+ 
+ private:
+   /// Adds a chain edge between SUa and SUb, but only if both
+   /// AAResults and Target fail to deny the dependency.
+-  void addChainDependency(SUnit *SUa, SUnit *SUb, unsigned Latency = 0);
++  ///
++  /// Returns true if an edge was inserted.
++  bool addChainDependency(SUnit *SUa, SUnit *SUb, unsigned Latency = 0);
+ 
+   /// Adds dependencies as needed from all SUs in list to SU.
+   void addChainDependencies(SUnit *SU, SUList &SUs, unsigned Latency);
+   void addChainDependencies(SUnit *SU, Value2SUsMap &Val2SUsMap);
+   void addChainDependencies(SUnit *SU, Value2SUsMap &Val2SUsMap, ValueType V);
++  void addChainDependencies(SUnit *SU, UnanalyzableFrontier &UF, bool IsStore);
+ 
+   void addBarrierChain(Value2SUsMap &map);
++  void addBarrierChain(UnanalyzableFrontier &UF);
++
++  /// Promote the store \p SU with underlying objects \p Objs to be a new
++  /// sequencing store in the frontier \p UF.
++  void updateSequencingStore(UnanalyzableFrontier &UF, SUnit *SU,
++                             UnderlyingObjectsVector &Objs);
+ 
+ public:
+   void buildDeps();
+ };
+ } // end namespace llvm
+ 
+-void ScheduleDAGDependencyBuilder::addChainDependency(SUnit *SUa, SUnit *SUb,
+-                                                      unsigned Latency) {
+-  if (SUa->getInstr()->mayAlias(AA, *SUb->getInstr(), UseTBAA)) {
+-    SDep Dep(SUa, SDep::MayAliasMem);
+-    Dep.setLatency(Latency);
+-    SUb->addPred(Dep);
++bool ScheduleDAGDependencyBuilder::UnanalyzableFrontier::shouldUpdate(
++    const UnderlyingObjectsVector &Objs) {
++  if (!EnableStoreSequencing)
++    return false;
++  if (!SequencingStore)
++    return true;
++  if (SeenSequencingLoad)
++    return true;
++  return escapesBaseObjects(Objs);
++}
++
++bool ScheduleDAGDependencyBuilder::UnanalyzableFrontier::escapesBaseObjects(
++    const UnderlyingObjectsVector &Objs) {
++  for (const ValueType V : Objs) {
++    if (!is_contained(BaseObjects, V))
++      return true;
+   }
++
++  return false;
++}
++
++void ScheduleDAGDependencyBuilder::UnanalyzableFrontier::clear() {
++  SequencingStore = nullptr;
++  SeenSequencingLoad = false;
++  BaseObjects.clear();
++  Stores.clear();
++  Loads.clear();
++}
++
++bool ScheduleDAGDependencyBuilder::addChainDependency(SUnit *SUa, SUnit *SUb,
++                                                      unsigned Latency) {
++  if (!SUa->getInstr()->mayAlias(AA, *SUb->getInstr(), UseTBAA))
++    return false;
++
++  SDep Dep(SUa, SDep::MayAliasMem);
++  Dep.setLatency(Latency);
++  SUb->addPred(Dep);
++  return true;
+ }
+ 
+ void ScheduleDAGDependencyBuilder::addChainDependencies(SUnit *SU, SUList &SUs,
+@@ -782,6 +893,16 @@ void ScheduleDAGDependencyBuilder::addChainDependencies(
+     addChainDependencies(SU, Itr->second, Val2SUsMap.getTrueMemOrderLatency());
+ }
+ 
++void ScheduleDAGDependencyBuilder::addChainDependencies(
++    SUnit *SU, UnanalyzableFrontier &UF, bool IsStore) {
++  if (UF.SequencingStore)
++    UF.SequencingStore->addPredBarrier(SU);
++
++  addChainDependencies(SU, UF.Stores, UnknownValue);
++  if (IsStore)
++    addChainDependencies(SU, UF.Loads, UnknownValue);
++}
++
+ void ScheduleDAGDependencyBuilder::addBarrierChain(Value2SUsMap &map) {
+   assert(BarrierChain != nullptr);
+ 
+@@ -794,6 +915,54 @@ void ScheduleDAGDependencyBuilder::addBarrierChain(Value2SUsMap &map) {
+   map.clear();
+ }
+ 
++void ScheduleDAGDependencyBuilder::addBarrierChain(UnanalyzableFrontier &UF) {
++  assert(BarrierChain != nullptr);
++
++  addBarrierChain(UF.Stores);
++  addBarrierChain(UF.Loads);
++
++  if (UF.SequencingStore)
++    UF.SequencingStore->addPredBarrier(BarrierChain);
++
++  UF.clear();
++}
++
++void ScheduleDAGDependencyBuilder::updateSequencingStore(
++    UnanalyzableFrontier &UF, SUnit *SU, UnderlyingObjectsVector &Objs) {
++  assert(SU->getInstr()->mayStore() &&
++         "Only store instructions should be used as sequencing stores");
++
++  if (UF.SequencingStore)
++    UF.SequencingStore->addPredBarrier(SU);
++
++  // Sequence all stores against the sequencing store and clear the map.
++  for (auto &[V, SUs] : UF.Stores)
++    for (SUnit *S : SUs)
++      S->addPredBarrier(SU);
++  UF.Stores.clear();
++
++  // For loads, we can do slightly better. Rather than naively adding pred
++  // barriers and clearing the map, we check whether each load genuinely needs
++  // to sequence against the new sequencing store. Wherever an edge is not
++  // required, we retain the load and avoid the spurious control dependency.
++  for (auto &[V, SUs] : UF.Loads) {
++    for (auto It = SUs.begin(); It != SUs.end();) {
++      if (addChainDependency(SU, *It, /*TrueMemOrderLatency=*/1)) {
++        // FIXME(@cofibrant): `UF.Loads` won't record the reduction in its size
++        // here. This wants fixing before we work on promoting stores to
++        // sequencing stores when the maps get too large.
++        It = SUs.erase(It);
++      } else {
++        ++It;
++      }
++    }
++  }
++
++  UF.SequencingStore = SU;
++  UF.BaseObjects = std::move(Objs);
++  UF.SeenSequencingLoad = false;
++}
++
+ void ScheduleDAGDependencyBuilder::buildDeps() {
+   const TargetSubtargetInfo &ST = DAG.MF.getSubtarget();
+ 
+@@ -912,6 +1081,7 @@ void ScheduleDAGDependencyBuilder::buildDeps() {
+       addBarrierChain(Stores);
+       addBarrierChain(Loads);
+       addBarrierChain(FPExceptions);
++      addBarrierChain(Frontier);
+ 
+       continue;
+     }
+@@ -945,6 +1115,13 @@ void ScheduleDAGDependencyBuilder::buildDeps() {
+       BarrierChain->addPredBarrier(SU);
+ 
+     // Reduce maps if they grow huge.
++    //
++    // FIXME(@cofibrant): With store-sequencing, this condition can be relaxed
++    // and improved. Specifically, we are not so worried about `Stores` and
++    // `Loads` growing too large, but more interested in making sure that the
++    // frontier(s) themselves stay sufficiently small. This is best achieved by
++    // measuring the size of the frontier(s) and, if sufficiently large,
++    // promoting the next store to a sequencing store.
+     if (MemOpsProcessed >= HugeRegion) {
+       LLVM_DEBUG(dbgs() << "Creating barrier chain and clearing maps.\n");
+ 
+@@ -952,6 +1129,7 @@ void ScheduleDAGDependencyBuilder::buildDeps() {
+ 
+       addBarrierChain(Stores);
+       addBarrierChain(Loads);
++      addBarrierChain(Frontier);
+ 
+       MemOpsProcessed = 0;
+       continue;
+@@ -970,8 +1148,13 @@ void ScheduleDAGDependencyBuilder::buildDeps() {
+         addChainDependencies(SU, Stores);
+         addChainDependencies(SU, Loads);
+ 
+-        // Map this store to 'UnknownValue'.
+-        Stores.insert(SU, UnknownValue);
++        if (Frontier.shouldUpdate(Objs)) {
++          LLVM_DEBUG(dbgs() << "Promoting " << *SU << " to sequencing store\n");
++          updateSequencingStore(Frontier, SU, Objs);
++        } else {
++          addChainDependencies(SU, Frontier, /*IsStore=*/true);
++          Frontier.Stores.insert(SU, UnknownValue);
++        }
+       } else {
+         // Add precise dependencies against all previously seen memory
+         // accesses mapped to the same Value(s).
+@@ -987,16 +1170,17 @@ void ScheduleDAGDependencyBuilder::buildDeps() {
+ 
+         // The store may have dependencies to unanalyzable loads and
+         // stores.
+-        addChainDependencies(SU, Loads, UnknownValue);
+-        addChainDependencies(SU, Stores, UnknownValue);
++        addChainDependencies(SU, Frontier, /*IsStore=*/true);
+       }
+     } else { // SU is a load.
+       if (!ObjsIdentified) {
+         // An unknown load depends on all stores.
+         addChainDependencies(SU, Stores);
++        addChainDependencies(SU, Frontier, /*IsStore=*/false);
+ 
+-        // Map this load to 'UnknownValue'.
+-        Loads.insert(SU, UnknownValue);
++        Frontier.Loads.insert(SU, UnknownValue);
++        if (Frontier.escapesBaseObjects(Objs))
++          Frontier.SeenSequencingLoad = true;
+       } else {
+         for (const ValueType V : Objs) {
+           // Add precise dependencies against all previously seen stores
+@@ -1007,7 +1191,7 @@ void ScheduleDAGDependencyBuilder::buildDeps() {
+           Loads.insert(SU, V);
+         }
+         // The load may have dependencies to unanalyzable stores.
+-        addChainDependencies(SU, Stores, UnknownValue);
++        addChainDependencies(SU, Frontier, /*IsStore=*/false);
+       }
+     }
+   }
+diff --git a/llvm/test/CodeGen/AArch64/unanalyzable-store-sequencing.ll b/llvm/test/CodeGen/AArch64/unanalyzable-store-sequencing.ll
+new file mode 100644
+index 0000000000000..8c9400fa891d1
+--- /dev/null
++++ b/llvm/test/CodeGen/AArch64/unanalyzable-store-sequencing.ll
+@@ -0,0 +1,343 @@
++; REQUIRES: asserts
++; RUN: llc < %s -mtriple=aarch64-unknown-linux-gnu -debug-only=machine-scheduler -enable-unanalyzable-store-sequencing 2>&1 | FileCheck %s
++
++define void @test_first_store_promoted(ptr %p) {
++; CHECK-LABEL: test_first_store_promoted:%bb.0
++; CHECK:       Promoting SU([[S:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU([[S]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++  store i32 0, ptr %p
++
++  ret void
++}
++
++define void @test_store_to_escaping_base_object_promoted(ptr %p, ptr %q) {
++; CHECK-LABEL: test_store_to_escaping_base_object_promoted:%bb.0
++; CHECK:       Promoting SU([[Q:[0-9]+]]) to sequencing store
++; CHECK:       Promoting SU([[P:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU([[P]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[Q]]): Ord Latency=0 Barrier
++; CHECK:       SU([[Q]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.q)
++  store i32 0, ptr %p
++  store i32 0, ptr %q
++
++  ret void
++}
++
++define void @test_repeated_stores_to_same_base_object_unpromoted(ptr %p, i64 %i) {
++; CHECK-LABEL: test_repeated_stores_to_same_base_object_unpromoted:%bb.0
++; CHECK:       Promoting SU([[S:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU({{[0-9]+}}): STRWroX $wzr, %{{[0-9]+}}:gpr64common, %{{[0-9]+}}:gpr64, 0, 1 :: (store (s32) into %ir.p.gep.i)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[S]]): Ord Latency=0 Barrier
++; CHECK-NEXT:    SU([[T:[0-9]+]]): Ord Latency=0 Memory
++; CHECK:       SU([[T]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 2 :: (store (s32) into %ir.p.gep.2)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[S]]): Ord Latency=0 Barrier
++; CHECK:       SU([[S]]): STRXui $xzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s64) into %ir.p, align 4)
++  %p.gep.i = getelementptr i32, ptr %p, i64 %i
++  %p.gep.1 = getelementptr i32, ptr %p, i64 1
++  %p.gep.2 = getelementptr i32, ptr %p, i64 2
++
++  store i32 0, ptr %p.gep.i
++  store i32 0, ptr %p.gep.1
++  store i32 0, ptr %p.gep.2
++  store i32 0, ptr %p
++
++  ret void
++}
++
++define void @test_disjoint_frontier_stores_unordered(ptr %p, i64 %i) {
++; CHECK-LABEL: test_disjoint_frontier_stores_unordered:%bb.0
++; CHECK:       Promoting SU([[S:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU({{[0-9]+}}): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[S]]): Ord Latency=0 Barrier
++; CHECK-NOT:     Ord
++; CHECK:       SU({{[0-9]+}}): STRWui $wzr, %{{[0-9]+}}:gpr64common, 3 :: (store (s32) into %ir.p.gep.3)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[S]]): Ord Latency=0 Barrier
++; CHECK:       SU([[S]]): STRWroX $wzr, %{{[0-9]+}}:gpr64common, %{{[0-9]+}}:gpr64, 0, 1 :: (store (s32) into %ir.p.gep.i)
++  %p.gep.i = getelementptr i32, ptr %p, i64 %i
++  %p.gep.3 = getelementptr i32, ptr %p, i64 3
++
++  store i32 0, ptr %p
++  store i32 0, ptr %p.gep.3
++  store i32 0, ptr %p.gep.i
++
++  ret void
++}
++
++define i32 @test_intervening_load_from_escaping_object_triggers_promotion(ptr %p, ptr %q) {
++; CHECK-LABEL: test_intervening_load_from_escaping_object_triggers_promotion:%bb.0
++; CHECK:       Promoting SU([[B:[0-9]+]]) to sequencing store
++; CHECK:       Promoting SU([[A:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU([[A]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[B]]): Ord Latency=0 Barrier
++; CHECK-NEXT:    SU([[L:[0-9]+]]): Ord Latency=1 Memory
++; CHECK:       SU([[L]]): %{{[0-9]+}}:gpr32 = LDRWui %{{[0-9]+}}:gpr64common, 0 :: (load (s32) from %ir.q)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU({{[0-9]+}}): Data Latency=2 Reg=%{{[0-9]+}}
++; CHECK-NEXT:    SU([[B]]): Ord Latency=0 Barrier
++; CHECK:       SU([[B]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++  store i32 0, ptr %p
++  %q.load = load i32, ptr %q
++  store i32 0, ptr %p
++
++  ret i32 %q.load
++}
++
++define i32 @test_non_escaping_load_does_not_trigger_promotion(ptr %p, i64 %i) {
++; CHECK-LABEL: test_non_escaping_load_does_not_trigger_promotion:%bb.0
++; CHECK:       Promoting SU([[S:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU({{[0-9]+}}): STRWroX $wzr, %{{[0-9]+}}:gpr64common, %{{[0-9]+}}:gpr64, 0, 1 :: (store (s32) into %ir.p.gep.i)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[S]]): Ord Latency=0 Barrier
++; CHECK-NEXT:    SU([[L:[0-9]+]]): Ord Latency=1 Memory
++; CHECK:       SU([[L]]): %{{[0-9]+}}:gpr32 = LDRWui %{{[0-9]+}}:gpr64common, 1 :: (load (s32) from %ir.p.gep.1)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU({{[0-9]+}}): Data Latency=2 Reg=%{{[0-9]+}}
++; CHECK-NEXT:    SU([[S]]): Ord Latency=0 Barrier
++; CHECK:       SU([[S]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++  %p.gep.i = getelementptr i32, ptr %p, i64 %i
++  %p.gep.1 = getelementptr i32, ptr %p, i64 1
++
++  store i32 0, ptr %p.gep.i
++  %p.load = load i32, ptr %p.gep.1
++  store i32 0, ptr %p
++
++  ret i32 %p.load
++}
++
++define i32 @test_non_aliasing_loads_retained_across_promotion(ptr %p, ptr %q, i64 %i) {
++; CHECK-LABEL: test_non_aliasing_loads_retained_across_promotion:%bb.0
++; CHECK:       Promoting SU([[Q:[0-9]+]]) to sequencing store
++; CHECK:       Promoting SU([[P:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU([[P]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 1 :: (store (s32) into %ir.p.gep.1)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[Q]]): Ord Latency=0 Barrier
++; CHECK-NEXT:    SU([[L:[0-9]+]]): Ord Latency=1 Memory
++; CHECK-NOT:     Ord
++; CHECK:       SU({{[0-9]+}}): %{{[0-9]+}}:gpr32 = LDRWui %{{[0-9]+}}:gpr64common, 0 :: (load (s32) from %ir.p)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU({{[0-9]+}}): Data Latency=2 Reg=%{{[0-9]+}}
++; CHECK-NEXT:    SU([[Q]]): Ord Latency=0 Barrier
++; CHECK:       SU([[L]]): %{{[0-9]+}}:gpr32 = LDRWroX %{{[0-9]+}}:gpr64common, %{{[0-9]+}}:gpr64, 0, 1 :: (load (s32) from %ir.p.gep.i)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU({{[0-9]+}}): Data Latency=2 Reg=%{{[0-9]+}}
++; CHECK-NEXT:    SU([[Q]]): Ord Latency=0 Barrier
++; CHECK:       SU([[Q]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.q)
++  %p.gep.1 = getelementptr i32, ptr %p, i64 1
++  %p.gep.i = getelementptr i32, ptr %p, i64 %i
++
++  store i32 0, ptr %p.gep.1
++  %p.load = load i32, ptr %p
++  %p.gep.i.load = load i32, ptr %p.gep.i
++  store i32 0, ptr %q
++
++  %sum = add i32 %p.load, %p.gep.i.load
++  ret i32 %sum
++}
++
++define i32 @test_retained_load_sequenced_against_preceding_store(ptr %p, ptr %q, i64 %i) {
++; CHECK-LABEL: test_retained_load_sequenced_against_preceding_store:%bb.0
++; CHECK:       Promoting SU([[Q:[0-9]+]]) to sequencing store
++; CHECK:       Promoting SU([[P:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU({{[0-9]+}}): STRWroX $wzr, %{{[0-9]+}}:gpr64common, %{{[0-9]+}}:gpr64, 0, 1 :: (store (s32) into %ir.p.gep.i)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[P]]): Ord Latency=0 Barrier
++; CHECK-NEXT:    SU([[L:[0-9]+]]): Ord Latency=1 Memory
++; CHECK:       SU([[P]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 2 :: (store (s32) into %ir.p.gep.2)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[Q]]): Ord Latency=0 Barrier
++; CHECK-NOT:     Ord
++; CHECK:       SU([[L]]): %{{[0-9]+}}:gpr32 = LDRWui %{{[0-9]+}}:gpr64common, 0 :: (load (s32) from %ir.p)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU({{[0-9]+}}): Data Latency=2 Reg=%{{[0-9]+}}
++; CHECK-NEXT:    SU([[Q]]): Ord Latency=0 Barrier
++; CHECK:       SU([[Q]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.q)
++  %p.gep.i = getelementptr i32, ptr %p, i64 %i
++  %p.gep.2 = getelementptr i32, ptr %p, i64 2
++
++  store i32 0, ptr %p.gep.i
++  store i32 0, ptr %p.gep.2
++  %p.load = load i32, ptr %p
++  store i32 0, ptr %q
++
++  ret i32 %p.load
++}
++
++define i32 @test_cleared_stores_reachable_through_sequencing_store(ptr %p, ptr %q, i64 %i) {
++; CHECK-LABEL: test_cleared_stores_reachable_through_sequencing_store:%bb.0
++; CHECK:       Promoting SU([[A:[0-9]+]]) to sequencing store
++; CHECK:       Promoting SU([[N:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU({{[0-9]+}}): %{{[0-9]+}}:gpr32 = LDRWui %{{[0-9]+}}:gpr64common, 0 :: (load (s32) from %ir.p)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU({{[0-9]+}}): Data Latency=2 Reg=%{{[0-9]+}}
++; CHECK-NEXT:    SU([[N]]): Ord Latency=0 Barrier
++; CHECK-NOT:     Ord
++; CHECK:       SU([[N]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.q)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[A]]): Ord Latency=0 Barrier
++; CHECK-NEXT:    SU([[S:[0-9]+]]): Ord Latency=0 Barrier
++; CHECK:       SU([[S]]): STRWroX $wzr, %{{[0-9]+}}:gpr64common, %{{[0-9]+}}:gpr64, 0, 1 :: (store (s32) into %ir.p.gep.i)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[A]]): Ord Latency=0 Barrier
++; CHECK:       SU([[A]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++  %p.gep.i = getelementptr i32, ptr %p, i64 %i
++
++  %p.load = load i32, ptr %p
++  store i32 0, ptr %q
++  store i32 0, ptr %p.gep.i
++  store i32 0, ptr %p
++
++  ret i32 %p.load
++}
++
++define void @test_known_no_alias_store_precedes_sequencing_store(ptr noalias %p, ptr %q) {
++; CHECK-LABEL: test_known_no_alias_store_precedes_sequencing_store:%bb.0
++; CHECK:       Promoting SU([[C:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU({{[0-9]+}}): STRXui $xzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s64) into %ir.p, align 4)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[C]]): Ord Latency=0 Barrier
++; CHECK:       SU([[C]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.q)
++  %q.gep.1 = getelementptr i32, ptr %p, i64 1
++
++  store i32 0, ptr %p
++  store i32 0, ptr %q.gep.1
++  store i32 0, ptr %q
++
++  ret void
++}
++
++define i32 @test_known_no_alias_load_precedes_sequencing_store(ptr noalias %p, ptr %q) {
++; CHECK-LABEL: test_known_no_alias_load_precedes_sequencing_store:%bb.0
++; CHECK:       Promoting SU([[C:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU({{[0-9]+}}): %{{[0-9]+}}:gpr32 = LDRWui %{{[0-9]+}}:gpr64common, 0 :: (load (s32) from %ir.p)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU({{[0-9]+}}): Data Latency=2 Reg=%{{[0-9]+}}
++; CHECK-NEXT:    SU([[C]]): Ord Latency=0 Barrier
++; CHECK:       SU([[C]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.q)
++  %p.load = load i32, ptr %p
++  store i32 0, ptr %q
++
++  ret i32 %p.load
++}
++
++define i32 @test_known_store_sequenced_against_frontier_load(ptr noalias %p, ptr %q, i1 %c) {
++; CHECK-LABEL: test_known_store_sequenced_against_frontier_load:%bb.0
++; CHECK:       Promoting SU([[C:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU({{[0-9]+}}): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[C]]): Ord Latency=0 Barrier
++; CHECK-NEXT:    SU([[L:[0-9]+]]): Ord Latency=1 Memory
++; CHECK:       SU([[L]]): %{{[0-9]+}}:gpr32 = LDRWui %{{[0-9]+}}:gpr64common, 0 :: (load (s32) from %ir.p.or.q)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU({{[0-9]+}}): Data Latency=2 Reg=%{{[0-9]+}}
++; CHECK-NEXT:    SU([[C]]): Ord Latency=0 Barrier
++; CHECK:       SU([[C]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.q)
++  %p.or.q = select i1 %c, ptr %p, ptr %q
++
++  store i32 0, ptr %p
++  %p.or.q.load = load i32, ptr %p.or.q
++  store i32 0, ptr %q
++
++  ret i32 %p.or.q.load
++}
++
++define void @test_global_memory_object_clears_frontier(ptr %p) {
++; CHECK-LABEL: test_global_memory_object_clears_frontier:%bb.0
++; CHECK:       Promoting SU([[B:[0-9]+]]) to sequencing store
++; CHECK:       Global memory object and new barrier chain: SU([[F:[0-9]+]]).
++; CHECK:       Promoting SU([[A:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU([[A]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[F]]): Ord Latency=1 Barrier
++; CHECK:       SU([[F]]): DMB 11
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[B]]): Ord Latency=0 Barrier
++; CHECK:       SU([[B]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++  store i32 0, ptr %p
++  fence seq_cst
++  store i32 0, ptr %p
++
++  ret void
++}
++
++define void @test_volatile_store_clears_frontier(ptr %p, ptr %q) {
++; CHECK-LABEL: test_volatile_store_clears_frontier:%bb.0
++; CHECK:       Promoting SU([[B:[0-9]+]]) to sequencing store
++; CHECK:       Global memory object and new barrier chain: SU([[V:[0-9]+]]).
++; CHECK:       Promoting SU([[A:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU([[A]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[V]]): Ord Latency=0 Barrier
++; CHECK:       SU([[V]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (volatile store (s32) into %ir.q)
++; CHECK-NOT:   {{^}}SU(
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[B]]): Ord Latency=0 Barrier
++; CHECK:       SU([[B]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++  store i32 0, ptr %p
++  store volatile i32 0, ptr %q
++  store i32 0, ptr %p
++
++  ret void
++}
++
++define void @test_unordered_atomic_store_unpromoted(ptr %p, ptr %q) {
++; CHECK-LABEL: test_unordered_atomic_store_unpromoted:%bb.0
++; CHECK:       Promoting SU([[S:[0-9]+]]) to sequencing store
++; CHECK-NOT:   Promoting
++
++; CHECK:       SU({{[0-9]+}}): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store unordered (s32) into %ir.q)
++; CHECK:       Successors:
++; CHECK-NEXT:    SU([[S]]): Ord Latency=0 Barrier
++; CHECK:       SU([[S]]): STRWui $wzr, %{{[0-9]+}}:gpr64common, 0 :: (store (s32) into %ir.p)
++  store atomic i32 0, ptr %q unordered, align 4
++  store i32 0, ptr %p
++
++  ret void
++}
