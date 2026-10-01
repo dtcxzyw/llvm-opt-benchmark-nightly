@@ -205,7 +205,7 @@ bb.bj:                                            ; preds = %bb.ac
   %i.nc = and i16 %i.mz, %.lcssa.i.i.i.i
   %i.nd = sub nsw i64 0, %i.nb
   %i.ne = getelementptr inbounds [32 x i8], ptr %.sroa.09.0.copyload.i, i64 %i.nd
-  %i.nf = add i64 %i.hb, -1                       ; 2 uses
+  %i.nf = add nsw i64 %i.hb, -1                   ; 2 uses
   %i.ng = getelementptr inbounds i8, ptr %i.ne, i64 -32
   %.sroa.0.0.i.i = call noundef i64 @llvm.umax.i64(i64 %i.hb, i64 4) ; 2 uses
   %i.nh = shl i64 %.sroa.0.0.i.i, 3               ; 3 uses
@@ -608,29 +608,24 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.dq, label %.invoke, label %bb.an
 
 bb.am:                                            ; preds = %_RNvMNtCscI6d9CVNmLh_4core5sliceSh11starts_withCs63DIHKhvmTb_10lance_core.exit.i
-  %i.dr = add i64 %.sroa.5.0, -2                  ; 7 uses
+  %i.dr = add nsw i64 %.sroa.5.0, -2              ; 5 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.bx, i64 2
   %i.dt = icmp eq i64 %i.dr, 0
-  br i1 %i.dt, label %bb.ar, label %3
+  br i1 %i.dt, label %bb.ar, label %bb.ao
 
 bb.an:                                            ; preds = %.thread20.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.dp, ptr nonnull readonly align 1 %i.bx, i64 %.sroa.5.0, i1 false), !noalias !21488
   br label %bb.as
 
-3:                                                ; preds = %bb.am
-  %.not.i10.i = icmp slt i64 %i.dr, 0
-  br i1 %.not.i10.i, label %.invoke, label %bb.ao, !prof !25
-
-bb.ao:                                            ; preds = %3
+bb.ao:                                            ; preds = %bb.am
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #65, !noalias !21489
   %i.du = tail call noundef ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.dr, i64 noundef range(i64 1, -9223372036854775807) 1) #65, !noalias !21489 ; 3 uses
   %i.dv = icmp eq ptr %i.du, null
   br i1 %i.dv, label %.invoke, label %bb.ap
 
-.invoke:                                          ; preds = %3, %bb.ao, %.thread20.i
-  %4 = phi i64 [ 1, %.thread20.i ], [ 1, %bb.ao ], [ 0, %3 ]
-  %5 = phi i64 [ %.sroa.5.0, %.thread20.i ], [ %i.dr, %bb.ao ], [ %i.dr, %3 ]
-  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef %4, i64 %5) #68
+.invoke:                                          ; preds = %bb.ao, %.thread20.i
+  %3 = phi i64 [ %.sroa.5.0, %.thread20.i ], [ %i.dr, %bb.ao ]
+  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 1, i64 %3) #68
           to label %.cont unwind label %bb.aq
 
 .cont:                                            ; preds = %.invoke
