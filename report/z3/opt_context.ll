@@ -205,21 +205,21 @@ bb.al:                                            ; preds = %bb.aq
 bb.am:                                            ; preds = %.lr.ph427
   %.not.i142 = icmp ugt i32 %i.hd, %i.gr
   %i.hf = load i32, ptr %i.gy, align 4, !tbaa !576
-  %i.hg = zext i32 %i.hf to i64                   ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.gx, i64 %i.hg
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.hg ; 2 uses
+  %i.hg = zext i32 %i.hf to i64
+  %.idx.i.i6.i = shl nuw nsw i64 %i.hg, 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.gx, i64 %.idx.i.i6.i ; 2 uses
   br i1 %.not.i142, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   %i.hh = add i32 %i.hd, -1
   %i.hi = zext i32 %i.hh to i64
-  %i.hj = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.hi
+  %i.hj = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.hi
   br label %bb.ap
 
 bb.ao:                                            ; preds = %bb.am
   %i.hk = add i32 %i.hd, %i.ha
   %i.hl = zext i32 %i.hk to i64
-  %i.hm = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.hl
+  %i.hm = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.hl
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.lr.ph427, %bb.ao, %bb.an
@@ -622,21 +622,21 @@ bb.ag:                                            ; preds = %bb.al
 bb.ah:                                            ; preds = %.lr.ph410
   %.not.i133 = icmp ugt i32 %i.gm, %i.ga
   %i.go = load i32, ptr %i.gh, align 4, !tbaa !576
-  %i.gp = zext i32 %i.go to i64                   ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %i.gp
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.gp ; 2 uses
+  %i.gp = zext i32 %i.go to i64
+  %.idx.i.i6.i = shl nuw nsw i64 %i.gp, 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.gg, i64 %.idx.i.i6.i ; 2 uses
   br i1 %.not.i133, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.gq = add i32 %i.gm, -1
   %i.gr = zext i32 %i.gq to i64
-  %i.gs = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.gr
+  %i.gs = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.gr
   br label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ah
   %i.gt = add i32 %i.gm, %i.gj
   %i.gu = zext i32 %i.gt to i64
-  %i.gv = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.gu
+  %i.gv = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.gu
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph410, %bb.aj, %bb.ai

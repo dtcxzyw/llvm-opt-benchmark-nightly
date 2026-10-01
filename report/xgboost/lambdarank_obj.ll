@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -215,6 +215,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_22CalcLambdaForGroupNDCGILb1ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
@@ -241,8 +242,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_22CalcLambdaForGroupNDCGILb1ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_22CalcLambdaForGroupNDCGILb1ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -645,7 +645,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -655,6 +655,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_22CalcLambdaForGroupNDCGILb1ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
@@ -681,8 +682,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_22CalcLambdaForGroupNDCGILb1ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_22CalcLambdaForGroupNDCGILb1ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -1085,7 +1085,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -1095,6 +1095,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_22CalcLambdaForGroupNDCGILb1ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
@@ -1121,8 +1122,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_22CalcLambdaForGroupNDCGILb1ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_22CalcLambdaForGroupNDCGILb1ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -1525,7 +1525,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -1535,6 +1535,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_22CalcLambdaForGroupNDCGILb1ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
@@ -1561,8 +1562,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_22CalcLambdaForGroupNDCGILb1ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_22CalcLambdaForGroupNDCGILb1ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -1965,7 +1965,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -1975,6 +1975,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_22CalcLambdaForGroupNDCGILb0ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
@@ -2001,8 +2002,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_22CalcLambdaForGroupNDCGILb0ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_22CalcLambdaForGroupNDCGILb0ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -2405,7 +2405,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -2415,6 +2415,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_22CalcLambdaForGroupNDCGILb0ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
@@ -2441,8 +2442,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_22CalcLambdaForGroupNDCGILb0ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_22CalcLambdaForGroupNDCGILb0ELb1EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -2845,7 +2845,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -2855,6 +2855,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_22CalcLambdaForGroupNDCGILb0ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
@@ -2881,8 +2882,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_22CalcLambdaForGroupNDCGILb0ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_22CalcLambdaForGroupNDCGILb0ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -3285,7 +3285,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -3295,6 +3295,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_22CalcLambdaForGroupNDCGILb0ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
@@ -3321,8 +3322,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_22CalcLambdaForGroupNDCGILb0ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_14LambdaRankNDCGENS9_3ltr9NDCGCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_22CalcLambdaForGroupNDCGILb0ELb0EEEvjNSA_4SpanIKfLm18446744073709551615EEENS9_6linalg10TensorViewISN_Li1EEEfNSM_IKmLm18446744073709551615EEENSQ_INS9_6detail20GradientPairInternalIfEELi1EEENSQ_IKdLi1EEENSM_ISY_Lm18446744073709551615EEEjEUlT_T0_mmjE_EEvjSO_SR_fST_jT1_SX_EUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjSR_ST_S11_EUlmE_EEfSt7greaterIvEEES3_IS11_SaIS11_EES18_S12_S12_T2_EUlRSS_S1J_E_EEES12_S11_S11_S11_S11_S12_S14_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -3725,7 +3725,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -3735,6 +3735,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us
@@ -3761,8 +3762,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -4165,7 +4165,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -4175,6 +4175,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us
@@ -4201,8 +4202,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -4605,7 +4605,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -4615,6 +4615,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us
@@ -4641,8 +4642,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -5045,7 +5045,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -5055,6 +5055,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us
@@ -5081,8 +5082,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_18LambdaRankPairwiseENS9_3ltr12RankingCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlDpT_E_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrISI_EjS16_S18_T_EUlmE_EEfSt7greaterIvEEES3_IS1H_SaIS1H_EES1E_T0_S1O_T2_EUlRS17_S1Q_E_EEES1O_S1H_S1H_S1H_S1H_S1O_S19_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -5485,7 +5485,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -5495,6 +5495,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us
@@ -5521,8 +5522,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb1ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -5925,7 +5925,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -5935,6 +5935,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us
@@ -5961,8 +5962,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb1ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -6365,7 +6365,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -6375,6 +6375,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us
@@ -6401,8 +6402,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb0ELb1EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
@@ -6805,7 +6805,7 @@ bb.a:
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx62 = shl i64 %3, 4                         ; 2 uses
   %.not63 = icmp eq i64 %.idx, %.idx62
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -6815,6 +6815,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 8
   %i.g = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us
@@ -6841,8 +6842,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7xgboost6common7ArgSortImNSA_18IndexTransformIterIZNS9_3obj9MakePairsIZNSD_13LambdaRankObjINSD_13LambdaRankMAPENS9_3ltr8MAPCacheEE18CalcLambdaForGroupILb0ELb0EZNSG_15GetGradientImplEjRKNS9_16HostDeviceVectorIfEERKNS9_8MetaInfoEPNS9_6linalg6TensorINS9_6detail20GradientPairInternalIfEELi2EEEEUlT_T0_mmjE_EEvjNSA_4SpanIKfLm18446744073709551615EEENSS_10TensorViewIS13_Li1EEEfNS12_IKmLm18446744073709551615EEEjT1_NS15_ISW_Li1EEEEUlmmE_EEvPKNS9_7ContextEjSt10shared_ptrINSH_12RankingCacheEEjS16_S18_SZ_EUlmE_EEfSt7greaterIvEEES3_ISZ_SaISZ_EES1E_S10_S10_T2_EUlRS17_S1P_E_EEES10_SZ_SZ_SZ_SZ_S10_S19_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.078.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.078.us, i64 %6 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses

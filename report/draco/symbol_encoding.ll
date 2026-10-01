@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -213,6 +213,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi5EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -239,8 +240,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi5EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi5EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -643,7 +643,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -652,6 +652,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi1EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -678,8 +679,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi1EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi1EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -1082,7 +1082,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -1091,6 +1091,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi2EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -1117,8 +1118,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi2EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi2EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -1521,7 +1521,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -1530,6 +1530,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi3EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -1556,8 +1557,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi3EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi3EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -1960,7 +1960,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -1969,6 +1969,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi4EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -1995,8 +1996,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi4EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi4EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -2399,7 +2399,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -2408,6 +2408,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi6EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -2434,8 +2435,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi6EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi6EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -2838,7 +2838,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -2847,6 +2847,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi7EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -2873,8 +2874,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi7EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi7EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -3277,7 +3277,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -3286,6 +3286,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi8EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -3312,8 +3313,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi8EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi8EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -3716,7 +3716,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -3725,6 +3725,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi9EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -3751,8 +3752,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi9EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi9EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -4155,7 +4155,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -4164,6 +4164,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi10EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -4190,8 +4191,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi10EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi10EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -4594,7 +4594,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -4603,6 +4603,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi11EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -4629,8 +4630,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi11EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi11EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -5033,7 +5033,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -5042,6 +5042,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi12EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -5068,8 +5069,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi12EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi12EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -5472,7 +5472,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -5481,6 +5481,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi13EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -5507,8 +5508,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi13EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi13EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -5911,7 +5911,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -5920,6 +5920,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi14EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -5946,8 +5947,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi14EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi14EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -6350,7 +6350,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -6359,6 +6359,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi15EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -6385,8 +6386,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi15EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi15EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -6789,7 +6789,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -6798,6 +6798,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi16EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -6824,8 +6825,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi16EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi16EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -7228,7 +7228,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -7237,6 +7237,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi17EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -7263,8 +7264,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi17EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi17EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -7667,7 +7667,7 @@ bb.a:
   br i1 %.not77, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx51 = shl i64 %3, 3                         ; 2 uses
   %.not52 = icmp eq i64 %.idx, %.idx51
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -7676,6 +7676,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi18EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
@@ -7702,8 +7703,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi18EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIN5draco17RAnsSymbolEncoderILi18EE15ProbabilityLessEEEET0_T_SF_SF_SF_SE_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.079.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.079.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses

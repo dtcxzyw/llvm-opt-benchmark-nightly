@@ -205,10 +205,10 @@ bb.eo:                                            ; preds = %bb.fe
 bb.ep:                                            ; preds = %.lr.ph367, %_ZN6vectorIP3appLb0EjED2Ev.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph367 ], [ %indvars.iv.next, %_ZN6vectorIP3appLb0EjED2Ev.exit ] ; 2 uses
   %i.ou = load i32, ptr %i.oo, align 4, !tbaa !432
-  %i.ov = zext i32 %i.ou to i64                   ; 2 uses
-  %25 = getelementptr inbounds nuw [8 x i8], ptr %i.on, i64 %i.ov
-  %26 = getelementptr inbounds nuw [8 x i8], ptr %25, i64 %i.ov
-  %i.ow = getelementptr inbounds nuw [8 x i8], ptr %26, i64 %indvars.iv
+  %i.ov = zext i32 %i.ou to i64
+  %.idx.i.i = shl nuw nsw i64 %i.ov, 4
+  %25 = getelementptr inbounds nuw i8, ptr %i.on, i64 %.idx.i.i
+  %i.ow = getelementptr inbounds nuw [8 x i8], ptr %25, i64 %indvars.iv
   %i.ox = load ptr, ptr %i.ow, align 8, !tbaa !333 ; 4 uses
   %i.oy = invoke { ptr, ptr } @_ZN3euf10ho_matcher18compile_ho_patternEP10quantifierP3app(ptr noundef nonnull align 8 dereferenceable(384) %i.op, ptr noundef nonnull %.0104, ptr noundef %i.ox)
           to label %bb.eq unwind label %bb.et     ; 2 uses

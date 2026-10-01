@@ -205,16 +205,16 @@ bb.a:
   br i1 %i.h, label %.lr.ph53, label %._crit_edge54
 
 .lr.ph53:                                         ; preds = %._crit_edge, %.lr.ph53
-  %.151 = phi i64 [ %i.q, %.lr.ph53 ], [ 0, %._crit_edge ] ; 3 uses
+  %.151 = phi i64 [ %i.q, %.lr.ph53 ], [ 0, %._crit_edge ] ; 2 uses
   %i.i = tail call i32 @abs_randwc(i32 noundef 262140) #11 ; 2 uses
   %i.j = zext i32 %i.i to i64
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.151
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.151 ; 2 uses
-  store i64 %i.j, ptr %5, align 8, !tbaa !15
+  %.idx44 = shl i64 %.151, 4
+  %4 = getelementptr inbounds i8, ptr %1, i64 %.idx44 ; 2 uses
+  store i64 %i.j, ptr %4, align 8, !tbaa !15
   %i.k = sub i32 262140, %i.i
   %i.l = tail call i32 @abs_randwc(i32 noundef %i.k) #11
   %i.m = zext i32 %i.l to i64                     ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 %i.m, ptr %i.n, align 8, !tbaa !15
   %i.o = load i64, ptr %3, align 8, !tbaa !15
   %i.p = add i64 %i.o, %i.m
@@ -232,11 +232,11 @@ bb.a:
   br label %.lr.ph57
 
 .lr.ph57:                                         ; preds = %.lr.ph57.preheader, %ToggleBitRun.exit
-  %.255 = phi i64 [ %i.cw, %ToggleBitRun.exit ], [ 0, %.lr.ph57.preheader ] ; 4 uses
+  %.255 = phi i64 [ %i.cw, %ToggleBitRun.exit ], [ 0, %.lr.ph57.preheader ] ; 3 uses
   %i.t = urem i64 %.255, 3
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.255
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.255 ; 4 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.idx43 = shl i64 %.255, 4
+  %5 = getelementptr inbounds i8, ptr %1, i64 %.idx43 ; 4 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.v = load i64, ptr %i.u, align 8, !tbaa !15   ; 13 uses
   %.not12.i = icmp eq i64 %i.v, 0                 ; 3 uses
   switch i64 %i.t, label %default.unreachable [
@@ -249,7 +249,7 @@ bb.b:                                             ; preds = %.lr.ph57
   br i1 %.not12.i, label %ToggleBitRun.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %i.w = load i64, ptr %7, align 8, !tbaa !15     ; 4 uses
+  %i.w = load i64, ptr %5, align 8, !tbaa !15     ; 4 uses
   %xtraiter74 = and i64 %i.v, 1
   %lcmp.mod75.not = icmp eq i64 %xtraiter74, 0
   br i1 %lcmp.mod75.not, label %.lr.ph.split.i.prol.loopexit, label %.lr.ph.split.i.prol
@@ -299,7 +299,7 @@ bb.c:                                             ; preds = %.lr.ph57
   br i1 %.not12.i, label %ToggleBitRun.exit, label %.lr.ph.i43
 
 .lr.ph.i43:                                       ; preds = %bb.c
-  %i.av = load i64, ptr %7, align 8, !tbaa !15    ; 4 uses
+  %i.av = load i64, ptr %5, align 8, !tbaa !15    ; 4 uses
   %xtraiter72 = and i64 %i.v, 1
   %lcmp.mod73.not = icmp eq i64 %xtraiter72, 0
   br i1 %lcmp.mod73.not, label %.lr.ph.split.us.i.prol.loopexit, label %.lr.ph.split.us.i.prol
@@ -352,7 +352,7 @@ bb.d:                                             ; preds = %.lr.ph57
   br i1 %.not12.i, label %ToggleBitRun.exit, label %.lr.ph.i45.preheader
 
 .lr.ph.i45.preheader:                             ; preds = %bb.d
-  %i.bx = load i64, ptr %7, align 8, !tbaa !15    ; 4 uses
+  %i.bx = load i64, ptr %5, align 8, !tbaa !15    ; 4 uses
   %xtraiter = and i64 %i.v, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i45.prol.loopexit, label %.lr.ph.i45.prol
