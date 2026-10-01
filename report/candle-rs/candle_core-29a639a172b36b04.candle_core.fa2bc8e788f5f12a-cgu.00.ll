@@ -204,7 +204,7 @@ scalar.ph2825:                                    ; preds = %scalar.ph2825.prol.
   br i1 %min.iters.check2826, label %scalar.ph2825.preheader, label %vector.memcheck2817
 
 vector.memcheck2817:                              ; preds = %.lr.ph.us.i263
-  %i.ti = shl i64 %.sroa.5158.0.copyload.us.i257, 2 ; 2 uses
+  %i.ti = shl nuw i64 %.sroa.5158.0.copyload.us.i257, 2 ; 2 uses
   %scevgep2818 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i255, i64 %i.ti
   %i.tj = shl i64 %.sroa.7159.0.copyload.us.i258, 2 ; 2 uses
   %scevgep2819 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i255, i64 %i.tj
@@ -345,7 +345,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutmENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2848, label %scalar.ph2847.preheader, label %vector.memcheck2839
 
 vector.memcheck2839:                              ; preds = %.lr.ph.i297
-  %i.uv = shl i64 %.sroa.5149.0.copyload.i294, 2  ; 2 uses
+  %i.uv = shl nuw i64 %.sroa.5149.0.copyload.i294, 2 ; 2 uses
   %scevgep2840 = getelementptr i8, ptr %.sroa.0147.0.copyload.i292, i64 %i.uv
   %i.uw = shl i64 %.sroa.7.0.copyload.i295, 2     ; 2 uses
   %scevgep2841 = getelementptr i8, ptr %.sroa.0147.0.copyload.i292, i64 %i.uw
@@ -748,7 +748,7 @@ iter.check:                                       ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2757, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck2748
 
 vector.memcheck2748:                              ; preds = %iter.check
-  %i.adi = shl i64 %.sroa.5158.0.copyload.us.i350, 1 ; 2 uses
+  %i.adi = shl nuw i64 %.sroa.5158.0.copyload.us.i350, 1 ; 2 uses
   %scevgep2749 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i348, i64 %i.adi
   %i.adj = shl i64 %.sroa.7159.0.copyload.us.i351, 1 ; 2 uses
   %scevgep2750 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i348, i64 %i.adj
@@ -921,7 +921,7 @@ iter.check2803:                                   ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2787, label %vec.epilog.scalar.ph2804.preheader, label %vector.memcheck2778
 
 vector.memcheck2778:                              ; preds = %iter.check2803
-  %i.afc = shl i64 %.sroa.5149.0.copyload.i387, 1 ; 2 uses
+  %i.afc = shl nuw i64 %.sroa.5149.0.copyload.i387, 1 ; 2 uses
   %scevgep2779 = getelementptr i8, ptr %.sroa.0147.0.copyload.i385, i64 %i.afc
   %i.afd = shl i64 %.sroa.7.0.copyload.i388, 1    ; 2 uses
   %scevgep2780 = getelementptr i8, ptr %.sroa.0147.0.copyload.i385, i64 %i.afd
@@ -1324,7 +1324,7 @@ scalar.ph2712:                                    ; preds = %scalar.ph2712.prol.
   br i1 %min.iters.check2713, label %scalar.ph2712.preheader, label %vector.memcheck2704
 
 vector.memcheck2704:                              ; preds = %.lr.ph.us.i449
-  %i.anw = shl i64 %.sroa.5158.0.copyload.us.i443, 2 ; 2 uses
+  %i.anw = shl nuw i64 %.sroa.5158.0.copyload.us.i443, 2 ; 2 uses
   %scevgep2705 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i441, i64 %i.anw
   %i.anx = shl i64 %.sroa.7159.0.copyload.us.i444, 2 ; 2 uses
   %scevgep2706 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i441, i64 %i.anx
@@ -1465,7 +1465,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutlENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2735, label %scalar.ph2734.preheader, label %vector.memcheck2726
 
 vector.memcheck2726:                              ; preds = %.lr.ph.i483
-  %i.apj = shl i64 %.sroa.5149.0.copyload.i480, 2 ; 2 uses
+  %i.apj = shl nuw i64 %.sroa.5149.0.copyload.i480, 2 ; 2 uses
   %scevgep2727 = getelementptr i8, ptr %.sroa.0147.0.copyload.i478, i64 %i.apj
   %i.apk = shl i64 %.sroa.7.0.copyload.i481, 2    ; 2 uses
   %scevgep2728 = getelementptr i8, ptr %.sroa.0147.0.copyload.i478, i64 %i.apk
@@ -1868,7 +1868,7 @@ scalar.ph2668:                                    ; preds = %scalar.ph2668.prol.
   br i1 %min.iters.check2669, label %scalar.ph2668.preheader, label %vector.memcheck2660
 
 vector.memcheck2660:                              ; preds = %.lr.ph.us.i542
-  %i.axw = shl i64 %.sroa.5158.0.copyload.us.i536, 3 ; 2 uses
+  %i.axw = shl nuw i64 %.sroa.5158.0.copyload.us.i536, 3 ; 2 uses
   %scevgep2661 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i534, i64 %i.axw
   %i.axx = shl i64 %.sroa.7159.0.copyload.us.i537, 3 ; 2 uses
   %scevgep2662 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i534, i64 %i.axx
@@ -2009,7 +2009,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutxENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2691, label %scalar.ph2690.preheader, label %vector.memcheck2682
 
 vector.memcheck2682:                              ; preds = %.lr.ph.i576
-  %i.azj = shl i64 %.sroa.5149.0.copyload.i573, 3 ; 2 uses
+  %i.azj = shl nuw i64 %.sroa.5149.0.copyload.i573, 3 ; 2 uses
   %scevgep2683 = getelementptr i8, ptr %.sroa.0147.0.copyload.i571, i64 %i.azj
   %i.azk = shl i64 %.sroa.7.0.copyload.i574, 3    ; 2 uses
   %scevgep2684 = getelementptr i8, ptr %.sroa.0147.0.copyload.i571, i64 %i.azk
@@ -2412,7 +2412,7 @@ _RNvXsk_NtCsdsILkMb8ZHY_4half6bfloatNtB5_4bf16NtNtNtCsf3Ta7LF998c_4core3ops5arit
   br i1 %min.iters.check2628, label %scalar.ph2627.preheader, label %vector.memcheck2619
 
 vector.memcheck2619:                              ; preds = %.lr.ph.us.i616
-  %i.bhv = shl i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
+  %i.bhv = shl nuw i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
   %scevgep2620 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhv
   %i.bhw = shl i64 %.sroa.7169.0.copyload.us.i, 1 ; 2 uses
   %scevgep2621 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhw
@@ -2553,7 +2553,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutNtNtCsdsILkMb8ZHY_4half6bfloa
   br i1 %min.iters.check2648, label %scalar.ph2647.preheader, label %vector.memcheck2639
 
 vector.memcheck2639:                              ; preds = %.lr.ph.i634
-  %i.bjy = shl i64 %.sroa.5159.0.copyload.i, 1    ; 2 uses
+  %i.bjy = shl nuw i64 %.sroa.5159.0.copyload.i, 1 ; 2 uses
   %scevgep2640 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bjy
   %i.bjz = shl i64 %.sroa.7.0.copyload.i633, 1    ; 2 uses
   %scevgep2641 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bjz
@@ -2956,7 +2956,7 @@ scalar.ph2583:                                    ; preds = %scalar.ph2583.prol.
   br i1 %min.iters.check2584, label %scalar.ph2583.preheader, label %vector.memcheck2575
 
 vector.memcheck2575:                              ; preds = %.lr.ph.us.i761
-  %i.bzu = shl i64 %.sroa.5158.0.copyload.us.i755, 2 ; 2 uses
+  %i.bzu = shl nuw i64 %.sroa.5158.0.copyload.us.i755, 2 ; 2 uses
   %scevgep2576 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i753, i64 %i.bzu
   %i.bzv = shl i64 %.sroa.7159.0.copyload.us.i756, 2 ; 2 uses
   %scevgep2577 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i753, i64 %i.bzv
@@ -3097,7 +3097,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2606, label %scalar.ph2605.preheader, label %vector.memcheck2597
 
 vector.memcheck2597:                              ; preds = %.lr.ph.i795
-  %i.cbh = shl i64 %.sroa.5149.0.copyload.i792, 2 ; 2 uses
+  %i.cbh = shl nuw i64 %.sroa.5149.0.copyload.i792, 2 ; 2 uses
   %scevgep2598 = getelementptr i8, ptr %.sroa.0147.0.copyload.i790, i64 %i.cbh
   %i.cbi = shl i64 %.sroa.7.0.copyload.i793, 2    ; 2 uses
   %scevgep2599 = getelementptr i8, ptr %.sroa.0147.0.copyload.i790, i64 %i.cbi
@@ -3500,7 +3500,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us.i854
-  %i.cju = shl i64 %.sroa.5158.0.copyload.us.i848, 3 ; 2 uses
+  %i.cju = shl nuw i64 %.sroa.5158.0.copyload.us.i848, 3 ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i846, i64 %i.cju
   %i.cjv = shl i64 %.sroa.7159.0.copyload.us.i849, 3 ; 2 uses
   %scevgep2547 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i846, i64 %i.cjv
@@ -3641,7 +3641,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutdENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2562, label %scalar.ph2561.preheader, label %vector.memcheck2553
 
 vector.memcheck2553:                              ; preds = %.lr.ph.i888
-  %i.clh = shl i64 %.sroa.5149.0.copyload.i885, 3 ; 2 uses
+  %i.clh = shl nuw i64 %.sroa.5149.0.copyload.i885, 3 ; 2 uses
   %scevgep2554 = getelementptr i8, ptr %.sroa.0147.0.copyload.i883, i64 %i.clh
   %i.cli = shl i64 %.sroa.7.0.copyload.i886, 3    ; 2 uses
   %scevgep2555 = getelementptr i8, ptr %.sroa.0147.0.copyload.i883, i64 %i.cli
@@ -4044,7 +4044,7 @@ scalar.ph2832:                                    ; preds = %scalar.ph2832.prol.
   br i1 %min.iters.check2833, label %scalar.ph2832.preheader, label %vector.memcheck2824
 
 vector.memcheck2824:                              ; preds = %.lr.ph.us.i264
-  %i.ti = shl i64 %.sroa.5158.0.copyload.us.i258, 2 ; 2 uses
+  %i.ti = shl nuw i64 %.sroa.5158.0.copyload.us.i258, 2 ; 2 uses
   %scevgep2825 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i256, i64 %i.ti
   %i.tj = shl i64 %.sroa.7159.0.copyload.us.i259, 2 ; 2 uses
   %scevgep2826 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i256, i64 %i.tj
@@ -4185,7 +4185,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutmENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2855, label %scalar.ph2854.preheader, label %vector.memcheck2846
 
 vector.memcheck2846:                              ; preds = %.lr.ph.i298
-  %i.uv = shl i64 %.sroa.5149.0.copyload.i295, 2  ; 2 uses
+  %i.uv = shl nuw i64 %.sroa.5149.0.copyload.i295, 2 ; 2 uses
   %scevgep2847 = getelementptr i8, ptr %.sroa.0147.0.copyload.i293, i64 %i.uv
   %i.uw = shl i64 %.sroa.7.0.copyload.i296, 2     ; 2 uses
   %scevgep2848 = getelementptr i8, ptr %.sroa.0147.0.copyload.i293, i64 %i.uw
@@ -4588,7 +4588,7 @@ iter.check:                                       ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2764, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck2755
 
 vector.memcheck2755:                              ; preds = %iter.check
-  %i.adi = shl i64 %.sroa.5158.0.copyload.us.i352, 1 ; 2 uses
+  %i.adi = shl nuw i64 %.sroa.5158.0.copyload.us.i352, 1 ; 2 uses
   %scevgep2756 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i350, i64 %i.adi
   %i.adj = shl i64 %.sroa.7159.0.copyload.us.i353, 1 ; 2 uses
   %scevgep2757 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i350, i64 %i.adj
@@ -4761,7 +4761,7 @@ iter.check2810:                                   ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2794, label %vec.epilog.scalar.ph2811.preheader, label %vector.memcheck2785
 
 vector.memcheck2785:                              ; preds = %iter.check2810
-  %i.afc = shl i64 %.sroa.5149.0.copyload.i389, 1 ; 2 uses
+  %i.afc = shl nuw i64 %.sroa.5149.0.copyload.i389, 1 ; 2 uses
   %scevgep2786 = getelementptr i8, ptr %.sroa.0147.0.copyload.i387, i64 %i.afc
   %i.afd = shl i64 %.sroa.7.0.copyload.i390, 1    ; 2 uses
   %scevgep2787 = getelementptr i8, ptr %.sroa.0147.0.copyload.i387, i64 %i.afd
@@ -5164,7 +5164,7 @@ scalar.ph2719:                                    ; preds = %scalar.ph2719.prol.
   br i1 %min.iters.check2720, label %scalar.ph2719.preheader, label %vector.memcheck2711
 
 vector.memcheck2711:                              ; preds = %.lr.ph.us.i452
-  %i.anw = shl i64 %.sroa.5158.0.copyload.us.i446, 2 ; 2 uses
+  %i.anw = shl nuw i64 %.sroa.5158.0.copyload.us.i446, 2 ; 2 uses
   %scevgep2712 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i444, i64 %i.anw
   %i.anx = shl i64 %.sroa.7159.0.copyload.us.i447, 2 ; 2 uses
   %scevgep2713 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i444, i64 %i.anx
@@ -5305,7 +5305,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutlENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2742, label %scalar.ph2741.preheader, label %vector.memcheck2733
 
 vector.memcheck2733:                              ; preds = %.lr.ph.i486
-  %i.apj = shl i64 %.sroa.5149.0.copyload.i483, 2 ; 2 uses
+  %i.apj = shl nuw i64 %.sroa.5149.0.copyload.i483, 2 ; 2 uses
   %scevgep2734 = getelementptr i8, ptr %.sroa.0147.0.copyload.i481, i64 %i.apj
   %i.apk = shl i64 %.sroa.7.0.copyload.i484, 2    ; 2 uses
   %scevgep2735 = getelementptr i8, ptr %.sroa.0147.0.copyload.i481, i64 %i.apk
@@ -5708,7 +5708,7 @@ scalar.ph2675:                                    ; preds = %scalar.ph2675.prol.
   br i1 %min.iters.check2676, label %scalar.ph2675.preheader, label %vector.memcheck2667
 
 vector.memcheck2667:                              ; preds = %.lr.ph.us.i546
-  %i.axw = shl i64 %.sroa.5158.0.copyload.us.i540, 3 ; 2 uses
+  %i.axw = shl nuw i64 %.sroa.5158.0.copyload.us.i540, 3 ; 2 uses
   %scevgep2668 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i538, i64 %i.axw
   %i.axx = shl i64 %.sroa.7159.0.copyload.us.i541, 3 ; 2 uses
   %scevgep2669 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i538, i64 %i.axx
@@ -5849,7 +5849,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutxENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2698, label %scalar.ph2697.preheader, label %vector.memcheck2689
 
 vector.memcheck2689:                              ; preds = %.lr.ph.i580
-  %i.azj = shl i64 %.sroa.5149.0.copyload.i577, 3 ; 2 uses
+  %i.azj = shl nuw i64 %.sroa.5149.0.copyload.i577, 3 ; 2 uses
   %scevgep2690 = getelementptr i8, ptr %.sroa.0147.0.copyload.i575, i64 %i.azj
   %i.azk = shl i64 %.sroa.7.0.copyload.i578, 3    ; 2 uses
   %scevgep2691 = getelementptr i8, ptr %.sroa.0147.0.copyload.i575, i64 %i.azk
@@ -6252,7 +6252,7 @@ _RNvXsk_NtCsdsILkMb8ZHY_4half6bfloatNtB5_4bf16NtNtNtCsf3Ta7LF998c_4core3ops5arit
   br i1 %min.iters.check2635, label %scalar.ph2634.preheader, label %vector.memcheck2626
 
 vector.memcheck2626:                              ; preds = %.lr.ph.us.i620
-  %i.bhv = shl i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
+  %i.bhv = shl nuw i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
   %scevgep2627 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhv
   %i.bhw = shl i64 %.sroa.7169.0.copyload.us.i, 1 ; 2 uses
   %scevgep2628 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhw
@@ -6393,7 +6393,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutNtNtCsdsILkMb8ZHY_4half6bfloa
   br i1 %min.iters.check2655, label %scalar.ph2654.preheader, label %vector.memcheck2646
 
 vector.memcheck2646:                              ; preds = %.lr.ph.i638
-  %i.bjy = shl i64 %.sroa.5159.0.copyload.i, 1    ; 2 uses
+  %i.bjy = shl nuw i64 %.sroa.5159.0.copyload.i, 1 ; 2 uses
   %scevgep2647 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bjy
   %i.bjz = shl i64 %.sroa.7.0.copyload.i637, 1    ; 2 uses
   %scevgep2648 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bjz
@@ -6796,7 +6796,7 @@ scalar.ph2590:                                    ; preds = %scalar.ph2590.prol.
   br i1 %min.iters.check2591, label %scalar.ph2590.preheader, label %vector.memcheck2582
 
 vector.memcheck2582:                              ; preds = %.lr.ph.us.i766
-  %i.bzu = shl i64 %.sroa.5158.0.copyload.us.i760, 2 ; 2 uses
+  %i.bzu = shl nuw i64 %.sroa.5158.0.copyload.us.i760, 2 ; 2 uses
   %scevgep2583 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i758, i64 %i.bzu
   %i.bzv = shl i64 %.sroa.7159.0.copyload.us.i761, 2 ; 2 uses
   %scevgep2584 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i758, i64 %i.bzv
@@ -6937,7 +6937,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2613, label %scalar.ph2612.preheader, label %vector.memcheck2604
 
 vector.memcheck2604:                              ; preds = %.lr.ph.i800
-  %i.cbh = shl i64 %.sroa.5149.0.copyload.i797, 2 ; 2 uses
+  %i.cbh = shl nuw i64 %.sroa.5149.0.copyload.i797, 2 ; 2 uses
   %scevgep2605 = getelementptr i8, ptr %.sroa.0147.0.copyload.i795, i64 %i.cbh
   %i.cbi = shl i64 %.sroa.7.0.copyload.i798, 2    ; 2 uses
   %scevgep2606 = getelementptr i8, ptr %.sroa.0147.0.copyload.i795, i64 %i.cbi
@@ -7340,7 +7340,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us.i860
-  %i.cju = shl i64 %.sroa.5158.0.copyload.us.i854, 3 ; 2 uses
+  %i.cju = shl nuw i64 %.sroa.5158.0.copyload.us.i854, 3 ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i852, i64 %i.cju
   %i.cjv = shl i64 %.sroa.7159.0.copyload.us.i855, 3 ; 2 uses
   %scevgep2554 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i852, i64 %i.cjv
@@ -7481,7 +7481,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutdENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2569, label %scalar.ph2568.preheader, label %vector.memcheck2560
 
 vector.memcheck2560:                              ; preds = %.lr.ph.i894
-  %i.clh = shl i64 %.sroa.5149.0.copyload.i891, 3 ; 2 uses
+  %i.clh = shl nuw i64 %.sroa.5149.0.copyload.i891, 3 ; 2 uses
   %scevgep2561 = getelementptr i8, ptr %.sroa.0147.0.copyload.i889, i64 %i.clh
   %i.cli = shl i64 %.sroa.7.0.copyload.i892, 3    ; 2 uses
   %scevgep2562 = getelementptr i8, ptr %.sroa.0147.0.copyload.i889, i64 %i.cli
@@ -7884,7 +7884,7 @@ scalar.ph2832:                                    ; preds = %scalar.ph2832.prol.
   br i1 %min.iters.check2833, label %scalar.ph2832.preheader, label %vector.memcheck2824
 
 vector.memcheck2824:                              ; preds = %.lr.ph.us.i264
-  %i.ti = shl i64 %.sroa.5158.0.copyload.us.i258, 2 ; 2 uses
+  %i.ti = shl nuw i64 %.sroa.5158.0.copyload.us.i258, 2 ; 2 uses
   %scevgep2825 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i256, i64 %i.ti
   %i.tj = shl i64 %.sroa.7159.0.copyload.us.i259, 2 ; 2 uses
   %scevgep2826 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i256, i64 %i.tj
@@ -8025,7 +8025,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutmENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2855, label %scalar.ph2854.preheader, label %vector.memcheck2846
 
 vector.memcheck2846:                              ; preds = %.lr.ph.i298
-  %i.uv = shl i64 %.sroa.5149.0.copyload.i295, 2  ; 2 uses
+  %i.uv = shl nuw i64 %.sroa.5149.0.copyload.i295, 2 ; 2 uses
   %scevgep2847 = getelementptr i8, ptr %.sroa.0147.0.copyload.i293, i64 %i.uv
   %i.uw = shl i64 %.sroa.7.0.copyload.i296, 2     ; 2 uses
   %scevgep2848 = getelementptr i8, ptr %.sroa.0147.0.copyload.i293, i64 %i.uw
@@ -8428,7 +8428,7 @@ iter.check:                                       ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2764, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck2755
 
 vector.memcheck2755:                              ; preds = %iter.check
-  %i.adi = shl i64 %.sroa.5158.0.copyload.us.i352, 1 ; 2 uses
+  %i.adi = shl nuw i64 %.sroa.5158.0.copyload.us.i352, 1 ; 2 uses
   %scevgep2756 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i350, i64 %i.adi
   %i.adj = shl i64 %.sroa.7159.0.copyload.us.i353, 1 ; 2 uses
   %scevgep2757 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i350, i64 %i.adj
@@ -8601,7 +8601,7 @@ iter.check2810:                                   ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2794, label %vec.epilog.scalar.ph2811.preheader, label %vector.memcheck2785
 
 vector.memcheck2785:                              ; preds = %iter.check2810
-  %i.afc = shl i64 %.sroa.5149.0.copyload.i389, 1 ; 2 uses
+  %i.afc = shl nuw i64 %.sroa.5149.0.copyload.i389, 1 ; 2 uses
   %scevgep2786 = getelementptr i8, ptr %.sroa.0147.0.copyload.i387, i64 %i.afc
   %i.afd = shl i64 %.sroa.7.0.copyload.i390, 1    ; 2 uses
   %scevgep2787 = getelementptr i8, ptr %.sroa.0147.0.copyload.i387, i64 %i.afd
@@ -9004,7 +9004,7 @@ scalar.ph2719:                                    ; preds = %scalar.ph2719.prol.
   br i1 %min.iters.check2720, label %scalar.ph2719.preheader, label %vector.memcheck2711
 
 vector.memcheck2711:                              ; preds = %.lr.ph.us.i452
-  %i.anw = shl i64 %.sroa.5158.0.copyload.us.i446, 2 ; 2 uses
+  %i.anw = shl nuw i64 %.sroa.5158.0.copyload.us.i446, 2 ; 2 uses
   %scevgep2712 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i444, i64 %i.anw
   %i.anx = shl i64 %.sroa.7159.0.copyload.us.i447, 2 ; 2 uses
   %scevgep2713 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i444, i64 %i.anx
@@ -9145,7 +9145,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutlENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2742, label %scalar.ph2741.preheader, label %vector.memcheck2733
 
 vector.memcheck2733:                              ; preds = %.lr.ph.i486
-  %i.apj = shl i64 %.sroa.5149.0.copyload.i483, 2 ; 2 uses
+  %i.apj = shl nuw i64 %.sroa.5149.0.copyload.i483, 2 ; 2 uses
   %scevgep2734 = getelementptr i8, ptr %.sroa.0147.0.copyload.i481, i64 %i.apj
   %i.apk = shl i64 %.sroa.7.0.copyload.i484, 2    ; 2 uses
   %scevgep2735 = getelementptr i8, ptr %.sroa.0147.0.copyload.i481, i64 %i.apk
@@ -9548,7 +9548,7 @@ scalar.ph2675:                                    ; preds = %scalar.ph2675.prol.
   br i1 %min.iters.check2676, label %scalar.ph2675.preheader, label %vector.memcheck2667
 
 vector.memcheck2667:                              ; preds = %.lr.ph.us.i546
-  %i.axw = shl i64 %.sroa.5158.0.copyload.us.i540, 3 ; 2 uses
+  %i.axw = shl nuw i64 %.sroa.5158.0.copyload.us.i540, 3 ; 2 uses
   %scevgep2668 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i538, i64 %i.axw
   %i.axx = shl i64 %.sroa.7159.0.copyload.us.i541, 3 ; 2 uses
   %scevgep2669 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i538, i64 %i.axx
@@ -9689,7 +9689,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutxENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2698, label %scalar.ph2697.preheader, label %vector.memcheck2689
 
 vector.memcheck2689:                              ; preds = %.lr.ph.i580
-  %i.azj = shl i64 %.sroa.5149.0.copyload.i577, 3 ; 2 uses
+  %i.azj = shl nuw i64 %.sroa.5149.0.copyload.i577, 3 ; 2 uses
   %scevgep2690 = getelementptr i8, ptr %.sroa.0147.0.copyload.i575, i64 %i.azj
   %i.azk = shl i64 %.sroa.7.0.copyload.i578, 3    ; 2 uses
   %scevgep2691 = getelementptr i8, ptr %.sroa.0147.0.copyload.i575, i64 %i.azk
@@ -10092,7 +10092,7 @@ _RNvXsk_NtCsdsILkMb8ZHY_4half6bfloatNtB5_4bf16NtNtNtCsf3Ta7LF998c_4core3ops5arit
   br i1 %min.iters.check2635, label %scalar.ph2634.preheader, label %vector.memcheck2626
 
 vector.memcheck2626:                              ; preds = %.lr.ph.us.i620
-  %i.bhv = shl i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
+  %i.bhv = shl nuw i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
   %scevgep2627 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhv
   %i.bhw = shl i64 %.sroa.7169.0.copyload.us.i, 1 ; 2 uses
   %scevgep2628 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhw
@@ -10233,7 +10233,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutNtNtCsdsILkMb8ZHY_4half6bfloa
   br i1 %min.iters.check2655, label %scalar.ph2654.preheader, label %vector.memcheck2646
 
 vector.memcheck2646:                              ; preds = %.lr.ph.i638
-  %i.bjy = shl i64 %.sroa.5159.0.copyload.i, 1    ; 2 uses
+  %i.bjy = shl nuw i64 %.sroa.5159.0.copyload.i, 1 ; 2 uses
   %scevgep2647 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bjy
   %i.bjz = shl i64 %.sroa.7.0.copyload.i637, 1    ; 2 uses
   %scevgep2648 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bjz
@@ -10636,7 +10636,7 @@ scalar.ph2590:                                    ; preds = %scalar.ph2590.prol.
   br i1 %min.iters.check2591, label %scalar.ph2590.preheader, label %vector.memcheck2582
 
 vector.memcheck2582:                              ; preds = %.lr.ph.us.i766
-  %i.bzu = shl i64 %.sroa.5158.0.copyload.us.i760, 2 ; 2 uses
+  %i.bzu = shl nuw i64 %.sroa.5158.0.copyload.us.i760, 2 ; 2 uses
   %scevgep2583 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i758, i64 %i.bzu
   %i.bzv = shl i64 %.sroa.7159.0.copyload.us.i761, 2 ; 2 uses
   %scevgep2584 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i758, i64 %i.bzv
@@ -10777,7 +10777,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2613, label %scalar.ph2612.preheader, label %vector.memcheck2604
 
 vector.memcheck2604:                              ; preds = %.lr.ph.i800
-  %i.cbh = shl i64 %.sroa.5149.0.copyload.i797, 2 ; 2 uses
+  %i.cbh = shl nuw i64 %.sroa.5149.0.copyload.i797, 2 ; 2 uses
   %scevgep2605 = getelementptr i8, ptr %.sroa.0147.0.copyload.i795, i64 %i.cbh
   %i.cbi = shl i64 %.sroa.7.0.copyload.i798, 2    ; 2 uses
   %scevgep2606 = getelementptr i8, ptr %.sroa.0147.0.copyload.i795, i64 %i.cbi
@@ -11180,7 +11180,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us.i860
-  %i.cju = shl i64 %.sroa.5158.0.copyload.us.i854, 3 ; 2 uses
+  %i.cju = shl nuw i64 %.sroa.5158.0.copyload.us.i854, 3 ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i852, i64 %i.cju
   %i.cjv = shl i64 %.sroa.7159.0.copyload.us.i855, 3 ; 2 uses
   %scevgep2554 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i852, i64 %i.cjv
@@ -11321,7 +11321,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutdENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2569, label %scalar.ph2568.preheader, label %vector.memcheck2560
 
 vector.memcheck2560:                              ; preds = %.lr.ph.i894
-  %i.clh = shl i64 %.sroa.5149.0.copyload.i891, 3 ; 2 uses
+  %i.clh = shl nuw i64 %.sroa.5149.0.copyload.i891, 3 ; 2 uses
   %scevgep2561 = getelementptr i8, ptr %.sroa.0147.0.copyload.i889, i64 %i.clh
   %i.cli = shl i64 %.sroa.7.0.copyload.i892, 3    ; 2 uses
   %scevgep2562 = getelementptr i8, ptr %.sroa.0147.0.copyload.i889, i64 %i.cli
@@ -11724,7 +11724,7 @@ scalar.ph2832:                                    ; preds = %scalar.ph2832.prol.
   br i1 %min.iters.check2833, label %scalar.ph2832.preheader, label %vector.memcheck2824
 
 vector.memcheck2824:                              ; preds = %.lr.ph.us.i264
-  %i.ti = shl i64 %.sroa.5158.0.copyload.us.i258, 2 ; 2 uses
+  %i.ti = shl nuw i64 %.sroa.5158.0.copyload.us.i258, 2 ; 2 uses
   %scevgep2825 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i256, i64 %i.ti
   %i.tj = shl i64 %.sroa.7159.0.copyload.us.i259, 2 ; 2 uses
   %scevgep2826 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i256, i64 %i.tj
@@ -11865,7 +11865,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutmENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2855, label %scalar.ph2854.preheader, label %vector.memcheck2846
 
 vector.memcheck2846:                              ; preds = %.lr.ph.i298
-  %i.uv = shl i64 %.sroa.5149.0.copyload.i295, 2  ; 2 uses
+  %i.uv = shl nuw i64 %.sroa.5149.0.copyload.i295, 2 ; 2 uses
   %scevgep2847 = getelementptr i8, ptr %.sroa.0147.0.copyload.i293, i64 %i.uv
   %i.uw = shl i64 %.sroa.7.0.copyload.i296, 2     ; 2 uses
   %scevgep2848 = getelementptr i8, ptr %.sroa.0147.0.copyload.i293, i64 %i.uw
@@ -12268,7 +12268,7 @@ iter.check:                                       ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2764, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck2755
 
 vector.memcheck2755:                              ; preds = %iter.check
-  %i.adi = shl i64 %.sroa.5158.0.copyload.us.i352, 1 ; 2 uses
+  %i.adi = shl nuw i64 %.sroa.5158.0.copyload.us.i352, 1 ; 2 uses
   %scevgep2756 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i350, i64 %i.adi
   %i.adj = shl i64 %.sroa.7159.0.copyload.us.i353, 1 ; 2 uses
   %scevgep2757 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i350, i64 %i.adj
@@ -12441,7 +12441,7 @@ iter.check2810:                                   ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2794, label %vec.epilog.scalar.ph2811.preheader, label %vector.memcheck2785
 
 vector.memcheck2785:                              ; preds = %iter.check2810
-  %i.afc = shl i64 %.sroa.5149.0.copyload.i389, 1 ; 2 uses
+  %i.afc = shl nuw i64 %.sroa.5149.0.copyload.i389, 1 ; 2 uses
   %scevgep2786 = getelementptr i8, ptr %.sroa.0147.0.copyload.i387, i64 %i.afc
   %i.afd = shl i64 %.sroa.7.0.copyload.i390, 1    ; 2 uses
   %scevgep2787 = getelementptr i8, ptr %.sroa.0147.0.copyload.i387, i64 %i.afd
@@ -12844,7 +12844,7 @@ scalar.ph2719:                                    ; preds = %scalar.ph2719.prol.
   br i1 %min.iters.check2720, label %scalar.ph2719.preheader, label %vector.memcheck2711
 
 vector.memcheck2711:                              ; preds = %.lr.ph.us.i452
-  %i.anw = shl i64 %.sroa.5158.0.copyload.us.i446, 2 ; 2 uses
+  %i.anw = shl nuw i64 %.sroa.5158.0.copyload.us.i446, 2 ; 2 uses
   %scevgep2712 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i444, i64 %i.anw
   %i.anx = shl i64 %.sroa.7159.0.copyload.us.i447, 2 ; 2 uses
   %scevgep2713 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i444, i64 %i.anx
@@ -12985,7 +12985,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutlENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2742, label %scalar.ph2741.preheader, label %vector.memcheck2733
 
 vector.memcheck2733:                              ; preds = %.lr.ph.i486
-  %i.apj = shl i64 %.sroa.5149.0.copyload.i483, 2 ; 2 uses
+  %i.apj = shl nuw i64 %.sroa.5149.0.copyload.i483, 2 ; 2 uses
   %scevgep2734 = getelementptr i8, ptr %.sroa.0147.0.copyload.i481, i64 %i.apj
   %i.apk = shl i64 %.sroa.7.0.copyload.i484, 2    ; 2 uses
   %scevgep2735 = getelementptr i8, ptr %.sroa.0147.0.copyload.i481, i64 %i.apk
@@ -13388,7 +13388,7 @@ scalar.ph2675:                                    ; preds = %scalar.ph2675.prol.
   br i1 %min.iters.check2676, label %scalar.ph2675.preheader, label %vector.memcheck2667
 
 vector.memcheck2667:                              ; preds = %.lr.ph.us.i546
-  %i.axw = shl i64 %.sroa.5158.0.copyload.us.i540, 3 ; 2 uses
+  %i.axw = shl nuw i64 %.sroa.5158.0.copyload.us.i540, 3 ; 2 uses
   %scevgep2668 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i538, i64 %i.axw
   %i.axx = shl i64 %.sroa.7159.0.copyload.us.i541, 3 ; 2 uses
   %scevgep2669 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i538, i64 %i.axx
@@ -13529,7 +13529,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutxENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2698, label %scalar.ph2697.preheader, label %vector.memcheck2689
 
 vector.memcheck2689:                              ; preds = %.lr.ph.i580
-  %i.azj = shl i64 %.sroa.5149.0.copyload.i577, 3 ; 2 uses
+  %i.azj = shl nuw i64 %.sroa.5149.0.copyload.i577, 3 ; 2 uses
   %scevgep2690 = getelementptr i8, ptr %.sroa.0147.0.copyload.i575, i64 %i.azj
   %i.azk = shl i64 %.sroa.7.0.copyload.i578, 3    ; 2 uses
   %scevgep2691 = getelementptr i8, ptr %.sroa.0147.0.copyload.i575, i64 %i.azk
@@ -13932,7 +13932,7 @@ _RNvXsk_NtCsdsILkMb8ZHY_4half6bfloatNtB5_4bf16NtNtNtCsf3Ta7LF998c_4core3ops5arit
   br i1 %min.iters.check2635, label %scalar.ph2634.preheader, label %vector.memcheck2626
 
 vector.memcheck2626:                              ; preds = %.lr.ph.us.i620
-  %i.bhv = shl i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
+  %i.bhv = shl nuw i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
   %scevgep2627 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhv
   %i.bhw = shl i64 %.sroa.7169.0.copyload.us.i, 1 ; 2 uses
   %scevgep2628 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhw
@@ -14073,7 +14073,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutNtNtCsdsILkMb8ZHY_4half6bfloa
   br i1 %min.iters.check2655, label %scalar.ph2654.preheader, label %vector.memcheck2646
 
 vector.memcheck2646:                              ; preds = %.lr.ph.i638
-  %i.bjy = shl i64 %.sroa.5159.0.copyload.i, 1    ; 2 uses
+  %i.bjy = shl nuw i64 %.sroa.5159.0.copyload.i, 1 ; 2 uses
   %scevgep2647 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bjy
   %i.bjz = shl i64 %.sroa.7.0.copyload.i637, 1    ; 2 uses
   %scevgep2648 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bjz
@@ -14476,7 +14476,7 @@ scalar.ph2590:                                    ; preds = %scalar.ph2590.prol.
   br i1 %min.iters.check2591, label %scalar.ph2590.preheader, label %vector.memcheck2582
 
 vector.memcheck2582:                              ; preds = %.lr.ph.us.i766
-  %i.bzu = shl i64 %.sroa.5158.0.copyload.us.i760, 2 ; 2 uses
+  %i.bzu = shl nuw i64 %.sroa.5158.0.copyload.us.i760, 2 ; 2 uses
   %scevgep2583 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i758, i64 %i.bzu
   %i.bzv = shl i64 %.sroa.7159.0.copyload.us.i761, 2 ; 2 uses
   %scevgep2584 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i758, i64 %i.bzv
@@ -14617,7 +14617,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2613, label %scalar.ph2612.preheader, label %vector.memcheck2604
 
 vector.memcheck2604:                              ; preds = %.lr.ph.i800
-  %i.cbh = shl i64 %.sroa.5149.0.copyload.i797, 2 ; 2 uses
+  %i.cbh = shl nuw i64 %.sroa.5149.0.copyload.i797, 2 ; 2 uses
   %scevgep2605 = getelementptr i8, ptr %.sroa.0147.0.copyload.i795, i64 %i.cbh
   %i.cbi = shl i64 %.sroa.7.0.copyload.i798, 2    ; 2 uses
   %scevgep2606 = getelementptr i8, ptr %.sroa.0147.0.copyload.i795, i64 %i.cbi
@@ -15020,7 +15020,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us.i860
-  %i.cju = shl i64 %.sroa.5158.0.copyload.us.i854, 3 ; 2 uses
+  %i.cju = shl nuw i64 %.sroa.5158.0.copyload.us.i854, 3 ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i852, i64 %i.cju
   %i.cjv = shl i64 %.sroa.7159.0.copyload.us.i855, 3 ; 2 uses
   %scevgep2554 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i852, i64 %i.cjv
@@ -15161,7 +15161,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutdENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2569, label %scalar.ph2568.preheader, label %vector.memcheck2560
 
 vector.memcheck2560:                              ; preds = %.lr.ph.i894
-  %i.clh = shl i64 %.sroa.5149.0.copyload.i891, 3 ; 2 uses
+  %i.clh = shl nuw i64 %.sroa.5149.0.copyload.i891, 3 ; 2 uses
   %scevgep2561 = getelementptr i8, ptr %.sroa.0147.0.copyload.i889, i64 %i.clh
   %i.cli = shl i64 %.sroa.7.0.copyload.i892, 3    ; 2 uses
   %scevgep2562 = getelementptr i8, ptr %.sroa.0147.0.copyload.i889, i64 %i.cli
@@ -15564,7 +15564,7 @@ scalar.ph2742:                                    ; preds = %scalar.ph2742.prol.
   br i1 %min.iters.check2743, label %scalar.ph2742.preheader, label %vector.memcheck2734
 
 vector.memcheck2734:                              ; preds = %.lr.ph.us.i264
-  %i.te = shl i64 %.sroa.5158.0.copyload.us.i258, 2 ; 2 uses
+  %i.te = shl nuw i64 %.sroa.5158.0.copyload.us.i258, 2 ; 2 uses
   %scevgep2735 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i256, i64 %i.te
   %i.tf = shl i64 %.sroa.7159.0.copyload.us.i259, 2 ; 2 uses
   %scevgep2736 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i256, i64 %i.tf
@@ -15704,7 +15704,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutmENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2765, label %scalar.ph2764.preheader, label %vector.memcheck2756
 
 vector.memcheck2756:                              ; preds = %.lr.ph.i298
-  %i.uq = shl i64 %.sroa.5149.0.copyload.i295, 2  ; 2 uses
+  %i.uq = shl nuw i64 %.sroa.5149.0.copyload.i295, 2 ; 2 uses
   %scevgep2757 = getelementptr i8, ptr %.sroa.0147.0.copyload.i293, i64 %i.uq
   %i.ur = shl i64 %.sroa.7.0.copyload.i296, 2     ; 2 uses
   %scevgep2758 = getelementptr i8, ptr %.sroa.0147.0.copyload.i293, i64 %i.ur
@@ -16107,7 +16107,7 @@ iter.check:                                       ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2674, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck2665
 
 vector.memcheck2665:                              ; preds = %iter.check
-  %i.adb = shl i64 %.sroa.5158.0.copyload.us.i352, 1 ; 2 uses
+  %i.adb = shl nuw i64 %.sroa.5158.0.copyload.us.i352, 1 ; 2 uses
   %scevgep2666 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i350, i64 %i.adb
   %i.adc = shl i64 %.sroa.7159.0.copyload.us.i353, 1 ; 2 uses
   %scevgep2667 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i350, i64 %i.adc
@@ -16279,7 +16279,7 @@ iter.check2720:                                   ; preds = %_RINvYINtNtNtCsf3Ta
   br i1 %min.iters.check2704, label %vec.epilog.scalar.ph2721.preheader, label %vector.memcheck2695
 
 vector.memcheck2695:                              ; preds = %iter.check2720
-  %i.aeu = shl i64 %.sroa.5149.0.copyload.i389, 1 ; 2 uses
+  %i.aeu = shl nuw i64 %.sroa.5149.0.copyload.i389, 1 ; 2 uses
   %scevgep2696 = getelementptr i8, ptr %.sroa.0147.0.copyload.i387, i64 %i.aeu
   %i.aev = shl i64 %.sroa.7.0.copyload.i390, 1    ; 2 uses
   %scevgep2697 = getelementptr i8, ptr %.sroa.0147.0.copyload.i387, i64 %i.aev
@@ -16682,7 +16682,7 @@ scalar.ph2629:                                    ; preds = %scalar.ph2629.prol.
   br i1 %min.iters.check2630, label %scalar.ph2629.preheader, label %vector.memcheck2621
 
 vector.memcheck2621:                              ; preds = %.lr.ph.us.i452
-  %i.anm = shl i64 %.sroa.5158.0.copyload.us.i446, 2 ; 2 uses
+  %i.anm = shl nuw i64 %.sroa.5158.0.copyload.us.i446, 2 ; 2 uses
   %scevgep2622 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i444, i64 %i.anm
   %i.ann = shl i64 %.sroa.7159.0.copyload.us.i447, 2 ; 2 uses
   %scevgep2623 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i444, i64 %i.ann
@@ -16822,7 +16822,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutlENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2652, label %scalar.ph2651.preheader, label %vector.memcheck2643
 
 vector.memcheck2643:                              ; preds = %.lr.ph.i486
-  %i.aoy = shl i64 %.sroa.5149.0.copyload.i483, 2 ; 2 uses
+  %i.aoy = shl nuw i64 %.sroa.5149.0.copyload.i483, 2 ; 2 uses
   %scevgep2644 = getelementptr i8, ptr %.sroa.0147.0.copyload.i481, i64 %i.aoy
   %i.aoz = shl i64 %.sroa.7.0.copyload.i484, 2    ; 2 uses
   %scevgep2645 = getelementptr i8, ptr %.sroa.0147.0.copyload.i481, i64 %i.aoz
@@ -17225,7 +17225,7 @@ scalar.ph2585:                                    ; preds = %scalar.ph2585.prol.
   br i1 %min.iters.check2586, label %scalar.ph2585.preheader, label %vector.memcheck2577
 
 vector.memcheck2577:                              ; preds = %.lr.ph.us.i546
-  %i.axj = shl i64 %.sroa.5158.0.copyload.us.i540, 3 ; 2 uses
+  %i.axj = shl nuw i64 %.sroa.5158.0.copyload.us.i540, 3 ; 2 uses
   %scevgep2578 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i538, i64 %i.axj
   %i.axk = shl i64 %.sroa.7159.0.copyload.us.i541, 3 ; 2 uses
   %scevgep2579 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i538, i64 %i.axk
@@ -17365,7 +17365,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutxENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2608, label %scalar.ph2607.preheader, label %vector.memcheck2599
 
 vector.memcheck2599:                              ; preds = %.lr.ph.i580
-  %i.ayv = shl i64 %.sroa.5149.0.copyload.i577, 3 ; 2 uses
+  %i.ayv = shl nuw i64 %.sroa.5149.0.copyload.i577, 3 ; 2 uses
   %scevgep2600 = getelementptr i8, ptr %.sroa.0147.0.copyload.i575, i64 %i.ayv
   %i.ayw = shl i64 %.sroa.7.0.copyload.i578, 3    ; 2 uses
   %scevgep2601 = getelementptr i8, ptr %.sroa.0147.0.copyload.i575, i64 %i.ayw
@@ -17768,7 +17768,7 @@ _RNvXsk_NtCsdsILkMb8ZHY_4half6bfloatNtB5_4bf16NtNtNtCsf3Ta7LF998c_4core3ops5arit
   br i1 %min.iters.check2545, label %scalar.ph2544.preheader, label %vector.memcheck2536
 
 vector.memcheck2536:                              ; preds = %.lr.ph.us.i620
-  %i.bhf = shl i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
+  %i.bhf = shl nuw i64 %.sroa.5168.0.copyload.us.i, 1 ; 2 uses
   %scevgep2537 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhf
   %i.bhg = shl i64 %.sroa.7169.0.copyload.us.i, 1 ; 2 uses
   %scevgep2538 = getelementptr i8, ptr %.sroa.0164.0.copyload.us.i, i64 %i.bhg
@@ -17908,7 +17908,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutNtNtCsdsILkMb8ZHY_4half6bfloa
   br i1 %min.iters.check2565, label %scalar.ph2564.preheader, label %vector.memcheck2556
 
 vector.memcheck2556:                              ; preds = %.lr.ph.i638
-  %i.bjh = shl i64 %.sroa.5159.0.copyload.i, 1    ; 2 uses
+  %i.bjh = shl nuw i64 %.sroa.5159.0.copyload.i, 1 ; 2 uses
   %scevgep2557 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bjh
   %i.bji = shl i64 %.sroa.7.0.copyload.i637, 1    ; 2 uses
   %scevgep2558 = getelementptr i8, ptr %.sroa.0157.0.copyload.i, i64 %i.bji
@@ -18311,7 +18311,7 @@ scalar.ph2500:                                    ; preds = %scalar.ph2500.prol.
   br i1 %min.iters.check2501, label %scalar.ph2500.preheader, label %vector.memcheck2492
 
 vector.memcheck2492:                              ; preds = %.lr.ph.us.i766
-  %i.byy = shl i64 %.sroa.5158.0.copyload.us.i760, 2 ; 2 uses
+  %i.byy = shl nuw i64 %.sroa.5158.0.copyload.us.i760, 2 ; 2 uses
   %scevgep2493 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i758, i64 %i.byy
   %i.byz = shl i64 %.sroa.7159.0.copyload.us.i761, 2 ; 2 uses
   %scevgep2494 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i758, i64 %i.byz
@@ -18451,7 +18451,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2523, label %scalar.ph2522.preheader, label %vector.memcheck2514
 
 vector.memcheck2514:                              ; preds = %.lr.ph.i800
-  %i.cak = shl i64 %.sroa.5149.0.copyload.i797, 2 ; 2 uses
+  %i.cak = shl nuw i64 %.sroa.5149.0.copyload.i797, 2 ; 2 uses
   %scevgep2515 = getelementptr i8, ptr %.sroa.0147.0.copyload.i795, i64 %i.cak
   %i.cal = shl i64 %.sroa.7.0.copyload.i798, 2    ; 2 uses
   %scevgep2516 = getelementptr i8, ptr %.sroa.0147.0.copyload.i795, i64 %i.cal
@@ -18854,7 +18854,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us.i860
-  %i.civ = shl i64 %.sroa.5158.0.copyload.us.i854, 3 ; 2 uses
+  %i.civ = shl nuw i64 %.sroa.5158.0.copyload.us.i854, 3 ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i852, i64 %i.civ
   %i.ciw = shl i64 %.sroa.7159.0.copyload.us.i855, 3 ; 2 uses
   %scevgep2464 = getelementptr i8, ptr %.sroa.0154.0.copyload.us.i852, i64 %i.ciw
@@ -18994,7 +18994,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutdENtNtNtNtBa_4iter6traits8ite
   br i1 %min.iters.check2479, label %scalar.ph2478.preheader, label %vector.memcheck2470
 
 vector.memcheck2470:                              ; preds = %.lr.ph.i894
-  %i.ckh = shl i64 %.sroa.5149.0.copyload.i891, 3 ; 2 uses
+  %i.ckh = shl nuw i64 %.sroa.5149.0.copyload.i891, 3 ; 2 uses
   %scevgep2471 = getelementptr i8, ptr %.sroa.0147.0.copyload.i889, i64 %i.ckh
   %i.cki = shl i64 %.sroa.7.0.copyload.i892, 3    ; 2 uses
   %scevgep2472 = getelementptr i8, ptr %.sroa.0147.0.copyload.i889, i64 %i.cki

@@ -205,7 +205,7 @@ bb.a:
   %scevgep107.i = getelementptr i8, ptr %i.af, i64 88
   %i.ag = sub nuw nsw i64 %.pre-phi.i, %.072.lcssa.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep.i, ptr align 1 %scevgep107.i, i64 %i.ag, i1 false), !tbaa !1213
-  %i.ah = shl i64 %.046.lcssa.i, 2
+  %i.ah = shl nuw i64 %.046.lcssa.i, 2
   %scevgep108.i = getelementptr i8, ptr %i.b, i64 %i.ah
   %i.ai = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.aj = getelementptr i8, ptr %2, i64 %i.ai
@@ -608,7 +608,7 @@ bb.w:                                             ; preds = %bb.v, %_ZZN6duckdbL
   %scevgep114.i = getelementptr i8, ptr %i.js, i64 88
   %i.jt = sub nuw nsw i64 %i.cj, %.054.lcssa.i.i  ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep113.i, ptr align 1 %scevgep114.i, i64 %i.jt, i1 false), !tbaa !1213
-  %i.ju = shl i64 %.7.i, 2
+  %i.ju = shl nuw i64 %.7.i, 2
   %scevgep115.i = getelementptr i8, ptr %i.b, i64 %i.ju
   %i.jv = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.jw = getelementptr i8, ptr %0, i64 %i.jv
@@ -724,7 +724,7 @@ bb.a:
   %scevgep184.i = getelementptr i8, ptr %i.ah, i64 88
   %i.ai = sub nuw nsw i64 %.pre-phi.i, %.072.lcssa.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep.i, ptr align 1 %scevgep184.i, i64 %i.ai, i1 false), !tbaa !273
-  %i.aj = shl i64 %.0128.lcssa.i, 2
+  %i.aj = shl nuw i64 %.0128.lcssa.i, 2
   %scevgep185.i = getelementptr i8, ptr %i.b, i64 %i.aj
   %i.ak = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.al = getelementptr i8, ptr %2, i64 %i.ak
@@ -1127,7 +1127,7 @@ bb.s:                                             ; preds = %bb.r, %_ZZN6duckdbL
   %scevgep190.i = getelementptr i8, ptr %i.iv, i64 88
   %i.iw = sub nuw nsw i64 %i.ce, %.054.lcssa.i.i  ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep189.i, ptr align 1 %scevgep190.i, i64 %i.iw, i1 false), !tbaa !273
-  %i.ix = shl i64 %.5.i, 2
+  %i.ix = shl nuw i64 %.5.i, 2
   %scevgep191.i = getelementptr i8, ptr %i.b, i64 %i.ix
   %i.iy = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.iz = getelementptr i8, ptr %0, i64 %i.iy
@@ -1250,7 +1250,7 @@ bb.a:
   br i1 %i.af, label %.lr.ph157.preheader.i, label %._crit_edge.i
 
 .lr.ph157.preheader.i:                            ; preds = %.preheader.i
-  %i.ag = shl i64 %.0122.lcssa.i, 1
+  %i.ag = shl nuw i64 %.0122.lcssa.i, 1
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ag
   %i.ah = shl nuw nsw i64 %.072.lcssa.i, 1
   %i.ai = getelementptr i8, ptr %2, i64 %i.v
@@ -1259,7 +1259,7 @@ bb.a:
   %i.ak = sub nuw nsw i64 %.pre-phi.i, %.072.lcssa.i ; 2 uses
   %i.al = shl nuw nsw i64 %i.ak, 1
   call void @llvm.memcpy.p0.p0.i64(ptr align 2 %scevgep.i, ptr align 2 %scevgep175.i, i64 %i.al, i1 false), !tbaa !317
-  %i.am = shl i64 %.0122.lcssa.i, 2
+  %i.am = shl nuw i64 %.0122.lcssa.i, 2
   %scevgep176.i = getelementptr i8, ptr %i.b, i64 %i.am
   %i.an = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.ao = getelementptr i8, ptr %2, i64 %i.an
@@ -1447,7 +1447,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i.prol.loopexit: ; preds = 
   br i1 %i.db, label %.preheader.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.us.i.preheader.i: ; preds = %.lr.ph9.split.us.i.i
-  %i.dc = shl i64 %.4.i, 1
+  %i.dc = shl nuw i64 %.4.i, 1
   %scevgep178.i = getelementptr i8, ptr %i.a, i64 %i.dc
   %i.dd = shl i64 %.0.lcssa.i.i, 1
   %scevgep179.i = getelementptr i8, ptr %i.f, i64 %i.dd
@@ -1749,7 +1749,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   br i1 %i.jb, label %.lr.ph20.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalIssNS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S3_RKNS_15SelectionVectorEPKS4_PlmS8_m.exit
 
 .lr.ph20.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.jc = shl i64 %.5.i, 1
+  %i.jc = shl nuw i64 %.5.i, 1
   %scevgep180.i = getelementptr i8, ptr %i.a, i64 %i.jc
   %i.jd = shl nuw nsw i64 %.054.lcssa.i.i, 1
   %i.je = getelementptr i8, ptr %0, i64 %i.p
@@ -1758,7 +1758,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   %i.jg = sub nuw nsw i64 %i.ci, %.054.lcssa.i.i  ; 3 uses
   %i.jh = shl nuw nsw i64 %i.jg, 1
   call void @llvm.memcpy.p0.p0.i64(ptr align 2 %scevgep180.i, ptr align 2 %scevgep181.i, i64 %i.jh, i1 false), !tbaa !317
-  %i.ji = shl i64 %.5.i, 2
+  %i.ji = shl nuw i64 %.5.i, 2
   %scevgep182.i = getelementptr i8, ptr %i.b, i64 %i.ji
   %i.jj = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.jk = getelementptr i8, ptr %0, i64 %i.jj
@@ -1882,7 +1882,7 @@ bb.a:
   br i1 %i.af, label %.lr.ph157.preheader.i, label %._crit_edge.i
 
 .lr.ph157.preheader.i:                            ; preds = %.preheader.i
-  %i.ag = shl i64 %.0122.lcssa.i, 2               ; 2 uses
+  %i.ag = shl nuw i64 %.0122.lcssa.i, 2           ; 2 uses
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ag
   %i.ah = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.ai = getelementptr i8, ptr %2, i64 %i.ah     ; 2 uses
@@ -2074,7 +2074,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i.prol.loopexit: ; preds = 
   br i1 %i.cw, label %.preheader.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.us.i.preheader.i: ; preds = %.lr.ph9.split.us.i.i
-  %i.cx = shl i64 %.4.i, 2
+  %i.cx = shl nuw i64 %.4.i, 2
   %scevgep178.i = getelementptr i8, ptr %i.a, i64 %i.cx
   %i.cy = shl i64 %.0.lcssa.i.i, 2
   %scevgep179.i = getelementptr i8, ptr %i.f, i64 %i.cy
@@ -2376,7 +2376,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   br i1 %i.iw, label %.lr.ph20.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalIiiNS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S3_RKNS_15SelectionVectorEPKS4_PlmS8_m.exit
 
 .lr.ph20.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.ix = shl i64 %.5.i, 2                        ; 2 uses
+  %i.ix = shl nuw i64 %.5.i, 2                    ; 2 uses
   %scevgep180.i = getelementptr i8, ptr %i.a, i64 %i.ix
   %i.iy = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.iz = getelementptr i8, ptr %0, i64 %i.iy     ; 2 uses
@@ -2504,7 +2504,7 @@ bb.a:
   br i1 %i.af, label %.lr.ph165.preheader.i, label %._crit_edge.i
 
 .lr.ph165.preheader.i:                            ; preds = %.preheader.i
-  %i.ag = shl i64 %.0130.lcssa.i, 3
+  %i.ag = shl nuw i64 %.0130.lcssa.i, 3
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ag
   %i.ah = shl nuw nsw i64 %.072.lcssa.i, 3
   %i.ai = getelementptr i8, ptr %2, i64 %i.ah
@@ -2513,7 +2513,7 @@ bb.a:
   %i.ak = sub nuw nsw i64 %.pre-phi.i, %.072.lcssa.i ; 2 uses
   %i.al = shl nuw nsw i64 %i.ak, 3
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %scevgep.i, ptr align 8 %scevgep183.i, i64 %i.al, i1 false), !tbaa !218
-  %i.am = shl i64 %.0130.lcssa.i, 2
+  %i.am = shl nuw i64 %.0130.lcssa.i, 2
   %scevgep184.i = getelementptr i8, ptr %i.b, i64 %i.am
   %i.an = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.ao = getelementptr i8, ptr %2, i64 %i.an
@@ -2701,7 +2701,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i.prol.loopexit: ; preds = 
   br i1 %i.db, label %.preheader.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.us.i.preheader.i: ; preds = %.lr.ph9.split.us.i.i
-  %i.dc = shl i64 %.4.i, 3
+  %i.dc = shl nuw i64 %.4.i, 3
   %scevgep186.i = getelementptr i8, ptr %i.a, i64 %i.dc
   %i.dd = shl i64 %.0.lcssa.i.i, 3
   %scevgep187.i = getelementptr i8, ptr %i.f, i64 %i.dd
@@ -3003,7 +3003,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   br i1 %i.iy, label %.lr.ph20.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalIllNS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S3_RKNS_15SelectionVectorEPKS4_PlmS8_m.exit
 
 .lr.ph20.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.iz = shl i64 %.5.i, 3
+  %i.iz = shl nuw i64 %.5.i, 3
   %scevgep188.i = getelementptr i8, ptr %i.a, i64 %i.iz
   %i.ja = shl nuw nsw i64 %.054.lcssa.i.i, 3
   %i.jb = getelementptr i8, ptr %0, i64 %i.ja
@@ -3012,7 +3012,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   %i.jd = sub nuw nsw i64 %i.ci, %.054.lcssa.i.i  ; 3 uses
   %i.je = shl nuw nsw i64 %i.jd, 3
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %scevgep188.i, ptr align 8 %scevgep189.i, i64 %i.je, i1 false), !tbaa !218
-  %i.jf = shl i64 %.5.i, 2
+  %i.jf = shl nuw i64 %.5.i, 2
   %scevgep190.i = getelementptr i8, ptr %i.b, i64 %i.jf
   %i.jg = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.jh = getelementptr i8, ptr %0, i64 %i.jg
@@ -3142,7 +3142,7 @@ bb.a:
   %scevgep184.i = getelementptr i8, ptr %i.ah, i64 88
   %i.ai = sub nuw nsw i64 %.pre-phi.i, %.072.lcssa.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep.i, ptr align 1 %scevgep184.i, i64 %i.ai, i1 false), !tbaa !273
-  %i.aj = shl i64 %.0128.lcssa.i, 2
+  %i.aj = shl nuw i64 %.0128.lcssa.i, 2
   %scevgep185.i = getelementptr i8, ptr %i.b, i64 %i.aj
   %i.ak = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.al = getelementptr i8, ptr %2, i64 %i.ak
@@ -3545,7 +3545,7 @@ bb.s:                                             ; preds = %bb.r, %_ZZN6duckdbL
   %scevgep190.i = getelementptr i8, ptr %i.iv, i64 88
   %i.iw = sub nuw nsw i64 %i.ce, %.054.lcssa.i.i  ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep189.i, ptr align 1 %scevgep190.i, i64 %i.iw, i1 false), !tbaa !273
-  %i.ix = shl i64 %.5.i, 2
+  %i.ix = shl nuw i64 %.5.i, 2
   %scevgep191.i = getelementptr i8, ptr %i.b, i64 %i.ix
   %i.iy = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.iz = getelementptr i8, ptr %0, i64 %i.iy
@@ -3668,7 +3668,7 @@ bb.a:
   br i1 %i.af, label %.lr.ph157.preheader.i, label %._crit_edge.i
 
 .lr.ph157.preheader.i:                            ; preds = %.preheader.i
-  %i.ag = shl i64 %.0122.lcssa.i, 1
+  %i.ag = shl nuw i64 %.0122.lcssa.i, 1
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ag
   %i.ah = shl nuw nsw i64 %.072.lcssa.i, 1
   %i.ai = getelementptr i8, ptr %2, i64 %i.v
@@ -3677,7 +3677,7 @@ bb.a:
   %i.ak = sub nuw nsw i64 %.pre-phi.i, %.072.lcssa.i ; 2 uses
   %i.al = shl nuw nsw i64 %i.ak, 1
   call void @llvm.memcpy.p0.p0.i64(ptr align 2 %scevgep.i, ptr align 2 %scevgep175.i, i64 %i.al, i1 false), !tbaa !317
-  %i.am = shl i64 %.0122.lcssa.i, 2
+  %i.am = shl nuw i64 %.0122.lcssa.i, 2
   %scevgep176.i = getelementptr i8, ptr %i.b, i64 %i.am
   %i.an = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.ao = getelementptr i8, ptr %2, i64 %i.an
@@ -3865,7 +3865,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i.prol.loopexit: ; preds = 
   br i1 %i.db, label %.preheader.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.us.i.preheader.i: ; preds = %.lr.ph9.split.us.i.i
-  %i.dc = shl i64 %.4.i, 1
+  %i.dc = shl nuw i64 %.4.i, 1
   %scevgep178.i = getelementptr i8, ptr %i.a, i64 %i.dc
   %i.dd = shl i64 %.0.lcssa.i.i, 1
   %scevgep179.i = getelementptr i8, ptr %i.f, i64 %i.dd
@@ -4167,7 +4167,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   br i1 %i.jb, label %.lr.ph20.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalIttNS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S3_RKNS_15SelectionVectorEPKS4_PlmS8_m.exit
 
 .lr.ph20.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.jc = shl i64 %.5.i, 1
+  %i.jc = shl nuw i64 %.5.i, 1
   %scevgep180.i = getelementptr i8, ptr %i.a, i64 %i.jc
   %i.jd = shl nuw nsw i64 %.054.lcssa.i.i, 1
   %i.je = getelementptr i8, ptr %0, i64 %i.p
@@ -4176,7 +4176,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   %i.jg = sub nuw nsw i64 %i.ci, %.054.lcssa.i.i  ; 3 uses
   %i.jh = shl nuw nsw i64 %i.jg, 1
   call void @llvm.memcpy.p0.p0.i64(ptr align 2 %scevgep180.i, ptr align 2 %scevgep181.i, i64 %i.jh, i1 false), !tbaa !317
-  %i.ji = shl i64 %.5.i, 2
+  %i.ji = shl nuw i64 %.5.i, 2
   %scevgep182.i = getelementptr i8, ptr %i.b, i64 %i.ji
   %i.jj = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.jk = getelementptr i8, ptr %0, i64 %i.jj
@@ -4300,7 +4300,7 @@ bb.a:
   br i1 %i.af, label %.lr.ph157.preheader.i, label %._crit_edge.i
 
 .lr.ph157.preheader.i:                            ; preds = %.preheader.i
-  %i.ag = shl i64 %.0122.lcssa.i, 2               ; 2 uses
+  %i.ag = shl nuw i64 %.0122.lcssa.i, 2           ; 2 uses
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ag
   %i.ah = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.ai = getelementptr i8, ptr %2, i64 %i.ah     ; 2 uses
@@ -4492,7 +4492,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i.prol.loopexit: ; preds = 
   br i1 %i.cw, label %.preheader.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.us.i.preheader.i: ; preds = %.lr.ph9.split.us.i.i
-  %i.cx = shl i64 %.4.i, 2
+  %i.cx = shl nuw i64 %.4.i, 2
   %scevgep178.i = getelementptr i8, ptr %i.a, i64 %i.cx
   %i.cy = shl i64 %.0.lcssa.i.i, 2
   %scevgep179.i = getelementptr i8, ptr %i.f, i64 %i.cy
@@ -4794,7 +4794,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   br i1 %i.iw, label %.lr.ph20.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalIjjNS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S3_RKNS_15SelectionVectorEPKS4_PlmS8_m.exit
 
 .lr.ph20.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.ix = shl i64 %.5.i, 2                        ; 2 uses
+  %i.ix = shl nuw i64 %.5.i, 2                    ; 2 uses
   %scevgep180.i = getelementptr i8, ptr %i.a, i64 %i.ix
   %i.iy = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.iz = getelementptr i8, ptr %0, i64 %i.iy     ; 2 uses
@@ -4922,7 +4922,7 @@ bb.a:
   br i1 %i.af, label %.lr.ph165.preheader.i, label %._crit_edge.i
 
 .lr.ph165.preheader.i:                            ; preds = %.preheader.i
-  %i.ag = shl i64 %.0130.lcssa.i, 3
+  %i.ag = shl nuw i64 %.0130.lcssa.i, 3
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ag
   %i.ah = shl nuw nsw i64 %.072.lcssa.i, 3
   %i.ai = getelementptr i8, ptr %2, i64 %i.ah
@@ -4931,7 +4931,7 @@ bb.a:
   %i.ak = sub nuw nsw i64 %.pre-phi.i, %.072.lcssa.i ; 2 uses
   %i.al = shl nuw nsw i64 %i.ak, 3
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %scevgep.i, ptr align 8 %scevgep183.i, i64 %i.al, i1 false), !tbaa !218
-  %i.am = shl i64 %.0130.lcssa.i, 2
+  %i.am = shl nuw i64 %.0130.lcssa.i, 2
   %scevgep184.i = getelementptr i8, ptr %i.b, i64 %i.am
   %i.an = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.ao = getelementptr i8, ptr %2, i64 %i.an
@@ -5119,7 +5119,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i.prol.loopexit: ; preds = 
   br i1 %i.db, label %.preheader.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.us.i.preheader.i: ; preds = %.lr.ph9.split.us.i.i
-  %i.dc = shl i64 %.4.i, 3
+  %i.dc = shl nuw i64 %.4.i, 3
   %scevgep186.i = getelementptr i8, ptr %i.a, i64 %i.dc
   %i.dd = shl i64 %.0.lcssa.i.i, 3
   %scevgep187.i = getelementptr i8, ptr %i.f, i64 %i.dd
@@ -5421,7 +5421,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   br i1 %i.iy, label %.lr.ph20.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalImmNS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S3_RKNS_15SelectionVectorEPKS4_PlmS8_m.exit
 
 .lr.ph20.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.iz = shl i64 %.5.i, 3
+  %i.iz = shl nuw i64 %.5.i, 3
   %scevgep188.i = getelementptr i8, ptr %i.a, i64 %i.iz
   %i.ja = shl nuw nsw i64 %.054.lcssa.i.i, 3
   %i.jb = getelementptr i8, ptr %0, i64 %i.ja
@@ -5430,7 +5430,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   %i.jd = sub nuw nsw i64 %i.ci, %.054.lcssa.i.i  ; 3 uses
   %i.je = shl nuw nsw i64 %i.jd, 3
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %scevgep188.i, ptr align 8 %scevgep189.i, i64 %i.je, i1 false), !tbaa !218
-  %i.jf = shl i64 %.5.i, 2
+  %i.jf = shl nuw i64 %.5.i, 2
   %scevgep190.i = getelementptr i8, ptr %i.b, i64 %i.jf
   %i.jg = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.jh = getelementptr i8, ptr %0, i64 %i.jg
@@ -5554,7 +5554,7 @@ bb.a:
   br i1 %i.ae, label %.lr.ph170.preheader.i, label %._crit_edge.i
 
 .lr.ph170.preheader.i:                            ; preds = %.preheader.i
-  %i.af = shl i64 %.0135.lcssa.i, 2
+  %i.af = shl nuw i64 %.0135.lcssa.i, 2
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.af
   %i.ag = shl nuw nsw i64 %.075.lcssa.i, 2
   %i.ah = getelementptr i8, ptr %2, i64 %i.ag
@@ -5562,7 +5562,7 @@ bb.a:
   %i.ai = sub nuw nsw i64 %.pre-phi.i, %.075.lcssa.i ; 2 uses
   %i.aj = shl nuw nsw i64 %i.ai, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.i, ptr align 4 %scevgep188.i, i64 %i.aj, i1 false), !tbaa !206
-  %i.ak = shl i64 %.0135.lcssa.i, 4
+  %i.ak = shl nuw i64 %.0135.lcssa.i, 4
   %scevgep189.i = getelementptr i8, ptr %8, i64 %i.ak
   %i.al = shl nuw nsw i64 %.075.lcssa.i, 4
   %i.am = getelementptr i8, ptr %2, i64 %i.al
@@ -5965,7 +5965,7 @@ bb.s:                                             ; preds = %bb.r, %_ZZN6duckdbL
   br i1 %i.jg, label %.lr.ph91.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalINS_9hugeint_tES1_NS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S4_RKNS_15SelectionVectorEPKS5_PlmS9_m.exit
 
 .lr.ph91.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.jh = shl i64 %.5.i, 2
+  %i.jh = shl nuw i64 %.5.i, 2
   %scevgep191.i = getelementptr i8, ptr %i.a, i64 %i.jh
   %i.ji = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.jj = getelementptr i8, ptr %0, i64 %i.ji
@@ -5973,7 +5973,7 @@ bb.s:                                             ; preds = %bb.r, %_ZZN6duckdbL
   %i.jk = sub nuw nsw i64 %i.ch, %.054.lcssa.i.i  ; 3 uses
   %i.jl = shl nuw nsw i64 %i.jk, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep191.i, ptr align 4 %scevgep192.i, i64 %i.jl, i1 false), !tbaa !206
-  %i.jm = shl i64 %.5.i, 4
+  %i.jm = shl nuw i64 %.5.i, 4
   %scevgep193.i = getelementptr i8, ptr %8, i64 %i.jm
   %i.jn = shl nuw nsw i64 %.054.lcssa.i.i, 4
   %i.jo = getelementptr i8, ptr %0, i64 %i.jn
@@ -6098,7 +6098,7 @@ bb.a:
   br i1 %i.ae, label %.lr.ph170.preheader.i, label %._crit_edge.i
 
 .lr.ph170.preheader.i:                            ; preds = %.preheader.i
-  %i.af = shl i64 %.0135.lcssa.i, 2
+  %i.af = shl nuw i64 %.0135.lcssa.i, 2
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.af
   %i.ag = shl nuw nsw i64 %.075.lcssa.i, 2
   %i.ah = getelementptr i8, ptr %2, i64 %i.ag
@@ -6106,7 +6106,7 @@ bb.a:
   %i.ai = sub nuw nsw i64 %.pre-phi.i, %.075.lcssa.i ; 2 uses
   %i.aj = shl nuw nsw i64 %i.ai, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.i, ptr align 4 %scevgep188.i, i64 %i.aj, i1 false), !tbaa !206
-  %i.ak = shl i64 %.0135.lcssa.i, 4
+  %i.ak = shl nuw i64 %.0135.lcssa.i, 4
   %scevgep189.i = getelementptr i8, ptr %8, i64 %i.ak
   %i.al = shl nuw nsw i64 %.075.lcssa.i, 4
   %i.am = getelementptr i8, ptr %2, i64 %i.al
@@ -6509,7 +6509,7 @@ bb.s:                                             ; preds = %bb.r, %_ZZN6duckdbL
   br i1 %i.jg, label %.lr.ph91.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalINS_10uhugeint_tES1_NS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S4_RKNS_15SelectionVectorEPKS5_PlmS9_m.exit
 
 .lr.ph91.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.jh = shl i64 %.5.i, 2
+  %i.jh = shl nuw i64 %.5.i, 2
   %scevgep191.i = getelementptr i8, ptr %i.a, i64 %i.jh
   %i.ji = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.jj = getelementptr i8, ptr %0, i64 %i.ji
@@ -6517,7 +6517,7 @@ bb.s:                                             ; preds = %bb.r, %_ZZN6duckdbL
   %i.jk = sub nuw nsw i64 %i.ch, %.054.lcssa.i.i  ; 3 uses
   %i.jl = shl nuw nsw i64 %i.jk, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep191.i, ptr align 4 %scevgep192.i, i64 %i.jl, i1 false), !tbaa !206
-  %i.jm = shl i64 %.5.i, 4
+  %i.jm = shl nuw i64 %.5.i, 4
   %scevgep193.i = getelementptr i8, ptr %8, i64 %i.jm
   %i.jn = shl nuw nsw i64 %.054.lcssa.i.i, 4
   %i.jo = getelementptr i8, ptr %0, i64 %i.jn
@@ -6642,7 +6642,7 @@ bb.a:
   br i1 %i.af, label %.lr.ph157.preheader.i, label %._crit_edge.i
 
 .lr.ph157.preheader.i:                            ; preds = %.preheader.i
-  %i.ag = shl i64 %.0122.lcssa.i, 2               ; 2 uses
+  %i.ag = shl nuw i64 %.0122.lcssa.i, 2           ; 2 uses
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ag
   %i.ah = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.ai = getelementptr i8, ptr %2, i64 %i.ah     ; 2 uses
@@ -6834,7 +6834,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i.prol.loopexit: ; preds = 
   br i1 %i.cw, label %.preheader.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.us.i.preheader.i: ; preds = %.lr.ph9.split.us.i.i
-  %i.cx = shl i64 %.4.i, 2
+  %i.cx = shl nuw i64 %.4.i, 2
   %scevgep178.i = getelementptr i8, ptr %i.a, i64 %i.cx
   %i.cy = shl i64 %.0.lcssa.i.i, 2
   %scevgep179.i = getelementptr i8, ptr %i.f, i64 %i.cy
@@ -7136,7 +7136,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   br i1 %i.iw, label %.lr.ph20.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalIffNS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S3_RKNS_15SelectionVectorEPKS4_PlmS8_m.exit
 
 .lr.ph20.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.ix = shl i64 %.5.i, 2                        ; 2 uses
+  %i.ix = shl nuw i64 %.5.i, 2                    ; 2 uses
   %scevgep180.i = getelementptr i8, ptr %i.a, i64 %i.ix
   %i.iy = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.iz = getelementptr i8, ptr %0, i64 %i.iy     ; 2 uses
@@ -7264,7 +7264,7 @@ bb.a:
   br i1 %i.af, label %.lr.ph157.preheader.i, label %._crit_edge.i
 
 .lr.ph157.preheader.i:                            ; preds = %.preheader.i
-  %i.ag = shl i64 %.0122.lcssa.i, 3
+  %i.ag = shl nuw i64 %.0122.lcssa.i, 3
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ag
   %i.ah = shl nuw nsw i64 %.072.lcssa.i, 3
   %i.ai = getelementptr i8, ptr %2, i64 %i.ah
@@ -7273,7 +7273,7 @@ bb.a:
   %i.ak = sub nuw nsw i64 %.pre-phi.i, %.072.lcssa.i ; 2 uses
   %i.al = shl nuw nsw i64 %i.ak, 3
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %scevgep.i, ptr align 8 %scevgep175.i, i64 %i.al, i1 false), !tbaa !1212
-  %i.am = shl i64 %.0122.lcssa.i, 2
+  %i.am = shl nuw i64 %.0122.lcssa.i, 2
   %scevgep176.i = getelementptr i8, ptr %i.b, i64 %i.am
   %i.an = shl nuw nsw i64 %.072.lcssa.i, 2
   %i.ao = getelementptr i8, ptr %2, i64 %i.an
@@ -7461,7 +7461,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i.prol.loopexit: ; preds = 
   br i1 %i.db, label %.preheader.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.i.i
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit61.us.us.i.preheader.i: ; preds = %.lr.ph9.split.us.i.i
-  %i.dc = shl i64 %.4.i, 3
+  %i.dc = shl nuw i64 %.4.i, 3
   %scevgep178.i = getelementptr i8, ptr %i.a, i64 %i.dc
   %i.dd = shl i64 %.0.lcssa.i.i, 3
   %scevgep179.i = getelementptr i8, ptr %i.f, i64 %i.dd
@@ -7763,7 +7763,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   br i1 %i.jb, label %.lr.ph20.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalIddNS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S3_RKNS_15SelectionVectorEPKS4_PlmS8_m.exit
 
 .lr.ph20.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.jc = shl i64 %.5.i, 3
+  %i.jc = shl nuw i64 %.5.i, 3
   %scevgep180.i = getelementptr i8, ptr %i.a, i64 %i.jc
   %i.jd = shl nuw nsw i64 %.054.lcssa.i.i, 3
   %i.je = getelementptr i8, ptr %0, i64 %i.jd
@@ -7772,7 +7772,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   %i.jg = sub nuw nsw i64 %i.ci, %.054.lcssa.i.i  ; 3 uses
   %i.jh = shl nuw nsw i64 %i.jg, 3
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %scevgep180.i, ptr align 8 %scevgep181.i, i64 %i.jh, i1 false), !tbaa !1212
-  %i.ji = shl i64 %.5.i, 2
+  %i.ji = shl nuw i64 %.5.i, 2
   %scevgep182.i = getelementptr i8, ptr %i.b, i64 %i.ji
   %i.jj = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.jk = getelementptr i8, ptr %0, i64 %i.jj
@@ -7896,7 +7896,7 @@ bb.a:
   br i1 %i.ae, label %.lr.ph170.preheader.i, label %._crit_edge.i
 
 .lr.ph170.preheader.i:                            ; preds = %.preheader.i
-  %i.af = shl i64 %.0135.lcssa.i, 2
+  %i.af = shl nuw i64 %.0135.lcssa.i, 2
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.af
   %i.ag = shl nuw nsw i64 %.075.lcssa.i, 2
   %i.ah = getelementptr i8, ptr %2, i64 %i.ag
@@ -7904,7 +7904,7 @@ bb.a:
   %i.ai = sub nuw nsw i64 %.pre-phi.i, %.075.lcssa.i ; 2 uses
   %i.aj = shl nuw nsw i64 %i.ai, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.i, ptr align 4 %scevgep188.i, i64 %i.aj, i1 false), !tbaa !206
-  %i.ak = shl i64 %.0135.lcssa.i, 4
+  %i.ak = shl nuw i64 %.0135.lcssa.i, 4
   %scevgep189.i = getelementptr i8, ptr %8, i64 %i.ak
   %i.al = shl nuw nsw i64 %.075.lcssa.i, 4
   %i.am = getelementptr i8, ptr %2, i64 %i.al
@@ -8307,7 +8307,7 @@ bb.s:                                             ; preds = %bb.r, %_ZZN6duckdbL
   br i1 %i.jg, label %.lr.ph91.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalINS_10interval_tES1_NS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S4_RKNS_15SelectionVectorEPKS5_PlmS9_m.exit
 
 .lr.ph91.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.jh = shl i64 %.5.i, 2
+  %i.jh = shl nuw i64 %.5.i, 2
   %scevgep191.i = getelementptr i8, ptr %i.a, i64 %i.jh
   %i.ji = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.jj = getelementptr i8, ptr %0, i64 %i.ji
@@ -8315,7 +8315,7 @@ bb.s:                                             ; preds = %bb.r, %_ZZN6duckdbL
   %i.jk = sub nuw nsw i64 %i.ch, %.054.lcssa.i.i  ; 3 uses
   %i.jl = shl nuw nsw i64 %i.jk, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep191.i, ptr align 4 %scevgep192.i, i64 %i.jl, i1 false), !tbaa !206
-  %i.jm = shl i64 %.5.i, 4
+  %i.jm = shl nuw i64 %.5.i, 4
   %scevgep193.i = getelementptr i8, ptr %8, i64 %i.jm
   %i.jn = shl nuw nsw i64 %.054.lcssa.i.i, 4
   %i.jo = getelementptr i8, ptr %0, i64 %i.jn
@@ -8431,7 +8431,7 @@ bb.a:
   br i1 %i.ac, label %.lr.ph160.preheader.i, label %._crit_edge.i
 
 .lr.ph160.preheader.i:                            ; preds = %.preheader.i
-  %i.ad = shl i64 %.0131.lcssa.i, 2
+  %i.ad = shl nuw i64 %.0131.lcssa.i, 2
   %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ad
   %i.ae = shl nuw nsw i64 %.075.lcssa.i, 2
   %i.af = getelementptr i8, ptr %2, i64 %i.ae
@@ -8439,7 +8439,7 @@ bb.a:
   %i.ag = sub nuw nsw i64 %i.ab, %.075.lcssa.i    ; 2 uses
   %i.ah = shl nuw nsw i64 %i.ag, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.i, ptr align 4 %scevgep178.i, i64 %i.ah, i1 false), !tbaa !206
-  %i.ai = shl i64 %.0131.lcssa.i, 4
+  %i.ai = shl nuw i64 %.0131.lcssa.i, 4
   %scevgep179.i = getelementptr i8, ptr %9, i64 %i.ai
   %i.aj = shl nuw nsw i64 %.075.lcssa.i, 4
   %i.ak = getelementptr i8, ptr %2, i64 %i.aj
@@ -8842,7 +8842,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   br i1 %i.gm, label %.lr.ph80.i.preheader.i, label %_ZN6duckdbL23MergeUpdateLoopInternalINS_8string_tES1_NS_20ExtractStandardEntryEEEvRNS_10UpdateInfoEPT0_S4_RKNS_15SelectionVectorEPKS5_PlmS9_m.exit
 
 .lr.ph80.i.preheader.i:                           ; preds = %.preheader.i.i
-  %i.gn = shl i64 %.5.i, 2
+  %i.gn = shl nuw i64 %.5.i, 2
   %scevgep181.i = getelementptr i8, ptr %i.a, i64 %i.gn
   %i.go = shl nuw nsw i64 %.054.lcssa.i.i, 2
   %i.gp = getelementptr i8, ptr %0, i64 %i.go
@@ -8850,7 +8850,7 @@ bb.t:                                             ; preds = %bb.s, %_ZZN6duckdbL
   %i.gq = sub nuw nsw i64 %i.cq, %.054.lcssa.i.i  ; 3 uses
   %i.gr = shl nuw nsw i64 %i.gq, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep181.i, ptr align 4 %scevgep182.i, i64 %i.gr, i1 false), !tbaa !206
-  %i.gs = shl i64 %.5.i, 4
+  %i.gs = shl nuw i64 %.5.i, 4
   %scevgep183.i = getelementptr i8, ptr %9, i64 %i.gs
   %i.gt = shl nuw nsw i64 %.054.lcssa.i.i, 4
   %i.gu = getelementptr i8, ptr %0, i64 %i.gt

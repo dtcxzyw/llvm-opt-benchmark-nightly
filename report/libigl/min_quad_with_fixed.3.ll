@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZN5Eigen10MatrixBa
   br i1 %min.iters.check187, label %.lr.ph.i17.i.i.i.i.i.i41.preheader223, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.i.i41.preheader
-  %i.fa = shl i64 %i.ew, 3                        ; 2 uses
+  %i.fa = shl nuw i64 %i.ew, 3                    ; 2 uses
   %scevgep = getelementptr i8, ptr %i.ex, i64 %i.fa
   %i.fb = getelementptr i8, ptr %i.ex, i64 %i.bp
   %scevgep182 = getelementptr i8, ptr %i.fb, i64 %i.cc

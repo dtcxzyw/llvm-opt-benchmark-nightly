@@ -164,7 +164,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %min.iters.check149, label %.lr.ph.preheader167, label %vector.memcheck137
 
 vector.memcheck137:                               ; preds = %.lr.ph.preheader
-  %i.bg = shl i64 %.074107, 2
+  %i.bg = shl nuw i64 %.074107, 2
   %scevgep138 = getelementptr i8, ptr %5, i64 %i.bg
   %i.bh = xor i64 %.074107, -1
   %i.bi = add i64 %invariant.umin, %i.bh
@@ -255,7 +255,7 @@ bb.q:                                             ; preds = %bb.n
   br i1 %min.iters.check, label %.lr.ph104.preheader166, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph104.preheader
-  %i.ct = shl i64 %.074107, 2
+  %i.ct = shl nuw i64 %.074107, 2
   %scevgep = getelementptr i8, ptr %5, i64 %i.ct
   %i.cu = xor i64 %.074107, -1
   %i.cv = add i64 %invariant.umin, %i.cu

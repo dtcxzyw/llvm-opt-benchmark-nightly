@@ -205,11 +205,11 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutAhjc_ENtNtNtNtBa_4iter6traits
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
-  %i.nd = mul i64 %.sroa.5112.0.copyload.i, 12
+  %i.nd = mul nuw i64 %.sroa.5112.0.copyload.i, 12
   %scevgep = getelementptr i8, ptr %.sroa.0108.0.copyload.i, i64 %i.nd
   %i.ne = mul i64 %.sroa.7113.0.copyload.i, 12
   %scevgep388 = getelementptr i8, ptr %.sroa.0108.0.copyload.i, i64 %i.ne
-  %i.nf = shl i64 %.sroa.5112.0.copyload.i, 2
+  %i.nf = shl nuw i64 %.sroa.5112.0.copyload.i, 2
   %scevgep389 = getelementptr i8, ptr %.sroa.4110.0.copyload.i, i64 %i.nf
   %i.ng = shl i64 %.sroa.7113.0.copyload.i, 2
   %scevgep390 = getelementptr i8, ptr %.sroa.4110.0.copyload.i, i64 %i.ng

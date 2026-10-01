@@ -205,7 +205,7 @@ iter.check4283:                                   ; preds = %.lr.ph.us3039
   br i1 %min.iters.check4263, label %_RNvYtNtNtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_num15PlNumArithmetic10legacy_divCs1LHh8CLbVkQ_11polars_core.exit.us.us.preheader, label %vector.memcheck4255, !dbg !72694
 
 vector.memcheck4255:                              ; preds = %iter.check4283
-  %i.czv = shl i64 %.sroa.5.0.ph.i1334.us, 1, !dbg !72694
+  %i.czv = shl nuw i64 %.sroa.5.0.ph.i1334.us, 1, !dbg !72694
   %scevgep4256 = getelementptr i8, ptr %i.cnj, i64 %i.czv, !dbg !72694
   %i.czw = shl i64 %.sroa.7.0.ph.i1333.us, 1, !dbg !72694
   %scevgep4257 = getelementptr i8, ptr %i.cnj, i64 %i.czw, !dbg !72694
@@ -608,7 +608,7 @@ iter.check4236:                                   ; preds = %.lr.ph.us3010
   br i1 %min.iters.check4216, label %_RNvXs4_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_numtNtB5_15PlNumArithmetic12wrapping_mod.exit.us.us.preheader, label %vector.memcheck4208, !dbg !72765
 
 vector.memcheck4208:                              ; preds = %iter.check4236
-  %i.dfv = shl i64 %.sroa.5.0.ph.i1377.us, 1, !dbg !72765
+  %i.dfv = shl nuw i64 %.sroa.5.0.ph.i1377.us, 1, !dbg !72765
   %scevgep4209 = getelementptr i8, ptr %i.cnj, i64 %i.dfv, !dbg !72765
   %i.dfw = shl i64 %.sroa.7.0.ph.i1376.us, 1, !dbg !72765
   %scevgep4210 = getelementptr i8, ptr %i.cnj, i64 %i.dfw, !dbg !72765
@@ -1011,7 +1011,7 @@ iter.check4189:                                   ; preds = %.lr.ph.us2981
   br i1 %min.iters.check4173, label %_RNvXs4_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_numtNtB5_15PlNumArithmetic18wrapping_floor_div.exit.us.us.preheader, label %vector.memcheck, !dbg !72836
 
 vector.memcheck:                                  ; preds = %iter.check4189
-  %i.dlv = shl i64 %.sroa.5.0.ph.i1420.us, 1, !dbg !72836
+  %i.dlv = shl nuw i64 %.sroa.5.0.ph.i1420.us, 1, !dbg !72836
   %scevgep = getelementptr i8, ptr %i.cnj, i64 %i.dlv, !dbg !72836
   %i.dlw = shl i64 %.sroa.7.0.ph.i1419.us, 1, !dbg !72836
   %scevgep4170 = getelementptr i8, ptr %i.cnj, i64 %i.dlw, !dbg !72836
@@ -1414,7 +1414,7 @@ _RNvYmNtNtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_num15PlNumArithmetic10
   br i1 %min.iters.check4131, label %_RNvYmNtNtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_num15PlNumArithmetic10legacy_divCs1LHh8CLbVkQ_11polars_core.exit.us.us.preheader4192, label %vector.memcheck4123, !dbg !79756
 
 vector.memcheck4123:                              ; preds = %_RNvYmNtNtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_num15PlNumArithmetic10legacy_divCs1LHh8CLbVkQ_11polars_core.exit.us.us.preheader
-  %i.dcp = shl i64 %.sroa.5.0.ph.i1334.us, 2, !dbg !79756
+  %i.dcp = shl nuw i64 %.sroa.5.0.ph.i1334.us, 2, !dbg !79756
   %scevgep4124 = getelementptr i8, ptr %i.cqd, i64 %i.dcp, !dbg !79756
   %i.dcq = shl i64 %.sroa.7.0.ph.i1333.us, 2, !dbg !79756
   %scevgep4125 = getelementptr i8, ptr %i.cqd, i64 %i.dcq, !dbg !79756
@@ -1817,7 +1817,7 @@ _RNvXs5_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_nummNtB5_15PlNumArithm
   br i1 %min.iters.check4106, label %_RNvXs5_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_nummNtB5_15PlNumArithmetic12wrapping_mod.exit.us.us.preheader4206, label %vector.memcheck4098, !dbg !79827
 
 vector.memcheck4098:                              ; preds = %_RNvXs5_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_nummNtB5_15PlNumArithmetic12wrapping_mod.exit.us.us.preheader
-  %i.dik = shl i64 %.sroa.5.0.ph.i1377.us, 2, !dbg !79827
+  %i.dik = shl nuw i64 %.sroa.5.0.ph.i1377.us, 2, !dbg !79827
   %scevgep4099 = getelementptr i8, ptr %i.cqd, i64 %i.dik, !dbg !79827
   %i.dil = shl i64 %.sroa.7.0.ph.i1376.us, 2, !dbg !79827
   %scevgep4100 = getelementptr i8, ptr %i.cqd, i64 %i.dil, !dbg !79827
@@ -2220,7 +2220,7 @@ _RNvXs5_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_nummNtB5_15PlNumArithm
   br i1 %min.iters.check4085, label %_RNvXs5_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_nummNtB5_15PlNumArithmetic18wrapping_floor_div.exit.us.us.preheader4220, label %vector.memcheck, !dbg !79898
 
 vector.memcheck:                                  ; preds = %_RNvXs5_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6pl_nummNtB5_15PlNumArithmetic18wrapping_floor_div.exit.us.us.preheader
-  %i.dof = shl i64 %.sroa.5.0.ph.i1420.us, 2, !dbg !79898
+  %i.dof = shl nuw i64 %.sroa.5.0.ph.i1420.us, 2, !dbg !79898
   %scevgep = getelementptr i8, ptr %i.cqd, i64 %i.dof, !dbg !79898
   %i.dog = shl i64 %.sroa.7.0.ph.i1419.us, 2, !dbg !79898
   %scevgep4082 = getelementptr i8, ptr %i.cqd, i64 %i.dog, !dbg !79898
@@ -2623,7 +2623,7 @@ iter.check4574:                                   ; preds = %.lr.ph.us3182
   br i1 %min.iters.check4554, label %.lr.ph.split.us.us3190.preheader, label %vector.memcheck4546, !dbg !129651
 
 vector.memcheck4546:                              ; preds = %iter.check4574
-  %i.dgn = shl i64 %.sroa.5.0.ph.i1396.us, 1, !dbg !129651
+  %i.dgn = shl nuw i64 %.sroa.5.0.ph.i1396.us, 1, !dbg !129651
   %scevgep4547 = getelementptr i8, ptr %i.cub, i64 %i.dgn, !dbg !129651
   %i.dgo = shl i64 %.sroa.7.0.ph.i1395.us, 1, !dbg !129651
   %scevgep4548 = getelementptr i8, ptr %i.cub, i64 %i.dgo, !dbg !129651
@@ -3026,7 +3026,7 @@ iter.check4527:                                   ; preds = %.lr.ph.us3149
   br i1 %min.iters.check4507, label %.lr.ph.split.split.us.us3154.preheader, label %vector.memcheck4500, !dbg !129729
 
 vector.memcheck4500:                              ; preds = %iter.check4527
-  %i.dne = shl i64 %.sroa.5.0.ph.i1448.us, 1, !dbg !129729
+  %i.dne = shl nuw i64 %.sroa.5.0.ph.i1448.us, 1, !dbg !129729
   %scevgep4501 = getelementptr i8, ptr %i.cub, i64 %i.dne, !dbg !129729
   %i.dnf = shl i64 %.sroa.7.0.ph.i1447.us, 1, !dbg !129729
   %scevgep4502 = getelementptr i8, ptr %i.cub, i64 %i.dnf, !dbg !129729
@@ -3115,7 +3115,7 @@ iter.check4481:                                   ; preds = %.lr.ph.us3149
   br i1 %min.iters.check4461, label %.lr.ph.split.us.us3156.preheader, label %vector.memcheck4453, !dbg !129729
 
 vector.memcheck4453:                              ; preds = %iter.check4481
-  %i.dny = shl i64 %.sroa.5.0.ph.i1448.us, 1, !dbg !129729
+  %i.dny = shl nuw i64 %.sroa.5.0.ph.i1448.us, 1, !dbg !129729
   %scevgep4454 = getelementptr i8, ptr %i.cub, i64 %i.dny, !dbg !129729
   %i.dnz = shl i64 %.sroa.7.0.ph.i1447.us, 1, !dbg !129729
   %scevgep4455 = getelementptr i8, ptr %i.cub, i64 %i.dnz, !dbg !129729
@@ -3518,7 +3518,7 @@ iter.check4434:                                   ; preds = %.lr.ph.us3115
   br i1 %min.iters.check4418, label %.lr.ph.split.us.us3123.preheader, label %vector.memcheck, !dbg !129802
 
 vector.memcheck:                                  ; preds = %iter.check4434
-  %i.dus = shl i64 %.sroa.5.0.ph.i1500.us, 1, !dbg !129802
+  %i.dus = shl nuw i64 %.sroa.5.0.ph.i1500.us, 1, !dbg !129802
   %scevgep = getelementptr i8, ptr %i.cub, i64 %i.dus, !dbg !129802
   %i.dut = shl i64 %.sroa.7.0.ph.i1499.us, 1, !dbg !129802
   %scevgep4415 = getelementptr i8, ptr %i.cub, i64 %i.dut, !dbg !129802
@@ -3921,7 +3921,7 @@ bb.pc:                                            ; preds = %bb.pb
   br i1 %min.iters.check4393, label %.lr.ph.split.us.us3190.preheader4457, label %vector.memcheck4385, !dbg !136934
 
 vector.memcheck4385:                              ; preds = %.lr.ph.split.us.us3190.preheader
-  %i.dfd = shl i64 %.sroa.5.0.ph.i1396.us, 2, !dbg !136934
+  %i.dfd = shl nuw i64 %.sroa.5.0.ph.i1396.us, 2, !dbg !136934
   %scevgep4386 = getelementptr i8, ptr %i.csr, i64 %i.dfd, !dbg !136934
   %i.dfe = shl i64 %.sroa.7.0.ph.i1395.us, 2, !dbg !136934
   %scevgep4387 = getelementptr i8, ptr %i.csr, i64 %i.dfe, !dbg !136934
@@ -4324,7 +4324,7 @@ bb.pp:                                            ; preds = %bb.po
   br i1 %min.iters.check4368, label %.lr.ph.split.split.us.us3154.preheader4474, label %vector.memcheck4361, !dbg !137012
 
 vector.memcheck4361:                              ; preds = %.lr.ph.split.split.us.us3154.preheader
-  %i.dlp = shl i64 %.sroa.5.0.ph.i1448.us, 2, !dbg !137012
+  %i.dlp = shl nuw i64 %.sroa.5.0.ph.i1448.us, 2, !dbg !137012
   %scevgep4362 = getelementptr i8, ptr %i.csr, i64 %i.dlp, !dbg !137012
   %i.dlq = shl i64 %.sroa.7.0.ph.i1447.us, 2, !dbg !137012
   %scevgep4363 = getelementptr i8, ptr %i.csr, i64 %i.dlq, !dbg !137012
@@ -4385,7 +4385,7 @@ middle.block4382:                                 ; preds = %vector.body4374
   br i1 %min.iters.check4344, label %.lr.ph.split.us.us3156.preheader4472, label %vector.memcheck4336, !dbg !137012
 
 vector.memcheck4336:                              ; preds = %.lr.ph.split.us.us3156.preheader
-  %i.dme = shl i64 %.sroa.5.0.ph.i1448.us, 2, !dbg !137012
+  %i.dme = shl nuw i64 %.sroa.5.0.ph.i1448.us, 2, !dbg !137012
   %scevgep4337 = getelementptr i8, ptr %i.csr, i64 %i.dme, !dbg !137012
   %i.dmf = shl i64 %.sroa.7.0.ph.i1447.us, 2, !dbg !137012
   %scevgep4338 = getelementptr i8, ptr %i.csr, i64 %i.dmf, !dbg !137012
@@ -4788,7 +4788,7 @@ bb.qb:                                            ; preds = %bb.qa
   br i1 %min.iters.check4323, label %.lr.ph.split.us.us3123.preheader4488, label %vector.memcheck, !dbg !137085
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us3123.preheader
-  %i.dst = shl i64 %.sroa.5.0.ph.i1500.us, 2, !dbg !137085
+  %i.dst = shl nuw i64 %.sroa.5.0.ph.i1500.us, 2, !dbg !137085
   %scevgep = getelementptr i8, ptr %i.csr, i64 %i.dst, !dbg !137085
   %i.dsu = shl i64 %.sroa.7.0.ph.i1499.us, 2, !dbg !137085
   %scevgep4320 = getelementptr i8, ptr %i.csr, i64 %i.dsu, !dbg !137085
