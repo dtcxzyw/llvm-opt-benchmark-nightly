@@ -204,7 +204,7 @@ _ZNSt6vectorIP6aiMeshSaIS1_EE7reserveEm.exit:     ; preds = %bb.g, %_ZNSt12_Vect
 ._crit_edge176:                                   ; preds = %._crit_edge176.loopexit, %_ZNSt6vectorIP6aiMeshSaIS1_EE7reserveEm.exit
   %.lcssa = phi i64 [ 0, %_ZNSt6vectorIP6aiMeshSaIS1_EE7reserveEm.exit ], [ %i.bb, %._crit_edge176.loopexit ]
   %i.bc = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %.lcssa) #19
-          to label %bb.v unwind label %bb.aj      ; 5 uses
+          to label %bb.v unwind label %bb.aj      ; 4 uses
 
 bb.j:                                             ; preds = %_ZNSt12_Vector_baseIP6aiMeshSaIS1_EE11_M_allocateEm.exit.i, %bb.f
   %i.bd = landingpad { ptr, i32 }
@@ -607,13 +607,11 @@ bb.u:                                             ; preds = %.loopexit149, %.loo
   br label %bb.ak
 
 bb.v:                                             ; preds = %._crit_edge176
-  %7 = ptrtoaddr ptr %i.bc to i64
   %i.jr = getelementptr inbounds nuw i8, ptr %1, i64 1128 ; 2 uses
-  %i.js = load ptr, ptr %i.jr, align 8            ; 10 uses
-  %8 = ptrtoaddr ptr %i.js to i64
+  %i.js = load ptr, ptr %i.jr, align 8            ; 8 uses
   %i.jt = load i32, ptr %i.w, align 8             ; 6 uses
   %i.ju = zext i32 %i.jt to i64                   ; 2 uses
-  %.idx137 = shl nuw nsw i64 %i.ju, 2             ; 4 uses
+  %.idx137 = shl nuw nsw i64 %i.ju, 2             ; 3 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.js, i64 %.idx137
   %i.jw = icmp ugt i32 %i.jt, 1
   br i1 %i.jw, label %bb.w, label %bb.x, !prof !4
@@ -632,20 +630,14 @@ bb.y:                                             ; preds = %bb.x
   br label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.y, %bb.w
-  %i.jz = getelementptr inbounds nuw [4 x i8], ptr %i.bc, i64 %i.ju ; 4 uses
+  %i.jz = getelementptr inbounds nuw [4 x i8], ptr %i.bc, i64 %i.ju ; 3 uses
   %i.ka = add nsw i64 %.idx137, -4                ; 2 uses
   %i.kb = lshr exact i64 %i.ka, 2
   %i.kc = add nuw nsw i64 %i.kb, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ka, 44
-  br i1 %min.iters.check, label %.lr.ph.i.preheader275, label %vector.memcheck
+  %min.iters.check = icmp ult i64 %i.ka, 28
+  br i1 %min.iters.check, label %.lr.ph.i.preheader275, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %9 = add i64 %.idx137, %7
-  %10 = sub i64 %8, %9
-  %diff.check = icmp ugt i64 %10, -32
-  br i1 %diff.check, label %.lr.ph.i.preheader275, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %n.vec = and i64 %i.kc, 9223372036854775800     ; 3 uses
   %i.kd = shl i64 %n.vec, 2                       ; 2 uses
   %i.ke = getelementptr i8, ptr %i.jz, i64 %i.kd
@@ -675,9 +667,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.kc, %n.vec
   br i1 %cmp.n, label %"_ZSt9transformIPjS0_ZN6Assimp7Blender22BlenderModifier_Mirror4DoItER6aiNodeRNS2_14ConversionDataERKNS2_8ElemBaseERKNS2_5SceneERKNS2_6ObjectEE3$_0ET0_T_SJ_SI_T1_.exit", label %.lr.ph.i.preheader275
 
-.lr.ph.i.preheader275:                            ; preds = %vector.memcheck, %.lr.ph.i.preheader, %middle.block
-  %.010.i.ph = phi ptr [ %i.jz, %vector.memcheck ], [ %i.jz, %.lr.ph.i.preheader ], [ %i.ke, %middle.block ]
-  %.079.i.ph = phi ptr [ %i.js, %vector.memcheck ], [ %i.js, %.lr.ph.i.preheader ], [ %i.kf, %middle.block ]
+.lr.ph.i.preheader275:                            ; preds = %.lr.ph.i.preheader, %middle.block
+  %.010.i.ph = phi ptr [ %i.jz, %.lr.ph.i.preheader ], [ %i.ke, %middle.block ]
+  %.079.i.ph = phi ptr [ %i.js, %.lr.ph.i.preheader ], [ %i.kf, %middle.block ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader275, %.lr.ph.i
@@ -1080,7 +1072,7 @@ attributes #19 = { builtin allocsize(0) }
 !21 = distinct !{!21, !3}
 !22 = distinct !{!22, !3}
 !23 = distinct !{!23, !3, !27, !28}
-!24 = distinct !{!24, !3, !27}
+!24 = distinct !{!24, !3, !28, !27}
 !25 = distinct !{ptr @_ZNSt12__shared_ptrIN6Assimp7Blender6ObjectELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
 !26 = !{!11}
 !27 = !{!"llvm.loop.isvectorized", i32 1}

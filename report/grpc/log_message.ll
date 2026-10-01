@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/grpc/original/log_message?download=true
 inline.NumInlined: 761
 inline.NumDeleted: 342
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4absl12lts_2025051212log_internal10LogMessage43CopyToEncodedBufferWithStructuredProtoFieldILNS2_10StringTypeE1EEEvNS1_20StructuredProtoFieldESt17basic_string_viewIcSt11char_traitsIcEE:bb.a
   %accumulator.tr2.i.i.i.i.i.i18.i.i.i = phi i64 [ %i.t, %tailrecurse.i.i.i.i.i.i16.i.i.i ], [ 0, %tailrecurse.i.i.preheader.i.i.i.i15.i.i.i ] ; 2 uses
   %i.s = lshr i64 %.tr3.i.i.i.i.i.i17.i.i.i, 7
@@ -204,12 +202,12 @@ declare noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_cr
 ; Function Attrs: mustprogress noinline uwtable
 define linkonce_odr noundef nonnull align 8 dereferenceable(8) ptr @_ZN4absl12lts_2025051223inlined_vector_internal7StorageIPNS0_7LogSinkELm16ESaIS4_EE15EmplaceBackSlowIJRKS4_EEERS4_DpOT_(ptr noundef nonnull align 8 dereferenceable(136) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !37, !noalias !147 ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !37, !noalias !146 ; 3 uses
   %i.b = trunc i64 %i.a to i1                     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.e = load i64, ptr %i.d, align 8, !noalias !147
-  %.sink1.i = lshr i64 %i.a, 1                    ; 7 uses
+  %i.e = load i64, ptr %i.d, align 8, !noalias !146
+  %.sink1.i = lshr i64 %i.a, 1                    ; 5 uses
   %i.f = shl i64 %i.e, 1
   %i.g = select i1 %i.b, i64 %i.f, i64 32         ; 4 uses
   %i.h = icmp ugt i64 %i.g, 1152921504606846975
@@ -228,9 +226,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN4absl12lts_2025051223inlined_vector_internal13MallocAdapterISaIPNS0_7LogSinkEELb0EE8AllocateERS5_m.exit.i: ; preds = %bb.a
-  %i.j = load ptr, ptr %i.c, align 8, !noalias !147
+  %i.j = load ptr, ptr %i.c, align 8, !noalias !146
   %i.k = shl nuw nsw i64 %i.g, 3
-  %i.l = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.k) #30 ; 9 uses
+  %i.l = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.k) #30 ; 4 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.sink1.i ; 2 uses
   %i.n = load ptr, ptr %1, align 8, !tbaa !88
   store ptr %i.n, ptr %i.m, align 8, !tbaa !88
@@ -238,14 +236,9 @@ _ZN4absl12lts_2025051223inlined_vector_internal13MallocAdapterISaIPNS0_7LogSinkE
   br i1 %.not.i, label %_ZN4absl12lts_2025051223inlined_vector_internal17ConstructElementsISaIPNS0_7LogSinkEENS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvRNS0_8internal13type_identityIT_E4typeENSt16allocator_traitsISD_E7pointerERT0_NSI_9size_typeE.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZN4absl12lts_2025051223inlined_vector_internal13MallocAdapterISaIPNS0_7LogSinkEELb0EE8AllocateERS5_m.exit.i
-  %2 = ptrtoaddr ptr %i.l to i64
-  %.sink2.i = select i1 %i.b, ptr %i.j, ptr %i.c  ; 4 uses
-  %min.iters.check = icmp ult i64 %i.a, 16
-  %.sink2.i30 = ptrtoaddr ptr %.sink2.i to i64
-  %3 = sub i64 %.sink2.i30, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph.i.preheader33, label %vector.ph
+  %.sink2.i = select i1 %i.b, ptr %i.j, ptr %i.c  ; 3 uses
+  %min.iters.check = icmp ult i64 %i.a, 8
+  br i1 %min.iters.check, label %.lr.ph.i.prol.loopexit, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %n.vec = and i64 %.sink1.i, 9223372036854775804 ; 4 uses
@@ -266,66 +259,29 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x ptr> %wide.load31, ptr %i.t, align 8, !tbaa !88
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.u = icmp eq i64 %index.next, %n.vec
-  br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !144
+  br i1 %i.u, label %.lr.ph.i.prol, label %vector.body, !llvm.loop !144
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %.sink1.i, %n.vec
-  br i1 %cmp.n, label %_ZN4absl12lts_2025051223inlined_vector_internal17ConstructElementsISaIPNS0_7LogSinkEENS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvRNS0_8internal13type_identityIT_E4typeENSt16allocator_traitsISD_E7pointerERT0_NSI_9size_typeE.exit, label %.lr.ph.i.preheader33
+.lr.ph.i.prol:                                    ; preds = %vector.body
+  %prol.iter.cmp.not = icmp eq i64 %.sink1.i, %n.vec
+  br i1 %prol.iter.cmp.not, label %_ZN4absl12lts_2025051223inlined_vector_internal17ConstructElementsISaIPNS0_7LogSinkEENS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvRNS0_8internal13type_identityIT_E4typeENSt16allocator_traitsISD_E7pointerERT0_NSI_9size_typeE.exit, label %.lr.ph.i.prol.loopexit
 
-.lr.ph.i.preheader33:                             ; preds = %.lr.ph.i.preheader, %middle.block
-  %.ph = phi ptr [ %.sink2.i, %.lr.ph.i.preheader ], [ %i.p, %middle.block ] ; 2 uses
-  %.012.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %.sink1.i, 3                ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
-
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader33, %.lr.ph.i.prol
-  %4 = phi ptr [ %7, %.lr.ph.i.prol ], [ %.ph, %.lr.ph.i.preheader33 ] ; 2 uses
-  %.012.i.prol = phi i64 [ %8, %.lr.ph.i.prol ], [ %.012.i.ph, %.lr.ph.i.preheader33 ] ; 2 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader33 ]
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.012.i.prol
-  %6 = load ptr, ptr %4, align 8, !tbaa !88
-  store ptr %6, ptr %5, align 8, !tbaa !88
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %8 = add nuw nsw i64 %.012.i.prol, 1            ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !145
-
-.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader33
-  %.unr = phi ptr [ %.ph, %.lr.ph.i.preheader33 ], [ %7, %.lr.ph.i.prol ]
-  %.012.i.unr = phi i64 [ %.012.i.ph, %.lr.ph.i.preheader33 ], [ %8, %.lr.ph.i.prol ]
-  %9 = sub nsw i64 %.012.i.ph, %.sink1.i
-  %10 = icmp ugt i64 %9, -4
-  br i1 %10, label %_ZN4absl12lts_2025051223inlined_vector_internal17ConstructElementsISaIPNS0_7LogSinkEENS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvRNS0_8internal13type_identityIT_E4typeENSt16allocator_traitsISD_E7pointerERT0_NSI_9size_typeE.exit, label %.lr.ph.i
+.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
+  %.unr = phi ptr [ %.sink2.i, %.lr.ph.i.preheader ], [ %i.p, %.lr.ph.i.prol ]
+  %.012.i.unr = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec, %.lr.ph.i.prol ]
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %i.v = phi ptr [ %i.y, %.lr.ph.i ], [ %.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
-  %.012.i = phi i64 [ %i.z, %.lr.ph.i ], [ %.012.i.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.012.i
-  %12 = load ptr, ptr %i.v, align 8, !tbaa !88
-  store ptr %12, ptr %11, align 8, !tbaa !88
-  %13 = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.012.i
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %16 = load ptr, ptr %13, align 8, !tbaa !88
-  store ptr %16, ptr %15, align 8, !tbaa !88
-  %17 = getelementptr inbounds nuw i8, ptr %i.v, i64 16
-  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.012.i
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 16
-  %20 = load ptr, ptr %17, align 8, !tbaa !88
-  store ptr %20, ptr %19, align 8, !tbaa !88
-  %21 = getelementptr inbounds nuw i8, ptr %i.v, i64 24
+  %i.v = phi ptr [ %i.y, %.lr.ph.i ], [ %.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
+  %.012.i = phi i64 [ %i.z, %.lr.ph.i ], [ %.012.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.012.i
-  %22 = getelementptr inbounds nuw i8, ptr %i.w, i64 24
-  %i.x = load ptr, ptr %21, align 8, !tbaa !88
-  store ptr %i.x, ptr %22, align 8, !tbaa !88
-  %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 32
-  %i.z = add nuw nsw i64 %.012.i, 4               ; 2 uses
+  %i.x = load ptr, ptr %i.v, align 8, !tbaa !88
+  store ptr %i.x, ptr %i.w, align 8, !tbaa !88
+  %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 8
+  %i.z = add nuw nsw i64 %.012.i, 1               ; 2 uses
   %exitcond.not.i.3 = icmp eq i64 %i.z, %.sink1.i
-  br i1 %exitcond.not.i.3, label %_ZN4absl12lts_2025051223inlined_vector_internal17ConstructElementsISaIPNS0_7LogSinkEENS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvRNS0_8internal13type_identityIT_E4typeENSt16allocator_traitsISD_E7pointerERT0_NSI_9size_typeE.exit, label %.lr.ph.i, !llvm.loop !146
+  br i1 %exitcond.not.i.3, label %_ZN4absl12lts_2025051223inlined_vector_internal17ConstructElementsISaIPNS0_7LogSinkEENS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvRNS0_8internal13type_identityIT_E4typeENSt16allocator_traitsISD_E7pointerERT0_NSI_9size_typeE.exit, label %.lr.ph.i, !llvm.loop !145
 
-_ZN4absl12lts_2025051223inlined_vector_internal17ConstructElementsISaIPNS0_7LogSinkEENS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvRNS0_8internal13type_identityIT_E4typeENSt16allocator_traitsISD_E7pointerERT0_NSI_9size_typeE.exit: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %middle.block, %_ZN4absl12lts_2025051223inlined_vector_internal13MallocAdapterISaIPNS0_7LogSinkEELb0EE8AllocateERS5_m.exit.i
+_ZN4absl12lts_2025051223inlined_vector_internal17ConstructElementsISaIPNS0_7LogSinkEENS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvRNS0_8internal13type_identityIT_E4typeENSt16allocator_traitsISD_E7pointerERT0_NSI_9size_typeE.exit: ; preds = %.lr.ph.i, %.lr.ph.i.prol, %_ZN4absl12lts_2025051223inlined_vector_internal13MallocAdapterISaIPNS0_7LogSinkEELb0EE8AllocateERS5_m.exit.i
   %i.aa = load i64, ptr %0, align 8, !tbaa !37    ; 2 uses
   %i.ab = trunc i64 %i.aa to i1
   br i1 %i.ab, label %bb.c, label %_ZN4absl12lts_2025051223inlined_vector_internal21AllocationTransactionISaIPNS0_7LogSinkEEED2Ev.exit
@@ -577,11 +533,9 @@ attributes #34 = { nounwind willreturn memory(read) }
 !141 = !{!32, !28, i64 32}
 !142 = distinct !{!142, !"_ZN4absl12lts_2025051223inlined_vector_internal7StorageIPNS0_7LogSinkELm16ESaIS4_EE15MakeStorageViewEv"}
 !143 = distinct !{!143, !142, !"_ZN4absl12lts_2025051223inlined_vector_internal7StorageIPNS0_7LogSinkELm16ESaIS4_EE15MakeStorageViewEv: argument 0"}
-!144 = distinct !{!144, !72, !148, !149}
-!145 = distinct !{!145, !150}
-!146 = distinct !{!146, !72, !148}
-!147 = !{!143}
-!148 = !{!"llvm.loop.isvectorized", i32 1}
-!149 = !{!"llvm.loop.unroll.runtime.disable"}
-!150 = !{!"llvm.loop.unroll.disable"}
+!144 = distinct !{!144, !72, !147, !148}
+!145 = distinct !{!145, !72, !148, !147}
+!146 = !{!143}
+!147 = !{!"llvm.loop.isvectorized", i32 1}
+!148 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

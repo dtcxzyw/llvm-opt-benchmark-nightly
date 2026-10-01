@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 gv_calloc.exit:                                   ; preds = %.thread.i, %bb.d
-  %i.p = phi ptr [ %i.h, %.thread.i ], [ %i.k, %bb.d ] ; 13 uses
+  %i.p = phi ptr [ %i.h, %.thread.i ], [ %i.k, %bb.d ] ; 9 uses
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 52 ; 6 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !44   ; 3 uses
   %i.s = icmp sgt i32 %i.r, 0
@@ -221,37 +221,17 @@ gv_calloc.exit:                                   ; preds = %.thread.i, %bb.d
   %i.y = load ptr, ptr %2, align 8, !tbaa !31     ; 2 uses
   %i.z = fpext float %.0315 to double             ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 40
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !126 ; 6 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !126 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !31 ; 2 uses
   %i.af = load <2 x double>, ptr %i.ac, align 8, !tbaa !127
   %i.ag = fmul <2 x double> %i.af, splat (double 5.000000e-01) ; 4 uses
-  %wide.trip.count = zext nneg i32 %.0317 to i64  ; 5 uses
-  %min.iters.check = icmp ult i32 %.0317, 4
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
+  %wide.trip.count = zext nneg i32 %.0317 to i64  ; 3 uses
+  %min.iters.check = icmp eq i32 %.0317, 1
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph
-  %6 = shl nuw nsw i64 %wide.trip.count, 5        ; 2 uses
-  %7 = getelementptr i8, ptr %i.p, i64 %6
-  %8 = getelementptr i8, ptr %7, i64 -8
-  %9 = shl nuw nsw i64 %wide.trip.count, 4        ; 2 uses
-  %10 = getelementptr i8, ptr %i.ab, i64 %9
-  %11 = getelementptr i8, ptr %10, i64 -8
-  %12 = getelementptr i8, ptr %i.p, i64 8
-  %13 = getelementptr i8, ptr %i.p, i64 %6
-  %14 = getelementptr nuw i8, ptr %i.ab, i64 8
-  %15 = getelementptr i8, ptr %i.ab, i64 %9
-  %bound0 = icmp ult ptr %i.p, %11
-  %bound1 = icmp ult ptr %i.ab, %8
-  %found.conflict = and i1 %bound0, %bound1
-  %bound0542 = icmp ult ptr %12, %15
-  %bound1543 = icmp ult ptr %14, %13
-  %found.conflict544 = and i1 %bound0542, %bound1543
-  %conflict.rdx = or i1 %found.conflict, %found.conflict544
-  br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %wide.trip.count, 2147483646   ; 3 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.z, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -296,8 +276,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
+scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
+  %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
   %i.bc = insertelement <2 x double> poison, double %i.z, i64 0
   %i.bd = shufflevector <2 x double> %i.bc, <2 x double> poison, <2 x i32> zeroinitializer
   br label %scalar.ph
@@ -700,7 +680,7 @@ attributes #17 = { cold noreturn nounwind }
 !111 = distinct !{!111, !32}
 !112 = distinct !{!112, !28}
 !113 = distinct !{!113, !28, !33, !34}
-!114 = distinct !{!114, !28, !33}
+!114 = distinct !{!114, !28, !34, !33}
 !115 = distinct !{!115, !28}
 !116 = distinct !{!116, !28}
 !117 = distinct !{!117, !28}

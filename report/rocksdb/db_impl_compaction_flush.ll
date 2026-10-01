@@ -205,7 +205,7 @@ define linkonce_odr void @_ZNSt6vectorISt10shared_ptrIN7rocksdb13EventListenerEE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !811  ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !812    ; 12 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !812    ; 7 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -228,7 +228,7 @@ _ZNKSt6vectorISt10shared_ptrIN7rocksdb13EventListenerEESaIS3_EE12_M_check_lenEmP
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 4
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #36 ; 12 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #36 ; 7 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !667  ; 2 uses
@@ -259,32 +259,13 @@ _ZSt12construct_atISt10shared_ptrIN7rocksdb13EventListenerEEJRKS3_EEDTgsnwcvPvLi
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZSt12construct_atISt10shared_ptrIN7rocksdb13EventListenerEEJRKS3_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS7_DpOS8_.exit
   %i.z = add i64 %i.m, -16
-  %i.aa = sub i64 %i.z, %i.e                      ; 3 uses
+  %i.aa = sub i64 %i.z, %i.e                      ; 2 uses
   %i.ab = lshr i64 %i.aa, 4
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aa, 304
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader89, label %vector.memcheck
+  %min.iters.check = icmp ult i64 %i.aa, 48
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader89, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %3 = and i64 %i.aa, -16                         ; 2 uses
-  %4 = or disjoint i64 %3, 8                      ; 2 uses
-  %5 = getelementptr i8, ptr %i.p, i64 %4
-  %6 = getelementptr i8, ptr %i.c, i64 %4
-  %7 = getelementptr i8, ptr %i.c, i64 8
-  %8 = add i64 %3, 16                             ; 2 uses
-  %9 = getelementptr i8, ptr %i.c, i64 %8
-  %10 = getelementptr i8, ptr %i.p, i64 8
-  %11 = getelementptr i8, ptr %i.p, i64 %8
-  %bound0 = icmp ult ptr %i.p, %6
-  %bound1 = icmp ult ptr %i.c, %5
-  %found.conflict = and i1 %bound0, %bound1
-  %bound044 = icmp ult ptr %7, %11
-  %bound145 = icmp ult ptr %10, %9
-  %found.conflict46 = and i1 %bound044, %bound145
-  %conflict.rdx = or i1 %found.conflict, %found.conflict46
-  br i1 %conflict.rdx, label %.lr.ph.i.i.i.preheader89, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
   %n.vec = and i64 %i.ac, 2305843009213693948     ; 3 uses
   %i.ad = shl i64 %n.vec, 4                       ; 2 uses
   %i.ae = getelementptr i8, ptr %i.p, i64 %i.ad   ; 2 uses
@@ -309,9 +290,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ac, %n.vec
   br i1 %cmp.n, label %_ZNSt6vectorISt10shared_ptrIN7rocksdb13EventListenerEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i.preheader89
 
-.lr.ph.i.i.i.preheader89:                         ; preds = %vector.memcheck, %.lr.ph.i.i.i.preheader, %middle.block
-  %.012.i.i.i.ph = phi ptr [ %i.p, %vector.memcheck ], [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.ae, %middle.block ]
-  %.0911.i.i.i.ph = phi ptr [ %i.c, %vector.memcheck ], [ %i.c, %.lr.ph.i.i.i.preheader ], [ %i.af, %middle.block ]
+.lr.ph.i.i.i.preheader89:                         ; preds = %.lr.ph.i.i.i.preheader, %middle.block
+  %.012.i.i.i.ph = phi ptr [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.ae, %middle.block ]
+  %.0911.i.i.i.ph = phi ptr [ %i.c, %.lr.ph.i.i.i.preheader ], [ %i.af, %middle.block ]
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader89, %.lr.ph.i.i.i
@@ -714,7 +695,7 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i64
 !2554 = distinct !{!2554, !2553, !"_ZSt19__relocate_object_aISt10shared_ptrIN7rocksdb13EventListenerEES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
 !2555 = distinct !{!2555, !2553, !"_ZSt19__relocate_object_aISt10shared_ptrIN7rocksdb13EventListenerEES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
 !2556 = distinct !{!2556, !767, !964, !965}
-!2557 = distinct !{!2557, !767, !964}
+!2557 = distinct !{!2557, !767, !965, !964}
 !2558 = distinct !{!2558, !"_ZSt19__relocate_object_aISt10shared_ptrIN7rocksdb13EventListenerEES3_SaIS3_EEvPT_PT0_RT1_"}
 !2559 = distinct !{!2559, !2558, !"_ZSt19__relocate_object_aISt10shared_ptrIN7rocksdb13EventListenerEES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
 !2560 = distinct !{!2560, !2558, !"_ZSt19__relocate_object_aISt10shared_ptrIN7rocksdb13EventListenerEES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 844
 inline.NumDeleted: 495
 loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 9
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8AccessorC2Ej:bb.a
   br label %.critedge.i.i.i
 
@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %i.d = phi i64 [ %i.c, %bb.b ], [ 0, %bb.a ]    ; 12 uses
+  %i.d = phi i64 [ %i.c, %bb.b ], [ 0, %bb.a ]    ; 10 uses
   %i.e = shl i64 %1, 3                            ; 2 uses
   %i.f = add i64 %i.e, 16                         ; 2 uses
   %i.g = icmp eq i64 %i.f, 0
@@ -219,12 +219,12 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.o = add i64 %i.n, %i.l
   %i.p = and i64 %i.o, -16
   %i.q = add i64 %i.p, %i.j
-  %i.r = tail call noalias noundef nonnull align 16 ptr @_ZnwmSt11align_val_t(i64 noundef %i.q, i64 noundef 16) #36 ; 8 uses
+  %i.r = tail call noalias noundef nonnull align 16 ptr @_ZnwmSt11align_val_t(i64 noundef %i.q, i64 noundef 16) #36 ; 7 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store i64 %1, ptr %i.s, align 8, !tbaa !60
-  %i.t = load ptr, ptr %2, align 8, !tbaa !100    ; 3 uses
+  %i.t = load ptr, ptr %2, align 8, !tbaa !100    ; 2 uses
   store ptr %i.t, ptr %i.r, align 16, !tbaa !100
-  %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 8 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 4 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %1
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = add i64 %i.w, 8
@@ -234,14 +234,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not65, label %.preheader58, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
-  %3 = ptrtoaddr ptr %i.t to i64
-  %4 = ptrtoaddr ptr %i.r to i64
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 6 uses
-  %min.iters.check = icmp ult i64 %i.d, 8
-  %5 = sub i64 %3, %4
-  %diff.check = icmp ugt i64 %5, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
+  %min.iters.check = icmp ult i64 %i.d, 4
+  br i1 %min.iters.check, label %scalar.ph.prol.loopexit, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %i.d, -4                       ; 3 uses
@@ -259,64 +254,29 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x ptr> %wide.load78, ptr %i.ae, align 16, !tbaa !91
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.af = icmp eq i64 %index.next, %n.vec
-  br i1 %i.af, label %middle.block, label %vector.body, !llvm.loop !1162
+  br i1 %i.af, label %scalar.ph.prol, label %vector.body, !llvm.loop !1162
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.d, %n.vec
-  br i1 %cmp.n, label %.preheader58, label %scalar.ph.preheader
+scalar.ph.prol:                                   ; preds = %vector.body
+  %prol.iter.cmp.not = icmp eq i64 %i.d, %n.vec
+  br i1 %prol.iter.cmp.not, label %.preheader58, label %scalar.ph.prol.loopexit
 
-scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
-  %.03759.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %i.d, 3                     ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+scalar.ph.prol.loopexit:                          ; preds = %.lr.ph, %scalar.ph.prol
+  %.03759.unr = phi i64 [ 0, %.lr.ph ], [ %n.vec, %scalar.ph.prol ]
+  br label %scalar.ph
 
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
-  %.03759.prol = phi i64 [ %9, %scalar.ph.prol ], [ %.03759.ph, %scalar.ph.preheader ] ; 3 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.03759.prol
-  %7 = load ptr, ptr %6, align 8, !tbaa !91
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.03759.prol
-  store ptr %7, ptr %8, align 8, !tbaa !91
-  %9 = add nuw i64 %.03759.prol, 1                ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !1163
-
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
-  %.03759.unr = phi i64 [ %.03759.ph, %scalar.ph.preheader ], [ %9, %scalar.ph.prol ]
-  %10 = sub i64 %.03759.ph, %i.d
-  %11 = icmp ugt i64 %10, -4
-  br i1 %11, label %.preheader58, label %scalar.ph
-
-.preheader58:                                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.c
+.preheader58:                                     ; preds = %scalar.ph, %scalar.ph.prol, %bb.c
   %i.ag = icmp ult i64 %i.d, %1
   br i1 %i.ag, label %.lr.ph64, label %_ZN5folly6detail14ScopeGuardImplISt5_BindIFMNS_17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultISB_S8_EEEEFvPNSE_5arrayEEPSE_SG_EELb1EED2Ev.exit
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %.03759 = phi i64 [ %i.ak, %scalar.ph ], [ %.03759.unr, %scalar.ph.prol.loopexit ] ; 6 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.03759
-  %13 = load ptr, ptr %12, align 8, !tbaa !91
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.03759
-  store ptr %13, ptr %14, align 8, !tbaa !91
-  %15 = add nuw i64 %.03759, 1                    ; 2 uses
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %15
-  %17 = load ptr, ptr %16, align 8, !tbaa !91
-  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %15
-  store ptr %17, ptr %18, align 8, !tbaa !91
-  %19 = add nuw i64 %.03759, 2                    ; 2 uses
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %19
-  %21 = load ptr, ptr %20, align 8, !tbaa !91
-  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %19
-  store ptr %21, ptr %22, align 8, !tbaa !91
-  %23 = add nuw i64 %.03759, 3                    ; 2 uses
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %23
+  %.03759 = phi i64 [ %i.ak, %scalar.ph ], [ %.03759.unr, %scalar.ph.prol.loopexit ] ; 3 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.03759
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !91
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %23
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.03759
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !91
-  %i.ak = add nuw i64 %.03759, 4                  ; 2 uses
+  %i.ak = add nuw i64 %.03759, 1                  ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.ak, %i.d
-  br i1 %exitcond.not.3, label %.preheader58, label %scalar.ph, !llvm.loop !1164
+  br i1 %exitcond.not.3, label %.preheader58, label %scalar.ph, !llvm.loop !1163
 
 .lr.ph64:                                         ; preds = %.preheader58
   %i.al = shl i64 %i.d, 3                         ; 2 uses
@@ -338,27 +298,27 @@ bb.d:                                             ; preds = %.lr.ph64, %.critedg
   %i.ar = sub nuw i64 %.03563, %i.d
   %i.as = getelementptr inbounds nuw [56 x i8], ptr %i.z, i64 %i.ar ; 4 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 24
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.as, i8 0, i64 56, i1 false), !alias.scope !1173
-  store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.at, align 8, !tbaa !111, !alias.scope !1173
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.as, i8 0, i64 56, i1 false), !alias.scope !1171
+  store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.at, align 8, !tbaa !111, !alias.scope !1171
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.au, i8 0, i64 20, i1 false), !alias.scope !1173
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.au, i8 0, i64 20, i1 false), !alias.scope !1171
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.03563
   store ptr %i.as, ptr %i.av, align 8, !tbaa !91
   %i.aw = add i64 %.03563, 1                      ; 2 uses
   %exitcond67.not = icmp eq i64 %i.aw, %1
-  br i1 %exitcond67.not, label %_ZN5folly6detail14ScopeGuardImplISt5_BindIFMNS_17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultISB_S8_EEEEFvPNSE_5arrayEEPSE_SG_EELb1EED2Ev.exit, label %bb.d, !llvm.loop !1167
+  br i1 %exitcond67.not, label %_ZN5folly6detail14ScopeGuardImplISt5_BindIFMNS_17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultISB_S8_EEEEFvPNSE_5arrayEEPSE_SG_EELb1EED2Ev.exit, label %bb.d, !llvm.loop !1166
 
 _ZNSt5_BindIFMN5folly17atomic_grow_arrayINS0_12SynchronizedINS0_18threadlocal_detail14ThreadEntrySetENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEENS0_32atomic_grow_array_policy_defaultIS9_S6_EEEEFvPNSC_5arrayEEPSC_SE_EE6__callIvJEJLm0ELm1EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE.exit.i.i.i: ; preds = %bb.d
   store ptr %i.ap, ptr %2, align 8, !tbaa !100
   invoke void @_ZN5folly17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultIS8_S5_EEE9del_arrayEPNSB_5arrayE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.r)
-          to label %_ZN5folly6detail14ScopeGuardImplISt5_BindIFMNS_17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultISB_S8_EEEEFvPNSE_5arrayEEPSE_SG_EELb1EED2Ev.exit unwind label %bb.e, !inline_history !1168
+          to label %_ZN5folly6detail14ScopeGuardImplISt5_BindIFMNS_17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultISB_S8_EEEEFvPNSE_5arrayEEPSE_SG_EELb1EED2Ev.exit unwind label %bb.e, !inline_history !1167
 
 bb.e:                                             ; preds = %_ZNSt5_BindIFMN5folly17atomic_grow_arrayINS0_12SynchronizedINS0_18threadlocal_detail14ThreadEntrySetENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEENS0_32atomic_grow_array_policy_defaultIS9_S6_EEEEFvPNSC_5arrayEEPSC_SE_EE6__callIvJEJLm0ELm1EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE.exit.i.i.i
   %i.ax = landingpad { ptr, i32 }
           catch ptr null
   %i.ay = extractvalue { ptr, i32 } %i.ax, 0
   %i.az = tail call ptr @__cxa_begin_catch(ptr %i.ay) #20 ; 0 uses
-  tail call void @_ZN5folly6detail18ScopeGuardImplBase9terminateEv() #20, !inline_history !1169
+  tail call void @_ZN5folly6detail18ScopeGuardImplBase9terminateEv() #20, !inline_history !1168
   unreachable
 
 _ZN5folly6detail14ScopeGuardImplISt5_BindIFMNS_17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultISB_S8_EEEEFvPNSE_5arrayEEPSE_SG_EELb1EED2Ev.exit: ; preds = %.critedge, %.preheader58, %_ZNSt5_BindIFMN5folly17atomic_grow_arrayINS0_12SynchronizedINS0_18threadlocal_detail14ThreadEntrySetENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEENS0_32atomic_grow_array_policy_defaultIS9_S6_EEEEFvPNSC_5arrayEEPSC_SE_EE6__callIvJEJLm0ELm1EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE.exit.i.i.i
@@ -408,8 +368,8 @@ _ZNSt11unique_lockIN5folly15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolic
   %i.l = load i8, ptr %i.k, align 8, !tbaa !95, !range !105, !noundef !103
   store ptr null, ptr %1, align 8, !tbaa !94
   store i8 0, ptr %i.k, align 8, !tbaa !95
-  %i.m = load ptr, ptr %0, align 8, !tbaa !1174   ; 3 uses
-  store ptr %i.j, ptr %0, align 8, !tbaa !1174
+  %i.m = load ptr, ptr %0, align 8, !tbaa !1172   ; 3 uses
+  store ptr %i.j, ptr %0, align 8, !tbaa !1172
   %i.n = load i8, ptr %i.c, align 8, !tbaa !138, !range !105, !noundef !103
   store i8 %i.l, ptr %i.c, align 8, !tbaa !138
   %i.o = trunc nuw i8 %i.n to i1
@@ -812,17 +772,15 @@ begin_hunk_1_@llvm.umin.i32
 !1159 = !{i64 8}
 !1160 = !{!1156}
 !1161 = distinct !{!1161, !53}
-!1162 = distinct !{!1162, !53, !1170, !1171}
-!1163 = distinct !{!1163, !1172}
-!1164 = distinct !{!1164, !53, !1170}
-!1165 = distinct !{!1165, !"_ZNK5folly32atomic_grow_array_policy_defaultINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEES5_E4makeEv"}
-!1166 = distinct !{!1166, !1165, !"_ZNK5folly32atomic_grow_array_policy_defaultINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEES5_E4makeEv: argument 0"}
-!1167 = distinct !{!1167, !53}
-!1168 = distinct !{null}
-!1169 = distinct !{null, null}
-!1170 = !{!"llvm.loop.isvectorized", i32 1}
-!1171 = !{!"llvm.loop.unroll.runtime.disable"}
-!1172 = !{!"llvm.loop.unroll.disable"}
-!1173 = !{!1166}
-!1174 = !{!92, !92, i64 0}
+!1162 = distinct !{!1162, !53, !1169, !1170}
+!1163 = distinct !{!1163, !53, !1170, !1169}
+!1164 = distinct !{!1164, !"_ZNK5folly32atomic_grow_array_policy_defaultINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEES5_E4makeEv"}
+!1165 = distinct !{!1165, !1164, !"_ZNK5folly32atomic_grow_array_policy_defaultINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEES5_E4makeEv: argument 0"}
+!1166 = distinct !{!1166, !53}
+!1167 = distinct !{null}
+!1168 = distinct !{null, null}
+!1169 = !{!"llvm.loop.isvectorized", i32 1}
+!1170 = !{!"llvm.loop.unroll.runtime.disable"}
+!1171 = !{!1165}
+!1172 = !{!92, !92, i64 0}
 end_hunk_1

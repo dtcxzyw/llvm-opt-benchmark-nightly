@@ -205,7 +205,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !85   ; 5 uses
   %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 1
   %.not = icmp ult i64 %i.h, %1
@@ -228,7 +228,7 @@ _ZNSt3__16vectorIsNS_9allocatorIsEEE18__construct_at_endEm.exit: ; preds = %bb.b
 
 bb.c:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %0, align 8, !tbaa !86     ; 2 uses
-  %i.k = ptrtoint ptr %i.j to i64                 ; 3 uses
+  %i.k = ptrtoint ptr %i.j to i64                 ; 2 uses
   %i.l = sub i64 %i.f, %i.k                       ; 2 uses
   %i.m = ashr exact i64 %i.l, 1
   %i.n = add i64 %i.m, %1                         ; 2 uses
@@ -264,11 +264,9 @@ _ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIsEEEENS_19__allocation_re
 
 _ZNSt3__114__split_bufferIsRNS_9allocatorIsEEE18__construct_at_endEm.exit: ; preds = %_ZNKSt3__16vectorIsNS_9allocatorIsEEE11__recommendB8nn180100Em.exit, %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIsEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i
   %i.u = phi ptr [ %.pre14, %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIsEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i ], [ %i.j, %_ZNKSt3__16vectorIsNS_9allocatorIsEEE11__recommendB8nn180100Em.exit ] ; 6 uses
-  %i.v = phi ptr [ %.pre, %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIsEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i ], [ %i.d, %_ZNKSt3__16vectorIsNS_9allocatorIsEEE11__recommendB8nn180100Em.exit ] ; 8 uses
-  %storemerge.i = phi ptr [ %i.t, %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIsEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i ], [ null, %_ZNKSt3__16vectorIsNS_9allocatorIsEEE11__recommendB8nn180100Em.exit ] ; 3 uses
-  %2 = ptrtoaddr ptr %i.v to i64                  ; 2 uses
-  %storemerge.i19 = ptrtoaddr ptr %storemerge.i to i64
-  %i.w = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 %i.l ; 9 uses
+  %i.v = phi ptr [ %.pre, %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIsEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i ], [ %i.d, %_ZNKSt3__16vectorIsNS_9allocatorIsEEE11__recommendB8nn180100Em.exit ] ; 7 uses
+  %storemerge.i = phi ptr [ %i.t, %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIsEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i ], [ null, %_ZNKSt3__16vectorIsNS_9allocatorIsEEE11__recommendB8nn180100Em.exit ] ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 %i.l ; 8 uses
   %i.x = getelementptr inbounds nuw [2 x i8], ptr %storemerge.i, i64 %.0.i
   %.idx.i6 = shl i64 %1, 1                        ; 2 uses
   %i.y = getelementptr i8, ptr %i.w, i64 %.idx.i6
@@ -278,21 +276,15 @@ _ZNSt3__114__split_bufferIsRNS_9allocatorIsEEE18__construct_at_endEm.exit: ; pre
 
 iter.check:                                       ; preds = %_ZNSt3__114__split_bufferIsRNS_9allocatorIsEEE18__construct_at_endEm.exit
   %i.z = ptrtoaddr ptr %i.u to i64
+  %2 = ptrtoaddr ptr %i.v to i64
   %i.aa = add i64 %2, -2
   %i.ab = sub i64 %i.aa, %i.z                     ; 3 uses
   %i.ac = lshr i64 %i.ab, 1
   %i.ad = add nuw i64 %i.ac, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.ab, 14
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
-vector.memcheck:                                  ; preds = %iter.check
-  %3 = add i64 %2, %i.k
-  %4 = add i64 %storemerge.i19, %i.f
-  %5 = sub i64 %4, %3
-  %diff.check = icmp ugt i64 %5, -32
-  br i1 %diff.check, label %.lr.ph.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
+vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check20 = icmp ult i64 %i.ab, 30
   br i1 %min.iters.check20, label %vec.epilog.ph, label %vector.ph
 
@@ -354,9 +346,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n30 = icmp eq i64 %i.ad, %n.vec24
   br i1 %cmp.n30, label %_ZNSt3__114__split_bufferIsRNS_9allocatorIsEEE5clearB8nn180100Ev.exit.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.ph = phi ptr [ %i.w, %iter.check ], [ %i.w, %vector.memcheck ], [ %i.ag, %vec.epilog.iter.check ], [ %i.ap, %vec.epilog.middle.block ]
-  %.sroa.2.05.i.i.i.i.i.i.i.ph = phi ptr [ %i.v, %iter.check ], [ %i.v, %vector.memcheck ], [ %i.ah, %vec.epilog.iter.check ], [ %i.aq, %vec.epilog.middle.block ]
+.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.ph = phi ptr [ %i.w, %iter.check ], [ %i.ag, %vec.epilog.iter.check ], [ %i.ap, %vec.epilog.middle.block ]
+  %.sroa.2.05.i.i.i.i.i.i.i.ph = phi ptr [ %i.v, %iter.check ], [ %i.ah, %vec.epilog.iter.check ], [ %i.aq, %vec.epilog.middle.block ]
   br label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i
@@ -759,7 +751,7 @@ begin_hunk_1_@llvm.smax.v2i32
 !264 = distinct !{!264, !263, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8nn180100INS_16reverse_iteratorIPsEES6_S6_EENS_4pairIT_T1_EES8_T0_S9_: argument 0"}
 !265 = distinct !{!265, !24, !32, !33}
 !266 = distinct !{!266, !24, !32, !33}
-!267 = distinct !{!267, !24, !32}
+!267 = distinct !{!267, !24, !33, !32}
 !268 = !{!264, !262, !260, !258}
 !269 = !{!"branch_weights", i32 8, i32 8}
 !270 = distinct !{!270, !"_ZNSt3__16__moveB8nn180100INS_17_ClassicAlgPolicyENS_16reverse_iteratorIPhEES4_S4_EENS_4pairIT0_T2_EES6_T1_S7_"}

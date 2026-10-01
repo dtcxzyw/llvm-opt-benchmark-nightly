@@ -205,14 +205,14 @@ bb.r:                                             ; preds = %bb.q
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ao = load ptr, ptr %i.an, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 24
-  %i.aq = load ptr, ptr %i.ap, align 8            ; 28 uses
+  %i.aq = load ptr, ptr %i.ap, align 8            ; 26 uses
   %.not66 = icmp eq ptr %i.aq, null
   br i1 %.not66, label %bb.aa, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 24
-  %i.as = load i64, ptr %i.ar, align 8            ; 14 uses
-  %i.at = tail call noalias ptr @malloc(i64 noundef %i.as) #56 ; 8 uses
+  %i.as = load i64, ptr %i.ar, align 8            ; 12 uses
+  %i.at = tail call noalias ptr @malloc(i64 noundef %i.as) #56 ; 6 uses
   %.not76 = icmp eq i64 %i.as, 0
   br i1 %.not76, label %._crit_edge, label %iter.check
 
@@ -224,8 +224,8 @@ iter.check:                                       ; preds = %bb.s
   %i.ax = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %i.ay = load i64, ptr %i.ax, align 8
   %sext92 = shl i64 %i.ay, 32
-  %i.az = ashr exact i64 %sext92, 32              ; 9 uses
-  %i.ba = sext i32 %spec.select to i64            ; 28 uses
+  %i.az = ashr exact i64 %sext92, 32              ; 6 uses
+  %i.ba = sext i32 %spec.select to i64            ; 27 uses
   %min.iters.check = icmp ult i64 %i.as, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.scevcheck
 
@@ -235,26 +235,9 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.bd = icmp eq i64 %i.bc, 4294967295
   %i.be = icmp ugt i64 %i.bb, 4294967295
   %i.bf = or i1 %i.bd, %i.be
-  br i1 %i.bf, label %.lr.ph.preheader, label %vector.memcheck
+  br i1 %i.bf, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
-vector.memcheck:                                  ; preds = %vector.scevcheck
-  %scevgep = getelementptr i8, ptr %i.at, i64 %i.as
-  %8 = add nsw i64 %i.as, -1
-  %9 = mul i64 %8, %i.ba
-  %10 = getelementptr i8, ptr %i.aq, i64 %9
-  %scevgep95 = getelementptr i8, ptr %10, i64 %i.az ; 4 uses
-  %scevgep96 = getelementptr i8, ptr %i.aq, i64 %i.az ; 4 uses
-  %11 = icmp ult ptr %scevgep95, %scevgep96
-  %umin = select i1 %11, ptr %scevgep95, ptr %scevgep96
-  %12 = icmp ugt ptr %scevgep95, %scevgep96
-  %umax = select i1 %12, ptr %scevgep95, ptr %scevgep96
-  %scevgep97 = getelementptr i8, ptr %umax, i64 1
-  %bound0 = icmp ult ptr %i.at, %scevgep97
-  %bound1 = icmp ult ptr %umin, %scevgep
-  %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %.lr.ph.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
+vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
   %min.iters.check98 = icmp ult i64 %i.as, 16
   br i1 %min.iters.check98, label %vec.epilog.ph, label %vector.ph
 
@@ -315,22 +298,22 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %gep134 = getelementptr i8, ptr %invariant.gep133, i64 %i.bz
   %gep136 = getelementptr i8, ptr %invariant.gep135, i64 %i.bz
   %gep138 = getelementptr i8, ptr %invariant.gep137, i64 %i.bz
-  %i.cb = load i8, ptr %i.ca, align 1, !alias.scope !396
-  %i.cc = load i8, ptr %gep110, align 1, !alias.scope !396
-  %i.cd = load i8, ptr %gep112, align 1, !alias.scope !396
-  %i.ce = load i8, ptr %gep114, align 1, !alias.scope !396
-  %i.cf = load i8, ptr %gep116, align 1, !alias.scope !396
-  %i.cg = load i8, ptr %gep118, align 1, !alias.scope !396
-  %i.ch = load i8, ptr %gep120, align 1, !alias.scope !396
-  %i.ci = load i8, ptr %gep122, align 1, !alias.scope !396
-  %i.cj = load i8, ptr %gep124, align 1, !alias.scope !396
-  %i.ck = load i8, ptr %gep126, align 1, !alias.scope !396
-  %i.cl = load i8, ptr %gep128, align 1, !alias.scope !396
-  %i.cm = load i8, ptr %gep130, align 1, !alias.scope !396
-  %i.cn = load i8, ptr %gep132, align 1, !alias.scope !396
-  %i.co = load i8, ptr %gep134, align 1, !alias.scope !396
-  %i.cp = load i8, ptr %gep136, align 1, !alias.scope !396
-  %i.cq = load i8, ptr %gep138, align 1, !alias.scope !396
+  %i.cb = load i8, ptr %i.ca, align 1
+  %i.cc = load i8, ptr %gep110, align 1
+  %i.cd = load i8, ptr %gep112, align 1
+  %i.ce = load i8, ptr %gep114, align 1
+  %i.cf = load i8, ptr %gep116, align 1
+  %i.cg = load i8, ptr %gep118, align 1
+  %i.ch = load i8, ptr %gep120, align 1
+  %i.ci = load i8, ptr %gep122, align 1
+  %i.cj = load i8, ptr %gep124, align 1
+  %i.ck = load i8, ptr %gep126, align 1
+  %i.cl = load i8, ptr %gep128, align 1
+  %i.cm = load i8, ptr %gep130, align 1
+  %i.cn = load i8, ptr %gep132, align 1
+  %i.co = load i8, ptr %gep134, align 1
+  %i.cp = load i8, ptr %gep136, align 1
+  %i.cq = load i8, ptr %gep138, align 1
   %i.cr = insertelement <16 x i8> poison, i8 %i.cb, i64 0
   %i.cs = insertelement <16 x i8> %i.cr, i8 %i.cc, i64 1
   %i.ct = insertelement <16 x i8> %i.cs, i8 %i.cd, i64 2
@@ -348,10 +331,10 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.df = insertelement <16 x i8> %i.de, i8 %i.cp, i64 14
   %i.dg = insertelement <16 x i8> %i.df, i8 %i.cq, i64 15
   %i.dh = getelementptr inbounds nuw i8, ptr %i.at, i64 %index
-  store <16 x i8> %i.dg, ptr %i.dh, align 1, !alias.scope !397, !noalias !396
+  store <16 x i8> %i.dg, ptr %i.dh, align 1
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.di = icmp eq i64 %index.next, %n.vec
-  br i1 %i.di, label %middle.block, label %vector.body, !llvm.loop !393
+  br i1 %i.di, label %middle.block, label %vector.body, !llvm.loop !390
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.as, %n.vec
@@ -359,7 +342,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check.not.not = icmp eq i64 %i.bg, 0
-  br i1 %min.epilog.iters.check.not.not, label %.lr.ph.preheader, label %vec.epilog.ph, !prof !398
+  br i1 %min.epilog.iters.check.not.not, label %.lr.ph.preheader, label %vec.epilog.ph, !prof !393
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -394,14 +377,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %gep148 = getelementptr i8, ptr %invariant.gep147, i64 %i.dt
   %gep150 = getelementptr i8, ptr %invariant.gep149, i64 %i.dt
   %gep152 = getelementptr i8, ptr %invariant.gep151, i64 %i.dt
-  %i.dv = load i8, ptr %i.du, align 1, !alias.scope !396
-  %i.dw = load i8, ptr %gep140, align 1, !alias.scope !396
-  %i.dx = load i8, ptr %gep142, align 1, !alias.scope !396
-  %i.dy = load i8, ptr %gep144, align 1, !alias.scope !396
-  %i.dz = load i8, ptr %gep146, align 1, !alias.scope !396
-  %i.ea = load i8, ptr %gep148, align 1, !alias.scope !396
-  %i.eb = load i8, ptr %gep150, align 1, !alias.scope !396
-  %i.ec = load i8, ptr %gep152, align 1, !alias.scope !396
+  %i.dv = load i8, ptr %i.du, align 1
+  %i.dw = load i8, ptr %gep140, align 1
+  %i.dx = load i8, ptr %gep142, align 1
+  %i.dy = load i8, ptr %gep144, align 1
+  %i.dz = load i8, ptr %gep146, align 1
+  %i.ea = load i8, ptr %gep148, align 1
+  %i.eb = load i8, ptr %gep150, align 1
+  %i.ec = load i8, ptr %gep152, align 1
   %i.ed = insertelement <8 x i8> poison, i8 %i.dv, i64 0
   %i.ee = insertelement <8 x i8> %i.ed, i8 %i.dw, i64 1
   %i.ef = insertelement <8 x i8> %i.ee, i8 %i.dx, i64 2
@@ -411,19 +394,19 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ej = insertelement <8 x i8> %i.ei, i8 %i.eb, i64 6
   %i.ek = insertelement <8 x i8> %i.ej, i8 %i.ec, i64 7
   %i.el = getelementptr inbounds nuw i8, ptr %i.at, i64 %index101
-  store <8 x i8> %i.ek, ptr %i.el, align 1, !alias.scope !397, !noalias !396
+  store <8 x i8> %i.ek, ptr %i.el, align 1
   %index.next102 = add nuw i64 %index101, 8       ; 2 uses
   %i.em = icmp eq i64 %index.next102, %n.vec100
-  br i1 %i.em, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !394
+  br i1 %i.em, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !391
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n103 = icmp eq i64 %i.as, %n.vec100
   br i1 %cmp.n103, label %._crit_edge.loopexit, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv85.ph = phi i64 [ %i.az, %iter.check ], [ %i.az, %vector.scevcheck ], [ %i.az, %vector.memcheck ], [ %i.bi, %vec.epilog.iter.check ], [ %i.dk, %vec.epilog.middle.block ]
-  %.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec100, %vec.epilog.middle.block ]
-  %.075.ph = phi i32 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ %i.bj, %vec.epilog.iter.check ], [ %i.dl, %vec.epilog.middle.block ]
+.lr.ph.preheader:                                 ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv85.ph = phi i64 [ %i.az, %iter.check ], [ %i.az, %vector.scevcheck ], [ %i.bi, %vec.epilog.iter.check ], [ %i.dk, %vec.epilog.middle.block ]
+  %.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec100, %vec.epilog.middle.block ]
+  %.075.ph = phi i32 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %i.bj, %vec.epilog.iter.check ], [ %i.dl, %vec.epilog.middle.block ]
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
@@ -450,7 +433,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ew = add i32 %.075, 1                        ; 2 uses
   %i.ex = zext i32 %i.ew to i64                   ; 2 uses
   %i.ey = icmp ugt i64 %i.as, %i.ex
-  br i1 %i.ey, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !395
+  br i1 %i.ey, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !392
 
 bb.t:                                             ; preds = %._crit_edge
   %i.ez = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.ep, ptr noundef nonnull dereferenceable(10) @.str.371) #51
@@ -853,13 +836,8 @@ begin_hunk_1_@llvm.abs.v4i32
 !387 = !{!351}
 !388 = !{!352}
 !389 = !{!350, !351}
-!390 = distinct !{!390, !"LVerDomain"}
-!391 = distinct !{!391, !390}
-!392 = distinct !{!392, !390}
-!393 = distinct !{!393, !11, !12}
-!394 = distinct !{!394, !11, !12}
-!395 = distinct !{!395, !11}
-!396 = !{!391}
-!397 = !{!392}
-!398 = !{!"branch_weights", i32 8, i32 8}
+!390 = distinct !{!390, !11, !12}
+!391 = distinct !{!391, !11, !12}
+!392 = distinct !{!392, !11}
+!393 = !{!"branch_weights", i32 8, i32 8}
 end_hunk_1

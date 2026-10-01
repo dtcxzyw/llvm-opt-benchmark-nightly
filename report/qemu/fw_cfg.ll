@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.p = add nuw nsw i32 %i.o, 1                  ; 6 uses
   %i.q = add i32 %i.h, %i.p
   %i.r = sext i32 %i.q to i64                     ; 2 uses
-  %i.s = tail call noalias ptr @g_malloc0_n(i64 noundef %i.r, i64 noundef 8) #8 ; 9 uses
+  %i.s = tail call noalias ptr @g_malloc0_n(i64 noundef %i.r, i64 noundef 8) #8 ; 7 uses
   %i.t = sext i32 %i.h to i64
   store i64 %i.t, ptr %i.s, align 8
   %i.u = load i32, ptr %i.e, align 8              ; 2 uses
@@ -222,10 +222,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.y, label %.lr.ph56, label %._crit_edge
 
 .lr.ph56:                                         ; preds = %.preheader
-  %i.z = load ptr, ptr %i.f, align 8              ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 8 uses
-  %wide.trip.count = zext nneg i32 %i.h to i64    ; 8 uses
-  %min.iters.check = icmp ult i32 %i.h, 36
+  %i.z = load ptr, ptr %i.f, align 8
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 7 uses
+  %wide.trip.count = zext nneg i32 %i.h to i64    ; 6 uses
+  %min.iters.check = icmp ult i32 %i.h, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph56
@@ -235,26 +235,9 @@ vector.scevcheck:                                 ; preds = %.lr.ph56
   %i.ae = icmp sle i32 %i.ad, %i.o
   %i.af = icmp ugt i64 %i.ab, 4294967295
   %i.ag = or i1 %i.ae, %i.af
-  br i1 %i.ag, label %scalar.ph.preheader, label %vector.memcheck
+  br i1 %i.ag, label %scalar.ph.preheader, label %vector.ph
 
-vector.memcheck:                                  ; preds = %vector.scevcheck
-  %3 = mul nuw nsw i64 %wide.trip.count, 152
-  %4 = getelementptr i8, ptr %i.z, i64 %3
-  %5 = getelementptr i8, ptr %4, i64 -136
-  %6 = zext i16 %2 to i64                         ; 2 uses
-  %7 = shl nuw nsw i64 %6, 3
-  %8 = getelementptr i8, ptr %i.s, i64 %7
-  %9 = getelementptr i8, ptr %8, i64 8
-  %10 = add nuw nsw i64 %6, %wide.trip.count
-  %11 = shl nuw nsw i64 %10, 3
-  %12 = getelementptr i8, ptr %i.s, i64 %11
-  %13 = getelementptr i8, ptr %12, i64 8
-  %bound0 = icmp ult ptr %i.aa, %13
-  %bound1 = icmp ult ptr %9, %5
-  %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %vector.scevcheck
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
   br label %vector.body
 
@@ -267,12 +250,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 304
   %i.am = getelementptr inbounds nuw [152 x i8], ptr %i.aa, i64 %index
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 456
-  %i.ao = load i64, ptr %i.ah, align 8, !alias.scope !18, !noalias !19
-  %i.ap = load i64, ptr %i.aj, align 8, !alias.scope !18, !noalias !19
+  %i.ao = load i64, ptr %i.ah, align 8
+  %i.ap = load i64, ptr %i.aj, align 8
   %i.aq = insertelement <2 x i64> poison, i64 %i.ao, i64 0
   %i.ar = insertelement <2 x i64> %i.aq, i64 %i.ap, i64 1
-  %i.as = load i64, ptr %i.al, align 8, !alias.scope !18, !noalias !19
-  %i.at = load i64, ptr %i.an, align 8, !alias.scope !18, !noalias !19
+  %i.as = load i64, ptr %i.al, align 8
+  %i.at = load i64, ptr %i.an, align 8
   %i.au = insertelement <2 x i64> poison, i64 %i.as, i64 0
   %i.av = insertelement <2 x i64> %i.au, i64 %i.at, i64 1
   %i.aw = trunc i64 %index to i32
@@ -280,18 +263,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ay = sext i32 %i.ax to i64
   %i.az = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.ay ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 16
-  store <2 x i64> %i.ar, ptr %i.az, align 8, !alias.scope !19
-  store <2 x i64> %i.av, ptr %i.ba, align 8, !alias.scope !19
+  store <2 x i64> %i.ar, ptr %i.az, align 8
+  store <2 x i64> %i.av, ptr %i.ba, align 8
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !15
+  br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !12
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph56, %middle.block
-  %indvars.iv58.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph56 ], [ %n.vec, %middle.block ] ; 5 uses
+scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph56, %middle.block
+  %indvars.iv58.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph56 ], [ %n.vec, %middle.block ] ; 5 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
@@ -334,7 +317,7 @@ bb.f:                                             ; preds = %bb.d
   store i64 %i.bp, ptr %i.bs, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bt = icmp samesign ult i64 %indvars.iv.next, %i.x
-  br i1 %i.bt, label %bb.d, label %.preheader, !llvm.loop !16
+  br i1 %i.bt, label %bb.d, label %.preheader, !llvm.loop !13
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv58 = phi i64 [ %indvars.iv.next59.1, %scalar.ph ], [ %indvars.iv58.unr, %scalar.ph.prol.loopexit ] ; 4 uses
@@ -355,7 +338,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i64 %i.cb, ptr %i.cf, align 8
   %indvars.iv.next59.1 = add nuw nsw i64 %indvars.iv58, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next59.1, %wide.trip.count
-  br i1 %exitcond.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !17
+  br i1 %exitcond.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.preheader
   %i.cg = shl nsw i64 %i.r, 3
@@ -537,14 +520,9 @@ attributes #10 = { nounwind allocsize(0) }
 !9 = distinct !{!9, !8}
 !10 = !{i8 0, i8 2}
 !11 = !{}
-!12 = distinct !{!12, !"LVerDomain"}
-!13 = distinct !{!13, !12}
-!14 = distinct !{!14, !12}
-!15 = distinct !{!15, !8, !20, !21}
-!16 = distinct !{!16, !8}
-!17 = distinct !{!17, !8, !20}
-!18 = !{!13}
-!19 = !{!14}
-!20 = !{!"llvm.loop.isvectorized", i32 1}
-!21 = !{!"llvm.loop.unroll.runtime.disable"}
+!12 = distinct !{!12, !8, !15, !16}
+!13 = distinct !{!13, !8}
+!14 = distinct !{!14, !8, !15}
+!15 = !{!"llvm.loop.isvectorized", i32 1}
+!16 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

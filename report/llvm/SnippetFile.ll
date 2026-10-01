@@ -202,7 +202,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.af
   %i.hp = load ptr, ptr %i.hj, align 8, !tbaa !134 ; 7 uses
   %i.hq = ptrtoint ptr %i.hl to i64               ; 2 uses
-  %i.hr = ptrtoint ptr %i.hp to i64               ; 4 uses
+  %i.hr = ptrtoint ptr %i.hp to i64               ; 3 uses
   %i.hs = sub i64 %i.hq, %i.hr                    ; 3 uses
   %i.ht = icmp eq i64 %i.hs, 9223372036854775804
   br i1 %i.ht, label %bb.ai, label %_ZNKSt6vectorIN4llvm10MCRegisterESaIS1_EE12_M_check_lenEmPKc.exit.i.i
@@ -221,23 +221,19 @@ _ZNKSt6vectorIN4llvm10MCRegisterESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds =
   %.not.i.i.i = icmp ne i64 %i.hy, 0
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.hz = shl nuw nsw i64 %i.hy, 2
-  %i.ia = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hz) #19 ; 8 uses
+  %i.ia = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hz) #19 ; 7 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 %i.hs
   store i32 %i.hg, ptr %i.ib, align 4, !tbaa !13
   %.not10.i.i.i.i.i = icmp eq ptr %i.hp, %i.hl
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN4llvm10MCRegisterESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN4llvm10MCRegisterESaIS1_EE12_M_check_lenEmPKc.exit.i.i
-  %24 = ptrtoaddr ptr %i.ia to i64
   %i.ic = add i64 %i.hq, -4
   %i.id = sub i64 %i.ic, %i.hr                    ; 2 uses
   %i.ie = lshr i64 %i.id, 2
   %i.if = add nuw nsw i64 %i.ie, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.id, 44
-  %25 = sub i64 %i.hr, %24
-  %diff.check = icmp ugt i64 %25, -32
-  %or.cond302 = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond302, label %.lr.ph.i.i.i.i.i.preheader303, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.id, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader303, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.preheader
   %n.vec = and i64 %i.if, 9223372036854775800     ; 3 uses
@@ -640,7 +636,7 @@ begin_hunk_1_@llvm.usub.sat.i64
 !596 = distinct !{!596, !595, !"_ZSt19__relocate_object_aIN4llvm10MCRegisterES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !597 = distinct !{!597, !595, !"_ZSt19__relocate_object_aIN4llvm10MCRegisterES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !598 = distinct !{!598, !137, !151, !152}
-!599 = distinct !{!599, !137, !151}
+!599 = distinct !{!599, !137, !152, !151}
 !600 = distinct !{!600, !"_ZNK4llvm9StringRef3strB5cxx11Ev"}
 !601 = distinct !{!601, !600, !"_ZNK4llvm9StringRef3strB5cxx11Ev: argument 0"}
 !602 = !{!103, !62, i64 312}

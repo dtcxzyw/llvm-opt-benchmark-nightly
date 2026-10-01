@@ -204,7 +204,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !101  ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !57     ; 8 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 2                   ; 7 uses
   %i.h = icmp ugt i64 %1, %i.g
@@ -245,7 +245,7 @@ _ZNKSt6vectorIi13std_allocatorIiEE12_M_check_lenEmPKc.exit.i: ; preds = %bb.c
   %i.t = add nuw nsw i64 %.sroa.speculated.i.i, %i.g
   %i.u = tail call i64 @llvm.umin.i64(i64 %i.t, i64 2305843009213693951) ; 2 uses
   %i.v = shl nuw nsw i64 %i.u, 2
-  %i.w = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef %i.v) ; 7 uses
+  %i.w = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef %i.v) ; 6 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.f ; 2 uses
   %i.y = shl nuw nsw i64 %i.i, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.x, i8 0, i64 %i.y, i1 false), !tbaa !59
@@ -253,16 +253,12 @@ _ZNKSt6vectorIi13std_allocatorIiEE12_M_check_lenEmPKc.exit.i: ; preds = %bb.c
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIi13std_allocatorIiEE11_S_relocateEPiS3_S3_RS1_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorIi13std_allocatorIiEE12_M_check_lenEmPKc.exit.i
-  %2 = ptrtoaddr ptr %i.w to i64
   %i.z = add i64 %i.d, -4
   %i.aa = sub i64 %i.z, %i.e                      ; 2 uses
   %i.ab = lshr i64 %i.aa, 2
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aa, 44
-  %3 = sub i64 %i.e, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.aa, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
   %n.vec = and i64 %i.ac, 9223372036854775800     ; 3 uses
@@ -665,7 +661,7 @@ middle.block157:                                  ; preds = %vector.body153
 
 bb.j:                                             ; preds = %bb.b
   %i.cj = load ptr, ptr %0, align 8, !tbaa !57    ; 7 uses
-  %i.ck = ptrtoint ptr %i.cj to i64               ; 4 uses
+  %i.ck = ptrtoint ptr %i.cj to i64               ; 3 uses
   %i.cl = sub i64 %i.f, %i.ck
   %i.cm = ashr exact i64 %i.cl, 2                 ; 4 uses
   %i.cn = sub nsw i64 2305843009213693951, %i.cm
@@ -693,8 +689,7 @@ bb.l:                                             ; preds = %_ZNKSt6vectorIi13st
   br label %.lr.ph.preheader.i80
 
 .lr.ph.preheader.i80:                             ; preds = %bb.l, %_ZNKSt6vectorIi13std_allocatorIiEE12_M_check_lenEmPKc.exit
-  %i.cx = phi ptr [ %i.cw, %bb.l ], [ null, %_ZNKSt6vectorIi13std_allocatorIiEE12_M_check_lenEmPKc.exit ] ; 8 uses
-  %4 = ptrtoaddr ptr %i.cx to i64
+  %i.cx = phi ptr [ %i.cw, %bb.l ], [ null, %_ZNKSt6vectorIi13std_allocatorIiEE12_M_check_lenEmPKc.exit ] ; 7 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.cu ; 3 uses
   %.pre.i81 = load i32, ptr %3, align 4, !tbaa !59 ; 2 uses
   %min.iters.check189 = icmp ult i64 %2, 8
@@ -747,11 +742,8 @@ _ZSt24__uninitialized_fill_n_aIPimi13std_allocatorIiEET_S3_T0_RKT1_RT2_.exit87: 
   %i.dj = sub i64 %i.di, %i.ck                    ; 2 uses
   %i.dk = lshr i64 %i.dj, 2
   %i.dl = add nuw nsw i64 %i.dk, 1                ; 2 uses
-  %min.iters.check205 = icmp ult i64 %i.dj, 44
-  %5 = sub i64 %i.ck, %4
-  %diff.check203 = icmp ugt i64 %5, -32
-  %or.cond237 = or i1 %min.iters.check205, %diff.check203
-  br i1 %or.cond237, label %.lr.ph.i.i88.preheader239, label %vector.ph206
+  %min.iters.check205 = icmp ult i64 %i.dj, 28
+  br i1 %min.iters.check205, label %.lr.ph.i.i88.preheader239, label %vector.ph206
 
 vector.ph206:                                     ; preds = %.lr.ph.i.i88.preheader
   %n.vec207 = and i64 %i.dl, 9223372036854775800  ; 3 uses
@@ -1154,7 +1146,7 @@ attributes #24 = { builtin nounwind }
 !166 = distinct !{!166, !165, !"_ZSt19__relocate_object_aIii13std_allocatorIiEEvPT_PT0_RT1_: argument 0"}
 !167 = distinct !{!167, !165, !"_ZSt19__relocate_object_aIii13std_allocatorIiEEvPT_PT0_RT1_: argument 1"}
 !168 = distinct !{!168, !58, !106, !107}
-!169 = distinct !{!169, !58, !106}
+!169 = distinct !{!169, !58, !107, !106}
 !170 = !{!166}
 !171 = !{!167}
 !172 = distinct !{!172, !103}
@@ -1220,7 +1212,7 @@ attributes #24 = { builtin nounwind }
 !232 = distinct !{!232, !58, !106, !107}
 !233 = distinct !{!233, !58, !107, !106}
 !234 = distinct !{!234, !58, !106, !107}
-!235 = distinct !{!235, !58, !106}
+!235 = distinct !{!235, !58, !107, !106}
 !236 = distinct !{!236, !58, !106, !107}
 !237 = distinct !{!237, !58, !106}
 !238 = !{!"branch_weights", !"expected", i32 2000, i32 1}

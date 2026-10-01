@@ -204,7 +204,7 @@ bb.aj:                                            ; preds = %.lr.ph179
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph182.epil, %.preheader175
   %i.fy = load ptr, ptr %i.f, align 8, !tbaa !63
   %i.fz = invoke noundef ptr @_ZNK5faiss15VectorTransform5applyElPKf(ptr noundef nonnull align 8 dereferenceable(17) %i.fy, i64 noundef %1, ptr noundef %2)
-          to label %bb.ak unwind label %bb.ao     ; 6 uses
+          to label %bb.ak unwind label %bb.ao     ; 5 uses
 
 .lr.ph182:                                        ; preds = %.lr.ph182, %.lr.ph182.preheader.new
   %.077181 = phi i64 [ 0, %.lr.ph182.preheader.new ], [ %i.gp, %.lr.ph182 ] ; 5 uses
@@ -235,7 +235,6 @@ bb.aj:                                            ; preds = %.lr.ph179
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph182, !llvm.loop !167
 
 bb.ak:                                            ; preds = %._crit_edge
-  %6 = ptrtoaddr ptr %i.fz to i64
   %i.gq = getelementptr inbounds nuw i8, ptr %0, i64 292 ; 4 uses
   %i.gr = load i32, ptr %i.gq, align 4, !tbaa !64
   %i.gs = sext i32 %i.gr to i64
@@ -247,27 +246,16 @@ bb.ak:                                            ; preds = %._crit_edge
           to label %.preheader unwind label %bb.ap ; 5 uses
 
 .preheader:                                       ; preds = %bb.ak
-  %i.gy = ptrtoaddr ptr %i.gx to i64              ; 2 uses
+  %i.gy = ptrtoaddr ptr %i.gx to i64
   %.pre228 = load i32, ptr %i.gq, align 4, !tbaa !64 ; 4 uses
-  %i.gz = sext i32 %.pre228 to i64                ; 9 uses
+  %i.gz = sext i32 %.pre228 to i64                ; 8 uses
   br i1 %i.es, label %.lr.ph188, label %._crit_edge189
 
 .lr.ph188:                                        ; preds = %.preheader
   %.not203 = icmp eq i32 %.pre228, 0
   br i1 %.not203, label %.lr.ph188.split.preheader, label %.lr.ph185.us.preheader
 
-.lr.ph188.split.preheader:                        ; preds = %.lr.ph188
-  %xtraiter321 = and i64 %1, 3                    ; 3 uses
-  %7 = icmp ult i64 %1, 4
-  br i1 %7, label %.lr.ph188.split.epil.preheader, label %.lr.ph188.split.preheader.new
-
-.lr.ph188.split.preheader.new:                    ; preds = %.lr.ph188.split.preheader
-  %unroll_iter325 = and i64 %1, 9223372036854775804
-  br label %.lr.ph188.split
-
 .lr.ph185.us.preheader:                           ; preds = %.lr.ph188
-  %8 = sub i64 %i.gy, %6
-  %9 = mul nsw i64 %i.gz, -4
   %min.iters.check274 = icmp ugt i32 %.pre228, 7
   %ident.check.not = icmp eq i64 %1, 1
   %or.cond = and i1 %min.iters.check274, %ident.check.not
@@ -278,30 +266,30 @@ bb.ak:                                            ; preds = %._crit_edge
   %lcmp.mod320.not = icmp eq i32 %i.ha, 0
   br label %.lr.ph185.us
 
+.lr.ph188.split.preheader:                        ; preds = %.lr.ph188
+  %xtraiter319 = and i64 %1, 3                    ; 3 uses
+  %6 = icmp ult i64 %1, 4
+  br i1 %6, label %.lr.ph188.split.epil.preheader, label %.lr.ph188.split.preheader.new
+
+.lr.ph188.split.preheader.new:                    ; preds = %.lr.ph188.split.preheader
+  %unroll_iter323 = and i64 %1, 9223372036854775804
+  br label %.lr.ph188.split
+
 .lr.ph185.us:                                     ; preds = %.lr.ph185.us.preheader, %._crit_edge186.us
-  %.075187.us = phi i64 [ %i.ip, %._crit_edge186.us ], [ 0, %.lr.ph185.us.preheader ] ; 4 uses
+  %.075187.us = phi i64 [ %i.ip, %._crit_edge186.us ], [ 0, %.lr.ph185.us.preheader ] ; 3 uses
   %i.hb = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %.075187.us
   %i.hc = load i64, ptr %i.hb, align 8, !tbaa !66
   %i.hd = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0153.0, i64 %i.hc ; 2 uses
-  %i.he = load i64, ptr %i.hd, align 8, !tbaa !66 ; 3 uses
+  %i.he = load i64, ptr %i.hd, align 8, !tbaa !66 ; 2 uses
   %i.hf = add i64 %i.he, 1
   store i64 %i.hf, ptr %i.hd, align 8, !tbaa !66
   %i.hg = mul nsw i64 %.075187.us, %i.gz
   %i.hh = getelementptr [4 x i8], ptr %i.fz, i64 %i.hg ; 6 uses
   %i.hi = getelementptr [4 x i8], ptr %i.gx, i64 %i.he ; 6 uses
-  br i1 %or.cond, label %vector.memcheck272, label %scalar.ph273.preheader
+  br i1 %or.cond, label %vector.body277, label %scalar.ph273.preheader
 
-vector.memcheck272:                               ; preds = %.lr.ph185.us
-  %10 = mul i64 %9, %.075187.us
-  %11 = add i64 %8, %10
-  %12 = shl i64 %i.he, 2
-  %13 = add i64 %11, %12
-  %14 = add i64 %13, -1
-  %diff.check = icmp ult i64 %14, 31
-  br i1 %diff.check, label %scalar.ph273.preheader, label %vector.body277
-
-vector.body277:                                   ; preds = %vector.memcheck272, %vector.body277
-  %index278 = phi i64 [ %index.next281, %vector.body277 ], [ 0, %vector.memcheck272 ] ; 3 uses
+vector.body277:                                   ; preds = %.lr.ph185.us, %vector.body277
+  %index278 = phi i64 [ %index.next281, %vector.body277 ], [ 0, %.lr.ph185.us ] ; 3 uses
   %i.hj = getelementptr [4 x i8], ptr %i.hh, i64 %index278 ; 2 uses
   %i.hk = getelementptr i8, ptr %i.hj, i64 16
   %wide.load279.a = load <4 x float>, ptr %i.hj, align 4, !tbaa !65
@@ -317,8 +305,8 @@ vector.body277:                                   ; preds = %vector.memcheck272,
 middle.block282:                                  ; preds = %vector.body277
   br i1 %cmp.n283, label %._crit_edge186.us, label %scalar.ph273.preheader
 
-scalar.ph273.preheader:                           ; preds = %vector.memcheck272, %.lr.ph185.us, %middle.block282
-  %.074183.us.ph = phi i64 [ 0, %vector.memcheck272 ], [ 0, %.lr.ph185.us ], [ %n.vec276, %middle.block282 ] ; 3 uses
+scalar.ph273.preheader:                           ; preds = %.lr.ph185.us, %middle.block282
+  %.074183.us.ph = phi i64 [ 0, %.lr.ph185.us ], [ %n.vec276, %middle.block282 ] ; 3 uses
   br i1 %lcmp.mod320.not, label %scalar.ph273.prol.loopexit, label %scalar.ph273.prol
 
 scalar.ph273.prol:                                ; preds = %scalar.ph273.preheader, %scalar.ph273.prol
@@ -375,12 +363,12 @@ scalar.ph273:                                     ; preds = %scalar.ph273.prol.l
   br i1 %exitcond210.not, label %._crit_edge189, label %.lr.ph185.us, !llvm.loop !171
 
 ._crit_edge189.loopexit.unr-lcssa:                ; preds = %.lr.ph188.split
-  %lcmp.mod323.not = icmp eq i64 %xtraiter321, 0
+  %lcmp.mod323.not = icmp eq i64 %xtraiter319, 0
   br i1 %lcmp.mod323.not, label %._crit_edge189, label %.lr.ph188.split.epil.preheader
 
 .lr.ph188.split.epil.preheader:                   ; preds = %._crit_edge189.loopexit.unr-lcssa, %.lr.ph188.split.preheader
   %.075187.epil.init = phi i64 [ 0, %.lr.ph188.split.preheader ], [ %i.ki, %._crit_edge189.loopexit.unr-lcssa ]
-  %lcmp.mod324 = icmp ne i64 %xtraiter321, 0
+  %lcmp.mod324 = icmp ne i64 %xtraiter319, 0
   tail call void @llvm.assume(i1 %lcmp.mod324)
   br label %.lr.ph188.split.epil
 
@@ -395,7 +383,7 @@ scalar.ph273:                                     ; preds = %scalar.ph273.prol.l
   store i64 %i.iu, ptr %i.is, align 8, !tbaa !66
   %i.iv = add nuw nsw i64 %.075187.epil, 1
   %epil.iter322.next = add i64 %epil.iter322, 1   ; 2 uses
-  %epil.iter322.cmp.not = icmp eq i64 %epil.iter322.next, %xtraiter321
+  %epil.iter322.cmp.not = icmp eq i64 %epil.iter322.next, %xtraiter319
   br i1 %epil.iter322.cmp.not, label %._crit_edge189, label %.lr.ph188.split.epil, !llvm.loop !172
 
 ._crit_edge189:                                   ; preds = %._crit_edge186.us, %._crit_edge189.loopexit.unr-lcssa, %.lr.ph188.split.epil, %.preheader
@@ -472,7 +460,7 @@ bb.ap:                                            ; preds = %bb.ak
   store i64 %i.kh, ptr %i.kf, align 8, !tbaa !66
   %i.ki = add nuw nsw i64 %.075187, 4             ; 2 uses
   %niter326.next.3 = add nuw nsw i64 %niter326, 4 ; 2 uses
-  %niter326.ncmp.3 = icmp eq i64 %niter326.next.3, %unroll_iter325
+  %niter326.ncmp.3 = icmp eq i64 %niter326.next.3, %unroll_iter323
   br i1 %niter326.ncmp.3, label %._crit_edge189.loopexit.unr-lcssa, label %.lr.ph188.split, !llvm.loop !171
 
 _ZNSt6vectorIfSaIfEE6resizeEm.exit125:            ; preds = %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i123, %bb.an, %bb.am, %bb.al

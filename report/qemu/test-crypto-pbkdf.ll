@@ -202,26 +202,17 @@ bb.a:
   %i.p = zext i32 %i.o to i64
   %i.q = tail call i32 @qcrypto_pbkdf2(i32 noundef %i.e, ptr noundef %i.g, i64 noundef %i.i, ptr noundef %i.k, i64 noundef %i.m, i64 noundef %i.p, ptr noundef %i.c, i64 noundef %i.b, ptr noundef nonnull @error_abort) #8 ; 0 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.s = load ptr, ptr %i.r, align 8              ; 4 uses
-  %i.t = load i64, ptr %i.a, align 8              ; 8 uses
+  %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
+  %i.t = load i64, ptr %i.a, align 8              ; 6 uses
   %i.u = shl i64 %i.t, 1                          ; 2 uses
   %i.v = or disjoint i64 %i.u, 1
-  %i.w = tail call noalias ptr @g_malloc0(i64 noundef %i.v) #10 ; 8 uses
+  %i.w = tail call noalias ptr @g_malloc0(i64 noundef %i.v) #10 ; 6 uses
   %.not.i = icmp eq i64 %i.t, 0
-  br i1 %.not.i, label %hex_string.exit, label %.lr.ph.i.preheader
+  br i1 %.not.i, label %hex_string.exit, label %vector.memcheck
 
-.lr.ph.i.preheader:                               ; preds = %bb.a
-  %min.iters.check = icmp ult i64 %i.t, 8
-  br i1 %min.iters.check, label %.lr.ph.i.preheader57, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %1 = shl i64 %i.t, 1
-  %2 = getelementptr i8, ptr %i.w, i64 %1
-  %3 = getelementptr i8, ptr %i.s, i64 %i.t
-  %bound0 = icmp ult ptr %i.w, %3
-  %bound1 = icmp ult ptr %i.s, %2
-  %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %.lr.ph.i.preheader57, label %vector.ph
+vector.memcheck:                                  ; preds = %bb.a
+  %bound1 = icmp ult i64 %i.t, 8
+  br i1 %bound1, label %.lr.ph.i.preheader57, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.t, -8                       ; 3 uses
@@ -230,7 +221,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 %index
-  %wide.load = load <8 x i8>, ptr %i.x, align 1, !alias.scope !19 ; 3 uses
+  %wide.load = load <8 x i8>, ptr %i.x, align 1   ; 3 uses
   %i.y = lshr <8 x i8> %wide.load, splat (i8 4)   ; 2 uses
   %i.z = icmp ult <8 x i8> %wide.load, splat (i8 -96)
   %i.aa = or disjoint <8 x i8> %i.y, splat (i8 48)
@@ -244,17 +235,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ai = add nuw nsw <8 x i8> %i.af, splat (i8 87)
   %i.aj = select <8 x i1> %i.ag, <8 x i8> %i.ah, <8 x i8> %i.ai
   %interleaved.vec = shufflevector <8 x i8> %i.ac, <8 x i8> %i.aj, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
-  store <16 x i8> %interleaved.vec, ptr %i.ae, align 1, !alias.scope !20, !noalias !19
+  store <16 x i8> %interleaved.vec, ptr %i.ae, align 1
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ak = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !15
+  br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !12
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.t, %n.vec
   br i1 %cmp.n, label %hex_string.exit, label %.lr.ph.i.preheader57
 
-.lr.ph.i.preheader57:                             ; preds = %vector.memcheck, %.lr.ph.i.preheader, %middle.block
-  %.028.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ]
+.lr.ph.i.preheader57:                             ; preds = %vector.memcheck, %middle.block
+  %.028.i.ph = phi i64 [ 0, %vector.memcheck ], [ %n.vec, %middle.block ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader57, %.lr.ph.i
@@ -278,7 +269,7 @@ middle.block:                                     ; preds = %vector.body
   store i8 %.0.i27.i, ptr %i.ax, align 1
   %i.ay = add nuw i64 %.028.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ay, %i.t
-  br i1 %exitcond.not.i, label %hex_string.exit, label %.lr.ph.i, !llvm.loop !16
+  br i1 %exitcond.not.i, label %hex_string.exit, label %.lr.ph.i, !llvm.loop !13
 
 hex_string.exit:                                  ; preds = %.lr.ph.i, %middle.block, %bb.a
   %i.az = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.u
@@ -317,7 +308,7 @@ vector.body48:                                    ; preds = %vector.body48, %vec
   store <16 x i8> %interleaved.vec51, ptr %i.bk, align 1
   %index.next52 = add nuw i64 %index49, 8         ; 2 uses
   %i.bq = icmp eq i64 %index.next52, %n.vec47
-  br i1 %i.bq, label %middle.block53, label %vector.body48, !llvm.loop !17
+  br i1 %i.bq, label %middle.block53, label %vector.body48, !llvm.loop !14
 
 middle.block53:                                   ; preds = %vector.body48
   %cmp.n54 = icmp eq i64 %i.b, %n.vec47
@@ -348,7 +339,7 @@ middle.block53:                                   ; preds = %vector.body48
   store i8 %.0.i27.i39, ptr %i.cd, align 1
   %i.ce = add nuw i64 %.028.i37, 1                ; 2 uses
   %exitcond.not.i40 = icmp eq i64 %i.ce, %i.b
-  br i1 %exitcond.not.i40, label %hex_string.exit41, label %.lr.ph.i36, !llvm.loop !18
+  br i1 %exitcond.not.i40, label %hex_string.exit41, label %.lr.ph.i36, !llvm.loop !15
 
 hex_string.exit41:                                ; preds = %.lr.ph.i36, %middle.block53, %hex_string.exit
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.ba
@@ -382,7 +373,7 @@ bb.a:
   %i.c = call i64 @qcrypto_pbkdf2_count_iters(i32 noundef 3, ptr noundef nonnull %i.a, i64 noundef 32, ptr noundef nonnull %i.b, i64 noundef 32, i64 noundef 32, ptr noundef nonnull @error_abort) #8
   %i.d = trunc i64 %i.c to i32
   %i.e = icmp slt i32 %i.d, 32768
-  br i1 %i.e, label %bb.b, label %bb.c, !prof !23
+  br i1 %i.e, label %bb.b, label %bb.c, !prof !18
 
 bb.b:                                             ; preds = %bb.a
   call void @g_assertion_message_expr(ptr noundef null, ptr noundef nonnull @.str, i32 noundef 427, ptr noundef nonnull @__func__.test_pbkdf_timing_sha256, ptr noundef nonnull @.str.61) #9
@@ -442,16 +433,11 @@ attributes #10 = { nounwind allocsize(0) }
 !9 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !10 = !{i8 0, i8 2}
 !11 = !{}
-!12 = distinct !{!12, !"LVerDomain"}
-!13 = distinct !{!13, !12}
-!14 = distinct !{!14, !12}
-!15 = distinct !{!15, !7, !21, !22}
-!16 = distinct !{!16, !7, !21}
-!17 = distinct !{!17, !7, !21, !22}
-!18 = distinct !{!18, !7, !22, !21}
-!19 = !{!13}
-!20 = !{!14}
-!21 = !{!"llvm.loop.isvectorized", i32 1}
-!22 = !{!"llvm.loop.unroll.runtime.disable"}
-!23 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!12 = distinct !{!12, !7, !16, !17}
+!13 = distinct !{!13, !7, !17, !16}
+!14 = distinct !{!14, !7, !16, !17}
+!15 = distinct !{!15, !7, !17, !16}
+!16 = !{!"llvm.loop.isvectorized", i32 1}
+!17 = !{!"llvm.loop.unroll.runtime.disable"}
+!18 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_0

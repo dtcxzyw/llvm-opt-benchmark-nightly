@@ -205,7 +205,7 @@ middle.block164:                                  ; preds = %vector.body160
 
 bb.f:                                             ; preds = %bb.b
   %i.cq = load ptr, ptr %0, align 8, !tbaa !31    ; 7 uses
-  %i.cr = ptrtoint ptr %i.cq to i64               ; 5 uses
+  %i.cr = ptrtoint ptr %i.cq to i64               ; 4 uses
   %i.cs = sub i64 %i.f, %i.cr
   %i.ct = ashr exact i64 %i.cs, 2                 ; 4 uses
   %i.cu = sub nsw i64 2305843009213693951, %i.ct
@@ -233,8 +233,7 @@ bb.h:                                             ; preds = %_ZNKSt6vectorIN5dra
   br label %.lr.ph.preheader.i.i.i.i85
 
 .lr.ph.preheader.i.i.i.i85:                       ; preds = %bb.h, %_ZNKSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE12_M_check_lenEmPKc.exit
-  %i.de = phi ptr [ %i.dd, %bb.h ], [ null, %_ZNKSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 8 uses
-  %4 = ptrtoaddr ptr %i.de to i64
+  %i.de = phi ptr [ %i.dd, %bb.h ], [ null, %_ZNKSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 7 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 %i.db ; 3 uses
   %.pre.i.i.i.i86 = load i32, ptr %3, align 4, !tbaa !54 ; 2 uses
   %min.iters.check214 = icmp ult i64 %2, 8
@@ -287,11 +286,8 @@ _ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EE
   %i.dp = sub i64 %i.do, %i.cr                    ; 2 uses
   %i.dq = lshr i64 %i.dp, 2
   %i.dr = add nuw nsw i64 %i.dq, 1                ; 2 uses
-  %min.iters.check230 = icmp ult i64 %i.dp, 44
-  %5 = sub i64 %i.cr, %4
-  %diff.check228 = icmp ugt i64 %5, -32
-  %or.cond263 = or i1 %min.iters.check230, %diff.check228
-  br i1 %or.cond263, label %.lr.ph.i.i.i.i.i93.preheader265, label %vector.ph231
+  %min.iters.check230 = icmp ult i64 %i.dp, 28
+  br i1 %min.iters.check230, label %.lr.ph.i.i.i.i.i93.preheader265, label %vector.ph231
 
 vector.ph231:                                     ; preds = %.lr.ph.i.i.i.i.i93.preheader
   %n.vec232 = and i64 %i.dr, 9223372036854775800  ; 3 uses
@@ -520,7 +516,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !22     ; 8 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 2                   ; 7 uses
   %i.h = icmp ugt i64 %1, %i.g
@@ -561,7 +557,7 @@ _ZNKSt6vectorIN5draco9IndexTypeIjNS0_21VertexIndex_tag_type_EEESaIS3_EE12_M_chec
   %i.t = add nuw nsw i64 %.sroa.speculated.i.i, %i.g
   %i.u = tail call i64 @llvm.umin.i64(i64 %i.t, i64 2305843009213693951) ; 2 uses
   %i.v = shl nuw nsw i64 %i.u, 2
-  %i.w = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #14 ; 7 uses
+  %i.w = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #14 ; 6 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.f ; 2 uses
   %i.y = shl nuw nsw i64 %i.i, 2
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.x, i8 0, i64 %i.y, i1 false), !tbaa !24
@@ -569,16 +565,12 @@ _ZNKSt6vectorIN5draco9IndexTypeIjNS0_21VertexIndex_tag_type_EEESaIS3_EE12_M_chec
   br i1 %.not13.i.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN5draco9IndexTypeIjNS0_21VertexIndex_tag_type_EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN5draco9IndexTypeIjNS0_21VertexIndex_tag_type_EEESaIS3_EE12_M_check_lenEmPKc.exit.i
-  %2 = ptrtoaddr ptr %i.w to i64
   %i.z = add i64 %i.d, -4
   %i.aa = sub i64 %i.z, %i.e                      ; 2 uses
   %i.ab = lshr i64 %i.aa, 2
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aa, 44
-  %3 = sub i64 %i.e, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader15, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.aa, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader15, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.ac, 9223372036854775800     ; 3 uses
@@ -981,11 +973,11 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !235 = distinct !{!235, !25, !57, !58}
 !236 = distinct !{!236, !25, !58, !57}
 !237 = distinct !{!237, !25, !57, !58}
-!238 = distinct !{!238, !25, !57}
+!238 = distinct !{!238, !25, !58, !57}
 !239 = distinct !{!239, !25, !57, !58}
 !240 = distinct !{!240, !25, !57}
 !241 = distinct !{!241, !25, !57, !58}
-!242 = distinct !{!242, !25, !57}
+!242 = distinct !{!242, !25, !58, !57}
 !243 = distinct !{!243, !25, !57, !58}
 !244 = distinct !{!244, !25, !58, !57}
 !245 = distinct !{!245, !25, !57, !58}
