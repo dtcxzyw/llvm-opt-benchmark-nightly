@@ -205,8 +205,8 @@ bb.ac:                                            ; preds = %bb.z, %_ZN5Eigen9De
 bb.ad:                                            ; preds = %.lr.ph439, %bb.au
   %indvars.iv454 = phi i64 [ 0, %.lr.ph439 ], [ %indvars.iv.next455, %bb.au ] ; 6 uses
   %.4175437 = phi i32 [ 0, %.lr.ph439 ], [ %.5176, %bb.au ] ; 2 uses
-  %i.pb = shl i64 %indvars.iv454, 3
-  %i.pc = shl i64 %indvars.iv454, 3
+  %i.pb = shl nuw nsw i64 %indvars.iv454, 3
+  %i.pc = shl nuw nsw i64 %indvars.iv454, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %69) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %70) #22
   store i64 %i.mr, ptr %70, align 8, !tbaa !32, !alias.scope !212
