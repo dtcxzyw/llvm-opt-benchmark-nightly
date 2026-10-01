@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   %.028 = phi i32 [ %i.o, %.lr.ph ], [ 0, %.preheader ] ; 6 uses
   %i.g = load i32, ptr @ett_sta_info, align 4
-  %4 = ashr exact i32 %.028, 1
+  %4 = lshr exact i32 %.028, 1
   %i.h = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %2, ptr noundef %0, i32 noundef %.028, i32 noundef 2, i32 noundef %i.g, ptr noundef null, ptr noundef nonnull @.str.10523, i32 noundef %4) ; 3 uses
   %i.i = load i32, ptr @hf_ieee80211_tag_aid, align 4
   %i.j = tail call ptr @proto_tree_add_item(ptr noundef %i.h, i32 noundef %i.i, ptr noundef %0, i32 noundef %.028, i32 noundef 2, i32 noundef -2147483648) ; 0 uses
@@ -213,7 +213,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = tail call ptr @proto_tree_add_item(ptr noundef %i.h, i32 noundef %i.k, ptr noundef %0, i32 noundef %.028, i32 noundef 2, i32 noundef -2147483648) ; 0 uses
   %i.m = load i32, ptr @hf_ieee80211_tag_pp_avail, align 4
   %i.n = tail call ptr @proto_tree_add_item(ptr noundef %i.h, i32 noundef %i.m, ptr noundef %0, i32 noundef %.028, i32 noundef 2, i32 noundef -2147483648) ; 0 uses
-  %i.o = add i32 %.028, 2                         ; 2 uses
+  %i.o = add nuw nsw i32 %.028, 2                 ; 2 uses
   %i.p = icmp slt i32 %i.o, %i.a
   br i1 %i.p, label %.lr.ph, label %._crit_edge, !llvm.loop !137
 

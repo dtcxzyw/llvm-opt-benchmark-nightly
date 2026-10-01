@@ -205,7 +205,7 @@ _ZN5faiss12_GLOBAL__N_117get_matrix_columnIKhSt5arrayIhLm32EEEEvPT_mmllRT0_.exit
   store <16 x i8> %i.cz, ptr %i.cp, align 1, !tbaa !60
   %i.da = getelementptr inbounds nuw i8, ptr %.2104.us, i64 32 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
-  %i.db = add i64 %.064105.us, 32                 ; 2 uses
+  %i.db = add nuw i64 %.064105.us, 32             ; 2 uses
   %i.dc = icmp ult i64 %i.db, %4
   br i1 %i.dc, label %bb.am, label %bb.as, !llvm.loop !571
 

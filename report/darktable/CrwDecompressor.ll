@@ -205,21 +205,21 @@ vector.body:                                      ; preds = %.preheader.us, %vec
   %i.fb = zext nneg i32 %i.ez to i64
   %i.fc = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.fb
   %i.fd = load i8, ptr %i.fc, align 1, !tbaa !106
-  %3 = icmp samesign ult i64 %indvars.iv233, 2672
-  call void @llvm.assume(i1 %3)
-  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.cn, i64 %indvars.iv.next234 ; 2 uses
+  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.cn, i64 %indvars.iv.next234 ; 2 uses
+  %4 = icmp samesign ult i64 %indvars.iv233, 2672
+  call void @llvm.assume(i1 %4)
   %i.fe = zext i8 %i.fd to i16
   %i.ff = insertelement <4 x i16> poison, i16 %i.fe, i64 0
   %i.fg = shufflevector <4 x i16> %i.ff, <4 x i16> poison, <4 x i32> zeroinitializer
   %i.fh = lshr <4 x i16> %i.fg, <i16 0, i16 2, i16 4, i16 6>
   %i.fi = and <4 x i16> %i.fh, <i16 3, i16 3, i16 3, i16 -1>
-  %i.fj = load <4 x i16>, ptr %4, align 2, !tbaa !156
+  %i.fj = load <4 x i16>, ptr %3, align 2, !tbaa !156
   %i.fk = shl <4 x i16> %i.fj, splat (i16 2)      ; 2 uses
   %i.fl = or disjoint <4 x i16> %i.fk, %i.fi      ; 2 uses
   %i.fm = icmp ult <4 x i16> %i.fk, splat (i16 512)
   %i.fn = add nuw nsw <4 x i16> %i.fl, splat (i16 2)
   %i.fo = select <4 x i1> %i.fm, <4 x i16> %i.fn, <4 x i16> %i.fl
-  store <4 x i16> %i.fo, ptr %4, align 2, !tbaa !156
+  store <4 x i16> %i.fo, ptr %3, align 2, !tbaa !156
   %indvars.iv.next234.1 = add nuw nsw i64 %indvars.iv233, 8
   %i.fp = icmp samesign ult i64 %indvars.iv.next234, 2668
   br i1 %i.fp, label %.split.us201.us, label %.split207.us.us, !llvm.loop !204
@@ -248,7 +248,7 @@ vector.body:                                      ; preds = %.preheader.us, %vec
 .split.us.epil:                                   ; preds = %.split.us.epil, %.split.us.epil.preheader
   %indvars.iv220.epil = phi i64 [ %indvars.iv220.epil.init, %.split.us.epil.preheader ], [ %indvars.iv.next221.epil, %.split.us.epil ] ; 4 uses
   %epil.iter = phi i32 [ 0, %.split.us.epil.preheader ], [ %epil.iter.next, %.split.us.epil ]
-  %i.fu = trunc nuw i64 %indvars.iv220.epil to i32
+  %i.fu = trunc nuw nsw i64 %indvars.iv220.epil to i32
   %i.fv = ashr exact i32 %i.fu, 2                 ; 2 uses
   %i.fw = icmp samesign ult i32 %i.fv, %i.bt
   call void @llvm.assume(i1 %i.fw)
@@ -268,7 +268,7 @@ vector.body:                                      ; preds = %.preheader.us, %vec
   %i.gi = shl <4 x i16> %i.gh, splat (i16 2)
   %i.gj = or disjoint <4 x i16> %i.gi, %i.gg
   store <4 x i16> %i.gj, ptr %i.ga, align 2, !tbaa !156
-  %indvars.iv.next221.epil = add i64 %indvars.iv220.epil, 4
+  %indvars.iv.next221.epil = add nuw nsw i64 %indvars.iv220.epil, 4
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.split207, label %.split.us.epil, !llvm.loop !206
@@ -281,7 +281,7 @@ vector.body:                                      ; preds = %.preheader.us, %vec
 .split.us:                                        ; preds = %.preheader, %.split.us
   %indvars.iv220 = phi i64 [ %indvars.iv.next221.3, %.split.us ], [ 0, %.preheader ] ; 10 uses
   %niter = phi i32 [ %niter.next.3, %.split.us ], [ 0, %.preheader ]
-  %i.gk = trunc nuw i64 %indvars.iv220 to i32
+  %i.gk = trunc nuw nsw i64 %indvars.iv220 to i32
   %i.gl = ashr exact i32 %i.gk, 2                 ; 2 uses
   %i.gm = icmp samesign ult i32 %i.gl, %i.bt
   call void @llvm.assume(i1 %i.gm)
@@ -302,7 +302,7 @@ vector.body:                                      ; preds = %.preheader.us, %vec
   %i.gz = or disjoint <4 x i16> %i.gy, %i.gw
   store <4 x i16> %i.gz, ptr %i.gq, align 2, !tbaa !156
   %indvars.iv.next221 = or disjoint i64 %indvars.iv220, 4 ; 2 uses
-  %i.ha = trunc nuw i64 %indvars.iv.next221 to i32
+  %i.ha = trunc nuw nsw i64 %indvars.iv.next221 to i32
   %i.hb = ashr exact i32 %i.ha, 2                 ; 2 uses
   %i.hc = icmp samesign ult i32 %i.hb, %i.bt
   call void @llvm.assume(i1 %i.hc)
@@ -323,7 +323,7 @@ vector.body:                                      ; preds = %.preheader.us, %vec
   %i.hp = or disjoint <4 x i16> %i.ho, %i.hm
   store <4 x i16> %i.hp, ptr %i.hg, align 2, !tbaa !156
   %indvars.iv.next221.1 = or disjoint i64 %indvars.iv220, 8 ; 2 uses
-  %i.hq = trunc nuw i64 %indvars.iv.next221.1 to i32
+  %i.hq = trunc nuw nsw i64 %indvars.iv.next221.1 to i32
   %i.hr = ashr exact i32 %i.hq, 2                 ; 2 uses
   %i.hs = icmp samesign ult i32 %i.hr, %i.bt
   call void @llvm.assume(i1 %i.hs)
@@ -344,7 +344,7 @@ vector.body:                                      ; preds = %.preheader.us, %vec
   %i.if = or disjoint <4 x i16> %i.ie, %i.ic
   store <4 x i16> %i.if, ptr %i.hw, align 2, !tbaa !156
   %indvars.iv.next221.2 = or disjoint i64 %indvars.iv220, 12 ; 2 uses
-  %i.ig = trunc nuw i64 %indvars.iv.next221.2 to i32
+  %i.ig = trunc nuw nsw i64 %indvars.iv.next221.2 to i32
   %i.ih = ashr exact i32 %i.ig, 2                 ; 2 uses
   %i.ii = icmp samesign ult i32 %i.ih, %i.bt
   call void @llvm.assume(i1 %i.ii)

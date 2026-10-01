@@ -202,7 +202,7 @@ conv_ascii2bin.exit.thread:                       ; preds = %.lr.ph, %bb.p, %bb.
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc range(i32 -2147483647, -2147483648) i32 @evp_decodeblock_int(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef range(i32 -1, 3) %4) unnamed_addr #6 {
+define internal fastcc range(i32 -1, 1610612737) i32 @evp_decodeblock_int(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef range(i32 -1, 3) %4) unnamed_addr #6 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -270,7 +270,7 @@ bb.f:                                             ; preds = %conv_ascii2bin.exit
 
 .critedge3:                                       ; preds = %conv_ascii2bin.exit96, %.lr.ph135, %bb.d, %.critedge
   %.084.lcssa167 = phi ptr [ %.084126, %.critedge ], [ %2, %bb.d ], [ %.084126, %.lr.ph135 ], [ %.084126, %conv_ascii2bin.exit96 ] ; 2 uses
-  %.1.lcssa = phi i32 [ %.083127, %.critedge ], [ %3, %bb.d ], [ %.1134, %.lr.ph135 ], [ %.1134, %conv_ascii2bin.exit96 ] ; 4 uses
+  %.1.lcssa = phi i32 [ %.083127, %.critedge ], [ %3, %bb.d ], [ %.1134, %.lr.ph135 ], [ %.1134, %conv_ascii2bin.exit96 ] ; 5 uses
   %i.y = and i32 %.1.lcssa, 3
   %.not91 = icmp eq i32 %i.y, 0
   br i1 %.not91, label %bb.g, label %.loopexit
@@ -282,13 +282,18 @@ bb.g:                                             ; preds = %.critedge3
 .preheader:                                       ; preds = %bb.g
   %i.aa = add nsw i32 %.1.lcssa, -4
   %i.ab = icmp sgt i32 %.1.lcssa, 4
-  br i1 %i.ab, label %.lr.ph144, label %._crit_edge
+  br i1 %i.ab, label %.lr.ph144.preheader, label %._crit_edge
 
-.lr.ph144:                                        ; preds = %.preheader, %bb.l
-  %.080143 = phi i32 [ %5, %bb.l ], [ 0, %.preheader ] ; 2 uses
-  %.081142 = phi i32 [ %i.bq, %bb.l ], [ 0, %.preheader ]
-  %.185141 = phi ptr [ %i.ay, %bb.l ], [ %.084.lcssa167, %.preheader ] ; 5 uses
-  %.086140 = phi ptr [ %i.bp, %bb.l ], [ %1, %.preheader ] ; 4 uses
+.lr.ph144.preheader:                              ; preds = %.preheader
+  %5 = add nsw i32 %.1.lcssa, -8
+  %6 = lshr exact i32 %5, 2
+  %7 = mul nuw nsw i32 %6, 3
+  br label %.lr.ph144
+
+.lr.ph144:                                        ; preds = %.lr.ph144.preheader, %bb.l
+  %.081142 = phi i32 [ %i.bq, %bb.l ], [ 0, %.lr.ph144.preheader ]
+  %.185141 = phi ptr [ %i.ay, %bb.l ], [ %.084.lcssa167, %.lr.ph144.preheader ] ; 5 uses
+  %.086140 = phi ptr [ %i.bp, %bb.l ], [ %1, %.lr.ph144.preheader ] ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.185141, i64 1
   %i.ad = load i8, ptr %.185141, align 1, !tbaa !13 ; 2 uses
   %.not.i97 = icmp sgt i8 %i.ad, -1
@@ -368,13 +373,12 @@ bb.l:                                             ; preds = %conv_ascii2bin.exit
   %i.bo = or i8 %.0.i107, %i.bn
   %i.bp = getelementptr inbounds nuw i8, ptr %.086140, i64 3 ; 2 uses
   store i8 %i.bo, ptr %i.bm, align 1, !tbaa !13
-  %5 = add nuw nsw i32 %.080143, 3
   %i.bq = add nuw nsw i32 %.081142, 4             ; 2 uses
   %i.br = icmp slt i32 %i.bq, %i.aa
   br i1 %i.br, label %.lr.ph144, label %._crit_edge.loopexit, !llvm.loop !18
 
 ._crit_edge.loopexit:                             ; preds = %bb.l
-  %i.bs = add nuw i32 %.080143, 6
+  %i.bs = add nuw nsw i32 %7, 6
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
@@ -497,7 +501,7 @@ default.unreachable164:                           ; preds = %bb.s
   unreachable
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
-  %i.dp = sub nuw i32 %.080.lcssa, %.082
+  %i.dp = sub nuw nsw i32 %.080.lcssa, %.082
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.e, %bb.f, %conv_ascii2bin.exit108, %conv_ascii2bin.exit120, %bb.g, %.critedge3, %bb.w
@@ -506,7 +510,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define range(i32 -2147483647, -2147483648) i32 @EVP_DecodeBlock(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #7 {
+define range(i32 -1, 1610612737) i32 @EVP_DecodeBlock(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #7 {
 bb.a:
   %i.a = tail call fastcc i32 @evp_decodeblock_int(ptr noundef null, ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef 0)
   ret i32 %i.a

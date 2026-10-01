@@ -1,0 +1,569 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 530b1400ae69e..c4d0b8d9e9931 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -13369,6 +13369,14 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+                                   bool ControlsOnlyExit, bool AllowPredicates) {
+   SmallVector<const SCEVPredicate *> Predicates;
+ 
++  // Loop guards for L, collected on demand and shared by all users below.
++  std::optional<LoopGuards> CachedGuards;
++  auto getGuards = [&]() -> const LoopGuards & {
++    if (!CachedGuards)
++      CachedGuards.emplace(LoopGuards::collect(L, *this));
++    return *CachedGuards;
++  };
++
+   // FIXME: Extend the non-invariant RHS analysis to greater-than comparisons.
+   if (Invert && !isLoopInvariant(RHS, L))
+     return getCouldNotCompute();
+@@ -13405,7 +13413,8 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+           APInt StrideMax = getUnsignedRangeMax(AR->getStepRecurrence(*this));
+           APInt Limit = APInt::getMaxValue(InnerBitWidth) - (StrideMax - 1);
+           Limit = Limit.zext(OuterBitWidth);
+-          return getUnsignedRangeMax(applyLoopGuards(RHS, L)).ule(Limit);
++          return getUnsignedRangeMax(applyLoopGuards(RHS, getGuards()))
++              .ule(Limit);
+         };
+         auto Flags = AR->getNoWrapFlags();
+         if (!hasFlags(Flags, SCEV::FlagNUW) && canProveNUW())
+@@ -13468,7 +13477,7 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+   bool PositiveStride = isKnownPositive(Stride);
+   // A dominating guard may prove the stride positive.
+   if (!PositiveStride) {
+-    const SCEV *LoopGuardedStride = applyLoopGuards(Stride, L);
++    const SCEV *LoopGuardedStride = applyLoopGuards(Stride, getGuards());
+     if (isKnownPositive(LoopGuardedStride)) {
+       GuardedStride = LoopGuardedStride;
+       PositiveStride = true;
+@@ -13566,8 +13575,14 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+     }
+   } else {
+     // Avoid proven overflow cases: this will ensure that the backedge taken
+-    // count will not generate any unsigned overflow.
+-    IVMayOverflow = canIVOverflowOnLT(RHS, GuardedStride, IsSigned, Invert);
++    // count will not generate any unsigned overflow. If the range of RHS is
++    // not sufficient, retry with facts from guards dominating the loop, which
++    // hold for an invariant RHS on every iteration.
++    IVMayOverflow =
++        canIVOverflowOnLT(RHS, GuardedStride, IsSigned, Invert) &&
++        (!isLoopInvariant(RHS, L) ||
++         canIVOverflowOnLT(applyLoopGuards(RHS, getGuards()), GuardedStride,
++                           IsSigned, Invert));
+     if (IVMayOverflow && !NoWrap)
+       return getCouldNotCompute();
+   }
+@@ -13796,8 +13811,8 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+         };
+ 
+         auto CondGE = IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE;
+-        const SCEV *GuardedRHS = applyLoopGuards(OrigRHS, L);
+-        const SCEV *GuardedStart = applyLoopGuards(OrigStart, L);
++        const SCEV *GuardedRHS = applyLoopGuards(OrigRHS, getGuards());
++        const SCEV *GuardedStart = applyLoopGuards(OrigStart, getGuards());
+         if (Invert)
+           std::swap(GuardedRHS, GuardedStart);
+ 
+diff --git a/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll b/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll
+index 6ff3d51714c55..da44d225b56c4 100644
+--- a/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll
++++ b/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll
+@@ -147,9 +147,9 @@ ret:
+ define i32 @sgt_stride_3_variable_bound(i32 %n, i32 %m) {
+ ; CHECK-LABEL: 'sgt_stride_3_variable_bound'
+ ; CHECK-NEXT:  Determining loop execution counts for: @sgt_stride_3_variable_bound
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is ((((-1 * (1 umin ((-1 * (%n smin %m)) + %n)))<nuw><nsw> + (-1 * (%n smin %m)) + %n) /u 3) + (1 umin ((-1 * (%n smin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((2 + (-1 * %m) + %n) /u 3)
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1431655765
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * (%n smin %m)) + %n)))<nuw><nsw> + (-1 * (%n smin %m)) + %n) /u 3) + (1 umin ((-1 * (%n smin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((2 + (-1 * %m) + %n) /u 3)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-lt-overflow-from-guard.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-lt-overflow-from-guard.ll
+new file mode 100644
+index 0000000000000..2114a218f2262
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-lt-overflow-from-guard.ll
+@@ -0,0 +1,414 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -disable-output -passes='print<scalar-evolution>' < %s 2>&1 | FileCheck %s
++;
++; howManyLessThans, also for inverted GT compares: use dominating loop guards
++; on RHS to prove a non-unit-stride IV cannot overflow before the exit is
++; taken.
++
++declare void @use(i64)
++
++; 0 < n < SMAX, stride 2: IV cannot overflow.
++define void @slt_stride2_guard(i64 %n) {
++; CHECK-LABEL: 'slt_stride2_guard'
++; CHECK-NEXT:  Classifying expressions for: @slt_stride2_guard
++; CHECK-NEXT:    %g = and i1 %g1, %g2
++; CHECK-NEXT:    --> (%g1 umin %g2) U: full-set S: full-set
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,2}<nuw><nsw><%loop> U: [0,9223372036854775805) S: [0,9223372036854775805) Exits: (2 * ((-1 + %n) /u 2))<nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, 2
++; CHECK-NEXT:    --> {2,+,2}<nuw><nsw><%loop> U: [2,9223372036854775807) S: [2,9223372036854775807) Exits: (2 + (2 * ((-1 + %n) /u 2))<nuw>)<u nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @slt_stride2_guard
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 + %n) /u 2)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4611686018427387902
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + %n) /u 2)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g1 = icmp slt i64 %n, 9223372036854775807
++  %g2 = icmp sgt i64 %n, 0
++  %g = and i1 %g1, %g2
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, 2
++  %c = icmp slt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Same as above, but with the range known from an attribute.
++define void @slt_stride2_range_attr(i64 range(i64 1, 9223372036854775807) %n) {
++; CHECK-LABEL: 'slt_stride2_range_attr'
++; CHECK-NEXT:  Classifying expressions for: @slt_stride2_range_attr
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,2}<nuw><nsw><%loop> U: [0,9223372036854775805) S: [0,9223372036854775805) Exits: (2 * ((-1 + %n)<nsw> /u 2))<nuw><nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, 2
++; CHECK-NEXT:    --> {2,+,2}<nuw><nsw><%loop> U: [2,9223372036854775807) S: [2,9223372036854775807) Exits: (2 + (2 * ((-1 + %n)<nsw> /u 2))<nuw><nsw>)<nuw><nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @slt_stride2_range_attr
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 + %n)<nsw> /u 2)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4611686018427387902
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + %n)<nsw> /u 2)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, 2
++  %c = icmp slt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; n < SMAX from a guard, with an additional early exit.
++define void @slt_stride2_guard_multi_exit(i64 %n, i64 %m) {
++; CHECK-LABEL: 'slt_stride2_guard_multi_exit'
++; CHECK-NEXT:  Classifying expressions for: @slt_stride2_guard_multi_exit
++; CHECK-NEXT:    %g = and i1 %g1, %g2
++; CHECK-NEXT:    --> (%g1 umin %g2) U: full-set S: full-set
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %latch ]
++; CHECK-NEXT:    --> {0,+,2}<nuw><nsw><%loop> U: [0,9223372036854775805) S: [0,9223372036854775805) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, 2
++; CHECK-NEXT:    --> {2,+,2}<nuw><nsw><%loop> U: [2,9223372036854775807) S: [2,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @slt_stride2_guard_multi_exit
++; CHECK-NEXT:  Loop %loop: <multiple exits> Unpredictable backedge-taken count.
++; CHECK-NEXT:    exit count for loop: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    predicated exit count for loop: (%m /u 2)
++; CHECK-NEXT:     Predicates:
++; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i64 %m to i1) to i64) == 0
++; CHECK-EMPTY:
++; CHECK-NEXT:    exit count for latch: ((-1 + %n) /u 2)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4611686018427387902
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + %n) /u 2)
++; CHECK-NEXT:    symbolic max exit count for loop: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    predicated symbolic max exit count for loop: (%m /u 2)
++; CHECK-NEXT:     Predicates:
++; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i64 %m to i1) to i64) == 0
++; CHECK-EMPTY:
++; CHECK-NEXT:    symbolic max exit count for latch: ((-1 + %n) /u 2)
++; CHECK-NEXT:  Loop %loop: Predicated backedge-taken count is (((-1 + %n) /u 2) umin (%m /u 2))
++; CHECK-NEXT:   Predicates:
++; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i64 %m to i1) to i64) == 0
++; CHECK-NEXT:  Loop %loop: Predicated symbolic max backedge-taken count is (((-1 + %n) /u 2) umin (%m /u 2))
++; CHECK-NEXT:   Predicates:
++; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i64 %m to i1) to i64) == 0
++;
++entry:
++  %g1 = icmp slt i64 %n, 9223372036854775807
++  %g2 = icmp sgt i64 %n, 0
++  %g = and i1 %g1, %g2
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %latch ]
++  %ec = icmp eq i64 %iv, %m
++  br i1 %ec, label %exit, label %latch
++
++latch:
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, 2
++  %c = icmp slt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; n <s SMAX - 1 (i.e. n <=s SMAX - 2), stride 3: IV cannot overflow.
++define void @slt_stride3_guard_smax_minus_1(i64 %n) {
++; CHECK-LABEL: 'slt_stride3_guard_smax_minus_1'
++; CHECK-NEXT:  Classifying expressions for: @slt_stride3_guard_smax_minus_1
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,3}<nuw><nsw><%loop> U: [0,9223372036854775804) S: [0,9223372036854775804) Exits: (3 * ((-1 + (3 smax %n))<nsw> /u 3))<nuw><nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, 3
++; CHECK-NEXT:    --> {3,+,3}<nuw><nsw><%loop> U: [3,9223372036854775807) S: [3,9223372036854775807) Exits: (3 + (3 * ((-1 + (3 smax %n))<nsw> /u 3))<nuw><nsw>)<nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @slt_stride3_guard_smax_minus_1
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 + (3 smax %n))<nsw> /u 3)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 3074457345618258601
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + (3 smax %n))<nsw> /u 3)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp slt i64 %n, 9223372036854775806
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, 3
++  %c = icmp slt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: n <s SMAX is insufficient for stride 3 (needs n <=s SMAX - 2).
++define void @slt_stride3_guard_smax_insufficient(i64 %n) {
++; CHECK-LABEL: 'slt_stride3_guard_smax_insufficient'
++; CHECK-NEXT:  Classifying expressions for: @slt_stride3_guard_smax_insufficient
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,3}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, 3
++; CHECK-NEXT:    --> {3,+,3}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @slt_stride3_guard_smax_insufficient
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  %g = icmp slt i64 %n, 9223372036854775807
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, 3
++  %c = icmp slt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: the guard does not dominate the loop.
++define void @slt_stride2_guard_not_dominating(i64 %n, i1 %c.0) {
++; CHECK-LABEL: 'slt_stride2_guard_not_dominating'
++; CHECK-NEXT:  Classifying expressions for: @slt_stride2_guard_not_dominating
++; CHECK-NEXT:    %iv = phi i64 [ 0, %ph ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,2}<%loop> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, 2
++; CHECK-NEXT:    --> {2,+,2}<%loop> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @slt_stride2_guard_not_dominating
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  br i1 %c.0, label %guard, label %ph
++
++guard:
++  %g = icmp slt i64 %n, 9223372036854775807
++  br i1 %g, label %ph, label %exit
++
++ph:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %ph ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, 2
++  %c = icmp slt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; n <u UMAX, stride 2: IV cannot overflow.
++define void @ult_stride2_guard(i64 %n) {
++; CHECK-LABEL: 'ult_stride2_guard'
++; CHECK-NEXT:  Classifying expressions for: @ult_stride2_guard
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,2}<nuw><%loop> U: [0,-3) S: [-9223372036854775808,9223372036854775807) Exits: (2 * ((-1 + (2 umax %n)) /u 2))<nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, 2
++; CHECK-NEXT:    --> {2,+,2}<nuw><%loop> U: [2,-1) S: [-9223372036854775808,9223372036854775807) Exits: (2 + (2 * ((-1 + (2 umax %n)) /u 2))<nuw>)<u nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @ult_stride2_guard
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 + (2 umax %n)) /u 2)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 9223372036854775806
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + (2 umax %n)) /u 2)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp ult i64 %n, -1
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, 2
++  %c = icmp ult i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: n <u UMAX is insufficient for stride 3.
++define void @ult_stride3_guard_insufficient(i64 %n) {
++; CHECK-LABEL: 'ult_stride3_guard_insufficient'
++; CHECK-NEXT:  Classifying expressions for: @ult_stride3_guard_insufficient
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,3}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, 3
++; CHECK-NEXT:    --> {3,+,3}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @ult_stride3_guard_insufficient
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  %g = icmp ult i64 %n, -1
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, 3
++  %c = icmp ult i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; n >s SMIN, stride -2: IV cannot overflow.
++define void @sgt_stride2_guard(i64 %n, i64 %start) {
++; CHECK-LABEL: 'sgt_stride2_guard'
++; CHECK-NEXT:  Classifying expressions for: @sgt_stride2_guard
++; CHECK-NEXT:    %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,-2}<%loop> U: full-set S: full-set Exits: ((-2 * ((-1 + (-1 * ((-2 + %start) smin %n)) + %start) /u 2)) + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, -2
++; CHECK-NEXT:    --> {(-2 + %start),+,-2}<%loop> U: full-set S: full-set Exits: (-2 + (-2 * ((-1 + (-1 * ((-2 + %start) smin %n)) + %start) /u 2)) + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @sgt_stride2_guard
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 + (-1 * ((-2 + %start) smin %n)) + %start) /u 2)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 9223372036854775807
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + (-1 * ((-2 + %start) smin %n)) + %start) /u 2)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp sgt i64 %n, -9223372036854775808
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, -2
++  %c = icmp sgt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: n >s SMIN is insufficient for stride -3.
++define void @sgt_stride3_guard_insufficient(i64 %n, i64 %start) {
++; CHECK-LABEL: 'sgt_stride3_guard_insufficient'
++; CHECK-NEXT:  Classifying expressions for: @sgt_stride3_guard_insufficient
++; CHECK-NEXT:    %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,-3}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, -3
++; CHECK-NEXT:    --> {(-3 + %start),+,-3}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @sgt_stride3_guard_insufficient
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  %g = icmp sgt i64 %n, -9223372036854775808
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, -3
++  %c = icmp sgt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; n >s SMIN + 1 (i.e. n >=s SMIN + 2), stride -3: IV cannot overflow.
++define void @sgt_stride3_guard_smin_plus_1(i64 %n, i64 %start) {
++; CHECK-LABEL: 'sgt_stride3_guard_smin_plus_1'
++; CHECK-NEXT:  Classifying expressions for: @sgt_stride3_guard_smin_plus_1
++; CHECK-NEXT:    %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,-3}<%loop> U: full-set S: full-set Exits: ((-3 * ((-1 + (-1 * ((-3 + %start) smin %n)) + %start) /u 3)) + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, -3
++; CHECK-NEXT:    --> {(-3 + %start),+,-3}<%loop> U: full-set S: full-set Exits: (-3 + (-3 * ((-1 + (-1 * ((-3 + %start) smin %n)) + %start) /u 3)) + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @sgt_stride3_guard_smin_plus_1
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 + (-1 * ((-3 + %start) smin %n)) + %start) /u 3)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 6148914691236517205
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + (-1 * ((-3 + %start) smin %n)) + %start) /u 3)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp sgt i64 %n, -9223372036854775807
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, -3
++  %c = icmp sgt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; n >u 1 (i.e. n >=u 2), stride -3: IV cannot overflow.
++define void @ugt_stride3_guard(i64 %n, i64 %start) {
++; CHECK-LABEL: 'ugt_stride3_guard'
++; CHECK-NEXT:  Classifying expressions for: @ugt_stride3_guard
++; CHECK-NEXT:    %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,-3}<%loop> U: full-set S: full-set Exits: ((-3 * ((-1 + (-1 * ((-3 + %start) umin %n)) + %start) /u 3)) + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, -3
++; CHECK-NEXT:    --> {(-3 + %start),+,-3}<%loop> U: full-set S: full-set Exits: (-3 + (-3 * ((-1 + (-1 * ((-3 + %start) umin %n)) + %start) /u 3)) + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @ugt_stride3_guard
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 + (-1 * ((-3 + %start) umin %n)) + %start) /u 3)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 6148914691236517205
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + (-1 * ((-3 + %start) umin %n)) + %start) /u 3)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp ugt i64 %n, 1
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, -3
++  %c = icmp ugt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: n >u 0 is insufficient for stride -3 (needs n >=u 2).
++define void @ugt_stride3_guard_insufficient(i64 %n, i64 %start) {
++; CHECK-LABEL: 'ugt_stride3_guard_insufficient'
++; CHECK-NEXT:  Classifying expressions for: @ugt_stride3_guard_insufficient
++; CHECK-NEXT:    %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,-3}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, -3
++; CHECK-NEXT:    --> {(-3 + %start),+,-3}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @ugt_stride3_guard_insufficient
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  %g = icmp ugt i64 %n, 0
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %iv)
++  %iv.next = add i64 %iv, -3
++  %c = icmp ugt i64 %iv.next, %n
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-multiple-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/trip-multiple-guard-info.ll
+index 512e583928804..fd9765f2697e1 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-multiple-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-multiple-guard-info.ll
+@@ -543,20 +543,21 @@ exit:
+   ret void
+ }
+ 
+-; TODO: Even though %num is known to divide by 4, and the loop's IV advances by 4, SCEV can't compute the trip count.
++; %num is known to divide by 4, and the loop's IV advances by 4.
+ define void @test_trip_multiple_4_vectorized_iv(i32 %num) {
+ ; CHECK-LABEL: 'test_trip_multiple_4_vectorized_iv'
+ ; CHECK-NEXT:  Classifying expressions for: @test_trip_multiple_4_vectorized_iv
+ ; CHECK-NEXT:    %u = urem i32 %num, 4
+ ; CHECK-NEXT:    --> (zext i2 (trunc i32 %num to i2) to i32) U: [0,4) S: [0,4)
+ ; CHECK-NEXT:    %i.010 = phi i32 [ 0, %entry ], [ %inc, %for.body ]
+-; CHECK-NEXT:    --> {0,+,4}<%for.body> U: [0,-3) S: [-2147483648,2147483645) Exits: <<Unknown>> LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,4}<nuw><%for.body> U: [0,-7) S: [-2147483648,2147483645) Exits: (4 * ((-1 + (4 umax %num)) /u 4))<nuw> LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add i32 %i.010, 4
+-; CHECK-NEXT:    --> {4,+,4}<%for.body> U: [0,-3) S: [-2147483648,2147483645) Exits: <<Unknown>> LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {4,+,4}<nuw><%for.body> U: [4,-3) S: [-2147483648,2147483645) Exits: (4 + (4 * ((-1 + (4 umax %num)) /u 4))<nuw>)<u nuw> LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_trip_multiple_4_vectorized_iv
+-; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is ((-1 + (4 umax %num)) /u 4)
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 1073741822
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is ((-1 + (4 umax %num)) /u 4)
++; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
+ ;
+ entry:
+   %u = urem i32 %num, 4
+diff --git a/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll b/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll
+index 1c53b64495a14..9715d85321d4d 100644
+--- a/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll
++++ b/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll
+@@ -284,20 +284,20 @@ define i64 @even_index_sum_uadd_with_overflow(ptr %p, i64 %count) {
+ ; CHECK-NEXT:    tail call void @llvm.assume(i1 [[NN]])
+ ; CHECK-NEXT:    [[EZ:%.*]] = icmp eq i64 [[COUNT]], 0
+ ; CHECK-NEXT:    br i1 [[EZ]], label %[[EXIT:.*]], label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER1:.*]]:
++; CHECK-NEXT:    [[OOB:%.*]] = icmp ult i64 [[IV:%.*]], [[COUNT]]
++; CHECK-NEXT:    br i1 [[OOB]], label %[[LOOP_HEADER]], label %[[TRAP:.*]]
+ ; CHECK:       [[LOOP_HEADER]]:
+-; CHECK-NEXT:    [[ACC:%.*]] = phi i64 [ [[ACC_NEXT:%.*]], %[[BODY:.*]] ], [ 0, %[[ENTRY]] ]
+-; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], %[[BODY]] ], [ 0, %[[ENTRY]] ]
+-; CHECK-NEXT:    [[OOB:%.*]] = icmp ult i64 [[IV]], [[COUNT]]
+-; CHECK-NEXT:    br i1 [[OOB]], label %[[BODY]], label %[[TRAP:.*]]
+-; CHECK:       [[BODY]]:
+-; CHECK-NEXT:    [[A:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[P]], i64 [[IV]]
++; CHECK-NEXT:    [[IV2:%.*]] = phi i64 [ [[IV]], %[[LOOP_HEADER1]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    [[ACC:%.*]] = phi i64 [ [[ACC_NEXT:%.*]], %[[LOOP_HEADER1]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    [[A:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[P]], i64 [[IV2]]
+ ; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[A]], align 8
+ ; CHECK-NEXT:    [[ACC_NEXT]] = add i64 [[V]], [[ACC]]
+-; CHECK-NEXT:    [[IV_NEXT]] = add nuw i64 [[IV]], 2
+-; CHECK-NEXT:    [[EC_NOT:%.*]] = icmp slt i64 [[IV_NEXT]], [[COUNT]]
+-; CHECK-NEXT:    br i1 [[EC_NOT]], label %[[LOOP_HEADER]], label %[[EXIT]]
++; CHECK-NEXT:    [[IV]] = add nuw i64 [[IV2]], 2
++; CHECK-NEXT:    [[EC_NOT:%.*]] = icmp slt i64 [[IV]], [[COUNT]]
++; CHECK-NEXT:    br i1 [[EC_NOT]], label %[[LOOP_HEADER1]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+-; CHECK-NEXT:    [[R:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[ACC_NEXT]], %[[BODY]] ]
++; CHECK-NEXT:    [[R:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[ACC_NEXT]], %[[LOOP_HEADER]] ]
+ ; CHECK-NEXT:    ret i64 [[R]]
+ ; CHECK:       [[TRAP]]:
+ ; CHECK-NEXT:    tail call void @llvm.trap()

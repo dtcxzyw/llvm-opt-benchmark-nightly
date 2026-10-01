@@ -202,21 +202,26 @@ bb.c:                                             ; preds = %bb.a
   %i.q = tail call ptr @proto_tree_add_item(ptr noundef %i.i, i32 noundef %i.p, ptr noundef %2, i32 noundef %i.f, i32 noundef 3, i32 noundef 0) ; 0 uses
   %i.r = load i32, ptr @hf_pcep_svec_flags_p, align 4
   %i.s = tail call ptr @proto_tree_add_item(ptr noundef %i.i, i32 noundef %i.r, ptr noundef %2, i32 noundef %i.f, i32 noundef 3, i32 noundef 0) ; 0 uses
-  %7 = add nsw i32 %4, -4
   %.not = icmp eq i32 %4, 8
-  br i1 %.not, label %.loopexit, label %.lr.ph
+  br i1 %.not, label %.loopexit, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.c, %.lr.ph
-  %.044 = phi i32 [ %i.y, %.lr.ph ], [ 4, %bb.c ] ; 2 uses
-  %.04143 = phi i32 [ %i.w, %.lr.ph ], [ 1, %bb.c ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.c
+  %7 = add nsw i32 %4, -9
+  %8 = lshr i32 %7, 2
+  %9 = add nuw nsw i32 %8, 1
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %.044 = phi i32 [ %i.y, %.lr.ph ], [ 4, %.lr.ph.preheader ] ; 2 uses
+  %.04143 = phi i32 [ %i.w, %.lr.ph ], [ 1, %.lr.ph.preheader ] ; 3 uses
   %i.t = add i32 %.044, %3                        ; 2 uses
   %i.u = tail call i32 @tvb_get_ntohl(ptr noundef %2, i32 noundef %i.t) ; 2 uses
   %i.v = load i32, ptr @hf_pcep_svec_obj_request_id_number, align 4
-  %i.w = add i32 %.04143, 1
+  %i.w = add nuw nsw i32 %.04143, 1
   %i.x = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %0, i32 noundef %i.v, ptr noundef %2, i32 noundef %i.t, i32 noundef 4, i32 noundef %i.u, ptr noundef nonnull @.str.1231, i32 noundef %.04143, i32 noundef %i.u) ; 0 uses
-  %i.y = add nuw nsw i32 %.044, 4                 ; 2 uses
-  %8 = icmp slt i32 %i.y, %7
-  br i1 %8, label %.lr.ph, label %.loopexit, !llvm.loop !15
+  %i.y = add nuw nsw i32 %.044, 4
+  %exitcond.not = icmp eq i32 %.04143, %9
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !15
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.c, %bb.b
   ret void

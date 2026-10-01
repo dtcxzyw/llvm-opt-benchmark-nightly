@@ -206,7 +206,7 @@ sqlite3DbFree.exit:                               ; preds = %bb.c
 bb.d:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.q = load i32, ptr %i.p, align 8, !tbaa !1093 ; 3 uses
-  %i.r = and i32 %i.q, -2                         ; 2 uses
+  %i.r = and i32 %i.q, -2                         ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !683  ; 2 uses
   %i.u = ashr i32 %i.q, 1
@@ -233,19 +233,34 @@ bb.g:                                             ; preds = %sqlite3DbMallocRaw.
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !762 ; 2 uses
   %i.ab = load i8, ptr %i.a, align 2, !tbaa !787
   %i.ac = icmp eq i8 %i.ab, 2
-  %2 = add nsw i32 %i.r, -1                       ; 2 uses
   %i.ad = icmp sgt i32 %i.q, 1                    ; 2 uses
   br i1 %i.ac, label %.preheader, label %.preheader64
 
 .preheader64:                                     ; preds = %bb.g
-  br i1 %i.ad, label %.lr.ph, label %sqlite3DbFree.exit60
+  br i1 %i.ad, label %.lr.ph.preheader, label %sqlite3DbFree.exit60
+
+.lr.ph.preheader:                                 ; preds = %.preheader64
+  %2 = tail call i32 @llvm.smax.i32(i32 %i.r, i32 3)
+  %3 = add nsw i32 %2, -2
+  %4 = lshr i32 %3, 1
+  %5 = add nuw nsw i32 %4, 1
+  %wide.trip.count = zext nneg i32 %5 to i64
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.g
-  br i1 %i.ad, label %.lr.ph74, label %sqlite3DbFree.exit60
+  br i1 %i.ad, label %.lr.ph74.preheader, label %sqlite3DbFree.exit60
 
-.lr.ph74:                                         ; preds = %.preheader, %bb.h
-  %indvars.iv90 = phi i64 [ %indvars.iv.next91, %bb.h ], [ 0, %.preheader ] ; 3 uses
-  %indvars.iv88 = phi i64 [ %indvars.iv.next89, %bb.h ], [ 0, %.preheader ] ; 3 uses
+.lr.ph74.preheader:                               ; preds = %.preheader
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.r, i32 3)
+  %7 = add nsw i32 %6, -2
+  %8 = lshr i32 %7, 1
+  %9 = add nuw nsw i32 %8, 1
+  %wide.trip.count97 = zext nneg i32 %9 to i64
+  br label %.lr.ph74
+
+.lr.ph74:                                         ; preds = %.lr.ph74.preheader, %bb.h
+  %indvars.iv90 = phi i64 [ 0, %.lr.ph74.preheader ], [ %indvars.iv.next91, %bb.h ] ; 3 uses
+  %indvars.iv88 = phi i64 [ 0, %.lr.ph74.preheader ], [ %indvars.iv.next89, %bb.h ] ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 %indvars.iv90 ; 2 uses
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !733
   %i.ag = getelementptr inbounds nuw i8, ptr %.0.i, i64 %indvars.iv88
@@ -257,14 +272,13 @@ bb.g:                                             ; preds = %sqlite3DbMallocRaw.
 
 bb.h:                                             ; preds = %.lr.ph74
   %indvars.iv.next91 = add nuw nsw i64 %indvars.iv90, 2 ; 2 uses
-  %indvars94 = trunc i64 %indvars.iv.next91 to i32 ; 2 uses
-  %indvars.iv.next89 = add nuw nsw i64 %indvars.iv88, 1 ; 2 uses
-  %3 = icmp sgt i32 %2, %indvars94
-  br i1 %3, label %.lr.ph74, label %sqlite3DbFree.exit60, !llvm.loop !3925
+  %indvars.iv.next89 = add nuw nsw i64 %indvars.iv88, 1 ; 3 uses
+  %exitcond98.not = icmp eq i64 %indvars.iv.next89, %wide.trip.count97
+  br i1 %exitcond98.not, label %sqlite3DbFree.exit60.loopexit.split.loop.exit104, label %.lr.ph74, !llvm.loop !3925
 
-.lr.ph:                                           ; preds = %.preheader64, %bb.i
-  %indvars.iv83 = phi i64 [ %indvars.iv.next84, %bb.i ], [ 0, %.preheader64 ] ; 3 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %.preheader64 ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
+  %indvars.iv83 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next84, %bb.i ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.i ] ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.aa, i64 %indvars.iv83 ; 2 uses
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !733
   %.not54 = icmp eq i8 %i.ak, 0
@@ -276,22 +290,25 @@ bb.i:                                             ; preds = %.lr.ph
   %i.an = getelementptr inbounds nuw i8, ptr %.0.i, i64 %indvars.iv
   store i8 %i.am, ptr %i.an, align 1, !tbaa !733
   %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 2 ; 2 uses
-  %indvars86 = trunc i64 %indvars.iv.next84 to i32 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %4 = icmp sgt i32 %2, %indvars86
-  br i1 %4, label %.lr.ph, label %sqlite3DbFree.exit60, !llvm.loop !3926
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %sqlite3DbFree.exit60.loopexit98.split.loop.exit101, label %.lr.ph, !llvm.loop !3926
 
-sqlite3DbFree.exit60.loopexit.split.loop.exit104: ; preds = %.lr.ph74
-  %i.ao = trunc nuw nsw i64 %indvars.iv90 to i32
+sqlite3DbFree.exit60.loopexit.split.loop.exit104: ; preds = %bb.h, %.lr.ph74
+  %.248.ph.in = phi i64 [ %indvars.iv90, %.lr.ph74 ], [ %indvars.iv.next91, %bb.h ]
+  %.2.ph.in = phi i64 [ %indvars.iv88, %.lr.ph74 ], [ %indvars.iv.next89, %bb.h ]
+  %i.ao = trunc i64 %.248.ph.in to i32
   br label %sqlite3DbFree.exit60
 
-sqlite3DbFree.exit60.loopexit98.split.loop.exit101: ; preds = %.lr.ph
-  %i.ap = trunc nuw nsw i64 %indvars.iv83 to i32
+sqlite3DbFree.exit60.loopexit98.split.loop.exit101: ; preds = %bb.i, %.lr.ph
+  %.248.ph81.in = phi i64 [ %indvars.iv.next84, %bb.i ], [ %indvars.iv83, %.lr.ph ]
+  %.2.ph82.in = phi i64 [ %indvars.iv.next, %bb.i ], [ %indvars.iv, %.lr.ph ]
+  %i.ap = trunc i64 %.248.ph81.in to i32
   br label %sqlite3DbFree.exit60
 
-sqlite3DbFree.exit60:                             ; preds = %bb.i, %bb.h, %sqlite3DbFree.exit60.loopexit98.split.loop.exit101, %sqlite3DbFree.exit60.loopexit.split.loop.exit104, %.preheader64, %.preheader
-  %.248 = phi i32 [ 0, %.preheader64 ], [ 0, %.preheader ], [ %indvars94, %bb.h ], [ %i.ao, %sqlite3DbFree.exit60.loopexit.split.loop.exit104 ], [ %i.ap, %sqlite3DbFree.exit60.loopexit98.split.loop.exit101 ], [ %indvars86, %bb.i ]
-  %.2 = phi i64 [ 0, %.preheader64 ], [ 0, %.preheader ], [ %indvars.iv.next89, %bb.h ], [ %indvars.iv88, %sqlite3DbFree.exit60.loopexit.split.loop.exit104 ], [ %indvars.iv, %sqlite3DbFree.exit60.loopexit98.split.loop.exit101 ], [ %indvars.iv.next, %bb.i ]
+sqlite3DbFree.exit60:                             ; preds = %sqlite3DbFree.exit60.loopexit98.split.loop.exit101, %sqlite3DbFree.exit60.loopexit.split.loop.exit104, %.preheader64, %.preheader
+  %.248 = phi i32 [ 0, %.preheader64 ], [ 0, %.preheader ], [ %i.ao, %sqlite3DbFree.exit60.loopexit.split.loop.exit104 ], [ %i.ap, %sqlite3DbFree.exit60.loopexit98.split.loop.exit101 ]
+  %.2 = phi i64 [ 0, %.preheader64 ], [ 0, %.preheader ], [ %.2.ph.in, %sqlite3DbFree.exit60.loopexit.split.loop.exit104 ], [ %.2.ph82.in, %sqlite3DbFree.exit60.loopexit98.split.loop.exit101 ]
   %i.aq = and i64 %.2, 4294967295
   %i.ar = getelementptr inbounds nuw i8, ptr %.0.i, i64 %i.aq
   store i8 0, ptr %i.ar, align 1, !tbaa !733
@@ -694,6 +711,7 @@ bb.go:                                            ; preds = %bb.gn, %.split1353.
   %i.aik = getelementptr inbounds nuw i8, ptr %i.h, i64 148
   %i.ail = getelementptr inbounds nuw i8, ptr %i.h, i64 136
   %i.aim = getelementptr inbounds nuw i8, ptr %i.h, i64 24
+  %7 = zext nneg i32 %i.aig to i64
   br label %bb.gp
 
 bb.gp:                                            ; preds = %.lr.ph872, %sqlite3VdbeResolveLabel.exit
@@ -770,8 +788,7 @@ bb.gv:                                            ; preds = %sqlite3VdbeGoto.exi
 
 sqlite3VdbeResolveLabel.exit:                     ; preds = %bb.gu, %bb.gv
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %7 = trunc nuw i64 %indvars.iv.next to i32
-  %8 = icmp sgt i32 %i.aig, %7
+  %8 = icmp samesign ult i64 %indvars.iv.next, %7
   br i1 %8, label %bb.gp, label %._crit_edge, !llvm.loop !4856
 
 ._crit_edge:                                      ; preds = %sqlite3VdbeResolveLabel.exit, %bb.go
@@ -1174,10 +1191,14 @@ jsonAppendChar.exit:                              ; preds = %bb.a
   store i64 1, ptr %i.j, align 8, !tbaa !1936
   store i8 123, ptr %i.g, align 2, !tbaa !733
   %i.l = icmp sgt i32 %1, 0
-  br i1 %i.l, label %.lr.ph, label %._crit_edge.thread
+  br i1 %i.l, label %.lr.ph.preheader, label %._crit_edge.thread
 
-.lr.ph:                                           ; preds = %jsonAppendChar.exit, %jsonAppendChar.exit23
-  %indvars.iv = phi i64 [ %indvars.iv.next, %jsonAppendChar.exit23 ], [ 0, %jsonAppendChar.exit ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %jsonAppendChar.exit
+  %4 = zext nneg i32 %1 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %jsonAppendChar.exit23
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %jsonAppendChar.exit23 ] ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv ; 4 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !761
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 20
@@ -1381,8 +1402,7 @@ jsonAppendChar.exit23:                            ; preds = %bb.z, %bb.aa
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !761
   call fastcc void @jsonAppendSqlValue(ptr noundef %3, ptr noundef %i.ck)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv.next to i32
-  %5 = icmp sgt i32 %1, %4
+  %5 = icmp samesign ult i64 %indvars.iv.next, %4
   br i1 %5, label %.lr.ph, label %._crit_edge, !llvm.loop !5734
 
 ._crit_edge:                                      ; preds = %jsonAppendChar.exit23

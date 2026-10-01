@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %"class.llvm::APInt", align 8       ; 5 uses
   %5 = alloca %"class.llvm::APInt", align 8       ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !23   ; 17 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !23   ; 18 uses
   %i.c = sub i32 0, %i.b
   %i.d = icmp ult i32 %i.b, 65                    ; 4 uses
   br i1 %i.d, label %_ZNK4llvm5APInt13getActiveBitsEv.exit.thread, label %.lr.ph.i.i.i
@@ -436,6 +436,9 @@ _ZN4llvm5APIntC2Ejmbb.exit15:                     ; preds = %_ZN4llvm5APIntC2Ejm
   %i.cv = zext i32 %i.ct to i64
   %i.cw = add nuw nsw i64 %i.cv, 63
   %i.cx = lshr i64 %i.cw, 6                       ; 2 uses
+  %6 = add nsw i32 %i.b, -5
+  %7 = and i32 %6, -2
+  %8 = add nuw nsw i32 %7, 6                      ; 2 uses
   br i1 %i.cu, label %.split.us.us.preheader, label %.lr.ph.split.us.split.split.preheader
 
 .split.us.us.preheader:                           ; preds = %.lr.ph.split.us
@@ -449,7 +452,7 @@ _ZN4llvm5APIntC2Ejmbb.exit15:                     ; preds = %_ZN4llvm5APIntC2Ejm
   br i1 %.not98.us.us, label %_ZNK4llvm5APInt3shlEj.exit21.thread.us.us, label %_ZNK4llvm5APInt3uleERKS0_.exit.thread
 
 _ZNK4llvm5APInt3shlEj.exit21.thread.us.us:        ; preds = %.split.us.us
-  %i.cz = add i32 %.0121.us.us, 2                 ; 3 uses
+  %i.cz = add nuw i32 %.0121.us.us, 2             ; 2 uses
   %i.da = shl i64 %.sroa.075.0120.us.us, 2
   %i.db = and i64 %i.da, %i.co                    ; 2 uses
   %.not.us.us = icmp ult i32 %i.cz, %i.b
@@ -485,7 +488,7 @@ _ZNK4llvm5APInt3uleERKS0_.exit.us:                ; preds = %.lr.ph325
   br i1 %.not97.us, label %_ZNK4llvm5APInt3shlEj.exit21.thread.us, label %_ZNK4llvm5APInt3uleERKS0_.exit.thread
 
 _ZNK4llvm5APInt3shlEj.exit21.thread.us:           ; preds = %_ZNK4llvm5APInt3uleERKS0_.exit.us
-  %i.dj = add i32 %.0121.us, 2                    ; 3 uses
+  %i.dj = add nuw i32 %.0121.us, 2                ; 2 uses
   %i.dk = shl i64 %.sroa.075.0120.us, 2
   %i.dl = and i64 %i.dk, %i.co                    ; 2 uses
   %.not.us = icmp ult i32 %i.dj, %i.b
@@ -536,7 +539,7 @@ _ZNK4llvm5APInt3uleERKS0_.exit:                   ; preds = %.lr.ph318
 
 _ZNK4llvm5APInt3uleERKS0_.exit.thread:            ; preds = %_ZN4llvm5APIntD2Ev.exit23, %_ZNK4llvm5APInt3uleERKS0_.exit, %.split, %bb.k, %bb.l, %_ZNK4llvm5APInt3shlEj.exit21.thread.us, %_ZNK4llvm5APInt3uleERKS0_.exit.us, %.lr.ph.split.us.split.split, %bb.j, %_ZNK4llvm5APInt3shlEj.exit21.thread.us.us, %.split.us.us, %_ZN4llvm5APIntC2Ejmbb.exit15
   %.sroa.075.0115 = phi i64 [ %.sroa.075.0120.us, %bb.j ], [ %.sroa.075.0120.us, %.lr.ph.split.us.split.split ], [ %.sroa.075.0120, %bb.l ], [ %.sroa.075.1234240251, %_ZN4llvm5APIntC2Ejmbb.exit15 ], [ %i.db, %_ZNK4llvm5APInt3shlEj.exit21.thread.us.us ], [ %.sroa.075.0120.us.us, %.split.us.us ], [ %.sroa.075.0120.us, %_ZNK4llvm5APInt3uleERKS0_.exit.us ], [ %i.dl, %_ZNK4llvm5APInt3shlEj.exit21.thread.us ], [ %i.im, %_ZN4llvm5APIntD2Ev.exit23 ], [ %.sroa.075.0120, %.split ], [ %.sroa.075.0120, %bb.k ], [ %.sroa.075.0120, %_ZNK4llvm5APInt3uleERKS0_.exit ] ; 2 uses
-  %.0113 = phi i32 [ %.0121.us, %bb.j ], [ %.0121.us, %.lr.ph.split.us.split.split ], [ %.0121, %bb.l ], [ 4, %_ZN4llvm5APIntC2Ejmbb.exit15 ], [ %i.cz, %_ZNK4llvm5APInt3shlEj.exit21.thread.us.us ], [ %.0121.us.us, %.split.us.us ], [ %.0121.us, %_ZNK4llvm5APInt3uleERKS0_.exit.us ], [ %i.dj, %_ZNK4llvm5APInt3shlEj.exit21.thread.us ], [ %i.il, %_ZN4llvm5APIntD2Ev.exit23 ], [ %.0121, %.split ], [ %.0121, %bb.k ], [ %.0121, %_ZNK4llvm5APInt3uleERKS0_.exit ] ; 3 uses
+  %.0113 = phi i32 [ %.0121.us, %bb.j ], [ %.0121.us, %.lr.ph.split.us.split.split ], [ %.0121, %bb.l ], [ 4, %_ZN4llvm5APIntC2Ejmbb.exit15 ], [ %8, %_ZNK4llvm5APInt3shlEj.exit21.thread.us.us ], [ %.0121.us.us, %.split.us.us ], [ %.0121.us, %_ZNK4llvm5APInt3uleERKS0_.exit.us ], [ %8, %_ZNK4llvm5APInt3shlEj.exit21.thread.us ], [ %i.il, %_ZN4llvm5APIntD2Ev.exit23 ], [ %.0121, %.split ], [ %.0121, %bb.k ], [ %.0121, %_ZNK4llvm5APInt3uleERKS0_.exit ] ; 3 uses
   %i.dz = lshr exact i32 %.0113, 1                ; 3 uses
   br i1 %i.ca, label %_ZNK4llvm5APInt3shlEj.exit.thread, label %bb.m
 

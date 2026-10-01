@@ -204,8 +204,8 @@ bb.gs:                                            ; preds = %.preheader30.3.i.i.
 
 bb.gt:                                            ; preds = %.noexc129.i, %.preheader30.3.i.i.i.i
   %.sroa.014.2.3.i.i.i.i = phi i8 [ %.sroa.014.2.2.i.i.i.i, %.preheader30.3.i.i.i.i ], [ %i.uc, %.noexc129.i ] ; 2 uses
-  %i.ud = add i64 %.sroa.06.034.i.i.i.i, 64       ; 2 uses
-  %i.ue = add i64 %.sroa.06.034.i.i.i.i, 147
+  %i.ud = add nuw i64 %.sroa.06.034.i.i.i.i, 64   ; 2 uses
+  %i.ue = add nuw i64 %.sroa.06.034.i.i.i.i, 147
   %i.uf = icmp uge i64 %i.ue, %.5.i.i
   %i.ug = trunc nuw i8 %.sroa.014.2.3.i.i.i.i to i1
   %or.cond.i.i.i126.i = select i1 %i.uf, i1 true, i1 %i.ug
