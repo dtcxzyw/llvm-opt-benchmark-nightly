@@ -205,9 +205,9 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247: ; preds = %bb.ai, %bb.aj, %bb
   br label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i
 
 bb.am:                                            ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572
-  %i.ha = add i64 %.0157791, 1                    ; 2 uses
-  %.not175 = icmp ugt i64 %i.ha, %i.ge
-  br i1 %.not175, label %bb.pe, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i, !llvm.loop !446
+  %i.ha = add nuw i64 %.0157791, 1
+  %exitcond.not = icmp eq i64 %.0157791, %i.ge
+  br i1 %exitcond.not, label %bb.pe, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i, !llvm.loop !446
 
 bb.an:                                            ; preds = %bb.i, %bb.f
   %i.hb = landingpad { ptr, i32 }
@@ -251,7 +251,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i: ; preds = %bb.am, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247
   %.0139792 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %.6145, %bb.am ] ; 4 uses
-  %.0157791 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %i.ha, %bb.am ] ; 8 uses
+  %.0157791 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %i.ha, %bb.am ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %39) #23
   %i.hh = load ptr, ptr %33, align 8, !tbaa !65   ; 2 uses
   %.idx649 = shl nuw nsw i64 %.0157791, 3         ; 3 uses
@@ -654,7 +654,7 @@ bb.nt:                                            ; preds = %bb.ns, %.body.i464,
   br label %bb.oe
 
 bb.nu:                                            ; preds = %bb.kq, %bb.ks, %bb.ko
-  %i.aqk = add i64 %.0163783, 1
+  %i.aqk = add nuw nsw i64 %.0163783, 1
   br label %bb.nv
 
 bb.nv:                                            ; preds = %bb.nu, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit516

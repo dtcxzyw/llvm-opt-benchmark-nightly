@@ -193,7 +193,7 @@ bb.e:                                             ; preds = %bb.a
   br label %_ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELi4ELi0ELin1ELi4EEEE8maxCoeffEv.exit
 
 _ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELi4ELi0ELin1ELi4EEEE8maxCoeffEv.exit: ; preds = %.loopexit76.i.i.i.i, %bb.e
-  %.3.i.i.i.i = phi i32 [ %i.z, %.loopexit76.i.i.i.i ], [ %i.aa, %bb.e ]
+  %.3.i.i.i.i = phi i32 [ %i.aa, %bb.e ], [ %i.z, %.loopexit76.i.i.i.i ]
   %i.ab = add nsw i32 %.3.i.i.i.i, 1
   tail call void @_ZN3igl20massmatrix_intrinsicIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELi4ELi0ELin1ELi4EEEdEEvRKNS1_10MatrixBaseIT_EERKNS5_IT0_EENS_14MassMatrixTypeEiRNS1_12SparseMatrixIT1_Li0EiEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %2, i32 noundef %i.ab, ptr noundef nonnull align 8 dereferenceable(72) %3)
   ret void
