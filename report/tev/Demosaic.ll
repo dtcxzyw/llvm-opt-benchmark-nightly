@@ -205,7 +205,7 @@ bb.as:                                            ; preds = %._crit_edge2691
 
 .lr.ph2702:                                       ; preds = %bb.as
   %i.daq = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.dar = mul i32 %.sroa.speculated2483, 160
+  %i.dar = mul nuw i32 %.sroa.speculated2483, 160
   %i.das = add i32 %.sroa.speculated2475, %i.dar
   %i.dat = zext i32 %i.das to i64
   br label %bb.at
@@ -317,14 +317,16 @@ bb.au:                                            ; preds = %.lr.ph2698
 
 bb.av:                                            ; preds = %bb.au
   %i.ddu = lshr i64 %indvars.iv2946, 1
-  %i.ddv = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ddu
+  %2 = and i64 %i.ddu, 2147483647
+  %i.ddv = getelementptr inbounds nuw i8, ptr %i.ab, i64 %2
   %i.ddw = load i8, ptr %i.ddv, align 1, !tbaa !55
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au, %.lr.ph2698
   %i.ddx = phi i8 [ 1, %.lr.ph2698 ], [ %i.ddw, %bb.av ], [ 0, %bb.au ]
   %i.ddy = lshr i64 %indvars.iv2946, 1
-  %i.ddz = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.ddy
+  %3 = and i64 %i.ddy, 2147483647
+  %i.ddz = getelementptr inbounds nuw i8, ptr %i.s, i64 %3
   store i8 %i.ddx, ptr %i.ddz, align 1, !tbaa !55
   %i.dea = icmp sgt i32 %i.dbj, %i.dcr
   br i1 %i.dea, label %.lr.ph2698, label %._crit_edge2699, !llvm.loop !1563
@@ -362,8 +364,9 @@ bb.ax:                                            ; preds = %.lr.ph2723, %._crit
 .lr.ph2720:                                       ; preds = %.lr.ph2720.preheader, %bb.bn
   %indvars.iv2961 = phi i64 [ %i.deo, %.lr.ph2720.preheader ], [ %indvars.iv.next2962, %bb.bn ] ; 2 uses
   %indvars.iv2952 = phi i32 [ %i.del, %.lr.ph2720.preheader ], [ %indvars.iv.next2953, %bb.bn ] ; 2 uses
-  %i.deq = lshr i64 %indvars.iv2961, 1            ; 2 uses
-  %i.der = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.deq
+  %i.deq = lshr i64 %indvars.iv2961, 1
+  %4 = and i64 %i.deq, 2147483647                 ; 2 uses
+  %i.der = getelementptr inbounds nuw i8, ptr %i.s, i64 %4
   %i.des = load i8, ptr %i.der, align 1, !tbaa !55
   %.not2398 = icmp eq i8 %i.des, 0
   br i1 %.not2398, label %bb.bn, label %.preheader2570
@@ -383,7 +386,7 @@ bb.ay:                                            ; preds = %bb.bm
   %i.dfe = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.dfd)
   %i.dff = extractelement <2 x float> %i.dfd, i64 0
   %i.dfg = fdiv float %i.dff, %i.dfe
-  %i.dfh = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.deq
+  %i.dfh = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %4
   store float %i.dfg, ptr %i.dfh, align 4, !tbaa !109
   br label %bb.bn
 
