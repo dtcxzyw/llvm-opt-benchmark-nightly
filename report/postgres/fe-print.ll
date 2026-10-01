@@ -63,7 +63,7 @@ bb.a:
   %3 = alloca %struct.__sigset_t, align 8         ; 4 uses
   %i.a = alloca i8, align 1                       ; 4 uses
   %4 = alloca %struct.winsize, align 2            ; 6 uses
-  %i.b = tail call i32 @PQnfields(ptr noundef %1) #14 ; 16 uses
+  %i.b = tail call i32 @PQnfields(ptr noundef %1) #14 ; 13 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.dc
 
@@ -87,7 +87,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.l = tail call i32 @PQntuples(ptr noundef %1) #14 ; 14 uses
-  %i.m = zext nneg i32 %i.b to i64                ; 5 uses
+  %i.m = zext nneg i32 %i.b to i64                ; 8 uses
   %i.n = tail call noalias ptr @calloc(i64 noundef %i.m, i64 noundef 8) #16 ; 13 uses
   %i.o = tail call noalias ptr @calloc(i64 noundef %i.m, i64 noundef 1) #16 ; 11 uses
   %i.p = tail call noalias ptr @calloc(i64 noundef %i.m, i64 noundef 4) #16 ; 11 uses
@@ -124,7 +124,6 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph327.preheader:                              ; preds = %.preheader317, %.critedge.loopexit
   %.0213.lcssa = phi i64 [ 0, %.preheader317 ], [ %i.ab, %.critedge.loopexit ]
-  %wide.trip.count = zext nneg i32 %i.b to i64
   br label %.lr.ph327
 
 .lr.ph327:                                        ; preds = %.lr.ph327.preheader, %bb.i
@@ -169,7 +168,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %spec.select = tail call i32 @llvm.smax.i32(i32 %i.aq, i32 %.0214325) ; 3 uses
   %i.ar = add i32 %i.aq, %.0212326                ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.m
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph327, !llvm.loop !4
 
 ._crit_edge:                                      ; preds = %bb.i
@@ -340,7 +339,6 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not266, label %.lr.ph331.preheader, label %bb.ae
 
 .lr.ph331.preheader:                              ; preds = %bb.ad
-  %5 = zext nneg i32 %i.b to i64
   %wide.trip.count367 = zext nneg i32 %i.b to i64
   br label %.lr.ph331
 
@@ -372,7 +370,7 @@ bb.ag:                                            ; preds = %bb.ae
   %i.dw = trunc i64 %i.dv to i32
   %i.dx = add i32 %.0207330, %i.dw                ; 2 uses
   %indvars.iv.next364 = add nuw nsw i64 %indvars.iv363, 1 ; 3 uses
-  %i.dy = icmp samesign ult i64 %indvars.iv.next364, %5
+  %i.dy = icmp samesign ult i64 %indvars.iv.next364, %wide.trip.count367
   br i1 %i.dy, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %.lr.ph331
@@ -381,7 +379,7 @@ bb.ah:                                            ; preds = %.lr.ph331
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %.lr.ph331
-  %exitcond368.not = icmp eq i64 %indvars.iv.next364, %wide.trip.count367
+  %exitcond368.not = icmp eq i64 %indvars.iv.next364, %i.m
   br i1 %exitcond368.not, label %._crit_edge332, label %.lr.ph331, !llvm.loop !5
 
 ._crit_edge332:                                   ; preds = %bb.ai
@@ -437,7 +435,6 @@ bb.ao:                                            ; preds = %bb.am, %bb.an, %bb.
   %i.eq = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 4 uses
   %i.er = getelementptr inbounds nuw i8, ptr %1, i64 156
   %i.es = sub i32 %spec.select, %i.g
-  %6 = zext nneg i32 %i.b to i64
   %wide.trip.count373 = zext nneg i32 %i.b to i64
   br label %bb.ap
 
@@ -615,7 +612,7 @@ bb.bk:                                            ; preds = %bb.bc
 
 bb.bl:                                            ; preds = %bb.bk, %bb.aw
   %i.gq = add nuw nsw i64 %indvars.iv369, 1
-  %i.gr = icmp samesign ult i64 %i.gq, %6
+  %i.gr = icmp samesign ult i64 %i.gq, %wide.trip.count373
   br i1 %i.gr, label %bb.bm, label %bb.bn
 
 bb.bm:                                            ; preds = %bb.bl
@@ -634,7 +631,7 @@ do_field.exit:                                    ; preds = %bb.bd
 
 bb.bo:                                            ; preds = %bb.av, %bb.aw, %bb.be, %bb.bi, %bb.bn, %bb.bm, %bb.bg, %bb.bj
   %indvars.iv.next370 = add nuw nsw i64 %indvars.iv369, 1 ; 2 uses
-  %exitcond374.not.a = icmp eq i64 %indvars.iv.next370, %wide.trip.count373
+  %exitcond374.not.a = icmp eq i64 %indvars.iv.next370, %i.m
   br i1 %exitcond374.not.a, label %._crit_edge344, label %bb.at, !llvm.loop !8
 
 ._crit_edge344:                                   ; preds = %bb.bo

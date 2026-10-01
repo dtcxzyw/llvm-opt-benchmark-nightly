@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.b, %.new
   %i.it = zext nneg i32 %.1137.lcssa to i64
   %i.iu = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.it ; 2 uses
   %.sroa.045.0.copyload = load <2 x float>, ptr %i.iu, align 8, !tbaa !9 ; 4 uses
-  %i.iv = add nsw i32 %.1128.lcssa, -2            ; 2 uses
-  %i.iw = zext nneg i32 %i.iv to i64
+  %i.iv = add nsw i32 %.1128.lcssa, -2
+  %i.iw = zext nneg i32 %i.iv to i64              ; 2 uses
   %i.ix = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.iw
   %i.iy = load i64, ptr %i.ix, align 8, !tbaa !9
   store i64 %i.iy, ptr %i.iu, align 8, !tbaa !9
@@ -231,7 +231,6 @@ bb.c:                                             ; preds = %._crit_edge243
   %.sroa.012.0.i = phi <2 x float> [ %i.jh, %bb.c ], [ zeroinitializer, %._crit_edge243 ]
   %i.ji = fmul float %i.d, 2.000000e+00
   %i.jj = fmul float %i.d, -2.000000e+00
-  %wide.trip.count289 = zext nneg i32 %i.iv to i64
   br label %bb.d
 
 .lr.ph242:                                        ; preds = %.lr.ph242, %.lr.ph242.preheader.new
@@ -317,7 +316,7 @@ bb.h:                                             ; preds = %.sink.split, %bb.f
   %.1132 = phi i32 [ %.0131245, %bb.f ], [ %.1132.ph, %.sink.split ] ; 2 uses
   %.1130 = phi i32 [ %.0129246, %bb.f ], [ %.1130.ph, %.sink.split ] ; 2 uses
   %indvars.iv.next287 = add nuw nsw i64 %indvars.iv286, 1 ; 2 uses
-  %exitcond290.not = icmp eq i64 %indvars.iv.next287, %wide.trip.count289
+  %exitcond290.not = icmp eq i64 %indvars.iv.next287, %i.iw
   br i1 %exitcond290.not, label %._crit_edge249, label %bb.d, !llvm.loop !15
 
 bb.i:                                             ; preds = %._crit_edge249
@@ -720,11 +719,11 @@ b2Normalize.exit97..critedge.loopexit_crit_edge:  ; preds = %b2Normalize.exit97
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #4
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #4

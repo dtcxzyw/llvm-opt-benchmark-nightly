@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.j, %_ZN4core5all
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.l, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i"
   %i.ap = phi ptr [ %i.bm, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ %.sroa.10.0.i.i.i.i.i, %bb.l ]
-  %i.aq = phi i64 [ %i.bo, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ 1, %bb.l ] ; 5 uses
+  %i.aq = phi i64 [ %i.bo, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ 1, %bb.l ] ; 4 uses
   %.lcssa23.i.i.i.i.i.i = phi ptr [ %.lcssa22.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ %.sroa.5.0.i.i, %bb.l ] ; 2 uses
   %i.ar = phi i16 [ %i.ba, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ %i.w, %bb.l ] ; 2 uses
   %.val1419.i.i.i.i.i.i = phi i64 [ %i.bd, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ %i.z, %bb.l ] ; 2 uses
@@ -263,8 +263,6 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge2
 bb.o:                                             ; preds = %bb.m, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.10.0.i.i.i.i.i.i.i.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bi, %bb.m ] ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i.i.i.i.i.i.i, ptr nonnull readonly align 1 %.val.i.i.i.i.i.i.i, i64 %.val2.i.i.i.i.i.i.i, i1 false), !noalias !1227
-  %2 = icmp samesign ult i64 %i.aq, 384307168202282326
-  tail call void @llvm.assume(i1 %2)
   %i.bk = load i64, ptr %i.c, align 8, !range !9, !alias.scope !1228, !noalias !1229, !noundef !8
   %i.bl = icmp eq i64 %i.aq, %i.bk
   br i1 %i.bl, label %bb.r, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i"
@@ -484,7 +482,7 @@ bb.af:                                            ; preds = %bb.ad, %_ZN4core5al
 
 .lr.ph.i.i.i.i.i.i32:                             ; preds = %bb.af, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45"
   %i.dh = phi ptr [ %i.ee, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ %.sroa.10.0.i.i.i.i.i26, %bb.af ]
-  %i.di = phi i64 [ %i.eg, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ 1, %bb.af ] ; 5 uses
+  %i.di = phi i64 [ %i.eg, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ 1, %bb.af ] ; 4 uses
   %.lcssa23.i.i.i.i.i.i33 = phi ptr [ %.lcssa22.i.i.i.i.i.i38, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ %.sroa.5.0.i.i16, %bb.af ] ; 2 uses
   %i.dj = phi i16 [ %i.ds, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ %i.co, %bb.af ] ; 2 uses
   %.val1419.i.i.i.i.i.i34 = phi i64 [ %i.dv, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ %i.cr, %bb.af ] ; 2 uses
@@ -542,8 +540,6 @@ bb.ah:                                            ; preds = %bb.ag, %._crit_edge
 bb.ai:                                            ; preds = %bb.ag, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i.i.i.i43
   %.sroa.10.0.i.i.i.i.i.i.i.i.i.i44 = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i.i.i.i43 ], [ %i.ea, %bb.ag ] ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i.i.i.i.i.i.i44, ptr nonnull readonly align 1 %.val.i.i.i.i.i.i.i41, i64 %.val2.i.i.i.i.i.i.i42, i1 false), !noalias !1262
-  %3 = icmp samesign ult i64 %i.di, 384307168202282326
-  tail call void @llvm.assume(i1 %3)
   %i.ec = load i64, ptr %i.b, align 8, !range !9, !alias.scope !1263, !noalias !1264, !noundef !8
   %i.ed = icmp eq i64 %i.di, %i.ec
   br i1 %i.ed, label %bb.al, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45"
@@ -838,7 +834,7 @@ bb.o:                                             ; preds = %bb.m, %_ZN4core5all
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.o, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i"
   %i.as = phi ptr [ %i.bp, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ %.sroa.10.0.i.i.i.i.i, %bb.o ]
-  %i.at = phi i64 [ %i.br, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ 1, %bb.o ] ; 5 uses
+  %i.at = phi i64 [ %i.br, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ 1, %bb.o ] ; 4 uses
   %.lcssa23.i.i.i.i.i.i = phi ptr [ %.lcssa22.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ %.sroa.5.0.i.i, %bb.o ] ; 2 uses
   %i.au = phi i16 [ %i.bd, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ %i.z, %bb.o ] ; 2 uses
   %.val1419.i.i.i.i.i.i = phi i64 [ %i.bg, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i" ], [ %i.ac, %bb.o ] ; 2 uses
@@ -896,8 +892,6 @@ bb.q:                                             ; preds = %bb.p, %._crit_edge2
 bb.r:                                             ; preds = %bb.p, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.10.0.i.i.i.i.i.i.i.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bl, %bb.p ] ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i.i.i.i.i.i.i, ptr nonnull readonly align 1 %.val.i.i.i.i.i.i.i, i64 %.val2.i.i.i.i.i.i.i, i1 false), !noalias !1455
-  %2 = icmp samesign ult i64 %i.at, 384307168202282326
-  tail call void @llvm.assume(i1 %2)
   %i.bn = load i64, ptr %i.c, align 8, !range !9, !alias.scope !1456, !noalias !1457, !noundef !8
   %i.bo = icmp eq i64 %i.at, %i.bn
   br i1 %i.bo, label %bb.u, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i"
@@ -1117,7 +1111,7 @@ bb.ai:                                            ; preds = %bb.ag, %_ZN4core5al
 
 .lr.ph.i.i.i.i.i.i32:                             ; preds = %bb.ai, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45"
   %i.dk = phi ptr [ %i.eh, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ %.sroa.10.0.i.i.i.i.i26, %bb.ai ]
-  %i.dl = phi i64 [ %i.ej, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ 1, %bb.ai ] ; 5 uses
+  %i.dl = phi i64 [ %i.ej, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ 1, %bb.ai ] ; 4 uses
   %.lcssa23.i.i.i.i.i.i33 = phi ptr [ %.lcssa22.i.i.i.i.i.i38, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ %.sroa.5.0.i.i16, %bb.ai ] ; 2 uses
   %i.dm = phi i16 [ %i.dv, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ %i.cr, %bb.ai ] ; 2 uses
   %.val1419.i.i.i.i.i.i34 = phi i64 [ %i.dy, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45" ], [ %i.cu, %bb.ai ] ; 2 uses
@@ -1175,8 +1169,6 @@ bb.ak:                                            ; preds = %bb.aj, %._crit_edge
 bb.al:                                            ; preds = %bb.aj, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i.i.i.i43
   %.sroa.10.0.i.i.i.i.i.i.i.i.i.i44 = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i.i.i.i43 ], [ %i.ed, %bb.aj ] ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i.i.i.i.i.i.i44, ptr nonnull readonly align 1 %.val.i.i.i.i.i.i.i41, i64 %.val2.i.i.i.i.i.i.i42, i1 false), !noalias !1490
-  %3 = icmp samesign ult i64 %i.dl, 384307168202282326
-  tail call void @llvm.assume(i1 %3)
   %i.ef = load i64, ptr %i.b, align 8, !range !9, !alias.scope !1491, !noalias !1492, !noundef !8
   %i.eg = icmp eq i64 %i.dl, %i.ef
   br i1 %i.eg, label %bb.ao, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h09d834aed134f77fE.exit.i.i.i.i.i.i45"

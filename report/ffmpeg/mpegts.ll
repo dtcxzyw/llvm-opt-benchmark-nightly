@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
   br label %get16.exit.thread
 
 bb.af:                                            ; preds = %mpegts_find_stream_type.exit
-  %i.dq = udiv i8 %i.h, 5
+  %i.dq = udiv i8 %i.h, 5                         ; 2 uses
   %.zext = zext nneg i8 %i.dq to i32              ; 2 uses
   %i.dr = urem i8 %i.h, 5
   %.not464 = icmp eq i8 %i.dr, 0
@@ -241,8 +241,7 @@ bb.ai:                                            ; preds = %bb.ah
 .lr.ph648.preheader:                              ; preds = %._crit_edge693
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dy, i64 16
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !201
-  %umax678 = tail call i32 @llvm.umax.i32(i32 %.zext, i32 1) ; 2 uses
-  %wide.trip.count679 = zext nneg i32 %umax678 to i64
+  %wide.trip.count679 = zext nneg i8 %i.dq to i64
   %.pre691 = load ptr, ptr %4, align 8, !tbaa !16
   br label %.lr.ph648
 
@@ -306,7 +305,7 @@ get8.exit500:                                     ; preds = %get8.exit497, %bb.a
   br i1 %exitcond680.not, label %._crit_edge649, label %.lr.ph648, !llvm.loop !196
 
 ._crit_edge649:                                   ; preds = %get8.exit500
-  %i.ex = shl nuw nsw i32 %umax678, 2
+  %i.ex = shl nuw nsw i32 %.zext, 2
   %i.ey = zext nneg i32 %i.ex to i64
   %i.ez = getelementptr i8, ptr %i.a, i64 %i.ey
   %i.fa = getelementptr i8, ptr %i.ez, i64 -1
@@ -707,9 +706,6 @@ declare i64 @llvm.umin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #11

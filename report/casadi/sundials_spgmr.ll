@@ -18,7 +18,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.l, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = zext i32 %i.b to i64                     ; 2 uses
+  %i.e = zext i32 %i.b to i64                     ; 7 uses
   %i.f = shl nuw nsw i64 %i.e, 3                  ; 2 uses
   %i.g = tail call noalias ptr @malloc(i64 noundef %i.f) #8 ; 15 uses
   %i.h = icmp eq ptr %i.g, null
@@ -77,21 +77,16 @@ bb.f:                                             ; preds = %bb.e
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #8 ; 6 uses
   %i.t = icmp eq ptr %i.s, null
-  br i1 %i.t, label %.lr.ph157.preheader, label %bb.g
+  br i1 %i.t, label %.lr.ph157, label %bb.g
 
-.lr.ph157.preheader:                              ; preds = %._crit_edge
-  %2 = add nuw i32 %0, 1
-  %wide.trip.count196 = zext i32 %2 to i64
-  br label %.lr.ph157
-
-.lr.ph157:                                        ; preds = %.lr.ph157.preheader, %.lr.ph157
-  %indvars.iv192 = phi i64 [ 0, %.lr.ph157.preheader ], [ %indvars.iv.next193, %.lr.ph157 ] ; 2 uses
+.lr.ph157:                                        ; preds = %._crit_edge, %.lr.ph157
+  %indvars.iv192 = phi i64 [ %indvars.iv.next193, %.lr.ph157 ], [ 0, %._crit_edge ] ; 2 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv192 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !10
   tail call void @free(ptr noundef %i.v) #7
   store ptr null, ptr %i.u, align 8, !tbaa !10
   %indvars.iv.next193 = add nuw nsw i64 %indvars.iv192, 1 ; 2 uses
-  %exitcond197.not = icmp eq i64 %indvars.iv.next193, %wide.trip.count196
+  %exitcond197.not = icmp eq i64 %indvars.iv.next193, %i.e
   br i1 %exitcond197.not, label %._crit_edge158, label %.lr.ph157, !llvm.loop !26
 
 ._crit_edge158:                                   ; preds = %.lr.ph157
@@ -106,8 +101,6 @@ bb.g:                                             ; preds = %._crit_edge
 
 .lr.ph153.preheader:                              ; preds = %bb.g
   tail call void @free(ptr noundef nonnull %i.s) #7
-  %3 = add nuw i32 %0, 1
-  %wide.trip.count190 = zext i32 %3 to i64
   br label %.lr.ph153
 
 .lr.ph153:                                        ; preds = %.lr.ph153.preheader, %.lr.ph153
@@ -117,7 +110,7 @@ bb.g:                                             ; preds = %._crit_edge
   tail call void @free(ptr noundef %i.z) #7
   store ptr null, ptr %i.y, align 8, !tbaa !10
   %indvars.iv.next187 = add nuw nsw i64 %indvars.iv186, 1 ; 2 uses
-  %exitcond191.not = icmp eq i64 %indvars.iv.next187, %wide.trip.count190
+  %exitcond191.not = icmp eq i64 %indvars.iv.next187, %i.e
   br i1 %exitcond191.not, label %._crit_edge154, label %.lr.ph153, !llvm.loop !27
 
 ._crit_edge154:                                   ; preds = %.lr.ph153
@@ -133,8 +126,6 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph148.preheader:                              ; preds = %bb.h
   tail call void @N_VDestroy(ptr noundef nonnull %i.w) #7
   tail call void @free(ptr noundef nonnull %i.s) #7
-  %4 = add nuw i32 %0, 1
-  %wide.trip.count184 = zext i32 %4 to i64
   br label %.lr.ph148
 
 .lr.ph148:                                        ; preds = %.lr.ph148.preheader, %.lr.ph148
@@ -144,7 +135,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void @free(ptr noundef %i.ad) #7
   store ptr null, ptr %i.ac, align 8, !tbaa !10
   %indvars.iv.next181 = add nuw nsw i64 %indvars.iv180, 1 ; 2 uses
-  %exitcond185.not = icmp eq i64 %indvars.iv.next181, %wide.trip.count184
+  %exitcond185.not = icmp eq i64 %indvars.iv.next181, %i.e
   br i1 %exitcond185.not, label %._crit_edge149, label %.lr.ph148, !llvm.loop !28
 
 ._crit_edge149:                                   ; preds = %.lr.ph148
@@ -161,8 +152,6 @@ bb.i:                                             ; preds = %bb.h
   tail call void @free(ptr noundef nonnull %i.aa) #7
   tail call void @N_VDestroy(ptr noundef nonnull %i.w) #7
   tail call void @free(ptr noundef nonnull %i.s) #7
-  %5 = add nuw i32 %0, 1
-  %wide.trip.count178 = zext i32 %5 to i64
   br label %.lr.ph143
 
 .lr.ph143:                                        ; preds = %.lr.ph143.preheader, %.lr.ph143
@@ -172,7 +161,7 @@ bb.i:                                             ; preds = %bb.h
   tail call void @free(ptr noundef %i.ah) #7
   store ptr null, ptr %i.ag, align 8, !tbaa !10
   %indvars.iv.next175 = add nuw nsw i64 %indvars.iv174, 1 ; 2 uses
-  %exitcond179.not = icmp eq i64 %indvars.iv.next175, %wide.trip.count178
+  %exitcond179.not = icmp eq i64 %indvars.iv.next175, %i.e
   br i1 %exitcond179.not, label %._crit_edge144, label %.lr.ph143, !llvm.loop !29
 
 ._crit_edge144:                                   ; preds = %.lr.ph143
@@ -190,8 +179,6 @@ bb.j:                                             ; preds = %bb.i
   tail call void @free(ptr noundef nonnull %i.aa) #7
   tail call void @N_VDestroy(ptr noundef nonnull %i.w) #7
   tail call void @free(ptr noundef nonnull %i.s) #7
-  %6 = add nuw i32 %0, 1
-  %wide.trip.count172 = zext i32 %6 to i64
   br label %.lr.ph138
 
 .lr.ph138:                                        ; preds = %.lr.ph138.preheader, %.lr.ph138
@@ -201,7 +188,7 @@ bb.j:                                             ; preds = %bb.i
   tail call void @free(ptr noundef %i.al) #7
   store ptr null, ptr %i.ak, align 8, !tbaa !10
   %indvars.iv.next170 = add nuw nsw i64 %indvars.iv169, 1 ; 2 uses
-  %exitcond173.not = icmp eq i64 %indvars.iv.next170, %wide.trip.count172
+  %exitcond173.not = icmp eq i64 %indvars.iv.next170, %i.e
   br i1 %exitcond173.not, label %._crit_edge139, label %.lr.ph138, !llvm.loop !30
 
 ._crit_edge139:                                   ; preds = %.lr.ph138

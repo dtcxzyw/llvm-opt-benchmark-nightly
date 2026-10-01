@@ -204,17 +204,17 @@ bb.x:                                             ; preds = %bb.v
   %i.dt = getelementptr i8, ptr %1, i64 416       ; 2 uses
   %i.du = load ptr, ptr %i.dt, align 8
   %i.dv = zext i32 %i.bz to i64
-  %i.dw = call noalias ptr @wmem_alloc(ptr noundef %i.du, i64 noundef %i.dv) #8 ; 10 uses
+  %i.dw = call noalias ptr @wmem_alloc(ptr noundef %i.du, i64 noundef %i.dv) #8 ; 9 uses
   %i.dx = ptrtoaddr ptr %i.dw to i64
   %.not.i.i.i = icmp eq i16 %i.bf, 0
   br i1 %.not.i.i.i, label %rs_deinterleave.exit.i.i, label %.preheader.preheader.i.i.i
 
 .preheader.preheader.i.i.i:                       ; preds = %bb.x
   %wide.trip.count.i.i.i = zext nneg i32 %i.bd to i64 ; 9 uses
-  %i.dy = add nsw i64 %wide.trip.count.i.i.i, -1  ; 4 uses
+  %i.dy = add nsw i64 %wide.trip.count.i.i.i, -1  ; 3 uses
   %min.iters.check = icmp samesign ult i32 %i.bd, 4
   %ident.check = icmp ne i32 %i.bk, 1
-  %i.dz = trunc nsw i64 %i.dy to i32              ; 2 uses
+  %i.dz = trunc nsw i64 %i.dy to i32
   %i.ea = icmp ugt i64 %i.dy, 4294967295
   %invariant.op = or i1 %i.ea, %ident.check
   %min.iters.check121 = icmp samesign ult i32 %i.bd, 32
@@ -230,7 +230,7 @@ bb.x:                                             ; preds = %bb.v
   br label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge.i.i.i, %.preheader.preheader.i.i.i
-  %indvar = phi i64 [ %indvar.next, %._crit_edge.i.i.i ], [ 0, %.preheader.preheader.i.i.i ] ; 5 uses
+  %indvar = phi i64 [ %indvar.next, %._crit_edge.i.i.i ], [ 0, %.preheader.preheader.i.i.i ] ; 3 uses
   %.01317.i.i.i = phi i32 [ %i.go, %._crit_edge.i.i.i ], [ 0, %.preheader.preheader.i.i.i ] ; 8 uses
   %i.ed = mul i32 %.01317.i.i.i, %i.bd            ; 6 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
@@ -241,22 +241,14 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.eg = zext i32 %i.ef to i64
   %i.eh = add i64 %i.ds, %i.eg
   %i.ei = add i64 %indvar, %i.dx
-  %4 = trunc i64 %indvar to i32
-  %i.ej = mul i32 %i.bd, %4
+  %i.ej = mul i32 %i.bd, %.01317.i.i.i
   %i.ek = zext i32 %i.ej to i64
-  %scevgep120 = getelementptr i8, ptr %i.dr, i64 %i.ek ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.dw, i64 %indvar ; 2 uses
-  %5 = xor i32 %.01317.i.i.i, -1
-  %6 = icmp ult i32 %5, %i.dz
-  %i.el = getelementptr i8, ptr %scevgep, i64 %i.dy
-  %7 = icmp ult ptr %i.el, %scevgep
+  %i.el = getelementptr i8, ptr %i.dr, i64 %i.ek  ; 2 uses
   %i.em = xor i32 %i.ed, -1
   %i.en = icmp ult i32 %i.em, %i.dz
-  %i.eo = getelementptr i8, ptr %scevgep120, i64 %i.dy
-  %i.ep = icmp ult ptr %i.eo, %scevgep120
-  %.reass = or i1 %6, %invariant.op
-  %8 = or i1 %.reass, %7
-  %i.eq = or i1 %i.en, %8
+  %i.eo = getelementptr i8, ptr %i.el, i64 %i.dy
+  %i.ep = icmp ult ptr %i.eo, %i.el
+  %i.eq = or i1 %i.en, %invariant.op
   %i.er = or i1 %i.eq, %i.ep
   %i.es = sub i64 %i.eh, %i.ei
   %diff.check = icmp ugt i64 %i.es, -32

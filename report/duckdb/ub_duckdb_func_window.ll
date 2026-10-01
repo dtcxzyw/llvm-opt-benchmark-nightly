@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #29
   %i.hq = shl i64 %.1291, 5                       ; 2 uses
   %i.hr = lshr i64 %.1122369, 5                   ; 2 uses
-  %i.hs = add i64 %.0370, -1                      ; 2 uses
+  %i.hs = add i64 %.0370, -1
   %.not = icmp ult i64 %.0370, 3
   br i1 %.not, label %._crit_edge372, label %.lr.ph371, !llvm.loop !1326
 
@@ -213,23 +213,19 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #29
   br label %bb.r
 
-bb.r:                                             ; preds = %._crit_edge372, %._crit_edge
-  %.3293 = phi i64 [ %i.hq, %._crit_edge372 ], [ 0, %._crit_edge ] ; 2 uses
-  %.3289 = phi i64 [ %.1287, %._crit_edge372 ], [ %2, %._crit_edge ] ; 2 uses
-  %.2123 = phi i64 [ %i.hr, %._crit_edge372 ], [ %.lcssa553, %._crit_edge ]
-  %.1 = phi i64 [ %i.hs, %._crit_edge372 ], [ %i.u, %._crit_edge ] ; 2 uses
-  %.not139391 = icmp eq i64 %.1, 0
-  br i1 %.not139391, label %._crit_edge398, label %.lr.ph397
-
-.lr.ph397:                                        ; preds = %bb.r
+bb.r:                                             ; preds = %._crit_edge, %._crit_edge372
+  %.3293 = phi i64 [ 1, %._crit_edge372 ], [ %i.u, %._crit_edge ]
+  %.3289 = phi i64 [ %i.hr, %._crit_edge372 ], [ %.lcssa553, %._crit_edge ]
+  %.2123 = phi i64 [ %.1287, %._crit_edge372 ], [ %2, %._crit_edge ]
+  %.1 = phi i64 [ %i.hq, %._crit_edge372 ], [ 0, %._crit_edge ]
   %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
   br label %bb.s
 
-bb.s:                                             ; preds = %.lr.ph397, %.thread305
-  %.2395 = phi i64 [ %.1, %.lr.ph397 ], [ %10, %.thread305 ] ; 2 uses
-  %.3394 = phi i64 [ %.2123, %.lr.ph397 ], [ %i.jr, %.thread305 ] ; 6 uses
-  %.4393 = phi i64 [ %.3289, %.lr.ph397 ], [ %.5.lcssa, %.thread305 ] ; 2 uses
-  %.4294392 = phi i64 [ %.3293, %.lr.ph397 ], [ %i.jq, %.thread305 ] ; 3 uses
+bb.s:                                             ; preds = %bb.r, %.thread305
+  %.2395 = phi i64 [ %.3293, %bb.r ], [ 1, %.thread305 ] ; 2 uses
+  %.3394 = phi i64 [ %.3289, %bb.r ], [ %i.jr, %.thread305 ] ; 6 uses
+  %.4393 = phi i64 [ %.2123, %bb.r ], [ %.5.lcssa, %.thread305 ] ; 2 uses
+  %.4294392 = phi i64 [ %.1, %bb.r ], [ %i.jq, %.thread305 ] ; 3 uses
   %i.ht = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZNK6duckdb6vectorISt4pairINS0_IjLb1ESaIjEEES3_ELb1ESaIS4_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.2395) ; 2 uses
   %i.hu = load ptr, ptr %i.ht, align 8, !tbaa !757
   %i.hv = mul i64 %.3394, %.4294392
@@ -348,13 +344,12 @@ _ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPKjSt6vectorIjSaIjEEEEmET_S8_S8
   %.5.lcssa = phi i64 [ %.4393, %bb.s ], [ %.5383, %._crit_edge379 ], [ %i.jo, %._crit_edge379.thread ] ; 2 uses
   %i.jq = shl i64 %.5295.lcssa, 5                 ; 2 uses
   %i.jr = lshr i64 %.3394, 5
-  %10 = add i64 %.2395, -1                        ; 2 uses
-  %.not139 = icmp eq i64 %10, 0
+  %.not139 = icmp eq i64 %.2395, 1
   br i1 %.not139, label %._crit_edge398, label %bb.s, !llvm.loop !1328
 
-._crit_edge398:                                   ; preds = %.thread305, %bb.b, %bb.r
-  %.4294.lcssa = phi i64 [ %.3293, %bb.r ], [ 0, %bb.b ], [ %i.jq, %.thread305 ] ; 5 uses
-  %.4.lcssa = phi i64 [ %.3289, %bb.r ], [ %2, %bb.b ], [ %.5.lcssa, %.thread305 ]
+._crit_edge398:                                   ; preds = %.thread305, %bb.b
+  %.4294.lcssa = phi i64 [ 0, %bb.b ], [ %i.jq, %.thread305 ] ; 5 uses
+  %.4.lcssa = phi i64 [ %2, %bb.b ], [ %.5.lcssa, %.thread305 ]
   %i.js = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZNK6duckdb6vectorISt4pairINS0_IjLb1ESaIjEEES3_ELb1ESaIS4_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 0)
   %i.jt = load ptr, ptr %i.js, align 8, !tbaa !727
   %i.ju = add i64 %.4.lcssa, 1                    ; 4 uses
@@ -757,7 +752,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #29
   %i.hi = shl i64 %.1291, 5                       ; 2 uses
   %i.hj = lshr i64 %.1122369, 5                   ; 2 uses
-  %i.hk = add i64 %.0370, -1                      ; 2 uses
+  %i.hk = add i64 %.0370, -1
   %.not = icmp ult i64 %.0370, 3
   br i1 %.not, label %._crit_edge372, label %.lr.ph371, !llvm.loop !1339
 
@@ -765,23 +760,19 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #29
   br label %bb.r
 
-bb.r:                                             ; preds = %._crit_edge372, %._crit_edge
-  %.3293 = phi i64 [ %i.hi, %._crit_edge372 ], [ 0, %._crit_edge ] ; 2 uses
-  %.3289 = phi i64 [ %.1287, %._crit_edge372 ], [ %2, %._crit_edge ] ; 2 uses
-  %.2123 = phi i64 [ %i.hj, %._crit_edge372 ], [ %.lcssa553, %._crit_edge ]
-  %.1 = phi i64 [ %i.hk, %._crit_edge372 ], [ %i.u, %._crit_edge ] ; 2 uses
-  %.not139391 = icmp eq i64 %.1, 0
-  br i1 %.not139391, label %._crit_edge398, label %.lr.ph397
-
-.lr.ph397:                                        ; preds = %bb.r
+bb.r:                                             ; preds = %._crit_edge, %._crit_edge372
+  %.3293 = phi i64 [ 1, %._crit_edge372 ], [ %i.u, %._crit_edge ]
+  %.3289 = phi i64 [ %i.hj, %._crit_edge372 ], [ %.lcssa553, %._crit_edge ]
+  %.2123 = phi i64 [ %.1287, %._crit_edge372 ], [ %2, %._crit_edge ]
+  %.1 = phi i64 [ %i.hi, %._crit_edge372 ], [ 0, %._crit_edge ]
   %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
   br label %bb.s
 
-bb.s:                                             ; preds = %.lr.ph397, %.thread305
-  %.2395 = phi i64 [ %.1, %.lr.ph397 ], [ %10, %.thread305 ] ; 2 uses
-  %.3394 = phi i64 [ %.2123, %.lr.ph397 ], [ %i.jh, %.thread305 ] ; 6 uses
-  %.4393 = phi i64 [ %.3289, %.lr.ph397 ], [ %.5.lcssa, %.thread305 ] ; 2 uses
-  %.4294392 = phi i64 [ %.3293, %.lr.ph397 ], [ %i.jg, %.thread305 ] ; 3 uses
+bb.s:                                             ; preds = %bb.r, %.thread305
+  %.2395 = phi i64 [ %.3293, %bb.r ], [ 1, %.thread305 ] ; 2 uses
+  %.3394 = phi i64 [ %.3289, %bb.r ], [ %i.jh, %.thread305 ] ; 6 uses
+  %.4393 = phi i64 [ %.2123, %bb.r ], [ %.5.lcssa, %.thread305 ] ; 2 uses
+  %.4294392 = phi i64 [ %.1, %bb.r ], [ %i.jg, %.thread305 ] ; 3 uses
   %i.hl = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZNK6duckdb6vectorISt4pairINS0_ImLb1ESaImEEES3_ELb1ESaIS4_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.2395) ; 2 uses
   %i.hm = load ptr, ptr %i.hl, align 8, !tbaa !414
   %i.hn = mul i64 %.3394, %.4294392
@@ -898,13 +889,12 @@ _ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmET_S8_S8
   %.5.lcssa = phi i64 [ %.4393, %bb.s ], [ %.5383, %._crit_edge379 ], [ %i.je, %._crit_edge379.thread ] ; 2 uses
   %i.jg = shl i64 %.5295.lcssa, 5                 ; 2 uses
   %i.jh = lshr i64 %.3394, 5
-  %10 = add i64 %.2395, -1                        ; 2 uses
-  %.not139 = icmp eq i64 %10, 0
+  %.not139 = icmp eq i64 %.2395, 1
   br i1 %.not139, label %._crit_edge398, label %bb.s, !llvm.loop !1341
 
-._crit_edge398:                                   ; preds = %.thread305, %bb.b, %bb.r
-  %.4294.lcssa = phi i64 [ %.3293, %bb.r ], [ 0, %bb.b ], [ %i.jg, %.thread305 ] ; 5 uses
-  %.4.lcssa = phi i64 [ %.3289, %bb.r ], [ %2, %bb.b ], [ %.5.lcssa, %.thread305 ]
+._crit_edge398:                                   ; preds = %.thread305, %bb.b
+  %.4294.lcssa = phi i64 [ 0, %bb.b ], [ %i.jg, %.thread305 ] ; 5 uses
+  %.4.lcssa = phi i64 [ %2, %bb.b ], [ %.5.lcssa, %.thread305 ]
   %i.ji = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZNK6duckdb6vectorISt4pairINS0_ImLb1ESaImEEES3_ELb1ESaIS4_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 0)
   %i.jj = load ptr, ptr %i.ji, align 8, !tbaa !366
   %i.jk = add i64 %.4.lcssa, 1                    ; 4 uses

@@ -205,7 +205,7 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %.not49.i.i, label %bb.bj, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.gm = load i32, ptr %.pre118.i.i, align 8     ; 35 uses
+  %i.gm = load i32, ptr %.pre118.i.i, align 8     ; 47 uses
   %i.gn = getelementptr inbounds nuw i8, ptr %.pre118.i.i, i64 4
   %i.go = load i32, ptr %i.gn, align 4            ; 9 uses
   br i1 %i.gf, label %bb.bd, label %bb.bh
@@ -252,7 +252,7 @@ _ZL17stbi__malloc_mad3iiii.exit.i.i.i:            ; preds = %_ZL21stbi__mul2size
 .lr.ph258.i.i.i:                                  ; preds = %.preheader197.i.i.i
   %i.ha = shl nsw i32 %i.gl, 3
   %i.hb = or disjoint i32 %i.ha, %4               ; 2 uses
-  %.11167198.i.i.i = add nsw i32 %i.gm, -1        ; 25 uses
+  %.11167198.i.i.i = add nsw i32 %i.gm, -1        ; 31 uses
   switch i32 %i.hb, label %_ZL20stbi__convert_formatPhiijj.exit.thread.sink.split.i.i [
     i32 10, label %.lr.ph258.split.i.i.i
     i32 11, label %.lr.ph258.split.i.i.i
@@ -270,110 +270,104 @@ _ZL17stbi__malloc_mad3iiii.exit.i.i.i:            ; preds = %_ZL21stbi__mul2size
 
 .lr.ph258.split.i.i.i:                            ; preds = %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i, %.lr.ph258.i.i.i
   %wide.trip.count.i.i.i = zext nneg i32 %i.go to i64
-  %7 = add nsw i32 %i.gm, -2                      ; 2 uses
-  %smin = tail call i32 @llvm.smin.i32(i32 %7, i32 -1) ; 2 uses
-  %8 = sub i32 %7, %smin                          ; 14 uses
-  %i.hc = zext i32 %8 to i64
-  %9 = add nuw nsw i64 %i.hc, 1                   ; 22 uses
-  %10 = xor i32 %smin, -1
-  %11 = add nuw i32 %i.gm, %10                    ; 6 uses
-  %min.iters.check261 = icmp ult i32 %8, 7
-  %n.vec263 = and i64 %9, 8589934584              ; 5 uses
-  %i.hd = trunc i64 %n.vec263 to i32
+  %i.hc = zext nneg i32 %i.gm to i64              ; 22 uses
+  %min.iters.check261 = icmp ult i32 %i.gm, 8
+  %n.vec263 = and i64 %i.hc, 2147483640           ; 5 uses
+  %i.hd = trunc nuw nsw i64 %n.vec263 to i32
   %i.he = sub i32 %.11167198.i.i.i, %i.hd
   %i.hf = shl nuw nsw i64 %n.vec263, 1
   %i.hg = shl nuw nsw i64 %n.vec263, 2
-  %cmp.n278 = icmp eq i64 %9, %n.vec263
-  %min.iters.check208 = icmp ult i32 %8, 8
-  %min.iters.check210 = icmp ult i32 %8, 16
-  %i.hh = and i64 %9, 15                          ; 2 uses
+  %cmp.n278 = icmp eq i64 %n.vec263, %i.hc
+  %min.iters.check208 = icmp ult i32 %i.gm, 9
+  %min.iters.check210 = icmp ult i32 %i.gm, 17
+  %i.hh = and i64 %i.hc, 15                       ; 2 uses
   %i.hi = icmp eq i64 %i.hh, 0
   %i.hj = select i1 %i.hi, i64 16, i64 %i.hh      ; 2 uses
-  %n.vec212 = sub nsw i64 %9, %i.hj               ; 5 uses
+  %n.vec212 = sub nsw i64 %i.hc, %i.hj            ; 5 uses
   %i.hk = trunc i64 %n.vec212 to i32
   %i.hl = sub i32 %.11167198.i.i.i, %i.hk
   %i.hm = shl nsw i64 %n.vec212, 2
   %min.epilog.iters.check241 = icmp samesign ult i64 %i.hj, 9
-  %i.hn = and i64 %9, 7                           ; 2 uses
+  %i.hn = and i64 %i.hc, 7                        ; 2 uses
   %i.ho = icmp eq i64 %i.hn, 0
   %i.hp = select i1 %i.ho, i64 8, i64 %i.hn
-  %n.vec243 = sub nsw i64 %9, %i.hp               ; 4 uses
+  %n.vec243 = sub nsw i64 %i.hc, %i.hp            ; 4 uses
   %i.hq = trunc i64 %n.vec243 to i32
   %i.hr = sub i32 %.11167198.i.i.i, %i.hq
   %i.hs = shl nsw i64 %n.vec243, 2
-  %min.iters.check186 = icmp ult i32 %8, 7
-  %n.vec188 = and i64 %9, 8589934584              ; 5 uses
-  %i.ht = trunc i64 %n.vec188 to i32
+  %min.iters.check186 = icmp ult i32 %i.gm, 8
+  %n.vec188 = and i64 %i.hc, 2147483640           ; 5 uses
+  %i.ht = trunc nuw nsw i64 %n.vec188 to i32
   %i.hu = sub i32 %.11167198.i.i.i, %i.ht
   %i.hv = shl nuw nsw i64 %n.vec188, 1
   %i.hw = mul nuw nsw i64 %n.vec188, 3
-  %cmp.n203 = icmp eq i64 %9, %n.vec188
-  %min.iters.check131 = icmp ult i32 %8, 7
-  %min.iters.check133 = icmp ult i32 %8, 15
-  %i.hx = and i64 %9, 8
-  %n.vec135 = and i64 %9, 8589934576              ; 6 uses
-  %i.hy = trunc i64 %n.vec135 to i32
+  %cmp.n203 = icmp eq i64 %n.vec188, %i.hc
+  %min.iters.check131 = icmp ult i32 %i.gm, 8
+  %min.iters.check133 = icmp ult i32 %i.gm, 16
+  %i.hx = and i64 %i.hc, 8
+  %n.vec135 = and i64 %i.hc, 2147483632           ; 6 uses
+  %i.hy = trunc nuw nsw i64 %n.vec135 to i32
   %i.hz = sub i32 %.11167198.i.i.i, %i.hy
   %i.ia = mul nuw nsw i64 %n.vec135, 3
-  %cmp.n157 = icmp eq i64 %9, %n.vec135
+  %cmp.n157 = icmp eq i64 %n.vec135, %i.hc
   %min.epilog.iters.check165.not.not = icmp eq i64 %i.hx, 0
-  %n.vec167 = and i64 %9, 8589934584              ; 5 uses
-  %i.ib = trunc i64 %n.vec167 to i32
+  %n.vec167 = and i64 %i.hc, 2147483640           ; 5 uses
+  %i.ib = trunc nuw nsw i64 %n.vec167 to i32
   %i.ic = sub i32 %.11167198.i.i.i, %i.ib
   %i.id = mul nuw nsw i64 %n.vec167, 3
-  %cmp.n181 = icmp eq i64 %9, %n.vec167
-  %xtraiter332 = and i32 %11, 1
+  %cmp.n181 = icmp eq i64 %n.vec167, %i.hc
+  %xtraiter332 = and i32 %i.gm, 1
   %lcmp.mod333.not = icmp eq i32 %xtraiter332, 0
   %.6162.i.i.i.prol = add nsw i32 %i.gm, -2
-  %12 = icmp slt i32 %i.gm, 2
-  %xtraiter335 = and i32 %11, 1
+  %7 = icmp eq i32 %.11167198.i.i.i, 0
+  %xtraiter335 = and i32 %i.gm, 1
   %lcmp.mod336.not = icmp eq i32 %xtraiter335, 0
   %.5161.i.i.i.prol = add nsw i32 %i.gm, -2
-  %13 = icmp slt i32 %i.gm, 2
-  %xtraiter338 = and i32 %11, 3                   ; 2 uses
+  %8 = icmp eq i32 %.11167198.i.i.i, 0
+  %xtraiter338 = and i32 %i.gm, 3                 ; 2 uses
   %lcmp.mod339.not = icmp eq i32 %xtraiter338, 0
-  %i.ie = icmp ult i32 %8, 3
-  %min.iters.check78 = icmp ult i32 %8, 8
-  %min.iters.check80 = icmp ult i32 %8, 16
-  %i.if = and i64 %9, 15                          ; 2 uses
+  %i.ie = icmp ult i32 %.11167198.i.i.i, 3
+  %min.iters.check78 = icmp ult i32 %i.gm, 9
+  %min.iters.check80 = icmp ult i32 %i.gm, 17
+  %i.if = and i64 %i.hc, 15                       ; 2 uses
   %i.ig = icmp eq i64 %i.if, 0
   %i.ih = select i1 %i.ig, i64 16, i64 %i.if      ; 2 uses
-  %n.vec82 = sub nsw i64 %9, %i.ih                ; 5 uses
+  %n.vec82 = sub nsw i64 %i.hc, %i.ih             ; 5 uses
   %i.ii = trunc i64 %n.vec82 to i32
   %i.ij = sub i32 %.11167198.i.i.i, %i.ii
   %i.ik = shl nsw i64 %n.vec82, 1
   %min.epilog.iters.check111 = icmp samesign ult i64 %i.ih, 9
-  %i.il = and i64 %9, 7                           ; 2 uses
+  %i.il = and i64 %i.hc, 7                        ; 2 uses
   %i.im = icmp eq i64 %i.il, 0
   %i.in = select i1 %i.im, i64 8, i64 %i.il
-  %n.vec113 = sub nsw i64 %9, %i.in               ; 4 uses
+  %n.vec113 = sub nsw i64 %i.hc, %i.in            ; 4 uses
   %i.io = trunc i64 %n.vec113 to i32
   %i.ip = sub i32 %.11167198.i.i.i, %i.io
   %i.iq = shl nsw i64 %n.vec113, 1
-  %xtraiter341 = and i32 %11, 3                   ; 2 uses
+  %xtraiter341 = and i32 %i.gm, 3                 ; 2 uses
   %lcmp.mod342.not = icmp eq i32 %xtraiter341, 0
-  %i.ir = icmp ult i32 %8, 3
-  %xtraiter344 = and i32 %11, 3                   ; 2 uses
+  %i.ir = icmp ult i32 %.11167198.i.i.i, 3
+  %xtraiter344 = and i32 %i.gm, 3                 ; 2 uses
   %lcmp.mod345.not = icmp eq i32 %xtraiter344, 0
-  %i.is = icmp ult i32 %8, 3
-  %min.iters.check47 = icmp ult i32 %8, 3
-  %min.iters.check48 = icmp ult i32 %8, 15
-  %i.it = and i64 %9, 12
-  %n.vec50 = and i64 %9, 8589934576               ; 6 uses
-  %i.iu = trunc i64 %n.vec50 to i32
+  %i.is = icmp ult i32 %.11167198.i.i.i, 3
+  %min.iters.check47 = icmp ult i32 %i.gm, 4
+  %min.iters.check48 = icmp ult i32 %i.gm, 16
+  %i.it = and i64 %i.hc, 12
+  %n.vec50 = and i64 %i.hc, 2147483632            ; 6 uses
+  %i.iu = trunc nuw nsw i64 %n.vec50 to i32
   %i.iv = sub i32 %.11167198.i.i.i, %i.iu
   %i.iw = shl nuw nsw i64 %n.vec50, 1
-  %cmp.n62 = icmp eq i64 %9, %n.vec50
+  %cmp.n62 = icmp eq i64 %n.vec50, %i.hc
   %min.epilog.iters.check = icmp eq i64 %i.it, 0
-  %n.vec66 = and i64 %9, 8589934588               ; 5 uses
-  %i.ix = trunc i64 %n.vec66 to i32
+  %n.vec66 = and i64 %i.hc, 2147483644            ; 5 uses
+  %i.ix = trunc nuw nsw i64 %n.vec66 to i32
   %i.iy = sub i32 %.11167198.i.i.i, %i.ix
   %i.iz = shl nuw nsw i64 %n.vec66, 1
-  %cmp.n73 = icmp eq i64 %9, %n.vec66
-  %xtraiter347 = and i32 %11, 1
+  %cmp.n73 = icmp eq i64 %n.vec66, %i.hc
+  %xtraiter347 = and i32 %i.gm, 1
   %lcmp.mod348.not = icmp eq i32 %xtraiter347, 0
   %.11167.i.i.i.prol = add nsw i32 %i.gm, -2
-  %14 = icmp slt i32 %i.gm, 2
+  %9 = icmp eq i32 %.11167198.i.i.i, 0
   br label %bb.bg
 
 bb.bg:                                            ; preds = %.loopexit.i.i.i, %.lr.ph258.split.i.i.i
@@ -425,7 +419,7 @@ bb.bg:                                            ; preds = %.loopexit.i.i.i, %.
   %.11167201.i.i.i.unr = phi i32 [ %.11167198.i.i.i, %.lr.ph.i.i.i.preheader ], [ %.11167.i.i.i.prol, %.lr.ph.i.i.i.prol ]
   %.11200.i.i.i.unr = phi ptr [ %i.jh, %.lr.ph.i.i.i.preheader ], [ %i.jq, %.lr.ph.i.i.i.prol ]
   %.11153199.i.i.i.unr = phi ptr [ %i.je, %.lr.ph.i.i.i.preheader ], [ %i.jp, %.lr.ph.i.i.i.prol ]
-  br i1 %14, label %.loopexit.i.i.i, label %.lr.ph.i.i.i
+  br i1 %9, label %.loopexit.i.i.i, label %.lr.ph.i.i.i
 
 .preheader193.i.i.i:                              ; preds = %bb.bg
   br i1 %i.gp, label %.loopexit.i.i.i, label %.lr.ph206.i.i.i.preheader
@@ -828,7 +822,7 @@ vec.epilog.middle.block180:                       ; preds = %vec.epilog.vector.b
   %.6162225.i.i.i.unr = phi i32 [ %.11167198.i.i.i, %.lr.ph226.i.i.i.preheader ], [ %.6162.i.i.i.prol, %.lr.ph226.i.i.i.prol ]
   %.6224.i.i.i.unr = phi ptr [ %i.jh, %.lr.ph226.i.i.i.preheader ], [ %i.ake, %.lr.ph226.i.i.i.prol ]
   %.6148223.i.i.i.unr = phi ptr [ %i.je, %.lr.ph226.i.i.i.preheader ], [ %i.akd, %.lr.ph226.i.i.i.prol ]
-  br i1 %12, label %.loopexit.i.i.i, label %.lr.ph226.i.i.i
+  br i1 %7, label %.loopexit.i.i.i, label %.lr.ph226.i.i.i
 
 .preheader183.i.i.i:                              ; preds = %bb.bg
   br i1 %i.gp, label %.loopexit.i.i.i, label %.lr.ph231.i.i.i.preheader
@@ -855,7 +849,7 @@ vec.epilog.middle.block180:                       ; preds = %vec.epilog.vector.b
   %.5161230.i.i.i.unr = phi i32 [ %.11167198.i.i.i, %.lr.ph231.i.i.i.preheader ], [ %.5161.i.i.i.prol, %.lr.ph231.i.i.i.prol ]
   %.5229.i.i.i.unr = phi ptr [ %i.jh, %.lr.ph231.i.i.i.preheader ], [ %i.akm, %.lr.ph231.i.i.i.prol ]
   %.5147228.i.i.i.unr = phi ptr [ %i.je, %.lr.ph231.i.i.i.preheader ], [ %i.akl, %.lr.ph231.i.i.i.prol ]
-  br i1 %13, label %.loopexit.i.i.i, label %.lr.ph231.i.i.i
+  br i1 %8, label %.loopexit.i.i.i, label %.lr.ph231.i.i.i
 
 .preheader181.i.i.i:                              ; preds = %bb.bg
   br i1 %i.gp, label %.loopexit.i.i.i, label %.lr.ph236.i.i.i.preheader
@@ -1256,9 +1250,6 @@ declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #40
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #40
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #40
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i32> @llvm.umin.v16i32(<16 x i32>, <16 x i32>) #40

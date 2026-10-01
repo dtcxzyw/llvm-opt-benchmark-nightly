@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = add nsw i32 %7, -1                       ; 3 uses
-  %i.h = zext nneg i32 %i.g to i64
+  %i.h = zext nneg i32 %i.g to i64                ; 2 uses
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %i.h
   %i.j = load float, ptr %i.i, align 4, !tbaa !26
   %i.k = load float, ptr %11, align 4, !tbaa !26
@@ -259,7 +259,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = phi ptr [ %i.t, %.split.preheader ], [ %i.ac, %.lr.ph.us.preheader ] ; 10 uses
   %i.ak = phi ptr [ %i.r, %.split.preheader ], [ %i.aa, %.lr.ph.us.preheader ] ; 10 uses
   %i.al = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.10, ptr noundef nonnull @.str.7, i32 noundef 228, i64 noundef range(i64 -2147483648, 2147483648) %i.p, i64 noundef 4) ; 19 uses
-  %i.am = zext nneg i32 %7 to i64
+  %i.am = zext nneg i32 %7 to i64                 ; 2 uses
   %i.an = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.11, ptr noundef nonnull @.str.7, i32 noundef 229, i64 noundef range(i64 -2147483648, 2147483648) %i.am, i64 noundef 4) ; 15 uses
   br i1 %i.q, label %.lr.ph234, label %._crit_edge.thread
 
@@ -271,7 +271,6 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph234:                                        ; preds = %.split227.us
   %i.aq = uitofp nneg i32 %7 to float             ; 4 uses
   %wide.trip.count283 = zext nneg i32 %8 to i64
-  %wide.trip.count = zext nneg i32 %7 to i64
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.preheader223
@@ -360,7 +359,7 @@ bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
   %.2152 = phi i32 [ %.1151228, %bb.d ], [ %i.ck, %bb.e ], [ %.1151228, %bb.c ] ; 5 uses
   %.1149 = phi i32 [ %.0148229, %bb.d ], [ %i.bx, %bb.e ], [ %i.bx, %bb.c ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.am
   br i1 %exitcond.not, label %.preheader223, label %bb.c, !llvm.loop !46
 
 bb.g:                                             ; preds = %._crit_edge
@@ -763,9 +762,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit180: ; preds = %_Z
   br i1 %exitcond311.not, label %._crit_edge258, label %.lr.ph257, !llvm.loop !58
 
 .preheader222:                                    ; preds = %._crit_edge258, %._crit_edge255.split
-  %21 = zext nneg i32 %7 to i64
-  %22 = shl nuw nsw i64 %21, 2
-  call void @llvm.memset.p0.i64(ptr align 4 %i.an, i8 0, i64 %22, i1 false), !tbaa !28
+  %21 = shl nuw nsw i64 %i.h, 2
+  %22 = add nuw nsw i64 %21, 4
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.an, i8 0, i64 %22, i1 false), !tbaa !28
   br i1 %i.q, label %.lr.ph263.preheader, label %.preheader
 
 .lr.ph263.preheader:                              ; preds = %.preheader222

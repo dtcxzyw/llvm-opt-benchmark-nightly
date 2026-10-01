@@ -204,7 +204,7 @@ _ZN4llvm4findIRNS_8ArrayRefIbEEbEEDaOT_RKT0_.exit.loopexit.split.loop.exit193: ;
 
 _ZN4llvm4findIRNS_8ArrayRefIbEEbEEDaOT_RKT0_.exit: ; preds = %bb.j, %_ZN4llvm4findIRNS_8ArrayRefIbEEbEEDaOT_RKT0_.exit.loopexit.split.loop.exit, %_ZN4llvm4findIRNS_8ArrayRefIbEEbEEDaOT_RKT0_.exit.loopexit.split.loop.exit191, %_ZN4llvm4findIRNS_8ArrayRefIbEEbEEDaOT_RKT0_.exit.loopexit.split.loop.exit193, %bb.o, %._crit_edge._crit_edge.i.i.i.i, %._crit_edge._crit_edge52.i.i.i.i, %bb.r
   %.028.i.i.i.i = phi ptr [ %.1.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i ], [ %i.cn, %bb.r ], [ %.2.i.i.i.i, %._crit_edge._crit_edge52.i.i.i.i ], [ %.029.lcssa.i.i.i.i, %bb.o ], [ %i.dk, %_ZN4llvm4findIRNS_8ArrayRefIbEEbEEDaOT_RKT0_.exit.loopexit.split.loop.exit193 ], [ %i.di, %_ZN4llvm4findIRNS_8ArrayRefIbEEbEEDaOT_RKT0_.exit.loopexit.split.loop.exit ], [ %i.dj, %_ZN4llvm4findIRNS_8ArrayRefIbEEbEEDaOT_RKT0_.exit.loopexit.split.loop.exit191 ], [ %.02946.i.i.i.i, %bb.j ]
-  %i.dl = ptrtoint ptr %.028.i.i.i.i to i64       ; 3 uses
+  %i.dl = ptrtoint ptr %.028.i.i.i.i to i64       ; 2 uses
   %i.dm = sub i64 %i.co, %i.dl                    ; 7 uses
   %i.dn = icmp slt i64 %i.dm, 2
   br i1 %i.dn, label %bb.s, label %bb.t
@@ -248,7 +248,7 @@ bb.w:                                             ; preds = %bb.u
   %i.ed = call { ptr, i64 } @_ZNK4mlir10MemRefType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %12) #21 ; 2 uses
   %i.ee = extractvalue { ptr, i64 } %i.ed, 0
   %i.ef = extractvalue { ptr, i64 } %i.ed, 1      ; 2 uses
-  %i.eg = add nsw i64 %i.dm, -1                   ; 10 uses
+  %i.eg = add nsw i64 %i.dm, -1                   ; 11 uses
   %.sroa.0.0.copyload.pn.idx.i = call i64 @llvm.usub.sat.i64(i64 %i.ef, i64 %i.eg)
   %.sroa.0.0.copyload.pn.i = getelementptr inbounds nuw [8 x i8], ptr %i.ee, i64 %.sroa.0.0.copyload.pn.idx.i
   %.pn2.i = call i64 @llvm.umin.i64(i64 %i.eg, i64 %i.ef) ; 3 uses
@@ -474,12 +474,10 @@ bb.ah:                                            ; preds = %._crit_edge169
 .lr.ph173:                                        ; preds = %bb.ah
   %i.hx = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.hv ; 6 uses
   %.promoted = load i64, ptr %i.hx, align 8, !tbaa !42 ; 2 uses
-  %i.hy = add i64 %i.at, %i.as                    ; 2 uses
-  %22 = xor i64 %i.dl, -1
-  %23 = add i64 %i.hy, %22
+  %i.hy = add i64 %i.at, %i.as
   %i.hz = add i64 %i.hy, -2
   %i.ia = sub i64 %i.hz, %i.dl
-  %xtraiter209 = and i64 %23, 3                   ; 2 uses
+  %xtraiter209 = and i64 %i.eg, 3                 ; 2 uses
   %lcmp.mod210.not = icmp eq i64 %xtraiter209, 0
   br i1 %lcmp.mod210.not, label %.prol.loopexit, label %.prol.preheader
 

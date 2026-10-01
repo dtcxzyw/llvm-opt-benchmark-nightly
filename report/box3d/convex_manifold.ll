@@ -204,16 +204,14 @@ bb.w:                                             ; preds = %._crit_edge.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.jp, ptr noundef nonnull align 8 dereferenceable(24) %i.jr, i64 24, i1 false), !tbaa.struct !71
   %i.js = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   store i32 1, ptr %i.js, align 8, !tbaa !16
-  %i.jt = add nsw i32 %i.gi, -1                   ; 2 uses
-  %i.ju = zext nneg i32 %i.jt to i64
+  %i.jt = add nsw i32 %i.gi, -1
+  %i.ju = zext nneg i32 %i.jt to i64              ; 2 uses
   %i.jv = getelementptr inbounds nuw [24 x i8], ptr %7, i64 %i.ju
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.jr, ptr noundef nonnull align 8 dereferenceable(24) %i.jv, i64 24, i1 false), !tbaa.struct !71
   %i.jw = load ptr, ptr %i.jo, align 8, !tbaa !17 ; 3 uses
   %.sroa.0193.0.copyload.i = load <2 x float>, ptr %i.jw, align 4, !tbaa !9 ; 5 uses
   %.sroa.8.0..sroa_idx.i170 = getelementptr inbounds nuw i8, ptr %i.jw, i64 8
   %.sroa.8.0.copyload.i = load float, ptr %.sroa.8.0..sroa_idx.i170, align 4, !tbaa !9 ; 5 uses
-  %smax465.i = call i32 @llvm.smax.i32(i32 %i.jt, i32 1)
-  %wide.trip.count466.i = zext nneg i32 %smax465.i to i64
   %i.jx = shufflevector <2 x float> %.sroa.0193.0.copyload.i, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.jy = insertelement <4 x float> %i.jx, float 0.000000e+00, i64 3
   %i.jz = insertelement <4 x float> %i.jy, float %.sroa.8.0.copyload.i, i64 2
@@ -271,7 +269,7 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph438.i
   %i.le = trunc nuw nsw i64 %indvars.iv462.i to i32
   %.4.i = select i1 %i.ld, i32 %i.le, i32 %.3436.i ; 2 uses
   %indvars.iv.next463.i = add nuw nsw i64 %indvars.iv462.i, 1 ; 2 uses
-  %exitcond467.not.i = icmp eq i64 %indvars.iv.next463.i, %wide.trip.count466.i
+  %exitcond467.not.i = icmp eq i64 %indvars.iv.next463.i, %i.ju
   br i1 %exitcond467.not.i, label %._crit_edge439.i, label %bb.x, !llvm.loop !109
 
 .lr.ph447.preheader.i:                            ; preds = %._crit_edge439.i
@@ -280,8 +278,8 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph438.i
   %i.lh = getelementptr inbounds [24 x i8], ptr %7, i64 %i.lg ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.lf, ptr noundef nonnull align 8 dereferenceable(24) %i.lh, i64 24, i1 false), !tbaa.struct !71
   store i32 2, ptr %i.js, align 8, !tbaa !16
-  %i.li = add nsw i32 %i.gi, -2                   ; 2 uses
-  %i.lj = zext nneg i32 %i.li to i64
+  %i.li = add nsw i32 %i.gi, -2
+  %i.lj = zext nneg i32 %i.li to i64              ; 2 uses
   %i.lk = getelementptr inbounds nuw [24 x i8], ptr %7, i64 %i.lj
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.lh, ptr noundef nonnull align 8 dereferenceable(24) %i.lk, i64 24, i1 false), !tbaa.struct !71
   %i.ll = load ptr, ptr %i.jo, align 8, !tbaa !17 ; 3 uses
@@ -292,8 +290,6 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph438.i
   %i.ln = fsub <2 x float> %.sroa.0150.0.copyload.i, %.sroa.0193.0.copyload.i ; 3 uses
   %i.lo = shufflevector <2 x float> %i.ln, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.lp = fsub float %.sroa.6153.0.copyload.i, %.sroa.8.0.copyload.i ; 4 uses
-  %smax471.i = call i32 @llvm.smax.i32(i32 %i.li, i32 1)
-  %wide.trip.count472.i = zext nneg i32 %smax471.i to i64
   %i.lq = extractelement <2 x float> %i.ln, i64 0 ; 2 uses
   %i.lr = extractelement <2 x float> %i.ln, i64 1 ; 2 uses
   %i.ls = extractelement <2 x float> %.sroa.0244.0.copyload.i, i64 1 ; 2 uses
@@ -341,7 +337,7 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph438.i
   %i.mr = trunc nuw nsw i64 %indvars.iv468.i to i32
   %.6.i = select i1 %i.mq, i32 %.5445.i, i32 %i.mr ; 3 uses
   %indvars.iv.next469.i = add nuw nsw i64 %indvars.iv468.i, 1 ; 2 uses
-  %exitcond473.not.i = icmp eq i64 %indvars.iv.next469.i, %wide.trip.count472.i
+  %exitcond473.not.i = icmp eq i64 %indvars.iv.next469.i, %i.lj
   br i1 %exitcond473.not.i, label %._crit_edge448.i, label %.lr.ph447.i, !llvm.loop !110
 
 .lr.ph455.i:                                      ; preds = %._crit_edge448.i
@@ -350,8 +346,8 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph438.i
   %i.mu = getelementptr inbounds [24 x i8], ptr %7, i64 %i.mt ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.ms, ptr noundef nonnull align 8 dereferenceable(24) %i.mu, i64 24, i1 false), !tbaa.struct !71
   store i32 3, ptr %i.js, align 8, !tbaa !16
-  %i.mv = add nsw i32 %i.gi, -3                   ; 2 uses
-  %i.mw = zext nneg i32 %i.mv to i64
+  %i.mv = add nsw i32 %i.gi, -3
+  %i.mw = zext nneg i32 %i.mv to i64              ; 2 uses
   %i.mx = getelementptr inbounds nuw [24 x i8], ptr %7, i64 %i.mw
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.mu, ptr noundef nonnull align 8 dereferenceable(24) %i.mx, i64 24, i1 false), !tbaa.struct !71
   %i.my = load ptr, ptr %i.jo, align 8, !tbaa !17 ; 3 uses
@@ -367,8 +363,6 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph438.i
   %i.nf = fsub <2 x float> %.sroa.0193.0.copyload.i, %.sroa.0102.0.copyload.i ; 3 uses
   %i.ng = shufflevector <2 x float> %i.nf, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.nh = fsub float %.sroa.8.0.copyload.i, %.sroa.6105.0.copyload.i
-  %smax477.i = call i32 @llvm.smax.i32(i32 %i.mv, i32 1)
-  %wide.trip.count478.i = zext nneg i32 %smax477.i to i64
   %i.ni = insertelement <2 x float> poison, float %i.na, i64 0
   %i.nj = shufflevector <2 x float> %i.ni, <2 x float> poison, <2 x i32> zeroinitializer
   %i.nk = insertelement <2 x float> poison, float %.sroa.10.0.copyload.i, i64 0
@@ -448,7 +442,7 @@ bb.y:                                             ; preds = %bb.y, %.lr.ph455.i
   %i.pq = trunc nuw nsw i64 %indvars.iv474.i to i32
   %.8.i = select i1 %i.pp, i32 %i.pq, i32 %.7453.i ; 3 uses
   %indvars.iv.next475.i = add nuw nsw i64 %indvars.iv474.i, 1 ; 2 uses
-  %exitcond479.not.i = icmp eq i64 %indvars.iv.next475.i, %wide.trip.count478.i
+  %exitcond479.not.i = icmp eq i64 %indvars.iv.next475.i, %i.mw
   br i1 %exitcond479.not.i, label %._crit_edge456.i, label %bb.y, !llvm.loop !111
 
 bb.z:                                             ; preds = %._crit_edge456.i
@@ -849,9 +843,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #9

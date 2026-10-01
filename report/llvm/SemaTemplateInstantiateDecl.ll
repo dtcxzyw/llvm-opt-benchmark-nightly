@@ -205,8 +205,8 @@ _ZNK5clang14DeclaratorDecl25getTemplateParameterListsEv.exit: ; preds = %_ZN5cla
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 24
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !2415
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 16
-  %i.bm = load i32, ptr %i.bl, align 8, !tbaa !2416 ; 5 uses
-  %i.bn = zext i32 %i.bm to i64                   ; 3 uses
+  %i.bm = load i32, ptr %i.bl, align 8, !tbaa !2416 ; 4 uses
+  %i.bn = zext i32 %i.bm to i64                   ; 4 uses
   %i.bo = icmp ne i32 %i.bm, 0
   %or.cond619.not = select i1 %.not.i360, i1 %i.bo, i1 false
   br i1 %or.cond619.not, label %bb.h, label %.thread555
@@ -251,8 +251,7 @@ bb.k:                                             ; preds = %bb.j
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %indvars.iv
   store ptr %i.bw, ptr %i.by, align 8, !tbaa !1174
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond = icmp eq i32 %i.bm, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next, %i.bn
   br i1 %exitcond, label %.thread555, label %bb.j, !llvm.loop !2409
 
 .thread555:                                       ; preds = %bb.k, %_ZN5clang30MultiLevelTemplateArgumentListD2Ev.exit, %_ZNK5clang14DeclaratorDecl25getTemplateParameterListsEv.exit
