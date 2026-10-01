@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: cold fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid optsize sspstrong
 define internal fastcc void @rcu_init_one() unnamed_addr #15 section ".init.text" align 16 prefalign(16) {
 bb.a:
-  %i.a = alloca [2 x i32], align 8                ; 13 uses
+  %i.a = alloca [2 x i32], align 8                ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.b = load i32, ptr @rcu_num_lvls, align 4     ; 7 uses
   %i.c = add i32 %i.b, -3
@@ -244,11 +244,7 @@ bb.b:                                             ; preds = %bb.a
 
 .thread:                                          ; preds = %._crit_edge.thread
   %i.n = load i32, ptr @rcu_fanout_leaf, align 4
-  %0 = zext nneg i32 %i.b to i64
-  %1 = getelementptr [4 x i8], ptr %i.a, i64 %0
-  %2 = getelementptr i8, ptr %1, i64 -4
-  store i32 %i.n, ptr %2, align 4
-  br label %.lr.ph97.preheader
+  br label %.lr.ph97.preheader.sink.split
 
 .lr.ph7.i:                                        ; preds = %.lr.ph
   %i.o = load i32, ptr @rcu_fanout_leaf, align 4
@@ -256,8 +252,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr [4 x i8], ptr %i.a, i64 %i.p
   %i.r = getelementptr i8, ptr %i.q, i64 -4
   store i32 %i.o, ptr %i.r, align 4
-  store i32 64, ptr %i.a, align 8
-  br label %.lr.ph97.preheader
+  br label %.lr.ph97.preheader.sink.split
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph, %._crit_edge.thread
   %.23.i = add nsw i32 %i.b, -1
@@ -279,7 +274,16 @@ bb.b:                                             ; preds = %bb.a
   %.not.i84 = icmp eq i64 %indvars.iv.i, 0
   br i1 %.not.i84, label %.lr.ph97.preheader, label %.lr.ph.i, !llvm.loop !291
 
-.lr.ph97.preheader:                               ; preds = %.lr.ph.i, %.lr.ph7.i, %.thread
+.lr.ph97.preheader.sink.split:                    ; preds = %.lr.ph7.i, %.thread
+  %.sink116 = phi i64 [ -4, %.thread ], [ -8, %.lr.ph7.i ]
+  %.sink113 = phi i32 [ %i.n, %.thread ], [ 64, %.lr.ph7.i ]
+  %0 = zext nneg i32 %i.b to i64
+  %1 = getelementptr [4 x i8], ptr %i.a, i64 %0
+  %2 = getelementptr i8, ptr %1, i64 %.sink116
+  store i32 %.sink113, ptr %2, align 4
+  br label %.lr.ph97.preheader
+
+.lr.ph97.preheader:                               ; preds = %.lr.ph.i, %.lr.ph97.preheader.sink.split
   %.193 = add nsw i32 %i.b, -1
   %i.aa = zext nneg i32 %.193 to i64
   %i.ab = zext nneg i32 %i.b to i64

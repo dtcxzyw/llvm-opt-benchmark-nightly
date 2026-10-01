@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.u, %bb.w
   %.1416 = phi i32 [ %i.cv, %bb.u ], [ %.0415866, %bb.w ] ; 2 uses
   %.1414 = phi i32 [ %.0413867, %bb.u ], [ %i.dg, %bb.w ] ; 2 uses
   %i.dh = add nuw nsw i32 %.2451865, 1            ; 2 uses
-  %exitcond.not = icmp eq i32 %i.dh, %.04491397
+  %exitcond.not = icmp eq i32 %.04491397, %i.dh
   br i1 %exitcond.not, label %._crit_edge870, label %.lr.ph869, !llvm.loop !130
 
 ._crit_edge870:                                   ; preds = %bb.x, %bb.v
@@ -608,7 +608,7 @@ bb.bj:                                            ; preds = %bb.as, %bb.bi, %bb.
   %.3452.lcssa = phi i32 [ 6, %.preheader738.12 ], [ 8, %.preheader738.10 ], [ 2, %.preheader738.16 ], [ 7, %.preheader738.11 ], [ %spec.select1285, %.preheader738.17 ], [ 3, %.preheader738.15 ], [ 5, %.preheader738.13 ], [ 4, %.preheader738.14 ] ; 7 uses
   %i.jz = sub nuw nsw i32 %.0449.lcssa11161126, %.3452.lcssa
   %i.ka = add i32 %i.jz, %i.ev                    ; 3 uses
-  %spec.select569 = tail call i32 @llvm.smin.i32(i32 %spec.select56811191124, i32 %.3452.lcssa) ; 8 uses
+  %spec.select569 = tail call i32 @llvm.smin.i32(i32 %spec.select56811191124, i32 %.3452.lcssa) ; 6 uses
   %i.kb = icmp sgt i32 %spec.select569, 0
   br i1 %i.kb, label %.lr.ph894.preheader, label %.preheader
 
@@ -624,7 +624,7 @@ bb.bj:                                            ; preds = %bb.as, %bb.bi, %bb.
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %.lr.ph894
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader, label %.lr.ph894.epil.preheader
+  br i1 %lcmp.mod.not, label %.preheader.loopexit, label %.lr.ph894.epil.preheader
 
 .lr.ph894.epil.preheader:                         ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph894.preheader
   %indvars.iv1018.epil.init = phi i64 [ 0, %.lr.ph894.preheader ], [ %indvars.iv.next1019.3, %.preheader.loopexit.unr-lcssa ]
@@ -643,19 +643,25 @@ bb.bj:                                            ; preds = %bb.as, %bb.bi, %bb.
   %i.kg = sext i8 %i.kf to i32
   %i.kh = add i32 %i.kd, -48
   %i.ki = add i32 %i.kh, %i.kg                    ; 2 uses
-  %indvars.iv.next1019.epil = add nuw nsw i64 %indvars.iv1018.epil, 1
+  %indvars.iv.next1019.epil = add nuw nsw i64 %indvars.iv1018.epil, 1 ; 2 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.preheader, label %.lr.ph894.epil, !llvm.loop !133
+  br i1 %epil.iter.cmp.not, label %.preheader.loopexit, label %.lr.ph894.epil, !llvm.loop !133
 
-.preheader:                                       ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph894.epil, %.preheader737
-  %.5454.lcssa = phi i32 [ 0, %.preheader737 ], [ %spec.select569, %.lr.ph894.epil ], [ %spec.select569, %.preheader.loopexit.unr-lcssa ] ; 2 uses
-  %.2417.lcssa = phi i32 [ 0, %.preheader737 ], [ %i.lu, %.preheader.loopexit.unr-lcssa ], [ %i.ki, %.lr.ph894.epil ] ; 3 uses
+.preheader.loopexit:                              ; preds = %.lr.ph894.epil, %.preheader.loopexit.unr-lcssa
+  %.lcssa1491 = phi i32 [ %i.lu, %.preheader.loopexit.unr-lcssa ], [ %i.ki, %.lr.ph894.epil ]
+  %indvars.iv.next1020.lcssa = phi i64 [ %indvars.iv.next1019.3, %.preheader.loopexit.unr-lcssa ], [ %indvars.iv.next1019.epil, %.lr.ph894.epil ]
+  %4 = trunc nuw nsw i64 %indvars.iv.next1020.lcssa to i32
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.loopexit, %.preheader737
+  %.5454.lcssa = phi i32 [ 0, %.preheader737 ], [ %4, %.preheader.loopexit ] ; 2 uses
+  %.2417.lcssa = phi i32 [ 0, %.preheader737 ], [ %.lcssa1491, %.preheader.loopexit ] ; 3 uses
   %i.kj = icmp samesign ult i32 %.5454.lcssa, %.3452.lcssa
   br i1 %i.kj, label %.lr.ph899.preheader, label %._crit_edge.thread.i
 
 .lr.ph899.preheader:                              ; preds = %.preheader
-  %i.kk = zext nneg i32 %.5454.lcssa to i64       ; 4 uses
+  %i.kk = zext i32 %.5454.lcssa to i64            ; 4 uses
   %wide.trip.count1025 = zext nneg i32 %.3452.lcssa to i64 ; 3 uses
   %i.kl = sub nsw i64 %wide.trip.count1025, %i.kk
   %xtraiter1511 = and i64 %i.kl, 3                ; 2 uses
@@ -716,7 +722,7 @@ bb.bj:                                            ; preds = %bb.as, %bb.bi, %bb.
   %i.ls = sext i8 %i.lr to i32
   %i.lt = add i32 %i.lo, -48
   %i.lu = add i32 %i.lt, %i.ls                    ; 3 uses
-  %indvars.iv.next1019.3 = add nuw nsw i64 %indvars.iv1018, 4 ; 2 uses
+  %indvars.iv.next1019.3 = add nuw nsw i64 %indvars.iv1018, 4 ; 3 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader.loopexit.unr-lcssa, label %.lr.ph894, !llvm.loop !135
