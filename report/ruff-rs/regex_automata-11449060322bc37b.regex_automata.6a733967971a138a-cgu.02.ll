@@ -162,78 +162,77 @@ target triple = "x86_64-unknown-linux-gnu"
 @152 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00K\12\00\00\09\00\00\00" }>, align 8
 @153 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00+\12\00\00\09\00\00\00" }>, align 8
 @154 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00\CC\11\00\00\19\00\00\00" }>, align 8
-@155 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00\CD\11\00\00\17\00\00\00" }>, align 8
-@156 = private unnamed_addr constant [18 x i8] c"invalid pattern ID", align 1
-@157 = private unnamed_addr constant [25 x i8] c"invalid pattern ID length", align 1
-@158 = private unnamed_addr constant [31 x i8] c"invalid pattern ID start offset", align 1
-@159 = private unnamed_addr constant [27 x i8] c"match state length mismatch", align 1
-@160 = private unnamed_addr constant [11 x i8] c"flag bitset", align 1
-@161 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtCs98D8VPWzHuM_14regex_automata4util10primitives15SmallIndexErrorNtB6_5Debug3fmtBC_ }>, align 8
-@162 = private unnamed_addr constant [12 x i8] c"StateIDError", align 1
-@163 = private unnamed_addr constant [14 x i8] c"PatternIDError", align 1
-@164 = private unnamed_addr constant [122 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/regex-automata-0.4.16/src/nfa/thompson/range_trie.rs\00", align 1
-@165 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @164, [16 x i8] c"y\00\00\00\00\00\00\00\B2\00\00\00\0A\00\00\00" }>, align 8
-@166 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCs98D8VPWzHuM_14regex_automata }>, align 8
-@167 = private unnamed_addr constant [15 x i8] c"TryFromIntError", align 1
-@168 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtCs98D8VPWzHuM_14regex_automata4util4wire20DeserializeErrorKindNtB6_5Debug3fmtBC_ }>, align 8
-@169 = private unnamed_addr constant [16 x i8] c"DeserializeError", align 1
-@170 = private unnamed_addr constant [11 x i8] c"NonWordByte", align 1
-@171 = private unnamed_addr constant [8 x i8] c"WordByte", align 1
-@172 = private unnamed_addr constant [4 x i8] c"Text", align 1
-@173 = private unnamed_addr constant [6 x i8] c"LineLF", align 1
-@174 = private unnamed_addr constant [6 x i8] c"LineCR", align 1
-@175 = private unnamed_addr constant [20 x i8] c"CustomLineTerminator", align 1
-@176 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00", ptr @_RNvXsf_NtCs4NRVxsYgnAr_4core3fmtbNtB5_5Debug3fmt }>, align 8
-@177 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRbNtB6_5Debug3fmtCs98D8VPWzHuM_14regex_automata }>, align 8
-@178 = private unnamed_addr constant [5 x i8] c"Flags", align 1
-@179 = private unnamed_addr constant [9 x i8] c"has_empty", align 1
-@180 = private unnamed_addr constant [7 x i8] c"is_utf8", align 1
-@181 = private unnamed_addr constant [24 x i8] c"is_always_start_anchored", align 1
-@182 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense14BuildErrorKindNtB6_5Debug3fmtBC_ }>, align 8
-@183 = private unnamed_addr constant [10 x i8] c"BuildError", align 1
-@184 = private unnamed_addr constant [4 x i8] c"kind", align 1
-@185 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson5error10BuildErrorNtB6_5Debug3fmtBE_ }>, align 8
-@186 = private unnamed_addr constant [3 x i8] c"NFA", align 1
-@187 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRReNtB6_5Debug3fmtCs98D8VPWzHuM_14regex_automata }>, align 8
-@188 = private unnamed_addr constant [11 x i8] c"Unsupported", align 1
-@189 = private unnamed_addr constant [13 x i8] c"TooManyStates", align 1
-@190 = private unnamed_addr constant [18 x i8] c"TooManyStartStates", align 1
-@191 = private unnamed_addr constant [22 x i8] c"TooManyMatchPatternIDs", align 1
-@192 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRjNtB6_5Debug3fmtCs98D8VPWzHuM_14regex_automata }>, align 8
-@193 = private unnamed_addr constant [20 x i8] c"DFAExceededSizeLimit", align 1
-@194 = private unnamed_addr constant [5 x i8] c"limit", align 1
-@195 = private unnamed_addr constant [28 x i8] c"DeterminizeExceededSizeLimit", align 1
-@196 = private unnamed_addr constant [12 x i8] c"dense::DFA(\0A", align 1
-@197 = private unnamed_addr constant [1 x i8] c"\0A", align 1
-@198 = private unnamed_addr constant [19 x i8] c"\0Estate length: \C0\01\0A\00", align 1
-@199 = private unnamed_addr constant [21 x i8] c"\10pattern length: \C0\01\0A\00", align 1
-@200 = private unnamed_addr constant [12 x i8] c"\07flags: \C0\01\0A\00", align 1
-@201 = private unnamed_addr constant [2 x i8] c")\0A", align 1
-@202 = private unnamed_addr constant [19 x i8] c"\06MATCH(\C3 \00\00i\06\00\03): \00", align 1
-@203 = private unnamed_addr constant [2 x i8] c", ", align 1
-@204 = private unnamed_addr constant [2 x i8] c"\C0\00", align 1
-@205 = private unnamed_addr constant [24 x i8] c"START-GROUP(unanchored)\0A", align 1
-@206 = private unnamed_addr constant [22 x i8] c"START-GROUP(anchored)\0A", align 1
-@207 = private unnamed_addr constant [27 x i8] c"\15START_GROUP(pattern: \C0\02)\0A\00", align 1
-@208 = private unnamed_addr constant [19 x i8] c"\02  \C0\04 => \C3 \00\00i\06\00\01\0A\00", align 1
-@209 = private unnamed_addr constant [11 x i8] c"\C3 \00\00i\06\00\02: \00", align 1
-@210 = private unnamed_addr constant [120 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/regex-automata-0.4.16/src/nfa/thompson/compiler.rs\00", align 1
-@211 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @210, [16 x i8] c"w\00\00\00\00\00\00\00\CD\02\00\00\0A\00\00\00" }>, align 8
-@212 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00\F4\10\00\00,\00\00\00" }>, align 8
-@213 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00\FB\10\00\003\00\00\00" }>, align 8
-@214 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00\F4\10\00\00@\00\00\00" }>, align 8
-@215 = private unnamed_addr constant [11 x i8] c"\C0\01-\C0\04 => \C0\00", align 1
-@216 = private unnamed_addr constant [8 x i8] c"\C0\04 => \C0\00", align 1
-@217 = private unnamed_addr constant [18 x i8] c"error building NFA", align 1
-@218 = private unnamed_addr constant [39 x i8] c"$unsupported regex feature for DFAs: \C0\00", align 1
-@219 = private unnamed_addr constant [8 x i8] c"\FF\FF\FF\7F\00\00\00\00", align 8
-@220 = private unnamed_addr constant [41 x i8] c"&number of DFA states exceeds limit of \C0\00", align 1
-@221 = private unnamed_addr constant [68 x i8] c"Acompiling DFA with start states exceeds pattern pattern limit of \C0\00", align 1
-@222 = private unnamed_addr constant [74 x i8] c"Gcompiling DFA with total patterns in all match states exceeds limit of \C0\00", align 1
-@223 = private unnamed_addr constant [54 x i8] c"\1BDFA exceeded size limit of \C0\17 during determinization\00", align 1
-@224 = private unnamed_addr constant [42 x i8] c"'determinization exceeded size limit of \C0\00", align 1
+@155 = private unnamed_addr constant [18 x i8] c"invalid pattern ID", align 1
+@156 = private unnamed_addr constant [25 x i8] c"invalid pattern ID length", align 1
+@157 = private unnamed_addr constant [31 x i8] c"invalid pattern ID start offset", align 1
+@158 = private unnamed_addr constant [27 x i8] c"match state length mismatch", align 1
+@159 = private unnamed_addr constant [11 x i8] c"flag bitset", align 1
+@160 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtCs98D8VPWzHuM_14regex_automata4util10primitives15SmallIndexErrorNtB6_5Debug3fmtBC_ }>, align 8
+@161 = private unnamed_addr constant [12 x i8] c"StateIDError", align 1
+@162 = private unnamed_addr constant [14 x i8] c"PatternIDError", align 1
+@163 = private unnamed_addr constant [122 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/regex-automata-0.4.16/src/nfa/thompson/range_trie.rs\00", align 1
+@164 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @163, [16 x i8] c"y\00\00\00\00\00\00\00\B2\00\00\00\0A\00\00\00" }>, align 8
+@165 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCs98D8VPWzHuM_14regex_automata }>, align 8
+@166 = private unnamed_addr constant [15 x i8] c"TryFromIntError", align 1
+@167 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtCs98D8VPWzHuM_14regex_automata4util4wire20DeserializeErrorKindNtB6_5Debug3fmtBC_ }>, align 8
+@168 = private unnamed_addr constant [16 x i8] c"DeserializeError", align 1
+@169 = private unnamed_addr constant [11 x i8] c"NonWordByte", align 1
+@170 = private unnamed_addr constant [8 x i8] c"WordByte", align 1
+@171 = private unnamed_addr constant [4 x i8] c"Text", align 1
+@172 = private unnamed_addr constant [6 x i8] c"LineLF", align 1
+@173 = private unnamed_addr constant [6 x i8] c"LineCR", align 1
+@174 = private unnamed_addr constant [20 x i8] c"CustomLineTerminator", align 1
+@175 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00", ptr @_RNvXsf_NtCs4NRVxsYgnAr_4core3fmtbNtB5_5Debug3fmt }>, align 8
+@176 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRbNtB6_5Debug3fmtCs98D8VPWzHuM_14regex_automata }>, align 8
+@177 = private unnamed_addr constant [5 x i8] c"Flags", align 1
+@178 = private unnamed_addr constant [9 x i8] c"has_empty", align 1
+@179 = private unnamed_addr constant [7 x i8] c"is_utf8", align 1
+@180 = private unnamed_addr constant [24 x i8] c"is_always_start_anchored", align 1
+@181 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense14BuildErrorKindNtB6_5Debug3fmtBC_ }>, align 8
+@182 = private unnamed_addr constant [10 x i8] c"BuildError", align 1
+@183 = private unnamed_addr constant [4 x i8] c"kind", align 1
+@184 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson5error10BuildErrorNtB6_5Debug3fmtBE_ }>, align 8
+@185 = private unnamed_addr constant [3 x i8] c"NFA", align 1
+@186 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRReNtB6_5Debug3fmtCs98D8VPWzHuM_14regex_automata }>, align 8
+@187 = private unnamed_addr constant [11 x i8] c"Unsupported", align 1
+@188 = private unnamed_addr constant [13 x i8] c"TooManyStates", align 1
+@189 = private unnamed_addr constant [18 x i8] c"TooManyStartStates", align 1
+@190 = private unnamed_addr constant [22 x i8] c"TooManyMatchPatternIDs", align 1
+@191 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRjNtB6_5Debug3fmtCs98D8VPWzHuM_14regex_automata }>, align 8
+@192 = private unnamed_addr constant [20 x i8] c"DFAExceededSizeLimit", align 1
+@193 = private unnamed_addr constant [5 x i8] c"limit", align 1
+@194 = private unnamed_addr constant [28 x i8] c"DeterminizeExceededSizeLimit", align 1
+@195 = private unnamed_addr constant [12 x i8] c"dense::DFA(\0A", align 1
+@196 = private unnamed_addr constant [1 x i8] c"\0A", align 1
+@197 = private unnamed_addr constant [19 x i8] c"\0Estate length: \C0\01\0A\00", align 1
+@198 = private unnamed_addr constant [21 x i8] c"\10pattern length: \C0\01\0A\00", align 1
+@199 = private unnamed_addr constant [12 x i8] c"\07flags: \C0\01\0A\00", align 1
+@200 = private unnamed_addr constant [2 x i8] c")\0A", align 1
+@201 = private unnamed_addr constant [19 x i8] c"\06MATCH(\C3 \00\00i\06\00\03): \00", align 1
+@202 = private unnamed_addr constant [2 x i8] c", ", align 1
+@203 = private unnamed_addr constant [2 x i8] c"\C0\00", align 1
+@204 = private unnamed_addr constant [24 x i8] c"START-GROUP(unanchored)\0A", align 1
+@205 = private unnamed_addr constant [22 x i8] c"START-GROUP(anchored)\0A", align 1
+@206 = private unnamed_addr constant [27 x i8] c"\15START_GROUP(pattern: \C0\02)\0A\00", align 1
+@207 = private unnamed_addr constant [19 x i8] c"\02  \C0\04 => \C3 \00\00i\06\00\01\0A\00", align 1
+@208 = private unnamed_addr constant [11 x i8] c"\C3 \00\00i\06\00\02: \00", align 1
+@209 = private unnamed_addr constant [120 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/regex-automata-0.4.16/src/nfa/thompson/compiler.rs\00", align 1
+@210 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @209, [16 x i8] c"w\00\00\00\00\00\00\00\CD\02\00\00\0A\00\00\00" }>, align 8
+@211 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00\F4\10\00\00,\00\00\00" }>, align 8
+@212 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00\FB\10\00\003\00\00\00" }>, align 8
+@213 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"k\00\00\00\00\00\00\00\F4\10\00\00@\00\00\00" }>, align 8
+@214 = private unnamed_addr constant [11 x i8] c"\C0\01-\C0\04 => \C0\00", align 1
+@215 = private unnamed_addr constant [8 x i8] c"\C0\04 => \C0\00", align 1
+@216 = private unnamed_addr constant [18 x i8] c"error building NFA", align 1
+@217 = private unnamed_addr constant [39 x i8] c"$unsupported regex feature for DFAs: \C0\00", align 1
+@218 = private unnamed_addr constant [8 x i8] c"\FF\FF\FF\7F\00\00\00\00", align 8
+@219 = private unnamed_addr constant [41 x i8] c"&number of DFA states exceeds limit of \C0\00", align 1
+@220 = private unnamed_addr constant [68 x i8] c"Acompiling DFA with start states exceeds pattern pattern limit of \C0\00", align 1
+@221 = private unnamed_addr constant [74 x i8] c"Gcompiling DFA with total patterns in all match states exceeds limit of \C0\00", align 1
+@222 = private unnamed_addr constant [54 x i8] c"\1BDFA exceeded size limit of \C0\17 during determinization\00", align 1
+@223 = private unnamed_addr constant [42 x i8] c"'determinization exceeded size limit of \C0\00", align 1
 @switch.table._RNvXs8_NtNtCs98D8VPWzHuM_14regex_automata4util5startNtB5_5StartNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt = private unnamed_addr constant [6 x i8] c"\0B\08\04\06\06\14", align 8
-@switch.table._RNvXs8_NtNtCs98D8VPWzHuM_14regex_automata4util5startNtB5_5StartNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.70 = private unnamed_addr constant [6 x ptr] [ptr @170, ptr @171, ptr @172, ptr @173, ptr @174, ptr @175], align 8
+@switch.table._RNvXs8_NtNtCs98D8VPWzHuM_14regex_automata4util5startNtB5_5StartNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.70 = private unnamed_addr constant [6 x ptr] [ptr @169, ptr @170, ptr @171, ptr @172, ptr @173, ptr @174], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMs_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_7Builder10build_manyReEB9_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([800 x i8]) align 16 captures(none) dereferenceable(800) %0, ptr nofree noundef nonnull align 16 captures(address, read_provenance) %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %2, i64 noundef range(i64 0, 576460752303423488) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -297,7 +296,7 @@ bb.b:                                             ; preds = %bb.a, %bb.p
   br i1 %i.aq, label %_RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson7builder7BuilderE6borrowBR_.exit.i.i, label %bb.c, !prof !8
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @211) #18, !noalias !71
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @210) #18, !noalias !71
   unreachable
 
 _RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson7builder7BuilderE6borrowBR_.exit.i.i: ; preds = %bb.b
@@ -406,7 +405,7 @@ _RNvXsx_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs98D8VPWzHuM_14regex_au
   br i1 %i.bs, label %_RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson8compiler9Utf8StateE6borrowBR_.exit.i.i, label %bb.k, !prof !8
 
 bb.k:                                             ; preds = %_RNvXsx_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson7builder7BuilderENtNtB7_5clone5Clone5cloneBR_.exit.i
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @211) #18
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @210) #18
           to label %.noexc.i unwind label %bb.q, !noalias !69
 
 .noexc.i:                                         ; preds = %bb.k
@@ -496,7 +495,7 @@ bb.r:                                             ; preds = %.noexc.i10.i
   br i1 %i.cq, label %_RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trie9RangeTrieE6borrowBR_.exit.i.i, label %bb.s, !prof !8
 
 bb.s:                                             ; preds = %bb.r
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @211) #18
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @210) #18
           to label %.noexc14.i unwind label %bb.al, !noalias !69
 
 .noexc14.i:                                       ; preds = %bb.s
@@ -536,7 +535,7 @@ bb.v:                                             ; preds = %.noexc.i12.i
   br i1 %i.cx, label %_RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trie8NextIterEE6borrowB1n_.exit.i.i.i.i, label %bb.w, !prof !8
 
 bb.w:                                             ; preds = %bb.v
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @165) #18
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @164) #18
           to label %.noexc.i.i.i unwind label %bb.y, !noalias !82
 
 .noexc.i.i.i:                                     ; preds = %bb.w
@@ -584,7 +583,7 @@ bb.z:                                             ; preds = %_RNvMst_NtCs4NRVxsY
   br i1 %i.dj, label %_RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCs79ICTHwG85D_12regex_syntax4utf89Utf8RangeEE6borrowCs98D8VPWzHuM_14regex_automata.exit.i.i.i.i, label %bb.aa, !prof !8
 
 bb.aa:                                            ; preds = %bb.z
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @165) #18
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @164) #18
           to label %.noexc5.i.i.i unwind label %bb.ac, !noalias !82
 
 .noexc5.i.i.i:                                    ; preds = %bb.aa
@@ -710,7 +709,7 @@ bb.am:                                            ; preds = %bb.ag
   br i1 %i.em, label %_RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson3map13Utf8SuffixMapE6borrowBR_.exit.i.i, label %bb.an, !prof !8
 
 bb.an:                                            ; preds = %bb.am
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @211) #18
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core4cell30panic_already_mutably_borrowed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @210) #18
           to label %.noexc17.i unwind label %bb.ap, !noalias !69
 
 .noexc17.i:                                       ; preds = %bb.an
@@ -1113,9 +1112,9 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.experimental.noalias.scope.decl(metadata !419)
   call void @llvm.experimental.noalias.scope.decl(metadata !420)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !421
-  %.val56.i = load ptr, ptr %i.v, align 8, !alias.scope !419, !noalias !422, !nonnull !4, !align !13, !noundef !4 ; 3 uses
+  %.val56.i = load ptr, ptr %i.v, align 8, !alias.scope !419, !noalias !422, !nonnull !4, !align !13, !noundef !4 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.g, i64 720
-  %.val57.i = load i64, ptr %i.w, align 16, !alias.scope !419, !noalias !422, !noundef !4 ; 9 uses
+  %.val57.i = load i64, ptr %i.w, align 16, !alias.scope !419, !noalias !422, !noundef !4 ; 7 uses
   %i.x = and i64 %.val57.i, 1                     ; 2 uses
   store i64 %i.x, ptr %i.b, align 8, !noalias !421
   %i.y = icmp eq i64 %i.x, 0
@@ -1130,7 +1129,7 @@ bb.i:                                             ; preds = %bb.h
 
 _RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit54.i: ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !421
-  %i.z = lshr exact i64 %.val57.i, 1              ; 2 uses
+  %i.z = lshr exact i64 %.val57.i, 1              ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.g, i64 704 ; 3 uses
   %i.ab = load i64, ptr %i.aa, align 16, !alias.scope !420, !noalias !423, !noundef !4 ; 2 uses
   %i.ac = and i64 %i.ab, 63                       ; 5 uses
@@ -1167,40 +1166,35 @@ _RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB
   br i1 %exitcond96.not.i.a, label %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE8validateB9_.exit, label %bb.j
 
 bb.j:                                             ; preds = %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit.loopexit.i, %.lr.ph.i
-  %.sroa.011.084.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ar, %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit.loopexit.i ] ; 2 uses
+  %.sroa.011.084.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ar, %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit.loopexit.i ] ; 3 uses
   %i.ar = add nuw nsw i64 %.sroa.011.084.i, 1     ; 2 uses
-  %3 = shl nuw nsw i64 %.sroa.011.084.i, 1        ; 4 uses
-  %4 = icmp ult i64 %3, %.val57.i
-  br i1 %4, label %bb.k, label %.invoke418
+  %exitcond96.not.i = icmp eq i64 %.sroa.011.084.i, %i.z
+  br i1 %exitcond96.not.i, label %.invoke418, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %.val56.i, i64 %3
-  %i.as = load i32, ptr %5, align 4, !noalias !424, !noundef !4
+  %.idx = shl nuw nsw i64 %.sroa.011.084.i, 3
+  %3 = getelementptr inbounds nuw i8, ptr %.val56.i, i64 %.idx ; 2 uses
+  %i.as = load i32, ptr %3, align 4, !noalias !424, !noundef !4
   %i.at = zext i32 %i.as to i64                   ; 3 uses
-  %6 = or disjoint i64 %3, 1                      ; 3 uses
-  %7 = icmp ult i64 %6, %.val57.i
-  br i1 %7, label %8, label %.invoke418
-
-8:                                                ; preds = %bb.k
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %.val56.i, i64 %6
-  %10 = load i32, ptr %9, align 4, !noalias !424, !noundef !4 ; 2 uses
-  %11 = zext i32 %10 to i64                       ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %5 = load i32, ptr %4, align 4, !noalias !424, !noundef !4 ; 2 uses
+  %6 = zext i32 %5 to i64                         ; 2 uses
   %.not52.i = icmp ugt i64 %.val71.i, %i.at
   br i1 %.not52.i, label %bb.l, label %.loopexit206
 
-bb.l:                                             ; preds = %8
-  %i.au = add nuw nsw i64 %11, %i.at
+bb.l:                                             ; preds = %bb.k
+  %i.au = add nuw nsw i64 %6, %i.at
   %i.av = icmp ugt i64 %i.au, %.val71.i
   br i1 %i.av, label %.loopexit206, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.l
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %.val70.i, i64 %i.at
-  %exitcond.not.i453 = icmp eq i32 %10, 0
+  %exitcond.not.i453 = icmp eq i32 %5, 0
   br i1 %exitcond.not.i453, label %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit.loopexit.i, label %.lr.ph455
 
 bb.m:                                             ; preds = %.lr.ph455
   %i.ax = add nuw nsw i64 %.sroa.033.0.i454, 1    ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.ax, %11
+  %exitcond.not.i = icmp eq i64 %i.ax, %6
   br i1 %exitcond.not.i, label %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit.loopexit.i, label %.lr.ph455
 
 .lr.ph455:                                        ; preds = %.preheader.i, %bb.m
@@ -1211,9 +1205,9 @@ bb.m:                                             ; preds = %.lr.ph455
   %.not53.i = icmp ugt i64 %i.aq, %i.ba
   br i1 %.not53.i, label %bb.m, label %.loopexit206
 
-.loopexit206:                                     ; preds = %8, %bb.l, %.lr.ph455, %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit54.i
-  %.sroa.14.0.ph = phi i64 [ 27, %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit54.i ], [ 18, %.lr.ph455 ], [ 31, %8 ], [ 25, %bb.l ]
-  %.sroa.1063.0.ph = phi ptr [ @159, %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit54.i ], [ @156, %.lr.ph455 ], [ @158, %8 ], [ @157, %bb.l ]
+.loopexit206:                                     ; preds = %bb.k, %bb.l, %.lr.ph455, %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit54.i
+  %.sroa.14.0.ph = phi i64 [ 27, %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit54.i ], [ 18, %.lr.ph455 ], [ 31, %bb.k ], [ 25, %bb.l ]
+  %.sroa.1063.0.ph = phi ptr [ @158, %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesRSmE3lenB9_.exit54.i ], [ @155, %.lr.ph455 ], [ @157, %bb.k ], [ @156, %bb.l ]
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %i.bb, align 8
   %.sroa.5120.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1324,11 +1318,11 @@ bb.w:                                             ; preds = %bb.v
   %i.co = icmp ult i64 %i.cn, %.val57.i
   br i1 %i.co, label %_RNvMs9_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_3DFARSmE17match_pattern_lenB9_.exit.i, label %.invoke418
 
-.invoke418:                                       ; preds = %bb.k, %bb.j, %bb.w, %.noexc19
-  %12 = phi i64 [ %i.cn, %bb.w ], [ %i.ga, %.noexc19 ], [ %3, %bb.j ], [ %6, %bb.k ]
-  %13 = phi i64 [ %.val57.i, %bb.w ], [ %i.fy, %.noexc19 ], [ %.val57.i, %bb.j ], [ %.val57.i, %bb.k ]
-  %14 = phi ptr [ @66, %bb.w ], [ @23, %.noexc19 ], [ @154, %bb.j ], [ @155, %bb.k ]
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %12, i64 noundef %13, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %14) #18
+.invoke418:                                       ; preds = %bb.j, %bb.w, %.noexc19
+  %7 = phi i64 [ %i.ga, %.noexc19 ], [ %i.cn, %bb.w ], [ %.val57.i, %bb.j ]
+  %8 = phi i64 [ %i.fy, %.noexc19 ], [ %.val57.i, %bb.w ], [ %.val57.i, %bb.j ]
+  %9 = phi ptr [ @23, %.noexc19 ], [ @66, %bb.w ], [ @154, %bb.j ]
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %7, i64 noundef %8, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %9) #18
           to label %.cont419 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .cont419:                                         ; preds = %.invoke418
@@ -1731,14 +1725,14 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.am, label %switch.lookup.i, label %bb.e, !prof !22
 
 bb.d:                                             ; preds = %.lr.ph
-  invoke void @_RNvNtNtCs4NRVxsYgnAr_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @212) #18
+  invoke void @_RNvNtNtCs4NRVxsYgnAr_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @211) #18
           to label %.noexc unwind label %.thread.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.d
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph.split
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @214) #18
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @213) #18
           to label %.noexc134 unwind label %.thread.loopexit.split-lp
 
 .noexc134:                                        ; preds = %bb.e
@@ -1757,7 +1751,7 @@ bb.f:                                             ; preds = %switch.lookup.i
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !532
   store i64 %i.ao, ptr %i.c, align 8, !noalias !532
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 43, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @213) #18
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 43, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @212) #18
           to label %.noexc135 unwind label %.thread.loopexit.split-lp
 
 .noexc135:                                        ; preds = %bb.g
@@ -2160,7 +2154,7 @@ bb.a:                                             ; preds = %.noexc17
 
 _RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesINtNtCscdodAO9FK5_5alloc3vec3VecmEE3lenB9_.exit: ; preds = %.noexc17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !743
-  %i.k = lshr exact i64 %.val22, 1
+  %i.k = lshr exact i64 %.val22, 1                ; 2 uses
   %.not = icmp eq i64 %.val22, 0
   br i1 %.not, label %._crit_edge78, label %.lr.ph
 
@@ -2171,6 +2165,7 @@ _RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesINtNtCscd
   %.val24 = load i64, ptr %i.n, align 8           ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.val23 = load ptr, ptr %i.o, align 8, !nonnull !4
+  %3 = or disjoint i64 %.val22, 1
   br label %bb.c
 
 .body.thread:                                     ; preds = %bb.n, %bb.h, %.body, %bb.b
@@ -2194,20 +2189,20 @@ bb.b:                                             ; preds = %bb.a
   br label %.body.thread
 
 bb.c:                                             ; preds = %.lr.ph, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCs98D8VPWzHuM_14regex_automata4util10primitives9PatternIDEEEB1z_.exit
-  %.sroa.04.077 = phi i64 [ 0, %.lr.ph ], [ %i.q, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCs98D8VPWzHuM_14regex_automata4util10primitives9PatternIDEEEB1z_.exit ] ; 3 uses
+  %.sroa.04.077 = phi i64 [ 0, %.lr.ph ], [ %i.q, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCs98D8VPWzHuM_14regex_automata4util10primitives9PatternIDEEEB1z_.exit ] ; 4 uses
   %i.q = add nuw nsw i64 %.sroa.04.077, 1         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i64 0, ptr %i.d, align 8
   store ptr inttoptr (i64 4 to ptr), ptr %i.l, align 8
   store i64 0, ptr %i.m, align 8
   %i.r = shl nuw i64 %.sroa.04.077, 1             ; 2 uses
-  %3 = or disjoint i64 %i.r, 1                    ; 3 uses
-  %4 = icmp ult i64 %3, %.val22
-  br i1 %4, label %.split, label %.invoke
+  %exitcond102.not = icmp eq i64 %.sroa.04.077, %i.k
+  br i1 %exitcond102.not, label %.invoke, label %.split
 
 .split:                                           ; preds = %bb.c
-  %i.s = getelementptr inbounds nuw [4 x i8], ptr %.val21, i64 %3 ; 2 uses
-  %i.t = load i32, ptr %i.s, align 4, !noundef !4 ; 2 uses
+  %i.s = getelementptr inbounds nuw [4 x i8], ptr %.val21, i64 %i.r
+  %4 = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 2 uses
+  %i.t = load i32, ptr %4, align 4, !noundef !4   ; 2 uses
   %i.u = zext i32 %i.t to i64
   %.not79 = icmp eq i32 %i.t, 0
   br i1 %.not79, label %._crit_edge, label %.noexc.lr.ph
@@ -2227,7 +2222,7 @@ bb.c:                                             ; preds = %.lr.ph, %_RINvNtCs4
   %i.y = add nuw nsw i64 %.sroa.06.076, 1         ; 2 uses
   %i.z = load i32, ptr %i.v, align 4, !noundef !4
   %i.aa = zext i32 %i.z to i64                    ; 3 uses
-  %i.ab = load i32, ptr %i.s, align 4, !noundef !4
+  %i.ab = load i32, ptr %4, align 4, !noundef !4
   %i.ac = zext i32 %i.ab to i64                   ; 3 uses
   %i.ad = add nuw nsw i64 %i.ac, %i.aa            ; 2 uses
   %.not.i = icmp ugt i64 %i.ad, %.val24
@@ -2367,7 +2362,7 @@ define hidden void @_RNvMso_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_5Fl
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire12try_read_u32(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef nonnull readonly captures(address, read_provenance) @160, i64 noundef 11)
+  call void @_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire12try_read_u32(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef nonnull readonly captures(address, read_provenance) @159, i64 noundef 11)
   %i.b = load i32, ptr %i.a, align 8, !range !12, !noundef !4 ; 2 uses
   %.not = icmp eq i32 %i.b, -1
   br i1 %.not, label %bb.c, label %bb.b
@@ -2474,7 +2469,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @162, i64 noundef 12, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @161)
+  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @161, i64 noundef 12, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @160)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
 }
@@ -2517,7 +2512,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !754
   store ptr %i.e, ptr %i.d, align 8, !noalias !754
-  %i.k = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @186, i64 noundef 3, ptr noundef nonnull %i.d, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @185)
+  %i.k = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @185, i64 noundef 3, ptr noundef nonnull %i.d, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @184)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !754
   br label %_RNvXsR_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_14BuildErrorKindNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.exit
 
@@ -2525,27 +2520,27 @@ bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !754
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.l, ptr %i.c, align 8, !noalias !754
-  %i.m = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @188, i64 noundef 11, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @187)
+  %i.m = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @187, i64 noundef 11, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @186)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !754
   br label %_RNvXsR_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_14BuildErrorKindNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.exit
 
 bb.e:                                             ; preds = %bb.a
-  %i.n = tail call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @189, i64 noundef 13), !noalias !752
+  %i.n = tail call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @188, i64 noundef 13), !noalias !752
   br label %_RNvXsR_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_14BuildErrorKindNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.exit
 
 bb.f:                                             ; preds = %bb.a
-  %i.o = tail call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @190, i64 noundef 18), !noalias !752
+  %i.o = tail call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @189, i64 noundef 18), !noalias !752
   br label %_RNvXsR_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_14BuildErrorKindNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.exit
 
 bb.g:                                             ; preds = %bb.a
-  %i.p = tail call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @191, i64 noundef 22), !noalias !752
+  %i.p = tail call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @190, i64 noundef 22), !noalias !752
   br label %_RNvXsR_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_14BuildErrorKindNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.exit
 
 bb.h:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !754
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.q, ptr %i.b, align 8, !noalias !754
-  %i.r = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter26debug_struct_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @193, i64 noundef 20, ptr noalias noundef nonnull readonly captures(address, read_provenance) @194, i64 noundef 5, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @192)
+  %i.r = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter26debug_struct_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @192, i64 noundef 20, ptr noalias noundef nonnull readonly captures(address, read_provenance) @193, i64 noundef 5, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @191)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !754
   br label %_RNvXsR_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_14BuildErrorKindNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.exit
 
@@ -2553,7 +2548,7 @@ bb.i:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !754
   %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.s, ptr %i.a, align 8, !noalias !754
-  %i.t = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter26debug_struct_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @195, i64 noundef 28, ptr noalias noundef nonnull readonly captures(address, read_provenance) @194, i64 noundef 5, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @192)
+  %i.t = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter26debug_struct_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @194, i64 noundef 28, ptr noalias noundef nonnull readonly captures(address, read_provenance) @193, i64 noundef 5, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @191)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !754
   br label %_RNvXsR_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_14BuildErrorKindNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt.exit
 
@@ -2576,7 +2571,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @163, i64 noundef 14, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @161)
+  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @162, i64 noundef 14, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @160)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
 }
@@ -2587,7 +2582,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @167, i64 noundef 15, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @166)
+  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @166, i64 noundef 15, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @165)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
 }
@@ -2598,7 +2593,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @169, i64 noundef 16, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @168)
+  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @168, i64 noundef 16, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @167)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
 }
@@ -2626,7 +2621,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2
   store ptr %i.c, ptr %i.a, align 8
-  %i.d = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter26debug_struct_field3_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @178, i64 noundef 5, ptr noalias noundef nonnull readonly captures(address, read_provenance) @179, i64 noundef 9, ptr noundef nonnull %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @176, ptr noalias noundef nonnull readonly captures(address, read_provenance) @180, i64 noundef 7, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @176, ptr noalias noundef nonnull readonly captures(address, read_provenance) @181, i64 noundef 24, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @177)
+  %i.d = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter26debug_struct_field3_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @177, i64 noundef 5, ptr noalias noundef nonnull readonly captures(address, read_provenance) @178, i64 noundef 9, ptr noundef nonnull %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @175, ptr noalias noundef nonnull readonly captures(address, read_provenance) @179, i64 noundef 7, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @175, ptr noalias noundef nonnull readonly captures(address, read_provenance) @180, i64 noundef 24, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @176)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.d
 }
@@ -2637,7 +2632,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter26debug_struct_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @183, i64 noundef 10, ptr noalias noundef nonnull readonly captures(address, read_provenance) @184, i64 noundef 4, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @182)
+  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter26debug_struct_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @182, i64 noundef 10, ptr noalias noundef nonnull readonly captures(address, read_provenance) @183, i64 noundef 4, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @181)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
 }
@@ -2700,7 +2695,7 @@ bb.a:
   %i.v = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   %i.x = load ptr, ptr %i.w, align 8, !invariant.load !4, !nonnull !4 ; 2 uses
-  %i.y = tail call noundef zeroext i1 %i.x(ptr noundef nonnull %i.t, ptr noalias noundef nonnull readonly captures(address, read_provenance) @196, i64 noundef 12)
+  %i.y = tail call noundef zeroext i1 %i.x(ptr noundef nonnull %i.t, ptr noalias noundef nonnull readonly captures(address, read_provenance) @195, i64 noundef 12)
   br i1 %i.y, label %bb.t, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -2776,7 +2771,7 @@ bb.f:                                             ; preds = %bb.d
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %i.ax = phi ptr [ %.pre431, %._crit_edge.loopexit ], [ %i.x, %bb.b ]
   %i.ay = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.t, %bb.b ]
-  %i.az = call noundef zeroext i1 %i.ax(ptr noundef nonnull %i.ay, ptr noalias noundef nonnull readonly captures(address, read_provenance) @197, i64 noundef 1)
+  %i.az = call noundef zeroext i1 %i.ax(ptr noundef nonnull %i.ay, ptr noalias noundef nonnull readonly captures(address, read_provenance) @196, i64 noundef 1)
   br i1 %i.az, label %bb.t, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge
@@ -2807,11 +2802,11 @@ bb.g:                                             ; preds = %._crit_edge
   br i1 %i.bk, label %switch.lookup.i.i, label %bb.i, !prof !22
 
 bb.h:                                             ; preds = %.lr.ph382
-  call void @_RNvNtNtCs4NRVxsYgnAr_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @212) #18, !noalias !778
+  call void @_RNvNtNtCs4NRVxsYgnAr_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @211) #18, !noalias !778
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph382.split
-  call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @214) #18, !noalias !778
+  call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @213) #18, !noalias !778
   unreachable
 
 switch.lookup.i.i:                                ; preds = %.lr.ph382.split
@@ -2832,7 +2827,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !779
   store i64 %i.bo, ptr %i.a, align 8, !noalias !779
-  call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @213) #18, !noalias !779
+  call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @212) #18, !noalias !779
   unreachable
 
 ._crit_edge383:                                   ; preds = %bb.am, %bb.g
@@ -2851,7 +2846,7 @@ bb.l:                                             ; preds = %bb.k
   store ptr @_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt, ptr %.sroa.4218.0..sroa_idx, align 8
   %i.bu = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.bv = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.bw = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.bu, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bv, ptr noundef nonnull @198, ptr noundef nonnull %i.f)
+  %i.bw = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.bu, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bv, ptr noundef nonnull @197, ptr noundef nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br i1 %i.bw, label %bb.t, label %bb.q
@@ -2861,7 +2856,7 @@ bb.m:                                             ; preds = %._crit_edge383
   %i.by = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 24
   %i.ca = load ptr, ptr %i.bz, align 8, !invariant.load !4, !nonnull !4
-  %i.cb = call noundef zeroext i1 %i.ca(ptr noundef nonnull %i.bx, ptr noalias noundef nonnull readonly captures(address, read_provenance) @197, i64 noundef 1)
+  %i.cb = call noundef zeroext i1 %i.ca(ptr noundef nonnull %i.bx, ptr noalias noundef nonnull readonly captures(address, read_provenance) @196, i64 noundef 1)
   br i1 %i.cb, label %bb.t, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -2881,7 +2876,7 @@ bb.o:                                             ; preds = %bb.n
 
 _RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesINtNtCscdodAO9FK5_5alloc3vec3VecmEE3lenB9_.exit: ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !780
-  %i.cg = lshr exact i64 %.val282, 1
+  %i.cg = lshr exact i64 %.val282, 1              ; 2 uses
   %.not389 = icmp eq i64 %.val282, 0
   br i1 %.not389, label %.loopexit339, label %.lr.ph387
 
@@ -2893,10 +2888,11 @@ _RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesINtNtCscd
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 416
   %.val283 = load ptr, ptr %i.cj, align 16, !nonnull !4
   %.sroa.4190.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
+  %2 = lshr exact i64 %.val282, 1
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph387, %bb.ac
-  %.sroa.0157.0386 = phi i64 [ 0, %.lr.ph387 ], [ %i.ck, %bb.ac ] ; 3 uses
+  %.sroa.0157.0386 = phi i64 [ 0, %.lr.ph387 ], [ %i.ck, %bb.ac ] ; 5 uses
   %i.ck = add nuw nsw i64 %.sroa.0157.0386, 1     ; 2 uses
   %i.cl = call fastcc noundef i32 @_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesINtNtCscdodAO9FK5_5alloc3vec3VecmEE14match_state_idB9_(ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(800) %0, i64 noundef %.sroa.0157.0386)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
@@ -2912,7 +2908,7 @@ bb.p:                                             ; preds = %.lr.ph387, %bb.ac
   store ptr @_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt, ptr %.sroa.4162.0..sroa_idx, align 8
   %i.cr = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.cs = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.ct = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.cr, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.cs, ptr noundef nonnull @202, ptr noundef nonnull %i.j)
+  %i.ct = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.cr, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.cs, ptr noundef nonnull @201, ptr noundef nonnull %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br i1 %i.ct, label %.loopexit340, label %bb.u
 
@@ -2925,7 +2921,7 @@ bb.q:                                             ; preds = %.loopexit339
   store ptr @_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt, ptr %.sroa.4234.0..sroa_idx, align 8
   %i.cu = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.cv = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.cw = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.cu, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.cv, ptr noundef nonnull @199, ptr noundef nonnull %i.d)
+  %i.cw = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.cu, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.cv, ptr noundef nonnull @198, ptr noundef nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br i1 %i.cw, label %bb.t, label %bb.r
@@ -2938,7 +2934,7 @@ bb.r:                                             ; preds = %bb.q
   store ptr @_RNvXsL_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseNtB5_5FlagsNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt, ptr %.sroa.4250.0..sroa_idx, align 8
   %i.cy = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.cz = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.da = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.cy, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.cz, ptr noundef nonnull @200, ptr noundef nonnull %i.c)
+  %i.da = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.cy, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.cz, ptr noundef nonnull @199, ptr noundef nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br i1 %i.da, label %bb.t, label %bb.s
 
@@ -2947,7 +2943,7 @@ bb.s:                                             ; preds = %bb.r
   %i.dc = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 24
   %i.de = load ptr, ptr %i.dd, align 8, !invariant.load !4, !nonnull !4
-  %i.df = call noundef zeroext i1 %i.de(ptr noundef nonnull %i.db, ptr noalias noundef nonnull readonly captures(address, read_provenance) @201, i64 noundef 2)
+  %i.df = call noundef zeroext i1 %i.de(ptr noundef nonnull %i.db, ptr noalias noundef nonnull readonly captures(address, read_provenance) @200, i64 noundef 2)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.q, %.loopexit339, %bb.s, %bb.m, %._crit_edge, %bb.a, %.loopexit340, %.loopexit342, %.loopexit341
@@ -2955,32 +2951,33 @@ bb.t:                                             ; preds = %bb.r, %bb.q, %.loop
   ret i1 %.sroa.0.0
 
 bb.u:                                             ; preds = %bb.p
-  %i.dg = shl nuw i64 %.sroa.0157.0386, 1         ; 4 uses
-  %2 = icmp ult i64 %i.dg, %.val282
-  br i1 %2, label %bb.v, label %bb.w
+  %i.dg = shl nuw i64 %.sroa.0157.0386, 1         ; 3 uses
+  %exitcond429.not = icmp eq i64 %.sroa.0157.0386, %2
+  br i1 %exitcond429.not, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %.val281, i64 %i.dg
   %i.di = load i32, ptr %i.dh, align 4, !noundef !4
   %i.dj = zext i32 %i.di to i64                   ; 3 uses
-  %3 = or disjoint i64 %i.dg, 1                   ; 3 uses
-  %4 = icmp ult i64 %3, %.val282
-  br i1 %4, label %bb.x, label %bb.y
+  %exitcond430.not = icmp eq i64 %.sroa.0157.0386, %i.cg
+  br i1 %exitcond430.not, label %bb.y, label %bb.x
 
 bb.w:                                             ; preds = %bb.u
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.dg, i64 noundef %.val282, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @149) #18
   unreachable
 
 bb.x:                                             ; preds = %bb.v
-  %i.dk = getelementptr inbounds nuw [4 x i8], ptr %.val281, i64 %3
-  %i.dl = load i32, ptr %i.dk, align 4, !noundef !4 ; 3 uses
+  %i.dk = getelementptr inbounds nuw [4 x i8], ptr %.val281, i64 %i.dg
+  %3 = getelementptr inbounds nuw i8, ptr %i.dk, i64 4
+  %i.dl = load i32, ptr %3, align 4, !noundef !4  ; 3 uses
   %i.dm = zext i32 %i.dl to i64                   ; 2 uses
   %i.dn = add nuw nsw i64 %i.dm, %i.dj            ; 2 uses
   %.not.i = icmp ugt i64 %i.dn, %.val284
   br i1 %.not.i, label %bb.z, label %_RNvMsn_NtNtCs98D8VPWzHuM_14regex_automata3dfa5denseINtB5_11MatchStatesINtNtCscdodAO9FK5_5alloc3vec3VecmEE16pattern_id_sliceB9_.exit, !prof !15
 
 bb.y:                                             ; preds = %bb.v
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef %.val282, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66) #18
+  %4 = or disjoint i64 %.val282, 1
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %4, i64 noundef %.val282, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66) #18
   unreachable
 
 bb.z:                                             ; preds = %bb.x
@@ -3003,7 +3000,7 @@ bb.aa:                                            ; preds = %_RNvMsn_NtNtCs98D8V
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr %i.i, ptr %i.h, align 8
   store ptr @_RNvXs11_NtNtCs98D8VPWzHuM_14regex_automata4util10primitivesNtB6_9PatternIDNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt, ptr %.sroa.4190.0..sroa_idx, align 8
-  %i.ds = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %.pre433, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.pre434, ptr noundef nonnull @204, ptr noundef nonnull %i.h)
+  %i.ds = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %.pre433, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.pre434, ptr noundef nonnull @203, ptr noundef nonnull %i.h)
   br i1 %i.ds, label %.loopexit426, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -3021,7 +3018,7 @@ _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.dw = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 24
   %i.dy = load ptr, ptr %i.dx, align 8, !invariant.load !4, !nonnull !4
-  %i.dz = call noundef zeroext i1 %i.dy(ptr noundef nonnull %i.dv, ptr noalias noundef nonnull readonly captures(address, read_provenance) @197, i64 noundef 1)
+  %i.dz = call noundef zeroext i1 %i.dy(ptr noundef nonnull %i.dv, ptr noalias noundef nonnull readonly captures(address, read_provenance) @196, i64 noundef 1)
   br i1 %i.dz, label %.loopexit340, label %bb.ac
 
 bb.ac:                                            ; preds = %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCs98D8VPWzHuM_14regex_automata4util10primitives9PatternIDEENtNtNtB8_6traits8iterator8Iterator4nextB1D_.exit.thread
@@ -3039,7 +3036,7 @@ bb.ad:                                            ; preds = %_RNvXs_NtNtNtCs4NRV
   store ptr @_RNvXs11_NtNtCs98D8VPWzHuM_14regex_automata4util10primitivesNtB6_9PatternIDNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt, ptr %.sroa.4190.0..sroa_idx, align 8
   %i.ea = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.eb = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.ec = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.ea, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.eb, ptr noundef nonnull @204, ptr noundef nonnull %i.h)
+  %i.ec = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.ea, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.eb, ptr noundef nonnull @203, ptr noundef nonnull %i.h)
   br i1 %i.ec, label %.loopexit426, label %bb.ae
 
 _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCs98D8VPWzHuM_14regex_automata4util10primitives9PatternIDEENtNtNtB8_6traits8iterator8Iterator4nextB1D_.exit.peel.next: ; preds = %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCs98D8VPWzHuM_14regex_automata4util10primitives9PatternIDEENtNtNtB8_6traits8iterator8Iterator4nextB1D_.exit.peel.next.preheader, %bb.ae
@@ -3052,7 +3049,7 @@ _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.eg = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 24
   %i.ei = load ptr, ptr %i.eh, align 8, !invariant.load !4, !nonnull !4
-  %i.ej = call noundef zeroext i1 %i.ei(ptr noundef nonnull %i.ef, ptr noalias noundef nonnull readonly captures(address, read_provenance) @203, i64 noundef 2)
+  %i.ej = call noundef zeroext i1 %i.ei(ptr noundef nonnull %i.ef, ptr noalias noundef nonnull readonly captures(address, read_provenance) @202, i64 noundef 2)
   br i1 %i.ej, label %.loopexit, label %bb.ad
 
 .loopexit426:                                     ; preds = %bb.aa, %bb.ad
@@ -3126,7 +3123,7 @@ bb.ai:                                            ; preds = %bb.ah
   store ptr @_RNvXs11_NtNtCs98D8VPWzHuM_14regex_automata4util10primitivesNtB6_9PatternIDNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt, ptr %.sroa.488.0..sroa_idx, align 8
   %i.fk = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.fl = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.fm = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.fk, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.fl, ptr noundef nonnull @207, ptr noundef nonnull %i.m)
+  %i.fm = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.fk, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.fl, ptr noundef nonnull @206, ptr noundef nonnull %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   br i1 %i.fm, label %.loopexit341, label %bb.ak
@@ -3136,7 +3133,7 @@ bb.aj:                                            ; preds = %bb.ag
   %i.fo = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 24
   %i.fq = load ptr, ptr %i.fp, align 8, !invariant.load !4, !nonnull !4
-  %i.fr = call noundef zeroext i1 %i.fq(ptr noundef nonnull %i.fn, ptr noalias noundef nonnull readonly captures(address, read_provenance) @205, i64 noundef 24)
+  %i.fr = call noundef zeroext i1 %i.fq(ptr noundef nonnull %i.fn, ptr noalias noundef nonnull readonly captures(address, read_provenance) @204, i64 noundef 24)
   br i1 %i.fr, label %.loopexit341, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.ai, %bb.af, %bb.ag, %bb.ah, %bb.al, %bb.aj
@@ -3147,7 +3144,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.af, %bb.
   store ptr @_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt, ptr %.sroa.4132.0..sroa_idx, align 8
   %i.fs = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.ft = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.fu = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.fs, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ft, ptr noundef nonnull @208, ptr noundef nonnull %i.l)
+  %i.fu = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.fs, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ft, ptr noundef nonnull @207, ptr noundef nonnull %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   br i1 %i.fu, label %.loopexit341, label %bb.am
 
@@ -3156,7 +3153,7 @@ bb.al:                                            ; preds = %bb.af
   %i.fw = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 24
   %i.fy = load ptr, ptr %i.fx, align 8, !invariant.load !4, !nonnull !4
-  %i.fz = call noundef zeroext i1 %i.fy(ptr noundef nonnull %i.fv, ptr noalias noundef nonnull readonly captures(address, read_provenance) @206, i64 noundef 22)
+  %i.fz = call noundef zeroext i1 %i.fy(ptr noundef nonnull %i.fv, ptr noalias noundef nonnull readonly captures(address, read_provenance) @205, i64 noundef 22)
   br i1 %i.fz, label %.loopexit341, label %bb.ak
 
 .loopexit341:                                     ; preds = %bb.ak, %bb.al, %bb.aj, %bb.ai
@@ -3183,7 +3180,7 @@ bb.an:                                            ; preds = %bb.f
   store ptr @_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt, ptr %.sroa.443.0..sroa_idx, align 8
   %i.ge = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.gf = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.gg = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.ge, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.gf, ptr noundef nonnull @209, ptr noundef nonnull %i.q)
+  %i.gg = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.ge, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.gf, ptr noundef nonnull @208, ptr noundef nonnull %i.q)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   br i1 %i.gg, label %.loopexit343, label %bb.ao
 
@@ -3196,7 +3193,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.gj = load ptr, ptr %i.u, align 8, !nonnull !4, !align !9, !noundef !4
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gj, i64 24
   %i.gl = load ptr, ptr %i.gk, align 8, !invariant.load !4, !nonnull !4
-  %i.gm = call noundef zeroext i1 %i.gl(ptr noundef nonnull %i.gi, ptr noalias noundef nonnull readonly captures(address, read_provenance) @197, i64 noundef 1)
+  %i.gm = call noundef zeroext i1 %i.gl(ptr noundef nonnull %i.gi, ptr noalias noundef nonnull readonly captures(address, read_provenance) @196, i64 noundef 1)
   br i1 %i.gm, label %.loopexit343, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
@@ -3252,11 +3249,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.m, label %switch.lookup, label %bb.f, !prof !22
 
 bb.e:                                             ; preds = %bb.b
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @212) #18
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @211) #18
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @214) #18
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @213) #18
   unreachable
 
 switch.lookup:                                    ; preds = %bb.d
@@ -3278,7 +3275,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !783
   store i64 %i.r, ptr %i.a, align 8, !noalias !783
-  call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @213) #18, !noalias !783
+  call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @212) #18, !noalias !783
   unreachable
 
 _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtNtCs98D8VPWzHuM_14regex_automata4util10primitives9PatternIDNtBJ_14PatternIDErrorE6unwrapBN_.exit: ; preds = %bb.h
@@ -3584,7 +3581,7 @@ bb.k:                                             ; preds = %._crit_edge, %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.bf = load ptr, ptr %i.v, align 8, !invariant.load !4, !nonnull !4
-  %i.bg = call noundef zeroext i1 %i.bf(ptr noundef nonnull %i.s, ptr noalias noundef nonnull readonly captures(address, read_provenance) @203, i64 noundef 2)
+  %i.bg = call noundef zeroext i1 %i.bf(ptr noundef nonnull %i.s, ptr noalias noundef nonnull readonly captures(address, read_provenance) @202, i64 noundef 2)
   br i1 %i.bg, label %.loopexit, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.l
@@ -3604,7 +3601,7 @@ bb.n:                                             ; preds = %.split, %bb.k, %bb.
   store ptr @_RNvXs_NtNtCs98D8VPWzHuM_14regex_automata4util8alphabetNtB4_4UnitNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt, ptr %.sroa.451.0..sroa_idx, align 8
   store ptr %i.d, ptr %i.ab, align 8
   store ptr @_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt, ptr %.sroa.455.0..sroa_idx, align 8
-  %i.bi = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.s, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.u, ptr noundef nonnull @215, ptr noundef nonnull %i.b)
+  %i.bi = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.s, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.u, ptr noundef nonnull @214, ptr noundef nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br i1 %i.bi, label %.loopexit, label %bb.q
 
@@ -3626,7 +3623,7 @@ bb.p:                                             ; preds = %.split, %bb.o
   store ptr @_RNvXs_NtNtCs98D8VPWzHuM_14regex_automata4util8alphabetNtB4_4UnitNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt, ptr %.sroa.427.0..sroa_idx, align 8
   store ptr %i.d, ptr %i.ac, align 8
   store ptr @_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt, ptr %.sroa.431.0..sroa_idx, align 8
-  %i.bp = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.s, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.u, ptr noundef nonnull @216, ptr noundef nonnull %i.c)
+  %i.bp = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.s, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.u, ptr noundef nonnull @215, ptr noundef nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br i1 %i.bp, label %.loopexit, label %bb.q
 
@@ -3861,20 +3858,20 @@ bb.c:                                             ; preds = %bb.a
   %i.q = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.t = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.q, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.s, ptr noundef nonnull @218, ptr noundef nonnull %i.i)
+  %i.t = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.q, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.s, ptr noundef nonnull @217, ptr noundef nonnull %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  store ptr @219, ptr %i.h, align 8
+  store ptr @218, ptr %i.h, align 8
   %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store ptr @_RNvXsi_NtNtNtCs4NRVxsYgnAr_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.415.0..sroa_idx, align 8
   %i.u = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.x = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.u, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.w, ptr noundef nonnull @220, ptr noundef nonnull %i.h)
+  %i.x = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.u, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.w, ptr noundef nonnull @219, ptr noundef nonnull %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   br label %bb.i
 
@@ -3888,20 +3885,20 @@ _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntEr
   %i.y = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.ab = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.y, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.aa, ptr noundef nonnull @221, ptr noundef nonnull %i.f)
+  %i.ab = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.y, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.aa, ptr noundef nonnull @220, ptr noundef nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  store ptr @219, ptr %i.e, align 8
+  store ptr @218, ptr %i.e, align 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr @_RNvXsi_NtNtNtCs4NRVxsYgnAr_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.411.0..sroa_idx, align 8
   %i.ac = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ae = load ptr, ptr %i.ad, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.af = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.ac, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ae, ptr noundef nonnull @222, ptr noundef nonnull %i.e)
+  %i.af = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.ac, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ae, ptr noundef nonnull @221, ptr noundef nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.i
 
@@ -3916,7 +3913,7 @@ bb.f:                                             ; preds = %bb.a
   %i.ah = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.aj = load ptr, ptr %i.ai, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.ak = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.ah, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.aj, ptr noundef nonnull @223, ptr noundef nonnull %i.c)
+  %i.ak = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.ah, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.aj, ptr noundef nonnull @222, ptr noundef nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.i
@@ -3932,7 +3929,7 @@ bb.g:                                             ; preds = %bb.a
   %i.am = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ao = load ptr, ptr %i.an, align 8, !nonnull !4, !align !9, !noundef !4
-  %i.ap = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.am, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ao, ptr noundef nonnull @224, ptr noundef nonnull %i.a)
+  %i.ap = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.am, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ao, ptr noundef nonnull @223, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.i
@@ -3943,7 +3940,7 @@ bb.h:                                             ; preds = %bb.a
   %i.as = load ptr, ptr %i.ar, align 8, !nonnull !4, !align !9, !noundef !4
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 24
   %i.au = load ptr, ptr %i.at, align 8, !invariant.load !4, !nonnull !4
-  %i.av = tail call noundef zeroext i1 %i.au(ptr noundef nonnull %i.aq, ptr noalias noundef nonnull readonly captures(address, read_provenance) @217, i64 noundef 18)
+  %i.av = tail call noundef zeroext i1 %i.au(ptr noundef nonnull %i.aq, ptr noalias noundef nonnull readonly captures(address, read_provenance) @216, i64 noundef 18)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs98D8VPWzHuM_14regex_automata.exit, %bb.d, %bb.c
