@@ -204,7 +204,7 @@ _ZNSt6vectorIxSaIxEE6resizeEm.exit:               ; preds = %_ZNSt12_Vector_base
 .lr.ph:                                           ; preds = %_ZNSt6vectorIxSaIxEE6resizeEm.exit
   %i.eu = load ptr, ptr %i.c, align 8, !tbaa !53  ; 6 uses
   %i.ev = sub nuw i64 %i.es, %i.cv                ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ev, 18
+  %min.iters.check = icmp ult i64 %i.ev, 20
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph

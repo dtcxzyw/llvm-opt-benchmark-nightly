@@ -205,7 +205,7 @@ middle.block651:                                  ; preds = %vector.body642
   br i1 %i.jf, label %.lr.ph59.i, label %_ZN6LibRaw13hat_transformEPfS0_iii.exit
 
 .lr.ph59.i:                                       ; preds = %.preheader.i
-  %i.jg = sext i32 %.1.lcssa.i to i64             ; 9 uses
+  %i.jg = sext i32 %.1.lcssa.i to i64             ; 10 uses
   %i.jh = sub nsw i64 %i.bk, %i.jg                ; 3 uses
   %min.iters.check615 = icmp ult i64 %i.jh, 12
   br i1 %min.iters.check615, label %scalar.ph614.preheader, label %vector.scevcheck589
@@ -223,10 +223,11 @@ vector.scevcheck589:                              ; preds = %.lr.ph59.i
   br i1 %i.jq, label %scalar.ph614.preheader, label %vector.memcheck590
 
 vector.memcheck590:                               ; preds = %vector.scevcheck589
-  %i.jr = shl nsw i64 %i.jg, 2                    ; 3 uses
+  %i.jr = shl nuw nsw i64 %i.jg, 2
   %scevgep592 = getelementptr i8, ptr %scevgep591, i64 %i.jr ; 3 uses
-  %scevgep594 = getelementptr i8, ptr %i.gy, i64 %i.jr
-  %scevgep597 = getelementptr i8, ptr %scevgep596, i64 %i.jr
+  %1 = shl nsw i64 %i.jg, 2                       ; 2 uses
+  %scevgep594 = getelementptr i8, ptr %i.gy, i64 %1
+  %scevgep597 = getelementptr i8, ptr %scevgep596, i64 %1
   %i.js = add i32 %i.ea, %.1.lcssa.i
   %i.jt = sub i32 %i.cd, %i.js
   %i.ju = sext i32 %i.jt to i64                   ; 2 uses
@@ -605,7 +606,7 @@ middle.block526:                                  ; preds = %vector.body517
   br i1 %i.py, label %.lr.ph59.i259, label %_ZN6LibRaw13hat_transformEPfS0_iii.exit278
 
 .lr.ph59.i259:                                    ; preds = %.preheader.i257
-  %i.pz = sext i32 %.1.lcssa.i258 to i64          ; 9 uses
+  %i.pz = sext i32 %.1.lcssa.i258 to i64          ; 10 uses
   %i.qa = sub nsw i64 %wide.trip.count363, %i.pz  ; 3 uses
   %min.iters.check489 = icmp ult i64 %i.qa, 12
   br i1 %min.iters.check489, label %scalar.ph488.preheader, label %vector.scevcheck467
@@ -624,10 +625,11 @@ vector.scevcheck467:                              ; preds = %.lr.ph59.i259
   br i1 %i.qk, label %scalar.ph488.preheader, label %vector.memcheck469
 
 vector.memcheck469:                               ; preds = %vector.scevcheck467
-  %i.ql = shl nsw i64 %i.pz, 2                    ; 3 uses
+  %i.ql = shl nuw nsw i64 %i.pz, 2
   %scevgep470 = getelementptr i8, ptr %scevgep, i64 %i.ql ; 3 uses
-  %scevgep472 = getelementptr i8, ptr %i.of, i64 %i.ql
-  %scevgep475 = getelementptr i8, ptr %scevgep474, i64 %i.ql
+  %2 = shl nsw i64 %i.pz, 2                       ; 2 uses
+  %scevgep472 = getelementptr i8, ptr %i.of, i64 %2
+  %scevgep475 = getelementptr i8, ptr %scevgep474, i64 %2
   %i.qm = add i32 %i.fm, %.1.lcssa.i258
   %i.qn = sub i32 %i.bv, %i.qm
   %i.qo = sext i32 %i.qn to i64                   ; 2 uses
