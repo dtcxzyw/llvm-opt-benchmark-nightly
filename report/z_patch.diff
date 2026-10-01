@@ -1,0 +1,117 @@
+diff --git a/llvm/lib/Analysis/ConstraintSystem.cpp b/llvm/lib/Analysis/ConstraintSystem.cpp
+index c659b4de3bb13..1aabb648a3638 100644
+--- a/llvm/lib/Analysis/ConstraintSystem.cpp
++++ b/llvm/lib/Analysis/ConstraintSystem.cpp
+@@ -300,6 +300,10 @@ bool ConstraintSystem::isConditionImplied(RowTy R) const {
+   if (isConstantOnly(R))
+     return getConstant(R) >= 0;
+ 
++  // R is trivially implied if a single row of the system implies it.
++  if (isImpliedBySingleRow(R))
++    return true;
++
+   // If there is no solution with the negation of R added to the system, the
+   // condition must hold based on the existing constraints.
+   R = ConstraintSystem::negate(std::move(R));
+diff --git a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+index 9b6ec5f10aa7a..07ad9a51f1912 100644
+--- a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
++++ b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+@@ -906,9 +906,8 @@ define i1 @add_neg_1_slt(i64 %x, i64 %b) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
+ ; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
+-; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], -1
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[X]], -1
++; CHECK-NEXT:    ret i1 true
+ ;
+   %x.non.neg = icmp sge i64 %x, 0
+   call void @llvm.assume(i1 %x.non.neg)
+@@ -943,9 +942,8 @@ define i1 @add_neg_1_nonneg_from_ult(i64 %x, i64 %c) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ult i64 [[X:%.*]], [[C]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+-; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], -1
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[C]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[X]], -1
++; CHECK-NEXT:    ret i1 true
+ ;
+   %x.non.neg = icmp sge i64 %c, 0
+   call void @llvm.assume(i1 %x.non.neg)
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+index 31ae62c564dd6..9d60fc7270482 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+@@ -8,7 +8,7 @@ define i1 @latch_counted_header_check_removable(ptr %p, i64 %n, i64 %lim) {
+ ; CHECK-NEXT:    [[POS:%.*]] = icmp sgt i64 [[N]], 0
+ ; CHECK-NEXT:    br i1 [[POS]], label %[[PH:.*]], label %[[EXIT_0:.*]]
+ ; CHECK:       [[PH]]:
+-; CHECK-NEXT:    [[NM1:%.*]] = add i64 [[N]], -1
++; CHECK-NEXT:    [[NM1:%.*]] = add nsw i64 [[N]], -1
+ ; CHECK-NEXT:    [[G4:%.*]] = shl nuw nsw i64 [[NM1]], 2
+ ; CHECK-NEXT:    [[G:%.*]] = icmp ult i64 [[G4]], [[LIM]]
+ ; CHECK-NEXT:    br i1 [[G]], label %[[LOOP_HEADER:.*]], label %[[EXIT_1:.*]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/large-constant-ints.ll b/llvm/test/Transforms/ConstraintElimination/large-constant-ints.ll
+index 8ee55f98f0e36..70c3a6480d3f1 100644
+--- a/llvm/test/Transforms/ConstraintElimination/large-constant-ints.ll
++++ b/llvm/test/Transforms/ConstraintElimination/large-constant-ints.ll
+@@ -432,4 +432,28 @@ define i1 @pr68751(i128 %arg) {
+   ret i1 %cmp
+ }
+ 
++; The fact %c.2 is implied by the single row added for %c.1. Multiplying
++; coefficients would overflow during Fourier-Motzkin elimination.
++define i1 @fact_implied_by_single_row_coefficient_overflow(i64 %x, i64 %y) {
++; CHECK-LABEL: @fact_implied_by_single_row_coefficient_overflow(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = shl nuw i64 [[X:%.*]], 33
++; CHECK-NEXT:    [[T:%.*]] = shl nuw i64 [[Y:%.*]], 33
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i64 [[S]], [[T]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp ule i64 [[S]], [[T]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %s = shl nuw i64 %x, 33
++  %t = shl nuw i64 %y, 33
++  %c.1 = icmp ult i64 %s, %t
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp ule i64 %s, %t
++  call void @llvm.assume(i1 %c.2)
++  %c.3 = icmp ule i64 %s, %t
++  ret i1 %c.3
++}
++
+ declare void @llvm.assume(i1)
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/pr38280.ll b/llvm/test/Transforms/PhaseOrdering/X86/pr38280.ll
+index 43f6cf7e51d09..a0c79a30ac9d7 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/pr38280.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/pr38280.ll
+@@ -32,7 +32,7 @@ define void @apply_delta(ptr nocapture noundef %dst, ptr nocapture noundef reado
+ ; CHECK-NEXT:    [[DST_ADDR_130:%.*]] = phi ptr [ [[INCDEC_PTR:%.*]], [[WHILE_BODY4]] ], [ [[DST_ADDR_0_LCSSA]], [[WHILE_COND3_PREHEADER]] ]
+ ; CHECK-NEXT:    [[SRC_ADDR_129:%.*]] = phi ptr [ [[INCDEC_PTR8:%.*]], [[WHILE_BODY4]] ], [ [[SRC_ADDR_0_LCSSA]], [[WHILE_COND3_PREHEADER]] ]
+ ; CHECK-NEXT:    [[COUNT_ADDR_128:%.*]] = phi i64 [ [[DEC:%.*]], [[WHILE_BODY4]] ], [ [[COUNT_ADDR_0_LCSSA]], [[WHILE_COND3_PREHEADER]] ]
+-; CHECK-NEXT:    [[DEC]] = add i64 [[COUNT_ADDR_128]], -1
++; CHECK-NEXT:    [[DEC]] = add nsw i64 [[COUNT_ADDR_128]], -1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = load i8, ptr [[SRC_ADDR_129]], align 1
+ ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i8, ptr [[DST_ADDR_130]], i64 [[NEG_OFFS]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = load i8, ptr [[ARRAYIDX]], align 1
+diff --git a/llvm/unittests/Analysis/ConstraintSystemTest.cpp b/llvm/unittests/Analysis/ConstraintSystemTest.cpp
+index edd7fdd89aac3..50abf0023b7c4 100644
+--- a/llvm/unittests/Analysis/ConstraintSystemTest.cpp
++++ b/llvm/unittests/Analysis/ConstraintSystemTest.cpp
+@@ -197,6 +197,9 @@ TEST(ConstraintSolverTest, IsConditionImpliedOverflow) {
+   // Make sure isConditionImplied returns false when there is an overflow.
+   int64_t Limit = std::numeric_limits<int64_t>::max();
+   addVariableRow(CS, {Limit - 1, Limit - 2, Limit - 3});
+-  EXPECT_FALSE(isConditionImplied(CS, {Limit - 1, Limit - 2, Limit - 3}));
++  EXPECT_FALSE(isConditionImplied(CS, {Limit - 1, Limit - 2, Limit - 4}));
++  // The same row is implied by the single row of the system, without
++  // Fourier-Motzkin elimination.
++  EXPECT_TRUE(isConditionImplied(CS, {Limit - 1, Limit - 2, Limit - 3}));
+ }
+ } // namespace
