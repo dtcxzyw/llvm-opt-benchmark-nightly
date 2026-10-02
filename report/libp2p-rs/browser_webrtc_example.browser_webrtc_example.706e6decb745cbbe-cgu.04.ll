@@ -204,7 +204,7 @@ _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTRN
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs9DIU3UKMbTt_4axum7routing7RouteIdINtBR_8EndpointNtCs9Et6OYOsIUY_22browser_webrtc_example14Libp2pEndpointEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB1J_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #11 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !7, !noundef !7 ; 5 uses
@@ -217,16 +217,11 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs9DIU3UKMbTt_4axum7routing7RouteIdINtBR_8EndpointNtCs9Et6OYOsIUY_22browser_webrtc_example14Libp2pEndpointEEE15into_allocationB1J_.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 288                        ; 2 uses
-  %2 = add i64 %i.g, 288                          ; 2 uses
-  %3 = add i64 %i.c, 17
-  %i.h = add i64 %3, %2                           ; 3 uses
-  %4 = icmp uge i64 %i.h, %2
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.h, 9223372036854775793
-  tail call void @llvm.assume(i1 %5)
-  %6 = sub i64 -288, %i.g
-  %i.i = getelementptr inbounds i8, ptr %i.a, i64 %6
+  %i.g = mul i64 %i.c, -288
+  %2 = mul i64 %i.c, 289
+  %i.h = add i64 %2, 305
+  %3 = getelementptr i8, ptr %i.a, i64 %i.g
+  %i.i = getelementptr i8, ptr %3, i64 -288
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs9DIU3UKMbTt_4axum7routing7RouteIdINtBR_8EndpointNtCs9Et6OYOsIUY_22browser_webrtc_example14Libp2pEndpointEEE15into_allocationB1J_.exit
 
 _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs9DIU3UKMbTt_4axum7routing7RouteIdINtBR_8EndpointNtCs9Et6OYOsIUY_22browser_webrtc_example14Libp2pEndpointEEE15into_allocationB1J_.exit: ; preds = %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, %bb.a
@@ -255,7 +250,7 @@ _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs9DIU3UKMbTt_4axum7ro
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs9DIU3UKMbTt_4axum7routing7RouteIdINtBR_8EndpointuEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCs9Et6OYOsIUY_22browser_webrtc_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #11 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !7, !noundef !7 ; 5 uses
@@ -268,16 +263,11 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs9DIU3UKMbTt_4axum7routing7RouteIdINtBR_8EndpointuEEE15into_allocationCs9Et6OYOsIUY_22browser_webrtc_example.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 288                        ; 2 uses
-  %2 = add i64 %i.g, 288                          ; 2 uses
-  %3 = add i64 %i.c, 17
-  %i.h = add i64 %3, %2                           ; 3 uses
-  %4 = icmp uge i64 %i.h, %2
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.h, 9223372036854775793
-  tail call void @llvm.assume(i1 %5)
-  %6 = sub i64 -288, %i.g
-  %i.i = getelementptr inbounds i8, ptr %i.a, i64 %6
+  %i.g = mul i64 %i.c, -288
+  %2 = mul i64 %i.c, 289
+  %i.h = add i64 %2, 305
+  %3 = getelementptr i8, ptr %i.a, i64 %i.g
+  %i.i = getelementptr i8, ptr %3, i64 -288
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs9DIU3UKMbTt_4axum7routing7RouteIdINtBR_8EndpointuEEE15into_allocationCs9Et6OYOsIUY_22browser_webrtc_example.exit
 
 _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs9DIU3UKMbTt_4axum7routing7RouteIdINtBR_8EndpointuEEE15into_allocationCs9Et6OYOsIUY_22browser_webrtc_example.exit: ; preds = %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, %bb.a
@@ -680,7 +670,7 @@ attributes #7 = { mustprogress nofree norecurse nosync nounwind nonlazybind will
 attributes #8 = { nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #9 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #10 = { nofree norecurse nosync nounwind nonlazybind memory(readwrite, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #11 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #11 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #13 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #14 = { cold minsize noinline noreturn nounwind nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

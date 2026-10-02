@@ -205,9 +205,9 @@ bb.a:
   %i.y = alloca [16 x i8], align 8                ; 5 uses
   %i.z = alloca [16 x i8], align 8                ; 4 uses
   %i.aa = alloca [24 x i8], align 8               ; 6 uses
-  %i.ab = alloca [24 x i8], align 8               ; 7 uses
+  %i.ab = alloca [24 x i8], align 8               ; 6 uses
   %i.ac = alloca [8 x i8], align 8                ; 4 uses
-  %i.ad = alloca [24 x i8], align 8               ; 7 uses
+  %i.ad = alloca [24 x i8], align 8               ; 6 uses
   %i.ae = alloca [16 x i8], align 8               ; 9 uses
   %i.af = alloca [8 x i8], align 8                ; 8 uses
   %.sroa.12.i.i.i = alloca [80 x i8], align 8     ; 4 uses
@@ -610,7 +610,7 @@ _RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_IBP_INtNtB7
   %i.aos = phi ptr [ %i.akt, %_RNvXs4_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_IBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB32_12GridLayouter20render_fills_strokess9_0EIB19_B1u_NCB2X_s8_0EEIB19_B1u_NCB2X_sa_0EEIB19_B1u_NCB2X_sb_0EENtNtBb_5clone5Clone5cloneB36_.exit.jt2.i.i.i.i.i ], [ %i.amo, %_RNCINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB7_5ChainIBR_IBR_INtNtB9_6filter6FilterINtNtNtBd_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB34_12GridLayouter20render_fills_strokess9_0EIB1b_B1w_NCB2Z_s8_0EEIB1b_B1w_NCB2Z_sa_0EEIB1b_B1w_NCB2Z_sb_0EENtNtNtBb_6traits8iterator8Iterator4findQNCNCINvNtB36_5lines22generate_line_segmentsNCB2Z_sc_0INtNtB9_9enumerate9EnumerateINtNtB9_6copied6CopiedIB1x_NtNtB22_3abs3AbsEEEBQ_E00E0B38_.exit.thread.i.i.i.i.i.i.i ], [ %i.ann, %bb.hz ], [ %i.axd, %_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB2Y_12GridLayouter20render_fills_strokess9_0EIB15_B1q_NCB2T_s8_0EEIB15_B1q_NCB2T_sa_0EENtNtNtB9_6traits8iterator8Iterator4foldINtNtBb_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB1Y_9visualize6stroke6StrokeNtNtB1W_3abs3AbsEEEQNCINvB17_11filter_foldRB1Q_B5M_NCNCINvNtB30_5lines22generate_line_segmentsNCB2T_sc_0INtNtB7_9enumerate9EnumerateINtNtB7_6copied6CopiedIB1r_B7f_EEEIBP_BO_IB15_B1q_NCB2T_sb_0EEE00NCINvNtB7_3map8map_foldB7V_B5M_B5M_NCB86_s_0NCNCB86_s0_00E0E0EB32_.exit.i.i.i.i.i.i ], [ %i.axe, %_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB2Y_12GridLayouter20render_fills_strokess9_0EIB15_B1q_NCB2T_s8_0EEIB15_B1q_NCB2T_sa_0EENtNtNtB9_6traits8iterator8Iterator4foldINtNtBb_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB1Y_9visualize6stroke6StrokeNtNtB1W_3abs3AbsEEEQNCINvB17_11filter_foldRB1Q_B5M_NCNCINvNtB30_5lines22generate_line_segmentsNCB2T_sc_0INtNtB7_9enumerate9EnumerateINtNtB7_6copied6CopiedIB1r_B7f_EEEIBP_BO_IB15_B1q_NCB2T_sb_0EEE00NCINvNtB7_3map8map_foldB7V_B5M_B5M_NCB86_s_0NCNCB86_s0_00E0E0EB32_.exit.i.i.thread.i.i.i.i ], [ %i.axe, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter11filter_foldRNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineINtNtBa_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB1a_9visualize6stroke6StrokeNtNtB18_3abs3AbsEEENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB3V_12GridLayouter20render_fills_strokessb_0NCIB2_B11_B22_NCNCINvNtB3X_5lines22generate_line_segmentsNCB3Q_sc_0INtNtB6_9enumerate9EnumerateINtNtB6_6copied6CopiedINtNtNtBa_5slice4iter4IterB3v_EEEINtNtB6_5chain5ChainIB7Q_IB7Q_INtB4_6FilterIB7j_B12_ENCB3Q_s9_0EIB8k_B8w_NCB3Q_s8_0EEIB8k_B8w_NCB3Q_sa_0EEIB8k_B8w_B3O_EEE00NCINvNtB6_3map8map_foldB11_B22_B22_NCB5F_s_0NCNCB5F_s0_00E0E0E0B3Z_.exit.i.i.i.i.i.i.i.i ], [ %i.ann, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter15filter_try_foldRNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB2Y_12GridLayouter20render_fills_strokessb_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCNCINvNtB30_5lines22generate_line_segmentsNCB2T_sc_0INtNtB6_9enumerate9EnumerateINtNtB6_6copied6CopiedINtNtNtBa_5slice4iter4IterNtNtB1c_3abs3AbsEEEINtNtB6_5chain5ChainIB7M_IB7M_INtB4_6FilterIB73_B16_ENCB2T_s9_0EIB8g_B8s_NCB2T_s8_0EEIB8g_B8s_NCB2T_sa_0EEIB8g_B8s_B2R_EEE00E0E0B32_.exit.i.i.i.i.i.i.i.i.i.i.i ] ; 11 uses
   %.sroa.3.0.i.i.i.i.i = phi ptr [ undef, %_RNvXs4_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_IBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB32_12GridLayouter20render_fills_strokess9_0EIB19_B1u_NCB2X_s8_0EEIB19_B1u_NCB2X_sa_0EEIB19_B1u_NCB2X_sb_0EENtNtBb_5clone5Clone5cloneB36_.exit.jt2.i.i.i.i.i ], [ undef, %_RNCINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB7_5ChainIBR_IBR_INtNtB9_6filter6FilterINtNtNtBd_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB34_12GridLayouter20render_fills_strokess9_0EIB1b_B1w_NCB2Z_s8_0EEIB1b_B1w_NCB2Z_sa_0EEIB1b_B1w_NCB2Z_sb_0EENtNtNtBb_6traits8iterator8Iterator4findQNCNCINvNtB36_5lines22generate_line_segmentsNCB2Z_sc_0INtNtB9_9enumerate9EnumerateINtNtB9_6copied6CopiedIB1x_NtNtB22_3abs3AbsEEEBQ_E00E0B38_.exit.thread.i.i.i.i.i.i.i ], [ undef, %bb.hz ], [ %.sroa.0.0.i81.i.i.i.i.i, %_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB2Y_12GridLayouter20render_fills_strokess9_0EIB15_B1q_NCB2T_s8_0EEIB15_B1q_NCB2T_sa_0EENtNtNtB9_6traits8iterator8Iterator4foldINtNtBb_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB1Y_9visualize6stroke6StrokeNtNtB1W_3abs3AbsEEEQNCINvB17_11filter_foldRB1Q_B5M_NCNCINvNtB30_5lines22generate_line_segmentsNCB2T_sc_0INtNtB7_9enumerate9EnumerateINtNtB7_6copied6CopiedIB1r_B7f_EEEIBP_BO_IB15_B1q_NCB2T_sb_0EEE00NCINvNtB7_3map8map_foldB7V_B5M_B5M_NCB86_s_0NCNCB86_s0_00E0E0EB32_.exit.i.i.i.i.i.i ], [ %.sroa.0.0.i81.i193.i.i.i.i, %_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB2Y_12GridLayouter20render_fills_strokess9_0EIB15_B1q_NCB2T_s8_0EEIB15_B1q_NCB2T_sa_0EENtNtNtB9_6traits8iterator8Iterator4foldINtNtBb_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB1Y_9visualize6stroke6StrokeNtNtB1W_3abs3AbsEEEQNCINvB17_11filter_foldRB1Q_B5M_NCNCINvNtB30_5lines22generate_line_segmentsNCB2T_sc_0INtNtB7_9enumerate9EnumerateINtNtB7_6copied6CopiedIB1r_B7f_EEEIBP_BO_IB15_B1q_NCB2T_sb_0EEE00NCINvNtB7_3map8map_foldB7V_B5M_B5M_NCB86_s_0NCNCB86_s0_00E0E0EB32_.exit.i.i.thread.i.i.i.i ], [ %.sroa.0.0.i.i.i.i83.i.i.i.i.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter11filter_foldRNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineINtNtBa_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB1a_9visualize6stroke6StrokeNtNtB18_3abs3AbsEEENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB3V_12GridLayouter20render_fills_strokessb_0NCIB2_B11_B22_NCNCINvNtB3X_5lines22generate_line_segmentsNCB3Q_sc_0INtNtB6_9enumerate9EnumerateINtNtB6_6copied6CopiedINtNtNtBa_5slice4iter4IterB3v_EEEINtNtB6_5chain5ChainIB7Q_IB7Q_INtB4_6FilterIB7j_B12_ENCB3Q_s9_0EIB8k_B8w_NCB3Q_s8_0EEIB8k_B8w_NCB3Q_sa_0EEIB8k_B8w_B3O_EEE00NCINvNtB6_3map8map_foldB11_B22_B22_NCB5F_s_0NCNCB5F_s0_00E0E0E0B3Z_.exit.i.i.i.i.i.i.i.i ], [ undef, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter15filter_try_foldRNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB2Y_12GridLayouter20render_fills_strokessb_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCNCINvNtB30_5lines22generate_line_segmentsNCB2T_sc_0INtNtB6_9enumerate9EnumerateINtNtB6_6copied6CopiedINtNtNtBa_5slice4iter4IterNtNtB1c_3abs3AbsEEEINtNtB6_5chain5ChainIB7M_IB7M_INtB4_6FilterIB73_B16_ENCB2T_s9_0EIB8g_B8s_NCB2T_s8_0EEIB8g_B8s_NCB2T_sa_0EEIB8g_B8s_B2R_EEE00E0E0B32_.exit.i.i.i.i.i.i.i.i.i.i.i ]
   %.sroa.0.0.i.i.i.i.i110 = phi i64 [ 0, %_RNvXs4_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_IBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB32_12GridLayouter20render_fills_strokess9_0EIB19_B1u_NCB2X_s8_0EEIB19_B1u_NCB2X_sa_0EEIB19_B1u_NCB2X_sb_0EENtNtBb_5clone5Clone5cloneB36_.exit.jt2.i.i.i.i.i ], [ 0, %_RNCINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB7_5ChainIBR_IBR_INtNtB9_6filter6FilterINtNtNtBd_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB34_12GridLayouter20render_fills_strokess9_0EIB1b_B1w_NCB2Z_s8_0EEIB1b_B1w_NCB2Z_sa_0EEIB1b_B1w_NCB2Z_sb_0EENtNtNtBb_6traits8iterator8Iterator4findQNCNCINvNtB36_5lines22generate_line_segmentsNCB2Z_sc_0INtNtB9_9enumerate9EnumerateINtNtB9_6copied6CopiedIB1x_NtNtB22_3abs3AbsEEEBQ_E00E0B38_.exit.thread.i.i.i.i.i.i.i ], [ 0, %bb.hz ], [ 1, %_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB2Y_12GridLayouter20render_fills_strokess9_0EIB15_B1q_NCB2T_s8_0EEIB15_B1q_NCB2T_sa_0EENtNtNtB9_6traits8iterator8Iterator4foldINtNtBb_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB1Y_9visualize6stroke6StrokeNtNtB1W_3abs3AbsEEEQNCINvB17_11filter_foldRB1Q_B5M_NCNCINvNtB30_5lines22generate_line_segmentsNCB2T_sc_0INtNtB7_9enumerate9EnumerateINtNtB7_6copied6CopiedIB1r_B7f_EEEIBP_BO_IB15_B1q_NCB2T_sb_0EEE00NCINvNtB7_3map8map_foldB7V_B5M_B5M_NCB86_s_0NCNCB86_s0_00E0E0EB32_.exit.i.i.i.i.i.i ], [ 1, %_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB2Y_12GridLayouter20render_fills_strokess9_0EIB15_B1q_NCB2T_s8_0EEIB15_B1q_NCB2T_sa_0EENtNtNtB9_6traits8iterator8Iterator4foldINtNtBb_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB1Y_9visualize6stroke6StrokeNtNtB1W_3abs3AbsEEEQNCINvB17_11filter_foldRB1Q_B5M_NCNCINvNtB30_5lines22generate_line_segmentsNCB2T_sc_0INtNtB7_9enumerate9EnumerateINtNtB7_6copied6CopiedIB1r_B7f_EEEIBP_BO_IB15_B1q_NCB2T_sb_0EEE00NCINvNtB7_3map8map_foldB7V_B5M_B5M_NCB86_s_0NCNCB86_s0_00E0E0EB32_.exit.i.i.thread.i.i.i.i ], [ 1, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter11filter_foldRNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineINtNtBa_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB1a_9visualize6stroke6StrokeNtNtB18_3abs3AbsEEENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB3V_12GridLayouter20render_fills_strokessb_0NCIB2_B11_B22_NCNCINvNtB3X_5lines22generate_line_segmentsNCB3Q_sc_0INtNtB6_9enumerate9EnumerateINtNtB6_6copied6CopiedINtNtNtBa_5slice4iter4IterB3v_EEEINtNtB6_5chain5ChainIB7Q_IB7Q_INtB4_6FilterIB7j_B12_ENCB3Q_s9_0EIB8k_B8w_NCB3Q_s8_0EEIB8k_B8w_NCB3Q_sa_0EEIB8k_B8w_B3O_EEE00NCINvNtB6_3map8map_foldB11_B22_B22_NCB5F_s_0NCNCB5F_s0_00E0E0E0B3Z_.exit.i.i.i.i.i.i.i.i ], [ 0, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter15filter_try_foldRNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB2Y_12GridLayouter20render_fills_strokessb_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCNCINvNtB30_5lines22generate_line_segmentsNCB2T_sc_0INtNtB6_9enumerate9EnumerateINtNtB6_6copied6CopiedINtNtNtBa_5slice4iter4IterNtNtB1c_3abs3AbsEEEINtNtB6_5chain5ChainIB7M_IB7M_INtB4_6FilterIB73_B16_ENCB2T_s9_0EIB8g_B8s_NCB2T_s8_0EEIB8g_B8s_NCB2T_sa_0EEIB8g_B8s_B2R_EEE00E0E0B32_.exit.i.i.i.i.i.i.i.i.i.i.i ]
-  %i.aot = load i64, ptr %.sroa.22545.0..sroa_idx.i, align 8, !alias.scope !31162, !noalias !31163, !noundef !41 ; 13 uses
+  %i.aot = load i64, ptr %.sroa.22545.0..sroa_idx.i, align 8, !alias.scope !31162, !noalias !31163, !noundef !41 ; 14 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !31194)
   call void @llvm.experimental.noalias.scope.decl(metadata !31195)
   %i.aou = load ptr, ptr %.sroa.20543.0..sroa_idx.i, align 8, !alias.scope !31196, !noalias !31197, !nonnull !41, !align !46, !noundef !41 ; 2 uses
@@ -634,21 +634,20 @@ _RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_IBP_INtNtB7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !noalias !31201
   store i64 %.sroa.0.0.i.i.i.i.i110, ptr %i.ae, align 8, !noalias !31202
   store ptr %.sroa.3.0.i.i.i.i.i, ptr %i.sx, align 8, !noalias !31202
-  %3 = icmp ne i64 %i.aot, 0                      ; 3 uses
-  br i1 %3, label %bb.id, label %bb.ic
+  %3 = icmp eq i64 %i.aot, 0                      ; 2 uses
+  br i1 %3, label %bb.ic, label %bb.id
 
-.thread146.i.i.i.i.i.i.i:                         ; preds = %4, %bb.id
-  %.not59147.i.i.i.i.i.i.i = icmp eq i64 %i.apa, 0
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !noalias !31202
-  br label %.fold.split.i.i.i.i.i.i.i
+.thread146.i.i.i.i.i.i.i:                         ; preds = %bb.ij, %bb.ii, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8layouter8RowPieceENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvNtBU_5lines22hline_stroke_at_column0EBW_.exit.i.i.i.i.i.i.i, %bb.ih, %bb.ig
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !31202
+  br label %bb.ic
 
-bb.ic:                                            ; preds = %.critedge.i.i.i.i.i.i.i, %_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_IBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB32_12GridLayouter20render_fills_strokess9_0EIB19_B1u_NCB2X_s8_0EEIB19_B1u_NCB2X_sa_0EEIB19_B1u_NCB2X_sb_0EENtNtNtB9_6traits8iterator8Iterator4foldINtNtBb_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB22_9visualize6stroke6StrokeNtNtB20_3abs3AbsEEENCINvB1b_11filter_foldRB1U_B6b_NCNCINvNtB34_5lines22generate_line_segmentsNCB2X_sc_0INtNtB7_9enumerate9EnumerateINtNtB7_6copied6CopiedIB1v_B7E_EEEBO_E00NCINvNtB7_3map8map_foldB8j_B6b_B6b_NCB8u_s_0NCNCB8u_s0_00E0E0EB36_.exit.i.i.i.i.i
-  %.not59.i.i.i.i.i.i.i = icmp eq i64 %i.apa, 0   ; 2 uses
-  %narrow.i.i.i.i.i.i.i = and i1 %3, %.not59.i.i.i.i.i.i.i ; 2 uses
+bb.ic:                                            ; preds = %bb.id, %.thread146.i.i.i.i.i.i.i, %_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_IBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB32_12GridLayouter20render_fills_strokess9_0EIB19_B1u_NCB2X_s8_0EEIB19_B1u_NCB2X_sa_0EEIB19_B1u_NCB2X_sb_0EENtNtNtB9_6traits8iterator8Iterator4foldINtNtBb_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB22_9visualize6stroke6StrokeNtNtB20_3abs3AbsEEENCINvB1b_11filter_foldRB1U_B6b_NCNCINvNtB34_5lines22generate_line_segmentsNCB2X_sc_0INtNtB7_9enumerate9EnumerateINtNtB7_6copied6CopiedIB1v_B7E_EEEBO_E00NCINvNtB7_3map8map_foldB8j_B6b_B6b_NCB8u_s_0NCNCB8u_s0_00E0E0EB36_.exit.i.i.i.i.i
+  %.not59.i.i.i.i.i.i.i = icmp ne i64 %i.apa, 0
+  %narrow.not124.i.i.i.i.i.i.i = or i1 %3, %.not59.i.i.i.i.i.i.i ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !noalias !31202
-  %.not59.not.i.i.i.i.i.i.i = xor i1 %.not59.i.i.i.i.i.i.i, true
-  %brmerge.i.i.i.i.i.i.i = or i1 %3, %.not59.not.i.i.i.i.i.i.i
-  br i1 %brmerge.i.i.i.i.i.i.i, label %.fold.split.i.i.i.i.i.i.i, label %bb.ja
+  %4 = or i64 %i.apa, %i.aot
+  %brmerge.not.i.i.i.i.i.i.i = icmp eq i64 %4, 0
+  br i1 %brmerge.not.i.i.i.i.i.i.i, label %bb.ja, label %.fold.split.i.i.i.i.i.i.i
 
 bb.id:                                            ; preds = %_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainIBP_IBP_INtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve4LineENCNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB32_12GridLayouter20render_fills_strokess9_0EIB19_B1u_NCB2X_s8_0EEIB19_B1u_NCB2X_sa_0EEIB19_B1u_NCB2X_sb_0EENtNtNtB9_6traits8iterator8Iterator4foldINtNtBb_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtB22_9visualize6stroke6StrokeNtNtB20_3abs3AbsEEENCINvB1b_11filter_foldRB1U_B6b_NCNCINvNtB34_5lines22generate_line_segmentsNCB2X_sc_0INtNtB7_9enumerate9EnumerateINtNtB7_6copied6CopiedIB1v_B7E_EEEBO_E00NCINvNtB7_3map8map_foldB8j_B6b_B6b_NCB8u_s_0NCNCB8u_s0_00E0E0EB36_.exit.i.i.i.i.i
   %i.apk = getelementptr inbounds nuw i8, ptr %i.aos, i64 64
@@ -656,7 +655,7 @@ bb.id:                                            ; preds = %_RINvXs_NtNtNtCs3oU
   %i.apm = icmp ult i64 %i.apl, 288230376151711744
   call void @llvm.assume(i1 %i.apm)
   %.not57.i.i.i.i.i.i.i = icmp eq i64 %i.aot, %i.apl
-  br i1 %.not57.i.i.i.i.i.i.i, label %.thread146.i.i.i.i.i.i.i, label %bb.ie
+  br i1 %.not57.i.i.i.i.i.i.i, label %bb.ic, label %bb.ie
 
 bb.ie:                                            ; preds = %bb.id
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad), !noalias !31202
@@ -681,27 +680,23 @@ bb.if:                                            ; preds = %bb.jx
 bb.ig:                                            ; preds = %bb.ie
   %i.apn = load i64, ptr %i.ad, align 8, !range !49, !noalias !31202, !noundef !41
   %i.apo = trunc nuw i64 %i.apn to i1
-  br i1 %i.apo, label %bb.ih, label %4
+  br i1 %i.apo, label %bb.ih, label %.thread146.i.i.i.i.i.i.i
 
 bb.ih:                                            ; preds = %bb.ig
   %i.app = load i64, ptr %i.sy, align 8, !noalias !31202, !noundef !41 ; 2 uses
   %i.apq = icmp ult i64 %i.app, %i.aot
-  br i1 %i.apq, label %bb.ii, label %4
-
-4:                                                ; preds = %bb.ih, %bb.ig
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !31202
-  br label %.thread146.i.i.i.i.i.i.i
+  br i1 %i.apq, label %bb.ii, label %.thread146.i.i.i.i.i.i.i
 
 bb.ii:                                            ; preds = %bb.ih
   %.idx2948 = shl nuw nsw i64 %i.aoy, 4
   %i.apr = getelementptr inbounds nuw i8, ptr %i.aow, i64 %.idx2948
   %i.aps = icmp eq i64 %i.aoy, 0
-  br i1 %i.aps, label %.critedge.i.i.i.i.i.i.i, label %.lr.ph2936
+  br i1 %i.aps, label %.thread146.i.i.i.i.i.i.i, label %.lr.ph2936
 
 bb.ij:                                            ; preds = %.lr.ph2936
   %i.apt = getelementptr inbounds nuw i8, ptr %i.apv, i64 16 ; 2 uses
   %i.apu = icmp eq ptr %i.apt, %i.apr
-  br i1 %i.apu, label %.critedge.i.i.i.i.i.i.i, label %.lr.ph2936
+  br i1 %i.apu, label %.thread146.i.i.i.i.i.i.i, label %.lr.ph2936
 
 .lr.ph2936:                                       ; preds = %bb.ii, %bb.ij
   %i.apv = phi ptr [ %i.apt, %bb.ij ], [ %i.aow, %bb.ii ] ; 2 uses
@@ -712,11 +707,7 @@ bb.ij:                                            ; preds = %.lr.ph2936
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8layouter8RowPieceENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvNtBU_5lines22hline_stroke_at_column0EBW_.exit.i.i.i.i.i.i.i: ; preds = %.lr.ph2936
   %i.apy = icmp ult i64 %i.apx, %i.aot
-  br i1 %i.apy, label %bb.ik, label %.critedge.i.i.i.i.i.i.i
-
-.critedge.i.i.i.i.i.i.i:                          ; preds = %bb.ij, %bb.ii, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8layouter8RowPieceENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvNtBU_5lines22hline_stroke_at_column0EBW_.exit.i.i.i.i.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !31202
-  br label %bb.ic
+  br i1 %i.apy, label %bb.ik, label %.thread146.i.i.i.i.i.i.i
 
 bb.ik:                                            ; preds = %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8layouter8RowPieceENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvNtBU_5lines22hline_stroke_at_column0EBW_.exit.i.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !31202
@@ -741,9 +732,8 @@ bb.in:                                            ; preds = %bb.im
   invoke void @_RNvMsn_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtNtCsdaEETE4DqmE_13typst_library9visualize6stroke6StrokeNtNtNtBN_6layout3abs3AbsEE9drop_slowBN_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.sx) #58
           to label %select.unfold.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i, !noalias !31210
 
-.fold.split.i.i.i.i.i.i.i:                        ; preds = %bb.ic, %.thread146.i.i.i.i.i.i.i
-  %narrow151.i.i.i.i.i.i.i = phi i1 [ %.not59147.i.i.i.i.i.i.i, %.thread146.i.i.i.i.i.i.i ], [ %narrow.i.i.i.i.i.i.i, %bb.ic ] ; 4 uses
-  %.mux.i.i.i.i.i.i.i = select i1 %narrow151.i.i.i.i.i.i.i, i64 0, i64 %i.apc
+.fold.split.i.i.i.i.i.i.i:                        ; preds = %bb.ic
+  %.mux.i.i.i.i.i.i.i = select i1 %narrow.not124.i.i.i.i.i.i.i, i64 %i.apc, i64 0
   invoke void @_RNvMs6_NtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolveNtB5_8CellGrid30effective_parent_cell_position(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.ab, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(184) %i.aos, i64 noundef %i.akf, i64 noundef %.mux.i.i.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @602)
           to label %bb.io unwind label %.thread.i.i.loopexit.i.i.i.i.i, !noalias !31204
 
@@ -763,7 +753,7 @@ bb.ip:                                            ; preds = %bb.io
   br i1 %.not.i71.i.i.i.i.i.i.i, label %bb.ir, label %bb.iq, !prof !44
 
 bb.iq:                                            ; preds = %.noexc.i.i.i.i.i.i.i
-  br i1 %narrow151.i.i.i.i.i.i.i, label %bb.it, label %bb.is
+  br i1 %narrow.not124.i.i.i.i.i.i.i, label %bb.is, label %bb.it
 
 bb.ir:                                            ; preds = %.noexc.i.i.i.i.i.i.i
   invoke void @_RNvNtCs3oUPovFnLWP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @258) #53
@@ -811,7 +801,6 @@ bb.iz:                                            ; preds = %bb.ix
   unreachable
 
 bb.ja:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtCsdaEETE4DqmE_13typst_library9visualize6stroke6StrokeNtNtNtB1D_6layout3abs3AbsEEEbEECs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i, %bb.io, %bb.ic
-  %narrow152.i.i.i.i.i.i.i = phi i1 [ %narrow151.i.i.i.i.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtCsdaEETE4DqmE_13typst_library9visualize6stroke6StrokeNtNtNtB1D_6layout3abs3AbsEEEbEECs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i ], [ %narrow.i.i.i.i.i.i.i, %bb.ic ], [ %narrow151.i.i.i.i.i.i.i, %bb.io ]
   %.sroa.048.0.i.i.i.i.i.i.i = phi i1 [ %i.aqv, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtCsdaEETE4DqmE_13typst_library9visualize6stroke6StrokeNtNtNtB1D_6layout3abs3AbsEEEbEECs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i ], [ false, %bb.ic ], [ false, %bb.io ] ; 2 uses
   %.val.i.i.i.i.i.i233.i = phi ptr [ %.sroa.0.0.i72.i.i.i.i.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtNtCsdaEETE4DqmE_13typst_library9visualize6stroke6StrokeNtNtNtB1D_6layout3abs3AbsEEEbEECs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i ], [ null, %bb.ic ], [ null, %bb.io ] ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !31202
@@ -890,12 +879,12 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionjE3zipjECs7tN9tvpkfrg_12typst_lay
   %..i.i.i.i.i.i234.i = zext i1 %or.cond.i.i.i.i.i.i.i to i8
   %.sroa.030.0.i.i.i.i.i.i.i = select i1 %.not62.i.i.i.i.i.i.i, i8 %..i.i.i.i.i.i234.i, i8 2 ; 5 uses
   %i.ark = and i64 %i.ape, %i.apa
-  %or.cond.not.i.i.i.i.i.i.i.i = icmp ne i64 %i.ark, 0
-  %5 = icmp ult i64 %i.apc, %i.apg
-  %6 = icmp ugt i64 %i.aot, %i.apg
-  %7 = and i1 %5, %6
-  %i.arl = select i1 %or.cond.not.i.i.i.i.i.i.i.i, i1 %7, i1 false
-  %.sroa.031.0.i.i.i.i.i.i.i = or i1 %i.arl, %narrow152.i.i.i.i.i.i.i
+  %or.cond.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.ark, 0
+  %5 = icmp uge i64 %i.apc, %i.apg
+  %6 = icmp ule i64 %i.aot, %i.apg
+  %.not129.i.i.i.i.i.i.i = or i1 %5, %6
+  %i.arl = select i1 %or.cond.not.i.i.i.i.i.i.i.i, i1 true, i1 %.not129.i.i.i.i.i.i.i
+  %.sroa.031.0.not122.i.i.i.i.i.i.i = and i1 %narrow.not124.i.i.i.i.i.i.i, %i.arl
   %i.arm = getelementptr inbounds nuw i8, ptr %i.aos, i64 168
   %i.arn = load i8, ptr %i.arm, align 8, !range !48, !alias.scope !31203, !noalias !31204, !noundef !41
   %i.aro = icmp eq i8 %i.arn, 1
@@ -990,10 +979,9 @@ bb.ju:                                            ; preds = %bb.js
   br i1 %or.cond3.i.i.i.i.i.i.i, label %bb.jw, label %bb.jv
 
 bb.jv:                                            ; preds = %bb.ju, %bb.jt
-  %.sroa.031.0.not.i.i.i.i.i.i.i = xor i1 %.sroa.031.0.i.i.i.i.i.i.i, true
   %.not.i.i75.i.i.i.i.i = xor i1 %.sroa.048.0.i.i.i.i.i.i.i, true
   %or.cond7.i.i.i.i.i.i.i = select i1 %.not.i.i75.i.i.i.i.i, i1 true, i1 %.sroa.052.0.i.i.i.i.i.i.i
-  %or.cond66.i.i.i.i.i.i.i = select i1 %.sroa.031.0.not.i.i.i.i.i.i.i, i1 %or.cond7.i.i.i.i.i.i.i, i1 false ; 2 uses
+  %or.cond66.i.i.i.i.i.i.i = select i1 %.sroa.031.0.not122.i.i.i.i.i.i.i, i1 %or.cond7.i.i.i.i.i.i.i, i1 false ; 2 uses
   %.sroa.037.0.pre.i.i.i.i.i.i.i = select i1 %or.cond66.i.i.i.i.i.i.i, ptr %.sroa.051.0.i.i.i.i.i.i.i, ptr %.val.i.i.i.i.i.i233.i
   %.sroa.038.0.pre.i.i.i.i.i.i.i = select i1 %or.cond66.i.i.i.i.i.i.i, ptr %.val.i.i.i.i.i.i233.i, ptr %.sroa.051.0.i.i.i.i.i.i.i
   br label %bb.jw

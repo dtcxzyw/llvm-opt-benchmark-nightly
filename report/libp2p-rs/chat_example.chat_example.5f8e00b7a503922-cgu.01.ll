@@ -204,12 +204,12 @@ _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTTN
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashRNtNtBT_5types12SubscriptionEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #14 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashRNtNtBT_5types12SubscriptionEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #7 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !7, !noundef !7 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !noundef !7 ; 5 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !7 ; 4 uses
   %.val13.i = load <16 x i8>, ptr %i.a, align 16, !noalias !3041
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.e = load i64, ptr %i.d, align 8, !noundef !7
@@ -217,16 +217,9 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashRNtNtBT_5types12SubscriptionEE15into_allocationCsvMXERwWlfq_12chat_example.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %2 = icmp slt i64 %i.c, 576460752303423487
-  tail call void @llvm.assume(i1 %2)
-  %i.g = shl i64 %i.c, 5                          ; 2 uses
-  %3 = add i64 %i.g, 32                           ; 2 uses
-  %4 = add nsw i64 %i.c, 17
-  %i.h = add i64 %4, %3                           ; 3 uses
-  %5 = icmp uge i64 %i.h, %3
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.h, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.g = shl i64 %i.c, 5
+  %2 = mul i64 %i.c, 33
+  %i.h = add i64 %2, 49
   %i.i = sub nuw nsw i64 -32, %i.g
   %i.j = getelementptr inbounds i8, ptr %i.a, i64 %i.i
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashRNtNtBT_5types12SubscriptionEE15into_allocationCsvMXERwWlfq_12chat_example.exit
@@ -257,8 +250,8 @@ _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p_gossipsub5types9MessageIduEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #14 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p_gossipsub5types9MessageIduEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #7 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !7, !noundef !7 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -270,18 +263,10 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p_gossipsub5types9MessageIduEE15into_allocationCsvMXERwWlfq_12chat_example.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 24                         ; 2 uses
-  %2 = add i64 %i.g, 24
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.g = mul i64 %i.c, 24
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %4 = add i64 %i.h, 32                           ; 2 uses
-  %i.i = add i64 %i.c, 17
-  %i.j = add i64 %i.i, %4                         ; 3 uses
-  %5 = icmp uge i64 %i.j, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.i = add i64 %i.c, 49
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub i64 -32, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p_gossipsub5types9MessageIduEE15into_allocationCsvMXERwWlfq_12chat_example.exit
@@ -312,8 +297,8 @@ _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs1pSuea8KFR7_16libp2p
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #14 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #7 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !7, !noundef !7 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -325,18 +310,10 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashEEE15into_allocationCsvMXERwWlfq_12chat_example.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 104                        ; 2 uses
-  %2 = add i64 %i.g, 104
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.g = mul i64 %i.c, 104
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %4 = add i64 %i.h, 112                          ; 2 uses
-  %i.i = add i64 %i.c, 17
-  %i.j = add i64 %i.i, %4                         ; 3 uses
-  %5 = icmp uge i64 %i.j, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.i = add i64 %i.c, 129
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub i64 -112, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs1pSuea8KFR7_16libp2p_gossipsub5topic9TopicHashEEE15into_allocationCsvMXERwWlfq_12chat_example.exit
@@ -367,8 +344,8 @@ _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdjEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #14 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdjEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #7 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !7, !noundef !7 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -380,18 +357,10 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdjEE15into_allocationCsvMXERwWlfq_12chat_example.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 88                         ; 2 uses
-  %2 = add i64 %i.g, 88
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.g = mul i64 %i.c, 88
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %4 = add i64 %i.h, 96                           ; 2 uses
-  %i.i = add i64 %i.c, 17
-  %i.j = add i64 %i.i, %4                         ; 3 uses
-  %5 = icmp uge i64 %i.j, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.i = add i64 %i.c, 113
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub i64 -96, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdjEE15into_allocationCsvMXERwWlfq_12chat_example.exit
@@ -422,8 +391,8 @@ _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIduEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #14 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIduEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCsvMXERwWlfq_12chat_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #7 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !7, !noundef !7 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -435,16 +404,11 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIduEE15into_allocationCsvMXERwWlfq_12chat_example.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 80                         ; 2 uses
-  %2 = add i64 %i.g, 80                           ; 2 uses
-  %3 = add i64 %i.c, 17
-  %i.h = add i64 %3, %2                           ; 3 uses
-  %4 = icmp uge i64 %i.h, %2
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.h, 9223372036854775793
-  tail call void @llvm.assume(i1 %5)
-  %6 = sub i64 -80, %i.g
-  %i.i = getelementptr inbounds i8, ptr %i.a, i64 %6
+  %i.g = mul i64 %i.c, -80
+  %2 = mul i64 %i.c, 81
+  %i.h = add i64 %2, 97
+  %3 = getelementptr i8, ptr %i.a, i64 %i.g
+  %i.i = getelementptr i8, ptr %3, i64 -80
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIduEE15into_allocationCsvMXERwWlfq_12chat_example.exit
 
 _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIduEE15into_allocationCsvMXERwWlfq_12chat_example.exit: ; preds = %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, %bb.a
@@ -490,13 +454,8 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %or.cond.i)
   %i.g = shl i64 %i.c, 3
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %2 = add i64 %i.h, 16                           ; 2 uses
-  %i.i = add nsw i64 %i.c, 17
-  %i.j = add i64 %i.i, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.j, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.i = add nsw i64 %i.c, 33
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub nuw nsw i64 -16, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTRNtNtCs1pSuea8KFR7_16libp2p_gossipsub5types12SubscriptionuEE15into_allocationCsvMXERwWlfq_12chat_example.exit

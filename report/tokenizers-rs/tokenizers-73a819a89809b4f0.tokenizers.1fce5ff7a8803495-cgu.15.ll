@@ -204,12 +204,12 @@ _RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTyI
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtCshgwszQZps6S_11compact_str13CompactStringmEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #16 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtCshgwszQZps6S_11compact_str13CompactStringmEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #11 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 5 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 4 uses
   %.val3.i = load <16 x i8>, ptr %i.a, align 16, !noalias !2779
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.e = load i64, ptr %i.d, align 8, !noundef !4
@@ -217,16 +217,9 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtCshgwszQZps6S_11compact_str13CompactStringmEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %2 = icmp slt i64 %i.c, 576460752303423487
-  tail call void @llvm.assume(i1 %2)
-  %i.g = shl i64 %i.c, 5                          ; 2 uses
-  %3 = add i64 %i.g, 32                           ; 2 uses
-  %4 = add nsw i64 %i.c, 17
-  %i.h = add i64 %4, %3                           ; 3 uses
-  %5 = icmp uge i64 %i.h, %3
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.h, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.g = shl i64 %i.c, 5
+  %2 = mul i64 %i.c, 33
+  %i.h = add i64 %2, 49
   %i.i = sub nuw nsw i64 -32, %i.g
   %i.j = getelementptr inbounds i8, ptr %i.a, i64 %i.i
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtCshgwszQZps6S_11compact_str13CompactStringmEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit
@@ -257,12 +250,12 @@ _RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtCshgwszQZps6S_11compact_
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringmEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #16 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringmEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #11 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 5 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 4 uses
   %.val3.i = load <16 x i8>, ptr %i.a, align 16, !noalias !2782
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.e = load i64, ptr %i.d, align 8, !noundef !4
@@ -270,16 +263,9 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringmEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %2 = icmp slt i64 %i.c, 576460752303423487
-  tail call void @llvm.assume(i1 %2)
-  %i.g = shl i64 %i.c, 5                          ; 2 uses
-  %3 = add i64 %i.g, 32                           ; 2 uses
-  %4 = add nsw i64 %i.c, 17
-  %i.h = add i64 %4, %3                           ; 3 uses
-  %5 = icmp uge i64 %i.h, %3
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.h, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.g = shl i64 %i.c, 5
+  %2 = mul i64 %i.c, 33
+  %i.h = add i64 %2, 49
   %i.i = sub nuw nsw i64 -32, %i.g
   %i.j = getelementptr inbounds i8, ptr %i.a, i64 %i.i
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringmEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit
@@ -310,8 +296,8 @@ _RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6st
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringuEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #16 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringuEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #11 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -323,18 +309,10 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringuEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 24                         ; 2 uses
-  %2 = add i64 %i.g, 24
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.g = mul i64 %i.c, 24
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %4 = add i64 %i.h, 32                           ; 2 uses
-  %i.i = add i64 %i.c, 17
-  %i.j = add i64 %i.i, %4                         ; 3 uses
-  %5 = icmp uge i64 %i.j, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.i = add i64 %i.c, 49
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub i64 -32, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringuEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit
@@ -365,8 +343,8 @@ _RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6st
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTTmmEINtNtCsiTTz6JxaXqu_5ahash8hash_set8AHashSetjEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #16 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTTmmEINtNtCsiTTz6JxaXqu_5ahash8hash_set8AHashSetjEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #11 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -378,18 +356,10 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTTmmEINtNtCsiTTz6JxaXqu_5ahash8hash_set8AHashSetjEEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 72                         ; 2 uses
-  %2 = add i64 %i.g, 72
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.g = mul i64 %i.c, 72
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %4 = add i64 %i.h, 80                           ; 2 uses
-  %i.i = add i64 %i.c, 17
-  %i.j = add i64 %i.i, %4                         ; 3 uses
-  %5 = icmp uge i64 %i.j, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.i = add i64 %i.c, 97
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub i64 -80, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTTmmEINtNtCsiTTz6JxaXqu_5ahash8hash_set8AHashSetjEEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit
@@ -420,8 +390,8 @@ _RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTTmmEINtNtCsiTTz6JxaXqu_5ah
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTTmmElEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #16 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTTmmElEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #11 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -433,18 +403,11 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTTmmElEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 12                         ; 2 uses
-  %2 = add i64 %i.g, 12
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.g = mul i64 %i.c, 12
   %i.h = add i64 %i.g, 24
-  %i.i = and i64 %i.h, -16                        ; 3 uses
+  %i.i = and i64 %i.h, -16                        ; 2 uses
   %i.j = add i64 %i.c, 17
-  %i.k = add i64 %i.j, %i.i                       ; 3 uses
-  %4 = icmp uge i64 %i.k, %i.i
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.k, 9223372036854775793
-  tail call void @llvm.assume(i1 %5)
+  %i.k = add i64 %i.j, %i.i
   %i.l = sub nsw i64 0, %i.i
   %i.m = getelementptr inbounds i8, ptr %i.a, i64 %i.l
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTTmmElEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit
@@ -492,13 +455,8 @@ _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %or.cond.i)
   %i.g = shl i64 %i.c, 3
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %2 = add i64 %i.h, 16                           ; 2 uses
-  %i.i = add nsw i64 %i.c, 17
-  %i.j = add i64 %i.i, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.j, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.i = add nsw i64 %i.c, 33
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub nuw nsw i64 -16, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTcmEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit
@@ -546,13 +504,8 @@ _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %i.g)
   %i.h = shl i64 %i.c, 2
   %i.i = and i64 %i.h, -16                        ; 2 uses
-  %2 = add i64 %i.i, 16                           ; 2 uses
-  %i.j = add nsw i64 %i.c, 17
-  %i.k = add i64 %i.j, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.k, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.k, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.j = add nsw i64 %i.c, 33
+  %i.k = add i64 %i.j, %i.i
   %i.l = sub nuw nsw i64 -16, %i.i
   %i.m = getelementptr inbounds i8, ptr %i.a, i64 %i.l
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTcuEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit
@@ -600,13 +553,8 @@ _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %or.cond.i)
   %i.g = shl i64 %i.c, 3
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %2 = add i64 %i.h, 16                           ; 2 uses
-  %i.i = add nsw i64 %i.c, 17
-  %i.j = add i64 %i.i, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.j, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.i = add nsw i64 %i.c, 33
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub nuw nsw i64 -16, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableThcEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit
@@ -637,8 +585,8 @@ _RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableThcEE15into_allocationCs2Ji
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTjINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEENtNtNtNtBX_4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #16 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTjINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEENtNtNtNtBX_4iter6traits7collect12IntoIterator9into_iterCs2JiOgHzbbc7_10tokenizers(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #11 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -650,18 +598,10 @@ bb.a:
   br i1 %i.f, label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTjINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
-  %i.g = mul i64 %i.c, 24                         ; 2 uses
-  %2 = add i64 %i.g, 24
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.g = mul i64 %i.c, 24
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %4 = add i64 %i.h, 32                           ; 2 uses
-  %i.i = add i64 %i.c, 17
-  %i.j = add i64 %i.i, %4                         ; 3 uses
-  %5 = icmp uge i64 %i.j, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.i = add i64 %i.c, 49
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub i64 -32, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTjINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit
@@ -709,13 +649,8 @@ _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %or.cond.i)
   %i.g = shl i64 %i.c, 3
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %2 = add i64 %i.h, 16                           ; 2 uses
-  %i.i = add nsw i64 %i.c, 17
-  %i.j = add i64 %i.i, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.j, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.i = add nsw i64 %i.c, 33
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub nuw nsw i64 -16, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTjuEE15into_allocationCs2JiOgHzbbc7_10tokenizers.exit

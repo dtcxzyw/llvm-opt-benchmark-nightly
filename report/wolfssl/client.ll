@@ -204,7 +204,7 @@ bb.dm:                                            ; preds = %.thread, %bb.dl, %b
   %.04439922909 = phi i8 [ %.04439922910, %.thread ], [ %.04431733, %bb.dl ], [ %.04431733, %bb.dk ]
   %.044510132906 = phi ptr [ %.044510132907, %.thread ], [ %.04451731, %bb.dl ], [ %.04451731, %bb.dk ] ; 3 uses
   %.044710342903 = phi i32 [ %.044710342904, %.thread ], [ %.04471729, %bb.dl ], [ %.04471729, %bb.dk ]
-  %.044910552900 = phi i32 [ %.044910552901, %.thread ], [ %.04491727, %bb.dl ], [ %.04491727, %bb.dk ]
+  %.044910552900 = phi i32 [ %.044910552901, %.thread ], [ %.04491727, %bb.dl ], [ %.04491727, %bb.dk ] ; 2 uses
   %.045110762897 = phi ptr [ %.045110762898, %.thread ], [ %.04511725, %bb.dl ], [ %.04511725, %bb.dk ] ; 2 uses
   %.045310972894 = phi i32 [ %.045310972895, %.thread ], [ %.04531723, %bb.dl ], [ %.04531723, %bb.dk ]
   %.045511182891 = phi ptr [ %.045511182892, %.thread ], [ %.04551721, %bb.dl ], [ %.04551721, %bb.dk ] ; 2 uses
@@ -228,7 +228,7 @@ bb.dm:                                            ; preds = %.thread, %bb.dl, %b
   %.049914982837 = phi i32 [ %.049914982838, %.thread ], [ %.04991685, %bb.dl ], [ %.04991685, %bb.dk ]
   %.050215192834 = phi i32 [ %.050215192835, %.thread ], [ %.05021683, %bb.dl ], [ %.05021683, %bb.dk ] ; 2 uses
   %.050415402831 = phi i32 [ %.050415402832, %.thread ], [ %.05041681, %bb.dl ], [ %.05041681, %bb.dk ] ; 2 uses
-  %.050615612828 = phi i32 [ %.050615612829, %.thread ], [ %.05061679, %bb.dl ], [ %.05061679, %bb.dk ] ; 2 uses
+  %.050615612828 = phi i32 [ %.050615612829, %.thread ], [ %.05061679, %bb.dl ], [ %.05061679, %bb.dk ] ; 3 uses
   %.050815822825 = phi i32 [ %.050815822826, %.thread ], [ %.05081677, %bb.dl ], [ %.05081677, %bb.dk ] ; 2 uses
   %.051316242822 = phi ptr [ %.051316242823, %.thread ], [ %.05131673, %bb.dl ], [ %.05131673, %bb.dk ]
   %.051516452819 = phi ptr [ %.051516452820, %.thread ], [ %.05151671, %bb.dl ], [ %.05151671, %bb.dk ] ; 9 uses
@@ -364,7 +364,7 @@ bb.en:                                            ; preds = %bb.em
   unreachable
 
 bb.eo:                                            ; preds = %bb.em
-  %.not569 = icmp eq i32 %.050615612828, 0        ; 3 uses
+  %.not569 = icmp eq i32 %.050615612828, 0        ; 2 uses
   %i.fh = icmp eq i32 %.047112862867, 0
   %not..not5692767 = xor i1 %.not569, true
   %i.fi = or i1 %i.fh, %not..not5692767           ; 2 uses
@@ -393,11 +393,11 @@ bb.es:                                            ; preds = %bb.er
   unreachable
 
 .critedge:                                        ; preds = %bb.eo, %bb.er
-  %i.fm = icmp ne i32 %.044910552900, 0           ; 2 uses
+  %i.fm = icmp ne i32 %.044910552900, 0
   %i.fn = load i32, ptr %i.o, align 4
   %i.fo = icmp eq i32 %i.fn, 1
-  %not..not569 = xor i1 %.not569, true
-  %not.or.cond33.not = or i1 %i.fm, %not..not569
+  %9 = or i32 %.044910552900, %.050615612828
+  %not.or.cond33.not = icmp ne i32 %9, 0
   %or.cond36 = select i1 %not.or.cond33.not, i1 true, i1 %i.fo
   %.not573 = icmp eq i32 %.048913922852, 0        ; 2 uses
   %or.cond680 = or i1 %or.cond36, %.not573

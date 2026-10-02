@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %"_ZN108_$LT$alloc..collections..btree..map..Iter$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdeb00d8de84ecd53E.exit.i", %.lr.ph.i.i
   %.sroa.21.1.i = phi i64 [ %.sroa.7.0.i.i.i26.i, %.lr.ph.i.i ], [ %.sroa.7.0.i.i.i.i, %"_ZN108_$LT$alloc..collections..btree..map..Iter$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdeb00d8de84ecd53E.exit.i" ] ; 3 uses
   %.sroa.274.1.in.i = phi i64 [ %.sroa.274.0.copyload.i, %.lr.ph.i.i ], [ %.sroa.274.1.i, %"_ZN108_$LT$alloc..collections..btree..map..Iter$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdeb00d8de84ecd53E.exit.i" ]
-  %.sroa.7.1.i = phi ptr [ %.sroa.07.0.i.i.i27.i, %.lr.ph.i.i ], [ %.sroa.07.0.i.i.i.i, %"_ZN108_$LT$alloc..collections..btree..map..Iter$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdeb00d8de84ecd53E.exit.i" ] ; 5 uses
+  %.sroa.7.1.i = phi ptr [ %.sroa.07.0.i.i.i27.i, %.lr.ph.i.i ], [ %.sroa.07.0.i.i.i.i, %"_ZN108_$LT$alloc..collections..btree..map..Iter$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdeb00d8de84ecd53E.exit.i" ] ; 4 uses
   %i.bi = phi ptr [ %i.bb, %.lr.ph.i.i ], [ %i.dp, %"_ZN108_$LT$alloc..collections..btree..map..Iter$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdeb00d8de84ecd53E.exit.i" ] ; 4 uses
   %.pn33.i = phi ptr [ %i.bc, %.lr.ph.i.i ], [ %i.dq, %"_ZN108_$LT$alloc..collections..btree..map..Iter$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdeb00d8de84ecd53E.exit.i" ] ; 2 uses
   %.sroa.274.1.i = add i64 %.sroa.274.1.in.i, -1  ; 2 uses
@@ -345,7 +345,6 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.ch, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h3bfcb163c77c30beE.exit", label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h997842cfa547a5d6E.exit.i.i"
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h997842cfa547a5d6E.exit.i.i": ; preds = %"_ZN4core4iter8adapters3map8map_fold28_$u7b$$u7b$closure$u7d$$u7d$17h51a34829a8378511E.exit.i.i"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i) ]
   %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.7.1.i, i64 450
   %i.cj = load i16, ptr %i.ci, align 2, !noalias !3493, !noundef !55
   %i.ck = zext i16 %i.cj to i64
@@ -748,7 +747,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cw = phi i64 [ %i.dd, %.noexc8.i.i.i.i ], [ 1, %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h08fc7a0b36046899E.exit.i.i.preheader.i.i.i.i" ] ; 5 uses
   %.sroa.21.1.i.i.i.i = phi i64 [ %.sroa.7.0.i.i.i.i.i.i.i, %.noexc8.i.i.i.i ], [ %.sroa.7.0.i.i.i37.i.i.i.i, %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h08fc7a0b36046899E.exit.i.i.preheader.i.i.i.i" ] ; 3 uses
   %.sroa.275.1.in.i.i.i.i = phi i64 [ %.sroa.275.1.i.i.i.i, %.noexc8.i.i.i.i ], [ %i.l, %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h08fc7a0b36046899E.exit.i.i.preheader.i.i.i.i" ]
-  %.sroa.7.1.i.i.i.i = phi ptr [ %.sroa.07.0.i.i.i.i.i.i.i, %.noexc8.i.i.i.i ], [ %.sroa.07.0.i.i.i38.i.i.i.i, %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h08fc7a0b36046899E.exit.i.i.preheader.i.i.i.i" ] ; 5 uses
+  %.sroa.7.1.i.i.i.i = phi ptr [ %.sroa.07.0.i.i.i.i.i.i.i, %.noexc8.i.i.i.i ], [ %.sroa.07.0.i.i.i38.i.i.i.i, %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h08fc7a0b36046899E.exit.i.i.preheader.i.i.i.i" ] ; 4 uses
   %i.cx = phi ptr [ %i.el, %.noexc8.i.i.i.i ], [ %i.cu, %"_ZN104_$LT$core..iter..adapters..cloned..Cloned$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h08fc7a0b36046899E.exit.i.i.preheader.i.i.i.i" ]
   %.sroa.275.1.i.i.i.i = add i64 %.sroa.275.1.in.i.i.i.i, -1 ; 3 uses
   invoke void @"_ZN68_$LT$rhai..types..dynamic..Dynamic$u20$as$u20$core..clone..Clone$GT$5clone17h1b28c043977b7655E"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.cx)
@@ -776,7 +775,6 @@ bb.s:                                             ; preds = %.noexc7.i.i.i.i
   br i1 %i.de, label %.noexc6.thread.i.i.i.i, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h997842cfa547a5d6E.exit.i.i.i.i.i"
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h997842cfa547a5d6E.exit.i.i.i.i.i": ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h8fdd6f58a4dd472aE.exit.i.i.i.i.i.i"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i.i.i) ]
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.7.1.i.i.i.i, i64 450
   %i.dg = load i16, ptr %i.df, align 2, !noalias !49950, !noundef !55
   %i.dh = zext i16 %i.dg to i64
@@ -1179,7 +1177,7 @@ bb.r:                                             ; preds = %.noexc56.i.i.i.i
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.backedge, %.lr.ph.i.i.i.i.i.i.preheader
   %.sroa.0.0.i.i.i.i.sink.i.i.i.i = phi ptr [ %.sroa.0.0.i.i.i.i.sink.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ], [ %.sroa.0.0.i.i.i.i.sink.i.i.i.i.be, %.lr.ph.i.i.i.i.i.i.backedge ] ; 2 uses
   %i.dq = phi ptr [ %i.by, %.lr.ph.i.i.i.i.i.i.preheader ], [ %i.dw, %.lr.ph.i.i.i.i.i.i.backedge ]
-  %.sroa.7.1.i.i.i.i = phi ptr [ %.sroa.07.0.i.i.i.i.i41.i.i.i.i, %.lr.ph.i.i.i.i.i.i.preheader ], [ %.sroa.07.0.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.backedge ] ; 5 uses
+  %.sroa.7.1.i.i.i.i = phi ptr [ %.sroa.07.0.i.i.i.i.i41.i.i.i.i, %.lr.ph.i.i.i.i.i.i.preheader ], [ %.sroa.07.0.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.backedge ] ; 4 uses
   %.sroa.17.1.i.i.i.i = phi i64 [ %.sroa.7.0.i.i.i.i.i40.i.i.i.i, %.lr.ph.i.i.i.i.i.i.preheader ], [ %.sroa.7.0.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.backedge ] ; 3 uses
   %.sroa.235.1.in.i.i.i.i = phi i64 [ %i.u, %.lr.ph.i.i.i.i.i.i.preheader ], [ %.sroa.235.1.i.i.i.i, %.lr.ph.i.i.i.i.i.i.backedge ]
   %i.dr = phi i64 [ %.sroa.0.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.preheader ], [ %i.dx, %.lr.ph.i.i.i.i.i.i.backedge ] ; 3 uses
@@ -1215,7 +1213,6 @@ bb.s:                                             ; preds = %.noexc9.i.i.i.i, %.
   br i1 %i.eb, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17h87fb45964da21e3aE.exit.i.i.i.i", label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h867c7b97b9d5fddeE.exit.i.i.i.i.i.i.i"
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h867c7b97b9d5fddeE.exit.i.i.i.i.i.i.i": ; preds = %bb.s
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i.i.i) ]
   %i.ec = getelementptr inbounds nuw i8, ptr %.sroa.7.1.i.i.i.i, i64 362
   %i.ed = load i16, ptr %i.ec, align 2, !noalias !53582, !noundef !55
   %i.ee = zext i16 %i.ed to i64
@@ -1618,7 +1615,7 @@ bb.aw:                                            ; preds = %.noexc55.i.i.i.i
 .lr.ph.i.i.i.i.i.i133:                            ; preds = %.lr.ph.i.i.i.i.i.i133.backedge, %.lr.ph.i.i.i.i.i.i133.preheader
   %.sroa.0.0.i.i.i.i.sink.i.i.i.i135 = phi ptr [ %.sroa.0.0.i.i.i.i.sink.i.i.i.i135.ph, %.lr.ph.i.i.i.i.i.i133.preheader ], [ %.sroa.0.0.i.i.i.i.sink.i.i.i.i135.be, %.lr.ph.i.i.i.i.i.i133.backedge ] ; 2 uses
   %i.kb = phi ptr [ %i.ij, %.lr.ph.i.i.i.i.i.i133.preheader ], [ %i.kh, %.lr.ph.i.i.i.i.i.i133.backedge ]
-  %.sroa.7.1.i.i.i.i136 = phi ptr [ %.sroa.07.0.i.i.i.i.i40.i.i.i.i, %.lr.ph.i.i.i.i.i.i133.preheader ], [ %.sroa.07.0.i.i.i.i.i.i.i.i.i153, %.lr.ph.i.i.i.i.i.i133.backedge ] ; 5 uses
+  %.sroa.7.1.i.i.i.i136 = phi ptr [ %.sroa.07.0.i.i.i.i.i40.i.i.i.i, %.lr.ph.i.i.i.i.i.i133.preheader ], [ %.sroa.07.0.i.i.i.i.i.i.i.i.i153, %.lr.ph.i.i.i.i.i.i133.backedge ] ; 4 uses
   %.sroa.17.1.i.i.i.i137 = phi i64 [ %.sroa.7.0.i.i.i.i.i39.i.i.i.i, %.lr.ph.i.i.i.i.i.i133.preheader ], [ %.sroa.7.0.i.i.i.i.i.i.i.i.i152, %.lr.ph.i.i.i.i.i.i133.backedge ] ; 3 uses
   %.sroa.235.1.in.i.i.i.i138 = phi i64 [ %i.gf, %.lr.ph.i.i.i.i.i.i133.preheader ], [ %.sroa.235.1.i.i.i.i140, %.lr.ph.i.i.i.i.i.i133.backedge ]
   %i.kc = phi i64 [ %.sroa.0.0.i.i.i.i.i120, %.lr.ph.i.i.i.i.i.i133.preheader ], [ %i.ki, %.lr.ph.i.i.i.i.i.i133.backedge ] ; 3 uses
@@ -1654,7 +1651,6 @@ bb.ax:                                            ; preds = %.noexc9.i.i.i.i166,
   br i1 %i.km, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hcdc70abdda0ac3f8E.exit.i.i.i.i", label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h88b82f522d9a3a18E.exit.i.i.i.i.i.i.i"
 
 "_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h88b82f522d9a3a18E.exit.i.i.i.i.i.i.i": ; preds = %bb.ax
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i.i.i136) ]
   %i.kn = getelementptr inbounds nuw i8, ptr %.sroa.7.1.i.i.i.i136, i64 362
   %i.ko = load i16, ptr %i.kn, align 2, !noalias !53617, !noundef !55
   %i.kp = zext i16 %i.ko to i64

@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   br i1 %i.m, label %.preheader.i, label %bb.m
 
 .preheader.i:                                     ; preds = %bb.h
-  %i.n = load ptr, ptr %i.j, align 8, !tbaa !22, !nonnull !33, !noundef !33 ; 2 uses
+  %i.n = load ptr, ptr %i.j, align 8, !tbaa !22   ; 2 uses
   br label %_ZNK6icu_7810NFRuleListixEj.exit.thread.i
 
 _ZNK6icu_7810NFRuleListixEj.exit.thread.i:        ; preds = %_ZNK6icu_7810NFRuleListixEj.exit41.i, %.preheader.i
@@ -311,7 +311,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %i.l, label %.preheader, label %bb.k
 
 .preheader:                                       ; preds = %bb.f
-  %i.m = load ptr, ptr %i.i, align 8, !tbaa !22, !nonnull !33, !noundef !33 ; 2 uses
+  %i.m = load ptr, ptr %i.i, align 8, !tbaa !22   ; 2 uses
   br label %_ZNK6icu_7810NFRuleListixEj.exit.thread
 
 _ZNK6icu_7810NFRuleListixEj.exit.thread:          ; preds = %.preheader, %_ZNK6icu_7810NFRuleListixEj.exit41

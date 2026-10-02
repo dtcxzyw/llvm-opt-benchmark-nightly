@@ -205,7 +205,7 @@ _RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7Node
 .lr.ph.i15.i.i.i.i:                               ; preds = %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i, %.lr.ph.i15.i.i.i.i
   %.sroa.0.022.i.i.i.i.i = phi ptr [ %i.dh, %.lr.ph.i15.i.i.i.i ], [ %.sroa.017.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 2 uses
   %.sroa.5.021.i.i.i.i.i = phi i64 [ %i.di, %.lr.ph.i15.i.i.i.i ], [ %.sroa.418.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ]
-  %i.dh = load ptr, ptr %.sroa.0.022.i.i.i.i.i, align 8, !noalias !5755, !nonnull !178, !noundef !178 ; 3 uses
+  %i.dh = load ptr, ptr %.sroa.0.022.i.i.i.i.i, align 8, !noalias !5755, !noundef !178 ; 3 uses
   %i.di = add i64 %.sroa.5.021.i.i.i.i.i, 1       ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i.i.i.i.i, i64 11624
   %i.dk = load i16, ptr %i.dj, align 8, !noalias !5755 ; 2 uses
@@ -221,7 +221,8 @@ _RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7Node
 _RNvMsh_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtB10_7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1y_4LeafENtB1y_4EdgeE7next_kvCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i: ; preds = %._crit_edge.loopexit.i.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i
   %.sroa.7.0.i.i.i.i = phi i64 [ %i.do, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.5.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 3 uses
   %.sroa.531.0.i.i.i.i = phi i64 [ %i.di, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.418.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ]
-  %.sroa.030.0.i.i.i.i = phi ptr [ %i.dh, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.017.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 2 uses
+  %.sroa.030.0.i.i.i.i = phi ptr [ %i.dh, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.017.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.030.0.i.i.i.i) ]
   %i.dp = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i.i.i, i64 8
   %i.dq = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %.sroa.7.0.i.i.i.i ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i.i.i, i64 96
@@ -534,7 +535,7 @@ _RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7Node
   %.sroa.0.022.i.i.i.i.i = phi ptr [ %i.di, %.lr.ph.i15.i.i.i.i ], [ %.sroa.017.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 2 uses
   %.sroa.5.021.i.i.i.i.i = phi i64 [ %i.dj, %.lr.ph.i15.i.i.i.i ], [ %.sroa.418.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ]
   %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i.i.i.i.i, i64 352
-  %i.di = load ptr, ptr %i.dh, align 8, !noalias !5797, !nonnull !178, !noundef !178 ; 3 uses
+  %i.di = load ptr, ptr %i.dh, align 8, !noalias !5797, !noundef !178 ; 3 uses
   %i.dj = add i64 %.sroa.5.021.i.i.i.i.i, 1       ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i.i.i.i.i, i64 448
   %i.dl = load i16, ptr %i.dk, align 8, !noalias !5797 ; 2 uses
@@ -550,7 +551,8 @@ _RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7Node
 _RNvMsh_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtB10_7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1y_4LeafENtB1y_4EdgeE7next_kvCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i: ; preds = %._crit_edge.loopexit.i.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i
   %.sroa.7.0.i.i.i.i = phi i64 [ %i.dp, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.5.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 3 uses
   %.sroa.531.0.i.i.i.i = phi i64 [ %i.dj, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.418.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ]
-  %.sroa.030.0.i.i.i.i = phi ptr [ %i.di, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.017.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 2 uses
+  %.sroa.030.0.i.i.i.i = phi ptr [ %i.di, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.017.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.030.0.i.i.i.i) ]
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i.i.i, i64 360
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.dq, i64 %.sroa.7.0.i.i.i.i ; 2 uses
   %i.ds = getelementptr inbounds nuw [32 x i8], ptr %.sroa.030.0.i.i.i.i, i64 %.sroa.7.0.i.i.i.i ; 2 uses
@@ -862,7 +864,7 @@ _RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7Node
 .lr.ph.i15.i.i.i.i:                               ; preds = %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association13ServerContextNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i, %.lr.ph.i15.i.i.i.i
   %.sroa.0.022.i.i.i.i.i = phi ptr [ %i.dh, %.lr.ph.i15.i.i.i.i ], [ %.sroa.017.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association13ServerContextNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 2 uses
   %.sroa.5.021.i.i.i.i.i = phi i64 [ %i.di, %.lr.ph.i15.i.i.i.i ], [ %.sroa.418.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association13ServerContextNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ]
-  %i.dh = load ptr, ptr %.sroa.0.022.i.i.i.i.i, align 8, !noalias !5839, !nonnull !178, !noundef !178 ; 3 uses
+  %i.dh = load ptr, ptr %.sroa.0.022.i.i.i.i.i, align 8, !noalias !5839, !noundef !178 ; 3 uses
   %i.di = add i64 %.sroa.5.021.i.i.i.i.i, 1       ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i.i.i.i.i, i64 11624
   %i.dk = load i16, ptr %i.dj, align 8, !noalias !5839 ; 2 uses
@@ -878,7 +880,8 @@ _RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7Node
 _RNvMsh_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtB10_7NodeRefNtNtB10_6marker3MutyTNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association13ServerContextNtNtCs5Xr050g3D4S_3std4time7InstantENtB1y_4LeafENtB1y_4EdgeE7next_kvCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i: ; preds = %._crit_edge.loopexit.i.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association13ServerContextNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i
   %.sroa.7.0.i.i.i.i = phi i64 [ %i.do, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.5.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association13ServerContextNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 3 uses
   %.sroa.531.0.i.i.i.i = phi i64 [ %i.di, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.418.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association13ServerContextNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ]
-  %.sroa.030.0.i.i.i.i = phi ptr [ %i.dh, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.017.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association13ServerContextNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 2 uses
+  %.sroa.030.0.i.i.i.i = phi ptr [ %i.dh, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.017.0.copyload.i.i.i.i, %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutyTNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association13ServerContextNtNtCs5Xr050g3D4S_3std4time7InstantENtB1k_14LeafOrInternalE14last_leaf_edgeCsgZAIVb0XKpv_9ssservice.exit.i.i.i.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.030.0.i.i.i.i) ]
   %i.dp = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i.i.i, i64 8
   %i.dq = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %.sroa.7.0.i.i.i.i ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i.i.i, i64 96
@@ -1281,7 +1284,7 @@ bb.o:                                             ; preds = %_RINvNtCsf3Ta7LF998
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216PipeToSendStreamNtNtCsgCecv3eZDcN_5alloc6string6StringEECsgZAIVb0XKpv_9ssservice.exit
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216PipeToSendStreamNtNtCsgCecv3eZDcN_5alloc6string6StringEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %bb.o, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsaI3lGUjttVO_5hyper5proto2h26PeekedNtNtCsknai52m1gBp_5bytes5bytes5BytesEEECsgZAIVb0XKpv_9ssservice.exit.i, %bb.ad
-  %.sroa.022.1 = xor i1 %i.aa, true               ; 2 uses
+  %.sroa.022.1 = xor i1 %i.aa, true
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.ay = icmp ne i64 %i.y, 0
   %i.az = icmp eq ptr %i.z, null
@@ -1419,7 +1422,7 @@ bb.ae:                                            ; preds = %bb.ac
   unreachable
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtCsaI3lGUjttVO_5hyper5error5ErrorEEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216PipeToSendStreamNtNtCsgCecv3eZDcN_5alloc6string6StringEECsgZAIVb0XKpv_9ssservice.exit, %bb.g, %bb.h
-  %.sroa.022.2 = phi i1 [ true, %bb.h ], [ true, %bb.g ], [ %.sroa.022.1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216PipeToSendStreamNtNtCsgCecv3eZDcN_5alloc6string6StringEECsgZAIVb0XKpv_9ssservice.exit ], [ %.sroa.022.1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
+  %.sroa.022.2 = phi i1 [ true, %bb.h ], [ true, %bb.g ], [ %.sroa.022.1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216PipeToSendStreamNtNtCsgCecv3eZDcN_5alloc6string6StringEECsgZAIVb0XKpv_9ssservice.exit ], [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
   %.sroa.023.1 = phi i1 [ false, %bb.h ], [ true, %bb.g ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216PipeToSendStreamNtNtCsgCecv3eZDcN_5alloc6string6StringEECsgZAIVb0XKpv_9ssservice.exit ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
   %.sroa.024.1 = phi i1 [ true, %bb.h ], [ true, %bb.g ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216PipeToSendStreamNtNtCsgCecv3eZDcN_5alloc6string6StringEECsgZAIVb0XKpv_9ssservice.exit ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
   %.sroa.03.0 = phi ptr [ %.sroa.07.0.copyload, %bb.h ], [ null, %bb.g ], [ null, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216PipeToSendStreamNtNtCsgCecv3eZDcN_5alloc6string6StringEECsgZAIVb0XKpv_9ssservice.exit ], [ null, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
@@ -1720,7 +1723,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216Pi
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.ad, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsaI3lGUjttVO_5hyper5proto2h216PipeToSendStreamNtNtNtBI_4body8incoming8IncomingEECsgZAIVb0XKpv_9ssservice.exit
-  %.sroa.022.1 = xor i1 %i.aa, true               ; 2 uses
+  %.sroa.022.1 = xor i1 %i.aa, true
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.aw = icmp ne i64 %i.y, 0
   %i.ax = icmp eq ptr %i.z, null
@@ -1858,7 +1861,7 @@ bb.ae:                                            ; preds = %bb.ac
   unreachable
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtCsaI3lGUjttVO_5hyper5error5ErrorEEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i, %bb.o, %bb.g, %bb.h
-  %.sroa.022.2 = phi i1 [ true, %bb.h ], [ true, %bb.g ], [ %.sroa.022.1, %bb.o ], [ %.sroa.022.1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
+  %.sroa.022.2 = phi i1 [ true, %bb.h ], [ true, %bb.g ], [ %.sroa.022.1, %bb.o ], [ true, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
   %.sroa.023.1 = phi i1 [ false, %bb.h ], [ true, %bb.g ], [ false, %bb.o ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
   %.sroa.024.1 = phi i1 [ true, %bb.h ], [ true, %bb.g ], [ false, %bb.o ], [ false, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
   %.sroa.03.0 = phi ptr [ %.sroa.07.0.copyload, %bb.h ], [ null, %bb.g ], [ null, %bb.o ], [ null, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaI3lGUjttVO_5hyper5error5ErrorECsgZAIVb0XKpv_9ssservice.exit.i.i ]
@@ -2261,16 +2264,11 @@ bb.c:                                             ; preds = %bb.v, %.lr.ph.i.i
   br i1 %i.kp, label %_RNvXsE_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMaptNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateENtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12IntoIterator9into_iterCsgZAIVb0XKpv_9ssservice.exit.i.i, label %_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i
 
 _RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i: ; preds = %._crit_edge.i.i
-  %i.kq = mul i64 %.sroa.480.0.copyload.pre.i.i, 80 ; 2 uses
-  %2 = add i64 %i.kq, 80                          ; 2 uses
-  %3 = add i64 %.sroa.480.0.copyload.pre.i.i, 17
-  %i.kr = add i64 %3, %2                          ; 3 uses
-  %4 = icmp uge i64 %i.kr, %2
-  call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.kr, 9223372036854775793
-  call void @llvm.assume(i1 %5)
-  %6 = sub i64 -80, %i.kq
-  %i.ks = getelementptr inbounds i8, ptr %.sroa.079.0.copyload.pre.i.i, i64 %6
+  %i.kq = mul i64 %.sroa.480.0.copyload.pre.i.i, -80
+  %2 = mul i64 %.sroa.480.0.copyload.pre.i.i, 81
+  %i.kr = add i64 %2, 97
+  %3 = getelementptr i8, ptr %.sroa.079.0.copyload.pre.i.i, i64 %i.kq
+  %i.ks = getelementptr i8, ptr %3, i64 -80
   br label %_RNvXsE_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMaptNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateENtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12IntoIterator9into_iterCsgZAIVb0XKpv_9ssservice.exit.i.i
 
 _RNvXsE_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMaptNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateENtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12IntoIterator9into_iterCsgZAIVb0XKpv_9ssservice.exit.i.i: ; preds = %_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i, %._crit_edge.i.i
@@ -2673,16 +2671,11 @@ bb.c:                                             ; preds = %bb.v, %.lr.ph.i.i
   br i1 %i.kc, label %_RNvXsE_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMaptNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateENtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12IntoIterator9into_iterCsgZAIVb0XKpv_9ssservice.exit.i.i, label %_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i
 
 _RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i: ; preds = %._crit_edge.i.i
-  %i.kd = mul i64 %.sroa.486.0.copyload.pre.i.i, 80 ; 2 uses
-  %2 = add i64 %i.kd, 80                          ; 2 uses
-  %3 = add i64 %.sroa.486.0.copyload.pre.i.i, 17
-  %i.ke = add i64 %3, %2                          ; 3 uses
-  %4 = icmp uge i64 %i.ke, %2
-  call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.ke, 9223372036854775793
-  call void @llvm.assume(i1 %5)
-  %6 = sub i64 -80, %i.kd
-  %i.kf = getelementptr inbounds i8, ptr %.sroa.085.0.copyload.pre.i.i, i64 %6
+  %i.kd = mul i64 %.sroa.486.0.copyload.pre.i.i, -80
+  %2 = mul i64 %.sroa.486.0.copyload.pre.i.i, 81
+  %i.ke = add i64 %2, 97
+  %3 = getelementptr i8, ptr %.sroa.085.0.copyload.pre.i.i, i64 %i.kd
+  %i.kf = getelementptr i8, ptr %3, i64 -80
   br label %_RNvXsE_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMaptNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateENtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12IntoIterator9into_iterCsgZAIVb0XKpv_9ssservice.exit.i.i
 
 _RNvXsE_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMaptNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateENtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12IntoIterator9into_iterCsgZAIVb0XKpv_9ssservice.exit.i.i: ; preds = %_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i, %._crit_edge.i.i

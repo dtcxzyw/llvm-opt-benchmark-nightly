@@ -205,10 +205,8 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit
 
 bb.m:                                             ; preds = %bb.k
-  %i.ef = add nsw i32 %i.ae, 1                    ; 2 uses
+  %i.ef = add nsw i32 %i.ae, 1
   %i.eg = sext i32 %i.ef to i64                   ; 3 uses
-  %.not173 = icmp ne i32 %i.ef, 0
-  tail call void @llvm.assume(i1 %.not173)
   %i.eh = icmp slt i32 %i.ae, -1
   br i1 %i.eh, label %.noexc143, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i
 

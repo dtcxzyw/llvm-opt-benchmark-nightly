@@ -202,7 +202,7 @@ _ZNK5Ipopt9IpoptData4currEv.exit:                 ; preds = %bb.bw, %bb.bv
 _ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i: ; preds = %_ZNK5Ipopt9IpoptData4currEv.exit
   %i.nk = getelementptr inbounds nuw i8, ptr %i.nd, i64 232
   %i.nl = load ptr, ptr %i.nk, align 8, !tbaa !320, !noalias !314
-  %i.nm = load ptr, ptr %i.nl, align 8, !tbaa !322, !noalias !314, !nonnull !72, !noundef !72
+  %i.nm = load ptr, ptr %i.nl, align 8, !tbaa !322, !noalias !314
   br label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i
 
 _ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i: ; preds = %_ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i, %_ZNK5Ipopt9IpoptData4currEv.exit
@@ -306,7 +306,7 @@ _ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i546: ; preds = %_ZNK5Ipopt9Ipop
   %i.oz = getelementptr inbounds nuw i8, ptr %i.or, i64 232
   %i.pa = load ptr, ptr %i.oz, align 8, !tbaa !320, !noalias !325
   %i.pb = getelementptr inbounds nuw i8, ptr %i.pa, i64 16
-  %i.pc = load ptr, ptr %i.pb, align 8, !tbaa !322, !noalias !325, !nonnull !72, !noundef !72
+  %i.pc = load ptr, ptr %i.pb, align 8, !tbaa !322, !noalias !325
   br label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i543
 
 _ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i543: ; preds = %_ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i546, %_ZNK5Ipopt9IpoptData4currEv.exit541
@@ -410,7 +410,7 @@ _ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i572: ; preds = %_ZNK5Ipopt9Ipop
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qh, i64 232
   %i.qq = load ptr, ptr %i.qp, align 8, !tbaa !320, !noalias !328
   %i.qr = getelementptr inbounds nuw i8, ptr %i.qq, i64 24
-  %i.qs = load ptr, ptr %i.qr, align 8, !tbaa !322, !noalias !328, !nonnull !72, !noundef !72
+  %i.qs = load ptr, ptr %i.qr, align 8, !tbaa !322, !noalias !328
   br label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i569
 
 _ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i569: ; preds = %_ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i572, %_ZNK5Ipopt9IpoptData4currEv.exit567
@@ -514,7 +514,7 @@ _ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i598: ; preds = %_ZNK5Ipopt9Ipop
   %i.sf = getelementptr inbounds nuw i8, ptr %i.rx, i64 232
   %i.sg = load ptr, ptr %i.sf, align 8, !tbaa !320, !noalias !331
   %i.sh = getelementptr inbounds nuw i8, ptr %i.sg, i64 32
-  %i.si = load ptr, ptr %i.sh, align 8, !tbaa !322, !noalias !331, !nonnull !72, !noundef !72
+  %i.si = load ptr, ptr %i.sh, align 8, !tbaa !322, !noalias !331
   br label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i595
 
 _ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i595: ; preds = %_ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i598, %_ZNK5Ipopt9IpoptData4currEv.exit593
@@ -618,7 +618,7 @@ _ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i624: ; preds = %_ZNK5Ipopt9Ipop
   %i.tv = getelementptr inbounds nuw i8, ptr %i.tn, i64 232
   %i.tw = load ptr, ptr %i.tv, align 8, !tbaa !320, !noalias !334
   %i.tx = getelementptr inbounds nuw i8, ptr %i.tw, i64 40
-  %i.ty = load ptr, ptr %i.tx, align 8, !tbaa !322, !noalias !334, !nonnull !72, !noundef !72
+  %i.ty = load ptr, ptr %i.tx, align 8, !tbaa !322, !noalias !334
   br label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i621
 
 _ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i621: ; preds = %_ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i624, %_ZNK5Ipopt9IpoptData4currEv.exit619
@@ -722,7 +722,7 @@ _ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i650: ; preds = %_ZNK5Ipopt9Ipop
   %i.vl = getelementptr inbounds nuw i8, ptr %i.vd, i64 232
   %i.vm = load ptr, ptr %i.vl, align 8, !tbaa !320, !noalias !337
   %i.vn = getelementptr inbounds nuw i8, ptr %i.vm, i64 48
-  %i.vo = load ptr, ptr %i.vn, align 8, !tbaa !322, !noalias !337, !nonnull !72, !noundef !72
+  %i.vo = load ptr, ptr %i.vn, align 8, !tbaa !322, !noalias !337
   br label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i647
 
 _ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i647: ; preds = %_ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i650, %_ZNK5Ipopt9IpoptData4currEv.exit645
@@ -826,7 +826,7 @@ _ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i676: ; preds = %_ZNK5Ipopt9Ipop
   %i.xb = getelementptr inbounds nuw i8, ptr %i.wt, i64 232
   %i.xc = load ptr, ptr %i.xb, align 8, !tbaa !320, !noalias !340
   %i.xd = getelementptr inbounds nuw i8, ptr %i.xc, i64 56
-  %i.xe = load ptr, ptr %i.xd, align 8, !tbaa !322, !noalias !340, !nonnull !72, !noundef !72
+  %i.xe = load ptr, ptr %i.xd, align 8, !tbaa !322, !noalias !340
   br label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i673
 
 _ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i673: ; preds = %_ZNK5Ipopt14CompoundVector10IsCompNullEi.exit.i.i676, %_ZNK5Ipopt9IpoptData4currEv.exit671

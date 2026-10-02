@@ -204,11 +204,10 @@ bb.a:
   %2 = alloca %"class.std::shared_ptr", align 16  ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #17
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.val = load ptr, ptr %i.a, align 8, !tbaa !75, !noalias !181, !nonnull !81, !noundef !81
+  %.val = load ptr, ptr %i.a, align 8, !tbaa !75, !noalias !181
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.val2 = load ptr, ptr %i.b, align 8            ; 4 uses
-  %i.c = tail call ptr @__dynamic_cast(ptr nonnull %.val, ptr nonnull @_ZTIN16OpenColorIO_v2_56OpDataE, ptr nonnull @_ZTIN16OpenColorIO_v2_512MatrixOpDataE, i64 0) #17, !noalias !182 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
+  %i.c = tail call ptr @__dynamic_cast(ptr nonnull %.val, ptr nonnull @_ZTIN16OpenColorIO_v2_56OpDataE, ptr nonnull @_ZTIN16OpenColorIO_v2_512MatrixOpDataE, i64 0) #17, !noalias !182 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %.val2, null
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt12__shared_ptrIN16OpenColorIO_v2_512MatrixOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.b
 

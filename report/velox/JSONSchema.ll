@@ -205,9 +205,7 @@ _ZNKSt6vectorIN5folly10jsonschema12_GLOBAL__N_111SchemaErrorESaIS3_EE12_M_check_
   %i.aa = add nsw i64 %.sroa.speculated.i.i.i, %i.y ; 2 uses
   %i.ab = icmp ult i64 %i.aa, %i.y
   %i.ac = call i64 @llvm.umin.i64(i64 %i.aa, i64 576460752303423487)
-  %i.ad = select i1 %i.ab, i64 576460752303423487, i64 %i.ac ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.ad, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.ad = select i1 %i.ab, i64 576460752303423487, i64 %i.ac ; 2 uses
   %i.ae = shl nuw nsw i64 %i.ad, 4
   %i.af = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ae) #48
           to label %.noexc28 unwind label %.loopexit ; 5 uses

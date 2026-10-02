@@ -202,7 +202,7 @@ _RNvMNtCsl8OoimOLbh_6qdrant9consensusNtB2_9Consensus13process_ready.exit.i: ; pr
   %.sroa.21.2.i = phi i1 [ false, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit115.i.i ], [ %i.aei, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit125.i.i ]
   %.sroa.18.2.i = phi i8 [ -1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit115.i.i ], [ %i.adk, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit125.i.i ]
   %.sroa.11.2.i = phi ptr [ %.sroa.11.0.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit115.i.i ], [ %.sroa.11.0.copyload.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit125.i.i ] ; 4 uses
-  %.sroa.0.2.i = phi i64 [ %.sroa.0.0.i46, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit115.i.i ], [ %.sroa.0.0.copyload.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit125.i.i ] ; 4 uses
+  %.sroa.0.2.i = phi i64 [ %.sroa.0.0.i46, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit115.i.i ], [ %.sroa.0.0.copyload.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_manager17ConsensusStateRefECsl8OoimOLbh_6qdrant.exit125.i.i ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !1647
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.sroa.8.i.i)
   %i.afj = icmp eq i64 %.sroa.0.2.i, -1
@@ -235,7 +235,7 @@ bb.kq:                                            ; preds = %bb.kp
 
 bb.kr:                                            ; preds = %bb.kq
   store ptr %i.afk, ptr %i.r, align 8, !noalias !1703
-  %i.afo = trunc nuw i64 %.sroa.0.2.i to i1       ; 2 uses
+  %i.afo = trunc nuw i64 %.sroa.0.2.i to i1
   br i1 %i.afo, label %bb.kv, label %bb.lb
 
 bb.ks:                                            ; preds = %bb.kq
@@ -334,25 +334,25 @@ _RNvMNtCsl8OoimOLbh_6qdrant9consensusNtB2_9Consensus19process_light_ready.exit.t
   br label %.loopexit
 
 bb.ld:                                            ; preds = %bb.lb
-  %.sroa.0.0.i.i48 = xor i1 %i.afo, true
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !1703
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !1703
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.430.0..sroa_idx.i, i64 24, i1 false), !noalias !1712
   store i64 0, ptr %.sroa.430.0..sroa_idx.i, align 8, !alias.scope !1702, !noalias !1712
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.416.0..sroa_idx.i.i, align 8, !alias.scope !1702, !noalias !1712
   store i64 0, ptr %.sroa.517.0..sroa_idx.i.i, align 8, !alias.scope !1702, !noalias !1712
-  %i.agd = load i64, ptr %i.py, align 8, !noalias !1703, !noundef !7 ; 3 uses
+  %i.agd = load i64, ptr %i.py, align 8, !noalias !1703, !noundef !7 ; 4 uses
   %i.age = icmp ult i64 %i.agd, 128102389400760776
   call void @llvm.assume(i1 %i.age)
-  %2 = icmp eq i64 %i.agd, 0                      ; 2 uses
-  %3 = and i1 %2, %.sroa.0.0.i.i48                ; 2 uses
+  %2 = or i64 %i.agd, %.sroa.0.2.i
+  %3 = icmp eq i64 %2, 0                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !1703
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !1703
   %i.agf = load ptr, ptr %i.pz, align 8, !noalias !1703, !nonnull !7, !noundef !7 ; 2 uses
   %.val.i44.i = load ptr, ptr %i.r, align 8, !noalias !1703 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1719)
   call void @llvm.experimental.noalias.scope.decl(metadata !1720)
-  br i1 %2, label %bb.lf, label %bb.le
+  %.not.i.i.i48 = icmp eq i64 %i.agd, 0
+  br i1 %.not.i.i.i48, label %bb.lf, label %bb.le
 
 bb.le:                                            ; preds = %bb.ld
   %i.agg = getelementptr [72 x i8], ptr %i.agf, i64 %i.agd

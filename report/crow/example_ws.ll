@@ -205,14 +205,10 @@ _ZNSt6vectorImSaImEEaSEOS1_.exit:                 ; preds = %bb.a
   %i.l = load ptr, ptr %spec.store.select27.sroa.sel500.v.sroa.sel.v.sroa.sel, align 8, !tbaa !1407 ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %spec.store.select27, i8 0, i64 24, i1 false)
   %i.m = load i64, ptr %3, align 8, !tbaa !526
-  %i.n = load ptr, ptr %spec.store.select27.sroa.sel.v.sroa.sel.v.sroa.sel, align 8, !tbaa !1471 ; 5 uses
-  %i.o = ptrtoint ptr %i.n to i64                 ; 3 uses
+  %i.n = load ptr, ptr %spec.store.select27.sroa.sel.v.sroa.sel.v.sroa.sel, align 8, !tbaa !1471 ; 7 uses
+  %i.o = ptrtoint ptr %i.n to i64                 ; 7 uses
   %.not.i.i.i.i = icmp eq ptr %i.n, null
-  br i1 %.not.i.i.i.i, label %.thread, label %bb.b
-
-.thread:                                          ; preds = %_ZNSt6vectorImSaImEEaSEOS1_.exit
-  %20 = getelementptr inbounds nuw i8, ptr null, i64 %i.o
-  br label %_ZNSt6vectorImSaImEEC2ERKS1_.exit
+  br i1 %.not.i.i.i.i, label %_ZNSt6vectorImSaImEEC2ERKS1_.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt6vectorImSaImEEaSEOS1_.exit
   %i.p = icmp ugt ptr %i.n, inttoptr (i64 9223372036854775800 to ptr)
@@ -227,19 +223,10 @@ bb.b:                                             ; preds = %_ZNSt6vectorImSaImE
 
 _ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.b
   %i.q = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #43
-          to label %.noexc240 unwind label %bb.o  ; 2 uses
+          to label %_ZNSt6vectorImSaImEEC2ERKS1_.exit unwind label %bb.o
 
-.noexc240:                                        ; preds = %_ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i
-  %21 = icmp ule ptr %i.n, inttoptr (i64 8 to ptr)
-  tail call void @llvm.assume(i1 %21)
-  %22 = getelementptr inbounds i8, ptr %i.q, i64 %i.o
-  %23 = icmp ne ptr %i.n, inttoptr (i64 8 to ptr)
-  tail call void @llvm.assume(i1 %23)
-  br label %_ZNSt6vectorImSaImEEC2ERKS1_.exit
-
-_ZNSt6vectorImSaImEEC2ERKS1_.exit:                ; preds = %.noexc240, %.thread
-  %24 = phi ptr [ %20, %.thread ], [ %22, %.noexc240 ] ; 3 uses
-  %i.r = phi ptr [ null, %.thread ], [ %i.q, %.noexc240 ] ; 9 uses
+_ZNSt6vectorImSaImEEC2ERKS1_.exit:                ; preds = %_ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i, %_ZNSt6vectorImSaImEEaSEOS1_.exit
+  %i.r = phi ptr [ null, %_ZNSt6vectorImSaImEEaSEOS1_.exit ], [ %i.q, %_ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i ] ; 6 uses
   invoke void @_ZN4crow14routing_paramsC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(96) %10, ptr noundef nonnull align 8 dereferenceable(96) %spec.store.select)
           to label %bb.c unwind label %bb.p
 
@@ -248,23 +235,20 @@ bb.c:                                             ; preds = %_ZNSt6vectorImSaImE
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.m, ptr %i.s, align 8, !tbaa !1465
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %25 = ptrtoint ptr %24 to i64
-  %26 = ptrtoint ptr %i.r to i64
-  %27 = sub i64 %25, %26                          ; 8 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.t, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i.i241 = icmp eq ptr %24, %i.r
+  %.not.i.i.i.i.i241 = icmp eq ptr %i.n, null
   br i1 %.not.i.i.i.i.i241, label %.thread658, label %bb.d
 
 .thread658:                                       ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.v = getelementptr inbounds i8, ptr null, i64 %27 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr null, i64 %i.o ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, i8 0, i64 16, i1 false)
   store ptr %i.v, ptr %i.w, align 8, !tbaa !1407
   br label %_ZNSt6vectorImSaImEEC2ERKS1_.exit.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.x = icmp ugt i64 %27, 9223372036854775800
+  %i.x = icmp ugt ptr %i.n, inttoptr (i64 9223372036854775800 to ptr)
   br i1 %i.x, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i.i, !prof !316
 
 .noexc.i.i.i:                                     ; preds = %bb.d
@@ -275,25 +259,25 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.d
-  %i.y = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %27) #43
+  %i.y = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #43
           to label %.noexc244 unwind label %bb.q  ; 5 uses
 
 .noexc244:                                        ; preds = %_ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i.i
   store ptr %i.y, ptr %i.t, align 8, !tbaa !1406
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   store ptr %i.y, ptr %i.z, align 8, !tbaa !1471
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 %27 ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.o ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   store ptr %i.aa, ptr %i.ab, align 8, !tbaa !1407
-  %i.ac = icmp samesign ugt i64 %27, 8
+  %i.ac = icmp ugt ptr %i.n, inttoptr (i64 8 to ptr)
   br i1 %i.ac, label %bb.e, label %bb.f, !prof !1133
 
 bb.e:                                             ; preds = %.noexc244
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.y, ptr align 8 %i.r, i64 %27, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.y, ptr align 8 %i.r, i64 %i.o, i1 false)
   br label %_ZNSt6vectorImSaImEEC2ERKS1_.exit.i
 
 bb.f:                                             ; preds = %.noexc244
-  %i.ad = icmp eq i64 %27, 8
+  %i.ad = icmp eq ptr %i.n, inttoptr (i64 8 to ptr)
   br i1 %i.ad, label %bb.g, label %_ZNSt6vectorImSaImEEC2ERKS1_.exit.i
 
 bb.g:                                             ; preds = %bb.f
@@ -418,7 +402,7 @@ _ZN4crow14routing_paramsD2Ev.exit:                ; preds = %_ZNSt6vectorImSaImE
   br i1 %.not.i.i.i, label %_ZNSt6vectorImSaImEED2Ev.exit, label %bb.n
 
 bb.n:                                             ; preds = %_ZN4crow14routing_paramsD2Ev.exit
-  call void @_ZdlPvm(ptr noundef nonnull %i.r, i64 noundef %27) #41
+  call void @_ZdlPvm(ptr noundef nonnull %i.r, i64 noundef %i.o) #41
   br label %_ZNSt6vectorImSaImEED2Ev.exit
 
 bb.o:                                             ; preds = %_ZNSt15__new_allocatorImE8allocateEmPKv.exit.i.i.i.i, %.noexc.i.i
@@ -447,10 +431,7 @@ bb.r:                                             ; preds = %.body, %bb.p
   br i1 %.not.i.i.i247, label %_ZNSt6vectorImSaImEED2Ev.exit248, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %28 = ptrtoint ptr %24 to i64
-  %29 = ptrtoint ptr %i.r to i64
-  %30 = sub i64 %28, %29
-  call void @_ZdlPvm(ptr noundef nonnull %i.r, i64 noundef %30) #41
+  call void @_ZdlPvm(ptr noundef nonnull %i.r, i64 noundef %i.o) #41
   br label %_ZNSt6vectorImSaImEED2Ev.exit248
 
 bb.t:                                             ; preds = %bb.a

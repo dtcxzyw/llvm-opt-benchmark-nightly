@@ -205,11 +205,8 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define noundef zeroext i1 @_RNvMNtCsbzNSmZPCnTx_10tgrep_core9gitignoreNtB2_13IgnoreMatcher14is_whitelisted(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(424) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i1 noundef zeroext %3) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc noundef i8 @_RNvMNtCsbzNSmZPCnTx_10tgrep_core9gitignoreNtB2_13IgnoreMatcher17standard_decision(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(424) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i1 noundef zeroext %3, i1 noundef zeroext false) ; 2 uses
-  %.not = icmp ne i8 %i.a, 2
-  %4 = trunc nuw i8 %i.a to i1
-  %5 = xor i1 %4, true
-  %.sroa.0.0 = select i1 %.not, i1 %5, i1 false
+  %i.a = tail call fastcc noundef i8 @_RNvMNtCsbzNSmZPCnTx_10tgrep_core9gitignoreNtB2_13IgnoreMatcher17standard_decision(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(424) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i1 noundef zeroext %3, i1 noundef zeroext false)
+  %.sroa.0.0 = icmp eq i8 %i.a, 0
   ret i1 %.sroa.0.0
 }
 

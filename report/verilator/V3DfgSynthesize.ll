@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.b, align 8, !tbaa !542
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 72
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !388, !nonnull !100, !align !235
-  %i.i = load i8, ptr %i.h, align 8, !tbaa !434
-  %i.j = icmp eq i8 %i.i, 0                       ; 5 uses
+  %i.i = load i8, ptr %i.h, align 8, !tbaa !434   ; 2 uses
+  %i.j = icmp eq i8 %i.i, 0                       ; 4 uses
   %i.k = ptrtoint ptr %i.d to i64
   %i.l = ptrtoint ptr %i.b to i64
   %i.m = sub i64 %i.k, %i.l
@@ -253,11 +253,10 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge.loopexit:                             ; preds = %bb.by
   %i.av = add i64 %.1126, 1
-  %18 = xor i1 %.2129, true
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
-  %.0127.lcssa = phi i1 [ true, %bb.b ], [ %18, %._crit_edge.loopexit ] ; 2 uses
+  %.0127.lcssa = phi i8 [ 0, %bb.b ], [ %.2129, %._crit_edge.loopexit ] ; 2 uses
   %.0125.lcssa = phi i64 [ 1, %bb.b ], [ %i.av, %._crit_edge.loopexit ] ; 4 uses
   %.lcssa478 = phi ptr [ %i.d, %bb.b ], [ %i.ot, %._crit_edge.loopexit ]
   %.lcssa447 = phi ptr [ %i.b, %bb.b ], [ %i.ou, %._crit_edge.loopexit ]
@@ -284,14 +283,17 @@ _ZSt8_DestroyIPN18AstToDfgSynthesize6DriverES1_EvT_S3_RSaIT0_E.exit.i.i: ; preds
   br label %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE6resizeEm.exit
 
 _ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE6resizeEm.exit: ; preds = %bb.c, %bb.d, %bb.e, %_ZSt8_DestroyIPN18AstToDfgSynthesize6DriverES1_EvT_S3_RSaIT0_E.exit.i.i
-  %or.cond3 = and i1 %i.j, %.0127.lcssa
+  %18 = trunc nuw i8 %.0127.lcssa to i1
+  %.not = xor i1 %18, true
+  %19 = or i8 %.0127.lcssa, %i.i
+  %or.cond3 = icmp eq i8 %19, 0
   br i1 %or.cond3, label %bb.cp, label %bb.cq
 
 bb.f:                                             ; preds = %.lr.ph, %bb.by
   %i.ba = phi ptr [ %i.b, %.lr.ph ], [ %i.ou, %bb.by ] ; 2 uses
   %.0121700 = phi i64 [ 1, %.lr.ph ], [ %.3124, %bb.by ] ; 4 uses
   %.0125698 = phi i64 [ 0, %.lr.ph ], [ %.1126, %bb.by ] ; 11 uses
-  %.0127697 = phi i1 [ false, %.lr.ph ], [ %.2129, %bb.by ] ; 4 uses
+  %.0127697 = phi i8 [ 0, %.lr.ph ], [ %.2129, %bb.by ] ; 4 uses
   %.not131 = icmp ult i64 %.0125698, %.0121700
   br i1 %.not131, label %bb.h, label %bb.g, !prof !149
 
@@ -694,7 +696,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit282: ; preds = %_Z
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.s, %bb.t, %bb.w, %bb.ab, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit282, %.split, %bb.h, %bb.q, %bb.j
-  %.2129 = phi i1 [ %.0127697, %bb.q ], [ %.0127697, %bb.h ], [ %.0127697, %bb.j ], [ %.0127697, %bb.s ], [ true, %bb.t ], [ true, %bb.w ], [ true, %bb.ab ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit282 ], [ true, %.split ] ; 2 uses
+  %.2129 = phi i8 [ %.0127697, %bb.q ], [ %.0127697, %bb.h ], [ %.0127697, %bb.j ], [ %.0127697, %bb.s ], [ 1, %bb.t ], [ 1, %bb.w ], [ 1, %bb.ab ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit282 ], [ 1, %.split ] ; 2 uses
   %.1126 = phi i64 [ %i.co, %bb.q ], [ %.0125698, %bb.h ], [ %.0125698, %bb.j ], [ %.0125698, %bb.s ], [ %.0125698, %bb.t ], [ %.0125698, %bb.w ], [ %.0125698, %bb.ab ], [ %.0125698, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit282 ], [ %.0125698, %.split ] ; 2 uses
   %.pn347 = phi i64 [ %i.cq, %bb.q ], [ 1, %bb.h ], [ 1, %bb.j ], [ 1, %bb.s ], [ 1, %bb.t ], [ 1, %bb.w ], [ 1, %bb.ab ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit282 ], [ 1, %.split ]
   %.3124 = add i64 %.pn347, %.0121700             ; 2 uses
@@ -1005,7 +1007,7 @@ bb.cp:                                            ; preds = %_ZNSt6vectorIN18Ast
   br label %bb.cq
 
 bb.cq:                                            ; preds = %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE6resizeEm.exit, %bb.cp, %bb.a
-  %.0130 = phi i1 [ true, %bb.a ], [ true, %bb.cp ], [ %.0127.lcssa, %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE6resizeEm.exit ]
+  %.0130 = phi i1 [ true, %bb.a ], [ true, %bb.cp ], [ %.not, %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE6resizeEm.exit ]
   ret i1 %.0130
 }
 

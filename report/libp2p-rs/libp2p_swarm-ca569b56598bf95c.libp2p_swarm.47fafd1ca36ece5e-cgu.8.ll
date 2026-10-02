@@ -202,10 +202,10 @@ bb.ah:                                            ; preds = %.lr.ph.i20.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !127
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !127
   store i8 8, ptr %i.o, align 8
-  %.sroa.01.0.copyload.i = load i128, ptr %.sroa.424.0..sroa_idx.i, align 1 ; 9 uses
-  %i.fl = trunc i128 %.sroa.01.0.copyload.i to i16 ; 4 uses
-  %i.fm = lshr i128 %.sroa.01.0.copyload.i, 16    ; 3 uses
-  %i.fn = trunc i128 %i.fm to i16                 ; 6 uses
+  %.sroa.01.0.copyload.i = load i128, ptr %.sroa.424.0..sroa_idx.i, align 1 ; 8 uses
+  %i.fl = trunc i128 %.sroa.01.0.copyload.i to i16 ; 5 uses
+  %i.fm = lshr i128 %.sroa.01.0.copyload.i, 16    ; 2 uses
+  %i.fn = trunc i128 %i.fm to i16                 ; 7 uses
   switch i128 %.sroa.01.0.copyload.i, label %bb.ai [
     i128 0, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsbli3iz7XG76_9multiaddr8protocol8ProtocolEECs6b9j1MKPRPC_12libp2p_swarm.exit37.i
     i128 1329227995784915872903807060280344576, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsbli3iz7XG76_9multiaddr8protocol8ProtocolEECs6b9j1MKPRPC_12libp2p_swarm.exit37.i
@@ -221,9 +221,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.fo = call i16 @llvm.bswap.i16(i16 %i.fl)     ; 2 uses
   %i.fp = call i16 @llvm.bswap.i16(i16 %i.fn)     ; 2 uses
   %i.fq = icmp ne i16 %i.fn, %.sroa.3.0.extract.trunc.i.i ; 2 uses
-  %2 = or i128 %i.fm, %.sroa.01.0.copyload.i
-  %3 = and i128 %2, 65535
-  %i.fr = icmp ne i128 %3, 0
+  %2 = or i16 %i.fn, %i.fl
+  %i.fr = icmp ne i16 %2, 0
   %i.fs = icmp ne i16 %.sroa.4.0.extract.trunc.i.i, %.sroa.5.0.extract.trunc.i.i
   %i.ft = or i1 %i.fs, %i.fr
   %or.cond2.i33.i = or i1 %i.fq, %i.ft

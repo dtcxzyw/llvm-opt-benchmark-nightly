@@ -205,9 +205,7 @@ _ZNKSt6vectorIZNK6google8protobuf10Reflection21MaybePoisonAfterClearERNS1_7Messa
   %i.gy = add nsw i64 %.sroa.speculated.i.i.i93, %i.gw ; 2 uses
   %i.gz = icmp ult i64 %i.gy, %i.gw
   %i.ha = call i64 @llvm.umin.i64(i64 %i.gy, i64 576460752303423487)
-  %i.hb = select i1 %i.gz, i64 576460752303423487, i64 %i.ha ; 3 uses
-  %.not.i.i.i94 = icmp ne i64 %i.hb, 0
-  call void @llvm.assume(i1 %.not.i.i.i94)
+  %i.hb = select i1 %i.gz, i64 576460752303423487, i64 %i.ha ; 2 uses
   %i.hc = shl nuw nsw i64 %i.hb, 4                ; 2 uses
   %i.hd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hc) #38
           to label %.noexc105 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 6 uses
@@ -585,9 +583,7 @@ _ZNKSt6vectorIZNK6google8protobuf10Reflection21MaybePoisonAfterClearERNS1_7Messa
   %i.mq = add nsw i64 %.sroa.speculated.i.i.i, %i.mo ; 2 uses
   %i.mr = icmp ult i64 %i.mq, %i.mo
   %i.ms = call i64 @llvm.umin.i64(i64 %i.mq, i64 576460752303423487)
-  %i.mt = select i1 %i.mr, i64 576460752303423487, i64 %i.ms ; 3 uses
-  %.not.i.i.i85 = icmp ne i64 %i.mt, 0
-  call void @llvm.assume(i1 %.not.i.i.i85)
+  %i.mt = select i1 %i.mr, i64 576460752303423487, i64 %i.ms ; 2 uses
   %i.mu = shl nuw nsw i64 %i.mt, 4                ; 2 uses
   %i.mv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.mu) #38
           to label %.noexc89 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 6 uses
@@ -990,9 +986,7 @@ _ZNKSt6vectorIZNK6google8protobuf10Reflection21MaybePoisonAfterClearERNS1_7Messa
   %i.uk = add nsw i64 %.sroa.speculated.i.i.i239, %i.ui ; 2 uses
   %i.ul = icmp ult i64 %i.uk, %i.ui
   %i.um = call i64 @llvm.umin.i64(i64 %i.uk, i64 576460752303423487)
-  %i.un = select i1 %i.ul, i64 576460752303423487, i64 %i.um ; 3 uses
-  %.not.i.i.i240 = icmp ne i64 %i.un, 0
-  call void @llvm.assume(i1 %.not.i.i.i240)
+  %i.un = select i1 %i.ul, i64 576460752303423487, i64 %i.um ; 2 uses
   %i.uo = shl nuw nsw i64 %i.un, 4                ; 2 uses
   %i.up = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.uo) #38
           to label %.noexc251 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit ; 6 uses
@@ -1185,9 +1179,7 @@ _ZNKSt6vectorIZNK6google8protobuf10Reflection21MaybePoisonAfterClearERNS1_7Messa
   %i.xj = add nsw i64 %.sroa.speculated.i.i.i220, %i.xh ; 2 uses
   %i.xk = icmp ult i64 %i.xj, %i.xh
   %i.xl = call i64 @llvm.umin.i64(i64 %i.xj, i64 576460752303423487)
-  %i.xm = select i1 %i.xk, i64 576460752303423487, i64 %i.xl ; 3 uses
-  %.not.i.i.i221 = icmp ne i64 %i.xm, 0
-  call void @llvm.assume(i1 %.not.i.i.i221)
+  %i.xm = select i1 %i.xk, i64 576460752303423487, i64 %i.xl ; 2 uses
   %i.xn = shl nuw nsw i64 %i.xm, 4                ; 2 uses
   %i.xo = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.xn) #38
           to label %.noexc232 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 6 uses
@@ -1590,9 +1582,7 @@ _ZNKSt6vectorIZNK6google8protobuf10Reflection21MaybePoisonAfterClearERNS1_7Messa
   %i.adc = add nsw i64 %.sroa.speculated.i.i.i201, %i.ada ; 2 uses
   %i.add = icmp ult i64 %i.adc, %i.ada
   %i.ade = call i64 @llvm.umin.i64(i64 %i.adc, i64 576460752303423487)
-  %i.adf = select i1 %i.add, i64 576460752303423487, i64 %i.ade ; 3 uses
-  %.not.i.i.i202 = icmp ne i64 %i.adf, 0
-  call void @llvm.assume(i1 %.not.i.i.i202)
+  %i.adf = select i1 %i.add, i64 576460752303423487, i64 %i.ade ; 2 uses
   %i.adg = shl nuw nsw i64 %i.adf, 4              ; 2 uses
   %i.adh = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.adg) #38
           to label %.noexc213 unwind label %.loopexit256 ; 6 uses
@@ -1785,9 +1775,7 @@ _ZNKSt6vectorIZNK6google8protobuf10Reflection21MaybePoisonAfterClearERNS1_7Messa
   %i.agb = add nsw i64 %.sroa.speculated.i.i.i182, %i.afz ; 2 uses
   %i.agc = icmp ult i64 %i.agb, %i.afz
   %i.agd = call i64 @llvm.umin.i64(i64 %i.agb, i64 576460752303423487)
-  %i.age = select i1 %i.agc, i64 576460752303423487, i64 %i.agd ; 3 uses
-  %.not.i.i.i183 = icmp ne i64 %i.age, 0
-  call void @llvm.assume(i1 %.not.i.i.i183)
+  %i.age = select i1 %i.agc, i64 576460752303423487, i64 %i.agd ; 2 uses
   %i.agf = shl nuw nsw i64 %i.age, 4              ; 2 uses
   %i.agg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.agf) #38
           to label %.noexc194 unwind label %.loopexit.split-lp.loopexit ; 6 uses
@@ -2190,9 +2178,7 @@ _ZNKSt6vectorIZNK6google8protobuf10Reflection21MaybePoisonAfterClearERNS1_7Messa
   %i.r = add nsw i64 %.sroa.speculated.i.i, %i.p  ; 2 uses
   %i.s = icmp ult i64 %i.r, %i.p
   %i.t = tail call i64 @llvm.umin.i64(i64 %i.r, i64 576460752303423487)
-  %i.u = select i1 %i.s, i64 576460752303423487, i64 %i.t ; 3 uses
-  %.not.i.i = icmp ne i64 %i.u, 0
-  tail call void @llvm.assume(i1 %.not.i.i)
+  %i.u = select i1 %i.s, i64 576460752303423487, i64 %i.t ; 2 uses
   %i.v = shl nuw nsw i64 %i.u, 4                  ; 2 uses
   %i.w = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #38 ; 6 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.n ; 2 uses

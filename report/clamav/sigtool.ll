@@ -205,13 +205,12 @@ getdbname.exit:                                   ; preds = %bb.j, %bb.k
   %i.aw = zext i8 %i.av to i64
   %i.ax = or i64 %i.at, %i.aw
   %i.ay = icmp ne i64 %i.ax, 0
-  %i.az = zext i1 %i.ay to i32
-  %.not348 = icmp eq i32 %i.az, 0                 ; 3 uses
-  %2 = xor i1 %.not348, true                      ; 2 uses
+  %i.az = zext i1 %i.ay to i32                    ; 3 uses
+  %.not348 = icmp eq i32 %i.az, 0                 ; 2 uses
   %i.ba = call ptr @optget(ptr noundef nonnull %0, ptr noundef nonnull @.str.215) #23
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 32
-  %i.bc = load i32, ptr %i.bb, align 8, !tbaa !18
-  %.not349 = icmp ne i32 %i.bc, 0                 ; 5 uses
+  %i.bc = load i32, ptr %i.bb, align 8, !tbaa !18 ; 3 uses
+  %.not349 = icmp ne i32 %i.bc, 0                 ; 3 uses
   %i.bd = call ptr @cl_engine_new() #23           ; 6 uses
   %.not350 = icmp eq ptr %i.bd, null
   br i1 %.not350, label %bb.l, label %bb.m
@@ -412,8 +411,9 @@ bb.aj:                                            ; preds = %.thread, %bb.ac, %b
   %.0307 = phi i32 [ %.1, %bb.ac ], [ %i.cy, %bb.ai ], [ 0, %bb.t ], [ 0, %.thread ] ; 2 uses
   %.2304 = phi ptr [ %.1303, %bb.ac ], [ %i.cr, %bb.ai ], [ null, %bb.t ], [ null, %.thread ] ; 4 uses
   %.2 = phi i32 [ %.1, %bb.ac ], [ %i.co, %bb.ai ], [ 0, %bb.t ], [ 0, %.thread ] ; 4 uses
-  %or.cond3 = or i1 %.not349, %2
-  br i1 %or.cond3, label %.preheader410, label %.loopexit411
+  %2 = or i32 %i.bc, %i.az
+  %or.cond3.not = icmp eq i32 %2, 0
+  br i1 %or.cond3.not, label %.loopexit411, label %.preheader410
 
 .preheader410:                                    ; preds = %bb.aj, %bb.am
   %indvars.iv501 = phi i64 [ %indvars.iv.next502, %bb.am ], [ 0, %bb.aj ] ; 3 uses
@@ -816,8 +816,9 @@ bb.dd:                                            ; preds = %bb.dc
   br label %bb.er
 
 .loopexit408:                                     ; preds = %bb.da, %bb.cz, %bb.cv
-  %or.cond7 = or i1 %.not349, %2
-  br i1 %or.cond7, label %.preheader407, label %.loopexit
+  %3 = or i32 %i.bc, %i.az
+  %or.cond7.not = icmp eq i32 %3, 0
+  br i1 %or.cond7.not, label %.loopexit, label %.preheader407
 
 .preheader407:                                    ; preds = %.loopexit408, %bb.dg
   %indvars.iv534 = phi i64 [ %indvars.iv.next535, %bb.dg ], [ 0, %.loopexit408 ] ; 2 uses

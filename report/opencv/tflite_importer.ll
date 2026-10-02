@@ -205,9 +205,7 @@ _ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i156: ; preds = %_ZNS
   %.061 = phi i1 [ true, %_ZNSt6vectorIiSaIiEED2Ev.exit ], [ false, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i137 ], [ false, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i ]
   %i.fc = getelementptr inbounds i8, ptr %1, i64 %.pre-phi
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 12
-  %i.fe = load i16, ptr %i.fd, align 2, !tbaa !23 ; 2 uses
-  %.not.i.i.i157 = icmp ne i16 %i.fe, 0
-  call void @llvm.assume(i1 %.not.i.i.i157)
+  %i.fe = load i16, ptr %i.fd, align 2, !tbaa !23
   %i.ff = zext i16 %i.fe to i64
   %i.fg = getelementptr inbounds nuw i8, ptr %1, i64 %i.ff ; 2 uses
   %i.fh = load i32, ptr %i.fg, align 4, !tbaa !21
@@ -610,9 +608,7 @@ _ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i: ; preds = %_ZNSt7_
   %i.bq = sub nsw i64 0, %i.bp
   %i.br = getelementptr inbounds i8, ptr %1, i64 %i.bq
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 12
-  %i.bt = load i16, ptr %i.bs, align 2, !tbaa !23 ; 2 uses
-  %.not.i.i.i.i = icmp ne i16 %i.bt, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.bt = load i16, ptr %i.bs, align 2, !tbaa !23
   %i.bu = zext i16 %i.bt to i64
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 %i.bu ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !21

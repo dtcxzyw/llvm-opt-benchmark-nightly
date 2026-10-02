@@ -205,23 +205,16 @@ bb.bd:                                            ; preds = %_RINvXs7_NtNtNtCsaL
 
 bb.be:                                            ; preds = %_RINvXs7_NtNtNtCsaL1QbXo9JQH_3std11collections4hash3setINtB6_7HashSetNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location8LocationNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEINtNtNtNtCs3oUPovFnLWP_4core4iter6traits7collect12FromIteratorB14_E9from_iterINtNtNtB2Z_8adapters6copied6CopiedINtB6_4IterB14_EEECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i
   %.sroa.040.0.copyload.i.i.i.i.i = load ptr, ptr %i.j, align 8, !noalias !16136, !nonnull !19, !noundef !19 ; 5 uses
-  %.sroa.441.0.copyload.i.i.i.i.i = load i64, ptr %.sroa.441.0..sroa_idx.i.i.i.i.i, align 8, !noalias !16136 ; 5 uses
+  %.sroa.441.0.copyload.i.i.i.i.i = load i64, ptr %.sroa.441.0..sroa_idx.i.i.i.i.i, align 8, !noalias !16136 ; 4 uses
   %.sroa.543.0.copyload.i.i.i.i.i = load i64, ptr %.sroa.543.0..sroa_idx.i.i.i.i.i, align 8, !noalias !16136
   %.val3.i.i.i21.i.i.i.i.i = load <16 x i8>, ptr %.sroa.040.0.copyload.i.i.i.i.i, align 16, !noalias !16196
   %i.ox = icmp eq i64 %.sroa.441.0.copyload.i.i.i.i.i, 0
   br i1 %i.ox, label %bb.bf, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i.i.i: ; preds = %bb.be
-  %2 = icmp slt i64 %.sroa.441.0.copyload.i.i.i.i.i, 576460752303423487
-  call void @llvm.assume(i1 %2)
-  %i.oy = shl i64 %.sroa.441.0.copyload.i.i.i.i.i, 5 ; 2 uses
-  %3 = add i64 %i.oy, 32                          ; 2 uses
-  %4 = add nsw i64 %.sroa.441.0.copyload.i.i.i.i.i, 17
-  %i.oz = add i64 %4, %3                          ; 3 uses
-  %5 = icmp uge i64 %i.oz, %3
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.oz, 9223372036854775793
-  call void @llvm.assume(i1 %6)
+  %i.oy = shl i64 %.sroa.441.0.copyload.i.i.i.i.i, 5
+  %2 = mul i64 %.sroa.441.0.copyload.i.i.i.i.i, 33
+  %i.oz = add i64 %2, 49
   %i.pa = sub nuw nsw i64 -32, %i.oy
   %i.pb = getelementptr inbounds i8, ptr %.sroa.040.0.copyload.i.i.i.i.i, i64 %i.pa
   br label %bb.bf

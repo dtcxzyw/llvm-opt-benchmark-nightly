@@ -205,7 +205,7 @@ _RNvMs8_NtNtNtCshzWfHUSfYae_4core5array4iter10iter_innerINtB5_15PolymorphicIterS
   %.not8.i = icmp eq i64 %i.y, 2
   br i1 %.not8.i, label %bb.f, label %_RNvXs1_NtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probeNtB5_18ProbeForNameChoiceNtB5_11ProbeChoice27consider_private_candidates.exit
 
-.sink.split.i:                                    ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14.i, %bb.g, %6
+.sink.split.i:                                    ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14.i, %bb.g, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !10708
   br label %_RNvXs1_NtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probeNtB5_18ProbeForNameChoiceNtB5_11ProbeChoice27consider_private_candidates.exit
 
@@ -216,21 +216,18 @@ bb.f:                                             ; preds = %_RNvMs8_NtNtNtCshzW
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 176
   %i.ac = load i64, ptr %i.ab, align 8, !alias.scope !10706, !noalias !10707, !noundef !6
   call fastcc void @_RNvMs6_NtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probeINtB5_12ProbeContextNtB5_18ProbeForNameChoiceE19consider_candidatesB9_(ptr noalias nofree noundef align 8 captures(address) dereferenceable(112) %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(280) %1, ptr noundef nonnull %i.x, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %3, i64 noundef range(i64 0, 288230376151711744) %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.aa, i64 noundef %i.ac, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(40) null)
-  %i.ad = load i64, ptr %i.a, align 8, !range !4, !noalias !10708, !noundef !6 ; 2 uses
-  %or.cond.not.i = icmp eq i64 %i.ad, 0
-  br i1 %or.cond.not.i, label %bb.g, label %6
-
-6:                                                ; preds = %bb.f
-  %7 = and i64 %i.ad, 1
-  %or.cond7.not.i = icmp eq i64 %7, 0
-  br i1 %or.cond7.not.i, label %.sink.split.i, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14.i
+  %i.ad = load i64, ptr %i.a, align 8, !range !4, !noalias !10708, !noundef !6
+  switch i64 %i.ad, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14.i [
+    i64 0, label %bb.g
+    i64 2, label %.sink.split.i
+  ]
 
 bb.g:                                             ; preds = %bb.f
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(280) %1, ptr noundef nonnull align 8 dereferenceable(104) %i.ae, i64 104, i1 false), !noalias !10707
   br label %.sink.split.i
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14.i: ; preds = %6
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14.i: ; preds = %bb.f
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution11MethodErrorEBF_(ptr noalias nofree noundef align 8 dereferenceable(104) %i.af)
   br label %.sink.split.i
@@ -633,7 +630,7 @@ bb.a:
   %.not8 = icmp eq i64 %i.b, 2
   br i1 %.not8, label %bb.c, label %bb.b
 
-.sink.split:                                      ; preds = %4, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14, %bb.d
+.sink.split:                                      ; preds = %bb.c, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.b
 
@@ -647,21 +644,18 @@ bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.f = load i64, ptr %i.e, align 8, !noundef !6
   call fastcc void @_RNvMs6_NtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probeINtB5_12ProbeContextNtB5_18ProbeForNameChoiceE19consider_candidatesB9_(ptr noalias nofree noundef align 8 captures(address) dereferenceable(112) %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(280) %0, ptr noundef nonnull %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %2, i64 noundef %3, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.d, i64 noundef %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(40) null)
-  %i.g = load i64, ptr %i.a, align 8, !range !4, !noundef !6 ; 2 uses
-  %or.cond.not = icmp eq i64 %i.g, 0
-  br i1 %or.cond.not, label %bb.d, label %4
-
-4:                                                ; preds = %bb.c
-  %5 = and i64 %i.g, 1
-  %or.cond7.not = icmp eq i64 %5, 0
-  br i1 %or.cond7.not, label %.sink.split, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14
+  %i.g = load i64, ptr %i.a, align 8, !range !4, !noundef !6
+  switch i64 %i.g, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14 [
+    i64 0, label %bb.d
+    i64 2, label %.sink.split
+  ]
 
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(104) %i.h, i64 104, i1 false)
   br label %.sink.split
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14: ; preds = %4
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe4PickNtB11_11MethodErrorEEB13_.exit14: ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution11MethodErrorEBF_(ptr noalias nofree noundef align 8 dereferenceable(104) %i.i)
   br label %.sink.split

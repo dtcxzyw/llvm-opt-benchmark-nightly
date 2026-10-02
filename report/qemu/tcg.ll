@@ -205,7 +205,7 @@ bb.oj:                                            ; preds = %tcg_reg_alloc_mov.e
   %i.bon = sext i32 %.1122 to i64
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %tcg_malloc.exit.._crit_edge_crit_edge, %._crit_edge.loopexit
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %tcg_malloc.exit.._crit_edge_crit_edge
   %.pre-phi347 = phi i64 [ %.pre346, %tcg_malloc.exit.._crit_edge_crit_edge ], [ %i.bol, %._crit_edge.loopexit ]
   %.0121.lcssa = phi i64 [ -1, %tcg_malloc.exit.._crit_edge_crit_edge ], [ %i.bon, %._crit_edge.loopexit ]
   %i.boo = trunc i64 %.pre-phi347 to i16
@@ -608,10 +608,10 @@ bb.cz:                                            ; preds = %output_pref.exit, %
   %i.aab = icmp samesign ult i64 %indvars.iv.next571, %i.zf
   br i1 %i.aab, label %bb.cw, label %.thread452, !llvm.loop !90
 
-.thread452:                                       ; preds = %bb.z, %bb.cz, %bb.d, %la_cross_call.exit, %bb.cv, %bb.cu, %bb.ct, %.thread455, %la_reset_pref.exit384
-  %.5309 = phi i32 [ %.4308, %bb.cu ], [ %.4308, %bb.ct ], [ %.0304504, %la_reset_pref.exit384 ], [ %.3307, %.thread455 ], [ %.4308, %bb.cv ], [ %.4308, %bb.cz ], [ %.0304504, %bb.d ], [ %.0304504, %la_cross_call.exit ], [ %.0304504, %bb.z ]
-  %.3302 = phi ptr [ %.2301, %bb.cu ], [ %.2301, %bb.ct ], [ %i.dh, %la_reset_pref.exit384 ], [ %.1300, %.thread455 ], [ %.2301, %bb.cv ], [ %.2301, %bb.cz ], [ %i.dh, %bb.d ], [ %i.dh, %la_cross_call.exit ], [ %i.dh, %bb.z ] ; 2 uses
-  %.12 = phi i32 [ %.10.lcssa, %bb.cu ], [ %.10.lcssa, %bb.ct ], [ 0, %la_reset_pref.exit384 ], [ 0, %.thread455 ], [ %.10.lcssa, %bb.cv ], [ %.10.lcssa, %bb.cz ], [ 0, %bb.d ], [ %.3.lcssa, %la_cross_call.exit ], [ %.3.lcssa, %bb.z ]
+.thread452:                                       ; preds = %bb.z, %bb.cz, %la_cross_call.exit, %bb.cv, %bb.d, %bb.cu, %bb.ct, %.thread455, %la_reset_pref.exit384
+  %.5309 = phi i32 [ %.4308, %bb.cu ], [ %.4308, %bb.ct ], [ %.0304504, %la_reset_pref.exit384 ], [ %.3307, %.thread455 ], [ %.0304504, %bb.d ], [ %.4308, %bb.cv ], [ %.4308, %bb.cz ], [ %.0304504, %la_cross_call.exit ], [ %.0304504, %bb.z ]
+  %.3302 = phi ptr [ %.2301, %bb.cu ], [ %.2301, %bb.ct ], [ %i.dh, %la_reset_pref.exit384 ], [ %.1300, %.thread455 ], [ %i.dh, %bb.d ], [ %.2301, %bb.cv ], [ %.2301, %bb.cz ], [ %i.dh, %la_cross_call.exit ], [ %i.dh, %bb.z ] ; 2 uses
+  %.12 = phi i32 [ %.10.lcssa, %bb.cu ], [ %.10.lcssa, %bb.ct ], [ 0, %la_reset_pref.exit384 ], [ 0, %.thread455 ], [ 0, %bb.d ], [ %.10.lcssa, %bb.cv ], [ %.10.lcssa, %bb.cz ], [ %.3.lcssa, %la_cross_call.exit ], [ %.3.lcssa, %bb.z ]
   %i.aac = getelementptr inbounds nuw i8, ptr %.0303505, i64 4
   store i32 %.12, ptr %i.aac, align 4
   %.not = icmp eq ptr %.3302, null

@@ -205,16 +205,11 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.rh, label %bb.al, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i: ; preds = %._crit_edge682
-  %i.ri = mul i64 %i.ev, 48                       ; 2 uses
-  %5 = add i64 %i.ri, 48                          ; 2 uses
-  %6 = add i64 %i.ev, 17
-  %i.rj = add i64 %6, %5                          ; 3 uses
-  %7 = icmp uge i64 %i.rj, %5
-  call void @llvm.assume(i1 %7)
-  %8 = icmp ult i64 %i.rj, 9223372036854775793
-  call void @llvm.assume(i1 %8)
-  %9 = sub i64 -48, %i.ri
-  %i.rk = getelementptr inbounds i8, ptr %i.et, i64 %9
+  %i.ri = mul i64 %i.ev, -48
+  %5 = mul i64 %i.ev, 49
+  %i.rj = add i64 %5, 65
+  %6 = getelementptr i8, ptr %i.et, i64 %i.ri
+  %i.rk = getelementptr i8, ptr %6, i64 -48
   br label %bb.al
 
 bb.al:                                            ; preds = %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i, %._crit_edge682
@@ -617,13 +612,8 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.
   call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i)
   %i.dh = shl i64 %.sroa.4139.0.copyload.i, 3
   %i.di = and i64 %i.dh, -16                      ; 2 uses
-  %4 = add i64 %i.di, 16                          ; 2 uses
-  %i.dj = add nsw i64 %.sroa.4139.0.copyload.i, 17
-  %i.dk = add i64 %i.dj, %4                       ; 3 uses
-  %5 = icmp uge i64 %i.dk, %4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.dk, 9223372036854775793
-  call void @llvm.assume(i1 %6)
+  %i.dj = add nsw i64 %.sroa.4139.0.copyload.i, 33
+  %i.dk = add i64 %i.dj, %i.di
   %i.dl = sub nuw nsw i64 -16, %i.di
   %i.dm = getelementptr inbounds i8, ptr %.sroa.0138.0.copyload.i, i64 %i.dl
   br label %"_ZN111_$LT$std..collections..hash..set..HashSet$LT$T$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h982e532af11a093dE.exit.i.i"
@@ -685,7 +675,7 @@ bb.t:                                             ; preds = %._crit_edge20.i.i.i
   %i.em = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.en = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i.i.i.i, 0
-  %or.cond.i.i.i.i.i1.i.i = or i1 %i.dg, %i.en
+  %or.cond.i.i.i.i.i1.i.i = select i1 %i.dg, i1 true, i1 %i.en
   br i1 %or.cond.i.i.i.i.i1.i.i, label %bb.bh, label %.body.sink.split.i.i.i
 
 ._crit_edge20.i.i.i.i.i.i.i.i.i.i:                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i, %.lr.ph
@@ -703,7 +693,7 @@ bb.t:                                             ; preds = %._crit_edge20.i.i.i
 
 "_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h341a441fbd35ad63E.exit.i.i.i.i.i.i.i.i._crit_edge": ; preds = %"_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h341a441fbd35ad63E.exit.i.i.i.i.i.i.i.i", %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$7reserve17hb0c5619dd44aa70bE.exit.i.i.i"
   %i.ev = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i.i.i.i, 0
-  %or.cond7.i.i.i.i.i.i.i = or i1 %i.dg, %i.ev
+  %or.cond7.i.i.i.i.i.i.i = select i1 %i.dg, i1 true, i1 %i.ev
   br i1 %or.cond7.i.i.i.i.i.i.i, label %"_ZN105_$LT$hashbrown..set..HashSet$LT$T$C$S$C$A$GT$$u20$as$u20$core..iter..traits..collect..Extend$LT$T$GT$$GT$6extend17h3f71a81990a9ad32E.exit.i", label %bb.u
 
 bb.u:                                             ; preds = %"_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h341a441fbd35ad63E.exit.i.i.i.i.i.i.i.i._crit_edge"
@@ -721,7 +711,7 @@ bb.v:                                             ; preds = %bb.s
   %i.ew = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ex = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i.i.i.i, 0
-  %or.cond.i.i.i = or i1 %i.dg, %i.ex
+  %or.cond.i.i.i = select i1 %i.dg, i1 true, i1 %i.ex
   br i1 %or.cond.i.i.i, label %bb.bh, label %.body.sink.split.i.i.i
 
 "_ZN105_$LT$hashbrown..set..HashSet$LT$T$C$S$C$A$GT$$u20$as$u20$core..iter..traits..collect..Extend$LT$T$GT$$GT$6extend17h3f71a81990a9ad32E.exit.i": ; preds = %bb.u, %"_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h341a441fbd35ad63E.exit.i.i.i.i.i.i.i.i._crit_edge"

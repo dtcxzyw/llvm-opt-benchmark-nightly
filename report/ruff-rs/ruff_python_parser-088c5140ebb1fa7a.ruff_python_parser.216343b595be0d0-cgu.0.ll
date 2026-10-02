@@ -205,18 +205,10 @@ _RNvXsE_NtCsgQfI1edjipl_9hashbrown3rawINtB5_11RawIntoIterTReRNtNtCskLngH8kgpZI_1
   br i1 %i.f, label %bb.c, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %._crit_edge
-  %i.g = mul i64 %.sroa.433.0.copyload.pre, 24    ; 2 uses
-  %3 = add i64 %i.g, 24
-  %4 = icmp ult i64 %3, -15
-  call void @llvm.assume(i1 %4)
+  %i.g = mul i64 %.sroa.433.0.copyload.pre, 24
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %5 = add i64 %i.h, 32                           ; 2 uses
-  %i.i = add i64 %.sroa.433.0.copyload.pre, 17
-  %i.j = add i64 %i.i, %5                         ; 3 uses
-  %6 = icmp uge i64 %i.j, %5
-  call void @llvm.assume(i1 %6)
-  %7 = icmp ult i64 %i.j, 9223372036854775793
-  call void @llvm.assume(i1 %7)
+  %i.i = add i64 %.sroa.433.0.copyload.pre, 49
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub i64 -32, %i.h
   %i.l = getelementptr inbounds i8, ptr %.sroa.032.0.copyload.pre, i64 %i.k
   br label %bb.c

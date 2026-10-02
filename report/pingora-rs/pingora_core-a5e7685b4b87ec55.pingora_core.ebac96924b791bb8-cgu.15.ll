@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = trunc nuw i64 %i.h to i1
   br i1 %i.k, label %bb.d, label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit
+bb.c:                                             ; preds = %bb.b, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit, %bb.a
   %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ], [ %i.j, %bb.b ]
   %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ], [ 1, %bb.b ]
   %i.l = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
@@ -268,7 +268,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = trunc nuw i64 %i.h to i1
   br i1 %i.k, label %bb.d, label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit
+bb.c:                                             ; preds = %bb.b, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit, %bb.a
   %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ], [ %i.j, %bb.b ]
   %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ], [ 1, %bb.b ]
   %i.l = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0

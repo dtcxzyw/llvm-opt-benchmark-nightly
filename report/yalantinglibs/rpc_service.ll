@@ -205,11 +205,9 @@ _ZNKSt6vectorIN4asio2ip20basic_resolver_entryINS1_3tcpEEESaIS4_EE12_M_check_lenE
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 96076792050570581)
-  %i.l = select i1 %i.j, i64 96076792050570581, i64 %i.k ; 3 uses
+  %i.l = select i1 %i.j, i64 96076792050570581, i64 %i.k ; 2 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp ne i64 %i.l, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 96
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #52 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 7 uses
@@ -612,7 +610,7 @@ define internal void @_ZN8coro_rpc19get_context_in_coroINS_8protocol17coro_rpc_p
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !1193, !nonnull !267, !noundef !267
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !1193
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !338
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses

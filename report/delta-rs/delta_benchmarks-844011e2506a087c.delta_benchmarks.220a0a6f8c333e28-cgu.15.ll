@@ -202,8 +202,8 @@ _RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9All
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsE_NtCs3gpiEk3WpjL_9hashbrown3mapINtB5_7HashMapNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12IntoIterator9into_iterCs2VbMhdeEr66_16delta_benchmarks(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #11 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsE_NtCs3gpiEk3WpjL_9hashbrown3mapINtB5_7HashMapNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12IntoIterator9into_iterCs2VbMhdeEr66_16delta_benchmarks(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #7 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.02.0.copyload = load ptr, ptr %1, align 8, !nonnull !8, !noundef !8 ; 5 uses
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -215,16 +215,11 @@ bb.a:
   br i1 %i.a, label %_RNvXsh_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12IntoIterator9into_iterCs2VbMhdeEr66_16delta_benchmarks.exit, label %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
-  %i.b = mul i64 %.sroa.43.0.copyload, 112        ; 2 uses
-  %2 = add i64 %i.b, 112                          ; 2 uses
-  %3 = add i64 %.sroa.43.0.copyload, 17
-  %i.c = add i64 %3, %2                           ; 3 uses
-  %4 = icmp uge i64 %i.c, %2
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.c, 9223372036854775793
-  tail call void @llvm.assume(i1 %5)
-  %6 = sub i64 -112, %i.b
-  %i.d = getelementptr inbounds i8, ptr %.sroa.02.0.copyload, i64 %6
+  %i.b = mul i64 %.sroa.43.0.copyload, -112
+  %2 = mul i64 %.sroa.43.0.copyload, 113
+  %i.c = add i64 %2, 129
+  %3 = getelementptr i8, ptr %.sroa.02.0.copyload, i64 %i.b
+  %i.d = getelementptr i8, ptr %3, i64 -112
   br label %_RNvXsh_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12IntoIterator9into_iterCs2VbMhdeEr66_16delta_benchmarks.exit
 
 _RNvXsh_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12IntoIterator9into_iterCs2VbMhdeEr66_16delta_benchmarks.exit: ; preds = %bb.a, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
@@ -270,13 +265,8 @@ _RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %or.cond.i.i)
   %i.b = shl i64 %.sroa.43.0.copyload, 3
   %i.c = and i64 %i.b, -16                        ; 2 uses
-  %2 = add i64 %i.c, 16                           ; 2 uses
-  %i.d = add nsw i64 %.sroa.43.0.copyload, 17
-  %i.e = add i64 %i.d, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.e, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.e, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.d = add nsw i64 %.sroa.43.0.copyload, 33
+  %i.e = add i64 %i.d, %i.c
   %i.f = sub nuw nsw i64 -16, %i.c
   %i.g = getelementptr inbounds i8, ptr %.sroa.02.0.copyload, i64 %i.f
   br label %_RNvXsh_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTRNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12IntoIterator9into_iterCs2VbMhdeEr66_16delta_benchmarks.exit

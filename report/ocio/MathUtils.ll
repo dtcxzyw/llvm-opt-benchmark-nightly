@@ -67,10 +67,10 @@ _ZN16OpenColorIO_v2_512FloatsDifferEffib.exit:    ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden noundef zeroext i1 @_ZN16OpenColorIO_v2_512FloatsDifferEffib(float noundef %0, float noundef %1, i32 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #1 {
 bb.a:
-  %i.a = bitcast float %0 to i32                  ; 6 uses
-  %i.b = bitcast float %1 to i32                  ; 7 uses
-  %i.c = and i32 %i.a, 8388607
-  %i.d = and i32 %i.b, 8388607
+  %i.a = bitcast float %0 to i32                  ; 5 uses
+  %i.b = bitcast float %1 to i32                  ; 6 uses
+  %i.c = and i32 %i.a, 8388607                    ; 2 uses
+  %i.d = and i32 %i.b, 8388607                    ; 2 uses
   %i.e = and i32 %i.a, 2139095040
   %i.f = icmp eq i32 %i.e, 2139095040
   %i.g = and i32 %i.b, 2139095040
@@ -83,9 +83,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.i = icmp eq i32 %i.c, 0
   %i.j = icmp eq i32 %i.d, 0
-  %i.k = or i32 %i.b, %i.a
-  %4 = and i32 %i.k, 8388607
-  %brmerge.not = icmp eq i32 %4, 0
+  %i.k = or i32 %i.d, %i.c
+  %brmerge.not = icmp eq i32 %i.k, 0
   %.mux = or i1 %i.i, %i.j
   %.unshifted = xor i32 %i.b, %i.a
   %i.l = icmp slt i32 %.unshifted, 0

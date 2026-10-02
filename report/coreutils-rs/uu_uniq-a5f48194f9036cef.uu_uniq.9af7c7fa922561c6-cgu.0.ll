@@ -205,9 +205,9 @@ _RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 bb.j:                                             ; preds = %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdiTcXS7gKpe_7uu_uniq.exit16.i.i.i.i.i.i.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdiTcXS7gKpe_7uu_uniq.exit14.i.i.i.i.i.i.i, %bb.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdiTcXS7gKpe_7uu_uniq.exit12.i.i.i.i.i.i.i
   %.val.i.i = phi ptr [ %i.cw, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdiTcXS7gKpe_7uu_uniq.exit14.i.i.i.i.i.i.i ], [ %i.dg, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdiTcXS7gKpe_7uu_uniq.exit16.i.i.i.i.i.i.i ], [ %i.cn, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdiTcXS7gKpe_7uu_uniq.exit12.i.i.i.i.i.i.i ], [ %i.ch, %bb.i ] ; 4 uses
   %spec.select.i.ph.i.i.i.i.i = phi i32 [ %i.dd, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdiTcXS7gKpe_7uu_uniq.exit14.i.i.i.i.i.i.i ], [ %i.do, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdiTcXS7gKpe_7uu_uniq.exit16.i.i.i.i.i.i.i ], [ %i.cs, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdiTcXS7gKpe_7uu_uniq.exit12.i.i.i.i.i.i.i ], [ %i.cu, %bb.i ] ; 4 uses
-  %i.dp = add nsw i32 %spec.select.i.ph.i.i.i.i.i, -58
-  %or.cond.i.i.i.i.i.i.i.i = icmp ult i32 %i.dp, -10
-  br i1 %or.cond.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i, label %bb.k
+  %i.dp = add nsw i32 %spec.select.i.ph.i.i.i.i.i, -48
+  %or.cond.i.i.i.i.i.i.i.i = icmp ult i32 %i.dp, 10
+  br i1 %or.cond.i.i.i.i.i.i.i.i, label %bb.k, label %.loopexit.i.i.i.i.i
 
 .loopexit.i.i.i.i.i:                              ; preds = %bb.j
   %i.dq = icmp eq i32 %spec.select.i.ph.i.i.i.i.i, 102 ; 2 uses

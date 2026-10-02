@@ -205,8 +205,8 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.au
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 64
-  %i.cn = load i64, ptr %i.cm, align 8            ; 4 uses
-  %.sroa.0923.0.extract.trunc = trunc i64 %i.cn to i8 ; 4 uses
+  %i.cn = load i64, ptr %i.cm, align 8            ; 5 uses
+  %.sroa.0923.0.extract.trunc = trunc i64 %i.cn to i8 ; 3 uses
   %.sroa.22942.0.extract.shift = lshr i64 %i.cn, 16
   %.sroa.22942.0.extract.trunc = trunc i64 %.sroa.22942.0.extract.shift to i8 ; 2 uses
   %.sroa.30955.0.extract.shift = lshr i64 %i.cn, 32 ; 2 uses
@@ -259,7 +259,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit.th
 bb.bb:                                            ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit.thread
   %i.cu = icmp eq i8 %.sroa.0901.0, %.sroa.0923.0.extract.trunc
   %i.cv = and i64 %i.cn, 65280
-  %i.cw = icmp eq i64 %i.cv, 256                  ; 2 uses
+  %i.cw = icmp eq i64 %i.cv, 256
   %or.cond1434 = and i1 %i.cu, %i.cw
   br i1 %or.cond1434, label %bb.bc, label %_ZNK11OpenImageIO4v3_18TypeDescneERKS1_.exit544.thread
 
@@ -270,9 +270,8 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %or.cond1450, label %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit543, label %bb.bd
 
 _ZNK11OpenImageIO4v3_18TypeDescneERKS1_.exit544.thread: ; preds = %bb.bb
-  %24 = icmp ne i8 %.sroa.0923.0.extract.trunc, 11
-  %.not1541 = xor i1 %i.cw, true
-  %or.cond1435.not1476 = or i1 %24, %.not1541
+  %24 = and i64 %i.cn, 65535
+  %or.cond1435.not1476 = icmp ne i64 %24, 267
   %i.cz = icmp ne i8 %.sroa.22942.0.extract.trunc, 0
   %or.cond1436.not1473 = select i1 %or.cond1435.not1476, i1 true, i1 %i.cz
   %i.da = icmp ne i64 %.sroa.30955.0.extract.shift, 0
@@ -655,8 +654,8 @@ bb.ch:                                            ; preds = %bb.cg
 
 bb.ci:                                            ; preds = %bb.ch
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 64
-  %i.gn = load i64, ptr %i.gm, align 8            ; 4 uses
-  %.sroa.0831.0.extract.trunc = trunc i64 %i.gn to i8 ; 4 uses
+  %i.gn = load i64, ptr %i.gm, align 8            ; 5 uses
+  %.sroa.0831.0.extract.trunc = trunc i64 %i.gn to i8 ; 3 uses
   %.sroa.22850.0.extract.shift = lshr i64 %i.gn, 16
   %.sroa.22850.0.extract.trunc = trunc i64 %.sroa.22850.0.extract.shift to i8 ; 2 uses
   %.sroa.30863.0.extract.shift = lshr i64 %i.gn, 32 ; 2 uses
@@ -704,7 +703,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit555
 bb.cn:                                            ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit555.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit555.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit555.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit555.thread
   %i.gt = icmp eq i8 %.sroa.0809.0, %.sroa.0831.0.extract.trunc
   %i.gu = and i64 %i.gn, 65280
-  %i.gv = icmp eq i64 %i.gu, 256                  ; 2 uses
+  %i.gv = icmp eq i64 %i.gu, 256
   %or.cond1438 = and i1 %i.gt, %i.gv
   br i1 %or.cond1438, label %bb.co, label %_ZNK11OpenImageIO4v3_18TypeDescneERKS1_.exit558.thread
 
@@ -715,9 +714,8 @@ bb.co:                                            ; preds = %bb.cn
   br i1 %or.cond1451, label %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit557, label %bb.cp
 
 _ZNK11OpenImageIO4v3_18TypeDescneERKS1_.exit558.thread: ; preds = %bb.cn
-  %25 = icmp ne i8 %.sroa.0831.0.extract.trunc, 11
-  %.not1543 = xor i1 %i.gv, true
-  %or.cond1439.not1482 = or i1 %25, %.not1543
+  %25 = and i64 %i.gn, 65535
+  %or.cond1439.not1482 = icmp ne i64 %25, 267
   %i.gy = icmp ne i8 %.sroa.22850.0.extract.trunc, 0
   %or.cond1440.not1479 = select i1 %or.cond1439.not1482, i1 true, i1 %i.gy
   %i.gz = icmp ne i64 %.sroa.30863.0.extract.shift, 0
@@ -1104,8 +1102,8 @@ bb.du:                                            ; preds = %bb.dt
 
 bb.dv:                                            ; preds = %bb.du
   %i.kl = getelementptr inbounds nuw i8, ptr %i.kk, i64 64
-  %i.km = load i64, ptr %i.kl, align 8            ; 4 uses
-  %.sroa.0730.0.extract.trunc = trunc i64 %i.km to i8 ; 4 uses
+  %i.km = load i64, ptr %i.kl, align 8            ; 5 uses
+  %.sroa.0730.0.extract.trunc = trunc i64 %i.km to i8 ; 3 uses
   %.sroa.22749.0.extract.shift = lshr i64 %i.km, 16
   %.sroa.22749.0.extract.trunc = trunc i64 %.sroa.22749.0.extract.shift to i8 ; 2 uses
   %.sroa.30762.0.extract.shift = lshr i64 %i.km, 32 ; 2 uses
@@ -1153,7 +1151,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit578
 bb.ea:                                            ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit578.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit578.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit578.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit578.thread
   %i.ks = icmp eq i8 %.sroa.0708.0, %.sroa.0730.0.extract.trunc
   %i.kt = and i64 %i.km, 65280
-  %i.ku = icmp eq i64 %i.kt, 256                  ; 2 uses
+  %i.ku = icmp eq i64 %i.kt, 256
   %or.cond1442 = and i1 %i.ks, %i.ku
   br i1 %or.cond1442, label %bb.eb, label %_ZNK11OpenImageIO4v3_18TypeDescneERKS1_.exit581.thread
 
@@ -1164,9 +1162,8 @@ bb.eb:                                            ; preds = %bb.ea
   br i1 %or.cond1452, label %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit580, label %bb.ec
 
 _ZNK11OpenImageIO4v3_18TypeDescneERKS1_.exit581.thread: ; preds = %bb.ea
-  %26 = icmp ne i8 %.sroa.0730.0.extract.trunc, 11
-  %.not1545 = xor i1 %i.ku, true
-  %or.cond1443.not1488 = or i1 %26, %.not1545
+  %26 = and i64 %i.km, 65535
+  %or.cond1443.not1488 = icmp ne i64 %26, 267
   %i.kx = icmp ne i8 %.sroa.22749.0.extract.trunc, 0
   %or.cond1444.not1485 = select i1 %or.cond1443.not1488, i1 true, i1 %i.kx
   %i.ky = icmp ne i64 %.sroa.30762.0.extract.shift, 0
@@ -1549,8 +1546,8 @@ bb.fg:                                            ; preds = %bb.ff
 
 bb.fh:                                            ; preds = %bb.fg
   %i.ok = getelementptr inbounds nuw i8, ptr %i.oj, i64 64
-  %i.ol = load i64, ptr %i.ok, align 8            ; 4 uses
-  %.sroa.0642.0.extract.trunc = trunc i64 %i.ol to i8 ; 4 uses
+  %i.ol = load i64, ptr %i.ok, align 8            ; 5 uses
+  %.sroa.0642.0.extract.trunc = trunc i64 %i.ol to i8 ; 3 uses
   %.sroa.22.0.extract.shift = lshr i64 %i.ol, 16
   %.sroa.22.0.extract.trunc = trunc i64 %.sroa.22.0.extract.shift to i8 ; 2 uses
   %.sroa.30671.0.extract.shift = lshr i64 %i.ol, 32 ; 2 uses
@@ -1598,7 +1595,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit601
 bb.fm:                                            ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit601.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit601.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit601.thread, %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit601.thread
   %i.or = icmp eq i8 %.sroa.0623.0, %.sroa.0642.0.extract.trunc
   %i.os = and i64 %i.ol, 65280
-  %i.ot = icmp eq i64 %i.os, 256                  ; 2 uses
+  %i.ot = icmp eq i64 %i.os, 256
   %or.cond1446 = and i1 %i.or, %i.ot
   br i1 %or.cond1446, label %bb.fn, label %_ZNK11OpenImageIO4v3_18TypeDescneERKS1_.exit604.thread
 
@@ -1609,9 +1606,8 @@ bb.fn:                                            ; preds = %bb.fm
   br i1 %or.cond1453, label %_ZN11OpenImageIO4v3_112ImageBufAlgo20is_common_pixel_typeENS0_8TypeDescE.exit603, label %bb.fo
 
 _ZNK11OpenImageIO4v3_18TypeDescneERKS1_.exit604.thread: ; preds = %bb.fm
-  %27 = icmp ne i8 %.sroa.0642.0.extract.trunc, 11
-  %.not1547 = xor i1 %i.ot, true
-  %or.cond1447.not1494 = or i1 %27, %.not1547
+  %27 = and i64 %i.ol, 65535
+  %or.cond1447.not1494 = icmp ne i64 %27, 267
   %i.ow = icmp ne i8 %.sroa.22.0.extract.trunc, 0
   %or.cond1448.not1491 = select i1 %or.cond1447.not1494, i1 true, i1 %i.ow
   %i.ox = icmp ne i64 %.sroa.30671.0.extract.shift, 0

@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 der_encode_length.exit:                           ; preds = %bb.a
-  %3 = icmp samesign ugt i64 %i.b, 255
+  %3 = icmp samesign ult i64 %i.b, 256
   %i.d = icmp samesign ugt i64 %i.b, 127
   %i.e = select i1 %i.d, i64 3, i64 2
-  %i.f = select i1 %3, i64 4, i64 %i.e
+  %i.f = select i1 %3, i64 %i.e, i64 4
   %i.g = add nuw nsw i64 %i.f, %i.b               ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !tbaa !41   ; 6 uses
@@ -243,10 +243,10 @@ bb.e:                                             ; preds = %.thread
   unreachable
 
 der_encode_length.exit43:                         ; preds = %.thread
-  %4 = icmp samesign ugt i64 %i.i, 255
+  %4 = icmp samesign ult i64 %i.i, 256
   %i.q = icmp samesign ugt i64 %i.i, 127
   %i.r = select i1 %i.q, i64 3, i64 2
-  %i.s = select i1 %4, i64 4, i64 %i.r
+  %i.s = select i1 %4, i64 %i.r, i64 4
   %i.t = add nuw nsw i64 %i.s, %i.i               ; 5 uses
   %i.u = icmp samesign ult i64 %i.t, 32768
   br i1 %i.u, label %der_encode_length.exit46, label %bb.f
@@ -256,10 +256,10 @@ bb.f:                                             ; preds = %der_encode_length.e
   unreachable
 
 der_encode_length.exit46:                         ; preds = %der_encode_length.exit43
-  %5 = icmp samesign ugt i64 %i.t, 255
+  %5 = icmp samesign ult i64 %i.t, 256
   %i.v = icmp samesign ugt i64 %i.t, 127
   %i.w = select i1 %i.v, i64 3, i64 2
-  %i.x = select i1 %5, i64 4, i64 %i.w
+  %i.x = select i1 %5, i64 %i.w, i64 4
   %i.y = add nuw nsw i64 %i.x, %i.t
   br label %bb.g
 
@@ -276,10 +276,10 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 der_encode_length.exit49:                         ; preds = %bb.g
-  %6 = icmp samesign ugt i64 %i.aa, 255
+  %6 = icmp samesign ult i64 %i.aa, 256
   %i.ac = icmp samesign ugt i64 %i.aa, 127
   %.19.i47 = select i1 %i.ac, i64 2, i64 1
-  %.0.i48 = select i1 %6, i64 3, i64 %.19.i47     ; 2 uses
+  %.0.i48 = select i1 %6, i64 %.19.i47, i64 3     ; 2 uses
   %i.ad = add nuw nsw i64 %i.g, 4
   %i.ae = add nuw nsw i64 %i.ad, %.037
   %i.af = add nuw nsw i64 %i.ae, %.0.i48          ; 3 uses
@@ -333,10 +333,10 @@ bb.m:                                             ; preds = %der_encode_length.e
   br i1 %.not22.i55, label %der_encode_length.exit56, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %7 = icmp samesign ugt i64 %i.aw, 255
+  %7 = icmp samesign ult i64 %i.aw, 256
   %i.ay = and i64 %i.aw, 32640
   %i.az = icmp eq i64 %i.ay, 128
-  %i.ba = select i1 %7, i8 2, i8 1
+  %i.ba = select i1 %7, i8 1, i8 2
   %i.bb = getelementptr inbounds nuw i8, ptr %.1, i64 6 ; 2 uses
   store i8 %i.ba, ptr %i.av, align 1, !tbaa !43
   br i1 %i.az, label %der_encode_length.exit56, label %bb.o
@@ -367,10 +367,10 @@ bb.p:                                             ; preds = %der_encode_length.e
   br i1 %.not22.i59, label %der_encode_length.exit60, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %8 = icmp samesign ugt i64 %.036, 255
+  %8 = icmp samesign ult i64 %.036, 256
   %i.bl = and i64 %.036, 32640
   %i.bm = icmp eq i64 %i.bl, 128
-  %i.bn = select i1 %8, i8 2, i8 1
+  %i.bn = select i1 %8, i8 1, i8 2
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bj, i64 2 ; 2 uses
   store i8 %i.bn, ptr %i.bk, align 1, !tbaa !43
   br i1 %i.bm, label %der_encode_length.exit60, label %bb.r
@@ -403,10 +403,10 @@ bb.t:                                             ; preds = %der_encode_length.e
   br i1 %.not22.i63, label %der_encode_length.exit64, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %9 = icmp samesign ugt i64 %i.bw, 255
+  %9 = icmp samesign ult i64 %i.bw, 256
   %i.by = and i64 %i.bw, 32640
   %i.bz = icmp eq i64 %i.by, 128
-  %i.ca = select i1 %9, i8 2, i8 1
+  %i.ca = select i1 %9, i8 1, i8 2
   %i.cb = getelementptr inbounds nuw i8, ptr %.3, i64 3 ; 2 uses
   store i8 %i.ca, ptr %i.bv, align 1, !tbaa !43
   br i1 %i.bz, label %der_encode_length.exit64, label %bb.v

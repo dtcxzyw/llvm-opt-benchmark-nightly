@@ -205,7 +205,7 @@ _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allo
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_RNvXsE_NtCsgQfI1edjipl_9hashbrown3mapINtB5_7HashMapRReINtNtCs4NRVxsYgnAr_4core6option6OptionjENtNtNtCs2AWtUsOyxgP_3std4hash6random11RandomStateENtNtNtNtBV_4iter6traits7collect12IntoIterator9into_iterCsl6EuCK7xub1_5insta(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #10 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.02.0.copyload = load ptr, ptr %1, align 8, !nonnull !3, !noundef !3 ; 5 uses
@@ -218,18 +218,10 @@ bb.a:
   br i1 %i.a, label %_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTRReINtNtCs4NRVxsYgnAr_4core6option6OptionjEEENtNtNtNtBX_4iter6traits7collect12IntoIterator9into_iterCsl6EuCK7xub1_5insta.exit, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
-  %i.b = mul i64 %.sroa.43.0.copyload, 24         ; 2 uses
-  %2 = add i64 %i.b, 24
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.b = mul i64 %.sroa.43.0.copyload, 24
   %i.c = and i64 %i.b, -16                        ; 2 uses
-  %4 = add i64 %i.c, 32                           ; 2 uses
-  %i.d = add i64 %.sroa.43.0.copyload, 17
-  %i.e = add i64 %i.d, %4                         ; 3 uses
-  %5 = icmp uge i64 %i.e, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.e, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.d = add i64 %.sroa.43.0.copyload, 49
+  %i.e = add i64 %i.d, %i.c
   %i.f = sub i64 -32, %i.c
   %i.g = getelementptr inbounds i8, ptr %.sroa.02.0.copyload, i64 %i.f
   br label %_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTRReINtNtCs4NRVxsYgnAr_4core6option6OptionjEEENtNtNtNtBX_4iter6traits7collect12IntoIterator9into_iterCsl6EuCK7xub1_5insta.exit
@@ -260,12 +252,12 @@ _RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTRReINtNtCs4NRVxsYgnAr_4cor
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_RNvXsE_NtCsgQfI1edjipl_9hashbrown3mapINtB5_7HashMapReINtNtCs4NRVxsYgnAr_4core6option6OptionjENtNtNtCs2AWtUsOyxgP_3std4hash6random11RandomStateENtNtNtNtBU_4iter6traits7collect12IntoIterator9into_iterCsl6EuCK7xub1_5insta(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #10 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.02.0.copyload = load ptr, ptr %1, align 8, !nonnull !3, !noundef !3 ; 5 uses
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.43.0.copyload = load i64, ptr %.sroa.43.0..sroa_idx, align 8 ; 5 uses
+  %.sroa.43.0.copyload = load i64, ptr %.sroa.43.0..sroa_idx, align 8 ; 4 uses
   %.sroa.55.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.55.0.copyload = load i64, ptr %.sroa.55.0..sroa_idx, align 8
   %.val3.i.i = load <16 x i8>, ptr %.sroa.02.0.copyload, align 16, !noalias !483
@@ -273,16 +265,9 @@ bb.a:
   br i1 %i.a, label %_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTReINtNtCs4NRVxsYgnAr_4core6option6OptionjEEENtNtNtNtBW_4iter6traits7collect12IntoIterator9into_iterCsl6EuCK7xub1_5insta.exit, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
-  %2 = icmp slt i64 %.sroa.43.0.copyload, 576460752303423487
-  tail call void @llvm.assume(i1 %2)
-  %i.b = shl i64 %.sroa.43.0.copyload, 5          ; 2 uses
-  %3 = add i64 %i.b, 32                           ; 2 uses
-  %4 = add nsw i64 %.sroa.43.0.copyload, 17
-  %i.c = add i64 %4, %3                           ; 3 uses
-  %5 = icmp uge i64 %i.c, %3
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.c, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.b = shl i64 %.sroa.43.0.copyload, 5
+  %2 = mul i64 %.sroa.43.0.copyload, 33
+  %i.c = add i64 %2, 49
   %i.d = sub nuw nsw i64 -32, %i.b
   %i.e = getelementptr inbounds i8, ptr %.sroa.02.0.copyload, i64 %i.d
   br label %_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTReINtNtCs4NRVxsYgnAr_4core6option6OptionjEEENtNtNtNtBW_4iter6traits7collect12IntoIterator9into_iterCsl6EuCK7xub1_5insta.exit
@@ -313,7 +298,7 @@ _RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTReINtNtCs4NRVxsYgnAr_4core
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_RNvXsE_NtCsgQfI1edjipl_9hashbrown3mapINtB5_7HashMapRmINtNtCs4NRVxsYgnAr_4core6option6OptionjENtNtNtCs2AWtUsOyxgP_3std4hash6random11RandomStateENtNtNtNtBU_4iter6traits7collect12IntoIterator9into_iterCsl6EuCK7xub1_5insta(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #10 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.02.0.copyload = load ptr, ptr %1, align 8, !nonnull !3, !noundef !3 ; 5 uses
@@ -326,18 +311,10 @@ bb.a:
   br i1 %i.a, label %_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTRmINtNtCs4NRVxsYgnAr_4core6option6OptionjEEENtNtNtNtBW_4iter6traits7collect12IntoIterator9into_iterCsl6EuCK7xub1_5insta.exit, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
-  %i.b = mul i64 %.sroa.43.0.copyload, 24         ; 2 uses
-  %2 = add i64 %i.b, 24
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.b = mul i64 %.sroa.43.0.copyload, 24
   %i.c = and i64 %i.b, -16                        ; 2 uses
-  %4 = add i64 %i.c, 32                           ; 2 uses
-  %i.d = add i64 %.sroa.43.0.copyload, 17
-  %i.e = add i64 %i.d, %4                         ; 3 uses
-  %5 = icmp uge i64 %i.e, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.e, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.d = add i64 %.sroa.43.0.copyload, 49
+  %i.e = add i64 %i.d, %i.c
   %i.f = sub i64 -32, %i.c
   %i.g = getelementptr inbounds i8, ptr %.sroa.02.0.copyload, i64 %i.f
   br label %_RNvXsh_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTRmINtNtCs4NRVxsYgnAr_4core6option6OptionjEEENtNtNtNtBW_4iter6traits7collect12IntoIterator9into_iterCsl6EuCK7xub1_5insta.exit
@@ -740,7 +717,7 @@ attributes #6 = { inlinehint nofree norecurse nosync nounwind nonlazybind memory
 attributes #7 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #8 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #9 = { inlinehint nofree nosync nounwind nonlazybind memory(read, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #10 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #10 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #11 = { nofree norecurse nosync nounwind nonlazybind memory(readwrite, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #12 = { inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #13 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

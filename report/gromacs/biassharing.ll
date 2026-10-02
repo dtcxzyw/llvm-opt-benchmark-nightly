@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph223, %_ZNSt6v
 bb.c:                                             ; preds = %bb.b
   %i.t = load ptr, ptr %3, align 8, !tbaa !54
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %indvars.iv265
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !26   ; 8 uses
+  %i.v = load i32, ptr %i.u, align 4, !tbaa !26   ; 7 uses
   %i.w = icmp eq i32 %i.v, 1
   br i1 %i.w, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.d
 
@@ -222,8 +222,6 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.d
   %i.aa = load ptr, ptr %i.i, align 8, !tbaa !54
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %indvars.iv265
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !26 ; 2 uses
-  %.not.i.i.i.i = icmp ne i32 %i.v, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.ad = shl nuw nsw i64 %i.z, 2                 ; 4 uses
   %i.ae = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #24 ; 11 uses
   store i32 0, ptr %i.ae, align 4, !tbaa !26
@@ -243,18 +241,26 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.d
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 12
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !25
   %i.aq = icmp eq i32 %i.ap, 0
-  br i1 %i.aq, label %bb.e, label %.lr.ph
+  br i1 %i.aq, label %bb.e, label %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIiEEi.exit
 
 bb.e:                                             ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ar = load ptr, ptr %i.l, align 8, !tbaa !62
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %indvars.iv265
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !16
   %i.au = invoke noundef i32 @_Z14tMPI_AllreducePKvPviP14tmpi_datatype_7tMPI_OpP10tmpi_comm_(ptr noundef null, ptr noundef nonnull %i.ae, i32 noundef %i.y, ptr noundef %i.n, i32 noundef 2, ptr noundef %i.at)
-          to label %.lr.ph unwind label %.loopexit ; 0 uses
+          to label %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIiEEi.exit unwind label %.loopexit ; 0 uses
 
-.lr.ph:                                           ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, %bb.e
+_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIiEEi.exit: ; preds = %bb.e, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
+  %.not307 = icmp eq i32 %i.v, 0                  ; 2 uses
+  br i1 %.not307, label %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIiEEi.exit._ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i_crit_edge, label %.lr.ph
+
+_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIiEEi.exit._ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i_crit_edge: ; preds = %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIiEEi.exit
+  %.pre = zext nneg i32 %i.v to i64
+  br label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
+
+.lr.ph:                                           ; preds = %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIiEEi.exit
   %i.av = load i32, ptr %i.ae, align 4, !tbaa !26
-  %i.aw = zext nneg i32 %i.v to i64               ; 6 uses
+  %i.aw = zext nneg i32 %i.v to i64               ; 4 uses
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.aw
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.aw
   br label %bb.g
@@ -264,10 +270,24 @@ bb.f:                                             ; preds = %bb.n
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.aw
   br i1 %exitcond.not, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i, label %bb.g, !llvm.loop !168
 
-_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.f
-  %i.ay = shl nuw nsw i64 %i.aw, 3                ; 4 uses
+_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.f, %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIiEEi.exit._ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i_crit_edge
+  %.pre-phi = phi i64 [ %.pre, %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIiEEi.exit._ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i_crit_edge ], [ %i.aw, %bb.f ] ; 3 uses
+  %i.ay = shl nuw nsw i64 %.pre-phi, 3            ; 4 uses
   %i.az = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24
-          to label %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit unwind label %bb.y ; 9 uses
+          to label %.noexc91 unwind label %bb.y   ; 10 uses
+
+.noexc91:                                         ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
+  store i64 0, ptr %i.az, align 8, !tbaa !71
+  %14 = getelementptr i8, ptr %i.az, i64 8        ; 3 uses
+  %15 = add nsw i64 %.pre-phi, -1                 ; 2 uses
+  %16 = icmp eq i64 %15, 0
+  br i1 %16, label %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit, label %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
+
+_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc91
+  %.idx.i.i.i.i.i.i.i88 = shl nuw nsw i64 %15, 3  ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 8 %14, i8 0, i64 %.idx.i.i.i.i.i.i.i88, i1 false), !tbaa !71
+  %17 = getelementptr inbounds nuw i8, ptr %14, i64 %.idx.i.i.i.i.i.i.i88
+  br label %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit
 
 .loopexit:                                        ; preds = %bb.e
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -406,12 +426,8 @@ bb.t:                                             ; preds = %.sink.split306.a, %
   call void @__cxa_free_exception(ptr %i.bj) #22
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit103
 
-_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit:               ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
-  store i64 0, ptr %i.az, align 8, !tbaa !71
-  %14 = getelementptr i8, ptr %i.az, i64 8
-  %15 = shl nuw nsw i64 %i.aw, 3
-  %.idx.i.i.i.i.i.i.i88 = add nsw i64 %15, -8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %14, i8 0, i64 %.idx.i.i.i.i.i.i.i88, i1 false), !tbaa !71
+_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc91
+  %.0.i.i.i.i.i89 = phi ptr [ %17, %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %14, %.noexc91 ]
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv265
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !71
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.ah
@@ -423,11 +439,15 @@ _ZNSt6vectorIlSaIlEEC2EmRKS0_.exit:               ; preds = %_ZNSt6vectorIlSaIlE
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 12
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !25
   %i.bx = icmp eq i32 %i.bw, 0
-  br i1 %i.bx, label %bb.u, label %.lr.ph220
+  br i1 %i.bx, label %bb.u, label %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIlEEi.exit
 
 bb.u:                                             ; preds = %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit
-  %.not277 = icmp eq i32 %i.v, 2147483647
-  br i1 %.not277, label %bb.v, label %bb.w
+  %18 = ptrtoint ptr %i.az to i64
+  %19 = ptrtoint ptr %.0.i.i.i.i.i89 to i64
+  %20 = sub i64 %19, %18
+  %21 = ashr exact i64 %20, 3                     ; 2 uses
+  %22 = icmp ult i64 %21, 2147483647
+  br i1 %22, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   invoke void @_ZN3gmx8internal13assertHandlerEPKcS2_S2_S2_i(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, ptr noundef nonnull @__PRETTY_FUNCTION__._ZZN3gmx18sumOverSimulationsIlEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommEENKUlvE_clEv, ptr noundef nonnull @.str.1, i32 noundef 238) #23
@@ -437,19 +457,23 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 bb.w:                                             ; preds = %bb.u
-  %i.by = invoke noundef i32 @_Z14tMPI_AllreducePKvPviP14tmpi_datatype_7tMPI_OpP10tmpi_comm_(ptr noundef null, ptr noundef nonnull %i.az, i32 noundef %i.v, ptr noundef %i.o, i32 noundef 2, ptr noundef %i.bt)
-          to label %.lr.ph220 unwind label %.thread169.loopexit ; 0 uses
+  %23 = trunc nuw nsw i64 %21 to i32
+  %i.by = invoke noundef i32 @_Z14tMPI_AllreducePKvPviP14tmpi_datatype_7tMPI_OpP10tmpi_comm_(ptr noundef null, ptr noundef nonnull %i.az, i32 noundef %23, ptr noundef %i.o, i32 noundef 2, ptr noundef %i.bt)
+          to label %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIlEEi.exit unwind label %.thread169.loopexit ; 0 uses
 
-.lr.ph220:                                        ; preds = %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit, %bb.w
+_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIlEEi.exit: ; preds = %bb.w, %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit
+  br i1 %.not307, label %_ZNSt6vectorIlSaIlEED2Ev.exit, label %.lr.ph220
+
+.lr.ph220:                                        ; preds = %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIlEEi.exit
   %i.bz = load i64, ptr %i.az, align 8, !tbaa !71
   br label %bb.z
 
 bb.x:                                             ; preds = %bb.z
   %indvars.iv.next261 = add nuw nsw i64 %indvars.iv260, 1 ; 2 uses
-  %exitcond264.not = icmp eq i64 %indvars.iv.next261, %i.aw
+  %exitcond264.not = icmp eq i64 %indvars.iv.next261, %.pre-phi
   br i1 %exitcond264.not, label %_ZNSt6vectorIlSaIlEED2Ev.exit, label %bb.z, !llvm.loop !169
 
-_ZNSt6vectorIlSaIlEED2Ev.exit:                    ; preds = %bb.x
+_ZNSt6vectorIlSaIlEED2Ev.exit:                    ; preds = %bb.x, %_ZNK3gmx11BiasSharing23sumOverSharingMainRanksENS_8ArrayRefIlEEi.exit
   tail call void @_ZdlPvm(ptr noundef nonnull %i.az, i64 noundef %i.ay) #25
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ae, i64 noundef %i.ad) #25
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit

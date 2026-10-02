@@ -205,12 +205,10 @@ bb.p:                                             ; preds = %bb.l
 bb.q:                                             ; preds = %bb.m, %bb.n
   %.181 = phi i8 [ 1, %bb.n ], [ %.080262, %bb.m ] ; 2 uses
   %i.by = add i32 %i.bv, -1
-  %or.cond9 = icmp ult i32 %i.by, 2               ; 2 uses
-  %or.cond11 = icmp ugt i32 %i.bv, -3
+  %or.cond9 = icmp ult i32 %i.by, 2
   %i.bz = zext i1 %or.cond9 to i32
   %.185 = add i32 %.084260, %i.bz                 ; 2 uses
-  %not.or.cond9 = xor i1 %or.cond9, true
-  %narrow = select i1 %not.or.cond9, i1 %or.cond11, i1 false
+  %narrow = icmp ugt i32 %i.bv, -3
   %spec.select142 = zext i1 %narrow to i32
   %.183 = add i32 %.082261, %spec.select142       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28

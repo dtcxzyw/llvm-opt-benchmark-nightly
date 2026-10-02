@@ -205,10 +205,8 @@ Vec_IntPush.exit:                                 ; preds = %bb.a, %Vec_IntGrow.
   store i32 0, ptr %i.n, align 4, !tbaa !19
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 6
   %i.p = load i16, ptr %i.o, align 2, !tbaa !37   ; 2 uses
-  %i.q = lshr i16 %i.p, 1                         ; 2 uses
-  %i.r = load i16, ptr %0, align 8, !tbaa !14     ; 2 uses
-  %2 = icmp uge i16 %i.q, %i.r
-  tail call void @llvm.assume(i1 %2)
+  %i.q = lshr i16 %i.p, 1
+  %i.r = load i16, ptr %0, align 8, !tbaa !14
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !15
   %narrow.i = sub nuw nsw i16 %i.q, %i.r
@@ -611,11 +609,11 @@ declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #11
 ; Function Attrs: nofree nounwind
 declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #11
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #12
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #10
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #12
 
 attributes #0 = { nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

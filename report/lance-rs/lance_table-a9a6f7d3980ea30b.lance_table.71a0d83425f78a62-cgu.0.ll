@@ -205,16 +205,11 @@ bb.a:
   br i1 %i.e, label %_RNvXsx_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB5_7HashMapNtNtCs40k4W9msRzi_5alloc6string6StringB13_ENtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12IntoIterator9into_iterCs9KQ7US1M400_11lance_table.exit, label %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i
 
 _RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i: ; preds = %bb.a
-  %i.f = mul i64 %.sroa.43.0.copyload.i, 48       ; 2 uses
-  %2 = add i64 %i.f, 48                           ; 2 uses
-  %3 = add i64 %.sroa.43.0.copyload.i, 17
-  %i.g = add i64 %3, %2                           ; 3 uses
-  %4 = icmp uge i64 %i.g, %2
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.g, 9223372036854775793
-  tail call void @llvm.assume(i1 %5)
-  %6 = sub i64 -48, %i.f
-  %i.h = getelementptr inbounds i8, ptr %.sroa.02.0.copyload.i, i64 %6
+  %i.f = mul i64 %.sroa.43.0.copyload.i, -48
+  %2 = mul i64 %.sroa.43.0.copyload.i, 49
+  %i.g = add i64 %2, 65
+  %3 = getelementptr i8, ptr %.sroa.02.0.copyload.i, i64 %i.f
+  %i.h = getelementptr i8, ptr %3, i64 -48
   br label %_RNvXsx_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB5_7HashMapNtNtCs40k4W9msRzi_5alloc6string6StringB13_ENtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12IntoIterator9into_iterCs9KQ7US1M400_11lance_table.exit
 
 _RNvXsx_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB5_7HashMapNtNtCs40k4W9msRzi_5alloc6string6StringB13_ENtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12IntoIterator9into_iterCs9KQ7US1M400_11lance_table.exit: ; preds = %bb.a, %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i
@@ -617,16 +612,11 @@ bb.az:                                            ; preds = %_RNvMNtNtCs1akgR21Q
   br i1 %i.ht, label %bb.ba, label %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %.loopexit341
-  %i.hu = mul i64 %.sroa.4232.0.copyload, 48      ; 2 uses
-  %4 = add i64 %i.hu, 48                          ; 2 uses
-  %5 = add i64 %.sroa.4232.0.copyload, 17
-  %i.hv = add i64 %5, %4                          ; 3 uses
-  %6 = icmp uge i64 %i.hv, %4
-  call void @llvm.assume(i1 %6)
-  %7 = icmp ult i64 %i.hv, 9223372036854775793
-  call void @llvm.assume(i1 %7)
-  %8 = sub i64 -48, %i.hu
-  %i.hw = getelementptr inbounds i8, ptr %.sroa.0231.0.copyload, i64 %8
+  %i.hu = mul i64 %.sroa.4232.0.copyload, -48
+  %4 = mul i64 %.sroa.4232.0.copyload, 49
+  %i.hv = add i64 %4, 65
+  %5 = getelementptr i8, ptr %.sroa.0231.0.copyload, i64 %i.hu
+  %i.hw = getelementptr i8, ptr %5, i64 -48
   br label %bb.ba
 
 bb.ba:                                            ; preds = %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, %.loopexit341
@@ -1029,7 +1019,7 @@ bb.fy:                                            ; preds = %bb.fs
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az)
   %.sroa.01066.0.copyload = load ptr, ptr %i.bk, align 8, !nonnull !68, !noundef !68 ; 5 uses
   %.sroa.41067.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
-  %.sroa.41067.0.copyload = load i64, ptr %.sroa.41067.0..sroa_idx, align 8 ; 5 uses
+  %.sroa.41067.0.copyload = load i64, ptr %.sroa.41067.0..sroa_idx, align 8 ; 4 uses
   %.sroa.51069.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 24
   %.sroa.51069.0.copyload = load i64, ptr %.sroa.51069.0..sroa_idx, align 8
   %.val3.i.i.i = load <16 x i8>, ptr %.sroa.01066.0.copyload, align 16, !noalias !71435
@@ -1037,16 +1027,9 @@ bb.fy:                                            ; preds = %bb.fs
   br i1 %i.tc, label %bb.gb, label %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %bb.fy
-  %2 = icmp slt i64 %.sroa.41067.0.copyload, 576460752303423487
-  tail call void @llvm.assume(i1 %2)
-  %i.td = shl i64 %.sroa.41067.0.copyload, 5      ; 2 uses
-  %3 = add i64 %i.td, 32                          ; 2 uses
-  %4 = add nsw i64 %.sroa.41067.0.copyload, 17
-  %i.te = add i64 %4, %3                          ; 3 uses
-  %5 = icmp uge i64 %i.te, %3
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.te, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.td = shl i64 %.sroa.41067.0.copyload, 5
+  %2 = mul i64 %.sroa.41067.0.copyload, 33
+  %i.te = add i64 %2, 49
   %i.tf = sub nuw nsw i64 -32, %i.td
   %i.tg = getelementptr inbounds i8, ptr %.sroa.01066.0.copyload, i64 %i.tf
   br label %bb.gb
@@ -1055,22 +1038,15 @@ bb.fz:                                            ; preds = %bb.fs
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba)
   %.sroa.01061.0.copyload = load ptr, ptr %i.bj, align 8, !nonnull !68, !noundef !68 ; 5 uses
   %.sroa.41062.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
-  %.sroa.41062.0.copyload = load i64, ptr %.sroa.41062.0..sroa_idx, align 8 ; 5 uses
+  %.sroa.41062.0.copyload = load i64, ptr %.sroa.41062.0..sroa_idx, align 8 ; 4 uses
   %.val3.i.i.i779 = load <16 x i8>, ptr %.sroa.01061.0.copyload, align 16, !noalias !71436
   %i.th = icmp eq i64 %.sroa.41062.0.copyload, 0
   br i1 %i.th, label %bb.ge, label %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i780
 
 _RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i780: ; preds = %bb.fz
-  %7 = icmp slt i64 %.sroa.41062.0.copyload, 576460752303423487
-  tail call void @llvm.assume(i1 %7)
-  %i.ti = shl i64 %.sroa.41062.0.copyload, 5      ; 2 uses
-  %8 = add i64 %i.ti, 32                          ; 2 uses
-  %9 = add nsw i64 %.sroa.41062.0.copyload, 17
-  %i.tj = add i64 %9, %8                          ; 3 uses
-  %10 = icmp uge i64 %i.tj, %8
-  tail call void @llvm.assume(i1 %10)
-  %11 = icmp ult i64 %i.tj, 9223372036854775793
-  tail call void @llvm.assume(i1 %11)
+  %i.ti = shl i64 %.sroa.41062.0.copyload, 5
+  %3 = mul i64 %.sroa.41062.0.copyload, 33
+  %i.tj = add i64 %3, 49
   %i.tk = sub nuw nsw i64 -32, %i.ti
   %i.tl = getelementptr inbounds i8, ptr %.sroa.01061.0.copyload, i64 %i.tk
   br label %bb.ge
@@ -1473,18 +1449,10 @@ bb.jm:                                            ; preds = %bb.jp, %bb.jk
   br i1 %i.abn, label %bb.jr, label %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i830
 
 _RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i830: ; preds = %bb.jm
-  %i.abo = mul i64 %.sroa.41072.0.copyload, 56    ; 2 uses
-  %12 = add i64 %i.abo, 56
-  %13 = icmp ult i64 %12, -15
-  tail call void @llvm.assume(i1 %13)
+  %i.abo = mul i64 %.sroa.41072.0.copyload, 56
   %i.abp = and i64 %i.abo, -16                    ; 2 uses
-  %14 = add i64 %i.abp, 64                        ; 2 uses
-  %i.abq = add i64 %.sroa.41072.0.copyload, 17
-  %i.abr = add i64 %i.abq, %14                    ; 3 uses
-  %15 = icmp uge i64 %i.abr, %14
-  tail call void @llvm.assume(i1 %15)
-  %16 = icmp ult i64 %i.abr, 9223372036854775793
-  tail call void @llvm.assume(i1 %16)
+  %i.abq = add i64 %.sroa.41072.0.copyload, 81
+  %i.abr = add i64 %i.abq, %i.abp
   %i.abs = sub i64 -64, %i.abp
   %i.abt = getelementptr inbounds i8, ptr %.sroa.01071.0.copyload, i64 %i.abs
   br label %bb.jr

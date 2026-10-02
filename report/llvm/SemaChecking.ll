@@ -205,9 +205,7 @@ bb.e:                                             ; preds = %bb.d
 _ZNK5clang9FieldDecl11getBitWidthEv.exit.thread:  ; preds = %_ZNK5clang4Type13isBooleanTypeEv.exit.thread, %select.unfold, %bb.c, %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #31
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %i.aw = load i32, ptr %i.av, align 4            ; 2 uses
-  %.not.i = trunc i32 %i.aw to i1
-  call void @llvm.assume(i1 %.not.i)
+  %i.aw = load i32, ptr %i.av, align 4
   %i.ax = lshr i32 %i.aw, 2
   %i.ay = and i32 %i.ax, 3
   %.off.i = add nsw i32 %i.ay, -1

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
   %i.l = load i32, ptr %i.k, align 8, !tbaa !41   ; 2 uses
-  %i.m = mul nsw i32 %4, 3                        ; 8 uses
+  %i.m = mul nsw i32 %4, 3                        ; 9 uses
   %i.n = add nsw i32 %i.m, 6                      ; 4 uses
   %i.o = icmp sgt i32 %i.l, %i.n
   br i1 %i.o, label %bb.d, label %.loopexit260
@@ -608,17 +608,15 @@ bb.am:                                            ; preds = %bb.ak, %bb.al, %bb.
   store float 0.000000e+00, ptr %i.h, align 4, !tbaa !12
   %i.iu = getelementptr inbounds nuw i8, ptr %i.j, i64 32 ; 5 uses
   %i.iv = load ptr, ptr %i.iu, align 8, !tbaa !35 ; 5 uses
-  %5 = icmp sgt i32 %4, -1
-  call void @llvm.assume(i1 %5)
-  %6 = zext nneg i32 %i.m to i64                  ; 5 uses
+  %5 = sext i32 %i.m to i64                       ; 4 uses
   %wide.trip.count.i.i = sext i32 %i.is to i64    ; 3 uses
-  %i.iw = sub nsw i64 %wide.trip.count.i.i, %6
+  %i.iw = sub nsw i64 %wide.trip.count.i.i, %5
   %xtraiter = and i64 %i.iw, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph107.i.i.prol.loopexit, label %.lr.ph107.i.i.prol
 
 .lr.ph107.i.i.prol:                               ; preds = %._crit_edge.i.i, %.lr.ph107.i.i.prol
-  %indvars.iv.i.i.prol = phi i64 [ %indvars.iv.next.i.i.prol, %.lr.ph107.i.i.prol ], [ %6, %._crit_edge.i.i ] ; 2 uses
+  %indvars.iv.i.i.prol = phi i64 [ %indvars.iv.next.i.i.prol, %.lr.ph107.i.i.prol ], [ %5, %._crit_edge.i.i ] ; 2 uses
   %i.ix = phi <2 x float> [ %i.je, %.lr.ph107.i.i.prol ], [ splat (float f0x00800000), %._crit_edge.i.i ] ; 2 uses
   %i.iy = phi <2 x float> [ %i.jd, %.lr.ph107.i.i.prol ], [ splat (float f0x7F7FFFFF), %._crit_edge.i.i ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph107.i.i.prol ], [ 0, %._crit_edge.i.i ]
@@ -637,10 +635,10 @@ bb.am:                                            ; preds = %bb.ak, %bb.al, %bb.
 .lr.ph107.i.i.prol.loopexit:                      ; preds = %.lr.ph107.i.i.prol, %._crit_edge.i.i
   %.lcssa325.unr = phi <2 x float> [ poison, %._crit_edge.i.i ], [ %i.jd, %.lr.ph107.i.i.prol ]
   %.lcssa.unr = phi <2 x float> [ poison, %._crit_edge.i.i ], [ %i.je, %.lr.ph107.i.i.prol ]
-  %indvars.iv.i.i.unr = phi i64 [ %6, %._crit_edge.i.i ], [ %indvars.iv.next.i.i.prol, %.lr.ph107.i.i.prol ]
+  %indvars.iv.i.i.unr = phi i64 [ %5, %._crit_edge.i.i ], [ %indvars.iv.next.i.i.prol, %.lr.ph107.i.i.prol ]
   %.unr = phi <2 x float> [ splat (float f0x00800000), %._crit_edge.i.i ], [ %i.je, %.lr.ph107.i.i.prol ]
   %.unr327 = phi <2 x float> [ splat (float f0x7F7FFFFF), %._crit_edge.i.i ], [ %i.jd, %.lr.ph107.i.i.prol ]
-  %i.jf = sub nsw i64 %6, %wide.trip.count.i.i
+  %i.jf = sub nsw i64 %5, %wide.trip.count.i.i
   %i.jg = icmp ugt i64 %i.jf, -4
   br i1 %i.jg, label %_path_bounding_box.exit, label %.lr.ph107.i.i
 
@@ -730,7 +728,11 @@ _path_bounding_box.exit:                          ; preds = %.lr.ph107.i.i, %.lr
   call void @cairo_move_to(ptr noundef %0, double noundef %i.lt, double noundef %i.lu) #25
   %i.lv = load i32, ptr %i.ir, align 8, !tbaa !36
   %i.lw = icmp slt i32 %i.m, %i.lv
-  br i1 %i.lw, label %.lr.ph277, label %._crit_edge278
+  br i1 %i.lw, label %.lr.ph277.preheader, label %._crit_edge278
+
+.lr.ph277.preheader:                              ; preds = %_path_bounding_box.exit
+  %6 = zext i32 %i.m to i64
+  br label %.lr.ph277
 
 ._crit_edge278:                                   ; preds = %.lr.ph277, %_path_bounding_box.exit
   %i.lx = load ptr, ptr %i.iu, align 8, !tbaa !35
@@ -744,8 +746,8 @@ _path_bounding_box.exit:                          ; preds = %.lr.ph107.i.i, %.lr
   %i.me = icmp eq i32 %i.md, %3
   br i1 %i.me, label %bb.an, label %bb.ap
 
-.lr.ph277:                                        ; preds = %_path_bounding_box.exit, %.lr.ph277
-  %indvars.iv291 = phi i64 [ %indvars.iv.next292, %.lr.ph277 ], [ %6, %_path_bounding_box.exit ] ; 2 uses
+.lr.ph277:                                        ; preds = %.lr.ph277.preheader, %.lr.ph277
+  %indvars.iv291 = phi i64 [ %6, %.lr.ph277.preheader ], [ %indvars.iv.next292, %.lr.ph277 ] ; 2 uses
   %i.mf = load ptr, ptr %i.iu, align 8, !tbaa !35
   %.idx315 = shl nuw nsw i64 %indvars.iv291, 3
   %i.mg = getelementptr inbounds nuw i8, ptr %i.mf, i64 %.idx315

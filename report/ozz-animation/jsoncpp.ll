@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %.0.i = phi ptr [ %i.g, %.preheader ], [ %1, %bb.b ] ; 2 uses
   %i.f = load i8, ptr %.0.i, align 1, !tbaa !50   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.0.i, i64 1
-  %or.cond.not.i = icmp ugt i8 %i.f, 31
-  br i1 %or.cond.not.i, label %.preheader, label %_ZN4JsonL24containsControlCharacterEPKc.exit, !llvm.loop !598
+  %or.cond.i = icmp ult i8 %i.f, 32
+  br i1 %or.cond.i, label %_ZN4JsonL24containsControlCharacterEPKc.exit, label %.preheader, !llvm.loop !598
 
 _ZN4JsonL24containsControlCharacterEPKc.exit:     ; preds = %.preheader
   %.not.i.not = icmp eq i8 %i.f, 0

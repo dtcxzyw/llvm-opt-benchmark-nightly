@@ -205,16 +205,11 @@ _RNvMs1_NtCsc96bKABWO34_9hashbrown3mapINtB5_7HashMapNtNtCscdodAO9FK5_5alloc6stri
   br i1 %i.m, label %bb.d, label %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RNvMs1_NtCsc96bKABWO34_9hashbrown3mapINtB5_7HashMapNtNtCscdodAO9FK5_5alloc6string6StringINtNtBR_3vec3VecBN_EE24with_capacity_and_hasherCsh4GC5dvIChH_27influxdb3_processing_engine.exit
-  %i.n = mul i64 %.sroa.446.0.copyload, 48        ; 2 uses
-  %3 = add i64 %i.n, 48                           ; 2 uses
-  %4 = add i64 %.sroa.446.0.copyload, 17
-  %i.o = add i64 %4, %3                           ; 3 uses
-  %5 = icmp uge i64 %i.o, %3
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.o, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
-  %7 = sub i64 -48, %i.n
-  %i.p = getelementptr inbounds i8, ptr %.sroa.0.0.copyload, i64 %7
+  %i.n = mul i64 %.sroa.446.0.copyload, -48
+  %3 = mul i64 %.sroa.446.0.copyload, 49
+  %i.o = add i64 %3, 65
+  %4 = getelementptr i8, ptr %.sroa.0.0.copyload, i64 %i.n
+  %i.p = getelementptr i8, ptr %4, i64 -48
   br label %bb.d
 
 bb.b:                                             ; preds = %.body, %bb.c
@@ -243,16 +238,11 @@ bb.d:                                             ; preds = %_RNvMs1_NtNtCsc96bK
   br i1 %i.v, label %bb.e, label %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i
 
 _RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i: ; preds = %bb.d
-  %i.w = mul i64 %.sroa.450.0.copyload, 48        ; 2 uses
-  %8 = add i64 %i.w, 48                           ; 2 uses
-  %9 = add i64 %.sroa.450.0.copyload, 17
-  %i.x = add i64 %9, %8                           ; 3 uses
-  %10 = icmp uge i64 %i.x, %8
-  tail call void @llvm.assume(i1 %10)
-  %11 = icmp ult i64 %i.x, 9223372036854775793
-  tail call void @llvm.assume(i1 %11)
-  %12 = sub i64 -48, %i.w
-  %i.y = getelementptr inbounds i8, ptr %.sroa.049.0.copyload, i64 %12
+  %i.w = mul i64 %.sroa.450.0.copyload, -48
+  %5 = mul i64 %.sroa.450.0.copyload, 49
+  %i.x = add i64 %5, 65
+  %6 = getelementptr i8, ptr %.sroa.049.0.copyload, i64 %i.w
+  %i.y = getelementptr i8, ptr %6, i64 -48
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i, %bb.d

@@ -204,7 +204,7 @@ _RNvXs2C_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_28InterpolatedStringFormatS
   %i.ab = icmp eq i8 %i.aa, 0                     ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 60 ; 2 uses
   %i.ad = load i8, ptr %i.ac, align 4, !range !61, !noalias !7245, !noundef !13
-  %i.ae = icmp eq i8 %i.ad, 0                     ; 3 uses
+  %i.ae = icmp eq i8 %i.ad, 0                     ; 2 uses
   %i.af = xor i1 %i.ab, %i.ae
   br i1 %i.af, label %_RNvXNtNtCscdodAO9FK5_5alloc3vec10partial_eqINtB4_3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated25InterpolatedStringElementENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eqCsEhZmuQNqkz_11ruff_linter.exit.thread, label %bb.f
 
@@ -250,8 +250,6 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ba, label %_RNvXs2C_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_28InterpolatedStringFormatSpecNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit, label %_RNvXNtNtCscdodAO9FK5_5alloc3vec10partial_eqINtB4_3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated25InterpolatedStringElementENtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eqCsEhZmuQNqkz_11ruff_linter.exit.thread
 
 bb.k:                                             ; preds = %bb.f
-  %2 = xor i1 %i.ae, true
-  tail call void @llvm.assume(i1 %2), !noalias !7245
   %i.bb = getelementptr inbounds nuw i8, ptr %i.x, i64 40
   %i.bc = load i32, ptr %i.bb, align 8, !noalias !7245, !noundef !13
   %i.bd = getelementptr inbounds nuw i8, ptr %i.y, i64 40
@@ -654,7 +652,7 @@ bb.a:
   %i.c = icmp eq i8 %i.b, 0                       ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 60 ; 2 uses
   %i.e = load i8, ptr %i.d, align 4, !range !61, !noundef !13
-  %i.f = icmp eq i8 %i.e, 0                       ; 3 uses
+  %i.f = icmp eq i8 %i.e, 0                       ; 2 uses
   %i.g = xor i1 %i.c, %i.f
   br i1 %i.g, label %_RNvXs2M_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_32InterpolatedStringLiteralElementNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit, label %bb.b
 
@@ -704,8 +702,6 @@ bb.g:                                             ; preds = %bb.f
   br label %_RNvXs2M_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_32InterpolatedStringLiteralElementNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.h:                                             ; preds = %bb.b
-  %2 = xor i1 %i.f, true
-  tail call void @llvm.assume(i1 %2)
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ad = load i32, ptr %i.ac, align 8, !noundef !13
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 40

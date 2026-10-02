@@ -205,23 +205,16 @@ bb.i:                                             ; preds = %.loopexit.i.i
 
 .loopexit92.i:                                    ; preds = %.loopexit.i.i, %.lr.ph.i.i.i, %bb.f
   %.sroa.062.0.copyload.i = load ptr, ptr %i.d, align 8, !noalias !4738, !nonnull !25, !noundef !25 ; 6 uses
-  %.sroa.463.0.copyload.i = load i64, ptr %i.ab, align 8, !noalias !4738 ; 5 uses
+  %.sroa.463.0.copyload.i = load i64, ptr %i.ab, align 8, !noalias !4738 ; 4 uses
   %.sroa.565.0.copyload.i = load i64, ptr %i.ad, align 8, !noalias !4738 ; 3 uses
   %.val3.i.i.i.i = load <16 x i8>, ptr %.sroa.062.0.copyload.i, align 16, !noalias !4744
   %i.ax = icmp eq i64 %.sroa.463.0.copyload.i, 0  ; 2 uses
   br i1 %i.ax, label %bb.j, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i: ; preds = %.loopexit92.i
-  %3 = icmp slt i64 %.sroa.463.0.copyload.i, 576460752303423487
-  call void @llvm.assume(i1 %3)
-  %i.ay = shl i64 %.sroa.463.0.copyload.i, 5      ; 2 uses
-  %4 = add i64 %i.ay, 32                          ; 2 uses
-  %5 = add nsw i64 %.sroa.463.0.copyload.i, 17
-  %i.az = add i64 %5, %4                          ; 3 uses
-  %6 = icmp uge i64 %i.az, %4
-  call void @llvm.assume(i1 %6)
-  %7 = icmp ult i64 %i.az, 9223372036854775793
-  call void @llvm.assume(i1 %7)
+  %i.ay = shl i64 %.sroa.463.0.copyload.i, 5
+  %3 = mul i64 %.sroa.463.0.copyload.i, 33
+  %i.az = add i64 %3, 49
   %i.ba = sub nuw nsw i64 -32, %i.ay
   %i.bb = getelementptr inbounds i8, ptr %.sroa.062.0.copyload.i, i64 %i.ba
   br label %bb.j
@@ -624,9 +617,7 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs45bxiIjzMqg_5salsa3key16Dat
   %i.cd = load i64, ptr %i.bf, align 8, !alias.scope !5985, !noalias !5986, !noundef !25
   %i.ce = icmp ugt i64 %i.cd, 4
   %.sink8.i12.i.i.i = select i1 %i.ce, ptr %i.bj, ptr %i.bf ; 2 uses
-  %i.cf = load i64, ptr %.sink8.i12.i.i.i, align 8, !alias.scope !5987, !noalias !5984, !noundef !25 ; 2 uses
-  %1 = icmp ne i64 %i.cf, 0
-  tail call void @llvm.assume(i1 %1)
+  %i.cf = load i64, ptr %.sink8.i12.i.i.i, align 8, !alias.scope !5987, !noalias !5984, !noundef !25
   %i.cg = add i64 %i.cf, -1
   store i64 %i.cg, ptr %.sink8.i12.i.i.i, align 8, !alias.scope !5987, !noalias !5984
   br label %.loopexit
@@ -935,9 +926,7 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs45bxiIjzMqg_5salsa3key16Dat
   %i.ce = load i64, ptr %i.bg, align 8, !alias.scope !6053, !noalias !6054, !noundef !25
   %i.cf = icmp ugt i64 %i.ce, 4
   %.sink8.i12.i.i.i = select i1 %i.cf, ptr %i.bk, ptr %i.bg ; 2 uses
-  %i.cg = load i64, ptr %.sink8.i12.i.i.i, align 8, !alias.scope !6055, !noalias !6052, !noundef !25 ; 2 uses
-  %2 = icmp ne i64 %i.cg, 0
-  tail call void @llvm.assume(i1 %2)
+  %i.cg = load i64, ptr %.sink8.i12.i.i.i, align 8, !alias.scope !6055, !noalias !6052, !noundef !25
   %i.ch = add i64 %i.cg, -1
   store i64 %i.ch, ptr %.sink8.i12.i.i.i, align 8, !alias.scope !6055, !noalias !6052
   br label %_RNvMs0_NtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphINtB5_8SmallSetNtNtB9_3key16DatabaseKeyIndexKj4_E6removeB9_.exit.i
@@ -1340,9 +1329,7 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs45bxiIjzMqg_5salsa3key16Dat
   %i.ka = load i64, ptr %i.jc, align 8, !alias.scope !7117, !noalias !7118, !noundef !25
   %i.kb = icmp ugt i64 %i.ka, 4
   %.sink8.i12.i.i.i.i = select i1 %i.kb, ptr %i.jg, ptr %i.jc ; 2 uses
-  %i.kc = load i64, ptr %.sink8.i12.i.i.i.i, align 8, !alias.scope !7119, !noalias !7116, !noundef !25 ; 2 uses
-  %2 = icmp ne i64 %i.kc, 0
-  tail call void @llvm.assume(i1 %2)
+  %i.kc = load i64, ptr %.sink8.i12.i.i.i.i, align 8, !alias.scope !7119, !noalias !7116, !noundef !25
   %i.kd = add i64 %i.kc, -1
   store i64 %i.kd, ptr %.sink8.i12.i.i.i.i, align 8, !alias.scope !7119, !noalias !7116
   br label %_RNvMs0_NtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphINtB5_8SmallSetNtNtB9_3key16DatabaseKeyIndexKj4_E6removeB9_.exit.i.i
@@ -1664,9 +1651,7 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs45bxiIjzMqg_5salsa3key16Dat
   %i.pp = load i64, ptr %i.or, align 8, !alias.scope !7150, !noalias !7151, !noundef !25
   %i.pq = icmp ugt i64 %i.pp, 4
   %.sink8.i12.i.i164.i.i = select i1 %i.pq, ptr %i.ov, ptr %i.or ; 2 uses
-  %i.pr = load i64, ptr %.sink8.i12.i.i164.i.i, align 8, !alias.scope !7152, !noalias !7149, !noundef !25 ; 2 uses
-  %3 = icmp ne i64 %i.pr, 0
-  tail call void @llvm.assume(i1 %3)
+  %i.pr = load i64, ptr %.sink8.i12.i.i164.i.i, align 8, !alias.scope !7152, !noalias !7149, !noundef !25
   %i.ps = add i64 %i.pr, -1
   store i64 %i.ps, ptr %.sink8.i12.i.i164.i.i, align 8, !alias.scope !7152, !noalias !7149
   br label %_RNvMs0_NtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphINtB5_8SmallSetNtNtB9_3key16DatabaseKeyIndexKj4_E6removeB9_.exit167.i.i

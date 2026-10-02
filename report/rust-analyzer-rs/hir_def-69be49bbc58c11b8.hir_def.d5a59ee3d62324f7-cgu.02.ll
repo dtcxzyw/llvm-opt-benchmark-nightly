@@ -202,8 +202,7 @@ bb.as:                                            ; preds = %.thread
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs33K2ylI4knu_10hir_expand8mod_path7ModPathEECsileJQcQObtj_7hir_def.exit unwind label %bb.ar
 
 bb.at:                                            ; preds = %bb.r
-  %i.dm = icmp ne ptr %i.bf, null                 ; 6 uses
-  %.not193 = xor i1 %i.dm, true
+  %i.dm = icmp ne ptr %i.bf, null                 ; 5 uses
   br i1 %i.dm, label %bb.au, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEECsileJQcQObtj_7hir_def.exit
 
 bb.au:                                            ; preds = %bb.at
@@ -455,7 +454,6 @@ bb.cb:                                            ; preds = %bb.bz
   br i1 %.not58, label %.noexc, label %_RNvNtCs8yWYkJLPqIi_8cov_mark4___rt3hit.exit
 
 bb.cc:                                            ; preds = %bb.by, %bb.ca
-  call void @llvm.assume(i1 %.not193)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.k, ptr noundef nonnull align 8 dereferenceable(40) %i.o, i64 40, i1 false)
   %i.fp = invoke noundef nonnull ptr @_RNvXskX_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_7UseTreeNtNtCshzWfHUSfYae_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.t)

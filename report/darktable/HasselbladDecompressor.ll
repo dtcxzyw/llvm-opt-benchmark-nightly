@@ -202,11 +202,11 @@ _ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequ
   %i.bs = icmp ugt i64 %i.br, 11                  ; 2 uses
   br label %.lr.ph.us
 
-.lr.ph.us:                                        ; preds = %._crit_edge.us, %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us
-  %indvars.iv344 = phi i64 [ %indvars.iv.next345, %._crit_edge.us ], [ 0, %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ] ; 2 uses
-  %.sroa.0121.0321.us = phi i64 [ %.sroa.0121.13.us, %._crit_edge.us ], [ 0, %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ]
-  %.sroa.28.0320.us = phi i32 [ %.sroa.28.13.us, %._crit_edge.us ], [ 0, %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ]
-  %.sroa.75160.0319.us = phi i32 [ %.sroa.75160.7.us, %._crit_edge.us ], [ 0, %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ]
+.lr.ph.us:                                        ; preds = %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us, %._crit_edge.us
+  %indvars.iv344 = phi i64 [ 0, %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ], [ %indvars.iv.next345, %._crit_edge.us ] ; 2 uses
+  %.sroa.0121.0321.us = phi i64 [ 0, %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ], [ %.sroa.0121.13.us, %._crit_edge.us ]
+  %.sroa.28.0320.us = phi i32 [ 0, %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ], [ %.sroa.28.13.us, %._crit_edge.us ]
+  %.sroa.75160.0319.us = phi i32 [ 0, %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ], [ %.sroa.75160.7.us, %._crit_edge.us ]
   %i.bt = load i16, ptr %i.be, align 8, !tbaa !165
   %i.bu = zext i16 %i.bt to i32                   ; 2 uses
   %i.bv = mul nuw nsw i64 %indvars.iv344, %i.bm
