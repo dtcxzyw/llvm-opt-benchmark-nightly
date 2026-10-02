@@ -204,11 +204,11 @@ bb.a:
   %i.p = alloca [16 x i8], align 8                ; 5 uses
   %i.q = alloca [104 x i8], align 8               ; 7 uses
   %i.r = alloca [104 x i8], align 8               ; 11 uses
-  %i.s = alloca [80 x i8], align 8                ; 23 uses
+  %i.s = alloca [80 x i8], align 8                ; 22 uses
   %i.t = alloca [56 x i8], align 8                ; 14 uses
   %i.u = alloca [104 x i8], align 8               ; 7 uses
   %.sroa.6.i.i = alloca [40 x i8], align 8        ; 6 uses
-  %i.v = alloca [104 x i8], align 8               ; 13 uses
+  %i.v = alloca [104 x i8], align 8               ; 14 uses
   %i.w = alloca [24 x i8], align 8                ; 4 uses
   %i.x = alloca [80 x i8], align 8                ; 15 uses
   %i.y = alloca [24 x i8], align 8                ; 6 uses
@@ -307,7 +307,10 @@ bb.a:
   %.sroa.531.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.u, i64 48
   %.sroa.58.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 48
   %.sroa.47.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 2 uses
-  %i.cg = getelementptr inbounds nuw i8, ptr %i.v, i64 32 ; 2 uses
+  %2 = insertelement <2 x ptr> poison, ptr %i.t, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.v, i64 1
+  %4 = getelementptr inbounds nuw i8, <2 x ptr> %3, <2 x i64> <i64 0, i64 32>
+  %i.cg = getelementptr inbounds nuw i8, ptr %i.v, i64 32
   %i.ch = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %.sroa.2.0..sroa_idx137.i = getelementptr inbounds nuw i8, ptr %i.s, i64 20
   %.sroa.3.0..sroa_idx139.i = getelementptr inbounds nuw i8, ptr %i.s, i64 22
@@ -320,7 +323,6 @@ bb.a:
   %i.ci = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.s, i64 32
   %i.ck = getelementptr inbounds nuw i8, ptr %i.s, i64 40
-  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 48
   %i.cl = getelementptr inbounds nuw i8, ptr %i.s, i64 56
   %.sroa.235.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 57
   %i.cm = getelementptr inbounds nuw i8, ptr %i.s, i64 64
@@ -723,8 +725,7 @@ bb.an:                                            ; preds = %bb.ak
   store ptr %i.ii, ptr %i.s, align 8, !noalias !698
   store i64 %i.ij, ptr %i.ci, align 8, !noalias !698
   store ptr %i.ip, ptr %i.cj, align 8, !noalias !698
-  store ptr %i.t, ptr %i.ck, align 8, !noalias !698
-  store ptr %i.cg, ptr %2, align 8, !noalias !698
+  store <2 x ptr> %4, ptr %i.ck, align 8, !noalias !698
   store i8 0, ptr %i.cl, align 8, !noalias !698
   store i8 1, ptr %.sroa.235.0..sroa_idx.i.i, align 1, !noalias !698
   store i16 0, ptr %i.cm, align 8, !noalias !698

@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 8
   store i64 0, ptr %i.r, align 8, !tbaa !95
   store i8 0, ptr %i.q, align 8, !tbaa !94
-  %i.s = add i64 %.057.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.s = add nsw i64 %.057.i.i.i.i.i.prol, -1     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 32 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -244,7 +244,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 104
   store i64 0, ptr %i.af, align 8, !tbaa !95
   store i8 0, ptr %i.ae, align 8, !tbaa !94
-  %i.ag = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.ag = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit205, label %.lr.ph.i.i.i.i.i, !llvm.loop !2438
@@ -647,7 +647,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal28gtest_suite_ConstructorTest_15CopyConstructorINS0_13node_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_NS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocISt4pairIKSA_SA_EEEEEE8TestBodyEv(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"struct.std::pair.887", align 8    ; 5 uses
+  %1 = alloca %"struct.std::pair.887", align 16   ; 5 uses
   %2 = alloca %"struct.absl::lts_20260526::container_internal::raw_hash_set<absl::lts_20260526::container_internal::NodeHashMapPolicy<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>, absl::lts_20260526::container_internal::StatefulTestingHash, absl::lts_20260526::container_internal::StatefulTestingEqual, absl::lts_20260526::container_internal::Alloc<std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>>>::EmplaceDecomposable", align 8 ; 4 uses
   %3 = alloca %class.anon.893, align 8            ; 5 uses
   %4 = alloca %"struct.absl::lts_20260526::container_internal::UniqueGenerator.806", align 8 ; 8 uses
@@ -695,9 +695,11 @@ bb.a:
 
 _ZN4absl12lts_2026052613node_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_NS0_18container_internal19StatefulTestingHashENS8_20StatefulTestingEqualENS8_5AllocISt4pairIKS7_S7_EEEECI2NS8_12raw_hash_setINS8_17NodeHashMapPolicyIS7_S7_EEJS9_SA_SF_EEEEmRKS9_RKSA_RKSF_.exit.preheader: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %27 = insertelement <2 x ptr> poison, ptr %6, i64 0
+  %28 = insertelement <2 x ptr> %27, ptr %i.i, i64 1
   br label %bb.g
 
 bb.b:                                             ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit
@@ -759,8 +761,7 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33, !noalias !3683
   store ptr %5, ptr %2, align 8, !tbaa !482, !noalias !3683
   call void @llvm.lifetime.start.p0(ptr nonnull %1), !noalias !3684
-  store ptr %6, ptr %1, align 8, !tbaa !151, !alias.scope !3685, !noalias !3686
-  store ptr %i.i, ptr %i.j, align 8, !tbaa !151, !alias.scope !3685, !noalias !3686
+  store <2 x ptr> %28, ptr %1, align 16, !tbaa !151, !alias.scope !3685, !noalias !3686
   invoke void @_ZNK4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocISt4pairIKS9_S9_EEEEE19EmplaceDecomposableclIS9_JRKSt21piecewise_construct_tSt5tupleIJOSF_EESO_IJOS9_EEEEESE_INSI_8iteratorEbERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.818") align 8 %7, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(64) %6, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt19piecewise_construct, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
           to label %bb.i unwind label %bb.k
 
@@ -1163,7 +1164,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal24CopyConstructorAllocTestINS0_13node_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_NS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocISt4pairIKS9_S9_EEEEEEEvv() local_unnamed_addr #2 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %0 = alloca %"struct.std::pair.887", align 8    ; 5 uses
+  %0 = alloca %"struct.std::pair.887", align 16   ; 5 uses
   %1 = alloca %"struct.absl::lts_20260526::container_internal::raw_hash_set<absl::lts_20260526::container_internal::NodeHashMapPolicy<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>, absl::lts_20260526::container_internal::StatefulTestingHash, absl::lts_20260526::container_internal::StatefulTestingEqual, absl::lts_20260526::container_internal::Alloc<std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>>>::EmplaceDecomposable", align 8 ; 4 uses
   %2 = alloca %class.anon.893, align 8            ; 5 uses
   %3 = alloca %"struct.absl::lts_20260526::container_internal::UniqueGenerator.806", align 8 ; 8 uses
@@ -1211,9 +1212,11 @@ bb.a:
 
 _ZN4absl12lts_2026052613node_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_NS0_18container_internal19StatefulTestingHashENS8_20StatefulTestingEqualENS8_5AllocISt4pairIKS7_S7_EEEECI2NS8_12raw_hash_setINS8_17NodeHashMapPolicyIS7_S7_EEJS9_SA_SF_EEEEmRKS9_RKSA_RKSF_.exit.preheader: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  %26 = insertelement <2 x ptr> poison, ptr %5, i64 0
+  %27 = insertelement <2 x ptr> %26, ptr %i.i, i64 1
   br label %bb.g
 
 bb.b:                                             ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit
@@ -1274,8 +1277,7 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #33, !noalias !3835
   store ptr %4, ptr %1, align 8, !tbaa !482, !noalias !3835
   call void @llvm.lifetime.start.p0(ptr nonnull %0), !noalias !3836
-  store ptr %5, ptr %0, align 8, !tbaa !151, !alias.scope !3837, !noalias !3838
-  store ptr %i.i, ptr %i.j, align 8, !tbaa !151, !alias.scope !3837, !noalias !3838
+  store <2 x ptr> %27, ptr %0, align 16, !tbaa !151, !alias.scope !3837, !noalias !3838
   invoke void @_ZNK4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocISt4pairIKS9_S9_EEEEE19EmplaceDecomposableclIS9_JRKSt21piecewise_construct_tSt5tupleIJOSF_EESO_IJOS9_EEEEESE_INSI_8iteratorEbERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.818") align 8 %6, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(64) %5, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt19piecewise_construct, ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
           to label %bb.i unwind label %bb.k
 
@@ -1678,7 +1680,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal28gtest_suite_ConstructorTest_15MoveConstructorINS0_13node_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_NS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocISt4pairIKSA_SA_EEEEEE8TestBodyEv(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"struct.std::pair.887", align 8    ; 5 uses
+  %1 = alloca %"struct.std::pair.887", align 16   ; 5 uses
   %2 = alloca %"struct.absl::lts_20260526::container_internal::raw_hash_set<absl::lts_20260526::container_internal::NodeHashMapPolicy<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>, absl::lts_20260526::container_internal::StatefulTestingHash, absl::lts_20260526::container_internal::StatefulTestingEqual, absl::lts_20260526::container_internal::Alloc<std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>>>::EmplaceDecomposable", align 8 ; 4 uses
   %3 = alloca %class.anon.893, align 8            ; 5 uses
   %4 = alloca %"struct.absl::lts_20260526::container_internal::UniqueGenerator.806", align 8 ; 8 uses
@@ -1727,9 +1729,11 @@ bb.a:
 
 _ZN4absl12lts_2026052613node_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_NS0_18container_internal19StatefulTestingHashENS8_20StatefulTestingEqualENS8_5AllocISt4pairIKS7_S7_EEEECI2NS8_12raw_hash_setINS8_17NodeHashMapPolicyIS7_S7_EEJS9_SA_SF_EEEEmRKS9_RKSA_RKSF_.exit.preheader: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %28 = insertelement <2 x ptr> poison, ptr %6, i64 0
+  %29 = insertelement <2 x ptr> %28, ptr %i.i, i64 1
   br label %bb.h
 
 bb.b:                                             ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit
@@ -1785,8 +1789,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33, !noalias !3958
   store ptr %5, ptr %2, align 8, !tbaa !482, !noalias !3958
   call void @llvm.lifetime.start.p0(ptr nonnull %1), !noalias !3959
-  store ptr %6, ptr %1, align 8, !tbaa !151, !alias.scope !3960, !noalias !3961
-  store ptr %i.i, ptr %i.j, align 8, !tbaa !151, !alias.scope !3960, !noalias !3961
+  store <2 x ptr> %29, ptr %1, align 16, !tbaa !151, !alias.scope !3960, !noalias !3961
   invoke void @_ZNK4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocISt4pairIKS9_S9_EEEEE19EmplaceDecomposableclIS9_JRKSt21piecewise_construct_tSt5tupleIJOSF_EESO_IJOS9_EEEEESE_INSI_8iteratorEbERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.818") align 8 %7, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(64) %6, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt19piecewise_construct, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
           to label %bb.j unwind label %bb.l
 
@@ -2189,7 +2192,7 @@ bb.a:
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal24MoveConstructorAllocTestINS0_13node_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_NS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocISt4pairIKS9_S9_EEEEEEEvv() local_unnamed_addr #2 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %0 = alloca %"class.absl::lts_20260526::container_internal::CommonFields", align 8 ; 4 uses
-  %1 = alloca %"struct.std::pair.887", align 8    ; 5 uses
+  %1 = alloca %"struct.std::pair.887", align 16   ; 5 uses
   %2 = alloca %"struct.absl::lts_20260526::container_internal::raw_hash_set<absl::lts_20260526::container_internal::NodeHashMapPolicy<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>, absl::lts_20260526::container_internal::StatefulTestingHash, absl::lts_20260526::container_internal::StatefulTestingEqual, absl::lts_20260526::container_internal::Alloc<std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>>>::EmplaceDecomposable", align 8 ; 4 uses
   %3 = alloca %class.anon.893, align 8            ; 5 uses
   %4 = alloca %"struct.absl::lts_20260526::container_internal::UniqueGenerator.806", align 8 ; 8 uses
@@ -2238,9 +2241,11 @@ bb.a:
 
 _ZN4absl12lts_2026052613node_hash_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_NS0_18container_internal19StatefulTestingHashENS8_20StatefulTestingEqualENS8_5AllocISt4pairIKS7_S7_EEEECI2NS8_12raw_hash_setINS8_17NodeHashMapPolicyIS7_S7_EEJS9_SA_SF_EEEEmRKS9_RKSA_RKSF_.exit.preheader: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %28 = insertelement <2 x ptr> poison, ptr %6, i64 0
+  %29 = insertelement <2 x ptr> %28, ptr %i.i, i64 1
   br label %bb.h
 
 bb.b:                                             ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit
@@ -2302,8 +2307,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33, !noalias !4116
   store ptr %5, ptr %2, align 8, !tbaa !482, !noalias !4116
   call void @llvm.lifetime.start.p0(ptr nonnull %1), !noalias !4117
-  store ptr %6, ptr %1, align 8, !tbaa !151, !alias.scope !4118, !noalias !4119
-  store ptr %i.i, ptr %i.j, align 8, !tbaa !151, !alias.scope !4118, !noalias !4119
+  store <2 x ptr> %29, ptr %1, align 16, !tbaa !151, !alias.scope !4118, !noalias !4119
   invoke void @_ZNK4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_EEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocISt4pairIKS9_S9_EEEEE19EmplaceDecomposableclIS9_JRKSt21piecewise_construct_tSt5tupleIJOSF_EESO_IJOS9_EEEEESE_INSI_8iteratorEbERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.818") align 8 %7, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(64) %6, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt19piecewise_construct, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
           to label %bb.j unwind label %bb.l
 

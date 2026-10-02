@@ -205,7 +205,7 @@ bb.a:
   %i.df = alloca [48 x i8], align 8               ; 6 uses
   %i.dg = alloca [56 x i8], align 8               ; 9 uses
   %i.dh = alloca [16 x i8], align 4               ; 6 uses
-  %i.di = alloca [64 x i8], align 8               ; 12 uses
+  %i.di = alloca [64 x i8], align 16              ; 12 uses
   %i.dj = alloca [24 x i8], align 8               ; 10 uses
   %i.dk = alloca [16 x i8], align 4               ; 6 uses
   %i.dl = alloca [16 x i8], align 4               ; 8 uses
@@ -608,7 +608,7 @@ bb.lh:                                            ; preds = %bb.a
   %.sroa.8933.16..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %.sroa.4930.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 4
   %i.alj = getelementptr inbounds nuw i8, ptr %i.dj, i64 16
-  %.sroa.4847.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.di, i64 8 ; 2 uses
+  %.sroa.4847.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.di, i64 8
   %.sroa.5848.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.di, i64 16 ; 4 uses
   %.sroa.6849.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.di, i64 24 ; 3 uses
   %.sroa.7.0..sroa_idx850 = getelementptr inbounds nuw i8, ptr %i.di, i64 32
@@ -707,6 +707,8 @@ bb.lh:                                            ; preds = %bb.a
   %i.aml = getelementptr inbounds nuw i8, ptr %i.cx, i64 4
   %i.amm = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.amn = icmp eq i64 %.val3.i, 0
+  %4 = insertelement <2 x ptr> poison, ptr %.val2.i, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %i.ajl, i64 1
   %i.amo = insertelement <4 x ptr> poison, ptr %1, i64 2
   %i.amp = insertelement <4 x ptr> %i.amo, ptr %i.n, i64 3
   br label %bb.li
@@ -1109,12 +1111,11 @@ bb.nh:                                            ; preds = %.noexc608
   call void @llvm.assume(i1 %i.aqh), !noalias !16877
   %i.aqi = getelementptr inbounds nuw [16 x i8], ptr %.sroa.7932.16.copyload, i64 %.sroa.8933.16.copyload
   call void @llvm.lifetime.start.p0(ptr nonnull %i.di), !noalias !16879
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9852.0..sroa_idx, i8 0, i64 16, i1 false), !noalias !16877
-  store ptr %.val2.i, ptr %i.di, align 8, !noalias !16879
-  store ptr %i.ajl, ptr %.sroa.4847.0..sroa_idx, align 8, !noalias !16879
-  store ptr %.sroa.7932.16.copyload, ptr %.sroa.5848.0..sroa_idx, align 8, !noalias !16879
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.9852.0..sroa_idx, i8 0, i64 16, i1 false), !noalias !16877
+  store <2 x ptr> %5, ptr %i.di, align 16, !noalias !16879
+  store ptr %.sroa.7932.16.copyload, ptr %.sroa.5848.0..sroa_idx, align 16, !noalias !16879
   store ptr %.sroa.7932.16.copyload, ptr %.sroa.6849.0..sroa_idx, align 8, !noalias !16879
-  store i64 %i.aqf, ptr %.sroa.7.0..sroa_idx850, align 8, !noalias !16879
+  store i64 %i.aqf, ptr %.sroa.7.0..sroa_idx850, align 16, !noalias !16879
   store ptr %i.aqi, ptr %.sroa.8851.0..sroa_idx, align 8, !noalias !16879
   br i1 %i.amn, label %._crit_edge, label %.lr.ph
 
@@ -1122,7 +1123,7 @@ bb.nh:                                            ; preds = %.noexc608
   %i.aqj = phi ptr [ %i.ash, %bb.od ], [ %.val2.i, %bb.nh ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !16880)
   %i.aqk = getelementptr inbounds nuw i8, ptr %i.aqj, i64 56
-  store ptr %i.aqk, ptr %i.di, align 8, !alias.scope !16881, !noalias !16882
+  store ptr %i.aqk, ptr %i.di, align 16, !alias.scope !16881, !noalias !16882
   call void @llvm.experimental.noalias.scope.decl(metadata !16883), !noalias !16877
   %i.aql = load ptr, ptr %.sroa.8851.0..sroa_idx, align 8, !alias.scope !16884, !noalias !16885, !nonnull !15, !noundef !15
   %i.aqm = load ptr, ptr %.sroa.6849.0..sroa_idx, align 8, !alias.scope !16884, !noalias !16885, !nonnull !15, !noundef !15 ; 4 uses
@@ -1478,7 +1479,7 @@ bb.od:                                            ; preds = %bb.ob
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dg), !noalias !16879
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dh), !noalias !16879
-  %i.ash = load ptr, ptr %i.di, align 8, !alias.scope !16907, !noalias !16882, !nonnull !15, !noundef !15 ; 2 uses
+  %i.ash = load ptr, ptr %i.di, align 16, !alias.scope !16907, !noalias !16882, !nonnull !15, !noundef !15 ; 2 uses
   %i.asi = load ptr, ptr %.sroa.4847.0..sroa_idx, align 8, !alias.scope !16907, !noalias !16882, !nonnull !15, !noundef !15
   %i.asj = icmp eq ptr %i.ash, %i.asi
   br i1 %i.asj, label %._crit_edge, label %.lr.ph

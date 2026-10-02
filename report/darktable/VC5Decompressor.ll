@@ -205,7 +205,7 @@ define linkonce_odr hidden void @_ZNK8rawspeed15VC5Decompressor28combineFinalLow
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !6688   ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 568
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !6848, !noalias !7054 ; 11 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !6848, !noalias !7054 ; 12 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 592
   %i.e = load i32, ptr %i.d, align 8, !tbaa !6771, !noalias !7054
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 608
@@ -318,6 +318,8 @@ bb.a:
   %i.bm = shl i64 %i.bl, 2                        ; 2 uses
   %i.bn = getelementptr i8, ptr %i.c, i64 %i.bm
   %scevgep = getelementptr i8, ptr %i.bn, i64 -2
+  %1 = getelementptr i8, ptr %i.c, <2 x i64> <i64 0, i64 2> ; 2 uses
+  %2 = shufflevector <2 x ptr> %1, <2 x ptr> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   %scevgep357 = getelementptr i8, ptr %i.c, i64 2
   %scevgep358 = getelementptr i8, ptr %i.c, i64 %i.bm ; 4 uses
   %i.bo = shl nuw nsw i64 %i.av, 1                ; 2 uses
@@ -331,7 +333,7 @@ bb.a:
   %i.bu = getelementptr i8, ptr %i.c, i64 %i.bo   ; 2 uses
   %i.bv = insertelement <2 x ptr> poison, ptr %i.bu, i64 0
   %i.bw = insertelement <2 x ptr> %i.bv, ptr %i.c, i64 1
-  %i.bx = getelementptr i8, <2 x ptr> %i.bw, i64 2 ; 2 uses
+  %i.bx = getelementptr i8, <2 x ptr> %i.bw, i64 2
   %i.by = shufflevector <2 x ptr> %i.bx, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1> ; 3 uses
   %scevgep361 = getelementptr i8, ptr %i.bu, i64 2 ; 3 uses
   %scevgep362 = getelementptr i8, ptr %i.c, i64 %i.bs ; 4 uses
@@ -352,7 +354,7 @@ bb.a:
   %i.ck = shl i64 %i.cj, 1
   %i.cl = getelementptr i8, ptr %.sroa.0298.0.copyload, i64 %i.ck
   %scevgep366 = getelementptr i8, ptr %i.cl, i64 %i.cb ; 4 uses
-  %i.cm = insertelement <4 x ptr> poison, ptr %i.c, i64 0 ; 2 uses
+  %i.cm = insertelement <4 x ptr> poison, ptr %i.c, i64 0
   %i.cn = shufflevector <4 x ptr> %i.cm, <4 x ptr> poison, <4 x i32> zeroinitializer
   %i.co = insertelement <4 x ptr> poison, ptr %scevgep358, i64 0 ; 2 uses
   %i.cp = insertelement <4 x ptr> %i.co, ptr %scevgep360, i64 1
@@ -370,6 +372,7 @@ bb.a:
   %i.db = insertelement <4 x ptr> %i.da, ptr %scevgep359, i64 3
   %i.dc = insertelement <4 x ptr> %i.cs, ptr %scevgep358, i64 1
   %i.dd = shufflevector <4 x ptr> %i.dc, <4 x ptr> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %3 = shufflevector <2 x ptr> %1, <2 x ptr> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %i.de = insertelement <4 x ptr> %i.co, ptr %scevgep363, i64 1
   %i.df = insertelement <4 x ptr> %i.de, ptr %scevgep364, i64 2
   %i.dg = insertelement <4 x ptr> %i.df, ptr %scevgep365, i64 3
@@ -379,7 +382,6 @@ bb.a:
   %i.dk = insertelement <4 x ptr> poison, ptr %scevgep362, i64 0 ; 2 uses
   %i.dl = insertelement <4 x ptr> %i.dk, ptr %scevgep358, i64 1
   %i.dm = shufflevector <4 x ptr> %i.dl, <4 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %1 = shufflevector <2 x ptr> %i.bx, <2 x ptr> poison, <4 x i32> <i32 1, i32 poison, i32 0, i32 poison>
   %i.dn = shufflevector <4 x ptr> %i.dj, <4 x ptr> %i.by, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
   %i.do = insertelement <4 x ptr> poison, ptr %scevgep361, i64 0
   %i.dp = insertelement <4 x ptr> %i.do, ptr %scevgep359, i64 1
@@ -408,11 +410,11 @@ bb.a:
   %i.em = shufflevector <4 x ptr> %i.el, <4 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %min.iters.check = icmp samesign ult i32 %i.h, 32
   %i.en = icmp ult <4 x ptr> %i.cn, %i.cr
-  %i.eo = insertelement <4 x ptr> %1, ptr %scevgep359, i64 1
-  %i.ep = insertelement <4 x ptr> %i.eo, ptr %.sroa.0257.0.copyload, i64 3
+  %i.eo = insertelement <4 x ptr> %3, ptr %scevgep359, i64 1
+  %4 = shufflevector <4 x ptr> %i.eo, <4 x ptr> %i.by, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
+  %i.ep = insertelement <4 x ptr> %4, ptr %.sroa.0257.0.copyload, i64 3
   %i.eq = icmp ult <4 x ptr> %i.ep, %i.ct
   %i.er = and <4 x i1> %i.en, %i.eq
-  %2 = shufflevector <4 x ptr> %i.cm, <4 x ptr> %i.by, <4 x i32> <i32 0, i32 0, i32 0, i32 5>
   %i.es = icmp ult <4 x ptr> %2, %i.cx
   %i.et = icmp ult <4 x ptr> %i.db, %i.dd
   %i.eu = and <4 x i1> %i.es, %i.et

@@ -204,30 +204,32 @@ bb.g:                                             ; preds = %bb.f
   br label %_Z14gmx_md5_appendP11md5_state_sPKhi.exit25
 
 _Z14gmx_md5_appendP11md5_state_sPKhi.exit25:      ; preds = %bb.g, %._crit_edge.i18, %._crit_edge.i18.thread
-  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %1 = load i32, ptr %i.az, align 4, !tbaa !9
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %2 = load i32, ptr %i.ba, align 4, !tbaa !9
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.bb = load i32, ptr %3, align 4, !tbaa !9
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %5 = load i32, ptr %4, align 4, !tbaa !9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
-  %i.bb = load i32, ptr %i.az, align 4, !tbaa !9
-  %1 = load <2 x i32>, ptr %i.az, align 4, !tbaa !9
-  %2 = shufflevector <2 x i32> %1, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 0, i32 0>
-  %3 = and <4 x i32> %2, <i32 -1, i32 -16777216, i32 16711680, i32 65280>
-  %4 = zext <4 x i32> %3 to <4 x i64>
-  %5 = shl nuw <4 x i64> %4, <i64 32, i64 0, i64 0, i64 0>
-  %6 = and i32 %i.bb, 255
-  %.sroa.0.0.insert.ext = zext nneg i32 %6 to i64
-  %7 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %5)
-  %op.rdx51 = or disjoint i64 %7, %.sroa.0.0.insert.ext
+  %.sroa.8.0.insert.shift45 = zext i32 %2 to i64
+  %.sroa.5.0.insert.insert = shl nuw i64 %.sroa.8.0.insert.shift45, 32
+  %6 = insertelement <4 x i32> poison, i32 %1, i64 0
+  %7 = shufflevector <4 x i32> %6, <4 x i32> poison, <4 x i32> zeroinitializer
+  %8 = and <4 x i32> %7, <i32 -16777216, i32 16711680, i32 65280, i32 255>
+  %9 = zext <4 x i32> %8 to <4 x i64>
+  %10 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %9)
+  %op.rdx51 = or disjoint i64 %10, %.sroa.5.0.insert.insert
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %op.rdx51, 0
-  %8 = load i32, ptr %i.ba, align 4, !tbaa !9
-  %9 = load <2 x i32>, ptr %i.ba, align 4, !tbaa !9
-  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 0, i32 0>
-  %11 = and <4 x i32> %10, <i32 -1, i32 -16777216, i32 16711680, i32 65280>
-  %12 = zext <4 x i32> %11 to <4 x i64>
-  %13 = shl nuw <4 x i64> %12, <i64 32, i64 0, i64 0, i64 0>
-  %14 = and i32 %8, 255
-  %.sroa.9.8.insert.ext = zext nneg i32 %14 to i64
-  %i.bc = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %13)
-  %op.rdx = or disjoint i64 %i.bc, %.sroa.9.8.insert.ext
+  %.sroa.17.8.insert.shift49 = zext i32 %5 to i64
+  %.sroa.14.8.insert.insert = shl nuw i64 %.sroa.17.8.insert.shift49, 32
+  %11 = insertelement <4 x i32> poison, i32 %i.bb, i64 0
+  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> zeroinitializer
+  %13 = and <4 x i32> %12, <i32 -16777216, i32 16711680, i32 65280, i32 255>
+  %14 = zext <4 x i32> %13 to <4 x i64>
+  %i.bc = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %14)
+  %op.rdx = or disjoint i64 %i.bc, %.sroa.14.8.insert.insert
   %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %op.rdx, 1
   ret { i64, i64 } %.fca.1.insert
 }

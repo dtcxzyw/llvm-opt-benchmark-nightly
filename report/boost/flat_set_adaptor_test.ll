@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost7movelib15detail_adaptive26op_merge_blocks_with_irregINS0_16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEENS0_7inverseINS4_3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEEEES8_NS3_IS6_EES8_SI_NS0_7move_opEEET3_T_SM_T0_T1_RT2_SP_SL_NS0_9iter_sizeISO_E4typeEST_ST_ST_T4_bT5_(ptr dead_on_unwind noalias writable sret(%"class.boost::movelib::reverse_iterator.159") align 8 %0, ptr noundef align 8 dead_on_return %1, ptr noundef align 8 dead_on_return %2, ptr noundef align 8 dead_on_return %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef align 8 dead_on_return %5, ptr noundef align 8 dead_on_return %6, i64 noundef %7, i64 noundef %8, i64 noundef %9, i64 noundef %10, i1 noundef zeroext %11) local_unnamed_addr #1 comdat {
 bb.a:
-  %12 = alloca %"class.boost::movelib::reverse_iterator.159", align 16 ; 2 uses
+  %12 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 3 uses
   %13 = alloca %"class.boost::movelib::reverse_iterator.159", align 16 ; 2 uses
   %14 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 6 uses
   %15 = alloca %"class.boost::movelib::reverse_iterator", align 8 ; 2 uses
@@ -215,7 +215,8 @@ bb.a:
   br i1 %.not330, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %18 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   %i.c = sub nsw i64 0, %7                        ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %7, 0               ; 2 uses
@@ -223,16 +224,19 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %16, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %18 = load <2 x ptr>, ptr %1, align 8, !tbaa !399, !noalias !14791
+  %.pre = load ptr, ptr %1, align 8, !tbaa !401, !noalias !14791
+  %.pre373 = load ptr, ptr %i.a, align 8, !tbaa !491, !noalias !14791
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit
+  %19 = phi ptr [ %.pre373, %.lr.ph ], [ %i.lq, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ]
+  %20 = phi ptr [ %.pre, %.lr.ph ], [ %storemerge.i.i, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ]
   %i.h = phi i64 [ %10, %.lr.ph ], [ %i.lu, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
   %.0332 = phi i64 [ %9, %.lr.ph ], [ %i.ls, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ] ; 3 uses
   %.0245331 = phi i64 [ %8, %.lr.ph ], [ %i.lv, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
-  %19 = phi <2 x ptr> [ %18, %.lr.ph ], [ %21, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ]
   call void @llvm.experimental.noalias.scope.decl(metadata !14791)
-  store <2 x ptr> %19, ptr %12, align 16, !tbaa !399, !alias.scope !14791
+  store ptr %20, ptr %12, align 8, !tbaa !401, !alias.scope !14791
+  store ptr %19, ptr %18, align 8, !tbaa !491, !alias.scope !14791
   call void @llvm.experimental.noalias.scope.decl(metadata !14792)
   %i.i = load <2 x ptr>, ptr %3, align 8, !tbaa !399, !noalias !14792
   store <2 x ptr> %i.i, ptr %13, align 16, !tbaa !399, !alias.scope !14792
@@ -635,8 +639,6 @@ _ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0E
   %i.lu = add i64 %.sroa.speculated, %.neg24
   %i.lv = add i64 %.0245331, -1                   ; 2 uses
   %.not = icmp eq i64 %i.lv, 0
-  %20 = insertelement <2 x ptr> poison, ptr %storemerge.i.i, i64 0
-  %21 = insertelement <2 x ptr> %20, ptr %i.lq, i64 1
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !14788
 
 ._crit_edge:                                      ; preds = %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit, %bb.a
@@ -1039,7 +1041,7 @@ bb.a:
   %25 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 5 uses
   %26 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 5 uses
   %27 = alloca %"struct.boost::movelib::antistable.24", align 8 ; 4 uses
-  %28 = alloca %"class.boost::movelib::reverse_iterator.159", align 16 ; 2 uses
+  %28 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 3 uses
   %29 = alloca %"class.boost::movelib::reverse_iterator.159", align 16 ; 2 uses
   %30 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 9 uses
   %31 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 10 uses
@@ -1047,7 +1049,8 @@ bb.a:
   br i1 %.not191, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
+  %32 = getelementptr inbounds nuw i8, ptr %28, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.c = sub nsw i64 0, %7                        ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %7, 0               ; 2 uses
@@ -1068,16 +1071,19 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %32 = load <2 x ptr>, ptr %1, align 8, !tbaa !399, !noalias !15055
+  %.pre = load ptr, ptr %1, align 8, !tbaa !401, !noalias !15055
+  %.pre198 = load ptr, ptr %i.a, align 8, !tbaa !491, !noalias !15055
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit
+  %33 = phi ptr [ %.pre198, %.lr.ph ], [ %i.io, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ]
+  %34 = phi ptr [ %.pre, %.lr.ph ], [ %storemerge.i.i, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ]
   %i.u = phi i64 [ %10, %.lr.ph ], [ %i.is, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
   %.0193 = phi i64 [ %9, %.lr.ph ], [ %i.iq, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ] ; 3 uses
   %.0178192 = phi i64 [ %8, %.lr.ph ], [ %i.it, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
-  %33 = phi <2 x ptr> [ %32, %.lr.ph ], [ %35, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ]
   call void @llvm.experimental.noalias.scope.decl(metadata !15055)
-  store <2 x ptr> %33, ptr %28, align 16, !tbaa !399, !alias.scope !15055
+  store ptr %34, ptr %28, align 8, !tbaa !401, !alias.scope !15055
+  store ptr %33, ptr %32, align 8, !tbaa !491, !alias.scope !15055
   call void @llvm.experimental.noalias.scope.decl(metadata !15056)
   %i.v = load <2 x ptr>, ptr %3, align 8, !tbaa !399, !noalias !15056
   store <2 x ptr> %i.v, ptr %29, align 16, !tbaa !399, !alias.scope !15056
@@ -1480,8 +1486,6 @@ _ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0E
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #23
   %i.it = add i64 %.0178192, -1                   ; 2 uses
   %.not = icmp eq i64 %i.it, 0
-  %34 = insertelement <2 x ptr> poison, ptr %storemerge.i.i, i64 0
-  %35 = insertelement <2 x ptr> %34, ptr %i.io, i64 1
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !15052
 
 ._crit_edge:                                      ; preds = %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit, %bb.a
@@ -1884,7 +1888,7 @@ bb.a:
   %20 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 5 uses
   %21 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 5 uses
   %22 = alloca %"struct.boost::movelib::antistable.24", align 8 ; 4 uses
-  %23 = alloca %"class.boost::movelib::reverse_iterator.159", align 16 ; 2 uses
+  %23 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 3 uses
   %24 = alloca %"class.boost::movelib::reverse_iterator.159", align 16 ; 2 uses
   %25 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 9 uses
   %26 = alloca %"class.boost::movelib::reverse_iterator.159", align 8 ; 10 uses
@@ -1892,7 +1896,8 @@ bb.a:
   br i1 %.not208, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
+  %27 = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   %i.c = sub nsw i64 0, %7                        ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %7, 0               ; 2 uses
@@ -1911,16 +1916,19 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %27 = load <2 x ptr>, ptr %1, align 8, !tbaa !399, !noalias !17365
+  %.pre = load ptr, ptr %1, align 8, !tbaa !401, !noalias !17365
+  %.pre213 = load ptr, ptr %i.a, align 8, !tbaa !491, !noalias !17365
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit
+  %28 = phi ptr [ %.pre213, %.lr.ph ], [ %i.km, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ]
+  %29 = phi ptr [ %.pre, %.lr.ph ], [ %storemerge.i.i, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ]
   %i.s = phi i64 [ %10, %.lr.ph ], [ %i.kq, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
   %.0210 = phi i64 [ %9, %.lr.ph ], [ %i.ko, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ] ; 3 uses
   %.0198209 = phi i64 [ %8, %.lr.ph ], [ %i.kr, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
-  %28 = phi <2 x ptr> [ %27, %.lr.ph ], [ %30, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit ]
   call void @llvm.experimental.noalias.scope.decl(metadata !17365)
-  store <2 x ptr> %28, ptr %23, align 16, !tbaa !399, !alias.scope !17365
+  store ptr %29, ptr %23, align 8, !tbaa !401, !alias.scope !17365
+  store ptr %28, ptr %27, align 8, !tbaa !491, !alias.scope !17365
   call void @llvm.experimental.noalias.scope.decl(metadata !17366)
   %i.t = load <2 x ptr>, ptr %3, align 8, !tbaa !399, !noalias !17366
   store <2 x ptr> %i.t, ptr %24, align 16, !tbaa !399, !alias.scope !17366
@@ -2323,8 +2331,6 @@ _ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0E
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #23
   %i.kr = add i64 %.0198209, -1                   ; 2 uses
   %.not = icmp eq i64 %i.kr, 0
-  %29 = insertelement <2 x ptr> poison, ptr %storemerge.i.i, i64 0
-  %30 = insertelement <2 x ptr> %29, ptr %i.km, i64 1
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !17362
 
 ._crit_edge:                                      ; preds = %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEEppEv.exit, %bb.a

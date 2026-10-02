@@ -203,12 +203,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.l = zext <4 x i8> %i.k to <4 x i16>
   %i.m = load <4 x i8>, ptr %.03850, align 1, !tbaa !14
   %i.n = zext <4 x i8> %i.m to <4 x i16>
-  %i.o = tail call i16 @llvm.vector.reduce.add.v4i16(<4 x i16> %i.n)
+  %i.o = tail call i16 @llvm.vector.reduce.add.v4i16(<4 x i16> %i.l)
   %rdx.op = add nuw nsw <4 x i16> %i.h, %i.j
-  %rdx.op71 = add nuw nsw <4 x i16> %rdx.op, %i.l
+  %rdx.op71 = add nuw nsw <4 x i16> %rdx.op, %i.n
   %i.p = tail call i16 @llvm.vector.reduce.add.v4i16(<4 x i16> %rdx.op71)
-  %op.rdx72 = add nuw nsw i16 %i.p, 8
-  %op.rdx73 = add nuw nsw i16 %op.rdx72, %i.o
+  %op.rdx72 = add nuw nsw i16 %i.o, 8
+  %op.rdx73 = add nuw nsw i16 %i.p, %op.rdx72
   %i.q = lshr i16 %op.rdx73, 4
   %i.r = trunc nuw i16 %i.q to i8
   store i8 %i.r, ptr %.051, align 1, !tbaa !14
@@ -258,23 +258,19 @@ bb.a:
   %.02839 = phi i32 [ %4, %.preheader33 ], [ %i.ag, %.preheader ] ; 2 uses
   %.138 = phi ptr [ %.03042, %.preheader33 ], [ %i.ae, %.preheader ] ; 2 uses
   %.13237 = phi ptr [ %.03141, %.preheader33 ], [ %i.af, %.preheader ] ; 3 uses
-  %6 = getelementptr inbounds i8, ptr %.13237, i64 %3 ; 2 uses
-  %i.i = getelementptr inbounds i8, ptr %6, i64 %3 ; 2 uses
+  %i.i = getelementptr inbounds i8, ptr %.13237, i64 %3 ; 2 uses
   %i.j = getelementptr inbounds i8, ptr %i.i, i64 %3 ; 2 uses
-  %7 = load <8 x i8>, ptr %.13237, align 1, !tbaa !14
-  %i.k = load <8 x i8>, ptr %6, align 1, !tbaa !14
+  %i.k = load <8 x i8>, ptr %.13237, align 1, !tbaa !14
   %i.l = load <8 x i8>, ptr %i.i, align 1, !tbaa !14
   %i.m = load <8 x i8>, ptr %i.j, align 1, !tbaa !14
-  %8 = shufflevector <8 x i8> %7, <8 x i8> %i.k, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %9 = shufflevector <8 x i8> %i.l, <8 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %10 = shufflevector <32 x i8> %8, <32 x i8> %9, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %11 = shufflevector <8 x i8> %i.m, <8 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %12 = shufflevector <32 x i8> %10, <32 x i8> %11, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39>
-  %13 = zext <32 x i8> %12 to <32 x i16>
+  %6 = shufflevector <8 x i8> %i.m, <8 x i8> %i.k, <24 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = shufflevector <8 x i8> %i.l, <8 x i8> poison, <24 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %8 = shufflevector <24 x i8> %6, <24 x i8> %7, <24 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
+  %9 = zext <24 x i8> %8 to <24 x i16>
   %i.n = getelementptr inbounds i8, ptr %i.j, i64 %3 ; 2 uses
   %i.o = getelementptr inbounds i8, ptr %i.n, i64 %3 ; 2 uses
   %i.p = getelementptr inbounds i8, ptr %i.o, i64 %3 ; 2 uses
-  %i.q = getelementptr inbounds i8, ptr %i.p, i64 %3
+  %i.q = getelementptr inbounds i8, ptr %i.p, i64 %3 ; 2 uses
   %i.r = load <8 x i8>, ptr %i.n, align 1, !tbaa !14
   %i.s = load <8 x i8>, ptr %i.o, align 1, !tbaa !14
   %i.t = load <8 x i8>, ptr %i.p, align 1, !tbaa !14
@@ -284,10 +280,18 @@ bb.a:
   %i.x = shufflevector <32 x i8> %i.v, <32 x i8> %i.w, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.y = shufflevector <8 x i8> %i.u, <8 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.z = shufflevector <32 x i8> %i.x, <32 x i8> %i.y, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39>
-  %i.aa = zext <32 x i8> %i.z to <32 x i16>
-  %rdx.op = add nuw nsw <32 x i16> %13, %i.aa
-  %i.ab = tail call i16 @llvm.vector.reduce.add.v32i16(<32 x i16> %rdx.op)
-  %op.rdx = add nuw nsw i16 %i.ab, 32
+  %i.aa = zext <32 x i8> %i.z to <32 x i16>       ; 2 uses
+  %10 = getelementptr inbounds i8, ptr %i.q, i64 %3
+  %11 = load <8 x i8>, ptr %10, align 1, !tbaa !14
+  %12 = zext <8 x i8> %11 to <8 x i16>
+  %13 = shufflevector <32 x i16> %i.aa, <32 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %rdx.op = add nuw nsw <8 x i16> %13, %12
+  %14 = shufflevector <8 x i16> %rdx.op, <8 x i16> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %15 = shufflevector <32 x i16> %14, <32 x i16> %i.aa, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
+  %16 = tail call i16 @llvm.vector.reduce.add.v32i16(<32 x i16> %15)
+  %i.ab = tail call i16 @llvm.vector.reduce.add.v24i16(<24 x i16> %9)
+  %op.rdx75 = add nuw nsw i16 %i.ab, 32
+  %op.rdx = add nuw nsw i16 %op.rdx75, %16
   %i.ac = lshr i16 %op.rdx, 6
   %i.ad = trunc nuw i16 %i.ac to i8
   %i.ae = getelementptr inbounds nuw i8, ptr %.138, i64 1 ; 2 uses
@@ -688,6 +692,9 @@ declare i16 @llvm.vector.reduce.add.v4i16(<4 x i16>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.vector.reduce.add.v32i16(<32 x i16>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.add.v24i16(<24 x i16>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v16i32(<16 x i32>) #7

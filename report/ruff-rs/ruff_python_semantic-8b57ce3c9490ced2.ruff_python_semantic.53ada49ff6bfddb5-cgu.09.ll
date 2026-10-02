@@ -202,7 +202,7 @@ bb.a:
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   %.sroa.5.i.i.i.i = alloca [24 x i8], align 8    ; 5 uses
   %i.f = alloca [24 x i8], align 8                ; 10 uses
-  %i.g = alloca [16 x i8], align 8                ; 6 uses
+  %i.g = alloca [16 x i8], align 16               ; 5 uses
   %i.h = alloca [136 x i8], align 8               ; 5 uses
   %i.i = alloca [32 x i8], align 8                ; 8 uses
   %i.j = alloca [144 x i8], align 8               ; 4 uses
@@ -416,7 +416,6 @@ bb.t:                                             ; preds = %bb.p, %bb.by, %bb.b
   %i.cw = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.cx = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %i.cy = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  %4 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.cz = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.sroa.461.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 4 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 19 uses
@@ -451,10 +450,15 @@ bb.t:                                             ; preds = %bb.p, %bb.by, %bb.b
   %.sroa.7.0..sroa_idx42.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %.sroa.8.0..sroa_idx44.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 65
   %.not.not.not.i.not.not335.not = icmp eq i64 %3, 0
-  br i1 %.not.not.not.i.not.not335.not, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze7logging19is_logger_candidates_0EB2j_.exit.loopexit, label %.lr.ph
+  br i1 %.not.not.not.i.not.not335.not, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze7logging19is_logger_candidates_0EB2j_.exit.loopexit, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %_RNCNvNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze7logging19is_logger_candidates_0B7_.exit.i, %bb.t
-  %i.dl = phi ptr [ %i.dm, %_RNCNvNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze7logging19is_logger_candidates_0B7_.exit.i ], [ %2, %bb.t ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.t
+  %4 = insertelement <2 x ptr> poison, ptr %i.i, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %i.cy, i64 1
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %_RNCNvNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze7logging19is_logger_candidates_0B7_.exit.i, %.lr.ph.preheader
+  %i.dl = phi ptr [ %i.dm, %_RNCNvNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze7logging19is_logger_candidates_0B7_.exit.i ], [ %2, %.lr.ph.preheader ] ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 24 ; 2 uses
   %i.dn = getelementptr i8, ptr %i.dl, i64 8
   %.val3.i = load ptr, ptr %i.dn, align 8, !noalias !240, !nonnull !4, !noundef !4 ; 9 uses
@@ -552,8 +556,7 @@ _RINvMNtCs4NRVxsYgnAr_4core3stre4findcECs7bpTdHNYxeX_20ruff_python_semantic.exit
   store ptr %.val3.i, ptr %i.cw, align 8, !noalias !248
   store i64 %.val4.i, ptr %i.cx, align 8, !noalias !248
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !251
-  store ptr %i.i, ptr %i.g, align 8, !noalias !251
-  store ptr %i.cy, ptr %4, align 8, !noalias !251
+  store <2 x ptr> %5, ptr %i.g, align 16, !noalias !251
   %i.ek = invoke { ptr, i64 } @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtBa_5slice4iter4IterReEENtNtNtB8_6traits8iterator8Iterator4nextCs7bpTdHNYxeX_20ruff_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.g)
           to label %.noexc33 unwind label %.loopexit.split-lp.loopexit.split-lp ; 2 uses
 

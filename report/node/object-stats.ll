@@ -204,12 +204,12 @@ declare void @_ZN2v88internal17RelocIteratorBaseINS0_9RelocInfoEE4nextEv(ptr nou
 define hidden void @_ZN2v88internal20ObjectStatsCollector7CollectEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %1 = alloca %"class.v8::internal::CombinedHeapObjectIterator", align 8 ; 12 uses
-  %2 = alloca %"class.v8::internal::ObjectStatsCollectorImpl", align 8 ; 32 uses
-  %3 = alloca %"class.v8::internal::ObjectStatsCollectorImpl", align 8 ; 31 uses
+  %2 = alloca %"class.v8::internal::ObjectStatsCollectorImpl", align 8 ; 35 uses
+  %3 = alloca %"class.v8::internal::ObjectStatsCollectorImpl", align 8 ; 34 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.a = load ptr, ptr %0, align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load ptr, ptr %i.b, align 8              ; 4 uses
+  %i.c = load ptr, ptr %i.b, align 8              ; 7 uses
   store ptr %i.a, ptr %2, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr %i.c, ptr %i.d, align 8
@@ -238,10 +238,14 @@ bb.a:
   store float 1.000000e+00, ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 120
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 136
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 136
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 663344
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 663352
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 663360
+  %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 663368
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 663376
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 663384
-  store ptr getelementptr inbounds nuw inrange(-16, 184) (i8, ptr @_ZTVN2v88internal19FieldStatsCollectorE, i64 16), ptr %i.s, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 184) (i8, ptr @_ZTVN2v88internal19FieldStatsCollectorE, i64 16), ptr %4, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 144
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 192
   store ptr %i.w, ptr %i.v, align 8
@@ -253,18 +257,23 @@ bb.a:
   store float 1.000000e+00, ptr %i.z, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 184
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aa, i8 0, i64 16, i1 false)
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 200
-  store ptr %i.a, ptr %i.ab, align 8
-  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 208
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, <4 x i64> <i64 663344, i64 663352, i64 663360, i64 663368>
-  store <4 x ptr> %4, ptr %i.ac, align 8
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 200
+  store ptr %i.a, ptr %8, align 8
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 208
+  store ptr %5, ptr %9, align 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 216
+  store ptr %6, ptr %i.ab, align 8
+  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 224
+  store ptr %7, ptr %i.ac, align 8
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 232
+  store ptr %i.s, ptr %10, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 240
   store ptr %i.t, ptr %i.ad, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 248
   store ptr %i.u, ptr %i.ae, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ag = load ptr, ptr %i.af, align 8            ; 4 uses
+  %i.ag = load ptr, ptr %i.af, align 8            ; 7 uses
   store ptr %i.a, ptr %3, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.ag, ptr %i.ah, align 8
@@ -292,10 +301,14 @@ bb.a:
   store float 1.000000e+00, ptr %i.at, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %3, i64 120
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false)
-  %i.av = getelementptr inbounds nuw i8, ptr %3, i64 136
+  %11 = getelementptr inbounds nuw i8, ptr %3, i64 136
+  %12 = getelementptr inbounds nuw i8, ptr %i.ag, i64 663344
+  %13 = getelementptr inbounds nuw i8, ptr %i.ag, i64 663352
+  %14 = getelementptr inbounds nuw i8, ptr %i.ag, i64 663360
+  %i.av = getelementptr inbounds nuw i8, ptr %i.ag, i64 663368
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ag, i64 663376
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ag, i64 663384
-  store ptr getelementptr inbounds nuw inrange(-16, 184) (i8, ptr @_ZTVN2v88internal19FieldStatsCollectorE, i64 16), ptr %i.av, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 184) (i8, ptr @_ZTVN2v88internal19FieldStatsCollectorE, i64 16), ptr %11, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 144
   %i.az = getelementptr inbounds nuw i8, ptr %3, i64 192
   store ptr %i.az, ptr %i.ay, align 8
@@ -307,11 +320,16 @@ bb.a:
   store float 1.000000e+00, ptr %i.bc, align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 184
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bd, i8 0, i64 16, i1 false)
-  %i.be = getelementptr inbounds nuw i8, ptr %3, i64 200
-  store ptr %i.a, ptr %i.be, align 8
-  %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 208
-  %5 = getelementptr inbounds nuw i8, ptr %i.ag, <4 x i64> <i64 663344, i64 663352, i64 663360, i64 663368>
-  store <4 x ptr> %5, ptr %i.bf, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %3, i64 200
+  store ptr %i.a, ptr %15, align 8
+  %16 = getelementptr inbounds nuw i8, ptr %3, i64 208
+  store ptr %12, ptr %16, align 8
+  %i.be = getelementptr inbounds nuw i8, ptr %3, i64 216
+  store ptr %13, ptr %i.be, align 8
+  %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 224
+  store ptr %14, ptr %i.bf, align 8
+  %17 = getelementptr inbounds nuw i8, ptr %3, i64 232
+  store ptr %i.av, ptr %17, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 240
   store ptr %i.aw, ptr %i.bg, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 248

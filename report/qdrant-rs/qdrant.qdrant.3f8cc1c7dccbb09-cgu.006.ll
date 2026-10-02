@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %._crit_edge74.i.i, 
   %i.cx = phi ptr [ %i.br, %.thread70.i.i.i ], [ %.phi.trans.insert.i.i, %._crit_edge74.i.i ] ; 6 uses
   %i.cy = phi ptr [ %i.bo, %.thread70.i.i.i ], [ %.pre79.i.i, %._crit_edge74.i.i ] ; 7 uses
   %i.cz = phi ptr [ %i.cm, %.thread70.i.i.i ], [ %.pre77.i.i, %._crit_edge74.i.i ] ; 8 uses
-  %i.da = phi ptr [ %i.bq, %.thread70.i.i.i ], [ %.pre75.i.i, %._crit_edge74.i.i ] ; 7 uses
+  %i.da = phi ptr [ %i.bq, %.thread70.i.i.i ], [ %.pre75.i.i, %._crit_edge74.i.i ] ; 8 uses
   %i.db = phi ptr [ %.sroa.935.0..sroa_idx.i.i.i, %.thread70.i.i.i ], [ %.phi.trans.insert.i.i.i, %._crit_edge74.i.i ] ; 6 uses
   %i.dc = phi ptr [ %i.cn, %.thread70.i.i.i ], [ %i.ct, %._crit_edge74.i.i ] ; 6 uses
   %i.dd = load i64, ptr %i.da, align 8, !range !35, !noalias !13031, !noundef !17 ; 3 uses
@@ -239,7 +239,10 @@ bb.am:                                            ; preds = %bb.ak
   br label %bb.aq
 
 .thread.i.i.i.i:                                  ; preds = %bb.ak
-  %i.dk = getelementptr inbounds nuw i8, ptr %i.da, i64 8 ; 2 uses
+  %i.dk = getelementptr inbounds nuw i8, ptr %i.da, i64 8
+  %3 = insertelement <2 x ptr> poison, ptr %i.da, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.cy, i64 1
+  %5 = getelementptr inbounds nuw i8, <2 x ptr> %4, <2 x i64> <i64 8, i64 0>
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
   store ptr %i.dk, ptr %i.dl, align 8, !noalias !13030
   %.sroa.784.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 128
@@ -249,8 +252,6 @@ bb.am:                                            ; preds = %bb.ak
   %.sroa.1087.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 2 uses
   store i8 0, ptr %.sroa.1087.0..sroa_idx.i.i.i.i, align 8, !noalias !13030
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !13030
-  %3 = insertelement <2 x ptr> poison, ptr %i.dk, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %i.cy, i64 1
   br label %bb.bc
 
 .thread130.i.i.i.i:                               ; preds = %bb.ak
@@ -435,7 +436,7 @@ bb.bc:                                            ; preds = %._crit_edge63.i.i.i
   %i.fi = phi ptr [ %i.cz, %.thread.i.i.i.i ], [ %.pre66.i.i.i, %._crit_edge63.i.i.i ]
   %i.fj = phi ptr [ %.sroa.1087.0..sroa_idx.i.i.i.i, %.thread.i.i.i.i ], [ %.phi.trans.insert127.i.i.i.i, %._crit_edge63.i.i.i ]
   %i.fk = phi ptr [ %i.dl, %.thread.i.i.i.i ], [ %i.fa, %._crit_edge63.i.i.i ]
-  %i.fl = phi <2 x ptr> [ %4, %.thread.i.i.i.i ], [ %i.fb, %._crit_edge63.i.i.i ]
+  %i.fl = phi <2 x ptr> [ %5, %.thread.i.i.i.i ], [ %i.fb, %._crit_edge63.i.i.i ]
   %i.fm = getelementptr inbounds nuw i8, ptr %1, i64 144
   store ptr %i.fi, ptr %i.fm, align 8, !noalias !13033
   %.sroa.810.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 160

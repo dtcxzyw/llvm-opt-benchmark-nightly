@@ -204,7 +204,7 @@ iter.check:                                       ; preds = %._crit_edge.i, %.th
   %i.ar = sext i32 %i.aq to i64                   ; 3 uses
   %i.as = getelementptr inbounds i8, ptr %i.f, i64 %i.ar ; 3 uses
   %i.at = sext i32 %.02643.i to i64               ; 8 uses
-  %i.au = sext i32 %i.i to i64                    ; 22 uses
+  %i.au = sext i32 %i.i to i64                    ; 23 uses
   %wide.trip.count38.i = sext i32 %.044.i to i64  ; 3 uses
   %i.av = sub nsw i64 %wide.trip.count38.i, %i.at ; 7 uses
   %min.iters.check = icmp ult i64 %i.av, 2
@@ -607,7 +607,7 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph32.i20
 stbhw__draw_vline.exit224:                        ; preds = %bb.j
   %i.kh = load ptr, ptr %i.e, align 8, !tbaa !67  ; 4 uses
   %i.ki = load i32, ptr %i.g, align 8, !tbaa !68  ; 2 uses
-  %i.kj = shl nsw i32 %i.d, 1                     ; 7 uses
+  %i.kj = shl nsw i32 %i.d, 1                     ; 8 uses
   %i.kk = add i32 %i.dt, %i.kj                    ; 4 uses
   %i.kl = getelementptr inbounds [16 x i8], ptr @stbhw__corner_colors_to_edge_color, i64 %i.hi
   %i.km = getelementptr inbounds [4 x i8], ptr %i.kl, i64 %i.ix
@@ -881,17 +881,21 @@ stbhw__draw_clipped_corner.exit:                  ; preds = %bb.l, %bb.n, %stbhw
   br i1 %.not139, label %stbhw__draw_clipped_corner.exit248, label %bb.o
 
 bb.o:                                             ; preds = %stbhw__draw_clipped_corner.exit
-  %i.pf = load ptr, ptr %i.e, align 8, !tbaa !67  ; 6 uses
+  %i.pf = load ptr, ptr %i.e, align 8, !tbaa !67  ; 7 uses
   %i.pg = load i32, ptr %i.g, align 8, !tbaa !68
   %i.ph = add nsw i32 %i.fm, %2
-  %i.pi = sext i32 %i.ph to i64                   ; 6 uses
-  %i.pj = sext i32 %i.pg to i64                   ; 6 uses
+  %i.pi = sext i32 %i.ph to i64                   ; 7 uses
+  %i.pj = sext i32 %i.pg to i64                   ; 7 uses
   %i.pk = icmp slt i32 %i.d, 2
   br i1 %i.pk, label %.split.us.i, label %bb.p
 
 .split.us.i:                                      ; preds = %bb.o
   %.not298 = icmp eq i32 %i.d, 1
   br i1 %.not298, label %.preheader.split.split.preheader.2.i244.thread.thread, label %.split.us.1.i
+
+.split.us.1.i:                                    ; preds = %.split.us.i
+  %.not283 = icmp slt i32 %i.d, %i.kj
+  br i1 %.not283, label %.preheader.split.split.preheader.2.i244.thread, label %.split.us.2.i246
 
 bb.p:                                             ; preds = %bb.o
   %i.pl = add nsw i64 %i.pi, -2
@@ -908,11 +912,8 @@ bb.p:                                             ; preds = %bb.o
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.pu, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
   %i.pv = getelementptr i8, ptr %i.pu, i64 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.pv, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
-  br label %.split.us.1.i
-
-.split.us.1.i:                                    ; preds = %bb.p, %.split.us.i
-  %.not283 = icmp slt i32 %i.d, %i.kj
-  br i1 %.not283, label %.preheader.split.split.preheader.2.i244.thread, label %.split.us.2.i246
+  %.not283299 = icmp slt i32 %i.d, %i.kj
+  br i1 %.not283299, label %bb.q, label %.split.us.2.i246
 
 .preheader.split.split.preheader.2.i244.thread.thread: ; preds = %.split.us.i
   %i.pw = add nsw i64 %i.pi, -1
@@ -930,21 +931,24 @@ bb.p:                                             ; preds = %bb.o
   %.pre293 = mul nsw i64 %i.au, 3
   %.pn = mul nsw i64 %i.pj, %i.pi
   %i.qd = getelementptr inbounds i8, ptr %i.pf, i64 %.pn
-  %i.qe = getelementptr i8, ptr %i.qd, i64 %.pre293 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.qe, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
-  %9 = icmp samesign ult i32 %i.d, 2
-  br i1 %9, label %.split.us.2.i246, label %bb.q
-
-bb.q:                                             ; preds = %.preheader.split.split.preheader.2.i244.thread
-  %i.qf = getelementptr i8, ptr %i.qe, i64 3
+  %i.qe = getelementptr i8, ptr %i.qd, i64 %.pre293
   br label %.split.us.2.i246.sink.split
 
-.split.us.2.i246.sink.split:                      ; preds = %bb.q, %.preheader.split.split.preheader.2.i244.thread.thread
-  %.sink = phi ptr [ %i.qc, %.preheader.split.split.preheader.2.i244.thread.thread ], [ %i.qf, %bb.q ]
+bb.q:                                             ; preds = %bb.p
+  %.pre293301 = mul nsw i64 %i.au, 3
+  %.pn302 = mul nsw i64 %i.pj, %i.pi
+  %9 = getelementptr inbounds i8, ptr %i.pf, i64 %.pn302
+  %10 = getelementptr i8, ptr %9, i64 %.pre293301 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %10, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
+  %i.qf = getelementptr i8, ptr %10, i64 3
+  br label %.split.us.2.i246.sink.split
+
+.split.us.2.i246.sink.split:                      ; preds = %bb.q, %.preheader.split.split.preheader.2.i244.thread.thread, %.preheader.split.split.preheader.2.i244.thread
+  %.sink = phi ptr [ %i.qe, %.preheader.split.split.preheader.2.i244.thread ], [ %i.qc, %.preheader.split.split.preheader.2.i244.thread.thread ], [ %i.qf, %bb.q ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sink, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
   br label %.split.us.2.i246
 
-.split.us.2.i246:                                 ; preds = %.split.us.2.i246.sink.split, %.preheader.split.split.preheader.2.i244.thread, %.split.us.1.i
+.split.us.2.i246:                                 ; preds = %.split.us.2.i246.sink.split, %bb.p, %.split.us.1.i
   %.not284 = icmp slt i32 %i.fm, %i.kj
   br i1 %.not284, label %.preheader.split.split.us.3.i247.thread, label %stbhw__draw_clipped_corner.exit248
 

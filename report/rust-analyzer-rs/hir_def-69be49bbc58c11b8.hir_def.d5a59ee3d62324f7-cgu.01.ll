@@ -204,7 +204,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecmEECsil
 define hidden void @_RNvXNtNtCsbSS6DM8SDEO_5alloc3vec14spec_from_iterINtB4_3VecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtCsileJQcQObtj_7hir_def3hir3PatEEINtB2_12SpecFromIterBU_INtNtNtNtCshzWfHUSfYae_4core4iter8adapters10filter_map9FilterMapINtNtB2q_9enumerate9EnumerateINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB3T_9generated5nodes4ExprEENCNvNvMs2_NtNtB1s_10expr_store5lowerNtB5e_13ExprCollector25maybe_collect_expr_as_pat13collect_tuple0EE9from_iterB1s_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(32) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %i.b = alloca [16 x i8], align 8                ; 6 uses
+  %i.b = alloca [16 x i8], align 16               ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = alloca [16 x i8], align 8                ; 6 uses
@@ -330,15 +330,16 @@ bb.k:                                             ; preds = %.noexc8.i
   call void @llvm.experimental.noalias.scope.decl(metadata !4579)
   %i.an = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %.sroa.4.0..sroa_idx1.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.5.0..sroa_idx2.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %2 = insertelement <2 x ptr> poison, ptr %i.f, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.ao, i64 1
   br label %bb.l
 
 bb.l:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtCsileJQcQObtj_7hir_def3hir3PatEE7reserveB1c_.exit.i.i.i, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !4580
-  store ptr %i.f, ptr %i.b, align 8, !noalias !4581
-  store ptr %i.ao, ptr %i.ap, align 8, !noalias !4581
+  store <2 x ptr> %3, ptr %i.b, align 16, !noalias !4581
   br label %bb.m
 
 bb.m:                                             ; preds = %.noexc6.i.i.i, %bb.l

@@ -205,18 +205,18 @@ bb.f:                                             ; preds = %bb.e
 define hidden void @_RINvMsj_NtCscdodAO9FK5_5alloc3vecINtB6_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures28DiagnosticRelatedInformationE16extend_desugaredINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map9FilterMapINtNtB2s_6filter6FilterINtNtNtB2w_5slice4iter4IterNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10AnnotationENCINvB4f_21secondary_annotationsB3M_E0ENCNvNtCs3aZOKTqqjPR_11ruff_server4lint17to_lsp_diagnostics0_0EEB5L_(ptr noalias noundef align 8 dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(32) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [128 x i8], align 8               ; 6 uses
-  %i.b = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = alloca [16 x i8], align 16               ; 8 uses
   %i.c = alloca [128 x i8], align 8               ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !185)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !186)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !187)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !188)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !189
-  store ptr %i.e, ptr %i.b, align 8, !noalias !190
+  store ptr %i.e, ptr %i.b, align 16, !noalias !190
   store ptr %1, ptr %i.f, align 8, !noalias !190
   %i.h = load ptr, ptr %i.g, align 8, !alias.scope !191, !noalias !192, !nonnull !8, !noundef !8 ; 2 uses
   %.promoted.i.i.i.i9 = load ptr, ptr %i.d, align 8, !alias.scope !191, !noalias !192 ; 2 uses
@@ -228,6 +228,8 @@ bb.a:
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %2 = insertelement <2 x ptr> poison, ptr %i.e, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %1, i64 1
   br label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.lr.ph.i.i.i.i.preheader.lr.ph, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures28DiagnosticRelatedInformationE7reserveCs3aZOKTqqjPR_11ruff_server.exit
@@ -267,7 +269,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i.i
   br i1 %.not.i.i.i.i.i.i, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10AnnotationuINtNtNtBa_3ops12control_flow11ControlFlowNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures28DiagnosticRelatedInformationENCINvB18_21secondary_annotationsINtNtNtBa_5slice4iter4IterB16_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8find_map5checkB15_B2A_QNCNvNtCs3aZOKTqqjPR_11ruff_server4lint17to_lsp_diagnostics0_0E0E0B6c_.exit.thread15.i.i.i.i, label %bb.e
 
 _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10AnnotationuINtNtNtBa_3ops12control_flow11ControlFlowNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures28DiagnosticRelatedInformationENCINvB18_21secondary_annotationsINtNtNtBa_5slice4iter4IterB16_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8find_map5checkB15_B2A_QNCNvNtCs3aZOKTqqjPR_11ruff_server4lint17to_lsp_diagnostics0_0E0E0B6c_.exit.thread15.i.i.i.i: ; preds = %bb.b
-  %.pre.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !198, !noalias !205
+  %.pre.i.i.i.i = load ptr, ptr %i.b, align 16, !alias.scope !198, !noalias !205
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !203
   br label %bb.c
 
@@ -308,8 +310,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9ge
   call void @llvm.experimental.noalias.scope.decl(metadata !209)
   call void @llvm.experimental.noalias.scope.decl(metadata !210)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !211
-  store ptr %i.e, ptr %i.b, align 8, !noalias !212
-  store ptr %1, ptr %i.f, align 8, !noalias !212
+  store <2 x ptr> %3, ptr %i.b, align 16, !noalias !212
   %i.ae = load ptr, ptr %i.g, align 8, !alias.scope !213, !noalias !192, !nonnull !8, !noundef !8 ; 2 uses
   %.promoted.i.i.i.i = load ptr, ptr %i.d, align 8, !alias.scope !213, !noalias !192 ; 2 uses
   %i.af = icmp eq ptr %.promoted.i.i.i.i, %i.ae
@@ -336,18 +337,18 @@ bb.h:                                             ; preds = %bb.f
 define hidden void @_RINvMsj_NtCscdodAO9FK5_5alloc3vecINtB6_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures28DiagnosticRelatedInformationE16extend_desugaredINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map9FilterMapINtNtB2s_6filter6FilterINtNtNtB2w_5slice4iter4IterNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10AnnotationENCINvB4f_21secondary_annotationsB3M_E0ENCNvNtCs3aZOKTqqjPR_11ruff_server4lint17to_lsp_diagnostics1_0EEB5L_(ptr noalias noundef align 8 dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(32) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [128 x i8], align 8               ; 6 uses
-  %i.b = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = alloca [16 x i8], align 16               ; 8 uses
   %i.c = alloca [128 x i8], align 8               ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !250)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !251)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !252)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !253)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !254
-  store ptr %i.e, ptr %i.b, align 8, !noalias !255
+  store ptr %i.e, ptr %i.b, align 16, !noalias !255
   store ptr %1, ptr %i.f, align 8, !noalias !255
   %i.h = load ptr, ptr %i.g, align 8, !alias.scope !256, !noalias !257, !nonnull !8, !noundef !8 ; 2 uses
   %.promoted.i.i.i.i9 = load ptr, ptr %i.d, align 8, !alias.scope !256, !noalias !257 ; 2 uses
@@ -359,6 +360,8 @@ bb.a:
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %2 = insertelement <2 x ptr> poison, ptr %i.e, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %1, i64 1
   br label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.lr.ph.i.i.i.i.preheader.lr.ph, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures28DiagnosticRelatedInformationE7reserveCs3aZOKTqqjPR_11ruff_server.exit
@@ -398,7 +401,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i.i
   br i1 %.not.i.i.i.i.i.i, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10AnnotationuINtNtNtBa_3ops12control_flow11ControlFlowNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures28DiagnosticRelatedInformationENCINvB18_21secondary_annotationsINtNtNtBa_5slice4iter4IterB16_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8find_map5checkB15_B2A_QNCNvNtCs3aZOKTqqjPR_11ruff_server4lint17to_lsp_diagnostics1_0E0E0B6c_.exit.thread15.i.i.i.i, label %bb.e
 
 _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10AnnotationuINtNtNtBa_3ops12control_flow11ControlFlowNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures28DiagnosticRelatedInformationENCINvB18_21secondary_annotationsINtNtNtBa_5slice4iter4IterB16_EE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8find_map5checkB15_B2A_QNCNvNtCs3aZOKTqqjPR_11ruff_server4lint17to_lsp_diagnostics1_0E0E0B6c_.exit.thread15.i.i.i.i: ; preds = %bb.b
-  %.pre.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !263, !noalias !270
+  %.pre.i.i.i.i = load ptr, ptr %i.b, align 16, !alias.scope !263, !noalias !270
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !268
   br label %bb.c
 
@@ -439,8 +442,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9ge
   call void @llvm.experimental.noalias.scope.decl(metadata !274)
   call void @llvm.experimental.noalias.scope.decl(metadata !275)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !276
-  store ptr %i.e, ptr %i.b, align 8, !noalias !277
-  store ptr %1, ptr %i.f, align 8, !noalias !277
+  store <2 x ptr> %3, ptr %i.b, align 16, !noalias !277
   %i.ae = load ptr, ptr %i.g, align 8, !alias.scope !278, !noalias !257, !nonnull !8, !noundef !8 ; 2 uses
   %.promoted.i.i.i.i = load ptr, ptr %i.d, align 8, !alias.scope !278, !noalias !257 ; 2 uses
   %i.af = icmp eq ptr %.promoted.i.i.i.i, %i.ae

@@ -205,11 +205,13 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecINtNtNt
   %i.pv = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %.sroa.4329.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.sroa.5330.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %.sroa.6331.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
+  %7 = insertelement <2 x ptr> poison, ptr %i.at, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %i.h, i64 1
+  %9 = getelementptr inbounds nuw i8, <2 x ptr> %8, <2 x i64> <i64 0, i64 24>
+  %.sroa.6331.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %.sroa.6332.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 56 ; 2 uses
   %i.pw = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 40
-  %.sroa.8.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   %i.px = call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNtNtCseXbohGRa9jr_5tokio7runtime7context7CONTEXT0023___RUST_STD_INTERNAL_VAL) ; 4 uses
   %i.py = getelementptr inbounds nuw i8, ptr %i.px, i64 72 ; 2 uses
   %i.pz = getelementptr inbounds nuw i8, ptr %i.px, i64 68
@@ -254,8 +256,7 @@ bb.ha:                                            ; preds = %bb.if, %_RINvNtCscI
   store i8 0, ptr %.sroa.6332.0..sroa_idx, align 8
   store i64 -1, ptr %.sroa.6331.0..sroa_idx, align 8, !noalias !52462
   store ptr %i.aw, ptr %i.pw, align 8, !noalias !52462
-  store ptr %i.at, ptr %.sroa.7.0..sroa_idx.i.i, align 8, !noalias !52462
-  store ptr %.sroa.6331.0..sroa_idx, ptr %.sroa.8.0..sroa_idx.i.i, align 8, !noalias !52462
+  store <2 x ptr> %9, ptr %.sroa.7.0..sroa_idx.i.i, align 8, !noalias !52462
   call void @llvm.experimental.noalias.scope.decl(metadata !52463)
   call void @llvm.experimental.noalias.scope.decl(metadata !52464)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !52465

@@ -204,10 +204,10 @@ _ZNSt12_Vector_baseIN9grpc_core12_GLOBAL__N_111FilterChainESaIS2_EE11_M_allocate
   %i.qi = getelementptr inbounds nuw i8, ptr %14, i64 216 ; 3 uses
   %i.qj = getelementptr inbounds nuw i8, ptr %14, i64 224
   %i.qk = getelementptr inbounds nuw i8, ptr %14, i64 232 ; 2 uses
-  %i.ql = getelementptr inbounds nuw i8, ptr %14, i64 248 ; 2 uses
+  %i.ql = getelementptr inbounds nuw i8, ptr %14, i64 248 ; 4 uses
   %i.qm = getelementptr inbounds nuw i8, ptr %14, i64 256 ; 4 uses
-  %i.qn = getelementptr inbounds nuw i8, ptr %14, i64 264 ; 3 uses
-  %i.qo = getelementptr inbounds nuw i8, ptr %14, i64 272
+  %i.qn = getelementptr inbounds nuw i8, ptr %14, i64 264 ; 2 uses
+  %i.qo = getelementptr inbounds nuw i8, ptr %14, i64 272 ; 2 uses
   %i.qp = getelementptr inbounds nuw i8, ptr %14, i64 280 ; 3 uses
   %i.qq = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 4 uses
   %i.qr = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 9 uses
@@ -237,8 +237,9 @@ _ZNSt12_Vector_baseIN9grpc_core12_GLOBAL__N_111FilterChainESaIS2_EE11_M_allocate
   %i.rp = shufflevector <2 x ptr> %i.ro, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.rq = insertelement <2 x ptr> poison, ptr %i.qg, i64 0
   %i.rr = shufflevector <2 x ptr> %i.rq, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
+  %55 = insertelement <2 x ptr> <ptr null, ptr poison>, ptr %i.ql, i64 1
   %i.rs = insertelement <2 x ptr> poison, ptr %i.ql, i64 0
-  %i.rt = shufflevector <2 x ptr> %i.rs, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.rt = shufflevector <2 x ptr> %i.rs, <2 x ptr> poison, <2 x i32> zeroinitializer
   br label %bb.fa
 
 ._crit_edge.i.i.i45:                              ; preds = %_ZN9grpc_core12_GLOBAL__N_139AddFilterChainDataForDestinationIpRangeERKNS0_11FilterChainEPSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_22InternalFilterChainMap13DestinationIpESt4lessISA_ESaISt4pairIKSA_SC_EEEPNS_16ValidationErrorsE.exit.i.i.i
@@ -641,8 +642,8 @@ bb.fz:                                            ; preds = %bb.fy
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %14, i8 0, i64 256, i1 false), !noalias !346
   store <2 x ptr> %i.rp, ptr %i.qd, align 8, !tbaa !155, !noalias !346
   store <2 x ptr> %i.rr, ptr %i.qi, align 8, !tbaa !155, !noalias !346
-  store ptr null, ptr %i.qm, align 8, !tbaa !78, !noalias !346
-  store <2 x ptr> %i.rt, ptr %i.qn, align 8, !tbaa !155, !noalias !346
+  store <2 x ptr> %55, ptr %i.qm, align 8, !tbaa !155, !noalias !346
+  store ptr %i.ql, ptr %i.qo, align 8, !tbaa !80, !noalias !346
   store i64 0, ptr %i.qp, align 8, !tbaa !103, !noalias !346
   %.val14.i.i.i.i.i = load ptr, ptr %10, align 8, !noalias !346 ; 2 uses
   %.val15.i.i.i.i.i = load i64, ptr %i.qq, align 8, !noalias !346 ; 4 uses

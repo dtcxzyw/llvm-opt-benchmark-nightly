@@ -204,7 +204,7 @@ define hidden void @_RNvXNtNtCscdodAO9FK5_5alloc3vec14spec_from_iterINtB4_3VecNt
 bb.a:
   %i.a = alloca [8 x i8], align 4                 ; 5 uses
   %i.b = alloca [40 x i8], align 8                ; 12 uses
-  %i.c = alloca [16 x i8], align 8                ; 7 uses
+  %i.c = alloca [16 x i8], align 16               ; 7 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = alloca [8 x i8], align 4                 ; 5 uses
   %i.f = alloca [40 x i8], align 8                ; 10 uses
@@ -293,13 +293,13 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8n
   call void @llvm.experimental.noalias.scope.decl(metadata !8637)
   %i.ac = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.h, i64 56 ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
   %.sroa.611.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   %.sroa.7.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !8638
-  store ptr %i.ad, ptr %i.c, align 8, !noalias !8639
+  store ptr %i.ad, ptr %i.c, align 16, !noalias !8639
   store ptr %i.h, ptr %i.ae, align 8, !noalias !8639
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !8639
   invoke void @_RNvXsa_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_30BindingWithConstraintsIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(40) %i.ac)
@@ -308,10 +308,15 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8n
 .noexc.i:                                         ; preds = %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8nlGN3X_18ty_python_semantic.exit.i
   %i.ah = load i32, ptr %i.af, align 8, !range !19, !noalias !8639, !noundef !14 ; 2 uses
   %.not16.i.i.i.i.i3.i.i = icmp eq i32 %i.ah, -1
-  br i1 %.not16.i.i.i.i.i3.i.i, label %.loopexit14.i, label %.lr.ph.i.i.i.i.i.i.i
+  br i1 %.not16.i.i.i.i.i3.i.i, label %.loopexit14.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i.i.i:                             ; preds = %.noexc.i, %.lr.ph.i.i.i.i.i.i.i.backedge
-  %i.ai = phi i32 [ %.be, %.lr.ph.i.i.i.i.i.i.i.backedge ], [ %i.ah, %.noexc.i ]
+.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc.i
+  %2 = insertelement <2 x ptr> poison, ptr %i.ad, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.h, i64 1
+  br label %.lr.ph.i.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.backedge, %.lr.ph.i.i.i.i.i.i.i.preheader
+  %i.ai = phi i32 [ %i.ah, %.lr.ph.i.i.i.i.i.i.i.preheader ], [ %.be, %.lr.ph.i.i.i.i.i.i.i.backedge ]
   %.sroa.611.0.copyload.i.i.i.i.i.i.i = load i32, ptr %.sroa.611.0..sroa_idx.i.i.i.i.i.i.i, align 4, !noalias !8639 ; 3 uses
   %i.aj = icmp ne i32 %i.ai, 0
   %.not7.i.i.i.i.i.i.i.i = icmp eq i32 %.sroa.611.0.copyload.i.i.i.i.i.i.i, 0
@@ -368,8 +373,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs2O29vuvTAEJ_14ty_python_core10de
   %i.at = add nuw nsw i64 %i.am, 1
   store i64 %i.at, ptr %.sroa.64.0..sroa_idx.i, align 8, !alias.scope !8642, !noalias !8643
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !8638
-  store ptr %i.ad, ptr %i.c, align 8, !noalias !8639
-  store ptr %i.h, ptr %i.ae, align 8, !noalias !8639
+  store <2 x ptr> %3, ptr %i.c, align 16, !noalias !8639
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !8639
   invoke void @_RNvXsa_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_30BindingWithConstraintsIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(40) %i.ac)
           to label %.noexc12.i unwind label %.loopexit.split-lp.loopexit.i, !noalias !8629

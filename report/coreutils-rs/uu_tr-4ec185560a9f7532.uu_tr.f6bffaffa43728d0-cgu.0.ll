@@ -205,7 +205,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringEC
 define void @_RNvMs1_NtCslbrwWrVtb7E_5uu_tr9operationNtB5_8Sequence20solve_set_characters(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef range(i64 0, -9223372036854775808) %4, i1 noundef zeroext %5, i1 noundef zeroext %6, i1 noundef zeroext %7) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [56 x i8], align 8                ; 6 uses
+  %i.b = alloca [56 x i8], align 8                ; 5 uses
   %i.c = alloca [56 x i8], align 8                ; 8 uses
   %i.d = alloca [48 x i8], align 8                ; 5 uses
   %i.e = alloca [48 x i8], align 8                ; 5 uses
@@ -546,18 +546,21 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtCsl
 
 _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit.lr.ph: ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEEB1c_.exit
   %i.dl = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
-  %.sroa.499.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 2 uses
+  %.sroa.499.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %.sroa.5100.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %.sroa.4108.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %.sroa.5109.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.do = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   br i1 %i.z, label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit.us, label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit.preheader
 
 _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit.preheader: ; preds = %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit.lr.ph
   %i.dp = icmp eq i64 %.sroa.5254.0.copyload.fr, 1
+  %8 = insertelement <2 x ptr> poison, ptr %.sroa.8.0.copyload220, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.dj, i64 1
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.4253.0.copyload, i64 16
+  %10 = insertelement <2 x ptr> poison, ptr %.sroa.4253.0.copyload, i64 0
+  %11 = insertelement <2 x ptr> %10, ptr %i.y, i64 1
   br label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit
 
 _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit.us: ; preds = %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit.lr.ph, %bb.m
@@ -955,8 +958,7 @@ bb.bc:                                            ; preds = %_RNvXs_NtNtNtCs6JMX
   br i1 %.not146, label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit197.lr.ph.thread, label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit197.lr.ph
 
 _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit197.lr.ph: ; preds = %bb.bc
-  store ptr %.sroa.8.0.copyload220, ptr %i.dl, align 8
-  store ptr %i.dj, ptr %.sroa.499.0..sroa_idx, align 8
+  store <2 x ptr> %9, ptr %i.dl, align 8
   store i64 %.sroa.8246.0277, ptr %.sroa.5100.0..sroa_idx, align 8
   store ptr null, ptr %i.c, align 8
   store ptr null, ptr %i.dm, align 8
@@ -1007,8 +1009,7 @@ bb.bg:                                            ; preds = %bb.bh, %_RNvXs_NtNt
   br i1 %i.hc, label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit197.thread, label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit197, !llvm.loop !833
 
 bb.bh:                                            ; preds = %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtCslbrwWrVtb7E_5uu_tr9operation8SequenceEENtNtNtB8_6traits8iterator8Iterator4nextB1B_.exit197
-  store ptr %.sroa.4253.0.copyload, ptr %i.dn, align 8
-  store ptr %i.y, ptr %.sroa.4108.0..sroa_idx, align 8
+  store <2 x ptr> %11, ptr %i.dn, align 8
   store i64 %.sroa.8249.0274, ptr %.sroa.5109.0..sroa_idx, align 8
   store ptr null, ptr %i.b, align 8
   store ptr null, ptr %i.do, align 8

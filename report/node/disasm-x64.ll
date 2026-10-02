@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN6disasm12Disassembler11DisassembleEP8_IO_FILEPhS3_NS0_25UnimplementedOpcodeActionE(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, i8 noundef signext %3) local_unnamed_addr #4 align 2 {
 bb.a:
-  %4 = alloca %"class.disasm::DisassemblerX64", align 8 ; 11 uses
+  %4 = alloca %"class.disasm::DisassemblerX64", align 16 ; 11 uses
   %5 = alloca %"class.disasm::NameConverter", align 8 ; 7 uses
   %6 = alloca %"class.v8::base::EmbeddedVector", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
@@ -220,8 +220,10 @@ bb.a:
 .lr.ph32:                                         ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.g = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.g = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %7 = insertelement <2 x ptr> poison, ptr %5, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %4, i64 1
+  %9 = getelementptr inbounds nuw i8, <2 x ptr> %8, <2 x i64> <i64 0, i64 24>
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 152
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 156
@@ -242,9 +244,8 @@ bb.b:                                             ; preds = %.lr.ph32, %._crit_e
   store i64 128, ptr %i.f, align 8
   store i8 0, ptr %i.e, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
-  store ptr %5, ptr %4, align 8
-  store ptr %7, ptr %i.g, align 8
-  store i64 128, ptr %i.h, align 8
+  store <2 x ptr> %9, ptr %4, align 16
+  store i64 128, ptr %i.h, align 16
   store i32 0, ptr %i.i, align 8
   store i8 %i.l, ptr %i.j, align 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.m, i8 0, i64 9, i1 false)
