@@ -149,17 +149,17 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.06.in.i = zext i32 %.06.in.i.in to i64
   %i.as = shl nuw i64 %i.j, 56
   %i.at = shl nuw nsw i64 %.pn.i, 32
-  %i.au = or disjoint i64 %i.as, %.06.in.i
-  %i.av = or i64 %i.au, %i.at                     ; 4 uses
-  %i.aw = and i64 %i.av, 360287970189639680
+  %i.au = or i64 %i.at, %i.as                     ; 4 uses
+  %i.av = or disjoint i64 %i.au, %.06.in.i
+  %i.aw = and i64 %i.au, 360287970189639680
   %or.cond = icmp ne i64 %i.aw, 72057594037927936
-  %i.ax = and i64 %i.av, 1729382256910270464
+  %i.ax = and i64 %i.au, 1729382256910270464
   %.not = icmp eq i64 %i.ax, 1729382256910270464
   %or.cond45 = or i1 %or.cond, %.not
   br i1 %or.cond45, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ay = lshr i64 %i.av, 61
+  %i.ay = lshr i64 %i.au, 61
   %i.az = trunc nuw nsw i64 %i.ay to i8
   switch i8 %i.az, label %bb.h [
     i8 6, label %bb.g
@@ -192,28 +192,18 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bj = icmp ult i64 %4, 16
-  br i1 %i.bj, label %bb.l, label %7
+  br i1 %i.bj, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   store i64 0, ptr %2, align 8, !tbaa !222
   br label %bb.n
 
-7:                                                ; preds = %bb.k
+bb.m:                                             ; preds = %bb.k
   store i64 16, ptr %2, align 8, !tbaa !222
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
-  br i1 %i.g, label %9, label %11
-
-9:                                                ; preds = %7
-  %10 = load i32, ptr %8, align 1
-  br label %bb.m
-
-11:                                               ; preds = %7
-  %12 = load i32, ptr %8, align 1
-  %13 = tail call i32 @llvm.bswap.i32(i32 %12)
-  br label %bb.m
-
-bb.m:                                             ; preds = %11, %9
-  %.028.in.in = phi i32 [ %10, %9 ], [ %13, %11 ]
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %8 = load i32, ptr %7, align 1                  ; 2 uses
+  %9 = tail call i32 @llvm.bswap.i32(i32 %8)
+  %.028.in.in = select i1 %i.g, i32 %8, i32 %9
   %.028.in = zext i32 %.028.in.in to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !23

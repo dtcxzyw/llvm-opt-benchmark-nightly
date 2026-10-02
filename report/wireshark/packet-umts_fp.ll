@@ -205,19 +205,15 @@ bb.d:                                             ; preds = %bb.c
   %i.l = load i32, ptr %i.k, align 1
   %i.m = tail call i32 @llvm.bswap.i32(i32 %i.l)
   %i.n = getelementptr i8, ptr %0, i64 288
-  %1 = load i32, ptr %i.n, align 8                ; 2 uses
-  %2 = shl i32 %1, 16
-  %3 = or i32 %2, %1
   %i.o = getelementptr i8, ptr %0, i64 240
   %i.p = load ptr, ptr %i.o, align 8
   %i.q = load i32, ptr %i.p, align 1
   %i.r = tail call i32 @llvm.bswap.i32(i32 %i.q)
-  %4 = getelementptr i8, ptr %0, i64 292
-  %5 = load i32, ptr %4, align 4                  ; 2 uses
-  %6 = shl i32 %5, 16
-  %7 = or i32 %6, %5
-  %8 = xor i32 %i.m, %3
-  %i.s = xor i32 %8, %7
+  %1 = load <2 x i32>, ptr %i.n, align 8          ; 2 uses
+  %2 = shl <2 x i32> %1, splat (i32 16)
+  %3 = or <2 x i32> %2, %1
+  %4 = tail call i32 @llvm.vector.reduce.xor.v2i32(<2 x i32> %3)
+  %i.s = xor i32 %4, %i.m
   %i.t = xor i32 %i.s, %i.r
   br label %bb.f
 
@@ -315,19 +311,15 @@ bb.d:                                             ; preds = %bb.c
   %i.r = load i32, ptr %i.q, align 1
   %i.s = tail call i32 @llvm.bswap.i32(i32 %i.r)
   %i.t = getelementptr i8, ptr %1, i64 288
-  %2 = load i32, ptr %i.t, align 8                ; 2 uses
-  %3 = shl i32 %2, 16
-  %4 = or i32 %3, %2
   %i.u = getelementptr i8, ptr %1, i64 240
   %i.v = load ptr, ptr %i.u, align 8
   %i.w = load i32, ptr %i.v, align 1
   %i.x = tail call i32 @llvm.bswap.i32(i32 %i.w)
-  %5 = getelementptr i8, ptr %1, i64 292
-  %6 = load i32, ptr %5, align 4                  ; 2 uses
-  %7 = shl i32 %6, 16
-  %8 = or i32 %7, %6
-  %9 = xor i32 %i.s, %4
-  %i.y = xor i32 %9, %8
+  %2 = load <2 x i32>, ptr %i.t, align 8          ; 2 uses
+  %3 = shl <2 x i32> %2, splat (i32 16)
+  %4 = or <2 x i32> %3, %2
+  %5 = tail call i32 @llvm.vector.reduce.xor.v2i32(<2 x i32> %4)
+  %i.y = xor i32 %5, %i.s
   %i.z = xor i32 %i.y, %i.x
   br label %generate_ue_id_for_heur.exit
 
@@ -436,6 +428,9 @@ declare i32 @llvm.umin.i32(i32, i32) #4
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #4
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #4
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11
 
@@ -443,7 +438,7 @@ declare void @llvm.assume(i1 noundef) #11
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #4
+declare i32 @llvm.vector.reduce.xor.v2i32(<2 x i32>) #4
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

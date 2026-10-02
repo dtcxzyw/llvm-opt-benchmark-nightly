@@ -203,7 +203,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h,
   br i1 %i.bk, label %getbfwe.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.split
-  %i.bl = getelementptr i8, ptr %0, i64 %i.bi     ; 10 uses
+  %i.bl = getelementptr i8, ptr %0, i64 %i.bi     ; 4 uses
   %i.bm = getelementptr i8, ptr %i.bl, i64 1
   %i.bn = load i8, ptr %i.bm, align 1, !tbaa !11
   %i.bo = zext i8 %i.bn to i16
@@ -232,42 +232,12 @@ getbfdwe.exit107:                                 ; preds = %bb.m
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !11
   %i.cf = zext i8 %i.ce to i16
   %i.cg = or disjoint i16 %i.cc, %i.cf            ; 2 uses
-  %5 = getelementptr i8, ptr %i.bl, i64 6
-  %6 = load i8, ptr %5, align 1, !tbaa !11
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw nsw i32 %7, 8
-  %9 = getelementptr i8, ptr %i.bl, i64 7
-  %10 = load i8, ptr %9, align 1, !tbaa !11
-  %11 = zext i8 %10 to i32
-  %12 = or disjoint i32 %8, %11
-  %13 = getelementptr i8, ptr %i.bl, i64 5
-  %14 = load i8, ptr %13, align 1, !tbaa !11
-  %15 = zext i8 %14 to i32
-  %16 = shl nuw nsw i32 %15, 16
-  %17 = or disjoint i32 %12, %16
   %i.ch = getelementptr i8, ptr %i.bl, i64 4
-  %18 = load i8, ptr %i.ch, align 1, !tbaa !11
-  %19 = zext i8 %18 to i32
-  %20 = shl nuw i32 %19, 24
-  %21 = or disjoint i32 %17, %20
+  %5 = load i32, ptr %i.ch, align 1
+  %6 = tail call i32 @llvm.bswap.i32(i32 %5)
   %i.ci = getelementptr i8, ptr %i.bl, i64 8
-  %22 = getelementptr i8, ptr %i.bl, i64 11
-  %23 = load i8, ptr %22, align 1, !tbaa !11
-  %24 = zext i8 %23 to i32
-  %25 = getelementptr i8, ptr %i.bl, i64 10
-  %26 = load i8, ptr %25, align 1, !tbaa !11
-  %27 = zext i8 %26 to i32
-  %28 = shl nuw nsw i32 %27, 8
-  %29 = or disjoint i32 %28, %24
-  %30 = getelementptr i8, ptr %i.bl, i64 9
-  %31 = load i8, ptr %30, align 1, !tbaa !11
-  %32 = zext i8 %31 to i32
-  %33 = shl nuw nsw i32 %32, 16
-  %34 = or disjoint i32 %29, %33
-  %35 = load i8, ptr %i.ci, align 1, !tbaa !11
-  %36 = zext i8 %35 to i32
-  %37 = shl nuw i32 %36, 24
-  %38 = or disjoint i32 %34, %37                  ; 3 uses
+  %7 = load i32, ptr %i.ci, align 1
+  %8 = tail call i32 @llvm.bswap.i32(i32 %7)      ; 3 uses
   %i.cj = zext nneg i16 %i.cg to i64
   %i.ck = add i16 %i.cg, -13
   %i.cl = icmp ult i16 %i.ck, -12
@@ -281,24 +251,24 @@ bb.n:                                             ; preds = %getbfdwe.exit107
   ]
 
 bb.o:                                             ; preds = %bb.n
-  %i.cm = call i64 @BufferCalcIFDSize(ptr noundef nonnull %0, i64 noundef %1, i32 noundef %38, i8 noundef zeroext %3, ptr noundef nonnull %i.a) ; 3 uses
+  %i.cm = call i64 @BufferCalcIFDSize(ptr noundef nonnull %0, i64 noundef %1, i32 noundef %8, i8 noundef zeroext %3, ptr noundef nonnull %i.a) ; 3 uses
   %i.cn = icmp slt i64 %i.cm, 0
   br i1 %i.cn, label %getbfwe.exit.thread, label %bb.s
 
 bb.p:                                             ; preds = %bb.n
-  %i.co = call i64 @BufferCalcIFDSize(ptr noundef nonnull %0, i64 noundef %1, i32 noundef %38, i8 noundef zeroext %3, ptr noundef nonnull %i.b) ; 3 uses
+  %i.co = call i64 @BufferCalcIFDSize(ptr noundef nonnull %0, i64 noundef %1, i32 noundef %8, i8 noundef zeroext %3, ptr noundef nonnull %i.b) ; 3 uses
   %i.cp = icmp slt i64 %i.co, 0
   br i1 %i.cp, label %getbfwe.exit.thread, label %bb.s
 
 bb.q:                                             ; preds = %bb.n
-  %i.cq = call i64 @BufferCalcIFDSize(ptr noundef nonnull %0, i64 noundef %1, i32 noundef %38, i8 noundef zeroext %3, ptr noundef nonnull %i.c) ; 3 uses
+  %i.cq = call i64 @BufferCalcIFDSize(ptr noundef nonnull %0, i64 noundef %1, i32 noundef %8, i8 noundef zeroext %3, ptr noundef nonnull %i.c) ; 3 uses
   %i.cr = icmp slt i64 %i.cq, 0
   br i1 %i.cr, label %getbfwe.exit.thread, label %bb.s
 
 bb.r:                                             ; preds = %bb.n
   %i.cs = getelementptr inbounds nuw [4 x i8], ptr @IFDEntryTypeSizes, i64 %i.cj
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !10
-  %i.cu = mul i32 %i.ct, %21                      ; 2 uses
+  %i.cu = mul i32 %i.ct, %6                       ; 2 uses
   %i.cv = icmp ugt i32 %i.cu, 4
   %i.cw = select i1 %i.cv, i32 %i.cu, i32 0
   %spec.select = add i32 %i.cw, %.065177
@@ -701,7 +671,7 @@ getbfwe.exit246:                                  ; preds = %bb.g
   br i1 %i.am, label %getbfwe.exit.thread, label %bb.i
 
 getbfwe.exit246.thread306:                        ; preds = %bb.h
-  %i.an = getelementptr i8, ptr %0, i64 %i.af     ; 6 uses
+  %i.an = getelementptr i8, ptr %0, i64 %i.af     ; 3 uses
   %i.ao = getelementptr i8, ptr %i.an, i64 1
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !11
   %i.aq = zext i8 %i.ap to i16
@@ -773,27 +743,12 @@ getbfdwe.exit.thread:                             ; preds = %.thread327
   br i1 %i.cd, label %getbfwe.exit.thread, label %.thread440
 
 .thread440:                                       ; preds = %getbfdwe.exit.thread
-  %7 = getelementptr i8, ptr %i.an, i64 6
-  %8 = load i8, ptr %7, align 1, !tbaa !11
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 8
-  %11 = getelementptr i8, ptr %i.an, i64 7
-  %12 = load i8, ptr %11, align 1, !tbaa !11
-  %13 = zext i8 %12 to i32
-  %14 = or disjoint i32 %10, %13
-  %15 = getelementptr i8, ptr %i.an, i64 5
-  %16 = load i8, ptr %15, align 1, !tbaa !11
-  %17 = zext i8 %16 to i32
-  %18 = shl nuw nsw i32 %17, 16
-  %19 = or disjoint i32 %14, %18
   %i.ce = getelementptr i8, ptr %i.an, i64 4
-  %20 = load i8, ptr %i.ce, align 1, !tbaa !11
-  %21 = zext i8 %20 to i32
-  %22 = shl nuw i32 %21, 24
-  %23 = or disjoint i32 %19, %22                  ; 2 uses
+  %7 = load i32, ptr %i.ce, align 1
+  %8 = tail call i32 @llvm.bswap.i32(i32 %7)      ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %4, i64 %i.av
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 4
-  store i32 %23, ptr %i.cg, align 1
+  store i32 %8, ptr %i.cg, align 1
   %i.ch = add nuw nsw i64 %i.af, 12
   %i.ci = icmp samesign ugt i64 %i.ch, %i.c
   br i1 %i.ci, label %getbfwe.exit.thread, label %bb.m
@@ -824,7 +779,7 @@ getbfdwe.exit258:                                 ; preds = %bb.m, %bb.l
   %.0300309312325334437448 = phi i16 [ %i.au, %bb.m ], [ %i.aj, %bb.l ]
   %i.cv = phi i64 [ %i.av, %bb.m ], [ %i.ak, %bb.l ] ; 2 uses
   %.0299326331438446 = phi i16 [ %i.br, %bb.m ], [ %i.bh, %bb.l ] ; 3 uses
-  %.1298439444 = phi i32 [ %23, %bb.m ], [ %i.bz, %bb.l ] ; 8 uses
+  %.1298439444 = phi i32 [ %8, %bb.m ], [ %i.bz, %bb.l ] ; 8 uses
   %i.cw = phi i64 [ %i.cc, %bb.m ], [ %i.ca, %bb.l ] ; 3 uses
   %.0296 = phi i32 [ %i.ct, %bb.m ], [ %i.cp, %bb.l ] ; 4 uses
   %i.cx = add nuw nsw i64 %i.cv, 12

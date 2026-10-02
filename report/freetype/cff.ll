@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.t
   %.07487 = phi ptr [ %i.i, %bb.b ], [ %i.o, %bb.t ] ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.07487, i64 8
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv ; 5 uses
-  %.074.val = load ptr, ptr %.07487, align 8, !tbaa !127 ; 10 uses
+  %.074.val = load ptr, ptr %.07487, align 8, !tbaa !127 ; 7 uses
   %i.q = load i8, ptr %.074.val, align 1, !tbaa !130 ; 5 uses
   %i.r = icmp eq i8 %i.q, 30
   %i.s = load ptr, ptr %i.n, align 8, !tbaa !281  ; 7 uses
@@ -290,44 +290,30 @@ bb.o:                                             ; preds = %bb.n
   br label %cff_parse_integer.exit.thread.i
 
 cff_parse_integer.exit.i:                         ; preds = %bb.h
-  %1 = load i8, ptr %i.u, align 1, !tbaa !130
-  %2 = zext i8 %1 to i64
-  %3 = shl nuw nsw i64 %2, 24
-  %4 = getelementptr inbounds nuw i8, ptr %.074.val, i64 2
-  %5 = load i8, ptr %4, align 1, !tbaa !130
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 16
-  %8 = or disjoint i64 %7, %3
-  %9 = getelementptr inbounds nuw i8, ptr %.074.val, i64 3
-  %10 = load i8, ptr %9, align 1, !tbaa !130
-  %11 = zext i8 %10 to i64
-  %12 = shl nuw nsw i64 %11, 8
-  %13 = or disjoint i64 %8, %12                   ; 4 uses
-  %14 = getelementptr inbounds nuw i8, ptr %.074.val, i64 4
-  %15 = load i8, ptr %14, align 1, !tbaa !130
-  %i.ba = zext i8 %15 to i64
-  %16 = or disjoint i64 %13, %i.ba                ; 7 uses
-  %i.bb = icmp samesign ugt i64 %13, 32767
+  %1 = load i32, ptr %i.u, align 1
+  %2 = call i32 @llvm.bswap.i32(i32 %1)           ; 7 uses
+  %i.ba = zext i32 %2 to i64                      ; 4 uses
+  %i.bb = icmp ugt i32 %2, 32767
   br i1 %i.bb, label %.preheader.preheader.i, label %cff_parse_integer.exit.thread.i
 
 .preheader.preheader.i:                           ; preds = %cff_parse_integer.exit.i
-  %i.bc = icmp samesign ult i64 %16, 100000
+  %i.bc = icmp ult i32 %2, 100000
   br i1 %i.bc, label %bb.p, label %.preheader.1.i
 
 .preheader.1.i:                                   ; preds = %.preheader.preheader.i
-  %i.bd = icmp samesign ult i64 %16, 1000000
+  %i.bd = icmp ult i32 %2, 1000000
   br i1 %i.bd, label %bb.p, label %.preheader.2.i
 
 .preheader.2.i:                                   ; preds = %.preheader.1.i
-  %i.be = icmp samesign ult i64 %16, 10000000
+  %i.be = icmp ult i32 %2, 10000000
   br i1 %i.be, label %bb.p, label %.preheader.3.i
 
 .preheader.3.i:                                   ; preds = %.preheader.2.i
-  %i.bf = icmp samesign ult i64 %13, 100000000
+  %i.bf = icmp ult i32 %2, 100000000
   br i1 %i.bf, label %bb.p, label %.preheader.4.i
 
 .preheader.4.i:                                   ; preds = %.preheader.3.i
-  %i.bg = icmp samesign ult i64 %13, 1000000000
+  %i.bg = icmp ult i32 %2, 1000000000
   %spec.select.i = select i1 %i.bg, i32 9, i32 10
   br label %bb.p
 
@@ -337,7 +323,7 @@ bb.p:                                             ; preds = %.preheader.4.i, %.p
   %i.bi = zext nneg i32 %i.bh to i64              ; 2 uses
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr @power_tens, i64 %i.bi
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !116 ; 2 uses
-  %i.bl = sdiv i64 %16, %i.bk
+  %i.bl = sdiv i64 %i.ba, %i.bk
   %i.bm = icmp sgt i64 %i.bl, 32767
   br i1 %i.bm, label %bb.q, label %bb.r
 
@@ -347,16 +333,16 @@ bb.q:                                             ; preds = %bb.p
   store i64 %i.bo, ptr %i.p, align 8, !tbaa !116
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr @power_tens, i64 %i.bo
   %i.bq = load i64, ptr %i.bp, align 8, !tbaa !116
-  %i.br = call i64 @FT_DivFix(i64 noundef %16, i64 noundef %i.bq) #18
+  %i.br = call i64 @FT_DivFix(i64 noundef %i.ba, i64 noundef %i.bq) #18
   br label %cff_parse_fixed_dynamic.exit
 
 bb.r:                                             ; preds = %bb.p
   store i64 %i.bi, ptr %i.p, align 8, !tbaa !116
-  %i.bs = call i64 @FT_DivFix(i64 noundef %16, i64 noundef %i.bk) #18
+  %i.bs = call i64 @FT_DivFix(i64 noundef %i.ba, i64 noundef %i.bk) #18
   br label %cff_parse_fixed_dynamic.exit
 
 cff_parse_integer.exit.thread.i:                  ; preds = %cff_parse_integer.exit.i, %bb.o, %bb.n, %bb.m, %bb.l, %bb.j, %bb.h, %bb.g, %bb.f
-  %.0.i2.i = phi i64 [ %16, %cff_parse_integer.exit.i ], [ 0, %bb.f ], [ 0, %bb.h ], [ 0, %bb.l ], [ 0, %bb.n ], [ %i.at, %bb.m ], [ %i.ak, %bb.j ], [ %i.af, %bb.g ], [ %i.az, %bb.o ]
+  %.0.i2.i = phi i64 [ %i.ba, %cff_parse_integer.exit.i ], [ 0, %bb.f ], [ 0, %bb.h ], [ 0, %bb.l ], [ 0, %bb.n ], [ %i.at, %bb.m ], [ %i.ak, %bb.j ], [ %i.af, %bb.g ], [ %i.az, %bb.o ]
   store i64 0, ptr %i.p, align 8, !tbaa !116
   %i.bt = shl nsw i64 %.0.i2.i, 16
   br label %cff_parse_fixed_dynamic.exit
@@ -759,7 +745,7 @@ bb.p:                                             ; preds = %._crit_edge.i, %.lr
   %i.dz = add i32 %.1104.i, 1                     ; 2 uses
   %i.ea = zext i32 %.1104.i to i64
   %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.dy, i64 %i.ea
-  %.val.i = load ptr, ptr %i.eb, align 8, !tbaa !127 ; 11 uses
+  %.val.i = load ptr, ptr %i.eb, align 8, !tbaa !127 ; 8 uses
   %i.ec = load i8, ptr %.val.i, align 1, !tbaa !130 ; 5 uses
   switch i8 %i.ec, label %bb.s [
     i8 30, label %bb.q
@@ -844,28 +830,14 @@ bb.ab:                                            ; preds = %bb.aa
   br label %cff_parse_integer.exit.i.thread.thread.i
 
 cff_parse_integer.exit.i.i:                       ; preds = %bb.u
-  %1 = load i8, ptr %i.ek, align 1, !tbaa !130
-  %2 = zext i8 %1 to i64
-  %3 = shl nuw nsw i64 %2, 24
-  %4 = getelementptr inbounds nuw i8, ptr %.val.i, i64 2
-  %5 = load i8, ptr %4, align 1, !tbaa !130
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 16
-  %8 = or disjoint i64 %7, %3
-  %9 = getelementptr inbounds nuw i8, ptr %.val.i, i64 3
-  %10 = load i8, ptr %9, align 1, !tbaa !130
-  %11 = zext i8 %10 to i64
-  %12 = shl nuw nsw i64 %11, 8
-  %13 = or disjoint i64 %8, %12                   ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %.val.i, i64 4
-  %15 = load i8, ptr %14, align 1, !tbaa !130
-  %i.fi = zext i8 %15 to i64
-  %16 = or disjoint i64 %13, %i.fi
-  %i.fj = icmp samesign ugt i64 %13, 32767
+  %1 = load i32, ptr %i.ek, align 1
+  %2 = call i32 @llvm.bswap.i32(i32 %1)           ; 2 uses
+  %i.fi = zext nneg i32 %2 to i64
+  %i.fj = icmp ugt i32 %2, 32767
   br i1 %i.fj, label %do_fixed.exit.i, label %cff_parse_integer.exit.i.thread.thread.i
 
 cff_parse_integer.exit.i.thread.thread.i:         ; preds = %cff_parse_integer.exit.i.i, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.w, %bb.u, %bb.t
-  %.0.i.i99.ph.i = phi i64 [ %i.fh, %bb.ab ], [ %i.es, %bb.w ], [ %i.fb, %bb.z ], [ 0, %bb.aa ], [ 0, %bb.y ], [ 0, %bb.u ], [ 0, %bb.t ], [ %16, %cff_parse_integer.exit.i.i ]
+  %.0.i.i99.ph.i = phi i64 [ %i.fh, %bb.ab ], [ %i.es, %bb.w ], [ %i.fb, %bb.z ], [ 0, %bb.aa ], [ 0, %bb.y ], [ 0, %bb.u ], [ 0, %bb.t ], [ %i.fi, %cff_parse_integer.exit.i.i ]
   %i.fk = shl nsw i64 %.0.i.i99.ph.i, 16
   br label %do_fixed.exit.i
 
@@ -1268,6 +1240,9 @@ declare i64 @llvm.abs.i64(i64, i1 immarg) #16
 declare i64 @llvm.umin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1278,9 +1253,6 @@ declare i32 @llvm.umax.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17

@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca i32, align 4                      ; 4 uses
-  %i.e = alloca [2 x i32], align 4                ; 20 uses
+  %i.e = alloca [2 x i32], align 4                ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
@@ -226,56 +226,56 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.k = load i8, ptr %0, align 1, !tbaa !12      ; 2 uses
-  %i.l = shl i8 %i.k, 1                           ; 2 uses
+  %i.l = shl i8 %i.k, 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 1 ; 3 uses
   store i8 %i.l, ptr %i.e, align 4, !tbaa !12
   %.not106 = icmp ne i8 %i.k, 0
   %spec.select.idx = zext i1 %.not106 to i64
   %spec.select = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.idx ; 2 uses
   %i.n = load i8, ptr %spec.select, align 1, !tbaa !12 ; 2 uses
-  %i.o = shl i8 %i.n, 1                           ; 2 uses
+  %i.o = shl i8 %i.n, 1
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 2 ; 2 uses
   store i8 %i.o, ptr %i.m, align 1, !tbaa !12
   %.not106.1 = icmp ne i8 %i.n, 0
   %spec.select.idx.1 = zext i1 %.not106.1 to i64
   %spec.select.1 = getelementptr inbounds nuw i8, ptr %spec.select, i64 %spec.select.idx.1 ; 2 uses
   %i.q = load i8, ptr %spec.select.1, align 1, !tbaa !12 ; 2 uses
-  %i.r = shl i8 %i.q, 1                           ; 2 uses
+  %i.r = shl i8 %i.q, 1
   %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 3 ; 2 uses
   store i8 %i.r, ptr %i.p, align 2, !tbaa !12
   %.not106.2 = icmp ne i8 %i.q, 0
   %spec.select.idx.2 = zext i1 %.not106.2 to i64
   %spec.select.2 = getelementptr inbounds nuw i8, ptr %spec.select.1, i64 %spec.select.idx.2 ; 2 uses
   %i.t = load i8, ptr %spec.select.2, align 1, !tbaa !12 ; 2 uses
-  %i.u = shl i8 %i.t, 1                           ; 2 uses
+  %i.u = shl i8 %i.t, 1
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 2 uses
   store i8 %i.u, ptr %i.s, align 1, !tbaa !12
   %.not106.3 = icmp ne i8 %i.t, 0
   %spec.select.idx.3 = zext i1 %.not106.3 to i64
   %spec.select.3 = getelementptr inbounds nuw i8, ptr %spec.select.2, i64 %spec.select.idx.3 ; 2 uses
   %i.w = load i8, ptr %spec.select.3, align 1, !tbaa !12 ; 2 uses
-  %i.x = shl i8 %i.w, 1                           ; 2 uses
+  %i.x = shl i8 %i.w, 1
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 5 ; 2 uses
   store i8 %i.x, ptr %i.v, align 4, !tbaa !12
   %.not106.4 = icmp ne i8 %i.w, 0
   %spec.select.idx.4 = zext i1 %.not106.4 to i64
   %spec.select.4 = getelementptr inbounds nuw i8, ptr %spec.select.3, i64 %spec.select.idx.4 ; 2 uses
   %i.z = load i8, ptr %spec.select.4, align 1, !tbaa !12 ; 2 uses
-  %i.aa = shl i8 %i.z, 1                          ; 2 uses
+  %i.aa = shl i8 %i.z, 1
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 6 ; 2 uses
   store i8 %i.aa, ptr %i.y, align 1, !tbaa !12
   %.not106.5 = icmp ne i8 %i.z, 0
   %spec.select.idx.5 = zext i1 %.not106.5 to i64
   %spec.select.5 = getelementptr inbounds nuw i8, ptr %spec.select.4, i64 %spec.select.idx.5 ; 2 uses
   %i.ac = load i8, ptr %spec.select.5, align 1, !tbaa !12 ; 2 uses
-  %i.ad = shl i8 %i.ac, 1                         ; 2 uses
+  %i.ad = shl i8 %i.ac, 1
   %i.ae = getelementptr inbounds nuw i8, ptr %i.e, i64 7 ; 2 uses
   store i8 %i.ad, ptr %i.ab, align 2, !tbaa !12
   %.not106.6 = icmp ne i8 %i.ac, 0
   %spec.select.idx.6 = zext i1 %.not106.6 to i64
   %spec.select.6 = getelementptr inbounds nuw i8, ptr %spec.select.5, i64 %spec.select.idx.6 ; 2 uses
   %i.af = load i8, ptr %spec.select.6, align 1, !tbaa !12 ; 2 uses
-  %i.ag = shl i8 %i.af, 1                         ; 2 uses
+  %i.ag = shl i8 %i.af, 1
   store i8 %i.ag, ptr %i.ae, align 1, !tbaa !12
   %.not106.7 = icmp ne i8 %i.af, 0
   %spec.select.idx.7 = zext i1 %.not106.7 to i64
@@ -392,12 +392,12 @@ bb.d:                                             ; preds = %.preheader122.3
 .lr.ph138:                                        ; preds = %.preheader
   %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.e, i64 3
+  %i.ct = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %i.cv = getelementptr inbounds nuw i8, ptr %i.e, i64 7
-  %i.cw = getelementptr inbounds nuw i8, ptr %i.e, i64 6
-  %i.cx = getelementptr inbounds nuw i8, ptr %i.e, i64 5
-  %i.cy = getelementptr inbounds nuw i8, ptr %i.e, i64 4
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.e, i64 3
+  %i.cw = getelementptr inbounds nuw i8, ptr %i.e, i64 5
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.e, i64 6
+  %i.cy = getelementptr inbounds nuw i8, ptr %i.e, i64 7
   br label %bb.e
 
 .preheader121.1:                                  ; preds = %.preheader121.preheader
@@ -466,14 +466,6 @@ bb.d:                                             ; preds = %.preheader122.3
   br i1 %.not102136, label %._crit_edge, label %.lr.ph138
 
 bb.e:                                             ; preds = %.lr.ph138, %.critedge
-  %3 = phi i8 [ %i.ag, %.lr.ph138 ], [ %31, %.critedge ]
-  %4 = phi i8 [ %i.ad, %.lr.ph138 ], [ %32, %.critedge ]
-  %5 = phi i8 [ %i.aa, %.lr.ph138 ], [ %33, %.critedge ]
-  %6 = phi i8 [ %i.x, %.lr.ph138 ], [ %34, %.critedge ]
-  %7 = phi i8 [ %i.u, %.lr.ph138 ], [ %35, %.critedge ]
-  %8 = phi i8 [ %i.r, %.lr.ph138 ], [ %36, %.critedge ]
-  %9 = phi i8 [ %i.o, %.lr.ph138 ], [ %37, %.critedge ]
-  %10 = phi i8 [ %i.l, %.lr.ph138 ], [ %38, %.critedge ]
   %.296137 = phi ptr [ %spec.select.7, %.lr.ph138 ], [ %.397.lcssa.ph, %.critedge ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 0, ptr %i.a, align 4, !tbaa !14
@@ -489,51 +481,35 @@ bb.f:                                             ; preds = %bb.e
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.f, %bb.e
-  %11 = zext i8 %7 to i32
-  %12 = zext i8 %8 to i32
-  %13 = shl nuw nsw i32 %12, 8
-  %14 = or disjoint i32 %13, %11
-  %15 = zext i8 %9 to i32
-  %16 = shl nuw nsw i32 %15, 16
-  %17 = or disjoint i32 %14, %16
-  %18 = zext i8 %10 to i32
-  %19 = shl nuw i32 %18, 24
-  %20 = or disjoint i32 %17, %19
-  %21 = zext i8 %3 to i32
-  %22 = zext i8 %4 to i32
-  %23 = shl nuw nsw i32 %22, 8
-  %24 = or disjoint i32 %23, %21
-  %25 = zext i8 %5 to i32
-  %26 = shl nuw nsw i32 %25, 16
-  %27 = or disjoint i32 %24, %26
-  %28 = zext i8 %6 to i32
-  %29 = shl nuw i32 %28, 24
-  %30 = or disjoint i32 %27, %29
-  call fastcc void @do_des(i32 noundef %20, i32 noundef %30, ptr noundef %i.a, ptr noundef %i.b, i32 noundef 1, ptr noundef nonnull %2)
+  %3 = load i32, ptr %i.e, align 4
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)
+  %5 = load i32, ptr %i.ct, align 4
+  %6 = tail call i32 @llvm.bswap.i32(i32 %5)
+  call fastcc void @do_des(i32 noundef %4, i32 noundef %6, ptr noundef %i.a, ptr noundef %i.b, i32 noundef 1, ptr noundef nonnull %2)
   %i.ep = load i32, ptr %i.a, align 4, !tbaa !14  ; 4 uses
   %i.eq = lshr i32 %i.ep, 24
-  %i.er = trunc nuw i32 %i.eq to i8               ; 3 uses
+  %i.er = trunc nuw i32 %i.eq to i8               ; 2 uses
   store i8 %i.er, ptr %i.e, align 4, !tbaa !12
   %i.es = lshr i32 %i.ep, 16
-  %i.et = trunc i32 %i.es to i8                   ; 4 uses
+  %i.et = trunc i32 %i.es to i8                   ; 2 uses
   store i8 %i.et, ptr %i.m, align 1, !tbaa !12
   %i.eu = lshr i32 %i.ep, 8
-  %i.ev = trunc i32 %i.eu to i8                   ; 5 uses
+  %i.ev = trunc i32 %i.eu to i8                   ; 2 uses
   store i8 %i.ev, ptr %i.cu, align 2, !tbaa !12
-  %i.ew = trunc i32 %i.ep to i8                   ; 6 uses
-  store i8 %i.ew, ptr %i.ct, align 1, !tbaa !12
+  %i.ew = trunc i32 %i.ep to i8                   ; 2 uses
+  store i8 %i.ew, ptr %i.cv, align 1, !tbaa !12
   %i.ex = load i32, ptr %i.b, align 4, !tbaa !14  ; 4 uses
   %i.ey = lshr i32 %i.ex, 24
-  %i.ez = trunc nuw i32 %i.ey to i8               ; 7 uses
-  store i8 %i.ez, ptr %i.cy, align 4, !tbaa !12
+  %i.ez = trunc nuw i32 %i.ey to i8               ; 2 uses
+  store i8 %i.ez, ptr %i.ct, align 4, !tbaa !12
   %i.fa = lshr i32 %i.ex, 16
-  %i.fb = trunc i32 %i.fa to i8                   ; 8 uses
-  store i8 %i.fb, ptr %i.cx, align 1, !tbaa !12
+  %i.fb = trunc i32 %i.fa to i8                   ; 2 uses
+  store i8 %i.fb, ptr %i.cw, align 1, !tbaa !12
   %i.fc = lshr i32 %i.ex, 8
-  %i.fd = trunc i32 %i.fc to i8                   ; 9 uses
-  store i8 %i.fd, ptr %i.cw, align 2, !tbaa !12
-  %i.fe = trunc i32 %i.ex to i8                   ; 10 uses
-  store i8 %i.fe, ptr %i.cv, align 1, !tbaa !12
+  %i.fd = trunc i32 %i.fc to i8                   ; 2 uses
+  store i8 %i.fd, ptr %i.cx, align 2, !tbaa !12
+  %i.fe = trunc i32 %i.ex to i8                   ; 2 uses
+  store i8 %i.fe, ptr %i.cy, align 1, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.ff = load i8, ptr %.296137, align 1, !tbaa !12 ; 2 uses
@@ -543,7 +519,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.1:                                         ; preds = %.lr.ph.preheader
   %i.fg = getelementptr inbounds nuw i8, ptr %.296137, i64 1 ; 2 uses
   %i.fh = shl i8 %i.ff, 1
-  %i.fi = xor i8 %i.fh, %i.er                     ; 9 uses
+  %i.fi = xor i8 %i.fh, %i.er
   store i8 %i.fi, ptr %i.e, align 4, !tbaa !12
   %i.fj = load i8, ptr %i.fg, align 1, !tbaa !12  ; 2 uses
   %.not103.1 = icmp eq i8 %i.fj, 0
@@ -552,7 +528,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.2:                                         ; preds = %.lr.ph.1
   %i.fk = getelementptr inbounds nuw i8, ptr %.296137, i64 2 ; 2 uses
   %i.fl = shl i8 %i.fj, 1
-  %i.fm = xor i8 %i.fl, %i.et                     ; 8 uses
+  %i.fm = xor i8 %i.fl, %i.et
   store i8 %i.fm, ptr %i.m, align 1, !tbaa !12
   %i.fn = load i8, ptr %i.fk, align 1, !tbaa !12  ; 2 uses
   %.not103.2 = icmp eq i8 %i.fn, 0
@@ -561,7 +537,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.3:                                         ; preds = %.lr.ph.2
   %i.fo = getelementptr inbounds nuw i8, ptr %.296137, i64 3 ; 2 uses
   %i.fp = shl i8 %i.fn, 1
-  %i.fq = xor i8 %i.fp, %i.ev                     ; 7 uses
+  %i.fq = xor i8 %i.fp, %i.ev
   store i8 %i.fq, ptr %i.p, align 2, !tbaa !12
   %i.fr = load i8, ptr %i.fo, align 1, !tbaa !12  ; 2 uses
   %.not103.3 = icmp eq i8 %i.fr, 0
@@ -570,7 +546,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.4:                                         ; preds = %.lr.ph.3
   %i.fs = getelementptr inbounds nuw i8, ptr %.296137, i64 4 ; 2 uses
   %i.ft = shl i8 %i.fr, 1
-  %i.fu = xor i8 %i.ft, %i.ew                     ; 6 uses
+  %i.fu = xor i8 %i.ft, %i.ew
   store i8 %i.fu, ptr %i.s, align 1, !tbaa !12
   %i.fv = load i8, ptr %i.fs, align 1, !tbaa !12  ; 2 uses
   %.not103.4 = icmp eq i8 %i.fv, 0
@@ -579,7 +555,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.5:                                         ; preds = %.lr.ph.4
   %i.fw = getelementptr inbounds nuw i8, ptr %.296137, i64 5 ; 2 uses
   %i.fx = shl i8 %i.fv, 1
-  %i.fy = xor i8 %i.fx, %i.ez                     ; 5 uses
+  %i.fy = xor i8 %i.fx, %i.ez
   store i8 %i.fy, ptr %i.v, align 4, !tbaa !12
   %i.fz = load i8, ptr %i.fw, align 1, !tbaa !12  ; 2 uses
   %.not103.5 = icmp eq i8 %i.fz, 0
@@ -588,7 +564,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.6:                                         ; preds = %.lr.ph.5
   %i.ga = getelementptr inbounds nuw i8, ptr %.296137, i64 6 ; 2 uses
   %i.gb = shl i8 %i.fz, 1
-  %i.gc = xor i8 %i.gb, %i.fb                     ; 4 uses
+  %i.gc = xor i8 %i.gb, %i.fb
   store i8 %i.gc, ptr %i.y, align 1, !tbaa !12
   %i.gd = load i8, ptr %i.ga, align 1, !tbaa !12  ; 2 uses
   %.not103.6 = icmp eq i8 %i.gd, 0
@@ -597,7 +573,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.7:                                         ; preds = %.lr.ph.6
   %i.ge = getelementptr inbounds nuw i8, ptr %.296137, i64 7 ; 2 uses
   %i.gf = shl i8 %i.gd, 1
-  %i.gg = xor i8 %i.gf, %i.fd                     ; 3 uses
+  %i.gg = xor i8 %i.gf, %i.fd
   store i8 %i.gg, ptr %i.ab, align 2, !tbaa !12
   %i.gh = load i8, ptr %i.ge, align 1, !tbaa !12  ; 2 uses
   %.not103.7 = icmp eq i8 %i.gh, 0
@@ -606,19 +582,11 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %.lr.ph.7
   %i.gi = getelementptr inbounds nuw i8, ptr %.296137, i64 8
   %i.gj = shl i8 %i.gh, 1
-  %i.gk = xor i8 %i.gj, %i.fe                     ; 2 uses
+  %i.gk = xor i8 %i.gj, %i.fe
   store i8 %i.gk, ptr %i.ae, align 1, !tbaa !12
   br label %.critedge
 
 .critedge:                                        ; preds = %.lr.ph.preheader, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.7, %bb.g
-  %31 = phi i8 [ %i.fe, %.lr.ph.preheader ], [ %i.gk, %bb.g ], [ %i.fe, %.lr.ph.1 ], [ %i.fe, %.lr.ph.7 ], [ %i.fe, %.lr.ph.2 ], [ %i.fe, %.lr.ph.5 ], [ %i.fe, %.lr.ph.3 ], [ %i.fe, %.lr.ph.6 ], [ %i.fe, %.lr.ph.4 ]
-  %32 = phi i8 [ %i.fd, %.lr.ph.preheader ], [ %i.gg, %bb.g ], [ %i.fd, %.lr.ph.1 ], [ %i.gg, %.lr.ph.7 ], [ %i.fd, %.lr.ph.2 ], [ %i.fd, %.lr.ph.5 ], [ %i.fd, %.lr.ph.3 ], [ %i.fd, %.lr.ph.6 ], [ %i.fd, %.lr.ph.4 ]
-  %33 = phi i8 [ %i.fb, %.lr.ph.preheader ], [ %i.gc, %bb.g ], [ %i.fb, %.lr.ph.1 ], [ %i.gc, %.lr.ph.7 ], [ %i.fb, %.lr.ph.2 ], [ %i.fb, %.lr.ph.5 ], [ %i.fb, %.lr.ph.3 ], [ %i.gc, %.lr.ph.6 ], [ %i.fb, %.lr.ph.4 ]
-  %34 = phi i8 [ %i.ez, %.lr.ph.preheader ], [ %i.fy, %bb.g ], [ %i.ez, %.lr.ph.1 ], [ %i.fy, %.lr.ph.7 ], [ %i.ez, %.lr.ph.2 ], [ %i.fy, %.lr.ph.5 ], [ %i.ez, %.lr.ph.3 ], [ %i.fy, %.lr.ph.6 ], [ %i.ez, %.lr.ph.4 ]
-  %35 = phi i8 [ %i.ew, %.lr.ph.preheader ], [ %i.fu, %bb.g ], [ %i.ew, %.lr.ph.1 ], [ %i.fu, %.lr.ph.7 ], [ %i.ew, %.lr.ph.2 ], [ %i.fu, %.lr.ph.5 ], [ %i.ew, %.lr.ph.3 ], [ %i.fu, %.lr.ph.6 ], [ %i.fu, %.lr.ph.4 ]
-  %36 = phi i8 [ %i.ev, %.lr.ph.preheader ], [ %i.fq, %bb.g ], [ %i.ev, %.lr.ph.1 ], [ %i.fq, %.lr.ph.7 ], [ %i.ev, %.lr.ph.2 ], [ %i.fq, %.lr.ph.5 ], [ %i.fq, %.lr.ph.3 ], [ %i.fq, %.lr.ph.6 ], [ %i.fq, %.lr.ph.4 ]
-  %37 = phi i8 [ %i.et, %.lr.ph.preheader ], [ %i.fm, %bb.g ], [ %i.et, %.lr.ph.1 ], [ %i.fm, %.lr.ph.7 ], [ %i.fm, %.lr.ph.2 ], [ %i.fm, %.lr.ph.5 ], [ %i.fm, %.lr.ph.3 ], [ %i.fm, %.lr.ph.6 ], [ %i.fm, %.lr.ph.4 ]
-  %38 = phi i8 [ %i.er, %.lr.ph.preheader ], [ %i.fi, %bb.g ], [ %i.fi, %.lr.ph.1 ], [ %i.fi, %.lr.ph.7 ], [ %i.fi, %.lr.ph.2 ], [ %i.fi, %.lr.ph.5 ], [ %i.fi, %.lr.ph.3 ], [ %i.fi, %.lr.ph.6 ], [ %i.fi, %.lr.ph.4 ]
   %.397.lcssa.ph = phi ptr [ %.296137, %.lr.ph.preheader ], [ %i.gi, %bb.g ], [ %i.fg, %.lr.ph.1 ], [ %i.ge, %.lr.ph.7 ], [ %i.fk, %.lr.ph.2 ], [ %i.fw, %.lr.ph.5 ], [ %i.fo, %.lr.ph.3 ], [ %i.ga, %.lr.ph.6 ], [ %i.fs, %.lr.ph.4 ] ; 2 uses
   call fastcc void @des_setkey(ptr noundef %i.e, ptr noundef nonnull %2)
   %i.gl = load i8, ptr %.397.lcssa.ph, align 1, !tbaa !12
@@ -1020,6 +988,9 @@ declare i24 @llvm.bitreverse.i24(i24) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #3
 
 attributes #0 = { nofree norecurse nosync nounwind memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

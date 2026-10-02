@@ -204,7 +204,7 @@ bb.ap:                                            ; preds = %bb.ao
 .thread346.i:                                     ; preds = %bb.ao, %bb.an
   %i.hg = getelementptr i8, ptr %2, i64 229       ; 2 uses
   %i.hh = load i32, ptr %i.hg, align 1
-  %i.hi = tail call i32 @llvm.bswap.i32(i32 %i.hh) ; 4 uses
+  %i.hi = tail call i32 @llvm.bswap.i32(i32 %i.hh) ; 5 uses
   %i.hj = add i32 %i.hi, -32769
   %or.cond12.i = icmp ult i32 %i.hj, -32757
   br i1 %or.cond12.i, label %bb.aq, label %bb.ar
@@ -214,10 +214,8 @@ bb.aq:                                            ; preds = %.thread346.i
   br label %ssh_decrypt_packet.exit
 
 bb.ar:                                            ; preds = %.thread346.i
-  %5 = getelementptr i8, ptr %2, i64 232
-  %6 = load i8, ptr %5, align 8
-  %7 = and i8 %6, 15
-  %.not321.i = icmp eq i8 %7, 12
+  %5 = and i32 %i.hi, 15
+  %.not321.i = icmp eq i32 %5, 12
   br i1 %.not321.i, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
@@ -620,6 +618,9 @@ declare i32 @llvm.smax.i32(i32, i32) #17
 declare void @llvm.assume(i1 noundef) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -627,9 +628,6 @@ declare i32 @llvm.umax.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #17
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

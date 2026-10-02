@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.as = zext i32 %i.d to i64                    ; 13 uses
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 %i.as
-  %i.au = getelementptr inbounds i8, ptr %i.at, i64 %i.ao ; 23 uses
+  %i.au = getelementptr inbounds i8, ptr %i.at, i64 %i.ao ; 13 uses
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 7
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !83  ; 3 uses
   %i.ax = zext i8 %i.aw to i32
@@ -417,40 +417,16 @@ cvt_flip.exit.thread609:                          ; preds = %bb.j, %bb.j, %cvt_f
 
 bb.al:                                            ; preds = %cvt_flip.exit.thread609
   %.not488 = icmp eq i8 %i.ar, 0
-  %19 = load i8, ptr %i.au, align 1, !tbaa !35    ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.au, i64 1
-  %21 = load i8, ptr %20, align 1, !tbaa !35      ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %i.au, i64 2
-  %23 = load i8, ptr %22, align 1, !tbaa !35      ; 2 uses
-  %24 = getelementptr inbounds nuw i8, ptr %i.au, i64 3
-  %25 = load i8, ptr %24, align 1, !tbaa !35      ; 2 uses
+  %19 = load i32, ptr %i.au, align 1
+  %20 = tail call i32 @llvm.bswap.i32(i32 %19)    ; 2 uses
   br i1 %.not488, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %26 = zext i8 %19 to i32
-  %27 = shl nuw i32 %26, 24
-  %28 = zext i8 %21 to i32
-  %29 = shl nuw nsw i32 %28, 16
-  %30 = or disjoint i32 %29, %27
-  %31 = zext i8 %23 to i32
-  %32 = shl nuw nsw i32 %31, 8
-  %33 = or disjoint i32 %30, %32
-  %34 = zext i8 %25 to i32
-  %35 = or disjoint i32 %33, %34
-  %i.da = sext i32 %35 to i64
+  %i.da = sext i32 %20 to i64
   br label %bb.bb
 
 bb.an:                                            ; preds = %bb.al
-  %36 = zext i8 %19 to i64
-  %37 = shl nuw nsw i64 %36, 24
-  %38 = zext i8 %21 to i64
-  %39 = shl nuw nsw i64 %38, 16
-  %40 = or disjoint i64 %39, %37
-  %41 = zext i8 %23 to i64
-  %42 = shl nuw nsw i64 %41, 8
-  %43 = or disjoint i64 %40, %42
-  %i.db = zext i8 %25 to i64
-  %44 = or disjoint i64 %43, %i.db
+  %i.db = zext i32 %20 to i64
   br label %bb.bb
 
 cvt_flip.exit.thread612:                          ; preds = %bb.j, %bb.j, %cvt_flip.exit, %cvt_flip.exit
@@ -524,43 +500,8 @@ cvt_flip.exit.thread615:                          ; preds = %bb.j, %cvt_flip.exi
   br i1 %or.cond555, label %.critedge577, label %bb.av
 
 bb.av:                                            ; preds = %cvt_flip.exit.thread615
-  %45 = load i8, ptr %i.au, align 1, !tbaa !35
-  %46 = zext i8 %45 to i64
-  %47 = shl nuw i64 %46, 56
-  %48 = getelementptr inbounds nuw i8, ptr %i.au, i64 1
-  %49 = load i8, ptr %48, align 1, !tbaa !35
-  %50 = zext i8 %49 to i64
-  %51 = shl nuw nsw i64 %50, 48
-  %52 = or disjoint i64 %51, %47
-  %53 = getelementptr inbounds nuw i8, ptr %i.au, i64 2
-  %54 = load i8, ptr %53, align 1, !tbaa !35
-  %55 = zext i8 %54 to i64
-  %56 = shl nuw nsw i64 %55, 40
-  %57 = or disjoint i64 %52, %56
-  %58 = getelementptr inbounds nuw i8, ptr %i.au, i64 3
-  %59 = load i8, ptr %58, align 1, !tbaa !35
-  %60 = zext i8 %59 to i64
-  %61 = shl nuw nsw i64 %60, 32
-  %62 = or disjoint i64 %57, %61
-  %63 = getelementptr inbounds nuw i8, ptr %i.au, i64 4
-  %64 = load i8, ptr %63, align 1, !tbaa !35
-  %65 = zext i8 %64 to i64
-  %66 = shl nuw nsw i64 %65, 24
-  %67 = or disjoint i64 %62, %66
-  %68 = getelementptr inbounds nuw i8, ptr %i.au, i64 5
-  %69 = load i8, ptr %68, align 1, !tbaa !35
-  %70 = zext i8 %69 to i64
-  %71 = shl nuw nsw i64 %70, 16
-  %72 = or disjoint i64 %67, %71
-  %73 = getelementptr inbounds nuw i8, ptr %i.au, i64 6
-  %74 = load i8, ptr %73, align 1, !tbaa !35
-  %75 = zext i8 %74 to i64
-  %76 = shl nuw nsw i64 %75, 8
-  %77 = or i64 %72, %76
-  %78 = getelementptr inbounds nuw i8, ptr %i.au, i64 7
-  %79 = load i8, ptr %78, align 1, !tbaa !35
-  %80 = zext i8 %79 to i64
-  %81 = or i64 %77, %80
+  %21 = load i64, ptr %i.au, align 1
+  %22 = tail call i64 @llvm.bswap.i64(i64 %21)
   br label %bb.bb
 
 cvt_flip.exit.thread618:                          ; preds = %bb.j, %cvt_flip.exit
@@ -608,7 +549,7 @@ bb.ba:                                            ; preds = %cvt_flip.exit.threa
   br label %.critedge577
 
 bb.bb:                                            ; preds = %bb.av, %bb.aw, %bb.at, %bb.au, %bb.ap, %bb.aq, %bb.am, %bb.an, %bb.ah, %bb.ai, %bb.ae, %bb.af, %bb.z, %bb.aa, %bb.az, %bb.ak, %bb.ac
-  %.0 = phi i64 [ %i.fa, %bb.az ], [ %i.bn, %bb.ac ], [ %i.bf, %bb.aa ], [ %i.ce, %bb.af ], [ %i.cu, %bb.ak ], [ %i.cm, %bb.ai ], [ %44, %bb.an ], [ %i.dj, %bb.aq ], [ %i.ei, %bb.au ], [ %i.et, %bb.aw ], [ %i.be, %bb.z ], [ %i.ca, %bb.ae ], [ %i.cl, %bb.ah ], [ %i.da, %bb.am ], [ %i.di, %bb.ap ], [ %i.eb, %bb.at ], [ %81, %bb.av ] ; 3 uses
+  %.0 = phi i64 [ %i.fa, %bb.az ], [ %i.bn, %bb.ac ], [ %i.bf, %bb.aa ], [ %i.ce, %bb.af ], [ %i.cu, %bb.ak ], [ %i.cm, %bb.ai ], [ %i.db, %bb.an ], [ %i.dj, %bb.aq ], [ %i.ei, %bb.au ], [ %i.et, %bb.aw ], [ %i.be, %bb.z ], [ %i.ca, %bb.ae ], [ %i.cl, %bb.ah ], [ %i.da, %bb.am ], [ %i.di, %bb.ap ], [ %i.eb, %bb.at ], [ %22, %bb.av ] ; 3 uses
   %i.ff = load i32, ptr %i.x, align 4, !tbaa !31
   %i.fg = and i32 %i.ff, 1
   %.not494 = icmp eq i32 %i.fg, 0
@@ -959,44 +900,9 @@ cvt_flip.exit592.thread641:                       ; preds = %bb.be, %cvt_flip.ex
   br i1 %or.cond576, label %.critedge577, label %bb.cp
 
 bb.cp:                                            ; preds = %cvt_flip.exit592.thread641
-  %82 = load i8, ptr %i.e, align 8, !tbaa !35
-  %83 = zext i8 %82 to i64
-  %84 = shl nuw i64 %83, 56
-  %85 = getelementptr inbounds nuw i8, ptr %0, i64 137
-  %86 = load i8, ptr %85, align 1, !tbaa !35
-  %87 = zext i8 %86 to i64
-  %88 = shl nuw nsw i64 %87, 48
-  %89 = or disjoint i64 %88, %84
-  %90 = getelementptr inbounds nuw i8, ptr %0, i64 138
-  %91 = load i8, ptr %90, align 2, !tbaa !35
-  %92 = zext i8 %91 to i64
-  %93 = shl nuw nsw i64 %92, 40
-  %94 = or disjoint i64 %89, %93
-  %95 = getelementptr inbounds nuw i8, ptr %0, i64 139
-  %96 = load i8, ptr %95, align 1, !tbaa !35
-  %97 = zext i8 %96 to i64
-  %98 = shl nuw nsw i64 %97, 32
-  %99 = or disjoint i64 %94, %98
-  %100 = getelementptr inbounds nuw i8, ptr %0, i64 140
-  %101 = load i8, ptr %100, align 4, !tbaa !35
-  %102 = zext i8 %101 to i64
-  %103 = shl nuw nsw i64 %102, 24
-  %104 = or disjoint i64 %99, %103
-  %105 = getelementptr inbounds nuw i8, ptr %0, i64 141
-  %106 = load i8, ptr %105, align 1, !tbaa !35
-  %107 = zext i8 %106 to i64
-  %108 = shl nuw nsw i64 %107, 16
-  %109 = or disjoint i64 %104, %108
-  %110 = getelementptr inbounds nuw i8, ptr %0, i64 142
-  %111 = load i8, ptr %110, align 2, !tbaa !35
-  %112 = zext i8 %111 to i64
-  %113 = shl nuw nsw i64 %112, 8
-  %114 = or i64 %109, %113
-  %115 = getelementptr inbounds nuw i8, ptr %0, i64 143
-  %116 = load i8, ptr %115, align 1, !tbaa !35
-  %117 = zext i8 %116 to i64
-  %118 = or i64 %114, %117
-  %i.jy = call fastcc i32 @do_ops(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %i.a, i64 noundef %118, i64 noundef %.2)
+  %23 = load i64, ptr %i.e, align 8
+  %24 = tail call i64 @llvm.bswap.i64(i64 %23)
+  %i.jy = call fastcc i32 @do_ops(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %i.a, i64 noundef %24, i64 noundef %.2)
   %.not500 = icmp eq i32 %i.jy, 0
   br i1 %.not500, label %bb.cu, label %.critedge577
 
@@ -1399,44 +1305,9 @@ bb.gx:                                            ; preds = %bb.gw
   br label %.critedge577
 
 cvt_flip.exit.thread.i:                           ; preds = %cvt_flip.exit.i, %cvt_flip.exit.i, %cvt_flip.exit.i, %cvt_flip.exit.i, %bb.er, %bb.er, %bb.er, %bb.er
-  %119 = load i8, ptr %i.e, align 8, !tbaa !35
-  %120 = zext i8 %119 to i64
-  %121 = shl nuw i64 %120, 56
-  %122 = getelementptr inbounds nuw i8, ptr %0, i64 137
-  %123 = load i8, ptr %122, align 1, !tbaa !35
-  %124 = zext i8 %123 to i64
-  %125 = shl nuw nsw i64 %124, 48
-  %126 = or disjoint i64 %125, %121
-  %127 = getelementptr inbounds nuw i8, ptr %0, i64 138
-  %128 = load i8, ptr %127, align 2, !tbaa !35
-  %129 = zext i8 %128 to i64
-  %130 = shl nuw nsw i64 %129, 40
-  %131 = or disjoint i64 %126, %130
-  %132 = getelementptr inbounds nuw i8, ptr %0, i64 139
-  %133 = load i8, ptr %132, align 1, !tbaa !35
-  %134 = zext i8 %133 to i64
-  %135 = shl nuw nsw i64 %134, 32
-  %136 = or disjoint i64 %131, %135
-  %137 = getelementptr inbounds nuw i8, ptr %0, i64 140
-  %138 = load i8, ptr %137, align 4, !tbaa !35
-  %139 = zext i8 %138 to i64
-  %140 = shl nuw nsw i64 %139, 24
-  %141 = or disjoint i64 %136, %140
-  %142 = getelementptr inbounds nuw i8, ptr %0, i64 141
-  %143 = load i8, ptr %142, align 1, !tbaa !35
-  %144 = zext i8 %143 to i64
-  %145 = shl nuw nsw i64 %144, 16
-  %146 = or disjoint i64 %141, %145
-  %147 = getelementptr inbounds nuw i8, ptr %0, i64 142
-  %148 = load i8, ptr %147, align 2, !tbaa !35
-  %149 = zext i8 %148 to i64
-  %150 = shl nuw nsw i64 %149, 8
-  %151 = or i64 %146, %150
-  %152 = getelementptr inbounds nuw i8, ptr %0, i64 143
-  %153 = load i8, ptr %152, align 1, !tbaa !35
-  %154 = zext i8 %153 to i64
-  %155 = or i64 %151, %154                        ; 10 uses
-  store i64 %155, ptr %i.e, align 8, !tbaa !35
+  %25 = load i64, ptr %i.e, align 8
+  %26 = tail call i64 @llvm.bswap.i64(i64 %25)    ; 10 uses
+  store i64 %26, ptr %i.e, align 8, !tbaa !35
   %i.we = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.wf = load i64, ptr %i.we, align 8, !tbaa !35 ; 9 uses
   %.not.i150.i = icmp eq i64 %i.wf, 0
@@ -1458,35 +1329,35 @@ bb.gy:                                            ; preds = %cvt_flip.exit.threa
   ]
 
 bb.gz:                                            ; preds = %bb.gy
-  %i.wj = and i64 %155, %i.wf
+  %i.wj = and i64 %i.wf, %26
   br label %.sink.split.i151.i
 
 bb.ha:                                            ; preds = %bb.gy
-  %i.wk = or i64 %155, %i.wf
+  %i.wk = or i64 %i.wf, %26
   br label %.sink.split.i151.i
 
 bb.hb:                                            ; preds = %bb.gy
-  %i.wl = xor i64 %155, %i.wf
+  %i.wl = xor i64 %i.wf, %26
   br label %.sink.split.i151.i
 
 bb.hc:                                            ; preds = %bb.gy
-  %i.wm = add i64 %155, %i.wf
+  %i.wm = add i64 %i.wf, %26
   br label %.sink.split.i151.i
 
 bb.hd:                                            ; preds = %bb.gy
-  %i.wn = sub i64 %155, %i.wf
+  %i.wn = sub i64 %26, %i.wf
   br label %.sink.split.i151.i
 
 bb.he:                                            ; preds = %bb.gy
-  %i.wo = mul i64 %155, %i.wf
+  %i.wo = mul i64 %i.wf, %26
   br label %.sink.split.i151.i
 
 bb.hf:                                            ; preds = %bb.gy
-  %i.wp = udiv i64 %155, %i.wf
+  %i.wp = udiv i64 %26, %i.wf
   br label %.sink.split.i151.i
 
 bb.hg:                                            ; preds = %bb.gy
-  %i.wq = urem i64 %155, %i.wf
+  %i.wq = urem i64 %26, %i.wf
   br label %.sink.split.i151.i
 
 .sink.split.i151.i:                               ; preds = %bb.hg, %bb.hf, %bb.he, %bb.hd, %bb.hc, %bb.hb, %bb.ha, %bb.gz
@@ -1495,7 +1366,7 @@ bb.hg:                                            ; preds = %bb.gy
   br label %bb.hh
 
 bb.hh:                                            ; preds = %.sink.split.i151.i, %cvt_flip.exit.thread.i
-  %i.wr = phi i64 [ %.sink.i152.i, %.sink.split.i151.i ], [ %155, %cvt_flip.exit.thread.i ]
+  %i.wr = phi i64 [ %.sink.i152.i, %.sink.split.i151.i ], [ %26, %cvt_flip.exit.thread.i ]
   %i.ws = getelementptr inbounds nuw i8, ptr %1, i64 9
   %i.wt = load i8, ptr %i.ws, align 1, !tbaa !52
   %i.wu = and i8 %i.wt, 64
@@ -1782,44 +1653,9 @@ bb.iw:                                            ; preds = %cvt_flip.exit.i
   br i1 %i.aad, label %cvt_16.exit.thread.i, label %.critedge577
 
 cvt_flip.exit.thread202.i:                        ; preds = %cvt_flip.exit.i, %bb.er
-  %156 = load i8, ptr %i.e, align 8, !tbaa !35
-  %157 = zext i8 %156 to i64
-  %158 = shl nuw i64 %157, 56
-  %159 = getelementptr inbounds nuw i8, ptr %0, i64 137
-  %160 = load i8, ptr %159, align 1, !tbaa !35
-  %161 = zext i8 %160 to i64
-  %162 = shl nuw nsw i64 %161, 48
-  %163 = or disjoint i64 %162, %158
-  %164 = getelementptr inbounds nuw i8, ptr %0, i64 138
-  %165 = load i8, ptr %164, align 2, !tbaa !35
-  %166 = zext i8 %165 to i64
-  %167 = shl nuw nsw i64 %166, 40
-  %168 = or disjoint i64 %163, %167
-  %169 = getelementptr inbounds nuw i8, ptr %0, i64 139
-  %170 = load i8, ptr %169, align 1, !tbaa !35
-  %171 = zext i8 %170 to i64
-  %172 = shl nuw nsw i64 %171, 32
-  %173 = or disjoint i64 %168, %172
-  %174 = getelementptr inbounds nuw i8, ptr %0, i64 140
-  %175 = load i8, ptr %174, align 4, !tbaa !35
-  %176 = zext i8 %175 to i64
-  %177 = shl nuw nsw i64 %176, 24
-  %178 = or disjoint i64 %173, %177
-  %179 = getelementptr inbounds nuw i8, ptr %0, i64 141
-  %180 = load i8, ptr %179, align 1, !tbaa !35
-  %181 = zext i8 %180 to i64
-  %182 = shl nuw nsw i64 %181, 16
-  %183 = or disjoint i64 %178, %182
-  %184 = getelementptr inbounds nuw i8, ptr %0, i64 142
-  %185 = load i8, ptr %184, align 2, !tbaa !35
-  %186 = zext i8 %185 to i64
-  %187 = shl nuw nsw i64 %186, 8
-  %188 = or i64 %183, %187
-  %189 = getelementptr inbounds nuw i8, ptr %0, i64 143
-  %190 = load i8, ptr %189, align 1, !tbaa !35
-  %191 = zext i8 %190 to i64
-  %192 = or i64 %188, %191
-  store i64 %192, ptr %i.e, align 8, !tbaa !35
+  %27 = load i64, ptr %i.e, align 8
+  %28 = tail call i64 @llvm.bswap.i64(i64 %27)
+  store i64 %28, ptr %i.e, align 8, !tbaa !35
   %i.aae = tail call fastcc i32 @cvt_double(ptr noundef nonnull %i.e, ptr noundef nonnull %1)
   %i.aaf = icmp eq i32 %i.aae, -1
   br i1 %i.aaf, label %cvt_16.exit.thread.i, label %.critedge577
@@ -2222,13 +2058,13 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 declare i64 @llvm.umin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umin.i8(i8, i8) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.bswap.i64(i64) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umin.i8(i8, i8) #19
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

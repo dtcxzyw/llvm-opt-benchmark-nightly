@@ -202,23 +202,8 @@ bb.h:                                             ; preds = %bb.g, %bb.g, %bb.g,
 
 bb.i:                                             ; preds = %bb.h
   %i.az = getelementptr i8, ptr %1, i64 20
-  %3 = load i8, ptr %i.az, align 4
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw i32 %4, 24
-  %6 = getelementptr i8, ptr %1, i64 21
-  %7 = load i8, ptr %6, align 1
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 16
-  %10 = or disjoint i32 %9, %5
-  %11 = getelementptr i8, ptr %1, i64 22
-  %12 = load i8, ptr %11, align 2
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %15 = or disjoint i32 %10, %14
-  %16 = getelementptr i8, ptr %1, i64 23
-  %17 = load i8, ptr %16, align 1
-  %18 = zext i8 %17 to i32
-  %19 = or disjoint i32 %15, %18
+  %3 = load i32, ptr %i.az, align 4
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.ba = add nuw nsw i32 %i.ap, 32
   %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -231,7 +216,7 @@ bb.j:                                             ; preds = %bb.l, %bb.i
   store i8 0, ptr %i.bb, align 16
   %i.bc = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
   %i.bd = shl nuw i32 1, %i.bc
-  %i.be = and i32 %i.bd, %19
+  %i.be = and i32 %i.bd, %4
   %.not525.i = icmp eq i32 %i.be, 0
   %i.bf = sub i32 %i.ba, %i.bc                    ; 2 uses
   br i1 %.not525.i, label %bb.l, label %bb.k
@@ -633,6 +618,9 @@ declare i8 @llvm.umin.i8(i8, i8) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #4
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

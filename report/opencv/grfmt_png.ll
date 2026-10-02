@@ -205,26 +205,11 @@ bb.bh:                                            ; preds = %bb.bf
   br label %bb.br
 
 bb.bi:                                            ; preds = %bb.be
-  %i.dc = load ptr, ptr %1, align 8, !tbaa !103   ; 5 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.dc, i64 12
-  %7 = load i8, ptr %6, align 1, !tbaa !117
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw i32 %8, 24
-  %10 = getelementptr inbounds nuw i8, ptr %i.dc, i64 13
-  %11 = load i8, ptr %10, align 1, !tbaa !117
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 16
-  %14 = or disjoint i32 %13, %9
-  %15 = getelementptr inbounds nuw i8, ptr %i.dc, i64 14
-  %16 = load i8, ptr %15, align 1, !tbaa !117
-  %17 = zext i8 %16 to i32
-  %18 = shl nuw nsw i32 %17, 8
-  %19 = or disjoint i32 %14, %18
-  %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 15
-  %20 = load i8, ptr %i.dd, align 1, !tbaa !117
-  %21 = zext i8 %20 to i32
-  %22 = or disjoint i32 %19, %21
-  store i32 %22, ptr %i.cs, align 8, !tbaa !262
+  %i.dc = load ptr, ptr %1, align 8, !tbaa !103   ; 2 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 12
+  %6 = load i32, ptr %i.dd, align 1
+  %7 = call i32 @llvm.bswap.i32(i32 %6)
+  store i32 %7, ptr %i.cs, align 8, !tbaa !262
   %i.de = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
   %i.df = load i32, ptr %i.de, align 1            ; 2 uses
   %i.dg = call i32 @llvm.bswap.i32(i32 %i.df)
@@ -235,83 +220,23 @@ bb.bi:                                            ; preds = %bb.be
 
 bb.bj:                                            ; preds = %bb.be
   store i8 1, ptr %i.ce, align 8, !tbaa !133
-  %i.dj = load ptr, ptr %1, align 8, !tbaa !103   ; 22 uses
-  %23 = getelementptr inbounds nuw i8, ptr %i.dj, i64 12
-  %24 = load i8, ptr %23, align 1, !tbaa !117
-  %25 = zext i8 %24 to i32
-  %26 = shl nuw i32 %25, 24
-  %27 = getelementptr inbounds nuw i8, ptr %i.dj, i64 13
-  %28 = load i8, ptr %27, align 1, !tbaa !117
-  %29 = zext i8 %28 to i32
-  %30 = shl nuw nsw i32 %29, 16
-  %31 = or disjoint i32 %30, %26
-  %32 = getelementptr inbounds nuw i8, ptr %i.dj, i64 14
-  %33 = load i8, ptr %32, align 1, !tbaa !117
-  %34 = zext i8 %33 to i32
-  %35 = shl nuw nsw i32 %34, 8
-  %36 = or disjoint i32 %31, %35
-  %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 15
-  %37 = load i8, ptr %i.dk, align 1, !tbaa !117
-  %38 = zext i8 %37 to i32
-  %39 = or disjoint i32 %36, %38
-  store i32 %39, ptr %i.ck, align 8, !tbaa !134
-  %40 = getelementptr inbounds nuw i8, ptr %i.dj, i64 16
-  %41 = load i8, ptr %40, align 1, !tbaa !117
-  %42 = zext i8 %41 to i32
-  %43 = shl nuw i32 %42, 24
-  %44 = getelementptr inbounds nuw i8, ptr %i.dj, i64 17
-  %45 = load i8, ptr %44, align 1, !tbaa !117
-  %46 = zext i8 %45 to i32
-  %47 = shl nuw nsw i32 %46, 16
-  %48 = or disjoint i32 %47, %43
-  %49 = getelementptr inbounds nuw i8, ptr %i.dj, i64 18
-  %50 = load i8, ptr %49, align 1, !tbaa !117
-  %51 = zext i8 %50 to i32
-  %52 = shl nuw nsw i32 %51, 8
-  %53 = or disjoint i32 %48, %52
-  %i.dl = getelementptr inbounds nuw i8, ptr %i.dj, i64 19
-  %54 = load i8, ptr %i.dl, align 1, !tbaa !117
-  %55 = zext i8 %54 to i32
-  %56 = or disjoint i32 %53, %55
-  store i32 %56, ptr %i.cl, align 4, !tbaa !135
-  %57 = getelementptr inbounds nuw i8, ptr %i.dj, i64 20
-  %58 = load i8, ptr %57, align 1, !tbaa !117
-  %59 = zext i8 %58 to i32
-  %60 = shl nuw i32 %59, 24
-  %61 = getelementptr inbounds nuw i8, ptr %i.dj, i64 21
-  %62 = load i8, ptr %61, align 1, !tbaa !117
-  %63 = zext i8 %62 to i32
-  %64 = shl nuw nsw i32 %63, 16
-  %65 = or disjoint i32 %64, %60
-  %66 = getelementptr inbounds nuw i8, ptr %i.dj, i64 22
-  %67 = load i8, ptr %66, align 1, !tbaa !117
-  %68 = zext i8 %67 to i32
-  %69 = shl nuw nsw i32 %68, 8
-  %70 = or disjoint i32 %65, %69
-  %i.dm = getelementptr inbounds nuw i8, ptr %i.dj, i64 23
-  %71 = load i8, ptr %i.dm, align 1, !tbaa !117
-  %72 = zext i8 %71 to i32
-  %73 = or disjoint i32 %70, %72
-  store i32 %73, ptr %i.cm, align 8, !tbaa !136
-  %74 = getelementptr inbounds nuw i8, ptr %i.dj, i64 24
-  %75 = load i8, ptr %74, align 1, !tbaa !117
-  %76 = zext i8 %75 to i32
-  %77 = shl nuw i32 %76, 24
-  %78 = getelementptr inbounds nuw i8, ptr %i.dj, i64 25
-  %79 = load i8, ptr %78, align 1, !tbaa !117
-  %80 = zext i8 %79 to i32
-  %81 = shl nuw nsw i32 %80, 16
-  %82 = or disjoint i32 %81, %77
-  %83 = getelementptr inbounds nuw i8, ptr %i.dj, i64 26
-  %84 = load i8, ptr %83, align 1, !tbaa !117
-  %85 = zext i8 %84 to i32
-  %86 = shl nuw nsw i32 %85, 8
-  %87 = or disjoint i32 %82, %86
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.dj, i64 27
-  %88 = load i8, ptr %i.dn, align 1, !tbaa !117
-  %89 = zext i8 %88 to i32
-  %90 = or disjoint i32 %87, %89
-  store i32 %90, ptr %i.cn, align 4, !tbaa !137
+  %i.dj = load ptr, ptr %1, align 8, !tbaa !103   ; 10 uses
+  %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 12
+  %8 = load i32, ptr %i.dk, align 1
+  %9 = call i32 @llvm.bswap.i32(i32 %8)
+  store i32 %9, ptr %i.ck, align 8, !tbaa !134
+  %i.dl = getelementptr inbounds nuw i8, ptr %i.dj, i64 16
+  %10 = load i32, ptr %i.dl, align 1
+  %11 = call i32 @llvm.bswap.i32(i32 %10)
+  store i32 %11, ptr %i.cl, align 4, !tbaa !135
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.dj, i64 20
+  %12 = load i32, ptr %i.dm, align 1
+  %13 = call i32 @llvm.bswap.i32(i32 %12)
+  store i32 %13, ptr %i.cm, align 8, !tbaa !136
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.dj, i64 24
+  %14 = load i32, ptr %i.dn, align 1
+  %15 = call i32 @llvm.bswap.i32(i32 %14)
+  store i32 %15, ptr %i.cn, align 4, !tbaa !137
   %i.do = getelementptr inbounds nuw i8, ptr %i.dj, i64 28
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !117
   %i.dq = zext i8 %i.dp to i32
@@ -714,7 +639,7 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1118basi
 ; Function Attrs: mustprogress uwtable
 define hidden noundef i32 @_ZN2cv10PngDecoder10read_chunkERNS_5ChunkE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(4544) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [8 x i8], align 8                 ; 10 uses
+  %i.a = alloca [8 x i8], align 8                 ; 7 uses
   %2 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 8 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
@@ -722,25 +647,11 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.w
 
 bb.b:                                             ; preds = %bb.a
-  %4 = load i8, ptr %i.a, align 8, !tbaa !117
-  %5 = zext i8 %4 to i64
-  %6 = shl nuw nsw i64 %5, 24
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !117
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw nsw i64 %9, 16
-  %11 = or disjoint i64 %10, %6
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %13 = load i8, ptr %12, align 2, !tbaa !117
-  %14 = zext i8 %13 to i64
-  %15 = shl nuw nsw i64 %14, 8
-  %16 = or disjoint i64 %11, %15
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %18 = load i8, ptr %17, align 1, !tbaa !117
-  %i.c = zext i8 %18 to i64
-  %19 = or disjoint i64 %16, %i.c
-  %.fr = freeze i64 %19                           ; 3 uses
-  %i.d = add nuw nsw i64 %.fr, 12                 ; 8 uses
+  %4 = load i32, ptr %i.a, align 8
+  %.fr = freeze i32 %4
+  %5 = tail call i32 @llvm.bswap.i32(i32 %.fr)    ; 3 uses
+  %i.c = zext i32 %5 to i64
+  %i.d = add nuw nsw i64 %i.c, 12                 ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.f = load i32, ptr %i.e, align 4
   %i.g = tail call i32 @llvm.bswap.i32(i32 %i.f)  ; 3 uses
@@ -764,14 +675,14 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not55, label %bb.s, label %bb.w
 
 bb.f:                                             ; preds = %bb.b
-  %20 = add nsw i64 %.fr, -3
-  %or.cond = icmp ult i64 %20, -2
+  %6 = add i32 %5, -3
+  %or.cond = icmp ult i32 %6, -2
   %i.h = icmp ne i64 %i.d, 18
   %or.cond3 = select i1 %or.cond, i1 %i.h, i1 false
   br i1 %or.cond3, label %bb.w, label %bb.s
 
 bb.g:                                             ; preds = %bb.b
-  %i.i = icmp ugt i64 %.fr, 7999988
+  %i.i = icmp ugt i32 %5, 7999988
   br i1 %i.i, label %switch.early.test, label %bb.s
 
 switch.early.test:                                ; preds = %bb.g
@@ -1174,53 +1085,23 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %i.io, label %.lr.ph215, label %.loopexit, !llvm.loop !278
 
 .loopexit:                                        ; preds = %.lr.ph215, %.preheader, %bb.bz, %bb.by, %bb.ak
-  %i.ip = load ptr, ptr %3, align 8, !tbaa !103   ; 16 uses
+  %i.ip = load ptr, ptr %3, align 8, !tbaa !103   ; 10 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ip, i64 12 ; 2 uses
   %i.ir = load i32, ptr %i.iq, align 1
   %i.is = call i32 @llvm.bswap.i32(i32 %i.ir)     ; 2 uses
   store i32 %i.is, ptr %i.dd, align 8, !tbaa !134
-  %25 = getelementptr inbounds nuw i8, ptr %i.ip, i64 16
-  %26 = load i8, ptr %25, align 1, !tbaa !117
-  %27 = zext i8 %26 to i32
-  %28 = shl nuw i32 %27, 24
-  %29 = getelementptr inbounds nuw i8, ptr %i.ip, i64 17
-  %30 = load i8, ptr %29, align 1, !tbaa !117
-  %31 = zext i8 %30 to i32
-  %32 = shl nuw nsw i32 %31, 16
-  %33 = or disjoint i32 %32, %28
-  %34 = getelementptr inbounds nuw i8, ptr %i.ip, i64 18
-  %35 = load i8, ptr %34, align 1, !tbaa !117
-  %36 = zext i8 %35 to i32
-  %37 = shl nuw nsw i32 %36, 8
-  %38 = or disjoint i32 %33, %37
-  %i.it = getelementptr inbounds nuw i8, ptr %i.ip, i64 19
-  %39 = load i8, ptr %i.it, align 1, !tbaa !117
-  %40 = zext i8 %39 to i32
-  %41 = or disjoint i32 %38, %40                  ; 2 uses
-  store i32 %41, ptr %i.dg, align 4, !tbaa !135
+  %i.it = getelementptr inbounds nuw i8, ptr %i.ip, i64 16
+  %25 = load i32, ptr %i.it, align 1
+  %26 = call i32 @llvm.bswap.i32(i32 %25)         ; 2 uses
+  store i32 %26, ptr %i.dg, align 4, !tbaa !135
   %i.iu = getelementptr inbounds nuw i8, ptr %i.ip, i64 20
   %i.iv = load i32, ptr %i.iu, align 1
   %i.iw = call i32 @llvm.bswap.i32(i32 %i.iv)     ; 2 uses
   store i32 %i.iw, ptr %i.dc, align 8, !tbaa !136
-  %42 = getelementptr inbounds nuw i8, ptr %i.ip, i64 24
-  %43 = load i8, ptr %42, align 1, !tbaa !117
-  %44 = zext i8 %43 to i32
-  %45 = shl nuw i32 %44, 24
-  %46 = getelementptr inbounds nuw i8, ptr %i.ip, i64 25
-  %47 = load i8, ptr %46, align 1, !tbaa !117
-  %48 = zext i8 %47 to i32
-  %49 = shl nuw nsw i32 %48, 16
-  %50 = or disjoint i32 %49, %45
-  %51 = getelementptr inbounds nuw i8, ptr %i.ip, i64 26
-  %52 = load i8, ptr %51, align 1, !tbaa !117
-  %53 = zext i8 %52 to i32
-  %54 = shl nuw nsw i32 %53, 8
-  %55 = or disjoint i32 %50, %54
-  %i.ix = getelementptr inbounds nuw i8, ptr %i.ip, i64 27
-  %56 = load i8, ptr %i.ix, align 1, !tbaa !117
-  %57 = zext i8 %56 to i32
-  %58 = or disjoint i32 %55, %57                  ; 2 uses
-  store i32 %58, ptr %i.df, align 4, !tbaa !137
+  %i.ix = getelementptr inbounds nuw i8, ptr %i.ip, i64 24
+  %27 = load i32, ptr %i.ix, align 1
+  %28 = call i32 @llvm.bswap.i32(i32 %27)         ; 2 uses
+  store i32 %28, ptr %i.df, align 4, !tbaa !137
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ip, i64 28
   %i.iz = load i8, ptr %i.iy, align 1, !tbaa !117
   %i.ja = zext i8 %i.iz to i32
@@ -1256,8 +1137,8 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %i.jz, label %.loopexit202, label %bb.ca
 
 bb.ca:                                            ; preds = %.loopexit
-  %i.ka = zext i32 %58 to i64
-  %i.kb = zext i32 %41 to i64
+  %i.ka = zext i32 %28 to i64
+  %i.kb = zext i32 %26 to i64
   %i.kc = add nuw nsw i64 %i.ka, %i.kb
   %i.kd = load i32, ptr %i.x, align 8, !tbaa !37
   %i.ke = sext i32 %i.kd to i64
@@ -1660,10 +1541,10 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #27
 declare i64 @llvm.umax.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #25
+declare i32 @llvm.bswap.i32(i32) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #25
+declare i32 @llvm.umax.i32(i32, i32) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #25

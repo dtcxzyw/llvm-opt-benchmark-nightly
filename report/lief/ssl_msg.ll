@@ -205,31 +205,17 @@ bb.a:
 define hidden range(i32 -1, 1) i32 @mbedtls_ssl_dtls_replay_check(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #12 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 192
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !38   ; 6 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %2 = load i8, ptr %1, align 1, !tbaa !34
-  %3 = zext i8 %2 to i64
-  %4 = shl nuw nsw i64 %3, 40
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %6 = load i8, ptr %5, align 1, !tbaa !34
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 32
-  %9 = or disjoint i64 %8, %4
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %10 = load i8, ptr %i.c, align 1, !tbaa !34
-  %11 = zext i8 %10 to i64
-  %12 = shl nuw nsw i64 %11, 24
-  %13 = or disjoint i64 %9, %12
-  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 5
-  %15 = load i8, ptr %14, align 1, !tbaa !34
-  %i.d = zext i8 %15 to i64
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !38   ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %1 = load i32, ptr %i.c, align 1
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  %i.d = zext i32 %2 to i64
   %i.e = shl nuw nsw i64 %i.d, 16
-  %16 = or disjoint i64 %13, %i.e
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   %i.g = load i8, ptr %i.f, align 1, !tbaa !34
   %i.h = zext i8 %i.g to i64
   %i.i = shl nuw nsw i64 %i.h, 8
-  %i.j = or disjoint i64 %16, %i.i
+  %i.j = or disjoint i64 %i.e, %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 7
   %i.l = load i8, ptr %i.k, align 1, !tbaa !34
   %i.m = zext i8 %i.l to i64
@@ -269,31 +255,17 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b,
 define hidden void @mbedtls_ssl_dtls_replay_update(ptr nofree noundef captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 192
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !38   ; 6 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %2 = load i8, ptr %1, align 1, !tbaa !34
-  %3 = zext i8 %2 to i64
-  %4 = shl nuw nsw i64 %3, 40
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %6 = load i8, ptr %5, align 1, !tbaa !34
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 32
-  %9 = or disjoint i64 %8, %4
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %10 = load i8, ptr %i.c, align 1, !tbaa !34
-  %11 = zext i8 %10 to i64
-  %12 = shl nuw nsw i64 %11, 24
-  %13 = or disjoint i64 %9, %12
-  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 5
-  %15 = load i8, ptr %14, align 1, !tbaa !34
-  %i.d = zext i8 %15 to i64
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !38   ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %1 = load i32, ptr %i.c, align 1
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  %i.d = zext i32 %2 to i64
   %i.e = shl nuw nsw i64 %i.d, 16
-  %16 = or disjoint i64 %13, %i.e
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   %i.g = load i8, ptr %i.f, align 1, !tbaa !34
   %i.h = zext i8 %i.g to i64
   %i.i = shl nuw nsw i64 %i.h, 8
-  %i.j = or disjoint i64 %16, %i.i
+  %i.j = or disjoint i64 %i.e, %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 7
   %i.l = load i8, ptr %i.k, align 1, !tbaa !34
   %i.m = zext i8 %i.l to i64
@@ -696,31 +668,17 @@ split.i.i:                                        ; preds = %.preheader.i.i, %._
   br i1 %i.gk, label %bb.bc, label %mbedtls_ssl_dtls_replay_update.exit.i.thread.i
 
 bb.bc:                                            ; preds = %.critedge.i.i
-  %i.gl = load ptr, ptr %i.u, align 8, !tbaa !38  ; 6 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.gl, i64 2
-  %4 = load i8, ptr %3, align 1, !tbaa !34
-  %5 = zext i8 %4 to i64
-  %6 = shl nuw nsw i64 %5, 40
-  %7 = getelementptr inbounds nuw i8, ptr %i.gl, i64 3
-  %8 = load i8, ptr %7, align 1, !tbaa !34
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw nsw i64 %9, 32
-  %11 = or disjoint i64 %10, %6
-  %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 4
-  %12 = load i8, ptr %i.gm, align 1, !tbaa !34
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 24
-  %15 = or disjoint i64 %11, %14
-  %16 = getelementptr inbounds nuw i8, ptr %i.gl, i64 5
-  %17 = load i8, ptr %16, align 1, !tbaa !34
-  %i.gn = zext i8 %17 to i64
+  %i.gl = load ptr, ptr %i.u, align 8, !tbaa !38  ; 3 uses
+  %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 2
+  %3 = load i32, ptr %i.gm, align 1
+  %4 = call i32 @llvm.bswap.i32(i32 %3)
+  %i.gn = zext i32 %4 to i64
   %i.go = shl nuw nsw i64 %i.gn, 16
-  %18 = or disjoint i64 %15, %i.go
   %i.gp = getelementptr inbounds nuw i8, ptr %i.gl, i64 6
   %i.gq = load i8, ptr %i.gp, align 1, !tbaa !34
   %i.gr = zext i8 %i.gq to i64
   %i.gs = shl nuw nsw i64 %i.gr, 8
-  %i.gt = or disjoint i64 %18, %i.gs
+  %i.gt = or disjoint i64 %i.go, %i.gs
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gl, i64 7
   %i.gv = load i8, ptr %i.gu, align 1, !tbaa !34
   %i.gw = zext i8 %i.gv to i64
@@ -1123,29 +1081,15 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !38
   store ptr %1, ptr %i.a, align 8, !tbaa !38
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %2 = load i8, ptr %i.c, align 1, !tbaa !34
-  %3 = zext i8 %2 to i64
-  %4 = shl nuw nsw i64 %3, 40
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %6 = load i8, ptr %5, align 1, !tbaa !34
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 32
-  %9 = or disjoint i64 %8, %4
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %11 = load i8, ptr %10, align 1, !tbaa !34
-  %12 = zext i8 %11 to i64
-  %13 = shl nuw nsw i64 %12, 24
-  %14 = or disjoint i64 %9, %13
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 5
-  %16 = load i8, ptr %15, align 1, !tbaa !34
-  %i.d = zext i8 %16 to i64
+  %2 = load i32, ptr %i.c, align 1
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  %i.d = zext i32 %3 to i64
   %i.e = shl nuw nsw i64 %i.d, 16
-  %17 = or disjoint i64 %14, %i.e
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 6
   %i.g = load i8, ptr %i.f, align 1, !tbaa !34
   %i.h = zext i8 %i.g to i64
   %i.i = shl nuw nsw i64 %i.h, 8
-  %i.j = or disjoint i64 %17, %i.i
+  %i.j = or disjoint i64 %i.e, %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 7
   %i.l = load i8, ptr %i.k, align 1, !tbaa !34
   %i.m = zext i8 %i.l to i64
@@ -1546,6 +1490,9 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #10

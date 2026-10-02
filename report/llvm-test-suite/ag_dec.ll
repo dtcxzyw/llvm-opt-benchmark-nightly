@@ -204,31 +204,16 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ah = add i32 %.0144151, 9                    ; 3 uses
   %i.ai = sdiv i32 %i.ah, 8                       ; 2 uses
   %i.aj = zext i32 %i.ai to i64
-  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.aj ; 4 uses
-  %7 = load i8, ptr %6, align 1, !tbaa !25
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw i32 %8, 24
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 1
-  %11 = load i8, ptr %10, align 1, !tbaa !25
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 16
-  %14 = or disjoint i32 %13, %9
-  %15 = getelementptr inbounds nuw i8, ptr %6, i64 2
-  %16 = load i8, ptr %15, align 1, !tbaa !25
-  %17 = zext i8 %16 to i32
-  %18 = shl nuw nsw i32 %17, 8
-  %19 = or disjoint i32 %14, %18
-  %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 3
-  %20 = load i8, ptr %i.ak, align 1, !tbaa !25
-  %21 = zext i8 %20 to i32
-  %22 = or disjoint i32 %19, %21                  ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.aj
+  %6 = load i32, ptr %i.ak, align 1
+  %7 = tail call i32 @llvm.bswap.i32(i32 %6)      ; 2 uses
   %i.al = and i32 %i.ah, 7                        ; 2 uses
   %i.am = add nsw i32 %i.al, %4                   ; 3 uses
   %i.an = icmp sgt i32 %i.am, 32
   br i1 %i.an, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.ao = shl i32 %22, %i.al
+  %i.ao = shl i32 %7, %i.al
   %i.ap = add nsw i32 %i.ai, 4
   %i.aq = zext i32 %i.ap to i64
   %i.ar = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.aq
@@ -242,7 +227,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ah
   %i.ay = sub i32 32, %i.am
-  %i.az = lshr i32 %22, %i.ay
+  %i.az = lshr i32 %7, %i.ay
   br label %getstreambits.exit.i
 
 getstreambits.exit.i:                             ; preds = %bb.aj, %bb.ai
@@ -564,11 +549,11 @@ declare void @BitBufferAdvance(ptr noundef, i32 noundef) local_unnamed_addr #2
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #3
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #3
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

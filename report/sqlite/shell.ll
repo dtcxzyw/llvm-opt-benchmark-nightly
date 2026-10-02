@@ -206,23 +206,8 @@ bb.e:                                             ; preds = %bb.d
   %i.s = load i8, ptr %i.r, align 1, !tbaa !52
   %i.t = zext i8 %i.s to i32                      ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %4 = load i8, ptr %i.u, align 1, !tbaa !52
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 57 ; 2 uses
-  %8 = load i8, ptr %7, align 1, !tbaa !52
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %6
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 58 ; 2 uses
-  %13 = load i8, ptr %12, align 1, !tbaa !52
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = or disjoint i32 %11, %15
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 59 ; 2 uses
-  %18 = load i8, ptr %17, align 1, !tbaa !52
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %16, %19                  ; 3 uses
+  %4 = load i32, ptr %i.u, align 1                ; 2 uses
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #45
   store i64 0, ptr %i.a, align 8, !tbaa !130
   %i.v = load ptr, ptr @recover_g.1, align 8, !tbaa !317 ; 8 uses
@@ -301,11 +286,11 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ay, i8 0, i64 range(i64 -17179869184, 17179869177) %i.au, i1 false)
   store ptr %i.ay, ptr %i.ap, align 8, !tbaa !331
-  %i.az = and i32 %20, -3
+  %i.az = and i32 %5, -3
   %or.cond5 = icmp ne i32 %i.az, 1
-  %i.ba = icmp ne i32 %20, 2
+  %i.ba = icmp ne i32 %4, 33554432
   %or.cond7 = and i1 %i.ba, %or.cond5
-  %spec.store.select9 = select i1 %or.cond7, i32 1, i32 %20 ; 4 uses
+  %spec.store.select9 = select i1 %or.cond7, i32 1, i32 %5 ; 4 uses
   %i.bb = zext nneg i32 %2 to i64                 ; 4 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.bb ; 2 uses
   store ptr %i.bc, ptr %i.ar, align 8, !tbaa !665
@@ -351,9 +336,12 @@ bb.n:                                             ; preds = %bb.l
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %.sroa.15.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(12) getelementptr inbounds nuw (i8, ptr @__const.recoverVfsRead.aHdr, i64 40), i64 12, i1 false)
   store i8 %i.bl, ptr %i.u, align 1
-  store i8 %i.bn, ptr %7, align 1
-  store i8 %i.bp, ptr %12, align 1
-  store i8 %i.bq, ptr %17, align 1
+  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 57
+  store i8 %i.bn, ptr %.sroa.17.0..sroa_idx, align 1
+  %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 58
+  store i8 %i.bp, ptr %.sroa.18.0..sroa_idx, align 1
+  %.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 59
+  store i8 %i.bq, ptr %.sroa.19.0..sroa_idx, align 1
   %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 72
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(33) %.sroa.23.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(33) getelementptr inbounds nuw (i8, ptr @__const.recoverVfsRead.aHdr, i64 72), i64 33, i1 false)
   %.sroa.23128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 105

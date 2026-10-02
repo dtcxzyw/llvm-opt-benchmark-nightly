@@ -202,26 +202,11 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
   br i1 %or.cond4.i, label %bb.cc, label %bb.cd
 
 bb.cc:                                            ; preds = %bb.cb
-  %8 = load i8, ptr %i.oj, align 1
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw i32 %9, 24
-  %11 = getelementptr i8, ptr %i.oj, i64 1        ; 2 uses
-  %12 = load i8, ptr %11, align 1
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 16
-  %15 = or disjoint i32 %14, %10
-  %16 = getelementptr i8, ptr %i.oj, i64 2        ; 2 uses
-  %17 = load i8, ptr %16, align 1
-  %18 = zext i8 %17 to i32
-  %19 = shl nuw nsw i32 %18, 8
-  %20 = or disjoint i32 %15, %19
-  %21 = getelementptr i8, ptr %i.oj, i64 3        ; 2 uses
-  %22 = load i8, ptr %21, align 1
-  %23 = zext i8 %22 to i32
-  %24 = or disjoint i32 %20, %23
+  %8 = load i32, ptr %i.oj, align 1
+  %9 = call i32 @llvm.bswap.i32(i32 %8)
   %i.po = load i32, ptr %i.g, align 4             ; 2 uses
   %i.pp = lshr i32 %i.po, 16
-  %i.pq = xor i32 %24, %i.pp                      ; 3 uses
+  %i.pq = xor i32 %i.pp, %9                       ; 3 uses
   %i.pr = shl i32 %i.po, 16
   %i.ps = xor i32 %i.pq, %i.pr                    ; 2 uses
   %i.pt = lshr i32 %i.ps, 24
@@ -229,12 +214,15 @@ bb.cc:                                            ; preds = %bb.cb
   store i8 %i.pu, ptr %i.oj, align 1
   %i.pv = lshr i32 %i.ps, 16
   %i.pw = trunc i32 %i.pv to i8
-  store i8 %i.pw, ptr %11, align 1
+  %10 = getelementptr i8, ptr %i.oj, i64 1
+  store i8 %i.pw, ptr %10, align 1
   %i.px = lshr i32 %i.pq, 8
   %i.py = trunc i32 %i.px to i8
-  store i8 %i.py, ptr %16, align 1
+  %11 = getelementptr i8, ptr %i.oj, i64 2
+  store i8 %i.py, ptr %11, align 1
   %i.pz = trunc i32 %i.pq to i8
-  store i8 %i.pz, ptr %21, align 1
+  %12 = getelementptr i8, ptr %i.oj, i64 3
+  store i8 %i.pz, ptr %12, align 1
   %i.qa = getelementptr i8, ptr %.0.i119, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(12) %i.qa, ptr noundef nonnull align 1 dereferenceable(12) %i.oj, i64 noundef 12, i1 noundef false) #16
   br label %bb.cd
@@ -635,6 +623,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #15

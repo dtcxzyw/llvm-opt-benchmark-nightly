@@ -205,25 +205,10 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %.03440 = phi ptr [ %i.t, %bb.e ], [ %i.d, %.lr.ph.preheader ] ; 8 uses
+  %.03440 = phi ptr [ %i.t, %bb.e ], [ %i.d, %.lr.ph.preheader ] ; 5 uses
   %.03539 = phi i32 [ %i.s, %bb.e ], [ 0, %.lr.ph.preheader ]
-  %4 = load i8, ptr %.03440, align 1, !tbaa !28
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr inbounds nuw i8, ptr %.03440, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !28
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %6
-  %12 = getelementptr inbounds nuw i8, ptr %.03440, i64 2
-  %13 = load i8, ptr %12, align 1, !tbaa !28
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = or disjoint i32 %11, %15
-  %17 = getelementptr inbounds nuw i8, ptr %.03440, i64 3
-  %18 = load i8, ptr %17, align 1, !tbaa !28
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %16, %19                  ; 2 uses
+  %4 = load i32, ptr %.03440, align 1
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)      ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.03440, i64 4
   %i.f = getelementptr inbounds nuw i8, ptr %.03440, i64 7
   %i.g = load i32, ptr %i.e, align 1, !tbaa !28
@@ -241,7 +226,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.o, label %.critedge, label %bb.c
 
 .critedge:                                        ; preds = %bb.b, %.lr.ph
-  %i.p = zext i32 %20 to i64
+  %i.p = zext i32 %5 to i64
   tail call fastcc void @png_icc_profile_error(ptr noundef %0, ptr noundef %1, i64 noundef %i.p, ptr noundef nonnull @.str.36)
   br label %.loopexit
 
@@ -251,7 +236,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = zext i32 %20 to i64
+  %i.r = zext i32 %5 to i64
   tail call fastcc void @png_icc_profile_error(ptr noundef %0, ptr noundef %1, i64 noundef %i.r, ptr noundef nonnull @.str.37)
   br label %bb.e
 
@@ -654,14 +639,14 @@ declare i32 @llvm.smax.i32(i32, i32) #19
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #19
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.floor.v2f64(<2 x double>) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #19

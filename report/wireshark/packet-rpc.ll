@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.backedge.i.i, %.lr.ph.i.i
   %.03043.i.i = phi i32 [ 12, %.lr.ph.i.i ], [ %.030.be.i.i, %.backedge.i.i ] ; 5 uses
   %i.t = zext i32 %.03043.i.i to i64              ; 2 uses
-  %i.u = getelementptr i8, ptr %i.p, i64 %i.t     ; 21 uses
+  %i.u = getelementptr i8, ptr %i.p, i64 %i.t     ; 18 uses
   %i.v = getelementptr i8, ptr %i.u, i64 15
   %scevgep47.i.i = getelementptr i8, ptr %scevgep.i.i, i64 %i.t
   %i.w = load i8, ptr %i.v, align 1
@@ -316,26 +316,11 @@ bb.u:                                             ; preds = %.loopexit.i.i
   br i1 %i.be, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %6 = getelementptr i8, ptr %i.u, i64 -11
-  %7 = load i8, ptr %6, align 1
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 16
   %i.bf = getelementptr i8, ptr %i.u, i64 -12
-  %10 = load i8, ptr %i.bf, align 1
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw i32 %11, 24
-  %13 = getelementptr i8, ptr %i.u, i64 -10
-  %14 = load i8, ptr %13, align 1
-  %15 = zext i8 %14 to i32
-  %16 = shl nuw nsw i32 %15, 8
-  %17 = getelementptr i8, ptr %i.u, i64 -9
-  %18 = load i8, ptr %17, align 1
-  %19 = zext i8 %18 to i32
-  %.masked37.i.i = and i32 %12, 2130706432
-  %.masked36.i.i = or disjoint i32 %.masked37.i.i, %9
-  %.masked.i.i = or disjoint i32 %.masked36.i.i, %16
-  %20 = or disjoint i32 %.masked.i.i, %19
-  %.not35.i.i = icmp ugt i32 %20, %i.s
+  %6 = load i32, ptr %i.bf, align 1
+  %.masked37.i.i = and i32 %6, -129
+  %7 = tail call i32 @llvm.bswap.i32(i32 %.masked37.i.i)
+  %.not35.i.i = icmp ugt i32 %7, %i.s
   br i1 %.not35.i.i, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v, %bb.u
@@ -737,6 +722,9 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.b,
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #15
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

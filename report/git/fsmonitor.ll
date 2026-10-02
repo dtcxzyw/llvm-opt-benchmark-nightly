@@ -84,14 +84,8 @@ bb.c:                                             ; preds = %bb.a
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %4 = load i32, ptr %i.e, align 1
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = load i32, ptr %5, align 1
-  %7 = zext i32 %4 to i64
-  %8 = zext i32 %6 to i64
-  %9 = shl nuw i64 %8, 32
-  %10 = or disjoint i64 %9, %7
-  %op.rdx = tail call i64 @llvm.bswap.i64(i64 %10)
+  %.val = load i64, ptr %i.e, align 1
+  %op.rdx = tail call i64 @llvm.bswap.i64(i64 %.val)
   call void (ptr, ptr, ...) @strbuf_addf(ptr noundef nonnull %3, ptr noundef nonnull @.str.2, i64 noundef %op.rdx) #9
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 12
   br label %bb.g

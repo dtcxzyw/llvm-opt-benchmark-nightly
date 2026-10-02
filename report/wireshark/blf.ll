@@ -204,28 +204,13 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k, %bb.l, %bb.j
   %.095.shrunk = phi i1 [ %8, %bb.j ], [ %i.ah, %bb.l ], [ true, %bb.k ] ; 2 uses
-  %17 = load i8, ptr %5, align 1
-  %18 = zext i8 %17 to i32                        ; 3 uses
-  %19 = shl nuw i32 %18, 24
-  %20 = getelementptr i8, ptr %5, i64 1
-  %21 = load i8, ptr %20, align 1
-  %22 = zext i8 %21 to i32
-  %23 = shl nuw nsw i32 %22, 16
-  %24 = getelementptr i8, ptr %5, i64 2
-  %25 = load i8, ptr %24, align 1
-  %26 = zext i8 %25 to i32
-  %27 = shl nuw nsw i32 %26, 8
-  %28 = getelementptr i8, ptr %5, i64 3
-  %29 = load i8, ptr %28, align 1
-  %30 = zext i8 %29 to i32
-  %31 = or disjoint i32 %27, %30
-  %i.ai = and i32 %18, 32
+  %17 = load i32, ptr %5, align 1
+  %18 = call i32 @llvm.bswap.i32(i32 %17)         ; 3 uses
+  %i.ai = and i32 %18, 536870912
   %.not110 = icmp ne i32 %i.ai, 0                 ; 2 uses
-  %i.aj = and i32 %18, 64
+  %i.aj = and i32 %18, 1073741824
   %.not111 = icmp eq i32 %i.aj, 0
-  %.masked129 = and i32 %19, -1627389952
-  %.masked = or disjoint i32 %23, %.masked129
-  %32 = or disjoint i32 %31, %.masked             ; 2 uses
+  %.masked129 = and i32 %18, -1610612737          ; 2 uses
   br i1 %.095.shrunk, label %bb.n, label %bb.w
 
 bb.n:                                             ; preds = %bb.m
@@ -259,7 +244,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o
   %i.ay = getelementptr inbounds nuw i8, ptr %15, i64 3
   store i8 0, ptr %i.ay, align 1
   %i.az = getelementptr inbounds nuw i8, ptr %15, i64 4
-  store i32 %32, ptr %i.az, align 4
+  store i32 %.masked129, ptr %i.az, align 4
   %i.ba = getelementptr inbounds nuw i8, ptr %15, i64 8
   store i32 0, ptr %i.ba, align 4
   %i.bb = getelementptr inbounds nuw i8, ptr %15, i64 12 ; 3 uses
@@ -371,7 +356,7 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.cg = getelementptr inbounds nuw i8, ptr %16, i64 4
-  store i32 %32, ptr %i.cg, align 4
+  store i32 %.masked129, ptr %i.cg, align 4
   %i.ch = load ptr, ptr %i.i, align 8             ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #15
   store i32 2, ptr %11, align 8
@@ -772,6 +757,9 @@ declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #8

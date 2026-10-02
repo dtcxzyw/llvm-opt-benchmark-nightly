@@ -202,7 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !28   ; 2 uses
-  %i.h = getelementptr i8, ptr %i.g, i64 %i.d     ; 9 uses
+  %i.h = getelementptr i8, ptr %i.g, i64 %i.d     ; 2 uses
   %i.i = getelementptr i8, ptr %i.h, i64 -9
   %i.j = load i8, ptr %i.i, align 1, !tbaa !20
   %.not = icmp eq i8 %i.j, 0
@@ -243,45 +243,10 @@ bb.e:                                             ; preds = %.thread136, %thread
   %i.s = phi ptr [ %i.r, %.thread136 ], [ %i.o, %thread-pre-split ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.s, ptr nonnull align 1 %i.g, i64 %i.m, i1 false)
   %i.t = getelementptr inbounds i8, ptr %i.h, i64 -8
-  %8 = load i8, ptr %i.t, align 1, !tbaa !20
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw i64 %9, 56
-  %11 = getelementptr inbounds i8, ptr %i.h, i64 -7
-  %12 = load i8, ptr %11, align 1, !tbaa !20
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 48
-  %15 = or disjoint i64 %14, %10
-  %16 = getelementptr inbounds i8, ptr %i.h, i64 -6
-  %17 = load i8, ptr %16, align 1, !tbaa !20
-  %18 = zext i8 %17 to i64
-  %19 = shl nuw nsw i64 %18, 40
-  %20 = or disjoint i64 %15, %19
-  %21 = getelementptr inbounds i8, ptr %i.h, i64 -5
-  %22 = load i8, ptr %21, align 1, !tbaa !20
-  %23 = zext i8 %22 to i64
-  %24 = shl nuw nsw i64 %23, 32
-  %25 = or disjoint i64 %20, %24
-  %26 = getelementptr inbounds i8, ptr %i.h, i64 -4
-  %27 = load i8, ptr %26, align 1, !tbaa !20
-  %28 = zext i8 %27 to i64
-  %29 = shl nuw nsw i64 %28, 24
-  %30 = or disjoint i64 %25, %29
-  %31 = getelementptr inbounds i8, ptr %i.h, i64 -3
-  %32 = load i8, ptr %31, align 1, !tbaa !20
-  %33 = zext i8 %32 to i64
-  %34 = shl nuw nsw i64 %33, 16
-  %35 = or disjoint i64 %30, %34
-  %36 = getelementptr inbounds i8, ptr %i.h, i64 -2
-  %37 = load i8, ptr %36, align 1, !tbaa !20
-  %38 = zext i8 %37 to i64
-  %39 = shl nuw nsw i64 %38, 8
-  %40 = or i64 %35, %39
-  %41 = getelementptr inbounds i8, ptr %i.h, i64 -1
-  %42 = load i8, ptr %41, align 1, !tbaa !20
-  %43 = zext i8 %42 to i64
-  %44 = or i64 %40, %43                           ; 2 uses
-  store i64 %44, ptr %i.a, align 8, !tbaa !22
-  %i.u = xor i64 %44, -1
+  %8 = load i64, ptr %i.t, align 1
+  %9 = tail call i64 @llvm.bswap.i64(i64 %8)      ; 2 uses
+  store i64 %9, ptr %i.a, align 8, !tbaa !22
+  %i.u = xor i64 %9, -1
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.u, ptr %i.v, align 8, !tbaa !33
   %i.w = zext i8 %2 to i32
@@ -682,6 +647,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #16

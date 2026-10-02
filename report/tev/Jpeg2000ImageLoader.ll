@@ -205,7 +205,7 @@ begin_hunk_0
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init.3, ptr @_ZN3tev8ituth2733hlg5gammaE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3tev8ituth2733hlg5gammaE], section "llvm.metadata"
 @"switch.table._ZZNK3tev19Jpeg2000ImageLoader4loadENSt3__14spanIKhLm18446744073709551615EEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcNS1_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEibPmPNS_10EPixelTypeEENK3$_0clES4_" = private unnamed_addr constant [7 x i8] c"\07\0B\04\04\04\04\04", align 8
-@"switch.table._ZZNK3tev19Jpeg2000ImageLoader4loadENSt3__14spanIKhLm18446744073709551615EEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcNS1_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEibPmPNS_10EPixelTypeEENK3$_0clES4_.13" = private unnamed_addr constant [7 x ptr] [ptr @.str.132, ptr @.str.133, ptr @.str.134, ptr @.str.135, ptr @.str.136, ptr @.str.137, ptr @.str.138], align 8
+@"switch.table._ZZNK3tev19Jpeg2000ImageLoader4loadENSt3__14spanIKhLm18446744073709551615EEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcNS1_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEibPmPNS_10EPixelTypeEENK3$_0clES4_.14" = private unnamed_addr constant [7 x ptr] [ptr @.str.132, ptr @.str.133, ptr @.str.134, ptr @.str.135, ptr @.str.136, ptr @.str.137, ptr @.str.138], align 8
 @switch.table._ZN4tlog13ConsoleOutput9writeLineENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEENS_9ESeverityES5_ = private unnamed_addr constant [6 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4tlog4ansiL4CYANE, i64 1), ptr getelementptr inbounds nuw (i8, ptr @_ZN4tlog4ansiL7MAGENTAE, i64 1), ptr getelementptr inbounds nuw (i8, ptr @_ZN4tlog4ansiL11BOLD_YELLOWE, i64 1), ptr getelementptr inbounds nuw (i8, ptr @_ZN4tlog4ansiL8BOLD_REDE, i64 1), ptr getelementptr inbounds nuw (i8, ptr @_ZN4tlog4ansiL5GREENE, i64 1), ptr getelementptr inbounds nuw (i8, ptr @_ZN4tlog4ansiL4BLUEE, i64 1)], align 8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -608,8 +608,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.026.0.copyload, i64 3
-  %i.p = load i32, ptr %i.o, align 1
-  %i.q = tail call i32 @llvm.bswap.i32(i32 %i.p)  ; 2 uses
+  %i.p = load i32, ptr %i.o, align 1, !noalias !606
+  %i.q = tail call noundef i32 @llvm.bswap.i32(i32 %i.p) ; 2 uses
   %switch.tableidx.i = add i32 %i.q, -16
   %i.r = icmp ult i32 %switch.tableidx.i, 3
   br i1 %i.r, label %switch.lookup.i, label %_ZN3tevL12parseColrBoxENSt3__14spanIKhLm18446744073709551615EEE.exit.thread
@@ -1012,7 +1012,7 @@ switch.lookup:                                    ; preds = %.from.556
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.fj = zext nneg i32 %switch.tableidx to i64
-  %switch.gep1056 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZZNK3tev19Jpeg2000ImageLoader4loadENSt3__14spanIKhLm18446744073709551615EEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcNS1_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEibPmPNS_10EPixelTypeEENK3$_0clES4_.13", i64 %i.fj
+  %switch.gep1056 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZZNK3tev19Jpeg2000ImageLoader4loadENSt3__14spanIKhLm18446744073709551615EEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcNS1_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEibPmPNS_10EPixelTypeEENK3$_0clES4_.14", i64 %i.fj
   %switch.load1057 = load ptr, ptr %switch.gep1056, align 8
   br label %.from.587
 
@@ -1415,7 +1415,7 @@ _ZN4tlog7warningENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEE.exit: ; pre
 bb.e:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #37
   %i.ab = load i32, ptr %1, align 1
-  %i.ac = tail call i32 @llvm.bswap.i32(i32 %i.ab)
+  %i.ac = tail call noundef i32 @llvm.bswap.i32(i32 %i.ab)
   %i.ad = zext i32 %i.ac to i64
   %.sroa.speculated41 = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.ad) ; 5 uses
   store i64 %.sroa.speculated41, ptr %i.a, align 8, !tbaa !95
@@ -1477,14 +1477,8 @@ _ZN4tlog7warningENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEE.exit27: ; p
 
 bb.j:                                             ; preds = %bb.f
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %4 = load i32, ptr %i.bd, align 1
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %6 = load i32, ptr %5, align 1
-  %7 = zext i32 %4 to i64
-  %8 = zext i32 %6 to i64
-  %9 = shl nuw i64 %8, 32
-  %10 = or disjoint i64 %9, %7
-  %op.rdx = tail call i64 @llvm.bswap.i64(i64 %10)
+  %.val = load i64, ptr %i.bd, align 1
+  %op.rdx = tail call noundef i64 @llvm.bswap.i64(i64 %.val)
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 %op.rdx) ; 2 uses
   %i.be = add i64 %.sroa.speculated, -16          ; 2 uses
   %i.bf = icmp eq i64 %i.be, -1
@@ -1887,6 +1881,12 @@ declare i64 @llvm.smin.i64(i64, i64) #3
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #33
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #3
+
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #24
 
@@ -2287,12 +2287,6 @@ _ZN3tev11TaskPromiseINS_4TaskINSt3__16vectorINS_9ImageDataENS2_9allocatorIS4_EEE
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 128) #37
   ret void
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.bswap.i64(i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fma.v4f32(<4 x float>, <4 x float>, <4 x float>) #3

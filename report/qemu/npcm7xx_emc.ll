@@ -202,7 +202,7 @@ declare void @device_class_set_legacy_reset(ptr noundef, ptr noundef) local_unna
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @npcm7xx_emc_reset(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.6, i32 noundef 281, ptr noundef nonnull @__func__.NPCM7XX_EMC) #9 ; 18 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.6, i32 noundef 281, ptr noundef nonnull @__func__.NPCM7XX_EMC) #9 ; 15 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 9328
   %i.c = load i8, ptr %i.b, align 16
   %i.d = zext i8 %i.c to i32
@@ -245,25 +245,10 @@ emc_reset.exit:                                   ; preds = %bb.a, %bb.b, %bb.c,
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 9553
   store i8 0, ptr %i.q, align 1
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 1112
-  %1 = load i8, ptr %i.r, align 8
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw i32 %2, 24
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 1113
-  %5 = load i8, ptr %4, align 1
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw nsw i32 %6, 16
-  %8 = or disjoint i32 %7, %3
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 1114
-  %10 = load i8, ptr %9, align 2
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 8
-  %13 = or disjoint i32 %8, %12
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 1115
-  %15 = load i8, ptr %14, align 1
-  %16 = zext i8 %15 to i32
-  %17 = or disjoint i32 %13, %16
+  %1 = load i32, ptr %i.r, align 8
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 9340
-  store i32 %17, ptr %i.s, align 4
+  store i32 %2, ptr %i.s, align 4
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 1116
   %i.u = load i8, ptr %i.t, align 4
   %i.v = zext i8 %i.u to i32
@@ -666,25 +651,10 @@ emc_reset.exit:                                   ; preds = %bb.a, %bb.b, %bb.c,
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 9553
   store i8 0, ptr %i.r, align 1
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1112
-  %1 = load i8, ptr %i.s, align 8
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw i32 %2, 24
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1113
-  %5 = load i8, ptr %4, align 1
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw nsw i32 %6, 16
-  %8 = or disjoint i32 %7, %3
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 1114
-  %10 = load i8, ptr %9, align 2
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 8
-  %13 = or disjoint i32 %8, %12
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 1115
-  %15 = load i8, ptr %14, align 1
-  %16 = zext i8 %15 to i32
-  %17 = or disjoint i32 %13, %16
+  %1 = load i32, ptr %i.s, align 8
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 9340
-  store i32 %17, ptr %i.t, align 4
+  store i32 %2, ptr %i.t, align 4
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1116
   %i.v = load i8, ptr %i.u, align 4
   %i.w = zext i8 %i.v to i32

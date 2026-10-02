@@ -140,30 +140,15 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: nounwind uwtable
 define void @png_write_chunk_start(ptr noalias noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = alloca [8 x i8], align 1                 ; 11 uses
-  %3 = load i8, ptr %1, align 1, !tbaa !10        ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %5 = load i8, ptr %4, align 1, !tbaa !10        ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %7 = load i8, ptr %6, align 1, !tbaa !10        ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %9 = load i8, ptr %8, align 1, !tbaa !10        ; 2 uses
+  %i.a = alloca [8 x i8], align 1                 ; 8 uses
+  %3 = load i32, ptr %1, align 1                  ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !77)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12, !noalias !77
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %png_write_chunk_header.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %10 = zext i8 %3 to i32
-  %11 = shl nuw i32 %10, 24
-  %12 = zext i8 %5 to i32
-  %13 = shl nuw nsw i32 %12, 16
-  %14 = or disjoint i32 %13, %11
-  %15 = zext i8 %7 to i32
-  %16 = shl nuw nsw i32 %15, 8
-  %17 = zext i8 %9 to i32
-  %18 = or disjoint i32 %14, %16
-  %19 = or disjoint i32 %18, %17
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1188 ; 2 uses
   store i32 34, ptr %i.c, align 4, !tbaa !27, !alias.scope !77
   %i.d = lshr i32 %2, 24
@@ -181,16 +166,10 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i8 %i.l, ptr %i.m, align 1, !tbaa !10, !noalias !77
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
-  store i8 %3, ptr %i.n, align 1, !tbaa !10, !noalias !77
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %5, ptr %20, align 1, !tbaa !10, !noalias !77
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %7, ptr %21, align 1, !tbaa !10, !noalias !77
-  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %9, ptr %22, align 1, !tbaa !10, !noalias !77
+  store i32 %3, ptr %i.n, align 1, !tbaa !10, !noalias !77
   call void @png_write_data(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 8) #12
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 544
-  store i32 %19, ptr %i.o, align 8, !tbaa !29, !alias.scope !77
+  store i32 %4, ptr %i.o, align 8, !tbaa !29, !alias.scope !77
   call void @png_reset_crc(ptr noundef nonnull %0) #12
   call void @png_calculate_crc(ptr noundef nonnull %0, ptr noundef nonnull %i.n, i64 noundef 4) #12
   store i32 66, ptr %i.c, align 4, !tbaa !27, !alias.scope !77
@@ -593,6 +572,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #10
 declare void @llvm.experimental.noalias.scope.decl(metadata) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -600,9 +582,6 @@ declare i32 @llvm.umin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #9

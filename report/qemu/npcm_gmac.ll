@@ -140,7 +140,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @npcm_gmac_realize(ptr noundef %0, ptr nofree readnone captures(none) %1) #0 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.6, i32 noundef 172, ptr noundef nonnull @__func__.NPCM_GMAC) #7 ; 14 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.6, i32 noundef 172, ptr noundef nonnull @__func__.NPCM_GMAC) #7 ; 11 uses
   %i.b = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.7, i32 noundef 20, ptr noundef nonnull @__func__.SYS_BUS_DEVICE) #7 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 816 ; 2 uses
   tail call void @memory_region_init_io(ptr noundef nonnull %i.c, ptr noundef %i.a, ptr noundef nonnull @npcm_gmac_ops, ptr noundef %i.a, ptr noundef nonnull @.str, i64 noundef 8192) #7
@@ -166,26 +166,11 @@ bb.a:
   %i.r = or disjoint i32 %i.n, %i.q
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 9384
   store i32 %i.r, ptr %i.s, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 1106
-  %3 = load i8, ptr %2, align 2
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw i32 %4, 24
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1107
-  %7 = load i8, ptr %6, align 1
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 16
-  %10 = or disjoint i32 %9, %5
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 1108
-  %12 = load i8, ptr %11, align 4
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %15 = or disjoint i32 %10, %14
-  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 1109
-  %16 = load i8, ptr %i.t, align 1
-  %17 = zext i8 %16 to i32
-  %18 = or disjoint i32 %15, %17
+  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 1106
+  %2 = load i32, ptr %i.t, align 2
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 9388
-  store i32 %18, ptr %i.u, align 4
+  store i32 %3, ptr %i.u, align 4
   ret void
 }
 
@@ -587,6 +572,9 @@ declare void @qemu_del_nic(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2

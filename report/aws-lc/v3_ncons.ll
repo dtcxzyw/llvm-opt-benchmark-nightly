@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/aws-lc/original/v3_ncons?download=true
-inline.NumInlined: 47
+inline.NumInlined: 48
 inline.NumDeleted: 24
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
@@ -204,106 +204,36 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %validate_ipv4_cidr_mask.exit
 
 bb.e:                                             ; preds = %bb.a
-  %i.g = tail call ptr @CBS_data(ptr noundef %0) #5 ; 16 uses
-  %1 = load i8, ptr %i.g, align 1, !tbaa !11
-  %2 = zext i8 %1 to i64
-  %3 = shl nuw i64 %2, 56
-  %4 = getelementptr inbounds nuw i8, ptr %i.g, i64 1
-  %5 = load i8, ptr %4, align 1, !tbaa !11
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 48
-  %8 = or disjoint i64 %7, %3
-  %9 = getelementptr inbounds nuw i8, ptr %i.g, i64 2
-  %10 = load i8, ptr %9, align 1, !tbaa !11
-  %11 = zext i8 %10 to i64
-  %12 = shl nuw nsw i64 %11, 40
-  %13 = or disjoint i64 %8, %12
-  %14 = getelementptr inbounds nuw i8, ptr %i.g, i64 3
-  %15 = load i8, ptr %14, align 1, !tbaa !11
-  %16 = zext i8 %15 to i64
-  %17 = shl nuw nsw i64 %16, 32
-  %18 = or disjoint i64 %13, %17
-  %19 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  %20 = load i8, ptr %19, align 1, !tbaa !11
-  %21 = zext i8 %20 to i64
-  %22 = shl nuw nsw i64 %21, 24
-  %23 = or disjoint i64 %18, %22
-  %24 = getelementptr inbounds nuw i8, ptr %i.g, i64 5
-  %25 = load i8, ptr %24, align 1, !tbaa !11
-  %26 = zext i8 %25 to i64
-  %27 = shl nuw nsw i64 %26, 16
-  %28 = or disjoint i64 %23, %27
-  %29 = getelementptr inbounds nuw i8, ptr %i.g, i64 6
-  %30 = load i8, ptr %29, align 1, !tbaa !11
-  %31 = zext i8 %30 to i64
-  %32 = shl nuw nsw i64 %31, 8
-  %33 = or i64 %28, %32
-  %34 = getelementptr inbounds nuw i8, ptr %i.g, i64 7
-  %35 = load i8, ptr %34, align 1, !tbaa !11
-  %36 = zext i8 %35 to i64
-  %37 = or i64 %33, %36                           ; 4 uses
-  %38 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %39 = load i8, ptr %38, align 1, !tbaa !11
-  %40 = zext i8 %39 to i64
-  %41 = shl nuw i64 %40, 56
-  %42 = getelementptr inbounds nuw i8, ptr %i.g, i64 9
-  %43 = load i8, ptr %42, align 1, !tbaa !11
-  %44 = zext i8 %43 to i64
-  %45 = shl nuw nsw i64 %44, 48
-  %46 = or disjoint i64 %45, %41
-  %47 = getelementptr inbounds nuw i8, ptr %i.g, i64 10
-  %48 = load i8, ptr %47, align 1, !tbaa !11
-  %49 = zext i8 %48 to i64
-  %50 = shl nuw nsw i64 %49, 40
-  %51 = or disjoint i64 %46, %50
-  %52 = getelementptr inbounds nuw i8, ptr %i.g, i64 11
-  %53 = load i8, ptr %52, align 1, !tbaa !11
-  %54 = zext i8 %53 to i64
-  %55 = shl nuw nsw i64 %54, 32
-  %56 = or disjoint i64 %51, %55
-  %57 = getelementptr inbounds nuw i8, ptr %i.g, i64 12
-  %58 = load i8, ptr %57, align 1, !tbaa !11
-  %59 = zext i8 %58 to i64
-  %60 = shl nuw nsw i64 %59, 24
-  %61 = or disjoint i64 %56, %60
-  %62 = getelementptr inbounds nuw i8, ptr %i.g, i64 13
-  %63 = load i8, ptr %62, align 1, !tbaa !11
-  %64 = zext i8 %63 to i64
-  %65 = shl nuw nsw i64 %64, 16
-  %66 = or disjoint i64 %61, %65
-  %67 = getelementptr inbounds nuw i8, ptr %i.g, i64 14
-  %68 = load i8, ptr %67, align 1, !tbaa !11
-  %69 = zext i8 %68 to i64
-  %70 = shl nuw nsw i64 %69, 8
-  %71 = or i64 %66, %70
-  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 15
-  %72 = load i8, ptr %i.h, align 1, !tbaa !11
-  %73 = zext i8 %72 to i64
-  %74 = or i64 %71, %73                           ; 4 uses
-  %i.i = icmp eq i64 %37, 0
+  %i.g = tail call ptr @CBS_data(ptr noundef %0) #5 ; 2 uses
+  %1 = load i64, ptr %i.g, align 1                ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  %2 = load i64, ptr %i.h, align 1                ; 3 uses
+  %3 = tail call i64 @llvm.bswap.i64(i64 %2)      ; 2 uses
+  %i.i = icmp eq i64 %1, 0
   br i1 %i.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.j = icmp eq i64 %74, 0
+  %i.j = icmp eq i64 %2, 0
   br label %validate_ipv6_cidr_mask.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.k = add i64 %37, -1
-  %i.l = or i64 %i.k, %37
+  %4 = tail call i64 @llvm.bswap.i64(i64 %1)      ; 2 uses
+  %i.k = add i64 %4, -1
+  %i.l = or i64 %i.k, %4
   %.not.i7 = icmp eq i64 %i.l, -1
   br i1 %.not.i7, label %bb.h, label %validate_ipv6_cidr_mask.exit
 
 bb.h:                                             ; preds = %bb.g
-  %.not28.i = icmp eq i64 %37, -1
+  %.not28.i = icmp eq i64 %1, -1
   br i1 %.not28.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.m = icmp eq i64 %74, 0
+  %i.m = icmp eq i64 %2, 0
   br label %validate_ipv6_cidr_mask.exit
 
 bb.j:                                             ; preds = %bb.h
-  %i.n = add i64 %74, -1
-  %i.o = or i64 %i.n, %74
+  %i.n = add i64 %3, -1
+  %i.o = or i64 %i.n, %3
   %i.p = icmp eq i64 %i.o, -1
   br label %validate_ipv6_cidr_mask.exit
 
@@ -603,7 +533,7 @@ bb.a:
   %3 = alloca %struct.cbs_st, align 8             ; 5 uses
   %4 = alloca %struct.cbs_st, align 8             ; 7 uses
   %5 = alloca %struct.cbs_st, align 8             ; 4 uses
-  %6 = alloca %struct.cbs_st, align 8             ; 5 uses
+  %6 = alloca %struct.cbs_st, align 8             ; 7 uses
   %i.a = alloca i8, align 1                       ; 5 uses
   %i.b = alloca i8, align 1                       ; 5 uses
   %i.c = alloca i8, align 1                       ; 5 uses
@@ -1006,14 +936,63 @@ bb.bi:                                            ; preds = %bb.bh
 bb.bj:                                            ; preds = %bb.bi
   %i.iz = call i64 @CBS_len(ptr noundef nonnull %4) #5
   %.not23.i = icmp eq i64 %i.iz, 0
-  br i1 %.not23.i, label %bb.bk, label %nc_ip.exit
+  br i1 %.not23.i, label %24, label %nc_ip.exit
 
-bb.bk:                                            ; preds = %bb.bj
-  %i.ja = call i32 @validate_cidr_mask(ptr noundef nonnull %6)
-  %.not24.i = icmp eq i32 %i.ja, 0
-  br i1 %.not24.i, label %nc_ip.exit, label %.lr.ph.preheader.i
+24:                                               ; preds = %bb.bj
+  %25 = call i64 @CBS_len(ptr noundef nonnull %6) #5
+  switch i64 %25, label %nc_ip.exit [
+    i64 4, label %26
+    i64 16, label %31
+  ]
 
-.lr.ph.preheader.i:                               ; preds = %bb.bk
+26:                                               ; preds = %24
+  %27 = call ptr @CBS_data(ptr noundef nonnull %6) #5
+  %28 = load i32, ptr %27, align 1                ; 2 uses
+  %.not.i.i.i = icmp eq i32 %28, 0
+  br i1 %.not.i.i.i, label %.lr.ph.preheader.i, label %bb.bk
+
+bb.bk:                                            ; preds = %26
+  %i.ja = call i32 @llvm.bswap.i32(i32 %28)       ; 2 uses
+  %29 = add i32 %i.ja, -1
+  %30 = or i32 %29, %i.ja
+  %.not24.i = icmp eq i32 %30, -1
+  br i1 %.not24.i, label %.lr.ph.preheader.i, label %nc_ip.exit
+
+31:                                               ; preds = %24
+  %32 = call ptr @CBS_data(ptr noundef nonnull %6) #5 ; 2 uses
+  %33 = load i64, ptr %32, align 1                ; 3 uses
+  %34 = getelementptr inbounds nuw i8, ptr %32, i64 8
+  %35 = load i64, ptr %34, align 1                ; 3 uses
+  %36 = call i64 @llvm.bswap.i64(i64 %35)         ; 2 uses
+  %37 = icmp eq i64 %33, 0
+  br i1 %37, label %.split.i, label %39
+
+.split.i:                                         ; preds = %31
+  %38 = icmp eq i64 %35, 0
+  br i1 %38, label %.lr.ph.preheader.i, label %nc_ip.exit
+
+39:                                               ; preds = %31
+  %40 = call i64 @llvm.bswap.i64(i64 %33)         ; 2 uses
+  %41 = add i64 %40, -1
+  %42 = or i64 %41, %40
+  %.not.i7.i.i = icmp eq i64 %42, -1
+  br i1 %.not.i7.i.i, label %43, label %nc_ip.exit
+
+43:                                               ; preds = %39
+  %.not28.i.i.i = icmp eq i64 %33, -1
+  br i1 %.not28.i.i.i, label %validate_cidr_mask.exit.i, label %.split23.i
+
+.split23.i:                                       ; preds = %43
+  %44 = icmp eq i64 %35, 0
+  br i1 %44, label %.lr.ph.preheader.i, label %nc_ip.exit
+
+validate_cidr_mask.exit.i:                        ; preds = %43
+  %45 = add i64 %36, -1
+  %46 = or i64 %45, %36
+  %47 = icmp eq i64 %46, -1
+  br i1 %47, label %.lr.ph.preheader.i, label %nc_ip.exit
+
+.lr.ph.preheader.i:                               ; preds = %validate_cidr_mask.exit.i, %.split23.i, %.split.i, %bb.bk, %26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   store i8 0, ptr %i.a, align 1, !tbaa !11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
@@ -1059,8 +1038,8 @@ bb.bo:                                            ; preds = %bb.bn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   br label %nc_ip.exit
 
-nc_ip.exit:                                       ; preds = %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %._crit_edge.i
-  %.2.i46 = phi i32 [ 53, %bb.be ], [ 47, %bb.bg ], [ %spec.select.ph.i, %._crit_edge.i ], [ 53, %bb.bh ], [ 53, %bb.bf ], [ 53, %bb.bj ], [ 53, %bb.bi ], [ 53, %bb.bk ]
+nc_ip.exit:                                       ; preds = %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %24, %bb.bk, %.split.i, %39, %.split23.i, %validate_cidr_mask.exit.i, %._crit_edge.i
+  %.2.i46 = phi i32 [ 53, %bb.be ], [ 47, %bb.bg ], [ %spec.select.ph.i, %._crit_edge.i ], [ 53, %bb.bh ], [ 53, %bb.bf ], [ 53, %bb.bj ], [ 53, %bb.bi ], [ 53, %validate_cidr_mask.exit.i ], [ 53, %39 ], [ 53, %24 ], [ 53, %bb.bk ], [ 53, %.split.i ], [ 53, %.split23.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
@@ -1286,6 +1265,9 @@ declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

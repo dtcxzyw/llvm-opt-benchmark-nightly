@@ -205,7 +205,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local range(i32 0, 2) i32 @flac__encode_file(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef %5, ptr noundef byval(%struct.encode_options_t) align 8 %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [10 x i8], align 1                ; 14 uses
+  %i.a = alloca [10 x i8], align 1                ; 7 uses
   %7 = alloca %struct.stat, align 8               ; 5 uses
   %8 = alloca %struct.stat, align 8               ; 5 uses
   %9 = alloca %struct.stat, align 8               ; 5 uses
@@ -608,13 +608,6 @@ fread.inline.exit.i.lr.ph.i:                      ; preds = %bb.dr
   %i.ru = icmp ne i32 %.fr.i, 0                   ; 2 uses
   %i.rv = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.rw = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   %i.rx = getelementptr inbounds nuw i8, ptr %7, i64 24
   br label %fread.inline.exit.i.i376
 
@@ -821,40 +814,12 @@ read_sane_extended.exit.thread:                   ; preds = %read_bytes.exit.i47
 
 bb.ee:                                            ; preds = %read_bytes.exit.i471
   %i.vc = sub nuw nsw i16 16446, %i.ux
-  %22 = load i8, ptr %i.rw, align 1, !tbaa !29
-  %23 = zext i8 %22 to i64
-  %24 = shl nuw i64 %23, 56
-  %25 = load i8, ptr %15, align 1, !tbaa !29
-  %26 = zext i8 %25 to i64
-  %27 = shl nuw nsw i64 %26, 48
-  %28 = or disjoint i64 %27, %24
-  %29 = load i8, ptr %16, align 1, !tbaa !29
-  %30 = zext i8 %29 to i64
-  %31 = shl nuw nsw i64 %30, 40
-  %32 = or disjoint i64 %28, %31
-  %33 = load i8, ptr %17, align 1, !tbaa !29
-  %34 = zext i8 %33 to i64
-  %35 = shl nuw nsw i64 %34, 32
-  %36 = or disjoint i64 %32, %35
-  %37 = load i8, ptr %18, align 1, !tbaa !29
-  %38 = zext i8 %37 to i64
-  %39 = shl nuw nsw i64 %38, 24
-  %40 = or disjoint i64 %36, %39
-  %41 = load i8, ptr %19, align 1, !tbaa !29
-  %42 = zext i8 %41 to i64
-  %43 = shl nuw nsw i64 %42, 16
-  %44 = or disjoint i64 %40, %43
-  %45 = load i8, ptr %20, align 1, !tbaa !29
-  %46 = zext i8 %45 to i64
-  %47 = shl nuw nsw i64 %46, 8
-  %48 = or i64 %44, %47
-  %49 = load i8, ptr %21, align 1, !tbaa !29
-  %50 = zext i8 %49 to i64
-  %51 = or i64 %48, %50                           ; 2 uses
+  %15 = load i64, ptr %i.rw, align 1
+  %16 = call i64 @llvm.bswap.i64(i64 %15)         ; 2 uses
   %i.vd = zext nneg i16 %i.vc to i64              ; 2 uses
-  %i.ve = lshr i64 %51, %i.vd
+  %i.ve = lshr i64 %16, %i.vd
   %i.vf = add nsw i64 %i.vd, -1
-  %i.vg = lshr i64 %51, %i.vf
+  %i.vg = lshr i64 %16, %i.vf
   %i.vh = and i64 %i.vg, 1
   %i.vi = add nuw i64 %i.vh, %i.ve
   %i.vj = trunc i64 %i.vi to i32                  ; 2 uses
@@ -1255,6 +1220,9 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #11

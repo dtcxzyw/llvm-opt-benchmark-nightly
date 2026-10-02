@@ -205,46 +205,12 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph, %bb.e
   %indvars.iv69 = phi i64 [ %i.p, %.lr.ph ], [ %indvars.iv.next70, %bb.e ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv69 ; 8 uses
-  %4 = load i8, ptr %3, align 1, !tbaa !41
-  %5 = zext i8 %4 to i64
-  %6 = getelementptr i8, ptr %3, i64 -1
-  %7 = load i8, ptr %6, align 1, !tbaa !41
-  %8 = zext i8 %7 to i64
-  %9 = shl nuw nsw i64 %8, 8
-  %10 = or disjoint i64 %9, %5
-  %11 = getelementptr i8, ptr %3, i64 -2
-  %12 = load i8, ptr %11, align 1, !tbaa !41
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 16
-  %15 = or disjoint i64 %10, %14
-  %16 = getelementptr i8, ptr %3, i64 -3
-  %17 = load i8, ptr %16, align 1, !tbaa !41
-  %18 = zext i8 %17 to i64
-  %19 = shl nuw nsw i64 %18, 24
-  %20 = or disjoint i64 %15, %19
-  %21 = getelementptr i8, ptr %3, i64 -4
-  %22 = load i8, ptr %21, align 1, !tbaa !41
-  %23 = zext i8 %22 to i64
-  %24 = shl nuw nsw i64 %23, 32
-  %25 = or disjoint i64 %20, %24
-  %26 = getelementptr i8, ptr %3, i64 -5
-  %27 = load i8, ptr %26, align 1, !tbaa !41
-  %28 = zext i8 %27 to i64
-  %29 = shl nuw nsw i64 %28, 40
-  %30 = or i64 %25, %29
-  %i.q = getelementptr i8, ptr %3, i64 -6
-  %31 = load i8, ptr %i.q, align 1, !tbaa !41
-  %32 = zext i8 %31 to i64
-  %33 = shl nuw nsw i64 %32, 48
-  %34 = or i64 %30, %33
-  %i.r = getelementptr i8, ptr %3, i64 -7
-  %35 = load i8, ptr %i.r, align 1, !tbaa !41
-  %36 = zext i8 %35 to i64
-  %37 = shl nuw i64 %36, 56
-  %38 = or i64 %34, %37
+  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv69
+  %i.r = getelementptr i8, ptr %i.q, i64 -7
+  %3 = load i64, ptr %i.r, align 1
+  %4 = tail call i64 @llvm.bswap.i64(i64 %3)
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv
-  store i64 %38, ptr %i.s, align 8, !tbaa !36
+  store i64 %4, ptr %i.s, align 8, !tbaa !36
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %indvars.iv.next70 = add nsw i64 %indvars.iv69, -8 ; 2 uses
   %i.t = icmp samesign ugt i64 %indvars.iv69, 14
@@ -646,6 +612,9 @@ declare i64 @llvm.umax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #19

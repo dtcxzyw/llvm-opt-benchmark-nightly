@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e,
 ; Function Attrs: mustprogress uwtable
 define hidden noundef i64 @_ZN14BitstreamRange6read64Ev(ptr noundef nonnull align 8 dereferenceable(41) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [8 x i8], align 1                 ; 12 uses
+  %i.a = alloca [8 x i8], align 8                 ; 5 uses
   %1 = alloca %"class.std::__1::shared_ptr", align 8 ; 6 uses
   %i.b = tail call noundef zeroext i1 @_ZN14BitstreamRange12prepare_readEm(ptr noundef nonnull align 8 dereferenceable(41) %0, i64 noundef 8)
   br i1 %i.b, label %bb.b, label %bb.k
@@ -251,47 +251,12 @@ bb.f:                                             ; preds = %bb.e, %_ZN14Bitstre
   resume { ptr, i32 } %i.m
 
 bb.g:                                             ; preds = %bb.d
-  %2 = load i8, ptr %i.a, align 1, !tbaa !30
-  %3 = zext i8 %2 to i64
-  %4 = shl nuw i64 %3, 56
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !30
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 48
-  %9 = or disjoint i64 %8, %4
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %11 = load i8, ptr %10, align 1, !tbaa !30
-  %12 = zext i8 %11 to i64
-  %13 = shl nuw nsw i64 %12, 40
-  %14 = or disjoint i64 %9, %13
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %16 = load i8, ptr %15, align 1, !tbaa !30
-  %17 = zext i8 %16 to i64
-  %18 = shl nuw nsw i64 %17, 32
-  %19 = or disjoint i64 %14, %18
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %21 = load i8, ptr %20, align 1, !tbaa !30
-  %22 = zext i8 %21 to i64
-  %23 = shl nuw nsw i64 %22, 24
-  %24 = or disjoint i64 %19, %23
-  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  %26 = load i8, ptr %25, align 1, !tbaa !30
-  %27 = zext i8 %26 to i64
-  %28 = shl nuw nsw i64 %27, 16
-  %29 = or disjoint i64 %24, %28
-  %30 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %31 = load i8, ptr %30, align 1, !tbaa !30
-  %32 = zext i8 %31 to i64
-  %33 = shl nuw nsw i64 %32, 8
-  %34 = or i64 %29, %33
-  %35 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %36 = load i8, ptr %35, align 1, !tbaa !30
-  %37 = zext i8 %36 to i64
-  %38 = or i64 %34, %37
+  %2 = load i64, ptr %i.a, align 8
+  %3 = call i64 @llvm.bswap.i64(i64 %2)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.g
-  %.0 = phi i64 [ %38, %bb.g ], [ 0, %bb.e ]
+  %.0 = phi i64 [ %3, %bb.g ], [ 0, %bb.e ]
   br i1 %.not.i.i, label %_ZNSt3__110shared_ptrI12StreamReaderED2B8ne180100Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -694,10 +659,13 @@ declare i64 @llvm.umin.i64(i64, i64) #22
 declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #22
+declare i32 @llvm.bswap.i32(i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #22
+declare i64 @llvm.bswap.i64(i64) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #22
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

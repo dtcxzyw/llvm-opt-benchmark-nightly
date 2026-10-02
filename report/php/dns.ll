@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = zext nneg i32 %i.c to i64
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %i.e ; 50 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %i.e ; 47 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 10 ; 17 uses
   %i.h = icmp ugt ptr %i.g, %1
   br i1 %i.h, label %.loopexit, label %bb.c
@@ -218,23 +218,9 @@ bb.c:                                             ; preds = %bb.b
   %i.n = zext i8 %i.m to i16
   %i.o = or disjoint i16 %i.k, %i.n               ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %8 = load i8, ptr %i.p, align 1, !tbaa !12
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw nsw i64 %9, 24
-  %11 = getelementptr inbounds nuw i8, ptr %i.f, i64 5
-  %12 = load i8, ptr %11, align 1, !tbaa !12
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 16
-  %15 = or disjoint i64 %14, %10
-  %16 = getelementptr inbounds nuw i8, ptr %i.f, i64 6
-  %17 = load i8, ptr %16, align 1, !tbaa !12
-  %18 = zext i8 %17 to i64
-  %19 = shl nuw nsw i64 %18, 8
-  %20 = or disjoint i64 %15, %19
-  %21 = getelementptr inbounds nuw i8, ptr %i.f, i64 7
-  %22 = load i8, ptr %21, align 1, !tbaa !12
-  %i.q = zext i8 %22 to i64
-  %23 = or disjoint i64 %20, %i.q
+  %8 = load i32, ptr %i.p, align 1
+  %9 = call i32 @llvm.bswap.i32(i32 %8)
+  %i.q = zext i32 %9 to i64
   %i.r = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.s = load i8, ptr %i.r, align 1, !tbaa !12
   %i.t = zext i8 %i.s to i16
@@ -266,7 +252,7 @@ bb.e:                                             ; preds = %bb.d
   store i32 775, ptr %i.b, align 8, !tbaa !12
   call void @add_assoc_string_ex(ptr noundef nonnull %6, ptr noundef nonnull @.str.24, i64 noundef 4, ptr noundef nonnull %i.a) #11
   call void @add_assoc_string_ex(ptr noundef nonnull %6, ptr noundef nonnull @.str.25, i64 noundef 5, ptr noundef nonnull @.str.26) #11
-  call void @add_assoc_long_ex(ptr noundef nonnull %6, ptr noundef nonnull @.str.27, i64 noundef 3, i64 noundef range(i64 0, 4294967296) %23) #11
+  call void @add_assoc_long_ex(ptr noundef nonnull %6, ptr noundef nonnull @.str.27, i64 noundef 3, i64 noundef range(i64 0, 4294967296) %i.q) #11
   br i1 %5, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e

@@ -205,15 +205,15 @@ bb.u:                                             ; preds = %bb.t
 
 .lr.ph:                                           ; preds = %.preheader238
   %i.ew = load ptr, ptr %i.eu, align 8, !tbaa !57 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.et, i64 1
-  %.08.val.i.peel = load i8, ptr %i.et, align 1, !tbaa !38 ; 2 uses
-  %13 = zext i8 %.08.val.i.peel to i64            ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.et, i64 2 ; 2 uses
-  %.08.val.1.i.peel = load i8, ptr %12, align 1, !tbaa !38
-  %15 = zext i8 %.08.val.1.i.peel to i64          ; 2 uses
   br i1 %.not148, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph
+  %12 = getelementptr inbounds nuw i8, ptr %i.et, i64 1
+  %.08.val.i195.peel = load i8, ptr %i.et, align 1, !tbaa !38
+  %13 = zext i8 %.08.val.i195.peel to i64
+  %14 = getelementptr inbounds nuw i8, ptr %i.et, i64 2
+  %.08.val.1.i196.peel = load i8, ptr %12, align 1, !tbaa !38
+  %15 = zext i8 %.08.val.1.i196.peel to i64
   %i.ex = shl nuw nsw i64 %13, 16
   %i.ey = shl nuw nsw i64 %15, 8
   %i.ez = or disjoint i64 %i.ey, %i.ex
@@ -234,20 +234,13 @@ bb.v:                                             ; preds = %.lr.ph
   br label %bb.x
 
 bb.w:                                             ; preds = %.lr.ph
-  %16 = getelementptr inbounds nuw i8, ptr %i.et, i64 3
-  %.08.val.2.i.peel = load i8, ptr %14, align 1, !tbaa !38
-  %17 = zext i8 %.08.val.2.i.peel to i64
-  %18 = shl nuw nsw i64 %13, 24
-  %19 = shl nuw nsw i64 %15, 16
-  %20 = shl nuw nsw i64 %17, 8
-  %.08.val.3.i.peel = load i8, ptr %16, align 1, !tbaa !38
-  %i.fm = zext i8 %.08.val.3.i.peel to i64
-  %21 = or disjoint i64 %19, %18
-  %22 = or disjoint i64 %21, %20
-  %i.fn = or disjoint i64 %22, %i.fm              ; 2 uses
-  %23 = or disjoint i64 %i.fn, -4294967296
-  %24 = icmp slt i8 %.08.val.i.peel, 0
-  %.09.i.peel = select i1 %24, i64 %23, i64 %i.fn
+  %.08.val.i.peel = load i32, ptr %i.et, align 1  ; 2 uses
+  %16 = call i32 @llvm.bswap.i32(i32 %.08.val.i.peel)
+  %i.fm = zext i32 %16 to i64                     ; 2 uses
+  %i.fn = or disjoint i64 %i.fm, -4294967296
+  %17 = and i32 %.08.val.i.peel, 128
+  %.not310 = icmp eq i32 %17, 0
+  %.09.i.peel = select i1 %.not310, i64 %i.fm, i64 %i.fn
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.v, %bb.w
@@ -270,37 +263,30 @@ bb.y:                                             ; preds = %bb.u, %bb.t
 .peel.next:                                       ; preds = %bb.x, %bb.ac
   %.0131247 = phi i64 [ %i.gp, %bb.ac ], [ 1, %bb.x ] ; 2 uses
   %.0132246 = phi ptr [ %i.go, %bb.ac ], [ %i.fp, %bb.x ] ; 7 uses
-  %25 = getelementptr inbounds nuw i8, ptr %.0132246, i64 1
-  %.08.val.i = load i8, ptr %.0132246, align 1, !tbaa !38 ; 2 uses
-  %26 = zext i8 %.08.val.i to i64                 ; 2 uses
-  %27 = getelementptr inbounds nuw i8, ptr %.0132246, i64 2 ; 2 uses
-  %.08.val.1.i = load i8, ptr %25, align 1, !tbaa !38
-  %28 = zext i8 %.08.val.1.i to i64               ; 2 uses
   br i1 %.not148, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %.peel.next
-  %29 = getelementptr inbounds nuw i8, ptr %.0132246, i64 3
-  %.08.val.2.i = load i8, ptr %27, align 1, !tbaa !38
-  %30 = zext i8 %.08.val.2.i to i64
-  %31 = shl nuw nsw i64 %26, 24
-  %32 = shl nuw nsw i64 %28, 16
-  %33 = shl nuw nsw i64 %30, 8
-  %.08.val.3.i = load i8, ptr %29, align 1, !tbaa !38
-  %i.fs = zext i8 %.08.val.3.i to i64
-  %34 = or disjoint i64 %32, %31
-  %35 = or disjoint i64 %34, %33
-  %i.ft = or disjoint i64 %35, %i.fs              ; 2 uses
-  %36 = or disjoint i64 %i.ft, -4294967296
-  %37 = icmp slt i8 %.08.val.i, 0
-  %.09.i = select i1 %37, i64 %36, i64 %i.ft
+  %.08.val.i = load i32, ptr %.0132246, align 1   ; 2 uses
+  %18 = call i32 @llvm.bswap.i32(i32 %.08.val.i)
+  %i.fs = zext i32 %18 to i64                     ; 2 uses
+  %i.ft = or disjoint i64 %i.fs, -4294967296
+  %19 = and i32 %.08.val.i, 128
+  %.not311 = icmp eq i32 %19, 0
+  %.09.i = select i1 %.not311, i64 %i.fs, i64 %i.ft
   br label %bb.ab
 
 bb.aa:                                            ; preds = %.peel.next
-  %i.fu = shl nuw nsw i64 %26, 16
-  %i.fv = shl nuw nsw i64 %28, 8
+  %20 = getelementptr inbounds nuw i8, ptr %.0132246, i64 1
+  %.08.val.i195 = load i8, ptr %.0132246, align 1, !tbaa !38
+  %21 = zext i8 %.08.val.i195 to i64
+  %22 = getelementptr inbounds nuw i8, ptr %.0132246, i64 2
+  %.08.val.1.i196 = load i8, ptr %20, align 1, !tbaa !38
+  %23 = zext i8 %.08.val.1.i196 to i64
+  %i.fu = shl nuw nsw i64 %21, 16
+  %i.fv = shl nuw nsw i64 %23, 8
   %i.fw = or disjoint i64 %i.fv, %i.fu
   %i.fx = getelementptr inbounds nuw i8, ptr %.0132246, i64 3
-  %.08.val.2.i197 = load i8, ptr %27, align 1, !tbaa !38
+  %.08.val.2.i197 = load i8, ptr %22, align 1, !tbaa !38
   %i.fy = zext i8 %.08.val.2.i197 to i64
   %i.fz = or disjoint i64 %i.fw, %i.fy
   %i.ga = getelementptr inbounds nuw i8, ptr %.0132246, i64 7
@@ -703,10 +689,10 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i22.i.i.i: ; preds = %_ZNSt1
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i15.i.i.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i22.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i12.i.i.i
   %.0.i.i16.i.i.i = phi i64 [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i12.i.i.i ], [ %i.bo, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i22.i.i.i ]
   %i.bp = getelementptr inbounds nuw i8, ptr %i.f, i64 11
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.f, i64 12 ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.g, i64 40 ; 3 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.g, i64 44 ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.f, i64 12
+  %i.br = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.g, i64 40 ; 2 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.g, i64 44
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit86.thread.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i15.i.i.i
@@ -738,22 +724,22 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.cg = load i8, ptr %i.bp, align 1, !tbaa !38, !noalias !300
-  %.08.val.i.i.i.i.i = load i8, ptr %i.bq, align 4, !tbaa !38, !noalias !300
-  %i.ch = load i32, ptr %i.bq, align 4, !tbaa !38, !noalias !300
+  %i.ch = load i32, ptr %i.bq, align 4, !noalias !300 ; 2 uses
   %i.ci = call i32 @llvm.bswap.i32(i32 %i.ch)
   %i.cj = zext i32 %i.ci to i64                   ; 4 uses
   %i.ck = or disjoint i64 %i.cj, -4294967296
-  %11 = icmp slt i8 %.08.val.i.i.i.i.i, 0         ; 2 uses
-  %.09.i.i.i.i.i = select i1 %11, i64 %i.ck, i64 %i.cj
-  %.08.val.i66.i.i.i.i = load i8, ptr %i.br, align 16, !tbaa !38, !noalias !300
-  %i.cl = load i32, ptr %i.br, align 16, !tbaa !38, !noalias !300
+  %11 = and i32 %i.ch, 128
+  %12 = icmp ne i32 %11, 0                        ; 2 uses
+  %.09.i.i.i.i.i = select i1 %12, i64 %i.ck, i64 %i.cj
+  %i.cl = load i32, ptr %i.br, align 16, !noalias !300 ; 2 uses
   %i.cm = call i32 @llvm.bswap.i32(i32 %i.cl)
   %i.cn = zext i32 %i.cm to i64                   ; 2 uses
   %i.co = or disjoint i64 %i.cn, -4294967296
-  %12 = icmp slt i8 %.08.val.i66.i.i.i.i, 0
-  %.09.i70.i.i.i.i = select i1 %12, i64 %i.co, i64 %i.cn ; 3 uses
+  %13 = and i32 %i.cl, 128
+  %.not163.i.i.i.i = icmp eq i32 %13, 0
+  %.09.i70.i.i.i.i = select i1 %.not163.i.i.i.i, i64 %i.cn, i64 %i.co ; 3 uses
   %i.cp = icmp slt i64 %.09.i70.i.i.i.i, %.09.i.i.i.i.i
-  %or.cond.i.i.i.i = or i1 %11, %i.cp
+  %or.cond.i.i.i.i = or i1 %12, %i.cp
   br i1 %or.cond.i.i.i.i, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit86.i.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -783,22 +769,22 @@ bb.w:                                             ; preds = %bb.y
   br i1 %.not59.i.i.i.i, label %bb.x, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit86.sink.split.i.i.i.i
 
 bb.x:                                             ; preds = %.lr.ph.i.i.i.i
-  %.08.val.i71.i.i.i.i = load i8, ptr %i.bs, align 8, !tbaa !38, !noalias !300
-  %i.cw = load i32, ptr %i.bs, align 8, !tbaa !38, !noalias !300
+  %i.cw = load i32, ptr %i.bs, align 8, !noalias !300 ; 2 uses
   %i.cx = call i32 @llvm.bswap.i32(i32 %i.cw)
   %i.cy = zext i32 %i.cx to i64                   ; 2 uses
   %i.cz = or disjoint i64 %i.cy, -4294967296
-  %13 = icmp slt i8 %.08.val.i71.i.i.i.i, 0
-  %.09.i75.i.i.i.i = select i1 %13, i64 %i.cz, i64 %i.cy
-  %14 = add nsw i64 %.09.i75.i.i.i.i, %.09.i70.i.i.i.i ; 2 uses
-  %.08.val.i76.i.i.i.i = load i8, ptr %i.bt, align 4, !tbaa !38, !noalias !300
-  %i.da = load i32, ptr %i.bt, align 4, !tbaa !38, !noalias !300
+  %14 = and i32 %i.cw, 128
+  %.not164.i.i.i.i = icmp eq i32 %14, 0
+  %.09.i75.i.i.i.i = select i1 %.not164.i.i.i.i, i64 %i.cy, i64 %i.cz
+  %15 = add nsw i64 %.09.i75.i.i.i.i, %.09.i70.i.i.i.i ; 2 uses
+  %i.da = load i32, ptr %i.bt, align 4, !noalias !300 ; 2 uses
   %i.db = call i32 @llvm.bswap.i32(i32 %i.da)
   %i.dc = zext i32 %i.db to i64                   ; 2 uses
   %i.dd = or disjoint i64 %i.dc, -4294967296
-  %15 = icmp slt i8 %.08.val.i76.i.i.i.i, 0
-  %.09.i80.i.i.i.i = select i1 %15, i64 %i.dd, i64 %i.dc ; 2 uses
-  %i.de = or i64 %.09.i80.i.i.i.i, %14
+  %16 = and i32 %i.da, 128
+  %.not165.i.i.i.i = icmp eq i32 %16, 0
+  %.09.i80.i.i.i.i = select i1 %.not165.i.i.i.i, i64 %i.dc, i64 %i.dd ; 2 uses
+  %i.de = or i64 %.09.i80.i.i.i.i, %15
   %or.cond.not.i.i.i.i = icmp sgt i64 %i.de, -1
   br i1 %or.cond.not.i.i.i.i, label %bb.y, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit86.sink.split.i.i.i.i
 
@@ -811,7 +797,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.di, label %bb.z, label %bb.w
 
 bb.z:                                             ; preds = %bb.y
-  %i.dj = call i32 @fseek(ptr noundef nonnull %i.bv, i64 noundef %14, i32 noundef 0), !noalias !300
+  %i.dj = call i32 @fseek(ptr noundef nonnull %i.bv, i64 noundef %15, i32 noundef 0), !noalias !300
   %.not60.i.i.i.i = icmp eq i32 %i.dj, 0
   br i1 %.not60.i.i.i.i, label %bb.aa, label %_ZNSt10unique_ptrI8_IO_FILEPFiPS0_EED2Ev.exit86.sink.split.i.i.i.i
 
@@ -1214,10 +1200,10 @@ declare i64 @llvm.smax.i64(i64, i64) #23
 declare i64 @llvm.smin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.sadd.sat.i64(i64, i64) #23
+declare i32 @llvm.bswap.i32(i32) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #23
+declare i64 @llvm.sadd.sat.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v6i64(<6 x i64>) #23

@@ -205,45 +205,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.m, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = load ptr, ptr %i.i, align 8, !tbaa !138  ; 9 uses
-  %2 = load i8, ptr %i.n, align 1, !tbaa !37
-  %3 = zext i8 %2 to i64
-  %4 = shl nuw i64 %3, 56
-  %5 = getelementptr inbounds nuw i8, ptr %i.n, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !37
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 48
-  %9 = or disjoint i64 %8, %4
-  %10 = getelementptr inbounds nuw i8, ptr %i.n, i64 2
-  %11 = load i8, ptr %10, align 1, !tbaa !37
-  %12 = zext i8 %11 to i64
-  %13 = shl nuw nsw i64 %12, 40
-  %14 = or disjoint i64 %9, %13
-  %15 = getelementptr inbounds nuw i8, ptr %i.n, i64 3
-  %16 = load i8, ptr %15, align 1, !tbaa !37
-  %17 = zext i8 %16 to i64
-  %18 = shl nuw nsw i64 %17, 32
-  %19 = or disjoint i64 %14, %18
-  %20 = getelementptr inbounds nuw i8, ptr %i.n, i64 4
-  %21 = load i8, ptr %20, align 1, !tbaa !37
-  %22 = zext i8 %21 to i64
-  %23 = shl nuw nsw i64 %22, 24
-  %24 = or disjoint i64 %19, %23
-  %25 = getelementptr inbounds nuw i8, ptr %i.n, i64 5
-  %26 = load i8, ptr %25, align 1, !tbaa !37
-  %27 = zext i8 %26 to i64
-  %28 = shl nuw nsw i64 %27, 16
-  %29 = or disjoint i64 %24, %28
-  %30 = getelementptr inbounds nuw i8, ptr %i.n, i64 6
-  %31 = load i8, ptr %30, align 1, !tbaa !37
-  %32 = zext i8 %31 to i64
-  %33 = shl nuw nsw i64 %32, 8
-  %34 = or i64 %29, %33
-  %35 = getelementptr inbounds nuw i8, ptr %i.n, i64 7
-  %36 = load i8, ptr %35, align 1, !tbaa !37
-  %37 = zext i8 %36 to i64
-  %38 = or i64 %34, %37
-  store i64 %38, ptr %1, align 8, !tbaa !146
+  %i.n = load ptr, ptr %i.i, align 8, !tbaa !138  ; 2 uses
+  %2 = load i64, ptr %i.n, align 1
+  %3 = tail call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %3, ptr %1, align 8, !tbaa !146
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store ptr %i.o, ptr %i.i, align 8, !tbaa !138
   %i.p = add nsw i64 %i.l, -8
@@ -644,6 +609,9 @@ declare i64 @llvm.umin.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #18

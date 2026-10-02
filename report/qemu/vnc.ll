@@ -205,24 +205,9 @@ bb.dj:                                            ; preds = %bb.c
 
 bb.dk:                                            ; preds = %bb.dj
   %i.ux = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  %4 = load i8, ptr %i.ux, align 1
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24                         ; 2 uses
-  %7 = getelementptr i8, ptr %1, i64 5
-  %8 = load i8, ptr %7, align 1
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = getelementptr i8, ptr %1, i64 6
-  %12 = load i8, ptr %11, align 1
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %15 = getelementptr i8, ptr %1, i64 7
-  %16 = load i8, ptr %15, align 1
-  %17 = zext i8 %16 to i32
-  %18 = or disjoint i32 %10, %17
-  %19 = or disjoint i32 %18, %14
-  %20 = or disjoint i32 %19, %6                   ; 3 uses
-  %i.uy = tail call i32 @llvm.abs.i32(i32 %20, i1 false) ; 6 uses
+  %4 = load i32, ptr %i.ux, align 1               ; 2 uses
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)      ; 3 uses
+  %i.uy = tail call i32 @llvm.abs.i32(i32 %5, i1 false) ; 6 uses
   %i.uz = icmp eq i64 %2, 8
   br i1 %i.uz, label %bb.dl, label %bb.dp
 
@@ -236,7 +221,7 @@ bb.dm:                                            ; preds = %bb.dl
   br label %set_pixel_format.exit
 
 bb.dn:                                            ; preds = %bb.dl
-  %.not226 = icmp eq i32 %20, 0
+  %.not226 = icmp eq i32 %4, 0
   br i1 %.not226, label %.thread, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn
@@ -244,7 +229,7 @@ bb.do:                                            ; preds = %bb.dn
   br label %bb.gh
 
 bb.dp:                                            ; preds = %bb.dk
-  %i.vc = icmp slt i32 %6, 0
+  %i.vc = icmp slt i32 %5, 0
   br i1 %i.vc, label %bb.dq, label %.thread
 
 bb.dq:                                            ; preds = %bb.dp
@@ -284,7 +269,7 @@ bb.du:                                            ; preds = %bb.ds
 .thread:                                          ; preds = %bb.dn, %bb.dp
   %i.vo = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.vp = load ptr, ptr %i.vo, align 8
-  tail call fastcc void @trace_vnc_msg_client_cut_text(ptr noundef %0, ptr noundef %i.vp, i32 noundef %20)
+  tail call fastcc void @trace_vnc_msg_client_cut_text(ptr noundef %0, ptr noundef %i.vp, i32 noundef %5)
   %i.vq = load i32, ptr %i.ux, align 1
   %i.vr = tail call i32 @llvm.bswap.i32(i32 %i.vq)
   %i.vs = zext i32 %i.vr to i64
@@ -687,10 +672,10 @@ declare i64 @llvm.umin.i64(i64, i64) #20
 declare void @llvm.experimental.noalias.scope.decl(metadata) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.ctpop.i16(i16) #20
+declare i32 @llvm.bswap.i32(i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #20
+declare i16 @llvm.ctpop.i16(i16) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i8> @llvm.bitreverse.v4i8(<4 x i8>) #20

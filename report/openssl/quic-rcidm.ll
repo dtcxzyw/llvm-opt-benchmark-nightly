@@ -12,10 +12,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local noundef i32 @FuzzerInitialize(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  tail call void @FuzzerSetRand() #3
-  %i.a = tail call i32 @OPENSSL_init_crypto(i64 noundef 258, ptr noundef null) #3 ; 0 uses
-  %i.b = tail call i32 @OPENSSL_init_ssl(i64 noundef 2097152, ptr noundef null) #3 ; 0 uses
-  tail call void @ERR_clear_error() #3
+  tail call void @FuzzerSetRand() #4
+  %i.a = tail call i32 @OPENSSL_init_crypto(i64 noundef 258, ptr noundef null) #4 ; 0 uses
+  %i.b = tail call i32 @OPENSSL_init_ssl(i64 noundef 2097152, ptr noundef null) #4 ; 0 uses
+  tail call void @ERR_clear_error() #4
   ret i32 1
 }
 
@@ -34,15 +34,15 @@ bb.a:
   %2 = alloca %struct.quic_conn_id_st, align 1    ; 9 uses
   %3 = alloca %struct.quic_conn_id_st, align 1    ; 3 uses
   %4 = alloca %struct.ossl_quic_frame_new_conn_id_st, align 8 ; 13 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #3
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #3
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #4
   %i.b = icmp slt i64 %1, 0
   br i1 %i.b, label %PACKET_buf_init.exit.thread, label %PACKET_buf_init.exit
 
 PACKET_buf_init.exit:                             ; preds = %bb.a
-  %i.c = tail call ptr @ossl_quic_rcidm_new(ptr noundef null) #3 ; 3 uses
+  %i.c = tail call ptr @ossl_quic_rcidm_new(ptr noundef null) #4 ; 3 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %PACKET_buf_init.exit.thread, label %.preheader
 
@@ -59,7 +59,7 @@ PACKET_buf_init.exit:                             ; preds = %bb.a
 
 bb.b:                                             ; preds = %.lr.ph, %bb.aa
   %.0138 = phi ptr [ %i.c, %.lr.ph ], [ %.1, %bb.aa ] ; 39 uses
-  %.sroa.0.0137 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.1, %bb.aa ] ; 31 uses
+  %.sroa.0.0137 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.1, %bb.aa ] ; 24 uses
   %.sroa.30.0136 = phi i64 [ %1, %.lr.ph ], [ %.sroa.30.1, %bb.aa ] ; 11 uses
   %i.i = load i8, ptr %.sroa.0.0137, align 1, !tbaa !10
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 1 ; 12 uses
@@ -100,14 +100,14 @@ bb.e:                                             ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.p
   %i.s = sub nuw i64 %i.n, %i.p
   store i8 %i.l, ptr %2, align 1, !tbaa !12
-  call void @ossl_quic_rcidm_free(ptr noundef %.0138) #3
-  %i.t = call ptr @ossl_quic_rcidm_new(ptr noundef nonnull %2) #3 ; 2 uses
+  call void @ossl_quic_rcidm_free(ptr noundef %.0138) #4
+  %i.t = call ptr @ossl_quic_rcidm_new(ptr noundef nonnull %2) #4 ; 2 uses
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %PACKET_buf_init.exit.thread, label %bb.aa
 
 bb.f:                                             ; preds = %bb.b
-  call void @ossl_quic_rcidm_free(ptr noundef %.0138) #3
-  %i.v = call ptr @ossl_quic_rcidm_new(ptr noundef null) #3 ; 2 uses
+  call void @ossl_quic_rcidm_free(ptr noundef %.0138) #4
+  %i.v = call ptr @ossl_quic_rcidm_new(ptr noundef null) #4 ; 2 uses
   %i.w = icmp eq ptr %i.v, null
   br i1 %i.w, label %PACKET_buf_init.exit.thread, label %bb.aa
 
@@ -132,7 +132,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ab
   %i.ae = sub nuw i64 %i.z, %i.ab
   store i8 %i.x, ptr %2, align 1, !tbaa !12
-  %i.af = call i32 @ossl_quic_rcidm_add_from_initial(ptr noundef %.0138, ptr noundef nonnull %2) #3 ; 0 uses
+  %i.af = call i32 @ossl_quic_rcidm_add_from_initial(ptr noundef %.0138, ptr noundef nonnull %2) #4 ; 0 uses
   br label %bb.aa
 
 bb.j:                                             ; preds = %bb.b
@@ -156,7 +156,7 @@ bb.l:                                             ; preds = %bb.k
   %i.am = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ak
   %i.an = sub nuw i64 %i.ai, %i.ak
   store i8 %i.ag, ptr %2, align 1, !tbaa !12
-  %i.ao = call i32 @ossl_quic_rcidm_add_from_server_retry(ptr noundef %.0138, ptr noundef nonnull %2) #3 ; 0 uses
+  %i.ao = call i32 @ossl_quic_rcidm_add_from_server_retry(ptr noundef %.0138, ptr noundef nonnull %2) #4 ; 0 uses
   br label %bb.aa
 
 bb.m:                                             ; preds = %bb.b
@@ -278,11 +278,11 @@ bb.q:                                             ; preds = %bb.p
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dq, i64 %i.dt
   %i.dw = sub nuw i64 %i.dr, %i.dt
   store i8 %i.dp, ptr %i.g, align 8, !tbaa !12
-  %i.dx = call i32 @ossl_quic_rcidm_add_from_ncid(ptr noundef %.0138, ptr noundef nonnull %4) #3 ; 0 uses
+  %i.dx = call i32 @ossl_quic_rcidm_add_from_ncid(ptr noundef %.0138, ptr noundef nonnull %4) #4 ; 0 uses
   br label %bb.aa
 
 bb.r:                                             ; preds = %bb.b
-  call void @ossl_quic_rcidm_on_handshake_complete(ptr noundef %.0138) #3
+  call void @ossl_quic_rcidm_on_handshake_complete(ptr noundef %.0138) #4
   br label %bb.aa
 
 bb.s:                                             ; preds = %bb.b
@@ -290,62 +290,27 @@ bb.s:                                             ; preds = %bb.b
   br i1 %i.dy, label %PACKET_buf_init.exit.thread, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %5 = load i8, ptr %i.j, align 1, !tbaa !10
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw i64 %6, 56
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 2
-  %9 = load i8, ptr %8, align 1, !tbaa !10
-  %10 = zext i8 %9 to i64
-  %11 = shl nuw nsw i64 %10, 48
-  %12 = or disjoint i64 %11, %7
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 3
-  %14 = load i8, ptr %13, align 1, !tbaa !10
-  %15 = zext i8 %14 to i64
-  %16 = shl nuw nsw i64 %15, 40
-  %17 = or disjoint i64 %12, %16
-  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 4
-  %19 = load i8, ptr %18, align 1, !tbaa !10
-  %20 = zext i8 %19 to i64
-  %21 = shl nuw nsw i64 %20, 32
-  %22 = or disjoint i64 %17, %21
-  %23 = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 5
-  %24 = load i8, ptr %23, align 1, !tbaa !10
-  %25 = zext i8 %24 to i64
-  %26 = shl nuw nsw i64 %25, 24
-  %27 = or disjoint i64 %22, %26
-  %28 = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 6
-  %29 = load i8, ptr %28, align 1, !tbaa !10
-  %30 = zext i8 %29 to i64
-  %31 = shl nuw nsw i64 %30, 16
-  %32 = or disjoint i64 %27, %31
-  %33 = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 7
-  %34 = load i8, ptr %33, align 1, !tbaa !10
-  %35 = zext i8 %34 to i64
-  %36 = shl nuw nsw i64 %35, 8
-  %37 = or i64 %32, %36
-  %38 = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 8
-  %39 = load i8, ptr %38, align 1, !tbaa !10
-  %40 = zext i8 %39 to i64
-  %41 = or i64 %37, %40
+  %5 = load i64, ptr %i.j, align 1
+  %6 = call i64 @llvm.bswap.i64(i64 %5)
   %i.dz = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 9
   %i.ea = add i64 %.sroa.30.0136, -9
-  call void @ossl_quic_rcidm_on_packet_sent(ptr noundef %.0138, i64 noundef %41) #3
+  call void @ossl_quic_rcidm_on_packet_sent(ptr noundef %.0138, i64 noundef %6) #4
   br label %bb.aa
 
 bb.u:                                             ; preds = %bb.b
-  call void @ossl_quic_rcidm_request_roll(ptr noundef %.0138) #3
+  call void @ossl_quic_rcidm_request_roll(ptr noundef %.0138) #4
   br label %bb.aa
 
 bb.v:                                             ; preds = %bb.b
-  %i.eb = call i32 @ossl_quic_rcidm_pop_retire_seq_num(ptr noundef %.0138, ptr noundef nonnull %i.a) #3 ; 0 uses
+  %i.eb = call i32 @ossl_quic_rcidm_pop_retire_seq_num(ptr noundef %.0138, ptr noundef nonnull %i.a) #4 ; 0 uses
   br label %bb.aa
 
 bb.w:                                             ; preds = %bb.b
-  %i.ec = call i32 @ossl_quic_rcidm_peek_retire_seq_num(ptr noundef %.0138, ptr noundef nonnull %i.a) #3 ; 0 uses
+  %i.ec = call i32 @ossl_quic_rcidm_peek_retire_seq_num(ptr noundef %.0138, ptr noundef nonnull %i.a) #4 ; 0 uses
   br label %bb.aa
 
 bb.x:                                             ; preds = %bb.b
-  %i.ed = call i32 @ossl_quic_rcidm_get_preferred_tx_dcid(ptr noundef %.0138, ptr noundef nonnull %3) #3 ; 0 uses
+  %i.ed = call i32 @ossl_quic_rcidm_get_preferred_tx_dcid(ptr noundef %.0138, ptr noundef nonnull %3) #4 ; 0 uses
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.b
@@ -357,7 +322,7 @@ bb.z:                                             ; preds = %bb.y
   %i.ef = zext i8 %i.ee to i32
   %i.eg = getelementptr inbounds nuw i8, ptr %.sroa.0.0137, i64 2
   %i.eh = add i64 %.sroa.30.0136, -2
-  %i.ei = call i32 @ossl_quic_rcidm_get_preferred_tx_dcid_changed(ptr noundef %.0138, i32 noundef %i.ef) #3 ; 0 uses
+  %i.ei = call i32 @ossl_quic_rcidm_get_preferred_tx_dcid_changed(ptr noundef %.0138, i32 noundef %i.ef) #4 ; 0 uses
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.f, %bb.e, %bb.z, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.r, %bb.q, %bb.l, %bb.i
@@ -370,11 +335,11 @@ bb.aa:                                            ; preds = %bb.f, %bb.e, %bb.z,
 PACKET_buf_init.exit.thread:                      ; preds = %bb.e, %bb.f, %bb.aa, %bb.b, %bb.c, %PACKET_get_1.exit.i, %bb.d, %bb.g, %PACKET_get_1.exit.i36, %bb.h, %bb.j, %PACKET_get_1.exit.i41, %bb.k, %bb.m, %bb.n, %bb.o, %PACKET_get_1.exit.i51, %bb.p, %bb.s, %bb.y, %.preheader, %bb.a, %PACKET_buf_init.exit
   %.015 = phi i32 [ 0, %PACKET_buf_init.exit ], [ 0, %bb.a ], [ 0, %.preheader ], [ -1, %bb.s ], [ -1, %bb.o ], [ -1, %bb.n ], [ -1, %bb.j ], [ -1, %bb.h ], [ -1, %bb.g ], [ -1, %bb.d ], [ -1, %bb.c ], [ -1, %bb.b ], [ -1, %bb.m ], [ 0, %bb.f ], [ 0, %bb.aa ], [ -1, %PACKET_get_1.exit.i51 ], [ -1, %PACKET_get_1.exit.i41 ], [ -1, %PACKET_get_1.exit.i36 ], [ -1, %PACKET_get_1.exit.i ], [ 0, %bb.e ], [ -1, %bb.k ], [ -1, %bb.p ], [ -1, %bb.y ]
   %.2 = phi ptr [ null, %PACKET_buf_init.exit ], [ null, %bb.a ], [ %i.c, %.preheader ], [ %.0138, %bb.s ], [ %.0138, %bb.o ], [ %.0138, %bb.n ], [ %.0138, %bb.j ], [ %.0138, %bb.h ], [ %.0138, %bb.g ], [ %.0138, %bb.d ], [ %.0138, %bb.c ], [ %.0138, %bb.b ], [ %.0138, %bb.m ], [ null, %bb.f ], [ %.1, %bb.aa ], [ %.0138, %PACKET_get_1.exit.i51 ], [ %.0138, %PACKET_get_1.exit.i41 ], [ %.0138, %PACKET_get_1.exit.i36 ], [ %.0138, %PACKET_get_1.exit.i ], [ null, %bb.e ], [ %.0138, %bb.k ], [ %.0138, %bb.p ], [ %.0138, %bb.y ]
-  call void @ossl_quic_rcidm_free(ptr noundef %.2) #3
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #3
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #3
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #3
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
+  call void @ossl_quic_rcidm_free(ptr noundef %.2) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %.015
 }
 
@@ -411,7 +376,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: nounwind uwtable
 define dso_local void @FuzzerCleanup() local_unnamed_addr #0 {
 bb.a:
-  tail call void @FuzzerClearRand() #3
+  tail call void @FuzzerClearRand() #4
   ret void
 }
 
@@ -420,10 +385,14 @@ declare void @FuzzerClearRand() local_unnamed_addr #1
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #3
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -204,7 +204,7 @@ declare void @lzxd_free(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @chmd_real_open(ptr nofree noundef captures(address_is_null) %0, ptr noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [84 x i8], align 16               ; 20 uses
+  %i.a = alloca [84 x i8], align 16               ; 17 uses
   %i.b = alloca ptr, align 8                      ; 11 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca i32, align 4                      ; 11 uses
@@ -281,25 +281,10 @@ bb.g:                                             ; preds = %bb.f
   %i.al = load i32, ptr %i.ak, align 4            ; 2 uses
   store i32 %i.al, ptr %i.k, align 8, !tbaa !92
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
-  %3 = load i8, ptr %i.am, align 16, !tbaa !67
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw i32 %4, 24
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 17
-  %7 = load i8, ptr %6, align 1, !tbaa !67
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 16
-  %10 = or disjoint i32 %9, %5
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
-  %12 = load i8, ptr %11, align 2, !tbaa !67
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %15 = or disjoint i32 %10, %14
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 19
-  %17 = load i8, ptr %16, align 1, !tbaa !67
-  %18 = zext i8 %17 to i32
-  %19 = or disjoint i32 %15, %18
+  %3 = load i32, ptr %i.am, align 16
+  %4 = call i32 @llvm.bswap.i32(i32 %3)
   %i.an = getelementptr inbounds nuw i8, ptr %i.k, i64 4
-  store i32 %19, ptr %i.an, align 4, !tbaa !93
+  store i32 %4, ptr %i.an, align 4, !tbaa !93
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %i.ap = load i32, ptr %i.ao, align 4
   %i.aq = getelementptr inbounds nuw i8, ptr %i.k, i64 8
@@ -700,6 +685,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10

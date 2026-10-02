@@ -204,7 +204,7 @@ bb.a:
   %37 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %38 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %39 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %i.b = alloca [8 x i8], align 1                 ; 11 uses
+  %i.b = alloca [8 x i8], align 1                 ; 8 uses
   %40 = alloca %"class.std::variant", align 8     ; 7 uses
   %41 = alloca %"struct.grpc_core::Http2GoawayFrame", align 8 ; 6 uses
   %42 = alloca %class.anon.97, align 1            ; 3 uses
@@ -219,7 +219,7 @@ bb.a:
   %51 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %52 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %53 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %i.c = alloca [8 x i8], align 1                 ; 11 uses
+  %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %54 = alloca %"class.std::variant", align 8     ; 7 uses
   %55 = alloca %class.anon.97, align 1            ; 3 uses
   %56 = alloca %class.anon.118, align 8           ; 4 uses
@@ -241,7 +241,7 @@ bb.a:
   %72 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %73 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %74 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %i.d = alloca [6 x i8], align 1                 ; 10 uses
+  %i.d = alloca [6 x i8], align 1                 ; 7 uses
   %75 = alloca %"class.std::variant", align 8     ; 9 uses
   %76 = alloca %class.anon.97, align 1            ; 3 uses
   %77 = alloca %class.anon.118, align 8           ; 4 uses
@@ -260,7 +260,7 @@ bb.a:
   %90 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %91 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %92 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %i.e = alloca [4 x i8], align 1                 ; 7 uses
+  %i.e = alloca [4 x i8], align 4                 ; 4 uses
   %93 = alloca %"class.std::variant", align 8     ; 6 uses
   %94 = alloca %class.anon.97, align 1            ; 3 uses
   %95 = alloca %class.anon.118, align 8           ; 4 uses
@@ -663,24 +663,10 @@ bb.du:                                            ; preds = %bb.de
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #25, !noalias !249
   call void @_Z40grpc_slice_buffer_copy_first_into_bufferPK17grpc_slice_buffermPv(ptr noundef nonnull align 8 dereferenceable(136) %2, i64 noundef 4, ptr noundef nonnull %i.e), !noalias !249
   %i.xx = load i32, ptr %i.uc, align 4, !tbaa !43, !noalias !249
-  %152 = load i8, ptr %i.e, align 1, !tbaa !37, !noalias !249
-  %153 = zext i8 %152 to i64
-  %154 = shl nuw nsw i64 %153, 24
-  %155 = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  %156 = load i8, ptr %155, align 1, !tbaa !37, !noalias !249
-  %157 = zext i8 %156 to i64
-  %158 = shl nuw nsw i64 %157, 16
-  %159 = or disjoint i64 %158, %154
-  %160 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %161 = load i8, ptr %160, align 1, !tbaa !37, !noalias !249
-  %162 = zext i8 %161 to i64
-  %163 = shl nuw nsw i64 %162, 8
-  %164 = or disjoint i64 %159, %163
-  %165 = getelementptr inbounds nuw i8, ptr %i.e, i64 3
-  %166 = load i8, ptr %165, align 1, !tbaa !37, !noalias !249
-  %i.xy = zext i8 %166 to i64
-  %.sroa.4.0.insert.ext.i = or disjoint i64 %164, %i.xy
-  %.sroa.4.0.insert.shift.i = shl nuw i64 %.sroa.4.0.insert.ext.i, 32
+  %152 = load i32, ptr %i.e, align 4, !noalias !249
+  %153 = call noundef i32 @llvm.bswap.i32(i32 %152)
+  %i.xy = zext i32 %153 to i64
+  %.sroa.4.0.insert.shift.i = shl nuw i64 %i.xy, 32
   %.sroa.0.0.insert.ext.i = zext i32 %i.xx to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.4.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   store i64 %.sroa.0.0.insert.insert.i, ptr %93, align 8, !tbaa !17, !noalias !249
@@ -1083,9 +1069,6 @@ bb.et:                                            ; preds = %bb.eg
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.acm = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   %i.acn = getelementptr inbounds nuw i8, ptr %i.d, i64 2
-  %167 = getelementptr inbounds nuw i8, ptr %i.d, i64 3
-  %168 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  %169 = getelementptr inbounds nuw i8, ptr %i.d, i64 5
   br label %bb.fb
 
 bb.eu:                                            ; preds = %bb.et
@@ -1251,20 +1234,8 @@ _ZN9grpc_core11SliceBuffer25MoveFirstNBytesIntoBufferEmPv.exit.i: ; preds = %bb.
   %i.aek = shl nuw i16 %i.aej, 8
   %i.ael = zext i8 %.val40.i to i16
   %i.aem = or disjoint i16 %i.aek, %i.ael         ; 4 uses
-  %170 = load i8, ptr %i.acn, align 1, !tbaa !37, !noalias !256
-  %171 = zext i8 %170 to i32
-  %172 = shl nuw i32 %171, 24
-  %173 = load i8, ptr %167, align 1, !tbaa !37, !noalias !256
-  %174 = zext i8 %173 to i32
-  %175 = shl nuw nsw i32 %174, 16
-  %176 = or disjoint i32 %175, %172
-  %177 = load i8, ptr %168, align 1, !tbaa !37, !noalias !256
-  %178 = zext i8 %177 to i32
-  %179 = shl nuw nsw i32 %178, 8
-  %180 = or disjoint i32 %176, %179
-  %181 = load i8, ptr %169, align 1, !tbaa !37, !noalias !256
-  %182 = zext i8 %181 to i32
-  %183 = or disjoint i32 %180, %182               ; 2 uses
+  %154 = load i32, ptr %i.acn, align 1, !noalias !256
+  %155 = call noundef i32 @llvm.bswap.i32(i32 %154) ; 2 uses
   %i.aen = add i16 %i.aem, 506
   %or.cond.i.i = icmp ult i16 %i.aen, 507
   %i.aeo = add i16 %i.aem, -7
@@ -1282,7 +1253,7 @@ bb.fd:                                            ; preds = %_ZN9grpc_core11Slic
   br i1 %.not.i.i100.i, label %bb.ff, label %bb.fe
 
 bb.fe:                                            ; preds = %bb.fd
-  %.sroa.6120.0.insert.ext.i = zext i32 %183 to i64
+  %.sroa.6120.0.insert.ext.i = zext i32 %155 to i64
   %.sroa.6120.0.insert.shift.i = shl nuw i64 %.sroa.6120.0.insert.ext.i, 32
   %.sroa.0.0.insert.ext.i133 = zext i16 %i.aem to i64
   %.sroa.0.0.insert.insert.i134 = or disjoint i64 %.sroa.6120.0.insert.shift.i, %.sroa.0.0.insert.ext.i133
@@ -1319,7 +1290,7 @@ _ZNKSt6vectorIN9grpc_core18Http2SettingsFrame7SettingESaIS2_EE12_M_check_lenEmPK
 
 .noexc102.i:                                      ; preds = %_ZNKSt6vectorIN9grpc_core18Http2SettingsFrame7SettingESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.afe = getelementptr inbounds nuw i8, ptr %i.afd, i64 %i.aev
-  %.sroa.6120.0.insert.ext122.i = zext i32 %183 to i64
+  %.sroa.6120.0.insert.ext122.i = zext i32 %155 to i64
   %.sroa.6120.0.insert.shift123.i = shl nuw i64 %.sroa.6120.0.insert.ext122.i, 32
   %.sroa.0.0.insert.ext112.i = zext i16 %i.aem to i64
   %.sroa.0.0.insert.insert114.i = or disjoint i64 %.sroa.6120.0.insert.shift123.i, %.sroa.0.0.insert.ext112.i
@@ -1722,46 +1693,11 @@ bb.gd:                                            ; preds = %bb.fv
   %i.ajs = and i8 %i.ajr, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25, !noalias !268
   call void @_Z40grpc_slice_buffer_copy_first_into_bufferPK17grpc_slice_buffermPv(ptr noundef nonnull align 8 dereferenceable(136) %2, i64 noundef 8, ptr noundef nonnull %i.c), !noalias !268
-  %184 = load i8, ptr %i.c, align 1, !tbaa !37, !noalias !268
-  %185 = zext i8 %184 to i64
-  %186 = shl nuw i64 %185, 56
-  %187 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %188 = load i8, ptr %187, align 1, !tbaa !37, !noalias !268
-  %189 = zext i8 %188 to i64
-  %190 = shl nuw nsw i64 %189, 48
-  %191 = or disjoint i64 %190, %186
-  %192 = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  %193 = load i8, ptr %192, align 1, !tbaa !37, !noalias !268
-  %194 = zext i8 %193 to i64
-  %195 = shl nuw nsw i64 %194, 40
-  %196 = or disjoint i64 %191, %195
-  %197 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  %198 = load i8, ptr %197, align 1, !tbaa !37, !noalias !268
-  %199 = zext i8 %198 to i64
-  %200 = shl nuw nsw i64 %199, 32
-  %201 = or disjoint i64 %196, %200
-  %202 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %203 = load i8, ptr %202, align 1, !tbaa !37, !noalias !268
-  %204 = zext i8 %203 to i64
-  %205 = shl nuw nsw i64 %204, 24
-  %206 = or disjoint i64 %201, %205
-  %207 = getelementptr inbounds nuw i8, ptr %i.c, i64 5
-  %208 = load i8, ptr %207, align 1, !tbaa !37, !noalias !268
-  %209 = zext i8 %208 to i64
-  %210 = shl nuw nsw i64 %209, 16
-  %211 = or disjoint i64 %206, %210
-  %212 = getelementptr inbounds nuw i8, ptr %i.c, i64 6
-  %213 = load i8, ptr %212, align 1, !tbaa !37, !noalias !268
-  %214 = zext i8 %213 to i64
-  %215 = shl nuw nsw i64 %214, 8
-  %216 = or i64 %211, %215
-  %217 = getelementptr inbounds nuw i8, ptr %i.c, i64 7
-  %218 = load i8, ptr %217, align 1, !tbaa !37, !noalias !268
-  %219 = zext i8 %218 to i64
-  %220 = or i64 %216, %219
+  %156 = load i64, ptr %i.c, align 8, !noalias !268
+  %157 = call noundef i64 @llvm.bswap.i64(i64 %156)
   store i8 %i.ajs, ptr %54, align 8, !tbaa !94, !noalias !268
   %.sroa.458.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %54, i64 8
-  store i64 %220, ptr %.sroa.458.0..sroa_idx.i, align 8, !tbaa !19, !noalias !268
+  store i64 %157, ptr %.sroa.458.0..sroa_idx.i, align 8, !tbaa !19, !noalias !268
   %i.ajt = getelementptr inbounds nuw i8, ptr %54, i64 144 ; 2 uses
   store i8 5, ptr %i.ajt, align 8, !tbaa !45, !noalias !268
   %i.aju = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
@@ -2152,24 +2088,9 @@ bb.gx:                                            ; preds = %bb.gp
   store i32 %i.aol, ptr %41, align 8, !tbaa !86, !noalias !273
   %i.aom = getelementptr inbounds nuw i8, ptr %41, i64 4
   %i.aon = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %221 = load i8, ptr %i.aon, align 1, !tbaa !37, !noalias !273
-  %222 = zext i8 %221 to i32
-  %223 = shl nuw i32 %222, 24
-  %224 = getelementptr inbounds nuw i8, ptr %i.b, i64 5
-  %225 = load i8, ptr %224, align 1, !tbaa !37, !noalias !273
-  %226 = zext i8 %225 to i32
-  %227 = shl nuw nsw i32 %226, 16
-  %228 = or disjoint i32 %227, %223
-  %229 = getelementptr inbounds nuw i8, ptr %i.b, i64 6
-  %230 = load i8, ptr %229, align 1, !tbaa !37, !noalias !273
-  %231 = zext i8 %230 to i32
-  %232 = shl nuw nsw i32 %231, 8
-  %233 = or disjoint i32 %228, %232
-  %234 = getelementptr inbounds nuw i8, ptr %i.b, i64 7
-  %235 = load i8, ptr %234, align 1, !tbaa !37, !noalias !273
-  %236 = zext i8 %235 to i32
-  %237 = or disjoint i32 %233, %236
-  store i32 %237, ptr %i.aom, align 4, !tbaa !87, !noalias !273
+  %158 = load i32, ptr %i.aon, align 1, !noalias !273
+  %159 = call noundef i32 @llvm.bswap.i32(i32 %158)
+  store i32 %159, ptr %i.aom, align 4, !tbaa !87, !noalias !273
   %i.aoo = getelementptr inbounds nuw i8, ptr %41, i64 8 ; 4 uses
   call void @_ZNK9grpc_core11SliceBuffer13JoinIntoSliceEv(ptr dead_on_unwind nonnull writable sret(%"class.grpc_core::Slice") align 8 %i.aoo, ptr noundef nonnull align 8 dereferenceable(136) %2), !noalias !273
   %i.aop = load i64, ptr %41, align 8, !noalias !273
@@ -2572,7 +2493,7 @@ bb.a:
   %7 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %8 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 7 uses
   %9 = alloca %"class.absl::lts_20250512::log_internal::LogMessageFatal", align 8 ; 5 uses
-  %i.b = alloca [5 x i8], align 1                 ; 9 uses
+  %i.b = alloca [5 x i8], align 1                 ; 6 uses
   %10 = alloca %"class.grpc_core::http2::ValueOrHttp2Status.74", align 8 ; 19 uses
   %11 = alloca %"class.grpc_core::http2::Http2Status", align 8 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -2908,24 +2829,10 @@ _ZN9grpc_core5http211Http2StatusD2Ev.exit:        ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.cm = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %12 = load i8, ptr %i.cm, align 1, !tbaa !37
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 24
-  %15 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %16 = load i8, ptr %15, align 1, !tbaa !37
-  %17 = zext i8 %16 to i64
-  %18 = shl nuw nsw i64 %17, 16
-  %19 = or disjoint i64 %18, %14
-  %20 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %21 = load i8, ptr %20, align 1, !tbaa !37
-  %22 = zext i8 %21 to i64
-  %23 = shl nuw nsw i64 %22, 8
-  %24 = or disjoint i64 %19, %23
-  %25 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %26 = load i8, ptr %25, align 1, !tbaa !37
-  %i.cn = zext i8 %26 to i64
-  %.sroa.6.0.insert.ext = or disjoint i64 %24, %i.cn
-  %.sroa.6.0.insert.shift = shl nuw i64 %.sroa.6.0.insert.ext, 32
+  %12 = load i32, ptr %i.cm, align 1
+  %13 = call noundef i32 @llvm.bswap.i32(i32 %12)
+  %i.cn = zext i32 %13 to i64
+  %.sroa.6.0.insert.shift = shl nuw i64 %i.cn, 32
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.shift, %.sroa.0.0.insert.ext.ph
   store i64 %.sroa.0.0.insert.insert, ptr %0, align 8, !tbaa !17
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -3328,13 +3235,16 @@ declare void @llvm.assume(i1 noundef) #22
 declare void @llvm.experimental.noalias.scope.decl(metadata) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #24
+declare i64 @llvm.bswap.i64(i64) #24
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

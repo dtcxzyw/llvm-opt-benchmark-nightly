@@ -205,27 +205,12 @@ load_oid_stat.exit65:                             ; preds = %bb.k, %bb.l, %bb.m
   store i32 %.2.i.i.i64, ptr %i.bq, align 4, !tbaa !141
   %i.br = getelementptr inbounds nuw i8, ptr %i.u, i64 148
   store i32 1, ptr %i.br, align 4, !tbaa !142
-  %i.bs = load ptr, ptr %i.a, align 8, !tbaa !118 ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.bs, i64 72
-  %4 = load i8, ptr %3, align 1, !tbaa !21
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr inbounds nuw i8, ptr %i.bs, i64 73
-  %8 = load i8, ptr %7, align 1, !tbaa !21
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %6
-  %12 = getelementptr inbounds nuw i8, ptr %i.bs, i64 74
-  %13 = load i8, ptr %12, align 1, !tbaa !21
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = or disjoint i32 %11, %15
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 75
-  %17 = load i8, ptr %i.bt, align 1, !tbaa !21
-  %18 = zext i8 %17 to i32
-  %19 = or disjoint i32 %16, %18
+  %i.bs = load ptr, ptr %i.a, align 8, !tbaa !118 ; 2 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 72
+  %3 = load i32, ptr %i.bt, align 1
+  %4 = call i32 @llvm.bswap.i32(i32 %3)
   %i.bu = getelementptr inbounds nuw i8, ptr %i.u, i64 192
-  store i32 %19, ptr %i.bu, align 8, !tbaa !83
+  store i32 %4, ptr %i.bu, align 8, !tbaa !83
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bs, i64 %i.q ; 2 uses
   %i.bw = call ptr @xstrdup(ptr noundef %i.bv) #25 ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.u, i64 160 ; 2 uses

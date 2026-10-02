@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.c, label %cdrom_read_subchannel.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.r = load ptr, ptr %i.g, align 8              ; 18 uses
+  %i.r = load ptr, ptr %i.g, align 8              ; 12 uses
   %i.s = getelementptr i8, ptr %i.r, i64 1
   %i.t = load i8, ptr %i.s, align 1
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 1
@@ -231,45 +231,25 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.ak = getelementptr i8, ptr %i.r, i64 8
-  %4 = load i8, ptr %i.ak, align 1
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr i8, ptr %i.r, i64 9
-  %8 = load i8, ptr %7, align 1                   ; 2 uses
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %6
-  %12 = getelementptr i8, ptr %i.r, i64 10
-  %13 = load i8, ptr %12, align 1                 ; 2 uses
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = getelementptr i8, ptr %i.r, i64 11
-  %17 = load i8, ptr %16, align 1                 ; 2 uses
-  %18 = zext i8 %17 to i32
-  %19 = or disjoint i32 %15, %11
-  %20 = or disjoint i32 %19, %18
+  %4 = load i32, ptr %i.ak, align 1
+  %5 = call i32 @llvm.bswap.i32(i32 %4)           ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %20, ptr %i.al, align 4
+  store i32 %5, ptr %i.al, align 4
   %i.am = getelementptr i8, ptr %i.r, i64 12
-  %21 = load i8, ptr %i.am, align 1
-  %22 = zext i8 %21 to i32
-  %23 = shl nuw i32 %22, 24
-  %i.an = getelementptr i8, ptr %i.r, i64 13
-  %24 = load i8, ptr %i.an, align 1               ; 2 uses
-  %25 = zext i8 %24 to i32
-  %26 = shl nuw nsw i32 %25, 16
-  %27 = or disjoint i32 %26, %23
-  %28 = getelementptr i8, ptr %i.r, i64 14
-  %29 = load i8, ptr %28, align 1                 ; 2 uses
-  %30 = zext i8 %29 to i32
-  %31 = shl nuw nsw i32 %30, 8
-  %32 = getelementptr i8, ptr %i.r, i64 15
-  %33 = load i8, ptr %32, align 1                 ; 2 uses
-  %34 = zext i8 %33 to i32
-  %35 = or disjoint i32 %31, %27
-  %36 = or disjoint i32 %35, %34
-  %37 = getelementptr inbounds nuw i8, ptr %3, i64 12
-  store i32 %36, ptr %37, align 4
+  %6 = load i32, ptr %i.am, align 1
+  %7 = call i32 @llvm.bswap.i32(i32 %6)           ; 4 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %3, i64 12
+  store i32 %7, ptr %i.an, align 4
+  %8 = lshr i32 %5, 16
+  %9 = trunc i32 %8 to i8
+  %10 = lshr i32 %5, 8
+  %11 = trunc i32 %10 to i8
+  %12 = trunc i32 %5 to i8
+  %13 = lshr i32 %7, 16
+  %14 = trunc i32 %13 to i8
+  %15 = lshr i32 %7, 8
+  %16 = trunc i32 %15 to i8
+  %17 = trunc i32 %7 to i8
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -305,12 +285,12 @@ cdrom_read_subchannel.exit:                       ; preds = %bb.b
   br label %bb.k
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %i.bg = phi i8 [ %33, %bb.d ], [ %i.ap, %bb.e ]
-  %i.bh = phi i8 [ %29, %bb.d ], [ %i.as, %bb.e ]
-  %i.bi = phi i8 [ %24, %bb.d ], [ %i.av, %bb.e ]
-  %i.bj = phi i8 [ %17, %bb.d ], [ %i.ay, %bb.e ]
-  %i.bk = phi i8 [ %13, %bb.d ], [ %i.bb, %bb.e ]
-  %i.bl = phi i8 [ %8, %bb.d ], [ %i.be, %bb.e ]
+  %i.bg = phi i8 [ %17, %bb.d ], [ %i.ap, %bb.e ]
+  %i.bh = phi i8 [ %16, %bb.d ], [ %i.as, %bb.e ]
+  %i.bi = phi i8 [ %14, %bb.d ], [ %i.av, %bb.e ]
+  %i.bj = phi i8 [ %12, %bb.d ], [ %i.ay, %bb.e ]
+  %i.bk = phi i8 [ %11, %bb.d ], [ %i.bb, %bb.e ]
+  %i.bl = phi i8 [ %9, %bb.d ], [ %i.be, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
