@@ -202,9 +202,9 @@ bb.at:                                            ; preds = %.lr.ph482.us, %_ZN9
           to label %bb.au unwind label %.split.us491
 
 bb.au:                                            ; preds = %bb.at
-  call void @llvm.experimental.noalias.scope.decl(metadata !84)
-  %i.fe = load float, ptr %7, align 4, !tbaa !71, !noalias !84 ; 6 uses
-  %i.ff = load <2 x float>, ptr %i.dk, align 4, !tbaa !72, !noalias !84 ; 7 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !69)
+  %i.fe = load float, ptr %7, align 4, !tbaa !71, !noalias !69 ; 6 uses
+  %i.ff = load <2 x float>, ptr %i.dk, align 4, !tbaa !72, !noalias !69 ; 7 uses
   %foldExtExtBinop = fmul <2 x float> %i.ff, %i.ff
   %i.fg = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.fh = call float @llvm.fmuladd.f32(float %i.fe, float %i.fe, float %i.fg)
@@ -262,11 +262,11 @@ bb.ay:                                            ; preds = %_ZNK9Imath_3_24Vec3
 _ZNK9Imath_3_24Vec3IfE10normalizedEv.exit.us:     ; preds = %bb.ay, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i.us, %bb.aw
   %.sink6.i.us = phi float [ %i.gg, %bb.ay ], [ 0.000000e+00, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i.us ], [ 0.000000e+00, %bb.aw ] ; 2 uses
   %i.gk = phi <2 x float> [ %i.gj, %bb.ay ], [ zeroinitializer, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i.us ], [ zeroinitializer, %bb.aw ] ; 2 uses
-  store float %.sink6.i.us, ptr %.sroa.0, align 4, !tbaa !71, !alias.scope !84
+  store float %.sink6.i.us, ptr %.sroa.0, align 4, !tbaa !71, !alias.scope !69
   %i.gl = extractelement <2 x float> %i.gk, i64 0 ; 2 uses
-  store float %i.gl, ptr %.sroa.10, align 4, !tbaa !75, !alias.scope !84
+  store float %i.gl, ptr %.sroa.10, align 4, !tbaa !75, !alias.scope !69
   %i.gm = extractelement <2 x float> %i.gk, i64 1 ; 2 uses
-  store float %i.gm, ptr %.sroa.17, align 4, !tbaa !76, !alias.scope !84
+  store float %i.gm, ptr %.sroa.17, align 4, !tbaa !76, !alias.scope !69
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #9
   %i.gn = load <2 x float>, ptr %6, align 8, !tbaa !72
@@ -669,6 +669,8 @@ attributes #10 = { builtin nounwind }
 !9 = distinct !{ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_, null, null, null}
 !10 = distinct !{ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_, null}
 !11 = distinct !{!11, !58}
+!12 = distinct !{!12, i1 false, !"_ZNK9Imath_3_24Vec3IfE10normalizedEv"}
+!13 = distinct !{!13, !12, !"_ZNK9Imath_3_24Vec3IfE10normalizedEv: argument 0"}
 !14 = distinct !{!14, !58}
 !15 = distinct !{!15, !58}
 !16 = distinct !{!16, !58}
@@ -724,6 +726,7 @@ attributes #10 = { builtin nounwind }
 !66 = !{!"_ZTSN9Imath_3_24Vec2IfEE", !65, i64 0, !65, i64 4}
 !67 = !{!66, !65, i64 0}
 !68 = !{!66, !65, i64 4}
+!69 = !{!13}
 !70 = !{!"_ZTSN9Imath_3_24Vec3IfEE", !65, i64 0, !65, i64 4, !65, i64 8}
 !71 = !{!70, !65, i64 0}
 !72 = !{!65, !65, i64 0}
@@ -736,7 +739,4 @@ attributes #10 = { builtin nounwind }
 !79 = !{!"_ZTSN9Imath_3_24halfE", !78, i64 0}
 !80 = !{!79, !78, i64 0}
 !81 = !{!78, !78, i64 0}
-!82 = distinct !{!82, i1 false, !"_ZNK9Imath_3_24Vec3IfE10normalizedEv"}
-!83 = distinct !{!83, !82, !"_ZNK9Imath_3_24Vec3IfE10normalizedEv: argument 0"}
-!84 = !{!83}
 end_hunk_1

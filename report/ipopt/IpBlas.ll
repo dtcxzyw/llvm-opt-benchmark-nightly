@@ -202,7 +202,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.v = sub i32 %0, %i.u
   %i.w = shl nuw nsw i64 %n.vec, 3
   %i.x = getelementptr i8, ptr %4, i64 %i.w
-  %i.y = load double, ptr %2, align 8, !tbaa !9, !alias.scope !34
+  %i.y = load double, ptr %2, align 8, !tbaa !9, !alias.scope !30
   %broadcast.splatinsert37 = insertelement <2 x double> poison, double %i.y, i64 0
   %broadcast.splat38 = shufflevector <2 x double> %broadcast.splatinsert37, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %1, i64 0
@@ -214,12 +214,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.z = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %4, i64 %i.z  ; 3 uses
   %i.aa = getelementptr i8, ptr %next.gep, i64 16 ; 2 uses
-  %wide.load = load <2 x double>, ptr %next.gep, align 8, !tbaa !9, !alias.scope !36, !noalias !34
-  %wide.load36 = load <2 x double>, ptr %i.aa, align 8, !tbaa !9, !alias.scope !36, !noalias !34
+  %wide.load = load <2 x double>, ptr %next.gep, align 8, !tbaa !9, !alias.scope !31, !noalias !30
+  %wide.load36 = load <2 x double>, ptr %i.aa, align 8, !tbaa !9, !alias.scope !31, !noalias !30
   %i.ab = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat, <2 x double> %broadcast.splat38, <2 x double> %wide.load)
   %i.ac = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat, <2 x double> %broadcast.splat38, <2 x double> %wide.load36)
-  store <2 x double> %i.ab, ptr %next.gep, align 8, !tbaa !9, !alias.scope !36, !noalias !34
-  store <2 x double> %i.ac, ptr %i.aa, align 8, !tbaa !9, !alias.scope !36, !noalias !34
+  store <2 x double> %i.ab, ptr %next.gep, align 8, !tbaa !9, !alias.scope !31, !noalias !30
+  store <2 x double> %i.ac, ptr %i.aa, align 8, !tbaa !9, !alias.scope !31, !noalias !30
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !26
@@ -571,13 +571,13 @@ attributes #4 = { nounwind }
 !20 = distinct !{!20, !12, !14, !13}
 !21 = distinct !{!21, !12}
 !22 = distinct !{!22, !10}
+!23 = distinct !{!23, i1 false, !"LVerDomain"}
+!24 = distinct !{!24, !23}
+!25 = distinct !{!25, !23}
 !26 = distinct !{!26, !12, !13, !14}
 !27 = distinct !{!27, !10}
 !28 = distinct !{!28, !12, !13}
 !29 = distinct !{!29, !12}
-!32 = distinct !{!32, i1 false, !"LVerDomain"}
-!33 = distinct !{!33, !32}
-!34 = !{!33}
-!35 = distinct !{!35, !32}
-!36 = !{!35}
+!30 = !{!24}
+!31 = !{!25}
 end_hunk_0

@@ -202,14 +202,14 @@ bb.f:                                             ; preds = %bb.e
           to label %.noexc12 unwind label %.loopexit.split-lp.loopexit
 
 .noexc12:                                         ; preds = %.noexc11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !11
-  store i32 %i.u, ptr %i.a, align 4, !noalias !11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !8
+  store i32 %i.u, ptr %i.a, align 4, !noalias !8
   %i.w = invoke ptr @_RNvMs4_NtNtCsaKDqXqZWSq0_14regex_automata3dfa5denseINtB5_3DFAINtNtCsexYYUdYSQU6_5alloc3vec3VecmEE12byte_classesB9_(ptr align 16 %1)
           to label %.noexc13 unwind label %.loopexit.split-lp.loopexit
 
 .noexc13:                                         ; preds = %.noexc12
   %i.x = getelementptr i8, ptr %i.w, i64 255
-  %.val.i.i = load i8, ptr %i.x, align 1, !noalias !11
+  %.val.i.i = load i8, ptr %i.x, align 1, !noalias !8
   %i.y = zext i8 %.val.i.i to i64
   %i.z = add nuw nsw i64 %i.y, 2
   %i.aa = invoke { i64, i64 } @_RNvMs9_NtCskKLDkoKarTP_4core3numj11checked_subCs2SM5xCHwwDm_13logos_codegen(i64 %i.z, i64 1) #17
@@ -260,8 +260,8 @@ bb.h:                                             ; preds = %.noexc19
 _RNvXsa_NtNtCsaKDqXqZWSq0_14regex_automata3dfa5denseINtB5_3DFAINtNtCsexYYUdYSQU6_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14next_eoi_stateCs2SM5xCHwwDm_13logos_codegen.exit.i: ; preds = %.noexc19
   %i.al = extractvalue { ptr, i64 } %i.ai, 0
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %i.ah
-  %i.an = load i32, ptr %i.am, align 4, !noalias !11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !11
+  %i.an = load i32, ptr %i.am, align 4, !noalias !8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8
   %i.ao = invoke { i32, i32 } @_RINvNtNtNtCskKLDkoKarTP_4core4iter7sources4once4onceNtNtNtCsaKDqXqZWSq0_14regex_automata4util10primitives7StateIDECs2SM5xCHwwDm_13logos_codegen(i32 %i.an)
           to label %.noexc21 unwind label %.loopexit.split-lp.loopexit ; 2 uses
 
@@ -664,7 +664,7 @@ attributes #23 = { inlinehint nounwind }
 !3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
 !4 = !{!"address", !"read_provenance"}
 !5 = !{}
-!9 = distinct !{!9, i1 false, !"_RNvNtNtCs2SM5xCHwwDm_13logos_codegen5graph8dfa_util13iter_children"}
-!10 = distinct !{!10, !9, !"_RNvNtNtCs2SM5xCHwwDm_13logos_codegen5graph8dfa_util13iter_children: argument 0"}
-!11 = !{!10}
+!6 = distinct !{!6, i1 false, !"_RNvNtNtCs2SM5xCHwwDm_13logos_codegen5graph8dfa_util13iter_children"}
+!7 = distinct !{!7, !6, !"_RNvNtNtCs2SM5xCHwwDm_13logos_codegen5graph8dfa_util13iter_children: argument 0"}
+!8 = !{!7}
 end_hunk_1

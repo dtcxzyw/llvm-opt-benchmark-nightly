@@ -203,7 +203,7 @@ u32_to_string.exit227:                            ; preds = %bb.i
   %i.ac = getelementptr i8, ptr %i.p, i64 3       ; 2 uses
   %i.ad = add i64 %i.n, -3                        ; 2 uses
   %i.ae = sub i64 11, %.0.i226                    ; 2 uses
-  %i.af = call ptr @__memcpy_chk(ptr noundef nonnull %i.c, ptr noundef nonnull %i.ab, i64 noundef %i.ae, i64 noundef 11) #7, !alias.scope !13 ; 0 uses
+  %i.af = call ptr @__memcpy_chk(ptr noundef nonnull %i.c, ptr noundef nonnull %i.ab, i64 noundef %i.ae, i64 noundef 11) #7, !alias.scope !9 ; 0 uses
   %i.ag = getelementptr i8, ptr %i.c, i64 %i.ae
   store i8 0, ptr %i.ag, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
@@ -374,8 +374,8 @@ attributes #7 = { nounwind }
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
 !5 = !{!"llvm.loop.mustprogress"}
-!10 = distinct !{!10, i1 false, !"memcpy.inline"}
-!11 = distinct !{!11, !10, !"memcpy.inline: argument 0"}
-!12 = distinct !{!12, !10, !"memcpy.inline: argument 1"}
-!13 = !{!11, !12}
+!6 = distinct !{!6, i1 false, !"memcpy.inline"}
+!7 = distinct !{!7, !6, !"memcpy.inline: argument 1"}
+!8 = distinct !{!8, !6, !"memcpy.inline: argument 0"}
+!9 = !{!8, !7}
 end_hunk_0

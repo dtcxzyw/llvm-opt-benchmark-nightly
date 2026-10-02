@@ -204,18 +204,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %index ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 4
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cp, i64 20
-  %wide.load = load <4 x i32>, ptr %i.cq, align 4, !tbaa !52, !alias.scope !62
-  %wide.load1240 = load <4 x i32>, ptr %i.cr, align 4, !tbaa !52, !alias.scope !62
+  %wide.load = load <4 x i32>, ptr %i.cq, align 4, !tbaa !52, !alias.scope !54
+  %wide.load1240 = load <4 x i32>, ptr %i.cr, align 4, !tbaa !52, !alias.scope !54
   %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %index ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
-  %wide.load1241 = load <4 x i32>, ptr %i.cs, align 4, !tbaa !52, !alias.scope !62
-  %wide.load1242 = load <4 x i32>, ptr %i.ct, align 4, !tbaa !52, !alias.scope !62
+  %wide.load1241 = load <4 x i32>, ptr %i.cs, align 4, !tbaa !52, !alias.scope !54
+  %wide.load1242 = load <4 x i32>, ptr %i.ct, align 4, !tbaa !52, !alias.scope !54
   %i.cu = sub nsw <4 x i32> %wide.load, %wide.load1241
   %i.cv = sub nsw <4 x i32> %wide.load1240, %wide.load1242
   %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %index ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 16
-  store <4 x i32> %i.cu, ptr %i.cw, align 4, !tbaa !52, !alias.scope !64, !noalias !62
-  store <4 x i32> %i.cv, ptr %i.cx, align 4, !tbaa !52, !alias.scope !64, !noalias !62
+  store <4 x i32> %i.cu, ptr %i.cw, align 4, !tbaa !52, !alias.scope !55, !noalias !54
+  store <4 x i32> %i.cv, ptr %i.cx, align 4, !tbaa !52, !alias.scope !55, !noalias !54
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.cy = icmp eq i64 %index.next, %n.vec
   br i1 %i.cy, label %middle.block, label %vector.body, !llvm.loop !13
@@ -618,6 +618,9 @@ attributes #7 = { nounwind }
 !7 = !{!6, !5, i64 0}
 !8 = distinct !{!8, !53}
 !9 = distinct !{!9, !53}
+!10 = distinct !{!10, i1 false, !"LVerDomain"}
+!11 = distinct !{!11, !10}
+!12 = distinct !{!12, !10}
 !13 = distinct !{!13, !53, !56, !57}
 !14 = distinct !{!14, !58}
 !15 = distinct !{!15, !53, !56}
@@ -659,13 +662,10 @@ attributes #7 = { nounwind }
 !51 = !{!46, !44, i64 24}
 !52 = !{!5, !5, i64 0}
 !53 = !{!"llvm.loop.mustprogress"}
+!54 = !{!11}
+!55 = !{!12}
 !56 = !{!"llvm.loop.isvectorized", i32 1}
 !57 = !{!"llvm.loop.unroll.runtime.disable"}
 !58 = !{!"llvm.loop.unroll.disable"}
 !59 = !{!46, !5, i64 0}
-!60 = distinct !{!60, i1 false, !"LVerDomain"}
-!61 = distinct !{!61, !60}
-!62 = !{!61}
-!63 = distinct !{!63, !60}
-!64 = !{!63}
 end_hunk_1

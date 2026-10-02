@@ -204,15 +204,15 @@ _RNvXs2_NtCsbqH9stoieM8_5alloc6borrowINtB5_3CoweENtNtNtCs8Chj7Szqq0n_4core3ops5d
           to label %bb.i unwind label %.loopexit.split-lp
 
 bb.i:                                             ; preds = %_RNvXs2_NtCsbqH9stoieM8_5alloc6borrowINtB5_3CoweENtNtNtCs8Chj7Szqq0n_4core3ops5deref5Deref5derefCs3asqsiKBnrB_18iceoryx2_pal_posix.exit
-  store i64 0, ptr %i.c, align 8, !alias.scope !10
+  store i64 0, ptr %i.c, align 8, !alias.scope !7
   %.sroa.28.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store i64 %i.w, ptr %.sroa.28.0..sroa_idx.i, align 8, !alias.scope !10
+  store i64 %i.w, ptr %.sroa.28.0..sroa_idx.i, align 8, !alias.scope !7
   %.sroa.39.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.39.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.39.i, i64 48, i1 false)
   %.sroa.410.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 64
-  store i8 0, ptr %.sroa.410.0..sroa_idx.i, align 8, !alias.scope !10
+  store i8 0, ptr %.sroa.410.0..sroa_idx.i, align 8, !alias.scope !7
   %.sroa.511.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 65
-  store i8 0, ptr %.sroa.511.0..sroa_idx.i, align 1, !alias.scope !10
+  store i8 0, ptr %.sroa.511.0..sroa_idx.i, align 1, !alias.scope !7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.39.i)
   br label %bb.j
 
@@ -615,7 +615,7 @@ attributes #33 = { noinline noreturn nounwind }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (0ed41eb41 2026-09-04)"}
 !4 = !{!"address", !"read_provenance"}
-!8 = distinct !{!8, i1 false, !"_RNvMNtCs8Chj7Szqq0n_4core3stre5linesCs3asqsiKBnrB_18iceoryx2_pal_posix"}
-!9 = distinct !{!9, !8, !"_RNvMNtCs8Chj7Szqq0n_4core3stre5linesCs3asqsiKBnrB_18iceoryx2_pal_posix: argument 0"}
-!10 = !{!9}
+!5 = distinct !{!5, i1 false, !"_RNvMNtCs8Chj7Szqq0n_4core3stre5linesCs3asqsiKBnrB_18iceoryx2_pal_posix"}
+!6 = distinct !{!6, !5, !"_RNvMNtCs8Chj7Szqq0n_4core3stre5linesCs3asqsiKBnrB_18iceoryx2_pal_posix: argument 0"}
+!7 = !{!6}
 end_hunk_1

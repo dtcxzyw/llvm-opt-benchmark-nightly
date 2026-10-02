@@ -202,10 +202,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep670 = getelementptr i8, ptr %.4484, i64 %i.ok
   %next.gep671 = getelementptr i8, ptr %.13, i64 %i.oj
   %next.gep672 = getelementptr i8, ptr %.13, i64 %i.ok
-  %wide.vec = load <8 x double>, ptr %next.gep, align 8, !tbaa !21, !alias.scope !30
-  %wide.vec674 = load <8 x double>, ptr %next.gep670, align 8, !tbaa !21, !alias.scope !30
-  store <8 x double> %wide.vec, ptr %next.gep671, align 8, !tbaa !21, !alias.scope !32, !noalias !30
-  store <8 x double> %wide.vec674, ptr %next.gep672, align 8, !tbaa !21, !alias.scope !32, !noalias !30
+  %wide.vec = load <8 x double>, ptr %next.gep, align 8, !tbaa !21, !alias.scope !24
+  %wide.vec674 = load <8 x double>, ptr %next.gep670, align 8, !tbaa !21, !alias.scope !24
+  store <8 x double> %wide.vec, ptr %next.gep671, align 8, !tbaa !21, !alias.scope !25, !noalias !24
+  store <8 x double> %wide.vec674, ptr %next.gep672, align 8, !tbaa !21, !alias.scope !25, !noalias !24
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ol = icmp eq i64 %index.next, %n.vec
   br i1 %i.ol, label %middle.block, label %vector.body, !llvm.loop !18
@@ -269,17 +269,17 @@ attributes #0 = { nofree norecurse nosync nounwind memory(readwrite, inaccessibl
 !12 = distinct !{!12, !22}
 !13 = distinct !{!13, !23}
 !14 = distinct !{!14, !22}
+!15 = distinct !{!15, i1 false, !"LVerDomain"}
+!16 = distinct !{!16, !15}
+!17 = distinct !{!17, !15}
 !18 = distinct !{!18, !22, !26, !27}
 !19 = distinct !{!19, !22, !26}
 !20 = !{!"double", !4, i64 0}
 !21 = !{!20, !20, i64 0}
 !22 = !{!"llvm.loop.mustprogress"}
 !23 = !{!"llvm.loop.unroll.disable"}
+!24 = !{!16}
+!25 = !{!17}
 !26 = !{!"llvm.loop.isvectorized", i32 1}
 !27 = !{!"llvm.loop.unroll.runtime.disable"}
-!28 = distinct !{!28, i1 false, !"LVerDomain"}
-!29 = distinct !{!29, !28}
-!30 = !{!29}
-!31 = distinct !{!31, !28}
-!32 = !{!31}
 end_hunk_0

@@ -204,12 +204,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  store <2 x i64> zeroinitializer, ptr %i.d, align 16, !noalias !10
-  call void @_RNvMs1K_NtNtCs3oUPovFnLWP_4core9core_arch3x86NtB6_7___m128i8as_i8x16CsatzsiS36G5T_11typst_utils(ptr nonnull sret([16 x i8]) align 16 %i.e, ptr nonnull align 16 %i.d) #32, !noalias !10
-  %i.g = load <16 x i8>, ptr %i.e, align 16, !noalias !10
-  store <2 x i64> %i.f, ptr %i.b, align 16, !noalias !10
-  call void @_RNvMs1K_NtNtCs3oUPovFnLWP_4core9core_arch3x86NtB6_7___m128i8as_i8x16CsatzsiS36G5T_11typst_utils(ptr nonnull sret([16 x i8]) align 16 %i.c, ptr nonnull align 16 %i.b) #32, !noalias !10
-  %i.h = load <16 x i8>, ptr %i.c, align 16, !noalias !10
+  store <2 x i64> zeroinitializer, ptr %i.d, align 16, !noalias !7
+  call void @_RNvMs1K_NtNtCs3oUPovFnLWP_4core9core_arch3x86NtB6_7___m128i8as_i8x16CsatzsiS36G5T_11typst_utils(ptr nonnull sret([16 x i8]) align 16 %i.e, ptr nonnull align 16 %i.d) #32, !noalias !7
+  %i.g = load <16 x i8>, ptr %i.e, align 16, !noalias !7
+  store <2 x i64> %i.f, ptr %i.b, align 16, !noalias !7
+  call void @_RNvMs1K_NtNtCs3oUPovFnLWP_4core9core_arch3x86NtB6_7___m128i8as_i8x16CsatzsiS36G5T_11typst_utils(ptr nonnull sret([16 x i8]) align 16 %i.c, ptr nonnull align 16 %i.b) #32, !noalias !7
+  %i.h = load <16 x i8>, ptr %i.c, align 16, !noalias !7
   %i.i = icmp sgt <16 x i8> %i.g, %i.h
   %i.j = sext <16 x i1> %i.i to <16 x i8>
   %i.k = bitcast <16 x i8> %i.j to <2 x i64>
@@ -612,7 +612,7 @@ define hidden i128 @_RNvMs3_NtNtNtCsl9Fzn6kz1og_15portable_atomic3imp9atomic1286
 bb.a:
   tail call void @_RNvNtCsl9Fzn6kz1og_15portable_atomic5utils20assert_load_orderingCsatzsiS36G5T_11typst_utils(i8 %1) #32
   %i.a = tail call ptr @_RNvMs3_NtNtCs3oUPovFnLWP_4core4sync6atomicINtB5_6AtomicOuE4loadCsatzsiS36G5T_11typst_utils(ptr nonnull align 8 @_RNvNvNtNtNtCsl9Fzn6kz1og_15portable_atomic3imp9atomic1286x86_6411atomic_load4FUNC, i8 0) #32
-  %i.b = tail call i128 %i.a(ptr %0), !inline_history !11
+  %i.b = tail call i128 %i.a(ptr %0), !inline_history !8
   ret i128 %i.b
 }
 
@@ -1015,7 +1015,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 16               ; 2 uses
   call void @_RNvMsb_NtNtCs3oUPovFnLWP_4core9core_arch4simdINtB5_4SimdaKj10_E5splatCscb9PBP19vM_15crossbeam_utils(ptr nonnull sret([16 x i8]) align 16 %i.a, i8 %1) #32
   %i.b = load <16 x i8>, ptr %i.a, align 16
-  store <16 x i8> %i.b, ptr %0, align 16, !alias.scope !17
+  store <16 x i8> %i.b, ptr %0, align 16, !alias.scope !11
   ret void
 }
 
@@ -1418,7 +1418,7 @@ define void @_RNvXsB_NtCs1xwejQucwHj_5alloc6stringeNtB5_8ToString9to_stringCsatz
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RINvXs_NvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs1iWEYfdUYYU_10rayon_core(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %1, i64 %2) #32, !noalias !23
+  call void @_RINvXs_NvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs1iWEYfdUYYU_10rayon_core(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %1, i64 %2) #32, !noalias !14
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
@@ -1821,14 +1821,14 @@ attributes #39 = { inlinehint noreturn }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (787af2b8c 2026-08-25)"}
 !4 = !{!"address", !"read_provenance"}
-!8 = distinct !{!8, i1 false, !"_RNvNtNtNtCs3oUPovFnLWP_4core9core_arch3x864sse214__mm_cmpgt_epi8CsatzsiS36G5T_11typst_utils"}
-!9 = distinct !{!9, !8, !"_RNvNtNtNtCs3oUPovFnLWP_4core9core_arch3x864sse214__mm_cmpgt_epi8CsatzsiS36G5T_11typst_utils: argument 0"}
-!10 = !{!9}
-!11 = distinct !{null}
-!15 = distinct !{!15, i1 false, !"_RNvMs1P_NtNtCs3oUPovFnLWP_4core9core_arch3x86INtNtB8_4simd4SimdaKj10_E8as_m128iCsatzsiS36G5T_11typst_utils"}
-!16 = distinct !{!16, !15, !"_RNvMs1P_NtNtCs3oUPovFnLWP_4core9core_arch3x86INtNtB8_4simd4SimdaKj10_E8as_m128iCsatzsiS36G5T_11typst_utils: argument 0"}
-!17 = !{!16}
-!21 = distinct !{!21, i1 false, !"_RNvXs26_NtCs1xwejQucwHj_5alloc6stringeNtB6_12SpecToString14spec_to_stringCsatzsiS36G5T_11typst_utils"}
-!22 = distinct !{!22, !21, !"_RNvXs26_NtCs1xwejQucwHj_5alloc6stringeNtB6_12SpecToString14spec_to_stringCsatzsiS36G5T_11typst_utils: argument 0"}
-!23 = !{!22}
+!5 = distinct !{!5, i1 false, !"_RNvNtNtNtCs3oUPovFnLWP_4core9core_arch3x864sse214__mm_cmpgt_epi8CsatzsiS36G5T_11typst_utils"}
+!6 = distinct !{!6, !5, !"_RNvNtNtNtCs3oUPovFnLWP_4core9core_arch3x864sse214__mm_cmpgt_epi8CsatzsiS36G5T_11typst_utils: argument 0"}
+!7 = !{!6}
+!8 = distinct !{null}
+!9 = distinct !{!9, i1 false, !"_RNvMs1P_NtNtCs3oUPovFnLWP_4core9core_arch3x86INtNtB8_4simd4SimdaKj10_E8as_m128iCsatzsiS36G5T_11typst_utils"}
+!10 = distinct !{!10, !9, !"_RNvMs1P_NtNtCs3oUPovFnLWP_4core9core_arch3x86INtNtB8_4simd4SimdaKj10_E8as_m128iCsatzsiS36G5T_11typst_utils: argument 0"}
+!11 = !{!10}
+!12 = distinct !{!12, i1 false, !"_RNvXs26_NtCs1xwejQucwHj_5alloc6stringeNtB6_12SpecToString14spec_to_stringCsatzsiS36G5T_11typst_utils"}
+!13 = distinct !{!13, !12, !"_RNvXs26_NtCs1xwejQucwHj_5alloc6stringeNtB6_12SpecToString14spec_to_stringCsatzsiS36G5T_11typst_utils: argument 0"}
+!14 = !{!13}
 end_hunk_4

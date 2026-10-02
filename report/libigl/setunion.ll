@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.split
   %i.by = load i64, ptr %i.a, align 8, !tbaa !13
   %i.bz = trunc i64 %i.by to i32                  ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
-  %i.cb = load i64, ptr %i.ca, align 8, !tbaa !13, !noalias !36 ; 6 uses
+  %i.cb = load i64, ptr %i.ca, align 8, !tbaa !13, !noalias !33 ; 6 uses
   %i.cc = icmp eq i64 %i.cb, 0
   br i1 %i.cc, label %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIiiLNS2_14ComparisonNameE1EEEKNS_12ArrayWrapperINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIiEENS_5ArrayIiLin1ELi1ELi0ELin1ELi1EEEEEEEE5countEv.exit, label %bb.d
 
@@ -551,6 +551,8 @@ attributes #12 = { noreturn }
 !20 = distinct !{!20, !29, !30, !31}
 !21 = distinct !{!21, !32}
 !22 = distinct !{!22, !29, !30}
+!23 = distinct !{!23, i1 false, !"_ZNK5Eigen9ArrayBaseINS_12ArrayWrapperINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEEltERKi"}
+!24 = distinct !{!24, !23, !"_ZNK5Eigen9ArrayBaseINS_12ArrayWrapperINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEEltERKi: argument 0"}
 !25 = distinct !{!25, !29, !30, !31}
 !26 = distinct !{!26, !29, !31, !30}
 !27 = distinct !{!27, !29}
@@ -559,7 +561,5 @@ attributes #12 = { noreturn }
 !30 = !{!"llvm.loop.isvectorized", i32 1}
 !31 = !{!"llvm.loop.unroll.runtime.disable"}
 !32 = !{!"llvm.loop.unroll.disable"}
-!34 = distinct !{!34, i1 false, !"_ZNK5Eigen9ArrayBaseINS_12ArrayWrapperINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEEltERKi"}
-!35 = distinct !{!35, !34, !"_ZNK5Eigen9ArrayBaseINS_12ArrayWrapperINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEEltERKi: argument 0"}
-!36 = !{!35}
+!33 = !{!24}
 end_hunk_0

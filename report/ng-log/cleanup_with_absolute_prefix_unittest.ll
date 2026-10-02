@@ -204,8 +204,8 @@ bb.ah:                                            ; preds = %bb.ag
 _Z13RUN_ALL_TESTSv.exit:                          ; preds = %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store i32 %i.bz, ptr %i.a, align 4, !tbaa !34, !noalias !80
-  store i32 0, ptr %i.b, align 4, !tbaa !34, !noalias !80
+  store i32 %i.bz, ptr %i.a, align 4, !tbaa !34, !noalias !76
+  store i32 0, ptr %i.b, align 4, !tbaa !34, !noalias !76
   %i.ca = icmp eq i32 %i.bz, 0
   br i1 %i.ca, label %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit.thread, label %bb.ai, !prof !77
 
@@ -498,9 +498,9 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.f, align 8, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.g) #19, !inline_history !81
-  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.e) #19, !inline_history !81
-  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(88) %i.d, i64 noundef 352) #21, !inline_history !82
+  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.g) #19, !inline_history !78
+  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.e) #19, !inline_history !78
+  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(88) %i.d, i64 noundef 352) #21, !inline_history !79
   ret void
 }
 
@@ -604,7 +604,7 @@ bb.a:
   %4 = alloca %"class.nglog::internal::CheckOpMessageBuilder", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   call void @_ZN5nglog8internal21CheckOpMessageBuilderC1EPKc(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef %3)
-  %i.a = load ptr, ptr %4, align 8, !tbaa !85
+  %i.a = load ptr, ptr %4, align 8, !tbaa !82
   %i.b = load i32, ptr %1, align 4, !tbaa !34
   %i.c = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.a, i32 noundef %i.b)
           to label %_ZN5nglog8internal22MakeCheckOpValueStringIiEEvPSoRKT_.exit unwind label %bb.d ; 0 uses
@@ -679,25 +679,25 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %0)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
-  store ptr %i.c, ptr %1, align 8, !tbaa !86
+  store ptr %i.c, ptr %1, align 8, !tbaa !83
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
-  store i64 74, ptr %i.b, align 8, !tbaa !87
+  store i64 74, ptr %i.b, align 8, !tbaa !84
   %i.d = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef 0) ; 3 uses
   store ptr %i.d, ptr %1, align 8, !tbaa !38
-  %i.e = load i64, ptr %i.b, align 8, !tbaa !87   ; 3 uses
+  %i.e = load i64, ptr %i.b, align 8, !tbaa !84   ; 3 uses
   store i64 %i.e, ptr %i.c, align 8, !tbaa !39
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(74) %i.d, ptr noundef nonnull align 1 dereferenceable(74) @.str.2, i64 74, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  store i64 %i.e, ptr %i.f, align 8, !tbaa !88
+  store i64 %i.e, ptr %i.f, align 8, !tbaa !85
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.e
   store i8 0, ptr %i.g, align 1, !tbaa !39
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
-  store ptr %i.h, ptr %0, align 8, !tbaa !86
+  store ptr %i.h, ptr %0, align 8, !tbaa !83
   %i.i = load ptr, ptr %1, align 8, !tbaa !38     ; 2 uses
-  %i.j = load i64, ptr %i.f, align 8, !tbaa !88   ; 4 uses
+  %i.j = load i64, ptr %i.f, align 8, !tbaa !85   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  store i64 %i.j, ptr %i.a, align 8, !tbaa !87
+  store i64 %i.j, ptr %i.a, align 8, !tbaa !84
   %i.k = icmp ugt i64 %i.j, 15
   br i1 %i.k, label %.noexc.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -707,7 +707,7 @@ bb.a:
 
 .noexc7.i:                                        ; preds = %.noexc.i.i.i
   store ptr %i.l, ptr %0, align 8, !tbaa !38
-  %i.m = load i64, ptr %i.a, align 8, !tbaa !87
+  %i.m = load i64, ptr %i.a, align 8, !tbaa !84
   store i64 %i.m, ptr %i.h, align 8, !tbaa !39
   br label %._crit_edge.i.i.i.i
 
@@ -728,15 +728,15 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %._crit_edge.i.i.i.i
-  %i.p = load i64, ptr %i.a, align 8, !tbaa !87   ; 2 uses
+  %i.p = load i64, ptr %i.a, align 8, !tbaa !84   ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.p, ptr %i.q, align 8, !tbaa !88
+  store i64 %i.p, ptr %i.q, align 8, !tbaa !85
   %i.r = load ptr, ptr %0, align 8, !tbaa !38
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.p
   store i8 0, ptr %i.s, align 1, !tbaa !39
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 57, ptr %i.t, align 8, !tbaa !90
+  store i32 57, ptr %i.t, align 8, !tbaa !87
   %i.u = invoke noundef ptr @_ZN7testing8internal13GetTestTypeIdEv()
           to label %bb.e unwind label %bb.k
 
@@ -815,7 +815,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13.i: ; preds = %_
 
 __cxx_global_var_init.exit:                       ; preds = %_ZN7testing8internal12CodeLocationD2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
-  store ptr %i.y, ptr @_ZN47CleanImmediatelyWithAbsolutePrefix_logging_Test10test_info_E, align 8, !tbaa !92
+  store ptr %i.y, ptr @_ZN47CleanImmediatelyWithAbsolutePrefix_logging_Test10test_info_E, align 8, !tbaa !89
   %i.ar = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN47CleanImmediatelyWithAbsolutePrefix_logging_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %0)
   ret void
@@ -906,6 +906,8 @@ attributes #23 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errno
 !53 = !{!52, !21, i64 0}
 !54 = !{!"llvm.loop.mustprogress"}
 !55 = distinct !{null, null, null}
+!56 = distinct !{!56, i1 false, !"_ZN5nglog8internal12Check_EQImplB5cxx11EiiPKc"}
+!57 = distinct !{!57, !56, !"_ZN5nglog8internal12Check_EQImplB5cxx11EiiPKc: argument 0"}
 !58 = !{!"any p2 pointer", !11, i64 0}
 !59 = !{!"p2 omnipotent char", !58, i64 0}
 !60 = !{!59, !59, i64 0}
@@ -924,20 +926,18 @@ attributes #23 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errno
 !73 = !{!"p1 _ZTSNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE", !11, i64 0}
 !74 = !{!73, !73, i64 0}
 !75 = !{!12, !12, i64 0}
+!76 = !{!57}
 !77 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!78 = distinct !{!78, i1 false, !"_ZN5nglog8internal12Check_EQImplB5cxx11EiiPKc"}
-!79 = distinct !{!79, !78, !"_ZN5nglog8internal12Check_EQImplB5cxx11EiiPKc: argument 0"}
-!80 = !{!79}
-!81 = !{ptr @_ZN5nglog10LogMessage9LogStreamD0Ev, ptr @_ZN5nglog10LogMessage9LogStreamD1Ev}
-!82 = !{ptr @_ZN5nglog10LogMessage9LogStreamD0Ev}
-!83 = !{!"p1 _ZTSNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE", !11, i64 0}
-!84 = !{!"_ZTSN5nglog8internal21CheckOpMessageBuilderE", !83, i64 0}
-!85 = !{!84, !83, i64 0}
-!86 = !{!36, !12, i64 0}
-!87 = !{!21, !21, i64 0}
-!88 = !{!37, !21, i64 8}
-!89 = !{!"_ZTSN7testing8internal12CodeLocationE", !37, i64 0, !6, i64 32}
-!90 = !{!89, !6, i64 32}
-!91 = !{!"p1 _ZTSN7testing8TestInfoE", !11, i64 0}
-!92 = !{!91, !91, i64 0}
+!78 = !{ptr @_ZN5nglog10LogMessage9LogStreamD0Ev, ptr @_ZN5nglog10LogMessage9LogStreamD1Ev}
+!79 = !{ptr @_ZN5nglog10LogMessage9LogStreamD0Ev}
+!80 = !{!"p1 _ZTSNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE", !11, i64 0}
+!81 = !{!"_ZTSN5nglog8internal21CheckOpMessageBuilderE", !80, i64 0}
+!82 = !{!81, !80, i64 0}
+!83 = !{!36, !12, i64 0}
+!84 = !{!21, !21, i64 0}
+!85 = !{!37, !21, i64 8}
+!86 = !{!"_ZTSN7testing8internal12CodeLocationE", !37, i64 0, !6, i64 32}
+!87 = !{!86, !6, i64 32}
+!88 = !{!"p1 _ZTSN7testing8TestInfoE", !11, i64 0}
+!89 = !{!88, !88, i64 0}
 end_hunk_0

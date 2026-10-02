@@ -202,7 +202,7 @@ _ZNKSt6vectorIN7CaDiCaL5WatchESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNKSt6vectorIN7CaDiCaL5WatchESaIS1_EE12_M_check_lenEmPKc.exit.i, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.z, %.lr.ph.i.i.i.i.i ], [ %i.w, %_ZNKSt6vectorIN7CaDiCaL5WatchESaIS1_EE12_M_check_lenEmPKc.exit.i ] ; 2 uses
   %.0911.i.i.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i.i.i ], [ %i.c, %_ZNKSt6vectorIN7CaDiCaL5WatchESaIS1_EE12_M_check_lenEmPKc.exit.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !13, !alias.scope !237
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !13, !alias.scope !233
   %i.y = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 16 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 16
   %.not.i.i.i.i.i = icmp eq ptr %i.y, %i.b
@@ -531,11 +531,11 @@ attributes #12 = { builtin nounwind }
 !224 = !{!26, !25, i64 16}
 !225 = !{!26, !25, i64 0}
 !226 = !{!166, !5, i64 3664}
+!227 = distinct !{!227, i1 false, !"_ZSt19__relocate_object_aIN7CaDiCaL5WatchES1_SaIS1_EEvPT_PT0_RT1_"}
+!228 = distinct !{!228, !227, !"_ZSt19__relocate_object_aIN7CaDiCaL5WatchES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
+!229 = distinct !{!229, !227, !"_ZSt19__relocate_object_aIN7CaDiCaL5WatchES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !230 = distinct !{!230, !14}
 !231 = !{!15, !11, i64 8}
 !232 = !{!15, !11, i64 0}
-!234 = distinct !{!234, i1 false, !"_ZSt19__relocate_object_aIN7CaDiCaL5WatchES1_SaIS1_EEvPT_PT0_RT1_"}
-!235 = distinct !{!235, !234, !"_ZSt19__relocate_object_aIN7CaDiCaL5WatchES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
-!236 = distinct !{!236, !234, !"_ZSt19__relocate_object_aIN7CaDiCaL5WatchES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
-!237 = !{!235, !236}
+!233 = !{!229, !228}
 end_hunk_0

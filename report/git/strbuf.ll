@@ -205,7 +205,7 @@ bb.a:
   %1 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #27
   call void @llvm.va_start.p0(ptr nonnull %1)
-  %i.a = load ptr, ptr @stdout, align 8, !tbaa !52, !noalias !56
+  %i.a = load ptr, ptr @stdout, align 8, !tbaa !52, !noalias !53
   %i.b = call i32 @vfprintf(ptr noundef %i.a, ptr noundef %0, ptr noundef nonnull %1) #27, !inline_history !49 ; 2 uses
   call void @llvm.va_end.p0(ptr nonnull %1)
   %i.c = icmp slt i32 %i.b, 0
@@ -299,7 +299,7 @@ bb.a:
   %i.u = add nuw i64 %.010, 2                     ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !57
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !54
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -373,7 +373,7 @@ bb.a:
   %i.w = add nuw i64 %.09, 2                      ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !58
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !55
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -601,7 +601,7 @@ skip_prefix_impl.exit44.thread:                   ; preds = %skip_prefix_impl.ex
   call void @strbuf_add(ptr noundef nonnull %5, ptr noundef %.2, i64 noundef %i.aj)
   %i.ak = load i8, ptr %i.ag, align 1, !tbaa !14
   %.not.i = icmp eq i8 %i.ak, 0
-  br i1 %.not.i, label %._crit_edge, label %bb.b, !llvm.loop !59
+  br i1 %.not.i, label %._crit_edge, label %bb.b, !llvm.loop !56
 
 ._crit_edge:                                      ; preds = %skip_prefix_impl.exit44.thread, %.preheader83
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
@@ -796,7 +796,7 @@ strbuf_grow.exit62:                               ; preds = %bb.aa, %bb.ab, %bb.
   %i.ct = sub i64 %i.cs, %i.cq
   %i.cu = tail call i64 @strftime(ptr noundef %i.cr, i64 noundef %i.ct, ptr noundef %i.by, ptr noundef %2) #27 ; 2 uses
   %.not30 = icmp eq i64 %i.cu, 0
-  br i1 %.not30, label %bb.w, label %bb.ad, !llvm.loop !60
+  br i1 %.not30, label %bb.w, label %bb.ad, !llvm.loop !57
 
 bb.ad:                                            ; preds = %strbuf_grow.exit62
   %i.cv = add i64 %i.cu, -1
@@ -994,7 +994,7 @@ starts_with.exit.thread.us:                       ; preds = %._crit_edge104, %bb
   %i.ax = add i64 %i.ab, %.04460.us               ; 2 uses
   %i.ay = add i64 %.06.i.us94, %.2.us             ; 2 uses
   %i.az = icmp ult i64 %i.ax, %i.aw
-  br i1 %i.az, label %starts_with.exit.us, label %._crit_edge, !llvm.loop !61
+  br i1 %i.az, label %starts_with.exit.us, label %._crit_edge, !llvm.loop !58
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %starts_with.exit.thread
   %i.ba = phi i64 [ %i.cj, %starts_with.exit.thread ], [ %i.r, %.lr.ph ] ; 4 uses
@@ -1090,7 +1090,7 @@ starts_with.exit.thread:                          ; preds = %bb.l, %bb.k, %bb.o,
   %i.ck = add i64 %i.bi, %.04460                  ; 2 uses
   %i.cl = add i64 %.0, %.2                        ; 2 uses
   %i.cm = icmp ult i64 %i.ck, %i.cj
-  br i1 %i.cm, label %.lr.ph.split, label %._crit_edge, !llvm.loop !61
+  br i1 %i.cm, label %.lr.ph.split, label %._crit_edge, !llvm.loop !58
 
 ._crit_edge:                                      ; preds = %starts_with.exit.thread, %starts_with.exit.thread.us
   %.043.lcssa = phi i64 [ %i.ay, %starts_with.exit.thread.us ], [ %i.cl, %starts_with.exit.thread ] ; 2 uses
@@ -1286,16 +1286,16 @@ attributes #29 = { nounwind willreturn memory(none) }
 !44 = distinct !{!44, !15}
 !45 = distinct !{null}
 !46 = distinct !{!46, !15}
+!47 = distinct !{!47, i1 false, !"vprintf"}
+!48 = distinct !{!48, !47, !"vprintf: argument 0"}
 !49 = distinct !{null}
 !50 = distinct !{null}
 !51 = !{!"p1 _ZTS8_IO_FILE", !16, i64 0}
 !52 = !{!51, !51, i64 0}
-!54 = distinct !{!54, i1 false, !"vprintf"}
-!55 = distinct !{!55, !54, !"vprintf: argument 0"}
-!56 = !{!55}
+!53 = !{!48}
+!54 = distinct !{!54, !15}
+!55 = distinct !{!55, !15}
+!56 = distinct !{!56, !15}
 !57 = distinct !{!57, !15}
 !58 = distinct !{!58, !15}
-!59 = distinct !{!59, !15}
-!60 = distinct !{!60, !15}
-!61 = distinct !{!61, !15}
 end_hunk_0

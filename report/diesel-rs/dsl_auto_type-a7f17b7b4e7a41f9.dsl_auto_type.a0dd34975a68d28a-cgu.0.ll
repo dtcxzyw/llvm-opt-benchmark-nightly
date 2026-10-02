@@ -202,7 +202,7 @@ define void @_RNvXs1_NtNtNtCscI6d9CVNmLh_4core3ops8function5implsQNCNvNtNtCsdOh5
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMs8_NtCs40k4W9msRzi_5alloc2rcINtB5_2RcNtNtCshMFl0SviwmK_3syn5error5ErrorE10try_unwrapCsdOh5Xhm0ZW8_13dsl_auto_type(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %2), !noalias !9
+  call void @_RNvMs8_NtCs40k4W9msRzi_5alloc2rcINtB5_2RcNtNtCshMFl0SviwmK_3syn5error5ErrorE10try_unwrapCsdOh5Xhm0ZW8_13dsl_auto_type(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %2), !noalias !6
   call void @_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultNtNtCshMFl0SviwmK_3syn5error5ErrorINtNtCs40k4W9msRzi_5alloc2rc2RcBH_EE2okCsdOh5Xhm0ZW8_13dsl_auto_type(ptr sret([24 x i8]) align 8 %0, ptr nonnull align 8 %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
@@ -605,7 +605,7 @@ attributes #26 = { "function-inline-cost-multiplier"="2" }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.97.0 (2d8144b78 2026-07-07)"}
 !3 = !{ptr @_RNvMs_NtNtCsdOh5Xhm0ZW8_13dsl_auto_type9auto_type25expression_type_inferenceNtB4_12TypeInferrer21infer_expression_type}
-!7 = distinct !{!7, i1 false, !"_RNCNvNtNtCsdOh5Xhm0ZW8_13dsl_auto_type9auto_type25expression_type_inference21infer_expression_type0B7_"}
-!8 = distinct !{!8, !7, !"_RNCNvNtNtCsdOh5Xhm0ZW8_13dsl_auto_type9auto_type25expression_type_inference21infer_expression_type0B7_: argument 0"}
-!9 = !{!8}
+!4 = distinct !{!4, i1 false, !"_RNCNvNtNtCsdOh5Xhm0ZW8_13dsl_auto_type9auto_type25expression_type_inference21infer_expression_type0B7_"}
+!5 = distinct !{!5, !4, !"_RNCNvNtNtCsdOh5Xhm0ZW8_13dsl_auto_type9auto_type25expression_type_inference21infer_expression_type0B7_: argument 0"}
+!6 = !{!5}
 end_hunk_1

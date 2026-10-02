@@ -68,7 +68,7 @@ bb.a:
 
 .noexc:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
-  store ptr %i.e, ptr %4, align 8, !tbaa !52, !alias.scope !57
+  store ptr %i.e, ptr %4, align 8, !tbaa !52, !alias.scope !53
   %i.f = load ptr, ptr %i.d, align 8, !tbaa !16   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 5 uses
   %i.h = icmp eq ptr %i.f, %i.g
@@ -84,9 +84,9 @@ bb.b:                                             ; preds = %.noexc
   br label %bb.c
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %.noexc
-  store ptr %i.f, ptr %4, align 8, !tbaa !16, !alias.scope !57
+  store ptr %i.f, ptr %4, align 8, !tbaa !16, !alias.scope !53
   %i.m = load i64, ptr %i.g, align 8, !tbaa !17
-  store i64 %i.m, ptr %i.e, align 8, !tbaa !17, !alias.scope !57
+  store i64 %i.m, ptr %i.e, align 8, !tbaa !17, !alias.scope !53
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !54
   br label %bb.c
@@ -95,7 +95,7 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.n = phi i64 [ %i.j, %bb.b ], [ %.pre.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 %i.n, ptr %i.p, align 8, !tbaa !54, !alias.scope !57
+  store i64 %i.n, ptr %i.p, align 8, !tbaa !54, !alias.scope !53
   store ptr %i.g, ptr %i.d, align 8, !tbaa !16
   store i64 0, ptr %i.o, align 8, !tbaa !54
   store i8 0, ptr %i.g, align 8, !tbaa !17
@@ -498,9 +498,9 @@ attributes #16 = { builtin allocsize(0) }
 !47 = !{!46, !36, i64 0}
 !48 = !{!"branch_weights", i32 1, i32 1048575}
 !49 = !{!36, !36, i64 0}
+!50 = distinct !{!50, i1 false, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_"}
+!51 = distinct !{!51, !50, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_: argument 0"}
 !52 = !{!13, !12, i64 0}
+!53 = !{!51}
 !54 = !{!15, !14, i64 8}
-!55 = distinct !{!55, i1 false, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_"}
-!56 = distinct !{!56, !55, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_: argument 0"}
-!57 = !{!56}
 end_hunk_1

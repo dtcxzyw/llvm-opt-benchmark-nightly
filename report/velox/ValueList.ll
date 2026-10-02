@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
           to label %.noexc7 unwind label %bb.e
 
 .noexc7:                                          ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #13, !noalias !128
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #13, !noalias !125
   %i.f = load ptr, ptr %3, align 8, !tbaa !15
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.h = load i64, ptr %i.g, align 8, !tbaa !17
@@ -227,7 +227,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.f
 
 bb.c:                                             ; preds = %.noexc7
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13, !noalias !128
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13, !noalias !125
   %i.t = load ptr, ptr %5, align 8, !tbaa !15     ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.v = icmp eq ptr %i.t, %i.u
@@ -488,7 +488,7 @@ attributes #16 = { noreturn }
 !120 = !{!52, !13, i64 128}
 !121 = distinct !{!121, !122}
 !122 = !{!"llvm.loop.peeled.count", i32 1}
-!126 = distinct !{!126, i1 false, !"_ZN3fmt3v116formatIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_EEES7_NS0_7fstringIJDpT_EE1tEDpOS9_"}
-!127 = distinct !{!127, !126, !"_ZN3fmt3v116formatIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_EEES7_NS0_7fstringIJDpT_EE1tEDpOS9_: argument 0"}
-!128 = !{!127}
+!123 = distinct !{!123, i1 false, !"_ZN3fmt3v116formatIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_EEES7_NS0_7fstringIJDpT_EE1tEDpOS9_"}
+!124 = distinct !{!124, !123, !"_ZN3fmt3v116formatIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_EEES7_NS0_7fstringIJDpT_EE1tEDpOS9_: argument 0"}
+!125 = !{!124}
 end_hunk_0

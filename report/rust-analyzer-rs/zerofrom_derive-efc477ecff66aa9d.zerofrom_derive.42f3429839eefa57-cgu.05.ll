@@ -202,10 +202,10 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %0, align 8                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  call void @_RNvNtNtNtCshzWfHUSfYae_4core9core_arch3x864sse214__mm_load_si128Cs5KndGQj2IFn_15zerofrom_derive(ptr nonnull sret([16 x i8]) align 16 %i.d, ptr %i.l) #14, !noalias !9
-  %i.m = load <2 x i64>, ptr %i.d, align 16, !noalias !9
-  store <2 x i64> %i.m, ptr %i.c, align 16, !noalias !9
-  %i.n = call i32 @_RNvNtNtNtCshzWfHUSfYae_4core9core_arch3x864sse217__mm_movemask_epi8Cs5KndGQj2IFn_15zerofrom_derive(ptr nonnull align 16 %i.c) #14, !noalias !9
+  call void @_RNvNtNtNtCshzWfHUSfYae_4core9core_arch3x864sse214__mm_load_si128Cs5KndGQj2IFn_15zerofrom_derive(ptr nonnull sret([16 x i8]) align 16 %i.d, ptr %i.l) #14, !noalias !6
+  %i.m = load <2 x i64>, ptr %i.d, align 16, !noalias !6
+  store <2 x i64> %i.m, ptr %i.c, align 16, !noalias !6
+  %i.n = call i32 @_RNvNtNtNtCshzWfHUSfYae_4core9core_arch3x864sse217__mm_movemask_epi8Cs5KndGQj2IFn_15zerofrom_derive(ptr nonnull align 16 %i.c) #14, !noalias !6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.o = load i64, ptr %i.i, align 8              ; 2 uses
@@ -608,7 +608,7 @@ attributes #18 = { inlinehint nounwind }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.99.0-nightly (73dc9167f 2026-08-01)"}
-!7 = distinct !{!7, i1 false, !"_RNvMsi_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_12RawIterRangeTNtCs1K5DUQUZc67_11proc_macro25IdentuEE3newCs5KndGQj2IFn_15zerofrom_derive"}
-!8 = distinct !{!8, !7, !"_RNvMsi_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_12RawIterRangeTNtCs1K5DUQUZc67_11proc_macro25IdentuEE3newCs5KndGQj2IFn_15zerofrom_derive: argument 0"}
-!9 = !{!8}
+!4 = distinct !{!4, i1 false, !"_RNvMsi_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_12RawIterRangeTNtCs1K5DUQUZc67_11proc_macro25IdentuEE3newCs5KndGQj2IFn_15zerofrom_derive"}
+!5 = distinct !{!5, !4, !"_RNvMsi_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_12RawIterRangeTNtCs1K5DUQUZc67_11proc_macro25IdentuEE3newCs5KndGQj2IFn_15zerofrom_derive: argument 0"}
+!6 = !{!5}
 end_hunk_1

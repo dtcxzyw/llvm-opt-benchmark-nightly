@@ -205,7 +205,7 @@ _ZNKSt6vectorIN6cyhair5real3ESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
 .lr.ph.i.i.i.i.i:                                 ; preds = %.noexc94, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.di, %.lr.ph.i.i.i.i.i ], [ %i.df, %.noexc94 ] ; 2 uses
   %.0911.i.i.i.i.i = phi ptr [ %i.dh, %.lr.ph.i.i.i.i.i ], [ %.sroa.0321.0578, %.noexc94 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.012.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.0911.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !83, !alias.scope !88
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.012.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.0911.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !83, !alias.scope !84
   %i.dh = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 12 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 12 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.dh, %.sroa.13.0580
@@ -608,7 +608,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !94   ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !90   ; 4 uses
   %i.e = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.d, ptr noundef nonnull dereferenceable(7) @.str.17) #23
   %i.f = icmp eq i32 %i.e, 0
   br i1 %i.f, label %bb.c, label %sub_0
@@ -631,13 +631,13 @@ sub_1:                                            ; preds = %sub_0
   br i1 %i.l, label %bb.c, label %sub_083
 
 bb.c:                                             ; preds = %.tail, %bb.b, %bb.a
-  %i.m = load ptr, ptr @stderr, align 8, !tbaa !96
+  %i.m = load ptr, ptr @stderr, align 8, !tbaa !92
   %fwrite67 = tail call i64 @fwrite(ptr nonnull @.str.19, i64 86, i64 1, ptr %i.m) #24 ; 0 uses
   br label %bb.aa
 
 sub_083:                                          ; preds = %sub_1, %sub_0, %.tail
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !94   ; 3 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !90   ; 3 uses
   %i.p = load i8, ptr %i.o, align 1
   %.not95 = icmp eq i8 %i.p, 45
   br i1 %.not95, label %.tail82, label %.tail82.thread
@@ -649,7 +649,7 @@ sub_083:                                          ; preds = %sub_1, %sub_0, %.ta
   br i1 %i.s, label %bb.d, label %.tail82.thread
 
 bb.d:                                             ; preds = %.tail82
-  %i.t = load ptr, ptr @stdout, align 8, !tbaa !96
+  %i.t = load ptr, ptr @stdout, align 8, !tbaa !92
   br label %bb.e
 
 .tail82.thread:                                   ; preds = %sub_083, %.tail82
@@ -662,7 +662,7 @@ bb.e:                                             ; preds = %.tail82.thread, %bb
   br i1 %.not, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = load ptr, ptr %i.n, align 8, !tbaa !94
+  %i.w = load ptr, ptr %i.n, align 8, !tbaa !90
   tail call void @perror(ptr noundef %i.w) #24
   br label %bb.aa
 
@@ -672,16 +672,16 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !94
-  %i.z = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.y, ptr noundef null, i32 noundef 10) #19, !inline_history !89
+  %i.y = load ptr, ptr %i.x, align 8, !tbaa !90
+  %i.z = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.y, ptr noundef null, i32 noundef 10) #19, !inline_history !85
   %i.aa = trunc i64 %i.z to i32                   ; 2 uses
   %i.ab = icmp samesign ugt i32 %0, 4
   br i1 %i.ab, label %bb.i, label %.thread
 
 bb.i:                                             ; preds = %bb.h
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !94
-  %i.ae = tail call double @strtod(ptr noundef nonnull captures(none) %i.ad, ptr noundef null) #19, !inline_history !90
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !90
+  %i.ae = tail call double @strtod(ptr noundef nonnull captures(none) %i.ad, ptr noundef null) #19, !inline_history !86
   %i.af = fptrunc double %i.ae to float
   br label %.thread
 
@@ -699,7 +699,7 @@ bb.i:                                             ; preds = %bb.h
   store <4 x float> <float f0x3C23D70A, float 1.000000e+00, float 5.000000e-01, float 5.000000e-01>, ptr %i.ai, align 8, !tbaa !11
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 280
   store float 5.000000e-01, ptr %i.ak, align 8, !tbaa !11
-  %i.al = load ptr, ptr %i.c, align 8, !tbaa !94
+  %i.al = load ptr, ptr %i.c, align 8, !tbaa !90
   %i.am = invoke noundef zeroext i1 @_ZN6cyhair6CyHair4LoadEPKc(ptr noundef nonnull align 8 dereferenceable(312) %2, ptr noundef %i.al)
           to label %bb.j unwind label %bb.l
 
@@ -707,8 +707,8 @@ bb.j:                                             ; preds = %.thread
   br i1 %i.am, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.an = load ptr, ptr @stderr, align 8, !tbaa !96
-  %i.ao = load ptr, ptr %i.c, align 8, !tbaa !94
+  %i.an = load ptr, ptr @stderr, align 8, !tbaa !92
+  %i.ao = load ptr, ptr %i.c, align 8, !tbaa !90
   %i.ap = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.an, ptr noundef nonnull @.str.22, ptr noundef %i.ao) #25 ; 0 uses
   br label %bb.y
 
@@ -731,7 +731,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ar, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.as = load ptr, ptr @stderr, align 8, !tbaa !96
+  %i.as = load ptr, ptr @stderr, align 8, !tbaa !92
   %fwrite = call i64 @fwrite(ptr nonnull @.str.23, i64 30, i64 1, ptr %i.as) #24 ; 0 uses
   %.pre106 = load ptr, ptr %4, align 8, !tbaa !58
   br label %bb.v
@@ -837,7 +837,7 @@ bb.s:                                             ; preds = %bb.n
   %.sroa.0.0 = phi double [ 1.000000e+30, %bb.s ], [ %.sroa.speculated76.1, %._crit_edge.loopexit.unr-lcssa ], [ %.sroa.speculated76.epil, %.lr.ph.epil.preheader ]
   %.sroa.23.0 = phi double [ -1.000000e+30, %bb.s ], [ %.sroa.speculated.2.1, %._crit_edge.loopexit.unr-lcssa ], [ %.sroa.speculated.2.epil, %.lr.ph.epil.preheader ]
   %i.cl = phi <4 x double> [ <double 1.000000e+30, double 1.000000e+30, double -1.000000e+30, double -1.000000e+30>, %bb.s ], [ %i.et, %._crit_edge.loopexit.unr-lcssa ], [ %i.ch, %.lr.ph.epil.preheader ] ; 4 uses
-  %i.cm = load ptr, ptr %i.c, align 8, !tbaa !94
+  %i.cm = load ptr, ptr %i.c, align 8, !tbaa !90
   %i.cn = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.v, ptr noundef nonnull @.str.24, ptr noundef %i.cm) #19 ; 0 uses
   %i.co = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !57
@@ -917,10 +917,10 @@ bb.s:                                             ; preds = %bb.n
   %i.ex = add nuw nsw i64 %.05587, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !91
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !87
 
 ._crit_edge92:                                    ; preds = %.lr.ph91, %._crit_edge
-  %i.ey = load ptr, ptr @stdout, align 8, !tbaa !96
+  %i.ey = load ptr, ptr @stdout, align 8, !tbaa !92
   %.not65 = icmp eq ptr %i.v, %i.ey
   br i1 %.not65, label %bb.u, label %bb.t
 
@@ -986,14 +986,14 @@ bb.s:                                             ; preds = %bb.n
   %i.hb = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.v, ptr noundef nonnull @.str.29, double noundef %i.gx, double noundef %i.ha) #19 ; 0 uses
   %i.hc = add nuw nsw i64 %.05389, 1              ; 2 uses
   %exitcond99.not = icmp eq i64 %i.hc, %i.cu
-  br i1 %exitcond99.not, label %._crit_edge92, label %.lr.ph91, !llvm.loop !92
+  br i1 %exitcond99.not, label %._crit_edge92, label %.lr.ph91, !llvm.loop !88
 
 bb.t:                                             ; preds = %._crit_edge92
   %i.hd = call i32 @fclose(ptr noundef nonnull %i.v) ; 0 uses
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %._crit_edge92
-  %i.he = load ptr, ptr @stderr, align 8, !tbaa !96
+  %i.he = load ptr, ptr @stderr, align 8, !tbaa !92
   %i.hf = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.he, ptr noundef nonnull @.str.30, i32 noundef %i.cv) #25 ; 0 uses
   br label %bb.v
 
@@ -1396,6 +1396,9 @@ attributes #25 = { cold nounwind }
 !71 = distinct !{!71, !62}
 !72 = !{!13, !7, i64 4}
 !73 = !{!55, !7, i64 256}
+!74 = distinct !{!74, i1 false, !"_ZSt19__relocate_object_aIN6cyhair5real3ES1_SaIS1_EEvPT_PT0_RT1_"}
+!75 = distinct !{!75, !74, !"_ZSt19__relocate_object_aIN6cyhair5real3ES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
+!76 = distinct !{!76, !74, !"_ZSt19__relocate_object_aIN6cyhair5real3ES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !77 = distinct !{!77, !62}
 !78 = distinct !{!78, !62}
 !79 = distinct !{!79, !62}
@@ -1403,16 +1406,13 @@ attributes #25 = { cold nounwind }
 !81 = !{!46, !46, i64 0}
 !82 = !{!36, !36, i64 0}
 !83 = !{i64 0, i64 4, !11, i64 4, i64 4, !11, i64 8, i64 4, !11}
-!85 = distinct !{!85, i1 false, !"_ZSt19__relocate_object_aIN6cyhair5real3ES1_SaIS1_EEvPT_PT0_RT1_"}
-!86 = distinct !{!86, !85, !"_ZSt19__relocate_object_aIN6cyhair5real3ES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
-!87 = distinct !{!87, !85, !"_ZSt19__relocate_object_aIN6cyhair5real3ES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
-!88 = !{!86, !87}
-!89 = distinct !{null}
-!90 = distinct !{null}
-!91 = distinct !{!91, !62}
-!92 = distinct !{!92, !62}
-!93 = !{!"p1 omnipotent char", !19, i64 0}
-!94 = !{!93, !93, i64 0}
-!95 = !{!"p1 _ZTS8_IO_FILE", !19, i64 0}
-!96 = !{!95, !95, i64 0}
+!84 = !{!76, !75}
+!85 = distinct !{null}
+!86 = distinct !{null}
+!87 = distinct !{!87, !62}
+!88 = distinct !{!88, !62}
+!89 = !{!"p1 omnipotent char", !19, i64 0}
+!90 = !{!89, !89, i64 0}
+!91 = !{!"p1 _ZTS8_IO_FILE", !19, i64 0}
+!92 = !{!91, !91, i64 0}
 end_hunk_2

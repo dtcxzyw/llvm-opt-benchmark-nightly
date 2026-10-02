@@ -204,12 +204,12 @@ vector.body:                                      ; preds = %.preheader.i62, %ve
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader.i62 ] ; 3 uses
   %i.jv = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %index ; 2 uses
   %i.jw = getelementptr i8, ptr %i.jv, i64 16
-  %wide.load = load <4 x i32>, ptr %i.jv, align 4, !tbaa !12, !alias.scope !116
-  %wide.load220 = load <4 x i32>, ptr %i.jw, align 4, !tbaa !12, !alias.scope !116
+  %wide.load = load <4 x i32>, ptr %i.jv, align 4, !tbaa !12, !alias.scope !111
+  %wide.load220 = load <4 x i32>, ptr %i.jw, align 4, !tbaa !12, !alias.scope !111
   %i.jx = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep25.i, i64 %index ; 2 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jx, i64 16
-  store <4 x i32> %wide.load, ptr %i.jx, align 4, !tbaa !12, !alias.scope !118, !noalias !116
-  store <4 x i32> %wide.load220, ptr %i.jy, align 4, !tbaa !12, !alias.scope !118, !noalias !116
+  store <4 x i32> %wide.load, ptr %i.jx, align 4, !tbaa !12, !alias.scope !112, !noalias !111
+  store <4 x i32> %wide.load220, ptr %i.jy, align 4, !tbaa !12, !alias.scope !112, !noalias !111
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.jz = icmp eq i64 %index.next, %n.vec
   br i1 %i.jz, label %middle.block, label %vector.body, !llvm.loop !101
@@ -598,6 +598,9 @@ attributes #15 = { nounwind allocsize(0) }
 !95 = distinct !{!95, !25}
 !96 = distinct !{!96, !25, !62}
 !97 = distinct !{!97, !25}
+!98 = distinct !{!98, i1 false, !"LVerDomain"}
+!99 = distinct !{!99, !98}
+!100 = distinct !{!100, !98}
 !101 = distinct !{!101, !25, !63, !64}
 !102 = distinct !{!102, !113}
 !103 = distinct !{!103, !25, !63}
@@ -608,10 +611,7 @@ attributes #15 = { nounwind allocsize(0) }
 !108 = distinct !{!108, !25}
 !109 = !{!"p1 int", !13, i64 0}
 !110 = !{!109, !109, i64 0}
+!111 = !{!99}
+!112 = !{!100}
 !113 = !{!"llvm.loop.unroll.disable"}
-!114 = distinct !{!114, i1 false, !"LVerDomain"}
-!115 = distinct !{!115, !114}
-!116 = !{!115}
-!117 = distinct !{!117, !114}
-!118 = !{!117}
 end_hunk_0

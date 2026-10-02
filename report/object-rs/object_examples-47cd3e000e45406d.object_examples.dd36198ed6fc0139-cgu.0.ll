@@ -21,14 +21,14 @@ bb.b:                                             ; preds = %bb.a
   %i.c = phi ptr [ %i.d, %_RNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0B5_.exit.thread.i ], [ %0, %bb.b ] ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
   %i.e = getelementptr i8, ptr %i.c, i64 16
-  %.val7.i = load i64, ptr %i.e, align 8, !noalias !12, !noundef !8
+  %.val7.i = load i64, ptr %i.e, align 8, !noalias !7, !noundef !8
   %i.f = icmp eq i64 %.val7.i, %3
   br i1 %i.f, label %_RNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0B5_.exit.i, label %_RNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0B5_.exit.thread.i
 
 _RNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0B5_.exit.i: ; preds = %.lr.ph.i
   %i.g = getelementptr i8, ptr %i.c, i64 8
-  %.val6.i = load ptr, ptr %i.g, align 8, !noalias !12, !nonnull !8, !noundef !8
-  %bcmp.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val6.i, ptr nonnull %2, i64 %3), !noalias !12
+  %.val6.i = load ptr, ptr %i.g, align 8, !noalias !7, !nonnull !8, !noundef !8
+  %bcmp.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val6.i, ptr nonnull %2, i64 %3), !noalias !7
   %i.h = icmp eq i32 %bcmp.i.i, 0
   br i1 %i.h, label %bb.c, label %_RNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0B5_.exit.thread.i
 
@@ -71,9 +71,9 @@ attributes #3 = { nocallback nofree nosync nounwind nonlazybind willreturn memor
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
+!4 = distinct !{!4, i1 false, !"_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterTNtNtCsexYYUdYSQU6_5alloc6string6StringbEENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0EB2q_"}
+!5 = distinct !{!5, !4, !"_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterTNtNtCsexYYUdYSQU6_5alloc6string6StringbEENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0EB2q_: argument 1"}
+!6 = distinct !{!6, !4, !"_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterTNtNtCsexYYUdYSQU6_5alloc6string6StringbEENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0EB2q_: argument 0"}
+!7 = !{!6, !5}
 !8 = !{}
-!9 = distinct !{!9, i1 false, !"_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterTNtNtCsexYYUdYSQU6_5alloc6string6StringbEENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0EB2q_"}
-!10 = distinct !{!10, !9, !"_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterTNtNtCsexYYUdYSQU6_5alloc6string6StringbEENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0EB2q_: argument 0"}
-!11 = distinct !{!11, !9, !"_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterTNtNtCsexYYUdYSQU6_5alloc6string6StringbEENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCNvNtCsiZvaoMVVkxx_15object_examples7objdump11find_member0EB2q_: argument 1"}
-!12 = !{!10, !11}
 end_hunk_0

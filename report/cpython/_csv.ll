@@ -205,14 +205,14 @@ vector.body43:                                    ; preds = %vector.body43, %vec
   %index44 = phi i64 [ 0, %vector.ph41 ], [ %index.next47, %vector.body43 ] ; 3 uses
   %i.dl = getelementptr i8, ptr %.0.i.i.i, i64 %index44 ; 2 uses
   %i.dm = getelementptr i8, ptr %i.dl, i64 4
-  %wide.load45 = load <4 x i8>, ptr %i.dl, align 1, !tbaa !28, !alias.scope !98
-  %wide.load46 = load <4 x i8>, ptr %i.dm, align 1, !tbaa !28, !alias.scope !98
+  %wide.load45 = load <4 x i8>, ptr %i.dl, align 1, !tbaa !28, !alias.scope !93
+  %wide.load46 = load <4 x i8>, ptr %i.dm, align 1, !tbaa !28, !alias.scope !93
   %i.dn = zext <4 x i8> %wide.load45 to <4 x i32>
   %i.do = zext <4 x i8> %wide.load46 to <4 x i32>
   %i.dp = getelementptr [4 x i8], ptr %i.cz, i64 %index44 ; 2 uses
   %i.dq = getelementptr i8, ptr %i.dp, i64 16
-  store <4 x i32> %i.dn, ptr %i.dp, align 4, !tbaa !9, !alias.scope !100, !noalias !98
-  store <4 x i32> %i.do, ptr %i.dq, align 4, !tbaa !9, !alias.scope !100, !noalias !98
+  store <4 x i32> %i.dn, ptr %i.dp, align 4, !tbaa !9, !alias.scope !94, !noalias !93
+  store <4 x i32> %i.do, ptr %i.dq, align 4, !tbaa !9, !alias.scope !94, !noalias !93
   %index.next47 = add nuw i64 %index44, 8         ; 2 uses
   %i.dr = icmp eq i64 %index.next47, %n.vec42
   br i1 %i.dr, label %middle.block48, label %vector.body43, !llvm.loop !84
@@ -464,7 +464,7 @@ bb.i:                                             ; preds = %bb.h
 Py_DECREF.exit16:                                 ; preds = %bb.g, %bb.h, %bb.i
   %i.o = tail call ptr @PyIter_Next(ptr noundef nonnull %i.a) #5 ; 2 uses
   %.not = icmp eq ptr %i.o, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !101
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !96
 
 ._crit_edge:                                      ; preds = %Py_DECREF.exit16, %.preheader
   %i.p = load i32, ptr %i.a, align 8, !tbaa !28   ; 2 uses
@@ -846,7 +846,7 @@ bb.ab:                                            ; preds = %.thread149, %bb.aa
   %.6 = add i64 %.5, 1                            ; 2 uses
   %i.bu = add nuw nsw i64 %.0108155, 1            ; 2 uses
   %i.bv = icmp slt i64 %i.bu, %3
-  br i1 %i.bv, label %bb.i, label %._crit_edge, !llvm.loop !102
+  br i1 %i.bv, label %bb.i, label %._crit_edge, !llvm.loop !97
 
 ._crit_edge:                                      ; preds = %bb.ab, %bb.h
   %.2.lcssa = phi i64 [ %.1107, %bb.h ], [ %.6, %bb.ab ] ; 5 uses
@@ -997,12 +997,12 @@ bb.g:                                             ; preds = %bb.f
 
 Py_DECREF.exit48:                                 ; preds = %bb.g, %bb.f, %bb.e, %Py_DECREF.exit50
   %i.k = getelementptr i8, ptr %i.a, i64 16       ; 2 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !103  ; 4 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !98   ; 4 uses
   %.not37 = icmp eq ptr %i.l, null
   br i1 %.not37, label %Py_DECREF.exit46, label %bb.h
 
 bb.h:                                             ; preds = %Py_DECREF.exit48
-  store ptr null, ptr %i.k, align 8, !tbaa !103
+  store ptr null, ptr %i.k, align 8, !tbaa !98
   %i.m = load i32, ptr %i.l, align 8, !tbaa !28   ; 2 uses
   %.not.i45 = icmp sgt i32 %i.m, -1
   br i1 %.not.i45, label %bb.i, label %Py_DECREF.exit46
@@ -1019,12 +1019,12 @@ bb.j:                                             ; preds = %bb.i
 
 Py_DECREF.exit46:                                 ; preds = %bb.j, %bb.i, %bb.h, %Py_DECREF.exit48
   %i.p = getelementptr i8, ptr %i.a, i64 24       ; 2 uses
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !103  ; 4 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !98   ; 4 uses
   %.not38 = icmp eq ptr %i.q, null
   br i1 %.not38, label %Py_DECREF.exit44, label %bb.k
 
 bb.k:                                             ; preds = %Py_DECREF.exit46
-  store ptr null, ptr %i.p, align 8, !tbaa !103
+  store ptr null, ptr %i.p, align 8, !tbaa !98
   %i.r = load i32, ptr %i.q, align 8, !tbaa !28   ; 2 uses
   %.not.i43 = icmp sgt i32 %i.r, -1
   br i1 %.not.i43, label %bb.l, label %Py_DECREF.exit44
@@ -1041,12 +1041,12 @@ bb.m:                                             ; preds = %bb.l
 
 Py_DECREF.exit44:                                 ; preds = %bb.m, %bb.l, %bb.k, %Py_DECREF.exit46
   %i.u = getelementptr i8, ptr %i.a, i64 32       ; 2 uses
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !103  ; 4 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !98   ; 4 uses
   %.not39 = icmp eq ptr %i.v, null
   br i1 %.not39, label %Py_DECREF.exit42, label %bb.n
 
 bb.n:                                             ; preds = %Py_DECREF.exit44
-  store ptr null, ptr %i.u, align 8, !tbaa !103
+  store ptr null, ptr %i.u, align 8, !tbaa !98
   %i.w = load i32, ptr %i.v, align 8, !tbaa !28   ; 2 uses
   %.not.i41 = icmp sgt i32 %i.w, -1
   br i1 %.not.i41, label %bb.o, label %Py_DECREF.exit42
@@ -1449,7 +1449,7 @@ bb.a:
 
 .thread:                                          ; preds = %bb.a
   %i.b = getelementptr i8, ptr %3, i64 16
-  %.val = load i64, ptr %i.b, align 8, !tbaa !104
+  %.val = load i64, ptr %i.b, align 8, !tbaa !99
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -1771,6 +1771,9 @@ attributes #5 = { nounwind }
 !78 = !{}
 !79 = distinct !{!79, !54}
 !80 = distinct !{!80, !54, !91, !92}
+!81 = distinct !{!81, i1 false, !"LVerDomain"}
+!82 = distinct !{!82, !81}
+!83 = distinct !{!83, !81}
 !84 = distinct !{!84, !54, !91, !92}
 !85 = distinct !{!85, !95}
 !86 = distinct !{!86, !54, !91, !92}
@@ -1780,14 +1783,11 @@ attributes #5 = { nounwind }
 !90 = distinct !{!90, !54, !91}
 !91 = !{!"llvm.loop.isvectorized", i32 1}
 !92 = !{!"llvm.loop.unroll.runtime.disable"}
+!93 = !{!82}
+!94 = !{!83}
 !95 = !{!"llvm.loop.unroll.disable"}
-!96 = distinct !{!96, i1 false, !"LVerDomain"}
-!97 = distinct !{!97, !96}
-!98 = !{!97}
-!99 = distinct !{!99, !96}
-!100 = !{!99}
-!101 = distinct !{!101, !54}
-!102 = distinct !{!102, !54}
-!103 = !{!13, !13, i64 0}
-!104 = !{!17, !16, i64 16}
+!96 = distinct !{!96, !54}
+!97 = distinct !{!97, !54}
+!98 = !{!13, !13, i64 0}
+!99 = !{!17, !16, i64 16}
 end_hunk_1

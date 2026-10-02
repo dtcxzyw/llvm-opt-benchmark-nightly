@@ -23,14 +23,14 @@ $_ZN23llama_model_llama_embedD0Ev = comdat any
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK23llama_model_llama_embed16build_arch_graphERK16llm_graph_params(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(36884) %1, ptr noundef nonnull align 8 dereferenceable(36496) %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(336) ptr @_Znwm(i64 noundef 336) #6, !noalias !17 ; 3 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(336) ptr @_Znwm(i64 noundef 336) #6, !noalias !10 ; 3 uses
   invoke void @_ZN17llama_model_llama5graphILb1EEC1ERK11llama_modelRK16llm_graph_params(ptr noundef nonnull align 8 dereferenceable(336) %i.a, ptr noundef nonnull align 8 dereferenceable(36884) %1, ptr noundef nonnull align 8 dereferenceable(36496) %2)
-          to label %_ZNSt10unique_ptrIN17llama_model_llama5graphILb1EEESt14default_deleteIS2_EED2Ev.exit unwind label %bb.b, !noalias !17
+          to label %_ZNSt10unique_ptrIN17llama_model_llama5graphILb1EEESt14default_deleteIS2_EED2Ev.exit unwind label %bb.b, !noalias !10
 
 bb.b:                                             ; preds = %bb.a
   %i.b = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 336) #7, !noalias !17
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 336) #7, !noalias !10
   resume { ptr, i32 } %i.b
 
 _ZNSt10unique_ptrIN17llama_model_llama5graphILb1EEESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.a
@@ -93,11 +93,11 @@ attributes #8 = { nounwind }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
+!8 = distinct !{!8, i1 false, !"_ZSt11make_uniqueIN17llama_model_llama5graphILb1EEEJRK23llama_model_llama_embedRK16llm_graph_paramsEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!9 = distinct !{!9, !8, !"_ZSt11make_uniqueIN17llama_model_llama5graphILb1EEEJRK23llama_model_llama_embedRK16llm_graph_paramsEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
+!10 = !{!9}
 !11 = !{!"any pointer", !4, i64 0}
 !12 = !{!"p1 _ZTS17llm_graph_context", !11, i64 0}
 !13 = !{!"_ZTSSt10_Head_baseILm0EP17llm_graph_contextLb0EE", !12, i64 0}
 !14 = !{!13, !12, i64 0}
-!15 = distinct !{!15, i1 false, !"_ZSt11make_uniqueIN17llama_model_llama5graphILb1EEEJRK23llama_model_llama_embedRK16llm_graph_paramsEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!16 = distinct !{!16, !15, !"_ZSt11make_uniqueIN17llama_model_llama5graphILb1EEEJRK23llama_model_llama_embedRK16llm_graph_paramsEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!17 = !{!16}
 end_hunk_0

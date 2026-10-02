@@ -205,16 +205,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %.sroa.027.0, i64 %index ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
-  %wide.load = load <4 x float>, ptr %i.av, align 4, !tbaa !50, !alias.scope !152
-  %wide.load42 = load <4 x float>, ptr %i.aw, align 4, !tbaa !50, !alias.scope !152
+  %wide.load = load <4 x float>, ptr %i.av, align 4, !tbaa !50, !alias.scope !145
+  %wide.load42 = load <4 x float>, ptr %i.aw, align 4, !tbaa !50, !alias.scope !145
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %index ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 16 ; 2 uses
-  %wide.load43 = load <4 x float>, ptr %i.ax, align 4, !tbaa !50, !alias.scope !154, !noalias !152
-  %wide.load44 = load <4 x float>, ptr %i.ay, align 4, !tbaa !50, !alias.scope !154, !noalias !152
+  %wide.load43 = load <4 x float>, ptr %i.ax, align 4, !tbaa !50, !alias.scope !146, !noalias !145
+  %wide.load44 = load <4 x float>, ptr %i.ay, align 4, !tbaa !50, !alias.scope !146, !noalias !145
   %i.az = fadd <4 x float> %wide.load, %wide.load43
   %i.ba = fadd <4 x float> %wide.load42, %wide.load44
-  store <4 x float> %i.az, ptr %i.ax, align 4, !tbaa !50, !alias.scope !154, !noalias !152
-  store <4 x float> %i.ba, ptr %i.ay, align 4, !tbaa !50, !alias.scope !154, !noalias !152
+  store <4 x float> %i.az, ptr %i.ax, align 4, !tbaa !50, !alias.scope !146, !noalias !145
+  store <4 x float> %i.ba, ptr %i.ay, align 4, !tbaa !50, !alias.scope !146, !noalias !145
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !142
@@ -538,15 +538,15 @@ attributes #33 = { noreturn nounwind }
 !136 = distinct !{!136, !51}
 !137 = !{!41, !40, i64 8}
 !138 = distinct !{!138, !51}
+!139 = distinct !{!139, i1 false, !"LVerDomain"}
+!140 = distinct !{!140, !139}
+!141 = distinct !{!141, !139}
 !142 = distinct !{!142, !51, !147, !148}
 !143 = distinct !{!143, !149}
 !144 = distinct !{!144, !51, !147}
+!145 = !{!140}
+!146 = !{!141}
 !147 = !{!"llvm.loop.isvectorized", i32 1}
 !148 = !{!"llvm.loop.unroll.runtime.disable"}
 !149 = !{!"llvm.loop.unroll.disable"}
-!150 = distinct !{!150, i1 false, !"LVerDomain"}
-!151 = distinct !{!151, !150}
-!152 = !{!151}
-!153 = distinct !{!153, !150}
-!154 = !{!153}
 end_hunk_0

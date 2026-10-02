@@ -204,7 +204,7 @@ ich9_cc_addr_len.exit:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 10406
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.b
   %i.j = zext i32 %.0 to i64
-  %i.k = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull %i.i, i64 noundef range(i64 0, 4294967296) %i.j, i64 noundef 4) #9, !alias.scope !23 ; 0 uses
+  %i.k = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull %i.i, i64 noundef range(i64 0, 4294967296) %i.j, i64 noundef 4) #9, !alias.scope !19 ; 0 uses
   %i.l = load i32, ptr %i.a, align 4
   %i.m = zext i32 %i.l to i64                     ; 4 uses
   %i.n = load i32, ptr @trace_events_enabled_count, align 4
@@ -607,8 +607,8 @@ attributes #10 = { noreturn nounwind }
 !13 = distinct !{!13, !9}
 !14 = !{i64 2153438514}
 !15 = !{i64 2153442738}
-!20 = distinct !{!20, i1 false, !"memcpy.inline"}
-!21 = distinct !{!21, !20, !"memcpy.inline: argument 0"}
-!22 = distinct !{!22, !20, !"memcpy.inline: argument 1"}
-!23 = !{!21, !22}
+!16 = distinct !{!16, i1 false, !"memcpy.inline"}
+!17 = distinct !{!17, !16, !"memcpy.inline: argument 1"}
+!18 = distinct !{!18, !16, !"memcpy.inline: argument 0"}
+!19 = !{!18, !17}
 end_hunk_1

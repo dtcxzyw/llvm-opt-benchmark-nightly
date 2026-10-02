@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %.lr.ph, %bb.e
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #10
-  store i64 1099511627779, ptr %i.j, align 8, !alias.scope !50
-  store ptr %i.p, ptr %0, align 8, !tbaa !12, !alias.scope !50
-  store i64 65536, ptr %i.k, align 8, !tbaa !12, !alias.scope !50
+  store i64 1099511627779, ptr %i.j, align 8, !alias.scope !47
+  store ptr %i.p, ptr %0, align 8, !tbaa !12, !alias.scope !47
+  store i64 65536, ptr %i.k, align 8, !tbaa !12, !alias.scope !47
   tail call void @_mi_os_free_ex(ptr noundef %i.d, ptr noundef nonnull %i.p, i64 noundef 65536, i1 noundef zeroext true, ptr noundef nonnull byval(%struct.mi_memid_s) align 8 %0) #9
   store atomic ptr null, ptr %i.o release, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #10
@@ -322,7 +322,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.an = add i64 %i.ak, -4
   %i.ao = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ao, label %middle.block, label %vector.body, !llvm.loop !51
+  br i1 %i.ao, label %middle.block, label %vector.body, !llvm.loop !48
 
 middle.block:                                     ; preds = %vector.body
   %i.ap = icmp ne i64 %i.ak, 3
@@ -344,7 +344,7 @@ middle.block:                                     ; preds = %vector.body
   %i.at = icmp ne i64 %i.ar, 0                    ; 2 uses
   %i.au = icmp samesign ult i64 %.11329.i.i, 8191
   %i.av = and i1 %i.at, %i.au
-  br i1 %i.av, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !52
+  br i1 %i.av, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !49
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %middle.block
   %.lcssa14 = phi i64 [ %i.ag, %middle.block ], [ %i.ar, %.lr.ph.i.i ]
@@ -470,7 +470,7 @@ mi_page_map_ensure_submap_at.exit.i.i:            ; preds = %bb.j, %bb.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.020.i.i, i8 0, i64 %i.aq, i1 false), !tbaa !30
   %i.ar = sub i64 %i.ao, %umin                    ; 2 uses
   %.not.i.i = icmp eq i64 %i.ar, 0
-  br i1 %.not.i.i, label %mi_page_map_set_range.exit, label %.peel.next, !llvm.loop !53
+  br i1 %.not.i.i, label %mi_page_map_set_range.exit, label %.peel.next, !llvm.loop !50
 
 mi_page_map_set_range.exit:                       ; preds = %mi_page_map_ensure_submap_at.exit.i.i, %bb.j, %bb.h, %bb.d, %bb.f, %mi_page_map_ensure_submap_at.exit.i.i.peel, %bb.b, %bb.a
   ret void
@@ -570,7 +570,7 @@ mi_page_map_ensure_submap_at.exit.i.i:            ; preds = %bb.j, %bb.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.020.i.i, i8 0, i64 %i.ah, i1 false), !tbaa !30
   %i.ai = sub i64 %i.af, %umin                    ; 2 uses
   %.not.i.i = icmp eq i64 %i.ai, 0
-  br i1 %.not.i.i, label %mi_page_map_set_range.exit, label %.peel.next, !llvm.loop !54
+  br i1 %.not.i.i, label %mi_page_map_set_range.exit, label %.peel.next, !llvm.loop !51
 
 mi_page_map_set_range.exit:                       ; preds = %mi_page_map_ensure_submap_at.exit.i.i, %bb.j, %bb.h, %bb.d, %bb.f, %mi_page_map_ensure_submap_at.exit.i.i.peel, %bb.b, %bb.a
   ret void
@@ -735,7 +735,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x ptr> %broadcast.splat, ptr %i.s, align 8, !tbaa !30
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.t = icmp eq i64 %index.next, %n.vec
-  br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !55
+  br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !52
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.n, %n.vec
@@ -756,7 +756,7 @@ middle.block:                                     ; preds = %vector.body
   %i.x = icmp ne i64 %i.v, 0
   %i.y = icmp samesign ult i64 %.11329, 8191
   %i.z = and i1 %i.x, %i.y
-  br i1 %i.z, label %.lr.ph, label %._crit_edge, !llvm.loop !56
+  br i1 %i.z, label %.lr.ph, label %._crit_edge, !llvm.loop !53
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %mi_page_map_ensure_submap_at.exit
   %.1.lcssa = phi i64 [ %.01134, %mi_page_map_ensure_submap_at.exit ], [ %i.o, %middle.block ], [ %i.v, %.lr.ph ] ; 2 uses
@@ -946,15 +946,15 @@ attributes #11 = { "no-builtin-malloc" }
 !40 = !{!5, !5, i64 0}
 !41 = !{!9, !9, i64 0}
 !42 = !{i64 0, i64 16, !12, i64 16, i64 4, !40, i64 20, i64 1, !41, i64 21, i64 1, !41, i64 22, i64 1, !41}
+!43 = distinct !{!43, i1 false, !"_mi_memid_create_os"}
+!44 = distinct !{!44, !43, !"_mi_memid_create_os: argument 0"}
 !45 = distinct !{!45, !16}
 !46 = !{!14, !4, i64 0}
-!48 = distinct !{!48, i1 false, !"_mi_memid_create_os"}
-!49 = distinct !{!49, !48, !"_mi_memid_create_os: argument 0"}
-!50 = !{!49}
-!51 = distinct !{!51, !16, !31, !32}
-!52 = distinct !{!52, !16, !32, !31}
-!53 = distinct !{!53, !33}
-!54 = distinct !{!54, !33}
-!55 = distinct !{!55, !16, !31, !32}
-!56 = distinct !{!56, !16, !32, !31}
+!47 = !{!44}
+!48 = distinct !{!48, !16, !31, !32}
+!49 = distinct !{!49, !16, !32, !31}
+!50 = distinct !{!50, !33}
+!51 = distinct !{!51, !33}
+!52 = distinct !{!52, !16, !31, !32}
+!53 = distinct !{!53, !16, !32, !31}
 end_hunk_0

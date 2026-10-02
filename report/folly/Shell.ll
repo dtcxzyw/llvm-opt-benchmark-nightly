@@ -38,14 +38,14 @@ define void @_ZN5folly10shellQuoteB5cxx11ENS_5RangeIPKcEE(ptr dead_on_unwind noa
   br i1 %.not29, label %._crit_edge, label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit
-  %.pre = load ptr, ptr %4, align 8, !tbaa !20, !noalias !27
-  %.pre31 = load i64, ptr %i.b, align 8, !tbaa !19, !noalias !27
+  %.pre = load ptr, ptr %4, align 8, !tbaa !20, !noalias !24
+  %.pre31 = load i64, ptr %i.b, align 8, !tbaa !19, !noalias !24
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %._crit_edge.i.i
   %i.d = phi i64 [ %.pre31, %._crit_edge.loopexit ], [ 1, %._crit_edge.i.i ]
   %i.e = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.a, %._crit_edge.i.i ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8, !noalias !27
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8, !noalias !24
   invoke void @_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef %i.e, i64 noundef %i.d, ptr noundef nonnull @.str, i64 noundef 1, ptr noundef nonnull align 1 dereferenceable(1) %3)
           to label %bb.l unwind label %bb.m
 
@@ -208,7 +208,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit: ; preds = %bb.
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
 
 bb.l:                                             ; preds = %._crit_edge
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8, !noalias !27
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8, !noalias !24
   %i.aq = load ptr, ptr %4, align 8, !tbaa !20    ; 2 uses
   %i.ar = icmp eq ptr %i.aq, %i.a
   br i1 %i.ar, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -611,7 +611,7 @@ attributes #11 = { builtin nounwind }
 !19 = !{!18, !17, i64 8}
 !20 = !{!18, !13, i64 0}
 !21 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!25 = distinct !{!25, i1 false, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
-!26 = distinct !{!26, !25, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
-!27 = !{!26}
+!22 = distinct !{!22, i1 false, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
+!23 = distinct !{!23, !22, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
+!24 = !{!23}
 end_hunk_1

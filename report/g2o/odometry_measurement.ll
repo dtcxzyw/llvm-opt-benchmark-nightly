@@ -172,16 +172,16 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8
   store double %i.j, ptr %i.o, align 8, !tbaa !9
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.2)
-  store double -1.000000e+00, ptr %.sroa.2, align 16, !tbaa !31, !alias.scope !39
+  store double -1.000000e+00, ptr %.sroa.2, align 16, !tbaa !31, !alias.scope !32
   %.sroa.2.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.2, i64 8
-  store ptr %3, ptr %.sroa.2.8..sroa_idx, align 8, !tbaa !35, !alias.scope !39
+  store ptr %3, ptr %.sroa.2.8..sroa_idx, align 8, !tbaa !35, !alias.scope !32
   %.sroa.2.0..sroa.2.0..sroa.2.0..sroa.2.16. = load <2 x double>, ptr %.sroa.2, align 16 ; 3 uses
   %bc.i.i.i.i.i.i = bitcast <2 x double> %.sroa.2.0..sroa.2.0..sroa.2.0..sroa.2.16. to <2 x i64>
   %i.p = extractelement <2 x i64> %bc.i.i.i.i.i.i, i64 1
   %i.q = inttoptr i64 %i.p to ptr
   %i.r = load <2 x double>, ptr %i.q, align 16, !tbaa !22 ; 2 uses
-  %i.s = call double @sin(double noundef %i.n) #8, !noalias !44 ; 2 uses
-  %i.t = call double @cos(double noundef %i.n) #8, !noalias !44 ; 2 uses
+  %i.s = call double @sin(double noundef %i.n) #8, !noalias !36 ; 2 uses
+  %i.t = call double @cos(double noundef %i.n) #8, !noalias !36 ; 2 uses
   %i.u = fneg double %i.s
   %.sroa.0.0.vec.insert.i = insertelement <2 x double> poison, double %i.t, i64 0
   %.sroa.0.8.vec.insert.i = insertelement <2 x double> %.sroa.0.0.vec.insert.i, double %i.s, i64 1
@@ -269,17 +269,17 @@ attributes #8 = { nounwind }
 !21 = !{!20, !8, i64 24}
 !22 = !{!4, !4, i64 0}
 !23 = !{i64 0, i64 24, !22}
+!24 = distinct !{!24, i1 false, !"_ZN5EigenmlIdEEKNS_13CwiseBinaryOpINS_8internal17scalar_product_opINS2_18promote_scalar_argIdT_Xsr5Eigen8internal14has_ReturnTypeINS_20ScalarBinaryOpTraitsIS5_dNS3_IS5_dEEEEEE5valueEE4typeEdEEKNS2_19plain_constant_typeINS_6MatrixIdLi2ELi1ELi0ELi2ELi1EEESA_E4typeEKSE_EERKS5_RKNS_10MatrixBaseISE_EE"}
+!25 = distinct !{!25, !24, !"_ZN5EigenmlIdEEKNS_13CwiseBinaryOpINS_8internal17scalar_product_opINS2_18promote_scalar_argIdT_Xsr5Eigen8internal14has_ReturnTypeINS_20ScalarBinaryOpTraitsIS5_dNS3_IS5_dEEEEEE5valueEE4typeEdEEKNS2_19plain_constant_typeINS_6MatrixIdLi2ELi1ELi0ELi2ELi1EEESA_E4typeEKSE_EERKS5_RKNS_10MatrixBaseISE_EE: argument 0"}
+!26 = distinct !{!26, i1 false, !"_ZNK5Eigen10Rotation2DIdEmlERKNS_6MatrixIdLi2ELi1ELi0ELi2ELi1EEE"}
+!27 = distinct !{!27, !26, !"_ZNK5Eigen10Rotation2DIdEmlERKNS_6MatrixIdLi2ELi1ELi0ELi2ELi1EEE: argument 0"}
+!28 = distinct !{!28, i1 false, !"_ZNK5Eigen10Rotation2DIdE16toRotationMatrixEv"}
+!29 = distinct !{!29, !28, !"_ZNK5Eigen10Rotation2DIdE16toRotationMatrixEv: argument 0"}
 !30 = !{!"_ZTSN5Eigen8internal18scalar_constant_opIdEE", !8, i64 0}
 !31 = !{!30, !8, i64 0}
+!32 = !{!25}
 !33 = !{!"any pointer", !4, i64 0}
 !34 = !{!"p1 _ZTSN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEE", !33, i64 0}
 !35 = !{!34, !34, i64 0}
-!37 = distinct !{!37, i1 false, !"_ZN5EigenmlIdEEKNS_13CwiseBinaryOpINS_8internal17scalar_product_opINS2_18promote_scalar_argIdT_Xsr5Eigen8internal14has_ReturnTypeINS_20ScalarBinaryOpTraitsIS5_dNS3_IS5_dEEEEEE5valueEE4typeEdEEKNS2_19plain_constant_typeINS_6MatrixIdLi2ELi1ELi0ELi2ELi1EEESA_E4typeEKSE_EERKS5_RKNS_10MatrixBaseISE_EE"}
-!38 = distinct !{!38, !37, !"_ZN5EigenmlIdEEKNS_13CwiseBinaryOpINS_8internal17scalar_product_opINS2_18promote_scalar_argIdT_Xsr5Eigen8internal14has_ReturnTypeINS_20ScalarBinaryOpTraitsIS5_dNS3_IS5_dEEEEEE5valueEE4typeEdEEKNS2_19plain_constant_typeINS_6MatrixIdLi2ELi1ELi0ELi2ELi1EEESA_E4typeEKSE_EERKS5_RKNS_10MatrixBaseISE_EE: argument 0"}
-!39 = !{!38}
-!40 = distinct !{!40, i1 false, !"_ZNK5Eigen10Rotation2DIdE16toRotationMatrixEv"}
-!41 = distinct !{!41, !40, !"_ZNK5Eigen10Rotation2DIdE16toRotationMatrixEv: argument 0"}
-!42 = distinct !{!42, i1 false, !"_ZNK5Eigen10Rotation2DIdEmlERKNS_6MatrixIdLi2ELi1ELi0ELi2ELi1EEE"}
-!43 = distinct !{!43, !42, !"_ZNK5Eigen10Rotation2DIdEmlERKNS_6MatrixIdLi2ELi1ELi0ELi2ELi1EEE: argument 0"}
-!44 = !{!41, !43}
+!36 = !{!29, !27}
 end_hunk_0

@@ -199,7 +199,7 @@ _ZNKSt6vectorISt4pairIdmESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.g
 .lr.ph.i.i.i.i.i:                                 ; preds = %.noexc40, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.bh, %.lr.ph.i.i.i.i.i ], [ %i.bd, %.noexc40 ] ; 2 uses
   %.0911.i.i.i.i.i = phi ptr [ %i.bg, %.lr.ph.i.i.i.i.i ], [ %i.as, %.noexc40 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !alias.scope !39
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !alias.scope !34
   %i.bg = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 16 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.bg, %i.ao
@@ -602,6 +602,9 @@ attributes #10 = { builtin nounwind }
 !9 = distinct !{!9, !22}
 !10 = distinct !{!10, !23, !24}
 !11 = distinct !{!11, !24, !23}
+!12 = distinct !{!12, i1 false, !"_ZSt19__relocate_object_aISt4pairIdmES1_SaIS1_EEvPT_PT0_RT1_"}
+!13 = distinct !{!13, !12, !"_ZSt19__relocate_object_aISt4pairIdmES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
+!14 = distinct !{!14, !12, !"_ZSt19__relocate_object_aISt4pairIdmES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !15 = distinct !{!15, !22}
 !16 = distinct !{!16, !22}
 !17 = !{!"any pointer", !5, i64 0}
@@ -621,9 +624,6 @@ attributes #10 = { builtin nounwind }
 !31 = !{!"_ZTSSt4pairIdmE", !20, i64 0, !30, i64 8}
 !32 = !{!31, !20, i64 0}
 !33 = !{!31, !30, i64 8}
+!34 = !{!14, !13}
 !35 = !{!30, !30, i64 0}
-!36 = distinct !{!36, i1 false, !"_ZSt19__relocate_object_aISt4pairIdmES1_SaIS1_EEvPT_PT0_RT1_"}
-!37 = distinct !{!37, !36, !"_ZSt19__relocate_object_aISt4pairIdmES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
-!38 = distinct !{!38, !36, !"_ZSt19__relocate_object_aISt4pairIdmES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
-!39 = !{!37, !38}
 end_hunk_1

@@ -47,7 +47,7 @@ bb.a:
   %2 = alloca %"class.std::vector.153", align 8   ; 5 uses
   %3 = alloca %"class.std::vector.153", align 8   ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !34, !noalias !91 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !34, !noalias !35 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 248 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !37   ; 2 uses
   %i.e = ptrtoint ptr %i.d to i64
@@ -427,7 +427,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !20   ; 2 uses
   %.not = icmp eq ptr %i.k, null
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !92
+  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !89
 }
 
 ; Function Attrs: mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite)
@@ -479,12 +479,15 @@ attributes #10 = { builtin nounwind }
 !24 = !{!"llvm.loop.mustprogress"}
 !25 = !{!"_ZTS18Elf_DynamicEntry_t", !10, i64 0, !10, i64 8}
 !26 = !{!25, !10, i64 0}
+!27 = distinct !{!27, i1 false, !"_ZN4LIEF3ELF6Binary15dynamic_entriesEv"}
+!28 = distinct !{!28, !27, !"_ZN4LIEF3ELF6Binary15dynamic_entriesEv: argument 0"}
 !29 = distinct !{!29, !24, !78, !79}
 !30 = distinct !{!30, !80}
 !31 = distinct !{!31, !24, !78}
 !32 = distinct !{!32, !24}
 !33 = !{!"p1 _ZTSSt10unique_ptrIN4LIEF3ELF12DynamicEntryESt14default_deleteIS2_EE", !8, i64 0}
 !34 = !{!33, !33, i64 0}
+!35 = !{!28}
 !36 = !{!"_ZTSNSt12_Vector_baseISt10unique_ptrIN4LIEF3ELF12DynamicEntryESt14default_deleteIS3_EESaIS6_EE17_Vector_impl_dataE", !33, i64 0, !33, i64 8, !33, i64 16}
 !37 = !{!36, !33, i64 8}
 !38 = !{!"p1 _ZTSN4LIEF3ELF12DynamicEntryE", !8, i64 0}
@@ -538,8 +541,5 @@ attributes #10 = { builtin nounwind }
 !86 = !{!84, !8, i64 16}
 !87 = !{!25, !10, i64 8}
 !88 = !{!36, !33, i64 0}
-!89 = distinct !{!89, i1 false, !"_ZN4LIEF3ELF6Binary15dynamic_entriesEv"}
-!90 = distinct !{!90, !89, !"_ZN4LIEF3ELF6Binary15dynamic_entriesEv: argument 0"}
-!91 = !{!90}
-!92 = distinct !{!92, !24}
+!89 = distinct !{!89, !24}
 end_hunk_0

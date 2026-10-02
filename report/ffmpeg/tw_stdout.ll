@@ -36,7 +36,7 @@ bb.a:
 ; Function Attrs: inlinehint nofree nounwind uwtable
 define internal void @stdout_vprintf(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) #2 {
 bb.a:
-  %i.a = load ptr, ptr @stdout, align 8, !tbaa !14, !noalias !18
+  %i.a = load ptr, ptr @stdout, align 8, !tbaa !14, !noalias !15
   %i.b = tail call i32 @vfprintf(ptr noundef %i.a, ptr noundef %1, ptr noundef %2) #6, !inline_history !11 ; 0 uses
   ret void
 }
@@ -77,11 +77,11 @@ attributes #6 = { nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
+!9 = distinct !{!9, i1 false, !"vprintf"}
+!10 = distinct !{!10, !9, !"vprintf: argument 0"}
 !11 = distinct !{null}
 !12 = !{!"any pointer", !5, i64 0}
 !13 = !{!"p1 _ZTS8_IO_FILE", !12, i64 0}
 !14 = !{!13, !13, i64 0}
-!16 = distinct !{!16, i1 false, !"vprintf"}
-!17 = distinct !{!17, !16, !"vprintf: argument 0"}
-!18 = !{!17}
+!15 = !{!10}
 end_hunk_0

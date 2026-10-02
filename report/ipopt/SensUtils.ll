@@ -169,18 +169,18 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
-  call void @llvm.experimental.noalias.scope.decl(metadata !43)
-  call void @llvm.experimental.noalias.scope.decl(metadata !46)
+  call void @llvm.experimental.noalias.scope.decl(metadata !20)
+  call void @llvm.experimental.noalias.scope.decl(metadata !21)
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
-  store ptr %i.c, ptr %3, align 8, !tbaa !25, !alias.scope !47
+  store ptr %i.c, ptr %3, align 8, !tbaa !25, !alias.scope !26
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  store i64 0, ptr %i.d, align 8, !tbaa !29, !alias.scope !47
-  store i8 0, ptr %i.c, align 8, !tbaa !30, !alias.scope !47
+  store i64 0, ptr %i.d, align 8, !tbaa !29, !alias.scope !26
+  store i8 0, ptr %i.c, align 8, !tbaa !30, !alias.scope !26
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !34, !noalias !47 ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !34, !noalias !26 ; 3 uses
   %.not.i.not.i.i = icmp eq ptr %i.f, null
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.h = load ptr, ptr %i.g, align 8, !noalias !47 ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8, !noalias !26 ; 2 uses
   %i.i = icmp ugt ptr %i.f, %i.h
   %.08.i.i.i = select i1 %i.i, ptr %i.f, ptr %i.h ; 2 uses
   %.not5.i.i = icmp eq ptr %.08.i.i.i, null
@@ -189,7 +189,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !35, !noalias !47 ; 2 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !35, !noalias !26 ; 2 uses
   %i.l = ptrtoint ptr %.08.i.i.i to i64
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
@@ -199,7 +199,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.e, %bb.c
   %i.p = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.q = load ptr, ptr %3, align 8, !tbaa !36, !alias.scope !47 ; 2 uses
+  %i.q = load ptr, ptr %3, align 8, !tbaa !36, !alias.scope !26 ; 2 uses
   %i.r = icmp eq ptr %i.q, %i.c
   br i1 %i.r, label %.body, label %.body.sink.split
 
@@ -471,10 +471,17 @@ attributes #13 = { builtin nounwind }
 !13 = distinct !{!13, !9, !10}
 !14 = distinct !{!14, !9, !10, !11}
 !15 = distinct !{!15, !9, !10}
+!16 = distinct !{!16, i1 false, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
+!17 = distinct !{!17, !16, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!18 = distinct !{!18, i1 false, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
+!19 = distinct !{!19, !18, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!20 = !{!17}
+!21 = !{!19}
 !22 = !{!"any pointer", !4, i64 0}
 !23 = !{!"p1 omnipotent char", !22, i64 0}
 !24 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !23, i64 0}
 !25 = !{!24, !23, i64 0}
+!26 = !{!19, !17}
 !27 = !{!"long", !4, i64 0}
 !28 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !24, i64 0, !27, i64 8, !4, i64 16}
 !29 = !{!28, !27, i64 8}
@@ -489,11 +496,4 @@ attributes #13 = { builtin nounwind }
 !38 = !{!37, !37, i64 0}
 !39 = !{!"_ZTSSi", !27, i64 8}
 !40 = !{!39, !27, i64 8}
-!41 = distinct !{!41, i1 false, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
-!42 = distinct !{!42, !41, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!43 = !{!42}
-!44 = distinct !{!44, i1 false, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
-!45 = distinct !{!45, !44, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!46 = !{!45}
-!47 = !{!45, !42}
 end_hunk_0

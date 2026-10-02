@@ -11,8 +11,8 @@ module asm
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden ptr @_ZN2v88internal6Maglev7CompileEPNS0_7IsolateENS0_6HandleINS0_10JSFunctionEEENS0_14BytecodeOffsetE(ptr noundef %0, ptr %1, i32 %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(144) ptr @_Znwm(i64 noundef 144) #5, !noalias !10 ; 5 uses
-  tail call void @_ZN2v88internal6maglev21MaglevCompilationInfoC1EPNS0_7IsolateENS0_6HandleINS0_10JSFunctionEEENS0_14BytecodeOffsetESt8optionalIPNS0_8compiler12JSHeapBrokerEES9_IbEb(ptr noundef nonnull align 8 dereferenceable(144) %i.a, ptr noundef %0, ptr %1, i32 %2, ptr undef, i8 0, i16 0, i1 noundef zeroext false) #6, !noalias !10
+  %i.a = tail call noalias noundef nonnull dereferenceable(144) ptr @_Znwm(i64 noundef 144) #5, !noalias !7 ; 5 uses
+  tail call void @_ZN2v88internal6maglev21MaglevCompilationInfoC1EPNS0_7IsolateENS0_6HandleINS0_10JSFunctionEEENS0_14BytecodeOffsetESt8optionalIPNS0_8compiler12JSHeapBrokerEES9_IbEb(ptr noundef nonnull align 8 dereferenceable(144) %i.a, ptr noundef %0, ptr %1, i32 %2, ptr undef, i8 0, i16 0, i1 noundef zeroext false) #6, !noalias !7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 63936
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef zeroext i1 @_ZN2v88internal6maglev14MaglevCompiler7CompileEPNS0_12LocalIsolateEPNS1_21MaglevCompilationInfoE(ptr noundef %i.c, ptr noundef nonnull %i.a) #6
@@ -62,7 +62,7 @@ attributes #7 = { builtin nounwind }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{i32 7, !"frame-pointer", i32 2}
 !4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!8 = distinct !{!8, i1 false, !"_ZN2v88internal6maglev21MaglevCompilationInfo3NewEPNS0_7IsolateENS0_6HandleINS0_10JSFunctionEEENS0_14BytecodeOffsetE"}
-!9 = distinct !{!9, !8, !"_ZN2v88internal6maglev21MaglevCompilationInfo3NewEPNS0_7IsolateENS0_6HandleINS0_10JSFunctionEEENS0_14BytecodeOffsetE: argument 0"}
-!10 = !{!9}
+!5 = distinct !{!5, i1 false, !"_ZN2v88internal6maglev21MaglevCompilationInfo3NewEPNS0_7IsolateENS0_6HandleINS0_10JSFunctionEEENS0_14BytecodeOffsetE"}
+!6 = distinct !{!6, !5, !"_ZN2v88internal6maglev21MaglevCompilationInfo3NewEPNS0_7IsolateENS0_6HandleINS0_10JSFunctionEEENS0_14BytecodeOffsetE: argument 0"}
+!7 = !{!6}
 end_hunk_0

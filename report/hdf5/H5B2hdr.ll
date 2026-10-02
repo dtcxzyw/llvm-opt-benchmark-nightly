@@ -204,7 +204,7 @@ vector.memcheck:                                  ; preds = %.lr.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count, 4294967292   ; 3 uses
-  %i.cb = load i64, ptr %i.bx, align 8, !tbaa !73, !alias.scope !86
+  %i.cb = load i64, ptr %i.bx, align 8, !tbaa !73, !alias.scope !74
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.cb, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -217,8 +217,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cd = mul <2 x i64> %broadcast.splat, %step.add
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %index ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
-  store <2 x i64> %i.cc, ptr %i.ce, align 8, !tbaa !33, !alias.scope !88, !noalias !86
-  store <2 x i64> %i.cd, ptr %i.cf, align 8, !tbaa !33, !alias.scope !88, !noalias !86
+  store <2 x i64> %i.cc, ptr %i.ce, align 8, !tbaa !33, !alias.scope !75, !noalias !74
+  store <2 x i64> %i.cd, ptr %i.cf, align 8, !tbaa !33, !alias.scope !75, !noalias !74
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.cg = icmp eq i64 %index.next, %n.vec
@@ -616,7 +616,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 424
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !31
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 32
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !90
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !85
   %i.m = tail call i32 %i.l(ptr noundef nonnull %i.h) #5
   %i.n = icmp slt i32 %i.m, 0
   br i1 %i.n, label %bb.d, label %bb.e
@@ -711,7 +711,7 @@ bb.q:                                             ; preds = %bb.n, %bb.o
   %i.as = load i16, ptr %i.z, align 4, !tbaa !30
   %i.at = zext i16 %i.as to i64
   %.not54.not = icmp samesign ult i64 %indvars.iv, %i.at
-  br i1 %.not54.not, label %bb.k, label %bb.r, !llvm.loop !89
+  br i1 %.not54.not, label %bb.k, label %bb.r, !llvm.loop !84
 
 bb.r:                                             ; preds = %bb.q
   %i.au = load ptr, ptr %i.x, align 8, !tbaa !34
@@ -721,24 +721,24 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.j
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 2 uses
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !91 ; 2 uses
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !86 ; 2 uses
   %.not57 = icmp eq ptr %i.ax, null
   br i1 %.not57, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.ay = tail call ptr @H5MM_xfree(ptr noundef nonnull %i.ax) #5
-  store ptr %i.ay, ptr %i.aw, align 8, !tbaa !91
+  store ptr %i.ay, ptr %i.aw, align 8, !tbaa !86
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !92 ; 2 uses
+  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !87 ; 2 uses
   %.not58 = icmp eq ptr %i.ba, null
   br i1 %.not58, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.bb = tail call ptr @H5MM_xfree(ptr noundef nonnull %i.ba) #5
-  store ptr %i.bb, ptr %i.az, align 8, !tbaa !92
+  store ptr %i.bb, ptr %i.az, align 8, !tbaa !87
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
@@ -1141,11 +1141,11 @@ bb.a:
   br i1 %i.f, label %bb.b, label %.thread, !prof !12
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %0, ptr %4, align 8, !tbaa !94
+  store ptr %0, ptr %4, align 8, !tbaa !89
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 %1, ptr %i.g, align 8, !tbaa !95
+  store i64 %1, ptr %i.g, align 8, !tbaa !90
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store ptr %2, ptr %i.h, align 8, !tbaa !96
+  store ptr %2, ptr %i.h, align 8, !tbaa !91
   %i.i = call ptr @H5AC_protect(ptr noundef %0, ptr noundef nonnull @H5AC_BT2_HDR, i64 noundef %1, ptr noundef nonnull %4, i32 noundef %3) #5 ; 9 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %bb.c, label %bb.d
@@ -1280,9 +1280,9 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 284
   %i.j = load i16, ptr %i.i, align 4, !tbaa !30
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 336
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !97
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !92
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 344
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !98
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !93
   %i.o = tail call i32 @H5B2__delete_node(ptr noundef nonnull %0, i16 noundef zeroext %i.j, ptr noundef nonnull %i.g, ptr noundef nonnull %0, ptr noundef %i.l, ptr noundef %i.n) #5
   %i.p = icmp slt i32 %i.o, 0
   br i1 %i.p, label %.split14, label %..split_crit_edge
@@ -1422,6 +1422,9 @@ attributes #5 = { nounwind }
 !50 = !{!29, !15, i64 296}
 !51 = !{!29, !15, i64 312}
 !52 = !{!29, !15, i64 320}
+!53 = distinct !{!53, i1 false, !"LVerDomain"}
+!54 = distinct !{!54, !53}
+!55 = distinct !{!55, !53}
 !56 = distinct !{!56, !41, !76, !77}
 !57 = distinct !{!57, !78}
 !58 = distinct !{!58, !41, !76}
@@ -1440,6 +1443,8 @@ attributes #5 = { nounwind }
 !71 = !{!36, !15, i64 16}
 !72 = !{!36, !4, i64 24}
 !73 = !{!37, !15, i64 16}
+!74 = !{!54}
+!75 = !{!55}
 !76 = !{!"llvm.loop.isvectorized", i32 1}
 !77 = !{!"llvm.loop.unroll.runtime.disable"}
 !78 = !{!"llvm.loop.unroll.disable"}
@@ -1448,19 +1453,14 @@ attributes #5 = { nounwind }
 !81 = !{!37, !5, i64 0}
 !82 = !{!29, !15, i64 416}
 !83 = !{!37, !13, i64 24}
-!84 = distinct !{!84, i1 false, !"LVerDomain"}
-!85 = distinct !{!85, !84}
-!86 = !{!85}
-!87 = distinct !{!87, !84}
-!88 = !{!87}
-!89 = distinct !{!89, !41}
-!90 = !{!37, !13, i64 32}
-!91 = !{!29, !13, i64 376}
-!92 = !{!29, !13, i64 384}
-!93 = !{!"H5B2_hdr_cache_ud_t", !25, i64 0, !15, i64 8, !13, i64 16}
-!94 = !{!93, !25, i64 0}
-!95 = !{!93, !15, i64 8}
-!96 = !{!93, !13, i64 16}
-!97 = !{!29, !13, i64 336}
-!98 = !{!29, !13, i64 344}
+!84 = distinct !{!84, !41}
+!85 = !{!37, !13, i64 32}
+!86 = !{!29, !13, i64 376}
+!87 = !{!29, !13, i64 384}
+!88 = !{!"H5B2_hdr_cache_ud_t", !25, i64 0, !15, i64 8, !13, i64 16}
+!89 = !{!88, !25, i64 0}
+!90 = !{!88, !15, i64 8}
+!91 = !{!88, !13, i64 16}
+!92 = !{!29, !13, i64 336}
+!93 = !{!29, !13, i64 344}
 end_hunk_1

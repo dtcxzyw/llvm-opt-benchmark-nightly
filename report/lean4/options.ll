@@ -202,7 +202,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define ptr @lean_internal_get_default_options(ptr nofree noundef readnone captures(none) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 _ZN4lean10object_refD2Ev.exit:
-  %i.a = tail call ptr @lean_options_get_empty(ptr noundef nonnull inttoptr (i64 1 to ptr)), !noalias !21
+  %i.a = tail call ptr @lean_options_get_empty(ptr noundef nonnull inttoptr (i64 1 to ptr)), !noalias !18
   ret ptr %i.a
 }
 
@@ -342,7 +342,7 @@ attributes #13 = { builtin nounwind }
 !13 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !14 = !{!"p1 _ZTSN4lean4nameE", !8, i64 0}
 !15 = !{!14, !14, i64 0}
-!19 = distinct !{!19, i1 false, !"_ZN4lean19get_default_optionsEv"}
-!20 = distinct !{!20, !19, !"_ZN4lean19get_default_optionsEv: argument 0"}
-!21 = !{!20}
+!16 = distinct !{!16, i1 false, !"_ZN4lean19get_default_optionsEv"}
+!17 = distinct !{!17, !16, !"_ZN4lean19get_default_optionsEv: argument 0"}
+!18 = !{!17}
 end_hunk_0

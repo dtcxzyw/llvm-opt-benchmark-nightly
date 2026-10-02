@@ -202,8 +202,8 @@ declare void @_ZN7testing4Test8TearDownEv(ptr noundef nonnull align 8 dereferenc
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN12_GLOBAL__N_123pointers_test_swap_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt10unique_ptrIiSt14default_deleteIiEED2Ev.exit:
-  %i.a = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #15, !noalias !17 ; 4 uses
-  store i32 0, ptr %i.a, align 4, !noalias !17
+  %i.a = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #15, !noalias !11 ; 4 uses
+  store i32 0, ptr %i.a, align 4, !noalias !11
   %i.b = invoke noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #15
           to label %_ZN7testing15AssertionResultD2Ev.exit181 unwind label %bb.a ; 3 uses
 
@@ -213,18 +213,18 @@ bb.a:                                             ; preds = %_ZNSt10unique_ptrIi
   br label %_ZN3gsl8not_nullISt10unique_ptrIiSt14default_deleteIiEEED2Ev.exit219
 
 _ZN7testing15AssertionResultD2Ev.exit181:         ; preds = %_ZNSt10unique_ptrIiSt14default_deleteIiEED2Ev.exit
-  store i32 1, ptr %i.b, align 4, !noalias !20
+  store i32 1, ptr %i.b, align 4, !noalias !12
   %i.d = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #15
           to label %bb.b unwind label %_ZN3gsl8not_nullISt10unique_ptrIiSt14default_deleteIiEEED2Ev.exit216 ; 9 uses
 
 bb.b:                                             ; preds = %_ZN7testing15AssertionResultD2Ev.exit181
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 5 uses
-  store i32 1, ptr %i.e, align 8, !noalias !23
+  store i32 1, ptr %i.e, align 8, !noalias !13
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
-  store i32 1, ptr %i.f, align 4, !noalias !23
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN12_GLOBAL__N_126NotMoveAssignableCustomPtrESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !noalias !23
+  store i32 1, ptr %i.f, align 4, !noalias !13
+  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN12_GLOBAL__N_126NotMoveAssignableCustomPtrESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !noalias !13
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store i32 0, ptr %i.g, align 8, !noalias !23
+  store i32 0, ptr %i.g, align 8, !noalias !13
   %i.h = load atomic i64, ptr %i.e acquire, align 8 ; 2 uses
   %i.i = icmp eq i64 %i.h, 4294967297
   %i.j = trunc i64 %i.h to i32                    ; 2 uses
@@ -357,7 +357,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #13, !inline_history !24
+  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #13, !inline_history !15
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.e = load i8, ptr @__libc_single_threaded, align 1
   %.not.i = icmp eq i8 %i.e, 0
@@ -382,7 +382,7 @@ bb.d:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.j = load ptr, ptr %0, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #13, !inline_history !24
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #13, !inline_history !15
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit: ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i, %bb.d
@@ -785,16 +785,16 @@ attributes #15 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errno
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
+!4 = distinct !{!4, i1 false, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!5 = distinct !{!5, !4, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
+!6 = distinct !{!6, i1 false, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!7 = distinct !{!7, !6, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
+!8 = distinct !{!8, i1 false, !"_ZSt11make_sharedIN12_GLOBAL__N_126NotMoveAssignableCustomPtrEJEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueES4_E4typeEEDpOT0_"}
+!9 = distinct !{!9, !8, !"_ZSt11make_sharedIN12_GLOBAL__N_126NotMoveAssignableCustomPtrEJEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueES4_E4typeEEDpOT0_: argument 0"}
 !10 = distinct !{null, null, null}
+!11 = !{!5}
+!12 = !{!7}
+!13 = !{!9}
 !14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!15 = distinct !{!15, i1 false, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!16 = distinct !{!16, !15, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!17 = !{!16}
-!18 = distinct !{!18, i1 false, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!19 = distinct !{!19, !18, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!20 = !{!19}
-!21 = distinct !{!21, i1 false, !"_ZSt11make_sharedIN12_GLOBAL__N_126NotMoveAssignableCustomPtrEJEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueES4_E4typeEEDpOT0_"}
-!22 = distinct !{!22, !21, !"_ZSt11make_sharedIN12_GLOBAL__N_126NotMoveAssignableCustomPtrEJEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueES4_E4typeEEDpOT0_: argument 0"}
-!23 = !{!22}
-!24 = distinct !{null}
+!15 = distinct !{null}
 end_hunk_1

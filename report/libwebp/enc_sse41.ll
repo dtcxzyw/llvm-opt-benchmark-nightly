@@ -204,9 +204,9 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read, inaccessiblemem: readwrite) uwtable
 define internal i32 @Disto16x16_SSE41(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree noundef readonly captures(none) %1, ptr noalias nofree noundef readonly captures(none) %2) #4 {
 bb.a:
-  %.val4.i = load <8 x i16>, ptr %2, align 1, !tbaa !10, !alias.scope !34, !noalias !35 ; 2 uses
+  %.val4.i = load <8 x i16>, ptr %2, align 1, !tbaa !10, !alias.scope !22, !noalias !23 ; 2 uses
   %i.a = getelementptr i8, ptr %2, i64 16
-  %.val35.i = load <8 x i16>, ptr %i.a, align 1, !tbaa !10, !alias.scope !34, !noalias !35 ; 2 uses
+  %.val35.i = load <8 x i16>, ptr %i.a, align 1, !tbaa !10, !alias.scope !22, !noalias !23 ; 2 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %bb.c
@@ -221,24 +221,24 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %.118 = phi i32 [ %.01320, %.preheader ], [ %i.cw, %bb.b ]
   %gep = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %indvars.iv ; 4 uses
   %gep17 = getelementptr inbounds nuw i8, ptr %invariant.gep16, i64 %indvars.iv ; 4 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !30)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !32)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
-  %i.b = load <4 x i32>, ptr %gep, align 1, !tbaa !10, !alias.scope !30, !noalias !36
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !24)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !25)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !22)
+  %i.b = load <4 x i32>, ptr %gep, align 1, !tbaa !10, !alias.scope !24, !noalias !26
   %i.c = getelementptr inbounds nuw i8, ptr %gep, i64 32
-  %i.d = load <4 x i32>, ptr %i.c, align 1, !tbaa !10, !alias.scope !30, !noalias !36
+  %i.d = load <4 x i32>, ptr %i.c, align 1, !tbaa !10, !alias.scope !24, !noalias !26
   %i.e = getelementptr inbounds nuw i8, ptr %gep, i64 64
-  %i.f = load <4 x i32>, ptr %i.e, align 1, !tbaa !10, !alias.scope !30, !noalias !36
+  %i.f = load <4 x i32>, ptr %i.e, align 1, !tbaa !10, !alias.scope !24, !noalias !26
   %i.g = getelementptr inbounds nuw i8, ptr %gep, i64 96
-  %i.h = load i64, ptr %i.g, align 1, !tbaa !10, !alias.scope !30, !noalias !36
+  %i.h = load i64, ptr %i.g, align 1, !tbaa !10, !alias.scope !24, !noalias !26
   %i.i = insertelement <2 x i64> poison, i64 %i.h, i64 0
-  %i.j = load <4 x i32>, ptr %gep17, align 1, !tbaa !10, !alias.scope !32, !noalias !37
+  %i.j = load <4 x i32>, ptr %gep17, align 1, !tbaa !10, !alias.scope !25, !noalias !27
   %i.k = getelementptr inbounds nuw i8, ptr %gep17, i64 32
-  %i.l = load <4 x i32>, ptr %i.k, align 1, !tbaa !10, !alias.scope !32, !noalias !37
+  %i.l = load <4 x i32>, ptr %i.k, align 1, !tbaa !10, !alias.scope !25, !noalias !27
   %i.m = getelementptr inbounds nuw i8, ptr %gep17, i64 64
-  %i.n = load <4 x i32>, ptr %i.m, align 1, !tbaa !10, !alias.scope !32, !noalias !37
+  %i.n = load <4 x i32>, ptr %i.m, align 1, !tbaa !10, !alias.scope !25, !noalias !27
   %i.o = getelementptr inbounds nuw i8, ptr %gep17, i64 96
-  %i.p = load i64, ptr %i.o, align 1, !tbaa !10, !alias.scope !32, !noalias !37
+  %i.p = load i64, ptr %i.o, align 1, !tbaa !10, !alias.scope !25, !noalias !27
   %i.q = insertelement <2 x i64> poison, i64 %i.p, i64 0
   %i.r = shufflevector <4 x i32> %i.b, <4 x i32> %i.j, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
   %i.s = shufflevector <4 x i32> %i.d, <4 x i32> %i.l, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
@@ -413,16 +413,16 @@ attributes #12 = { nounwind }
 !13 = !{!5, !5, i64 0}
 !14 = !{!"short", !4, i64 0}
 !15 = !{!14, !14, i64 0}
+!16 = distinct !{!16, i1 false, !"Disto4x4_SSE41"}
+!17 = distinct !{!17, !16, !"Disto4x4_SSE41: argument 2"}
+!18 = distinct !{!18, !16, !"Disto4x4_SSE41: argument 1"}
+!19 = distinct !{!19, !16, !"Disto4x4_SSE41: argument 0"}
 !20 = distinct !{!20, !11}
 !21 = distinct !{!21, !11}
-!28 = distinct !{!28, i1 false, !"Disto4x4_SSE41"}
-!29 = distinct !{!29, !28, !"Disto4x4_SSE41: argument 0"}
-!30 = !{!29}
-!31 = distinct !{!31, !28, !"Disto4x4_SSE41: argument 1"}
-!32 = !{!31}
-!33 = distinct !{!33, !28, !"Disto4x4_SSE41: argument 2"}
-!34 = !{!33}
-!35 = !{!29, !31}
-!36 = !{!31, !33}
-!37 = !{!29, !33}
+!22 = !{!17}
+!23 = !{!19, !18}
+!24 = !{!19}
+!25 = !{!18}
+!26 = !{!18, !17}
+!27 = !{!19, !17}
 end_hunk_0

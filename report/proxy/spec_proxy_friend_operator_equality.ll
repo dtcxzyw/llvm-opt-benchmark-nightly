@@ -59,7 +59,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit5: ; preds = %_ZNSol
           to label %bb.b unwind label %bb.f       ; 2 uses
 
 bb.b:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit5
-  store i32 123, ptr %i.m, align 4, !tbaa !31, !noalias !35
+  store i32 123, ptr %i.m, align 4, !tbaa !31, !noalias !32
   %i.n = load ptr, ptr %0, align 8, !tbaa !17     ; 2 uses
   %.not.i.i = icmp eq ptr %i.n, null
   br i1 %.not.i.i, label %_ZNSt10unique_ptrIiSt14default_deleteIiEED2Ev.exit, label %bb.c
@@ -188,6 +188,8 @@ attributes #8 = { builtin nounwind }
 !9 = !{!"any pointer", !5, i64 0}
 !10 = !{!"p1 int", !9, i64 0}
 !11 = !{!10, !10, i64 0}
+!12 = distinct !{!12, i1 false, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!13 = distinct !{!13, !12, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
 !14 = distinct !{null, null, null, null}
 !15 = distinct !{null, null, null, null}
 !16 = !{!"_ZTSN3pro2v46detail9conv_metaINS0_5proxyI10AnyMovableEENS1_16destroy_dispatchEDoFvvEEE", !9, i64 0}
@@ -206,7 +208,5 @@ attributes #8 = { builtin nounwind }
 !29 = !{!28, !21, i64 24}
 !30 = !{!21, !21, i64 0}
 !31 = !{!6, !6, i64 0}
-!33 = distinct !{!33, i1 false, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!34 = distinct !{!34, !33, !"_ZSt11make_uniqueIiJiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!35 = !{!34}
+!32 = !{!13}
 end_hunk_0

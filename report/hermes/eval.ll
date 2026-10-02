@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit5, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit
 
 _ZNK6hermes2vm10NativeArgs6getArgEj.exit:         ; preds = %bb.a
-  %i.n = load ptr, ptr %2, align 8, !tbaa !52, !noalias !56
+  %i.n = load ptr, ptr %2, align 8, !tbaa !52, !noalias !53
   %i.o = getelementptr inbounds i8, ptr %i.n, i64 -8 ; 2 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.o, align 8, !tbaa !9 ; 3 uses
   %.mask.i = and i64 %.sroa.0.0.copyload.i, -281474976710656
@@ -298,6 +298,8 @@ attributes #9 = { builtin nounwind }
 !28 = !{!"llvm.loop.unroll.runtime.disable"}
 !29 = !{!"branch_weights", i32 4, i32 28}
 !30 = !{!"llvm.loop.unroll.disable"}
+!31 = distinct !{!31, i1 false, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
+!32 = distinct !{!32, !31, !"_ZNK6hermes2vm10NativeArgs5beginEv: argument 0"}
 !33 = !{!"p1 _ZTSN6hermes2vm15HandleRootOwnerE", !7, i64 0}
 !34 = !{!33, !33, i64 0}
 !35 = !{!"p1 _ZTSN6hermes2vm7GCScopeE", !7, i64 0}
@@ -318,7 +320,5 @@ attributes #9 = { builtin nounwind }
 !50 = !{!"_ZTSN6hermes2vm10NativeArgsE", !49, i64 0, !5, i64 8, !43, i64 16}
 !51 = !{!50, !5, i64 8}
 !52 = !{!49, !43, i64 0}
-!54 = distinct !{!54, i1 false, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
-!55 = distinct !{!55, !54, !"_ZNK6hermes2vm10NativeArgs5beginEv: argument 0"}
-!56 = !{!55}
+!53 = !{!32}
 end_hunk_0

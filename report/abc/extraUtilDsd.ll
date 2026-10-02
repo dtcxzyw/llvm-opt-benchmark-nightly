@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.i = load ptr, ptr @stdout, align 8, !tbaa !80, !noalias !84
+  %i.i = load ptr, ptr @stdout, align 8, !tbaa !80, !noalias !81
   %i.j = call i32 @vfprintf(ptr noundef %i.i, ptr noundef %1, ptr noundef nonnull %2) #25, !inline_history !78 ; 0 uses
   br label %bb.e
 
@@ -383,10 +383,10 @@ attributes #29 = { nounwind willreturn memory(read) }
 !73 = distinct !{!73, !11}
 !74 = distinct !{!74, !11}
 !75 = distinct !{!75, !11}
+!76 = distinct !{!76, i1 false, !"vprintf"}
+!77 = distinct !{!77, !76, !"vprintf: argument 0"}
 !78 = distinct !{null}
 !79 = !{!"p1 _ZTS8_IO_FILE", !12, i64 0}
 !80 = !{!79, !79, i64 0}
-!82 = distinct !{!82, i1 false, !"vprintf"}
-!83 = distinct !{!83, !82, !"vprintf: argument 0"}
-!84 = !{!83}
+!81 = !{!77}
 end_hunk_0

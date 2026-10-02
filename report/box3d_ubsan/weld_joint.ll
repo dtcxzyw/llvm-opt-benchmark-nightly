@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %bb.a
   %i.aj = fadd <2 x float> %i.w, %i.ai
   %i.ak = fsub <2 x float> %i.w, %i.ai
   %i.al = shufflevector <2 x float> %i.aj, <2 x float> %i.ak, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.v, ptr %i.i, align 4, !tbaa !100, !alias.scope !152
+  store <2 x float> %i.v, ptr %i.i, align 4, !tbaa !100, !alias.scope !144
   %.sroa.4.0..sroa_idx.i15 = getelementptr inbounds nuw i8, ptr %5, i64 20
-  store <2 x float> %i.al, ptr %.sroa.4.0..sroa_idx.i15, align 4, !tbaa !100, !alias.scope !152
+  store <2 x float> %i.al, ptr %.sroa.4.0..sroa_idx.i15, align 4, !tbaa !100, !alias.scope !144
   %i.am = load <2 x float>, ptr %2, align 8
   %foldExtExtBinop = fmul <2 x float> %.sroa.076.0.copyload, %.sroa.870.0.copyload
   %i.an = extractelement <2 x float> %foldExtExtBinop, i64 0
@@ -276,9 +276,9 @@ bb.c:                                             ; preds = %bb.a
   %i.ck = fadd <2 x float> %i.bx, %i.cj
   %i.cl = fsub <2 x float> %i.bx, %i.cj
   %i.cm = shufflevector <2 x float> %i.ck, <2 x float> %i.cl, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.bw, ptr %i.bj, align 4, !tbaa !100, !alias.scope !155
+  store <2 x float> %i.bw, ptr %i.bj, align 4, !tbaa !100, !alias.scope !145
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 20
-  store <2 x float> %i.cm, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !100, !alias.scope !155
+  store <2 x float> %i.cm, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !100, !alias.scope !145
   %i.cn = load <2 x float>, ptr %3, align 8
   %foldExtExtBinop87 = fmul <2 x float> %.sroa.056.0.copyload, %.sroa.8.0.copyload
   %i.co = extractelement <2 x float> %foldExtExtBinop87, i64 0
@@ -549,15 +549,15 @@ attributes #8 = { noreturn nounwind }
 !136 = !{!102, !62, i64 16}
 !137 = !{!102, !62, i64 20}
 !138 = !{!102, !62, i64 24}
+!139 = distinct !{!139, i1 false, !"b3MulWorldTransforms"}
+!140 = distinct !{!140, !139, !"b3MulWorldTransforms: argument 0"}
+!141 = distinct !{!141, i1 false, !"b3MulWorldTransforms"}
+!142 = distinct !{!142, !141, !"b3MulWorldTransforms: argument 0"}
 !143 = !{i32 -1056584962, i32 1341312997}
+!144 = !{!140}
+!145 = !{!142}
 !146 = !{!"b3AABB", !63, i64 0, !63, i64 12}
 !147 = !{!"b3DebugDraw", !12, i64 0, !12, i64 8, !12, i64 16, !12, i64 24, !12, i64 32, !12, i64 40, !12, i64 48, !12, i64 56, !12, i64 64, !146, i64 72, !62, i64 96, !62, i64 100, !69, i64 104, !69, i64 105, !69, i64 106, !69, i64 107, !69, i64 108, !69, i64 109, !69, i64 110, !69, i64 111, !69, i64 112, !69, i64 113, !69, i64 114, !69, i64 115, !69, i64 116, !69, i64 117, !12, i64 120}
 !148 = !{!147, !12, i64 56}
 !149 = !{!147, !12, i64 120}
-!150 = distinct !{!150, i1 false, !"b3MulWorldTransforms"}
-!151 = distinct !{!151, !150, !"b3MulWorldTransforms: argument 0"}
-!152 = !{!151}
-!153 = distinct !{!153, i1 false, !"b3MulWorldTransforms"}
-!154 = distinct !{!154, !153, !"b3MulWorldTransforms: argument 0"}
-!155 = !{!154}
 end_hunk_0

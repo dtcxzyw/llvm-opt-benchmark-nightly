@@ -205,11 +205,11 @@ switch.lookup:                                    ; preds = %bb.c
   %switch.gep149 = getelementptr inbounds nuw i8, ptr @switch.table._ZN8rawspeed16ColorFilterArray13colorToStringB5cxx11ENS_8CFAColorE.2, i64 %i.ap
   %switch.load150 = load i8, ptr %switch.gep149, align 1
   %switch.ext = zext i8 %switch.load150 to i64    ; 7 uses
-  store ptr %i.h, ptr %2, align 8, !tbaa !34, !alias.scope !58
+  store ptr %i.h, ptr %2, align 8, !tbaa !34, !alias.scope !55
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.h, ptr noundef nonnull align 1 dereferenceable(1) %switch.load, i64 %switch.ext, i1 false)
-  store i64 %switch.ext, ptr %i.i, align 8, !tbaa !37, !alias.scope !58
+  store i64 %switch.ext, ptr %i.i, align 8, !tbaa !37, !alias.scope !55
   %i.aq = getelementptr inbounds nuw i8, ptr %i.h, i64 %switch.ext
-  store i8 0, ptr %i.aq, align 1, !tbaa !38, !alias.scope !58
+  store i8 0, ptr %i.aq, align 1, !tbaa !38, !alias.scope !55
   %i.ar = load i64, ptr %i.b, align 8, !tbaa !37  ; 7 uses
   %i.as = sub i64 9223372036854775807, %i.ar
   %i.at = icmp ult i64 %i.as, %switch.ext
@@ -612,9 +612,9 @@ attributes #22 = { cold }
 !48 = distinct !{!48, !23}
 !49 = distinct !{!49, !23}
 !50 = distinct !{!50, !23, !54}
+!51 = distinct !{!51, i1 false, !"_ZN8rawspeed16ColorFilterArray13colorToStringB5cxx11ENS_8CFAColorE"}
+!52 = distinct !{!52, !51, !"_ZN8rawspeed16ColorFilterArray13colorToStringB5cxx11ENS_8CFAColorE: argument 0"}
 !53 = distinct !{!53, !23}
 !54 = !{!"llvm.loop.unswitch.partial.disable"}
-!56 = distinct !{!56, i1 false, !"_ZN8rawspeed16ColorFilterArray13colorToStringB5cxx11ENS_8CFAColorE"}
-!57 = distinct !{!57, !56, !"_ZN8rawspeed16ColorFilterArray13colorToStringB5cxx11ENS_8CFAColorE: argument 0"}
-!58 = !{!57}
+!55 = !{!52}
 end_hunk_1

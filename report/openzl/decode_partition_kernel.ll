@@ -47,7 +47,7 @@ bb.a:
   br i1 %i.e, label %bb.b, label %bb.c, !prof !21
 
 bb.b:                                             ; preds = %bb.a
-  %.val.i = load i64, ptr %4, align 1, !noalias !33
+  %.val.i = load i64, ptr %4, align 1, !noalias !22
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 %5 ; 2 uses
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 -7
   br label %ZS_BitDStreamFF_init.exit
@@ -58,14 +58,14 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %ZS_BitDStreamFF_loadPartial.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.c
-  %i.i = load i8, ptr %4, align 1, !tbaa !23, !noalias !33
+  %i.i = load i8, ptr %4, align 1, !tbaa !23, !noalias !22
   %i.j = zext i8 %i.i to i64                      ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %5, 1
   br i1 %exitcond.not.i.i, label %ZS_BitDStreamFF_loadPartial.exit.i, label %.lr.ph.i.i.1
 
 .lr.ph.i.i.1:                                     ; preds = %.lr.ph.i.i
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 1
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !23, !noalias !33
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !23, !noalias !22
   %i.m = zext i8 %i.l to i64
   %i.n = shl nuw nsw i64 %i.m, 8
   %i.o = or disjoint i64 %i.n, %i.j               ; 2 uses
@@ -74,7 +74,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i.i.2:                                     ; preds = %.lr.ph.i.i.1
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 2
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !23, !noalias !33
+  %i.q = load i8, ptr %i.p, align 1, !tbaa !23, !noalias !22
   %i.r = zext i8 %i.q to i64
   %i.s = shl nuw nsw i64 %i.r, 16
   %i.t = or disjoint i64 %i.s, %i.o               ; 2 uses
@@ -83,7 +83,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i.i.3:                                     ; preds = %.lr.ph.i.i.2
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 3
-  %i.v = load i8, ptr %i.u, align 1, !tbaa !23, !noalias !33
+  %i.v = load i8, ptr %i.u, align 1, !tbaa !23, !noalias !22
   %i.w = zext i8 %i.v to i64
   %i.x = shl nuw nsw i64 %i.w, 24
   %i.y = or disjoint i64 %i.x, %i.t               ; 2 uses
@@ -92,7 +92,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i.i.4:                                     ; preds = %.lr.ph.i.i.3
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %i.aa = load i8, ptr %i.z, align 1, !tbaa !23, !noalias !33
+  %i.aa = load i8, ptr %i.z, align 1, !tbaa !23, !noalias !22
   %i.ab = zext i8 %i.aa to i64
   %i.ac = shl nuw nsw i64 %i.ab, 32
   %i.ad = or disjoint i64 %i.ac, %i.y             ; 2 uses
@@ -101,7 +101,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i.i.5:                                     ; preds = %.lr.ph.i.i.4
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 5
-  %i.af = load i8, ptr %i.ae, align 1, !tbaa !23, !noalias !33
+  %i.af = load i8, ptr %i.ae, align 1, !tbaa !23, !noalias !22
   %i.ag = zext i8 %i.af to i64
   %i.ah = shl nuw nsw i64 %i.ag, 40
   %i.ai = or i64 %i.ah, %i.ad                     ; 2 uses
@@ -110,7 +110,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i.i.6:                                     ; preds = %.lr.ph.i.i.5
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 6
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !23, !noalias !33
+  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !23, !noalias !22
   %i.al = zext i8 %i.ak to i64
   %i.am = shl nuw nsw i64 %i.al, 48
   %i.an = or i64 %i.am, %i.ai
@@ -373,6 +373,8 @@ attributes #8 = { nounwind willreturn memory(none) }
 !8 = !{!"int", !7, i64 0}
 !9 = !{!"__libc_errno", !8, i64 0}
 !10 = !{!9, !8, i64 0}
+!11 = distinct !{!11, i1 false, !"ZS_BitDStreamFF_init"}
+!12 = distinct !{!12, !11, !"ZS_BitDStreamFF_init: argument 0"}
 !13 = distinct !{!13, !30}
 !14 = !{!"any pointer", !7, i64 0}
 !15 = !{!"p1 _ZTS21ZL_OperationContext_s", !14, i64 0}
@@ -382,6 +384,7 @@ attributes #8 = { nounwind willreturn memory(none) }
 !19 = !{!"", !15, i64 0, !18, i64 8}
 !20 = !{!19, !15, i64 0}
 !21 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!22 = !{!12}
 !23 = !{!7, !7, i64 0}
 !24 = !{!"branch_weights", !"expected", i32 2145337238, i32 2146410}
 !25 = !{!"long", !7, i64 0}
@@ -390,7 +393,4 @@ attributes #8 = { nounwind willreturn memory(none) }
 !28 = !{!27, !27, i64 0}
 !29 = !{!8, !8, i64 0}
 !30 = !{!"llvm.loop.mustprogress"}
-!31 = distinct !{!31, i1 false, !"ZS_BitDStreamFF_init"}
-!32 = distinct !{!32, !31, !"ZS_BitDStreamFF_init: argument 0"}
-!33 = !{!32}
 end_hunk_0

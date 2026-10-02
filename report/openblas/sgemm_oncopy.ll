@@ -203,8 +203,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ih = shl i64 %index, 4                       ; 2 uses
   %next.gep = getelementptr i8, ptr %.9, i64 %i.ih
   %next.gep284 = getelementptr i8, ptr %.2154, i64 %i.ih
-  %wide.vec = load <16 x float>, ptr %next.gep284, align 4, !tbaa !20, !alias.scope !28
-  store <16 x float> %wide.vec, ptr %next.gep, align 4, !tbaa !20, !alias.scope !30, !noalias !28
+  %wide.vec = load <16 x float>, ptr %next.gep284, align 4, !tbaa !20, !alias.scope !22
+  store <16 x float> %wide.vec, ptr %next.gep, align 4, !tbaa !20, !alias.scope !23, !noalias !22
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ii = icmp eq i64 %index.next, %n.vec
   br i1 %i.ii, label %middle.block, label %vector.body, !llvm.loop !15
@@ -281,6 +281,9 @@ attributes #0 = { nofree norecurse nosync nounwind memory(readwrite, inaccessibl
 !9 = distinct !{!9, !18}
 !10 = distinct !{!10, !21}
 !11 = distinct !{!11, !18}
+!12 = distinct !{!12, i1 false, !"LVerDomain"}
+!13 = distinct !{!13, !12}
+!14 = distinct !{!14, !12}
 !15 = distinct !{!15, !18, !24, !25}
 !16 = distinct !{!16, !18, !24}
 !17 = !{!4, !4, i64 0}
@@ -288,11 +291,8 @@ attributes #0 = { nofree norecurse nosync nounwind memory(readwrite, inaccessibl
 !19 = !{!"float", !4, i64 0}
 !20 = !{!19, !19, i64 0}
 !21 = !{!"llvm.loop.unroll.disable"}
+!22 = !{!13}
+!23 = !{!14}
 !24 = !{!"llvm.loop.isvectorized", i32 1}
 !25 = !{!"llvm.loop.unroll.runtime.disable"}
-!26 = distinct !{!26, i1 false, !"LVerDomain"}
-!27 = distinct !{!27, !26}
-!28 = !{!27}
-!29 = distinct !{!29, !26}
-!30 = !{!29}
 end_hunk_0

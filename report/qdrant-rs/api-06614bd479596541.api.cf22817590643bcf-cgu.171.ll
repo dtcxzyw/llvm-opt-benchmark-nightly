@@ -178,7 +178,7 @@ bb.i:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   %i.h = invoke noundef nonnull align 8 ptr @_RINvMs1_NtCsgOCJwUSa4vG_5tonic6statusNtB6_6Status3newReECshMzyYDJGtjv_3api(i8 noundef 3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 39)
-          to label %bb.k unwind label %bb.j, !noalias !12
+          to label %bb.k unwind label %bb.j, !noalias !9
 
 bb.j:                                             ; preds = %bb.i
   %i.i = landingpad { ptr, i32 }
@@ -293,8 +293,8 @@ attributes #6 = { cold }
 !3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
 !4 = !{}
 !5 = !{i64 -1, i64 -9223372036854775805}
+!6 = distinct !{!6, i1 false, !"_RNCNvXs2v_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types6facets10FacetValueINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant18FacetValueInternalE8try_froms_0Bc_"}
+!7 = distinct !{!7, !6, !"_RNCNvXs2v_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types6facets10FacetValueINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant18FacetValueInternalE8try_froms_0Bc_: argument 0"}
 !8 = !{i64 -1, i64 -9223372036854775808}
-!10 = distinct !{!10, i1 false, !"_RNCNvXs2v_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types6facets10FacetValueINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant18FacetValueInternalE8try_froms_0Bc_"}
-!11 = distinct !{!11, !10, !"_RNCNvXs2v_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types6facets10FacetValueINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant18FacetValueInternalE8try_froms_0Bc_: argument 0"}
-!12 = !{!11}
+!9 = !{!7}
 end_hunk_0

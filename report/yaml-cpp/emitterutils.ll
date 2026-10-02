@@ -204,14 +204,14 @@ bb.l:                                             ; preds = %.lr.ph, %bb.m
   %.sroa.021.032 = phi ptr [ %i.bi, %.lr.ph ], [ %i.bu, %bb.m ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !59
-  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !17, !alias.scope !98 ; 2 uses
+  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !17, !alias.scope !94 ; 2 uses
   %i.bn = trunc i64 %i.bm to i32
   %i.bo = add nsw i32 %.015.i33, %i.bn
   %i.bp = icmp sgt i32 %i.bo, -1
   %i.bq = sext i32 %.015.i33 to i64
   %i.br = add i64 %i.bm, %i.bq
   %storemerge.i = select i1 %i.bp, i64 %i.br, i64 0
-  store i64 %storemerge.i, ptr %i.bl, align 8, !tbaa !17, !alias.scope !98
+  store i64 %storemerge.i, ptr %i.bl, align 8, !tbaa !17, !alias.scope !94
   %i.bs = call noundef i32 @_ZNK4YAML5RegEx5MatchINS_16StringCharSourceEEEiRKT_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.021.032, ptr noundef nonnull align 8 dereferenceable(24) %2), !inline_history !95 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   %.not.i16 = icmp eq i32 %i.bs, -1
@@ -340,14 +340,14 @@ bb.b:                                             ; preds = %.lr.ph, %bb.k
   %.sroa.021.026 = phi ptr [ %i.b, %.lr.ph ], [ %i.an, %bb.k ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !59
-  %i.g = load i64, ptr %i.e, align 8, !tbaa !17, !alias.scope !104 ; 2 uses
+  %i.g = load i64, ptr %i.e, align 8, !tbaa !17, !alias.scope !98 ; 2 uses
   %i.h = trunc i64 %i.g to i32
   %i.i = add nsw i32 %.01527, %i.h
   %i.j = icmp sgt i32 %i.i, -1
   %i.k = sext i32 %.01527 to i64
   %i.l = add i64 %i.g, %i.k
   %storemerge.i = select i1 %i.j, i64 %i.l, i64 0 ; 4 uses
-  store i64 %storemerge.i, ptr %i.e, align 8, !tbaa !17, !alias.scope !104
+  store i64 %storemerge.i, ptr %i.e, align 8, !tbaa !17, !alias.scope !98
   %i.m = load i32, ptr %.sroa.021.026, align 8, !tbaa !47 ; 2 uses
   %i.n = add i32 %i.m, -3
   %switch.i.i = icmp ult i32 %i.n, -2
@@ -556,14 +556,14 @@ attributes #20 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errno
 !86 = distinct !{null, null, ptr @_ZN4YAML5RegExD2Ev, null}
 !87 = distinct !{!87, !20}
 !88 = distinct !{!88, !20, !54}
+!89 = distinct !{!89, i1 false, !"_ZNK4YAML16StringCharSourceplEi"}
+!90 = distinct !{!90, !89, !"_ZNK4YAML16StringCharSourceplEi: argument 0"}
 !91 = !{ptr @_ZNK4YAML5RegEx10MatchOpAndINS_16StringCharSourceEEEiRKT_}
 !92 = !{ptr @_ZNK4YAML5RegEx9MatchOpOrINS_16StringCharSourceEEEiRKT_}
 !93 = !{ptr @_ZNK4YAML5RegEx10MatchOpNotINS_16StringCharSourceEEEiRKT_}
+!94 = !{!90}
 !95 = !{ptr @_ZNK4YAML5RegEx10MatchOpSeqINS_16StringCharSourceEEEiRKT_}
 !96 = distinct !{!96, i1 false, !"_ZNK4YAML16StringCharSourceplEi"}
 !97 = distinct !{!97, !96, !"_ZNK4YAML16StringCharSourceplEi: argument 0"}
 !98 = !{!97}
-!102 = distinct !{!102, i1 false, !"_ZNK4YAML16StringCharSourceplEi"}
-!103 = distinct !{!103, !102, !"_ZNK4YAML16StringCharSourceplEi: argument 0"}
-!104 = !{!103}
 end_hunk_0

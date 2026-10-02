@@ -21,23 +21,23 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = add nuw i64 %i.b, 1
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !24)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !11)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !17, !noalias !24
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !17, !noalias !11
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr %i.f, ptr %0, align 8, !tbaa !18, !alias.scope !24
-  %i.g = load ptr, ptr %1, align 8, !tbaa !19, !noalias !24 ; 2 uses
+  store ptr %i.f, ptr %0, align 8, !tbaa !18, !alias.scope !11
+  %i.g = load ptr, ptr %1, align 8, !tbaa !19, !noalias !11 ; 2 uses
   %spec.select.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.c, i64 %i.e) ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !24
-  store i64 %spec.select.i.i.i, ptr %i.a, align 8, !tbaa !20, !noalias !24
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !11
+  store i64 %spec.select.i.i.i, ptr %i.a, align 8, !tbaa !20, !noalias !11
   %i.h = icmp ugt i64 %spec.select.i.i.i, 15
   br i1 %i.h, label %.noexc10.i.i, label %._crit_edge.i.i.i
 
 .noexc10.i.i:                                     ; preds = %bb.b
   %i.i = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
-  store ptr %i.i, ptr %0, align 8, !tbaa !19, !alias.scope !24
-  %i.j = load i64, ptr %i.a, align 8, !tbaa !20, !noalias !24
-  store i64 %i.j, ptr %i.f, align 8, !tbaa !21, !alias.scope !24
+  store ptr %i.i, ptr %0, align 8, !tbaa !19, !alias.scope !11
+  %i.j = load i64, ptr %i.a, align 8, !tbaa !20, !noalias !11
+  store i64 %i.j, ptr %i.f, align 8, !tbaa !21, !alias.scope !11
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc10.i.i, %bb.b
@@ -57,13 +57,13 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit: ; preds = %._crit_edge.i.i.i, %bb.c, %bb.d
-  %i.m = load i64, ptr %i.a, align 8, !tbaa !20, !noalias !24 ; 2 uses
+  %i.m = load i64, ptr %i.a, align 8, !tbaa !20, !noalias !11 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.m, ptr %i.n, align 8, !tbaa !17, !alias.scope !24
-  %i.o = load ptr, ptr %0, align 8, !tbaa !19, !alias.scope !24
+  store i64 %i.m, ptr %i.n, align 8, !tbaa !17, !alias.scope !11
+  %i.o = load ptr, ptr %0, align 8, !tbaa !19, !alias.scope !11
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.m
   store i8 0, ptr %i.p, align 1, !tbaa !21
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !24
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !11
   br label %bb.e
 
 ._crit_edge.i.i:                                  ; preds = %bb.a
@@ -121,6 +121,9 @@ attributes #6 = { nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
+!9 = distinct !{!9, i1 false, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm"}
+!10 = distinct !{!10, !9, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm: argument 0"}
+!11 = !{!10}
 !12 = !{!"any pointer", !5, i64 0}
 !13 = !{!"p1 omnipotent char", !12, i64 0}
 !14 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !13, i64 0}
@@ -131,7 +134,4 @@ attributes #6 = { nounwind }
 !19 = !{!16, !13, i64 0}
 !20 = !{!15, !15, i64 0}
 !21 = !{!5, !5, i64 0}
-!22 = distinct !{!22, i1 false, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm"}
-!23 = distinct !{!23, !22, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm: argument 0"}
-!24 = !{!23}
 end_hunk_0

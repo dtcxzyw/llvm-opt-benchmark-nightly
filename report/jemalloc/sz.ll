@@ -172,7 +172,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.h, -4                       ; 3 uses
   %i.x = add nsw i64 %n.vec, %i.e
-  %i.y = load i64, ptr %i.d, align 8, !tbaa !25, !alias.scope !41
+  %i.y = load i64, ptr %i.d, align 8, !tbaa !25, !alias.scope !26
   %i.z = add i64 %i.y, 4096
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.z, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -183,8 +183,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %index ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %gep, align 8, !tbaa !13, !alias.scope !43, !noalias !41
-  store <2 x i64> %broadcast.splat, ptr %i.aa, align 8, !tbaa !13, !alias.scope !43, !noalias !41
+  store <2 x i64> %broadcast.splat, ptr %gep, align 8, !tbaa !13, !alias.scope !27, !noalias !26
+  store <2 x i64> %broadcast.splat, ptr %i.aa, align 8, !tbaa !13, !alias.scope !27, !noalias !26
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ab = icmp eq i64 %index.next, %n.vec
   br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !18
@@ -366,6 +366,9 @@ attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !12 = !{!"long", !8, i64 0}
 !13 = !{!12, !12, i64 0}
 !14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!15 = distinct !{!15, i1 false, !"LVerDomain"}
+!16 = distinct !{!16, !15}
+!17 = distinct !{!17, !15}
 !18 = distinct !{!18, !28, !29, !30}
 !19 = distinct !{!19, !28}
 !20 = distinct !{!20, !28, !29}
@@ -374,6 +377,8 @@ attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !23 = !{!"_Bool", !8, i64 0}
 !24 = !{!"sc_data_s", !9, i64 0, !9, i64 4, !9, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !9, i64 24, !12, i64 32, !12, i64 40, !9, i64 48, !12, i64 56, !12, i64 64, !23, i64 72, !8, i64 76}
 !25 = !{!24, !12, i64 64}
+!26 = !{!16}
+!27 = !{!17}
 !28 = !{!"llvm.loop.mustprogress"}
 !29 = !{!"llvm.loop.isvectorized", i32 1}
 !30 = !{!"llvm.loop.unroll.runtime.disable"}
@@ -385,9 +390,4 @@ attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !36 = !{!31, !9, i64 12}
 !37 = !{!31, !9, i64 8}
 !38 = !{!8, !8, i64 0}
-!39 = distinct !{!39, i1 false, !"LVerDomain"}
-!40 = distinct !{!40, !39}
-!41 = !{!40}
-!42 = distinct !{!42, !39}
-!43 = !{!42}
 end_hunk_0

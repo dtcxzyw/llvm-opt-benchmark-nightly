@@ -202,7 +202,7 @@ _ZNKSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE12_M_check_len
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNKSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE12_M_check_lenEmPKc.exit.i.i, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.ay, %.lr.ph.i.i.i.i.i ], [ %i.au, %_ZNKSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
   %.0911.i.i.i.i.i = phi ptr [ %i.ax, %.lr.ph.i.i.i.i.i ], [ %i.aj, %_ZNKSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !16, !alias.scope !46
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !16, !alias.scope !42
   %i.ax = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 24 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ax, %.pre
@@ -354,6 +354,9 @@ attributes #13 = { builtin nounwind }
 !24 = !{!"_ZTSN22photos_editing_formats8image_io11DataLineMapE", !22, i64 0, !23, i64 24}
 !25 = !{!24, !23, i64 24}
 !26 = distinct !{!26, !13}
+!27 = distinct !{!27, i1 false, !"_ZSt19__relocate_object_aIN22photos_editing_formats8image_io8DataLineES2_SaIS2_EEvPT_PT0_RT1_"}
+!28 = distinct !{!28, !27, !"_ZSt19__relocate_object_aIN22photos_editing_formats8image_io8DataLineES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
+!29 = distinct !{!29, !27, !"_ZSt19__relocate_object_aIN22photos_editing_formats8image_io8DataLineES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
 !30 = distinct !{!30, !13}
 !31 = distinct !{!31, !13}
 !32 = !{i8 0, i8 2}
@@ -366,8 +369,5 @@ attributes #13 = { builtin nounwind }
 !39 = !{!17, !8, i64 16}
 !40 = !{!"_ZTSN22photos_editing_formats8image_io8DataLineE", !10, i64 0, !11, i64 8}
 !41 = !{!40, !10, i64 0}
-!43 = distinct !{!43, i1 false, !"_ZSt19__relocate_object_aIN22photos_editing_formats8image_io8DataLineES2_SaIS2_EEvPT_PT0_RT1_"}
-!44 = distinct !{!44, !43, !"_ZSt19__relocate_object_aIN22photos_editing_formats8image_io8DataLineES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
-!45 = distinct !{!45, !43, !"_ZSt19__relocate_object_aIN22photos_editing_formats8image_io8DataLineES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
-!46 = !{!44, !45}
+!42 = !{!29, !28}
 end_hunk_0

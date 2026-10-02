@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.c, label %.critedge
 
 .thread:                                          ; preds = %bb.a
-  %i.h = call ptr @__memcpy_chk(ptr noundef nonnull %i.c, ptr noundef nonnull %1, i64 noundef range(i64 0, 65) %2, i64 noundef 60) #10, !alias.scope !21 ; 0 uses
+  %i.h = call ptr @__memcpy_chk(ptr noundef nonnull %i.c, ptr noundef nonnull %1, i64 noundef range(i64 0, 65) %2, i64 noundef 60) #10, !alias.scope !17 ; 0 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 %2
   %i.j = sub nuw nsw i64 60, %2
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.i, i8 noundef 0, i64 noundef range(i64 1, 4097) %i.j, i1 noundef false) #10
@@ -585,8 +585,8 @@ attributes #13 = { nounwind allocsize(1) }
 !11 = distinct !{!11, !13}
 !12 = distinct !{!12, !13}
 !13 = !{!"llvm.loop.mustprogress"}
-!18 = distinct !{!18, i1 false, !"memcpy.inline"}
-!19 = distinct !{!19, !18, !"memcpy.inline: argument 0"}
-!20 = distinct !{!20, !18, !"memcpy.inline: argument 1"}
-!21 = !{!19, !20}
+!14 = distinct !{!14, i1 false, !"memcpy.inline"}
+!15 = distinct !{!15, !14, !"memcpy.inline: argument 1"}
+!16 = distinct !{!16, !14, !"memcpy.inline: argument 0"}
+!17 = !{!16, !15}
 end_hunk_0

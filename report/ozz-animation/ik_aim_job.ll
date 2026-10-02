@@ -53,14 +53,14 @@ bb.a:
   br i1 %i.s, label %bb.b, label %bb.u
 
 bb.b:                                             ; preds = %bb.a
-  %i.t = load <4 x float>, ptr %i.b, align 16, !tbaa !10, !noalias !29 ; 2 uses
+  %i.t = load <4 x float>, ptr %i.b, align 16, !tbaa !10, !noalias !21 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.v = load <4 x float>, ptr %i.u, align 16, !tbaa !10, !noalias !29 ; 2 uses
+  %i.v = load <4 x float>, ptr %i.u, align 16, !tbaa !10, !noalias !21 ; 2 uses
   %i.w = shufflevector <4 x float> %i.t, <4 x float> %i.v, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.y = load <4 x float>, ptr %i.x, align 16, !tbaa !10, !noalias !29 ; 2 uses
+  %i.y = load <4 x float>, ptr %i.x, align 16, !tbaa !10, !noalias !21 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %i.aa = load <4 x float>, ptr %i.z, align 16, !tbaa !10, !noalias !29 ; 2 uses
+  %i.aa = load <4 x float>, ptr %i.z, align 16, !tbaa !10, !noalias !21 ; 2 uses
   %i.ab = shufflevector <4 x float> %i.y, <4 x float> %i.aa, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 3 uses
   %i.ac = shufflevector <4 x float> %i.t, <4 x float> %i.v, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 4 uses
   %i.ad = shufflevector <4 x float> %i.y, <4 x float> %i.aa, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 4 uses
@@ -463,6 +463,8 @@ attributes #5 = { nounwind }
 !9 = !{!"any pointer", !5, i64 0}
 !10 = !{!5, !5, i64 0}
 !11 = !{!9, !9, i64 0}
+!12 = distinct !{!12, i1 false, !"_ZN3ozz4math6InvertERKNS0_8Float4x4EPDv2_x"}
+!13 = distinct !{!13, !12, !"_ZN3ozz4math6InvertERKNS0_8Float4x4EPDv2_x: argument 0"}
 !14 = !{!"float", !5, i64 0}
 !15 = !{!"p1 _ZTSN3ozz4math8Float4x4E", !9, i64 0}
 !16 = !{!"p1 _ZTSN3ozz4math14SimdQuaternionE", !9, i64 0}
@@ -470,12 +472,10 @@ attributes #5 = { nounwind }
 !18 = !{!"_ZTSN3ozz9animation8IKAimJobE", !5, i64 0, !5, i64 16, !5, i64 32, !5, i64 48, !5, i64 64, !14, i64 80, !14, i64 84, !15, i64 88, !16, i64 96, !17, i64 104}
 !19 = !{!18, !15, i64 88}
 !20 = !{!18, !16, i64 96}
+!21 = !{!13}
 !22 = !{!18, !17, i64 104}
 !23 = !{!"bool", !5, i64 0}
 !24 = !{!23, !23, i64 0}
 !25 = !{!18, !14, i64 80}
 !26 = !{!18, !14, i64 84}
-!27 = distinct !{!27, i1 false, !"_ZN3ozz4math6InvertERKNS0_8Float4x4EPDv2_x"}
-!28 = distinct !{!28, !27, !"_ZN3ozz4math6InvertERKNS0_8Float4x4EPDv2_x: argument 0"}
-!29 = !{!28}
 end_hunk_1

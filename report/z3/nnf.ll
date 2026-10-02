@@ -205,13 +205,13 @@ _ZNK10skolemizer10is_sk_hackEP4expr.exit.thread:  ; preds = %bb.ar, %bb.ap, %bb.
   %.2 = phi ptr [ %i.gc, %_ZSt7reverseIPP4exprEvT_S3_.exit ], [ %i.gc, %bb.al ], [ %.1, %_ZNK10skolemizer10is_sk_hackEP4expr.exit.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
   %i.ik = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.il = load ptr, ptr %i.cv, align 8, !tbaa !24, !noalias !260 ; 3 uses
+  %i.il = load ptr, ptr %i.cv, align 8, !tbaa !24, !noalias !257 ; 3 uses
   %i.im = icmp eq ptr %i.il, null
   br i1 %i.im, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i, label %bb.bd
 
 bb.bd:                                            ; preds = %.loopexit
   %i.in = getelementptr inbounds i8, ptr %i.il, i64 -4
-  %i.io = load i32, ptr %i.in, align 4, !tbaa !153, !noalias !260
+  %i.io = load i32, ptr %i.in, align 4, !tbaa !153, !noalias !257
   br label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i: ; preds = %bb.bd, %.loopexit
@@ -614,10 +614,10 @@ begin_hunk_1_@bcmp
 !249 = distinct !{!249, !155}
 !250 = distinct !{!250, !155}
 !251 = distinct !{!251, !155}
+!252 = distinct !{!252, i1 false, !"_ZN9var_substclEP4exprRK10ref_vectorIS0_11ast_managerE"}
+!253 = distinct !{!253, !252, !"_ZN9var_substclEP4exprRK10ref_vectorIS0_11ast_managerE: argument 0"}
 !254 = !{!216, !9, i64 8}
 !255 = !{!216, !9, i64 12}
 !256 = !{!137, !137, i64 0}
-!258 = distinct !{!258, i1 false, !"_ZN9var_substclEP4exprRK10ref_vectorIS0_11ast_managerE"}
-!259 = distinct !{!259, !258, !"_ZN9var_substclEP4exprRK10ref_vectorIS0_11ast_managerE: argument 0"}
-!260 = !{!259}
+!257 = !{!253}
 end_hunk_1

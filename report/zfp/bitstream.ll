@@ -202,14 +202,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.x = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %i.h, i64 %i.x ; 2 uses
   %i.y = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> zeroinitializer, ptr %next.gep, align 8, !tbaa !17, !alias.scope !32, !noalias !34
-  store <2 x i64> zeroinitializer, ptr %i.y, align 8, !tbaa !17, !alias.scope !32, !noalias !34
+  store <2 x i64> zeroinitializer, ptr %next.gep, align 8, !tbaa !17, !alias.scope !26, !noalias !27
+  store <2 x i64> zeroinitializer, ptr %i.y, align 8, !tbaa !17, !alias.scope !26, !noalias !27
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.z = icmp eq i64 %index.next, %n.vec
   br i1 %i.z, label %middle.block, label %vector.body, !llvm.loop !24
 
 middle.block:                                     ; preds = %vector.body
-  store i64 0, ptr %i.f, align 8, !tbaa !18, !alias.scope !34
+  store i64 0, ptr %i.f, align 8, !tbaa !18, !alias.scope !27
   %cmp.n = icmp eq i64 %i.n, %n.vec
   br i1 %cmp.n, label %._crit_edge.i, label %.peel.next.preheader17
 
@@ -456,7 +456,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(40) %0, i64 40, i1 false), !tbaa.struct !36
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(40) %0, i64 40, i1 false), !tbaa.struct !31
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -511,15 +511,15 @@ attributes #15 = { nounwind }
 !18 = !{!12, !9, i64 8}
 !19 = !{!"llvm.loop.peeled.count", i32 1}
 !20 = distinct !{!20, !19}
+!21 = distinct !{!21, i1 false, !"LVerDomain"}
+!22 = distinct !{!22, !21}
+!23 = distinct !{!23, !21}
 !24 = distinct !{!24, !19, !28, !29}
 !25 = distinct !{!25, !19, !28}
+!26 = !{!22}
+!27 = !{!23}
 !28 = !{!"llvm.loop.isvectorized", i32 1}
 !29 = !{!"llvm.loop.unroll.runtime.disable"}
-!30 = distinct !{!30, i1 false, !"LVerDomain"}
-!31 = distinct !{!31, !30}
-!32 = !{!31}
-!33 = distinct !{!33, !30}
-!34 = !{!33}
-!35 = !{!11, !11, i64 0}
-!36 = !{i64 0, i64 8, !17, i64 8, i64 8, !17, i64 16, i64 8, !35, i64 24, i64 8, !35, i64 32, i64 8, !35}
+!30 = !{!11, !11, i64 0}
+!31 = !{i64 0, i64 8, !17, i64 8, i64 8, !17, i64 16, i64 8, !30, i64 24, i64 8, !30, i64 32, i64 8, !30}
 end_hunk_0

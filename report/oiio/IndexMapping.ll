@@ -204,10 +204,10 @@ _ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.c
 .lr.ph.i.i.i:                                     ; preds = %_ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit, %.lr.ph.i.i.i
   %.012.i.i.i = phi ptr [ %i.z, %.lr.ph.i.i.i ], [ %i.u, %_ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit ] ; 2 uses
   %.0911.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i ], [ %i.c, %_ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit ] ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !40)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !42)
-  %i.x = load i64, ptr %.0911.i.i.i, align 4, !alias.scope !42, !noalias !40
-  store i64 %i.x, ptr %.012.i.i.i, align 4, !alias.scope !40, !noalias !42
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !36)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !37)
+  %i.x = load i64, ptr %.0911.i.i.i, align 4, !alias.scope !37, !noalias !36
+  store i64 %i.x, ptr %.012.i.i.i, align 4, !alias.scope !36, !noalias !37
   %i.y = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8
   %.not.i.i.i = icmp eq ptr %i.y, %i.b
@@ -318,10 +318,10 @@ attributes #19 = { builtin allocsize(0) }
 !29 = !{!4, !4, i64 0}
 !30 = distinct !{!30, !23}
 !31 = distinct !{!31, !23}
+!32 = distinct !{!32, i1 false, !"_ZSt19__relocate_object_aISt4pairIffES1_SaIS1_EEvPT_PT0_RT1_"}
+!33 = distinct !{!33, !32, !"_ZSt19__relocate_object_aISt4pairIffES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
+!34 = distinct !{!34, !32, !"_ZSt19__relocate_object_aISt4pairIffES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !35 = distinct !{!35, !23}
-!38 = distinct !{!38, i1 false, !"_ZSt19__relocate_object_aISt4pairIffES1_SaIS1_EEvPT_PT0_RT1_"}
-!39 = distinct !{!39, !38, !"_ZSt19__relocate_object_aISt4pairIffES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
-!40 = !{!39}
-!41 = distinct !{!41, !38, !"_ZSt19__relocate_object_aISt4pairIffES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
-!42 = !{!41}
+!36 = !{!33}
+!37 = !{!34}
 end_hunk_0

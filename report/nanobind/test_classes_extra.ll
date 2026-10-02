@@ -26,7 +26,7 @@ define hidden void @_ZN13NeverDestructC2Ev(ptr nofree noundef nonnull writeonly 
 _ZNSt10unique_ptrIN13NeverDestruct6NDImplESt14default_deleteIS1_EED2Ev.exit:
   store ptr null, ptr %0, align 8, !tbaa !11
   %i.a = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #8 ; 2 uses
-  store i32 0, ptr %i.a, align 4, !tbaa !13, !noalias !20
+  store i32 0, ptr %i.a, align 4, !tbaa !13, !noalias !17
   store ptr %i.a, ptr %0, align 8, !tbaa !14
   ret void
 }
@@ -54,7 +54,7 @@ define hidden noundef nonnull align 8 dereferenceable(8) ptr @_ZN13NeverDestruct
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN13NeverDestruct4makeEvE2nd acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.e, !prof !23
+  br i1 %i.b, label %bb.b, label %bb.e, !prof !20
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN13NeverDestruct4makeEvE2nd) #9
@@ -67,7 +67,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.f       ; 2 uses
 
 bb.d:                                             ; preds = %bb.c
-  store i32 0, ptr %i.d, align 4, !tbaa !13, !noalias !27
+  store i32 0, ptr %i.d, align 4, !tbaa !13, !noalias !21
   store ptr %i.d, ptr @_ZZN13NeverDestruct4makeEvE2nd, align 8, !tbaa !14
   %i.e = tail call i32 @__cxa_atexit(ptr nonnull @_ZN13NeverDestructD2Ev, ptr nonnull @_ZZN13NeverDestruct4makeEvE2nd, ptr nonnull @__dso_handle) #9 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN13NeverDestruct4makeEvE2nd) #9
@@ -147,11 +147,11 @@ attributes #10 = { builtin nounwind optsize }
 !12 = !{!"_ZTSN13NeverDestruct6NDImplE", !5, i64 0}
 !13 = !{!12, !5, i64 0}
 !14 = !{!9, !9, i64 0}
+!15 = distinct !{!15, i1 false, !"_ZSt11make_uniqueIN13NeverDestruct6NDImplEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!16 = distinct !{!16, !15, !"_ZSt11make_uniqueIN13NeverDestruct6NDImplEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
+!17 = !{!16}
 !18 = distinct !{!18, i1 false, !"_ZSt11make_uniqueIN13NeverDestruct6NDImplEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !19 = distinct !{!19, !18, !"_ZSt11make_uniqueIN13NeverDestruct6NDImplEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!20 = !{!19}
-!23 = !{!"branch_weights", i32 1, i32 1048575}
-!25 = distinct !{!25, i1 false, !"_ZSt11make_uniqueIN13NeverDestruct6NDImplEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!26 = distinct !{!26, !25, !"_ZSt11make_uniqueIN13NeverDestruct6NDImplEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!27 = !{!26}
+!20 = !{!"branch_weights", i32 1, i32 1048575}
+!21 = !{!19}
 end_hunk_0

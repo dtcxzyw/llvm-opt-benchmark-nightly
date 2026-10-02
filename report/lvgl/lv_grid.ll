@@ -204,18 +204,18 @@ vector.body108:                                   ; preds = %vector.body108, %ve
   %index109 = phi i64 [ 0, %vector.ph104 ], [ %index.next114, %vector.body108 ] ; 3 uses
   %i.iz = getelementptr inbounds nuw [4 x i8], ptr %i.dh, i64 %index109 ; 3 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 16 ; 2 uses
-  %wide.load110 = load <4 x i32>, ptr %i.iz, align 4, !tbaa !55, !alias.scope !97, !noalias !99
-  %wide.load111 = load <4 x i32>, ptr %i.ja, align 4, !tbaa !55, !alias.scope !97, !noalias !99
+  %wide.load110 = load <4 x i32>, ptr %i.iz, align 4, !tbaa !55, !alias.scope !68, !noalias !69
+  %wide.load111 = load <4 x i32>, ptr %i.ja, align 4, !tbaa !55, !alias.scope !68, !noalias !69
   %i.jb = getelementptr inbounds nuw [4 x i8], ptr %i.gm, i64 %index109 ; 2 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  %wide.load112 = load <4 x i32>, ptr %i.jb, align 4, !tbaa !55, !alias.scope !99
-  %wide.load113 = load <4 x i32>, ptr %i.jc, align 4, !tbaa !55, !alias.scope !99
+  %wide.load112 = load <4 x i32>, ptr %i.jb, align 4, !tbaa !55, !alias.scope !69
+  %wide.load113 = load <4 x i32>, ptr %i.jc, align 4, !tbaa !55, !alias.scope !69
   %i.jd = add <4 x i32> %wide.load110, %wide.load112
   %i.je = add <4 x i32> %wide.load111, %wide.load113
   %i.jf = sub <4 x i32> %broadcast.splat107, %i.jd
   %i.jg = sub <4 x i32> %broadcast.splat107, %i.je
-  store <4 x i32> %i.jf, ptr %i.iz, align 4, !tbaa !55, !alias.scope !97, !noalias !99
-  store <4 x i32> %i.jg, ptr %i.ja, align 4, !tbaa !55, !alias.scope !97, !noalias !99
+  store <4 x i32> %i.jf, ptr %i.iz, align 4, !tbaa !55, !alias.scope !68, !noalias !69
+  store <4 x i32> %i.jg, ptr %i.ja, align 4, !tbaa !55, !alias.scope !68, !noalias !69
   %index.next114 = add nuw i64 %index109, 8       ; 2 uses
   %i.jh = icmp eq i64 %index.next114, %n.vec105
   br i1 %i.jh, label %middle.block115, label %vector.body108, !llvm.loop !49
@@ -618,6 +618,9 @@ attributes #8 = { nounwind }
 !43 = distinct !{!43, !56, !66, !65}
 !44 = distinct !{!44, !56}
 !45 = distinct !{!45, !67}
+!46 = distinct !{!46, i1 false, !"LVerDomain"}
+!47 = distinct !{!47, !46}
+!48 = distinct !{!48, !46}
 !49 = distinct !{!49, !56, !65, !66}
 !50 = distinct !{!50, !56, !65}
 !51 = distinct !{!51, !56, !65, !66}
@@ -637,6 +640,8 @@ attributes #8 = { nounwind }
 !65 = !{!"llvm.loop.isvectorized", i32 1}
 !66 = !{!"llvm.loop.unroll.runtime.disable"}
 !67 = !{!"llvm.loop.unroll.disable"}
+!68 = !{!47}
+!69 = !{!48}
 !70 = !{!58, !5, i64 40}
 !71 = !{!58, !5, i64 44}
 !72 = !{!"p1 _ZTS15_lv_obj_class_t", !8, i64 0}
@@ -662,9 +667,4 @@ attributes #8 = { nounwind }
 !92 = !{!12, !12, i64 0}
 !93 = !{!77, !5, i64 48}
 !94 = !{!77, !5, i64 52}
-!95 = distinct !{!95, i1 false, !"LVerDomain"}
-!96 = distinct !{!96, !95}
-!97 = !{!96}
-!98 = distinct !{!98, !95}
-!99 = !{!98}
 end_hunk_1

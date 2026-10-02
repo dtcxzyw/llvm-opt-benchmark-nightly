@@ -204,16 +204,16 @@ vector.body304:                                   ; preds = %vector.ph300, %vect
   %index305 = phi i64 [ 0, %vector.ph300 ], [ %index.next308, %vector.body304 ] ; 2 uses
   %i.el = add nuw i64 %index305, %i.du            ; 2 uses
   %i.em = getelementptr i8, ptr %invariant.gep, i64 %i.el
-  %wide.load306 = load <16 x i8>, ptr %i.em, align 1, !tbaa !8, !alias.scope !42
+  %wide.load306 = load <16 x i8>, ptr %i.em, align 1, !tbaa !8, !alias.scope !37
   %i.en = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.el ; 2 uses
-  %wide.load307 = load <16 x i8>, ptr %i.en, align 1, !tbaa !8, !alias.scope !44, !noalias !42
+  %wide.load307 = load <16 x i8>, ptr %i.en, align 1, !tbaa !8, !alias.scope !38, !noalias !37
   %i.eo = zext <16 x i8> %wide.load306 to <16 x i32>
   %i.ep = zext <16 x i8> %wide.load307 to <16 x i32>
   %i.eq = and <16 x i32> %broadcast.splat, %i.eo
   %i.er = and <16 x i32> %broadcast.splat303, %i.ep
   %i.es = or <16 x i32> %i.er, %i.eq
   %i.et = trunc nuw <16 x i32> %i.es to <16 x i8>
-  store <16 x i8> %i.et, ptr %i.en, align 1, !tbaa !8, !alias.scope !44, !noalias !42
+  store <16 x i8> %i.et, ptr %i.en, align 1, !tbaa !8, !alias.scope !38, !noalias !37
   %index.next308 = add nuw i64 %index305, 16      ; 2 uses
   %i.eu = icmp eq i64 %index.next308, %n.vec301
   br i1 %i.eu, label %middle.block309, label %vector.body304, !llvm.loop !31
@@ -240,16 +240,16 @@ vec.epilog.vector.body323:                        ; preds = %vec.epilog.vector.b
   %index324 = phi i64 [ %vec.epilog.resume.val311, %vec.epilog.ph317 ], [ %index.next327, %vec.epilog.vector.body323 ] ; 2 uses
   %i.ew = add nuw i64 %index324, %i.du            ; 2 uses
   %i.ex = getelementptr i8, ptr %invariant.gep, i64 %i.ew
-  %wide.load325 = load <4 x i8>, ptr %i.ex, align 1, !tbaa !8, !alias.scope !42
+  %wide.load325 = load <4 x i8>, ptr %i.ex, align 1, !tbaa !8, !alias.scope !37
   %i.ey = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.ew ; 2 uses
-  %wide.load326 = load <4 x i8>, ptr %i.ey, align 1, !tbaa !8, !alias.scope !44, !noalias !42
+  %wide.load326 = load <4 x i8>, ptr %i.ey, align 1, !tbaa !8, !alias.scope !38, !noalias !37
   %i.ez = zext <4 x i8> %wide.load325 to <4 x i32>
   %i.fa = zext <4 x i8> %wide.load326 to <4 x i32>
   %i.fb = and <4 x i32> %broadcast.splat320, %i.ez
   %i.fc = and <4 x i32> %broadcast.splat322, %i.fa
   %i.fd = or <4 x i32> %i.fc, %i.fb
   %i.fe = trunc nuw <4 x i32> %i.fd to <4 x i8>
-  store <4 x i8> %i.fe, ptr %i.ey, align 1, !tbaa !8, !alias.scope !44, !noalias !42
+  store <4 x i8> %i.fe, ptr %i.ey, align 1, !tbaa !8, !alias.scope !38, !noalias !37
   %index.next327 = add nuw i64 %index324, 4       ; 2 uses
   %i.ff = icmp eq i64 %index.next327, %n.vec318
   br i1 %i.ff, label %vec.epilog.middle.block328, label %vec.epilog.vector.body323, !llvm.loop !32
@@ -400,16 +400,16 @@ attributes #7 = { nounwind memory(none) }
 !25 = distinct !{!25, !9, !10, !11}
 !26 = distinct !{!26, !9, !11, !10}
 !27 = distinct !{!27, !9}
+!28 = distinct !{!28, i1 false, !"LVerDomain"}
+!29 = distinct !{!29, !28}
+!30 = distinct !{!30, !28}
 !31 = distinct !{!31, !9, !10, !11}
 !32 = distinct !{!32, !9, !10, !11}
 !33 = distinct !{!33, !9, !10}
 !34 = distinct !{!34, !9}
 !35 = distinct !{!35, !9}
 !36 = !{i64 62253}
+!37 = !{!29}
+!38 = !{!30}
 !39 = !{!"branch_weights", i32 4, i32 12}
-!40 = distinct !{!40, i1 false, !"LVerDomain"}
-!41 = distinct !{!41, !40}
-!42 = !{!41}
-!43 = distinct !{!43, !40}
-!44 = !{!43}
 end_hunk_0

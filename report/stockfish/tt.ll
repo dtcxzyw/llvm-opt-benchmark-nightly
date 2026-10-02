@@ -204,13 +204,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.bj = icmp ne i8 %i.bi, 0
   %i.bk = zext i1 %i.bj to i8
   %i.bl = getelementptr inbounds nuw i8, ptr %.lcssa, i64 4
-  %.sroa.0.0.copyload.i = load i16, ptr %i.bl, align 2, !tbaa !26, !noalias !70
+  %.sroa.0.0.copyload.i = load i16, ptr %i.bl, align 2, !tbaa !26, !noalias !59
   %i.bm = getelementptr inbounds nuw i8, ptr %.lcssa, i64 6
-  %i.bn = load <2 x i16>, ptr %i.bm, align 2, !tbaa !26, !noalias !70
+  %i.bn = load <2 x i16>, ptr %i.bm, align 2, !tbaa !26, !noalias !59
   %i.bo = zext i8 %i.bi to i32
   %i.bp = add nsw i32 %i.bo, -3
   %i.bq = getelementptr inbounds nuw i8, ptr %.lcssa, i64 3
-  %i.br = load i8, ptr %i.bq, align 1, !tbaa !27, !noalias !70 ; 2 uses
+  %i.br = load i8, ptr %i.bq, align 1, !tbaa !27, !noalias !59 ; 2 uses
   %i.bs = and i8 %i.br, 3
   %i.bt = lshr i8 %i.br, 2
   %.lobit.i = and i8 %i.bt, 1
@@ -282,13 +282,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorIPN9Stockfish3shm6detail16SharedMemoryBaseESaIS4_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) unnamed_addr #4 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !74     ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !71     ; 3 uses
   %.not.i.i = icmp eq ptr %i.a, null
   br i1 %.not.i.i, label %_ZNSt12_Vector_baseIPN9Stockfish3shm6detail16SharedMemoryBaseESaIS4_EED2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !75
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !72
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e
@@ -335,13 +335,13 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.07 = phi ptr [ %i.d, %.lr.ph ], [ %1, %bb.a ] ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.07, i64 24
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !77
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !74
   tail call void @_ZNSt8_Rb_treeImmSt9_IdentityImESt4lessImESaImEE8_M_eraseEPSt13_Rb_tree_nodeImE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %i.b)
   %i.c = getelementptr inbounds nuw i8, ptr %.07, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !78   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !75   ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.07, i64 noundef 40) #23
   %.not = icmp eq ptr %i.d, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !76
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !73
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -351,13 +351,13 @@ bb.a:
 define internal void @"_ZNSt17_Function_handlerIFvvEZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E9_M_invokeERKSt9_Any_data"(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) #8 align 2 {
 bb.a:
   %.val = load ptr, ptr %0, align 8, !tbaa !41    ; 3 uses
-  %i.a = load ptr, ptr %.val, align 8, !tbaa !80  ; 2 uses
+  %i.a = load ptr, ptr %.val, align 8, !tbaa !77  ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !37   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val, i64 16
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !81   ; 2 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !78   ; 2 uses
   %i.e = udiv i64 %i.b, %i.d                      ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.val, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !82   ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !79   ; 2 uses
   %i.h = mul i64 %i.g, %i.e                       ; 2 uses
   %i.i = add i64 %i.g, 1
   %.not.i.i.i = icmp eq i64 %i.i, %i.d
@@ -382,7 +382,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  store ptr @"_ZTIZN9Stockfish18TranspositionTable5clearERNS_10ThreadPoolEE3$_0", ptr %0, align 8, !tbaa !84
+  store ptr @"_ZTIZN9Stockfish18TranspositionTable5clearERNS_10ThreadPoolEE3$_0", ptr %0, align 8, !tbaa !81
   br label %"_ZNSt14_Function_base13_Base_managerIZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation.exit"
 
 bb.c:                                             ; preds = %bb.a
@@ -393,7 +393,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.a
   %.val6 = load ptr, ptr %1, align 8
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #22 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(24) %.val6, i64 24, i1 false), !tbaa.struct !85
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(24) %.val6, i64 24, i1 false), !tbaa.struct !82
   store ptr %i.a, ptr %0, align 8, !tbaa !41
   br label %"_ZNSt14_Function_base13_Base_managerIZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation.exit"
 
@@ -507,6 +507,9 @@ attributes #23 = { builtin nounwind }
 !54 = distinct !{ptr @_ZN9Stockfish18TranspositionTable5clearERNS_10ThreadPoolE, null}
 !55 = distinct !{null}
 !56 = distinct !{!56, !21}
+!57 = distinct !{!57, i1 false, !"_ZNK9Stockfish7TTEntry4readEv"}
+!58 = distinct !{!58, !57, !"_ZNK9Stockfish7TTEntry4readEv: argument 0"}
+!59 = !{!58}
 !60 = !{!31, !31, i64 0}
 !61 = !{!10, !10, i64 0}
 !62 = !{!"_ZTSN9Stockfish5BoundE", !9, i64 0}
@@ -515,22 +518,19 @@ attributes #23 = { builtin nounwind }
 !65 = !{!64, !64, i64 0}
 !66 = !{!"_ZTSSt10_Head_baseILm0EbLb0EE", !64, i64 0}
 !67 = !{!66, !64, i64 0}
-!68 = distinct !{!68, i1 false, !"_ZNK9Stockfish7TTEntry4readEv"}
-!69 = distinct !{!69, !68, !"_ZNK9Stockfish7TTEntry4readEv: argument 0"}
-!70 = !{!69}
-!71 = !{!"any p2 pointer", !16, i64 0}
-!72 = !{!"p2 _ZTSN9Stockfish3shm6detail16SharedMemoryBaseE", !71, i64 0}
-!73 = !{!"_ZTSNSt12_Vector_baseIPN9Stockfish3shm6detail16SharedMemoryBaseESaIS4_EE17_Vector_impl_dataE", !72, i64 0, !72, i64 8, !72, i64 16}
-!74 = !{!73, !72, i64 0}
-!75 = !{!73, !72, i64 16}
-!76 = distinct !{!76, !21}
-!77 = !{!18, !17, i64 24}
-!78 = !{!18, !17, i64 16}
-!79 = !{!"_ZTSZN9Stockfish18TranspositionTable5clearERNS_10ThreadPoolEE3$_0", !39, i64 0, !13, i64 8, !13, i64 16}
-!80 = !{!79, !39, i64 0}
-!81 = !{!79, !13, i64 16}
-!82 = !{!79, !13, i64 8}
-!83 = !{!"p1 _ZTSSt9type_info", !16, i64 0}
-!84 = !{!83, !83, i64 0}
-!85 = !{i64 0, i64 8, !40, i64 8, i64 8, !14, i64 16, i64 8, !14}
+!68 = !{!"any p2 pointer", !16, i64 0}
+!69 = !{!"p2 _ZTSN9Stockfish3shm6detail16SharedMemoryBaseE", !68, i64 0}
+!70 = !{!"_ZTSNSt12_Vector_baseIPN9Stockfish3shm6detail16SharedMemoryBaseESaIS4_EE17_Vector_impl_dataE", !69, i64 0, !69, i64 8, !69, i64 16}
+!71 = !{!70, !69, i64 0}
+!72 = !{!70, !69, i64 16}
+!73 = distinct !{!73, !21}
+!74 = !{!18, !17, i64 24}
+!75 = !{!18, !17, i64 16}
+!76 = !{!"_ZTSZN9Stockfish18TranspositionTable5clearERNS_10ThreadPoolEE3$_0", !39, i64 0, !13, i64 8, !13, i64 16}
+!77 = !{!76, !39, i64 0}
+!78 = !{!76, !13, i64 16}
+!79 = !{!76, !13, i64 8}
+!80 = !{!"p1 _ZTSSt9type_info", !16, i64 0}
+!81 = !{!80, !80, i64 0}
+!82 = !{i64 0, i64 8, !40, i64 8, i64 8, !14, i64 16, i64 8, !14}
 end_hunk_0

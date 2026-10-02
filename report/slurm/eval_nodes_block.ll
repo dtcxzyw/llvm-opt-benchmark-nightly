@@ -202,7 +202,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.qi = phi i64 [ 3, %vector.ph ], [ %i.ql, %vector.body ] ; 2 uses
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.qk, %vector.body ]
   %i.qj = getelementptr [4 x i8], ptr %invariant.gep, i64 %index
-  %wide.load = load <4 x i32>, ptr %i.qj, align 4, !alias.scope !46
+  %wide.load = load <4 x i32>, ptr %i.qj, align 4, !alias.scope !38
   %i.qk = add <4 x i32> %wide.load, %vec.phi      ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ql = add nuw nsw i64 %i.qi, 4
@@ -212,7 +212,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %i.qn = trunc i64 %i.qi to i32
   %i.qo = add i32 %i.qn, 1
-  store i32 %i.qo, ptr %i.k, align 4, !alias.scope !48, !noalias !46
+  store i32 %i.qo, ptr %i.k, align 4, !alias.scope !41, !noalias !38
   %i.qp = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.qk) ; 2 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %.loopexit1110, label %scalar.ph.preheader
@@ -615,7 +615,10 @@ attributes #8 = { nounwind }
 !10 = distinct !{!10, !36, !37}
 !11 = distinct !{!11, !36, !37}
 !12 = distinct !{!12, !36, !37}
+!13 = distinct !{!13, i1 false, !"LVerDomain"}
+!14 = distinct !{!14, !13}
 !15 = distinct !{!15, !36, !37, !39, !40}
+!16 = distinct !{!16, !13}
 !17 = distinct !{!17, !36, !37, !39}
 !18 = distinct !{!18, !36, !37}
 !19 = distinct !{!19, !36, !37}
@@ -637,13 +640,10 @@ attributes #8 = { nounwind }
 !35 = distinct !{!35, !36, !37}
 !36 = !{!"llvm.loop.mustprogress"}
 !37 = !{!"llvm.loop.unroll.disable"}
+!38 = !{!14}
 !39 = !{!"llvm.loop.isvectorized", i32 1}
 !40 = !{!"llvm.loop.unroll.runtime.disable"}
+!41 = !{!16}
 !42 = !{i8 0, i8 2}
 !43 = !{}
-!44 = distinct !{!44, i1 false, !"LVerDomain"}
-!45 = distinct !{!45, !44}
-!46 = !{!45}
-!47 = distinct !{!47, !44}
-!48 = !{!47}
 end_hunk_1

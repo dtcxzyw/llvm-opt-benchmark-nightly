@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %0, align 8, !nonnull !6, !noundef !6 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 %2
   %i.e = sub nuw i64 %i.b, %2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %1, ptr nonnull readonly align 1 %i.c, i64 range(i64 0, -9223372036854775808) %2, i1 false), !alias.scope !17
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %1, ptr nonnull readonly align 1 %i.c, i64 range(i64 0, -9223372036854775808) %2, i1 false), !alias.scope !12
   store ptr %i.d, ptr %0, align 8, !captures !13
   store i64 %i.e, ptr %i.a, align 8
   br label %bb.c
@@ -215,9 +215,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRtNtB6_5Debug3fmtCs6kx5fqqPdgs_8wasmi_ir(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #1 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !nonnull !6, !align !21, !noundef !6 ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !nonnull !6, !align !17, !noundef !6 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.c = load i32, ptr %i.b, align 8, !alias.scope !26, !noalias !28, !noundef !6 ; 2 uses
+  %i.c = load i32, ptr %i.b, align 8, !alias.scope !18, !noalias !19, !noundef !6 ; 2 uses
   %i.d = and i32 %i.c, 33554432
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -247,7 +247,7 @@ _RNvXsV_NtNtCskKLDkoKarTP_4core3fmt3numtNtB7_5Debug3fmt.exit: ; preds = %bb.c, %
 ; Function Attrs: nonlazybind uwtable
 define noundef zeroext i1 @_RNvXs3_NtCs6kx5fqqPdgs_8wasmi_ir6opcodeNtB5_6OpCodeNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 2 captures(none) dereferenceable(2) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #1 {
 switch.lookup:
-  %i.a = load i16, ptr %0, align 2, !range !29, !noundef !6 ; 2 uses
+  %i.a = load i16, ptr %0, align 2, !range !20, !noundef !6 ; 2 uses
   %i.b = zext nneg i16 %i.a to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs3_NtCs6kx5fqqPdgs_8wasmi_ir6opcodeNtB5_6OpCodeNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt, i64 %i.b
   %switch.load = load i8, ptr %switch.gep, align 1
@@ -262,7 +262,7 @@ switch.lookup:
 ; Function Attrs: nonlazybind uwtable
 define noundef zeroext i1 @_RNvXs_NtCs6kx5fqqPdgs_8wasmi_ir6decodeNtB4_11DecodeErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt(ptr noalias nofree noundef readonly captures(none) dereferenceable(1) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #1 {
 bb.a:
-  %i.a = load i8, ptr %0, align 1, !range !30, !noundef !6
+  %i.a = load i8, ptr %0, align 1, !range !21, !noundef !6
   %i.b = trunc nuw i8 %i.a to i1                  ; 2 uses
   %. = select i1 %i.b, i64 31, i64 26
   %.1 = select i1 %i.b, ptr @1421, ptr @1420
@@ -328,17 +328,17 @@ attributes #5 = { noinline noreturn }
 !6 = !{}
 !7 = !{i8 0, i8 3}
 !8 = !{i64 8}
+!9 = distinct !{!9, i1 false, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECs6kx5fqqPdgs_8wasmi_ir"}
+!10 = distinct !{!10, !9, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECs6kx5fqqPdgs_8wasmi_ir: argument 1"}
+!11 = distinct !{!11, !9, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECs6kx5fqqPdgs_8wasmi_ir: argument 0"}
+!12 = !{!11, !10}
 !13 = !{!"address", !"read_provenance"}
-!14 = distinct !{!14, i1 false, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECs6kx5fqqPdgs_8wasmi_ir"}
-!15 = distinct !{!15, !14, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECs6kx5fqqPdgs_8wasmi_ir: argument 0"}
-!16 = distinct !{!16, !14, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECs6kx5fqqPdgs_8wasmi_ir: argument 1"}
-!17 = !{!15, !16}
-!21 = !{i64 2}
-!24 = distinct !{!24, i1 false, !"_RNvXsV_NtNtCskKLDkoKarTP_4core3fmt3numtNtB7_5Debug3fmt"}
-!25 = distinct !{!25, !24, !"_RNvXsV_NtNtCskKLDkoKarTP_4core3fmt3numtNtB7_5Debug3fmt: argument 1"}
-!26 = !{!25}
-!27 = distinct !{!27, !24, !"_RNvXsV_NtNtCskKLDkoKarTP_4core3fmt3numtNtB7_5Debug3fmt: argument 0"}
-!28 = !{!27}
-!29 = !{i16 0, i16 1404}
-!30 = !{i8 0, i8 2}
+!14 = distinct !{!14, i1 false, !"_RNvXsV_NtNtCskKLDkoKarTP_4core3fmt3numtNtB7_5Debug3fmt"}
+!15 = distinct !{!15, !14, !"_RNvXsV_NtNtCskKLDkoKarTP_4core3fmt3numtNtB7_5Debug3fmt: argument 1"}
+!16 = distinct !{!16, !14, !"_RNvXsV_NtNtCskKLDkoKarTP_4core3fmt3numtNtB7_5Debug3fmt: argument 0"}
+!17 = !{i64 2}
+!18 = !{!15}
+!19 = !{!16}
+!20 = !{i16 0, i16 1404}
+!21 = !{i8 0, i8 2}
 end_hunk_0

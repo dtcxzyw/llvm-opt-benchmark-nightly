@@ -22,7 +22,7 @@ bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #5
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 9 uses
-  store ptr %i.a, ptr %2, align 8, !tbaa !11, !alias.scope !22
+  store ptr %i.a, ptr %2, align 8, !tbaa !11, !alias.scope !18
   switch i32 %1, label %._crit_edge.i.i8.i [
     i32 10, label %._crit_edge.i.i.i
     i32 20, label %._crit_edge.i.i4.i
@@ -47,8 +47,8 @@ _ZSt9to_stringB5cxx11N8bitwuzla6ResultE.exit:     ; preds = %._crit_edge.i.i.i, 
   %.sink.i = phi i64 [ 7, %._crit_edge.i.i8.i ], [ 5, %._crit_edge.i.i4.i ], [ 3, %._crit_edge.i.i.i ] ; 2 uses
   %.sink14.i.sroa.phi = phi ptr [ %.sink14.i.sroa.gep, %._crit_edge.i.i8.i ], [ %.sink14.i.sroa.gep7, %._crit_edge.i.i4.i ], [ %.sink14.i.sroa.gep8, %._crit_edge.i.i.i ]
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %.sink.i, ptr %i.b, align 8, !tbaa !14, !alias.scope !22
-  store i8 0, ptr %.sink14.i.sroa.phi, align 1, !tbaa !15, !alias.scope !22
+  store i64 %.sink.i, ptr %i.b, align 8, !tbaa !14, !alias.scope !18
+  store i8 0, ptr %.sink14.i.sroa.phi, align 1, !tbaa !15, !alias.scope !18
   %i.c = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.a, i64 noundef %.sink.i)
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit unwind label %bb.b ; 0 uses
 
@@ -161,8 +161,8 @@ attributes #6 = { builtin nounwind }
 !13 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !10, i64 0, !12, i64 8, !4, i64 16}
 !14 = !{!13, !12, i64 8}
 !15 = !{!4, !4, i64 0}
+!16 = distinct !{!16, i1 false, !"_ZSt9to_stringB5cxx11N8bitwuzla6ResultE"}
+!17 = distinct !{!17, !16, !"_ZSt9to_stringB5cxx11N8bitwuzla6ResultE: argument 0"}
+!18 = !{!17}
 !19 = !{!13, !9, i64 0}
-!20 = distinct !{!20, i1 false, !"_ZSt9to_stringB5cxx11N8bitwuzla6ResultE"}
-!21 = distinct !{!21, !20, !"_ZSt9to_stringB5cxx11N8bitwuzla6ResultE: argument 0"}
-!22 = !{!21}
 end_hunk_0

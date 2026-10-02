@@ -14,7 +14,7 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6KyyKVsJz8w_20qdrant_rust_stemmers8snowball12snowball_env11SnowballEnvEBH_(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !7, !alias.scope !11, !noundef !4
+  %i.a = load i64, ptr %0, align 8, !range !7, !alias.scope !8, !noundef !4
   %i.b = icmp eq i64 %i.a, -1
   br i1 %i.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs6KyyKVsJz8w_20qdrant_rust_stemmers.exit, label %bb.b
 
@@ -186,8 +186,8 @@ attributes #6 = { cold }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
 !4 = !{}
+!5 = distinct !{!5, i1 false, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs6KyyKVsJz8w_20qdrant_rust_stemmers"}
+!6 = distinct !{!6, !5, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs6KyyKVsJz8w_20qdrant_rust_stemmers: argument 0"}
 !7 = !{i64 -1, i64 -9223372036854775808}
-!9 = distinct !{!9, i1 false, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs6KyyKVsJz8w_20qdrant_rust_stemmers"}
-!10 = distinct !{!10, !9, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs6KyyKVsJz8w_20qdrant_rust_stemmers: argument 0"}
-!11 = !{!10}
+!8 = !{!6}
 end_hunk_0

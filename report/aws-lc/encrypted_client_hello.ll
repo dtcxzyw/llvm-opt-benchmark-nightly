@@ -204,16 +204,16 @@ bb.c:                                             ; preds = %_ZN15ssl_ech_keys_s
 ; Function Attrs: mustprogress nounwind uwtable
 define range(i32 0, 2) i32 @SSL_ECH_KEYS_add(ptr noundef %0, i32 noundef %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @OPENSSL_malloc(i64 noundef 152) #10, !noalias !236 ; 10 uses
+  %i.a = tail call ptr @OPENSSL_malloc(i64 noundef 152) #10, !noalias !233 ; 10 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %_ZNSt10unique_ptrIN4bssl15ECHServerConfigENS0_8internal7DeleterEED2Ev.exit7, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 72 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(152) %i.a, i8 0, i64 152, i1 false), !noalias !236
-  tail call void @EVP_HPKE_KEY_zero(ptr noundef nonnull align 8 dereferenceable(72) %i.c) #10, !noalias !236
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(152) %i.a, i8 0, i64 152, i1 false), !noalias !233
+  tail call void @EVP_HPKE_KEY_zero(ptr noundef nonnull align 8 dereferenceable(72) %i.c) #10, !noalias !233
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  store i8 0, ptr %i.d, align 8, !tbaa !156, !noalias !236
+  store i8 0, ptr %i.d, align 8, !tbaa !156, !noalias !233
   %i.e = icmp ne i32 %1, 0
   %i.f = tail call noundef zeroext i1 @_ZN4bssl15ECHServerConfig4InitENS_4SpanIKhEEPK15evp_hpke_key_stb(ptr noundef nonnull align 8 dereferenceable(145) %i.a, ptr %2, i64 %3, ptr noundef %4, i1 noundef zeroext %i.e)
   br i1 %i.f, label %bb.c, label %_ZN4bssl8internal7DeleterclINS_15ECHServerConfigEEEvPT_.exit.i6
@@ -407,15 +407,15 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not.i, label %_ZN4bssl5UpRefEP15ssl_ech_keys_st.exit, label %.split4.i
 
 .split4.i:                                        ; preds = %bb.c
-  tail call void @CRYPTO_refcount_inc(ptr noundef nonnull align 4 dereferenceable(4) %1) #10, !noalias !243
+  tail call void @CRYPTO_refcount_inc(ptr noundef nonnull align 4 dereferenceable(4) %1) #10, !noalias !236
   br label %_ZN4bssl5UpRefEP15ssl_ech_keys_st.exit
 
 _ZN4bssl5UpRefEP15ssl_ech_keys_st.exit:           ; preds = %bb.c, %.split4.i
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   tail call void @CRYPTO_MUTEX_lock_write(ptr noundef nonnull %i.k) #10
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 640 ; 2 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !240  ; 2 uses
-  store ptr %1, ptr %i.l, align 8, !tbaa !240
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !237  ; 2 uses
+  store ptr %1, ptr %i.l, align 8, !tbaa !237
   tail call void @CRYPTO_MUTEX_unlock_write(ptr noundef nonnull %i.k) #10
   %.not.i16 = icmp eq ptr %i.m, null
   br i1 %.not.i16, label %_ZNSt10unique_ptrI15ssl_ech_keys_stN4bssl8internal7DeleterEED2Ev.exit, label %_ZN4bssl8internal7DeleterclI15ssl_ech_keys_stEEvPT_.exit.i
@@ -597,7 +597,7 @@ _ZNSt10unique_ptrIN4bssl15ECHServerConfigENS0_8internal7DeleterEED2Ev.exit.i.i.i
   %i.w = load ptr, ptr %i.a, align 8, !tbaa !194
   call void @OPENSSL_free(ptr noundef %i.w) #10
   %i.x = load ptr, ptr %1, align 8, !tbaa !194
-  store ptr %i.x, ptr %i.a, align 8, !tbaa !245
+  store ptr %i.x, ptr %i.a, align 8, !tbaa !239
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.z = load i64, ptr %i.y, align 8, !tbaa !193
   store i64 %i.z, ptr %i.b, align 8, !tbaa !80
@@ -633,7 +633,7 @@ _ZNSt10unique_ptrIN4bssl15ECHServerConfigENS0_8internal7DeleterEEaSEOS4_.exit: ;
   %i.ak = phi ptr [ %i.ab, %.lr.ph ], [ %.pre, %_ZN4bssl8internal7DeleterclINS_15ECHServerConfigEEEvPT_.exit.i.i.i.i15 ]
   %i.al = add nuw i64 %.024, 1                    ; 2 uses
   %i.am = icmp ult i64 %i.al, %i.aj
-  br i1 %i.am, label %.lr.ph, label %._crit_edge, !llvm.loop !244
+  br i1 %i.am, label %.lr.ph, label %._crit_edge, !llvm.loop !238
 
 bb.f:                                             ; preds = %bb.e
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1003,13 +1003,13 @@ attributes #12 = { nounwind willreturn memory(read) }
 !228 = !{!152, !5, i64 66}
 !229 = !{!"_ZTSN4bssl10RefCountedI15ssl_ech_keys_stEE", !6, i64 0}
 !230 = !{!229, !6, i64 0}
-!234 = distinct !{!234, i1 false, !"_ZN4bssl10MakeUniqueINS_15ECHServerConfigEJEEESt10unique_ptrIT_NS_8internal7DeleterEEDpOT0_"}
-!235 = distinct !{!235, !234, !"_ZN4bssl10MakeUniqueINS_15ECHServerConfigEJEEESt10unique_ptrIT_NS_8internal7DeleterEEDpOT0_: argument 0"}
+!231 = distinct !{!231, i1 false, !"_ZN4bssl10MakeUniqueINS_15ECHServerConfigEJEEESt10unique_ptrIT_NS_8internal7DeleterEEDpOT0_"}
+!232 = distinct !{!232, !231, !"_ZN4bssl10MakeUniqueINS_15ECHServerConfigEJEEESt10unique_ptrIT_NS_8internal7DeleterEEDpOT0_: argument 0"}
+!233 = !{!232}
+!234 = distinct !{!234, i1 false, !"_ZN4bssl5UpRefEP15ssl_ech_keys_st"}
+!235 = distinct !{!235, !234, !"_ZN4bssl5UpRefEP15ssl_ech_keys_st: argument 0"}
 !236 = !{!235}
-!240 = !{!126, !126, i64 0}
-!241 = distinct !{!241, i1 false, !"_ZN4bssl5UpRefEP15ssl_ech_keys_st"}
-!242 = distinct !{!242, !241, !"_ZN4bssl5UpRefEP15ssl_ech_keys_st: argument 0"}
-!243 = !{!242}
-!244 = distinct !{!244, !16}
-!245 = !{!191, !191, i64 0}
+!237 = !{!126, !126, i64 0}
+!238 = distinct !{!238, !16}
+!239 = !{!191, !191, i64 0}
 end_hunk_0

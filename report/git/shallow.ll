@@ -204,16 +204,16 @@ vector.body:                                      ; preds = %.lr.ph.i.preheader,
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph.i.preheader ] ; 3 uses
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %index ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 16
-  %wide.load = load <4 x i32>, ptr %i.dv, align 4, !tbaa !50, !alias.scope !173
-  %wide.load349 = load <4 x i32>, ptr %i.dw, align 4, !tbaa !50, !alias.scope !173
+  %wide.load = load <4 x i32>, ptr %i.dv, align 4, !tbaa !50, !alias.scope !164
+  %wide.load349 = load <4 x i32>, ptr %i.dw, align 4, !tbaa !50, !alias.scope !164
   %i.dx = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %index ; 3 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 16 ; 2 uses
-  %wide.load350 = load <4 x i32>, ptr %i.dx, align 4, !tbaa !50, !alias.scope !175, !noalias !173
-  %wide.load351 = load <4 x i32>, ptr %i.dy, align 4, !tbaa !50, !alias.scope !175, !noalias !173
+  %wide.load350 = load <4 x i32>, ptr %i.dx, align 4, !tbaa !50, !alias.scope !165, !noalias !164
+  %wide.load351 = load <4 x i32>, ptr %i.dy, align 4, !tbaa !50, !alias.scope !165, !noalias !164
   %i.dz = or <4 x i32> %wide.load350, %wide.load
   %i.ea = or <4 x i32> %wide.load351, %wide.load349
-  store <4 x i32> %i.dz, ptr %i.dx, align 4, !tbaa !50, !alias.scope !175, !noalias !173
-  store <4 x i32> %i.ea, ptr %i.dy, align 4, !tbaa !50, !alias.scope !175, !noalias !173
+  store <4 x i32> %i.dz, ptr %i.dx, align 4, !tbaa !50, !alias.scope !165, !noalias !164
+  store <4 x i32> %i.ea, ptr %i.dy, align 4, !tbaa !50, !alias.scope !165, !noalias !164
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.eb = icmp eq i64 %index.next, %n.vec
   br i1 %i.eb, label %middle.block, label %vector.body, !llvm.loop !149
@@ -616,7 +616,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = tail call ptr @lookup_commit(ptr noundef %i.f, ptr noundef %i.i) #14
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %i.m = load i64, ptr %i.l, align 8, !tbaa !176  ; 2 uses
+  %i.m = load i64, ptr %i.l, align 8, !tbaa !171  ; 2 uses
   %.not17 = icmp eq i64 %i.m, 0
   br i1 %.not17, label %bb.c, label %bb.d
 
@@ -627,14 +627,14 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load ptr, ptr @the_repository, align 8, !tbaa !56
   %i.r = tail call ptr @get_main_ref_store(ptr noundef %i.q) #14
   %i.s = tail call i32 @refs_for_each_ref(ptr noundef %i.r, ptr noundef nonnull @add_ref, ptr noundef nonnull %i.k) #14 ; 0 uses
-  %.pre = load i64, ptr %i.l, align 8, !tbaa !176
+  %.pre = load i64, ptr %i.l, align 8, !tbaa !171
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.t = phi i64 [ %.pre, %bb.c ], [ %i.m, %bb.b ]
   %i.u = load ptr, ptr @the_repository, align 8, !tbaa !56
   %i.v = trunc i64 %i.t to i32
-  %i.w = load ptr, ptr %i.k, align 8, !tbaa !177
+  %i.w = load ptr, ptr %i.k, align 8, !tbaa !172
   %i.x = tail call i32 @repo_in_merge_bases_many(ptr noundef %i.u, ptr noundef %i.j, i32 noundef %i.v, ptr noundef %i.w, i32 noundef 1) #14 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !103  ; 2 uses
@@ -1026,6 +1026,9 @@ attributes #15 = { nounwind willreturn memory(read) }
 !143 = distinct !{!143, !59}
 !144 = distinct !{!144, !59}
 !145 = distinct !{!145, !59}
+!146 = distinct !{!146, i1 false, !"LVerDomain"}
+!147 = distinct !{!147, !146}
+!148 = distinct !{!148, !146}
 !149 = distinct !{!149, !59, !166, !167}
 !150 = distinct !{!150, !168}
 !151 = distinct !{!151, !59, !166}
@@ -1041,16 +1044,13 @@ attributes #15 = { nounwind willreturn memory(read) }
 !161 = distinct !{!161, !59}
 !162 = distinct !{!162, !59}
 !163 = !{!94, !90, i64 40}
+!164 = !{!147}
+!165 = !{!148}
 !166 = !{!"llvm.loop.isvectorized", i32 1}
 !167 = !{!"llvm.loop.unroll.runtime.disable"}
 !168 = !{!"llvm.loop.unroll.disable"}
 !169 = !{!93, !25, i64 8}
 !170 = !{!93, !92, i64 0}
-!171 = distinct !{!171, i1 false, !"LVerDomain"}
-!172 = distinct !{!172, !171}
-!173 = !{!172}
-!174 = distinct !{!174, !171}
-!175 = !{!174}
-!176 = !{!94, !25, i64 88}
-!177 = !{!94, !92, i64 80}
+!171 = !{!94, !25, i64 88}
+!172 = !{!94, !92, i64 80}
 end_hunk_1

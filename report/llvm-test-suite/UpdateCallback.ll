@@ -205,16 +205,16 @@ bb.e:                                             ; preds = %.lr.ph
           to label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i unwind label %bb.p ; 6 uses
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i.i:      ; preds = %bb.e
-  store i32 0, ptr %i.q, align 4, !tbaa !20, !noalias !128
+  store i32 0, ptr %i.q, align 4, !tbaa !20, !noalias !118
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i
   %.04.i.i.i = phi ptr [ %i.q, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i ], [ %i.t, %bb.f ] ; 2 uses
   %.0.i.i.i = phi ptr [ %i.o, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i ], [ %i.r, %bb.f ] ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 4
-  %i.s = load i32, ptr %.0.i.i.i, align 4, !tbaa !20, !noalias !128 ; 2 uses
+  %i.s = load i32, ptr %.0.i.i.i, align 4, !tbaa !20, !noalias !118 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.04.i.i.i, i64 4
-  store i32 %i.s, ptr %.04.i.i.i, align 4, !tbaa !20, !noalias !128
+  store i32 %i.s, ptr %.04.i.i.i, align 4, !tbaa !20, !noalias !118
   %.not.i.i.i = icmp eq i32 %i.s, 0
   br i1 %.not.i.i.i, label %_ZN11CStringBaseIwEC2ERKS0_.exit.i, label %bb.f, !llvm.loop !107
 
@@ -617,6 +617,8 @@ attributes #24 = { nounwind willreturn memory(none) }
 !105 = !{!14, !6, i64 12}
 !106 = !{!59, !59, i64 0}
 !107 = distinct !{!107, !21}
+!108 = distinct !{!108, i1 false, !"_ZplIwE11CStringBaseIT_ERKS2_S4_"}
+!109 = distinct !{!109, !108, !"_ZplIwE11CStringBaseIT_ERKS2_S4_: argument 0"}
 !110 = distinct !{!110, !21}
 !111 = distinct !{!111, !21, !22, !23}
 !112 = distinct !{!112, !24}
@@ -625,6 +627,7 @@ attributes #24 = { nounwind willreturn memory(none) }
 !115 = distinct !{!115, !24}
 !116 = distinct !{!116, !21, !22}
 !117 = distinct !{null}
+!118 = !{!109}
 !119 = !{!"_ZTS20ISequentialOutStream", !25, i64 0}
 !120 = !{!"_ZTS10IOutStream", !119, i64 0}
 !121 = !{!"_ZTSN8NWindows5NFile3NIO8COutFileE", !65, i64 0}
@@ -632,7 +635,4 @@ attributes #24 = { nounwind willreturn memory(none) }
 !123 = !{!122, !59, i64 1104}
 !124 = !{!"p1 _ZTS20ISequentialOutStream", !12, i64 0}
 !125 = !{!124, !124, i64 0}
-!126 = distinct !{!126, i1 false, !"_ZplIwE11CStringBaseIT_ERKS2_S4_"}
-!127 = distinct !{!127, !126, !"_ZplIwE11CStringBaseIT_ERKS2_S4_: argument 0"}
-!128 = !{!127}
 end_hunk_1

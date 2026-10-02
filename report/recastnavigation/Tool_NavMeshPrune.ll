@@ -202,15 +202,15 @@ _ZNKSt6vectorIS_IhSaIhEESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.c
 .lr.ph.i.i.i:                                     ; preds = %_ZNKSt6vectorIS_IhSaIhEESaIS1_EE12_M_check_lenEmPKc.exit, %.lr.ph.i.i.i
   %.012.i.i.i = phi ptr [ %i.ac, %.lr.ph.i.i.i ], [ %i.u, %_ZNKSt6vectorIS_IhSaIhEESaIS1_EE12_M_check_lenEmPKc.exit ] ; 3 uses
   %.0911.i.i.i = phi ptr [ %i.ab, %.lr.ph.i.i.i ], [ %i.c, %_ZNKSt6vectorIS_IhSaIhEESaIS1_EE12_M_check_lenEmPKc.exit ] ; 4 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !125)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !127)
-  %i.x = load <2 x ptr>, ptr %.0911.i.i.i, align 8, !tbaa !45, !alias.scope !127, !noalias !125
-  store <2 x ptr> %i.x, ptr %.012.i.i.i, align 8, !tbaa !45, !alias.scope !125, !noalias !127
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !121)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !122)
+  %i.x = load <2 x ptr>, ptr %.0911.i.i.i, align 8, !tbaa !45, !alias.scope !122, !noalias !121
+  store <2 x ptr> %i.x, ptr %.012.i.i.i, align 8, !tbaa !45, !alias.scope !121, !noalias !122
   %i.y = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 16
   %i.z = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 16
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !27, !alias.scope !127, !noalias !125
-  store ptr %i.aa, ptr %i.y, align 8, !tbaa !27, !alias.scope !125, !noalias !127
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i, i8 0, i64 24, i1 false), !alias.scope !127, !noalias !125
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !27, !alias.scope !122, !noalias !121
+  store ptr %i.aa, ptr %i.y, align 8, !tbaa !27, !alias.scope !121, !noalias !122
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i, i8 0, i64 24, i1 false), !alias.scope !122, !noalias !121
   %i.ab = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 24 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 24
   %.not.i.i.i = icmp eq ptr %i.ab, %i.b
@@ -274,7 +274,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds i8, ptr %i.d, i64 %i.l ; 3 uses
   %i.n = ptrtoint ptr %i.m to i64
   %i.o = icmp sgt i64 %2, 1
-  br i1 %i.o, label %bb.e, label %bb.f, !prof !128
+  br i1 %i.o, label %bb.e, label %bb.f, !prof !123
 
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.d, ptr nonnull align 1 %i.m, i64 %2, i1 false)
@@ -295,7 +295,7 @@ _ZSt22__uninitialized_move_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit: ; preds = %bb.e, %
   store ptr %i.s, ptr %i.c, align 8, !tbaa !43
   %i.t = sub i64 %i.n, %i.i                       ; 4 uses
   %i.u = icmp sgt i64 %i.t, 1
-  br i1 %i.u, label %bb.h, label %bb.i, !prof !128
+  br i1 %i.u, label %bb.h, label %bb.i, !prof !123
 
 bb.h:                                             ; preds = %_ZSt22__uninitialized_move_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
   %i.v = sub nsw i64 0, %i.t
@@ -331,7 +331,7 @@ _ZSt24__uninitialized_fill_n_aIPhmhhET_S1_T0_RKT1_RSaIT2_E.exit: ; preds = %bb.k
   %.0.i.i.i.i.i = phi ptr [ %i.d, %bb.k ], [ %i.ac, %bb.l ] ; 3 uses
   store ptr %.0.i.i.i.i.i, ptr %i.c, align 8, !tbaa !43
   %i.ad = icmp sgt i64 %i.j, 1
-  br i1 %i.ad, label %bb.m, label %bb.n, !prof !128
+  br i1 %i.ad, label %bb.m, label %bb.n, !prof !123
 
 bb.m:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPhmhhET_S1_T0_RKT1_RSaIT2_E.exit
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %.0.i.i.i.i.i, ptr align 1 %1, i64 %i.j, i1 false)
@@ -390,7 +390,7 @@ _ZSt24__uninitialized_fill_n_aIPhmhhET_S1_T0_RKT1_RSaIT2_E.exit54: ; preds = %_Z
   %i.aw = load i8, ptr %3, align 1, !tbaa !42
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.av, i8 %i.aw, i64 %2, i1 false)
   %i.ax = icmp sgt i64 %i.as, 1
-  br i1 %i.ax, label %bb.t, label %bb.u, !prof !128
+  br i1 %i.ax, label %bb.t, label %bb.u, !prof !123
 
 bb.t:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPhmhhET_S1_T0_RKT1_RSaIT2_E.exit54
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.au, ptr align 1 %i.ai, i64 %i.as, i1 false)
@@ -409,7 +409,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit: ; pred
   %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 %2 ; 3 uses
   %i.bb = sub i64 %i.f, %i.ar                     ; 4 uses
   %i.bc = icmp sgt i64 %i.bb, 1
-  br i1 %i.bc, label %bb.w, label %bb.x, !prof !128
+  br i1 %i.bc, label %bb.w, label %bb.x, !prof !123
 
 bb.w:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ba, ptr align 1 %1, i64 %i.bb, i1 false)
@@ -610,11 +610,11 @@ attributes #17 = { noreturn nounwind }
 !114 = !{null, !99}
 !115 = !DISubroutineType(types: !114)
 !116 = !DISubprogram(name: "end", linkageName: "_ZN11duDebugDraw3endEv", scope: !92, file: !98, line: 70, type: !115, scopeLine: 70, containingType: !92, virtualIndex: 9, flags: DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!117 = distinct !{!117, i1 false, !"_ZSt19__relocate_object_aISt6vectorIhSaIhEES2_SaIS2_EEvPT_PT0_RT1_"}
+!118 = distinct !{!118, !117, !"_ZSt19__relocate_object_aISt6vectorIhSaIhEES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
+!119 = distinct !{!119, !117, !"_ZSt19__relocate_object_aISt6vectorIhSaIhEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !120 = distinct !{!120, !28}
-!123 = distinct !{!123, i1 false, !"_ZSt19__relocate_object_aISt6vectorIhSaIhEES2_SaIS2_EEvPT_PT0_RT1_"}
-!124 = distinct !{!124, !123, !"_ZSt19__relocate_object_aISt6vectorIhSaIhEES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
-!125 = !{!124}
-!126 = distinct !{!126, !123, !"_ZSt19__relocate_object_aISt6vectorIhSaIhEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
-!127 = !{!126}
-!128 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!121 = !{!118}
+!122 = !{!119}
+!123 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 end_hunk_0

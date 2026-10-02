@@ -65,7 +65,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt10unique_ptrIN11cmFileTimes5TimesESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.a
   %i.b = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #10 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, i8 0, i64 16, i1 false), !noalias !32
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, i8 0, i64 16, i1 false), !noalias !21
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt10unique_ptrIN11cmFileTimes5TimesESt14default_deleteIS1_EED2Ev.exit, %bb.b
@@ -274,6 +274,9 @@ attributes #11 = { nounwind }
 !16 = !{!"long", !5, i64 0}
 !17 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !15, i64 0, !16, i64 8, !5, i64 16}
 !18 = !{!17, !14, i64 0}
+!19 = distinct !{!19, i1 false, !"_ZSt11make_uniqueIN11cmFileTimes5TimesEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!20 = distinct !{!20, !19, !"_ZSt11make_uniqueIN11cmFileTimes5TimesEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
+!21 = !{!20}
 !22 = !{!"_ZTS8timespec", !16, i64 0, !16, i64 8}
 !23 = !{!"_ZTS4stat", !16, i64 0, !16, i64 8, !16, i64 16, !6, i64 24, !6, i64 28, !6, i64 32, !6, i64 36, !16, i64 40, !16, i64 48, !16, i64 56, !16, i64 64, !22, i64 72, !22, i64 88, !22, i64 104, !5, i64 120}
 !24 = !{!23, !16, i64 72}
@@ -282,7 +285,4 @@ attributes #11 = { nounwind }
 !27 = !{!26, !16, i64 0}
 !28 = !{!23, !16, i64 88}
 !29 = !{!26, !16, i64 8}
-!30 = distinct !{!30, i1 false, !"_ZSt11make_uniqueIN11cmFileTimes5TimesEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!31 = distinct !{!31, !30, !"_ZSt11make_uniqueIN11cmFileTimes5TimesEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!32 = !{!31}
 end_hunk_0

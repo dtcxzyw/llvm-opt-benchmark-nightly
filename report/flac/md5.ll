@@ -204,16 +204,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep148 = getelementptr i8, ptr %i.bl, i64 16
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %index ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
-  %wide.load = load <2 x i32>, ptr %i.bm, align 4, !tbaa !8, !alias.scope !68
-  %wide.load149 = load <2 x i32>, ptr %i.bn, align 4, !tbaa !8, !alias.scope !68
+  %wide.load = load <2 x i32>, ptr %i.bm, align 4, !tbaa !8, !alias.scope !56
+  %wide.load149 = load <2 x i32>, ptr %i.bn, align 4, !tbaa !8, !alias.scope !56
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.bc, i64 %index ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
-  %wide.load150 = load <2 x i32>, ptr %i.bo, align 4, !tbaa !8, !alias.scope !70
-  %wide.load151 = load <2 x i32>, ptr %i.bp, align 4, !tbaa !8, !alias.scope !70
+  %wide.load150 = load <2 x i32>, ptr %i.bo, align 4, !tbaa !8, !alias.scope !57
+  %wide.load151 = load <2 x i32>, ptr %i.bp, align 4, !tbaa !8, !alias.scope !57
   %interleaved.vec = shufflevector <2 x i32> %wide.load, <2 x i32> %wide.load150, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x i32> %interleaved.vec, ptr %next.gep, align 4, !tbaa !8, !alias.scope !72, !noalias !73
+  store <4 x i32> %interleaved.vec, ptr %next.gep, align 4, !tbaa !8, !alias.scope !58, !noalias !59
   %interleaved.vec152 = shufflevector <2 x i32> %wide.load149, <2 x i32> %wide.load151, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x i32> %interleaved.vec152, ptr %next.gep148, align 4, !tbaa !8, !alias.scope !72, !noalias !73
+  store <4 x i32> %interleaved.vec152, ptr %next.gep148, align 4, !tbaa !8, !alias.scope !58, !noalias !59
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bq = icmp eq i64 %index.next, %n.vec
   br i1 %i.bq, label %middle.block, label %vector.body, !llvm.loop !14
@@ -616,6 +616,10 @@ attributes #12 = { nounwind allocsize(0) }
 !7 = !{!6, !5, i64 0}
 !8 = !{!5, !5, i64 0}
 !9 = !{!4, !4, i64 0}
+!10 = distinct !{!10, i1 false, !"LVerDomain"}
+!11 = distinct !{!11, !10}
+!12 = distinct !{!12, !10}
+!13 = distinct !{!13, !10}
 !14 = distinct !{!14, !60, !61, !62}
 !15 = distinct !{!15, !63}
 !16 = distinct !{!16, !60, !61, !62}
@@ -658,18 +662,14 @@ attributes #12 = { nounwind allocsize(0) }
 !53 = !{!"any pointer", !4, i64 0}
 !54 = !{!"p1 int", !53, i64 0}
 !55 = !{!54, !54, i64 0}
+!56 = !{!11}
+!57 = !{!12}
+!58 = !{!13}
+!59 = !{!11, !12}
 !60 = !{!"llvm.loop.mustprogress"}
 !61 = !{!"llvm.loop.isvectorized", i32 1}
 !62 = !{!"llvm.loop.unroll.runtime.disable"}
 !63 = !{!"llvm.loop.unroll.disable"}
 !64 = !{!"short", !4, i64 0}
 !65 = !{!64, !64, i64 0}
-!66 = distinct !{!66, i1 false, !"LVerDomain"}
-!67 = distinct !{!67, !66}
-!68 = !{!67}
-!69 = distinct !{!69, !66}
-!70 = !{!69}
-!71 = distinct !{!71, !66}
-!72 = !{!71}
-!73 = !{!67, !69}
 end_hunk_1

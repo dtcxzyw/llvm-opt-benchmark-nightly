@@ -204,7 +204,7 @@ _ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSa
 .lr.ph.i.i.i38:                                   ; preds = %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit36, %.lr.ph.i.i.i38
   %.012.i.i.i = phi ptr [ %i.ap, %.lr.ph.i.i.i38 ], [ %i.ab, %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit36 ] ; 2 uses
   %.0911.i.i.i = phi ptr [ %i.ao, %.lr.ph.i.i.i38 ], [ %i.c, %_ZSt27__uninitialized_default_n_aIPN7msdfgen17FontVariationAxisEmS1_ET_S3_T0_RSaIT1_E.exit36 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i, i64 40, i1 false), !tbaa.struct !123, !alias.scope !128
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i, i64 40, i1 false), !tbaa.struct !123, !alias.scope !124
   %i.ao = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 40 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 40
   %.not.i.i.i39 = icmp eq ptr %i.ao, %i.b
@@ -404,12 +404,12 @@ attributes #22 = { noreturn }
 !114 = !{!78, !29, i64 16}
 !115 = !{!110, !23, i64 32}
 !116 = distinct !{!116, !22}
+!117 = distinct !{!117, i1 false, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_"}
+!118 = distinct !{!118, !117, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
+!119 = distinct !{!119, !117, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !120 = distinct !{!120, !22}
 !121 = !{!82, !81, i64 16}
 !122 = !{!40, !40, i64 0}
 !123 = !{i64 0, i64 4, !10, i64 8, i64 8, !122, i64 16, i64 8, !33, i64 24, i64 8, !33, i64 32, i64 8, !33}
-!125 = distinct !{!125, i1 false, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_"}
-!126 = distinct !{!126, !125, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
-!127 = distinct !{!127, !125, !"_ZSt19__relocate_object_aIN7msdfgen17FontVariationAxisES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
-!128 = !{!126, !127}
+!124 = !{!119, !118}
 end_hunk_0

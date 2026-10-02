@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   %i.h = getelementptr i8, ptr %i.c, i64 728      ; 2 uses
-  tail call void @mutex_lock(ptr noundef %i.h) #11, !noalias !21
+  tail call void @mutex_lock(ptr noundef %i.h) #11, !noalias !18
   %i.i = getelementptr i8, ptr %i.c, i64 112
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %4, ptr noundef align 8 dereferenceable(192) %i.i, i64 192, i1 false)
   %i.j = load ptr, ptr %i.d, align 8
@@ -605,7 +605,7 @@ attributes #14 = { cold noredzone nounwind "no-builtin-wcslen" }
 !13 = !{i64 2157870852, i64 2157870727}
 !14 = !{i64 2157871375, i64 2157872415, i64 2157872448, i64 2157872483, i64 2157872499, i64 2157873426, i64 2157873484, i64 2157873533, i64 2157873343, i64 2157872558, i64 2157872590, i64 2157872673}
 !15 = !{i64 2157873831, i64 2157873707}
-!19 = distinct !{!19, i1 false, !"queue_limits_start_update"}
-!20 = distinct !{!20, !19, !"queue_limits_start_update: argument 0"}
-!21 = !{!20}
+!16 = distinct !{!16, i1 false, !"queue_limits_start_update"}
+!17 = distinct !{!17, !16, !"queue_limits_start_update: argument 0"}
+!18 = !{!17}
 end_hunk_1

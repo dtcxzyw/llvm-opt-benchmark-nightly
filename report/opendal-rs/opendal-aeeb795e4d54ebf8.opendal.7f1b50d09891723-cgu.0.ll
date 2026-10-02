@@ -37,19 +37,19 @@ bb.c:                                             ; preds = %bb.a
 define internal void @_RNSNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBd_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBd_9OnceStateEE9call_once6vtableB17_(ptr nofree noundef readonly captures(none) %0, ptr nofree nonnull readnone align 4 captures(none) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !16)
-  %i.b = load i8, ptr %i.a, align 1, !range !5, !alias.scope !16, !noalias !19, !noundef !4
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !11)
+  %i.b = load i8, ptr %i.a, align 1, !range !5, !alias.scope !11, !noalias !12, !noundef !4
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 1, !alias.scope !16, !noalias !19
+  store i8 0, ptr %i.a, align 1, !alias.scope !11, !noalias !12
   br i1 %i.c, label %_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_.exit, label %bb.b, !prof !6
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtCsgxBkk5gSRhY_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #8, !noalias !20
+  tail call void @_RNvNtCsgxBkk5gSRhY_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #8, !noalias !13
   unreachable
 
 _RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_.exit: ; preds = %bb.a
-  %i.d = tail call noundef nonnull align 8 ptr @_RNvMNtNtNtCs5XgW7KoffLW_12opendal_core5types8operator8registryNtB2_16OperatorRegistry3get(), !noalias !20
-  tail call void @_RNvNtNtCs5XgW7KoffLW_12opendal_core8services6memory23register_memory_service(ptr noundef nonnull align 8 %i.d), !noalias !20
+  %i.d = tail call noundef nonnull align 8 ptr @_RNvMNtNtNtCs5XgW7KoffLW_12opendal_core5types8operator8registryNtB2_16OperatorRegistry3get(), !noalias !13
+  tail call void @_RNvNtNtCs5XgW7KoffLW_12opendal_core8services6memory23register_memory_service(ptr noundef nonnull align 8 %i.d), !noalias !13
   ret void
 }
 
@@ -187,11 +187,11 @@ attributes #9 = { cold noreturn nounwind }
 !4 = !{}
 !5 = !{i8 0, i8 2}
 !6 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!14 = distinct !{!14, i1 false, !"_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_"}
-!15 = distinct !{!15, !14, !"_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_: argument 0"}
-!16 = !{!15}
-!17 = distinct !{!17, i1 false, !"_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_"}
-!18 = distinct !{!18, !17, !"_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_: argument 0"}
-!19 = !{!18}
-!20 = !{!18, !15}
+!7 = distinct !{!7, i1 false, !"_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_"}
+!8 = distinct !{!8, !7, !"_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_: argument 0"}
+!9 = distinct !{!9, i1 false, !"_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_"}
+!10 = distinct !{!10, !9, !"_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_: argument 0"}
+!11 = !{!8}
+!12 = !{!10}
+!13 = !{!10, !8}
 end_hunk_0

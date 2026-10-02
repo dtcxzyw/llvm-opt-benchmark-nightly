@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.a, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.b = tail call i64 @strcspn(ptr noundef nonnull %0, ptr noundef nonnull @.str.57) #16, !noalias !59
+  %i.b = tail call i64 @strcspn(ptr noundef nonnull %0, ptr noundef nonnull @.str.57) #16, !noalias !56
   %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %i.c
   br label %bb.b
@@ -396,8 +396,8 @@ attributes #20 = { noreturn nounwind }
 !50 = !{!49, !49, i64 0}
 !51 = !{!"Agedge_s", !41, i64 0, !35, i64 24, !35, i64 40, !42, i64 56}
 !52 = !{!51, !42, i64 56}
+!53 = distinct !{!53, i1 false, !"tok"}
+!54 = distinct !{!54, !53, !"tok: argument 0"}
 !55 = distinct !{!55, !9}
-!57 = distinct !{!57, i1 false, !"tok"}
-!58 = distinct !{!58, !57, !"tok: argument 0"}
-!59 = !{!58}
+!56 = !{!54}
 end_hunk_0

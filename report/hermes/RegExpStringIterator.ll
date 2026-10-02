@@ -56,7 +56,7 @@ declare void @_ZN6hermes2vm12defineMethodERNS0_7RuntimeENS0_6HandleINS0_8JSObjec
 define hidden { i32, i64 } @_ZN6hermes2vm33regExpStringIteratorPrototypeNextEPvRNS0_7RuntimeENS0_10NativeArgsE(ptr nofree readnone captures(none) %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nofree noundef readonly captures(none) dead_on_return %2) #0 {
 bb.a:
   %3 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
-  %i.a = load ptr, ptr %2, align 8, !tbaa !28, !noalias !41 ; 2 uses
+  %i.a = load ptr, ptr %2, align 8, !tbaa !28, !noalias !29 ; 2 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.a, align 8, !tbaa !11 ; 2 uses
   %i.b = icmp ugt i64 %.sroa.0.0.copyload.i, -844424930131969
   br i1 %i.b, label %_ZN6hermes2vm5vmisaINS0_22JSRegExpStringIteratorEEEbNS0_11HermesValueE.exit.i, label %_ZN6hermes2vm5vmisaINS0_22JSRegExpStringIteratorEEEbNS0_11HermesValueE.exit.thread.i
@@ -156,8 +156,11 @@ attributes #3 = { nounwind }
 !22 = !{!"_ZTSN6hermes2vm7GCScopeE", !15, i64 0, !12, i64 8, !4, i64 16, !21, i64 144, !8, i64 192, !8, i64 200, !5, i64 208}
 !23 = !{!22, !8, i64 192}
 !24 = !{!22, !8, i64 200}
+!25 = distinct !{!25, i1 false, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
+!26 = distinct !{!26, !25, !"_ZNK6hermes2vm10NativeArgs5beginEv: argument 0"}
 !27 = !{!"_ZTSSt16reverse_iteratorIPKN6hermes2vm17PinnedHermesValueEE", !8, i64 0}
 !28 = !{!27, !8, i64 0}
+!29 = !{!26}
 !30 = !{!"_ZTSN6hermes2vm11HermesValueE", !10, i64 0}
 !31 = !{!30, !10, i64 0}
 !32 = !{!"_ZTSN6hermes2vm11TwineChar168NodeKindE", !4, i64 0}
@@ -167,7 +170,4 @@ attributes #3 = { nounwind }
 !36 = !{!33, !10, i64 40}
 !37 = !{!4, !4, i64 0}
 !38 = !{!33, !32, i64 8}
-!39 = distinct !{!39, i1 false, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
-!40 = distinct !{!40, !39, !"_ZNK6hermes2vm10NativeArgs5beginEv: argument 0"}
-!41 = !{!40}
 end_hunk_0

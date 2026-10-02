@@ -204,16 +204,16 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm, %._c
   %i.is = getelementptr inbounds nuw i8, ptr %i.ir, i64 %i.iq
   store i8 0, ptr %i.is, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
-  call void @llvm.experimental.noalias.scope.decl(metadata !42)
-  store ptr %i.fo, ptr %10, align 8, !alias.scope !42
-  store i64 0, ptr %i.fp, align 8, !alias.scope !42
-  store i8 0, ptr %i.fo, align 8, !alias.scope !42
-  %i.it = load i64, ptr %i.fn, align 8, !noalias !42
+  call void @llvm.experimental.noalias.scope.decl(metadata !39)
+  store ptr %i.fo, ptr %10, align 8, !alias.scope !39
+  store i64 0, ptr %i.fp, align 8, !alias.scope !39
+  store i8 0, ptr %i.fo, align 8, !alias.scope !39
+  %i.it = load i64, ptr %i.fn, align 8, !noalias !39
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(ptr noundef nonnull align 8 dereferenceable(32) %10, i64 noundef %i.it)
           to label %.preheader.i.i unwind label %bb.bp
 
 .preheader.i.i:                                   ; preds = %bb.bo
-  %i.iu = load i64, ptr %i.fn, align 8, !noalias !42
+  %i.iu = load i64, ptr %i.fn, align 8, !noalias !39
   %.not33.i.i = icmp eq i64 %i.iu, 0
   br i1 %.not33.i.i, label %_ZN6Assimp16AssxmlFileWriterL9encodeXMLERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i, label %.lr.ph.i.i
 
@@ -224,10 +224,10 @@ bb.bp:                                            ; preds = %bb.bo
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i.i
   %.034.i.i = phi i64 [ %i.jo, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i.i ], [ 0, %.preheader.i.i ] ; 2 uses
-  %i.iw = load ptr, ptr %11, align 8, !noalias !42
+  %i.iw = load ptr, ptr %11, align 8, !noalias !39
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 %.034.i.i ; 2 uses
   %i.iy = load i8, ptr %i.ix, align 1
-  %i.iz = load i64, ptr %i.fp, align 8, !alias.scope !42 ; 6 uses
+  %i.iz = load i64, ptr %i.fp, align 8, !alias.scope !39 ; 6 uses
   switch i8 %i.iy, label %bb.bv [
     i8 38, label %bb.bq
     i8 34, label %bb.br
@@ -290,13 +290,13 @@ bb.bv:                                            ; preds = %.lr.ph.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.invoke.i.i
   %i.jo = add i64 %.034.i.i, 1                    ; 2 uses
-  %i.jp = load i64, ptr %i.fn, align 8, !noalias !42
+  %i.jp = load i64, ptr %i.fn, align 8, !noalias !39
   %.not.i.i = icmp eq i64 %i.jo, %i.jp
   br i1 %.not.i.i, label %_ZN6Assimp16AssxmlFileWriterL9encodeXMLERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i, label %.lr.ph.i.i, !llvm.loop !15
 
 bb.bw:                                            ; preds = %.loopexit.split-lp.i.i, %.loopexit.i.i, %bb.bp
   %.pn.i.i = phi { ptr, i32 } [ %i.iv, %bb.bp ], [ %lpad.loopexit.i.i, %.loopexit.i.i ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ] ; 2 uses
-  %i.jq = load ptr, ptr %10, align 8, !alias.scope !42 ; 2 uses
+  %i.jq = load ptr, ptr %10, align 8, !alias.scope !39 ; 2 uses
   %i.jr = icmp eq ptr %i.jq, %i.fo
   br i1 %i.jr, label %.body.i, label %.body.i.sink.split
 
@@ -699,7 +699,7 @@ bb.c:                                             ; preds = %.lr.ph54, %bb.c
   %i.ao = load i32, ptr %i.ah, align 8
   %i.ap = zext i32 %i.ao to i64
   %i.aq = icmp samesign ult i64 %indvars.iv.next, %i.ap
-  br i1 %i.aq, label %bb.c, label %._crit_edge55, !llvm.loop !43
+  br i1 %i.aq, label %bb.c, label %._crit_edge55, !llvm.loop !40
 
 bb.d:                                             ; preds = %._crit_edge55, %._crit_edge
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 1104 ; 3 uses
@@ -732,7 +732,7 @@ bb.f:                                             ; preds = %.lr.ph58, %bb.f
   %i.az = load i32, ptr %i.ar, align 8
   %i.ba = zext i32 %i.az to i64
   %i.bb = icmp samesign ult i64 %indvars.iv.next66, %i.ba
-  br i1 %i.bb, label %bb.f, label %._crit_edge59, !llvm.loop !44
+  br i1 %i.bb, label %bb.f, label %._crit_edge59, !llvm.loop !41
 
 bb.g:                                             ; preds = %._crit_edge59, %bb.d
   call void (ptr, ptr, ...) @_ZN6Assimp16AssxmlFileWriterL8ioprintfEPNS_8IOStreamEPKcz(ptr noundef %1, ptr noundef nonnull @.str.92, ptr noundef nonnull %i.a)
@@ -946,6 +946,8 @@ attributes #17 = { builtin nounwind }
 !10 = distinct !{!10, !4}
 !11 = distinct !{!11, !4}
 !12 = distinct !{!12, !4, !37}
+!13 = distinct !{!13, i1 false, !"_ZN6Assimp16AssxmlFileWriterL9encodeXMLERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"}
+!14 = distinct !{!14, !13, !"_ZN6Assimp16AssxmlFileWriterL9encodeXMLERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE: argument 0"}
 !15 = distinct !{!15, !4}
 !16 = distinct !{!16, !4}
 !17 = distinct !{!17, !4}
@@ -970,9 +972,7 @@ attributes #17 = { builtin nounwind }
 !36 = distinct !{null, null}
 !37 = !{!"llvm.loop.peeled.count", i32 1}
 !38 = !{!"llvm.loop.unswitch.partial.disable"}
-!40 = distinct !{!40, i1 false, !"_ZN6Assimp16AssxmlFileWriterL9encodeXMLERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"}
-!41 = distinct !{!41, !40, !"_ZN6Assimp16AssxmlFileWriterL9encodeXMLERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE: argument 0"}
-!42 = !{!41}
-!43 = distinct !{!43, !4}
-!44 = distinct !{!44, !4}
+!39 = !{!14}
+!40 = distinct !{!40, !4}
+!41 = distinct !{!41, !4}
 end_hunk_1

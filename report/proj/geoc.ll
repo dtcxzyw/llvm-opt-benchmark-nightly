@@ -107,16 +107,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 216
-  %i.c = load double, ptr %i.b, align 8, !tbaa !37, !noalias !54
+  %i.c = load double, ptr %i.b, align 8, !tbaa !37, !noalias !51
   %i.d = fcmp oeq double %i.c, 0.000000e+00
   br i1 %i.d, label %_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit, label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 264
-  %i.f = load double, ptr %i.e, align 8, !tbaa !38, !noalias !54
-  %i.g = tail call double @tan(double noundef %.sroa.0.sroa.2.0.copyload) #6, !noalias !54
+  %i.f = load double, ptr %i.e, align 8, !tbaa !38, !noalias !51
+  %i.g = tail call double @tan(double noundef %.sroa.0.sroa.2.0.copyload) #6, !noalias !51
   %i.h = fmul double %i.f, %i.g
-  %i.i = tail call double @atan(double noundef %i.h) #6, !noalias !54
+  %i.i = tail call double @atan(double noundef %i.h) #6, !noalias !51
   br label %_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit
 
 _Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit: ; preds = %bb.a, %bb.b, %.sink.split.i
@@ -136,16 +136,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 216
-  %i.c = load double, ptr %i.b, align 8, !tbaa !37, !noalias !60
+  %i.c = load double, ptr %i.b, align 8, !tbaa !37, !noalias !54
   %i.d = fcmp oeq double %i.c, 0.000000e+00
   br i1 %i.d, label %_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit, label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 256
-  %i.f = load double, ptr %i.e, align 8, !tbaa !38, !noalias !60
-  %i.g = tail call double @tan(double noundef %.sroa.0.sroa.2.0.copyload) #6, !noalias !60
+  %i.f = load double, ptr %i.e, align 8, !tbaa !38, !noalias !54
+  %i.g = tail call double @tan(double noundef %.sroa.0.sroa.2.0.copyload) #6, !noalias !54
   %i.h = fmul double %i.f, %i.g
-  %i.i = tail call double @atan(double noundef %i.h) #6, !noalias !60
+  %i.i = tail call double @atan(double noundef %i.h) #6, !noalias !54
   br label %_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit
 
 _Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit: ; preds = %bb.a, %bb.b, %.sink.split.i
@@ -218,10 +218,10 @@ attributes #6 = { nounwind }
 !46 = !{!36, !10, i64 8}
 !47 = !{!36, !10, i64 16}
 !48 = !{!36, !5, i64 360}
+!49 = distinct !{!49, i1 false, !"_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD"}
+!50 = distinct !{!50, !49, !"_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD: argument 0"}
+!51 = !{!50}
 !52 = distinct !{!52, i1 false, !"_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD"}
 !53 = distinct !{!53, !52, !"_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD: argument 0"}
 !54 = !{!53}
-!58 = distinct !{!58, i1 false, !"_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD"}
-!59 = distinct !{!59, !58, !"_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD: argument 0"}
-!60 = !{!59}
 end_hunk_0

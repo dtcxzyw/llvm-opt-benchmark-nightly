@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 putquote.exit:                                    ; preds = %bb.a, %bb.b
   call void @llvm.va_start.p0(ptr nonnull %1)
-  %i.i = load ptr, ptr @stdout, align 8, !noalias !35
+  %i.i = load ptr, ptr @stdout, align 8, !noalias !32
   %i.j = call i32 @__vfprintf_chk(ptr noundef %i.i, i32 noundef 2, ptr noundef %0, ptr noundef nonnull %1) #15 ; 0 uses
   call void @llvm.va_end.p0(ptr nonnull %1)
   %i.k = load i8, ptr @quote_char, align 1        ; 2 uses
@@ -416,7 +416,7 @@ attributes #18 = { nounwind willreturn memory(none) }
 !27 = distinct !{!27, !8}
 !28 = distinct !{!28, !8}
 !29 = distinct !{!29, !8}
-!33 = distinct !{!33, i1 false, !"vprintf.inline"}
-!34 = distinct !{!34, !33, !"vprintf.inline: argument 0"}
-!35 = !{!34}
+!30 = distinct !{!30, i1 false, !"vprintf.inline"}
+!31 = distinct !{!31, !30, !"vprintf.inline: argument 0"}
+!32 = !{!31}
 end_hunk_0

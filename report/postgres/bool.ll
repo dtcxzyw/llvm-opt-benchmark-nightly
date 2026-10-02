@@ -202,15 +202,15 @@ bb.a:
   call void @pq_begintypsend(ptr noundef nonnull %1) #12
   %i.d = zext i1 %i.c to i8
   call void @enlargeStringInfo(ptr noundef nonnull %1, i32 noundef 1) #12
-  call void @llvm.experimental.noalias.scope.decl(metadata !14)
-  %i.e = load ptr, ptr %1, align 8, !alias.scope !14
+  call void @llvm.experimental.noalias.scope.decl(metadata !11)
+  %i.e = load ptr, ptr %1, align 8, !alias.scope !11
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.g = load i32, ptr %i.f, align 8, !alias.scope !14 ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8, !alias.scope !11 ; 2 uses
   %i.h = sext i32 %i.g to i64
   %i.i = getelementptr inbounds i8, ptr %i.e, i64 %i.h
-  store i8 %i.d, ptr %i.i, align 1, !noalias !14
+  store i8 %i.d, ptr %i.i, align 1, !noalias !11
   %i.j = add i32 %i.g, 1
-  store i32 %i.j, ptr %i.f, align 8, !alias.scope !14
+  store i32 %i.j, ptr %i.f, align 8, !alias.scope !11
   %i.k = call ptr @pq_endtypsend(ptr noundef nonnull %1) #12
   %i.l = ptrtoint ptr %i.k to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
@@ -613,7 +613,7 @@ attributes #14 = { cold nounwind }
 !6 = distinct !{!6, !8}
 !7 = distinct !{!7, !8}
 !8 = !{!"llvm.loop.mustprogress"}
-!12 = distinct !{!12, i1 false, !"pq_writeint8"}
-!13 = distinct !{!13, !12, !"pq_writeint8: argument 0"}
-!14 = !{!13}
+!9 = distinct !{!9, i1 false, !"pq_writeint8"}
+!10 = distinct !{!10, !9, !"pq_writeint8: argument 0"}
+!11 = !{!10}
 end_hunk_1

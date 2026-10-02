@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
   %i.t = getelementptr i8, ptr %i.d, i64 80       ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8              ; 2 uses
   %i.v = getelementptr i8, ptr %i.u, i64 728
-  call void @mutex_lock(ptr noundef %i.v) #13, !noalias !68
+  call void @mutex_lock(ptr noundef %i.v) #13, !noalias !65
   %i.w = getelementptr i8, ptr %i.u, i64 112
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %4, ptr noundef align 8 dereferenceable(192) %i.w, i64 192, i1 false)
   call void @virtio_check_driver_offered_feature(ptr noundef %i.h, i32 noundef 11) #13
@@ -477,10 +477,10 @@ attributes #19 = { noredzone nounwind allocsize(0) "no-builtin-wcslen" }
 !57 = !{i64 2157056017, i64 2157055892}
 !58 = !{i64 2157056540, i64 2157057016, i64 2157057049, i64 2157057084, i64 2157057100, i64 2157057941, i64 2157057999, i64 2157058048, i64 2157057858, i64 2157057159, i64 2157057191}
 !59 = distinct !{null}
+!60 = distinct !{!60, i1 false, !"queue_limits_start_update"}
+!61 = distinct !{!61, !60, !"queue_limits_start_update: argument 0"}
 !62 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !63 = !{i64 2157050347, i64 2157050222}
 !64 = !{i64 2157050870, i64 2157051346, i64 2157051379, i64 2157051414, i64 2157051430, i64 2157052271, i64 2157052329, i64 2157052378, i64 2157052188, i64 2157051489, i64 2157051521}
-!66 = distinct !{!66, i1 false, !"queue_limits_start_update"}
-!67 = distinct !{!67, !66, !"queue_limits_start_update: argument 0"}
-!68 = !{!67}
+!65 = !{!61}
 end_hunk_0

@@ -204,11 +204,11 @@ bb.h:                                             ; preds = %bb.g
   store i8 2, ptr %i.j, align 1, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
-  store ptr %i.ai, ptr %5, align 8, !tbaa !31, !alias.scope !39
+  store ptr %i.ai, ptr %5, align 8, !tbaa !31, !alias.scope !32
   %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  store ptr %i.ai, ptr %i.aj, align 8, !tbaa !33, !alias.scope !39
+  store ptr %i.ai, ptr %i.aj, align 8, !tbaa !33, !alias.scope !32
   %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store ptr %i.e, ptr %i.ak, align 8, !tbaa !34, !alias.scope !39
+  store ptr %i.e, ptr %i.ak, align 8, !tbaa !34, !alias.scope !32
   %i.al = call { i32, i64 } @ZS_largeHuffmanWriteCTable(ptr noundef nonnull %5, ptr noundef nonnull %4, i16 noundef zeroext %.0150, i32 noundef %i.ah) #5
   %i.am = extractvalue { i32, i64 } %i.al, 0
   %.not191 = icmp eq i32 %i.am, 0
@@ -611,6 +611,10 @@ attributes #5 = { nounwind }
 !17 = !{!16, !16, i64 0}
 !18 = distinct !{!18, !13}
 !19 = distinct !{!19, !13}
+!20 = distinct !{!20, i1 false, !"ZL_WC_wrap"}
+!21 = distinct !{!21, !20, !"ZL_WC_wrap: argument 0"}
+!22 = distinct !{!22, i1 false, !"ZL_WC_wrapPartial"}
+!23 = distinct !{!23, !22, !"ZL_WC_wrapPartial: argument 0"}
 !24 = distinct !{!24, !13}
 !25 = distinct !{!25, !13}
 !26 = !{!"short", !7, i64 0}
@@ -619,11 +623,7 @@ attributes #5 = { nounwind }
 !29 = !{!"p1 omnipotent char", !28, i64 0}
 !30 = !{!"", !29, i64 0, !29, i64 8, !29, i64 16}
 !31 = !{!30, !29, i64 0}
+!32 = !{!23, !21}
 !33 = !{!30, !29, i64 8}
 !34 = !{!30, !29, i64 16}
-!35 = distinct !{!35, i1 false, !"ZL_WC_wrapPartial"}
-!36 = distinct !{!36, !35, !"ZL_WC_wrapPartial: argument 0"}
-!37 = distinct !{!37, i1 false, !"ZL_WC_wrap"}
-!38 = distinct !{!38, !37, !"ZL_WC_wrap: argument 0"}
-!39 = !{!36, !38}
 end_hunk_1
