@@ -202,9 +202,9 @@ glk_plane_color_ctl_crtc.exit:                    ; preds = %bb.k, %bb.l
   %i.bs = icmp sgt i32 %i.br, -1                  ; 2 uses
   %spec.select = select i1 %i.bs, i32 0, i32 %i.aj ; 2 uses
   %spec.select149 = select i1 %i.bs, i32 0, i32 %i.ah ; 2 uses
-  %i.bt = shl i32 %i.g, 12                        ; 4 uses
-  %i.bu = shl i32 %i.e, 8                         ; 4 uses
-  %i.bv = add i32 %i.bt, %i.bu                    ; 20 uses
+  %i.bt = shl i32 %i.g, 12
+  %i.bu = shl i32 %i.e, 8
+  %i.bv = add i32 %i.bt, %i.bu                    ; 23 uses
   %i.bw = add i32 %i.bv, 459144                   ; 5 uses
   %.not.i171 = icmp eq ptr %0, null               ; 12 uses
   br i1 %.not.i171, label %bb.m, label %bb.ab
@@ -607,8 +607,7 @@ intel_de_write_dsb.exit154.thread302:             ; preds = %bb.bq, %trace_i915_
   br i1 %spec.select.i260303, label %.thread, label %intel_de_write_dsb.exit152.thread304
 
 .thread:                                          ; preds = %intel_de_write_dsb.exit154.thread302
-  %4 = or disjoint i32 %i.bt, %i.bu
-  %i.me = add i32 %4, 459208
+  %i.me = add i32 %i.bv, 459208
   %i.mf = getelementptr i8, ptr %3, i64 500
   %i.mg = load i32, ptr %i.mf, align 4
   br label %bb.bs
@@ -626,8 +625,7 @@ intel_de_write_dsb.exit154.thread:                ; preds = %bb.bl
   br i1 %spec.select.i260300, label %.thread305, label %intel_de_write_dsb.exit152.thread301
 
 .thread305:                                       ; preds = %intel_de_write_dsb.exit154.thread
-  %5 = or disjoint i32 %i.bt, %i.bu
-  %i.ml = add i32 %5, 459208
+  %i.ml = add i32 %i.bv, 459208
   %i.mm = getelementptr i8, ptr %3, i64 500
   %i.mn = load i32, ptr %i.mm, align 4
   br label %intel_de_write_dsb.exit152.thread299
@@ -637,8 +635,7 @@ intel_de_write_dsb.exit152.thread301:             ; preds = %intel_de_write_dsb.
   br label %bb.bx
 
 bb.br:                                            ; preds = %intel_de_write_dsb.exit154
-  %6 = or disjoint i32 %i.bt, %i.bu
-  %i.mp = add i32 %6, 459208                      ; 2 uses
+  %i.mp = add i32 %i.bv, 459208                   ; 2 uses
   %i.mq = getelementptr i8, ptr %3, i64 500
   %i.mr = load i32, ptr %i.mq, align 4            ; 2 uses
   br i1 %.not.i171, label %bb.bs, label %intel_de_write_dsb.exit152.thread299

@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %.lr.ph, %bb.x
   %i.w = phi ptr [ %i.n, %.lr.ph ], [ %i.bx, %bb.x ]
   %.val5.i = phi i64 [ 0, %.lr.ph ], [ %i.bz, %bb.x ] ; 4 uses
   %.sroa.0.047 = phi ptr [ %i.s, %.lr.ph ], [ %i.x, %bb.x ] ; 2 uses
-  %.sroa.8.046 = phi i64 [ 0, %.lr.ph ], [ %i.y, %bb.x ] ; 3 uses
+  %.sroa.8.046 = phi i64 [ 0, %.lr.ph ], [ %i.y, %bb.x ] ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.0.047, i64 144 ; 2 uses
-  %i.y = add nuw nsw i64 %.sroa.8.046, 1
+  %i.y = add nuw nsw i64 %.sroa.8.046, 1          ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
@@ -274,9 +274,11 @@ bb.j:                                             ; preds = %bb.e
   store i64 %i.ac, ptr %.sroa.5.0..sroa_idx, align 8
   %i.ak = and i64 %.sroa.8.046, 1
   %i.al = icmp eq i64 %i.ak, 0
-  br i1 %i.al, label %4, label %.thread41
+  %4 = icmp samesign ult i64 %i.y, %i.h
+  %or.cond = select i1 %i.al, i1 %4, i1 false
+  br i1 %or.cond, label %bb.n, label %.thread41
 
-.thread41:                                        ; preds = %bb.o, %bb.n, %bb.p, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtNtCsdaEETE4DqmE_13typst_library4math2ir4item8MathItemENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvNtNtCs7tN9tvpkfrg_12typst_layout4math3run16alignment_lspace0EB2G_.exit.i, %4, %bb.w, %bb.j
+.thread41:                                        ; preds = %bb.o, %bb.n, %bb.p, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtNtCsdaEETE4DqmE_13typst_library4math2ir4item8MathItemENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvNtNtCs7tN9tvpkfrg_12typst_layout4math3run16alignment_lspace0EB2G_.exit.i, %bb.w, %bb.j
   call void @llvm.experimental.noalias.scope.decl(metadata !43098)
   %i.am = load i64, ptr %i.f, align 8, !range !45, !alias.scope !43098, !noalias !43099, !noundef !41
   %i.an = icmp eq i64 %.val5.i, %i.am
@@ -302,13 +304,8 @@ bb.m:                                             ; preds = %bb.l
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #55, !noalias !43100
   unreachable
 
-4:                                                ; preds = %bb.j
-  %5 = or disjoint i64 %.sroa.8.046, 1            ; 2 uses
-  %6 = icmp samesign ult i64 %5, %i.h
-  br i1 %6, label %bb.n, label %.thread41
-
-bb.n:                                             ; preds = %4
-  %i.aq = getelementptr inbounds nuw [144 x i8], ptr %i.s, i64 %5 ; 5 uses
+bb.n:                                             ; preds = %bb.j
+  %i.aq = getelementptr inbounds nuw [144 x i8], ptr %i.s, i64 %i.y ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !43101)
   %i.ar = load i64, ptr %i.aq, align 16, !range !95, !alias.scope !43101, !noundef !41
   %i.as = icmp samesign ult i64 %i.ar, 2
