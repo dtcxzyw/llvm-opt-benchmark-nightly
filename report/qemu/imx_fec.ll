@@ -202,7 +202,7 @@ declare void @device_class_set_legacy_reset(ptr noundef, ptr noundef) local_unna
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @imx_eth_reset(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.3, i32 noundef 29, ptr noundef nonnull @__func__.IMX_FEC) #8 ; 23 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.3, i32 noundef 29, ptr noundef nonnull @__func__.IMX_FEC) #8 ; 20 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 9328
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1600) %i.b, i8 noundef 0, i64 noundef 1600, i1 noundef false) #8
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 9364
@@ -213,26 +213,11 @@ bb.a:
   store i32 99483649, ptr %i.e, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 9564
   store i32 65536, ptr %i.f, align 4
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 816
-  %2 = load i8, ptr %1, align 16
-  %3 = zext i8 %2 to i32
-  %4 = shl nuw i32 %3, 24
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 817
-  %6 = load i8, ptr %5, align 1
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw nsw i32 %7, 16
-  %9 = or disjoint i32 %8, %4
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 818
-  %11 = load i8, ptr %10, align 2
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 8
-  %14 = or disjoint i32 %9, %13
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 819
-  %15 = load i8, ptr %i.g, align 1
-  %16 = zext i8 %15 to i32
-  %17 = or disjoint i32 %14, %16
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 816
+  %1 = load i32, ptr %i.g, align 16
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 9556
-  store i32 %17, ptr %i.h, align 4
+  store i32 %2, ptr %i.h, align 4
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 820
   %i.j = load i8, ptr %i.i, align 4
   %i.k = zext i8 %i.j to i32

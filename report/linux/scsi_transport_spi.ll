@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/scsi_transport_spi?download=true
-inline.NumInlined: 76
-inline.NumDeleted: 29
+inline.NumInlined: 79
+inline.NumDeleted: 30
 loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 6
@@ -205,11 +205,14 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %.lr.ph
 
 bb.f:                                             ; preds = %bb.e
-  tail call fastcc void @print_ptr(ptr noundef %0, i32 noundef 3, ptr noundef nonnull @.str.27) #18, !srcloc !22
+  %1 = getelementptr i8, ptr %0, i64 3
+  %2 = load i32, ptr %1, align 1
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  %4 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.59, ptr noundef nonnull @.str.27, i32 noundef %3) #17 ; 0 uses
   br label %.loopexit
 
 bb.g:                                             ; preds = %bb.e
-  tail call fastcc void @print_nego(ptr noundef %0, i32 noundef 3, i32 noundef 4, i32 noundef 0) #18, !srcloc !23
+  tail call fastcc void @print_nego(ptr noundef %0, i32 noundef 3, i32 noundef 4, i32 noundef 0) #18, !srcloc !22
   br label %.loopexit
 
 bb.h:                                             ; preds = %bb.e
@@ -221,12 +224,18 @@ bb.h:                                             ; preds = %bb.e
   br label %.loopexit
 
 bb.i:                                             ; preds = %bb.e
-  tail call fastcc void @print_nego(ptr noundef %0, i32 noundef 3, i32 noundef 5, i32 noundef 6) #18, !srcloc !24
+  tail call fastcc void @print_nego(ptr noundef %0, i32 noundef 3, i32 noundef 5, i32 noundef 6) #18, !srcloc !23
   br label %.loopexit
 
 bb.j:                                             ; preds = %bb.e
-  tail call fastcc void @print_ptr(ptr noundef %0, i32 noundef 3, ptr noundef nonnull @.str.28) #18, !srcloc !25
-  tail call fastcc void @print_ptr(ptr noundef %0, i32 noundef 7, ptr noundef nonnull @.str.29) #18, !srcloc !26
+  %5 = getelementptr i8, ptr %0, i64 3
+  %6 = load i32, ptr %5, align 1
+  %7 = tail call i32 @llvm.bswap.i32(i32 %6)
+  %8 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.59, ptr noundef nonnull @.str.28, i32 noundef %7) #17 ; 0 uses
+  %9 = getelementptr i8, ptr %0, i64 7
+  %10 = load i32, ptr %9, align 1
+  %11 = tail call i32 @llvm.bswap.i32(i32 %10)
+  %12 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.59, ptr noundef nonnull @.str.29, i32 noundef %11) #17 ; 0 uses
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -324,31 +333,6 @@ bb.x:                                             ; preds = %bb.t
 
 ; Function Attrs: cold noredzone null_pointer_is_valid
 declare dso_local i32 @_printk(ptr noundef, ...) local_unnamed_addr #3
-
-; Function Attrs: cold fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define internal fastcc void @print_ptr(ptr nofree noundef readonly captures(none) %0, i32 noundef range(i32 3, 8) %1, ptr noundef %2) unnamed_addr #7 align 16 prefalign(16) {
-  %4 = zext nneg i32 %1 to i64
-  %5 = getelementptr i8, ptr %0, i64 %4           ; 4 uses
-  %6 = load i8, ptr %5, align 1
-  %7 = zext i8 %6 to i32
-  %8 = shl nuw i32 %7, 24
-  %9 = getelementptr i8, ptr %5, i64 1
-  %10 = load i8, ptr %9, align 1
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 16
-  %13 = or disjoint i32 %12, %8
-  %14 = getelementptr i8, ptr %5, i64 2
-  %15 = load i8, ptr %14, align 1
-  %16 = zext i8 %15 to i32
-  %17 = shl nuw nsw i32 %16, 8
-  %18 = or disjoint i32 %13, %17
-  %19 = getelementptr i8, ptr %5, i64 3
-  %20 = load i8, ptr %19, align 1
-  %21 = zext i8 %20 to i32
-  %22 = or disjoint i32 %18, %21
-  %23 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.59, ptr noundef %2, i32 noundef %22) #17 ; 0 uses
-  ret void
-}
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc void @print_nego(ptr nofree noundef readonly captures(none) %0, i32 noundef range(i32 0, 4) %1, i32 noundef range(i32 0, 6) %2, i32 noundef range(i32 0, 7) %3) unnamed_addr #0 align 16 prefalign(16) {
@@ -608,8 +592,8 @@ bb.a:
   br i1 %.not.i, label %transport_container_unregister.exit, label %bb.b, !prof !12
 
 bb.b:                                             ; preds = %bb.a
-  tail call void asm sideeffect "647: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 647b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 647) #19, !srcloc !27
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.13, ptr nonnull @.str.142, i32 99, i32 0, i64 16) #19, !srcloc !28
+  tail call void asm sideeffect "647: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 647b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 647) #19, !srcloc !24
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.13, ptr nonnull @.str.142, i32 99, i32 0, i64 16) #19, !srcloc !25
   unreachable
 
 transport_container_unregister.exit:              ; preds = %bb.a
@@ -618,8 +602,8 @@ transport_container_unregister.exit:              ; preds = %bb.a
   br i1 %.not.i6, label %transport_container_unregister.exit7, label %bb.c, !prof !12
 
 bb.c:                                             ; preds = %transport_container_unregister.exit
-  tail call void asm sideeffect "647: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 647b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 647) #19, !srcloc !27
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.13, ptr nonnull @.str.142, i32 99, i32 0, i64 16) #19, !srcloc !28
+  tail call void asm sideeffect "647: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 647b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 647) #19, !srcloc !24
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.13, ptr nonnull @.str.142, i32 99, i32 0, i64 16) #19, !srcloc !25
   unreachable
 
 transport_container_unregister.exit7:             ; preds = %transport_container_unregister.exit
@@ -664,7 +648,7 @@ bb.a:
   %i.h = tail call i32 @scsi_dev_info_list_add_keyed(i32 noundef 1, ptr noundef %i.c, ptr noundef %i.e, ptr noundef null, i64 noundef %i.g, i32 noundef 1) #15 ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not12 = icmp eq i64 %indvars.iv.next, 2
-  br i1 %.not12, label %.loopexit, label %.preheader, !llvm.loop !29
+  br i1 %.not12, label %.loopexit, label %.preheader, !llvm.loop !26
 
 .loopexit:                                        ; preds = %.preheader, %bb.a
   %i.i = tail call i32 @transport_class_register(ptr noundef nonnull @spi_transport_class) #15 ; 2 uses
@@ -769,7 +753,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.1 = phi i32 [ %i.v, %bb.f ], [ %.029, %bb.g ]
   %i.w = add i32 %.1, 1                           ; 2 uses
   %i.x = icmp slt i32 %i.w, %3
-  br i1 %i.x, label %bb.b, label %.loopexit, !llvm.loop !30
+  br i1 %i.x, label %bb.b, label %.loopexit, !llvm.loop !27
 
 .loopexit:                                        ; preds = %bb.g, %bb.h, %bb.a, %bb.d
   %.021 = phi i32 [ 1, %bb.d ], [ 0, %bb.a ], [ 1, %bb.g ], [ 0, %bb.h ]
@@ -785,7 +769,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = getelementptr i8, ptr %0, i64 320        ; 6 uses
   %i.e = load ptr, ptr %i.d, align 8              ; 5 uses
-  %i.f = tail call i32 %3(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef 3) #15, !callees !31 ; 2 uses
+  %i.f = tail call i32 %3(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef 3) #15, !callees !28 ; 2 uses
   %i.g = and i32 %i.f, -3
   %or.cond91 = icmp eq i32 %i.g, 0
   br i1 %or.cond91, label %.thread, label %.lr.ph
@@ -927,7 +911,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.k, %bb.j, %bb.n, %bb.o, %bb.t, %bb.s
   %.3 = phi i32 [ %.05792, %bb.n ], [ %.158, %bb.t ], [ %.158, %bb.s ], [ %.05792, %bb.k ], [ %.05792, %bb.j ], [ %.05792, %bb.o ]
   %.2 = phi i32 [ %.05693, %bb.n ], [ %.158, %bb.t ], [ %.158, %bb.s ], [ %.05693, %bb.k ], [ %.05693, %bb.j ], [ %.05693, %bb.o ]
-  %i.ba = tail call i32 %3(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef 3) #15, !callees !31 ; 2 uses
+  %i.ba = tail call i32 %3(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef 3) #15, !callees !28 ; 2 uses
   %i.bb = and i32 %i.ba, -3
   %or.cond = icmp eq i32 %i.bb, 0
   br i1 %or.cond, label %.thread, label %bb.b
@@ -993,7 +977,7 @@ bb.a:
   %.1115.lcssa = phi i32 [ %.0114142, %.preheader124 ], [ %i.cc, %.lr.ph139 ]
   %.4.lcssa = phi i32 [ %.3.lcssa, %.preheader124 ], [ %i.cd, %.lr.ph139 ] ; 2 uses
   %i.v = icmp slt i32 %.4.lcssa, %i.f
-  br i1 %i.v, label %.preheader128, label %.preheader, !llvm.loop !32
+  br i1 %i.v, label %.preheader128, label %.preheader, !llvm.loop !29
 
 .preheader128:                                    ; preds = %.preheader128.lr.ph, %.loopexit125
   %.0112143 = phi i32 [ 0, %.preheader128.lr.ph ], [ %.4.lcssa, %.loopexit125 ] ; 3 uses
@@ -1017,7 +1001,7 @@ bb.a:
   %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !33
+  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !30
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %indvars.iv.unr = phi i64 [ %i.x, %.lr.ph.preheader ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
@@ -1089,7 +1073,7 @@ bb.a:
   store i8 %i.bi, ptr %i.bj, align 1
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
   %exitcond.not.7 = icmp eq i64 %indvars.iv.next.7, %wide.trip.count
-  br i1 %exitcond.not.7, label %.preheader127, label %.lr.ph, !llvm.loop !34
+  br i1 %exitcond.not.7, label %.preheader127, label %.lr.ph, !llvm.loop !31
 
 .preheader126.loopexit:                           ; preds = %.lr.ph132
   %.pre = add i32 %.2131, 34
@@ -1113,7 +1097,7 @@ bb.a:
   store i16 %i.bq, ptr %i.bm, align 2
   %i.br = add i32 %.2131, 2                       ; 3 uses
   %i.bs = icmp slt i32 %i.br, %i.as
-  br i1 %i.bs, label %.lr.ph132, label %.preheader126.loopexit, !llvm.loop !35
+  br i1 %i.bs, label %.lr.ph132, label %.preheader126.loopexit, !llvm.loop !32
 
 .preheader124.loopexit:                           ; preds = %.lr.ph135
   %.pre160 = add i32 %.3134, 34
@@ -1136,7 +1120,7 @@ bb.a:
   store i16 %i.bx, ptr %i.bv, align 2
   %i.by = add i32 %.3134, 2                       ; 3 uses
   %i.bz = icmp slt i32 %i.by, %.pre-phi159
-  br i1 %i.bz, label %.lr.ph135, label %.preheader124.loopexit, !llvm.loop !36
+  br i1 %i.bz, label %.lr.ph135, label %.preheader124.loopexit, !llvm.loop !33
 
 .lr.ph139:                                        ; preds = %.preheader124, %.lr.ph139
   %.4138 = phi i32 [ %i.cd, %.lr.ph139 ], [ %.3.lcssa, %.preheader124 ] ; 2 uses
@@ -1147,12 +1131,12 @@ bb.a:
   %i.cc = tail call i32 @llvm.fshl.i32(i32 %.1115137, i32 %.1115137, i32 1) ; 2 uses
   %i.cd = add i32 %.4138, 4                       ; 3 uses
   %i.ce = icmp slt i32 %i.cd, %.pre-phi163
-  br i1 %i.ce, label %.lr.ph139, label %.loopexit125, !llvm.loop !37
+  br i1 %i.ce, label %.lr.ph139, label %.loopexit125, !llvm.loop !34
 
 bb.b:                                             ; preds = %bb.h
   %i.cf = add nuw nsw i32 %.0113144, 1            ; 2 uses
   %exitcond157.not = icmp eq i32 %i.cf, %3
-  br i1 %exitcond157.not, label %.loopexit, label %bb.c, !llvm.loop !38
+  br i1 %exitcond157.not, label %.loopexit, label %bb.c, !llvm.loop !35
 
 bb.c:                                             ; preds = %.lr.ph145, %bb.b
   %.0113144 = phi i32 [ 0, %.lr.ph145 ], [ %i.cf, %bb.b ]
@@ -1555,6 +1539,9 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #13
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #13
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #13
+
 attributes #0 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { noredzone null_pointer_is_valid "no-builtin-wcslen" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" }
@@ -1601,22 +1588,19 @@ attributes #19 = { nounwind }
 !19 = !{i64 26341}
 !20 = !{i64 27159}
 !21 = distinct !{!21, !15}
-!22 = !{i64 35687}
-!23 = !{i64 35752}
-!24 = !{i64 35873}
-!25 = !{i64 35950}
-!26 = !{i64 35979}
-!27 = !{i64 2157677989, i64 2157677864}
-!28 = !{i64 2157678512, i64 2157678988, i64 2157679021, i64 2157679056, i64 2157679072, i64 2157679913, i64 2157679971, i64 2157680020, i64 2157679830, i64 2157679131, i64 2157679163}
+!22 = !{i64 35752}
+!23 = !{i64 35873}
+!24 = !{i64 2157677989, i64 2157677864}
+!25 = !{i64 2157678512, i64 2157678988, i64 2157679021, i64 2157679056, i64 2157679072, i64 2157679913, i64 2157679971, i64 2157680020, i64 2157679830, i64 2157679131, i64 2157679163}
+!26 = distinct !{!26, !15}
+!27 = distinct !{!27, !15}
+!28 = !{ptr @spi_dv_device_compare_inquiry, ptr @spi_dv_device_echo_buffer}
 !29 = distinct !{!29, !15}
-!30 = distinct !{!30, !15}
-!31 = !{ptr @spi_dv_device_compare_inquiry, ptr @spi_dv_device_echo_buffer}
+!30 = distinct !{!30, !36}
+!31 = distinct !{!31, !15}
 !32 = distinct !{!32, !15}
-!33 = distinct !{!33, !39}
+!33 = distinct !{!33, !15}
 !34 = distinct !{!34, !15}
 !35 = distinct !{!35, !15}
-!36 = distinct !{!36, !15}
-!37 = distinct !{!37, !15}
-!38 = distinct !{!38, !15}
-!39 = !{!"llvm.loop.unroll.disable"}
+!36 = !{!"llvm.loop.unroll.disable"}
 end_hunk_1

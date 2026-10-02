@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/zstd_v01?download=true
-inline.NumInlined: 186
+inline.NumInlined: 187
 inline.NumDeleted: 49
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 7
@@ -205,9 +205,116 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 10264
   store ptr %0, ptr %i.a, align 8, !tbaa !34
-  %5 = call i64 @ZSTDv01_decompressDCtx(ptr noundef nonnull %4, ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3)
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %3
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %1
+  %7 = icmp ult i64 %3, 7
+  br i1 %7, label %ZSTDv01_decompressDCtx.exit, label %8
+
+8:                                                ; preds = %bb.a
+  %9 = load i32, ptr %2, align 1
+  %.not.i = icmp eq i32 %9, 515190781
+  br i1 %.not.i, label %.lr.ph.i, label %ZSTDv01_decompressDCtx.exit
+
+.lr.ph.i:                                         ; preds = %8
+  %10 = ptrtoint ptr %5 to i64
+  %gepdiff.i = add i64 %3, -4
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %12 = ptrtoint ptr %6 to i64                    ; 2 uses
+  br label %13
+
+13:                                               ; preds = %45, %.lr.ph.i
+  %.047112.i = phi i64 [ %gepdiff.i, %.lr.ph.i ], [ %48, %45 ] ; 2 uses
+  %.049111.i = phi ptr [ %0, %.lr.ph.i ], [ %46, %45 ] ; 6 uses
+  %.051110.i = phi ptr [ %11, %.lr.ph.i ], [ %47, %45 ] ; 4 uses
+  %14 = load i8, ptr %.051110.i, align 1, !tbaa !13
+  %15 = zext i8 %14 to i32                        ; 2 uses
+  %16 = lshr i32 %15, 6                           ; 2 uses
+  switch i32 %16, label %17 [
+    i32 3, label %.thread73.i
+    i32 2, label %30
+  ]
+
+.thread73.i:                                      ; preds = %13
+  %.not61.i = icmp eq i64 %.047112.i, 3
+  br i1 %.not61.i, label %.thread73.i.ZSTD_copyUncompressedBlock.exit.ZSTD_copyUncompressedBlock.exit.thread80_crit_edge.i_crit_edge, label %ZSTDv01_decompressDCtx.exit
+
+.thread73.i.ZSTD_copyUncompressedBlock.exit.ZSTD_copyUncompressedBlock.exit.thread80_crit_edge.i_crit_edge: ; preds = %.thread73.i
+  %.pre = ptrtoint ptr %.049111.i to i64
+  br label %ZSTD_copyUncompressedBlock.exit.thread80.i
+
+17:                                               ; preds = %13
+  %18 = shl nuw nsw i32 %15, 16
+  %19 = and i32 %18, 458752
+  %20 = getelementptr inbounds nuw i8, ptr %.051110.i, i64 2
+  %21 = load i8, ptr %20, align 1, !tbaa !13
+  %22 = zext i8 %21 to i32
+  %23 = or disjoint i32 %19, %22
+  %24 = getelementptr inbounds nuw i8, ptr %.051110.i, i64 1
+  %25 = load i8, ptr %24, align 1, !tbaa !13
+  %26 = zext i8 %25 to i32
+  %27 = shl nuw nsw i32 %26, 8
+  %28 = or disjoint i32 %27, %23
+  %29 = zext nneg i32 %28 to i64
+  br label %30
+
+30:                                               ; preds = %17, %13
+  %.0.i.ph.i = phi i64 [ %29, %17 ], [ 1, %13 ]   ; 9 uses
+  %31 = getelementptr inbounds nuw i8, ptr %.051110.i, i64 3 ; 3 uses
+  %32 = add i64 %.047112.i, -3                    ; 2 uses
+  %33 = icmp ugt i64 %.0.i.ph.i, %32
+  br i1 %33, label %ZSTDv01_decompressDCtx.exit, label %34
+
+34:                                               ; preds = %30
+  switch i32 %16, label %ZSTDv01_decompressDCtx.exit [
+    i32 0, label %ZSTD_copyUncompressedBlock.exit.i
+    i32 1, label %35
+  ]
+
+35:                                               ; preds = %34
+  %36 = ptrtoint ptr %.049111.i to i64            ; 2 uses
+  %37 = sub i64 %12, %36
+  %38 = icmp ugt i64 %.0.i.ph.i, %37
+  br i1 %38, label %ZSTDv01_decompressDCtx.exit, label %39
+
+39:                                               ; preds = %35
+  %.not.i.i = icmp eq i64 %.0.i.ph.i, 0
+  br i1 %.not.i.i, label %ZSTD_copyUncompressedBlock.exit.thread80.i, label %ZSTD_copyUncompressedBlock.exit.thread.thread.i
+
+ZSTD_copyUncompressedBlock.exit.thread.thread.i:  ; preds = %39
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.049111.i, ptr nonnull readonly align 1 %31, i64 %.0.i.ph.i, i1 false)
+  br label %45
+
+ZSTD_copyUncompressedBlock.exit.i:                ; preds = %34
+  %40 = ptrtoint ptr %.049111.i to i64            ; 2 uses
+  %41 = sub i64 %12, %40
+  %42 = call fastcc i64 @ZSTD_decompressBlock(ptr noundef nonnull %4, ptr noundef %.049111.i, i64 noundef %41, ptr noundef nonnull %31, i64 noundef %.0.i.ph.i) ; 3 uses
+  %43 = icmp eq i64 %.0.i.ph.i, 0
+  br i1 %43, label %ZSTD_copyUncompressedBlock.exit.thread80.i, label %ZSTD_copyUncompressedBlock.exit.thread.i
+
+ZSTD_copyUncompressedBlock.exit.thread.i:         ; preds = %ZSTD_copyUncompressedBlock.exit.i
+  %44 = icmp ult i64 %42, -119
+  br i1 %44, label %45, label %ZSTDv01_decompressDCtx.exit
+
+45:                                               ; preds = %ZSTD_copyUncompressedBlock.exit.thread.i, %ZSTD_copyUncompressedBlock.exit.thread.thread.i
+  %.179103.i = phi i64 [ %.0.i.ph.i, %ZSTD_copyUncompressedBlock.exit.thread.thread.i ], [ %42, %ZSTD_copyUncompressedBlock.exit.thread.i ]
+  %46 = getelementptr inbounds nuw i8, ptr %.049111.i, i64 %.179103.i
+  %47 = getelementptr inbounds nuw i8, ptr %31, i64 %.0.i.ph.i ; 2 uses
+  %48 = sub nuw i64 %32, %.0.i.ph.i
+  %49 = ptrtoint ptr %47 to i64
+  %50 = sub i64 %10, %49
+  %51 = icmp ult i64 %50, 3
+  br i1 %51, label %ZSTDv01_decompressDCtx.exit, label %13
+
+ZSTD_copyUncompressedBlock.exit.thread80.i:       ; preds = %39, %ZSTD_copyUncompressedBlock.exit.i, %.thread73.i.ZSTD_copyUncompressedBlock.exit.ZSTD_copyUncompressedBlock.exit.thread80_crit_edge.i_crit_edge
+  %.pre-phi.i = phi i64 [ %.pre, %.thread73.i.ZSTD_copyUncompressedBlock.exit.ZSTD_copyUncompressedBlock.exit.thread80_crit_edge.i_crit_edge ], [ %36, %39 ], [ %40, %ZSTD_copyUncompressedBlock.exit.i ]
+  %52 = ptrtoint ptr %0 to i64
+  %53 = sub i64 %.pre-phi.i, %52
+  br label %ZSTDv01_decompressDCtx.exit
+
+ZSTDv01_decompressDCtx.exit:                      ; preds = %30, %34, %35, %ZSTD_copyUncompressedBlock.exit.thread.i, %45, %bb.a, %8, %.thread73.i, %ZSTD_copyUncompressedBlock.exit.thread80.i
+  %.255.i = phi i64 [ %53, %ZSTD_copyUncompressedBlock.exit.thread80.i ], [ -72, %bb.a ], [ -10, %8 ], [ -72, %.thread73.i ], [ -72, %45 ], [ -1, %34 ], [ -72, %30 ], [ %42, %ZSTD_copyUncompressedBlock.exit.thread.i ], [ -70, %35 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
-  ret i64 %5
+  ret i64 %.255.i
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable

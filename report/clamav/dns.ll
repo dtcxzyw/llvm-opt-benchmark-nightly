@@ -19,8 +19,8 @@ define noalias noundef ptr @dnsquery(ptr noundef %0, i32 noundef %1, ptr nofree 
 bb.a:
   %i.a = alloca [512 x i8], align 16              ; 9 uses
   %i.b = alloca [128 x i8], align 16              ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   %.not = icmp eq ptr %2, null                    ; 3 uses
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -29,25 +29,25 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.c = tail call i32 @__res_init() #6
+  %i.c = tail call i32 @__res_init() #7
   %i.d = icmp slt i32 %i.c, 0
   br i1 %i.d, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = tail call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str) #6 ; 0 uses
+  %i.e = tail call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str) #7 ; 0 uses
   br label %bb.ae
 
 bb.e:                                             ; preds = %bb.c
-  %i.f = tail call i32 (i32, ptr, ...) @logg(i32 noundef 2, ptr noundef nonnull @.str.1, ptr noundef %0) #6 ; 0 uses
+  %i.f = tail call i32 (i32, ptr, ...) @logg(i32 noundef 2, ptr noundef nonnull @.str.1, ptr noundef %0) #7 ; 0 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %i.a, i8 0, i64 512, i1 false)
-  %i.g = call i32 @res_query(ptr noundef %0, i32 noundef 1, i32 noundef %1, ptr noundef nonnull %i.a, i32 noundef 512) #6 ; 2 uses
+  %i.g = call i32 @res_query(ptr noundef %0, i32 noundef 1, i32 noundef %1, ptr noundef nonnull %i.a, i32 noundef 512) #7 ; 2 uses
   %or.cond = icmp ugt i32 %i.g, 512
   br i1 %or.cond, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.h = icmp eq i32 %1, 16
   %i.i = select i1 %i.h, i32 4, i32 2
-  %i.j = call i32 (i32, ptr, ...) @logg(i32 noundef %i.i, ptr noundef nonnull @.str.2, ptr noundef %0) #6 ; 0 uses
+  %i.j = call i32 (i32, ptr, ...) @logg(i32 noundef %i.i, ptr noundef nonnull @.str.2, ptr noundef %0) #7 ; 0 uses
   br label %bb.ae
 
 bb.g:                                             ; preds = %bb.e
@@ -67,12 +67,12 @@ bb.j:                                             ; preds = %bb.g, %bb.g
   %i.k = zext nneg i32 %i.g to i64                ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.k ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
-  %i.n = call i32 @dn_expand(ptr noundef nonnull %i.a, ptr noundef nonnull %i.l, ptr noundef nonnull %i.m, ptr noundef nonnull %i.b, i32 noundef 128) #6 ; 2 uses
+  %i.n = call i32 @dn_expand(ptr noundef nonnull %i.a, ptr noundef nonnull %i.l, ptr noundef nonnull %i.m, ptr noundef nonnull %i.b, i32 noundef 128) #7 ; 2 uses
   %i.o = icmp slt i32 %i.n, 0
   br i1 %i.o, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.p = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.3) #6 ; 0 uses
+  %i.p = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.3) #7 ; 0 uses
   br label %bb.ae
 
 bb.l:                                             ; preds = %bb.j
@@ -83,7 +83,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.t, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.u = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.4) #6 ; 0 uses
+  %i.u = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.4) #7 ; 0 uses
   br label %bb.ae
 
 bb.n:                                             ; preds = %bb.l
@@ -99,7 +99,7 @@ bb.n:                                             ; preds = %bb.l
   br i1 %.not91, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ad = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.5) #6 ; 0 uses
+  %i.ad = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.5) #7 ; 0 uses
   br label %bb.ae
 
 bb.p:                                             ; preds = %bb.n
@@ -112,22 +112,22 @@ bb.q:                                             ; preds = %bb.w, %bb.p
   %.077 = phi ptr [ %i.ae, %bb.p ], [ %i.ax, %bb.w ]
   %i.ag = zext nneg i32 %.079 to i64
   %i.ah = getelementptr inbounds nuw i8, ptr %.077, i64 %i.ag ; 2 uses
-  %i.ai = call i32 @dn_expand(ptr noundef nonnull %i.a, ptr noundef nonnull %i.l, ptr noundef nonnull %i.ah, ptr noundef nonnull %i.b, i32 noundef 128) #6 ; 2 uses
+  %i.ai = call i32 @dn_expand(ptr noundef nonnull %i.a, ptr noundef nonnull %i.l, ptr noundef nonnull %i.ah, ptr noundef nonnull %i.b, i32 noundef 128) #7 ; 2 uses
   %i.aj = icmp slt i32 %i.ai, 0
   br i1 %i.aj, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.ak = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.6) #6 ; 0 uses
+  %i.ak = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.6) #7 ; 0 uses
   br label %bb.ae
 
 bb.s:                                             ; preds = %bb.q
   %i.al = zext nneg i32 %i.ai to i64
-  %i.am = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.al ; 11 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.al ; 8 uses
   %i.an = icmp ugt ptr %i.am, %i.af
   br i1 %i.an, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %i.ao = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.4) #6 ; 0 uses
+  %i.ao = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.4) #7 ; 0 uses
   br label %bb.ae
 
 bb.u:                                             ; preds = %bb.s
@@ -148,7 +148,7 @@ bb.u:                                             ; preds = %bb.s
   br i1 %or.cond95, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.bc = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.7) #6 ; 0 uses
+  %i.bc = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.7) #7 ; 0 uses
   br label %bb.ae
 
 bb.w:                                             ; preds = %bb.u
@@ -165,28 +165,13 @@ bb.w:                                             ; preds = %bb.u
   ]
 
 bb.x:                                             ; preds = %bb.w
-  %i.bj = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.8) #6 ; 0 uses
+  %i.bj = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.8) #7 ; 0 uses
   br label %bb.ae
 
 bb.y:                                             ; preds = %bb.w
-  %3 = getelementptr inbounds nuw i8, ptr %i.am, i64 7
-  %4 = load i8, ptr %3, align 1, !tbaa !9
-  %5 = getelementptr inbounds nuw i8, ptr %i.am, i64 6
-  %6 = load i8, ptr %5, align 1, !tbaa !9
-  %7 = getelementptr inbounds nuw i8, ptr %i.am, i64 5
-  %8 = load i8, ptr %7, align 1, !tbaa !9
   %i.bk = getelementptr inbounds nuw i8, ptr %i.am, i64 4
-  %9 = load i8, ptr %i.bk, align 1, !tbaa !9
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw i32 %10, 24
-  %12 = zext i8 %8 to i32
-  %13 = shl nuw nsw i32 %12, 16
-  %14 = or disjoint i32 %13, %11
-  %15 = zext i8 %6 to i32
-  %16 = shl nuw nsw i32 %15, 8
-  %17 = or disjoint i32 %14, %16
-  %18 = zext i8 %4 to i32
-  %19 = or disjoint i32 %17, %18
+  %3 = load i32, ptr %i.bk, align 1
+  %4 = call i32 @llvm.bswap.i32(i32 %3)
   %.not93 = icmp eq i32 %i.aw, 0
   br i1 %.not93, label %bb.aa, label %bb.z
 
@@ -200,13 +185,13 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
   %.078 = phi i32 [ %i.bm, %bb.z ], [ 0, %bb.y ]
-  %i.bp = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.9, i32 noundef %.078, i32 noundef %i.aw) #6 ; 0 uses
+  %i.bp = call i32 (i32, ptr, ...) @logg(i32 noundef 4, ptr noundef nonnull @.str.9, i32 noundef %.078, i32 noundef %i.aw) #7 ; 0 uses
   br label %bb.ae
 
 bb.ab:                                            ; preds = %bb.z
   %i.bq = add nuw nsw i32 %i.bm, 1
   %i.br = zext nneg i32 %i.bq to i64
-  %i.bs = call noalias ptr @malloc(i64 noundef %i.br) #7 ; 5 uses
+  %i.bs = call noalias ptr @malloc(i64 noundef %i.br) #8 ; 5 uses
   %.not94 = icmp eq ptr %i.bs, null
   br i1 %.not94, label %bb.ae, label %bb.ac
 
@@ -219,13 +204,13 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  store i32 %19, ptr %2, align 4, !tbaa !8
+  store i32 %4, ptr %2, align 4, !tbaa !8
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ac, %bb.ad, %bb.ab, %bb.h, %bb.i, %bb.aa, %bb.x, %bb.v, %bb.t, %bb.r, %bb.o, %bb.m, %bb.k, %bb.f, %bb.d
   %.0 = phi ptr [ null, %bb.d ], [ null, %bb.f ], [ null, %bb.aa ], [ null, %bb.k ], [ null, %bb.m ], [ null, %bb.o ], [ null, %bb.r ], [ null, %bb.t ], [ null, %bb.v ], [ null, %bb.x ], [ null, %bb.ab ], [ null, %bb.h ], [ null, %bb.i ], [ %i.bs, %bb.ad ], [ %i.bs, %bb.ac ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret ptr %.0
 }
 
@@ -255,14 +240,18 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #5
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #6
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #5 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nounwind }
-attributes #7 = { nounwind allocsize(0) }
+attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nounwind }
+attributes #8 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

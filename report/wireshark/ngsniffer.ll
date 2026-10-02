@@ -202,7 +202,7 @@ declare zeroext i1 @wtap_read_bytes_or_eof(ptr noundef, ptr noundef, i32 noundef
 define internal fastcc noundef zeroext i1 @process_frame_record(ptr nofree noundef readonly captures(none) %0, i1 noundef zeroext %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr noundef %5, ptr noundef %6) unnamed_addr #0 {
 bb.a:
   %7 = alloca %struct.frame2_rec, align 2         ; 15 uses
-  %8 = alloca %struct.frame4_rec, align 4         ; 22 uses
+  %8 = alloca %struct.frame4_rec, align 4         ; 19 uses
   %9 = alloca %struct.frame6_rec, align 2         ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #10
@@ -605,26 +605,11 @@ set_pseudo_header_frame4.exit:                    ; preds = %bb.z, %bb.aa, %bb.a
   %i.el = load <2 x i16>, ptr %i.ej, align 4
   %i.em = shufflevector <2 x i16> %i.ek, <2 x i16> %i.el, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   store <4 x i16> %i.em, ptr %i.ei, align 2
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 24
-  %11 = load i8, ptr %10, align 4
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw i32 %12, 24
-  %14 = getelementptr inbounds nuw i8, ptr %8, i64 25
-  %15 = load i8, ptr %14, align 1
-  %16 = zext i8 %15 to i32
-  %17 = shl nuw nsw i32 %16, 16
-  %18 = or disjoint i32 %17, %13
-  %19 = getelementptr inbounds nuw i8, ptr %8, i64 26
-  %20 = load i8, ptr %19, align 2
-  %21 = zext i8 %20 to i32
-  %22 = shl nuw nsw i32 %21, 8
-  %23 = or disjoint i32 %18, %22
-  %i.en = getelementptr inbounds nuw i8, ptr %8, i64 27
-  %24 = load i8, ptr %i.en, align 1
-  %25 = zext i8 %24 to i32
-  %26 = or disjoint i32 %23, %25
+  %i.en = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %10 = load i32, ptr %i.en, align 4
+  %11 = call i32 @llvm.bswap.i32(i32 %10)
   %i.eo = getelementptr i8, ptr %4, i64 88
-  store i32 %26, ptr %i.eo, align 8
+  store i32 %11, ptr %i.eo, align 8
   br label %set_metadata_frame2.exit
 
 bb.bq:                                            ; preds = %bb.a
@@ -1026,6 +1011,9 @@ declare i32 @llvm.umin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9

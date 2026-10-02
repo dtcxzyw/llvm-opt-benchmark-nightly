@@ -202,23 +202,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.f
   %i.m = getelementptr i8, ptr %0, i64 166
-  %4 = load i8, ptr %i.m, align 2
-  %5 = zext i8 %4 to i64
-  %6 = shl nuw nsw i64 %5, 24
-  %7 = getelementptr i8, ptr %0, i64 167
-  %8 = load i8, ptr %7, align 1
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw nsw i64 %9, 16
-  %11 = or disjoint i64 %10, %6
-  %12 = getelementptr i8, ptr %0, i64 168
-  %13 = load i8, ptr %12, align 8
-  %14 = zext i8 %13 to i64
-  %15 = shl nuw nsw i64 %14, 8
-  %16 = or disjoint i64 %11, %15
-  %17 = getelementptr i8, ptr %0, i64 169
-  %18 = load i8, ptr %17, align 1
-  %19 = zext i8 %18 to i64
-  %20 = or disjoint i64 %16, %19
+  %4 = load i32, ptr %i.m, align 2
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
   %i.n = getelementptr i8, ptr %0, i64 -248
   %i.o = load ptr, ptr %i.n, align 8
   %i.p = getelementptr i8, ptr %i.o, i64 96
@@ -233,11 +218,11 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not25.i, label %thread-pre-split.i.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %21 = add nuw nsw i64 %20, 1
-  %22 = and i64 %21, 4294967295
+  %6 = add i32 %5, 1
+  %7 = zext i32 %6 to i64
   %i.s = getelementptr i8, ptr %.val.i, i64 792
   %i.t = load i64, ptr %i.s, align 8
-  %.not26.i = icmp eq i64 %22, %i.t
+  %.not26.i = icmp eq i64 %i.t, %7
   br i1 %.not26.i, label %bb.j, label %thread-pre-split.i.thread
 
 bb.j:                                             ; preds = %bb.i
@@ -632,23 +617,8 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb, %bb.bb
   %i.eo = getelementptr i8, ptr %0, i64 166
-  %23 = load i8, ptr %i.eo, align 2
-  %24 = zext i8 %23 to i64
-  %25 = shl nuw nsw i64 %24, 24
-  %26 = getelementptr i8, ptr %0, i64 167
-  %27 = load i8, ptr %26, align 1
-  %28 = zext i8 %27 to i64
-  %29 = shl nuw nsw i64 %28, 16
-  %30 = or disjoint i64 %29, %25
-  %31 = getelementptr i8, ptr %0, i64 168
-  %32 = load i8, ptr %31, align 8
-  %33 = zext i8 %32 to i64
-  %34 = shl nuw nsw i64 %33, 8
-  %35 = or disjoint i64 %30, %34
-  %36 = getelementptr i8, ptr %0, i64 169
-  %37 = load i8, ptr %36, align 1
-  %38 = zext i8 %37 to i64
-  %39 = or disjoint i64 %35, %38
+  %8 = load i32, ptr %i.eo, align 2
+  %9 = call i32 @llvm.bswap.i32(i32 %8)
   %i.ep = getelementptr i8, ptr %0, i64 -248
   %i.eq = load ptr, ptr %i.ep, align 8
   %i.er = getelementptr i8, ptr %i.eq, i64 96
@@ -663,11 +633,11 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %.not25.i197, label %thread-pre-split.i199, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %40 = add nuw nsw i64 %39, 1
-  %41 = and i64 %40, 4294967295
+  %10 = add i32 %9, 1
+  %11 = zext i32 %10 to i64
   %i.eu = getelementptr i8, ptr %.val.i196, i64 792
   %i.ev = load i64, ptr %i.eu, align 8
-  %.not26.i198 = icmp eq i64 %41, %i.ev
+  %.not26.i198 = icmp eq i64 %i.ev, %11
   br i1 %.not26.i198, label %bb.bf, label %thread-pre-split.i199
 
 bb.bf:                                            ; preds = %bb.be
@@ -789,23 +759,8 @@ bb.br:                                            ; preds = %bb.bq
 
 bb.bs:                                            ; preds = %bb.br, %bb.br
   %i.gj = getelementptr i8, ptr %0, i64 166
-  %42 = load i8, ptr %i.gj, align 2
-  %43 = zext i8 %42 to i64
-  %44 = shl nuw nsw i64 %43, 24
-  %45 = getelementptr i8, ptr %0, i64 167
-  %46 = load i8, ptr %45, align 1
-  %47 = zext i8 %46 to i64
-  %48 = shl nuw nsw i64 %47, 16
-  %49 = or disjoint i64 %48, %44
-  %50 = getelementptr i8, ptr %0, i64 168
-  %51 = load i8, ptr %50, align 8
-  %52 = zext i8 %51 to i64
-  %53 = shl nuw nsw i64 %52, 8
-  %54 = or disjoint i64 %49, %53
-  %55 = getelementptr i8, ptr %0, i64 169
-  %56 = load i8, ptr %55, align 1
-  %57 = zext i8 %56 to i64
-  %58 = or disjoint i64 %54, %57
+  %12 = load i32, ptr %i.gj, align 2
+  %13 = call i32 @llvm.bswap.i32(i32 %12)
   %i.gk = getelementptr i8, ptr %0, i64 -248
   %i.gl = load ptr, ptr %i.gk, align 8
   %i.gm = getelementptr i8, ptr %i.gl, i64 96
@@ -820,11 +775,11 @@ bb.bt:                                            ; preds = %bb.bs
   br i1 %.not25.i208, label %thread-pre-split.i210, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
-  %59 = add nuw nsw i64 %58, 1
-  %60 = and i64 %59, 4294967295
+  %14 = add i32 %13, 1
+  %15 = zext i32 %14 to i64
   %i.gp = getelementptr i8, ptr %.val.i207, i64 792
   %i.gq = load i64, ptr %i.gp, align 8
-  %.not26.i209 = icmp eq i64 %60, %i.gq
+  %.not26.i209 = icmp eq i64 %i.gq, %15
   br i1 %.not26.i209, label %bb.bv, label %thread-pre-split.i210
 
 bb.bv:                                            ; preds = %bb.bu
@@ -1225,6 +1180,9 @@ declare i32 @llvm.umax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #6

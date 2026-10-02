@@ -204,13 +204,13 @@ bb.a:
   br i1 %.not107115, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader109
-  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 2 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 3 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 3
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 5 ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 6 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 7 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 5
+  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 6
+  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 7
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   br label %bb.b
 
@@ -218,13 +218,13 @@ bb.a:
   br i1 %.not107115, label %.loopexit, label %.lr.ph119
 
 .lr.ph119:                                        ; preds = %.preheader
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 2 ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 3 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 3
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 5 ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 6 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 7 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 5
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 6
+  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 7
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   br label %bb.e
 
@@ -238,36 +238,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   br i1 %i.u, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %7 = load i8, ptr %4, align 1, !tbaa !9
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw i32 %8, 24
-  %10 = load i8, ptr %i.d, align 1, !tbaa !9
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 16
-  %13 = or disjoint i32 %12, %9
-  %14 = load i8, ptr %i.e, align 1, !tbaa !9
-  %15 = zext i8 %14 to i32
-  %16 = shl nuw nsw i32 %15, 8
-  %17 = or disjoint i32 %13, %16
-  %18 = load i8, ptr %i.f, align 1, !tbaa !9
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %17, %19
-  store i32 %20, ptr %i.a, align 4, !tbaa !8
-  %21 = load i8, ptr %i.g, align 1, !tbaa !9
-  %22 = zext i8 %21 to i32
-  %23 = shl nuw i32 %22, 24
-  %24 = load i8, ptr %i.h, align 1, !tbaa !9
-  %25 = zext i8 %24 to i32
-  %26 = shl nuw nsw i32 %25, 16
-  %27 = or disjoint i32 %26, %23
-  %28 = load i8, ptr %i.i, align 1, !tbaa !9
-  %29 = zext i8 %28 to i32
-  %30 = shl nuw nsw i32 %29, 8
-  %31 = or disjoint i32 %27, %30
-  %32 = load i8, ptr %i.j, align 1, !tbaa !9
-  %33 = zext i8 %32 to i32
-  %34 = or disjoint i32 %31, %33
-  store i32 %34, ptr %i.k, align 4, !tbaa !8
+  %7 = load i32, ptr %4, align 1
+  %8 = tail call i32 @llvm.bswap.i32(i32 %7)
+  store i32 %8, ptr %i.a, align 4, !tbaa !8
+  %9 = load i32, ptr %i.g, align 1
+  %10 = tail call i32 @llvm.bswap.i32(i32 %9)
+  store i32 %10, ptr %i.k, align 4, !tbaa !8
   call void @BF_encrypt(ptr noundef nonnull %i.a, ptr noundef %3)
   %i.v = load i32, ptr %i.a, align 4, !tbaa !8    ; 4 uses
   %i.w = lshr i32 %i.v, 24
@@ -320,36 +296,12 @@ bb.e:                                             ; preds = %.lr.ph119, %bb.g
   br i1 %i.av, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %35 = load i8, ptr %4, align 1, !tbaa !9
-  %36 = zext i8 %35 to i32
-  %37 = shl nuw i32 %36, 24
-  %38 = load i8, ptr %i.l, align 1, !tbaa !9
-  %39 = zext i8 %38 to i32
-  %40 = shl nuw nsw i32 %39, 16
-  %41 = or disjoint i32 %40, %37
-  %42 = load i8, ptr %i.m, align 1, !tbaa !9
-  %43 = zext i8 %42 to i32
-  %44 = shl nuw nsw i32 %43, 8
-  %45 = or disjoint i32 %41, %44
-  %46 = load i8, ptr %i.n, align 1, !tbaa !9
-  %47 = zext i8 %46 to i32
-  %48 = or disjoint i32 %45, %47
-  store i32 %48, ptr %i.a, align 4, !tbaa !8
-  %49 = load i8, ptr %i.o, align 1, !tbaa !9
-  %50 = zext i8 %49 to i32
-  %51 = shl nuw i32 %50, 24
-  %52 = load i8, ptr %i.p, align 1, !tbaa !9
-  %53 = zext i8 %52 to i32
-  %54 = shl nuw nsw i32 %53, 16
-  %55 = or disjoint i32 %54, %51
-  %56 = load i8, ptr %i.q, align 1, !tbaa !9
-  %57 = zext i8 %56 to i32
-  %58 = shl nuw nsw i32 %57, 8
-  %59 = or disjoint i32 %55, %58
-  %60 = load i8, ptr %i.r, align 1, !tbaa !9
-  %61 = zext i8 %60 to i32
-  %62 = or disjoint i32 %59, %61
-  store i32 %62, ptr %i.s, align 4, !tbaa !8
+  %11 = load i32, ptr %4, align 1
+  %12 = tail call i32 @llvm.bswap.i32(i32 %11)
+  store i32 %12, ptr %i.a, align 4, !tbaa !8
+  %13 = load i32, ptr %i.o, align 1
+  %14 = tail call i32 @llvm.bswap.i32(i32 %13)
+  store i32 %14, ptr %i.s, align 4, !tbaa !8
   call void @BF_encrypt(ptr noundef nonnull %i.a, ptr noundef %3)
   %i.aw = load i32, ptr %i.a, align 4, !tbaa !8   ; 4 uses
   %i.ax = lshr i32 %i.aw, 24
@@ -646,47 +598,17 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %BF_ecb_encrypt.exit
   %.012 = phi i64 [ %3, %.lr.ph ], [ %i.ah, %BF_ecb_encrypt.exit ]
-  %.0811 = phi ptr [ %2, %.lr.ph ], [ %i.af, %BF_ecb_encrypt.exit ] ; 9 uses
+  %.0811 = phi ptr [ %2, %.lr.ph ], [ %i.af, %BF_ecb_encrypt.exit ] ; 3 uses
   %.0910 = phi ptr [ %1, %.lr.ph ], [ %i.ag, %BF_ecb_encrypt.exit ] ; 9 uses
   %i.g = load i32, ptr %i.e, align 4, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  %4 = getelementptr inbounds nuw i8, ptr %.0811, i64 1
-  %5 = load i8, ptr %.0811, align 1, !tbaa !9
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw i32 %6, 24
-  %8 = getelementptr inbounds nuw i8, ptr %.0811, i64 2
-  %9 = load i8, ptr %4, align 1, !tbaa !9
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 16
-  %12 = or disjoint i32 %11, %7
-  %13 = getelementptr inbounds nuw i8, ptr %.0811, i64 3
-  %14 = load i8, ptr %8, align 1, !tbaa !9
-  %15 = zext i8 %14 to i32
-  %16 = shl nuw nsw i32 %15, 8
-  %17 = or disjoint i32 %12, %16
+  %4 = load i32, ptr %.0811, align 1
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
   %i.h = getelementptr inbounds nuw i8, ptr %.0811, i64 4
-  %18 = load i8, ptr %13, align 1, !tbaa !9
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %17, %19
-  store i32 %20, ptr %i.a, align 4, !tbaa !8
-  %21 = getelementptr inbounds nuw i8, ptr %.0811, i64 5
-  %22 = load i8, ptr %i.h, align 1, !tbaa !9
-  %23 = zext i8 %22 to i32
-  %24 = shl nuw i32 %23, 24
-  %25 = getelementptr inbounds nuw i8, ptr %.0811, i64 6
-  %26 = load i8, ptr %21, align 1, !tbaa !9
-  %27 = zext i8 %26 to i32
-  %28 = shl nuw nsw i32 %27, 16
-  %29 = or disjoint i32 %28, %24
-  %30 = getelementptr inbounds nuw i8, ptr %.0811, i64 7
-  %31 = load i8, ptr %25, align 1, !tbaa !9
-  %32 = zext i8 %31 to i32
-  %33 = shl nuw nsw i32 %32, 8
-  %34 = or disjoint i32 %29, %33
-  %35 = load i8, ptr %30, align 1, !tbaa !9
-  %36 = zext i8 %35 to i32
-  %37 = or disjoint i32 %34, %36
-  store i32 %37, ptr %i.f, align 4, !tbaa !8
+  store i32 %5, ptr %i.a, align 4, !tbaa !8
+  %6 = load i32, ptr %i.h, align 1
+  %7 = tail call i32 @llvm.bswap.i32(i32 %6)
+  store i32 %7, ptr %i.f, align 4, !tbaa !8
   %.not.i = icmp eq i32 %i.g, 0
   br i1 %.not.i, label %bb.d, label %bb.c
 

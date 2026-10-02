@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.g, %bb.j, %bb.i,
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define noundef nonnull ptr @ComputeSHA1(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #40 {
 bb.a:
-  %i.a = alloca [80 x i32], align 16              ; 8 uses
+  %i.a = alloca [80 x i32], align 16              ; 10 uses
   store <4 x i32> <i32 1732584193, i32 -271733879, i32 -1732584194, i32 271733878>, ptr @ComputeSHA1.hash, align 16
   store i32 -1009589776, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA1.hash, i64 16), align 16
   %i.b = add nsw i32 %1, 8
@@ -213,7 +213,7 @@ bb.a:
   %i.d = shl nsw i32 %i.c, 6                      ; 2 uses
   %i.e = add i32 %i.d, 64                         ; 2 uses
   %i.f = sext i32 %i.e to i64                     ; 2 uses
-  %i.g = tail call noalias ptr @calloc(i64 noundef %i.f, i64 noundef 1) #60 ; 6 uses
+  %i.g = tail call noalias ptr @calloc(i64 noundef %i.f, i64 noundef 1) #60 ; 8 uses
   %i.h = sext i32 %1 to i64                       ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.g, ptr align 1 %0, i64 %i.h, i1 false)
   %i.i = getelementptr inbounds i8, ptr %i.g, i64 %i.h
@@ -230,7 +230,9 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 64
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.c
@@ -246,7 +248,7 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   ret ptr @ComputeSHA1.hash
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv138 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next139, %bb.c ] ; 3 uses
+  %indvars.iv138 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next139, %bb.c ] ; 5 uses
   %i.s = phi i32 [ 1732584193, %.lr.ph.preheader ], [ %i.bb, %bb.c ] ; 2 uses
   %i.t = phi i32 [ -271733879, %.lr.ph.preheader ], [ %i.bc, %bb.c ] ; 2 uses
   %i.u = phi i32 [ -1732584194, %.lr.ph.preheader ], [ %i.bd, %bb.c ] ; 2 uses
@@ -255,40 +257,24 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #56
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.q, i8 0, i64 256, i1 false)
   %i.x = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv138
-  %2 = load <32 x i8>, ptr %i.x, align 1          ; 4 uses
-  %3 = shufflevector <32 x i8> %2, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %4 = zext <8 x i8> %3 to <8 x i32>
-  %5 = shl nuw <8 x i32> %4, splat (i32 24)
-  %6 = shufflevector <32 x i8> %2, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %7 = zext <8 x i8> %6 to <8 x i32>
-  %8 = shl nuw nsw <8 x i32> %7, splat (i32 16)
-  %9 = or disjoint <8 x i32> %8, %5
-  %10 = shufflevector <32 x i8> %2, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %11 = zext <8 x i8> %10 to <8 x i32>
-  %12 = shl nuw nsw <8 x i32> %11, splat (i32 8)
-  %13 = or disjoint <8 x i32> %9, %12
-  %14 = shufflevector <32 x i8> %2, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %15 = zext <8 x i8> %14 to <8 x i32>
-  %16 = or disjoint <8 x i32> %13, %15
-  store <8 x i32> %16, ptr %i.a, align 16
+  %4 = load <4 x i32>, ptr %i.x, align 1
+  %5 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %4)
+  store <4 x i32> %5, ptr %i.a, align 16
   %i.y = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv138
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 32
-  %17 = load <32 x i8>, ptr %i.z, align 1         ; 4 uses
-  %18 = shufflevector <32 x i8> %17, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %19 = zext <8 x i8> %18 to <8 x i32>
-  %20 = shl nuw <8 x i32> %19, splat (i32 24)
-  %21 = shufflevector <32 x i8> %17, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %22 = zext <8 x i8> %21 to <8 x i32>
-  %23 = shl nuw nsw <8 x i32> %22, splat (i32 16)
-  %24 = or disjoint <8 x i32> %23, %20
-  %25 = shufflevector <32 x i8> %17, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %26 = zext <8 x i8> %25 to <8 x i32>
-  %27 = shl nuw nsw <8 x i32> %26, splat (i32 8)
-  %28 = or disjoint <8 x i32> %24, %27
-  %29 = shufflevector <32 x i8> %17, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %30 = zext <8 x i8> %29 to <8 x i32>
-  %31 = or disjoint <8 x i32> %28, %30
-  store <8 x i32> %31, ptr %i.r, align 16
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
+  %6 = load <4 x i32>, ptr %i.z, align 1
+  %7 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %6)
+  store <4 x i32> %7, ptr %2, align 16
+  %8 = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv138
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %10 = load <4 x i32>, ptr %9, align 1
+  %11 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %10)
+  store <4 x i32> %11, ptr %i.r, align 16
+  %12 = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv138
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 48
+  %14 = load <4 x i32>, ptr %13, align 1
+  %15 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %14)
+  store <4 x i32> %15, ptr %3, align 16
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader, %.lr.ph
@@ -398,7 +384,7 @@ bb.j:                                             ; preds = %bb.f, %bb.i, %bb.h,
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define noundef nonnull ptr @ComputeSHA256(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #40 {
 .preheader111:
-  %i.a = alloca [64 x i32], align 16              ; 7 uses
+  %i.a = alloca [64 x i32], align 16              ; 9 uses
   store <4 x i32> <i32 1779033703, i32 -1150833019, i32 1013904242, i32 -1521486534>, ptr @ComputeSHA256.hash, align 16
   store <4 x i32> <i32 1359893119, i32 -1694144372, i32 528734635, i32 1541459225>, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA256.hash, i64 16), align 16
   %i.b = sext i32 %1 to i64                       ; 5 uses
@@ -422,7 +408,9 @@ define noundef nonnull ptr @ComputeSHA256(ptr nofree noundef readonly captures(n
 
 .lr.ph.preheader:                                 ; preds = %.preheader111
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 64
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.b
@@ -451,42 +439,24 @@ bb.a:                                             ; preds = %._crit_edge, %.preh
   %i.w = phi i32 [ %i.bd, %bb.b ], [ 528734635, %.lr.ph.preheader ] ; 2 uses
   %i.x = phi i32 [ %i.be, %bb.b ], [ 1541459225, %.lr.ph.preheader ] ; 2 uses
   %i.y = shl nuw i64 %.097130, 6
-  %i.z = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.y ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.y ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #56
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(192) %i.o, i8 0, i64 192, i1 false)
-  %2 = load <32 x i8>, ptr %i.z, align 1          ; 4 uses
-  %3 = shufflevector <32 x i8> %2, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %4 = zext <8 x i8> %3 to <8 x i32>
-  %5 = shl nuw <8 x i32> %4, splat (i32 24)
-  %6 = shufflevector <32 x i8> %2, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %7 = zext <8 x i8> %6 to <8 x i32>
-  %8 = shl nuw nsw <8 x i32> %7, splat (i32 16)
-  %9 = or disjoint <8 x i32> %8, %5
-  %10 = shufflevector <32 x i8> %2, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %11 = zext <8 x i8> %10 to <8 x i32>
-  %12 = shl nuw nsw <8 x i32> %11, splat (i32 8)
-  %13 = or disjoint <8 x i32> %9, %12
-  %14 = shufflevector <32 x i8> %2, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %15 = zext <8 x i8> %14 to <8 x i32>
-  %16 = or disjoint <8 x i32> %13, %15
-  store <8 x i32> %16, ptr %i.a, align 16
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 32
-  %17 = load <32 x i8>, ptr %i.aa, align 1        ; 4 uses
-  %18 = shufflevector <32 x i8> %17, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %19 = zext <8 x i8> %18 to <8 x i32>
-  %20 = shl nuw <8 x i32> %19, splat (i32 24)
-  %21 = shufflevector <32 x i8> %17, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %22 = zext <8 x i8> %21 to <8 x i32>
-  %23 = shl nuw nsw <8 x i32> %22, splat (i32 16)
-  %24 = or disjoint <8 x i32> %23, %20
-  %25 = shufflevector <32 x i8> %17, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %26 = zext <8 x i8> %25 to <8 x i32>
-  %27 = shl nuw nsw <8 x i32> %26, splat (i32 8)
-  %28 = or disjoint <8 x i32> %24, %27
-  %29 = shufflevector <32 x i8> %17, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %30 = zext <8 x i8> %29 to <8 x i32>
-  %31 = or disjoint <8 x i32> %28, %30
-  store <8 x i32> %31, ptr %i.p, align 16
+  %4 = load <4 x i32>, ptr %i.z, align 1
+  %5 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %4)
+  store <4 x i32> %5, ptr %i.a, align 16
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
+  %6 = load <4 x i32>, ptr %i.aa, align 1
+  %7 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %6)
+  store <4 x i32> %7, ptr %2, align 16
+  %8 = getelementptr inbounds nuw i8, ptr %i.z, i64 32
+  %9 = load <4 x i32>, ptr %8, align 1
+  %10 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %9)
+  store <4 x i32> %10, ptr %i.p, align 16
+  %11 = getelementptr inbounds nuw i8, ptr %i.z, i64 48
+  %12 = load <4 x i32>, ptr %11, align 1
+  %13 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %12)
+  store <4 x i32> %13, ptr %3, align 16
   br label %.preheader110
 
 .preheader110:                                    ; preds = %.lr.ph, %.preheader110
@@ -889,6 +859,9 @@ declare float @llvm.sqrt.f32(float) #5
 declare i64 @llvm.smin.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -925,9 +898,6 @@ declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #5
 declare i64 @llvm.umax.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -938,6 +908,9 @@ declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <3 x float> @llvm.fmuladd.v3f32(<3 x float>, <3 x float>, <3 x float>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #5

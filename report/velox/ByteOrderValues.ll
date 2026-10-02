@@ -6,39 +6,21 @@ target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef i32 @_ZN4geos2io15ByteOrderValues6getIntEPKhi(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
-  %3 = icmp eq i32 %1, 0
-  br i1 %3, label %bb.a, label %4
-
-bb.a:                                             ; preds = %2
-  %i.a = load i32, ptr %0, align 1
+bb.a:
+  %2 = icmp eq i32 %1, 0
+  %i.a = load i32, ptr %0, align 1                ; 2 uses
   %i.b = tail call i32 @llvm.bswap.i32(i32 %i.a)
-  br label %6
-
-4:                                                ; preds = %2
-  %5 = load i32, ptr %0, align 1
-  br label %6
-
-6:                                                ; preds = %4, %bb.a
-  %.0 = phi i32 [ %i.b, %bb.a ], [ %5, %4 ]
+  %.0 = select i1 %2, i32 %i.b, i32 %i.a
   ret i32 %.0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef i32 @_ZN4geos2io15ByteOrderValues11getUnsignedEPKhi(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
-  %3 = icmp eq i32 %1, 0
-  br i1 %3, label %bb.a, label %4
-
-bb.a:                                             ; preds = %2
-  %i.a = load i32, ptr %0, align 1
+bb.a:
+  %2 = icmp eq i32 %1, 0
+  %i.a = load i32, ptr %0, align 1                ; 2 uses
   %i.b = tail call i32 @llvm.bswap.i32(i32 %i.a)
-  br label %6
-
-4:                                                ; preds = %2
-  %5 = load i32, ptr %0, align 1
-  br label %6
-
-6:                                                ; preds = %4, %bb.a
-  %.0 = phi i32 [ %i.b, %bb.a ], [ %5, %4 ]
+  %.0 = select i1 %2, i32 %i.b, i32 %i.a
   ret i32 %.0
 }
 
@@ -64,20 +46,11 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef i64 @_ZN4geos2io15ByteOrderValues7getLongEPKhi(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
-  %3 = icmp eq i32 %1, 0
-  br i1 %3, label %bb.a, label %4
-
-bb.a:                                             ; preds = %2
-  %i.a = load i64, ptr %0, align 1, !tbaa !8
+bb.a:
+  %2 = icmp eq i32 %1, 0
+  %i.a = load i64, ptr %0, align 1                ; 2 uses
   %i.b = tail call i64 @llvm.bswap.i64(i64 %i.a)
-  br label %6
-
-4:                                                ; preds = %2
-  %5 = load i64, ptr %0, align 1
-  br label %6
-
-6:                                                ; preds = %4, %bb.a
-  %.0 = phi i64 [ %i.b, %bb.a ], [ %5, %4 ]
+  %.0 = select i1 %2, i64 %i.b, i64 %i.a
   ret i64 %.0
 }
 
@@ -93,22 +66,13 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef double @_ZN4geos2io15ByteOrderValues9getDoubleEPKhi(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
-  %3 = icmp eq i32 %1, 0
-  br i1 %3, label %bb.a, label %4
-
-bb.a:                                             ; preds = %2
-  %i.a = load i64, ptr %0, align 1, !tbaa !8
+bb.a:
+  %2 = icmp eq i32 %1, 0
+  %i.a = load i64, ptr %0, align 1                ; 2 uses
   %i.b = tail call i64 @llvm.bswap.i64(i64 %i.a)
-  br label %_ZN4geos2io15ByteOrderValues7getLongEPKhi.exit
-
-4:                                                ; preds = %2
-  %5 = load i64, ptr %0, align 1
-  br label %_ZN4geos2io15ByteOrderValues7getLongEPKhi.exit
-
-_ZN4geos2io15ByteOrderValues7getLongEPKhi.exit:   ; preds = %bb.a, %4
-  %.0.i = phi i64 [ %i.b, %bb.a ], [ %5, %4 ]
-  %6 = bitcast i64 %.0.i to double
-  ret double %6
+  %.0.i = select i1 %2, i64 %i.b, i64 %i.a
+  %3 = bitcast i64 %.0.i to double
+  ret double %3
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
@@ -145,5 +109,4 @@ attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
-!8 = !{!4, !4, i64 0}
 end_hunk_0

@@ -72,43 +72,27 @@ define internal fastcc void @Sha256_WriteByteBlock(ptr nofree noundef captures(n
 bb.a:
   %i.a = alloca [16 x i32], align 16              ; 7 uses
   %i.b = alloca [8 x i32], align 16               ; 13 uses
-  %i.c = alloca [16 x i32], align 16              ; 5 uses
+  %i.c = alloca [16 x i32], align 16              ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #4
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %1 = load <32 x i8>, ptr %i.d, align 1, !tbaa !11 ; 4 uses
-  %2 = shufflevector <32 x i8> %1, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %3 = zext <8 x i8> %2 to <8 x i32>
-  %4 = shl nuw <8 x i32> %3, splat (i32 24)
-  %5 = shufflevector <32 x i8> %1, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %6 = zext <8 x i8> %5 to <8 x i32>
-  %7 = shl nuw nsw <8 x i32> %6, splat (i32 16)
-  %8 = or disjoint <8 x i32> %7, %4
-  %9 = shufflevector <32 x i8> %1, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %10 = zext <8 x i8> %9 to <8 x i32>
-  %11 = shl nuw nsw <8 x i32> %10, splat (i32 8)
-  %12 = or disjoint <8 x i32> %8, %11
-  %13 = shufflevector <32 x i8> %1, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %14 = zext <8 x i8> %13 to <8 x i32>
-  %15 = or disjoint <8 x i32> %12, %14
-  store <8 x i32> %15, ptr %i.c, align 16, !tbaa !7
+  %1 = load <4 x i32>, ptr %i.d, align 1
+  %2 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %1)
+  store <4 x i32> %2, ptr %i.c, align 16, !tbaa !7
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %5 = load <4 x i32>, ptr %3, align 1
+  %6 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %5)
+  store <4 x i32> %6, ptr %4, align 16, !tbaa !7
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %16 = load <32 x i8>, ptr %i.e, align 1, !tbaa !11 ; 4 uses
-  %17 = shufflevector <32 x i8> %16, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %18 = zext <8 x i8> %17 to <8 x i32>
-  %19 = shl nuw <8 x i32> %18, splat (i32 24)
-  %20 = shufflevector <32 x i8> %16, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %21 = zext <8 x i8> %20 to <8 x i32>
-  %22 = shl nuw nsw <8 x i32> %21, splat (i32 16)
-  %23 = or disjoint <8 x i32> %22, %19
-  %24 = shufflevector <32 x i8> %16, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %25 = zext <8 x i8> %24 to <8 x i32>
-  %26 = shl nuw nsw <8 x i32> %25, splat (i32 8)
-  %27 = or disjoint <8 x i32> %23, %26
-  %28 = shufflevector <32 x i8> %16, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %29 = zext <8 x i8> %28 to <8 x i32>
-  %30 = or disjoint <8 x i32> %27, %29
-  store <8 x i32> %30, ptr %i.f, align 16, !tbaa !7
+  %7 = load <4 x i32>, ptr %i.e, align 1
+  %8 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %7)
+  store <4 x i32> %8, ptr %i.f, align 16, !tbaa !7
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %10 = getelementptr inbounds nuw i8, ptr %i.c, i64 48
+  %11 = load <4 x i32>, ptr %9, align 1
+  %12 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %11)
+  store <4 x i32> %12, ptr %10, align 16, !tbaa !7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, ptr noundef nonnull align 4 dereferenceable(32) %0, i64 32, i1 false), !tbaa !7
@@ -492,6 +476,9 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #3
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

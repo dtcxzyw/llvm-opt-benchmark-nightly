@@ -204,24 +204,10 @@ PACKET_get_length_prefixed_2.exit181.thread:      ; preds = %bb.f, %bb.h, %bb.g
   br label %.thread262
 
 bb.i:                                             ; preds = %bb.h
-  %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.ao ; 5 uses
-  %5 = load i8, ptr %i.au, align 1, !tbaa !15
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 24
-  %8 = getelementptr inbounds nuw i8, ptr %i.au, i64 1
-  %9 = load i8, ptr %8, align 1, !tbaa !15
-  %10 = zext i8 %9 to i64
-  %11 = shl nuw nsw i64 %10, 16
-  %12 = or disjoint i64 %11, %7
-  %13 = getelementptr inbounds nuw i8, ptr %i.au, i64 2
-  %14 = load i8, ptr %13, align 1, !tbaa !15
-  %15 = zext i8 %14 to i64
-  %16 = shl nuw nsw i64 %15, 8
-  %17 = or disjoint i64 %12, %16
-  %18 = getelementptr inbounds nuw i8, ptr %i.au, i64 3
-  %19 = load i8, ptr %18, align 1, !tbaa !15
-  %i.av = zext i8 %19 to i64
-  %20 = or disjoint i64 %17, %i.av
+  %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.ao ; 2 uses
+  %5 = load i32, ptr %i.au, align 1
+  %6 = call i32 @llvm.bswap.i32(i32 %5)
+  %i.av = zext i32 %6 to i64
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 4
   %i.ax = add i64 %i.as, -4
   %i.ay = icmp eq i64 %i.ao, 0
@@ -461,7 +447,7 @@ bb.am:                                            ; preds = %bb.al
   %i.cx = load i64, ptr %i.cw, align 8
   %..i184 = call i64 @llvm.usub.sat.i64(i64 %i.cu, i64 %i.cx) ; 2 uses
   %.sroa.03.0.i = call i64 @llvm.uadd.sat.i64(i64 %..i184, i64 1000000000) ; 2 uses
-  %i.cy = mul nuw nsw i64 %20, 1000000
+  %i.cy = mul nuw nsw i64 %i.av, 1000000
   %i.cz = zext i32 %i.ct to i64
   %i.da = mul nuw nsw i64 %i.cz, 1000000
   %..i = call i64 @llvm.usub.sat.i64(i64 %i.cy, i64 %i.da) ; 2 uses
@@ -863,6 +849,9 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.uadd.sat.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

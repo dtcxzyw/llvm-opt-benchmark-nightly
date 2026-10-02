@@ -203,47 +203,17 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %CAST_ecb_encrypt.exit
   %.012 = phi i64 [ %3, %.lr.ph ], [ %i.ah, %CAST_ecb_encrypt.exit ]
-  %.0811 = phi ptr [ %2, %.lr.ph ], [ %i.af, %CAST_ecb_encrypt.exit ] ; 9 uses
+  %.0811 = phi ptr [ %2, %.lr.ph ], [ %i.af, %CAST_ecb_encrypt.exit ] ; 3 uses
   %.0910 = phi ptr [ %1, %.lr.ph ], [ %i.ag, %CAST_ecb_encrypt.exit ] ; 9 uses
   %i.g = load i32, ptr %i.e, align 4, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  %4 = getelementptr inbounds nuw i8, ptr %.0811, i64 1
-  %5 = load i8, ptr %.0811, align 1, !tbaa !8
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw i32 %6, 24
-  %8 = getelementptr inbounds nuw i8, ptr %.0811, i64 2
-  %9 = load i8, ptr %4, align 1, !tbaa !8
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 16
-  %12 = or disjoint i32 %11, %7
-  %13 = getelementptr inbounds nuw i8, ptr %.0811, i64 3
-  %14 = load i8, ptr %8, align 1, !tbaa !8
-  %15 = zext i8 %14 to i32
-  %16 = shl nuw nsw i32 %15, 8
-  %17 = or disjoint i32 %12, %16
+  %4 = load i32, ptr %.0811, align 1
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
   %i.h = getelementptr inbounds nuw i8, ptr %.0811, i64 4
-  %18 = load i8, ptr %13, align 1, !tbaa !8
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %17, %19
-  store i32 %20, ptr %i.a, align 4, !tbaa !9
-  %21 = getelementptr inbounds nuw i8, ptr %.0811, i64 5
-  %22 = load i8, ptr %i.h, align 1, !tbaa !8
-  %23 = zext i8 %22 to i32
-  %24 = shl nuw i32 %23, 24
-  %25 = getelementptr inbounds nuw i8, ptr %.0811, i64 6
-  %26 = load i8, ptr %21, align 1, !tbaa !8
-  %27 = zext i8 %26 to i32
-  %28 = shl nuw nsw i32 %27, 16
-  %29 = or disjoint i32 %28, %24
-  %30 = getelementptr inbounds nuw i8, ptr %.0811, i64 7
-  %31 = load i8, ptr %25, align 1, !tbaa !8
-  %32 = zext i8 %31 to i32
-  %33 = shl nuw nsw i32 %32, 8
-  %34 = or disjoint i32 %29, %33
-  %35 = load i8, ptr %30, align 1, !tbaa !8
-  %36 = zext i8 %35 to i32
-  %37 = or disjoint i32 %34, %36
-  store i32 %37, ptr %i.f, align 4, !tbaa !9
+  store i32 %5, ptr %i.a, align 4, !tbaa !9
+  %6 = load i32, ptr %i.h, align 1
+  %7 = tail call i32 @llvm.bswap.i32(i32 %6)
+  store i32 %7, ptr %i.f, align 4, !tbaa !9
   %.not.i = icmp eq i32 %i.g, 0
   br i1 %.not.i, label %bb.d, label %bb.c
 

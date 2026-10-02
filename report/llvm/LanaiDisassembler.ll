@@ -36,7 +36,7 @@ $_ZN4llvm23SmallVectorTemplateBaseIPKhLb1EE15growAndPushBackES2_ = comdat any
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @LLVMInitializeLanaiDisassembler() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(264) ptr @_ZN4llvm17getTheLanaiTargetEv() #10
+  %i.a = tail call noundef nonnull align 8 dereferenceable(264) ptr @_ZN4llvm17getTheLanaiTargetEv() #11
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   store ptr @_ZL23createLanaiDisassemblerRKN4llvm6TargetERKNS_15MCSubtargetInfoERNS_9MCContextE, ptr %i.b, align 8, !tbaa !19
   ret void
@@ -47,8 +47,8 @@ declare noundef nonnull align 8 dereferenceable(264) ptr @_ZN4llvm17getTheLanaiT
 ; Function Attrs: mustprogress nounwind uwtable
 define internal noundef nonnull ptr @_ZL23createLanaiDisassemblerRKN4llvm6TargetERKNS_15MCSubtargetInfoERNS_9MCContextE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(320) %1, ptr noundef nonnull align 1 %2) #0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #11 ; 2 uses
-  tail call void @_ZN4llvm17LanaiDisassemblerC1ERKNS_15MCSubtargetInfoERNS_9MCContextE(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(320) %1, ptr noundef nonnull align 1 %2) #10
+  %i.a = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #12 ; 2 uses
+  tail call void @_ZN4llvm17LanaiDisassemblerC1ERKNS_15MCSubtargetInfoERNS_9MCContextE(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(320) %1, ptr noundef nonnull align 1 %2) #11
   ret ptr %i.a
 }
 
@@ -119,24 +119,9 @@ bb.a:
   br i1 %i.a, label %.sink.split, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = load i8, ptr %3, align 1, !tbaa !28
-  %9 = zext i8 %8 to i32                          ; 4 uses
-  %10 = shl nuw i32 %9, 24
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %12 = load i8, ptr %11, align 1, !tbaa !28
-  %13 = zext i8 %12 to i32                        ; 17 uses
-  %14 = shl nuw nsw i32 %13, 16
-  %15 = or disjoint i32 %14, %10                  ; 10 uses
-  %16 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %17 = load i8, ptr %16, align 1, !tbaa !28
-  %18 = zext i8 %17 to i32                        ; 7 uses
-  %19 = shl nuw nsw i32 %18, 8
-  %20 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %21 = load i8, ptr %20, align 1, !tbaa !28
-  %22 = zext i8 %21 to i32                        ; 9 uses
-  %23 = or disjoint i32 %19, %22                  ; 7 uses
-  %24 = or disjoint i32 %23, %15                  ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
+  %8 = load i32, ptr %3, align 1
+  %9 = tail call i32 @llvm.bswap.i32(i32 %8)      ; 53 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
   %i.b = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   store ptr %i.b, ptr %7, align 8, !tbaa !16
   %i.c = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 6 uses
@@ -159,8 +144,8 @@ _ZN4llvm11raw_ostreamlsEc.exit.i:                 ; preds = %_ZN4llvm11raw_ostre
 bb.c:                                             ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.i
   %i.g = ptrtoint ptr %.018.i to i64
   %i.h = sub i64 %i.g, ptrtoint (ptr @_ZN12_GLOBAL__N_119DecoderTableLanai32E to i64)
-  %i.i = call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4errsEv() #10
-  %i.j = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %i.i, i64 noundef %i.h) #10 ; 4 uses
+  %i.i = call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4errsEv() #11
+  %i.j = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %i.i, i64 noundef %i.h) #11 ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !32
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 32 ; 3 uses
@@ -172,7 +157,7 @@ bb.c:                                             ; preds = %_ZN4llvm11raw_ostre
   br i1 %i.r, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.s = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.j, ptr noundef nonnull @.str, i64 noundef 34) #10
+  %i.s = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.j, ptr noundef nonnull @.str, i64 noundef 34) #11
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -185,7 +170,7 @@ bb.e:                                             ; preds = %bb.c
 _ZN4llvm11raw_ostreamlsEPKc.exit.i:               ; preds = %bb.e, %bb.d
   %.0.i.i.i = phi ptr [ %i.s, %bb.d ], [ %i.j, %bb.e ]
   %i.v = zext i8 %i.f to i64
-  %i.w = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i.i, i64 noundef %i.v) #10 ; 3 uses
+  %i.w = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i.i, i64 noundef %i.v) #11 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 32 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !33   ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 24
@@ -194,7 +179,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit.i:               ; preds = %bb.e, %bb.d
   br i1 %.not.i.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit.i
-  %i.ab = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEh(ptr noundef nonnull align 8 dereferenceable(48) %i.w, i8 noundef zeroext 10) #10 ; 0 uses
+  %i.ab = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEh(ptr noundef nonnull align 8 dereferenceable(48) %i.w, i8 noundef zeroext 10) #11 ; 0 uses
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.g:                                             ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit.i
@@ -304,7 +289,7 @@ _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit59.i: ; preds = %bb.m, %bb.l
   %i.bz = sub nsw i32 32, %i.bx
   %i.ca = lshr i32 -1, %i.bz
   %.0.i.i60.i = select i1 %i.by, i32 0, i32 %i.ca
-  %i.cb = lshr i32 %24, %i.bu
+  %i.cb = lshr i32 %9, %i.bu
   %i.cc = and i32 %.0.i.i60.i, %i.cb
   %i.cd = zext i32 %i.cc to i64                   ; 2 uses
   br label %bb.n
@@ -454,7 +439,7 @@ _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit93.i: ; preds = %bb.x, %bb.w
   %i.er = sub nsw i32 32, %i.ep
   %i.es = lshr i32 -1, %i.er
   %.0.i.i94.i = select i1 %i.eq, i32 0, i32 %i.es
-  %i.et = lshr i32 %24, %i.en
+  %i.et = lshr i32 %9, %i.en
   %i.eu = and i32 %.0.i.i94.i, %i.et
   %i.ev = zext i32 %i.eu to i64
   %i.ew = getelementptr inbounds nuw i8, ptr %i.em, i64 1 ; 3 uses
@@ -601,7 +586,7 @@ bb.ag:                                            ; preds = %_ZN4llvm25decodeULE
   unreachable
 
 bb.ah:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.gv = lshr i32 %15, 23
+  %i.gv = lshr i32 %9, 23
   %i.gw = and i32 %i.gv, 31
   %i.gx = zext nneg i32 %i.gw to i64
   %i.gy = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.gx
@@ -630,7 +615,7 @@ bb.aj:                                            ; preds = %bb.ah
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit.i.i: ; preds = %bb.aj, %bb.ai
   %i.hg = phi i32 [ %.pre91.i, %bb.ai ], [ %i.hf, %bb.aj ] ; 2 uses
-  %i.hh = lshr i32 %13, 2
+  %i.hh = lshr i32 %9, 18
   %i.hi = and i32 %i.hh, 31
   %i.hj = zext nneg i32 %i.hi to i64
   %i.hk = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.hj
@@ -659,7 +644,8 @@ bb.al:                                            ; preds = %_Z22DecodeGPRRegist
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit180.i.i: ; preds = %bb.al, %bb.ak
   %i.hs = phi i32 [ %i.hr, %bb.al ], [ %.pre92.i, %bb.ak ] ; 2 uses
-  %i.ht = zext nneg i32 %23 to i64                ; 2 uses
+  %10 = and i32 %9, 65535
+  %i.ht = zext nneg i32 %10 to i64                ; 2 uses
   %i.hu = load i32, ptr %i.hb, align 4, !tbaa !14
   %.not.i.i138.i = icmp ult i32 %i.hs, %i.hu
   br i1 %.not.i.i138.i, label %bb.an, label %bb.am, !prof !15
@@ -681,7 +667,7 @@ bb.an:                                            ; preds = %_Z22DecodeGPRRegist
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.ao:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.ia = lshr i32 %15, 23
+  %i.ia = lshr i32 %9, 23
   %i.ib = and i32 %i.ia, 31
   %i.ic = zext nneg i32 %i.ib to i64
   %i.id = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.ic
@@ -710,7 +696,7 @@ bb.aq:                                            ; preds = %bb.ao
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit184.i.i: ; preds = %bb.aq, %bb.ap
   %i.il = phi i32 [ %.pre89.i, %bb.ap ], [ %i.ik, %bb.aq ] ; 2 uses
-  %i.im = lshr i32 %13, 2
+  %i.im = lshr i32 %9, 18
   %i.in = and i32 %i.im, 31
   %i.io = zext nneg i32 %i.in to i64
   %i.ip = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.io
@@ -739,7 +725,7 @@ bb.as:                                            ; preds = %_Z22DecodeGPRRegist
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit188.i.i: ; preds = %bb.as, %bb.ar
   %i.ix = phi i32 [ %i.iw, %bb.as ], [ %.pre90.i, %bb.ar ] ; 2 uses
-  %i.iy = shl nuw i32 %23, 16
+  %i.iy = shl i32 %9, 16
   %i.iz = ashr exact i32 %i.iy, 16
   %i.ja = sext i32 %i.iz to i64                   ; 2 uses
   %i.jb = load i32, ptr %i.ig, align 4, !tbaa !14
@@ -763,7 +749,7 @@ bb.au:                                            ; preds = %_Z22DecodeGPRRegist
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.av:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.jh = lshr i32 %15, 23
+  %i.jh = lshr i32 %9, 23
   %i.ji = and i32 %i.jh, 31
   %i.jj = zext nneg i32 %i.ji to i64
   %i.jk = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.jj
@@ -792,7 +778,7 @@ bb.ax:                                            ; preds = %bb.av
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit192.i.i: ; preds = %bb.ax, %bb.aw
   %i.js = phi i32 [ %.pre88.i, %bb.aw ], [ %i.jr, %bb.ax ] ; 2 uses
-  %i.jt = lshr i32 %13, 2
+  %i.jt = lshr i32 %9, 18
   %i.ju = and i32 %i.jt, 31
   %i.jv = zext nneg i32 %i.ju to i64
   %i.jw = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.jv
@@ -821,7 +807,7 @@ bb.az:                                            ; preds = %_Z22DecodeGPRRegist
 
 _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit.i.i.i: ; preds = %bb.az, %bb.ay
   %i.ke = phi i32 [ %.pre.i.i.i, %bb.ay ], [ %i.kd, %bb.az ] ; 2 uses
-  %i.kf = shl nuw i32 %23, 16
+  %i.kf = shl i32 %9, 16
   %i.kg = ashr exact i32 %i.kf, 16
   %i.kh = sext i32 %i.kg to i64                   ; 2 uses
   %i.ki = load i32, ptr %i.jn, align 4, !tbaa !14
@@ -845,7 +831,7 @@ bb.bb:                                            ; preds = %_ZN4llvm6MCInst10ad
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.bc:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.ko = lshr i32 %15, 23
+  %i.ko = lshr i32 %9, 23
   %i.kp = and i32 %i.ko, 31
   %i.kq = zext nneg i32 %i.kp to i64
   %i.kr = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.kq
@@ -874,7 +860,7 @@ bb.be:                                            ; preds = %bb.bc
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit200.i.i: ; preds = %bb.be, %bb.bd
   %i.kz = phi i32 [ %.pre87.i, %bb.bd ], [ %i.ky, %bb.be ] ; 2 uses
-  %i.la = lshr i32 %13, 2
+  %i.la = lshr i32 %9, 18
   %i.lb = and i32 %i.la, 31
   %i.lc = zext nneg i32 %i.lb to i64
   %i.ld = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.lc
@@ -903,8 +889,9 @@ bb.bg:                                            ; preds = %_Z22DecodeGPRRegist
 
 _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit.i204.i.i: ; preds = %bb.bg, %bb.bf
   %i.ll = phi i32 [ %.pre.i203.i.i, %bb.bf ], [ %i.lk, %bb.bg ] ; 2 uses
-  %i.lm = lshr i32 %18, 3
-  %i.ln = zext nneg i32 %i.lm to i64
+  %i.lm = lshr i32 %9, 11
+  %11 = and i32 %i.lm, 31
+  %i.ln = zext nneg i32 %11 to i64
   %i.lo = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.ln
   %i.lp = load i32, ptr %i.lo, align 4, !tbaa !11
   %.sroa.3.8.insert.ext.i7.i.i.i = zext i32 %i.lp to i64 ; 2 uses
@@ -929,7 +916,7 @@ bb.bi:                                            ; preds = %_ZN4llvm6MCInst10ad
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.bj:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.lw = lshr i32 %15, 23
+  %i.lw = lshr i32 %9, 23
   %i.lx = and i32 %i.lw, 31
   %i.ly = zext nneg i32 %i.lx to i64
   %i.lz = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.ly
@@ -958,7 +945,7 @@ bb.bl:                                            ; preds = %bb.bj
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit210.i.i: ; preds = %bb.bl, %bb.bk
   %i.mh = phi i32 [ %.pre84.i, %bb.bk ], [ %i.mg, %bb.bl ] ; 2 uses
-  %i.mi = lshr i32 %13, 2
+  %i.mi = lshr i32 %9, 18
   %i.mj = and i32 %i.mi, 31
   %i.mk = zext nneg i32 %i.mj to i64
   %i.ml = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.mk
@@ -987,8 +974,9 @@ bb.bn:                                            ; preds = %_Z22DecodeGPRRegist
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit215.i.i: ; preds = %bb.bn, %bb.bm
   %i.mt = phi i32 [ %i.ms, %bb.bn ], [ %.pre85.i, %bb.bm ] ; 2 uses
-  %i.mu = lshr i32 %18, 3
-  %i.mv = zext nneg i32 %i.mu to i64
+  %i.mu = lshr i32 %9, 11
+  %12 = and i32 %i.mu, 31
+  %i.mv = zext nneg i32 %12 to i64
   %i.mw = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.mv
   %i.mx = load i32, ptr %i.mw, align 4, !tbaa !11
   %.sroa.3.8.insert.ext.i.i131.i = zext i32 %i.mx to i64 ; 2 uses
@@ -1015,8 +1003,9 @@ bb.bp:                                            ; preds = %_Z22DecodeGPRRegist
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit135.i: ; preds = %bb.bp, %bb.bo
   %i.ne = phi i32 [ %i.nd, %bb.bp ], [ %.pre86.i, %bb.bo ] ; 2 uses
-  %i.nf = shl nuw nsw i32 %22, 1
+  %i.nf = shl i32 %9, 1
   %i.ng = and i32 %i.nf, 14
+  %13 = lshr i32 %9, 16
   %i.nh = and i32 %13, 1
   %i.ni = or disjoint i32 %i.ng, %i.nh
   %i.nj = zext nneg i32 %i.ni to i64              ; 2 uses
@@ -1041,8 +1030,9 @@ bb.br:                                            ; preds = %_Z22DecodeGPRRegist
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.bs:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.nq = lshr i32 %18, 3
-  %i.nr = zext nneg i32 %i.nq to i64
+  %i.nq = lshr i32 %9, 11
+  %14 = and i32 %i.nq, 31
+  %i.nr = zext nneg i32 %14 to i64
   %i.ns = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.nr
   %i.nt = load i32, ptr %i.ns, align 4, !tbaa !11
   %.sroa.3.8.insert.ext.i.i216.i.i = zext i32 %i.nt to i64 ; 2 uses
@@ -1067,7 +1057,7 @@ bb.bu:                                            ; preds = %bb.bs
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.bv:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.oa = lshr i32 %13, 2
+  %i.oa = lshr i32 %9, 18
   %i.ob = and i32 %i.oa, 31
   %i.oc = zext nneg i32 %i.ob to i64
   %i.od = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.oc
@@ -1096,9 +1086,10 @@ bb.bx:                                            ; preds = %bb.bv
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit225.i.i: ; preds = %bb.bx, %bb.bw
   %i.ol = phi i32 [ %.pre83.i, %bb.bw ], [ %i.ok, %bb.bx ] ; 2 uses
-  %i.om = shl nuw nsw i32 %22, 1
+  %i.om = shl i32 %9, 1
   %i.on = and i32 %i.om, 14
-  %i.oo = and i32 %13, 1
+  %15 = lshr i32 %9, 16
+  %i.oo = and i32 %15, 1
   %i.op = or disjoint i32 %i.on, %i.oo
   %i.oq = zext nneg i32 %i.op to i64              ; 2 uses
   %i.or = load i32, ptr %i.og, align 4, !tbaa !14
@@ -1122,7 +1113,7 @@ bb.bz:                                            ; preds = %_Z22DecodeGPRRegist
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.ca:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.ox = lshr i32 %13, 2
+  %i.ox = lshr i32 %9, 18
   %i.oy = and i32 %i.ox, 31
   %i.oz = zext nneg i32 %i.oy to i64
   %i.pa = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.oz
@@ -1151,8 +1142,9 @@ bb.cc:                                            ; preds = %bb.ca
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit231.i.i: ; preds = %bb.cc, %bb.cb
   %i.pi = phi i32 [ %.pre81.i, %bb.cb ], [ %i.ph, %bb.cc ] ; 2 uses
-  %i.pj = lshr i32 %18, 3
-  %i.pk = zext nneg i32 %i.pj to i64
+  %i.pj = lshr i32 %9, 11
+  %16 = and i32 %i.pj, 31
+  %i.pk = zext nneg i32 %16 to i64
   %i.pl = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.pk
   %i.pm = load i32, ptr %i.pl, align 4, !tbaa !11
   %.sroa.3.8.insert.ext.i.i232.i.i = zext i32 %i.pm to i64 ; 2 uses
@@ -1179,9 +1171,10 @@ bb.ce:                                            ; preds = %_Z22DecodeGPRRegist
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit236.i.i: ; preds = %bb.ce, %bb.cd
   %i.pt = phi i32 [ %i.ps, %bb.ce ], [ %.pre82.i, %bb.cd ] ; 2 uses
-  %i.pu = shl nuw nsw i32 %22, 1
+  %i.pu = shl i32 %9, 1
   %i.pv = and i32 %i.pu, 14
-  %i.pw = and i32 %13, 1
+  %17 = lshr i32 %9, 16
+  %i.pw = and i32 %17, 1
   %i.px = or disjoint i32 %i.pv, %i.pw
   %i.py = zext nneg i32 %i.px to i64              ; 2 uses
   %i.pz = load i32, ptr %i.pd, align 4, !tbaa !14
@@ -1205,7 +1198,7 @@ bb.cg:                                            ; preds = %_Z22DecodeGPRRegist
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.ch:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.qf = lshr i32 %15, 23
+  %i.qf = lshr i32 %9, 23
   %i.qg = and i32 %i.qf, 31
   %i.qh = zext nneg i32 %i.qg to i64
   %i.qi = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.qh
@@ -1234,7 +1227,7 @@ bb.cj:                                            ; preds = %bb.ch
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit242.i.i: ; preds = %bb.cj, %bb.ci
   %i.qq = phi i32 [ %.pre78.i, %bb.ci ], [ %i.qp, %bb.cj ] ; 2 uses
-  %i.qr = lshr i32 %13, 2
+  %i.qr = lshr i32 %9, 18
   %i.qs = and i32 %i.qr, 31
   %i.qt = zext nneg i32 %i.qs to i64
   %i.qu = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.qt
@@ -1263,8 +1256,9 @@ bb.cl:                                            ; preds = %_Z22DecodeGPRRegist
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit247.i.i: ; preds = %bb.cl, %bb.ck
   %i.rc = phi i32 [ %i.rb, %bb.cl ], [ %.pre79.i, %bb.ck ] ; 2 uses
-  %i.rd = lshr i32 %18, 3
-  %i.re = zext nneg i32 %i.rd to i64
+  %i.rd = lshr i32 %9, 11
+  %18 = and i32 %i.rd, 31
+  %i.re = zext nneg i32 %18 to i64
   %i.rf = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.re
   %i.rg = load i32, ptr %i.rf, align 4, !tbaa !11
   %.sroa.3.8.insert.ext.i.i.i = zext i32 %i.rg to i64 ; 2 uses
@@ -1291,9 +1285,10 @@ bb.cn:                                            ; preds = %_Z22DecodeGPRRegist
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit.i: ; preds = %bb.cn, %bb.cm
   %i.rn = phi i32 [ %i.rm, %bb.cn ], [ %.pre80.i, %bb.cm ] ; 2 uses
-  %i.ro = shl nuw nsw i32 %22, 1
+  %i.ro = shl i32 %9, 1
   %i.rp = and i32 %i.ro, 14
-  %i.rq = and i32 %13, 1
+  %19 = lshr i32 %9, 16
+  %i.rq = and i32 %19, 1
   %i.rr = or disjoint i32 %i.rp, %i.rq
   %i.rs = zext nneg i32 %i.rr to i64              ; 2 uses
   %i.rt = load i32, ptr %i.ql, align 4, !tbaa !14
@@ -1317,7 +1312,7 @@ bb.cp:                                            ; preds = %_Z22DecodeGPRRegist
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.cq:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.rz = lshr i32 %15, 23
+  %i.rz = lshr i32 %9, 23
   %i.sa = and i32 %i.rz, 31
   %i.sb = zext nneg i32 %i.sa to i64
   %i.sc = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.sb
@@ -1346,7 +1341,7 @@ bb.cs:                                            ; preds = %bb.cq
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit253.i.i: ; preds = %bb.cs, %bb.cr
   %i.sk = phi i32 [ %.pre77.i, %bb.cr ], [ %i.sj, %bb.cs ] ; 2 uses
-  %i.sl = lshr i32 %13, 2
+  %i.sl = lshr i32 %9, 18
   %i.sm = and i32 %i.sl, 31
   %i.sn = zext nneg i32 %i.sm to i64
   %i.so = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.sn
@@ -1373,10 +1368,10 @@ bb.cu:                                            ; preds = %_Z22DecodeGPRRegist
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.cv:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.sw = and i32 %24, 33554428
+  %i.sw = and i32 %9, 33554428
   %i.sx = zext nneg i32 %i.sw to i64              ; 3 uses
   %i.sy = add i64 %5, %i.sx
-  %i.sz = call noundef zeroext i1 @_ZNK4llvm14MCDisassembler24tryAddingSymbolicOperandERNS_6MCInstElmbmmm(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(128) %1, i64 noundef %i.sy, i64 noundef %5, i1 noundef zeroext false, i64 noundef 2, i64 noundef 23, i64 noundef 0) #10
+  %i.sz = call noundef zeroext i1 @_ZNK4llvm14MCDisassembler24tryAddingSymbolicOperandERNS_6MCInstElmbmmm(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(128) %1, i64 noundef %i.sy, i64 noundef %5, i1 noundef zeroext false, i64 noundef 2, i64 noundef 23, i64 noundef 0) #11
   br i1 %i.sz, label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
@@ -1404,10 +1399,10 @@ bb.cy:                                            ; preds = %bb.cw
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.cz:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.tj = and i32 %24, 33554428
+  %i.tj = and i32 %9, 33554428
   %i.tk = zext nneg i32 %i.tj to i64              ; 3 uses
   %i.tl = add i64 %5, %i.tk
-  %i.tm = call noundef zeroext i1 @_ZNK4llvm14MCDisassembler24tryAddingSymbolicOperandERNS_6MCInstElmbmmm(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(128) %1, i64 noundef %i.tl, i64 noundef %5, i1 noundef zeroext false, i64 noundef 2, i64 noundef 23, i64 noundef 0) #10
+  %i.tm = call noundef zeroext i1 @_ZNK4llvm14MCDisassembler24tryAddingSymbolicOperandERNS_6MCInstElmbmmm(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(128) %1, i64 noundef %i.tl, i64 noundef %5, i1 noundef zeroext false, i64 noundef 2, i64 noundef 23, i64 noundef 0) #11
   %.pre76.i = load i32, ptr %i.gu, align 8, !tbaa !13 ; 3 uses
   br i1 %i.tm, label %_ZL12decodeBranchRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit265.i.i, label %bb.da
 
@@ -1437,9 +1432,10 @@ bb.dc:                                            ; preds = %bb.da
 
 _ZL12decodeBranchRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit265.i.i: ; preds = %bb.dc, %bb.db, %bb.cz
   %i.tv = phi i32 [ %.pre76.i, %bb.cz ], [ %.pre75.i, %bb.db ], [ %i.tu, %bb.dc ] ; 2 uses
-  %i.tw = and i32 %22, 1
-  %i.tx = and i32 %9, 14
-  %i.ty = or disjoint i32 %i.tw, %i.tx
+  %i.tw = and i32 %9, 1
+  %20 = lshr i32 %9, 24
+  %i.tx = and i32 %20, 14
+  %i.ty = or disjoint i32 %i.tx, %i.tw
   %i.tz = zext nneg i32 %i.ty to i64              ; 2 uses
   %i.ua = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.ub = getelementptr inbounds nuw i8, ptr %1, i64 28
@@ -1464,7 +1460,7 @@ bb.de:                                            ; preds = %_ZL12decodeBranchRN
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.df:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.ui = lshr i32 %13, 2
+  %i.ui = lshr i32 %9, 18
   %i.uj = and i32 %i.ui, 31
   %i.uk = zext nneg i32 %i.uj to i64
   %i.ul = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.uk
@@ -1493,9 +1489,10 @@ bb.dh:                                            ; preds = %bb.df
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit274.i.i: ; preds = %bb.dh, %bb.dg
   %i.ut = phi i32 [ %.pre74.i, %bb.dg ], [ %i.us, %bb.dh ] ; 2 uses
-  %i.uu = and i32 %22, 1
-  %i.uv = and i32 %9, 14
-  %i.uw = or disjoint i32 %i.uu, %i.uv
+  %i.uu = and i32 %9, 1
+  %21 = lshr i32 %9, 24
+  %i.uv = and i32 %21, 14
+  %i.uw = or disjoint i32 %i.uv, %i.uu
   %i.ux = zext nneg i32 %i.uw to i64              ; 2 uses
   %i.uy = load i32, ptr %i.uo, align 4, !tbaa !14
   %.not.i.i276.i.i = icmp ult i32 %i.ut, %i.uy
@@ -1518,7 +1515,7 @@ bb.dj:                                            ; preds = %_Z22DecodeGPRRegist
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.dk:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.ve = and i32 %23, 65532
+  %i.ve = and i32 %9, 65532
   %i.vf = zext nneg i32 %i.ve to i64              ; 2 uses
   %i.vg = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.vh = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
@@ -1543,9 +1540,10 @@ bb.dm:                                            ; preds = %bb.dk
 
 _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit282.i.i: ; preds = %bb.dm, %bb.dl
   %i.vm = phi i32 [ %.pre.i.i, %bb.dl ], [ %i.vl, %bb.dm ] ; 2 uses
-  %i.vn = and i32 %22, 1
-  %i.vo = and i32 %9, 14
-  %i.vp = or disjoint i32 %i.vn, %i.vo
+  %i.vn = and i32 %9, 1
+  %22 = lshr i32 %9, 24
+  %i.vo = and i32 %22, 14
+  %i.vp = or disjoint i32 %i.vo, %i.vn
   %i.vq = zext nneg i32 %i.vp to i64              ; 2 uses
   %i.vr = load i32, ptr %i.vh, align 4, !tbaa !14
   %.not.i.i284.i.i = icmp ult i32 %i.vm, %i.vr
@@ -1568,7 +1566,7 @@ bb.do:                                            ; preds = %_ZN4llvm6MCInst10ad
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.dp:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.vx = lshr i32 %15, 23
+  %i.vx = lshr i32 %9, 23
   %i.vy = and i32 %i.vx, 31
   %i.vz = zext nneg i32 %i.vy to i64
   %i.wa = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.vz
@@ -1597,9 +1595,10 @@ bb.dr:                                            ; preds = %bb.dp
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit291.i.i: ; preds = %bb.dr, %bb.dq
   %i.wi = phi i32 [ %.pre73.i, %bb.dq ], [ %i.wh, %bb.dr ] ; 2 uses
-  %25 = shl nuw nsw i32 %13, 14
-  %i.wj = and i32 %25, 2031616
-  %i.wk = or disjoint i32 %23, %i.wj
+  %23 = and i32 %9, 65535
+  %24 = lshr i32 %9, 2
+  %i.wj = and i32 %24, 2031616
+  %i.wk = or disjoint i32 %i.wj, %23
   %i.wl = zext nneg i32 %i.wk to i64              ; 2 uses
   %i.wm = load i32, ptr %i.wd, align 4, !tbaa !14
   %.not.i.i293.i.i = icmp ult i32 %i.wi, %i.wm
@@ -1622,7 +1621,7 @@ bb.dt:                                            ; preds = %_Z22DecodeGPRRegist
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
 
 bb.du:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit117.i
-  %i.ws = lshr i32 %15, 23
+  %i.ws = lshr i32 %9, 23
   %i.wt = and i32 %i.ws, 31
   %i.wu = zext nneg i32 %i.wt to i64
   %i.wv = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.wu
@@ -1651,7 +1650,7 @@ bb.dw:                                            ; preds = %bb.du
 
 _Z22DecodeGPRRegisterClassRN4llvm6MCInstEjmPKNS_14MCDisassemblerE.exit300.i.i: ; preds = %bb.dw, %bb.dv
   %i.xd = phi i32 [ %.pre.i, %bb.dv ], [ %i.xc, %bb.dw ] ; 2 uses
-  %i.xe = lshr i32 %13, 2
+  %i.xe = lshr i32 %9, 18
   %i.xf = and i32 %i.xe, 31
   %i.xg = zext nneg i32 %i.xf to i64
   %i.xh = getelementptr inbounds nuw [4 x i8], ptr @_ZL15GPRDecoderTable, i64 %i.xg
@@ -1680,7 +1679,7 @@ bb.dy:                                            ; preds = %_Z22DecodeGPRRegist
 
 _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit.i304.i.i: ; preds = %bb.dy, %bb.dx
   %i.xp = phi i32 [ %.pre.i303.i.i, %bb.dx ], [ %i.xo, %bb.dy ] ; 2 uses
-  %i.xq = shl i32 %23, 22
+  %i.xq = shl i32 %9, 22
   %i.xr = ashr exact i32 %i.xq, 22
   %i.xs = sext i32 %i.xr to i64                   ; 2 uses
   %i.xt = load i32, ptr %i.wy, align 4, !tbaa !14
@@ -1730,11 +1729,11 @@ _ZN4llvm11raw_ostreamlsEc.exit.thread.i:          ; preds = %bb.eb, %bb.ea, %bb.
   br i1 %i.yh, label %_ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE.exit, label %bb.ed
 
 bb.ed:                                            ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.thread.i
-  call void @free(ptr noundef %i.yg) #10
+  call void @free(ptr noundef %i.yg) #11
   br label %_ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE.exit
 
 _ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE.exit: ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.thread.i, %bb.ed
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
   br i1 %.not, label %bb.eq, label %bb.ee
 
 bb.ee:                                            ; preds = %_ZN12_GLOBAL__N_117decodeInstructionIjEEN4llvm14MCDisassembler12DecodeStatusEPKhRNS1_6MCInstET_mPKS2_RKNS1_15MCSubtargetInfoE.exit
@@ -1760,13 +1759,15 @@ bb.ee:                                            ; preds = %_ZN12_GLOBAL__N_117
   ]
 
 bb.ef:                                            ; preds = %bb.ee, %bb.ee, %bb.ee, %bb.ee, %bb.ee, %bb.ee, %bb.ee, %bb.ee, %bb.ee
-  %i.yj = and i32 %18, 7                          ; 2 uses
+  %25 = lshr i32 %9, 8
+  %i.yj = and i32 %25, 7                          ; 2 uses
   %i.yk = icmp eq i32 %i.yj, 7
   br i1 %i.yk, label %bb.eg, label %_ZN4llvmL12isSPLSOpcodeEj.exit.thread.i
 
 bb.eg:                                            ; preds = %bb.ef
-  %i.yl = lshr i32 %22, 2
-  %i.ym = or i32 %i.yl, 39
+  %i.yl = lshr i32 %9, 2
+  %26 = and i32 %i.yl, 24
+  %i.ym = or disjoint i32 %26, 39
   br label %_ZN4llvmL12isSPLSOpcodeEj.exit.thread.i
 
 _ZN4llvmL12isSPLSOpcodeEj.exit.thread.fold.split.i: ; preds = %bb.ee, %bb.ee, %bb.ee, %bb.ee, %bb.ee, %bb.ee
@@ -1775,7 +1776,7 @@ _ZN4llvmL12isSPLSOpcodeEj.exit.thread.fold.split.i: ; preds = %bb.ee, %bb.ee, %b
 _ZN4llvmL12isSPLSOpcodeEj.exit.thread.i:          ; preds = %_ZN4llvmL12isSPLSOpcodeEj.exit.thread.fold.split.i, %bb.eg, %bb.ef, %bb.ee, %bb.ee
   %.018.i12 = phi i32 [ 16, %bb.ef ], [ 16, %bb.ee ], [ 16, %bb.eg ], [ 16, %bb.ee ], [ 10, %_ZN4llvmL12isSPLSOpcodeEj.exit.thread.fold.split.i ]
   %.0.i13 = phi i32 [ %i.yj, %bb.ef ], [ 0, %bb.ee ], [ %i.ym, %bb.eg ], [ 0, %bb.ee ], [ 0, %_ZN4llvmL12isSPLSOpcodeEj.exit.thread.fold.split.i ] ; 5 uses
-  %i.yn = lshr i32 %24, %.018.i12
+  %i.yn = lshr i32 %9, %.018.i12
   %i.yo = and i32 %i.yn, 3
   switch i32 %i.yo, label %default.unreachable [
     i32 0, label %bb.eh
@@ -1869,8 +1870,8 @@ declare void @_ZN4llvm14MCDisassemblerD2Ev(ptr noundef nonnull align 8 dead_on_r
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm17LanaiDisassemblerD0Ev(ptr noundef nonnull align 8 dereferenceable(40) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
-  tail call void @_ZN4llvm14MCDisassemblerD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %0) #10
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 40) #12
+  tail call void @_ZN4llvm14MCDisassemblerD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %0) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 40) #13
   ret void
 }
 
@@ -1910,7 +1911,7 @@ bb.a:
   %i.c = zext i32 %i.b to i64
   %i.d = add nuw nsw i64 %i.c, 1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  tail call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.e, i64 noundef %i.d, i64 noundef 16) #10
+  tail call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.e, i64 noundef %i.d, i64 noundef 16) #11
   %i.f = load ptr, ptr %0, align 8, !tbaa !16
   %i.g = load i32, ptr %i.a, align 8, !tbaa !13
   %i.h = zext i32 %i.g to i64
@@ -1945,7 +1946,7 @@ bb.a:
   %i.c = zext i32 %i.b to i64
   %i.d = add nuw nsw i64 %i.c, 1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  tail call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.e, i64 noundef %i.d, i64 noundef 8) #10
+  tail call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.e, i64 noundef %i.d, i64 noundef 8) #11
   %i.f = load ptr, ptr %0, align 8, !tbaa !16
   %i.g = load i32, ptr %i.a, align 8, !tbaa !13
   %i.h = zext i32 %i.g to i64
@@ -1962,6 +1963,9 @@ declare noundef zeroext i1 @_ZNK4llvm14MCDisassembler24tryAddingSymbolicOperandE
 ; Function Attrs: mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite)
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #9
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #10
+
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1972,9 +1976,10 @@ attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 attributes #7 = { mustprogress noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nounwind }
-attributes #11 = { builtin nounwind allocsize(0) }
-attributes #12 = { builtin nounwind }
+attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nounwind }
+attributes #12 = { builtin nounwind allocsize(0) }
+attributes #13 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

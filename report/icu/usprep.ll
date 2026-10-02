@@ -36,7 +36,7 @@ $__clang_call_terminate = comdat any
 @_ZL21SHARED_DATA_HASHTABLE = internal unnamed_addr global ptr null, align 8
 @.str.3 = private unnamed_addr constant [4 x i8] c"spp\00", align 1
 @_ZL19gSharedDataInitOnce = internal global { { i32 }, i32 } zeroinitializer, align 4
-@_ZL11dataVersion = internal unnamed_addr global [4 x i8] zeroinitializer, align 4
+@_ZL11dataVersion.0 = internal unnamed_addr global i32 0, align 4
 @.str.5 = private unnamed_addr constant [8 x i8] c"rfc3491\00", align 1
 @.str.6 = private unnamed_addr constant [10 x i8] c"rfc3530cs\00", align 1
 @.str.7 = private unnamed_addr constant [12 x i8] c"rfc3530csci\00", align 1
@@ -226,12 +226,12 @@ bb.r:                                             ; preds = %.noexc64.i
 bb.s:                                             ; preds = %.noexc67.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.au = load i32, ptr %i.at, align 8, !tbaa !23
-  %i.av = load i32, ptr %i.a, align 4
-  %i.aw = call i32 @llvm.bswap.i32(i32 %i.av)     ; 2 uses
-  %i.ax = load i32, ptr @_ZL11dataVersion, align 4
-  %i.ay = call i32 @llvm.bswap.i32(i32 %i.ax)
-  %i.az = icmp slt i32 %i.aw, %i.ay
-  %i.ba = icmp slt i32 %i.aw, %i.au
+  %i.av = load i32, ptr @_ZL11dataVersion.0, align 4
+  %i.aw = call i32 @llvm.bswap.i32(i32 %i.av)
+  %i.ax = load i32, ptr %i.a, align 4
+  %i.ay = call i32 @llvm.bswap.i32(i32 %i.ax)     ; 2 uses
+  %i.az = icmp slt i32 %i.ay, %i.aw
+  %i.ba = icmp slt i32 %i.ay, %i.au
   %or.cond.i.i = select i1 %i.az, i1 %i.ba, i1 false
   br i1 %or.cond.i.i, label %bb.t, label %bb.v
 
@@ -634,7 +634,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ae = load i32, ptr %i.ad, align 2
-  store i32 %i.ae, ptr @_ZL11dataVersion, align 4
+  store i32 %i.ae, ptr @_ZL11dataVersion.0, align 4
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k
@@ -662,13 +662,13 @@ declare i32 @u_terminateUChars_78(ptr noundef, i32 noundef, i32 noundef, ptr nou
 declare i32 @llvm.smax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

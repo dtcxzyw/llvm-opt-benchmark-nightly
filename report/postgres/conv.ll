@@ -30,7 +30,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %6, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @report_invalid_encoding(i32 noundef %3, ptr noundef nonnull %.040, i32 noundef %.02638) #5
+  tail call void @report_invalid_encoding(i32 noundef %3, ptr noundef nonnull %.040, i32 noundef %.02638) #6
   unreachable
 
 bb.d:                                             ; preds = %.lr.ph
@@ -48,7 +48,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %6, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @report_untranslatable_char(i32 noundef %3, i32 noundef %4, ptr noundef nonnull %.040, i32 noundef %.02638) #5
+  tail call void @report_untranslatable_char(i32 noundef %3, i32 noundef %4, ptr noundef nonnull %.040, i32 noundef %.02638) #6
   unreachable
 
 bb.h:                                             ; preds = %bb.e, %bb.d
@@ -98,10 +98,10 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #6 ; 0 uses
-  %i.e = tail call i32 @errcode(i32 noundef 50856066) #7 ; 0 uses
-  %i.f = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str, i32 noundef %7) #7 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 284, ptr noundef nonnull @__func__.UtfToLocal) #7
+  %i.d = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #7 ; 0 uses
+  %i.e = tail call i32 @errcode(i32 noundef 50856066) #8 ; 0 uses
+  %i.f = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str, i32 noundef %7) #8 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 284, ptr noundef nonnull @__func__.UtfToLocal) #8
   unreachable
 
 bb.c:                                             ; preds = %.lr.ph, %store_coded_char.exit
@@ -113,12 +113,12 @@ bb.c:                                             ; preds = %.lr.ph, %store_code
   br i1 %i.h, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = tail call i32 @pg_utf_mblen_private(ptr noundef nonnull %.0134264) #7 ; 14 uses
+  %i.i = tail call i32 @pg_utf_mblen_private(ptr noundef nonnull %.0134264) #8 ; 14 uses
   %i.j = icmp slt i32 %.0139263, %i.i
   br i1 %i.j, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = tail call zeroext i1 @pg_utf8_islegal(ptr noundef nonnull %.0134264, i32 noundef %i.i) #7
+  %i.k = tail call zeroext i1 @pg_utf8_islegal(ptr noundef nonnull %.0134264, i32 noundef %i.i) #8
   br i1 %i.k, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
@@ -149,9 +149,9 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.f
-  %i.u = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #6 ; 0 uses
-  %i.v = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2, i32 noundef %i.i) #7 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 332, ptr noundef nonnull @__func__.UtfToLocal) #7
+  %i.u = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #7 ; 0 uses
+  %i.v = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2, i32 noundef %i.i) #8 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 332, ptr noundef nonnull @__func__.UtfToLocal) #8
   unreachable
 
 bb.k:                                             ; preds = %bb.f, %bb.h, %bb.i
@@ -161,7 +161,7 @@ bb.k:                                             ; preds = %bb.f, %bb.h, %bb.i
   %.0128 = phi i8 [ %i.p, %bb.h ], [ %i.t, %bb.i ], [ 0, %bb.f ] ; 2 uses
   %.0127.in = phi ptr [ %i.o, %bb.h ], [ %i.s, %bb.i ], [ %.0134264, %bb.f ]
   %i.w = getelementptr inbounds nuw i8, ptr %.0134264, i64 %.sink350
-  %i.x = getelementptr inbounds nuw i8, ptr %.0134264, i64 %.sink ; 20 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %.0134264, i64 %.sink ; 19 uses
   %.0126 = load i8, ptr %i.w, align 1             ; 2 uses
   %.0127 = load i8, ptr %.0127.in, align 1        ; 2 uses
   %i.y = zext i8 %.0129 to i32
@@ -180,7 +180,7 @@ bb.k:                                             ; preds = %bb.f, %bb.h, %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.aj = sub nuw nsw i32 %.0139263, %i.i         ; 5 uses
-  %i.ak = tail call i32 @pg_utf_mblen_private(ptr noundef nonnull %i.x) #7 ; 7 uses
+  %i.ak = tail call i32 @pg_utf_mblen_private(ptr noundef nonnull %i.x) #8 ; 7 uses
   %i.al = icmp slt i32 %i.aj, %i.ak
   br i1 %i.al, label %bb.m, label %bb.n
 
@@ -191,14 +191,14 @@ bb.m:                                             ; preds = %bb.l
   br label %.loopexit
 
 bb.n:                                             ; preds = %bb.l
-  %i.ap = tail call zeroext i1 @pg_utf8_islegal(ptr noundef nonnull %i.x, i32 noundef %i.ak) #7
+  %i.ap = tail call zeroext i1 @pg_utf8_islegal(ptr noundef nonnull %i.x, i32 noundef %i.ak) #8
   br i1 %i.ap, label %bb.r, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   br i1 %8, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @report_invalid_encoding(i32 noundef 6, ptr noundef nonnull %i.x, i32 noundef %i.aj) #5
+  tail call void @report_invalid_encoding(i32 noundef 6, ptr noundef nonnull %i.x, i32 noundef %i.aj) #6
   unreachable
 
 bb.q:                                             ; preds = %bb.o
@@ -213,61 +213,53 @@ bb.r:                                             ; preds = %bb.n
 
 bb.s:                                             ; preds = %bb.r
   switch i32 %i.ak, label %bb.v [
-    i32 2, label %9
-    i32 3, label %bb.t
-    i32 4, label %bb.u
+    i32 2, label %bb.t
+    i32 3, label %bb.u
+    i32 4, label %9
   ]
-
-9:                                                ; preds = %bb.s
-  %10 = getelementptr inbounds nuw i8, ptr %i.x, i64 1
-  %11 = load i8, ptr %i.x, align 1
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 8
-  br label %bb.w
 
 bb.t:                                             ; preds = %bb.s
   %i.au = getelementptr inbounds nuw i8, ptr %i.x, i64 1
   %i.av = load i8, ptr %i.x, align 1
   %i.aw = zext i8 %i.av to i32
-  %i.ax = shl nuw nsw i32 %i.aw, 16
+  %i.ax = shl nuw nsw i32 %i.aw, 8
   %i.ay = getelementptr inbounds nuw i8, ptr %i.x, i64 2
   %i.az = load i8, ptr %i.au, align 1
   %i.ba = zext i8 %i.az to i32
-  %14 = shl nuw nsw i32 %i.ba, 8
-  %i.bb = or disjoint i32 %14, %i.ax
+  %i.bb = or disjoint i32 %i.ax, %i.ba
   br label %bb.w
 
 bb.u:                                             ; preds = %bb.s
   %i.bc = getelementptr inbounds nuw i8, ptr %i.x, i64 1
   %i.bd = load i8, ptr %i.x, align 1
   %i.be = zext i8 %i.bd to i32
-  %i.bf = shl nuw i32 %i.be, 24
+  %i.bf = shl nuw nsw i32 %i.be, 16
   %i.bg = getelementptr inbounds nuw i8, ptr %i.x, i64 2
   %i.bh = load i8, ptr %i.bc, align 1
   %i.bi = zext i8 %i.bh to i32
-  %i.bj = shl nuw nsw i32 %i.bi, 16
+  %i.bj = shl nuw nsw i32 %i.bi, 8
   %i.bk = or disjoint i32 %i.bj, %i.bf
   %i.bl = getelementptr inbounds nuw i8, ptr %i.x, i64 3
   %i.bm = load i8, ptr %i.bg, align 1
   %i.bn = zext i8 %i.bm to i32
-  %15 = shl nuw nsw i32 %i.bn, 8
-  %i.bo = or disjoint i32 %i.bk, %15
+  %i.bo = or disjoint i32 %i.bk, %i.bn
+  br label %bb.w
+
+9:                                                ; preds = %bb.s
+  %10 = load i32, ptr %i.x, align 1
+  %11 = tail call i32 @llvm.bswap.i32(i32 %10)
+  %12 = getelementptr inbounds nuw i8, ptr %i.x, i64 4
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.s
-  %i.bp = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #6 ; 0 uses
-  %i.bq = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2, i32 noundef %i.ak) #7 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 389, ptr noundef nonnull @__func__.UtfToLocal) #7
+  %i.bp = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #7 ; 0 uses
+  %i.bq = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2, i32 noundef %i.ak) #8 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 389, ptr noundef nonnull @__func__.UtfToLocal) #8
   unreachable
 
-bb.w:                                             ; preds = %bb.t, %bb.u, %9
-  %.sink390 = phi i64 [ 3, %bb.t ], [ 4, %bb.u ], [ 2, %9 ]
-  %.sink353.in = phi ptr [ %i.ay, %bb.t ], [ %i.bl, %bb.u ], [ %10, %9 ]
-  %.sink351 = phi i32 [ %i.bb, %bb.t ], [ %i.bo, %bb.u ], [ %13, %9 ]
-  %16 = getelementptr inbounds nuw i8, ptr %i.x, i64 %.sink390 ; 2 uses
-  %.sink353 = load i8, ptr %.sink353.in, align 1
-  %17 = zext i8 %.sink353 to i32
-  %18 = or disjoint i32 %.sink351, %17            ; 2 uses
+bb.w:                                             ; preds = %bb.u, %9, %bb.t
+  %.sink353.in = phi ptr [ %i.ay, %bb.t ], [ %i.bl, %bb.u ], [ %12, %9 ] ; 2 uses
+  %.sink351 = phi i32 [ %i.bb, %bb.t ], [ %i.bo, %bb.u ], [ %11, %9 ] ; 2 uses
   br i1 %.not24.i, label %store_coded_char.exit.thread197, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.w, %bb.z
@@ -285,12 +277,12 @@ bb.w:                                             ; preds = %bb.t, %bb.u, %9
 
 bb.x:                                             ; preds = %.lr.ph.i
   %i.bz = icmp ne i32 %i.ah, %i.bv                ; 2 uses
-  %i.ca = icmp ule i32 %18, %i.bx
+  %i.ca = icmp ule i32 %.sink351, %i.bx
   %or.cond.not.i = select i1 %i.bz, i1 true, i1 %i.ca
   br i1 %or.cond.not.i, label %compare3.exit, label %bb.y
 
 compare3.exit:                                    ; preds = %bb.x
-  %i.cb = icmp ne i32 %18, %i.bx
+  %i.cb = icmp ne i32 %.sink351, %i.bx
   %.not15.i = select i1 %i.bz, i1 true, i1 %i.cb
   br i1 %.not15.i, label %bb.z, label %bsearch.exit
 
@@ -416,7 +408,7 @@ store_coded_char.exit179:                         ; preds = %bb.ah, %store_coded
   br i1 %.not166, label %store_coded_char.exit188, label %bb.aq
 
 bb.aq:                                            ; preds = %store_coded_char.exit179
-  %i.dj = tail call i32 %6(i32 noundef %i.ah) #7  ; 9 uses
+  %i.dj = tail call i32 %6(i32 noundef %i.ah) #8  ; 9 uses
   %.not167 = icmp eq i32 %i.dj, 0
   br i1 %.not167, label %store_coded_char.exit188, label %bb.ar
 
@@ -476,13 +468,13 @@ store_coded_char.exit188:                         ; preds = %bb.aq, %store_coded
   br i1 %8, label %.thread215, label %bb.az
 
 bb.az:                                            ; preds = %store_coded_char.exit188
-  tail call void @report_untranslatable_char(i32 noundef 6, i32 noundef %7, ptr noundef nonnull %i.ea, i32 noundef %.0139263) #5
+  tail call void @report_untranslatable_char(i32 noundef 6, i32 noundef %7, ptr noundef nonnull %i.ea, i32 noundef %.0139263) #6
   unreachable
 
 store_coded_char.exit:                            ; preds = %bb.ax, %bb.ay, %bb.ao, %bb.ap, %bb.ag, %bb.af, %bb.g
   %.9 = phi ptr [ %i.di, %bb.ap ], [ %i.ct, %bb.ag ], [ %i.n, %bb.g ], [ %.2.i, %bb.af ], [ %.2.i176, %bb.ao ], [ %.2.i185, %bb.ax ], [ %i.dx, %bb.ay ] ; 2 uses
   %.3142 = phi i32 [ %.0139263, %bb.ap ], [ %i.aj, %bb.ag ], [ %.0139263, %bb.g ], [ %i.aj, %bb.af ], [ %.0139263, %bb.ao ], [ %.0139263, %bb.ax ], [ %.0139263, %bb.ay ]
-  %.5 = phi ptr [ %i.x, %bb.ap ], [ %16, %bb.ag ], [ %i.l, %bb.g ], [ %16, %bb.af ], [ %i.x, %bb.ao ], [ %i.x, %bb.ax ], [ %i.x, %bb.ay ] ; 2 uses
+  %.5 = phi ptr [ %i.x, %bb.ap ], [ %.sink353.in, %bb.ag ], [ %i.l, %bb.g ], [ %.sink353.in, %bb.af ], [ %i.x, %bb.ao ], [ %i.x, %bb.ax ], [ %i.x, %bb.ay ] ; 2 uses
   %.3133 = phi i32 [ %i.i, %bb.ap ], [ %i.ak, %bb.ag ], [ 1, %bb.g ], [ %i.ak, %bb.af ], [ %i.i, %bb.ao ], [ %i.i, %bb.ax ], [ %i.i, %bb.ay ]
   %i.eb = sub i32 %.3142, %.3133                  ; 2 uses
   %i.ec = icmp sgt i32 %i.eb, 0
@@ -496,7 +488,7 @@ store_coded_char.exit:                            ; preds = %bb.ax, %bb.ay, %bb.
   br i1 %or.cond8, label %.thread215, label %bb.ba
 
 bb.ba:                                            ; preds = %.loopexit
-  tail call void @report_invalid_encoding(i32 noundef 6, ptr noundef nonnull %.5.ph, i32 noundef %.3142.ph) #5
+  tail call void @report_invalid_encoding(i32 noundef 6, ptr noundef nonnull %.5.ph, i32 noundef %.3142.ph) #6
   unreachable
 
 .thread215:                                       ; preds = %store_coded_char.exit, %.preheader, %bb.q, %store_coded_char.exit188, %.loopexit
@@ -877,10 +869,10 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #6 ; 0 uses
-  %i.e = tail call i32 @errcode(i32 noundef 50856066) #7 ; 0 uses
-  %i.f = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str, i32 noundef %7) #7 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 495, ptr noundef nonnull @__func__.LocalToUtf) #7
+  %i.d = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #7 ; 0 uses
+  %i.e = tail call i32 @errcode(i32 noundef 50856066) #8 ; 0 uses
+  %i.f = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str, i32 noundef %7) #8 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 495, ptr noundef nonnull @__func__.LocalToUtf) #8
   unreachable
 
 bb.c:                                             ; preds = %.lr.ph, %store_coded_char.exit.thread
@@ -902,7 +894,7 @@ bb.e:                                             ; preds = %bb.d
   br label %store_coded_char.exit.thread
 
 bb.f:                                             ; preds = %bb.d
-  %i.k = tail call i32 @pg_encoding_verifymbchar(i32 noundef %7, ptr noundef nonnull %.086177, i32 noundef %.089176) #7 ; 11 uses
+  %i.k = tail call i32 @pg_encoding_verifymbchar(i32 noundef %7, ptr noundef nonnull %.086177, i32 noundef %.089176) #8 ; 11 uses
   %i.l = icmp slt i32 %i.k, 0
   br i1 %i.l, label %bb.ax, label %bb.g
 
@@ -936,9 +928,9 @@ bb.j:                                             ; preds = %bb.g
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.g
-  %i.y = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #6 ; 0 uses
-  %i.z = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2, i32 noundef %i.k) #7 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 543, ptr noundef nonnull @__func__.LocalToUtf) #7
+  %i.y = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #7 ; 0 uses
+  %i.z = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2, i32 noundef %i.k) #8 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 543, ptr noundef nonnull @__func__.LocalToUtf) #8
   unreachable
 
 bb.l:                                             ; preds = %bb.g, %bb.h, %bb.j, %bb.i
@@ -1151,7 +1143,7 @@ store_coded_char.exit:                            ; preds = %bb.y, %bb.v, %bb.l
   br i1 %.not107, label %store_coded_char.exit137, label %bb.an
 
 bb.an:                                            ; preds = %store_coded_char.exit
-  %i.cp = tail call i32 %6(i32 noundef %i.ak) #7  ; 9 uses
+  %i.cp = tail call i32 %6(i32 noundef %i.ak) #8  ; 9 uses
   %.not108 = icmp eq i32 %i.cp, 0
   br i1 %.not108, label %store_coded_char.exit137, label %bb.ao
 
@@ -1211,7 +1203,7 @@ store_coded_char.exit137:                         ; preds = %bb.an, %store_coded
   br i1 %8, label %.thread150, label %bb.aw
 
 bb.aw:                                            ; preds = %store_coded_char.exit137
-  tail call void @report_untranslatable_char(i32 noundef %7, i32 noundef 6, ptr noundef nonnull %i.dg, i32 noundef %.089176) #5
+  tail call void @report_untranslatable_char(i32 noundef %7, i32 noundef 6, ptr noundef nonnull %i.dg, i32 noundef %.089176) #6
   unreachable
 
 store_coded_char.exit.thread:                     ; preds = %bb.au, %bb.av, %bb.am, %bb.al, %bb.t, %bb.u, %bb.e
@@ -1226,7 +1218,7 @@ bb.ax:                                            ; preds = %bb.c, %bb.f
   br i1 %8, label %.thread150, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  tail call void @report_invalid_encoding(i32 noundef %7, ptr noundef nonnull %.086177, i32 noundef %.089176) #5
+  tail call void @report_invalid_encoding(i32 noundef %7, ptr noundef nonnull %.086177, i32 noundef %.089176) #6
   unreachable
 
 .thread150:                                       ; preds = %store_coded_char.exit.thread, %.preheader, %store_coded_char.exit137, %bb.ax
@@ -1242,14 +1234,18 @@ bb.ay:                                            ; preds = %bb.ax
 
 declare i32 @pg_encoding_verifymbchar(i32 noundef, ptr noundef, i32 noundef) local_unnamed_addr #3
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #5
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { cold "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { noreturn nounwind }
-attributes #6 = { cold nounwind }
-attributes #7 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { noreturn nounwind }
+attributes #7 = { cold nounwind }
+attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!1, !2, !3}
 !llvm.ident = !{!4}

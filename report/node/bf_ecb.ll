@@ -15,89 +15,59 @@ bb.a:
 define dso_local void @BF_ecb_encrypt(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca [2 x i32], align 4                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %5 = load i8, ptr %0, align 1, !tbaa !10
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw i32 %6, 24
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %9 = load i8, ptr %4, align 1, !tbaa !10
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 16
-  %12 = or disjoint i32 %11, %7
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %14 = load i8, ptr %8, align 1, !tbaa !10
-  %15 = zext i8 %14 to i32
-  %16 = shl nuw nsw i32 %15, 8
-  %17 = or disjoint i32 %12, %16
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  %4 = load i32, ptr %0, align 1
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %18 = load i8, ptr %13, align 1, !tbaa !10
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %17, %19
-  store i32 %20, ptr %i.a, align 4, !tbaa !11
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %22 = load i8, ptr %i.b, align 1, !tbaa !10
-  %23 = zext i8 %22 to i32
-  %24 = shl nuw i32 %23, 24
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %26 = load i8, ptr %21, align 1, !tbaa !10
-  %27 = zext i8 %26 to i32
-  %28 = shl nuw nsw i32 %27, 16
-  %29 = or disjoint i32 %28, %24
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %31 = load i8, ptr %25, align 1, !tbaa !10
-  %32 = zext i8 %31 to i32
-  %33 = shl nuw nsw i32 %32, 8
-  %34 = or disjoint i32 %29, %33
-  %35 = load i8, ptr %30, align 1, !tbaa !10
-  %36 = zext i8 %35 to i32
-  %37 = or disjoint i32 %34, %36
+  store i32 %5, ptr %i.a, align 4, !tbaa !10
+  %6 = load i32, ptr %i.b, align 1
+  %7 = tail call i32 @llvm.bswap.i32(i32 %6)
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
-  store i32 %37, ptr %i.c, align 4, !tbaa !11
+  store i32 %7, ptr %i.c, align 4, !tbaa !10
   %.not = icmp eq i32 %3, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @BF_encrypt(ptr noundef nonnull %i.a, ptr noundef %2) #4
+  call void @BF_encrypt(ptr noundef nonnull %i.a, ptr noundef %2) #5
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  call void @BF_decrypt(ptr noundef nonnull %i.a, ptr noundef %2) #4
+  call void @BF_decrypt(ptr noundef nonnull %i.a, ptr noundef %2) #5
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.d = load i32, ptr %i.a, align 4, !tbaa !11   ; 4 uses
+  %i.d = load i32, ptr %i.a, align 4, !tbaa !10   ; 4 uses
   %i.e = lshr i32 %i.d, 24
   %i.f = trunc nuw i32 %i.e to i8
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %i.f, ptr %1, align 1, !tbaa !10
+  store i8 %i.f, ptr %1, align 1, !tbaa !11
   %i.h = lshr i32 %i.d, 16
   %i.i = trunc i32 %i.h to i8
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %i.i, ptr %i.g, align 1, !tbaa !10
+  store i8 %i.i, ptr %i.g, align 1, !tbaa !11
   %i.k = lshr i32 %i.d, 8
   %i.l = trunc i32 %i.k to i8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %i.l, ptr %i.j, align 1, !tbaa !10
+  store i8 %i.l, ptr %i.j, align 1, !tbaa !11
   %i.n = trunc i32 %i.d to i8
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %i.n, ptr %i.m, align 1, !tbaa !10
-  %i.p = load i32, ptr %i.c, align 4, !tbaa !11   ; 4 uses
+  store i8 %i.n, ptr %i.m, align 1, !tbaa !11
+  %i.p = load i32, ptr %i.c, align 4, !tbaa !10   ; 4 uses
   %i.q = lshr i32 %i.p, 24
   %i.r = trunc nuw i32 %i.q to i8
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %i.r, ptr %i.o, align 1, !tbaa !10
+  store i8 %i.r, ptr %i.o, align 1, !tbaa !11
   %i.t = lshr i32 %i.p, 16
   %i.u = trunc i32 %i.t to i8
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 6
-  store i8 %i.u, ptr %i.s, align 1, !tbaa !10
+  store i8 %i.u, ptr %i.s, align 1, !tbaa !11
   %i.w = lshr i32 %i.p, 8
   %i.x = trunc i32 %i.w to i8
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %i.x, ptr %i.v, align 1, !tbaa !10
+  store i8 %i.x, ptr %i.v, align 1, !tbaa !11
   %i.z = trunc i32 %i.p to i8
-  store i8 %i.z, ptr %i.y, align 1, !tbaa !10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+  store i8 %i.z, ptr %i.y, align 1, !tbaa !11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret void
 }
 
@@ -111,11 +81,15 @@ declare void @BF_decrypt(ptr noundef, ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #4
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nounwind }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}
@@ -131,6 +105,6 @@ attributes #4 = { nounwind }
 !7 = !{!"int", !6, i64 0}
 !8 = !{!"__libc_errno", !7, i64 0}
 !9 = !{!8, !7, i64 0}
-!10 = !{!6, !6, i64 0}
-!11 = !{!7, !7, i64 0}
+!10 = !{!7, !7, i64 0}
+!11 = !{!6, !6, i64 0}
 end_hunk_0

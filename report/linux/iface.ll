@@ -204,30 +204,16 @@ bb.t:                                             ; preds = %bb.s
   br label %.loopexit269
 
 .loopexit269:                                     ; preds = %bb.r, %bb.t
-  %.0177 = phi ptr [ %i.ce, %bb.t ], [ %i.bz, %bb.r ] ; 6 uses
-  %3 = load i8, ptr %.0177, align 1
-  %4 = zext i8 %3 to i64
-  %5 = shl nuw nsw i64 %4, 40
-  %6 = getelementptr i8, ptr %.0177, i64 1
-  %7 = load i8, ptr %6, align 1
-  %8 = zext i8 %7 to i64
-  %9 = shl nuw nsw i64 %8, 32
-  %10 = or disjoint i64 %9, %5
-  %11 = getelementptr i8, ptr %.0177, i64 2
-  %12 = load i8, ptr %11, align 1
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 24
-  %15 = or disjoint i64 %10, %14
-  %16 = getelementptr i8, ptr %.0177, i64 3
-  %17 = load i8, ptr %16, align 1
-  %i.cf = zext i8 %17 to i64
+  %.0177 = phi ptr [ %i.ce, %bb.t ], [ %i.bz, %bb.r ] ; 3 uses
+  %3 = load i32, ptr %.0177, align 1
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)
+  %i.cf = zext i32 %4 to i64
   %i.cg = shl nuw nsw i64 %i.cf, 16
-  %18 = or disjoint i64 %15, %i.cg
   %i.ch = getelementptr i8, ptr %.0177, i64 4
   %i.ci = load i8, ptr %i.ch, align 1
   %i.cj = zext i8 %i.ci to i64
   %i.ck = shl nuw nsw i64 %i.cj, 8
-  %i.cl = or disjoint i64 %18, %i.ck
+  %i.cl = or disjoint i64 %i.cg, %i.ck
   %i.cm = getelementptr i8, ptr %.0177, i64 5
   %i.cn = load i8, ptr %i.cm, align 1
   %i.co = zext i8 %i.cn to i64
@@ -630,41 +616,27 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ax = lshr i16 %.val46.i.i, 8
-  %2 = load i8, ptr %i.ao, align 1
-  %i.ay = zext i8 %2 to i64
-  %3 = shl nuw nsw i64 %i.ay, 40
-  %4 = getelementptr i8, ptr %1, i64 3
-  %5 = load i8, ptr %4, align 1
-  %i.az = zext i8 %5 to i64
-  %i.ba = shl nuw nsw i64 %i.az, 32
-  %6 = or disjoint i64 %i.ba, %3
-  %i.bb = getelementptr i8, ptr %1, i64 4
+  %i.ay = zext nneg i16 %i.ax to i64
+  %2 = load i32, ptr %i.ao, align 1
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  %i.az = zext i32 %3 to i64
+  %i.ba = shl nuw nsw i64 %i.az, 16
+  %i.bb = getelementptr i8, ptr %1, i64 6
   %i.bc = load i8, ptr %i.bb, align 1
   %i.bd = zext i8 %i.bc to i64
-  %i.be = shl nuw nsw i64 %i.bd, 24
-  %i.bf = or disjoint i64 %6, %i.be
-  %i.bg = getelementptr i8, ptr %1, i64 5
+  %i.be = shl nuw nsw i64 %i.bd, 8
+  %i.bf = or disjoint i64 %i.ba, %i.be
+  %i.bg = getelementptr i8, ptr %1, i64 7
   %i.bh = load i8, ptr %i.bg, align 1
   %i.bi = zext i8 %i.bh to i64
-  %7 = shl nuw nsw i64 %i.bi, 16
-  %i.bj = or disjoint i64 %i.bf, %7
-  %8 = getelementptr i8, ptr %1, i64 6
-  %9 = load i8, ptr %8, align 1
-  %i.bk = zext i8 %9 to i64
-  %i.bl = shl nuw nsw i64 %i.bk, 8
-  %10 = or disjoint i64 %i.bj, %i.bl
-  %11 = getelementptr i8, ptr %1, i64 7
-  %12 = load i8, ptr %11, align 1
-  %13 = zext i8 %12 to i64
-  %14 = or disjoint i64 %10, %13
-  %trunc.i.i = zext i32 %.val.i.i to i48
-  %rev.i.i = tail call i48 @llvm.bswap.i48(i48 %trunc.i.i)
+  %i.bj = or disjoint i64 %i.bf, %i.bi
+  %4 = tail call i32 @llvm.bswap.i32(i32 %.val.i.i)
+  %i.bk = zext i32 %4 to i64
+  %i.bl = shl nuw nsw i64 %i.bk, 16
   %i.bm = shl i16 %.val46.i.i, 8
-  %15 = zext i16 %i.bm to i48
-  %16 = or disjoint i48 %rev.i.i, %15
-  %17 = zext nneg i16 %i.ax to i48
-  %18 = or disjoint i48 %16, %17
-  %19 = zext i48 %18 to i64
+  %5 = zext i16 %i.bm to i64
+  %6 = or disjoint i64 %i.bl, %5
+  %7 = or disjoint i64 %6, %i.ay
   br i1 %.031.i, label %bb.n, label %.loopexit.i
 
 bb.n:                                             ; preds = %bb.m
@@ -674,11 +646,11 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not48.i.i, label %.loopexit.i, label %.lr.ph.i38.i
 
 .lr.ph.i38.i:                                     ; preds = %bb.n
-  %i.bo = xor i64 %19, -1
+  %i.bo = xor i64 %7, -1
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.s, %.lr.ph.i38.i
-  %.04249.i.i = phi ptr [ %.04247.i.i, %.lr.ph.i38.i ], [ %.042.i.i, %bb.s ] ; 10 uses
+  %.04249.i.i = phi ptr [ %.04247.i.i, %.lr.ph.i38.i ], [ %.042.i.i, %bb.s ] ; 7 uses
   %i.bp = icmp eq ptr %.04249.i.i, %i.a
   br i1 %i.bp, label %bb.s, label %bb.p
 
@@ -697,34 +669,20 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %i.bw = getelementptr i8, ptr %.04249.i.i, i64 7202
-  %20 = load i8, ptr %i.bw, align 2
-  %21 = zext i8 %20 to i64
-  %22 = shl nuw nsw i64 %21, 40
-  %23 = getelementptr i8, ptr %.04249.i.i, i64 7203
-  %24 = load i8, ptr %23, align 1
-  %25 = zext i8 %24 to i64
-  %26 = shl nuw nsw i64 %25, 32
-  %27 = or disjoint i64 %26, %22
-  %28 = getelementptr i8, ptr %.04249.i.i, i64 7204
-  %29 = load i8, ptr %28, align 4
-  %30 = zext i8 %29 to i64
-  %31 = shl nuw nsw i64 %30, 24
-  %32 = or disjoint i64 %27, %31
-  %33 = getelementptr i8, ptr %.04249.i.i, i64 7205
-  %34 = load i8, ptr %33, align 1
-  %i.bx = zext i8 %34 to i64
+  %8 = load i32, ptr %i.bw, align 2
+  %9 = tail call i32 @llvm.bswap.i32(i32 %8)
+  %i.bx = zext i32 %9 to i64
   %i.by = shl nuw nsw i64 %i.bx, 16
-  %35 = or disjoint i64 %32, %i.by
   %i.bz = getelementptr i8, ptr %.04249.i.i, i64 7206
   %i.ca = load i8, ptr %i.bz, align 2
   %i.cb = zext i8 %i.ca to i64
   %i.cc = shl nuw nsw i64 %i.cb, 8
-  %i.cd = or disjoint i64 %35, %i.cc
+  %i.cd = or disjoint i64 %i.by, %i.cc
   %i.ce = getelementptr i8, ptr %.04249.i.i, i64 7207
   %i.cf = load i8, ptr %i.ce, align 1
   %i.cg = zext i8 %i.cf to i64
   %i.ch = or disjoint i64 %i.cd, %i.cg
-  %i.ci = xor i64 %i.ch, %14
+  %i.ci = xor i64 %i.ch, %i.bj
   %i.cj = and i64 %i.ci, %i.bo
   %.not45.i.i = icmp eq i64 %i.cj, 0
   br i1 %.not45.i.i, label %bb.s, label %_ieee80211_change_mac.exit
@@ -1127,7 +1085,7 @@ bb.f:                                             ; preds = %bb.d, %bb.b, %bb.c,
 declare i32 @llvm.smin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i48 @llvm.bswap.i48(i48) #12
+declare i32 @llvm.bswap.i32(i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.bswap.i16(i16) #12

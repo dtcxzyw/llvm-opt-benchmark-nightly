@@ -205,7 +205,7 @@ _ZNSt3__16vectorIhNS_9allocatorIhEEED2B8ne180100Ev.exit44: ; preds = %.body, %bb
 define linkonce_odr dso_local void @_ZN15DecoderStrategy9MakeValidEv(ptr noundef nonnull align 8 dereferenceable(176) %0) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 12 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !248  ; 12 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !248  ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !352
   %i.e = getelementptr inbounds i8, ptr %i.d, i64 -7
@@ -213,29 +213,15 @@ bb.a:
   br i1 %i.f, label %_ZN15DecoderStrategy13OptimizedReadEv.exit.thread, label %_ZN15DecoderStrategy13OptimizedReadEv.exit
 
 _ZN15DecoderStrategy13OptimizedReadEv.exit.thread: ; preds = %bb.a
-  %1 = load i8, ptr %i.b, align 1, !tbaa !51
-  %2 = zext i8 %1 to i64
-  %3 = shl nuw i64 %2, 56
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %5 = load i8, ptr %4, align 1, !tbaa !51
-  %6 = zext i8 %5 to i64
-  %7 = shl nuw nsw i64 %6, 48
-  %8 = or disjoint i64 %7, %3
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %10 = load i8, ptr %9, align 1, !tbaa !51
-  %11 = zext i8 %10 to i64
-  %12 = shl nuw nsw i64 %11, 40
-  %13 = or disjoint i64 %8, %12
-  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %15 = load i8, ptr %14, align 1, !tbaa !51
-  %i.g = zext i8 %15 to i64
-  %i.h = shl nuw nsw i64 %i.g, 32
-  %16 = or disjoint i64 %13, %i.h
+  %1 = load i32, ptr %i.b, align 1
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  %i.g = zext i32 %2 to i64
+  %i.h = shl nuw i64 %i.g, 32
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.j = load i8, ptr %i.i, align 1, !tbaa !51
   %i.k = zext i8 %i.j to i64
   %i.l = shl nuw nsw i64 %i.k, 24
-  %i.m = or disjoint i64 %16, %i.l
+  %i.m = or disjoint i64 %i.h, %i.l
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 5
   %i.o = load i8, ptr %i.n, align 1, !tbaa !51
   %i.p = zext i8 %i.o to i64
@@ -249,11 +235,11 @@ _ZN15DecoderStrategy13OptimizedReadEv.exit.thread: ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 7
   %i.y = load i8, ptr %i.x, align 1, !tbaa !51
   %i.z = zext i8 %i.y to i64
-  %17 = add nuw i64 %i.w, %i.z
+  %3 = or disjoint i64 %i.w, %i.z
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !247 ; 3 uses
   %i.ac = zext nneg i32 %i.ab to i64
-  %i.ad = lshr i64 %17, %i.ac
+  %i.ad = lshr i64 %3, %i.ac
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !347
   %i.ag = or i64 %i.ad, %i.af
@@ -654,6 +640,9 @@ declare i32 @llvm.umax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #20

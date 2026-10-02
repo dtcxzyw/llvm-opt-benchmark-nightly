@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.loopexit, %bb.g, %
 declare void @_Z23lodepng_color_mode_make16LodePNGColorTypej(ptr dead_on_unwind writable sret(%struct.LodePNGColorMode) align 8, i32 noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree nounwind memory(write, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define internal fastcc noundef range(i32 0, 2) i32 @_ZN7lodepngL8parseICCEPNS_10LodePNGICCEPKhm(ptr nofree noundef nonnull writeonly captures(none) %0, ptr nofree noundef readonly %1, i64 noundef range(i64 0, 4294967296) %2) unnamed_addr #8 {
+define internal fastcc noundef range(i32 0, 2) i32 @_ZN7lodepngL8parseICCEPNS_10LodePNGICCEPKhm(ptr nofree noundef nonnull writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef range(i64 0, 4294967296) %2) unnamed_addr #8 {
 bb.a:
   %i.a = icmp samesign ult i64 %2, 132
   br i1 %i.a, label %.critedge243, label %_ZN7lodepngL18decodeICC15Fixed16EPKhmPm.exit
@@ -235,16 +235,16 @@ _ZN7lodepngL18decodeICC15Fixed16EPKhmPm.exit:     ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 116
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.c, i8 0, i64 64, i1 false)
-  %3 = load i8, ptr %i.u, align 1, !tbaa !21
-  %4 = zext i8 %3 to i32
-  %5 = getelementptr i8, ptr %1, i64 9
-  %6 = load i8, ptr %5, align 1, !tbaa !21
-  %7 = zext i8 %6 to i32                          ; 2 uses
+  %3 = load i32, ptr %i.u, align 1
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)      ; 3 uses
+  %5 = lshr i32 %4, 24
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %4, ptr %i.v, align 4, !tbaa !112
-  %i.w = lshr i32 %7, 4
+  store i32 %5, ptr %i.v, align 4, !tbaa !112
+  %i.w = lshr i32 %4, 20
+  %6 = and i32 %i.w, 15
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.w, ptr %i.x, align 8, !tbaa !113
+  store i32 %6, ptr %i.x, align 8, !tbaa !113
+  %7 = lshr i32 %4, 16
   %i.y = and i32 %7, 15
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.y, ptr %i.z, align 4, !tbaa !114
@@ -256,101 +256,39 @@ _ZN7lodepngL18decodeICC15Fixed16EPKhmPm.exit:     ; preds = %bb.a
   %switch.select420 = select i1 %switch.selectcmp419, i32 1, i32 %switch.select
   store i32 %switch.select420, ptr %0, align 8, !tbaa !54
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %8 = load i8, ptr %i.ac, align 1, !tbaa !21
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw i32 %9, 24
-  %11 = getelementptr i8, ptr %1, i64 69
-  %12 = load i8, ptr %11, align 1, !tbaa !21
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 16
-  %15 = or disjoint i32 %14, %10
-  %16 = getelementptr i8, ptr %1, i64 70
-  %17 = load i8, ptr %16, align 1, !tbaa !21
-  %18 = zext i8 %17 to i32
-  %19 = shl nuw nsw i32 %18, 8
-  %20 = or disjoint i32 %15, %19
-  %21 = getelementptr i8, ptr %1, i64 71
-  %22 = load i8, ptr %21, align 1, !tbaa !21
-  %23 = zext i8 %22 to i32
-  %24 = or disjoint i32 %20, %23
-  %i.ad = sitofp i32 %24 to float
+  %8 = load i32, ptr %i.ac, align 1
+  %9 = tail call i32 @llvm.bswap.i32(i32 %8)
+  %i.ad = sitofp i32 %9 to float
   %i.ae = fmul nnan float %i.ad, f0x37800000
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16
   store float %i.ae, ptr %i.af, align 8, !tbaa !58
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %25 = load i8, ptr %i.ag, align 1, !tbaa !21
-  %26 = zext i8 %25 to i32
-  %27 = shl nuw i32 %26, 24
-  %28 = getelementptr i8, ptr %1, i64 73
-  %29 = load i8, ptr %28, align 1, !tbaa !21
-  %30 = zext i8 %29 to i32
-  %31 = shl nuw nsw i32 %30, 16
-  %32 = or disjoint i32 %31, %27
-  %33 = getelementptr i8, ptr %1, i64 74
-  %34 = load i8, ptr %33, align 1, !tbaa !21
-  %35 = zext i8 %34 to i32
-  %36 = shl nuw nsw i32 %35, 8
-  %37 = or disjoint i32 %32, %36
-  %38 = getelementptr i8, ptr %1, i64 75
-  %39 = load i8, ptr %38, align 1, !tbaa !21
-  %40 = zext i8 %39 to i32
-  %41 = or disjoint i32 %37, %40
-  %i.ah = sitofp i32 %41 to float
+  %10 = load i32, ptr %i.ag, align 1
+  %11 = tail call i32 @llvm.bswap.i32(i32 %10)
+  %i.ah = sitofp i32 %11 to float
   %i.ai = fmul nnan float %i.ah, f0x37800000
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 20
   store float %i.ai, ptr %i.aj, align 4, !tbaa !58
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 76
-  %42 = load i8, ptr %i.ak, align 1, !tbaa !21
-  %43 = zext i8 %42 to i32
-  %44 = shl nuw i32 %43, 24
-  %45 = getelementptr i8, ptr %1, i64 77
-  %46 = load i8, ptr %45, align 1, !tbaa !21
-  %47 = zext i8 %46 to i32
-  %48 = shl nuw nsw i32 %47, 16
-  %49 = or disjoint i32 %48, %44
-  %50 = getelementptr i8, ptr %1, i64 78
-  %51 = load i8, ptr %50, align 1, !tbaa !21
-  %52 = zext i8 %51 to i32
-  %53 = shl nuw nsw i32 %52, 8
-  %54 = or disjoint i32 %49, %53
-  %55 = getelementptr i8, ptr %1, i64 79
-  %56 = load i8, ptr %55, align 1, !tbaa !21
-  %57 = zext i8 %56 to i32
-  %58 = or disjoint i32 %54, %57
-  %i.al = sitofp i32 %58 to float
+  %12 = load i32, ptr %i.ak, align 1
+  %13 = tail call i32 @llvm.bswap.i32(i32 %12)
+  %i.al = sitofp i32 %13 to float
   %i.am = fmul nnan float %i.al, f0x37800000
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 24
   store float %i.am, ptr %i.an, align 8, !tbaa !58
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %59 = load i8, ptr %i.ao, align 1, !tbaa !21
-  %60 = zext i8 %59 to i64
-  %61 = shl nuw nsw i64 %60, 24                   ; 2 uses
-  %62 = getelementptr i8, ptr %1, i64 129
-  %63 = load i8, ptr %62, align 1, !tbaa !21
-  %64 = zext i8 %63 to i64
-  %65 = shl nuw nsw i64 %64, 16                   ; 2 uses
-  %66 = getelementptr i8, ptr %1, i64 130
-  %67 = load i8, ptr %66, align 1, !tbaa !21
-  %68 = zext i8 %67 to i64
-  %69 = shl nuw nsw i64 %68, 8                    ; 2 uses
-  %70 = getelementptr i8, ptr %1, i64 131
-  %71 = load i8, ptr %70, align 1, !tbaa !21
-  %i.ap = zext i8 %71 to i64                      ; 2 uses
+  %14 = load i32, ptr %i.ao, align 1              ; 2 uses
+  %15 = tail call i32 @llvm.bswap.i32(i32 %14)
+  %i.ap = zext i32 %15 to i64
   %.not225.not = icmp eq i64 %2, 132
   br i1 %.not225.not, label %.critedge243, label %.preheader
 
 .preheader:                                       ; preds = %_ZN7lodepngL18decodeICC15Fixed16EPKhmPm.exit
-  %72 = or disjoint i64 %65, %61
-  %73 = or disjoint i64 %72, %69
-  %74 = or disjoint i64 %73, %i.ap
-  %.not410 = icmp eq i64 %74, 0
+  %.not410 = icmp eq i32 %14, 0
   br i1 %.not410, label %.critedge243, label %.lr.ph401
 
 .lr.ph401:                                        ; preds = %.preheader
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %75 = or disjoint i64 %61, %65
-  %76 = or disjoint i64 %75, %69
-  %77 = or disjoint i64 %76, %i.ap
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 44
@@ -363,7 +301,7 @@ _ZN7lodepngL18decodeICC15Fixed16EPKhmPm.exit:     ; preds = %bb.a
 
 bb.b:                                             ; preds = %.critedge
   %i.az = add nuw nsw i64 %.0214400, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %i.az, %77
+  %exitcond.not = icmp eq i64 %i.az, %i.ap
   br i1 %exitcond.not, label %.critedge243, label %bb.c, !llvm.loop !110
 
 bb.c:                                             ; preds = %.lr.ph401, %bb.b
@@ -766,16 +704,16 @@ bb.au:                                            ; preds = %bb.at
   %i.jg = zext nneg i32 %i.je to i64
   %i.jh = getelementptr inbounds nuw [56 x i8], ptr %i.f, i64 %i.jg ; 6 uses
   store i32 1, ptr %i.d, align 4, !tbaa !57
-  %i.ji = add nuw nsw i64 %.0.i256, 12            ; 6 uses
+  %i.ji = add nuw nsw i64 %.0.i256, 12            ; 7 uses
   %i.jj = icmp samesign ugt i64 %i.ji, %2
   br i1 %i.jj, label %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit294.thread, label %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit294
 
 _ZN7lodepngL15decodeICCUint32EPKhmPm.exit294:     ; preds = %bb.au
   %i.jk = getelementptr inbounds nuw i8, ptr %1, i64 %.0.i256
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 8
-  %i.jm = load i32, ptr %i.jl, align 1
+  %i.jm = load i32, ptr %i.jl, align 1            ; 3 uses
   %i.jn = tail call i32 @llvm.bswap.i32(i32 %i.jm) ; 4 uses
-  %i.jo = zext i32 %i.jn to i64                   ; 4 uses
+  %i.jo = zext i32 %i.jn to i64                   ; 5 uses
   switch i32 %i.jn, label %bb.ax [
     i32 0, label %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit294.thread
     i32 1, label %bb.av
@@ -826,13 +764,16 @@ bb.ax:                                            ; preds = %_ZN7lodepngL15decod
   %i.ki = tail call noalias noundef ptr @malloc(i64 noundef %i.kh) #32 ; 4 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %i.jh, i64 8
   store ptr %i.ki, ptr %i.kj, align 8, !tbaa !48
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.jo, i64 1) ; 3 uses
-  %xtraiter = and i64 %umax, 1
-  %78 = icmp ult i32 %i.jn, 2
-  br i1 %78, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+  %.not411 = icmp eq i32 %i.jm, 0
+  br i1 %.not411, label %.loopexit, label %.lr.ph.preheader
 
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader.a
-  %unroll_iter = and i64 %umax, 33554430
+.lr.ph.preheader:                                 ; preds = %.lr.ph.preheader.a
+  %xtraiter = and i64 %i.jo, 1
+  %16 = icmp eq i32 %i.jm, 16777216
+  br i1 %16, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+
+.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %unroll_iter = and i64 %i.jo, 33554430
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.1, %.lr.ph.preheader.new
@@ -891,10 +832,10 @@ _ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.1:   ; preds = %bb.az, %_ZN7lodepng
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
 
-.lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader.a
-  %.1213398.epil.init = phi i64 [ 0, %.lr.ph.preheader.a ], [ %i.ll, %.loopexit.loopexit.unr-lcssa ]
-  %.1397.epil.init = phi i64 [ %i.ji, %.lr.ph.preheader.a ], [ %i.kx, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod422 = trunc i64 %umax to i1
+.lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
+  %.1213398.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.ll, %.loopexit.loopexit.unr-lcssa ]
+  %.1397.epil.init = phi i64 [ %i.ji, %.lr.ph.preheader ], [ %i.kx, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod422 = trunc i32 %i.jn to i1
   tail call void @llvm.assume(i1 %lcmp.mod422)
   %i.lm = add nuw nsw i64 %.1397.epil.init, 2     ; 2 uses
   %i.ln = icmp samesign ugt i64 %i.lm, %2
@@ -919,8 +860,8 @@ _ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.epil: ; preds = %bb.ba, %.lr.ph.epi
   store float %.0.i296.epil, ptr %i.ly, align 4, !tbaa !58
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.epil, %.loopexit.loopexit.unr-lcssa, %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit, %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit294.thread, %bb.at
-  %.2 = phi i64 [ %.0.i256, %bb.at ], [ %i.jp, %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit ], [ %i.ji, %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit294.thread ], [ %i.kx, %.loopexit.loopexit.unr-lcssa ], [ %i.lm, %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.epil ] ; 12 uses
+.loopexit:                                        ; preds = %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.epil, %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader.a, %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit, %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit294.thread, %bb.at
+  %.2 = phi i64 [ %.0.i256, %bb.at ], [ %i.jp, %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit ], [ %i.ji, %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit294.thread ], [ %i.ji, %.lr.ph.preheader.a ], [ %i.kx, %.loopexit.loopexit.unr-lcssa ], [ %i.lm, %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.epil ] ; 12 uses
   %i.lz = tail call fastcc noundef i32 @_ZN7lodepngL9isICCwordEPKhmmPKc(ptr noundef %1, i64 noundef %2, i64 noundef %.2, ptr noundef nonnull @.str.14)
   %.not238 = icmp eq i32 %i.lz, 0
   br i1 %.not238, label %.critedge, label %bb.bb

@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.0.0208 = phi i32 [ %.sroa.0.1, %.thread ], [ 0, %bb.f ] ; 19 uses
   %.sroa.8.0207 = phi i32 [ %.sroa.8.1, %.thread ], [ 0, %bb.f ] ; 15 uses
   %i.q = zext i32 %.098217 to i64
-  %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.q ; 12 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.q ; 6 uses
   %i.s = load i32, ptr %i.r, align 1              ; 2 uses
-  %i.t = call i32 @llvm.bswap.i32(i32 %i.s)       ; 7 uses
+  %i.t = call noundef i32 @llvm.bswap.i32(i32 %i.s) ; 7 uses
   %i.u = add i32 %i.p, -12
   %i.v = icmp ugt i32 %i.t, %i.u
   br i1 %i.v, label %.thread179, label %bb.g
@@ -215,7 +215,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %.lr.ph
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   %i.x = load i32, ptr %i.w, align 1
-  %i.y = call i32 @llvm.bswap.i32(i32 %i.x)
+  %i.y = call noundef i32 @llvm.bswap.i32(i32 %i.x)
   %i.z = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 4 uses
   switch i32 %i.y, label %.fold.split [
     i32 1229472850, label %bb.h
@@ -230,41 +230,11 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.aa, label %.thread164, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %9 = load i8, ptr %i.z, align 1, !tbaa !63
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw i32 %10, 24
-  %12 = getelementptr inbounds nuw i8, ptr %i.r, i64 9
-  %13 = load i8, ptr %12, align 1, !tbaa !63
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 16
-  %16 = or disjoint i32 %15, %11
-  %17 = getelementptr inbounds nuw i8, ptr %i.r, i64 10
-  %18 = load i8, ptr %17, align 1, !tbaa !63
-  %19 = zext i8 %18 to i32
-  %20 = shl nuw nsw i32 %19, 8
-  %21 = or disjoint i32 %16, %20
-  %22 = getelementptr inbounds nuw i8, ptr %i.r, i64 11
-  %23 = load i8, ptr %22, align 1, !tbaa !63
-  %24 = zext i8 %23 to i32
-  %25 = or disjoint i32 %21, %24                  ; 4 uses
+  %9 = load i32, ptr %i.z, align 1
+  %10 = call noundef i32 @llvm.bswap.i32(i32 %9)  ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.r, i64 12
-  %26 = load i8, ptr %i.ab, align 1, !tbaa !63
-  %27 = zext i8 %26 to i32
-  %28 = shl nuw i32 %27, 24
-  %29 = getelementptr inbounds nuw i8, ptr %i.r, i64 13
-  %30 = load i8, ptr %29, align 1, !tbaa !63
-  %31 = zext i8 %30 to i32
-  %32 = shl nuw nsw i32 %31, 16
-  %33 = or disjoint i32 %32, %28
-  %34 = getelementptr inbounds nuw i8, ptr %i.r, i64 14
-  %35 = load i8, ptr %34, align 1, !tbaa !63
-  %36 = zext i8 %35 to i32
-  %37 = shl nuw nsw i32 %36, 8
-  %38 = or disjoint i32 %33, %37
-  %39 = getelementptr inbounds nuw i8, ptr %i.r, i64 15
-  %40 = load i8, ptr %39, align 1, !tbaa !63
-  %41 = zext i8 %40 to i32
-  %42 = or disjoint i32 %38, %41                  ; 4 uses
+  %11 = load i32, ptr %i.ab, align 1
+  %12 = call noundef i32 @llvm.bswap.i32(i32 %11) ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !63
   %.not147 = icmp eq i8 %i.ad, 8
@@ -369,14 +339,14 @@ bb.u:                                             ; preds = %_ZN11hb_vector_tIcL
   %.sroa.8.1 = phi i32 [ %.sroa.8.0207, %.fold.split ], [ %i.ai, %bb.u ], [ %.sroa.8.0207, %bb.g ], [ %.sroa.8.0207, %bb.n ], [ %.sroa.8.0207, %bb.o ], [ %.sroa.8.0207, %bb.j ], [ %.sroa.8.0207, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %i.ai, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %.sroa.8.0207, %bb.l ], [ %.sroa.8.0207, %bb.k ], [ %.sroa.8.0207, %bb.m ] ; 2 uses
   %.sroa.0.1 = phi i32 [ %.sroa.0.0208, %.fold.split ], [ %.sroa.0.5, %bb.u ], [ %.sroa.0.0208, %bb.g ], [ %.sroa.0.0208, %bb.n ], [ %.sroa.0.0208, %bb.o ], [ %.sroa.0.0208, %bb.j ], [ %i.av, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.sroa.0.5, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %.sroa.0.0208, %bb.l ], [ %.sroa.0.0208, %bb.k ], [ %.sroa.0.0208, %bb.m ] ; 2 uses
   %.sroa.13.1 = phi ptr [ %.sroa.13.0209, %.fold.split ], [ %.sroa.13.5, %bb.u ], [ %.sroa.13.0209, %bb.g ], [ %.sroa.13.0209, %bb.n ], [ %.sroa.13.0209, %bb.o ], [ %.sroa.13.0209, %bb.j ], [ %.sroa.13.0209, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.sroa.13.5, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %.sroa.13.0209, %bb.l ], [ %.sroa.13.0209, %bb.k ], [ %.sroa.13.0209, %bb.m ] ; 2 uses
-  %.1136 = phi i32 [ %.0135210, %.fold.split ], [ %.0135210, %bb.u ], [ %.0135210, %bb.g ], [ %.0135210, %bb.n ], [ %.0135210, %bb.o ], [ %42, %bb.j ], [ %.0135210, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.0135210, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %42, %bb.l ], [ %42, %bb.k ], [ %42, %bb.m ] ; 2 uses
+  %.1136 = phi i32 [ %.0135210, %.fold.split ], [ %.0135210, %bb.u ], [ %.0135210, %bb.g ], [ %.0135210, %bb.n ], [ %.0135210, %bb.o ], [ %12, %bb.j ], [ %.0135210, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.0135210, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %12, %bb.l ], [ %12, %bb.k ], [ %12, %bb.m ] ; 2 uses
   %.3131 = phi i32 [ %.0128211, %.fold.split ], [ %.0128211, %bb.u ], [ %.0128211, %bb.g ], [ %.0128211, %bb.n ], [ %.0128211, %bb.o ], [ 3, %bb.j ], [ %.0128211, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.0128211, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ 4, %bb.l ], [ 2, %bb.k ], [ 1, %bb.m ] ; 2 uses
   %.3124 = phi i1 [ %.0121212, %.fold.split ], [ %.0121212, %bb.u ], [ %.0121212, %bb.g ], [ %.0121212, %bb.n ], [ %.0121212, %bb.o ], [ false, %bb.j ], [ %.0121212, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.0121212, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ true, %bb.l ], [ true, %bb.k ], [ false, %bb.m ] ; 2 uses
   %.1117 = phi ptr [ %.0116213, %.fold.split ], [ %.0116213, %bb.u ], [ %i.z, %bb.g ], [ %.0116213, %bb.n ], [ %.0116213, %bb.o ], [ %.0116213, %bb.j ], [ %.0116213, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.0116213, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %.0116213, %bb.l ], [ %.0116213, %bb.k ], [ %.0116213, %bb.m ] ; 2 uses
   %.1112 = phi i32 [ %.0111214, %.fold.split ], [ %.0111214, %bb.u ], [ %i.t, %bb.g ], [ %.0111214, %bb.n ], [ %.0111214, %bb.o ], [ %.0111214, %bb.j ], [ %.0111214, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.0111214, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %.0111214, %bb.l ], [ %.0111214, %bb.k ], [ %.0111214, %bb.m ] ; 2 uses
   %.1107 = phi ptr [ %.0106215, %.fold.split ], [ %.0106215, %bb.u ], [ %.0106215, %bb.g ], [ %i.z, %bb.n ], [ %.0106215, %bb.o ], [ %.0106215, %bb.j ], [ %.0106215, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.0106215, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %.0106215, %bb.l ], [ %.0106215, %bb.k ], [ %.0106215, %bb.m ] ; 2 uses
   %.1102 = phi i32 [ %.0101216, %.fold.split ], [ %.0101216, %bb.u ], [ %.0101216, %bb.g ], [ %i.t, %bb.n ], [ %.0101216, %bb.o ], [ %.0101216, %bb.j ], [ %.0101216, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.0101216, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %.0101216, %bb.l ], [ %.0101216, %bb.k ], [ %.0101216, %bb.m ] ; 2 uses
-  %.194 = phi i32 [ %.093218, %.fold.split ], [ %.093218, %bb.u ], [ %.093218, %bb.g ], [ %.093218, %bb.n ], [ %.093218, %bb.o ], [ %25, %bb.j ], [ %.093218, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.093218, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %25, %bb.l ], [ %25, %bb.k ], [ %25, %bb.m ] ; 2 uses
+  %.194 = phi i32 [ %.093218, %.fold.split ], [ %.093218, %bb.u ], [ %.093218, %bb.g ], [ %.093218, %bb.n ], [ %.093218, %bb.o ], [ %10, %bb.j ], [ %.093218, %_ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.thread63.i.i.i ], [ %.093218, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i ], [ %10, %bb.l ], [ %10, %bb.k ], [ %10, %bb.m ] ; 2 uses
   %i.az = add i32 %.098217, 12
   %i.ba = add i32 %i.az, %i.t                     ; 2 uses
   %i.bb = load i32, ptr %i.a, align 4, !tbaa !61
@@ -779,11 +749,11 @@ declare i32 @llvm.umin.i32(i32, i32) #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #7
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #11
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #7
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #7

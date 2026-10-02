@@ -205,7 +205,7 @@ bb.ce:                                            ; preds = %bb.cd
   %i.sd = zext i8 %i.sc to i32
   %i.se = sub nsw i32 8, %i.rz
   %i.sf = lshr i32 %i.sd, %i.se
-  %i.sg = or i32 %i.sa, %i.sf
+  %i.sg = or i32 %i.sf, %i.sa
   %i.sh = add nsw i32 %i.rm, -5
   %i.si = add nsw i32 %i.sh, %i.rz                ; 2 uses
   %i.sj = ashr i32 %i.si, 3
@@ -608,14 +608,14 @@ declare i64 @llvm.smax.i64(i64, i64) #12
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #12
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #12
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13

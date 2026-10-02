@@ -120,26 +120,20 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 21 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 15 uses
   store ptr null, ptr %1, align 8, !tbaa !25
   store i64 0, ptr %i.a, align 8, !tbaa !26
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 6 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 6 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 25
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 26
-  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 27
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 44 ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 35
-  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 34
-  %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 33
-  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 36
-  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 39
-  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 38
-  %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 37
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 6 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 6 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 25
+  %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 26
+  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 27
+  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 44 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 32
+  %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 36
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.w, %bb.a
@@ -162,7 +156,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.b
   %.186 = phi ptr [ %i.q, %bb.c ], [ %.085, %bb.b ] ; 9 uses
-  %i.u = load i32, ptr %2, align 8, !tbaa !29
+  %i.u = load i32, ptr %i.e, align 8, !tbaa !29
   switch i32 %i.u, label %..loopexit_crit_edge [
     i32 0, label %bb.f
     i32 1, label %bb.i
@@ -195,48 +189,48 @@ bb.h:                                             ; preds = %bb.f
   %i.ac = sub nsw i64 96, %i.x                    ; 2 uses
   %i.ad = add i64 %i.ac, %.0
   %i.ae = getelementptr inbounds nuw i8, ptr %.186, i64 %i.ac
-  store i32 1, ptr %2, align 8, !tbaa !29
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
-  store i32 1, ptr %i.f, align 4, !tbaa !31
+  store i32 1, ptr %i.e, align 8, !tbaa !29
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
+  store i32 1, ptr %i.l, align 4, !tbaa !31
   br label %.loopexit
 
 bb.i:                                             ; preds = %bb.e
-  %i.af = load i64, ptr %3, align 8, !tbaa !32    ; 3 uses
+  %i.af = load i64, ptr %i.f, align 8, !tbaa !32  ; 3 uses
   %i.ag = sub i64 16, %i.af
   %i.ah = load i64, ptr %i.a, align 8, !tbaa !26  ; 4 uses
   %i.ai = sub nsw i64 %i.ah, %.0
   %i.aj = call noundef i64 @llvm.umin.i64(i64 %i.ag, i64 %i.ai) ; 4 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 %i.af
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.af
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ak, ptr nonnull align 1 %.186, i64 %i.aj, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %.186, i64 %i.aj ; 3 uses
   %i.am = add i64 %i.aj, %.0                      ; 3 uses
   %i.an = add i64 %i.aj, %i.af                    ; 2 uses
-  store i64 %i.an, ptr %3, align 8, !tbaa !32
+  store i64 %i.an, ptr %i.f, align 8, !tbaa !32
   %i.ao = icmp eq i64 %i.an, 16
   br i1 %i.ao, label %bb.j, label %.loopexit
 
 bb.j:                                             ; preds = %bb.i
-  %i.ap = load i8, ptr %5, align 8, !tbaa !9
+  %i.ap = load i8, ptr %i.h, align 8, !tbaa !9
   %.not93 = icmp eq i8 %i.ap, -114
   br i1 %.not93, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
-  %i.aq = load i8, ptr %6, align 1, !tbaa !9
+  %i.aq = load i8, ptr %i.i, align 1, !tbaa !9
   %.not94 = icmp eq i8 %i.aq, -83
   br i1 %.not94, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %i.ar = load i8, ptr %7, align 2, !tbaa !9
+  %i.ar = load i8, ptr %i.j, align 2, !tbaa !9
   %.not95 = icmp eq i8 %i.ar, -24
   br i1 %.not95, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.as = load i8, ptr %i.e, align 1, !tbaa !9
+  %i.as = load i8, ptr %i.k, align 1, !tbaa !9
   %.not96 = icmp eq i8 %i.as, 1
   br i1 %.not96, label %bb.q, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.j
-  %i.at = load i32, ptr %i.f, align 4, !tbaa !31
+  %i.at = load i32, ptr %i.l, align 4, !tbaa !31
   %.not97 = icmp eq i32 %i.at, 0
   br i1 %.not97, label %bb.p, label %bb.o
 
@@ -247,50 +241,28 @@ bb.o:                                             ; preds = %bb.n
   br label %.thread
 
 bb.p:                                             ; preds = %bb.n
-  store i32 4, ptr %2, align 8, !tbaa !29
-  store ptr %5, ptr %1, align 8, !tbaa !25
+  store i32 4, ptr %i.e, align 8, !tbaa !29
+  store ptr %i.h, ptr %1, align 8, !tbaa !25
   br label %.loopexit
 
 bb.q:                                             ; preds = %bb.m
-  %8 = load i8, ptr %i.h, align 1, !tbaa !9
-  %9 = zext i8 %8 to i64
-  %10 = load i8, ptr %i.i, align 2, !tbaa !9
-  %11 = zext i8 %10 to i64
-  %12 = load i8, ptr %i.j, align 1, !tbaa !9
-  %13 = zext i8 %12 to i64
-  %14 = load i8, ptr %i.g, align 8, !tbaa !9
-  %15 = zext i8 %14 to i64
-  %16 = load i8, ptr %i.l, align 1, !tbaa !9
-  %17 = zext i8 %16 to i64
-  %18 = load i8, ptr %i.m, align 2, !tbaa !9
-  %i.aw = zext i8 %18 to i64
-  %19 = load i8, ptr %i.n, align 1, !tbaa !9
-  %20 = zext i8 %19 to i64
-  %21 = load i8, ptr %i.k, align 4, !tbaa !9
-  %i.ax = zext i8 %21 to i64
-  %22 = shl nuw nsw i64 %i.ax, 24
-  %23 = shl nuw nsw i64 %20, 16
-  %24 = shl nuw nsw i64 %i.aw, 8
-  %25 = or disjoint i64 %24, %17
-  %26 = or disjoint i64 %25, %23
-  %27 = or disjoint i64 %26, %22
-  %28 = shl nuw nsw i64 %15, 28
-  %29 = shl nuw nsw i64 %13, 20
-  %30 = shl nuw nsw i64 %11, 12
-  %i.ay = shl nuw nsw i64 %9, 4
-  %31 = or disjoint i64 %30, %i.ay
-  %32 = or disjoint i64 %31, %29
-  %33 = or disjoint i64 %32, %28
-  %i.az = add nuw nsw i64 %33, 16
-  %i.ba = add nuw nsw i64 %i.az, %27
-  store i64 %i.ba, ptr %4, align 8, !tbaa !33
-  store i32 2, ptr %2, align 8, !tbaa !29
-  store i32 0, ptr %i.f, align 4, !tbaa !31
+  %2 = load i32, ptr %i.m, align 8
+  %3 = call i32 @llvm.bswap.i32(i32 %2)
+  %i.aw = zext i32 %3 to i64
+  %4 = load i32, ptr %i.n, align 4
+  %5 = call i32 @llvm.bswap.i32(i32 %4)
+  %i.ax = zext i32 %5 to i64
+  %i.ay = shl nuw nsw i64 %i.aw, 4
+  %i.az = add nuw nsw i64 %i.ay, 16
+  %i.ba = add nuw nsw i64 %i.az, %i.ax
+  store i64 %i.ba, ptr %i.g, align 8, !tbaa !33
+  store i32 2, ptr %i.e, align 8, !tbaa !29
+  store i32 0, ptr %i.l, align 4, !tbaa !31
   br label %.loopexit
 
 bb.r:                                             ; preds = %bb.e
-  %i.bb = load i64, ptr %4, align 8, !tbaa !33    ; 2 uses
-  %i.bc = load i64, ptr %3, align 8, !tbaa !32    ; 2 uses
+  %i.bb = load i64, ptr %i.g, align 8, !tbaa !33  ; 2 uses
+  %i.bc = load i64, ptr %i.f, align 8, !tbaa !32  ; 2 uses
   %i.bd = sub i64 %i.bb, %i.bc
   %i.be = load i64, ptr %i.a, align 8, !tbaa !26  ; 3 uses
   %i.bf = sub nsw i64 %i.be, %.0
@@ -298,12 +270,12 @@ bb.r:                                             ; preds = %bb.e
   %i.bh = getelementptr inbounds nuw i8, ptr %.186, i64 %i.bg ; 2 uses
   %i.bi = add i64 %i.bg, %.0                      ; 2 uses
   %i.bj = add i64 %i.bg, %i.bc                    ; 2 uses
-  store i64 %i.bj, ptr %3, align 8, !tbaa !32
+  store i64 %i.bj, ptr %i.f, align 8, !tbaa !32
   %i.bk = icmp eq i64 %i.bj, %i.bb
   br i1 %i.bk, label %bb.s, label %.loopexit
 
 bb.s:                                             ; preds = %bb.r
-  store i32 3, ptr %2, align 8, !tbaa !29
+  store i32 3, ptr %i.e, align 8, !tbaa !29
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader, %bb.u
@@ -314,8 +286,8 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph
-  store i32 1, ptr %2, align 8, !tbaa !29
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  store i32 1, ptr %i.e, align 8, !tbaa !29
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   br label %.loopexit
 
 bb.u:                                             ; preds = %.lr.ph
@@ -397,6 +369,9 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7

@@ -44,7 +44,7 @@ _ZN11CStringBaseIcEC2Ev.exit:
   %i.l = alloca ptr, align 8                      ; 4 uses
   %i.m = alloca [32 x i8], align 16               ; 13 uses
   %i.n = alloca ptr, align 8                      ; 4 uses
-  %i.o = alloca [512 x i8], align 16              ; 62 uses
+  %i.o = alloca [512 x i8], align 16              ; 61 uses
   %i.p = alloca i64, align 8                      ; 9 uses
   %4 = alloca %class.CStringBase, align 8         ; 9 uses
   %5 = alloca %class.CStringBase, align 8         ; 7 uses
@@ -91,7 +91,6 @@ _ZN11CStringBaseIcEC2Ev.exit88:                   ; preds = %_ZN11CStringBaseIcE
   %i.ae = getelementptr inbounds nuw i8, ptr %i.g, i64 12
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.o, i64 128
-  %8 = getelementptr inbounds nuw i8, ptr %i.o, i64 132
   %i.ah = getelementptr inbounds nuw i8, ptr %i.o, i64 136
   %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 12
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 36
@@ -494,13 +493,8 @@ _ZN8NArchive4NTarL13OctalToNumberEPKciRy.exit.i172.i: ; preds = %bb.ao
   br i1 %i.lj, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %.noexc100
-  %9 = load i32, ptr %i.ag, align 16
-  %10 = load i32, ptr %8, align 4
-  %11 = zext i32 %9 to i64
-  %12 = zext i32 %10 to i64
-  %13 = shl nuw i64 %12, 32
-  %14 = or disjoint i64 %13, %11
-  %op.rdx = call i64 @llvm.bswap.i64(i64 %14)
+  %8 = load i64, ptr %i.ag, align 16
+  %op.rdx = call i64 @llvm.bswap.i64(i64 %8)
   store i64 %op.rdx, ptr %i.af, align 8, !tbaa !58
   br label %bb.at
 
@@ -903,10 +897,10 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare i64 @strlen(ptr captures(none)) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #8
+declare i64 @llvm.bswap.i64(i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.bswap.i64(i64) #8
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #8
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

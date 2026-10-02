@@ -205,46 +205,17 @@ bb.hy:                                            ; preds = %bb.hx
   call void @llvm.lifetime.end.p0(ptr nonnull %89) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %88) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #31
-  %i.mt = load ptr, ptr %81, align 8, !tbaa !94   ; 8 uses
-  %2159 = getelementptr inbounds nuw i8, ptr %i.mt, i64 1
-  %2160 = load i8, ptr %2159, align 1, !tbaa !89
-  %2161 = zext i8 %2160 to i64
-  %2162 = shl nuw i64 %2161, 56
-  %2163 = getelementptr inbounds nuw i8, ptr %i.mt, i64 2
-  %2164 = load i8, ptr %2163, align 1, !tbaa !89
-  %2165 = zext i8 %2164 to i64
-  %2166 = shl nuw nsw i64 %2165, 48
-  %2167 = or disjoint i64 %2166, %2162
-  %2168 = getelementptr inbounds nuw i8, ptr %i.mt, i64 3
-  %2169 = load i8, ptr %2168, align 1, !tbaa !89
-  %2170 = zext i8 %2169 to i64
-  %2171 = shl nuw nsw i64 %2170, 40
-  %2172 = or disjoint i64 %2167, %2171
-  %2173 = getelementptr inbounds nuw i8, ptr %i.mt, i64 4
-  %2174 = load i8, ptr %2173, align 1, !tbaa !89
-  %2175 = zext i8 %2174 to i64
-  %2176 = shl nuw nsw i64 %2175, 32
-  %2177 = or disjoint i64 %2172, %2176
-  %i.mu = getelementptr inbounds nuw i8, ptr %i.mt, i64 5
-  %2178 = load i8, ptr %i.mu, align 1, !tbaa !89
-  %2179 = zext i8 %2178 to i64
-  %2180 = shl nuw nsw i64 %2179, 24
-  %2181 = or disjoint i64 %2177, %2180
-  %i.mv = getelementptr inbounds nuw i8, ptr %i.mt, i64 6
-  %2182 = load i8, ptr %i.mv, align 1, !tbaa !89
-  %i.mw = zext i8 %2182 to i64
-  %2183 = shl nuw nsw i64 %i.mw, 16
-  %2184 = or disjoint i64 %2181, %2183
-  %2185 = getelementptr inbounds nuw i8, ptr %i.mt, i64 7
-  %2186 = load i8, ptr %2185, align 1, !tbaa !89
-  %i.mx = zext i8 %2186 to i64
-  %i.my = shl nuw nsw i64 %i.mx, 8
-  %i.mz = or disjoint i64 %2184, %i.my
-  %2187 = getelementptr inbounds nuw i8, ptr %i.mt, i64 8
-  %2188 = load i8, ptr %2187, align 1, !tbaa !89
-  %2189 = zext i8 %2188 to i64
-  %2190 = add nuw nsw i64 %i.mz, %2189
-  store i64 %2190, ptr %i.h, align 8, !tbaa !105
+  %i.mt = load ptr, ptr %81, align 8, !tbaa !94   ; 2 uses
+  %i.mu = getelementptr inbounds nuw i8, ptr %i.mt, i64 1
+  %2159 = load i32, ptr %i.mu, align 1
+  %i.mv = getelementptr inbounds nuw i8, ptr %i.mt, i64 5
+  %2160 = load i32, ptr %i.mv, align 1
+  %i.mw = zext i32 %2159 to i64
+  %i.mx = zext i32 %2160 to i64
+  %i.my = shl nuw i64 %i.mx, 32
+  %i.mz = or disjoint i64 %i.my, %i.mw
+  %op.rdx14139 = call i64 @llvm.bswap.i64(i64 %i.mz)
+  store i64 %op.rdx14139, ptr %i.h, align 8, !tbaa !105
   call void @llvm.lifetime.start.p0(ptr nonnull %91) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %92) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %93) #31
@@ -647,46 +618,17 @@ bb.amh:                                           ; preds = %bb.amg
   call void @llvm.lifetime.end.p0(ptr nonnull %346) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %345) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap) #31
-  %i.ayq = load ptr, ptr %338, align 8, !tbaa !94 ; 8 uses
-  %2191 = getelementptr inbounds nuw i8, ptr %i.ayq, i64 1
-  %2192 = load i8, ptr %2191, align 1, !tbaa !89
-  %2193 = zext i8 %2192 to i64
-  %2194 = shl nuw i64 %2193, 56
-  %2195 = getelementptr inbounds nuw i8, ptr %i.ayq, i64 2
-  %2196 = load i8, ptr %2195, align 1, !tbaa !89
-  %2197 = zext i8 %2196 to i64
-  %2198 = shl nuw nsw i64 %2197, 48
-  %2199 = or disjoint i64 %2198, %2194
-  %2200 = getelementptr inbounds nuw i8, ptr %i.ayq, i64 3
-  %2201 = load i8, ptr %2200, align 1, !tbaa !89
-  %2202 = zext i8 %2201 to i64
-  %2203 = shl nuw nsw i64 %2202, 40
-  %2204 = or disjoint i64 %2199, %2203
-  %2205 = getelementptr inbounds nuw i8, ptr %i.ayq, i64 4
-  %2206 = load i8, ptr %2205, align 1, !tbaa !89
-  %2207 = zext i8 %2206 to i64
-  %2208 = shl nuw nsw i64 %2207, 32
-  %2209 = or disjoint i64 %2204, %2208
-  %i.ayr = getelementptr inbounds nuw i8, ptr %i.ayq, i64 5
-  %2210 = load i8, ptr %i.ayr, align 1, !tbaa !89
-  %2211 = zext i8 %2210 to i64
-  %2212 = shl nuw nsw i64 %2211, 24
-  %2213 = or disjoint i64 %2209, %2212
-  %i.ays = getelementptr inbounds nuw i8, ptr %i.ayq, i64 6
-  %2214 = load i8, ptr %i.ays, align 1, !tbaa !89
-  %i.ayt = zext i8 %2214 to i64
-  %2215 = shl nuw nsw i64 %i.ayt, 16
-  %2216 = or disjoint i64 %2213, %2215
-  %2217 = getelementptr inbounds nuw i8, ptr %i.ayq, i64 7
-  %2218 = load i8, ptr %2217, align 1, !tbaa !89
-  %i.ayu = zext i8 %2218 to i64
-  %i.ayv = shl nuw nsw i64 %i.ayu, 8
-  %i.ayw = or disjoint i64 %2216, %i.ayv
-  %2219 = getelementptr inbounds nuw i8, ptr %i.ayq, i64 8
-  %2220 = load i8, ptr %2219, align 1, !tbaa !89
-  %2221 = zext i8 %2220 to i64
-  %2222 = add nuw i64 %i.ayw, %2221
-  store i64 %2222, ptr %i.ap, align 8, !tbaa !105
+  %i.ayq = load ptr, ptr %338, align 8, !tbaa !94 ; 2 uses
+  %i.ayr = getelementptr inbounds nuw i8, ptr %i.ayq, i64 1
+  %2161 = load i32, ptr %i.ayr, align 1
+  %i.ays = getelementptr inbounds nuw i8, ptr %i.ayq, i64 5
+  %2162 = load i32, ptr %i.ays, align 1
+  %i.ayt = zext i32 %2161 to i64
+  %i.ayu = zext i32 %2162 to i64
+  %i.ayv = shl nuw i64 %i.ayu, 32
+  %i.ayw = or disjoint i64 %i.ayv, %i.ayt
+  %op.rdx14138 = call i64 @llvm.bswap.i64(i64 %i.ayw)
+  store i64 %op.rdx14138, ptr %i.ap, align 8, !tbaa !105
   call void @llvm.lifetime.start.p0(ptr nonnull %348) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %349) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %350) #31
@@ -1089,46 +1031,17 @@ bb.bdv:                                           ; preds = %bb.bdu
   call void @llvm.lifetime.end.p0(ptr nonnull %493) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %492) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bk) #31
-  %i.btp = load ptr, ptr %485, align 8, !tbaa !94 ; 8 uses
-  %2223 = getelementptr inbounds nuw i8, ptr %i.btp, i64 1
-  %2224 = load i8, ptr %2223, align 1, !tbaa !89
-  %2225 = zext i8 %2224 to i64
-  %2226 = shl nuw i64 %2225, 56
-  %2227 = getelementptr inbounds nuw i8, ptr %i.btp, i64 2
-  %2228 = load i8, ptr %2227, align 1, !tbaa !89
-  %2229 = zext i8 %2228 to i64
-  %2230 = shl nuw nsw i64 %2229, 48
-  %2231 = or disjoint i64 %2230, %2226
-  %2232 = getelementptr inbounds nuw i8, ptr %i.btp, i64 3
-  %2233 = load i8, ptr %2232, align 1, !tbaa !89
-  %2234 = zext i8 %2233 to i64
-  %2235 = shl nuw nsw i64 %2234, 40
-  %2236 = or disjoint i64 %2231, %2235
-  %2237 = getelementptr inbounds nuw i8, ptr %i.btp, i64 4
-  %2238 = load i8, ptr %2237, align 1, !tbaa !89
-  %2239 = zext i8 %2238 to i64
-  %2240 = shl nuw nsw i64 %2239, 32
-  %2241 = or disjoint i64 %2236, %2240
-  %i.btq = getelementptr inbounds nuw i8, ptr %i.btp, i64 5
-  %2242 = load i8, ptr %i.btq, align 1, !tbaa !89
-  %2243 = zext i8 %2242 to i64
-  %2244 = shl nuw nsw i64 %2243, 24
-  %2245 = or disjoint i64 %2241, %2244
-  %i.btr = getelementptr inbounds nuw i8, ptr %i.btp, i64 6
-  %2246 = load i8, ptr %i.btr, align 1, !tbaa !89
-  %i.bts = zext i8 %2246 to i64
-  %2247 = shl nuw nsw i64 %i.bts, 16
-  %2248 = or disjoint i64 %2245, %2247
-  %2249 = getelementptr inbounds nuw i8, ptr %i.btp, i64 7
-  %2250 = load i8, ptr %2249, align 1, !tbaa !89
-  %i.btt = zext i8 %2250 to i64
-  %i.btu = shl nuw nsw i64 %i.btt, 8
-  %i.btv = or disjoint i64 %2248, %i.btu
-  %2251 = getelementptr inbounds nuw i8, ptr %i.btp, i64 8
-  %2252 = load i8, ptr %2251, align 1, !tbaa !89
-  %2253 = zext i8 %2252 to i64
-  %2254 = add nuw i64 %i.btv, %2253
-  store i64 %2254, ptr %i.bk, align 8, !tbaa !105
+  %i.btp = load ptr, ptr %485, align 8, !tbaa !94 ; 2 uses
+  %i.btq = getelementptr inbounds nuw i8, ptr %i.btp, i64 1
+  %2163 = load i32, ptr %i.btq, align 1
+  %i.btr = getelementptr inbounds nuw i8, ptr %i.btp, i64 5
+  %2164 = load i32, ptr %i.btr, align 1
+  %i.bts = zext i32 %2163 to i64
+  %i.btt = zext i32 %2164 to i64
+  %i.btu = shl nuw i64 %i.btt, 32
+  %i.btv = or disjoint i64 %i.btu, %i.bts
+  %op.rdx = call i64 @llvm.bswap.i64(i64 %i.btv)
+  store i64 %op.rdx, ptr %i.bk, align 8, !tbaa !105
   call void @llvm.lifetime.start.p0(ptr nonnull %495) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %496) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %497) #31
@@ -1530,6 +1443,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #28
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #28
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

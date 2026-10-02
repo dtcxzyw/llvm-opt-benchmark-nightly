@@ -205,7 +205,7 @@ ma_dr_wav_preinit.exit.thread:                    ; preds = %ma_dr_wav_copy_allo
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @ma_dr_wav_init__internal(ptr nofree noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr noundef %2, i32 noundef %3) unnamed_addr #8 {
 bb.a:
-  %i.a = alloca [4 x i8], align 4                 ; 6 uses
+  %i.a = alloca [4 x i8], align 4                 ; 5 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [4 x i8], align 4                 ; 5 uses
   %i.d = alloca i64, align 8                      ; 24 uses
@@ -223,12 +223,12 @@ bb.a:
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %6 = alloca %struct.ma_dr_wav_chunk_header, align 8 ; 7 uses
   %7 = alloca %struct.ma_dr_wav_chunk_header, align 8 ; 22 uses
-  %i.o = alloca [16 x i8], align 16               ; 22 uses
+  %i.o = alloca [16 x i8], align 16               ; 16 uses
   %i.p = alloca [2 x i8], align 2                 ; 7 uses
   %i.q = alloca [22 x i8], align 16               ; 9 uses
-  %i.r = alloca [4 x i8], align 4                 ; 6 uses
+  %i.r = alloca [4 x i8], align 4                 ; 5 uses
   %i.s = alloca [24 x i8], align 16               ; 15 uses
-  %i.t = alloca [8 x i8], align 4                 ; 7 uses
+  %i.t = alloca [8 x i8], align 4                 ; 6 uses
   %8 = alloca %struct.ma_dr_wav_chunk_header, align 8 ; 10 uses
   %i.u = alloca i64, align 8                      ; 4 uses
   %i.v = alloca [4096 x i8], align 16             ; 3 uses
@@ -631,13 +631,7 @@ bb.ad:                                            ; preds = %.thread852, %bb.ac,
   %i.he = getelementptr inbounds nuw i8, ptr %i.o, i64 2
   %i.hf = getelementptr inbounds nuw i8, ptr %i.o, i64 3
   %i.hg = getelementptr inbounds nuw i8, ptr %i.o, i64 4 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.o, i64 7
-  %10 = getelementptr inbounds nuw i8, ptr %i.o, i64 6
-  %11 = getelementptr inbounds nuw i8, ptr %i.o, i64 5
   %i.hh = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  %12 = getelementptr inbounds nuw i8, ptr %i.o, i64 11
-  %13 = getelementptr inbounds nuw i8, ptr %i.o, i64 10
-  %14 = getelementptr inbounds nuw i8, ptr %i.o, i64 9
   %i.hi = getelementptr inbounds nuw i8, ptr %i.o, i64 12 ; 2 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %i.o, i64 13
   %i.hk = getelementptr inbounds nuw i8, ptr %i.o, i64 14 ; 2 uses
@@ -679,21 +673,17 @@ bb.af:                                            ; preds = %bb.ae, %bb.ae, %bb.
 bb.ag:                                            ; preds = %bb.af
   %i.hz = call i64 %i.hw(ptr noundef %i.hx, ptr noundef nonnull %i.a, i64 noundef 4) #55, !inline_history !2820
   %.not36.i669 = icmp eq i64 %i.hz, 4
-  br i1 %.not36.i669, label %15, label %.thread.i667
+  br i1 %.not36.i669, label %bb.ah, label %.thread.i667
 
-15:                                               ; preds = %bb.ag
-  switch i32 %i.hv, label %bb.ai [
-    i32 4, label %bb.ah
-    i32 1, label %bb.ah
+bb.ah:                                            ; preds = %bb.ag
+  %i.ia = load i32, ptr %i.a, align 4             ; 2 uses
+  switch i32 %i.hv, label %bb.aj [
+    i32 4, label %bb.ai
+    i32 1, label %bb.ai
   ]
 
-bb.ah:                                            ; preds = %15, %15
-  %i.ia = load i32, ptr %i.a, align 4
-  %16 = call i32 @llvm.bswap.i32(i32 %i.ia)
-  br label %bb.aj
-
-bb.ai:                                            ; preds = %15
-  %17 = load i32, ptr %i.a, align 4
+bb.ai:                                            ; preds = %bb.ah, %bb.ah
+  %9 = call i32 @llvm.bswap.i32(i32 %i.ia)
   br label %bb.aj
 
 .thread.i667:                                     ; preds = %bb.ag, %bb.af
@@ -701,7 +691,7 @@ bb.ai:                                            ; preds = %15
   br label %.loopexit1323
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah
-  %.0.i.i670 = phi i32 [ %16, %bb.ah ], [ %17, %bb.ai ] ; 2 uses
+  %.0.i.i670 = phi i32 [ %9, %bb.ai ], [ %i.ia, %bb.ah ] ; 2 uses
   %i.ib = zext i32 %.0.i.i670 to i64              ; 2 uses
   store i64 %i.ib, ptr %i.fz, align 8, !tbaa !1079
   %i.ic = and i32 %.0.i.i670, 1
@@ -906,36 +896,12 @@ bb.av:                                            ; preds = %bb.au, %bb.au
   %i.ks = shl nuw i16 %i.kr, 8
   %i.kt = or disjoint i16 %i.ks, %i.kp
   store i16 %i.kt, ptr %i.gt, align 2, !tbaa !2822
-  %18 = load i8, ptr %9, align 1, !tbaa !119
-  %19 = zext i8 %18 to i32
-  %20 = load i8, ptr %10, align 2, !tbaa !119
-  %21 = zext i8 %20 to i32
-  %22 = shl nuw nsw i32 %21, 8
-  %23 = or disjoint i32 %22, %19
-  %24 = load i8, ptr %11, align 1, !tbaa !119
-  %25 = zext i8 %24 to i32
-  %26 = shl nuw nsw i32 %25, 16
-  %27 = or disjoint i32 %23, %26
-  %28 = load i8, ptr %i.hg, align 4, !tbaa !119
-  %29 = zext i8 %28 to i32
-  %30 = shl nuw i32 %29, 24
-  %31 = or disjoint i32 %27, %30
-  store i32 %31, ptr %i.gu, align 4, !tbaa !2823
-  %32 = load i8, ptr %12, align 1, !tbaa !119
-  %33 = zext i8 %32 to i32
-  %34 = load i8, ptr %13, align 2, !tbaa !119
-  %35 = zext i8 %34 to i32
-  %36 = shl nuw nsw i32 %35, 8
-  %37 = or disjoint i32 %36, %33
-  %38 = load i8, ptr %14, align 1, !tbaa !119
-  %39 = zext i8 %38 to i32
-  %40 = shl nuw nsw i32 %39, 16
-  %41 = or disjoint i32 %37, %40
-  %42 = load i8, ptr %i.hh, align 8, !tbaa !119
-  %43 = zext i8 %42 to i32
-  %44 = shl nuw i32 %43, 24
-  %45 = or disjoint i32 %41, %44
-  store i32 %45, ptr %i.gx, align 4, !tbaa !2824
+  %10 = load i32, ptr %i.hg, align 4
+  %11 = call i32 @llvm.bswap.i32(i32 %10)
+  store i32 %11, ptr %i.gu, align 4, !tbaa !2823
+  %12 = load i32, ptr %i.hh, align 8
+  %13 = call i32 @llvm.bswap.i32(i32 %12)
+  store i32 %13, ptr %i.gx, align 4, !tbaa !2824
   %i.ku = load i8, ptr %i.hj, align 1, !tbaa !119
   %i.kv = zext i8 %i.ku to i16
   %i.kw = load i8, ptr %i.hi, align 4, !tbaa !119
@@ -1280,23 +1246,23 @@ bb.bu:                                            ; preds = %bb.bt
 
 bb.bv:                                            ; preds = %bb.bu
   %i.pg = load i32, ptr %i.dz, align 8, !tbaa !683
+  %14 = load i32, ptr %i.r, align 4               ; 2 uses
   switch i32 %i.pg, label %bb.bx [
     i32 4, label %bb.bw
     i32 1, label %bb.bw
   ]
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bv
-  %46 = load i32, ptr %i.r, align 4
-  %i.ph = call i32 @llvm.bswap.i32(i32 %46)
+  %i.ph = call i32 @llvm.bswap.i32(i32 %14)
+  br label %bb.bx
+
+bb.bx:                                            ; preds = %bb.bv, %bb.bw
+  %.0.i565.in = phi i32 [ %i.ph, %bb.bw ], [ %14, %bb.bv ]
+  %.0.i565 = zext i32 %.0.i565.in to i64
   br label %.thread884
 
-bb.bx:                                            ; preds = %bb.bv
-  %47 = load i32, ptr %i.r, align 4
-  br label %.thread884
-
-.thread884:                                       ; preds = %bb.bx, %bb.bw, %bb.bu
-  %storemerge.shrunk = phi i32 [ 0, %bb.bu ], [ %i.ph, %bb.bw ], [ %47, %bb.bx ]
-  %storemerge = zext i32 %storemerge.shrunk to i64
+.thread884:                                       ; preds = %bb.bx, %bb.bu
+  %storemerge = phi i64 [ %.0.i565, %bb.bx ], [ 0, %bb.bu ]
   store i64 %storemerge, ptr %i.f, align 8, !tbaa !164
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #55
   br label %bb.ca
@@ -1653,27 +1619,23 @@ bb.cz:                                            ; preds = %.thread964
   %i.ua = add i64 %i.im, %i.tz                    ; 3 uses
   store i64 %i.ua, ptr %i.d, align 8, !tbaa !164
   %.not499 = icmp eq i64 %i.tz, 8
-  br i1 %.not499, label %48, label %ma_dr_wav__seek_forward.exit751.thread.jt1
+  br i1 %.not499, label %bb.da, label %ma_dr_wav__seek_forward.exit751.thread.jt1
 
-48:                                               ; preds = %bb.cz
-  %49 = load i32, ptr %i.dz, align 8, !tbaa !683
-  switch i32 %49, label %bb.db [
-    i32 4, label %bb.da
-    i32 1, label %bb.da
+bb.da:                                            ; preds = %bb.cz
+  %i.ub = load i32, ptr %i.dz, align 8, !tbaa !683
+  %15 = load i32, ptr %i.t, align 4               ; 2 uses
+  switch i32 %i.ub, label %ma_dr_wav_bytes_to_u32_ex.exit [
+    i32 4, label %bb.db
+    i32 1, label %bb.db
   ]
 
-bb.da:                                            ; preds = %48, %48
-  %i.ub = load i32, ptr %i.t, align 4
-  %50 = call i32 @llvm.bswap.i32(i32 %i.ub)
-  br label %ma_dr_wav_bytes_to_u32_ex.exit
-
-bb.db:                                            ; preds = %48
-  %51 = load i32, ptr %i.t, align 4
+bb.db:                                            ; preds = %bb.da, %bb.da
+  %16 = call i32 @llvm.bswap.i32(i32 %15)
   br label %ma_dr_wav_bytes_to_u32_ex.exit
 
 ma_dr_wav_bytes_to_u32_ex.exit:                   ; preds = %bb.da, %bb.db
-  %.0.i.in = phi i32 [ %50, %bb.da ], [ %51, %bb.db ] ; 6 uses
-  %.0.i = zext i32 %.0.i.in to i64                ; 2 uses
+  %.0.i.in = phi i32 [ %16, %bb.db ], [ %15, %bb.da ] ; 4 uses
+  %.0.i = zext i32 %.0.i.in to i64                ; 3 uses
   %i.uc = add i64 %i.ua, %.0.i                    ; 2 uses
   store i64 %i.uc, ptr %i.gh, align 8, !tbaa !688
   %.4415 = call i64 @llvm.usub.sat.i64(i64 %i.il, i64 %.0.i) ; 2 uses
@@ -1684,8 +1646,8 @@ bb.dc:                                            ; preds = %ma_dr_wav_bytes_to_
   br i1 %.not500, label %ma_dr_wav__seek_forward.exit751.thread.jt1, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
-  %i.ud = load ptr, ptr %i.gd, align 8, !tbaa !674 ; 3 uses
-  %i.ue = load ptr, ptr %i.z, align 8, !tbaa !676 ; 3 uses
+  %i.ud = load ptr, ptr %i.gd, align 8, !tbaa !674 ; 2 uses
+  %i.ue = load ptr, ptr %i.z, align 8, !tbaa !676 ; 2 uses
   %.not12.i744 = icmp eq i32 %.0.i.in, 0
   br i1 %.not12.i744, label %ma_dr_wav__seek_forward.exit751.thread968, label %.lr.ph.i745.preheader
 
@@ -1693,23 +1655,23 @@ bb.dd:                                            ; preds = %bb.dc
   %i.uf = icmp slt i32 %.0.i.in, 0
   br i1 %i.uf, label %.lr.ph1392.preheader, label %ma_dr_wav__seek_forward.exit751
 
-.lr.ph1392.preheader:                             ; preds = %.lr.ph.i745.preheader
-  %52 = add i32 %.0.i.in, -2147483647
+.lr.ph1392.preheader:                             ; preds = %.lr.ph.i745.preheader, %.lr.ph.i745.peel
+  %.013.i7461391 = phi i64 [ %17, %.lr.ph.i745.peel ], [ %.0.i, %.lr.ph.i745.preheader ]
   %i.ug = call i32 %i.ud(ptr noundef %i.ue, i32 noundef 2147483647, i32 noundef 1) #55, !inline_history !2819
   %.not11.i750.peel = icmp eq i32 %i.ug, 0
   br i1 %.not11.i750.peel, label %ma_dr_wav__seek_forward.exit751.thread.jt1, label %.lr.ph.i745.peel
 
 .lr.ph.i745.peel:                                 ; preds = %.lr.ph1392.preheader
-  %53 = icmp eq i32 %.0.i.in, -1
-  br i1 %53, label %.lr.ph1392, label %ma_dr_wav__seek_forward.exit751
+  %17 = add i64 %.013.i7461391, -2147483647       ; 3 uses
+  %18 = icmp ugt i64 %17, 2147483647
+  br i1 %18, label %.lr.ph1392.preheader, label %.lr.ph1392
 
 .lr.ph1392:                                       ; preds = %.lr.ph.i745.peel
-  %54 = call i32 %i.ud(ptr noundef %i.ue, i32 noundef 2147483647, i32 noundef 1) #55, !inline_history !2819
-  %.not11.i750 = icmp eq i32 %54, 0
-  br i1 %.not11.i750, label %ma_dr_wav__seek_forward.exit751.thread.jt1, label %ma_dr_wav__seek_forward.exit751
+  %19 = trunc nuw nsw i64 %17 to i32
+  br label %ma_dr_wav__seek_forward.exit751
 
-ma_dr_wav__seek_forward.exit751:                  ; preds = %.lr.ph.i745.peel, %.lr.ph1392, %.lr.ph.i745.preheader
-  %.013.i746.lcssa = phi i32 [ %.0.i.in, %.lr.ph.i745.preheader ], [ %52, %.lr.ph.i745.peel ], [ 1, %.lr.ph1392 ]
+ma_dr_wav__seek_forward.exit751:                  ; preds = %.lr.ph1392, %.lr.ph.i745.preheader
+  %.013.i746.lcssa = phi i32 [ %.0.i.in, %.lr.ph.i745.preheader ], [ %19, %.lr.ph1392 ]
   %i.uh = call i32 %i.ud(ptr noundef %i.ue, i32 noundef %.013.i746.lcssa, i32 noundef 1) #55, !inline_history !2819
   %.not10.i747.not = icmp eq i32 %i.uh, 0
   br i1 %.not10.i747.not, label %ma_dr_wav__seek_forward.exit751.thread.jt1, label %ma_dr_wav__seek_forward.exit751.thread968
@@ -1754,7 +1716,7 @@ ma_dr_wav__seek_forward.exit751.thread.jt5:       ; preds = %ma_dr_wav__seek_for
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #55
   br label %.loopexit1323
 
-ma_dr_wav__seek_forward.exit751.thread.jt1:       ; preds = %bb.cz, %.lr.ph1392.preheader, %.lr.ph1392, %bb.dc, %ma_dr_wav__seek_forward.exit751
+ma_dr_wav__seek_forward.exit751.thread.jt1:       ; preds = %bb.cz, %.lr.ph1392.preheader, %bb.dc, %ma_dr_wav__seek_forward.exit751
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #55
   br label %bb.dh
 
@@ -2157,7 +2119,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -17, 1) i32 @ma_dr_wav__read_chunk_header(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef nonnull captures(none) %3, ptr noundef nonnull %4) unnamed_addr #8 {
 bb.a:
-  %i.a = alloca [4 x i8], align 4                 ; 6 uses
+  %i.a = alloca [4 x i8], align 4                 ; 5 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   switch i32 %2, label %bb.j [
     i32 4, label %bb.b
@@ -2176,21 +2138,17 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a,
 bb.c:                                             ; preds = %bb.b
   %i.d = call i64 %0(ptr noundef %1, ptr noundef nonnull %i.a, i64 noundef 4) #55
   %.not36 = icmp eq i64 %i.d, 4
-  br i1 %.not36, label %5, label %.thread
+  br i1 %.not36, label %bb.d, label %.thread
 
-5:                                                ; preds = %bb.c
-  switch i32 %2, label %bb.e [
-    i32 4, label %bb.d
-    i32 1, label %bb.d
+bb.d:                                             ; preds = %bb.c
+  %i.e = load i32, ptr %i.a, align 4              ; 2 uses
+  switch i32 %2, label %bb.f [
+    i32 4, label %bb.e
+    i32 1, label %bb.e
   ]
 
-bb.d:                                             ; preds = %5, %5
-  %i.e = load i32, ptr %i.a, align 4
-  %6 = call i32 @llvm.bswap.i32(i32 %i.e)
-  br label %bb.f
-
-bb.e:                                             ; preds = %5
-  %7 = load i32, ptr %i.a, align 4
+bb.e:                                             ; preds = %bb.d, %bb.d
+  %5 = call i32 @llvm.bswap.i32(i32 %i.e)
   br label %bb.f
 
 .thread:                                          ; preds = %bb.b, %bb.c
@@ -2198,8 +2156,8 @@ bb.e:                                             ; preds = %5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #55
   br label %bb.j
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %.0.i = phi i32 [ %6, %bb.d ], [ %7, %bb.e ]    ; 2 uses
+bb.f:                                             ; preds = %bb.d, %bb.e
+  %.0.i = phi i32 [ %5, %bb.e ], [ %i.e, %bb.d ]  ; 2 uses
   %i.f = zext i32 %.0.i to i64
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i64 %i.f, ptr %i.g, align 8, !tbaa !1079

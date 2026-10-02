@@ -205,24 +205,9 @@ FT_Stream_ReadULong.exit65.thread.i:              ; preds = %bb.p, %bb.n
 bb.r:                                             ; preds = %bb.q, %..thread_crit_edge.i58.i
   %.pre134.i = phi ptr [ null, %bb.q ], [ %.pre134.pre.i, %..thread_crit_edge.i58.i ] ; 2 uses
   %.pre.i61.i = phi i64 [ %i.av, %bb.q ], [ %.pre.pre.i59.i, %..thread_crit_edge.i58.i ] ; 4 uses
-  %.01926.i62.i = phi ptr [ %i.bc, %bb.q ], [ %i.c, %..thread_crit_edge.i58.i ] ; 4 uses
-  %4 = load i8, ptr %.01926.i62.i, align 1, !tbaa !104
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr inbounds nuw i8, ptr %.01926.i62.i, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !104
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %6
-  %12 = getelementptr inbounds nuw i8, ptr %.01926.i62.i, i64 2
-  %13 = load i8, ptr %12, align 1, !tbaa !104
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = or disjoint i32 %11, %15
-  %17 = getelementptr inbounds nuw i8, ptr %.01926.i62.i, i64 3
-  %18 = load i8, ptr %17, align 1, !tbaa !104
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %16, %19                  ; 2 uses
+  %.01926.i62.i = phi ptr [ %i.bc, %bb.q ], [ %i.c, %..thread_crit_edge.i58.i ]
+  %4 = load i32, ptr %.01926.i62.i, align 1
+  %5 = call i32 @llvm.bswap.i32(i32 %4)           ; 2 uses
   %i.bf = add i64 %.pre.i61.i, 4
   store i64 %i.bf, ptr %i.i, align 8, !tbaa !199
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #30
@@ -246,14 +231,14 @@ bb.r:                                             ; preds = %bb.q, %..thread_cri
 bb.s:                                             ; preds = %._crit_edge54, %.thread151.i
   %i.bi = phi i64 [ %i.ax, %.thread151.i ], [ %.pre55, %._crit_edge54 ] ; 2 uses
   %i.bj = phi i64 [ %i.be, %.thread151.i ], [ %i.bg, %._crit_edge54 ] ; 2 uses
-  %.0.i63155.i = phi i32 [ 0, %.thread151.i ], [ %20, %._crit_edge54 ]
+  %.0.i63155.i = phi i32 [ 0, %.thread151.i ], [ %5, %._crit_edge54 ]
   %i.bk = phi i64 [ %i.av, %.thread151.i ], [ %.pre.i61.i, %._crit_edge54 ]
   %.not17.i.i70.i = icmp ugt i64 %i.bj, %i.bi
   br i1 %.not17.i.i70.i, label %ft_mem_qalloc.exit.thread41, label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %.split.i.i67._crit_edge.i
   %i.bl = phi i64 [ %i.bg, %.split.i.i67._crit_edge.i ], [ %i.bj, %bb.s ] ; 5 uses
-  %.0.i63154.i = phi i32 [ %20, %.split.i.i67._crit_edge.i ], [ %.0.i63155.i, %bb.s ]
+  %.0.i63154.i = phi i32 [ %5, %.split.i.i67._crit_edge.i ], [ %.0.i63155.i, %bb.s ]
   %i.bm = phi i64 [ %.pre.i61.i, %.split.i.i67._crit_edge.i ], [ %i.bk, %bb.s ]
   %i.bn = phi i64 [ %.pre135.i, %.split.i.i67._crit_edge.i ], [ %i.bi, %bb.s ] ; 3 uses
   store i64 %i.bl, ptr %i.i, align 8, !tbaa !199
@@ -656,19 +641,18 @@ FT_Stream_ReadULong.exit.thread:                  ; preds = %bb.f, %bb.h
 
 bb.j:                                             ; preds = %..thread_crit_edge.i, %bb.i
   %.pre.i = phi i64 [ %i.v, %bb.i ], [ %.pre.pre.i, %..thread_crit_edge.i ]
-  %.01926.i = phi ptr [ %i.af, %bb.i ], [ %i.a, %..thread_crit_edge.i ] ; 2 uses
-  %5 = load i8, ptr %.01926.i, align 1, !tbaa !104
-  %i.ah = load i32, ptr %.01926.i, align 1, !tbaa !104
-  %i.ai = call i32 @llvm.bswap.i32(i32 %i.ah)
-  %6 = zext i32 %i.ai to i64
+  %.01926.i = phi ptr [ %i.af, %bb.i ], [ %i.a, %..thread_crit_edge.i ]
+  %i.ah = load i32, ptr %.01926.i, align 1
+  %i.ai = call i32 @llvm.bswap.i32(i32 %i.ah)     ; 2 uses
   %i.aj = add i64 %.pre.i, 4
   store i64 %i.aj, ptr %i.t, align 8, !tbaa !199
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
-  %.not98 = icmp eq i8 %5, 0
-  br i1 %.not98, label %bb.k, label %Mac_Read_POST_Resource.exit.thread
+  %5 = zext nneg i32 %i.ai to i64
+  %6 = icmp ugt i32 %i.ai, 16777215
+  br i1 %6, label %Mac_Read_POST_Resource.exit.thread, label %bb.k
 
 bb.k:                                             ; preds = %.thread, %bb.j
-  %i.ak = phi i64 [ 0, %.thread ], [ %6, %bb.j ]  ; 2 uses
+  %i.ak = phi i64 [ 0, %.thread ], [ %5, %bb.j ]  ; 2 uses
   %i.al = sub nuw nsw i64 16777215, %i.ak
   %i.am = add nuw nsw i64 %.0115.i116, 6          ; 2 uses
   %i.an = icmp ult i64 %i.al, %i.am
@@ -1071,6 +1055,9 @@ declare i32 @llvm.smax.i32(i32, i32) #28
 declare void @llvm.assume(i1 noundef) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #28
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #28
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
@@ -1078,9 +1065,6 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #28
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #28
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

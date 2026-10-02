@@ -190,9 +190,6 @@ LzmaDec_WriteRem.exit:                            ; preds = %bb.a, %._crit_edge.
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 11 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 13 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 113
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 114
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 115
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 116
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -333,21 +330,9 @@ bb.l:                                             ; preds = %.critedge
   br i1 %.not153, label %bb.m, label %.thread182
 
 bb.m:                                             ; preds = %.critedge.thread
-  %9 = load i8, ptr %i.bh, align 1, !tbaa !29
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw i32 %10, 24
-  %12 = load i8, ptr %6, align 2, !tbaa !29
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 16
-  %15 = or disjoint i32 %14, %11
-  %16 = load i8, ptr %7, align 1, !tbaa !29
-  %17 = zext i8 %16 to i32
-  %18 = shl nuw nsw i32 %17, 8
-  %19 = or disjoint i32 %15, %18
-  %20 = load i8, ptr %8, align 4, !tbaa !29
-  %21 = zext i8 %20 to i32
-  %22 = or disjoint i32 %19, %21
-  store i32 %22, ptr %i.bi, align 4, !tbaa !30
+  %6 = load i32, ptr %i.bh, align 1
+  %7 = tail call i32 @llvm.bswap.i32(i32 %6)
+  store i32 %7, ptr %i.bi, align 4, !tbaa !30
   store i32 -1, ptr %i.bj, align 8, !tbaa !31
   store i32 0, ptr %i.be, align 8, !tbaa !17
   store i32 0, ptr %i.bf, align 4, !tbaa !19
@@ -749,6 +734,9 @@ declare i64 @llvm.umin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #6
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

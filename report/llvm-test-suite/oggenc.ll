@@ -205,7 +205,7 @@ define dso_local range(i32 0, 2) i32 @aiff_open(ptr noundef %0, ptr nofree nound
 bb.a:
   %i.a = alloca [1024 x i8], align 16             ; 3 uses
   %i.b = alloca i32, align 4                      ; 6 uses
-  %i.c = alloca [8 x i8], align 1                 ; 11 uses
+  %i.c = alloca [8 x i8], align 4                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #62
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #62
   %i.d = tail call noalias dereferenceable_or_null(40) ptr @malloc(i64 noundef 40) #69 ; 7 uses
@@ -233,7 +233,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.l = zext i32 %i.i to i64                     ; 3 uses
-  %i.m = alloca i8, i64 %i.l, align 16            ; 20 uses
+  %i.m = alloca i8, i64 %i.l, align 16            ; 17 uses
   %i.n = call i64 @fread(ptr noundef nonnull %i.m, i64 noundef 1, i64 noundef %i.l, ptr noundef %0)
   %i.o = icmp ult i64 %i.n, %i.l
   br i1 %i.o, label %bb.f, label %bb.g
@@ -252,23 +252,8 @@ bb.g:                                             ; preds = %bb.e
   %i.v = zext i8 %i.u to i16
   %i.w = or disjoint i16 %i.s, %i.v               ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.m, i64 2
-  %4 = load i8, ptr %i.x, align 2
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr inbounds nuw i8, ptr %i.m, i64 3
-  %8 = load i8, ptr %7, align 1
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %6
-  %12 = getelementptr inbounds nuw i8, ptr %i.m, i64 4
-  %13 = load i8, ptr %12, align 4
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = or disjoint i32 %11, %15
-  %17 = getelementptr inbounds nuw i8, ptr %i.m, i64 5
-  %18 = load i8, ptr %17, align 1
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %16, %19
+  %4 = load i32, ptr %i.x, align 2
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
   %i.y = getelementptr inbounds nuw i8, ptr %i.m, i64 6
   %i.z = load i8, ptr %i.y, align 2
   %i.aa = zext i8 %i.z to i16
@@ -410,35 +395,11 @@ bb.v:                                             ; preds = %bb.u
   br label %seek_forward.exit
 
 bb.w:                                             ; preds = %bb.u
-  %21 = load i8, ptr %i.c, align 1
-  %22 = zext i8 %21 to i32
-  %23 = shl nuw i32 %22, 24
-  %24 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %25 = load i8, ptr %24, align 1
-  %26 = zext i8 %25 to i32
-  %27 = shl nuw nsw i32 %26, 16
-  %28 = or disjoint i32 %27, %23
-  %29 = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  %30 = load i8, ptr %29, align 1
-  %31 = zext i8 %30 to i32
-  %32 = shl nuw nsw i32 %31, 8
-  %33 = or disjoint i32 %28, %32
-  %34 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  %35 = load i8, ptr %34, align 1
-  %36 = zext i8 %35 to i32
-  %37 = or disjoint i32 %33, %36                  ; 3 uses
+  %6 = load i32, ptr %i.c, align 4
+  %7 = tail call i32 @llvm.bswap.i32(i32 %6)      ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %38 = load i8, ptr %i.cx, align 1
-  %39 = getelementptr inbounds nuw i8, ptr %i.c, i64 5
-  %40 = load i8, ptr %39, align 1
-  %41 = getelementptr inbounds nuw i8, ptr %i.c, i64 6
-  %42 = load i8, ptr %41, align 1
-  %43 = getelementptr inbounds nuw i8, ptr %i.c, i64 7
-  %44 = load i8, ptr %43, align 1
-  %45 = or i8 %40, %38
-  %46 = or i8 %45, %42
-  %47 = or i8 %46, %44
-  %i.cy = icmp eq i8 %47, 0
+  %8 = load i32, ptr %i.cx, align 4
+  %i.cy = icmp eq i32 %8, 0
   br i1 %i.cy, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %bb.w
@@ -456,7 +417,7 @@ bb.y:                                             ; preds = %bb.x, %bb.x
   store i32 %i.db, ptr %i.dc, align 8
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 16
   store ptr @wav_read, ptr %i.dd, align 8
-  %i.de = sext i32 %20 to i64                     ; 2 uses
+  %i.de = sext i32 %5 to i64                      ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 64
   store i64 %i.de, ptr %i.df, align 8
   %i.dg = getelementptr inbounds nuw i8, ptr %i.d, i64 24
@@ -470,18 +431,18 @@ bb.y:                                             ; preds = %bb.x, %bb.x
   store i64 %i.de, ptr %i.dj, align 8
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 56
   store ptr %i.d, ptr %i.dk, align 8
-  %i.dl = sext i32 %37 to i64
+  %i.dl = sext i32 %7 to i64
   %i.dm = tail call i32 @fseek(ptr noundef %0, i64 noundef %i.dl, i32 noundef 1)
   %.not.i62 = icmp eq i32 %i.dm, 0
   br i1 %.not.i62, label %seek_forward.exit, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #62
-  %i.dn = icmp sgt i32 %37, 0
+  %i.dn = icmp sgt i32 %7, 0
   br i1 %i.dn, label %.lr.ph.i, label %.sink.split.i
 
 .lr.ph.i:                                         ; preds = %bb.z, %.lr.ph.i
-  %.01115.i = phi i32 [ %i.ds, %.lr.ph.i ], [ %37, %bb.z ] ; 2 uses
+  %.01115.i = phi i32 [ %i.ds, %.lr.ph.i ], [ %7, %bb.z ] ; 2 uses
   %i.do = tail call i32 @llvm.umin.i32(i32 %.01115.i, i32 1024)
   %i.dp = zext nneg i32 %i.do to i64
   %i.dq = call i64 @fread(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef %i.dp, ptr noundef %0)
@@ -884,6 +845,9 @@ declare float @llvm.fabs.f32(float) #30
 declare i64 @llvm.umin.i64(i64, i64) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bitreverse.i32(i32) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -914,9 +878,6 @@ declare i16 @llvm.fptosi.sat.i16.f64(double) #30
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #61
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #30

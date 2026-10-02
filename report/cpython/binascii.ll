@@ -205,45 +205,30 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph:                                           ; preds = %bb.h, %.lr.ph
   %.0703 = phi ptr [ %i.ap, %.lr.ph ], [ %i.m, %bb.h ] ; 6 uses
   %.0732 = phi i64 [ %i.aq, %.lr.ph ], [ %.16.val, %bb.h ] ; 2 uses
-  %.0741 = phi ptr [ %i.ar, %.lr.ph ], [ %.0.val, %bb.h ] ; 5 uses
-  %4 = load i8, ptr %.0741, align 1, !tbaa !17
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr i8, ptr %.0741, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !17
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %6
-  %12 = getelementptr i8, ptr %.0741, i64 2
-  %13 = load i8, ptr %12, align 1, !tbaa !17
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = or disjoint i32 %11, %15
-  %17 = getelementptr i8, ptr %.0741, i64 3
-  %18 = load i8, ptr %17, align 1, !tbaa !17
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %16, %19                  ; 5 uses
-  %i.o = urem i32 %20, 85
+  %.0741 = phi ptr [ %i.ar, %.lr.ph ], [ %.0.val, %bb.h ] ; 2 uses
+  %4 = load i32, ptr %.0741, align 1
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)      ; 5 uses
+  %i.o = urem i32 %5, 85
   %i.p = zext nneg i32 %i.o to i64
   %i.q = getelementptr i8, ptr %2, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !tbaa !17
   %i.s = getelementptr i8, ptr %.0703, i64 4
   store i8 %i.r, ptr %i.s, align 1, !tbaa !17
-  %i.t = udiv i32 %20, 85
+  %i.t = udiv i32 %5, 85
   %i.u = urem i32 %i.t, 85
   %i.v = zext nneg i32 %i.u to i64
   %i.w = getelementptr i8, ptr %2, i64 %i.v
   %i.x = load i8, ptr %i.w, align 1, !tbaa !17
   %i.y = getelementptr i8, ptr %.0703, i64 3
   store i8 %i.x, ptr %i.y, align 1, !tbaa !17
-  %i.z = udiv i32 %20, 7225
+  %i.z = udiv i32 %5, 7225
   %i.aa = urem i32 %i.z, 85
   %i.ab = zext nneg i32 %i.aa to i64
   %i.ac = getelementptr i8, ptr %2, i64 %i.ab
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !17
   %i.ae = getelementptr i8, ptr %.0703, i64 2
   store i8 %i.ad, ptr %i.ae, align 1, !tbaa !17
-  %i.af = udiv i32 %20, 614125
+  %i.af = udiv i32 %5, 614125
   %.lhs.trunc = trunc nuw nsw i32 %i.af to i16
   %i.ag = urem i16 %.lhs.trunc, 85
   %i.ah = zext nneg i16 %i.ag to i64
@@ -251,7 +236,7 @@ bb.h:                                             ; preds = %bb.g
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !17
   %i.ak = getelementptr i8, ptr %.0703, i64 1
   store i8 %i.aj, ptr %i.ak, align 1, !tbaa !17
-  %i.al = udiv i32 %20, 52200625
+  %i.al = udiv i32 %5, 52200625
   %i.am = zext nneg i32 %i.al to i64
   %i.an = getelementptr i8, ptr %2, i64 %i.am
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !17
@@ -516,10 +501,10 @@ declare i64 @llvm.umax.i64(i64, i64) #5
 declare i64 @llvm.smin.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #5
+declare i32 @llvm.bswap.i32(i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #5
+declare i64 @llvm.smax.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #5

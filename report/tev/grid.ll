@@ -202,7 +202,7 @@ bb.a:
   %6 = alloca %"class.std::__1::basic_string", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !35
-  %i.c = load ptr, ptr %2, align 8, !tbaa !36     ; 14 uses
+  %i.c = load ptr, ptr %2, align 8, !tbaa !36     ; 11 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -541,20 +541,8 @@ bb.ag:                                            ; preds = %bb.ab
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.dq, ptr %i.dr, align 4, !tbaa !57
   %i.ds = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %7 = load i8, ptr %i.ds, align 1, !tbaa !37
-  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 9
-  %9 = load i8, ptr %8, align 1, !tbaa !37
-  %10 = getelementptr inbounds nuw i8, ptr %i.c, i64 10
-  %11 = load i8, ptr %10, align 1, !tbaa !37
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 11
-  %13 = zext i8 %7 to i32
-  %14 = shl nuw i32 %13, 24
-  %15 = zext i8 %9 to i32
-  %16 = shl nuw nsw i32 %15, 16
-  %17 = or disjoint i32 %16, %14
-  %18 = zext i8 %11 to i32
-  %19 = shl nuw nsw i32 %18, 8
-  %20 = or disjoint i32 %17, %19
+  %7 = load i32, ptr %i.ds, align 1
+  %8 = tail call i32 @llvm.bswap.i32(i32 %7)
   br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.aa
@@ -571,18 +559,17 @@ bb.ah:                                            ; preds = %bb.aa
   %i.ec = getelementptr inbounds nuw i8, ptr %i.c, i64 6
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !37
   %i.ee = getelementptr inbounds nuw i8, ptr %i.c, i64 7
+  %9 = load i8, ptr %i.ee, align 1, !tbaa !37
   %i.ef = zext i8 %i.ed to i32
   %i.eg = shl nuw nsw i32 %i.ef, 8
+  %10 = zext i8 %9 to i32
+  %11 = or disjoint i32 %i.eg, %10
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  %.sink.in = phi ptr [ %i.ee, %bb.ah ], [ %12, %bb.ag ]
-  %.sink51 = phi i32 [ %i.eg, %bb.ah ], [ %20, %bb.ag ]
-  %.sink = load i8, ptr %.sink.in, align 1, !tbaa !37
-  %21 = zext i8 %.sink to i32
-  %22 = or disjoint i32 %.sink51, %21
+  %.sink51 = phi i32 [ %11, %bb.ah ], [ %8, %bb.ag ]
   %i.eh = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %22, ptr %i.eh, align 4, !tbaa !58
+  store i32 %.sink51, ptr %i.eh, align 4, !tbaa !58
   %i.ei = load i64, ptr @_ZN5Error2OkE, align 8
   store i64 %i.ei, ptr %0, align 8
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -985,10 +972,10 @@ declare { i16, i1 } @llvm.umul.with.overflow.i16(i16, i16) #21
 declare void @llvm.experimental.noalias.scope.decl(metadata) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #21
+declare i32 @llvm.bswap.i32(i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #21
+declare i64 @llvm.umax.i64(i64, i64) #21
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

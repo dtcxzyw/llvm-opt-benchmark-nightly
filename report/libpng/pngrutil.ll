@@ -205,7 +205,7 @@ declare i32 @png_sig_cmp(ptr noundef, i64 noundef, i64 noundef) local_unnamed_ad
 ; Function Attrs: nounwind uwtable
 define range(i32 0, -2147483648) i32 @png_read_chunk_header(ptr noalias noundef initializes((1188, 1192)) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [8 x i8], align 1                 ; 12 uses
+  %i.a = alloca [8 x i8], align 1                 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1188 ; 2 uses
   store i32 33, ptr %i.b, align 4, !tbaa !25
@@ -228,25 +228,10 @@ png_get_uint_31.exit:                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   %i.l = load i8, ptr %i.k, align 1, !tbaa !8, !noalias !94
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
-  %1 = load i8, ptr %i.m, align 1, !tbaa !8
-  %2 = zext i8 %1 to i32
-  %3 = shl nuw i32 %2, 24
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  %5 = load i8, ptr %4, align 1, !tbaa !8
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw nsw i32 %6, 16
-  %8 = or disjoint i32 %7, %3
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %10 = load i8, ptr %9, align 1, !tbaa !8
-  %11 = zext i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 8
-  %13 = or disjoint i32 %8, %12
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %15 = load i8, ptr %14, align 1, !tbaa !8
-  %16 = zext i8 %15 to i32
-  %17 = or disjoint i32 %13, %16                  ; 3 uses
+  %1 = load i32, ptr %i.m, align 1
+  %2 = call i32 @llvm.bswap.i32(i32 %1)           ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 544
-  store i32 %17, ptr %i.n, align 8, !tbaa !27
+  store i32 %2, ptr %i.n, align 8, !tbaa !27
   call void @png_reset_crc(ptr noundef nonnull %0) #13
   call void @png_calculate_crc(ptr noundef nonnull %0, ptr noundef nonnull %i.m, i64 noundef 4) #13
   %i.o = load i8, ptr %i.a, align 1, !tbaa !8
@@ -258,8 +243,8 @@ bb.c:                                             ; preds = %png_get_uint_31.exi
   unreachable
 
 bb.d:                                             ; preds = %png_get_uint_31.exit
-  %i.q = and i32 %17, -538968097                  ; 2 uses
-  %i.r = and i32 %17, -1061101376
+  %i.q = and i32 %2, -538968097                   ; 2 uses
+  %i.r = and i32 %2, -1061101376
   %i.s = xor i32 %i.r, 1077952576
   %i.t = add i32 %i.q, -1094795585
   %i.u = or i32 %i.s, %i.t
@@ -320,7 +305,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @png_crc_finish_critical(ptr noalias noundef %0, i32 noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 4                 ; 7 uses
+  %i.a = alloca [4 x i8], align 4                 ; 9 uses
   %i.b = alloca [1024 x i8], align 16             ; 6 uses
   %.not41 = icmp eq i32 %1, 0
   br i1 %.not41, label %._crit_edge, label %.lr.ph
@@ -383,7 +368,7 @@ bb.d:                                             ; preds = %._crit_edge, %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1188
   store i32 129, ptr %i.r, align 4, !tbaa !25, !alias.scope !99
   call void @png_read_data(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 4) #13
-  br i1 %i.q, label %png_crc_error.exit.thread, label %png_crc_error.exit.a
+  br i1 %i.q, label %png_crc_error.exit.thread, label %png_crc_error.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.s = and i32 %i.n, 2048
@@ -397,20 +382,28 @@ png_crc_error.exit.thread:                        ; preds = %bb.e, %.split.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13, !noalias !99
   br label %bb.l
 
-png_crc_error.exit.a:                             ; preds = %.split.i, %bb.e
-  %.not2533 = phi i1 [ true, %bb.e ], [ %.not2535, %.split.i ]
-  %i.u = load i32, ptr %i.a, align 4
+png_crc_error.exit:                               ; preds = %.split.i
+  %3 = load i32, ptr %i.a, align 4, !noalias !99
+  %4 = call i32 @llvm.bswap.i32(i32 %3)
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 596
+  %6 = load i32, ptr %5, align 4, !tbaa !30, !alias.scope !99
+  %.not40 = icmp eq i32 %4, %6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13, !noalias !99
+  br i1 %.not40, label %bb.l, label %bb.f
+
+png_crc_error.exit.a:                             ; preds = %bb.e
+  %i.u = load i32, ptr %i.a, align 4, !noalias !99
   %i.v = call i32 @llvm.bswap.i32(i32 %i.u)
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 596
   %i.x = load i32, ptr %i.w, align 4, !tbaa !30, !alias.scope !99
   %.not40.a = icmp eq i32 %i.v, %i.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13, !noalias !99
-  br i1 %.not40.a, label %bb.l, label %bb.f
+  br i1 %.not40.a, label %bb.l, label %bb.g
 
-bb.f:                                             ; preds = %png_crc_error.exit.a
-  br i1 %.not2533, label %bb.g, label %bb.h
+bb.f:                                             ; preds = %png_crc_error.exit
+  br i1 %.not2535, label %bb.g, label %bb.h
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %png_crc_error.exit.a, %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 544
   %i.z = load i32, ptr %i.y, align 8, !tbaa !27
   %i.aa = and i32 %i.z, 536870912
@@ -439,8 +432,8 @@ bb.k:                                             ; preds = %bb.i, %bb.h
   call void @png_chunk_error(ptr noundef nonnull %0, ptr noundef nonnull @.str.26) #12
   unreachable
 
-bb.l:                                             ; preds = %png_crc_error.exit.thread, %png_crc_error.exit.a, %bb.j
-  %.020 = phi i32 [ 1, %bb.j ], [ 0, %png_crc_error.exit.a ], [ 0, %png_crc_error.exit.thread ]
+bb.l:                                             ; preds = %png_crc_error.exit.a, %png_crc_error.exit.thread, %png_crc_error.exit, %bb.j
+  %.020 = phi i32 [ 1, %bb.j ], [ 0, %png_crc_error.exit ], [ 0, %png_crc_error.exit.thread ], [ 0, %png_crc_error.exit.a ]
   ret i32 %.020
 }
 
@@ -843,8 +836,8 @@ bb.e:                                             ; preds = %bb.d, %bb.a
 ; Function Attrs: nounwind uwtable
 define void @png_read_IDAT_data(ptr noalias noundef initializes((344, 356)) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 4                 ; 5 uses
-  %i.b = alloca [8 x i8], align 1                 ; 12 uses
+  %i.a = alloca [4 x i8], align 4                 ; 7 uses
+  %i.b = alloca [8 x i8], align 1                 ; 9 uses
   %i.c = alloca [1024 x i8], align 16             ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 3 uses
@@ -858,14 +851,11 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 544 ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1188 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 596
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 5
-  %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 6
-  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 7
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 596 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 3
+  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1184
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1120
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 1168 ; 3 uses
@@ -904,7 +894,7 @@ bb.c:                                             ; preds = %.preheader
 .split.i.i:                                       ; preds = %bb.c
   %i.ae = and i32 %i.ad, 768
   %i.af = icmp eq i32 %i.ae, 768
-  br i1 %i.af, label %png_crc_error.exit.thread.i, label %png_crc_error.exit.i.a
+  br i1 %i.af, label %png_crc_error.exit.thread.i, label %png_crc_error.exit.i
 
 bb.d:                                             ; preds = %bb.c
   %i.ag = and i32 %i.ad, 2048
@@ -915,15 +905,23 @@ png_crc_error.exit.thread.i:                      ; preds = %bb.d, %.split.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13, !noalias !156
   br label %png_crc_finish_critical.exit
 
-png_crc_error.exit.i.a:                           ; preds = %bb.d, %.split.i.i
-  %i.ah = load i32, ptr %i.a, align 4
+png_crc_error.exit.i:                             ; preds = %.split.i.i
+  %3 = load i32, ptr %i.a, align 4, !noalias !156
+  %4 = call i32 @llvm.bswap.i32(i32 %3)
+  %5 = load i32, ptr %i.m, align 4, !tbaa !30, !alias.scope !156
+  %.not40.i = icmp eq i32 %4, %5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13, !noalias !156
+  br i1 %.not40.i, label %png_crc_finish_critical.exit, label %bb.e
+
+png_crc_error.exit.i.a:                           ; preds = %bb.d
+  %i.ah = load i32, ptr %i.a, align 4, !noalias !156
   %i.ai = call i32 @llvm.bswap.i32(i32 %i.ah)
   %i.aj = load i32, ptr %i.m, align 4, !tbaa !30, !alias.scope !156
   %.not40.i.a = icmp eq i32 %i.ai, %i.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13, !noalias !156
   br i1 %.not40.i.a, label %png_crc_finish_critical.exit, label %bb.e
 
-bb.e:                                             ; preds = %png_crc_error.exit.i.a
+bb.e:                                             ; preds = %png_crc_error.exit.i, %png_crc_error.exit.i.a
   %i.ak = load i32, ptr %i.j, align 8, !tbaa !27, !alias.scope !154
   %i.al = and i32 %i.ak, 536870912
   %.not26.i = icmp eq i32 %i.al, 0
@@ -948,7 +946,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f
   call void @png_chunk_error(ptr noundef nonnull %0, ptr noundef nonnull @.str.26) #12
   unreachable
 
-png_crc_finish_critical.exit:                     ; preds = %png_crc_error.exit.thread.i, %png_crc_error.exit.i.a, %bb.h
+png_crc_finish_critical.exit:                     ; preds = %png_crc_error.exit.thread.i, %png_crc_error.exit.i, %png_crc_error.exit.i.a, %bb.h
   call void @llvm.experimental.noalias.scope.decl(metadata !157)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13, !noalias !157
   store i32 33, ptr %i.l, align 4, !tbaa !25, !alias.scope !157
@@ -964,26 +962,14 @@ bb.j:                                             ; preds = %png_crc_finish_crit
   unreachable
 
 png_get_uint_31.exit.i:                           ; preds = %png_crc_finish_critical.exit
-  %6 = load i8, ptr %3, align 1, !tbaa !8, !noalias !158
-  %7 = load i8, ptr %4, align 1, !tbaa !8, !noalias !158
-  %8 = load i8, ptr %5, align 1, !tbaa !8, !noalias !158
-  %i.au = load i8, ptr %i.n, align 1, !tbaa !8, !noalias !157
-  %9 = zext i8 %i.au to i32
-  %10 = shl nuw i32 %9, 24
-  %i.av = load i8, ptr %i.o, align 1, !tbaa !8, !noalias !157
-  %11 = zext i8 %i.av to i32
-  %12 = shl nuw nsw i32 %11, 16
-  %13 = or disjoint i32 %12, %10
-  %i.aw = load i8, ptr %i.p, align 1, !tbaa !8, !noalias !157
-  %14 = zext i8 %i.aw to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = or disjoint i32 %13, %15
-  %17 = load i8, ptr %i.q, align 1, !tbaa !8, !noalias !157
-  %18 = zext i8 %17 to i32
-  %19 = or disjoint i32 %16, %18                  ; 3 uses
-  store i32 %19, ptr %i.j, align 8, !tbaa !27, !alias.scope !157
+  %i.au = load i8, ptr %i.n, align 1, !tbaa !8, !noalias !158
+  %i.av = load i8, ptr %i.o, align 1, !tbaa !8, !noalias !158
+  %i.aw = load i8, ptr %i.p, align 1, !tbaa !8, !noalias !158
+  %6 = load i32, ptr %i.q, align 1, !noalias !157
+  %7 = call i32 @llvm.bswap.i32(i32 %6)           ; 3 uses
+  store i32 %7, ptr %i.j, align 8, !tbaa !27, !alias.scope !157
   call void @png_reset_crc(ptr noundef nonnull %0) #13
-  call void @png_calculate_crc(ptr noundef nonnull %0, ptr noundef nonnull %i.n, i64 noundef 4) #13
+  call void @png_calculate_crc(ptr noundef nonnull %0, ptr noundef nonnull %i.q, i64 noundef 4) #13
   %i.ax = load i8, ptr %i.b, align 1, !tbaa !8, !noalias !157
   %i.ay = icmp slt i8 %i.ax, 0
   br i1 %i.ay, label %bb.k, label %bb.l
@@ -993,8 +979,8 @@ bb.k:                                             ; preds = %png_get_uint_31.exi
   unreachable
 
 bb.l:                                             ; preds = %png_get_uint_31.exit.i
-  %i.az = and i32 %19, -538968097                 ; 2 uses
-  %i.ba = and i32 %19, -1061101376
+  %i.az = and i32 %7, -538968097                  ; 2 uses
+  %i.ba = and i32 %7, -1061101376
   %i.bb = xor i32 %i.ba, 1077952576
   %i.bc = add i32 %i.az, -1094795585
   %i.bd = or i32 %i.bb, %i.bc
@@ -1009,10 +995,10 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 png_read_chunk_header.exit:                       ; preds = %bb.l
-  %i.bh = zext i8 %6 to i32
+  %i.bh = zext i8 %i.au to i32
   %i.bi = shl nuw nsw i32 %i.bh, 16
-  %i.bj = zext i8 %8 to i32
-  %i.bk = zext i8 %7 to i32
+  %i.bj = zext i8 %i.aw to i32
+  %i.bk = zext i8 %i.av to i32
   %i.bl = shl nuw nsw i32 %i.bk, 8
   %i.bm = or disjoint i32 %i.bi, %i.bj
   %i.bn = or disjoint i32 %i.bm, %i.bl
@@ -1415,7 +1401,7 @@ define internal range(i32 0, 4) i32 @png_handle_iCCP(ptr noalias noundef %0, ptr
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca [81 x i8], align 16               ; 19 uses
-  %i.c = alloca [132 x i8], align 16              ; 14 uses
+  %i.c = alloca [132 x i8], align 16              ; 11 uses
   %i.d = alloca [1024 x i8], align 16             ; 8 uses
   %i.e = alloca i64, align 8                      ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
@@ -1603,33 +1589,18 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.bf = getelementptr inbounds nuw i8, ptr %i.c, i64 128
-  %3 = load i8, ptr %i.bf, align 16, !tbaa !8
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 129
-  %5 = load i8, ptr %4, align 1, !tbaa !8
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 130
-  %7 = load i8, ptr %6, align 2, !tbaa !8
-  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 131
-  %9 = load i8, ptr %8, align 1, !tbaa !8
+  %3 = load i32, ptr %i.bf, align 16
   %i.bg = zext i32 %i.az to i64                   ; 2 uses
   %i.bh = call fastcc ptr @png_read_buffer(ptr noundef nonnull %0, i64 noundef %i.bg) ; 5 uses
   %.not115 = icmp eq ptr %i.bh, null
   br i1 %.not115, label %.thread164, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %10 = zext i8 %3 to i64
-  %11 = shl nuw nsw i64 %10, 24
-  %12 = zext i8 %5 to i64
-  %13 = shl nuw nsw i64 %12, 16
-  %14 = or disjoint i64 %13, %11
-  %15 = zext i8 %7 to i64
-  %16 = shl nuw nsw i64 %15, 8
-  %17 = or disjoint i64 %14, %16
-  %18 = zext i8 %9 to i64
-  %19 = or disjoint i64 %17, %18
+  %4 = call i32 @llvm.bswap.i32(i32 %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(132) %i.bh, ptr noundef nonnull align 16 dereferenceable(132) %i.c, i64 132, i1 false)
-  %20 = mul nuw nsw i64 %19, 12
-  %21 = and i64 %20, 4294967292                   ; 3 uses
-  store i64 %21, ptr %i.e, align 8, !tbaa !84
+  %5 = mul i32 %4, 12
+  %6 = zext i32 %5 to i64                         ; 3 uses
+  store i64 %6, ptr %i.e, align 8, !tbaa !84
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 132 ; 2 uses
   call fastcc void @png_inflate_read(ptr noundef nonnull %0, ptr noundef %i.d, ptr noundef %i.a, ptr noundef %i.bi, ptr noundef %i.e, i32 noundef 0)
   %i.bj = load i64, ptr %i.e, align 8, !tbaa !84
@@ -1643,9 +1614,9 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bm = add nsw i64 %i.bg, -132
-  %i.bn = sub nsw i64 %i.bm, %21
+  %i.bn = sub nsw i64 %i.bm, %6
   store i64 %i.bn, ptr %i.e, align 8, !tbaa !84
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.bi, i64 %21
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.bi, i64 %6
   call fastcc void @png_inflate_read(ptr noundef nonnull %0, ptr noundef %i.d, ptr noundef %i.a, ptr noundef %i.bo, ptr noundef %i.e, i32 noundef 1)
   %i.bp = load i32, ptr %i.a, align 4, !tbaa !45  ; 2 uses
   %.not117 = icmp eq i32 %i.bp, 0
@@ -2048,6 +2019,9 @@ declare i32 @llvm.umax.i32(i32, i32) #8
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #9
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #8
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #10
 
@@ -2056,9 +2030,6 @@ declare i32 @llvm.umin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11
