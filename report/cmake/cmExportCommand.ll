@@ -204,13 +204,13 @@ bb.a:
   %20 = alloca %class.cmArgumentParser.534, align 8 ; 7 uses
   %21 = alloca %class.cmArgumentParser.534, align 8 ; 9 uses
   %22 = alloca %struct.PackageDependencyArguments, align 8 ; 17 uses
-  %23 = alloca %class.cmRange, align 8            ; 6 uses
+  %23 = alloca %class.cmRange, align 16           ; 5 uses
   %24 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %25 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %26 = alloca %class.cmArgumentParser.544, align 8 ; 7 uses
   %27 = alloca %class.cmArgumentParser.544, align 8 ; 8 uses
   %28 = alloca %struct.TargetArguments, align 8   ; 11 uses
-  %29 = alloca %class.cmRange, align 8            ; 6 uses
+  %29 = alloca %class.cmRange, align 16           ; 5 uses
   %30 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(144) %15, i8 0, i64 144, i1 false)
@@ -613,7 +613,6 @@ _ZN16cmArgumentParserIZL15HandleSetupModeRKSt6vectorINSt7__cxx1112basic_stringIc
   br i1 %.not273, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN16cmArgumentParserIZL15HandleSetupModeRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EER17cmExecutionStatusE26PackageDependencyArgumentsEC2ERKSE_.exit
-  %31 = getelementptr inbounds nuw i8, ptr %23, i64 8
   %i.ew = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 4 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %22, i64 8 ; 4 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %22, i64 32 ; 4 uses
@@ -670,7 +669,7 @@ bb.bh:                                            ; preds = %bb.be
 bb.bi:                                            ; preds = %.lr.ph, %.thread
   %.sroa.0248.0274 = phi ptr [ %i.et, %.lr.ph ], [ %i.jh, %.thread ] ; 5 uses
   %i.fw = load ptr, ptr %.sroa.0248.0274, align 8, !tbaa !24
-  %i.fx = getelementptr inbounds nuw i8, ptr %.sroa.0248.0274, i64 8 ; 2 uses
+  %i.fx = getelementptr inbounds nuw i8, ptr %.sroa.0248.0274, i64 8
   %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !24
   %i.fz = icmp eq ptr %i.fw, %i.fy
   br i1 %i.fz, label %.thread, label %bb.bj
@@ -678,11 +677,9 @@ bb.bi:                                            ; preds = %.lr.ph, %.thread
 bb.bj:                                            ; preds = %bb.bi
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #22
-  %32 = load ptr, ptr %.sroa.0248.0274, align 8, !tbaa !24
-  %33 = load ptr, ptr %i.fx, align 8, !tbaa !24
-  %34 = getelementptr inbounds nuw i8, ptr %32, i64 32
-  store ptr %34, ptr %23, align 8
-  store ptr %33, ptr %31, align 8
+  %31 = load <2 x ptr>, ptr %.sroa.0248.0274, align 8, !tbaa !24
+  %32 = getelementptr inbounds nuw i8, <2 x ptr> %31, <2 x i64> <i64 32, i64 0>
+  store <2 x ptr> %32, ptr %23, align 16
   call void @llvm.experimental.noalias.scope.decl(metadata !389)
   store ptr %i.ew, ptr %22, align 8, !tbaa !42, !alias.scope !389
   store i64 0, ptr %i.ex, align 8, !tbaa !33, !alias.scope !389
@@ -1085,7 +1082,6 @@ _ZN16cmArgumentParserIZL15HandleSetupModeRKSt6vectorINSt7__cxx1112basic_stringIc
   br i1 %.not255275, label %.critedge113, label %.lr.ph278
 
 .lr.ph278:                                        ; preds = %_ZN16cmArgumentParserIZL15HandleSetupModeRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EER17cmExecutionStatusE15TargetArgumentsEC2ERKSE_.exit
-  %35 = getelementptr inbounds nuw i8, ptr %29, i64 8
   %i.jx = getelementptr inbounds nuw i8, ptr %28, i64 16 ; 8 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %28, i64 8
   %i.jz = getelementptr inbounds nuw i8, ptr %3, i64 32
@@ -1117,7 +1113,7 @@ bb.co:                                            ; preds = %bb.cn
 bb.cp:                                            ; preds = %.lr.ph278, %.thread252
   %.sroa.0242.0276 = phi ptr [ %i.ju, %.lr.ph278 ], [ %i.md, %.thread252 ] ; 5 uses
   %i.kk = load ptr, ptr %.sroa.0242.0276, align 8, !tbaa !24
-  %i.kl = getelementptr inbounds nuw i8, ptr %.sroa.0242.0276, i64 8 ; 2 uses
+  %i.kl = getelementptr inbounds nuw i8, ptr %.sroa.0242.0276, i64 8
   %i.km = load ptr, ptr %i.kl, align 8, !tbaa !24
   %i.kn = icmp eq ptr %i.kk, %i.km
   br i1 %i.kn, label %.thread252, label %bb.cq
@@ -1125,11 +1121,9 @@ bb.cp:                                            ; preds = %.lr.ph278, %.thread
 bb.cq:                                            ; preds = %bb.cp
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #22
-  %36 = load ptr, ptr %.sroa.0242.0276, align 8, !tbaa !24
-  %37 = load ptr, ptr %i.kl, align 8, !tbaa !24
-  %38 = getelementptr inbounds nuw i8, ptr %36, i64 32
-  store ptr %38, ptr %29, align 8
-  store ptr %37, ptr %35, align 8
+  %33 = load <2 x ptr>, ptr %.sroa.0242.0276, align 8, !tbaa !24
+  %34 = getelementptr inbounds nuw i8, <2 x ptr> %33, <2 x i64> <i64 32, i64 0>
+  store <2 x ptr> %34, ptr %29, align 16
   call void @llvm.experimental.noalias.scope.decl(metadata !405)
   store ptr %i.jx, ptr %28, align 8, !tbaa !42, !alias.scope !405
   store i64 0, ptr %i.jy, align 8, !tbaa !33, !alias.scope !405

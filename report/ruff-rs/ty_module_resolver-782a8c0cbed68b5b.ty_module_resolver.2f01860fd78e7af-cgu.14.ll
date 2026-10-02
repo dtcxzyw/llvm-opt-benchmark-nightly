@@ -204,7 +204,7 @@ bb.a:
 define void @_RNvXs0_NvNtCsfDzkztWVnn_18ty_module_resolver4lists0_1__NtB5_30list_modules_in_Configuration_NtNtCs45bxiIjzMqg_5salsa8function13Configuration7execute(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(176) %2, i32 noundef range(i32 1, 0) %3, i32 noundef %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
-  %i.b = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = alloca [16 x i8], align 16               ; 8 uses
   %i.c = alloca [72 x i8], align 8                ; 12 uses
   %i.d = alloca [24 x i8], align 8                ; 11 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
@@ -607,11 +607,11 @@ bb.ai:                                            ; preds = %bb.ah
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.i, ptr noundef nonnull align 8 dereferenceable(40) %i.j, i64 40, i1 false), !noalias !471
   %i.ep = getelementptr inbounds nuw i8, ptr %i.i, i64 24 ; 3 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.i, i64 40 ; 2 uses
-  %i.er = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %i.er = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.es = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !485)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !471
-  store ptr %i.i, ptr %i.b, align 8, !noalias !486
+  store ptr %i.i, ptr %i.b, align 16, !noalias !486
   store ptr %i.eq, ptr %i.er, align 8, !noalias !486
   %i.et = load ptr, ptr %i.es, align 8, !alias.scope !487, !noalias !488, !nonnull !3, !noundef !3 ; 2 uses
   %.promoted.i132.i = load ptr, ptr %i.ep, align 8, !alias.scope !487, !noalias !488 ; 2 uses
@@ -625,6 +625,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.ew = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.ex = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.ey = getelementptr inbounds nuw i8, ptr %i.h, i64 24
+  %5 = insertelement <2 x ptr> poison, ptr %i.i, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.eq, i64 1
   br label %.lr.ph.i.preheader.i
 
 .lr.ph.i.preheader.i:                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db8vendored14DirectoryEntryECsfDzkztWVnn_18ty_module_resolver.exit.i, %.lr.ph.i.preheader.lr.ph.i
@@ -742,8 +744,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db8vendored14Dir
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !471
   call void @llvm.experimental.noalias.scope.decl(metadata !494)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !471
-  store ptr %i.i, ptr %i.b, align 8, !noalias !495
-  store ptr %i.eq, ptr %i.er, align 8, !noalias !495
+  store <2 x ptr> %6, ptr %i.b, align 16, !noalias !495
   %i.fo = load ptr, ptr %i.es, align 8, !alias.scope !496, !noalias !497, !nonnull !3, !noundef !3 ; 2 uses
   %.promoted.i.i = load ptr, ptr %i.ep, align 8, !alias.scope !496, !noalias !497 ; 2 uses
   %i.fp = icmp eq ptr %.promoted.i.i, %i.fo

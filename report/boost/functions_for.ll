@@ -202,27 +202,28 @@ bb.c:                                             ; preds = %bb.a
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit: ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
-  %i.l = getelementptr inbounds nuw i8, ptr %i.c, <4 x i64> <i64 4, i64 6, i64 8, i64 12>
-  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 6
-  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, <4 x i64> <i64 16, i64 20, i64 24, i64 28>
-  store ptr %i.c, ptr %2, align 8, !tbaa !60, !alias.scope !175
-  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <4 x ptr> %i.l, ptr %i.p, align 8, !tbaa !89, !alias.scope !175
-  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 40
-  store <4 x ptr> %3, ptr %i.q, align 8, !tbaa !60, !alias.scope !175
+  %i.l = getelementptr inbounds nuw i8, ptr %i.c, <4 x i64> <i64 12, i64 16, i64 20, i64 24>
+  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 28
+  %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, <4 x i64> <i64 0, i64 4, i64 6, i64 8>
+  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 6
+  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  store <4 x ptr> %3, ptr %2, align 8, !tbaa !89, !alias.scope !175
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 32
+  store <4 x ptr> %i.l, ptr %i.p, align 8, !tbaa !60, !alias.scope !175
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 64
+  store ptr %i.m, ptr %i.q, align 8, !tbaa !60, !alias.scope !175
   %i.r = load i32, ptr %i.c, align 4, !tbaa !12
   %i.s = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %i.r) ; 0 uses
   %i.t = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.33, i64 noundef 2) ; 0 uses
-  %i.u = load i16, ptr %i.m, align 4, !tbaa !14
+  %i.u = load i16, ptr %4, align 4, !tbaa !14
   %i.v = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEs(ptr noundef nonnull align 8 dereferenceable(8) %0, i16 noundef signext %i.u) ; 0 uses
   %i.w = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.33, i64 noundef 2) ; 0 uses
-  %i.x = load i8, ptr %i.n, align 2, !tbaa !16, !range !17, !noundef !18
+  %i.x = load i8, ptr %i.o, align 2, !tbaa !16, !range !17, !noundef !18
   %i.y = trunc nuw i8 %i.x to i1
   %i.z = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIbEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %0, i1 noundef zeroext %i.y) ; 0 uses
   %i.aa = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.33, i64 noundef 2) ; 0 uses
-  %i.ab = load i32, ptr %i.o, align 4, !tbaa !12
+  %i.ab = load i32, ptr %i.n, align 4, !tbaa !12
   %i.ac = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %i.ab) ; 0 uses
   call void @_ZN5boost3pfr6detail10print_implILm4ELm9EE5printISoNS1_14sequence_tuple5tupleIJRKiRKsRKbS8_S8_S8_S8_S8_S8_EEEEEvRT_RKT0_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(72) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
@@ -294,13 +295,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
-  %i.z = getelementptr inbounds nuw i8, ptr %i.b, <4 x i64> <i64 4, i64 6, i64 8, i64 12>
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.b, <4 x i64> <i64 16, i64 20, i64 24, i64 28>
-  store ptr %i.b, ptr %2, align 8, !tbaa !60, !alias.scope !184
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <4 x ptr> %i.z, ptr %i.ab, align 8, !tbaa !89, !alias.scope !184
-  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 40
-  store <4 x ptr> %i.aa, ptr %i.ac, align 8, !tbaa !60, !alias.scope !184
+  %i.z = getelementptr inbounds nuw i8, ptr %i.b, <4 x i64> <i64 12, i64 16, i64 20, i64 24>
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 28
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.b, <4 x i64> <i64 0, i64 4, i64 6, i64 8>
+  store <4 x ptr> %i.aa, ptr %2, align 8, !tbaa !89, !alias.scope !184
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 32
+  store <4 x ptr> %i.z, ptr %i.ab, align 8, !tbaa !60, !alias.scope !184
+  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 64
+  store ptr %3, ptr %i.ac, align 8, !tbaa !60, !alias.scope !184
   %i.ad = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSirsERi(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.b) ; 0 uses
   call void @_ZN5boost3pfr6detail9read_implILm1ELm9EE4readISiNS1_14sequence_tuple5tupleIJRiRsRbS7_S7_S7_S7_S7_S7_EEEEEvRT_RKT0_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(72) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22

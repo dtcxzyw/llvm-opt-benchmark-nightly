@@ -204,21 +204,20 @@ default.unreachable16:                            ; preds = %bb.a
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %1, align 8, !nonnull !16, !align !19, !noundef !16 ; 5 uses
+  %i.c = load ptr, ptr %1, align 8, !nonnull !16, !align !19, !noundef !16 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.f = load i32, ptr %i.e, align 8, !noundef !16
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 68
   %i.h = load i8, ptr %i.g, align 4, !range !62, !noundef !16
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %.sroa.710.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 72
-  store ptr %3, ptr %.sroa.710.0..sroa_idx, align 8
-  %.sroa.811.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 80
-  store ptr %i.i, ptr %.sroa.811.0..sroa_idx, align 8
-  %.sroa.912.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %4 = load <2 x ptr>, ptr %i.d, align 8
-  store <2 x ptr> %4, ptr %.sroa.912.0..sroa_idx, align 8
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %3 = load <2 x ptr>, ptr %i.d, align 8
+  %4 = insertelement <4 x ptr> poison, ptr %i.c, i64 0
+  %5 = shufflevector <4 x ptr> %4, <4 x ptr> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
+  %6 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x ptr> %5, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %8 = getelementptr inbounds nuw i8, <4 x ptr> %7, <4 x i64> <i64 40, i64 24, i64 0, i64 0>
+  store <4 x ptr> %8, ptr %i.i, align 8
   %.sroa.1114.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 104
   store ptr %i.c, ptr %.sroa.1114.0..sroa_idx, align 8
   %.sroa.1215.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 112
@@ -621,7 +620,7 @@ bb.bf:                                            ; preds = %bb.a, %_RNvNtCsexYY
 define hidden void @_RNvMNtNtCs4wN8za6y8UK_7soketto9handshake6serverINtB2_6ServerINtNtNtCsl9hx9jpF0W9_12futures_util6future6either6EitherIBX_INtNtCsgrcu2UPjJtD_14futures_rustls6client9TlsStreamNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEINtNtB1Z_6server9TlsStreamB2K_EEB2K_EE14decode_requestCs2Bxje7pdMIr_13libp2p_server(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([96 x i8]) align 8 captures(none) dereferenceable(96) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(1288) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %i.b = alloca [16 x i8], align 8                ; 5 uses
+  %i.b = alloca [16 x i8], align 16               ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 9 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
@@ -1024,7 +1023,8 @@ bb.y:                                             ; preds = %.lr.ph, %bb.ak
   %i.fv = getelementptr inbounds nuw i8, ptr %1, i64 1224
   %i.fw = load i64, ptr %i.fv, align 8, !noundef !16
   %i.fx = getelementptr inbounds nuw [16 x i8], ptr %i.fu, i64 %i.fw
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %2 = insertelement <2 x ptr> poison, ptr %i.fu, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.fx, i64 1
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.ad
@@ -1037,8 +1037,7 @@ bb.aa:                                            ; preds = %.lr.ph113, %bb.ae
   %i.fz = phi i64 [ 0, %.lr.ph113 ], [ %i.gn, %bb.ae ] ; 4 uses
   %i.ga = phi ptr [ %i.fs, %.lr.ph113 ], [ %i.go, %bb.ae ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store ptr %i.fu, ptr %i.b, align 8
-  store ptr %i.fx, ptr %2, align 8
+  store <2 x ptr> %3, ptr %i.b, align 16
   %i.gb = call fastcc noundef align 8 ptr @_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterReENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvMNtNtCs4wN8za6y8UK_7soketto9handshake6serverINtB1I_6ServerINtNtNtCsl9hx9jpF0W9_12futures_util6future6either6EitherIB2E_INtNtCsgrcu2UPjJtD_14futures_rustls6client9TlsStreamNtNtNtCs62FBUrD8956_10libp2p_tcp8provider5tokio9TcpStreamEINtNtB3H_6server9TlsStreamB4s_EEB4s_EE14decode_requests2_0ECs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef align 8 dereferenceable(16) %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ga) ; 3 uses
   %.not97 = icmp eq ptr %i.gb, null
   br i1 %.not97, label %bb.ae, label %bb.ac

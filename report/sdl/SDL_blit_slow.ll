@@ -202,18 +202,18 @@ bb.ax:                                            ; preds = %bb.au
   %i.acp = zext nneg i8 %i.aco to i64
   %i.acq = getelementptr inbounds nuw i8, ptr %.0556697, i64 %i.acp
   %i.acr = load i8, ptr %i.acq, align 1
-  %1 = zext i8 %i.acr to i32
   %i.acs = load i8, ptr %i.de, align 1
   %i.act = lshr i8 %i.acs, 3
   %i.acu = zext nneg i8 %i.act to i64
   %i.acv = getelementptr inbounds nuw i8, ptr %.0556697, i64 %i.acu
   %i.acw = load i8, ptr %i.acv, align 1
-  %2 = zext i8 %i.acw to i32
   %i.acx = load i8, ptr %i.dh, align 2
   %i.acy = lshr i8 %i.acx, 3
   %i.acz = zext nneg i8 %i.acy to i64
   %i.ada = getelementptr inbounds nuw i8, ptr %.0556697, i64 %i.acz
   %i.adb = load i8, ptr %i.ada, align 1
+  %1 = zext i8 %i.acr to i32
+  %2 = zext i8 %i.acw to i32
   %i.adc = zext i8 %i.adb to i32
   br label %bb.be
 

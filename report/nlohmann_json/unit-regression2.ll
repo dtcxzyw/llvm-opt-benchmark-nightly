@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.r, align 8, !tbaa !222
   %i.s = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 40
   store ptr null, ptr %i.s, align 8, !tbaa !140
-  %i.t = add i64 %.01012.i.i.i.prol, -1           ; 2 uses
+  %i.t = add nsw i64 %.01012.i.i.i.prol, -1       ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 48 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -260,7 +260,7 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.an, align 8, !tbaa !222
   %i.ao = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 184
   store ptr null, ptr %i.ao, align 8, !tbaa !140
-  %i.ap = add i64 %.01012.i.i.i, -4               ; 2 uses
+  %i.ap = add nsw i64 %.01012.i.i.i, -4           ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.3 = icmp eq i64 %i.ap, 0
   br i1 %.not.i.i.i.3, label %_ZSt27__uninitialized_default_n_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonINS9_11ordered_mapESt6vectorS6_blmdSaNS9_14adl_serializerESC_IhSaIhEEvEEEmSH_ET_SJ_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !3072
@@ -302,7 +302,7 @@ _ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlo
   store i8 0, ptr %i.az, align 8, !tbaa !222
   %i.ba = getelementptr inbounds nuw i8, ptr %.013.i.i.i41.prol, i64 40
   store ptr null, ptr %i.ba, align 8, !tbaa !140
-  %i.bb = add i64 %.01012.i.i.i42.prol, -1        ; 2 uses
+  %i.bb = add nsw i64 %.01012.i.i.i42.prol, -1    ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.013.i.i.i41.prol, i64 48 ; 2 uses
   %prol.iter63.next = add i64 %prol.iter63, 1     ; 2 uses
   %prol.iter63.cmp.not = icmp eq i64 %prol.iter63.next, %xtraiter61
@@ -356,7 +356,7 @@ _ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlo
   store i8 0, ptr %i.bv, align 8, !tbaa !222
   %i.bw = getelementptr inbounds nuw i8, ptr %.013.i.i.i41, i64 184
   store ptr null, ptr %i.bw, align 8, !tbaa !140
-  %i.bx = add i64 %.01012.i.i.i42, -4             ; 2 uses
+  %i.bx = add nsw i64 %.01012.i.i.i42, -4         ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.013.i.i.i41, i64 192
   %.not.i.i.i43.3 = icmp eq i64 %i.bx, 0
   br i1 %.not.i.i.i43.3, label %_ZSt27__uninitialized_default_n_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonINS9_11ordered_mapESt6vectorS6_blmdSaNS9_14adl_serializerESC_IhSaIhEEvEEEmSH_ET_SJ_T0_RSaIT1_E.exit45, label %.lr.ph.i.i.i40, !llvm.loop !3072

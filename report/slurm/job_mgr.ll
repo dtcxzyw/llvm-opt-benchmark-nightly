@@ -202,7 +202,7 @@ define dso_local void @batch_requeue_fini(ptr noundef %0) local_unnamed_addr #0 
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 7 uses
-  %1 = alloca %struct.gres_job_state_validate_t, align 8 ; 13 uses
+  %1 = alloca %struct.gres_job_state_validate_t, align 8 ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 512 ; 3 uses
   %i.d = load i32, ptr %i.c, align 8              ; 2 uses
   %i.e = and i32 %i.d, 16777216
@@ -536,18 +536,18 @@ bb.am:                                            ; preds = %bb.al
   store <4 x ptr> %i.dr, ptr %1, align 8
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 1160
-  %2 = load <2 x ptr>, ptr %i.dt, align 8
-  store <2 x ptr> %2, ptr %i.ds, align 8
-  %i.du = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1176
-  %4 = load ptr, ptr %3, align 8
-  store ptr %4, ptr %i.du, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %6 = getelementptr inbounds nuw i8, ptr %i.da, <4 x i64> <i64 112, i64 240, i64 272, i64 288>
-  store <4 x ptr> %6, ptr %5, align 8
-  %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %7 = getelementptr inbounds nuw i8, ptr %i.da, i64 296
-  store ptr %7, ptr %i.dv, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1176
+  %3 = load ptr, ptr %2, align 8
+  %i.du = getelementptr inbounds nuw i8, ptr %i.da, i64 112
+  %4 = load <2 x ptr>, ptr %i.dt, align 8
+  %5 = insertelement <4 x ptr> poison, ptr %3, i64 2
+  %6 = insertelement <4 x ptr> %5, ptr %i.du, i64 3
+  %7 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x ptr> %7, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x ptr> %8, ptr %i.ds, align 8
+  %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %9 = getelementptr inbounds nuw i8, ptr %i.da, <4 x i64> <i64 240, i64 272, i64 288, i64 296>
+  store <4 x ptr> %9, ptr %i.dv, align 8
   %i.dw = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dh, i64 12
   store ptr %i.dx, ptr %i.dw, align 8

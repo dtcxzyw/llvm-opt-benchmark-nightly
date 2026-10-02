@@ -205,15 +205,11 @@ _RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsciM7tI7r4rL_3ena5unify7NoEr
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef i32 @_RNvMs5_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_17TypeVariableTable30sub_unification_table_root_var(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 5 uses
+  %i.a = alloca [16 x i8], align 16               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %2 = load ptr, ptr %0, align 8, !nonnull !6, !align !7, !noundef !6
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load ptr, ptr %3, align 8, !nonnull !6, !align !7, !noundef !6
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  store ptr %5, ptr %i.a, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %4, ptr %6, align 8
+  %2 = load <2 x ptr>, ptr %0, align 8
+  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 24, i64 0>
+  store <2 x ptr> %3, ptr %i.a, align 16
   %i.b = call noundef i32 @_RNvMs4_NtCsciM7tI7r4rL_3ena5unifyINtB5_16UnificationTableINtNtB5_11backing_vec7InPlaceNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable11TyVidSubKeyQINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB5_8VarValueB1m_EEQNtNtNtB1q_8snapshot8undo_log17InferCtxtUndoLogsEE22uninlined_get_root_keyB1u_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a, i32 noundef %1) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i32 %i.b

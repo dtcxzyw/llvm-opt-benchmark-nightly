@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [112 x i8], align 8               ; 5 uses
   %i.d = alloca [64 x i8], align 8                ; 5 uses
-  %.val = load ptr, ptr %0, align 8, !dbg !37587, !nonnull !1343, !noundef !1343 ; 24 uses
+  %.val = load ptr, ptr %0, align 8, !dbg !37587, !nonnull !1343, !noundef !1343 ; 22 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.val, i64 42, !dbg !37588 ; 3 uses
   %i.f = load i8, ptr %i.e, align 2, !dbg !37588, !range !1697, !noalias !37578, !noundef !1343
   switch i8 %i.f, label %bb.b [
@@ -226,17 +226,14 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcN
 
 bb.c:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %.val, i64 41, !dbg !37591
-  %i.k = getelementptr inbounds nuw i8, ptr %.val, i64 24, !dbg !37592
-  %2 = load ptr, ptr %i.k, align 8, !dbg !37592, !noalias !37578, !nonnull !1343, !noundef !1343 ; 2 uses
-  store ptr %2, ptr %.val, align 8, !dbg !37593, !noalias !37578
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !37594
-  %i.l = getelementptr inbounds nuw i8, ptr %.val, i64 8, !dbg !37595
-  store ptr %3, ptr %i.l, align 8, !dbg !37595, !noalias !37578
-  store i8 0, ptr %i.j, align 1, !dbg !37596, !noalias !37578
-  %4 = getelementptr inbounds nuw i8, ptr %.val, i64 16, !dbg !37596
-  %5 = getelementptr inbounds nuw i8, ptr %.val, i64 32, !dbg !37596
-  %6 = load ptr, ptr %5, align 8, !dbg !37596, !noalias !37578, !nonnull !1343, !noundef !1343
-  store ptr %6, ptr %4, align 8, !dbg !37596, !noalias !37578
+  %i.k = getelementptr inbounds nuw i8, ptr %.val, i64 24, !dbg !37592 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %.val, i64 8, !dbg !37593
+  store i8 0, ptr %i.j, align 1, !dbg !37594, !noalias !37578
+  %2 = load <2 x ptr>, ptr %i.k, align 8, !dbg !37592, !noalias !37578
+  %3 = load ptr, ptr %i.k, align 8, !dbg !37592, !noalias !37578, !nonnull !1343, !noundef !1343
+  store ptr %3, ptr %.val, align 8, !dbg !37595, !noalias !37578
+  %4 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 16, i64 0>, !dbg !37596
+  store <2 x ptr> %4, ptr %i.l, align 8, !dbg !37593, !noalias !37578
   %i.m = getelementptr inbounds nuw i8, ptr %.val, i64 40, !dbg !37597
   store i8 0, ptr %i.m, align 8, !dbg !37597, !noalias !37578
   br label %bb.d, !dbg !37598
@@ -639,13 +636,13 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !37503 = distinct !DILocation(line: 133, column: 9, scope: !37499)
 !37504 = distinct !{!37504, !"_RNCNCNvNtNtCslpwjCj2YNBy_9polars_io10file_cache10cache_lock22GLOBAL_FILE_CACHE_LOCK0s_0B9_"}
 !37505 = distinct !{!37505, !37504, !"_RNCNCNvNtNtCslpwjCj2YNBy_9polars_io10file_cache10cache_lock22GLOBAL_FILE_CACHE_LOCK0s_0B9_: argument 0"}
-!37506 = distinct !DISubprogram(name: "deref<core::sync::atomic::Atomic<bool>, alloc::alloc::Global>", linkageName: "_RNvXsw_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtNtCscgRAwXFJnXP_4core4sync6atomic6AtomicbEENtNtNtBN_3ops5deref5Deref5derefCslpwjCj2YNBy_9polars_io", scope: !1445, file: !1413, line: 2427, type: !1344, scopeLine: 2427, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1343)
-!37507 = distinct !DISubprogram(name: "as_ref<core::sync::atomic::Atomic<bool>, alloc::alloc::Global>", linkageName: "_RNvXs1j_NtCsgZ49sUHp3tW_5alloc4syncINtB6_3ArcINtNtNtCscgRAwXFJnXP_4core4sync6atomic6AtomicbEEINtNtBO_7convert5AsRefBH_E6as_refCslpwjCj2YNBy_9polars_io", scope: !1446, file: !1413, line: 4193, type: !1359, scopeLine: 4193, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1343)
-!37508 = distinct !DILexicalBlock(scope: !37502, file: !37574, line: 32, column: 9)
-!37509 = distinct !DILocation(line: 33, column: 38, scope: !37508, inlinedAt: !37503)
-!37510 = distinct !DILocation(line: 4194, column: 10, scope: !37507, inlinedAt: !37509)
-!37511 = distinct !DILexicalBlock(scope: !37508, file: !37574, line: 33, column: 9)
-!37512 = distinct !DILexicalBlock(scope: !37511, file: !37574, line: 34, column: 9)
+!37506 = distinct !DILexicalBlock(scope: !37502, file: !37574, line: 32, column: 9)
+!37507 = distinct !DILexicalBlock(scope: !37506, file: !37574, line: 33, column: 9)
+!37508 = distinct !DISubprogram(name: "deref<core::sync::atomic::Atomic<bool>, alloc::alloc::Global>", linkageName: "_RNvXsw_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtNtCscgRAwXFJnXP_4core4sync6atomic6AtomicbEENtNtNtBN_3ops5deref5Deref5derefCslpwjCj2YNBy_9polars_io", scope: !1445, file: !1413, line: 2427, type: !1344, scopeLine: 2427, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1343)
+!37509 = distinct !DISubprogram(name: "as_ref<core::sync::atomic::Atomic<bool>, alloc::alloc::Global>", linkageName: "_RNvXs1j_NtCsgZ49sUHp3tW_5alloc4syncINtB6_3ArcINtNtNtCscgRAwXFJnXP_4core4sync6atomic6AtomicbEEINtNtBO_7convert5AsRefBH_E6as_refCslpwjCj2YNBy_9polars_io", scope: !1446, file: !1413, line: 4193, type: !1359, scopeLine: 4193, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1343)
+!37510 = distinct !DILocation(line: 33, column: 38, scope: !37506, inlinedAt: !37503)
+!37511 = distinct !DILocation(line: 4194, column: 10, scope: !37509, inlinedAt: !37510)
+!37512 = distinct !DILexicalBlock(scope: !37507, file: !37574, line: 34, column: 9)
 !37513 = distinct !DILexicalBlock(scope: !37512, file: !37574, line: 35, column: 9)
 !37514 = distinct !DILexicalBlock(scope: !37513, file: !37574, line: 59, column: 60)
 !37515 = distinct !DISubprogram(name: "atomic_swap<u8>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core4sync6atomic11atomic_swaphECslpwjCj2YNBy_9polars_io", scope: !1401, file: !1399, line: 3916, type: !1344, scopeLine: 3916, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1343)
@@ -681,7 +678,7 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !37545 = distinct !{!37545, !"_RNvXsD_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtNtCskmDBXs7hs3c_5tokio4sync6notify6NotifyENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io"}
 !37546 = distinct !{!37546, !37545, !"_RNvXsD_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtNtCskmDBXs7hs3c_5tokio4sync6notify6NotifyENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io: argument 0"}
 !37547 = distinct !DISubprogram(name: "drop_in_place<alloc::sync::Arc<tokio::sync::notify::Notify, alloc::alloc::Global>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcNtNtNtCskmDBXs7hs3c_5tokio4sync6notify6NotifyEECslpwjCj2YNBy_9polars_io", scope: !1365, file: !1364, line: 810, type: !1344, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1343)
-!37548 = distinct !DILocation(line: 62, column: 5, scope: !37511, inlinedAt: !37503)
+!37548 = distinct !DILocation(line: 62, column: 5, scope: !37507, inlinedAt: !37503)
 !37549 = distinct !DISubprogram(name: "as_ref<alloc::sync::ArcInner<tokio::sync::notify::Notify>>", linkageName: "_RNvMs1_NtNtCscgRAwXFJnXP_4core3ptr8non_nullINtB5_7NonNullINtNtCsgZ49sUHp3tW_5alloc4sync8ArcInnerNtNtNtCskmDBXs7hs3c_5tokio4sync6notify6NotifyEE6as_refCslpwjCj2YNBy_9polars_io", scope: !1405, file: !1403, line: 440, type: !1344, scopeLine: 440, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1343)
 !37550 = distinct !DISubprogram(name: "inner<tokio::sync::notify::Notify, alloc::alloc::Global>", linkageName: "_RNvMsn_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtNtCskmDBXs7hs3c_5tokio4sync6notify6NotifyE5innerCslpwjCj2YNBy_9polars_io", scope: !1416, file: !1413, line: 2104, type: !1344, scopeLine: 2104, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1343)
 !37551 = distinct !DISubprogram(name: "drop<tokio::sync::notify::Notify, alloc::alloc::Global>", linkageName: "_RNvXsD_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtNtCskmDBXs7hs3c_5tokio4sync6notify6NotifyENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io", scope: !1423, file: !1413, line: 2810, type: !1344, scopeLine: 2810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1343)
@@ -726,10 +723,10 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !37590 = !DILocation(line: 62, column: 5, scope: !37502, inlinedAt: !37503)
 !37591 = !DILocation(line: 32, column: 13, scope: !37502, inlinedAt: !37503)
 !37592 = !DILocation(line: 32, column: 51, scope: !37502, inlinedAt: !37503)
-!37593 = !DILocation(line: 32, column: 23, scope: !37502, inlinedAt: !37503)
-!37594 = !DILocation(line: 2428, column: 9, scope: !37506, inlinedAt: !37510)
-!37595 = !DILocation(line: 33, column: 30, scope: !37508, inlinedAt: !37503)
-!37596 = !DILocation(line: 34, column: 36, scope: !37511, inlinedAt: !37503)
+!37593 = !DILocation(line: 33, column: 30, scope: !37506, inlinedAt: !37503)
+!37594 = !DILocation(line: 34, column: 36, scope: !37507, inlinedAt: !37503)
+!37595 = !DILocation(line: 32, column: 23, scope: !37502, inlinedAt: !37503)
+!37596 = !DILocation(line: 2428, column: 9, scope: !37508, inlinedAt: !37511)
 !37597 = !DILocation(line: 35, column: 23, scope: !37512, inlinedAt: !37503)
 !37598 = !DILocation(line: 37, column: 9, scope: !37513, inlinedAt: !37503)
 !37599 = !DILocation(line: 38, column: 16, scope: !37513, inlinedAt: !37503)
@@ -765,7 +762,7 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !37629 = !DILocation(line: 674, column: 18, scope: !582, inlinedAt: !37542)
 !37630 = !DILocation(line: 44, column: 16, scope: !37513, inlinedAt: !37503)
 !37631 = !DILocation(line: 45, column: 17, scope: !37513, inlinedAt: !37503)
-!37632 = !DILocation(line: 62, column: 5, scope: !37511, inlinedAt: !37503)
+!37632 = !DILocation(line: 62, column: 5, scope: !37507, inlinedAt: !37503)
 !37633 = !DILocation(line: 810, column: 1, scope: !37547, inlinedAt: !37548)
 !37634 = !DILocation(line: 444, column: 20, scope: !37549, inlinedAt: !37554)
 !37635 = !DILocation(line: 3956, column: 24, scope: !37555, inlinedAt: !37558)

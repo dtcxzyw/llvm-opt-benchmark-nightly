@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i.i.i14 = phi i1 [ %i.u, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i ], [ true, %bb.d ]
   %i.v = phi ptr [ %.pre60, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i ], [ %i.o, %bb.d ] ; 2 uses
   %i.w = phi ptr [ %i.t, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i ], [ null, %bb.d ] ; 8 uses
-  %i.x = sub i64 %.pre-phi, %.pre-phi64           ; 10 uses
-  %i.y = icmp sgt i64 %i.x, 4
+  %i.x = sub i64 %.pre-phi, %.pre-phi64           ; 9 uses
+  %i.y = icmp sgt i64 %i.x, 4                     ; 2 uses
   br i1 %i.y, label %bb.g, label %bb.h, !prof !140
 
 bb.g:                                             ; preds = %bb.f
@@ -299,8 +299,7 @@ _ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i15: ; preds = %bb.m
   %i.az = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.x ; 4 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr %i.az, ptr %i.ba, align 8, !tbaa !307
-  %4 = icmp samesign ugt i64 %i.x, 4
-  br i1 %4, label %bb.n, label %bb.o, !prof !1134
+  br i1 %i.y, label %bb.n, label %bb.o, !prof !1134
 
 bb.n:                                             ; preds = %.noexc17
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ax, ptr align 4 %i.w, i64 %i.x, i1 false)
@@ -703,7 +702,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.08.i.i.i.prol, i8 0, i64 24, i1 false)
   store i32 -1, ptr %i.p, align 8, !tbaa !494
-  %i.q = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.q = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 24 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -750,7 +749,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 184
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ag, i8 0, i64 24, i1 false)
   store i32 -1, ptr %i.ah, align 8, !tbaa !494
-  %i.ai = add i64 %.057.i.i.i, -8                 ; 2 uses
+  %i.ai = add nsw i64 %.057.i.i.i, -8             ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.7 = icmp eq i64 %i.ai, 0
   br i1 %.not.i.i.i.7, label %_ZSt27__uninitialized_default_n_aIPN7xgboost6common16RowSetCollection4ElemEmS3_ET_S5_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !1618
@@ -786,7 +785,7 @@ _ZNKSt6vectorIN7xgboost6common16RowSetCollection4ElemESaIS3_EE12_M_check_lenEmPK
   %i.aq = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.prol, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.08.i.i.i31.prol, i8 0, i64 24, i1 false)
   store i32 -1, ptr %i.aq, align 8, !tbaa !494
-  %i.ar = add i64 %.057.i.i.i32.prol, -1          ; 2 uses
+  %i.ar = add nsw i64 %.057.i.i.i32.prol, -1      ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.prol, i64 24 ; 2 uses
   %prol.iter46.next = add i64 %prol.iter46, 1     ; 2 uses
   %prol.iter46.cmp.not = icmp eq i64 %prol.iter46.next, %xtraiter44
@@ -832,7 +831,7 @@ _ZNKSt6vectorIN7xgboost6common16RowSetCollection4ElemESaIS3_EE12_M_check_lenEmPK
   %i.bi = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 184
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bh, i8 0, i64 24, i1 false)
   store i32 -1, ptr %i.bi, align 8, !tbaa !494
-  %i.bj = add i64 %.057.i.i.i32, -8               ; 2 uses
+  %i.bj = add nsw i64 %.057.i.i.i32, -8           ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 192
   %.not.i.i.i33.7 = icmp eq i64 %i.bj, 0
   br i1 %.not.i.i.i33.7, label %_ZSt27__uninitialized_default_n_aIPN7xgboost6common16RowSetCollection4ElemEmS3_ET_S5_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !1618

@@ -205,19 +205,19 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.k = sext i32 %i.j to i64
   %i.l = getelementptr inbounds [8 x i8], ptr %.val39, i64 %i.k
   %i.m = tail call fastcc i32 @Abc_TtMinBase(ptr noundef %i.l, ptr noundef null, i32 noundef %1, i32 noundef %1)
-  %i.n = tail call noundef i32 @llvm.smax.i32(i32 %.045, i32 %i.m) ; 11 uses
+  %i.n = tail call noundef i32 @llvm.smax.i32(i32 %.045, i32 %i.m) ; 10 uses
   %i.o = add nuw nsw i32 %.03444, 1               ; 2 uses
   %exitcond.not = icmp eq i32 %i.o, %i.f
   br i1 %exitcond.not, label %.lr.ph49, label %bb.b, !llvm.loop !283
 
 .lr.ph49:                                         ; preds = %bb.b
-  %i.p = icmp slt i32 %i.n, 7                     ; 2 uses
+  %i.p = icmp slt i32 %i.n, 7                     ; 3 uses
   %i.q = add nsw i32 %i.n, -6                     ; 3 uses
   %i.r = shl nuw i32 1, %i.q                      ; 3 uses
   %i.s = select i1 %i.p, i32 1, i32 %i.r
   %i.t = select i1 %i.a, i32 0, i32 %i.b          ; 2 uses
   %i.u = getelementptr i8, ptr %0, i64 8          ; 2 uses
-  %i.v = select i1 %i.p, i32 0, i32 %i.q          ; 6 uses
+  %i.v = select i1 %i.p, i32 0, i32 %i.q          ; 5 uses
   %i.w = icmp sgt i32 %i.n, 0
   %i.x = sext i32 %i.r to i64
   %.idx.i.i = shl nsw i64 %i.x, 3
@@ -230,13 +230,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %i.w, label %.lr.ph49.split.us, label %._crit_edge50
 
 .lr.ph49.split.us:                                ; preds = %.lr.ph49
-  %2 = icmp samesign ult i32 %i.n, 7
-  br i1 %2, label %.lr.ph.i.us.us.preheader, label %.lr.ph49.split.us.split
+  br i1 %i.p, label %.lr.ph.i.us.us.preheader, label %.lr.ph49.split.us.split
 
 .lr.ph.i.us.us.preheader:                         ; preds = %.lr.ph49.split.us
   %xtraiter = and i64 %wide.trip.count.i, 1
   %i.aa = icmp eq i32 %i.n, 1
-  %unroll_iter = and i64 %wide.trip.count.i, 6
+  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod88 = trunc i32 %i.n to i1
   br label %.lr.ph.i.us.us
@@ -435,7 +434,7 @@ Abc_TtSupportSize.exit.loopexit43.us:             ; preds = %Abc_TtHasVar.exit.t
 
 ._crit_edge50:                                    ; preds = %Abc_TtSupportSize.exit.thread.us, %Abc_TtSupportSize.exit.thread.us.us, %bb.a, %.lr.ph49.split.us.split, %.lr.ph49
   %.0.lcssa74 = phi i32 [ %i.n, %Abc_TtSupportSize.exit.thread.us.us ], [ 37, %.lr.ph49.split.us.split ], [ 0, %bb.a ], [ %i.n, %.lr.ph49 ], [ %i.n, %Abc_TtSupportSize.exit.thread.us ]
-  %.pre-phi = phi i32 [ %i.v, %Abc_TtSupportSize.exit.thread.us.us ], [ %i.v, %.lr.ph49.split.us.split ], [ 0, %bb.a ], [ %i.v, %.lr.ph49 ], [ %i.v, %Abc_TtSupportSize.exit.thread.us ]
+  %.pre-phi = phi i32 [ %i.v, %Abc_TtSupportSize.exit.thread.us.us ], [ 31, %.lr.ph49.split.us.split ], [ 0, %bb.a ], [ %i.v, %.lr.ph49 ], [ %i.v, %Abc_TtSupportSize.exit.thread.us ]
   %.033.lcssa = phi i32 [ %.1.us.us, %Abc_TtSupportSize.exit.thread.us.us ], [ 0, %.lr.ph49.split.us.split ], [ 0, %bb.a ], [ 0, %.lr.ph49 ], [ %.1.us, %Abc_TtSupportSize.exit.thread.us ]
   %i.cv = shl i32 %.033.lcssa, %.pre-phi
   store i32 %i.cv, ptr %i.e, align 4, !tbaa !104

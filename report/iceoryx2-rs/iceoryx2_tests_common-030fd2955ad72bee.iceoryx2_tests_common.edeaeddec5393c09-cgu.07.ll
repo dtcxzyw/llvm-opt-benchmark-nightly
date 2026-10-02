@@ -204,7 +204,7 @@ bb.a:
   %i.g = alloca [16 x i8], align 8                ; 5 uses
   %i.h = alloca [48 x i8], align 8                ; 9 uses
   %i.i = alloca [16 x i8], align 8                ; 5 uses
-  %i.j = alloca [24 x i8], align 8                ; 10 uses
+  %i.j = alloca [24 x i8], align 16               ; 9 uses
   %i.k = alloca [16 x i8], align 8                ; 16 uses
   %i.l = alloca [16 x i8], align 8                ; 15 uses
   %i.m = alloca [8 x i8], align 8                 ; 14 uses
@@ -224,8 +224,7 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 2648 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 3625 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %1, <2 x i64> <i64 16, i64 0> ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 2632
@@ -317,9 +316,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %..i = add nuw nsw i8 %i.ba, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !449
-  store ptr %5, ptr %i.j, align 8, !noalias !449
-  store ptr %1, ptr %6, align 8, !noalias !449
-  store ptr %i.aw, ptr %i.w, align 8, !noalias !449
+  store <2 x ptr> %5, ptr %i.j, align 16, !noalias !449
+  store ptr %i.aw, ptr %i.w, align 16, !noalias !449
   call void @_RINvXsc_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB6_6SenderINtNtNtBc_15dynamic_storage19posix_shared_memory7StorageNtB6_20SharedManagementDataEENtBa_14ZeroCopySender13blocking_sendNCNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details6senderINtB3x_6SenderNtNtNtB3D_7service14ipc_threadsafe7ServiceE33deliver_offset_to_connection_impl0ECskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.k, ptr noundef nonnull align 8 %i.aw, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.j, i8 noundef %..i) #17, !noalias !449
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !449
   br label %bb.i
@@ -568,9 +566,8 @@ bb.y:                                             ; preds = %bb.w
 bb.z:                                             ; preds = %bb.v
   %..i.peel = add nuw nsw i8 %i.cy, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !449
-  store ptr %5, ptr %i.j, align 8, !noalias !449
-  store ptr %1, ptr %6, align 8, !noalias !449
-  store ptr %i.cu, ptr %i.w, align 8, !noalias !449
+  store <2 x ptr> %5, ptr %i.j, align 16, !noalias !449
+  store ptr %i.cu, ptr %i.w, align 16, !noalias !449
   call void @_RINvXsc_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB6_6SenderINtNtNtBc_15dynamic_storage19posix_shared_memory7StorageNtB6_20SharedManagementDataEENtBa_14ZeroCopySender13blocking_sendNCNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details6senderINtB3x_6SenderNtNtNtB3D_7service14ipc_threadsafe7ServiceE33deliver_offset_to_connection_impl0ECskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.k, ptr noundef nonnull align 8 %i.cu, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.j, i8 noundef %..i.peel) #17, !noalias !449
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !449
   br label %bb.aa

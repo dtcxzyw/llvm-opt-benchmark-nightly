@@ -205,7 +205,7 @@ bb.da:                                            ; preds = %bb.cz, %_ZNSt7__cxx
   %i.yl = getelementptr inbounds nuw i8, ptr %16, i64 88
   %i.ym = load double, ptr %i.yl, align 8, !tbaa !622 ; 2 uses
   %i.yn = fcmp ogt double %i.ym, 1.000000e-03
-  %i.yo = icmp sgt i32 %2, 2                      ; 8 uses
+  %i.yo = icmp sgt i32 %2, 2                      ; 13 uses
   %or.cond = or i1 %i.yo, %i.yn
   br i1 %or.cond, label %bb.db, label %bb.dg
 
@@ -608,8 +608,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit581: ; preds = %bb
 .thread1137:                                      ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i558, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit578, %bb.fy
   %i.ajx = load i64, ptr %i.g, align 8, !tbaa !288
   %i.ajy = icmp ne i64 %i.ajx, 0
-  %60 = icmp samesign ugt i32 %2, 2               ; 5 uses
-  %or.cond20 = or i1 %60, %i.ajy
+  %or.cond20 = or i1 %i.yo, %i.ajy
   br i1 %or.cond20, label %bb.hc, label %bb.hd
 
 bb.hc:                                            ; preds = %.thread1137
@@ -629,11 +628,11 @@ bb.he:                                            ; preds = %bb.hd
 bb.hf:                                            ; preds = %bb.he
   %i.akb = load i8, ptr %i.ou, align 1, !tbaa !460, !range !395, !noundef !326
   %i.akc = trunc nuw i8 %i.akb to i1
-  %or.cond22 = or i1 %60, %i.akc
+  %or.cond22 = or i1 %i.yo, %i.akc
   br i1 %or.cond22, label %bb.hh, label %bb.hi
 
 bb.hg:                                            ; preds = %bb.he
-  br i1 %60, label %bb.hh, label %bb.hi
+  br i1 %i.yo, label %bb.hh, label %bb.hi
 
 bb.hh:                                            ; preds = %bb.hg, %bb.hf, %bb.hd
   invoke void @_ZN3fmt3v125printIJRmS2_EEEvRSoNS0_7fstringIJDpT_EE1tEDpOS5_(ptr noundef nonnull align 8 dereferenceable(8) %19, ptr nonnull @.str.157, i64 34, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f)
@@ -642,7 +641,7 @@ bb.hh:                                            ; preds = %bb.hg, %bb.hf, %bb.
 bb.hi:                                            ; preds = %bb.hh, %bb.hf, %bb.hg
   %i.akd = load i64, ptr %i.h, align 8, !tbaa !288 ; 2 uses
   %i.ake = icmp ne i64 %i.akd, 0
-  %or.cond25 = or i1 %60, %i.ake
+  %or.cond25 = or i1 %i.yo, %i.ake
   br i1 %or.cond25, label %bb.hj, label %bb.hm
 
 bb.hj:                                            ; preds = %bb.hi
@@ -671,7 +670,7 @@ bb.hm:                                            ; preds = %bb.hi, %bb.hk
   %i.akm = sub i64 %i.akk, %i.akl                 ; 2 uses
   %i.akn = ashr exact i64 %i.akm, 3               ; 2 uses
   %i.ako = icmp ugt i64 %i.akn, 49
-  %or.cond28 = or i1 %60, %i.ako
+  %or.cond28 = or i1 %i.yo, %i.ako
   br i1 %or.cond28, label %bb.hn, label %bb.mr
 
 bb.hn:                                            ; preds = %bb.hm
@@ -1074,7 +1073,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIN11OpenImageI
   store i16 -1, ptr %i.aa, align 4, !tbaa !551
   %i.ab = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 6
   store i8 0, ptr %i.ab, align 2, !tbaa !557
-  %i.ac = add i64 %.057.i.i.i.i.i.prol, -1        ; 2 uses
+  %i.ac = add nsw i64 %.057.i.i.i.i.i.prol, -1    ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 24 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1113,7 +1112,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIN11OpenImageI
   store i16 -1, ptr %i.ao, align 4, !tbaa !551
   %i.ap = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 78
   store i8 0, ptr %i.ap, align 2, !tbaa !557
-  %i.aq = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.aq = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.aq, 0
   br i1 %.not.i.i.i.i.i.3, label %.unr-lcssa, label %.lr.ph.i.i.i.i.i, !llvm.loop !2070
@@ -1516,7 +1515,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIN11OpenImageI
   store i16 -1, ptr %i.aa, align 4, !tbaa !631
   %i.ab = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 6
   store i8 0, ptr %i.ab, align 2, !tbaa !632
-  %i.ac = add i64 %.057.i.i.i.i.i.prol, -1        ; 2 uses
+  %i.ac = add nsw i64 %.057.i.i.i.i.i.prol, -1    ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 96 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1555,7 +1554,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIN11OpenImageI
   store i16 -1, ptr %i.ao, align 4, !tbaa !631
   %i.ap = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 294
   store i8 0, ptr %i.ap, align 2, !tbaa !632
-  %i.aq = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.aq = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 384 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.aq, 0
   br i1 %.not.i.i.i.i.i.3, label %.unr-lcssa, label %.lr.ph.i.i.i.i.i, !llvm.loop !2074
@@ -1958,7 +1957,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairImNSt7__cxx111
   store i16 -1, ptr %.08.i.i.i.i.i.prol, align 8, !tbaa !119
   %i.aa = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 2
   store i8 0, ptr %i.aa, align 2, !tbaa !120
-  %i.ab = add i64 %.057.i.i.i.i.i.prol, -1        ; 2 uses
+  %i.ab = add nsw i64 %.057.i.i.i.i.i.prol, -1    ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 48 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -2005,7 +2004,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairImNSt7__cxx111
   store i16 -1, ptr %i.ar, align 8, !tbaa !119
   %i.as = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 338
   store i8 0, ptr %i.as, align 2, !tbaa !120
-  %i.at = add i64 %.057.i.i.i.i.i, -8             ; 2 uses
+  %i.at = add nsw i64 %.057.i.i.i.i.i, -8         ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 384 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.at, 0
   br i1 %.not.i.i.i.i.i.7, label %.unr-lcssa, label %.lr.ph.i.i.i.i.i, !llvm.loop !2082
@@ -2158,7 +2157,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairImPN11OpenImag
   store i16 -1, ptr %.08.i.i.i.i.i.prol, align 8, !tbaa !143
   %i.aa = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 2
   store i8 0, ptr %i.aa, align 2, !tbaa !144
-  %i.ab = add i64 %.057.i.i.i.i.i.prol, -1        ; 2 uses
+  %i.ab = add nsw i64 %.057.i.i.i.i.i.prol, -1    ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 24 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -2205,7 +2204,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairImPN11OpenImag
   store i16 -1, ptr %i.ar, align 8, !tbaa !143
   %i.as = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 170
   store i8 0, ptr %i.as, align 2, !tbaa !144
-  %i.at = add i64 %.057.i.i.i.i.i, -8             ; 2 uses
+  %i.at = add nsw i64 %.057.i.i.i.i.i, -8         ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.at, 0
   br i1 %.not.i.i.i.i.i.7, label %.unr-lcssa, label %.lr.ph.i.i.i.i.i, !llvm.loop !2084
@@ -2608,7 +2607,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIN11OpenImageI
   store i16 -1, ptr %i.aa, align 4, !tbaa !485
   %i.ab = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 6
   store i8 0, ptr %i.ab, align 2, !tbaa !567
-  %i.ac = add i64 %.057.i.i.i.i.i.prol, -1        ; 2 uses
+  %i.ac = add nsw i64 %.057.i.i.i.i.i.prol, -1    ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 24 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -2647,7 +2646,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIN11OpenImageI
   store i16 -1, ptr %i.ao, align 4, !tbaa !485
   %i.ap = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 78
   store i8 0, ptr %i.ap, align 2, !tbaa !567
-  %i.aq = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.aq = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.aq, 0
   br i1 %.not.i.i.i.i.i.3, label %.unr-lcssa, label %.lr.ph.i.i.i.i.i, !llvm.loop !2118
@@ -3050,7 +3049,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIN11OpenImageI
   store i16 -1, ptr %i.aa, align 4, !tbaa !575
   %i.ab = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 6
   store i8 0, ptr %i.ab, align 2, !tbaa !576
-  %i.ac = add i64 %.057.i.i.i.i.i.prol, -1        ; 2 uses
+  %i.ac = add nsw i64 %.057.i.i.i.i.i.prol, -1    ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.prol, i64 56 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -3089,7 +3088,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIN11OpenImageI
   store i16 -1, ptr %i.ao, align 4, !tbaa !575
   %i.ap = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 174
   store i8 0, ptr %i.ap, align 2, !tbaa !576
-  %i.aq = add i64 %.057.i.i.i.i.i, -4             ; 2 uses
+  %i.aq = add nsw i64 %.057.i.i.i.i.i, -4         ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 224 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.aq, 0
   br i1 %.not.i.i.i.i.i.3, label %.unr-lcssa, label %.lr.ph.i.i.i.i.i, !llvm.loop !2122
@@ -3492,7 +3491,7 @@ _ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic
   store ptr null, ptr %.013.i.i.i.i.i.i.prol, align 8, !tbaa !1093
   %i.cd = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.prol, i64 8
   store i32 0, ptr %i.cd, align 8, !tbaa !1103
-  %i.ce = add i64 %.01012.i.i.i.i.i.i.prol, -1    ; 2 uses
+  %i.ce = add nsw i64 %.01012.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -3539,7 +3538,7 @@ _ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic
   store ptr null, ptr %i.cu, align 8, !tbaa !1093
   %i.cv = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i, i64 120
   store i32 0, ptr %i.cv, align 8, !tbaa !1103
-  %i.cw = add i64 %.01012.i.i.i.i.i.i, -8         ; 2 uses
+  %i.cw = add nsw i64 %.01012.i.i.i.i.i.i, -8     ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.i.7 = icmp eq i64 %i.cw, 0
   br i1 %.not.i.i.i.i.i.i.7, label %.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !97
@@ -3780,7 +3779,7 @@ _ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic
   store ptr null, ptr %.013.i.i.i.i.i.prol, align 8, !tbaa !1093
   %i.v = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 8
   store i32 0, ptr %i.v, align 8, !tbaa !1103
-  %i.w = add i64 %.01012.i.i.i.i.i.prol, -1       ; 2 uses
+  %i.w = add nsw i64 %.01012.i.i.i.i.i.prol, -1   ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -3827,7 +3826,7 @@ _ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic
   store ptr null, ptr %i.am, align 8, !tbaa !1093
   %i.an = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 120
   store i32 0, ptr %i.an, align 8, !tbaa !1103
-  %i.ao = add i64 %.01012.i.i.i.i.i, -8           ; 2 uses
+  %i.ao = add nsw i64 %.01012.i.i.i.i.i, -8       ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.7 = icmp eq i64 %i.ao, 0
   br i1 %.not.i.i.i.i.i.7, label %.loopexit.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !97
@@ -4132,7 +4131,7 @@ _ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_
   %.068.i.i.i.i.i.i.prol = phi i64 [ %i.l, %.lr.ph.i.i.i.i.i.i.prol ], [ %1, %_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EEC2EmRKSD_.exit.i ]
   %prol.iter32 = phi i64 [ %prol.iter32.next, %.lr.ph.i.i.i.i.i.i.prol ], [ 0, %_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EEC2EmRKSD_.exit.i ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.09.i.i.i.i.i.i.prol, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
-  %i.l = add i64 %.068.i.i.i.i.i.i.prol, -1       ; 2 uses
+  %i.l = add nsw i64 %.068.i.i.i.i.i.i.prol, -1   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.prol, i64 24 ; 3 uses
   %prol.iter32.next = add i64 %prol.iter32, 1     ; 2 uses
   %prol.iter32.cmp.not = icmp eq i64 %prol.iter32.next, %xtraiter30
@@ -4155,7 +4154,7 @@ _ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
   %i.q = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 72
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
-  %i.r = add i64 %.068.i.i.i.i.i.i, -4            ; 2 uses
+  %i.r = add nsw i64 %.068.i.i.i.i.i.i, -4        ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i.i.i.i.3 = icmp eq i64 %i.r, 0
   br i1 %.not.i.i.i.i.i.i.3, label %_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EEC2EmRKSC_RKSD_.exit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !2496
@@ -4558,7 +4557,7 @@ _ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic
   store ptr null, ptr %.013.i.i.i.i.i.i.prol, align 8, !tbaa !1093
   %i.at = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.prol, i64 8
   store i32 0, ptr %i.at, align 8, !tbaa !1103
-  %i.au = add i64 %.01012.i.i.i.i.i.i.prol, -1    ; 2 uses
+  %i.au = add nsw i64 %.01012.i.i.i.i.i.i.prol, -1 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -4605,7 +4604,7 @@ _ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic
   store ptr null, ptr %i.bk, align 8, !tbaa !1093
   %i.bl = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i, i64 120
   store i32 0, ptr %i.bl, align 8, !tbaa !1103
-  %i.bm = add i64 %.01012.i.i.i.i.i.i, -8         ; 2 uses
+  %i.bm = add nsw i64 %.01012.i.i.i.i.i.i, -8     ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.i.7 = icmp eq i64 %i.bm, 0
   br i1 %.not.i.i.i.i.i.i.7, label %.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !97
@@ -4956,7 +4955,7 @@ bb.b:                                             ; preds = %bb.a
   %.01012.i.i.i.prol = phi i64 [ %i.p, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.preheader ]
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.013.i.i.i.prol, i8 0, i64 16, i1 false)
-  %i.p = add i64 %.01012.i.i.i.prol, -1           ; 2 uses
+  %i.p = add nsw i64 %.01012.i.i.i.prol, -1       ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.013.i.i.i.prol, i64 24 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -4987,7 +4986,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, i8 0, i64 16, i1 false)
   %i.y = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 168
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, i8 0, i64 16, i1 false)
-  %i.z = add i64 %.01012.i.i.i, -8                ; 2 uses
+  %i.z = add nsw i64 %.01012.i.i.i, -8            ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.013.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.7 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.7, label %_ZSt27__uninitialized_default_n_aIPN11OpenImageIO4v3_13pvt8UdimInfoEmS3_ET_S5_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !2545
@@ -5021,7 +5020,7 @@ _ZNKSt6vectorIN11OpenImageIO4v3_13pvt8UdimInfoESaIS3_EE12_M_check_lenEmPKc.exit:
   %.01012.i.i.i42.prol = phi i64 [ %i.ah, %.lr.ph.i.i.i40.prol ], [ %1, %_ZNKSt6vectorIN11OpenImageIO4v3_13pvt8UdimInfoESaIS3_EE12_M_check_lenEmPKc.exit ]
   %prol.iter53 = phi i64 [ %prol.iter53.next, %.lr.ph.i.i.i40.prol ], [ 0, %_ZNKSt6vectorIN11OpenImageIO4v3_13pvt8UdimInfoESaIS3_EE12_M_check_lenEmPKc.exit ]
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.013.i.i.i41.prol, i8 0, i64 16, i1 false)
-  %i.ah = add i64 %.01012.i.i.i42.prol, -1        ; 2 uses
+  %i.ah = add nsw i64 %.01012.i.i.i42.prol, -1    ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.013.i.i.i41.prol, i64 24 ; 2 uses
   %prol.iter53.next = add i64 %prol.iter53, 1     ; 2 uses
   %prol.iter53.cmp.not = icmp eq i64 %prol.iter53.next, %xtraiter51
@@ -5051,7 +5050,7 @@ _ZNKSt6vectorIN11OpenImageIO4v3_13pvt8UdimInfoESaIS3_EE12_M_check_lenEmPKc.exit:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ap, i8 0, i64 16, i1 false)
   %i.aq = getelementptr inbounds nuw i8, ptr %.013.i.i.i41, i64 168
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i8 0, i64 16, i1 false)
-  %i.ar = add i64 %.01012.i.i.i42, -8             ; 2 uses
+  %i.ar = add nsw i64 %.01012.i.i.i42, -8         ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.013.i.i.i41, i64 192
   %.not.i.i.i43.7 = icmp eq i64 %i.ar, 0
   br i1 %.not.i.i.i43.7, label %_ZSt27__uninitialized_default_n_aIPN11OpenImageIO4v3_13pvt8UdimInfoEmS3_ET_S5_T0_RSaIT1_E.exit45, label %.lr.ph.i.i.i40, !llvm.loop !2545

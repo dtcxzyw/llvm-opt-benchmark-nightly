@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %.01740.i.prol = phi i64 [ %i.ak, %.lr.ph.i.prol ], [ %.01740.i.ph, %.lr.ph.i.preheader54 ]
   %.01839.i.prol = phi ptr [ %i.ao, %.lr.ph.i.prol ], [ %.01839.i.ph, %.lr.ph.i.preheader54 ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader54 ]
-  %i.ak = add i64 %.01740.i.prol, -1              ; 2 uses
+  %i.ak = add nsw i64 %.01740.i.prol, -1          ; 2 uses
   %i.al = load i8, ptr %.01641.i.prol, align 1, !tbaa !237
   %i.am = zext i8 %i.al to i32
   store i32 %i.am, ptr %.01839.i.prol, align 4, !tbaa !43
@@ -261,7 +261,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.bp, ptr %i.bn, align 4, !tbaa !43
   %i.bq = getelementptr i8, ptr %.01641.i, i64 7
   %i.br = getelementptr i8, ptr %.01839.i, i64 28
-  %i.bs = add i64 %.01740.i, -8                   ; 2 uses
+  %i.bs = add nsw i64 %.01740.i, -8               ; 2 uses
   %i.bt = load i8, ptr %i.bq, align 1, !tbaa !237
   %i.bu = zext i8 %i.bt to i32
   store i32 %i.bu, ptr %i.br, align 4, !tbaa !43
@@ -335,7 +335,7 @@ middle.block48:                                   ; preds = %vector.body41
   %.045.i = phi ptr [ %i.co, %.lr.ph46.i ], [ %.045.i.ph, %.lr.ph46.i.preheader53 ] ; 2 uses
   %.144.i = phi i64 [ %i.cl, %.lr.ph46.i ], [ %.144.i.ph, %.lr.ph46.i.preheader53 ]
   %.11943.i = phi ptr [ %i.cp, %.lr.ph46.i ], [ %.11943.i.ph, %.lr.ph46.i.preheader53 ] ; 2 uses
-  %i.cl = add i64 %.144.i, -1                     ; 2 uses
+  %i.cl = add nsw i64 %.144.i, -1                 ; 2 uses
   %i.cm = load i16, ptr %.045.i, align 2, !tbaa !240
   %i.cn = zext i16 %i.cm to i32
   store i32 %i.cn, ptr %.11943.i, align 4, !tbaa !43
@@ -738,28 +738,37 @@ bb.w:                                             ; preds = %bb.v
 
 .lr.ph.i127:                                      ; preds = %bb.w, %bb.x
   %.065107.i = phi ptr [ %i.hi, %bb.x ], [ %.1208270, %bb.w ] ; 6 uses
-  %.070106.i = phi ptr [ %i.hh, %bb.x ], [ %i.gx, %bb.w ] ; 5 uses
-  %3 = load <4 x i16>, ptr %.070106.i, align 2, !tbaa !240 ; 3 uses
-  %4 = xor <4 x i16> %3, splat (i16 -10240)
-  %5 = call i16 @llvm.vector.reduce.and.v4i16(<4 x i16> %4)
-  %i.ha = icmp ult i16 %5, 2048
+  %.070106.i = phi ptr [ %i.hh, %bb.x ], [ %i.gx, %bb.w ] ; 6 uses
+  %3 = load i16, ptr %.070106.i, align 2, !tbaa !240
+  %4 = zext i16 %3 to i32                         ; 2 uses
+  %5 = xor i32 %4, 55296
+  %6 = getelementptr i8, ptr %.070106.i, i64 2
+  %7 = load i16, ptr %6, align 2, !tbaa !240      ; 2 uses
+  %8 = xor i16 %7, -10240
+  %9 = zext i16 %8 to i32
+  %10 = and i32 %5, %9
+  %11 = getelementptr i8, ptr %.070106.i, i64 4
+  %12 = load i16, ptr %11, align 2, !tbaa !240    ; 2 uses
+  %13 = xor i16 %12, -10240
+  %14 = zext i16 %13 to i32
+  %15 = and i32 %10, %14
+  %16 = getelementptr i8, ptr %.070106.i, i64 6
+  %17 = load i16, ptr %16, align 2, !tbaa !240    ; 2 uses
+  %18 = xor i16 %17, -10240
+  %19 = zext i16 %18 to i32
+  %20 = and i32 %15, %19
+  %i.ha = icmp samesign ult i32 %20, 2048
   br i1 %i.ha, label %._crit_edge.i, label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph.i127
-  %6 = load i16, ptr %.070106.i, align 2, !tbaa !240
-  %7 = zext i16 %6 to i32
-  %8 = getelementptr i8, ptr %.070106.i, i64 2
-  %9 = load i16, ptr %8, align 2, !tbaa !240
-  store i32 %7, ptr %.065107.i, align 4, !tbaa !43
-  %i.hb = zext i16 %9 to i32
+  store i32 %4, ptr %.065107.i, align 4, !tbaa !43
+  %i.hb = zext i16 %7 to i32
   %i.hc = getelementptr i8, ptr %.065107.i, i64 4
   store i32 %i.hb, ptr %i.hc, align 4, !tbaa !43
-  %10 = extractelement <4 x i16> %3, i64 2
-  %i.hd = zext i16 %10 to i32
+  %i.hd = zext i16 %12 to i32
   %i.he = getelementptr i8, ptr %.065107.i, i64 8
   store i32 %i.hd, ptr %i.he, align 4, !tbaa !43
-  %11 = extractelement <4 x i16> %3, i64 3
-  %i.hf = zext i16 %11 to i32
+  %i.hf = zext i16 %17 to i32
   %i.hg = getelementptr i8, ptr %.065107.i, i64 12
   store i32 %i.hf, ptr %i.hg, align 4, !tbaa !43
   %i.hh = getelementptr i8, ptr %.070106.i, i64 8 ; 3 uses

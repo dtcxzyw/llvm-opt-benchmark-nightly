@@ -205,7 +205,7 @@ bb.a:
   %6 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
   %7 = alloca %"class.clang::FixItHint", align 8  ; 6 uses
   %8 = alloca %"class.clang::AttributeFactory", align 8 ; 5 uses
-  %9 = alloca %"class.clang::DeclSpec", align 8   ; 22 uses
+  %9 = alloca %"class.clang::DeclSpec", align 8   ; 23 uses
   %i.a = alloca ptr, align 8                      ; 3 uses
   %i.b = alloca i32, align 4                      ; 3 uses
   %10 = alloca %"class.clang::Declarator", align 8 ; 32 uses
@@ -283,8 +283,11 @@ bb.e:                                             ; preds = %_ZN5clang10Declarat
   %i.ae = getelementptr inbounds nuw i8, ptr %9, i64 48
   %i.af = getelementptr inbounds nuw i8, ptr %9, i64 52
   %i.ag = getelementptr inbounds nuw i8, ptr %9, i64 72 ; 4 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %9, i64 80 ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 96 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %9, i64 80
+  %11 = insertelement <2 x ptr> poison, ptr %8, i64 0
+  %12 = insertelement <2 x ptr> %11, ptr %9, i64 1
+  %13 = getelementptr inbounds nuw i8, <2 x ptr> %12, <2 x i64> <i64 0, i64 96>
+  %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 96
   %i.aj = getelementptr inbounds nuw i8, ptr %9, i64 88
   %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 92
   %i.al = getelementptr inbounds nuw i8, ptr %9, i64 112
@@ -479,8 +482,7 @@ bb.q:                                             ; preds = %_ZN4llvm11SmallVect
   store ptr %i.ad, ptr %i.ac, align 8, !tbaa !876
   store i32 0, ptr %i.ae, align 8, !tbaa !877
   store i32 2, ptr %i.af, align 4, !tbaa !878
-  store ptr %8, ptr %i.ag, align 8, !tbaa !1013
-  store ptr %i.ai, ptr %i.ah, align 8, !tbaa !876
+  store <2 x ptr> %13, ptr %i.ag, align 8, !tbaa !920
   store i32 0, ptr %i.aj, align 8, !tbaa !877
   store i32 2, ptr %i.ak, align 4, !tbaa !878
   store ptr null, ptr %i.am, align 8, !tbaa !1032

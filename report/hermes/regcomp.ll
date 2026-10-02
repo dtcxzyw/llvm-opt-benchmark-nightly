@@ -205,7 +205,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 36 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !29   ; 2 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !19     ; 5 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 15 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 14 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !20   ; 6 uses
   %i.g = icmp ult ptr %i.d, %i.f
   br i1 %i.g, label %bb.b, label %bb.k
@@ -320,6 +320,8 @@ bb.k:                                             ; preds = %bb.a, %bb.b, %doemi
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %3 = insertelement <2 x ptr> poison, ptr %i.a, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.av, i64 1
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph126, %p_simp_re.exit
@@ -417,8 +419,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
-  store ptr %i.a, ptr %0, align 8, !tbaa !19
-  store ptr %i.av, ptr %i.e, align 8, !tbaa !20
+  store <2 x ptr> %4, ptr %0, align 8, !tbaa !37
   store <4 x i8> <i8 94, i8 10, i8 93, i8 0>, ptr %i.a, align 4, !tbaa !31
   call fastcc void @p_bracket(ptr noundef nonnull %0)
   store ptr %i.bx, ptr %0, align 8, !tbaa !19

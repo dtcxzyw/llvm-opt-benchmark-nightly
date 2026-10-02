@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.a, %bb.l
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6icu_7825ContractionsAndExpansions10handleCE32Eiij(ptr noundef nonnull align 8 dereferenceable(764) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.icu_78::UTF16CollationIterator", align 8 ; 24 uses
+  %4 = alloca %"class.icu_78::UTF16CollationIterator", align 8 ; 23 uses
   %i.a = alloca [1 x i16], align 2                ; 8 uses
   %i.b = and i32 %3, 192
   %.not91 = icmp eq i32 %i.b, 192
@@ -550,10 +550,9 @@ bb.an:                                            ; preds = %bb.am
   %i.eu = getelementptr inbounds nuw i8, ptr %4, i64 388
   store i8 0, ptr %i.eu, align 4, !tbaa !98
   store ptr getelementptr inbounds nuw inrange(-16, 128) (i8, ptr @_ZTVN6icu_7822UTF16CollationIteratorE, i64 16), ptr %4, align 8, !tbaa !84
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 392 ; 2 uses
-  %i.ev = getelementptr inbounds nuw i8, ptr %4, i64 400
-  %i.ew = getelementptr inbounds nuw i8, ptr %4, i64 408
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  %i.ev = getelementptr inbounds nuw i8, ptr %4, i64 392 ; 2 uses
+  %i.ew = getelementptr inbounds nuw i8, ptr %4, i64 400
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ev, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %.not57.not93 = icmp sgt i32 %1, %2
   br i1 %.not57.not93, label %.critedge.thread, label %.lr.ph96
@@ -561,6 +560,8 @@ bb.an:                                            ; preds = %bb.am
 .lr.ph96:                                         ; preds = %bb.an
   %i.ex = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 760 ; 2 uses
+  %5 = insertelement <2 x ptr> poison, ptr %i.a, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.ex, i64 1
   br label %bb.ao
 
 .critedge.thread:                                 ; preds = %bb.au, %bb.an
@@ -578,8 +579,7 @@ bb.ao:                                            ; preds = %.lr.ph96, %bb.au
 
 bb.ap:                                            ; preds = %bb.ao
   store ptr %i.a, ptr %i.ev, align 8, !tbaa !100
-  store ptr %i.a, ptr %5, align 8, !tbaa !101
-  store ptr %i.ex, ptr %i.ew, align 8, !tbaa !102
+  store <2 x ptr> %6, ptr %i.ew, align 8, !tbaa !101
   %i.fa = invoke noundef i32 @_ZN6icu_7817CollationIterator8fetchCEsER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(389) %4, ptr noundef nonnull align 4 dereferenceable(4) %i.ey)
           to label %bb.aq unwind label %bb.as
 
@@ -716,7 +716,7 @@ bb.a:
   %i.m = or disjoint i32 %i.i, %i.l
   tail call void @_ZN6icu_7825ContractionsAndExpansions10handleCE32Eiij(ptr noundef nonnull align 8 dereferenceable(764) %0, i32 noundef %1, i32 noundef %2, i32 noundef %i.m)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.o = load i8, ptr %i.n, align 8, !tbaa !104
+  %i.o = load i8, ptr %i.n, align 8, !tbaa !103
   %.not = icmp eq i8 %i.o, 0
   br i1 %.not, label %bb.l, label %bb.b
 
@@ -775,7 +775,7 @@ bb.g:                                             ; preds = %_ZN6icu_7825Contrac
 bb.h:                                             ; preds = %bb.g
   %i.ak = load i32, ptr %i.y, align 4, !tbaa !51
   invoke void @_ZN6icu_7825ContractionsAndExpansions10handleCE32Eiij(ptr noundef nonnull align 8 dereferenceable(764) %0, i32 noundef %1, i32 noundef %2, i32 noundef %i.ak)
-          to label %bb.d unwind label %bb.j, !llvm.loop !103
+          to label %bb.d unwind label %bb.j, !llvm.loop !102
 
 bb.i:                                             ; preds = %bb.b
   %i.al = landingpad { ptr, i32 }
@@ -895,7 +895,7 @@ bb.k:                                             ; preds = %bb.l, %bb.i, %bb.g,
 bb.l:                                             ; preds = %bb.i, %bb.h
   %i.af = load i32, ptr %i.w, align 4, !tbaa !51
   invoke void @_ZN6icu_7825ContractionsAndExpansions10handleCE32Eiij(ptr noundef nonnull align 8 dereferenceable(764) %0, i32 noundef %1, i32 noundef %2, i32 noundef %i.af)
-          to label %bb.e unwind label %bb.k, !llvm.loop !105
+          to label %bb.e unwind label %bb.k, !llvm.loop !104
 
 bb.m:                                             ; preds = %bb.f
   store ptr null, ptr %i.s, align 8, !tbaa !72
@@ -1016,7 +1016,7 @@ bb.l:                                             ; preds = %bb.j
 _ZN6icu_7813UnicodeString8truncateEi.exit:        ; preds = %bb.l, %bb.k, %bb.i, %bb.h
   %i.ao = add i32 %.0, 1
   %exitcond.not = icmp eq i32 %.0, %smax
-  br i1 %exitcond.not, label %bb.m, label %bb.c, !llvm.loop !106
+  br i1 %exitcond.not, label %bb.m, label %bb.c, !llvm.loop !105
 
 bb.m:                                             ; preds = %_ZN6icu_7813UnicodeString8truncateEi.exit
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #9
@@ -1179,11 +1179,10 @@ attributes #10 = { noreturn nounwind }
 !97 = !{!88, !6, i64 384}
 !98 = !{!88, !5, i64 388}
 !99 = !{!"_ZTSN6icu_7822UTF16CollationIteratorE", !88, i64 0, !24, i64 392, !24, i64 400, !24, i64 408}
-!100 = !{!99, !24, i64 400}
-!101 = !{!99, !24, i64 392}
-!102 = !{!99, !24, i64 408}
-!103 = distinct !{!103, !42}
-!104 = !{!66, !5, i64 32}
+!100 = !{!99, !24, i64 392}
+!101 = !{!24, !24, i64 0}
+!102 = distinct !{!102, !42}
+!103 = !{!66, !5, i64 32}
+!104 = distinct !{!104, !42}
 !105 = distinct !{!105, !42}
-!106 = distinct !{!106, !42}
 end_hunk_0

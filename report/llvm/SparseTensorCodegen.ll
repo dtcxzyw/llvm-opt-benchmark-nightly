@@ -205,7 +205,7 @@ _ZSt4copyIPKlPlET0_T_S4_S3_.exit30.i.thread.i.i.i.i.i: ; preds = %_ZSt4copyIPKlP
   br label %_ZSt10_ConstructIN4llvm11SmallVectorIlLj2EEEJRKS2_EEvPT_DpOT0_.exit.i.i.i
 
 _ZSt10_ConstructIN4llvm11SmallVectorIlLj2EEEJRKS2_EEvPT_DpOT0_.exit.i.i.i: ; preds = %.sink.split.i.i.i.i.i.i6, %bb.q
-  %i.az = add i64 %.068.i.i.i, -1                 ; 2 uses
+  %i.az = add nsw i64 %.068.i.i.i, -1             ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.09.i.i.i, i64 32
   %.not.i.i.i = icmp eq i64 %i.az, 0
   br i1 %.not.i.i.i, label %_ZSt20uninitialized_fill_nIPN4llvm11SmallVectorIlLj2EEEmS2_ET_S4_T0_RKT1_.exit, label %bb.q, !llvm.loop !3
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %_ZN4mlir13sparse_te
   call void @_ZN4mlir10ValueRangeC2EN4llvm8ArrayRefINS_5ValueEEE(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr %3, i64 %4) #18
   store ptr null, ptr %9, align 8, !tbaa !807
   %i.p = call ptr @_ZN4mlir3scf5ForOp6createERNS_9OpBuilderENS_8LocationENS_5ValueES5_S5_NS_10ValueRangeEN4llvm12function_refIFvS3_S4_S5_S6_EEEb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr %1, ptr nonnull %.sroa.0.0, ptr %2, ptr %i.o, ptr noundef nonnull byval(%"class.mlir::ValueRange") align 8 %8, ptr noundef nonnull byval(%"class.llvm::function_ref.1168") align 8 %9, i1 noundef zeroext false) #18 ; 9 uses
-  %i.q = and i64 %4, 4294967295
+  %i.q = and i64 %4, 4294967295                   ; 2 uses
   %.not30 = icmp eq i64 %i.q, 0
   br i1 %.not30, label %.._crit_edge_crit_edge, label %.lr.ph
 
@@ -623,9 +623,8 @@ bb.e:                                             ; preds = %_ZN4mlir13sparse_te
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 40
   %i.t = load i32, ptr %i.s, align 8, !tbaa !161
   %i.u = zext i32 %i.t to i64                     ; 5 uses
-  %wide.trip.count = and i64 %4, 4294967295
   %xtraiter = and i64 %4, 1
-  %i.v = icmp eq i64 %wide.trip.count, 1
+  %i.v = icmp eq i64 %i.q, 1
   br i1 %i.v, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph

@@ -203,12 +203,7 @@ bb.a:
   %i.w = trunc i64 %indvars.iv6 to i16
   %i.x = sub i16 31, %i.w                         ; 2 uses
   %i.y = trunc i64 %indvars.iv.next7 to i16       ; 2 uses
-  br i1 %conflict.rdx20, label %scalar.ph.preheader, label %vector.body
-
-scalar.ph.preheader:                              ; preds = %.preheader
-  %4 = insertelement <4 x i16> <i16 poison, i16 poison, i16 poison, i16 32>, i16 %i.x, i64 1
-  %5 = insertelement <4 x i16> %4, i16 %i.y, i64 2
-  br label %scalar.ph
+  br i1 %conflict.rdx20, label %scalar.ph, label %vector.body
 
 vector.body:                                      ; preds = %.preheader
   %broadcast.splatinsert27 = insertelement <16 x i16> poison, i16 %i.x, i64 0
@@ -255,8 +250,8 @@ vector.body:                                      ; preds = %.preheader
   store <16 x i8> %i.az, ptr %i.ba, align 1, !tbaa !78, !alias.scope !592, !noalias !593
   br label %middle.block
 
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ 0, %scalar.ph.preheader ] ; 4 uses
+scalar.ph:                                        ; preds = %.preheader, %scalar.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ 0, %.preheader ] ; 4 uses
   %i.bb = load i8, ptr %i.t, align 1, !tbaa !78
   %i.bc = zext i8 %i.bb to i16
   %i.bd = trunc i64 %indvars.iv to i16
@@ -266,18 +261,18 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.bg = load i8, ptr %i.a, align 1, !tbaa !78
   %i.bh = zext i8 %i.bg to i16
   %i.bi = trunc i64 %indvars.iv.next to i16
+  %4 = mul i16 %i.bi, %i.bh
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
   %i.bk = load i8, ptr %i.bj, align 1, !tbaa !78
   %i.bl = zext i8 %i.bk to i16
+  %5 = mul i16 %i.x, %i.bl
   %i.bm = load i8, ptr %i.b, align 1, !tbaa !78
   %i.bn = zext i8 %i.bm to i16
-  %6 = insertelement <4 x i16> %5, i16 %i.bi, i64 0
-  %7 = insertelement <4 x i16> <i16 poison, i16 poison, i16 poison, i16 1>, i16 %i.bh, i64 0
-  %8 = insertelement <4 x i16> %7, i16 %i.bl, i64 1
-  %9 = insertelement <4 x i16> %8, i16 %i.bn, i64 2
-  %10 = mul <4 x i16> %6, %9
-  %11 = tail call i16 @llvm.vector.reduce.add.v4i16(<4 x i16> %10)
-  %op.rdx = add i16 %11, %i.bf
+  %6 = mul i16 %i.y, %i.bn
+  %7 = add i16 %i.bf, 32
+  %8 = add i16 %7, %4
+  %9 = add i16 %8, %5
+  %op.rdx = add i16 %9, %6
   %i.bo = lshr i16 %op.rdx, 6
   %i.bp = trunc i16 %i.bo to i8
   %i.bq = getelementptr i8, ptr %i.v, i64 %indvars.iv
@@ -679,9 +674,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.vector.reduce.add.v4i16(<4 x i16>) #7
 
 attributes #0 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -206,10 +206,10 @@ _ZN5boost4json6detail5stack5clearEv.exit:         ; preds = %_ZN5boost4json6deta
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(8) ptr @_ZN5boost4jsonlsERSoRKNS0_5valueE(ptr noundef nonnull returned align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.boost::json::detail::stream", align 8 ; 8 uses
+  %2 = alloca %"class.boost::json::detail::stream", align 16 ; 7 uses
   %3 = alloca %"class.boost::json::serializer", align 8 ; 13 uses
   %4 = alloca %"struct.boost::json::serialize_options", align 1 ; 4 uses
-  %i.a = alloca [4096 x i8], align 16             ; 8 uses
+  %i.a = alloca [4096 x i8], align 16             ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #47
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #47
   %i.b = load ptr, ptr %0, align 8, !tbaa !98
@@ -278,9 +278,10 @@ _ZN5boost4json6detail5stack11non_trivialIvE7destroyEv.exit.i.i: ; preds = %.lr.p
   store i64 0, ptr %i.af, align 8, !tbaa !237
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 128 ; 4 uses
   store i8 0, ptr %i.ag, align 8, !tbaa !263
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 4096 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 4096
   %i.ai = ptrtoint ptr %i.a to i64
+  %5 = insertelement <2 x ptr> poison, ptr %i.a, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.ah, i64 1 ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.l
@@ -320,8 +321,7 @@ _ZN5boost4json6detail5stack11non_trivialIvE7destroyEv.exit.i.i.i.i: ; preds = %.
   store i64 0, ptr %i.af, align 8, !tbaa !237
   store i8 0, ptr %i.ag, align 8, !tbaa !263
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #47
-  store ptr %i.a, ptr %2, align 8, !tbaa !265
-  store ptr %i.ah, ptr %5, align 8, !tbaa !266
+  store <2 x ptr> %6, ptr %2, align 16, !tbaa !191
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.e
@@ -329,8 +329,7 @@ bb.h:                                             ; preds = %bb.e
   %.pre.fr.i = freeze i64 %.pre.i
   %i.as = icmp eq i64 %.pre.fr.i, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #47
-  store ptr %i.a, ptr %2, align 8, !tbaa !265
-  store ptr %i.ah, ptr %5, align 8, !tbaa !266
+  store <2 x ptr> %6, ptr %2, align 16, !tbaa !191
   %spec.select.i = select i1 %i.as, ptr %i.u, ptr %i.v
   br label %bb.i
 
@@ -352,7 +351,7 @@ bb.j:                                             ; preds = %.noexc
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.noexc
-  %i.ax = load ptr, ptr %2, align 8, !tbaa !265
+  %i.ax = load ptr, ptr %2, align 16, !tbaa !265
   %i.ay = ptrtoint ptr %i.ax to i64
   %i.az = sub i64 %i.ay, %i.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #47
@@ -471,8 +470,8 @@ bb.f:                                             ; preds = %_ZN5boost4json10ser
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN5boost4jsonL10to_ostreamERSoRNS0_10serializerE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(129) %1) unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.boost::json::detail::stream", align 8 ; 8 uses
-  %i.a = alloca [4096 x i8], align 16             ; 7 uses
+  %2 = alloca %"class.boost::json::detail::stream", align 16 ; 7 uses
+  %i.a = alloca [4096 x i8], align 16             ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 4 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !263, !range !231, !noundef !125
   %i.d = trunc nuw i8 %i.c to i1
@@ -481,12 +480,13 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 5 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 4096 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 4096
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.j = ptrtoint ptr %i.a to i64
+  %3 = insertelement <2 x ptr> poison, ptr %i.a, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.f, i64 1 ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5boost4json10serializer4readILm4096EEENS_4core17basic_string_viewIcEERAT__c.exit
@@ -526,8 +526,7 @@ _ZN5boost4json6detail5stack11non_trivialIvE7destroyEv.exit.i.i.i.i: ; preds = %.
   store i64 0, ptr %.phi.trans.insert.i, align 8, !tbaa !237
   store i8 0, ptr %i.b, align 8, !tbaa !263
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #47
-  store ptr %i.a, ptr %2, align 8, !tbaa !265
-  store ptr %i.f, ptr %3, align 8, !tbaa !266
+  store <2 x ptr> %4, ptr %2, align 16, !tbaa !191
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
@@ -535,8 +534,7 @@ bb.e:                                             ; preds = %bb.b
   %.pre.fr.i = freeze i64 %.pre.i
   %i.t = icmp eq i64 %.pre.fr.i, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #47
-  store ptr %i.a, ptr %2, align 8, !tbaa !265
-  store ptr %i.f, ptr %3, align 8, !tbaa !266
+  store <2 x ptr> %4, ptr %2, align 16, !tbaa !191
   %spec.select.i = select i1 %i.t, ptr %i.e, ptr %i.g
   br label %bb.f
 
@@ -555,7 +553,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN5boost4json10serializer4readILm4096EEENS_4core17basic_string_viewIcEERAT__c.exit
 
 _ZN5boost4json10serializer4readILm4096EEENS_4core17basic_string_viewIcEERAT__c.exit: ; preds = %bb.f, %bb.g
-  %i.y = load ptr, ptr %2, align 8, !tbaa !265
+  %i.y = load ptr, ptr %2, align 16, !tbaa !265
   %i.z = ptrtoint ptr %i.y to i64
   %i.aa = sub i64 %i.z, %i.j
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #47

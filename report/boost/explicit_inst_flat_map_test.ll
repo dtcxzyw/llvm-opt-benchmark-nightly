@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.z, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !1130
   %i.aa = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 16
   %i.ab = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 16
-  %i.ac = add i64 %.020.i.i.i.i.i.i.i, -2         ; 2 uses
+  %i.ac = add nsw i64 %.020.i.i.i.i.i.i.i, -2     ; 2 uses
   %.not.i.i.i.i.i.i.i.1 = icmp eq i64 %i.ac, 0
   br i1 %.not.i.i.i.i.i.i.i.1, label %_ZN5boost9container6vectorISt4pairINS0_4test24movable_and_copyable_intES4_ENS0_22small_vector_allocatorIS5_SaIvEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS8_PKS5_EEEEvPS5_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !2
 
@@ -298,7 +298,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.z, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !1135
   %i.aa = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 16
   %i.ab = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 16
-  %i.ac = add i64 %.020.i.i.i.i.i.i.i, -2         ; 2 uses
+  %i.ac = add nsw i64 %.020.i.i.i.i.i.i.i, -2     ; 2 uses
   %.not.i.i.i.i.i.i.i.1 = icmp eq i64 %i.ac, 0
   br i1 %.not.i.i.i.i.i.i.i.1, label %_ZN5boost9container6vectorISt4pairINS0_4test24movable_and_copyable_intES4_ENS0_22small_vector_allocatorIS5_SaIvEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS8_PKS5_EEEEvPS5_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !2
 
@@ -392,7 +392,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.z, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !1140
   %i.aa = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 16
   %i.ab = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 16
-  %i.ac = add i64 %.020.i.i.i.i.i.i.i, -2         ; 2 uses
+  %i.ac = add nsw i64 %.020.i.i.i.i.i.i.i, -2     ; 2 uses
   %.not.i.i.i.i.i.i.i.1 = icmp eq i64 %i.ac, 0
   br i1 %.not.i.i.i.i.i.i.i.1, label %_ZN5boost9container6vectorISt4pairINS0_4test24movable_and_copyable_intES4_ENS0_22small_vector_allocatorIS5_SaIvEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS8_PKS5_EEEEvPS5_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !2
 
@@ -795,7 +795,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.w, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !2786
   %i.x = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 16
   %i.y = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 16
-  %i.z = add i64 %.020.i.i.i.i.i.i.i, -2          ; 2 uses
+  %i.z = add nsw i64 %.020.i.i.i.i.i.i.i, -2      ; 2 uses
   %.not.i.i.i.i.i.i.i.1 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.i.i.i.i.1, label %_ZN5boost9container3dtl9flat_treeISt4pairINS0_4test24movable_and_copyable_intES5_ENS1_9select1stIS5_EESt4lessIS5_ENS0_13static_vectorIS6_Lm10EvEEEC2IPKS6_EENS0_15ordered_range_tET_SI_.exit, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !21
 
@@ -894,7 +894,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.w, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !2791
   %i.x = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 16
   %i.y = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 16
-  %i.z = add i64 %.020.i.i.i.i.i.i.i, -2          ; 2 uses
+  %i.z = add nsw i64 %.020.i.i.i.i.i.i.i, -2      ; 2 uses
   %.not.i.i.i.i.i.i.i.1 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.i.i.i.i.1, label %_ZN5boost9container3dtl9flat_treeISt4pairINS0_4test24movable_and_copyable_intES5_ENS1_9select1stIS5_EESt4lessIS5_ENS0_13static_vectorIS6_Lm10EvEEEC2IPKS6_EENS0_15ordered_range_tET_SI_RKSA_.exit, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !21
 
@@ -993,7 +993,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.w, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255, !noalias !2796
   %i.x = getelementptr inbounds nuw i8, ptr %.0919.i.i.i.i.i.i.i, i64 16
   %i.y = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.i.i, i64 16
-  %i.z = add i64 %.020.i.i.i.i.i.i.i, -2          ; 2 uses
+  %i.z = add nsw i64 %.020.i.i.i.i.i.i.i, -2      ; 2 uses
   %.not.i.i.i.i.i.i.i.1 = icmp eq i64 %i.z, 0
   br i1 %.not.i.i.i.i.i.i.i.1, label %_ZN5boost9container3dtl9flat_treeISt4pairINS0_4test24movable_and_copyable_intES5_ENS1_9select1stIS5_EESt4lessIS5_ENS0_13static_vectorIS6_Lm10EvEEEC2IPKS6_EENS0_15ordered_range_tET_SI_RKSA_RKNS1_24static_storage_allocatorIS6_Lm10ELm0ELb1EEE.exit, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !21
 
@@ -1056,7 +1056,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   %.0819.i.i.i.i.i.prol = phi ptr [ %i.j, %.lr.ph.i.i.i.i.i.prol ], [ %1, %.lr.ph.i.preheader.i.i.i.i ] ; 3 uses
   %.01618.i.i.i.i.i.prol = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.prol ], [ %0, %.lr.ph.i.preheader.i.i.i.i ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.preheader.i.i.i.i ]
-  %i.e = add i64 %.020.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.e = add nsw i64 %.020.i.i.i.i.i.prol, -1     ; 2 uses
   %i.f = load i32, ptr %.0819.i.i.i.i.i.prol, align 4, !tbaa !254
   store i32 %i.f, ptr %.01618.i.i.i.i.i.prol, align 4, !tbaa !254
   %i.g = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.prol, i64 4
@@ -1104,7 +1104,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   store i32 %i.ab, ptr %i.z, align 4, !tbaa !254
   %i.ac = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 24
   %i.ad = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 24
-  %i.ae = add i64 %.020.i.i.i.i.i, -4             ; 2 uses
+  %i.ae = add nsw i64 %.020.i.i.i.i.i, -4         ; 2 uses
   %i.af = load i32, ptr %i.ac, align 4, !tbaa !254
   store i32 %i.af, ptr %i.ad, align 4, !tbaa !254
   %i.ag = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 28
@@ -1265,7 +1265,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   %.0819.i.i.i.i.i.prol = phi ptr [ %i.j, %.lr.ph.i.i.i.i.i.prol ], [ %1, %.lr.ph.i.preheader.i.i.i.i ] ; 3 uses
   %.01618.i.i.i.i.i.prol = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.prol ], [ %0, %.lr.ph.i.preheader.i.i.i.i ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.preheader.i.i.i.i ]
-  %i.e = add i64 %.020.i.i.i.i.i.prol, -1         ; 2 uses
+  %i.e = add nsw i64 %.020.i.i.i.i.i.prol, -1     ; 2 uses
   %i.f = load i32, ptr %.0819.i.i.i.i.i.prol, align 4, !tbaa !254
   store i32 %i.f, ptr %.01618.i.i.i.i.i.prol, align 4, !tbaa !254
   %i.g = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i.prol, i64 4
@@ -1313,7 +1313,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorISt4p
   store i32 %i.ab, ptr %i.z, align 4, !tbaa !254
   %i.ac = getelementptr inbounds nuw i8, ptr %.0819.i.i.i.i.i, i64 24
   %i.ad = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 24
-  %i.ae = add i64 %.020.i.i.i.i.i, -4             ; 2 uses
+  %i.ae = add nsw i64 %.020.i.i.i.i.i, -4         ; 2 uses
   %i.af = load i32, ptr %i.ac, align 4, !tbaa !254
   store i32 %i.af, ptr %i.ad, align 4, !tbaa !254
   %i.ag = getelementptr inbounds nuw i8, ptr %.01618.i.i.i.i.i, i64 28
@@ -1716,7 +1716,7 @@ bb.a:
   %17 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 5 uses
   %18 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 5 uses
   %19 = alloca %"struct.boost::movelib::antistable.93", align 8 ; 4 uses
-  %20 = alloca %"class.boost::movelib::reverse_iterator.47", align 16 ; 2 uses
+  %20 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 3 uses
   %21 = alloca %"class.boost::movelib::reverse_iterator.47", align 16 ; 2 uses
   %22 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 9 uses
   %23 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 9 uses
@@ -1727,7 +1727,8 @@ bb.a:
   br i1 %.not170, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
+  %27 = getelementptr inbounds nuw i8, ptr %20, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.c = sub nsw i64 0, %7                        ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %7, 0               ; 2 uses
@@ -1740,16 +1741,19 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %25, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %27 = load <2 x ptr>, ptr %1, align 8, !tbaa !314, !noalias !11076
+  %.pre = load ptr, ptr %1, align 8, !tbaa !311, !noalias !11076
+  %.pre175 = load ptr, ptr %i.a, align 8, !tbaa !312, !noalias !11076
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit
+  %28 = phi ptr [ %.pre175, %.lr.ph ], [ %i.iq, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ]
+  %29 = phi ptr [ %.pre, %.lr.ph ], [ %storemerge.i.i, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ]
   %i.m = phi i64 [ %10, %.lr.ph ], [ %i.iu, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
   %.0172 = phi i64 [ %9, %.lr.ph ], [ %i.is, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ] ; 3 uses
   %.0163171 = phi i64 [ %8, %.lr.ph ], [ %i.iv, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
-  %28 = phi <2 x ptr> [ %27, %.lr.ph ], [ %30, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ]
   call void @llvm.experimental.noalias.scope.decl(metadata !11076)
-  store <2 x ptr> %28, ptr %20, align 16, !tbaa !314, !alias.scope !11076
+  store ptr %29, ptr %20, align 8, !tbaa !311, !alias.scope !11076
+  store ptr %28, ptr %27, align 8, !tbaa !312, !alias.scope !11076
   call void @llvm.experimental.noalias.scope.decl(metadata !11077)
   %i.n = load <2 x ptr>, ptr %3, align 8, !tbaa !314, !noalias !11077
   store <2 x ptr> %i.n, ptr %21, align 16, !tbaa !314, !alias.scope !11077
@@ -2152,8 +2156,6 @@ _ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #23
   %i.iv = add i64 %.0163171, -1                   ; 2 uses
   %.not = icmp eq i64 %i.iv, 0
-  %29 = insertelement <2 x ptr> poison, ptr %storemerge.i.i, i64 0
-  %30 = insertelement <2 x ptr> %29, ptr %i.iq, i64 1
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !11073
 
 ._crit_edge:                                      ; preds = %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit, %bb.a
@@ -2556,7 +2558,7 @@ bb.a:
   %25 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 5 uses
   %26 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 5 uses
   %27 = alloca %"struct.boost::movelib::antistable.93", align 8 ; 4 uses
-  %28 = alloca %"class.boost::movelib::reverse_iterator.47", align 16 ; 2 uses
+  %28 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 3 uses
   %29 = alloca %"class.boost::movelib::reverse_iterator.47", align 16 ; 2 uses
   %30 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 9 uses
   %31 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 10 uses
@@ -2564,7 +2566,8 @@ bb.a:
   br i1 %.not191, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
+  %32 = getelementptr inbounds nuw i8, ptr %28, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.c = sub nsw i64 0, %7                        ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %7, 0               ; 2 uses
@@ -2585,16 +2588,19 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %32 = load <2 x ptr>, ptr %1, align 8, !tbaa !314, !noalias !11401
+  %.pre = load ptr, ptr %1, align 8, !tbaa !311, !noalias !11401
+  %.pre198 = load ptr, ptr %i.a, align 8, !tbaa !312, !noalias !11401
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit
+  %33 = phi ptr [ %.pre198, %.lr.ph ], [ %i.jl, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ]
+  %34 = phi ptr [ %.pre, %.lr.ph ], [ %storemerge.i.i, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ]
   %i.u = phi i64 [ %10, %.lr.ph ], [ %i.jp, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
   %.0193 = phi i64 [ %9, %.lr.ph ], [ %i.jn, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ] ; 3 uses
   %.0178192 = phi i64 [ %8, %.lr.ph ], [ %i.jq, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
-  %33 = phi <2 x ptr> [ %32, %.lr.ph ], [ %35, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ]
   call void @llvm.experimental.noalias.scope.decl(metadata !11401)
-  store <2 x ptr> %33, ptr %28, align 16, !tbaa !314, !alias.scope !11401
+  store ptr %34, ptr %28, align 8, !tbaa !311, !alias.scope !11401
+  store ptr %33, ptr %32, align 8, !tbaa !312, !alias.scope !11401
   call void @llvm.experimental.noalias.scope.decl(metadata !11402)
   %i.v = load <2 x ptr>, ptr %3, align 8, !tbaa !314, !noalias !11402
   store <2 x ptr> %i.v, ptr %29, align 16, !tbaa !314, !alias.scope !11402
@@ -2997,8 +3003,6 @@ _ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #23
   %i.jq = add i64 %.0178192, -1                   ; 2 uses
   %.not = icmp eq i64 %i.jq, 0
-  %34 = insertelement <2 x ptr> poison, ptr %storemerge.i.i, i64 0
-  %35 = insertelement <2 x ptr> %34, ptr %i.jl, i64 1
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !11398
 
 ._crit_edge:                                      ; preds = %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit, %bb.a
@@ -3401,7 +3405,7 @@ bb.a:
   %25 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 5 uses
   %26 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 5 uses
   %27 = alloca %"struct.boost::movelib::antistable.93", align 8 ; 4 uses
-  %28 = alloca %"class.boost::movelib::reverse_iterator.47", align 16 ; 2 uses
+  %28 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 3 uses
   %29 = alloca %"class.boost::movelib::reverse_iterator.47", align 16 ; 2 uses
   %30 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 9 uses
   %31 = alloca %"class.boost::movelib::reverse_iterator.47", align 8 ; 10 uses
@@ -3409,7 +3413,8 @@ bb.a:
   br i1 %.not185, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
+  %32 = getelementptr inbounds nuw i8, ptr %28, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.c = sub nsw i64 0, %7                        ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %7, 0               ; 2 uses
@@ -3430,16 +3435,19 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %32 = load <2 x ptr>, ptr %1, align 8, !tbaa !314, !noalias !13886
+  %.pre = load ptr, ptr %1, align 8, !tbaa !311, !noalias !13886
+  %.pre190 = load ptr, ptr %i.a, align 8, !tbaa !312, !noalias !13886
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit
+  %33 = phi ptr [ %.pre190, %.lr.ph ], [ %i.iy, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ]
+  %34 = phi ptr [ %.pre, %.lr.ph ], [ %storemerge.i.i, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ]
   %i.u = phi i64 [ %10, %.lr.ph ], [ %i.jc, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
   %.0187 = phi i64 [ %9, %.lr.ph ], [ %i.ja, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ] ; 3 uses
   %.0178186 = phi i64 [ %8, %.lr.ph ], [ %i.jd, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ] ; 2 uses
-  %33 = phi <2 x ptr> [ %32, %.lr.ph ], [ %35, %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit ]
   call void @llvm.experimental.noalias.scope.decl(metadata !13886)
-  store <2 x ptr> %33, ptr %28, align 16, !tbaa !314, !alias.scope !13886
+  store ptr %34, ptr %28, align 8, !tbaa !311, !alias.scope !13886
+  store ptr %33, ptr %32, align 8, !tbaa !312, !alias.scope !13886
   call void @llvm.experimental.noalias.scope.decl(metadata !13887)
   %i.v = load <2 x ptr>, ptr %3, align 8, !tbaa !314, !noalias !13887
   store <2 x ptr> %i.v, ptr %29, align 16, !tbaa !314, !alias.scope !13887
@@ -3842,8 +3850,6 @@ _ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #23
   %i.jd = add i64 %.0178186, -1                   ; 2 uses
   %.not = icmp eq i64 %i.jd, 0
-  %34 = insertelement <2 x ptr> poison, ptr %storemerge.i.i, i64 0
-  %35 = insertelement <2 x ptr> %34, ptr %i.iy, i64 1
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !13883
 
 ._crit_edge:                                      ; preds = %_ZN5boost7movelib16reverse_iteratorINS_9container14deque_iteratorIPSt4pairINS2_4test24movable_and_copyable_intES6_ELb0ELj0ELj0EmEEEppEv.exit, %bb.a

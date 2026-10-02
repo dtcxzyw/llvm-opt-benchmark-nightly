@@ -204,41 +204,34 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN2v88internal22ExternalReferenceTable12AddStubCacheEPNS0_7IsolateEPi.exit: ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 58744
-  %2 = load ptr, ptr %i.d, align 8                ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 58752
-  %3 = load ptr, ptr %i.e, align 8                ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 58760
-  %4 = load ptr, ptr %i.f, align 8                ; 3 uses
-  %5 = ptrtoint ptr %2 to i64
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 10976
-  store i64 %5, ptr %i.g, align 8
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 10984
-  %6 = getelementptr inbounds nuw i8, ptr %2, <4 x i64> <i64 8, i64 16, i64 49152, i64 49160>
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 11008
+  %2 = load <2 x ptr>, ptr %i.d, align 8          ; 2 uses
+  %3 = load ptr, ptr %i.e, align 8
+  %4 = shufflevector <2 x ptr> %2, <2 x ptr> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %5 = shufflevector <2 x ptr> %2, <2 x ptr> poison, <4 x i32> zeroinitializer
+  %6 = getelementptr inbounds nuw i8, <4 x ptr> %5, <4 x i64> <i64 0, i64 8, i64 16, i64 49152>
   %7 = ptrtoint <4 x ptr> %6 to <4 x i64>
-  store <4 x i64> %7, ptr %i.h, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 49168
-  %9 = ptrtoint ptr %8 to i64
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 11016
-  store i64 %9, ptr %10, align 8
-  %11 = ptrtoint ptr %3 to i64
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 11024
-  store i64 %11, ptr %12, align 8
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 11032
-  %i.j = getelementptr inbounds nuw i8, ptr %3, <4 x i64> <i64 8, i64 16, i64 49152, i64 49160>
+  %8 = getelementptr inbounds nuw i8, <4 x ptr> %4, <4 x i64> <i64 49160, i64 49168, i64 0, i64 8>
+  %9 = ptrtoint <4 x ptr> %8 to <4 x i64>
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 11040
+  %i.j = getelementptr inbounds nuw i8, ptr %3, <4 x i64> <i64 16, i64 49152, i64 49160, i64 49168>
   %i.k = ptrtoint <4 x ptr> %i.j to <4 x i64>
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 11072
+  %11 = load ptr, ptr %i.f, align 8               ; 3 uses
+  store <4 x i64> %7, ptr %i.g, align 8
+  store <4 x i64> %9, ptr %i.h, align 8
   store <4 x i64> %i.k, ptr %i.i, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %3, i64 49168
-  %14 = ptrtoint ptr %13 to i64
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 11064
+  %12 = getelementptr inbounds nuw i8, ptr %11, <4 x i64> <i64 0, i64 8, i64 16, i64 49152>
+  %13 = ptrtoint <4 x ptr> %12 to <4 x i64>
+  store <4 x i64> %13, ptr %10, align 8
+  %i.l = getelementptr inbounds nuw i8, ptr %11, i64 49160
+  %14 = ptrtoint ptr %i.l to i64
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 11104
   store i64 %14, ptr %15, align 8
-  %16 = ptrtoint ptr %4 to i64
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 11072
-  store i64 %16, ptr %17, align 8
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 11080
-  %18 = getelementptr inbounds nuw i8, ptr %4, <4 x i64> <i64 8, i64 16, i64 49152, i64 49160>
-  %19 = ptrtoint <4 x ptr> %18 to <4 x i64>
-  store <4 x i64> %19, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 49168
+  %i.m = getelementptr inbounds nuw i8, ptr %11, i64 49168
   %i.n = ptrtoint ptr %i.m to i64
   store i32 1390, ptr %i.a, align 4
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 11112

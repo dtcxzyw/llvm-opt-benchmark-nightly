@@ -204,15 +204,12 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %.thread, %bb.p
   %i.ak = phi ptr [ %i.ac, %.thread ], [ %i.aj, %bb.p ]
-  %2 = load ptr, ptr %0, align 8, !noalias !14165, !nonnull !27, !align !33, !noundef !27
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load ptr, ptr %3, align 8, !noalias !14165, !nonnull !27, !align !33, !noundef !27
-  store ptr %4, ptr %i.al, align 8, !noalias !14165
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !14165
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 208
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %5, ptr %6, align 8, !noalias !14165
+  %2 = load <2 x ptr>, ptr %0, align 8, !noalias !14165
+  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 208, i64 0>
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %4, ptr %i.al, align 8, !noalias !14165
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i8 0, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !14165
   br label %bb.u
@@ -615,7 +612,7 @@ bb.cn:                                            ; preds = %._crit_edge74.i.i.i
   %i.jz = phi ptr [ %i.in, %.thread70.i.i.i.i ], [ %.phi.trans.insert.i.i.i, %._crit_edge74.i.i.i ] ; 6 uses
   %i.ka = phi ptr [ %i.ik, %.thread70.i.i.i.i ], [ %.pre79.i.i.i, %._crit_edge74.i.i.i ] ; 7 uses
   %i.kb = phi ptr [ %i.jk, %.thread70.i.i.i.i ], [ %.pre77.i.i.i, %._crit_edge74.i.i.i ] ; 8 uses
-  %i.kc = phi ptr [ %i.im, %.thread70.i.i.i.i ], [ %.pre75.i.i.i, %._crit_edge74.i.i.i ] ; 7 uses
+  %i.kc = phi ptr [ %i.im, %.thread70.i.i.i.i ], [ %.pre75.i.i.i, %._crit_edge74.i.i.i ] ; 8 uses
   %i.kd = phi ptr [ %.sroa.935.0..sroa_idx.i.i.i.i, %.thread70.i.i.i.i ], [ %.phi.trans.insert.i.i.i.i, %._crit_edge74.i.i.i ] ; 6 uses
   %i.ke = phi ptr [ %i.jl, %.thread70.i.i.i.i ], [ %i.jt, %._crit_edge74.i.i.i ] ; 6 uses
   %i.kf = load i64, ptr %i.kc, align 8, !range !99, !noalias !14607, !noundef !27 ; 3 uses
@@ -650,7 +647,10 @@ bb.cp:                                            ; preds = %bb.cn
   br label %bb.ct
 
 .thread.i.i.i.i.i:                                ; preds = %bb.cn
-  %i.km = getelementptr inbounds nuw i8, ptr %i.kc, i64 8 ; 2 uses
+  %i.km = getelementptr inbounds nuw i8, ptr %i.kc, i64 8
+  %3 = insertelement <2 x ptr> poison, ptr %i.kc, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.ka, i64 1
+  %5 = getelementptr inbounds nuw i8, <2 x ptr> %4, <2 x i64> <i64 8, i64 0>
   %i.kn = getelementptr inbounds nuw i8, ptr %1, i64 864 ; 2 uses
   store ptr %i.km, ptr %i.kn, align 8, !noalias !14606
   %.sroa.784.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 872
@@ -660,8 +660,6 @@ bb.cp:                                            ; preds = %bb.cn
   %.sroa.1087.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 928 ; 2 uses
   store i8 0, ptr %.sroa.1087.0..sroa_idx.i.i.i.i.i, align 8, !noalias !14606
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !14606
-  %3 = insertelement <2 x ptr> poison, ptr %i.km, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %i.ka, i64 1
   br label %bb.df
 
 .thread130.i.i.i.i.i:                             ; preds = %bb.cn
@@ -854,7 +852,7 @@ bb.df:                                            ; preds = %._crit_edge63.i.i.i
   %i.ms = phi ptr [ %i.kb, %.thread.i.i.i.i.i ], [ %.pre66.i.i.i.i, %._crit_edge63.i.i.i.i ]
   %i.mt = phi ptr [ %.sroa.1087.0..sroa_idx.i.i.i.i.i, %.thread.i.i.i.i.i ], [ %.phi.trans.insert127.i.i.i.i.i, %._crit_edge63.i.i.i.i ]
   %i.mu = phi ptr [ %i.kn, %.thread.i.i.i.i.i ], [ %i.mi, %._crit_edge63.i.i.i.i ]
-  %i.mv = phi <2 x ptr> [ %4, %.thread.i.i.i.i.i ], [ %i.mj, %._crit_edge63.i.i.i.i ]
+  %i.mv = phi <2 x ptr> [ %5, %.thread.i.i.i.i.i ], [ %i.mj, %._crit_edge63.i.i.i.i ]
   %i.mw = getelementptr inbounds nuw i8, ptr %1, i64 888
   store ptr %i.ms, ptr %i.mw, align 8, !noalias !14609
   %.sroa.810.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 904

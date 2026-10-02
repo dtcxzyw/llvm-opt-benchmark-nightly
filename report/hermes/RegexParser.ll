@@ -204,9 +204,9 @@ _ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE17ParseStackEle
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE16closeAlternationERN4llvh11SmallVectorINS7_17ParseStackElementELj4EEE(ptr noundef nonnull align 8 dereferenceable(41) %0, ptr noundef nonnull align 8 dereferenceable(336) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %2 = alloca %"class.std::vector.16", align 16   ; 10 uses
+  %2 = alloca %"class.std::vector.16", align 8    ; 10 uses
   %3 = alloca %"class.std::vector", align 8       ; 10 uses
-  %4 = alloca %"class.std::vector.16", align 16   ; 6 uses
+  %4 = alloca %"class.std::vector.16", align 8    ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !40   ; 2 uses
   %.not.i = icmp eq i32 %i.b, 0
@@ -215,7 +215,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %1, align 8, !tbaa !39
   %i.d = zext i32 %i.b to i64
-  %i.e = getelementptr inbounds nuw [80 x i8], ptr %i.c, i64 %i.d ; 3 uses
+  %i.e = getelementptr inbounds nuw [80 x i8], ptr %i.c, i64 %i.d ; 4 uses
   %i.f = getelementptr inbounds i8, ptr %i.e, i64 -80
   %i.g = load i32, ptr %i.f, align 8, !tbaa !59
   %i.h = icmp eq i32 %i.g, 0
@@ -224,14 +224,16 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   %i.i = getelementptr inbounds i8, ptr %i.e, i64 -32 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %5 = load <2 x ptr>, ptr %i.i, align 8, !tbaa !94 ; 3 uses
-  %6 = extractelement <2 x ptr> %5, i64 1         ; 6 uses
-  store <2 x ptr> %5, ptr %2, align 16, !tbaa !94
+  %5 = load ptr, ptr %i.i, align 8, !tbaa !93     ; 2 uses
+  store ptr %5, ptr %2, align 8, !tbaa !93
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %6 = getelementptr inbounds i8, ptr %i.e, i64 -24
+  %7 = load ptr, ptr %6, align 8, !tbaa !61       ; 7 uses
+  store ptr %7, ptr %i.j, align 8, !tbaa !61
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %i.l = getelementptr inbounds i8, ptr %i.e, i64 -16
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !62   ; 3 uses
-  store ptr %i.m, ptr %i.k, align 16, !tbaa !62
+  store ptr %i.m, ptr %i.k, align 8, !tbaa !62
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   %i.n = load ptr, ptr %0, align 8, !tbaa !25     ; 2 uses
@@ -433,37 +435,39 @@ bb.m:                                             ; preds = %_ZSt8_DestroyIPSt6v
   br label %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit
 
 _ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit: ; preds = %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i.i.i, %bb.m
-  %.not.i.i = icmp eq ptr %6, %i.m
+  %.not.i.i = icmp eq ptr %7, %i.m
   br i1 %.not.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit
-  store ptr %i.br, ptr %6, align 8, !tbaa !56
-  %i.ct = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store ptr %i.br, ptr %7, align 8, !tbaa !56
+  %i.ct = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr %i.bq, ptr %i.ct, align 8, !tbaa !55
-  %i.cu = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %i.cu = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.bp, ptr %i.cu, align 8, !tbaa !58
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
-  %i.cv = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %7 = insertelement <2 x ptr> %5, ptr %i.cv, i64 1
+  %i.cv = getelementptr inbounds nuw i8, ptr %7, i64 24
   br label %_ZNSt6vectorIS_IPN6hermes5regex4NodeESaIS3_EESaIS5_EE9push_backEOS5_.exit
 
 bb.o:                                             ; preds = %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit
-  call void @_ZNSt6vectorIS_IPN6hermes5regex4NodeESaIS3_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr %6, ptr noundef nonnull align 8 dereferenceable(24) %3)
-  %8 = load <2 x ptr>, ptr %2, align 16, !tbaa !94
-  %.pre22 = load ptr, ptr %i.k, align 16, !tbaa !62
+  call void @_ZNSt6vectorIS_IPN6hermes5regex4NodeESaIS3_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr %7, ptr noundef nonnull align 8 dereferenceable(24) %3)
+  %.pre20 = load ptr, ptr %2, align 8, !tbaa !93
+  %.pre21 = load ptr, ptr %i.j, align 8, !tbaa !61
+  %.pre22 = load ptr, ptr %i.k, align 8, !tbaa !62
   br label %_ZNSt6vectorIS_IPN6hermes5regex4NodeESaIS3_EESaIS5_EE9push_backEOS5_.exit
 
 _ZNSt6vectorIS_IPN6hermes5regex4NodeESaIS3_EESaIS5_EE9push_backEOS5_.exit: ; preds = %bb.n, %bb.o
   %i.cw = phi ptr [ %i.m, %bb.n ], [ %.pre22, %bb.o ]
-  %9 = phi <2 x ptr> [ %7, %bb.n ], [ %8, %bb.o ]
+  %8 = phi ptr [ %i.cv, %bb.n ], [ %.pre21, %bb.o ]
+  %9 = phi ptr [ %5, %bb.n ], [ %.pre20, %bb.o ]
   %i.cx = load ptr, ptr %0, align 8, !tbaa !25
-  %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store <2 x ptr> %9, ptr %4, align 16, !tbaa !94
+  store ptr %9, ptr %4, align 8, !tbaa !93
+  %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store ptr %8, ptr %i.cy, align 8, !tbaa !61
   %i.cz = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  store ptr %i.cw, ptr %i.cz, align 16, !tbaa !62
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, i8 0, i64 24, i1 false)
+  store ptr %i.cw, ptr %i.cz, align 8, !tbaa !62
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   %i.da = call noundef ptr @_ZN6hermes5regex5RegexINS0_16UTF16RegexTraitsEE10appendNodeINS0_15AlternationNodeEJSt6vectorIS6_IPNS0_4NodeESaIS8_EESaISA_EEEEEPT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(336) %i.cx, ptr noundef nonnull align 8 dereferenceable(24) %4) ; 0 uses
-  %i.db = load ptr, ptr %4, align 16, !tbaa !93   ; 3 uses
+  %i.db = load ptr, ptr %4, align 8, !tbaa !93    ; 3 uses
   %i.dc = load ptr, ptr %i.cy, align 8, !tbaa !61 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.db, %i.dc
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i, label %.lr.ph.i.i.i
@@ -489,7 +493,7 @@ _ZSt8_DestroyISt6vectorIPN6hermes5regex4NodeESaIS4_EEEvPT_.exit.i.i.i: ; preds =
   br i1 %.not.i.i.i7, label %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exitthread-pre-split.i, label %.lr.ph.i.i.i, !llvm.loop !2
 
 _ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exitthread-pre-split.i: ; preds = %_ZSt8_DestroyISt6vectorIPN6hermes5regex4NodeESaIS4_EEEvPT_.exit.i.i.i
-  %.pr.i = load ptr, ptr %4, align 16, !tbaa !93
+  %.pr.i = load ptr, ptr %4, align 8, !tbaa !93
   br label %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i
 
 _ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i: ; preds = %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exitthread-pre-split.i, %_ZNSt6vectorIS_IPN6hermes5regex4NodeESaIS3_EESaIS5_EE9push_backEOS5_.exit
@@ -498,7 +502,7 @@ _ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i: ; preds = 
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIS_IPN6hermes5regex4NodeESaIS3_EESaIS5_EED2Ev.exit, label %bb.q
 
 bb.q:                                             ; preds = %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i
-  %i.dl = load ptr, ptr %i.cz, align 16, !tbaa !62
+  %i.dl = load ptr, ptr %i.cz, align 8, !tbaa !62
   %i.dm = ptrtoint ptr %i.dl to i64
   %i.dn = ptrtoint ptr %i.dk to i64
   %i.do = sub i64 %i.dm, %i.dn
@@ -521,7 +525,7 @@ bb.r:                                             ; preds = %_ZNSt6vectorIS_IPN6
 
 _ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit: ; preds = %_ZNSt6vectorIS_IPN6hermes5regex4NodeESaIS3_EESaIS5_EED2Ev.exit, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
-  %i.dv = load ptr, ptr %2, align 16, !tbaa !93   ; 3 uses
+  %i.dv = load ptr, ptr %2, align 8, !tbaa !93    ; 3 uses
   %i.dw = load ptr, ptr %i.j, align 8, !tbaa !61  ; 2 uses
   %.not4.i.i.i9 = icmp eq ptr %i.dv, %i.dw
   br i1 %.not4.i.i.i9, label %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i17, label %.lr.ph.i.i.i10
@@ -547,7 +551,7 @@ _ZSt8_DestroyISt6vectorIPN6hermes5regex4NodeESaIS4_EEEvPT_.exit.i.i.i13: ; preds
   br i1 %.not.i.i.i14, label %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exitthread-pre-split.i15, label %.lr.ph.i.i.i10, !llvm.loop !2
 
 _ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exitthread-pre-split.i15: ; preds = %_ZSt8_DestroyISt6vectorIPN6hermes5regex4NodeESaIS4_EEEvPT_.exit.i.i.i13
-  %.pr.i16 = load ptr, ptr %2, align 16, !tbaa !93
+  %.pr.i16 = load ptr, ptr %2, align 8, !tbaa !93
   br label %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i17
 
 _ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i17: ; preds = %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exitthread-pre-split.i15, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit
@@ -556,7 +560,7 @@ _ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i17: ; preds 
   br i1 %.not.i.i1.i18, label %_ZNSt6vectorIS_IPN6hermes5regex4NodeESaIS3_EESaIS5_EED2Ev.exit19, label %bb.t
 
 bb.t:                                             ; preds = %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i17
-  %i.ef = load ptr, ptr %i.k, align 16, !tbaa !62
+  %i.ef = load ptr, ptr %i.k, align 8, !tbaa !62
   %i.eg = ptrtoint ptr %i.ef to i64
   %i.eh = ptrtoint ptr %i.ee to i64
   %i.ei = sub i64 %i.eg, %i.eh

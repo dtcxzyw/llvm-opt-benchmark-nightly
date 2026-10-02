@@ -119,7 +119,7 @@ bb.a:
   %i.i = alloca [24 x i8], align 8                ; 6 uses
   %i.j = alloca [24 x i8], align 8                ; 7 uses
   %i.k = alloca [288 x i8], align 8               ; 13 uses
-  %i.l = alloca [48 x i8], align 8                ; 10 uses
+  %i.l = alloca [48 x i8], align 16               ; 10 uses
   %i.m = alloca [24 x i8], align 8                ; 6 uses
   %i.n = alloca [24 x i8], align 8                ; 6 uses
   %i.o = alloca [24 x i8], align 8                ; 6 uses
@@ -274,7 +274,7 @@ _RNvMNtCsdEEMmLUVy6d_5rav1e3lrfNtB2_19IntegralImageBuffer6zeroed.exit: ; preds =
   %i.bq = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.br = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.bs = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 32
@@ -364,7 +364,7 @@ bb.n:                                             ; preds = %_RNvMNtCsdEEMmLUVy6
   %.sroa.019.0188 = phi i64 [ 0, %_RNvMNtCsdEEMmLUVy6d_5rav1e3lrfNtB2_19IntegralImageBuffer6zeroed.exit ], [ %i.cq, %.loopexit84 ] ; 6 uses
   %i.cq = add nuw nsw i64 %.sroa.019.0188, 1
   %i.cr = getelementptr inbounds nuw [104 x i8], ptr %0, i64 %.sroa.019.0188 ; 3 uses
-  %i.cs = getelementptr inbounds nuw [96 x i8], ptr %1, i64 %.sroa.019.0188 ; 10 uses
+  %i.cs = getelementptr inbounds nuw [96 x i8], ptr %1, i64 %.sroa.019.0188 ; 11 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 48
   %i.cu = load i64, ptr %i.ct, align 8, !noundef !4
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cs, i64 56
@@ -387,7 +387,9 @@ bb.n:                                             ; preds = %_RNvMNtCsdEEMmLUVy6
   %i.dl = add i64 %i.di, -1
   %i.dm = getelementptr inbounds nuw [96 x i8], ptr %i.q, i64 %.sroa.019.0188 ; 3 uses
   %i.dn = getelementptr inbounds nuw [96 x i8], ptr %2, i64 %.sroa.019.0188 ; 3 uses
-  %i.do = getelementptr inbounds nuw i8, ptr %i.cs, i64 16 ; 3 uses
+  %4 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %i.cs, i64 0
+  %5 = getelementptr inbounds nuw i8, <2 x ptr> %4, <2 x i64> <i64 16, i64 0>
+  %i.do = getelementptr inbounds nuw i8, ptr %i.cs, i64 16 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.cs, i64 32
   %i.dq = getelementptr inbounds nuw i8, ptr %i.cs, i64 40
   %i.dr = getelementptr inbounds nuw i8, ptr %i.cs, i64 80
@@ -539,17 +541,16 @@ bb.x:                                             ; preds = %bb.w
   %i.ga = getelementptr i8, ptr %i.fz, i64 %i.fp
   %i.gb = getelementptr i8, ptr %i.ga, i64 %i.ez
   store ptr %i.gb, ptr %i.bt, align 8, !alias.scope !116, !noalias !117
-  store ptr %i.do, ptr %i.l, align 8, !alias.scope !116, !noalias !117
-  store i64 %i.ez, ptr %i.bu, align 8, !alias.scope !118, !noalias !119
+  store ptr %i.do, ptr %i.l, align 16, !alias.scope !116, !noalias !117
+  store i64 %i.ez, ptr %i.bu, align 16, !alias.scope !118, !noalias !119
   store i64 %.sroa.04.0.us290, ptr %.sroa.8.0..sroa_idx, align 8, !alias.scope !118, !noalias !119
-  store i64 %.sroa.014.0.us, ptr %.sroa.13.0..sroa_idx, align 8, !alias.scope !118, !noalias !119
+  store i64 %.sroa.014.0.us, ptr %.sroa.13.0..sroa_idx, align 16, !alias.scope !118, !noalias !119
   store i64 %.sroa.010.0.us289, ptr %.sroa.18.0..sroa_idx, align 8, !alias.scope !118, !noalias !119
   br label %_RNvXNtNtCsdEEMmLUVy6d_5rav1e5frame5planeINtNtCsko5zPvjVG7R_7v_frame5plane5PlanehEINtB2_8AsRegionhE10region_mutCs2mu2Cb9JdUH_5ravif.exit.us
 
 .noexc.us:                                        ; preds = %_RNvMs_NtNtCsdEEMmLUVy6d_5rav1e6tiling12plane_regionNtB4_4Area7to_rect.exit.i.us
-  store ptr null, ptr %i.bt, align 8, !alias.scope !120, !noalias !121
-  store ptr %i.do, ptr %i.l, align 8, !alias.scope !120, !noalias !121
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bu, i8 0, i64 32, i1 false), !alias.scope !120, !noalias !121
+  store <2 x ptr> %5, ptr %i.l, align 16, !alias.scope !120, !noalias !121
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bu, i8 0, i64 32, i1 false), !alias.scope !120, !noalias !121
   br label %_RNvXNtNtCsdEEMmLUVy6d_5rav1e5frame5planeINtNtCsko5zPvjVG7R_7v_frame5plane5PlanehEINtB2_8AsRegionhE10region_mutCs2mu2Cb9JdUH_5ravif.exit.us
 
 _RNvXNtNtCsdEEMmLUVy6d_5rav1e5frame5planeINtNtCsko5zPvjVG7R_7v_frame5plane5PlanehEINtB2_8AsRegionhE10region_mutCs2mu2Cb9JdUH_5ravif.exit.us: ; preds = %.noexc.us, %bb.x
@@ -952,7 +953,7 @@ bb.a:
   %i.i = alloca [24 x i8], align 8                ; 6 uses
   %i.j = alloca [24 x i8], align 8                ; 7 uses
   %i.k = alloca [288 x i8], align 8               ; 13 uses
-  %i.l = alloca [48 x i8], align 8                ; 10 uses
+  %i.l = alloca [48 x i8], align 16               ; 10 uses
   %i.m = alloca [24 x i8], align 8                ; 6 uses
   %i.n = alloca [24 x i8], align 8                ; 6 uses
   %i.o = alloca [24 x i8], align 8                ; 6 uses
@@ -1107,7 +1108,7 @@ _RNvMNtCsdEEMmLUVy6d_5rav1e3lrfNtB2_19IntegralImageBuffer6zeroed.exit: ; preds =
   %i.bq = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.br = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.bs = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 32
@@ -1200,7 +1201,7 @@ bb.n:                                             ; preds = %_RNvMNtCsdEEMmLUVy6
   %.sroa.019.0188 = phi i64 [ 0, %_RNvMNtCsdEEMmLUVy6d_5rav1e3lrfNtB2_19IntegralImageBuffer6zeroed.exit ], [ %i.ct, %.loopexit84 ] ; 6 uses
   %i.ct = add nuw nsw i64 %.sroa.019.0188, 1
   %i.cu = getelementptr inbounds nuw [104 x i8], ptr %0, i64 %.sroa.019.0188 ; 3 uses
-  %i.cv = getelementptr inbounds nuw [96 x i8], ptr %1, i64 %.sroa.019.0188 ; 10 uses
+  %i.cv = getelementptr inbounds nuw [96 x i8], ptr %1, i64 %.sroa.019.0188 ; 11 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 48
   %i.cx = load i64, ptr %i.cw, align 8, !noundef !4
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cv, i64 56
@@ -1223,7 +1224,9 @@ bb.n:                                             ; preds = %_RNvMNtCsdEEMmLUVy6
   %i.do = add i64 %i.dl, -1
   %i.dp = getelementptr inbounds nuw [96 x i8], ptr %i.q, i64 %.sroa.019.0188 ; 3 uses
   %i.dq = getelementptr inbounds nuw [96 x i8], ptr %2, i64 %.sroa.019.0188 ; 3 uses
-  %i.dr = getelementptr inbounds nuw i8, ptr %i.cv, i64 16 ; 3 uses
+  %4 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %i.cv, i64 0
+  %5 = getelementptr inbounds nuw i8, <2 x ptr> %4, <2 x i64> <i64 16, i64 0>
+  %i.dr = getelementptr inbounds nuw i8, ptr %i.cv, i64 16 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.cv, i64 32
   %i.dt = getelementptr inbounds nuw i8, ptr %i.cv, i64 40
   %i.du = getelementptr inbounds nuw i8, ptr %i.cv, i64 80
@@ -1375,17 +1378,16 @@ bb.x:                                             ; preds = %bb.w
   %i.gd = getelementptr [2 x i8], ptr %i.gc, i64 %i.fs
   %i.ge = getelementptr [2 x i8], ptr %i.gd, i64 %i.fc
   store ptr %i.ge, ptr %i.bt, align 8, !alias.scope !226, !noalias !227
-  store ptr %i.dr, ptr %i.l, align 8, !alias.scope !226, !noalias !227
-  store i64 %i.fc, ptr %i.bu, align 8, !alias.scope !228, !noalias !229
+  store ptr %i.dr, ptr %i.l, align 16, !alias.scope !226, !noalias !227
+  store i64 %i.fc, ptr %i.bu, align 16, !alias.scope !228, !noalias !229
   store i64 %.sroa.04.0.us290, ptr %.sroa.8.0..sroa_idx, align 8, !alias.scope !228, !noalias !229
-  store i64 %.sroa.014.0.us, ptr %.sroa.13.0..sroa_idx, align 8, !alias.scope !228, !noalias !229
+  store i64 %.sroa.014.0.us, ptr %.sroa.13.0..sroa_idx, align 16, !alias.scope !228, !noalias !229
   store i64 %.sroa.010.0.us289, ptr %.sroa.18.0..sroa_idx, align 8, !alias.scope !228, !noalias !229
   br label %_RNvXNtNtCsdEEMmLUVy6d_5rav1e5frame5planeINtNtCsko5zPvjVG7R_7v_frame5plane5PlanetEINtB2_8AsRegiontE10region_mutCs2mu2Cb9JdUH_5ravif.exit.us
 
 .noexc.us:                                        ; preds = %_RNvMs_NtNtCsdEEMmLUVy6d_5rav1e6tiling12plane_regionNtB4_4Area7to_rect.exit.i.us
-  store ptr null, ptr %i.bt, align 8, !alias.scope !230, !noalias !231
-  store ptr %i.dr, ptr %i.l, align 8, !alias.scope !230, !noalias !231
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bu, i8 0, i64 32, i1 false), !alias.scope !230, !noalias !231
+  store <2 x ptr> %5, ptr %i.l, align 16, !alias.scope !230, !noalias !231
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bu, i8 0, i64 32, i1 false), !alias.scope !230, !noalias !231
   br label %_RNvXNtNtCsdEEMmLUVy6d_5rav1e5frame5planeINtNtCsko5zPvjVG7R_7v_frame5plane5PlanetEINtB2_8AsRegiontE10region_mutCs2mu2Cb9JdUH_5ravif.exit.us
 
 _RNvXNtNtCsdEEMmLUVy6d_5rav1e5frame5planeINtNtCsko5zPvjVG7R_7v_frame5plane5PlanetEINtB2_8AsRegiontE10region_mutCs2mu2Cb9JdUH_5ravif.exit.us: ; preds = %.noexc.us, %bb.x

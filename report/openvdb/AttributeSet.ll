@@ -204,7 +204,7 @@ _ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EE
   %.09.i.i.i.i.i.us.i.prol = phi ptr [ %i.ab, %_ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.prol ], [ %i.w, %.lr.ph.i.i.i.i.i.split.us.i ] ; 2 uses
   %.068.i.i.i.i.i.us.i.prol = phi i64 [ %i.aa, %_ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.prol ], [ %i.s, %.lr.ph.i.i.i.i.i.split.us.i ]
   %prol.iter = phi i64 [ %prol.iter.next, %_ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.split.us.i ]
-  %i.aa = add i64 %.068.i.i.i.i.i.us.i.prol, -1   ; 2 uses
+  %i.aa = add nsw i64 %.068.i.i.i.i.i.us.i.prol, -1 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.prol, i64 16 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i.i.i.i.i.us.i.prol, i8 0, i64 16, i1 false)
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -235,7 +235,7 @@ _ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EE
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ah, i8 0, i64 16, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i, i64 112
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i8 0, i64 16, i1 false)
-  %i.ak = add i64 %.068.i.i.i.i.i.us.i, -8        ; 2 uses
+  %i.ak = add nsw i64 %.068.i.i.i.i.i.us.i, -8    ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i.7 = icmp eq i64 %i.ak, 0
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
@@ -638,7 +638,7 @@ _ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EE
   %.09.i.i.i.i.i.us.i.prol = phi ptr [ %i.ab, %_ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.prol ], [ %i.w, %.lr.ph.i.i.i.i.i.split.us.i ] ; 2 uses
   %.068.i.i.i.i.i.us.i.prol = phi i64 [ %i.aa, %_ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.prol ], [ %i.s, %.lr.ph.i.i.i.i.i.split.us.i ]
   %prol.iter = phi i64 [ %prol.iter.next, %_ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.split.us.i ]
-  %i.aa = add i64 %.068.i.i.i.i.i.us.i.prol, -1   ; 2 uses
+  %i.aa = add nsw i64 %.068.i.i.i.i.i.us.i.prol, -1 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.prol, i64 16 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i.i.i.i.i.us.i.prol, i8 0, i64 16, i1 false)
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -669,7 +669,7 @@ _ZSt10_ConstructISt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEJRKS5_EE
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ah, i8 0, i64 16, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i, i64 112
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i8 0, i64 16, i1 false)
-  %i.ak = add i64 %.068.i.i.i.i.i.us.i, -8        ; 2 uses
+  %i.ak = add nsw i64 %.068.i.i.i.i.i.us.i, -8    ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i.7 = icmp eq i64 %i.ak, 0
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
@@ -1072,7 +1072,7 @@ _ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
   %i.ad = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 104
   store i64 0, ptr %i.ad, align 8, !tbaa !70
   store i8 0, ptr %i.ac, align 8, !tbaa !43
-  %i.ae = add i64 %.01012.i.i.i.i.i, -2           ; 2 uses
+  %i.ae = add nsw i64 %.01012.i.i.i.i.i, -2       ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.1 = icmp eq i64 %i.ae, 0
   br i1 %.not.i.i.i.i.i.1, label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EEC2EmRKS8_.exit.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !231

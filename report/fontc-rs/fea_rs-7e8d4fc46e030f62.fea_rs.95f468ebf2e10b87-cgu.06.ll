@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   %i.c = alloca [16 x i8], align 8                ; 5 uses
-  %i.d = alloca [16 x i8], align 8                ; 6 uses
+  %i.d = alloca [16 x i8], align 16               ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = load i8, ptr %i.e, align 4, !range !16, !noundef !5
   %.not = icmp eq i8 %i.f, 2
@@ -221,8 +221,10 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.i:                                       ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.g, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %1, i64 1
+  %5 = getelementptr inbounds nuw i8, <2 x ptr> %4, <2 x i64> <i64 0, i64 64>
+  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.sroa.519.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 104
@@ -253,8 +255,7 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !1764)
   call void @llvm.experimental.noalias.scope.decl(metadata !1765)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1766
-  store ptr %i.g, ptr %i.d, align 8, !noalias !1767
-  store ptr %3, ptr %i.l, align 8, !noalias !1767
+  store <2 x ptr> %5, ptr %i.d, align 16, !noalias !1767
   %i.q = load ptr, ptr %i.m, align 8, !alias.scope !1768, !noalias !1763, !nonnull !5, !noundef !5 ; 2 uses
   %i.r = icmp eq ptr %i.p, %i.q
   br i1 %i.r, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6filterINtB5_6FilterINtNtB7_7flatten7FlatMapINtNtNtBb_5slice4iter4IterNtNtNtNtCs8n5UXKvQVD9_10read_fonts11collections7int_set6bitset8PageInfoEINtNtBb_6option6OptionTmRNtNtB1U_7bitpage7BitPageEENCNvMs1_B1S_NtB1S_6U32Set10iter_pages0ENCNvB3T_20iter_non_empty_pages0ENtNtNtB9_6traits8iterator8Iterator4nextCscScJTt9VrQp_6fea_rs.exit.thread10.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
@@ -657,7 +658,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 16               ; 6 uses
   %i.c = alloca [16 x i8], align 8                ; 5 uses
-  %i.d = alloca [16 x i8], align 8                ; 6 uses
+  %i.d = alloca [16 x i8], align 16               ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 3 uses
   %i.f = load i8, ptr %i.e, align 8, !range !16, !noundef !5 ; 2 uses
   %.not = icmp eq i8 %i.f, 2
@@ -699,8 +700,10 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i.i:                                       ; preds = %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %1 = insertelement <2 x ptr> poison, ptr %i.u, i64 0
+  %2 = insertelement <2 x ptr> %1, ptr %0, i64 1
+  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 0, i64 64>
+  %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.sroa.519.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -731,8 +734,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.experimental.noalias.scope.decl(metadata !2226)
   call void @llvm.experimental.noalias.scope.decl(metadata !2227)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2228
-  store ptr %i.u, ptr %i.d, align 8, !noalias !2229
-  store ptr %1, ptr %i.z, align 8, !noalias !2229
+  store <2 x ptr> %3, ptr %i.d, align 16, !noalias !2229
   %i.ae = load ptr, ptr %i.aa, align 8, !alias.scope !2230, !noalias !2225, !nonnull !5, !noundef !5 ; 2 uses
   %i.af = icmp eq ptr %i.ad, %i.ae
   br i1 %i.af, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters6filterINtB5_6FilterINtNtB7_7flatten7FlatMapINtNtNtBb_5slice4iter4IterNtNtNtNtCs8n5UXKvQVD9_10read_fonts11collections7int_set6bitset8PageInfoEINtNtBb_6option6OptionTmRNtNtB1U_7bitpage7BitPageEENCNvMs1_B1S_NtB1S_6U32Set10iter_pages0ENCNvB3T_20iter_non_empty_pages0ENtNtNtB9_6traits8iterator8Iterator4nextCscScJTt9VrQp_6fea_rs.exit.thread10.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i

@@ -205,7 +205,7 @@ bb.hn:                                            ; preds = %_RNvMs_NtCs87CvPiUl
 bb.ho:                                            ; preds = %.split1071
   %i.bda = getelementptr inbounds i8, ptr %i.bcz, i64 -4 ; 2 uses
   %.val11.i.i.i.i.i.i.i.i.i.i = load i32, ptr %i.bda, align 4, !noalias !14417 ; 2 uses
-  %i.bdb = add i64 %i.bcy, -1                     ; 2 uses
+  %i.bdb = add nsw i64 %i.bcy, -1                 ; 2 uses
   %i.bdc = load i64, ptr @_RNvNtNtCs1X8ypyHYXIB_8foldhash4seed6global19GLOBAL_SEED_STORAGE, align 8, !noalias !14418, !noundef !67
   %i.bdd = zext i32 %.val11.i.i.i.i.i.i.i.i.i.i to i64
   %i.bde = xor i64 %.sroa.28.0.copyload, %i.bdd
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %_RNCINvYSNtNtCsbNMR
 .lr.ph.i:                                         ; preds = %bb.c, %bb.d
   %.sroa.02.011.i = phi i64 [ %i.x, %bb.d ], [ %i.w, %bb.c ]
   %.sroa.5.010.i = phi ptr [ %i.y, %bb.d ], [ %i.f, %bb.c ] ; 3 uses
-  %i.x = add i64 %.sroa.02.011.i, -1              ; 3 uses
+  %i.x = add nsw i64 %.sroa.02.011.i, -1          ; 3 uses
   %i.y = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %i.x ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 40
   %i.aa = load double, ptr %i.z, align 8, !alias.scope !28094, !noalias !28095, !noundef !67 ; 2 uses
@@ -727,7 +727,7 @@ bb.c:                                             ; preds = %_RNCINvYSNtNtCsbNMR
 .lr.ph.i:                                         ; preds = %bb.c, %bb.d
   %.sroa.02.011.i = phi i64 [ %i.y, %bb.d ], [ %i.x, %bb.c ]
   %.sroa.5.010.i = phi ptr [ %i.z, %bb.d ], [ %i.f, %bb.c ] ; 3 uses
-  %i.y = add i64 %.sroa.02.011.i, -1              ; 3 uses
+  %i.y = add nsw i64 %.sroa.02.011.i, -1          ; 3 uses
   %i.z = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %i.y ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 24
   %i.ab = load i64, ptr %i.aa, align 8, !alias.scope !28119, !noalias !28120, !noundef !67 ; 2 uses
@@ -819,7 +819,7 @@ bb.c:                                             ; preds = %_RNvXs8_NtNtCslwFuT
 .lr.ph.i:                                         ; preds = %bb.c, %bb.d
   %.sroa.02.04.i = phi i64 [ %i.l, %bb.d ], [ %i.k, %bb.c ]
   %.sroa.5.03.i = phi ptr [ %i.m, %bb.d ], [ %i.h, %bb.c ] ; 2 uses
-  %i.l = add i64 %.sroa.02.04.i, -1               ; 3 uses
+  %i.l = add nsw i64 %.sroa.02.04.i, -1           ; 3 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.l ; 3 uses
   %i.n = getelementptr i8, ptr %i.m, i64 8
   %.val8.i = load double, ptr %i.n, align 8, !alias.scope !28123, !noundef !67
@@ -886,7 +886,7 @@ bb.c:                                             ; preds = %_RNvXs8_NtNtCslwFuT
 .lr.ph.i:                                         ; preds = %bb.c, %bb.d
   %.sroa.02.05.i = phi i64 [ %i.i, %bb.d ], [ %i.h, %bb.c ]
   %.sroa.5.04.i = phi ptr [ %i.j, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
-  %i.i = add i64 %.sroa.02.05.i, -1               ; 3 uses
+  %i.i = add nsw i64 %.sroa.02.05.i, -1           ; 3 uses
   %i.j = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %i.i ; 3 uses
   %.val8.i = load double, ptr %i.j, align 8, !alias.scope !28126, !noundef !67
   %i.k = fcmp ult double %.val9.i, %.val8.i
@@ -1289,7 +1289,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ba = and i16 %i.ax, %.lcssa.i.i.i.i.i.i
   %i.bb = sub nsw i64 0, %i.az
   %i.bc = getelementptr inbounds [4 x i8], ptr %.sroa.09.0.copyload.i.i, i64 %i.bb
-  %i.bd = add i64 %4, -1                          ; 2 uses
+  %i.bd = add nsw i64 %4, -1                      ; 2 uses
   %i.be = getelementptr inbounds i8, ptr %i.bc, i64 -4
   %.val.i.i.i = load i32, ptr %i.be, align 4, !noalias !35752, !noundef !67
   %i.bf = zext i32 %.val.i.i.i to i64
@@ -1692,7 +1692,7 @@ bb.c:                                             ; preds = %bb.a, %_RINvNtNtNtN
   br i1 %.not7, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = sub nuw i64 %i.d, %1
+  %i.e = sub nuw nsw i64 %i.d, %1
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -2095,8 +2095,8 @@ bb.a:
   %i.b = alloca [64 x i8], align 8                ; 8 uses
   %i.c = alloca [32 x i8], align 8                ; 5 uses
   %i.d = alloca [64 x i8], align 8                ; 7 uses
-  %i.e = alloca [4 x i8], align 4                 ; 5 uses
-  %i.f = alloca [32 x i8], align 8                ; 7 uses
+  %i.e = alloca [4 x i8], align 4                 ; 4 uses
+  %i.f = alloca [32 x i8], align 8                ; 6 uses
   %i.g = alloca [24 x i8], align 8                ; 6 uses
   %i.h = alloca [24 x i8], align 8                ; 10 uses
   %i.i = alloca [72 x i8], align 8                ; 16 uses
@@ -2149,10 +2149,9 @@ bb.f:                                             ; preds = %bb.a, %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 6 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.i, i64 40 ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.i, i64 48 ; 4 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 4
+  %8 = getelementptr inbounds nuw i8, ptr %i.e, <2 x i64> <i64 0, i64 4>
   %.sroa.4109.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.5110.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %.sroa.6111.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %.sroa.6144.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %.sroa.7149.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.ag = getelementptr inbounds nuw i8, ptr %i.i, i64 56 ; 3 uses
@@ -2555,8 +2554,7 @@ bb.y:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   store i32 %.sroa.4.0.i.ph.i.i.i.i.i, ptr %i.e, align 4, !noalias !41861
   store ptr %i.ku, ptr %i.f, align 8, !noalias !41861
   store ptr %i.kv, ptr %.sroa.4109.0..sroa_idx.i.i.i.i.i, align 8, !noalias !41861
-  store ptr %i.e, ptr %.sroa.5110.0..sroa_idx.i.i.i.i.i, align 8, !noalias !41861
-  store ptr %8, ptr %.sroa.6111.0..sroa_idx.i.i.i.i.i, align 8, !noalias !41861
+  store <2 x ptr> %8, ptr %.sroa.5110.0..sroa_idx.i.i.i.i.i, align 8, !noalias !41861
   invoke fastcc void @_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexEINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters6copied6CopiedINtNtB2a_5chain5ChainINtNtNtCsfztDQZkQYYe_8indexmap3set4iter4IterBU_EINtNtNtB2e_5slice4iter4IterBU_EEEE9from_iterCskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.g, ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.f)
           to label %bb.z unwind label %.loopexit203.i.i.i.loopexit.i.i, !noalias !41861
 
@@ -2959,8 +2957,8 @@ bb.a:
   %i.b = alloca [64 x i8], align 8                ; 8 uses
   %i.c = alloca [32 x i8], align 8                ; 5 uses
   %i.d = alloca [64 x i8], align 8                ; 7 uses
-  %i.e = alloca [4 x i8], align 4                 ; 5 uses
-  %i.f = alloca [32 x i8], align 8                ; 7 uses
+  %i.e = alloca [4 x i8], align 4                 ; 4 uses
+  %i.f = alloca [32 x i8], align 8                ; 6 uses
   %i.g = alloca [24 x i8], align 8                ; 6 uses
   %i.h = alloca [24 x i8], align 8                ; 10 uses
   %i.i = alloca [72 x i8], align 8                ; 16 uses
@@ -3013,10 +3011,9 @@ bb.f:                                             ; preds = %bb.a, %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 6 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.i, i64 40 ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.i, i64 48 ; 4 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 4
+  %8 = getelementptr inbounds nuw i8, ptr %i.e, <2 x i64> <i64 0, i64 4>
   %.sroa.4110.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.5111.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %.sroa.6112.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %.sroa.6145.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %.sroa.7.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.ag = getelementptr inbounds nuw i8, ptr %i.i, i64 56 ; 3 uses
@@ -3419,8 +3416,7 @@ bb.y:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   store i32 %.sroa.4.0.i.ph.i.i.i.i.i, ptr %i.e, align 4, !noalias !42237
   store ptr %i.ks, ptr %i.f, align 8, !noalias !42237
   store ptr %i.kt, ptr %.sroa.4110.0..sroa_idx.i.i.i.i.i, align 8, !noalias !42237
-  store ptr %i.e, ptr %.sroa.5111.0..sroa_idx.i.i.i.i.i, align 8, !noalias !42237
-  store ptr %8, ptr %.sroa.6112.0..sroa_idx.i.i.i.i.i, align 8, !noalias !42237
+  store <2 x ptr> %8, ptr %.sroa.5111.0..sroa_idx.i.i.i.i.i, align 8, !noalias !42237
   invoke fastcc void @_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexEINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters6copied6CopiedINtNtB2a_5chain5ChainINtNtNtCsfztDQZkQYYe_8indexmap3set4iter4IterBU_EINtNtNtB2e_5slice4iter4IterBU_EEEE9from_iterCskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.g, ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.f)
           to label %bb.z unwind label %.loopexit206.i.i.i.loopexit.i.i, !noalias !42237
 
@@ -3823,7 +3819,7 @@ _RNvXsi_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_5EdgesINtNtCs
 
 _RNvXs1_NtNtNtCslwFuT2d6ECx_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11NodeIndicesINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB2g_5types3any5PyAnyEEINtNtNtB9_7sources8repeat_n7RepeatNNtB19_9NodeIndexENCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core10generators12random_graph21barabasi_albert_graphINtB17_11StableGraphB2b_B2b_EB2b_NCNvNtCskcxRuJ53GpR_9rustworkx12random_graph30directed_barabasi_albert_graph0B60_B2b_E0ENtNtNtB9_6traits8iterator8Iterator9size_hintB66_.exit.i.i.i.i: ; preds = %.loopexit.i.i.i.i.i
   %i.ja = trunc i64 %i.hv to i32                  ; 2 uses
-  %i.jb = add i64 %i.iz, -1                       ; 2 uses
+  %i.jb = add nsw i64 %i.iz, -1                   ; 2 uses
   %i.jc = call i64 @llvm.umax.i64(i64 %i.iz, i64 4) ; 3 uses
   %i.jd = shl i64 %i.jc, 2                        ; 3 uses
   %i.je = icmp ugt i64 %i.iz, 4611686018427387903
@@ -4226,7 +4222,7 @@ bb.cu:                                            ; preds = %bb.ct, %_RNvYNtNtCs
   br i1 %i.xi, label %.thread379.i.i, label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.xj = add i64 %i.xh, -1                       ; 2 uses
+  %i.xj = add nsw i64 %i.xh, -1                   ; 2 uses
   %i.xk = mul i128 %i.xg, 47026247687942121848144207491837523525
   %i.xl = add i128 %i.xk, %i.xf                   ; 4 uses
   %i.xm = lshr i128 %i.xl, 122
@@ -4629,7 +4625,7 @@ bb.bv:                                            ; preds = %.lr.ph.i.i.i.i.i.i
   %i.lf = and i16 %i.lc, %.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.lg = sub nsw i64 0, %i.le
   %i.lh = getelementptr inbounds [4 x i8], ptr %.sroa.09.0.copyload.i.i.i.i.i.i.i.i.i.i, i64 %i.lg
-  %i.li = add i64 %.sroa.615.0.copyload.i.i.i.i.i.i, -1 ; 2 uses
+  %i.li = add nsw i64 %.sroa.615.0.copyload.i.i.i.i.i.i, -1 ; 2 uses
   %i.lj = getelementptr inbounds i8, ptr %i.lh, i64 -4
   %.val.i.i.i.i.i.i.i.i.i.i.i = load i32, ptr %i.lj, align 4, !noalias !138193, !noundef !67
   %i.lk = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i to i64
@@ -5032,7 +5028,7 @@ bb.bv:                                            ; preds = %.lr.ph.i.i.i.i.i.i
   %i.lf = and i16 %i.lc, %.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.lg = sub nsw i64 0, %i.le
   %i.lh = getelementptr inbounds [4 x i8], ptr %.sroa.09.0.copyload.i.i.i.i.i.i.i.i.i.i, i64 %i.lg
-  %i.li = add i64 %.sroa.615.0.copyload.i.i.i.i.i.i, -1 ; 2 uses
+  %i.li = add nsw i64 %.sroa.615.0.copyload.i.i.i.i.i.i, -1 ; 2 uses
   %i.lj = getelementptr inbounds i8, ptr %i.lh, i64 -4
   %.val.i.i.i.i.i.i.i.i.i.i.i = load i32, ptr %i.lj, align 4, !noalias !138615, !noundef !67
   %i.lk = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i to i64
@@ -5435,12 +5431,12 @@ bb.a:
   %i.d = alloca [64 x i8], align 8                ; 19 uses
   %i.e = alloca [4 x i8], align 4                 ; 4 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
-  %i.g = alloca [4 x i8], align 4                 ; 5 uses
-  %i.h = alloca [32 x i8], align 8                ; 7 uses
+  %i.g = alloca [4 x i8], align 4                 ; 4 uses
+  %i.h = alloca [32 x i8], align 8                ; 6 uses
   %i.i = alloca [24 x i8], align 8                ; 8 uses
   %i.j = alloca [24 x i8], align 8                ; 6 uses
   %i.k = alloca [4 x i8], align 4                 ; 5 uses
-  %i.l = alloca [32 x i8], align 8                ; 7 uses
+  %i.l = alloca [32 x i8], align 8                ; 6 uses
   %i.m = alloca [24 x i8], align 8                ; 8 uses
   %i.n = alloca [4 x i8], align 4                 ; 4 uses
   %i.o = alloca [64 x i8], align 8                ; 12 uses
@@ -5599,10 +5595,9 @@ _RNvXsE_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphRINtB5_11StableGrap
   %i.cd = load ptr, ptr %i.v, align 8, !alias.scope !168155, !noalias !168170, !nonnull !67 ; 7 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.q, i64 56 ; 3 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.q, i64 64 ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
+  %1 = getelementptr inbounds nuw i8, ptr %i.g, <2 x i64> <i64 0, i64 4>
   %.sroa.4258.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.sroa.5259.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %.sroa.6260.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.cg = getelementptr inbounds nuw i8, ptr %i.o, i64 56 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
@@ -5615,7 +5610,6 @@ _RNvXsE_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphRINtB5_11StableGrap
   %i.cn = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %.sroa.4226.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.5227.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %.sroa.6228.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %.sroa.5236.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   %.sroa.6239.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.co = getelementptr inbounds nuw i8, ptr %i.j, i64 8
@@ -5623,6 +5617,8 @@ _RNvXsE_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphRINtB5_11StableGrap
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cd, i64 16
   %i.cr = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.val.i.i.i172.i.i = load ptr, ptr %i.cr, align 8, !alias.scope !168154, !noalias !168156, !nonnull !67
+  %2 = insertelement <2 x ptr> poison, ptr %i.k, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.cn, i64 1
   br label %bb.g
 
 bb.e:                                             ; preds = %_RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Allocator10deallocate.exit.i.i.i4.i180.i.i, %bb.by, %_RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Allocator10deallocate.exit.i.i.i4.i.i139.i.i, %bb.bh, %.body142.i.i, %_RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Allocator10deallocate.exit.i.i.i4.i95.i.i, %bb.as, %_RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Allocator10deallocate.exit.i.i.i4.i.i.i.i, %bb.ao, %.body.i.i, %.loopexit.split-lp.loopexit.split-lp.i.i, %.loopexit.split-lp.loopexit.i.i, %.loopexit354.i.i
@@ -6025,8 +6021,7 @@ bb.af:                                            ; preds = %.loopexit.i.i
   store i32 %.pn2.i311.i.i, ptr %i.g, align 4, !noalias !168157
   store ptr %i.mn, ptr %i.h, align 8, !noalias !168157
   store ptr %i.mo, ptr %.sroa.4258.0..sroa_idx.i.i, align 8, !noalias !168157
-  store ptr %i.g, ptr %.sroa.5259.0..sroa_idx.i.i, align 8, !noalias !168157
-  store ptr %1, ptr %.sroa.6260.0..sroa_idx.i.i, align 8, !noalias !168157
+  store <2 x ptr> %1, ptr %.sroa.5259.0..sroa_idx.i.i, align 8, !noalias !168157
   invoke fastcc void @_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexEINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters6copied6CopiedINtNtB2a_5chain5ChainINtNtNtCsfztDQZkQYYe_8indexmap3set4iter4IterBU_EINtNtNtB2e_5slice4iter4IterBU_EEEE9from_iterCskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.i, ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.h)
           to label %bb.ag unwind label %.loopexit354.i.i, !noalias !168157
 
@@ -6291,8 +6286,7 @@ bb.ay:                                            ; preds = %_RINvMs3_NtCs3sCKvc
   store i32 %.sroa.4.0.i.ph.i.i, ptr %i.k, align 4, !noalias !168157
   store ptr %i.px, ptr %i.l, align 8, !noalias !168157
   store ptr %i.pz, ptr %.sroa.4226.0..sroa_idx.i.i, align 8, !noalias !168157
-  store ptr %i.k, ptr %.sroa.5227.0..sroa_idx.i.i, align 8, !noalias !168157
-  store ptr %i.cn, ptr %.sroa.6228.0..sroa_idx.i.i, align 8, !noalias !168157
+  store <2 x ptr> %3, ptr %.sroa.5227.0..sroa_idx.i.i, align 8, !noalias !168157
   invoke fastcc void @_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexEINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters6copied6CopiedINtNtB2a_5chain5ChainINtNtNtCsfztDQZkQYYe_8indexmap3set4iter4IterBU_EINtNtNtB2e_5slice4iter4IterBU_EEEE9from_iterCskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.m, ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.l)
           to label %bb.az unwind label %.loopexit.split-lp.loopexit.i.i, !noalias !168157
 
@@ -6695,12 +6689,12 @@ bb.a:
   %i.d = alloca [64 x i8], align 8                ; 19 uses
   %i.e = alloca [4 x i8], align 4                 ; 4 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
-  %i.g = alloca [4 x i8], align 4                 ; 5 uses
-  %i.h = alloca [32 x i8], align 8                ; 7 uses
+  %i.g = alloca [4 x i8], align 4                 ; 4 uses
+  %i.h = alloca [32 x i8], align 8                ; 6 uses
   %i.i = alloca [24 x i8], align 8                ; 8 uses
   %i.j = alloca [24 x i8], align 8                ; 6 uses
   %i.k = alloca [4 x i8], align 4                 ; 5 uses
-  %i.l = alloca [32 x i8], align 8                ; 7 uses
+  %i.l = alloca [32 x i8], align 8                ; 6 uses
   %i.m = alloca [24 x i8], align 8                ; 8 uses
   %i.n = alloca [4 x i8], align 4                 ; 4 uses
   %i.o = alloca [64 x i8], align 8                ; 12 uses
@@ -6861,10 +6855,9 @@ _RNvXsE_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphRINtB5_11StableGrap
   %i.cb = load ptr, ptr %i.v, align 8, !alias.scope !168664, !noalias !168679, !nonnull !67 ; 7 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.q, i64 56 ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.q, i64 64 ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
+  %1 = getelementptr inbounds nuw i8, ptr %i.g, <2 x i64> <i64 0, i64 4>
   %.sroa.4257.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.sroa.5258.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %.sroa.6259.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.ce = getelementptr inbounds nuw i8, ptr %i.o, i64 56 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
@@ -6877,7 +6870,6 @@ _RNvXsE_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphRINtB5_11StableGrap
   %i.cl = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %.sroa.4226.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.5227.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %.sroa.6228.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %.sroa.5236.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   %.sroa.6239.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.cm = getelementptr inbounds nuw i8, ptr %i.j, i64 8
@@ -6885,6 +6877,8 @@ _RNvXsE_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphRINtB5_11StableGrap
   %i.co = getelementptr inbounds nuw i8, ptr %i.cb, i64 16
   %i.cp = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.val.i.i.i172.i.i = load ptr, ptr %i.cp, align 8, !alias.scope !168663, !noalias !168665, !nonnull !67
+  %2 = insertelement <2 x ptr> poison, ptr %i.k, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.cl, i64 1
   br label %bb.g
 
 bb.e:                                             ; preds = %_RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Allocator10deallocate.exit.i.i.i4.i180.i.i, %bb.by, %_RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Allocator10deallocate.exit.i.i.i4.i.i139.i.i, %bb.bh, %.body142.i.i, %_RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Allocator10deallocate.exit.i.i.i4.i95.i.i, %bb.as, %_RNvXs1_NtCs87CvPiUlf0m_5alloc5allocNtB5_6GlobalNtNtCslwFuT2d6ECx_4core5alloc9Allocator10deallocate.exit.i.i.i4.i.i.i.i, %bb.ao, %.body.i.i, %.loopexit.split-lp.loopexit.split-lp.i.i, %.loopexit.split-lp.loopexit.i.i, %.loopexit356.i.i
@@ -7287,8 +7281,7 @@ bb.af:                                            ; preds = %.loopexit.i.i
   store i32 %.pn2.i311.i.i, ptr %i.g, align 4, !noalias !168666
   store ptr %i.ml, ptr %i.h, align 8, !noalias !168666
   store ptr %i.mm, ptr %.sroa.4257.0..sroa_idx.i.i, align 8, !noalias !168666
-  store ptr %i.g, ptr %.sroa.5258.0..sroa_idx.i.i, align 8, !noalias !168666
-  store ptr %1, ptr %.sroa.6259.0..sroa_idx.i.i, align 8, !noalias !168666
+  store <2 x ptr> %1, ptr %.sroa.5258.0..sroa_idx.i.i, align 8, !noalias !168666
   invoke fastcc void @_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexEINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters6copied6CopiedINtNtB2a_5chain5ChainINtNtNtCsfztDQZkQYYe_8indexmap3set4iter4IterBU_EINtNtNtB2e_5slice4iter4IterBU_EEEE9from_iterCskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.i, ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.h)
           to label %bb.ag unwind label %.loopexit356.i.i, !noalias !168666
 
@@ -7553,8 +7546,7 @@ bb.ay:                                            ; preds = %_RINvMs3_NtCs3sCKvc
   store i32 %.sroa.4.0.i.ph.i.i, ptr %i.k, align 4, !noalias !168666
   store ptr %i.pv, ptr %i.l, align 8, !noalias !168666
   store ptr %i.px, ptr %.sroa.4226.0..sroa_idx.i.i, align 8, !noalias !168666
-  store ptr %i.k, ptr %.sroa.5227.0..sroa_idx.i.i, align 8, !noalias !168666
-  store ptr %i.cl, ptr %.sroa.6228.0..sroa_idx.i.i, align 8, !noalias !168666
+  store <2 x ptr> %3, ptr %.sroa.5227.0..sroa_idx.i.i, align 8, !noalias !168666
   invoke fastcc void @_RNvXNtNtCs87CvPiUlf0m_5alloc3vec14spec_from_iterINtB4_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexEINtB2_12SpecFromIterBU_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters6copied6CopiedINtNtB2a_5chain5ChainINtNtNtCsfztDQZkQYYe_8indexmap3set4iter4IterBU_EINtNtNtB2e_5slice4iter4IterBU_EEEE9from_iterCskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.m, ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.l)
           to label %bb.az unwind label %.loopexit.split-lp.loopexit.i.i, !noalias !168666
 

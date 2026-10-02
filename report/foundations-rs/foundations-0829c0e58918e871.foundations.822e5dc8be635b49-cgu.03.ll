@@ -204,16 +204,14 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !12199
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(40) %i.c, i64 40, i1 false), !dbg !12198
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 32, !dbg !12200
-  %2 = load ptr, ptr %i.d, align 8, !dbg !12200, !nonnull !786, !noundef !786 ; 2 uses
-  %3 = getelementptr inbounds i8, ptr %2, i64 -32, !dbg !12201
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !12202
-  %i.f = load ptr, ptr %i.e, align 8, !dbg !12202, !nonnull !786, !align !806, !noundef !786
-  %4 = getelementptr inbounds i8, ptr %2, i64 -8, !dbg !12203
-  store ptr %i.f, ptr %0, align 8, !dbg !12204
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !12204
-  store ptr %3, ptr %i.g, align 8, !dbg !12204
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !12201
+  %i.f = load ptr, ptr %i.d, align 8, !dbg !12200, !nonnull !786, !noundef !786
+  %2 = load <2 x ptr>, ptr %i.e, align 8, !dbg !12201
+  %3 = getelementptr inbounds i8, <2 x ptr> %2, <2 x i64> <i64 0, i64 -32>, !dbg !12202
+  %i.g = getelementptr inbounds i8, ptr %i.f, i64 -8, !dbg !12203
+  store <2 x ptr> %3, ptr %0, align 8, !dbg !12204
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !12204
-  store ptr %4, ptr %i.h, align 8, !dbg !12204
+  store ptr %i.g, ptr %i.h, align 8, !dbg !12204
   %i.i = load i64, ptr %i.a, align 8, !dbg !12205, !range !1067, !alias.scope !12180, !noundef !786
   %i.j = icmp eq i64 %i.i, -1, !dbg !12205
   br i1 %i.j, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc6borrow3CoweEECsbaWXNhtWAp9_11foundations.exit, label %bb.c, !dbg !12205
@@ -616,8 +614,8 @@ begin_hunk_1_@llvm.memset.p0.i64
 !12087 = distinct !DISubprogram(name: "as_ptr<(alloc::borrow::Cow<str>, dashmap::util::SharedValue<governor::state::in_memory::InMemoryState>)>", linkageName: "_RNvMs4_NtNtCscYIHOBAkUpv_9hashbrown3raw5innerINtB5_6BucketTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtCsdra7vpBasQ9_7dashmap4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEEE6as_ptrCsbaWXNhtWAp9_11foundations", scope: !12165, file: !12163, line: 513, type: !787, scopeLine: 513, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !786)
 !12088 = distinct !DISubprogram(name: "into_ref<alloc::borrow::Cow<str>, governor::state::in_memory::InMemoryState>", linkageName: "_RNvMs4_NtNtCsdra7vpBasQ9_7dashmap6mapref5entryINtB5_13OccupiedEntryINtNtCs1xwejQucwHj_5alloc6borrow3CoweENtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateE8into_refCsbaWXNhtWAp9_11foundations", scope: !12169, file: !12158, line: 208, type: !787, scopeLine: 208, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !786)
 !12089 = distinct !DISubprogram(name: "as_ref<(alloc::borrow::Cow<str>, dashmap::util::SharedValue<governor::state::in_memory::InMemoryState>)>", linkageName: "_RNvMs4_NtNtCscYIHOBAkUpv_9hashbrown3raw5innerINtB5_6BucketTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtCsdra7vpBasQ9_7dashmap4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEEE6as_refCsbaWXNhtWAp9_11foundations", scope: !12165, file: !12163, line: 682, type: !787, scopeLine: 682, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !786)
-!12090 = distinct !DISubprogram(name: "sub<(alloc::borrow::Cow<str>, dashmap::util::SharedValue<governor::state::in_memory::InMemoryState>)>", linkageName: "_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrOTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtCsdra7vpBasQ9_7dashmap4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEE3subCsbaWXNhtWAp9_11foundations", scope: !898, file: !896, line: 1015, type: !787, scopeLine: 1015, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !786)
-!12091 = distinct !DILexicalBlock(scope: !12088, file: !12158, line: 210, column: 13)
+!12090 = distinct !DILexicalBlock(scope: !12088, file: !12158, line: 210, column: 13)
+!12091 = distinct !DISubprogram(name: "sub<(alloc::borrow::Cow<str>, dashmap::util::SharedValue<governor::state::in_memory::InMemoryState>)>", linkageName: "_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrOTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtCsdra7vpBasQ9_7dashmap4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEE3subCsbaWXNhtWAp9_11foundations", scope: !898, file: !896, line: 1015, type: !787, scopeLine: 1015, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !786)
 !12092 = distinct !DISubprogram(name: "get<governor::state::in_memory::InMemoryState>", linkageName: "_RNvMsX_NtCs3oUPovFnLWP_4core4cellINtB5_10UnsafeCellNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateE3getCsbaWXNhtWAp9_11foundations", scope: !834, file: !832, line: 2434, type: !787, scopeLine: 2434, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !786)
 !12093 = distinct !DISubprogram(name: "as_ptr<governor::state::in_memory::InMemoryState>", linkageName: "_RNvMs1_NtCsdra7vpBasQ9_7dashmap4utilINtB5_11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateE6as_ptrCsbaWXNhtWAp9_11foundations", scope: !12175, file: !12173, line: 77, type: !787, scopeLine: 77, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !786)
 !12094 = distinct !DISubprogram(name: "new<alloc::borrow::Cow<str>, governor::state::in_memory::InMemoryState>", linkageName: "_RNvMs5_NtNtCsdra7vpBasQ9_7dashmap6mapref3oneINtB5_6RefMutINtNtCs1xwejQucwHj_5alloc6borrow3CoweENtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateE3newCsbaWXNhtWAp9_11foundations", scope: !12178, file: !12176, line: 95, type: !787, scopeLine: 95, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !786)
@@ -697,7 +695,7 @@ begin_hunk_1_@llvm.memset.p0.i64
 !12168 = !DILocation(line: 683, column: 16, scope: !12089, inlinedAt: !12167)
 !12169 = !DINamespace(name: "OccupiedEntry", scope: !12161)
 !12170 = !DILocation(line: 519, column: 40, scope: !12087, inlinedAt: !12168)
-!12171 = !DILocation(line: 211, column: 42, scope: !12091, inlinedAt: !12166)
+!12171 = !DILocation(line: 211, column: 42, scope: !12090, inlinedAt: !12166)
 !12172 = !DILocation(line: 78, column: 20, scope: !12093, inlinedAt: !12171)
 !12173 = !DIFile(filename: "src/util.rs", directory: "/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/dashmap-6.2.1", checksumkind: CSK_MD5, checksum: "290ec4629451d85f7d0ce1919081e8f2")
 !12174 = !DINamespace(name: "util", scope: !12159)
@@ -705,7 +703,7 @@ begin_hunk_1_@llvm.memset.p0.i64
 !12176 = !DIFile(filename: "src/mapref/one.rs", directory: "/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/dashmap-6.2.1", checksumkind: CSK_MD5, checksum: "c69f1fd16420e28c88f66ac7d2fb03d9")
 !12177 = !DINamespace(name: "one", scope: !12160)
 !12178 = !DINamespace(name: "RefMut", scope: !12177)
-!12179 = !DILocation(line: 211, column: 13, scope: !12091, inlinedAt: !12166)
+!12179 = !DILocation(line: 211, column: 13, scope: !12090, inlinedAt: !12166)
 !12180 = !{!12096}
 !12181 = !{!12103}
 !12182 = !{!12105}
@@ -727,8 +725,8 @@ begin_hunk_1_@llvm.memset.p0.i64
 !12198 = !DILocation(line: 50, column: 29, scope: !12085)
 !12199 = !DILocation(line: 50, column: 39, scope: !12086)
 !12200 = !DILocation(line: 519, column: 22, scope: !12087, inlinedAt: !12168)
-!12201 = !DILocation(line: 1054, column: 22, scope: !12090, inlinedAt: !12170)
-!12202 = !DILocation(line: 211, column: 25, scope: !12091, inlinedAt: !12166)
+!12201 = !DILocation(line: 211, column: 25, scope: !12090, inlinedAt: !12166)
+!12202 = !DILocation(line: 1054, column: 22, scope: !12091, inlinedAt: !12170)
 !12203 = !DILocation(line: 2437, column: 9, scope: !12092, inlinedAt: !12172)
 !12204 = !DILocation(line: 100, column: 9, scope: !12094, inlinedAt: !12179)
 !12205 = !DILocation(line: 848, column: 1, scope: !311, inlinedAt: !12097)

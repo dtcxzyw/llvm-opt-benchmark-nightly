@@ -204,7 +204,7 @@ bb.a:
   %96 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %97 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %98 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %99 = alloca %"struct.(anonymous namespace)::OpStrings", align 8 ; 12 uses
+  %99 = alloca %"struct.(anonymous namespace)::OpStrings", align 8 ; 13 uses
   %100 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %101 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %102 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
@@ -607,7 +607,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit32.i.i.i128: ; pre
 
 "_ZN4llvm4joinINS_14iterator_rangeINS_15mapped_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZL20generateOpDefinitionRNS_9StringMapINS_11SmallStringILj8EEENS_15MallocAllocatorEEEN4mlir4irdl11OperationOpEE3$_3S8_EEEEEES8_OT_NS_9StringRefE.exit": ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit32.i.i.i128, %"_ZN4llvm4joinINS_14iterator_rangeINS_15mapped_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZL20generateOpDefinitionRNS_9StringMapINS_11SmallStringILj8EEENS_15MallocAllocatorEEEN4mlir4irdl11OperationOpEE3$_2S8_EEEEEES8_OT_NS_9StringRefE.exit", %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i116
   call void @llvm.lifetime.start.p0(ptr nonnull %104) #20
-  %i.mt = getelementptr inbounds nuw i8, ptr %99, i64 16 ; 3 uses
+  %111 = insertelement <2 x ptr> poison, ptr %18, i64 0 ; 2 uses
+  %112 = insertelement <2 x ptr> %111, ptr %99, i64 1
+  %113 = getelementptr inbounds nuw i8, <2 x ptr> %112, <2 x i64> <i64 0, i64 16>
+  %i.mt = getelementptr inbounds nuw i8, ptr %99, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %105) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %106) #20
   %i.mu = load ptr, ptr %i.h, align 8, !tbaa !17, !noalias !2004 ; 2 uses
@@ -912,9 +915,7 @@ _ZN4mlir7OpTrait16AtMostOneChildOfIJNS_4irdl10OperandsOpENS2_9ResultsOpENS2_12At
   store i64 0, ptr %i.b, align 8, !tbaa !46
   %i.rx = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 5 uses
   %i.ry = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %111 = insertelement <2 x ptr> poison, ptr %18, i64 0 ; 2 uses
-  %112 = insertelement <2 x ptr> %111, ptr %i.mt, i64 1
-  %i.rz = ptrtoint <2 x ptr> %112 to <2 x i64>
+  %i.rz = ptrtoint <2 x ptr> %113 to <2 x i64>
   %i.sa = getelementptr inbounds nuw i8, ptr %20, i64 56 ; 2 uses
   %.sroa.22.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %20, i64 8
   %i.sb = getelementptr inbounds nuw i8, ptr %20, i64 16

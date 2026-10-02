@@ -205,15 +205,11 @@ default.unreachable42:                            ; preds = %bb.be, %bb.az, %bb.
 .thread:                                          ; preds = %bb.a
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 6944
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 6928
-  %.val = load ptr, ptr %i.au, align 16, !nonnull !15, !noundef !15
-  %2 = getelementptr inbounds nuw i8, ptr %.val, i64 16
   store i8 0, ptr %i.at, align 16
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 6936
-  %4 = load ptr, ptr %3, align 8, !nonnull !15, !noundef !15
   %.sroa.717.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6896
-  store ptr %2, ptr %.sroa.717.0..sroa_idx, align 16
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6904
-  store ptr %4, ptr %.sroa.8.0..sroa_idx, align 8
+  %2 = load <2 x ptr>, ptr %i.au, align 16
+  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 16, i64 0>
+  store <2 x ptr> %3, ptr %.sroa.717.0..sroa_idx, align 16
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6920
   store i8 0, ptr %.sroa.10.0..sroa_idx, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 6920

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.08.i.i.i.prol, i8 0, i64 24, i1 false)
   store i32 -1, ptr %i.p, align 8, !tbaa !96
-  %i.q = add i64 %.057.i.i.i.prol, -1             ; 2 uses
+  %i.q = add nsw i64 %.057.i.i.i.prol, -1         ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.prol, i64 24 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -252,7 +252,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ah = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 184
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ag, i8 0, i64 24, i1 false)
   store i32 -1, ptr %i.ah, align 8, !tbaa !96
-  %i.ai = add i64 %.057.i.i.i, -8                 ; 2 uses
+  %i.ai = add nsw i64 %.057.i.i.i, -8             ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 192 ; 2 uses
   %.not.i.i.i.7 = icmp eq i64 %i.ai, 0
   br i1 %.not.i.i.i.7, label %_ZSt27__uninitialized_default_n_aIPN7xgboost6common16RowSetCollection4ElemEmS3_ET_S5_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !2511
@@ -288,7 +288,7 @@ _ZNKSt6vectorIN7xgboost6common16RowSetCollection4ElemESaIS3_EE12_M_check_lenEmPK
   %i.aq = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.prol, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.08.i.i.i31.prol, i8 0, i64 24, i1 false)
   store i32 -1, ptr %i.aq, align 8, !tbaa !96
-  %i.ar = add i64 %.057.i.i.i32.prol, -1          ; 2 uses
+  %i.ar = add nsw i64 %.057.i.i.i32.prol, -1      ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.prol, i64 24 ; 2 uses
   %prol.iter46.next = add i64 %prol.iter46, 1     ; 2 uses
   %prol.iter46.cmp.not = icmp eq i64 %prol.iter46.next, %xtraiter44
@@ -334,7 +334,7 @@ _ZNKSt6vectorIN7xgboost6common16RowSetCollection4ElemESaIS3_EE12_M_check_lenEmPK
   %i.bi = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 184
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bh, i8 0, i64 24, i1 false)
   store i32 -1, ptr %i.bi, align 8, !tbaa !96
-  %i.bj = add i64 %.057.i.i.i32, -8               ; 2 uses
+  %i.bj = add nsw i64 %.057.i.i.i32, -8           ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 192
   %.not.i.i.i33.7 = icmp eq i64 %i.bj, 0
   br i1 %.not.i.i.i33.7, label %_ZSt27__uninitialized_default_n_aIPN7xgboost6common16RowSetCollection4ElemEmS3_ET_S5_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !2511
@@ -737,7 +737,7 @@ bb.a:
           to label %.noexc unwind label %bb.e
 
 .noexc:                                           ; preds = %bb.a
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !301, !noalias !3113 ; 5 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !301, !noalias !3113 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load i8, ptr %i.j, align 8, !tbaa !417, !noalias !3113
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -792,7 +792,7 @@ bb.d:                                             ; preds = %bb.b, %.noexc
   %i.ag = mul i64 %i.w, %i.aa
   %i.ah = shl i64 %i.ag, 4                        ; 2 uses
   %i.ai = shl i64 %i.v, 4
-  %scevgep38 = getelementptr i8, ptr %i.i, i64 8
+  %3 = getelementptr i8, ptr %i.i, <2 x i64> <i64 0, i64 8>
   %i.aj = getelementptr i8, ptr %i.i, i64 %i.ac
   %scevgep39 = getelementptr i8, ptr %i.aj, i64 %i.ad
   %i.ak = getelementptr i8, ptr %i.y, i64 %i.ah
@@ -800,8 +800,6 @@ bb.d:                                             ; preds = %bb.b, %.noexc
   %i.am = getelementptr i8, ptr %i.al, i64 -8
   %i.an = getelementptr i8, ptr %i.y, i64 %i.ah
   %i.ao = getelementptr i8, ptr %i.an, i64 %i.ad
-  %3 = insertelement <2 x ptr> poison, ptr %i.i, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %scevgep38, i64 1
   %i.ap = insertelement <2 x ptr> poison, ptr %scevgep, i64 0
   %i.aq = insertelement <2 x ptr> %i.ap, ptr %scevgep39, i64 1
   %min.iters.check = icmp ult i64 %i.u, 20
@@ -833,7 +831,7 @@ bb.d:                                             ; preds = %bb.b, %.noexc
   %i.az = insertelement <2 x ptr> %i.ay, ptr %scevgep41, i64 1
   %i.ba = insertelement <2 x ptr> poison, ptr %i.ax, i64 0
   %i.bb = insertelement <2 x ptr> %i.ba, ptr %scevgep40, i64 1
-  %i.bc = icmp ult <2 x ptr> %4, %i.az
+  %i.bc = icmp ult <2 x ptr> %3, %i.az
   %i.bd = icmp ult <2 x ptr> %i.bb, %i.aq
   %i.be = and <2 x i1> %i.bc, %i.bd
   %i.bf = bitcast <2 x i1> %i.be to i2
@@ -1236,8 +1234,8 @@ bb.f:                                             ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i.i.i14 = phi i1 [ %i.u, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i ], [ true, %bb.d ]
   %i.v = phi ptr [ %.pre60, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i ], [ %i.o, %bb.d ] ; 2 uses
   %i.w = phi ptr [ %i.t, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i ], [ null, %bb.d ] ; 8 uses
-  %i.x = sub i64 %.pre-phi, %.pre-phi64           ; 10 uses
-  %i.y = icmp sgt i64 %i.x, 4
+  %i.x = sub i64 %.pre-phi, %.pre-phi64           ; 9 uses
+  %i.y = icmp sgt i64 %i.x, 4                     ; 2 uses
   br i1 %i.y, label %bb.g, label %bb.h, !prof !194
 
 bb.g:                                             ; preds = %bb.f
@@ -1330,8 +1328,7 @@ _ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i.i.i15: ; preds = %bb.m
   %i.az = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.x ; 4 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr %i.az, ptr %i.ba, align 8, !tbaa !347
-  %4 = icmp samesign ugt i64 %i.x, 4
-  br i1 %4, label %bb.n, label %bb.o, !prof !3227
+  br i1 %i.y, label %bb.n, label %bb.o, !prof !3227
 
 bb.n:                                             ; preds = %.noexc17
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ax, ptr align 4 %i.w, i64 %i.x, i1 false)

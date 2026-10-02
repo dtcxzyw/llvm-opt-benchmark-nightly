@@ -202,7 +202,7 @@ define hidden void @_RNvMs_NtNtCsdjW2DEjcQy2_12clap_builder6output13help_templat
   %i.am = alloca [24 x i8], align 8               ; 6 uses
   %i.an = alloca [776 x i8], align 8              ; 56 uses
   %i.ao = alloca [32 x i8], align 8               ; 7 uses
-  %i.ap = alloca [32 x i8], align 8               ; 7 uses
+  %i.ap = alloca [32 x i8], align 8               ; 4 uses
   %i.aq = alloca [24 x i8], align 8               ; 9 uses
   %i.ar = alloca [16 x i8], align 8               ; 6 uses
   %i.as = alloca [32 x i8], align 8               ; 8 uses
@@ -379,9 +379,6 @@ _RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10nex
   %.sroa.5147.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.as, i64 16
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.as, i64 24 ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
-  %.sroa.513.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.ef = getelementptr inbounds nuw i8, ptr %i.aq, i64 16 ; 2 uses
   %.sroa.479.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
@@ -457,6 +454,8 @@ _RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10nex
   %i.gd = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   %i.ge = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %3 = insertelement <4 x ptr> poison, ptr %i.ar, i64 2
+  %4 = insertelement <4 x ptr> %3, ptr %i.dk, i64 3
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %.loopexit
@@ -859,10 +858,9 @@ bb.cp:                                            ; preds = %_RINvNtCs4NRVxsYgnA
   %i.rq = getelementptr i8, ptr %i.ro, i64 336
   %.val110.i = load i64, ptr %i.rq, align 8, !noundef !4
   %i.rr = getelementptr inbounds nuw [672 x i8], ptr %.val109.i, i64 %.val110.i
-  store ptr %.val109.i, ptr %i.ap, align 8, !noalias !557
-  store ptr %i.rr, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !557
-  store ptr %i.ar, ptr %.sroa.513.0..sroa_idx.i, align 8, !noalias !557
-  store ptr %i.dk, ptr %3, align 8, !noalias !557
+  %5 = insertelement <4 x ptr> %4, ptr %.val109.i, i64 0
+  %6 = insertelement <4 x ptr> %5, ptr %i.rr, i64 1
+  store <4 x ptr> %6, ptr %i.ap, align 8, !noalias !557
   invoke void @_RNvXNtNtCscdodAO9FK5_5alloc3vec21spec_from_iter_nestedINtB4_3VecRNtNtNtCsdjW2DEjcQy2_12clap_builder7builder3arg3ArgEINtB2_18SpecFromIterNestedB10_INtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter6FilterIB2l_INtNtNtB2t_5slice4iter4IterB11_ENCNvMs1_NtNtB17_6output13help_templateNtB3X_12HelpTemplate14write_all_argss3_0ENCB3R_s4_0EE9from_iterB17_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.aq, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.ap)
           to label %bb.cq unwind label %bb.cn
 

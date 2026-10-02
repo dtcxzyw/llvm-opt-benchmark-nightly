@@ -205,8 +205,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i2 = phi i1 [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.d, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %i.i, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.m = sub i64 %.pre-phi, %.pre-phi22           ; 11 uses
-  %i.n = icmp sgt i64 %i.m, 1
+  %i.m = sub i64 %.pre-phi, %.pre-phi22           ; 10 uses
+  %i.n = icmp sgt i64 %i.m, 1                     ; 2 uses
   br i1 %i.n, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -255,8 +255,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4:     ; preds = %bb.f
   %i.z = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #25 ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.m ; 2 uses
-  %4 = icmp samesign ugt i64 %i.m, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.n, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.z, ptr align 1 %i.l, i64 %i.m, i1 false)
@@ -478,8 +477,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i2 = phi i1 [ %i.k, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 11 uses
-  %i.o = icmp sgt i64 %i.n, 1
+  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 10 uses
+  %i.o = icmp sgt i64 %i.n, 1                     ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -528,8 +527,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4:     ; preds = %bb.f
   %i.aa = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.n ; 2 uses
-  %4 = icmp samesign ugt i64 %i.n, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.o, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr align 1 %i.m, i64 %i.n, i1 false)
@@ -756,8 +754,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i2 = phi i1 [ %i.k, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 11 uses
-  %i.o = icmp sgt i64 %i.n, 1
+  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 10 uses
+  %i.o = icmp sgt i64 %i.n, 1                     ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -806,8 +804,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4:     ; preds = %bb.f
   %i.aa = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.n ; 2 uses
-  %4 = icmp samesign ugt i64 %i.n, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.o, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr align 1 %i.m, i64 %i.n, i1 false)
@@ -1034,8 +1031,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i2 = phi i1 [ %i.k, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 11 uses
-  %i.o = icmp sgt i64 %i.n, 1
+  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 10 uses
+  %i.o = icmp sgt i64 %i.n, 1                     ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -1084,8 +1081,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4:     ; preds = %bb.f
   %i.aa = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.n ; 2 uses
-  %4 = icmp samesign ugt i64 %i.n, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.o, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr align 1 %i.m, i64 %i.n, i1 false)
@@ -1312,8 +1308,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i2 = phi i1 [ %i.k, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 11 uses
-  %i.o = icmp sgt i64 %i.n, 1
+  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 10 uses
+  %i.o = icmp sgt i64 %i.n, 1                     ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -1362,8 +1358,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4:     ; preds = %bb.f
   %i.aa = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.n ; 2 uses
-  %4 = icmp samesign ugt i64 %i.n, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.o, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr align 1 %i.m, i64 %i.n, i1 false)
@@ -1590,8 +1585,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i2 = phi i1 [ %i.k, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 11 uses
-  %i.o = icmp sgt i64 %i.n, 1
+  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 10 uses
+  %i.o = icmp sgt i64 %i.n, 1                     ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -1640,8 +1635,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4:     ; preds = %bb.f
   %i.aa = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.n ; 2 uses
-  %4 = icmp samesign ugt i64 %i.n, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.o, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr align 1 %i.m, i64 %i.n, i1 false)
@@ -1868,8 +1862,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i2 = phi i1 [ %i.k, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 11 uses
-  %i.o = icmp sgt i64 %i.n, 1
+  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 10 uses
+  %i.o = icmp sgt i64 %i.n, 1                     ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -1918,8 +1912,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4:     ; preds = %bb.f
   %i.aa = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.n ; 2 uses
-  %4 = icmp samesign ugt i64 %i.n, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.o, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr align 1 %i.m, i64 %i.n, i1 false)
@@ -2146,8 +2139,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i2 = phi i1 [ %i.k, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 11 uses
-  %i.o = icmp sgt i64 %i.n, 1
+  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 10 uses
+  %i.o = icmp sgt i64 %i.n, 1                     ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -2196,8 +2189,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4:     ; preds = %bb.f
   %i.aa = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.n ; 2 uses
-  %4 = icmp samesign ugt i64 %i.n, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.o, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr align 1 %i.m, i64 %i.n, i1 false)
@@ -2424,8 +2416,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i2 = phi i1 [ %i.k, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 11 uses
-  %i.o = icmp sgt i64 %i.n, 1
+  %i.n = sub i64 %.pre-phi, %.pre-phi22           ; 10 uses
+  %i.o = icmp sgt i64 %i.n, 1                     ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -2474,8 +2466,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4:     ; preds = %bb.f
   %i.aa = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.n ; 2 uses
-  %4 = icmp samesign ugt i64 %i.n, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.o, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr align 1 %i.m, i64 %i.n, i1 false)
@@ -2878,8 +2869,8 @@ _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i:      ; preds = %_ZNSt15__new_alloca
   %.not.i.i.i.i4 = phi i1 [ %i.j, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ true, %bb.a ] ; 2 uses
   %i.k = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ %i.d, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %i.i, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
-  %i.m = sub i64 %.pre-phi, %.pre-phi24           ; 11 uses
-  %i.n = icmp sgt i64 %i.m, 1
+  %i.m = sub i64 %.pre-phi, %.pre-phi24           ; 10 uses
+  %i.n = icmp sgt i64 %i.m, 1                     ; 2 uses
   br i1 %i.n, label %bb.d, label %bb.e, !prof !40
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i
@@ -2930,8 +2921,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i6:     ; preds = %bb.f
   %i.ab = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #25 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.m ; 2 uses
-  %4 = icmp samesign ugt i64 %i.m, 1
-  br i1 %4, label %bb.h, label %bb.j, !prof !42
+  br i1 %i.n, label %bb.h, label %bb.j, !prof !42
 
 bb.h:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i6
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ab, ptr align 1 %i.l, i64 %i.m, i1 false)

@@ -205,11 +205,11 @@ bb.b:                                             ; preds = %bb.a
   %i.dr = getelementptr inbounds nuw i8, ptr %i.a, i64 122
   %i.ds = getelementptr inbounds nuw i8, ptr %i.a, i64 124
   %i.dt = getelementptr inbounds nuw i8, ptr %i.a, i64 126
-  %i.du = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
-  %i.dv = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %i.du = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %i.dv = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %i.dx = getelementptr inbounds nuw i8, ptr %i.b, i64 36 ; 2 uses
-  %i.dy = getelementptr inbounds nuw i8, ptr %i.c, i64 36
+  %i.dx = getelementptr inbounds nuw i8, ptr %i.c, i64 36
+  %i.dy = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.ea = getelementptr inbounds nuw i8, ptr %i.e, i64 2
   %i.eb = getelementptr inbounds nuw i8, ptr %i.e, i64 4
@@ -612,23 +612,32 @@ bb.dn:                                            ; preds = %bb.dl, %bb.dk, %bb.
 
 .preheader499:                                    ; preds = %.split715.us.1, %.preheader500.preheader
   %.not363 = phi i1 [ true, %.preheader500.preheader ], [ false, %.split715.us.1 ] ; 4 uses
-  %indvars.iv993.sroa.phi = phi ptr [ %i.a, %.preheader500.preheader ], [ %indvars.iv993.sroa.gep1718, %.split715.us.1 ] ; 6 uses
+  %indvars.iv993.sroa.phi = phi ptr [ %i.a, %.preheader500.preheader ], [ %indvars.iv993.sroa.gep1718, %.split715.us.1 ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
-  %i.abt = load <8 x i16>, ptr %indvars.iv993.sroa.phi, align 16, !tbaa !78
+  %1 = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 4
+  %2 = load i16, ptr %1, align 4, !tbaa !78
+  %3 = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 6
+  %4 = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 14
+  %i.abt = load <8 x i16>, ptr %4, align 2, !tbaa !78
   %i.abu = zext <8 x i16> %i.abt to <8 x i32>
-  store <8 x i32> %i.abu, ptr %i.du, align 4, !tbaa !12
-  %1 = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 16
+  store <8 x i32> %i.abu, ptr %i.dv, align 16, !tbaa !12
   store <8 x i32> %i.abs, ptr %i.dw, align 16, !tbaa !12
   %i.abv = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 30
   %i.abw = load i16, ptr %i.abv, align 2, !tbaa !78
-  %2 = load <8 x i16>, ptr %1, align 16, !tbaa !78
-  %i.abx = zext i16 %i.abw to i32
-  %3 = zext <8 x i16> %2 to <8 x i32>
-  store <8 x i32> %3, ptr %i.dx, align 4, !tbaa !12
+  %i.abx = zext i16 %i.abw to i32                 ; 2 uses
+  store i32 %i.abx, ptr %i.dy, align 16, !tbaa !12
   store i32 %i.abp, ptr %i.dz, align 16, !tbaa !12
   store <8 x i32> %i.abr, ptr %i.c, align 16, !tbaa !12
-  store i32 0, ptr %i.b, align 16, !tbaa !12
+  %5 = load <2 x i16>, ptr %indvars.iv993.sroa.phi, align 16, !tbaa !78
+  %6 = load <4 x i16>, ptr %3, align 2, !tbaa !78
+  %7 = shufflevector <2 x i16> %5, <2 x i16> poison, <8 x i32> <i32 poison, i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %8 = insertelement <8 x i16> %7, i16 0, i64 0
+  %9 = insertelement <8 x i16> %8, i16 %2, i64 3
+  %10 = shufflevector <4 x i16> %6, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %11 = shufflevector <8 x i16> %9, <8 x i16> %10, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %12 = zext <8 x i16> %11 to <8 x i32>
+  store <8 x i32> %12, ptr %i.b, align 16, !tbaa !12
   %i.aby = udiv i32 %i.abq, %i.abx                ; 2 uses
   store i32 %i.aby, ptr %i.ba, align 4, !tbaa !12
   store i32 %i.aby, ptr %i.bb, align 4, !tbaa !12
@@ -800,21 +809,30 @@ bb.dv:                                            ; preds = %bb.dv, %.epil.prehe
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
   %i.aem = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 32
-  %4 = load <8 x i16>, ptr %i.aem, align 16, !tbaa !78
-  %5 = zext <8 x i16> %4 to <8 x i32>
-  store <8 x i32> %5, ptr %i.du, align 4, !tbaa !12
-  store <8 x i32> %i.zz, ptr %i.dv, align 4, !tbaa !12
-  %6 = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 48
+  %13 = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 36
+  %14 = load i16, ptr %13, align 4, !tbaa !78
+  %15 = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 38
+  %16 = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 46
+  store <8 x i32> %i.zz, ptr %i.du, align 4, !tbaa !12
+  %17 = load <8 x i16>, ptr %16, align 2, !tbaa !78
+  %18 = zext <8 x i16> %17 to <8 x i32>
+  store <8 x i32> %18, ptr %i.dv, align 16, !tbaa !12
   %i.aen = getelementptr inbounds nuw i8, ptr %indvars.iv993.sroa.phi, i64 62
   %i.aeo = load i16, ptr %i.aen, align 2, !tbaa !78
-  %7 = load <8 x i16>, ptr %6, align 16, !tbaa !78
-  %8 = zext i16 %i.aeo to i32
-  %9 = zext <8 x i16> %7 to <8 x i32>
-  store <8 x i32> %9, ptr %i.dx, align 4, !tbaa !12
-  store <8 x i32> %i.abo, ptr %i.dy, align 4, !tbaa !12
+  %19 = zext i16 %i.aeo to i32                    ; 2 uses
+  store i32 %19, ptr %i.dy, align 16, !tbaa !12
+  store <8 x i32> %i.abo, ptr %i.dx, align 4, !tbaa !12
   store i32 0, ptr %i.c, align 16, !tbaa !12
-  store i32 0, ptr %i.b, align 16, !tbaa !12
-  %i.aep = udiv i32 %i.abq, %8                    ; 2 uses
+  %20 = load <2 x i16>, ptr %i.aem, align 16, !tbaa !78
+  %21 = load <4 x i16>, ptr %15, align 2, !tbaa !78
+  %22 = shufflevector <2 x i16> %20, <2 x i16> poison, <8 x i32> <i32 poison, i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %23 = insertelement <8 x i16> %22, i16 0, i64 0
+  %24 = insertelement <8 x i16> %23, i16 %14, i64 3
+  %25 = shufflevector <4 x i16> %21, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %26 = shufflevector <8 x i16> %24, <8 x i16> %25, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %27 = zext <8 x i16> %26 to <8 x i32>
+  store <8 x i32> %27, ptr %i.b, align 16, !tbaa !12
+  %i.aep = udiv i32 %i.abq, %19                   ; 2 uses
   store i32 %i.aep, ptr %i.ba, align 4, !tbaa !12
   store i32 %i.aep, ptr %i.bb, align 4, !tbaa !12
   store i32 65535, ptr %i.bc, align 8, !tbaa !12

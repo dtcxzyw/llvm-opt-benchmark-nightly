@@ -205,9 +205,9 @@ bb.a:
   %6 = alloca %class.anon.172, align 8            ; 5 uses
   %7 = alloca %class.anon.172, align 8            ; 5 uses
   %8 = alloca %class.anon.168, align 1            ; 4 uses
-  %9 = alloca %class.anon.172, align 8            ; 5 uses
+  %9 = alloca %class.anon.172, align 16           ; 4 uses
   %10 = alloca %class.anon.168, align 1           ; 4 uses
-  %11 = alloca %class.anon.172, align 8           ; 5 uses
+  %11 = alloca %class.anon.172, align 16          ; 4 uses
   %12 = alloca %class.anon.172, align 8           ; 5 uses
   %13 = alloca %class.anon.168, align 1           ; 4 uses
   %14 = alloca %class.anon.172, align 8           ; 5 uses
@@ -223,16 +223,21 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
-  %17 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %18 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.h = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %i.i = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.h = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.n = icmp eq i64 %2, 0
-  br i1 %i.n, label %._crit_edge, label %.lr.ph109
+  br i1 %i.n, label %._crit_edge, label %.lr.ph109.preheader
+
+.lr.ph109.preheader:                              ; preds = %.lr.ph
+  %17 = insertelement <2 x ptr> poison, ptr %0, i64 0
+  %18 = insertelement <2 x ptr> %17, ptr %i.f, i64 1
+  %19 = insertelement <2 x ptr> poison, ptr %0, i64 0
+  %20 = insertelement <2 x ptr> %19, ptr %i.f, i64 1
+  br label %.lr.ph109
 
 bb.b:                                             ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt7variantIJPKN8WasmEdge3AST13CustomSectionEPKNS4_11TypeSectionEPKNS4_13ImportSectionEPKNS4_15FunctionSectionEPKNS4_12TableSectionEPKNS4_13MemorySectionEPKNS4_13GlobalSectionEPKNS4_13ExportSectionEPKNS4_12StartSectionEPKNS4_14ElementSectionEPKNS4_11CodeSectionEPKNS4_11DataSectionEPKNS4_16DataCountSectionEPKNS4_10TagSectionEEESt6vectorIS1B_SaIS1B_EEEENS0_5__ops15_Iter_comp_iterIZNKS3_6Loader10Serializer15serializeModuleERKNS4_6ModuleEE3$_2EEET_S1Q_S1Q_T0_.exit"
   %i.o = icmp eq i64 %i.z, 0
@@ -270,10 +275,10 @@ bb.c:                                             ; preds = %bb.c, %._crit_edge
   %i.x = icmp sgt i64 %i.v, 16
   br i1 %i.x, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt7variantIJPKN8WasmEdge3AST13CustomSectionEPKNS4_11TypeSectionEPKNS4_13ImportSectionEPKNS4_15FunctionSectionEPKNS4_12TableSectionEPKNS4_13MemorySectionEPKNS4_13GlobalSectionEPKNS4_13ExportSectionEPKNS4_12StartSectionEPKNS4_14ElementSectionEPKNS4_11CodeSectionEPKNS4_11DataSectionEPKNS4_16DataCountSectionEPKNS4_10TagSectionEEESt6vectorIS1B_SaIS1B_EEEENS0_5__ops15_Iter_comp_iterIZNKS3_6Loader10Serializer15serializeModuleERKNS4_6ModuleEE3$_2EEEvT_S1Q_S1Q_T0_.exit", !llvm.loop !325
 
-.lr.ph109:                                        ; preds = %.lr.ph, %bb.b
-  %storemerge46108 = phi ptr [ %.sroa.010.1.i.i, %bb.b ], [ %1, %.lr.ph ] ; 4 uses
-  %.047107 = phi i64 [ %i.z, %bb.b ], [ %2, %.lr.ph ]
-  %i.y = phi i64 [ %i.fb, %bb.b ], [ %i.d, %.lr.ph ]
+.lr.ph109:                                        ; preds = %.lr.ph109.preheader, %bb.b
+  %storemerge46108 = phi ptr [ %.sroa.010.1.i.i, %bb.b ], [ %1, %.lr.ph109.preheader ] ; 4 uses
+  %.047107 = phi i64 [ %i.z, %bb.b ], [ %2, %.lr.ph109.preheader ]
+  %i.y = phi i64 [ %i.fb, %bb.b ], [ %i.d, %.lr.ph109.preheader ]
   %i.z = add nsw i64 %.047107, -1                 ; 3 uses
   %i.aa = lshr i64 %i.y, 1
   %i.ab = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.aa ; 8 uses
@@ -373,8 +378,7 @@ _ZSt9iter_swapIN9__gnu_cxx17__normal_iteratorIPSt7variantIJPKN8WasmEdge3AST13Cus
 
 bb.j:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #20
-  store ptr %0, ptr %11, align 8, !tbaa !120
-  store ptr %i.f, ptr %i.i, align 8, !tbaa !333
+  store <2 x ptr> %20, ptr %11, align 16, !tbaa !333
   %i.by = load i8, ptr %i.g, align 8, !tbaa !26
   %i.bz = zext i8 %i.by to i64
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr @_ZNSt8__detail9__variant12__gen_vtableINS0_20__variant_idx_cookieEOZNSt7variantIJPKN8WasmEdge3AST13CustomSectionEPKNS5_11TypeSectionEPKNS5_13ImportSectionEPKNS5_15FunctionSectionEPKNS5_12TableSectionEPKNS5_13MemorySectionEPKNS5_13GlobalSectionEPKNS5_13ExportSectionEPKNS5_12StartSectionEPKNS5_14ElementSectionEPKNS5_11CodeSectionEPKNS5_11DataSectionEPKNS5_16DataCountSectionEPKNS5_10TagSectionEEE4swapERS1C_EUlOT_T0_E_JS1D_EE9_S_vtableE, i64 %i.bz
@@ -411,8 +415,7 @@ bb.l:                                             ; preds = %.lr.ph109
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
-  store ptr %0, ptr %9, align 8, !tbaa !120
-  store ptr %i.f, ptr %i.h, align 8, !tbaa !333
+  store <2 x ptr> %18, ptr %9, align 16, !tbaa !333
   %i.cp = load i8, ptr %i.g, align 8, !tbaa !26
   %i.cq = zext i8 %i.cp to i64
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr @_ZNSt8__detail9__variant12__gen_vtableINS0_20__variant_idx_cookieEOZNSt7variantIJPKN8WasmEdge3AST13CustomSectionEPKNS5_11TypeSectionEPKNS5_13ImportSectionEPKNS5_15FunctionSectionEPKNS5_12TableSectionEPKNS5_13MemorySectionEPKNS5_13GlobalSectionEPKNS5_13ExportSectionEPKNS5_12StartSectionEPKNS5_14ElementSectionEPKNS5_11CodeSectionEPKNS5_11DataSectionEPKNS5_16DataCountSectionEPKNS5_10TagSectionEEE4swapERS1C_EUlOT_T0_E_JS1D_EE9_S_vtableE, i64 %i.cq
@@ -450,7 +453,7 @@ bb.o:                                             ; preds = %bb.l
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   store ptr %0, ptr %7, align 8, !tbaa !120
-  store ptr %i.ac, ptr %18, align 8, !tbaa !333
+  store ptr %i.ac, ptr %i.i, align 8, !tbaa !333
   %i.dg = load i8, ptr %i.ap, align 8, !tbaa !26
   %i.dh = zext i8 %i.dg to i64
   %i.di = getelementptr inbounds nuw [8 x i8], ptr @_ZNSt8__detail9__variant12__gen_vtableINS0_20__variant_idx_cookieEOZNSt7variantIJPKN8WasmEdge3AST13CustomSectionEPKNS5_11TypeSectionEPKNS5_13ImportSectionEPKNS5_15FunctionSectionEPKNS5_12TableSectionEPKNS5_13MemorySectionEPKNS5_13GlobalSectionEPKNS5_13ExportSectionEPKNS5_12StartSectionEPKNS5_14ElementSectionEPKNS5_11CodeSectionEPKNS5_11DataSectionEPKNS5_16DataCountSectionEPKNS5_10TagSectionEEE4swapERS1C_EUlOT_T0_E_JS1D_EE9_S_vtableE, i64 %i.dh
@@ -472,7 +475,7 @@ _ZSt9iter_swapIN9__gnu_cxx17__normal_iteratorIPSt7variantIJPKN8WasmEdge3AST13Cus
 bb.r:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   store ptr %0, ptr %6, align 8, !tbaa !120
-  store ptr %i.ab, ptr %17, align 8, !tbaa !333
+  store ptr %i.ab, ptr %i.h, align 8, !tbaa !333
   %i.dm = load i8, ptr %i.ai, align 8, !tbaa !26
   %i.dn = zext i8 %i.dm to i64
   %i.do = getelementptr inbounds nuw [8 x i8], ptr @_ZNSt8__detail9__variant12__gen_vtableINS0_20__variant_idx_cookieEOZNSt7variantIJPKN8WasmEdge3AST13CustomSectionEPKNS5_11TypeSectionEPKNS5_13ImportSectionEPKNS5_15FunctionSectionEPKNS5_12TableSectionEPKNS5_13MemorySectionEPKNS5_13GlobalSectionEPKNS5_13ExportSectionEPKNS5_12StartSectionEPKNS5_14ElementSectionEPKNS5_11CodeSectionEPKNS5_11DataSectionEPKNS5_16DataCountSectionEPKNS5_10TagSectionEEE4swapERS1C_EUlOT_T0_E_JS1D_EE9_S_vtableE, i64 %i.dn

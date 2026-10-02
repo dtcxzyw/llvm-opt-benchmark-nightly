@@ -205,8 +205,6 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs14kWLkQVSKO_14deltalake_cor
 .thread1238:                                      ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs14kWLkQVSKO_14deltalake_core5table5state15DeltaTableStateEBM_.exit328, %_RNvMNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3setINtB2_7HashSetNtNtCs6Po7BT7Nknu_5alloc6string6StringE3newCs14kWLkQVSKO_14deltalake_core.exit
   %i.aez = getelementptr inbounds nuw i8, ptr %1, i64 224
   store i32 0, ptr %i.aez, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 136
-  %4 = load ptr, ptr %3, align 8, !nonnull !29, !align !39, !noundef !29
   %i.afa = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.afb = load i64, ptr %i.afa, align 8, !noundef !29
   %i.afc = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -214,12 +212,11 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs14kWLkQVSKO_14deltalake_cor
   %i.afe = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.aff = load i64, ptr %i.afe, align 8, !noundef !29
   %i.afg = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %5 = load ptr, ptr %i.afg, align 8, !nonnull !29, !align !39, !noundef !29
-  %i.afh = getelementptr inbounds nuw i8, ptr %5, i64 168
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 240
-  store ptr %4, ptr %6, align 8
-  %.sroa.8640.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 248
-  store ptr %i.afh, ptr %.sroa.8640.0..sroa_idx, align 8
+  %i.afh = getelementptr inbounds nuw i8, ptr %1, i64 240
+  %3 = load <2 x ptr>, ptr %i.afg, align 8
+  %4 = getelementptr inbounds nuw i8, <2 x ptr> %3, <2 x i64> <i64 168, i64 0>
+  %5 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %5, ptr %i.afh, align 8
   %.sroa.9641.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 256
   store ptr @188, ptr %.sroa.9641.0..sroa_idx, align 8
   %.sroa.10642.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 264

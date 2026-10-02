@@ -202,21 +202,24 @@ bb.z:                                             ; preds = %bb.x
   %i.ca = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !38 ; 2 uses
   %.not98.i22 = icmp eq ptr %i.cb, null
-  br i1 %.not98.i22, label %.critedge5.i, label %.lr.ph
+  br i1 %.not98.i22, label %.critedge5.i, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.peel.next.i, %uriAppendSegmentA.exit.i
-  %i.cc = phi ptr [ %i.cl, %uriAppendSegmentA.exit.i ], [ %i.cb, %.peel.next.i ]
+.lr.ph.preheader:                                 ; preds = %.peel.next.i
+  %5 = insertelement <2 x ptr> poison, ptr %i.bm, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.bn, i64 1
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %uriAppendSegmentA.exit.i
+  %i.cc = phi ptr [ %i.cl, %uriAppendSegmentA.exit.i ], [ %i.cb, %.lr.ph.preheader ]
   %i.cd = load ptr, ptr %.0, align 8, !tbaa !17
-  %i.ce = tail call ptr %i.cd(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !19 ; 7 uses
+  %i.ce = tail call ptr %i.cd(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !19 ; 6 uses
   %i.cf = icmp eq ptr %i.ce, null
   br i1 %i.cf, label %uriRemoveBaseUriImplA.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
   store ptr null, ptr %i.cg, align 8, !tbaa !38
-  store ptr %i.bm, ptr %i.ce, align 8, !tbaa !36
-  %5 = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
-  store ptr %i.bn, ptr %5, align 8, !tbaa !37
+  store <2 x ptr> %6, ptr %i.ce, align 8, !tbaa !28
   %i.ch = load ptr, ptr %i.bo, align 8, !tbaa !39 ; 2 uses
   %i.ci = icmp eq ptr %i.ch, null
   br i1 %i.ci, label %bb.ab, label %bb.ac
@@ -244,10 +247,12 @@ uriAppendSegmentA.exit.i:                         ; preds = %bb.ac, %bb.ab
   br i1 %.not99157.i, label %.loopexit.i, label %.lr.ph160.i
 
 .lr.ph160.i:                                      ; preds = %.critedge5.i
-  %i.cm = load ptr, ptr @uriConstPwdA, align 8    ; 3 uses
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 1 ; 2 uses
+  %i.cm = load ptr, ptr @uriConstPwdA, align 8    ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 1
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 5 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
+  %7 = insertelement <2 x ptr> poison, ptr %i.cm, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %i.cn, i64 1 ; 2 uses
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ar, %.lr.ph160.i
@@ -275,16 +280,14 @@ bb.af:                                            ; preds = %.lr.ph155.i
 
 bb.ag:                                            ; preds = %.lr.ph155.i
   %i.cv = load ptr, ptr %.0, align 8, !tbaa !17
-  %i.cw = tail call ptr %i.cv(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !19 ; 8 uses
+  %i.cw = tail call ptr %i.cv(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !19 ; 7 uses
   %i.cx = icmp eq ptr %i.cw, null
   br i1 %i.cx, label %uriRemoveBaseUriImplA.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 16
   store ptr null, ptr %i.cy, align 8, !tbaa !38
-  store ptr %i.cm, ptr %i.cw, align 8, !tbaa !36
-  %6 = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
-  store ptr %i.cn, ptr %6, align 8, !tbaa !37
+  store <2 x ptr> %8, ptr %i.cw, align 8, !tbaa !28
   %i.cz = load ptr, ptr %i.co, align 8, !tbaa !39 ; 2 uses
   %i.da = icmp eq ptr %i.cz, null
   br i1 %i.da, label %bb.ai, label %bb.aj
@@ -304,16 +307,14 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %.critedge111.i
   %i.dd = load ptr, ptr %.0, align 8, !tbaa !17
-  %i.de = tail call ptr %i.dd(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !19 ; 8 uses
+  %i.de = tail call ptr %i.dd(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !19 ; 7 uses
   %i.df = icmp eq ptr %i.de, null
   br i1 %i.df, label %uriRemoveBaseUriImplA.exit, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.dg = getelementptr inbounds nuw i8, ptr %i.de, i64 16
   store ptr null, ptr %i.dg, align 8, !tbaa !38
-  store ptr %i.cm, ptr %i.de, align 8, !tbaa !36
-  %7 = getelementptr inbounds nuw i8, ptr %i.de, i64 8
-  store ptr %i.cn, ptr %7, align 8, !tbaa !37
+  store <2 x ptr> %8, ptr %i.de, align 8, !tbaa !28
   %i.dh = load ptr, ptr %i.co, align 8, !tbaa !39 ; 2 uses
   %i.di = icmp eq ptr %i.dh, null
   br i1 %i.di, label %bb.am, label %bb.an
@@ -629,21 +630,24 @@ bb.z:                                             ; preds = %bb.x
   %i.ca = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !61 ; 2 uses
   %.not98.i22 = icmp eq ptr %i.cb, null
-  br i1 %.not98.i22, label %.critedge5.i, label %.lr.ph
+  br i1 %.not98.i22, label %.critedge5.i, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.peel.next.i, %uriAppendSegmentW.exit.i
-  %i.cc = phi ptr [ %i.cl, %uriAppendSegmentW.exit.i ], [ %i.cb, %.peel.next.i ]
+.lr.ph.preheader:                                 ; preds = %.peel.next.i
+  %5 = insertelement <2 x ptr> poison, ptr %i.bm, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.bn, i64 1
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %uriAppendSegmentW.exit.i
+  %i.cc = phi ptr [ %i.cl, %uriAppendSegmentW.exit.i ], [ %i.cb, %.lr.ph.preheader ]
   %i.cd = load ptr, ptr %.0, align 8, !tbaa !17
-  %i.ce = tail call ptr %i.cd(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !42 ; 7 uses
+  %i.ce = tail call ptr %i.cd(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !42 ; 6 uses
   %i.cf = icmp eq ptr %i.ce, null
   br i1 %i.cf, label %uriRemoveBaseUriImplW.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
   store ptr null, ptr %i.cg, align 8, !tbaa !61
-  store ptr %i.bm, ptr %i.ce, align 8, !tbaa !59
-  %5 = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
-  store ptr %i.bn, ptr %5, align 8, !tbaa !60
+  store <2 x ptr> %6, ptr %i.ce, align 8, !tbaa !51
   %i.ch = load ptr, ptr %i.bo, align 8, !tbaa !62 ; 2 uses
   %i.ci = icmp eq ptr %i.ch, null
   br i1 %i.ci, label %bb.ab, label %bb.ac
@@ -671,10 +675,12 @@ uriAppendSegmentW.exit.i:                         ; preds = %bb.ac, %bb.ab
   br i1 %.not99157.i, label %.loopexit.i, label %.lr.ph160.i
 
 .lr.ph160.i:                                      ; preds = %.critedge5.i
-  %i.cm = load ptr, ptr @uriConstPwdW, align 8    ; 3 uses
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 4 ; 2 uses
+  %i.cm = load ptr, ptr @uriConstPwdW, align 8    ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 4
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 5 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
+  %7 = insertelement <2 x ptr> poison, ptr %i.cm, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %i.cn, i64 1 ; 2 uses
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ar, %.lr.ph160.i
@@ -702,16 +708,14 @@ bb.af:                                            ; preds = %.lr.ph155.i
 
 bb.ag:                                            ; preds = %.lr.ph155.i
   %i.cv = load ptr, ptr %.0, align 8, !tbaa !17
-  %i.cw = tail call ptr %i.cv(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !42 ; 8 uses
+  %i.cw = tail call ptr %i.cv(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !42 ; 7 uses
   %i.cx = icmp eq ptr %i.cw, null
   br i1 %i.cx, label %uriRemoveBaseUriImplW.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 16
   store ptr null, ptr %i.cy, align 8, !tbaa !61
-  store ptr %i.cm, ptr %i.cw, align 8, !tbaa !59
-  %6 = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
-  store ptr %i.cn, ptr %6, align 8, !tbaa !60
+  store <2 x ptr> %8, ptr %i.cw, align 8, !tbaa !51
   %i.cz = load ptr, ptr %i.co, align 8, !tbaa !62 ; 2 uses
   %i.da = icmp eq ptr %i.cz, null
   br i1 %i.da, label %bb.ai, label %bb.aj
@@ -731,16 +735,14 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %.critedge111.i
   %i.dd = load ptr, ptr %.0, align 8, !tbaa !17
-  %i.de = tail call ptr %i.dd(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !42 ; 8 uses
+  %i.de = tail call ptr %i.dd(ptr noundef nonnull %.0, i64 noundef 32) #3, !inline_history !42 ; 7 uses
   %i.df = icmp eq ptr %i.de, null
   br i1 %i.df, label %uriRemoveBaseUriImplW.exit, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.dg = getelementptr inbounds nuw i8, ptr %i.de, i64 16
   store ptr null, ptr %i.dg, align 8, !tbaa !61
-  store ptr %i.cm, ptr %i.de, align 8, !tbaa !59
-  %7 = getelementptr inbounds nuw i8, ptr %i.de, i64 8
-  store ptr %i.cn, ptr %7, align 8, !tbaa !60
+  store <2 x ptr> %8, ptr %i.de, align 8, !tbaa !51
   %i.dh = load ptr, ptr %i.co, align 8, !tbaa !62 ; 2 uses
   %i.di = icmp eq ptr %i.dh, null
   br i1 %i.di, label %bb.am, label %bb.an

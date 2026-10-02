@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %.pre-phi.i = phi i64 [ %.pre2.i, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i ], [ %i.g, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %.pre.i, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i ], [ %i.f, %bb.a ] ; 2 uses
   %i.m = phi ptr [ %i.k, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i.i ], [ null, %bb.a ] ; 8 uses
-  %i.n = sub i64 %.pre-phi.i, %.pre-phi4.i        ; 10 uses
-  %i.o = icmp sgt i64 %i.n, 8
+  %i.n = sub i64 %.pre-phi.i, %.pre-phi4.i        ; 9 uses
+  %i.o = icmp sgt i64 %i.n, 8                     ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.e, !prof !84
 
 bb.d:                                             ; preds = %bb.c
@@ -247,8 +247,7 @@ _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i: ; preds = %.thread585, %bb
 
 .noexc168:                                        ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.n ; 3 uses
-  %8 = icmp samesign ugt i64 %i.n, 8
-  br i1 %8, label %bb.g, label %bb.h, !prof !140
+  br i1 %i.o, label %bb.g, label %bb.h, !prof !140
 
 bb.g:                                             ; preds = %.noexc168
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.t, ptr align 8 %i.m, i64 %i.n, i1 false)
@@ -651,7 +650,7 @@ bb.b:                                             ; preds = %bb.a
   %.08.i.i.i = phi ptr [ %i.q, %.lr.ph.i.i.i ], [ %i.b, %bb.b ] ; 2 uses
   %.057.i.i.i = phi i64 [ %i.p, %.lr.ph.i.i.i ], [ %1, %bb.b ]
   tail call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %.08.i.i.i) #18
-  %i.p = add i64 %.057.i.i.i, -1                  ; 2 uses
+  %i.p = add nsw i64 %.057.i.i.i, -1              ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 208 ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.p, 0
   br i1 %.not.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN2cv3MatEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !196
@@ -681,7 +680,7 @@ _ZNKSt6vectorIN2cv3MatESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.c
   %.08.i.i.i31 = phi ptr [ %i.y, %.lr.ph.i.i.i30 ], [ %i.w, %_ZNKSt6vectorIN2cv3MatESaIS1_EE12_M_check_lenEmPKc.exit ] ; 2 uses
   %.057.i.i.i32 = phi i64 [ %i.x, %.lr.ph.i.i.i30 ], [ %1, %_ZNKSt6vectorIN2cv3MatESaIS1_EE12_M_check_lenEmPKc.exit ]
   tail call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %.08.i.i.i31) #18
-  %i.x = add i64 %.057.i.i.i32, -1                ; 2 uses
+  %i.x = add nsw i64 %.057.i.i.i32, -1            ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 208
   %.not.i.i.i33 = icmp eq i64 %i.x, 0
   br i1 %.not.i.i.i33, label %_ZSt27__uninitialized_default_n_aIPN2cv3MatEmS1_ET_S3_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !196

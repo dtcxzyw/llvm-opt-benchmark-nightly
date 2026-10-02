@@ -205,7 +205,7 @@ _ZN4mlir12RewriterBase18notifyMatchFailureIRNS_3scf7WhileOpEEEN4llvm13LogicalRes
 
 bb.h:                                             ; preds = %bb.f
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 10 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 6 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 5 uses
   %i.bf = load <2 x ptr>, ptr %i.bd, align 8
   %i.bg = load ptr, ptr %i.bd, align 8, !tbaa !88
   %i.bh = call noundef ptr @_ZN4mlir5spirv6LoopOp13getEntryBlockEv(ptr noundef nonnull align 8 dereferenceable(8) %11) #15 ; 2 uses
@@ -440,7 +440,9 @@ _ZN4llvm11SmallVectorIN4mlir5ValueELj6EEC2Em.exit: ; preds = %_ZN4llvm15SmallVec
   br i1 %.not142144, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4llvm11SmallVectorIN4mlir5ValueELj6EEC2Em.exit
-  %21 = getelementptr inbounds nuw i8, ptr %i.bj, i64 32
+  %21 = insertelement <2 x ptr> poison, ptr %i.bk, i64 0
+  %22 = insertelement <2 x ptr> %21, ptr %i.bj, i64 1
+  %23 = getelementptr inbounds nuw i8, <2 x ptr> %22, <2 x i64> <i64 0, i64 32>
   br label %bb.p
 
 ._crit_edge:                                      ; preds = %bb.p, %_ZN4mlir3scf21WhileOpGenericAdaptorINS_10ValueRangeEE8getInitsEv.exit, %_ZN4llvm11SmallVectorIN4mlir5ValueELj6EEC2Em.exit
@@ -542,8 +544,7 @@ bb.p:                                             ; preds = %.lr.ph, %bb.p
   %i.il = load ptr, ptr %18, align 8, !tbaa !27
   %i.im = getelementptr inbounds nuw [8 x i8], ptr %i.il, i64 %.sroa.7.0146
   store ptr %i.ik, ptr %i.im, align 8, !tbaa !123
-  store ptr %i.bk, ptr %i.bd, align 8, !tbaa !88
-  store ptr %21, ptr %i.be, align 8
+  store <2 x ptr> %23, ptr %i.bd, align 8
   %i.in = call ptr @_ZN4mlir5spirv7StoreOp6createERNS_9OpBuilderENS_8LocationENS_5ValueES5_N4llvm8ArrayRefINS_14NamedAttributeEEE(ptr noundef nonnull align 8 dereferenceable(32) %i.q, ptr %.sroa.0.0.copyload.i.i99, ptr nonnull %i.ii, ptr %i.hs, ptr null, i64 0) #15 ; 0 uses
   %i.io = add nuw nsw i64 %.sroa.7.0146, 1
   %i.ip = getelementptr inbounds nuw i8, ptr %.sroa.0120.0145, i64 8 ; 2 uses

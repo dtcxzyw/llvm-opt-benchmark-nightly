@@ -205,8 +205,8 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   store i32 0, ptr %i.b, align 4, !tbaa !60
   %i.p = icmp slt i32 %1, 7                       ; 2 uses
   %i.q = add nsw i32 %1, -6                       ; 2 uses
-  %i.r = shl nuw i32 1, %i.q                      ; 2 uses
-  %i.s = select i1 %i.p, i32 1, i32 %i.r          ; 5 uses
+  %i.r = shl nuw i32 1, %i.q
+  %i.s = select i1 %i.p, i32 1, i32 %i.r          ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1000) %i.c, i8 0, i64 1000, i1 false)
   %i.t = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) @.str.57) #33
@@ -355,11 +355,8 @@ bb.n:                                             ; preds = %Vec_WrdReadBin.exit
   %i.bs = icmp samesign ugt i32 %1, 5
   %i.bt = add nsw i32 %1, -2                      ; 2 uses
   %i.bu = icmp slt i32 %1, 2                      ; 3 uses
-  %20 = icmp samesign ult i32 %1, 7
-  %21 = select i1 %20, i32 1, i32 %i.r            ; 2 uses
-  %.not22.i = icmp slt i32 %21, 1                 ; 3 uses
-  %22 = zext nneg i32 %21 to i64
-  %.idx.i = shl nuw nsw i64 %22, 3                ; 3 uses
+  %.not22.i = icmp slt i32 %i.s, 1                ; 3 uses
+  %.idx.i = shl nuw nsw i64 %wide.trip.count.i, 3 ; 4 uses
   %notmask.i = shl nsw i32 -1, %i.bt
   %i.bv = xor i32 %notmask.i, -1
   %i.bw = select i1 %i.bs, i32 15, i32 %i.bv
@@ -378,7 +375,6 @@ bb.n:                                             ; preds = %Vec_WrdReadBin.exit
   %i.cd = shl nuw i32 1, %i.bt
   %i.ce = add nuw nsw i32 %i.cd, 1
   %i.cf = sext i32 %i.ce to i64
-  %23 = shl nuw nsw i64 %wide.trip.count.i, 3
   %min.iters.check = icmp ult i32 %1, 8
   %n.vec = and i64 %wide.trip.count.i242, 2147483640 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i242
@@ -399,7 +395,7 @@ bb.o:                                             ; preds = %.lr.ph316, %bb.bi
   br i1 %i.bq, label %.lr.ph.i.preheader, label %Abc_TtCopy.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.o
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bm, ptr noundef nonnull align 8 dereferenceable(1) %i.ci, i64 %23, i1 false), !tbaa !72
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bm, ptr noundef nonnull align 8 dereferenceable(1) %i.ci, i64 %.idx.i, i1 false), !tbaa !72
   br label %Abc_TtCopy.exit
 
 Abc_TtCopy.exit:                                  ; preds = %.lr.ph.i.preheader, %bb.o
@@ -802,8 +798,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.d = icmp slt i32 %2, 7                       ; 2 uses
   %i.e = add nsw i32 %2, -6                       ; 2 uses
-  %i.f = shl nuw i32 1, %i.e                      ; 2 uses
-  %i.g = select i1 %i.d, i32 1, i32 %i.f
+  %i.f = shl nuw i32 1, %i.e
+  %i.g = select i1 %i.d, i32 1, i32 %i.f          ; 3 uses
   %i.h = getelementptr i8, ptr %1, i64 4
   %.val16 = load i32, ptr %i.h, align 4, !tbaa !84
   %i.i = sdiv i32 %.val16, %i.g                   ; 4 uses
@@ -816,9 +812,7 @@ bb.c:                                             ; preds = %bb.a
   %i.m = icmp samesign ugt i32 %2, 5
   %i.n = add nsw i32 %2, -2
   %i.o = icmp slt i32 %2, 2
-  %3 = icmp samesign ult i32 %2, 7
-  %4 = select i1 %3, i32 1, i32 %i.f              ; 2 uses
-  %i.p = zext nneg i32 %4 to i64
+  %i.p = zext nneg i32 %i.g to i64
   %.idx.i = shl nuw nsw i64 %i.p, 3
   %notmask.i = shl nsw i32 -1, %i.n
   %i.q = xor i32 %notmask.i, -1
@@ -845,7 +839,7 @@ Abc_TtPrintHexRev.exit.us:                        ; preds = %.lr.ph, %Abc_TtPrin
   br i1 %exitcond25.not, label %._crit_edge, label %Abc_TtPrintHexRev.exit.us, !llvm.loop !348
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  %.not22.i = icmp slt i32 %4, 1
+  %.not22.i = icmp slt i32 %i.g, 1
   br i1 %.not22.i, label %Abc_TtPrintHexRev.exit.us20, label %.lr.ph.i
 
 Abc_TtPrintHexRev.exit.us20:                      ; preds = %.lr.ph.split, %Abc_TtPrintHexRev.exit.us20

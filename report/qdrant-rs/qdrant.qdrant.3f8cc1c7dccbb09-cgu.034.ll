@@ -204,12 +204,8 @@ bb.u:                                             ; preds = %.thread, %bb.s
   %i.bz = phi ptr [ %i.bs, %.thread ], [ %i.bw, %bb.s ] ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 441
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 288
-  %3 = load ptr, ptr %i.cb, align 8, !noalias !2779, !nonnull !12, !align !13, !noundef !12
   store i8 1, ptr %i.ca, align 1, !noalias !2779
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 448
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 296
-  %5 = load ptr, ptr %4, align 8, !noalias !2779, !nonnull !12, !noundef !12
-  store ptr %5, ptr %i.cc, align 8, !noalias !2779
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 312
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 272
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cd, ptr noundef nonnull align 8 dereferenceable(16) %i.ce, i64 16, i1 false), !noalias !2779
@@ -235,9 +231,10 @@ bb.u:                                             ; preds = %.thread, %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 368
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 240
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ct, ptr noundef nonnull align 8 dereferenceable(32) %i.cu, i64 32, i1 false), !noalias !2779
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 360
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 456
-  store ptr %6, ptr %7, align 8, !noalias !2779
+  %3 = load <2 x ptr>, ptr %i.cb, align 8, !noalias !2779
+  %4 = getelementptr inbounds nuw i8, <2 x ptr> %3, <2 x i64> <i64 360, i64 0>
+  %5 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %5, ptr %i.cc, align 8, !noalias !2779
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 560
   store i8 0, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2779
   br label %bb.x
@@ -640,15 +637,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %3 = load ptr, ptr %1, align 8, !noalias !6437, !nonnull !12, !align !13, !noundef !12
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %5 = load ptr, ptr %4, align 8, !noalias !6437, !nonnull !12, !align !13, !noundef !12
-  store ptr %5, ptr %i.g, align 8, !noalias !6437, !captures !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6437
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 432
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store ptr %6, ptr %7, align 8, !noalias !6437
+  %3 = load <2 x ptr>, ptr %1, align 8, !noalias !6437
+  %4 = getelementptr inbounds nuw i8, <2 x ptr> %3, <2 x i64> <i64 432, i64 0>
+  %5 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %5, ptr %i.g, align 8, !noalias !6437
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 112
   store i8 0, ptr %.sroa.9.0..sroa_idx.i, align 8, !noalias !6437
   br label %bb.f

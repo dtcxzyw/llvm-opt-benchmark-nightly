@@ -205,9 +205,9 @@ If_CluCopy.exit:                                  ; preds = %.lr.ph.preheader.i,
   %i.s = icmp slt i32 %3, 7
   %i.t = add nsw i32 %3, -6
   %i.u = shl nuw i32 1, %i.t
-  %.fr.i = freeze i32 %i.u                        ; 2 uses
-  %i.v = select i1 %i.s, i32 1, i32 %.fr.i        ; 2 uses
-  %i.w = icmp sgt i32 %i.v, 0
+  %.fr.i = freeze i32 %i.u
+  %i.v = select i1 %i.s, i32 1, i32 %.fr.i        ; 4 uses
+  %i.w = icmp sgt i32 %i.v, 0                     ; 2 uses
   br i1 %i.w, label %.lr.ph.preheader.i145, label %If_CluCopy.exit151
 
 .lr.ph.preheader.i145:                            ; preds = %If_CluCopy.exit
@@ -266,11 +266,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not, label %.lr.ph.i152, label %.lr.ph, !llvm.loop !322
 
 .lr.ph.i152:                                      ; preds = %.lr.ph, %middle.block
-  %14 = icmp samesign ult i32 %3, 7
-  %15 = select i1 %14, i32 1, i32 %.fr.i          ; 3 uses
-  %16 = icmp sgt i32 %15, 0
-  %wide.trip.count52.i.i = zext nneg i32 %15 to i64
-  br i1 %16, label %.lr.ph.split.us.split.us.preheader.i, label %If_CluSupport.exit.thread
+  %wide.trip.count52.i.i = zext nneg i32 %i.v to i64
+  br i1 %i.w, label %.lr.ph.split.us.split.us.preheader.i, label %If_CluSupport.exit.thread
 
 .lr.ph.split.us.split.us.preheader.i:             ; preds = %.lr.ph.i152
   %wide.trip.count96.i = zext nneg i32 %3 to i64
@@ -319,7 +316,7 @@ bb.g:                                             ; preds = %bb.f
 ._crit_edge.us.i.us.us.i:                         ; preds = %bb.g
   %i.as = getelementptr inbounds [8 x i8], ptr %.03140.us.i.us.us.i, i64 %i.am
   %i.at = add nsw i32 %.041.us.i.us.us.i, %i.al   ; 2 uses
-  %i.au = icmp slt i32 %i.at, %15
+  %i.au = icmp slt i32 %i.at, %i.v
   br i1 %i.au, label %.preheader.us.i.us.us.i, label %If_CluHasVar.exit.thread.us.us.i, !llvm.loop !2
 
 If_CluHasVar.exit.us.us.i:                        ; preds = %.preheader.lr.ph.i.us.us.i

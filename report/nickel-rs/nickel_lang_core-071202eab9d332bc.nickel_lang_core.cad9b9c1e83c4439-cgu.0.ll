@@ -206,7 +206,7 @@ bb.a:
   %i.da = alloca [48 x i8], align 8               ; 7 uses
   %i.db = alloca [440 x i8], align 8              ; 10 uses
   %i.dc = alloca [48 x i8], align 8               ; 9 uses
-  %i.dd = alloca [32 x i8], align 8               ; 6 uses
+  %i.dd = alloca [32 x i8], align 16              ; 5 uses
   %i.de = alloca [24 x i8], align 8               ; 7 uses
   %i.df = alloca [8 x i8], align 8                ; 4 uses
   %i.dg = alloca [24 x i8], align 8               ; 7 uses
@@ -609,7 +609,6 @@ begin_hunk_1_@_ZN16nickel_lang_core4repl18rustyline_frontend4repl17h3df1d2f871a4
   %i.px = getelementptr inbounds nuw i8, ptr %i.dk, i64 8 ; 3 uses
   %i.py = getelementptr inbounds nuw i8, ptr %i.gh, i64 344
   %i.pz = getelementptr inbounds nuw i8, ptr %i.gh, i64 392
-  %3 = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
   %i.qa = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
   %i.qb = getelementptr inbounds nuw i8, ptr %i.gh, i64 488
   %i.qc = getelementptr inbounds nuw i8, ptr %i.dh, i64 8
@@ -671,6 +670,8 @@ begin_hunk_1_@_ZN16nickel_lang_core4repl18rustyline_frontend4repl17h3df1d2f871a4
   %.sroa.7427.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.rl = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
   %i.rm = getelementptr inbounds nuw i8, ptr %i.fd, i64 8 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %i.pt, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.gh, i64 1
   %i.rn = insertelement <2 x ptr> poison, ptr %i.py, i64 0
   %i.ro = insertelement <2 x ptr> %i.rn, ptr %i.pz, i64 1
   br label %bb.al
@@ -1073,9 +1074,8 @@ bb.du:                                            ; preds = %.noexc79.i
   store ptr %i.wo, ptr %i.dk, align 8, !noalias !55667
   store ptr %.sroa.9.0.copyload.i, ptr %i.px, align 8, !noalias !55667
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dd), !noalias !55667
-  store ptr %i.pt, ptr %i.dd, align 8, !noalias !55677
-  store ptr %i.gh, ptr %3, align 8, !noalias !55677
-  store <2 x ptr> %i.ro, ptr %i.qa, align 8, !noalias !55677
+  store <2 x ptr> %4, ptr %i.dd, align 16, !noalias !55677
+  store <2 x ptr> %i.ro, ptr %i.qa, align 16, !noalias !55677
   %i.ws = invoke noundef zeroext i1 @"_ZN16nickel_lang_core5cache9ast_cache88_$LT$impl$u20$nickel_lang_core..cache..ast_cache..ouroboros_impl_ast_cache..AstCache$GT$17add_type_bindings17h3a34935025772d36E"(ptr noalias noundef nonnull align 8 dereferenceable(144) %i.qb, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.0.sroa.4.0..sroa_idx.i, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.dd, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.dl)
           to label %bb.dv unwind label %.body.thread126.i.loopexit, !noalias !55671
 
@@ -1478,7 +1478,7 @@ bb.b:                                             ; preds = %bb.a
   %i.al = and i16 %i.ai, %.lcssa.i.i.i.i.i.i.i
   %i.am = sub nsw i64 0, %i.ak
   %i.an = getelementptr inbounds [144 x i8], ptr %.sroa.01.0.copyload.i.i.i.i, i64 %i.am ; 2 uses
-  %i.ao = add i64 %i.y, -1                        ; 2 uses
+  %i.ao = add nsw i64 %i.y, -1                    ; 2 uses
   %i.ap = getelementptr inbounds i8, ptr %i.an, i64 -144
   %i.aq = getelementptr inbounds i8, ptr %i.an, i64 -120
   %.sroa.0.0.i.i.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %i.y, i64 4) ; 3 uses
@@ -1881,14 +1881,13 @@ bb.a:
   %i.p = alloca [16 x i8], align 8                ; 4 uses
   %i.q = alloca [48 x i8], align 8                ; 7 uses
   %i.r = alloca [8 x i8], align 8                 ; 4 uses
-  %i.s = alloca [24 x i8], align 8                ; 7 uses
+  %i.s = alloca [24 x i8], align 8                ; 6 uses
   %i.t = alloca [72 x i8], align 8                ; 15 uses
   %.sroa.620 = alloca [64 x i8], align 8          ; 5 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %.sroa.654.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
@@ -1933,6 +1932,8 @@ bb.a:
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 72
   %i.ay = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
+  %3 = insertelement <2 x ptr> poison, ptr %1, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.v, i64 1
   %.sink154.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sink154.sroa.gep219 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.val.i.i3 = load ptr, ptr %2, align 8          ; 3 uses
@@ -1963,8 +1964,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.0.0.i = phi i64 [ 1, %bb.c ], [ 0, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !101869
   store ptr %i.ba, ptr %i.s, align 8, !noalias !101869
-  store ptr %1, ptr %3, align 8, !noalias !101869
-  store ptr %i.v, ptr %i.x, align 8, !noalias !101869
+  store <2 x ptr> %4, ptr %i.x, align 8, !noalias !101869
   call void @llvm.experimental.noalias.scope.decl(metadata !101870)
   call void @llvm.experimental.noalias.scope.decl(metadata !101871)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !101872
@@ -2367,7 +2367,7 @@ bb.k:                                             ; preds = %_ZN4core3fmt9Format
   %i.dp = and i16 %i.dm, %.lcssa.i.i.i.i.i.i.i
   %i.dq = sub nsw i64 0, %i.do
   %i.dr = getelementptr inbounds [32 x i8], ptr %.sroa.01.0.copyload.i.i.i.i, i64 %i.dq ; 2 uses
-  %i.ds = add i64 %i.ch, -1                       ; 2 uses
+  %i.ds = add nsw i64 %i.ch, -1                   ; 2 uses
   %i.dt = getelementptr inbounds i8, ptr %i.dr, i64 -32
   %i.du = getelementptr inbounds i8, ptr %i.dr, i64 -24
   %.sroa.0.0.i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.ch, i64 4) ; 3 uses
@@ -2770,7 +2770,7 @@ bb.bk:                                            ; preds = %_ZN9rustyline11line
   %.in.i = phi i64 [ %.sroa.05.0.i.i.i, %.lr.ph.i ], [ %i.ev, %_ZN9rustyline11line_buffer10LineBuffer10insert_str17h1cb04a5c43050d58E.exit.i ]
   %i.eu = phi i64 [ 32, %.lr.ph.i ], [ %i.fs, %_ZN9rustyline11line_buffer10LineBuffer10insert_str17h1cb04a5c43050d58E.exit.i ] ; 2 uses
   %.sroa.070.0280.i = phi i64 [ 0, %.lr.ph.i ], [ %i.eu, %_ZN9rustyline11line_buffer10LineBuffer10insert_str17h1cb04a5c43050d58E.exit.i ]
-  %i.ev = add i64 %.in.i, -1                      ; 2 uses
+  %i.ev = add nsw i64 %.in.i, -1                  ; 2 uses
   %i.ew = sub i64 %3, %.sroa.070.0280.i
   %.sroa.0.0.i114.i = call noundef i64 @llvm.umin.i64(i64 %i.ew, i64 32) ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !134685)

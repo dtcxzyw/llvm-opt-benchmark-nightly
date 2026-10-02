@@ -204,8 +204,6 @@ bb.jq:                                            ; preds = %bb.jn
   store i8 %i.aft, ptr %.sroa.15129.0..sroa_idx.i.i.i, align 2, !noalias !15045
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dm), !noalias !15045
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i)
-  %3 = insertelement <2 x ptr> poison, ptr %i.agj, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %i.afv, i64 1
   br label %bb.kh
 
 .thread368.i.i.i:                                 ; preds = %bb.jn
@@ -438,11 +436,13 @@ bb.kg:                                            ; preds = %bb.jl
 
 ._crit_edge176.i.i:                               ; preds = %bb.kg
   %.phi.trans.insert177.i.i = getelementptr inbounds nuw i8, ptr %1, i64 2568
+  %.pre178.i.i = load ptr, ptr %.phi.trans.insert177.i.i, align 8, !noalias !15048
   %.phi.trans.insert179.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1568
   %.pre180.i.i = load ptr, ptr %.phi.trans.insert179.i.i, align 8, !noalias !15048
   %.phi.trans.insert181.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1576
   %.pre182.i.i = load i64, ptr %.phi.trans.insert181.i.i, align 8, !noalias !15048
-  %5 = load <2 x ptr>, ptr %.phi.trans.insert177.i.i, align 8, !noalias !15048
+  %.phi.trans.insert183.i.i = getelementptr inbounds nuw i8, ptr %1, i64 2576
+  %.pre184.i.i = load ptr, ptr %.phi.trans.insert183.i.i, align 8, !noalias !15048
   %.phi.trans.insert185.i.i = getelementptr inbounds nuw i8, ptr %1, i64 2585
   %.pre186.i.i = load i8, ptr %.phi.trans.insert185.i.i, align 1, !range !34, !noalias !15048
   %.phi.trans.insert187.i.i = getelementptr inbounds nuw i8, ptr %1, i64 2586
@@ -458,13 +458,14 @@ bb.kh:                                            ; preds = %._crit_edge176.i.i,
   %i.ais = phi ptr [ %i.aga, %.thread.i.i.i ], [ %i.afo, %._crit_edge176.i.i ]
   %i.ait = phi i8 [ %i.aft, %.thread.i.i.i ], [ %.pre188.i.i, %._crit_edge176.i.i ]
   %i.aiu = phi i8 [ %i.afu, %.thread.i.i.i ], [ %.pre186.i.i, %._crit_edge176.i.i ]
+  %3 = phi ptr [ %i.afv, %.thread.i.i.i ], [ %.pre184.i.i, %._crit_edge176.i.i ]
   %i.aiv = phi i64 [ %i.afw, %.thread.i.i.i ], [ %.pre182.i.i, %._crit_edge176.i.i ]
   %i.aiw = phi ptr [ %i.afx, %.thread.i.i.i ], [ %.pre180.i.i, %._crit_edge176.i.i ]
-  %i.aix = phi ptr [ %.sroa.13127.0..sroa_idx.i.i.i, %.thread.i.i.i ], [ %.phi.trans.insert362.i.i.i, %._crit_edge176.i.i ]
-  %i.aiy = phi ptr [ %i.agk, %.thread.i.i.i ], [ %i.aim, %._crit_edge176.i.i ] ; 2 uses
-  %6 = phi <2 x ptr> [ %4, %.thread.i.i.i ], [ %5, %._crit_edge176.i.i ]
+  %i.aix = phi ptr [ %i.agj, %.thread.i.i.i ], [ %.pre178.i.i, %._crit_edge176.i.i ]
+  %i.aiy = phi ptr [ %.sroa.13127.0..sroa_idx.i.i.i, %.thread.i.i.i ], [ %.phi.trans.insert362.i.i.i, %._crit_edge176.i.i ]
+  %4 = phi ptr [ %i.agk, %.thread.i.i.i ], [ %i.aim, %._crit_edge176.i.i ] ; 2 uses
   %.sroa.0.32..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i.i.i, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.32..sroa_idx.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(48) %i.aiy, i64 48, i1 false), !noalias !15048
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.32..sroa_idx.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 48, i1 false), !noalias !15048
   %i.aiz = getelementptr inbounds nuw i8, ptr %1, i64 1584
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.aiz, ptr noundef nonnull align 8 dereferenceable(160) %.sroa.0.i.i.i.i, i64 160, i1 false), !noalias !15048
   %.sroa.79.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1744
@@ -472,7 +473,9 @@ bb.kh:                                            ; preds = %._crit_edge176.i.i,
   %.sroa.810.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 1752
   store i64 %i.aiv, ptr %.sroa.810.0..sroa_idx.i.i.i.i, align 8, !noalias !15048
   %.sroa.1012.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 2104
-  store <2 x ptr> %6, ptr %.sroa.1012.0..sroa_idx.i.i.i.i, align 8, !noalias !15048
+  store ptr %i.aix, ptr %.sroa.1012.0..sroa_idx.i.i.i.i, align 8, !noalias !15048
+  %.sroa.1113.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 2112
+  store ptr %3, ptr %.sroa.1113.0..sroa_idx.i.i.i.i, align 8, !noalias !15048
   %.sroa.13.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 2122
   store i8 0, ptr %.sroa.13.0..sroa_idx.i.i.i.i, align 2, !noalias !15048
   %.sroa.14.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 2123
@@ -507,8 +510,8 @@ bb.kl:                                            ; preds = %bb.kh, %bb.kg
   %i.ajd = phi ptr [ %i.aam, %bb.kg ], [ %i.aiq, %bb.kh ] ; 3 uses
   %i.aje = phi ptr [ %.phi.trans.insert.i.i, %bb.kg ], [ %i.air, %bb.kh ] ; 4 uses
   %i.ajf = phi ptr [ %i.afo, %bb.kg ], [ %i.ais, %bb.kh ] ; 3 uses
-  %i.ajg = phi ptr [ %.phi.trans.insert362.i.i.i, %bb.kg ], [ %i.aix, %bb.kh ] ; 3 uses
-  %i.ajh = phi ptr [ %i.aim, %bb.kg ], [ %i.aiy, %bb.kh ]
+  %i.ajg = phi ptr [ %.phi.trans.insert362.i.i.i, %bb.kg ], [ %i.aiy, %bb.kh ] ; 3 uses
+  %i.ajh = phi ptr [ %i.aim, %bb.kg ], [ %4, %bb.kh ]
   %i.aji = getelementptr inbounds nuw i8, ptr %1, i64 1584 ; 3 uses
   invoke fastcc void @_RNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard8snapshotNtB6_10LocalShard20get_snapshot_creator0Csl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(576) %i.dm, ptr noundef nonnull align 8 %i.aji, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.kn unwind label %bb.km, !noalias !15047

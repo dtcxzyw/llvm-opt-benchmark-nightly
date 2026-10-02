@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal fastcc { ptr, ptr } @_RNvMs8_NtCskVyUMSjkkSy_10rayon_core8registryNtB5_12WorkerThread9find_work(ptr noundef nonnull align 128 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
-  %i.b = alloca [32 x i8], align 8                ; 7 uses
+  %i.b = alloca [32 x i8], align 16               ; 6 uses
   %i.c = alloca [56 x i8], align 8                ; 10 uses
   %i.d = alloca [1 x i8], align 1                 ; 6 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
@@ -259,15 +259,15 @@ _RNvMs8_NtCskVyUMSjkkSy_10rayon_core8registryNtB5_12WorkerThread14take_local_job
 
 bb.e:                                             ; preds = %_RNvMs8_NtCskVyUMSjkkSy_10rayon_core8registryNtB5_12WorkerThread14take_local_job.exit
   %i.r = getelementptr i8, ptr %0, i64 272        ; 2 uses
-  %1 = load ptr, ptr %i.r, align 16, !nonnull !5, !noundef !5 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 512
-  %i.s = load ptr, ptr %2, align 8, !nonnull !5, !noundef !5
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 520
+  %i.s = load ptr, ptr %i.r, align 16, !nonnull !5, !noundef !5 ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 520
   %i.u = load i64, ptr %i.t, align 8, !noundef !5 ; 4 uses
   %i.v = icmp ult i64 %i.u, 2
   br i1 %i.v, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE7or_elseNCNvMs8_NtBM_8registryNtB1E_12WorkerThread9find_work0EBM_.exit.thread, label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.e
+  %1 = getelementptr inbounds nuw i8, ptr %i.s, i64 512
+  %2 = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -275,9 +275,10 @@ bb.e:                                             ; preds = %_RNvMs8_NtCskVyUMSj
   %.sroa.7.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %.sroa.8.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %.sroa.415.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.516.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %.sroa.415.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %3 = insertelement <2 x ptr> poison, ptr %i.x, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %2, i64 1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %.preheader.i.i.i
@@ -302,10 +303,9 @@ bb.f:                                             ; preds = %bb.g, %.preheader.i
   store i64 %i.ah, ptr %.sroa.8.0..sroa_idx.i.i.i, align 8
   store ptr %0, ptr %i.x, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store ptr %i.x, ptr %i.b, align 8
-  store ptr %i.s, ptr %i.y, align 8
-  store i64 %i.u, ptr %.sroa.415.0..sroa_idx.i.i.i, align 8
-  store ptr %i.d, ptr %.sroa.516.0..sroa_idx.i.i.i, align 8
+  store <2 x ptr> %4, ptr %i.b, align 16
+  store i64 %i.u, ptr %i.y, align 16
+  store ptr %i.d, ptr %.sroa.415.0..sroa_idx.i.i.i, align 8
   %i.ai = call { ptr, ptr } @_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB5_5ChainINtNtNtBb_3ops5range5RangejEB10_ENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNtB7_6filter15filter_try_foldjuINtNtB15_12control_flow11ControlFlowNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefENCNvMs8_NtB3t_8registryNtB4d_12WorkerThread5steal0NCINvNvB1x_8find_map5checkjB3p_NCB47_s_0E0E0B2P_EB3t_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.c, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.b) ; 2 uses
   %i.aj = extractvalue { ptr, ptr } %i.ai, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -328,7 +328,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCskVyUMSjkkSy_10rayon_core3jo
   br label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE7or_elseNCNvMs8_NtBM_8registryNtB1E_12WorkerThread9find_works_0EBM_.exit
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE7or_elseNCNvMs8_NtBM_8registryNtB1E_12WorkerThread9find_work0EBM_.exit.thread: ; preds = %bb.e, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE7or_elseNCNvMs8_NtBM_8registryNtB1E_12WorkerThread9find_work0EBM_.exit.thread19
-  %.val.i = phi ptr [ %1, %bb.e ], [ %.val.i.pre, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE7or_elseNCNvMs8_NtBM_8registryNtB1E_12WorkerThread9find_work0EBM_.exit.thread19 ]
+  %.val.i = phi ptr [ %i.s, %bb.e ], [ %.val.i.pre, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE7or_elseNCNvMs8_NtBM_8registryNtB1E_12WorkerThread9find_work0EBM_.exit.thread19 ]
   %i.am = getelementptr inbounds nuw i8, ptr %.val.i, i64 128
   br label %bb.h
 

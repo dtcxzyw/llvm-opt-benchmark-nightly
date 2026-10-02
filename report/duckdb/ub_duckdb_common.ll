@@ -205,7 +205,7 @@ _ZNKSt6vectorIN6duckdb12BoxRenderRowESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds
   store i32 0, ptr %.013.i.i.i31.i.prol, align 8, !tbaa !436
   %i.fb = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.i.prol, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fb, i8 0, i64 24, i1 false)
-  %i.fc = add i64 %.01012.i.i.i32.i.prol, -1      ; 2 uses
+  %i.fc = add nsw i64 %.01012.i.i.i32.i.prol, -1  ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.i.prol, i64 32 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -251,7 +251,7 @@ _ZNKSt6vectorIN6duckdb12BoxRenderRowESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds
   store i32 0, ptr %i.fs, align 8, !tbaa !436
   %i.ft = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.i, i64 232
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ft, i8 0, i64 24, i1 false)
-  %i.fu = add i64 %.01012.i.i.i32.i, -8           ; 2 uses
+  %i.fu = add nsw i64 %.01012.i.i.i32.i, -8       ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.i, i64 256
   %.not.i.i.i33.i.7 = icmp eq i64 %i.fu, 0
   br i1 %.not.i.i.i33.i.7, label %.noexc176, label %.lr.ph.i.i.i30.i, !llvm.loop !2261

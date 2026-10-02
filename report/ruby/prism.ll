@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.critedge
   br label %select.unfold, !llvm.loop !350
 
 bb.d:                                             ; preds = %.critedge
-  %i.i = add i64 %.01628, -1                      ; 2 uses
+  %i.i = add nsw i64 %.01628, -1                  ; 2 uses
   call void @pm_buffer_append_string(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.i) #27
   switch i64 %i.i, label %bb.h [
     i64 7, label %bb.e
@@ -608,7 +608,7 @@ bb.a:
   %12 = alloca %struct.pm_static_literals_t, align 8 ; 5 uses
   %13 = alloca %struct.pm_token_t, align 8        ; 7 uses
   %14 = alloca %struct.pm_token_t, align 8        ; 5 uses
-  %15 = alloca %struct.pm_token_t, align 8        ; 5 uses
+  %15 = alloca %struct.pm_token_t, align 8        ; 4 uses
   %16 = alloca %struct.pm_token_t, align 8        ; 4 uses
   %17 = alloca %struct.pm_arguments_t, align 8    ; 5 uses
   %18 = alloca %struct.pm_token_t, align 8        ; 4 uses
@@ -1011,21 +1011,19 @@ bb.cn:                                            ; preds = %bb.a
   %i.jg = getelementptr inbounds nuw i8, ptr %14, i64 4
   store i32 0, ptr %i.jg, align 4
   %i.jh = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %i.ji = getelementptr i8, ptr %0, i64 352
-  %117 = load ptr, ptr %i.ji, align 8, !tbaa !151 ; 2 uses
-  store ptr %117, ptr %i.jh, align 8, !tbaa !127
-  %118 = getelementptr inbounds nuw i8, ptr %14, i64 16
-  %i.jj = getelementptr i8, ptr %117, i64 1       ; 2 uses
-  store ptr %i.jj, ptr %118, align 8, !tbaa !128
+  %i.ji = getelementptr i8, ptr %0, i64 352       ; 2 uses
+  %117 = getelementptr inbounds nuw i8, ptr %14, i64 16
   store i32 148, ptr %15, align 8, !tbaa !126
-  %i.jk = getelementptr inbounds nuw i8, ptr %15, i64 4
-  store i32 0, ptr %i.jk, align 4
-  %119 = getelementptr inbounds nuw i8, ptr %15, i64 8
-  store ptr %i.jj, ptr %119, align 8, !tbaa !127
-  %i.jl = getelementptr inbounds nuw i8, ptr %15, i64 16
-  %120 = getelementptr i8, ptr %0, i64 360
-  %121 = load ptr, ptr %120, align 8, !tbaa !87
-  store ptr %121, ptr %i.jl, align 8, !tbaa !128
+  %i.jj = getelementptr inbounds nuw i8, ptr %15, i64 4
+  store i32 0, ptr %i.jj, align 4
+  %i.jk = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %118 = load <2 x ptr>, ptr %i.ji, align 8, !tbaa !36
+  %119 = load ptr, ptr %i.ji, align 8, !tbaa !151 ; 2 uses
+  store ptr %119, ptr %i.jh, align 8, !tbaa !127
+  %i.jl = getelementptr i8, ptr %119, i64 1
+  %120 = getelementptr i8, <2 x ptr> %118, <2 x i64> <i64 1, i64 0>
+  store ptr %i.jl, ptr %117, align 8, !tbaa !128
+  store <2 x ptr> %120, ptr %i.jk, align 8, !tbaa !36
   %i.jm = call fastcc ptr @pm_string_node_create_current_string(ptr noundef nonnull %0, ptr noundef %14, ptr noundef nonnull %15, ptr noundef %13) ; 3 uses
   %i.jn = getelementptr i8, ptr %0, i64 672
   %i.jo = load ptr, ptr %i.jn, align 8, !tbaa !168 ; 2 uses
@@ -1428,7 +1426,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 14 uses
   %9 = alloca %struct.pm_token_t, align 8         ; 9 uses
   %10 = alloca %struct.pm_token_t, align 8        ; 7 uses
-  %11 = alloca %struct.pm_token_t, align 8        ; 8 uses
+  %11 = alloca %struct.pm_token_t, align 8        ; 7 uses
   %12 = alloca %struct.pm_token_t, align 8        ; 9 uses
   %13 = alloca %struct.pm_token_t, align 8        ; 6 uses
   %14 = alloca %struct.pm_token_t, align 8        ; 9 uses
@@ -1479,8 +1477,7 @@ pm_parameters_node_create.exit:                   ; preds = %bb.a
   %or.cond = or i1 %2, %6
   %i.x = getelementptr i8, ptr %0, i64 701        ; 4 uses
   %i.y = getelementptr i8, ptr %0, i64 504        ; 12 uses
-  %.sroa.4507.0..sroa_idx508 = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %.sroa.11.0..sroa_idx515 = getelementptr inbounds nuw i8, ptr %11, i64 16
+  %.sroa.11.0..sroa_idx515 = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.z = getelementptr i8, ptr %0, i64 699
   %i.aa = getelementptr i8, ptr %0, i64 520
   %i.ab = getelementptr i8, ptr %i.e, i64 104     ; 2 uses
@@ -1883,14 +1880,13 @@ bb.bm:                                            ; preds = %bb.bl
 context_push.exit343:                             ; preds = %bb.bl, %bb.bm
   tail call fastcc void @parser_lex(ptr noundef nonnull %0)
   %.sroa.0505.0.copyload = load i64, ptr %i.l, align 8
-  %i.kg = load <2 x ptr>, ptr %i.p, align 8, !tbaa !36 ; 9 uses
-  %15 = extractelement <2 x ptr> %i.kg, i64 0     ; 23 uses
+  %i.kg = load <2 x ptr>, ptr %i.p, align 8, !tbaa !36 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #27
   store i64 %.sroa.0505.0.copyload, ptr %11, align 8
-  store ptr %15, ptr %.sroa.4507.0..sroa_idx508, align 8, !tbaa !36
-  %16 = extractelement <2 x ptr> %i.kg, i64 1     ; 5 uses
-  %17 = getelementptr i8, ptr %16, i64 -1         ; 9 uses
-  store ptr %17, ptr %.sroa.11.0..sroa_idx515, align 8, !tbaa !128
+  %15 = extractelement <2 x ptr> %i.kg, i64 0     ; 22 uses
+  %16 = getelementptr i8, <2 x ptr> %i.kg, <2 x i64> <i64 0, i64 -1> ; 2 uses
+  %17 = extractelement <2 x ptr> %16, i64 1       ; 8 uses
+  store <2 x ptr> %16, ptr %.sroa.11.0..sroa_idx515, align 8, !tbaa !36
   %i.kh = load i8, ptr %i.z, align 1, !tbaa !63, !range !64, !noundef !65
   %i.ki = trunc nuw i8 %i.kh to i1
   br i1 %i.ki, label %bb.bn, label %bb.bo
@@ -1917,7 +1913,8 @@ bb.bp:                                            ; preds = %bb.bo, %bb.bn
   br label %bb.bs
 
 bb.bq:                                            ; preds = %bb.bo, %bb.bn
-  %i.kv = getelementptr i8, ptr %16, i64 -2
+  %18 = extractelement <2 x ptr> %i.kg, i64 1
+  %i.kv = getelementptr i8, ptr %18, i64 -2
   %i.kw = load i8, ptr %i.kv, align 1, !tbaa !83
   switch i8 %i.kw, label %bb.bs [
     i8 33, label %bb.br
@@ -2284,7 +2281,8 @@ pm_optional_keyword_parameter_node_create.exit:   ; preds = %bb.cw
   %.sroa.8.0..sroa_idx.i405 = getelementptr inbounds nuw i8, ptr %i.po, i64 32
   store ptr %15, ptr %.sroa.8.0..sroa_idx.i405, align 8, !tbaa !36
   %.sroa.9.0..sroa_idx.i406 = getelementptr inbounds nuw i8, ptr %i.po, i64 40
-  store ptr %16, ptr %.sroa.9.0..sroa_idx.i406, align 8, !tbaa !36
+  %19 = extractelement <2 x ptr> %i.kg, i64 1
+  store ptr %19, ptr %.sroa.9.0..sroa_idx.i406, align 8, !tbaa !36
   %.sroa.10.0..sroa_idx.i407 = getelementptr inbounds nuw i8, ptr %i.po, i64 48
   store ptr %i.nt, ptr %.sroa.10.0..sroa_idx.i407, align 8, !tbaa !106
   br label %bb.da
@@ -2311,13 +2309,14 @@ pm_required_keyword_parameter_node_create.exit415: ; preds = %bb.cy
   %.sroa.4.0..sroa_idx.i410 = getelementptr inbounds nuw i8, ptr %i.px, i64 8
   store ptr %15, ptr %.sroa.4.0..sroa_idx.i410, align 8, !tbaa !36
   %.sroa.5.0..sroa_idx.i411 = getelementptr inbounds nuw i8, ptr %i.px, i64 16
-  store ptr %16, ptr %.sroa.5.0..sroa_idx.i411, align 8, !tbaa !36
+  %20 = extractelement <2 x ptr> %i.kg, i64 1     ; 2 uses
+  store ptr %20, ptr %.sroa.5.0..sroa_idx.i411, align 8, !tbaa !36
   %.sroa.6.0..sroa_idx.i412 = getelementptr inbounds nuw i8, ptr %i.px, i64 24
   store i32 %i.qd, ptr %.sroa.6.0..sroa_idx.i412, align 8, !tbaa !31
   %.sroa.8.0..sroa_idx.i413 = getelementptr inbounds nuw i8, ptr %i.px, i64 32
   store ptr %15, ptr %.sroa.8.0..sroa_idx.i413, align 8, !tbaa !36
   %.sroa.9.0..sroa_idx.i414 = getelementptr inbounds nuw i8, ptr %i.px, i64 40
-  store ptr %16, ptr %.sroa.9.0..sroa_idx.i414, align 8, !tbaa !36
+  store ptr %20, ptr %.sroa.9.0..sroa_idx.i414, align 8, !tbaa !36
   br label %bb.da
 
 bb.da:                                            ; preds = %pm_required_keyword_parameter_node_create.exit415, %pm_optional_keyword_parameter_node_create.exit

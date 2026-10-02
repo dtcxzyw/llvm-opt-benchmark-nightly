@@ -205,14 +205,13 @@ bb.a:
   %i.a = alloca [72 x i8], align 8                ; 6 uses
   %i.b = alloca [72 x i8], align 8                ; 6 uses
   %i.c = alloca [72 x i8], align 8                ; 6 uses
-  %i.d = alloca [24 x i8], align 8                ; 9 uses
+  %i.d = alloca [24 x i8], align 16               ; 8 uses
   %.sroa.5.i.i.i = alloca [64 x i8], align 8      ; 7 uses
   %i.e = alloca [72 x i8], align 8                ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4267)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4268)
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 208 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %.sroa.5.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 144 ; 12 uses
   %.sroa.7.0..sroa_idx28.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -234,6 +233,8 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %2 = insertelement <2 x ptr> poison, ptr %1, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.f, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtNtCs8Xq8PKFYOms_3hir11term_search4expr4ExprE7reserveCs6u1mgJOKDyY_13rust_analyzer.exit.i, %bb.a
@@ -245,9 +246,8 @@ bb.b:                                             ; preds = %_RNvMs_NtCsbSS6DM8S
   call void @llvm.experimental.noalias.scope.decl(metadata !4273)
   call void @llvm.experimental.noalias.scope.decl(metadata !4274)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !4275
-  store ptr %1, ptr %i.d, align 8, !noalias !4276
-  store ptr %i.f, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !noalias !4276
-  store ptr %i.f, ptr %.sroa.5.0..sroa_idx.i.i.i.i.i, align 8, !noalias !4276
+  store <2 x ptr> %3, ptr %i.d, align 16, !noalias !4276
+  store ptr %i.f, ptr %.sroa.5.0..sroa_idx.i.i.i.i.i, align 16, !noalias !4276
   call void @llvm.experimental.noalias.scope.decl(metadata !4277)
   %i.x = load ptr, ptr %i.h, align 8, !alias.scope !4278, !noalias !4279, !noundef !10
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.x, null
@@ -650,7 +650,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4599)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4600)
@@ -673,6 +673,8 @@ bb.a:
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %2 = insertelement <2 x ptr> poison, ptr %1, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.g, i64 1
   br label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtNtCs8Xq8PKFYOms_3hir11term_search4expr4ExprE7reserveCs6u1mgJOKDyY_13rust_analyzer.exit.i, %.lr.ph.i.i.i.i.i.lr.ph.i
@@ -819,8 +821,7 @@ _RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtNtCs8Xq8PKFYOms_3hir11term_search
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !4639
   store ptr %i.i, ptr %i.e, align 8, !noalias !4639
   store i64 3, ptr %i.j, align 8, !noalias !4639
-  store ptr %1, ptr %i.k, align 8, !noalias !4639
-  store ptr %i.g, ptr %i.l, align 8, !noalias !4639
+  store <2 x ptr> %3, ptr %i.k, align 8, !noalias !4639
   %i.aq = load i64, ptr %i.h, align 8, !alias.scope !4640, !noalias !4641, !noundef !10 ; 5 uses
   %i.ar = load i64, ptr %i.m, align 8, !alias.scope !4640, !noalias !4641, !noundef !10 ; 3 uses
   %i.as = icmp ule i64 %i.aq, %i.ar

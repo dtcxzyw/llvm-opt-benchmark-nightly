@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.e
 ; Function Attrs: cold inlinehint nonlazybind uwtable
 define internal fastcc noundef zeroext i1 @"_ZN4core3str7pattern13simd_contains28_$u7b$$u7b$closure$u7d$$u7d$17h20cc10966381f5f7E"(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i16 noundef range(i16 1, 0) %2, i1 noundef zeroext %3) unnamed_addr #11 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 5 uses
+  %i.a = alloca [16 x i8], align 16               ; 4 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   br i1 %3, label %_ZN4core3str7pattern14small_slice_eq17h716c89b270afae6eE.exit.thread12, label %.preheader
 
@@ -219,11 +219,15 @@ bb.a:
   %i.j = getelementptr i8, ptr %i.h, i64 %i.g     ; 2 uses
   %i.k = getelementptr i8, ptr %i.j, i64 -4
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  br i1 %i.i, label %.preheader.split.us, label %.preheader.split
+  br i1 %i.i, label %.preheader.split.us.preheader, label %.preheader.split
 
-.preheader.split.us:                              ; preds = %.preheader, %_ZN4core3str7pattern14small_slice_eq17h716c89b270afae6eE.exit.thread.loopexit.us
-  %.sroa.0.016.us = phi i16 [ %i.aa, %_ZN4core3str7pattern14small_slice_eq17h716c89b270afae6eE.exit.thread.loopexit.us ], [ %2, %.preheader ] ; 2 uses
+.preheader.split.us.preheader:                    ; preds = %.preheader
+  %4 = insertelement <2 x ptr> poison, ptr %i.h, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %i.j, i64 1
+  br label %.preheader.split.us
+
+.preheader.split.us:                              ; preds = %.preheader.split.us.preheader, %_ZN4core3str7pattern14small_slice_eq17h716c89b270afae6eE.exit.thread.loopexit.us
+  %.sroa.0.016.us = phi i16 [ %i.aa, %_ZN4core3str7pattern14small_slice_eq17h716c89b270afae6eE.exit.thread.loopexit.us ], [ %2, %.preheader.split.us.preheader ] ; 2 uses
   %i.m = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0.016.us, i1 true) ; 2 uses
   %i.n = zext nneg i16 %i.m to i64
   %i.o = getelementptr i8, ptr %i.d, i64 %i.n
@@ -235,8 +239,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10183
   store ptr %i.p, ptr %i.b, align 8, !noalias !10184
   store ptr %i.q, ptr %i.l, align 8, !noalias !10184
-  store ptr %i.h, ptr %i.a, align 8, !noalias !10184
-  store ptr %i.j, ptr %4, align 8, !noalias !10184
+  store <2 x ptr> %5, ptr %i.a, align 16, !noalias !10184
   %i.r = call noundef i64 @_ZN4core4iter8adapters3zip27TrustedRandomAccessNoCoerce4size17h70231c8b4b0fe5b0E(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.b), !noalias !10185
   %i.s = call noundef i64 @_ZN4core4iter8adapters3zip27TrustedRandomAccessNoCoerce4size17h70231c8b4b0fe5b0E(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a), !noalias !10185
   %.sroa.0.0.i.i.i.i.us = call noundef i64 @llvm.umin.i64(i64 %i.s, i64 %i.r) ; 2 uses

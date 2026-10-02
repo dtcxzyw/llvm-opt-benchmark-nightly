@@ -191,7 +191,7 @@ _ZNSt12_Vector_baseIN4ncnn3MatESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vector
   store i64 0, ptr %i.bd, align 8, !tbaa !37
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %.013.i.i.i.i.i.prol, i8 0, i64 28, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.bc, i8 0, i64 28, i1 false)
-  %i.be = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.be = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 72 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -230,7 +230,7 @@ _ZNSt12_Vector_baseIN4ncnn3MatESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vector
   store i64 0, ptr %i.br, align 8, !tbaa !37
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.bp, i8 0, i64 28, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.bq, i8 0, i64 28, i1 false)
-  %i.bs = add i64 %.01012.i.i.i.i.i, -4           ; 2 uses
+  %i.bs = add nsw i64 %.01012.i.i.i.i.i, -4       ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 288 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.bs, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !0
@@ -633,7 +633,7 @@ _ZNSt12_Vector_baseIN4ncnn3MatESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vector
   store i64 0, ptr %i.be, align 8, !tbaa !37
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %.013.i.i.i.i.i.prol, i8 0, i64 28, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.bd, i8 0, i64 28, i1 false)
-  %i.bf = add i64 %.01012.i.i.i.i.i.prol, -1      ; 2 uses
+  %i.bf = add nsw i64 %.01012.i.i.i.i.i.prol, -1  ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.prol, i64 72 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -672,7 +672,7 @@ _ZNSt12_Vector_baseIN4ncnn3MatESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vector
   store i64 0, ptr %i.bs, align 8, !tbaa !37
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.bq, i8 0, i64 28, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.br, i8 0, i64 28, i1 false)
-  %i.bt = add i64 %.01012.i.i.i.i.i, -4           ; 2 uses
+  %i.bt = add nsw i64 %.01012.i.i.i.i.i, -4       ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 288 ; 2 uses
   %.not.i.i.i.i.i.3 = icmp eq i64 %i.bt, 0
   br i1 %.not.i.i.i.i.i.3, label %.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !0
@@ -1075,14 +1075,10 @@ bb.bq:                                            ; preds = %bb.bp
 
 .lr.ph511.i:                                      ; preds = %bb.bq, %.lr.ph511.i
   %indvars.iv548.i = phi i64 [ %indvars.iv.next549.i, %.lr.ph511.i ], [ 0, %bb.bq ] ; 3 uses
-  %.0328509.i = phi ptr [ %i.aap, %.lr.ph511.i ], [ %i.wo, %bb.bq ] ; 7 uses
+  %.0328509.i = phi ptr [ %i.aap, %.lr.ph511.i ], [ %i.wo, %bb.bq ] ; 5 uses
   %i.yo = getelementptr inbounds nuw [4 x i8], ptr %i.wp, i64 %indvars.iv548.i
-  %18 = getelementptr inbounds nuw i8, ptr %.0328509.i, i64 8
-  %19 = getelementptr inbounds nuw i8, ptr %.0328509.i, i64 16
-  %20 = insertelement <8 x ptr> poison, ptr %.0328509.i, i64 0
-  %21 = insertelement <8 x ptr> %20, ptr %18, i64 1
-  %22 = insertelement <8 x ptr> %21, ptr %19, i64 2
-  %i.yp = shufflevector <8 x ptr> %22, <8 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
+  %18 = getelementptr inbounds nuw i8, ptr %.0328509.i, <3 x i64> <i64 0, i64 8, i64 16>
+  %i.yp = shufflevector <3 x ptr> %18, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
   %i.yq = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %i.yp, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !60
   %i.yr = getelementptr inbounds nuw i8, ptr %.0328509.i, i64 24
   %i.ys = load float, ptr %i.yr, align 4, !tbaa !60
@@ -1257,14 +1253,10 @@ bb.br:                                            ; preds = %bb.bp
 
 .lr.ph.i100:                                      ; preds = %bb.br, %.lr.ph.i100
   %indvars.iv.i101 = phi i64 [ %indvars.iv.next.i102, %.lr.ph.i100 ], [ 0, %bb.br ] ; 3 uses
-  %.0322498.i = phi ptr [ %i.agk, %.lr.ph.i100 ], [ %i.wo, %bb.br ] ; 7 uses
+  %.0322498.i = phi ptr [ %i.agk, %.lr.ph.i100 ], [ %i.wo, %bb.br ] ; 5 uses
   %i.adj = getelementptr inbounds nuw [4 x i8], ptr %i.wp, i64 %indvars.iv.i101
-  %23 = getelementptr inbounds nuw i8, ptr %.0322498.i, i64 8
-  %24 = getelementptr inbounds nuw i8, ptr %.0322498.i, i64 16
-  %25 = insertelement <8 x ptr> poison, ptr %.0322498.i, i64 0
-  %26 = insertelement <8 x ptr> %25, ptr %23, i64 1
-  %27 = insertelement <8 x ptr> %26, ptr %24, i64 2
-  %i.adk = shufflevector <8 x ptr> %27, <8 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
+  %19 = getelementptr inbounds nuw i8, ptr %.0322498.i, <3 x i64> <i64 0, i64 8, i64 16>
+  %i.adk = shufflevector <3 x ptr> %19, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
   %i.adl = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %i.adk, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !60
   %i.adm = getelementptr inbounds nuw i8, ptr %.0322498.i, i64 24
   %i.adn = load float, ptr %i.adm, align 4, !tbaa !60
@@ -1667,14 +1659,10 @@ bb.em:                                            ; preds = %bb.el
 
 .lr.ph2341.i:                                     ; preds = %bb.em, %.lr.ph2341.i
   %indvars.iv2420.i = phi i64 [ %indvars.iv.next2421.i, %.lr.ph2341.i ], [ 0, %bb.em ] ; 3 uses
-  %.013712339.i = phi ptr [ %i.bnz, %.lr.ph2341.i ], [ %i.bhk, %bb.em ] ; 11 uses
+  %.013712339.i = phi ptr [ %i.bnz, %.lr.ph2341.i ], [ %i.bhk, %bb.em ] ; 9 uses
   %i.bki = getelementptr inbounds nuw [4 x i8], ptr %i.bhl, i64 %indvars.iv2420.i
-  %26 = getelementptr inbounds nuw i8, ptr %.013712339.i, i64 16
-  %27 = getelementptr inbounds nuw i8, ptr %.013712339.i, i64 32
-  %28 = insertelement <8 x ptr> poison, ptr %.013712339.i, i64 0
-  %29 = insertelement <8 x ptr> %28, ptr %26, i64 1
-  %30 = insertelement <8 x ptr> %29, ptr %27, i64 2
-  %i.bkj = shufflevector <8 x ptr> %30, <8 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
+  %26 = getelementptr inbounds nuw i8, ptr %.013712339.i, <3 x i64> <i64 0, i64 16, i64 32>
+  %i.bkj = shufflevector <3 x ptr> %26, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
   %i.bkk = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %i.bkj, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !60
   %i.bkl = getelementptr inbounds nuw i8, ptr %.013712339.i, i64 48
   %i.bkm = load float, ptr %i.bkl, align 4, !tbaa !60
@@ -1937,14 +1925,10 @@ bb.eo:                                            ; preds = %bb.en
 
 .lr.ph2328.i:                                     ; preds = %bb.eo, %.lr.ph2328.i
   %indvars.iv2405.i = phi i64 [ %indvars.iv.next2406.i, %.lr.ph2328.i ], [ 0, %bb.eo ] ; 3 uses
-  %.013622326.i = phi ptr [ %i.bxz, %.lr.ph2328.i ], [ %i.bhk, %bb.eo ] ; 11 uses
+  %.013622326.i = phi ptr [ %i.bxz, %.lr.ph2328.i ], [ %i.bhk, %bb.eo ] ; 9 uses
   %i.bsk = getelementptr inbounds nuw [4 x i8], ptr %i.bhl, i64 %indvars.iv2405.i
-  %31 = getelementptr inbounds nuw i8, ptr %.013622326.i, i64 16
-  %32 = getelementptr inbounds nuw i8, ptr %.013622326.i, i64 32
-  %33 = insertelement <8 x ptr> poison, ptr %.013622326.i, i64 0
-  %34 = insertelement <8 x ptr> %33, ptr %31, i64 1
-  %35 = insertelement <8 x ptr> %34, ptr %32, i64 2
-  %i.bsl = shufflevector <8 x ptr> %35, <8 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
+  %27 = getelementptr inbounds nuw i8, ptr %.013622326.i, <3 x i64> <i64 0, i64 16, i64 32>
+  %i.bsl = shufflevector <3 x ptr> %27, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
   %i.bsm = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %i.bsl, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !60
   %i.bsn = getelementptr inbounds nuw i8, ptr %.013622326.i, i64 48
   %i.bso = load float, ptr %i.bsn, align 4, !tbaa !60
@@ -2300,14 +2284,10 @@ bb.eq:                                            ; preds = %bb.ep
 
 .lr.ph2315.i:                                     ; preds = %bb.eq, %.lr.ph2315.i
   %indvars.iv2390.i = phi i64 [ %indvars.iv.next2391.i, %.lr.ph2315.i ], [ 0, %bb.eq ] ; 3 uses
-  %.013562313.i = phi ptr [ %i.cln, %.lr.ph2315.i ], [ %i.bhk, %bb.eq ] ; 11 uses
+  %.013562313.i = phi ptr [ %i.cln, %.lr.ph2315.i ], [ %i.bhk, %bb.eq ] ; 9 uses
   %i.ceb = getelementptr inbounds nuw [4 x i8], ptr %i.bhl, i64 %indvars.iv2390.i
-  %36 = getelementptr inbounds nuw i8, ptr %.013562313.i, i64 16
-  %37 = getelementptr inbounds nuw i8, ptr %.013562313.i, i64 32
-  %38 = insertelement <8 x ptr> poison, ptr %.013562313.i, i64 0
-  %39 = insertelement <8 x ptr> %38, ptr %36, i64 1
-  %40 = insertelement <8 x ptr> %39, ptr %37, i64 2
-  %i.cec = shufflevector <8 x ptr> %40, <8 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
+  %28 = getelementptr inbounds nuw i8, ptr %.013562313.i, <3 x i64> <i64 0, i64 16, i64 32>
+  %i.cec = shufflevector <3 x ptr> %28, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
   %i.ced = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %i.cec, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !60
   %i.cee = getelementptr inbounds nuw i8, ptr %.013562313.i, i64 48
   %i.cef = load float, ptr %i.cee, align 4, !tbaa !60
@@ -2710,14 +2690,10 @@ bb.er:                                            ; preds = %bb.ep
 
 .lr.ph.i100:                                      ; preds = %bb.er, %.lr.ph.i100
   %indvars.iv.i101 = phi i64 [ %indvars.iv.next.i102, %.lr.ph.i100 ], [ 0, %bb.er ] ; 3 uses
-  %.013502302.i = phi ptr [ %i.dcm, %.lr.ph.i100 ], [ %i.bhk, %bb.er ] ; 11 uses
+  %.013502302.i = phi ptr [ %i.dcm, %.lr.ph.i100 ], [ %i.bhk, %bb.er ] ; 9 uses
   %i.ctd = getelementptr inbounds nuw [4 x i8], ptr %i.bhl, i64 %indvars.iv.i101
-  %41 = getelementptr inbounds nuw i8, ptr %.013502302.i, i64 16
-  %42 = getelementptr inbounds nuw i8, ptr %.013502302.i, i64 32
-  %43 = insertelement <8 x ptr> poison, ptr %.013502302.i, i64 0
-  %44 = insertelement <8 x ptr> %43, ptr %41, i64 1
-  %45 = insertelement <8 x ptr> %44, ptr %42, i64 2
-  %i.cte = shufflevector <8 x ptr> %45, <8 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
+  %29 = getelementptr inbounds nuw i8, ptr %.013502302.i, <3 x i64> <i64 0, i64 16, i64 32>
+  %i.cte = shufflevector <3 x ptr> %29, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
   %i.ctf = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %i.cte, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !60
   %i.ctg = getelementptr inbounds nuw i8, ptr %.013502302.i, i64 48
   %i.cth = load float, ptr %i.ctg, align 4, !tbaa !60
@@ -3120,14 +3096,10 @@ bb.bq:                                            ; preds = %bb.bp
 
 .lr.ph633.i:                                      ; preds = %bb.bq, %.lr.ph633.i
   %indvars.iv670.i = phi i64 [ %indvars.iv.next671.i, %.lr.ph633.i ], [ 0, %bb.bq ] ; 3 uses
-  %.0328631.i = phi ptr [ %i.ado, %.lr.ph633.i ], [ %i.yl, %bb.bq ] ; 7 uses
+  %.0328631.i = phi ptr [ %i.ado, %.lr.ph633.i ], [ %i.yl, %bb.bq ] ; 5 uses
   %i.aah = getelementptr inbounds nuw [4 x i8], ptr %i.ym, i64 %indvars.iv670.i
-  %18 = getelementptr inbounds nuw i8, ptr %.0328631.i, i64 8
-  %19 = getelementptr inbounds nuw i8, ptr %.0328631.i, i64 16
-  %20 = insertelement <8 x ptr> poison, ptr %.0328631.i, i64 0
-  %21 = insertelement <8 x ptr> %20, ptr %18, i64 1
-  %22 = insertelement <8 x ptr> %21, ptr %19, i64 2
-  %i.aai = shufflevector <8 x ptr> %22, <8 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
+  %18 = getelementptr inbounds nuw i8, ptr %.0328631.i, <3 x i64> <i64 0, i64 8, i64 16>
+  %i.aai = shufflevector <3 x ptr> %18, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
   %i.aaj = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %i.aai, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !60
   %i.aak = getelementptr inbounds nuw i8, ptr %.0328631.i, i64 24
   %i.aal = load float, ptr %i.aak, align 4, !tbaa !60
@@ -3356,14 +3328,10 @@ bb.br:                                            ; preds = %bb.bp
 
 .lr.ph.i110:                                      ; preds = %bb.br, %.lr.ph.i110
   %indvars.iv.i111 = phi i64 [ %indvars.iv.next.i112, %.lr.ph.i110 ], [ 0, %bb.br ] ; 3 uses
-  %.0322620.i = phi ptr [ %i.amr, %.lr.ph.i110 ], [ %i.yl, %bb.br ] ; 7 uses
+  %.0322620.i = phi ptr [ %i.amr, %.lr.ph.i110 ], [ %i.yl, %bb.br ] ; 5 uses
   %i.ahe = getelementptr inbounds nuw [4 x i8], ptr %i.ym, i64 %indvars.iv.i111
-  %23 = getelementptr inbounds nuw i8, ptr %.0322620.i, i64 8
-  %24 = getelementptr inbounds nuw i8, ptr %.0322620.i, i64 16
-  %25 = insertelement <8 x ptr> poison, ptr %.0322620.i, i64 0
-  %26 = insertelement <8 x ptr> %25, ptr %23, i64 1
-  %27 = insertelement <8 x ptr> %26, ptr %24, i64 2
-  %i.ahf = shufflevector <8 x ptr> %27, <8 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
+  %19 = getelementptr inbounds nuw i8, ptr %.0322620.i, <3 x i64> <i64 0, i64 8, i64 16>
+  %i.ahf = shufflevector <3 x ptr> %19, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2>
   %i.ahg = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %i.ahf, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !60
   %i.ahh = getelementptr inbounds nuw i8, ptr %.0322620.i, i64 24
   %i.ahi = load float, ptr %i.ahh, align 4, !tbaa !60

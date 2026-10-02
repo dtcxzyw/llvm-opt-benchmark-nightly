@@ -204,7 +204,7 @@ bb.a:
   %i.e = alloca [152 x i8], align 16              ; 19 uses
   %i.f = alloca [48 x i8], align 8                ; 4 uses
   %i.g = alloca [24 x i8], align 8                ; 4 uses
-  %i.h = alloca [32 x i8], align 8                ; 7 uses
+  %i.h = alloca [32 x i8], align 8                ; 4 uses
   %i.i = alloca [48 x i8], align 8                ; 5 uses
   %i.j = alloca [24 x i8], align 8                ; 4 uses
   %i.k = alloca [16 x i8], align 8                ; 5 uses
@@ -214,8 +214,8 @@ bb.a:
   %i.o = alloca [24 x i8], align 8                ; 6 uses
   %i.p = alloca [48 x i8], align 8                ; 4 uses
   %i.q = alloca [24 x i8], align 8                ; 5 uses
-  %i.r = alloca [32 x i8], align 8                ; 7 uses
-  %i.s = alloca [32 x i8], align 8                ; 7 uses
+  %i.r = alloca [32 x i8], align 8                ; 4 uses
+  %i.s = alloca [32 x i8], align 8                ; 4 uses
   %i.t = alloca [48 x i8], align 8                ; 5 uses
   %.sroa.5.i = alloca [16 x i8], align 8          ; 4 uses
   %i.u = alloca [16 x i8], align 8                ; 5 uses
@@ -270,7 +270,7 @@ bb.a:
   %.sroa.7 = alloca [80 x i8], align 8            ; 7 uses
   %.sroa.10 = alloca [1144 x i8], align 8         ; 5 uses
   %.sroa.6 = alloca [80 x i8], align 8            ; 7 uses
-  %i.bp = alloca [1232 x i8], align 8             ; 18 uses
+  %i.bp = alloca [1232 x i8], align 8             ; 17 uses
   %i.bq = alloca [24 x i8], align 8               ; 13 uses
   %i.br = alloca [8 x i8], align 8                ; 6 uses
   %i.bs = alloca [48 x i8], align 8               ; 5 uses
@@ -673,12 +673,6 @@ bb.ae:                                            ; preds = %bb.ac
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 88
   %.sroa.421.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bp, i64 88
-  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  %4 = getelementptr inbounds nuw i8, ptr %i.s, i64 24
-  %5 = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %7 = getelementptr inbounds nuw i8, ptr %i.r, i64 24
   %i.gy = getelementptr inbounds nuw i8, ptr %i.bp, i64 1204 ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.bp, i64 1152 ; 4 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.bp, i64 1160 ; 2 uses
@@ -697,9 +691,6 @@ bb.ae:                                            ; preds = %bb.ac
   %i.hl = getelementptr inbounds nuw i8, ptr %i.v, i64 80
   %i.hm = getelementptr inbounds nuw i8, ptr %i.bp, i64 752
   %i.hn = getelementptr inbounds nuw i8, ptr %i.bp, i64 936
-  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %9 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %10 = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.ho = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.hp = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.hq = getelementptr inbounds nuw i8, ptr %i.n, i64 136
@@ -752,6 +743,8 @@ bb.ae:                                            ; preds = %bb.ac
   %.sroa.17.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 164
   %.sroa.18.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 165
   %.sroa.19.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 166
+  %2 = insertelement <4 x ptr> poison, ptr %i.bp, i64 2
+  %3 = insertelement <4 x ptr> poison, ptr %i.bp, i64 2
   br label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph364, %.loopexit214
@@ -1154,7 +1147,7 @@ bb.bt:                                            ; preds = %bb.br
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.bt, %bb.fz
-  %.sroa.014.0361 = phi ptr [ %i.mp, %bb.fz ], [ %.val60, %bb.bt ] ; 7 uses
+  %.sroa.014.0361 = phi ptr [ %i.mp, %bb.fz ], [ %.val60, %bb.bt ] ; 6 uses
   %i.mp = getelementptr inbounds nuw i8, ptr %.sroa.014.0361, i64 24 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bp)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
@@ -1557,10 +1550,14 @@ bb.ef:                                            ; preds = %bb.eb
   %.idx.i97 = mul nuw nsw i64 %i.wt, 24
   %i.wu = getelementptr inbounds nuw i8, ptr %i.wr, i64 %.idx.i97
   %i.wv = icmp eq i64 %i.wt, 0
-  br i1 %i.wv, label %.loopexit208, label %.lr.ph.i98
+  br i1 %i.wv, label %.loopexit208, label %.lr.ph.i98.preheader
 
-.lr.ph.i98:                                       ; preds = %bb.ef, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCs844E4pPEVZX_17influxdb3_catalog10repository15RepositoryErrorNtCsbFlE7Gjht9i_12influxdb3_id11LastCacheIdEE6expectBN_.exit.i
-  %.sroa.0.022.i = phi ptr [ %i.ww, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCs844E4pPEVZX_17influxdb3_catalog10repository15RepositoryErrorNtCsbFlE7Gjht9i_12influxdb3_id11LastCacheIdEE6expectBN_.exit.i ], [ %i.wr, %bb.ef ] ; 2 uses
+.lr.ph.i98.preheader:                             ; preds = %bb.ef
+  %4 = insertelement <4 x ptr> %2, ptr %.sroa.014.0361, i64 3 ; 2 uses
+  br label %.lr.ph.i98
+
+.lr.ph.i98:                                       ; preds = %.lr.ph.i98.preheader, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCs844E4pPEVZX_17influxdb3_catalog10repository15RepositoryErrorNtCsbFlE7Gjht9i_12influxdb3_id11LastCacheIdEE6expectBN_.exit.i
+  %.sroa.0.022.i = phi ptr [ %i.ww, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCs844E4pPEVZX_17influxdb3_catalog10repository15RepositoryErrorNtCsbFlE7Gjht9i_12influxdb3_id11LastCacheIdEE6expectBN_.exit.i ], [ %i.wr, %.lr.ph.i98.preheader ] ; 2 uses
   %i.ww = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i, i64 24 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !5259
   %i.wx = load ptr, ptr %.sroa.0.022.i, align 8, !nonnull !11, !noundef !11 ; 11 uses
@@ -1570,10 +1567,9 @@ bb.ef:                                            ; preds = %bb.eb
   %i.xb = load i64, ptr %i.xa, align 8, !noundef !11
   %i.xc = getelementptr inbounds nuw [2 x i8], ptr %i.wz, i64 %i.xb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !5259
-  store ptr %i.wz, ptr %i.s, align 8, !noalias !5259
-  store ptr %i.xc, ptr %2, align 8, !noalias !5259
-  store ptr %i.bp, ptr %3, align 8, !noalias !5259
-  store ptr %.sroa.014.0361, ptr %4, align 8, !noalias !5259
+  %5 = insertelement <4 x ptr> %4, ptr %i.wz, i64 0
+  %6 = insertelement <4 x ptr> %5, ptr %i.xc, i64 1
+  store <4 x ptr> %6, ptr %i.s, align 8, !noalias !5259
   invoke void @_RNvXs_NtNtCscdodAO9FK5_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtCsbFlE7Gjht9i_12influxdb3_id16ColumnIdentifierEINtB4_18SpecFromIterNestedB12_INtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtB2s_5slice4iter4IterNtB14_8ColumnIdENCINvNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog10migrations2v24conv15from_column_idsB37_E0EE9from_iterB41_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.y, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.s)
           to label %.noexc103 unwind label %.loopexit.split-lp203
 
@@ -1597,10 +1593,9 @@ bb.eh:                                            ; preds = %.noexc103
   %i.xj = load i64, ptr %i.xi, align 8, !noundef !11
   %i.xk = getelementptr inbounds nuw [2 x i8], ptr %i.xh, i64 %i.xj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !5259
-  store ptr %i.xh, ptr %i.r, align 8, !noalias !5259
-  store ptr %i.xk, ptr %5, align 8, !noalias !5259
-  store ptr %i.bp, ptr %6, align 8, !noalias !5259
-  store ptr %.sroa.014.0361, ptr %7, align 8, !noalias !5259
+  %7 = insertelement <4 x ptr> %4, ptr %i.xh, i64 0
+  %8 = insertelement <4 x ptr> %7, ptr %i.xk, i64 1
+  store <4 x ptr> %8, ptr %i.r, align 8, !noalias !5259
   invoke void @_RNvXs_NtNtCscdodAO9FK5_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtCsbFlE7Gjht9i_12influxdb3_id16ColumnIdentifierEINtB4_18SpecFromIterNestedB12_INtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtB2s_5slice4iter4IterNtB14_8ColumnIdENCINvNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog10migrations2v24conv15from_column_idsB37_E0EE9from_iterB41_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.w, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.r)
           to label %bb.ej unwind label %bb.ei
 
@@ -1776,10 +1771,14 @@ bb.fa:                                            ; preds = %bb.ez, %bb.ei
   %.idx.i107 = mul nuw nsw i64 %i.yv, 24
   %i.yw = getelementptr inbounds nuw i8, ptr %i.yt, i64 %.idx.i107
   %i.yx = icmp eq i64 %i.yv, 0
-  br i1 %i.yx, label %.loopexit207, label %.lr.ph.i108
+  br i1 %i.yx, label %.loopexit207, label %.lr.ph.i108.preheader
 
-.lr.ph.i108:                                      ; preds = %.loopexit208, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCs844E4pPEVZX_17influxdb3_catalog10repository15RepositoryErrorNtCsbFlE7Gjht9i_12influxdb3_id15DistinctCacheIdEE6expectBN_.exit.i
-  %.sroa.0.014.i = phi ptr [ %i.yy, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCs844E4pPEVZX_17influxdb3_catalog10repository15RepositoryErrorNtCsbFlE7Gjht9i_12influxdb3_id15DistinctCacheIdEE6expectBN_.exit.i ], [ %i.yt, %.loopexit208 ] ; 2 uses
+.lr.ph.i108.preheader:                            ; preds = %.loopexit208
+  %9 = insertelement <4 x ptr> %3, ptr %.sroa.014.0361, i64 3
+  br label %.lr.ph.i108
+
+.lr.ph.i108:                                      ; preds = %.lr.ph.i108.preheader, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCs844E4pPEVZX_17influxdb3_catalog10repository15RepositoryErrorNtCsbFlE7Gjht9i_12influxdb3_id15DistinctCacheIdEE6expectBN_.exit.i
+  %.sroa.0.014.i = phi ptr [ %i.yy, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCs844E4pPEVZX_17influxdb3_catalog10repository15RepositoryErrorNtCsbFlE7Gjht9i_12influxdb3_id15DistinctCacheIdEE6expectBN_.exit.i ], [ %i.yt, %.lr.ph.i108.preheader ] ; 2 uses
   %i.yy = getelementptr inbounds nuw i8, ptr %.sroa.0.014.i, i64 24 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !5265
   %i.yz = load ptr, ptr %.sroa.0.014.i, align 8, !nonnull !11, !noundef !11 ; 8 uses
@@ -1789,10 +1788,9 @@ bb.fa:                                            ; preds = %bb.ez, %bb.ei
   %i.zd = load i64, ptr %i.zc, align 8, !noundef !11
   %i.ze = getelementptr inbounds nuw [2 x i8], ptr %i.zb, i64 %i.zd
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !5265
-  store ptr %i.zb, ptr %i.h, align 8, !noalias !5265
-  store ptr %i.ze, ptr %8, align 8, !noalias !5265
-  store ptr %i.bp, ptr %9, align 8, !noalias !5265
-  store ptr %.sroa.014.0361, ptr %10, align 8, !noalias !5265
+  %10 = insertelement <4 x ptr> %9, ptr %i.zb, i64 0
+  %11 = insertelement <4 x ptr> %10, ptr %i.ze, i64 1
+  store <4 x ptr> %11, ptr %i.h, align 8, !noalias !5265
   invoke void @_RNvXs_NtNtCscdodAO9FK5_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtCsbFlE7Gjht9i_12influxdb3_id16ColumnIdentifierEINtB4_18SpecFromIterNestedB12_INtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtB2s_5slice4iter4IterNtB14_8ColumnIdENCINvNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog10migrations2v24conv15from_column_idsB37_E0EE9from_iterB41_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.o, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.h)
           to label %.noexc113 unwind label %.loopexit202
 

@@ -202,21 +202,20 @@ default.unreachable16:                            ; preds = %bb.a
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %1, align 8, !nonnull !14, !align !15, !noundef !14 ; 5 uses
+  %i.c = load ptr, ptr %1, align 8, !nonnull !14, !align !15, !noundef !14 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.f = load i32, ptr %i.e, align 8, !noundef !14
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 68
   %i.h = load i8, ptr %i.g, align 4, !range !27, !noundef !14
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %.sroa.710.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 72
-  store ptr %3, ptr %.sroa.710.0..sroa_idx, align 8
-  %.sroa.811.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 80
-  store ptr %i.i, ptr %.sroa.811.0..sroa_idx, align 8
-  %.sroa.912.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %4 = load <2 x ptr>, ptr %i.d, align 8
-  store <2 x ptr> %4, ptr %.sroa.912.0..sroa_idx, align 8
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %3 = load <2 x ptr>, ptr %i.d, align 8
+  %4 = insertelement <4 x ptr> poison, ptr %i.c, i64 0
+  %5 = shufflevector <4 x ptr> %4, <4 x ptr> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
+  %6 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x ptr> %5, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %8 = getelementptr inbounds nuw i8, <4 x ptr> %7, <4 x i64> <i64 40, i64 24, i64 0, i64 0>
+  store <4 x ptr> %8, ptr %i.i, align 8
   %.sroa.1114.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 104
   store ptr %i.c, ptr %.sroa.1114.0..sroa_idx, align 8
   %.sroa.1215.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 112
