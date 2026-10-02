@@ -1,0 +1,475 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/wolfmath?download=true
+inline.NumInlined: 5
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
+begin_hunk_0
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-pc-linux-gnu"
+
+@wc_off_on_addr = local_unnamed_addr constant [2 x i64] [i64 0, i64 -1], align 16
+
+; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
+define void @mp_reverse(ptr nofree noundef captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #0 {
+bb.a:
+  %i.a = icmp ne ptr %0, null
+  %i.b = icmp sgt i32 %1, 1
+  %or.cond = and i1 %i.a, %i.b
+  br i1 %or.cond, label %.lr.ph.preheader, label %.loopexit
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %i.c = zext nneg i32 %1 to i64
+  %i.d = add nsw i64 %i.c, -1
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %indvars.iv19 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next20, %.lr.ph ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.d, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv19 ; 2 uses
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !15
+  %i.g = getelementptr inbounds i8, ptr %0, i64 %indvars.iv ; 2 uses
+  %i.h = load i8, ptr %i.g, align 1, !tbaa !15
+  store i8 %i.h, ptr %i.e, align 1, !tbaa !15
+  store i8 %i.f, ptr %i.g, align 1, !tbaa !15
+  %indvars.iv.next20 = add nuw nsw i64 %indvars.iv19, 1 ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %i.i = icmp slt i64 %indvars.iv.next20, %indvars.iv.next
+  br i1 %i.i, label %.lr.ph, label %.loopexit, !llvm.loop !14
+
+.loopexit:                                        ; preds = %.lr.ph, %bb.a
+  ret void
+}
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define range(i32 0, 65536) i32 @mp_get_digit_count(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #2 {
+bb.a:
+  %i.a = icmp eq ptr %0, null
+  br i1 %i.a, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = load i16, ptr %0, align 8, !tbaa !11
+  %i.c = zext i16 %i.b to i32
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi i32 [ %i.c, %bb.b ], [ 0, %bb.a ]
+  ret i32 %.0
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define i64 @mp_get_digit(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #2 {
+bb.a:
+  %i.a = icmp eq ptr %0, null
+  %i.b = icmp slt i32 %1, 0
+  %or.cond = or i1 %i.a, %i.b
+  br i1 %or.cond, label %bb.d, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.c = load i16, ptr %0, align 8, !tbaa !11
+  %i.d = zext i16 %i.c to i32
+  %.not = icmp samesign ult i32 %1, %i.d
+  br i1 %.not, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %bb.b
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.f = zext nneg i32 %1 to i64
+  %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.f
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !13
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
+  %.0 = phi i64 [ 0, %bb.a ], [ %i.h, %bb.c ], [ 0, %bb.b ]
+  ret i64 %.0
+}
+
+; Function Attrs: nounwind uwtable
+define i32 @mp_cond_copy(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, ptr noundef %2) local_unnamed_addr #3 {
+bb.a:
+  %i.a = sext i32 %1 to i64                       ; 2 uses
+  %i.b = sub nsw i64 0, %i.a                      ; 5 uses
+  %i.c = icmp ne ptr %0, null
+  %i.d = icmp ne ptr %2, null
+  %or.cond.not = and i1 %i.c, %i.d
+  br i1 %or.cond.not, label %bb.b, label %.thread
+
+bb.b:                                             ; preds = %bb.a
+  %i.e = load i16, ptr %0, align 8, !tbaa !11
+  %i.f = zext i16 %i.e to i32
+  %i.g = add nuw nsw i32 %i.f, 1
+  %i.h = tail call i32 @sp_grow(ptr noundef nonnull %2, i32 noundef %i.g) #6 ; 3 uses
+  %i.i = icmp eq i32 %i.h, 0
+  br i1 %i.i, label %.preheader45, label %.thread
+
+.preheader45:                                     ; preds = %bb.b
+  %i.j = load i16, ptr %0, align 8, !tbaa !11     ; 6 uses
+  %.not = icmp eq i16 %i.j, 0
+  br i1 %.not, label %.preheader, label %mp_get_digit.exit.lr.ph.split
+
+mp_get_digit.exit.lr.ph.split:                    ; preds = %.preheader45
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 8 uses
+  %i.m = load i16, ptr %2, align 8, !tbaa !11
+  %i.n = zext i16 %i.m to i64                     ; 4 uses
+  %wide.trip.count = zext i16 %i.j to i64         ; 6 uses
+  %min.iters.check = icmp ult i16 %i.j, 6
+  br i1 %min.iters.check, label %mp_get_digit.exit.preheader, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %mp_get_digit.exit.lr.ph.split
+  %i.o = shl nuw nsw i64 %wide.trip.count, 3
+  %i.p = add nuw nsw i64 %i.o, 8                  ; 2 uses
+  %i.q = getelementptr i8, ptr %2, i64 %i.p
+  %i.r = getelementptr i8, ptr %0, i64 %i.p
+  %bound0 = icmp ult ptr %i.l, %i.r
+  %bound1 = icmp ult ptr %i.k, %i.q
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %mp_get_digit.exit.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  %n.vec = and i64 %wide.trip.count, 65532        ; 3 uses
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.n, i64 0
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert71 = insertelement <2 x i64> poison, i64 %i.b, i64 0
+  %broadcast.splat72 = shufflevector <2 x i64> %broadcast.splatinsert71, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add nuw <2 x i64> %vec.ind, splat (i64 2)
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %index ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  %wide.load = load <2 x i64>, ptr %i.s, align 8, !tbaa !13, !alias.scope !29
+  %wide.load73 = load <2 x i64>, ptr %i.t, align 8, !tbaa !13, !alias.scope !29
+  %i.u = icmp ult <2 x i64> %vec.ind, %broadcast.splat
+  %i.v = icmp ult <2 x i64> %step.add, %broadcast.splat
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %index ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 2 uses
+  %wide.load74 = load <2 x i64>, ptr %i.w, align 8, !tbaa !13, !alias.scope !31, !noalias !29 ; 2 uses
+  %wide.load75 = load <2 x i64>, ptr %i.x, align 8, !tbaa !13, !alias.scope !31, !noalias !29 ; 2 uses
+  %i.y = select <2 x i1> %i.u, <2 x i64> %wide.load74, <2 x i64> zeroinitializer
+  %i.z = select <2 x i1> %i.v, <2 x i64> %wide.load75, <2 x i64> zeroinitializer
+  %i.aa = xor <2 x i64> %wide.load, %i.y
+  %i.ab = xor <2 x i64> %wide.load73, %i.z
+  %i.ac = and <2 x i64> %i.aa, %broadcast.splat72
+  %i.ad = and <2 x i64> %i.ab, %broadcast.splat72
+  %i.ae = xor <2 x i64> %wide.load74, %i.ac
+  %i.af = xor <2 x i64> %wide.load75, %i.ad
+  store <2 x i64> %i.ae, ptr %i.w, align 8, !tbaa !13, !alias.scope !31, !noalias !29
+  store <2 x i64> %i.af, ptr %i.x, align 8, !tbaa !13, !alias.scope !31, !noalias !29
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %i.ag = icmp eq i64 %index.next, %n.vec
+  br i1 %i.ag, label %middle.block, label %vector.body, !llvm.loop !19
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  br i1 %cmp.n, label %.preheader, label %mp_get_digit.exit.preheader
+
+mp_get_digit.exit.preheader:                      ; preds = %vector.memcheck, %mp_get_digit.exit.lr.ph.split, %middle.block
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %mp_get_digit.exit.lr.ph.split ], [ %n.vec, %middle.block ] ; 7 uses
+  %xtraiter = and i64 %wide.trip.count, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %mp_get_digit.exit.prol.loopexit, label %mp_get_digit.exit.prol
+
+mp_get_digit.exit.prol:                           ; preds = %mp_get_digit.exit.preheader
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.ph
+  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !13
+  %.not.i36.prol = icmp samesign ult i64 %indvars.iv.ph, %i.n
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.ph
+  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !13 ; 2 uses
+  %i.al = select i1 %.not.i36.prol, i64 %i.ak, i64 0
+  %.0.i37.prol = xor i64 %i.ai, %i.al
+  %i.am = and i64 %.0.i37.prol, %i.b
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.ph
+  %i.ao = xor i64 %i.ak, %i.am
+  store i64 %i.ao, ptr %i.an, align 8, !tbaa !13
+  %indvars.iv.next.prol = or disjoint i64 %indvars.iv.ph, 1
+  br label %mp_get_digit.exit.prol.loopexit
+
+mp_get_digit.exit.prol.loopexit:                  ; preds = %mp_get_digit.exit.prol, %mp_get_digit.exit.preheader
+  %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %mp_get_digit.exit.preheader ], [ %indvars.iv.next.prol, %mp_get_digit.exit.prol ]
+  %i.ap = add nsw i64 %wide.trip.count, -1
+  %i.aq = icmp eq i64 %indvars.iv.ph, %i.ap
+  br i1 %i.aq, label %.preheader, label %mp_get_digit.exit
+
+.preheader:                                       ; preds = %mp_get_digit.exit.prol.loopexit, %mp_get_digit.exit, %middle.block, %.preheader45
+  %i.ar = load i16, ptr %2, align 8, !tbaa !11    ; 4 uses
+  %i.as = icmp ult i16 %i.j, %i.ar
+  br i1 %i.as, label %mp_get_digit.exit44.lr.ph, label %._crit_edge
+
+mp_get_digit.exit44.lr.ph:                        ; preds = %.preheader
+  %i.at = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.au = zext i16 %i.j to i64                    ; 4 uses
+  %wide.trip.count63 = zext i16 %i.ar to i64      ; 2 uses
+  %i.av = add nsw i64 %i.a, -1                    ; 2 uses
+  %i.aw = sub nsw i64 %wide.trip.count63, %i.au   ; 3 uses
+  %min.iters.check77 = icmp ult i64 %i.aw, 4
+  br i1 %min.iters.check77, label %mp_get_digit.exit44.preheader, label %vector.ph78
+
+vector.ph78:                                      ; preds = %mp_get_digit.exit44.lr.ph
+  %n.vec79 = and i64 %i.aw, -4                    ; 3 uses
+  %i.ax = add nsw i64 %n.vec79, %i.au
+  %broadcast.splatinsert80 = insertelement <2 x i64> poison, i64 %i.av, i64 0
+  %broadcast.splat81 = shufflevector <2 x i64> %broadcast.splatinsert80, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %invariant.gep = getelementptr [8 x i8], ptr %i.at, i64 %i.au
+  br label %vector.body82
+
+vector.body82:                                    ; preds = %vector.body82, %vector.ph78
+  %index83 = phi i64 [ 0, %vector.ph78 ], [ %index.next86, %vector.body82 ] ; 2 uses
+  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %index83 ; 3 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %gep, i64 16 ; 2 uses
+  %wide.load84 = load <2 x i64>, ptr %gep, align 8, !tbaa !13
+  %wide.load85 = load <2 x i64>, ptr %i.ay, align 8, !tbaa !13
+  %i.az = and <2 x i64> %wide.load84, %broadcast.splat81
+  %i.ba = and <2 x i64> %wide.load85, %broadcast.splat81
+  store <2 x i64> %i.az, ptr %gep, align 8, !tbaa !13
+  store <2 x i64> %i.ba, ptr %i.ay, align 8, !tbaa !13
+  %index.next86 = add nuw i64 %index83, 4         ; 2 uses
+  %i.bb = icmp eq i64 %index.next86, %n.vec79
+  br i1 %i.bb, label %middle.block87, label %vector.body82, !llvm.loop !20
+
+middle.block87:                                   ; preds = %vector.body82
+  %cmp.n88 = icmp eq i64 %i.aw, %n.vec79
+  br i1 %cmp.n88, label %._crit_edge, label %mp_get_digit.exit44.preheader
+
+mp_get_digit.exit44.preheader:                    ; preds = %mp_get_digit.exit44.lr.ph, %middle.block87
+  %indvars.iv60.ph = phi i64 [ %i.au, %mp_get_digit.exit44.lr.ph ], [ %i.ax, %middle.block87 ]
+  br label %mp_get_digit.exit44
+
+mp_get_digit.exit:                                ; preds = %mp_get_digit.exit.prol.loopexit, %mp_get_digit.exit
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %mp_get_digit.exit ], [ %indvars.iv.unr, %mp_get_digit.exit.prol.loopexit ] ; 6 uses
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv
+  %i.bd = load i64, ptr %i.bc, align 8, !tbaa !13
+  %.not.i36 = icmp samesign ult i64 %indvars.iv, %i.n
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv
+  %i.bf = load i64, ptr %i.be, align 8, !tbaa !13 ; 2 uses
+  %i.bg = select i1 %.not.i36, i64 %i.bf, i64 0
+  %.0.i37 = xor i64 %i.bd, %i.bg
+  %i.bh = and i64 %.0.i37, %i.b
+  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv
+  %i.bj = xor i64 %i.bf, %i.bh
+  store i64 %i.bj, ptr %i.bi, align 8, !tbaa !13
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.next
+  %i.bl = load i64, ptr %i.bk, align 8, !tbaa !13
+  %.not.i36.1 = icmp samesign ult i64 %indvars.iv.next, %i.n
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.next
+  %i.bn = load i64, ptr %i.bm, align 8, !tbaa !13 ; 2 uses
+  %i.bo = select i1 %.not.i36.1, i64 %i.bn, i64 0
+  %.0.i37.1 = xor i64 %i.bl, %i.bo
+  %i.bp = and i64 %.0.i37.1, %i.b
+  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.next
+  %i.br = xor i64 %i.bn, %i.bp
+  store i64 %i.br, ptr %i.bq, align 8, !tbaa !13
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
+  br i1 %exitcond.not.1, label %.preheader, label %mp_get_digit.exit, !llvm.loop !21
+
+mp_get_digit.exit44:                              ; preds = %mp_get_digit.exit44.preheader, %mp_get_digit.exit44
+  %indvars.iv60 = phi i64 [ %indvars.iv.next61, %mp_get_digit.exit44 ], [ %indvars.iv60.ph, %mp_get_digit.exit44.preheader ] ; 2 uses
+  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv60 ; 2 uses
+  %i.bt = load i64, ptr %i.bs, align 8, !tbaa !13
+  %i.bu = and i64 %i.bt, %i.av
+  store i64 %i.bu, ptr %i.bs, align 8, !tbaa !13
+  %indvars.iv.next61 = add nuw nsw i64 %indvars.iv60, 1 ; 2 uses
+  %exitcond64.not = icmp eq i64 %indvars.iv.next61, %wide.trip.count63
+  br i1 %exitcond64.not, label %._crit_edge, label %mp_get_digit.exit44, !llvm.loop !22
+
+._crit_edge:                                      ; preds = %mp_get_digit.exit44, %middle.block87, %.preheader
+  %i.bv = xor i16 %i.ar, %i.j
+  %i.bw = trunc i64 %i.b to i16
+  %i.bx = and i16 %i.bv, %i.bw
+  %i.by = xor i16 %i.bx, %i.ar
+  store i16 %i.by, ptr %2, align 8, !tbaa !11
+  br label %.thread
+
+.thread:                                          ; preds = %bb.a, %._crit_edge, %bb.b
+  %.13369 = phi i32 [ %i.h, %bb.b ], [ %i.h, %._crit_edge ], [ -173, %bb.a ]
+  ret i32 %.13369
+}
+
+declare i32 @sp_grow(ptr noundef, i32 noundef) local_unnamed_addr #4
+
+; Function Attrs: nounwind uwtable
+define i32 @mp_get_rand_digit(ptr noundef %0, ptr noundef %1) local_unnamed_addr #3 {
+bb.a:
+  %i.a = tail call i32 @wc_RNG_GenerateBlock(ptr noundef %0, ptr noundef %1, i32 noundef 8) #6
+  ret i32 %i.a
+}
+
+declare i32 @wc_RNG_GenerateBlock(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #4
+
+; Function Attrs: nounwind uwtable
+define i32 @mp_rand(ptr noundef %0, i32 noundef %1, ptr noundef %2) local_unnamed_addr #3 {
+bb.a:
+  %i.a = shl nuw nsw i32 %1, 3
+  %i.b = icmp eq ptr %2, null
+  br i1 %i.b, label %.critedge, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.c = icmp ne ptr %0, null
+  %i.d = icmp sgt i32 %1, 0
+  %or.cond.not = and i1 %i.c, %i.d
+  br i1 %or.cond.not, label %bb.c, label %.critedge
+
+bb.c:                                             ; preds = %bb.b
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %i.f = load i16, ptr %i.e, align 2, !tbaa !32
+  %i.g = zext i16 %i.f to i32
+  %i.h = icmp samesign ugt i32 %1, %i.g
+  br i1 %i.h, label %.critedge, label %.critedge30
+
+.critedge30:                                      ; preds = %bb.c
+  %i.i = trunc nuw i32 %1 to i16
+  store i16 %i.i, ptr %0, align 8, !tbaa !11
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.k = tail call i32 @wc_RNG_GenerateBlock(ptr noundef nonnull %2, ptr noundef nonnull %i.j, i32 noundef %i.a) #6 ; 2 uses
+  %i.l = icmp eq i32 %i.k, 0
+  br i1 %i.l, label %.preheader, label %.critedge
+
+.preheader:                                       ; preds = %.critedge30, %bb.d
+  %i.m = load i16, ptr %0, align 8, !tbaa !11
+  %i.n = zext i16 %i.m to i64
+  %i.o = getelementptr [8 x i8], ptr %0, i64 %i.n ; 2 uses
+  %i.p = load i64, ptr %i.o, align 8, !tbaa !13
+  %i.q = icmp eq i64 %i.p, 0
+  br i1 %i.q, label %bb.d, label %.critedge
+
+bb.d:                                             ; preds = %.preheader
+  %i.r = tail call i32 @wc_RNG_GenerateBlock(ptr noundef nonnull %2, ptr noundef nonnull %i.o, i32 noundef 8) #6 ; 2 uses
+  %.old2 = icmp eq i32 %i.r, 0
+  br i1 %.old2, label %.preheader, label %.critedge
+
+.critedge:                                        ; preds = %.preheader, %bb.d, %bb.b, %bb.c, %bb.a, %.critedge30
+  %.4 = phi i32 [ -236, %bb.a ], [ -173, %bb.b ], [ %i.k, %.critedge30 ], [ -173, %bb.c ], [ 0, %.preheader ], [ %i.r, %bb.d ]
+  ret i32 %.4
+}
+
+; Function Attrs: nounwind uwtable
+define i32 @wc_export_int(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(address_is_null) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #3 {
+bb.a:
+  %i.a = alloca i32, align 4                      ; 6 uses
+  %i.b = icmp eq ptr %0, null
+  %i.c = icmp eq ptr %1, null
+  %or.cond = or i1 %i.b, %i.c
+  %i.d = icmp eq ptr %2, null
+  %or.cond4 = or i1 %or.cond, %i.d
+  br i1 %or.cond4, label %.critedge51, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.e = icmp eq i32 %4, 1
+  br i1 %i.e, label %bb.c, label %bb.g
+
+bb.c:                                             ; preds = %bb.b
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  store i32 0, ptr %i.a, align 4, !tbaa !33
+  %i.f = call i32 @sp_radix_size(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull %i.a) #6 ; 2 uses
+  %i.g = icmp eq i32 %i.f, 0
+  br i1 %i.g, label %bb.d, label %bb.f
+
+bb.d:                                             ; preds = %bb.c
+  %i.h = load i32, ptr %2, align 4, !tbaa !33
+  %i.i = load i32, ptr %i.a, align 4, !tbaa !33   ; 2 uses
+  %i.j = icmp ult i32 %i.h, %i.i
+  store i32 %i.i, ptr %2, align 4, !tbaa !33
+  br i1 %i.j, label %.critedge, label %bb.e
+
+.critedge:                                        ; preds = %bb.d
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  br label %.critedge51
+
+bb.e:                                             ; preds = %bb.d
+  %i.k = call i32 @sp_tohex(ptr noundef nonnull %0, ptr noundef nonnull %1) #6
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.c, %bb.e
+  %.135 = phi i32 [ %i.f, %bb.c ], [ %i.k, %bb.e ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  br label %.critedge51
+
+bb.g:                                             ; preds = %bb.b
+  %i.l = load i32, ptr %2, align 4, !tbaa !33
+  %i.m = icmp ult i32 %i.l, %3
+  store i32 %3, ptr %2, align 4, !tbaa !33
+  br i1 %i.m, label %.critedge51, label %bb.h
+
+bb.h:                                             ; preds = %bb.g
+  %i.n = tail call i32 @sp_unsigned_bin_size(ptr noundef nonnull %0) #6 ; 3 uses
+  %i.o = icmp slt i32 %i.n, 0
+  %i.p = icmp ugt i32 %i.n, %3
+  %or.cond49 = or i1 %i.o, %i.p
+  br i1 %or.cond49, label %.critedge51, label %bb.i
+
+bb.i:                                             ; preds = %bb.h
+  %i.q = load i32, ptr %2, align 4, !tbaa !33
+  %i.r = zext i32 %i.q to i64
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %1, i8 0, i64 %i.r, i1 false)
+  %i.s = sub nuw i32 %3, %i.n
+  %i.t = zext i32 %i.s to i64
+  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %i.t
+  %i.v = tail call i32 @sp_to_unsigned_bin(ptr noundef nonnull %0, ptr noundef %i.u) #6
+  br label %.critedge51
+
+.critedge51:                                      ; preds = %bb.g, %bb.h, %bb.f, %bb.i, %.critedge, %bb.a
+  %.238 = phi i32 [ %i.v, %bb.i ], [ -173, %bb.a ], [ -132, %.critedge ], [ %.135, %bb.f ], [ -132, %bb.h ], [ -132, %bb.g ]
+  ret i32 %.238
+}
+
+declare i32 @sp_radix_size(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #4
+
+declare i32 @sp_tohex(ptr noundef, ptr noundef) local_unnamed_addr #4
+
+declare i32 @sp_unsigned_bin_size(ptr noundef) local_unnamed_addr #4
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
+
+declare i32 @sp_to_unsigned_bin(ptr noundef, ptr noundef) local_unnamed_addr #4
+
+attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #6 = { nounwind }
+
+!llvm.module.flags = !{!0, !1}
+!llvm.ident = !{!2}
+!llvm.errno.tbaa = !{!7}
+
+!0 = !{i32 8, !"PIC Level", i32 2}
+!1 = !{i32 7, !"uwtable", i32 2}
+!2 = !{!"Ubuntu clang version 24.0.0 (++20260816081927+7cb5d896117c-1~exp1~20260816201937.1790)"}
+!3 = !{!"Simple C/C++ TBAA"}
+!4 = !{!"omnipotent char", !3, i64 0}
+!5 = !{!"int", !4, i64 0}
+!6 = !{!"__libc_errno", !5, i64 0}
+!7 = !{!6, !5, i64 0}
+!8 = !{!"llvm.loop.mustprogress"}
+!9 = !{!"short", !4, i64 0}
+!10 = !{!"sp_int", !9, i64 0, !9, i64 2, !4, i64 8}
+!11 = !{!10, !9, i64 0}
+!12 = !{!"long", !4, i64 0}
+!13 = !{!12, !12, i64 0}
+!14 = distinct !{!14, !8}
+!15 = !{!4, !4, i64 0}
+!19 = distinct !{!19, !8, !25, !26}
+!20 = distinct !{!20, !8, !25, !26}
+!21 = distinct !{!21, !8, !25}
+!22 = distinct !{!22, !8, !26, !25}
+!25 = !{!"llvm.loop.isvectorized", i32 1}
+!26 = !{!"llvm.loop.unroll.runtime.disable"}
+!27 = distinct !{!27, i1 false, !"LVerDomain"}
+!28 = distinct !{!28, !27}
+!29 = !{!28}
+!30 = distinct !{!30, !27}
+!31 = !{!30}
+!32 = !{!10, !9, i64 2}
+!33 = !{!5, !5, i64 0}
+end_hunk_0
