@@ -204,9 +204,9 @@ bb.i:                                             ; preds = %bb.h
   %i.bt = load i32, ptr %i.bs, align 8
   %i.bu = icmp ult i32 %i.bq, 1024
   %i.bv = call i32 @llvm.umin.i32(i32 %i.bq, i32 1048576)
-  %narrow.i = select i1 %i.bu, i32 4096, i32 %i.bv ; 13 uses
+  %narrow.i = select i1 %i.bu, i32 4096, i32 %i.bv ; 14 uses
   %i.bw = icmp eq i32 %i.bt, 17
-  %i.bx = icmp samesign ult i32 %narrow.i, 4096   ; 2 uses
+  %i.bx = icmp samesign ult i32 %narrow.i, 4096
   %or.cond.i.i = select i1 %i.bw, i1 true, i1 %i.bx
   br i1 %or.cond.i.i, label %bb.j, label %bb.k
 
@@ -244,9 +244,10 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not15.17.i.i.i, label %.preheader.18.i.i.i, label %.critedge.i.i.i
 
 .preheader.18.i.i.i:                              ; preds = %.preheader.17.i.i.i
-  %.not15.18.i.i.i = icmp samesign ult i32 %narrow.i, 8192
-  %.mux.i.i = select i1 %.not15.18.i.i.i, i32 12, i32 13
-  br i1 %i.bx, label %.preheader.20.i.i.i, label %.critedge.i.i.i
+  %.not15.18.i.i.i = icmp samesign ugt i32 %narrow.i, 8191
+  %brmerge.i.i = icmp samesign ugt i32 %narrow.i, 4095
+  %.mux.i.i = select i1 %.not15.18.i.i.i, i32 13, i32 12
+  br i1 %brmerge.i.i, label %.critedge.i.i.i, label %.preheader.20.i.i.i
 
 .preheader.20.i.i.i:                              ; preds = %.preheader.18.i.i.i
   %.not15.20.i.i.i = icmp samesign ult i32 %narrow.i, 2048
@@ -284,9 +285,9 @@ bb.m:                                             ; preds = %bb.l
   %i.ck = load i32, ptr %i.cj, align 8
   %i.cl = icmp ult i32 %i.ch, 1024
   %i.cm = call i32 @llvm.umin.i32(i32 %i.ch, i32 1048576)
-  %narrow1.i = select i1 %i.cl, i32 4096, i32 %i.cm ; 13 uses
+  %narrow1.i = select i1 %i.cl, i32 4096, i32 %i.cm ; 14 uses
   %i.cn = icmp eq i32 %i.ck, 17
-  %i.co = icmp samesign ult i32 %narrow1.i, 4096  ; 2 uses
+  %i.co = icmp samesign ult i32 %narrow1.i, 4096
   %or.cond.i62.i = select i1 %i.cn, i1 true, i1 %i.co
   br i1 %or.cond.i62.i, label %bb.n, label %bb.o
 
@@ -324,9 +325,10 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not15.17.i.i79.i, label %.preheader.18.i.i80.i, label %.critedge.i.i66.i
 
 .preheader.18.i.i80.i:                            ; preds = %.preheader.17.i.i78.i
-  %.not15.18.i.i81.i = icmp samesign ult i32 %narrow1.i, 8192
-  %.mux.i82.i = select i1 %.not15.18.i.i81.i, i32 12, i32 13
-  br i1 %i.co, label %.preheader.20.i.i83.i, label %.critedge.i.i66.i
+  %.not15.18.i.i81.i = icmp samesign ugt i32 %narrow1.i, 8191
+  %brmerge.i82.i = icmp samesign ugt i32 %narrow1.i, 4095
+  %.mux.i82.i = select i1 %.not15.18.i.i81.i, i32 13, i32 12
+  br i1 %brmerge.i82.i, label %.critedge.i.i66.i, label %.preheader.20.i.i83.i
 
 .preheader.20.i.i83.i:                            ; preds = %.preheader.18.i.i80.i
   %.not15.20.i.i84.i = icmp samesign ult i32 %narrow1.i, 2048
