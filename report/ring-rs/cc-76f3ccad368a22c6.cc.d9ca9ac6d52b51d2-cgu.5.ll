@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %3
-  %i.d = load i8, ptr %i.c, align 1, !noalias !11
+  %i.d = load i8, ptr %i.c, align 1, !noalias !8
   %i.e = icmp sgt i8 %i.d, -65
   br i1 %i.e, label %.split.i, label %_RNvMNtCs3oUPovFnLWP_4core3stre16split_at_checkedCsiHivYpkJ4Hu_2cc.exit.thread
 
@@ -605,7 +605,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: inlinehint nonlazybind uwtable
 define void @_RNvXs1_NtCs3oUPovFnLWP_4core7convertINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCsaL1QbXo9JQH_3std4path4PathEINtB5_4IntoNtB1a_7PathBufE4intoCsiHivYpkJ4Hu_2cc(ptr sret([24 x i8]) align 8 %0, ptr nofree readonly align 8 captures(none) %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !noalias !17
+  %i.a = load i64, ptr %1, align 8, !noalias !11
   %.not.i = icmp eq i64 %i.a, -1
   br i1 %.not.i, label %bb.c, label %bb.b
 
@@ -615,9 +615,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !noalias !17
+  %i.c = load ptr, ptr %i.b, align 8, !noalias !11
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = load i64, ptr %i.d, align 8, !noalias !17
+  %i.e = load i64, ptr %i.d, align 8, !noalias !11
   tail call void @_RNvMs16_NtCsaL1QbXo9JQH_3std4pathNtB6_4Path11to_path_buf(ptr sret([24 x i8]) align 8 %0, ptr %i.c, i64 %i.e)
   br label %_RNvXsO_NtCsaL1QbXo9JQH_3std4pathNtB5_7PathBufINtNtCs3oUPovFnLWP_4core7convert4FromINtNtCs1xwejQucwHj_5alloc6borrow3CowNtB5_4PathEE4fromCsiHivYpkJ4Hu_2cc.exit
 
@@ -1020,10 +1020,10 @@ attributes #28 = { noinline noreturn }
 !3 = !{!"rustc version 1.100.0-nightly (787af2b8c 2026-08-25)"}
 !4 = distinct !{!4, !5}
 !5 = !{!"llvm.loop.peeled.count", i32 2}
-!9 = distinct !{!9, i1 false, !"_RNvMNtCs3oUPovFnLWP_4core3stre16split_at_checkedCsiHivYpkJ4Hu_2cc"}
-!10 = distinct !{!10, !9, !"_RNvMNtCs3oUPovFnLWP_4core3stre16split_at_checkedCsiHivYpkJ4Hu_2cc: argument 0"}
+!6 = distinct !{!6, i1 false, !"_RNvMNtCs3oUPovFnLWP_4core3stre16split_at_checkedCsiHivYpkJ4Hu_2cc"}
+!7 = distinct !{!7, !6, !"_RNvMNtCs3oUPovFnLWP_4core3stre16split_at_checkedCsiHivYpkJ4Hu_2cc: argument 0"}
+!8 = !{!7}
+!9 = distinct !{!9, i1 false, !"_RNvXsO_NtCsaL1QbXo9JQH_3std4pathNtB5_7PathBufINtNtCs3oUPovFnLWP_4core7convert4FromINtNtCs1xwejQucwHj_5alloc6borrow3CowNtB5_4PathEE4fromCsiHivYpkJ4Hu_2cc"}
+!10 = distinct !{!10, !9, !"_RNvXsO_NtCsaL1QbXo9JQH_3std4pathNtB5_7PathBufINtNtCs3oUPovFnLWP_4core7convert4FromINtNtCs1xwejQucwHj_5alloc6borrow3CowNtB5_4PathEE4fromCsiHivYpkJ4Hu_2cc: argument 0"}
 !11 = !{!10}
-!15 = distinct !{!15, i1 false, !"_RNvXsO_NtCsaL1QbXo9JQH_3std4pathNtB5_7PathBufINtNtCs3oUPovFnLWP_4core7convert4FromINtNtCs1xwejQucwHj_5alloc6borrow3CowNtB5_4PathEE4fromCsiHivYpkJ4Hu_2cc"}
-!16 = distinct !{!16, !15, !"_RNvXsO_NtCsaL1QbXo9JQH_3std4pathNtB5_7PathBufINtNtCs3oUPovFnLWP_4core7convert4FromINtNtCs1xwejQucwHj_5alloc6borrow3CowNtB5_4PathEE4fromCsiHivYpkJ4Hu_2cc: argument 0"}
-!17 = !{!16}
 end_hunk_2

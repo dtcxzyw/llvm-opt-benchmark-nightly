@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.noexc
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !11, !noalias !47
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !11, !noalias !44
   invoke void @_ZN2cv3MatC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(208) %3, ptr noundef nonnull align 8 dereferenceable(208) %i.d)
           to label %_ZNK2cv11_InputArray6getMatEi.exit unwind label %bb.i
 
@@ -378,7 +378,7 @@ attributes #15 = { noreturn nounwind }
 !39 = !{!"_ZTSN2cv5Size_IfEE", !32, i64 0, !32, i64 4}
 !40 = !{!"_ZTSN2cv11RotatedRectE", !36, i64 0, !39, i64 8, !32, i64 16}
 !41 = !{!40, !32, i64 16}
-!45 = distinct !{!45, i1 false, !"_ZNK2cv11_InputArray6getMatEi"}
-!46 = distinct !{!46, !45, !"_ZNK2cv11_InputArray6getMatEi: argument 0"}
-!47 = !{!46}
+!42 = distinct !{!42, i1 false, !"_ZNK2cv11_InputArray6getMatEi"}
+!43 = distinct !{!43, !42, !"_ZNK2cv11_InputArray6getMatEi: argument 0"}
+!44 = !{!43}
 end_hunk_0

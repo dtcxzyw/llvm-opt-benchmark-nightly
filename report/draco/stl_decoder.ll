@@ -202,13 +202,13 @@ bb.v:                                             ; preds = %bb.s
   br label %bb.y
 
 _ZNSt10unique_ptrIN5draco4MeshESt14default_deleteIS1_EED2Ev.exit: ; preds = %._crit_edge
-  store i32 0, ptr %0, align 8, !tbaa !21, !alias.scope !54
+  store i32 0, ptr %0, align 8, !tbaa !21, !alias.scope !51
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  store ptr %i.cq, ptr %i.cp, align 8, !tbaa !12, !alias.scope !54
+  store ptr %i.cq, ptr %i.cp, align 8, !tbaa !12, !alias.scope !51
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 0, ptr %i.cr, align 8, !tbaa !18, !alias.scope !54
-  store i8 0, ptr %i.cq, align 8, !tbaa !17, !alias.scope !54
+  store i64 0, ptr %i.cr, align 8, !tbaa !18, !alias.scope !51
+  store i8 0, ptr %i.cq, align 8, !tbaa !17, !alias.scope !51
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ct = load i64, ptr %12, align 8, !tbaa !25
   store i64 %i.ct, ptr %i.cs, align 8, !tbaa !25
@@ -288,7 +288,7 @@ _ZNKSt14default_deleteIN5draco4MeshEEclEPS1_.exit.i: ; preds = %bb.a
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !27
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8
-  tail call void %i.e(ptr noundef nonnull align 8 dereferenceable(216) %i.b) #9, !inline_history !55
+  tail call void %i.e(ptr noundef nonnull align 8 dereferenceable(216) %i.b) #9, !inline_history !52
   br label %_ZNSt10unique_ptrIN5draco4MeshESt14default_deleteIS1_EED2Ev.exit
 
 _ZNSt10unique_ptrIN5draco4MeshESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN5draco4MeshEEclEPS1_.exit.i
@@ -379,6 +379,8 @@ attributes #11 = { nounwind willreturn memory(read) }
 !33 = !{!31, !10, i64 8}
 !34 = !{!31, !10, i64 16}
 !35 = distinct !{!35, !50}
+!36 = distinct !{!36, i1 false, !"_ZN5draco8OkStatusEv"}
+!37 = distinct !{!37, !36, !"_ZN5draco8OkStatusEv: argument 0"}
 !38 = distinct !{ptr @_ZN5draco23TriangleSoupMeshBuilderD2Ev, null, null}
 !39 = !{!"_ZTSN5draco13DecoderBuffer10BitDecoderE", !10, i64 0, !10, i64 8, !13, i64 16}
 !40 = !{!"bool", !5, i64 0}
@@ -392,8 +394,6 @@ attributes #11 = { nounwind willreturn memory(read) }
 !48 = !{!"float", !5, i64 0}
 !49 = !{!48, !48, i64 0}
 !50 = !{!"llvm.loop.mustprogress"}
-!52 = distinct !{!52, i1 false, !"_ZN5draco8OkStatusEv"}
-!53 = distinct !{!53, !52, !"_ZN5draco8OkStatusEv: argument 0"}
-!54 = !{!53}
-!55 = distinct !{null, null}
+!51 = !{!37}
+!52 = distinct !{null, null}
 end_hunk_0

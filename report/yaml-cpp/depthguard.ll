@@ -202,18 +202,18 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit7: ; preds = %bb.f
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit unwind label %bb.j ; 0 uses
 
 _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit7
-  call void @llvm.experimental.noalias.scope.decl(metadata !49)
-  call void @llvm.experimental.noalias.scope.decl(metadata !52)
+  call void @llvm.experimental.noalias.scope.decl(metadata !37)
+  call void @llvm.experimental.noalias.scope.decl(metadata !38)
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr %i.ak, ptr %0, align 8, !tbaa !17, !alias.scope !53
+  store ptr %i.ak, ptr %0, align 8, !tbaa !17, !alias.scope !39
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %i.al, align 8, !tbaa !18, !alias.scope !53
-  store i8 0, ptr %i.ak, align 8, !tbaa !20, !alias.scope !53
+  store i64 0, ptr %i.al, align 8, !tbaa !18, !alias.scope !39
+  store i8 0, ptr %i.ak, align 8, !tbaa !20, !alias.scope !39
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 64
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !43, !noalias !53 ; 3 uses
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !43, !noalias !39 ; 3 uses
   %.not.i.not.i.i = icmp eq ptr %i.an, null
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %i.ap = load ptr, ptr %i.ao, align 8, !noalias !53 ; 2 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !noalias !39 ; 2 uses
   %i.aq = icmp ugt ptr %i.an, %i.ap
   %.08.i.i.i = select i1 %i.aq, ptr %i.an, ptr %i.ap ; 2 uses
   %.not5.i.i = icmp eq ptr %.08.i.i.i, null
@@ -222,7 +222,7 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
 
 bb.g:                                             ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 56
-  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !44, !noalias !53 ; 2 uses
+  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !44, !noalias !39 ; 2 uses
   %i.at = ptrtoint ptr %.08.i.i.i to i64
   %i.au = ptrtoint ptr %i.as to i64
   %i.av = sub i64 %i.at, %i.au
@@ -232,7 +232,7 @@ bb.g:                                             ; preds = %_ZStlsIcSt11char_tr
 bb.h:                                             ; preds = %bb.i, %bb.g
   %i.ax = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.ay = load ptr, ptr %0, align 8, !tbaa !16, !alias.scope !53 ; 2 uses
+  %i.ay = load ptr, ptr %0, align 8, !tbaa !16, !alias.scope !39 ; 2 uses
   %i.az = icmp eq ptr %i.ay, %i.ak
   br i1 %i.az, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
@@ -385,9 +385,16 @@ attributes #8 = { builtin nounwind }
 !27 = !{!26, !5, i64 64}
 !28 = !{!5, !5, i64 0}
 !29 = !{i64 0, i64 4, !28, i64 4, i64 4, !28, i64 8, i64 4, !28}
+!30 = distinct !{!30, i1 false, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
+!31 = distinct !{!31, !30, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!32 = distinct !{!32, i1 false, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
+!33 = distinct !{!33, !32, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
 !34 = !{!10, !5, i64 0}
 !35 = !{!10, !5, i64 4}
 !36 = !{!10, !5, i64 8}
+!37 = !{!31}
+!38 = !{!33}
+!39 = !{!33, !31}
 !40 = !{!"p1 _ZTSNSt6locale5_ImplE", !11, i64 0}
 !41 = !{!"_ZTSSt6locale", !40, i64 0}
 !42 = !{!"_ZTSSt15basic_streambufIcSt11char_traitsIcEE", !12, i64 8, !12, i64 16, !12, i64 24, !12, i64 32, !12, i64 40, !12, i64 48, !41, i64 56}
@@ -395,11 +402,4 @@ attributes #8 = { builtin nounwind }
 !44 = !{!42, !12, i64 32}
 !45 = !{!"_ZTSSi", !14, i64 8}
 !46 = !{!45, !14, i64 8}
-!47 = distinct !{!47, i1 false, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
-!48 = distinct !{!48, !47, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!49 = !{!48}
-!50 = distinct !{!50, i1 false, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
-!51 = distinct !{!51, !50, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!52 = !{!51}
-!53 = !{!51, !48}
 end_hunk_0

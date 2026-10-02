@@ -202,7 +202,7 @@ _ZNKSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_E
 .lr.ph.i.i.i.i36:                                 ; preds = %.noexc43, %.lr.ph.i.i.i.i36
   %.012.i.i.i.i37 = phi ptr [ %i.aw, %.lr.ph.i.i.i.i36 ], [ %i.ar, %.noexc43 ] ; 2 uses
   %.0911.i.i.i.i38 = phi ptr [ %i.av, %.lr.ph.i.i.i.i36 ], [ %i.q, %.noexc43 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i.i37, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i.i38, i64 40, i1 false), !tbaa.struct !25, !alias.scope !47
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i.i37, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i.i38, i64 40, i1 false), !tbaa.struct !25, !alias.scope !43
   %i.av = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i38, i64 40 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i37, i64 40 ; 2 uses
   %.not.i.i.i.i39 = icmp eq ptr %i.av, %i.o
@@ -387,14 +387,14 @@ attributes #15 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errno
 !31 = !{!22, !11, i64 16}
 !32 = distinct !{!32, !21}
 !33 = distinct !{!33, !21}
+!34 = distinct !{!34, i1 false, !"_ZSt19__relocate_object_aIN4absl12lts_2026052616strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_"}
+!35 = distinct !{!35, !34, !"_ZSt19__relocate_object_aIN4absl12lts_2026052616strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
+!36 = distinct !{!36, !34, !"_ZSt19__relocate_object_aIN4absl12lts_2026052616strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
 !37 = distinct !{!37, !21}
 !38 = distinct !{!38, !21}
 !39 = !{!"p1 _ZTSSt4pairISt17basic_string_viewIcSt11char_traitsIcEES3_E", !10, i64 0}
 !40 = !{!"_ZTSSt16initializer_listISt4pairISt17basic_string_viewIcSt11char_traitsIcEES4_EE", !39, i64 0, !13, i64 8}
 !41 = !{!40, !13, i64 8}
 !42 = !{!40, !39, i64 0}
-!44 = distinct !{!44, i1 false, !"_ZSt19__relocate_object_aIN4absl12lts_2026052616strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_"}
-!45 = distinct !{!45, !44, !"_ZSt19__relocate_object_aIN4absl12lts_2026052616strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
-!46 = distinct !{!46, !44, !"_ZSt19__relocate_object_aIN4absl12lts_2026052616strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
-!47 = !{!45, !46}
+!43 = !{!36, !35}
 end_hunk_0

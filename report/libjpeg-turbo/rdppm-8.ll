@@ -204,7 +204,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ao = shl i64 %index, 2
   %next.gep = getelementptr i8, ptr %i.s, i64 %i.ao
   %next.gep67 = getelementptr i8, ptr %i.t, i64 %index
-  %wide.load = load <4 x i8>, ptr %next.gep67, align 1, !tbaa !33, !alias.scope !104
+  %wide.load = load <4 x i8>, ptr %next.gep67, align 1, !tbaa !33, !alias.scope !98
   %i.ap = uitofp <4 x i8> %wide.load to <4 x double>
   %i.aq = fdiv <4 x double> %i.ap, %broadcast.splat
   %i.ar = fsub <4 x double> splat (double 1.000000e+00), %i.aq ; 5 uses
@@ -222,7 +222,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bd = fadd <4 x double> %i.bc, splat (double 5.000000e-01)
   %i.be = fptoui <4 x double> %i.bd to <4 x i8>
   %interleaved.vec = shufflevector <4 x i8> %i.ba, <4 x i8> %i.be, <16 x i32> <i32 0, i32 0, i32 0, i32 4, i32 1, i32 1, i32 1, i32 5, i32 2, i32 2, i32 2, i32 6, i32 3, i32 3, i32 3, i32 7>
-  store <16 x i8> %interleaved.vec, ptr %next.gep, align 1, !tbaa !33, !alias.scope !106, !noalias !104
+  store <16 x i8> %interleaved.vec, ptr %next.gep, align 1, !tbaa !33, !alias.scope !99, !noalias !98
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bf = icmp eq i64 %index.next, %n.vec
   br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !95
@@ -460,7 +460,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.cr = getelementptr inbounds i8, ptr %.06265.us, i64 %i.aq
   %i.cs = add i32 %.067.us, -1                    ; 2 uses
   %.not.us = icmp eq i32 %i.cs, 0
-  br i1 %.not.us, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !107
+  br i1 %.not.us, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !102
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.o
   %.067 = phi i32 [ %i.eq, %bb.o ], [ %i.ae, %.lr.ph ]
@@ -544,7 +544,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ep = getelementptr inbounds i8, ptr %.06265, i64 %i.aq
   %i.eq = add i32 %.067, -1                       ; 2 uses
   %.not = icmp eq i32 %i.eq, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !107
+  br i1 %.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !102
 
 ._crit_edge:                                      ; preds = %bb.o, %bb.i, %bb.c
   ret i32 1
@@ -710,7 +710,7 @@ rgb_to_cmyk.exit100:                              ; preds = %bb.k, %bb.l
   %i.cv = getelementptr inbounds nuw i8, ptr %.090107, i64 4
   %i.cw = add i32 %.0109, -1                      ; 2 uses
   %.not95 = icmp eq i32 %i.cw, 0
-  br i1 %.not95, label %.loopexit, label %bb.e, !llvm.loop !108
+  br i1 %.not95, label %.loopexit, label %bb.e, !llvm.loop !103
 
 bb.m:                                             ; preds = %bb.c
   br i1 %.not95106, label %.loopexit, label %.lr.ph
@@ -840,7 +840,7 @@ rgb_to_cmyk.exit:                                 ; preds = %bb.s, %bb.t
   %i.gd = getelementptr inbounds nuw i8, ptr %.191103, i64 4
   %i.ge = add i32 %.1105, -1                      ; 2 uses
   %.not = icmp eq i32 %i.ge, 0
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !109
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !104
 
 .loopexit:                                        ; preds = %rgb_to_cmyk.exit, %rgb_to_cmyk.exit100, %bb.m, %bb.d
   ret i32 1
@@ -981,7 +981,7 @@ bb.e:                                             ; preds = %bb.d
   %i.cd = getelementptr inbounds i8, ptr %i.bs, i64 %i.au
   %i.ce = add i32 %.0123, -2                      ; 2 uses
   %.not102.1 = icmp eq i32 %i.ce, 0
-  br i1 %.not102.1, label %.loopexit, label %.lr.ph124.new, !llvm.loop !110
+  br i1 %.not102.1, label %.loopexit, label %.lr.ph124.new, !llvm.loop !105
 
 bb.f:                                             ; preds = %bb.d
   br i1 %.not102120, label %.loopexit, label %.lr.ph119
@@ -1051,7 +1051,7 @@ bb.f:                                             ; preds = %bb.d
   %i.do = getelementptr inbounds i8, ptr %i.de, i64 %i.ci
   %i.dp = add i32 %.1118, -2                      ; 2 uses
   %.not101.1 = icmp eq i32 %i.dp, 0
-  br i1 %.not101.1, label %.loopexit, label %.lr.ph119.new, !llvm.loop !111
+  br i1 %.not101.1, label %.loopexit, label %.lr.ph119.new, !llvm.loop !106
 
 bb.g:                                             ; preds = %bb.c
   br i1 %i.am, label %bb.h, label %bb.j
@@ -1101,7 +1101,7 @@ bb.i:                                             ; preds = %.lr.ph114, %bb.i
   %i.er = getelementptr inbounds i8, ptr %.294111, i64 %i.du
   %i.es = add i32 %.2113, -1                      ; 2 uses
   %.not99 = icmp eq i32 %i.es, 0
-  br i1 %.not99, label %.loopexit, label %bb.i, !llvm.loop !112
+  br i1 %.not99, label %.loopexit, label %bb.i, !llvm.loop !107
 
 bb.j:                                             ; preds = %bb.g
   br i1 %.not102120, label %.loopexit, label %.lr.ph
@@ -1198,7 +1198,7 @@ bb.j:                                             ; preds = %bb.g
   %i.hd = getelementptr inbounds i8, ptr %i.gk, i64 %i.ew
   %i.he = add i32 %.3109, -2                      ; 2 uses
   %.not.1 = icmp eq i32 %i.he, 0
-  br i1 %.not.1, label %.loopexit, label %.lr.ph.new, !llvm.loop !113
+  br i1 %.not.1, label %.loopexit, label %.lr.ph.new, !llvm.loop !108
 
 .loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph.new, %bb.i, %.prol.loopexit141, %.lr.ph119.new, %.prol.loopexit145, %.lr.ph124.new, %bb.j, %bb.h, %bb.f, %bb.e
   ret i32 1
@@ -1306,7 +1306,7 @@ rgb_to_cmyk.exit57:                               ; preds = %bb.e, %bb.f
   %i.bn = getelementptr inbounds nuw i8, ptr %.066, i64 4
   %i.bo = add i32 %.04864, -1                     ; 2 uses
   %.not52 = icmp eq i32 %i.bo, 0
-  br i1 %.not52, label %.loopexit, label %bb.e, !llvm.loop !114
+  br i1 %.not52, label %.loopexit, label %bb.e, !llvm.loop !109
 
 bb.g:                                             ; preds = %bb.c
   br i1 %.not5263, label %.loopexit, label %.lr.ph
@@ -1382,7 +1382,7 @@ rgb_to_cmyk.exit:                                 ; preds = %.lr.ph, %bb.h
   %i.dr = getelementptr inbounds nuw i8, ptr %.162, i64 4
   %i.ds = add i32 %.14960, -1                     ; 2 uses
   %.not = icmp eq i32 %i.ds, 0
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !115
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !110
 
 .loopexit:                                        ; preds = %rgb_to_cmyk.exit, %rgb_to_cmyk.exit57, %bb.g, %bb.d
   ret i32 1
@@ -1510,23 +1510,23 @@ attributes #6 = { nounwind }
 !89 = distinct !{!89, !52}
 !90 = distinct !{!90, !52}
 !91 = distinct !{!91, !52}
+!92 = distinct !{!92, i1 false, !"LVerDomain"}
+!93 = distinct !{!93, !92}
+!94 = distinct !{!94, !92}
 !95 = distinct !{!95, !52, !100, !101}
 !96 = distinct !{!96, !52, !100}
 !97 = distinct !{!97, !52}
+!98 = !{!93}
+!99 = !{!94}
 !100 = !{!"llvm.loop.isvectorized", i32 1}
 !101 = !{!"llvm.loop.unroll.runtime.disable"}
-!102 = distinct !{!102, i1 false, !"LVerDomain"}
-!103 = distinct !{!103, !102}
-!104 = !{!103}
-!105 = distinct !{!105, !102}
-!106 = !{!105}
+!102 = distinct !{!102, !52}
+!103 = distinct !{!103, !52}
+!104 = distinct !{!104, !52}
+!105 = distinct !{!105, !52}
+!106 = distinct !{!106, !52}
 !107 = distinct !{!107, !52}
 !108 = distinct !{!108, !52}
 !109 = distinct !{!109, !52}
 !110 = distinct !{!110, !52}
-!111 = distinct !{!111, !52}
-!112 = distinct !{!112, !52}
-!113 = distinct !{!113, !52}
-!114 = distinct !{!114, !52}
-!115 = distinct !{!115, !52}
 end_hunk_0

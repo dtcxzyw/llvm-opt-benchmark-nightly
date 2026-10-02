@@ -204,7 +204,7 @@ copy_chroma.exit:                                 ; preds = %bb.k, %vp8_alloc_fr
 vector.body:                                      ; preds = %.lr.ph.i, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph.i ] ; 3 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dg, i64 %index
-  %wide.load = load <16 x i8>, ptr %i.dj, align 1, !tbaa !135, !alias.scope !272
+  %wide.load = load <16 x i8>, ptr %i.dj, align 1, !tbaa !135, !alias.scope !266
   %i.dk = zext <16 x i8> %wide.load to <16 x i32> ; 2 uses
   %i.dl = mul nsw <16 x i32> %broadcast.splat, %i.dk
   %i.dm = ashr <16 x i32> %i.dl, splat (i32 8)
@@ -214,7 +214,7 @@ vector.body:                                      ; preds = %.lr.ph.i, %vector.b
   %i.dq = tail call <16 x i32> @llvm.umin.v16i32(<16 x i32> %i.dp, <16 x i32> splat (i32 255))
   %i.dr = trunc nuw <16 x i32> %i.dq to <16 x i8>
   %i.ds = getelementptr inbounds nuw i8, ptr %i.di, i64 %index
-  store <16 x i8> %i.dr, ptr %i.ds, align 1, !tbaa !135, !alias.scope !274, !noalias !272
+  store <16 x i8> %i.dr, ptr %i.ds, align 1, !tbaa !135, !alias.scope !267, !noalias !266
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.dt = icmp eq i64 %index.next, %wide.trip.count.i
   br i1 %i.dt, label %._crit_edge.i45, label %vector.body, !llvm.loop !263
@@ -617,14 +617,14 @@ begin_hunk_1_@llvm.umin.v16i32
 !257 = distinct !{!257, !61}
 !258 = distinct !{!258, !61}
 !259 = distinct !{!259, !61}
+!260 = distinct !{!260, i1 false, !"LVerDomain"}
+!261 = distinct !{!261, !260}
+!262 = distinct !{!262, !260}
 !263 = distinct !{!263, !61, !268, !269}
 !264 = distinct !{!264, !61, !268}
 !265 = distinct !{!265, !61}
+!266 = !{!261}
+!267 = !{!262}
 !268 = !{!"llvm.loop.isvectorized", i32 1}
 !269 = !{!"llvm.loop.unroll.runtime.disable"}
-!270 = distinct !{!270, i1 false, !"LVerDomain"}
-!271 = distinct !{!271, !270}
-!272 = !{!271}
-!273 = distinct !{!273, !270}
-!274 = !{!273}
 end_hunk_1

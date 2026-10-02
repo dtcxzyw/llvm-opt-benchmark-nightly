@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.o = zext i32 %i.n to i64
   %i.p = load ptr, ptr %i.j, align 8, !tbaa !26
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr readonly align 1 %i.p, i64 range(i64 0, 4294967296) %i.o, i1 false), !alias.scope !37
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr readonly align 1 %i.p, i64 range(i64 0, 4294967296) %i.o, i1 false), !alias.scope !33
   br label %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.i
 
 _ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.i.i: ; preds = %bb.d, %.critedge.thread.i.i
@@ -290,7 +290,7 @@ bb.a:
   %i.d = fmul float %.03441.epil, 1.000000e-01    ; 2 uses
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !38
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !34
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %bb.a
   %.034.lcssa = phi float [ 5.000000e-01, %bb.a ], [ %i.p, %._crit_edge.loopexit.unr-lcssa ], [ %i.d, %.lr.ph.epil ]
@@ -314,7 +314,7 @@ bb.a:
   %i.p = fmul float %i.o, 1.000000e-01            ; 3 uses
   %niter.next.7 = add i32 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !39
+  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !35
 
 bb.b:                                             ; preds = %._crit_edge
   %i.q = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %0, i8 noundef signext 48) ; 0 uses
@@ -376,7 +376,7 @@ bb.i:                                             ; preds = %.lr.ph46
   store i8 0, ptr %.044, align 1, !tbaa !28
   %.0 = getelementptr inbounds i8, ptr %.044, i64 -1 ; 3 uses
   %i.am = icmp ugt ptr %.0, %i.ag
-  br i1 %i.am, label %.lr.ph46, label %.critedge, !llvm.loop !40
+  br i1 %i.am, label %.lr.ph46, label %.critedge, !llvm.loop !36
 
 .critedge:                                        ; preds = %.lr.ph46, %bb.i, %bb.h
   %.0.lcssa = phi ptr [ %.043, %bb.h ], [ %.0, %bb.i ], [ %.044, %.lr.ph46 ] ; 2 uses
@@ -440,7 +440,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.bh = zext i32 %i.bg to i64
   %i.bi = load ptr, ptr %i.bc, align 8, !tbaa !26
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bf, ptr readonly align 1 %i.bi, i64 range(i64 0, 4294967296) %i.bh, i1 false), !alias.scope !53
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bf, ptr readonly align 1 %i.bi, i64 range(i64 0, 4294967296) %i.bh, i1 false), !alias.scope !44
   br label %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i
 
 _ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.i.i.i: ; preds = %bb.n, %.critedge.thread.i.i.i
@@ -477,7 +477,7 @@ bb.s:                                             ; preds = %bb.r
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !26
   %i.br = zext i32 %i.ar to i64
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.br
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bs, ptr nonnull readonly align 16 %i.b, i64 range(i64 0, 4294967296) %i.bo, i1 false), !alias.scope !57
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bs, ptr nonnull readonly align 16 %i.b, i64 range(i64 0, 4294967296) %i.bo, i1 false), !alias.scope !45
   br label %_ZN15hb_vector_buf_t10append_lenEPKcj.exit
 
 _ZN15hb_vector_buf_t10append_lenEPKcj.exit:       ; preds = %bb.k, %bb.l, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.i.i, %bb.r, %bb.s
@@ -734,7 +734,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.t = zext i32 %i.s to i64
   %i.u = load ptr, ptr %i.o, align 8, !tbaa !26
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.r, ptr readonly align 1 %i.u, i64 range(i64 0, 4294967296) %i.t, i1 false), !alias.scope !69
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.r, ptr readonly align 1 %i.u, i64 range(i64 0, 4294967296) %i.t, i1 false), !alias.scope !52
   br label %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.thread4.i.i
 
 _ZN11hb_vector_tIcLb0EE14realloc_vectorIcTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPcj11hb_priorityILj0EE.exit.i.i.i: ; preds = %bb.d, %.critedge.thread.i.i.i
@@ -771,7 +771,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !26
   %i.ad = zext i32 %i.d to i64
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ad
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ae, ptr nonnull readonly align 1 %1, i64 range(i64 0, 4294967296) %i.aa, i1 false), !alias.scope !73
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ae, ptr nonnull readonly align 1 %1, i64 range(i64 0, 4294967296) %i.aa, i1 false), !alias.scope !53
   br label %_ZN15hb_vector_buf_t10append_lenEPKcj.exit
 
 _ZN15hb_vector_buf_t10append_lenEPKcj.exit:       ; preds = %bb.a, %bb.b, %_ZN11hb_vector_tIcLb0EE5allocEjb.exit.i.i, %bb.h, %bb.i
@@ -830,28 +830,28 @@ attributes #9 = { nounwind willreturn memory(read) }
 !27 = !{!"branch_weights", !"expected", i32 1913573, i32 2145570075}
 !28 = !{!5, !5, i64 0}
 !29 = !{!"branch_weights", i32 4001, i32 4000000}
-!34 = distinct !{!34, i1 false, !"_ZL9hb_memcpyPvPKvm"}
-!35 = distinct !{!35, !34, !"_ZL9hb_memcpyPvPKvm: argument 0"}
-!36 = distinct !{!36, !34, !"_ZL9hb_memcpyPvPKvm: argument 1"}
-!37 = !{!35, !36}
-!38 = distinct !{!38, !47}
-!39 = distinct !{!39, !25}
-!40 = distinct !{!40, !25}
-!47 = !{!"llvm.loop.unroll.disable"}
-!50 = distinct !{!50, i1 false, !"_ZL9hb_memcpyPvPKvm"}
-!51 = distinct !{!51, !50, !"_ZL9hb_memcpyPvPKvm: argument 0"}
-!52 = distinct !{!52, !50, !"_ZL9hb_memcpyPvPKvm: argument 1"}
-!53 = !{!51, !52}
-!54 = distinct !{!54, i1 false, !"_ZL9hb_memcpyPvPKvm"}
-!55 = distinct !{!55, !54, !"_ZL9hb_memcpyPvPKvm: argument 0"}
-!56 = distinct !{!56, !54, !"_ZL9hb_memcpyPvPKvm: argument 1"}
-!57 = !{!55, !56}
-!66 = distinct !{!66, i1 false, !"_ZL9hb_memcpyPvPKvm"}
-!67 = distinct !{!67, !66, !"_ZL9hb_memcpyPvPKvm: argument 0"}
-!68 = distinct !{!68, !66, !"_ZL9hb_memcpyPvPKvm: argument 1"}
-!69 = !{!67, !68}
-!70 = distinct !{!70, i1 false, !"_ZL9hb_memcpyPvPKvm"}
-!71 = distinct !{!71, !70, !"_ZL9hb_memcpyPvPKvm: argument 0"}
-!72 = distinct !{!72, !70, !"_ZL9hb_memcpyPvPKvm: argument 1"}
-!73 = !{!71, !72}
+!30 = distinct !{!30, i1 false, !"_ZL9hb_memcpyPvPKvm"}
+!31 = distinct !{!31, !30, !"_ZL9hb_memcpyPvPKvm: argument 1"}
+!32 = distinct !{!32, !30, !"_ZL9hb_memcpyPvPKvm: argument 0"}
+!33 = !{!32, !31}
+!34 = distinct !{!34, !43}
+!35 = distinct !{!35, !25}
+!36 = distinct !{!36, !25}
+!37 = distinct !{!37, i1 false, !"_ZL9hb_memcpyPvPKvm"}
+!38 = distinct !{!38, !37, !"_ZL9hb_memcpyPvPKvm: argument 1"}
+!39 = distinct !{!39, !37, !"_ZL9hb_memcpyPvPKvm: argument 0"}
+!40 = distinct !{!40, i1 false, !"_ZL9hb_memcpyPvPKvm"}
+!41 = distinct !{!41, !40, !"_ZL9hb_memcpyPvPKvm: argument 1"}
+!42 = distinct !{!42, !40, !"_ZL9hb_memcpyPvPKvm: argument 0"}
+!43 = !{!"llvm.loop.unroll.disable"}
+!44 = !{!39, !38}
+!45 = !{!42, !41}
+!46 = distinct !{!46, i1 false, !"_ZL9hb_memcpyPvPKvm"}
+!47 = distinct !{!47, !46, !"_ZL9hb_memcpyPvPKvm: argument 1"}
+!48 = distinct !{!48, !46, !"_ZL9hb_memcpyPvPKvm: argument 0"}
+!49 = distinct !{!49, i1 false, !"_ZL9hb_memcpyPvPKvm"}
+!50 = distinct !{!50, !49, !"_ZL9hb_memcpyPvPKvm: argument 1"}
+!51 = distinct !{!51, !49, !"_ZL9hb_memcpyPvPKvm: argument 0"}
+!52 = !{!48, !47}
+!53 = !{!51, !50}
 end_hunk_0

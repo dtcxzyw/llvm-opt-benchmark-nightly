@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.c
   store i64 6620516959819538809, ptr %i.n, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.a, i8 noundef 0, i64 noundef 128, i1 noundef false) #8
-  %i.o = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull %2, i64 noundef %.sroa.0.1.insert.ext, i64 noundef 128) #8, !alias.scope !12 ; 0 uses
+  %i.o = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull %2, i64 noundef %.sroa.0.1.insert.ext, i64 noundef 128) #8, !alias.scope !8 ; 0 uses
   %i.p = call i32 @blake2b_update(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 128) ; 0 uses
   call void @sodium_memzero(ptr noundef nonnull %i.a, i64 noundef 128) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
@@ -267,7 +267,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.aa, ptr %i.a, align 1
   %.131 = getelementptr i8, ptr %.03034, i64 %i.g
   %.not = icmp eq i64 %i.ab, 0
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !13
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %bb.c, %.thread, %bb.a
   ret i32 0
@@ -339,7 +339,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   store <2 x i64> %i.k, ptr %i.r, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.a, i8 noundef 0, i64 noundef 128, i1 noundef false) #8
-  %i.s = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull %2, i64 noundef %.sroa.0.1.insert.ext, i64 noundef 128) #8, !alias.scope !22 ; 0 uses
+  %i.s = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull %2, i64 noundef %.sroa.0.1.insert.ext, i64 noundef 128) #8, !alias.scope !14 ; 0 uses
   %i.t = call i32 @blake2b_update(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 128) ; 0 uses
   call void @sodium_memzero(ptr noundef nonnull %i.a, i64 noundef 128) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
@@ -721,14 +721,14 @@ attributes #9 = { noreturn nounwind }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
 !4 = !{ptr @blake2b_compress_avx2, ptr @blake2b_compress_ref, ptr @blake2b_compress_sse41, ptr @blake2b_compress_ssse3}
-!9 = distinct !{!9, i1 false, !"memcpy.inline"}
-!10 = distinct !{!10, !9, !"memcpy.inline: argument 0"}
-!11 = distinct !{!11, !9, !"memcpy.inline: argument 1"}
-!12 = !{!10, !11}
-!13 = distinct !{!13, !14}
-!14 = !{!"llvm.loop.mustprogress"}
-!19 = distinct !{!19, i1 false, !"memcpy.inline"}
-!20 = distinct !{!20, !19, !"memcpy.inline: argument 0"}
-!21 = distinct !{!21, !19, !"memcpy.inline: argument 1"}
-!22 = !{!20, !21}
+!5 = distinct !{!5, i1 false, !"memcpy.inline"}
+!6 = distinct !{!6, !5, !"memcpy.inline: argument 1"}
+!7 = distinct !{!7, !5, !"memcpy.inline: argument 0"}
+!8 = !{!7, !6}
+!9 = distinct !{!9, !10}
+!10 = !{!"llvm.loop.mustprogress"}
+!11 = distinct !{!11, i1 false, !"memcpy.inline"}
+!12 = distinct !{!12, !11, !"memcpy.inline: argument 1"}
+!13 = distinct !{!13, !11, !"memcpy.inline: argument 0"}
+!14 = !{!13, !12}
 end_hunk_0

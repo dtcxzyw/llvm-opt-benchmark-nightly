@@ -202,8 +202,8 @@ bb.y:                                             ; preds = %bb.w, %bb.v, %bb.t,
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 %i.ce
   store i8 0, ptr %i.co, align 1, !tbaa !25
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr null, ptr %i.cp, align 8, !tbaa !68, !alias.scope !72
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false), !alias.scope !72
+  store ptr null, ptr %i.cp, align 8, !tbaa !68, !alias.scope !69
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false), !alias.scope !69
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %_ZN7rocksdb6Status10CorruptionERKNS_5SliceES3_.exit33
@@ -606,6 +606,8 @@ attributes #13 = { builtin allocsize(0) }
 !28 = !{!15, !14, i64 0}
 !29 = !{!"llvm.loop.mustprogress"}
 !30 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!31 = distinct !{!31, i1 false, !"_ZN7rocksdb6Status2OKEv"}
+!32 = distinct !{!32, !31, !"_ZN7rocksdb6Status2OKEv: argument 0"}
 !33 = !{!"_ZTSNSt6chrono8durationIlSt5ratioILl1ELl1000000EEEE", !10, i64 0}
 !34 = !{!"_ZTSN7rocksdb10IOPriorityE", !6, i64 0}
 !35 = !{!"_ZTSN7rocksdb3Env10IOPriorityE", !6, i64 0}
@@ -642,7 +644,5 @@ attributes #13 = { builtin allocsize(0) }
 !66 = !{!65, !21, i64 0}
 !67 = !{!65, !10, i64 8}
 !68 = !{!55, !21, i64 0}
-!70 = distinct !{!70, i1 false, !"_ZN7rocksdb6Status2OKEv"}
-!71 = distinct !{!71, !70, !"_ZN7rocksdb6Status2OKEv: argument 0"}
-!72 = !{!71}
+!69 = !{!32}
 end_hunk_1

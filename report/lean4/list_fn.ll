@@ -25,26 +25,26 @@ bb.a:
   %.09 = phi i32 [ %i.b, %bb.d ], [ %2, %bb.a ]
   %i.b = add i32 %.09, -1                         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
-  call void @llvm.experimental.noalias.scope.decl(metadata !26)
+  call void @llvm.experimental.noalias.scope.decl(metadata !17)
   %i.c = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #7
           to label %.noexc unwind label %bb.e     ; 5 uses
 
 .noexc:                                           ; preds = %.lr.ph
-  store i32 1, ptr %i.c, align 4, !tbaa !19, !noalias !26
+  store i32 1, ptr %i.c, align 4, !tbaa !19, !noalias !17
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 %i.b, ptr %i.d, align 4, !tbaa !22, !noalias !26
+  store i32 %i.b, ptr %i.d, align 4, !tbaa !22, !noalias !17
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr %.pr, ptr %i.e, align 8, !tbaa !13, !noalias !26
+  store ptr %.pr, ptr %i.e, align 8, !tbaa !13, !noalias !17
   %.not.i.i.i.i = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i.i, label %.thread, label %bb.b
 
 .thread:                                          ; preds = %.noexc
-  store ptr %i.c, ptr %3, align 8, !tbaa !13, !alias.scope !26
+  store ptr %i.c, ptr %3, align 8, !tbaa !13, !alias.scope !17
   br label %bb.d
 
 bb.b:                                             ; preds = %.noexc
-  %i.f = atomicrmw add ptr %.pr, i32 1 monotonic, align 4, !noalias !26 ; 0 uses
-  store ptr %i.c, ptr %3, align 8, !tbaa !13, !alias.scope !26
+  %i.f = atomicrmw add ptr %.pr, i32 1 monotonic, align 4, !noalias !17 ; 0 uses
+  store ptr %i.c, ptr %3, align 8, !tbaa !13, !alias.scope !17
   %i.g = atomicrmw sub ptr %.pr, i32 1 acq_rel, align 4
   %i.h = icmp eq i32 %i.g, 1
   br i1 %i.h, label %bb.c, label %bb.d
@@ -155,14 +155,14 @@ attributes #8 = { builtin nounwind }
 !11 = !{!"p1 _ZTSN4lean4listIjE4cellE", !10, i64 0}
 !12 = !{!"_ZTSN4lean4listIjEE", !11, i64 0}
 !13 = !{!12, !11, i64 0}
+!14 = distinct !{!14, i1 false, !"_ZN4lean4consIjEENS_4listIT_EERKS2_RKS3_"}
+!15 = distinct !{!15, !14, !"_ZN4lean4consIjEENS_4listIT_EERKS2_RKS3_: argument 0"}
 !16 = distinct !{!16, !23}
+!17 = !{!15}
 !18 = !{!"_ZTSSt13__atomic_baseIjE", !7, i64 0}
 !19 = !{!18, !7, i64 0}
 !20 = !{!"_ZTSSt6atomicIjE", !18, i64 0}
 !21 = !{!"_ZTSN4lean4listIjE4cellE", !20, i64 0, !7, i64 4, !12, i64 8}
 !22 = !{!21, !7, i64 4}
 !23 = !{!"llvm.loop.mustprogress"}
-!24 = distinct !{!24, i1 false, !"_ZN4lean4consIjEENS_4listIT_EERKS2_RKS3_"}
-!25 = distinct !{!25, !24, !"_ZN4lean4consIjEENS_4listIT_EERKS2_RKS3_: argument 0"}
-!26 = !{!25}
 end_hunk_0

@@ -29,8 +29,8 @@ bb.a:
   %0 = alloca %"class.pro::v4::proxy", align 8    ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #4
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 123, ptr %i.a, align 8, !tbaa !16, !alias.scope !38
-  store i64 ptrtoint (ptr @_ZZN3pro2v46detail9conv_metaINS0_5proxyI10AnyMovableEENS1_16destroy_dispatchEDoFvvEEC1INS1_11inplace_ptrIiEEEESt15in_place_type_tIT_EENUlRS5_E_8__invokeESF_ to i64), ptr %0, align 8, !alias.scope !38
+  store i32 123, ptr %i.a, align 8, !tbaa !16, !alias.scope !17
+  store i64 ptrtoint (ptr @_ZZN3pro2v46detail9conv_metaINS0_5proxyI10AnyMovableEENS1_16destroy_dispatchEDoFvvEEC1INS1_11inplace_ptrIiEEEESt15in_place_type_tIT_EENUlRS5_E_8__invokeESF_ to i64), ptr %0, align 8, !alias.scope !17
   %i.b = load ptr, ptr @_ZSt4cout, align 8, !tbaa !19
   %i.c = getelementptr i8, ptr %i.b, i64 -24
   %i.d = load i64, ptr %i.c, align 8
@@ -130,10 +130,15 @@ attributes #4 = { nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
+!9 = distinct !{!9, i1 false, !"_ZN3pro2v410make_proxyITkNS0_6facadeE10AnyMovableiEENS0_5proxyIT_EEOT0_Qsr3stdE18is_constructible_vINSt5decayIS6_E4typeES6_E"}
+!10 = distinct !{!10, !9, !"_ZN3pro2v410make_proxyITkNS0_6facadeE10AnyMovableiEENS0_5proxyIT_EEOT0_Qsr3stdE18is_constructible_vINSt5decayIS6_E4typeES6_E: argument 0"}
+!11 = distinct !{!11, i1 false, !"_ZN3pro2v46detail15make_proxy_implI10AnyMovableiJiEEENS0_5proxyIT_EEDpOT1_"}
+!12 = distinct !{!12, !11, !"_ZN3pro2v46detail15make_proxy_implI10AnyMovableiJiEEENS0_5proxyIT_EEDpOT1_: argument 0"}
 !13 = distinct !{null, null, null, null}
 !14 = distinct !{null, null, null, null}
 !15 = !{!"_ZTSN3pro2v46detail11inplace_ptrIiEE", !6, i64 0}
 !16 = !{!15, !6, i64 0}
+!17 = !{!12, !10}
 !18 = !{!"vtable pointer", !4, i64 0}
 !19 = !{!18, !18, i64 0}
 !20 = !{!"long", !5, i64 0}
@@ -150,9 +155,4 @@ attributes #4 = { nounwind }
 !31 = !{!21, !21, i64 0}
 !32 = !{!"_ZTSN3pro2v46detail9conv_metaINS0_5proxyI10AnyMovableEENS1_16destroy_dispatchEDoFvvEEE", !23, i64 0}
 !33 = !{!32, !23, i64 0}
-!34 = distinct !{!34, i1 false, !"_ZN3pro2v46detail15make_proxy_implI10AnyMovableiJiEEENS0_5proxyIT_EEDpOT1_"}
-!35 = distinct !{!35, !34, !"_ZN3pro2v46detail15make_proxy_implI10AnyMovableiJiEEENS0_5proxyIT_EEDpOT1_: argument 0"}
-!36 = distinct !{!36, i1 false, !"_ZN3pro2v410make_proxyITkNS0_6facadeE10AnyMovableiEENS0_5proxyIT_EEOT0_Qsr3stdE18is_constructible_vINSt5decayIS6_E4typeES6_E"}
-!37 = distinct !{!37, !36, !"_ZN3pro2v410make_proxyITkNS0_6facadeE10AnyMovableiEENS0_5proxyIT_EEOT0_Qsr3stdE18is_constructible_vINSt5decayIS6_E4typeES6_E: argument 0"}
-!38 = !{!35, !37}
 end_hunk_0

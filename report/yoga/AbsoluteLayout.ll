@@ -202,22 +202,22 @@ define hidden noundef zeroext i1 @_ZN8facebook4yoga25layoutAbsoluteDescendantsEP
 bb.a:
   %11 = alloca %"struct.facebook::yoga::LayoutableChildren<facebook::yoga::Node>::Iterator", align 8 ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #11
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !101)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !97)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 696
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 704
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !26, !noalias !101
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !27, !noalias !101 ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !26, !noalias !97
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !27, !noalias !97 ; 2 uses
   %.not.i = icmp eq ptr %i.c, %i.d
   br i1 %.not.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %1, ptr %11, align 8, !tbaa !36, !alias.scope !101
+  store ptr %1, ptr %11, align 8, !tbaa !36, !alias.scope !97
   %i.e = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %11, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false), !alias.scope !101
-  %i.g = load ptr, ptr %i.d, align 8, !tbaa !37, !noalias !101
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false), !alias.scope !97
+  %i.g = load ptr, ptr %i.d, align 8, !tbaa !37, !noalias !97
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 60
-  %i.i = load i8, ptr %i.h, align 4, !noalias !101
+  %i.i = load i8, ptr %i.h, align 4, !noalias !97
   %i.j = and i8 %i.i, 12
   %i.k = icmp eq i8 %i.j, 8
   br i1 %i.k, label %bb.c, label %_ZNK8facebook4yoga18LayoutableChildrenINS0_4NodeEE5beginEv.exit.thread, !prof !38
@@ -238,7 +238,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.m = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.n = load ptr, ptr %i.f, align 8, !tbaa !39, !alias.scope !101 ; 2 uses
+  %i.n = load ptr, ptr %i.f, align 8, !tbaa !39, !alias.scope !97 ; 2 uses
   %.not12.i.i.i.i = icmp eq ptr %i.n, null
   br i1 %.not12.i.i.i.i, label %common.resume, label %.lr.ph.i.i.i.i
 
@@ -254,7 +254,7 @@ common.resume:                                    ; preds = %.lr.ph.i.i.i.i, %bb
   resume { ptr, i32 } %common.resume.op
 
 bb.e:                                             ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, i8 0, i64 24, i1 false), !alias.scope !101
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, i8 0, i64 24, i1 false), !alias.scope !97
   br label %_ZNK8facebook4yoga18LayoutableChildrenINS0_4NodeEE5beginEv.exit
 
 _ZNK8facebook4yoga18LayoutableChildrenINS0_4NodeEE5beginEv.exit: ; preds = %._ZNK8facebook4yoga18LayoutableChildrenINS0_4NodeEE5beginEv.exit_crit_edge, %bb.e
@@ -657,7 +657,7 @@ bb.f:                                             ; preds = %bb.e
   %i.am = load ptr, ptr %i.ag, align 8, !tbaa !26
   %i.an = load ptr, ptr %i.af, align 8, !tbaa !27 ; 2 uses
   %.not.i.i.i6.not = icmp eq ptr %i.am, %i.an
-  br i1 %.not.i.i.i6.not, label %.loopexit12, label %_ZNK8facebook4yoga4Node8getChildEm.exit7, !llvm.loop !102
+  br i1 %.not.i.i.i6.not, label %.loopexit12, label %_ZNK8facebook4yoga4Node8getChildEm.exit7, !llvm.loop !99
 
 .loopexit12:                                      ; preds = %bb.f, %bb.d
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str, i64 noundef 0, i64 noundef 0) #10
@@ -869,11 +869,11 @@ attributes #14 = { builtin allocsize(0) }
 !91 = !{!"_ZTSSt4pairIPKN8facebook4yoga4NodeEmE", !28, i64 0, !29, i64 8}
 !92 = !{!91, !28, i64 0}
 !93 = !{!91, !29, i64 8}
+!94 = distinct !{!94, i1 false, !"_ZNK8facebook4yoga18LayoutableChildrenINS0_4NodeEE5beginEv"}
+!95 = distinct !{!95, !94, !"_ZNK8facebook4yoga18LayoutableChildrenINS0_4NodeEE5beginEv: argument 0"}
 !96 = distinct !{!96, !40}
+!97 = !{!95}
 !98 = !{ptr @_ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8Iterator4nextEv}
-!99 = distinct !{!99, i1 false, !"_ZNK8facebook4yoga18LayoutableChildrenINS0_4NodeEE5beginEv"}
-!100 = distinct !{!100, !99, !"_ZNK8facebook4yoga18LayoutableChildrenINS0_4NodeEE5beginEv: argument 0"}
-!101 = !{!100}
-!102 = distinct !{!102, !40, !103}
-!103 = !{!"llvm.loop.peeled.count", i32 1}
+!99 = distinct !{!99, !40, !100}
+!100 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_1

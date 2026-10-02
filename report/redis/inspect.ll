@@ -204,30 +204,30 @@ bb.f:                                             ; preds = %.preheader.6, %.pre
 
 rtree_leaf_elm_lookup.exit:                       ; preds = %bb.f, %bb.b, %bb.d, %bb.e
   %.1.i = phi ptr [ %i.k, %bb.b ], [ %i.x, %bb.d ], [ %i.aq, %bb.e ], [ %i.bb, %bb.f ]
-  %i.bc = load atomic ptr, ptr %.1.i monotonic, align 8, !noalias !63
+  %i.bc = load atomic ptr, ptr %.1.i monotonic, align 8, !noalias !55
   %i.bd = ptrtoint ptr %i.bc to i64               ; 4 uses
   %i.be = lshr i64 %i.bd, 48
   %i.bf = trunc nuw nsw i64 %i.be to i32
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.bf, ptr %i.bg, align 8, !tbaa !56, !alias.scope !66
+  store i32 %i.bf, ptr %i.bg, align 8, !tbaa !56, !alias.scope !57
   %i.bh = trunc i64 %i.bd to i8                   ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 17
   %i.bj = and i8 %i.bh, 1
-  store i8 %i.bj, ptr %i.bi, align 1, !tbaa !58, !alias.scope !66
+  store i8 %i.bj, ptr %i.bi, align 1, !tbaa !58, !alias.scope !57
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bl = lshr i8 %i.bh, 1
   %i.bm = and i8 %i.bl, 1
-  store i8 %i.bm, ptr %i.bk, align 8, !tbaa !59, !alias.scope !66
+  store i8 %i.bm, ptr %i.bk, align 8, !tbaa !59, !alias.scope !57
   %i.bn = trunc i64 %i.bd to i32
   %i.bo = lshr i32 %i.bn, 2
   %i.bp = and i32 %i.bo, 7
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.bp, ptr %i.bq, align 4, !tbaa !60, !alias.scope !66
+  store i32 %i.bp, ptr %i.bq, align 4, !tbaa !60, !alias.scope !57
   %i.br = shl i64 %i.bd, 16
   %i.bs = ashr exact i64 %i.br, 16
   %i.bt = and i64 %i.bs, -128
   %i.bu = inttoptr i64 %i.bt to ptr
-  store ptr %i.bu, ptr %0, align 8, !tbaa !17, !alias.scope !66
+  store ptr %i.bu, ptr %0, align 8, !tbaa !17, !alias.scope !57
   ret void
 }
 
@@ -300,19 +300,19 @@ attributes #5 = { nounwind }
 !43 = !{!41, !18, i64 136}
 !44 = !{!41, !13, i64 192}
 !45 = !{!22, !12, i64 8}
+!46 = distinct !{!46, i1 false, !"rtree_leaf_elm_read"}
+!47 = distinct !{!47, !46, !"rtree_leaf_elm_read: argument 0"}
+!48 = distinct !{!48, i1 false, !"rtree_leaf_elm_bits_decode"}
+!49 = distinct !{!49, !48, !"rtree_leaf_elm_bits_decode: argument 0"}
 !50 = !{!"p1 _ZTS16rtree_leaf_elm_s", !12, i64 0}
 !51 = !{!"rtree_ctx_cache_elm_s", !18, i64 0, !50, i64 8}
 !52 = !{!51, !18, i64 0}
 !53 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !54 = !{!51, !50, i64 8}
+!55 = !{!47}
 !56 = !{!16, !9, i64 8}
+!57 = !{!49}
 !58 = !{!16, !14, i64 17}
 !59 = !{!16, !14, i64 16}
 !60 = !{!16, !9, i64 12}
-!61 = distinct !{!61, i1 false, !"rtree_leaf_elm_read"}
-!62 = distinct !{!62, !61, !"rtree_leaf_elm_read: argument 0"}
-!63 = !{!62}
-!64 = distinct !{!64, i1 false, !"rtree_leaf_elm_bits_decode"}
-!65 = distinct !{!65, !64, !"rtree_leaf_elm_bits_decode: argument 0"}
-!66 = !{!65}
 end_hunk_0

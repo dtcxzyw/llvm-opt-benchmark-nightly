@@ -122,7 +122,7 @@ _ZNKSt6vectorISt4pairIddESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.f
 .lr.ph.i.i.i.i.i:                                 ; preds = %.noexc18, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.al, %.lr.ph.i.i.i.i.i ], [ %i.ag, %.noexc18 ] ; 2 uses
   %.0911.i.i.i.i.i = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i ], [ %i.q, %.noexc18 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !alias.scope !32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !alias.scope !27
   %i.ak = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 16 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ak, %i.o
@@ -250,6 +250,9 @@ attributes #11 = { builtin nounwind }
 !9 = !{!"int", !8, i64 0}
 !10 = !{!"__libc_errno", !9, i64 0}
 !11 = !{!10, !9, i64 0}
+!12 = distinct !{!12, i1 false, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_"}
+!13 = distinct !{!13, !12, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
+!14 = distinct !{!14, !12, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !15 = distinct !{!15, !28}
 !16 = !{!"any pointer", !8, i64 0}
 !17 = !{!"p1 _ZTSSt4pairIddE", !16, i64 0}
@@ -262,9 +265,6 @@ attributes #11 = { builtin nounwind }
 !24 = !{!"_ZTSSt4pairIddE", !22, i64 0, !22, i64 8}
 !25 = !{!24, !22, i64 0}
 !26 = !{!24, !22, i64 8}
+!27 = !{!14, !13}
 !28 = !{!"llvm.loop.mustprogress"}
-!29 = distinct !{!29, i1 false, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_"}
-!30 = distinct !{!30, !29, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
-!31 = distinct !{!31, !29, !"_ZSt19__relocate_object_aISt4pairIddES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
-!32 = !{!30, !31}
 end_hunk_0

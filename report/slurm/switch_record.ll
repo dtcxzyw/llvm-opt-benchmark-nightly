@@ -202,10 +202,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep471 = getelementptr i8, ptr %i.fz, i64 144
   %i.ga = getelementptr i8, ptr %i.fm, i64 %i.fx
   %next.gep472 = getelementptr i8, ptr %i.ga, i64 216
-  %i.gb = load i32, ptr %next.gep, align 8, !alias.scope !56
-  %i.gc = load i32, ptr %next.gep470, align 8, !alias.scope !56
-  %i.gd = load i32, ptr %next.gep471, align 8, !alias.scope !56
-  %i.ge = load i32, ptr %next.gep472, align 8, !alias.scope !56
+  %i.gb = load i32, ptr %next.gep, align 8, !alias.scope !50
+  %i.gc = load i32, ptr %next.gep470, align 8, !alias.scope !50
+  %i.gd = load i32, ptr %next.gep471, align 8, !alias.scope !50
+  %i.ge = load i32, ptr %next.gep472, align 8, !alias.scope !50
   %i.gf = insertelement <4 x i32> poison, i32 %i.gb, i64 0
   %i.gg = insertelement <4 x i32> %i.gf, i32 %i.gc, i64 1
   %i.gh = insertelement <4 x i32> %i.gg, i32 %i.gd, i64 2
@@ -217,7 +217,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %i.gl = call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %i.gj) ; 2 uses
-  store i32 %i.gl, ptr %i.fk, align 4, !alias.scope !58, !noalias !56
+  store i32 %i.gl, ptr %i.fk, align 4, !alias.scope !53, !noalias !50
   %cmp.n = icmp eq i64 %n.vec, %i.fn
   br i1 %cmp.n, label %._crit_edge264, label %scalar.ph.preheader
 
@@ -620,7 +620,10 @@ attributes #9 = { nounwind willreturn memory(read) }
 !27 = distinct !{!27, !9, !10}
 !28 = distinct !{!28, !9, !10}
 !29 = distinct !{!29, !10, !11}
+!30 = distinct !{!30, i1 false, !"LVerDomain"}
+!31 = distinct !{!31, !30}
 !32 = distinct !{!32, !9, !10, !51, !52}
+!33 = distinct !{!33, !30}
 !34 = distinct !{!34, !9, !10, !51}
 !35 = distinct !{!35, !9, !10}
 !36 = distinct !{!36, !9, !10}
@@ -637,11 +640,8 @@ attributes #9 = { nounwind willreturn memory(read) }
 !47 = distinct !{!47, !9, !10}
 !48 = distinct !{!48, !9, !10}
 !49 = distinct !{!49, !9, !10, !11}
+!50 = !{!31}
 !51 = !{!"llvm.loop.isvectorized", i32 1}
 !52 = !{!"llvm.loop.unroll.runtime.disable"}
-!54 = distinct !{!54, i1 false, !"LVerDomain"}
-!55 = distinct !{!55, !54}
-!56 = !{!55}
-!57 = distinct !{!57, !54}
-!58 = !{!57}
+!53 = !{!33}
 end_hunk_1

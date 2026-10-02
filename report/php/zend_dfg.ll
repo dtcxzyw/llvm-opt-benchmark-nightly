@@ -204,16 +204,16 @@ vector.body240:                                   ; preds = %vector.memcheck232,
   %index241 = phi i64 [ %index.next246, %vector.body240 ], [ 0, %vector.memcheck232 ] ; 3 uses
   %i.sn = getelementptr inbounds nuw [8 x i8], ptr %i.sl, i64 %index241 ; 2 uses
   %i.so = getelementptr inbounds nuw i8, ptr %i.sn, i64 16
-  %wide.load242 = load <2 x i64>, ptr %i.sn, align 8, !tbaa !17, !alias.scope !86
-  %wide.load243 = load <2 x i64>, ptr %i.so, align 8, !tbaa !17, !alias.scope !86
+  %wide.load242 = load <2 x i64>, ptr %i.sn, align 8, !tbaa !17, !alias.scope !75
+  %wide.load243 = load <2 x i64>, ptr %i.so, align 8, !tbaa !17, !alias.scope !75
   %i.sp = getelementptr inbounds nuw [8 x i8], ptr %i.rx, i64 %index241 ; 3 uses
   %i.sq = getelementptr inbounds nuw i8, ptr %i.sp, i64 16 ; 2 uses
-  %wide.load244 = load <2 x i64>, ptr %i.sp, align 8, !tbaa !17, !alias.scope !88, !noalias !86
-  %wide.load245 = load <2 x i64>, ptr %i.sq, align 8, !tbaa !17, !alias.scope !88, !noalias !86
+  %wide.load244 = load <2 x i64>, ptr %i.sp, align 8, !tbaa !17, !alias.scope !76, !noalias !75
+  %wide.load245 = load <2 x i64>, ptr %i.sq, align 8, !tbaa !17, !alias.scope !76, !noalias !75
   %i.sr = or <2 x i64> %wide.load244, %wide.load242
   %i.ss = or <2 x i64> %wide.load245, %wide.load243
-  store <2 x i64> %i.sr, ptr %i.sp, align 8, !tbaa !17, !alias.scope !88, !noalias !86
-  store <2 x i64> %i.ss, ptr %i.sq, align 8, !tbaa !17, !alias.scope !88, !noalias !86
+  store <2 x i64> %i.sr, ptr %i.sp, align 8, !tbaa !17, !alias.scope !76, !noalias !75
+  store <2 x i64> %i.ss, ptr %i.sq, align 8, !tbaa !17, !alias.scope !76, !noalias !75
   %index.next246 = add nuw i64 %index241, 4       ; 2 uses
   %i.st = icmp eq i64 %index.next246, %n.vec239
   br i1 %i.st, label %middle.block247, label %vector.body240, !llvm.loop !46
@@ -541,6 +541,9 @@ attributes #10 = { nounwind }
 !40 = distinct !{!40, !70}
 !41 = distinct !{!41, !70}
 !42 = distinct !{!42, !70}
+!43 = distinct !{!43, i1 false, !"LVerDomain"}
+!44 = distinct !{!44, !43}
+!45 = distinct !{!45, !43}
 !46 = distinct !{!46, !70, !77, !78}
 !47 = distinct !{!47, !79}
 !48 = distinct !{!48, !70, !77}
@@ -570,6 +573,8 @@ attributes #10 = { nounwind }
 !72 = !{!9, !9, i64 0}
 !73 = !{!65, !9, i64 20}
 !74 = !{!65, !31, i64 0}
+!75 = !{!44}
+!76 = !{!45}
 !77 = !{!"llvm.loop.isvectorized", i32 1}
 !78 = !{!"llvm.loop.unroll.runtime.disable"}
 !79 = !{!"llvm.loop.unroll.disable"}
@@ -577,9 +582,4 @@ attributes #10 = { nounwind }
 !81 = !{!65, !9, i64 28}
 !82 = !{!65, !9, i64 24}
 !83 = !{!"branch_weights", !"expected", i32 1143561, i32 2146340087}
-!84 = distinct !{!84, i1 false, !"LVerDomain"}
-!85 = distinct !{!85, !84}
-!86 = !{!85}
-!87 = distinct !{!87, !84}
-!88 = !{!87}
 end_hunk_0

@@ -197,8 +197,8 @@ vector.body154:                                   ; preds = %vector.body154, %ve
   %i.br = add nuw i64 %.074107, %index155         ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 %i.br ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 4
-  %wide.load156 = load <4 x i8>, ptr %i.bs, align 1, !tbaa !22, !alias.scope !35
-  %wide.load157 = load <4 x i8>, ptr %i.bt, align 1, !tbaa !22, !alias.scope !35
+  %wide.load156 = load <4 x i8>, ptr %i.bs, align 1, !tbaa !22, !alias.scope !26
+  %wide.load157 = load <4 x i8>, ptr %i.bt, align 1, !tbaa !22, !alias.scope !26
   %i.bu = add <4 x i8> %wide.load156, %broadcast.splat
   %i.bv = add <4 x i8> %wide.load157, %broadcast.splat
   %i.bw = zext <4 x i8> %i.bu to <4 x i32>
@@ -207,8 +207,8 @@ vector.body154:                                   ; preds = %vector.body154, %ve
   %i.bz = or disjoint <4 x i32> %broadcast.splat153, %i.bx
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.br ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
-  store <4 x i32> %i.by, ptr %i.ca, align 4, !tbaa !25, !alias.scope !37, !noalias !35
-  store <4 x i32> %i.bz, ptr %i.cb, align 4, !tbaa !25, !alias.scope !37, !noalias !35
+  store <4 x i32> %i.by, ptr %i.ca, align 4, !tbaa !25, !alias.scope !27, !noalias !26
+  store <4 x i32> %i.bz, ptr %i.cb, align 4, !tbaa !25, !alias.scope !27, !noalias !26
   %index.next158 = add nuw i64 %index155, 8       ; 2 uses
   %i.cc = icmp eq i64 %index.next158, %n.vec151
   br i1 %i.cc, label %middle.block159, label %vector.body154, !llvm.loop !14
@@ -285,14 +285,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dd = add nuw i64 %.074107, %index            ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 %i.dd ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 4
-  %wide.load = load <4 x i8>, ptr %i.de, align 1, !tbaa !22, !alias.scope !40
-  %wide.load135 = load <4 x i8>, ptr %i.df, align 1, !tbaa !22, !alias.scope !40
+  %wide.load = load <4 x i8>, ptr %i.de, align 1, !tbaa !22, !alias.scope !31
+  %wide.load135 = load <4 x i8>, ptr %i.df, align 1, !tbaa !22, !alias.scope !31
   %i.dg = sext <4 x i8> %wide.load to <4 x i32>
   %i.dh = sext <4 x i8> %wide.load135 to <4 x i32>
   %i.di = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.dd ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 16
-  store <4 x i32> %i.dg, ptr %i.di, align 4, !tbaa !25, !alias.scope !42, !noalias !40
-  store <4 x i32> %i.dh, ptr %i.dj, align 4, !tbaa !25, !alias.scope !42, !noalias !40
+  store <4 x i32> %i.dg, ptr %i.di, align 4, !tbaa !25, !alias.scope !32, !noalias !31
+  store <4 x i32> %i.dh, ptr %i.dj, align 4, !tbaa !25, !alias.scope !32, !noalias !31
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.dk = icmp eq i64 %index.next, %n.vec
   br i1 %i.dk, label %middle.block, label %vector.body, !llvm.loop !19
@@ -371,8 +371,14 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !8 = !{!"long", !4, i64 0}
 !9 = !{!"_ZTS14EncodeFileName", !4, i64 0, !5, i64 4, !8, i64 8, !8, i64 16}
 !10 = !{!9, !4, i64 0}
+!11 = distinct !{!11, i1 false, !"LVerDomain"}
+!12 = distinct !{!12, !11}
+!13 = distinct !{!13, !11}
 !14 = distinct !{!14, !28, !29, !30}
 !15 = distinct !{!15, !28, !29}
+!16 = distinct !{!16, i1 false, !"LVerDomain"}
+!17 = distinct !{!17, !16}
+!18 = distinct !{!18, !16}
 !19 = distinct !{!19, !28, !29, !30}
 !20 = distinct !{!20, !28, !29}
 !21 = distinct !{!21, !28}
@@ -380,17 +386,11 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !23 = !{!9, !5, i64 4}
 !24 = !{!"wchar_t", !4, i64 0}
 !25 = !{!24, !24, i64 0}
+!26 = !{!12}
+!27 = !{!13}
 !28 = !{!"llvm.loop.mustprogress"}
 !29 = !{!"llvm.loop.isvectorized", i32 1}
 !30 = !{!"llvm.loop.unroll.runtime.disable"}
-!33 = distinct !{!33, i1 false, !"LVerDomain"}
-!34 = distinct !{!34, !33}
-!35 = !{!34}
-!36 = distinct !{!36, !33}
-!37 = !{!36}
-!38 = distinct !{!38, i1 false, !"LVerDomain"}
-!39 = distinct !{!39, !38}
-!40 = !{!39}
-!41 = distinct !{!41, !38}
-!42 = !{!41}
+!31 = !{!17}
+!32 = !{!18}
 end_hunk_0

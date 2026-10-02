@@ -202,9 +202,9 @@ bb.u:                                             ; preds = %bb.r
   %.sroa.36.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.36.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false)
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 -9223372036854775800, ptr %i.az, align 8, !alias.scope !11
+  store i64 -9223372036854775800, ptr %i.az, align 8, !alias.scope !8
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store ptr %i.aw, ptr %.sroa.2.0..sroa_idx.i, align 8, !alias.scope !11
+  store ptr %i.aw, ptr %.sroa.2.0..sroa_idx.i, align 8, !alias.scope !8
   br label %bb.e
 
 bb.v:                                             ; preds = %bb.s
@@ -607,7 +607,7 @@ attributes #31 = { noreturn nounwind }
 !3 = !{!"rustc version 1.92.0 (ded5c06cf 2025-12-08)"}
 !4 = !{ptr @_ZN3std9panicking12catch_unwind7do_call17h77f664723c80c5c0E, ptr @_ZN3std9panicking12catch_unwind7do_call17hb9f6693e8a59a9a2E}
 !5 = !{ptr @_ZN3std9panicking12catch_unwind8do_catch17h09f6d393e3044e5eE, ptr @_ZN3std9panicking12catch_unwind8do_catch17h1f00298bd6d774afE}
-!9 = distinct !{!9, i1 false, !"_ZN9jobserver7FromEnv6new_ok17h1e31863a86d9e00cE"}
-!10 = distinct !{!10, !9, !"_ZN9jobserver7FromEnv6new_ok17h1e31863a86d9e00cE: argument 0"}
-!11 = !{!10}
+!6 = distinct !{!6, i1 false, !"_ZN9jobserver7FromEnv6new_ok17h1e31863a86d9e00cE"}
+!7 = distinct !{!7, !6, !"_ZN9jobserver7FromEnv6new_ok17h1e31863a86d9e00cE: argument 0"}
+!8 = !{!7}
 end_hunk_1

@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %3
-  %i.d = load i8, ptr %i.c, align 1, !noalias !10
+  %i.d = load i8, ptr %i.c, align 1, !noalias !7
   %i.e = icmp sgt i8 %i.d, -65
   br i1 %i.e, label %.split.i, label %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checkedCs1K5DUQUZc67_11proc_macro2.exit.thread
 
@@ -605,7 +605,7 @@ attributes #37 = { noinline noreturn }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.99.0-nightly (73dc9167f 2026-08-01)"}
 !4 = !{}
-!8 = distinct !{!8, i1 false, !"_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checkedCs1K5DUQUZc67_11proc_macro2"}
-!9 = distinct !{!9, !8, !"_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checkedCs1K5DUQUZc67_11proc_macro2: argument 0"}
-!10 = !{!9}
+!5 = distinct !{!5, i1 false, !"_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checkedCs1K5DUQUZc67_11proc_macro2"}
+!6 = distinct !{!6, !5, !"_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checkedCs1K5DUQUZc67_11proc_macro2: argument 0"}
+!7 = !{!6}
 end_hunk_1

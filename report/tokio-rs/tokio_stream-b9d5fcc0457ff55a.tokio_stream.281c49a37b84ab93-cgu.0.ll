@@ -35,30 +35,30 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.d = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBa_11RandomState3new4KEYS0s_023___RUST_STD_INTERNAL_VAL) ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
-  %i.f = load i8, ptr %i.e, align 8, !range !4, !noalias !28, !noundef !5
+  %i.f = load i8, ptr %i.e, align 8, !range !4, !noalias !17, !noundef !5
   %i.g = trunc nuw i8 %i.f to i1
   br i1 %i.g, label %._RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCs3rvrQdG6Evv_12tokio_stream.exit_crit_edge.i.i.i.i.i, label %_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream.exit.i.i.i.i.i, !prof !6
 
 ._RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCs3rvrQdG6Evv_12tokio_stream.exit_crit_edge.i.i.i.i.i: ; preds = %bb.d
-  %.pre.i.i.i.i.i = load i64, ptr %i.d, align 8, !noalias !29
+  %.pre.i.i.i.i.i = load i64, ptr %i.d, align 8, !noalias !18
   %.phi.trans.insert.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %.pre1.i.i.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i.i.i, align 8, !noalias !29
+  %.pre1.i.i.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i.i.i, align 8, !noalias !18
   br label %_RNvYNvNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG27___rust_std_internal_init_fnINtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuE9call_onceBc_.exit
 
 _RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream.exit.i.i.i.i.i: ; preds = %bb.d
-  %i.h = tail call { i64, i64 } @_RNvNtNtNtCsaL1QbXo9JQH_3std3sys6random5linux19hashmap_random_keys(), !noalias !32 ; 2 uses
+  %i.h = tail call { i64, i64 } @_RNvNtNtNtCsaL1QbXo9JQH_3std3sys6random5linux19hashmap_random_keys(), !noalias !19 ; 2 uses
   %i.i = extractvalue { i64, i64 } %i.h, 0
   %i.j = extractvalue { i64, i64 } %i.h, 1        ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store i64 %i.j, ptr %i.k, align 8, !noalias !32
-  store i8 1, ptr %i.e, align 8, !noalias !32
+  store i64 %i.j, ptr %i.k, align 8, !noalias !19
+  store i8 1, ptr %i.e, align 8, !noalias !19
   br label %_RNvYNvNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG27___rust_std_internal_init_fnINtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuE9call_onceBc_.exit
 
 _RNvYNvNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG27___rust_std_internal_init_fnINtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuE9call_onceBc_.exit: ; preds = %._RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCs3rvrQdG6Evv_12tokio_stream.exit_crit_edge.i.i.i.i.i, %_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream.exit.i.i.i.i.i
   %.pre-phi3.i.i.i = phi i64 [ %.pre1.i.i.i.i.i, %._RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCs3rvrQdG6Evv_12tokio_stream.exit_crit_edge.i.i.i.i.i ], [ %i.j, %_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream.exit.i.i.i.i.i ] ; 2 uses
   %i.l = phi i64 [ %.pre.i.i.i.i.i, %._RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCs3rvrQdG6Evv_12tokio_stream.exit_crit_edge.i.i.i.i.i ], [ %i.i, %_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream.exit.i.i.i.i.i ] ; 3 uses
   %i.m = add i64 %i.l, 1
-  store i64 %i.m, ptr %i.d, align 8, !noalias !29
+  store i64 %i.m, ptr %i.d, align 8, !noalias !18
   %i.n = atomicrmw add ptr @_RNvNtNtNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand4loom4rand7COUNTER, i32 1 monotonic, align 4
   %i.o = xor i64 %i.l, 8317987319222330741
   %i.p = xor i64 %.pre-phi3.i.i.i, 7237128888997146477 ; 3 uses
@@ -148,7 +148,7 @@ define noundef range(i32 0, -1) i32 @_RNvNtNtCs3rvrQdG6Evv_12tokio_stream10strea
 bb.a:
   %i.a = tail call align 4 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG0s_023___RUST_STD_INTERNAL_VAL) ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.c = load i8, ptr %i.b, align 4, !range !4, !noalias !46, !noundef !5
+  %i.c = load i8, ptr %i.b, align 4, !range !4, !noalias !26, !noundef !5
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand8FastRandE4withNCNvBW_12thread_rng_n0mEB10_.exit, label %bb.b, !prof !6
 
@@ -239,24 +239,24 @@ attributes #4 = { nocallback nofree nosync nounwind speculatable willreturn memo
 !4 = !{i8 0, i8 2}
 !5 = !{}
 !6 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!20 = distinct !{!20, i1 false, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream"}
-!21 = distinct !{!21, !20, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream: argument 0"}
-!22 = distinct !{!22, i1 false, !"_RNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs3rvrQdG6Evv_12tokio_stream"}
-!23 = distinct !{!23, !22, !"_RNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs3rvrQdG6Evv_12tokio_stream: argument 0"}
-!24 = distinct !{!24, i1 false, !"_RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCs3rvrQdG6Evv_12tokio_stream"}
-!25 = distinct !{!25, !24, !"_RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCs3rvrQdG6Evv_12tokio_stream: argument 0"}
-!26 = distinct !{!26, i1 false, !"_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEE8try_withNCNvMNtNtBa_4hash6randomNtB1M_11RandomState3new0B25_ECs3rvrQdG6Evv_12tokio_stream"}
-!27 = distinct !{!27, !26, !"_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEE8try_withNCNvMNtNtBa_4hash6randomNtB1M_11RandomState3new0B25_ECs3rvrQdG6Evv_12tokio_stream: argument 0"}
-!28 = !{!21, !23, !25, !27}
-!29 = !{!27}
-!30 = distinct !{!30, i1 false, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream"}
-!31 = distinct !{!31, !30, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream: argument 0"}
-!32 = !{!31, !27}
-!40 = distinct !{!40, i1 false, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageNtNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand8FastRandzE11get_or_initNvNvNvB1g_12thread_rng_n10THREAD_RNG27___rust_std_internal_init_fnEB1k_"}
-!41 = distinct !{!41, !40, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageNtNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand8FastRandzE11get_or_initNvNvNvB1g_12thread_rng_n10THREAD_RNG27___rust_std_internal_init_fnEB1k_: argument 0"}
-!42 = distinct !{!42, i1 false, !"_RNCNKNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG0s_0Bb_"}
-!43 = distinct !{!43, !42, !"_RNCNKNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG0s_0Bb_: argument 0"}
-!44 = distinct !{!44, i1 false, !"_RNvYNCNKNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1y_6option6OptionQIB2d_NtBa_8FastRandEEEE9call_onceBe_"}
-!45 = distinct !{!45, !44, !"_RNvYNCNKNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1y_6option6OptionQIB2d_NtBa_8FastRandEEEE9call_onceBe_: argument 0"}
-!46 = !{!41, !43, !45}
+!7 = distinct !{!7, i1 false, !"_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEE8try_withNCNvMNtNtBa_4hash6randomNtB1M_11RandomState3new0B25_ECs3rvrQdG6Evv_12tokio_stream"}
+!8 = distinct !{!8, !7, !"_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEE8try_withNCNvMNtNtBa_4hash6randomNtB1M_11RandomState3new0B25_ECs3rvrQdG6Evv_12tokio_stream: argument 0"}
+!9 = distinct !{!9, i1 false, !"_RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCs3rvrQdG6Evv_12tokio_stream"}
+!10 = distinct !{!10, !9, !"_RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCs3rvrQdG6Evv_12tokio_stream: argument 0"}
+!11 = distinct !{!11, i1 false, !"_RNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs3rvrQdG6Evv_12tokio_stream"}
+!12 = distinct !{!12, !11, !"_RNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0Cs3rvrQdG6Evv_12tokio_stream: argument 0"}
+!13 = distinct !{!13, i1 false, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream"}
+!14 = distinct !{!14, !13, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream: argument 0"}
+!15 = distinct !{!15, i1 false, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream"}
+!16 = distinct !{!16, !15, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECs3rvrQdG6Evv_12tokio_stream: argument 0"}
+!17 = !{!14, !12, !10, !8}
+!18 = !{!8}
+!19 = !{!16, !8}
+!20 = distinct !{!20, i1 false, !"_RNvYNCNKNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1y_6option6OptionQIB2d_NtBa_8FastRandEEEE9call_onceBe_"}
+!21 = distinct !{!21, !20, !"_RNvYNCNKNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1y_6option6OptionQIB2d_NtBa_8FastRandEEEE9call_onceBe_: argument 0"}
+!22 = distinct !{!22, i1 false, !"_RNCNKNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG0s_0Bb_"}
+!23 = distinct !{!23, !22, !"_RNCNKNvNvNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand12thread_rng_n10THREAD_RNG0s_0Bb_: argument 0"}
+!24 = distinct !{!24, i1 false, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageNtNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand8FastRandzE11get_or_initNvNvNvB1g_12thread_rng_n10THREAD_RNG27___rust_std_internal_init_fnEB1k_"}
+!25 = distinct !{!25, !24, !"_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageNtNtNtCs3rvrQdG6Evv_12tokio_stream10stream_map4rand8FastRandzE11get_or_initNvNvNvB1g_12thread_rng_n10THREAD_RNG27___rust_std_internal_init_fnEB1k_: argument 0"}
+!26 = !{!25, !23, !21}
 end_hunk_0

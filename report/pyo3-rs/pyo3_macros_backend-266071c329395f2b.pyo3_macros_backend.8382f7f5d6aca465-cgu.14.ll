@@ -202,30 +202,30 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 8, !noalias !13
+  %i.i = load i32, ptr %i.h, align 8, !noalias !10
   %.not.i.i = icmp eq i32 %i.i, 0
   br i1 %.not.i.i, label %_RNvXs11_CseSCJ3UB48O9_10proc_macroNtB6_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call i32 @_RNvXsa_NtNtCseSCJ3UB48O9_10proc_macro6bridge6clientNtB5_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5clone(ptr nonnull align 4 %i.h), !noalias !13
+  %i.j = tail call i32 @_RNvXsa_NtNtCseSCJ3UB48O9_10proc_macro6bridge6clientNtB5_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5clone(ptr nonnull align 4 %i.h), !noalias !10
   br label %_RNvXs11_CseSCJ3UB48O9_10proc_macroNtB6_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend.exit.i
 
 _RNvXs11_CseSCJ3UB48O9_10proc_macroNtB6_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend.exit.i: ; preds = %bb.d, %bb.c
   %i.k = phi i32 [ %i.j, %bb.d ], [ 0, %bb.c ]    ; 2 uses
-  store i32 %i.k, ptr %i.b, align 4, !noalias !13
+  store i32 %i.k, ptr %i.b, align 4, !noalias !10
   invoke void @_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtCseSCJ3UB48O9_10proc_macro9TokenTreeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs3FigHW6Y7TR_11proc_macro2(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr nonnull align 8 %1)
-          to label %_RNvXsA_NtCs3FigHW6Y7TR_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend.exit unwind label %bb.e, !noalias !13
+          to label %_RNvXsA_NtCs3FigHW6Y7TR_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend.exit unwind label %bb.e, !noalias !10
 
 bb.e:                                             ; preds = %_RNvXs11_CseSCJ3UB48O9_10proc_macroNtB6_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend.exit.i
   %i.l = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCseSCJ3UB48O9_10proc_macro11TokenStreamECs3FigHW6Y7TR_11proc_macro2(ptr nonnull align 4 %i.b) #15
-          to label %bb.g unwind label %bb.f, !noalias !13
+          to label %bb.g unwind label %bb.f, !noalias !10
 
 bb.f:                                             ; preds = %bb.e
   %i.m = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16, !noalias !13
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16, !noalias !10
   unreachable
 
 bb.g:                                             ; preds = %bb.e
@@ -628,7 +628,7 @@ attributes #19 = { noinline noreturn }
 !5 = distinct !{!5, !7}
 !6 = !{!"address", !"read_provenance"}
 !7 = !{!"llvm.loop.peeled.count", i32 1}
-!11 = distinct !{!11, i1 false, !"_RNvXsA_NtCs3FigHW6Y7TR_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend"}
-!12 = distinct !{!12, !11, !"_RNvXsA_NtCs3FigHW6Y7TR_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend: argument 0"}
-!13 = !{!12}
+!8 = distinct !{!8, i1 false, !"_RNvXsA_NtCs3FigHW6Y7TR_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend"}
+!9 = distinct !{!9, !8, !"_RNvXsA_NtCs3FigHW6Y7TR_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbi23obv45GP_19pyo3_macros_backend: argument 0"}
+!10 = !{!9}
 end_hunk_1

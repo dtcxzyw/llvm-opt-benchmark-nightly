@@ -16,7 +16,7 @@ bb.a:
   %1 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
   call void @llvm.va_start.p0(ptr nonnull %1)
-  %i.a = load ptr, ptr @stdout, align 8, !tbaa !10, !noalias !17
+  %i.a = load ptr, ptr @stdout, align 8, !tbaa !10, !noalias !14
   %i.b = call i32 @vfprintf(ptr noundef %i.a, ptr noundef %0, ptr noundef nonnull %1) #9, !inline_history !13
   call void @llvm.va_end.p0(ptr nonnull %1)
   %i.c = load ptr, ptr @stdout, align 8, !tbaa !10
@@ -143,8 +143,8 @@ attributes #11 = { noreturn nounwind }
 !8 = !{!"any pointer", !4, i64 0}
 !9 = !{!"p1 _ZTS8_IO_FILE", !8, i64 0}
 !10 = !{!9, !9, i64 0}
+!11 = distinct !{!11, i1 false, !"vprintf"}
+!12 = distinct !{!12, !11, !"vprintf: argument 0"}
 !13 = distinct !{null}
-!15 = distinct !{!15, i1 false, !"vprintf"}
-!16 = distinct !{!16, !15, !"vprintf: argument 0"}
-!17 = !{!16}
+!14 = !{!12}
 end_hunk_0

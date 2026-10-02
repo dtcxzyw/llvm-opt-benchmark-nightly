@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr i8, ptr %1, i64 8
   %.val1 = load i64, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RINvXs_NvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECshnxY9fdgZEp_13toml_datetime(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %.val, i64 %.val1), !noalias !26
+  call void @_RINvXs_NvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECshnxY9fdgZEp_13toml_datetime(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %.val, i64 %.val1), !noalias !23
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
@@ -607,7 +607,7 @@ attributes #27 = { noreturn }
 !18 = distinct !{!18, !3}
 !19 = distinct !{!19, !3}
 !20 = distinct !{!20, !3}
-!24 = distinct !{!24, i1 false, !"_RNvXs25_NtCscdodAO9FK5_5alloc6stringReNtB6_12SpecToString14spec_to_stringCsbxgzIzrjA57_16proc_macro_crate"}
-!25 = distinct !{!25, !24, !"_RNvXs25_NtCscdodAO9FK5_5alloc6stringReNtB6_12SpecToString14spec_to_stringCsbxgzIzrjA57_16proc_macro_crate: argument 0"}
-!26 = !{!25}
+!21 = distinct !{!21, i1 false, !"_RNvXs25_NtCscdodAO9FK5_5alloc6stringReNtB6_12SpecToString14spec_to_stringCsbxgzIzrjA57_16proc_macro_crate"}
+!22 = distinct !{!22, !21, !"_RNvXs25_NtCscdodAO9FK5_5alloc6stringReNtB6_12SpecToString14spec_to_stringCsbxgzIzrjA57_16proc_macro_crate: argument 0"}
+!23 = !{!22}
 end_hunk_1

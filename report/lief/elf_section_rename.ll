@@ -197,7 +197,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   %i.ax = load ptr, ptr %3, align 8, !tbaa !41
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 192
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !43, !noalias !54
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !43, !noalias !44
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !46 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
   store ptr %i.bb, ptr %6, align 8, !tbaa !30
@@ -457,6 +457,8 @@ attributes #9 = { builtin nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
+!9 = distinct !{!9, i1 false, !"_ZN4LIEF3ELF6Binary8sectionsEv"}
+!10 = distinct !{!10, !9, !"_ZN4LIEF3ELF6Binary8sectionsEv: argument 0"}
 !11 = distinct !{null, null}
 !12 = !{!5, !5, i64 0}
 !13 = !{!"vtable pointer", !4, i64 0}
@@ -490,6 +492,7 @@ attributes #9 = { builtin nounwind }
 !41 = !{!40, !40, i64 0}
 !42 = !{!"p1 _ZTSSt10unique_ptrIN4LIEF3ELF7SectionESt14default_deleteIS2_EE", !18, i64 0}
 !43 = !{!42, !42, i64 0}
+!44 = !{!10}
 !45 = !{!"p1 _ZTSN4LIEF3ELF7SectionE", !18, i64 0}
 !46 = !{!45, !45, i64 0}
 !47 = !{!"_ZTSN4LIEF3ELF7Builder8config_tE", !35, i64 0, !35, i64 1, !35, i64 2, !35, i64 3, !35, i64 4, !35, i64 5, !35, i64 6, !35, i64 7, !35, i64 8, !35, i64 9, !35, i64 10, !35, i64 11, !35, i64 12, !35, i64 13, !35, i64 14, !35, i64 15, !35, i64 16, !35, i64 17, !35, i64 18, !35, i64 19, !35, i64 20, !35, i64 21}
@@ -497,7 +500,4 @@ attributes #9 = { builtin nounwind }
 !49 = !{!47, !35, i64 19}
 !50 = !{!47, !35, i64 20}
 !51 = !{!47, !35, i64 21}
-!52 = distinct !{!52, i1 false, !"_ZN4LIEF3ELF6Binary8sectionsEv"}
-!53 = distinct !{!53, !52, !"_ZN4LIEF3ELF6Binary8sectionsEv: argument 0"}
-!54 = !{!53}
 end_hunk_0

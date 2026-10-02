@@ -204,15 +204,15 @@ bb.d:                                             ; preds = %bb.c
   %i.ei = fadd float %i.eh, %i.eg                 ; 2 uses
   %i.ej = fsub <2 x float> %i.bv, %i.eb
   %i.ek = fsub float %i.bw, %i.ei
-  store <2 x float> %i.ej, ptr %4, align 8, !alias.scope !145
+  store <2 x float> %i.ej, ptr %4, align 8, !alias.scope !134
   %.sroa.28.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store float %i.ek, ptr %.sroa.28.0..sroa_idx.i, align 8, !alias.scope !145
+  store float %i.ek, ptr %.sroa.28.0..sroa_idx.i, align 8, !alias.scope !134
   %i.el = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.em = fadd <2 x float> %i.eb, %i.bv
   %i.en = fadd float %i.ei, %i.bw
-  store <2 x float> %i.em, ptr %i.el, align 4, !alias.scope !145
+  store <2 x float> %i.em, ptr %i.el, align 4, !alias.scope !134
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 20
-  store float %i.en, ptr %.sroa.2.0..sroa_idx.i, align 4, !alias.scope !145
+  store float %i.en, ptr %.sroa.2.0..sroa_idx.i, align 4, !alias.scope !134
   store i32 %i.e, ptr %i.b, align 8, !tbaa !94
   %i.eo = getelementptr inbounds nuw i8, ptr %2, i64 52 ; 2 uses
   store i32 %0, ptr %i.eo, align 4, !tbaa !135
@@ -615,12 +615,15 @@ attributes #8 = { nounwind }
 !123 = !{}
 !124 = distinct !{!124, !31}
 !125 = !{i64 0, i64 4, !99, i64 4, i64 4, !99, i64 8, i64 4, !99, i64 12, i64 4, !99, i64 16, i64 4, !99, i64 20, i64 4, !99}
+!126 = distinct !{!126, i1 false, !"b3AABB_Transform"}
+!127 = distinct !{!127, !126, !"b3AABB_Transform: argument 0"}
 !128 = !{!"b3SurfaceMaterial", !73, i64 0, !73, i64 4, !73, i64 8, !74, i64 12, !22, i64 24, !5, i64 32, !5, i64 36}
 !129 = !{!"p1 _ZTS17b3SurfaceMaterial", !9, i64 0}
 !130 = !{!"b3Filter", !22, i64 0, !22, i64 8, !5, i64 16}
 !131 = !{!"b3Shape", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24, !73, i64 28, !73, i64 32, !73, i64 36, !91, i64 40, !91, i64 64, !74, i64 88, !5, i64 100, !128, i64 104, !129, i64 144, !130, i64 152, !9, i64 176, !9, i64 184, !5, i64 192, !75, i64 196, !4, i64 198, !4, i64 200}
 !132 = !{!131, !5, i64 24}
 !133 = !{!131, !5, i64 4}
+!134 = !{!127}
 !135 = !{!92, !5, i64 52}
 !136 = !{!131, !5, i64 16}
 !137 = !{!80, !42, i64 3880}
@@ -629,7 +632,4 @@ attributes #8 = { nounwind }
 !140 = !{!80, !75, i64 4760}
 !141 = !{!131, !75, i64 196}
 !142 = !{!80, !9, i64 4672}
-!143 = distinct !{!143, i1 false, !"b3AABB_Transform"}
-!144 = distinct !{!144, !143, !"b3AABB_Transform: argument 0"}
-!145 = !{!144}
 end_hunk_1

@@ -204,9 +204,9 @@ bb.u:                                             ; preds = %.lr.ph181, %_ZNSt3_
   %.028180 = phi i64 [ %i.fb, %.lr.ph181 ], [ %.129, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit139 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.fe = call i64 @llvm.usub.sat.i64(i64 %.028180, i64 3) ; 4 uses
-  %i.ff = load i8, ptr %2, align 8, !noalias !29  ; 2 uses
+  %i.ff = load i8, ptr %2, align 8, !noalias !21  ; 2 uses
   %i.fg = trunc i8 %i.ff to i1                    ; 2 uses
-  %i.fh = load i64, ptr %i.v, align 8, !noalias !29
+  %i.fh = load i64, ptr %i.v, align 8, !noalias !21
   %i.fi = lshr i8 %i.ff, 1
   %i.fj = zext nneg i8 %i.fi to i64
   %i.fk = select i1 %i.fg, i64 %i.fh, i64 %i.fj   ; 13 uses
@@ -221,7 +221,7 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 bb.w:                                             ; preds = %bb.u
-  %i.fm = load ptr, ptr %i.r, align 8, !noalias !29
+  %i.fm = load ptr, ptr %i.r, align 8, !noalias !21
   %i.fn = select i1 %i.fg, ptr %i.fm, ptr %i.t    ; 8 uses
   %i.fo = sub nuw i64 %i.fk, %i.fe                ; 2 uses
   %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.fo, i64 8) ; 4 uses
@@ -624,16 +624,16 @@ attributes #18 = { builtin nounwind }
 !12 = distinct !{!12, !20}
 !13 = distinct !{!13, !20}
 !14 = distinct !{!14, !20}
+!15 = distinct !{!15, i1 false, !"_ZNKRSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6substrB8ne180100Emm"}
+!16 = distinct !{!16, !15, !"_ZNKRSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6substrB8ne180100Emm: argument 0"}
 !17 = distinct !{!17, !20}
 !18 = distinct !{!18, !20}
 !19 = distinct !{!19, !20}
 !20 = !{!"llvm.loop.mustprogress"}
+!21 = !{!16}
 !22 = !{!"any pointer", !5, i64 0}
 !23 = !{!"p1 short", !22, i64 0}
 !24 = !{!23, !23, i64 0}
 !25 = !{!"short", !5, i64 0}
 !26 = !{!25, !25, i64 0}
-!27 = distinct !{!27, i1 false, !"_ZNKRSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6substrB8ne180100Emm"}
-!28 = distinct !{!28, !27, !"_ZNKRSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6substrB8ne180100Emm: argument 0"}
-!29 = !{!28}
 end_hunk_1

@@ -204,7 +204,7 @@ bb.a:
   %i.b = trunc nuw i8 %.val to i1                 ; 2 uses
   %..i = select i1 %i.b, i64 4, i64 5
   %.1.i = select i1 %i.b, ptr @12, ptr @11
-  call void @_RINvXs_NvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr nonnull %.1.i, i64 %..i) #29, !noalias !9
+  call void @_RINvXs_NvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr nonnull %.1.i, i64 %..i) #29, !noalias !6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
@@ -218,10 +218,10 @@ bb.a:
   %.val = load i32, ptr %1, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.c = call { ptr, i64 } @_RNvMsa_NtNtNtCs3oUPovFnLWP_4core3fmt3num3impm4__fmt(i32 %.val, ptr nonnull %i.b, i64 10), !noalias !15 ; 2 uses
+  %i.c = call { ptr, i64 } @_RNvMsa_NtNtNtCs3oUPovFnLWP_4core3fmt3num3impm4__fmt(i32 %.val, ptr nonnull %i.b, i64 10), !noalias !9 ; 2 uses
   %i.d = extractvalue { ptr, i64 } %i.c, 0
   %i.e = extractvalue { ptr, i64 } %i.c, 1
-  call void @_RINvXs_NvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %i.d, i64 %i.e) #29, !noalias !15
+  call void @_RINvXs_NvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr %i.d, i64 %i.e) #29, !noalias !9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -624,10 +624,10 @@ attributes #36 = { inlinehint nounwind }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (787af2b8c 2026-08-25)"}
-!7 = distinct !{!7, i1 false, !"_RNvXsF_NtCs1xwejQucwHj_5alloc6stringbNtB5_12SpecToString14spec_to_stringCsiHivYpkJ4Hu_2cc"}
-!8 = distinct !{!8, !7, !"_RNvXsF_NtCs1xwejQucwHj_5alloc6stringbNtB5_12SpecToString14spec_to_stringCsiHivYpkJ4Hu_2cc: argument 0"}
+!4 = distinct !{!4, i1 false, !"_RNvXsF_NtCs1xwejQucwHj_5alloc6stringbNtB5_12SpecToString14spec_to_stringCsiHivYpkJ4Hu_2cc"}
+!5 = distinct !{!5, !4, !"_RNvXsF_NtCs1xwejQucwHj_5alloc6stringbNtB5_12SpecToString14spec_to_stringCsiHivYpkJ4Hu_2cc: argument 0"}
+!6 = !{!5}
+!7 = distinct !{!7, i1 false, !"_RNvXs1L_NtCs1xwejQucwHj_5alloc6stringmNtB6_12SpecToString14spec_to_stringCsiHivYpkJ4Hu_2cc"}
+!8 = distinct !{!8, !7, !"_RNvXs1L_NtCs1xwejQucwHj_5alloc6stringmNtB6_12SpecToString14spec_to_stringCsiHivYpkJ4Hu_2cc: argument 0"}
 !9 = !{!8}
-!13 = distinct !{!13, i1 false, !"_RNvXs1L_NtCs1xwejQucwHj_5alloc6stringmNtB6_12SpecToString14spec_to_stringCsiHivYpkJ4Hu_2cc"}
-!14 = distinct !{!14, !13, !"_RNvXs1L_NtCs1xwejQucwHj_5alloc6stringmNtB6_12SpecToString14spec_to_stringCsiHivYpkJ4Hu_2cc: argument 0"}
-!15 = !{!14}
 end_hunk_1

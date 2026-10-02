@@ -202,7 +202,7 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
   br i1 %.not.i.i, label %ruby_nonempty_memcpy.exit.i, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
-  %i.hq = call ptr @__memcpy_chk(ptr noundef nonnull %i.j, ptr noundef nonnull readonly %.042.i, i64 noundef range(i64 1, 0) %i.hp, i64 noundef 1335) #20, !alias.scope !129 ; 0 uses
+  %i.hq = call ptr @__memcpy_chk(ptr noundef nonnull %i.j, ptr noundef nonnull readonly %.042.i, i64 noundef range(i64 1, 0) %i.hp, i64 noundef 1335) #20, !alias.scope !119 ; 0 uses
   br label %ruby_nonempty_memcpy.exit.i
 
 ruby_nonempty_memcpy.exit.i:                      ; preds = %bb.by, %bb.bx
@@ -605,7 +605,7 @@ bb.h:                                             ; preds = %bb.i, %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.z = shl i64 %.0, 1                           ; 2 uses
   %i.aa = icmp slt i64 %i.z, 0
-  br i1 %i.aa, label %bb.j, label %bb.h, !llvm.loop !130
+  br i1 %i.aa, label %bb.j, label %bb.h, !llvm.loop !126
 
 bb.j:                                             ; preds = %bb.i
   %i.ab = load i64, ptr @rb_eArgError, align 8, !tbaa !13
@@ -652,7 +652,7 @@ ruby_nonempty_memcpy.exit:                        ; preds = %.lr.ph, %bb.m
   %i.ap = sub i64 %.03953, %i.am                  ; 2 uses
   %i.aq = getelementptr i8, ptr %.04151, i64 16
   %i.ar = icmp sgt i64 %i.ap, 0
-  br i1 %i.ar, label %.lr.ph, label %._crit_edge, !llvm.loop !131
+  br i1 %i.ar, label %.lr.ph, label %._crit_edge, !llvm.loop !127
 
 ._crit_edge:                                      ; preds = %ruby_nonempty_memcpy.exit
   %.pre = load i64, ptr %i.b, align 8, !tbaa !15
@@ -996,6 +996,9 @@ attributes #26 = { memory(none) }
 !93 = distinct !{null}
 !94 = distinct !{!94, !19}
 !95 = distinct !{!95, !19}
+!96 = distinct !{!96, i1 false, !"memcpy.inline"}
+!97 = distinct !{!97, !96, !"memcpy.inline: argument 1"}
+!98 = distinct !{!98, !96, !"memcpy.inline: argument 0"}
 !99 = distinct !{!99, !19}
 !100 = distinct !{!100, !19}
 !101 = distinct !{!101, !19}
@@ -1016,16 +1019,13 @@ attributes #26 = { memory(none) }
 !116 = !{!42, !10, i64 8}
 !117 = !{!25, !25, i64 0}
 !118 = !{!21, !21, i64 0}
+!119 = !{!98, !97}
 !120 = !{!"p1 short", !20, i64 0}
 !121 = !{!120, !120, i64 0}
 !122 = !{!28, !28, i64 0}
 !123 = !{!"p1 int", !20, i64 0}
 !124 = !{!123, !123, i64 0}
 !125 = !{!20, !20, i64 0}
-!126 = distinct !{!126, i1 false, !"memcpy.inline"}
-!127 = distinct !{!127, !126, !"memcpy.inline: argument 0"}
-!128 = distinct !{!128, !126, !"memcpy.inline: argument 1"}
-!129 = !{!127, !128}
-!130 = distinct !{!130, !19}
-!131 = distinct !{!131, !19}
+!126 = distinct !{!126, !19}
+!127 = distinct !{!127, !19}
 end_hunk_1

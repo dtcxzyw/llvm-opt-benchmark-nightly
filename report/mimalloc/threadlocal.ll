@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %.thread.i
   %i.n = tail call i64 @llvm.umax.i64(i64 range(i64 0, 65536) %i.b, i64 15)
   %spec.select28.i = add nuw nsw i64 %i.n, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !alias.scope !39
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !alias.scope !34
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -341,9 +341,9 @@ attributes #15 = { nounwind }
 !27 = !{i64 0, i64 16, !24, i64 16, i64 4, !25, i64 20, i64 1, !26, i64 21, i64 1, !26, i64 22, i64 1, !26}
 !28 = !{!12, !12, i64 0}
 !29 = !{i64 153813}
-!35 = distinct !{!35, i1 false, !"_mi_memid_create"}
-!36 = distinct !{!36, !35, !"_mi_memid_create: argument 0"}
-!37 = distinct !{!37, i1 false, !"_mi_memid_none"}
-!38 = distinct !{!38, !37, !"_mi_memid_none: argument 0"}
-!39 = !{!36, !38}
+!30 = distinct !{!30, i1 false, !"_mi_memid_none"}
+!31 = distinct !{!31, !30, !"_mi_memid_none: argument 0"}
+!32 = distinct !{!32, i1 false, !"_mi_memid_create"}
+!33 = distinct !{!33, !32, !"_mi_memid_create: argument 0"}
+!34 = !{!33, !31}
 end_hunk_0

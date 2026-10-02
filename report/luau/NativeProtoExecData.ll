@@ -36,8 +36,8 @@ _ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit:
   %i.c = add nuw nsw i64 %i.b, %i.a
   %i.d = shl nuw nsw i64 %i.c, 2
   %i.e = add nuw nsw i64 %i.d, 40                 ; 2 uses
-  %i.f = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.e) #7, !noalias !22 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.f, i8 0, i64 %i.e, i1 false), !noalias !22
+  %i.f = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.e) #7, !noalias !11 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.f, i8 0, i64 %i.e, i1 false), !noalias !11
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   store i64 0, ptr %i.g, align 8, !tbaa !17
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 40
@@ -93,6 +93,9 @@ attributes #7 = { builtin allocsize(0) }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
+!9 = distinct !{!9, i1 false, !"_ZSt11make_uniqueIA_hENSt8__detail9_MakeUniqIT_E7__arrayEm"}
+!10 = distinct !{!10, !9, !"_ZSt11make_uniqueIA_hENSt8__detail9_MakeUniqIT_E7__arrayEm: argument 0"}
+!11 = !{!10}
 !12 = !{!"any pointer", !5, i64 0}
 !13 = !{!"p1 _ZTSN4Luau7CodeGen12NativeModuleE", !12, i64 0}
 !14 = !{!"p1 omnipotent char", !12, i64 0}
@@ -101,7 +104,4 @@ attributes #7 = { builtin allocsize(0) }
 !17 = !{!16, !15, i64 32}
 !18 = !{!"p1 int", !12, i64 0}
 !19 = !{!18, !18, i64 0}
-!20 = distinct !{!20, i1 false, !"_ZSt11make_uniqueIA_hENSt8__detail9_MakeUniqIT_E7__arrayEm"}
-!21 = distinct !{!21, !20, !"_ZSt11make_uniqueIA_hENSt8__detail9_MakeUniqIT_E7__arrayEm: argument 0"}
-!22 = !{!21}
 end_hunk_0

@@ -204,18 +204,18 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
   br i1 %i.ac, label %.lr.ph.peel.next, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit._crit_edge, !llvm.loop !37
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit11: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit._crit_edge
-  call void @llvm.experimental.noalias.scope.decl(metadata !57)
-  call void @llvm.experimental.noalias.scope.decl(metadata !60)
+  call void @llvm.experimental.noalias.scope.decl(metadata !43)
+  call void @llvm.experimental.noalias.scope.decl(metadata !44)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  store ptr %i.ad, ptr %0, align 8, !tbaa !22, !alias.scope !61
+  store ptr %i.ad, ptr %0, align 8, !tbaa !22, !alias.scope !45
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %i.ae, align 8, !tbaa !23, !alias.scope !61
-  store i8 0, ptr %i.ad, align 8, !tbaa !19, !alias.scope !61
+  store i64 0, ptr %i.ae, align 8, !tbaa !23, !alias.scope !45
+  store i8 0, ptr %i.ad, align 8, !tbaa !19, !alias.scope !45
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 64
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !49, !noalias !61 ; 3 uses
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !49, !noalias !45 ; 3 uses
   %.not.i.not.i.i = icmp eq ptr %i.ag, null
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %i.ai = load ptr, ptr %i.ah, align 8, !noalias !61 ; 2 uses
+  %i.ai = load ptr, ptr %i.ah, align 8, !noalias !45 ; 2 uses
   %i.aj = icmp ugt ptr %i.ag, %i.ai
   %.08.i.i.i = select i1 %i.aj, ptr %i.ag, ptr %i.ai ; 2 uses
   %.not5.i.i = icmp eq ptr %.08.i.i.i, null
@@ -224,7 +224,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit11: ; preds = %_ZStl
 
 bb.c:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit11
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 56
-  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !50, !noalias !61 ; 2 uses
+  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !50, !noalias !45 ; 2 uses
   %i.am = ptrtoint ptr %.08.i.i.i to i64
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = sub i64 %i.am, %i.an
@@ -234,12 +234,12 @@ bb.c:                                             ; preds = %_ZStlsISt11char_tra
 bb.d:                                             ; preds = %bb.e, %bb.c
   %i.aq = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.ar = load ptr, ptr %0, align 8, !tbaa !18, !alias.scope !61 ; 2 uses
+  %i.ar = load ptr, ptr %0, align 8, !tbaa !18, !alias.scope !45 ; 2 uses
   %i.as = icmp eq ptr %i.ar, %i.ad
   br i1 %i.as, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.d
-  %i.at = load i64, ptr %i.ad, align 8, !tbaa !19, !alias.scope !61
+  %i.at = load i64, ptr %i.ad, align 8, !tbaa !19, !alias.scope !45
   %i.au = add i64 %i.at, 1
   call void @_ZdlPvm(ptr noundef %i.ar, i64 noundef %i.au) #15
   br label %.body
@@ -642,7 +642,14 @@ attributes #19 = { builtin allocsize(0) }
 !35 = distinct !{!35, !20}
 !36 = !{!16, !16, i64 0}
 !37 = distinct !{!37, !20, !42}
+!38 = distinct !{!38, i1 false, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
+!39 = distinct !{!39, !38, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!40 = distinct !{!40, i1 false, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
+!41 = distinct !{!41, !40, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
 !42 = !{!"llvm.loop.peeled.count", i32 1}
+!43 = !{!39}
+!44 = !{!41}
+!45 = !{!41, !39}
 !46 = !{!"p1 _ZTSNSt6locale5_ImplE", !9, i64 0}
 !47 = !{!"_ZTSSt6locale", !46, i64 0}
 !48 = !{!"_ZTSSt15basic_streambufIcSt11char_traitsIcEE", !14, i64 8, !14, i64 16, !14, i64 24, !14, i64 32, !14, i64 40, !14, i64 48, !47, i64 56}
@@ -652,11 +659,4 @@ attributes #19 = { builtin allocsize(0) }
 !52 = !{!51, !51, i64 0}
 !53 = !{!"_ZTSSi", !16, i64 8}
 !54 = !{!53, !16, i64 8}
-!55 = distinct !{!55, i1 false, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
-!56 = distinct !{!56, !55, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!57 = !{!56}
-!58 = distinct !{!58, i1 false, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
-!59 = distinct !{!59, !58, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!60 = !{!59}
-!61 = !{!59, !56}
 end_hunk_1

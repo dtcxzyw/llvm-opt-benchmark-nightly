@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %.noexc, %bb.a, %bb.
 bb.d:                                             ; preds = %.noexc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  store i32 %i.k, ptr %i.o, align 8, !alias.scope !8
+  store i32 %i.k, ptr %i.o, align 8, !alias.scope !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.p = invoke ptr @_RNvMse_NtCscdodAO9FK5_5alloc4syncINtB5_3ArcNtCs56awJiKzoFA_9jobserver11HelperStateE3newCsedfi03xVdHO_2cc(ptr nonnull align 8 %i.f)
           to label %bb.e unwind label %bb.c
@@ -605,7 +605,7 @@ attributes #24 = { noreturn nounwind }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.97.1 (8bab26f4f 2026-07-14)"}
-!6 = distinct !{!6, i1 false, !"_RNvXs8_Cs56awJiKzoFA_9jobserverNtB5_11HelperStateNtNtCs4NRVxsYgnAr_4core7default7Default7defaultCsedfi03xVdHO_2cc"}
-!7 = distinct !{!7, !6, !"_RNvXs8_Cs56awJiKzoFA_9jobserverNtB5_11HelperStateNtNtCs4NRVxsYgnAr_4core7default7Default7defaultCsedfi03xVdHO_2cc: argument 0"}
-!8 = !{!7}
+!3 = distinct !{!3, i1 false, !"_RNvXs8_Cs56awJiKzoFA_9jobserverNtB5_11HelperStateNtNtCs4NRVxsYgnAr_4core7default7Default7defaultCsedfi03xVdHO_2cc"}
+!4 = distinct !{!4, !3, !"_RNvXs8_Cs56awJiKzoFA_9jobserverNtB5_11HelperStateNtNtCs4NRVxsYgnAr_4core7default7Default7defaultCsedfi03xVdHO_2cc: argument 0"}
+!5 = !{!4}
 end_hunk_1

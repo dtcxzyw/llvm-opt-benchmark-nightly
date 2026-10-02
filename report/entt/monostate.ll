@@ -202,18 +202,18 @@ bb.a:
           to label %_ZN7testing8internal21UniversalTersePrinterIiE5PrintERKiPSo.exit unwind label %bb.e ; 0 uses
 
 _ZN7testing8internal21UniversalTersePrinterIiE5PrintERKiPSo.exit: ; preds = %bb.a
-  call void @llvm.experimental.noalias.scope.decl(metadata !63)
-  call void @llvm.experimental.noalias.scope.decl(metadata !66)
+  call void @llvm.experimental.noalias.scope.decl(metadata !52)
+  call void @llvm.experimental.noalias.scope.decl(metadata !53)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  store ptr %i.d, ptr %0, align 8, !tbaa !54, !alias.scope !67
+  store ptr %i.d, ptr %0, align 8, !tbaa !54, !alias.scope !55
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %i.e, align 8, !tbaa !30, !alias.scope !67
-  store i8 0, ptr %i.d, align 8, !tbaa !28, !alias.scope !67
+  store i64 0, ptr %i.e, align 8, !tbaa !30, !alias.scope !55
+  store i8 0, ptr %i.d, align 8, !tbaa !28, !alias.scope !55
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !57, !noalias !67 ; 3 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !57, !noalias !55 ; 3 uses
   %.not.i.not.i.i = icmp eq ptr %i.g, null
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.i = load ptr, ptr %i.h, align 8, !noalias !67 ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8, !noalias !55 ; 2 uses
   %i.j = icmp ugt ptr %i.g, %i.i
   %.08.i.i.i = select i1 %i.j, ptr %i.g, ptr %i.i ; 2 uses
   %.not5.i.i = icmp eq ptr %.08.i.i.i, null
@@ -222,7 +222,7 @@ _ZN7testing8internal21UniversalTersePrinterIiE5PrintERKiPSo.exit: ; preds = %bb.
 
 bb.b:                                             ; preds = %_ZN7testing8internal21UniversalTersePrinterIiE5PrintERKiPSo.exit
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !58, !noalias !67 ; 2 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !58, !noalias !55 ; 2 uses
   %i.m = ptrtoint ptr %.08.i.i.i to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n
@@ -232,12 +232,12 @@ bb.b:                                             ; preds = %_ZN7testing8interna
 bb.c:                                             ; preds = %bb.d, %bb.b
   %i.q = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.r = load ptr, ptr %0, align 8, !tbaa !27, !alias.scope !67 ; 2 uses
+  %i.r = load ptr, ptr %0, align 8, !tbaa !27, !alias.scope !55 ; 2 uses
   %i.s = icmp eq ptr %i.r, %i.d
   br i1 %i.s, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.c
-  %i.t = load i64, ptr %i.d, align 8, !tbaa !28, !alias.scope !67
+  %i.t = load i64, ptr %i.d, align 8, !tbaa !28, !alias.scope !55
   %i.u = add i64 %i.t, 1
   call void @_ZdlPvm(ptr noundef %i.r, i64 noundef %i.u) #16
   br label %.body
@@ -357,7 +357,7 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.b
   %i.r = icmp ult ptr %i.q, %3
   %i.s = select i1 %i.p, i1 true, i1 %i.r
-  br i1 %i.s, label %bb.d, label %bb.j, !prof !68
+  br i1 %i.s, label %bb.d, label %bb.j, !prof !61
 
 bb.d:                                             ; preds = %bb.c
   %.not35 = icmp eq i64 %i.b, %i.n
@@ -654,7 +654,7 @@ define internal void @_GLOBAL__sub_I_monostate.cpp() #11 section ".text.startup"
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 54
   store i8 0, ptr %i.d, align 1, !tbaa !28
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 5, ptr %i.e, align 8, !tbaa !70
+  store i32 5, ptr %i.e, align 8, !tbaa !63
   %i.f = invoke noundef ptr @_ZN7testing8internal13GetTestTypeIdEv()
           to label %bb.a unwind label %bb.f
 
@@ -703,7 +703,7 @@ _ZN7testing8internal12CodeLocationD2Ev.exit14.i:  ; preds = %bb.f, %_ZNKSt7__cxx
   resume { ptr, i32 } %i.o
 
 __cxx_global_var_init.exit:                       ; preds = %bb.e, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-  store ptr %i.j, ptr @_ZN30Monostate_Functionalities_Test10test_info_E, align 8, !tbaa !72
+  store ptr %i.j, ptr @_ZN30Monostate_Functionalities_Test10test_info_E, align 8, !tbaa !65
   %i.t = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN30Monostate_Functionalities_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %0)
   ret void
@@ -791,22 +791,22 @@ attributes #19 = { cold }
 !45 = !{!37, !23, i64 0}
 !46 = !{!"p1 _ZTSNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE", !14, i64 0}
 !47 = !{!46, !46, i64 0}
+!48 = distinct !{!48, i1 false, !"_ZNKRSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
+!49 = distinct !{!49, !48, !"_ZNKRSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!50 = distinct !{!50, i1 false, !"_ZNKRSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
+!51 = distinct !{!51, !50, !"_ZNKRSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!52 = !{!49}
+!53 = !{!51}
 !54 = !{!25, !24, i64 0}
+!55 = !{!51, !49}
 !56 = !{!"_ZTSSt15basic_streambufIcSt11char_traitsIcEE", !24, i64 8, !24, i64 16, !24, i64 24, !24, i64 32, !24, i64 40, !24, i64 48, !19, i64 56}
 !57 = !{!56, !24, i64 40}
 !58 = !{!56, !24, i64 32}
 !59 = !{!"_ZTSSi", !11, i64 8}
 !60 = !{!59, !11, i64 8}
-!61 = distinct !{!61, i1 false, !"_ZNKRSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
-!62 = distinct !{!62, !61, !"_ZNKRSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!63 = !{!62}
-!64 = distinct !{!64, i1 false, !"_ZNKRSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
-!65 = distinct !{!65, !64, !"_ZNKRSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!66 = !{!65}
-!67 = !{!65, !62}
-!68 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!69 = !{!"_ZTSN7testing8internal12CodeLocationE", !26, i64 0, !6, i64 32}
-!70 = !{!69, !6, i64 32}
-!71 = !{!"p1 _ZTSN7testing8TestInfoE", !14, i64 0}
-!72 = !{!71, !71, i64 0}
+!61 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!62 = !{!"_ZTSN7testing8internal12CodeLocationE", !26, i64 0, !6, i64 32}
+!63 = !{!62, !6, i64 32}
+!64 = !{!"p1 _ZTSN7testing8TestInfoE", !14, i64 0}
+!65 = !{!64, !64, i64 0}
 end_hunk_0

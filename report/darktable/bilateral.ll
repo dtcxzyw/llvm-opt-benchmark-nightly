@@ -205,7 +205,7 @@ image_to_grid.exit:                               ; preds = %.preheader, %image_
   %i.dr = fsub reassoc nsz arcp contract afn float %i.au, %i.dq
   %i.ds = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.dr, float 0.000000e+00)
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.as ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.dt, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.at, i64 16, i1 false), !tbaa !18, !alias.scope !89
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.dt, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.at, i64 16, i1 false), !tbaa !18, !alias.scope !85
   store float %i.ds, ptr %i.dt, align 4, !tbaa !18
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ad
@@ -542,8 +542,8 @@ attributes #15 = { nounwind }
 !79 = distinct !{!79, !31, !30}
 !80 = distinct !{!80, !30, !31}
 !81 = distinct !{!81, !30}
-!86 = distinct !{!86, i1 false, !"copy_pixel"}
-!87 = distinct !{!87, !86, !"copy_pixel: argument 0"}
-!88 = distinct !{!88, !86, !"copy_pixel: argument 1"}
-!89 = !{!87, !88}
+!82 = distinct !{!82, i1 false, !"copy_pixel"}
+!83 = distinct !{!83, !82, !"copy_pixel: argument 1"}
+!84 = distinct !{!84, !82, !"copy_pixel: argument 0"}
+!85 = !{!84, !83}
 end_hunk_0

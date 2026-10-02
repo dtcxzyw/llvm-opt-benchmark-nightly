@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a
 define hidden void @_Z42test_select_on_container_copy_constructionv() local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN5boost9container3pmr20get_default_resourceEv() #13
-  %i.b = tail call noundef ptr @_ZN5boost9container3pmr20get_default_resourceEv() #13, !noalias !51
+  %i.b = tail call noundef ptr @_ZN5boost9container3pmr20get_default_resourceEv() #13, !noalias !48
   %i.c = icmp eq ptr %i.a, %i.b
   %i.d = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.23, ptr noundef nonnull @.str.1, i32 noundef 173, ptr noundef nonnull @__PRETTY_FUNCTION__._Z42test_select_on_container_copy_constructionv, i1 noundef zeroext %i.c)
           to label %bb.b unwind label %bb.c       ; 0 uses
@@ -355,7 +355,7 @@ bb.o:                                             ; preds = %_Z15test_deallocate
 _Z12test_destroyv.exit:                           ; preds = %bb.n, %bb.m, %bb.l
   store i8 1, ptr @_ZN11char_holder17destructor_calledE, align 1, !tbaa !42
   %i.af = tail call noundef ptr @_ZN5boost9container3pmr20get_default_resourceEv() #13
-  %i.ag = tail call noundef ptr @_ZN5boost9container3pmr20get_default_resourceEv() #13, !noalias !57
+  %i.ag = tail call noundef ptr @_ZN5boost9container3pmr20get_default_resourceEv() #13, !noalias !51
   %i.ah = icmp eq ptr %i.af, %i.ag
   %i.ai = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.23, ptr noundef nonnull @.str.1, i32 noundef 173, ptr noundef nonnull @__PRETTY_FUNCTION__._Z42test_select_on_container_copy_constructionv, i1 noundef zeroext %i.ah)
           to label %_Z42test_select_on_container_copy_constructionv.exit unwind label %bb.p ; 0 uses
@@ -518,7 +518,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.b
   %i.d = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr)
-          to label %_ZNSolsEPFRSoS_E.exit unwind label %bb.d, !inline_history !58 ; 0 uses
+          to label %_ZNSolsEPFRSoS_E.exit unwind label %bb.d, !inline_history !52 ; 0 uses
 
 _ZNSolsEPFRSoS_E.exit:                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   tail call void @abort() #15
@@ -643,11 +643,11 @@ attributes #15 = { noreturn nounwind }
 !43 = !{i8 0, i8 2}
 !44 = !{}
 !45 = !{!26, !19, i64 32}
+!46 = distinct !{!46, i1 false, !"_ZNK5boost9container3pmr21polymorphic_allocatorIiE37select_on_container_copy_constructionEv"}
+!47 = distinct !{!47, !46, !"_ZNK5boost9container3pmr21polymorphic_allocatorIiE37select_on_container_copy_constructionEv: argument 0"}
+!48 = !{!47}
 !49 = distinct !{!49, i1 false, !"_ZNK5boost9container3pmr21polymorphic_allocatorIiE37select_on_container_copy_constructionEv"}
 !50 = distinct !{!50, !49, !"_ZNK5boost9container3pmr21polymorphic_allocatorIiE37select_on_container_copy_constructionEv: argument 0"}
 !51 = !{!50}
-!55 = distinct !{!55, i1 false, !"_ZNK5boost9container3pmr21polymorphic_allocatorIiE37select_on_container_copy_constructionEv"}
-!56 = distinct !{!56, !55, !"_ZNK5boost9container3pmr21polymorphic_allocatorIiE37select_on_container_copy_constructionEv: argument 0"}
-!57 = !{!56}
-!58 = distinct !{null}
+!52 = distinct !{null}
 end_hunk_0

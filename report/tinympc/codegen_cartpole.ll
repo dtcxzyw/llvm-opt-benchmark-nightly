@@ -205,13 +205,13 @@ bb.ag:                                            ; preds = %bb.af
           to label %bb.ah unwind label %bb.bd
 
 bb.ah:                                            ; preds = %bb.ag
-  call void @llvm.experimental.noalias.scope.decl(metadata !48)
-  call void @llvm.experimental.noalias.scope.decl(metadata !51)
-  %i.dw = load ptr, ptr %14, align 8, !tbaa !16, !noalias !52 ; 3 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !43)
+  call void @llvm.experimental.noalias.scope.decl(metadata !44)
+  %i.dw = load ptr, ptr %14, align 8, !tbaa !16, !noalias !45 ; 3 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %i.dy = load i64, ptr %i.dx, align 8, !tbaa !18, !noalias !52 ; 5 uses
+  %i.dy = load i64, ptr %i.dx, align 8, !tbaa !18, !noalias !45 ; 5 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 7 uses
-  store ptr %i.dz, ptr %13, align 8, !tbaa !12, !alias.scope !52
+  store ptr %i.dz, ptr %13, align 8, !tbaa !12, !alias.scope !45
   %i.ea = icmp eq ptr %i.dw, null
   %i.eb = icmp ne i64 %i.dy, 0
   %or.cond.i.i.i = and i1 %i.ea, %i.eb
@@ -225,8 +225,8 @@ bb.ah:                                            ; preds = %bb.ag
   unreachable
 
 bb.ai:                                            ; preds = %bb.ah
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20, !noalias !52
-  store i64 %i.dy, ptr %i.a, align 8, !tbaa !14, !noalias !52
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20, !noalias !45
+  store i64 %i.dy, ptr %i.a, align 8, !tbaa !14, !noalias !45
   %i.ec = icmp ugt i64 %i.dy, 15
   br i1 %i.ec, label %.noexc.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -235,9 +235,9 @@ bb.ai:                                            ; preds = %bb.ah
           to label %.noexc86 unwind label %bb.be  ; 2 uses
 
 .noexc86:                                         ; preds = %.noexc.i.i.i
-  store ptr %i.ed, ptr %13, align 8, !tbaa !16, !alias.scope !52
-  %i.ee = load i64, ptr %i.a, align 8, !tbaa !14, !noalias !52
-  store i64 %i.ee, ptr %i.dz, align 8, !tbaa !17, !alias.scope !52
+  store ptr %i.ed, ptr %13, align 8, !tbaa !16, !alias.scope !45
+  %i.ee = load i64, ptr %i.a, align 8, !tbaa !14, !noalias !45
+  store i64 %i.ee, ptr %i.dz, align 8, !tbaa !17, !alias.scope !45
   br label %._crit_edge.i.i.i.i
 
 ._crit_edge.i.i.i.i:                              ; preds = %.noexc86, %bb.ai
@@ -257,13 +257,13 @@ bb.ak:                                            ; preds = %._crit_edge.i.i.i.i
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj, %._crit_edge.i.i.i.i
-  %i.eh = load i64, ptr %i.a, align 8, !tbaa !14, !noalias !52 ; 2 uses
+  %i.eh = load i64, ptr %i.a, align 8, !tbaa !14, !noalias !45 ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %13, i64 8
-  store i64 %i.eh, ptr %i.ei, align 8, !tbaa !18, !alias.scope !52
-  %i.ej = load ptr, ptr %13, align 8, !tbaa !16, !alias.scope !52
+  store i64 %i.eh, ptr %i.ei, align 8, !tbaa !18, !alias.scope !45
+  %i.ej = load ptr, ptr %13, align 8, !tbaa !16, !alias.scope !45
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 %i.eh
   store i8 0, ptr %i.ek, align 1, !tbaa !17
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !52
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !45
   %i.el = load ptr, ptr %13, align 8, !tbaa !16
   %i.em = invoke i32 @tiny_codegen(ptr noundef %i.dv, ptr noundef %i.el, i32 noundef 0)
           to label %bb.am unwind label %bb.bf     ; 0 uses
@@ -666,7 +666,7 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE7setZeroEv.exit: ; pr
   %i.ar = add nuw nsw i64 %.05.i.i.i.i.i.i.i.i, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %_ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !53
+  br i1 %niter.ncmp.3, label %_ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !46
 
 _ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i.i.i.i.i.i.i
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -690,7 +690,7 @@ _ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1E
   %i.ax = add nuw nsw i64 %.05.i.i.i.i.i.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %_ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit, label %.lr.ph.i.i.i.i.i.i.i.i.epil, !llvm.loop !54
+  br i1 %epil.iter.cmp.not, label %_ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit, label %.lr.ph.i.i.i.i.i.i.i.i.epil, !llvm.loop !47
 
 _ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit: ; preds = %_ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.i.i.i.i.epil, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE7setZeroEv.exit
   ret void
@@ -789,16 +789,16 @@ attributes #23 = { noreturn }
 !35 = !{!34, !33, i64 0}
 !36 = !{}
 !37 = !{i64 8}
+!38 = distinct !{!38, i1 false, !"_ZNKSt10filesystem7__cxx114path6stringEv"}
+!39 = distinct !{!39, !38, !"_ZNKSt10filesystem7__cxx114path6stringEv: argument 0"}
+!40 = distinct !{!40, i1 false, !"_ZNKSt10filesystem7__cxx114path6stringIcSt11char_traitsIcESaIcEEENSt7__cxx1112basic_stringIT_T0_T1_EERKSA_"}
+!41 = distinct !{!41, !40, !"_ZNKSt10filesystem7__cxx114path6stringIcSt11char_traitsIcESaIcEEENSt7__cxx1112basic_stringIT_T0_T1_EERKSA_: argument 0"}
 !42 = !{!9, !9, i64 0}
-!46 = distinct !{!46, i1 false, !"_ZNKSt10filesystem7__cxx114path6stringEv"}
-!47 = distinct !{!47, !46, !"_ZNKSt10filesystem7__cxx114path6stringEv: argument 0"}
-!48 = !{!47}
-!49 = distinct !{!49, i1 false, !"_ZNKSt10filesystem7__cxx114path6stringIcSt11char_traitsIcESaIcEEENSt7__cxx1112basic_stringIT_T0_T1_EERKSA_"}
-!50 = distinct !{!50, !49, !"_ZNKSt10filesystem7__cxx114path6stringIcSt11char_traitsIcESaIcEEENSt7__cxx1112basic_stringIT_T0_T1_EERKSA_: argument 0"}
-!51 = !{!50}
-!52 = !{!50, !47}
-!53 = distinct !{!53, !55}
-!54 = distinct !{!54, !56}
-!55 = !{!"llvm.loop.mustprogress"}
-!56 = !{!"llvm.loop.unroll.disable"}
+!43 = !{!39}
+!44 = !{!41}
+!45 = !{!41, !39}
+!46 = distinct !{!46, !48}
+!47 = distinct !{!47, !49}
+!48 = !{!"llvm.loop.mustprogress"}
+!49 = !{!"llvm.loop.unroll.disable"}
 end_hunk_1

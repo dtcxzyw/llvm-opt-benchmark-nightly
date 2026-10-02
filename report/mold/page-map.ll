@@ -202,9 +202,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #10
-  store i64 1099511627780, ptr %i.g, align 8, !alias.scope !40
-  store ptr %i.r, ptr %0, align 8, !tbaa !15, !alias.scope !40
-  store i64 65536, ptr %i.h, align 8, !tbaa !15, !alias.scope !40
+  store i64 1099511627780, ptr %i.g, align 8, !alias.scope !37
+  store ptr %i.r, ptr %0, align 8, !tbaa !15, !alias.scope !37
+  store i64 65536, ptr %i.h, align 8, !tbaa !15, !alias.scope !37
   tail call void @_mi_os_free_ex(ptr noundef %i.c, ptr noundef nonnull %i.r, i64 noundef 65536, i1 noundef zeroext true, ptr noundef nonnull byval(%struct.mi_memid_s) align 8 %0) #9
   %i.s = load ptr, ptr @_mi_page_map, align 64, !tbaa !11
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %.013
@@ -554,7 +554,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x ptr> %broadcast.splat, ptr %i.ak, align 8, !tbaa !28
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.al = icmp eq i64 %index.next, %n.vec
-  br i1 %i.al, label %middle.block, label %vector.body, !llvm.loop !41
+  br i1 %i.al, label %middle.block, label %vector.body, !llvm.loop !38
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.af, %n.vec
@@ -575,7 +575,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ap = icmp ne i64 %i.an, 0
   %i.aq = icmp samesign ult i64 %.11231, 8191
   %i.ar = and i1 %i.ap, %i.aq
-  br i1 %i.ar, label %.lr.ph, label %._crit_edge, !llvm.loop !42
+  br i1 %i.ar, label %.lr.ph, label %._crit_edge, !llvm.loop !39
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %mi_page_map_ensure_submap_at.exit
   %.1.lcssa = phi i64 [ %.01037, %mi_page_map_ensure_submap_at.exit ], [ %i.ag, %middle.block ], [ %i.an, %.lr.ph ] ; 2 uses
@@ -673,12 +673,12 @@ attributes #11 = { "no-builtin-malloc" }
 !31 = !{}
 !32 = !{i64 155690}
 !33 = !{!13, !12, i64 22}
+!34 = distinct !{!34, i1 false, !"_mi_memid_create_os"}
+!35 = distinct !{!35, !34, !"_mi_memid_create_os: argument 0"}
 !36 = distinct !{!36, !16}
-!38 = distinct !{!38, i1 false, !"_mi_memid_create_os"}
-!39 = distinct !{!39, !38, !"_mi_memid_create_os: argument 0"}
-!40 = !{!39}
-!41 = distinct !{!41, !16, !43, !44}
-!42 = distinct !{!42, !16, !44, !43}
-!43 = !{!"llvm.loop.isvectorized", i32 1}
-!44 = !{!"llvm.loop.unroll.runtime.disable"}
+!37 = !{!35}
+!38 = distinct !{!38, !16, !40, !41}
+!39 = distinct !{!39, !16, !41, !40}
+!40 = !{!"llvm.loop.isvectorized", i32 1}
+!41 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

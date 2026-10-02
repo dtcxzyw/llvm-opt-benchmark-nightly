@@ -205,18 +205,18 @@ vector.memcheck:                                  ; preds = %.lr.ph602
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count694, 2147483644 ; 3 uses
-  %i.jw = load float, ptr %i.id, align 4, !tbaa !24, !alias.scope !94
+  %i.jw = load float, ptr %i.id, align 4, !tbaa !24, !alias.scope !63
   %broadcast.splatinsert798 = insertelement <4 x float> poison, float %i.jw, i64 0
-  %i.jx = load float, ptr %i.iy, align 8, !tbaa !39, !alias.scope !94
+  %i.jx = load float, ptr %i.iy, align 8, !tbaa !39, !alias.scope !63
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.jx, i64 0
-  %i.jy = load float, ptr %i.if, align 8, !tbaa !24, !alias.scope !94
+  %i.jy = load float, ptr %i.if, align 8, !tbaa !24, !alias.scope !63
   %broadcast.splatinsert802 = insertelement <4 x float> poison, float %i.jy, i64 0
-  %i.jz = load float, ptr %i.jr, align 4, !tbaa !53, !alias.scope !94
+  %i.jz = load float, ptr %i.jr, align 4, !tbaa !53, !alias.scope !63
   %broadcast.splatinsert800 = insertelement <4 x float> poison, float %i.jz, i64 0
-  %i.ka = load float, ptr %i.ii, align 4, !tbaa !24, !alias.scope !94
+  %i.ka = load float, ptr %i.ii, align 4, !tbaa !24, !alias.scope !63
   %broadcast.splatinsert806 = insertelement <4 x float> poison, float %i.ka, i64 0
   %broadcast.splat807 = shufflevector <4 x float> %broadcast.splatinsert806, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.kb = load float, ptr %i.iy, align 8, !tbaa !39, !alias.scope !94
+  %i.kb = load float, ptr %i.iy, align 8, !tbaa !39, !alias.scope !63
   %broadcast.splatinsert804 = insertelement <4 x float> poison, float %i.kb, i64 0
   %broadcast.splat805 = shufflevector <4 x float> %broadcast.splatinsert804, <4 x float> poison, <4 x i32> zeroinitializer
   %i.kc = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> %broadcast.splatinsert800, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
@@ -277,7 +277,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ly = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.lx, <8 x float> %i.kc, <8 x float> %i.kd)
   %i.lz = shufflevector <4 x float> %i.lw, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <8 x float> %i.ly, <8 x float> %i.lz, <12 x i32> <i32 0, i32 4, i32 8, i32 1, i32 5, i32 9, i32 2, i32 6, i32 10, i32 3, i32 7, i32 11>
-  store <12 x float> %interleaved.vec, ptr %i.km, align 4, !tbaa !24, !alias.scope !96, !noalias !94
+  store <12 x float> %interleaved.vec, ptr %i.km, align 4, !tbaa !24, !alias.scope !64, !noalias !63
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ma = icmp eq i64 %index.next, %n.vec
   br i1 %i.ma, label %middle.block, label %vector.body, !llvm.loop !47
@@ -680,7 +680,7 @@ _ZL11calcExtendsP6BVItemiiiPtS1_.exit:            ; preds = %bb.o, %bb.c
 common.ret:                                       ; preds = %bb.b, %_ZL11calcExtendsP6BVItemiiiPtS1_.exit
   %.sink = phi i32 [ %i.z, %bb.b ], [ %.neg, %_ZL11calcExtendsP6BVItemiiiPtS1_.exit ]
   %i.cm = getelementptr inbounds nuw i8, ptr %i.e, i64 12
-  store i32 %.sink, ptr %i.cm, align 4, !tbaa !98
+  store i32 %.sink, ptr %i.cm, align 4, !tbaa !93
   ret void
 }
 
@@ -815,6 +815,9 @@ attributes #11 = { nounwind }
 !41 = !{!30, !8, i64 48}
 !42 = !{!"_ZTS6BVItem", !7, i64 0, !7, i64 6, !8, i64 12}
 !43 = !{!42, !8, i64 12}
+!44 = distinct !{!44, i1 false, !"LVerDomain"}
+!45 = distinct !{!45, !44}
+!46 = distinct !{!46, !44}
 !47 = distinct !{!47, !65, !66}
 !48 = distinct !{!48, !65}
 !49 = distinct !{!49, !81}
@@ -831,6 +834,8 @@ attributes #11 = { nounwind }
 !60 = !{!30, !16, i64 96}
 !61 = !{!30, !8, i64 56}
 !62 = !{!30, !16, i64 68}
+!63 = !{!45}
+!64 = !{!46}
 !65 = !{!"llvm.loop.isvectorized", i32 1}
 !66 = !{!"llvm.loop.unroll.runtime.disable"}
 !67 = !{!18, !12, i64 24}
@@ -858,11 +863,6 @@ attributes #11 = { nounwind }
 !89 = !{!83, !7, i64 31}
 !90 = !{!18, !14, i64 128}
 !91 = !{!83, !8, i64 32}
-!92 = distinct !{!92, i1 false, !"LVerDomain"}
-!93 = distinct !{!93, !92}
-!94 = !{!93}
-!95 = distinct !{!95, !92}
-!96 = !{!95}
-!97 = !{!"_ZTS8dtBVNode", !7, i64 0, !7, i64 6, !8, i64 12}
-!98 = !{!97, !8, i64 12}
+!92 = !{!"_ZTS8dtBVNode", !7, i64 0, !7, i64 6, !8, i64 12}
+!93 = !{!92, !8, i64 12}
 end_hunk_1

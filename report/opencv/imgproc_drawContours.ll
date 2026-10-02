@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %.critedge83
 
 bb.n:                                             ; preds = %bb.m
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %5) #10
-  %i.ah = load ptr, ptr %6, align 8, !tbaa !50, !noalias !69 ; 2 uses
+  %i.ah = load ptr, ptr %6, align 8, !tbaa !50, !noalias !51 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !53
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
   %i.ak = load ptr, ptr %i.aj, align 8
@@ -605,6 +605,8 @@ attributes #12 = { builtin nounwind }
 !18 = !{!17, !16, i64 0}
 !19 = !{!17, !16, i64 16}
 !20 = !{!13, !12, i64 16}
+!21 = distinct !{!21, i1 false, !"_ZNK2cv7MatExprcvNS_3MatEEv"}
+!22 = distinct !{!22, !21, !"_ZNK2cv7MatExprcvNS_3MatEEv: argument 0"}
 !23 = distinct !{null}
 !24 = distinct !{!24, !11}
 !25 = !{!"p1 omnipotent char", !10, i64 0}
@@ -633,6 +635,7 @@ attributes #12 = { builtin nounwind }
 !48 = !{!"_ZTSN2cv7Scalar_IdEE", !47, i64 0}
 !49 = !{!"_ZTSN2cv7MatExprE", !44, i64 0, !7, i64 8, !40, i64 16, !40, i64 224, !40, i64 432, !45, i64 640, !45, i64 648, !48, i64 656}
 !50 = !{!49, !44, i64 0}
+!51 = !{!22}
 !52 = !{!"vtable pointer", !5, i64 0}
 !53 = !{!52, !52, i64 0}
 !54 = !{!"_ZTSN2cv5Size_IiEE", !7, i64 0, !7, i64 4}
@@ -648,7 +651,4 @@ attributes #12 = { builtin nounwind }
 !64 = !{!62, !61, i64 0}
 !65 = !{!7, !7, i64 0}
 !66 = !{!62, !61, i64 16}
-!67 = distinct !{!67, i1 false, !"_ZNK2cv7MatExprcvNS_3MatEEv"}
-!68 = distinct !{!68, !67, !"_ZNK2cv7MatExprcvNS_3MatEEv: argument 0"}
-!69 = !{!68}
 end_hunk_1

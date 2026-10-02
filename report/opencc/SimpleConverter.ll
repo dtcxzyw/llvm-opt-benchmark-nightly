@@ -202,22 +202,22 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 8 uses
-  store ptr %i.c, ptr %4, align 8, !tbaa !42, !alias.scope !57
+  store ptr %i.c, ptr %4, align 8, !tbaa !42, !alias.scope !54
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 0, ptr %i.d, align 8, !tbaa !38, !alias.scope !57
-  store i8 0, ptr %i.c, align 8, !tbaa !22, !alias.scope !57
+  store i64 0, ptr %i.d, align 8, !tbaa !38, !alias.scope !54
+  store i8 0, ptr %i.c, align 8, !tbaa !22, !alias.scope !54
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %4, i64 noundef %2, i8 noundef signext 0)
           to label %_ZN6opencc8UTF8Util10FromSubstrB5cxx11EPKcm.exit unwind label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.e = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.f = load ptr, ptr %4, align 8, !tbaa !21, !alias.scope !57 ; 2 uses
+  %i.f = load ptr, ptr %4, align 8, !tbaa !21, !alias.scope !54 ; 2 uses
   %i.g = icmp eq ptr %i.f, %i.c
   br i1 %i.g, label %common.resume, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.d
-  %i.h = load i64, ptr %i.c, align 8, !tbaa !22, !alias.scope !57
+  %i.h = load i64, ptr %i.c, align 8, !tbaa !22, !alias.scope !54
   %i.i = add i64 %i.h, 1
   call void @_ZdlPvm(ptr noundef %i.f, i64 noundef %i.i) #20
   br label %common.resume
@@ -227,7 +227,7 @@ common.resume:                                    ; preds = %bb.d, %_ZNKSt7__cxx
   resume { ptr, i32 } %common.resume.op
 
 _ZN6opencc8UTF8Util10FromSubstrB5cxx11EPKcm.exit: ; preds = %bb.c
-  %i.j = load ptr, ptr %4, align 8, !tbaa !21, !alias.scope !57
+  %i.j = load ptr, ptr %4, align 8, !tbaa !21, !alias.scope !54
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.j, ptr align 1 %1, i64 %2, i1 false)
   %i.k = load ptr, ptr %4, align 8, !tbaa !21
   %i.l = invoke noundef i64 @_ZNK6opencc15SimpleConverter7ConvertEPKcPc(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef %i.k, ptr noundef %3)
@@ -574,7 +574,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #19, !noalias !63
+  %i.b = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #19, !noalias !57
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -723,7 +723,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !34
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #19, !inline_history !64
+  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #19, !inline_history !58
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.e = load i8, ptr @__libc_single_threaded, align 1, !tbaa !22
   %.not.i = icmp eq i8 %i.e, 0
@@ -748,7 +748,7 @@ bb.d:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.j = load ptr, ptr %0, align 8, !tbaa !34
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #19, !inline_history !64
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #19, !inline_history !58
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit: ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i, %bb.d
@@ -888,11 +888,11 @@ attributes #23 = { noreturn nounwind }
 !49 = distinct !{null}
 !50 = distinct !{null, null}
 !51 = distinct !{null, null, null, null}
-!55 = distinct !{!55, i1 false, !"_ZN6opencc8UTF8Util10FromSubstrB5cxx11EPKcm"}
-!56 = distinct !{!56, !55, !"_ZN6opencc8UTF8Util10FromSubstrB5cxx11EPKcm: argument 0"}
+!52 = distinct !{!52, i1 false, !"_ZN6opencc8UTF8Util10FromSubstrB5cxx11EPKcm"}
+!53 = distinct !{!53, !52, !"_ZN6opencc8UTF8Util10FromSubstrB5cxx11EPKcm: argument 0"}
+!54 = !{!53}
+!55 = distinct !{!55, i1 false, !"_ZNK6opencc15SimpleConverter7ConvertB5cxx11EPKcm"}
+!56 = distinct !{!56, !55, !"_ZNK6opencc15SimpleConverter7ConvertB5cxx11EPKcm: argument 0"}
 !57 = !{!56}
-!61 = distinct !{!61, i1 false, !"_ZNK6opencc15SimpleConverter7ConvertB5cxx11EPKcm"}
-!62 = distinct !{!62, !61, !"_ZNK6opencc15SimpleConverter7ConvertB5cxx11EPKcm: argument 0"}
-!63 = !{!62}
-!64 = distinct !{null}
+!58 = distinct !{null}
 end_hunk_0

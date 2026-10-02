@@ -150,16 +150,16 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
   call void @pq_begintypsend(ptr noundef nonnull %1) #10
   call void @enlargeStringInfo(ptr noundef nonnull %1, i32 noundef 8) #10
-  call void @llvm.experimental.noalias.scope.decl(metadata !9)
+  call void @llvm.experimental.noalias.scope.decl(metadata !6)
   %i.c = call i64 @llvm.bswap.i64(i64 %i.b)
-  %i.d = load ptr, ptr %1, align 8, !alias.scope !9
+  %i.d = load ptr, ptr %1, align 8, !alias.scope !6
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.f = load i32, ptr %i.e, align 8, !alias.scope !9 ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !alias.scope !6 ; 2 uses
   %i.g = sext i32 %i.f to i64
   %i.h = getelementptr inbounds i8, ptr %i.d, i64 %i.g
-  store i64 %i.c, ptr %i.h, align 1, !noalias !9
+  store i64 %i.c, ptr %i.h, align 1, !noalias !6
   %i.i = add i32 %i.f, 8
-  store i32 %i.i, ptr %i.e, align 8, !alias.scope !9
+  store i32 %i.i, ptr %i.e, align 8, !alias.scope !6
   %i.j = call ptr @pq_endtypsend(ptr noundef nonnull %1) #10
   %i.k = ptrtoint ptr %i.j to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #10
@@ -446,7 +446,7 @@ attributes #11 = { cold nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"Ubuntu clang version 24.0.0 (++20260804081852+44c6aed9bd9b-1~exp1~20260804202019.1766)"}
-!7 = distinct !{!7, i1 false, !"pq_writeint64"}
-!8 = distinct !{!8, !7, !"pq_writeint64: argument 0"}
-!9 = !{!8}
+!4 = distinct !{!4, i1 false, !"pq_writeint64"}
+!5 = distinct !{!5, !4, !"pq_writeint64: argument 0"}
+!6 = !{!5}
 end_hunk_0

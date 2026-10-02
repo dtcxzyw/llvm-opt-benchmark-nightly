@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define hidden void @_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil8datetimeNtB2_8DateTime22saturating_add_secondsB6_(ptr nofree writeonly sret([12 x i8]) align 4 captures(none) %0, ptr nofree readonly align 4 captures(none) %1, i32 %2) unnamed_addr #0 {
 bb.a:
-  %.sroa.0.0.copyload.i.i = load i64, ptr %1, align 4, !noalias !13 ; 3 uses
+  %.sroa.0.0.copyload.i.i = load i64, ptr %1, align 4, !noalias !9 ; 3 uses
   %.sroa.22.0.extract.shift.i.i.i = lshr i64 %.sroa.0.0.copyload.i.i, 32
   %.sroa.22.0.extract.trunc.i.i.i = trunc i64 %.sroa.22.0.extract.shift.i.i.i to i8
   %i.a = sext i8 %.sroa.22.0.extract.trunc.i.i.i to i32
@@ -218,23 +218,23 @@ bb.a:
   %i.e = sext i8 %.sroa.22.0.extract.trunc.i15.i.i to i32
   %i.f = add nsw i32 %i.d, %i.e
   %i.g = add nsw i32 %i.f, %i.b
-  %i.h = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 range(i32 -468608, 464948) %i.g, i32 %2) #18, !noalias !16 ; 2 uses
+  %i.h = tail call { i32, i32 } @_RNvMs0_NtCs3oUPovFnLWP_4core3numl11checked_addCsaR3IayqLkK5_9jiff_core(i32 range(i32 -468608, 464948) %i.g, i32 %2) #18, !noalias !10 ; 2 uses
   %i.i = extractvalue { i32, i32 } %i.h, 0
   %i.j = trunc i32 %i.i to i1
   br i1 %i.j, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = tail call i8 @_RNvMsy_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_14CivilDaySecond5error(), !noalias !16
-  %i.l = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 %i.k), !noalias !16 ; 0 uses
+  %i.k = tail call i8 @_RNvMsy_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_14CivilDaySecond5error(), !noalias !10
+  %i.l = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 %i.k), !noalias !10 ; 0 uses
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.a
   %i.m = extractvalue { i32, i32 } %i.h, 1        ; 2 uses
-  %i.n = tail call i32 @_RNvMs0_NtCs3oUPovFnLWP_4core3numl10div_euclidCsaR3IayqLkK5_9jiff_core(i32 %i.m, i32 86400, ptr nonnull align 8 @38) #18, !noalias !16
-  %i.o = tail call i32 @_RNvMs0_NtCs3oUPovFnLWP_4core3numl10rem_euclidCsaR3IayqLkK5_9jiff_core(i32 %i.m, i32 86400, ptr nonnull align 8 @39) #18, !noalias !16 ; 3 uses
+  %i.n = tail call i32 @_RNvMs0_NtCs3oUPovFnLWP_4core3numl10div_euclidCsaR3IayqLkK5_9jiff_core(i32 %i.m, i32 86400, ptr nonnull align 8 @38) #18, !noalias !10
+  %i.o = tail call i32 @_RNvMs0_NtCs3oUPovFnLWP_4core3numl10rem_euclidCsaR3IayqLkK5_9jiff_core(i32 %i.m, i32 86400, ptr nonnull align 8 @39) #18, !noalias !10 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.0.0.copyload.i28.i = load i32, ptr %i.p, align 4, !noalias !13
-  %i.q = tail call i48 @_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date11checked_addB6_(i32 %.sroa.0.0.copyload.i28.i, i32 %i.n) #18, !noalias !13 ; 2 uses
+  %.sroa.0.0.copyload.i28.i = load i32, ptr %i.p, align 4, !noalias !9
+  %i.q = tail call i48 @_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil4dateNtB2_4Date11checked_addB6_(i32 %.sroa.0.0.copyload.i28.i, i32 %i.n) #18, !noalias !9 ; 2 uses
   %.sroa.221.0.extract.shift.i = lshr i48 %i.q, 16
   %.sroa.221.0.extract.trunc.i = trunc nuw i48 %.sroa.221.0.extract.shift.i to i32
   %i.r = trunc i48 %i.q to i1
@@ -265,15 +265,15 @@ bb.f:                                             ; preds = %bb.e
 _RNvMs0_NtNtCsaR3IayqLkK5_9jiff_core5civil4timeNtB5_10TimeSecond7to_timeB9_.exit.i: ; preds = %bb.f, %bb.e, %bb.d
   %.sroa.2.0.i.i = phi i8 [ %i.t, %bb.f ], [ %i.t, %bb.e ], [ 0, %bb.d ]
   %.sroa.4.0.i.i = phi i64 [ %i.ab, %bb.f ], [ 0, %bb.e ], [ 0, %bb.d ] ; 2 uses
-  %.sroa.0.0.copyload.i29.i = load i64, ptr %1, align 4, !noalias !13 ; 2 uses
+  %.sroa.0.0.copyload.i29.i = load i64, ptr %1, align 4, !noalias !9 ; 2 uses
   %.sroa.01.0.extract.trunc.i.i = trunc i64 %.sroa.0.0.copyload.i29.i to i32
   %or.cond.i.i.i.i = icmp ult i32 %.sroa.01.0.extract.trunc.i.i, 1000000000
   br i1 %or.cond.i.i.i.i, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %_RNvMs0_NtNtCsaR3IayqLkK5_9jiff_core5civil4timeNtB5_10TimeSecond7to_timeB9_.exit.i
-  tail call void @_RNvMNtCsaR3IayqLkK5_9jiff_core6boundsINtB2_14RawBoundsErrorNtB2_16SubsecNanosecondE3newB4_() #18, !noalias !13
-  %i.ac = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 21), !noalias !13 ; 0 uses
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr nonnull @8, ptr nonnull inttoptr (i64 109 to ptr), ptr nonnull align 8 @10) #19, !noalias !13
+  tail call void @_RNvMNtCsaR3IayqLkK5_9jiff_core6boundsINtB2_14RawBoundsErrorNtB2_16SubsecNanosecondE3newB4_() #18, !noalias !9
+  %i.ac = tail call i32 @_RNvMs3_NtCsaR3IayqLkK5_9jiff_core6boundsNtB5_11BoundsError16into_range_error(i8 21), !noalias !9 ; 0 uses
+  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr nonnull @8, ptr nonnull inttoptr (i64 109 to ptr), ptr nonnull align 8 @10) #19, !noalias !9
   unreachable
 
 bb.h:                                             ; preds = %bb.c, %bb.b
@@ -676,10 +676,10 @@ attributes #21 = { cold noreturn nounwind }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (787af2b8c 2026-08-25)"}
 !4 = !{}
-!11 = distinct !{!11, i1 false, !"_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil8datetimeNtB2_8DateTime19checked_add_secondsB6_"}
-!12 = distinct !{!12, !11, !"_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil8datetimeNtB2_8DateTime19checked_add_secondsB6_: argument 0"}
-!13 = !{!12}
-!14 = distinct !{!14, i1 false, !"_RNvMs0_NtNtCsaR3IayqLkK5_9jiff_core5civil4timeNtB5_10TimeSecond15overflowing_addB9_"}
-!15 = distinct !{!15, !14, !"_RNvMs0_NtNtCsaR3IayqLkK5_9jiff_core5civil4timeNtB5_10TimeSecond15overflowing_addB9_: argument 0"}
-!16 = !{!15, !12}
+!5 = distinct !{!5, i1 false, !"_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil8datetimeNtB2_8DateTime19checked_add_secondsB6_"}
+!6 = distinct !{!6, !5, !"_RNvMNtNtCsaR3IayqLkK5_9jiff_core5civil8datetimeNtB2_8DateTime19checked_add_secondsB6_: argument 0"}
+!7 = distinct !{!7, i1 false, !"_RNvMs0_NtNtCsaR3IayqLkK5_9jiff_core5civil4timeNtB5_10TimeSecond15overflowing_addB9_"}
+!8 = distinct !{!8, !7, !"_RNvMs0_NtNtCsaR3IayqLkK5_9jiff_core5civil4timeNtB5_10TimeSecond15overflowing_addB9_: argument 0"}
+!9 = !{!6}
+!10 = !{!8, !6}
 end_hunk_1

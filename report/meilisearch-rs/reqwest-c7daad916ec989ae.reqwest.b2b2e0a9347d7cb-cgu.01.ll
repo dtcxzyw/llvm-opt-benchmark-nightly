@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 1                ; 6 uses
   %.sroa.2 = alloca [7 x i8], align 1             ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.b = load i8, ptr %1, align 8, !noalias !11   ; 2 uses
+  %i.b = load i8, ptr %1, align 8, !noalias !8    ; 2 uses
   switch i8 %i.b, label %bb.b [
     i8 0, label %"_ZN58_$LT$http..method..Inner$u20$as$u20$core..clone..Clone$GT$5clone17h9e503e41150fd11dE.exit"
     i8 1, label %"_ZN58_$LT$http..method..Inner$u20$as$u20$core..clone..Clone$GT$5clone17h9e503e41150fd11dE.exit"
@@ -222,7 +222,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 1
-  call void @"_ZN79_$LT$http..method..extension..InlineExtension$u20$as$u20$core..clone..Clone$GT$5clone17h4ca92e2d32be5524E"(ptr nonnull sret([16 x i8]) align 1 %i.a, ptr nonnull align 1 %i.c), !noalias !11
+  call void @"_ZN79_$LT$http..method..extension..InlineExtension$u20$as$u20$core..clone..Clone$GT$5clone17h4ca92e2d32be5524E"(ptr nonnull sret([16 x i8]) align 1 %i.a, ptr nonnull align 1 %i.c), !noalias !8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.2, ptr noundef nonnull align 1 dereferenceable(7) %i.a, i64 7, i1 false)
   %.sroa.3.1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 7
   %.sroa.3.1.copyload = load ptr, ptr %.sroa.3.1..sroa_idx, align 1
@@ -233,7 +233,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = tail call { ptr, i64 } @"_ZN82_$LT$http..method..extension..AllocatedExtension$u20$as$u20$core..clone..Clone$GT$5clone17hae51246715d31955E"(ptr nonnull align 8 %i.d), !noalias !11 ; 2 uses
+  %i.e = tail call { ptr, i64 } @"_ZN82_$LT$http..method..extension..AllocatedExtension$u20$as$u20$core..clone..Clone$GT$5clone17hae51246715d31955E"(ptr nonnull align 8 %i.d), !noalias !8 ; 2 uses
   %i.f = extractvalue { ptr, i64 } %i.e, 0
   %i.g = extractvalue { ptr, i64 } %i.e, 1
   br label %"_ZN58_$LT$http..method..Inner$u20$as$u20$core..clone..Clone$GT$5clone17h9e503e41150fd11dE.exit"
@@ -636,7 +636,7 @@ attributes #25 = { noreturn nounwind }
 !3 = !{ptr @"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17h25e192ce4c8a0570E"}
 !4 = !{ptr @"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17h4254984f00f64d00E"}
 !5 = !{ptr @"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17h83610b70374e8209E"}
-!9 = distinct !{!9, i1 false, !"_ZN58_$LT$http..method..Inner$u20$as$u20$core..clone..Clone$GT$5clone17h9e503e41150fd11dE"}
-!10 = distinct !{!10, !9, !"_ZN58_$LT$http..method..Inner$u20$as$u20$core..clone..Clone$GT$5clone17h9e503e41150fd11dE: argument 0"}
-!11 = !{!10}
+!6 = distinct !{!6, i1 false, !"_ZN58_$LT$http..method..Inner$u20$as$u20$core..clone..Clone$GT$5clone17h9e503e41150fd11dE"}
+!7 = distinct !{!7, !6, !"_ZN58_$LT$http..method..Inner$u20$as$u20$core..clone..Clone$GT$5clone17h9e503e41150fd11dE: argument 0"}
+!8 = !{!7}
 end_hunk_1

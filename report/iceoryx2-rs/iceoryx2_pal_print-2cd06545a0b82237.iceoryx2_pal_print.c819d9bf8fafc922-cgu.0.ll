@@ -45,8 +45,8 @@ bb.d:                                             ; preds = %bb.b
   %i.j = getelementptr i8, ptr %i.d, i64 -1       ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  store ptr %i.j, ptr %i.k, align 8, !alias.scope !10
-  store i8 3, ptr %i.a, align 8, !alias.scope !10
+  store ptr %i.j, ptr %i.k, align 8, !alias.scope !7
+  store i8 3, ptr %i.a, align 8, !alias.scope !7
   call void @_RNvXsd_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.k) #3
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshb8exvODBu0_18iceoryx2_pal_print.exit
 
@@ -96,8 +96,8 @@ bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr i8, ptr %i.c, i64 -1       ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.i) ]
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  store ptr %i.i, ptr %i.j, align 8, !alias.scope !16
-  store i8 3, ptr %i.a, align 8, !alias.scope !16
+  store ptr %i.i, ptr %i.j, align 8, !alias.scope !10
+  store i8 3, ptr %i.a, align 8, !alias.scope !10
   call void @_RNvXsd_NtNtCs8Chj7Szqq0n_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.j) #3
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshb8exvODBu0_18iceoryx2_pal_print.exit
 
@@ -167,10 +167,10 @@ attributes #3 = { nounwind }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (0ed41eb41 2026-09-04)"}
 !4 = !{!"branch_weights", i32 1, i32 2000, i32 2000, i32 2000, i32 2000}
+!5 = distinct !{!5, i1 false, !"_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECshb8exvODBu0_18iceoryx2_pal_print"}
+!6 = distinct !{!6, !5, !"_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECshb8exvODBu0_18iceoryx2_pal_print: argument 0"}
+!7 = !{!6}
 !8 = distinct !{!8, i1 false, !"_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECshb8exvODBu0_18iceoryx2_pal_print"}
 !9 = distinct !{!9, !8, !"_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECshb8exvODBu0_18iceoryx2_pal_print: argument 0"}
 !10 = !{!9}
-!14 = distinct !{!14, i1 false, !"_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECshb8exvODBu0_18iceoryx2_pal_print"}
-!15 = distinct !{!15, !14, !"_RINvNtNtNtCs8Chj7Szqq0n_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECshb8exvODBu0_18iceoryx2_pal_print: argument 0"}
-!16 = !{!15}
 end_hunk_0

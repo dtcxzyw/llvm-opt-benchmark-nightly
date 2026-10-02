@@ -205,26 +205,26 @@ ZSTDMT_getCCtx.exit:                              ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !107  ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !200)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !188)
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 40
-  %i.t = load i64, ptr %i.s, align 8, !tbaa !46, !noalias !200
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !46, !noalias !188
   %i.u = icmp eq i64 %i.t, 0
   br i1 %i.u, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %ZSTDMT_getCCtx.exit
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, i8 0, i64 40, i1 false), !alias.scope !200
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, i8 0, i64 40, i1 false), !alias.scope !188
   br label %ZSTDMT_getSeq.exit
 
 bb.e:                                             ; preds = %ZSTDMT_getCCtx.exit
-  %i.v = tail call fastcc { ptr, i64 } @ZSTDMT_getBuffer(ptr noundef nonnull %i.r), !noalias !200 ; 2 uses
+  %i.v = tail call fastcc { ptr, i64 } @ZSTDMT_getBuffer(ptr noundef nonnull %i.r), !noalias !188 ; 2 uses
   %i.w = extractvalue { ptr, i64 } %i.v, 0        ; 2 uses
   %i.x = extractvalue { ptr, i64 } %i.v, 1
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, i8 0, i64 24, i1 false), !alias.scope !203
-  store ptr %i.w, ptr %2, align 8, !tbaa !191, !alias.scope !203
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, i8 0, i64 24, i1 false), !alias.scope !189
+  store ptr %i.w, ptr %2, align 8, !tbaa !191, !alias.scope !189
   %i.z = udiv i64 %i.x, 12
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 32
-  store i64 %i.z, ptr %i.aa, align 8, !tbaa !192, !alias.scope !203
+  store i64 %i.z, ptr %i.aa, align 8, !tbaa !192, !alias.scope !189
   %i.ab = icmp eq ptr %i.w, null
   br label %ZSTDMT_getSeq.exit
 
@@ -627,10 +627,16 @@ attributes #17 = { nounwind willreturn memory(read) }
 !177 = !{!175, !21, i64 16}
 !178 = !{!175, !16, i64 0}
 !179 = distinct !{!179, !49}
+!180 = distinct !{!180, i1 false, !"ZSTDMT_getSeq"}
+!181 = distinct !{!181, !180, !"ZSTDMT_getSeq: argument 0"}
+!182 = distinct !{!182, i1 false, !"bufferToSeq"}
+!183 = distinct !{!183, !182, !"bufferToSeq: argument 0"}
 !184 = distinct !{!184, !49}
 !185 = distinct !{!185, !49}
 !186 = distinct !{null, null, null}
 !187 = !{!75, !16, i64 104}
+!188 = !{!181}
+!189 = !{!183, !181}
 !190 = !{!"", !16, i64 0, !21, i64 8, !21, i64 16, !21, i64 24, !21, i64 32}
 !191 = !{!190, !16, i64 0}
 !192 = !{!190, !21, i64 32}
@@ -639,10 +645,4 @@ attributes #17 = { nounwind willreturn memory(read) }
 !195 = !{!75, !16, i64 152}
 !196 = !{!75, !21, i64 160}
 !197 = !{!190, !21, i64 24}
-!198 = distinct !{!198, i1 false, !"ZSTDMT_getSeq"}
-!199 = distinct !{!199, !198, !"ZSTDMT_getSeq: argument 0"}
-!200 = !{!199}
-!201 = distinct !{!201, i1 false, !"bufferToSeq"}
-!202 = distinct !{!202, !201, !"bufferToSeq: argument 0"}
-!203 = !{!202, !199}
 end_hunk_1

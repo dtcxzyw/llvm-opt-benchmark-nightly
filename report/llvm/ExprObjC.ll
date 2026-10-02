@@ -204,7 +204,7 @@ bb.a:
 define dso_local void @_ZNK5clang15ObjCMessageExpr8childrenEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.llvm::iterator_range.387") align 8 captures(none) initializes((0, 16), (24, 40)) %0, ptr noundef nonnull align 8 dereferenceable(40) %1) local_unnamed_addr #7 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.b = load i32, ptr %i.a, align 8, !noalias !95 ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !noalias !92 ; 2 uses
   %i.c = and i32 %i.b, 16711680
   %i.d = icmp eq i32 %i.c, 65536
   %.0.v.i = select i1 %i.d, i64 40, i64 48
@@ -539,7 +539,7 @@ attributes #14 = { nounwind willreturn memory(read) }
 !87 = !{!"p1 _ZTSN5clang4TypeE", !22, i64 0}
 !88 = !{!"_ZTSN5clang22ExtQualsTypeCommonBaseE", !87, i64 0, !17, i64 8}
 !89 = !{!88, !87, i64 0}
-!93 = distinct !{!93, i1 false, !"_ZN5clang15ObjCMessageExpr8childrenEv"}
-!94 = distinct !{!94, !93, !"_ZN5clang15ObjCMessageExpr8childrenEv: argument 0"}
-!95 = !{!94}
+!90 = distinct !{!90, i1 false, !"_ZN5clang15ObjCMessageExpr8childrenEv"}
+!91 = distinct !{!91, !90, !"_ZN5clang15ObjCMessageExpr8childrenEv: argument 0"}
+!92 = !{!91}
 end_hunk_0

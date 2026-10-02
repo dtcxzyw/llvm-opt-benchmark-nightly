@@ -15,13 +15,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   call void @_RNvMNtNtCs2awuzAz5vY4_5tokio4sync9semaphoreNtB2_9Semaphore3new(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %.sroa.5, i64 noundef 0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1)
   %i.a = tail call { i64, i32 } @_RNvMNtCsG258MDvU3F_3std4timeNtB2_7Instant3now() ; 2 uses
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #6, !noalias !10
-  %i.b = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef 8) #6, !noalias !10 ; 7 uses
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #6, !noalias !6
+  %i.b = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef 8) #6, !noalias !6 ; 7 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.b, label %_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit, !prof !7
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 72) #7, !noalias !10
+  tail call void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 72) #7, !noalias !6
   unreachable
 
 _RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
@@ -51,12 +51,12 @@ bb.b:                                             ; preds = %bb.a
   %i.b = extractvalue { i64, i32 } %i.a, 0
   %i.c = extractvalue { i64, i32 } %i.a, 1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.e = load i64, ptr %i.d, align 8, !noundef !11
+  %i.e = load i64, ptr %i.d, align 8, !noundef !8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.g = load i32, ptr %i.f, align 8, !range !12, !noundef !11
+  %i.g = load i32, ptr %i.f, align 8, !range !9, !noundef !8
   %i.h = tail call { i64, i32 } @_RNvXs3_NtCsG258MDvU3F_3std4timeNtB5_7InstantNtNtNtCskKLDkoKarTP_4core3ops5arith3Sub3sub(i64 noundef %i.b, i32 noundef %i.c, i64 noundef %i.e, i32 noundef %i.g) ; 2 uses
   %i.i = extractvalue { i64, i32 } %i.h, 0        ; 2 uses
-  %i.j = load i64, ptr %1, align 8, !noundef !11  ; 2 uses
+  %i.j = load i64, ptr %1, align 8, !noundef !8   ; 2 uses
   %i.k = icmp eq i64 %i.i, %i.j
   %i.l = icmp ugt i64 %i.i, %i.j
   br i1 %i.k, label %bb.d, label %bb.c
@@ -70,7 +70,7 @@ bb.d:                                             ; preds = %bb.b
   %i.n = icmp ult i32 %i.m, 1000000000
   tail call void @llvm.assume(i1 %i.n)
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.p = load i32, ptr %i.o, align 8, !range !12, !noundef !11
+  %i.p = load i32, ptr %i.o, align 8, !range !9, !noundef !8
   %i.q = icmp samesign ugt i32 %i.m, %i.p
   br label %bb.c
 }
@@ -124,10 +124,10 @@ attributes #7 = { noreturn }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
+!4 = distinct !{!4, i1 false, !"_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsHAS6hUK698_20pingora_memory_cache12read_through9CacheLockEE3newB14_"}
+!5 = distinct !{!5, !4, !"_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsHAS6hUK698_20pingora_memory_cache12read_through9CacheLockEE3newB14_: argument 0"}
+!6 = !{!5}
 !7 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!8 = distinct !{!8, i1 false, !"_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsHAS6hUK698_20pingora_memory_cache12read_through9CacheLockEE3newB14_"}
-!9 = distinct !{!9, !8, !"_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsHAS6hUK698_20pingora_memory_cache12read_through9CacheLockEE3newB14_: argument 0"}
-!10 = !{!9}
-!11 = !{}
-!12 = !{i32 0, i32 1000000000}
+!8 = !{}
+!9 = !{i32 0, i32 1000000000}
 end_hunk_0

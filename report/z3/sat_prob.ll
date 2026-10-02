@@ -204,13 +204,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %i.ap, i64 %i.bb ; 2 uses
   %next.gep51 = getelementptr i8, ptr %i.ak, i64 %i.bb ; 3 uses
   %i.bc = getelementptr i8, ptr %next.gep51, i64 16 ; 2 uses
-  %wide.load = load <2 x ptr>, ptr %next.gep51, align 8, !tbaa !25, !alias.scope !272
-  %wide.load52 = load <2 x ptr>, ptr %i.bc, align 8, !tbaa !25, !alias.scope !272
+  %wide.load = load <2 x ptr>, ptr %next.gep51, align 8, !tbaa !25, !alias.scope !268
+  %wide.load52 = load <2 x ptr>, ptr %i.bc, align 8, !tbaa !25, !alias.scope !268
   %i.bd = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x ptr> %wide.load, ptr %next.gep, align 8, !tbaa !25, !alias.scope !274, !noalias !272
-  store <2 x ptr> %wide.load52, ptr %i.bd, align 8, !tbaa !25, !alias.scope !274, !noalias !272
-  store <2 x ptr> splat (ptr null), ptr %next.gep51, align 8, !tbaa !25, !alias.scope !272
-  store <2 x ptr> splat (ptr null), ptr %i.bc, align 8, !tbaa !25, !alias.scope !272
+  store <2 x ptr> %wide.load, ptr %next.gep, align 8, !tbaa !25, !alias.scope !269, !noalias !268
+  store <2 x ptr> %wide.load52, ptr %i.bd, align 8, !tbaa !25, !alias.scope !269, !noalias !268
+  store <2 x ptr> splat (ptr null), ptr %next.gep51, align 8, !tbaa !25, !alias.scope !268
+  store <2 x ptr> splat (ptr null), ptr %i.bc, align 8, !tbaa !25, !alias.scope !268
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.be = icmp eq i64 %index.next, %n.vec
   br i1 %i.be, label %middle.block, label %vector.body, !llvm.loop !266
@@ -613,11 +613,11 @@ begin_hunk_1_@llvm.umax.i32
 !260 = !{!59, !51, i64 8}
 !261 = !{!59, !15, i64 24}
 !262 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!263 = distinct !{!263, i1 false, !"LVerDomain"}
+!264 = distinct !{!264, !263}
+!265 = distinct !{!265, !263}
 !266 = distinct !{!266, !32, !95, !96}
 !267 = distinct !{!267, !32, !95}
-!270 = distinct !{!270, i1 false, !"LVerDomain"}
-!271 = distinct !{!271, !270}
-!272 = !{!271}
-!273 = distinct !{!273, !270}
-!274 = !{!273}
+!268 = !{!264}
+!269 = !{!265}
 end_hunk_1

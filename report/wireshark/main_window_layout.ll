@@ -202,7 +202,7 @@ bb.at:                                            ; preds = %bb.as
 bb.au:                                            ; preds = %bb.at, %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.dy = getelementptr i8, ptr %0, i64 128       ; 4 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %3, i8 0, i64 24, i1 false), !alias.scope !22
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %3, i8 0, i64 24, i1 false), !alias.scope !19
   invoke void @_Z23qt_qFindChildren_helperPK7QObjectRK11QMetaObjectP5QListIPvE6QFlagsIN2Qt15FindChildOptionEE(ptr noundef align 8 dereferenceable_or_null(16) %i.dy, ptr noundef nonnull align 8 dereferenceable(56) @_ZN7QWidget16staticMetaObjectE, ptr noundef nonnull align 8 %3, i32 1)
           to label %_ZNK7QObject12findChildrenIP7QWidgetEE5QListIT_E6QFlagsIN2Qt15FindChildOptionEE.exit unwind label %bb.av
 
@@ -605,6 +605,8 @@ attributes #13 = { cold noreturn }
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
 !6 = !{!"llvm.loop.mustprogress"}
 !7 = distinct !{!7, !6}
+!8 = distinct !{!8, i1 false, !"_ZNK7QObject12findChildrenIP7QWidgetEE5QListIT_E6QFlagsIN2Qt15FindChildOptionEE"}
+!9 = distinct !{!9, !8, !"_ZNK7QObject12findChildrenIP7QWidgetEE5QListIT_E6QFlagsIN2Qt15FindChildOptionEE: argument 0"}
 !10 = distinct !{!10, !6}
 !11 = distinct !{!11, !6}
 !12 = distinct !{!12, !6}
@@ -614,7 +616,5 @@ attributes #13 = { cold noreturn }
 !16 = distinct !{!16, !6}
 !17 = !{i8 0, i8 2}
 !18 = !{}
-!20 = distinct !{!20, i1 false, !"_ZNK7QObject12findChildrenIP7QWidgetEE5QListIT_E6QFlagsIN2Qt15FindChildOptionEE"}
-!21 = distinct !{!21, !20, !"_ZNK7QObject12findChildrenIP7QWidgetEE5QListIT_E6QFlagsIN2Qt15FindChildOptionEE: argument 0"}
-!22 = !{!21}
+!19 = !{!9}
 end_hunk_1

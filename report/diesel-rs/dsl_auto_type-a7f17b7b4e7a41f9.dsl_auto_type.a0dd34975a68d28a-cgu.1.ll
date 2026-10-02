@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 16               ; 2 uses
   call void @_RNvMs9_NtNtCscI6d9CVNmLh_4core9core_arch4simdINtB5_4SimdaKj10_E5splatCsdfcQ11shQaG_6strsim(ptr nonnull sret([16 x i8]) align 16 %i.a, i8 %1)
   %i.b = load <16 x i8>, ptr %i.a, align 16
-  store <16 x i8> %i.b, ptr %0, align 16, !alias.scope !9
+  store <16 x i8> %i.b, ptr %0, align 16, !alias.scope !6
   ret void
 }
 
@@ -605,21 +605,21 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.i = tail call i32 @_RNvXsU_Cs50gxqRnCXtk_10proc_macroNtB5_11TokenStreamNtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsdOh5Xhm0ZW8_13dsl_auto_type(ptr nonnull align 4 %i.h), !noalias !15 ; 2 uses
-  store i32 %i.i, ptr %i.b, align 4, !noalias !15
+  %i.i = tail call i32 @_RNvXsU_Cs50gxqRnCXtk_10proc_macroNtB5_11TokenStreamNtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsdOh5Xhm0ZW8_13dsl_auto_type(ptr nonnull align 4 %i.h), !noalias !9 ; 2 uses
+  store i32 %i.i, ptr %i.b, align 4, !noalias !9
   invoke void @_RNvXsa_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecNtCs50gxqRnCXtk_10proc_macro9TokenTreeENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsf5uYjtxkodL_11proc_macro2(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr nonnull align 8 %1)
-          to label %_RNvXsA_NtCsf5uYjtxkodL_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsdOh5Xhm0ZW8_13dsl_auto_type.exit unwind label %bb.d, !noalias !15
+          to label %_RNvXsA_NtCsf5uYjtxkodL_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsdOh5Xhm0ZW8_13dsl_auto_type.exit unwind label %bb.d, !noalias !9
 
 bb.d:                                             ; preds = %bb.c
   %i.j = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs50gxqRnCXtk_10proc_macro11TokenStreamECsf5uYjtxkodL_11proc_macro2(ptr nonnull align 4 %i.b) #25
-          to label %bb.f unwind label %bb.e, !noalias !15
+          to label %bb.f unwind label %bb.e, !noalias !9
 
 bb.e:                                             ; preds = %bb.d
   %i.k = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCscI6d9CVNmLh_4core9panicking16panic_in_cleanup() #26, !noalias !15
+  call void @_RNvNtCscI6d9CVNmLh_4core9panicking16panic_in_cleanup() #26, !noalias !9
   unreachable
 
 bb.f:                                             ; preds = %bb.d
@@ -1022,10 +1022,10 @@ attributes #28 = { noreturn }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.97.0 (2d8144b78 2026-07-07)"}
 !3 = !{}
-!7 = distinct !{!7, i1 false, !"_RNvMs1P_NtNtCscI6d9CVNmLh_4core9core_arch3x86INtNtB8_4simd4SimdaKj10_E8as_m128iCsdOh5Xhm0ZW8_13dsl_auto_type"}
-!8 = distinct !{!8, !7, !"_RNvMs1P_NtNtCscI6d9CVNmLh_4core9core_arch3x86INtNtB8_4simd4SimdaKj10_E8as_m128iCsdOh5Xhm0ZW8_13dsl_auto_type: argument 0"}
+!4 = distinct !{!4, i1 false, !"_RNvMs1P_NtNtCscI6d9CVNmLh_4core9core_arch3x86INtNtB8_4simd4SimdaKj10_E8as_m128iCsdOh5Xhm0ZW8_13dsl_auto_type"}
+!5 = distinct !{!5, !4, !"_RNvMs1P_NtNtCscI6d9CVNmLh_4core9core_arch3x86INtNtB8_4simd4SimdaKj10_E8as_m128iCsdOh5Xhm0ZW8_13dsl_auto_type: argument 0"}
+!6 = !{!5}
+!7 = distinct !{!7, i1 false, !"_RNvXsA_NtCsf5uYjtxkodL_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsdOh5Xhm0ZW8_13dsl_auto_type"}
+!8 = distinct !{!8, !7, !"_RNvXsA_NtCsf5uYjtxkodL_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsdOh5Xhm0ZW8_13dsl_auto_type: argument 0"}
 !9 = !{!8}
-!13 = distinct !{!13, i1 false, !"_RNvXsA_NtCsf5uYjtxkodL_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsdOh5Xhm0ZW8_13dsl_auto_type"}
-!14 = distinct !{!14, !13, !"_RNvXsA_NtCsf5uYjtxkodL_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsdOh5Xhm0ZW8_13dsl_auto_type: argument 0"}
-!15 = !{!14}
 end_hunk_2

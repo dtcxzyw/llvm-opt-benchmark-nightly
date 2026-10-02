@@ -202,8 +202,8 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h, %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr null, ptr %i.ac, align 8, !tbaa !34, !alias.scope !38
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false), !alias.scope !38
+  store ptr null, ptr %i.ac, align 8, !tbaa !34, !alias.scope !35
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false), !alias.scope !35
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.d, %bb.g, %bb.i, %bb.b
@@ -264,7 +264,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %.0 = phi i64 [ %spec.store.select.i, %bb.e ], [ %i.f, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
   %i.q = add nuw i64 %.0, 1                       ; 2 uses
   %i.r = icmp slt i64 %i.q, 0
-  br i1 %i.r, label %bb.g, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !39
+  br i1 %i.r, label %bb.g, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !36
 
 bb.g:                                             ; preds = %bb.f
   tail call void @_ZSt17__throw_bad_allocv() #9
@@ -416,13 +416,13 @@ attributes #12 = { builtin nounwind }
 !25 = !{i8 0, i8 2}
 !26 = !{}
 !27 = !{!6, !6, i64 0}
+!28 = distinct !{!28, i1 false, !"_ZN7rocksdb6Status2OKEv"}
+!29 = distinct !{!29, !28, !"_ZN7rocksdb6Status2OKEv: argument 0"}
 !30 = !{!"_ZTSN7rocksdb5SliceE", !15, i64 0, !17, i64 8}
 !31 = !{!30, !17, i64 8}
 !32 = !{!30, !15, i64 0}
 !33 = !{!"_ZTSSt10_Head_baseILm0EPKcLb0EE", !15, i64 0}
 !34 = !{!33, !15, i64 0}
-!36 = distinct !{!36, i1 false, !"_ZN7rocksdb6Status2OKEv"}
-!37 = distinct !{!37, !36, !"_ZN7rocksdb6Status2OKEv: argument 0"}
-!38 = !{!37}
-!39 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!35 = !{!29}
+!36 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_0

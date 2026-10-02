@@ -204,8 +204,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.phi105 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.i, %vector.body ]
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %index ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %wide.load = load <4 x i32>, ptr %i.f, align 4, !tbaa !24, !alias.scope !107
-  %wide.load106 = load <4 x i32>, ptr %i.g, align 4, !tbaa !24, !alias.scope !107
+  %wide.load = load <4 x i32>, ptr %i.f, align 4, !tbaa !24, !alias.scope !100
+  %wide.load106 = load <4 x i32>, ptr %i.g, align 4, !tbaa !24, !alias.scope !100
   %i.h = add <4 x i32> %vec.phi, %wide.load       ; 2 uses
   %i.i = add <4 x i32> %vec.phi105, %wide.load106 ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
@@ -215,7 +215,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.i, %i.h
   %i.k = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  store i32 %i.k, ptr %3, align 4, !tbaa !42, !alias.scope !109, !noalias !107
+  store i32 %i.k, ptr %3, align 4, !tbaa !42, !alias.scope !101, !noalias !100
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %.preheader, label %scalar.ph.preheader
 
@@ -402,8 +402,8 @@ vector.body120:                                   ; preds = %vector.body120, %ve
   %vec.phi123 = phi <4 x i32> [ zeroinitializer, %vector.ph118 ], [ %i.cx, %vector.body120 ]
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %index121 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
-  %wide.load124 = load <4 x i32>, ptr %i.cu, align 4, !tbaa !24, !alias.scope !112
-  %wide.load125 = load <4 x i32>, ptr %i.cv, align 4, !tbaa !24, !alias.scope !112
+  %wide.load124 = load <4 x i32>, ptr %i.cu, align 4, !tbaa !24, !alias.scope !103
+  %wide.load125 = load <4 x i32>, ptr %i.cv, align 4, !tbaa !24, !alias.scope !103
   %i.cw = add <4 x i32> %vec.phi122, %wide.load124 ; 2 uses
   %i.cx = add <4 x i32> %vec.phi123, %wide.load125 ; 2 uses
   %index.next126 = add nuw i64 %index121, 8       ; 2 uses
@@ -413,7 +413,7 @@ vector.body120:                                   ; preds = %vector.body120, %ve
 middle.block127:                                  ; preds = %vector.body120
   %bin.rdx128 = add <4 x i32> %i.cx, %i.cw
   %i.cz = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx128) ; 2 uses
-  store i32 %i.cz, ptr %i.co, align 4, !tbaa !44, !alias.scope !114, !noalias !112
+  store i32 %i.cz, ptr %i.co, align 4, !tbaa !44, !alias.scope !104, !noalias !103
   %cmp.n129 = icmp eq i64 %n.vec119, %wide.trip.count98
   br i1 %cmp.n129, label %._crit_edge, label %scalar.ph112.preheader
 
@@ -620,22 +620,22 @@ attributes #8 = { nounwind }
 !84 = !{!75, !72, i64 64}
 !85 = distinct !{!85, !30}
 !86 = distinct !{!86, !30}
+!87 = distinct !{!87, i1 false, !"LVerDomain"}
+!88 = distinct !{!88, !87}
 !89 = distinct !{!89, !30, !31, !32}
+!90 = distinct !{!90, !87}
 !91 = distinct !{!91, !102}
 !92 = distinct !{!92, !30, !31}
 !93 = distinct !{!93, !30}
+!94 = distinct !{!94, i1 false, !"LVerDomain"}
+!95 = distinct !{!95, !94}
 !96 = distinct !{!96, !30, !31, !32}
+!97 = distinct !{!97, !94}
 !98 = distinct !{!98, !102}
 !99 = distinct !{!99, !30, !31}
+!100 = !{!88}
+!101 = !{!90}
 !102 = !{!"llvm.loop.unroll.disable"}
-!105 = distinct !{!105, i1 false, !"LVerDomain"}
-!106 = distinct !{!106, !105}
-!107 = !{!106}
-!108 = distinct !{!108, !105}
-!109 = !{!108}
-!110 = distinct !{!110, i1 false, !"LVerDomain"}
-!111 = distinct !{!111, !110}
-!112 = !{!111}
-!113 = distinct !{!113, !110}
-!114 = !{!113}
+!103 = !{!95}
+!104 = !{!97}
 end_hunk_0

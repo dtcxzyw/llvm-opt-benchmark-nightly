@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bo, label %bb.j, label %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit.i, !prof !27
 
 bb.j:                                             ; preds = %bb.i
-  %i.bp = call noundef { double, double } @__muldc3(double noundef %.sroa.028.032.i, double noundef %.sroa.6.031.i, double noundef 0.000000e+00, double noundef %i.bg) #16, !noalias !68 ; 2 uses
+  %i.bp = call noundef { double, double } @__muldc3(double noundef %.sroa.028.032.i, double noundef %.sroa.6.031.i, double noundef 0.000000e+00, double noundef %i.bg) #16, !noalias !65 ; 2 uses
   %i.bq = extractvalue { double, double } %i.bp, 0
   %i.br = extractvalue { double, double } %i.bp, 1
   br label %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit.i
@@ -429,7 +429,7 @@ vector.body:                                      ; preds = %vector.body, %_Z25p
   %index.next = add nuw i32 %index, 32            ; 2 uses
   %vec.ind.next = add nuw <16 x i32> %vec.ind, splat (i32 32)
   %i.av = icmp eq i32 %index.next, 64
-  br i1 %i.av, label %_Z28paulis_getSignOfPauliStrConj8PauliStr.exit, label %vector.body, !llvm.loop !69
+  br i1 %i.av, label %_Z28paulis_getSignOfPauliStrConj8PauliStr.exit, label %vector.body, !llvm.loop !66
 
 _Z28paulis_getSignOfPauliStrConj8PauliStr.exit:   ; preds = %vector.body
   %bin.rdx = xor <16 x i1> %i.au, %i.at
@@ -468,7 +468,7 @@ _ZmlRKSt7complexIdERKi.exit:                      ; preds = %_Z28paulis_getSignO
   store double %i.bp, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !30
   %i.br = add nuw nsw i64 %.022, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.br, %i.j
-  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !70
+  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !67
 }
 
 declare void @_Z54error_pauliStrSumHasMoreQubitsThanSpecifiedInConjShiftv() local_unnamed_addr #4
@@ -575,6 +575,8 @@ attributes #16 = { nounwind }
 !51 = distinct !{!51, !13, !16, !17}
 !52 = distinct !{!52, !13}
 !53 = distinct !{!53, !13}
+!54 = distinct !{!54, i1 false, !"_Z22paulis_getPauliStrProd8PauliStrS_"}
+!55 = distinct !{!55, !54, !"_Z22paulis_getPauliStrProd8PauliStrS_: argument 0"}
 !56 = distinct !{!56, !13}
 !57 = !{!"p1 omnipotent char", !18, i64 0}
 !58 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !57, i64 0}
@@ -584,9 +586,7 @@ attributes #16 = { nounwind }
 !62 = !{!61, !60, i64 8}
 !63 = !{!61, !57, i64 0}
 !64 = !{!31, !29, i64 16}
-!66 = distinct !{!66, i1 false, !"_Z22paulis_getPauliStrProd8PauliStrS_"}
-!67 = distinct !{!67, !66, !"_Z22paulis_getPauliStrProd8PauliStrS_: argument 0"}
-!68 = !{!67}
-!69 = distinct !{!69, !13, !16, !17}
-!70 = distinct !{!70, !13}
+!65 = !{!55}
+!66 = distinct !{!66, !13, !16, !17}
+!67 = distinct !{!67, !13}
 end_hunk_0

@@ -202,9 +202,9 @@ _ZN6icu_7813UnicodeStringC2ISt17basic_string_viewIDsSt11char_traitsIDsEEvEERKT_.
   br i1 %i.bo, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %_ZN6icu_7813UnicodeStringC2ISt17basic_string_viewIDsSt11char_traitsIDsEEvEERKT_.exit151
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6icu_788message217StandardFunctions13PluralFactoryE, i64 16), ptr %i.bn, align 8, !tbaa !35, !alias.scope !91
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6icu_788message217StandardFunctions13PluralFactoryE, i64 16), ptr %i.bn, align 8, !tbaa !35, !alias.scope !86
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
-  store i8 1, ptr %i.bp, align 8, !tbaa !85, !alias.scope !91
+  store i8 1, ptr %i.bp, align 8, !tbaa !85, !alias.scope !86
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %_ZN6icu_7813UnicodeStringC2ISt17basic_string_viewIDsSt11char_traitsIDsEEvEERKT_.exit151
@@ -607,13 +607,13 @@ attributes #12 = { noreturn nounwind }
 !77 = !{!"_ZTSN6icu_7812LocalPointerINS_7UVectorEEE", !76, i64 0}
 !78 = !{!"_ZTSN6icu_788message212StaticErrorsE", !9, i64 0, !77, i64 8, !12, i64 16, !12, i64 17, !12, i64 18}
 !79 = !{!78, !12, i64 18}
+!80 = distinct !{!80, i1 false, !"_ZN6icu_788message217StandardFunctions13PluralFactory7integerEv"}
+!81 = distinct !{!81, !80, !"_ZN6icu_788message217StandardFunctions13PluralFactory7integerEv: argument 0"}
 !82 = distinct !{null}
 !83 = !{!"_ZTSN6icu_788message215SelectorFactoryE", !9, i64 0}
 !84 = !{!"_ZTSN6icu_788message217StandardFunctions13PluralFactoryE", !83, i64 0, !12, i64 8}
 !85 = !{!84, !12, i64 8}
+!86 = !{!81}
 !87 = !{!"p1 _ZTSN6icu_788message216MessageFormatterE", !13, i64 0}
 !88 = !{!87, !87, i64 0}
-!89 = distinct !{!89, i1 false, !"_ZN6icu_788message217StandardFunctions13PluralFactory7integerEv"}
-!90 = distinct !{!90, !89, !"_ZN6icu_788message217StandardFunctions13PluralFactory7integerEv: argument 0"}
-!91 = !{!90}
 end_hunk_1

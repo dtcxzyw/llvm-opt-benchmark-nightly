@@ -202,7 +202,7 @@ _ZNKSt6vectorIN4absl12lts_2025051216strings_internal18ViableSubstitutionESaIS3_E
 .lr.ph.i.i.i.i36:                                 ; preds = %.noexc43, %.lr.ph.i.i.i.i36
   %.012.i.i.i.i37 = phi ptr [ %i.aw, %.lr.ph.i.i.i.i36 ], [ %i.ar, %.noexc43 ] ; 2 uses
   %.0911.i.i.i.i38 = phi ptr [ %i.av, %.lr.ph.i.i.i.i36 ], [ %i.q, %.noexc43 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i.i37, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i.i38, i64 40, i1 false), !tbaa.struct !23, !alias.scope !45
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i.i37, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i.i38, i64 40, i1 false), !tbaa.struct !23, !alias.scope !41
   %i.av = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i38, i64 40 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i37, i64 40 ; 2 uses
   %.not.i.i.i.i39 = icmp eq ptr %i.av, %i.o
@@ -385,14 +385,14 @@ attributes #15 = { builtin allocsize(0) }
 !29 = !{!20, !9, i64 16}
 !30 = distinct !{!30, !19}
 !31 = distinct !{!31, !19}
+!32 = distinct !{!32, i1 false, !"_ZSt19__relocate_object_aIN4absl12lts_2025051216strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_"}
+!33 = distinct !{!33, !32, !"_ZSt19__relocate_object_aIN4absl12lts_2025051216strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
+!34 = distinct !{!34, !32, !"_ZSt19__relocate_object_aIN4absl12lts_2025051216strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
 !35 = distinct !{!35, !19}
 !36 = distinct !{!36, !19}
 !37 = !{!"p1 _ZTSSt4pairISt17basic_string_viewIcSt11char_traitsIcEES3_E", !8, i64 0}
 !38 = !{!"_ZTSSt16initializer_listISt4pairISt17basic_string_viewIcSt11char_traitsIcEES4_EE", !37, i64 0, !11, i64 8}
 !39 = !{!38, !11, i64 8}
 !40 = !{!38, !37, i64 0}
-!42 = distinct !{!42, i1 false, !"_ZSt19__relocate_object_aIN4absl12lts_2025051216strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_"}
-!43 = distinct !{!43, !42, !"_ZSt19__relocate_object_aIN4absl12lts_2025051216strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
-!44 = distinct !{!44, !42, !"_ZSt19__relocate_object_aIN4absl12lts_2025051216strings_internal18ViableSubstitutionES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
-!45 = !{!43, !44}
+!41 = !{!34, !33}
 end_hunk_0

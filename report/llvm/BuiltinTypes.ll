@@ -202,7 +202,7 @@ define linkonce_odr hidden void @_ZN4llvm12function_refIFN4mlir18InFlightDiagnos
 bb.a:
   %i.a = inttoptr i64 %1 to ptr                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !61, !noalias !65
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !61, !noalias !62
   tail call void %i.c(ptr dead_on_unwind writable sret(%"class.mlir::InFlightDiagnostic") align 8 %0, ptr noundef nonnull align 8 dereferenceable(40) %i.a) #9, !inline_history !60
   ret void
 }
@@ -315,9 +315,9 @@ attributes #9 = { nounwind }
 !55 = !{!54, !53, i64 32}
 !56 = !{!54, !53, i64 33}
 !57 = !{!7, !7, i64 0}
+!58 = distinct !{!58, i1 false, !"_ZN4llvm15unique_functionIFN4mlir18InFlightDiagnosticEvEEclEv"}
+!59 = distinct !{!59, !58, !"_ZN4llvm15unique_functionIFN4mlir18InFlightDiagnosticEvEEclEv: argument 0"}
 !60 = distinct !{null}
 !61 = !{!28, !11, i64 24}
-!63 = distinct !{!63, i1 false, !"_ZN4llvm15unique_functionIFN4mlir18InFlightDiagnosticEvEEclEv"}
-!64 = distinct !{!64, !63, !"_ZN4llvm15unique_functionIFN4mlir18InFlightDiagnosticEvEEclEv: argument 0"}
-!65 = !{!64}
+!62 = !{!59}
 end_hunk_0

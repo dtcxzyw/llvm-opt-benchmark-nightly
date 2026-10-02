@@ -202,16 +202,16 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !53   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  store ptr %i.e, ptr %0, align 8, !tbaa !55, !alias.scope !109
+  store ptr %i.e, ptr %0, align 8, !tbaa !55, !alias.scope !106
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  store i64 0, ptr %i.f, align 8, !tbaa !53, !alias.scope !109
-  store i8 0, ptr %i.e, align 8, !tbaa !39, !alias.scope !109
+  store i64 0, ptr %i.f, align 8, !tbaa !53, !alias.scope !106
+  store i8 0, ptr %i.e, align 8, !tbaa !39, !alias.scope !106
   %i.g = add i64 %i.d, %i.a
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %i.g)
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = load i64, ptr %i.f, align 8, !tbaa !53, !alias.scope !109
+  %i.h = load i64, ptr %i.f, align 8, !tbaa !53, !alias.scope !106
   %i.i = sub i64 4611686018427387903, %i.h
   %i.j = icmp ult i64 %i.i, %i.a
   br i1 %i.j, label %.invoke.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i
@@ -221,7 +221,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.ex
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i unwind label %bb.c ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i
-  %i.l = load i64, ptr %i.f, align 8, !tbaa !53, !alias.scope !109
+  %i.l = load i64, ptr %i.f, align 8, !tbaa !53, !alias.scope !106
   %i.m = sub i64 4611686018427387903, %i.l
   %i.n = icmp ult i64 %i.m, %i.d
   br i1 %i.n, label %.invoke.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i
@@ -240,12 +240,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.ex
 bb.c:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i, %.invoke.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i, %bb.a
   %i.p = landingpad { ptr, i32 }
           cleanup
-  %i.q = load ptr, ptr %0, align 8, !tbaa !31, !alias.scope !109 ; 2 uses
+  %i.q = load ptr, ptr %0, align 8, !tbaa !31, !alias.scope !106 ; 2 uses
   %i.r = icmp eq ptr %i.q, %i.e
   br i1 %i.r, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.c
-  %i.s = load i64, ptr %i.e, align 8, !tbaa !39, !alias.scope !109
+  %i.s = load i64, ptr %i.e, align 8, !tbaa !39, !alias.scope !106
   %i.t = add i64 %i.s, 1
   tail call void @_ZdlPvm(ptr noundef %i.q, i64 noundef %i.t) #19
   br label %.body
@@ -648,7 +648,7 @@ attributes #20 = { noreturn nounwind }
 !101 = !{!"p1 short", !16, i64 0}
 !102 = !{!"_ZTSSt5ctypeIcE", !98, i64 0, !99, i64 16, !54, i64 24, !100, i64 32, !100, i64 40, !101, i64 48, !5, i64 56, !5, i64 57, !5, i64 313, !5, i64 569}
 !103 = !{!102, !5, i64 56}
-!107 = distinct !{!107, i1 false, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
-!108 = distinct !{!108, !107, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE: argument 0"}
-!109 = !{!108}
+!104 = distinct !{!104, i1 false, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
+!105 = distinct !{!105, !104, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE: argument 0"}
+!106 = !{!105}
 end_hunk_1

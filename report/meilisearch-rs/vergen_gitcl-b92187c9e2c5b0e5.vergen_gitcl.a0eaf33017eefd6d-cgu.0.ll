@@ -202,11 +202,11 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d, %bb.c
-  store ptr @121, ptr %i.a, align 8, !alias.scope !9
+  store ptr @121, ptr %i.a, align 8, !alias.scope !5
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 4, ptr %i.k, align 8, !alias.scope !9
+  store i64 4, ptr %i.k, align 8, !alias.scope !5
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i8 1, ptr %i.l, align 8, !alias.scope !9
+  store i8 1, ptr %i.l, align 8, !alias.scope !5
   call void @"_ZN119_$LT$time..error..format..Format$u20$as$u20$core..convert..From$LT$time..error..component_range..ComponentRange$GT$$GT$4from17h076d86da2d471720E"(ptr nonnull sret([24 x i8]) align 8 %i.b, ptr nonnull align 8 %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   br label %bb.g
@@ -609,8 +609,8 @@ attributes #26 = { cold noreturn nounwind }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.91.1 (ed61e7d7e 2025-11-07)"}
+!3 = distinct !{!3, i1 false, !"_ZN4time5error15component_range14ComponentRange11conditional17h59aebecf876b432fE"}
+!4 = distinct !{!4, !3, !"_ZN4time5error15component_range14ComponentRange11conditional17h59aebecf876b432fE: argument 0"}
+!5 = !{!4}
 !6 = !{ptr @_ZN4time10formatting13format_number17h3f1e507c229397f7E, ptr @_ZN4time10formatting13format_number17h65192779b60cd19cE}
-!7 = distinct !{!7, i1 false, !"_ZN4time5error15component_range14ComponentRange11conditional17h59aebecf876b432fE"}
-!8 = distinct !{!8, !7, !"_ZN4time5error15component_range14ComponentRange11conditional17h59aebecf876b432fE: argument 0"}
-!9 = !{!8}
 end_hunk_1

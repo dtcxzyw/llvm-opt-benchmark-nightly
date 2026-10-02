@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %_ZNSt3mapIN7Imf_3_4
 .critedge.i:                                      ; preds = %bb.h, %_ZNSt3mapIN7Imf_3_44NameENS0_5SliceESt4lessIS1_ESaISt4pairIKS1_S2_EEE11lower_boundERS6_.exit.i, %bb.g
   %.08.lcssa.i.i.i11.i = phi ptr [ %.19.i.i.i.i, %bb.h ], [ %.19.i.i.i.i, %_ZNSt3mapIN7Imf_3_44NameENS0_5SliceESt4lessIS1_ESaISt4pairIKS1_S2_EEE11lower_boundERS6_.exit.i ], [ %i.l, %bb.g ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
-  store ptr %6, ptr %3, align 8, !tbaa !26, !alias.scope !59
+  store ptr %6, ptr %3, align 8, !tbaa !26, !alias.scope !49
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.t = call ptr @_ZNSt8_Rb_treeIN7Imf_3_44NameESt4pairIKS1_NS0_5SliceEESt10_Select1stIS5_ESt4lessIS1_ESaIS5_EE22_M_emplace_hint_uniqueIJRKSt21piecewise_construct_tSt5tupleIJOS1_EESG_IJEEEEESt17_Rb_tree_iteratorIS5_ESt23_Rb_tree_const_iteratorIS5_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %.08.lcssa.i.i.i11.i, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt19piecewise_construct, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 1 dereferenceable(1) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
@@ -605,7 +605,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   %i.c = load i64, ptr %3, align 8, !tbaa !26
   %i.d = inttoptr i64 %i.c to ptr
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(312) %i.b, ptr noundef nonnull align 1 dereferenceable(256) %i.d, i64 256, i1 false), !tbaa.struct !60
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(312) %i.b, ptr noundef nonnull align 1 dereferenceable(256) %i.d, i64 256, i1 false), !tbaa.struct !57
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 288
   invoke void @_ZN7Imf_3_45SliceC1ENS_9PixelTypeEPcmmiidbb(ptr noundef nonnull align 8 dereferenceable(50) %i.e, i32 noundef 1, ptr noundef null, i64 noundef 0, i64 noundef 0, i32 noundef 1, i32 noundef 1, double noundef 0.000000e+00, i1 noundef zeroext false, i1 noundef zeroext false)
           to label %_ZNSt8_Rb_treeIN7Imf_3_44NameESt4pairIKS1_NS0_5SliceEESt10_Select1stIS5_ESt4lessIS1_ESaIS5_EE10_Auto_nodeC2IJRKSt21piecewise_construct_tSt5tupleIJOS1_EESH_IJEEEEERSB_DpOT_.exit unwind label %bb.b
@@ -725,7 +725,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.in.i = getelementptr inbounds nuw i8, ptr %.02024.i, i64 %.in.v.i
   %.020.i = load ptr, ptr %.in.i, align 8, !tbaa !23 ; 2 uses
   %.not.i = icmp eq ptr %.020.i, null
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !61
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !58
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
   br i1 %i.m, label %._crit_edge.thread.i, label %bb.f
@@ -772,7 +772,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !62
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !59
   %i.ag = icmp eq ptr %i.af, null                 ; 2 uses
   %spec.select = select i1 %i.ag, ptr null, ptr %1
   %spec.select71 = select i1 %i.ag, ptr %i.aa, ptr %1
@@ -793,7 +793,7 @@ bb.k:                                             ; preds = %bb.i
   %.in.i15 = getelementptr inbounds nuw i8, ptr %.02024.i13, i64 %.in.v.i14
   %.020.i16 = load ptr, ptr %.in.i15, align 8, !tbaa !23 ; 2 uses
   %.not.i17 = icmp eq ptr %.020.i16, null
-  br i1 %.not.i17, label %._crit_edge.i18, label %.lr.ph.i12, !llvm.loop !61
+  br i1 %.not.i17, label %._crit_edge.i18, label %.lr.ph.i12, !llvm.loop !58
 
 ._crit_edge.i18:                                  ; preds = %.lr.ph.i12
   br i1 %i.ak, label %._crit_edge.thread.i27, label %bb.m
@@ -837,7 +837,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !62
+  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !59
   %i.bb = icmp eq ptr %i.ba, null                 ; 2 uses
   %spec.select72 = select i1 %i.bb, ptr null, ptr %i.av
   %spec.select73 = select i1 %i.bb, ptr %1, ptr %i.av
@@ -858,7 +858,7 @@ bb.r:                                             ; preds = %bb.p
   %.in.i35 = getelementptr inbounds nuw i8, ptr %.02024.i33, i64 %.in.v.i34
   %.020.i36 = load ptr, ptr %.in.i35, align 8, !tbaa !23 ; 2 uses
   %.not.i37 = icmp eq ptr %.020.i36, null
-  br i1 %.not.i37, label %._crit_edge.i38, label %.lr.ph.i32, !llvm.loop !61
+  br i1 %.not.i37, label %._crit_edge.i38, label %.lr.ph.i32, !llvm.loop !58
 
 ._crit_edge.i38:                                  ; preds = %.lr.ph.i32
   br i1 %i.bf, label %._crit_edge.thread.i47, label %bb.t
@@ -985,6 +985,9 @@ attributes #24 = { builtin nounwind }
 !44 = !{!"_ZTSN9Imath_3_23BoxINS_4Vec2IiEEEE", !16, i64 0, !16, i64 8}
 !45 = !{!44, !7, i64 8}
 !46 = !{!44, !7, i64 0}
+!47 = distinct !{!47, i1 false, !"_ZSt16forward_as_tupleIJN7Imf_3_44NameEEESt5tupleIJDpOT_EES5_"}
+!48 = distinct !{!48, !47, !"_ZSt16forward_as_tupleIJN7Imf_3_44NameEEESt5tupleIJDpOT_EES5_: argument 0"}
+!49 = !{!48}
 !50 = !{!10, !10, i64 0}
 !51 = !{!12, !12, i64 0}
 !52 = !{!13, !13, i64 0}
@@ -992,10 +995,7 @@ attributes #24 = { builtin nounwind }
 !54 = !{!14, !14, i64 0}
 !55 = !{!15, !15, i64 0}
 !56 = !{i64 0, i64 4, !50, i64 8, i64 8, !51, i64 16, i64 8, !52, i64 24, i64 8, !52, i64 32, i64 4, !53, i64 36, i64 4, !53, i64 40, i64 8, !54, i64 48, i64 1, !55, i64 49, i64 1, !55}
-!57 = distinct !{!57, i1 false, !"_ZSt16forward_as_tupleIJN7Imf_3_44NameEEESt5tupleIJDpOT_EES5_"}
-!58 = distinct !{!58, !57, !"_ZSt16forward_as_tupleIJN7Imf_3_44NameEEESt5tupleIJDpOT_EES5_: argument 0"}
-!59 = !{!58}
-!60 = !{i64 0, i64 256, !17}
-!61 = distinct !{!61, !24}
-!62 = !{!20, !19, i64 24}
+!57 = !{i64 0, i64 256, !17}
+!58 = distinct !{!58, !24}
+!59 = !{!20, !19, i64 24}
 end_hunk_1

@@ -202,7 +202,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.b, %bb.a
-  store ptr @_ZZN5arrow8internal19UninitializedResultEvE20uninitialized_result, ptr %0, align 8, !tbaa !40, !alias.scope !44
+  store ptr @_ZZN5arrow8internal19UninitializedResultEvE20uninitialized_result, ptr %0, align 8, !tbaa !40, !alias.scope !41
   ret void
 
 bb.h:                                             ; preds = %bb.c
@@ -238,11 +238,11 @@ bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !9
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load ptr, ptr %i.i, align 8
-  tail call void %i.j(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !45
+  tail call void %i.j(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !42
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !9
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.m = load ptr, ptr %i.l, align 8
-  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !45
+  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !42
   br label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -294,11 +294,11 @@ bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !9
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load ptr, ptr %i.i, align 8
-  tail call void %i.j(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !46
+  tail call void %i.j(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !43
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !9
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.m = load ptr, ptr %i.l, align 8
-  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !46
+  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !43
   br label %_ZNSt12__shared_ptrIN5arrow12StatusDetailELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.d:                                             ; preds = %bb.b
@@ -394,7 +394,7 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.b
   %i.r = icmp ult ptr %i.q, %3
   %i.s = select i1 %i.p, i1 true, i1 %i.r
-  br i1 %i.s, label %bb.d, label %bb.j, !prof !47
+  br i1 %i.s, label %bb.d, label %bb.j, !prof !44
 
 bb.d:                                             ; preds = %bb.c
   %.not35 = icmp eq i64 %i.b, %i.n
@@ -615,7 +615,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #16, !inline_history !48
+  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #16, !inline_history !45
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.e = load i8, ptr @__libc_single_threaded, align 1, !tbaa !18
   %.not.i = icmp eq i8 %i.e, 0
@@ -640,7 +640,7 @@ bb.d:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.j = load ptr, ptr %0, align 8, !tbaa !9
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #16, !inline_history !48
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #16, !inline_history !45
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit: ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i, %bb.d
@@ -705,6 +705,8 @@ attributes #20 = { cold }
 !23 = !{!"_ZTSSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE", !6, i64 8, !6, i64 12}
 !24 = !{!23, !6, i64 8}
 !25 = !{!23, !6, i64 12}
+!26 = distinct !{!26, i1 false, !"_ZN5arrow8internal14StatusConstantcvNS_6StatusEEv"}
+!27 = distinct !{!27, !26, !"_ZN5arrow8internal14StatusConstantcvNS_6StatusEEv: argument 0"}
 !28 = !{!"branch_weights", i32 1, i32 1048575}
 !29 = !{!"_ZTSN5arrow10StatusCodeE", !5, i64 0}
 !30 = !{!"bool", !5, i64 0}
@@ -718,11 +720,9 @@ attributes #20 = { cold }
 !38 = !{!"p1 _ZTSN5arrow6Status5StateE", !10, i64 0}
 !39 = !{!"_ZTSN5arrow6StatusE", !38, i64 0}
 !40 = !{!39, !38, i64 0}
-!42 = distinct !{!42, i1 false, !"_ZN5arrow8internal14StatusConstantcvNS_6StatusEEv"}
-!43 = distinct !{!43, !42, !"_ZN5arrow8internal14StatusConstantcvNS_6StatusEEv: argument 0"}
-!44 = !{!43}
-!45 = distinct !{null, null}
-!46 = distinct !{null, ptr @_ZNSt12__shared_ptrIN5arrow12StatusDetailELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
-!47 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!48 = distinct !{null}
+!41 = !{!27}
+!42 = distinct !{null, null}
+!43 = distinct !{null, ptr @_ZNSt12__shared_ptrIN5arrow12StatusDetailELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
+!44 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!45 = distinct !{null}
 end_hunk_0

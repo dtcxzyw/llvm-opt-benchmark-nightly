@@ -34,7 +34,7 @@ bb.c:                                             ; preds = %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.e = urem i64 %indvars.iv.next, %i.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #3
-  %i.f = load ptr, ptr %0, align 8, !tbaa !17, !noalias !24 ; 2 uses
+  %i.f = load ptr, ptr %0, align 8, !tbaa !17, !noalias !18 ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv ; 2 uses
   %i.h = load double, ptr %i.g, align 8, !tbaa !20
   store double %i.h, ptr %2, align 16, !tbaa !20
@@ -87,6 +87,8 @@ attributes #3 = { nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
+!9 = distinct !{!9, i1 false, !"_ZNK5Eigen9DenseBaseINS_6MatrixIdLin1ELi2ELi0ELin1ELi2EEEE3rowEl"}
+!10 = distinct !{!10, !9, !"_ZNK5Eigen9DenseBaseINS_6MatrixIdLin1ELi2ELi0ELin1ELi2EEEE3rowEl: argument 0"}
 !11 = distinct !{!11, !21}
 !12 = !{!"any pointer", !5, i64 0}
 !13 = !{!"p1 double", !12, i64 0}
@@ -94,10 +96,8 @@ attributes #3 = { nounwind }
 !15 = !{!"_ZTSN5Eigen12DenseStorageIdLin1ELin1ELi2ELi0EEE", !13, i64 0, !14, i64 8}
 !16 = !{!15, !14, i64 8}
 !17 = !{!15, !13, i64 0}
+!18 = !{!10}
 !19 = !{!"double", !5, i64 0}
 !20 = !{!19, !19, i64 0}
 !21 = !{!"llvm.loop.mustprogress"}
-!22 = distinct !{!22, i1 false, !"_ZNK5Eigen9DenseBaseINS_6MatrixIdLin1ELi2ELi0ELin1ELi2EEEE3rowEl"}
-!23 = distinct !{!23, !22, !"_ZNK5Eigen9DenseBaseINS_6MatrixIdLin1ELi2ELi0ELin1ELi2EEEE3rowEl: argument 0"}
-!24 = !{!23}
 end_hunk_0

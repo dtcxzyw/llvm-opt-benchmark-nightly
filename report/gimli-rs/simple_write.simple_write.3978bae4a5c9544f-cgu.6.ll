@@ -204,7 +204,7 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8find_map5chec
 bb.bq:                                            ; preds = %.lr.ph817, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8find_map5checkTRTNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringNtB1l_11DirectoryIdERNtB1l_8FileInfoENtNtB1p_9constants6DwFormNCINvMB1l_NtB1l_11LineProgram5writeNtCs4VV2qO6j7hb_12simple_write7SectionE0E0B3H_.exit.i
   %i.fp = phi ptr [ %i.en, %.lr.ph817 ], [ %i.fo, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8find_map5checkTRTNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringNtB1l_11DirectoryIdERNtB1l_8FileInfoENtNtB1p_9constants6DwFormNCINvMB1l_NtB1l_11LineProgram5writeNtCs4VV2qO6j7hb_12simple_write7SectionE0E0B3H_.exit.i ] ; 2 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 32
-  %.val.i = load i64, ptr %i.fq, align 8, !range !8, !noalias !19, !noundef !6 ; 2 uses
+  %.val.i = load i64, ptr %i.fq, align 8, !range !8, !noalias !15, !noundef !6 ; 2 uses
   %.not.i.not.i.not.i = icmp eq i64 %.val.i, -1
   br i1 %.not.i.not.i.not.i, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8find_map5checkTRTNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringNtB1l_11DirectoryIdERNtB1l_8FileInfoENtNtB1p_9constants6DwFormNCINvMB1l_NtB1l_11LineProgram5writeNtCs4VV2qO6j7hb_12simple_write7SectionE0E0B3H_.exit.i, label %switch.lookup836
 
@@ -545,7 +545,7 @@ define internal fastcc i64 @_RINvMs0_NtNtCsi68uqYEhoRA_5gimli5write4lineNtB6_15L
 bb.a:
   %i.a = alloca [11 x i8], align 1                ; 15 uses
   %.sroa.02.0.extract.trunc = trunc i32 %2 to i8
-  %i.b = load i64, ptr %0, align 8, !range !20, !noundef !6 ; 3 uses
+  %i.b = load i64, ptr %0, align 8, !range !17, !noundef !6 ; 3 uses
   %i.c = icmp ne i64 %i.b, 15
   tail call void @llvm.assume(i1 %i.c)
   %i.d = add nsw i64 %i.b, -2
@@ -948,18 +948,18 @@ bb.e:                                             ; preds = %_RINvNtCskKLDkoKarT
 define internal fastcc i64 @_RNCINvMNtNtCsi68uqYEhoRA_5gimli5write4lineNtB5_11LineProgram5writeNtCs4VV2qO6j7hb_12simple_write7SectionEs_0B14_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, i64 noundef %2, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 12 uses
-  %i.b = load ptr, ptr %0, align 8, !nonnull !6, !align !21, !noundef !6 ; 7 uses
+  %i.b = load ptr, ptr %0, align 8, !nonnull !6, !align !18, !noundef !6 ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !nonnull !6, !align !22, !noundef !6
+  %i.d = load ptr, ptr %i.c, align 8, !nonnull !6, !align !19, !noundef !6
   %i.e = load i16, ptr %i.d, align 2, !noundef !6
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.g = load ptr, ptr %i.f, align 8, !nonnull !6, !align !21, !noundef !6 ; 5 uses
+  %i.g = load ptr, ptr %i.f, align 8, !nonnull !6, !align !18, !noundef !6 ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 264 ; 3 uses
   %.sroa.024.0.copyload = load i32, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.j = load ptr, ptr %i.i, align 8, !nonnull !6, !align !21, !noundef !6 ; 3 uses
+  %i.j = load ptr, ptr %i.i, align 8, !nonnull !6, !align !18, !noundef !6 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.l = load ptr, ptr %i.k, align 8, !nonnull !6, !align !21, !noundef !6 ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !nonnull !6, !align !18, !noundef !6 ; 3 uses
   %i.m = getelementptr i8, ptr %i.j, i64 64       ; 3 uses
   %.val151 = load ptr, ptr %i.m, align 8
   %i.n = getelementptr i8, ptr %i.j, i64 72       ; 3 uses
@@ -1053,7 +1053,7 @@ bb.o:                                             ; preds = %bb.l
 
 bb.p:                                             ; preds = %bb.o
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.at = load ptr, ptr %i.as, align 8, !nonnull !6, !align !22, !noundef !6
+  %i.at = load ptr, ptr %i.as, align 8, !nonnull !6, !align !19, !noundef !6
   %i.au = load i16, ptr %i.at, align 2, !noundef !6
   %.sroa.062.0.copyload = load i32, ptr %i.h, align 8
   %.val147 = load ptr, ptr %i.m, align 8
@@ -1071,7 +1071,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.ay = load ptr, ptr %i.ax, align 8, !nonnull !6, !align !22, !noundef !6 ; 2 uses
+  %i.ay = load ptr, ptr %i.ax, align 8, !nonnull !6, !align !19, !noundef !6 ; 2 uses
   %i.az = load i16, ptr %i.ay, align 2, !noundef !6
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   switch i16 %i.az, label %bb.r [
@@ -1263,15 +1263,15 @@ attributes #12 = { cold }
 !6 = !{}
 !7 = !{i64 0, i64 -9223372036854775806}
 !8 = !{i64 -1, i64 -9223372036854775806}
+!9 = distinct !{!9, i1 false, !"_RINvYINtNtNtCsbbt5GHOb4oK_8indexmap3map4iter4IterTNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringNtBO_11DirectoryIdENtBO_8FileInfoENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB27_8find_map5checkTRBL_RB1S_ENtNtBS_9constants6DwFormNCINvMBO_NtBO_11LineProgram5writeNtCs4VV2qO6j7hb_12simple_write7SectionE0E0INtNtNtB2f_3ops12control_flow11ControlFlowB3N_EEB4K_"}
+!10 = distinct !{!10, !9, !"_RINvYINtNtNtCsbbt5GHOb4oK_8indexmap3map4iter4IterTNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringNtBO_11DirectoryIdENtBO_8FileInfoENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB27_8find_map5checkTRBL_RB1S_ENtNtBS_9constants6DwFormNCINvMBO_NtBO_11LineProgram5writeNtCs4VV2qO6j7hb_12simple_write7SectionE0E0INtNtNtB2f_3ops12control_flow11ControlFlowB3N_EEB4K_: argument 0"}
 !11 = distinct !{!11, !16}
 !12 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !13 = !{i8 4, i8 9}
 !14 = !{i32 0, i32 2}
+!15 = !{!10}
 !16 = !{!"llvm.loop.peeled.count", i32 1}
-!17 = distinct !{!17, i1 false, !"_RINvYINtNtNtCsbbt5GHOb4oK_8indexmap3map4iter4IterTNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringNtBO_11DirectoryIdENtBO_8FileInfoENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB27_8find_map5checkTRBL_RB1S_ENtNtBS_9constants6DwFormNCINvMBO_NtBO_11LineProgram5writeNtCs4VV2qO6j7hb_12simple_write7SectionE0E0INtNtNtB2f_3ops12control_flow11ControlFlowB3N_EEB4K_"}
-!18 = distinct !{!18, !17, !"_RINvYINtNtNtCsbbt5GHOb4oK_8indexmap3map4iter4IterTNtNtNtCsi68uqYEhoRA_5gimli5write4line10LineStringNtBO_11DirectoryIdENtBO_8FileInfoENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB27_8find_map5checkTRBL_RB1S_ENtNtBS_9constants6DwFormNCINvMBO_NtBO_11LineProgram5writeNtCs4VV2qO6j7hb_12simple_write7SectionE0E0INtNtNtB2f_3ops12control_flow11ControlFlowB3N_EEB4K_: argument 0"}
-!19 = !{!18}
-!20 = !{i64 0, i64 17}
-!21 = !{i64 8}
-!22 = !{i64 2}
+!17 = !{i64 0, i64 17}
+!18 = !{i64 8}
+!19 = !{i64 2}
 end_hunk_1

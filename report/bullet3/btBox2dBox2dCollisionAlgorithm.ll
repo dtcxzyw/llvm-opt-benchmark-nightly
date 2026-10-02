@@ -205,9 +205,9 @@ bb.a:
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 40
-  %i.ac = load float, ptr %i.z, align 4, !tbaa !31, !noalias !73 ; 2 uses
-  %i.ad = load float, ptr %i.aa, align 4, !tbaa !31, !noalias !73 ; 2 uses
-  %i.ae = load float, ptr %i.ab, align 4, !tbaa !31, !noalias !73 ; 2 uses
+  %i.ac = load float, ptr %i.z, align 4, !tbaa !31, !noalias !70 ; 2 uses
+  %i.ad = load float, ptr %i.aa, align 4, !tbaa !31, !noalias !70 ; 2 uses
+  %i.ae = load float, ptr %i.ab, align 4, !tbaa !31, !noalias !70 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.ag = load float, ptr %i.af, align 4, !tbaa !31
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 112
@@ -242,8 +242,8 @@ bb.a:
   %i.bk = extractelement <2 x float> %i.bh, i64 0
   %i.bl = tail call float @llvm.fmuladd.f32(float %i.bk, float %i.e, float %i.bj)
   %i.bm = tail call noundef float @llvm.fmuladd.f32(float %i.t, float %i.l, float %i.bl) ; 3 uses
-  %i.bn = load <2 x float>, ptr %i.v, align 4, !tbaa !31, !noalias !73 ; 3 uses
-  %i.bo = load float, ptr %i.y, align 4, !tbaa !31, !noalias !73
+  %i.bn = load <2 x float>, ptr %i.v, align 4, !tbaa !31, !noalias !70 ; 3 uses
+  %i.bo = load float, ptr %i.y, align 4, !tbaa !31, !noalias !70
   %i.bp = load <2 x float>, ptr %i.ar, align 4, !tbaa !31 ; 2 uses
   %i.bq = shufflevector <2 x float> %i.bn, <2 x float> %i.bh, <2 x i32> <i32 1, i32 3>
   %i.br = shufflevector <2 x float> %i.bn, <2 x float> %i.bh, <2 x i32> <i32 0, i32 2>
@@ -255,8 +255,8 @@ bb.a:
   %i.bx = extractelement <2 x float> %i.bu, i64 0
   %i.by = tail call float @llvm.fmuladd.f32(float %i.bx, float %i.e, float %i.bw)
   %i.bz = tail call noundef float @llvm.fmuladd.f32(float %i.j, float %i.l, float %i.by) ; 3 uses
-  %i.ca = load <2 x float>, ptr %4, align 4, !tbaa !31, !noalias !73 ; 3 uses
-  %i.cb = load float, ptr %i.w, align 4, !tbaa !31, !noalias !73
+  %i.ca = load <2 x float>, ptr %4, align 4, !tbaa !31, !noalias !70 ; 3 uses
+  %i.cb = load float, ptr %i.w, align 4, !tbaa !31, !noalias !70
   %i.cc = load <2 x float>, ptr %i.as, align 4, !tbaa !31 ; 2 uses
   %i.cd = load float, ptr %i.at, align 4, !tbaa !31
   %i.ce = shufflevector <2 x float> %i.ca, <2 x float> %i.bu, <2 x i32> <i32 1, i32 3>
@@ -270,8 +270,8 @@ bb.a:
   %i.cm = extractelement <2 x float> %i.cj, i64 0
   %i.cn = tail call float @llvm.fmuladd.f32(float %i.cm, float %i.e, float %i.cl)
   %i.co = tail call noundef float @llvm.fmuladd.f32(float %i.p, float %i.l, float %i.cn) ; 3 uses
-  %i.cp = load <2 x float>, ptr %i.u, align 4, !tbaa !31, !noalias !73 ; 3 uses
-  %i.cq = load float, ptr %i.x, align 4, !tbaa !31, !noalias !73
+  %i.cp = load <2 x float>, ptr %i.u, align 4, !tbaa !31, !noalias !70 ; 3 uses
+  %i.cq = load float, ptr %i.x, align 4, !tbaa !31, !noalias !70
   %i.cr = fmul float %i.co, %i.ad
   %i.cs = tail call float @llvm.fmuladd.f32(float %i.ac, float %i.bz, float %i.cr)
   %i.ct = tail call noundef float @llvm.fmuladd.f32(float %i.ae, float %i.bm, float %i.cs) ; 4 uses
@@ -478,7 +478,7 @@ attributes #16 = { builtin nounwind }
 !65 = !{!"llvm.loop.unroll.runtime.disable"}
 !66 = !{!"llvm.loop.unroll.disable"}
 !67 = !{!59, !15, i64 24}
-!71 = distinct !{!71, i1 false, !"_ZNK11btMatrix3x39transposeEv"}
-!72 = distinct !{!72, !71, !"_ZNK11btMatrix3x39transposeEv: argument 0"}
-!73 = !{!72}
+!68 = distinct !{!68, i1 false, !"_ZNK11btMatrix3x39transposeEv"}
+!69 = distinct !{!69, !68, !"_ZNK11btMatrix3x39transposeEv: argument 0"}
+!70 = !{!69}
 end_hunk_0

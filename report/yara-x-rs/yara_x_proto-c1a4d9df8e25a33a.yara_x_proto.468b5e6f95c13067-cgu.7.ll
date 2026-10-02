@@ -202,17 +202,17 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 define void @_RNvXs_NtNtCs63vnYBEjbPn_12yara_x_proto4yara18enum_value_optionsNtB4_5ValueNtNtCs5YNYYMCeUDn_8protobuf10oneof_full9OneofFull10descriptor(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0) unnamed_addr #1 {
 bb.a:
   %i.a = tail call align 8 ptr @_RINvMNtCs5YNYYMCeUDn_8protobuf4lazyINtB3_4LazyNtNtNtB5_7reflect5oneof15OneofDescriptorE3getNCNvXs_NtNtCs63vnYBEjbPn_12yara_x_proto4yara18enum_value_optionsNtB1y_5ValueNtNtB5_10oneof_full9OneofFull10descriptor0EB1C_(ptr nonnull align 8 @_RNvNvXs_NtNtCs63vnYBEjbPn_12yara_x_proto4yara18enum_value_optionsNtB6_5ValueNtNtCs5YNYYMCeUDn_8protobuf10oneof_full9OneofFull10descriptor10descriptor) ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !10)
-  %i.b = tail call { i64, ptr } @_RNvXs4_NtNtCs5YNYYMCeUDn_8protobuf7reflect4fileNtB5_14FileDescriptorNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs63vnYBEjbPn_12yara_x_proto(ptr align 8 %i.a) #22, !noalias !10 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !7)
+  %i.b = tail call { i64, ptr } @_RNvXs4_NtNtCs5YNYYMCeUDn_8protobuf7reflect4fileNtB5_14FileDescriptorNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs63vnYBEjbPn_12yara_x_proto(ptr align 8 %i.a) #22, !noalias !7 ; 2 uses
   %i.c = extractvalue { i64, ptr } %i.b, 0
   %i.d = extractvalue { i64, ptr } %i.b, 1
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.f = load i64, ptr %i.e, align 8, !noalias !10
-  store i64 %i.c, ptr %0, align 8, !alias.scope !10
+  %i.f = load i64, ptr %i.e, align 8, !noalias !7
+  store i64 %i.c, ptr %0, align 8, !alias.scope !7
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.d, ptr %i.g, align 8, !alias.scope !10
+  store ptr %i.d, ptr %i.g, align 8, !alias.scope !7
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.f, ptr %i.h, align 8, !alias.scope !10
+  store i64 %i.f, ptr %i.h, align 8, !alias.scope !7
   ret void
 }
 
@@ -615,7 +615,7 @@ attributes #27 = { inlinehint nounwind }
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
 !4 = !{}
-!8 = distinct !{!8, i1 false, !"_RNvXs2_NtNtCs5YNYYMCeUDn_8protobuf7reflect5oneofNtB5_15OneofDescriptorNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs63vnYBEjbPn_12yara_x_proto"}
-!9 = distinct !{!9, !8, !"_RNvXs2_NtNtCs5YNYYMCeUDn_8protobuf7reflect5oneofNtB5_15OneofDescriptorNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs63vnYBEjbPn_12yara_x_proto: argument 0"}
-!10 = !{!9}
+!5 = distinct !{!5, i1 false, !"_RNvXs2_NtNtCs5YNYYMCeUDn_8protobuf7reflect5oneofNtB5_15OneofDescriptorNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs63vnYBEjbPn_12yara_x_proto"}
+!6 = distinct !{!6, !5, !"_RNvXs2_NtNtCs5YNYYMCeUDn_8protobuf7reflect5oneofNtB5_15OneofDescriptorNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs63vnYBEjbPn_12yara_x_proto: argument 0"}
+!7 = !{!6}
 end_hunk_1

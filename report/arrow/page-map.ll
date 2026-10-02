@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
-  store i64 1099511627780, ptr %i.e, align 8, !alias.scope !37
-  store ptr %i.p, ptr %1, align 8, !tbaa !14, !alias.scope !37
-  store i64 65536, ptr %i.f, align 8, !tbaa !14, !alias.scope !37
+  store i64 1099511627780, ptr %i.e, align 8, !alias.scope !34
+  store ptr %i.p, ptr %1, align 8, !tbaa !14, !alias.scope !34
+  store i64 65536, ptr %i.f, align 8, !tbaa !14, !alias.scope !34
   tail call void @_mi_os_free_ex(ptr noundef nonnull %i.p, i64 noundef 65536, i1 noundef zeroext true, ptr noundef nonnull byval(%struct.mi_memid_s) align 8 %1, ptr noundef %0) #7
   %i.q = load ptr, ptr @_mi_page_map, align 64, !tbaa !8
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %.012
@@ -303,7 +303,7 @@ mi_page_map_ensure_committed.exit.i:              ; preds = %bb.c, %.lr.ph31
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.01426
   %i.k = load atomic ptr, ptr %i.j acquire, align 8 ; 2 uses
   %i.l = icmp eq ptr %i.k, null
-  br i1 %i.l, label %mi_page_map_ensure_committed.exit.thread.i, label %mi_page_map_ensure_submap_at.exit, !prof !40
+  br i1 %i.l, label %mi_page_map_ensure_committed.exit.thread.i, label %mi_page_map_ensure_submap_at.exit, !prof !37
 
 mi_page_map_ensure_committed.exit.thread.i:       ; preds = %mi_page_map_ensure_committed.exit.i, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
@@ -363,7 +363,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x ptr> %broadcast.splat, ptr %i.ae, align 8, !tbaa !25
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.af = icmp eq i64 %index.next, %n.vec
-  br i1 %i.af, label %.lr.ph.preheader41, label %vector.body, !llvm.loop !38
+  br i1 %i.af, label %.lr.ph.preheader41, label %vector.body, !llvm.loop !35
 
 .lr.ph.preheader41:                               ; preds = %vector.body, %.lr.ph.preheader
   %.124.ph = phi i64 [ %.01029, %.lr.ph.preheader ], [ %i.aa, %vector.body ]
@@ -373,7 +373,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 bb.h:                                             ; preds = %.lr.ph
   %i.ag = add nuw nsw i64 %.11223, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.ag, 8192
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !39
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !36
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader41, %bb.h
   %.124 = phi i64 [ %i.ai, %bb.h ], [ %.124.ph, %.lr.ph.preheader41 ]
@@ -586,13 +586,13 @@ attributes #7 = { nounwind }
 !28 = !{i8 0, i8 2}
 !29 = !{}
 !30 = !{!12, !11, i64 22}
+!31 = distinct !{!31, i1 false, !"_mi_memid_create_os"}
+!32 = distinct !{!32, !31, !"_mi_memid_create_os: argument 0"}
 !33 = distinct !{!33, !15}
-!35 = distinct !{!35, i1 false, !"_mi_memid_create_os"}
-!36 = distinct !{!36, !35, !"_mi_memid_create_os: argument 0"}
-!37 = !{!36}
-!38 = distinct !{!38, !15, !41, !42}
-!39 = distinct !{!39, !15, !42, !41}
-!40 = !{!"branch_weights", !"expected", i32 536737, i32 2146946911}
-!41 = !{!"llvm.loop.isvectorized", i32 1}
-!42 = !{!"llvm.loop.unroll.runtime.disable"}
+!34 = !{!32}
+!35 = distinct !{!35, !15, !38, !39}
+!36 = distinct !{!36, !15, !39, !38}
+!37 = !{!"branch_weights", !"expected", i32 536737, i32 2146946911}
+!38 = !{!"llvm.loop.isvectorized", i32 1}
+!39 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

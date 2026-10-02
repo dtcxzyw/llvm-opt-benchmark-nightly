@@ -202,12 +202,12 @@ bb.d:                                             ; preds = %.lr.ph, %bb.ap
   br i1 %i.bn, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  %i.bo = load ptr, ptr %i.aj, align 8, !noalias !20 ; 2 uses
+  %i.bo = load ptr, ptr %i.aj, align 8, !noalias !15 ; 2 uses
   %i.bp = icmp eq ptr %.val101224, %i.bo          ; 2 uses
   br i1 %i.bp, label %bb.f, label %_ZNSt5stackIZN2v88internal12_GLOBAL__N_19FormatterEPNS1_7IsolateERNS1_16BuiltinArgumentsEiE5StateSt5dequeIS7_SaIS7_EEE3topEv.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.bq = load ptr, ptr %i.ai, align 8, !noalias !20
+  %i.bq = load ptr, ptr %i.ai, align 8, !noalias !15
   %i.br = getelementptr inbounds i8, ptr %i.bq, i64 -8
   %i.bs = load ptr, ptr %i.br, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 512
@@ -610,13 +610,13 @@ attributes #12 = { nounwind willreturn memory(read) }
 !6 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !7 = !{}
 !8 = !{i8 0, i8 2}
+!9 = distinct !{!9, i1 false, !"_ZNSt5dequeIZN2v88internal12_GLOBAL__N_19FormatterEPNS1_7IsolateERNS1_16BuiltinArgumentsEiE5StateSaIS7_EE3endEv"}
+!10 = distinct !{!10, !9, !"_ZNSt5dequeIZN2v88internal12_GLOBAL__N_19FormatterEPNS1_7IsolateERNS1_16BuiltinArgumentsEiE5StateSaIS7_EE3endEv: argument 0"}
 !11 = distinct !{!11, !16}
 !12 = distinct !{null, null}
 !13 = distinct !{null, null}
 !14 = distinct !{!14, !16}
+!15 = !{!10}
 !16 = !{!"llvm.loop.mustprogress"}
 !17 = !{!"branch_weights", !"expected", i32 3609197, i32 2143874451}
-!18 = distinct !{!18, i1 false, !"_ZNSt5dequeIZN2v88internal12_GLOBAL__N_19FormatterEPNS1_7IsolateERNS1_16BuiltinArgumentsEiE5StateSaIS7_EE3endEv"}
-!19 = distinct !{!19, !18, !"_ZNSt5dequeIZN2v88internal12_GLOBAL__N_19FormatterEPNS1_7IsolateERNS1_16BuiltinArgumentsEiE5StateSaIS7_EE3endEv: argument 0"}
-!20 = !{!19}
 end_hunk_1

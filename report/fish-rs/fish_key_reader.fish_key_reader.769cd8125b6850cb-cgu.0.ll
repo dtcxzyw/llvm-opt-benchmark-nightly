@@ -38,7 +38,7 @@ bb.a:
 define internal noundef i32 @_RNSNvYNCINvNtCsaL1QbXo9JQH_3std2rt10lang_startuE0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuE9call_once6vtableCsabn5LYsHvcZ_15fish_key_reader(ptr nofree noundef readonly captures(none) %0) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !5, !noundef !5
-  tail call fastcc void @_RINvNtNtCsaL1QbXo9JQH_3std3sys9backtrace28___rust_begin_short_backtraceFEuuECsabn5LYsHvcZ_15fish_key_reader(ptr noundef nonnull readonly %i.a) #7, !noalias !13
+  tail call fastcc void @_RINvNtNtCsaL1QbXo9JQH_3std3sys9backtrace28___rust_begin_short_backtraceFEuuECsabn5LYsHvcZ_15fish_key_reader(ptr noundef nonnull readonly %i.a) #7, !noalias !10
   ret i32 0
 }
 
@@ -97,7 +97,7 @@ attributes #7 = { noinline }
 !5 = !{}
 !6 = distinct !{null}
 !7 = !{i64 3286478910893286}
-!11 = distinct !{!11, i1 false, !"_RNCINvNtCsaL1QbXo9JQH_3std2rt10lang_startuE0Csabn5LYsHvcZ_15fish_key_reader"}
-!12 = distinct !{!12, !11, !"_RNCINvNtCsaL1QbXo9JQH_3std2rt10lang_startuE0Csabn5LYsHvcZ_15fish_key_reader: argument 0"}
-!13 = !{!12}
+!8 = distinct !{!8, i1 false, !"_RNCINvNtCsaL1QbXo9JQH_3std2rt10lang_startuE0Csabn5LYsHvcZ_15fish_key_reader"}
+!9 = distinct !{!9, !8, !"_RNCINvNtCsaL1QbXo9JQH_3std2rt10lang_startuE0Csabn5LYsHvcZ_15fish_key_reader: argument 0"}
+!10 = !{!9}
 end_hunk_0

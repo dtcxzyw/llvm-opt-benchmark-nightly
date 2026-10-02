@@ -204,14 +204,14 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %next.gep = getelementptr i8, ptr %i.a, i64 %i.g ; 2 uses
   %next.gep41 = getelementptr i8, ptr %1, i64 %index ; 2 uses
   %i.h = getelementptr i8, ptr %next.gep41, i64 16
-  %wide.load = load <16 x i8>, ptr %next.gep41, align 1, !tbaa !25, !alias.scope !35
-  %wide.load42 = load <16 x i8>, ptr %i.h, align 1, !tbaa !25, !alias.scope !35
+  %wide.load = load <16 x i8>, ptr %next.gep41, align 1, !tbaa !25, !alias.scope !26
+  %wide.load42 = load <16 x i8>, ptr %i.h, align 1, !tbaa !25, !alias.scope !26
   %i.i = getelementptr i8, ptr %next.gep, i64 -16
   %i.j = getelementptr i8, ptr %next.gep, i64 -32
   %reverse = shufflevector <16 x i8> %wide.load, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   %reverse43 = shufflevector <16 x i8> %wide.load42, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <16 x i8> %reverse, ptr %i.i, align 1, !tbaa !25, !alias.scope !37, !noalias !35
-  store <16 x i8> %reverse43, ptr %i.j, align 1, !tbaa !25, !alias.scope !37, !noalias !35
+  store <16 x i8> %reverse, ptr %i.i, align 1, !tbaa !25, !alias.scope !27, !noalias !26
+  store <16 x i8> %reverse43, ptr %i.j, align 1, !tbaa !25, !alias.scope !27, !noalias !26
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.k = icmp eq i64 %index.next, %n.vec
   br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !19
@@ -237,10 +237,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.o = sub i64 0, %index46
   %next.gep47 = getelementptr i8, ptr %i.a, i64 %i.o
   %next.gep48 = getelementptr i8, ptr %1, i64 %index46
-  %wide.load49 = load <8 x i8>, ptr %next.gep48, align 1, !tbaa !25, !alias.scope !35
+  %wide.load49 = load <8 x i8>, ptr %next.gep48, align 1, !tbaa !25, !alias.scope !26
   %i.p = getelementptr i8, ptr %next.gep47, i64 -8
   %reverse50 = shufflevector <8 x i8> %wide.load49, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %reverse50, ptr %i.p, align 1, !tbaa !25, !alias.scope !37, !noalias !35
+  store <8 x i8> %reverse50, ptr %i.p, align 1, !tbaa !25, !alias.scope !27, !noalias !26
   %index.next51 = add nuw i64 %index46, 8         ; 2 uses
   %i.q = icmp eq i64 %index.next51, %n.vec45
   br i1 %i.q, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !20
@@ -431,6 +431,9 @@ attributes #6 = { nounwind }
 !13 = !{!11, !10, i64 8}
 !14 = !{!11, !8, i64 16}
 !15 = !{!11, !8, i64 0}
+!16 = distinct !{!16, i1 false, !"LVerDomain"}
+!17 = distinct !{!17, !16}
+!18 = distinct !{!18, !16}
 !19 = distinct !{!19, !28, !29, !30}
 !20 = distinct !{!20, !28, !29, !30}
 !21 = distinct !{!21, !32}
@@ -438,14 +441,11 @@ attributes #6 = { nounwind }
 !23 = distinct !{!23, !28}
 !24 = distinct !{!24, !32}
 !25 = !{!4, !4, i64 0}
+!26 = !{!17}
+!27 = !{!18}
 !28 = !{!"llvm.loop.mustprogress"}
 !29 = !{!"llvm.loop.isvectorized", i32 1}
 !30 = !{!"llvm.loop.unroll.runtime.disable"}
 !31 = !{!"branch_weights", i32 8, i32 24}
 !32 = !{!"llvm.loop.unroll.disable"}
-!33 = distinct !{!33, i1 false, !"LVerDomain"}
-!34 = distinct !{!34, !33}
-!35 = !{!34}
-!36 = distinct !{!36, !33}
-!37 = !{!36}
 end_hunk_0

@@ -23,42 +23,42 @@ bb.a:
           to label %.noexc unwind label %bb.f     ; 6 uses
 
 .noexc:                                           ; preds = %bb.a
-  store ptr inttoptr (i64 -1 to ptr), ptr %i.a, align 8, !tbaa !13, !noalias !24
+  store ptr inttoptr (i64 -1 to ptr), ptr %i.a, align 8, !tbaa !13, !noalias !18
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  store i64 0, ptr %i.b, align 8, !tbaa !14, !noalias !24
+  store i64 0, ptr %i.b, align 8, !tbaa !14, !noalias !18
   %i.c = invoke i32 (ptr, i32, ...) @open(ptr noundef readonly %.val, i32 noundef 0)
-          to label %bb.b unwind label %bb.d, !noalias !24 ; 5 uses
+          to label %bb.b unwind label %bb.d, !noalias !18 ; 5 uses
 
 bb.b:                                             ; preds = %.noexc
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i32 %i.c, ptr %i.d, align 8, !tbaa !15, !noalias !24
+  store i32 %i.c, ptr %i.d, align 8, !tbaa !15, !noalias !18
   %i.e = icmp slt i32 %i.c, 0
   br i1 %i.e, label %_ZNKSt14default_deleteIN8WasmEdge12_GLOBAL__N_19ImplementEEclEPS2_.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #13, !noalias !24
-  %i.f = call i32 @fstat(i32 noundef %i.c, ptr noundef nonnull %2) #13, !noalias !24
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #13, !noalias !18
+  %i.f = call i32 @fstat(i32 noundef %i.c, ptr noundef nonnull %2) #13, !noalias !18
   %i.g = icmp slt i32 %i.f, 0
   br i1 %i.g, label %.thread10, label %_ZSt11make_uniqueIN8WasmEdge12_GLOBAL__N_19ImplementEJRKNSt10filesystem7__cxx114pathEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
 
 .thread10:                                        ; preds = %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13, !noalias !24
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13, !noalias !18
   br label %.thread9
 
 bb.d:                                             ; preds = %.noexc
   %i.h = landingpad { ptr, i32 }
           catch ptr null
   %i.i = extractvalue { ptr, i32 } %i.h, 0
-  tail call void @__clang_call_terminate(ptr %i.i) #14, !noalias !24
+  tail call void @__clang_call_terminate(ptr %i.i) #14, !noalias !18
   unreachable
 
 _ZSt11make_uniqueIN8WasmEdge12_GLOBAL__N_19ImplementEJRKNSt10filesystem7__cxx114pathEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !21, !noalias !24 ; 2 uses
-  store i64 %i.k, ptr %i.b, align 8, !tbaa !14, !noalias !24
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13, !noalias !24
-  %i.l = tail call ptr @mmap(ptr noundef null, i64 noundef %i.k, i32 noundef 1, i32 noundef 1, i32 noundef %i.c, i64 noundef 0) #13, !noalias !24 ; 2 uses
-  store ptr %i.l, ptr %i.a, align 8, !tbaa !13, !noalias !24
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !21, !noalias !18 ; 2 uses
+  store i64 %i.k, ptr %i.b, align 8, !tbaa !14, !noalias !18
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13, !noalias !18
+  %i.l = tail call ptr @mmap(ptr noundef null, i64 noundef %i.k, i32 noundef 1, i32 noundef 1, i32 noundef %i.c, i64 noundef 0) #13, !noalias !18 ; 2 uses
+  store ptr %i.l, ptr %i.a, align 8, !tbaa !13, !noalias !18
   %i.m = icmp eq ptr %i.l, inttoptr (i64 -1 to ptr)
   br i1 %i.m, label %.thread9, label %.thread
 
@@ -121,7 +121,7 @@ bb.a:
   br i1 %.not, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store ptr null, ptr %0, align 8, !tbaa !25
+  store ptr null, ptr %0, align 8, !tbaa !22
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.b, inttoptr (i64 -1 to ptr)
   br i1 %.not.i.i.i, label %bb.d, label %bb.c
@@ -236,11 +236,11 @@ attributes #15 = { builtin nounwind }
 !13 = !{!12, !8, i64 0}
 !14 = !{!12, !11, i64 16}
 !15 = !{!12, !5, i64 8}
+!16 = distinct !{!16, i1 false, !"_ZSt11make_uniqueIN8WasmEdge12_GLOBAL__N_19ImplementEJRKNSt10filesystem7__cxx114pathEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!17 = distinct !{!17, !16, !"_ZSt11make_uniqueIN8WasmEdge12_GLOBAL__N_19ImplementEJRKNSt10filesystem7__cxx114pathEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
+!18 = !{!17}
 !19 = !{!"_ZTS8timespec", !11, i64 0, !11, i64 8}
 !20 = !{!"_ZTS4stat", !11, i64 0, !11, i64 8, !11, i64 16, !5, i64 24, !5, i64 28, !5, i64 32, !5, i64 36, !11, i64 40, !11, i64 48, !11, i64 56, !11, i64 64, !19, i64 72, !19, i64 88, !19, i64 104, !4, i64 120}
 !21 = !{!20, !11, i64 48}
-!22 = distinct !{!22, i1 false, !"_ZSt11make_uniqueIN8WasmEdge12_GLOBAL__N_19ImplementEJRKNSt10filesystem7__cxx114pathEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
-!23 = distinct !{!23, !22, !"_ZSt11make_uniqueIN8WasmEdge12_GLOBAL__N_19ImplementEJRKNSt10filesystem7__cxx114pathEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!24 = !{!23}
-!25 = !{!8, !8, i64 0}
+!22 = !{!8, !8, i64 0}
 end_hunk_0

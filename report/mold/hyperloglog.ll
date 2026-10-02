@@ -77,19 +77,19 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.d = load atomic i64, ptr %i.c acquire, align 8, !noalias !38
+  %i.d = load atomic i64, ptr %i.c acquire, align 8, !noalias !18
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.f = load atomic ptr, ptr %i.e acquire, align 8, !noalias !38 ; 2 uses
+  %i.f = load atomic ptr, ptr %i.e acquire, align 8, !noalias !18 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.h = icmp eq ptr %i.f, %i.g
   %i.i = select i1 %i.h, i64 3, i64 64
-  %i.j = load ptr, ptr %i.b, align 8, !tbaa !31, !noalias !38
+  %i.j = load ptr, ptr %i.b, align 8, !tbaa !31, !noalias !18
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.01015.i.i.i.i = phi i64 [ 0, %bb.a ], [ %i.o, %bb.c ] ; 3 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.01015.i.i.i.i
-  %i.l = load atomic ptr, ptr %i.k monotonic, align 8, !noalias !38
+  %i.l = load atomic ptr, ptr %i.k monotonic, align 8, !noalias !18
   %.not.i.i.i.i = icmp ugt ptr %i.l, %i.j
   br i1 %.not.i.i.i.i, label %bb.c, label %.thread.i.i.i.i
 
@@ -234,8 +234,11 @@ attributes #11 = { builtin nounwind }
 !11 = !{!"_ZTSNSt12_Vector_baseIPN4mold7CounterESaIS2_EE17_Vector_impl_dataE", !10, i64 0, !10, i64 8, !10, i64 16}
 !12 = !{!11, !10, i64 0}
 !13 = !{!11, !10, i64 16}
+!14 = distinct !{!14, i1 false, !"_ZNK3tbb6detail2d126enumerable_thread_specificIN4mold11HyperLogLog6SketchENS1_23cache_aligned_allocatorIS5_EELNS1_18ets_key_usage_typeE1EE3endEv"}
+!15 = distinct !{!15, !14, !"_ZNK3tbb6detail2d126enumerable_thread_specificIN4mold11HyperLogLog6SketchENS1_23cache_aligned_allocatorIS5_EELNS1_18ets_key_usage_typeE1EE3endEv: argument 0"}
 !16 = distinct !{!16, !32}
 !17 = distinct !{!17, !32, !34, !35}
+!18 = !{!15}
 !19 = !{!"p1 _ZTSN3tbb6detail2d06paddedINS0_2d111ets_elementIN4mold11HyperLogLog6SketchEEELm128EEE", !8, i64 0}
 !20 = !{!"_ZTSN3tbb6detail2d123cache_aligned_allocatorISt6atomicIPNS0_2d06paddedINS1_11ets_elementIN4mold11HyperLogLog6SketchEEELm128EEEEEE"}
 !21 = !{!"p1 _ZTSSt6atomicIPN3tbb6detail2d06paddedINS1_2d111ets_elementIN4mold11HyperLogLog6SketchEEELm128EEEE", !8, i64 0}
@@ -253,7 +256,4 @@ attributes #11 = { builtin nounwind }
 !33 = !{!4, !4, i64 0}
 !34 = !{!"llvm.loop.isvectorized", i32 1}
 !35 = !{!"llvm.loop.unroll.runtime.disable"}
-!36 = distinct !{!36, i1 false, !"_ZNK3tbb6detail2d126enumerable_thread_specificIN4mold11HyperLogLog6SketchENS1_23cache_aligned_allocatorIS5_EELNS1_18ets_key_usage_typeE1EE3endEv"}
-!37 = distinct !{!37, !36, !"_ZNK3tbb6detail2d126enumerable_thread_specificIN4mold11HyperLogLog6SketchENS1_23cache_aligned_allocatorIS5_EELNS1_18ets_key_usage_typeE1EE3endEv: argument 0"}
-!38 = !{!37}
 end_hunk_0

@@ -205,16 +205,16 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bs = getelementptr i8, ptr %i.br, i64 %.neg  ; 2 uses
   %i.bt = getelementptr inbounds i8, ptr %i.bs, i64 -15 ; 2 uses
   %i.bu = getelementptr inbounds i8, ptr %i.bs, i64 -31 ; 2 uses
-  %wide.load = load <16 x i8>, ptr %i.bt, align 1, !alias.scope !20
-  %wide.load232 = load <16 x i8>, ptr %i.bu, align 1, !alias.scope !20
+  %wide.load = load <16 x i8>, ptr %i.bt, align 1, !alias.scope !13
+  %wide.load232 = load <16 x i8>, ptr %i.bu, align 1, !alias.scope !13
   %i.bv = xor i64 %index, -1
   %i.bw = getelementptr inbounds i8, ptr %.ptr, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds i8, ptr %i.bw, i64 -15
   %i.by = getelementptr inbounds i8, ptr %i.bw, i64 -31
-  store <16 x i8> %wide.load, ptr %i.bx, align 16, !alias.scope !22, !noalias !20
-  store <16 x i8> %wide.load232, ptr %i.by, align 16, !alias.scope !22, !noalias !20
-  store <16 x i8> zeroinitializer, ptr %i.bt, align 1, !alias.scope !20
-  store <16 x i8> zeroinitializer, ptr %i.bu, align 1, !alias.scope !20
+  store <16 x i8> %wide.load, ptr %i.bx, align 16, !alias.scope !14, !noalias !13
+  store <16 x i8> %wide.load232, ptr %i.by, align 16, !alias.scope !14, !noalias !13
+  store <16 x i8> zeroinitializer, ptr %i.bt, align 1, !alias.scope !13
+  store <16 x i8> zeroinitializer, ptr %i.bu, align 1, !alias.scope !13
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.bz = icmp eq i64 %index.next, %n.vec
   br i1 %i.bz, label %middle.block, label %vector.body, !llvm.loop !10
@@ -239,12 +239,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %.neg239 = xor i64 %index234, -1
   %i.cc = getelementptr i8, ptr %i.cb, i64 %.neg239
   %i.cd = getelementptr inbounds i8, ptr %i.cc, i64 -7 ; 2 uses
-  %wide.load235 = load <8 x i8>, ptr %i.cd, align 1, !alias.scope !20
+  %wide.load235 = load <8 x i8>, ptr %i.cd, align 1, !alias.scope !13
   %i.ce = xor i64 %index234, -1
   %i.cf = getelementptr inbounds i8, ptr %.ptr, i64 %i.ce
   %i.cg = getelementptr inbounds i8, ptr %i.cf, i64 -7
-  store <8 x i8> %wide.load235, ptr %i.cg, align 8, !alias.scope !22, !noalias !20
-  store <8 x i8> zeroinitializer, ptr %i.cd, align 1, !alias.scope !20
+  store <8 x i8> %wide.load235, ptr %i.cg, align 8, !alias.scope !14, !noalias !13
+  store <8 x i8> zeroinitializer, ptr %i.cd, align 1, !alias.scope !13
   %index.next236 = add nuw i64 %index234, 8       ; 2 uses
   %i.ch = icmp eq i64 %index.next236, %n.vec233
   br i1 %i.ch, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !11
@@ -352,15 +352,15 @@ attributes #9 = { nounwind willreturn memory(read) }
 !4 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
 !5 = !{!"llvm.loop.mustprogress"}
 !6 = distinct !{!6, !5}
+!7 = distinct !{!7, i1 false, !"LVerDomain"}
+!8 = distinct !{!8, !7}
+!9 = distinct !{!9, !7}
 !10 = distinct !{!10, !5, !15, !16}
 !11 = distinct !{!11, !5, !15, !16}
 !12 = distinct !{!12, !5, !15}
+!13 = !{!8}
+!14 = !{!9}
 !15 = !{!"llvm.loop.isvectorized", i32 1}
 !16 = !{!"llvm.loop.unroll.runtime.disable"}
 !17 = !{!"branch_weights", i32 8, i32 24}
-!18 = distinct !{!18, i1 false, !"LVerDomain"}
-!19 = distinct !{!19, !18}
-!20 = !{!19}
-!21 = distinct !{!21, !18}
-!22 = !{!21}
 end_hunk_0

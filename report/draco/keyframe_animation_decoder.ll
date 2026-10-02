@@ -93,12 +93,12 @@ _ZN5draco6StatusD2Ev.exit:                        ; preds = %bb.e, %_ZNKSt7__cxx
   resume { ptr, i32 } %i.s
 
 bb.f:                                             ; preds = %bb.a
-  store i32 0, ptr %0, align 8, !tbaa !17, !alias.scope !26
+  store i32 0, ptr %0, align 8, !tbaa !17, !alias.scope !23
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  store ptr %i.y, ptr %i.d, align 8, !tbaa !18, !alias.scope !26
+  store ptr %i.y, ptr %i.d, align 8, !tbaa !18, !alias.scope !23
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 0, ptr %i.z, align 8, !tbaa !20, !alias.scope !26
-  store i8 0, ptr %i.y, align 8, !tbaa !22, !alias.scope !26
+  store i64 0, ptr %i.z, align 8, !tbaa !20, !alias.scope !23
+  store i8 0, ptr %i.y, align 8, !tbaa !22, !alias.scope !23
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %_ZN5draco6StatusC2ERKS0_.exit
@@ -156,6 +156,8 @@ attributes #5 = { builtin nounwind }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
+!8 = distinct !{!8, i1 false, !"_ZN5draco8OkStatusEv"}
+!9 = distinct !{!9, !8, !"_ZN5draco8OkStatusEv: argument 0"}
 !10 = !{!"_ZTSN5draco6Status4CodeE", !4, i64 0}
 !11 = !{!"any pointer", !4, i64 0}
 !12 = !{!"p1 omnipotent char", !11, i64 0}
@@ -169,7 +171,5 @@ attributes #5 = { builtin nounwind }
 !20 = !{!15, !14, i64 8}
 !21 = !{!14, !14, i64 0}
 !22 = !{!4, !4, i64 0}
-!24 = distinct !{!24, i1 false, !"_ZN5draco8OkStatusEv"}
-!25 = distinct !{!25, !24, !"_ZN5draco8OkStatusEv: argument 0"}
-!26 = !{!25}
+!23 = !{!9}
 end_hunk_0

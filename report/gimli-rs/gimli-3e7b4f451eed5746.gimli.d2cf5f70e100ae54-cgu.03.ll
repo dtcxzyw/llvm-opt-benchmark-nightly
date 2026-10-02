@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr i8, ptr %1, i64 -1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.g) ]
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  store ptr %i.g, ptr %i.h, align 8, !alias.scope !13
-  store i8 3, ptr %i.a, align 8, !alias.scope !13
+  store ptr %i.g, ptr %i.h, align 8, !alias.scope !10
+  store i8 3, ptr %i.a, align 8, !alias.scope !10
   call void @_RNvXsd_NtNtCskKLDkoKarTP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.h)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi68uqYEhoRA_5gimli.exit
 
@@ -267,8 +267,8 @@ attributes #4 = { inlinehint }
 !4 = !{i8 0, i8 77}
 !5 = !{}
 !6 = !{i64 8}
+!7 = distinct !{!7, i1 false, !"_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECsi68uqYEhoRA_5gimli"}
+!8 = distinct !{!8, !7, !"_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECsi68uqYEhoRA_5gimli: argument 0"}
 !9 = !{!"branch_weights", i32 1, i32 2000, i32 2000, i32 2000, i32 2000}
-!11 = distinct !{!11, i1 false, !"_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECsi68uqYEhoRA_5gimli"}
-!12 = distinct !{!12, !11, !"_RINvNtNtNtCskKLDkoKarTP_4core2io5error4repr11decode_reprNtB4_11CustomOwnerNCNvXs1_B2_NtB2_4ReprNtNtNtB8_3ops4drop4Drop4drop0ECsi68uqYEhoRA_5gimli: argument 0"}
-!13 = !{!12}
+!10 = !{!8}
 end_hunk_0

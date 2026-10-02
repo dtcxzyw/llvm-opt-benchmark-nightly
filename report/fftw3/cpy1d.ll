@@ -202,12 +202,12 @@ vector.body:                                      ; preds = %.preheader, %vector
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader ] ; 3 uses
   %i.es = getelementptr [8 x i8], ptr %i.ep, i64 %index ; 2 uses
   %i.et = getelementptr i8, ptr %i.es, i64 16
-  %wide.load = load <2 x double>, ptr %i.es, align 8, !tbaa !23, !alias.scope !32
-  %wide.load115 = load <2 x double>, ptr %i.et, align 8, !tbaa !23, !alias.scope !32
+  %wide.load = load <2 x double>, ptr %i.es, align 8, !tbaa !23, !alias.scope !26
+  %wide.load115 = load <2 x double>, ptr %i.et, align 8, !tbaa !23, !alias.scope !26
   %i.eu = getelementptr [8 x i8], ptr %i.er, i64 %index ; 2 uses
   %i.ev = getelementptr i8, ptr %i.eu, i64 16
-  store <2 x double> %wide.load, ptr %i.eu, align 8, !tbaa !23, !alias.scope !34, !noalias !32
-  store <2 x double> %wide.load115, ptr %i.ev, align 8, !tbaa !23, !alias.scope !34, !noalias !32
+  store <2 x double> %wide.load, ptr %i.eu, align 8, !tbaa !23, !alias.scope !27, !noalias !26
+  store <2 x double> %wide.load115, ptr %i.ev, align 8, !tbaa !23, !alias.scope !27, !noalias !26
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ew = icmp eq i64 %index.next, %n.vec
   br i1 %i.ew, label %middle.block, label %vector.body, !llvm.loop !18
@@ -315,6 +315,9 @@ attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwt
 !12 = distinct !{!12, !25}
 !13 = distinct !{!13, !24}
 !14 = distinct !{!14, !25}
+!15 = distinct !{!15, i1 false, !"LVerDomain"}
+!16 = distinct !{!16, !15}
+!17 = distinct !{!17, !15}
 !18 = distinct !{!18, !25, !28, !29}
 !19 = distinct !{!19, !24}
 !20 = distinct !{!20, !25, !28}
@@ -323,11 +326,8 @@ attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwt
 !23 = !{!22, !22, i64 0}
 !24 = !{!"llvm.loop.unroll.disable"}
 !25 = !{!"llvm.loop.mustprogress"}
+!26 = !{!16}
+!27 = !{!17}
 !28 = !{!"llvm.loop.isvectorized", i32 1}
 !29 = !{!"llvm.loop.unroll.runtime.disable"}
-!30 = distinct !{!30, i1 false, !"LVerDomain"}
-!31 = distinct !{!31, !30}
-!32 = !{!31}
-!33 = distinct !{!33, !30}
-!34 = !{!33}
 end_hunk_0

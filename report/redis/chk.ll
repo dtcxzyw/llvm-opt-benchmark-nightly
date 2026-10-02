@@ -204,19 +204,19 @@ bb.b:                                             ; preds = %bb.a
   %i.d = add i64 %i.c, %3
   store i64 %i.d, ptr %i.b, align 8, !tbaa !42
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !62)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !58)
   %i.e = sext i32 %2 to i64                       ; 5 uses
-  %i.f = tail call i64 @XXH3_64bits_withSeed(ptr noundef readonly captures(none) %1, i64 noundef %i.e, i64 noundef 0) #19, !noalias !62 ; 4 uses
+  %i.f = tail call i64 @XXH3_64bits_withSeed(ptr noundef readonly captures(none) %1, i64 noundef %i.e, i64 noundef 0) #19, !noalias !58 ; 4 uses
   %i.g = trunc i64 %i.f to i16                    ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store i16 %i.g, ptr %i.h, align 8, !tbaa !38, !alias.scope !62
+  store i16 %i.g, ptr %i.h, align 8, !tbaa !38, !alias.scope !58
   %i.i = lshr i64 %i.f, 32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 6228
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !31, !noalias !62
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !31, !noalias !58
   %i.l = add nsw i32 %i.k, -1                     ; 2 uses
   %i.m = zext i32 %i.l to i64
   %i.n = and i64 %i.i, %i.m                       ; 3 uses
-  store i64 %i.n, ptr %5, align 8, !tbaa !22, !alias.scope !62
+  store i64 %i.n, ptr %5, align 8, !tbaa !22, !alias.scope !58
   %i.o = trunc nuw i64 %i.n to i32
   %i.p = trunc i64 %i.f to i32
   %i.q = and i32 %i.p, 65535
@@ -225,7 +225,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = and i32 %i.s, %i.l
   %i.u = sext i32 %i.t to i64                     ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i64 %i.u, ptr %i.v, align 8, !tbaa !22, !alias.scope !62
+  store i64 %i.u, ptr %i.v, align 8, !tbaa !22, !alias.scope !58
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false)
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -628,9 +628,9 @@ attributes #20 = { nounwind allocsize(0) }
 !52 = !{!26, !25, i64 6200}
 !53 = !{!26, !25, i64 6208}
 !54 = distinct !{!54, !24}
+!55 = distinct !{!55, i1 false, !"generateItemFpAndIdxs"}
+!56 = distinct !{!56, !55, !"generateItemFpAndIdxs: argument 0"}
 !57 = distinct !{!57, !24}
+!58 = !{!56}
 !59 = !{!19, !16, i64 16}
-!60 = distinct !{!60, i1 false, !"generateItemFpAndIdxs"}
-!61 = distinct !{!61, !60, !"generateItemFpAndIdxs: argument 0"}
-!62 = !{!61}
 end_hunk_1

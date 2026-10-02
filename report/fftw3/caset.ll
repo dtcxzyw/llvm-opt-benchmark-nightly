@@ -28,9 +28,9 @@ vector.memcheck:                                  ; preds = %.lr.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
-  %i.f = load double, ptr %2, align 8, !tbaa !16, !alias.scope !25
+  %i.f = load double, ptr %2, align 8, !tbaa !16, !alias.scope !17
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.f, i64 0
-  %i.g = load double, ptr %i.b, align 8, !tbaa !16, !alias.scope !25
+  %i.g = load double, ptr %i.b, align 8, !tbaa !16, !alias.scope !17
   %broadcast.splatinsert11 = insertelement <2 x double> poison, double %i.g, i64 0
   %interleaved.vec = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> %broadcast.splatinsert11, <4 x i32> <i32 0, i32 2, i32 0, i32 2> ; 2 uses
   br label %vector.body
@@ -40,8 +40,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.h = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %index
   %i.i = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %index
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  store <4 x double> %interleaved.vec, ptr %i.h, align 8, !tbaa !16, !alias.scope !27, !noalias !25
-  store <4 x double> %interleaved.vec, ptr %i.j, align 8, !tbaa !16, !alias.scope !27, !noalias !25
+  store <4 x double> %interleaved.vec, ptr %i.h, align 8, !tbaa !16, !alias.scope !18, !noalias !17
+  store <4 x double> %interleaved.vec, ptr %i.j, align 8, !tbaa !16, !alias.scope !18, !noalias !17
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.k = icmp eq i64 %index.next, %n.vec
   br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !12
@@ -128,18 +128,18 @@ attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwt
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
+!9 = distinct !{!9, i1 false, !"LVerDomain"}
+!10 = distinct !{!10, !9}
+!11 = distinct !{!11, !9}
 !12 = distinct !{!12, !19, !20, !21}
 !13 = distinct !{!13, !22}
 !14 = distinct !{!14, !19, !20}
 !15 = !{!"double", !5, i64 0}
 !16 = !{!15, !15, i64 0}
+!17 = !{!10}
+!18 = !{!11}
 !19 = !{!"llvm.loop.mustprogress"}
 !20 = !{!"llvm.loop.isvectorized", i32 1}
 !21 = !{!"llvm.loop.unroll.runtime.disable"}
 !22 = !{!"llvm.loop.unroll.disable"}
-!23 = distinct !{!23, i1 false, !"LVerDomain"}
-!24 = distinct !{!24, !23}
-!25 = !{!24}
-!26 = distinct !{!26, !23}
-!27 = !{!26}
 end_hunk_0

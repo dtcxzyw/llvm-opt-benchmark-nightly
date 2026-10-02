@@ -143,14 +143,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %step.add = add nuw <2 x i64> %vec.ind, splat (i64 2)
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %index ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  %wide.load = load <2 x i64>, ptr %i.s, align 8, !tbaa !13, !alias.scope !29
-  %wide.load73 = load <2 x i64>, ptr %i.t, align 8, !tbaa !13, !alias.scope !29
+  %wide.load = load <2 x i64>, ptr %i.s, align 8, !tbaa !13, !alias.scope !23
+  %wide.load73 = load <2 x i64>, ptr %i.t, align 8, !tbaa !13, !alias.scope !23
   %i.u = icmp ult <2 x i64> %vec.ind, %broadcast.splat
   %i.v = icmp ult <2 x i64> %step.add, %broadcast.splat
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %index ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 2 uses
-  %wide.load74 = load <2 x i64>, ptr %i.w, align 8, !tbaa !13, !alias.scope !31, !noalias !29 ; 2 uses
-  %wide.load75 = load <2 x i64>, ptr %i.x, align 8, !tbaa !13, !alias.scope !31, !noalias !29 ; 2 uses
+  %wide.load74 = load <2 x i64>, ptr %i.w, align 8, !tbaa !13, !alias.scope !24, !noalias !23 ; 2 uses
+  %wide.load75 = load <2 x i64>, ptr %i.x, align 8, !tbaa !13, !alias.scope !24, !noalias !23 ; 2 uses
   %i.y = select <2 x i1> %i.u, <2 x i64> %wide.load74, <2 x i64> zeroinitializer
   %i.z = select <2 x i1> %i.v, <2 x i64> %wide.load75, <2 x i64> zeroinitializer
   %i.aa = xor <2 x i64> %wide.load, %i.y
@@ -159,8 +159,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ad = and <2 x i64> %i.ab, %broadcast.splat72
   %i.ae = xor <2 x i64> %wide.load74, %i.ac
   %i.af = xor <2 x i64> %wide.load75, %i.ad
-  store <2 x i64> %i.ae, ptr %i.w, align 8, !tbaa !13, !alias.scope !31, !noalias !29
-  store <2 x i64> %i.af, ptr %i.x, align 8, !tbaa !13, !alias.scope !31, !noalias !29
+  store <2 x i64> %i.ae, ptr %i.w, align 8, !tbaa !13, !alias.scope !24, !noalias !23
+  store <2 x i64> %i.af, ptr %i.x, align 8, !tbaa !13, !alias.scope !24, !noalias !23
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.ag = icmp eq i64 %index.next, %n.vec
@@ -319,7 +319,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %i.f = load i16, ptr %i.e, align 2, !tbaa !32
+  %i.f = load i16, ptr %i.e, align 2, !tbaa !27
   %i.g = zext i16 %i.f to i32
   %i.h = icmp samesign ugt i32 %1, %i.g
   br i1 %i.h, label %.critedge, label %.critedge30
@@ -367,16 +367,16 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  store i32 0, ptr %i.a, align 4, !tbaa !33
+  store i32 0, ptr %i.a, align 4, !tbaa !28
   %i.f = call i32 @sp_radix_size(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull %i.a) #6 ; 2 uses
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = load i32, ptr %2, align 4, !tbaa !33
-  %i.i = load i32, ptr %i.a, align 4, !tbaa !33   ; 2 uses
+  %i.h = load i32, ptr %2, align 4, !tbaa !28
+  %i.i = load i32, ptr %i.a, align 4, !tbaa !28   ; 2 uses
   %i.j = icmp ult i32 %i.h, %i.i
-  store i32 %i.i, ptr %2, align 4, !tbaa !33
+  store i32 %i.i, ptr %2, align 4, !tbaa !28
   br i1 %i.j, label %.critedge, label %bb.e
 
 .critedge:                                        ; preds = %bb.d
@@ -393,9 +393,9 @@ bb.f:                                             ; preds = %bb.c, %bb.e
   br label %.critedge51
 
 bb.g:                                             ; preds = %bb.b
-  %i.l = load i32, ptr %2, align 4, !tbaa !33
+  %i.l = load i32, ptr %2, align 4, !tbaa !28
   %i.m = icmp ult i32 %i.l, %3
-  store i32 %3, ptr %2, align 4, !tbaa !33
+  store i32 %3, ptr %2, align 4, !tbaa !28
   br i1 %i.m, label %.critedge51, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -406,7 +406,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %or.cond49, label %.critedge51, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.q = load i32, ptr %2, align 4, !tbaa !33
+  %i.q = load i32, ptr %2, align 4, !tbaa !28
   %i.r = zext i32 %i.q to i64
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %1, i8 0, i64 %i.r, i1 false)
   %i.s = sub nuw i32 %3, %i.n
@@ -459,17 +459,17 @@ attributes #6 = { nounwind }
 !13 = !{!12, !12, i64 0}
 !14 = distinct !{!14, !8}
 !15 = !{!4, !4, i64 0}
+!16 = distinct !{!16, i1 false, !"LVerDomain"}
+!17 = distinct !{!17, !16}
+!18 = distinct !{!18, !16}
 !19 = distinct !{!19, !8, !25, !26}
 !20 = distinct !{!20, !8, !25, !26}
 !21 = distinct !{!21, !8, !25}
 !22 = distinct !{!22, !8, !26, !25}
+!23 = !{!17}
+!24 = !{!18}
 !25 = !{!"llvm.loop.isvectorized", i32 1}
 !26 = !{!"llvm.loop.unroll.runtime.disable"}
-!27 = distinct !{!27, i1 false, !"LVerDomain"}
-!28 = distinct !{!28, !27}
-!29 = !{!28}
-!30 = distinct !{!30, !27}
-!31 = !{!30}
-!32 = !{!10, !9, i64 2}
-!33 = !{!5, !5, i64 0}
+!27 = !{!10, !9, i64 2}
+!28 = !{!5, !5, i64 0}
 end_hunk_0

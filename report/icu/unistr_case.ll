@@ -202,8 +202,8 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af, %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #6
-  %i.cb = load ptr, ptr %7, align 8, !tbaa !23, !noalias !39
-  %i.cc = load i32, ptr %i.bj, align 4, !tbaa !27, !noalias !39
+  %i.cb = load ptr, ptr %7, align 8, !tbaa !23, !noalias !26
+  %i.cc = load i32, ptr %i.bj, align 4, !tbaa !27, !noalias !26
   invoke void @_ZN6icu_785Edits8IteratorC1EPKtiaa(ptr noundef nonnull align 8 dereferenceable(48) %9, ptr noundef %i.cb, i32 noundef %i.cc, i8 noundef signext 1, i8 noundef signext 1)
           to label %_ZNK6icu_785Edits24getCoarseChangesIteratorEv.exit.preheader unwind label %.loopexit.split-lp
 
@@ -585,6 +585,8 @@ attributes #6 = { nounwind }
 !8 = !{!4, !4, i64 0}
 !9 = !{!"_ZTS10UErrorCode", !4, i64 0}
 !10 = !{!9, !9, i64 0}
+!11 = distinct !{!11, i1 false, !"_ZNK6icu_785Edits24getCoarseChangesIteratorEv"}
+!12 = distinct !{!12, !11, !"_ZNK6icu_785Edits24getCoarseChangesIteratorEv: argument 0"}
 !13 = distinct !{!13, !34}
 !14 = !{!"vtable pointer", !3, i64 0}
 !15 = !{!14, !14, i64 0}
@@ -598,6 +600,7 @@ attributes #6 = { nounwind }
 !23 = !{!22, !21, i64 0}
 !24 = !{!22, !5, i64 8}
 !25 = !{!22, !5, i64 16}
+!26 = !{!12}
 !27 = !{!22, !5, i64 12}
 !28 = !{!"_ZTSN6icu_785Edits8IteratorE", !21, i64 0, !5, i64 8, !5, i64 12, !5, i64 16, !4, i64 20, !4, i64 21, !4, i64 22, !4, i64 23, !5, i64 24, !5, i64 28, !5, i64 32, !5, i64 36, !5, i64 40}
 !29 = !{!28, !4, i64 20}
@@ -608,7 +611,4 @@ attributes #6 = { nounwind }
 !34 = !{!"llvm.loop.mustprogress"}
 !35 = !{!"p1 int", !16, i64 0}
 !36 = !{!35, !35, i64 0}
-!37 = distinct !{!37, i1 false, !"_ZNK6icu_785Edits24getCoarseChangesIteratorEv"}
-!38 = distinct !{!38, !37, !"_ZNK6icu_785Edits24getCoarseChangesIteratorEv: argument 0"}
-!39 = !{!38}
 end_hunk_0

@@ -162,18 +162,18 @@ bb.a:
           to label %bb.b unwind label %bb.f       ; 0 uses
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.experimental.noalias.scope.decl(metadata !64)
-  call void @llvm.experimental.noalias.scope.decl(metadata !67)
+  call void @llvm.experimental.noalias.scope.decl(metadata !55)
+  call void @llvm.experimental.noalias.scope.decl(metadata !56)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  store ptr %i.b, ptr %0, align 8, !tbaa !57, !alias.scope !68
+  store ptr %i.b, ptr %0, align 8, !tbaa !57, !alias.scope !58
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %i.c, align 8, !tbaa !15, !alias.scope !68
-  store i8 0, ptr %i.b, align 8, !tbaa !18, !alias.scope !68
+  store i64 0, ptr %i.c, align 8, !tbaa !15, !alias.scope !58
+  store i8 0, ptr %i.b, align 8, !tbaa !18, !alias.scope !58
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !60, !noalias !68 ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !60, !noalias !58 ; 3 uses
   %.not.i.not.i.i = icmp eq ptr %i.e, null
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.g = load ptr, ptr %i.f, align 8, !noalias !68 ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !noalias !58 ; 2 uses
   %i.h = icmp ugt ptr %i.e, %i.g
   %.08.i.i.i = select i1 %i.h, ptr %i.e, ptr %i.g ; 2 uses
   %.not5.i.i = icmp eq ptr %.08.i.i.i, null
@@ -182,7 +182,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !61, !noalias !68 ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !61, !noalias !58 ; 2 uses
   %i.k = ptrtoint ptr %.08.i.i.i to i64
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = sub i64 %i.k, %i.l
@@ -192,12 +192,12 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.e, %bb.c
   %i.o = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.p = load ptr, ptr %0, align 8, !tbaa !14, !alias.scope !68 ; 2 uses
+  %i.p = load ptr, ptr %0, align 8, !tbaa !14, !alias.scope !58 ; 2 uses
   %i.q = icmp eq ptr %i.p, %i.b
   br i1 %i.q, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.d
-  %i.r = load i64, ptr %i.b, align 8, !tbaa !18, !alias.scope !68
+  %i.r = load i64, ptr %i.b, align 8, !tbaa !18, !alias.scope !58
   %i.s = add i64 %i.r, 1
   call void @_ZdlPvm(ptr noundef %i.p, i64 noundef %i.s) #13
   br label %.body
@@ -370,15 +370,15 @@ attributes #13 = { builtin nounwind }
 !48 = !{!"_ZTSSt5ctypeIcE", !44, i64 0, !45, i64 16, !34, i64 24, !46, i64 32, !46, i64 40, !47, i64 48, !5, i64 56, !5, i64 57, !5, i64 313, !5, i64 569}
 !49 = !{!48, !5, i64 56}
 !50 = !{!39, !5, i64 224}
+!51 = distinct !{!51, i1 false, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv"}
+!52 = distinct !{!52, !51, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!53 = distinct !{!53, i1 false, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
+!54 = distinct !{!54, !53, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!55 = !{!52}
+!56 = !{!54}
 !57 = !{!11, !10, i64 0}
+!58 = !{!54, !52}
 !59 = !{!"_ZTSSt15basic_streambufIcSt11char_traitsIcEE", !10, i64 8, !10, i64 16, !10, i64 24, !10, i64 32, !10, i64 40, !10, i64 48, !22, i64 56}
 !60 = !{!59, !10, i64 40}
 !61 = !{!59, !10, i64 32}
-!62 = distinct !{!62, i1 false, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv"}
-!63 = distinct !{!63, !62, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!64 = !{!63}
-!65 = distinct !{!65, i1 false, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
-!66 = distinct !{!66, !65, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!67 = !{!66}
-!68 = !{!66, !63}
 end_hunk_0

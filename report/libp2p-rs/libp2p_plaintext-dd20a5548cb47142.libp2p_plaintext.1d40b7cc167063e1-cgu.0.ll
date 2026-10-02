@@ -159,11 +159,11 @@ bb.a:
   %i.c = load ptr, ptr %0, align 8, !nonnull !4, !align !5, !noundef !4
   %.val = load ptr, ptr %i.c, align 8, !nonnull !4, !align !5, !noundef !4 ; 2 uses
   %i.d = getelementptr i8, ptr %.val, i64 8
-  %.val.i = load ptr, ptr %i.d, align 8, !noalias !24, !nonnull !4, !noundef !4 ; 2 uses
+  %.val.i = load ptr, ptr %i.d, align 8, !noalias !17, !nonnull !4, !noundef !4 ; 2 uses
   %i.e = getelementptr i8, ptr %.val, i64 16
-  %.val1.i = load i64, ptr %i.e, align 8, !noalias !24, !noundef !4 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !30
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter10debug_list(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1), !noalias !31
+  %.val1.i = load i64, ptr %i.e, align 8, !noalias !17, !noundef !4 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !18
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter10debug_list(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1), !noalias !19
   %i.f = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.val1.i
   %i.g = icmp samesign eq i64 %.val1.i, 0
   br i1 %i.g, label %_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext.exit, label %.lr.ph.i.i.i.i
@@ -171,16 +171,16 @@ bb.a:
 .lr.ph.i.i.i.i:                                   ; preds = %bb.a, %.lr.ph.i.i.i.i
   %.sroa.0.05.i.i.i.i = phi ptr [ %i.h, %.lr.ph.i.i.i.i ], [ %.val.i, %bb.a ] ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.i.i, i64 1 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !34
-  store ptr %.sroa.0.05.i.i.i.i, ptr %i.a, align 8, !noalias !34, !captures !21
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !20
+  store ptr %.sroa.0.05.i.i.i.i, ptr %i.a, align 8, !noalias !20, !captures !21
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_9DebugList5entry(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !34
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !20
   %i.j = icmp eq ptr %i.h, %i.f
   br i1 %i.j, label %_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext.exit, label %.lr.ph.i.i.i.i
 
 _RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext.exit: ; preds = %.lr.ph.i.i.i.i, %bb.a
   %i.k = call noundef zeroext i1 @_RNvMs6_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_9DebugList6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !30
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !18
   ret i1 %i.k
 }
 
@@ -189,7 +189,7 @@ define internal noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRhNtB6_5De
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.c = load i32, ptr %i.b, align 8, !alias.scope !42, !noalias !44, !noundef !4 ; 2 uses
+  %i.c = load i32, ptr %i.b, align 8, !alias.scope !25, !noalias !26, !noundef !4 ; 2 uses
   %i.d = and i32 %i.c, 33554432
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -407,23 +407,23 @@ attributes #7 = { nounwind }
 !5 = !{i64 8}
 !6 = !{i64 -1, i64 -9223372036854775808}
 !7 = !{i64 0, i64 -9223372036854775803}
+!8 = distinct !{!8, i1 false, !"_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
+!9 = distinct !{!9, !8, !"_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
+!10 = distinct !{!10, i1 false, !"_RNvXsr_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtCskKLDkoKarTP_4core3fmt5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
+!11 = distinct !{!11, !10, !"_RNvXsr_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtCskKLDkoKarTP_4core3fmt5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
+!12 = distinct !{!12, i1 false, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
+!13 = distinct !{!13, !12, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 1"}
+!14 = distinct !{!14, !12, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
+!15 = distinct !{!15, i1 false, !"_RINvMs6_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB6_9DebugList7entriesRhINtNtNtBa_5slice4iter4IterhEECs2vI8TDSUWPt_16libp2p_plaintext"}
+!16 = distinct !{!16, !15, !"_RINvMs6_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB6_9DebugList7entriesRhINtNtNtBa_5slice4iter4IterhEECs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
+!17 = !{!9}
+!18 = !{!14, !13, !11, !9}
+!19 = !{!14}
+!20 = !{!16, !14, !13, !11, !9}
 !21 = !{!"address", !"read_provenance"}
-!22 = distinct !{!22, i1 false, !"_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
-!23 = distinct !{!23, !22, !"_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
-!24 = !{!23}
-!25 = distinct !{!25, i1 false, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
-!26 = distinct !{!26, !25, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
-!27 = distinct !{!27, !25, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 1"}
-!28 = distinct !{!28, i1 false, !"_RNvXsr_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtCskKLDkoKarTP_4core3fmt5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
-!29 = distinct !{!29, !28, !"_RNvXsr_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtCskKLDkoKarTP_4core3fmt5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
-!30 = !{!26, !27, !29, !23}
-!31 = !{!26}
-!32 = distinct !{!32, i1 false, !"_RINvMs6_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB6_9DebugList7entriesRhINtNtNtBa_5slice4iter4IterhEECs2vI8TDSUWPt_16libp2p_plaintext"}
-!33 = distinct !{!33, !32, !"_RINvMs6_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB6_9DebugList7entriesRhINtNtNtBa_5slice4iter4IterhEECs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
-!34 = !{!33, !26, !27, !29, !23}
-!40 = distinct !{!40, i1 false, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt"}
-!41 = distinct !{!41, !40, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt: argument 1"}
-!42 = !{!41}
-!43 = distinct !{!43, !40, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt: argument 0"}
-!44 = !{!43}
+!22 = distinct !{!22, i1 false, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt"}
+!23 = distinct !{!23, !22, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt: argument 1"}
+!24 = distinct !{!24, !22, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt: argument 0"}
+!25 = !{!23}
+!26 = !{!24}
 end_hunk_0

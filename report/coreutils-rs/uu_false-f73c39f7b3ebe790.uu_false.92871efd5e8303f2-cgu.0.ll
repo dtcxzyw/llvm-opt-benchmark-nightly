@@ -40,7 +40,7 @@ _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_tem
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.sroa.0.sroa.25.0..sroa_idx, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @_RNvCsh036I4OHgIr_6uucore23localized_help_template(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 5) #3
-  %.sroa.0.0.copyload.i = load i64, ptr %i.f, align 8, !alias.scope !27, !noalias !30 ; 2 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %i.f, align 8, !alias.scope !18, !noalias !19 ; 2 uses
   %i.i = icmp eq i64 %.sroa.0.0.copyload.i, -1    ; 2 uses
   %.sroa.55.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.5.i.sroa.0.0.copyload = load ptr, ptr %.sroa.55.0..sroa_idx.i, align 8
@@ -51,7 +51,7 @@ _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_tem
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @_RNvNtNtCsh036I4OHgIr_6uucore4mods6locale11get_message(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.e, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 11) #3
-  %.sroa.0.0.copyload.i5 = load i64, ptr %i.e, align 8, !alias.scope !36, !noalias !39 ; 2 uses
+  %.sroa.0.0.copyload.i5 = load i64, ptr %i.e, align 8, !alias.scope !20, !noalias !21 ; 2 uses
   %i.j = icmp eq i64 %.sroa.0.0.copyload.i5, -1   ; 2 uses
   %.sroa.55.0..sroa_idx.i6 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.sroa.5.i4.sroa.0.0.copyload = load ptr, ptr %.sroa.55.0..sroa_idx.i6, align 8
@@ -413,22 +413,22 @@ attributes #3 = { nounwind }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.99.0-nightly (7608eb7b0 2026-08-05)"}
-!22 = distinct !{!22, i1 false, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtB7_10styled_str9StyledStrINtB5_14IntoResettableBV_E15into_resettableCsczXM74sk5TG_8uu_false"}
-!23 = distinct !{!23, !22, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtB7_10styled_str9StyledStrINtB5_14IntoResettableBV_E15into_resettableCsczXM74sk5TG_8uu_false: argument 0"}
-!24 = distinct !{!24, !22, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtB7_10styled_str9StyledStrINtB5_14IntoResettableBV_E15into_resettableCsczXM74sk5TG_8uu_false: argument 1"}
-!25 = distinct !{!25, i1 false, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_templateNtNtB8_10styled_str9StyledStrECsczXM74sk5TG_8uu_false"}
-!26 = distinct !{!26, !25, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_templateNtNtB8_10styled_str9StyledStrECsczXM74sk5TG_8uu_false: argument 2"}
-!27 = !{!23, !24, !26}
-!28 = distinct !{!28, !25, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_templateNtNtB8_10styled_str9StyledStrECsczXM74sk5TG_8uu_false: argument 0"}
-!29 = distinct !{!29, !25, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_templateNtNtB8_10styled_str9StyledStrECsczXM74sk5TG_8uu_false: argument 1"}
-!30 = !{!28, !29}
-!31 = distinct !{!31, i1 false, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtCs7tKScEop1B6_5alloc6string6StringINtB5_14IntoResettableNtNtB7_10styled_str9StyledStrE15into_resettableCsczXM74sk5TG_8uu_false"}
-!32 = distinct !{!32, !31, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtCs7tKScEop1B6_5alloc6string6StringINtB5_14IntoResettableNtNtB7_10styled_str9StyledStrE15into_resettableCsczXM74sk5TG_8uu_false: argument 0"}
-!33 = distinct !{!33, !31, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtCs7tKScEop1B6_5alloc6string6StringINtB5_14IntoResettableNtNtB7_10styled_str9StyledStrE15into_resettableCsczXM74sk5TG_8uu_false: argument 1"}
-!34 = distinct !{!34, i1 false, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECsczXM74sk5TG_8uu_false"}
-!35 = distinct !{!35, !34, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECsczXM74sk5TG_8uu_false: argument 2"}
-!36 = !{!32, !33, !35}
-!37 = distinct !{!37, !34, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECsczXM74sk5TG_8uu_false: argument 0"}
-!38 = distinct !{!38, !34, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECsczXM74sk5TG_8uu_false: argument 1"}
-!39 = !{!37, !38}
+!4 = distinct !{!4, i1 false, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_templateNtNtB8_10styled_str9StyledStrECsczXM74sk5TG_8uu_false"}
+!5 = distinct !{!5, !4, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_templateNtNtB8_10styled_str9StyledStrECsczXM74sk5TG_8uu_false: argument 2"}
+!6 = distinct !{!6, i1 false, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtB7_10styled_str9StyledStrINtB5_14IntoResettableBV_E15into_resettableCsczXM74sk5TG_8uu_false"}
+!7 = distinct !{!7, !6, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtB7_10styled_str9StyledStrINtB5_14IntoResettableBV_E15into_resettableCsczXM74sk5TG_8uu_false: argument 1"}
+!8 = distinct !{!8, !6, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtB7_10styled_str9StyledStrINtB5_14IntoResettableBV_E15into_resettableCsczXM74sk5TG_8uu_false: argument 0"}
+!9 = distinct !{!9, !4, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_templateNtNtB8_10styled_str9StyledStrECsczXM74sk5TG_8uu_false: argument 1"}
+!10 = distinct !{!10, !4, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_templateNtNtB8_10styled_str9StyledStrECsczXM74sk5TG_8uu_false: argument 0"}
+!11 = distinct !{!11, i1 false, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECsczXM74sk5TG_8uu_false"}
+!12 = distinct !{!12, !11, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECsczXM74sk5TG_8uu_false: argument 2"}
+!13 = distinct !{!13, i1 false, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtCs7tKScEop1B6_5alloc6string6StringINtB5_14IntoResettableNtNtB7_10styled_str9StyledStrE15into_resettableCsczXM74sk5TG_8uu_false"}
+!14 = distinct !{!14, !13, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtCs7tKScEop1B6_5alloc6string6StringINtB5_14IntoResettableNtNtB7_10styled_str9StyledStrE15into_resettableCsczXM74sk5TG_8uu_false: argument 1"}
+!15 = distinct !{!15, !13, !"_RNvXsh_NtNtCsgNwXemyrBWj_12clap_builder7builder10resettableNtNtCs7tKScEop1B6_5alloc6string6StringINtB5_14IntoResettableNtNtB7_10styled_str9StyledStrE15into_resettableCsczXM74sk5TG_8uu_false: argument 0"}
+!16 = distinct !{!16, !11, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECsczXM74sk5TG_8uu_false: argument 1"}
+!17 = distinct !{!17, !11, !"_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECsczXM74sk5TG_8uu_false: argument 0"}
+!18 = !{!8, !7, !5}
+!19 = !{!10, !9}
+!20 = !{!15, !14, !12}
+!21 = !{!17, !16}
 end_hunk_0

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.i = load ptr, ptr @stdout, align 8, !tbaa !113, !noalias !266
+  %i.i = load ptr, ptr @stdout, align 8, !tbaa !113, !noalias !263
   %i.j = call i32 @vfprintf(ptr noundef %i.i, ptr noundef %1, ptr noundef nonnull %2) #24, !inline_history !262 ; 0 uses
   br label %bb.e
 
@@ -566,8 +566,8 @@ attributes #28 = { nounwind willreturn memory(read) }
 !257 = distinct !{!257, !58, !98}
 !258 = distinct !{!258, !107}
 !259 = distinct !{!259, !58}
+!260 = distinct !{!260, i1 false, !"vprintf"}
+!261 = distinct !{!261, !260, !"vprintf: argument 0"}
 !262 = distinct !{null}
-!264 = distinct !{!264, i1 false, !"vprintf"}
-!265 = distinct !{!265, !264, !"vprintf: argument 0"}
-!266 = !{!265}
+!263 = !{!261}
 end_hunk_0

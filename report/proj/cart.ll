@@ -202,12 +202,12 @@ bb.f:                                             ; preds = %_ZL26normal_radius_
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable
 define internal { double, double } @_ZL12cart_forward5PJ_LPP8PJconsts(double %0, double %1, ptr nofree noundef readonly captures(none) %2) #4 {
 bb.a:
-  %i.a = tail call double @cos(double noundef %1) #8, !noalias !64
-  %i.b = tail call double @sin(double noundef %1) #8, !noalias !64 ; 2 uses
+  %i.a = tail call double @cos(double noundef %1) #8, !noalias !61
+  %i.b = tail call double @sin(double noundef %1) #8, !noalias !61 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 168
-  %i.d = load double, ptr %i.c, align 8, !tbaa !45, !noalias !64 ; 2 uses
+  %i.d = load double, ptr %i.c, align 8, !tbaa !45, !noalias !61 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 216
-  %i.f = load double, ptr %i.e, align 8, !tbaa !46, !noalias !64 ; 2 uses
+  %i.f = load double, ptr %i.e, align 8, !tbaa !46, !noalias !61 ; 2 uses
   %i.g = fcmp oeq double %i.f, 0.000000e+00
   br i1 %i.g, label %_ZL9cartesian6PJ_LPZP8PJconsts.exit, label %bb.b
 
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = fneg double %i.b
   %i.i = fmul double %i.f, %i.h
   %i.j = tail call double @llvm.fmuladd.f64(double %i.i, double %i.b, double 1.000000e+00)
-  %i.k = tail call double @sqrt(double noundef %i.j) #8, !noalias !64
+  %i.k = tail call double @sqrt(double noundef %i.j) #8, !noalias !61
   %i.l = fdiv double %i.d, %i.k
   br label %_ZL9cartesian6PJ_LPZP8PJconsts.exit
 
@@ -223,9 +223,9 @@ _ZL9cartesian6PJ_LPZP8PJconsts.exit:              ; preds = %bb.a, %bb.b
   %.0.i.i = phi double [ %i.l, %bb.b ], [ %i.d, %bb.a ]
   %i.m = fadd double %.0.i.i, 0.000000e+00
   %i.n = fmul double %i.a, %i.m                   ; 2 uses
-  %i.o = tail call double @cos(double noundef %0) #8, !noalias !64
+  %i.o = tail call double @cos(double noundef %0) #8, !noalias !61
   %i.p = fmul double %i.o, %i.n
-  %i.q = tail call double @sin(double noundef %0) #8, !noalias !64
+  %i.q = tail call double @sin(double noundef %0) #8, !noalias !61
   %i.r = fmul double %i.n, %i.q
   %.fca.0.insert = insertvalue { double, double } poison, double %i.p, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.r, 1
@@ -238,15 +238,15 @@ bb.a:
   %3 = alloca %struct.PJ_LPZ, align 8             ; 5 uses
   %4 = alloca %struct.PJ_XYZ, align 8             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  store double %0, ptr %4, align 8, !tbaa !65
+  store double %0, ptr %4, align 8, !tbaa !62
   %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store double %1, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8, !tbaa !65
+  store double %1, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8, !tbaa !62
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store double 0.000000e+00, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !65
+  store double 0.000000e+00, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !62
   call void @_ZL8geodetic6PJ_XYZP8PJconsts(ptr dead_on_unwind nonnull writable sret(%struct.PJ_LPZ) align 8 %3, ptr noundef nonnull byval(%struct.PJ_XYZ) align 8 %4, ptr noundef %2)
-  %.sroa.0.sroa.0.0.copyload4 = load double, ptr %3, align 8, !tbaa !65
+  %.sroa.0.sroa.0.0.copyload4 = load double, ptr %3, align 8, !tbaa !62
   %.sroa.0.sroa.6.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.0.sroa.6.0.copyload7 = load double, ptr %.sroa.0.sroa.6.0..sroa_idx6, align 8, !tbaa !65
+  %.sroa.0.sroa.6.0.copyload7 = load double, ptr %.sroa.0.sroa.6.0..sroa_idx6, align 8, !tbaa !62
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   %.fca.0.insert = insertvalue { double, double } poison, double %.sroa.0.sroa.0.0.copyload4, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %.sroa.0.sroa.6.0.copyload7, 1
@@ -359,8 +359,8 @@ attributes #8 = { nounwind }
 !56 = !{!36, !14, i64 184}
 !57 = !{!36, !14, i64 272}
 !58 = !{!36, !14, i64 232}
-!62 = distinct !{!62, i1 false, !"_ZL9cartesian6PJ_LPZP8PJconsts"}
-!63 = distinct !{!63, !62, !"_ZL9cartesian6PJ_LPZP8PJconsts: argument 0"}
-!64 = !{!63}
-!65 = !{!14, !14, i64 0}
+!59 = distinct !{!59, i1 false, !"_ZL9cartesian6PJ_LPZP8PJconsts"}
+!60 = distinct !{!60, !59, !"_ZL9cartesian6PJ_LPZP8PJconsts: argument 0"}
+!61 = !{!60}
+!62 = !{!14, !14, i64 0}
 end_hunk_0

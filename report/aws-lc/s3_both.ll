@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.j
 
 _ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit: ; preds = %bb.k
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ac, i64 28
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !154, !noalias !158
+  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !154, !noalias !155
   %i.aq = icmp eq i32 %i.ap, 64
   %i.ar = zext i1 %i.aq to i8                     ; 2 uses
   %i.as = icmp eq i8 %.sroa.537.048, 0
@@ -439,10 +439,10 @@ attributes #9 = { noreturn nounwind }
 !147 = !{!76, !10, i64 16}
 !148 = distinct !{!148, !73}
 !149 = distinct !{!149, !73}
+!150 = distinct !{!150, i1 false, !"_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st"}
+!151 = distinct !{!151, !150, !"_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st: argument 0"}
 !152 = !{!"_ZTS13ssl_cipher_st", !9, i64 0, !9, i64 8, !5, i64 16, !5, i64 20, !5, i64 24, !5, i64 28, !5, i64 32, !5, i64 36}
 !153 = !{!152, !5, i64 16}
 !154 = !{!152, !5, i64 28}
-!156 = distinct !{!156, i1 false, !"_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st"}
-!157 = distinct !{!157, !156, !"_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st: argument 0"}
-!158 = !{!157}
+!155 = !{!151}
 end_hunk_0

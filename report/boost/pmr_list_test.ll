@@ -50,7 +50,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = load i64, ptr %i.b, align 8, !tbaa !28
   %i.m = add i64 %i.l, 1
   store i64 %i.m, ptr %i.b, align 8, !tbaa !28
-  %i.n = load ptr, ptr %i.c, align 8, !tbaa !17, !noalias !32
+  %i.n = load ptr, ptr %i.c, align 8, !tbaa !17, !noalias !29
   br label %_ZN5boost9container3dtl24allocator_node_destroyerINS0_3pmr21polymorphic_allocatorINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEEEEEclERKPS9_.exit.i.i.i
 
 _ZN5boost9container3dtl24allocator_node_destroyerINS0_3pmr21polymorphic_allocatorINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEEEEEclERKPS9_.exit.i.i.i: ; preds = %bb.c, %bb.b
@@ -101,7 +101,7 @@ declare i32 @__gxx_personality_v0(...)
 define linkonce_odr hidden void @_ZN5boost9container3dtl17node_alloc_holderINS0_3pmr21polymorphic_allocatorIiEENS_9intrusive9list_implINS6_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS6_16list_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj1EEEmLb1EvEEED2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !17, !noalias !38
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !17, !noalias !32
   br label %_ZN5boost9container3dtl24allocator_node_destroyerINS0_3pmr21polymorphic_allocatorINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEEEEEclERKPS9_.exit.i.i
 
 _ZN5boost9container3dtl24allocator_node_destroyerINS0_3pmr21polymorphic_allocatorINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEEEEEclERKPS9_.exit.i.i: ; preds = %bb.b, %bb.a
@@ -178,15 +178,15 @@ attributes #7 = { noreturn nounwind }
 !19 = !{!18, !18, i64 0}
 !20 = !{!"llvm.loop.mustprogress"}
 !21 = distinct !{null}
+!22 = distinct !{!22, i1 false, !"_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS7_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE5beginEv"}
+!23 = distinct !{!23, !22, !"_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS7_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE5beginEv: argument 0"}
 !24 = !{!16, !15, i64 8}
 !25 = !{!8, !8, i64 0}
 !26 = !{!"long", !7, i64 0}
 !27 = !{!"_ZTSN5boost9intrusive6detail11size_holderILb1EmvEE", !26, i64 0}
 !28 = !{!27, !26, i64 0}
+!29 = !{!23}
 !30 = distinct !{!30, i1 false, !"_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS7_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE5beginEv"}
 !31 = distinct !{!31, !30, !"_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS7_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE5beginEv: argument 0"}
 !32 = !{!31}
-!36 = distinct !{!36, i1 false, !"_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS7_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE5beginEv"}
-!37 = distinct !{!37, !36, !"_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeIiNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS7_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE5beginEv: argument 0"}
-!38 = !{!37}
 end_hunk_0
