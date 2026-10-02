@@ -202,15 +202,15 @@ _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTyy
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define hidden void @_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCslusEaBCZKLp_13quiche_client(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #8 personality ptr @rust_eh_personality !dbg !8292 {
 bb.a:
-    #dbg_declare(ptr %1, !8357, !DIExpression(), !8360)
-    #dbg_value(ptr %1, !8361, !DIExpression(), !8367)
-    #dbg_value(ptr %1, !8368, !DIExpression(), !8375)
-    #dbg_value(ptr %1, !8376, !DIExpression(), !8382)
-    #dbg_value(ptr %1, !8383, !DIExpression(), !8386)
-  %i.a = load ptr, ptr %1, align 8, !dbg !8422, !nonnull !557, !noundef !557 ; 5 uses
-    #dbg_value(ptr %i.a, !8372, !DIExpression(), !8387)
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !8423
-  %i.c = load i64, ptr %i.b, align 8, !dbg !8423, !noundef !557 ; 5 uses
+    #dbg_declare(ptr %1, !8356, !DIExpression(), !8359)
+    #dbg_value(ptr %1, !8360, !DIExpression(), !8366)
+    #dbg_value(ptr %1, !8367, !DIExpression(), !8374)
+    #dbg_value(ptr %1, !8375, !DIExpression(), !8381)
+    #dbg_value(ptr %1, !8382, !DIExpression(), !8385)
+  %i.a = load ptr, ptr %1, align 8, !dbg !8424, !nonnull !557, !noundef !557 ; 5 uses
+    #dbg_value(ptr %i.a, !8371, !DIExpression(), !8386)
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !8425
+  %i.c = load i64, ptr %i.b, align 8, !dbg !8425, !noundef !557 ; 5 uses
     #dbg_value(ptr %i.a, !1947, !DIExpression(), !8300)
     #dbg_value(ptr %i.a, !1930, !DIExpression(), !8301)
     #dbg_value(ptr %i.a, !1947, !DIExpression(), !8303)
@@ -220,30 +220,30 @@ bb.a:
     #dbg_value(i64 16, !1949, !DIExpression(), !8300)
     #dbg_value(!DIArgList(ptr %i.a, i64 %i.c), !1943, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value), !8304)
     #dbg_value(ptr %i.a, !1951, !DIExpression(), !8306)
-  %.val911.i = load <16 x i8>, ptr %i.a, align 16, !dbg !8424, !noalias !8388
+  %.val911.i = load <16 x i8>, ptr %i.a, align 16, !dbg !8426, !noalias !8387
     #dbg_value(<2 x i64> poison, !1958, !DIExpression(), !8311)
     #dbg_value(ptr poison, !1960, !DIExpression(), !8312)
     #dbg_declare(ptr poison, !1383, !DIExpression(), !8314)
     #dbg_value(<16 x i8> poison, !1387, !DIExpression(), !8315)
     #dbg_value(!DIArgList(<16 x i8> %.val911.i, <16 x i8> splat (i8 7)), !1388, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_shra, DW_OP_stack_value), !8316)
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !8425
-  %i.e = load i64, ptr %i.d, align 8, !dbg !8425, !noundef !557
-    #dbg_value(ptr %i.a, !8358, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8389)
-    #dbg_value(ptr %i.a, !8390, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8403)
-    #dbg_value(ptr %i.a, !8358, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !8389)
-    #dbg_value(ptr %i.a, !8390, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !8403)
-    #dbg_value(!DIArgList(ptr %i.a, i64 %i.c), !8358, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 128, 64), !8389)
-    #dbg_value(!DIArgList(ptr %i.a, i64 %i.c), !8390, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 128, 64), !8403)
-    #dbg_value(!DIArgList(<16 x i8> %.val911.i, <16 x i8> splat (i8 -1)), !8358, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_gt, DW_OP_stack_value, DW_OP_LLVM_fragment, 192, 16), !8389)
-    #dbg_value(!DIArgList(<16 x i8> %.val911.i, <16 x i8> splat (i8 -1)), !8390, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_gt, DW_OP_stack_value, DW_OP_LLVM_fragment, 192, 16), !8403)
-    #dbg_value(i64 %i.e, !8390, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !8403)
-    #dbg_value(i64 %i.e, !8358, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !8389)
-    #dbg_value(ptr %i.a, !8394, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8403)
-    #dbg_value(i64 %i.c, !8394, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8403)
-    #dbg_declare(ptr poison, !8406, !DIExpression(), !8326)
-    #dbg_value(ptr poison, !8416, !DIExpression(), !8329)
-  %i.f = icmp eq i64 %i.c, 0, !dbg !8426
-  br i1 %i.f, label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE15into_allocationCslusEaBCZKLp_13quiche_client.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, !dbg !8427
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !8427
+  %i.e = load i64, ptr %i.d, align 8, !dbg !8427, !noundef !557
+    #dbg_value(ptr %i.a, !8357, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8388)
+    #dbg_value(ptr %i.a, !8389, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8402)
+    #dbg_value(ptr %i.a, !8357, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !8388)
+    #dbg_value(ptr %i.a, !8389, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !8402)
+    #dbg_value(!DIArgList(ptr %i.a, i64 %i.c), !8357, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 128, 64), !8388)
+    #dbg_value(!DIArgList(ptr %i.a, i64 %i.c), !8389, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 128, 64), !8402)
+    #dbg_value(!DIArgList(<16 x i8> %.val911.i, <16 x i8> splat (i8 -1)), !8357, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_gt, DW_OP_stack_value, DW_OP_LLVM_fragment, 192, 16), !8388)
+    #dbg_value(!DIArgList(<16 x i8> %.val911.i, <16 x i8> splat (i8 -1)), !8389, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_gt, DW_OP_stack_value, DW_OP_LLVM_fragment, 192, 16), !8402)
+    #dbg_value(i64 %i.e, !8389, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !8402)
+    #dbg_value(i64 %i.e, !8357, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !8388)
+    #dbg_value(ptr %i.a, !8393, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8402)
+    #dbg_value(i64 %i.c, !8393, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8402)
+    #dbg_declare(ptr poison, !8405, !DIExpression(), !8326)
+    #dbg_value(ptr poison, !8415, !DIExpression(), !8329)
+  %i.f = icmp eq i64 %i.c, 0, !dbg !8428
+  br i1 %i.f, label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE15into_allocationCslusEaBCZKLp_13quiche_client.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, !dbg !8429
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
     #dbg_value(i64 8, !2063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8331)
@@ -261,69 +261,63 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
     #dbg_value(i64 %i.c, !2096, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_constu, 3, DW_OP_shl, DW_OP_stack_value), !8341)
     #dbg_value(i64 15, !2097, !DIExpression(), !8341)
     #dbg_value(i64 %i.c, !2094, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_constu, 2305843009213693951, DW_OP_eq, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !8343)
-  %or.cond.i = icmp slt i64 %i.c, 2305843009213693950, !dbg !8428
-  tail call void @llvm.assume(i1 %or.cond.i), !dbg !8428
-  %i.g = shl i64 %i.c, 3, !dbg !8429
+  %or.cond.i = icmp slt i64 %i.c, 2305843009213693950, !dbg !8430
+  tail call void @llvm.assume(i1 %or.cond.i), !dbg !8430
+  %i.g = shl i64 %i.c, 3, !dbg !8431
     #dbg_value(i64 %i.g, !2091, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !8339)
     #dbg_value(i64 %i.g, !2096, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !8341)
-  %i.h = and i64 %i.g, -16, !dbg !8430            ; 2 uses
-  %2 = add i64 %i.h, 16, !dbg !8430               ; 2 uses
-    #dbg_value(i64 %2, !2096, !DIExpression(), !8345)
-    #dbg_value(i64 %2, !2070, !DIExpression(), !8346)
-  %i.i = add nsw i64 %i.c, 17, !dbg !8431
-    #dbg_value(i64 %i.i, !2097, !DIExpression(), !8345)
-  %i.j = add i64 %i.i, %2, !dbg !8432             ; 3 uses
-  %3 = icmp uge i64 %i.j, %2, !dbg !8432
-    #dbg_value(i1 true, !2094, !DIExpression(DW_OP_not, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !8348)
-  tail call void @llvm.assume(i1 %3), !dbg !8433
-    #dbg_value(i64 %i.j, !2075, !DIExpression(), !8349)
-  %4 = icmp ult i64 %i.j, 9223372036854775793, !dbg !8434
-  tail call void @llvm.assume(i1 %4), !dbg !8434
-    #dbg_value(i64 16, !8412, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8350)
-    #dbg_value(i64 %i.j, !8412, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8350)
-    #dbg_value(i64 %2, !8418, !DIExpression(), !8353)
-    #dbg_value(i64 %2, !8413, !DIExpression(), !8350)
-    #dbg_value(ptr %i.a, !8419, !DIExpression(), !8353)
-  %i.k = sub nuw nsw i64 -16, %i.h, !dbg !8435
-  %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k, !dbg !8436
-    #dbg_value(i64 %i.j, !8400, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8421)
-    #dbg_value(ptr %i.l, !8400, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8421)
-  br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE15into_allocationCslusEaBCZKLp_13quiche_client.exit, !dbg !8437
+  %i.h = and i64 %i.g, -16, !dbg !8432            ; 2 uses
+    #dbg_value(i64 %i.h, !2096, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !8345)
+    #dbg_value(i64 %i.h, !2070, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !8346)
+    #dbg_value(i64 %i.c, !2097, !DIExpression(DW_OP_plus_uconst, 17, DW_OP_stack_value), !8345)
+  %i.i = add nsw i64 %i.c, 33, !dbg !8433
+  %i.j = add i64 %i.i, %i.h, !dbg !8433
+    #dbg_value(i1 false, !2094, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !8348)
+    #dbg_value(i64 16, !8411, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8349)
+    #dbg_value(!DIArgList(i64 %i.c, i64 %i.h), !8411, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_plus_uconst, 33, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !8349)
+    #dbg_value(i64 %i.h, !8420, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !8352)
+    #dbg_value(i64 %i.h, !8412, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !8349)
+    #dbg_value(ptr %i.a, !8421, !DIExpression(), !8352)
+  %i.k = sub nuw nsw i64 -16, %i.h, !dbg !8434
+  %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k, !dbg !8435
+    #dbg_value(!DIArgList(i64 %i.c, i64 %i.h), !8399, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_plus_uconst, 33, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !8423)
+    #dbg_value(ptr %i.l, !8399, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8423)
+  br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE15into_allocationCslusEaBCZKLp_13quiche_client.exit, !dbg !8436
 
 _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE15into_allocationCslusEaBCZKLp_13quiche_client.exit: ; preds = %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, %bb.a
-  %.sroa.521.0 = phi ptr [ undef, %bb.a ], [ %i.l, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i ], !dbg !8438
-  %.sroa.420.0 = phi i64 [ undef, %bb.a ], [ %i.j, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i ], !dbg !8438
-  %.sink.i = phi i64 [ 0, %bb.a ], [ 16, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i ], !dbg !8439
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !8440
-    #dbg_value(ptr %i.m, !8358, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8389)
-    #dbg_value(ptr %i.m, !8390, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8403)
-  %i.n = icmp sgt <16 x i8> %.val911.i, splat (i8 -1), !dbg !8441
-    #dbg_value(<16 x i1> %i.n, !8358, !DIExpression(DW_OP_LLVM_fragment, 192, 16), !8389)
-    #dbg_value(<16 x i1> %i.n, !8390, !DIExpression(DW_OP_LLVM_fragment, 192, 16), !8403)
-  %i.o = getelementptr i8, ptr %i.a, i64 %i.c, !dbg !8442
-  %i.p = getelementptr i8, ptr %i.o, i64 1, !dbg !8442
+  %.sroa.521.0 = phi ptr [ undef, %bb.a ], [ %i.l, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i ], !dbg !8437
+  %.sroa.420.0 = phi i64 [ undef, %bb.a ], [ %i.j, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i ], !dbg !8437
+  %.sink.i = phi i64 [ 0, %bb.a ], [ 16, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i ], !dbg !8438
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !8439
+    #dbg_value(ptr %i.m, !8357, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8388)
+    #dbg_value(ptr %i.m, !8389, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8402)
+  %i.n = icmp sgt <16 x i8> %.val911.i, splat (i8 -1), !dbg !8440
+    #dbg_value(<16 x i1> %i.n, !8357, !DIExpression(DW_OP_LLVM_fragment, 192, 16), !8388)
+    #dbg_value(<16 x i1> %i.n, !8389, !DIExpression(DW_OP_LLVM_fragment, 192, 16), !8402)
+  %i.o = getelementptr i8, ptr %i.a, i64 %i.c, !dbg !8441
+  %i.p = getelementptr i8, ptr %i.o, i64 1, !dbg !8441
     #dbg_value(ptr %i.p, !1943, !DIExpression(), !8304)
-    #dbg_value(ptr %i.p, !8358, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8389)
-    #dbg_value(ptr %i.p, !8390, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8403)
-    #dbg_value(i64 %.sroa.420.0, !8400, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8421)
-    #dbg_value(ptr %.sroa.521.0, !8400, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8421)
-    #dbg_value(i64 %.sink.i, !8400, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8421)
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !8443
-  store ptr %i.a, ptr %i.q, align 8, !dbg !8443
-  %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !8443
-  store ptr %i.m, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8, !dbg !8443
-  %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !8443
-  store ptr %i.p, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8, !dbg !8443
-  %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48, !dbg !8443
-  store <16 x i1> %i.n, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8, !dbg !8443
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !8443
-  store i64 %i.e, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !8443
-  store i64 %.sink.i, ptr %0, align 8, !dbg !8443
-  %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !8443
-  store i64 %.sroa.420.0, ptr %.sroa.420.0..sroa_idx, align 8, !dbg !8443
-  %.sroa.521.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !8443
-  store ptr %.sroa.521.0, ptr %.sroa.521.0..sroa_idx, align 8, !dbg !8443
-  ret void, !dbg !8444
+    #dbg_value(ptr %i.p, !8357, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8388)
+    #dbg_value(ptr %i.p, !8389, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8402)
+    #dbg_value(i64 %.sroa.420.0, !8399, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8423)
+    #dbg_value(ptr %.sroa.521.0, !8399, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8423)
+    #dbg_value(i64 %.sink.i, !8399, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8423)
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !8442
+  store ptr %i.a, ptr %i.q, align 8, !dbg !8442
+  %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !8442
+  store ptr %i.m, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8, !dbg !8442
+  %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !8442
+  store ptr %i.p, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8, !dbg !8442
+  %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48, !dbg !8442
+  store <16 x i1> %i.n, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8, !dbg !8442
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !8442
+  store i64 %i.e, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !8442
+  store i64 %.sink.i, ptr %0, align 8, !dbg !8442
+  %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !8442
+  store i64 %.sroa.420.0, ptr %.sroa.420.0..sroa_idx, align 8, !dbg !8442
+  %.sroa.521.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !8442
+  store ptr %.sroa.521.0, ptr %.sroa.521.0..sroa_idx, align 8, !dbg !8442
+  ret void, !dbg !8443
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
@@ -726,13 +720,13 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !8289 = !DILocation(line: 312, column: 9, scope: !412, inlinedAt: !8247)
 !8290 = !DILocation(line: 3498, column: 6, scope: !8204)
 !8291 = distinct !DILexicalBlock(scope: !8292, file: !1202, line: 3525, column: 13)
-!8292 = distinct !DISubprogram(name: "into_iter<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCslusEaBCZKLp_13quiche_client", scope: !8354, file: !1202, line: 3523, type: !8356, scopeLine: 3523, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !707, retainedNodes: !8359)
-!8293 = distinct !DISubprogram(name: "iter<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE4iterCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1361, type: !8363, scopeLine: 1361, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !707, declaration: !8364, retainedNodes: !8365)
+!8292 = distinct !DISubprogram(name: "into_iter<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvXsh_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCslusEaBCZKLp_13quiche_client", scope: !8353, file: !1202, line: 3523, type: !8355, scopeLine: 3523, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !707, retainedNodes: !8358)
+!8293 = distinct !DISubprogram(name: "iter<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE4iterCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1361, type: !8362, scopeLine: 1361, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !707, declaration: !8363, retainedNodes: !8364)
 !8294 = distinct !DILexicalBlock(scope: !8295, file: !1202, line: 2167, column: 13)
-!8295 = distinct !DISubprogram(name: "iter<(u64, ())>", linkageName: "_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner4iterTyuEECslusEaBCZKLp_13quiche_client", scope: !29, file: !1202, line: 2138, type: !8370, scopeLine: 2138, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !703, declaration: !8371, retainedNodes: !8373)
-!8296 = distinct !DISubprogram(name: "data_end<(u64, ())>", linkageName: "_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner8data_endTyuEECslusEaBCZKLp_13quiche_client", scope: !29, file: !1202, line: 2438, type: !8378, scopeLine: 2438, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !703, declaration: !8379, retainedNodes: !8380)
-!8297 = distinct !DISubprogram(name: "num_buckets", linkageName: "_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner11num_buckets", scope: !29, file: !1202, line: 2634, type: !2041, scopeLine: 2634, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !557, declaration: !2045, retainedNodes: !8384)
-!8298 = distinct !DILocation(line: 2170, column: 23, scope: !8294, inlinedAt: !8374)
+!8295 = distinct !DISubprogram(name: "iter<(u64, ())>", linkageName: "_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner4iterTyuEECslusEaBCZKLp_13quiche_client", scope: !29, file: !1202, line: 2138, type: !8369, scopeLine: 2138, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !703, declaration: !8370, retainedNodes: !8372)
+!8296 = distinct !DISubprogram(name: "data_end<(u64, ())>", linkageName: "_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner8data_endTyuEECslusEaBCZKLp_13quiche_client", scope: !29, file: !1202, line: 2438, type: !8377, scopeLine: 2438, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !703, declaration: !8378, retainedNodes: !8379)
+!8297 = distinct !DISubprogram(name: "num_buckets", linkageName: "_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner11num_buckets", scope: !29, file: !1202, line: 2634, type: !2041, scopeLine: 2634, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !557, declaration: !2045, retainedNodes: !8383)
+!8298 = distinct !DILocation(line: 2170, column: 23, scope: !8294, inlinedAt: !8373)
 !8299 = distinct !DILocation(line: 3587, column: 22, scope: !381, inlinedAt: !8298)
 !8300 = distinct !DILocation(line: 0, scope: !387, inlinedAt: !8299)
 !8301 = distinct !DILocation(line: 0, scope: !386, inlinedAt: !8298)
@@ -754,14 +748,14 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !8317 = distinct !DILexicalBlock(scope: !8320, file: !1202, line: 1442, column: 9)
 !8318 = distinct !DILexicalBlock(scope: !8319, file: !1442, line: 48, column: 21)
 !8319 = distinct !DILexicalBlock(scope: !8320, file: !1442, line: 46, column: 13)
-!8320 = distinct !DISubprogram(name: "into_iter_from<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE14into_iter_fromCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1439, type: !8392, scopeLine: 1439, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !707, declaration: !8393, retainedNodes: !8401)
+!8320 = distinct !DISubprogram(name: "into_iter_from<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE14into_iter_fromCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1439, type: !8391, scopeLine: 1439, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !707, declaration: !8392, retainedNodes: !8400)
 !8321 = distinct !DILexicalBlock(scope: !8324, file: !1202, line: 1458, column: 17)
 !8322 = distinct !DILexicalBlock(scope: !8324, file: !1202, line: 1457, column: 13)
 !8323 = distinct !DILexicalBlock(scope: !8324, file: !1202, line: 1454, column: 9)
-!8324 = distinct !DISubprogram(name: "into_allocation<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE15into_allocationCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1453, type: !8408, scopeLine: 1453, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !707, declaration: !8410, retainedNodes: !8415)
-!8325 = distinct !DILocation(line: 1442, column: 31, scope: !8320, inlinedAt: !8402)
+!8324 = distinct !DISubprogram(name: "into_allocation<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE15into_allocationCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1453, type: !8407, scopeLine: 1453, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !707, declaration: !8409, retainedNodes: !8414)
+!8325 = distinct !DILocation(line: 1442, column: 31, scope: !8320, inlinedAt: !8401)
 !8326 = distinct !DILocation(line: 1453, column: 35, scope: !8324, inlinedAt: !8325)
-!8327 = distinct !DISubprogram(name: "is_empty_singleton", linkageName: "_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner18is_empty_singleton", scope: !29, file: !1202, line: 2655, type: !2043, scopeLine: 2655, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !557, declaration: !2044, retainedNodes: !8417)
+!8327 = distinct !DISubprogram(name: "is_empty_singleton", linkageName: "_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner18is_empty_singleton", scope: !29, file: !1202, line: 2655, type: !2043, scopeLine: 2655, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !557, declaration: !2044, retainedNodes: !8416)
 !8328 = distinct !DILocation(line: 1454, column: 35, scope: !8324, inlinedAt: !8325)
 !8329 = distinct !DILocation(line: 2655, column: 27, scope: !8327, inlinedAt: !8328)
 !8330 = distinct !DILocation(line: 1458, column: 49, scope: !8324, inlinedAt: !8325)
@@ -783,98 +777,94 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !8346 = distinct !DILocation(line: 0, scope: !426, inlinedAt: !8330)
 !8347 = distinct !DILocation(line: 968, column: 16, scope: !2099, inlinedAt: !8344)
 !8348 = distinct !DILocation(line: 0, scope: !433, inlinedAt: !8347)
-!8349 = distinct !DILocation(line: 0, scope: !421, inlinedAt: !8330)
-!8350 = distinct !DILocation(line: 0, scope: !8322, inlinedAt: !8325)
-!8351 = distinct !DISubprogram(name: "sub<u8>", linkageName: "_RNvMNtNtCskKLDkoKarTP_4core3ptr7mut_ptrOh3subCslusEaBCZKLp_13quiche_client", scope: !1334, file: !1332, line: 1016, type: !1338, scopeLine: 1016, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !591, retainedNodes: !8420)
-!8352 = distinct !DILocation(line: 1462, column: 74, scope: !8322, inlinedAt: !8325)
-!8353 = distinct !DILocation(line: 0, scope: !8351, inlinedAt: !8352)
-!8354 = !DINamespace(name: "{impl#19}", scope: !524)
-!8355 = !{!408, !37}
-!8356 = !DISubroutineType(types: !8355)
-!8357 = !DILocalVariable(name: "self", arg: 1, scope: !8292, file: !1202, line: 3523, type: !37)
-!8358 = !DILocalVariable(name: "iter", scope: !8291, file: !1202, line: 3525, type: !407, align: 64)
-!8359 = !{!8357, !8358}
-!8360 = !DILocation(line: 3523, column: 18, scope: !8292)
-!8361 = !DILocalVariable(name: "self", arg: 1, scope: !8293, file: !1202, line: 1361, type: !695)
-!8362 = !{!407, !695}
-!8363 = !DISubroutineType(types: !8362)
-!8364 = !DISubprogram(name: "iter<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE4iterCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1361, type: !8363, scopeLine: 1361, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !707)
-!8365 = !{!8361}
-!8366 = !DILocation(line: 3525, column: 29, scope: !8292)
-!8367 = !DILocation(line: 1361, column: 31, scope: !8293, inlinedAt: !8366)
-!8368 = !DILocalVariable(name: "self", arg: 1, scope: !8295, file: !1202, line: 2138, type: !1218)
-!8369 = !{!407, !1218}
-!8370 = !DISubroutineType(types: !8369)
-!8371 = !DISubprogram(name: "iter<(u64, ())>", linkageName: "_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner4iterTyuEECslusEaBCZKLp_13quiche_client", scope: !29, file: !1202, line: 2138, type: !8370, scopeLine: 2138, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !703)
-!8372 = !DILocalVariable(name: "data", scope: !8294, file: !1202, line: 2167, type: !282, align: 64)
-!8373 = !{!8368, !8372}
-!8374 = !DILocation(line: 1366, column: 29, scope: !8293, inlinedAt: !8366)
-!8375 = !DILocation(line: 2138, column: 23, scope: !8295, inlinedAt: !8374)
-!8376 = !DILocalVariable(name: "self", arg: 1, scope: !8296, file: !1202, line: 2438, type: !1218)
-!8377 = !{!281, !1218}
-!8378 = !DISubroutineType(types: !8377)
-!8379 = !DISubprogram(name: "data_end<(u64, ())>", linkageName: "_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner8data_endTyuEECslusEaBCZKLp_13quiche_client", scope: !29, file: !1202, line: 2438, type: !8378, scopeLine: 2438, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !703)
-!8380 = !{!8376}
-!8381 = !DILocation(line: 2167, column: 53, scope: !8295, inlinedAt: !8374)
-!8382 = !DILocation(line: 2438, column: 20, scope: !8296, inlinedAt: !8381)
-!8383 = !DILocalVariable(name: "self", arg: 1, scope: !8297, file: !1202, line: 2634, type: !1218)
-!8384 = !{!8383}
-!8385 = !DILocation(line: 2170, column: 72, scope: !8294, inlinedAt: !8374)
-!8386 = !DILocation(line: 2634, column: 20, scope: !8297, inlinedAt: !8385)
-!8387 = !DILocation(line: 0, scope: !8294, inlinedAt: !8374)
-!8388 = !{!8308}
-!8389 = !DILocation(line: 0, scope: !8291)
-!8390 = !DILocalVariable(name: "iter", arg: 2, scope: !8320, file: !1202, line: 1439, type: !407)
-!8391 = !{!408, !37, !407}
-!8392 = !DISubroutineType(types: !8391)
-!8393 = !DISubprogram(name: "into_iter_from<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE14into_iter_fromCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1439, type: !8392, scopeLine: 1439, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !707)
-!8394 = !DILocalVariable(name: "self", arg: 1, scope: !8320, file: !1202, line: 1439, type: !37)
-!8395 = !DILexicalBlockFile(scope: !8319, file: !1202, discriminator: 0)
-!8396 = !DILocalVariable(name: "left_val", scope: !8395, file: !1202, line: 1440, type: !1441, align: 64)
-!8397 = !DILocalVariable(name: "right_val", scope: !8395, file: !1202, line: 1440, type: !1441, align: 64)
-!8398 = !DILexicalBlockFile(scope: !8318, file: !1202, discriminator: 0)
-!8399 = !DILocalVariable(name: "kind", scope: !8398, file: !1202, line: 1440, type: !453, align: 8)
-!8400 = !DILocalVariable(name: "allocation", scope: !8317, file: !1202, line: 1442, type: !406, align: 64)
-!8401 = !{!8394, !8390, !8396, !8397, !8399, !8400}
-!8402 = !DILocation(line: 3526, column: 18, scope: !8291)
-!8403 = !DILocation(line: 0, scope: !8320, inlinedAt: !8402)
-!8406 = !DILocalVariable(name: "self", arg: 1, scope: !8324, file: !1202, line: 1453, type: !37)
-!8407 = !{!406, !37}
-!8408 = !DISubroutineType(cc: DW_CC_nocall, types: !8407)
-!8409 = !DISubroutineType(types: !8407)
-!8410 = !DISubprogram(name: "into_allocation<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE15into_allocationCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1453, type: !8409, scopeLine: 1453, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !707)
-!8411 = !DILocalVariable(name: "alloc", scope: !8323, file: !1202, line: 1454, type: !406, align: 64)
-!8412 = !DILocalVariable(name: "layout", scope: !8322, file: !1202, line: 1457, type: !262, align: 64)
-!8413 = !DILocalVariable(name: "ctrl_offset", scope: !8322, file: !1202, line: 1457, type: !551, align: 64)
-!8414 = !DILocalVariable(name: "option", scope: !8321, file: !1202, line: 1458, type: !418, align: 64)
-!8415 = !{!8406, !8411, !8412, !8413, !8414}
-!8416 = !DILocalVariable(name: "self", arg: 1, scope: !8327, file: !1202, line: 2655, type: !1218)
-!8417 = !{!8416}
-!8418 = !DILocalVariable(name: "count", arg: 2, scope: !8351, file: !1332, line: 1016, type: !551)
-!8419 = !DILocalVariable(name: "self", arg: 1, scope: !8351, file: !1332, line: 1016, type: !1335)
-!8420 = !{!8419, !8418}
-!8421 = !DILocation(line: 0, scope: !8317, inlinedAt: !8402)
-!8422 = !DILocation(line: 2439, column: 9, scope: !8296, inlinedAt: !8381)
-!8423 = !DILocation(line: 2635, column: 9, scope: !8297, inlinedAt: !8385)
-!8424 = !DILocation(line: 57, column: 24, scope: !390, inlinedAt: !8305)
-!8425 = !DILocation(line: 2171, column: 24, scope: !8294, inlinedAt: !8374)
-!8426 = !DILocation(line: 2656, column: 9, scope: !8327, inlinedAt: !8328)
-!8427 = !DILocation(line: 1454, column: 24, scope: !8324, inlinedAt: !8325)
-!8428 = !DILocation(line: 483, column: 8, scope: !433, inlinedAt: !8337)
-!8429 = !DILocation(line: 3242, column: 26, scope: !430, inlinedAt: !8333)
-!8430 = !DILocation(line: 222, column: 13, scope: !427, inlinedAt: !8330)
-!8431 = !DILocation(line: 223, column: 43, scope: !426, inlinedAt: !8330)
-!8432 = !DILocation(line: 968, column: 37, scope: !434, inlinedAt: !8344)
-!8433 = !DILocation(line: 483, column: 8, scope: !433, inlinedAt: !8347)
-!8434 = !DILocation(line: 227, column: 12, scope: !421, inlinedAt: !8330)
-!8435 = !DILocation(line: 1055, column: 47, scope: !8351, inlinedAt: !8352)
-!8436 = !DILocation(line: 1055, column: 22, scope: !8351, inlinedAt: !8352)
-!8437 = !DILocation(line: 1454, column: 21, scope: !8324, inlinedAt: !8325)
-!8438 = !DILocation(line: 1442, scope: !8320, inlinedAt: !8402)
-!8439 = !DILocation(line: 0, scope: !8324, inlinedAt: !8325)
-!8440 = !DILocation(line: 872, column: 18, scope: !387, inlinedAt: !8299)
-!8441 = !DILocation(line: 1570, column: 9, scope: !227, inlinedAt: !8313)
-!8442 = !DILocation(line: 872, column: 18, scope: !387, inlinedAt: !8302)
-!8443 = !DILocation(line: 1443, column: 9, scope: !8317, inlinedAt: !8402)
-!8444 = !DILocation(line: 3528, column: 6, scope: !8292)
+!8349 = distinct !DILocation(line: 0, scope: !8322, inlinedAt: !8325)
+!8350 = distinct !DISubprogram(name: "sub<u8>", linkageName: "_RNvMNtNtCskKLDkoKarTP_4core3ptr7mut_ptrOh3subCslusEaBCZKLp_13quiche_client", scope: !1334, file: !1332, line: 1016, type: !1338, scopeLine: 1016, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !170, templateParams: !591, retainedNodes: !8422)
+!8351 = distinct !DILocation(line: 1462, column: 74, scope: !8322, inlinedAt: !8325)
+!8352 = distinct !DILocation(line: 0, scope: !8350, inlinedAt: !8351)
+!8353 = !DINamespace(name: "{impl#19}", scope: !524)
+!8354 = !{!408, !37}
+!8355 = !DISubroutineType(types: !8354)
+!8356 = !DILocalVariable(name: "self", arg: 1, scope: !8292, file: !1202, line: 3523, type: !37)
+!8357 = !DILocalVariable(name: "iter", scope: !8291, file: !1202, line: 3525, type: !407, align: 64)
+!8358 = !{!8356, !8357}
+!8359 = !DILocation(line: 3523, column: 18, scope: !8292)
+!8360 = !DILocalVariable(name: "self", arg: 1, scope: !8293, file: !1202, line: 1361, type: !695)
+!8361 = !{!407, !695}
+!8362 = !DISubroutineType(types: !8361)
+!8363 = !DISubprogram(name: "iter<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE4iterCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1361, type: !8362, scopeLine: 1361, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !707)
+!8364 = !{!8360}
+!8365 = !DILocation(line: 3525, column: 29, scope: !8292)
+!8366 = !DILocation(line: 1361, column: 31, scope: !8293, inlinedAt: !8365)
+!8367 = !DILocalVariable(name: "self", arg: 1, scope: !8295, file: !1202, line: 2138, type: !1218)
+!8368 = !{!407, !1218}
+!8369 = !DISubroutineType(types: !8368)
+!8370 = !DISubprogram(name: "iter<(u64, ())>", linkageName: "_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner4iterTyuEECslusEaBCZKLp_13quiche_client", scope: !29, file: !1202, line: 2138, type: !8369, scopeLine: 2138, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !703)
+!8371 = !DILocalVariable(name: "data", scope: !8294, file: !1202, line: 2167, type: !282, align: 64)
+!8372 = !{!8367, !8371}
+!8373 = !DILocation(line: 1366, column: 29, scope: !8293, inlinedAt: !8365)
+!8374 = !DILocation(line: 2138, column: 23, scope: !8295, inlinedAt: !8373)
+!8375 = !DILocalVariable(name: "self", arg: 1, scope: !8296, file: !1202, line: 2438, type: !1218)
+!8376 = !{!281, !1218}
+!8377 = !DISubroutineType(types: !8376)
+!8378 = !DISubprogram(name: "data_end<(u64, ())>", linkageName: "_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner8data_endTyuEECslusEaBCZKLp_13quiche_client", scope: !29, file: !1202, line: 2438, type: !8377, scopeLine: 2438, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !703)
+!8379 = !{!8375}
+!8380 = !DILocation(line: 2167, column: 53, scope: !8295, inlinedAt: !8373)
+!8381 = !DILocation(line: 2438, column: 20, scope: !8296, inlinedAt: !8380)
+!8382 = !DILocalVariable(name: "self", arg: 1, scope: !8297, file: !1202, line: 2634, type: !1218)
+!8383 = !{!8382}
+!8384 = !DILocation(line: 2170, column: 72, scope: !8294, inlinedAt: !8373)
+!8385 = !DILocation(line: 2634, column: 20, scope: !8297, inlinedAt: !8384)
+!8386 = !DILocation(line: 0, scope: !8294, inlinedAt: !8373)
+!8387 = !{!8308}
+!8388 = !DILocation(line: 0, scope: !8291)
+!8389 = !DILocalVariable(name: "iter", arg: 2, scope: !8320, file: !1202, line: 1439, type: !407)
+!8390 = !{!408, !37, !407}
+!8391 = !DISubroutineType(types: !8390)
+!8392 = !DISubprogram(name: "into_iter_from<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE14into_iter_fromCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1439, type: !8391, scopeLine: 1439, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !707)
+!8393 = !DILocalVariable(name: "self", arg: 1, scope: !8320, file: !1202, line: 1439, type: !37)
+!8394 = !DILexicalBlockFile(scope: !8319, file: !1202, discriminator: 0)
+!8395 = !DILocalVariable(name: "left_val", scope: !8394, file: !1202, line: 1440, type: !1441, align: 64)
+!8396 = !DILocalVariable(name: "right_val", scope: !8394, file: !1202, line: 1440, type: !1441, align: 64)
+!8397 = !DILexicalBlockFile(scope: !8318, file: !1202, discriminator: 0)
+!8398 = !DILocalVariable(name: "kind", scope: !8397, file: !1202, line: 1440, type: !453, align: 8)
+!8399 = !DILocalVariable(name: "allocation", scope: !8317, file: !1202, line: 1442, type: !406, align: 64)
+!8400 = !{!8393, !8389, !8395, !8396, !8398, !8399}
+!8401 = !DILocation(line: 3526, column: 18, scope: !8291)
+!8402 = !DILocation(line: 0, scope: !8320, inlinedAt: !8401)
+!8405 = !DILocalVariable(name: "self", arg: 1, scope: !8324, file: !1202, line: 1453, type: !37)
+!8406 = !{!406, !37}
+!8407 = !DISubroutineType(cc: DW_CC_nocall, types: !8406)
+!8408 = !DISubroutineType(types: !8406)
+!8409 = !DISubprogram(name: "into_allocation<(u64, ()), alloc::alloc::Global>", linkageName: "_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyuEE15into_allocationCslusEaBCZKLp_13quiche_client", scope: !37, file: !1202, line: 1453, type: !8408, scopeLine: 1453, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !707)
+!8410 = !DILocalVariable(name: "alloc", scope: !8323, file: !1202, line: 1454, type: !406, align: 64)
+!8411 = !DILocalVariable(name: "layout", scope: !8322, file: !1202, line: 1457, type: !262, align: 64)
+!8412 = !DILocalVariable(name: "ctrl_offset", scope: !8322, file: !1202, line: 1457, type: !551, align: 64)
+!8413 = !DILocalVariable(name: "option", scope: !8321, file: !1202, line: 1458, type: !418, align: 64)
+!8414 = !{!8405, !8410, !8411, !8412, !8413}
+!8415 = !DILocalVariable(name: "self", arg: 1, scope: !8327, file: !1202, line: 2655, type: !1218)
+!8416 = !{!8415}
+!8420 = !DILocalVariable(name: "count", arg: 2, scope: !8350, file: !1332, line: 1016, type: !551)
+!8421 = !DILocalVariable(name: "self", arg: 1, scope: !8350, file: !1332, line: 1016, type: !1335)
+!8422 = !{!8421, !8420}
+!8423 = !DILocation(line: 0, scope: !8317, inlinedAt: !8401)
+!8424 = !DILocation(line: 2439, column: 9, scope: !8296, inlinedAt: !8380)
+!8425 = !DILocation(line: 2635, column: 9, scope: !8297, inlinedAt: !8384)
+!8426 = !DILocation(line: 57, column: 24, scope: !390, inlinedAt: !8305)
+!8427 = !DILocation(line: 2171, column: 24, scope: !8294, inlinedAt: !8373)
+!8428 = !DILocation(line: 2656, column: 9, scope: !8327, inlinedAt: !8328)
+!8429 = !DILocation(line: 1454, column: 24, scope: !8324, inlinedAt: !8325)
+!8430 = !DILocation(line: 483, column: 8, scope: !433, inlinedAt: !8337)
+!8431 = !DILocation(line: 3242, column: 26, scope: !430, inlinedAt: !8333)
+!8432 = !DILocation(line: 222, column: 13, scope: !427, inlinedAt: !8330)
+!8433 = !DILocation(line: 968, column: 37, scope: !434, inlinedAt: !8344)
+!8434 = !DILocation(line: 1055, column: 47, scope: !8350, inlinedAt: !8351)
+!8435 = !DILocation(line: 1055, column: 22, scope: !8350, inlinedAt: !8351)
+!8436 = !DILocation(line: 1454, column: 21, scope: !8324, inlinedAt: !8325)
+!8437 = !DILocation(line: 1442, scope: !8320, inlinedAt: !8401)
+!8438 = !DILocation(line: 0, scope: !8324, inlinedAt: !8325)
+!8439 = !DILocation(line: 872, column: 18, scope: !387, inlinedAt: !8299)
+!8440 = !DILocation(line: 1570, column: 9, scope: !227, inlinedAt: !8313)
+!8441 = !DILocation(line: 872, column: 18, scope: !387, inlinedAt: !8302)
+!8442 = !DILocation(line: 1443, column: 9, scope: !8317, inlinedAt: !8401)
+!8443 = !DILocation(line: 3528, column: 6, scope: !8292)
 end_hunk_1

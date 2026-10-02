@@ -205,20 +205,13 @@ Abc_TtGetCM5Pat.exit:                             ; preds = %bb.p, %.loopexit.i,
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define range(i32 1, 32) i32 @Abc_TtGetCMPat(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef captures(none) %5, ptr nofree noundef captures(none) %6) local_unnamed_addr #3 {
-  %8 = tail call i32 @Abc_TtGetCMInt(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef null) ; 2 uses
-  %9 = icmp slt i32 %8, 3
-  br i1 %9, label %Abc_TtCheck1Shared.exit, label %bb.a
-
-bb.a:                                             ; preds = %7
-  %i.a = add nsw i32 %8, -1
+bb.a:
+  %7 = tail call i32 @Abc_TtGetCMInt(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef null) ; 2 uses
+  %8 = icmp slt i32 %7, 3
+  %i.a = add nsw i32 %7, -1
   %i.b = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.a, i1 true)
   %i.c = sub nuw nsw i32 32, %i.b
-  %.not3950.i = icmp sle i32 %1, %2
-  tail call void @llvm.assume(i1 %.not3950.i)
-  br label %Abc_TtCheck1Shared.exit
-
-Abc_TtCheck1Shared.exit:                          ; preds = %bb.a, %7
-  %.0 = phi i32 [ 1, %7 ], [ %i.c, %bb.a ]
+  %.0 = select i1 %8, i32 1, i32 %i.c
   ret i32 %.0
 }
 
@@ -226,27 +219,23 @@ Abc_TtCheck1Shared.exit:                          ; preds = %bb.a, %7
 define i32 @Abc_TtGetCM(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef captures(none) %5, ptr nofree noundef captures(none) %6, i32 noundef %7) local_unnamed_addr #3 {
 bb.a:
   %.not = icmp eq i32 %7, 0
-  br i1 %.not, label %bb.c, label %8
+  br i1 %.not, label %bb.c, label %bb.b
 
-8:                                                ; preds = %bb.a
-  %9 = tail call i32 @Abc_TtGetCMInt(ptr noundef readonly %0, i32 noundef %1, i32 noundef %2, ptr noundef readonly %3, ptr noundef readonly %4, ptr noundef %5, ptr noundef %6, ptr noundef null) ; 2 uses
-  %10 = icmp slt i32 %9, 3
-  br i1 %10, label %Abc_TtGetCMPat.exit, label %bb.b
-
-bb.b:                                             ; preds = %8
-  %i.a = add nsw i32 %9, -1
+bb.b:                                             ; preds = %bb.a
+  %8 = tail call i32 @Abc_TtGetCMInt(ptr noundef readonly %0, i32 noundef %1, i32 noundef %2, ptr noundef readonly %3, ptr noundef readonly %4, ptr noundef %5, ptr noundef %6, ptr noundef null) ; 2 uses
+  %9 = icmp slt i32 %8, 3
+  %i.a = add nsw i32 %8, -1
   %i.b = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.a, i1 true)
   %i.c = sub nuw nsw i32 32, %i.b
-  %.not3950.i.i = icmp sle i32 %1, %2
-  tail call void @llvm.assume(i1 %.not3950.i.i)
+  %.0.i = select i1 %9, i32 1, i32 %i.c
   br label %Abc_TtGetCMPat.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.d = tail call i32 @Abc_TtGetCMCount(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6)
   br label %Abc_TtGetCMPat.exit
 
-Abc_TtGetCMPat.exit:                              ; preds = %bb.b, %8, %bb.c
-  %.0 = phi i32 [ %i.d, %bb.c ], [ 1, %8 ], [ %i.c, %bb.b ]
+Abc_TtGetCMPat.exit:                              ; preds = %bb.c, %bb.b
+  %.0 = phi i32 [ %.0.i, %bb.b ], [ %i.d, %bb.c ]
   ret i32 %.0
 }
 
@@ -649,7 +638,6 @@ bb.c:                                             ; preds = %.loopexit._crit_edg
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 4648
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 4640
   %.not.i = icmp eq i32 %10, 0
-  %.not3950.i.i.i = icmp sle i32 %4, %6
   %.not172 = icmp eq ptr %3, null
   %i.av = icmp slt i32 %4, 7
   %i.aw = add nsw i32 %4, -6
@@ -730,26 +718,23 @@ bb.c:                                             ; preds = %.loopexit._crit_edg
   %i.bw = load ptr, ptr %i.as, align 8, !tbaa !54 ; 2 uses
   %i.bx = load ptr, ptr %i.at, align 8, !tbaa !56 ; 2 uses
   %i.by = load ptr, ptr %i.au, align 8, !tbaa !55 ; 2 uses
-  br i1 %.not.i, label %bb.e, label %12
+  br i1 %.not.i, label %bb.e, label %bb.d
 
-12:                                               ; preds = %.critedge
-  %13 = tail call i32 @Abc_TtGetCMInt(ptr noundef readonly %1, i32 noundef %4, i32 noundef %6, ptr noundef readonly %i.bv, ptr noundef readonly %i.bw, ptr noundef %i.bx, ptr noundef %i.by, ptr noundef null) ; 2 uses
-  %14 = icmp slt i32 %13, 3
-  br i1 %14, label %Abc_TtGetCM.exit, label %bb.d
-
-bb.d:                                             ; preds = %12
-  %i.bz = add nsw i32 %13, -1
+bb.d:                                             ; preds = %.critedge
+  %12 = tail call i32 @Abc_TtGetCMInt(ptr noundef readonly %1, i32 noundef %4, i32 noundef %6, ptr noundef readonly %i.bv, ptr noundef readonly %i.bw, ptr noundef %i.bx, ptr noundef %i.by, ptr noundef null) ; 2 uses
+  %13 = icmp slt i32 %12, 3
+  %i.bz = add nsw i32 %12, -1
   %i.ca = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.bz, i1 true)
   %i.cb = sub nuw nsw i32 32, %i.ca
-  tail call void @llvm.assume(i1 %.not3950.i.i.i)
+  %.0.i.i = select i1 %13, i32 1, i32 %i.cb
   br label %Abc_TtGetCM.exit
 
 bb.e:                                             ; preds = %.critedge
   %i.cc = tail call i32 @Abc_TtGetCMCount(ptr noundef readonly %1, i32 noundef %4, i32 noundef %6, ptr noundef readonly %i.bv, ptr noundef readonly %i.bw, ptr noundef %i.bx, ptr noundef %i.by)
   br label %Abc_TtGetCM.exit
 
-Abc_TtGetCM.exit:                                 ; preds = %12, %bb.d, %bb.e
-  %.0.i = phi i32 [ %i.cc, %bb.e ], [ 1, %12 ], [ %i.cb, %bb.d ] ; 7 uses
+Abc_TtGetCM.exit:                                 ; preds = %bb.d, %bb.e
+  %.0.i = phi i32 [ %.0.i.i, %bb.d ], [ %i.cc, %bb.e ] ; 7 uses
   %i.cd = lshr exact i64 %indvars.iv249, 1        ; 2 uses
   %i.ce = icmp eq i64 %i.aj, %i.cd
   br i1 %i.ce, label %bb.f, label %bb.h
@@ -1152,7 +1137,6 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.e
   %i.av = getelementptr inbounds nuw i8, ptr %i.f, i64 4648
   %i.aw = getelementptr inbounds nuw i8, ptr %i.f, i64 4640
   %.not.i166 = icmp eq i32 %5, 0
-  %.not3950.i.i.i = icmp slt i32 %1, 1
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph187, %bb.x
@@ -1257,26 +1241,23 @@ bb.t:                                             ; preds = %.thread, %bb.r
   %i.bu = load ptr, ptr %i.au, align 8, !tbaa !54 ; 2 uses
   %i.bv = load ptr, ptr %i.av, align 8, !tbaa !56 ; 2 uses
   %i.bw = load ptr, ptr %i.aw, align 8, !tbaa !55 ; 2 uses
-  br i1 %.not.i166, label %bb.v, label %9
+  br i1 %.not.i166, label %bb.v, label %bb.u
 
-9:                                                ; preds = %bb.t
-  %10 = call i32 @Abc_TtGetCMInt(ptr noundef readonly %i.w, i32 noundef %0, i32 noundef %i.as, ptr noundef readonly %i.bt, ptr noundef readonly %i.bu, ptr noundef %i.bv, ptr noundef %i.bw, ptr noundef null) ; 2 uses
-  %11 = icmp slt i32 %10, 3
-  br i1 %11, label %Abc_TtGetCM.exit, label %bb.u
-
-bb.u:                                             ; preds = %9
-  %i.bx = add nsw i32 %10, -1
+bb.u:                                             ; preds = %bb.t
+  %9 = call i32 @Abc_TtGetCMInt(ptr noundef readonly %i.w, i32 noundef %0, i32 noundef %i.as, ptr noundef readonly %i.bt, ptr noundef readonly %i.bu, ptr noundef %i.bv, ptr noundef %i.bw, ptr noundef null) ; 2 uses
+  %10 = icmp slt i32 %9, 3
+  %i.bx = add nsw i32 %9, -1
   %i.by = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.bx, i1 true)
   %i.bz = sub nuw nsw i32 32, %i.by
-  call void @llvm.assume(i1 %.not3950.i.i.i)
+  %.0.i.i = select i1 %10, i32 1, i32 %i.bz
   br label %Abc_TtGetCM.exit
 
 bb.v:                                             ; preds = %bb.t
   %i.ca = call i32 @Abc_TtGetCMCount(ptr noundef readonly %i.w, i32 noundef %0, i32 noundef %i.as, ptr noundef readonly %i.bt, ptr noundef readonly %i.bu, ptr noundef %i.bv, ptr noundef %i.bw)
   br label %Abc_TtGetCM.exit
 
-Abc_TtGetCM.exit:                                 ; preds = %bb.v, %bb.u, %9, %bb.s
-  %.0 = phi i32 [ %i.bs, %bb.s ], [ %i.ca, %bb.v ], [ 1, %9 ], [ %i.bz, %bb.u ] ; 5 uses
+Abc_TtGetCM.exit:                                 ; preds = %bb.v, %bb.u, %bb.s
+  %.0 = phi i32 [ %i.bs, %bb.s ], [ %.0.i.i, %bb.u ], [ %i.ca, %bb.v ] ; 5 uses
   br i1 %.not150, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %Abc_TtGetCM.exit
@@ -1679,9 +1660,6 @@ declare i32 @llvm.smin.i32(i32, i32) #15
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #26
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #27
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #15
 
@@ -1690,6 +1668,9 @@ declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i4 @llvm.ctpop.i4(i4) #15
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.ctpop.i16(i16) #15

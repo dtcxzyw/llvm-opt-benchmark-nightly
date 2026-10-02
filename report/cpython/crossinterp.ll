@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %_sharednsitem_apply
 
 bb.c:                                             ; preds = %.lr.ph
   %i.k = getelementptr i8, ptr %i.g, i64 8
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !181, !nonnull !241, !noundef !241 ; 2 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !181  ; 2 uses
   %i.m = getelementptr i8, ptr %i.l, i64 24
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !145
   %i.o = tail call ptr %i.n(ptr noundef nonnull %i.l) #14, !inline_history !240 ; 5 uses
@@ -452,7 +452,7 @@ bb.i:                                             ; preds = %bb.h, %Py_DECREF.ex
 
 bb.j:                                             ; preds = %bb.i
   %i.t = getelementptr i8, ptr %0, i64 24
-  store i32 0, ptr %i.t, align 8, !tbaa !242
+  store i32 0, ptr %i.t, align 8, !tbaa !241
   tail call void @PyThreadState_Clear(ptr noundef %i.b) #14
   %i.u = load ptr, ptr %i.q, align 8, !tbaa !188
   %i.v = tail call ptr @PyThreadState_Swap(ptr noundef %i.u) #14 ; 0 uses
@@ -855,7 +855,7 @@ _sharednsitem_clear.exit:                         ; preds = %bb.b, %bb.c
   %i.g = add nuw nsw i64 %.015, 1                 ; 3 uses
   %i.h = load i64, ptr %i.a, align 8, !tbaa !182
   %i.i = icmp slt i64 %i.g, %i.h
-  br i1 %i.i, label %bb.b, label %.loopexit, !llvm.loop !243
+  br i1 %i.i, label %bb.b, label %.loopexit, !llvm.loop !242
 
 .loopexit:                                        ; preds = %_sharednsitem_clear.exit, %bb.a
   %.1 = phi i64 [ 0, %bb.a ], [ %i.g, %_sharednsitem_clear.exit ] ; 2 uses
@@ -885,7 +885,7 @@ _sharednsitem_clear.exit14:                       ; preds = %bb.d, %bb.e
   %i.p = add nuw nsw i64 %.216, 1                 ; 2 uses
   %i.q = load i64, ptr %i.j, align 8, !tbaa !177
   %i.r = icmp slt i64 %i.p, %i.q
-  br i1 %i.r, label %bb.d, label %._crit_edge, !llvm.loop !244
+  br i1 %i.r, label %bb.d, label %._crit_edge, !llvm.loop !243
 
 ._crit_edge:                                      ; preds = %_sharednsitem_clear.exit14, %.loopexit
   tail call void @PyMem_RawFree(ptr noundef nonnull %0) #14
@@ -921,7 +921,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not12.i.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void %i.h(ptr noundef nonnull %i.f) #14, !inline_history !245
+  tail call void %i.h(ptr noundef nonnull %i.f) #14, !inline_history !244
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -1192,7 +1192,7 @@ _PyUnicode_DATA.exit:                             ; preds = %bb.g, %bb.h
   %i.u = getelementptr i8, ptr %i.k, i64 8
   store ptr %.0.i11, ptr %i.u, align 8, !tbaa !204
   %i.v = getelementptr i8, ptr %1, i64 16
-  %.val = load i64, ptr %i.v, align 8, !tbaa !248
+  %.val = load i64, ptr %i.v, align 8, !tbaa !247
   %i.w = getelementptr i8, ptr %i.k, i64 16
   store i64 %.val, ptr %i.w, align 8, !tbaa !205
   br label %_PyXIData_InitWithSize.exit.thread
@@ -1273,7 +1273,7 @@ _PyXIData_InitWithSize.exit.thread:               ; preds = %_PyXIData_Init.exit
 define internal range(i32 -1, 1) i32 @_tuple_shared(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 16
-  %.val = load i64, ptr %i.a, align 8, !tbaa !250 ; 3 uses
+  %.val = load i64, ptr %i.a, align 8, !tbaa !249 ; 3 uses
   %i.b = icmp slt i64 %.val, 0
   br i1 %i.b, label %bb.n, label %bb.b
 
@@ -1321,7 +1321,7 @@ _PyXIData_New.exit.thread:                        ; preds = %bb.f
 _PyXIData_New.exit:                               ; preds = %bb.f
   %i.q = getelementptr [8 x i8], ptr %i.k, i64 %.03349
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !39
-  %.val.i = load i64, ptr %i.l, align 8, !tbaa !251 ; 2 uses
+  %.val.i = load i64, ptr %i.l, align 8, !tbaa !250 ; 2 uses
   %i.s = tail call ptr @llvm.frameaddress.p0(i32 0)
   %i.t = ptrtoint ptr %i.s to i64                 ; 2 uses
   %i.u = icmp ule i64 %.val.i, %i.t
@@ -1351,7 +1351,7 @@ bb.g:                                             ; preds = %_Py_EnterRecursiveC
   %i.ac = add nuw nsw i64 %.03349, 1              ; 2 uses
   %i.ad = load i64, ptr %i.c, align 8, !tbaa !210
   %i.ae = icmp slt i64 %i.ac, %i.ad
-  br i1 %i.ae, label %bb.f, label %._crit_edge, !llvm.loop !249
+  br i1 %i.ae, label %bb.f, label %._crit_edge, !llvm.loop !248
 
 ._crit_edge:                                      ; preds = %bb.g, %.preheader
   %i.af = getelementptr i8, ptr %0, i64 16
@@ -1527,7 +1527,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !212  ; 2 uses
   %i.k = getelementptr i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !145
-  %i.m = tail call ptr %i.l(ptr noundef %i.j) #14, !inline_history !253 ; 2 uses
+  %i.m = tail call ptr %i.l(ptr noundef %i.j) #14, !inline_history !252 ; 2 uses
   %.not = icmp eq ptr %i.m, null
   br i1 %.not, label %bb.c, label %bb.f
 
@@ -1552,7 +1552,7 @@ bb.f:                                             ; preds = %bb.b
   %i.r = add nuw nsw i64 %.024, 1                 ; 2 uses
   %i.s = load i64, ptr %i.a, align 8, !tbaa !210
   %.not22 = icmp slt i64 %i.r, %i.s
-  br i1 %.not22, label %bb.b, label %Py_DECREF.exit.thread, !llvm.loop !252
+  br i1 %.not22, label %bb.b, label %Py_DECREF.exit.thread, !llvm.loop !251
 
 Py_DECREF.exit.thread:                            ; preds = %bb.f, %.preheader, %bb.e, %bb.d, %bb.c, %bb.a
   %.3 = phi ptr [ null, %bb.a ], [ null, %bb.c ], [ null, %bb.d ], [ null, %bb.e ], [ %i.c, %.preheader ], [ %i.c, %bb.f ]
@@ -1883,17 +1883,16 @@ attributes #16 = { noreturn nounwind }
 !238 = distinct !{!238, !134}
 !239 = distinct !{!239, !134}
 !240 = distinct !{null, ptr @_PyXIData_NewObject}
-!241 = !{}
-!242 = !{!170, !14, i64 24}
+!241 = !{!170, !14, i64 24}
+!242 = distinct !{!242, !134}
 !243 = distinct !{!243, !134}
-!244 = distinct !{!244, !134}
-!245 = distinct !{null, ptr @_PyXIData_Clear, null}
-!246 = !{!"_PyUnicodeObject_state", !14, i64 0, !14, i64 0, !14, i64 0, !14, i64 0, !14, i64 0}
-!247 = !{!"", !103, i64 0, !19, i64 16, !19, i64 24, !246, i64 32}
-!248 = !{!247, !19, i64 16}
-!249 = distinct !{!249, !134}
-!250 = !{!117, !19, i64 16}
-!251 = !{!111, !19, i64 952}
-!252 = distinct !{!252, !134}
-!253 = !{ptr @_PyXIData_NewObject}
+!244 = distinct !{null, ptr @_PyXIData_Clear, null}
+!245 = !{!"_PyUnicodeObject_state", !14, i64 0, !14, i64 0, !14, i64 0, !14, i64 0, !14, i64 0}
+!246 = !{!"", !103, i64 0, !19, i64 16, !19, i64 24, !245, i64 32}
+!247 = !{!246, !19, i64 16}
+!248 = distinct !{!248, !134}
+!249 = !{!117, !19, i64 16}
+!250 = !{!111, !19, i64 952}
+!251 = distinct !{!251, !134}
+!252 = !{ptr @_PyXIData_NewObject}
 end_hunk_1

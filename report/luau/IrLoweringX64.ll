@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.assume(i1 %i.m)
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 272
   %i.o = load i64, ptr %i.n, align 8, !tbaa !254
-  %i.p = add i64 %i.o, -1                         ; 3 uses
+  %i.p = add i64 %i.o, -1                         ; 2 uses
   %i.q = zext i32 %2 to i64
   %i.r = and i64 %i.p, %i.q                       ; 2 uses
   %i.s = load ptr, ptr %i.j, align 8, !tbaa !255  ; 2 uses
@@ -216,11 +216,9 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph:                                           ; preds = %bb.c, %.lr.ph
   %.01927.i.i33 = phi i64 [ %i.y, %.lr.ph ], [ %i.r, %bb.c ]
   %.01828.i.i32 = phi i64 [ %i.w, %.lr.ph ], [ 0, %bb.c ]
-  %i.w = add i64 %.01828.i.i32, 1                 ; 3 uses
+  %i.w = add i64 %.01828.i.i32, 1                 ; 2 uses
   %i.x = add i64 %i.w, %.01927.i.i33
   %i.y = and i64 %i.x, %i.p                       ; 2 uses
-  %.not.i.i = icmp ule i64 %i.w, %i.p
-  tail call void @llvm.assume(i1 %.not.i.i)
   %i.z = getelementptr inbounds nuw [64 x i8], ptr %i.s, i64 %i.y ; 2 uses
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !125
   %i.ab = icmp eq i32 %i.aa, %2

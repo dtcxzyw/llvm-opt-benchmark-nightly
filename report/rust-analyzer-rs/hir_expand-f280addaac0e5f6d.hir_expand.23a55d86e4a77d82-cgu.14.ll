@@ -205,12 +205,12 @@ _RNvXs_NtCsbSS6DM8SDEO_5alloc5allocNtB4_6GlobalNtNtCshzWfHUSfYae_4core5alloc9All
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
-define hidden void @_RNvXsE_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtCsgIpRO4v45SJ_7base_db5input12CrateBuilderEINtNtCs50pZefIA5Ye_8triomphe3arc3ArcNtNtCs33K2ylI4knu_10hir_expand10proc_macro15CrateProcMacrosENtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtNtNtCshzWfHUSfYae_4core4iter6traits7collect12IntoIterator9into_iterB2G_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #4 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_RNvXsE_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtCsgIpRO4v45SJ_7base_db5input12CrateBuilderEINtNtCs50pZefIA5Ye_8triomphe3arc3ArcNtNtCs33K2ylI4knu_10hir_expand10proc_macro15CrateProcMacrosENtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtNtNtCshzWfHUSfYae_4core4iter6traits7collect12IntoIterator9into_iterB2G_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #8 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.02.0.copyload = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 5 uses
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.43.0.copyload = load i64, ptr %.sroa.43.0..sroa_idx, align 8 ; 5 uses
+  %.sroa.43.0.copyload = load i64, ptr %.sroa.43.0..sroa_idx, align 8 ; 4 uses
   %.sroa.55.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.55.0.copyload = load i64, ptr %.sroa.55.0..sroa_idx, align 8
   %.val13.i.i = load <16 x i8>, ptr %.sroa.02.0.copyload, align 16, !noalias !1596
@@ -218,16 +218,9 @@ bb.a:
   br i1 %i.a, label %_RNvXsh_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_8RawTableTINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtCsgIpRO4v45SJ_7base_db5input12CrateBuilderEINtNtCs50pZefIA5Ye_8triomphe3arc3ArcNtNtCs33K2ylI4knu_10hir_expand10proc_macro15CrateProcMacrosEEENtNtNtNtCshzWfHUSfYae_4core4iter6traits7collect12IntoIterator9into_iterB2I_.exit, label %_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
-  %2 = icmp slt i64 %.sroa.43.0.copyload, 1152921504606846975
-  tail call void @llvm.assume(i1 %2)
-  %i.b = shl i64 %.sroa.43.0.copyload, 4          ; 2 uses
-  %3 = add i64 %i.b, 16                           ; 2 uses
-  %4 = add nsw i64 %.sroa.43.0.copyload, 17
-  %i.c = add i64 %4, %3                           ; 3 uses
-  %5 = icmp uge i64 %i.c, %3
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.c, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.b = shl i64 %.sroa.43.0.copyload, 4
+  %2 = mul i64 %.sroa.43.0.copyload, 17
+  %i.c = add i64 %2, 33
   %i.d = sub nuw nsw i64 -16, %i.b
   %i.e = getelementptr inbounds i8, ptr %.sroa.02.0.copyload, i64 %i.d
   br label %_RNvXsh_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_8RawTableTINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtCsgIpRO4v45SJ_7base_db5input12CrateBuilderEINtNtCs50pZefIA5Ye_8triomphe3arc3ArcNtNtCs33K2ylI4knu_10hir_expand10proc_macro15CrateProcMacrosEEENtNtNtNtCshzWfHUSfYae_4core4iter6traits7collect12IntoIterator9into_iterB2I_.exit

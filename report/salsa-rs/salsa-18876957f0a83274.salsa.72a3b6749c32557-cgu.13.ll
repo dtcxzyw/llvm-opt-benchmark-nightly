@@ -202,13 +202,10 @@ bb.a:
 _RNvMs1_NtCsgMW4BsFgQdt_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit: ; preds = %bb.a
   %i.d = mul i64 %i.b, 24
   %i.e = and i64 %i.d, -16
-  %1 = add i64 %i.e, 32                           ; 2 uses
-  %i.f = add i64 %i.b, 17
-  %i.g = add i64 %i.f, %1                         ; 3 uses
-  %2 = icmp uge i64 %i.g, %1
-  tail call void @llvm.assume(i1 %2)
-  %3 = icmp ult i64 %i.g, 9223372036854775793
-  tail call void @llvm.assume(i1 %3)
+  %i.f = add i64 %i.b, %i.e                       ; 2 uses
+  %i.g = add nsw i64 %i.f, 49
+  %1 = icmp slt i64 %i.f, 9223372036854775744
+  tail call void @llvm.assume(i1 %1)
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %_RNvMs1_NtCsgMW4BsFgQdt_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit

@@ -205,10 +205,8 @@ Vec_IntPush.exit:
   store i32 0, ptr %i.c, align 4, !tbaa !14
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 6
   %i.f = load i16, ptr %i.e, align 2, !tbaa !58   ; 2 uses
-  %i.g = lshr i16 %i.f, 1                         ; 2 uses
-  %i.h = load i16, ptr %0, align 8, !tbaa !22     ; 2 uses
-  %2 = icmp uge i16 %i.g, %i.h
-  tail call void @llvm.assume(i1 %2)
+  %i.g = lshr i16 %i.f, 1
+  %i.h = load i16, ptr %0, align 8, !tbaa !22
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !23
   %narrow.i = sub nuw nsw i16 %i.g, %i.h

@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v
   %.pre301 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !83
   br label %bb.x
 
-bb.x:                                             ; preds = %.split, %._crit_edge
+bb.x:                                             ; preds = %._crit_edge, %.split
   %i.db = phi ptr [ %i.cu, %.split ], [ %.pre301, %._crit_edge ]
   %.0158258 = phi i1 [ %i.da, %.split ], [ %.0158, %._crit_edge ] ; 2 uses
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !388
@@ -449,7 +449,7 @@ bb.at:                                            ; preds = %._crit_edge305, %.l
   br label %_ZN7rocksdb6StatusD2Ev.exit
 
 .thread259:                                       ; preds = %bb.t, %bb.w, %bb.x
-  %.0158257264 = phi i1 [ %.0158258, %bb.x ], [ %i.cp, %bb.t ], [ %.0158, %bb.w ]
+  %.0158257264 = phi i1 [ %.0158258, %bb.x ], [ %.0158, %bb.w ], [ %i.cp, %bb.t ]
   br i1 %i.ao, label %bb.au, label %bb.ay
 
 bb.au:                                            ; preds = %.thread259
@@ -852,11 +852,9 @@ _ZNKSt6vectorIN7rocksdb12DeadlockInfoESaIS1_EE12_M_check_lenEmPKc.exit: ; preds 
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 192153584101141162)
-  %i.l = select i1 %i.j, i64 192153584101141162, i64 %i.k ; 3 uses
+  %i.l = select i1 %i.j, i64 192153584101141162, i64 %i.k ; 2 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp ne i64 %i.l, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 48
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #29 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 4 uses

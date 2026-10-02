@@ -204,13 +204,8 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %or.cond.i)
   %i.g = shl i64 %i.c, 3
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %2 = add i64 %i.h, 16                           ; 2 uses
-  %i.i = add nsw i64 %i.c, 17
-  %i.j = add i64 %i.i, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.j, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.i = add nsw i64 %i.c, 33
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub nuw nsw i64 -16, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtCsfoiTdJnOWBy_23libp2p_request_response16InboundRequestIduEE15into_allocationCsiQsUuLk7hWW_14libp2p_autonat.exit
@@ -258,13 +253,8 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %or.cond.i)
   %i.g = shl i64 %i.c, 3
   %i.h = and i64 %i.g, -16                        ; 2 uses
-  %2 = add i64 %i.h, 16                           ; 2 uses
-  %i.i = add nsw i64 %i.c, 17
-  %i.j = add i64 %i.i, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.j, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.j, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.i = add nsw i64 %i.c, 33
+  %i.j = add i64 %i.i, %i.h
   %i.k = sub nuw nsw i64 -16, %i.h
   %i.l = getelementptr inbounds i8, ptr %i.a, i64 %i.k
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtCsfoiTdJnOWBy_23libp2p_request_response17OutboundRequestIduEE15into_allocationCsiQsUuLk7hWW_14libp2p_autonat.exit

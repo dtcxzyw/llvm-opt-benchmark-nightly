@@ -204,15 +204,12 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 101
-  %i.c = load i8, ptr %i.b, align 1, !range !15, !noundef !4 ; 3 uses
+  %i.c = load i8, ptr %i.b, align 1, !range !15, !noundef !4 ; 2 uses
   %.not = icmp eq i8 %i.c, -1
   br i1 %.not, label %bb.b, label %.thread
 
 .thread:                                          ; preds = %bb.a
-  %.not2 = icmp ne i8 %i.c, 2
-  %1 = trunc nuw i8 %i.c to i1
-  %2 = xor i1 %1, true
-  %.sroa.0.0.ph = select i1 %.not2, i1 %2, i1 false
+  %.sroa.0.0.ph = icmp eq i8 %i.c, 0
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -232,15 +229,12 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 53
-  %i.c = load i8, ptr %i.b, align 1, !range !15, !noundef !4 ; 3 uses
+  %i.c = load i8, ptr %i.b, align 1, !range !15, !noundef !4 ; 2 uses
   %.not = icmp eq i8 %i.c, -1
   br i1 %.not, label %bb.b, label %.thread
 
 .thread:                                          ; preds = %bb.a
-  %.not2 = icmp ne i8 %i.c, 2
-  %1 = trunc nuw i8 %i.c to i1
-  %2 = xor i1 %1, true
-  %.sroa.0.0.ph = select i1 %.not2, i1 %2, i1 false
+  %.sroa.0.0.ph = icmp eq i8 %i.c, 0
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -260,15 +254,12 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 29
-  %i.c = load i8, ptr %i.b, align 1, !range !15, !noundef !4 ; 3 uses
+  %i.c = load i8, ptr %i.b, align 1, !range !15, !noundef !4 ; 2 uses
   %.not = icmp eq i8 %i.c, -1
   br i1 %.not, label %bb.b, label %.thread
 
 .thread:                                          ; preds = %bb.a
-  %.not2 = icmp ne i8 %i.c, 2
-  %1 = trunc nuw i8 %i.c to i1
-  %2 = xor i1 %1, true
-  %.sroa.0.0.ph = select i1 %.not2, i1 %2, i1 false
+  %.sroa.0.0.ph = icmp eq i8 %i.c, 0
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
 
 bb.b:                                             ; preds = %bb.a

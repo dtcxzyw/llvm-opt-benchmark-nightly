@@ -203,7 +203,6 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define noundef range(i64 0, -9223372036854775808) i64 @CloseWS_List(ptr nofree noundef captures(none) %0) #18 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   %i.a = load ptr, ptr %0, align 8, !tbaa !55     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !46   ; 2 uses
@@ -606,11 +605,11 @@ declare i32 @llvm.bswap.i32(i32) #25
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #25
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #26
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #25
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #26
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

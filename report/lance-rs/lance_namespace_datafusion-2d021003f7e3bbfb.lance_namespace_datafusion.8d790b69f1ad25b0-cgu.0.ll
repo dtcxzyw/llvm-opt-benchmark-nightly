@@ -205,18 +205,10 @@ _RINvXs7_NtNtNtCsgczF5crJ4sT_3std11collections4hash3setINtB6_7HashSetNtNtCs40k4W
   br i1 %i.cp, label %_RNvXsE_NtCsfKiFC1ztrmh_9hashbrown3mapINtB5_7HashMapNtNtCs40k4W9msRzi_5alloc6string6StringuNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateENtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12IntoIterator9into_iterCsc93vp1BCDlY_26lance_namespace_datafusion.exit, label %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RINvXs7_NtNtNtCsgczF5crJ4sT_3std11collections4hash3setINtB6_7HashSetNtNtCs40k4W9msRzi_5alloc6string6StringEINtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12FromIteratorB14_E9from_iterINtNtNtB1O_8adapters3map3MapINtNtCs5q0wOX0Zf7d_7dashmap4iter4IterB14_INtNtB18_4sync3ArcDNtNtCs5q7AjagIPjV_18datafusion_catalog6schema14SchemaProviderEL_EENCNvXs1_NtCsc93vp1BCDlY_26lance_namespace_datafusion7catalogNtB5y_20LanceCatalogProviderNtNtB4q_7catalog15CatalogProvider12schema_names0EEB5A_.exit
-  %i.cq = mul i64 %.sroa.421.0.copyload, 24       ; 2 uses
-  %2 = add i64 %i.cq, 24
-  %3 = icmp ult i64 %2, -15
-  call void @llvm.assume(i1 %3)
+  %i.cq = mul i64 %.sroa.421.0.copyload, 24
   %i.cr = and i64 %i.cq, -16                      ; 2 uses
-  %4 = add i64 %i.cr, 32                          ; 2 uses
-  %i.cs = add i64 %.sroa.421.0.copyload, 17
-  %i.ct = add i64 %i.cs, %4                       ; 3 uses
-  %5 = icmp uge i64 %i.ct, %4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.ct, 9223372036854775793
-  call void @llvm.assume(i1 %6)
+  %i.cs = add i64 %.sroa.421.0.copyload, 49
+  %i.ct = add i64 %i.cs, %i.cr
   %i.cu = sub i64 -32, %i.cr
   %i.cv = getelementptr inbounds i8, ptr %.sroa.020.0.copyload, i64 %i.cu
   br label %_RNvXsE_NtCsfKiFC1ztrmh_9hashbrown3mapINtB5_7HashMapNtNtCs40k4W9msRzi_5alloc6string6StringuNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateENtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12IntoIterator9into_iterCsc93vp1BCDlY_26lance_namespace_datafusion.exit
@@ -619,18 +611,10 @@ _RINvXs7_NtNtNtCsgczF5crJ4sT_3std11collections4hash3setINtB6_7HashSetNtNtCs40k4W
   br i1 %i.cp, label %_RNvXsE_NtCsfKiFC1ztrmh_9hashbrown3mapINtB5_7HashMapNtNtCs40k4W9msRzi_5alloc6string6StringuNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateENtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12IntoIterator9into_iterCsc93vp1BCDlY_26lance_namespace_datafusion.exit, label %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RINvXs7_NtNtNtCsgczF5crJ4sT_3std11collections4hash3setINtB6_7HashSetNtNtCs40k4W9msRzi_5alloc6string6StringEINtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12FromIteratorB14_E9from_iterINtNtNtB1O_8adapters3map3MapINtNtCs5q0wOX0Zf7d_7dashmap4iter4IterB14_INtNtB18_4sync3ArcDNtNtCs5q7AjagIPjV_18datafusion_catalog7catalog15CatalogProviderEL_EENCNvXs_NtCsc93vp1BCDlY_26lance_namespace_datafusion7catalogNtB5z_24LanceCatalogProviderListNtB4o_19CatalogProviderList13catalog_names0EEB5B_.exit
-  %i.cq = mul i64 %.sroa.421.0.copyload, 24       ; 2 uses
-  %2 = add i64 %i.cq, 24
-  %3 = icmp ult i64 %2, -15
-  call void @llvm.assume(i1 %3)
+  %i.cq = mul i64 %.sroa.421.0.copyload, 24
   %i.cr = and i64 %i.cq, -16                      ; 2 uses
-  %4 = add i64 %i.cr, 32                          ; 2 uses
-  %i.cs = add i64 %.sroa.421.0.copyload, 17
-  %i.ct = add i64 %i.cs, %4                       ; 3 uses
-  %5 = icmp uge i64 %i.ct, %4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.ct, 9223372036854775793
-  call void @llvm.assume(i1 %6)
+  %i.cs = add i64 %.sroa.421.0.copyload, 49
+  %i.ct = add i64 %i.cs, %i.cr
   %i.cu = sub i64 -32, %i.cr
   %i.cv = getelementptr inbounds i8, ptr %.sroa.020.0.copyload, i64 %i.cu
   br label %_RNvXsE_NtCsfKiFC1ztrmh_9hashbrown3mapINtB5_7HashMapNtNtCs40k4W9msRzi_5alloc6string6StringuNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateENtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12IntoIterator9into_iterCsc93vp1BCDlY_26lance_namespace_datafusion.exit

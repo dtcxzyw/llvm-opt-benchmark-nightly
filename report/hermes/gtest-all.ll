@@ -205,9 +205,9 @@ bb.ay:                                            ; preds = %_ZN7testing8interna
           cleanup
   br label %bb.az
 
-_ZNK7testing8TestCase11GetTestInfoEi.exit.thread: ; preds = %bb.ax, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i217._crit_edge, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i
-  %i.kr = phi ptr [ %.pre241, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i217._crit_edge ], [ %i.jy, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i ], [ %i.jy, %bb.ax ] ; 2 uses
-  %i.ks = phi ptr [ %.pre, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i217._crit_edge ], [ %i.jz, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i ], [ %i.jz, %bb.ax ] ; 2 uses
+_ZNK7testing8TestCase11GetTestInfoEi.exit.thread: ; preds = %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i217._crit_edge, %bb.ax, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i
+  %i.kr = phi ptr [ %.pre241, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i217._crit_edge ], [ %i.jy, %bb.ax ], [ %i.jy, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i ] ; 2 uses
+  %i.ks = phi ptr [ %.pre, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i217._crit_edge ], [ %i.jz, %bb.ax ], [ %i.jz, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.kt = ptrtoint ptr %i.ks to i64
   %i.ku = ptrtoint ptr %i.kr to i64
@@ -610,11 +610,9 @@ _ZNKSt6vectorIN7testing8internal9TraceInfoESaIS2_EE12_M_check_lenEmPKc.exit: ; p
   %i.j = add nsw i64 %.sroa.speculated.i, %i.i    ; 2 uses
   %i.k = icmp ult i64 %i.j, %i.i
   %i.l = tail call i64 @llvm.umin.i64(i64 %i.j, i64 192153584101141162)
-  %i.m = select i1 %i.k, i64 192153584101141162, i64 %i.l ; 3 uses
+  %i.m = select i1 %i.k, i64 192153584101141162, i64 %i.l ; 2 uses
   %i.n = ptrtoint ptr %1 to i64
   %i.o = sub i64 %i.n, %i.f
-  %.not.i = icmp ne i64 %i.m, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.p = mul nuw nsw i64 %i.m, 48                 ; 2 uses
   %i.q = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.p) #57 ; 6 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.o ; 4 uses

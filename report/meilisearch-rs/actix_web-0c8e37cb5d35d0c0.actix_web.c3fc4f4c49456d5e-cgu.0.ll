@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %"_ZN63_$LT$alloc..a
 "_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$17new_uninitialized17hc76a527eec220e83E.exit.i.i": ; preds = %bb.k, %.noexc36
   %.pre-phi.i.i = phi i64 [ %.pre.i.i, %.noexc36 ], [ %i.ad, %bb.k ]
   %.sroa.7.0.i.i = phi i64 [ %.sroa.12.0.ph.i.i.i, %.noexc36 ], [ %.sroa.02.0.i.i.i.i, %bb.k ]
-  %.sroa.5.0.i.i = phi i64 [ %.sroa.7.0.ph.i.i.i, %.noexc36 ], [ %i.y, %bb.k ] ; 6 uses
+  %.sroa.5.0.i.i = phi i64 [ %.sroa.7.0.ph.i.i.i, %.noexc36 ], [ %i.y, %bb.k ] ; 5 uses
   %.sroa.0.0.i.i = phi ptr [ null, %.noexc36 ], [ %i.am, %bb.k ] ; 8 uses
   store ptr %.sroa.0.0.i.i, ptr %i.h, align 8, !noalias !12585
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
@@ -349,16 +349,9 @@ bb.r:                                             ; preds = %bb.b
   br i1 %i.cc, label %"_ZN115_$LT$std..collections..hash..map..HashMap$LT$K$C$V$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hcba43b8afc7083d8E.exit.i", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i: ; preds = %"_ZN83_$LT$hashbrown..map..HashMap$LT$K$C$V$C$S$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h0f9f077cf0e7e9c1E.exit"
-  %3 = icmp slt i64 %.sroa.5.0.i.i, 576460752303423487
-  call void @llvm.assume(i1 %3)
-  %i.cd = shl i64 %.sroa.5.0.i.i, 5               ; 2 uses
-  %4 = add i64 %i.cd, 32                          ; 2 uses
-  %5 = add nsw i64 %.sroa.5.0.i.i, 17
-  %i.ce = add i64 %5, %4                          ; 3 uses
-  %6 = icmp uge i64 %i.ce, %4
-  call void @llvm.assume(i1 %6)
-  %7 = icmp ult i64 %i.ce, 9223372036854775793
-  call void @llvm.assume(i1 %7)
+  %i.cd = shl i64 %.sroa.5.0.i.i, 5
+  %3 = mul i64 %.sroa.5.0.i.i, 33
+  %i.ce = add i64 %3, 49
   %i.cf = sub nuw nsw i64 -32, %i.cd
   %i.cg = getelementptr inbounds i8, ptr %.sroa.0.0.i.i, i64 %i.cf
   br label %"_ZN115_$LT$std..collections..hash..map..HashMap$LT$K$C$V$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hcba43b8afc7083d8E.exit.i"

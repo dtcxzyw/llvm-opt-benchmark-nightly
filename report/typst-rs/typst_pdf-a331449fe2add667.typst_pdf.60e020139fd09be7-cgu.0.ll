@@ -205,11 +205,8 @@ bb.j:                                             ; preds = %bb.i
   store i8 1, ptr %i.eh, align 8
   %i.ei = load ptr, ptr %2, align 8, !nonnull !10, !noundef !10 ; 3 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 72
-  %i.ek = load i8, ptr %i.ej, align 8, !range !64, !noundef !10 ; 2 uses
-  %.not15 = icmp ne i8 %i.ek, 2
-  %7 = trunc nuw i8 %i.ek to i1
-  %8 = xor i1 %7, true
-  %.sroa.01.0 = select i1 %.not15, i1 %8, i1 false ; 2 uses
+  %i.ek = load i8, ptr %i.ej, align 8, !range !64, !noundef !10
+  %.sroa.01.0 = icmp eq i8 %i.ek, 0               ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %0, i64 520 ; 3 uses
   %i.em = mul i64 %6, -1065810590584100411        ; 2 uses
   %i.en = call noundef i64 @llvm.fshl.i64(i64 %i.em, i64 %i.em, i64 26) ; 2 uses
@@ -612,22 +609,15 @@ bb.cl:                                            ; preds = %bb.cj
   %i.pn = icmp eq i64 %i.pm, 1                    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !20333
   %.sroa.024.0.copyload.i.i = load ptr, ptr %i.r, align 8, !noalias !20333, !nonnull !10, !noundef !10 ; 5 uses
-  %.sroa.425.0.copyload.i.i = load i64, ptr %i.ax, align 8, !noalias !20333 ; 4 uses
+  %.sroa.425.0.copyload.i.i = load i64, ptr %i.ax, align 8, !noalias !20333 ; 3 uses
   %.val3.i.i.i.i157.i = load <16 x i8>, ptr %.sroa.024.0.copyload.i.i, align 16, !noalias !20336
   %i.po = icmp eq i64 %.sroa.425.0.copyload.i.i, 0 ; 3 uses
   br i1 %i.po, label %bb.cm, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i: ; preds = %bb.cl
-  %1 = icmp slt i64 %.sroa.425.0.copyload.i.i, 1152921504606846975
-  call void @llvm.assume(i1 %1)
-  %i.pp = shl i64 %.sroa.425.0.copyload.i.i, 4    ; 2 uses
-  %2 = add i64 %i.pp, 16                          ; 2 uses
-  %3 = add nsw i64 %.sroa.425.0.copyload.i.i, 17
-  %i.pq = add i64 %3, %2                          ; 3 uses
-  %4 = icmp uge i64 %i.pq, %2
-  call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.pq, 9223372036854775793
-  call void @llvm.assume(i1 %5)
+  %i.pp = shl i64 %.sroa.425.0.copyload.i.i, 4
+  %1 = mul i64 %.sroa.425.0.copyload.i.i, 17
+  %i.pq = add i64 %1, 33
   %i.pr = sub nuw nsw i64 -16, %i.pp
   %i.ps = getelementptr inbounds i8, ptr %.sroa.024.0.copyload.i.i, i64 %i.pr
   br label %bb.cm

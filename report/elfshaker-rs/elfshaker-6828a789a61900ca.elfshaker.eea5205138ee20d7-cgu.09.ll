@@ -202,18 +202,11 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.gd, label %bb.v, label %_RNvMs1_NtCs4u2a9tqgjUw_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCs4u2a9tqgjUw_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %bb.u
-  %i.ge = mul i64 %.sroa.419.0.copyload, 12       ; 2 uses
-  %4 = add i64 %i.ge, 12
-  %5 = icmp ult i64 %4, -15
-  call void @llvm.assume(i1 %5)
+  %i.ge = mul i64 %.sroa.419.0.copyload, 12
   %i.gf = add i64 %i.ge, 24
-  %i.gg = and i64 %i.gf, -16                      ; 3 uses
+  %i.gg = and i64 %i.gf, -16                      ; 2 uses
   %i.gh = add i64 %.sroa.419.0.copyload, 17
-  %i.gi = add i64 %i.gh, %i.gg                    ; 3 uses
-  %6 = icmp uge i64 %i.gi, %i.gg
-  call void @llvm.assume(i1 %6)
-  %7 = icmp ult i64 %i.gi, 9223372036854775793
-  call void @llvm.assume(i1 %7)
+  %i.gi = add i64 %i.gh, %i.gg
   %i.gj = sub nsw i64 0, %i.gg
   %i.gk = getelementptr inbounds i8, ptr %.sroa.018.0.copyload, i64 %i.gj
   br label %bb.v

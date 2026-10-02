@@ -205,13 +205,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.n = and i32 %5, 67108864                     ; 2 uses
-  %i.o = icmp ne i32 %i.n, 0                      ; 29 uses
+  %i.o = icmp ne i32 %i.n, 0                      ; 28 uses
   %i.p = and i32 %5, 16384
-  %i.q = icmp ne i32 %i.p, 0                      ; 19 uses
+  %i.q = icmp ne i32 %i.p, 0                      ; 17 uses
   %i.r = and i32 %5, 32768
-  %i.s = icmp eq i32 %i.r, 0                      ; 5 uses
+  %i.s = icmp eq i32 %i.r, 0                      ; 4 uses
   %i.t = and i32 %5, 65536
-  %i.u = icmp eq i32 %i.t, 0                      ; 2 uses
+  %i.u = icmp eq i32 %i.t, 0
   %i.v = and i32 %5, 262144
   %i.w = icmp ne i32 %i.v, 0                      ; 2 uses
   br i1 %i.o, label %bb.c, label %bb.d
@@ -614,12 +614,11 @@ _ZN5ImGui15IsKeyPressedMapEib.exit1131:           ; preds = %bb.eb
   br i1 %brmerge1040, label %_ZN5ImGui15IsKeyPressedMapEib.exit1131.thread, label %bb.ed
 
 bb.ec:                                            ; preds = %_ZN5ImGui15IsKeyPressedMapEib.exit1130
-  %.not1034 = xor i1 %i.s, true
-  %brmerge1035 = or i1 %i.q, %.not1034            ; 2 uses
-  %.not1036 = xor i1 %i.o, true
-  %brmerge1037 = or i1 %brmerge1035, %.not1036
-  %not.brmerge1035 = xor i1 %brmerge1035, true
-  br i1 %brmerge1037, label %.thread1320, label %bb.ed
+  %22 = and i32 %5, 49152
+  %brmerge1035 = icmp eq i32 %22, 0
+  %23 = and i32 %5, 67158016
+  %brmerge1037.not = icmp eq i32 %23, 67108864
+  br i1 %brmerge1037.not, label %bb.ed, label %.thread1320
 
 bb.ed:                                            ; preds = %_ZN5ImGui15IsKeyPressedMapEib.exit1131, %bb.ec
   %i.th = getelementptr inbounds nuw i8, ptr %.095715601681, i64 80
@@ -634,7 +633,7 @@ _ZN5ImGui15IsKeyPressedMapEib.exit1131.thread:    ; preds = %bb.eb, %_ZN5ImGui15
   br i1 %i.su, label %.thread1320, label %_ZN5ImGui15IsKeyPressedMapEib.exit1132.thread
 
 .thread1320:                                      ; preds = %bb.ec, %_ZN5ImGui15IsKeyPressedMapEib.exit1131.thread
-  %i.tn = phi i1 [ %i.tm, %_ZN5ImGui15IsKeyPressedMapEib.exit1131.thread ], [ %not.brmerge1035, %bb.ec ] ; 5 uses
+  %i.tn = phi i1 [ %i.tm, %_ZN5ImGui15IsKeyPressedMapEib.exit1131.thread ], [ %brmerge1035, %bb.ec ] ; 5 uses
   %i.to = load ptr, ptr @GImGui, align 8, !tbaa !22
   %i.tp = getelementptr inbounds nuw i8, ptr %i.to, i64 128
   %i.tq = load i32, ptr %i.tp, align 4, !tbaa !188 ; 2 uses
@@ -734,9 +733,9 @@ bb.ej:                                            ; preds = %_ZN5ImGui15IsKeyPre
 
 bb.ek:                                            ; preds = %bb.ej
   %i.vc = call noundef zeroext i1 @_ZN5ImGui12IsKeyPressedEib(i32 noundef %i.va, i1 noundef zeroext true)
-  %.not1418 = xor i1 %i.q, true
-  %22 = and i1 %i.vc, %.not1418
-  %i.vd = and i1 %i.u, %22
+  %24 = and i32 %5, 81920
+  %25 = icmp eq i32 %24, 0
+  %i.vd = and i1 %25, %i.vc
   %.pre1455 = load ptr, ptr @GImGui, align 8, !tbaa !22
   br label %bb.el
 

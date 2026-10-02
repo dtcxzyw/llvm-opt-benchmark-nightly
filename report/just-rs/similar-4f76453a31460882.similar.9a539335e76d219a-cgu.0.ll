@@ -205,7 +205,7 @@ _RINvMs2_NtNtCsaKJjC64KgbL_3std6thread5localINtB6_8LocalKeyINtNtCsj6eKBz9Db1c_4c
 
 ._crit_edge:                                      ; preds = %bb.aa
   %.sroa.0114.0.copyload.pre = load ptr, ptr %i.f, align 8 ; 4 uses
-  %.sroa.4115.0.copyload.pre = load i64, ptr %i.x, align 8 ; 5 uses
+  %.sroa.4115.0.copyload.pre = load i64, ptr %i.x, align 8 ; 4 uses
   %.sroa.5117.0.copyload.pre = load i64, ptr %i.z, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %.val3.i.i.i = load <16 x i8>, ptr %.sroa.0114.0.copyload.pre, align 16, !noalias !7256 ; 2 uses
@@ -213,16 +213,9 @@ _RINvMs2_NtNtCsaKJjC64KgbL_3std6thread5localINtB6_8LocalKeyINtNtCsj6eKBz9Db1c_4c
   br i1 %i.aa, label %bb.c, label %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %._crit_edge
-  %4 = icmp slt i64 %.sroa.4115.0.copyload.pre, 576460752303423487
-  call void @llvm.assume(i1 %4)
-  %i.ab = shl i64 %.sroa.4115.0.copyload.pre, 5   ; 2 uses
-  %5 = add i64 %i.ab, 32                          ; 2 uses
-  %6 = add nsw i64 %.sroa.4115.0.copyload.pre, 17
-  %i.ac = add i64 %6, %5                          ; 3 uses
-  %7 = icmp uge i64 %i.ac, %5
-  call void @llvm.assume(i1 %7)
-  %8 = icmp ult i64 %i.ac, 9223372036854775793
-  call void @llvm.assume(i1 %8)
+  %i.ab = shl i64 %.sroa.4115.0.copyload.pre, 5
+  %4 = mul i64 %.sroa.4115.0.copyload.pre, 33
+  %i.ac = add i64 %4, 49
   %i.ad = sub nuw nsw i64 -32, %i.ab
   %i.ae = getelementptr inbounds i8, ptr %.sroa.0114.0.copyload.pre, i64 %i.ad
   br label %bb.c
@@ -625,7 +618,7 @@ _RINvMs2_NtNtCsaKJjC64KgbL_3std6thread5localINtB6_8LocalKeyINtNtCsj6eKBz9Db1c_4c
 
 ._crit_edge:                                      ; preds = %bb.ak
   %.sroa.0121.0.copyload.pre = load ptr, ptr %i.f, align 8 ; 4 uses
-  %.sroa.4122.0.copyload.pre = load i64, ptr %i.x, align 8 ; 5 uses
+  %.sroa.4122.0.copyload.pre = load i64, ptr %i.x, align 8 ; 4 uses
   %.sroa.5124.0.copyload.pre = load i64, ptr %i.z, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %.val3.i.i.i = load <16 x i8>, ptr %.sroa.0121.0.copyload.pre, align 16, !noalias !7391 ; 2 uses
@@ -633,16 +626,9 @@ _RINvMs2_NtNtCsaKJjC64KgbL_3std6thread5localINtB6_8LocalKeyINtNtCsj6eKBz9Db1c_4c
   br i1 %i.aa, label %bb.g, label %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %._crit_edge
-  %4 = icmp slt i64 %.sroa.4122.0.copyload.pre, 576460752303423487
-  call void @llvm.assume(i1 %4)
-  %i.ab = shl i64 %.sroa.4122.0.copyload.pre, 5   ; 2 uses
-  %5 = add i64 %i.ab, 32                          ; 2 uses
-  %6 = add nsw i64 %.sroa.4122.0.copyload.pre, 17
-  %i.ac = add i64 %6, %5                          ; 3 uses
-  %7 = icmp uge i64 %i.ac, %5
-  call void @llvm.assume(i1 %7)
-  %8 = icmp ult i64 %i.ac, 9223372036854775793
-  call void @llvm.assume(i1 %8)
+  %i.ab = shl i64 %.sroa.4122.0.copyload.pre, 5
+  %4 = mul i64 %.sroa.4122.0.copyload.pre, 33
+  %i.ac = add i64 %4, 49
   %i.ad = sub nuw nsw i64 -32, %i.ab
   %i.ae = getelementptr inbounds i8, ptr %.sroa.0121.0.copyload.pre, i64 %i.ad
   br label %bb.g

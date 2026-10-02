@@ -205,16 +205,11 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %i.eo, label %"_ZN4core3ptr181drop_in_place$LT$core..option..Option$LT$std..collections..hash..map..IntoIter$LT$nickel_lang_parser..identifier..LocIdent$C$nickel..customize..interface..FieldInterface$GT$$GT$$GT$17h65e427f971656e28E.exit.i", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i.i.i: ; preds = %bb.ar
-  %i.ep = mul i64 %.sroa.5.sroa.0.0.copyload.i.i.i, 112 ; 2 uses
-  %3 = add i64 %i.ep, 112                         ; 2 uses
-  %4 = add i64 %.sroa.5.sroa.0.0.copyload.i.i.i, 17
-  %i.eq = add i64 %4, %3                          ; 3 uses
-  %5 = icmp uge i64 %i.eq, %3
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.eq, 9223372036854775793
-  call void @llvm.assume(i1 %6)
-  %7 = sub i64 -112, %i.ep
-  %i.er = getelementptr inbounds i8, ptr %.sroa.0.0.copyload1.i.i.i, i64 %7
+  %i.ep = mul i64 %.sroa.5.sroa.0.0.copyload.i.i.i, -112
+  %3 = mul i64 %.sroa.5.sroa.0.0.copyload.i.i.i, 113
+  %i.eq = add i64 %3, 129
+  %4 = getelementptr i8, ptr %.sroa.0.0.copyload1.i.i.i, i64 %i.ep
+  %i.er = getelementptr i8, ptr %4, i64 -112
   br label %"_ZN4core3ptr181drop_in_place$LT$core..option..Option$LT$std..collections..hash..map..IntoIter$LT$nickel_lang_parser..identifier..LocIdent$C$nickel..customize..interface..FieldInterface$GT$$GT$$GT$17h65e427f971656e28E.exit.i"
 
 "_ZN4core3ptr181drop_in_place$LT$core..option..Option$LT$std..collections..hash..map..IntoIter$LT$nickel_lang_parser..identifier..LocIdent$C$nickel..customize..interface..FieldInterface$GT$$GT$$GT$17h65e427f971656e28E.exit.i": ; preds = %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i.i.i, %bb.ar
@@ -617,16 +612,11 @@ bb.ad:                                            ; preds = %.noexc.i.i.i, %._ZN
   br i1 %i.gs, label %bb.ag, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i.i: ; preds = %bb.ad
-  %i.gt = mul i64 %.sroa.2.0.copyload.i.i.i, 112  ; 2 uses
-  %3 = add i64 %i.gt, 112                         ; 2 uses
-  %4 = add i64 %.sroa.2.0.copyload.i.i.i, 17
-  %i.gu = add i64 %4, %3                          ; 3 uses
-  %5 = icmp uge i64 %i.gu, %3
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.gu, 9223372036854775793
-  call void @llvm.assume(i1 %6)
-  %7 = sub i64 -112, %i.gt
-  %i.gv = getelementptr inbounds i8, ptr %.sroa.029.0.copyload.i.i.i, i64 %7
+  %i.gt = mul i64 %.sroa.2.0.copyload.i.i.i, -112
+  %3 = mul i64 %.sroa.2.0.copyload.i.i.i, 113
+  %i.gu = add i64 %3, 129
+  %4 = getelementptr i8, ptr %.sroa.029.0.copyload.i.i.i, i64 %i.gt
+  %i.gv = getelementptr i8, ptr %4, i64 -112
   br label %bb.ag
 
 bb.ae:                                            ; preds = %bb.ai, %bb.af
@@ -1029,16 +1019,11 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.t, label %bb.j, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i: ; preds = %bb.g
-  %i.u = mul i64 %.sroa.2.0.copyload, 112         ; 2 uses
-  %3 = add i64 %i.u, 112                          ; 2 uses
-  %4 = add i64 %.sroa.2.0.copyload, 17
-  %i.v = add i64 %4, %3                           ; 3 uses
-  %5 = icmp uge i64 %i.v, %3
-  tail call void @llvm.assume(i1 %5), !noalias !65926
-  %6 = icmp ult i64 %i.v, 9223372036854775793
-  tail call void @llvm.assume(i1 %6), !noalias !65926
-  %7 = sub i64 -112, %i.u
-  %i.w = getelementptr inbounds i8, ptr %i.s, i64 %7
+  %i.u = mul i64 %.sroa.2.0.copyload, -112
+  %3 = mul i64 %.sroa.2.0.copyload, 113
+  %i.v = add i64 %3, 129
+  %4 = getelementptr i8, ptr %i.s, i64 %i.u
+  %i.w = getelementptr i8, ptr %4, i64 -112
   br label %bb.j
 
 bb.h:                                             ; preds = %.body, %bb.i

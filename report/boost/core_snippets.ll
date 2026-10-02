@@ -204,11 +204,9 @@ _ZNKSt6vectorIN5boost4asio2ip20basic_resolver_entryINS2_3tcpEEESaIS5_EE12_M_chec
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 96076792050570581)
-  %i.l = select i1 %i.j, i64 96076792050570581, i64 %i.k ; 3 uses
+  %i.l = select i1 %i.j, i64 96076792050570581, i64 %i.k ; 2 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp ne i64 %i.l, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 96
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #35 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 7 uses
@@ -611,7 +609,7 @@ _ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE
   %i.dt = phi ptr [ %.pre80, %._ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit_crit_edge ], [ %i.cp, %bb.s ], [ %.pre.i25, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i.peel ], [ %i.dd, %.lr.ph.split.i ], [ %i.dd, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i ], [ %i.ds, %bb.x ], [ %i.dc, %bb.u ], [ %i.cq, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i ] ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 32
   %i.dv = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 24 ; 2 uses
-  %i.dw = icmp ne ptr %.fr13.i, %i.bt             ; 2 uses
+  %i.dw = icmp ne ptr %.fr13.i, %i.bt
   %i.dx = icmp ne ptr %i.dt, %i.bv
   %.not3.i.us18.i.i.i = select i1 %i.dw, i1 true, i1 %i.dx
   br i1 %.not3.i.us18.i.i.i, label %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i, label %_ZNK5boost5beast6detail17buffer_bytes_implclINS0_14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEEEvEEmRKT_.exit.thread
@@ -624,8 +622,6 @@ _ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEE
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 8
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !130
   %i.ee = load ptr, ptr %i.dz, align 8, !tbaa !250
-  %38 = xor i1 %i.dw, true
-  tail call void @llvm.assume(i1 %38)
   %i.ef = load i64, ptr %i.dy, align 8
   br label %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratorneERKS8_.exit.thread.us.i.i.i
 

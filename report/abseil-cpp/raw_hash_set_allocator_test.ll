@@ -202,7 +202,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit47:          ; preds = %bb.z, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i45
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32
-  %.val.i = load i64, ptr %i.i, align 8           ; 5 uses
+  %.val.i = load i64, ptr %i.i, align 8           ; 4 uses
   %i.bs = and i64 %.val.i, 254
   %i.bt = icmp eq i64 %i.bs, 0
   br i1 %i.bt, label %bb.ab, label %bb.ac
@@ -210,8 +210,6 @@ _ZN7testing15AssertionResultD2Ev.exit47:          ; preds = %bb.z, %_ZNKSt14defa
 bb.ab:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit47
   %i.bu = icmp ult i64 %.val.i, 562949953552384
   call void @llvm.assume(i1 %i.bu)
-  %.not.i.i.i = icmp samesign ugt i64 %.val.i, 131071
-  call void @llvm.assume(i1 %.not.i.i.i)
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val3.i.i = load ptr, ptr %i.bv, align 8, !tbaa !67
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi7EEEEE4findIiEENSC_8iteratorERKi.exit

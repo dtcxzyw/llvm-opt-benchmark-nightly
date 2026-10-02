@@ -205,18 +205,10 @@ bb.a:
   br i1 %i.h, label %"_ZN111_$LT$std..collections..hash..set..HashSet$LT$T$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h5afb1b96b88d94adE.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i: ; preds = %bb.a
-  %i.i = mul i64 %.sroa.2.0.copyload.i, 24        ; 2 uses
-  %2 = add i64 %i.i, 24
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.i = mul i64 %.sroa.2.0.copyload.i, 24
   %i.j = and i64 %i.i, -16                        ; 2 uses
-  %4 = add i64 %i.j, 32                           ; 2 uses
-  %i.k = add i64 %.sroa.2.0.copyload.i, 17
-  %i.l = add i64 %i.k, %4                         ; 3 uses
-  %5 = icmp uge i64 %i.l, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.l, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.k = add i64 %.sroa.2.0.copyload.i, 49
+  %i.l = add i64 %i.k, %i.j
   %i.m = sub i64 -32, %i.j
   %i.n = getelementptr inbounds i8, ptr %.sroa.010.0.copyload.i, i64 %i.m
   br label %"_ZN111_$LT$std..collections..hash..set..HashSet$LT$T$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h5afb1b96b88d94adE.exit"
@@ -619,13 +611,8 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.
   call void @llvm.assume(i1 %i.ar)
   %i.as = shl i64 %.sroa.435.0.copyload.i, 2
   %i.at = and i64 %i.as, -16                      ; 2 uses
-  %3 = add i64 %i.at, 16                          ; 2 uses
-  %i.au = add nsw i64 %.sroa.435.0.copyload.i, 17
-  %i.av = add i64 %i.au, %3                       ; 3 uses
-  %4 = icmp uge i64 %i.av, %3
-  call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.av, 9223372036854775793
-  call void @llvm.assume(i1 %5)
+  %i.au = add nsw i64 %.sroa.435.0.copyload.i, 33
+  %i.av = add i64 %i.au, %i.at
   %i.aw = sub nuw nsw i64 -16, %i.at
   %i.ax = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i, i64 %i.aw
   br label %"_ZN106_$LT$hashbrown..map..HashMap$LT$K$C$V$C$S$C$A$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h5aaaf58dbb2edf35E.exit.i"
@@ -1028,13 +1015,8 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.
   call void @llvm.assume(i1 %i.lv)
   %i.lw = shl i64 %.sroa.7.0, 2
   %i.lx = and i64 %i.lw, -16                      ; 2 uses
-  %4 = add i64 %i.lx, 16                          ; 2 uses
-  %i.ly = add nsw i64 %.sroa.7.0, 17
-  %i.lz = add i64 %i.ly, %4                       ; 3 uses
-  %5 = icmp uge i64 %i.lz, %4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.lz, 9223372036854775793
-  call void @llvm.assume(i1 %6)
+  %i.ly = add nsw i64 %.sroa.7.0, 33
+  %i.lz = add i64 %i.ly, %i.lx
   %i.ma = sub nuw nsw i64 -16, %i.lx
   %i.mb = getelementptr inbounds i8, ptr %.sroa.0.0, i64 %i.ma
   br label %bb.ca
@@ -1081,7 +1063,7 @@ bb.cc:                                            ; preds = %bb.co
 .body91:                                          ; preds = %bb.ce, %bb.cf, %bb.cc
   %eh.lpad-body92 = phi { ptr, i32 } [ %i.mn, %bb.cc ], [ %i.my, %bb.cf ], [ %i.my, %bb.ce ] ; 2 uses
   %i.mo = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i, 0
-  %or.cond = or i1 %i.ku, %i.mo
+  %or.cond = select i1 %i.ku, i1 true, i1 %i.mo
   br i1 %or.cond, label %.body78.thread, label %bb.cd
 
 bb.cd:                                            ; preds = %.body91
@@ -1125,7 +1107,7 @@ bb.cf:                                            ; preds = %bb.ce
 
 ._crit_edge:                                      ; preds = %bb.cp, %bb.ca
   %i.nb = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i, 0
-  %or.cond286 = or i1 %i.ku, %i.nb
+  %or.cond286 = select i1 %i.ku, i1 true, i1 %i.nb
   br i1 %or.cond286, label %bb.ch, label %bb.cg
 
 bb.cg:                                            ; preds = %._crit_edge
@@ -1528,13 +1510,8 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.
   call void @llvm.assume(i1 %i.aik)
   %i.ail = shl i64 %.sroa.6.sroa.0.0.copyload.i.i.i, 2
   %i.aim = and i64 %i.ail, -16                    ; 2 uses
-  %1 = add i64 %i.aim, 16                         ; 2 uses
-  %i.ain = add nsw i64 %.sroa.6.sroa.0.0.copyload.i.i.i, 17
-  %i.aio = add i64 %i.ain, %1                     ; 3 uses
-  %2 = icmp uge i64 %i.aio, %1
-  call void @llvm.assume(i1 %2)
-  %3 = icmp ult i64 %i.aio, 9223372036854775793
-  call void @llvm.assume(i1 %3)
+  %i.ain = add nsw i64 %.sroa.6.sroa.0.0.copyload.i.i.i, 33
+  %i.aio = add i64 %i.ain, %i.aim
   %i.aip = sub nuw nsw i64 -16, %i.aim
   %i.aiq = getelementptr inbounds i8, ptr %i.aic, i64 %i.aip
   br label %bb.fo
@@ -1937,18 +1914,10 @@ bb.j:                                             ; preds = %"_ZN83_$LT$hashbrow
   br i1 %i.bj, label %bb.k, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i9
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i9: ; preds = %bb.j
-  %i.bk = mul i64 %.sroa.2.0.copyload, 104        ; 2 uses
-  %4 = add i64 %i.bk, 104
-  %5 = icmp ult i64 %4, -15
-  call void @llvm.assume(i1 %5)
+  %i.bk = mul i64 %.sroa.2.0.copyload, 104
   %i.bl = and i64 %i.bk, -16                      ; 2 uses
-  %6 = add i64 %i.bl, 112                         ; 2 uses
-  %i.bm = add i64 %.sroa.2.0.copyload, 17
-  %i.bn = add i64 %i.bm, %6                       ; 3 uses
-  %7 = icmp uge i64 %i.bn, %6
-  call void @llvm.assume(i1 %7)
-  %8 = icmp ult i64 %i.bn, 9223372036854775793
-  call void @llvm.assume(i1 %8)
+  %i.bm = add i64 %.sroa.2.0.copyload, 129
+  %i.bn = add i64 %i.bm, %i.bl
   %i.bo = sub i64 -112, %i.bl
   %i.bp = getelementptr inbounds i8, ptr %.sroa.0230.0.copyload, i64 %i.bo
   br label %bb.k
@@ -2351,18 +2320,10 @@ bb.at:                                            ; preds = %bb.al, %bb.ak, %"_Z
   br i1 %i.hw, label %bb.au, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i21
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i21: ; preds = %bb.at
-  %i.hx = mul i64 %.sroa.2234.0.copyload, 120     ; 2 uses
-  %9 = add i64 %i.hx, 120
-  %10 = icmp ult i64 %9, -15
-  call void @llvm.assume(i1 %10)
+  %i.hx = mul i64 %.sroa.2234.0.copyload, 120
   %i.hy = and i64 %i.hx, -16                      ; 2 uses
-  %11 = add i64 %i.hy, 128                        ; 2 uses
-  %i.hz = add i64 %.sroa.2234.0.copyload, 17
-  %i.ia = add i64 %i.hz, %11                      ; 3 uses
-  %12 = icmp uge i64 %i.ia, %11
-  call void @llvm.assume(i1 %12)
-  %13 = icmp ult i64 %i.ia, 9223372036854775793
-  call void @llvm.assume(i1 %13)
+  %i.hz = add i64 %.sroa.2234.0.copyload, 145
+  %i.ia = add i64 %i.hz, %i.hy
   %i.ib = sub i64 -128, %i.hy
   %i.ic = getelementptr inbounds i8, ptr %.sroa.0233.0.copyload, i64 %i.ib
   br label %bb.au
@@ -2765,18 +2726,10 @@ bb.ah:                                            ; preds = %.loopexit212.i.i
   br i1 %i.hd, label %bb.ai, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr305drop_in_place$LT$core..iter..adapters..filter..Filter$LT$alloc..vec..into_iter..IntoIter$LT$nls..requests..completion..CompletionItem$GT$$C$nls..requests..completion..remove_myself$LT$alloc..vec..into_iter..IntoIter$LT$nls..requests..completion..CompletionItem$GT$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$$GT$17hd4ffd15a5d6cc9d3E.exit.i.i"
-  %i.he = mul i64 %.sroa.2.0.copyload.i.i, 88     ; 2 uses
-  %4 = add i64 %i.he, 88
-  %5 = icmp ult i64 %4, -15
-  call void @llvm.assume(i1 %5)
+  %i.he = mul i64 %.sroa.2.0.copyload.i.i, 88
   %i.hf = and i64 %i.he, -16                      ; 2 uses
-  %6 = add i64 %i.hf, 96                          ; 2 uses
-  %i.hg = add i64 %.sroa.2.0.copyload.i.i, 17
-  %i.hh = add i64 %i.hg, %6                       ; 3 uses
-  %7 = icmp uge i64 %i.hh, %6
-  call void @llvm.assume(i1 %7)
-  %8 = icmp ult i64 %i.hh, 9223372036854775793
-  call void @llvm.assume(i1 %8)
+  %i.hg = add i64 %.sroa.2.0.copyload.i.i, 113
+  %i.hh = add i64 %i.hg, %i.hf
   %i.hi = sub i64 -96, %i.hf
   %i.hj = getelementptr inbounds i8, ptr %.sroa.0162.0.copyload.i.i, i64 %i.hi
   br label %bb.ai
@@ -3179,18 +3132,11 @@ bb.af:                                            ; preds = %"_ZN103_$LT$alloc..
   br i1 %i.fb, label %"_ZN111_$LT$std..collections..hash..set..HashSet$LT$T$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hc79d06cb80a4f2d5E.exit.i", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr97drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$nickel_lang_parser..position..RawSpan$GT$$GT$17hb6b2792219045163E.exit154"
-  %i.fc = mul i64 %.sroa.4285.0.copyload, 12      ; 2 uses
-  %4 = add i64 %i.fc, 12
-  %5 = icmp ult i64 %4, -15
-  call void @llvm.assume(i1 %5)
+  %i.fc = mul i64 %.sroa.4285.0.copyload, 12
   %i.fd = add i64 %i.fc, 24
-  %i.fe = and i64 %i.fd, -16                      ; 3 uses
+  %i.fe = and i64 %i.fd, -16                      ; 2 uses
   %i.ff = add i64 %.sroa.4285.0.copyload, 17
-  %i.fg = add i64 %i.ff, %i.fe                    ; 3 uses
-  %6 = icmp uge i64 %i.fg, %i.fe
-  call void @llvm.assume(i1 %6)
-  %7 = icmp ult i64 %i.fg, 9223372036854775793
-  call void @llvm.assume(i1 %7)
+  %i.fg = add i64 %i.ff, %i.fe
   %i.fh = sub nsw i64 0, %i.fe
   %i.fi = getelementptr inbounds i8, ptr %.sroa.0284.0.copyload, i64 %i.fh
   br label %"_ZN111_$LT$std..collections..hash..set..HashSet$LT$T$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hc79d06cb80a4f2d5E.exit.i"

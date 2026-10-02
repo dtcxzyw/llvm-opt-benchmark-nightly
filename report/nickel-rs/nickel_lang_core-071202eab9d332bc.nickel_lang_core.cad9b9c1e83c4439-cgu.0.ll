@@ -206,18 +206,10 @@ bb.q:                                             ; preds = %bb.n
   br i1 %i.bq, label %"_ZN111_$LT$std..collections..hash..set..HashSet$LT$T$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hafcfbd5954d64e41E.exit.i.i.i.i", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i.i.i.i: ; preds = %"_ZN136_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$alloc..vec..into_iter..IntoIter$LT$T$GT$$GT$$GT$11spec_extend17hc6da0f21500364bcE.exit.i.i.i"
-  %i.br = mul i64 %.sroa.440.0.copyload.i.i.i, 24 ; 2 uses
-  %2 = add i64 %i.br, 24
-  %3 = icmp ult i64 %2, -15
-  tail call void @llvm.assume(i1 %3)
+  %i.br = mul i64 %.sroa.440.0.copyload.i.i.i, 24
   %i.bs = and i64 %i.br, -16                      ; 2 uses
-  %4 = add i64 %i.bs, 32                          ; 2 uses
-  %i.bt = add i64 %.sroa.440.0.copyload.i.i.i, 17
-  %i.bu = add i64 %i.bt, %4                       ; 3 uses
-  %5 = icmp uge i64 %i.bu, %4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.bu, 9223372036854775793
-  tail call void @llvm.assume(i1 %6)
+  %i.bt = add i64 %.sroa.440.0.copyload.i.i.i, 49
+  %i.bu = add i64 %i.bt, %i.bs
   %i.bv = sub i64 -32, %i.bs
   %i.bw = getelementptr inbounds i8, ptr %.sroa.039.0.copyload.i.i.i, i64 %i.bv
   br label %"_ZN111_$LT$std..collections..hash..set..HashSet$LT$T$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hafcfbd5954d64e41E.exit.i.i.i.i"
@@ -620,13 +612,8 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.
   tail call void @llvm.assume(i1 %i.b)
   %i.c = shl i64 %.sroa.2.0.copyload.i, 2
   %i.d = and i64 %i.c, -16                        ; 2 uses
-  %2 = add i64 %i.d, 16                           ; 2 uses
-  %i.e = add nsw i64 %.sroa.2.0.copyload.i, 17
-  %i.f = add i64 %i.e, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.f, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.f, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.e = add nsw i64 %.sroa.2.0.copyload.i, 33
+  %i.f = add i64 %i.e, %i.d
   %i.g = sub nuw nsw i64 -16, %i.d
   %i.h = getelementptr inbounds i8, ptr %.sroa.010.0.copyload.i, i64 %i.g
   br label %"_ZN111_$LT$std..collections..hash..set..HashSet$LT$T$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17he1bc22b748fb43d8E.exit"
@@ -688,7 +675,7 @@ bb.c:                                             ; preds = %._crit_edge20.i.i.i
   %i.ah = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ai = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i.i, 0
-  %or.cond.i.i.i.i.i = or i1 %i.a, %i.ai
+  %or.cond.i.i.i.i.i = select i1 %i.a, i1 true, i1 %i.ai
   br i1 %or.cond.i.i.i.i.i, label %.body.i, label %.body.sink.split.i
 
 ._crit_edge20.i.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %.lr.ph
@@ -706,7 +693,7 @@ bb.c:                                             ; preds = %._crit_edge20.i.i.i
 
 "_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h0c99652eb0754fdeE.exit.i.i.i.i.i.i._crit_edge": ; preds = %"_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h0c99652eb0754fdeE.exit.i.i.i.i.i.i", %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$7reserve17hcd6537b7d52169a2E.exit.i"
   %i.ap = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i.i, 0
-  %or.cond7.i.i.i.i.i = or i1 %i.a, %i.ap
+  %or.cond7.i.i.i.i.i = select i1 %i.a, i1 true, i1 %i.ap
   br i1 %or.cond7.i.i.i.i.i, label %"_ZN121_$LT$hashbrown..map..HashMap$LT$K$C$V$C$S$C$A$GT$$u20$as$u20$core..iter..traits..collect..Extend$LT$$LP$K$C$V$RP$$GT$$GT$6extend17h0c4e3a8e00996867E.exit", label %bb.d
 
 bb.d:                                             ; preds = %"_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h0c99652eb0754fdeE.exit.i.i.i.i.i.i._crit_edge"
@@ -728,7 +715,7 @@ bb.e:                                             ; preds = %bb.b
   %i.aq = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ar = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i.i, 0
-  %or.cond.i = or i1 %i.a, %i.ar
+  %or.cond.i = select i1 %i.a, i1 true, i1 %i.ar
   br i1 %or.cond.i, label %.body.i, label %.body.sink.split.i
 
 "_ZN121_$LT$hashbrown..map..HashMap$LT$K$C$V$C$S$C$A$GT$$u20$as$u20$core..iter..traits..collect..Extend$LT$$LP$K$C$V$RP$$GT$$GT$6extend17h0c4e3a8e00996867E.exit": ; preds = %"_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h0c99652eb0754fdeE.exit.i.i.i.i.i.i._crit_edge", %bb.d
@@ -1131,18 +1118,10 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit: ; preds = %bb.i
   br i1 %i.cr, label %bb.v, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i: ; preds = %"_ZN4core3ptr134drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$LP$$RF$nickel_lang_parser..identifier..Ident$C$$RF$std..path..PathBuf$RP$$GT$$GT$17h7a6b6717b330b032E.exit134"
-  %i.cs = mul i64 %.sroa.2.0.copyload, 40         ; 2 uses
-  %2 = add i64 %i.cs, 40
-  %3 = icmp ult i64 %2, -15
-  call void @llvm.assume(i1 %3)
+  %i.cs = mul i64 %.sroa.2.0.copyload, 40
   %i.ct = and i64 %i.cs, -16                      ; 2 uses
-  %4 = add i64 %i.ct, 48                          ; 2 uses
-  %i.cu = add i64 %.sroa.2.0.copyload, 17
-  %i.cv = add i64 %i.cu, %4                       ; 3 uses
-  %5 = icmp uge i64 %i.cv, %4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.cv, 9223372036854775793
-  call void @llvm.assume(i1 %6)
+  %i.cu = add i64 %.sroa.2.0.copyload, 65
+  %i.cv = add i64 %i.cu, %i.ct
   %i.cw = sub i64 -48, %i.ct
   %i.cx = getelementptr inbounds i8, ptr %.sroa.0394.0.copyload, i64 %i.cw
   br label %bb.v

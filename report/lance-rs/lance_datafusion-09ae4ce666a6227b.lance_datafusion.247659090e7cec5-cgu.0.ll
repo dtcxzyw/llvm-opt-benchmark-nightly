@@ -205,13 +205,8 @@ _RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i)
   %i.en = shl i64 %.sroa.426.0.copyload.i.i.i.i, 3
   %i.eo = and i64 %i.en, -16                      ; 2 uses
-  %3 = add i64 %i.eo, 16                          ; 2 uses
-  %i.ep = add nsw i64 %.sroa.426.0.copyload.i.i.i.i, 17
-  %i.eq = add i64 %i.ep, %3                       ; 3 uses
-  %4 = icmp uge i64 %i.eq, %3
-  call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.eq, 9223372036854775793
-  call void @llvm.assume(i1 %5)
+  %i.ep = add nsw i64 %.sroa.426.0.copyload.i.i.i.i, 33
+  %i.eq = add i64 %i.ep, %i.eo
   %i.er = sub nuw nsw i64 -16, %i.eo
   %i.es = getelementptr inbounds i8, ptr %.sroa.025.0.copyload.i.i.i.i, i64 %i.er
   br label %_RNvXsE_NtCsfKiFC1ztrmh_9hashbrown3mapINtB5_7HashMapRNtNtCs2bHstFFhpHt_17datafusion_common6column6ColumnuNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateENtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12IntoIterator9into_iterCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i
@@ -265,7 +260,7 @@ bb.aj:                                            ; preds = %bb.al, %._crit_edge
 .body.i.i.i.i.i.i.i.i.i.i.i.i.i:                  ; preds = %bb.dh, %bb.de, %bb.dc, %bb.cs, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsc85D0lJ81Z_16lance_datafusion.exit.i.i.i, %bb.aj
   %eh.lpad-body.i.i.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.wc, %bb.de ], [ %i.wa, %bb.dc ], [ %lpad.phi.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.dh ], [ %i.fe, %bb.aj ], [ %eh.lpad-body65.i.i, %bb.cs ], [ %eh.lpad-body65.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
   %i.ff = icmp eq i64 %.sroa.413.0.i.i.i.i.i.i, 0
-  %or.cond.i.i.i.i.i.i.i.i.i.i.i.i = or i1 %i.em, %i.ff
+  %or.cond.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.em, i1 true, i1 %i.ff
   br i1 %or.cond.i.i.i.i.i.i.i.i.i.i.i.i, label %.body119.i, label %bb.ak
 
 bb.ak:                                            ; preds = %.body.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -668,7 +663,7 @@ _RNCINvXss_NtCsfKiFC1ztrmh_9hashbrown3setINtB8_8IntoIterRNtNtCs2bHstFFhpHt_17dat
 
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i:            ; preds = %_RNCINvXss_NtCsfKiFC1ztrmh_9hashbrown3setINtB8_8IntoIterRNtNtCs2bHstFFhpHt_17datafusion_common6column6ColumnENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1O_8adapters6filter11filter_foldBR_uNCNCINvMs_NtNtCs1Jc0oVeks7E_15datafusion_expr12logical_plan7builderNtB3D_18LogicalPlanBuilder15sort_with_limitNtNtB3H_4expr4SortINtNtCs40k4W9msRzi_5alloc3vec3VecB5f_EE00NCINvNtB2Q_3map8map_foldBR_BS_uNvYBS_NtNtB1Q_5clone5Clone5cloneNCIB6f_BS_TBS_uEuNCINvXs8_NtCs7KEmJBkOrAg_8indexmap3setINtB7D_8IndexSetBS_EINtNtB1M_7collect6ExtendBS_E6extendINtNtB2Q_6cloned6ClonedINtB2O_6FilterINtNtNtNtCsgczF5crJ4sT_3std11collections4hash3set8IntoIterBR_EB3t_EEE0NCINvNvB1I_8for_each4callB7n_NCINvXsb_NtB7F_3mapINtBbk_8IndexMapBS_uEIB8r_B7n_E6extendINtB6h_3MapB8Z_B7u_EE0E0E0E0E0E0Csc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, %_RNvXsE_NtCsfKiFC1ztrmh_9hashbrown3mapINtB5_7HashMapRNtNtCs2bHstFFhpHt_17datafusion_common6column6ColumnuNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateENtNtNtNtCscI6d9CVNmLh_4core4iter6traits7collect12IntoIterator9into_iterCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i.i
   %i.wj = icmp eq i64 %.sroa.413.0.i.i.i.i.i.i, 0
-  %or.cond7.i.i.i.i.i.i.i.i.i.i.i.i = or i1 %i.em, %i.wj
+  %or.cond7.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.em, i1 true, i1 %i.wj
   br i1 %or.cond7.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.dk, label %bb.dj
 
 bb.dj:                                            ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1071,16 +1066,11 @@ bb.ci:                                            ; preds = %bb.ch, %_RNCNvMsB_N
   br i1 %i.km, label %bb.cj, label %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i
 
 _RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i: ; preds = %bb.ci
-  %i.kn = mul i64 %.sroa.4.0.copyload.i218, 112   ; 2 uses
-  %2 = add i64 %i.kn, 112                         ; 2 uses
-  %3 = add i64 %.sroa.4.0.copyload.i218, 17
-  %i.ko = add i64 %3, %2                          ; 3 uses
-  %4 = icmp uge i64 %i.ko, %2
-  call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.ko, 9223372036854775793
-  call void @llvm.assume(i1 %5)
-  %6 = sub i64 -112, %i.kn
-  %i.kp = getelementptr inbounds i8, ptr %.sroa.07.0.copyload.i, i64 %6
+  %i.kn = mul i64 %.sroa.4.0.copyload.i218, -112
+  %2 = mul i64 %.sroa.4.0.copyload.i218, 113
+  %i.ko = add i64 %2, 129
+  %3 = getelementptr i8, ptr %.sroa.07.0.copyload.i, i64 %i.kn
+  %i.kp = getelementptr i8, ptr %3, i64 -112
   br label %bb.cj
 
 bb.cj:                                            ; preds = %_RNvMs1_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i, %bb.ci

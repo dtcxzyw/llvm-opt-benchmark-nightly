@@ -205,16 +205,11 @@ bb.km:                                            ; preds = %bb.kl
   br i1 %i.ze, label %bb.kp, label %_RNvMs1_NtCs2HSpDNxY7OE_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i
 
 _RNvMs1_NtCs2HSpDNxY7OE_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i: ; preds = %bb.km
-  %i.zf = mul i64 %.sroa.5809.0.copyload, 48      ; 2 uses
-  %3 = add i64 %i.zf, 48                          ; 2 uses
-  %4 = add i64 %.sroa.5809.0.copyload, 17
-  %i.zg = add i64 %4, %3                          ; 3 uses
-  %5 = icmp uge i64 %i.zg, %3
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.zg, 9223372036854775793
-  call void @llvm.assume(i1 %6)
-  %7 = sub i64 -48, %i.zf
-  %i.zh = getelementptr inbounds i8, ptr %.sroa.0808.0.copyload, i64 %7
+  %i.zf = mul i64 %.sroa.5809.0.copyload, -48
+  %3 = mul i64 %.sroa.5809.0.copyload, 49
+  %i.zg = add i64 %3, 65
+  %4 = getelementptr i8, ptr %.sroa.0808.0.copyload, i64 %i.zf
+  %i.zh = getelementptr i8, ptr %4, i64 -48
   br label %bb.kp
 
 bb.kn:                                            ; preds = %bb.kl

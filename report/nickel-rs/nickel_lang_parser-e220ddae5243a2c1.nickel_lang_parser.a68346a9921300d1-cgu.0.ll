@@ -205,13 +205,8 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.
   tail call void @llvm.assume(i1 %i.b)
   %i.c = shl i64 %.sroa.2.0.copyload.i, 2
   %i.d = and i64 %i.c, -16                        ; 2 uses
-  %2 = add i64 %i.d, 16                           ; 2 uses
-  %i.e = add nsw i64 %.sroa.2.0.copyload.i, 17
-  %i.f = add i64 %i.e, %2                         ; 3 uses
-  %3 = icmp uge i64 %i.f, %2
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp ult i64 %i.f, 9223372036854775793
-  tail call void @llvm.assume(i1 %4)
+  %i.e = add nsw i64 %.sroa.2.0.copyload.i, 33
+  %i.f = add i64 %i.e, %i.d
   %i.g = sub nuw nsw i64 -16, %i.d
   %i.h = getelementptr inbounds i8, ptr %.sroa.010.0.copyload.i, i64 %i.g
   br label %"_ZN111_$LT$std..collections..hash..set..HashSet$LT$T$C$S$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h711149770dabd2c6E.exit"
@@ -273,7 +268,7 @@ bb.c:                                             ; preds = %._crit_edge20.i.i.i
   %i.ah = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ai = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i.i, 0
-  %or.cond.i.i.i.i.i = or i1 %i.a, %i.ai
+  %or.cond.i.i.i.i.i = select i1 %i.a, i1 true, i1 %i.ai
   br i1 %or.cond.i.i.i.i.i, label %.body.i, label %.body.sink.split.i
 
 ._crit_edge20.i.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %.lr.ph
@@ -291,7 +286,7 @@ bb.c:                                             ; preds = %._crit_edge20.i.i.i
 
 "_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h01fb2ffb8592ad29E.exit.i.i.i.i.i.i._crit_edge": ; preds = %"_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h01fb2ffb8592ad29E.exit.i.i.i.i.i.i", %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$7reserve17hdb621ce873a694beE.exit.i"
   %i.ap = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i.i, 0
-  %or.cond7.i.i.i.i.i = or i1 %i.a, %i.ap
+  %or.cond7.i.i.i.i.i = select i1 %i.a, i1 true, i1 %i.ap
   br i1 %or.cond7.i.i.i.i.i, label %"_ZN121_$LT$hashbrown..map..HashMap$LT$K$C$V$C$S$C$A$GT$$u20$as$u20$core..iter..traits..collect..Extend$LT$$LP$K$C$V$RP$$GT$$GT$6extend17hbe980ddb29f59950E.exit", label %bb.d
 
 bb.d:                                             ; preds = %"_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h01fb2ffb8592ad29E.exit.i.i.i.i.i.i._crit_edge"
@@ -313,7 +308,7 @@ bb.e:                                             ; preds = %bb.b
   %i.aq = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ar = icmp eq i64 %.sroa.5.sroa.0.0.i.i.i.i.i, 0
-  %or.cond.i = or i1 %i.a, %i.ar
+  %or.cond.i = select i1 %i.a, i1 true, i1 %i.ar
   br i1 %or.cond.i, label %.body.i, label %.body.sink.split.i
 
 "_ZN121_$LT$hashbrown..map..HashMap$LT$K$C$V$C$S$C$A$GT$$u20$as$u20$core..iter..traits..collect..Extend$LT$$LP$K$C$V$RP$$GT$$GT$6extend17hbe980ddb29f59950E.exit": ; preds = %"_ZN96_$LT$hashbrown..set..IntoIter$LT$K$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold28_$u7b$$u7b$closure$u7d$$u7d$17h01fb2ffb8592ad29E.exit.i.i.i.i.i.i._crit_edge", %bb.d
@@ -716,8 +711,8 @@ bb.e:                                             ; preds = %"_ZN5alloc3vec16Vec
 bb.f:                                             ; preds = %bb.e
   %i.al = getelementptr inbounds nuw [2 x i8], ptr @4318, i64 %i.aj
   %i.am = load i16, ptr %i.al, align 2, !noalias !1093, !noundef !19 ; 3 uses
-  %or.cond.not.i.i.i.i.i.i.i.i = icmp slt i16 %i.am, 0
-  br i1 %or.cond.not.i.i.i.i.i.i.i.i, label %bb.h, label %.loopexit.i.i.i.i.i.i.i.i
+  %or.cond.i.i.i.i.i.i.i.i = icmp sgt i16 %i.am, -1
+  br i1 %or.cond.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %bb.h
 
 .loopexit.i.i.i.i.i.i.i.i:                        ; preds = %bb.f, %bb.j
   %.val.i.i.i.i.i.i.i.i = load i64, ptr %i.b, align 8, !noalias !1093 ; 2 uses
@@ -989,8 +984,8 @@ bb.e:                                             ; preds = %"_ZN5alloc3vec16Vec
 bb.f:                                             ; preds = %bb.e
   %i.al = getelementptr inbounds nuw [2 x i8], ptr @10099, i64 %i.aj
   %i.am = load i16, ptr %i.al, align 2, !noalias !1155, !noundef !19 ; 3 uses
-  %or.cond.not.i.i.i.i.i.i.i.i = icmp slt i16 %i.am, 0
-  br i1 %or.cond.not.i.i.i.i.i.i.i.i, label %bb.h, label %.loopexit.i.i.i.i.i.i.i.i
+  %or.cond.i.i.i.i.i.i.i.i = icmp sgt i16 %i.am, -1
+  br i1 %or.cond.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %bb.h
 
 .loopexit.i.i.i.i.i.i.i.i:                        ; preds = %bb.f, %bb.j
   %.val.i.i.i.i.i.i.i.i = load i64, ptr %i.b, align 8, !noalias !1155 ; 2 uses
@@ -1262,8 +1257,8 @@ bb.e:                                             ; preds = %"_ZN5alloc3vec16Vec
 bb.f:                                             ; preds = %bb.e
   %i.al = getelementptr inbounds nuw [2 x i8], ptr @2389, i64 %i.aj
   %i.am = load i16, ptr %i.al, align 2, !noalias !1217, !noundef !19 ; 3 uses
-  %or.cond.not.i.i.i.i.i.i.i.i = icmp slt i16 %i.am, 0
-  br i1 %or.cond.not.i.i.i.i.i.i.i.i, label %bb.h, label %.loopexit.i.i.i.i.i.i.i.i
+  %or.cond.i.i.i.i.i.i.i.i = icmp sgt i16 %i.am, -1
+  br i1 %or.cond.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %bb.h
 
 .loopexit.i.i.i.i.i.i.i.i:                        ; preds = %bb.f, %bb.j
   %.val.i.i.i.i.i.i.i.i = load i64, ptr %i.b, align 8, !noalias !1217 ; 2 uses
@@ -1535,8 +1530,8 @@ bb.e:                                             ; preds = %"_ZN5alloc3vec16Vec
 bb.f:                                             ; preds = %bb.e
   %i.al = getelementptr inbounds nuw [2 x i8], ptr @6245, i64 %i.aj
   %i.am = load i16, ptr %i.al, align 2, !noalias !1279, !noundef !19 ; 3 uses
-  %or.cond.not.i.i.i.i.i.i.i.i = icmp slt i16 %i.am, 0
-  br i1 %or.cond.not.i.i.i.i.i.i.i.i, label %bb.h, label %.loopexit.i.i.i.i.i.i.i.i
+  %or.cond.i.i.i.i.i.i.i.i = icmp sgt i16 %i.am, -1
+  br i1 %or.cond.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %bb.h
 
 .loopexit.i.i.i.i.i.i.i.i:                        ; preds = %bb.f, %bb.j
   %.val.i.i.i.i.i.i.i.i = load i64, ptr %i.b, align 8, !noalias !1279 ; 2 uses
@@ -1808,8 +1803,8 @@ bb.e:                                             ; preds = %"_ZN5alloc3vec16Vec
 bb.f:                                             ; preds = %bb.e
   %i.al = getelementptr inbounds nuw [2 x i8], ptr @8172, i64 %i.aj
   %i.am = load i16, ptr %i.al, align 2, !noalias !1341, !noundef !19 ; 3 uses
-  %or.cond.not.i.i.i.i.i.i.i.i = icmp slt i16 %i.am, 0
-  br i1 %or.cond.not.i.i.i.i.i.i.i.i, label %bb.h, label %.loopexit.i.i.i.i.i.i.i.i
+  %or.cond.i.i.i.i.i.i.i.i = icmp sgt i16 %i.am, -1
+  br i1 %or.cond.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %bb.h
 
 .loopexit.i.i.i.i.i.i.i.i:                        ; preds = %bb.f, %bb.j
   %.val.i.i.i.i.i.i.i.i = load i64, ptr %i.b, align 8, !noalias !1341 ; 2 uses

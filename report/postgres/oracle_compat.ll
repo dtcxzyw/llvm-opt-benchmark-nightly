@@ -204,8 +204,8 @@ declare i32 @pg_encoding_max_length(i32 noundef) local_unnamed_addr #1
 define dso_local noundef i64 @chr(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load i64, ptr %i.a, align 8              ; 12 uses
-  %i.c = trunc i64 %i.b to i32                    ; 11 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 11 uses
+  %i.c = trunc i64 %i.b to i32                    ; 12 uses
   %i.d = tail call i32 @GetDatabaseEncoding() #6  ; 2 uses
   %i.e = icmp slt i32 %i.c, 0
   br i1 %i.e, label %bb.b, label %bb.c
@@ -246,19 +246,18 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %1 = icmp samesign ugt i32 %i.c, 65535
+  %1 = icmp samesign ult i32 %i.c, 65536
   %i.s = icmp samesign ugt i32 %i.c, 2047
   %.55 = select i1 %i.s, i32 3, i32 2
-  %.0 = select i1 %1, i32 4, i32 %.55             ; 2 uses
+  %2 = icmp samesign ult i32 %i.c, 2048
+  %.0 = select i1 %1, i32 %.55, i32 4             ; 2 uses
   %i.t = add nuw nsw i32 %.0, 4                   ; 2 uses
   %i.u = zext nneg i32 %i.t to i64
   %i.v = tail call ptr @palloc(i64 noundef %i.u) #6 ; 6 uses
   %i.w = shl nuw nsw i32 %i.t, 2
   store i32 %i.w, ptr %i.v, align 4
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 4 ; 4 uses
-  %2 = and i64 %i.b, 2095104
-  %.not = icmp eq i64 %2, 0
-  br i1 %.not, label %bb.i, label %bb.j
+  br i1 %2, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.y = lshr i64 %i.b, 6
@@ -273,9 +272,8 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.m
 
 bb.j:                                             ; preds = %bb.h
-  %3 = add nsw i32 %i.c, -2048
-  %4 = icmp ult i32 %3, 63488
-  br i1 %4, label %bb.k, label %bb.l
+  %3 = icmp slt i32 %i.c, 65536
+  br i1 %3, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.af = getelementptr inbounds nuw i8, ptr %i.v, i64 6

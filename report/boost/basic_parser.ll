@@ -204,12 +204,11 @@ _ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_buffe
   br label %bb.f
 
 bb.b:                                             ; preds = %_ZN5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorppEv.exit.i
-  %i.s = icmp eq ptr %1, %.sroa.3.sroa.2.0.copyload.fr.i.i ; 2 uses
+  %i.s = icmp eq ptr %1, %.sroa.3.sroa.2.0.copyload.fr.i.i
   %.not3.i.us16.i.i.i.not = select i1 %i.s, i1 %i.i, i1 false
   br i1 %.not3.i.us16.i.i.i.not, label %_ZNK5boost5beast6detail17buffer_bytes_implclINS0_19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEEEvEEmRKT_.exit.thread, label %_ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS7_.exit.thread.us.lr.ph.i.i.i
 
 _ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS7_.exit.thread.us.lr.ph.i.i.i: ; preds = %bb.b
-  tail call void @llvm.assume(i1 %i.s)
   %i.t = load i64, ptr %i.k, align 8
   %.sroa.4.0..sroa_idx.i.i.us.i.peel.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.sroa.4.0.copyload.i.i.us.i.peel.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.us.i.peel.i.i, align 8, !tbaa !39
@@ -612,12 +611,11 @@ _ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_buffe
   br label %bb.f
 
 bb.b:                                             ; preds = %_ZN5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorppEv.exit.i
-  %i.s = icmp eq ptr %1, %.sroa.3.sroa.2.0.copyload.fr.i.i ; 2 uses
+  %i.s = icmp eq ptr %1, %.sroa.3.sroa.2.0.copyload.fr.i.i
   %.not3.i.us16.i.i.i.not = select i1 %i.s, i1 %i.i, i1 false
   br i1 %.not3.i.us16.i.i.i.not, label %_ZNK5boost5beast6detail17buffer_bytes_implclINS0_19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEEEvEEmRKT_.exit.thread, label %_ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS7_.exit.thread.us.lr.ph.i.i.i
 
 _ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS7_.exit.thread.us.lr.ph.i.i.i: ; preds = %bb.b
-  tail call void @llvm.assume(i1 %i.s)
   %i.t = load i64, ptr %i.k, align 8
   %.sroa.4.0..sroa_idx.i.i.us.i.peel.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.sroa.4.0.copyload.i.i.us.i.peel.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.us.i.peel.i.i, align 8, !tbaa !39

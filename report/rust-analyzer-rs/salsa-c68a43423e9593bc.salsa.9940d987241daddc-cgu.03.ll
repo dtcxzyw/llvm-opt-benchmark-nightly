@@ -202,9 +202,7 @@ _RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsd9Lm8bEdjjY_5salsa3key16Dat
   %i.ce = load i64, ptr %i.bb, align 8, !alias.scope !160, !noalias !161, !noundef !5
   %i.cf = icmp ugt i64 %i.ce, 4
   %.sink9.i12.i.i = select i1 %i.cf, ptr %i.bf, ptr %i.bb ; 2 uses
-  %i.cg = load i64, ptr %.sink9.i12.i.i, align 8, !alias.scope !162, !noalias !159, !noundef !5 ; 2 uses
-  %6 = icmp ne i64 %i.cg, 0
-  call void @llvm.assume(i1 %6)
+  %i.cg = load i64, ptr %.sink9.i12.i.i, align 8, !alias.scope !162, !noalias !159, !noundef !5
   %i.ch = add i64 %i.cg, -1
   store i64 %i.ch, ptr %.sink9.i12.i.i, align 8, !alias.scope !162, !noalias !159
   br label %_RNvMs0_NtNtCsd9Lm8bEdjjY_5salsa7runtime16dependency_graphINtB5_8SmallSetNtNtB9_3key16DatabaseKeyIndexKj4_E6removeB9_.exit
@@ -350,9 +348,7 @@ _RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsd9Lm8bEdjjY_5salsa3key16Dat
   %i.dx = load i64, ptr %i.cz, align 8, !alias.scope !168, !noalias !169, !noundef !5
   %i.dy = icmp ugt i64 %i.dx, 4
   %.sink9.i12.i.i95 = select i1 %i.dy, ptr %i.dd, ptr %i.cz ; 2 uses
-  %i.dz = load i64, ptr %.sink9.i12.i.i95, align 8, !alias.scope !170, !noalias !167, !noundef !5 ; 2 uses
-  %7 = icmp ne i64 %i.dz, 0
-  call void @llvm.assume(i1 %7)
+  %i.dz = load i64, ptr %.sink9.i12.i.i95, align 8, !alias.scope !170, !noalias !167, !noundef !5
   %i.ea = add i64 %i.dz, -1
   store i64 %i.ea, ptr %.sink9.i12.i.i95, align 8, !alias.scope !170, !noalias !167
   br label %_RNvMs0_NtNtCsd9Lm8bEdjjY_5salsa7runtime16dependency_graphINtB5_8SmallSetNtNtB9_3key16DatabaseKeyIndexKj4_E6removeB9_.exit98
@@ -755,9 +751,7 @@ _RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsd9Lm8bEdjjY_5salsa3key16Dat
   %i.al = load i64, ptr %i.i, align 8, !alias.scope !229, !noalias !230, !noundef !5
   %i.am = icmp ugt i64 %i.al, 4
   %.sink9.i12.i.i = select i1 %i.am, ptr %i.m, ptr %i.i ; 2 uses
-  %i.an = load i64, ptr %.sink9.i12.i.i, align 8, !alias.scope !231, !noalias !228, !noundef !5 ; 2 uses
-  %2 = icmp ne i64 %i.an, 0
-  call void @llvm.assume(i1 %2)
+  %i.an = load i64, ptr %.sink9.i12.i.i, align 8, !alias.scope !231, !noalias !228, !noundef !5
   %i.ao = add i64 %i.an, -1
   store i64 %i.ao, ptr %.sink9.i12.i.i, align 8, !alias.scope !231, !noalias !228
   br label %_RNvMs0_NtNtCsd9Lm8bEdjjY_5salsa7runtime16dependency_graphINtB5_8SmallSetNtNtB9_3key16DatabaseKeyIndexKj4_E6removeB9_.exit
@@ -1160,9 +1154,7 @@ _RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsd9Lm8bEdjjY_5salsa3key16Dat
   %i.am = load i64, ptr %i.j, align 8, !alias.scope !326, !noalias !327, !noundef !5
   %i.an = icmp ugt i64 %i.am, 4
   %.sink9.i12.i.i = select i1 %i.an, ptr %i.n, ptr %i.j ; 2 uses
-  %i.ao = load i64, ptr %.sink9.i12.i.i, align 8, !alias.scope !328, !noalias !325, !noundef !5 ; 2 uses
-  %3 = icmp ne i64 %i.ao, 0
-  call void @llvm.assume(i1 %3)
+  %i.ao = load i64, ptr %.sink9.i12.i.i, align 8, !alias.scope !328, !noalias !325, !noundef !5
   %i.ap = add i64 %i.ao, -1
   store i64 %i.ap, ptr %.sink9.i12.i.i, align 8, !alias.scope !328, !noalias !325
   br label %_RNvMs0_NtNtCsd9Lm8bEdjjY_5salsa7runtime16dependency_graphINtB5_8SmallSetNtNtB9_3key16DatabaseKeyIndexKj4_E6removeB9_.exit

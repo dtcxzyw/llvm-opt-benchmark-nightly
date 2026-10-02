@@ -205,9 +205,7 @@ _ZNKSt6vectorIN9Stockfish6Search8RootMoveESaIS2_EE12_M_check_lenEmPKc.exit.i: ; 
   %i.eg = add nsw i64 %.sroa.speculated.i.i, %i.ef ; 2 uses
   %i.eh = icmp ult i64 %i.eg, %i.ef
   %i.ei = call i64 @llvm.umin.i64(i64 %i.eg, i64 128102389400760775)
-  %i.ej = select i1 %i.eh, i64 128102389400760775, i64 %i.ei ; 3 uses
-  %.not.i.i150 = icmp ne i64 %i.ej, 0
-  call void @llvm.assume(i1 %.not.i.i150)
+  %i.ej = select i1 %i.eh, i64 128102389400760775, i64 %i.ei ; 2 uses
   %i.ek = mul nuw nsw i64 %i.ej, 72
   %i.el = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ek) #36 ; 5 uses
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.ed ; 10 uses
@@ -537,9 +535,7 @@ _ZNKSt6vectorIN9Stockfish6Search8RootMoveESaIS2_EE12_M_check_lenEmPKc.exit.i154:
   %i.iz = add nsw i64 %.sroa.speculated.i.i155, %i.iy ; 2 uses
   %i.ja = icmp ult i64 %i.iz, %i.iy
   %i.jb = call i64 @llvm.umin.i64(i64 %i.iz, i64 128102389400760775)
-  %i.jc = select i1 %i.ja, i64 128102389400760775, i64 %i.jb ; 3 uses
-  %.not.i.i156 = icmp ne i64 %i.jc, 0
-  call void @llvm.assume(i1 %.not.i.i156)
+  %i.jc = select i1 %i.ja, i64 128102389400760775, i64 %i.jb ; 2 uses
   %i.jd = mul nuw nsw i64 %i.jc, 72
   %i.je = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.jd) #36 ; 5 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.je, i64 %i.iw ; 10 uses
@@ -942,11 +938,9 @@ _ZNKSt6vectorIN9Stockfish8L3DomainESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 164703072086692425)
-  %i.l = select i1 %i.j, i64 164703072086692425, i64 %i.k ; 3 uses
+  %i.l = select i1 %i.j, i64 164703072086692425, i64 %i.k ; 2 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp ne i64 %i.l, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 56
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #36 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 7 uses
@@ -1349,11 +1343,9 @@ _ZNKSt6vectorIN9Stockfish6Search8RootMoveESaIS2_EE12_M_check_lenEmPKc.exit: ; pr
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 128102389400760775)
-  %i.l = select i1 %i.j, i64 128102389400760775, i64 %i.k ; 3 uses
+  %i.l = select i1 %i.j, i64 128102389400760775, i64 %i.k ; 2 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp ne i64 %i.l, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 72
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #36 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 10 uses

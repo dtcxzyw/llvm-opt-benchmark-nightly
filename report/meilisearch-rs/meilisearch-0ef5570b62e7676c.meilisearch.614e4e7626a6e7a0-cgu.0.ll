@@ -205,15 +205,13 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8 ; 4 uses
   %.sroa.537.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  %.sroa.537.0.copyload = load i64, ptr %.sroa.537.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.537.0.copyload = load i64, ptr %.sroa.537.0..sroa_idx, align 8 ; 2 uses
   %i.bl = icmp eq i64 %.sroa.537.0.copyload, 0
   br i1 %i.bl, label %bb.s, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i: ; preds = %bb.n
   %.sroa.436.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %.sroa.436.0.copyload = load ptr, ptr %.sroa.436.0..sroa_idx, align 8, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i = icmp slt i64 %.sroa.537.0.copyload, 2305843009213693950
-  call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i)
   %i.bm = shl i64 %.sroa.537.0.copyload, 3
   %.not232 = and i64 %i.bm, -16
   %i.bn = xor i64 %.not232, -16
@@ -616,14 +614,12 @@ bb.bg:                                            ; preds = %bb.bh, %bb.ak
   call void @llvm.experimental.noalias.scope.decl(metadata !9616)
   call void @llvm.experimental.noalias.scope.decl(metadata !9617)
   %i.fn = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
-  %.val1.i.i.i98 = load i64, ptr %i.fn, align 8, !alias.scope !9618, !noundef !45 ; 3 uses
+  %.val1.i.i.i98 = load i64, ptr %i.fn, align 8, !alias.scope !9618, !noundef !45 ; 2 uses
   %i.fo = icmp eq i64 %.val1.i.i.i98, 0
   br i1 %i.fo, label %"_ZN4core3ptr100drop_in_place$LT$indexmap..map..IndexMap$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17h0858f1ff0f5a2af9E.exit.i102", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i99
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i99: ; preds = %bb.bg
   %.val.i.i.i100 = load ptr, ptr %.sroa.6.0..sroa_idx.i.i, align 8, !alias.scope !9618, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i101 = icmp slt i64 %.val1.i.i.i98, 2305843009213693950
-  call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i101), !noalias !9617
   %i.fp = shl i64 %.val1.i.i.i98, 3
   %.not19 = and i64 %i.fp, -16
   %i.fq = xor i64 %.not19, -16
@@ -963,14 +959,12 @@ bb.cf:                                            ; preds = %bb.at
   call void @llvm.experimental.noalias.scope.decl(metadata !9636)
   call void @llvm.experimental.noalias.scope.decl(metadata !9637)
   %i.hy = getelementptr inbounds nuw i8, ptr %i.am, i64 32
-  %.val1.i.i.i = load i64, ptr %i.hy, align 8, !alias.scope !9638, !noundef !45 ; 3 uses
+  %.val1.i.i.i = load i64, ptr %i.hy, align 8, !alias.scope !9638, !noundef !45 ; 2 uses
   %i.hz = icmp eq i64 %.val1.i.i.i, 0
   br i1 %i.hz, label %"_ZN4core3ptr100drop_in_place$LT$indexmap..map..IndexMap$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17h0858f1ff0f5a2af9E.exit.i", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17haa6b05cad5d2dbeeE.exit131.i"
   %.val.i.i.i96 = load ptr, ptr %.sroa.6.0..sroa_idx.i110.i, align 8, !alias.scope !9638, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i, 2305843009213693950
-  call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i), !noalias !9637
   %i.ia = shl i64 %.val1.i.i.i, 3
   %.not = and i64 %i.ia, -16
   %i.ib = xor i64 %.not, -16
@@ -1373,18 +1367,10 @@ bb.fu:                                            ; preds = %.noexc186.i, %._ZN4
   br i1 %i.ph, label %bb.fw, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i.i.i.i.i: ; preds = %bb.fu
-  %i.pi = mul i64 %.sroa.2.0.copyload.i, 104      ; 2 uses
-  %2 = add i64 %i.pi, 104
-  %3 = icmp ult i64 %2, -15
-  call void @llvm.assume(i1 %3)
+  %i.pi = mul i64 %.sroa.2.0.copyload.i, 104
   %i.pj = and i64 %i.pi, -16                      ; 2 uses
-  %4 = add i64 %i.pj, 112                         ; 2 uses
-  %i.pk = add i64 %.sroa.2.0.copyload.i, 17
-  %i.pl = add i64 %i.pk, %4                       ; 3 uses
-  %5 = icmp uge i64 %i.pl, %4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp ult i64 %i.pl, 9223372036854775793
-  call void @llvm.assume(i1 %6)
+  %i.pk = add i64 %.sroa.2.0.copyload.i, 129
+  %i.pl = add i64 %i.pk, %i.pj
   %i.pm = sub i64 -112, %i.pj
   %i.pn = getelementptr inbounds i8, ptr %.sroa.0305.0.copyload.i, i64 %i.pm
   br label %bb.fw
@@ -1787,15 +1773,13 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21856)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21857)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.val1.i.i.i = load i64, ptr %i.c, align 8, !alias.scope !21858, !noundef !45 ; 3 uses
+  %.val1.i.i.i = load i64, ptr %i.c, align 8, !alias.scope !21858, !noundef !45 ; 2 uses
   %i.d = icmp eq i64 %.val1.i.i.i, 0
   br i1 %i.d, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i: ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val.i.i.i = load ptr, ptr %i.e, align 8, !alias.scope !21858, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i), !noalias !21857
   %i.f = shl i64 %.val1.i.i.i, 3
   %.not = and i64 %i.f, -16
   %i.g = xor i64 %.not, -16
@@ -2198,15 +2182,13 @@ bb.e:                                             ; preds = %"_ZN4core3ptr55drop
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23768)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23769)
   %i.l = getelementptr inbounds nuw i8, ptr %.0.val, i64 64
-  %.val1.i.i.i.i.i = load i64, ptr %i.l, align 8, !alias.scope !23770, !noundef !45 ; 3 uses
+  %.val1.i.i.i.i.i = load i64, ptr %i.l, align 8, !alias.scope !23770, !noundef !45 ; 2 uses
   %i.m = icmp eq i64 %.val1.i.i.i.i.i, 0
   br i1 %i.m, label %"_ZN4core3ptr100drop_in_place$LT$indexmap..map..IndexMap$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17h0858f1ff0f5a2af9E.exit.i.i.i", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr55drop_in_place$LT$meilisearch..routes..indexes..Size$GT$17h141452c7e57ce00cE.exit26.i.i"
   %i.n = getelementptr inbounds nuw i8, ptr %.0.val, i64 56
   %.val.i.i.i.i.i = load ptr, ptr %i.n, align 8, !alias.scope !23770, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i.i.i), !noalias !23769
   %i.o = shl i64 %.val1.i.i.i.i.i, 3
   %.not = and i64 %i.o, -16
   %i.p = xor i64 %.not, -16
@@ -2609,15 +2591,13 @@ bb.s:                                             ; preds = %"_ZN4core3ptr69drop
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25266)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25267)
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %.val1.i.i.i.i.i3 = load i64, ptr %i.ak, align 8, !alias.scope !25268, !noundef !45 ; 3 uses
+  %.val1.i.i.i.i.i3 = load i64, ptr %i.ak, align 8, !alias.scope !25268, !noundef !45 ; 2 uses
   %i.al = icmp eq i64 %.val1.i.i.i.i.i3, 0
   br i1 %i.al, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit.i.i", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i.i: ; preds = %bb.s
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 176
   %.val.i.i.i.i.i4 = load ptr, ptr %i.am, align 8, !alias.scope !25268, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i.i.i3, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i.i.i), !noalias !25267
   %i.an = shl i64 %.val1.i.i.i.i.i3, 3
   %.not = and i64 %i.an, -16
   %i.ao = xor i64 %.not, -16
@@ -2652,15 +2632,13 @@ bb.v:                                             ; preds = %"_ZN4core3ptr125dro
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25272)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25273)
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %.val1.i.i.i.i15.i = load i64, ptr %i.av, align 8, !alias.scope !25274, !noundef !45 ; 3 uses
+  %.val1.i.i.i.i15.i = load i64, ptr %i.av, align 8, !alias.scope !25274, !noundef !45 ; 2 uses
   %i.aw = icmp eq i64 %.val1.i.i.i.i15.i, 0
   br i1 %i.aw, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit.i19.i", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i16.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i16.i: ; preds = %bb.v
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 248
   %.val.i.i.i.i17.i = load ptr, ptr %i.ax, align 8, !alias.scope !25274, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i.i18.i = icmp slt i64 %.val1.i.i.i.i15.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i.i18.i), !noalias !25273
   %i.ay = shl i64 %.val1.i.i.i.i15.i, 3
   %.not24 = and i64 %i.ay, -16
   %i.az = xor i64 %.not24, -16
@@ -3063,15 +3041,13 @@ bb.n:                                             ; preds = %bb.m
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25373)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25374)
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.val1.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !25375, !noundef !45 ; 3 uses
+  %.val1.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !25375, !noundef !45 ; 2 uses
   %i.ai = icmp eq i64 %.val1.i.i.i, 0
   br i1 %i.ai, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr73drop_in_place$LT$core..option..Option$LT$serde_json..value..Value$GT$$GT$17h437a88b599b93c96E.exit16"
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.val.i.i.i = load ptr, ptr %i.aj, align 8, !alias.scope !25375, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i), !noalias !25374
   %i.ak = shl i64 %.val1.i.i.i, 3
   %.not = and i64 %i.ak, -16
   %i.al = xor i64 %.not, -16
@@ -3474,15 +3450,13 @@ bb.k:                                             ; preds = %bb.j
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25498)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25499)
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.val1.i.i.i = load i64, ptr %i.ac, align 8, !alias.scope !25500, !noundef !45 ; 3 uses
+  %.val1.i.i.i = load i64, ptr %i.ac, align 8, !alias.scope !25500, !noundef !45 ; 2 uses
   %i.ad = icmp eq i64 %.val1.i.i.i, 0
   br i1 %i.ad, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr73drop_in_place$LT$core..option..Option$LT$serde_json..value..Value$GT$$GT$17h437a88b599b93c96E.exit14"
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.val.i.i.i = load ptr, ptr %i.ae, align 8, !alias.scope !25500, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i), !noalias !25499
   %i.af = shl i64 %.val1.i.i.i, 3
   %.not = and i64 %i.af, -16
   %i.ag = xor i64 %.not, -16
@@ -3636,15 +3610,13 @@ bb.n:                                             ; preds = %bb.m
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25539)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25540)
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.val1.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !25541, !noundef !45 ; 3 uses
+  %.val1.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !25541, !noundef !45 ; 2 uses
   %i.ai = icmp eq i64 %.val1.i.i.i, 0
   br i1 %i.ai, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr73drop_in_place$LT$core..option..Option$LT$serde_json..value..Value$GT$$GT$17h437a88b599b93c96E.exit16"
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.val.i.i.i = load ptr, ptr %i.aj, align 8, !alias.scope !25541, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i), !noalias !25540
   %i.ak = shl i64 %.val1.i.i.i, 3
   %.not = and i64 %i.ak, -16
   %i.al = xor i64 %.not, -16
@@ -3798,15 +3770,13 @@ bb.n:                                             ; preds = %bb.m
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25580)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25581)
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.val1.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !25582, !noundef !45 ; 3 uses
+  %.val1.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !25582, !noundef !45 ; 2 uses
   %i.ai = icmp eq i64 %.val1.i.i.i, 0
   br i1 %i.ai, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr73drop_in_place$LT$core..option..Option$LT$serde_json..value..Value$GT$$GT$17h437a88b599b93c96E.exit16"
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.val.i.i.i = load ptr, ptr %i.aj, align 8, !alias.scope !25582, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i), !noalias !25581
   %i.ak = shl i64 %.val1.i.i.i, 3
   %.not = and i64 %i.ak, -16
   %i.al = xor i64 %.not, -16
@@ -4209,15 +4179,13 @@ bb.n:                                             ; preds = %bb.m
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25639)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25640)
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.val1.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !25641, !noundef !45 ; 3 uses
+  %.val1.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !25641, !noundef !45 ; 2 uses
   %i.ai = icmp eq i64 %.val1.i.i.i, 0
   br i1 %i.ai, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr73drop_in_place$LT$core..option..Option$LT$serde_json..value..Value$GT$$GT$17h437a88b599b93c96E.exit16"
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.val.i.i.i = load ptr, ptr %i.aj, align 8, !alias.scope !25641, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i), !noalias !25640
   %i.ak = shl i64 %.val1.i.i.i, 3
   %.not = and i64 %i.ak, -16
   %i.al = xor i64 %.not, -16
@@ -4277,15 +4245,13 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25654)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25655)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.val1.i.i = load i64, ptr %i.e, align 8, !alias.scope !25656, !noundef !45 ; 3 uses
+  %.val1.i.i = load i64, ptr %i.e, align 8, !alias.scope !25656, !noundef !45 ; 2 uses
   %i.f = icmp eq i64 %.val1.i.i, 0
   br i1 %i.f, label %"_ZN4core3ptr100drop_in_place$LT$indexmap..map..IndexMap$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17h0858f1ff0f5a2af9E.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i: ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val.i.i = load ptr, ptr %i.g, align 8, !alias.scope !25656, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i = icmp slt i64 %.val1.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i), !noalias !25656
   %i.h = shl i64 %.val1.i.i, 3
   %.not = and i64 %i.h, -16
   %i.i = xor i64 %.not, -16
@@ -4688,15 +4654,13 @@ bb.j:                                             ; preds = %bb.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26041)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26042)
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %.val1.i.i.i.i = load i64, ptr %i.s, align 8, !alias.scope !26043, !noundef !45 ; 3 uses
+  %.val1.i.i.i.i = load i64, ptr %i.s, align 8, !alias.scope !26043, !noundef !45 ; 2 uses
   %i.t = icmp eq i64 %.val1.i.i.i.i, 0
   br i1 %i.t, label %"_ZN4core3ptr44drop_in_place$LT$segment..message..Batch$GT$17hc01538795f8af0f0E.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr73drop_in_place$LT$core..option..Option$LT$serde_json..value..Value$GT$$GT$17h437a88b599b93c96E.exit9.i"
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val.i.i.i.i = load ptr, ptr %i.u, align 8, !alias.scope !26043, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i.i), !noalias !26042
   %i.v = shl i64 %.val1.i.i.i.i, 3
   %.not = and i64 %i.v, -16
   %i.w = xor i64 %.not, -16
@@ -5099,15 +5063,13 @@ bb.m:                                             ; preds = %bb.l
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26349)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26350)
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.val1.i.i.i = load i64, ptr %i.ae, align 8, !alias.scope !26351, !noundef !45 ; 3 uses
+  %.val1.i.i.i = load i64, ptr %i.ae, align 8, !alias.scope !26351, !noundef !45 ; 2 uses
   %i.af = icmp eq i64 %.val1.i.i.i, 0
   br i1 %i.af, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr73drop_in_place$LT$core..option..Option$LT$serde_json..value..Value$GT$$GT$17h437a88b599b93c96E.exit11"
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val.i.i.i = load ptr, ptr %i.ag, align 8, !alias.scope !26351, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i), !noalias !26350
   %i.ah = shl i64 %.val1.i.i.i, 3
   %.not = and i64 %i.ah, -16
   %i.ai = xor i64 %.not, -16
@@ -5510,15 +5472,13 @@ bb.y:                                             ; preds = %"_ZN4core3ptr45drop
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26449)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26450)
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %.val1.i.i.i.i = load i64, ptr %i.cv, align 8, !alias.scope !26451, !noundef !45 ; 3 uses
+  %.val1.i.i.i.i = load i64, ptr %i.cv, align 8, !alias.scope !26451, !noundef !45 ; 2 uses
   %i.cw = icmp eq i64 %.val1.i.i.i.i, 0
   br i1 %i.cw, label %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17he1345de9ed5d2aafE.exit.i", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i.i.i: ; preds = %bb.y
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 80
   %.val.i.i.i.i = load ptr, ptr %i.cx, align 8, !alias.scope !26451, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i.i.i = icmp slt i64 %.val1.i.i.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i.i.i), !noalias !26450
   %i.cy = shl i64 %.val1.i.i.i.i, 3
   %.not = and i64 %i.cy, -16
   %i.cz = xor i64 %.not, -16
@@ -5921,15 +5881,13 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30936)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30937)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.val1.i.i = load i64, ptr %i.a, align 8, !alias.scope !30938, !noundef !45 ; 3 uses
+  %.val1.i.i = load i64, ptr %i.a, align 8, !alias.scope !30938, !noundef !45 ; 2 uses
   %i.b = icmp eq i64 %.val1.i.i, 0
   br i1 %i.b, label %"_ZN4core3ptr100drop_in_place$LT$indexmap..map..IndexMap$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17h0858f1ff0f5a2af9E.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i.i: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val.i.i = load ptr, ptr %i.c, align 8, !alias.scope !30938, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i.i = icmp slt i64 %.val1.i.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i.i), !noalias !30937
   %i.d = shl i64 %.val1.i.i, 3
   %.not = and i64 %i.d, -16
   %i.e = xor i64 %.not, -16
@@ -6224,15 +6182,13 @@ bb.aa:                                            ; preds = %bb.q, %bb.m, %bb.i,
 define internal fastcc void @"_ZN4core3ptr98drop_in_place$LT$indexmap..inner..Core$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17h00ef09d73cf7b48fE"(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.val1 = load i64, ptr %i.a, align 8, !noundef !45 ; 3 uses
+  %.val1 = load i64, ptr %i.a, align 8, !noundef !45 ; 2 uses
   %i.b = icmp eq i64 %.val1, 0
   br i1 %i.b, label %"_ZN4core3ptr61drop_in_place$LT$hashbrown..table..HashTable$LT$usize$GT$$GT$17he0bc62b0db664c01E.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i.i.i: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val = load ptr, ptr %i.c, align 8, !nonnull !45, !noundef !45
-  %or.cond.i.i.i.i.i = icmp slt i64 %.val1, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i.i.i)
   %i.d = shl i64 %.val1, 3
   %.not = and i64 %i.d, -16
   %i.e = xor i64 %.not, -16
@@ -6635,14 +6591,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload.i = load ptr, ptr %i.f, align 8, !alias.scope !39672, !noalias !39673 ; 2 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !39672, !noalias !39673 ; 3 uses
+  %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !39672, !noalias !39673 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef nonnull align 8 dereferenceable(32) @86, i64 32, i1 false), !noalias !39673
   %i.k = icmp eq i64 %.sroa.4.0.copyload.i, 0
   br i1 %i.k, label %"_ZN76_$LT$hashbrown..raw..RawTable$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$10clone_from17h3ac5d4eae2d40ac0E.exit", label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i.i: ; preds = %bb.b
-  %or.cond.i.i.i = icmp slt i64 %.sroa.4.0.copyload.i, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i.i.i)
   %i.l = shl i64 %.sroa.4.0.copyload.i, 3
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i) ]
   %.not154 = and i64 %i.l, -16
@@ -6670,7 +6624,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.x = load i64, ptr %i.w, align 8, !alias.scope !39672, !noalias !39673, !noundef !45 ; 9 uses
+  %i.x = load i64, ptr %i.w, align 8, !alias.scope !39672, !noalias !39673, !noundef !45 ; 8 uses
   %.not.i = icmp eq i64 %i.x, %i.i
   br i1 %.not.i, label %._crit_edge.i, label %bb.f
 
@@ -6804,8 +6758,6 @@ _ZN9hashbrown3raw13RawTableInner17new_uninitialized17h3b9301694f7edaa8E.exit.i: 
   br i1 %i.bz, label %bb.k, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i
 
 _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h08f7ba962753a076E.exit.i: ; preds = %_ZN9hashbrown3raw13RawTableInner17new_uninitialized17h3b9301694f7edaa8E.exit.i
-  %or.cond.i7.i = icmp slt i64 %i.x, 2305843009213693950
-  tail call void @llvm.assume(i1 %or.cond.i7.i)
   %i.ca = shl i64 %i.x, 3
   %.not153 = and i64 %i.ca, -16
   %i.cb = xor i64 %.not153, -16

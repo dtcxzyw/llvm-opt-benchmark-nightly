@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
 .lr.ph.i.i.i.i:                                   ; preds = %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i, %.lr.ph.i.preheader.i.i.i
   %.sroa.21.0.i.i.i = phi i64 [ %.sroa.78.0.i.i.i.i.i.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i ], [ %.sroa.78.0.i.i.i26.i.i.i, %.lr.ph.i.preheader.i.i.i ] ; 2 uses
   %.sroa.2741.0.in.i.i.i = phi i64 [ %.sroa.2741.0.i.i.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i ], [ %i.de, %.lr.ph.i.preheader.i.i.i ]
-  %.sroa.7.0.i.i.i = phi ptr [ %.sroa.07.0.i.i.i.i.i.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i ], [ %.sroa.07.0.i.i.i27.i.i.i, %.lr.ph.i.preheader.i.i.i ] ; 4 uses
+  %.sroa.7.0.i.i.i = phi ptr [ %.sroa.07.0.i.i.i.i.i.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i ], [ %.sroa.07.0.i.i.i27.i.i.i, %.lr.ph.i.preheader.i.i.i ] ; 3 uses
   %i.gi = phi ptr [ %i.hu, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i ], [ %i.gh, %.lr.ph.i.preheader.i.i.i ]
   %.sroa.0.06.i.i.i.i = phi i64 [ %..i.i.i.i.i.i.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i ], [ %.sroa.3.0.i.ph.i.i, %.lr.ph.i.preheader.i.i.i ]
   %.sroa.2741.0.i.i.i = add i64 %.sroa.2741.0.in.i.i.i, -1 ; 2 uses
@@ -228,7 +228,6 @@ _RNCINvNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map8map_foldRNtCsgy7pbN39oAf_6uu_
   br i1 %i.gp, label %_RINvYINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtNtNtCs7tKScEop1B6_5alloc11collections5btree3set4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefENCNvB1O_26get_auto_max_reference_len0ENtNtNtBa_6traits8iterator8Iterator6reduceNCINvNvB2U_6max_by4foldjNvYjNtNtBc_3cmp3Ord3cmpE0EB1O_.exit.i, label %_RNvMsc_NtNtNtCs7tKScEop1B6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTE10init_frontB1L_.exit.i.i.i.i
 
 _RNvMsc_NtNtNtCs7tKScEop1B6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTE10init_frontB1L_.exit.i.i.i.i: ; preds = %_RNCINvNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map8map_foldRNtCsgy7pbN39oAf_6uu_ptx7WordRefjjNCNvBX_26get_auto_max_reference_len0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldjNvYjNtNtBa_3cmp3Ord3cmpE0E0BX_.exit.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.i.i.i) ]
   %i.gq = getelementptr inbounds nuw i8, ptr %.sroa.7.0.i.i.i, i64 890
   %i.gr = load i16, ptr %i.gq, align 2, !noalias !2704, !noundef !7
   %i.gs = zext i16 %i.gr to i64
@@ -631,7 +630,7 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i.i, %.lr.ph.i.i.i.i.i
   %.sroa.21.0.i.i.i.i = phi i64 [ %.sroa.78.0.i.i.i27.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.sroa.78.0.i.i.i.i.i.i.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i.i ] ; 2 uses
   %.sroa.2742.0.in.i.i.i.i = phi i64 [ %i.hx, %.lr.ph.i.i.i.i.i ], [ %.sroa.2742.0.i.i.i.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i.i ]
-  %.sroa.7.0.i.i.i.i = phi ptr [ %.sroa.07.0.i.i.i28.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.sroa.07.0.i.i.i.i.i.i.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i.i ] ; 4 uses
+  %.sroa.7.0.i.i.i.i = phi ptr [ %.sroa.07.0.i.i.i28.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.sroa.07.0.i.i.i.i.i.i.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i.i ] ; 3 uses
   %i.lk = phi ptr [ %i.lg, %.lr.ph.i.i.i.i.i ], [ %i.mw, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i.i ] ; 2 uses
   %.sroa.0.07.i.i.i.i.i = phi i64 [ %.sroa.5.0.copyload.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i91.i, %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.i.i.i.i ] ; 2 uses
   %.sroa.2742.0.i.i.i.i = add i64 %.sroa.2742.0.in.i.i.i.i, -1 ; 2 uses
@@ -696,7 +695,6 @@ _RNCINvNtNtNtCs6JMX4GRUq9U_4core4iter8adapters6filter11filter_foldRNtCsgy7pbN39o
   br i1 %i.lr, label %_RNvCsgy7pbN39oAf_6uu_ptx26get_auto_max_reference_len.exit, label %_RNvMsc_NtNtNtCs7tKScEop1B6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTE10init_frontB1L_.exit.i.i.i.i.i
 
 _RNvMsc_NtNtNtCs7tKScEop1B6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTE10init_frontB1L_.exit.i.i.i.i.i: ; preds = %_RNCINvNtNtNtCs6JMX4GRUq9U_4core4iter8adapters6filter11filter_foldRNtCsgy7pbN39oAf_6uu_ptx7WordRefjNCNvB14_26get_auto_max_reference_lens_0NCINvNtB6_3map8map_foldB11_jjNCB1A_s0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldjNvYjNtNtBa_3cmp3Ord3cmpE0E0E0B14_.exit.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.i.i.i.i) ]
   %i.ls = getelementptr inbounds nuw i8, ptr %.sroa.7.0.i.i.i.i, i64 890
   %i.lt = load i16, ptr %i.ls, align 2, !noalias !2733, !noundef !7
   %i.lu = zext i16 %i.lt to i64
@@ -1099,13 +1097,8 @@ _RNvMs1_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   call void @llvm.assume(i1 %i.ik)
   %i.il = shl i64 %.sroa.9230.0, 2
   %i.im = and i64 %i.il, -16                      ; 2 uses
-  %3 = add i64 %i.im, 16                          ; 2 uses
-  %i.in = add nsw i64 %.sroa.9230.0, 17
-  %i.io = add i64 %i.in, %3                       ; 3 uses
-  %4 = icmp uge i64 %i.io, %3
-  call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.io, 9223372036854775793
-  call void @llvm.assume(i1 %5)
+  %i.in = add nsw i64 %.sroa.9230.0, 33
+  %i.io = add i64 %i.in, %i.im
   %i.ip = sub nuw nsw i64 -16, %i.im
   %i.iq = getelementptr inbounds i8, ptr %.sroa.0227.0, i64 %i.ip
   br label %_RNvXsE_NtCs7GWc7oqutCf_9hashbrown3mapINtB5_7HashMapcuNtNtNtCs2vKOLqTMYjT_3std4hash6random11RandomStateENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits7collect12IntoIterator9into_iterCsgy7pbN39oAf_6uu_ptx.exit
@@ -1264,7 +1257,7 @@ _RNCINvXss_NtCs7GWc7oqutCf_9hashbrown3setINtB8_8IntoItercENtNtNtNtCs6JMX4GRUq9U_
   %.sroa.6250.0.copyload392 = phi i64 [ 0, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsgy7pbN39oAf_6uu_ptx.exit.i.i ], [ %i.kt, %_RNCINvXss_NtCs7GWc7oqutCf_9hashbrown3setINtB8_8IntoItercENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4folduNCINvNvBT_8for_each4callcNCINvXsd_NtCs7tKScEop1B6_5alloc6stringNtB2s_6StringINtNtBX_7collect6ExtendcE6extendINtNtNtNtCs2vKOLqTMYjT_3std11collections4hash3set8IntoItercEE0E0E0Csgy7pbN39oAf_6uu_ptx.exit.i.i.i.i.i.i ]
   %.sroa.4249.0.copyload390 = phi ptr [ inttoptr (i64 1 to ptr), %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCsgy7pbN39oAf_6uu_ptx.exit.i.i ], [ %i.js, %_RNCINvXss_NtCs7GWc7oqutCf_9hashbrown3setINtB8_8IntoItercENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4folduNCINvNvBT_8for_each4callcNCINvXsd_NtCs7tKScEop1B6_5alloc6stringNtB2s_6StringINtNtBX_7collect6ExtendcE6extendINtNtNtNtCs2vKOLqTMYjT_3std11collections4hash3set8IntoItercEE0E0E0Csgy7pbN39oAf_6uu_ptx.exit.i.i.i.i.i.i ]
   %i.kv = icmp eq i64 %.sroa.49.0.i.i, 0
-  %or.cond.i.i.i.i.i = or i1 %i.ij, %i.kv
+  %or.cond.i.i.i.i.i = select i1 %i.ij, i1 true, i1 %i.kv
   br i1 %or.cond.i.i.i.i.i, label %_RINvXs5_NtCs7tKScEop1B6_5alloc6stringNtB6_6StringINtNtNtNtCs6JMX4GRUq9U_4core4iter6traits7collect12FromIteratorcE9from_iterINtNtNtNtCs2vKOLqTMYjT_3std11collections4hash3set8IntoItercEECsgy7pbN39oAf_6uu_ptx.exit, label %bb.bs
 
 bb.bs:                                            ; preds = %._crit_edge.i.i.i.i.i.i

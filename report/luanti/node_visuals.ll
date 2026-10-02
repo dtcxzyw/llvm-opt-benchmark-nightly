@@ -204,18 +204,19 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %._cri
   br i1 %i.an, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit.split.preheader, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ao = load i32, ptr %3, align 4, !tbaa !131   ; 2 uses
-  %7 = icmp eq i32 %i.ao, 1                       ; 2 uses
-  %8 = icmp eq i32 %i.ao, 2
-  br i1 %8, label %bb.l, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit
+  %i.ao = load i32, ptr %3, align 4, !tbaa !131
+  switch i32 %i.ao, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit.split.preheader [
+    i32 2, label %bb.l
+    i32 1, label %.preheader65.split
+  ]
 
 bb.l:                                             ; preds = %bb.k
   %i.ap = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %4, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.4, i64 noundef 9)
           to label %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit_crit_edge unwind label %bb.o ; 0 uses
 
 ._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit_crit_edge: ; preds = %bb.l
-  %.pre72.pre = load ptr, ptr %i.aj, align 8, !tbaa !91 ; 2 uses
-  br i1 %7, label %.preheader65.split, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit.split.preheader
+  %.pre72.pre = load ptr, ptr %i.aj, align 8, !tbaa !91
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit.split.preheader
 
 bb.m:                                             ; preds = %.noexc.i
   %i.aq = landingpad { ptr, i32 }
@@ -232,21 +233,18 @@ bb.o:                                             ; preds = %bb.l
           cleanup
   br label %bb.x
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit: ; preds = %bb.k
-  br i1 %7, label %.preheader65.split, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit.split.preheader
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit.split.preheader: ; preds = %bb.j, %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit_crit_edge, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit
-  %.pre7287 = phi ptr [ %.pre72.pre, %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit_crit_edge ], [ %i.ak, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit ], [ %i.ak, %bb.j ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit.split.preheader: ; preds = %bb.k, %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit_crit_edge, %bb.j
+  %.pre7287 = phi ptr [ %i.ak, %bb.k ], [ %.pre72.pre, %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit_crit_edge ], [ %i.ak, %bb.j ]
   %i.at = getelementptr inbounds nuw i8, ptr %.pre7287, i64 144
   %.val43 = load ptr, ptr %4, align 8
   %.val44 = load i64, ptr %i.d, align 8
   invoke fastcc void @"_ZZN11NodeVisuals17preUpdateTexturesEP14ITextureSourceRSt13unordered_setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hashIS8_ESt8equal_toIS8_ESaIS8_EERK15TextureSettingsENK3$_0clERK7TileDefRKS8_"(ptr nonnull %2, ptr noundef nonnull align 8 dereferenceable(60) %i.at, ptr %.val43, i64 %.val44)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit.split.1 unwind label %bb.p
 
-.preheader65.split:                               ; preds = %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit_crit_edge, %.preheader65.split.loopexit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit
-  %.024.shrunk88 = phi i1 [ %i.an, %.preheader65.split.loopexit ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit ], [ false, %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit_crit_edge ]
-  %9 = phi ptr [ %.pre, %.preheader65.split.loopexit ], [ %i.ak, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit ], [ %.pre72.pre, %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit_crit_edge ]
-  %i.au = getelementptr inbounds nuw i8, ptr %9, i64 528
+.preheader65.split:                               ; preds = %bb.k, %.preheader65.split.loopexit
+  %.024.shrunk88 = phi i1 [ %i.an, %.preheader65.split.loopexit ], [ true, %bb.k ]
+  %7 = phi ptr [ %.pre, %.preheader65.split.loopexit ], [ %i.ak, %bb.k ]
+  %i.au = getelementptr inbounds nuw i8, ptr %7, i64 528
   %.val40 = load ptr, ptr %5, align 8
   %.val41 = load i64, ptr %i.u, align 8
   invoke fastcc void @"_ZZN11NodeVisuals17preUpdateTexturesEP14ITextureSourceRSt13unordered_setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hashIS8_ESt8equal_toIS8_ESaIS8_EERK15TextureSettingsENK3$_0clERK7TileDefRKS8_"(ptr nonnull %2, ptr noundef nonnull align 8 dereferenceable(60) %i.au, ptr %.val40, i64 %.val41)

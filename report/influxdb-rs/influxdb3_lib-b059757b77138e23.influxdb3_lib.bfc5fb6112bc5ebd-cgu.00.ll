@@ -205,13 +205,8 @@ bb.jg:                                            ; preds = %bb.jc
 _RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i: ; preds = %bb.jg
   %i.adr = mul i64 %.sroa.5805.0.copyload.i.i, 24
   %i.ads = and i64 %i.adr, -16                    ; 2 uses
-  %3 = add i64 %i.ads, 32                         ; 2 uses
-  %i.adt = add i64 %.sroa.5805.0.copyload.i.i, 17
-  %i.adu = add i64 %i.adt, %3                     ; 3 uses
-  %4 = icmp uge i64 %i.adu, %3
-  call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.adu, 9223372036854775793
-  call void @llvm.assume(i1 %5)
+  %i.adt = add i64 %.sroa.5805.0.copyload.i.i, 49
+  %i.adu = add i64 %i.adt, %i.ads
   %i.adv = sub i64 -32, %i.ads
   %i.adw = getelementptr inbounds i8, ptr %.sroa.0804.0.copyload.i.i, i64 %i.adv
   br label %bb.jh

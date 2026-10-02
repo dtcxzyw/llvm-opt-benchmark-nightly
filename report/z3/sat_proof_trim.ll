@@ -205,8 +205,7 @@ _ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit:    ; preds = %_ZNK6vectorIN3sat7l
 bb.i:                                             ; preds = %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 3168 ; 3 uses
   %i.ag = load i8, ptr %i.af, align 8, !tbaa !204, !range !40, !noundef !41
-  %i.ah = trunc nuw i8 %i.ag to i1                ; 2 uses
-  %8 = xor i1 %i.ah, true                         ; 4 uses
+  %i.ah = trunc nuw i8 %i.ag to i1
   br i1 %i.ah, label %.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -475,7 +474,7 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49:   ; preds = %_ZNK6vectorIN3sat7l
   br i1 %exitcond.not.3, label %.thread, label %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49
 
 .thread:                                          ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49.prol.loopexit, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49, %.thread111, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49.lr.ph, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit, %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit, %bb.i
-  %i.ee = phi i1 [ false, %bb.i ], [ false, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ false, %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit ], [ %8, %.thread111 ], [ %8, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49.lr.ph ], [ %8, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49 ], [ %8, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49.prol.loopexit ]
+  %i.ee = phi i1 [ false, %bb.i ], [ false, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ false, %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit ], [ true, %.thread111 ], [ true, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49.lr.ph ], [ true, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49 ], [ true, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49.prol.loopexit ]
   %.036 = phi i32 [ %.0.i, %bb.i ], [ %.0.i, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ %.0.i, %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit ], [ %.0.i42, %.thread111 ], [ %.0.i42, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49.lr.ph ], [ %.0.i42, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49 ], [ %.0.i42, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit49.prol.loopexit ] ; 2 uses
   %i.ef = call noundef i32 @_Z19get_verbosity_levelv()
   %i.eg = icmp ugt i32 %i.ef, 2

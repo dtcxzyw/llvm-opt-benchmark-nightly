@@ -204,7 +204,7 @@ _RNvXs_NtCs6i54tJFfzR_5alloc5allocNtB4_6GlobalNtNtCsgxBkk5gSRhY_4core5alloc9Allo
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_RNvXsE_NtCsfBDUjroi3FF_9hashbrown3mapINtB5_7HashMapNtNtNtCskw1zp9IbpTW_24libsignal_message_backup6backup7sticker6PackIdINtBP_11StickerPackNtNtBR_6method5StoreENtNtNtCs9k3SxhrAWiO_3std4hash6random11RandomStateENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits7collect12IntoIterator9into_iterBT_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 50), (56, 64)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #8 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.02.0.copyload = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 5 uses
@@ -217,16 +217,11 @@ bb.a:
   br i1 %i.a, label %_RNvXsh_NtCsfBDUjroi3FF_9hashbrown3rawINtB5_8RawTableTNtNtNtCskw1zp9IbpTW_24libsignal_message_backup6backup7sticker6PackIdINtBR_11StickerPackNtNtBT_6method5StoreEEENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits7collect12IntoIterator9into_iterBV_.exit, label %_RNvMs1_NtCsfBDUjroi3FF_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs1_NtCsfBDUjroi3FF_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
-  %i.b = mul i64 %.sroa.43.0.copyload, 48         ; 2 uses
-  %2 = add i64 %i.b, 48                           ; 2 uses
-  %3 = add i64 %.sroa.43.0.copyload, 17
-  %i.c = add i64 %3, %2                           ; 3 uses
-  %4 = icmp uge i64 %i.c, %2
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %i.c, 9223372036854775793
-  tail call void @llvm.assume(i1 %5)
-  %6 = sub i64 -48, %i.b
-  %i.d = getelementptr inbounds i8, ptr %.sroa.02.0.copyload, i64 %6
+  %i.b = mul i64 %.sroa.43.0.copyload, -48
+  %2 = mul i64 %.sroa.43.0.copyload, 49
+  %i.c = add i64 %2, 65
+  %3 = getelementptr i8, ptr %.sroa.02.0.copyload, i64 %i.b
+  %i.d = getelementptr i8, ptr %3, i64 -48
   br label %_RNvXsh_NtCsfBDUjroi3FF_9hashbrown3rawINtB5_8RawTableTNtNtNtCskw1zp9IbpTW_24libsignal_message_backup6backup7sticker6PackIdINtBR_11StickerPackNtNtBT_6method5StoreEEENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits7collect12IntoIterator9into_iterBV_.exit
 
 _RNvXsh_NtCsfBDUjroi3FF_9hashbrown3rawINtB5_8RawTableTNtNtNtCskw1zp9IbpTW_24libsignal_message_backup6backup7sticker6PackIdINtBR_11StickerPackNtNtBT_6method5StoreEEENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits7collect12IntoIterator9into_iterBV_.exit: ; preds = %bb.a, %_RNvMs1_NtCsfBDUjroi3FF_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
@@ -629,7 +624,7 @@ attributes #4 = { mustprogress nofree norecurse nosync nounwind nonlazybind will
 attributes #5 = { cold nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #6 = { nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #7 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #8 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #9 = { nofree norecurse nosync nounwind nonlazybind memory(readwrite, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
