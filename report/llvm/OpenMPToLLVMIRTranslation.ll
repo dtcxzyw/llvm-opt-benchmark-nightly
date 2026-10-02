@@ -205,7 +205,7 @@ _ZL21collectReductionDeclsIN4mlir3omp6SimdOpEEvT_RN4llvm15SmallVectorImplINS1_18
   %i.bx = call noundef ptr @_ZN4llvm7splitBBENS_13IRBuilderBase11InsertPointEbNS_8DebugLocENS_5TwineE(ptr noundef nonnull byval(%"class.llvm::IRBuilderBase::InsertPoint") align 8 %63, i1 noundef zeroext true, ptr %.sroa.013.0.copyload.i, ptr noundef nonnull byval(%"class.llvm::Twine") align 8 %64) #31, !noalias !2733 ; 0 uses
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 41 uses
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !187, !noalias !2733 ; 3 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 30 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 29 uses
   %.sroa.0.0.copyload.i.i.i170 = load ptr, ptr %i.ca, align 8, !noalias !2733 ; 3 uses
   %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 35 uses
   %.sroa.2.0.copyload.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !noalias !2733
@@ -608,7 +608,7 @@ bb.cs:                                            ; preds = %_ZNRSt8optionalImE5
   %i.amn = and i64 %i.amm, 4294967296
   %.not.i234 = icmp eq i64 %i.amn, 0
   %spec.select.i = select i1 %.not.i234, i32 2, i32 1
-  %i.amo = load ptr, ptr %i.by, align 8, !tbaa !187 ; 3 uses
+  %i.amo = load ptr, ptr %i.by, align 8, !tbaa !187 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %85) #31
   %i.amp = call { ptr, i8 } @_ZN4mlir3omp6SimdOp13getAlignmentsEv(ptr noundef nonnull align 8 dereferenceable(8) %72) #31 ; 2 uses
   %i.amq = extractvalue { ptr, i8 } %i.amp, 0
@@ -644,7 +644,7 @@ _ZN4mlir3omp6SimdOp14getAlignedVarsEv.exit:       ; preds = %bb.cs, %bb.ct
   %i.anf = getelementptr inbounds nuw i8, ptr %2, i64 232
   %i.ang = getelementptr inbounds nuw i8, ptr %2, i64 252
   %i.anh = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %95 = getelementptr inbounds nuw i8, ptr %i.amo, i64 48
+  %95 = getelementptr inbounds nuw i8, ptr %i.amo, <2 x i64> <i64 0, i64 48>
   %i.ani = getelementptr inbounds nuw i8, ptr %87, i64 32
   %i.anj = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.ank = getelementptr inbounds nuw i8, ptr %9, i64 33
@@ -789,8 +789,7 @@ bb.cx:                                            ; preds = %bb.cw, %.split
   %i.aqj = load ptr, ptr %i.by, align 8, !tbaa !187, !noalias !2754 ; 3 uses
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.ca, align 8, !noalias !2754 ; 3 uses
   %.sroa.2.0.copyload.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !noalias !2754
-  store ptr %i.amo, ptr %i.by, align 8, !tbaa !187
-  store ptr %95, ptr %i.ca, align 8
+  store <2 x ptr> %95, ptr %i.by, align 8
   store i16 0, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8
   %i.aqk = load ptr, ptr %i.e, align 8, !tbaa !198
   call void @llvm.lifetime.start.p0(ptr nonnull %87) #31

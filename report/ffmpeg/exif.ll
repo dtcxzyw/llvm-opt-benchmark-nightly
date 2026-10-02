@@ -116,23 +116,19 @@ vector.body.interim:                              ; preds = %vector.body
   br i1 %i.ai, label %scalar.ph, label %vector.body, !llvm.loop !57
 
 vector.early.exit:                                ; preds = %vector.body
-  %1 = insertelement <2 x ptr> poison, ptr %i.g, i64 0
-  %2 = insertelement <2 x ptr> %1, ptr %i.h, i64 1
-  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 204, i64 238>
-  %i.aj = insertelement <4 x ptr> poison, ptr %i.c, i64 0
-  %i.ak = insertelement <4 x ptr> %i.aj, ptr %i.d, i64 1
-  %i.al = insertelement <4 x ptr> %i.ak, ptr %i.e, i64 2
-  %i.am = insertelement <4 x ptr> %i.al, ptr %i.f, i64 3
-  %i.an = getelementptr inbounds nuw i8, <4 x ptr> %i.am, <4 x i64> <i64 68, i64 102, i64 136, i64 170>
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 34
-  %5 = insertelement <8 x ptr> poison, ptr %i.a, i64 0
-  %6 = insertelement <8 x ptr> %5, ptr %4, i64 1
-  %7 = shufflevector <4 x ptr> %i.an, <4 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %8 = shufflevector <8 x ptr> %6, <8 x ptr> %7, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison>
-  %9 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %10 = shufflevector <8 x ptr> %8, <8 x ptr> %9, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
+  %i.aj = insertelement <4 x ptr> poison, ptr %i.e, i64 0
+  %i.ak = insertelement <4 x ptr> %i.aj, ptr %i.f, i64 1
+  %i.al = insertelement <4 x ptr> %i.ak, ptr %i.g, i64 2
+  %i.am = insertelement <4 x ptr> %i.al, ptr %i.h, i64 3
+  %i.an = getelementptr inbounds nuw i8, <4 x ptr> %i.am, <4 x i64> <i64 136, i64 170, i64 204, i64 238>
+  %1 = insertelement <4 x ptr> poison, ptr %i.a, i64 0
+  %2 = insertelement <4 x ptr> %1, ptr %i.b, i64 1
+  %3 = insertelement <4 x ptr> %2, ptr %i.c, i64 2
+  %4 = insertelement <4 x ptr> %3, ptr %i.d, i64 3
+  %5 = getelementptr inbounds nuw i8, <4 x ptr> %4, <4 x i64> <i64 0, i64 34, i64 68, i64 102>
+  %6 = shufflevector <4 x ptr> %5, <4 x ptr> %i.an, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %first.active.lane = tail call i64 @llvm.experimental.cttz.elts.i64.v8i1(<8 x i1> %i.ag, i1 false)
-  %i.ao = extractelement <8 x ptr> %10, i64 %first.active.lane
+  %i.ao = extractelement <8 x ptr> %6, i64 %first.active.lane
   br label %.loopexit
 
 bb.a:                                             ; preds = %scalar.ph
@@ -535,23 +531,19 @@ vector.body.interim:                              ; preds = %vector.body
   br i1 %i.at, label %scalar.ph, label %vector.body, !llvm.loop !82
 
 vector.early.exit:                                ; preds = %vector.body
-  %4 = insertelement <2 x ptr> poison, ptr %i.q, i64 0
-  %5 = insertelement <2 x ptr> %4, ptr %i.r, i64 1
-  %6 = getelementptr inbounds nuw i8, <2 x ptr> %5, <2 x i64> <i64 204, i64 238>
-  %i.au = insertelement <4 x ptr> poison, ptr %i.m, i64 0
-  %i.av = insertelement <4 x ptr> %i.au, ptr %i.n, i64 1
-  %i.aw = insertelement <4 x ptr> %i.av, ptr %i.o, i64 2
-  %i.ax = insertelement <4 x ptr> %i.aw, ptr %i.p, i64 3
-  %i.ay = getelementptr inbounds nuw i8, <4 x ptr> %i.ax, <4 x i64> <i64 68, i64 102, i64 136, i64 170>
-  %7 = getelementptr inbounds nuw i8, ptr %i.l, i64 34
-  %8 = insertelement <8 x ptr> poison, ptr %i.k, i64 0
-  %9 = insertelement <8 x ptr> %8, ptr %7, i64 1
-  %10 = shufflevector <4 x ptr> %i.ay, <4 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %11 = shufflevector <8 x ptr> %9, <8 x ptr> %10, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison>
-  %12 = shufflevector <2 x ptr> %6, <2 x ptr> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %13 = shufflevector <8 x ptr> %11, <8 x ptr> %12, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
+  %i.au = insertelement <4 x ptr> poison, ptr %i.o, i64 0
+  %i.av = insertelement <4 x ptr> %i.au, ptr %i.p, i64 1
+  %i.aw = insertelement <4 x ptr> %i.av, ptr %i.q, i64 2
+  %i.ax = insertelement <4 x ptr> %i.aw, ptr %i.r, i64 3
+  %i.ay = getelementptr inbounds nuw i8, <4 x ptr> %i.ax, <4 x i64> <i64 136, i64 170, i64 204, i64 238>
+  %4 = insertelement <4 x ptr> poison, ptr %i.k, i64 0
+  %5 = insertelement <4 x ptr> %4, ptr %i.l, i64 1
+  %6 = insertelement <4 x ptr> %5, ptr %i.m, i64 2
+  %7 = insertelement <4 x ptr> %6, ptr %i.n, i64 3
+  %8 = getelementptr inbounds nuw i8, <4 x ptr> %7, <4 x i64> <i64 0, i64 34, i64 68, i64 102>
+  %9 = shufflevector <4 x ptr> %8, <4 x ptr> %i.ay, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %first.active.lane = call i64 @llvm.experimental.cttz.elts.i64.v8i1(<8 x i1> %i.ar, i1 false)
-  %i.az = extractelement <8 x ptr> %13, i64 %first.active.lane
+  %i.az = extractelement <8 x ptr> %9, i64 %first.active.lane
   br label %av_exif_get_tag_name.exit
 
 bb.b:                                             ; preds = %scalar.ph

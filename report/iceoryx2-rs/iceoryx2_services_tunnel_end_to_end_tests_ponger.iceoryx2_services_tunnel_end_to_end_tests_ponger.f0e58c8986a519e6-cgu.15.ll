@@ -204,7 +204,7 @@ bb.a:
   %i.g = alloca [16 x i8], align 8                ; 5 uses
   %i.h = alloca [48 x i8], align 8                ; 9 uses
   %i.i = alloca [16 x i8], align 8                ; 5 uses
-  %i.j = alloca [24 x i8], align 8                ; 10 uses
+  %i.j = alloca [24 x i8], align 16               ; 9 uses
   %i.k = alloca [16 x i8], align 8                ; 16 uses
   %i.l = alloca [16 x i8], align 8                ; 15 uses
   %i.m = alloca [8 x i8], align 8                 ; 14 uses
@@ -435,7 +435,7 @@ bb.u:                                             ; preds = %bb.s
   br label %_RNvMs1_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_20PublisherSharedStateNtNtNtB9_7service3ipc7ServiceE21add_sample_to_historyCskGhOA1yjEoc_48iceoryx2_services_tunnel_end_to_end_tests_ponger.exit
 
 _RNvMs1_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_20PublisherSharedStateNtNtNtB9_7service3ipc7ServiceE21add_sample_to_historyCskGhOA1yjEoc_48iceoryx2_services_tunnel_end_to_end_tests_ponger.exit: ; preds = %bb.m, %_RNvMs4_NtCs5kzjBmDVxDj_21iceoryx2_bb_container5queueINtB5_9MetaQueueNtNtNtCsg6ZEkMtNi4J_8iceoryx24port9publisher13OffsetAndSizeNtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits14owning_pointer20GenericOwningPointerE23push_with_overflow_implCskGhOA1yjEoc_48iceoryx2_services_tunnel_end_to_end_tests_ponger.exit.i, %bb.s, %bb.u
-  %i.co = load ptr, ptr %i.y, align 8, !nonnull !5, !align !13, !noundef !5 ; 18 uses
+  %i.co = load ptr, ptr %i.y, align 8, !nonnull !5, !align !13, !noundef !5 ; 17 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !726)
   call fastcc void @_RNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details6senderINtB5_6SenderNtNtNtBb_7service3ipc7ServiceE25retrieve_returned_samplesCskGhOA1yjEoc_48iceoryx2_services_tunnel_end_to_end_tests_ponger(ptr noundef nonnull align 16 %i.co) #20, !noalias !726
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 2656 ; 3 uses
@@ -450,8 +450,8 @@ _RNvMs1_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_20PublisherSharedStateNt
   %i.cs = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.co, i64 2648 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.co, i64 3625 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.co, i64 16 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.co, <2 x i64> <i64 16, i64 0>
+  %5 = getelementptr inbounds nuw i8, ptr %i.co, <2 x i64> <i64 16, i64 0>
   %i.cv = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.co, i64 2632
@@ -542,9 +542,8 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x
   %..i.i = add nuw nsw i8 %i.dx, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !727
-  store ptr %4, ptr %i.j, align 8, !noalias !727
-  store ptr %i.co, ptr %5, align 8, !noalias !727
-  store ptr %i.dt, ptr %i.cv, align 8, !noalias !727
+  store <2 x ptr> %4, ptr %i.j, align 16, !noalias !727
+  store ptr %i.dt, ptr %i.cv, align 16, !noalias !727
   call void @_RINvXsc_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB6_6SenderINtNtNtBc_15dynamic_storage19posix_shared_memory7StorageNtB6_20SharedManagementDataEENtBa_14ZeroCopySender13blocking_sendNCNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details6senderINtB3x_6SenderNtNtNtB3D_7service3ipc7ServiceE33deliver_offset_to_connection_impl0ECskGhOA1yjEoc_48iceoryx2_services_tunnel_end_to_end_tests_ponger(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.k, ptr noundef nonnull align 8 %i.dt, i64 noundef %2, i64 noundef %3, i64 noundef 0, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.j, i8 noundef %..i.i) #20, !noalias !727
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !727
   br label %bb.ac
@@ -764,9 +763,8 @@ bb.ap:                                            ; preds = %bb.an
 bb.aq:                                            ; preds = %bb.am
   %..i.i.peel = add nuw nsw i8 %i.fm, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !727
-  store ptr %4, ptr %i.j, align 8, !noalias !727
-  store ptr %i.co, ptr %5, align 8, !noalias !727
-  store ptr %i.fi, ptr %i.cv, align 8, !noalias !727
+  store <2 x ptr> %5, ptr %i.j, align 16, !noalias !727
+  store ptr %i.fi, ptr %i.cv, align 16, !noalias !727
   call void @_RINvXsc_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB6_6SenderINtNtNtBc_15dynamic_storage19posix_shared_memory7StorageNtB6_20SharedManagementDataEENtBa_14ZeroCopySender13blocking_sendNCNvMs2_NtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details6senderINtB3x_6SenderNtNtNtB3D_7service3ipc7ServiceE33deliver_offset_to_connection_impl0ECskGhOA1yjEoc_48iceoryx2_services_tunnel_end_to_end_tests_ponger(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.k, ptr noundef nonnull align 8 %i.fi, i64 noundef %2, i64 noundef %3, i64 noundef 0, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.j, i8 noundef %..i.i.peel) #20, !noalias !727
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !727
   br label %bb.ar

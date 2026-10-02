@@ -205,9 +205,9 @@ define hidden noundef zeroext i1 @_RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers12
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [16 x i8], align 8                ; 5 uses
-  %i.c = alloca [32 x i8], align 8                ; 7 uses
+  %i.c = alloca [32 x i8], align 8                ; 6 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
-  %i.e = alloca [32 x i8], align 8                ; 7 uses
+  %i.e = alloca [32 x i8], align 8                ; 6 uses
   %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = alloca [16 x i8], align 8                ; 5 uses
   %i.h = alloca [8 x i8], align 8                 ; 5 uses
@@ -218,10 +218,10 @@ bb.a:
   %i.m = alloca [8 x i8], align 8                 ; 5 uses
   %i.n = alloca [88 x i8], align 8                ; 8 uses
   %i.o = alloca [32 x i8], align 8                ; 4 uses
-  %i.p = alloca [56 x i8], align 8                ; 10 uses
+  %i.p = alloca [56 x i8], align 8                ; 9 uses
   %i.q = alloca [24 x i8], align 8                ; 5 uses
   %i.r = alloca [40 x i8], align 8                ; 7 uses
-  %i.s = alloca [88 x i8], align 8                ; 11 uses
+  %i.s = alloca [88 x i8], align 8                ; 10 uses
   %.sroa.0242 = alloca [60 x i8], align 8         ; 6 uses
   %.sroa.7 = alloca [24 x i8], align 8            ; 6 uses
   %i.t = alloca [32 x i8], align 8                ; 8 uses
@@ -624,20 +624,20 @@ _RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs6oosyzwIepl
   %i.ju = getelementptr inbounds nuw i8, ptr %i.r, i64 32
   %i.jv = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   %i.jw = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.jx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.jy = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.jz = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ka = getelementptr inbounds nuw i8, ptr %i.s, i64 40
   %i.kb = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %i.kc = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %i.kd = getelementptr inbounds nuw i8, ptr %i.p, i64 24
-  %i.ke = getelementptr inbounds nuw i8, ptr %i.p, i64 32
-  %i.kf = getelementptr inbounds nuw i8, ptr %i.p, i64 40
-  %4 = getelementptr inbounds nuw i8, ptr %i.p, i64 48
+  %i.ke = getelementptr inbounds nuw i8, ptr %i.p, i64 40
+  %i.kf = getelementptr inbounds nuw i8, ptr %i.p, i64 48
+  %2 = insertelement <2 x ptr> poison, ptr %i.s, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.ka, i64 1
+  %4 = insertelement <2 x ptr> <ptr @100, ptr poison>, ptr %i.s, i64 1 ; 2 uses
   br label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs6oosyzwIepl_6ide_db7imports13import_assets13LocatedImportENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCsiU5vK8fN4ZC_11ide_assists.exit
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCs6oosyzwIepl_6ide_db7imports13import_assets13LocatedImportECsiU5vK8fN4ZC_11ide_assists.exit: ; preds = %bb.ec, %bb.dv
@@ -773,8 +773,7 @@ bb.ee:                                            ; preds = %bb.ed
 .split13.i:                                       ; preds = %bb.ee, %bb.ed
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1257
   store ptr %.val120, ptr %i.c, align 8, !noalias !1257
-  store ptr @100, ptr %i.jw, align 8, !noalias !1257
-  store ptr %i.s, ptr %2, align 8, !noalias !1257
+  store <2 x ptr> %4, ptr %i.jw, align 8, !noalias !1257
   store i8 %i.ks, ptr %i.jx, align 8, !noalias !1257
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1257
   store ptr %i.c, ptr %i.b, align 8, !noalias !1257
@@ -790,8 +789,7 @@ bb.ee:                                            ; preds = %bb.ed
 .split.i:                                         ; preds = %bb.ee
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !1257
   store ptr %.val120, ptr %i.e, align 8, !noalias !1257
-  store ptr @100, ptr %i.jy, align 8, !noalias !1257
-  store ptr %i.s, ptr %3, align 8, !noalias !1257
+  store <2 x ptr> %4, ptr %i.jy, align 8, !noalias !1257
   store i8 %i.ks, ptr %i.jz, align 8, !noalias !1257
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1257
   store ptr %i.e, ptr %i.d, align 8, !noalias !1257
@@ -809,10 +807,9 @@ _RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers12qualify_path5label.exit: ; preds =
   store ptr %i.ai, ptr %i.p, align 8
   store ptr %i.z, ptr %i.kb, align 8
   store ptr %i.ad, ptr %i.kc, align 8
-  store ptr %i.s, ptr %i.kd, align 8
-  store ptr %i.ka, ptr %i.ke, align 8
-  store ptr %i.w, ptr %i.kf, align 8
-  store ptr %1, ptr %4, align 8
+  store <2 x ptr> %3, ptr %i.kd, align 8
+  store ptr %i.w, ptr %i.ke, align 8
+  store ptr %1, ptr %i.kf, align 8
   %i.kw = load i32, ptr %i.ad, align 8, !noundef !4
   %i.kx = load i32, ptr %i.bf, align 4, !noundef !4
   %i.ky = invoke noundef zeroext i1 @_RINvMs_NtCsiU5vK8fN4ZC_11ide_assists14assist_contextNtB5_7Assists9add_groupNtNtCsbSS6DM8SDEO_5alloc6string6StringNCNvNtNtB7_8handlers12qualify_path12qualify_paths3_0EB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.u, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.r, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.q, i32 noundef %i.kw, i32 noundef %i.kx, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %i.p)

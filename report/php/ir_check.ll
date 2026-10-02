@@ -95,7 +95,7 @@ bb.d:                                             ; preds = %.thread, %bb.b
 bb.e:                                             ; preds = %.lr.ph470, %bb.eb
   %.1283468 = phi i1 [ %.0282, %.lr.ph470 ], [ %.15, %bb.eb ] ; 2 uses
   %.0287467 = phi ptr [ %i.o, %.lr.ph470 ], [ %i.wo, %bb.eb ] ; 18 uses
-  %.0292466 = phi i32 [ 1, %.lr.ph470 ], [ %i.wm, %bb.eb ] ; 44 uses
+  %.0292466 = phi i32 [ 1, %.lr.ph470 ], [ %i.wm, %bb.eb ] ; 43 uses
   %.sroa.0.0465 = phi ptr [ null, %.lr.ph470 ], [ %.sroa.0.4, %bb.eb ] ; 3 uses
   %.sroa.14.0464 = phi ptr [ null, %.lr.ph470 ], [ %.sroa.14.1.lcssa, %bb.eb ] ; 2 uses
   %.sroa.19.0463 = phi ptr [ null, %.lr.ph470 ], [ %.sroa.19.2, %bb.eb ] ; 3 uses
@@ -150,7 +150,7 @@ bb.i:                                             ; preds = %.lr.ph, %.thread402
   %.0291440 = phi i32 [ 1, %.lr.ph ], [ %i.kt, %.thread402 ] ; 27 uses
   %.sroa.0.1439 = phi ptr [ %.sroa.0.0465, %.lr.ph ], [ %.sroa.0.2, %.thread402 ] ; 15 uses
   %.sroa.14.1438 = phi ptr [ %.sroa.14.0464, %.lr.ph ], [ %.sroa.14.2, %.thread402 ] ; 16 uses
-  %i.au = load i32, ptr %.0288441, align 4, !tbaa !46 ; 25 uses
+  %i.au = load i32, ptr %.0288441, align 4, !tbaa !46 ; 24 uses
   %.not332 = icmp eq i32 %i.au, 0
   br i1 %.not332, label %bb.bd, label %bb.j
 
@@ -240,7 +240,7 @@ bb.v:                                             ; preds = %bb.t, %bb.u, %bb.r
   %i.cc = load i32, ptr %i.p, align 4, !tbaa !49
   %i.cd = and i32 %i.cc, 32
   %.not350 = icmp eq i32 %i.cd, 0
-  %.not351 = icmp slt i32 %i.au, %.0292466
+  %.not351 = icmp slt i32 %i.au, %.0292466        ; 2 uses
   %or.cond360 = or i1 %.not351, %.not350
   br i1 %or.cond360, label %bb.z, label %bb.w
 
@@ -398,8 +398,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.dy, label %.lr.ph.i, label %ir_check_domination.exit.thread
 
 .split:                                           ; preds = %bb.am
-  %1 = icmp samesign ult i32 %i.au, %.0292466
-  br i1 %1, label %bb.bj, label %ir_check_domination.exit.thread
+  br i1 %.not351, label %bb.bj, label %ir_check_domination.exit.thread
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
   %i.dz = phi i64 [ %.pn.i, %.lr.ph.i ], [ %.pn1.i, %.preheader.i ]

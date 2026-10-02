@@ -202,47 +202,34 @@ bb.f:                                             ; preds = %bb.e, %bb.a, %.thre
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @makeIndexInfo(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, i1 noundef zeroext %5, i1 noundef zeroext %6, i1 noundef zeroext %7, i1 noundef zeroext %8, i1 noundef zeroext %9, i1 noundef zeroext %10) local_unnamed_addr #0 {
 bb.a:
-  %11 = zext i1 %5 to i8
-  %12 = zext i1 %6 to i8
-  %13 = zext i1 %7 to i8
-  %14 = zext i1 %8 to i8
-  %15 = zext i1 %9 to i8
   %i.a = zext i1 %10 to i8
-  %i.b = tail call noundef ptr @palloc0(i64 noundef 200) #5 ; 21 uses
+  %i.b = tail call noundef ptr @palloc0(i64 noundef 200) #5 ; 14 uses
   store i32 401, ptr %i.b, align 4
-  %16 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i32 %0, ptr %16, align 4
-  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i32 %1, ptr %17, align 8
-  %18 = getelementptr inbounds nuw i8, ptr %i.b, i64 160
-  store i8 %11, ptr %18, align 8
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 161
-  store i8 %12, ptr %i.c, align 1
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 162
-  store i8 %13, ptr %i.d, align 2
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 163
-  store i8 0, ptr %i.e, align 1
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 164
-  store i8 0, ptr %i.f, align 4
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 165
-  store i8 %14, ptr %i.g, align 1
-  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 167
-  store i8 %15, ptr %i.h, align 1
-  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 168
-  store i8 %i.a, ptr %i.i, align 8
-  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 80
-  store ptr %3, ptr %i.j, align 8
-  %19 = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  store ptr null, ptr %19, align 8
-  %20 = getelementptr inbounds nuw i8, ptr %i.b, i64 96
-  store ptr %4, ptr %20, align 8
-  %21 = getelementptr inbounds nuw i8, ptr %i.b, i64 104
-  %22 = getelementptr inbounds nuw i8, ptr %i.b, i64 166
-  store i8 0, ptr %22, align 2
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  store i32 %0, ptr %i.c, align 4
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store i32 %1, ptr %i.d, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 160
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 168
+  store i8 %i.a, ptr %i.f, align 8
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 80
+  store ptr %3, ptr %i.g, align 8
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 88
+  store ptr null, ptr %i.h, align 8
+  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 96
+  store ptr %4, ptr %i.i, align 8
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 104
+  %11 = insertelement <8 x i1> <i1 poison, i1 poison, i1 poison, i1 false, i1 false, i1 poison, i1 false, i1 poison>, i1 %5, i64 0
+  %12 = insertelement <8 x i1> %11, i1 %6, i64 1
+  %13 = insertelement <8 x i1> %12, i1 %7, i64 2
+  %14 = insertelement <8 x i1> %13, i1 %8, i64 5
+  %15 = insertelement <8 x i1> %14, i1 %9, i64 7
+  %16 = zext <8 x i1> %15 to <8 x i8>
+  store <8 x i8> %16, ptr %i.e, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 172
   store i32 0, ptr %i.k, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 176
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %21, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.j, i8 0, i64 56, i1 false)
   store i32 %2, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 184
   store ptr null, ptr %i.m, align 8

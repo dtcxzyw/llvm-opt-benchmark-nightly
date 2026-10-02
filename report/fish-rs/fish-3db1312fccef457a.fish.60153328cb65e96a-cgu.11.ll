@@ -206,7 +206,7 @@ bb.a:
   %i.j = alloca [40 x i8], align 8                ; 25 uses
   %i.k = alloca [24 x i8], align 8                ; 10 uses
   %i.l = alloca [40 x i8], align 8                ; 9 uses
-  %i.m = alloca [24 x i8], align 8                ; 7 uses
+  %i.m = alloca [24 x i8], align 16               ; 6 uses
   %i.n = alloca [1 x i8], align 1                 ; 3 uses
   %i.o = alloca [1 x i8], align 1                 ; 3 uses
   %i.p = alloca [24 x i8], align 8                ; 6 uses
@@ -226,7 +226,7 @@ bb.a:
   %i.ad = alloca [24 x i8], align 8               ; 8 uses
   %i.ae = alloca [24 x i8], align 8               ; 5 uses
   %i.af = alloca [24 x i8], align 8               ; 32 uses
-  %i.ag = alloca [96 x i8], align 8               ; 16 uses
+  %i.ag = alloca [96 x i8], align 8               ; 15 uses
   %i.ah = alloca [8 x i8], align 8                ; 4 uses
   %i.ai = alloca [24 x i8], align 8               ; 4 uses
   %i.aj = alloca [24 x i8], align 8               ; 5 uses
@@ -476,8 +476,7 @@ bb.i:                                             ; preds = %bb.g
   %.sroa.14.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 72
   %.sroa.15.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 80
   %.sroa.16.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 88
-  %2 = getelementptr inbounds nuw i8, ptr %i.ag, i64 96
-  %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.ag, <2 x i64> <i64 0, i64 96>
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 3 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.df = getelementptr inbounds nuw i8, ptr %i.k, i64 16
@@ -834,9 +833,8 @@ _RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager32visual_selected_completion_index.
   %.sroa.08.0302.i.i = phi i64 [ %i.gg, %._crit_edge.i.i ], [ %.sroa.034.0217224.i, %_RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager32visual_selected_completion_index.exit.i.i ] ; 4 uses
   %i.gg = add nuw nsw i64 %.sroa.08.0302.i.i, 1   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !2956
-  store ptr %i.ag, ptr %i.m, align 8, !noalias !2956
-  store ptr %2, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !noalias !2956
-  store i64 0, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !noalias !2956
+  store <2 x ptr> %2, ptr %i.m, align 16, !noalias !2956
+  store i64 0, ptr %.sroa.3.0..sroa_idx.i.i, align 16, !noalias !2956
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !2957
   invoke void @_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters6copiedINtB4_6CopiedINtNtNtBa_5slice4iter4IterNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1v_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.k, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
           to label %.noexc65 unwind label %.loopexit.split-lp.loopexit
@@ -861,13 +859,13 @@ bb.ae:                                            ; preds = %.noexc72, %.lr.ph.i
   %i.gm = load i64, ptr %i.de, align 8, !noalias !2959, !noundef !5 ; 8 uses
   %i.gn = load i64, ptr %i.df, align 8, !noalias !2959, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !2959
-  %i.go = load i64, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !alias.scope !2958, !noalias !2960, !noundef !5 ; 4 uses
+  %i.go = load i64, ptr %.sroa.3.0..sroa_idx.i.i, align 16, !alias.scope !2958, !noalias !2960, !noundef !5 ; 4 uses
   %i.gp = icmp eq i64 %i.go, -1
   br i1 %i.gp, label %.invoke, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.gq = add nuw i64 %i.go, 1
-  store i64 %i.gq, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !alias.scope !2958, !noalias !2960
+  store i64 %i.gq, ptr %.sroa.3.0..sroa_idx.i.i, align 16, !alias.scope !2958, !noalias !2960
   %i.gr = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.go, i64 %.sroa.0.0.i.i.i138) ; 2 uses
   %i.gs = extractvalue { i64, i1 } %i.gr, 1
   br i1 %i.gs, label %.invoke1053, label %bb.ag
@@ -1270,13 +1268,14 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs9DVVTwq977Y_16
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RNvNtNtCs8frGy5WneL6_4fish7history12yaml_backend11replace_all(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [56 x i8], align 8                ; 8 uses
+  %i.a = alloca [56 x i8], align 8                ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.b, align 8, !noundef !5
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %3 = insertelement <2 x ptr> poison, ptr %2, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.e, i64 1
   br label %bb.c
 
 bb.b:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec6splice6SpliceINtNtNtNtB4_4iter8adapters6copied6CopiedINtNtNtB4_5slice4iter4IterhEEEECs8frGy5WneL6_4fish.exit
@@ -1321,8 +1320,7 @@ bb.h:                                             ; preds = %bb.e
 bb.i:                                             ; preds = %bb.g
   %i.u = add nuw i64 %i.r, 1
   call void @_RINvMs_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechE5drainINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(56) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.r, i64 noundef %i.u)
-  store ptr %2, ptr %i.f, align 8, !alias.scope !3029, !noalias !3030
-  store ptr %i.e, ptr %3, align 8, !alias.scope !3029, !noalias !3030
+  store <2 x ptr> %4, ptr %i.f, align 8, !alias.scope !3029, !noalias !3030
   invoke void @_RNvXs1_NtNtCs1xwejQucwHj_5alloc3vec6spliceINtB5_6SpliceINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters6copied6CopiedINtNtNtB10_5slice4iter4IterhEEENtNtNtB10_3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.a)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec6splice6SpliceINtNtNtNtB4_4iter8adapters6copied6CopiedINtNtNtB4_5slice4iter4IterhEEEECs8frGy5WneL6_4fish.exit unwind label %bb.j
 

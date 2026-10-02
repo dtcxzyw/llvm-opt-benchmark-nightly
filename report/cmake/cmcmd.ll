@@ -205,7 +205,7 @@ bb.a:
   %67 = alloca %"class.std::optional.12", align 8 ; 6 uses
   %68 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %69 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %70 = alloca %class.cmRange, align 8            ; 5 uses
+  %70 = alloca %class.cmRange, align 16           ; 4 uses
   %i.r = alloca i32, align 4                      ; 6 uses
   %71 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.s = alloca i32, align 4                      ; 7 uses
@@ -342,7 +342,7 @@ bb.a:
   %191 = alloca %class.cmStateDirectory, align 8  ; 5 uses
   %192 = alloca %class.cmMakefile, align 8        ; 7 uses
   %193 = alloca %"class.std::unique_ptr.334", align 8 ; 8 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 55 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 54 uses
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !53
   %i.ag = load ptr, ptr %0, align 8, !tbaa !55    ; 9 uses
   %i.ah = ptrtoint ptr %i.af to i64
@@ -745,12 +745,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1859: ; preds = %b
 bb.nj:                                            ; preds = %bb.nf
   call void @llvm.lifetime.start.p0(ptr nonnull %69) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %70) #28
-  %194 = load ptr, ptr %0, align 8, !tbaa !30
-  %195 = load ptr, ptr %i.ae, align 8, !tbaa !30
-  %196 = getelementptr inbounds nuw i8, ptr %194, i64 96
-  store ptr %196, ptr %70, align 8
-  %197 = getelementptr inbounds nuw i8, ptr %70, i64 8
-  store ptr %195, ptr %197, align 8
+  %194 = load <2 x ptr>, ptr %0, align 8, !tbaa !30
+  %195 = getelementptr inbounds nuw i8, <2 x ptr> %194, <2 x i64> <i64 96, i64 0>
+  store <2 x ptr> %195, ptr %70, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %2)

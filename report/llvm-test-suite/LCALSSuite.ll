@@ -205,7 +205,7 @@ _ZN12_GLOBAL__N_116allocAndInitDataERN8LoopData9RealArrayEi.exit164: ; preds = %
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
   store ptr null, ptr %i.b, align 8, !tbaa !131
   %i.ls = call i32 @posix_memalign(ptr noundef nonnull %i.b, i64 noundef 32, i64 noundef 32768) #22 ; 0 uses
-  %i.lt = load ptr, ptr %i.b, align 8, !tbaa !131 ; 22 uses
+  %i.lt = load ptr, ptr %i.b, align 8, !tbaa !131 ; 19 uses
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lc, i64 1504
   store ptr %i.lt, ptr %i.lu, align 8, !tbaa !119
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lc, i64 1512
@@ -238,65 +238,57 @@ vector.body409:                                   ; preds = %vector.body409, %.p
 
 _ZN12_GLOBAL__N_116allocAndInitDataERN8LoopData9RealArrayEi.exit171: ; preds = %vector.body409
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
-  %i.mk = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znam(i64 noundef 512) #23 ; 20 uses
+  %i.mk = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znam(i64 noundef 512) #23 ; 17 uses
   %i.ml = load ptr, ptr @_ZL11s_loop_data, align 8, !tbaa !16
   %i.mm = getelementptr inbounds nuw i8, ptr %i.ml, i64 352
   store ptr %i.mk, ptr %i.mm, align 8, !tbaa !135
-  store ptr %i.lt, ptr %i.mk, align 8, !tbaa !131
-  %i.mn = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 512, i64 1024, i64 1536, i64 2048>
-  %0 = getelementptr inbounds nuw i8, ptr %i.mk, i64 8
-  store <4 x ptr> %i.mn, ptr %0, align 8, !tbaa !131
-  %i.mo = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 2560, i64 3072, i64 3584, i64 4096>
-  %i.mp = getelementptr inbounds nuw i8, ptr %i.mk, i64 40
+  %i.mn = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 0, i64 512, i64 1024, i64 1536>
+  store <4 x ptr> %i.mn, ptr %i.mk, align 8, !tbaa !131
+  %i.mo = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 2048, i64 2560, i64 3072, i64 3584>
+  %i.mp = getelementptr inbounds nuw i8, ptr %i.mk, i64 32
   store <4 x ptr> %i.mo, ptr %i.mp, align 8, !tbaa !131
-  %i.mq = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 4608, i64 5120, i64 5632, i64 6144>
-  %i.mr = getelementptr inbounds nuw i8, ptr %i.mk, i64 72
+  %i.mq = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 4096, i64 4608, i64 5120, i64 5632>
+  %i.mr = getelementptr inbounds nuw i8, ptr %i.mk, i64 64
   store <4 x ptr> %i.mq, ptr %i.mr, align 8, !tbaa !131
-  %i.ms = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 6656, i64 7168, i64 7680, i64 8192>
-  %i.mt = getelementptr inbounds nuw i8, ptr %i.mk, i64 104
+  %i.ms = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 6144, i64 6656, i64 7168, i64 7680>
+  %i.mt = getelementptr inbounds nuw i8, ptr %i.mk, i64 96
   store <4 x ptr> %i.ms, ptr %i.mt, align 8, !tbaa !131
-  %i.mu = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 8704, i64 9216, i64 9728, i64 10240>
-  %i.mv = getelementptr inbounds nuw i8, ptr %i.mk, i64 136
+  %i.mu = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 8192, i64 8704, i64 9216, i64 9728>
+  %i.mv = getelementptr inbounds nuw i8, ptr %i.mk, i64 128
   store <4 x ptr> %i.mu, ptr %i.mv, align 8, !tbaa !131
-  %i.mw = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 10752, i64 11264, i64 11776, i64 12288>
-  %i.mx = getelementptr inbounds nuw i8, ptr %i.mk, i64 168
+  %i.mw = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 10240, i64 10752, i64 11264, i64 11776>
+  %i.mx = getelementptr inbounds nuw i8, ptr %i.mk, i64 160
   store <4 x ptr> %i.mw, ptr %i.mx, align 8, !tbaa !131
-  %i.my = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 12800, i64 13312, i64 13824, i64 14336>
-  %i.mz = getelementptr inbounds nuw i8, ptr %i.mk, i64 200
+  %i.my = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 12288, i64 12800, i64 13312, i64 13824>
+  %i.mz = getelementptr inbounds nuw i8, ptr %i.mk, i64 192
   store <4 x ptr> %i.my, ptr %i.mz, align 8, !tbaa !131
-  %i.na = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 14848, i64 15360, i64 15872, i64 16384>
-  %i.nb = getelementptr inbounds nuw i8, ptr %i.mk, i64 232
+  %i.na = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 14336, i64 14848, i64 15360, i64 15872>
+  %i.nb = getelementptr inbounds nuw i8, ptr %i.mk, i64 224
   store <4 x ptr> %i.na, ptr %i.nb, align 8, !tbaa !131
-  %i.nc = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 16896, i64 17408, i64 17920, i64 18432>
-  %i.nd = getelementptr inbounds nuw i8, ptr %i.mk, i64 264
+  %i.nc = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 16384, i64 16896, i64 17408, i64 17920>
+  %i.nd = getelementptr inbounds nuw i8, ptr %i.mk, i64 256
   store <4 x ptr> %i.nc, ptr %i.nd, align 8, !tbaa !131
-  %i.ne = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 18944, i64 19456, i64 19968, i64 20480>
-  %i.nf = getelementptr inbounds nuw i8, ptr %i.mk, i64 296
+  %i.ne = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 18432, i64 18944, i64 19456, i64 19968>
+  %i.nf = getelementptr inbounds nuw i8, ptr %i.mk, i64 288
   store <4 x ptr> %i.ne, ptr %i.nf, align 8, !tbaa !131
-  %i.ng = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 20992, i64 21504, i64 22016, i64 22528>
-  %i.nh = getelementptr inbounds nuw i8, ptr %i.mk, i64 328
+  %i.ng = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 20480, i64 20992, i64 21504, i64 22016>
+  %i.nh = getelementptr inbounds nuw i8, ptr %i.mk, i64 320
   store <4 x ptr> %i.ng, ptr %i.nh, align 8, !tbaa !131
-  %i.ni = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 23040, i64 23552, i64 24064, i64 24576>
-  %i.nj = getelementptr inbounds nuw i8, ptr %i.mk, i64 360
+  %i.ni = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 22528, i64 23040, i64 23552, i64 24064>
+  %i.nj = getelementptr inbounds nuw i8, ptr %i.mk, i64 352
   store <4 x ptr> %i.ni, ptr %i.nj, align 8, !tbaa !131
-  %i.nk = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 25088, i64 25600, i64 26112, i64 26624>
-  %i.nl = getelementptr inbounds nuw i8, ptr %i.mk, i64 392
+  %i.nk = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 24576, i64 25088, i64 25600, i64 26112>
+  %i.nl = getelementptr inbounds nuw i8, ptr %i.mk, i64 384
   store <4 x ptr> %i.nk, ptr %i.nl, align 8, !tbaa !131
-  %i.nm = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 27136, i64 27648, i64 28160, i64 28672>
-  %i.nn = getelementptr inbounds nuw i8, ptr %i.mk, i64 424
+  %i.nm = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 26624, i64 27136, i64 27648, i64 28160>
+  %i.nn = getelementptr inbounds nuw i8, ptr %i.mk, i64 416
   store <4 x ptr> %i.nm, ptr %i.nn, align 8, !tbaa !131
-  %i.no = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 29184, i64 29696, i64 30208, i64 30720>
-  %1 = getelementptr inbounds nuw i8, ptr %i.mk, i64 456
-  store <4 x ptr> %i.no, ptr %1, align 8, !tbaa !131
-  %2 = getelementptr inbounds nuw i8, ptr %i.lt, i64 31232
-  %3 = getelementptr inbounds nuw i8, ptr %i.mk, i64 488
-  store ptr %2, ptr %3, align 8, !tbaa !131
-  %4 = getelementptr inbounds nuw i8, ptr %i.lt, i64 31744
-  %i.np = getelementptr inbounds nuw i8, ptr %i.mk, i64 496
-  store ptr %4, ptr %i.np, align 8, !tbaa !131
-  %5 = getelementptr inbounds nuw i8, ptr %i.lt, i64 32256
-  %i.nq = getelementptr inbounds nuw i8, ptr %i.mk, i64 504
-  store ptr %5, ptr %i.nq, align 8, !tbaa !131
+  %i.no = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 28672, i64 29184, i64 29696, i64 30208>
+  %i.np = getelementptr inbounds nuw i8, ptr %i.mk, i64 448
+  store <4 x ptr> %i.no, ptr %i.np, align 8, !tbaa !131
+  %0 = getelementptr inbounds nuw i8, ptr %i.lt, <4 x i64> <i64 30720, i64 31232, i64 31744, i64 32256>
+  %i.nq = getelementptr inbounds nuw i8, ptr %i.mk, i64 480
+  store <4 x ptr> %0, ptr %i.nq, align 8, !tbaa !131
   %i.nr = shl i32 %i.m, 3                         ; 6 uses
   %i.ns = sext i32 %i.nr to i64
   %i.nt = shl nsw i64 %i.ns, 3                    ; 3 uses

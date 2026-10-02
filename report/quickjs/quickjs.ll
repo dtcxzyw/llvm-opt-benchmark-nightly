@@ -205,8 +205,8 @@ bb.kj:                                            ; preds = %bb.ki, %bb.ki, %bb.
   %i.bns = getelementptr inbounds nuw i8, ptr %i.bnm, i64 48
   %i.bnt = load ptr, ptr %i.bns, align 8, !tbaa !218
   %i.bnu = getelementptr inbounds nuw i8, ptr %i.bnt, i64 88
-  %i.bnv = load i32, ptr %i.bnu, align 8, !tbaa !469 ; 7 uses
-  %i.bnw = icmp slt i32 %i.bnv, 242
+  %i.bnv = load i32, ptr %i.bnu, align 8, !tbaa !469 ; 6 uses
+  %i.bnw = icmp slt i32 %i.bnv, 242               ; 2 uses
   br i1 %i.bnw, label %JS_GetScriptOrModuleName.exit, label %.split158.i.thread
 
 .split158.i.thread:                               ; preds = %bb.kj
@@ -262,8 +262,7 @@ JS_AtomToValue.exit:                              ; preds = %.split158.i._crit_e
   %.2793 = select i1 %i.bot, i64 -7, i64 -8       ; 3 uses
   %.pn553 = ptrtoint ptr %i.bor to i64            ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #49
-  %56 = icmp samesign ult i32 %i.bnv, 242
-  br i1 %56, label %.split.i, label %bb.kk
+  br i1 %i.bnw, label %.split.i, label %bb.kk
 
 bb.kk:                                            ; preds = %JS_AtomToValue.exit
   %i.box = load ptr, ptr %i.fc, align 8, !tbaa !232 ; 7 uses

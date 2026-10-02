@@ -205,10 +205,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapIN4pbrt7TexInfoEPNS0_6MIPMapESt4lessIS1_ESaISt4pairIKS1_S3_EEEixERS7_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(56) %1) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::tuple.84", align 8     ; 7 uses
+  %2 = alloca %"class.std::tuple.84", align 8     ; 4 uses
   %3 = alloca %"class.std::tuple.84", align 8     ; 4 uses
   %4 = alloca %"class.std::tuple.84", align 8     ; 4 uses
-  %5 = alloca %"class.std::tuple.84", align 8     ; 7 uses
+  %5 = alloca %"class.std::tuple.84", align 8     ; 4 uses
   %6 = alloca %"class.std::tuple.103", align 8    ; 4 uses
   %7 = alloca %"class.std::tuple.106", align 1    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -218,12 +218,8 @@ bb.a:
   br i1 %.not10.i.i.i, label %.critedge, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %12 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %13 = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %8 = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 40, i64 48, i64 32, i64 0>
+  %9 = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 40, i64 48, i64 32, i64 0>
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i.i.i
@@ -233,10 +229,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   store <4 x ptr> %i.d, ptr %4, align 8, !tbaa !67, !alias.scope !1588
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
-  store ptr %10, ptr %5, align 8, !tbaa !67, !alias.scope !1589
-  store ptr %9, ptr %11, align 8, !tbaa !204, !alias.scope !1589
-  store ptr %8, ptr %12, align 8, !tbaa !206, !alias.scope !1589
-  store ptr %1, ptr %13, align 8, !tbaa !208, !alias.scope !1589
+  store <4 x ptr> %9, ptr %5, align 8, !tbaa !67, !alias.scope !1589
   %i.e = call noundef zeroext i1 @_ZNSt15__tuple_compareISt5tupleIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN4pbrt19MIPMapFilterOptionsERKNS9_13ColorEncodingERKNS9_8WrapModeEEESJ_Lm0ELm4EE6__lessERKSJ_SM_(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %5) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
@@ -254,13 +247,7 @@ _ZNSt3mapIN4pbrt7TexInfoEPNS0_6MIPMapESt4lessIS1_ESaISt4pairIKS1_S3_EEE11lower_b
 bb.c:                                             ; preds = %_ZNSt3mapIN4pbrt7TexInfoEPNS0_6MIPMapESt4lessIS1_ESaISt4pairIKS1_S3_EEE11lower_boundERS7_.exit
   %i.g = getelementptr inbounds nuw i8, ptr %.19.i.i.i, <4 x i64> <i64 72, i64 80, i64 64, i64 32>
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  store ptr %10, ptr %2, align 8, !tbaa !67, !alias.scope !1590
-  %14 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %9, ptr %14, align 8, !tbaa !204, !alias.scope !1590
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store ptr %8, ptr %15, align 8, !tbaa !206, !alias.scope !1590
-  %16 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  store ptr %1, ptr %16, align 8, !tbaa !208, !alias.scope !1590
+  store <4 x ptr> %8, ptr %2, align 8, !tbaa !67, !alias.scope !1590
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   store <4 x ptr> %i.g, ptr %3, align 8, !tbaa !67, !alias.scope !1591
   %i.h = call noundef zeroext i1 @_ZNSt15__tuple_compareISt5tupleIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN4pbrt19MIPMapFilterOptionsERKNS9_13ColorEncodingERKNS9_8WrapModeEEESJ_Lm0ELm4EE6__lessERKSJ_SM_(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %3)
@@ -663,16 +650,16 @@ _ZNSt8_Rb_treeIN4pbrt7TexInfoESt4pairIKS1_PNS0_6MIPMapEESt10_Select1stIS6_ESt4le
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local { ptr, ptr } @_ZNSt8_Rb_treeIN4pbrt7TexInfoESt4pairIKS1_PNS0_6MIPMapEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS6_ERS3_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(56) %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::tuple.84", align 8     ; 7 uses
+  %3 = alloca %"class.std::tuple.84", align 8     ; 4 uses
   %4 = alloca %"class.std::tuple.84", align 8     ; 4 uses
   %5 = alloca %"class.std::tuple.84", align 8     ; 4 uses
-  %6 = alloca %"class.std::tuple.84", align 8     ; 7 uses
+  %6 = alloca %"class.std::tuple.84", align 8     ; 4 uses
   %7 = alloca %"class.std::tuple.84", align 8     ; 4 uses
-  %8 = alloca %"class.std::tuple.84", align 8     ; 7 uses
-  %9 = alloca %"class.std::tuple.84", align 8     ; 7 uses
+  %8 = alloca %"class.std::tuple.84", align 8     ; 4 uses
+  %9 = alloca %"class.std::tuple.84", align 8     ; 4 uses
   %10 = alloca %"class.std::tuple.84", align 8    ; 4 uses
   %11 = alloca %"class.std::tuple.84", align 8    ; 4 uses
-  %12 = alloca %"class.std::tuple.84", align 8    ; 7 uses
+  %12 = alloca %"class.std::tuple.84", align 8    ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = icmp eq ptr %1, %i.a
   br i1 %i.b, label %bb.b, label %bb.f
@@ -690,16 +677,8 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, <4 x i64> <i64 72, i64 80, i64 64, i64 32>
   store <4 x ptr> %i.g, ptr %11, align 8, !tbaa !67, !alias.scope !1642
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #26
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %14 = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 40
-  store ptr %15, ptr %12, align 8, !tbaa !67, !alias.scope !1643
-  %16 = getelementptr inbounds nuw i8, ptr %12, i64 8
-  store ptr %14, ptr %16, align 8, !tbaa !204, !alias.scope !1643
-  %17 = getelementptr inbounds nuw i8, ptr %12, i64 16
-  store ptr %13, ptr %17, align 8, !tbaa !206, !alias.scope !1643
-  %18 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  store ptr %2, ptr %18, align 8, !tbaa !208, !alias.scope !1643
+  %13 = getelementptr inbounds nuw i8, ptr %2, <4 x i64> <i64 40, i64 48, i64 32, i64 0>
+  store <4 x ptr> %13, ptr %12, align 8, !tbaa !67, !alias.scope !1643
   %i.h = call noundef zeroext i1 @_ZNSt15__tuple_compareISt5tupleIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN4pbrt19MIPMapFilterOptionsERKNS9_13ColorEncodingERKNS9_8WrapModeEEESJ_Lm0ELm4EE6__lessERKSJ_SM_(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull align 8 dereferenceable(32) %12)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #26
@@ -718,16 +697,10 @@ bb.e:                                             ; preds = %bb.c, %bb.b
 bb.f:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 72, i64 80, i64 64, i64 32>
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
-  %19 = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 4 uses
-  %20 = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 4 uses
-  %21 = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
-  store ptr %21, ptr %9, align 8, !tbaa !67, !alias.scope !1644
-  %22 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store ptr %20, ptr %22, align 8, !tbaa !204, !alias.scope !1644
-  %23 = getelementptr inbounds nuw i8, ptr %9, i64 16
-  store ptr %19, ptr %23, align 8, !tbaa !206, !alias.scope !1644
-  %24 = getelementptr inbounds nuw i8, ptr %9, i64 24
-  store ptr %2, ptr %24, align 8, !tbaa !208, !alias.scope !1644
+  %14 = getelementptr inbounds nuw i8, ptr %2, <4 x i64> <i64 40, i64 48, i64 32, i64 0>
+  %15 = getelementptr inbounds nuw i8, ptr %2, <4 x i64> <i64 40, i64 48, i64 32, i64 0>
+  %16 = getelementptr inbounds nuw i8, ptr %2, <4 x i64> <i64 40, i64 48, i64 32, i64 0>
+  store <4 x ptr> %16, ptr %9, align 8, !tbaa !67, !alias.scope !1644
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
   store <4 x ptr> %i.m, ptr %10, align 8, !tbaa !67, !alias.scope !1645
   %i.n = call noundef zeroext i1 @_ZNSt15__tuple_compareISt5tupleIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN4pbrt19MIPMapFilterOptionsERKNS9_13ColorEncodingERKNS9_8WrapModeEEESJ_Lm0ELm4EE6__lessERKSJ_SM_(ptr noundef nonnull align 8 dereferenceable(32) %9, ptr noundef nonnull align 8 dereferenceable(32) %10)
@@ -747,13 +720,7 @@ bb.h:                                             ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, <4 x i64> <i64 72, i64 80, i64 64, i64 32>
   store <4 x ptr> %i.s, ptr %7, align 8, !tbaa !67, !alias.scope !1646
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
-  store ptr %21, ptr %8, align 8, !tbaa !67, !alias.scope !1647
-  %25 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store ptr %20, ptr %25, align 8, !tbaa !204, !alias.scope !1647
-  %26 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  store ptr %19, ptr %26, align 8, !tbaa !206, !alias.scope !1647
-  %27 = getelementptr inbounds nuw i8, ptr %8, i64 24
-  store ptr %2, ptr %27, align 8, !tbaa !208, !alias.scope !1647
+  store <4 x ptr> %14, ptr %8, align 8, !tbaa !67, !alias.scope !1647
   %i.t = call noundef zeroext i1 @_ZNSt15__tuple_compareISt5tupleIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN4pbrt19MIPMapFilterOptionsERKNS9_13ColorEncodingERKNS9_8WrapModeEEESJ_Lm0ELm4EE6__lessERKSJ_SM_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
@@ -774,17 +741,12 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.p
 
 bb.k:                                             ; preds = %bb.f
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 72, i64 80, i64 64, i64 32>
+  %i.aa = getelementptr inbounds nuw i8, ptr %2, <4 x i64> <i64 40, i64 48, i64 32, i64 0>
+  %17 = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 72, i64 80, i64 64, i64 32>
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
-  store <4 x ptr> %i.aa, ptr %5, align 8, !tbaa !67, !alias.scope !1648
+  store <4 x ptr> %17, ptr %5, align 8, !tbaa !67, !alias.scope !1648
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
-  store ptr %21, ptr %6, align 8, !tbaa !67, !alias.scope !1649
-  %28 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store ptr %20, ptr %28, align 8, !tbaa !204, !alias.scope !1649
-  %29 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store ptr %19, ptr %29, align 8, !tbaa !206, !alias.scope !1649
-  %30 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  store ptr %2, ptr %30, align 8, !tbaa !208, !alias.scope !1649
+  store <4 x ptr> %i.aa, ptr %6, align 8, !tbaa !67, !alias.scope !1649
   %i.ab = call noundef zeroext i1 @_ZNSt15__tuple_compareISt5tupleIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN4pbrt19MIPMapFilterOptionsERKNS9_13ColorEncodingERKNS9_8WrapModeEEESJ_Lm0ELm4EE6__lessERKSJ_SM_(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
@@ -799,13 +761,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.af = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %1) #29 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
-  store ptr %21, ptr %3, align 8, !tbaa !67, !alias.scope !1650
-  %31 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %20, ptr %31, align 8, !tbaa !204, !alias.scope !1650
-  %32 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store ptr %19, ptr %32, align 8, !tbaa !206, !alias.scope !1650
-  %33 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store ptr %2, ptr %33, align 8, !tbaa !208, !alias.scope !1650
+  store <4 x ptr> %15, ptr %3, align 8, !tbaa !67, !alias.scope !1650
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, <4 x i64> <i64 72, i64 80, i64 64, i64 32>
   store <4 x ptr> %i.ag, ptr %4, align 8, !tbaa !67, !alias.scope !1651
@@ -968,8 +924,8 @@ declare void @__cxa_end_catch() local_unnamed_addr
 define linkonce_odr dso_local { ptr, ptr } @_ZNSt8_Rb_treeIN4pbrt7TexInfoESt4pairIKS1_PNS0_6MIPMapEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE24_M_get_insert_unique_posERS3_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(56) %1) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::tuple.84", align 8     ; 4 uses
-  %3 = alloca %"class.std::tuple.84", align 8     ; 7 uses
-  %4 = alloca %"class.std::tuple.84", align 8     ; 7 uses
+  %3 = alloca %"class.std::tuple.84", align 8     ; 4 uses
+  %4 = alloca %"class.std::tuple.84", align 8     ; 4 uses
   %5 = alloca %"class.std::tuple.84", align 8     ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -978,22 +934,14 @@ bb.a:
   br i1 %.not23, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %10 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %6 = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 40, i64 48, i64 32, i64 0>
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.02024 = phi ptr [ %.02022, %.lr.ph ], [ %.020, %bb.b ] ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.02024, <4 x i64> <i64 72, i64 80, i64 64, i64 32>
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
-  store ptr %8, ptr %4, align 8, !tbaa !67, !alias.scope !1661
-  store ptr %7, ptr %9, align 8, !tbaa !204, !alias.scope !1661
-  store ptr %6, ptr %10, align 8, !tbaa !206, !alias.scope !1661
-  store ptr %1, ptr %11, align 8, !tbaa !208, !alias.scope !1661
+  store <4 x ptr> %6, ptr %4, align 8, !tbaa !67, !alias.scope !1661
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
   store <4 x ptr> %i.c, ptr %5, align 8, !tbaa !67, !alias.scope !1662
   %i.d = call noundef zeroext i1 @_ZNSt15__tuple_compareISt5tupleIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN4pbrt19MIPMapFilterOptionsERKNS9_13ColorEncodingERKNS9_8WrapModeEEESJ_Lm0ELm4EE6__lessERKSJ_SM_(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %5) ; 2 uses
@@ -1026,16 +974,8 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   store <4 x ptr> %i.i, ptr %2, align 8, !tbaa !67, !alias.scope !1663
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  store ptr %14, ptr %3, align 8, !tbaa !67, !alias.scope !1664
-  %15 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %13, ptr %15, align 8, !tbaa !204, !alias.scope !1664
-  %16 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store ptr %12, ptr %16, align 8, !tbaa !206, !alias.scope !1664
-  %17 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store ptr %1, ptr %17, align 8, !tbaa !208, !alias.scope !1664
+  %7 = getelementptr inbounds nuw i8, ptr %1, <4 x i64> <i64 40, i64 48, i64 32, i64 0>
+  store <4 x ptr> %7, ptr %3, align 8, !tbaa !67, !alias.scope !1664
   %i.j = call noundef zeroext i1 @_ZNSt15__tuple_compareISt5tupleIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN4pbrt19MIPMapFilterOptionsERKNS9_13ColorEncodingERKNS9_8WrapModeEEESJ_Lm0ELm4EE6__lessERKSJ_SM_(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %3) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26

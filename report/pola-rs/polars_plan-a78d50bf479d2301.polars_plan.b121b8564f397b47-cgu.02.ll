@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8, !dbg !56318
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !56318 ; 4 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16, !dbg !56318
-  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !56318 ; 14 uses
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !56318 ; 13 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !56287), !dbg !56318
   %i.q = invoke noundef nonnull align 8 ptr @_RNvMs1_NtNtCskmDBXs7hs3c_5tokio7runtime9schedulerNtB5_6Handle17as_current_thread(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %.sroa.0.0.copyload)
           to label %.noexc unwind label %.loopexit.split-lp, !dbg !56319 ; 3 uses
@@ -230,13 +230,13 @@ bb.b:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %.sroa.8.0..sroa_idx25.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 2600 ; 4 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 24 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, <2 x i64> <i64 0, i64 24>
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 24
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 32
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 40 ; 3 uses
   %.sroa.77.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 48 ; 3 uses
   %.sroa.99.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 2576
-  %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 2584
   %.sroa.12.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 2593 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 56
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload, i64 2592 ; 2 uses
@@ -351,8 +351,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ba = load ptr, ptr %i.ab, align 8, !dbg !56360, !noalias !56295, !align !4821, !noundef !4698
   store ptr %i.ba, ptr %i.ac, align 8, !dbg !56361, !noalias !56295
   store ptr null, ptr %.sroa.77.0..sroa_idx.i.i, align 8, !dbg !56361, !noalias !56295
-  store ptr %.sroa.5.0.copyload, ptr %.sroa.99.0..sroa_idx.i.i, align 8, !dbg !56361, !noalias !56295
-  store ptr %i.z, ptr %.sroa.10.0..sroa_idx.i.i, align 8, !dbg !56361, !noalias !56295
+  store <2 x ptr> %5, ptr %.sroa.99.0..sroa_idx.i.i, align 8, !dbg !56361, !noalias !56295
   store i8 0, ptr %.sroa.12.0..sroa_idx.i.i, align 1, !dbg !56361, !noalias !56295
   br label %bb.m, !dbg !56362
 

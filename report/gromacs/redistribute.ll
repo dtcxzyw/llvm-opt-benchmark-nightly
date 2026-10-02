@@ -115,8 +115,8 @@ bb.a:
   %10 = alloca %"class.std::vector.188", align 8  ; 10 uses
   %i.o = alloca [6 x i32], align 16               ; 9 uses
   %11 = alloca %class.DDBufferAccess.331, align 8 ; 8 uses
-  %i.p = alloca i32, align 4                      ; 9 uses
-  %12 = alloca %"class.gmx::ArrayRef", align 8    ; 3 uses
+  %i.p = alloca i32, align 4                      ; 8 uses
+  %12 = alloca %"class.gmx::ArrayRef", align 16   ; 2 uses
   %13 = alloca %"class.gmx::ArrayRef", align 8    ; 3 uses
   %14 = alloca %"class.gmx::ArrayRef.332", align 8 ; 3 uses
   %i.q = alloca [3 x float], align 8              ; 7 uses
@@ -519,10 +519,9 @@ bb.bw:                                            ; preds = %_ZL18clear_and_mark
   br i1 %i.vf, label %.lr.ph626, label %._crit_edge627
 
 .lr.ph626:                                        ; preds = %bb.bw
-  %15 = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
-  %.sroa.4.0..sroa_idx.i357.a = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
-  %i.vg = getelementptr inbounds nuw i8, ptr %i.p, i64 4
-  %16 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %.sroa.4.0..sroa_idx.i357.a = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
+  %i.vg = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %i.p, <2 x i64> <i64 0, i64 4>
   %i.vh = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.vi = add nuw nsw i32 %.1287, 1               ; 6 uses
   %i.vj = getelementptr inbounds nuw i8, ptr %14, i64 8
@@ -640,8 +639,8 @@ bb.ce:                                            ; preds = %bb.cd
 bb.cf:                                            ; preds = %bb.cd
   store i8 1, ptr %i.wr, align 8, !tbaa !264
   %i.wu = load ptr, ptr %i.wq, align 8, !tbaa !251 ; 2 uses
-  store ptr %i.wu, ptr %15, align 8
   store ptr %i.wu, ptr %.sroa.4.0..sroa_idx.i357.a, align 8
+  store ptr %i.wu, ptr %i.vg, align 8
   %i.wv = getelementptr inbounds nuw i8, ptr %i.wo, i64 180
   %i.ww = getelementptr inbounds nuw [4 x i8], ptr %i.wv, i64 %indvars.iv710
   %i.wx = load i32, ptr %i.ww, align 4, !tbaa !168 ; 3 uses
@@ -709,8 +708,7 @@ bb.ck:                                            ; preds = %._crit_edge767, %bb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #9
   %i.xw = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.xp ; 4 uses
   %i.xx = getelementptr inbounds nuw i8, ptr %i.xw, i64 4
-  store ptr %i.p, ptr %12, align 8
-  store ptr %i.vg, ptr %16, align 8
+  store <2 x ptr> %15, ptr %12, align 16
   invoke void @_Z10ddSendrecvIiEvPK12gmx_domdec_tiiN3gmx8ArrayRefIT_EES6_(ptr noundef %i.xv, i32 noundef %.pre-phi771, i32 noundef %.pre-phi769, ptr nonnull %i.xw, ptr nonnull %i.xx, ptr noundef nonnull byval(%"class.gmx::ArrayRef") align 8 %12)
           to label %bb.cl unwind label %.loopexit495
 
@@ -1018,8 +1016,8 @@ _ZNSt12_Vector_baseIN3gmx11BasicVectorIfEENS0_30DefaultInitializationAllocatorIS
   %.not.i.i.i371 = icmp eq ptr %i.acj, null       ; 2 uses
   %i.ack = getelementptr inbounds nuw [12 x i8], ptr %i.acj, i64 %i.abc
   %spec.select.i.i.i372 = select i1 %.not.i.i.i371, ptr null, ptr %i.ack
-  store ptr %i.acj, ptr %15, align 8
-  store ptr %spec.select.i.i.i372, ptr %.sroa.4.0..sroa_idx.i357.a, align 8
+  store ptr %i.acj, ptr %.sroa.4.0..sroa_idx.i357.a, align 8
+  store ptr %spec.select.i.i.i372, ptr %i.vg, align 8
   %i.acl = mul nsw i32 %i.aay, %i.vi
   %i.acm = load ptr, ptr %i.g, align 8, !tbaa !16
   %i.acn = load ptr, ptr %i.j, align 8, !tbaa !22

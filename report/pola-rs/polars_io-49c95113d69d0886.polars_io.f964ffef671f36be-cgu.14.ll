@@ -204,17 +204,14 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcN
 
 bb.c:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 41, !dbg !35762
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !35763
-  %2 = load ptr, ptr %i.k, align 8, !dbg !35763, !nonnull !1513, !noundef !1513 ; 2 uses
-  store ptr %2, ptr %0, align 8, !dbg !35764
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !35765
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !35766
-  store ptr %3, ptr %i.l, align 8, !dbg !35766
-  store i8 0, ptr %i.j, align 1, !dbg !35767
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !35767
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !35767
-  %6 = load ptr, ptr %5, align 8, !dbg !35767, !nonnull !1513, !noundef !1513
-  store ptr %6, ptr %4, align 8, !dbg !35767
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !35763 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !35764
+  store i8 0, ptr %i.j, align 1, !dbg !35765
+  %2 = load <2 x ptr>, ptr %i.k, align 8, !dbg !35763
+  %3 = load ptr, ptr %i.k, align 8, !dbg !35763, !nonnull !1513, !noundef !1513
+  store ptr %3, ptr %0, align 8, !dbg !35766
+  %4 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 16, i64 0>, !dbg !35767
+  store <2 x ptr> %4, ptr %i.l, align 8, !dbg !35764
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !35768
   store i8 0, ptr %i.m, align 8, !dbg !35768
   br label %bb.d, !dbg !35769
@@ -617,13 +614,13 @@ begin_hunk_1_@llvm.umin.i8
 !35685 = !DILocation(line: 1667, column: 18, scope: !35579)
 !35686 = !DILocation(line: 1661, column: 38, scope: !35579)
 !35687 = distinct !DISubprogram(name: "{async_block#1}", linkageName: "_RNCNCNvNtNtCslpwjCj2YNBy_9polars_io10file_cache10cache_lock22GLOBAL_FILE_CACHE_LOCK0s_0B9_", scope: !35750, file: !1871, line: 31, type: !1514, scopeLine: 31, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!35688 = distinct !DISubprogram(name: "deref<core::sync::atomic::Atomic<bool>, alloc::alloc::Global>", linkageName: "_RNvXsw_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtNtCscgRAwXFJnXP_4core4sync6atomic6AtomicbEENtNtNtBN_3ops5deref5Deref5derefCslpwjCj2YNBy_9polars_io", scope: !1907, file: !1533, line: 2427, type: !1514, scopeLine: 2427, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!35689 = distinct !DISubprogram(name: "as_ref<core::sync::atomic::Atomic<bool>, alloc::alloc::Global>", linkageName: "_RNvXs1j_NtCsgZ49sUHp3tW_5alloc4syncINtB6_3ArcINtNtNtCscgRAwXFJnXP_4core4sync6atomic6AtomicbEEINtNtBO_7convert5AsRefBH_E6as_refCslpwjCj2YNBy_9polars_io", scope: !1972, file: !1533, line: 4193, type: !1532, scopeLine: 4193, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
-!35690 = distinct !DILexicalBlock(scope: !35687, file: !1871, line: 32, column: 9)
-!35691 = distinct !DILocation(line: 33, column: 38, scope: !35690)
-!35692 = distinct !DILocation(line: 4194, column: 10, scope: !35689, inlinedAt: !35691)
-!35693 = distinct !DILexicalBlock(scope: !35690, file: !1871, line: 33, column: 9)
-!35694 = distinct !DILexicalBlock(scope: !35693, file: !1871, line: 34, column: 9)
+!35688 = distinct !DILexicalBlock(scope: !35687, file: !1871, line: 32, column: 9)
+!35689 = distinct !DILexicalBlock(scope: !35688, file: !1871, line: 33, column: 9)
+!35690 = distinct !DISubprogram(name: "deref<core::sync::atomic::Atomic<bool>, alloc::alloc::Global>", linkageName: "_RNvXsw_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcINtNtNtCscgRAwXFJnXP_4core4sync6atomic6AtomicbEENtNtNtBN_3ops5deref5Deref5derefCslpwjCj2YNBy_9polars_io", scope: !1907, file: !1533, line: 2427, type: !1514, scopeLine: 2427, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!35691 = distinct !DISubprogram(name: "as_ref<core::sync::atomic::Atomic<bool>, alloc::alloc::Global>", linkageName: "_RNvXs1j_NtCsgZ49sUHp3tW_5alloc4syncINtB6_3ArcINtNtNtCscgRAwXFJnXP_4core4sync6atomic6AtomicbEEINtNtBO_7convert5AsRefBH_E6as_refCslpwjCj2YNBy_9polars_io", scope: !1972, file: !1533, line: 4193, type: !1532, scopeLine: 4193, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
+!35692 = distinct !DILocation(line: 33, column: 38, scope: !35688)
+!35693 = distinct !DILocation(line: 4194, column: 10, scope: !35691, inlinedAt: !35692)
+!35694 = distinct !DILexicalBlock(scope: !35689, file: !1871, line: 34, column: 9)
 !35695 = distinct !DILexicalBlock(scope: !35694, file: !1871, line: 35, column: 9)
 !35696 = distinct !DILexicalBlock(scope: !35695, file: !1871, line: 59, column: 60)
 !35697 = distinct !DISubprogram(name: "atomic_swap<u8>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core4sync6atomic11atomic_swaphECslpwjCj2YNBy_9polars_io", scope: !1518, file: !1515, line: 3916, type: !1514, scopeLine: 3916, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !1513)
@@ -658,7 +655,7 @@ begin_hunk_1_@llvm.umin.i8
 !35726 = distinct !{!35726, !35725, !"_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcNtNtNtCskmDBXs7hs3c_5tokio4sync6notify6NotifyEECslpwjCj2YNBy_9polars_io: argument 0"}
 !35727 = distinct !{!35727, !"_RNvXsD_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtNtCskmDBXs7hs3c_5tokio4sync6notify6NotifyENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io"}
 !35728 = distinct !{!35728, !35727, !"_RNvXsD_NtCsgZ49sUHp3tW_5alloc4syncINtB5_3ArcNtNtNtCskmDBXs7hs3c_5tokio4sync6notify6NotifyENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCslpwjCj2YNBy_9polars_io: argument 0"}
-!35729 = distinct !DILocation(line: 62, column: 5, scope: !35693)
+!35729 = distinct !DILocation(line: 62, column: 5, scope: !35689)
 !35730 = distinct !DILocation(line: 810, column: 1, scope: !836, inlinedAt: !35729)
 !35731 = distinct !DILocation(line: 2814, column: 17, scope: !837, inlinedAt: !35730)
 !35732 = distinct !DILocation(line: 2110, column: 27, scope: !848, inlinedAt: !35731)
@@ -693,10 +690,10 @@ begin_hunk_1_@llvm.umin.i8
 !35761 = !DILocation(line: 62, column: 5, scope: !35687)
 !35762 = !DILocation(line: 32, column: 13, scope: !35687)
 !35763 = !DILocation(line: 32, column: 51, scope: !35687)
-!35764 = !DILocation(line: 32, column: 23, scope: !35687)
-!35765 = !DILocation(line: 2428, column: 9, scope: !35688, inlinedAt: !35692)
-!35766 = !DILocation(line: 33, column: 30, scope: !35690)
-!35767 = !DILocation(line: 34, column: 36, scope: !35693)
+!35764 = !DILocation(line: 33, column: 30, scope: !35688)
+!35765 = !DILocation(line: 34, column: 36, scope: !35689)
+!35766 = !DILocation(line: 32, column: 23, scope: !35687)
+!35767 = !DILocation(line: 2428, column: 9, scope: !35690, inlinedAt: !35693)
 !35768 = !DILocation(line: 35, column: 23, scope: !35694)
 !35769 = !DILocation(line: 37, column: 9, scope: !35695)
 !35770 = !DILocation(line: 38, column: 16, scope: !35695)
@@ -733,7 +730,7 @@ begin_hunk_1_@llvm.umin.i8
 !35801 = !DILocation(line: 674, column: 18, scope: !745, inlinedAt: !35724)
 !35802 = !DILocation(line: 44, column: 16, scope: !35695)
 !35803 = !DILocation(line: 45, column: 17, scope: !35695)
-!35804 = !DILocation(line: 62, column: 5, scope: !35693)
+!35804 = !DILocation(line: 62, column: 5, scope: !35689)
 !35805 = !DILocation(line: 810, column: 1, scope: !836, inlinedAt: !35729)
 !35806 = !DILocation(line: 444, column: 20, scope: !847, inlinedAt: !35732)
 !35807 = !DILocation(line: 3956, column: 24, scope: !849, inlinedAt: !35734)

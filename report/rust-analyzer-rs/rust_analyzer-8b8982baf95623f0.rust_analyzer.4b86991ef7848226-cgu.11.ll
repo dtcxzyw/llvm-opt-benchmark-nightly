@@ -205,11 +205,11 @@ bb.a:
   %i.b = alloca [64 x i8], align 8                ; 10 uses
   %i.c = alloca [64 x i8], align 8                ; 12 uses
   %i.d = alloca [64 x i8], align 8                ; 12 uses
-  %i.e = alloca [24 x i8], align 8                ; 6 uses
+  %i.e = alloca [24 x i8], align 8                ; 5 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
   %i.g = alloca [48 x i8], align 8                ; 5 uses
   %i.h = alloca [32 x i8], align 8                ; 7 uses
-  %i.i = alloca [24 x i8], align 8                ; 6 uses
+  %i.i = alloca [24 x i8], align 8                ; 5 uses
   %i.j = alloca [24 x i8], align 8                ; 8 uses
   %i.k = alloca [24 x i8], align 8                ; 6 uses
   %i.l = alloca [32 x i8], align 8                ; 7 uses
@@ -612,7 +612,6 @@ _RINvXs7_NtNtNtCscAsMj0W7j8b_3std11collections4hash3setINtB6_7HashSetNtNtCs6u1mg
   br i1 %i.il, label %_RNvMs1_NtCs6u1mgJOKDyY_13rust_analyzer12global_stateNtB5_19GlobalStateSnapshot38all_workspace_dependencies_for_package.exit.i, label %bb.ca
 
 bb.cf:                                            ; preds = %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtCs6u1mgJOKDyY_13rust_analyzer8flycheck14FlycheckHandleENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNCNvNtNtBU_8handlers12notification12run_flychecks_0s0_0EBU_.exit.i
-  %1 = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.im = getelementptr inbounds nuw i8, ptr %.val.i, i64 16
   %i.in = load ptr, ptr %i.im, align 8, !noalias !2846, !nonnull !5, !noundef !5 ; 2 uses
@@ -624,11 +623,12 @@ bb.cf:                                            ; preds = %_RINvXs2J_NtNtCshzW
   br i1 %i.ir, label %_RNvMs1_NtCs6u1mgJOKDyY_13rust_analyzer12global_stateNtB5_19GlobalStateSnapshot38all_workspace_dependencies_for_package.exit.i, label %.lr.ph.i2.i.i
 
 .lr.ph.i2.i.i:                                    ; preds = %bb.cf
+  %1 = insertelement <2 x ptr> poison, ptr %i.az, i64 0
+  %2 = insertelement <2 x ptr> %1, ptr %i.j, i64 1
   %.sroa.411.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %.sroa.512.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %2 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
+  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 8, i64 24>
   %i.is = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %.sroa.4.0..sroa_idx.i.i.i212.i = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   %.sroa.12.0..sroa_idx269.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   br label %bb.cg
@@ -667,8 +667,7 @@ bb.cj:                                            ; preds = %bb.ci, %bb.ch
   store i64 0, ptr %.sroa.512.0..sroa_idx.i.i.i.i, align 8, !noalias !2860
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2860
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.i, align 8, !noalias !2860
-  store ptr %1, ptr %i.is, align 8, !noalias !2860
-  store ptr %2, ptr %3, align 8, !noalias !2860
+  store <2 x ptr> %3, ptr %i.is, align 8, !noalias !2860
   %i.je = invoke { i32, i32 } @_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace11PackageDataEENCNvMsm_Csbq3eHDLgq0Z_8la_arenaINtB30_5ArenaB1P_E4iter0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvB6_12map_try_foldTINtB30_3IdxB1P_ERB1P_EB4R_uINtNtNtBc_3ops12control_flow11ControlFlowB4R_ENCNvMs4_B1R_NtB1R_14CargoWorkspace8packages0NCINvNvB3M_4find5checkB4R_NCNCNvMs1_NtCs6u1mgJOKDyY_13rust_analyzer12global_stateNtB7k_19GlobalStateSnapshot38all_workspace_dependencies_for_package00E0E0B5i_EB7m_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.j, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.i)
           to label %.noexc217.i unwind label %.loopexit336.i ; 2 uses
 
@@ -1071,9 +1070,10 @@ bb.ej:                                            ; preds = %bb.el, %bb.ei, %bb.
   %.sroa.814.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 58
   %.sroa.418.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.519.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %4 = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.my = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %4 = insertelement <2 x ptr> poison, ptr %i.ak, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %i.f, i64 1
+  %6 = getelementptr inbounds nuw i8, <2 x ptr> %5, <2 x i64> <i64 0, i64 24>
+  %i.my = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.mz = trunc nuw i64 %.sroa.0.0288.i to i1
   br label %.lr.ph.i
 
@@ -1316,8 +1316,7 @@ bb.ey:                                            ; preds = %bb.ex, %bb.eo
   store i64 0, ptr %.sroa.519.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !2882
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !2882
   store ptr %.sroa.02.0.i.i.i.i.i.i, ptr %i.e, align 8, !noalias !2882
-  store ptr %i.ak, ptr %5, align 8, !noalias !2882
-  store ptr %4, ptr %i.my, align 8, !noalias !2882
+  store <2 x ptr> %6, ptr %i.my, align 8, !noalias !2882
   %i.pi = invoke noundef zeroext i1 @_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace11PackageDataEENCNvMsm_Csbq3eHDLgq0Z_8la_arenaINtB30_5ArenaB1P_E4iter0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvB6_12map_try_foldTINtB30_3IdxB1P_ERB1P_EB4R_uINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs4_B1R_NtB1R_14CargoWorkspace8packages0NCINvNvB3M_3any5checkB4R_NCNCNCNvNtNtCs6u1mgJOKDyY_13rust_analyzer8handlers12notification12run_flychecks_0s3_00E0E0B5i_EB7i_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.e)
           to label %.noexc241.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i
 

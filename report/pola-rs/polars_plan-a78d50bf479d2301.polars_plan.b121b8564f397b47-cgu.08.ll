@@ -205,21 +205,23 @@ bb.cd:                                            ; preds = %.critedge44
 define void @_RNvNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl9functions8temporal8duration(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([144 x i8]) align 16 captures(none) dereferenceable(144) %0, ptr noalias noundef align 16 captures(address) dead_on_return dereferenceable(1168) %1) unnamed_addr #1 personality ptr @rust_eh_personality !dbg !142659 {
 bb.a:
   %i.a = alloca [48 x i8], align 16               ; 90 uses
-  %i.b = alloca [64 x i8], align 8                ; 11 uses
-  %i.c = alloca [64 x i8], align 8                ; 11 uses
+  %i.b = alloca [64 x i8], align 8                ; 4 uses
+  %i.c = alloca [64 x i8], align 8                ; 4 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = alloca [144 x i8], align 16              ; 9 uses
   %i.f = alloca [72 x i8], align 8                ; 10 uses
   %i.g = alloca [144 x i8], align 16              ; 13 uses
   %i.h = alloca [144 x i8], align 16              ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !dbg !142727
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 144, !dbg !142728 ; 5 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 288, !dbg !142729 ; 5 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 432, !dbg !142730 ; 5 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 576, !dbg !142731 ; 5 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 720, !dbg !142732 ; 5 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 864, !dbg !142733 ; 5 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 1008, !dbg !142734 ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, <8 x i64> <i64 0, i64 144, i64 288, i64 432, i64 576, i64 720, i64 864, i64 1008>, !dbg !142728
+  %3 = getelementptr inbounds nuw i8, ptr %1, <8 x i64> <i64 0, i64 144, i64 288, i64 432, i64 576, i64 720, i64 864, i64 1008>, !dbg !142728
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 144, !dbg !142728 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 288, !dbg !142729 ; 3 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 432, !dbg !142730 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 576, !dbg !142731 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 720, !dbg !142732 ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 864, !dbg !142733 ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 1008, !dbg !142734 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !142735 ; 16 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !142736 ; 8 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 112, !dbg !142737
@@ -622,21 +624,7 @@ _RNCNvMs1_NtNtNtCsfcROwRM8ZtH_11polars_plan3dsl9functions8temporalNtB7_12Duratio
 _RNCNvMs1_NtNtNtCsfcROwRM8ZtH_11polars_plan3dsl9functions8temporalNtB7_12DurationArgs10as_literals0_0Bd_.exit.backedge.i.7.i: ; preds = %_RNCNvMs1_NtNtNtCsfcROwRM8ZtH_11polars_plan3dsl9functions8temporalNtB7_12DurationArgs10as_literals0_0Bd_.exit.backedge.sink.split.i.7.i, %.noexc46, %.noexc45, %.noexc44, %_RNCNvMs1_NtNtNtCsfcROwRM8ZtH_11polars_plan3dsl9functions8temporalNtB7_12DurationArgs10as_literals0_0Bd_.exit.backedge.i.6.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !142751, !noalias !142721
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !142751, !noalias !142721
-  store ptr %1, ptr %i.c, align 8, !dbg !142751, !noalias !142721
-  %.sroa.4.0..sroa_idx47.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !142751
-  store ptr %i.i, ptr %.sroa.4.0..sroa_idx47.i, align 8, !dbg !142751, !noalias !142721
-  %.sroa.6.0..sroa_idx51.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !142751
-  store ptr %i.j, ptr %.sroa.6.0..sroa_idx51.i, align 8, !dbg !142751, !noalias !142721
-  %.sroa.8.0..sroa_idx55.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !142751
-  store ptr %i.k, ptr %.sroa.8.0..sroa_idx55.i, align 8, !dbg !142751, !noalias !142721
-  %.sroa.10.0..sroa_idx59.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !142751
-  store ptr %i.l, ptr %.sroa.10.0..sroa_idx59.i, align 8, !dbg !142751, !noalias !142721
-  %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 40, !dbg !142751
-  store ptr %i.m, ptr %.sroa.12.0..sroa_idx.i, align 8, !dbg !142751, !noalias !142721
-  %.sroa.14.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 48, !dbg !142751
-  store ptr %i.n, ptr %.sroa.14.0..sroa_idx.i, align 8, !dbg !142751, !noalias !142721
-  %.sroa.16.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 56, !dbg !142751
-  store ptr %i.o, ptr %.sroa.16.0..sroa_idx.i, align 8, !dbg !142751, !noalias !142721
+  store <8 x ptr> %3, ptr %i.c, align 8, !dbg !142751, !noalias !142721
   invoke void @_RINvNtCs2mZqlW55729_12polars_utils5array7try_mapRNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprnKj8_NCNvMs1_NtNtBP_9functions8temporalNtB1J_12DurationArgs10as_literal0EBR_(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(none) dereferenceable(144) %i.g, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(64) %i.c)
           to label %.noexc48 unwind label %bb.q, !dbg !142751
 
@@ -708,21 +696,7 @@ bb.k:                                             ; preds = %.noexc48
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !142767, !noalias !142721
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !142769, !noalias !142721
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !142769, !noalias !142721
-  store ptr %1, ptr %i.b, align 8, !dbg !142769, !noalias !142721
-  %.sroa.4.0..sroa_idx49.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !142769
-  store ptr %i.i, ptr %.sroa.4.0..sroa_idx49.i, align 8, !dbg !142769, !noalias !142721
-  %.sroa.6.0..sroa_idx53.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16, !dbg !142769
-  store ptr %i.j, ptr %.sroa.6.0..sroa_idx53.i, align 8, !dbg !142769, !noalias !142721
-  %.sroa.8.0..sroa_idx57.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24, !dbg !142769
-  store ptr %i.k, ptr %.sroa.8.0..sroa_idx57.i, align 8, !dbg !142769, !noalias !142721
-  %.sroa.10.0..sroa_idx61.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32, !dbg !142769
-  store ptr %i.l, ptr %.sroa.10.0..sroa_idx61.i, align 8, !dbg !142769, !noalias !142721
-  %.sroa.12.0..sroa_idx63.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40, !dbg !142769
-  store ptr %i.m, ptr %.sroa.12.0..sroa_idx63.i, align 8, !dbg !142769, !noalias !142721
-  %.sroa.14.0..sroa_idx65.i = getelementptr inbounds nuw i8, ptr %i.b, i64 48, !dbg !142769
-  store ptr %i.n, ptr %.sroa.14.0..sroa_idx65.i, align 8, !dbg !142769, !noalias !142721
-  %.sroa.16.0..sroa_idx67.i = getelementptr inbounds nuw i8, ptr %i.b, i64 56, !dbg !142769
-  store ptr %i.o, ptr %.sroa.16.0..sroa_idx67.i, align 8, !dbg !142769, !noalias !142721
+  store <8 x ptr> %2, ptr %i.b, align 8, !dbg !142769, !noalias !142721
   invoke void @_RINvNtCs2mZqlW55729_12polars_utils5array7try_mapRNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprdKj8_NCNvMs1_NtNtBP_9functions8temporalNtB1J_12DurationArgs10as_literals_0EBR_(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.f, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(64) %i.b)
           to label %.noexc49 unwind label %bb.q, !dbg !142769
 
@@ -1125,7 +1099,7 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 8 uses
   %i.e = alloca [24 x i8], align 8                ; 4 uses
-  %i.f = alloca [48 x i8], align 8                ; 4 uses
+  %i.f = alloca [48 x i8], align 8                ; 6 uses
   %i.g = alloca [24 x i8], align 8                ; 9 uses
   %i.h = alloca [8 x i8], align 8                 ; 4 uses
   %i.i = alloca [16 x i8], align 8                ; 5 uses
@@ -1221,7 +1195,9 @@ _RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtNtNtCsfcROwRM8ZtH_11p
   %.sroa.0.0.i = phi i64 [ 0, %bb.a ], [ %i.an, %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_format14TreeViewColumnENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB28_8adapters3map8map_foldRBQ_jjNCNvXs5_BS_NtBS_6CanvasINtNtBb_7convert4FromNtBS_8TreeViewE4from0NCINvXsK_NtB26_5accumjNtB4E_3Sum3sumINtB2S_3MapBF_B3s_EE0E0EBY_.exit.loopexit.unr-lcssa ], [ %i.as, %.preheader344.epil ], !dbg !165172
   %i.au = add i64 %i.u, 3, !dbg !165165
   %i.av = add i64 %i.au, %.sroa.0.0.i, !dbg !165165 ; 18 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !165178
+  %2 = insertelement <2 x ptr> poison, ptr %i.v, i64 0, !dbg !165178
+  %3 = insertelement <2 x ptr> %2, ptr %1, i64 1, !dbg !165178
+  %4 = getelementptr inbounds nuw i8, <2 x ptr> %3, <2 x i64> <i64 0, i64 48>, !dbg !165178
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 56, !dbg !165178 ; 4 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !dbg !165178, !nonnull !2277, !noundef !2277 ; 5 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 64, !dbg !165179 ; 5 uses
@@ -1624,14 +1600,14 @@ bb.q:                                             ; preds = %.lr.ph862, %.loopex
   br i1 %i.gj, label %._crit_edge872, label %.lr.ph871, !dbg !165290
 
 .lr.ph871:                                        ; preds = %._crit_edge863
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %.sroa.658.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 40
   %i.gk = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.gl = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.gm = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %i.gn = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  %3 = insertelement <4 x ptr> poison, ptr %1, i64 2
-  %4 = insertelement <4 x ptr> %3, ptr %i.v, i64 3
   br label %bb.r, !dbg !165290
 
 .loopexit:                                        ; preds = %bb.t, %bb.r
@@ -1691,10 +1667,10 @@ bb.u:                                             ; preds = %bb.s
   %i.hl = getelementptr inbounds nuw i8, ptr %.sroa.0259.0864, i64 40, !dbg !165314
   %i.hm = load i64, ptr %i.hl, align 8, !dbg !165314, !noundef !2277
   %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.hk, i64 %i.hm, !dbg !165315
-  %5 = insertelement <4 x ptr> %4, ptr %i.hk, i64 0, !dbg !165316
-  %6 = insertelement <4 x ptr> %5, ptr %i.hn, i64 1, !dbg !165316
-  store <4 x ptr> %6, ptr %i.f, align 8, !dbg !165316
-  store ptr %2, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !165316
+  store ptr %i.hk, ptr %i.f, align 8, !dbg !165316
+  store ptr %i.hn, ptr %5, align 8, !dbg !165316
+  store ptr %1, ptr %6, align 8, !dbg !165316
+  store <2 x ptr> %4, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !165316
   store ptr %i.h, ptr %.sroa.658.0..sroa_idx, align 8, !dbg !165316
   invoke void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_format5PointEINtB4_18SpecFromIterNestedB13_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2I_5slice4iter4IterjENCNvXs5_B15_NtB15_6CanvasINtNtB2I_7convert4FromNtB15_8TreeViewE4froms0_0EE9from_iterB1b_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.g, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.f)
           to label %bb.v unwind label %.loopexit329, !dbg !165317

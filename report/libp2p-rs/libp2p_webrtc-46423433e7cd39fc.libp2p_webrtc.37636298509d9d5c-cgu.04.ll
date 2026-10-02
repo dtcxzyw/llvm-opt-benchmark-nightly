@@ -202,7 +202,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCskKLDkoKarTP_4core6future6futureIN
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 9 uses
   %i.b = alloca [112 x i8], align 8               ; 16 uses
-  %.val = load ptr, ptr %0, align 8, !nonnull !17, !noundef !17 ; 78 uses
+  %.val = load ptr, ptr %0, align 8, !nonnull !17, !noundef !17 ; 74 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val, i64 185 ; 3 uses
   %i.d = load i8, ptr %i.c, align 1, !range !42, !noalias !4677, !noundef !17
   switch i8 %i.d, label %default.unreachable [
@@ -479,19 +479,13 @@ bb.aj:                                            ; preds = %bb.ai
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %.val, ptr noundef nonnull align 8 dereferenceable(112) %i.b, i64 112, i1 false), !noalias !4677
   %i.bg = getelementptr inbounds nuw i8, ptr %.val, i64 136
   store ptr %.val, ptr %i.bg, align 8, !noalias !4677
-  %2 = getelementptr inbounds nuw i8, ptr %.val, i64 184 ; 2 uses
-  store i8 0, ptr %2, align 8, !noalias !4677
-  %3 = getelementptr inbounds nuw i8, ptr %.val, i64 160
-  %4 = getelementptr inbounds nuw i8, ptr %.val, i64 208 ; 2 uses
-  store ptr %.val, ptr %4, align 8, !noalias !4677
-  %i.bh = getelementptr inbounds nuw i8, ptr %.val, i64 216
-  store ptr %3, ptr %i.bh, align 8, !noalias !4677
-  %.sroa.6136.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 232
-  store i8 0, ptr %.sroa.6136.0..sroa_idx.i, align 8, !noalias !4677
-  %i.bi = getelementptr inbounds nuw i8, ptr %.val, i64 192
-  store ptr %2, ptr %i.bi, align 8, !noalias !4677
-  %5 = getelementptr inbounds nuw i8, ptr %.val, i64 200
-  store ptr %4, ptr %5, align 8, !noalias !4677
+  %i.bh = getelementptr inbounds nuw i8, ptr %.val, i64 232
+  store i8 0, ptr %i.bh, align 8, !noalias !4677
+  %.sroa.6136.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 192
+  %2 = getelementptr inbounds nuw i8, ptr %.val, <4 x i64> <i64 184, i64 208, i64 0, i64 160>
+  %i.bi = getelementptr inbounds nuw i8, ptr %.val, i64 184
+  store i8 0, ptr %i.bi, align 8, !noalias !4677
+  store <4 x ptr> %2, ptr %.sroa.6136.0..sroa_idx.i, align 8, !noalias !4677
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.d

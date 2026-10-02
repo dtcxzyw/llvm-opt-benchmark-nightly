@@ -205,22 +205,20 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %i.ed = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.ee = ptrtoint ptr %.0.i.i.i.i.i to i64       ; 2 uses
   %i.ef = ptrtoint ptr %.sroa.0351.0 to i64       ; 3 uses
-  %i.eg = sub i64 %i.ee, %i.ef                    ; 11 uses
+  %i.eg = sub i64 %i.ee, %i.ef                    ; 10 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 4 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 6 uses
-  %i.ej = icmp sgt i64 %i.eg, 4
+  %i.ej = icmp sgt i64 %i.eg, 4                   ; 2 uses
   %i.ek = icmp eq i64 %i.eg, 4                    ; 2 uses
-  %11 = icmp ugt i64 %i.eg, 9223372036854775804
-  %i.el = icmp samesign ugt i64 %i.eg, 4
+  %i.el = icmp ugt i64 %i.eg, 9223372036854775804
   %i.em = ptrtoint ptr %.0.i.i.i.i.i178 to i64    ; 2 uses
   %i.en = ptrtoint ptr %.sroa.0342.0 to i64       ; 8 uses
-  %i.eo = sub i64 %i.em, %i.en                    ; 11 uses
+  %i.eo = sub i64 %i.em, %i.en                    ; 10 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %9, i64 56 ; 4 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %9, i64 48 ; 6 uses
-  %i.er = icmp sgt i64 %i.eo, 4
+  %i.er = icmp sgt i64 %i.eo, 4                   ; 2 uses
   %i.es = icmp eq i64 %i.eo, 4                    ; 2 uses
-  %12 = icmp ugt i64 %i.eo, 9223372036854775804
-  %i.et = icmp samesign ugt i64 %i.eo, 4
+  %i.et = icmp ugt i64 %i.eo, 9223372036854775804
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -623,7 +621,7 @@ _ZNK5draco56MeshPredictionSchemeConstrainedMultiParallelogramEncoderIiNS_37Predi
   br i1 %i.vp, label %bb.be, label %bb.bj
 
 bb.be:                                            ; preds = %_ZNK5draco56MeshPredictionSchemeConstrainedMultiParallelogramEncoderIiNS_37PredictionSchemeWrapEncodingTransformIiiEENS_24MeshPredictionSchemeDataINS_24MeshAttributeCornerTableEEEE5ErrorltERKS7_.exit.thread
-  br i1 %11, label %.invoke, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i
+  br i1 %i.el, label %.invoke, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i
 
 .invoke:                                          ; preds = %bb.bu, %bb.be
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #20
@@ -637,7 +635,7 @@ _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i: ; preds = %bb.be
           to label %.noexc292 unwind label %.loopexit376 ; 4 uses
 
 .noexc292:                                        ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i
-  br i1 %i.el, label %bb.bf, label %bb.bg, !prof !140
+  br i1 %i.ej, label %bb.bf, label %bb.bg, !prof !140
 
 bb.bf:                                            ; preds = %.noexc292
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.vq, ptr align 4 %.sroa.0351.0, i64 %i.eg, i1 false)
@@ -753,14 +751,14 @@ _ZNSt6vectorIiSaIiEE6assignIN9__gnu_cxx17__normal_iteratorIPiS1_EEvEEvT_S7_.exit
   br i1 %i.wo, label %bb.bu, label %bb.bz
 
 bb.bu:                                            ; preds = %_ZNSt6vectorIiSaIiEE6assignIN9__gnu_cxx17__normal_iteratorIPiS1_EEvEEvT_S7_.exit243
-  br i1 %12, label %.invoke, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i303
+  br i1 %i.et, label %.invoke, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i303
 
 _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i303: ; preds = %bb.bu
   %i.wp = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.eo) #18
           to label %.noexc308 unwind label %.loopexit376 ; 4 uses
 
 .noexc308:                                        ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i303
-  br i1 %i.et, label %bb.bv, label %bb.bw, !prof !140
+  br i1 %i.er, label %bb.bv, label %bb.bw, !prof !140
 
 bb.bv:                                            ; preds = %.noexc308
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.wp, ptr align 4 %.sroa.0342.0, i64 %i.eo, i1 false)
@@ -1163,22 +1161,20 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %i.ec = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.ed = ptrtoint ptr %.0.i.i.i.i.i to i64       ; 2 uses
   %i.ee = ptrtoint ptr %.sroa.0344.0 to i64       ; 3 uses
-  %i.ef = sub i64 %i.ed, %i.ee                    ; 11 uses
+  %i.ef = sub i64 %i.ed, %i.ee                    ; 10 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 4 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 6 uses
-  %i.ei = icmp sgt i64 %i.ef, 4
+  %i.ei = icmp sgt i64 %i.ef, 4                   ; 2 uses
   %i.ej = icmp eq i64 %i.ef, 4                    ; 2 uses
-  %11 = icmp ugt i64 %i.ef, 9223372036854775804
-  %i.ek = icmp samesign ugt i64 %i.ef, 4
+  %i.ek = icmp ugt i64 %i.ef, 9223372036854775804
   %i.el = ptrtoint ptr %.0.i.i.i.i.i178 to i64    ; 2 uses
   %i.em = ptrtoint ptr %.sroa.0335.0 to i64       ; 8 uses
-  %i.en = sub i64 %i.el, %i.em                    ; 11 uses
+  %i.en = sub i64 %i.el, %i.em                    ; 10 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %9, i64 56 ; 4 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %9, i64 48 ; 6 uses
-  %i.eq = icmp sgt i64 %i.en, 4
+  %i.eq = icmp sgt i64 %i.en, 4                   ; 2 uses
   %i.er = icmp eq i64 %i.en, 4                    ; 2 uses
-  %12 = icmp ugt i64 %i.en, 9223372036854775804
-  %i.es = icmp samesign ugt i64 %i.en, 4
+  %i.es = icmp ugt i64 %i.en, 9223372036854775804
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -1581,7 +1577,7 @@ _ZNK5draco56MeshPredictionSchemeConstrainedMultiParallelogramEncoderIiNS_37Predi
   br i1 %i.ub, label %bb.be, label %bb.bj
 
 bb.be:                                            ; preds = %_ZNK5draco56MeshPredictionSchemeConstrainedMultiParallelogramEncoderIiNS_37PredictionSchemeWrapEncodingTransformIiiEENS_24MeshPredictionSchemeDataINS_11CornerTableEEEE5ErrorltERKS7_.exit.thread
-  br i1 %11, label %.invoke, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i
+  br i1 %i.ek, label %.invoke, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i
 
 .invoke:                                          ; preds = %bb.bu, %bb.be
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #20
@@ -1595,7 +1591,7 @@ _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i: ; preds = %bb.be
           to label %.noexc285 unwind label %.loopexit369 ; 4 uses
 
 .noexc285:                                        ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i
-  br i1 %i.ek, label %bb.bf, label %bb.bg, !prof !140
+  br i1 %i.ei, label %bb.bf, label %bb.bg, !prof !140
 
 bb.bf:                                            ; preds = %.noexc285
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.uc, ptr align 4 %.sroa.0344.0, i64 %i.ef, i1 false)
@@ -1711,14 +1707,14 @@ _ZNSt6vectorIiSaIiEE6assignIN9__gnu_cxx17__normal_iteratorIPiS1_EEvEEvT_S7_.exit
   br i1 %i.va, label %bb.bu, label %bb.bz
 
 bb.bu:                                            ; preds = %_ZNSt6vectorIiSaIiEE6assignIN9__gnu_cxx17__normal_iteratorIPiS1_EEvEEvT_S7_.exit236
-  br i1 %12, label %.invoke, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i296
+  br i1 %i.es, label %.invoke, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i296
 
 _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i296: ; preds = %bb.bu
   %i.vb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.en) #18
           to label %.noexc301 unwind label %.loopexit369 ; 4 uses
 
 .noexc301:                                        ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i296
-  br i1 %i.es, label %bb.bv, label %bb.bw, !prof !140
+  br i1 %i.eq, label %bb.bv, label %bb.bw, !prof !140
 
 bb.bv:                                            ; preds = %.noexc301
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.vb, ptr align 4 %.sroa.0335.0, i64 %i.en, i1 false)

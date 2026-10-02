@@ -205,9 +205,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -322,8 +322,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.aq = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.at = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.au = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -726,9 +725,8 @@ bb.af:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.ae, !dbg !8700
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63.thread: ; preds = %bb.y, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63
-  store ptr %i.m, ptr %i.k, align 8, !dbg !8708
-  store ptr %6, ptr %7, align 8, !dbg !8708
-  store ptr %i.v, ptr %i.at, align 8, !dbg !8708
+  store <2 x ptr> %6, ptr %i.k, align 16, !dbg !8708
+  store ptr %i.v, ptr %i.at, align 16, !dbg !8708
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes1Alignment1EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2z_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_RSBT_Es_0EE11spec_extendB3W_(ptr noalias noundef nonnull align 8 dereferenceable(24) %4, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !8709
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !8707
   call void @llvm.experimental.noalias.scope.decl(metadata !8562), !dbg !8710
@@ -755,9 +753,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -870,8 +868,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.ap = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.aq = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %5 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.as = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.at = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -1274,9 +1271,8 @@ bb.ah:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.ag, !dbg !9012
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63.thread: ; preds = %bb.aa, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63
-  store ptr %i.m, ptr %i.k, align 8, !dbg !9020
-  store ptr %5, ptr %6, align 8, !dbg !9020
-  store ptr %i.v, ptr %i.as, align 8, !dbg !9020
+  store <2 x ptr> %5, ptr %i.k, align 16, !dbg !9020
+  store ptr %i.v, ptr %i.as, align 16, !dbg !9020
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes1Alignment1EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2z_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_hEs_0EE11spec_extendB3W_(ptr noalias noundef nonnull align 8 dereferenceable(24) %3, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !9021
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !9019
   call void @llvm.experimental.noalias.scope.decl(metadata !8881), !dbg !9022
@@ -1303,9 +1299,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -1420,8 +1416,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.aq = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.at = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.au = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -1824,9 +1819,8 @@ bb.af:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.ae, !dbg !9349
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63.thread: ; preds = %bb.y, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63
-  store ptr %i.m, ptr %i.k, align 8, !dbg !9357
-  store ptr %6, ptr %7, align 8, !dbg !9357
-  store ptr %i.v, ptr %i.at, align 8, !dbg !9357
+  store <2 x ptr> %6, ptr %i.k, align 16, !dbg !9357
+  store ptr %i.v, ptr %i.at, align 16, !dbg !9357
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes2Alignment2EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2z_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_RSBT_Es_0EE11spec_extendB3W_(ptr noalias noundef nonnull align 8 dereferenceable(24) %4, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !9358
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !9356
   call void @llvm.experimental.noalias.scope.decl(metadata !9211), !dbg !9359
@@ -1853,9 +1847,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -1968,8 +1962,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.ap = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.aq = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %5 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.as = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.at = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -2372,9 +2365,8 @@ bb.ah:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.ag, !dbg !9662
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63.thread: ; preds = %bb.aa, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63
-  store ptr %i.m, ptr %i.k, align 8, !dbg !9670
-  store ptr %5, ptr %6, align 8, !dbg !9670
-  store ptr %i.v, ptr %i.as, align 8, !dbg !9670
+  store <2 x ptr> %5, ptr %i.k, align 16, !dbg !9670
+  store ptr %i.v, ptr %i.as, align 16, !dbg !9670
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes2Alignment2EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2z_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_tEs_0EE11spec_extendB3W_(ptr noalias noundef nonnull align 8 dereferenceable(24) %3, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !9671
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !9669
   call void @llvm.experimental.noalias.scope.decl(metadata !9530), !dbg !9672
@@ -2401,9 +2393,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -2518,8 +2510,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.aq = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.at = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.au = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -2922,9 +2913,8 @@ bb.af:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.ae, !dbg !9999
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63.thread: ; preds = %bb.y, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63
-  store ptr %i.m, ptr %i.k, align 8, !dbg !10007
-  store ptr %6, ptr %7, align 8, !dbg !10007
-  store ptr %i.v, ptr %i.at, align 8, !dbg !10007
+  store <2 x ptr> %6, ptr %i.k, align 16, !dbg !10007
+  store ptr %i.v, ptr %i.at, align 16, !dbg !10007
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes4Alignment4EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2z_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_RSBT_Es_0EE11spec_extendB3W_(ptr noalias noundef nonnull align 8 dereferenceable(24) %4, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !10008
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !10006
   call void @llvm.experimental.noalias.scope.decl(metadata !9861), !dbg !10009
@@ -2951,9 +2941,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -3066,8 +3056,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.ap = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.aq = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %5 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.as = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.at = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -3470,9 +3459,8 @@ bb.ah:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.ag, !dbg !10309
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63.thread: ; preds = %bb.aa, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit63
-  store ptr %i.m, ptr %i.k, align 8, !dbg !10317
-  store ptr %5, ptr %6, align 8, !dbg !10317
-  store ptr %i.v, ptr %i.as, align 8, !dbg !10317
+  store <2 x ptr> %5, ptr %i.k, align 16, !dbg !10317
+  store ptr %i.v, ptr %i.as, align 16, !dbg !10317
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes4Alignment4EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2z_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_mEs_0EE11spec_extendB3W_(ptr noalias noundef nonnull align 8 dereferenceable(24) %3, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !10318
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !10316
   call void @llvm.experimental.noalias.scope.decl(metadata !10180), !dbg !10319
@@ -3499,9 +3487,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -3616,8 +3604,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.aq = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.at = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.au = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -4020,9 +4007,8 @@ bb.ag:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.af, !dbg !10649
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit59.thread: ; preds = %bb.z, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit59
-  store ptr %i.m, ptr %i.k, align 8, !dbg !10657
-  store ptr %6, ptr %7, align 8, !dbg !10657
-  store ptr %i.v, ptr %i.at, align 8, !dbg !10657
+  store <2 x ptr> %6, ptr %i.k, align 16, !dbg !10657
+  store ptr %i.v, ptr %i.at, align 16, !dbg !10657
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes8Alignment8EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2z_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_RSBT_Es_0EE11spec_extendB3W_(ptr noalias noundef nonnull align 8 dereferenceable(24) %4, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !10658
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !10656
   call void @llvm.experimental.noalias.scope.decl(metadata !10511), !dbg !10659
@@ -4049,9 +4035,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -4167,8 +4153,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.ar = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.au = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -4571,9 +4556,8 @@ bb.ag:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.af, !dbg !10986
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit56.thread: ; preds = %bb.z, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit56
-  store ptr %i.m, ptr %i.k, align 8, !dbg !10994
-  store ptr %6, ptr %7, align 8, !dbg !10994
-  store ptr %i.w, ptr %i.au, align 8, !dbg !10994
+  store <2 x ptr> %6, ptr %i.k, align 16, !dbg !10994
+  store ptr %i.w, ptr %i.au, align 16, !dbg !10994
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes17Bytes12Alignment4EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2A_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_RSBT_Es_0EE11spec_extendB3X_(ptr noalias noundef nonnull align 8 dereferenceable(24) %4, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !10995
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !10993
   call void @llvm.experimental.noalias.scope.decl(metadata !10850), !dbg !10996
@@ -4600,9 +4584,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -4718,8 +4702,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.ar = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.au = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -5122,9 +5105,8 @@ bb.ag:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.af, !dbg !11323
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit56.thread: ; preds = %bb.z, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit56
-  store ptr %i.m, ptr %i.k, align 8, !dbg !11331
-  store ptr %6, ptr %7, align 8, !dbg !11331
-  store ptr %i.w, ptr %i.au, align 8, !dbg !11331
+  store <2 x ptr> %6, ptr %i.k, align 16, !dbg !11331
+  store ptr %i.w, ptr %i.au, align 16, !dbg !11331
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes17Bytes16Alignment4EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2A_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_RSBT_Es_0EE11spec_extendB3X_(ptr noalias noundef nonnull align 8 dereferenceable(24) %4, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !11332
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !11330
   call void @llvm.experimental.noalias.scope.decl(metadata !11187), !dbg !11333
@@ -5151,9 +5133,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -5269,8 +5251,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.ar = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.au = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -5673,9 +5654,8 @@ bb.ag:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.af, !dbg !11660
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit56.thread: ; preds = %bb.z, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit56
-  store ptr %i.m, ptr %i.k, align 8, !dbg !11668
-  store ptr %6, ptr %7, align 8, !dbg !11668
-  store ptr %i.w, ptr %i.au, align 8, !dbg !11668
+  store <2 x ptr> %6, ptr %i.k, align 16, !dbg !11668
+  store ptr %i.w, ptr %i.au, align 16, !dbg !11668
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes18Bytes16Alignment16EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2B_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_RSBT_Es_0EE11spec_extendB3Y_(ptr noalias noundef nonnull align 8 dereferenceable(24) %4, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !11669
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !11667
   call void @llvm.experimental.noalias.scope.decl(metadata !11524), !dbg !11670
@@ -5702,9 +5682,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = alloca [128 x i8], align 16              ; 16 uses
   %i.j = alloca [144 x i8], align 8               ; 7 uses
-  %i.k = alloca [24 x i8], align 8                ; 4 uses
+  %i.k = alloca [24 x i8], align 16               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.m = alloca [128 x i8], align 4               ; 7 uses
+  %i.m = alloca [128 x i8], align 4               ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -5820,8 +5800,7 @@ bb.i:                                             ; preds = %bb.g, %bb.d
   %i.ar = getelementptr inbounds nuw i8, ptr %i.s, i64 136
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, <2 x i64> <i64 0, i64 128>
   %i.au = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.j, i64 136
@@ -6224,9 +6203,8 @@ bb.ag:                                            ; preds = %_RNvNtNtNtNtCsfISxE
   br label %bb.af, !dbg !11997
 
 _RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit56.thread: ; preds = %bb.z, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded19verify_dict_indices.exit56
-  store ptr %i.m, ptr %i.k, align 8, !dbg !12005
-  store ptr %6, ptr %7, align 8, !dbg !12005
-  store ptr %i.w, ptr %i.au, align 8, !dbg !12005
+  store <2 x ptr> %6, ptr %i.k, align 16, !dbg !12005
+  store ptr %i.w, ptr %i.au, align 16, !dbg !12005
   call void @_RNvXs_NtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes18Bytes32Alignment16EINtB4_10SpecExtendBT_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2B_5slice4iter4ItermENCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize18dictionary_encoded8required6decodeBT_RSBT_Es_0EE11spec_extendB3Y_(ptr noalias noundef nonnull align 8 dereferenceable(24) %4, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.k), !dbg !12006
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !12004
   call void @llvm.experimental.noalias.scope.decl(metadata !11861), !dbg !12007

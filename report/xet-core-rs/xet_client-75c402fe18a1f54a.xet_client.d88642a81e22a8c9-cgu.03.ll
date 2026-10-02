@@ -204,15 +204,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %2 = load ptr, ptr %0, align 8, !nonnull !12, !align !17, !noundef !12
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load ptr, ptr %3, align 8, !nonnull !12, !align !17, !noundef !12
-  store ptr %4, ptr %i.d, align 8, !captures !40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 376
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %5, ptr %6, align 8
+  %2 = load <2 x ptr>, ptr %0, align 8
+  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 376, i64 0>
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %4, ptr %i.d, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i8 0, ptr %.sroa.8.0..sroa_idx, align 8
   br label %bb.f
@@ -373,15 +370,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %2 = load ptr, ptr %0, align 8, !nonnull !12, !align !17, !noundef !12
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load ptr, ptr %3, align 8, !nonnull !12, !align !17, !noundef !12
-  store ptr %4, ptr %i.d, align 8, !captures !40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 472
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %5, ptr %6, align 8
+  %2 = load <2 x ptr>, ptr %0, align 8
+  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 472, i64 0>
+  %4 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %4, ptr %i.d, align 8
   %.sroa.821.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i8 0, ptr %.sroa.821.0..sroa_idx, align 8
   br label %bb.f
@@ -723,7 +717,7 @@ bb.t:                                             ; preds = %bb.s
           to label %.body unwind label %bb.r
 
 bb.u:                                             ; preds = %bb.s
-  %i.az = load i64, ptr %i.p, align 8, !range !41, !noundef !12 ; 5 uses
+  %i.az = load i64, ptr %i.p, align 8, !range !40, !noundef !12 ; 5 uses
   %i.ba = icmp eq i64 %i.az, -3
   br i1 %i.ba, label %bb.v, label %bb.w
 
@@ -1126,7 +1120,7 @@ bb.t:                                             ; preds = %bb.s
           to label %.body unwind label %bb.r
 
 bb.u:                                             ; preds = %bb.s
-  %i.bb = load i64, ptr %i.r, align 8, !range !41, !noundef !12 ; 5 uses
+  %i.bb = load i64, ptr %i.r, align 8, !range !40, !noundef !12 ; 5 uses
   %i.bc = icmp eq i64 %i.bb, -3
   br i1 %i.bc, label %bb.v, label %bb.w
 
@@ -1529,7 +1523,7 @@ bb.v:                                             ; preds = %bb.u
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsUrhh0HcRih_5tokio4sync6rwlock10read_guard15RwLockReadGuardNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard15shard_in_memory16MDBInMemoryShardEECsiAynQAjgDuT_10xet_client.exit unwind label %bb.ac
 
 bb.w:                                             ; preds = %bb.u
-  %i.as = load i64, ptr %i.f, align 8, !range !42, !noundef !12
+  %i.as = load i64, ptr %i.f, align 8, !range !41, !noundef !12
   %.not = icmp eq i64 %i.as, 2
   br i1 %.not, label %bb.y, label %bb.x
 
@@ -1881,7 +1875,7 @@ default.unreachable158:                           ; preds = %bb.br, %bb.bo, %bb.
 .thread:                                          ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load ptr, ptr %1, align 8, !nonnull !12, !align !17, !noundef !12 ; 2 uses
-  store ptr %i.h, ptr %i.g, align 8, !captures !40
+  store ptr %i.h, ptr %i.g, align 8, !captures !42
   %.val42 = load ptr, ptr %i.h, align 8, !nonnull !12, !noundef !12
   %i.i = getelementptr inbounds nuw i8, ptr %.val42, i64 56
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -1989,7 +1983,7 @@ bb.l:                                             ; preds = %._crit_edge148, %.t
   %i.ab = phi ptr [ %i.t, %.thread.i ], [ %.pre150, %._crit_edge148 ] ; 2 uses
   %i.ac = phi ptr [ %.sroa.9.0..sroa_idx.i, %.thread.i ], [ %.phi.trans.insert.i, %._crit_edge148 ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  store ptr %i.ab, ptr %i.ad, align 8, !noalias !778, !captures !40
+  store ptr %i.ab, ptr %i.ad, align 8, !noalias !778, !captures !42
   %.val12.i.i = load ptr, ptr %i.ab, align 8, !noalias !778, !nonnull !12, !noundef !12
   %i.ae = getelementptr inbounds nuw i8, ptr %.val12.i.i, i64 16
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 2 uses
@@ -2392,7 +2386,7 @@ bb.bn:                                            ; preds = %bb.bk
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1007)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1008)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1009)
-  %i.eu = load i64, ptr %i.i, align 8, !range !42, !alias.scope !1008, !noalias !1010, !noundef !12 ; 2 uses
+  %i.eu = load i64, ptr %i.i, align 8, !range !41, !alias.scope !1008, !noalias !1010, !noundef !12 ; 2 uses
   %.not.i106 = icmp eq i64 %i.eu, 2
   br i1 %.not.i106, label %bb.bv, label %bb.bo
 
@@ -2795,7 +2789,7 @@ bb.ax:                                            ; preds = %.thread
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1090)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1091)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1092)
-  %i.di = load i64, ptr %i.b, align 8, !range !42, !alias.scope !1091, !noalias !1093, !noundef !12 ; 2 uses
+  %i.di = load i64, ptr %i.b, align 8, !range !41, !alias.scope !1091, !noalias !1093, !noundef !12 ; 2 uses
   %.not.i = icmp eq i64 %i.di, 2
   br i1 %.not.i, label %bb.bh, label %bb.ay
 
@@ -3198,7 +3192,7 @@ bb.f:                                             ; preds = %bb.e
           to label %.body unwind label %bb.r
 
 bb.g:                                             ; preds = %bb.e
-  %i.j = load i64, ptr %i.b, align 8, !range !41, !noundef !12
+  %i.j = load i64, ptr %i.b, align 8, !range !40, !noundef !12
   %i.k = icmp eq i64 %i.j, -3
   br i1 %i.k, label %bb.h, label %bb.i
 
@@ -3339,7 +3333,7 @@ bb.f:                                             ; preds = %bb.e
           to label %.body unwind label %bb.r
 
 bb.g:                                             ; preds = %bb.e
-  %i.j = load i64, ptr %i.b, align 8, !range !41, !noundef !12
+  %i.j = load i64, ptr %i.b, align 8, !range !40, !noundef !12
   %i.k = icmp eq i64 %i.j, -3
   br i1 %i.k, label %bb.h, label %bb.i
 
@@ -3742,7 +3736,7 @@ bb.f:                                             ; preds = %bb.e
           to label %.body unwind label %bb.r
 
 bb.g:                                             ; preds = %bb.e
-  %i.j = load i64, ptr %i.b, align 8, !range !41, !noundef !12
+  %i.j = load i64, ptr %i.b, align 8, !range !40, !noundef !12
   %i.k = icmp eq i64 %i.j, -3
   br i1 %i.k, label %bb.h, label %bb.i
 
@@ -3984,7 +3978,7 @@ bb.t:                                             ; preds = %bb.s
           to label %.body unwind label %bb.r
 
 bb.u:                                             ; preds = %bb.s
-  %i.ah = load i64, ptr %i.b, align 8, !range !42, !noundef !12
+  %i.ah = load i64, ptr %i.b, align 8, !range !41, !noundef !12
   %i.ai = icmp eq i64 %i.ah, 2
   br i1 %i.ai, label %bb.v, label %bb.w
 
@@ -4311,7 +4305,7 @@ bb.al:                                            ; preds = %bb.ai
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2029)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2030)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2031)
-  %i.cg = load i64, ptr %i.o, align 8, !range !42, !alias.scope !2030, !noalias !2032, !noundef !12 ; 2 uses
+  %i.cg = load i64, ptr %i.o, align 8, !range !41, !alias.scope !2030, !noalias !2032, !noundef !12 ; 2 uses
   %.not.i = icmp eq i64 %i.cg, 2
   br i1 %.not.i, label %bb.ar, label %bb.am
 
@@ -4714,7 +4708,7 @@ bb.t:                                             ; preds = %bb.s
           to label %.body unwind label %bb.r
 
 bb.u:                                             ; preds = %bb.s
-  %i.ah = load i64, ptr %i.b, align 8, !range !42, !noundef !12
+  %i.ah = load i64, ptr %i.b, align 8, !range !41, !noundef !12
   %i.ai = icmp eq i64 %i.ah, 2
   br i1 %i.ai, label %bb.v, label %bb.w
 
@@ -4958,7 +4952,7 @@ bb.w:                                             ; preds = %bb.v
           to label %.body44 unwind label %bb.u
 
 bb.x:                                             ; preds = %bb.v
-  %i.bm = load i64, ptr %i.n, align 8, !range !41, !noundef !12 ; 3 uses
+  %i.bm = load i64, ptr %i.n, align 8, !range !40, !noundef !12 ; 3 uses
   %i.bn = icmp eq i64 %i.bm, -3
   br i1 %i.bn, label %bb.y, label %bb.z
 
@@ -5306,7 +5300,7 @@ bb.bi:                                            ; preds = %bb.t
   %i.do = getelementptr inbounds nuw i8, ptr %i.bh, i64 32
   store ptr %i.do, ptr %i.dn, align 8, !alias.scope !2097
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 40
-  store ptr %i.bh, ptr %i.dp, align 8, !captures !40
+  store ptr %i.bh, ptr %i.dp, align 8, !captures !42
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.dr = load ptr, ptr %i.dq, align 8, !nonnull !12, !align !17, !noundef !12
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -5578,7 +5572,7 @@ bb.ah:                                            ; preds = %bb.ag
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsUrhh0HcRih_5tokio4sync6rwlock10read_guard15RwLockReadGuardNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard15shard_in_memory16MDBInMemoryShardEECsiAynQAjgDuT_10xet_client.exit unwind label %bb.s
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.bi = load i64, ptr %i.a, align 8, !range !42, !alias.scope !2109, !noalias !2110, !noundef !12 ; 2 uses
+  %i.bi = load i64, ptr %i.a, align 8, !range !41, !alias.scope !2109, !noalias !2110, !noundef !12 ; 2 uses
   %.not.i = icmp eq i64 %i.bi, 2
   br i1 %.not.i, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoE3mapTBI_IBw_NtNtNtBO_10merklehash9data_hash8DataHashEENCNCNvXs1_NtNtNtCsiAynQAjgDuT_10xet_client10cas_client10simulation13memory_clientNtB37_12MemoryClientNtNtB3b_9interface6Client28get_file_reconstruction_info00EB3d_.exit, label %bb.aj
 
@@ -5981,7 +5975,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.w
 
 bb.u:                                             ; preds = %bb.s
-  %.val14 = load i64, ptr %i.a, align 8, !range !42, !noundef !12
+  %.val14 = load i64, ptr %i.a, align 8, !range !41, !noundef !12
   %.not = icmp eq i64 %.val14, 2
   br i1 %.not, label %bb.y, label %bb.v
 
@@ -6384,9 +6378,9 @@ attributes #30 = { inlinehint }
 !37 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !38 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !39 = !{!"branch_weights", i32 1, i32 2000, i32 2000, i32 2000}
-!40 = !{!"address", !"read_provenance"}
-!41 = !{i64 -3, i64 -9223372036854775808}
-!42 = !{i64 0, i64 3}
+!40 = !{i64 -3, i64 -9223372036854775808}
+!41 = !{i64 0, i64 3}
+!42 = !{!"address", !"read_provenance"}
 !43 = !{i64 -2, i64 42}
 !44 = !{i64 0, i64 -9223372036854775807}
 !45 = !{i64 -1, i64 21}

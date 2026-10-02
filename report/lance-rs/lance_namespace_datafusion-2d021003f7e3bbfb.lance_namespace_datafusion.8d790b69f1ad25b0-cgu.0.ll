@@ -205,11 +205,9 @@ bb.ajx:                                           ; preds = %bb.ajw
 
 bb.ajy:                                           ; preds = %bb.ajw
   %i.drx = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %2 = load ptr, ptr %i.drx, align 8, !noalias !33374, !nonnull !111, !align !127, !noundef !111
   %i.dry = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.drz = load ptr, ptr %i.dry, align 8, !noalias !33374, !nonnull !111, !align !127, !noundef !111
   %.val37.i469 = load ptr, ptr %i.drz, align 8, !nonnull !111, !align !127, !noundef !111
-  %3 = getelementptr inbounds nuw i8, ptr %.val37.i469, i64 16
   %i.dsa = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.dsb = getelementptr inbounds nuw i8, ptr %0, i64 244
   %i.dsc = load i32, ptr %i.dsb, align 4, !noalias !33374, !noundef !111
@@ -218,12 +216,14 @@ bb.ajy:                                           ; preds = %bb.ajw
   %.sroa.792.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 336
   store i64 %i.dse, ptr %.sroa.792.0..sroa_idx.i, align 8, !noalias !33374
   %.sroa.994.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 464
-  store ptr %2, ptr %.sroa.994.0..sroa_idx.i, align 8, !noalias !33374
-  %.sroa.1095.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 472
-  store ptr %3, ptr %.sroa.1095.0..sroa_idx.i, align 8, !noalias !33374
-  %.sroa.1196.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 480
-  %4 = load <2 x ptr>, ptr %i.dsa, align 8, !noalias !33374
-  store <2 x ptr> %4, ptr %.sroa.1196.0..sroa_idx.i, align 8, !noalias !33374
+  %2 = load ptr, ptr %i.drx, align 8, !noalias !33374, !nonnull !111, !align !127, !noundef !111
+  %3 = load <2 x ptr>, ptr %i.dsa, align 8, !noalias !33374
+  %4 = insertelement <4 x ptr> poison, ptr %2, i64 0
+  %5 = insertelement <4 x ptr> %4, ptr %.val37.i469, i64 1
+  %6 = shufflevector <2 x ptr> %3, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x ptr> %5, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %8 = getelementptr inbounds nuw i8, <4 x ptr> %7, <4 x i64> <i64 0, i64 16, i64 0, i64 0>
+  store <4 x ptr> %8, ptr %.sroa.994.0..sroa_idx.i, align 8, !noalias !33374
   %.sroa.1398.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 496
   store i32 %i.dsc, ptr %.sroa.1398.0..sroa_idx.i, align 8, !noalias !33374
   %.sroa.15100.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 505
@@ -259,11 +259,9 @@ bb.akd:                                           ; preds = %bb.akc
 
 bb.ake:                                           ; preds = %bb.akc
   %i.dsl = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %5 = load ptr, ptr %i.dsl, align 8, !noalias !33374, !nonnull !111, !align !127, !noundef !111
   %i.dsm = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.dsn = load ptr, ptr %i.dsm, align 8, !noalias !33374, !nonnull !111, !align !127, !noundef !111
   %.val36.i468 = load ptr, ptr %i.dsn, align 8, !nonnull !111, !align !127, !noundef !111
-  %6 = getelementptr inbounds nuw i8, ptr %.val36.i468, i64 16
   %i.dso = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.dsp = getelementptr inbounds nuw i8, ptr %0, i64 244
   %i.dsq = load i32, ptr %i.dsp, align 4, !noalias !33374, !noundef !111
@@ -272,12 +270,14 @@ bb.ake:                                           ; preds = %bb.akc
   %.sroa.7116.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 336
   store i64 %i.dss, ptr %.sroa.7116.0..sroa_idx.i, align 8, !noalias !33374
   %.sroa.9118.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 464
-  store ptr %5, ptr %.sroa.9118.0..sroa_idx.i, align 8, !noalias !33374
-  %.sroa.10119.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 472
-  store ptr %6, ptr %.sroa.10119.0..sroa_idx.i, align 8, !noalias !33374
-  %.sroa.11120.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 480
-  %7 = load <2 x ptr>, ptr %i.dso, align 8, !noalias !33374
-  store <2 x ptr> %7, ptr %.sroa.11120.0..sroa_idx.i, align 8, !noalias !33374
+  %9 = load ptr, ptr %i.dsl, align 8, !noalias !33374, !nonnull !111, !align !127, !noundef !111
+  %10 = load <2 x ptr>, ptr %i.dso, align 8, !noalias !33374
+  %11 = insertelement <4 x ptr> poison, ptr %9, i64 0
+  %12 = insertelement <4 x ptr> %11, ptr %.val36.i468, i64 1
+  %13 = shufflevector <2 x ptr> %10, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %14 = shufflevector <4 x ptr> %12, <4 x ptr> %13, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %15 = getelementptr inbounds nuw i8, <4 x ptr> %14, <4 x i64> <i64 0, i64 16, i64 0, i64 0>
+  store <4 x ptr> %15, ptr %.sroa.9118.0..sroa_idx.i, align 8, !noalias !33374
   %.sroa.13122.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 496
   store i32 %i.dsq, ptr %.sroa.13122.0..sroa_idx.i, align 8, !noalias !33374
   %.sroa.15124.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 505
@@ -680,11 +680,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 97
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.val = load ptr, ptr %i.e, align 8, !nonnull !111, !noundef !111
-  %2 = getelementptr inbounds nuw i8, ptr %.val, i64 16
   store i8 0, ptr %i.c, align 1
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %4 = load ptr, ptr %3, align 8, !nonnull !111, !noundef !111
   store i8 0, ptr %i.d, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !111, !noundef !111
@@ -697,9 +693,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.819.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.i, ptr %.sroa.819.0..sroa_idx, align 8
   %.sroa.1021.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr %2, ptr %.sroa.1021.0..sroa_idx, align 8
-  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store ptr %4, ptr %.sroa.11.0..sroa_idx, align 8
+  %2 = load <2 x ptr>, ptr %i.e, align 8
+  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 16, i64 0>
+  store <2 x ptr> %3, ptr %.sroa.1021.0..sroa_idx, align 8
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60
   store i8 %i.k, ptr %.sroa.13.0..sroa_idx, align 4
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 61

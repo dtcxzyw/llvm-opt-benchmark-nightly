@@ -204,8 +204,8 @@ _ZNK12ListedForces14haveRestraintsERK8t_fcdata.exit: ; preds = %bb.d, %bb.c, %bb
 define void @_ZN12ListedForces9calculateEP13gmx_wallcyclePA3_KfN3gmx19ArrayRefWithPaddingIKNS5_11BasicVectorIfEEEENS5_8ArrayRefIS9_EEP8t_fcdataPK9history_tPNS5_12ForceOutputsEPK10t_forcerecPK5t_pbcP14gmx_enerdata_tP6t_nrnbNSB_IS2_EESU_SU_NSB_IKbEENSB_IKtEEiPiRKNS5_12StepWorkloadE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(2880) %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly align 8 captures(none) dead_on_return %3, ptr %4, ptr %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr noundef %9, ptr noundef %10, ptr noundef %11, ptr noundef %12, ptr nofree noundef readonly byval(%"class.gmx::ArrayRef.122") align 8 captures(none) %13, ptr nofree noundef readonly byval(%"class.gmx::ArrayRef.122") align 8 captures(none) %14, ptr nofree noundef readonly byval(%"class.gmx::ArrayRef.122") align 8 captures(none) %15, ptr nofree noundef readonly byval(%"class.gmx::ArrayRef.125") align 8 captures(none) %16, ptr nofree noundef readonly byval(%"class.gmx::ArrayRef") align 8 captures(none) %17, i32 noundef %18, ptr noundef %19, ptr noundef nonnull align 1 dereferenceable(19) %20) local_unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %21 = alloca %"class.gmx::StepWorkload", align 1 ; 5 uses
-  %22 = alloca %"class.gmx::ArrayRef.122", align 8 ; 5 uses
-  %23 = alloca %"class.gmx::ArrayRef.238", align 8 ; 5 uses
+  %22 = alloca %"class.gmx::ArrayRef.122", align 16 ; 4 uses
+  %23 = alloca %"class.gmx::ArrayRef.238", align 16 ; 4 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca i8, align 1                       ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
@@ -236,7 +236,7 @@ bb.a:
   %34 = alloca %struct.t_pbc, align 4             ; 4 uses
   %35 = alloca %"class.gmx::BasicVector", align 8 ; 6 uses
   %36 = alloca %"struct.gmx::EnumerationArray.67", align 4 ; 7 uses
-  %37 = alloca %"struct.gmx::EnumerationArray.67", align 16 ; 10 uses
+  %37 = alloca %"struct.gmx::EnumerationArray.67", align 16 ; 9 uses
   %38 = alloca %struct.t_pbc, align 4             ; 4 uses
   %39 = alloca %"class.gmx::ArrayRef.122", align 8 ; 3 uses
   %40 = alloca %"class.gmx::ArrayRef", align 8    ; 3 uses
@@ -245,7 +245,7 @@ bb.a:
   %43 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %44 = alloca %"class.std::allocator.256", align 1 ; 3 uses
   %45 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
-  %46 = alloca %"struct.gmx::EnumerationArray.67", align 16 ; 10 uses
+  %46 = alloca %"struct.gmx::EnumerationArray.67", align 16 ; 9 uses
   %47 = alloca %"struct.gmx::EnumerationArray.66", align 4 ; 6 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 2784
   %i.s = load i64, ptr %i.r, align 8, !tbaa !100  ; 2 uses
@@ -648,8 +648,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.ku = getelementptr inbounds nuw i8, ptr %0, i64 2800
   %i.kv = getelementptr inbounds nuw i8, ptr %0, i64 2816
   %i.kw = getelementptr inbounds nuw i8, ptr %0, i64 2824
-  %48 = getelementptr inbounds nuw i8, ptr %37, i64 28
-  %49 = getelementptr inbounds nuw i8, ptr %46, i64 28
+  %48 = getelementptr inbounds nuw i8, ptr %37, <2 x i64> <i64 0, i64 28>
+  %49 = getelementptr inbounds nuw i8, ptr %46, <2 x i64> <i64 0, i64 28>
   %i.kx = load ptr, ptr %14, align 8              ; 3 uses
   %i.ky = load ptr, ptr %i.fr, align 8
   %i.kz = ptrtoint ptr %i.ky to i64
@@ -676,9 +676,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lp, i64 %i.lt
   %i.lv = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.lw = getelementptr inbounds nuw i8, ptr %i.w, i64 2344
-  %50 = getelementptr inbounds nuw i8, ptr %21, i64 4
-  %51 = getelementptr inbounds nuw i8, ptr %22, i64 8
-  %i.lx = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.lx = getelementptr inbounds nuw i8, ptr %21, i64 4
   %i.ly = getelementptr inbounds nuw i8, ptr %47, i64 316
   %i.lz = getelementptr inbounds nuw i8, ptr %11, i64 640
   %i.ma = getelementptr inbounds nuw i8, ptr %11, i64 664
@@ -909,12 +907,10 @@ bb.af:                                            ; preds = %_ZL25ftype_is_bonde
   store i32 %i.qi, ptr %i.qn, align 4, !tbaa !111
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(19) %21, i8 0, i64 19, i1 false)
-  store i8 1, ptr %50, align 1, !tbaa !281
+  store i8 1, ptr %i.lx, align 1, !tbaa !281
   %i.qo = getelementptr inbounds nuw i8, ptr %i.pn, i64 %i.qg
-  store ptr %46, ptr %22, align 8, !tbaa !254
-  store ptr %49, ptr %51, align 8, !tbaa !254
-  store ptr %37, ptr %23, align 8, !tbaa !283
-  store ptr %48, ptr %i.lx, align 8, !tbaa !283
+  store <2 x ptr> %49, ptr %22, align 16, !tbaa !254
+  store <2 x ptr> %48, ptr %23, align 16, !tbaa !283
   %.val.i = load i32, ptr %i.ou, align 8
   %.val39.i = load ptr, ptr %i.pc, align 8
   %i.qp = call fastcc noundef float @_ZN12_GLOBAL__N_113calc_one_bondEi19InteractionFunctionRK22InteractionDefinitionsN3gmx8ArrayRefIKiEEbRK12WorkDivisionPA3_KfPA4_fPA3_fPK10t_forcerecPK5t_pbcP17gmx_grppairener_tP6t_nrnbNS5_ISB_EENS5_IfEESS_SS_NS5_IKbEENS5_IKtEEiP8t_fcdataRKNS4_12StepWorkloadEPi(i32 noundef 0, i32 noundef %i.ph, ptr noundef nonnull align 8 dereferenceable(2760) %i.w, ptr %i.pn, ptr nonnull %i.qo, i1 noundef zeroext true, i32 %.val.i, ptr %.val39.i, ptr noundef %i.x, ptr noundef %i.oo, ptr noundef %i.oq, ptr noundef %9, ptr noundef %..i, ptr noundef %i.ot, ptr noundef %12, ptr noundef nonnull byval(%"class.gmx::ArrayRef.122") align 8 %22, ptr noundef nonnull byval(%"class.gmx::ArrayRef.238") align 8 %23, ptr %i.kx, ptr %i.lc, ptr %i.ld, ptr %i.li, ptr %i.lj, ptr %i.lo, ptr %i.lp, ptr %i.lu, i32 noundef %18, ptr noundef %6, ptr noundef nonnull align 1 dereferenceable(19) %21, ptr noundef %19)

@@ -205,8 +205,8 @@ bb.a:
   br i1 %.not, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load i32, ptr %1, align 4, !tbaa !19     ; 8 uses
-  %i.g = icmp slt i32 %i.f, 50
+  %i.f = load i32, ptr %1, align 4, !tbaa !19     ; 7 uses
+  %i.g = icmp slt i32 %i.f, 50                    ; 2 uses
   br i1 %i.g, label %bb.c, label %.thread
 
 .thread:                                          ; preds = %bb.b
@@ -258,8 +258,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.ad = getelementptr i8, ptr %.034, i64 12
-  %6 = icmp samesign ult i32 %i.f, 50
-  br i1 %6, label %bb.h, label %.thread.i
+  br i1 %i.g, label %bb.h, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.g
   %i.ae = add nuw nsw i32 %i.f, 2
@@ -305,8 +304,8 @@ bb.i:                                             ; preds = %decNumberCopy.exit,
   br i1 %.not52, label %bb.r, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ax = load i32, ptr %2, align 4, !tbaa !19    ; 8 uses
-  %i.ay = icmp slt i32 %i.ax, 50
+  %i.ax = load i32, ptr %2, align 4, !tbaa !19    ; 7 uses
+  %i.ay = icmp slt i32 %i.ax, 50                  ; 2 uses
   br i1 %i.ay, label %bb.k, label %.thread94
 
 .thread94:                                        ; preds = %bb.j
@@ -362,8 +361,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.bv = getelementptr i8, ptr %.0, i64 12
-  %7 = icmp samesign ult i32 %i.ax, 50
-  br i1 %7, label %bb.q, label %.thread.i56
+  br i1 %i.ay, label %bb.q, label %.thread.i56
 
 .thread.i56:                                      ; preds = %bb.p
   %i.bw = add nuw nsw i32 %i.ax, 2
@@ -766,11 +764,11 @@ bb.m:                                             ; preds = %bb.j, %bb.i
 bb.n:                                             ; preds = %bb.m
   %i.bq = load i32, ptr %2, align 4, !tbaa !27
   %i.br = add nsw i32 %i.bq, 1
-  %i.bs = load i32, ptr %1, align 4, !tbaa !19    ; 11 uses
+  %i.bs = load i32, ptr %1, align 4, !tbaa !19    ; 10 uses
   %. = tail call i32 @llvm.smax.i32(i32 %i.br, i32 %i.bs) ; 2 uses
   %i.bt = tail call i32 @llvm.smax.i32(i32 %., i32 7) ; 4 uses
   %i.bu = add nuw nsw i32 %i.bt, 2                ; 3 uses
-  %i.bv = icmp slt i32 %i.bs, 50
+  %i.bv = icmp slt i32 %i.bs, 50                  ; 2 uses
   br i1 %i.bv, label %bb.o, label %.thread
 
 .thread:                                          ; preds = %bb.n
@@ -859,8 +857,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.de = getelementptr i8, ptr %.0192, i64 12
-  %10 = icmp samesign ult i32 %i.bs, 50
-  br i1 %10, label %bb.z, label %.thread.i246
+  br i1 %i.bv, label %bb.z, label %.thread.i246
 
 .thread.i246:                                     ; preds = %bb.y
   %i.df = add nuw nsw i32 %i.bs, 2

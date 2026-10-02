@@ -205,10 +205,10 @@ define noundef i32 @_Z26setup_specat_communicationP12gmx_domdec_tPSt6vectorIiSaI
 bb.a:
   %8 = alloca %"struct.std::array.105", align 4   ; 13 uses
   %9 = alloca %"struct.std::array.105", align 8   ; 8 uses
-  %10 = alloca %"struct.std::array.105", align 4  ; 8 uses
+  %10 = alloca %"struct.std::array.105", align 4  ; 7 uses
   %11 = alloca %"class.gmx::ArrayRef.106", align 8 ; 5 uses
   %12 = alloca %"class.gmx::ArrayRef.106", align 8 ; 5 uses
-  %13 = alloca %"class.gmx::ArrayRef.106", align 8 ; 3 uses
+  %13 = alloca %"class.gmx::ArrayRef.106", align 16 ; 2 uses
   %14 = alloca %"class.gmx::ArrayRef.106", align 8 ; 3 uses
   %15 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
@@ -607,8 +607,7 @@ bb.ab:                                            ; preds = %bb.aa, %._crit_edge
   %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 920
   %i.ey = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %2, i64 296 ; 3 uses
-  %16 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %17 = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %16 = getelementptr inbounds nuw i8, ptr %10, <2 x i64> <i64 0, i64 8>
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.fb = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 2 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 896 ; 3 uses
@@ -1011,8 +1010,7 @@ bb.bf:                                            ; preds = %_ZNSt6vectorIiSaIiE
   store i32 %i.lz, ptr %.0218.sroa.gep340, align 4, !tbaa !133
   %i.ma = icmp eq i64 %indvars.iv446, 0
   %i.mb = zext i1 %i.ma to i32                    ; 2 uses
-  store ptr %10, ptr %13, align 8
-  store ptr %16, ptr %17, align 8
+  store <2 x ptr> %16, ptr %13, align 16
   call void @_Z10ddSendrecvIiEvPK12gmx_domdec_tiiN3gmx8ArrayRefIT_EES6_(ptr noundef %0, i32 noundef %i.gb, i32 noundef %i.mb, ptr nonnull %8, ptr nonnull %.0218.sroa.gep, ptr noundef nonnull byval(%"class.gmx::ArrayRef.106") align 8 %13)
   %i.mc = load ptr, ptr @debug, align 8, !tbaa !225 ; 2 uses
   %.not253 = icmp eq ptr %i.mc, null
@@ -1415,7 +1413,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 -1, ptr %.08.i.i.i, align 4, !tbaa !157
   %i.v = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 8
   store i32 -1, ptr %i.v, align 4, !tbaa !158
-  %i.w = add i64 %.057.i.i.i, -1                  ; 2 uses
+  %i.w = add nsw i64 %.057.i.i.i, -1              ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.08.i.i.i, i64 12 ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.w, 0
   br i1 %.not.i.i.i, label %_ZSt27__uninitialized_default_n_aIPN3gmx9HashedMapIiE9hashEntryEmS3_ET_S5_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i, !llvm.loop !274
@@ -1476,7 +1474,7 @@ middle.block53:                                   ; preds = %vector.body49
   store i32 -1, ptr %.08.i.i.i31, align 4, !tbaa !157
   %i.ak = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 8
   store i32 -1, ptr %i.ak, align 4, !tbaa !158
-  %i.al = add i64 %.057.i.i.i32, -1               ; 2 uses
+  %i.al = add nsw i64 %.057.i.i.i32, -1           ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.08.i.i.i31, i64 12
   %.not.i.i.i33 = icmp eq i64 %i.al, 0
   br i1 %.not.i.i.i33, label %_ZSt27__uninitialized_default_n_aIPN3gmx9HashedMapIiE9hashEntryEmS3_ET_S5_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30, !llvm.loop !276
