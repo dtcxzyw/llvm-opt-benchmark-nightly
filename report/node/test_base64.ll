@@ -202,33 +202,34 @@ bb.a:
   %i.m = load i8, ptr %i.l, align 1
   %i.n = zext i8 %i.m to i64
   %i.o = getelementptr inbounds nuw i8, ptr @_ZN6nbytes14unbase64_tableE, i64 %i.n
-  %i.p = load i8, ptr %i.o, align 1               ; 2 uses
+  %i.p = load i8, ptr %i.o, align 1
   %i.q = getelementptr i8, ptr %i.l, i64 1
   %i.r = load i8, ptr %i.q, align 1
   %i.s = zext i8 %i.r to i64
   %i.t = getelementptr inbounds nuw i8, ptr @_ZN6nbytes14unbase64_tableE, i64 %i.s
-  %i.u = load i8, ptr %i.t, align 1               ; 3 uses
+  %i.u = load i8, ptr %i.t, align 1
   %i.v = getelementptr i8, ptr %i.l, i64 2
   %i.w = load i8, ptr %i.v, align 1
   %i.x = zext i8 %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr @_ZN6nbytes14unbase64_tableE, i64 %i.x
-  %i.z = load i8, ptr %i.y, align 1               ; 3 uses
+  %i.z = load i8, ptr %i.y, align 1
   %i.aa = getelementptr i8, ptr %i.l, i64 3
   %i.ab = load i8, ptr %i.aa, align 1
   %i.ac = zext i8 %i.ab to i64
   %i.ad = getelementptr inbounds nuw i8, ptr @_ZN6nbytes14unbase64_tableE, i64 %i.ac
-  %i.ae = load i8, ptr %i.ad, align 1             ; 2 uses
-  %i.af = zext i8 %i.p to i32
+  %i.ae = load i8, ptr %i.ad, align 1
+  %i.af = zext i8 %i.ae to i32
   %i.ag = shl nuw i32 %i.af, 24
-  %i.ah = zext i8 %i.u to i32
+  %i.ah = zext i8 %i.z to i32
   %i.ai = shl nuw nsw i32 %i.ah, 16
-  %5 = or disjoint i32 %i.ai, %i.ag
-  %i.aj = zext i8 %i.z to i32
+  %i.aj = zext i8 %i.u to i32
   %i.ak = shl nuw nsw i32 %i.aj, 8
-  %i.al = zext i8 %i.ae to i32
-  %i.am = or disjoint i32 %5, %i.ak
-  %i.an = or disjoint i32 %i.am, %i.al
-  %i.ao = and i32 %i.an, -2139062144
+  %i.al = zext i8 %i.p to i32
+  %.sroa.5.0.insert.insert = or disjoint i32 %i.ak, %i.al
+  %i.am = or disjoint i32 %.sroa.5.0.insert.insert, %i.ai
+  %i.an = or disjoint i32 %i.am, %i.ag
+  %5 = call noundef i32 @llvm.bswap.i32(i32 %i.an) ; 7 uses
+  %i.ao = and i32 %5, -2139062144
   %.not = icmp eq i32 %i.ao, 0
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -245,23 +246,29 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph
-  %6 = shl i8 %i.p, 2
-  %7 = lshr i8 %i.u, 4
-  %8 = and i8 %7, 3
-  %9 = or disjoint i8 %8, %6
+  %6 = lshr i32 %5, 22
+  %7 = and i32 %6, 252
+  %8 = lshr i32 %5, 20
+  %9 = and i32 %8, 3
+  %10 = or disjoint i32 %7, %9
+  %11 = trunc nuw i32 %10 to i8
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 %i.j ; 3 uses
-  store i8 %9, ptr %i.au, align 1
-  %10 = shl i8 %i.u, 4
-  %11 = lshr i8 %i.z, 2
-  %12 = and i8 %11, 15
-  %13 = or disjoint i8 %12, %10
+  store i8 %11, ptr %i.au, align 1
+  %12 = lshr i32 %5, 12
+  %13 = and i32 %12, 240
+  %14 = lshr i32 %5, 10
+  %15 = and i32 %14, 15
+  %16 = or disjoint i32 %13, %15
+  %17 = trunc nuw i32 %16 to i8
   %i.av = getelementptr i8, ptr %i.au, i64 1
-  store i8 %13, ptr %i.av, align 1
-  %14 = shl i8 %i.z, 6
-  %15 = and i8 %i.ae, 63
-  %16 = or disjoint i8 %15, %14
+  store i8 %17, ptr %i.av, align 1
+  %18 = lshr i32 %5, 2
+  %19 = and i32 %18, 192
+  %20 = and i32 %5, 63
+  %21 = or disjoint i32 %19, %20
+  %22 = trunc nuw i32 %21 to i8
   %i.aw = getelementptr i8, ptr %i.au, i64 2
-  store i8 %16, ptr %i.aw, align 1
+  store i8 %22, ptr %i.aw, align 1
   %i.ax = add i64 %i.k, 4                         ; 2 uses
   store i64 %i.ax, ptr %i.a, align 8
   %i.ay = add i64 %i.j, 3                         ; 2 uses
@@ -663,6 +670,9 @@ __cxx_global_var_init.23.exit:                    ; preds = %_ZNSt7__cxx1112basi
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #10
 
 attributes #0 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

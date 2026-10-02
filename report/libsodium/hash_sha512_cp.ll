@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsodium/original/hash_sha512_cp?download=true
 inline.NumInlined: 167
 inline.NumDeleted: 6
-loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumUnrolled: 9
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -124,7 +124,7 @@ middle.block:                                     ; preds = %vector.body.3, %vec
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.w, 0
-  br i1 %min.epilog.iters.check, label %.preheader51.preheader, label %vec.epilog.ph, !prof !16
+  br i1 %min.epilog.iters.check, label %.preheader51.preheader, label %vec.epilog.ph, !prof !15
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -139,7 +139,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <4 x i8> %wide.load71, ptr %i.ap, align 1
   %index.next72 = add nuw i64 %index70, 4         ; 2 uses
   %i.aq = icmp eq i64 %index.next72, %n.vec69
-  br i1 %i.aq, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !5
+  br i1 %i.aq, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !4
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n73 = icmp eq i64 %i.p, %n.vec69
@@ -163,7 +163,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.aw = add nuw nsw i64 %.152.prol, 1           ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.preheader51.prol.loopexit, label %.preheader51.prol, !llvm.loop !6
+  br i1 %prol.iter.cmp.not, label %.preheader51.prol.loopexit, label %.preheader51.prol, !llvm.loop !5
 
 .preheader51.prol.loopexit:                       ; preds = %.preheader51.prol, %.preheader51.preheader
   %.152.unr = phi i64 [ %.152.ph, %.preheader51.preheader ], [ %i.aw, %.preheader51.prol ]
@@ -290,7 +290,7 @@ vec.epilog.vector.body124:                        ; preds = %vec.epilog.vector.b
   store <4 x i8> %wide.load126, ptr %i.ck, align 1
   %index.next127 = add nuw i64 %index125, 4       ; 2 uses
   %i.cl = icmp eq i64 %index.next127, %n.vec123
-  br i1 %i.cl, label %vec.epilog.middle.block128, label %vec.epilog.vector.body124, !llvm.loop !7
+  br i1 %i.cl, label %vec.epilog.middle.block128, label %vec.epilog.vector.body124, !llvm.loop !6
 
 vec.epilog.middle.block128:                       ; preds = %vec.epilog.vector.body124
   %cmp.n129 = icmp eq i64 %2, %n.vec123
@@ -312,7 +312,7 @@ vec.epilog.middle.block128:                       ; preds = %vec.epilog.vector.b
   %i.cp = add nuw nsw i64 %.058.prol, 1           ; 2 uses
   %prol.iter138.next = add i64 %prol.iter138, 1   ; 2 uses
   %prol.iter138.cmp.not = icmp eq i64 %prol.iter138.next, %xtraiter136
-  br i1 %prol.iter138.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !8
+  br i1 %prol.iter138.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !7
 
 .preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader
   %.058.unr = phi i64 [ %.058.ph, %.preheader.preheader ], [ %i.cp, %.preheader.prol ]
@@ -343,7 +343,7 @@ vec.epilog.middle.block128:                       ; preds = %vec.epilog.vector.b
   store i8 %i.df, ptr %i.dg, align 1
   %i.dh = add nuw nsw i64 %.058, 4                ; 2 uses
   %exitcond61.not.3 = icmp eq i64 %i.dh, %2
-  br i1 %exitcond61.not.3, label %.loopexit, label %.preheader, !llvm.loop !9
+  br i1 %exitcond61.not.3, label %.loopexit, label %.preheader, !llvm.loop !8
 
 .preheader51:                                     ; preds = %.preheader51.prol.loopexit, %.preheader51
   %.152 = phi i64 [ %i.dx, %.preheader51 ], [ %.152.unr, %.preheader51.prol.loopexit ] ; 6 uses
@@ -368,7 +368,7 @@ vec.epilog.middle.block128:                       ; preds = %vec.epilog.vector.b
   store i8 %i.dv, ptr %i.dw, align 1
   %i.dx = add nuw nsw i64 %.152, 4                ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.dx, %i.p
-  br i1 %exitcond.not.3, label %.loopexit131, label %.preheader51, !llvm.loop !10
+  br i1 %exitcond.not.3, label %.loopexit131, label %.preheader51, !llvm.loop !9
 
 .loopexit131:                                     ; preds = %.preheader51.prol.loopexit, %.preheader51, %vec.epilog.middle.block, %middle.block
   %i.dy = getelementptr inbounds nuw i8, ptr %i.c, i64 640 ; 2 uses
@@ -416,7 +416,7 @@ vector.body82:                                    ; preds = %vector.ph80, %vecto
   store <16 x i8> %wide.load85, ptr %i.ei, align 1
   %index.next86 = add nuw i64 %index83, 32        ; 2 uses
   %i.ej = icmp eq i64 %index.next86, %n.vec81
-  br i1 %i.ej, label %middle.block87, label %vector.body82, !llvm.loop !11
+  br i1 %i.ej, label %middle.block87, label %vector.body82, !llvm.loop !10
 
 middle.block87:                                   ; preds = %vector.body82
   %cmp.n88 = icmp eq i64 %.045.lcssa, %n.vec81
@@ -424,7 +424,7 @@ middle.block87:                                   ; preds = %vector.body82
 
 vec.epilog.iter.check92:                          ; preds = %middle.block87
   %min.epilog.iters.check93 = icmp eq i64 %i.ee, 0
-  br i1 %min.epilog.iters.check93, label %.lr.ph57.preheader, label %vec.epilog.ph94, !prof !16
+  br i1 %min.epilog.iters.check93, label %.lr.ph57.preheader, label %vec.epilog.ph94, !prof !15
 
 vec.epilog.ph94:                                  ; preds = %vector.main.loop.iter.check78, %vec.epilog.iter.check92
   %vec.epilog.resume.val89 = phi i64 [ %n.vec81, %vec.epilog.iter.check92 ], [ 0, %vector.main.loop.iter.check78 ]
@@ -439,7 +439,7 @@ vec.epilog.vector.body96:                         ; preds = %vec.epilog.vector.b
   store <4 x i8> %wide.load98, ptr %i.el, align 1
   %index.next99 = add nuw i64 %index97, 4         ; 2 uses
   %i.em = icmp eq i64 %index.next99, %n.vec95
-  br i1 %i.em, label %vec.epilog.middle.block100, label %vec.epilog.vector.body96, !llvm.loop !12
+  br i1 %i.em, label %vec.epilog.middle.block100, label %vec.epilog.vector.body96, !llvm.loop !11
 
 vec.epilog.middle.block100:                       ; preds = %vec.epilog.vector.body96
   %cmp.n101 = icmp eq i64 %.045.lcssa, %n.vec95
@@ -461,7 +461,7 @@ vec.epilog.middle.block100:                       ; preds = %vec.epilog.vector.b
   %i.eq = add nuw nsw i64 %.256.prol, 1           ; 2 uses
   %prol.iter135.next = add i64 %prol.iter135, 1   ; 2 uses
   %prol.iter135.cmp.not = icmp eq i64 %prol.iter135.next, %xtraiter133
-  br i1 %prol.iter135.cmp.not, label %.lr.ph57.prol.loopexit, label %.lr.ph57.prol, !llvm.loop !13
+  br i1 %prol.iter135.cmp.not, label %.lr.ph57.prol.loopexit, label %.lr.ph57.prol, !llvm.loop !12
 
 .lr.ph57.prol.loopexit:                           ; preds = %.lr.ph57.prol, %.lr.ph57.preheader
   %.256.unr = phi i64 [ %.256.ph, %.lr.ph57.preheader ], [ %i.eq, %.lr.ph57.prol ]
@@ -476,7 +476,7 @@ vec.epilog.middle.block100:                       ; preds = %vec.epilog.vector.b
   %i.et = getelementptr i8, ptr %.04653, i64 128  ; 2 uses
   %i.eu = add i64 %.04554, -128                   ; 3 uses
   %i.ev = icmp ugt i64 %i.eu, 127
-  br i1 %i.ev, label %.lr.ph, label %.preheader50, !llvm.loop !14
+  br i1 %i.ev, label %.lr.ph, label %.preheader50, !llvm.loop !13
 
 .lr.ph57:                                         ; preds = %.lr.ph57.prol.loopexit, %.lr.ph57
   %.256 = phi i64 [ %i.fl, %.lr.ph57 ], [ %.256.unr, %.lr.ph57.prol.loopexit ] ; 6 uses
@@ -501,7 +501,7 @@ vec.epilog.middle.block100:                       ; preds = %vec.epilog.vector.b
   store i8 %i.fj, ptr %i.fk, align 1
   %i.fl = add nuw nsw i64 %.256, 4                ; 2 uses
   %exitcond60.not.3 = icmp eq i64 %i.fl, %.045.lcssa
-  br i1 %exitcond60.not.3, label %._crit_edge, label %.lr.ph57, !llvm.loop !15
+  br i1 %exitcond60.not.3, label %._crit_edge, label %.lr.ph57, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %.lr.ph57.prol.loopexit, %.lr.ph57, %middle.block87, %vec.epilog.middle.block100, %.preheader50
   call void @sodium_memzero(ptr noundef nonnull %i.c, i64 noundef 704) #6
@@ -516,77 +516,106 @@ vec.epilog.middle.block100:                       ; preds = %vec.epilog.vector.b
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 
 ; Function Attrs: nofree norecurse nosync nounwind ssp memory(argmem: readwrite) uwtable
-define internal fastcc void @SHA512_Transform(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull captures(none) %2, ptr noundef %3) unnamed_addr #0 {
-  br label %bb.a
-
-bb.a:                                             ; preds = %bb.a, %4
-  %.06.i = phi i64 [ 0, %4 ], [ %37, %bb.a ]      ; 3 uses
-  %5 = shl nuw nsw i64 %.06.i, 3
-  %i.a = getelementptr i8, ptr %1, i64 %5         ; 8 uses
-  %i.b = getelementptr i8, ptr %i.a, i64 7
-  %6 = load i8, ptr %i.b, align 1
-  %7 = zext i8 %6 to i64
-  %i.c = getelementptr i8, ptr %i.a, i64 6
-  %8 = load i8, ptr %i.c, align 1
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw nsw i64 %9, 8
-  %11 = or disjoint i64 %10, %7
-  %i.d = getelementptr i8, ptr %i.a, i64 5
-  %12 = load i8, ptr %i.d, align 1
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 16
-  %15 = or disjoint i64 %11, %14
-  %i.e = getelementptr i8, ptr %i.a, i64 4
-  %16 = load i8, ptr %i.e, align 1
-  %17 = zext i8 %16 to i64
-  %18 = shl nuw nsw i64 %17, 24
-  %19 = or disjoint i64 %15, %18
-  %i.f = getelementptr i8, ptr %i.a, i64 3
-  %20 = load i8, ptr %i.f, align 1
-  %21 = zext i8 %20 to i64
-  %22 = shl nuw nsw i64 %21, 32
-  %23 = or disjoint i64 %19, %22
-  %i.g = getelementptr i8, ptr %i.a, i64 2
-  %24 = load i8, ptr %i.g, align 1
-  %25 = zext i8 %24 to i64
-  %26 = shl nuw nsw i64 %25, 40
-  %27 = or i64 %23, %26
-  %i.h = getelementptr i8, ptr %i.a, i64 1
-  %28 = load i8, ptr %i.h, align 1
-  %29 = zext i8 %28 to i64
-  %30 = shl nuw nsw i64 %29, 48
-  %31 = or i64 %27, %30
-  %32 = load i8, ptr %i.a, align 1
-  %33 = zext i8 %32 to i64
-  %34 = shl nuw i64 %33, 56
-  %35 = or i64 %31, %34
-  %36 = getelementptr [8 x i8], ptr %2, i64 %.06.i
-  store i64 %35, ptr %36, align 8
-  %37 = add nuw nsw i64 %.06.i, 1                 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %37, 16
-  br i1 %exitcond.not.i, label %be64dec_vect.exit, label %bb.a, !llvm.loop !21
-
-be64dec_vect.exit:                                ; preds = %bb.a
+define internal fastcc void @SHA512_Transform(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull captures(none) initializes((0, 128)) %2, ptr noundef %3) unnamed_addr #0 {
+bb.a:
+  %4 = load i64, ptr %1, align 1
+  %5 = tail call i64 @llvm.bswap.i64(i64 %4)
+  store i64 %5, ptr %2, align 8
+  %6 = getelementptr i8, ptr %1, i64 8
+  %7 = load i64, ptr %6, align 1
+  %8 = tail call i64 @llvm.bswap.i64(i64 %7)
+  %9 = getelementptr i8, ptr %2, i64 8
+  store i64 %8, ptr %9, align 8
+  %10 = getelementptr i8, ptr %1, i64 16
+  %11 = load i64, ptr %10, align 1
+  %12 = tail call i64 @llvm.bswap.i64(i64 %11)
+  %13 = getelementptr i8, ptr %2, i64 16
+  store i64 %12, ptr %13, align 8
+  %14 = getelementptr i8, ptr %1, i64 24
+  %15 = load i64, ptr %14, align 1
+  %16 = tail call i64 @llvm.bswap.i64(i64 %15)
+  %17 = getelementptr i8, ptr %2, i64 24
+  store i64 %16, ptr %17, align 8
+  %18 = getelementptr i8, ptr %1, i64 32
+  %19 = load i64, ptr %18, align 1
+  %20 = tail call i64 @llvm.bswap.i64(i64 %19)
+  %21 = getelementptr i8, ptr %2, i64 32
+  store i64 %20, ptr %21, align 8
+  %22 = getelementptr i8, ptr %1, i64 40
+  %23 = load i64, ptr %22, align 1
+  %24 = tail call i64 @llvm.bswap.i64(i64 %23)
+  %25 = getelementptr i8, ptr %2, i64 40
+  store i64 %24, ptr %25, align 8
+  %26 = getelementptr i8, ptr %1, i64 48
+  %27 = load i64, ptr %26, align 1
+  %28 = tail call i64 @llvm.bswap.i64(i64 %27)
+  %29 = getelementptr i8, ptr %2, i64 48
+  store i64 %28, ptr %29, align 8
+  %30 = getelementptr i8, ptr %1, i64 56
+  %31 = load i64, ptr %30, align 1
+  %32 = tail call i64 @llvm.bswap.i64(i64 %31)
+  %i.a = getelementptr i8, ptr %2, i64 56
+  store i64 %32, ptr %i.a, align 8
+  %i.b = getelementptr i8, ptr %1, i64 64
+  %33 = load i64, ptr %i.b, align 1
+  %34 = tail call i64 @llvm.bswap.i64(i64 %33)
+  %i.c = getelementptr i8, ptr %2, i64 64
+  store i64 %34, ptr %i.c, align 8
+  %35 = getelementptr i8, ptr %1, i64 72
+  %36 = load i64, ptr %35, align 1
+  %37 = tail call i64 @llvm.bswap.i64(i64 %36)
+  %i.d = getelementptr i8, ptr %2, i64 72
+  store i64 %37, ptr %i.d, align 8
+  %38 = getelementptr i8, ptr %1, i64 80
+  %39 = load i64, ptr %38, align 1
+  %40 = tail call i64 @llvm.bswap.i64(i64 %39)
+  %i.e = getelementptr i8, ptr %2, i64 80
+  store i64 %40, ptr %i.e, align 8
+  %41 = getelementptr i8, ptr %1, i64 88
+  %42 = load i64, ptr %41, align 1
+  %43 = tail call i64 @llvm.bswap.i64(i64 %42)
+  %i.f = getelementptr i8, ptr %2, i64 88
+  store i64 %43, ptr %i.f, align 8
+  %44 = getelementptr i8, ptr %1, i64 96
+  %45 = load i64, ptr %44, align 1
+  %46 = tail call i64 @llvm.bswap.i64(i64 %45)
+  %i.g = getelementptr i8, ptr %2, i64 96
+  store i64 %46, ptr %i.g, align 8
+  %47 = getelementptr i8, ptr %1, i64 104
+  %48 = load i64, ptr %47, align 1
+  %49 = tail call i64 @llvm.bswap.i64(i64 %48)
+  %i.h = getelementptr i8, ptr %2, i64 104
+  store i64 %49, ptr %i.h, align 8
+  %50 = getelementptr i8, ptr %1, i64 112
+  %51 = load i64, ptr %50, align 1
+  %52 = tail call i64 @llvm.bswap.i64(i64 %51)
+  %53 = getelementptr i8, ptr %2, i64 112
+  store i64 %52, ptr %53, align 8
+  %54 = getelementptr i8, ptr %1, i64 120
+  %55 = load i64, ptr %54, align 1
+  %56 = tail call i64 @llvm.bswap.i64(i64 %55)
+  %57 = getelementptr i8, ptr %2, i64 120
+  store i64 %56, ptr %57, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %3, ptr noundef nonnull align 1 dereferenceable(64) %0, i64 noundef 64, i1 noundef false) #6
-  %38 = getelementptr i8, ptr %3, i64 32          ; 6 uses
-  %39 = getelementptr i8, ptr %3, i64 40          ; 6 uses
-  %40 = getelementptr i8, ptr %3, i64 48          ; 6 uses
-  %41 = getelementptr i8, ptr %3, i64 56          ; 6 uses
-  %42 = getelementptr i8, ptr %3, i64 24          ; 6 uses
-  %43 = getelementptr i8, ptr %3, i64 8           ; 6 uses
-  %44 = getelementptr i8, ptr %3, i64 16          ; 6 uses
+  %58 = getelementptr i8, ptr %3, i64 32          ; 6 uses
+  %59 = getelementptr i8, ptr %3, i64 40          ; 6 uses
+  %60 = getelementptr i8, ptr %3, i64 48          ; 6 uses
+  %61 = getelementptr i8, ptr %3, i64 56          ; 6 uses
+  %62 = getelementptr i8, ptr %3, i64 24          ; 6 uses
+  %63 = getelementptr i8, ptr %3, i64 8           ; 6 uses
+  %64 = getelementptr i8, ptr %3, i64 16          ; 6 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.c, %be64dec_vect.exit
-  %indvars.iv = phi i64 [ 0, %be64dec_vect.exit ], [ %indvars.iv.next, %bb.c ] ; 19 uses
-  %i.i = load i64, ptr %38, align 8               ; 11 uses
+bb.b:                                             ; preds = %bb.c, %bb.a
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.c ] ; 19 uses
+  %i.i = load i64, ptr %58, align 8               ; 11 uses
   %i.j = tail call i64 @llvm.fshl.i64(i64 %i.i, i64 %i.i, i64 50)
   %i.k = tail call i64 @llvm.fshl.i64(i64 %i.i, i64 %i.i, i64 46)
   %i.l = xor i64 %i.j, %i.k
   %i.m = tail call i64 @llvm.fshl.i64(i64 %i.i, i64 %i.i, i64 23)
   %i.n = xor i64 %i.l, %i.m
-  %i.o = load i64, ptr %39, align 8               ; 4 uses
-  %i.p = load i64, ptr %40, align 8               ; 3 uses
+  %i.o = load i64, ptr %59, align 8               ; 4 uses
+  %i.p = load i64, ptr %60, align 8               ; 3 uses
   %i.q = xor i64 %i.p, %i.o
   %i.r = and i64 %i.q, %i.i
   %i.s = xor i64 %i.r, %i.p
@@ -594,29 +623,29 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.u = load i64, ptr %i.t, align 8
   %i.v = getelementptr [8 x i8], ptr @Krnd, i64 %indvars.iv
   %i.w = load i64, ptr %i.v, align 16
-  %i.x = load i64, ptr %41, align 8
+  %i.x = load i64, ptr %61, align 8
   %i.y = add i64 %i.u, %i.n
   %i.z = add i64 %i.y, %i.w
   %i.aa = add i64 %i.z, %i.s
   %i.ab = add i64 %i.aa, %i.x                     ; 2 uses
-  %i.ac = load i64, ptr %42, align 8
+  %i.ac = load i64, ptr %62, align 8
   %i.ad = add i64 %i.ab, %i.ac                    ; 12 uses
-  store i64 %i.ad, ptr %42, align 8
+  store i64 %i.ad, ptr %62, align 8
   %i.ae = load i64, ptr %3, align 8               ; 12 uses
   %i.af = tail call i64 @llvm.fshl.i64(i64 %i.ae, i64 %i.ae, i64 36)
   %i.ag = tail call i64 @llvm.fshl.i64(i64 %i.ae, i64 %i.ae, i64 30)
   %i.ah = xor i64 %i.af, %i.ag
   %i.ai = tail call i64 @llvm.fshl.i64(i64 %i.ae, i64 %i.ae, i64 25)
   %i.aj = xor i64 %i.ah, %i.ai
-  %i.ak = load i64, ptr %43, align 8              ; 5 uses
-  %i.al = load i64, ptr %44, align 8              ; 3 uses
+  %i.ak = load i64, ptr %63, align 8              ; 5 uses
+  %i.al = load i64, ptr %64, align 8              ; 3 uses
   %i.am = or i64 %i.al, %i.ak
   %i.an = and i64 %i.am, %i.ae
   %i.ao = and i64 %i.al, %i.ak
   %i.ap = or i64 %i.an, %i.ao
   %i.aq = add i64 %i.aj, %i.ab
   %i.ar = add i64 %i.aq, %i.ap                    ; 13 uses
-  store i64 %i.ar, ptr %41, align 8
+  store i64 %i.ar, ptr %61, align 8
   %i.as = tail call i64 @llvm.fshl.i64(i64 %i.ad, i64 %i.ad, i64 50)
   %i.at = tail call i64 @llvm.fshl.i64(i64 %i.ad, i64 %i.ad, i64 46)
   %i.au = xor i64 %i.as, %i.at
@@ -635,7 +664,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.bh = add i64 %i.bg, %i.bc
   %i.bi = add i64 %i.bh, %i.be                    ; 2 uses
   %i.bj = add i64 %i.bi, %i.al                    ; 12 uses
-  store i64 %i.bj, ptr %44, align 8
+  store i64 %i.bj, ptr %64, align 8
   %i.bk = tail call i64 @llvm.fshl.i64(i64 %i.ar, i64 %i.ar, i64 36)
   %i.bl = tail call i64 @llvm.fshl.i64(i64 %i.ar, i64 %i.ar, i64 30)
   %i.bm = xor i64 %i.bk, %i.bl
@@ -647,7 +676,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.bs = or i64 %i.bq, %i.br
   %i.bt = add i64 %i.bs, %i.bi
   %i.bu = add i64 %i.bt, %i.bo                    ; 13 uses
-  store i64 %i.bu, ptr %40, align 8
+  store i64 %i.bu, ptr %60, align 8
   %i.bv = tail call i64 @llvm.fshl.i64(i64 %i.bj, i64 %i.bj, i64 50)
   %i.bw = tail call i64 @llvm.fshl.i64(i64 %i.bj, i64 %i.bj, i64 46)
   %i.bx = xor i64 %i.bv, %i.bw
@@ -666,7 +695,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.ck = add i64 %i.cj, %i.cc
   %i.cl = add i64 %i.ck, %i.bz                    ; 2 uses
   %i.cm = add i64 %i.cl, %i.ak                    ; 12 uses
-  store i64 %i.cm, ptr %43, align 8
+  store i64 %i.cm, ptr %63, align 8
   %i.cn = tail call i64 @llvm.fshl.i64(i64 %i.bu, i64 %i.bu, i64 36)
   %i.co = tail call i64 @llvm.fshl.i64(i64 %i.bu, i64 %i.bu, i64 30)
   %i.cp = xor i64 %i.cn, %i.co
@@ -678,7 +707,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.cv = or i64 %i.ct, %i.cu
   %i.cw = add i64 %i.cr, %i.cv
   %i.cx = add i64 %i.cw, %i.cl                    ; 13 uses
-  store i64 %i.cx, ptr %39, align 8
+  store i64 %i.cx, ptr %59, align 8
   %i.cy = tail call i64 @llvm.fshl.i64(i64 %i.cm, i64 %i.cm, i64 50)
   %i.cz = tail call i64 @llvm.fshl.i64(i64 %i.cm, i64 %i.cm, i64 46)
   %i.da = xor i64 %i.cy, %i.cz
@@ -709,7 +738,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.dy = or i64 %i.dw, %i.dx
   %i.dz = add i64 %i.du, %i.dy
   %i.ea = add i64 %i.dz, %i.do                    ; 13 uses
-  store i64 %i.ea, ptr %38, align 8
+  store i64 %i.ea, ptr %58, align 8
   %i.eb = tail call i64 @llvm.fshl.i64(i64 %i.dp, i64 %i.dp, i64 50)
   %i.ec = tail call i64 @llvm.fshl.i64(i64 %i.dp, i64 %i.dp, i64 46)
   %i.ed = xor i64 %i.eb, %i.ec
@@ -728,7 +757,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.eq = add i64 %i.ep, %i.ei
   %i.er = add i64 %i.eq, %i.ef                    ; 2 uses
   %i.es = add i64 %i.er, %i.ar                    ; 12 uses
-  store i64 %i.es, ptr %41, align 8
+  store i64 %i.es, ptr %61, align 8
   %i.et = tail call i64 @llvm.fshl.i64(i64 %i.ea, i64 %i.ea, i64 36)
   %i.eu = tail call i64 @llvm.fshl.i64(i64 %i.ea, i64 %i.ea, i64 30)
   %i.ev = xor i64 %i.et, %i.eu
@@ -740,7 +769,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.fb = or i64 %i.ez, %i.fa
   %i.fc = add i64 %i.ex, %i.fb
   %i.fd = add i64 %i.fc, %i.er                    ; 13 uses
-  store i64 %i.fd, ptr %42, align 8
+  store i64 %i.fd, ptr %62, align 8
   %i.fe = tail call i64 @llvm.fshl.i64(i64 %i.es, i64 %i.es, i64 50)
   %i.ff = tail call i64 @llvm.fshl.i64(i64 %i.es, i64 %i.es, i64 46)
   %i.fg = xor i64 %i.fe, %i.ff
@@ -759,7 +788,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.ft = add i64 %i.fs, %i.fl
   %i.fu = add i64 %i.ft, %i.fi                    ; 2 uses
   %i.fv = add i64 %i.fu, %i.bu                    ; 12 uses
-  store i64 %i.fv, ptr %40, align 8
+  store i64 %i.fv, ptr %60, align 8
   %i.fw = tail call i64 @llvm.fshl.i64(i64 %i.fd, i64 %i.fd, i64 36)
   %i.fx = tail call i64 @llvm.fshl.i64(i64 %i.fd, i64 %i.fd, i64 30)
   %i.fy = xor i64 %i.fw, %i.fx
@@ -771,7 +800,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.ge = or i64 %i.gc, %i.gd
   %i.gf = add i64 %i.ga, %i.ge
   %i.gg = add i64 %i.gf, %i.fu                    ; 13 uses
-  store i64 %i.gg, ptr %44, align 8
+  store i64 %i.gg, ptr %64, align 8
   %i.gh = tail call i64 @llvm.fshl.i64(i64 %i.fv, i64 %i.fv, i64 50)
   %i.gi = tail call i64 @llvm.fshl.i64(i64 %i.fv, i64 %i.fv, i64 46)
   %i.gj = xor i64 %i.gh, %i.gi
@@ -790,7 +819,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.gw = add i64 %i.gv, %i.go
   %i.gx = add i64 %i.gw, %i.gl                    ; 2 uses
   %i.gy = add i64 %i.gx, %i.cx                    ; 12 uses
-  store i64 %i.gy, ptr %39, align 8
+  store i64 %i.gy, ptr %59, align 8
   %i.gz = tail call i64 @llvm.fshl.i64(i64 %i.gg, i64 %i.gg, i64 36)
   %i.ha = tail call i64 @llvm.fshl.i64(i64 %i.gg, i64 %i.gg, i64 30)
   %i.hb = xor i64 %i.gz, %i.ha
@@ -802,7 +831,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.hh = or i64 %i.hf, %i.hg
   %i.hi = add i64 %i.hd, %i.hh
   %i.hj = add i64 %i.hi, %i.gx                    ; 13 uses
-  store i64 %i.hj, ptr %43, align 8
+  store i64 %i.hj, ptr %63, align 8
   %i.hk = tail call i64 @llvm.fshl.i64(i64 %i.gy, i64 %i.gy, i64 50)
   %i.hl = tail call i64 @llvm.fshl.i64(i64 %i.gy, i64 %i.gy, i64 46)
   %i.hm = xor i64 %i.hk, %i.hl
@@ -821,7 +850,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.hz = add i64 %i.hy, %i.hr
   %i.ia = add i64 %i.hz, %i.ho                    ; 2 uses
   %i.ib = add i64 %i.ia, %i.ea                    ; 12 uses
-  store i64 %i.ib, ptr %38, align 8
+  store i64 %i.ib, ptr %58, align 8
   %i.ic = tail call i64 @llvm.fshl.i64(i64 %i.hj, i64 %i.hj, i64 36)
   %i.id = tail call i64 @llvm.fshl.i64(i64 %i.hj, i64 %i.hj, i64 30)
   %i.ie = xor i64 %i.ic, %i.id
@@ -852,7 +881,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.jc = add i64 %i.jb, %i.iu
   %i.jd = add i64 %i.jc, %i.ir                    ; 2 uses
   %i.je = add i64 %i.jd, %i.fd                    ; 12 uses
-  store i64 %i.je, ptr %42, align 8
+  store i64 %i.je, ptr %62, align 8
   %i.jf = tail call i64 @llvm.fshl.i64(i64 %i.im, i64 %i.im, i64 36)
   %i.jg = tail call i64 @llvm.fshl.i64(i64 %i.im, i64 %i.im, i64 30)
   %i.jh = xor i64 %i.jf, %i.jg
@@ -864,7 +893,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.jn = or i64 %i.jl, %i.jm
   %i.jo = add i64 %i.jj, %i.jn
   %i.jp = add i64 %i.jo, %i.jd                    ; 13 uses
-  store i64 %i.jp, ptr %41, align 8
+  store i64 %i.jp, ptr %61, align 8
   %i.jq = tail call i64 @llvm.fshl.i64(i64 %i.je, i64 %i.je, i64 50)
   %i.jr = tail call i64 @llvm.fshl.i64(i64 %i.je, i64 %i.je, i64 46)
   %i.js = xor i64 %i.jq, %i.jr
@@ -883,7 +912,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.kf = add i64 %i.ke, %i.jx
   %i.kg = add i64 %i.kf, %i.ju                    ; 2 uses
   %i.kh = add i64 %i.kg, %i.gg                    ; 12 uses
-  store i64 %i.kh, ptr %44, align 8
+  store i64 %i.kh, ptr %64, align 8
   %i.ki = tail call i64 @llvm.fshl.i64(i64 %i.jp, i64 %i.jp, i64 36)
   %i.kj = tail call i64 @llvm.fshl.i64(i64 %i.jp, i64 %i.jp, i64 30)
   %i.kk = xor i64 %i.ki, %i.kj
@@ -895,7 +924,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.kq = or i64 %i.ko, %i.kp
   %i.kr = add i64 %i.km, %i.kq
   %i.ks = add i64 %i.kr, %i.kg                    ; 13 uses
-  store i64 %i.ks, ptr %40, align 8
+  store i64 %i.ks, ptr %60, align 8
   %i.kt = tail call i64 @llvm.fshl.i64(i64 %i.kh, i64 %i.kh, i64 50)
   %i.ku = tail call i64 @llvm.fshl.i64(i64 %i.kh, i64 %i.kh, i64 46)
   %i.kv = xor i64 %i.kt, %i.ku
@@ -914,7 +943,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.li = add i64 %i.lh, %i.la
   %i.lj = add i64 %i.li, %i.kx                    ; 2 uses
   %i.lk = add i64 %i.lj, %i.hj                    ; 12 uses
-  store i64 %i.lk, ptr %43, align 8
+  store i64 %i.lk, ptr %63, align 8
   %i.ll = tail call i64 @llvm.fshl.i64(i64 %i.ks, i64 %i.ks, i64 36)
   %i.lm = tail call i64 @llvm.fshl.i64(i64 %i.ks, i64 %i.ks, i64 30)
   %i.ln = xor i64 %i.ll, %i.lm
@@ -926,7 +955,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.lt = or i64 %i.lr, %i.ls
   %i.lu = add i64 %i.lp, %i.lt
   %i.lv = add i64 %i.lu, %i.lj                    ; 13 uses
-  store i64 %i.lv, ptr %39, align 8
+  store i64 %i.lv, ptr %59, align 8
   %i.lw = tail call i64 @llvm.fshl.i64(i64 %i.lk, i64 %i.lk, i64 50)
   %i.lx = tail call i64 @llvm.fshl.i64(i64 %i.lk, i64 %i.lk, i64 46)
   %i.ly = xor i64 %i.lw, %i.lx
@@ -957,7 +986,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.mw = or i64 %i.mu, %i.mv
   %i.mx = add i64 %i.ms, %i.mw
   %i.my = add i64 %i.mx, %i.mm                    ; 13 uses
-  store i64 %i.my, ptr %38, align 8
+  store i64 %i.my, ptr %58, align 8
   %i.mz = tail call i64 @llvm.fshl.i64(i64 %i.mn, i64 %i.mn, i64 50)
   %i.na = tail call i64 @llvm.fshl.i64(i64 %i.mn, i64 %i.mn, i64 46)
   %i.nb = xor i64 %i.mz, %i.na
@@ -976,7 +1005,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.no = add i64 %i.nn, %i.ng
   %i.np = add i64 %i.no, %i.nd                    ; 2 uses
   %i.nq = add i64 %i.np, %i.jp                    ; 11 uses
-  store i64 %i.nq, ptr %41, align 8
+  store i64 %i.nq, ptr %61, align 8
   %i.nr = tail call i64 @llvm.fshl.i64(i64 %i.my, i64 %i.my, i64 36)
   %i.ns = tail call i64 @llvm.fshl.i64(i64 %i.my, i64 %i.my, i64 30)
   %i.nt = xor i64 %i.nr, %i.ns
@@ -988,7 +1017,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.nz = or i64 %i.nx, %i.ny
   %i.oa = add i64 %i.nv, %i.nz
   %i.ob = add i64 %i.oa, %i.np                    ; 12 uses
-  store i64 %i.ob, ptr %42, align 8
+  store i64 %i.ob, ptr %62, align 8
   %i.oc = tail call i64 @llvm.fshl.i64(i64 %i.nq, i64 %i.nq, i64 50)
   %i.od = tail call i64 @llvm.fshl.i64(i64 %i.nq, i64 %i.nq, i64 46)
   %i.oe = xor i64 %i.oc, %i.od
@@ -1007,7 +1036,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.or = add i64 %i.oq, %i.oj
   %i.os = add i64 %i.or, %i.og                    ; 2 uses
   %i.ot = add i64 %i.os, %i.ks                    ; 9 uses
-  store i64 %i.ot, ptr %40, align 8
+  store i64 %i.ot, ptr %60, align 8
   %i.ou = tail call i64 @llvm.fshl.i64(i64 %i.ob, i64 %i.ob, i64 36)
   %i.ov = tail call i64 @llvm.fshl.i64(i64 %i.ob, i64 %i.ob, i64 30)
   %i.ow = xor i64 %i.ou, %i.ov
@@ -1019,7 +1048,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.pc = or i64 %i.pa, %i.pb
   %i.pd = add i64 %i.oy, %i.pc
   %i.pe = add i64 %i.pd, %i.os                    ; 10 uses
-  store i64 %i.pe, ptr %44, align 8
+  store i64 %i.pe, ptr %64, align 8
   %i.pf = tail call i64 @llvm.fshl.i64(i64 %i.ot, i64 %i.ot, i64 50)
   %i.pg = tail call i64 @llvm.fshl.i64(i64 %i.ot, i64 %i.ot, i64 46)
   %i.ph = xor i64 %i.pf, %i.pg
@@ -1038,7 +1067,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.pu = add i64 %i.pt, %i.pm
   %i.pv = add i64 %i.pu, %i.pj                    ; 2 uses
   %i.pw = add i64 %i.pv, %i.lv                    ; 8 uses
-  store i64 %i.pw, ptr %39, align 8
+  store i64 %i.pw, ptr %59, align 8
   %i.px = tail call i64 @llvm.fshl.i64(i64 %i.pe, i64 %i.pe, i64 36)
   %i.py = tail call i64 @llvm.fshl.i64(i64 %i.pe, i64 %i.pe, i64 30)
   %i.pz = xor i64 %i.px, %i.py
@@ -1050,7 +1079,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.qf = or i64 %i.qd, %i.qe
   %i.qg = add i64 %i.qb, %i.qf
   %i.qh = add i64 %i.qg, %i.pv                    ; 8 uses
-  store i64 %i.qh, ptr %43, align 8
+  store i64 %i.qh, ptr %63, align 8
   %i.qi = tail call i64 @llvm.fshl.i64(i64 %i.pw, i64 %i.pw, i64 50)
   %i.qj = tail call i64 @llvm.fshl.i64(i64 %i.pw, i64 %i.pw, i64 46)
   %i.qk = xor i64 %i.qi, %i.qj
@@ -1069,7 +1098,7 @@ bb.b:                                             ; preds = %bb.c, %be64dec_vect
   %i.qx = add i64 %i.qw, %i.qp
   %i.qy = add i64 %i.qx, %i.qm                    ; 2 uses
   %i.qz = add i64 %i.qy, %i.my
-  store i64 %i.qz, ptr %38, align 8
+  store i64 %i.qz, ptr %58, align 8
   %i.ra = tail call i64 @llvm.fshl.i64(i64 %i.qh, i64 %i.qh, i64 36)
   %i.rb = tail call i64 @llvm.fshl.i64(i64 %i.qh, i64 %i.qh, i64 30)
   %i.rc = xor i64 %i.ra, %i.rb
@@ -1370,37 +1399,37 @@ split:                                            ; preds = %bb.b
   %i.abn = load i64, ptr %0, align 8
   %i.abo = add i64 %i.abn, %i.rk
   store i64 %i.abo, ptr %0, align 8
-  %i.abp = load i64, ptr %43, align 8
+  %i.abp = load i64, ptr %63, align 8
   %i.abq = getelementptr i8, ptr %0, i64 8        ; 2 uses
   %i.abr = load i64, ptr %i.abq, align 8
   %i.abs = add i64 %i.abr, %i.abp
   store i64 %i.abs, ptr %i.abq, align 8
-  %i.abt = load i64, ptr %44, align 8
+  %i.abt = load i64, ptr %64, align 8
   %i.abu = getelementptr i8, ptr %0, i64 16       ; 2 uses
   %i.abv = load i64, ptr %i.abu, align 8
   %i.abw = add i64 %i.abv, %i.abt
   store i64 %i.abw, ptr %i.abu, align 8
-  %i.abx = load i64, ptr %42, align 8
+  %i.abx = load i64, ptr %62, align 8
   %i.aby = getelementptr i8, ptr %0, i64 24       ; 2 uses
   %i.abz = load i64, ptr %i.aby, align 8
   %i.aca = add i64 %i.abz, %i.abx
   store i64 %i.aca, ptr %i.aby, align 8
-  %i.acb = load i64, ptr %38, align 8
+  %i.acb = load i64, ptr %58, align 8
   %i.acc = getelementptr i8, ptr %0, i64 32       ; 2 uses
   %i.acd = load i64, ptr %i.acc, align 8
   %i.ace = add i64 %i.acd, %i.acb
   store i64 %i.ace, ptr %i.acc, align 8
-  %i.acf = load i64, ptr %39, align 8
+  %i.acf = load i64, ptr %59, align 8
   %i.acg = getelementptr i8, ptr %0, i64 40       ; 2 uses
   %i.ach = load i64, ptr %i.acg, align 8
   %i.aci = add i64 %i.ach, %i.acf
   store i64 %i.aci, ptr %i.acg, align 8
-  %i.acj = load i64, ptr %40, align 8
+  %i.acj = load i64, ptr %60, align 8
   %i.ack = getelementptr i8, ptr %0, i64 48       ; 2 uses
   %i.acl = load i64, ptr %i.ack, align 8
   %i.acm = add i64 %i.acl, %i.acj
   store i64 %i.acm, ptr %i.ack, align 8
-  %i.acn = load i64, ptr %41, align 8
+  %i.acn = load i64, ptr %61, align 8
   %i.aco = getelementptr i8, ptr %0, i64 56       ; 2 uses
   %i.acp = load i64, ptr %i.aco, align 8
   %i.acq = add i64 %i.acp, %i.acn
@@ -1524,6 +1553,9 @@ bb.a:
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.fshl.i64(i64, i64, i64) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -1544,22 +1576,21 @@ attributes #6 = { nounwind }
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
-!4 = !{!"llvm.loop.mustprogress"}
-!5 = distinct !{!5, !4, !17, !18}
-!6 = distinct !{!6, !19}
-!7 = distinct !{!7, !4, !17, !18}
-!8 = distinct !{!8, !19}
-!9 = distinct !{!9, !4, !17}
-!10 = distinct !{!10, !4, !17}
-!11 = distinct !{!11, !4, !17, !18}
-!12 = distinct !{!12, !4, !17, !18}
-!13 = distinct !{!13, !19}
-!14 = distinct !{!14, !4}
-!15 = distinct !{!15, !4, !17}
-!16 = !{!"branch_weights", i32 4, i32 28}
+!4 = distinct !{!4, !16, !17, !18}
+!5 = distinct !{!5, !19}
+!6 = distinct !{!6, !16, !17, !18}
+!7 = distinct !{!7, !19}
+!8 = distinct !{!8, !16, !17}
+!9 = distinct !{!9, !16, !17}
+!10 = distinct !{!10, !16, !17, !18}
+!11 = distinct !{!11, !16, !17, !18}
+!12 = distinct !{!12, !19}
+!13 = distinct !{!13, !16}
+!14 = distinct !{!14, !16, !17}
+!15 = !{!"branch_weights", i32 4, i32 28}
+!16 = !{!"llvm.loop.mustprogress"}
 !17 = !{!"llvm.loop.isvectorized", i32 1}
 !18 = !{!"llvm.loop.unroll.runtime.disable"}
 !19 = !{!"llvm.loop.unroll.disable"}
 !20 = !{!"branch_weights", i32 4, i32 12}
-!21 = distinct !{!21, !4}
 end_hunk_0
