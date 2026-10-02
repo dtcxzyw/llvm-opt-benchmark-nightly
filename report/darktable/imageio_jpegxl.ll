@@ -202,9 +202,9 @@ bb.aq:                                            ; preds = %bb.ap
   %i.cj = zext i32 %i.cd to i64
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.cj
   %i.cl = trunc i64 %i.ce to i32
-  %5 = add i32 %i.cl, -4
-  %6 = sub i32 %5, %i.cd
-  %i.cm = call i32 @dt_exif_read_from_blob(ptr noundef nonnull %0, ptr noundef nonnull %i.ck, i32 noundef %6) #9 ; 0 uses
+  %reass.sub = sub i32 %i.cl, %i.cd
+  %5 = add i32 %reass.sub, -4
+  %i.cm = call i32 @dt_exif_read_from_blob(ptr noundef nonnull %0, ptr noundef nonnull %i.ck, i32 noundef %5) #9 ; 0 uses
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
