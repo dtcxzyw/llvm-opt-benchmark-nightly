@@ -205,7 +205,7 @@ _RNvXs0_NtNtCs8774dFTUdNv_12polars_arrow5array8iteratorINtB5_15ArrayValuesIterIN
   %i.fg = load i32, ptr %i.ff, align 4, !dbg !12098, !alias.scope !11876, !noalias !11878, !noundef !2531
   %i.fh = zext i32 %i.fg to i64, !dbg !12098
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fe, i64 8, !dbg !12099
-  %i.fj = load ptr, ptr %i.fi, align 8, !dbg !12099, !alias.scope !11879, !noalias !11880, !nonnull !2531, !noundef !2531
+  %i.fj = load ptr, ptr %i.fi, align 8, !dbg !12099, !alias.scope !11879, !noalias !11880, !noundef !2531
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 %i.fh, !dbg !12100
   br label %bb.n, !dbg !12093
 
@@ -608,7 +608,7 @@ _RNvXs0_NtNtCs8774dFTUdNv_12polars_arrow5array8iteratorINtB5_15ArrayValuesIterIN
   %i.jx = load i32, ptr %i.jw, align 4, !dbg !122322, !alias.scope !121935, !noalias !121937, !noundef !2531
   %i.jy = zext i32 %i.jx to i64, !dbg !122322
   %i.jz = getelementptr inbounds nuw i8, ptr %i.jv, i64 8, !dbg !122323
-  %i.ka = load ptr, ptr %i.jz, align 8, !dbg !122323, !alias.scope !121938, !noalias !121939, !nonnull !2531, !noundef !2531
+  %i.ka = load ptr, ptr %i.jz, align 8, !dbg !122323, !alias.scope !121938, !noalias !121939, !noundef !2531
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 %i.jy, !dbg !122324
   br label %bb.bj, !dbg !122317
 
@@ -1011,7 +1011,7 @@ _RNvXs0_NtNtCs8774dFTUdNv_12polars_arrow5array8iteratorINtB5_15ArrayValuesIterIN
   %i.xq = load i32, ptr %i.xp, align 4, !dbg !122674, !alias.scope !122049, !noalias !122051, !noundef !2531
   %i.xr = zext i32 %i.xq to i64, !dbg !122674
   %i.xs = getelementptr inbounds nuw i8, ptr %i.xo, i64 8, !dbg !122675
-  %i.xt = load ptr, ptr %i.xs, align 8, !dbg !122675, !alias.scope !122052, !noalias !122053, !nonnull !2531, !noundef !2531
+  %i.xt = load ptr, ptr %i.xs, align 8, !dbg !122675, !alias.scope !122052, !noalias !122053, !noundef !2531
   %i.xu = getelementptr inbounds nuw i8, ptr %i.xt, i64 %i.xr, !dbg !122676
   br label %bb.ei, !dbg !122669
 
@@ -1414,7 +1414,7 @@ _RNvXs0_NtNtCs8774dFTUdNv_12polars_arrow5array8iteratorINtB5_15ArrayValuesIterIN
   %i.fr = load i32, ptr %i.fq, align 4, !dbg !125336, !alias.scope !124906, !noalias !124908, !noundef !2531
   %i.fs = zext i32 %i.fr to i64, !dbg !125336
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fp, i64 8, !dbg !125337
-  %i.fu = load ptr, ptr %i.ft, align 8, !dbg !125337, !alias.scope !124909, !noalias !124910, !nonnull !2531, !noundef !2531
+  %i.fu = load ptr, ptr %i.ft, align 8, !dbg !125337, !alias.scope !124909, !noalias !124910, !noundef !2531
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 %i.fs, !dbg !125338
   br label %bb.w, !dbg !125331
 
@@ -1817,7 +1817,7 @@ _RNvXs0_NtNtCs8774dFTUdNv_12polars_arrow5array8iteratorINtB5_15ArrayValuesIterIN
   %i.aei = load i32, ptr %i.aeh, align 4, !dbg !125972, !alias.scope !125073, !noalias !125075, !noundef !2531
   %i.aej = zext i32 %i.aei to i64, !dbg !125972
   %i.aek = getelementptr inbounds nuw i8, ptr %i.aeg, i64 8, !dbg !125973
-  %i.ael = load ptr, ptr %i.aek, align 8, !dbg !125973, !alias.scope !125076, !noalias !125077, !nonnull !2531, !noundef !2531
+  %i.ael = load ptr, ptr %i.aek, align 8, !dbg !125973, !alias.scope !125076, !noalias !125077, !noundef !2531
   %i.aem = getelementptr inbounds nuw i8, ptr %i.ael, i64 %i.aej, !dbg !125974
   br label %bb.eb, !dbg !125967
 
@@ -2220,7 +2220,7 @@ _RNvXs0_NtNtCs8774dFTUdNv_12polars_arrow5array8iteratorINtB5_15ArrayValuesIterIN
   %i.ew = load i32, ptr %i.ev, align 4, !dbg !127798, !alias.scope !127535, !noalias !127537, !noundef !2531
   %i.ex = zext i32 %i.ew to i64, !dbg !127798
   %i.ey = getelementptr inbounds nuw i8, ptr %i.eu, i64 8, !dbg !127799
-  %i.ez = load ptr, ptr %i.ey, align 8, !dbg !127799, !alias.scope !127538, !noalias !127539, !nonnull !2531, !noundef !2531
+  %i.ez = load ptr, ptr %i.ey, align 8, !dbg !127799, !alias.scope !127538, !noalias !127539, !noundef !2531
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 %i.ex, !dbg !127800
   br label %bb.v, !dbg !127793
 

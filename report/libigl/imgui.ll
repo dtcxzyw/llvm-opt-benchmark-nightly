@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %bb.al
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
-  %.1 = phi i32 [ %spec.select, %bb.am ], [ %i.iv, %bb.an ] ; 32 uses
+  %.1 = phi i32 [ %spec.select, %bb.am ], [ %i.iv, %bb.an ] ; 33 uses
   %i.iw = load i32, ptr %i.hc, align 8, !tbaa !479 ; 3 uses
   %i.ix = icmp eq i32 %i.iw, 0
   br i1 %i.ix, label %bb.aq, label %bb.ap
@@ -608,7 +608,7 @@ bb.cv:                                            ; preds = %bb.cu
   %i.uc = and i32 %.1, 16777216                   ; 2 uses
   %.not346 = icmp eq i32 %i.uc, 0                 ; 6 uses
   %i.ud = and i32 %.1, 33554432
-  %.not347 = icmp eq i32 %i.ud, 0                 ; 2 uses
+  %.not347 = icmp eq i32 %i.ud, 0
   %i.ue = and i32 %.1, 50331648                   ; 2 uses
   %i.uf = icmp eq i32 %i.ue, 50331648             ; 3 uses
   %i.ug = getelementptr inbounds nuw i8, ptr %.01057, i64 142
@@ -1011,8 +1011,8 @@ bb.et:                                            ; preds = %bb.es, %_ZN5ImGui20
   store i8 0, ptr %i.abu, align 2, !tbaa !1007
   %i.abv = call fastcc <2 x float> @_ZL21CalcWindowAutoFitSizeP11ImGuiWindowRK6ImVec2(ptr noundef nonnull %.01057, ptr noundef nonnull align 4 dereferenceable(8) %i.ww) ; 7 uses
   %i.abw = and i32 %.1, 64
-  %.not358 = icmp ne i32 %i.abw, 0                ; 2 uses
-  br i1 %.not358, label %bb.eu, label %bb.ez
+  %.not358.not = icmp eq i32 %i.abw, 0
+  br i1 %.not358.not, label %bb.ez, label %bb.eu
 
 bb.eu:                                            ; preds = %bb.et
   %i.abx = getelementptr inbounds nuw i8, ptr %.01057, i64 145
@@ -1415,9 +1415,9 @@ _ZNK11ImGuiWindow12TitleBarRectEv.exit602:        ; preds = %bb.jm, %_ZNK11ImGui
   %i.bgp = select <2 x i1> %i.bgm, <2 x float> %.sroa.0786.0.copyload, <2 x float> %i.bgo
   store <2 x float> %i.bgp, ptr %i.bfv, align 8, !tbaa !75
   %i.bgq = fcmp ule float %i.bfc, 0.000000e+00
-  %.not347.not = xor i1 %.not347, true
-  %brmerge404 = select i1 %i.bgq, i1 true, i1 %.not347.not
-  %brmerge405 = or i1 %.not358, %brmerge404
+  %28 = and i32 %.1, 33554496
+  %29 = icmp ne i32 %28, 0
+  %brmerge405 = select i1 %i.bgq, i1 true, i1 %29
   br i1 %brmerge405, label %bb.jq, label %bb.jp
 
 bb.jp:                                            ; preds = %_ZNK11ImGuiWindow12TitleBarRectEv.exit602

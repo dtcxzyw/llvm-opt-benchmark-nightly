@@ -202,9 +202,9 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i:          ; preds = %bb.a
 
 _ZN7obj_refI3app11ast_managerEC2EPS0_RS1_.exit:   ; preds = %bb.a, %_ZN11ast_manager7inc_refEP3ast.exit.i.i
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !75
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !75
   %i.i = add i32 %i.h, 1
-  store i32 %i.i, ptr %i.g, align 8, !tbaa !75
+  store i32 %i.i, ptr %i.g, align 4, !tbaa !75
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !58   ; 4 uses
   %i.l = icmp eq ptr %i.k, null
@@ -277,9 +277,9 @@ bb.h:                                             ; preds = %.noexc18, %bb.f
   %i.al = add i32 %i.ag, 1
   store i32 %i.al, ptr %i.ai, align 4, !tbaa !81
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.an = load i32, ptr %i.am, align 8, !tbaa !75
+  %i.an = load i32, ptr %i.am, align 4, !tbaa !75
   %i.ao = add i32 %i.an, -1                       ; 2 uses
-  store i32 %i.ao, ptr %i.am, align 8, !tbaa !75
+  store i32 %i.ao, ptr %i.am, align 4, !tbaa !75
   %i.ap = icmp eq i32 %i.ao, 0
   br i1 %i.ap, label %bb.i, label %_ZN7obj_refI3app11ast_managerED2Ev.exit
 
@@ -682,9 +682,9 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i:          ; preds = %bb.a
 
 _ZN7obj_refI3app11ast_managerEC2EPS0_RS1_.exit:   ; preds = %bb.a, %_ZN11ast_manager7inc_refEP3ast.exit.i.i
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !75
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !75
   %i.i = add i32 %i.h, 1
-  store i32 %i.i, ptr %i.g, align 8, !tbaa !75
+  store i32 %i.i, ptr %i.g, align 4, !tbaa !75
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !58   ; 4 uses
   %i.l = icmp eq ptr %i.k, null
@@ -725,9 +725,9 @@ bb.e:                                             ; preds = %.noexc13, %bb.c
   %i.x = add i32 %i.s, 1
   store i32 %i.x, ptr %i.u, align 4, !tbaa !81
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.z = load i32, ptr %i.y, align 8, !tbaa !75
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !75
   %i.aa = add i32 %i.z, -1                        ; 2 uses
-  store i32 %i.aa, ptr %i.y, align 8, !tbaa !75
+  store i32 %i.aa, ptr %i.y, align 4, !tbaa !75
   %i.ab = icmp eq i32 %i.aa, 0
   br i1 %i.ab, label %bb.f, label %_ZN7obj_refI3app11ast_managerED2Ev.exit
 

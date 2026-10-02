@@ -204,7 +204,7 @@ _ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit.preheader: ; preds = %bb.aa
 
 _ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit:   ; preds = %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit.preheader, %bb.bd
   %.040 = phi i32 [ %i.gi, %bb.bd ], [ 0, %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit.preheader ] ; 6 uses
-  %i.ds = load ptr, ptr %i.dp, align 8, !tbaa !247, !nonnull !225, !noundef !225
+  %i.ds = load ptr, ptr %i.dp, align 8, !tbaa !247
   %i.dt = getelementptr inbounds i8, ptr %i.ds, i64 -4
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !271
   %i.dv = icmp ult i32 %.040, %i.du

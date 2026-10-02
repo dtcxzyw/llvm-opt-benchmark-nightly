@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
   %.sroa.063.0 = phi i64 [ %12, %bb.d ], [ %i.bi, %bb.e ], [ %12, %bb.c ] ; 2 uses
   %.sroa.043.1 = phi i64 [ %.sroa.043.2, %bb.d ], [ %.sroa.043.0, %bb.e ], [ %12, %bb.c ] ; 12 uses
   %.sroa.038.0 = phi i32 [ 8, %bb.d ], [ 4, %bb.e ], [ %11, %bb.c ] ; 5 uses
-  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.d ], [ %.sroa.0.0, %bb.e ], [ %8, %bb.c ] ; 9 uses
+  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.d ], [ %.sroa.0.0, %bb.e ], [ %8, %bb.c ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.bn = load ptr, ptr %i.bm, align 8, !noundef !21 ; 2 uses
@@ -245,10 +245,10 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.m, %bb.i, %bb.k, %bb.k, %bb.n
   %.sroa.065.0 = phi i1 [ false, %bb.i ], [ %i.cl, %bb.n ], [ false, %bb.k ], [ false, %bb.k ], [ true, %bb.m ] ; 2 uses
-  %i.by = icmp eq i8 %.sroa.0.1, 0                ; 3 uses
-  %i.bz = icmp ne i8 %9, 0                        ; 3 uses
-  %not. = xor i1 %i.by, true
-  %.sroa.067.0 = or i1 %i.bz, %not.               ; 2 uses
+  %i.by = icmp eq i8 %.sroa.0.1, 0                ; 2 uses
+  %i.bz = icmp ne i8 %9, 0                        ; 2 uses
+  %14 = or i8 %.sroa.0.1, %9
+  %.sroa.067.0.not = icmp eq i8 %14, 0            ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %3, i64 20
   %i.cb = load i32, ptr %i.ca, align 4, !noundef !21 ; 3 uses
   %i.cc = lshr i32 %i.cb, 18
@@ -429,10 +429,10 @@ bb.ae:                                            ; preds = %bb.v
           to label %_RNvMs_NtCsf8MNnN4IDbl_8iced_x869formatterNtB4_22FormatterOutputMethods6write1.exit unwind label %bb.aa
 
 bb.af:                                            ; preds = %bb.v
-  br i1 %.sroa.067.0, label %bb.ag, label %.critedge
+  br i1 %.sroa.067.0.not, label %.critedge, label %bb.ag
 
 _RNvMs_NtCsf8MNnN4IDbl_8iced_x869formatterNtB4_22FormatterOutputMethods6write1.exit: ; preds = %bb.ae, %bb.bb
-  br i1 %.sroa.067.0, label %_RNvMs_NtCsf8MNnN4IDbl_8iced_x869formatterNtB4_22FormatterOutputMethods6write1.exit.thread, label %bb.bv
+  br i1 %.sroa.067.0.not, label %bb.bv, label %_RNvMs_NtCsf8MNnN4IDbl_8iced_x869formatterNtB4_22FormatterOutputMethods6write1.exit.thread
 
 bb.ag:                                            ; preds = %bb.af
   %i.do = icmp eq i32 %.sroa.038.0, 0

@@ -202,13 +202,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 21064
-  %i.cf = load i32, ptr %i.ce, align 8, !tbaa !109 ; 3 uses
+  %i.cf = load i32, ptr %i.ce, align 8, !tbaa !109 ; 7 uses
   %i.cg = sext i32 %i.cf to i64
   %i.ch = getelementptr inbounds [16 x i8], ptr @ff_h264_filter_mb.offset, i64 %i.cg
-  %i.ci = and i32 %3, 1                           ; 5 uses
+  %i.ci = and i32 %3, 1                           ; 9 uses
   %i.cj = zext nneg i32 %i.ci to i64
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %i.cj ; 8 uses
-  %.not296 = icmp ne i32 %i.cf, 0                 ; 10 uses
+  %.not296 = icmp ne i32 %i.cf, 0                 ; 6 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 20932 ; 3 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 34072 ; 8 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 31088 ; 8 uses
@@ -339,9 +339,9 @@ bb.q:                                             ; preds = %bb.p
   %i.fb = getelementptr inbounds [2 x i8], ptr %i.fa, i64 %i.ez
   %i.fc = load i16, ptr %i.fb, align 2, !tbaa !89
   %i.fd = zext i16 %i.fc to i32
-  %.not300.2908 = trunc i32 %3 to i1
-  %.not300.2.not = or i1 %.not296, %.not300.2908
-  %i.fe = select i1 %.not300.2.not, i32 32768, i32 8192
+  %9 = or i32 %i.ci, %i.cf
+  %.not300.2 = icmp eq i32 %9, 0
+  %i.fe = select i1 %.not300.2, i32 8192, i32 32768
   %i.ff = and i32 %i.fe, %i.fd
   br label %bb.s
 
@@ -387,9 +387,9 @@ bb.v:                                             ; preds = %bb.u
   %i.fz = getelementptr inbounds [2 x i8], ptr %i.fy, i64 %i.fx
   %i.ga = load i16, ptr %i.fz, align 2, !tbaa !89
   %i.gb = zext i16 %i.ga to i32
-  %.not300.3910 = trunc i32 %3 to i1
-  %.not300.3.not = or i1 %.not296, %.not300.3910
-  %i.gc = select i1 %.not300.3.not, i32 32768, i32 8192
+  %10 = or i32 %i.ci, %i.cf
+  %.not300.3 = icmp eq i32 %10, 0
+  %i.gc = select i1 %.not300.3, i32 8192, i32 32768
   %i.gd = and i32 %i.gc, %i.gb
   br label %bb.x
 
@@ -543,9 +543,9 @@ bb.ak:                                            ; preds = %bb.aj
   %i.je = getelementptr inbounds [2 x i8], ptr %i.jd, i64 %i.jc
   %i.jf = load i16, ptr %i.je, align 2, !tbaa !89
   %i.jg = zext i16 %i.jf to i32
-  %.not300.6914 = trunc i32 %3 to i1
-  %.not300.6.not = or i1 %.not296, %.not300.6914
-  %i.jh = select i1 %.not300.6.not, i32 32768, i32 8192
+  %11 = or i32 %i.ci, %i.cf
+  %.not300.6 = icmp eq i32 %11, 0
+  %i.jh = select i1 %.not300.6, i32 8192, i32 32768
   %i.ji = and i32 %i.jh, %i.jg
   br label %bb.am
 
@@ -591,9 +591,9 @@ bb.ap:                                            ; preds = %bb.ao
   %i.kc = getelementptr inbounds [2 x i8], ptr %i.kb, i64 %i.ka
   %i.kd = load i16, ptr %i.kc, align 2, !tbaa !89
   %i.ke = zext i16 %i.kd to i32
-  %.not300.7916 = trunc i32 %3 to i1
-  %.not300.7.not = or i1 %.not296, %.not300.7916
-  %i.kf = select i1 %.not300.7.not, i32 32768, i32 8192
+  %12 = or i32 %i.ci, %i.cf
+  %.not300.7 = icmp eq i32 %12, 0
+  %i.kf = select i1 %.not300.7, i32 8192, i32 32768
   %i.kg = and i32 %i.kf, %i.ke
   br label %bb.ar
 

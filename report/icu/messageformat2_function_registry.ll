@@ -204,6 +204,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.m
           to label %bb.r unwind label %bb.ai      ; 2 uses
 
 bb.r:                                             ; preds = %bb.q
+  %44 = icmp eq i8 %i.bw, 0                       ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.by = load i32, ptr %i.bx, align 8, !tbaa !130
   switch i32 %i.by, label %.thread382 [
@@ -212,7 +213,6 @@ bb.r:                                             ; preds = %bb.q
   ]
 
 bb.s:                                             ; preds = %bb.r
-  %44 = icmp eq i8 %i.bw, 0                       ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ca = load i32, ptr %i.bz, align 8, !tbaa !42
   %i.cb = icmp eq i32 %i.ca, 0

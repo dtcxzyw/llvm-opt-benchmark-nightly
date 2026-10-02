@@ -205,13 +205,13 @@ _ZN5ImGui17GetInputTextStateEj.exit:              ; preds = %.critedge1348, %bb.
   %i.dh = load i32, ptr %i.cu, align 4, !tbaa !255
   %i.di = lshr i32 %i.dh, 2
   %i.dj = and i32 %i.di, 512
-  %spec.select1349 = or i32 %i.dj, %5             ; 7 uses
+  %spec.select1349 = or i32 %i.dj, %5             ; 9 uses
   %i.dk = and i32 %spec.select1349, 512
-  %i.dl = icmp ne i32 %i.dk, 0                    ; 20 uses
+  %i.dl = icmp ne i32 %i.dk, 0                    ; 19 uses
   %i.dm = and i32 %5, 1024
-  %i.dn = icmp eq i32 %i.dm, 0                    ; 7 uses
+  %i.dn = icmp eq i32 %i.dm, 0                    ; 6 uses
   %i.do = and i32 %5, 65536
-  %i.dp = icmp eq i32 %i.do, 0                    ; 2 uses
+  %i.dp = icmp eq i32 %i.do, 0
   %i.dq = and i32 %5, 4194304
   %.not1291 = icmp eq i32 %i.dq, 0
   %i.dr = and i32 %5, 16777216
@@ -614,7 +614,7 @@ bb.cy:                                            ; preds = %bb.cx
 
 bb.cz:                                            ; preds = %bb.cy, %bb.cx
   %i.qa = phi i8 [ %spec.select1357, %bb.cy ], [ 0, %bb.cx ] ; 24 uses
-  %not.1637 = xor i1 %i.dl, true                  ; 3 uses
+  %not.1637 = xor i1 %i.dl, true                  ; 2 uses
   %spec.select1617 = and i1 %i.pm, %not.1637
   %i.qb = select i1 %i.ps, i1 %spec.select1617, i1 false ; 2 uses
   %.not1306 = icmp eq ptr %1, null                ; 3 uses
@@ -1017,12 +1017,10 @@ bb.fr:                                            ; preds = %bb.fq
   br i1 %brmerge1369, label %bb.fu, label %bb.ft
 
 bb.fs:                                            ; preds = %bb.fq
-  %.not1363 = xor i1 %i.dn, true
-  %brmerge1364 = or i1 %i.dl, %.not1363           ; 2 uses
-  %.not1365 = xor i1 %i.r, true
-  %brmerge1366 = or i1 %brmerge1364, %.not1365
-  %not.brmerge1364 = xor i1 %brmerge1364, true
-  br i1 %brmerge1366, label %bb.fu, label %bb.ft
+  %23 = and i32 %spec.select1349, 1536
+  %brmerge1364 = icmp eq i32 %23, 0               ; 2 uses
+  %brmerge1366.not = and i1 %i.r, %brmerge1364
+  br i1 %brmerge1366.not, label %bb.ft, label %bb.fu
 
 bb.ft:                                            ; preds = %bb.fr, %bb.fs
   %i.zi = load ptr, ptr %i.yl, align 8, !tbaa !378 ; 2 uses
@@ -1034,7 +1032,7 @@ bb.ft:                                            ; preds = %bb.fr, %bb.fs
   br label %bb.fu
 
 bb.fu:                                            ; preds = %bb.fr, %bb.fs, %bb.ft
-  %i.zo = phi i1 [ %i.zn, %bb.ft ], [ %not.brmerge1364, %bb.fs ], [ %not.brmerge1362, %bb.fr ] ; 5 uses
+  %i.zo = phi i1 [ %i.zn, %bb.ft ], [ %brmerge1364, %bb.fs ], [ %not.brmerge1362, %bb.fr ] ; 5 uses
   %i.zp = call noundef zeroext i1 @_ZN5ImGui8ShortcutEiij(i32 noundef 4644, i32 noundef 0, i32 noundef %i.s)
   br i1 %i.zp, label %bb.fw, label %bb.fv
 
@@ -1076,8 +1074,9 @@ bb.ga:                                            ; preds = %bb.fz, %bb.fy
 bb.gb:                                            ; preds = %bb.ga, %bb.fz
   %i.aab = phi i1 [ false, %bb.fz ], [ %not.1637, %bb.ga ]
   %i.aac = call noundef zeroext i1 @_ZN5ImGui8ShortcutEiij(i32 noundef 4667, i32 noundef 1, i32 noundef %i.s)
-  %not.or.cond78 = and i1 %i.aac, %not.1637
-  %i.aad = and i1 %i.dp, %not.or.cond78           ; 3 uses
+  %24 = and i32 %spec.select1349, 66048
+  %25 = icmp eq i32 %24, 0
+  %i.aad = and i1 %25, %i.aac                     ; 4 uses
   %i.aae = call noundef zeroext i1 @_ZN5ImGui8ShortcutEiij(i32 noundef 4666, i32 noundef 1, i32 noundef %i.s)
   br i1 %i.aae, label %bb.gd, label %bb.gc
 
@@ -1091,10 +1090,11 @@ bb.gd:                                            ; preds = %bb.gb
   br i1 %i.dl, label %bb.gf, label %bb.ge
 
 bb.ge:                                            ; preds = %bb.gc, %bb.gd
+  %26 = or i1 %i.dp, %i.aad
   br label %bb.gf
 
 bb.gf:                                            ; preds = %bb.ge, %bb.gd, %bb.gc
-  %or.cond135 = phi i1 [ %i.aad, %bb.gd ], [ %i.aad, %bb.gc ], [ %i.dp, %bb.ge ]
+  %or.cond135 = phi i1 [ %i.aad, %bb.gd ], [ %i.aad, %bb.gc ], [ %26, %bb.ge ]
   %i.aag = call noundef zeroext i1 @_ZN5ImGui8ShortcutEiij(i32 noundef 4642, i32 noundef 0, i32 noundef %i.s)
   %i.aah = load i32, ptr %i.p, align 8, !tbaa !719
   %i.aai = and i32 %i.aah, 2

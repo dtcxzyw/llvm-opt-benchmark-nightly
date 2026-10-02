@@ -205,9 +205,9 @@ bb.qi:                                            ; preds = %bb.qf
   call void @llvm.memset.p0.i64(ptr align 1 %i.cvd, i8 %i.cpp, i64 %i.cve, i1 false)
   br label %horizontal_fill.exit.i
 
-horizontal_fill.exit.i:                           ; preds = %vec.epilog.scalar.ph3391, %bb.qh, %bb.qg, %middle.block3386, %vec.epilog.middle.block3406, %bb.qf, %bb.qf, %bb.qf, %bb.qi, %bb.qc, %horizontal_fill.exit357.i
-  %.4308.i = phi ptr [ %i.cpj, %horizontal_fill.exit357.i ], [ %.3307.i, %bb.qc ], [ %i.cpo, %bb.qh ], [ %i.cpo, %bb.qi ], [ %i.cpo, %middle.block3386 ], [ %i.cpo, %bb.qf ], [ %i.cpo, %bb.qf ], [ %i.cpo, %bb.qf ], [ %i.cpo, %bb.qg ], [ %i.cpo, %vec.epilog.middle.block3406 ], [ %i.cpo, %vec.epilog.scalar.ph3391 ] ; 4 uses
-  %.1291.i = phi i32 [ %i.cjw, %horizontal_fill.exit357.i ], [ %.0290549.i, %bb.qc ], [ %i.cpl, %bb.qh ], [ %i.cpl, %bb.qi ], [ %i.cpl, %middle.block3386 ], [ %i.cpl, %bb.qf ], [ %i.cpl, %bb.qf ], [ %i.cpl, %bb.qf ], [ %i.cpl, %bb.qg ], [ %i.cpl, %vec.epilog.middle.block3406 ], [ %i.cpl, %vec.epilog.scalar.ph3391 ] ; 2 uses
+horizontal_fill.exit.i:                           ; preds = %vec.epilog.scalar.ph3391, %bb.qh, %bb.qg, %middle.block3386, %vec.epilog.middle.block3406, %bb.qi, %bb.qf, %bb.qf, %bb.qf, %bb.qc, %horizontal_fill.exit357.i
+  %.4308.i = phi ptr [ %i.cpj, %horizontal_fill.exit357.i ], [ %.3307.i, %bb.qc ], [ %i.cpo, %middle.block3386 ], [ %i.cpo, %bb.qi ], [ %i.cpo, %bb.qf ], [ %i.cpo, %bb.qh ], [ %i.cpo, %bb.qf ], [ %i.cpo, %bb.qf ], [ %i.cpo, %bb.qg ], [ %i.cpo, %vec.epilog.middle.block3406 ], [ %i.cpo, %vec.epilog.scalar.ph3391 ] ; 4 uses
+  %.1291.i = phi i32 [ %i.cjw, %horizontal_fill.exit357.i ], [ %.0290549.i, %bb.qc ], [ %i.cpl, %middle.block3386 ], [ %i.cpl, %bb.qi ], [ %i.cpl, %bb.qf ], [ %i.cpl, %bb.qh ], [ %i.cpl, %bb.qf ], [ %i.cpl, %bb.qf ], [ %i.cpl, %bb.qg ], [ %i.cpl, %vec.epilog.middle.block3406 ], [ %i.cpl, %vec.epilog.scalar.ph3391 ] ; 2 uses
   %i.cvf = icmp slt i32 %.1291.i, %.2.i
   br i1 %i.cvf, label %.lr.ph550.i, label %._crit_edge.i856, !llvm.loop !139
 
@@ -610,14 +610,14 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #6
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #15
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #6
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #6

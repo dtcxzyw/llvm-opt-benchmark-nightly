@@ -202,7 +202,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %ompi_request_cancel.exit
 
 ompi_request_cancel.exit:                         ; preds = %bb.ab, %bb.ad, %bb.ac, %bb.ab, %bb.aa
-  %.0104 = phi i32 [ %i.cb, %bb.ad ], [ 0, %bb.aa ], [ %i.cb, %bb.ab ], [ %i.cb, %bb.ac ], [ %i.cb, %bb.ab ] ; 2 uses
+  %.0104 = phi i32 [ %i.cb, %bb.ad ], [ 0, %bb.aa ], [ %i.cb, %bb.ab ], [ %i.cb, %bb.ac ], [ %i.cb, %bb.ab ] ; 3 uses
   br i1 %.not124, label %bb.ah, label %bb.ae
 
 bb.ae:                                            ; preds = %ompi_request_cancel.exit
@@ -243,14 +243,14 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ai, %bb.ae
-  %.7 = phi i32 [ 0, %bb.ah ], [ %i.ch, %bb.ae ], [ 0, %bb.ai ] ; 2 uses
-  %i.cu = icmp ne i32 %.0104, 0                   ; 2 uses
-  %i.cv = icmp eq i32 %.7, 0                      ; 2 uses
+  %.7 = phi i32 [ 0, %bb.ah ], [ %i.ch, %bb.ae ], [ 0, %bb.ai ] ; 3 uses
+  %i.cu = icmp ne i32 %.0104, 0
+  %i.cv = icmp eq i32 %.7, 0
   %i.cw = and i1 %i.cu, %i.cv
-  %.not194 = xor i1 %i.cv, true
-  %brmerge = or i1 %i.cu, %.not194
+  %12 = or i32 %.0104, %.7
+  %brmerge.not = icmp eq i32 %12, 0
   %.0104.mux = select i1 %i.cw, i32 %.0104, i32 %.7, !prof !81
-  br i1 %brmerge, label %.thread177, label %bb.ak, !prof !82
+  br i1 %brmerge.not, label %bb.ak, label %.thread177, !prof !82
 
 .thread177:                                       ; preds = %bb.aj, %.thread174
   %.8180 = phi i32 [ %.0104.mux, %bb.aj ], [ 75, %.thread174 ]
@@ -474,7 +474,7 @@ attributes #6 = { nounwind }
 !79 = !{!73, !5, i64 76}
 !80 = !{!72, !5, i64 12}
 !81 = !{!"branch_weights", i32 1073472, i32 2146410176}
-!82 = !{!"branch_weights", i32 2146944, i32 -2146944}
+!82 = !{!"branch_weights", i32 -2146944, i32 2146944}
 !83 = distinct !{!83, !90}
 !84 = distinct !{!84, !90, !91}
 !85 = !{!"opal_pointer_array_t", !16, i64 0, !18, i64 16, !5, i64 80, !5, i64 84, !5, i64 88, !5, i64 92, !5, i64 96, !17, i64 104, !19, i64 112}

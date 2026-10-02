@@ -205,7 +205,7 @@ ISEQ_COMPILE_DATA.exit482.i:                      ; preds = %ISEQ_COMPILE_DATA.e
   store i64 %i.rt, ptr %i.ru, align 8, !tbaa !47
   br label %bb.cv
 
-ISEQ_COMPILE_DATA.exit479.i:                      ; preds = %._crit_edge592.i, %ISEQ_COMPILE_DATA.exit479.thread.i
+ISEQ_COMPILE_DATA.exit479.i:                      ; preds = %ISEQ_COMPILE_DATA.exit479.thread.i, %._crit_edge592.i
   %i.rv = getelementptr i8, ptr %i.h, i64 280     ; 2 uses
   br i1 %.0332.lcssa.i, label %bb.cu, label %ISEQ_COMPILE_DATA.exit485.i
 
@@ -608,10 +608,15 @@ bb.a:
 ISEQ_COMPILE_DATA.exit:                           ; preds = %bb.a
   %i.c = load ptr, ptr inttoptr (i64 64 to ptr), align 64, !tbaa !525
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %can_add_ensure_iseq.exit.preheader.a, label %ISEQ_COMPILE_DATA.exit.i
+  br i1 %.not, label %can_add_ensure_iseq.exit.preheader, label %can_add_ensure_iseq.exit.preheader.a
 
-can_add_ensure_iseq.exit.preheader.a:             ; preds = %.preheader.i, %ISEQ_COMPILE_DATA.exit.thread, %ISEQ_COMPILE_DATA.exit
+can_add_ensure_iseq.exit.preheader:               ; preds = %.preheader.i, %ISEQ_COMPILE_DATA.exit.thread, %ISEQ_COMPILE_DATA.exit
   br label %can_add_ensure_iseq.exit
+
+can_add_ensure_iseq.exit.preheader.a:             ; preds = %ISEQ_COMPILE_DATA.exit
+  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
+  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
+  br label %.loopexit
 
 ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 24
@@ -619,12 +624,7 @@ ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.f = getelementptr i8, ptr %i.e, i64 64
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !525
   %.not138 = icmp eq ptr %i.g, null
-  br i1 %.not138, label %can_add_ensure_iseq.exit.preheader.a, label %ISEQ_COMPILE_DATA.exit.thread.i
-
-ISEQ_COMPILE_DATA.exit.i:                         ; preds = %ISEQ_COMPILE_DATA.exit
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
-  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
-  br label %.loopexit
+  br i1 %.not138, label %can_add_ensure_iseq.exit.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i
 
 ISEQ_COMPILE_DATA.exit.thread.i:                  ; preds = %ISEQ_COMPILE_DATA.exit.thread
   %i.h = getelementptr i8, ptr %i.e, i64 120
@@ -642,7 +642,7 @@ ISEQ_COMPILE_DATA.exit13.i:                       ; preds = %ISEQ_COMPILE_DATA.e
   %.0.i70 = phi ptr [ %i.o, %bb.b ], [ %i.l, %ISEQ_COMPILE_DATA.exit13.i ] ; 2 uses
   %i.m = load ptr, ptr %.0.i70, align 8, !tbaa !529
   %.not10.i = icmp eq ptr %i.m, null
-  br i1 %.not10.i, label %bb.b, label %can_add_ensure_iseq.exit.preheader.a
+  br i1 %.not10.i, label %bb.b, label %can_add_ensure_iseq.exit.preheader
 
 bb.b:                                             ; preds = %.preheader.i
   %i.n = getelementptr i8, ptr %.0.i70, i64 8
@@ -650,8 +650,8 @@ bb.b:                                             ; preds = %.preheader.i
   %.old1.not.i = icmp eq ptr %i.o, null
   br i1 %.old1.not.i, label %.loopexit, label %.preheader.i
 
-.loopexit:                                        ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit.i, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
-  %.val13.i = phi ptr [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
+.loopexit:                                        ; preds = %bb.b, %can_add_ensure_iseq.exit.preheader.a, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
+  %.val13.i = phi ptr [ %.val13.i.pre, %can_add_ensure_iseq.exit.preheader.a ], [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
   %i.p = getelementptr i8, ptr %0, i64 24         ; 6 uses
   %i.q = getelementptr i8, ptr %.val13.i, i64 96  ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !64   ; 4 uses
@@ -984,8 +984,8 @@ bb.m:                                             ; preds = %new_adjust_body.exi
   store ptr %i.fs, ptr %i.ba, align 8, !tbaa !42
   br label %bb.u
 
-can_add_ensure_iseq.exit:                         ; preds = %can_add_ensure_iseq.exit.preheader.a, %bb.p
-  %.0150 = phi ptr [ %i.gj, %bb.p ], [ %0, %can_add_ensure_iseq.exit.preheader.a ] ; 3 uses
+can_add_ensure_iseq.exit:                         ; preds = %can_add_ensure_iseq.exit.preheader, %bb.p
+  %.0150 = phi ptr [ %i.gj, %bb.p ], [ %0, %can_add_ensure_iseq.exit.preheader ] ; 3 uses
   %i.fw = load i64, ptr %.0150, align 8, !tbaa !123
   %i.fx = and i64 %i.fw, 262144
   %.not.i114 = icmp eq i64 %i.fx, 0
@@ -1118,7 +1118,12 @@ bb.a:
 ISEQ_COMPILE_DATA.exit:                           ; preds = %bb.a
   %i.c = load ptr, ptr inttoptr (i64 64 to ptr), align 64, !tbaa !525
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %ISEQ_COMPILE_DATA.exit162, label %ISEQ_COMPILE_DATA.exit.i
+  br i1 %.not, label %ISEQ_COMPILE_DATA.exit162, label %ISEQ_COMPILE_DATA.exit..loopexit271_crit_edge
+
+ISEQ_COMPILE_DATA.exit..loopexit271_crit_edge:    ; preds = %ISEQ_COMPILE_DATA.exit
+  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
+  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
+  br label %.loopexit273
 
 ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 24
@@ -1126,12 +1131,7 @@ ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.f = getelementptr i8, ptr %i.e, i64 64
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !525
   %.not258 = icmp eq ptr %i.g, null
-  br i1 %.not258, label %ISEQ_COMPILE_DATA.exit162.thread, label %ISEQ_COMPILE_DATA.exit.thread.i
-
-ISEQ_COMPILE_DATA.exit.i:                         ; preds = %ISEQ_COMPILE_DATA.exit
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
-  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
-  br label %.loopexit273
+  br i1 %.not258, label %ISEQ_COMPILE_DATA.exit.i172, label %ISEQ_COMPILE_DATA.exit.thread.i
 
 ISEQ_COMPILE_DATA.exit.thread.i:                  ; preds = %ISEQ_COMPILE_DATA.exit.thread
   %i.h = getelementptr i8, ptr %i.e, i64 120
@@ -1157,8 +1157,8 @@ bb.b:                                             ; preds = %.preheader.i
   %.old1.not.i = icmp eq ptr %i.o, null
   br i1 %.old1.not.i, label %.loopexit273, label %.preheader.i
 
-.loopexit273:                                     ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit.i, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
-  %.val13.i = phi ptr [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
+.loopexit273:                                     ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit..loopexit271_crit_edge, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
+  %.val13.i = phi ptr [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit..loopexit271_crit_edge ], [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
   %i.p = getelementptr i8, ptr %0, i64 24         ; 6 uses
   %i.q = getelementptr i8, ptr %.val13.i, i64 96  ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !64   ; 4 uses
@@ -1488,26 +1488,26 @@ bb.k:                                             ; preds = %new_adjust_body.exi
 can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit162.thread_crit_edge: ; preds = %.preheader.i
   %.phi.trans.insert288 = getelementptr i8, ptr %0, i64 24
   %.pre = load ptr, ptr %.phi.trans.insert288, align 8, !tbaa !47
-  br label %ISEQ_COMPILE_DATA.exit162.thread
+  br label %ISEQ_COMPILE_DATA.exit.i172
 
 ISEQ_COMPILE_DATA.exit162:                        ; preds = %ISEQ_COMPILE_DATA.exit
   %i.fu = load ptr, ptr inttoptr (i64 56 to ptr), align 8, !tbaa !234
   %.not95 = icmp eq ptr %i.fu, null
-  br i1 %.not95, label %can_add_ensure_iseq.exit173, label %ISEQ_COMPILE_DATA.exit.i172
+  br i1 %.not95, label %can_add_ensure_iseq.exit173, label %ISEQ_COMPILE_DATA.exit162.thread
 
-ISEQ_COMPILE_DATA.exit162.thread:                 ; preds = %can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit162.thread_crit_edge, %ISEQ_COMPILE_DATA.exit.thread
-  %4 = phi ptr [ %.pre, %can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit162.thread_crit_edge ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread ] ; 6 uses
-  %i.fv = getelementptr i8, ptr %4, i64 56
-  %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !234
-  %.not95264 = icmp eq ptr %i.fw, null
-  br i1 %.not95264, label %.lr.ph.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i164
-
-ISEQ_COMPILE_DATA.exit.i172:                      ; preds = %ISEQ_COMPILE_DATA.exit162
-  %.phi.trans.insert289 = getelementptr i8, ptr %0, i64 24
-  %.val13.i174.pre = load ptr, ptr %.phi.trans.insert289, align 8, !tbaa !47
+ISEQ_COMPILE_DATA.exit162.thread:                 ; preds = %ISEQ_COMPILE_DATA.exit162
+  %i.fv = getelementptr i8, ptr %0, i64 24
+  %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !47
   br label %.loopexit
 
-ISEQ_COMPILE_DATA.exit.thread.i164:               ; preds = %ISEQ_COMPILE_DATA.exit162.thread
+ISEQ_COMPILE_DATA.exit.i172:                      ; preds = %can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit162.thread_crit_edge, %ISEQ_COMPILE_DATA.exit.thread
+  %4 = phi ptr [ %.pre, %can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit162.thread_crit_edge ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread ] ; 6 uses
+  %.phi.trans.insert289 = getelementptr i8, ptr %4, i64 56
+  %.val13.i174.pre = load ptr, ptr %.phi.trans.insert289, align 8, !tbaa !234
+  %.not95262 = icmp eq ptr %.val13.i174.pre, null
+  br i1 %.not95262, label %.lr.ph.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i164
+
+ISEQ_COMPILE_DATA.exit.thread.i164:               ; preds = %ISEQ_COMPILE_DATA.exit.i172
   %i.fx = getelementptr i8, ptr %4, i64 120
   %i.fy = load i8, ptr %i.fx, align 8, !tbaa !535, !range !151, !noundef !152
   %i.fz = trunc nuw i8 %i.fy to i1
@@ -1531,8 +1531,8 @@ bb.l:                                             ; preds = %.preheader.i168
   %.old1.not.i171 = icmp eq ptr %i.ge, null
   br i1 %.old1.not.i171, label %.loopexit, label %.preheader.i168
 
-.loopexit:                                        ; preds = %bb.l, %ISEQ_COMPILE_DATA.exit.i172, %ISEQ_COMPILE_DATA.exit.thread.i164, %ISEQ_COMPILE_DATA.exit13.i166
-  %.val13.i174 = phi ptr [ %4, %ISEQ_COMPILE_DATA.exit13.i166 ], [ %.val13.i174.pre, %ISEQ_COMPILE_DATA.exit.i172 ], [ %4, %ISEQ_COMPILE_DATA.exit.thread.i164 ], [ %4, %bb.l ]
+.loopexit:                                        ; preds = %bb.l, %ISEQ_COMPILE_DATA.exit162.thread, %ISEQ_COMPILE_DATA.exit.thread.i164, %ISEQ_COMPILE_DATA.exit13.i166
+  %.val13.i174 = phi ptr [ %i.fw, %ISEQ_COMPILE_DATA.exit162.thread ], [ %4, %ISEQ_COMPILE_DATA.exit13.i166 ], [ %4, %ISEQ_COMPILE_DATA.exit.thread.i164 ], [ %4, %bb.l ]
   %i.gf = getelementptr i8, ptr %0, i64 24        ; 6 uses
   %i.gg = getelementptr i8, ptr %.val13.i174, i64 96 ; 2 uses
   %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !64 ; 4 uses
@@ -1863,7 +1863,7 @@ can_add_ensure_iseq.exit173:                      ; preds = %.preheader.i168, %I
   %.not96279 = icmp eq ptr %0, null
   br i1 %.not96279, label %.critedge109, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %ISEQ_COMPILE_DATA.exit162.thread, %can_add_ensure_iseq.exit173
+.lr.ph.preheader:                                 ; preds = %ISEQ_COMPILE_DATA.exit.i172, %can_add_ensure_iseq.exit173
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.x
@@ -1999,7 +1999,12 @@ bb.a:
 ISEQ_COMPILE_DATA.exit:                           ; preds = %bb.a
   %i.c = load ptr, ptr inttoptr (i64 64 to ptr), align 64, !tbaa !525
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %can_add_ensure_iseq.exit.thread, label %ISEQ_COMPILE_DATA.exit.i
+  br i1 %.not, label %can_add_ensure_iseq.exit.thread, label %ISEQ_COMPILE_DATA.exit..loopexit234_crit_edge
+
+ISEQ_COMPILE_DATA.exit..loopexit234_crit_edge:    ; preds = %ISEQ_COMPILE_DATA.exit
+  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
+  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
+  br label %.loopexit235
 
 ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 24
@@ -2008,11 +2013,6 @@ ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !525
   %.not224 = icmp eq ptr %i.g, null
   br i1 %.not224, label %can_add_ensure_iseq.exit.thread226, label %ISEQ_COMPILE_DATA.exit.thread.i
-
-ISEQ_COMPILE_DATA.exit.i:                         ; preds = %ISEQ_COMPILE_DATA.exit
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
-  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
-  br label %.loopexit235
 
 ISEQ_COMPILE_DATA.exit.thread.i:                  ; preds = %ISEQ_COMPILE_DATA.exit.thread
   %i.h = getelementptr i8, ptr %i.e, i64 120
@@ -2038,8 +2038,8 @@ bb.b:                                             ; preds = %.preheader.i
   %.old1.not.i = icmp eq ptr %i.o, null
   br i1 %.old1.not.i, label %.loopexit235, label %.preheader.i
 
-.loopexit235:                                     ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit.i, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
-  %.val13.i = phi ptr [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
+.loopexit235:                                     ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit..loopexit234_crit_edge, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
+  %.val13.i = phi ptr [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit..loopexit234_crit_edge ], [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
   %i.p = getelementptr i8, ptr %0, i64 24         ; 5 uses
   %i.q = getelementptr i8, ptr %.val13.i, i64 96  ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !64   ; 4 uses
@@ -2338,7 +2338,7 @@ can_add_ensure_iseq.exit:                         ; preds = %.preheader.i
   %.not82 = icmp eq i32 %i.fh, 6
   br i1 %.not82, label %can_add_ensure_iseq.exit151.preheader, label %.ISEQ_COMPILE_DATA.exit140.thread_crit_edge
 
-can_add_ensure_iseq.exit151.preheader:            ; preds = %.preheader.i146, %can_add_ensure_iseq.exit.thread, %ISEQ_COMPILE_DATA.exit140.thread.a, %can_add_ensure_iseq.exit.thread226, %ISEQ_COMPILE_DATA.exit140, %can_add_ensure_iseq.exit
+can_add_ensure_iseq.exit151.preheader:            ; preds = %.preheader.i146, %can_add_ensure_iseq.exit.thread, %ISEQ_COMPILE_DATA.exit.i150, %can_add_ensure_iseq.exit.thread226, %ISEQ_COMPILE_DATA.exit140, %can_add_ensure_iseq.exit
   br label %can_add_ensure_iseq.exit151
 
 can_add_ensure_iseq.exit.thread:                  ; preds = %ISEQ_COMPILE_DATA.exit
@@ -2353,31 +2353,31 @@ can_add_ensure_iseq.exit.thread226:               ; preds = %ISEQ_COMPILE_DATA.e
   %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !70
   %i.fn = load i32, ptr %i.fm, align 8, !tbaa !86
   %.not82227 = icmp eq i32 %i.fn, 6
-  br i1 %.not82227, label %can_add_ensure_iseq.exit151.preheader, label %ISEQ_COMPILE_DATA.exit140.thread.a
+  br i1 %.not82227, label %can_add_ensure_iseq.exit151.preheader, label %ISEQ_COMPILE_DATA.exit.i150
 
 .ISEQ_COMPILE_DATA.exit140.thread_crit_edge:      ; preds = %can_add_ensure_iseq.exit
   %.phi.trans.insert248.a = getelementptr i8, ptr %0, i64 24
   %.pre = load ptr, ptr %.phi.trans.insert248.a, align 8, !tbaa !47
-  br label %ISEQ_COMPILE_DATA.exit140.thread.a
+  br label %ISEQ_COMPILE_DATA.exit.i150
 
 ISEQ_COMPILE_DATA.exit140:                        ; preds = %can_add_ensure_iseq.exit.thread
   %i.fo = load ptr, ptr inttoptr (i64 48 to ptr), align 16, !tbaa !233
   %.not83 = icmp eq ptr %i.fo, null
-  br i1 %.not83, label %can_add_ensure_iseq.exit151.preheader, label %ISEQ_COMPILE_DATA.exit.i150
+  br i1 %.not83, label %can_add_ensure_iseq.exit151.preheader, label %ISEQ_COMPILE_DATA.exit140.thread.a
 
-ISEQ_COMPILE_DATA.exit140.thread.a:               ; preds = %.ISEQ_COMPILE_DATA.exit140.thread_crit_edge, %can_add_ensure_iseq.exit.thread226
-  %4 = phi ptr [ %.pre, %.ISEQ_COMPILE_DATA.exit140.thread_crit_edge ], [ %i.e, %can_add_ensure_iseq.exit.thread226 ] ; 6 uses
-  %i.fp = getelementptr i8, ptr %4, i64 48
-  %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !233
-  %.not83230 = icmp eq ptr %i.fq, null
-  br i1 %.not83230, label %can_add_ensure_iseq.exit151.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i142
-
-ISEQ_COMPILE_DATA.exit.i150:                      ; preds = %ISEQ_COMPILE_DATA.exit140
-  %.phi.trans.insert249 = getelementptr i8, ptr %0, i64 24
-  %.val13.i152.pre = load ptr, ptr %.phi.trans.insert249, align 8, !tbaa !47
+ISEQ_COMPILE_DATA.exit140.thread.a:               ; preds = %ISEQ_COMPILE_DATA.exit140
+  %i.fp = getelementptr i8, ptr %0, i64 24
+  %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !47
   br label %.loopexit
 
-ISEQ_COMPILE_DATA.exit.thread.i142:               ; preds = %ISEQ_COMPILE_DATA.exit140.thread.a
+ISEQ_COMPILE_DATA.exit.i150:                      ; preds = %.ISEQ_COMPILE_DATA.exit140.thread_crit_edge, %can_add_ensure_iseq.exit.thread226
+  %4 = phi ptr [ %.pre, %.ISEQ_COMPILE_DATA.exit140.thread_crit_edge ], [ %i.e, %can_add_ensure_iseq.exit.thread226 ] ; 6 uses
+  %.phi.trans.insert249 = getelementptr i8, ptr %4, i64 48
+  %.val13.i152.pre = load ptr, ptr %.phi.trans.insert249, align 8, !tbaa !233
+  %.not83229 = icmp eq ptr %.val13.i152.pre, null
+  br i1 %.not83229, label %can_add_ensure_iseq.exit151.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i142
+
+ISEQ_COMPILE_DATA.exit.thread.i142:               ; preds = %ISEQ_COMPILE_DATA.exit.i150
   %i.fr = getelementptr i8, ptr %4, i64 120
   %i.fs = load i8, ptr %i.fr, align 8, !tbaa !535, !range !151, !noundef !152
   %i.ft = trunc nuw i8 %i.fs to i1
@@ -2401,8 +2401,8 @@ bb.k:                                             ; preds = %.preheader.i146
   %.old1.not.i149 = icmp eq ptr %i.fy, null
   br i1 %.old1.not.i149, label %.loopexit, label %.preheader.i146
 
-.loopexit:                                        ; preds = %bb.k, %ISEQ_COMPILE_DATA.exit.i150, %ISEQ_COMPILE_DATA.exit.thread.i142, %ISEQ_COMPILE_DATA.exit13.i144
-  %.val13.i152 = phi ptr [ %4, %ISEQ_COMPILE_DATA.exit13.i144 ], [ %.val13.i152.pre, %ISEQ_COMPILE_DATA.exit.i150 ], [ %4, %ISEQ_COMPILE_DATA.exit.thread.i142 ], [ %4, %bb.k ]
+.loopexit:                                        ; preds = %bb.k, %ISEQ_COMPILE_DATA.exit140.thread.a, %ISEQ_COMPILE_DATA.exit.thread.i142, %ISEQ_COMPILE_DATA.exit13.i144
+  %.val13.i152 = phi ptr [ %i.fq, %ISEQ_COMPILE_DATA.exit140.thread.a ], [ %4, %ISEQ_COMPILE_DATA.exit13.i144 ], [ %4, %ISEQ_COMPILE_DATA.exit.thread.i142 ], [ %4, %bb.k ]
   %i.fz = getelementptr i8, ptr %0, i64 24        ; 5 uses
   %i.ga = getelementptr i8, ptr %.val13.i152, i64 96 ; 2 uses
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !64 ; 4 uses
@@ -2805,10 +2805,15 @@ bb.a:
 ISEQ_COMPILE_DATA.exit:                           ; preds = %bb.a
   %i.c = load ptr, ptr inttoptr (i64 64 to ptr), align 64, !tbaa !525
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %can_add_ensure_iseq.exit.preheader.a, label %ISEQ_COMPILE_DATA.exit.i
+  br i1 %.not, label %can_add_ensure_iseq.exit.preheader, label %can_add_ensure_iseq.exit.preheader.a
 
-can_add_ensure_iseq.exit.preheader.a:             ; preds = %.preheader.i, %ISEQ_COMPILE_DATA.exit.thread, %ISEQ_COMPILE_DATA.exit
+can_add_ensure_iseq.exit.preheader:               ; preds = %.preheader.i, %ISEQ_COMPILE_DATA.exit.thread, %ISEQ_COMPILE_DATA.exit
   br label %can_add_ensure_iseq.exit
+
+can_add_ensure_iseq.exit.preheader.a:             ; preds = %ISEQ_COMPILE_DATA.exit
+  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
+  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
+  br label %.loopexit
 
 ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 24
@@ -2816,12 +2821,7 @@ ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.f = getelementptr i8, ptr %i.e, i64 64
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !525
   %.not120 = icmp eq ptr %i.g, null
-  br i1 %.not120, label %can_add_ensure_iseq.exit.preheader.a, label %ISEQ_COMPILE_DATA.exit.thread.i
-
-ISEQ_COMPILE_DATA.exit.i:                         ; preds = %ISEQ_COMPILE_DATA.exit
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
-  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
-  br label %.loopexit
+  br i1 %.not120, label %can_add_ensure_iseq.exit.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i
 
 ISEQ_COMPILE_DATA.exit.thread.i:                  ; preds = %ISEQ_COMPILE_DATA.exit.thread
   %i.h = getelementptr i8, ptr %i.e, i64 120
@@ -2839,7 +2839,7 @@ ISEQ_COMPILE_DATA.exit13.i:                       ; preds = %ISEQ_COMPILE_DATA.e
   %.0.i79 = phi ptr [ %i.o, %bb.b ], [ %i.l, %ISEQ_COMPILE_DATA.exit13.i ] ; 2 uses
   %i.m = load ptr, ptr %.0.i79, align 8, !tbaa !529
   %.not10.i = icmp eq ptr %i.m, null
-  br i1 %.not10.i, label %bb.b, label %can_add_ensure_iseq.exit.preheader.a
+  br i1 %.not10.i, label %bb.b, label %can_add_ensure_iseq.exit.preheader
 
 bb.b:                                             ; preds = %.preheader.i
   %i.n = getelementptr i8, ptr %.0.i79, i64 8
@@ -2847,8 +2847,8 @@ bb.b:                                             ; preds = %.preheader.i
   %.old1.not.i = icmp eq ptr %i.o, null
   br i1 %.old1.not.i, label %.loopexit, label %.preheader.i
 
-.loopexit:                                        ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit.i, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
-  %.val13.i = phi ptr [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
+.loopexit:                                        ; preds = %bb.b, %can_add_ensure_iseq.exit.preheader.a, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
+  %.val13.i = phi ptr [ %.val13.i.pre, %can_add_ensure_iseq.exit.preheader.a ], [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
   %i.p = getelementptr i8, ptr %0, i64 24         ; 5 uses
   %i.q = getelementptr i8, ptr %.val13.i, i64 96  ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !64   ; 4 uses
@@ -3156,8 +3156,8 @@ bb.l:                                             ; preds = %new_adjust_body.exi
   store ptr %i.fe, ptr %i.ba, align 8, !tbaa !42
   br label %bb.u
 
-can_add_ensure_iseq.exit:                         ; preds = %can_add_ensure_iseq.exit.preheader.a, %bb.o
-  %.065126 = phi ptr [ %i.ft, %bb.o ], [ %0, %can_add_ensure_iseq.exit.preheader.a ] ; 3 uses
+can_add_ensure_iseq.exit:                         ; preds = %can_add_ensure_iseq.exit.preheader, %bb.o
+  %.065126 = phi ptr [ %i.ft, %bb.o ], [ %0, %can_add_ensure_iseq.exit.preheader ] ; 3 uses
   %i.fi = load i64, ptr %.065126, align 8, !tbaa !123
   %i.fj = and i64 %i.fi, 262144
   %.not.i110 = icmp eq i64 %i.fj, 0
@@ -3560,7 +3560,12 @@ bb.a:
 ISEQ_COMPILE_DATA.exit:                           ; preds = %bb.a
   %i.c = load ptr, ptr inttoptr (i64 64 to ptr), align 64, !tbaa !525
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %ISEQ_COMPILE_DATA.exit156, label %ISEQ_COMPILE_DATA.exit.i
+  br i1 %.not, label %ISEQ_COMPILE_DATA.exit156, label %ISEQ_COMPILE_DATA.exit..loopexit234_crit_edge
+
+ISEQ_COMPILE_DATA.exit..loopexit234_crit_edge:    ; preds = %ISEQ_COMPILE_DATA.exit
+  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
+  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
+  br label %.loopexit235
 
 ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 24
@@ -3568,12 +3573,7 @@ ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.f = getelementptr i8, ptr %i.e, i64 64
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !525
   %.not226 = icmp eq ptr %i.g, null
-  br i1 %.not226, label %ISEQ_COMPILE_DATA.exit156.thread.a, label %ISEQ_COMPILE_DATA.exit.thread.i
-
-ISEQ_COMPILE_DATA.exit.i:                         ; preds = %ISEQ_COMPILE_DATA.exit
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
-  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
-  br label %.loopexit235
+  br i1 %.not226, label %ISEQ_COMPILE_DATA.exit.i166, label %ISEQ_COMPILE_DATA.exit.thread.i
 
 ISEQ_COMPILE_DATA.exit.thread.i:                  ; preds = %ISEQ_COMPILE_DATA.exit.thread
   %i.h = getelementptr i8, ptr %i.e, i64 120
@@ -3599,8 +3599,8 @@ bb.b:                                             ; preds = %.preheader.i
   %.old1.not.i = icmp eq ptr %i.o, null
   br i1 %.old1.not.i, label %.loopexit235, label %.preheader.i
 
-.loopexit235:                                     ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit.i, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
-  %.val13.i = phi ptr [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
+.loopexit235:                                     ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit..loopexit234_crit_edge, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
+  %.val13.i = phi ptr [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit..loopexit234_crit_edge ], [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
   %i.p = getelementptr i8, ptr %0, i64 24         ; 5 uses
   %i.q = getelementptr i8, ptr %.val13.i, i64 96  ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !64   ; 4 uses
@@ -3911,29 +3911,29 @@ bb.l:                                             ; preds = %new_adjust_body.exi
 can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit156.thread_crit_edge: ; preds = %.preheader.i
   %.phi.trans.insert248.a = getelementptr i8, ptr %0, i64 24
   %.pre = load ptr, ptr %.phi.trans.insert248.a, align 8, !tbaa !47
-  br label %ISEQ_COMPILE_DATA.exit156.thread.a
+  br label %ISEQ_COMPILE_DATA.exit.i166
 
 ISEQ_COMPILE_DATA.exit156:                        ; preds = %ISEQ_COMPILE_DATA.exit
   %i.fi = load ptr, ptr inttoptr (i64 56 to ptr), align 8, !tbaa !234
   %.not107 = icmp eq ptr %i.fi, null
-  br i1 %.not107, label %can_add_ensure_iseq.exit167.preheader, label %ISEQ_COMPILE_DATA.exit.i166
+  br i1 %.not107, label %can_add_ensure_iseq.exit167.preheader, label %ISEQ_COMPILE_DATA.exit156.thread.a
 
-can_add_ensure_iseq.exit167.preheader:            ; preds = %.preheader.i162, %ISEQ_COMPILE_DATA.exit156.thread.a, %ISEQ_COMPILE_DATA.exit156
+can_add_ensure_iseq.exit167.preheader:            ; preds = %.preheader.i162, %ISEQ_COMPILE_DATA.exit.i166, %ISEQ_COMPILE_DATA.exit156
   br label %can_add_ensure_iseq.exit167
 
-ISEQ_COMPILE_DATA.exit156.thread.a:               ; preds = %can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit156.thread_crit_edge, %ISEQ_COMPILE_DATA.exit.thread
-  %6 = phi ptr [ %.pre, %can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit156.thread_crit_edge ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread ] ; 6 uses
-  %i.fj = getelementptr i8, ptr %6, i64 56
-  %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !234
-  %.not107230 = icmp eq ptr %i.fk, null
-  br i1 %.not107230, label %can_add_ensure_iseq.exit167.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i158
-
-ISEQ_COMPILE_DATA.exit.i166:                      ; preds = %ISEQ_COMPILE_DATA.exit156
-  %.phi.trans.insert249 = getelementptr i8, ptr %0, i64 24
-  %.val13.i168.pre = load ptr, ptr %.phi.trans.insert249, align 8, !tbaa !47
+ISEQ_COMPILE_DATA.exit156.thread.a:               ; preds = %ISEQ_COMPILE_DATA.exit156
+  %i.fj = getelementptr i8, ptr %0, i64 24
+  %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !47
   br label %.loopexit
 
-ISEQ_COMPILE_DATA.exit.thread.i158:               ; preds = %ISEQ_COMPILE_DATA.exit156.thread.a
+ISEQ_COMPILE_DATA.exit.i166:                      ; preds = %can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit156.thread_crit_edge, %ISEQ_COMPILE_DATA.exit.thread
+  %6 = phi ptr [ %.pre, %can_add_ensure_iseq.exit.ISEQ_COMPILE_DATA.exit156.thread_crit_edge ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread ] ; 6 uses
+  %.phi.trans.insert249 = getelementptr i8, ptr %6, i64 56
+  %.val13.i168.pre = load ptr, ptr %.phi.trans.insert249, align 8, !tbaa !234
+  %.not107229 = icmp eq ptr %.val13.i168.pre, null
+  br i1 %.not107229, label %can_add_ensure_iseq.exit167.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i158
+
+ISEQ_COMPILE_DATA.exit.thread.i158:               ; preds = %ISEQ_COMPILE_DATA.exit.i166
   %i.fl = getelementptr i8, ptr %6, i64 120
   %i.fm = load i8, ptr %i.fl, align 8, !tbaa !535, !range !151, !noundef !152
   %i.fn = trunc nuw i8 %i.fm to i1
@@ -3957,8 +3957,8 @@ bb.m:                                             ; preds = %.preheader.i162
   %.old1.not.i165 = icmp eq ptr %i.fs, null
   br i1 %.old1.not.i165, label %.loopexit, label %.preheader.i162
 
-.loopexit:                                        ; preds = %bb.m, %ISEQ_COMPILE_DATA.exit.i166, %ISEQ_COMPILE_DATA.exit.thread.i158, %ISEQ_COMPILE_DATA.exit13.i160
-  %.val13.i168 = phi ptr [ %6, %ISEQ_COMPILE_DATA.exit13.i160 ], [ %.val13.i168.pre, %ISEQ_COMPILE_DATA.exit.i166 ], [ %6, %ISEQ_COMPILE_DATA.exit.thread.i158 ], [ %6, %bb.m ]
+.loopexit:                                        ; preds = %bb.m, %ISEQ_COMPILE_DATA.exit156.thread.a, %ISEQ_COMPILE_DATA.exit.thread.i158, %ISEQ_COMPILE_DATA.exit13.i160
+  %.val13.i168 = phi ptr [ %i.fk, %ISEQ_COMPILE_DATA.exit156.thread.a ], [ %6, %ISEQ_COMPILE_DATA.exit13.i160 ], [ %6, %ISEQ_COMPILE_DATA.exit.thread.i158 ], [ %6, %bb.m ]
   %i.ft = getelementptr i8, ptr %0, i64 24        ; 5 uses
   %i.fu = getelementptr i8, ptr %.val13.i168, i64 96 ; 2 uses
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !64 ; 4 uses
@@ -4361,7 +4361,12 @@ bb.a:
 ISEQ_COMPILE_DATA.exit:                           ; preds = %bb.a
   %i.c = load ptr, ptr inttoptr (i64 64 to ptr), align 64, !tbaa !525
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %can_add_ensure_iseq.exit.thread, label %ISEQ_COMPILE_DATA.exit.i
+  br i1 %.not, label %can_add_ensure_iseq.exit.thread, label %ISEQ_COMPILE_DATA.exit..loopexit203_crit_edge
+
+ISEQ_COMPILE_DATA.exit..loopexit203_crit_edge:    ; preds = %ISEQ_COMPILE_DATA.exit
+  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
+  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
+  br label %.loopexit204
 
 ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 24
@@ -4370,11 +4375,6 @@ ISEQ_COMPILE_DATA.exit.thread:                    ; preds = %bb.a
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !525
   %.not193 = icmp eq ptr %i.g, null
   br i1 %.not193, label %can_add_ensure_iseq.exit.thread195, label %ISEQ_COMPILE_DATA.exit.thread.i
-
-ISEQ_COMPILE_DATA.exit.i:                         ; preds = %ISEQ_COMPILE_DATA.exit
-  %.phi.trans.insert = getelementptr i8, ptr %0, i64 24
-  %.val13.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47
-  br label %.loopexit204
 
 ISEQ_COMPILE_DATA.exit.thread.i:                  ; preds = %ISEQ_COMPILE_DATA.exit.thread
   %i.h = getelementptr i8, ptr %i.e, i64 120
@@ -4400,8 +4400,8 @@ bb.b:                                             ; preds = %.preheader.i
   %.old1.not.i = icmp eq ptr %i.o, null
   br i1 %.old1.not.i, label %.loopexit204, label %.preheader.i
 
-.loopexit204:                                     ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit.i, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
-  %.val13.i = phi ptr [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
+.loopexit204:                                     ; preds = %bb.b, %ISEQ_COMPILE_DATA.exit..loopexit203_crit_edge, %ISEQ_COMPILE_DATA.exit.thread.i, %ISEQ_COMPILE_DATA.exit13.i
+  %.val13.i = phi ptr [ %.val13.i.pre, %ISEQ_COMPILE_DATA.exit..loopexit203_crit_edge ], [ %i.e, %ISEQ_COMPILE_DATA.exit13.i ], [ %i.e, %ISEQ_COMPILE_DATA.exit.thread.i ], [ %i.e, %bb.b ]
   %i.p = getelementptr i8, ptr %0, i64 24         ; 5 uses
   %i.q = getelementptr i8, ptr %.val13.i, i64 96  ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !64   ; 4 uses
@@ -4693,7 +4693,7 @@ can_add_ensure_iseq.exit:                         ; preds = %.preheader.i
   %.not78 = icmp eq i32 %i.fb, 6
   br i1 %.not78, label %can_add_ensure_iseq.exit136.preheader, label %.ISEQ_COMPILE_DATA.exit125.thread_crit_edge
 
-can_add_ensure_iseq.exit136.preheader:            ; preds = %.preheader.i131, %can_add_ensure_iseq.exit.thread, %ISEQ_COMPILE_DATA.exit125.thread.a, %can_add_ensure_iseq.exit.thread195, %ISEQ_COMPILE_DATA.exit125, %can_add_ensure_iseq.exit
+can_add_ensure_iseq.exit136.preheader:            ; preds = %.preheader.i131, %can_add_ensure_iseq.exit.thread, %ISEQ_COMPILE_DATA.exit.i135, %can_add_ensure_iseq.exit.thread195, %ISEQ_COMPILE_DATA.exit125, %can_add_ensure_iseq.exit
   br label %can_add_ensure_iseq.exit136
 
 can_add_ensure_iseq.exit.thread:                  ; preds = %ISEQ_COMPILE_DATA.exit
@@ -4708,31 +4708,31 @@ can_add_ensure_iseq.exit.thread195:               ; preds = %ISEQ_COMPILE_DATA.e
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !70
   %i.fh = load i32, ptr %i.fg, align 8, !tbaa !86
   %.not78196 = icmp eq i32 %i.fh, 6
-  br i1 %.not78196, label %can_add_ensure_iseq.exit136.preheader, label %ISEQ_COMPILE_DATA.exit125.thread.a
+  br i1 %.not78196, label %can_add_ensure_iseq.exit136.preheader, label %ISEQ_COMPILE_DATA.exit.i135
 
 .ISEQ_COMPILE_DATA.exit125.thread_crit_edge:      ; preds = %can_add_ensure_iseq.exit
   %.phi.trans.insert217.a = getelementptr i8, ptr %0, i64 24
   %.pre = load ptr, ptr %.phi.trans.insert217.a, align 8, !tbaa !47
-  br label %ISEQ_COMPILE_DATA.exit125.thread.a
+  br label %ISEQ_COMPILE_DATA.exit.i135
 
 ISEQ_COMPILE_DATA.exit125:                        ; preds = %can_add_ensure_iseq.exit.thread
   %i.fi = load ptr, ptr inttoptr (i64 48 to ptr), align 16, !tbaa !233
   %.not79 = icmp eq ptr %i.fi, null
-  br i1 %.not79, label %can_add_ensure_iseq.exit136.preheader, label %ISEQ_COMPILE_DATA.exit.i135
+  br i1 %.not79, label %can_add_ensure_iseq.exit136.preheader, label %ISEQ_COMPILE_DATA.exit125.thread.a
 
-ISEQ_COMPILE_DATA.exit125.thread.a:               ; preds = %.ISEQ_COMPILE_DATA.exit125.thread_crit_edge, %can_add_ensure_iseq.exit.thread195
-  %5 = phi ptr [ %.pre, %.ISEQ_COMPILE_DATA.exit125.thread_crit_edge ], [ %i.e, %can_add_ensure_iseq.exit.thread195 ] ; 6 uses
-  %i.fj = getelementptr i8, ptr %5, i64 48
-  %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !233
-  %.not79199 = icmp eq ptr %i.fk, null
-  br i1 %.not79199, label %can_add_ensure_iseq.exit136.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i127
-
-ISEQ_COMPILE_DATA.exit.i135:                      ; preds = %ISEQ_COMPILE_DATA.exit125
-  %.phi.trans.insert218 = getelementptr i8, ptr %0, i64 24
-  %.val13.i137.pre = load ptr, ptr %.phi.trans.insert218, align 8, !tbaa !47
+ISEQ_COMPILE_DATA.exit125.thread.a:               ; preds = %ISEQ_COMPILE_DATA.exit125
+  %i.fj = getelementptr i8, ptr %0, i64 24
+  %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !47
   br label %.loopexit
 
-ISEQ_COMPILE_DATA.exit.thread.i127:               ; preds = %ISEQ_COMPILE_DATA.exit125.thread.a
+ISEQ_COMPILE_DATA.exit.i135:                      ; preds = %.ISEQ_COMPILE_DATA.exit125.thread_crit_edge, %can_add_ensure_iseq.exit.thread195
+  %5 = phi ptr [ %.pre, %.ISEQ_COMPILE_DATA.exit125.thread_crit_edge ], [ %i.e, %can_add_ensure_iseq.exit.thread195 ] ; 6 uses
+  %.phi.trans.insert218 = getelementptr i8, ptr %5, i64 48
+  %.val13.i137.pre = load ptr, ptr %.phi.trans.insert218, align 8, !tbaa !233
+  %.not79198 = icmp eq ptr %.val13.i137.pre, null
+  br i1 %.not79198, label %can_add_ensure_iseq.exit136.preheader, label %ISEQ_COMPILE_DATA.exit.thread.i127
+
+ISEQ_COMPILE_DATA.exit.thread.i127:               ; preds = %ISEQ_COMPILE_DATA.exit.i135
   %i.fl = getelementptr i8, ptr %5, i64 120
   %i.fm = load i8, ptr %i.fl, align 8, !tbaa !535, !range !151, !noundef !152
   %i.fn = trunc nuw i8 %i.fm to i1
@@ -4756,8 +4756,8 @@ bb.k:                                             ; preds = %.preheader.i131
   %.old1.not.i134 = icmp eq ptr %i.fs, null
   br i1 %.old1.not.i134, label %.loopexit, label %.preheader.i131
 
-.loopexit:                                        ; preds = %bb.k, %ISEQ_COMPILE_DATA.exit.i135, %ISEQ_COMPILE_DATA.exit.thread.i127, %ISEQ_COMPILE_DATA.exit13.i129
-  %.val13.i137 = phi ptr [ %5, %ISEQ_COMPILE_DATA.exit13.i129 ], [ %.val13.i137.pre, %ISEQ_COMPILE_DATA.exit.i135 ], [ %5, %ISEQ_COMPILE_DATA.exit.thread.i127 ], [ %5, %bb.k ]
+.loopexit:                                        ; preds = %bb.k, %ISEQ_COMPILE_DATA.exit125.thread.a, %ISEQ_COMPILE_DATA.exit.thread.i127, %ISEQ_COMPILE_DATA.exit13.i129
+  %.val13.i137 = phi ptr [ %i.fk, %ISEQ_COMPILE_DATA.exit125.thread.a ], [ %5, %ISEQ_COMPILE_DATA.exit13.i129 ], [ %5, %ISEQ_COMPILE_DATA.exit.thread.i127 ], [ %5, %bb.k ]
   %i.ft = getelementptr i8, ptr %0, i64 24        ; 5 uses
   %i.fu = getelementptr i8, ptr %.val13.i137, i64 96 ; 2 uses
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !64 ; 4 uses

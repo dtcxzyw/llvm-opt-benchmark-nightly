@@ -202,7 +202,7 @@ ehooks_dalloc_will_fail.exit.i:                   ; preds = %bb.h
   %i.ao = load atomic ptr, ptr %i.al acquire, align 8 ; 0 uses
   br label %.critedge.i
 
-.critedge.i:                                      ; preds = %bb.h, %ehooks_dalloc_will_fail.exit.i, %.thread.i
+.critedge.i:                                      ; preds = %ehooks_dalloc_will_fail.exit.i, %bb.h, %.thread.i
   %.not3.i = icmp eq ptr %.sroa.0.128, null
   br i1 %.not3.i, label %pac_decay_stashed.exit, label %.lr.ph.i
 

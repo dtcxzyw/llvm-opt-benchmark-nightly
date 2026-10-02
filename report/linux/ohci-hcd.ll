@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m, %rooth
   %i.bw = load i32, ptr %i.af, align 4
   %i.bx = sext i32 %i.bw to i64
   %i.by = icmp slt i64 %indvars.iv.next, %i.bx
-  br i1 %i.by, label %bb.i, label %._crit_edge, !llvm.loop !25
+  br i1 %i.by, label %bb.i, label %._crit_edge, !llvm.loop !24
 
 ._crit_edge:                                      ; preds = %bb.n, %bb.h
   %.041.lcssa = phi i32 [ 0, %bb.h ], [ %i.bv, %bb.n ] ; 2 uses
@@ -307,7 +307,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not52.i, label %bb.z, label %ohci_root_hub_state_changes.exit.thread
 
 bb.z:                                             ; preds = %bb.y
-  %i.dn = tail call fastcc i32 @ohci_rh_suspend(ptr noundef %i.a, i32 noundef 1) #15, !srcloc !26 ; 0 uses
+  %i.dn = tail call fastcc i32 @ohci_rh_suspend(ptr noundef %i.a, i32 noundef 1) #15, !srcloc !25 ; 0 uses
   br label %ohci_root_hub_state_changes.exit
 
 bb.aa:                                            ; preds = %._crit_edge, %._crit_edge
@@ -322,7 +322,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not44.i, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.dr = tail call fastcc i32 @ohci_rh_resume(ptr noundef %i.a) #15, !srcloc !27 ; 0 uses
+  %i.dr = tail call fastcc i32 @ohci_rh_resume(ptr noundef %i.a) #15, !srcloc !26 ; 0 uses
   br label %ohci_root_hub_state_changes.exit.thread
 
 bb.ad:                                            ; preds = %bb.ab
@@ -664,7 +664,7 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %bb.z
   %i.cr = zext i16 %i.cg to i32
-  %i.cs = tail call fastcc i32 @root_port_reset(ptr noundef %i.a, i32 noundef %i.cr) #15, !srcloc !28
+  %i.cs = tail call fastcc i32 @root_port_reset(ptr noundef %i.a, i32 noundef %i.cr) #15, !srcloc !27
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.x, %bb.b, %bb.z, %bb.y, %bb.t, %bb.f, %bb.e, %bb.c
@@ -940,7 +940,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.bx = add nsw i32 %.024, -1
   %i.by = icmp ne i32 %.024, 0
   %or.cond = select i1 %i.bw, i1 %i.by, i1 false
-  br i1 %or.cond, label %bb.b, label %.critedge, !llvm.loop !29
+  br i1 %or.cond, label %bb.b, label %.critedge, !llvm.loop !28
 
 .critedge:                                        ; preds = %bb.aq, %bb.at, %bb.b, %bb.d, %bb.f, %bb.h, %bb.j, %bb.l, %bb.n, %bb.p, %bb.r, %bb.t, %bb.v, %bb.x, %bb.z, %bb.ab, %bb.ad, %bb.af, %bb.ah, %bb.aj, %bb.al, %bb.an, %bb.ap
   %.230 = phi i32 [ 0, %bb.ap ], [ 0, %bb.aq ], [ 0, %bb.at ], [ -108, %bb.al ], [ -108, %bb.aj ], [ -108, %bb.ah ], [ -108, %bb.af ], [ -108, %bb.ad ], [ -108, %bb.ab ], [ -108, %bb.z ], [ -108, %bb.x ], [ -108, %bb.v ], [ -108, %bb.t ], [ -108, %bb.r ], [ -108, %bb.p ], [ -108, %bb.n ], [ -108, %bb.l ], [ -108, %bb.j ], [ -108, %bb.h ], [ -108, %bb.f ], [ -108, %bb.d ], [ -108, %bb.b ], [ -108, %bb.an ]
@@ -963,7 +963,7 @@ bb.a:
   store volatile ptr %i.f, ptr %i.f, align 8
   %i.g = getelementptr i8, ptr %0, i64 1472
   store volatile ptr %i.f, ptr %i.g, align 8
-  %i.h = tail call fastcc i32 @ohci_init(ptr noundef %i.a) #15, !srcloc !30
+  %i.h = tail call fastcc i32 @ohci_init(ptr noundef %i.a) #15, !srcloc !29
   ret i32 %i.h
 }
 
@@ -982,7 +982,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.e = load i8, ptr @distrust_firmware, align 1, !range !32, !noundef !21
+  %i.e = load i8, ptr @distrust_firmware, align 1, !range !31, !noundef !32
   %i.f = trunc nuw i8 %i.e to i1
   br i1 %i.f, label %bb.d, label %bb.e
 
@@ -1000,7 +1000,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.l = load ptr, ptr %i.k, align 8              ; 3 uses
   %i.m = getelementptr i8, ptr %0, i64 8          ; 10 uses
   store ptr %i.l, ptr %i.m, align 8
-  %i.n = load i8, ptr @no_handshake, align 1, !range !32, !noundef !21
+  %i.n = load i8, ptr @no_handshake, align 1, !range !31, !noundef !32
   %i.o = trunc nuw i8 %i.n to i1
   br i1 %i.o, label %bb.k, label %bb.f
 
@@ -1033,7 +1033,7 @@ bb.i:                                             ; preds = %bb.h
   tail call void @msleep(i32 noundef 10) #12
   %i.z = add nsw i32 %.042, -1                    ; 2 uses
   %i.aa = icmp eq i32 %i.z, 0
-  br i1 %i.aa, label %bb.j, label %bb.h, !llvm.loop !31
+  br i1 %i.aa, label %bb.j, label %bb.h, !llvm.loop !30
 
 .thread:                                          ; preds = %bb.h
   %i.ab = load ptr, ptr %i.m, align 8
@@ -1436,7 +1436,7 @@ bb.z:                                             ; preds = %bb.y
   %i.cy = load i32, ptr %i.aa, align 16
   %i.cz = or i32 %i.cy, 134217728
   store i32 %i.cz, ptr %i.aa, align 16
-  tail call fastcc void @ed_deschedule(ptr noundef %0, ptr noundef %i.aa) #15, !srcloc !22
+  tail call fastcc void @ed_deschedule(ptr noundef %0, ptr noundef %i.aa) #15, !srcloc !21
   %i.da = load ptr, ptr %i.i, align 8
   %i.db = getelementptr i8, ptr %i.aa, i64 32
   store ptr %i.da, ptr %i.db, align 16
@@ -1839,7 +1839,7 @@ define internal fastcc void @finish_urb(ptr noundef %0, ptr noundef %1, i32 noun
   tail call fastcc void @urb_free_priv(ptr noundef %0, ptr noundef %i.l) #15, !srcloc !77
   store ptr null, ptr %i.k, align 8
   %i.m = icmp eq i32 %2, -115
-  %spec.store.select.peel = select i1 %i.m, i32 0, i32 %2, !prof !24
+  %spec.store.select.peel = select i1 %i.m, i32 0, i32 %2, !prof !23
   %i.n = getelementptr i8, ptr %1, i64 80
   %i.o = load i32, ptr %i.n, align 8
   %i.p = lshr i32 %i.o, 30
@@ -2144,7 +2144,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = load i32, ptr %i.i, align 8
   %i.k = and i32 %i.j, 16
   %.not69 = icmp eq i32 %i.k, 0
-  br i1 %.not69, label %bb.e, label %bb.d, !prof !24
+  br i1 %.not69, label %bb.e, label %bb.d, !prof !23
 
 bb.d:                                             ; preds = %bb.c
   tail call void asm sideeffect "626: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 626b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 626) #13, !srcloc !84
@@ -2216,7 +2216,7 @@ bb.l:                                             ; preds = %bb.k
   %i.an = load i32, ptr %i.am, align 8
   %i.ao = and i32 %i.an, 32
   %.not = icmp eq i32 %i.ao, 0
-  br i1 %.not, label %bb.n, label %bb.m, !prof !24
+  br i1 %.not, label %bb.n, label %bb.m, !prof !23
 
 bb.m:                                             ; preds = %bb.l
   tail call void asm sideeffect "628: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 628b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 628) #13, !srcloc !88
@@ -2619,7 +2619,7 @@ usb_maxpacket.exit:                               ; preds = %bb.z
   %i.eb = and i32 %i.ea, 15
   %i.ec = zext nneg i32 %i.eb to i64
   %i.ed = getelementptr [8 x i8], ptr %i.dz, i64 %i.ec
-  %i.ee = load ptr, ptr %i.ed, align 8, !nonnull !21, !noundef !21
+  %i.ee = load ptr, ptr %i.ed, align 8
   %i.ef = getelementptr i8, ptr %i.ee, i64 4
   %.val.i160 = load i16, ptr %i.ef, align 1
   %i.eg = and i16 %.val.i160, 2047
@@ -2932,7 +2932,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = load i32, ptr %i.g, align 16
   %i.l = or i32 %i.k, 134217728
   store i32 %i.l, ptr %i.g, align 16
-  tail call fastcc void @ed_deschedule(ptr noundef %i.a, ptr noundef %i.g) #15, !srcloc !22
+  tail call fastcc void @ed_deschedule(ptr noundef %i.a, ptr noundef %i.g) #15, !srcloc !21
   %i.m = getelementptr i8, ptr %0, i64 616        ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = getelementptr i8, ptr %i.g, i64 32
@@ -3335,18 +3335,18 @@ attributes #17 = { noredzone nounwind allocsize(0) "no-builtin-wcslen" }
 !18 = !{i64 2148567881, i64 2148567920, i64 2148567941, i64 2148567978, i64 2148568001, i64 2148567872}
 !19 = !{i64 2148569193, i64 2148569232, i64 2148569253, i64 2148569290, i64 2148569313, i64 2148569184}
 !20 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!21 = !{}
-!22 = !{i64 10849530}
-!23 = !{!"llvm.loop.peeled.count", i32 1}
-!24 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!25 = distinct !{!25, !16}
-!26 = !{i64 10727989}
-!27 = !{i64 10728230}
-!28 = !{i64 10737939}
-!29 = distinct !{!29, !16}
-!30 = !{i64 19912}
-!31 = distinct !{!31, !16}
-!32 = !{i8 0, i8 2}
+!21 = !{i64 10849530}
+!22 = !{!"llvm.loop.peeled.count", i32 1}
+!23 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!24 = distinct !{!24, !16}
+!25 = !{i64 10727989}
+!26 = !{i64 10728230}
+!27 = !{i64 10737939}
+!28 = distinct !{!28, !16}
+!29 = !{i64 19912}
+!30 = distinct !{!30, !16}
+!31 = !{i8 0, i8 2}
+!32 = !{}
 !33 = !{i64 14251}
 !34 = distinct !{!34, !16}
 !35 = !{i64 29094}
@@ -3358,7 +3358,7 @@ attributes #17 = { noredzone nounwind allocsize(0) "no-builtin-wcslen" }
 !41 = !{i64 2158468397}
 !42 = distinct !{!42, !16}
 !43 = distinct !{!43, !16}
-!44 = distinct !{!44, !16, !23}
+!44 = distinct !{!44, !16, !22}
 !45 = distinct !{!45, !50}
 !46 = distinct !{!46, !16}
 !47 = !{i64 10868465}
@@ -3390,7 +3390,7 @@ attributes #17 = { noredzone nounwind allocsize(0) "no-builtin-wcslen" }
 !73 = distinct !{!73, !16}
 !74 = distinct !{!74, !16}
 !75 = distinct !{!75, !16}
-!76 = distinct !{!76, !23}
+!76 = distinct !{!76, !22}
 !77 = !{i64 10836984}
 !78 = distinct !{!78, !16}
 !79 = distinct !{!79, !16}

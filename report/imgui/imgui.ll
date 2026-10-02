@@ -205,15 +205,13 @@ bb.fi:                                            ; preds = %bb.fh, %bb.fg
   %i.ata = getelementptr inbounds nuw i8, ptr %i.g, i64 3148 ; 3 uses
   %i.atb = load i32, ptr %i.ata, align 4, !tbaa !1694
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.350, i32 noundef %i.atb)
-  %i.atc = load i32, ptr %i.ata, align 4, !tbaa !1694
-  %24 = icmp eq i32 %i.atc, 0                     ; 2 uses
+  %i.atc = load i32, ptr %i.ata, align 4, !tbaa !1694 ; 2 uses
   %i.atd = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 6 uses
   %i.ate = getelementptr inbounds nuw i8, ptr %i.atd, i64 7784 ; 3 uses
   %i.atf = load i32, ptr %i.ate, align 8, !tbaa !792 ; 2 uses
-  %i.atg = and i32 %i.atf, 64
-  %25 = icmp ne i32 %i.atg, 0                     ; 2 uses
-  %.not.i675 = xor i1 %25, true
-  %or.cond.i676 = and i1 %24, %.not.i675
+  %i.atg = and i32 %i.atf, 64                     ; 2 uses
+  %24 = or i32 %i.atg, %i.atc
+  %or.cond.i676 = icmp eq i32 %24, 0
   br i1 %or.cond.i676, label %.thread1023, label %bb.fj
 
 .thread1023:                                      ; preds = %bb.fi
@@ -228,7 +226,9 @@ bb.fi:                                            ; preds = %bb.fh, %bb.fg
   br label %bb.fk
 
 bb.fj:                                            ; preds = %bb.fi
-  %or.cond3.i = or i1 %24, %25
+  %25 = icmp ne i32 %i.atg, 0
+  %26 = icmp eq i32 %i.atc, 0
+  %or.cond3.i = or i1 %26, %25
   br i1 %or.cond3.i, label %bb.fk, label %_ZN5ImGui13BeginDisabledEb.exit
 
 bb.fk:                                            ; preds = %.thread1023, %bb.fj

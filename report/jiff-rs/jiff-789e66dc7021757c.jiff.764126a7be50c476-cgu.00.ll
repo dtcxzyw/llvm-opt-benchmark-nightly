@@ -202,7 +202,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanYearsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
 
 _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanYearsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i: ; preds = %.thread434.i, %bb.af
-  %.sroa.079.2442.i = phi i32 [ %.sroa.079.2443.i, %.thread434.i ], [ %.sroa.079.0.i, %bb.af ] ; 3 uses
+  %.sroa.079.2442.i = phi i32 [ %.sroa.079.2443.i, %.thread434.i ], [ %.sroa.079.0.i, %bb.af ] ; 4 uses
   %.sroa.042.0432439.i = phi i32 [ %.sroa.042.0432440.i, %.thread434.i ], [ %i.cp, %bb.af ] ; 3 uses
   %.sroa.3.0.insert.insert.i.i128.i = phi i32 [ %i.ec, %.thread434.i ], [ %i.ea, %bb.af ] ; 4 uses
   %i.ed = trunc i32 %.sroa.3.0.insert.insert.i.i128.i to i1
@@ -246,7 +246,7 @@ bb.al:                                            ; preds = %bb.aj
   unreachable
 
 _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i: ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanYearsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
-  %.sroa.517.0.extract.shift.i.i = lshr i32 %.sroa.3.0.insert.insert.i.i128.i, 16 ; 2 uses
+  %.sroa.517.0.extract.shift.i.i = lshr i32 %.sroa.3.0.insert.insert.i.i128.i, 16 ; 3 uses
   %.sroa.517.0.extract.trunc.i.i = trunc nuw i32 %.sroa.517.0.extract.shift.i.i to i16 ; 2 uses
   %i.el = icmp slt i32 %.sroa.3.0.insert.insert.i.i128.i, 0 ; 2 uses
   %i.em = sub i16 0, %.sroa.517.0.extract.trunc.i.i
@@ -254,17 +254,17 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6b
   %masksel.i.i = select i1 %.not529.i, i16 512, i16 0
   %spec.select538.i = zext i1 %.not529.i to i8
   %.sroa.26.60.extract.trunc455.i = select i1 %i.el, i8 -1, i8 %spec.select538.i ; 2 uses
-  %.sroa.24382.0450.i = select i1 %i.el, i16 %i.em, i16 %.sroa.517.0.extract.trunc.i.i ; 5 uses
+  %.sroa.24382.0450.i = select i1 %i.el, i16 %i.em, i16 %.sroa.517.0.extract.trunc.i.i ; 4 uses
   %.sroa.015.0.i.i = tail call i32 @llvm.abs.i32(i32 %.sroa.079.2442.i, i1 true) ; 3 uses
-  %i.en = icmp eq i32 %.sroa.079.2442.i, 0        ; 4 uses
+  %i.en = icmp eq i32 %.sroa.079.2442.i, 0        ; 3 uses
   %masksel.i133.i = select i1 %i.en, i16 0, i16 256
   %i.eo = icmp slt i32 %.sroa.079.2442.i, 0
   br i1 %i.eo, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i, label %bb.am
 
 bb.am:                                            ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
-  %3 = icmp eq i16 %.sroa.24382.0450.i, 0
-  %4 = select i1 %i.en, i1 %3, i1 false
-  br i1 %4, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i, label %.thread.i.i143.i
+  %3 = or i32 %.sroa.079.2442.i, %.sroa.517.0.extract.shift.i.i
+  %.not67.not = icmp eq i32 %3, 0
+  br i1 %.not67.not, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i, label %.thread.i.i143.i
 
 .thread.i.i143.i:                                 ; preds = %bb.am
   %.not = xor i1 %i.en, true

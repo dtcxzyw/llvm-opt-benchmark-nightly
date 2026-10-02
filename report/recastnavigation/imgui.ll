@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.z
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.jk = phi ptr [ %i.io, %bb.af ], [ %i.ej, %bb.ag ] ; 4 uses
-  %.1359 = phi i32 [ %spec.select, %bb.af ], [ %i.jj, %bb.ag ] ; 34 uses
+  %.1359 = phi i32 [ %spec.select, %bb.af ], [ %i.jj, %bb.ag ] ; 35 uses
   %i.jl = load i32, ptr %i.er, align 8, !tbaa !505 ; 3 uses
   %i.jm = icmp eq i32 %i.jl, 0
   br i1 %i.jm, label %bb.aj, label %bb.ai
@@ -267,7 +267,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.kp = getelementptr i8, ptr %i.kl, i64 -112
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.kp, ptr noundef nonnull align 8 dereferenceable(80) %i.ko, i64 80, i1 false), !tbaa.struct !888
   %i.kq = and i32 %.1359, 33554432
-  %.not417 = icmp eq i32 %i.kq, 0                 ; 4 uses
+  %.not417 = icmp eq i32 %i.kq, 0                 ; 3 uses
   br i1 %.not417, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
@@ -670,9 +670,9 @@ bb.ex:                                            ; preds = %bb.ew, %_ZN5ImGui20
   %i.aei = getelementptr inbounds nuw i8, ptr %i.aba, i64 72
   %i.aej = call fastcc <2 x float> @_ZL21CalcWindowAutoFitSizeP11ImGuiWindowRK6ImVec2(ptr noundef nonnull %i.aba, ptr noundef nonnull align 4 dereferenceable(8) %i.aei) ; 8 uses
   %i.aek = and i32 %.1359, 64
-  %.not430 = icmp ne i32 %i.aek, 0                ; 2 uses
+  %.not430.not = icmp eq i32 %i.aek, 0
   %.pre1044 = load ptr, ptr %i.g, align 8, !tbaa !595 ; 16 uses
-  br i1 %.not430, label %bb.ey, label %bb.fd
+  br i1 %.not430.not, label %bb.fd, label %bb.ey
 
 bb.ey:                                            ; preds = %bb.ex
   %i.ael = getelementptr inbounds nuw i8, ptr %.pre1044, i64 207
@@ -1075,9 +1075,9 @@ bb.nd:                                            ; preds = %bb.nb, %bb.nc
   %i.cnq = getelementptr inbounds nuw i8, ptr %i.cnh, i64 48
   %i.cnr = load float, ptr %i.cnq, align 8, !tbaa !916 ; 2 uses
   %i.cns = fcmp ule float %i.cnr, 0.000000e+00
-  %.not417.not = xor i1 %.not417, true
-  %brmerge483 = or i1 %i.cns, %.not417.not
-  %brmerge484 = or i1 %.not430, %brmerge483
+  %38 = and i32 %.1359, 33554496
+  %39 = icmp ne i32 %38, 0
+  %brmerge484 = or i1 %39, %i.cns
   br i1 %brmerge484, label %bb.nf, label %bb.ne
 
 bb.ne:                                            ; preds = %bb.nd
