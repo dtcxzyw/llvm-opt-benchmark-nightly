@@ -205,7 +205,7 @@ _ZN6brotli3enc9histogram32BrotliBuildHistogramsWithContext17hc482235d9a53e0e7E.e
 "_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hc79103a98b41dcfaE.exit": ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h1e0b43146c957e5eE.exit.i.i.i.i", %_ZN6brotli3enc9histogram32BrotliBuildHistogramsWithContext17hc482235d9a53e0e7E.exit
   %i.lq = load i64, ptr %i.cr, align 8, !noundef !21 ; 6 uses
   %i.lr = getelementptr inbounds nuw i8, ptr %12, i64 224
-  %i.ls = shl i64 %i.lq, 6                        ; 61 uses
+  %i.ls = shl i64 %i.lq, 6                        ; 60 uses
   store i64 %i.ls, ptr %i.lr, align 8
   %i.lt = shl i64 %i.lq, 8                        ; 5 uses
   %i.lu = icmp ugt i64 %i.ls, 4611686018427387903
@@ -608,7 +608,7 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i116.i: ; p
 
 .lr.ph.i117.i.preheader:                          ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i116.i
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.uk, i8 -1, i64 %i.uj, i1 false), !noalias !12554
-  %i.um = or disjoint i64 %i.ls, 1                ; 2 uses
+  %i.um = or disjoint i64 %i.ls, 1                ; 3 uses
   br label %bb.dk
 
 ._crit_edge.i.i:                                  ; preds = %bb.do
@@ -734,7 +734,6 @@ _ZN6brotli3enc14combined_alloc8alloc_if17h264207b7abc9f7deE.exit.i.i: ; preds = 
 .lr.ph79.i.i:                                     ; preds = %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17h7012861f67b004adE.exit.i.i"
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.vf) ]
   %i.vi = add nuw nsw i64 %i.vg, 1
-  %13 = or disjoint i64 %i.ls, 1
   br label %bb.cw
 
 ._crit_edge80.i.i:                                ; preds = %bb.db, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17h7012861f67b004adE.exit.i.i"
@@ -761,7 +760,7 @@ bb.cy:                                            ; preds = %bb.dh, %bb.da, %bb.
   unreachable
 
 bb.cz:                                            ; preds = %bb.cw
-  %exitcond107.not.i.i = icmp eq i64 %i.vl, %13
+  %exitcond107.not.i.i = icmp eq i64 %i.vl, %i.um
   br i1 %exitcond107.not.i.i, label %bb.da, label %bb.db
 
 bb.da:                                            ; preds = %bb.cz
@@ -1076,7 +1075,7 @@ bb.dz:                                            ; preds = %bb.dy
 .loopexit270:                                     ; preds = %.loopexit, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hc48b868ba43f28bfE.exit"
   %i.yp = load i64, ptr %i.cs, align 8, !noundef !21 ; 7 uses
   %i.yq = getelementptr inbounds nuw i8, ptr %12, i64 232
-  %i.yr = shl i64 %i.yp, 2                        ; 76 uses
+  %i.yr = shl i64 %i.yp, 2                        ; 75 uses
   store i64 %i.yr, ptr %i.yq, align 8
   %i.ys = shl i64 %i.yp, 4                        ; 5 uses
   %i.yt = icmp ugt i64 %i.yr, 4611686018427387903
@@ -1479,7 +1478,7 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i116.i301: 
 
 .lr.ph.i117.i302:                                 ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i116.i301
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ahr, i8 -1, i64 %i.ahq, i1 false), !noalias !12620
-  %i.aht = or disjoint i64 %i.yr, 1
+  %i.aht = or disjoint i64 %i.yr, 1               ; 2 uses
   br label %bb.fw
 
 ._crit_edge.i.i320:                               ; preds = %bb.gd
@@ -1605,7 +1604,6 @@ _ZN6brotli3enc14combined_alloc8alloc_if17hd9a9ddd756460710E.exit.i.i: ; preds = 
 .lr.ph79.i.i342:                                  ; preds = %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17h7012861f67b004adE.exit.i.i340"
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aim) ]
   %i.aip = add nuw nsw i64 %i.ain, 1
-  %14 = or disjoint i64 %i.yr, 1
   br label %bb.fj
 
 ._crit_edge80.i.i347:                             ; preds = %bb.fo, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17h7012861f67b004adE.exit.i.i340"
@@ -1632,7 +1630,7 @@ bb.fl:                                            ; preds = %bb.ft, %bb.fn, %bb.
   unreachable
 
 bb.fm:                                            ; preds = %bb.fj
-  %exitcond107.not.i.i345 = icmp eq i64 %i.ais, %14
+  %exitcond107.not.i.i345 = icmp eq i64 %i.ais, %i.aht
   br i1 %exitcond107.not.i.i345, label %bb.fn, label %bb.fo
 
 bb.fn:                                            ; preds = %bb.fm

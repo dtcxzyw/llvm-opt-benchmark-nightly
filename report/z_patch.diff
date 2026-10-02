@@ -1,0 +1,53 @@
+diff --git a/llvm/include/llvm/Transforms/Scalar/GVNValueTable.h b/llvm/include/llvm/Transforms/Scalar/GVNValueTable.h
+index 66d4a95f489da..ffeeaae743b2a 100644
+--- a/llvm/include/llvm/Transforms/Scalar/GVNValueTable.h
++++ b/llvm/include/llvm/Transforms/Scalar/GVNValueTable.h
+@@ -105,6 +105,7 @@ class GVNValueTable {
+                                    Value *LHS, Value *RHS);
+   LLVM_ABI uint32_t lookupCmp(unsigned Opcode, CmpInst::Predicate Pred,
+                               Value *LHS, Value *RHS);
++  LLVM_ABI uint32_t lookupAdd(Value *LHS, Value *RHS);
+   LLVM_ABI uint32_t lookupPtrToInt(Value *Ptr, Type *Ty);
+   LLVM_ABI uint32_t phiTranslate(const BasicBlock *BB,
+                                  const BasicBlock *PhiBlock, uint32_t Num,
+diff --git a/llvm/lib/Transforms/Scalar/GVN.cpp b/llvm/lib/Transforms/Scalar/GVN.cpp
+index 4ef8e650f4934..09035d0adb850 100644
+--- a/llvm/lib/Transforms/Scalar/GVN.cpp
++++ b/llvm/lib/Transforms/Scalar/GVN.cpp
+@@ -1063,6 +1063,17 @@ uint32_t GVNValueTable::lookupCmp(unsigned Opcode, CmpInst::Predicate Predicate,
+   Expression Exp = createCmpExpr(Opcode, Predicate, LHS, RHS);
+   return ExpressionNumbering.lookup(Exp);
+ }
++uint32_t GVNValueTable::lookupAdd(Value *LHS, Value *RHS) {
++  Expression E;
++  E.Ty = LHS->getType();
++  E.Opcode = Instruction::Add;
++  E.VarArgs.push_back(lookupOrAdd(LHS));
++  E.VarArgs.push_back(lookupOrAdd(RHS));
++  if (E.VarArgs[0] > E.VarArgs[1])
++    std::swap(E.VarArgs[0], E.VarArgs[1]);
++  E.Commutative = true;
++  return ExpressionNumbering.lookup(E);
++}
+ 
+ /// Returns the value number of ptrtoint \p Ptr to \Ty.
+ uint32_t GVNValueTable::lookupPtrToInt(Value *Ptr, Type *Ty) {
+@@ -3799,6 +3810,18 @@ bool GVNPassImpl::processInstruction(Instruction *I) {
+         }
+       }
+     }
++
++    if (match(I, m_DisjointOr(m_Value(), m_Value()))) {
++      uint32_t AddNum = VN.lookupAdd(I->getOperand(0), I->getOperand(1));
++      if (AddNum != 0) {
++        Repl = findLeader(I->getParent(), AddNum);
++        if (Repl) {
++          patchAndReplaceAllUsesWith(I, Repl);
++          salvageAndRemoveInstruction(I);
++          return true;
++        }
++      }
++    }
+     // Failure, just remember this instance for future use.
+     LeaderTable.insert(Num, I, I->getParent());
+     return false;
