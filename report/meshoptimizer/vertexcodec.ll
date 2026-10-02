@@ -205,10 +205,10 @@ bb.p:                                             ; preds = %bb.n
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cd, i64 32
   %i.cj = load <8 x i16>, ptr %i.ci, align 16, !tbaa !9
   %i.ck = bitcast <16 x i8> %i.ch to <8 x i16>    ; 2 uses
-  %8 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ck, <8 x i16> %i.cj)
+  %8 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ck, <8 x i16> %i.cj)
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cd, i64 48
   %i.cm = load <8 x i16>, ptr %i.cl, align 16, !tbaa !9
-  %9 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ck, <8 x i16> %i.cm)
+  %9 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ck, <8 x i16> %i.cm)
   %i.cn = shl <8 x i16> %9, splat (i16 8)
   %i.co = or <8 x i16> %i.cn, %8
   %i.cp = bitcast <8 x i16> %i.co to <2 x i64>
@@ -282,10 +282,10 @@ bb.p:                                             ; preds = %bb.n
   %i.fd = getelementptr inbounds nuw i8, ptr %i.ey, i64 32
   %i.fe = load <8 x i16>, ptr %i.fd, align 16, !tbaa !9
   %i.ff = bitcast <16 x i8> %i.fc to <8 x i16>    ; 2 uses
-  %10 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ff, <8 x i16> %i.fe)
+  %10 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ff, <8 x i16> %i.fe)
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ey, i64 48
   %i.fh = load <8 x i16>, ptr %i.fg, align 16, !tbaa !9
-  %11 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ff, <8 x i16> %i.fh)
+  %11 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ff, <8 x i16> %i.fh)
   %i.fi = shl <8 x i16> %11, splat (i16 8)
   %i.fj = or <8 x i16> %i.fi, %10
   %i.fk = bitcast <8 x i16> %i.fj to <2 x i64>
@@ -359,10 +359,10 @@ bb.p:                                             ; preds = %bb.n
   %i.hy = getelementptr inbounds nuw i8, ptr %i.ht, i64 32
   %i.hz = load <8 x i16>, ptr %i.hy, align 16, !tbaa !9
   %i.ia = bitcast <16 x i8> %i.hx to <8 x i16>    ; 2 uses
-  %12 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ia, <8 x i16> %i.hz)
+  %12 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ia, <8 x i16> %i.hz)
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ht, i64 48
   %i.ic = load <8 x i16>, ptr %i.ib, align 16, !tbaa !9
-  %13 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ia, <8 x i16> %i.ic)
+  %13 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ia, <8 x i16> %i.ic)
   %i.id = shl <8 x i16> %13, splat (i16 8)
   %i.ie = or <8 x i16> %i.id, %12
   %i.if = bitcast <8 x i16> %i.ie to <2 x i64>
@@ -435,10 +435,10 @@ bb.p:                                             ; preds = %bb.n
   %i.ks = getelementptr inbounds nuw i8, ptr %i.kn, i64 32
   %i.kt = load <8 x i16>, ptr %i.ks, align 16, !tbaa !9
   %i.ku = bitcast <16 x i8> %i.kr to <8 x i16>    ; 2 uses
-  %14 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ku, <8 x i16> %i.kt)
+  %14 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ku, <8 x i16> %i.kt)
   %i.kv = getelementptr inbounds nuw i8, ptr %i.kn, i64 48
   %i.kw = load <8 x i16>, ptr %i.kv, align 16, !tbaa !9
-  %15 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ku, <8 x i16> %i.kw)
+  %15 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.ku, <8 x i16> %i.kw)
   %i.kx = shl <8 x i16> %15, splat (i16 8)
   %i.ky = or <8 x i16> %i.kx, %14
   %i.kz = bitcast <8 x i16> %i.ky to <2 x i64>
@@ -540,10 +540,10 @@ bb.r:                                             ; preds = %.lr.ph80.i
   %i.od = getelementptr inbounds nuw i8, ptr %i.ny, i64 32
   %i.oe = load <8 x i16>, ptr %i.od, align 16, !tbaa !9
   %i.of = bitcast <16 x i8> %i.oc to <8 x i16>    ; 2 uses
-  %16 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.of, <8 x i16> %i.oe)
+  %16 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.of, <8 x i16> %i.oe)
   %i.og = getelementptr inbounds nuw i8, ptr %i.ny, i64 48
   %i.oh = load <8 x i16>, ptr %i.og, align 16, !tbaa !9
-  %17 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.of, <8 x i16> %i.oh)
+  %17 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.of, <8 x i16> %i.oh)
   %i.oi = shl <8 x i16> %17, splat (i16 8)
   %i.oj = or <8 x i16> %i.oi, %16
   %i.ok = bitcast <8 x i16> %i.oj to <2 x i64>
@@ -946,6 +946,9 @@ __cxx_global_var_init.exit:                       ; preds = %vector.body
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i16> @llvm.umulh.v8i16(<8 x i16>, <8 x i16>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -980,9 +983,6 @@ declare i64 @llvm.vector.reduce.add.v16i64(<16 x i64>) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.umulh.v8i16(<8 x i16>, <8 x i16>) #8
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

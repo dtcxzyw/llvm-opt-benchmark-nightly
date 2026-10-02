@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.bc = shl nuw nsw <32 x i16> %i.bb, splat (i16 7)
   %i.bd = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.ar, <32 x i16> splat (i16 255))
   %i.be = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.aw, <32 x i16> splat (i16 255))
-  %6 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.az, <32 x i16> %i.bd)
-  %7 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.bc, <32 x i16> %i.be)
+  %6 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.az, <32 x i16> %i.bd)
+  %7 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.bc, <32 x i16> %i.be)
   %i.bf = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %6, <32 x i16> %7)
   store <64 x i8> %i.bf, ptr %i.ae, align 64, !tbaa !62
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ac, i64 128
@@ -237,8 +237,8 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.cf = shl nuw nsw <32 x i16> %i.ce, splat (i16 7)
   %i.cg = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.bu, <32 x i16> splat (i16 255))
   %i.ch = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.bz, <32 x i16> splat (i16 255))
-  %8 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.cc, <32 x i16> %i.cg)
-  %9 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.cf, <32 x i16> %i.ch)
+  %8 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.cc, <32 x i16> %i.cg)
+  %9 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.cf, <32 x i16> %i.ch)
   %i.ci = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %8, <32 x i16> %9)
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ae, i64 64
   store <64 x i8> %i.ci, ptr %i.cj, align 64, !tbaa !62
@@ -270,8 +270,8 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.dj = shl nuw nsw <32 x i16> %i.di, splat (i16 7)
   %i.dk = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.cy, <32 x i16> splat (i16 255))
   %i.dl = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.dd, <32 x i16> splat (i16 255))
-  %10 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.dg, <32 x i16> %i.dk)
-  %11 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.dj, <32 x i16> %i.dl)
+  %10 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.dg, <32 x i16> %i.dk)
+  %11 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.dj, <32 x i16> %i.dl)
   %i.dm = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %10, <32 x i16> %11)
   %i.dn = getelementptr inbounds nuw i8, ptr %i.ae, i64 128
   store <64 x i8> %i.dm, ptr %i.dn, align 64, !tbaa !62
@@ -303,8 +303,8 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.en = shl nuw nsw <32 x i16> %i.em, splat (i16 7)
   %i.eo = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.ec, <32 x i16> splat (i16 255))
   %i.ep = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.eh, <32 x i16> splat (i16 255))
-  %12 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ek, <32 x i16> %i.eo)
-  %13 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.en, <32 x i16> %i.ep)
+  %12 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ek, <32 x i16> %i.eo)
+  %13 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.en, <32 x i16> %i.ep)
   %i.eq = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %12, <32 x i16> %13)
   %i.er = getelementptr inbounds nuw i8, ptr %i.ae, i64 192
   store <64 x i8> %i.eq, ptr %i.er, align 64, !tbaa !62
@@ -336,8 +336,8 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.fr = shl nuw nsw <32 x i16> %i.fq, splat (i16 7)
   %i.fs = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.fg, <32 x i16> splat (i16 255))
   %i.ft = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.fl, <32 x i16> splat (i16 255))
-  %14 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.fo, <32 x i16> %i.fs)
-  %15 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.fr, <32 x i16> %i.ft)
+  %14 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.fo, <32 x i16> %i.fs)
+  %15 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.fr, <32 x i16> %i.ft)
   %i.fu = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %14, <32 x i16> %15)
   %i.fv = getelementptr inbounds nuw i8, ptr %i.ae, i64 256
   store <64 x i8> %i.fu, ptr %i.fv, align 64, !tbaa !62
@@ -369,8 +369,8 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.gv = shl nuw nsw <32 x i16> %i.gu, splat (i16 7)
   %i.gw = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.gk, <32 x i16> splat (i16 255))
   %i.gx = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.gp, <32 x i16> splat (i16 255))
-  %16 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.gs, <32 x i16> %i.gw)
-  %17 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.gv, <32 x i16> %i.gx)
+  %16 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.gs, <32 x i16> %i.gw)
+  %17 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.gv, <32 x i16> %i.gx)
   %i.gy = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %16, <32 x i16> %17)
   %i.gz = getelementptr inbounds nuw i8, ptr %i.ae, i64 320
   store <64 x i8> %i.gy, ptr %i.gz, align 64, !tbaa !62
@@ -402,8 +402,8 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.hz = shl nuw nsw <32 x i16> %i.hy, splat (i16 7)
   %i.ia = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.ho, <32 x i16> splat (i16 255))
   %i.ib = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.ht, <32 x i16> splat (i16 255))
-  %18 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.hw, <32 x i16> %i.ia)
-  %19 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.hz, <32 x i16> %i.ib)
+  %18 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.hw, <32 x i16> %i.ia)
+  %19 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.hz, <32 x i16> %i.ib)
   %i.ic = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %18, <32 x i16> %19)
   %i.id = getelementptr inbounds nuw i8, ptr %i.ae, i64 384
   store <64 x i8> %i.ic, ptr %i.id, align 64, !tbaa !62
@@ -435,8 +435,8 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.jd = shl nuw nsw <32 x i16> %i.jc, splat (i16 7)
   %i.je = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.is, <32 x i16> splat (i16 255))
   %i.jf = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.ix, <32 x i16> splat (i16 255))
-  %20 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ja, <32 x i16> %i.je)
-  %21 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.jd, <32 x i16> %i.jf)
+  %20 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ja, <32 x i16> %i.je)
+  %21 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.jd, <32 x i16> %i.jf)
   %i.jg = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %20, <32 x i16> %21)
   %i.jh = getelementptr inbounds nuw i8, ptr %i.ae, i64 448
   store <64 x i8> %i.jg, ptr %i.jh, align 64, !tbaa !62
@@ -839,8 +839,8 @@ bb.a:
   %i.am = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.al, <32 x i16> splat (i16 254))
   %i.an = load <32 x i16>, ptr %i.ac, align 64, !tbaa !62
   %i.ao = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.an, <32 x i16> splat (i16 254))
-  %5 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ag, <32 x i16> %i.am)
-  %6 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ak, <32 x i16> %i.ao)
+  %5 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ag, <32 x i16> %i.am)
+  %6 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ak, <32 x i16> %i.ao)
   %i.ap = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %5, <32 x i16> %6) ; 2 uses
   store <64 x i8> %i.ap, ptr %i.b, align 64, !tbaa !62
   %i.aq = getelementptr inbounds nuw [256 x i8], ptr %i.o, i64 %i.v ; 4 uses
@@ -860,8 +860,8 @@ bb.a:
   %i.be = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.bd, <32 x i16> splat (i16 254))
   %i.bf = load <32 x i16>, ptr %i.au, align 64, !tbaa !62
   %i.bg = tail call <32 x i16> @llvm.smin.v32i16(<32 x i16> %i.bf, <32 x i16> splat (i16 254))
-  %7 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ay, <32 x i16> %i.be)
-  %8 = call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.bc, <32 x i16> %i.bg)
+  %7 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.ay, <32 x i16> %i.be)
+  %8 = tail call <32 x i16> @llvm.smulh.v32i16(<32 x i16> %i.bc, <32 x i16> %i.bg)
   %i.bh = tail call <64 x i8> @llvm.x86.avx512.packuswb.512(<32 x i16> %7, <32 x i16> %8) ; 2 uses
   store <64 x i8> %i.bh, ptr %i.as, align 64, !tbaa !62
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 6488448
@@ -1264,6 +1264,12 @@ bb.f:                                             ; preds = %bb.e, %_ZNK9Stockfi
   ret i1 %i.av
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <32 x i16> @llvm.smulh.v32i16(<32 x i16>, <32 x i16>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i16> @llvm.smulh.v8i16(<8 x i16>, <8 x i16>) #12
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #16
 
@@ -1293,12 +1299,6 @@ declare <6 x i64> @llvm.masked.load.v6i64.p0(ptr captures(none), <6 x i1>, <6 x 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <5 x i64> @llvm.masked.load.v5i64.p0(ptr captures(none), <5 x i1>, <5 x i64>) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.smulh.v8i16(<8 x i16>, <8 x i16>) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <32 x i16> @llvm.smulh.v32i16(<32 x i16>, <32 x i16>) #12
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="znver5" "target-features"="+adx,+aes,+avx,+avx2,+avx512bf16,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vp2intersect,+avx512vpopcntdq,+avxvnni,+bmi,+bmi2,+clflushopt,+clwb,+clzero,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+movdir64b,+movdiri,+mwaitx,+pclmul,+pku,+popcnt,+prefetchi,+prfchw,+rdpid,+rdpru,+rdrnd,+rdseed,+sahf,+sha,+shstk,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+sse4a,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

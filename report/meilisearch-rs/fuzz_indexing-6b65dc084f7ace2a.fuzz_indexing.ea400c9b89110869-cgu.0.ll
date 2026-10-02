@@ -205,7 +205,7 @@ bb.a:
   %i.ak = alloca [64 x i8], align 8               ; 14 uses
   %i.al = alloca [152 x i8], align 8              ; 11 uses
   %i.am = alloca [152 x i8], align 8              ; 11 uses
-  %i.an = alloca [128 x i8], align 8              ; 11 uses
+  %i.an = alloca [128 x i8], align 8              ; 10 uses
   %i.ao = alloca [24 x i8], align 8               ; 8 uses
   %i.ap = alloca [48 x i8], align 8               ; 16 uses
   %i.aq = alloca [48 x i8], align 8               ; 14 uses
@@ -441,7 +441,6 @@ bb.p:                                             ; preds = %.noexc443, %._ZN4co
   %i.cv = getelementptr inbounds nuw [40 x i8], ptr %i.cs, i64 %i.cu
   %.sroa.016.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 56
   %.sroa.317.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 112
-  %.sroa.418.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 120
   %.sroa.4172.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   %.sroa.4172.sroa.4.sroa.4.0..sroa.4172.sroa.4.0..sroa.4172.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.al, i64 24
   %.sroa.4172.sroa.4.sroa.5.0..sroa.4172.sroa.4.0..sroa.4172.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.al, i64 32
@@ -458,6 +457,8 @@ bb.p:                                             ; preds = %.noexc443, %._ZN4co
   %.sroa.5653.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.4658.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.5659.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %8 = insertelement <2 x ptr> poison, ptr %i.cs, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.cv, i64 1
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph, %bb.ck
@@ -860,8 +861,7 @@ bb.cg:                                            ; preds = %bb.cf
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an)
   store i64 6, ptr %i.an, align 8
   store i64 6, ptr %.sroa.016.sroa.3.0..sroa_idx, align 8
-  store ptr %i.cs, ptr %.sroa.317.0..sroa_idx, align 8
-  store ptr %i.cv, ptr %.sroa.418.0..sroa_idx, align 8
+  store <2 x ptr> %9, ptr %.sroa.317.0..sroa_idx, align 8
   br label %bb.ch
 
 bb.ch:                                            ; preds = %_ZN9zerometry8relation14OutputRelation12any_relation17h24dd15aa6209160dE.exit506.thread903, %bb.cg

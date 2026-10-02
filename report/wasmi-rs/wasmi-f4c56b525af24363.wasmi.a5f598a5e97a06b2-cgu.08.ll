@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 7 uses
   %i.c = alloca [16 x i8], align 8                ; 7 uses
-  %i.d = alloca [24 x i8], align 8                ; 7 uses
+  %i.d = alloca [24 x i8], align 16               ; 6 uses
   %i.e = alloca [40 x i8], align 8                ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1597)
@@ -329,8 +329,9 @@ _RNvMs_NtNtCs9FmeSmcCnTG_10wasmparser9validator4funcINtB4_13FuncValidatorNtNtB6_
   br i1 %.not27, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_RNvMs_NtNtCs9FmeSmcCnTG_10wasmparser9validator4funcINtB4_13FuncValidatorNtNtB6_4core18ValidatorResourcesE11read_localsCsefoF4u9kbII_5wasmi.exit
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %2 = insertelement <2 x ptr> poison, ptr %0, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.ad, i64 1
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph, %bb.m
@@ -338,9 +339,8 @@ bb.j:                                             ; preds = %.lr.ph, %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %.val18 = load i64, ptr %i.n, align 8, !noundef !4
   %i.au = add i64 %.val18, %.val1428
-  store ptr %0, ptr %i.d, align 8, !alias.scope !1607, !noalias !1608
-  store ptr %i.ad, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1607, !noalias !1608
-  store i64 %i.au, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !1607, !noalias !1608
+  store <2 x ptr> %3, ptr %i.d, align 16, !alias.scope !1607, !noalias !1608
+  store i64 %i.au, ptr %.sroa.4.0..sroa_idx.i, align 16, !alias.scope !1607, !noalias !1608
   %i.av = call { i64, ptr } @_RINvMs1_NtCs9FmeSmcCnTG_10wasmparser13binary_readerNtB6_12BinaryReader14visit_operatorINtNtNtB8_9validator9operators21WasmProposalValidatorNtNtB1r_4core18ValidatorResourcesEECsefoF4u9kbII_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d) ; 2 uses
   %i.aw = extractvalue { i64, ptr } %i.av, 0
   %i.ax = extractvalue { i64, ptr } %i.av, 1      ; 3 uses

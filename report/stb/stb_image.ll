@@ -204,17 +204,17 @@ bb.a:
   %i.u = bitcast <16 x i8> %i.n to <8 x i16>
   %i.v = lshr exact <8 x i16> %i.u, splat (i16 4) ; 3 uses
   %i.w = bitcast <16 x i8> %i.q to <8 x i16>      ; 2 uses
-  %6 = call <8 x i16> @llvm.smulh.v8i16(<8 x i16> splat (i16 5743), <8 x i16> %i.w)
+  %6 = tail call <8 x i16> @llvm.smulh.v8i16(<8 x i16> %i.w, <8 x i16> splat (i16 5743))
   %i.x = bitcast <16 x i8> %i.t to <8 x i16>      ; 2 uses
-  %7 = call <8 x i16> @llvm.smulh.v8i16(<8 x i16> splat (i16 -1410), <8 x i16> %i.x)
-  %8 = call <8 x i16> @llvm.smulh.v8i16(<8 x i16> %i.x, <8 x i16> splat (i16 7258))
-  %9 = call <8 x i16> @llvm.smulh.v8i16(<8 x i16> %i.w, <8 x i16> splat (i16 -2925))
-  %i.y = add <8 x i16> %i.v, %6
-  %i.z = add <8 x i16> %i.v, %7
-  %i.aa = add <8 x i16> %i.v, %8
-  %i.ab = add <8 x i16> %i.z, %9
+  %7 = tail call <8 x i16> @llvm.smulh.v8i16(<8 x i16> %i.x, <8 x i16> splat (i16 -1410))
+  %8 = tail call <8 x i16> @llvm.smulh.v8i16(<8 x i16> %i.x, <8 x i16> splat (i16 7258))
+  %9 = tail call <8 x i16> @llvm.smulh.v8i16(<8 x i16> %i.w, <8 x i16> splat (i16 -2925))
+  %i.y = add <8 x i16> %6, %i.v
+  %i.z = add <8 x i16> %8, %i.v
+  %i.aa = add <8 x i16> %9, %i.v
+  %i.ab = add <8 x i16> %i.aa, %7
   %i.ac = ashr <8 x i16> %i.y, splat (i16 4)
-  %i.ad = ashr <8 x i16> %i.aa, splat (i16 4)
+  %i.ad = ashr <8 x i16> %i.z, splat (i16 4)
   %i.ae = ashr <8 x i16> %i.ab, splat (i16 4)
   %i.af = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.ac, <8 x i16> %i.ad) ; 2 uses
   %i.ag = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.ae, <8 x i16> splat (i16 255)) ; 2 uses
@@ -617,6 +617,9 @@ declare <8 x i16> @llvm.x86.sse2.packssdw.128(<4 x i32>, <4 x i32>) #34
 declare <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16>, <8 x i16>) #34
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i16> @llvm.smulh.v8i16(<8 x i16>, <8 x i16>) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -663,9 +666,6 @@ declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.umax.v4i32(<4 x i32>, <4 x i32>) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.smulh.v8i16(<8 x i16>, <8 x i16>) #21
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

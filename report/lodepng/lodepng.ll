@@ -205,7 +205,7 @@ bb.a:
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !29
   %i.ca = lshr i32 %.131, 8
   %i.cb = xor i32 %i.bz, %i.ca                    ; 2 uses
-  %i.cc = add i64 %.12030, -2                     ; 2 uses
+  %i.cc = add nsw i64 %.12030, -2                 ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %.12229, i64 2
   %i.ce = load i8, ptr %i.bv, align 1, !tbaa !35
   %.1.tr.1 = trunc i32 %i.cb to i8
@@ -481,7 +481,7 @@ bb.a:
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !29
   %i.cj = lshr i32 %.131.i, 8
   %i.ck = xor i32 %i.ci, %i.cj                    ; 2 uses
-  %i.cl = add i64 %.12030.i, -2                   ; 2 uses
+  %i.cl = add nsw i64 %.12030.i, -2               ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.12229.i, i64 2
   %i.cn = load i8, ptr %i.ce, align 1, !tbaa !35
   %.1.tr.i.1 = trunc i32 %i.ck to i8
@@ -629,7 +629,7 @@ bb.a:
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !29
   %i.cf = lshr i32 %.131.i, 8
   %i.cg = xor i32 %i.ce, %i.cf                    ; 2 uses
-  %i.ch = add i64 %.12030.i, -2                   ; 2 uses
+  %i.ch = add nsw i64 %.12030.i, -2               ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %.12229.i, i64 2
   %i.cj = load i8, ptr %i.ca, align 1, !tbaa !35
   %.1.tr.i.1 = trunc i32 %i.cg to i8

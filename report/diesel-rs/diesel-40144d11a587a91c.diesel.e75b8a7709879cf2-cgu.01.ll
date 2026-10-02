@@ -202,7 +202,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvXs3_NtNtNtCsjRvGck33osM_6diesel2pg10connection6cursorNtB5_14RowByRowCursorNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 5 uses
+  %i.a = alloca [16 x i8], align 16               ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [48 x i8], align 8                ; 8 uses
   %i.d = alloca [48 x i8], align 8                ; 8 uses
@@ -217,9 +217,10 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 28 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 4 uses
+  %1 = insertelement <2 x ptr> poison, ptr %i.f, i64 0
+  %2 = insertelement <2 x ptr> %1, ptr %i.n, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultENtNtB1r_6result5ErrorEEB1r_.exit, %bb.a
@@ -301,9 +302,8 @@ _RNvNvNtNtCsjRvGck33osM_6diesel2pg10connection33update_transaction_manager_statu
 
 bb.m:                                             ; preds = %_RNvNvNtNtCsjRvGck33osM_6diesel2pg10connection33update_transaction_manager_status17non_generic_inner.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !746
-  store ptr %i.f, ptr %i.a, align 8, !noalias !746
-  store ptr %i.n, ptr %i.o, align 8, !noalias !746
-  %i.x = load ptr, ptr %i.p, align 8, !invariant.load !5, !noalias !747, !nonnull !5
+  store <2 x ptr> %2, ptr %i.a, align 16, !noalias !746
+  %i.x = load ptr, ptr %i.o, align 8, !invariant.load !5, !noalias !747, !nonnull !5
   invoke void %i.x(ptr noundef nonnull %i.i, ptr noundef nonnull %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) @45)
           to label %.noexc3 unwind label %bb.l, !inline_history !738
 
@@ -326,13 +326,13 @@ _RINvNtNtCsjRvGck33osM_6diesel2pg10connection33update_transaction_manager_status
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.z = load i64, ptr %i.d, align 8, !range !9, !noundef !5 ; 2 uses
   %i.aa = trunc nuw i64 %i.z to i1
-  %i.ab = load ptr, ptr %1, align 8
+  %i.ab = load ptr, ptr %i.p, align 8
   %i.ac = icmp eq ptr %i.ab, null
   %or.cond = select i1 %i.aa, i1 true, i1 %i.ac
   br i1 %or.cond, label %bb.o, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultENtNtB1r_6result5ErrorEEB1r_.exit
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultENtNtB1r_6result5ErrorEEB1r_.exit: ; preds = %_RINvNtNtCsjRvGck33osM_6diesel2pg10connection33update_transaction_manager_statusINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB2_6result8PgResultEEB6_.exit
-  call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultEEB15_(ptr noalias noundef align 8 dereferenceable(40) %1)
+  call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultEEB15_(ptr noalias noundef align 8 dereferenceable(40) %i.p)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.b
 
@@ -343,7 +343,7 @@ bb.o:                                             ; preds = %_RINvNtNtCsjRvGck33
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
-  %i.ae = load ptr, ptr %i.p, align 8, !invariant.load !5, !nonnull !5
+  %i.ae = load ptr, ptr %i.o, align 8, !invariant.load !5, !nonnull !5
   invoke void %i.ae(ptr noundef nonnull %i.i, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @58)
           to label %bb.q unwind label %bb.s
 
@@ -354,11 +354,11 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.af, label %bb.r, label %.thread
 
 bb.r:                                             ; preds = %bb.q
-  call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultEEB15_(ptr noalias noundef align 8 dereferenceable(40) %1)
+  call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultEEB15_(ptr noalias noundef align 8 dereferenceable(40) %i.p)
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultENtNtB1r_6result5ErrorEEB1r_.exit4
 
 .thread:                                          ; preds = %bb.o, %bb.q
-  call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjRvGck33osM_6diesel6result5ErrorEBF_(ptr noalias noundef align 8 dereferenceable(32) %1)
+  call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjRvGck33osM_6diesel6result5ErrorEBF_(ptr noalias noundef align 8 dereferenceable(32) %i.p)
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultENtNtB1r_6result5ErrorEEB1r_.exit4
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtNtCsjRvGck33osM_6diesel2pg10connection6result8PgResultENtNtB1r_6result5ErrorEEB1r_.exit4: ; preds = %bb.r, %.thread

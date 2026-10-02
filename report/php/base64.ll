@@ -202,11 +202,11 @@ bb.b:                                             ; preds = %bb.a
   %i.m = shufflevector <32 x i8> %i.l, <32 x i8> poison, <32 x i32> <i32 5, i32 4, i32 6, i32 5, i32 8, i32 7, i32 9, i32 8, i32 11, i32 10, i32 12, i32 11, i32 14, i32 13, i32 15, i32 14, i32 17, i32 16, i32 18, i32 17, i32 20, i32 19, i32 21, i32 20, i32 23, i32 22, i32 24, i32 23, i32 26, i32 25, i32 27, i32 26> ; 2 uses
   %i.n = bitcast <32 x i8> %i.m to <16 x i16>
   %i.o = and <16 x i16> %i.n, <i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032>
-  %3 = call <16 x i16> @llvm.umulh.v16i16(<16 x i16> %i.o, <16 x i16> <i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024>)
+  %3 = tail call <16 x i16> @llvm.umulh.v16i16(<16 x i16> %i.o, <16 x i16> <i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024>)
   %i.p = bitcast <32 x i8> %i.m to <16 x i16>
   %i.q = and <16 x i16> %i.p, <i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63>
   %i.r = shl <16 x i16> %i.q, <i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8>
-  %i.s = or <16 x i16> %i.r, %3
+  %i.s = or <16 x i16> %3, %i.r
   %i.t = bitcast <16 x i16> %i.s to <32 x i8>     ; 3 uses
   %i.u = tail call <32 x i8> @llvm.usub.sat.v32i8(<32 x i8> %i.t, <32 x i8> splat (i8 51))
   %i.v = icmp sgt <32 x i8> %i.t, splat (i8 25)
@@ -231,11 +231,11 @@ bb.b:                                             ; preds = %bb.a
   %i.ai = shufflevector <32 x i8> %i.ah, <32 x i8> poison, <32 x i32> <i32 5, i32 4, i32 6, i32 5, i32 8, i32 7, i32 9, i32 8, i32 11, i32 10, i32 12, i32 11, i32 14, i32 13, i32 15, i32 14, i32 17, i32 16, i32 18, i32 17, i32 20, i32 19, i32 21, i32 20, i32 23, i32 22, i32 24, i32 23, i32 26, i32 25, i32 27, i32 26> ; 2 uses
   %i.aj = bitcast <32 x i8> %i.ai to <16 x i16>
   %i.ak = and <16 x i16> %i.aj, <i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032>
-  %4 = call <16 x i16> @llvm.umulh.v16i16(<16 x i16> %i.ak, <16 x i16> <i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024>)
+  %4 = tail call <16 x i16> @llvm.umulh.v16i16(<16 x i16> %i.ak, <16 x i16> <i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024>)
   %i.al = bitcast <32 x i8> %i.ai to <16 x i16>
   %i.am = and <16 x i16> %i.al, <i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63>
   %i.an = shl <16 x i16> %i.am, <i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8>
-  %i.ao = or <16 x i16> %i.an, %4
+  %i.ao = or <16 x i16> %4, %i.an
   %i.ap = bitcast <16 x i16> %i.ao to <32 x i8>   ; 3 uses
   %i.aq = tail call <32 x i8> @llvm.usub.sat.v32i8(<32 x i8> %i.ap, <32 x i8> splat (i8 51))
   %i.ar = icmp sgt <32 x i8> %i.ap, splat (i8 25)
@@ -638,11 +638,11 @@ bb.a:
   %i.l = shufflevector <16 x i8> %i.k, <16 x i8> poison, <16 x i32> <i32 1, i32 0, i32 2, i32 1, i32 4, i32 3, i32 5, i32 4, i32 7, i32 6, i32 8, i32 7, i32 10, i32 9, i32 11, i32 10> ; 2 uses
   %i.m = bitcast <16 x i8> %i.l to <8 x i16>
   %i.n = and <8 x i16> %i.m, <i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032>
-  %3 = call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.n, <8 x i16> <i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024>)
+  %3 = tail call <8 x i16> @llvm.umulh.v8i16(<8 x i16> %i.n, <8 x i16> <i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024>)
   %i.o = bitcast <16 x i8> %i.l to <8 x i16>
   %i.p = and <8 x i16> %i.o, <i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63>
   %i.q = shl <8 x i16> %i.p, <i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8>
-  %i.r = or <8 x i16> %i.q, %3
+  %i.r = or <8 x i16> %3, %i.q
   %i.s = bitcast <8 x i16> %i.r to <16 x i8>      ; 3 uses
   %i.t = tail call <16 x i8> @llvm.usub.sat.v16i8(<16 x i8> %i.s, <16 x i8> splat (i8 51))
   %i.u = icmp sgt <16 x i8> %i.s, splat (i8 25)
@@ -1045,13 +1045,13 @@ declare zeroext i1 @zend_parse_arg_str_slow(ptr noundef, ptr noundef, i32 nounde
 declare zeroext i1 @zend_parse_arg_bool_slow(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i16> @llvm.umulh.v16i16(<16 x i16>, <16 x i16>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.umulh.v8i16(<8 x i16>, <8 x i16>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="512" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vbmi,+avx512vl,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
