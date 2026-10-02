@@ -202,13 +202,14 @@ bb.b:                                             ; preds = %.loopexit4
 
 ._crit_edge33:                                    ; preds = %.loopexit, %.preheader6
   %i.bs = shl nuw nsw i32 %i.b, 1                 ; 8 uses
-  %i.bt = mul nuw nsw i32 %i.a, %i.bs             ; 8 uses
+  %i.bt = mul nuw nsw i32 %i.a, %i.bs             ; 9 uses
   %.not13.1 = icmp eq i32 %i.bt, 0
   br i1 %.not13.1, label %.preheader5.1, label %.lr.ph19.1
 
 .lr.ph19.1:                                       ; preds = %._crit_edge33
   %i.bu = add nsw i32 %i.bs, -2
   %i.bv = zext nneg i32 %i.bs to i64
+  %2 = zext nneg i32 %i.bt to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph19.1
@@ -228,15 +229,16 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph19.1
   br label %.preheader2.1
 
 .preheader2.1:                                    ; preds = %._crit_edge.1, %.preheader2.lr.ph.1
-  %indvars.iv37.1 = phi i64 [ %indvars.iv.1, %.preheader2.lr.ph.1 ], [ %indvars.iv.next38.1, %._crit_edge.1 ] ; 4 uses
+  %indvars.iv37.1 = phi i64 [ %indvars.iv.1, %.preheader2.lr.ph.1 ], [ %indvars.iv.next38.1, %._crit_edge.1 ] ; 3 uses
   %indvars42.1 = trunc i64 %indvars.iv37.1 to i32
   %.not1559.1 = icmp slt i32 %i.bt, %indvars42.1
   br i1 %.not1559.1, label %._crit_edge.1, label %.lr.ph.1
 
-.lr.ph.1:                                         ; preds = %.preheader2.1
-  %i.bz = trunc nsw i64 %indvars.iv37.1 to i32
+.lr.ph.1:                                         ; preds = %.preheader2.1, %.lr.ph.1
+  %indvars.iv39.1 = phi i64 [ %indvars.iv.next40.1, %.lr.ph.1 ], [ %indvars.iv37.1, %.preheader2.1 ] ; 4 uses
+  %i.bz = trunc nsw i64 %indvars.iv39.1 to i32
   %i.ca = add i32 %i.by, %i.bz
-  %i.cb = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv37.1 ; 3 uses
+  %i.cb = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv39.1 ; 3 uses
   %i.cc = load double, ptr %i.cb, align 8, !tbaa !9
   %i.cd = sext i32 %i.ca to i64
   %i.ce = getelementptr inbounds [8 x i8], ptr %0, i64 %i.cd ; 3 uses
@@ -249,10 +251,12 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph19.1
   %i.cj = load double, ptr %i.ci, align 8, !tbaa !9
   store double %i.cj, ptr %i.cg, align 8, !tbaa !9
   store double %i.ch, ptr %i.ci, align 8, !tbaa !9
-  br label %._crit_edge.1
+  %indvars.iv.next40.1 = add nsw i64 %indvars.iv39.1, %2
+  %.not155.1 = icmp sgt i64 %indvars.iv39.1, 0
+  br i1 %.not155.1, label %._crit_edge.1, label %.lr.ph.1, !llvm.loop !20
 
 ._crit_edge.1:                                    ; preds = %.lr.ph.1, %.preheader2.1
-  %indvars.iv.next38.1 = add nuw nsw i64 %indvars.iv37.1, 2 ; 2 uses
+  %indvars.iv.next38.1 = add nsw i64 %indvars.iv37.1, 2 ; 2 uses
   %indvars.1 = trunc i64 %indvars.iv.next38.1 to i32
   %.not154.1 = icmp slt i32 %i.bx, %indvars.1
   br i1 %.not154.1, label %.loopexit4.1.preheader, label %.preheader2.1, !llvm.loop !26
@@ -272,7 +276,7 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph19.1
 
 bb.d:                                             ; preds = %.loopexit4.1
   %i.co = add nsw i32 %.0138.1, %.1141.1
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.1, %i.bv ; 2 uses
+  %indvars.iv.next.1 = add i64 %indvars.iv.1, %i.bv ; 2 uses
   %indvars43.1 = trunc i64 %indvars.iv.next.1 to i32
   %.not.1 = icmp slt i32 %i.bt, %indvars43.1
   br i1 %.not.1, label %.preheader5.1, label %bb.c, !llvm.loop !22

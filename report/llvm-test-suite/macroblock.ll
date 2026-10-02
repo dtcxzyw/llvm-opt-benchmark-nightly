@@ -205,7 +205,7 @@ begin_hunk_0_@TransformDecision:bb.a
 bb.b:                                             ; preds = %.preheader
   %i.ez = tail call i32 @distortion8x8(ptr noundef nonnull @diff64) #17
   %i.fa = add nsw i32 %i.ez, %.04569              ; 2 uses
-  %i.fb = add i32 %.14868, 1                      ; 2 uses
+  %i.fb = add nsw i32 %.14868, 1                  ; 2 uses
   %indvars.iv.next84 = add i32 %indvars.iv, 8
   %indvars.iv.next89 = add i32 %indvars.iv88, 4
   %exitcond.not = icmp eq i32 %i.fb, %.046

@@ -205,8 +205,10 @@ _ZN9benchmark5State3endEv.exit.preheader:         ; preds = %bb.c
   %i.ar = sext i32 %i.ap to i64
   %i.as = sext i32 %i.an to i64
   %i.at = sext i32 %i.y to i64
-  %i.au = sext i32 %i.am to i64
-  %i.av = sext i32 %i.ao to i64
+  %2 = sext i32 %i.am to i64
+  %3 = sext i32 %i.ao to i64
+  %i.au = sext i32 %i.aa to i64
+  %i.av = sext i32 %i.w to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %"._Z6forallI9simd_execZL16BM_COUPLE_LAMBDARN9benchmark5StateEE3$_0EviiT0_.exit_crit_edge"
@@ -241,8 +243,8 @@ bb.e:                                             ; preds = %_ZN9benchmark5State
 
 .lr.ph313.split.i.preheader:                      ; preds = %.preheader, %.noexc22.loopexit
   %indvars.iv104 = phi i64 [ %i.at, %.preheader ], [ %indvars.iv.next105, %.noexc22.loopexit ] ; 3 uses
-  %i.bb = mul nsw i64 %indvars.iv104, %i.av
-  %i.bc = mul nsw i64 %indvars.iv104, %i.au
+  %i.bb = mul nsw i64 %indvars.iv104, %3
+  %i.bc = mul nsw i64 %indvars.iv104, %2
   br label %.lr.ph313.split.i
 
 .lr.ph313.split.i:                                ; preds = %.lr.ph313.split.i.preheader, %._crit_edge.i.loopexit
@@ -256,8 +258,7 @@ bb.e:                                             ; preds = %_ZN9benchmark5State
 
 ._crit_edge.i.loopexit:                           ; preds = %_ZStmlIdESt7complexIT_ERKS2_S4_.exit203.i
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond103.not = icmp eq i32 %i.w, %lftr.wideiv
+  %exitcond103.not = icmp eq i64 %indvars.iv.next, %i.av
   br i1 %exitcond103.not, label %.noexc22.loopexit, label %.lr.ph313.split.i, !llvm.loop !141
 
 .lr.ph.i:                                         ; preds = %_ZStmlIdESt7complexIT_ERKS2_S4_.exit203.i, %.lr.ph313.split.i
@@ -617,8 +618,7 @@ _ZStmlIdESt7complexIT_ERKS2_S4_.exit203.i:        ; preds = %bb.aa, %bb.z, %_ZSt
 
 .noexc22.loopexit:                                ; preds = %._crit_edge.i.loopexit
   %indvars.iv.next105 = add nsw i64 %indvars.iv104, 1 ; 2 uses
-  %lftr.wideiv107 = trunc i64 %indvars.iv.next105 to i32
-  %exitcond108.not = icmp eq i32 %i.aa, %lftr.wideiv107
+  %exitcond108.not = icmp eq i64 %indvars.iv.next105, %i.au
   br i1 %exitcond108.not, label %"._Z6forallI9simd_execZL16BM_COUPLE_LAMBDARN9benchmark5StateEE3$_0EviiT0_.exit_crit_edge", label %.lr.ph313.split.i.preheader, !llvm.loop !143
 
 "._Z6forallI9simd_execZL16BM_COUPLE_LAMBDARN9benchmark5StateEE3$_0EviiT0_.exit_crit_edge": ; preds = %.noexc22.loopexit
