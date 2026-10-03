@@ -205,20 +205,20 @@ vec.epilog.iter.check646:                         ; preds = %middle.block637
 vec.epilog.ph648:                                 ; preds = %vector.main.loop.iter.check620, %vec.epilog.iter.check646
   %vec.epilog.resume.val642 = phi i64 [ %n.vec623, %vec.epilog.iter.check646 ], [ 0, %vector.main.loop.iter.check620 ]
   %bc.merge.rdx643 = phi i1 [ %.not867, %vec.epilog.iter.check646 ], [ true, %vector.main.loop.iter.check620 ]
-  %7 = xor i1 %bc.merge.rdx643, true
   %n.vec649 = and i64 %wide.trip.count572.i, 2147483644 ; 3 uses
-  %broadcast.splatinsert650 = insertelement <4 x i32> poison, i32 %i.aow, i64 0
-  %broadcast.splat651 = shufflevector <4 x i32> %broadcast.splatinsert650, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert652 = insertelement <4 x i1> poison, i1 %7, i64 0
-  %broadcast.splat653 = shufflevector <4 x i1> %broadcast.splatinsert652, <4 x i1> poison, <4 x i32> zeroinitializer
+  %7 = xor i1 %bc.merge.rdx643, true
+  %broadcast.splatinsert650 = insertelement <4 x i1> poison, i1 %7, i64 0
+  %broadcast.splat651 = shufflevector <4 x i1> %broadcast.splatinsert650, <4 x i1> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert652 = insertelement <4 x i32> poison, i32 %i.aow, i64 0
+  %broadcast.splat653 = shufflevector <4 x i32> %broadcast.splatinsert652, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body654
 
 vec.epilog.vector.body654:                        ; preds = %vec.epilog.vector.body654, %vec.epilog.ph648
   %index655 = phi i64 [ %vec.epilog.resume.val642, %vec.epilog.ph648 ], [ %index.next658, %vec.epilog.vector.body654 ] ; 2 uses
-  %vec.phi656 = phi <4 x i1> [ %broadcast.splat653, %vec.epilog.ph648 ], [ %.fr868, %vec.epilog.vector.body654 ]
+  %vec.phi656 = phi <4 x i1> [ %broadcast.splat651, %vec.epilog.ph648 ], [ %.fr868, %vec.epilog.vector.body654 ]
   %i.apm = getelementptr inbounds nuw [4 x i8], ptr %i.aou, i64 %index655
   %wide.load657 = load <4 x i32>, ptr %i.apm, align 4, !tbaa !54
-  %i.apn = icmp slt <4 x i32> %wide.load657, %broadcast.splat651
+  %i.apn = icmp slt <4 x i32> %wide.load657, %broadcast.splat653
   %i.apo = or <4 x i1> %vec.phi656, %i.apn
   %.fr868 = freeze <4 x i1> %i.apo                ; 2 uses
   %index.next658 = add nuw i64 %index655, 4       ; 2 uses

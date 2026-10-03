@@ -203,9 +203,9 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i1 [ %.not1812, %vec.epilog.iter.check ], [ false, %vector.main.loop.iter.check ]
   %n.vec1744 = and i64 %i.cm, 2147483644          ; 3 uses
-  %28 = or disjoint i64 %n.vec1744, 1
   %broadcast.splatinsert = insertelement <4 x i1> poison, i1 %bc.merge.rdx, i64 0
   %broadcast.splat = shufflevector <4 x i1> %broadcast.splatinsert, <4 x i1> poison, <4 x i32> zeroinitializer
+  %28 = or disjoint i64 %n.vec1744, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph

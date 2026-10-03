@@ -205,8 +205,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i1 [ %.not84, %vec.epilog.iter.check ], [ true, %vector.main.loop.iter.check ]
-  %10 = xor i1 %bc.merge.rdx, true
   %n.vec74 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %10 = xor i1 %bc.merge.rdx, true
   %broadcast.splatinsert = insertelement <4 x i1> poison, i1 %10, i64 0
   %broadcast.splat = shufflevector <4 x i1> %broadcast.splatinsert, <4 x i1> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body

@@ -205,20 +205,20 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i1 [ %i.ap, %vec.epilog.iter.check ], [ false, %vector.main.loop.iter.check ]
   %n.vec49 = and i64 %i.l, -4                     ; 3 uses
+  %broadcast.splatinsert50 = insertelement <4 x i1> poison, i1 %bc.merge.rdx, i64 0
+  %broadcast.splat51 = shufflevector <4 x i1> %broadcast.splatinsert50, <4 x i1> poison, <4 x i32> zeroinitializer
   %4 = or disjoint i64 %n.vec49, 1
-  %broadcast.splatinsert50 = insertelement <4 x float> poison, float %i.k, i64 0
-  %broadcast.splat51 = shufflevector <4 x float> %broadcast.splatinsert50, <4 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert52 = insertelement <4 x i1> poison, i1 %bc.merge.rdx, i64 0
-  %broadcast.splat53 = shufflevector <4 x i1> %broadcast.splatinsert52, <4 x i1> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert52 = insertelement <4 x float> poison, float %i.k, i64 0
+  %broadcast.splat53 = shufflevector <4 x float> %broadcast.splatinsert52, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index54 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next57, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi55 = phi <4 x i1> [ %broadcast.splat53, %vec.epilog.ph ], [ %i.aw, %vec.epilog.vector.body ]
+  %vec.phi55 = phi <4 x i1> [ %broadcast.splat51, %vec.epilog.ph ], [ %i.aw, %vec.epilog.vector.body ]
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %index54
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 4
   %wide.load56 = load <4 x float>, ptr %i.ar, align 4, !tbaa !32
-  %i.as = fsub <4 x float> %wide.load56, %broadcast.splat51
+  %i.as = fsub <4 x float> %wide.load56, %broadcast.splat53
   %.fr90 = freeze <4 x float> %i.as
   %i.at = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %.fr90)
   %i.au = fpext <4 x float> %i.at to <4 x double>
