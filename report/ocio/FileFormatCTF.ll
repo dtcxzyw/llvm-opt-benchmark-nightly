@@ -202,8 +202,8 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i:  ; preds = %_ZNSt12__shared_ptr
   %i.ey = mul nuw nsw i32 %.sroa.speculated, %.sroa.speculated
   %i.ez = mul nuw nsw i32 %i.ey, %.sroa.speculated ; 2 uses
   %i.fa = mul nuw nsw i32 %i.ez, 3
-  %i.fb = zext nneg i32 %i.fa to i64              ; 3 uses
-  %i.fc = shl nuw nsw i64 %i.fb, 2
+  %i.fb = zext nneg i32 %i.fa to i64              ; 2 uses
+  %i.fc = shl nuw nsw i64 %i.fb, 2                ; 2 uses
   %i.fd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fc) #27
           to label %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i unwind label %bb.bm ; 5 uses
 
@@ -212,8 +212,7 @@ _ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i: ; preds = %_ZNKSt6vecto
   %i.ff = getelementptr inbounds nuw i8, ptr %12, i64 8
   store float 0.000000e+00, ptr %i.fd, align 4, !tbaa !96
   %i.fg = getelementptr i8, ptr %i.fd, i64 4
-  %24 = shl nuw nsw i64 %i.fb, 2
-  %.idx.i.i.i.i.i31.i = add nsw i64 %24, -4
+  %.idx.i.i.i.i.i31.i = add nsw i64 %i.fc, -4
   call void @llvm.memset.p0.i64(ptr align 4 %i.fg, i8 0, i64 %.idx.i.i.i.i.i31.i, i1 false), !tbaa !96
   store ptr %i.fd, ptr %12, align 8, !tbaa !102
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.fb ; 2 uses
