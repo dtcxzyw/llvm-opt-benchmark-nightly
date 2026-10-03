@@ -204,9 +204,9 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i1 [ %i.bf, %vec.epilog.iter.check ], [ false, %vector.main.loop.iter.check ]
   %n.vec997 = and i64 %i.av, -4                   ; 3 uses
-  %221 = getelementptr i8, ptr %i.ak, i64 %n.vec997
   %broadcast.splatinsert = insertelement <4 x i1> poison, i1 %bc.merge.rdx, i64 0
   %broadcast.splat = shufflevector <4 x i1> %broadcast.splatinsert, <4 x i1> poison, <4 x i32> zeroinitializer
+  %221 = getelementptr i8, ptr %i.ak, i64 %n.vec997
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph

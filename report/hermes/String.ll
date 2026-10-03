@@ -202,13 +202,13 @@ vec.epilog.ph213:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val206 = phi i64 [ %n.vec191, %vec.epilog.iter.check211 ], [ 0, %vector.main.loop.iter.check188 ]
   %bc.merge.rdx207 = phi i16 [ %i.ac, %vec.epilog.iter.check211 ], [ 0, %vector.main.loop.iter.check188 ]
   %bc.merge.rdx208 = phi i1 [ %.not232, %vec.epilog.iter.check211 ], [ true, %vector.main.loop.iter.check188 ]
-  %7 = xor i1 %bc.merge.rdx208, true
   %n.vec214 = and i64 %i.n, -4                    ; 3 uses
+  %7 = xor i1 %bc.merge.rdx208, true
+  %broadcast.splatinsert215 = insertelement <4 x i1> poison, i1 %7, i64 0
+  %broadcast.splat216 = shufflevector <4 x i1> %broadcast.splatinsert215, <4 x i1> poison, <4 x i32> zeroinitializer
   %8 = shl i64 %n.vec214, 1
   %9 = getelementptr i8, ptr %i.h, i64 %8
   %10 = insertelement <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, i16 %bc.merge.rdx207, i64 0
-  %broadcast.splatinsert215 = insertelement <4 x i1> poison, i1 %7, i64 0
-  %broadcast.splat216 = shufflevector <4 x i1> %broadcast.splatinsert215, <4 x i1> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body217
 
 vec.epilog.vector.body217:                        ; preds = %vec.epilog.vector.body217, %vec.epilog.ph213
@@ -315,13 +315,13 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i16 [ %i.bj, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx175 = phi i1 [ %.not229, %vec.epilog.iter.check ], [ true, %vector.main.loop.iter.check ]
-  %11 = xor i1 %bc.merge.rdx175, true
   %n.vec176 = and i64 %i.au, -4                   ; 3 uses
+  %11 = xor i1 %bc.merge.rdx175, true
+  %broadcast.splatinsert = insertelement <4 x i1> poison, i1 %11, i64 0
+  %broadcast.splat = shufflevector <4 x i1> %broadcast.splatinsert, <4 x i1> poison, <4 x i32> zeroinitializer
   %12 = shl i64 %n.vec176, 1
   %13 = getelementptr i8, ptr %i.h, i64 %12
   %14 = insertelement <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, i16 %bc.merge.rdx, i64 0
-  %broadcast.splatinsert = insertelement <4 x i1> poison, i1 %11, i64 0
-  %broadcast.splat = shufflevector <4 x i1> %broadcast.splatinsert, <4 x i1> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph

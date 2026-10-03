@@ -205,21 +205,21 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %rdx.select, %vec.epilog.iter.check ], [ %i.ed, %vector.main.loop.iter.check ]
-  %i.gv = icmp ne i32 %bc.merge.rdx, %i.ed
   %n.vec211 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %i.gv = icmp ne i32 %bc.merge.rdx, %i.ed
+  %broadcast.splatinsert212 = insertelement <8 x i1> poison, i1 %i.gv, i64 0
+  %broadcast.splat213 = shufflevector <8 x i1> %broadcast.splatinsert212, <8 x i1> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert212.a = insertelement <8 x ptr> poison, ptr %i.ei, i64 0
   %broadcast.splat213.a = shufflevector <8 x ptr> %broadcast.splatinsert212.a, <8 x ptr> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert214 = insertelement <8 x ptr> poison, ptr %i.ej, i64 0
   %broadcast.splat215 = shufflevector <8 x ptr> %broadcast.splatinsert214, <8 x ptr> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert216 = insertelement <8 x float> poison, float %i.dr, i64 0
   %broadcast.splat217 = shufflevector <8 x float> %broadcast.splatinsert216, <8 x float> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert218 = insertelement <8 x i1> poison, i1 %i.gv, i64 0
-  %broadcast.splat219 = shufflevector <8 x i1> %broadcast.splatinsert218, <8 x i1> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index220 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next228, %vec.epilog.vector.body ] ; 4 uses
-  %vec.phi221 = phi <8 x i1> [ %broadcast.splat219, %vec.epilog.ph ], [ %predphi227.fr, %vec.epilog.vector.body ]
+  %vec.phi221 = phi <8 x i1> [ %broadcast.splat213, %vec.epilog.ph ], [ %predphi227.fr, %vec.epilog.vector.body ]
   %i.gw = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %index220
   %wide.load222 = load <8 x float>, ptr %i.gw, align 4, !tbaa !12
   %i.gx = getelementptr inbounds nuw [4 x i8], ptr %i.eg, i64 %index220

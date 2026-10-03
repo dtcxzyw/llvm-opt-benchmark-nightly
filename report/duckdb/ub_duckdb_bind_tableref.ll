@@ -204,12 +204,12 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i1 [ %rdx.select, %vec.epilog.iter.check ], [ %.04433.i, %vector.main.loop.iter.check ]
-  %34 = xor i1 %bc.merge.rdx, %.04433.i
   %n.vec448 = and i64 %i.z, 2305843009213693936   ; 3 uses
-  %35 = mul i64 %n.vec448, 24
-  %36 = getelementptr i8, ptr %i.r, i64 %35
+  %34 = xor i1 %bc.merge.rdx, %.04433.i
   %broadcast.splatinsert = insertelement <16 x i1> poison, i1 %34, i64 0
   %broadcast.splat = shufflevector <16 x i1> %broadcast.splatinsert, <16 x i1> poison, <16 x i32> zeroinitializer
+  %35 = mul i64 %n.vec448, 24
+  %36 = getelementptr i8, ptr %i.r, i64 %35
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
