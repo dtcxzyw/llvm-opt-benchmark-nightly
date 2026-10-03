@@ -1,0 +1,95 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 281e3b353f6dd2..4622e3f02b87e3 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -2167,7 +2167,9 @@ Instruction *InstCombinerImpl::visitFAdd(BinaryOperator &I) {
+                          m_Value(Z))) ||
+       match(&I, m_c_FAdd(m_OneUse(m_FDiv(m_Value(X), m_FNeg(m_Value(Y)))),
+                          m_Value(Z)))) {
+-    Value *XY = Builder.CreateFDivFMF(X, Y, &I);
++    Value *Div = I.getOperand(0);
++    auto *DivInst = cast<BinaryOperator>(Div);
++    Value *XY = Builder.CreateFDivFMF(X, Y, DivInst);
+     return BinaryOperator::CreateFSubFMF(Z, XY, &I);
+   }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/fadd.ll b/llvm/test/Transforms/InstCombine/fadd.ll
+index c3f5cc742dd281..22985a41b9cdfc 100644
+--- a/llvm/test/Transforms/InstCombine/fadd.ll
++++ b/llvm/test/Transforms/InstCombine/fadd.ll
+@@ -45,6 +45,18 @@ define double @fdiv_fneg1(double %x, double %y, double %pz) {
+   ret double %r
+ }
+ 
++define double @fdiv_fneg1_ninf(double %x, double %y, double %z) {
++; CHECK-LABEL: @fdiv_fneg1_ninf(
++; CHECK-NEXT:    [[TMP1:%.*]] = fdiv double [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = fsub ninf double [[Z:%.*]], [[TMP1]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %nx = fneg double %x
++  %d  = fdiv double %nx, %y
++  %r  = fadd ninf double %z, %d
++  ret double %r
++}
++
+ ; Z + (Y / -X) --> Z - (Y / X)
+ 
+ define <2 x double> @fdiv_fneg2(<2 x double> %x, <2 x double> %y, <2 x double> %pz) {
+@@ -61,6 +73,18 @@ define <2 x double> @fdiv_fneg2(<2 x double> %x, <2 x double> %y, <2 x double> %
+   ret <2 x double> %r
+ }
+ 
++define double @fdiv_fneg2_ninf(double %x, double %y, double %z) {
++; CHECK-LABEL: @fdiv_fneg2_ninf(
++; CHECK-NEXT:    [[TMP1:%.*]] = fdiv double [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = fsub ninf double [[Z:%.*]], [[TMP1]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %nx = fneg double %x
++  %d  = fdiv double %y, %nx
++  %r  = fadd ninf double %z, %d
++  ret double %r
++}
++
+ ; Z + (-X * Y) --> Z - (X * Y)
+ 
+ define double @fmul_fneg1(double %x, double %y, double %pz) {
+@@ -111,6 +135,18 @@ define double @fdiv_fneg1_commute(double %x, double %y, double %pz) {
+   ret double %r
+ }
+ 
++define double @fdiv_fneg1_commute_ninf(double %x, double %y, double %z) {
++; CHECK-LABEL: @fdiv_fneg1_commute_ninf(
++; CHECK-NEXT:    [[TMP1:%.*]] = fdiv double [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = fsub ninf double [[Z:%.*]], [[TMP1]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %nx = fneg double %x
++  %d  = fdiv double %nx, %y
++  %r  = fadd ninf double %d, %z
++  ret double %r
++}
++
+ ; (Y / -X) + Z --> Z - (Y / X)
+ 
+ define <2 x double> @fdiv_fneg2_commute(<2 x double> %x, <2 x double> %y, <2 x double> %pz) {
+@@ -127,6 +163,18 @@ define <2 x double> @fdiv_fneg2_commute(<2 x double> %x, <2 x double> %y, <2 x d
+   ret <2 x double> %r
+ }
+ 
++define double @fdiv_fneg2_commute_ninf(double %x, double %y, double %z) {
++; CHECK-LABEL: @fdiv_fneg2_commute_ninf(
++; CHECK-NEXT:    [[TMP1:%.*]] = fdiv double [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = fsub ninf double [[Z:%.*]], [[TMP1]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %nx = fneg double %x
++  %d  = fdiv double %y, %nx
++  %r  = fadd ninf double %d, %z
++  ret double %r
++}
++
+ ; (-X * Y) + Z --> Z - (X * Y)
+ 
+ define double @fmul_fneg1_commute(double %x, double %y, double %pz) {
