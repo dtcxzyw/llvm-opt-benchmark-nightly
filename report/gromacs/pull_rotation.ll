@@ -205,12 +205,12 @@ bb.bo:                                            ; preds = %bb.br, %.lr.ph108.i
   br i1 %i.bnf, label %bb.bp, label %bb.br
 
 bb.bp:                                            ; preds = %bb.bo
-  %i.bng = getelementptr inbounds nuw i8, ptr %i.bnd, i64 16 ; 3 uses
+  %i.bng = getelementptr inbounds nuw i8, ptr %i.bnd, i64 16 ; 2 uses
   %i.bnh = load ptr, ptr %i.bng, align 8, !tbaa !614
   %i.bni = getelementptr inbounds nuw i8, ptr %i.bnd, i64 24 ; 3 uses
   %i.bnj = load ptr, ptr %i.bni, align 8, !tbaa !615
   call void @_Z10get_centerPA3_KfPfiS2_(ptr noundef %i.bnh, ptr noundef %i.bnj, i32 noundef %i.bne, ptr noundef nonnull %i.b)
-  %i.bnk = getelementptr inbounds nuw i8, ptr %i.bnd, i64 8 ; 4 uses
+  %i.bnk = getelementptr inbounds nuw i8, ptr %i.bnd, i64 8 ; 3 uses
   %i.bnl = load ptr, ptr %i.bnk, align 8, !tbaa !613
   %i.bnm = load ptr, ptr %i.bni, align 8, !tbaa !615
   %i.bnn = load i32, ptr %i.bnd, align 8, !tbaa !612
@@ -227,24 +227,24 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %i.bns, label %.lr.ph103.i, label %._crit_edge104.i
 
 .lr.ph103.i:                                      ; preds = %.preheader.i112
-  %13 = load ptr, ptr %i.bnk, align 8, !tbaa !613 ; 4 uses
-  %14 = load ptr, ptr %i.bng, align 8, !tbaa !614 ; 4 uses
+  %13 = load <2 x ptr>, ptr %i.bnk, align 8, !tbaa !122 ; 5 uses
   %wide.trip.count.i113 = zext nneg i32 %.pre.i111 to i64 ; 4 uses
   %min.iters.check211 = icmp ult i32 %.pre.i111, 8
   br i1 %min.iters.check211, label %scalar.ph210.preheader, label %vector.memcheck186
 
 vector.memcheck186:                               ; preds = %.lr.ph103.i
-  %15 = load <2 x ptr>, ptr %i.bnk, align 8, !tbaa !122
+  %14 = shufflevector <2 x ptr> %13, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.bnt = mul nuw nsw i64 %wide.trip.count.i113, 12 ; 2 uses
-  %scevgep187 = getelementptr i8, ptr %14, i64 %i.bnt ; 2 uses
-  %scevgep188 = getelementptr i8, ptr %13, i64 %i.bnt ; 2 uses
-  %bound0191 = icmp ult ptr %14, %scevgep188
-  %bound1192 = icmp ult ptr %13, %scevgep187
+  %15 = extractelement <2 x ptr> %13, i64 1       ; 3 uses
+  %scevgep187 = getelementptr i8, ptr %15, i64 %i.bnt ; 2 uses
+  %16 = extractelement <2 x ptr> %13, i64 0       ; 3 uses
+  %scevgep188 = getelementptr i8, ptr %16, i64 %i.bnt ; 2 uses
+  %bound0191 = icmp ult ptr %15, %scevgep188
+  %bound1192 = icmp ult ptr %16, %scevgep187
   %found.conflict193 = and i1 %bound0191, %bound1192
-  %16 = shufflevector <2 x ptr> %15, <2 x ptr> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  %i.bnu = icmp ult <4 x ptr> %16, %i.bkm
-  %i.bnv = insertelement <4 x ptr> poison, ptr %scevgep187, i64 0
-  %i.bnw = insertelement <4 x ptr> %i.bnv, ptr %scevgep188, i64 1
+  %i.bnu = icmp ult <4 x ptr> %14, %i.bkm
+  %i.bnv = insertelement <4 x ptr> poison, ptr %scevgep188, i64 0
+  %i.bnw = insertelement <4 x ptr> %i.bnv, ptr %scevgep187, i64 1
   %i.bnx = shufflevector <4 x ptr> %i.bnw, <4 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.bny = icmp ult <4 x ptr> %i.bkn, %i.bnx
   %i.bnz = and <4 x i1> %i.bnu, %i.bny
@@ -276,7 +276,7 @@ vector.ph212:                                     ; preds = %vector.memcheck186
 
 vector.body214:                                   ; preds = %vector.body214, %vector.ph212
   %index215 = phi i64 [ 0, %vector.ph212 ], [ %index.next242, %vector.body214 ] ; 3 uses
-  %i.bok = getelementptr inbounds nuw [12 x i8], ptr %14, i64 %index215 ; 3 uses
+  %i.bok = getelementptr inbounds nuw [12 x i8], ptr %15, i64 %index215 ; 3 uses
   %wide.vec216 = load <24 x float>, ptr %i.bok, align 4, !tbaa !61, !alias.scope !618, !noalias !619 ; 2 uses
   %i.bol = shufflevector <24 x float> %wide.vec216, <24 x float> poison, <16 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21, i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
   %i.bom = fsub <16 x float> %i.bol, %i.boi
@@ -284,7 +284,7 @@ vector.body214:                                   ; preds = %vector.body214, %ve
   %i.boo = fsub <16 x float> %i.bon, %i.boj
   %interleaved.vec = shufflevector <16 x float> %i.bom, <16 x float> %i.boo, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
   store <24 x float> %interleaved.vec, ptr %i.bok, align 4, !tbaa !61, !alias.scope !618, !noalias !619
-  %i.bop = getelementptr inbounds nuw [12 x i8], ptr %13, i64 %index215 ; 3 uses
+  %i.bop = getelementptr inbounds nuw [12 x i8], ptr %16, i64 %index215 ; 3 uses
   %wide.vec226 = load <24 x float>, ptr %i.bop, align 4, !tbaa !61, !alias.scope !620, !noalias !621 ; 3 uses
   %strided.vec227 = shufflevector <24 x float> %wide.vec226, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
   %strided.vec228 = shufflevector <24 x float> %wide.vec226, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
@@ -326,6 +326,8 @@ middle.block243:                                  ; preds = %vector.body214
 
 scalar.ph210.preheader:                           ; preds = %vector.memcheck186, %.lr.ph103.i, %middle.block243
   %indvars.iv118.i.ph = phi i64 [ 0, %vector.memcheck186 ], [ 0, %.lr.ph103.i ], [ %n.vec213, %middle.block243 ]
+  %17 = extractelement <2 x ptr> %13, i64 1
+  %18 = extractelement <2 x ptr> %13, i64 0
   br label %scalar.ph210
 
 ._crit_edge104.i:                                 ; preds = %scalar.ph210, %middle.block243, %.preheader.i112
@@ -337,7 +339,7 @@ scalar.ph210.preheader:                           ; preds = %vector.memcheck186,
 
 scalar.ph210:                                     ; preds = %scalar.ph210.preheader, %scalar.ph210
   %indvars.iv118.i = phi i64 [ %indvars.iv.next119.i, %scalar.ph210 ], [ %indvars.iv118.i.ph, %scalar.ph210.preheader ] ; 3 uses
-  %i.bpk = getelementptr inbounds nuw [12 x i8], ptr %14, i64 %indvars.iv118.i ; 5 uses
+  %i.bpk = getelementptr inbounds nuw [12 x i8], ptr %17, i64 %indvars.iv118.i ; 5 uses
   %i.bpl = getelementptr inbounds nuw i8, ptr %i.bpk, i64 4
   %i.bpm = getelementptr inbounds nuw i8, ptr %i.bpk, i64 8 ; 3 uses
   %i.bpn = load float, ptr %i.bpm, align 4, !tbaa !61
@@ -348,7 +350,7 @@ scalar.ph210:                                     ; preds = %scalar.ph210.prehea
   %i.bps = fsub <2 x float> %i.bpq, %i.bpr
   store <2 x float> %i.bps, ptr %i.bpk, align 4, !tbaa !61
   store float %i.bpp, ptr %i.bpm, align 4, !tbaa !61
-  %i.bpt = getelementptr inbounds nuw [12 x i8], ptr %13, i64 %indvars.iv118.i ; 4 uses
+  %i.bpt = getelementptr inbounds nuw [12 x i8], ptr %18, i64 %indvars.iv118.i ; 4 uses
   %i.bpu = getelementptr inbounds nuw i8, ptr %i.bpt, i64 8 ; 3 uses
   %i.bpv = load float, ptr %i.bpu, align 4, !tbaa !61
   %i.bpw = load float, ptr %i.bki, align 8, !tbaa !61
