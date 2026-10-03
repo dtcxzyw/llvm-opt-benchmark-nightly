@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %.0555558, i64 %i.h ; 17 uses
   %i.k = load float, ptr %i.j, align 4, !tbaa !28
   %i.l = load float, ptr %.0556557, align 4, !tbaa !24 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 4
+  %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 4 ; 2 uses
   %i.n = load float, ptr %i.m, align 4, !tbaa !29
   %i.o = getelementptr inbounds nuw i8, ptr %.0554559, i64 28
   %i.p = load float, ptr %i.o, align 4, !tbaa !24 ; 3 uses
@@ -233,8 +233,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.am = insertelement <2 x float> poison, float %i.l, i64 0
   %i.an = insertelement <2 x float> %i.am, float %i.p, i64 1
   %i.ao = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> %i.an, <2 x float> %i.aj) ; 3 uses
-  %i.ap = load <2 x float>, ptr %.0555558, align 4, !tbaa !24 ; 2 uses
-  %i.aq = fadd nsz <2 x float> %i.af, %i.ao       ; 2 uses
+  %i.ap = load <2 x float>, ptr %.0555558, align 4, !tbaa !24 ; 3 uses
+  %i.aq = fadd nsz <2 x float> %i.af, %i.ao       ; 3 uses
+  %foldExtExtBinop = fsub nsz <2 x float> %i.ap, %i.aq
+  %3 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  store float %3, ptr %i.j, align 4, !tbaa !28
   %i.ar = load <2 x float>, ptr %i.v, align 4, !tbaa !24 ; 2 uses
   %i.as = shufflevector <2 x float> %i.af, <2 x float> %i.ao, <2 x i32> <i32 1, i32 2>
   %i.at = shufflevector <2 x float> %i.ao, <2 x float> %i.af, <2 x i32> <i32 1, i32 2>
@@ -242,9 +245,10 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.av = fsub nsz <2 x float> %i.ar, %i.au
   store <2 x float> %i.av, ptr %i.r, align 4, !tbaa !24
   %i.aw = fadd nsz <2 x float> %i.ar, %i.au
-  %i.ax = fsub nsz <2 x float> %i.ap, %i.aq
-  store <2 x float> %i.ax, ptr %i.j, align 4, !tbaa !24
   store <2 x float> %i.aw, ptr %i.v, align 4, !tbaa !24
+  %i.ax = fsub nsz <2 x float> %i.ap, %i.aq
+  %4 = extractelement <2 x float> %i.ax, i64 1
+  store float %4, ptr %i.m, align 4, !tbaa !29
   %i.ay = fadd nsz <2 x float> %i.ap, %i.aq
   store <2 x float> %i.ay, ptr %.0555558, align 4, !tbaa !24
   %i.az = getelementptr i8, ptr %i.j, i64 16      ; 2 uses
@@ -290,9 +294,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.cn = fsub nsz <2 x float> %i.cj, %i.cm
   store <2 x float> %i.cn, ptr %i.bi, align 4, !tbaa !24
   %i.co = fadd nsz <2 x float> %i.cj, %i.cm
-  %3 = fsub nsz <2 x float> %i.ch, %i.ci
-  store <2 x float> %3, ptr %i.az, align 4, !tbaa !24
   store <2 x float> %i.co, ptr %i.bn, align 4, !tbaa !24
+  %5 = fsub nsz <2 x float> %i.ch, %i.ci
+  store <2 x float> %5, ptr %i.az, align 4, !tbaa !24
   %i.cp = fadd nsz <2 x float> %i.ch, %i.ci
   store <2 x float> %i.cp, ptr %i.bm, align 4, !tbaa !24
   %i.cq = getelementptr i8, ptr %i.j, i64 32      ; 2 uses
@@ -338,9 +342,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ee = fsub nsz <2 x float> %i.ea, %i.ed
   store <2 x float> %i.ee, ptr %i.cz, align 4, !tbaa !24
   %i.ef = fadd nsz <2 x float> %i.ea, %i.ed
-  %4 = fsub nsz <2 x float> %i.dy, %i.dz
-  store <2 x float> %4, ptr %i.cq, align 4, !tbaa !24
   store <2 x float> %i.ef, ptr %i.de, align 4, !tbaa !24
+  %6 = fsub nsz <2 x float> %i.dy, %i.dz
+  store <2 x float> %6, ptr %i.cq, align 4, !tbaa !24
   %i.eg = fadd nsz <2 x float> %i.dy, %i.dz
   store <2 x float> %i.eg, ptr %i.dd, align 4, !tbaa !24
   %i.eh = getelementptr i8, ptr %i.j, i64 48      ; 2 uses
@@ -386,9 +390,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.fv = fsub nsz <2 x float> %i.fr, %i.fu
   store <2 x float> %i.fv, ptr %i.eq, align 4, !tbaa !24
   %i.fw = fadd nsz <2 x float> %i.fr, %i.fu
+  %7 = fsub nsz <2 x float> %i.fp, %i.fq
+  store <2 x float> %7, ptr %i.eh, align 4, !tbaa !24
   store <2 x float> %i.fw, ptr %i.ev, align 4, !tbaa !24
-  %5 = fsub nsz <2 x float> %i.fp, %i.fq
-  store <2 x float> %5, ptr %i.eh, align 4, !tbaa !24
   %i.fx = fadd nsz <2 x float> %i.fp, %i.fq
   store <2 x float> %i.fx, ptr %i.eu, align 4, !tbaa !24
   %i.fy = getelementptr i8, ptr %i.j, i64 8       ; 2 uses
@@ -434,9 +438,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.hm = fsub nsz <2 x float> %i.hi, %i.hl
   store <2 x float> %i.hm, ptr %i.gh, align 4, !tbaa !24
   %i.hn = fadd nsz <2 x float> %i.hi, %i.hl
-  %6 = fsub nsz <2 x float> %i.hg, %i.hh
-  store <2 x float> %6, ptr %i.fy, align 4, !tbaa !24
   store <2 x float> %i.hn, ptr %i.gm, align 4, !tbaa !24
+  %8 = fsub nsz <2 x float> %i.hg, %i.hh
+  store <2 x float> %8, ptr %i.fy, align 4, !tbaa !24
   %i.ho = fadd nsz <2 x float> %i.hg, %i.hh
   store <2 x float> %i.ho, ptr %i.gl, align 4, !tbaa !24
   %i.hp = getelementptr i8, ptr %i.j, i64 24      ; 2 uses
@@ -576,20 +580,21 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.mf = insertelement <2 x float> poison, float %i.le, i64 0
   %i.mg = insertelement <2 x float> %i.mf, float %i.lh, i64 1
   %i.mh = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.me, <2 x float> %i.mg, <2 x float> %i.mc) ; 3 uses
-  %i.mi = load <2 x float>, ptr %i.ln, align 4, !tbaa !24 ; 2 uses
-  %i.mj = fadd nsz <2 x float> %i.ly, %i.mh       ; 2 uses
-  %7 = shufflevector <2 x float> %i.ly, <2 x float> %i.mh, <2 x i32> <i32 1, i32 2>
-  %8 = shufflevector <2 x float> %i.mh, <2 x float> %i.ly, <2 x i32> <i32 1, i32 2>
-  %9 = fsub nsz <2 x float> %7, %8                ; 2 uses
-  %10 = fsub nsz <2 x float> %i.mi, %i.mj         ; 2 uses
-  %11 = extractelement <2 x float> %10, i64 0
-  store float %11, ptr %i.lb, align 4, !tbaa !28
-  %12 = load <2 x float>, ptr %i.lo, align 4, !tbaa !24 ; 2 uses
-  %i.mk = fsub nsz <2 x float> %12, %9
+  %i.mi = load <2 x float>, ptr %i.ln, align 4, !tbaa !24 ; 3 uses
+  %i.mj = fadd nsz <2 x float> %i.ly, %i.mh       ; 3 uses
+  %foldExtExtBinop572 = fsub nsz <2 x float> %i.mi, %i.mj
+  %9 = extractelement <2 x float> %foldExtExtBinop572, i64 0
+  store float %9, ptr %i.lb, align 4, !tbaa !28
+  %10 = load <2 x float>, ptr %i.lo, align 4, !tbaa !24 ; 2 uses
+  %11 = shufflevector <2 x float> %i.ly, <2 x float> %i.mh, <2 x i32> <i32 1, i32 2>
+  %12 = shufflevector <2 x float> %i.mh, <2 x float> %i.ly, <2 x i32> <i32 1, i32 2>
+  %13 = fsub nsz <2 x float> %11, %12             ; 2 uses
+  %i.mk = fsub nsz <2 x float> %10, %13
   store <2 x float> %i.mk, ptr %i.lj, align 4, !tbaa !24
-  %i.ml = fadd nsz <2 x float> %12, %9
+  %i.ml = fadd nsz <2 x float> %10, %13
   store <2 x float> %i.ml, ptr %i.lo, align 4, !tbaa !24
-  %i.mm = extractelement <2 x float> %10, i64 1
+  %foldExtExtBinop574 = fsub nsz <2 x float> %i.mi, %i.mj
+  %i.mm = extractelement <2 x float> %foldExtExtBinop574, i64 1
   store float %i.mm, ptr %i.lf, align 4, !tbaa !29
   %i.mn = fadd nsz <2 x float> %i.mi, %i.mj
   store <2 x float> %i.mn, ptr %i.ln, align 4, !tbaa !24
