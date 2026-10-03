@@ -27,7 +27,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.11 = private unnamed_addr constant [29 x i8] c"fallback failed... bail out\0A\00", align 1
 @.str.12 = private unnamed_addr constant [53 x i8] c"iconv error:%s, silently resuming (%ld,%ld,%lu,%lu)\0A\00", align 1
 @.str.13 = private unnamed_addr constant [40 x i8] c"Skipping null character in html stream\0A\00", align 1
-@.str.14 = private unnamed_addr constant [12 x i8] c"Impossible\0A\00", align 1
 @.str.15 = private unnamed_addr constant [10 x i8] c"varpropto\00", align 1
 @.str.16 = private unnamed_addr constant [6 x i8] c"ncong\00", align 1
 @.str.17 = private unnamed_addr constant [6 x i8] c"grave\00", align 1
@@ -430,7 +429,7 @@ bb.cu:                                            ; preds = %.lr.ph, %.thread
   %i.pp = zext i8 %i.po to i16
   %i.pq = shl nuw i16 %i.pp, 8
   %i.pr = getelementptr inbounds nuw i8, ptr %i.pn, i64 1
-  %i.ps = load i8, ptr %i.pr, align 1, !tbaa !19  ; 3 uses
+  %i.ps = load i8, ptr %i.pr, align 1, !tbaa !19  ; 2 uses
   %i.pt = zext i8 %i.ps to i16
   %i.pu = or disjoint i16 %i.pq, %i.pt            ; 4 uses
   %.not173 = icmp eq i16 %i.pu, 0
@@ -456,17 +455,9 @@ bb.cy:                                            ; preds = %bb.cu
 
 bb.cz:                                            ; preds = %bb.cy
   %.not177 = icmp ult ptr %.1148290, %i.pb
-  br i1 %.not177, label %4, label %.thread262
+  br i1 %.not177, label %bb.da, label %.thread262
 
-4:                                                ; preds = %bb.cz
-  %5 = icmp eq i8 %i.ps, 0
-  br i1 %5, label %6, label %bb.da
-
-6:                                                ; preds = %4
-  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.14) #14
-  br label %bb.da
-
-bb.da:                                            ; preds = %6, %4
+bb.da:                                            ; preds = %bb.cz
   %i.py = getelementptr inbounds nuw i8, ptr %.1148290, i64 1
   store i8 %i.ps, ptr %.1148290, align 1, !tbaa !19
   br label %.thread
