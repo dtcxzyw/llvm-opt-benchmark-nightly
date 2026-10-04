@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %.lr.ph63, %bb.x
   %i.fa = load <2 x float>, ptr %i.eq, align 8, !tbaa !241
   %i.fb = fpext <2 x float> %i.fa to <2 x double> ; 2 uses
   %i.fc = extractelement <2 x double> %i.fb, i64 1
-  %i.fd = fmul double %i.fc, 2.000000e+00         ; 2 uses
+  %i.fd = fmul double %i.fc, 2.000000e+00
   %i.fe = load <2 x double>, ptr %6, align 16, !tbaa !632 ; 2 uses
   %i.ff = load <2 x float>, ptr %8, align 8, !tbaa !241 ; 4 uses
   %i.fg = load <2 x double>, ptr %7, align 16, !tbaa !632 ; 2 uses
@@ -218,17 +218,16 @@ bb.x:                                             ; preds = %.lr.ph63, %bb.x
   %i.fn = fmul <2 x float> %i.ff, %i.ff
   %i.fo = fpext <2 x float> %i.fn to <2 x double>
   %i.fp = fmul <2 x double> %i.fm, %i.fo
-  %i.fq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fi, <2 x double> %i.fj, <2 x double> %i.fp) ; 2 uses
-  %9 = extractelement <2 x double> %i.fq, i64 1
+  %i.fq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fi, <2 x double> %i.fj, <2 x double> %i.fp)
   %i.fr = call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.ff)
-  %i.fs = fpext <2 x float> %i.fr to <2 x double> ; 2 uses
-  %10 = extractelement <2 x double> %i.fs, i64 1
-  %11 = call double @llvm.fmuladd.f64(double %i.fd, double %10, double %9)
-  %12 = fsub double %.262, %11
-  %i.ft = extractelement <2 x double> %i.fq, i64 0
-  %13 = extractelement <2 x double> %i.fs, i64 0
-  %14 = call double @llvm.fmuladd.f64(double %i.fd, double %13, double %i.ft)
-  %i.fu = fsub double %12, %14                    ; 2 uses
+  %i.fs = fpext <2 x float> %i.fr to <2 x double>
+  %9 = insertelement <2 x double> poison, double %i.fd, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %10, <2 x double> %i.fs, <2 x double> %i.fq) ; 2 uses
+  %i.ft = extractelement <2 x double> %11, i64 1
+  %12 = fsub double %.262, %i.ft
+  %13 = extractelement <2 x double> %11, i64 0
+  %i.fu = fsub double %12, %13                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #11

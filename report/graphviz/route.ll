@@ -205,14 +205,14 @@ bb.f:                                             ; preds = %bb.am, %mkspline.ex
   %i.fe = shufflevector <2 x double> %i.fd, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ff = fmul <2 x double> %i.ew, %i.fe
   %i.fg = fdiv <2 x double> %i.ff, splat (double 3.000000e+00) ; 2 uses
-  %i.fh = fadd <2 x double> %i.eu, %i.fg          ; 3 uses
+  %i.fh = fadd <2 x double> %i.eu, %i.fg          ; 4 uses
   %i.fi = fsub <2 x double> %i.eu, %i.fg          ; 6 uses
   %i.fj = shufflevector <2 x double> %i.fh, <2 x double> %i.fi, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %i.fk = extractelement <2 x double> %i.fh, i64 0 ; 6 uses
+  %i.fk = extractelement <2 x double> %i.fh, i64 0 ; 5 uses
   %i.fl = fmul <2 x double> %i.fa, %i.fe
   %i.fm = fdiv <2 x double> %i.fl, splat (double 3.000000e+00) ; 2 uses
   %i.fn = fadd <2 x double> %i.ez, %i.fm          ; 6 uses
-  %i.fo = fsub <2 x double> %i.ez, %i.fm          ; 4 uses
+  %i.fo = fsub <2 x double> %i.ez, %i.fm          ; 5 uses
   br i1 %.not.i, label %bb.g, label %.lr.ph.i.preheader.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.f
@@ -276,13 +276,13 @@ bb.g:                                             ; preds = %dist_n.exit41.i, %b
   %i.gw = fmul <2 x double> %i.gv, <double 3.000000e+00, double 1.000000e+00>
   %i.gx = shufflevector <2 x double> %i.ey, <2 x double> %i.fn, <2 x i32> <i32 0, i32 2>
   %i.gy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gx, <2 x double> splat (double 3.000000e+00), <2 x double> %i.gw) ; 2 uses
-  %8 = extractelement <2 x double> %i.gy, i64 0
-  %9 = call double @llvm.fmuladd.f64(double %i.fk, double -6.000000e+00, double %8) ; 2 uses
-  %10 = extractelement <2 x double> %i.fo, i64 1  ; 3 uses
-  %11 = call double @llvm.fmuladd.f64(double %10, double 3.000000e+00, double %.sroa.6173.0.copyload)
-  %i.gz = extractelement <2 x double> %i.gy, i64 1
-  %12 = fsub double %i.gz, %11                    ; 2 uses
-  %i.ha = fmul double %10, 3.000000e+00
+  %8 = shufflevector <2 x double> %i.fh, <2 x double> %i.fo, <2 x i32> <i32 0, i32 3>
+  %9 = insertelement <2 x double> %i.gy, double %.sroa.6173.0.copyload, i64 1
+  %10 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> <double -6.000000e+00, double 3.000000e+00>, <2 x double> %9) ; 2 uses
+  %foldExtExtBinop350 = fsub <2 x double> %i.gy, %10
+  %i.gz = extractelement <2 x double> %foldExtExtBinop350, i64 1 ; 2 uses
+  %11 = extractelement <2 x double> %i.fo, i64 1  ; 2 uses
+  %i.ha = fmul double %11, 3.000000e+00
   %i.hb = call double @llvm.fmuladd.f64(double %.sroa.6173.0.copyload, double 3.000000e+00, double %i.ha)
   %i.hc = extractelement <2 x double> %i.fn, i64 0 ; 3 uses
   %i.hd = call double @llvm.fmuladd.f64(double %i.hc, double -6.000000e+00, double %i.hb) ; 2 uses
@@ -290,6 +290,7 @@ bb.g:                                             ; preds = %dist_n.exit41.i, %b
   %i.hf = fmul double %i.he, 3.000000e+00         ; 2 uses
   %i.hg = shufflevector <2 x double> %i.ey, <2 x double> %i.fh, <2 x i32> <i32 0, i32 2>
   %i.hh = shufflevector <2 x double> %i.fi, <2 x double> %i.eh, <2 x i32> <i32 1, i32 2>
+  %12 = extractelement <2 x double> %10, i64 0    ; 2 uses
   %i.hi = shufflevector <2 x double> %i.fb, <2 x double> %i.fn, <2 x i32> <i32 0, i32 2>
   %i.hj = shufflevector <2 x double> %i.fo, <2 x double> %i.eh, <2 x i32> <i32 1, i32 3>
   %i.hk = extractelement <2 x double> %i.fi, i64 1
@@ -316,7 +317,7 @@ bb.h:                                             ; preds = %.loopexit.i.i, %.lr
 bb.i:                                             ; preds = %bb.h
   %i.hq = fcmp oeq double %i.ho, 0.000000e+00
   store double %i.gs, ptr %i.ep, align 8, !tbaa !9
-  store double %9, ptr %i.eq, align 16, !tbaa !9
+  store double %12, ptr %i.eq, align 16, !tbaa !9
   store double %i.gu, ptr %i.er, align 8, !tbaa !9
   %i.hr = fsub double %.sroa.0170.0.copyload, %.sroa.0.0.copyload.i.i
   store double %i.hr, ptr %i.a, align 16, !tbaa !9
@@ -324,7 +325,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.hq, label %bb.j, label %bb.t
 
 bb.j:                                             ; preds = %bb.i
-  store double %12, ptr %i.ep, align 8, !tbaa !9
+  store double %i.gz, ptr %i.ep, align 8, !tbaa !9
   store double %i.hd, ptr %i.eq, align 16, !tbaa !9
   store double %i.hf, ptr %i.er, align 8, !tbaa !9
   %i.ht = fsub double %.sroa.6173.0.copyload, %.sroa.5.0.copyload.i.i
@@ -563,7 +564,7 @@ bb.u:                                             ; preds = %bb.w, %.lr.ph154.i.
   br i1 %or.cond.i.i.i, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.kk = call double @llvm.fmuladd.f64(double %i.kh, double %12, double %i.hd)
+  %i.kk = call double @llvm.fmuladd.f64(double %i.kh, double %i.gz, double %i.hd)
   %i.kl = call double @llvm.fmuladd.f64(double %i.kh, double %i.kk, double %i.hf)
   %i.km = call double @llvm.fmuladd.f64(double %i.kh, double %i.kl, double %.sroa.6173.0.copyload)
   %i.kn = fsub double %i.km, %.sroa.5.0.copyload.i.i
@@ -635,7 +636,7 @@ bb.x:                                             ; preds = %bb.h
   br i1 %or.cond5.i.i.i, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %.lr.ph.i.i.i
-  %i.lw = call double @llvm.fmuladd.f64(double %i.lt, double %i.gs, double %9)
+  %i.lw = call double @llvm.fmuladd.f64(double %i.lt, double %i.gs, double %12)
   %i.lx = call double @llvm.fmuladd.f64(double %i.lt, double %i.lw, double %i.gu)
   %i.ly = call double @llvm.fmuladd.f64(double %i.lt, double %i.lx, double %.sroa.0170.0.copyload)
   %i.lz = fsub double %i.ly, %.sroa.0.0.copyload.i.i
@@ -747,7 +748,7 @@ bb.ac:                                            ; preds = %.lr.ph.i44.i
   %i.nq = insertelement <2 x double> %i.np, double %i.nn, i64 1
   %i.nr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nj, <2 x double> %i.fc, <2 x double> %i.nq) ; 2 uses
   %i.ns = extractelement <2 x double> %i.nr, i64 0
-  %i.nt = call double @llvm.fmuladd.f64(double %i.nd, double %10, double %i.ns)
+  %i.nt = call double @llvm.fmuladd.f64(double %i.nd, double %11, double %i.ns)
   %i.nu = extractelement <2 x double> %i.nj, i64 1
   %i.nv = call double @llvm.fmuladd.f64(double %i.nu, double %i.es, double %i.nt) ; 2 uses
   %i.nw = extractelement <2 x double> %i.nr, i64 1 ; 2 uses

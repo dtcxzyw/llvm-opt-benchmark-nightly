@@ -205,15 +205,11 @@ bb.mz:                                            ; preds = %_ZNSt6vectorIN2cv3V
   %i.azp = shufflevector <2 x float> %i.azm, <2 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %i.azq = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.azp) ; 3 uses
   %i.azr = sitofp <2 x i32> %i.awr to <2 x double>
-  %i.azs = fmul <2 x double> %i.asf, %i.azr       ; 2 uses
-  %123 = extractelement <2 x double> %i.azs, i64 0
-  %124 = fmul double %123, 1.024000e+03
-  %125 = insertelement <2 x double> poison, double %124, i64 0
-  %i.azt = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %125) ; 2 uses
-  %126 = extractelement <2 x double> %i.azs, i64 1
-  %127 = fmul double %126, 1.024000e+03
-  %128 = insertelement <2 x double> poison, double %127, i64 0
-  %i.azu = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %128) ; 2 uses
+  %i.azs = fmul <2 x double> %i.asf, %i.azr
+  %123 = fmul <2 x double> %i.azs, splat (double 1.024000e+03) ; 2 uses
+  %i.azt = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %123) ; 2 uses
+  %124 = shufflevector <2 x double> %123, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.azu = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %124) ; 2 uses
   br i1 %.not306651.i, label %.preheader.split.i.preheader, label %.lr.ph656.preheader.i
 
 .preheader.split.i.preheader:                     ; preds = %.critedge.1.i, %bb.nb, %bb.mz

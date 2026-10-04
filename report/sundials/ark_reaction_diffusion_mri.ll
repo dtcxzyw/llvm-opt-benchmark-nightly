@@ -204,7 +204,7 @@ define internal range(i32 0, 2) i32 @fs(double %0, ptr noundef %1, ptr noundef %
 bb.a:
   %i.a = load i64, ptr %3, align 8, !tbaa !15     ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.c = load <2 x double>, ptr %i.b, align 8, !tbaa !16 ; 3 uses
+  %i.c = load <2 x double>, ptr %i.b, align 8, !tbaa !16 ; 2 uses
   %i.d = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #9 ; 15 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %check_retval.exit, label %bb.b
@@ -227,18 +227,15 @@ check_retval.exit43:                              ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   %i.l = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.m = fmul <2 x double> %i.l, <double 1.000000e+00, double 2.000000e+00>
-  %i.n = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.o = fdiv <2 x double> %i.m, %i.n             ; 2 uses
-  %4 = extractelement <2 x double> %i.o, i64 0
-  %5 = extractelement <2 x double> %i.c, i64 0    ; 2 uses
-  %6 = fdiv double %4, %5                         ; 7 uses
-  %7 = extractelement <2 x double> %i.o, i64 1
-  %8 = fdiv double %7, %5                         ; 6 uses
+  %i.n = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.o = fdiv <2 x double> %i.m, %i.n
+  %4 = fdiv <2 x double> %i.o, %i.n               ; 6 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.q = load double, ptr %i.p, align 8, !tbaa !16
   %i.r = load double, ptr %i.d, align 8, !tbaa !16
   %i.s = fsub double %i.q, %i.r
-  %i.t = fmul double %8, %i.s
+  %5 = extractelement <2 x double> %4, i64 1      ; 5 uses
+  %i.t = fmul double %5, %i.s
   store double %i.t, ptr %i.h, align 8, !tbaa !16
   %i.u = add i64 %i.a, -1                         ; 3 uses
   %i.v = icmp sgt i64 %i.a, 2
@@ -263,10 +260,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.w, -4                       ; 3 uses
   %i.ac = or disjoint i64 %n.vec, 1
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %8, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert52 = insertelement <2 x double> poison, double %6, i64 0
-  %broadcast.splat53 = shufflevector <2 x double> %broadcast.splatinsert52, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
+  %broadcast.splat = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
+  %broadcast.splat53 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -318,7 +313,8 @@ middle.block:                                     ; preds = %vector.body
   %i.az = load double, ptr %i.ay, align 8, !tbaa !16
   %i.ba = load double, ptr %i.ax, align 8, !tbaa !16
   %i.bb = fneg double %i.ba
-  %i.bc = fmul double %8, %i.bb
+  %i.bc = fmul double %5, %i.bb
+  %6 = extractelement <2 x double> %4, i64 0      ; 2 uses
   %i.bd = tail call double @llvm.fmuladd.f64(double %6, double %i.az, double %i.bc)
   %i.be = add nuw nsw i64 %.048.ph, 1             ; 2 uses
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.be
@@ -331,21 +327,26 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader59
   %.048.unr = phi i64 [ %.048.ph, %.lr.ph.preheader59 ], [ %i.be, %.lr.ph.prol ]
   %i.bj = icmp eq i64 %i.aw, %.048.ph
-  br i1 %i.bj, label %._crit_edge, label %.lr.ph
+  br i1 %i.bj, label %._crit_edge, label %.lr.ph.preheader59.new
 
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.048 = phi i64 [ %i.cd, %.lr.ph ], [ %.048.unr, %.lr.ph.prol.loopexit ] ; 4 uses
+.lr.ph.preheader59.new:                           ; preds = %.lr.ph.prol.loopexit
+  %7 = extractelement <2 x double> %4, i64 0      ; 2 uses
+  %8 = extractelement <2 x double> %4, i64 0      ; 2 uses
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader59.new
+  %.048 = phi i64 [ %.048.unr, %.lr.ph.preheader59.new ], [ %i.cd, %.lr.ph ] ; 4 uses
   %i.bk = getelementptr [8 x i8], ptr %i.d, i64 %.048 ; 2 uses
   %i.bl = getelementptr i8, ptr %i.bk, i64 -8
   %i.bm = load double, ptr %i.bl, align 8, !tbaa !16
   %i.bn = load double, ptr %i.bk, align 8, !tbaa !16
   %i.bo = fneg double %i.bn
-  %i.bp = fmul double %8, %i.bo
-  %i.bq = tail call double @llvm.fmuladd.f64(double %6, double %i.bm, double %i.bp)
+  %i.bp = fmul double %5, %i.bo
+  %i.bq = tail call double @llvm.fmuladd.f64(double %7, double %i.bm, double %i.bp)
   %i.br = add nuw nsw i64 %.048, 1                ; 3 uses
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.br
   %i.bt = load double, ptr %i.bs, align 8, !tbaa !16
-  %i.bu = tail call double @llvm.fmuladd.f64(double %6, double %i.bt, double %i.bq)
+  %i.bu = tail call double @llvm.fmuladd.f64(double %7, double %i.bt, double %i.bq)
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.048
   store double %i.bu, ptr %i.bv, align 8, !tbaa !16
   %i.bw = getelementptr [8 x i8], ptr %i.d, i64 %i.br ; 2 uses
@@ -353,12 +354,12 @@ middle.block:                                     ; preds = %vector.body
   %i.by = load double, ptr %i.bx, align 8, !tbaa !16
   %i.bz = load double, ptr %i.bw, align 8, !tbaa !16
   %i.ca = fneg double %i.bz
-  %i.cb = fmul double %8, %i.ca
-  %i.cc = tail call double @llvm.fmuladd.f64(double %6, double %i.by, double %i.cb)
+  %i.cb = fmul double %5, %i.ca
+  %i.cc = tail call double @llvm.fmuladd.f64(double %8, double %i.by, double %i.cb)
   %i.cd = add nuw nsw i64 %.048, 2                ; 3 uses
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.cd
   %i.cf = load double, ptr %i.ce, align 8, !tbaa !16
-  %i.cg = tail call double @llvm.fmuladd.f64(double %6, double %i.cf, double %i.cc)
+  %i.cg = tail call double @llvm.fmuladd.f64(double %8, double %i.cf, double %i.cc)
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.br
   store double %i.cg, ptr %i.ch, align 8, !tbaa !16
   %exitcond.not.1 = icmp eq i64 %i.cd, %i.u
@@ -371,7 +372,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cl = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.u
   %i.cm = load double, ptr %i.cl, align 8, !tbaa !16
   %i.cn = fsub double %i.ck, %i.cm
-  %i.co = fmul double %8, %i.cn
+  %i.co = fmul double %5, %i.cn
   %i.cp = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.u
   store double %i.co, ptr %i.cp, align 8, !tbaa !16
   br label %bb.d

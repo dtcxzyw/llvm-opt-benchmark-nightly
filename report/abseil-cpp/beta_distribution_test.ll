@@ -205,13 +205,15 @@ bb.bp:                                            ; preds = %bb.f
   %i.lv = insertelement <2 x double> poison, double %i.lf, i64 0
   %i.lw = insertelement <2 x double> %i.lv, double %.val64.i, i64 1
   %i.lx = fdiv <2 x double> %i.lu, %i.lw          ; 2 uses
-  %i.ly = extractelement <2 x double> %i.lx, i64 0 ; 4 uses
-  %24 = fdiv double %i.ly, %i.lj
-  %25 = call double @sqrt(double noundef %24) #39
-  %i.lz = extractelement <2 x double> %i.lx, i64 1
-  %26 = fdiv double %i.lz, %.val65.i
+  %i.ly = extractelement <2 x double> %i.lx, i64 0 ; 3 uses
+  %24 = insertelement <2 x double> poison, double %i.lj, i64 0
+  %25 = insertelement <2 x double> %24, double %.val65.i, i64 1
+  %26 = fdiv <2 x double> %i.lx, %25              ; 2 uses
+  %i.lz = extractelement <2 x double> %26, i64 0
+  %27 = call double @sqrt(double noundef %i.lz) #39
   %i.ma = fadd double %i.lf, 2.000000e+00
-  %i.mb = fdiv double %26, %i.ma
+  %28 = extractelement <2 x double> %26, i64 1
+  %i.mb = fdiv double %28, %i.ma
   %i.mc = fadd double %i.lf, 3.000000e+00
   %i.md = fdiv double %i.mb, %i.mc
   %i.me = fadd double %i.md, 3.000000e+00
@@ -325,7 +327,7 @@ _ZN4absl12lts_2026052612log_internal10LogMessagelsILi12EEERS2_RAT__Kc.exit.i: ; 
   %i.nk = fdiv double %i.nj, %i.ni
   %i.nl = fsub double %i.ng, %i.nk
   %i.nm = call noundef double @llvm.fabs.f64(double %i.nl)
-  %i.nn = fdiv double %i.nm, %25
+  %i.nn = fdiv double %i.nm, %27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   store double %i.nn, ptr %i.n, align 8, !tbaa !100
   %i.no = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN4absl12lts_2026052612log_internal10LogMessagelsIdEERS2_RKT_(ptr noundef nonnull align 8 dereferenceable(16) %i.nf, ptr noundef nonnull align 8 dereferenceable(8) %i.n)

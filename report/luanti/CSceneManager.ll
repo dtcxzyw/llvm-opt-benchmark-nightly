@@ -204,9 +204,8 @@ define linkonce_odr void @_ZN5scene12SViewFrustum25recalculateBoundingSphereEv(p
   %.sroa.0.0.copyload.i167 = load <2 x float>, ptr %8, align 8 ; 2 uses
   %.sroa.2.0.copyload.i168 = load float, ptr %i.bb, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
-  %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 7 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 6 uses
   %i.be = load float, ptr %.sroa.497.0..sroa_idx, align 4, !tbaa !141
-  %13 = fsub float %.sroa.2.0.copyload.i168, %i.be ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   store <2 x float> zeroinitializer, ptr %7, align 8, !tbaa !19
   %i.bf = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
@@ -226,7 +225,6 @@ define linkonce_odr void @_ZN5scene12SViewFrustum25recalculateBoundingSphereEv(p
   %i.bp = load float, ptr %i.ba, align 4, !tbaa !139
   %i.bq = load float, ptr %i.bd, align 4, !tbaa !140
   %i.br = load float, ptr %.sroa.497.0..sroa_idx, align 4, !tbaa !141
-  %14 = fsub float %.sroa.2.0.copyload.i176, %i.br ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store <2 x float> zeroinitializer, ptr %6, align 8, !tbaa !19
   store float 0.000000e+00, ptr %i.bg, align 8, !tbaa !141
@@ -269,104 +267,107 @@ define linkonce_odr void @_ZN5scene12SViewFrustum25recalculateBoundingSphereEv(p
   store <2 x float> zeroinitializer, ptr %4, align 8, !tbaa !19
   store float 0.000000e+00, ptr %i.bj, align 8, !tbaa !141
   %i.cs = call noundef zeroext i1 @_ZNK4core7plane3dIfE25getIntersectionWithPlanesERKS1_S3_RNS_8vector3dIfEE(ptr noundef nonnull align 4 dereferenceable(16) %i.b, ptr noundef nonnull align 4 dereferenceable(16) %i.bh, ptr noundef nonnull align 4 dereferenceable(16) %i.g, ptr noundef nonnull align 4 dereferenceable(12) %4) ; 0 uses
-  %.sroa.0.0.copyload.i199 = load <2 x float>, ptr %4, align 8
+  %.sroa.0.0.copyload.i199 = load <2 x float>, ptr %4, align 8 ; 2 uses
   %.sroa.2.0.copyload.i200 = load float, ptr %i.bj, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.ct = load float, ptr %i.ba, align 4, !tbaa !139
-  %15 = load float, ptr %i.bd, align 4, !tbaa !140
-  %16 = load float, ptr %.sroa.497.0..sroa_idx, align 4, !tbaa !141
+  %i.ct = load float, ptr %.sroa.497.0..sroa_idx, align 4, !tbaa !141
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   store <2 x float> zeroinitializer, ptr %3, align 8, !tbaa !19
   store float 0.000000e+00, ptr %i.bk, align 8, !tbaa !141
-  %17 = call noundef zeroext i1 @_ZNK4core7plane3dIfE25getIntersectionWithPlanesERKS1_S3_RNS_8vector3dIfEE(ptr noundef nonnull align 4 dereferenceable(16) %i.b, ptr noundef nonnull align 4 dereferenceable(16) %i.bh, ptr noundef nonnull align 4 dereferenceable(16) %i.d, ptr noundef nonnull align 4 dereferenceable(12) %3) ; 0 uses
-  %.sroa.0.0.copyload.i207 = load <2 x float>, ptr %3, align 8
-  %.sroa.2.0.copyload.i208 = load float, ptr %i.bk, align 8
+  %13 = fmul <4 x float> %i.cq, %i.cq
+  %14 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ch, <4 x float> %i.ch, <4 x float> %13)
+  %15 = insertelement <4 x float> poison, float %.sroa.2.0.copyload.i168, i64 0
+  %16 = insertelement <4 x float> %15, float %.sroa.2.0.copyload.i176, i64 1
+  %17 = insertelement <4 x float> %16, float %.sroa.2.0.copyload.i184, i64 2
+  %18 = insertelement <4 x float> %17, float %.sroa.2.0.copyload.i192, i64 3
+  %19 = insertelement <4 x float> poison, float %i.be, i64 0
+  %20 = insertelement <4 x float> %19, float %i.br, i64 1
+  %21 = insertelement <4 x float> %20, float %i.bv, i64 2
+  %22 = insertelement <4 x float> %21, float %i.cr, i64 3
+  %23 = fsub <4 x float> %18, %22                 ; 2 uses
+  %24 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %23, <4 x float> %23, <4 x float> %14) ; 4 uses
+  %25 = load <2 x float>, ptr %i.ba, align 4, !tbaa !19 ; 2 uses
+  %i.cu = call noundef zeroext i1 @_ZNK4core7plane3dIfE25getIntersectionWithPlanesERKS1_S3_RNS_8vector3dIfEE(ptr noundef nonnull align 4 dereferenceable(16) %i.b, ptr noundef nonnull align 4 dereferenceable(16) %i.bh, ptr noundef nonnull align 4 dereferenceable(16) %i.d, ptr noundef nonnull align 4 dereferenceable(12) %3) ; 0 uses
+  %.sroa.0.0.copyload.i215.a = load <2 x float>, ptr %3, align 8 ; 2 uses
+  %.sroa.2.0.copyload.i216.a = load float, ptr %i.bk, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %18 = load float, ptr %i.ba, align 4, !tbaa !139
-  %19 = load float, ptr %i.bd, align 4, !tbaa !140
-  %20 = load float, ptr %.sroa.497.0..sroa_idx, align 4, !tbaa !141
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  store <2 x float> zeroinitializer, ptr %2, align 8, !tbaa !19
-  store float 0.000000e+00, ptr %i.bl, align 8, !tbaa !141
-  %i.cu = call noundef zeroext i1 @_ZNK4core7plane3dIfE25getIntersectionWithPlanesERKS1_S3_RNS_8vector3dIfEE(ptr noundef nonnull align 4 dereferenceable(16) %i.b, ptr noundef nonnull align 4 dereferenceable(16) %i.c, ptr noundef nonnull align 4 dereferenceable(16) %i.g, ptr noundef nonnull align 4 dereferenceable(12) %2) ; 0 uses
-  %.sroa.0.0.copyload.i215.a = load <2 x float>, ptr %2, align 8 ; 2 uses
-  %.sroa.2.0.copyload.i216.a = load float, ptr %i.bl, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.cv = load float, ptr %i.ba, align 4, !tbaa !139
   %i.cw = load float, ptr %i.bd, align 4, !tbaa !140
   %i.cx = load float, ptr %.sroa.497.0..sroa_idx, align 4, !tbaa !141
-  %21 = fsub float %.sroa.2.0.copyload.i216.a, %i.cx ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  store <2 x float> zeroinitializer, ptr %1, align 8, !tbaa !19
-  store float 0.000000e+00, ptr %i.bm, align 8, !tbaa !141
-  %i.cy = call noundef zeroext i1 @_ZNK4core7plane3dIfE25getIntersectionWithPlanesERKS1_S3_RNS_8vector3dIfEE(ptr noundef nonnull align 4 dereferenceable(16) %i.b, ptr noundef nonnull align 4 dereferenceable(16) %i.c, ptr noundef nonnull align 4 dereferenceable(16) %i.d, ptr noundef nonnull align 4 dereferenceable(12) %1) ; 0 uses
-  %.sroa.0.0.copyload.i223.a = load <2 x float>, ptr %1, align 8 ; 2 uses
-  %.sroa.2.0.copyload.i224.a = load float, ptr %i.bm, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  store <2 x float> zeroinitializer, ptr %2, align 8, !tbaa !19
+  store float 0.000000e+00, ptr %i.bl, align 8, !tbaa !141
+  %i.cy = call noundef zeroext i1 @_ZNK4core7plane3dIfE25getIntersectionWithPlanesERKS1_S3_RNS_8vector3dIfEE(ptr noundef nonnull align 4 dereferenceable(16) %i.b, ptr noundef nonnull align 4 dereferenceable(16) %i.c, ptr noundef nonnull align 4 dereferenceable(16) %i.g, ptr noundef nonnull align 4 dereferenceable(12) %2) ; 0 uses
+  %.sroa.0.0.copyload.i223.a = load <2 x float>, ptr %2, align 8
+  %.sroa.2.0.copyload.i224.a = load float, ptr %i.bl, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.cz = load float, ptr %i.ba, align 4, !tbaa !139
   %i.da = load float, ptr %i.bd, align 4, !tbaa !140
   %i.db = load float, ptr %.sroa.497.0..sroa_idx, align 4, !tbaa !141
-  %22 = fsub float %.sroa.2.0.copyload.i224.a, %i.db ; 2 uses
-  %23 = fmul <4 x float> %i.cq, %i.cq
-  %24 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ch, <4 x float> %i.ch, <4 x float> %23) ; 3 uses
-  %25 = extractelement <4 x float> %24, i64 0
-  %26 = call noundef float @llvm.fmuladd.f32(float %13, float %13, float %25) ; 2 uses
-  %27 = extractelement <4 x float> %24, i64 1
-  %28 = call noundef float @llvm.fmuladd.f32(float %14, float %14, float %27) ; 2 uses
-  %29 = shufflevector <2 x float> %.sroa.0.0.copyload.i199, <2 x float> %.sroa.0.0.copyload.i207, <4 x i32> <i32 1, i32 3, i32 0, i32 2> ; 2 uses
-  %30 = insertelement <4 x float> %29, float %.sroa.2.0.copyload.i184, i64 0
-  %31 = insertelement <4 x float> %30, float %.sroa.2.0.copyload.i192, i64 1
-  %32 = insertelement <4 x float> poison, float %i.bv, i64 0
-  %i.dc = insertelement <4 x float> %32, float %i.cr, i64 1
-  %i.dd = insertelement <4 x float> %i.dc, float %i.ct, i64 2
-  %i.de = insertelement <4 x float> %i.dd, float %18, i64 3
-  %i.df = fsub <4 x float> %31, %i.de             ; 2 uses
-  %33 = shufflevector <2 x float> %.sroa.0.0.copyload.i215.a, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %34 = shufflevector <4 x float> %29, <4 x float> %33, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
-  %35 = shufflevector <2 x float> %.sroa.0.0.copyload.i223.a, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %i.dg = shufflevector <4 x float> %34, <4 x float> %35, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
-  %36 = insertelement <4 x float> poison, float %15, i64 0
-  %i.dh = insertelement <4 x float> %36, float %19, i64 1
-  %i.di = insertelement <4 x float> %i.dh, float %i.cw, i64 2
-  %i.dj = insertelement <4 x float> %i.di, float %i.da, i64 3
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
+  store <2 x float> zeroinitializer, ptr %1, align 8, !tbaa !19
+  store float 0.000000e+00, ptr %i.bm, align 8, !tbaa !141
+  %26 = call noundef zeroext i1 @_ZNK4core7plane3dIfE25getIntersectionWithPlanesERKS1_S3_RNS_8vector3dIfEE(ptr noundef nonnull align 4 dereferenceable(16) %i.b, ptr noundef nonnull align 4 dereferenceable(16) %i.c, ptr noundef nonnull align 4 dereferenceable(16) %i.d, ptr noundef nonnull align 4 dereferenceable(12) %1) ; 0 uses
+  %.sroa.0.0.copyload.i223 = load <2 x float>, ptr %1, align 8
+  %.sroa.2.0.copyload.i224 = load float, ptr %i.bm, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  %27 = load float, ptr %i.ba, align 4, !tbaa !139
+  %28 = shufflevector <2 x float> %.sroa.0.0.copyload.i199, <2 x float> %.sroa.0.0.copyload.i215.a, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+  %29 = shufflevector <2 x float> %.sroa.0.0.copyload.i223.a, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %30 = shufflevector <4 x float> %28, <4 x float> %29, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
+  %31 = shufflevector <2 x float> %.sroa.0.0.copyload.i223, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %32 = shufflevector <4 x float> %30, <4 x float> %31, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %33 = shufflevector <2 x float> %25, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %i.dc = insertelement <4 x float> %33, float %i.cv, i64 1
+  %i.dd = insertelement <4 x float> %i.dc, float %i.cz, i64 2
+  %i.de = insertelement <4 x float> %i.dd, float %27, i64 3
+  %i.df = fsub <4 x float> %32, %i.de             ; 2 uses
+  %34 = load float, ptr %i.bd, align 4, !tbaa !140
+  %35 = shufflevector <2 x float> %.sroa.0.0.copyload.i199, <2 x float> %.sroa.0.0.copyload.i215.a, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
+  %36 = shufflevector <4 x float> %35, <4 x float> %29, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+  %i.dg = shufflevector <4 x float> %36, <4 x float> %31, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %37 = shufflevector <2 x float> %25, <2 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
+  %i.dh = insertelement <4 x float> %37, float %i.cw, i64 1
+  %i.di = insertelement <4 x float> %i.dh, float %i.da, i64 2
+  %i.dj = insertelement <4 x float> %i.di, float %34, i64 3
   %i.dk = fsub <4 x float> %i.dg, %i.dj           ; 2 uses
-  %37 = fmul <4 x float> %i.dk, %i.dk             ; 2 uses
-  %38 = shufflevector <4 x float> %24, <4 x float> %37, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
-  %i.dl = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.df, <4 x float> %i.df, <4 x float> %38) ; 3 uses
-  %39 = shufflevector <2 x float> %.sroa.0.0.copyload.i215.a, <2 x float> %.sroa.0.0.copyload.i223.a, <4 x i32> <i32 poison, i32 poison, i32 0, i32 2>
-  %i.dm = insertelement <4 x float> %39, float %.sroa.2.0.copyload.i200, i64 0
-  %i.dn = insertelement <4 x float> %i.dm, float %.sroa.2.0.copyload.i208, i64 1
-  %i.do = insertelement <4 x float> poison, float %16, i64 0
-  %i.dp = insertelement <4 x float> %i.do, float %20, i64 1
-  %i.dq = insertelement <4 x float> %i.dp, float %i.cv, i64 2
-  %i.dr = insertelement <4 x float> %i.dq, float %i.cz, i64 3
-  %40 = fsub <4 x float> %i.dn, %i.dr             ; 2 uses
-  %41 = shufflevector <4 x float> %i.dl, <4 x float> %37, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %i.ds = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %40, <4 x float> %40, <4 x float> %41) ; 4 uses
-  %i.dt = extractelement <4 x float> %i.ds, i64 2
-  %42 = call noundef float @llvm.fmuladd.f32(float %21, float %21, float %i.dt) ; 2 uses
-  %43 = extractelement <4 x float> %i.ds, i64 3
-  %44 = call noundef float @llvm.fmuladd.f32(float %22, float %22, float %43) ; 2 uses
-  %i.du = fcmp ogt float %26, 0.000000e+00
-  %.1.a = select i1 %i.du, float %26, float 0.000000e+00 ; 2 uses
-  %i.dv = fcmp ogt float %28, %.1.a
-  %.1.1 = select i1 %i.dv, float %28, float %.1.a ; 2 uses
-  %i.dw = extractelement <4 x float> %i.dl, i64 0 ; 2 uses
+  %38 = load float, ptr %.sroa.497.0..sroa_idx, align 4, !tbaa !141
+  %39 = fmul <4 x float> %i.dk, %i.dk
+  %i.dl = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.df, <4 x float> %i.df, <4 x float> %39)
+  %40 = insertelement <4 x float> poison, float %.sroa.2.0.copyload.i200, i64 0
+  %i.dm = insertelement <4 x float> %40, float %.sroa.2.0.copyload.i216.a, i64 1
+  %i.dn = insertelement <4 x float> %i.dm, float %.sroa.2.0.copyload.i224.a, i64 2
+  %i.do = insertelement <4 x float> %i.dn, float %.sroa.2.0.copyload.i224, i64 3
+  %i.dp = insertelement <4 x float> poison, float %i.ct, i64 0
+  %i.dq = insertelement <4 x float> %i.dp, float %i.cx, i64 1
+  %i.dr = insertelement <4 x float> %i.dq, float %i.db, i64 2
+  %41 = insertelement <4 x float> %i.dr, float %38, i64 3
+  %42 = fsub <4 x float> %i.do, %41               ; 2 uses
+  %i.ds = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %42, <4 x float> %42, <4 x float> %i.dl) ; 4 uses
+  %i.dt = extractelement <4 x float> %24, i64 0   ; 2 uses
+  %43 = fcmp ogt float %i.dt, 0.000000e+00
+  %.1 = select i1 %43, float %i.dt, float 0.000000e+00 ; 2 uses
+  %44 = extractelement <4 x float> %24, i64 1     ; 2 uses
+  %i.du = fcmp ogt float %44, %.1
+  %.1.a = select i1 %i.du, float %44, float %.1   ; 2 uses
+  %45 = extractelement <4 x float> %24, i64 2     ; 2 uses
+  %i.dv = fcmp ogt float %45, %.1.a
+  %.1.1 = select i1 %i.dv, float %45, float %.1.a ; 2 uses
+  %i.dw = extractelement <4 x float> %24, i64 3   ; 2 uses
   %i.dx = fcmp ogt float %i.dw, %.1.1
   %.1.2 = select i1 %i.dx, float %i.dw, float %.1.1 ; 2 uses
-  %i.dy = extractelement <4 x float> %i.dl, i64 1 ; 2 uses
+  %i.dy = extractelement <4 x float> %i.ds, i64 0 ; 2 uses
   %i.dz = fcmp ogt float %i.dy, %.1.2
   %.1.3 = select i1 %i.dz, float %i.dy, float %.1.2 ; 2 uses
-  %i.ea = extractelement <4 x float> %i.ds, i64 0 ; 2 uses
+  %i.ea = extractelement <4 x float> %i.ds, i64 1 ; 2 uses
   %i.eb = fcmp ogt float %i.ea, %.1.3
   %.1.4 = select i1 %i.eb, float %i.ea, float %.1.3 ; 2 uses
-  %i.ec = extractelement <4 x float> %i.ds, i64 1 ; 2 uses
+  %i.ec = extractelement <4 x float> %i.ds, i64 2 ; 2 uses
   %i.ed = fcmp ogt float %i.ec, %.1.4
   %.1.5 = select i1 %i.ed, float %i.ec, float %.1.4 ; 2 uses
-  %45 = fcmp ogt float %42, %.1.5
-  %.1.6 = select i1 %45, float %42, float %.1.5   ; 2 uses
-  %i.ee = fcmp ogt float %44, %.1.6
-  %.1.7 = select i1 %i.ee, float %44, float %.1.6
+  %46 = extractelement <4 x float> %i.ds, i64 3   ; 2 uses
+  %i.ee = fcmp ogt float %46, %.1.5
+  %.1.7 = select i1 %i.ee, float %46, float %.1.5
   %i.ef = call float @sqrtf(float noundef %.1.7) #33
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 260
   store float %i.ef, ptr %i.eg, align 4, !tbaa !143

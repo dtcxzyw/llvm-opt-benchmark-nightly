@@ -120,7 +120,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.n = load double, ptr %i.m, align 8, !tbaa !10 ; 3 uses
+  %i.n = load double, ptr %i.m, align 8, !tbaa !10
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.p = load <2 x double>, ptr %i.o, align 8, !tbaa !10 ; 4 uses
   %i.q = shufflevector <2 x double> %i.b, <2 x double> %i.p, <2 x i32> <i32 1, i32 3>
@@ -128,15 +128,17 @@ bb.b:                                             ; preds = %bb.a
   %i.s = fmul <2 x double> %i.q, %i.r
   %i.t = shufflevector <2 x double> %i.b, <2 x double> %i.p, <2 x i32> <i32 0, i32 2>
   %i.u = shufflevector <2 x double> %i.p, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.v = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.t, <2 x double> %i.u, <2 x double> %i.s) ; 2 uses
-  %1 = extractelement <2 x double> %i.v, i64 0
-  %2 = tail call noundef double @llvm.fmuladd.f64(double %i.h, double %i.n, double %1)
-  %3 = extractelement <2 x double> %i.v, i64 1
-  %4 = tail call double @llvm.fmuladd.f64(double %i.n, double %i.n, double %3)
-  %i.w = fadd double %4, -1.000000e+00
+  %i.v = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.t, <2 x double> %i.u, <2 x double> %i.s)
+  %1 = insertelement <2 x double> poison, double %i.h, i64 0
+  %2 = insertelement <2 x double> %1, double %i.n, i64 1 ; 2 uses
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %4 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %2, <2 x double> %3, <2 x double> %i.v) ; 2 uses
+  %5 = extractelement <2 x double> %4, i64 1
+  %i.w = fadd double %5, -1.000000e+00
   %i.x = tail call double @llvm.fabs.f64(double %i.w)
   %i.y = fcmp olt double %i.x, 1.000000e-03
-  %i.z = tail call double @llvm.fabs.f64(double %2)
+  %6 = extractelement <2 x double> %4, i64 0
+  %i.z = tail call double @llvm.fabs.f64(double %6)
   %i.aa = fcmp olt double %i.z, 1.000000e-03
   %or.cond = and i1 %i.aa, %i.y
   br label %bb.c

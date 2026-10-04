@@ -204,26 +204,29 @@ bb.a:
   %i.aw = insertelement <2 x double> poison, double %i.aq, i64 0
   %i.ax = insertelement <2 x double> %i.aw, double %i.av, i64 1
   %i.ay = insertelement <2 x double> %i.ap, double %i.ar, i64 0
-  %i.az = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ax, <2 x double> %i.ay, <2 x double> <double 0.000000e+00, double 1.000000e+00>) ; 2 uses
-  %3 = extractelement <2 x double> %i.az, i64 0
-  %4 = tail call double @llvm.fmuladd.f64(double %i.as, double %i.at, double %3) ; 2 uses
-  store double %4, ptr %i.am, align 8, !tbaa !22
-  %5 = fmul <2 x double> %i.ap, splat (double f0x402921FB54442D28) ; 2 uses
-  %i.ba = extractelement <2 x double> %5, i64 0
+  %i.az = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ax, <2 x double> %i.ay, <2 x double> <double 0.000000e+00, double 1.000000e+00>)
+  %3 = fmul <2 x double> %i.ap, splat (double f0x402921FB54442D28) ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  %5 = tail call double @sin(double noundef %4) #12
+  %6 = fmul double %5, 1.000000e+03
+  %i.ba = extractelement <2 x double> %3, i64 1   ; 3 uses
   %i.bb = tail call double @sin(double noundef %i.ba) #12
-  %6 = fmul double %i.bb, 1.000000e+03
-  %7 = extractelement <2 x double> %5, i64 1      ; 3 uses
-  %8 = tail call double @sin(double noundef %7) #12
-  %i.bc = extractelement <2 x double> %i.az, i64 1
-  %9 = tail call double @llvm.fmuladd.f64(double %6, double %8, double %i.bc) ; 2 uses
+  %7 = insertelement <2 x double> poison, double %i.as, i64 0
+  %8 = insertelement <2 x double> %7, double %6, i64 1
+  %9 = insertelement <2 x double> poison, double %i.at, i64 0
+  %10 = insertelement <2 x double> %9, double %i.bb, i64 1
+  %11 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %10, <2 x double> %i.az) ; 2 uses
+  %i.bc = extractelement <2 x double> %11, i64 0  ; 2 uses
+  store double %i.bc, ptr %i.am, align 8, !tbaa !22
   %i.bd = load double, ptr %i.ac, align 8, !tbaa !22
   %i.be = load double, ptr %i.t, align 8, !tbaa !22
-  %i.bf = tail call double @llvm.fmuladd.f64(double %i.be, double %9, double %i.al)
+  %12 = extractelement <2 x double> %11, i64 1    ; 2 uses
+  %i.bf = tail call double @llvm.fmuladd.f64(double %i.be, double %12, double %i.al)
   %i.bg = fmul double %i.bd, %i.bf                ; 2 uses
   store double %i.bg, ptr %i.ad, align 8, !tbaa !22
   %i.bh = load double, ptr %i.af, align 8, !tbaa !22
   %i.bi = load double, ptr %i.u, align 8, !tbaa !22
-  %i.bj = tail call double @llvm.fmuladd.f64(double %i.bi, double %9, double %4)
+  %i.bj = tail call double @llvm.fmuladd.f64(double %i.bi, double %12, double %i.bc)
   %i.bk = fmul double %i.bh, %i.bj
   store double %i.bk, ptr %i.am, align 8, !tbaa !22
   %i.bl = getelementptr inbounds [8 x i8], ptr %i.ac, i64 %.neg ; 2 uses
@@ -295,24 +298,27 @@ bb.b:                                             ; preds = %.peel.next, %bb.b
   %i.ds = insertelement <2 x double> poison, double %i.dm, i64 0
   %i.dt = insertelement <2 x double> %i.ds, double %i.dr, i64 1
   %i.du = insertelement <2 x double> %i.ap, double %i.dn, i64 0
-  %i.dv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dt, <2 x double> %i.du, <2 x double> <double 0.000000e+00, double 1.000000e+00>) ; 2 uses
-  %10 = extractelement <2 x double> %i.dv, i64 0
-  %11 = tail call double @llvm.fmuladd.f64(double %i.do, double %i.dp, double %10) ; 2 uses
-  store double %11, ptr %i.dq, align 8, !tbaa !22
-  %12 = fmul double %i.cz, f0x402921FB54442D28
-  %13 = tail call double @sin(double noundef %12) #12
-  %14 = fmul double %13, 1.000000e+03
-  %15 = tail call double @sin(double noundef %7) #12
-  %i.dw = extractelement <2 x double> %i.dv, i64 1
-  %16 = tail call double @llvm.fmuladd.f64(double %14, double %15, double %i.dw) ; 2 uses
+  %i.dv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dt, <2 x double> %i.du, <2 x double> <double 0.000000e+00, double 1.000000e+00>)
+  %13 = fmul double %i.cz, f0x402921FB54442D28
+  %14 = tail call double @sin(double noundef %13) #12
+  %15 = fmul double %14, 1.000000e+03
+  %16 = tail call double @sin(double noundef %i.ba) #12
+  %17 = insertelement <2 x double> poison, double %i.do, i64 0
+  %18 = insertelement <2 x double> %17, double %15, i64 1
+  %19 = insertelement <2 x double> poison, double %i.dp, i64 0
+  %20 = insertelement <2 x double> %19, double %16, i64 1
+  %21 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %18, <2 x double> %20, <2 x double> %i.dv) ; 2 uses
+  %i.dw = extractelement <2 x double> %21, i64 0  ; 2 uses
+  store double %i.dw, ptr %i.dq, align 8, !tbaa !22
   %i.dx = load double, ptr %i.dc, align 8, !tbaa !22
   %i.dy = load double, ptr %i.t, align 8, !tbaa !22
-  %i.dz = tail call double @llvm.fmuladd.f64(double %i.dy, double %16, double %i.dl)
+  %22 = extractelement <2 x double> %21, i64 1    ; 2 uses
+  %i.dz = tail call double @llvm.fmuladd.f64(double %i.dy, double %22, double %i.dl)
   %i.ea = fmul double %i.dx, %i.dz                ; 2 uses
   store double %i.ea, ptr %i.dd, align 8, !tbaa !22
   %i.eb = load double, ptr %i.df, align 8, !tbaa !22
   %i.ec = load double, ptr %i.u, align 8, !tbaa !22
-  %i.ed = tail call double @llvm.fmuladd.f64(double %i.ec, double %16, double %11)
+  %i.ed = tail call double @llvm.fmuladd.f64(double %i.ec, double %22, double %i.dw)
   %i.ee = fmul double %i.eb, %i.ed
   store double %i.ee, ptr %i.dq, align 8, !tbaa !22
   %i.ef = getelementptr inbounds [8 x i8], ptr %i.dc, i64 %.neg ; 2 uses
@@ -388,24 +394,27 @@ bb.b:                                             ; preds = %.peel.next, %bb.b
   %i.gq = insertelement <2 x double> poison, double %i.gk, i64 0
   %i.gr = insertelement <2 x double> %i.gq, double %i.gp, i64 1
   %i.gs = insertelement <2 x double> %i.ap, double %i.gl, i64 0
-  %i.gt = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gr, <2 x double> %i.gs, <2 x double> <double 0.000000e+00, double 1.000000e+00>) ; 2 uses
-  %17 = extractelement <2 x double> %i.gt, i64 0
-  %18 = tail call double @llvm.fmuladd.f64(double %i.gm, double %i.gn, double %17) ; 2 uses
-  store double %18, ptr %i.go, align 8, !tbaa !22
-  %19 = fmul double %i.fy, f0x402921FB54442D28
-  %20 = tail call double @sin(double noundef %19) #12
-  %21 = fmul double %20, 1.000000e+03
-  %22 = tail call double @sin(double noundef %7) #12
-  %i.gu = extractelement <2 x double> %i.gt, i64 1
-  %23 = tail call double @llvm.fmuladd.f64(double %21, double %22, double %i.gu) ; 2 uses
+  %i.gt = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gr, <2 x double> %i.gs, <2 x double> <double 0.000000e+00, double 1.000000e+00>)
+  %23 = fmul double %i.fy, f0x402921FB54442D28
+  %24 = tail call double @sin(double noundef %23) #12
+  %25 = fmul double %24, 1.000000e+03
+  %26 = tail call double @sin(double noundef %i.ba) #12
+  %27 = insertelement <2 x double> poison, double %i.gm, i64 0
+  %28 = insertelement <2 x double> %27, double %25, i64 1
+  %29 = insertelement <2 x double> poison, double %i.gn, i64 0
+  %30 = insertelement <2 x double> %29, double %26, i64 1
+  %31 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %28, <2 x double> %30, <2 x double> %i.gt) ; 2 uses
+  %i.gu = extractelement <2 x double> %31, i64 0  ; 2 uses
+  store double %i.gu, ptr %i.go, align 8, !tbaa !22
   %i.gv = load double, ptr %i.ga, align 8, !tbaa !22
   %i.gw = load double, ptr %i.t, align 8, !tbaa !22
-  %i.gx = tail call double @llvm.fmuladd.f64(double %i.gw, double %23, double %i.gj)
+  %32 = extractelement <2 x double> %31, i64 1    ; 2 uses
+  %i.gx = tail call double @llvm.fmuladd.f64(double %i.gw, double %32, double %i.gj)
   %i.gy = fmul double %i.gv, %i.gx                ; 2 uses
   store double %i.gy, ptr %i.gb, align 8, !tbaa !22
   %i.gz = load double, ptr %i.gd, align 8, !tbaa !22
   %i.ha = load double, ptr %i.u, align 8, !tbaa !22
-  %i.hb = tail call double @llvm.fmuladd.f64(double %i.ha, double %23, double %18)
+  %i.hb = tail call double @llvm.fmuladd.f64(double %i.ha, double %32, double %i.gu)
   %i.hc = fmul double %i.gz, %i.hb
   store double %i.hc, ptr %i.go, align 8, !tbaa !22
   %i.hd = getelementptr inbounds [8 x i8], ptr %i.ga, i64 %.neg ; 2 uses

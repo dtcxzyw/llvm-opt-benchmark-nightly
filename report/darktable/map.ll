@@ -205,48 +205,41 @@ _others_location_draw.exit.thread:                ; preds = %.lr.ph.i
   %i.bn = shufflevector <4 x float> %i.bl, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 3, i32 3>
   %i.bo = fsub reassoc nsz arcp contract afn <4 x float> %i.bm, %i.bn
   %i.bp = fmul reassoc nsz arcp contract afn <4 x float> %i.bo, splat (float 5.000000e-01) ; 2 uses
-  %i.bq = fsub reassoc nsz arcp contract afn <4 x float> %i.bl, %i.bp ; 3 uses
-  %i.br = fadd reassoc nsz arcp contract afn <4 x float> %i.bl, %i.bp ; 3 uses
-  %i.bs = shufflevector <4 x float> %i.bq, <4 x float> %i.br, <4 x i32> <i32 0, i32 5, i32 6, i32 3> ; 2 uses
-  %5 = extractelement <4 x float> %i.bq, i64 0
-  %6 = fcmp reassoc nsz arcp contract afn ogt float %5, 1.800000e+02
+  %i.bq = fsub reassoc nsz arcp contract afn <4 x float> %i.bl, %i.bp
+  %i.br = fadd reassoc nsz arcp contract afn <4 x float> %i.bl, %i.bp
+  %i.bs = shufflevector <4 x float> %i.bq, <4 x float> %i.br, <4 x i32> <i32 0, i32 5, i32 6, i32 3> ; 3 uses
   %i.bt = fcmp reassoc nsz arcp contract afn olt <4 x float> %i.bs, <float -1.800000e+02, float -1.800000e+02, float -9.000000e+01, float -9.000000e+01>
-  %i.bu = select <4 x i1> %i.bt, <4 x float> <float -1.800000e+02, float -1.800000e+02, float -9.000000e+01, float -9.000000e+01>, <4 x float> %i.bs ; 4 uses
-  %7 = extractelement <4 x float> %i.bu, i64 0
-  %8 = select i1 %6, float 1.800000e+02, float %7
-  %9 = extractelement <4 x float> %i.br, i64 1
-  %10 = fcmp reassoc nsz arcp contract afn ogt float %9, 1.800000e+02
-  %11 = extractelement <4 x float> %i.bu, i64 1
-  %12 = select i1 %10, float 1.800000e+02, float %11
-  %13 = extractelement <4 x float> %i.br, i64 2
-  %14 = fcmp reassoc nsz arcp contract afn ogt float %13, 9.000000e+01
-  %15 = extractelement <4 x float> %i.bu, i64 2
-  %16 = select i1 %14, float 9.000000e+01, float %15
-  %17 = extractelement <4 x float> %i.bq, i64 3
-  %18 = fcmp reassoc nsz arcp contract afn ogt float %17, 9.000000e+01
-  %19 = extractelement <4 x float> %i.bu, i64 3
-  %20 = select i1 %18, float 9.000000e+01, float %19
+  %i.bu = select <4 x i1> %i.bt, <4 x float> <float -1.800000e+02, float -1.800000e+02, float -9.000000e+01, float -9.000000e+01>, <4 x float> %i.bs
+  %5 = fcmp reassoc nsz arcp contract afn ogt <4 x float> %i.bs, <float 1.800000e+02, float 1.800000e+02, float 9.000000e+01, float 9.000000e+01>
+  %6 = select <4 x i1> %5, <4 x float> <float 1.800000e+02, float 1.800000e+02, float 9.000000e+01, float 9.000000e+01>, <4 x float> %i.bu ; 4 uses
   %.075.i = load ptr, ptr %i.q, align 8, !tbaa !140 ; 2 uses
   %.not76.i = icmp eq ptr %.075.i, null
-  br i1 %.not76.i, label %_view_map_add_polygon_location.exit, label %.lr.ph.i34
+  br i1 %.not76.i, label %_view_map_add_polygon_location.exit, label %.lr.ph.i34.preheader
 
-.lr.ph.i34:                                       ; preds = %.thread38, %bb.n
-  %.080.i = phi ptr [ %.0.i, %bb.n ], [ %.075.i, %.thread38 ] ; 2 uses
-  %.05079.i = phi float [ %.1.i, %bb.n ], [ 0.000000e+00, %.thread38 ] ; 4 uses
-  %.05178.i = phi float [ %.152.i, %bb.n ], [ 0.000000e+00, %.thread38 ] ; 4 uses
-  %.05377.i = phi i32 [ %i.cr, %bb.n ], [ 0, %.thread38 ] ; 2 uses
+.lr.ph.i34.preheader:                             ; preds = %.thread38
+  %7 = extractelement <4 x float> %6, i64 2
+  %8 = extractelement <4 x float> %6, i64 3
+  %9 = extractelement <4 x float> %6, i64 0
+  %10 = extractelement <4 x float> %6, i64 1
+  br label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %.lr.ph.i34.preheader, %bb.n
+  %.080.i = phi ptr [ %.0.i, %bb.n ], [ %.075.i, %.lr.ph.i34.preheader ] ; 2 uses
+  %.05079.i = phi float [ %.1.i, %bb.n ], [ 0.000000e+00, %.lr.ph.i34.preheader ] ; 4 uses
+  %.05178.i = phi float [ %.152.i, %bb.n ], [ 0.000000e+00, %.lr.ph.i34.preheader ] ; 4 uses
+  %.05377.i = phi i32 [ %i.cr, %bb.n ], [ 0, %.lr.ph.i34.preheader ] ; 2 uses
   %i.bv = load ptr, ptr %.080.i, align 8, !tbaa !142 ; 4 uses
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !172 ; 5 uses
-  %i.bx = fcmp reassoc nsz arcp contract afn ugt float %i.bw, %16
-  %i.by = fcmp reassoc nsz arcp contract afn ult float %i.bw, %20
+  %i.bx = fcmp reassoc nsz arcp contract afn ugt float %i.bw, %7
+  %i.by = fcmp reassoc nsz arcp contract afn ult float %i.bw, %8
   %or.cond.i = select i1 %i.bx, i1 true, i1 %i.by
   br i1 %or.cond.i, label %bb.l, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.i34
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bv, i64 4 ; 2 uses
   %i.ca = load float, ptr %i.bz, align 4, !tbaa !173 ; 4 uses
-  %i.cb = fcmp reassoc nsz arcp contract afn ult float %i.ca, %8
-  %i.cc = fcmp reassoc nsz arcp contract afn ugt float %i.ca, %12
+  %i.cb = fcmp reassoc nsz arcp contract afn ult float %i.ca, %9
+  %i.cc = fcmp reassoc nsz arcp contract afn ugt float %i.ca, %10
   %or.cond66.i = select i1 %i.cb, i1 true, i1 %i.cc
   br i1 %or.cond66.i, label %bb.l, label %bb.i
 

@@ -205,12 +205,11 @@ bb.bh:                                            ; preds = %bb.bg
   %i.hm = sitofp i64 %i.gz to double
   %i.hn = insertelement <2 x double> poison, double %i.hl, i64 0
   %i.ho = insertelement <2 x double> %i.hn, double %i.hm, i64 1
-  %i.hp = fdiv <2 x double> %i.ho, splat (double 1.000000e+06) ; 2 uses
-  %1 = extractelement <2 x double> %i.hp, i64 0
-  %2 = fdiv double %1, 6.000000e+01
+  %i.hp = fdiv <2 x double> %i.ho, splat (double 1.000000e+06)
+  %1 = fdiv <2 x double> %i.hp, splat (double 6.000000e+01) ; 2 uses
+  %2 = extractelement <2 x double> %1, i64 0
   store double %2, ptr %i.q, align 8, !noalias !4205
-  %i.hq = extractelement <2 x double> %i.hp, i64 1
-  %3 = fdiv double %i.hq, 6.000000e+01
+  %i.hq = extractelement <2 x double> %1, i64 1
   br label %bb.bm
 
 bb.bi:                                            ; preds = %bb.bg
@@ -248,7 +247,7 @@ bb.bl:                                            ; preds = %_RNvMNtCs3oUPovFnLW
           to label %common.resume unwind label %bb.cg, !noalias !4205
 
 bb.bm:                                            ; preds = %bb.bk, %bb.bj, %bb.bi, %bb.bh
-  %.sink407.i = phi double [ %3, %bb.bh ], [ %i.hw, %bb.bi ], [ %i.ic, %bb.bj ], [ %i.id, %bb.bk ]
+  %.sink407.i = phi double [ %i.hq, %bb.bh ], [ %i.hw, %bb.bi ], [ %i.ic, %bb.bj ], [ %i.id, %bb.bk ]
   store double %.sink407.i, ptr %i.p, align 8, !noalias !4205
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !4205
   store i64 0, ptr %i.o, align 8, !noalias !4205
@@ -326,12 +325,11 @@ bb.bt:                                            ; preds = %bb.bs
   %i.jk = sitofp i64 %i.jj to double
   %i.jl = insertelement <2 x double> poison, double %i.jf, i64 0
   %i.jm = insertelement <2 x double> %i.jl, double %i.jk, i64 1
-  %i.jn = fdiv <2 x double> %i.jm, splat (double 1.000000e+06) ; 2 uses
-  %4 = extractelement <2 x double> %i.jn, i64 0
-  %5 = fdiv double %4, 6.000000e+01
-  store double %5, ptr %i.n, align 8, !noalias !4205
-  %i.jo = extractelement <2 x double> %i.jn, i64 1
-  %6 = fdiv double %i.jo, 6.000000e+01
+  %i.jn = fdiv <2 x double> %i.jm, splat (double 1.000000e+06)
+  %3 = fdiv <2 x double> %i.jn, splat (double 6.000000e+01) ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  store double %4, ptr %i.n, align 8, !noalias !4205
+  %i.jo = extractelement <2 x double> %3, i64 1
   br label %bb.bx
 
 bb.bu:                                            ; preds = %bb.bs
@@ -375,7 +373,7 @@ bb.bw:                                            ; preds = %bb.bs
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw, %bb.bv, %bb.bu, %bb.bt
-  %.sink408.i = phi double [ %i.kn, %bb.bw ], [ %i.ki, %bb.bv ], [ %i.jy, %bb.bu ], [ %6, %bb.bt ]
+  %.sink408.i = phi double [ %i.kn, %bb.bw ], [ %i.ki, %bb.bv ], [ %i.jy, %bb.bu ], [ %i.jo, %bb.bt ]
   store double %.sink408.i, ptr %i.m, align 8, !noalias !4205
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !4205
   %i.ko = mul i64 %.2.i331.i, 1000000
@@ -399,12 +397,11 @@ bb.by:                                            ; preds = %bb.bx
   %i.kx = sitofp i64 %i.kw to double
   %i.ky = insertelement <2 x double> poison, double %i.ks, i64 0
   %i.kz = insertelement <2 x double> %i.ky, double %i.kx, i64 1
-  %i.la = fdiv <2 x double> %i.kz, splat (double 1.000000e+06) ; 2 uses
-  %7 = extractelement <2 x double> %i.la, i64 0
-  %8 = fdiv double %7, 6.000000e+01
-  store double %8, ptr %i.l, align 8, !noalias !4205
-  %i.lb = extractelement <2 x double> %i.la, i64 1
-  %9 = fdiv double %i.lb, 6.000000e+01
+  %i.la = fdiv <2 x double> %i.kz, splat (double 1.000000e+06)
+  %5 = fdiv <2 x double> %i.la, splat (double 6.000000e+01) ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  store double %6, ptr %i.l, align 8, !noalias !4205
+  %i.lb = extractelement <2 x double> %5, i64 1
   br label %switch.lookup
 
 bb.bz:                                            ; preds = %bb.bx
@@ -448,7 +445,7 @@ bb.cb:                                            ; preds = %bb.bx
   br label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.cb, %bb.ca, %bb.bz, %bb.by
-  %.sink409.i = phi double [ %9, %bb.by ], [ %i.ll, %bb.bz ], [ %i.lv, %bb.ca ], [ %i.ma, %bb.cb ]
+  %.sink409.i = phi double [ %i.lb, %bb.by ], [ %i.ll, %bb.bz ], [ %i.lv, %bb.ca ], [ %i.ma, %bb.cb ]
   store double %.sink409.i, ptr %i.k, align 8, !noalias !4205
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !4205
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs_NtCs8frGy5WneL6_4fish5timerNtB4_18PrintElapsedOnDropNtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4drop.244, i64 %.sroa.031.0.i

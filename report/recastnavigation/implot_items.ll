@@ -205,14 +205,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ke, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.kk = extractelement <2 x double> %i.jt, i64 0
-  %19 = extractelement <2 x double> %i.jt, i64 1
+  %i.kk = extractelement <2 x double> %i.jt, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.km, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.kl = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.kl, i64 0
   br label %bb.n
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -225,39 +226,40 @@ bb.n:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.mh, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.kn = load double, ptr %7, align 8, !tbaa !1254
   %i.ko = uitofp nneg i32 %.0110246 to double
-  %i.kp = fmul double %19, %i.ko
+  %i.kp = fmul double %i.kk, %i.ko
   %i.kq = insertelement <2 x double> poison, double %i.kn, i64 0
   %i.kr = insertelement <2 x double> %i.kq, double %i.kp, i64 1
   %i.ks = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jt, <2 x double> splat (double 5.000000e-01), <2 x double> %i.kr) ; 2 uses
-  %20 = extractelement <2 x double> %i.ks, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.kl, double %i.kk, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.ks, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.du) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jt, <2 x double> %i.ks, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.ks, double %i.du, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.kt = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.kt = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.ku = fsub double %i.kt, %i.y
   %i.kv = fdiv double %i.ku, %i.kf
   %i.kw = call double @llvm.fmuladd.f64(double %i.kg, double %i.kv, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.n, %bb.o
-  %.0.i128 = phi double [ %i.kw, %bb.o ], [ %21, %bb.n ]
+  %.0.i128 = phi double [ %i.kw, %bb.o ], [ %24, %bb.n ]
   %i.kx = fsub double %.0.i128, %i.s
   %i.ky = call double @llvm.fmuladd.f64(double %i.w, double %i.kx, double %i.q)
   %i.kz = fptrunc double %i.ky to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.p
 
 bb.p:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.la = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.la = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.lb = fsub double %i.la, %i.ap
   %i.lc = fdiv double %i.lb, %i.kh
   %i.ld = call double @llvm.fmuladd.f64(double %i.ki, double %i.lc, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.p
-  %.0.i125 = phi double [ %i.ld, %bb.p ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.ld, %bb.p ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.le = fsub double %.0.i125, %i.aj
   %i.lf = call double @llvm.fmuladd.f64(double %i.an, double %i.le, double %i.ah)
   %i.lg = fptrunc double %i.lf to float
@@ -660,14 +662,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ke, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.kk = extractelement <2 x double> %i.jt, i64 0
-  %19 = extractelement <2 x double> %i.jt, i64 1
+  %i.kk = extractelement <2 x double> %i.jt, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.km, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.kl = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.kl, i64 0
   br label %bb.n
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -680,39 +683,40 @@ bb.n:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.mh, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.kn = load double, ptr %7, align 8, !tbaa !1254
   %i.ko = uitofp nneg i32 %.0110246 to double
-  %i.kp = fmul double %19, %i.ko
+  %i.kp = fmul double %i.kk, %i.ko
   %i.kq = insertelement <2 x double> poison, double %i.kn, i64 0
   %i.kr = insertelement <2 x double> %i.kq, double %i.kp, i64 1
   %i.ks = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jt, <2 x double> splat (double 5.000000e-01), <2 x double> %i.kr) ; 2 uses
-  %20 = extractelement <2 x double> %i.ks, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.kl, double %i.kk, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.ks, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.du) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jt, <2 x double> %i.ks, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.ks, double %i.du, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.kt = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.kt = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.ku = fsub double %i.kt, %i.y
   %i.kv = fdiv double %i.ku, %i.kf
   %i.kw = call double @llvm.fmuladd.f64(double %i.kg, double %i.kv, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.n, %bb.o
-  %.0.i128 = phi double [ %i.kw, %bb.o ], [ %21, %bb.n ]
+  %.0.i128 = phi double [ %i.kw, %bb.o ], [ %24, %bb.n ]
   %i.kx = fsub double %.0.i128, %i.s
   %i.ky = call double @llvm.fmuladd.f64(double %i.w, double %i.kx, double %i.q)
   %i.kz = fptrunc double %i.ky to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.p
 
 bb.p:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.la = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.la = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.lb = fsub double %i.la, %i.ap
   %i.lc = fdiv double %i.lb, %i.kh
   %i.ld = call double @llvm.fmuladd.f64(double %i.ki, double %i.lc, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.p
-  %.0.i125 = phi double [ %i.ld, %bb.p ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.ld, %bb.p ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.le = fsub double %.0.i125, %i.aj
   %i.lf = call double @llvm.fmuladd.f64(double %i.an, double %i.le, double %i.ah)
   %i.lg = fptrunc double %i.lf to float
@@ -1115,14 +1119,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ke, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.kk = extractelement <2 x double> %i.jt, i64 0
-  %19 = extractelement <2 x double> %i.jt, i64 1
+  %i.kk = extractelement <2 x double> %i.jt, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.km, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.kl = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.kl, i64 0
   br label %bb.n
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -1135,39 +1140,40 @@ bb.n:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.mh, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.kn = load double, ptr %7, align 8, !tbaa !1254
   %i.ko = uitofp nneg i32 %.0110246 to double
-  %i.kp = fmul double %19, %i.ko
+  %i.kp = fmul double %i.kk, %i.ko
   %i.kq = insertelement <2 x double> poison, double %i.kn, i64 0
   %i.kr = insertelement <2 x double> %i.kq, double %i.kp, i64 1
   %i.ks = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jt, <2 x double> splat (double 5.000000e-01), <2 x double> %i.kr) ; 2 uses
-  %20 = extractelement <2 x double> %i.ks, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.kl, double %i.kk, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.ks, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.du) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jt, <2 x double> %i.ks, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.ks, double %i.du, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.kt = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.kt = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.ku = fsub double %i.kt, %i.y
   %i.kv = fdiv double %i.ku, %i.kf
   %i.kw = call double @llvm.fmuladd.f64(double %i.kg, double %i.kv, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.n, %bb.o
-  %.0.i128 = phi double [ %i.kw, %bb.o ], [ %21, %bb.n ]
+  %.0.i128 = phi double [ %i.kw, %bb.o ], [ %24, %bb.n ]
   %i.kx = fsub double %.0.i128, %i.s
   %i.ky = call double @llvm.fmuladd.f64(double %i.w, double %i.kx, double %i.q)
   %i.kz = fptrunc double %i.ky to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.p
 
 bb.p:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.la = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.la = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.lb = fsub double %i.la, %i.ap
   %i.lc = fdiv double %i.lb, %i.kh
   %i.ld = call double @llvm.fmuladd.f64(double %i.ki, double %i.lc, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.p
-  %.0.i125 = phi double [ %i.ld, %bb.p ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.ld, %bb.p ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.le = fsub double %.0.i125, %i.aj
   %i.lf = call double @llvm.fmuladd.f64(double %i.an, double %i.le, double %i.ah)
   %i.lg = fptrunc double %i.lf to float
@@ -1570,14 +1576,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ke, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.kk = extractelement <2 x double> %i.jt, i64 0
-  %19 = extractelement <2 x double> %i.jt, i64 1
+  %i.kk = extractelement <2 x double> %i.jt, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.km, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.kl = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.kl, i64 0
   br label %bb.n
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -1590,39 +1597,40 @@ bb.n:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.mh, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.kn = load double, ptr %7, align 8, !tbaa !1254
   %i.ko = uitofp nneg i32 %.0110246 to double
-  %i.kp = fmul double %19, %i.ko
+  %i.kp = fmul double %i.kk, %i.ko
   %i.kq = insertelement <2 x double> poison, double %i.kn, i64 0
   %i.kr = insertelement <2 x double> %i.kq, double %i.kp, i64 1
   %i.ks = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jt, <2 x double> splat (double 5.000000e-01), <2 x double> %i.kr) ; 2 uses
-  %20 = extractelement <2 x double> %i.ks, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.kl, double %i.kk, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.ks, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.du) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jt, <2 x double> %i.ks, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.ks, double %i.du, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.kt = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.kt = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.ku = fsub double %i.kt, %i.y
   %i.kv = fdiv double %i.ku, %i.kf
   %i.kw = call double @llvm.fmuladd.f64(double %i.kg, double %i.kv, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.n, %bb.o
-  %.0.i128 = phi double [ %i.kw, %bb.o ], [ %21, %bb.n ]
+  %.0.i128 = phi double [ %i.kw, %bb.o ], [ %24, %bb.n ]
   %i.kx = fsub double %.0.i128, %i.s
   %i.ky = call double @llvm.fmuladd.f64(double %i.w, double %i.kx, double %i.q)
   %i.kz = fptrunc double %i.ky to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.p
 
 bb.p:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.la = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.la = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.lb = fsub double %i.la, %i.ap
   %i.lc = fdiv double %i.lb, %i.kh
   %i.ld = call double @llvm.fmuladd.f64(double %i.ki, double %i.lc, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.p
-  %.0.i125 = phi double [ %i.ld, %bb.p ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.ld, %bb.p ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.le = fsub double %.0.i125, %i.aj
   %i.lf = call double @llvm.fmuladd.f64(double %i.an, double %i.le, double %i.ah)
   %i.lg = fptrunc double %i.lf to float
@@ -2025,14 +2033,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.jv, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.kb = extractelement <2 x double> %i.jk, i64 0
-  %19 = extractelement <2 x double> %i.jk, i64 1
+  %i.kb = extractelement <2 x double> %i.jk, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.kd, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.kc = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.kc, i64 0
   br label %bb.n
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -2045,39 +2054,40 @@ bb.n:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.lx, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.ke = load double, ptr %7, align 8, !tbaa !1254
   %i.kf = uitofp nneg i32 %.0110246 to double
-  %i.kg = fmul double %19, %i.kf
+  %i.kg = fmul double %i.kb, %i.kf
   %i.kh = insertelement <2 x double> poison, double %i.ke, i64 0
   %i.ki = insertelement <2 x double> %i.kh, double %i.kg, i64 1
   %i.kj = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jk, <2 x double> splat (double 5.000000e-01), <2 x double> %i.ki) ; 2 uses
-  %20 = extractelement <2 x double> %i.kj, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.kc, double %i.kb, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.kj, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.dl) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jk, <2 x double> %i.kj, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.kj, double %i.dl, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.kk = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.kk = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.kl = fsub double %i.kk, %i.y
   %i.km = fdiv double %i.kl, %i.jw
   %i.kn = call double @llvm.fmuladd.f64(double %i.jx, double %i.km, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.n, %bb.o
-  %.0.i128 = phi double [ %i.kn, %bb.o ], [ %21, %bb.n ]
+  %.0.i128 = phi double [ %i.kn, %bb.o ], [ %24, %bb.n ]
   %i.ko = fsub double %.0.i128, %i.s
   %i.kp = call double @llvm.fmuladd.f64(double %i.w, double %i.ko, double %i.q)
   %i.kq = fptrunc double %i.kp to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.p
 
 bb.p:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.kr = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.kr = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.ks = fsub double %i.kr, %i.ap
   %i.kt = fdiv double %i.ks, %i.jy
   %i.ku = call double @llvm.fmuladd.f64(double %i.jz, double %i.kt, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.p
-  %.0.i125 = phi double [ %i.ku, %bb.p ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.ku, %bb.p ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.kv = fsub double %.0.i125, %i.aj
   %i.kw = call double @llvm.fmuladd.f64(double %i.an, double %i.kv, double %i.ah)
   %i.kx = fptrunc double %i.kw to float
@@ -2480,14 +2490,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.jv, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.kb = extractelement <2 x double> %i.jk, i64 0
-  %19 = extractelement <2 x double> %i.jk, i64 1
+  %i.kb = extractelement <2 x double> %i.jk, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.kd, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.kc = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.kc, i64 0
   br label %bb.n
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -2500,39 +2511,40 @@ bb.n:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.lx, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.ke = load double, ptr %7, align 8, !tbaa !1254
   %i.kf = uitofp nneg i32 %.0110246 to double
-  %i.kg = fmul double %19, %i.kf
+  %i.kg = fmul double %i.kb, %i.kf
   %i.kh = insertelement <2 x double> poison, double %i.ke, i64 0
   %i.ki = insertelement <2 x double> %i.kh, double %i.kg, i64 1
   %i.kj = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jk, <2 x double> splat (double 5.000000e-01), <2 x double> %i.ki) ; 2 uses
-  %20 = extractelement <2 x double> %i.kj, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.kc, double %i.kb, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.kj, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.dl) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jk, <2 x double> %i.kj, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.kj, double %i.dl, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.kk = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.kk = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.kl = fsub double %i.kk, %i.y
   %i.km = fdiv double %i.kl, %i.jw
   %i.kn = call double @llvm.fmuladd.f64(double %i.jx, double %i.km, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.n, %bb.o
-  %.0.i128 = phi double [ %i.kn, %bb.o ], [ %21, %bb.n ]
+  %.0.i128 = phi double [ %i.kn, %bb.o ], [ %24, %bb.n ]
   %i.ko = fsub double %.0.i128, %i.s
   %i.kp = call double @llvm.fmuladd.f64(double %i.w, double %i.ko, double %i.q)
   %i.kq = fptrunc double %i.kp to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.p
 
 bb.p:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.kr = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.kr = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.ks = fsub double %i.kr, %i.ap
   %i.kt = fdiv double %i.ks, %i.jy
   %i.ku = call double @llvm.fmuladd.f64(double %i.jz, double %i.kt, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.p
-  %.0.i125 = phi double [ %i.ku, %bb.p ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.ku, %bb.p ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.kv = fsub double %.0.i125, %i.aj
   %i.kw = call double @llvm.fmuladd.f64(double %i.an, double %i.kv, double %i.ah)
   %i.kx = fptrunc double %i.kw to float
@@ -2935,14 +2947,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.jx, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.kd = extractelement <2 x double> %i.jm, i64 0
-  %19 = extractelement <2 x double> %i.jm, i64 1
+  %i.kd = extractelement <2 x double> %i.jm, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.kf, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.ke = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.ke, i64 0
   br label %bb.n
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -2955,39 +2968,40 @@ bb.n:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.lz, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.kg = load double, ptr %7, align 8, !tbaa !1254
   %i.kh = uitofp nneg i32 %.0110246 to double
-  %i.ki = fmul double %19, %i.kh
+  %i.ki = fmul double %i.kd, %i.kh
   %i.kj = insertelement <2 x double> poison, double %i.kg, i64 0
   %i.kk = insertelement <2 x double> %i.kj, double %i.ki, i64 1
   %i.kl = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jm, <2 x double> splat (double 5.000000e-01), <2 x double> %i.kk) ; 2 uses
-  %20 = extractelement <2 x double> %i.kl, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.ke, double %i.kd, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.kl, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.dn) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jm, <2 x double> %i.kl, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.kl, double %i.dn, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.km = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.km = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.kn = fsub double %i.km, %i.y
   %i.ko = fdiv double %i.kn, %i.jy
   %i.kp = call double @llvm.fmuladd.f64(double %i.jz, double %i.ko, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.n, %bb.o
-  %.0.i128 = phi double [ %i.kp, %bb.o ], [ %21, %bb.n ]
+  %.0.i128 = phi double [ %i.kp, %bb.o ], [ %24, %bb.n ]
   %i.kq = fsub double %.0.i128, %i.s
   %i.kr = call double @llvm.fmuladd.f64(double %i.w, double %i.kq, double %i.q)
   %i.ks = fptrunc double %i.kr to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.p
 
 bb.p:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.kt = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.kt = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.ku = fsub double %i.kt, %i.ap
   %i.kv = fdiv double %i.ku, %i.ka
   %i.kw = call double @llvm.fmuladd.f64(double %i.kb, double %i.kv, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.p
-  %.0.i125 = phi double [ %i.kw, %bb.p ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.kw, %bb.p ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.kx = fsub double %.0.i125, %i.aj
   %i.ky = call double @llvm.fmuladd.f64(double %i.an, double %i.kx, double %i.ah)
   %i.kz = fptrunc double %i.ky to float
@@ -3390,14 +3404,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.jx, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.kd = extractelement <2 x double> %i.jm, i64 0
-  %19 = extractelement <2 x double> %i.jm, i64 1
+  %i.kd = extractelement <2 x double> %i.jm, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.kf, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.ke = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.ke, i64 0
   br label %bb.n
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -3410,39 +3425,40 @@ bb.n:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.lz, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.kg = load double, ptr %7, align 8, !tbaa !1254
   %i.kh = uitofp nneg i32 %.0110246 to double
-  %i.ki = fmul double %19, %i.kh
+  %i.ki = fmul double %i.kd, %i.kh
   %i.kj = insertelement <2 x double> poison, double %i.kg, i64 0
   %i.kk = insertelement <2 x double> %i.kj, double %i.ki, i64 1
   %i.kl = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jm, <2 x double> splat (double 5.000000e-01), <2 x double> %i.kk) ; 2 uses
-  %20 = extractelement <2 x double> %i.kl, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.ke, double %i.kd, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.kl, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.dn) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jm, <2 x double> %i.kl, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.kl, double %i.dn, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.km = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.km = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.kn = fsub double %i.km, %i.y
   %i.ko = fdiv double %i.kn, %i.jy
   %i.kp = call double @llvm.fmuladd.f64(double %i.jz, double %i.ko, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.n, %bb.o
-  %.0.i128 = phi double [ %i.kp, %bb.o ], [ %21, %bb.n ]
+  %.0.i128 = phi double [ %i.kp, %bb.o ], [ %24, %bb.n ]
   %i.kq = fsub double %.0.i128, %i.s
   %i.kr = call double @llvm.fmuladd.f64(double %i.w, double %i.kq, double %i.q)
   %i.ks = fptrunc double %i.kr to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.p
 
 bb.p:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.kt = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.kt = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.ku = fsub double %i.kt, %i.ap
   %i.kv = fdiv double %i.ku, %i.ka
   %i.kw = call double @llvm.fmuladd.f64(double %i.kb, double %i.kv, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.p
-  %.0.i125 = phi double [ %i.kw, %bb.p ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.kw, %bb.p ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.kx = fsub double %.0.i125, %i.aj
   %i.ky = call double @llvm.fmuladd.f64(double %i.an, double %i.kx, double %i.ah)
   %i.kz = fptrunc double %i.ky to float
@@ -3845,14 +3861,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.jw, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.kc = extractelement <2 x double> %i.jl, i64 0
-  %19 = extractelement <2 x double> %i.jl, i64 1
+  %i.kc = extractelement <2 x double> %i.jl, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.ke, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.kd = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.kd, i64 0
   br label %bb.n
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -3865,39 +3882,40 @@ bb.n:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.lz, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.kf = load double, ptr %7, align 8, !tbaa !1254
   %i.kg = uitofp nneg i32 %.0110246 to double
-  %i.kh = fmul double %19, %i.kg
+  %i.kh = fmul double %i.kc, %i.kg
   %i.ki = insertelement <2 x double> poison, double %i.kf, i64 0
   %i.kj = insertelement <2 x double> %i.ki, double %i.kh, i64 1
   %i.kk = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jl, <2 x double> splat (double 5.000000e-01), <2 x double> %i.kj) ; 2 uses
-  %20 = extractelement <2 x double> %i.kk, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.kd, double %i.kc, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.kk, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.dm) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jl, <2 x double> %i.kk, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.kk, double %i.dm, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.kl = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.kl = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.km = fsub double %i.kl, %i.y
   %i.kn = fdiv double %i.km, %i.jx
   %i.ko = call double @llvm.fmuladd.f64(double %i.jy, double %i.kn, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.n, %bb.o
-  %.0.i128 = phi double [ %i.ko, %bb.o ], [ %21, %bb.n ]
+  %.0.i128 = phi double [ %i.ko, %bb.o ], [ %24, %bb.n ]
   %i.kp = fsub double %.0.i128, %i.s
   %i.kq = call double @llvm.fmuladd.f64(double %i.w, double %i.kp, double %i.q)
   %i.kr = fptrunc double %i.kq to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.p
 
 bb.p:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.ks = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.ks = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.kt = fsub double %i.ks, %i.ap
   %i.ku = fdiv double %i.kt, %i.jz
   %i.kv = call double @llvm.fmuladd.f64(double %i.ka, double %i.ku, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.p
-  %.0.i125 = phi double [ %i.kv, %bb.p ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.kv, %bb.p ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.kw = fsub double %.0.i125, %i.aj
   %i.kx = call double @llvm.fmuladd.f64(double %i.an, double %i.kw, double %i.ah)
   %i.ky = fptrunc double %i.kx to float
@@ -4300,14 +4318,15 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ju, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.ka = extractelement <2 x double> %i.jj, i64 0
-  %19 = extractelement <2 x double> %i.jj, i64 1
+  %i.ka = extractelement <2 x double> %i.jj, i64 1
+  %19 = insertelement <2 x double> poison, double %., i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
   %.0111250 = phi i32 [ %i.kc, %._crit_edge247 ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0112249 = phi i64 [ %indvars.iv.next256, %._crit_edge247 ], [ 0, %.preheader.preheader ]
   %i.kb = uitofp nneg i32 %.0111250 to double
+  %20 = insertelement <2 x double> %19, double %i.kb, i64 0
   br label %bb.m
 
 ._crit_edge247:                                   ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
@@ -4320,39 +4339,40 @@ bb.m:                                             ; preds = %.preheader, %_ZNK6I
   %.0110246 = phi i32 [ 0, %.preheader ], [ %i.lv, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126 ] ; 2 uses
   %i.kd = load double, ptr %7, align 8, !tbaa !1254
   %i.ke = uitofp nneg i32 %.0110246 to double
-  %i.kf = fmul double %19, %i.ke
+  %i.kf = fmul double %i.ka, %i.ke
   %i.kg = insertelement <2 x double> poison, double %i.kd, i64 0
   %i.kh = insertelement <2 x double> %i.kg, double %i.kf, i64 1
   %i.ki = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jj, <2 x double> splat (double 5.000000e-01), <2 x double> %i.kh) ; 2 uses
-  %20 = extractelement <2 x double> %i.ki, i64 0
-  %21 = call double @llvm.fmuladd.f64(double %i.kb, double %i.ka, double %20) ; 2 uses
-  %22 = extractelement <2 x double> %i.ki, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %., double %22, double %i.dk) ; 2 uses
+  %21 = shufflevector <2 x double> %i.jj, <2 x double> %i.ki, <2 x i32> <i32 0, i32 3>
+  %22 = insertelement <2 x double> %i.ki, double %i.dk, i64 1
+  %23 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %21, <2 x double> %22) ; 2 uses
+  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
   br i1 %.not.i127, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.kj = call noundef double %i.ac(double noundef %21, ptr noundef %i.ae) #16, !inline_history !22
+  %i.kj = call noundef double %i.ac(double noundef %24, ptr noundef %i.ae) #16, !inline_history !22
   %i.kk = fsub double %i.kj, %i.y
   %i.kl = fdiv double %i.kk, %i.jv
   %i.km = call double @llvm.fmuladd.f64(double %i.jw, double %i.kl, double %i.s)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit129:       ; preds = %bb.m, %bb.n
-  %.0.i128 = phi double [ %i.km, %bb.n ], [ %21, %bb.m ]
+  %.0.i128 = phi double [ %i.km, %bb.n ], [ %24, %bb.m ]
   %i.kn = fsub double %.0.i128, %i.s
   %i.ko = call double @llvm.fmuladd.f64(double %i.w, double %i.kn, double %i.q)
   %i.kp = fptrunc double %i.ko to float
+  %25 = extractelement <2 x double> %23, i64 1    ; 2 uses
   br i1 %.not.i124, label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126, label %bb.o
 
 bb.o:                                             ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129
-  %i.kq = call noundef double %i.at(double noundef %23, ptr noundef %i.av) #16, !inline_history !22
+  %i.kq = call noundef double %i.at(double noundef %25, ptr noundef %i.av) #16, !inline_history !22
   %i.kr = fsub double %i.kq, %i.ap
   %i.ks = fdiv double %i.kr, %i.jx
   %i.kt = call double @llvm.fmuladd.f64(double %i.jy, double %i.ks, double %i.aj)
   br label %_ZNK6ImPlot12Transformer1clIdEEfT_.exit126
 
 _ZNK6ImPlot12Transformer1clIdEEfT_.exit126:       ; preds = %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129, %bb.o
-  %.0.i125 = phi double [ %i.kt, %bb.o ], [ %23, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
+  %.0.i125 = phi double [ %i.kt, %bb.o ], [ %25, %_ZNK6ImPlot12Transformer1clIdEEfT_.exit129 ]
   %i.ku = fsub double %.0.i125, %i.aj
   %i.kv = call double @llvm.fmuladd.f64(double %i.an, double %i.ku, double %i.ah)
   %i.kw = fptrunc double %i.kv to float

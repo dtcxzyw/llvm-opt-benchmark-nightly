@@ -202,7 +202,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.e = load double, ptr %i.d, align 8, !tbaa !20
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.g = load double, ptr %i.f, align 8, !tbaa !21 ; 5 uses
+  %i.g = load double, ptr %i.f, align 8, !tbaa !21 ; 3 uses
   %i.h = tail call ptr @N_VGetSubvector_ManyVector(ptr noundef %1, i64 noundef 0) #9
   %i.i = tail call ptr @N_VGetArrayPointer(ptr noundef %i.h) #9 ; 11 uses
   %i.j = icmp eq ptr %i.i, null
@@ -271,12 +271,9 @@ check_flag.exit83:                                ; preds = %bb.f
 bb.g:                                             ; preds = %bb.f
   tail call void @N_VConst(double noundef 0.000000e+00, ptr noundef %2) #9
   %i.al = insertelement <2 x double> poison, double %i.g, i64 0
-  %i.am = shufflevector <2 x double> %i.al, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.an = fdiv <2 x double> %i.c, %i.am           ; 2 uses
-  %4 = extractelement <2 x double> %i.an, i64 0
-  %5 = fdiv double %4, %i.g                       ; 2 uses
-  %6 = extractelement <2 x double> %i.an, i64 1
-  %7 = fdiv double %6, %i.g                       ; 2 uses
+  %i.am = shufflevector <2 x double> %i.al, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.an = fdiv <2 x double> %i.c, %i.am
+  %4 = fdiv <2 x double> %i.an, %i.am             ; 4 uses
   %i.ao = fdiv double %i.e, %i.g
   %i.ap = fdiv double %i.ao, %i.g                 ; 2 uses
   %i.aq = add i64 %i.a, -1                        ; 4 uses
@@ -352,10 +349,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.as, -2                      ; 2 uses
   %i.be = or i64 %i.as, 1
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %5, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
-  %broadcast.splatinsert196 = insertelement <2 x double> poison, double %7, i64 0
-  %broadcast.splat197 = shufflevector <2 x double> %broadcast.splatinsert196, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat197 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %broadcast.splatinsert198 = insertelement <2 x double> poison, double %i.ap, i64 0
   %broadcast.splat199 = shufflevector <2 x double> %broadcast.splatinsert198, <2 x double> poison, <2 x i32> zeroinitializer
   br label %vector.body
@@ -407,6 +402,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader208:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.096.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph.preheader ], [ %i.be, %middle.block ]
+  %5 = extractelement <2 x double> %4, i64 0
+  %6 = extractelement <2 x double> %4, i64 1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader208, %.lr.ph
@@ -432,7 +429,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.cj
   %i.cv = load double, ptr %i.cu, align 8, !tbaa !16
   %i.cw = fadd double %i.ct, %i.cv
-  %i.cx = fmul double %7, %i.cw
+  %i.cx = fmul double %6, %i.cw
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %.096
   store double %i.cx, ptr %i.cy, align 8, !tbaa !16
   %i.cz = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.cd

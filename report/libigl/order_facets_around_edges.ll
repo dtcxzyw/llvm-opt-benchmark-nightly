@@ -205,7 +205,9 @@ _ZNSt13_Bvector_baseISaIbEED2Ev.exit.i.i:         ; preds = %bb.u
   %i.jj = insertelement <2 x double> poison, double %i.bn, i64 0
   %i.jk = insertelement <2 x double> %i.jj, double %i.bp, i64 1
   %i.jl = insertelement <2 x double> poison, double %i.bp, i64 0
-  %i.jm = insertelement <2 x double> %i.jl, double %i.bl, i64 1
+  %10 = insertelement <2 x double> %i.jl, double %i.bl, i64 1
+  %11 = insertelement <2 x double> poison, double %.sroa.20312.4, i64 0
+  %i.jm = insertelement <2 x double> %11, double %i.bp, i64 1
   br label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph366, %bb.aa
@@ -257,28 +259,28 @@ bb.y:                                             ; preds = %bb.w, %bb.x
   %i.kq = insertelement <2 x double> poison, double %i.kn, i64 0
   %i.kr = insertelement <2 x double> %i.kq, double %i.kp, i64 1
   %i.ks = fneg <2 x double> %i.kr
-  %i.kt = fmul <2 x double> %i.jm, %i.ks
+  %i.kt = fmul <2 x double> %10, %i.ks
   %i.ku = insertelement <2 x double> poison, double %i.kp, i64 0
   %i.kv = insertelement <2 x double> %i.ku, double %i.kl, i64 1
   %i.kw = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jk, <2 x double> %i.kv, <2 x double> %i.kt)
   %i.kx = fneg double %i.kl
   %i.ky = fmul double %i.bn, %i.kx
-  %10 = call double @llvm.fmuladd.f64(double %i.bl, double %i.kn, double %i.ky)
   %i.kz = fmul <2 x double> %.sroa.0298.4, %i.kw  ; 2 uses
-  %11 = fmul double %.sroa.20312.4, %10
   %i.la = getelementptr [8 x i8], ptr %i.jh, i64 %.091365 ; 7 uses
   %i.lb = fmul <2 x double> %.sroa.0326.8.vec.insert, %.sroa.0187.8.vec.insert ; 2 uses
   %i.lc = shufflevector <2 x double> %i.kz, <2 x double> %i.lb, <2 x i32> <i32 0, i32 2>
   %i.ld = shufflevector <2 x double> %i.kz, <2 x double> %i.lb, <2 x i32> <i32 1, i32 3>
-  %i.le = fadd <2 x double> %i.lc, %i.ld          ; 2 uses
-  %12 = extractelement <2 x double> %i.le, i64 0
-  %13 = fadd double %11, %12
-  store double %13, ptr %i.la, align 8, !tbaa !39
-  %14 = fmul double %i.bp, %i.kp
-  %i.lf = extractelement <2 x double> %i.le, i64 1
-  %15 = fadd double %14, %i.lf
+  %i.le = fadd <2 x double> %i.lc, %i.ld
+  %12 = call double @llvm.fmuladd.f64(double %i.bl, double %i.kn, double %i.ky)
+  %13 = insertelement <2 x double> poison, double %12, i64 0
+  %14 = insertelement <2 x double> %13, double %i.kp, i64 1
+  %15 = fmul <2 x double> %i.jm, %14
+  %16 = fadd <2 x double> %15, %i.le              ; 2 uses
+  %i.lf = extractelement <2 x double> %16, i64 0
+  store double %i.lf, ptr %i.la, align 8, !tbaa !39
   %i.lg = getelementptr [8 x i8], ptr %i.la, i64 %i.ji ; 3 uses
-  store double %15, ptr %i.lg, align 8, !tbaa !39
+  %17 = extractelement <2 x double> %16, i64 1
+  store double %17, ptr %i.lg, align 8, !tbaa !39
   %i.lh = and i64 %storemerge353, %i.kd
   %.not = icmp eq i64 %i.lh, 0                    ; 2 uses
   br i1 %.not, label %bb.aa, label %bb.z

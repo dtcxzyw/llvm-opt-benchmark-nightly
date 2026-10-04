@@ -202,19 +202,18 @@ bb.a:
   %i.i = fmul <2 x double> %i.h, splat (double 1.000000e+03) ; 2 uses
   %i.j = sitofp <2 x i32> %i.f to <2 x double>
   %i.k = fdiv <2 x double> %i.j, %i.h
-  %i.l = fmul <2 x double> %i.k, splat (double f0x3F50000000000000) ; 2 uses
-  %5 = extractelement <2 x double> %i.l, i64 0
-  %6 = fmul double %5, f0x3F50000000000000
-  %7 = extractelement <2 x double> %i.l, i64 1
-  %8 = fmul double %7, f0x3F50000000000000
+  %i.l = fmul <2 x double> %i.k, splat (double f0x3F50000000000000)
+  %5 = fmul <2 x double> %i.l, splat (double f0x3F50000000000000) ; 2 uses
   %i.m = load double, ptr %0, align 8, !tbaa !94
   %i.n = fmul double %i.m, 1.000000e+03           ; 2 uses
   %i.o = sitofp i32 %i.d to double
   %i.p = fdiv double %i.n, %i.o
   %.str.149..str.148 = select i1 %.not, ptr @.str.149, ptr @.str.148
-  %i.q = extractelement <2 x double> %i.i, i64 0
-  %i.r = extractelement <2 x double> %i.i, i64 1
-  %i.s = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.a, ptr noundef nonnull %.str.149..str.148, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %i.g, i32 noundef %i.d, double noundef %i.q, double noundef %i.r, double noundef %6, double noundef %8, double noundef %i.n, double noundef %i.p) #17 ; 0 uses
+  %6 = extractelement <2 x double> %i.i, i64 0
+  %7 = extractelement <2 x double> %i.i, i64 1
+  %i.q = extractelement <2 x double> %5, i64 0
+  %i.r = extractelement <2 x double> %5, i64 1
+  %i.s = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.a, ptr noundef nonnull %.str.149..str.148, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %i.g, i32 noundef %i.d, double noundef %6, double noundef %7, double noundef %i.q, double noundef %i.r, double noundef %i.n, double noundef %i.p) #17 ; 0 uses
   ret void
 }
 

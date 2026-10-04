@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.n
   %.sroa.gep209 = getelementptr inbounds nuw i8, ptr %7, i64 40
   %.sroa.gep210 = getelementptr inbounds nuw i8, ptr %0, i64 272
   %.sroa.sel147.sroa.sel211 = select i1 %.not217, ptr %.sroa.gep210, ptr %.sroa.gep209
-  %i.jw = load double, ptr %.sroa.sel147.sroa.sel211, align 8, !tbaa !61 ; 3 uses
+  %i.jw = load double, ptr %.sroa.sel147.sroa.sel211, align 8, !tbaa !61 ; 2 uses
   %i.jx = fdiv double %i.js, %i.jr
   %.sroa.gep204 = getelementptr inbounds nuw i8, ptr %8, i64 40
   %.sroa.gep205 = getelementptr inbounds nuw i8, ptr %0, i64 344
@@ -226,7 +226,6 @@ bb.p:                                             ; preds = %bb.n
   %i.km = insertelement <2 x double> poison, double %i.jq, i64 0
   %i.kn = shufflevector <2 x double> %i.km, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ko = fmul <2 x double> %i.kn, %i.kl
-  %18 = extractelement <2 x double> %i.kl, i64 1
   store <2 x double> %i.ko, ptr %17, align 16, !tbaa !61
   %i.kp = getelementptr inbounds nuw i8, ptr %17, i64 16
   %i.kq = getelementptr inbounds nuw i8, ptr %17, i64 24
@@ -241,14 +240,15 @@ bb.p:                                             ; preds = %bb.n
   %i.kz = insertelement <2 x double> poison, double %i.jv, i64 0
   %i.la = shufflevector <2 x double> %i.kz, <2 x double> poison, <2 x i32> zeroinitializer
   %i.lb = shufflevector <2 x double> %i.kl, <2 x double> %i.kv, <2 x i32> <i32 0, i32 2>
-  %i.lc = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.la, <2 x double> %i.lb, <2 x double> %i.ky) ; 2 uses
-  %19 = extractelement <2 x double> %i.lc, i64 0
-  %20 = call double @llvm.fmuladd.f64(double %i.jw, double %18, double %19)
-  %21 = fsub double %20, %i.jx
-  store double %21, ptr %i.kp, align 16, !tbaa !61
-  %i.ld = extractelement <2 x double> %i.kv, i64 1
-  %22 = extractelement <2 x double> %i.lc, i64 1
-  %23 = call double @llvm.fmuladd.f64(double %i.jw, double %i.ld, double %22)
+  %i.lc = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.la, <2 x double> %i.lb, <2 x double> %i.ky)
+  %18 = insertelement <2 x double> poison, double %i.jw, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = shufflevector <2 x double> %i.kl, <2 x double> %i.kv, <2 x i32> <i32 1, i32 3>
+  %21 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %19, <2 x double> %20, <2 x double> %i.lc) ; 2 uses
+  %i.ld = extractelement <2 x double> %21, i64 0
+  %22 = fsub double %i.ld, %i.jx
+  store double %22, ptr %i.kp, align 16, !tbaa !61
+  %23 = extractelement <2 x double> %21, i64 1
   %i.le = fsub double %23, %i.kb
   store <2 x double> %i.kw, ptr %i.kq, align 8, !tbaa !61
   %i.lf = getelementptr inbounds nuw i8, ptr %17, i64 40
@@ -651,7 +651,7 @@ begin_hunk_1_@_ZN2cv4usac26CovarianceAffineSolverImpl8estimateERKSt6vectorIbSaIb
   %i.ks = getelementptr inbounds nuw i8, ptr %i.km, i64 16
   %i.kt = load double, ptr %i.ks, align 8, !tbaa !61 ; 2 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %i.km, i64 40
-  %i.kv = load double, ptr %i.ku, align 8, !tbaa !61 ; 3 uses
+  %i.kv = load double, ptr %i.ku, align 8, !tbaa !61 ; 2 uses
   %i.kw = getelementptr inbounds nuw i8, ptr %i.kp, i64 40
   %i.kx = load double, ptr %i.kw, align 8, !tbaa !61 ; 2 uses
   %i.ky = load double, ptr %i.kr, align 8, !tbaa !61 ; 2 uses
@@ -675,8 +675,6 @@ begin_hunk_1_@_ZN2cv4usac26CovarianceAffineSolverImpl8estimateERKSt6vectorIbSaIb
   %i.lq = insertelement <2 x double> poison, double %i.kn, i64 0
   %i.lr = shufflevector <2 x double> %i.lq, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ls = fmul <2 x double> %i.lr, %i.lp
-  %14 = extractelement <2 x double> %i.lp, i64 1
-  %15 = extractelement <2 x double> %i.lg, i64 0
   store <2 x double> %i.ls, ptr %13, align 16, !tbaa !61
   %i.lt = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.lu = getelementptr inbounds nuw i8, ptr %13, i64 24
@@ -690,15 +688,16 @@ begin_hunk_1_@_ZN2cv4usac26CovarianceAffineSolverImpl8estimateERKSt6vectorIbSaIb
   %i.mc = insertelement <2 x double> poison, double %i.kt, i64 0
   %i.md = shufflevector <2 x double> %i.mc, <2 x double> poison, <2 x i32> zeroinitializer
   %i.me = shufflevector <2 x double> %i.lp, <2 x double> %i.ly, <2 x i32> <i32 0, i32 2>
-  %i.mf = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.md, <2 x double> %i.me, <2 x double> %i.mb) ; 2 uses
-  %16 = extractelement <2 x double> %i.mf, i64 0
-  %17 = call double @llvm.fmuladd.f64(double %i.kv, double %14, double %16)
-  %18 = fsub double %17, %15
-  store double %18, ptr %i.lt, align 16, !tbaa !61
-  %i.mg = extractelement <2 x double> %i.ly, i64 1
-  %19 = extractelement <2 x double> %i.mf, i64 1
-  %20 = call double @llvm.fmuladd.f64(double %i.kv, double %i.mg, double %19)
-  %i.mh = fsub double %20, %i.lh
+  %i.mf = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.md, <2 x double> %i.me, <2 x double> %i.mb)
+  %14 = insertelement <2 x double> poison, double %i.kv, i64 0
+  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
+  %16 = shufflevector <2 x double> %i.lp, <2 x double> %i.ly, <2 x i32> <i32 1, i32 3>
+  %17 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %15, <2 x double> %16, <2 x double> %i.mf) ; 2 uses
+  %foldExtExtBinop288 = fsub <2 x double> %17, %i.lg
+  %i.mg = extractelement <2 x double> %foldExtExtBinop288, i64 0
+  store double %i.mg, ptr %i.lt, align 16, !tbaa !61
+  %18 = extractelement <2 x double> %17, i64 1
+  %i.mh = fsub double %18, %i.lh
   store <2 x double> %i.lz, ptr %i.lu, align 8, !tbaa !61
   %i.mi = getelementptr inbounds nuw i8, ptr %13, i64 40
   store double %i.mh, ptr %i.mi, align 8, !tbaa !61

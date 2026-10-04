@@ -205,7 +205,7 @@ bb.a:                                             ; preds = %.preheader599, %.lo
   %i.w = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %.0265619 ; 2 uses
   %i.x = load double, ptr %i.w, align 16, !tbaa !59 ; 6 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %i.z = load double, ptr %i.y, align 8, !tbaa !59 ; 12 uses
+  %i.z = load double, ptr %i.y, align 8, !tbaa !59 ; 11 uses
   %i.aa = fcmp oeq double %i.z, 0.000000e+00
   br i1 %i.aa, label %bb.b, label %bb.m
 
@@ -549,10 +549,10 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.gd = add nsw i64 %.0265619, -2
   %i.ge = getelementptr inbounds i8, ptr %i.u, i64 %.idx.i285
   %i.gf = getelementptr inbounds i8, ptr %i.u, i64 %.idx.i286 ; 2 uses
-  %i.gg = fneg double %i.z                        ; 3 uses
+  %i.gg = fneg double %i.z                        ; 2 uses
   %i.gh = tail call double @llvm.fabs.f64(double %i.z) ; 2 uses
   %i.gi = insertelement <2 x double> poison, double %i.gg, i64 0
-  %i.gj = insertelement <2 x double> %i.gi, double %i.z, i64 1
+  %i.gj = insertelement <2 x double> %i.gi, double %i.z, i64 1 ; 2 uses
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph, %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELin1ELin1ELb0EEEEdVERKd.exit
@@ -817,12 +817,13 @@ bb.x:                                             ; preds = %._crit_edge, %bb.w
   %i.lo = fmul <2 x double> %i.ln, %i.ll
   %i.lp = insertelement <2 x double> poison, double %i.kp, i64 0
   %i.lq = shufflevector <2 x double> %i.lp, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.lr = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.lq, <2 x double> %i.gk, <2 x double> %i.lo) ; 2 uses
-  %1 = extractelement <2 x double> %i.lr, i64 1
-  %2 = tail call double @llvm.fmuladd.f64(double %i.z, double %.0.i.i.i317, double %1)
-  %i.ls = extractelement <2 x double> %i.lr, i64 0
-  %3 = tail call double @llvm.fmuladd.f64(double %i.gg, double %.0.i.i.i304594, double %i.ls)
-  %i.lt = tail call noundef { double, double } @__divdc3(double noundef %2, double noundef %3, double noundef %.0249, double noundef %i.kz) #27 ; 2 uses
+  %i.lr = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.lq, <2 x double> %i.gk, <2 x double> %i.lo)
+  %1 = insertelement <2 x double> poison, double %.0.i.i.i304594, i64 0
+  %2 = insertelement <2 x double> %1, double %.0.i.i.i317, i64 1
+  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gj, <2 x double> %2, <2 x double> %i.lr) ; 2 uses
+  %i.ls = extractelement <2 x double> %3, i64 0
+  %4 = extractelement <2 x double> %3, i64 1
+  %i.lt = tail call noundef { double, double } @__divdc3(double noundef %4, double noundef %i.ls, double noundef %.0249, double noundef %i.kz) #27 ; 2 uses
   %i.lu = extractvalue { double, double } %i.lt, 0 ; 4 uses
   %i.lv = extractvalue { double, double } %i.lt, 1 ; 4 uses
   %i.lw = getelementptr i8, ptr %i.gl, i64 %.idx.i285 ; 2 uses

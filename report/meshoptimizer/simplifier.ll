@@ -205,46 +205,46 @@ _ZN7meshoptL16fillEdgeQuadricsEPNS_7QuadricEPKjmPKNS_7Vector3ES3_PKhS3_S3_.exit:
   %i.atw = load <3 x float>, ptr %i.ati, align 4, !tbaa !44 ; 3 uses
   %i.atx = shufflevector <3 x float> %i.atw, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1> ; 2 uses
   %i.aty = load float, ptr %i.att, align 4, !tbaa !50
-  %i.atz = fsub <4 x float> %i.atv, %i.atx        ; 9 uses
+  %i.atz = fsub <4 x float> %i.atv, %i.atx        ; 10 uses
   %i.aua = load <3 x float>, ptr %i.atm, align 4, !tbaa !44
   %i.aub = shufflevector <3 x float> %i.aua, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
   %i.auc = fsub <4 x float> %i.aub, %i.atx        ; 8 uses
   %i.aud = fneg <4 x float> %i.auc                ; 2 uses
-  %18 = extractelement <4 x float> %i.atz, i64 2  ; 3 uses
-  %19 = extractelement <4 x float> %i.auc, i64 2  ; 3 uses
-  %i.aue = extractelement <4 x float> %i.atz, i64 0
-  %i.auf = extractelement <4 x float> %i.auc, i64 0 ; 3 uses
+  %i.aue = extractelement <4 x float> %i.atz, i64 2
+  %i.auf = extractelement <4 x float> %i.auc, i64 2 ; 3 uses
   %i.aug = shufflevector <4 x float> %i.atz, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 0, i32 1>
   %i.auh = shufflevector <4 x float> %i.aud, <4 x float> %i.atz, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   %i.aui = fmul <4 x float> %i.aug, %i.auh
   %i.auj = shufflevector <4 x float> %i.atz, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.auk = shufflevector <4 x float> %i.auc, <4 x float> %i.atz, <4 x i32> <i32 1, i32 2, i32 0, i32 4>
   %i.aul = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.auj, <4 x float> %i.auk, <4 x float> %i.aui) ; 5 uses
-  %foldExtExtBinop1221 = fmul <4 x float> %i.aul, %i.aul
-  %20 = extractelement <4 x float> %foldExtExtBinop1221, i64 2
-  %21 = extractelement <4 x float> %i.aul, i64 1  ; 2 uses
-  %22 = call float @llvm.fmuladd.f32(float %21, float %21, float %20)
-  %23 = extractelement <4 x float> %i.aul, i64 0  ; 2 uses
-  %24 = call float @llvm.fmuladd.f32(float %23, float %23, float %22)
-  %sqrt.i.i486 = call float @llvm.sqrt.f32(float %24)
-  %25 = fmul float %sqrt.i.i486, 5.000000e-01     ; 5 uses
-  %26 = extractelement <4 x float> %i.aul, i64 3
-  %27 = call float @llvm.fmuladd.f32(float %18, float %18, float %26) ; 2 uses
-  %foldExtExtBinop1223 = fmul <4 x float> %i.atz, %i.auc
-  %i.aum = extractelement <4 x float> %foldExtExtBinop1223, i64 1
-  %i.aun = call float @llvm.fmuladd.f32(float %i.aue, float %i.auf, float %i.aum)
-  %28 = call float @llvm.fmuladd.f32(float %18, float %19, float %i.aun) ; 3 uses
-  %foldExtExtBinop1225 = fmul <4 x float> %i.auc, %i.auc
-  %i.auo = extractelement <4 x float> %foldExtExtBinop1225, i64 1
-  %i.aup = call float @llvm.fmuladd.f32(float %i.auf, float %i.auf, float %i.auo)
-  %i.auq = call float @llvm.fmuladd.f32(float %19, float %19, float %i.aup) ; 2 uses
-  %i.aur = fneg float %28
-  %i.aus = fmul float %28, %i.aur
-  %i.aut = call float @llvm.fmuladd.f32(float %27, float %i.auq, float %i.aus) ; 2 uses
+  %18 = extractelement <4 x float> %i.aul, i64 0  ; 2 uses
+  %19 = shufflevector <4 x float> %i.aul, <4 x float> %i.atz, <4 x i32> <i32 2, i32 3, i32 5, i32 poison>
+  %20 = shufflevector <4 x float> %19, <4 x float> %i.auc, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %21 = shufflevector <4 x float> %i.aul, <4 x float> %i.auc, <4 x i32> <i32 2, i32 poison, i32 5, i32 5>
+  %22 = insertelement <4 x float> %21, float 1.000000e+00, i64 1
+  %23 = fmul <4 x float> %20, %22
+  %24 = shufflevector <4 x float> %i.aul, <4 x float> %i.atz, <4 x i32> <i32 1, i32 6, i32 4, i32 poison>
+  %25 = shufflevector <4 x float> %24, <4 x float> %i.auc, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %26 = shufflevector <4 x float> %i.aul, <4 x float> %i.auc, <4 x i32> <i32 1, i32 poison, i32 4, i32 4>
+  %27 = shufflevector <4 x float> %26, <4 x float> %i.atz, <4 x i32> <i32 0, i32 6, i32 2, i32 3>
+  %28 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %25, <4 x float> %27, <4 x float> %23) ; 5 uses
+  %i.aum = extractelement <4 x float> %28, i64 0
+  %i.aun = call float @llvm.fmuladd.f32(float %18, float %18, float %i.aum)
+  %sqrt.i.i486 = call float @llvm.sqrt.f32(float %i.aun)
+  %29 = fmul float %sqrt.i.i486, 5.000000e-01     ; 5 uses
+  %i.auo = extractelement <4 x float> %28, i64 2
+  %i.aup = call float @llvm.fmuladd.f32(float %i.aue, float %i.auf, float %i.auo) ; 3 uses
+  %30 = extractelement <4 x float> %28, i64 3
+  %i.auq = call float @llvm.fmuladd.f32(float %i.auf, float %i.auf, float %30) ; 2 uses
+  %i.aur = fneg float %i.aup
+  %i.aus = fmul float %i.aup, %i.aur
+  %31 = extractelement <4 x float> %28, i64 1
+  %i.aut = call float @llvm.fmuladd.f32(float %31, float %i.auq, float %i.aus) ; 2 uses
   %i.auu = fcmp oeq float %i.aut, 0.000000e+00
   %i.auv = fdiv float 1.000000e+00, %i.aut
   %i.auw = select i1 %i.auu, float 0.000000e+00, float %i.auv
-  %i.aux = insertelement <4 x float> poison, float %28, i64 0
+  %i.aux = insertelement <4 x float> poison, float %i.aup, i64 0
   %i.auy = shufflevector <4 x float> %i.aux, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.auz = fmul <4 x float> %i.auy, %i.aud
   %i.ava = insertelement <4 x float> poison, float %i.auq, i64 0
@@ -252,9 +252,8 @@ _ZN7meshoptL16fillEdgeQuadricsEPNS_7QuadricEPKjmPKNS_7Vector3ES3_PKhS3_S3_.exit:
   %i.avc = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.avb, <4 x float> %i.atz, <4 x float> %i.auz)
   %i.avd = fneg <4 x float> %i.atz
   %i.ave = fmul <4 x float> %i.auy, %i.avd
-  %29 = insertelement <4 x float> poison, float %27, i64 0
-  %30 = shufflevector <4 x float> %29, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.avf = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %30, <4 x float> %i.auc, <4 x float> %i.ave)
+  %32 = shufflevector <4 x float> %28, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %i.avf = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %32, <4 x float> %i.auc, <4 x float> %i.ave)
   %i.avg = insertelement <4 x float> poison, float %i.auw, i64 0
   %i.avh = shufflevector <4 x float> %i.avg, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.avi = fmul <4 x float> %i.avc, %i.avh
@@ -264,9 +263,9 @@ _ZN7meshoptL16fillEdgeQuadricsEPNS_7QuadricEPKjmPKNS_7Vector3ES3_PKhS3_S3_.exit:
   %i.avm = fneg float %i.aty
   %i.avn = extractelement <3 x float> %i.atw, i64 2
   %i.avo = fneg float %i.avn
-  %i.avp = insertelement <4 x float> poison, float %25, i64 0
+  %i.avp = insertelement <4 x float> poison, float %29, i64 0
   %i.avq = shufflevector <4 x float> %i.avp, <4 x float> poison, <4 x i32> zeroinitializer ; 3 uses
-  %i.avr = insertelement <2 x float> poison, float %25, i64 0
+  %i.avr = insertelement <2 x float> poison, float %29, i64 0
   %i.avs = shufflevector <2 x float> %i.avr, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.df
 
@@ -332,7 +331,7 @@ _ZN7meshoptL21quadricFromAttributesERNS_7QuadricEPNS_11QuadricGradERKNS_7Vector3
   store <2 x float> %i.axq, ptr %i.axo, align 4, !tbaa !44
   %i.axr = getelementptr inbounds nuw i8, ptr %i.axi, i64 40 ; 2 uses
   %i.axs = load float, ptr %i.axr, align 4, !tbaa !48
-  %i.axt = fadd float %25, %i.axs
+  %i.axt = fadd float %29, %i.axs
   store float %i.axt, ptr %i.axr, align 4, !tbaa !48
   %i.axu = getelementptr inbounds nuw [44 x i8], ptr %.0348, i64 %i.atj ; 5 uses
   %i.axv = load <4 x float>, ptr %i.axu, align 4, !tbaa !44
@@ -348,7 +347,7 @@ _ZN7meshoptL21quadricFromAttributesERNS_7QuadricEPNS_11QuadricGradERKNS_7Vector3
   store <2 x float> %i.ayc, ptr %i.aya, align 4, !tbaa !44
   %i.ayd = getelementptr inbounds nuw i8, ptr %i.axu, i64 40 ; 2 uses
   %i.aye = load float, ptr %i.ayd, align 4, !tbaa !48
-  %i.ayf = fadd float %25, %i.aye
+  %i.ayf = fadd float %29, %i.aye
   store float %i.ayf, ptr %i.ayd, align 4, !tbaa !48
   %i.ayg = getelementptr inbounds nuw [44 x i8], ptr %.0348, i64 %i.atl ; 5 uses
   %i.ayh = load <4 x float>, ptr %i.ayg, align 4, !tbaa !44
@@ -364,7 +363,7 @@ _ZN7meshoptL21quadricFromAttributesERNS_7QuadricEPNS_11QuadricGradERKNS_7Vector3
   store <2 x float> %i.ayo, ptr %i.aym, align 4, !tbaa !44
   %i.ayp = getelementptr inbounds nuw i8, ptr %i.ayg, i64 40 ; 2 uses
   %i.ayq = load float, ptr %i.ayp, align 4, !tbaa !48
-  %i.ayr = fadd float %25, %i.ayq
+  %i.ayr = fadd float %29, %i.ayq
   store float %i.ayr, ptr %i.ayp, align 4, !tbaa !48
   %i.ays = getelementptr inbounds nuw [16 x i8], ptr %.0347, i64 %i.atn ; 3 uses
   br i1 %i.asy, label %.epil.preheader1327, label %_ZN7meshoptL21quadricFromAttributesERNS_7QuadricEPNS_11QuadricGradERKNS_7Vector3ES6_S6_PKfS8_S8_m.exit.i.new

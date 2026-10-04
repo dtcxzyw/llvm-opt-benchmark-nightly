@@ -205,7 +205,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.e = load double, ptr %i.d, align 8, !tbaa !146, !noalias !2862 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %4 = load double, ptr %i.f, align 8, !tbaa !146, !noalias !2861 ; 2 uses
+  %4 = load <2 x double>, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.h = load double, ptr %i.g, align 8, !tbaa !146, !noalias !2861
   %i.i = load <2 x double>, ptr %2, align 8, !tbaa !146, !noalias !2861 ; 2 uses
@@ -214,17 +214,19 @@ bb.a:
   %i.l = fmul <2 x double> %i.j, %i.k
   %i.m = shufflevector <2 x double> %i.i, <2 x double> poison, <2 x i32> zeroinitializer
   %i.n = shufflevector <2 x double> %i.b, <2 x double> %i.c, <2 x i32> <i32 0, i32 2>
-  %i.o = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.m, <2 x double> %i.n, <2 x double> %i.l) ; 2 uses
-  %5 = extractelement <2 x double> %i.o, i64 0
-  %6 = tail call double @llvm.fmuladd.f64(double %4, double %.sroa.7.0.copyload.i, double %5)
-  %7 = fadd double %i.h, %6                       ; 3 uses
-  %i.p = extractelement <2 x double> %i.o, i64 1
-  %8 = tail call double @llvm.fmuladd.f64(double %4, double %i.e, double %i.p) ; 5 uses
-  %i.q = fcmp oeq double %8, 0.000000e+00
+  %i.o = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.m, <2 x double> %i.n, <2 x double> %i.l)
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = insertelement <2 x double> poison, double %.sroa.7.0.copyload.i, i64 0
+  %7 = insertelement <2 x double> %6, double %i.e, i64 1
+  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %5, <2 x double> %7, <2 x double> %i.o) ; 3 uses
+  %9 = extractelement <2 x double> %8, i64 1      ; 4 uses
+  %i.p = extractelement <2 x double> %8, i64 0
+  %10 = fadd double %i.h, %i.p                    ; 3 uses
+  %i.q = fcmp oeq double %9, 0.000000e+00
   br i1 %i.q, label %bb.b, label %_ZN4CGAL7Point_3INS_5EpickEEC2ERKdS4_S4_S4_.exit.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.r = fcmp oeq double %7, 0.000000e+00
+  %i.r = fcmp oeq double %10, 0.000000e+00
   br i1 %i.r, label %bb.c, label %_ZN4CGAL13Intersections8internal12intersectionINS_5EpickEEENS_19Intersection_traitsIT_NS5_7Plane_3ENS5_6Line_3EE11result_typeERKS6_RKS7_RKS5_.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -234,18 +236,17 @@ bb.c:                                             ; preds = %bb.b
 _ZN4CGAL7Point_3INS_5EpickEEC2ERKdS4_S4_S4_.exit.i: ; preds = %bb.a
   %i.s = fneg <2 x double> %i.c
   %i.t = fneg double %i.e
-  %i.u = fmul double %7, %i.t
-  %i.v = tail call double @llvm.fmuladd.f64(double %8, double %.sroa.7.0.copyload.i, double %i.u) ; 2 uses
-  %i.w = fcmp une double %8, 1.000000e+00         ; 2 uses
-  %i.x = fdiv double %i.v, %8
+  %i.u = fmul double %10, %i.t
+  %i.v = tail call double @llvm.fmuladd.f64(double %9, double %.sroa.7.0.copyload.i, double %i.u) ; 2 uses
+  %i.w = fcmp une double %9, 1.000000e+00         ; 2 uses
+  %i.x = fdiv double %i.v, %9
   %.sink.i.i.i.i.i.i.i = select i1 %i.w, double %i.x, double %i.v
-  %i.y = insertelement <2 x double> poison, double %7, i64 0
+  %i.y = insertelement <2 x double> poison, double %10, i64 0
   %i.z = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aa = fmul <2 x double> %i.z, %i.s
-  %9 = insertelement <2 x double> poison, double %8, i64 0
-  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.ab = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %10, <2 x double> %i.b, <2 x double> %i.aa) ; 2 uses
-  %i.ac = fdiv <2 x double> %i.ab, %10
+  %11 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
+  %i.ab = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> %i.b, <2 x double> %i.aa) ; 2 uses
+  %i.ac = fdiv <2 x double> %i.ab, %11
   %i.ad = insertelement <2 x i1> poison, i1 %i.w, i64 0
   %i.ae = shufflevector <2 x i1> %i.ad, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.af = select <2 x i1> %i.ae, <2 x double> %i.ac, <2 x double> %i.ab

@@ -204,24 +204,21 @@ bb.g:                                             ; preds = %PivotRgb.exit10.i
   br label %RGB2XYZ.exit
 
 RGB2XYZ.exit:                                     ; preds = %bb.f, %bb.g
-  %.0.i11.i = phi double [ %i.v, %bb.f ], [ %i.x, %bb.g ] ; 3 uses
+  %.0.i11.i = phi double [ %i.v, %bb.f ], [ %i.x, %bb.g ] ; 2 uses
   %i.y = insertelement <2 x double> poison, double %.0.i9.i, i64 0
   %i.z = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aa = fmul <2 x double> %i.z, <double 3.576000e-01, double 7.152000e-01>
   %i.ab = insertelement <2 x double> poison, double %.0.i.i, i64 0
   %i.ac = shufflevector <2 x double> %i.ab, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ad = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ac, <2 x double> <double 4.124000e-01, double 2.126000e-01>, <2 x double> %i.aa) ; 2 uses
-  %2 = extractelement <2 x double> %i.ad, i64 0
-  %3 = tail call double @llvm.fmuladd.f64(double %.0.i11.i, double 1.805000e-01, double %2)
-  %4 = fmul double %.0.i9.i, 1.192000e-01
+  %i.ad = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ac, <2 x double> <double 4.124000e-01, double 2.126000e-01>, <2 x double> %i.aa)
   %i.ae = insertelement <2 x double> poison, double %.0.i11.i, i64 0
-  %5 = insertelement <2 x double> %i.ae, double %.0.i.i, i64 1
-  %6 = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %7 = insertelement <2 x double> %6, double %4, i64 1
-  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %5, <2 x double> <double 7.220000e-02, double 1.930000e-02>, <2 x double> %7) ; 2 uses
-  %9 = extractelement <2 x double> %8, i64 1
-  %10 = tail call double @llvm.fmuladd.f64(double %.0.i11.i, double 9.505000e-01, double %9)
-  %i.af = fdiv double %3, f0x4057C3020C49BA5E     ; 3 uses
+  %2 = shufflevector <2 x double> %i.ae, <2 x double> poison, <2 x i32> zeroinitializer
+  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %2, <2 x double> <double 1.805000e-01, double 7.220000e-02>, <2 x double> %i.ad) ; 2 uses
+  %4 = fmul double %.0.i9.i, 1.192000e-01
+  %5 = tail call double @llvm.fmuladd.f64(double %.0.i.i, double 1.930000e-02, double %4)
+  %6 = tail call double @llvm.fmuladd.f64(double %.0.i11.i, double 9.505000e-01, double %5)
+  %7 = extractelement <2 x double> %3, i64 0
+  %i.af = fdiv double %7, f0x4057C3020C49BA5E     ; 3 uses
   %i.ag = load double, ptr @XYZEpsilon, align 8, !tbaa !19 ; 3 uses
   %i.ah = fcmp ogt double %i.af, %i.ag
   br i1 %i.ah, label %bb.h, label %bb.i
@@ -238,7 +235,7 @@ bb.i:                                             ; preds = %RGB2XYZ.exit
 
 PivotXYZ.exit:                                    ; preds = %bb.h, %bb.i
   %.0.i = phi double [ %i.ai, %bb.h ], [ %i.al, %bb.i ]
-  %i.am = extractelement <2 x double> %8, i64 0
+  %i.am = extractelement <2 x double> %3, i64 1
   %i.an = fdiv double %i.am, 1.000000e+02         ; 3 uses
   %i.ao = fcmp ogt double %i.an, %i.ag
   br i1 %i.ao, label %bb.j, label %bb.k
@@ -255,7 +252,7 @@ bb.k:                                             ; preds = %PivotXYZ.exit
 
 PivotXYZ.exit10:                                  ; preds = %bb.j, %bb.k
   %.0.i9 = phi double [ %i.ap, %bb.j ], [ %i.as, %bb.k ] ; 3 uses
-  %i.at = fdiv double %10, 1.088830e+02           ; 3 uses
+  %i.at = fdiv double %6, 1.088830e+02            ; 3 uses
   %i.au = fcmp ogt double %i.at, %i.ag
   br i1 %i.au, label %bb.l, label %bb.m
 
@@ -365,60 +362,58 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.af = insertelement <2 x double> %i.ae, double %.0, i64 1
   %i.ag = fmul <2 x double> %i.af, <double 1.000000e+02, double 1.088830e+02>
   %i.ah = fdiv <2 x double> %i.ag, splat (double 1.000000e+02) ; 4 uses
-  %i.ai = extractelement <2 x double> %i.ah, i64 0
-  %i.aj = extractelement <2 x double> %i.ah, i64 1 ; 2 uses
+  %2 = extractelement <2 x double> %i.ah, i64 0
+  %i.ai = extractelement <2 x double> %i.ac, i64 1
+  %i.aj = extractelement <2 x double> %i.ah, i64 1
   %i.ak = shufflevector <2 x double> %i.ah, <2 x double> poison, <2 x i32> zeroinitializer
   %i.al = fmul <2 x double> %i.ak, <double -1.537200e+00, double 1.875800e+00>
   %i.am = shufflevector <2 x double> %i.ac, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.an = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.am, <2 x double> <double 3.240600e+00, double f0xBFEF013A92A30553>, <2 x double> %i.al) ; 2 uses
-  %2 = extractelement <2 x double> %i.an, i64 0
-  %3 = tail call double @llvm.fmuladd.f64(double %i.aj, double -4.986000e-01, double %2) ; 3 uses
-  %i.ao = fmul double %i.ai, -2.040000e-01
-  %4 = shufflevector <2 x double> %i.ah, <2 x double> %i.ac, <2 x i32> <i32 1, i32 3>
-  %5 = shufflevector <2 x double> %i.an, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %6 = insertelement <2 x double> %5, double %i.ao, i64 1
-  %7 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> <double 4.150000e-02, double 5.570000e-02>, <2 x double> %6) ; 2 uses
-  %8 = extractelement <2 x double> %7, i64 0      ; 3 uses
-  %i.ap = extractelement <2 x double> %7, i64 1
-  %9 = tail call double @llvm.fmuladd.f64(double %i.aj, double 1.057000e+00, double %i.ap) ; 3 uses
-  %i.aq = fcmp ogt double %3, 3.130800e-03
+  %i.an = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.am, <2 x double> <double 3.240600e+00, double f0xBFEF013A92A30553>, <2 x double> %i.al)
+  %3 = shufflevector <2 x double> %i.ah, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %4 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> <double -4.986000e-01, double 4.150000e-02>, <2 x double> %i.an) ; 2 uses
+  %i.ao = fmul double %2, -2.040000e-01
+  %5 = tail call double @llvm.fmuladd.f64(double %i.ai, double 5.570000e-02, double %i.ao)
+  %6 = tail call double @llvm.fmuladd.f64(double %i.aj, double 1.057000e+00, double %5) ; 3 uses
+  %i.ap = extractelement <2 x double> %4, i64 0   ; 3 uses
+  %i.aq = fcmp ogt double %i.ap, 3.130800e-03
   br i1 %i.aq, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.ar = tail call double @pow(double noundef %3, double noundef f0x3FDAAAAAAAAAAAAB) #18, !noalias !42
+  %i.ar = tail call double @pow(double noundef %i.ap, double noundef f0x3FDAAAAAAAAAAAAB) #18, !noalias !42
   %i.as = tail call double @llvm.fmuladd.f64(double %i.ar, double 1.055000e+00, double -5.500000e-02)
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.at = fmul double %3, 1.292000e+01
+  %i.at = fmul double %i.ap, 1.292000e+01
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.034.i = phi double [ %i.as, %bb.e ], [ %i.at, %bb.f ]
-  %i.au = fcmp ogt double %8, 3.130800e-03
+  %7 = extractelement <2 x double> %4, i64 1      ; 3 uses
+  %i.au = fcmp ogt double %7, 3.130800e-03
   br i1 %i.au, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.av = tail call double @pow(double noundef %8, double noundef f0x3FDAAAAAAAAAAAAB) #18, !noalias !42
+  %i.av = tail call double @pow(double noundef %7, double noundef f0x3FDAAAAAAAAAAAAB) #18, !noalias !42
   %i.aw = tail call double @llvm.fmuladd.f64(double %i.av, double 1.055000e+00, double -5.500000e-02)
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %i.ax = fmul double %8, 1.292000e+01
+  %i.ax = fmul double %7, 1.292000e+01
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.033.i = phi double [ %i.aw, %bb.h ], [ %i.ax, %bb.i ]
-  %i.ay = fcmp ogt double %9, 3.130800e-03
+  %i.ay = fcmp ogt double %6, 3.130800e-03
   br i1 %i.ay, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.az = tail call double @pow(double noundef %9, double noundef f0x3FDAAAAAAAAAAAAB) #18, !noalias !42
+  %i.az = tail call double @pow(double noundef %6, double noundef f0x3FDAAAAAAAAAAAAB) #18, !noalias !42
   %i.ba = tail call double @llvm.fmuladd.f64(double %i.az, double 1.055000e+00, double -5.500000e-02)
   br label %XYZ2RGB.exit
 
 bb.l:                                             ; preds = %bb.j
-  %i.bb = fmul double %9, 1.292000e+01
+  %i.bb = fmul double %6, 1.292000e+01
   br label %XYZ2RGB.exit
 
 XYZ2RGB.exit:                                     ; preds = %bb.k, %bb.l
@@ -451,58 +446,59 @@ bb.a:
   %i.b = fdiv <2 x double> %i.a, splat (double 1.000000e+02) ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = load double, ptr %i.c, align 8, !tbaa !14
-  %i.e = fdiv double %i.d, 1.000000e+02           ; 3 uses
+  %i.e = fdiv double %i.d, 1.000000e+02           ; 2 uses
   %i.f = extractelement <2 x double> %i.b, i64 1
   %i.g = extractelement <2 x double> %i.b, i64 0
   %i.h = shufflevector <2 x double> %i.b, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.i = fmul <2 x double> %i.h, <double -1.537200e+00, double 1.875800e+00>
   %i.j = shufflevector <2 x double> %i.b, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.k = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.j, <2 x double> <double 3.240600e+00, double f0xBFEF013A92A30553>, <2 x double> %i.i) ; 2 uses
-  %2 = extractelement <2 x double> %i.k, i64 0
-  %3 = tail call double @llvm.fmuladd.f64(double %i.e, double -4.986000e-01, double %2) ; 3 uses
-  %4 = extractelement <2 x double> %i.k, i64 1
-  %5 = tail call double @llvm.fmuladd.f64(double %i.e, double 4.150000e-02, double %4) ; 3 uses
-  %6 = fmul double %i.f, -2.040000e-01
-  %i.l = tail call double @llvm.fmuladd.f64(double %i.g, double 5.570000e-02, double %6)
-  %7 = tail call double @llvm.fmuladd.f64(double %i.e, double 1.057000e+00, double %i.l) ; 3 uses
-  %i.m = fcmp ogt double %3, 3.130800e-03
+  %i.k = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.j, <2 x double> <double 3.240600e+00, double f0xBFEF013A92A30553>, <2 x double> %i.i)
+  %2 = insertelement <2 x double> poison, double %i.e, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> <double -4.986000e-01, double 4.150000e-02>, <2 x double> %i.k) ; 2 uses
+  %5 = fmul double %i.f, -2.040000e-01
+  %6 = tail call double @llvm.fmuladd.f64(double %i.g, double 5.570000e-02, double %5)
+  %i.l = tail call double @llvm.fmuladd.f64(double %i.e, double 1.057000e+00, double %6) ; 3 uses
+  %7 = extractelement <2 x double> %4, i64 0      ; 3 uses
+  %i.m = fcmp ogt double %7, 3.130800e-03
   br i1 %i.m, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.n = tail call double @pow(double noundef %3, double noundef f0x3FDAAAAAAAAAAAAB) #18
+  %i.n = tail call double @pow(double noundef %7, double noundef f0x3FDAAAAAAAAAAAAB) #18
   %i.o = tail call double @llvm.fmuladd.f64(double %i.n, double 1.055000e+00, double -5.500000e-02)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.p = fmul double %3, 1.292000e+01
+  %i.p = fmul double %7, 1.292000e+01
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.034 = phi double [ %i.o, %bb.b ], [ %i.p, %bb.c ]
-  %i.q = fcmp ogt double %5, 3.130800e-03
+  %8 = extractelement <2 x double> %4, i64 1      ; 3 uses
+  %i.q = fcmp ogt double %8, 3.130800e-03
   br i1 %i.q, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = tail call double @pow(double noundef %5, double noundef f0x3FDAAAAAAAAAAAAB) #18
+  %i.r = tail call double @pow(double noundef %8, double noundef f0x3FDAAAAAAAAAAAAB) #18
   %i.s = tail call double @llvm.fmuladd.f64(double %i.r, double 1.055000e+00, double -5.500000e-02)
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.t = fmul double %5, 1.292000e+01
+  %i.t = fmul double %8, 1.292000e+01
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.033 = phi double [ %i.s, %bb.e ], [ %i.t, %bb.f ]
-  %i.u = fcmp ogt double %7, 3.130800e-03
+  %i.u = fcmp ogt double %i.l, 3.130800e-03
   br i1 %i.u, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.v = tail call double @pow(double noundef %7, double noundef f0x3FDAAAAAAAAAAAAB) #18
+  %i.v = tail call double @pow(double noundef %i.l, double noundef f0x3FDAAAAAAAAAAAAB) #18
   %i.w = tail call double @llvm.fmuladd.f64(double %i.v, double 1.055000e+00, double -5.500000e-02)
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %i.x = fmul double %7, 1.292000e+01
+  %i.x = fmul double %i.l, 1.292000e+01
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
