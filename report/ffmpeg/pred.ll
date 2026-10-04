@@ -203,10 +203,10 @@ scalar.ph292:                                     ; preds = %scalar.ph292.prehea
   br i1 %i.mk, label %.lr.ph68.preheader, label %.lr.ph72
 
 .lr.ph68.preheader:                               ; preds = %.preheader39
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.ml, i32 4) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.ml, i32 4) ; 3 uses
   %i.mm = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.mm to i64
-  %i.mn = zext nneg i32 %smax to i64              ; 3 uses
+  %i.mn = zext nneg i32 %smax to i64              ; 4 uses
   %i.mo = add nsw i64 %i.mn, -3                   ; 2 uses
   %min.iters.check309 = icmp slt i32 %i.ml, 131
   br i1 %min.iters.check309, label %.lr.ph68.preheader343, label %vector.scevcheck302
@@ -239,12 +239,11 @@ vector.scevcheck302:                              ; preds = %.lr.ph68.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck302
   %scevgep303 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.ni = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.mn, 1                   ; 2 uses
+  %i.ni = getelementptr i8, ptr %i.a, i64 %5
   %scevgep304 = getelementptr i8, ptr %i.ni, i64 4
   %i.nj = shl nsw i64 %i.bc, 1                    ; 2 uses
-  %i.nk = add nsw i64 %i.nj, %6
+  %i.nk = add nsw i64 %i.nj, %5
   %i.nl = mul i64 %i.ax, %i.nk
   %i.nm = shl nsw i64 %i.ba, 1                    ; 2 uses
   %i.nn = getelementptr i8, ptr %i.az, i64 %i.nl
@@ -647,10 +646,10 @@ scalar.ph328:                                     ; preds = %scalar.ph328.prehea
   br i1 %i.nc, label %.lr.ph73.preheader, label %.lr.ph77
 
 .lr.ph73.preheader:                               ; preds = %.preheader44
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.nd, i32 8) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.nd, i32 8) ; 3 uses
   %i.ne = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ne to i64
-  %i.nf = zext nneg i32 %smax to i64              ; 3 uses
+  %i.nf = zext nneg i32 %smax to i64              ; 4 uses
   %i.ng = add nsw i64 %i.nf, -7                   ; 2 uses
   %min.iters.check345 = icmp slt i32 %i.nd, 135
   br i1 %min.iters.check345, label %.lr.ph73.preheader379, label %vector.scevcheck338
@@ -683,12 +682,11 @@ vector.scevcheck338:                              ; preds = %.lr.ph73.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck338
   %scevgep339 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.oa = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.nf, 1                   ; 2 uses
+  %i.oa = getelementptr i8, ptr %i.a, i64 %5
   %scevgep340 = getelementptr i8, ptr %i.oa, i64 4
   %i.ob = shl nsw i64 %i.be, 1                    ; 2 uses
-  %i.oc = add nsw i64 %i.ob, %6
+  %i.oc = add nsw i64 %i.ob, %5
   %i.od = mul i64 %i.az, %i.oc
   %i.oe = shl nsw i64 %i.bc, 1                    ; 2 uses
   %i.of = getelementptr i8, ptr %i.bb, i64 %i.od
@@ -1091,10 +1089,10 @@ scalar.ph334:                                     ; preds = %scalar.ph334.prehea
   br i1 %i.oi, label %.lr.ph73.preheader, label %.lr.ph77
 
 .lr.ph73.preheader:                               ; preds = %.preheader44
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.oj, i32 16) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.oj, i32 16) ; 3 uses
   %i.ok = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ok to i64
-  %i.ol = zext nneg i32 %smax to i64              ; 3 uses
+  %i.ol = zext nneg i32 %smax to i64              ; 4 uses
   %i.om = add nsw i64 %i.ol, -15                  ; 2 uses
   %min.iters.check351 = icmp slt i32 %i.oj, 143
   br i1 %min.iters.check351, label %.lr.ph73.preheader385, label %vector.scevcheck344
@@ -1127,12 +1125,11 @@ vector.scevcheck344:                              ; preds = %.lr.ph73.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck344
   %scevgep345 = getelementptr inbounds nuw i8, ptr %i.a, i64 34
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.pg = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.ol, 1                   ; 2 uses
+  %i.pg = getelementptr i8, ptr %i.a, i64 %5
   %scevgep346 = getelementptr i8, ptr %i.pg, i64 4
   %i.ph = shl nsw i64 %i.be, 1                    ; 2 uses
-  %i.pi = add nsw i64 %i.ph, %6
+  %i.pi = add nsw i64 %i.ph, %5
   %i.pj = mul i64 %i.az, %i.pi
   %i.pk = shl nsw i64 %i.bc, 1                    ; 2 uses
   %i.pl = getelementptr i8, ptr %i.bb, i64 %i.pj
@@ -1535,10 +1532,10 @@ begin_hunk_3_@intra_pred_5_9:bb.a
   br i1 %i.qu, label %.lr.ph74.preheader, label %.lr.ph78
 
 .lr.ph74.preheader:                               ; preds = %.preheader45
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.qv, i32 32) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.qv, i32 32) ; 3 uses
   %i.qw = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.qw to i64
-  %i.qx = zext nneg i32 %smax to i64              ; 3 uses
+  %i.qx = zext nneg i32 %smax to i64              ; 4 uses
   %i.qy = add nsw i64 %i.qx, -31                  ; 2 uses
   %min.iters.check393 = icmp slt i32 %i.qv, 159
   br i1 %min.iters.check393, label %.lr.ph74.preheader427, label %vector.scevcheck386
@@ -1571,12 +1568,11 @@ vector.scevcheck386:                              ; preds = %.lr.ph74.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck386
   %scevgep387 = getelementptr inbounds nuw i8, ptr %i.a, i64 66
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.rs = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.qx, 1                   ; 2 uses
+  %i.rs = getelementptr i8, ptr %i.a, i64 %5
   %scevgep388 = getelementptr i8, ptr %i.rs, i64 4
   %i.rt = shl nsw i64 %i.be, 1                    ; 2 uses
-  %i.ru = add nsw i64 %i.rt, %6
+  %i.ru = add nsw i64 %i.rt, %5
   %i.rv = mul i64 %i.az, %i.ru
   %i.rw = shl nsw i64 %i.bc, 1                    ; 2 uses
   %i.rx = getelementptr i8, ptr %i.bb, i64 %i.rv
@@ -1979,10 +1975,10 @@ scalar.ph291:                                     ; preds = %scalar.ph291.prehea
   br i1 %i.mk, label %.lr.ph67.preheader, label %.lr.ph71
 
 .lr.ph67.preheader:                               ; preds = %.preheader38
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.ml, i32 4) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.ml, i32 4) ; 3 uses
   %i.mm = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.mm to i64
-  %i.mn = zext nneg i32 %smax to i64              ; 3 uses
+  %i.mn = zext nneg i32 %smax to i64              ; 4 uses
   %i.mo = add nsw i64 %i.mn, -3                   ; 2 uses
   %min.iters.check308 = icmp slt i32 %i.ml, 131
   br i1 %min.iters.check308, label %.lr.ph67.preheader342, label %vector.scevcheck301
@@ -2015,12 +2011,11 @@ vector.scevcheck301:                              ; preds = %.lr.ph67.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck301
   %scevgep302 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.ni = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.mn, 1                   ; 2 uses
+  %i.ni = getelementptr i8, ptr %i.a, i64 %5
   %scevgep303 = getelementptr i8, ptr %i.ni, i64 4
   %i.nj = shl nsw i64 %i.bc, 1                    ; 2 uses
-  %i.nk = add nsw i64 %i.nj, %6
+  %i.nk = add nsw i64 %i.nj, %5
   %i.nl = mul i64 %i.ax, %i.nk
   %i.nm = shl nsw i64 %i.ba, 1                    ; 2 uses
   %i.nn = getelementptr i8, ptr %i.az, i64 %i.nl
@@ -2423,10 +2418,10 @@ scalar.ph327:                                     ; preds = %scalar.ph327.prehea
   br i1 %i.nc, label %.lr.ph72.preheader, label %.lr.ph76
 
 .lr.ph72.preheader:                               ; preds = %.preheader43
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.nd, i32 8) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.nd, i32 8) ; 3 uses
   %i.ne = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ne to i64
-  %i.nf = zext nneg i32 %smax to i64              ; 3 uses
+  %i.nf = zext nneg i32 %smax to i64              ; 4 uses
   %i.ng = add nsw i64 %i.nf, -7                   ; 2 uses
   %min.iters.check344 = icmp slt i32 %i.nd, 135
   br i1 %min.iters.check344, label %.lr.ph72.preheader378, label %vector.scevcheck337
@@ -2459,12 +2454,11 @@ vector.scevcheck337:                              ; preds = %.lr.ph72.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck337
   %scevgep338 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.oa = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.nf, 1                   ; 2 uses
+  %i.oa = getelementptr i8, ptr %i.a, i64 %5
   %scevgep339 = getelementptr i8, ptr %i.oa, i64 4
   %i.ob = shl nsw i64 %i.be, 1                    ; 2 uses
-  %i.oc = add nsw i64 %i.ob, %6
+  %i.oc = add nsw i64 %i.ob, %5
   %i.od = mul i64 %i.az, %i.oc
   %i.oe = shl nsw i64 %i.bc, 1                    ; 2 uses
   %i.of = getelementptr i8, ptr %i.bb, i64 %i.od
@@ -2867,10 +2861,10 @@ scalar.ph333:                                     ; preds = %scalar.ph333.prehea
   br i1 %i.oi, label %.lr.ph72.preheader, label %.lr.ph76
 
 .lr.ph72.preheader:                               ; preds = %.preheader43
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.oj, i32 16) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.oj, i32 16) ; 3 uses
   %i.ok = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ok to i64
-  %i.ol = zext nneg i32 %smax to i64              ; 3 uses
+  %i.ol = zext nneg i32 %smax to i64              ; 4 uses
   %i.om = add nsw i64 %i.ol, -15                  ; 2 uses
   %min.iters.check350 = icmp slt i32 %i.oj, 143
   br i1 %min.iters.check350, label %.lr.ph72.preheader384, label %vector.scevcheck343
@@ -2903,12 +2897,11 @@ vector.scevcheck343:                              ; preds = %.lr.ph72.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck343
   %scevgep344 = getelementptr inbounds nuw i8, ptr %i.a, i64 34
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.pg = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.ol, 1                   ; 2 uses
+  %i.pg = getelementptr i8, ptr %i.a, i64 %5
   %scevgep345 = getelementptr i8, ptr %i.pg, i64 4
   %i.ph = shl nsw i64 %i.be, 1                    ; 2 uses
-  %i.pi = add nsw i64 %i.ph, %6
+  %i.pi = add nsw i64 %i.ph, %5
   %i.pj = mul i64 %i.az, %i.pi
   %i.pk = shl nsw i64 %i.bc, 1                    ; 2 uses
   %i.pl = getelementptr i8, ptr %i.bb, i64 %i.pj
@@ -3311,10 +3304,10 @@ begin_hunk_7_@intra_pred_5_10:bb.a
   br i1 %i.qu, label %.lr.ph73.preheader, label %.lr.ph77
 
 .lr.ph73.preheader:                               ; preds = %.preheader44
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.qv, i32 32) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.qv, i32 32) ; 3 uses
   %i.qw = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.qw to i64
-  %i.qx = zext nneg i32 %smax to i64              ; 3 uses
+  %i.qx = zext nneg i32 %smax to i64              ; 4 uses
   %i.qy = add nsw i64 %i.qx, -31                  ; 2 uses
   %min.iters.check392 = icmp slt i32 %i.qv, 159
   br i1 %min.iters.check392, label %.lr.ph73.preheader426, label %vector.scevcheck385
@@ -3347,12 +3340,11 @@ vector.scevcheck385:                              ; preds = %.lr.ph73.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck385
   %scevgep386 = getelementptr inbounds nuw i8, ptr %i.a, i64 66
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.rs = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.qx, 1                   ; 2 uses
+  %i.rs = getelementptr i8, ptr %i.a, i64 %5
   %scevgep387 = getelementptr i8, ptr %i.rs, i64 4
   %i.rt = shl nsw i64 %i.be, 1                    ; 2 uses
-  %i.ru = add nsw i64 %i.rt, %6
+  %i.ru = add nsw i64 %i.rt, %5
   %i.rv = mul i64 %i.az, %i.ru
   %i.rw = shl nsw i64 %i.bc, 1                    ; 2 uses
   %i.rx = getelementptr i8, ptr %i.bb, i64 %i.rv
@@ -3755,10 +3747,10 @@ scalar.ph291:                                     ; preds = %scalar.ph291.prehea
   br i1 %i.mk, label %.lr.ph67.preheader, label %.lr.ph71
 
 .lr.ph67.preheader:                               ; preds = %.preheader38
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.ml, i32 4) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.ml, i32 4) ; 3 uses
   %i.mm = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.mm to i64
-  %i.mn = zext nneg i32 %smax to i64              ; 3 uses
+  %i.mn = zext nneg i32 %smax to i64              ; 4 uses
   %i.mo = add nsw i64 %i.mn, -3                   ; 2 uses
   %min.iters.check308 = icmp slt i32 %i.ml, 131
   br i1 %min.iters.check308, label %.lr.ph67.preheader342, label %vector.scevcheck301
@@ -3791,12 +3783,11 @@ vector.scevcheck301:                              ; preds = %.lr.ph67.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck301
   %scevgep302 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.ni = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.mn, 1                   ; 2 uses
+  %i.ni = getelementptr i8, ptr %i.a, i64 %5
   %scevgep303 = getelementptr i8, ptr %i.ni, i64 4
   %i.nj = shl nsw i64 %i.bc, 1                    ; 2 uses
-  %i.nk = add nsw i64 %i.nj, %6
+  %i.nk = add nsw i64 %i.nj, %5
   %i.nl = mul i64 %i.ax, %i.nk
   %i.nm = shl nsw i64 %i.ba, 1                    ; 2 uses
   %i.nn = getelementptr i8, ptr %i.az, i64 %i.nl
@@ -4199,10 +4190,10 @@ scalar.ph327:                                     ; preds = %scalar.ph327.prehea
   br i1 %i.nc, label %.lr.ph72.preheader, label %.lr.ph76
 
 .lr.ph72.preheader:                               ; preds = %.preheader43
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.nd, i32 8) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.nd, i32 8) ; 3 uses
   %i.ne = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ne to i64
-  %i.nf = zext nneg i32 %smax to i64              ; 3 uses
+  %i.nf = zext nneg i32 %smax to i64              ; 4 uses
   %i.ng = add nsw i64 %i.nf, -7                   ; 2 uses
   %min.iters.check344 = icmp slt i32 %i.nd, 135
   br i1 %min.iters.check344, label %.lr.ph72.preheader378, label %vector.scevcheck337
@@ -4235,12 +4226,11 @@ vector.scevcheck337:                              ; preds = %.lr.ph72.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck337
   %scevgep338 = getelementptr inbounds nuw i8, ptr %i.a, i64 18
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.oa = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.nf, 1                   ; 2 uses
+  %i.oa = getelementptr i8, ptr %i.a, i64 %5
   %scevgep339 = getelementptr i8, ptr %i.oa, i64 4
   %i.ob = shl nsw i64 %i.be, 1                    ; 2 uses
-  %i.oc = add nsw i64 %i.ob, %6
+  %i.oc = add nsw i64 %i.ob, %5
   %i.od = mul i64 %i.az, %i.oc
   %i.oe = shl nsw i64 %i.bc, 1                    ; 2 uses
   %i.of = getelementptr i8, ptr %i.bb, i64 %i.od
@@ -4643,10 +4633,10 @@ scalar.ph333:                                     ; preds = %scalar.ph333.prehea
   br i1 %i.oi, label %.lr.ph72.preheader, label %.lr.ph76
 
 .lr.ph72.preheader:                               ; preds = %.preheader43
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.oj, i32 16) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.oj, i32 16) ; 3 uses
   %i.ok = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ok to i64
-  %i.ol = zext nneg i32 %smax to i64              ; 3 uses
+  %i.ol = zext nneg i32 %smax to i64              ; 4 uses
   %i.om = add nsw i64 %i.ol, -15                  ; 2 uses
   %min.iters.check350 = icmp slt i32 %i.oj, 143
   br i1 %min.iters.check350, label %.lr.ph72.preheader384, label %vector.scevcheck343
@@ -4679,12 +4669,11 @@ vector.scevcheck343:                              ; preds = %.lr.ph72.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck343
   %scevgep344 = getelementptr inbounds nuw i8, ptr %i.a, i64 34
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.pg = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.ol, 1                   ; 2 uses
+  %i.pg = getelementptr i8, ptr %i.a, i64 %5
   %scevgep345 = getelementptr i8, ptr %i.pg, i64 4
   %i.ph = shl nsw i64 %i.be, 1                    ; 2 uses
-  %i.pi = add nsw i64 %i.ph, %6
+  %i.pi = add nsw i64 %i.ph, %5
   %i.pj = mul i64 %i.az, %i.pi
   %i.pk = shl nsw i64 %i.bc, 1                    ; 2 uses
   %i.pl = getelementptr i8, ptr %i.bb, i64 %i.pj
@@ -5087,10 +5076,10 @@ begin_hunk_11_@intra_pred_5_12:bb.a
   br i1 %i.qu, label %.lr.ph73.preheader, label %.lr.ph77
 
 .lr.ph73.preheader:                               ; preds = %.preheader44
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.qv, i32 32) ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.qv, i32 32) ; 3 uses
   %i.qw = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.qw to i64
-  %i.qx = zext nneg i32 %smax to i64              ; 3 uses
+  %i.qx = zext nneg i32 %smax to i64              ; 4 uses
   %i.qy = add nsw i64 %i.qx, -31                  ; 2 uses
   %min.iters.check392 = icmp slt i32 %i.qv, 159
   br i1 %min.iters.check392, label %.lr.ph73.preheader426, label %vector.scevcheck385
@@ -5123,12 +5112,11 @@ vector.scevcheck385:                              ; preds = %.lr.ph73.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck385
   %scevgep386 = getelementptr inbounds nuw i8, ptr %i.a, i64 66
-  %5 = shl nuw i32 %smax, 1
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.rs = getelementptr i8, ptr %i.a, i64 %6
+  %5 = shl nuw nsw i64 %i.qx, 1                   ; 2 uses
+  %i.rs = getelementptr i8, ptr %i.a, i64 %5
   %scevgep387 = getelementptr i8, ptr %i.rs, i64 4
   %i.rt = shl nsw i64 %i.be, 1                    ; 2 uses
-  %i.ru = add nsw i64 %i.rt, %6
+  %i.ru = add nsw i64 %i.rt, %5
   %i.rv = mul i64 %i.az, %i.ru
   %i.rw = shl nsw i64 %i.bc, 1                    ; 2 uses
   %i.rx = getelementptr i8, ptr %i.bb, i64 %i.rv
