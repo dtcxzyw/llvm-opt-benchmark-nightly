@@ -1,0 +1,88 @@
+diff --git a/llvm/lib/Analysis/BasicAliasAnalysis.cpp b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+index 3aece3ca7d76953..1a0d17baee246c1 100644
+--- a/llvm/lib/Analysis/BasicAliasAnalysis.cpp
++++ b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+@@ -343,6 +343,14 @@ struct CastedValue {
+     return CastedValue(NewV, ZExtBits, SExtBits + ExtendBy, 0, IsNonNegative);
+   }
+ 
++  /// Replace V with trunc(NewV).
++  CastedValue withTruncOfValue(const Value *NewV) const {
++    unsigned TruncateBy = NewV->getType()->getPrimitiveSizeInBits() -
++                          V->getType()->getPrimitiveSizeInBits();
++    return CastedValue(NewV, ZExtBits, SExtBits, TruncBits + TruncateBy,
++                       IsNonNegative);
++  }
++
+   APInt evaluateWith(APInt N) const {
+     assert(N.getBitWidth() == V->getType()->getPrimitiveSizeInBits() &&
+            "Incompatible bit width");
+@@ -517,6 +525,10 @@ static LinearExpression GetLinearExpression(
+     }
+   }
+ 
++  if (const auto *Trunc = dyn_cast<TruncInst>(Val.V))
++    return GetLinearExpression(Val.withTruncOfValue(Trunc->getOperand(0)), DL,
++                               Depth + 1, AC, DT);
++
+   if (const auto *ZExt = dyn_cast<ZExtInst>(Val.V))
+     return GetLinearExpression(
+         Val.withZExtOfValue(ZExt->getOperand(0), ZExt->hasNonNeg()), DL,
+@@ -2102,8 +2114,7 @@ bool BasicAAResult::computeConstantOffsetHeuristic(const DecomposedGEP &GEP,
+ 
+   const VariableGEPIndex &Var0 = GEP.VarIndices[0], &Var1 = GEP.VarIndices[1];
+ 
+-  if (Var0.Val.TruncBits != 0 || !Var0.Val.hasSameCastsAs(Var1.Val) ||
+-      !Var0.hasNegatedScaleOf(Var1) ||
++  if (!Var0.Val.hasSameCastsAs(Var1.Val) || !Var0.hasNegatedScaleOf(Var1) ||
+       Var0.Val.V->getType() != Var1.Val.V->getType())
+     return false;
+ 
+@@ -2126,8 +2137,10 @@ bool BasicAAResult::computeConstantOffsetHeuristic(const DecomposedGEP &GEP,
+   // minimum difference between the two. The minimum distance may occur due to
+   // wrapping; consider "add i3 %i, 5": if %i == 7 then 7 + 5 mod 8 == 4, and so
+   // the minimum distance between %i and %i + 5 is 3.
+-  APInt MinDiff = E0.Offset - E1.Offset, Wrapped = -MinDiff;
+-  MinDiff = APIntOps::umin(MinDiff, Wrapped);
++  APInt MinDiff = E0.Offset - E1.Offset;
++  if (Var0.Val.TruncBits)
++    MinDiff = MinDiff.trunc(MinDiff.getBitWidth() - Var0.Val.TruncBits);
++  MinDiff = APIntOps::umin(MinDiff, -MinDiff);
+   APInt MinDiffBytes =
+     MinDiff.zextOrTrunc(Var0.Scale.getBitWidth()) * Var0.Scale.abs();
+ 
+diff --git a/llvm/test/Analysis/BasicAA/gep-explicit-trunc.ll b/llvm/test/Analysis/BasicAA/gep-explicit-trunc.ll
+new file mode 100644
+index 000000000000000..97747fda29952c3
+--- /dev/null
++++ b/llvm/test/Analysis/BasicAA/gep-explicit-trunc.ll
+@@ -0,0 +1,29 @@
++; RUN: opt < %s -aa-pipeline=basic-aa -passes=aa-eval -print-all-alias-modref-info -disable-output 2>&1 | FileCheck %s
++
++target datalayout = "e-p:64:64"
++
++; CHECK-LABEL: Function: trunc_offset
++; CHECK: NoAlias: i32* %p, i32* %q
++define void @trunc_offset(ptr %base, i64 %x) {
++  %next = add i64 %x, 1
++  %i = trunc i64 %x to i32
++  %j = trunc i64 %next to i32
++  %p = getelementptr i32, ptr %base, i32 %i
++  %q = getelementptr i32, ptr %base, i32 %j
++  store i32 0, ptr %p
++  store i32 0, ptr %q
++  ret void
++}
++
++; CHECK-LABEL: Function: trunc_wrap
++; CHECK: MayAlias: i32* %p, i32* %q
++define void @trunc_wrap(ptr %base, i64 %x) {
++  %next = add i64 %x, 4294967296
++  %i = trunc i64 %x to i32
++  %j = trunc i64 %next to i32
++  %p = getelementptr i32, ptr %base, i32 %i
++  %q = getelementptr i32, ptr %base, i32 %j
++  store i32 0, ptr %p
++  store i32 0, ptr %q
++  ret void
++}
