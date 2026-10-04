@@ -205,12 +205,15 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.bz = sext i32 %.021.i.i to i64               ; 2 uses
   %i.ca = add nsw i64 %i.bz, 1
   %i.cb = sub nsw i64 %i.ca, %i.by                ; 3 uses
-  %min.iters.check = icmp ult i64 %i.cb, 8
+  %min.iters.check = icmp ult i64 %i.cb, 9
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i
-  %n.vec.a = and i64 %i.cb, -8                    ; 3 uses
-  %i.cc = add nsw i64 %n.vec.a, %i.by
+  %n.vec.a = and i64 %i.cb, 7                     ; 2 uses
+  %3 = icmp eq i64 %n.vec.a, 0
+  %4 = select i1 %3, i64 8, i64 %n.vec.a
+  %n.vec = sub nsw i64 %i.cb, %4                  ; 2 uses
+  %i.cc = add nsw i64 %n.vec, %i.by
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -257,14 +260,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.do = add <4 x i32> %vec.phi, %i.dm           ; 2 uses
   %i.dp = add <4 x i32> %vec.phi156, %i.dn        ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.dq = icmp eq i64 %index.next, %n.vec.a
+  %i.dq = icmp eq i64 %index.next, %n.vec
   br i1 %i.dq, label %middle.block, label %vector.body, !llvm.loop !376
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.dp, %i.do
-  %i.dr = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %i.cb, %n.vec.a
-  br i1 %cmp.n, label %._crit_edge.loopexit.i.i, label %scalar.ph.preheader
+  %i.dr = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx)
+  br label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.i.i, %middle.block
   %indvars.iv.i.i.ph = phi i64 [ %i.by, %.lr.ph.i.i ], [ %i.cc, %middle.block ]
@@ -284,14 +286,13 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.i.i, %i.bz
   br i1 %exitcond.not.i.i, label %._crit_edge.loopexit.i.i, label %scalar.ph, !llvm.loop !377
 
-._crit_edge.loopexit.i.i:                         ; preds = %scalar.ph, %middle.block
-  %spec.select.i.i.lcssa = phi i32 [ %i.dr, %middle.block ], [ %spec.select.i.i, %scalar.ph ]
+._crit_edge.loopexit.i.i:                         ; preds = %scalar.ph
   %i.dx = add i32 %.021.i.i, 1
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %bb.n
   %.124.lcssa.i.i = phi i32 [ %.02343.i.i, %bb.n ], [ %i.dx, %._crit_edge.loopexit.i.i ]
-  %.022.lcssa.i.i = phi i32 [ 0, %bb.n ], [ %spec.select.i.i.lcssa, %._crit_edge.loopexit.i.i ] ; 2 uses
+  %.022.lcssa.i.i = phi i32 [ 0, %bb.n ], [ %spec.select.i.i, %._crit_edge.loopexit.i.i ] ; 2 uses
   %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv45.i.i ; 2 uses
   %i.dz = load i32, ptr %i.dy, align 4, !tbaa !162
   %i.ea = add nsw i32 %i.dz, %.022.lcssa.i.i

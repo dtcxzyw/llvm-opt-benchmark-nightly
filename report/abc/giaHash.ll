@@ -204,14 +204,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.d = sext i32 %2 to i64                       ; 3 uses
-  %i.e = getelementptr inbounds [4 x i8], ptr %3, i64 %i.d ; 17 uses
+  %i.e = getelementptr inbounds [4 x i8], ptr %3, i64 %i.d ; 19 uses
   %.not = icmp eq i32 %2, 31
   br i1 %.not, label %Gia_ManLatest.exit131, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.c
   %i.f = shl nuw i32 1, %2
   %wide.trip.count.i = zext nneg i32 %i.f to i64  ; 11 uses
-  %i.g = add nsw i64 %wide.trip.count.i, -1       ; 4 uses
+  %i.g = add nsw i64 %wide.trip.count.i, -1       ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i, 3       ; 3 uses
   %i.h = icmp ult i32 %2, 2
   br i1 %i.h, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
@@ -291,57 +291,80 @@ bb.c:                                             ; preds = %bb.a
   %i.ad = sext i32 %i.ac to i64
   %i.ae = getelementptr inbounds [4 x i8], ptr %3, i64 %i.ad
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !21 ; 2 uses
-  %xtraiter174 = and i64 %wide.trip.count.i, 1
-  %4 = icmp eq i64 %i.g, 0
-  br i1 %4, label %.lr.ph.i95.epil.preheader.a, label %.lr.ph.preheader.i93.new
+  %xtraiter174 = and i64 %wide.trip.count.i, 3    ; 3 uses
+  %4 = icmp ult i32 %2, 2
+  br i1 %4, label %.lr.ph.i95.epil.preheader, label %.lr.ph.preheader.i93.new
 
 .lr.ph.preheader.i93.new:                         ; preds = %.lr.ph.preheader.i93
-  %unroll_iter179 = and i64 %wide.trip.count.i, 2147483646
+  %unroll_iter179 = and i64 %wide.trip.count.i, 2147483644
   br label %.lr.ph.i95
 
 .lr.ph.i95:                                       ; preds = %.lr.ph.i95, %.lr.ph.preheader.i93.new
-  %indvars.iv.i96 = phi i64 [ 0, %.lr.ph.preheader.i93.new ], [ %indvars.iv.next.i97.1, %.lr.ph.i95 ] ; 5 uses
+  %indvars.iv.i96 = phi i64 [ 0, %.lr.ph.preheader.i93.new ], [ %indvars.iv.next.i97.1, %.lr.ph.i95 ] ; 6 uses
   %.025.i = phi i32 [ -1, %.lr.ph.preheader.i93.new ], [ %.1.i.1, %.lr.ph.i95 ]
-  %.01524.i = phi i32 [ -1, %.lr.ph.preheader.i93.new ], [ %.116.i.1, %.lr.ph.i95 ] ; 2 uses
+  %.01524.i = phi i32 [ -1, %.lr.ph.preheader.i93.new ], [ %.116.i.3, %.lr.ph.i95 ] ; 2 uses
   %niter180 = phi i64 [ 0, %.lr.ph.preheader.i93.new ], [ %niter180.next.1, %.lr.ph.i95 ]
-  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.i96
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.i96
+  %6 = load i32, ptr %5, align 4, !tbaa !21       ; 2 uses
+  %.not172 = icmp slt i32 %.01524.i, %6
+  %.116.i = tail call i32 @llvm.smax.i32(i32 %.01524.i, i32 %6) ; 2 uses
+  %7 = trunc nuw nsw i64 %indvars.iv.i96 to i32
+  %.1.i = select i1 %.not172, i32 %7, i32 %.025.i
+  %indvars.iv.next.i97 = or disjoint i64 %indvars.iv.i96, 1 ; 2 uses
+  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.next.i97
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !21 ; 2 uses
-  %.not202 = icmp slt i32 %.01524.i, %i.ah
-  %.116.i.a = tail call i32 @llvm.smax.i32(i32 %.01524.i, i32 %i.ah) ; 2 uses
-  %i.ai = trunc nuw nsw i64 %indvars.iv.i96 to i32
-  %.1.i.a = select i1 %.not202, i32 %i.ai, i32 %.025.i
-  %indvars.iv.next.i97.a = or disjoint i64 %indvars.iv.i96, 1 ; 2 uses
+  %.not202 = icmp slt i32 %.116.i, %i.ah
+  %.116.i.a = tail call i32 @llvm.smax.i32(i32 %.116.i, i32 %i.ah) ; 2 uses
+  %i.ai = trunc nuw nsw i64 %indvars.iv.next.i97 to i32
+  %.1.i.a = select i1 %.not202, i32 %i.ai, i32 %.1.i
+  %indvars.iv.next.i97.a = or disjoint i64 %indvars.iv.i96, 2 ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.next.i97.a
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !21 ; 2 uses
-  %5 = icmp sge i32 %.116.i.a, %i.ak
-  %.not.i.1 = icmp eq i64 %indvars.iv.i96, 4294967294
-  %or.cond.i.1 = or i1 %.not.i.1, %5              ; 2 uses
-  %.116.i.1 = select i1 %or.cond.i.1, i32 %.116.i.a, i32 %i.ak ; 2 uses
-  %i.al = trunc nuw nsw i64 %indvars.iv.next.i97.a to i32
-  %.1.i.1 = select i1 %or.cond.i.1, i32 %.1.i.a, i32 %i.al ; 3 uses
-  %indvars.iv.next.i97.1 = add nuw nsw i64 %indvars.iv.i96, 2 ; 2 uses
-  %niter180.next.1 = add i64 %niter180, 2         ; 2 uses
+  %.not172.2 = icmp slt i32 %.116.i.a, %i.ak
+  %.116.i.2 = tail call i32 @llvm.smax.i32(i32 %.116.i.a, i32 %i.ak) ; 2 uses
+  %8 = trunc nuw nsw i64 %indvars.iv.next.i97.a to i32
+  %.116.i.1 = select i1 %.not172.2, i32 %8, i32 %.1.i.a
+  %indvars.iv.next.i97.2 = or disjoint i64 %indvars.iv.i96, 3 ; 2 uses
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.next.i97.2
+  %10 = load i32, ptr %9, align 4, !tbaa !21      ; 2 uses
+  %.not172.3 = icmp slt i32 %.116.i.2, %10
+  %.116.i.3 = tail call i32 @llvm.smax.i32(i32 %.116.i.2, i32 %10) ; 2 uses
+  %i.al = trunc nuw nsw i64 %indvars.iv.next.i97.2 to i32
+  %.1.i.1 = select i1 %.not172.3, i32 %i.al, i32 %.116.i.1 ; 3 uses
+  %indvars.iv.next.i97.1 = add nuw nsw i64 %indvars.iv.i96, 4 ; 2 uses
+  %niter180.next.1 = add i64 %niter180, 4         ; 2 uses
   %niter180.ncmp.1 = icmp eq i64 %niter180.next.1, %unroll_iter179
   br i1 %niter180.ncmp.1, label %.lr.ph.preheader.i100.unr-lcssa, label %.lr.ph.i95, !llvm.loop !6
 
 .lr.ph.preheader.i100.unr-lcssa:                  ; preds = %.lr.ph.i95
   %lcmp.mod176.not = icmp eq i64 %xtraiter174, 0
-  br i1 %lcmp.mod176.not, label %.lr.ph.preheader.i100, label %.lr.ph.i95.epil.preheader.a
+  br i1 %lcmp.mod176.not, label %.lr.ph.preheader.i100, label %.lr.ph.i95.epil.preheader
 
-.lr.ph.i95.epil.preheader.a:                      ; preds = %.lr.ph.preheader.i100.unr-lcssa, %.lr.ph.preheader.i93
-  %indvars.iv.i96.epil.init.a = phi i64 [ 0, %.lr.ph.preheader.i93 ], [ %indvars.iv.next.i97.1, %.lr.ph.preheader.i100.unr-lcssa ] ; 2 uses
-  %.025.i.epil.init.a = phi i32 [ -1, %.lr.ph.preheader.i93 ], [ %.1.i.1, %.lr.ph.preheader.i100.unr-lcssa ]
-  %.01524.i.epil.init.a = phi i32 [ -1, %.lr.ph.preheader.i93 ], [ %.116.i.1, %.lr.ph.preheader.i100.unr-lcssa ]
-  %lcmp.mod178 = icmp eq i32 %2, 0
-  tail call void @llvm.assume(i1 %lcmp.mod178)
+.lr.ph.i95.epil.preheader:                        ; preds = %.lr.ph.preheader.i100.unr-lcssa, %.lr.ph.preheader.i93
+  %indvars.iv.i96.epil.init = phi i64 [ 0, %.lr.ph.preheader.i93 ], [ %indvars.iv.next.i97.1, %.lr.ph.preheader.i100.unr-lcssa ]
+  %.025.i.epil.init = phi i32 [ -1, %.lr.ph.preheader.i93 ], [ %.1.i.1, %.lr.ph.preheader.i100.unr-lcssa ]
+  %.01524.i.epil.init = phi i32 [ -1, %.lr.ph.preheader.i93 ], [ %.116.i.3, %.lr.ph.preheader.i100.unr-lcssa ]
+  %lcmp.mod179 = icmp ne i64 %xtraiter174, 0
+  tail call void @llvm.assume(i1 %lcmp.mod179)
+  br label %.lr.ph.i95.epil.preheader.a
+
+.lr.ph.i95.epil.preheader.a:                      ; preds = %.lr.ph.i95.epil.preheader.a, %.lr.ph.i95.epil.preheader
+  %indvars.iv.i96.epil.init.a = phi i64 [ %indvars.iv.i96.epil.init, %.lr.ph.i95.epil.preheader ], [ %indvars.iv.next.i97.epil, %.lr.ph.i95.epil.preheader.a ] ; 3 uses
+  %.025.i.epil.init.a = phi i32 [ %.025.i.epil.init, %.lr.ph.i95.epil.preheader ], [ %.1.i.epil, %.lr.ph.i95.epil.preheader.a ]
+  %.01524.i.epil.init.a = phi i32 [ %.01524.i.epil.init, %.lr.ph.i95.epil.preheader ], [ %.116.i.epil, %.lr.ph.i95.epil.preheader.a ] ; 2 uses
+  %epil.iter176 = phi i64 [ 0, %.lr.ph.i95.epil.preheader ], [ %epil.iter176.next, %.lr.ph.i95.epil.preheader.a ]
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.i96.epil.init.a
-  %i.an = load i32, ptr %i.am, align 4, !tbaa !21
+  %i.an = load i32, ptr %i.am, align 4, !tbaa !21 ; 2 uses
   %.not203 = icmp slt i32 %.01524.i.epil.init.a, %i.an
+  %.116.i.epil = tail call i32 @llvm.smax.i32(i32 %.01524.i.epil.init.a, i32 %i.an)
   %i.ao = trunc nuw nsw i64 %indvars.iv.i96.epil.init.a to i32
-  %.1.i.epil = select i1 %.not203, i32 %i.ao, i32 %.025.i.epil.init.a
-  br label %.lr.ph.preheader.i100
+  %.1.i.epil = select i1 %.not203, i32 %i.ao, i32 %.025.i.epil.init.a ; 2 uses
+  %indvars.iv.next.i97.epil = add nuw nsw i64 %indvars.iv.i96.epil.init.a, 1
+  %epil.iter176.next = add i64 %epil.iter176, 1   ; 2 uses
+  %epil.iter176.cmp.not = icmp eq i64 %epil.iter176.next, %xtraiter174
+  br i1 %epil.iter176.cmp.not, label %.lr.ph.preheader.i100, label %.lr.ph.i95.epil.preheader.a, !llvm.loop !102
 
-.lr.ph.preheader.i100:                            ; preds = %.lr.ph.preheader.i100.unr-lcssa, %.lr.ph.i95.epil.preheader.a
+.lr.ph.preheader.i100:                            ; preds = %.lr.ph.i95.epil.preheader.a, %.lr.ph.preheader.i100.unr-lcssa
   %.1.i.lcssa = phi i32 [ %.1.i.1, %.lr.ph.preheader.i100.unr-lcssa ], [ %.1.i.epil, %.lr.ph.i95.epil.preheader.a ] ; 3 uses
   %i.ap = zext i32 %.1.i.lcssa to i64             ; 9 uses
   %xtraiter181 = and i64 %wide.trip.count.i, 1
@@ -353,7 +376,7 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph.i102
 
 .lr.ph.i102:                                      ; preds = %.lr.ph.i102, %.lr.ph.preheader.i100.new
-  %indvars.iv.i103 = phi i64 [ 0, %.lr.ph.preheader.i100.new ], [ %indvars.iv.next.i112.1, %.lr.ph.i102 ] ; 6 uses
+  %indvars.iv.i103 = phi i64 [ 0, %.lr.ph.preheader.i100.new ], [ %indvars.iv.next.i112.1, %.lr.ph.i102 ] ; 5 uses
   %.025.i104 = phi i32 [ -1, %.lr.ph.preheader.i100.new ], [ %.1.i111.1, %.lr.ph.i102 ]
   %.01524.i105 = phi i32 [ -1, %.lr.ph.preheader.i100.new ], [ %.116.i110.1, %.lr.ph.i102 ] ; 2 uses
   %niter187 = phi i64 [ 0, %.lr.ph.preheader.i100.new ], [ %niter187.next.1, %.lr.ph.i102 ]
@@ -369,10 +392,8 @@ bb.c:                                             ; preds = %bb.a
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.next.i112
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !21 ; 2 uses
   %i.ax = icmp sge i32 %.116.i110, %i.aw
-  %.not.i106.1 = icmp eq i64 %indvars.iv.next.i112, %i.ap
-  %or.cond.i107.1 = or i1 %.not.i106.1, %i.ax
-  %.not19.i108.1 = icmp eq i64 %indvars.iv.i103, 4294967294
-  %or.cond21.i.1 = or i1 %.not19.i108.1, %or.cond.i107.1 ; 2 uses
+  %.not19.i108.1 = icmp eq i64 %indvars.iv.next.i112, %i.ap
+  %or.cond21.i.1 = or i1 %.not19.i108.1, %i.ax    ; 2 uses
   %.116.i110.1 = select i1 %or.cond21.i.1, i32 %.116.i110, i32 %i.aw ; 2 uses
   %i.ay = trunc nuw nsw i64 %indvars.iv.next.i112 to i32
   %.1.i111.1 = select i1 %or.cond21.i.1, i32 %.1.i111, i32 %i.ay ; 3 uses
@@ -412,7 +433,7 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph.i118
 
 .lr.ph.i118:                                      ; preds = %.lr.ph.i118, %.lr.ph.preheader.i116.new
-  %indvars.iv.i119 = phi i64 [ 0, %.lr.ph.preheader.i116.new ], [ %indvars.iv.next.i129.1, %.lr.ph.i118 ] ; 7 uses
+  %indvars.iv.i119 = phi i64 [ 0, %.lr.ph.preheader.i116.new ], [ %indvars.iv.next.i129.1, %.lr.ph.i118 ] ; 6 uses
   %.025.i120 = phi i32 [ -1, %.lr.ph.preheader.i116.new ], [ %.1.i128.1, %.lr.ph.i118 ]
   %.01524.i121 = phi i32 [ -1, %.lr.ph.preheader.i116.new ], [ %.116.i127.1, %.lr.ph.i118 ] ; 2 uses
   %niter194 = phi i64 [ 0, %.lr.ph.preheader.i116.new ], [ %niter194.next.1, %.lr.ph.i118 ]
@@ -430,11 +451,9 @@ bb.c:                                             ; preds = %bb.a
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.next.i129
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !21 ; 2 uses
   %i.bl = icmp sge i32 %.116.i127, %i.bk
-  %.not.i122.1 = icmp eq i64 %indvars.iv.next.i129, %i.ap
-  %or.cond.i123.1 = or i1 %.not.i122.1, %i.bl
-  %.not19.i124.1.a = icmp eq i64 %indvars.iv.next.i129, %i.bd
-  %or.cond21.i125.1.a = or i1 %.not19.i124.1.a, %or.cond.i123.1
-  %.not20.i126.1 = icmp eq i64 %indvars.iv.i119, 4294967294
+  %.not19.i124.1.a = icmp eq i64 %indvars.iv.next.i129, %i.ap
+  %or.cond21.i125.1.a = or i1 %.not19.i124.1.a, %i.bl
+  %.not20.i126.1 = icmp eq i64 %indvars.iv.next.i129, %i.bd
   %or.cond22.i.1 = or i1 %.not20.i126.1, %or.cond21.i125.1.a ; 2 uses
   %.116.i127.1 = select i1 %or.cond22.i.1, i32 %.116.i127, i32 %i.bk ; 2 uses
   %i.bm = trunc nuw nsw i64 %indvars.iv.next.i129 to i32
@@ -679,7 +698,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
   %i.n = icmp eq i64 %index.next, %n.vec
-  br i1 %i.n, label %middle.block, label %vector.body, !llvm.loop !102
+  br i1 %i.n, label %middle.block, label %vector.body, !llvm.loop !103
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
@@ -697,7 +716,7 @@ middle.block:                                     ; preds = %vector.body
   %i.p = shl nuw i32 %indvars.iv.next.tr.i, 1
   store i32 %i.p, ptr %i.o, align 4, !tbaa !21
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %Gia_ManCollectLiterals.exit, label %.lr.ph.i, !llvm.loop !103
+  br i1 %exitcond.not.i, label %Gia_ManCollectLiterals.exit, label %.lr.ph.i, !llvm.loop !104
 
 Gia_ManCollectLiterals.exit:                      ; preds = %.lr.ph.i, %middle.block, %bb.a
   %i.q = tail call ptr @Gia_ManStart(i32 noundef 1000) #28 ; 6 uses
@@ -711,7 +730,7 @@ Gia_ManCollectLiterals.exit:                      ; preds = %.lr.ph.i, %middle.b
   %i.s = tail call fastcc i32 @Gia_ManAppendCi(ptr noundef nonnull %i.q) ; 0 uses
   %i.t = add nuw nsw i32 %.039, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.t, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !104
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !105
 
 ._crit_edge:                                      ; preds = %.lr.ph, %Gia_ManCollectLiterals.exit
   tail call void @Gia_ManHashAlloc(ptr noundef nonnull %i.q)
@@ -741,7 +760,7 @@ vector.body45:                                    ; preds = %vector.body45, %vec
   %index.next49 = add nuw i64 %index46, 8         ; 2 uses
   %vec.ind.next50 = add <4 x i32> %vec.ind47, splat (i32 8)
   %i.z = icmp eq i64 %index.next49, %n.vec44
-  br i1 %i.z, label %middle.block51, label %vector.body45, !llvm.loop !105
+  br i1 %i.z, label %middle.block51, label %vector.body45, !llvm.loop !106
 
 middle.block51:                                   ; preds = %vector.body45
   %cmp.n52 = icmp eq i64 %n.vec44, %wide.trip.count.i34
@@ -758,7 +777,7 @@ middle.block51:                                   ; preds = %vector.body45
   store i32 %i.ab, ptr %i.aa, align 4, !tbaa !21
   %indvars.iv.next.i37 = add nuw nsw i64 %indvars.iv.i36, 1 ; 2 uses
   %exitcond.not.i38 = icmp eq i64 %indvars.iv.next.i37, %wide.trip.count.i34
-  br i1 %exitcond.not.i38, label %.lr.ph23.i.preheader, label %.lr.ph.i35, !llvm.loop !106
+  br i1 %exitcond.not.i38, label %.lr.ph23.i.preheader, label %.lr.ph.i35, !llvm.loop !107
 
 .lr.ph23.i.preheader:                             ; preds = %.lr.ph.i35, %middle.block51
   br label %.lr.ph23.i
@@ -831,7 +850,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 820
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !107
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !108
   %.not = icmp eq i32 %i.j, 0
   br i1 %.not, label %bb.f, label %bb.e
 
@@ -1196,10 +1215,11 @@ attributes #31 = { cold noreturn nounwind }
 !99 = distinct !{!99, !42}
 !100 = distinct !{!100, !56}
 !101 = distinct !{!101, !56}
-!102 = distinct !{!102, !42, !54, !55}
-!103 = distinct !{!103, !42, !55, !54}
-!104 = distinct !{!104, !42}
-!105 = distinct !{!105, !42, !54, !55}
-!106 = distinct !{!106, !42, !55, !54}
-!107 = !{!39, !13, i64 820}
+!102 = distinct !{!102, !56}
+!103 = distinct !{!103, !42, !54, !55}
+!104 = distinct !{!104, !42, !55, !54}
+!105 = distinct !{!105, !42}
+!106 = distinct !{!106, !42, !54, !55}
+!107 = distinct !{!107, !42, !55, !54}
+!108 = !{!39, !13, i64 820}
 end_hunk_0

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raylib/original/rmodels?download=true
 inline.NumInlined: 1421
 inline.NumDeleted: 227
-loop-unroll.NumCompletelyUnrolled: 83
-loop-unroll.NumRuntimeUnrolled: 99
+loop-unroll.NumCompletelyUnrolled: 84
+loop-unroll.NumRuntimeUnrolled: 98
 loop-unroll.NumUnrolled: 188
 begin_hunk_0_@Vox_LoadFromMemory:bb.a
   %i.vd = phi i32 [ %.pre8.i129.i, %bb.bc ], [ %i.uw, %insertArrayUShort.exit127.i ] ; 2 uses
@@ -205,8 +205,8 @@ bb.a:
   %5 = alloca %struct._m3dstbi__zhuffman, align 4 ; 9 uses
   %i.a = alloca [455 x i8], align 16              ; 8 uses
   %i.b = alloca [19 x i8], align 16               ; 6 uses
-  %i.c = alloca [4 x i8], align 2                 ; 13 uses
-  %6 = alloca %struct._m3dstbi__zbuf, align 8     ; 77 uses
+  %i.c = alloca [4 x i8], align 2                 ; 14 uses
+  %6 = alloca %struct._m3dstbi__zbuf, align 8     ; 78 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #54
   %i.d = sext i32 %2 to i64                       ; 2 uses
   %i.e = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -2147483648, 2147483648) %i.d) #56 ; 5 uses
@@ -563,38 +563,13 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
   br i1 %indvars.iv.i.i.i.lcssa, label %.lr.ph42.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph42.i.i.i:                                   ; preds = %.preheader.i.i.i, %bb.p
-  %.pr.i.i116 = phi i32 [ %i.dw, %.preheader.i.i.i ], [ 0, %bb.p ] ; 2 uses
-  %.pre.i.i.i111 = phi i32 [ %.lcssa345, %.preheader.i.i.i ], [ %.promoted.i.i.i, %bb.p ] ; 2 uses
-  %.0.lcssa61.i.i.i = phi i64 [ %wide.trip.count.i.i, %.preheader.i.i.i ], [ 0, %bb.p ] ; 5 uses
-  %i.dx = load ptr, ptr %i.i, align 8             ; 3 uses
-  %.promoted43.i.i.i = load ptr, ptr %6, align 8  ; 5 uses
-  %xtraiter437 = and i64 %.0.lcssa61.i.i.i, 1
-  %lcmp.mod438.not = icmp eq i64 %xtraiter437, 0
-  br i1 %lcmp.mod438.not, label %.prol.loopexit436, label %.prol.preheader435
-
-.prol.preheader435:                               ; preds = %.lr.ph42.i.i.i
-  %.not.i.i33.i.i.prol = icmp ult ptr %.promoted43.i.i.i, %i.dx
-  br i1 %.not.i.i33.i.i.prol, label %7, label %_m3dstbi__zget8.exit.i34.i.i.prol
-
-7:                                                ; preds = %.prol.preheader435
-  %8 = getelementptr inbounds nuw i8, ptr %.promoted43.i.i.i, i64 1 ; 2 uses
-  store ptr %8, ptr %6, align 8
-  %9 = load i8, ptr %.promoted43.i.i.i, align 1
-  br label %_m3dstbi__zget8.exit.i34.i.i.prol
-
-_m3dstbi__zget8.exit.i34.i.i.prol:                ; preds = %7, %.prol.preheader435
-  %10 = phi ptr [ %8, %7 ], [ %.promoted43.i.i.i, %.prol.preheader435 ]
-  %.0.i.i35.i.i.prol = phi i8 [ %9, %7 ], [ 0, %.prol.preheader435 ]
-  %indvars.iv.next50.i.i.i.prol = add nuw nsw i64 %.0.lcssa61.i.i.i, 1
-  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0.lcssa61.i.i.i
-  store i8 %.0.i.i35.i.i.prol, ptr %11, align 1
-  br label %.prol.loopexit436
-
-.prol.loopexit436:                                ; preds = %_m3dstbi__zget8.exit.i34.i.i.prol, %.lr.ph42.i.i.i
-  %indvars.iv49.i.i.i.unr = phi i64 [ %.0.lcssa61.i.i.i, %.lr.ph42.i.i.i ], [ %indvars.iv.next50.i.i.i.prol, %_m3dstbi__zget8.exit.i34.i.i.prol ]
-  %.unr440 = phi ptr [ %.promoted43.i.i.i, %.lr.ph42.i.i.i ], [ %10, %_m3dstbi__zget8.exit.i34.i.i.prol ]
-  %12 = icmp eq i64 %.0.lcssa61.i.i.i, 3
-  br i1 %12, label %._crit_edge.i.i.i, label %.lr.ph42.i.i.i.new
+  %.pr.i.i116 = phi i32 [ %i.dw, %.preheader.i.i.i ], [ 0, %bb.p ] ; 4 uses
+  %.pre.i.i.i111 = phi i32 [ %.lcssa345, %.preheader.i.i.i ], [ %.promoted.i.i.i, %bb.p ] ; 4 uses
+  %.0.lcssa61.i.i.i = phi i64 [ %wide.trip.count.i.i, %.preheader.i.i.i ], [ 0, %bb.p ] ; 4 uses
+  %i.dx = load ptr, ptr %i.i, align 8             ; 4 uses
+  %.promoted43.i.i.i = load ptr, ptr %6, align 8  ; 4 uses
+  %.not.i.i33.i.i = icmp ult ptr %.promoted43.i.i.i, %i.dx
+  br i1 %.not.i.i33.i.i, label %7, label %.lr.ph42.i.i.i.new
 
 bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i.new
   %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.new ], [ %indvars.iv.next.i.i.i.3, %bb.r ] ; 5 uses
@@ -623,45 +598,78 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader.i.i.i.unr-lcssa, label %bb.r
 
-.lr.ph42.i.i.i.new:                               ; preds = %.prol.loopexit436, %_m3dstbi__zget8.exit.i34.i.i.1
-  %indvars.iv49.i.i.i = phi i64 [ %indvars.iv.next50.i.i.i.1.a, %_m3dstbi__zget8.exit.i34.i.i.1 ], [ %indvars.iv49.i.i.i.unr, %.prol.loopexit436 ] ; 3 uses
-  %13 = phi ptr [ %i.et, %_m3dstbi__zget8.exit.i34.i.i.1 ], [ %.unr440, %.prol.loopexit436 ] ; 4 uses
-  %.not.i.i33.i.i = icmp ult ptr %13, %i.dx
-  br i1 %.not.i.i33.i.i, label %bb.s, label %_m3dstbi__zget8.exit.i34.i.i
+7:                                                ; preds = %.lr.ph42.i.i.i
+  %8 = getelementptr inbounds nuw i8, ptr %.promoted43.i.i.i, i64 1 ; 2 uses
+  store ptr %8, ptr %6, align 8
+  %9 = load i8, ptr %.promoted43.i.i.i, align 1
+  br label %.lr.ph42.i.i.i.new
 
-bb.s:                                             ; preds = %.lr.ph42.i.i.i.new
-  %i.en = getelementptr inbounds nuw i8, ptr %13, i64 1 ; 2 uses
+.lr.ph42.i.i.i.new:                               ; preds = %7, %.lr.ph42.i.i.i
+  %10 = phi ptr [ %8, %7 ], [ %.promoted43.i.i.i, %.lr.ph42.i.i.i ] ; 4 uses
+  %.0.i.i35.i.i = phi i8 [ %9, %7 ], [ 0, %.lr.ph42.i.i.i ]
+  %indvars.iv.next50.i.i.i = add nuw nsw i64 %.0.lcssa61.i.i.i, 1 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0.lcssa61.i.i.i
+  store i8 %.0.i.i35.i.i, ptr %11, align 1
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next50.i.i.i, 4
+  br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i, label %12
+
+12:                                               ; preds = %.lr.ph42.i.i.i.new
+  %.not.i.i33.i.i.1 = icmp ult ptr %10, %i.dx
+  br i1 %.not.i.i33.i.i.1, label %bb.s, label %_m3dstbi__zget8.exit.i34.i.i
+
+bb.s:                                             ; preds = %12
+  %i.en = getelementptr inbounds nuw i8, ptr %10, i64 1 ; 2 uses
   store ptr %i.en, ptr %6, align 8
-  %i.eo = load i8, ptr %13, align 1
+  %i.eo = load i8, ptr %10, align 1
   br label %_m3dstbi__zget8.exit.i34.i.i
 
-_m3dstbi__zget8.exit.i34.i.i:                     ; preds = %bb.s, %.lr.ph42.i.i.i.new
-  %i.ep = phi ptr [ %i.en, %bb.s ], [ %13, %.lr.ph42.i.i.i.new ] ; 4 uses
-  %.0.i.i35.i.i.a = phi i8 [ %i.eo, %bb.s ], [ 0, %.lr.ph42.i.i.i.new ]
-  %i.eq = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv49.i.i.i
+_m3dstbi__zget8.exit.i34.i.i:                     ; preds = %bb.s, %12
+  %i.ep = phi ptr [ %i.en, %bb.s ], [ %10, %12 ]  ; 4 uses
+  %.0.i.i35.i.i.a = phi i8 [ %i.eo, %bb.s ], [ 0, %12 ]
+  %indvars.iv.next50.i.i.i.1 = add nuw nsw i64 %.0.lcssa61.i.i.i, 2 ; 2 uses
+  %i.eq = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next50.i.i.i
   store i8 %.0.i.i35.i.i.a, ptr %i.eq, align 1
-  %.not.i.i33.i.i.1 = icmp ult ptr %i.ep, %i.dx
-  br i1 %.not.i.i33.i.i.1, label %bb.t, label %_m3dstbi__zget8.exit.i34.i.i.1
+  %exitcond.not.i.i.i.1 = icmp eq i64 %indvars.iv.next50.i.i.i.1, 4
+  br i1 %exitcond.not.i.i.i.1, label %._crit_edge.i.i.i, label %13
 
-bb.t:                                             ; preds = %_m3dstbi__zget8.exit.i34.i.i
+13:                                               ; preds = %_m3dstbi__zget8.exit.i34.i.i
+  %.not.i.i33.i.i.2 = icmp ult ptr %i.ep, %i.dx
+  br i1 %.not.i.i33.i.i.2, label %bb.t, label %_m3dstbi__zget8.exit.i34.i.i.1
+
+bb.t:                                             ; preds = %13
   %i.er = getelementptr inbounds nuw i8, ptr %i.ep, i64 1 ; 2 uses
   store ptr %i.er, ptr %6, align 8
   %i.es = load i8, ptr %i.ep, align 1
   br label %_m3dstbi__zget8.exit.i34.i.i.1
 
-_m3dstbi__zget8.exit.i34.i.i.1:                   ; preds = %bb.t, %_m3dstbi__zget8.exit.i34.i.i
-  %i.et = phi ptr [ %i.er, %bb.t ], [ %i.ep, %_m3dstbi__zget8.exit.i34.i.i ]
-  %.0.i.i35.i.i.1 = phi i8 [ %i.es, %bb.t ], [ 0, %_m3dstbi__zget8.exit.i34.i.i ]
-  %indvars.iv.next50.i.i.i.1.a = add nuw nsw i64 %indvars.iv49.i.i.i, 2 ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv49.i.i.i
-  %i.eu = getelementptr inbounds nuw i8, ptr %14, i64 1
+_m3dstbi__zget8.exit.i34.i.i.1:                   ; preds = %bb.t, %13
+  %i.et = phi ptr [ %i.er, %bb.t ], [ %i.ep, %13 ] ; 3 uses
+  %.0.i.i35.i.i.1 = phi i8 [ %i.es, %bb.t ], [ 0, %13 ]
+  %indvars.iv.next50.i.i.i.1.a = add nuw nsw i64 %.0.lcssa61.i.i.i, 3 ; 2 uses
+  %i.eu = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next50.i.i.i.1
   store i8 %.0.i.i35.i.i.1, ptr %i.eu, align 1
   %exitcond.not.i.i.i.1.a = icmp eq i64 %indvars.iv.next50.i.i.i.1.a, 4
-  br i1 %exitcond.not.i.i.i.1.a, label %._crit_edge.i.i.i, label %.lr.ph42.i.i.i.new
+  br i1 %exitcond.not.i.i.i.1.a, label %._crit_edge.i.i.i, label %14
 
-._crit_edge.i.i.i:                                ; preds = %.prol.loopexit436, %_m3dstbi__zget8.exit.i34.i.i.1, %.preheader.i.i.i
-  %.pr.i.i115 = phi i32 [ %i.dw, %.preheader.i.i.i ], [ %.pr.i.i116, %_m3dstbi__zget8.exit.i34.i.i.1 ], [ %.pr.i.i116, %.prol.loopexit436 ]
-  %.pre.i.i.i110 = phi i32 [ %.lcssa345, %.preheader.i.i.i ], [ %.pre.i.i.i111, %_m3dstbi__zget8.exit.i34.i.i.1 ], [ %.pre.i.i.i111, %.prol.loopexit436 ]
+14:                                               ; preds = %_m3dstbi__zget8.exit.i34.i.i.1
+  %.not.i.i33.i.i.3 = icmp ult ptr %i.et, %i.dx
+  br i1 %.not.i.i33.i.i.3, label %15, label %_m3dstbi__zget8.exit.i34.i.i.3
+
+15:                                               ; preds = %14
+  %16 = getelementptr inbounds nuw i8, ptr %i.et, i64 1
+  store ptr %16, ptr %6, align 8
+  %17 = load i8, ptr %i.et, align 1
+  br label %_m3dstbi__zget8.exit.i34.i.i.3
+
+_m3dstbi__zget8.exit.i34.i.i.3:                   ; preds = %15, %14
+  %.0.i.i35.i.i.3 = phi i8 [ %17, %15 ], [ 0, %14 ]
+  %18 = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next50.i.i.i.1.a
+  store i8 %.0.i.i35.i.i.3, ptr %18, align 1
+  br label %._crit_edge.i.i.i
+
+._crit_edge.i.i.i:                                ; preds = %.lr.ph42.i.i.i.new, %_m3dstbi__zget8.exit.i34.i.i, %_m3dstbi__zget8.exit.i34.i.i.1, %_m3dstbi__zget8.exit.i34.i.i.3, %.preheader.i.i.i
+  %.pr.i.i115 = phi i32 [ %i.dw, %.preheader.i.i.i ], [ %.pr.i.i116, %_m3dstbi__zget8.exit.i34.i.i.3 ], [ %.pr.i.i116, %_m3dstbi__zget8.exit.i34.i.i.1 ], [ %.pr.i.i116, %_m3dstbi__zget8.exit.i34.i.i ], [ %.pr.i.i116, %.lr.ph42.i.i.i.new ]
+  %.pre.i.i.i110 = phi i32 [ %.lcssa345, %.preheader.i.i.i ], [ %.pre.i.i.i111, %_m3dstbi__zget8.exit.i34.i.i.3 ], [ %.pre.i.i.i111, %_m3dstbi__zget8.exit.i34.i.i.1 ], [ %.pre.i.i.i111, %_m3dstbi__zget8.exit.i34.i.i ], [ %.pre.i.i.i111, %.lr.ph42.i.i.i.new ]
   %i.ev = load i16, ptr %i.c, align 2             ; 3 uses
   %i.ew = zext i16 %i.ev to i32
   %i.ex = load i16, ptr %i.aq, align 2

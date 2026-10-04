@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.n = getelementptr i8, ptr %i.m, i64 1108
   %.val.i.3 = load i32, ptr %i.n, align 4, !noundef !7
   %..i.i.i.i.3 = tail call noundef i32 @llvm.umin.i32(i32 %.val.i.3, i32 %..i.i.i.i.2) ; 3 uses
-  %i.o = add nuw i64 %.sroa.04.0.i, 4             ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.04.0.i, 4         ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordENtNtNtNtBb_4iter6traits8iterator8Iterator4foldmNCINvNtNtB1N_8adapters3map8map_foldRBQ_mmNCNvMs_NtCsa9Jrx9KOzzM_16hickory_resolver14caching_clientINtB3e_13CachingClientINtNtB3g_8resolver12LookupEitherNtNtNtCs4LZN9PPmi2I_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEE17lookup_from_cache0NvYmNtNtBb_3cmp3Ord3minE0ECshke30g4Hb4g_20ipfs_private_example.exit.loopexit.unr-lcssa, label %bb.c
@@ -229,7 +229,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %i.q = getelementptr i8, ptr %i.p, i64 268
   %.val.i.epil = load i32, ptr %i.q, align 4, !noundef !7
   %..i.i.i.i.epil = tail call noundef i32 @llvm.umin.i32(i32 %.val.i.epil, i32 %.sroa.02.0.i.epil) ; 2 uses
-  %i.r = add nuw i64 %.sroa.04.0.i.epil, 1
+  %i.r = add nuw nsw i64 %.sroa.04.0.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordENtNtNtNtBb_4iter6traits8iterator8Iterator4foldmNCINvNtNtB1N_8adapters3map8map_foldRBQ_mmNCNvMs_NtCsa9Jrx9KOzzM_16hickory_resolver14caching_clientINtB3e_13CachingClientINtNtB3g_8resolver12LookupEitherNtNtNtCs4LZN9PPmi2I_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEE17lookup_from_cache0NvYmNtNtBb_3cmp3Ord3minE0ECshke30g4Hb4g_20ipfs_private_example.exit, label %bb.d, !llvm.loop !1524
@@ -632,13 +632,20 @@ vector.ph207:                                     ; preds = %vector.main.loop.it
 
 vector.body209:                                   ; preds = %vector.ph207, %vector.body209
   %index210 = phi i64 [ 0, %vector.ph207 ], [ %index.next213, %vector.body209 ] ; 4 uses
-  %i.tk = getelementptr inbounds nuw i8, ptr %i.av, i64 %index210
-  %wide.load211 = load <16 x i8>, ptr %i.tk, align 1, !noalias !4334
-  %i.tl = getelementptr inbounds nuw i8, ptr %i.aw, i64 %index210
-  %i.tm = getelementptr inbounds nuw i8, ptr %i.s, i64 %index210
-  %wide.load212 = load <16 x i8>, ptr %i.tm, align 4, !alias.scope !4335, !noalias !4336
-  %2 = xor <16 x i8> %wide.load212, %wide.load211
-  store <16 x i8> %2, ptr %i.tl, align 1, !noalias !4334
+  %2 = getelementptr inbounds nuw i8, ptr %i.av, i64 %index210 ; 2 uses
+  %i.tk = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %wide.load211 = load <8 x i8>, ptr %2, align 1, !noalias !4334
+  %wide.load212 = load <8 x i8>, ptr %i.tk, align 1, !noalias !4334
+  %3 = getelementptr inbounds nuw i8, ptr %i.aw, i64 %index210 ; 2 uses
+  %i.tl = getelementptr inbounds nuw i8, ptr %i.s, i64 %index210 ; 2 uses
+  %i.tm = getelementptr inbounds nuw i8, ptr %i.tl, i64 8
+  %wide.load213 = load <8 x i8>, ptr %i.tl, align 4, !alias.scope !4335, !noalias !4336
+  %wide.load214 = load <8 x i8>, ptr %i.tm, align 4, !alias.scope !4335, !noalias !4336
+  %4 = xor <8 x i8> %wide.load213, %wide.load211
+  %5 = xor <8 x i8> %wide.load214, %wide.load212
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store <8 x i8> %4, ptr %3, align 1, !noalias !4334
+  store <8 x i8> %5, ptr %6, align 1, !noalias !4334
   %index.next213 = add nuw i64 %index210, 16      ; 2 uses
   %i.tn = icmp eq i64 %index.next213, %n.vec208
   br i1 %i.tn, label %middle.block214, label %vector.body209, !llvm.loop !4273

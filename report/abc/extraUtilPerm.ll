@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/extraUtilPerm?download=true
 inline.NumInlined: 140
 inline.NumDeleted: 28
-loop-unroll.NumCompletelyUnrolled: 30
-loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 31
+loop-unroll.NumRuntimeUnrolled: 5
 loop-unroll.NumUnrolled: 36
 begin_hunk_0_@Abc_ZddGiaTest:bb.a
   %i.bc = getelementptr i8, ptr %0, i64 32        ; 2 uses
@@ -205,7 +205,7 @@ declare void @Gia_ManFillValue(ptr noundef) local_unnamed_addr #12
 define void @Abc_ZddPermTestInt(ptr noundef %0) local_unnamed_addr #7 {
 .lr.ph.i:
   %i.a = alloca [3 x [5 x i32]], align 16         ; 4 uses
-  %i.b = alloca [5 x i32], align 16               ; 13 uses
+  %i.b = alloca [5 x i32], align 16               ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(60) %i.a, ptr noundef nonnull align 16 dereferenceable(60) @__const.Abc_ZddPermTestInt.pPerms, i64 60, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
@@ -232,6 +232,10 @@ define void @Abc_ZddPermTestInt(ptr noundef %0) local_unnamed_addr #7 {
   %puts.i.2 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
   %i.r = getelementptr i8, ptr %0, i64 12         ; 2 uses
   %i.s = getelementptr i8, ptr %0, i64 88         ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   br label %.lr.ph.i50
 
 .lr.ph.i50:                                       ; preds = %.lr.ph.i, %Abc_ZddPermPrint.exit73
@@ -421,8 +425,8 @@ Abc_ZddPerm2Comb.exit:                            ; preds = %.lr.ph.i56.4
   br i1 %i.cc, label %._crit_edge.thread, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %Abc_ZddPerm2Comb.exit, %Abc_ZddPerm2Comb.exit.thread
-  %.1.i.4102 = phi i32 [ %i.bx, %Abc_ZddPerm2Comb.exit.thread ], [ %.1.i.3, %Abc_ZddPerm2Comb.exit ] ; 5 uses
-  %wide.trip.count.i = zext i32 %.1.i.4102 to i64 ; 3 uses
+  %.1.i.4102 = phi i32 [ %i.bx, %Abc_ZddPerm2Comb.exit.thread ], [ %.1.i.3, %Abc_ZddPerm2Comb.exit ] ; 7 uses
+  %wide.trip.count.i = zext nneg i32 %.1.i.4102 to i64
   br label %.lr.ph.i61
 
 .lr.ph.i61:                                       ; preds = %.lr.ph.i61, %.lr.ph.preheader.i
@@ -444,32 +448,35 @@ Abc_ZddPerm2Comb.exit:                            ; preds = %.lr.ph.i56.4
 
 .lr.ph:                                           ; preds = %.lr.ph.i61
   %putchar.i60104 = tail call i32 @putchar(i32 10) ; 0 uses
-  %.val47 = load i32, ptr %i.r, align 4, !tbaa !41 ; 3 uses
-  %.val48 = load ptr, ptr %i.s, align 8, !tbaa !44 ; 3 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
+  %.val47 = load i32, ptr %i.r, align 4, !tbaa !41 ; 5 uses
+  %.val48 = load ptr, ptr %i.s, align 8, !tbaa !44 ; 5 uses
+  %5 = load i32, ptr %i.b, align 16, !tbaa !17    ; 2 uses
+  %6 = ashr i32 %5, 16
+  %7 = and i32 %5, 65535
+  %8 = mul nsw i32 %6, %.val47
+  %9 = add nsw i32 %8, %7
+  %10 = sext i32 %9 to i64
+  %11 = getelementptr inbounds [4 x i8], ptr %.val48, i64 %10
+  %12 = load i32, ptr %11, align 4, !tbaa !17
+  store i32 %12, ptr %i.b, align 16, !tbaa !17
   %i.cj = icmp eq i32 %.1.i.4102, 1
-  br i1 %i.cj, label %.epil.preheader, label %.lr.ph.new
+  br i1 %i.cj, label %._crit_edge, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967294
-  br label %bb.a
+  %13 = load i32, ptr %1, align 4, !tbaa !17      ; 2 uses
+  %14 = ashr i32 %13, 16
+  %15 = and i32 %13, 65535
+  %16 = mul nsw i32 %14, %.val47
+  %17 = add nsw i32 %16, %15
+  %18 = sext i32 %17 to i64
+  %19 = getelementptr inbounds [4 x i8], ptr %.val48, i64 %18
+  %20 = load i32, ptr %19, align 4, !tbaa !17
+  store i32 %20, ptr %1, align 4, !tbaa !17
+  %exitcond.not.1 = icmp eq i32 %.1.i.4102, 2
+  br i1 %exitcond.not.1, label %._crit_edge, label %bb.a
 
-bb.a:                                             ; preds = %bb.a, %.lr.ph.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.a ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.a ]
-  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv ; 2 uses
-  %2 = load i32, ptr %1, align 8, !tbaa !17       ; 2 uses
-  %3 = ashr i32 %2, 16
-  %4 = and i32 %2, 65535
-  %5 = mul nsw i32 %3, %.val47
-  %6 = add nsw i32 %5, %4
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr inbounds [4 x i8], ptr %.val48, i64 %7
-  %9 = load i32, ptr %8, align 4, !tbaa !17
-  store i32 %9, ptr %1, align 8, !tbaa !17
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 2 uses
-  %i.ck = load i32, ptr %11, align 4, !tbaa !17   ; 2 uses
+bb.a:                                             ; preds = %.lr.ph.new
+  %i.ck = load i32, ptr %2, align 8, !tbaa !17    ; 2 uses
   %i.cl = ashr i32 %i.ck, 16
   %i.cm = and i32 %i.ck, 65535
   %i.cn = mul nsw i32 %i.cl, %.val47
@@ -477,22 +484,25 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph.new
   %i.cp = sext i32 %i.co to i64
   %i.cq = getelementptr inbounds [4 x i8], ptr %.val48, i64 %i.cp
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !17
-  store i32 %i.cr, ptr %11, align 4, !tbaa !17
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %bb.a, !llvm.loop !96
+  store i32 %i.cr, ptr %2, align 8, !tbaa !17
+  %niter.ncmp.1 = icmp eq i32 %.1.i.4102, 3
+  br i1 %niter.ncmp.1, label %._crit_edge, label %._crit_edge.unr-lcssa
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.a
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %21 = load i32, ptr %3, align 4, !tbaa !17      ; 2 uses
+  %22 = ashr i32 %21, 16
+  %23 = and i32 %21, 65535
+  %24 = mul nsw i32 %22, %.val47
+  %25 = add nsw i32 %24, %23
+  %26 = sext i32 %25 to i64
+  %27 = getelementptr inbounds [4 x i8], ptr %.val48, i64 %26
+  %28 = load i32, ptr %27, align 4, !tbaa !17
+  store i32 %28, ptr %3, align 4, !tbaa !17
+  %lcmp.mod.not = icmp eq i32 %.1.i.4102, 4
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ]
-  %lcmp.mod110 = trunc i32 %.1.i.4102 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod110)
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.epil.init ; 2 uses
-  %i.cs = load i32, ptr %12, align 4, !tbaa !17   ; 2 uses
+.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa
+  %i.cs = load i32, ptr %4, align 16, !tbaa !17   ; 2 uses
   %i.ct = ashr i32 %i.cs, 16
   %i.cu = and i32 %i.cs, 65535
   %i.cv = mul nsw i32 %i.ct, %.val47
@@ -500,10 +510,10 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph.new
   %i.cx = sext i32 %i.cw to i64
   %i.cy = getelementptr inbounds [4 x i8], ptr %.val48, i64 %i.cx
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !17
-  store i32 %i.cz, ptr %12, align 4, !tbaa !17
+  store i32 %i.cz, ptr %4, align 16, !tbaa !17
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
+._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.unr-lcssa, %bb.a, %.lr.ph.new, %.lr.ph
   %putchar.i65 = tail call i32 @putchar(i32 123)  ; 0 uses
   %wide.trip.count.i68 = zext nneg i32 %.1.i.4102 to i64
   br label %.lr.ph.i69
@@ -524,7 +534,7 @@ Abc_ZddPermPrint.exit73:                          ; preds = %.lr.ph.i69, %._crit
   %i.de = tail call i32 @Abc_ZddUnion(ptr noundef %0, i32 noundef %.080, i32 noundef %i.dd) ; 6 uses
   %indvars.iv.next88 = add nuw nsw i64 %indvars.iv87, 1 ; 2 uses
   %exitcond90.not = icmp eq i64 %indvars.iv.next88, 3
-  br i1 %exitcond90.not, label %bb.b, label %.lr.ph.i50, !llvm.loop !97
+  br i1 %exitcond90.not, label %bb.b, label %.lr.ph.i50, !llvm.loop !96
 
 bb.b:                                             ; preds = %Abc_ZddPermPrint.exit73
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.3) ; 0 uses
@@ -646,10 +656,10 @@ bb.a:
   br i1 %i.d, label %Abc_Clock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = load i64, ptr %3, align 8, !tbaa !103
+  %i.e = load i64, ptr %3, align 8, !tbaa !102
   %i.f = mul nsw i64 %i.e, 1000000
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !104
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !103
   %i.i = sdiv i64 %i.h, 1000
   %i.j = add nsw i64 %i.i, %i.f
   br label %Abc_Clock.exit
@@ -745,7 +755,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next115 = add <4 x i32> %vec.ind113, splat (i32 8)
   %i.al = icmp eq i64 %index.next, %n.vec
-  br i1 %i.al, label %middle.block, label %vector.body, !llvm.loop !98
+  br i1 %i.al, label %middle.block, label %vector.body, !llvm.loop !97
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.w, %n.vec
@@ -770,7 +780,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i32 %i.ap, ptr %gep.i, align 4, !tbaa !17
   %indvars.iv.next41.i = add nuw nsw i64 %indvars.iv40.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next41.i, 24
-  br i1 %exitcond.not.i, label %.loopexit.loopexit.i, label %scalar.ph, !llvm.loop !99
+  br i1 %exitcond.not.i, label %.loopexit.loopexit.i, label %scalar.ph, !llvm.loop !98
 
 Abc_ZddManCreatePerms.exit:                       ; preds = %.loopexit.i
   %i.aq = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.14, i32 noundef 0, i32 noundef 1, i32 noundef 0, i32 noundef 2) ; 0 uses
@@ -780,10 +790,10 @@ Abc_ZddManCreatePerms.exit:                       ; preds = %.loopexit.i
   br i1 %i.as, label %Abc_Clock.exit72, label %bb.c
 
 bb.c:                                             ; preds = %Abc_ZddManCreatePerms.exit
-  %i.at = load i64, ptr %2, align 8, !tbaa !103
+  %i.at = load i64, ptr %2, align 8, !tbaa !102
   %i.au = mul nsw i64 %i.at, 1000000
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.aw = load i64, ptr %i.av, align 8, !tbaa !104
+  %i.aw = load i64, ptr %i.av, align 8, !tbaa !103
   %i.ax = sdiv i64 %i.aw, 1000
   %i.ay = add nsw i64 %i.ax, %i.au
   br label %Abc_Clock.exit72
@@ -1097,7 +1107,7 @@ Abc_ZddPerm2Comb.exit.preheader:                  ; preds = %bb.d
   %i.ji = call i32 @Abc_ZddUnion(ptr noundef nonnull %i.k, i32 noundef %i.jg, i32 noundef %i.jh) ; 6 uses
   %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next100, 3
-  br i1 %exitcond.not, label %bb.e, label %.preheader81, !llvm.loop !100
+  br i1 %exitcond.not, label %bb.e, label %.preheader81, !llvm.loop !99
 
 bb.e:                                             ; preds = %Abc_ZddPerm2Comb.exit.preheader
   %i.jj = call i32 @Abc_ZddCountPaths(ptr noundef nonnull %i.k, i32 noundef %i.ji)
@@ -1112,10 +1122,10 @@ bb.e:                                             ; preds = %Abc_ZddPerm2Comb.ex
   br i1 %i.jp, label %Abc_Clock.exit78, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.jq = load i64, ptr %1, align 8, !tbaa !103
+  %i.jq = load i64, ptr %1, align 8, !tbaa !102
   %i.jr = mul nsw i64 %i.jq, 1000000
   %i.js = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.jt = load i64, ptr %i.js, align 8, !tbaa !104
+  %i.jt = load i64, ptr %i.js, align 8, !tbaa !103
   %i.ju = sdiv i64 %i.jt, 1000
   %i.jv = add nsw i64 %i.ju, %i.jr
   br label %Abc_Clock.exit78
@@ -1146,9 +1156,9 @@ bb.g:                                             ; preds = %Abc_Clock.exit80, %
   br i1 %i.kg, label %Abc_Clock.exit80, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.kh = load i64, ptr %0, align 8, !tbaa !103
+  %i.kh = load i64, ptr %0, align 8, !tbaa !102
   %i.ki = mul nsw i64 %i.kh, 1000000
-  %i.kj = load i64, ptr %i.jz, align 8, !tbaa !104
+  %i.kj = load i64, ptr %i.jz, align 8, !tbaa !103
   %i.kk = sdiv i64 %i.kj, 1000
   %i.kl = add nsw i64 %i.kk, %i.ki
   br label %Abc_Clock.exit80
@@ -1165,7 +1175,7 @@ Abc_Clock.exit80:                                 ; preds = %bb.g, %bb.h
   %i.kq = add nuw nsw i32 %.16987, 1              ; 2 uses
   %exitcond102.not = icmp eq i32 %i.kq, 101
   %or.cond = select i1 %i.kp, i1 true, i1 %exitcond102.not
-  br i1 %or.cond, label %bb.i, label %bb.g, !llvm.loop !101
+  br i1 %or.cond, label %bb.i, label %bb.g, !llvm.loop !100
 
 bb.i:                                             ; preds = %Abc_Clock.exit80
   call void @Abc_ZddManFree(ptr noundef nonnull %i.k)
@@ -1209,8 +1219,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.i = load ptr, ptr @stdout, align 8, !tbaa !36, !noalias !108
-  %i.j = call i32 @vfprintf(ptr noundef %i.i, ptr noundef %1, ptr noundef nonnull %2) #24, !inline_history !107 ; 0 uses
+  %i.i = load ptr, ptr @stdout, align 8, !tbaa !36, !noalias !107
+  %i.j = call i32 @vfprintf(ptr noundef %i.i, ptr noundef %1, ptr noundef nonnull %2) #24, !inline_history !106 ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1390,16 +1400,15 @@ attributes #26 = { nounwind willreturn memory(read) }
 !94 = !{!93, !14, i64 8}
 !95 = !{!89, !75, i64 72}
 !96 = distinct !{!96, !19}
-!97 = distinct !{!97, !19}
-!98 = distinct !{!98, !19, !45, !46}
-!99 = distinct !{!99, !19, !46, !45}
+!97 = distinct !{!97, !19, !45, !46}
+!98 = distinct !{!98, !19, !46, !45}
+!99 = distinct !{!99, !19}
 !100 = distinct !{!100, !19}
-!101 = distinct !{!101, !19}
-!102 = !{!"timespec", !24, i64 0, !24, i64 8}
-!103 = !{!102, !24, i64 0}
-!104 = !{!102, !24, i64 8}
-!105 = distinct !{!105, i1 false, !"vprintf"}
-!106 = distinct !{!106, !105, !"vprintf: argument 0"}
-!107 = distinct !{null}
-!108 = !{!106}
+!101 = !{!"timespec", !24, i64 0, !24, i64 8}
+!102 = !{!101, !24, i64 0}
+!103 = !{!101, !24, i64 8}
+!104 = distinct !{!104, i1 false, !"vprintf"}
+!105 = distinct !{!105, !104, !"vprintf: argument 0"}
+!106 = distinct !{null}
+!107 = !{!105}
 end_hunk_0
