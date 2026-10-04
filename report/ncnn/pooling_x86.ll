@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load i32, ptr %0, align 4, !tbaa !35     ; 2 uses
   call void @__kmpc_for_static_init_4(ptr nonnull @1, i32 %i.h, i32 34, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c, i32 1, i32 1)
   %i.i = load i32, ptr %i.b, align 4, !tbaa !35
-  %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 7 uses
+  %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 6 uses
   store i32 %i.j, ptr %i.b, align 4, !tbaa !35
-  %i.k = load i32, ptr %i.a, align 4, !tbaa !35   ; 4 uses
+  %i.k = load i32, ptr %i.a, align 4, !tbaa !35   ; 3 uses
   %.not35 = icmp sgt i32 %i.k, %i.j
   br i1 %.not35, label %._crit_edge37, label %.noexc.lr.ph
 
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %bb.a
 
 .noexc.preheader:                                 ; preds = %.noexc.lr.ph
   %i.v = sub i32 %i.j, %i.k                       ; 2 uses
-  %i.w = zext i32 %i.v to i64
+  %i.w = zext i32 %i.v to i64                     ; 3 uses
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check = icmp ult i32 %i.v, 55
   br i1 %min.iters.check, label %.noexc.preheader72, label %vector.memcheck
@@ -234,17 +234,15 @@ bb.b:                                             ; preds = %bb.a
 vector.memcheck:                                  ; preds = %.noexc.preheader
   %i.y = shl nsw i64 %i.t, 1
   %scevgep = getelementptr i8, ptr %i.s, i64 %i.y
-  %6 = sub i32 %i.j, %i.k
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %i.z = add nsw i64 %i.t, %7
+  %i.z = add nsw i64 %i.t, %i.w
   %i.aa = shl nsw i64 %i.z, 1
   %i.ab = getelementptr i8, ptr %i.s, i64 %i.aa
   %scevgep54 = getelementptr i8, ptr %i.ab, i64 2
-  %8 = mul i64 %i.n, %i.p                         ; 2 uses
-  %9 = add nsw i64 %i.t, %7
-  %i.ac = mul i64 %8, %9
+  %6 = add nsw i64 %i.t, %i.w
+  %7 = mul i64 %i.n, %i.p                         ; 2 uses
+  %i.ac = mul i64 %7, %6
   %scevgep55 = getelementptr i8, ptr %i.l, i64 %i.ac ; 4 uses
-  %i.ad = mul i64 %8, %i.t
+  %i.ad = mul i64 %7, %i.t
   %scevgep56 = getelementptr i8, ptr %i.l, i64 %i.ad ; 4 uses
   %i.ae = icmp ult ptr %scevgep55, %scevgep56
   %umin = select i1 %i.ae, ptr %scevgep55, ptr %scevgep56
