@@ -205,13 +205,13 @@ define hidden noundef i32 @_ZN3jxl6N_SSE411TryMergeAcsENS_14AcStrategyTypeEmmmmR
   %15 = alloca %"class.jxl::AcStrategy", align 8  ; 4 uses
   %i.a = alloca float, align 4                    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #51
-  %.sroa.071.0.insert.ext = zext i32 %0 to i64    ; 5 uses
+  %.sroa.071.0.insert.ext = zext i32 %0 to i64
   %.sroa.071.0.insert.insert = or disjoint i64 %.sroa.071.0.insert.ext, 4294967296
   %i.b = trunc nuw nsw i64 %.sroa.071.0.insert.insert to i40
   store i40 %i.b, ptr %15, align 8
-  %i.c = zext i32 %0 to i64                       ; 4 uses
+  %i.c = zext i32 %0 to i64                       ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %i.c
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !66
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !66    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %i.c
   %i.g = load i8, ptr %i.f, align 1, !tbaa !66
   %i.h = tail call i8 @llvm.umax.i8(i8 %i.g, i8 1)
@@ -267,7 +267,7 @@ bb.c:                                             ; preds = %.thread
 
 .preheader.preheader:                             ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %i.c
-  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !66
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !66  ; 2 uses
   %i.ae = shl i64 %3, 2
   %i.af = tail call i8 @llvm.umax.i8(i8 %i.ad, i8 1)
   %umax101 = zext i8 %i.af to i64                 ; 4 uses
@@ -328,24 +328,20 @@ bb.c:                                             ; preds = %.thread
   br label %._crit_edge95.split
 
 ._crit_edge95.split:                              ; preds = %._crit_edge95.split.unr-lcssa, %.preheader.epil.preheader
-  %16 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %.sroa.071.0.insert.ext
-  %17 = load i8, ptr %16, align 1, !tbaa !66
-  %18 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %.sroa.071.0.insert.ext
-  %19 = load i8, ptr %18, align 1, !tbaa !66
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 64
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 56
   %i.az = shl nuw i32 %0, 1                       ; 3 uses
-  %i.ba = tail call i8 @llvm.umax.i8(i8 %19, i8 1)
+  %i.ba = tail call i8 @llvm.umax.i8(i8 %i.ad, i8 1)
   %umax46.i.i = zext i8 %i.ba to i64              ; 6 uses
-  %i.bb = tail call i8 @llvm.umax.i8(i8 %17, i8 1)
+  %i.bb = tail call i8 @llvm.umax.i8(i8 %i.e, i8 1)
   %umax48.i.i = zext i8 %i.bb to i64
   %i.bc = load i64, ptr %i.ax, align 8, !tbaa !110
   %i.bd = load ptr, ptr %i.ay, align 8, !tbaa !111
   %invariant.gep = getelementptr i8, ptr %i.bd, i64 %i.u
-  %i.be = shl nuw i64 1, %.sroa.071.0.insert.ext
+  %i.be = shl nuw i64 1, %i.c
   %i.bf = and i64 %i.be, 259551
   %min.iters.check.not = icmp eq i64 %i.bf, 0
-  %i.bg = shl nuw i64 1, %.sroa.071.0.insert.ext
+  %i.bg = shl nuw i64 1, %i.c
   %i.bh = and i64 %i.bg, 6291455
   %min.iters.check113.not = icmp eq i64 %i.bh, 0
   %i.bi = and i64 %umax46.i.i, 12
@@ -748,13 +744,13 @@ define hidden noundef i32 @_ZN3jxl6N_AVX211TryMergeAcsENS_14AcStrategyTypeEmmmmR
   %15 = alloca %"class.jxl::AcStrategy", align 8  ; 4 uses
   %i.a = alloca float, align 4                    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #51
-  %.sroa.071.0.insert.ext = zext i32 %0 to i64    ; 5 uses
+  %.sroa.071.0.insert.ext = zext i32 %0 to i64
   %.sroa.071.0.insert.insert = or disjoint i64 %.sroa.071.0.insert.ext, 4294967296
   %i.b = trunc nuw nsw i64 %.sroa.071.0.insert.insert to i40
   store i40 %i.b, ptr %15, align 8
-  %i.c = zext i32 %0 to i64                       ; 4 uses
+  %i.c = zext i32 %0 to i64                       ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %i.c
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !66
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !66    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %i.c
   %i.g = load i8, ptr %i.f, align 1, !tbaa !66
   %i.h = tail call i8 @llvm.umax.i8(i8 %i.g, i8 1)
@@ -810,7 +806,7 @@ bb.c:                                             ; preds = %.thread
 
 .preheader.preheader:                             ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %i.c
-  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !66
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !66  ; 2 uses
   %i.ae = shl i64 %3, 2
   %i.af = tail call i8 @llvm.umax.i8(i8 %i.ad, i8 1)
   %umax101 = zext i8 %i.af to i64                 ; 4 uses
@@ -871,24 +867,20 @@ bb.c:                                             ; preds = %.thread
   br label %._crit_edge95.split
 
 ._crit_edge95.split:                              ; preds = %._crit_edge95.split.unr-lcssa, %.preheader.epil.preheader
-  %16 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %.sroa.071.0.insert.ext
-  %17 = load i8, ptr %16, align 1, !tbaa !66
-  %18 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %.sroa.071.0.insert.ext
-  %19 = load i8, ptr %18, align 1, !tbaa !66
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 64
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 56
   %i.az = shl nuw i32 %0, 1                       ; 3 uses
-  %i.ba = tail call i8 @llvm.umax.i8(i8 %19, i8 1)
+  %i.ba = tail call i8 @llvm.umax.i8(i8 %i.ad, i8 1)
   %umax46.i.i = zext i8 %i.ba to i64              ; 6 uses
-  %i.bb = tail call i8 @llvm.umax.i8(i8 %17, i8 1)
+  %i.bb = tail call i8 @llvm.umax.i8(i8 %i.e, i8 1)
   %umax48.i.i = zext i8 %i.bb to i64
   %i.bc = load i64, ptr %i.ax, align 8, !tbaa !110
   %i.bd = load ptr, ptr %i.ay, align 8, !tbaa !111
   %invariant.gep = getelementptr i8, ptr %i.bd, i64 %i.u
-  %i.be = shl nuw i64 1, %.sroa.071.0.insert.ext
+  %i.be = shl nuw i64 1, %i.c
   %i.bf = and i64 %i.be, 259551
   %min.iters.check.not = icmp eq i64 %i.bf, 0
-  %i.bg = shl nuw i64 1, %.sroa.071.0.insert.ext
+  %i.bg = shl nuw i64 1, %i.c
   %i.bh = and i64 %i.bg, 6291455
   %min.iters.check113.not = icmp eq i64 %i.bh, 0
   %i.bi = and i64 %umax46.i.i, 12
@@ -1291,13 +1283,13 @@ define hidden noundef i32 @_ZN3jxl6N_SSE211TryMergeAcsENS_14AcStrategyTypeEmmmmR
   %15 = alloca %"class.jxl::AcStrategy", align 8  ; 4 uses
   %i.a = alloca float, align 4                    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #51
-  %.sroa.071.0.insert.ext = zext i32 %0 to i64    ; 5 uses
+  %.sroa.071.0.insert.ext = zext i32 %0 to i64
   %.sroa.071.0.insert.insert = or disjoint i64 %.sroa.071.0.insert.ext, 4294967296
   %i.b = trunc nuw nsw i64 %.sroa.071.0.insert.insert to i40
   store i40 %i.b, ptr %15, align 8
-  %i.c = zext i32 %0 to i64                       ; 4 uses
+  %i.c = zext i32 %0 to i64                       ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %i.c
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !66
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !66    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %i.c
   %i.g = load i8, ptr %i.f, align 1, !tbaa !66
   %i.h = tail call i8 @llvm.umax.i8(i8 %i.g, i8 1)
@@ -1353,7 +1345,7 @@ bb.c:                                             ; preds = %.thread
 
 .preheader.preheader:                             ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %i.c
-  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !66
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !66  ; 2 uses
   %i.ae = shl i64 %3, 2
   %i.af = tail call i8 @llvm.umax.i8(i8 %i.ad, i8 1)
   %umax101 = zext i8 %i.af to i64                 ; 4 uses
@@ -1414,24 +1406,20 @@ bb.c:                                             ; preds = %.thread
   br label %._crit_edge95.split
 
 ._crit_edge95.split:                              ; preds = %._crit_edge95.split.unr-lcssa, %.preheader.epil.preheader
-  %16 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %.sroa.071.0.insert.ext
-  %17 = load i8, ptr %16, align 1, !tbaa !66
-  %18 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %.sroa.071.0.insert.ext
-  %19 = load i8, ptr %18, align 1, !tbaa !66
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 64
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 56
   %i.az = shl nuw i32 %0, 1                       ; 3 uses
-  %i.ba = tail call i8 @llvm.umax.i8(i8 %19, i8 1)
+  %i.ba = tail call i8 @llvm.umax.i8(i8 %i.ad, i8 1)
   %umax46.i.i = zext i8 %i.ba to i64              ; 6 uses
-  %i.bb = tail call i8 @llvm.umax.i8(i8 %17, i8 1)
+  %i.bb = tail call i8 @llvm.umax.i8(i8 %i.e, i8 1)
   %umax48.i.i = zext i8 %i.bb to i64
   %i.bc = load i64, ptr %i.ax, align 8, !tbaa !110
   %i.bd = load ptr, ptr %i.ay, align 8, !tbaa !111
   %invariant.gep = getelementptr i8, ptr %i.bd, i64 %i.u
-  %i.be = shl nuw i64 1, %.sroa.071.0.insert.ext
+  %i.be = shl nuw i64 1, %i.c
   %i.bf = and i64 %i.be, 259551
   %min.iters.check.not = icmp eq i64 %i.bf, 0
-  %i.bg = shl nuw i64 1, %.sroa.071.0.insert.ext
+  %i.bg = shl nuw i64 1, %i.c
   %i.bh = and i64 %i.bg, 6291455
   %min.iters.check113.not = icmp eq i64 %i.bh, 0
   %i.bi = and i64 %umax46.i.i, 12
