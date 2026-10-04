@@ -204,11 +204,11 @@ bb.i:                                             ; preds = %.preheader.i
   %i.bt = add i32 %.043.i, 1
   %i.bu = add i32 %.044.i, 1
   %i.bv = icmp eq i8 %.0.copyload.i55.i, %.0.copyload.i56.i
-  br i1 %i.bv, label %.preheader.i, label %w2c_hermes_strcmp.exit
+  br i1 %i.bv, label %.preheader.i, label %bb.l
 
-w2c_hermes_strcmp.exit:                           ; preds = %.preheader.i, %bb.i, %bb.h
-  %.042.in.i = phi i8 [ %.0.copyload.i.i, %bb.h ], [ %.0.copyload.i55.i, %bb.i ], [ %.0.copyload.i55.i, %.preheader.i ] ; 2 uses
-  %.0.shrunk.i = phi i8 [ %.0.copyload.i54.i, %bb.h ], [ 0, %.preheader.i ], [ %.0.copyload.i56.i, %bb.i ] ; 2 uses
+w2c_hermes_strcmp.exit:                           ; preds = %.preheader.i, %bb.h
+  %.042.in.i = phi i8 [ %.0.copyload.i.i, %bb.h ], [ %.0.copyload.i55.i, %.preheader.i ] ; 2 uses
+  %.0.shrunk.i = phi i8 [ %.0.copyload.i54.i, %bb.h ], [ 0, %.preheader.i ] ; 2 uses
   %.not359 = icmp eq i8 %.0.shrunk.i, %.042.in.i
   br i1 %.not359, label %bb.j, label %bb.l
 
@@ -249,13 +249,15 @@ bb.k:                                             ; preds = %bb.j
   %or.cond421 = or i1 %.not363, %.not362
   br i1 %or.cond421, label %.thread, label %bb.n
 
-bb.l:                                             ; preds = %w2c_hermes_strcmp.exit
+bb.l:                                             ; preds = %bb.i, %w2c_hermes_strcmp.exit
+  %.0.shrunk.i441 = phi i8 [ %.0.shrunk.i, %w2c_hermes_strcmp.exit ], [ %.0.copyload.i56.i, %bb.i ]
+  %.042.in.i440 = phi i8 [ %.042.in.i, %w2c_hermes_strcmp.exit ], [ %.0.copyload.i55.i, %bb.i ]
   %i.cl = icmp eq i32 %.0339, 1
   br i1 %i.cl, label %.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.cm = sub nuw nsw i32 %.0339, %i.ar
-  %i.cn = icmp ult i8 %.0.shrunk.i, %.042.in.i    ; 2 uses
+  %i.cn = icmp ult i8 %.0.shrunk.i441, %.042.in.i440 ; 2 uses
   %i.co = select i1 %i.cn, i32 %i.ar, i32 %i.cm
   %i.cp = select i1 %i.cn, i32 %.0338, i32 %i.as
   br label %bb.f

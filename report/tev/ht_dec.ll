@@ -205,11 +205,13 @@ bb.gg:                                            ; preds = %bb.gf, %.loopexit18
 bb.gh:                                            ; preds = %._crit_edge1947
   %i.avw = and i32 %i.en, 3
   %.off = add nsw i32 %i.avw, -1                  ; 2 uses
-  %switch = icmp ult i32 %.off, 2
-  %or.cond2211 = select i1 %i.gw, i1 %switch, i1 false
-  br i1 %or.cond2211, label %bb.gi, label %.loopexit1838
+  br i1 %i.gw, label %13, label %.loopexit1838
 
-bb.gi:                                            ; preds = %bb.gh
+13:                                               ; preds = %bb.gh
+  %switch = icmp ult i32 %.off, 2
+  br i1 %switch, label %bb.gi, label %.loopexit1837
+
+bb.gi:                                            ; preds = %13
   %i.avx = and i32 %i.en, 16777212
   %i.avy = mul nsw i32 %i.avx, %i.ek
   %i.avz = sext i32 %i.avy to i64
@@ -470,7 +472,7 @@ middle.block2276:                                 ; preds = %vector.body2268
   %i.baw = icmp slt i32 %i.bau, %i.ek
   br i1 %i.baw, label %.lr.ph1961, label %.loopexit1837, !llvm.loop !65
 
-.loopexit1837:                                    ; preds = %.lr.ph1961, %middle.block2276, %.loopexit1838, %bb.gi
+.loopexit1837:                                    ; preds = %.lr.ph1961, %middle.block2276, %.loopexit1838, %bb.gi, %13
   %i.bax = icmp sgt i32 %i.en, 6
   %i.bay = add nuw nsw i32 %i.en, 1
   %i.baz = and i32 %i.bay, 3

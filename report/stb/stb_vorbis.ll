@@ -205,14 +205,14 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 148
   %i.m = load i32, ptr %i.l, align 4, !tbaa !45   ; 3 uses
   %i.n = icmp sgt i32 %i.k, %i.m
-  br i1 %i.n, label %bb.e, label %bb.c
+  br i1 %i.n, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %3 = sext i32 %i.j to i64
-  %4 = getelementptr inbounds i8, ptr %i.h, i64 %3
-  store i32 %i.k, ptr %i.i, align 8, !tbaa !44
-  %.pre = add nsw i32 %i.k, %i.c
-  br label %bb.e
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1416
+  %4 = sext i32 %1 to i64                         ; 2 uses
+  %5 = getelementptr inbounds [8 x i8], ptr %3, i64 %4 ; 2 uses
+  store ptr null, ptr %5, align 8, !tbaa !64
+  br label %bb.h
 
 bb.d:                                             ; preds = %bb.a
   %.not17.i = icmp eq i32 %i.c, 0
@@ -225,22 +225,22 @@ bb.d:                                             ; preds = %bb.a
   store ptr null, ptr %i.q, align 8, !tbaa !64
   br label %bb.j
 
-bb.e:                                             ; preds = %bb.c, %bb.b
-  %.pre-phi = phi i32 [ %.pre, %bb.c ], [ %i.k, %bb.b ] ; 3 uses
-  %5 = phi i32 [ %i.k, %bb.c ], [ %i.j, %bb.b ]   ; 2 uses
-  %.1.i = phi ptr [ %4, %bb.c ], [ null, %bb.b ]
+bb.e:                                             ; preds = %bb.b
+  %6 = sext i32 %i.j to i64
+  %7 = getelementptr inbounds i8, ptr %i.h, i64 %6
+  store i32 %i.k, ptr %i.i, align 8, !tbaa !44
+  %.pre = add nsw i32 %i.k, %i.c                  ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1416
-  %i.s = sext i32 %1 to i64                       ; 4 uses
+  %i.s = sext i32 %1 to i64                       ; 3 uses
   %i.t = getelementptr inbounds [8 x i8], ptr %i.r, i64 %i.s ; 3 uses
-  store ptr %.1.i, ptr %i.t, align 8, !tbaa !64
-  %6 = add i32 %i.f, %i.c
-  %i.u = icmp sgt i32 %.pre-phi, %i.m
+  store ptr %7, ptr %i.t, align 8, !tbaa !64
+  %i.u = icmp sgt i32 %.pre, %i.m
   br i1 %i.u, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.v = sext i32 %5 to i64
+  %i.v = sext i32 %i.k to i64
   %i.w = getelementptr inbounds i8, ptr %i.h, i64 %i.v
-  store i32 %.pre-phi, ptr %i.i, align 8, !tbaa !44
+  store i32 %.pre, ptr %i.i, align 8, !tbaa !44
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d
@@ -254,22 +254,25 @@ bb.g:                                             ; preds = %bb.d
   %i.ad = tail call noalias ptr @malloc(i64 noundef %i.x) #29
   br label %bb.j
 
-bb.h:                                             ; preds = %bb.f, %bb.e
-  %7 = phi i32 [ %5, %bb.e ], [ %.pre-phi, %bb.f ] ; 2 uses
-  %.1.i59 = phi ptr [ null, %bb.e ], [ %i.w, %bb.f ] ; 3 uses
+bb.h:                                             ; preds = %bb.c, %bb.f, %bb.e
+  %8 = phi ptr [ %i.t, %bb.e ], [ %i.t, %bb.f ], [ %5, %bb.c ] ; 2 uses
+  %9 = phi i64 [ %i.s, %bb.e ], [ %i.s, %bb.f ], [ %4, %bb.c ] ; 3 uses
+  %10 = phi i32 [ %i.k, %bb.e ], [ %.pre, %bb.f ], [ %i.j, %bb.c ] ; 2 uses
+  %.1.i59 = phi ptr [ null, %bb.e ], [ %i.w, %bb.f ], [ null, %bb.c ] ; 3 uses
+  %11 = add i32 %i.f, %i.c
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 1432
-  %i.af = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %i.s
+  %i.af = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %9
   store ptr %.1.i59, ptr %i.af, align 8, !tbaa !64
   %i.ag = add nsw i32 %2, 4
   %i.ah = and i32 %i.ag, -8                       ; 2 uses
-  %i.ai = add i32 %6, %i.ah                       ; 3 uses
+  %i.ai = add i32 %11, %i.ah                      ; 3 uses
   store i32 %i.ai, ptr %i.d, align 8, !tbaa !42
-  %i.aj = add nsw i32 %7, %i.ah                   ; 2 uses
+  %i.aj = add nsw i32 %10, %i.ah                  ; 2 uses
   %i.ak = icmp sgt i32 %i.aj, %i.m
   br i1 %i.ak, label %setup_malloc.exit65, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.al = sext i32 %7 to i64
+  %i.al = sext i32 %10 to i64
   %i.am = getelementptr inbounds i8, ptr %i.h, i64 %i.al
   store i32 %i.aj, ptr %i.i, align 8, !tbaa !44
   br label %setup_malloc.exit65
@@ -297,8 +300,8 @@ bb.k:                                             ; preds = %bb.j
 setup_malloc.exit65:                              ; preds = %bb.h, %bb.i, %bb.j, %bb.k
   %i.au = phi i32 [ %i.ai, %bb.h ], [ %i.ai, %bb.i ], [ %i.ar, %bb.k ], [ %i.ar, %bb.j ]
   %.1.i5990 = phi ptr [ %.1.i59, %bb.h ], [ %.1.i59, %bb.i ], [ %.1.i59.ph, %bb.k ], [ %.1.i59.ph, %bb.j ] ; 2 uses
-  %i.av = phi i64 [ %i.s, %bb.h ], [ %i.s, %bb.i ], [ %.ph88, %bb.k ], [ %.ph88, %bb.j ] ; 4 uses
-  %i.aw = phi ptr [ %i.t, %bb.h ], [ %i.t, %bb.i ], [ %.ph87, %bb.k ], [ %.ph87, %bb.j ]
+  %i.av = phi i64 [ %9, %bb.h ], [ %9, %bb.i ], [ %.ph88, %bb.k ], [ %.ph88, %bb.j ] ; 4 uses
+  %i.aw = phi ptr [ %8, %bb.h ], [ %8, %bb.i ], [ %.ph87, %bb.k ], [ %.ph87, %bb.j ]
   %.1.i63 = phi ptr [ null, %bb.h ], [ %i.am, %bb.i ], [ %i.at, %bb.k ], [ null, %bb.j ] ; 4 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1448
   %i.ay = getelementptr inbounds [8 x i8], ptr %i.ax, i64 %i.av

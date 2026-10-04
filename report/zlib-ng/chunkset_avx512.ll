@@ -204,12 +204,12 @@ bb.o:                                             ; preds = %bb.n
   br label %CHUNKCOPY_SAFE.exit
 
 bb.p:                                             ; preds = %bb.n
-  %i.fw = sub nuw nsw i32 %i.fm, %i.aa            ; 5 uses
+  %i.fw = sub nuw nsw i32 %i.fm, %i.aa            ; 4 uses
   %i.fx = sub i32 %i.w, %i.fw
   %i.fy = zext i32 %i.fx to i64
   %i.fz = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.fy ; 3 uses
   %i.ga = icmp ult i32 %i.fw, %i.dx
-  br i1 %i.ga, label %bb.q, label %CHUNKCOPY_SAFE.exit
+  br i1 %i.ga, label %bb.q, label %bb.am
 
 bb.q:                                             ; preds = %bb.p
   %i.gb = sub nuw nsw i32 %i.dx, %i.fw            ; 2 uses
@@ -228,11 +228,11 @@ bb.s:                                             ; preds = %bb.q
   %i.gi = tail call fastcc ptr @chunkmemset_avx512(ptr noundef %.1215462, ptr noundef %i.fz, i32 noundef %i.gh)
   br label %CHUNKCOPY_SAFE.exit
 
-CHUNKCOPY_SAFE.exit:                              ; preds = %bb.s, %bb.r, %bb.o, %bb.p, %bb.m
-  %.0322 = phi i32 [ %i.dx, %bb.m ], [ %i.dx, %bb.o ], [ %i.dx, %bb.p ], [ %i.gb, %bb.r ], [ %i.gb, %bb.s ] ; 3 uses
-  %.2216 = phi ptr [ %.1215462, %bb.m ], [ %.1215462, %bb.o ], [ %.1215462, %bb.p ], [ %i.ge, %bb.r ], [ %i.gi, %bb.s ] ; 17 uses
-  %.0202 = phi i32 [ %i.fm, %bb.m ], [ %i.fm, %bb.o ], [ %i.fw, %bb.p ], [ %i.aa, %bb.r ], [ %i.aa, %bb.s ] ; 3 uses
-  %.0 = phi ptr [ %i.fs, %bb.m ], [ %i.fv, %bb.o ], [ %i.fz, %bb.p ], [ %i.ac, %bb.r ], [ %i.ac, %bb.s ] ; 12 uses
+CHUNKCOPY_SAFE.exit:                              ; preds = %bb.s, %bb.r, %bb.o, %bb.m
+  %.0322 = phi i32 [ %i.dx, %bb.m ], [ %i.dx, %bb.o ], [ %i.gb, %bb.s ], [ %i.gb, %bb.r ] ; 3 uses
+  %.2216 = phi ptr [ %.1215462, %bb.m ], [ %.1215462, %bb.o ], [ %i.gi, %bb.s ], [ %i.ge, %bb.r ] ; 14 uses
+  %.0202 = phi i32 [ %i.fm, %bb.m ], [ %i.fm, %bb.o ], [ %i.aa, %bb.s ], [ %i.aa, %bb.r ] ; 3 uses
+  %.0 = phi ptr [ %i.fs, %bb.m ], [ %i.fv, %bb.o ], [ %i.ac, %bb.s ], [ %i.ac, %bb.r ] ; 11 uses
   %i.gj = icmp ult i32 %.0202, %.0322
   br i1 %i.gj, label %bb.t, label %bb.am
 
@@ -635,21 +635,24 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.not72.i287.7 = icmp eq i64 %i.ox, 0
   br i1 %.not72.i287.7, label %.loopexit.i288, label %.lr.ph84.i283, !llvm.loop !27
 
-bb.am:                                            ; preds = %CHUNKCOPY_SAFE.exit
-  %i.pb = zext nneg i32 %.0322 to i64             ; 2 uses
-  %i.pc = icmp eq ptr %.2216, %.0
+bb.am:                                            ; preds = %bb.p, %CHUNKCOPY_SAFE.exit
+  %.0331 = phi ptr [ %.0, %CHUNKCOPY_SAFE.exit ], [ %i.fz, %bb.p ] ; 2 uses
+  %.2216330 = phi ptr [ %.2216, %CHUNKCOPY_SAFE.exit ], [ %.1215462, %bb.p ] ; 4 uses
+  %.0322329 = phi i32 [ %.0322, %CHUNKCOPY_SAFE.exit ], [ %i.dx, %bb.p ]
+  %i.pb = zext nneg i32 %.0322329 to i64          ; 2 uses
+  %i.pc = icmp eq ptr %.2216330, %.0331
   br i1 %i.pc, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %i.pd = getelementptr inbounds nuw i8, ptr %.2216, i64 %i.pb
+  %i.pd = getelementptr inbounds nuw i8, ptr %.2216330, i64 %i.pb
   br label %CHUNKCOPY_SAFE.exit261
 
 bb.ao:                                            ; preds = %bb.am
-  %i.pe = ptrtoint ptr %.2216 to i64
+  %i.pe = ptrtoint ptr %.2216330 to i64
   %i.pf = sub i64 %i.bc, %i.pe
   %i.pg = tail call i64 @llvm.umin.i64(i64 range(i64 0, 4294967296) %i.pb, i64 %i.pf)
   %i.ph = trunc nuw nsw i64 %i.pg to i32
-  %i.pi = tail call fastcc ptr @chunkmemset_avx512(ptr noundef %.2216, ptr noundef %.0, i32 noundef %i.ph)
+  %i.pi = tail call fastcc ptr @chunkmemset_avx512(ptr noundef %.2216330, ptr noundef %.0331, i32 noundef %i.ph)
   br label %CHUNKCOPY_SAFE.exit261
 
 bb.ap:                                            ; preds = %._crit_edge374

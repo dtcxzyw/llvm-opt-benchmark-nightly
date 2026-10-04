@@ -204,38 +204,44 @@ bb.c:                                             ; preds = %bb.b
   %i.k = load i64, ptr %i.j, align 8, !tbaa !23
   %i.l = inttoptr i64 %i.k to ptr
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 248
-  br label %index2adr_stack.exit.a
+  br label %index2adr_stack.exit
 
 bb.d:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !17   ; 2 uses
   %i.p = sext i32 %1 to i64
   %i.q = getelementptr inbounds [8 x i8], ptr %i.o, i64 %i.p
-  br label %index2adr_stack.exit.a
+  br label %index2adr_stack.exit
 
-index2adr_stack.exit.a:                           ; preds = %bb.b, %bb.c, %bb.d
-  %2 = phi ptr [ %i.o, %bb.d ], [ %i.h, %bb.c ], [ %i.h, %bb.b ] ; 3 uses
-  %.1.i = phi ptr [ %i.q, %bb.d ], [ %i.m, %bb.c ], [ %i.f, %bb.b ] ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 40
+index2adr_stack.exit:                             ; preds = %bb.c, %bb.d
+  %2 = phi ptr [ %i.o, %bb.d ], [ %i.h, %bb.c ]   ; 3 uses
+  %.1.i = phi ptr [ %i.q, %bb.d ], [ %i.m, %bb.c ] ; 3 uses
   %3 = icmp ugt ptr %2, %.1.i
-  br i1 %3, label %.lr.ph, label %._crit_edge
+  br i1 %3, label %index2adr_stack.exit.a, label %._crit_edge
+
+index2adr_stack.exit.a:                           ; preds = %bb.b, %index2adr_stack.exit
+  %.1.i20 = phi ptr [ %.1.i, %index2adr_stack.exit ], [ %i.f, %bb.b ] ; 2 uses
+  %4 = phi ptr [ %2, %index2adr_stack.exit ], [ %i.h, %bb.b ]
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 40
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %index2adr_stack.exit.a, %.lr.ph
-  %.012 = phi ptr [ %i.s, %.lr.ph ], [ %2, %index2adr_stack.exit.a ] ; 2 uses
+  %.012 = phi ptr [ %i.s, %.lr.ph ], [ %4, %index2adr_stack.exit.a ] ; 2 uses
   %i.s = getelementptr inbounds i8, ptr %.012, i64 -8 ; 3 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !20
   store i64 %i.t, ptr %.012, align 8, !tbaa !20
-  %i.u = icmp ugt ptr %i.s, %.1.i
+  %i.u = icmp ugt ptr %i.s, %.1.i20
   br i1 %i.u, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !54
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %.pre = load ptr, ptr %i.r, align 8, !tbaa !17
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %index2adr_stack.exit.a
-  %i.v = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %2, %index2adr_stack.exit.a ]
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %index2adr_stack.exit
+  %.1.i19 = phi ptr [ %.1.i20, %._crit_edge.loopexit ], [ %.1.i, %index2adr_stack.exit ]
+  %i.v = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %2, %index2adr_stack.exit ]
   %i.w = load i64, ptr %i.v, align 8, !tbaa !20
-  store i64 %i.w, ptr %.1.i, align 8, !tbaa !20
+  store i64 %i.w, ptr %.1.i19, align 8, !tbaa !20
   ret void
 }
 

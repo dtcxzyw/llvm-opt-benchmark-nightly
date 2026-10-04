@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %.lr.ph723, %bb.db
   %.0375720 = phi ptr [ %1, %.lr.ph723 ], [ %.4379, %bb.db ] ; 36 uses
   %.0382718 = phi i32 [ 0, %.lr.ph723 ], [ %.4386, %bb.db ] ; 8 uses
   %.0387716 = phi i32 [ %i.ex, %.lr.ph723 ], [ %.5392, %bb.db ] ; 12 uses
-  %.0715 = phi i32 [ 0, %.lr.ph723 ], [ %.3, %bb.db ] ; 14 uses
+  %.0715 = phi i32 [ 0, %.lr.ph723 ], [ %.3, %bb.db ] ; 15 uses
   %i.gv = phi <2 x i32> [ %i.cc, %.lr.ph723 ], [ %i.akh, %bb.db ] ; 4 uses
   %i.gw = icmp slt i32 %.0370721, 0
   br i1 %i.gw, label %bb.y, label %bb.z
@@ -407,13 +407,15 @@ bb.ai:                                            ; preds = %bb.ah
 
 insert_batch.exit:                                ; preds = %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %.lr.ph.i
   %indvars.iv.next66.i.lcssa = phi i32 [ 3, %.lr.ph.i ], [ 6, %bb.ad ], [ 9, %bb.ae ], [ 12, %bb.af ], [ 15, %bb.ag ], [ 18, %bb.ah ], [ 21, %bb.ai ] ; 2 uses
-  %3 = icmp ne ptr %.0375720, %1
+  %3 = icmp eq ptr %.0375720, %1
   %.pre850 = add nsw i32 %.0387716, 3             ; 4 uses
-  %.not.i480 = icmp slt i32 %.pre850, %.1394
-  %or.cond967 = select i1 %3, i1 %.not.i480, i1 false
-  br i1 %or.cond967, label %.preheader.i, label %is_quite_large.exit.thread
+  br i1 %3, label %is_quite_large.exit.thread, label %4
 
-.preheader.i:                                     ; preds = %insert_batch.exit
+4:                                                ; preds = %insert_batch.exit
+  %.not.i480 = icmp slt i32 %.pre850, %.1394
+  br i1 %.not.i480, label %.preheader.i, label %.preheader643.preheader
+
+.preheader.i:                                     ; preds = %4
   %i.km = sext i32 %.pre850 to i64
   %i.kn = getelementptr inbounds [4 x i8], ptr @magic, i64 %i.km ; 3 uses
   %i.ko = load i32, ptr %i.j, align 16, !tbaa !12 ; 4 uses
@@ -816,8 +818,8 @@ swapdecide.exit:                                  ; preds = %bb.bo, %bb.bp, %bb.
   %i.sf = load <2 x i32>, ptr %i.j, align 16, !tbaa !12
   br label %.loopexit642
 
-.preheader643.preheader:                          ; preds = %positive_int.exit.i509, %positive_int.exit.2.i503, %positive_int.exit.1.i490, %positive_int.exit.i493, %is_quite_large.exit.thread, %positive_int.exit.1.i506, %positive_int.exit.2.i487, %bb.br, %swapdecide.exit
-  %.1607918 = phi i32 [ 0, %swapdecide.exit ], [ %.0715, %positive_int.exit.i509 ], [ %.0715, %positive_int.exit.2.i503 ], [ %.0715, %positive_int.exit.1.i490 ], [ %.0715, %positive_int.exit.i493 ], [ %.0715, %is_quite_large.exit.thread ], [ %.0715, %positive_int.exit.1.i506 ], [ %.0715, %positive_int.exit.2.i487 ], [ 0, %bb.br ]
+.preheader643.preheader:                          ; preds = %4, %positive_int.exit.i509, %positive_int.exit.2.i503, %positive_int.exit.1.i490, %positive_int.exit.i493, %is_quite_large.exit.thread, %positive_int.exit.1.i506, %positive_int.exit.2.i487, %bb.br, %swapdecide.exit
+  %.1607920 = phi i32 [ %.0715, %4 ], [ 0, %swapdecide.exit ], [ %.0715, %positive_int.exit.i509 ], [ %.0715, %positive_int.exit.2.i503 ], [ %.0715, %positive_int.exit.1.i490 ], [ %.0715, %positive_int.exit.i493 ], [ %.0715, %is_quite_large.exit.thread ], [ %.0715, %positive_int.exit.1.i506 ], [ %.0715, %positive_int.exit.2.i487 ], [ 0, %bb.br ]
   %i.sg = load <2 x i32>, ptr %.0375720, align 4, !tbaa !12
   %i.sh = sub nsw <2 x i32> %i.sg, %i.cc
   %i.si = getelementptr inbounds nuw i8, ptr %.0375720, i64 8
@@ -829,7 +831,7 @@ swapdecide.exit:                                  ; preds = %bb.bo, %bb.bp, %bb.
   %or.cond3923 = phi i1 [ true, %.critedge433 ], [ false, %.preheader643.preheader ] ; 4 uses
   %.0363921 = phi i32 [ 2, %.critedge433 ], [ 0, %.preheader643.preheader ] ; 4 uses
   %.not.i516919 = phi i1 [ false, %.critedge433 ], [ true, %.preheader643.preheader ] ; 2 uses
-  %.1607917 = phi i32 [ 1, %.critedge433 ], [ %.1607918, %.preheader643.preheader ] ; 3 uses
+  %.1607917 = phi i32 [ 1, %.critedge433 ], [ %.1607920, %.preheader643.preheader ] ; 3 uses
   %.sroa.14.1 = phi i32 [ %i.sd, %.critedge433 ], [ %i.sk, %.preheader643.preheader ] ; 6 uses
   %i.sl = phi <2 x i32> [ %i.sf, %.critedge433 ], [ %i.sh, %.preheader643.preheader ] ; 7 uses
   %i.sm = load i32, ptr %i.h, align 4, !tbaa !12  ; 2 uses

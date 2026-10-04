@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ao = load ptr, ptr %i.an, align 8
   %i.ap = tail call fastcc ptr @__ip_tunnel_create(ptr noundef %i.c, ptr noundef %i.ao, ptr noundef %1) #16, !srcloc !43 ; 17 uses
   %i.aq = icmp ugt ptr %i.ap, inttoptr (i64 -4096 to ptr)
-  br i1 %i.aq, label %ip_tunnel_create.exit, label %bb.p
+  br i1 %i.aq, label %bb.y, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.ar = tail call fastcc i32 @ip_tunnel_bind_dev(ptr noundef %i.ap) #16, !srcloc !44
@@ -294,13 +294,14 @@ bb.x:                                             ; preds = %bb.p
   %i.cg = inttoptr i64 %i.cf to ptr
   br label %ip_tunnel_create.exit
 
-ip_tunnel_create.exit:                            ; preds = %bb.o, %bb.v, %bb.w, %bb.x
-  %.0.i110 = phi ptr [ %i.ap, %bb.o ], [ %i.cg, %bb.x ], [ %i.at, %bb.v ], [ %i.at, %bb.w ] ; 2 uses
+ip_tunnel_create.exit:                            ; preds = %bb.v, %bb.w, %bb.x
+  %.0.i110 = phi ptr [ %i.at, %bb.w ], [ %i.cg, %bb.x ], [ %i.at, %bb.v ] ; 2 uses
   %i.ch = icmp ugt ptr %.0.i110, inttoptr (i64 -4096 to ptr)
   br i1 %i.ch, label %bb.y, label %PTR_ERR_OR_ZERO.exit
 
-bb.y:                                             ; preds = %ip_tunnel_create.exit
-  %i.ci = ptrtoint ptr %.0.i110 to i64
+bb.y:                                             ; preds = %bb.o, %ip_tunnel_create.exit
+  %.0.i110112 = phi ptr [ %.0.i110, %ip_tunnel_create.exit ], [ %i.ap, %bb.o ]
+  %i.ci = ptrtoint ptr %.0.i110112 to i64
   %i.cj = trunc i64 %i.ci to i32
   br label %PTR_ERR_OR_ZERO.exit
 

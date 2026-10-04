@@ -202,7 +202,7 @@ nfs_try_to_update_request.exit.i.i:               ; preds = %bb.as, %bb.am, %arc
 nfs_try_to_update_request.exit.thread.i.i:        ; preds = %nfs_try_to_update_request.exit.i.i, %trace_nfs_try_to_update_request_done.exit59.i.i.i
   %i.ga = tail call ptr @nfs_page_create_from_folio(ptr noundef %.val48, ptr noundef %1, i32 noundef %.0, i32 noundef %.036) #12 ; 10 uses
   %i.gb = icmp ugt ptr %i.ga, inttoptr (i64 -4096 to ptr)
-  br i1 %i.gb, label %nfs_setup_write_request.exit.i, label %bb.at
+  br i1 %i.gb, label %nfs_writepage_setup.exit, label %bb.at
 
 bb.at:                                            ; preds = %nfs_try_to_update_request.exit.thread.i.i
   %i.gc = getelementptr i8, ptr %i.ga, i64 56     ; 7 uses
@@ -273,8 +273,8 @@ bb.az:                                            ; preds = %bb.ay
   tail call void @refcount_warn_saturate(ptr noundef %i.gu, i32 noundef %.sink.i.i.i.i.i.i.i) #12
   br label %nfs_setup_write_request.exit.i
 
-nfs_setup_write_request.exit.i:                   ; preds = %.sink.split.i.i.i.i.i.i.i, %bb.az, %nfs_try_to_update_request.exit.thread.i.i, %nfs_try_to_update_request.exit.i.i
-  %.0.i.i56 = phi ptr [ %.0.i.i.i54, %nfs_try_to_update_request.exit.i.i ], [ %i.ga, %nfs_try_to_update_request.exit.thread.i.i ], [ %i.ga, %bb.az ], [ %i.ga, %.sink.split.i.i.i.i.i.i.i ] ; 10 uses
+nfs_setup_write_request.exit.i:                   ; preds = %.sink.split.i.i.i.i.i.i.i, %bb.az, %nfs_try_to_update_request.exit.i.i
+  %.0.i.i56 = phi ptr [ %.0.i.i.i54, %nfs_try_to_update_request.exit.i.i ], [ %i.ga, %.sink.split.i.i.i.i.i.i.i ], [ %i.ga, %bb.az ] ; 10 uses
   %i.gy = icmp ugt ptr %.0.i.i56, inttoptr (i64 -4096 to ptr)
   br i1 %i.gy, label %nfs_writepage_setup.exit, label %bb.ba
 
@@ -585,8 +585,9 @@ nfs_writepage_setup.exit.thread:                  ; preds = %nfs_mark_uptodate.e
   tail call void @nfs_unlock_and_release_request(ptr noundef %.0.i.i56) #12
   br label %trace_nfs_update_folio.exit._crit_edge
 
-nfs_writepage_setup.exit:                         ; preds = %nfs_setup_write_request.exit.i
-  %i.lh = ptrtoint ptr %.0.i.i56 to i64
+nfs_writepage_setup.exit:                         ; preds = %nfs_try_to_update_request.exit.thread.i.i, %nfs_setup_write_request.exit.i
+  %.0.i36.i = phi ptr [ %.0.i.i56, %nfs_setup_write_request.exit.i ], [ %i.ga, %nfs_try_to_update_request.exit.thread.i.i ]
+  %i.lh = ptrtoint ptr %.0.i36.i to i64
   %i.li = trunc i64 %i.lh to i32                  ; 3 uses
   %i.lj = icmp slt i32 %i.li, 0
   br i1 %i.lj, label %bb.by, label %trace_nfs_update_folio.exit._crit_edge
