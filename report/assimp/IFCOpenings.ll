@@ -205,7 +205,9 @@ _ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = 
   %i.ep = insertelement <2 x double> poison, double %i.ag, i64 0
   %i.eq = insertelement <2 x double> %i.ep, double %i.at, i64 1
   %i.er = insertelement <2 x double> poison, double %i.ac, i64 0
-  %i.es = insertelement <2 x double> %i.er, double %i.ap, i64 1
+  %24 = insertelement <2 x double> %i.er, double %i.ap, i64 1
+  %25 = insertelement <2 x double> poison, double %i.ak, i64 0
+  %i.es = insertelement <2 x double> %25, double %i.ax, i64 1
   br label %bb.i
 
 ._crit_edge740:                                   ; preds = %_ZN6Assimp12LogFunctionsINS_11IFCImporterEE7LogWarnIJRA61_KcEEEvDpOT_.exit, %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit
@@ -316,7 +318,7 @@ bb.o:                                             ; preds = %bb.j
   %i.ft = getelementptr inbounds nuw [24 x i8], ptr %i.fs, i64 %.0113724 ; 3 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
   %i.fv = getelementptr inbounds nuw i8, ptr %i.ft, i64 16
-  %i.fw = load double, ptr %i.fv, align 8, !noalias !391 ; 3 uses
+  %i.fw = load double, ptr %i.fv, align 8, !noalias !391 ; 2 uses
   %i.fx = load double, ptr %i.ft, align 8, !noalias !391 ; 2 uses
   %i.fy = load double, ptr %i.fu, align 8, !noalias !391 ; 2 uses
   %i.fz = insertelement <2 x double> poison, double %i.fy, i64 0
@@ -324,11 +326,10 @@ bb.o:                                             ; preds = %bb.j
   %i.gb = fmul <2 x double> %i.ga, %i.eq
   %i.gc = insertelement <2 x double> poison, double %i.fx, i64 0
   %i.gd = shufflevector <2 x double> %i.gc, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ge = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.es, <2 x double> %i.gd, <2 x double> %i.gb) ; 2 uses
-  %24 = extractelement <2 x double> %i.ge, i64 0
-  %25 = call double @llvm.fmuladd.f64(double %i.ak, double %i.fw, double %24)
-  %26 = extractelement <2 x double> %i.ge, i64 1
-  %27 = call double @llvm.fmuladd.f64(double %i.ax, double %i.fw, double %26)
+  %i.ge = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %24, <2 x double> %i.gd, <2 x double> %i.gb)
+  %26 = insertelement <2 x double> poison, double %i.fw, i64 0
+  %27 = shufflevector <2 x double> %26, <2 x double> poison, <2 x i32> zeroinitializer
+  %28 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.es, <2 x double> %27, <2 x double> %i.ge) ; 2 uses
   %i.gf = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.dc, ptr noundef nonnull @.str.20, i64 noundef 3)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit205 unwind label %bb.p ; 0 uses
 
@@ -344,7 +345,8 @@ _ZNSolsEd.exit207:                                ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit209 unwind label %bb.p ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit209: ; preds = %_ZNSolsEd.exit207
-  %i.gl = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.gj, double noundef %25)
+  %29 = extractelement <2 x double> %28, i64 0
+  %i.gl = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.gj, double noundef %29)
           to label %_ZNSolsEd.exit211 unwind label %bb.p ; 2 uses
 
 _ZNSolsEd.exit211:                                ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit209
@@ -352,7 +354,8 @@ _ZNSolsEd.exit211:                                ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit213 unwind label %bb.p ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit213: ; preds = %_ZNSolsEd.exit211
-  %i.gn = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.gl, double noundef %27)
+  %30 = extractelement <2 x double> %28, i64 1
+  %i.gn = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.gl, double noundef %30)
           to label %_ZNSolsEd.exit215 unwind label %bb.p ; 2 uses
 
 _ZNSolsEd.exit215:                                ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit213

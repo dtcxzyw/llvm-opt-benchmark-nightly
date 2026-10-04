@@ -205,7 +205,7 @@ bb.dr:                                            ; preds = %bb.dq
 
 bb.ds:                                            ; preds = %bb.dr
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 416
-  %i.fi = load double, ptr %i.fh, align 8         ; 6 uses
+  %i.fi = load double, ptr %i.fh, align 8         ; 5 uses
   %i.fj = fcmp ogt double %i.fi, 0.000000e+00
   br i1 %i.fj, label %bb.dt, label %bb.ef
 
@@ -264,11 +264,10 @@ pg_ticks_to_ns.exit789:                           ; preds = %pg_ticks_to_ns.exit
   %i.gh = sitofp i64 %.0.i788 to double
   %i.gi = insertelement <2 x double> poison, double %.pn.in, i64 0
   %i.gj = insertelement <2 x double> %i.gi, double %i.gh, i64 1
-  %i.gk = fdiv <2 x double> %i.gj, splat (double 1.000000e+06) ; 2 uses
-  %9 = extractelement <2 x double> %i.gk, i64 0
-  %10 = fdiv double %9, %i.fi                     ; 2 uses
-  %11 = extractelement <2 x double> %i.gk, i64 1
-  %12 = fdiv double %11, %i.fi                    ; 2 uses
+  %i.gk = fdiv <2 x double> %i.gj, splat (double 1.000000e+06)
+  %9 = insertelement <2 x double> poison, double %i.fi, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = fdiv <2 x double> %i.gk, %10              ; 4 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.fg, i64 400
   %i.gm = load double, ptr %i.gl, align 8
   %i.gn = fdiv double %i.gm, %i.fi                ; 2 uses
@@ -286,7 +285,9 @@ bb.dz:                                            ; preds = %pg_ticks_to_ns.exit
 
 bb.ea:                                            ; preds = %bb.dz
   %i.gu = load ptr, ptr %4, align 8
-  tail call void (ptr, ptr, ...) @appendStringInfo(ptr noundef %i.gu, ptr noundef nonnull @.str.168, double noundef %10, double noundef %12) #6
+  %12 = extractelement <2 x double> %11, i64 0
+  %13 = extractelement <2 x double> %11, i64 1
+  tail call void (ptr, ptr, ...) @appendStringInfo(ptr noundef %i.gu, ptr noundef nonnull @.str.168, double noundef %12, double noundef %13) #6
   br label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea, %bb.dz
@@ -301,8 +302,10 @@ bb.ec:                                            ; preds = %pg_ticks_to_ns.exit
   br i1 %i.gy, label %bb.ed, label %bb.ee
 
 bb.ed:                                            ; preds = %bb.ec
-  tail call void @ExplainPropertyFloat(ptr noundef nonnull @.str.170, ptr noundef nonnull @.str.18, double noundef %10, i32 noundef 3, ptr noundef nonnull %4) #6
-  tail call void @ExplainPropertyFloat(ptr noundef nonnull @.str.171, ptr noundef nonnull @.str.18, double noundef %12, i32 noundef 3, ptr noundef nonnull %4) #6
+  %14 = extractelement <2 x double> %11, i64 0
+  tail call void @ExplainPropertyFloat(ptr noundef nonnull @.str.170, ptr noundef nonnull @.str.18, double noundef %14, i32 noundef 3, ptr noundef nonnull %4) #6
+  %15 = extractelement <2 x double> %11, i64 1
+  tail call void @ExplainPropertyFloat(ptr noundef nonnull @.str.171, ptr noundef nonnull @.str.18, double noundef %15, i32 noundef 3, ptr noundef nonnull %4) #6
   br label %bb.ee
 
 bb.ee:                                            ; preds = %bb.ed, %bb.ec
@@ -678,7 +681,7 @@ bb.fg:                                            ; preds = %.lr.ph, %bb.fv
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.fv ] ; 4 uses
   %i.mq = getelementptr inbounds nuw [440 x i8], ptr %i.mn, i64 %indvars.iv ; 5 uses
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mq, i64 416
-  %i.ms = load double, ptr %i.mr, align 8         ; 6 uses
+  %i.ms = load double, ptr %i.mr, align 8         ; 5 uses
   %i.mt = fcmp ugt double %i.ms, 0.000000e+00
   br i1 %i.mt, label %bb.fh, label %bb.fv
 
@@ -737,11 +740,10 @@ pg_ticks_to_ns.exit799:                           ; preds = %pg_ticks_to_ns.exit
   %i.nr = sitofp i64 %.0.i798 to double
   %i.ns = insertelement <2 x double> poison, double %.pn1079.in, i64 0
   %i.nt = insertelement <2 x double> %i.ns, double %i.nr, i64 1
-  %i.nu = fdiv <2 x double> %i.nt, splat (double 1.000000e+06) ; 2 uses
-  %13 = extractelement <2 x double> %i.nu, i64 0
-  %14 = fdiv double %13, %i.ms                    ; 2 uses
-  %15 = extractelement <2 x double> %i.nu, i64 1
-  %16 = fdiv double %15, %i.ms                    ; 2 uses
+  %i.nu = fdiv <2 x double> %i.nt, splat (double 1.000000e+06)
+  %16 = insertelement <2 x double> poison, double %i.ms, i64 0
+  %17 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> zeroinitializer
+  %18 = fdiv <2 x double> %i.nu, %17              ; 4 uses
   %i.nv = getelementptr inbounds nuw i8, ptr %i.mq, i64 400
   %i.nw = load double, ptr %i.nv, align 8
   %i.nx = fdiv double %i.nw, %i.ms                ; 2 uses
@@ -761,7 +763,9 @@ bb.fn:                                            ; preds = %pg_ticks_to_ns.exit
 
 bb.fo:                                            ; preds = %bb.fn
   %i.oe = load ptr, ptr %4, align 8
-  tail call void (ptr, ptr, ...) @appendStringInfo(ptr noundef %i.oe, ptr noundef nonnull @.str.168, double noundef %14, double noundef %16) #6
+  %19 = extractelement <2 x double> %18, i64 0
+  %20 = extractelement <2 x double> %18, i64 1
+  tail call void (ptr, ptr, ...) @appendStringInfo(ptr noundef %i.oe, ptr noundef nonnull @.str.168, double noundef %19, double noundef %20) #6
   br label %bb.fp
 
 bb.fp:                                            ; preds = %bb.fo, %bb.fn
@@ -775,8 +779,10 @@ bb.fq:                                            ; preds = %pg_ticks_to_ns.exit
   br i1 %i.oh, label %bb.fr, label %bb.fs
 
 bb.fr:                                            ; preds = %bb.fq
-  tail call void @ExplainPropertyFloat(ptr noundef nonnull @.str.170, ptr noundef nonnull @.str.18, double noundef %14, i32 noundef 3, ptr noundef nonnull %4) #6
-  tail call void @ExplainPropertyFloat(ptr noundef nonnull @.str.171, ptr noundef nonnull @.str.18, double noundef %16, i32 noundef 3, ptr noundef nonnull %4) #6
+  %21 = extractelement <2 x double> %18, i64 0
+  tail call void @ExplainPropertyFloat(ptr noundef nonnull @.str.170, ptr noundef nonnull @.str.18, double noundef %21, i32 noundef 3, ptr noundef nonnull %4) #6
+  %22 = extractelement <2 x double> %18, i64 1
+  tail call void @ExplainPropertyFloat(ptr noundef nonnull @.str.171, ptr noundef nonnull @.str.18, double noundef %22, i32 noundef 3, ptr noundef nonnull %4) #6
   br label %bb.fs
 
 bb.fs:                                            ; preds = %bb.fr, %bb.fq

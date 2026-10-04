@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ax = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.ay = load float, ptr %i.ax, align 4, !tbaa !172, !noalias !237 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  %i.ba = load float, ptr %i.az, align 4, !tbaa !172, !noalias !237 ; 3 uses
+  %i.ba = load float, ptr %i.az, align 4, !tbaa !172, !noalias !237 ; 2 uses
   %i.bb = insertelement <2 x float> poison, float %i.al, i64 0
   %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.bd = fmul <2 x float> %i.bc, %i.at
@@ -231,7 +231,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bx = getelementptr inbounds nuw i8, ptr %i.d, i64 96
   %i.by = load float, ptr %i.bx, align 4, !tbaa !172, !noalias !238 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.d, i64 112
-  %i.ca = load float, ptr %i.bz, align 4, !tbaa !172, !noalias !238 ; 3 uses
+  %i.ca = load float, ptr %i.bz, align 4, !tbaa !172, !noalias !238 ; 2 uses
   %i.cb = fmul <2 x float> %i.bc, %i.bt
   %i.cc = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bs, <2 x float> %i.bf, <2 x float> %i.cb)
   %i.cd = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bu, <2 x float> %i.bi, <2 x float> %i.cc)
@@ -259,7 +259,6 @@ bb.b:                                             ; preds = %bb.a
   %i.cz = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.as, <2 x float> %i.cy, <2 x float> %i.cx)
   %i.da = shufflevector <2 x float> %i.cg, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.db = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.au, <2 x float> %i.da, <2 x float> %i.cz)
-  %8 = extractelement <2 x float> %i.cg, i64 0    ; 2 uses
   %i.dc = shufflevector <2 x float> %i.cf, <2 x float> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.dd = fmul <2 x float> %i.dc, %i.at
   %i.de = shufflevector <2 x float> %i.ce, <2 x float> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
@@ -268,7 +267,7 @@ bb.b:                                             ; preds = %bb.a
   %i.dh = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.au, <2 x float> %i.dg, <2 x float> %i.df)
   %i.di = extractelement <2 x float> %i.cf, i64 1
   %i.dj = extractelement <2 x float> %i.ce, i64 1
-  %i.dk = extractelement <2 x float> %i.cg, i64 1 ; 2 uses
+  %i.dk = extractelement <2 x float> %i.cg, i64 1
   %i.dl = shufflevector <2 x float> %i.k, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.dm = insertelement <2 x float> %i.dl, float %i.ck, i64 1 ; 2 uses
   %i.dn = fmul <2 x float> %i.cf, %i.dm
@@ -301,15 +300,13 @@ bb.b:                                             ; preds = %bb.a
   %i.en = shufflevector <4 x float> %i.em, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.eo = shufflevector <2 x float> %i.ce, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 1>
   %i.ep = insertelement <4 x float> %i.eo, float %i.ak, i64 0
-  %i.eq = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.en, <4 x float> %i.ep, <4 x float> %i.ek) ; 4 uses
-  %9 = extractelement <4 x float> %i.eq, i64 0
-  %10 = tail call noundef float @llvm.fmuladd.f32(float %i.ca, float %i.am, float %9)
-  %11 = extractelement <4 x float> %i.eq, i64 1
-  %12 = tail call noundef float @llvm.fmuladd.f32(float %i.ba, float %8, float %11)
-  %13 = extractelement <4 x float> %i.eq, i64 3
-  %14 = tail call noundef float @llvm.fmuladd.f32(float %i.ba, float %i.dk, float %13)
-  %15 = extractelement <4 x float> %i.eq, i64 2
-  %16 = tail call noundef float @llvm.fmuladd.f32(float %i.ca, float %8, float %15)
+  %i.eq = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.en, <4 x float> %i.ep, <4 x float> %i.ek)
+  %8 = insertelement <4 x float> poison, float %i.ca, i64 0
+  %9 = insertelement <4 x float> %8, float %i.ba, i64 1
+  %10 = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %11 = shufflevector <2 x float> %i.cg, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 1>
+  %12 = insertelement <4 x float> %11, float %i.am, i64 0
+  %13 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %10, <4 x float> %12, <4 x float> %i.eq) ; 4 uses
   %i.er = fmul <2 x float> %i.dc, %i.bt
   %i.es = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bs, <2 x float> %i.de, <2 x float> %i.er)
   %i.et = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bu, <2 x float> %i.dg, <2 x float> %i.es)
@@ -392,13 +389,15 @@ _Z8btSetMinIfEvRT_RKS0_.exit5.i:                  ; preds = %bb.e, %_Z8btSetMinI
   %i.gk = getelementptr inbounds nuw i8, ptr %7, i64 8
   store <2 x float> %i.db, ptr %i.gk, align 8
   %.sroa.664.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 16
-  store float %12, ptr %.sroa.664.0..sroa_idx, align 8
+  %14 = extractelement <4 x float> %13, i64 1
+  store float %14, ptr %.sroa.664.0..sroa_idx, align 8
   %.sroa.765.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 20
   store float 0.000000e+00, ptr %.sroa.765.0..sroa_idx, align 4, !tbaa !184
   %i.gl = getelementptr inbounds nuw i8, ptr %7, i64 24
   store <2 x float> %i.dh, ptr %i.gl, align 8
   %.sroa.1168.16..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 32
-  store float %14, ptr %.sroa.1168.16..sroa_idx, align 8
+  %15 = extractelement <4 x float> %13, i64 3
+  store float %15, ptr %.sroa.1168.16..sroa_idx, align 8
   %.sroa.1269.16..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 36
   store float 0.000000e+00, ptr %.sroa.1269.16..sroa_idx, align 4, !tbaa !184
   %i.gm = getelementptr inbounds nuw i8, ptr %7, i64 40
@@ -414,6 +413,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit5.i:                  ; preds = %bb.e, %_Z8btSetMinI
   %i.go = getelementptr inbounds nuw i8, ptr %7, i64 72
   store <2 x float> %i.ee, ptr %i.go, align 8
   %.sroa.652.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 80
+  %16 = extractelement <4 x float> %13, i64 2
   store float %16, ptr %.sroa.652.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 84
   store float 0.000000e+00, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !184
@@ -426,7 +426,8 @@ _Z8btSetMinIfEvRT_RKS0_.exit5.i:                  ; preds = %bb.e, %_Z8btSetMinI
   %i.gq = getelementptr inbounds nuw i8, ptr %7, i64 104
   store <2 x float> %i.cd, ptr %i.gq, align 8
   %.sroa.16.32..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 112
-  store float %10, ptr %.sroa.16.32..sroa_idx, align 8
+  %17 = extractelement <4 x float> %13, i64 0
+  store float %17, ptr %.sroa.16.32..sroa_idx, align 8
   %.sroa.17.32..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 116
   store float 0.000000e+00, ptr %.sroa.17.32..sroa_idx, align 4, !tbaa !184
   %i.gr = getelementptr inbounds nuw i8, ptr %7, i64 120

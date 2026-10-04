@@ -205,7 +205,7 @@ bb.a:
   %i.az = shufflevector <2 x float> %i.al, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.ba = insertelement <2 x float> %i.az, float %i.ad, i64 1
   %i.bb = fsub <2 x float> %i.ay, %i.ba           ; 3 uses
-  %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1> ; 2 uses
   %i.bd = load <2 x float>, ptr %i.d, align 4, !tbaa !253 ; 4 uses
   %i.be = load float, ptr %i.f, align 8, !tbaa !253
   %i.bf = fadd float %i.be, %i.h
@@ -466,7 +466,7 @@ _ZL18hasSeparatingPlanePKN10btSoftBody4FaceEPKNS_4NodeERKf.exit.i: ; preds = %.t
   %i.jn = extractelement <2 x float> %i.en, i64 0
   %i.jo = fsub float %i.ft, %i.jn                 ; 2 uses
   %i.jp = fsub float %i.fw, %i.eo                 ; 2 uses
-  %i.jq = fsub float %i.fz, %i.dq                 ; 3 uses
+  %i.jq = fsub float %i.fz, %i.dq                 ; 2 uses
   %i.jr = extractelement <4 x float> %i.jh, i64 3 ; 2 uses
   %i.js = fneg float %i.jr                        ; 2 uses
   %i.jt = extractelement <4 x float> %i.jd, i64 1 ; 3 uses
@@ -506,17 +506,16 @@ _ZL18hasSeparatingPlanePKN10btSoftBody4FaceEPKNS_4NodeERKf.exit.i: ; preds = %.t
   %i.kx = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.kv, <4 x float> %i.kw, <4 x float> %i.ku) ; 4 uses
   %shift24 = shufflevector <4 x float> %i.km, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %foldExtExtBinop25 = fadd <4 x float> %i.kx, %shift24
-  %i.ky = extractelement <4 x float> %foldExtExtBinop25, i64 0 ; 2 uses
+  %i.ky = extractelement <4 x float> %foldExtExtBinop25, i64 0
   %i.kz = extractelement <2 x float> %i.av, i64 0
   %i.la = fmul float %i.kz, %i.kk
   %i.lb = extractelement <2 x float> %i.ar, i64 0
   %i.lc = tail call float @llvm.fmuladd.f32(float %i.kh, float %i.lb, float %i.la)
-  %i.ld = extractelement <2 x float> %i.bb, i64 0 ; 3 uses
+  %i.ld = extractelement <2 x float> %i.bb, i64 0
   %i.le = tail call noundef float @llvm.fmuladd.f32(float %i.jx, float %i.ld, float %i.lc) ; 4 uses
   %i.lf = fmul float %i.kk, %i.jp
   %i.lg = tail call float @llvm.fmuladd.f32(float %i.kh, float %i.jo, float %i.lf)
   %i.lh = tail call noundef float @llvm.fmuladd.f32(float %i.jx, float %i.jq, float %i.lg)
-  %9 = extractelement <4 x float> %i.kx, i64 3    ; 2 uses
   %i.li = insertelement <4 x float> %i.aw, float %i.jp, i64 1
   %i.lj = shufflevector <4 x float> %i.li, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.lk = shufflevector <4 x float> %i.kx, <4 x float> poison, <2 x i32> <i32 poison, i32 2>
@@ -528,19 +527,21 @@ _ZL18hasSeparatingPlanePKN10btSoftBody4FaceEPKNS_4NodeERKf.exit.i: ; preds = %.t
   %i.lq = shufflevector <2 x float> %i.lp, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.lr = insertelement <4 x float> %i.as, float %i.jo, i64 1
   %i.ls = shufflevector <4 x float> %i.lr, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.lt = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.lq, <4 x float> %i.ls, <4 x float> %i.ln) ; 4 uses
-  %10 = extractelement <4 x float> %i.lt, i64 0
-  %11 = tail call noundef float @llvm.fmuladd.f32(float %i.ky, float %i.ld, float %10)
-  %12 = fadd float %i.lh, %11                     ; 4 uses
-  %13 = extractelement <4 x float> %i.lt, i64 2
-  %14 = tail call noundef float @llvm.fmuladd.f32(float %9, float %i.ld, float %13)
-  %i.lu = extractelement <4 x float> %i.lt, i64 1
-  %15 = tail call noundef float @llvm.fmuladd.f32(float %i.ky, float %i.jq, float %i.lu)
-  %16 = fadd float %14, %15                       ; 4 uses
-  %17 = extractelement <4 x float> %i.lt, i64 3
-  %18 = tail call noundef float @llvm.fmuladd.f32(float %9, float %i.jq, float %17) ; 4 uses
+  %i.lt = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.lq, <4 x float> %i.ls, <4 x float> %i.ln)
+  %9 = shufflevector <4 x float> %i.kx, <4 x float> poison, <2 x i32> <i32 poison, i32 3>
+  %10 = insertelement <2 x float> %9, float %i.ky, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %12 = insertelement <4 x float> %i.bc, float %i.jq, i64 1
+  %13 = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %14 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %11, <4 x float> %13, <4 x float> %i.lt) ; 4 uses
+  %i.lu = extractelement <4 x float> %14, i64 0
+  %15 = fadd float %i.lh, %i.lu                   ; 4 uses
+  %shift27 = shufflevector <4 x float> %14, <4 x float> poison, <4 x i32> <i32 poison, i32 2, i32 poison, i32 poison>
+  %foldExtExtBinop28 = fadd <4 x float> %shift27, %14
+  %16 = extractelement <4 x float> %foldExtExtBinop28, i64 1 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #39
-  %i.lv = tail call noundef float @llvm.fabs.f32(float %18)
+  %17 = extractelement <4 x float> %14, i64 3     ; 4 uses
+  %i.lv = tail call noundef float @llvm.fabs.f32(float %17)
   %i.lw = fcmp olt float %i.lv, f0x37480000
   br i1 %i.lw, label %bb.i, label %bb.n
 
@@ -550,7 +551,7 @@ bb.i:                                             ; preds = %_ZL18hasSeparatingP
   br i1 %i.ly, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
-  %i.lz = tail call noundef float @llvm.fabs.f32(float %12)
+  %i.lz = tail call noundef float @llvm.fabs.f32(float %15)
   %i.ma = fcmp olt float %i.lz, f0x37480000
   br i1 %i.ma, label %bb.k, label %bb.l
 
@@ -567,20 +568,20 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.me = fneg float %i.le
-  %i.mf = fdiv float %i.me, %12
+  %i.mf = fdiv float %i.me, %15
   store float %i.mf, ptr %i.a, align 4, !tbaa !253
   br label %.lr.ph.i
 
 bb.m:                                             ; preds = %bb.i
-  %i.mg = fdiv float %12, %16
+  %i.mg = fdiv float %15, %16
   %i.mh = fdiv float %i.le, %16
   %i.mi = call noundef i32 @_Z7SolveP2Pfff(ptr noundef nonnull %i.a, float noundef %i.mg, float noundef %i.mh)
   br label %bb.o
 
 bb.n:                                             ; preds = %_ZL18hasSeparatingPlanePKN10btSoftBody4FaceEPKNS_4NodeERKf.exit.i
-  %i.mj = fdiv float %16, %18
-  %i.mk = fdiv float %12, %18
-  %i.ml = fdiv float %i.le, %18
+  %i.mj = fdiv float %16, %17
+  %i.mk = fdiv float %15, %17
+  %i.ml = fdiv float %i.le, %17
   %i.mm = call noundef i32 @_Z7SolveP3Pffff(ptr noundef nonnull %i.a, float noundef %i.mj, float noundef %i.mk, float noundef %i.ml)
   br label %bb.o
 

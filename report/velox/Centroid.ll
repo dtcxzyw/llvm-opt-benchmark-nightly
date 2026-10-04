@@ -63,18 +63,19 @@ _ZNSt10unique_ptrIN4geos4geom10CoordinateESt14default_deleteIS2_EED2Ev.exit.i: ;
   resume { ptr, i32 } %i.i
 
 _ZN4geos9algorithm8CentroidC2ERKNS_4geom8GeometryE.exit: ; preds = %bb.a
-  %i.k = load double, ptr %i.h, align 8, !tbaa !22 ; 3 uses
+  %i.k = load double, ptr %i.h, align 8, !tbaa !22 ; 2 uses
   %i.l = fcmp ueq double %i.k, 0.000000e+00
   br i1 %i.l, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4geos9algorithm8CentroidC2ERKNS_4geom8GeometryE.exit
   %i.m = load <2 x double>, ptr %i.b, align 8, !tbaa !23
-  %i.n = fdiv <2 x double> %i.m, splat (double 3.000000e+00) ; 2 uses
-  %3 = extractelement <2 x double> %i.n, i64 0
-  %4 = fdiv double %3, %i.k
-  store double %4, ptr %1, align 8, !tbaa !24
-  %i.o = extractelement <2 x double> %i.n, i64 1
-  %5 = fdiv double %i.o, %i.k
+  %i.n = fdiv <2 x double> %i.m, splat (double 3.000000e+00)
+  %3 = insertelement <2 x double> poison, double %i.k, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = fdiv <2 x double> %i.n, %4                 ; 2 uses
+  %i.o = extractelement <2 x double> %5, i64 0
+  store double %i.o, ptr %1, align 8, !tbaa !24
+  %6 = extractelement <2 x double> %5, i64 1
   br label %.sink.split.i
 
 bb.d:                                             ; preds = %_ZN4geos9algorithm8CentroidC2ERKNS_4geom8GeometryE.exit
@@ -111,7 +112,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.g, %bb.e, %bb.c
-  %.sink.i = phi double [ %5, %bb.c ], [ %i.ah, %bb.g ], [ %i.x, %bb.e ]
+  %.sink.i = phi double [ %6, %bb.c ], [ %i.ah, %bb.g ], [ %i.x, %bb.e ]
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 8
   store double %.sink.i, ptr %i.ai, align 8, !tbaa !27
   br label %_ZNK4geos9algorithm8Centroid11getCentroidERNS_4geom10CoordinateE.exit
@@ -138,19 +139,20 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 define noundef zeroext i1 @_ZNK4geos9algorithm8Centroid11getCentroidERNS_4geom10CoordinateE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(124) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.b = load double, ptr %i.a, align 8, !tbaa !22 ; 3 uses
+  %i.b = load double, ptr %i.a, align 8, !tbaa !22 ; 2 uses
   %i.c = fcmp ueq double %i.b, 0.000000e+00
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load <2 x double>, ptr %i.d, align 8, !tbaa !23
-  %i.f = fdiv <2 x double> %i.e, splat (double 3.000000e+00) ; 2 uses
-  %2 = extractelement <2 x double> %i.f, i64 0
-  %3 = fdiv double %2, %i.b
-  store double %3, ptr %1, align 8, !tbaa !24
-  %i.g = extractelement <2 x double> %i.f, i64 1
-  %4 = fdiv double %i.g, %i.b
+  %i.f = fdiv <2 x double> %i.e, splat (double 3.000000e+00)
+  %2 = insertelement <2 x double> poison, double %i.b, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = fdiv <2 x double> %i.f, %3                 ; 2 uses
+  %i.g = extractelement <2 x double> %4, i64 0
+  store double %i.g, ptr %1, align 8, !tbaa !24
+  %5 = extractelement <2 x double> %4, i64 1
   br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a
@@ -189,7 +191,7 @@ bb.f:                                             ; preds = %bb.e
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.d, %bb.f, %bb.b
-  %.sink = phi double [ %4, %bb.b ], [ %i.ab, %bb.f ], [ %i.q, %bb.d ]
+  %.sink = phi double [ %5, %bb.b ], [ %i.ab, %bb.f ], [ %i.q, %bb.d ]
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 8
   store double %.sink, ptr %i.ac, align 8, !tbaa !27
   br label %bb.g

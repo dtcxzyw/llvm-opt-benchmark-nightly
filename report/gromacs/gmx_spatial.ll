@@ -205,11 +205,14 @@ bb.bf:                                            ; preds = %bb.bc
   %i.sf = insertelement <2 x double> poison, double %i.sd, i64 0
   %i.sg = shufflevector <2 x double> %i.sf, <2 x double> poison, <2 x i32> zeroinitializer
   %i.sh = fdiv <2 x double> %i.qg, %i.sg          ; 2 uses
-  %11 = extractelement <2 x double> %i.sh, i64 0
-  %12 = fdiv double %11, %i.se
-  %13 = fdiv double %.0186.lcssa, %i.sd
-  %i.si = extractelement <2 x double> %i.sh, i64 1
-  %i.sj = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.73, double noundef %12, double noundef %i.si, double noundef %13) ; 0 uses
+  %11 = insertelement <2 x double> %i.sh, double %.0186.lcssa, i64 1
+  %12 = insertelement <2 x double> poison, double %i.se, i64 0
+  %13 = insertelement <2 x double> %12, double %i.sd, i64 1
+  %14 = fdiv <2 x double> %11, %13                ; 2 uses
+  %15 = extractelement <2 x double> %i.sh, i64 1
+  %16 = extractelement <2 x double> %14, i64 0
+  %i.si = extractelement <2 x double> %14, i64 1
+  %i.sj = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.73, double noundef %16, double noundef %15, double noundef %i.si) ; 0 uses
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %bb.bd
