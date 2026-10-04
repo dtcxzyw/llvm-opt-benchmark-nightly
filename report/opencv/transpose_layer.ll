@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %._crit_edge8.split.
   %indvar = phi i64 [ %indvar.next, %._crit_edge8.split.i.i.i ], [ 0, %.lr.ph.i.i.i ] ; 6 uses
   %.0329.i.i.i = phi i64 [ %i.cw, %._crit_edge8.split.i.i.i ], [ %i.d, %.lr.ph.i.i.i ] ; 3 uses
   %i.aj = add i64 %indvar, %i.d
-  %i.ak = shl i64 %indvar, 5
+  %i.ak = shl nuw nsw i64 %indvar, 5
   %i.al = add i64 %i.ae, %i.ak
   %i.am = sdiv i64 %.0329.i.i.i, %i.j             ; 5 uses
   %i.an = mul i64 %i.am, %i.j                     ; 0 uses
@@ -228,12 +228,12 @@ bb.b:                                             ; preds = %._crit_edge8.split.
   br i1 %or.cond.i.i.i, label %.preheader.i.i.i.preheader, label %._crit_edge8.split.i.i.i
 
 .preheader.i.i.i.preheader:                       ; preds = %bb.b
-  %i.az = shl i64 %indvar, 7                      ; 2 uses
+  %i.az = shl nuw nsw i64 %indvar, 7              ; 2 uses
   %i.ba = add i64 %i.z, %i.az                     ; 2 uses
   %scevgep13 = getelementptr i8, ptr %i.s, i64 %i.ba ; 2 uses
   %i.bb = shl i64 %indvar, 5
   %i.bc = sub i64 %i.ag, %i.bb                    ; 2 uses
-  %i.bd = shl i64 %indvar, 5
+  %i.bd = shl nuw nsw i64 %indvar, 5
   %i.be = add i64 %i.ae, %i.bd
   %scevgep10 = getelementptr i8, ptr %i.ai, i64 %i.az
   %scevgep = getelementptr i8, ptr %i.y, i64 %i.ba

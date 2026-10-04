@@ -200,6 +200,7 @@ middle.block1426:                                 ; preds = %vector.body1398
   %i.ayt = sub i32 %i.ays, %b748                  ; 2 uses
   %i.ayu = mul i32 %i.aye, %i.ayt
   %i.ayv = sub i32 %i.ayu, %b751
+  %sext = sext i32 %i.aya to i64
   %i.ayw = mul i32 %i.ayt, %i.aqw
   %i.ayx = add i32 %i.ayw, %i.ak
   %i.ayy = sub i32 %i.ayx, %b751
@@ -434,12 +435,11 @@ middle.block1471:                                 ; preds = %vector.body1444
 
 "end for f78.s0.v3.loopexit":                     ; preds = %"for f78.s0.v3", %middle.block1471
   %lsr.iv.next407 = add nsw i64 %lsr.iv406, 1     ; 2 uses
-  %lsr426 = trunc i64 %lsr.iv.next407 to i32
   %lsr.iv.next411 = add i32 %lsr.iv410, %i.ayf
   %lsr.iv.next415 = add i32 %lsr.iv414, %i.ayf
   %lsr.iv.next419 = add i32 %lsr.iv418, %i.ayf
   %lsr.iv.next423 = add i32 %lsr.iv422, %i.ayf
-  %.not587 = icmp eq i32 %i.aya, %lsr426
+  %.not587 = icmp eq i64 %lsr.iv.next407, %sext
   %indvar.next1436 = add i32 %indvar1435, 1
   br i1 %.not587, label %"assert succeeded188.split", label %"for f78.s0.v4"
 
@@ -578,6 +578,7 @@ if.then.i298:                                     ; preds = %"end for f132.s0.v3
   %i.bgv = sub nsw i32 %a1, %f9.v4.min_realized
   %i.bgw = mul i32 %i.bgj, %i.bgv
   %i.bgx = sub i32 %i.bgw, %f9.v3.min_realized
+  %sext1023 = sext i32 %i.bgf to i64
   br label %"for f131.s0.v4"
 
 "for f131.s0.v4":                                 ; preds = %"for f131.s0.v4.preheader1018", %"end for f131.s0.v3.loopexit"
@@ -747,10 +748,9 @@ if.then.i307:                                     ; preds = %"end for f131.s0.v3
 
 "end for f131.s0.v3.loopexit":                    ; preds = %"for f131.s0.v3"
   %lsr.iv.next375 = add nsw i64 %lsr.iv374, 1     ; 2 uses
-  %lsr391 = trunc i64 %lsr.iv.next375 to i32
   %lsr.iv.next379 = add i32 %lsr.iv378, %i.bgj
   %lsr.iv.next386 = add i64 %lsr.iv385, %i.bgm
-  %.not602 = icmp eq i32 %i.bgf, %lsr391
+  %.not602 = icmp eq i64 %lsr.iv.next375, %sext1023
   br i1 %.not602, label %if.then.i307, label %"for f131.s0.v4"
 
 "assert failed195":                               ; preds = %if.then.i307
@@ -804,6 +804,7 @@ if.then.i307:                                     ; preds = %"end for f131.s0.v3
   %i.bms = sub nsw i32 %a7, %i.adf
   %i.bmt = mul i32 %i.adm, %i.bms
   %i.bmu = sub i32 %i.bmt, %a667
+  %sext1024 = sext i32 %i.blw to i64
   br label %"for f130.s0.v4"
 
 "for f130.s0.v4":                                 ; preds = %"for f130.s0.v4.preheader1017", %"end for f130.s0.v3.loopexit"
@@ -1160,10 +1161,9 @@ if.then.i316:                                     ; preds = %"end for f130.s0.v3
 
 "end for f130.s0.v3.loopexit":                    ; preds = %"for f130.s0.v3"
   %lsr.iv.next349 = add nsw i64 %lsr.iv348, 1     ; 2 uses
-  %lsr = trunc i64 %lsr.iv.next349 to i32
   %lsr.iv.next359 = add i32 %lsr.iv358, %i.adm
   %lsr.iv.next364 = add i64 %lsr.iv363, %i.bmf
-  %.not612 = icmp eq i32 %i.blw, %lsr
+  %.not612 = icmp eq i64 %lsr.iv.next349, %sext1024
   br i1 %.not612, label %if.then.i316, label %"for f130.s0.v4"
 
 if.then.i292:                                     ; preds = %if.then.i316

@@ -168,7 +168,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.d:                                             ; preds = %.thread116.i.i, %.preheader.i.i
   %.087.i.i = phi i16 [ %.390.i.i, %.thread116.i.i ], [ 1, %.preheader.i.i ] ; 4 uses
-  %.084.i.i = phi i16 [ %.185.i.i, %.thread116.i.i ], [ 1, %.preheader.i.i ] ; 5 uses
+  %.084.i.i = phi i16 [ %.185.i.i, %.thread116.i.i ], [ 1, %.preheader.i.i ] ; 6 uses
   %.080.i.i = phi i1 [ %spec.select172.i.i, %.thread116.i.i ], [ false, %.preheader.i.i ] ; 2 uses
   %.077.i.i = phi i1 [ %.not100.i.i, %.thread116.i.i ], [ false, %.preheader.i.i ]
   %.072.i.i = phi i32 [ %.5.i.i, %.thread116.i.i ], [ 0, %.preheader.i.i ] ; 2 uses
@@ -183,9 +183,10 @@ bb.d:                                             ; preds = %.thread116.i.i, %.p
 
 .lr.ph152.preheader.i.i:                          ; preds = %bb.d
   %i.cc = sext i16 %.087.i.i to i64
-  %wide.trip.count166.i.i = sext i16 %.084.i.i to i32 ; 3 uses
+  %wide.trip.count166.i.i = sext i16 %.084.i.i to i32 ; 2 uses
   %i.cd = sub nsw i32 %wide.trip.count166.i.i, %i.ca
   %i.ce = add i32 %i.cd, %.072.i.i
+  %sext = sext i16 %.084.i.i to i64
   br label %.lr.ph152.i.i
 
 .lr.ph152.i.i:                                    ; preds = %bb.e, %.lr.ph152.preheader.i.i
@@ -205,8 +206,7 @@ bb.d:                                             ; preds = %.thread116.i.i, %.p
 
 bb.e:                                             ; preds = %.lr.ph152.i.i
   %indvars.iv.next162.i.i = add nsw i64 %indvars.iv161.i.i, 1 ; 2 uses
-  %indvars.i = trunc i64 %indvars.iv.next162.i.i to i32
-  %exitcond167.not.i.i = icmp eq i32 %indvars.i, %wide.trip.count166.i.i
+  %exitcond167.not.i.i = icmp eq i64 %indvars.iv.next162.i.i, %sext
   br i1 %exitcond167.not.i.i, label %._crit_edge.i.i, label %.lr.ph152.i.i, !llvm.loop !11
 
 ._crit_edge.i.i:                                  ; preds = %bb.e, %bb.d

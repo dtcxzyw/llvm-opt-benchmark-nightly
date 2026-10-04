@@ -205,7 +205,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.i = sub i64 %i.b, %i.c
-  %diff.check = icmp ugt i64 %i.i, -32
+  %diff.check = icmp ugt i64 %i.i, -8
   br label %.lr.ph56
 
 .lr.ph56:                                         ; preds = %.lr.ph56.preheader, %._crit_edge
@@ -278,7 +278,7 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.ah = add i64 %.03255, %i.c
   %i.ai = add i64 %.03654, %i.a
   %i.aj = sub i64 %i.ai, %i.ah
-  %diff.check61 = icmp ugt i64 %i.aj, -32
+  %diff.check61 = icmp ugt i64 %i.aj, -8
   %conflict.rdx = or i1 %diff.check, %diff.check61
   br i1 %conflict.rdx, label %.lr.ph53.preheader, label %vec.epilog.ph
 
@@ -306,7 +306,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n71 = icmp eq i64 %i.ak, 0
   br i1 %cmp.n71, label %._crit_edge, label %.lr.ph53.preheader
 
-.lr.ph53.preheader:                               ; preds = %iter.check, %vector.memcheck, %vec.epilog.middle.block
+.lr.ph53.preheader:                               ; preds = %vector.memcheck, %iter.check, %vec.epilog.middle.block
   %.1.i52.ph = phi i64 [ %.0.i.lcssa, %vector.memcheck ], [ %.0.i.lcssa, %iter.check ], [ %i.al, %vec.epilog.middle.block ] ; 4 uses
   %i.as = sub i64 %spec.select, %.1.i52.ph
   %xtraiter = and i64 %i.as, 3                    ; 2 uses

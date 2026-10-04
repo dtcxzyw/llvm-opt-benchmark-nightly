@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !315
   store i32 %i.ac, ptr %i.aa, align 8, !tbaa !315
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.033.0, i64 40
-  %i.ae = add nuw i64 %.012.i, 1                  ; 2 uses
+  %i.ae = add nuw nsw i64 %.012.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ae, %i.d
   br i1 %exitcond.not.i, label %.lr.ph.i27, label %.lr.ph.i, !llvm.loop !23
 
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   store i64 0, ptr %i.x, align 8, !tbaa !199
   store i8 0, ptr %i.q, align 8, !tbaa !198
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.033.0, i64 32
-  %i.ab = add nuw i64 %.012.i, 1                  ; 2 uses
+  %i.ab = add nuw nsw i64 %.012.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ab, %i.d
   br i1 %exitcond.not.i, label %.lr.ph.i27, label %.lr.ph.i, !llvm.loop !27
 
@@ -1011,7 +1011,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.06.i.i.i = phi i64 [ %i.z, %scalar.ph ], [ %.06.i.i.i.ph, %scalar.ph.preheader ] ; 2 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %.010.i.i, i64 %.06.i.i.i
   store i32 7, ptr %i.y, align 4, !tbaa !211
-  %i.z = add nuw i64 %.06.i.i.i, 1                ; 2 uses
+  %i.z = add nuw nsw i64 %.06.i.i.i, 1            ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.z, %storemerge72
   br i1 %exitcond.not.i.i.i, label %.loopexit.loopexit, label %scalar.ph, !llvm.loop !2313
 
@@ -1414,7 +1414,7 @@ middle.block1040:                                 ; preds = %vector.body1034
   %i.nc = load i32, ptr %i.na, align 4, !tbaa !211
   store i32 %i.nc, ptr %i.nb, align 4, !tbaa !211
   %i.nd = getelementptr inbounds nuw i8, ptr %i.na, i64 4 ; 2 uses
-  %i.ne = add nuw i64 %.013.us.i.i721.prol, 1     ; 2 uses
+  %i.ne = add nuw nsw i64 %.013.us.i.i721.prol, 1 ; 2 uses
   %prol.iter1087.next = add i64 %prol.iter1087, 1 ; 2 uses
   %prol.iter1087.cmp.not = icmp eq i64 %prol.iter1087.next, %xtraiter1085
   br i1 %prol.iter1087.cmp.not, label %.lr.ph.split.us.i.i720.prol.loopexit, label %.lr.ph.split.us.i.i720.prol, !llvm.loop !4804
@@ -1448,7 +1448,7 @@ middle.block1040:                                 ; preds = %vector.body1034
   %i.nv = load i32, ptr %i.ns, align 4, !tbaa !211
   store i32 %i.nv, ptr %i.nu, align 4, !tbaa !211
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nh, i64 16
-  %i.nx = add nuw i64 %.013.us.i.i721, 4          ; 2 uses
+  %i.nx = add nuw nsw i64 %.013.us.i.i721, 4      ; 2 uses
   %exitcond20.not.i.i722.3 = icmp eq i64 %i.nx, %i.mc
   br i1 %exitcond20.not.i.i722.3, label %_ZN4absl12lts_2026052623inlined_vector_internal7StorageIiLm4ENS0_18container_internal17CountingAllocatorIiEEE10InitializeINS1_20IteratorValueAdapterIS5_St13move_iteratorIPiEEEEEvT_m.exit, label %.lr.ph.split.us.i.i720, !llvm.loop !4805
 
@@ -1500,7 +1500,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.oi = load i32, ptr %i.og, align 4, !tbaa !211
   store i32 %i.oi, ptr %i.oh, align 4, !tbaa !211
   %i.oj = getelementptr inbounds nuw i8, ptr %i.og, i64 4 ; 2 uses
-  %i.ok = add nuw i64 %.013.i.i717.prol, 1        ; 2 uses
+  %i.ok = add nuw nsw i64 %.013.i.i717.prol, 1    ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !4807
@@ -1540,7 +1540,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.pc = load i32, ptr %i.oz, align 4, !tbaa !211
   store i32 %i.pc, ptr %i.pb, align 4, !tbaa !211
   %i.pd = getelementptr inbounds nuw i8, ptr %i.oo, i64 16
-  %i.pe = add nuw i64 %.013.i.i717, 4             ; 2 uses
+  %i.pe = add nuw nsw i64 %.013.i.i717, 4         ; 2 uses
   %exitcond.not.i.i718.3 = icmp eq i64 %i.pe, %i.mc
   br i1 %exitcond.not.i.i718.3, label %._crit_edge.split.i.i719, label %scalar.ph, !llvm.loop !4808
 
@@ -1943,7 +1943,7 @@ middle.block1073:                                 ; preds = %vector.body1067
   %i.yc = load i32, ptr %i.ya, align 4, !tbaa !211
   store i32 %i.yc, ptr %i.yb, align 4, !tbaa !211
   %i.yd = getelementptr inbounds nuw i8, ptr %i.ya, i64 4 ; 2 uses
-  %i.ye = add nuw i64 %.013.us.i.i758.prol, 1     ; 2 uses
+  %i.ye = add nuw nsw i64 %.013.us.i.i758.prol, 1 ; 2 uses
   %prol.iter1095.next = add i64 %prol.iter1095, 1 ; 2 uses
   %prol.iter1095.cmp.not = icmp eq i64 %prol.iter1095.next, %xtraiter1093
   br i1 %prol.iter1095.cmp.not, label %.lr.ph.split.us.i.i757.prol.loopexit, label %.lr.ph.split.us.i.i757.prol, !llvm.loop !4810
@@ -1977,7 +1977,7 @@ middle.block1073:                                 ; preds = %vector.body1067
   %i.yv = load i32, ptr %i.ys, align 4, !tbaa !211
   store i32 %i.yv, ptr %i.yu, align 4, !tbaa !211
   %i.yw = getelementptr inbounds nuw i8, ptr %i.yh, i64 16
-  %i.yx = add nuw i64 %.013.us.i.i758, 4          ; 2 uses
+  %i.yx = add nuw nsw i64 %.013.us.i.i758, 4      ; 2 uses
   %exitcond20.not.i.i759.3 = icmp eq i64 %i.yx, %i.xc
   br i1 %exitcond20.not.i.i759.3, label %_ZN4absl12lts_2026052623inlined_vector_internal7StorageIiLm4ENS0_18container_internal17CountingAllocatorIiEEE10InitializeINS1_20IteratorValueAdapterIS5_St13move_iteratorIPiEEEEEvT_m.exit769, label %.lr.ph.split.us.i.i757, !llvm.loop !4811
 
@@ -2029,7 +2029,7 @@ scalar.ph1046.prol:                               ; preds = %scalar.ph1046.prehe
   %i.zi = load i32, ptr %i.zg, align 4, !tbaa !211
   store i32 %i.zi, ptr %i.zh, align 4, !tbaa !211
   %i.zj = getelementptr inbounds nuw i8, ptr %i.zg, i64 4 ; 2 uses
-  %i.zk = add nuw i64 %.013.i.i754.prol, 1        ; 2 uses
+  %i.zk = add nuw nsw i64 %.013.i.i754.prol, 1    ; 2 uses
   %prol.iter1091.next = add i64 %prol.iter1091, 1 ; 2 uses
   %prol.iter1091.cmp.not = icmp eq i64 %prol.iter1091.next, %xtraiter1089
   br i1 %prol.iter1091.cmp.not, label %scalar.ph1046.prol.loopexit, label %scalar.ph1046.prol, !llvm.loop !4813
@@ -2069,7 +2069,7 @@ scalar.ph1046:                                    ; preds = %scalar.ph1046.prol.
   %i.aac = load i32, ptr %i.zz, align 4, !tbaa !211
   store i32 %i.aac, ptr %i.aab, align 4, !tbaa !211
   %i.aad = getelementptr inbounds nuw i8, ptr %i.zo, i64 16
-  %i.aae = add nuw i64 %.013.i.i754, 4            ; 2 uses
+  %i.aae = add nuw nsw i64 %.013.i.i754, 4        ; 2 uses
   %exitcond.not.i.i755.3 = icmp eq i64 %i.aae, %i.xc
   br i1 %exitcond.not.i.i755.3, label %._crit_edge.split.i.i756, label %scalar.ph1046, !llvm.loop !4814
 
@@ -2472,7 +2472,7 @@ middle.block65:                                   ; preds = %vector.body59
   %i.ah = load i32, ptr %i.af, align 4, !tbaa !211
   store i32 %i.ah, ptr %i.ag, align 4, !tbaa !211
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 4 ; 2 uses
-  %i.aj = add nuw i64 %.013.us.i.prol, 1          ; 2 uses
+  %i.aj = add nuw nsw i64 %.013.us.i.prol, 1      ; 2 uses
   %prol.iter74.next = add i64 %prol.iter74, 1     ; 2 uses
   %prol.iter74.cmp.not = icmp eq i64 %prol.iter74.next, %xtraiter72
   br i1 %prol.iter74.cmp.not, label %.lr.ph.split.us.i.prol.loopexit, label %.lr.ph.split.us.i.prol, !llvm.loop !4972
@@ -2506,7 +2506,7 @@ middle.block65:                                   ; preds = %vector.body59
   %i.ba = load i32, ptr %i.ax, align 4, !tbaa !211
   store i32 %i.ba, ptr %i.az, align 4, !tbaa !211
   %i.bb = getelementptr inbounds nuw i8, ptr %i.am, i64 16
-  %i.bc = add nuw i64 %.013.us.i, 4               ; 2 uses
+  %i.bc = add nuw nsw i64 %.013.us.i, 4           ; 2 uses
   %exitcond20.not.i.3 = icmp eq i64 %i.bc, %i.f
   br i1 %exitcond20.not.i.3, label %_ZN4absl12lts_2026052623inlined_vector_internal14DestroyAdapterINS0_18container_internal17CountingAllocatorIiEELb0EE15DestroyElementsERS5_Pim.exit, label %.lr.ph.split.us.i, !llvm.loop !4973
 
@@ -2558,7 +2558,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.bn = load i32, ptr %i.bl, align 4, !tbaa !211
   store i32 %i.bn, ptr %i.bm, align 4, !tbaa !211
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bl, i64 4 ; 2 uses
-  %i.bp = add nuw i64 %.013.i.prol, 1             ; 2 uses
+  %i.bp = add nuw nsw i64 %.013.i.prol, 1         ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !4975
@@ -2592,7 +2592,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.cg = load i32, ptr %i.cd, align 4, !tbaa !211
   store i32 %i.cg, ptr %i.cf, align 4, !tbaa !211
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
-  %i.ci = add nuw i64 %.013.i, 4                  ; 2 uses
+  %i.ci = add nuw nsw i64 %.013.i, 4              ; 2 uses
   %exitcond.not.i.3 = icmp eq i64 %i.ci, %i.f
   br i1 %exitcond.not.i.3, label %.lr.ph.split.i29, label %scalar.ph, !llvm.loop !4976
 

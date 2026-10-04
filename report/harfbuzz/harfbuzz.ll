@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i.i
   %i.bd = shl nuw i64 1, %i.bc
   %i.be = or i64 %i.bd, %i.al                     ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.bg = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.bg = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.bg, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.g, !llvm.loop !162
 
@@ -608,7 +608,7 @@ middle.block151:                                  ; preds = %vector.body138
   store i32 %i.be, ptr %.02325.i, align 4, !tbaa !324
   %i.bf = getelementptr inbounds nuw i8, ptr %.02226.i, i64 8
   %i.bg = getelementptr inbounds nuw i8, ptr %.02325.i, i64 8
-  %i.bh = add nuw i32 %.027.i, 1                  ; 2 uses
+  %i.bh = add nuw nsw i32 %.027.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.bh, %.sroa.speculated
   br i1 %exitcond.not.i, label %_ZN9hb_font_t19get_glyph_h_originsEjPKjjPijS2_jb.exit.thread, label %.lr.ph.split.i, !llvm.loop !4328
 
@@ -718,7 +718,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.da, ptr %.02325.i64, align 4, !tbaa !324
   %i.db = getelementptr inbounds nuw i8, ptr %.02226.i63, i64 8
   %i.dc = getelementptr inbounds nuw i8, ptr %.02325.i64, i64 8
-  %i.dd = add nuw i32 %.027.i62, 1                ; 2 uses
+  %i.dd = add nuw nsw i32 %.027.i62, 1            ; 2 uses
   %exitcond.not.i65 = icmp eq i32 %i.dd, %.sroa.speculated
   br i1 %exitcond.not.i65, label %_ZN9hb_font_t19get_glyph_v_originsEjPKjjPijS2_jb.exit.thread, label %.lr.ph.split.i61, !llvm.loop !4330
 
@@ -1121,7 +1121,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.bh, ptr %.02325.i, align 4, !tbaa !324
   %i.bi = getelementptr inbounds nuw i8, ptr %.02226.i, i64 8
   %i.bj = getelementptr inbounds nuw i8, ptr %.02325.i, i64 8
-  %i.bk = add nuw i32 %.027.i, 1                  ; 2 uses
+  %i.bk = add nuw nsw i32 %.027.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.bk, %.sroa.speculated
   br i1 %exitcond.not.i, label %_ZN9hb_font_t19get_glyph_v_originsEjPKjjPijS2_jb.exit.thread, label %.lr.ph.split.i, !llvm.loop !4339
 
@@ -1231,7 +1231,7 @@ middle.block152:                                  ; preds = %vector.body139
   store i32 %i.da, ptr %.02325.i65, align 4, !tbaa !324
   %i.db = getelementptr inbounds nuw i8, ptr %.02226.i64, i64 8
   %i.dc = getelementptr inbounds nuw i8, ptr %.02325.i65, i64 8
-  %i.dd = add nuw i32 %.027.i63, 1                ; 2 uses
+  %i.dd = add nuw nsw i32 %.027.i63, 1            ; 2 uses
   %exitcond.not.i66 = icmp eq i32 %i.dd, %.sroa.speculated
   br i1 %exitcond.not.i66, label %.loopexit, label %.lr.ph.split.i62, !llvm.loop !4341
 
@@ -1634,7 +1634,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -2037,7 +2037,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -2241,7 +2241,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -2644,7 +2644,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -2957,7 +2957,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -3360,7 +3360,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -3763,7 +3763,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -4166,7 +4166,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -4493,7 +4493,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -4896,7 +4896,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -5299,7 +5299,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.i.i
   %i.at = shl nuw i64 1, %i.as
   %i.au = or i64 %i.at, %i.ab                     ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.aw = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.aw = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.aw, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.d, !llvm.loop !162
 
@@ -5506,7 +5506,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -5909,7 +5909,7 @@ bb.n:                                             ; preds = %.lr.ph185.i.i
   br label %bb.w
 
 bb.o:                                             ; preds = %.lr.ph185.i.i
-  %i.dh = add nuw i64 %indvars.iv210.i.i, 4294967295
+  %i.dh = add nuw nsw i64 %indvars.iv210.i.i, 4294967295
   %i.di = and i64 %i.dh, 4294967295
   %i.dj = getelementptr inbounds nuw [20 x i8], ptr %i.u, i64 %i.di
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 19
@@ -6312,7 +6312,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -6715,7 +6715,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -6959,7 +6959,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -7362,7 +7362,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -7765,7 +7765,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -8168,7 +8168,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -8571,7 +8571,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 
@@ -8974,7 +8974,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.al = shl nuw i64 1, %i.ak
   %i.am = or i64 %i.al, %i.t                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.067.i.i.i.i.i, i64 2
-  %i.ao = add nuw i32 %.08.i.i.i.i.i, 1           ; 2 uses
+  %i.ao = add nuw nsw i32 %.08.i.i.i.i.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i32 %i.ao, %.sroa.4.8.extract.trunc.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.c, !llvm.loop !162
 

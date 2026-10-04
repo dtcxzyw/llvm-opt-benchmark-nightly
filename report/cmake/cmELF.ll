@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.cn, label %.critedge, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.co = add i64 %.03169, 1                      ; 2 uses
+  %i.co = add nuw nsw i64 %.03169, 1              ; 2 uses
   br i1 %i.cm, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
@@ -302,7 +302,7 @@ bb.v:                                             ; preds = %.critedge
   %i.dx = zext i32 %i.dw to i64
   %i.dy = add nuw nsw i64 %i.dx, %i.br
   store i64 %i.dy, ptr %i.z, align 8, !tbaa !133
-  %i.dz = sub i64 %.031.lcssa, %i.br
+  %i.dz = sub nuw nsw i64 %.031.lcssa, %i.br
   store i64 %i.dz, ptr %i.aa, align 8, !tbaa !134
   %i.ea = load ptr, ptr %i.ba, align 8, !tbaa !104
   %i.eb = ptrtoint ptr %.sroa.047.068 to i64

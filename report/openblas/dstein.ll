@@ -203,9 +203,9 @@ bb.aa:                                            ; preds = %.loopexit.1
   br i1 %exitcond395.1, label %.loopexit397, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.outer.1, %bb.aa
-  %.in = phi i32 [ %i.ix, %bb.aa ], [ %i.hk, %.outer.1 ] ; 2 uses
+  %.in = phi i32 [ %i.ix, %bb.aa ], [ %i.hk, %.outer.1 ] ; 3 uses
   %.3.1465 = phi i32 [ %.5.1, %bb.aa ], [ %.5, %.outer.1 ] ; 2 uses
-  %i.ix = add i32 %.in, 1                         ; 4 uses
+  %i.ix = add nuw nsw i32 %.in, 1                 ; 3 uses
   %i.iy = call i32 @idamax_(ptr noundef nonnull %i.h, ptr noundef nonnull %9, ptr noundef nonnull @c__1) #6
   %i.iz = load i32, ptr %i.h, align 4, !tbaa !17  ; 2 uses
   %i.ja = add nsw i32 %i.iz, %i.ax
@@ -274,15 +274,15 @@ bb.ac:                                            ; preds = %bb.ab
 .outer.2:                                         ; preds = %.loopexit.1
   %smax.2 = call i32 @llvm.smax.i32(i32 %i.ix, i32 5)
   %i.kj = trunc nsw i64 %i.hh to i32
-  %exitcond395.2466 = icmp sgt i32 %i.ix, 4
+  %exitcond395.2466 = icmp samesign ugt i32 %.in, 3
   br i1 %exitcond395.2466, label %.loopexit397, label %.lr.ph468
 
 .lr.ph468:                                        ; preds = %.outer.2
-  %i.kk = add i32 %.in, 2
+  %i.kk = add nuw nsw i32 %.in, 2
   br label %bb.ae
 
 bb.ad:                                            ; preds = %.loopexit.2
-  %i.kl = add i32 %i.km, 1
+  %i.kl = add nuw nsw i32 %i.km, 1
   %exitcond395.2 = icmp eq i32 %i.km, %smax.2
   br i1 %exitcond395.2, label %.loopexit397, label %bb.ae
 

@@ -204,28 +204,28 @@ bb.a:
   %niter = phi i64 [ 0, %.preheader.preheader.new ], [ %niter.next.3, %.preheader ]
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.0.011.i
   %.val.i = load double, ptr %i.g, align 8, !noundef !4
-  %i.h = uitofp i64 %.sroa.0.011.i to double
+  %i.h = uitofp nneg i64 %.sroa.0.011.i to double
   %i.i = fmul double %.val.i, %i.h
   %i.j = fadd double %.sroa.02.0.i, %i.i
   %i.k = or disjoint i64 %.sroa.0.011.i, 1        ; 2 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.k
   %.val.i.1 = load double, ptr %i.l, align 8, !noundef !4
-  %i.m = uitofp i64 %i.k to double
+  %i.m = uitofp nneg i64 %i.k to double
   %i.n = fmul double %.val.i.1, %i.m
   %i.o = fadd double %i.j, %i.n
   %i.p = or disjoint i64 %.sroa.0.011.i, 2        ; 2 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.p
   %.val.i.2 = load double, ptr %i.q, align 8, !noundef !4
-  %i.r = uitofp i64 %i.p to double
+  %i.r = uitofp nneg i64 %i.p to double
   %i.s = fmul double %.val.i.2, %i.r
   %i.t = fadd double %i.o, %i.s
   %i.u = or disjoint i64 %.sroa.0.011.i, 3        ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.u
   %.val.i.3 = load double, ptr %i.v, align 8, !noundef !4
-  %i.w = uitofp i64 %i.u to double
+  %i.w = uitofp nneg i64 %i.u to double
   %i.x = fmul double %.val.i.3, %i.w
   %i.y = fadd double %i.t, %i.x                   ; 3 uses
-  %i.z = add nuw i64 %.sroa.0.011.i, 4            ; 2 uses
+  %i.z = add nuw nsw i64 %.sroa.0.011.i, 4        ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRddNCNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution11categoricalNtB2Z_11CategoricalINtNtNtB33_10statistics6traits12DistributiondE4mean0E0EB33_.exit.loopexit.unr-lcssa, label %.preheader
@@ -247,10 +247,10 @@ _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits
   %epil.iter = phi i64 [ %epil.iter.next, %.preheader.epil ], [ 0, %.preheader.epil.preheader ]
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.0.011.i.epil
   %.val.i.epil = load double, ptr %i.aa, align 8, !noundef !4
-  %i.ab = uitofp i64 %.sroa.0.011.i.epil to double
+  %i.ab = uitofp nneg i64 %.sroa.0.011.i.epil to double
   %i.ac = fmul double %.val.i.epil, %i.ab
   %i.ad = fadd double %.sroa.02.0.i.epil, %i.ac   ; 2 uses
-  %i.ae = add nuw i64 %.sroa.0.011.i.epil, 1
+  %i.ae = add nuw nsw i64 %.sroa.0.011.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRddNCNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution11categoricalNtB2Z_11CategoricalINtNtNtB33_10statistics6traits12DistributiondE4mean0E0EB33_.exit, label %.preheader.epil, !llvm.loop !76
@@ -311,7 +311,7 @@ bb.c:                                             ; preds = %_RNCINvNtNtNtCs3oUP
 
 _RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter11filter_foldRddNCNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution11categoricalNtB1c_11CategoricalINtNtNtB1g_10statistics6traits12DistributiondE7entropy0NCINvNtB6_3map8map_foldB11_ddNCB16_s_0NCINvXs26_NtNtB8_6traits5accumdNtB40_3Sum3sumINtB3j_3MapINtB4_6FilterINtNtNtBa_5slice4iter4IterdEB14_EB3H_EE0E0E0B1g_.exit.i.1: ; preds = %bb.c, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter11filter_foldRddNCNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution11categoricalNtB1c_11CategoricalINtNtNtB1g_10statistics6traits12DistributiondE7entropy0NCINvNtB6_3map8map_foldB11_ddNCB16_s_0NCINvXs26_NtNtB8_6traits5accumdNtB40_3Sum3sumINtB3j_3MapINtB4_6FilterINtNtNtBa_5slice4iter4IterdEB14_EB3H_EE0E0E0B1g_.exit.i
   %.sroa.0.0.i.i.1 = phi double [ %i.s, %bb.c ], [ %.sroa.0.0.i.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter11filter_foldRddNCNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution11categoricalNtB1c_11CategoricalINtNtNtB1g_10statistics6traits12DistributiondE7entropy0NCINvNtB6_3map8map_foldB11_ddNCB16_s_0NCINvXs26_NtNtB8_6traits5accumdNtB40_3Sum3sumINtB3j_3MapINtB4_6FilterINtNtNtBa_5slice4iter4IterdEB14_EB3H_EE0E0E0B1g_.exit.i ] ; 3 uses
-  %i.t = add nuw i64 %.sroa.04.0.i, 2             ; 2 uses
+  %i.t = add nuw nsw i64 %.sroa.04.0.i, 2         ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters6filter11filter_foldRddNCNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution11categoricalNtB2t_11CategoricalINtNtNtB2x_10statistics6traits12DistributiondE7entropy0NCINvNtB1K_3map8map_foldB2i_ddNCB2n_s_0NCINvXs26_NtBW_5accumdNtB5i_3Sum3sumINtB4A_3MapINtB1I_6FilterBF_B2l_EB4Z_EE0E0E0EB2x_.exit.loopexit.unr-lcssa, label %.preheader
@@ -369,28 +369,28 @@ bb.a:
   %niter = phi i64 [ 0, %.preheader.i.preheader.new ], [ %niter.next.3, %.preheader.i ]
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.0.011.i.i
   %.val.i.i = load double, ptr %i.g, align 8, !noalias !85, !noundef !4
-  %i.h = uitofp i64 %.sroa.0.011.i.i to double
+  %i.h = uitofp nneg i64 %.sroa.0.011.i.i to double
   %i.i = fmul double %.val.i.i, %i.h
   %i.j = fadd double %.sroa.02.0.i.i, %i.i
   %i.k = or disjoint i64 %.sroa.0.011.i.i, 1      ; 2 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.k
   %.val.i.i.1 = load double, ptr %i.l, align 8, !noalias !85, !noundef !4
-  %i.m = uitofp i64 %i.k to double
+  %i.m = uitofp nneg i64 %i.k to double
   %i.n = fmul double %.val.i.i.1, %i.m
   %i.o = fadd double %i.j, %i.n
   %i.p = or disjoint i64 %.sroa.0.011.i.i, 2      ; 2 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.p
   %.val.i.i.2 = load double, ptr %i.q, align 8, !noalias !85, !noundef !4
-  %i.r = uitofp i64 %i.p to double
+  %i.r = uitofp nneg i64 %i.p to double
   %i.s = fmul double %.val.i.i.2, %i.r
   %i.t = fadd double %i.o, %i.s
   %i.u = or disjoint i64 %.sroa.0.011.i.i, 3      ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.u
   %.val.i.i.3 = load double, ptr %i.v, align 8, !noalias !85, !noundef !4
-  %i.w = uitofp i64 %i.u to double
+  %i.w = uitofp nneg i64 %i.u to double
   %i.x = fmul double %.val.i.i.3, %i.w
   %i.y = fadd double %i.t, %i.x                   ; 3 uses
-  %i.z = add nuw i64 %.sroa.0.011.i.i, 4          ; 2 uses
+  %i.z = add nuw nsw i64 %.sroa.0.011.i.i, 4      ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader.preheader.unr-lcssa, label %.preheader.i
@@ -412,10 +412,10 @@ bb.a:
   %epil.iter = phi i64 [ %epil.iter.next, %.preheader.i.epil ], [ 0, %.preheader.i.epil.preheader ]
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.0.011.i.i.epil
   %.val.i.i.epil = load double, ptr %i.aa, align 8, !noalias !85, !noundef !4
-  %i.ab = uitofp i64 %.sroa.0.011.i.i.epil to double
+  %i.ab = uitofp nneg i64 %.sroa.0.011.i.i.epil to double
   %i.ac = fmul double %.val.i.i.epil, %i.ab
   %i.ad = fadd double %.sroa.02.0.i.i.epil, %i.ac ; 2 uses
-  %i.ae = add nuw i64 %.sroa.0.011.i.i.epil, 1
+  %i.ae = add nuw nsw i64 %.sroa.0.011.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.preheader.preheader, label %.preheader.i.epil, !llvm.loop !82
@@ -436,7 +436,7 @@ bb.a:
   %niter18 = phi i64 [ 0, %.preheader.preheader.new ], [ %niter18.next.1, %.preheader ]
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.2.0.i
   %.val.i = load double, ptr %i.ag, align 8, !noalias !86, !noundef !4
-  %i.ah = uitofp i64 %.sroa.2.0.i to double
+  %i.ah = uitofp nneg i64 %.sroa.2.0.i to double
   %i.ai = fsub double %i.ah, %.lcssa9             ; 2 uses
   %i.aj = fmul double %i.ai, %i.ai
   %i.ak = fmul double %.val.i, %i.aj
@@ -444,12 +444,12 @@ bb.a:
   %i.am = or disjoint i64 %.sroa.2.0.i, 1         ; 2 uses
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.am
   %.val.i.1 = load double, ptr %i.an, align 8, !noalias !86, !noundef !4
-  %i.ao = uitofp i64 %i.am to double
+  %i.ao = uitofp nneg i64 %i.am to double
   %i.ap = fsub double %i.ao, %.lcssa9             ; 2 uses
   %i.aq = fmul double %i.ap, %i.ap
   %i.ar = fmul double %.val.i.1, %i.aq
   %i.as = fadd double %i.al, %i.ar                ; 3 uses
-  %i.at = add nuw i64 %.sroa.2.0.i, 2             ; 2 uses
+  %i.at = add nuw nsw i64 %.sroa.2.0.i, 2         ; 2 uses
   %niter18.next.1 = add i64 %niter18, 2           ; 2 uses
   %niter18.ncmp.1 = icmp eq i64 %niter18.next.1, %unroll_iter17
   br i1 %niter18.ncmp.1, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRddNCNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution11categoricalNtB2Z_11CategoricalINtNtNtB33_10statistics6traits12DistributiondE8variance0E0EB33_.exit.loopexit.unr-lcssa, label %.preheader
@@ -465,7 +465,7 @@ _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits
   tail call void @llvm.assume(i1 %lcmp.mod16)
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.2.0.i.epil.init
   %.val.i.epil = load double, ptr %i.au, align 8, !noalias !86, !noundef !4
-  %i.av = uitofp i64 %.sroa.2.0.i.epil.init to double
+  %i.av = uitofp nneg i64 %.sroa.2.0.i.epil.init to double
   %i.aw = fsub double %i.av, %.lcssa9             ; 2 uses
   %i.ax = fmul double %i.aw, %i.aw
   %i.ay = fmul double %.val.i.epil, %i.ax

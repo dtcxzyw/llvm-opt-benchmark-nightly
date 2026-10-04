@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %_RNCINvNtNtNtCskKLD
 
 .lr.ph:                                           ; preds = %bb.i, %bb.j
   %i.au = phi i64 [ %i.av, %bb.j ], [ %.sroa.026.0.i, %bb.i ] ; 3 uses
-  %i.av = add i64 %i.au, 1                        ; 2 uses
+  %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
   %i.aw = call noundef i64 @_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack18depth_to_stack_pos(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(112) %i.j, i64 noundef %i.au), !noalias !6615
   %i.ax = add i64 %i.aw, -1                       ; 3 uses
   %i.ay = icmp ult i64 %i.ax, %i.ar
@@ -249,7 +249,7 @@ _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldjNtNtNtNtNtNtCse
   br i1 %.sroa.0.0.i.i.i.i.i, label %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBR_8adapters3map12map_try_foldjNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operand7OperanduINtNtB8_12control_flow11ControlFlowuENCNvMs1_B2k_NtB2k_14FuncTranslator28requires_branch_param_copies0NCINvNvBL_3any5checkB2e_NCB48_s_0E0E0B3v_EB2q_.exit.i, label %bb.j
 
 _RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBR_8adapters3map12map_try_foldjNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operand7OperanduINtNtB8_12control_flow11ControlFlowuENCNvMs1_B2k_NtB2k_14FuncTranslator28requires_branch_param_copies0NCINvNvBL_3any5checkB2e_NCB48_s_0E0E0B3v_EB2q_.exit.i: ; preds = %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldjNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operand7OperanduINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs1_B16_NtB16_14FuncTranslator28requires_branch_param_copies0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB10_NCB30_s_0E0E0B1c_.exit.i.i, %bb.k
-  %i.bc = icmp ult i64 %i.au, %.sroa.05.0.i
+  %i.bc = icmp samesign ult i64 %i.au, %.sroa.05.0.i
   br i1 %i.bc, label %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBR_8adapters3map12map_try_foldjNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operand7OperanduINtNtB8_12control_flow11ControlFlowuENCNvMs1_B2k_NtB2k_14FuncTranslator28requires_branch_param_copiess0_0NCINvNvBL_3any5checkB2e_NCB48_s1_0E0E0B3v_EB2q_.exit.i, label %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBR_8adapters3map12map_try_foldjNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operand7OperanduINtNtB8_12control_flow11ControlFlowuENCNvMs1_B2k_NtB2k_14FuncTranslator28requires_branch_param_copies0NCINvNvBL_3any5checkB2e_NCB48_s_0E0E0B3v_EB2q_.exit.thread.i
 
 bb.o:                                             ; preds = %bb.q
