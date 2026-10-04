@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/swapproc?download=true
 inline.NumInlined: 7
 inline.NumDeleted: 5
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -36,12 +37,12 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.e = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %index ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
-  %wide.load = load <8 x i16>, ptr %i.e, align 2, !tbaa !21
-  %wide.load39 = load <8 x i16>, ptr %i.f, align 2, !tbaa !21
+  %wide.load = load <8 x i16>, ptr %i.e, align 2, !tbaa !19
+  %wide.load39 = load <8 x i16>, ptr %i.f, align 2, !tbaa !19
   %i.g = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load)
   %i.h = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load39)
-  store <8 x i16> %i.g, ptr %i.e, align 2, !tbaa !21
-  store <8 x i16> %i.h, ptr %i.f, align 2, !tbaa !21
+  store <8 x i16> %i.g, ptr %i.e, align 2, !tbaa !19
+  store <8 x i16> %i.h, ptr %i.f, align 2, !tbaa !19
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.i = icmp eq i64 %index.next, %n.vec
   br i1 %i.i, label %middle.block, label %vector.body, !llvm.loop !11
@@ -52,7 +53,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.d, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.i.preheader, label %vec.epilog.ph, !prof !24
+  br i1 %min.epilog.iters.check, label %.lr.ph.i.preheader, label %vec.epilog.ph, !prof !22
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -62,9 +63,9 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index41 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next43, %vec.epilog.vector.body ] ; 2 uses
   %i.j = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %index41 ; 2 uses
-  %wide.load42 = load <4 x i16>, ptr %i.j, align 2, !tbaa !21
+  %wide.load42 = load <4 x i16>, ptr %i.j, align 2, !tbaa !19
   %i.k = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %wide.load42)
-  store <4 x i16> %i.k, ptr %i.j, align 2, !tbaa !21
+  store <4 x i16> %i.k, ptr %i.j, align 2, !tbaa !19
   %index.next43 = add nuw i64 %index41, 4         ; 2 uses
   %i.l = icmp eq i64 %index.next43, %n.vec40
   br i1 %i.l, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !12
@@ -80,9 +81,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %.09.i = phi i64 [ %i.p, %.lr.ph.i ], [ %.09.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %i.m = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.09.i ; 2 uses
-  %i.n = load i16, ptr %i.m, align 2, !tbaa !21
+  %i.n = load i16, ptr %i.m, align 2, !tbaa !19
   %i.o = tail call i16 @llvm.bswap.i16(i16 %i.n)
-  store i16 %i.o, ptr %i.m, align 2, !tbaa !21
+  store i16 %i.o, ptr %i.m, align 2, !tbaa !19
   %i.p = add nuw nsw i64 %.09.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.p, %1
   br i1 %exitcond.not.i, label %ffswap2_slow.exit, label %.lr.ph.i, !llvm.loop !13
@@ -95,62 +96,88 @@ bb.c:                                             ; preds = %bb.a
 get_peel.exit:                                    ; preds = %bb.c
   %i.r = sub nuw nsw i64 16, %i.q
   %i.s = lshr exact i64 %i.r, 1
-  %i.t = tail call i64 @llvm.umin.i64(i64 %1, i64 %i.s) ; 6 uses
+  %i.t = tail call i64 @llvm.umin.i64(i64 %1, i64 %i.s) ; 15 uses
   %.not27 = icmp eq i64 %1, 0
-  br i1 %.not27, label %ffswap2_slow.exit22, label %iter.check55
+  br i1 %.not27, label %ffswap2_slow.exit22, label %.lr.ph.i19
 
-iter.check55:                                     ; preds = %get_peel.exit
-  %min.iters.check45 = icmp samesign ult i64 %i.t, 4
-  br i1 %min.iters.check45, label %.lr.ph.i19.preheader, label %vec.epilog.ph59
+.lr.ph.i19:                                       ; preds = %get_peel.exit
+  %2 = load i16, ptr %0, align 2, !tbaa !19
+  %3 = tail call i16 @llvm.bswap.i16(i16 %2)
+  store i16 %3, ptr %0, align 2, !tbaa !19
+  %exitcond.not.i21 = icmp eq i64 %i.t, 1
+  br i1 %exitcond.not.i21, label %ffswap2_slow.exit22, label %iter.check55
+
+iter.check55:                                     ; preds = %.lr.ph.i19
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
+  %5 = load i16, ptr %4, align 2, !tbaa !19
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  store i16 %6, ptr %4, align 2, !tbaa !19
+  %exitcond.not.i21.1 = icmp eq i64 %i.t, 2
+  br i1 %exitcond.not.i21.1, label %ffswap2_slow.exit22, label %vec.epilog.ph59
 
 vec.epilog.ph59:                                  ; preds = %iter.check55
-  %n.vec60 = and i64 %i.t, 12                     ; 3 uses
-  br label %vec.epilog.vector.body61
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %8 = load i16, ptr %7, align 2, !tbaa !19
+  %9 = tail call i16 @llvm.bswap.i16(i16 %8)
+  store i16 %9, ptr %7, align 2, !tbaa !19
+  %exitcond.not.i21.2 = icmp eq i64 %i.t, 3
+  br i1 %exitcond.not.i21.2, label %ffswap2_slow.exit22, label %vec.epilog.vector.body61
 
-vec.epilog.vector.body61:                         ; preds = %vec.epilog.vector.body61, %vec.epilog.ph59
-  %index62 = phi i64 [ 0, %vec.epilog.ph59 ], [ %index.next64, %vec.epilog.vector.body61 ] ; 2 uses
-  %2 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %index62 ; 2 uses
-  %wide.load63 = load <4 x i16>, ptr %2, align 2, !tbaa !21
-  %3 = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %wide.load63)
-  store <4 x i16> %3, ptr %2, align 2, !tbaa !21
-  %index.next64 = add nuw i64 %index62, 4         ; 2 uses
-  %i.u = icmp eq i64 %index.next64, %n.vec60
-  br i1 %i.u, label %vec.epilog.middle.block65, label %vec.epilog.vector.body61, !llvm.loop !14
+vec.epilog.vector.body61:                         ; preds = %vec.epilog.ph59
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
+  %11 = load i16, ptr %10, align 2, !tbaa !19
+  %12 = tail call i16 @llvm.bswap.i16(i16 %11)
+  store i16 %12, ptr %10, align 2, !tbaa !19
+  %i.u = icmp eq i64 %i.t, 4
+  br i1 %i.u, label %ffswap2_slow.exit22, label %vec.epilog.middle.block65
 
 vec.epilog.middle.block65:                        ; preds = %vec.epilog.vector.body61
-  %cmp.n66 = icmp eq i64 %i.t, %n.vec60
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %14 = load i16, ptr %13, align 2, !tbaa !19
+  %15 = tail call i16 @llvm.bswap.i16(i16 %14)
+  store i16 %15, ptr %13, align 2, !tbaa !19
+  %cmp.n66 = icmp eq i64 %i.t, 5
   br i1 %cmp.n66, label %ffswap2_slow.exit22, label %.lr.ph.i19.preheader
 
-.lr.ph.i19.preheader:                             ; preds = %iter.check55, %vec.epilog.middle.block65
-  %.09.i20.ph = phi i64 [ 0, %iter.check55 ], [ %n.vec60, %vec.epilog.middle.block65 ]
-  br label %.lr.ph.i19.a
+.lr.ph.i19.preheader:                             ; preds = %vec.epilog.middle.block65
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
+  %17 = load i16, ptr %16, align 2, !tbaa !19
+  %18 = tail call i16 @llvm.bswap.i16(i16 %17)
+  store i16 %18, ptr %16, align 2, !tbaa !19
+  %exitcond.not.i21.5 = icmp eq i64 %i.t, 6
+  br i1 %exitcond.not.i21.5, label %ffswap2_slow.exit22, label %.lr.ph.i19.a
 
-.lr.ph.i19.a:                                     ; preds = %.lr.ph.i19.preheader, %.lr.ph.i19.a
-  %.09.i20 = phi i64 [ %5, %.lr.ph.i19.a ], [ %.09.i20.ph, %.lr.ph.i19.preheader ] ; 2 uses
-  %4 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.09.i20 ; 2 uses
-  %i.v = load i16, ptr %4, align 2, !tbaa !21
+.lr.ph.i19.a:                                     ; preds = %.lr.ph.i19.preheader
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %i.v = load i16, ptr %19, align 2, !tbaa !19
   %i.w = tail call i16 @llvm.bswap.i16(i16 %i.v)
-  store i16 %i.w, ptr %4, align 2, !tbaa !21
-  %5 = add nuw nsw i64 %.09.i20, 1                ; 2 uses
-  %exitcond.not.i21.a = icmp eq i64 %5, %i.t
-  br i1 %exitcond.not.i21.a, label %ffswap2_slow.exit22, label %.lr.ph.i19.a, !llvm.loop !15
+  store i16 %i.w, ptr %19, align 2, !tbaa !19
+  %exitcond.not.i21.a = icmp eq i64 %i.t, 7
+  br i1 %exitcond.not.i21.a, label %ffswap2_slow.exit22, label %.lr.ph.i19.7
 
-ffswap2_slow.exit22:                              ; preds = %.lr.ph.i19.a, %vec.epilog.middle.block65, %bb.c, %get_peel.exit
-  %6 = phi i64 [ 0, %bb.c ], [ 0, %get_peel.exit ], [ %i.t, %vec.epilog.middle.block65 ], [ %i.t, %.lr.ph.i19.a ] ; 4 uses
-  %i.x = sub i64 %1, %6                           ; 2 uses
+.lr.ph.i19.7:                                     ; preds = %.lr.ph.i19.a
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 14 ; 2 uses
+  %21 = load i16, ptr %20, align 2, !tbaa !19
+  %22 = tail call i16 @llvm.bswap.i16(i16 %21)
+  store i16 %22, ptr %20, align 2, !tbaa !19
+  br label %ffswap2_slow.exit22
+
+ffswap2_slow.exit22:                              ; preds = %.lr.ph.i19, %iter.check55, %vec.epilog.ph59, %vec.epilog.vector.body61, %vec.epilog.middle.block65, %.lr.ph.i19.preheader, %.lr.ph.i19.a, %.lr.ph.i19.7, %bb.c, %get_peel.exit
+  %23 = phi i64 [ 0, %bb.c ], [ 0, %get_peel.exit ], [ %i.t, %.lr.ph.i19.7 ], [ %i.t, %.lr.ph.i19.a ], [ %i.t, %.lr.ph.i19.preheader ], [ %i.t, %vec.epilog.middle.block65 ], [ %i.t, %vec.epilog.vector.body61 ], [ %i.t, %vec.epilog.ph59 ], [ %i.t, %iter.check55 ], [ %i.t, %.lr.ph.i19 ] ; 4 uses
+  %i.x = sub i64 %1, %23                          ; 2 uses
   %i.y = and i64 %i.x, -8                         ; 2 uses
-  %i.z = icmp ult i64 %6, %i.y
+  %i.z = icmp ult i64 %23, %i.y
   br i1 %i.z, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %ffswap2_slow.exit22, %.lr.ph
-  %.029 = phi i64 [ %i.ad, %.lr.ph ], [ %6, %ffswap2_slow.exit22 ] ; 2 uses
+  %.029 = phi i64 [ %i.ad, %.lr.ph ], [ %23, %ffswap2_slow.exit22 ] ; 2 uses
   %i.aa = getelementptr inbounds [2 x i8], ptr %0, i64 %.029 ; 2 uses
   %i.ab = load <8 x i16>, ptr %i.aa, align 16, !tbaa !10
   %i.ac = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %i.ab)
   store <8 x i16> %i.ac, ptr %i.aa, align 16, !tbaa !10
   %i.ad = add nuw nsw i64 %.029, 8                ; 4 uses
   %i.ae = icmp ult i64 %i.ad, %i.y
-  br i1 %i.ae, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !16
+  br i1 %i.ae, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !14
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %.pre = sub nsw i64 %1, %i.ad
@@ -158,7 +185,7 @@ ffswap2_slow.exit22:                              ; preds = %.lr.ph.i19.a, %vec.
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %ffswap2_slow.exit22
   %.pre-phi = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.x, %ffswap2_slow.exit22 ] ; 9 uses
-  %.0.lcssa = phi i64 [ %i.ad, %._crit_edge.loopexit ], [ %6, %ffswap2_slow.exit22 ]
+  %.0.lcssa = phi i64 [ %i.ad, %._crit_edge.loopexit ], [ %23, %ffswap2_slow.exit22 ]
   %i.af = getelementptr inbounds [2 x i8], ptr %0, i64 %.0.lcssa ; 3 uses
   %i.ag = icmp sgt i64 %.pre-phi, 0
   br i1 %i.ag, label %iter.check81, label %ffswap2_slow.exit
@@ -180,15 +207,15 @@ vector.body73:                                    ; preds = %vector.ph71, %vecto
   %index74 = phi i64 [ 0, %vector.ph71 ], [ %index.next77, %vector.body73 ] ; 2 uses
   %i.ai = getelementptr inbounds nuw [2 x i8], ptr %i.af, i64 %index74 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16 ; 2 uses
-  %wide.load75 = load <8 x i16>, ptr %i.ai, align 2, !tbaa !21
-  %wide.load76 = load <8 x i16>, ptr %i.aj, align 2, !tbaa !21
+  %wide.load75 = load <8 x i16>, ptr %i.ai, align 2, !tbaa !19
+  %wide.load76 = load <8 x i16>, ptr %i.aj, align 2, !tbaa !19
   %i.ak = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load75)
   %i.al = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load76)
-  store <8 x i16> %i.ak, ptr %i.ai, align 2, !tbaa !21
-  store <8 x i16> %i.al, ptr %i.aj, align 2, !tbaa !21
+  store <8 x i16> %i.ak, ptr %i.ai, align 2, !tbaa !19
+  store <8 x i16> %i.al, ptr %i.aj, align 2, !tbaa !19
   %index.next77 = add nuw i64 %index74, 16        ; 2 uses
   %i.am = icmp eq i64 %index.next77, %n.vec72
-  br i1 %i.am, label %middle.block78, label %vector.body73, !llvm.loop !17
+  br i1 %i.am, label %middle.block78, label %vector.body73, !llvm.loop !15
 
 middle.block78:                                   ; preds = %vector.body73
   %cmp.n79 = icmp eq i64 %.pre-phi, %n.vec72
@@ -196,7 +223,7 @@ middle.block78:                                   ; preds = %vector.body73
 
 vec.epilog.iter.check83:                          ; preds = %middle.block78
   %min.epilog.iters.check84 = icmp eq i64 %i.ah, 0
-  br i1 %min.epilog.iters.check84, label %.lr.ph.i23.preheader, label %vec.epilog.ph85, !prof !24
+  br i1 %min.epilog.iters.check84, label %.lr.ph.i23.preheader, label %vec.epilog.ph85, !prof !22
 
 vec.epilog.ph85:                                  ; preds = %vector.main.loop.iter.check69, %vec.epilog.iter.check83
   %vec.epilog.resume.val80 = phi i64 [ %n.vec72, %vec.epilog.iter.check83 ], [ 0, %vector.main.loop.iter.check69 ]
@@ -206,12 +233,12 @@ vec.epilog.ph85:                                  ; preds = %vector.main.loop.it
 vec.epilog.vector.body87:                         ; preds = %vec.epilog.vector.body87, %vec.epilog.ph85
   %index88 = phi i64 [ %vec.epilog.resume.val80, %vec.epilog.ph85 ], [ %index.next90, %vec.epilog.vector.body87 ] ; 2 uses
   %i.an = getelementptr inbounds nuw [2 x i8], ptr %i.af, i64 %index88 ; 2 uses
-  %wide.load89 = load <4 x i16>, ptr %i.an, align 2, !tbaa !21
+  %wide.load89 = load <4 x i16>, ptr %i.an, align 2, !tbaa !19
   %i.ao = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %wide.load89)
-  store <4 x i16> %i.ao, ptr %i.an, align 2, !tbaa !21
+  store <4 x i16> %i.ao, ptr %i.an, align 2, !tbaa !19
   %index.next90 = add nuw i64 %index88, 4         ; 2 uses
   %i.ap = icmp eq i64 %index.next90, %n.vec86
-  br i1 %i.ap, label %vec.epilog.middle.block91, label %vec.epilog.vector.body87, !llvm.loop !18
+  br i1 %i.ap, label %vec.epilog.middle.block91, label %vec.epilog.vector.body87, !llvm.loop !16
 
 vec.epilog.middle.block91:                        ; preds = %vec.epilog.vector.body87
   %cmp.n92 = icmp eq i64 %.pre-phi, %n.vec86
@@ -224,12 +251,12 @@ vec.epilog.middle.block91:                        ; preds = %vec.epilog.vector.b
 .lr.ph.i23:                                       ; preds = %.lr.ph.i23.preheader, %.lr.ph.i23
   %.09.i24 = phi i64 [ %i.at, %.lr.ph.i23 ], [ %.09.i24.ph, %.lr.ph.i23.preheader ] ; 2 uses
   %i.aq = getelementptr inbounds nuw [2 x i8], ptr %i.af, i64 %.09.i24 ; 2 uses
-  %i.ar = load i16, ptr %i.aq, align 2, !tbaa !21
+  %i.ar = load i16, ptr %i.aq, align 2, !tbaa !19
   %i.as = tail call i16 @llvm.bswap.i16(i16 %i.ar)
-  store i16 %i.as, ptr %i.aq, align 2, !tbaa !21
+  store i16 %i.as, ptr %i.aq, align 2, !tbaa !19
   %i.at = add nuw nsw i64 %.09.i24, 1             ; 2 uses
   %exitcond.not.i25 = icmp eq i64 %i.at, %.pre-phi
-  br i1 %exitcond.not.i25, label %ffswap2_slow.exit, label %.lr.ph.i23, !llvm.loop !19
+  br i1 %exitcond.not.i25, label %ffswap2_slow.exit, label %.lr.ph.i23, !llvm.loop !17
 
 ffswap2_slow.exit:                                ; preds = %.lr.ph.i, %.lr.ph.i23, %middle.block, %vec.epilog.middle.block, %middle.block78, %vec.epilog.middle.block91, %._crit_edge, %bb.b
   ret void
@@ -265,7 +292,7 @@ bb.a:
   %i.j = add nuw nsw i64 %.014.i, 2               ; 2 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %ffswap4_slow.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !25
+  br i1 %niter.ncmp.1, label %ffswap4_slow.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !23
 
 ffswap4_slow.exit.loopexit.unr-lcssa:             ; preds = %.lr.ph.i
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -300,7 +327,7 @@ bb.a:
   store <8 x i8> %i.e, ptr %i.c, align 1, !tbaa !10
   %i.f = add nuw nsw i64 %.039.i, 8               ; 2 uses
   %i.g = icmp samesign ult i64 %i.f, %i.a
-  br i1 %i.g, label %.lr.ph.i, label %ffswap8_slow.exit, !llvm.loop !26
+  br i1 %i.g, label %.lr.ph.i, label %ffswap8_slow.exit, !llvm.loop !24
 
 ffswap8_slow.exit:                                ; preds = %.lr.ph.i, %bb.a
   ret void
@@ -341,20 +368,18 @@ attributes #3 = { nocallback nofree nosync nounwind willreturn memory(inaccessib
 !8 = !{!7, !6, i64 0}
 !9 = !{!"llvm.loop.mustprogress"}
 !10 = !{!5, !5, i64 0}
-!11 = distinct !{!11, !9, !22, !23}
-!12 = distinct !{!12, !9, !22, !23}
-!13 = distinct !{!13, !9, !23, !22}
-!14 = distinct !{!14, !9, !22, !23}
-!15 = distinct !{!15, !9, !23, !22}
-!16 = distinct !{!16, !9}
-!17 = distinct !{!17, !9, !22, !23}
-!18 = distinct !{!18, !9, !22, !23}
-!19 = distinct !{!19, !9, !23, !22}
-!20 = !{!"short", !5, i64 0}
-!21 = !{!20, !20, i64 0}
-!22 = !{!"llvm.loop.isvectorized", i32 1}
-!23 = !{!"llvm.loop.unroll.runtime.disable"}
-!24 = !{!"branch_weights", i32 4, i32 12}
-!25 = distinct !{!25, !9}
-!26 = distinct !{!26, !9}
+!11 = distinct !{!11, !9, !20, !21}
+!12 = distinct !{!12, !9, !20, !21}
+!13 = distinct !{!13, !9, !21, !20}
+!14 = distinct !{!14, !9}
+!15 = distinct !{!15, !9, !20, !21}
+!16 = distinct !{!16, !9, !20, !21}
+!17 = distinct !{!17, !9, !21, !20}
+!18 = !{!"short", !5, i64 0}
+!19 = !{!18, !18, i64 0}
+!20 = !{!"llvm.loop.isvectorized", i32 1}
+!21 = !{!"llvm.loop.unroll.runtime.disable"}
+!22 = !{!"branch_weights", i32 4, i32 12}
+!23 = distinct !{!23, !9}
+!24 = distinct !{!24, !9}
 end_hunk_0

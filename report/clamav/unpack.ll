@@ -205,12 +205,12 @@ bb.p:                                             ; preds = %_ZN5ArrayIhE5AllocE
 
 .lr.ph.i:                                         ; preds = %bb.p, %.lr.ph.i
   %.07.i = phi i64 [ %i.bu, %.lr.ph.i ], [ 0, %bb.p ] ; 3 uses
-  %i.bq = add i64 %.07.i, %i.am
+  %i.bq = add nuw nsw i64 %.07.i, %i.am
   %i.br = tail call noundef nonnull align 1 dereferenceable(1) ptr @_ZN16FragmentedWindowixEm(ptr noundef nonnull readonly align 8 dereferenceable(512) %i.r, i64 noundef %i.bq)
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !35
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bm, i64 %.07.i
   store i8 %i.bs, ptr %i.bt, align 1, !tbaa !35
-  %i.bu = add nuw i64 %.07.i, 1                   ; 2 uses
+  %i.bu = add nuw nsw i64 %.07.i, 1               ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bu, %i.aw
   br i1 %exitcond.not.i, label %_ZN16FragmentedWindow8CopyDataEPhmm.exit, label %.lr.ph.i, !llvm.loop !6
 
@@ -253,7 +253,7 @@ _ZN16FragmentedWindow8CopyDataEPhmm.exit118:      ; preds = %.lr.ph.i115, %bb.s
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !35
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.07.i121
   store i8 %i.cj, ptr %i.ck, align 1, !tbaa !35
-  %i.cl = add nuw i64 %.07.i121, 1                ; 2 uses
+  %i.cl = add nuw nsw i64 %.07.i121, 1            ; 2 uses
   %exitcond.not.i122 = icmp eq i64 %i.cl, %i.ch
   br i1 %exitcond.not.i122, label %_ZN16FragmentedWindow8CopyDataEPhmm.exit, label %.lr.ph.i120, !llvm.loop !6
 

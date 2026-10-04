@@ -50,7 +50,7 @@ bb.a:
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %i.d = ashr exact i64 %i.c, 2                   ; 8 uses
   %i.e = icmp ult i64 %i.d, 5
-  br i1 %i.e, label %.preheader, label %.preheader37, !prof !15
+  br i1 %i.e, label %.preheader, label %.preheader37, !prof !13
 
 .preheader37:                                     ; preds = %bb.a
   %i.f = icmp ugt i64 %i.d, 8
@@ -88,10 +88,10 @@ vec.epilog.vector.body:                           ; preds = %iter.check, %vec.ep
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.r
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.t
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.v
-  %i.aa = load i64, ptr %i.w, align 8, !tbaa !17
-  %i.ab = load i64, ptr %i.x, align 8, !tbaa !17
-  %i.ac = load i64, ptr %i.y, align 8, !tbaa !17
-  %i.ad = load i64, ptr %i.z, align 8, !tbaa !17
+  %i.aa = load i64, ptr %i.w, align 8, !tbaa !15
+  %i.ab = load i64, ptr %i.x, align 8, !tbaa !15
+  %i.ac = load i64, ptr %i.y, align 8, !tbaa !15
+  %i.ad = load i64, ptr %i.z, align 8, !tbaa !15
   %i.ae = insertelement <4 x i64> poison, i64 %i.aa, i64 0
   %i.af = insertelement <4 x i64> %i.ae, i64 %i.ab, i64 1
   %i.ag = insertelement <4 x i64> %i.af, i64 %i.ac, i64 2
@@ -106,7 +106,7 @@ vec.epilog.vector.body:                           ; preds = %iter.check, %vec.ep
   %index.next64 = add nuw i64 %index61, 4         ; 2 uses
   %vec.ind.next65 = add <4 x i32> %vec.ind63, splat (i32 4)
   %i.ap = icmp eq i64 %index.next64, %i.d
-  br i1 %i.ap, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !12
+  br i1 %i.ap, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !10
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %i.aq = tail call i8 @llvm.vector.reduce.or.v4i8(<4 x i8> %i.ao)
@@ -125,7 +125,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.at = sext i32 %i.as to i64                   ; 2 uses
   %i.au = lshr i64 %i.at, 6
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.au
-  %i.aw = load i64, ptr %i.av, align 8, !tbaa !17
+  %i.aw = load i64, ptr %i.av, align 8, !tbaa !15
   %i.ax = and i64 %i.at, 63
   %i.ay = lshr i64 %i.aw, %i.ax
   %i.az = trunc i64 %i.ay to i32
@@ -136,23 +136,23 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.be = or i8 %.03239, %i.bd                    ; 2 uses
   %indvars.iv.next52 = add nuw nsw i64 %indvars.iv51, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next52, %i.d
-  br i1 %exitcond.not, label %._crit_edge42, label %.lr.ph41, !llvm.loop !13
+  br i1 %exitcond.not, label %._crit_edge42, label %.lr.ph41, !llvm.loop !11
 
 .lr.ph:                                           ; preds = %.preheader37, %.lr.ph
   %indvars.iv46 = phi i64 [ %indvars.iv.next47, %.lr.ph ], [ 0, %.preheader37 ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 8, %.preheader37 ]
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv46
   %i.bg = load <4 x i64>, ptr %i.bf, align 1, !tbaa !18
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   %i.bh = call noundef zeroext i8 @_ZN8facebook5velox4simd11gather8BitsIN5xsimd4fma3INS3_4avx2EEEEEhPKvNS3_5batchIiT_EEiRKSA_(ptr noundef %0, <4 x i64> %i.bg, i32 noundef 8, ptr noundef nonnull align 1 dereferenceable(1) %4)
   %i.bi = lshr exact i64 %indvars.iv46, 3
   %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 %i.bi
   store i8 %i.bh, ptr %i.bj, align 1, !tbaa !18
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
   %i.bk = icmp ugt i64 %i.d, %indvars.iv.next
   %indvars.iv.next47 = add nuw nsw i64 %indvars.iv46, 8
-  br i1 %i.bk, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !14
+  br i1 %i.bk, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !12
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %i.bl = trunc i64 %i.d to i32
@@ -172,13 +172,13 @@ bb.b:                                             ; preds = %._crit_edge
   %i.br = load <4 x i64>, ptr %i.bq, align 1, !tbaa !18
   %i.bs = trunc nuw i64 %i.d to i32
   %i.bt = sub i32 %i.bs, %.0.lcssa
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
   %i.bu = call noundef zeroext i8 @_ZN8facebook5velox4simd11gather8BitsIN5xsimd4fma3INS3_4avx2EEEEEhPKvNS3_5batchIiT_EEiRKSA_(ptr noundef %0, <4 x i64> %i.br, i32 noundef %i.bt, ptr noundef nonnull align 1 dereferenceable(1) %5)
   %i.bv = lshr exact i32 %.0.lcssa, 3
   %i.bw = zext nneg i32 %i.bv to i64
   %i.bx = getelementptr inbounds nuw i8, ptr %3, i64 %i.bw
   store i8 %i.bu, ptr %i.bx, align 1, !tbaa !18
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b, %._crit_edge42
@@ -199,14 +199,14 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_ZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_.exit, !prof !19
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_E9kByteBits) #9
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_E9kByteBits) #10
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %_ZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   store <8 x i32> <i32 1, i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128>, ptr @_ZZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_E9kByteBits, align 32
   %i.d = tail call ptr @llvm.invariant.start.p0(i64 32, ptr nonnull @_ZZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_E9kByteBits) ; 0 uses
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_E9kByteBits) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_E9kByteBits) #10
   br label %_ZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_.exit
 
 _ZN8facebook5velox4simd6detail15gather8BitsImplIN5xsimd4fma3INS4_4avx2EEEEEhPKvNS4_5batchIiT_EEiRKS6_.exit: ; preds = %bb.a, %bb.b, %bb.c
@@ -235,33 +235,25 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a, %._crit_edge.i
   %indvars.iv21.i = phi i64 [ %indvars.iv.next22.i, %._crit_edge.i ], [ 0, %bb.a ] ; 3 uses
-  %i.a = getelementptr inbounds nuw [32 x i8], ptr @_ZN8facebook5velox4simd6detail11byteSetBitsE, i64 %indvars.iv21.i ; 10 uses
+  %i.a = getelementptr inbounds nuw [32 x i8], ptr @_ZN8facebook5velox4simd6detail11byteSetBitsE, i64 %indvars.iv21.i ; 9 uses
   %i.b = trunc nuw nsw i64 %indvars.iv21.i to i32 ; 8 uses
   %i.c = and i32 %i.b, 1
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %bb.c, label %bb.b
 
-.lr.ph.preheader.i:                               ; preds = %.preheader.i, %bb.o
+vector.ph:                                        ; preds = %.preheader.i, %bb.o
   %.1.726.i = phi i32 [ %i.ac, %.preheader.i ], [ %.1.6.i, %bb.o ] ; 2 uses
-  %0 = zext i32 %.1.726.i to i64                  ; 4 uses
-  %1 = sub nsw i64 8, %0                          ; 3 uses
-  %min.iters.check = icmp ult i64 %1, 8
-  br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %1, -8                         ; 2 uses
-  %2 = add nsw i64 %n.vec, %0
+  %0 = zext i32 %.1.726.i to i64                  ; 2 uses
   %broadcast.splatinsert.a = insertelement <8 x i32> poison, i32 %.1.726.i, i64 0
   %broadcast.splat.a = shufflevector <8 x i32> %broadcast.splatinsert.a, <8 x i32> poison, <8 x i32> zeroinitializer
   %induction = add <8 x i32> %broadcast.splat.a, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %0
-  store <8 x i32> %induction, ptr %3, align 4, !tbaa !8
-  %cmp.n = icmp eq i64 %1, %n.vec
-  br i1 %cmp.n, label %._crit_edge.i, label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %vector.ph
-  %indvars.iv.i.ph = phi i64 [ %0, %.lr.ph.preheader.i ], [ %2, %vector.ph ]
-  br label %.lr.ph.i
+  %trip.count.minus.1 = sub nsw i64 7, %0
+  %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %trip.count.minus.1, i64 0
+  %broadcast.splat = shufflevector <8 x i64> %broadcast.splatinsert, <8 x i64> poison, <8 x i32> zeroinitializer
+  %1 = icmp uge <8 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %0
+  tail call void @llvm.masked.store.v8i32.p0(<8 x i32> %induction, ptr align 4 %2, <8 x i1> %1), !tbaa !8
+  br label %._crit_edge.i
 
 bb.b:                                             ; preds = %.preheader
   store i32 0, ptr %i.a, align 32, !tbaa !8
@@ -349,7 +341,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.1.6.i = phi i32 [ %i.y, %bb.n ], [ %.1.5.i, %bb.m ] ; 4 uses
   %i.ab = and i32 %i.b, 128
   %.not.7.i = icmp eq i32 %i.ab, 0
-  br i1 %.not.7.i, label %.lr.ph.preheader.i, label %.preheader.i
+  br i1 %.not.7.i, label %vector.ph, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.o
   %i.ac = add nuw nsw i32 %.1.6.i, 1
@@ -357,51 +349,34 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ad
   store i32 7, ptr %i.ae, align 4, !tbaa !8
   %i.af = icmp samesign ult i32 %.1.6.i, 7
-  br i1 %i.af, label %.lr.ph.preheader.i, label %._crit_edge.i
+  br i1 %i.af, label %vector.ph, label %._crit_edge.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader ] ; 3 uses
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
-  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
-  store i32 %5, ptr %4, align 4, !tbaa !8
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 8
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !20
-
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %vector.ph, %.preheader.i
+._crit_edge.i:                                    ; preds = %vector.ph, %.preheader.i
   %indvars.iv.next22.i = add nuw nsw i64 %indvars.iv21.i, 1 ; 2 uses
   %exitcond24.not.i = icmp eq i64 %indvars.iv.next22.i, 256
-  br i1 %exitcond24.not.i, label %_ZN8facebook5velox4simd12_GLOBAL__N_115initByteSetBitsEv.exit, label %.preheader, !llvm.loop !21
+  br i1 %exitcond24.not.i, label %_ZN8facebook5velox4simd12_GLOBAL__N_115initByteSetBitsEv.exit, label %.preheader, !llvm.loop !20
 
 _ZN8facebook5velox4simd12_GLOBAL__N_115initByteSetBitsEv.exit: ; preds = %._crit_edge.i, %._crit_edge.i9
   %indvars.iv24.i = phi i64 [ %indvars.iv.next25.i, %._crit_edge.i9 ], [ 0, %._crit_edge.i ] ; 3 uses
-  %i.ag = getelementptr inbounds nuw [32 x i8], ptr @_ZN8facebook5velox4simd6detail18permute4x64IndicesE, i64 %indvars.iv24.i ; 7 uses
+  %i.ag = getelementptr inbounds nuw [32 x i8], ptr @_ZN8facebook5velox4simd6detail18permute4x64IndicesE, i64 %indvars.iv24.i ; 6 uses
   %i.ah = trunc nuw nsw i64 %indvars.iv24.i to i32 ; 4 uses
   %i.ai = and i32 %i.ah, 1
   %.not.i1 = icmp eq i32 %i.ai, 0
   br i1 %.not.i1, label %bb.q, label %bb.p
 
-.lr.ph.preheader.i10:                             ; preds = %.preheader.i8, %bb.u
+vector.ph17:                                      ; preds = %.preheader.i8, %bb.u
   %.1.329.i = phi i32 [ %i.ax, %.preheader.i8 ], [ %.1.2.i6, %bb.u ] ; 2 uses
-  %6 = zext i32 %.1.329.i to i64                  ; 4 uses
-  %7 = sub nsw i64 8, %6                          ; 3 uses
-  %min.iters.check16 = icmp ult i64 %7, 8
-  br i1 %min.iters.check16, label %.lr.ph.i11.preheader, label %vector.ph17
-
-vector.ph17:                                      ; preds = %.lr.ph.preheader.i10
-  %n.vec18 = and i64 %7, -8                       ; 2 uses
-  %8 = add nsw i64 %n.vec18, %6
+  %3 = zext i32 %.1.329.i to i64                  ; 2 uses
   %broadcast.splatinsert19.a = insertelement <8 x i32> poison, i32 %.1.329.i, i64 0
   %broadcast.splat20.a = shufflevector <8 x i32> %broadcast.splatinsert19.a, <8 x i32> poison, <8 x i32> zeroinitializer
   %induction21 = add <8 x i32> %broadcast.splat20.a, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %6
-  store <8 x i32> %induction21, ptr %9, align 4, !tbaa !8
-  %cmp.n24 = icmp eq i64 %7, %n.vec18
-  br i1 %cmp.n24, label %._crit_edge.i9, label %.lr.ph.i11.preheader
-
-.lr.ph.i11.preheader:                             ; preds = %.lr.ph.preheader.i10, %vector.ph17
-  %indvars.iv.i12.ph = phi i64 [ %6, %.lr.ph.preheader.i10 ], [ %8, %vector.ph17 ]
-  br label %.lr.ph.i11
+  %trip.count.minus.118 = sub nsw i64 7, %3
+  %broadcast.splatinsert19 = insertelement <8 x i64> poison, i64 %trip.count.minus.118, i64 0
+  %broadcast.splat20 = shufflevector <8 x i64> %broadcast.splatinsert19, <8 x i64> poison, <8 x i32> zeroinitializer
+  %4 = icmp uge <8 x i64> %broadcast.splat20, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %3
+  tail call void @llvm.masked.store.v8i32.p0(<8 x i32> %induction21, ptr align 4 %5, <8 x i1> %4), !tbaa !8
+  br label %._crit_edge.i9
 
 bb.p:                                             ; preds = %_ZN8facebook5velox4simd12_GLOBAL__N_115initByteSetBitsEv.exit
   store i32 0, ptr %i.ag, align 32, !tbaa !8
@@ -443,7 +418,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.1.2.i6 = phi i32 [ %i.as, %bb.t ], [ %.1.1.i4, %bb.s ] ; 4 uses
   %i.au = and i32 %i.ah, 8
   %.not.3.i7 = icmp eq i32 %i.au, 0
-  br i1 %.not.3.i7, label %.lr.ph.preheader.i10, label %.preheader.i8
+  br i1 %.not.3.i7, label %vector.ph17, label %.preheader.i8
 
 .preheader.i8:                                    ; preds = %bb.u
   %i.av = zext nneg i32 %.1.2.i6 to i64
@@ -453,21 +428,12 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.ay = getelementptr i8, ptr %i.aw, i64 4
   store i32 7, ptr %i.ay, align 4, !tbaa !8
   %i.az = icmp samesign ult i32 %.1.2.i6, 6
-  br i1 %i.az, label %.lr.ph.preheader.i10, label %._crit_edge.i9
+  br i1 %i.az, label %vector.ph17, label %._crit_edge.i9
 
-.lr.ph.i11:                                       ; preds = %.lr.ph.i11.preheader, %.lr.ph.i11
-  %indvars.iv.i12 = phi i64 [ %indvars.iv.next.i13, %.lr.ph.i11 ], [ %indvars.iv.i12.ph, %.lr.ph.i11.preheader ] ; 3 uses
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv.i12
-  %11 = trunc nuw nsw i64 %indvars.iv.i12 to i32
-  store i32 %11, ptr %10, align 4, !tbaa !8
-  %indvars.iv.next.i13 = add nuw nsw i64 %indvars.iv.i12, 1 ; 2 uses
-  %exitcond.not.i14 = icmp eq i64 %indvars.iv.next.i13, 8
-  br i1 %exitcond.not.i14, label %._crit_edge.i9, label %.lr.ph.i11, !llvm.loop !22
-
-._crit_edge.i9:                                   ; preds = %.lr.ph.i11, %vector.ph17, %.preheader.i8
+._crit_edge.i9:                                   ; preds = %vector.ph17, %.preheader.i8
   %indvars.iv.next25.i = add nuw nsw i64 %indvars.iv24.i, 1 ; 2 uses
   %exitcond27.not.i = icmp eq i64 %indvars.iv.next25.i, 16
-  br i1 %exitcond27.not.i, label %_ZN8facebook5velox4simd12_GLOBAL__N_122initPermute4x64IndicesEv.exit, label %_ZN8facebook5velox4simd12_GLOBAL__N_115initByteSetBitsEv.exit, !llvm.loop !23
+  br i1 %exitcond27.not.i, label %_ZN8facebook5velox4simd12_GLOBAL__N_122initPermute4x64IndicesEv.exit, label %_ZN8facebook5velox4simd12_GLOBAL__N_115initByteSetBitsEv.exit, !llvm.loop !21
 
 _ZN8facebook5velox4simd12_GLOBAL__N_122initPermute4x64IndicesEv.exit: ; preds = %._crit_edge.i9
   store i1 true, ptr @_ZZN8facebook5velox4simd18initializeSimdUtilEvE6inited, align 1
@@ -539,7 +505,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   store <8 x i32> %i.o, ptr %i.p, align 32
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
   %exitcond.not.i.i.1 = icmp eq i64 %indvars.iv.next.i.i.1, 256
-  br i1 %exitcond.not.i.i.1, label %__cxx_global_var_init.2.exit, label %bb.b, !llvm.loop !24
+  br i1 %exitcond.not.i.i.1, label %__cxx_global_var_init.2.exit, label %bb.b, !llvm.loop !22
 
 __cxx_global_var_init.2.exit:                     ; preds = %bb.b
   %i.q = tail call ptr @llvm.invariant.start.p0(i64 8192, ptr nonnull @_ZN8facebook5velox4simd6detail13fromBitMask32E) ; 0 uses
@@ -567,6 +533,9 @@ __cxx_global_var_init.2.exit:                     ; preds = %bb.b
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.vector.reduce.or.v4i8(<4 x i8>) #8
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.masked.store.v8i32.p0(<8 x i32>, ptr captures(none), <8 x i1>) #9
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -576,7 +545,8 @@ attributes #5 = { nocallback nofree nosync nounwind willreturn memory(none) }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(read) }
 attributes #7 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="256" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nounwind }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #10 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -592,19 +562,17 @@ attributes #9 = { nounwind }
 !7 = !{!6, !5, i64 0}
 !8 = !{!5, !5, i64 0}
 !9 = !{!"llvm.loop.mustprogress"}
-!10 = !{!"llvm.loop.isvectorized", i32 1}
-!11 = !{!"llvm.loop.unroll.runtime.disable"}
-!12 = distinct !{!12, !9, !10, !11}
-!13 = distinct !{!13, !9, !11, !10}
-!14 = distinct !{!14, !9}
-!15 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!16 = !{!"long", !4, i64 0}
-!17 = !{!16, !16, i64 0}
+!10 = distinct !{!10, !9, !16, !17}
+!11 = distinct !{!11, !9, !17, !16}
+!12 = distinct !{!12, !9}
+!13 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!14 = !{!"long", !4, i64 0}
+!15 = !{!14, !14, i64 0}
+!16 = !{!"llvm.loop.isvectorized", i32 1}
+!17 = !{!"llvm.loop.unroll.runtime.disable"}
 !18 = !{!4, !4, i64 0}
 !19 = !{!"branch_weights", i32 1, i32 1048575}
-!20 = distinct !{!20, !9, !11, !10}
+!20 = distinct !{!20, !9}
 !21 = distinct !{!21, !9}
-!22 = distinct !{!22, !9, !11, !10}
-!23 = distinct !{!23, !9}
-!24 = distinct !{!24, !9}
+!22 = distinct !{!22, !9}
 end_hunk_0

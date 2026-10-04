@@ -204,18 +204,18 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 bb.e:                                             ; preds = %bb.e, %.noexc53.new
   %indvars.iv79.i = phi i64 [ 0, %.noexc53.new ], [ %indvars.iv.next80.i.1, %bb.e ] ; 4 uses
   %niter = phi i64 [ 0, %.noexc53.new ], [ %niter.next.1, %bb.e ]
-  %i.he = mul i64 %indvars.iv79.i, 3
+  %i.he = mul nuw nsw i64 %indvars.iv79.i, 3
   %i.hf = and i64 %i.he, 4294967294
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hc, i64 %i.hf
-  %i.hh = shl i64 %indvars.iv79.i, 2
+  %i.hh = shl nuw nsw i64 %indvars.iv79.i, 2
   %i.hi = and i64 %i.hh, 4294967288
   %i.hj = getelementptr inbounds nuw i8, ptr %1, i64 %i.hi
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.hg, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.hj, i64 3, i1 false)
   %indvars.iv.next80.i = or disjoint i64 %indvars.iv79.i, 1 ; 2 uses
-  %i.hk = mul i64 %indvars.iv.next80.i, 3
+  %i.hk = mul nuw nsw i64 %indvars.iv.next80.i, 3
   %i.hl = and i64 %i.hk, 4294967295
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hc, i64 %i.hl
-  %i.hn = shl i64 %indvars.iv.next80.i, 2
+  %i.hn = shl nuw nsw i64 %indvars.iv.next80.i, 2
   %i.ho = and i64 %i.hn, 4294967292
   %i.hp = getelementptr inbounds nuw i8, ptr %1, i64 %i.ho
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.hm, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.hp, i64 3, i1 false)
@@ -232,10 +232,10 @@ bb.e:                                             ; preds = %bb.e, %.noexc53.new
   %indvars.iv79.i.epil.init = phi i64 [ 0, %.noexc53 ], [ %indvars.iv.next80.i.1, %.loopexit118.loopexit165.unr-lcssa ] ; 2 uses
   %lcmp.mod166 = trunc i32 %i.i to i1
   call void @llvm.assume(i1 %lcmp.mod166)
-  %i.hq = mul i64 %indvars.iv79.i.epil.init, 3
+  %i.hq = mul nuw nsw i64 %indvars.iv79.i.epil.init, 3
   %i.hr = and i64 %i.hq, 4294967295
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hc, i64 %i.hr
-  %i.ht = shl i64 %indvars.iv79.i.epil.init, 2
+  %i.ht = shl nuw nsw i64 %indvars.iv79.i.epil.init, 2
   %i.hu = and i64 %i.ht, 4294967292
   %i.hv = getelementptr inbounds nuw i8, ptr %1, i64 %i.hu
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.hs, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.hv, i64 3, i1 false)

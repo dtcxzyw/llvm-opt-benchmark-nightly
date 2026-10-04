@@ -205,7 +205,7 @@ iter.check:                                       ; preds = %bb.h
 vector.memcheck:                                  ; preds = %iter.check
   %i.ac = sub i64 %i.a, %i.c
   %i.ad = add i64 %i.ac, 10
-  %diff.check = icmp ult i64 %i.ad, 31
+  %diff.check = icmp ult i64 %i.ad, 15
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vec.epilog.ph
 
 vec.epilog.ph:                                    ; preds = %vector.memcheck

@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/alphablend?download=true
-loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -14,7 +14,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define noundef i32 @ff_sws_alphablendaway(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readonly captures(none) %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [2 x [3 x i32]], align 16         ; 11 uses
+  %i.a = alloca [2 x [3 x i32]], align 16         ; 17 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 5 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !43
   %i.d = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.c) #5 ; 6 uses
@@ -84,10 +84,16 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !48
   %i.al = and i64 %i.ak, 32
   %.not438 = icmp eq i64 %i.al, 0
-  %spec.select = select i1 %.not438, i32 %i.aa, i32 0
-  %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %spec.select, i64 0
-  %broadcast.splat = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  br label %.split476.us.sink.split
+  %spec.select = select i1 %.not438, i32 %i.aa, i32 0 ; 4 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  store i32 %spec.select, ptr %7, align 4, !tbaa !52
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i32 %spec.select, ptr %8, align 16, !tbaa !52
+  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i32 %spec.select, ptr %9, align 8, !tbaa !52
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
+  store i32 %spec.select, ptr %10, align 4, !tbaa !52
+  br label %.split476.us
 
 bb.g:                                             ; preds = %bb.e
   store i32 %i.ag, ptr %i.a, align 16, !tbaa !52
@@ -98,24 +104,19 @@ bb.g:                                             ; preds = %bb.e
   %i.am = load i64, ptr %i.aj, align 8, !tbaa !48
   %i.an = and i64 %i.am, 32
   %.not438.us = icmp eq i64 %i.an, 0              ; 2 uses
-  %spec.select452.us = select i1 %.not438.us, i32 %i.aa, i32 %i.ai
-  %spec.select.us = select i1 %.not438.us, i32 %i.aa, i32 %i.ag
-  %broadcast.splatinsert647 = insertelement <2 x i32> poison, i32 %spec.select.us, i64 0
-  %broadcast.splat648 = shufflevector <2 x i32> %broadcast.splatinsert647, <2 x i32> poison, <2 x i32> zeroinitializer
-  %broadcast.splatinsert645 = insertelement <2 x i32> poison, i32 %spec.select452.us, i64 0
-  %broadcast.splat646 = shufflevector <2 x i32> %broadcast.splatinsert645, <2 x i32> poison, <2 x i32> zeroinitializer
-  br label %.split476.us.sink.split
-
-.split476.us.sink.split:                          ; preds = %.split.us.peel.next, %.split.peel.next
-  %broadcast.splat.sink653 = phi <2 x i32> [ %broadcast.splat, %.split.peel.next ], [ %broadcast.splat648, %.split.us.peel.next ]
-  %broadcast.splat.sink = phi <2 x i32> [ %broadcast.splat, %.split.peel.next ], [ %broadcast.splat646, %.split.us.peel.next ]
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store <2 x i32> %broadcast.splat.sink653, ptr %7, align 4, !tbaa !52
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store <2 x i32> %broadcast.splat.sink, ptr %8, align 16, !tbaa !52
+  %spec.select452.us = select i1 %.not438.us, i32 %i.aa, i32 %i.ai ; 2 uses
+  %spec.select.us = select i1 %.not438.us, i32 %i.aa, i32 %i.ag ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  store i32 %spec.select.us, ptr %11, align 4, !tbaa !52
+  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i32 %spec.select452.us, ptr %12, align 16, !tbaa !52
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i32 %spec.select.us, ptr %13, align 8, !tbaa !52
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
+  store i32 %spec.select452.us, ptr %14, align 4, !tbaa !52
   br label %.split476.us
 
-.split476.us:                                     ; preds = %.split476.us.sink.split, %bb.f, %bb.g
+.split476.us:                                     ; preds = %.split.peel.next, %.split.us.peel.next, %bb.f, %bb.g
   %i.ao = add nsw i32 %i.k, -1
   %i.ap = icmp eq i32 %i.v, %i.ao
   br i1 %i.ap, label %bb.i, label %bb.h

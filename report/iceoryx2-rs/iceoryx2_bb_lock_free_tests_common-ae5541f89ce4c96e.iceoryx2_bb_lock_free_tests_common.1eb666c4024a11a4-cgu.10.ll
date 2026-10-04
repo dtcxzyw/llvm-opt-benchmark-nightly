@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %.val11.i.i.i.i.i.i.i.i.i.prol = load i64, ptr %i.z, align 8, !noalias !231, !noundef !9
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.y
   store i64 %.val11.i.i.i.i.i.i.i.i.i.prol, ptr %i.aa, align 8, !noalias !232
-  %i.ab = add nuw i64 %i.y, 1                     ; 2 uses
+  %i.ab = add nuw nsw i64 %i.y, 1                 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.preheader.i.i.i.i.i.i.prol.loopexit, label %.preheader.i.i.i.i.i.i.prol, !llvm.loop !207
@@ -222,22 +222,22 @@ middle.block:                                     ; preds = %vector.body
   %.val11.i.i.i.i.i.i.i.i.i = load i64, ptr %i.af, align 8, !noalias !231, !noundef !9
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.ae
   store i64 %.val11.i.i.i.i.i.i.i.i.i, ptr %i.ag, align 8, !noalias !232
-  %i.ah = add nuw i64 %i.ae, 1                    ; 2 uses
+  %i.ah = add nuw nsw i64 %i.ae, 1                ; 2 uses
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ah
   %.val11.i.i.i.i.i.i.i.i.i.1 = load i64, ptr %i.ai, align 8, !noalias !231, !noundef !9
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.ah
   store i64 %.val11.i.i.i.i.i.i.i.i.i.1, ptr %i.aj, align 8, !noalias !232
-  %i.ak = add nuw i64 %i.ae, 2                    ; 2 uses
+  %i.ak = add nuw nsw i64 %i.ae, 2                ; 2 uses
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ak
   %.val11.i.i.i.i.i.i.i.i.i.2 = load i64, ptr %i.al, align 8, !noalias !231, !noundef !9
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.ak
   store i64 %.val11.i.i.i.i.i.i.i.i.i.2, ptr %i.am, align 8, !noalias !232
-  %i.an = add nuw i64 %i.ae, 3                    ; 2 uses
+  %i.an = add nuw nsw i64 %i.ae, 3                ; 2 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.an
   %.val11.i.i.i.i.i.i.i.i.i.3 = load i64, ptr %i.ao, align 8, !noalias !231, !noundef !9
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.an
   store i64 %.val11.i.i.i.i.i.i.i.i.i.3, ptr %i.ap, align 8, !noalias !232
-  %i.aq = add nuw i64 %i.ae, 4                    ; 2 uses
+  %i.aq = add nuw nsw i64 %i.ae, 4                ; 2 uses
   %i.ar = icmp eq i64 %i.aq, %i.h
   br i1 %i.ar, label %.loopexit, label %.preheader.i.i.i.i.i.i, !llvm.loop !208
 

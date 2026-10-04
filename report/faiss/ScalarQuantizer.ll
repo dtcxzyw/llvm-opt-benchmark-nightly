@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.us61.
   br i1 %exitcond75.not.i, label %._crit_edge.us.i, label %bb.d, !llvm.loop !31
 
 ._crit_edge.us.i:                                 ; preds = %bb.d
-  %i.aq = add nuw i64 %.13654.us.i, 1             ; 2 uses
+  %i.aq = add nuw nsw i64 %.13654.us.i, 1         ; 2 uses
   %exitcond76.not.i = icmp eq i64 %i.aq, %i.o
   br i1 %exitcond76.not.i, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit, label %.lr.ph.us61.i, !llvm.loop !32
 
@@ -323,7 +323,7 @@ middle.block207:                                  ; preds = %vector.body200
   %i.cd = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.cc)
   %i.ce = zext nneg i8 %i.cd to i64
   %i.cf = add i64 %.125.i, %i.ce                  ; 2 uses
-  %i.cg = add nuw i64 %.11724.i, 1                ; 2 uses
+  %i.cg = add nuw nsw i64 %.11724.i, 1            ; 2 uses
   %exitcond.not.i55 = icmp eq i64 %i.cg, %i.o
   br i1 %exitcond.not.i55, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit, label %.lr.ph26.i, !llvm.loop !825
 
@@ -518,7 +518,7 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph.us61.
   br i1 %exitcond75.not.i87, label %._crit_edge.us.i88, label %bb.o, !llvm.loop !31
 
 ._crit_edge.us.i88:                               ; preds = %bb.o
-  %i.ft = add nuw i64 %.13654.us.i81, 1           ; 2 uses
+  %i.ft = add nuw nsw i64 %.13654.us.i81, 1       ; 2 uses
   %exitcond76.not.i89 = icmp eq i64 %i.ft, %i.er
   br i1 %exitcond76.not.i89, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit93, label %.lr.ph.us61.i79, !llvm.loop !32
 
@@ -636,7 +636,7 @@ middle.block240:                                  ; preds = %vector.body233
   %i.hg = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.hf)
   %i.hh = zext nneg i8 %i.hg to i64
   %i.hi = add i64 %.125.i105, %i.hh               ; 2 uses
-  %i.hj = add nuw i64 %.11724.i106, 1             ; 2 uses
+  %i.hj = add nuw nsw i64 %.11724.i106, 1         ; 2 uses
   %exitcond.not.i107 = icmp eq i64 %i.hj, %i.er
   br i1 %exitcond.not.i107, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit108, label %.lr.ph26.i104, !llvm.loop !829
 
@@ -1039,7 +1039,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.us61.
   br i1 %exitcond75.not.i, label %._crit_edge.us.i, label %bb.q, !llvm.loop !31
 
 ._crit_edge.us.i:                                 ; preds = %bb.q
-  %i.fe = add nuw i64 %.13654.us.i, 1             ; 2 uses
+  %i.fe = add nuw nsw i64 %.13654.us.i, 1         ; 2 uses
   %exitcond76.not.i = icmp eq i64 %i.fe, %i.q
   br i1 %exitcond76.not.i, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit, label %.lr.ph.us61.i, !llvm.loop !32
 
@@ -1157,7 +1157,7 @@ middle.block175:                                  ; preds = %vector.body168
   %i.gr = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.gq)
   %i.gs = zext nneg i8 %i.gr to i64
   %i.gt = add i64 %.125.i, %i.gs                  ; 2 uses
-  %i.gu = add nuw i64 %.11724.i, 1                ; 2 uses
+  %i.gu = add nuw nsw i64 %.11724.i, 1            ; 2 uses
   %exitcond.not.i98 = icmp eq i64 %i.gu, %i.q
   br i1 %exitcond.not.i98, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit, label %.lr.ph26.i, !llvm.loop !851
 
@@ -1560,7 +1560,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.us61.
   br i1 %exitcond75.not.i, label %._crit_edge.us.i, label %bb.h, !llvm.loop !31
 
 ._crit_edge.us.i:                                 ; preds = %bb.h
-  %i.cw = add nuw i64 %.13654.us.i, 1             ; 2 uses
+  %i.cw = add nuw nsw i64 %.13654.us.i, 1         ; 2 uses
   %exitcond76.not.i = icmp eq i64 %i.cw, %i.bu
   br i1 %exitcond76.not.i, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit, label %.lr.ph.us61.i, !llvm.loop !32
 
@@ -1678,7 +1678,7 @@ middle.block116:                                  ; preds = %vector.body109
   %i.ej = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.ei)
   %i.ek = zext nneg i8 %i.ej to i64
   %i.el = add i64 %.125.i, %i.ek                  ; 2 uses
-  %i.em = add nuw i64 %.11724.i, 1                ; 2 uses
+  %i.em = add nuw nsw i64 %.11724.i, 1            ; 2 uses
   %exitcond.not.i55 = icmp eq i64 %i.em, %i.bu
   br i1 %exitcond.not.i55, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit, label %.lr.ph26.i, !llvm.loop !870
 
@@ -2081,7 +2081,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.us61.
   br i1 %exitcond75.not.i, label %._crit_edge.us.i, label %bb.h, !llvm.loop !31
 
 ._crit_edge.us.i:                                 ; preds = %bb.h
-  %i.dc = add nuw i64 %.13654.us.i, 1             ; 2 uses
+  %i.dc = add nuw nsw i64 %.13654.us.i, 1         ; 2 uses
   %exitcond76.not.i = icmp eq i64 %i.dc, %i.ca
   br i1 %exitcond76.not.i, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit, label %.lr.ph.us61.i, !llvm.loop !32
 
@@ -2199,7 +2199,7 @@ middle.block116:                                  ; preds = %vector.body109
   %i.ep = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.eo)
   %i.eq = zext nneg i8 %i.ep to i64
   %i.er = add i64 %.125.i, %i.eq                  ; 2 uses
-  %i.es = add nuw i64 %.11724.i, 1                ; 2 uses
+  %i.es = add nuw nsw i64 %.11724.i, 1            ; 2 uses
   %exitcond.not.i55 = icmp eq i64 %i.es, %i.ca
   br i1 %exitcond.not.i55, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit, label %.lr.ph26.i, !llvm.loop !889
 
@@ -2602,7 +2602,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.us61.
   br i1 %exitcond75.not.i, label %._crit_edge.us.i, label %bb.d, !llvm.loop !31
 
 ._crit_edge.us.i:                                 ; preds = %bb.d
-  %i.aq = add nuw i64 %.13654.us.i, 1             ; 2 uses
+  %i.aq = add nuw nsw i64 %.13654.us.i, 1         ; 2 uses
   %exitcond76.not.i = icmp eq i64 %i.aq, %i.o
   br i1 %exitcond76.not.i, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit, label %.lr.ph.us61.i, !llvm.loop !32
 
@@ -2720,7 +2720,7 @@ middle.block201:                                  ; preds = %vector.body194
   %i.cd = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.cc)
   %i.ce = zext nneg i8 %i.cd to i64
   %i.cf = add i64 %.125.i, %i.ce                  ; 2 uses
-  %i.cg = add nuw i64 %.11724.i, 1                ; 2 uses
+  %i.cg = add nuw nsw i64 %.11724.i, 1            ; 2 uses
   %exitcond.not.i48 = icmp eq i64 %i.cg, %i.o
   br i1 %exitcond.not.i48, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit, label %.lr.ph26.i, !llvm.loop !932
 
@@ -2911,7 +2911,7 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph.us61.
   br i1 %exitcond75.not.i80, label %._crit_edge.us.i81, label %bb.o, !llvm.loop !31
 
 ._crit_edge.us.i81:                               ; preds = %bb.o
-  %i.fp = add nuw i64 %.13654.us.i74, 1           ; 2 uses
+  %i.fp = add nuw nsw i64 %.13654.us.i74, 1       ; 2 uses
   %exitcond76.not.i82 = icmp eq i64 %i.fp, %i.en
   br i1 %exitcond76.not.i82, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit86, label %.lr.ph.us61.i72, !llvm.loop !32
 
@@ -3029,7 +3029,7 @@ middle.block234:                                  ; preds = %vector.body227
   %i.hc = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.hb)
   %i.hd = zext nneg i8 %i.hc to i64
   %i.he = add i64 %.125.i98, %i.hd                ; 2 uses
-  %i.hf = add nuw i64 %.11724.i99, 1              ; 2 uses
+  %i.hf = add nuw nsw i64 %.11724.i99, 1          ; 2 uses
   %exitcond.not.i100 = icmp eq i64 %i.hf, %i.en
   br i1 %exitcond.not.i100, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit101, label %.lr.ph26.i97, !llvm.loop !936
 
@@ -3432,7 +3432,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.us61.
   br i1 %exitcond75.not.i, label %._crit_edge.us.i, label %bb.q, !llvm.loop !31
 
 ._crit_edge.us.i:                                 ; preds = %bb.q
-  %i.fa = add nuw i64 %.13654.us.i, 1             ; 2 uses
+  %i.fa = add nuw nsw i64 %.13654.us.i, 1         ; 2 uses
   %exitcond76.not.i = icmp eq i64 %i.fa, %i.q
   br i1 %exitcond76.not.i, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit, label %.lr.ph.us61.i, !llvm.loop !32
 
@@ -3550,7 +3550,7 @@ middle.block169:                                  ; preds = %vector.body162
   %i.gn = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.gm)
   %i.go = zext nneg i8 %i.gn to i64
   %i.gp = add i64 %.125.i, %i.go                  ; 2 uses
-  %i.gq = add nuw i64 %.11724.i, 1                ; 2 uses
+  %i.gq = add nuw nsw i64 %.11724.i, 1            ; 2 uses
   %exitcond.not.i91 = icmp eq i64 %i.gq, %i.q
   br i1 %exitcond.not.i91, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit, label %.lr.ph26.i, !llvm.loop !959
 
@@ -3953,7 +3953,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.us61.
   br i1 %exitcond75.not.i, label %._crit_edge.us.i, label %bb.h, !llvm.loop !31
 
 ._crit_edge.us.i:                                 ; preds = %bb.h
-  %i.cs = add nuw i64 %.13654.us.i, 1             ; 2 uses
+  %i.cs = add nuw nsw i64 %.13654.us.i, 1         ; 2 uses
   %exitcond76.not.i = icmp eq i64 %i.cs, %i.bq
   br i1 %exitcond76.not.i, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit, label %.lr.ph.us61.i, !llvm.loop !32
 
@@ -4071,7 +4071,7 @@ middle.block110:                                  ; preds = %vector.body103
   %i.ef = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.ee)
   %i.eg = zext nneg i8 %i.ef to i64
   %i.eh = add i64 %.125.i, %i.eg                  ; 2 uses
-  %i.ei = add nuw i64 %.11724.i, 1                ; 2 uses
+  %i.ei = add nuw nsw i64 %.11724.i, 1            ; 2 uses
   %exitcond.not.i48 = icmp eq i64 %i.ei, %i.bq
   br i1 %exitcond.not.i48, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit, label %.lr.ph26.i, !llvm.loop !979
 
@@ -4474,7 +4474,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.us61.
   br i1 %exitcond75.not.i, label %._crit_edge.us.i, label %bb.h, !llvm.loop !31
 
 ._crit_edge.us.i:                                 ; preds = %bb.h
-  %i.cy = add nuw i64 %.13654.us.i, 1             ; 2 uses
+  %i.cy = add nuw nsw i64 %.13654.us.i, 1         ; 2 uses
   %exitcond76.not.i = icmp eq i64 %i.cy, %i.bw
   br i1 %exitcond76.not.i, label %_ZN5faiss6rabitq23bitwise_and_dot_productILNS_9SIMDLevelE0EEEmPKhS4_mm.exit, label %.lr.ph.us61.i, !llvm.loop !32
 
@@ -4592,7 +4592,7 @@ middle.block110:                                  ; preds = %vector.body103
   %i.el = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.ek)
   %i.em = zext nneg i8 %i.el to i64
   %i.en = add i64 %.125.i, %i.em                  ; 2 uses
-  %i.eo = add nuw i64 %.11724.i, 1                ; 2 uses
+  %i.eo = add nuw nsw i64 %.11724.i, 1            ; 2 uses
   %exitcond.not.i48 = icmp eq i64 %i.eo, %i.bw
   br i1 %exitcond.not.i48, label %_ZN5faiss6rabitq8popcountILNS_9SIMDLevelE0EEEmPKhm.exit, label %.lr.ph26.i, !llvm.loop !999
 

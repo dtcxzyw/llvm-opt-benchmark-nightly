@@ -173,7 +173,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.al, label %draw_background.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.am = load ptr, ptr %i.aj, align 8, !tbaa !73 ; 8 uses
+  %i.am = load ptr, ptr %i.aj, align 8, !tbaa !73 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 64
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !35
   %i.ap = sdiv i32 %i.ao, 2                       ; 2 uses
@@ -320,11 +320,10 @@ bb.n:                                             ; preds = %tongue_outline.exit
   %i.di = sitofp nsz i32 %i.dh to float           ; 2 uses
   %.not70.i.i = icmp eq i32 %i.cw, 0              ; 4 uses
   %switch.i26.i = icmp ult i32 %i.cr, 3
-  %i.dj = sext i32 %i.da to i64                   ; 3 uses
+  %i.dj = sext i32 %i.da to i64                   ; 2 uses
   br i1 %switch.i26.i, label %.lr.ph.i.us.i.i.preheader, label %.lr.ph.i.i.i
 
 .lr.ph.i.us.i.i.preheader:                        ; preds = %.lr.ph136.i.i
-  %2 = shl nsw i64 %i.dj, 1
   %broadcast.splatinsert249 = insertelement <8 x float> poison, float %i.at, i64 0
   %broadcast.splat250 = shufflevector <8 x float> %broadcast.splatinsert249, <8 x float> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert251 = insertelement <8 x float> poison, float %i.di, i64 0
@@ -335,14 +334,13 @@ bb.n:                                             ; preds = %tongue_outline.exit
   br label %.lr.ph.i.us.i.i
 
 .lr.ph.i.us.i.i:                                  ; preds = %.lr.ph.i.us.i.i.preheader, %find_tongue.exit.thread.us.i.i
-  %indvars.iv156.i.i = phi i64 [ %indvars.iv.next157.i.i, %find_tongue.exit.thread.us.i.i ], [ 0, %.lr.ph.i.us.i.i.preheader ] ; 4 uses
-  %3 = mul i64 %2, %indvars.iv156.i.i             ; 4 uses
+  %indvars.iv156.i.i = phi i64 [ %indvars.iv.next157.i.i, %find_tongue.exit.thread.us.i.i ], [ 0, %.lr.ph.i.us.i.i.preheader ] ; 3 uses
   %i.dn = mul nsw i64 %indvars.iv156.i.i, %i.dj
   %invariant.gep.i.us.i.i = getelementptr [2 x i8], ptr %i.am, i64 %i.dn ; 4 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.p, %.lr.ph.i.us.i.i
-  %indvars.iv.i.us.i.i = phi i64 [ 0, %.lr.ph.i.us.i.i ], [ %indvars.iv.next.i.us.i.i, %bb.p ] ; 13 uses
+  %indvars.iv.i.us.i.i = phi i64 [ 0, %.lr.ph.i.us.i.i ], [ %indvars.iv.next.i.us.i.i, %bb.p ] ; 10 uses
   %.idx.i.us.i.i = shl nuw nsw i64 %indvars.iv.i.us.i.i, 3
   %gep.i.us.i.i = getelementptr i8, ptr %invariant.gep.i.us.i.i, i64 %.idx.i.us.i.i
   %i.do = load i16, ptr %gep.i.us.i.i, align 2, !tbaa !39
@@ -535,7 +533,7 @@ bb.af:                                            ; preds = %gamma_correct_rgb.e
   %i.hf = fmul nsz <2 x float> %i.he, %i.hc
   %i.hg = fmul nsz float %i.fr, %.1.us.i.i
   %i.hh = fptosi float %i.hg to i32
-  %.idx.i.i = shl i64 %indvars.iv151.i.i, 3
+  %.idx.i.i = shl nuw nsw i64 %indvars.iv151.i.i, 3
   %gep.i.i = getelementptr i8, ptr %invariant.gep.i.us.i.i, i64 %.idx.i.i ; 3 uses
   %i.hi = fptosi <2 x float> %i.hf to <2 x i32>
   %i.hj = trunc <2 x i32> %i.hi to <2 x i16>
@@ -569,43 +567,12 @@ find_tongue.exit.thread.us.i.i:                   ; preds = %bb.p, %bb.af, %midd
   %i.hy = load float, ptr %i.de, align 8, !tbaa !36 ; 2 uses
   %i.hz = load float, ptr %i.df, align 4, !tbaa !36 ; 2 uses
   %i.ia = add i32 %.0108.us.i.i, 1
-  %wide.trip.count154.i.i = zext i32 %i.ia to i64 ; 3 uses
+  %wide.trip.count154.i.i = zext i32 %i.ia to i64 ; 2 uses
   %i.ib = sub nsw i64 %wide.trip.count154.i.i, %indvars.iv.i.us.i.i ; 3 uses
   %min.iters.check = icmp ult i64 %i.ib, 8
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
-vector.scevcheck:                                 ; preds = %.lr.ph.us.i.i
-  %4 = xor i64 %indvars.iv.i.us.i.i, -1
-  %5 = add nsw i64 %wide.trip.count154.i.i, %4    ; 2 uses
-  %6 = shl nuw nsw i64 %indvars.iv.i.us.i.i, 3    ; 4 uses
-  %7 = getelementptr i8, ptr %i.am, i64 %6
-  %scevgep = getelementptr i8, ptr %7, i64 %3     ; 2 uses
-  %mul.result = shl i64 %5, 3                     ; 4 uses
-  %mul.overflow = icmp ugt i64 %5, 2305843009213693951
-  %8 = getelementptr i8, ptr %scevgep, i64 %mul.result
-  %9 = icmp ult ptr %8, %scevgep
-  %10 = getelementptr i8, ptr %i.am, i64 %6
-  %11 = getelementptr i8, ptr %10, i64 %3
-  %scevgep218 = getelementptr i8, ptr %11, i64 2  ; 2 uses
-  %12 = getelementptr i8, ptr %scevgep218, i64 %mul.result
-  %13 = icmp ult ptr %12, %scevgep218
-  %14 = getelementptr i8, ptr %i.am, i64 %6
-  %15 = getelementptr i8, ptr %14, i64 %3
-  %scevgep219 = getelementptr i8, ptr %15, i64 4  ; 2 uses
-  %16 = getelementptr i8, ptr %scevgep219, i64 %mul.result
-  %17 = icmp ult ptr %16, %scevgep219
-  %18 = or i1 %17, %mul.overflow
-  %19 = getelementptr i8, ptr %i.am, i64 %6
-  %20 = getelementptr i8, ptr %19, i64 %3
-  %scevgep220 = getelementptr i8, ptr %20, i64 6  ; 2 uses
-  %21 = getelementptr i8, ptr %scevgep220, i64 %mul.result
-  %22 = icmp ult ptr %21, %scevgep220
-  %23 = or i1 %13, %9
-  %24 = or i1 %23, %18
-  %25 = or i1 %22, %24
-  br i1 %25, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.scevcheck
+vector.ph:                                        ; preds = %.lr.ph.us.i.i
   %n.vec = and i64 %i.ib, -8                      ; 3 uses
   %i.ic = add i64 %indvars.iv.i.us.i.i, %n.vec
   %broadcast.splatinsert221 = insertelement <8 x float> poison, float %i.hq, i64 0
@@ -722,7 +689,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %predphi269 = select nsz i1 %.not70.i.i, <8 x float> %i.jy, <8 x float> %i.kq
   %i.kr = fmul nsz <8 x float> %predphi263.a, %predphi269
   %i.ks = fptosi <8 x float> %i.kr to <8 x i32>
-  %i.kt = shl i64 %i.ie, 3
+  %i.kt = shl nuw nsw i64 %i.ie, 3
   %i.ku = getelementptr i8, ptr %invariant.gep.i.us.i.i, i64 %i.kt
   %i.kv = trunc <8 x i32> %i.ks to <8 x i16>
   %i.kw = shufflevector <8 x float> %predphi263.a, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
@@ -742,8 +709,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ib, %n.vec
   br i1 %cmp.n, label %find_tongue.exit.thread.us.i.i, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph.us.i.i, %middle.block
-  %indvars.iv151.i.i.ph = phi i64 [ %indvars.iv.i.us.i.i, %vector.scevcheck ], [ %indvars.iv.i.us.i.i, %.lr.ph.us.i.i ], [ %i.ic, %middle.block ]
+scalar.ph.preheader:                              ; preds = %.lr.ph.us.i.i, %middle.block
+  %indvars.iv151.i.i.ph = phi i64 [ %indvars.iv.i.us.i.i, %.lr.ph.us.i.i ], [ %i.ic, %middle.block ]
   %i.ld = insertelement <2 x float> poison, float %i.hs, i64 1
   %i.le = insertelement <2 x float> poison, float %i.hu, i64 1
   %i.lf = insertelement <2 x float> poison, float %i.hq, i64 1
@@ -1146,8 +1113,8 @@ attributes #11 = { noreturn nounwind }
 !37 = !{!"llvm.loop.mustprogress"}
 !38 = !{!"short", !5, i64 0}
 !39 = !{!38, !38, i64 0}
-!40 = !{!"llvm.loop.isvectorized", i32 1}
-!41 = !{!"llvm.loop.unroll.runtime.disable"}
+!40 = !{!"llvm.loop.unroll.runtime.disable"}
+!41 = !{!"llvm.loop.isvectorized", i32 1}
 !42 = !{!31, !9, i64 262280}
 !43 = !{!31, !6, i64 8}
 !44 = !{!5, !5, i64 0}
@@ -1156,9 +1123,9 @@ attributes #11 = { noreturn nounwind }
 !47 = distinct !{!47, !37, !75}
 !48 = distinct !{!48, !37}
 !49 = distinct !{!49, !37}
-!50 = distinct !{!50, !37, !40}
+!50 = distinct !{!50, !37, !40, !41}
 !51 = distinct !{!51, !37}
-!52 = distinct !{!52, !37, !40, !41}
+!52 = distinct !{!52, !37, !41, !40}
 !53 = distinct !{!53, !37}
 !54 = distinct !{!54, !37}
 !55 = distinct !{!55, !37}
@@ -1196,7 +1163,7 @@ attributes #11 = { noreturn nounwind }
 !87 = !{!82, !30, i64 0}
 !88 = !{!82, !30, i64 8}
 !89 = !{!82, !30, i64 12}
-!90 = distinct !{!90, !37, !40, !41}
+!90 = distinct !{!90, !37, !41, !40}
 !91 = !{!28, !6, i64 36}
 !92 = !{!31, !30, i64 262192}
 !93 = !{!28, !21, i64 0}

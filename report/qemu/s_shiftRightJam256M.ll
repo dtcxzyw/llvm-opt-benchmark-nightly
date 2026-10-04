@@ -1,7 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/s_shiftRightJam256M?download=true
 inline.NumInlined: 1
 inline.NumDeleted: 1
-loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -50,13 +51,13 @@ bb.e:                                             ; preds = %.thread.thread, %.t
   %i.j = phi i64 [ %1, %.thread.thread ], [ %i.i, %.thread ] ; 5 uses
   %i.k = phi ptr [ %0, %.thread.thread ], [ %i.h, %.thread ] ; 4 uses
   %.0395780 = phi i1 [ true, %.thread.thread ], [ %.not45.not, %.thread ] ; 3 uses
-  %.0375977 = phi i64 [ 0, %.thread.thread ], [ %spec.store.select, %.thread ] ; 6 uses
+  %.0375977 = phi i64 [ 0, %.thread.thread ], [ %spec.store.select, %.thread ] ; 7 uses
   %i.l = load i64, ptr %i.k, align 8, !tbaa !16   ; 2 uses
   %i.m = lshr i64 %i.l, %i.j                      ; 2 uses
   %i.n = shl i64 %i.m, %i.j
   %.not.i = icmp ne i64 %i.n, %i.l
   %i.o = zext i1 %.not.i to i64
-  %spec.select.i = or i64 %i.m, %i.o              ; 3 uses
+  %spec.select.i = or i64 %i.m, %i.o              ; 2 uses
   %.not2526.i = icmp eq i64 %.0375977, 3
   br i1 %.not2526.i, label %softfloat_shortShiftRightJamM.exit.thread, label %.lr.ph.i
 
@@ -68,62 +69,41 @@ softfloat_shortShiftRightJamM.exit.thread:        ; preds = %bb.e
   br i1 %.0395780, label %bb.h, label %bb.g
 
 .lr.ph.i:                                         ; preds = %bb.e
-  %i.r = sub nsw i64 3, %.0375977                 ; 4 uses
+  %i.r = sub nsw i64 3, %.0375977
   %i.s = sub i64 0, %1
   %i.t = and i64 %i.s, 63                         ; 3 uses
-  %xtraiter = and i64 %i.r, 1
-  %i.u = icmp eq i64 %.0375977, 2
-  br i1 %i.u, label %.epil.preheader, label %.lr.ph.i.new
-
-.lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i64 %i.r, -2
-  br label %bb.f
-
-bb.f:                                             ; preds = %bb.f, %.lr.ph.i.new
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.new ], [ %indvars.iv.next.i.1, %bb.f ] ; 3 uses
-  %.128.i = phi i64 [ %spec.select.i, %.lr.ph.i.new ], [ %i.y, %bb.f ]
-  %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %niter.next.1, %bb.f ]
-  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.next.i
+  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %4 = load i64, ptr %3, align 8, !tbaa !16       ; 2 uses
   %5 = shl i64 %4, %i.t
-  %6 = or i64 %5, %.128.i
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i
-  store i64 %6, ptr %7, align 8, !tbaa !16
-  %8 = lshr i64 %4, %i.j
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 3 uses
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.next.i.1
-  %i.v = load i64, ptr %9, align 8, !tbaa !16     ; 2 uses
+  %6 = or i64 %5, %spec.select.i
+  store i64 %6, ptr %2, align 8, !tbaa !16
+  %7 = lshr i64 %4, %i.j                          ; 2 uses
+  %i.u = icmp eq i64 %.0375977, 2
+  br i1 %i.u, label %softfloat_shortShiftRightJamM.exit, label %bb.f
+
+bb.f:                                             ; preds = %.lr.ph.i
+  %8 = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+  %i.v = load i64, ptr %8, align 8, !tbaa !16     ; 2 uses
   %i.w = shl i64 %i.v, %i.t
-  %i.x = or i64 %i.w, %8
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next.i
-  store i64 %i.x, ptr %10, align 8, !tbaa !16
-  %i.y = lshr i64 %i.v, %i.j                      ; 3 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %softfloat_shortShiftRightJamM.exit.unr-lcssa, label %bb.f
+  %i.x = or i64 %i.w, %7
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i64 %i.x, ptr %9, align 8, !tbaa !16
+  %i.y = lshr i64 %i.v, %i.j                      ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %.0375977, 1
+  br i1 %niter.ncmp.1, label %softfloat_shortShiftRightJamM.exit, label %.epil.preheader
 
-softfloat_shortShiftRightJamM.exit.unr-lcssa:     ; preds = %bb.f
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %softfloat_shortShiftRightJamM.exit, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %softfloat_shortShiftRightJamM.exit.unr-lcssa, %.lr.ph.i
-  %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i.1, %softfloat_shortShiftRightJamM.exit.unr-lcssa ] ; 2 uses
-  %.128.i.epil.init = phi i64 [ %spec.select.i, %.lr.ph.i ], [ %i.y, %softfloat_shortShiftRightJamM.exit.unr-lcssa ]
-  %lcmp.mod96 = trunc i64 %i.r to i1
-  tail call void @llvm.assume(i1 %lcmp.mod96)
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.i.epil.init
-  %i.z = getelementptr inbounds nuw i8, ptr %11, i64 8
+.epil.preheader:                                  ; preds = %bb.f
+  %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !16  ; 2 uses
   %i.ab = shl i64 %i.aa, %i.t
-  %i.ac = or i64 %i.ab, %.128.i.epil.init
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i.epil.init
-  store i64 %i.ac, ptr %12, align 8, !tbaa !16
+  %i.ac = or i64 %i.ab, %i.y
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store i64 %i.ac, ptr %10, align 8, !tbaa !16
   %i.ad = lshr i64 %i.aa, %i.j
   br label %softfloat_shortShiftRightJamM.exit
 
-softfloat_shortShiftRightJamM.exit:               ; preds = %softfloat_shortShiftRightJamM.exit.unr-lcssa, %.epil.preheader
-  %.lcssa = phi i64 [ %i.y, %softfloat_shortShiftRightJamM.exit.unr-lcssa ], [ %i.ad, %.epil.preheader ]
+softfloat_shortShiftRightJamM.exit:               ; preds = %.epil.preheader, %bb.f, %.lr.ph.i
+  %.lcssa = phi i64 [ %7, %.lr.ph.i ], [ %i.y, %bb.f ], [ %i.ad, %.epil.preheader ]
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.r
   store i64 %.lcssa, ptr %i.ae, align 8, !tbaa !16
   %.not49 = icmp eq i64 %.0375977, 0
@@ -275,13 +255,9 @@ declare i64 @llvm.umin.i64(i64, i64) #1
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #2
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #3
-
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

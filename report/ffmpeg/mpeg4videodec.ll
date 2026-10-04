@@ -205,10 +205,14 @@ scalar.ph231.preheader:                           ; preds = %.preheader.us.1
 
 vector.body235:                                   ; preds = %.preheader.us.1, %vector.body235
   %index236 = phi i64 [ %index.next238, %vector.body235 ], [ 0, %.preheader.us.1 ] ; 3 uses
-  %i.dy = getelementptr inbounds [2 x i8], ptr %.0151160.us.1, i64 %index236
-  %wide.load237 = load <8 x i16>, ptr %i.dy, align 2, !tbaa !66, !alias.scope !210
-  %i.dz = getelementptr inbounds nuw [2 x i8], ptr %i.dx, i64 %index236
-  store <8 x i16> %wide.load237, ptr %i.dz, align 2, !tbaa !66, !alias.scope !211, !noalias !210
+  %i.dy = getelementptr inbounds [2 x i8], ptr %.0151160.us.1, i64 %index236 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.dy, i64 8
+  %wide.load237 = load <4 x i16>, ptr %i.dy, align 2, !tbaa !66, !alias.scope !210
+  %wide.load238 = load <4 x i16>, ptr %8, align 2, !tbaa !66, !alias.scope !210
+  %i.dz = getelementptr inbounds nuw [2 x i8], ptr %i.dx, i64 %index236 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
+  store <4 x i16> %wide.load237, ptr %i.dz, align 2, !tbaa !66, !alias.scope !211, !noalias !210
+  store <4 x i16> %wide.load238, ptr %9, align 2, !tbaa !66, !alias.scope !211, !noalias !210
   %index.next238 = add nuw i64 %index236, 8       ; 2 uses
   %i.ea = icmp eq i64 %index.next238, %wide.trip.count.1
   br i1 %i.ea, label %._crit_edge.us.1, label %vector.body235, !llvm.loop !179
@@ -338,10 +342,14 @@ scalar.ph252.preheader:                           ; preds = %.preheader.us.2
 
 vector.body256:                                   ; preds = %.preheader.us.2, %vector.body256
   %index257 = phi i64 [ %index.next259, %vector.body256 ], [ 0, %.preheader.us.2 ] ; 3 uses
-  %i.fv = getelementptr inbounds [2 x i8], ptr %.0151160.us.2, i64 %index257
-  %wide.load258 = load <8 x i16>, ptr %i.fv, align 2, !tbaa !66, !alias.scope !212
-  %i.fw = getelementptr inbounds nuw [2 x i8], ptr %i.fu, i64 %index257
-  store <8 x i16> %wide.load258, ptr %i.fw, align 2, !tbaa !66, !alias.scope !213, !noalias !212
+  %i.fv = getelementptr inbounds [2 x i8], ptr %.0151160.us.2, i64 %index257 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.fv, i64 8
+  %wide.load259 = load <4 x i16>, ptr %i.fv, align 2, !tbaa !66, !alias.scope !212
+  %wide.load260 = load <4 x i16>, ptr %10, align 2, !tbaa !66, !alias.scope !212
+  %i.fw = getelementptr inbounds nuw [2 x i8], ptr %i.fu, i64 %index257 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.fw, i64 8
+  store <4 x i16> %wide.load259, ptr %i.fw, align 2, !tbaa !66, !alias.scope !213, !noalias !212
+  store <4 x i16> %wide.load260, ptr %11, align 2, !tbaa !66, !alias.scope !213, !noalias !212
   %index.next259 = add nuw i64 %index257, 8       ; 2 uses
   %i.fx = icmp eq i64 %index.next259, %wide.trip.count.2
   br i1 %i.fx, label %._crit_edge.us.2, label %vector.body256, !llvm.loop !185

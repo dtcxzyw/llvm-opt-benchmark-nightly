@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %_RNvXs1_NtCs1xwejQu
   store <2 x i64> %i.et, ptr %i.es, align 8, !noalias !28663
   %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.es, i64 16
   store i8 %i.er, ptr %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i.1, align 8, !noalias !28663
-  %i.eu = add nuw i64 %i.ei, 2                    ; 2 uses
+  %i.eu = add nuw nsw i64 %i.ei, 2                ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB6_3VecINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusiveINtNtB1a_6option6OptionINtNtNtB1a_3num7nonzero7NonZerojEEEEINtB4_18SpecFromIterNestedB13_INtNtNtNtB1a_4iter8adapters3map3MapINtNtNtB1a_5slice4iter4IterNtNtCs9fPPV5zPXBl_5typst4args5PagesENCNCNvMNtB4o_7compileNtB51_13CompileConfig8new_impls_00EE9from_iterB4o_.exit.loopexit.unr-lcssa, label %.preheader.i.i.i

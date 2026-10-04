@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph
   br i1 %.not12.i.us, label %bb.f, label %_ZN2cvL10isZeroElemEPKhm.exit.us
 
 bb.f:                                             ; preds = %.lr.ph.i.us
-  %i.bb = add i64 %.116.i.us, 1                   ; 2 uses
+  %i.bb = add nuw nsw i64 %.116.i.us, 1           ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %i.bb, %i.ag
   br i1 %exitcond.not.i.us, label %_ZN2cvL8copyElemEPKhPhm.exit.us, label %.lr.ph.i.us, !llvm.loop !87
 
@@ -419,7 +419,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dt = load i8, ptr %i.ds, align 1, !tbaa !45
   %i.du = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.116.i44.us.prol
   store i8 %i.dt, ptr %i.du, align 1, !tbaa !45
-  %i.dv = add nuw i64 %.116.i44.us.prol, 1        ; 2 uses
+  %i.dv = add nuw nsw i64 %.116.i44.us.prol, 1    ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter165
   br i1 %prol.iter.cmp.not, label %.lr.ph17.i.us.prol.loopexit, label %.lr.ph17.i.us.prol, !llvm.loop !93
@@ -436,22 +436,22 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !45
   %i.ea = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.116.i44.us
   store i8 %i.dz, ptr %i.ea, align 1, !tbaa !45
-  %i.eb = add nuw i64 %.116.i44.us, 1             ; 2 uses
+  %i.eb = add nuw nsw i64 %.116.i44.us, 1         ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.13665.us, i64 %i.eb
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !45
   %i.ee = getelementptr inbounds nuw i8, ptr %i.cn, i64 %i.eb
   store i8 %i.ed, ptr %i.ee, align 1, !tbaa !45
-  %i.ef = add nuw i64 %.116.i44.us, 2             ; 2 uses
+  %i.ef = add nuw nsw i64 %.116.i44.us, 2         ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %.13665.us, i64 %i.ef
   %i.eh = load i8, ptr %i.eg, align 1, !tbaa !45
   %i.ei = getelementptr inbounds nuw i8, ptr %i.cn, i64 %i.ef
   store i8 %i.eh, ptr %i.ei, align 1, !tbaa !45
-  %i.ej = add nuw i64 %.116.i44.us, 3             ; 2 uses
+  %i.ej = add nuw nsw i64 %.116.i44.us, 3         ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %.13665.us, i64 %i.ej
   %i.el = load i8, ptr %i.ek, align 1, !tbaa !45
   %i.em = getelementptr inbounds nuw i8, ptr %i.cn, i64 %i.ej
   store i8 %i.el, ptr %i.em, align 1, !tbaa !45
-  %i.en = add nuw i64 %.116.i44.us, 4             ; 2 uses
+  %i.en = add nuw nsw i64 %.116.i44.us, 4         ; 2 uses
   %exitcond.not.i45.us.3 = icmp eq i64 %i.en, %i.ag
   br i1 %exitcond.not.i45.us.3, label %_ZN2cvL8copyElemEPKhPhm.exit.us, label %.lr.ph17.i.us, !llvm.loop !94
 
@@ -854,7 +854,7 @@ vec.epilog.middle.block150:                       ; preds = %vec.epilog.vector.b
   %i.dt = load i8, ptr %i.ds, align 1, !tbaa !45
   %i.du = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.116.i.us.prol
   store i8 %i.dt, ptr %i.du, align 1, !tbaa !45
-  %i.dv = add nuw i64 %.116.i.us.prol, 1          ; 2 uses
+  %i.dv = add nuw nsw i64 %.116.i.us.prol, 1      ; 2 uses
   %prol.iter188.next = add i64 %prol.iter188, 1   ; 2 uses
   %prol.iter188.cmp.not = icmp eq i64 %prol.iter188.next, %xtraiter186
   br i1 %prol.iter188.cmp.not, label %.lr.ph17.i.us.prol.loopexit, label %.lr.ph17.i.us.prol, !llvm.loop !118
@@ -871,22 +871,22 @@ vec.epilog.middle.block150:                       ; preds = %vec.epilog.vector.b
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !45
   %i.ea = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.116.i.us
   store i8 %i.dz, ptr %i.ea, align 1, !tbaa !45
-  %i.eb = add nuw i64 %.116.i.us, 1               ; 2 uses
+  %i.eb = add nuw nsw i64 %.116.i.us, 1           ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.eb
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !45
   %i.ee = getelementptr inbounds nuw i8, ptr %i.cn, i64 %i.eb
   store i8 %i.ed, ptr %i.ee, align 1, !tbaa !45
-  %i.ef = add nuw i64 %.116.i.us, 2               ; 2 uses
+  %i.ef = add nuw nsw i64 %.116.i.us, 2           ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ef
   %i.eh = load i8, ptr %i.eg, align 1, !tbaa !45
   %i.ei = getelementptr inbounds nuw i8, ptr %i.cn, i64 %i.ef
   store i8 %i.eh, ptr %i.ei, align 1, !tbaa !45
-  %i.ej = add nuw i64 %.116.i.us, 3               ; 2 uses
+  %i.ej = add nuw nsw i64 %.116.i.us, 3           ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ej
   %i.el = load i8, ptr %i.ek, align 1, !tbaa !45
   %i.em = getelementptr inbounds nuw i8, ptr %i.cn, i64 %i.ej
   store i8 %i.el, ptr %i.em, align 1, !tbaa !45
-  %i.en = add nuw i64 %.116.i.us, 4               ; 2 uses
+  %i.en = add nuw nsw i64 %.116.i.us, 4           ; 2 uses
   %exitcond.not.i22.us.3 = icmp eq i64 %i.en, %i.ad
   br i1 %exitcond.not.i22.us.3, label %_ZN2cvL8copyElemEPKhPhm.exit.us, label %.lr.ph17.i.us, !llvm.loop !119
 

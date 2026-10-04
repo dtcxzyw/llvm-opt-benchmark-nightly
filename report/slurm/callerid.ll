@@ -180,10 +180,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
-  %i.g = icmp eq i32 %2, 2                        ; 2 uses
+  %i.g = icmp eq i32 %2, 2
   %i.h = select i1 %i.g, i32 4, i32 16            ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.i, i8 0, i64 32, i1 false)
   %i.k = tail call noalias ptr @fopen(ptr noundef %3, ptr noundef nonnull @.str.11) ; 3 uses
   %.not = icmp eq ptr %i.k, null
@@ -192,8 +192,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.m = lshr exact i32 %i.h, 2
-  %wide.trip.count = zext nneg i32 %i.m to i64    ; 2 uses
-  %n.vec = and i64 %wide.trip.count, 4
+  %wide.trip.count = zext nneg i32 %i.m to i64
   br label %.outer
 
 .outer:                                           ; preds = %.preheader, %middle.block
@@ -215,28 +214,10 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.p = call i32 @inet_nsap_addr(ptr noundef nonnull %i.a, ptr noundef nonnull %i.i, i32 noundef %i.h) #9 ; 0 uses
   %i.q = call i32 @inet_nsap_addr(ptr noundef nonnull %i.b, ptr noundef nonnull %i.j, i32 noundef %i.h) #9 ; 0 uses
-  br i1 %i.g, label %scalar.ph, label %vector.ph
-
-vector.ph:                                        ; preds = %bb.d
-  %load_initial = load <4 x i32>, ptr %i.i, align 4
-  %6 = call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %load_initial)
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %store_forwarded = phi <4 x i32> [ %6, %vector.ph ], [ %wide.load44, %vector.body ]
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %index
-  store <4 x i32> %store_forwarded, ptr %7, align 4
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %index ; 2 uses
-  %wide.load44 = load <4 x i32>, ptr %8, align 4  ; 2 uses
-  %9 = call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %wide.load44)
-  store <4 x i32> %9, ptr %8, align 4
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %10 = icmp eq i64 %index.next, %n.vec
-  br i1 %10, label %middle.block, label %vector.body, !llvm.loop !10
+  br label %scalar.ph
 
 scalar.ph:                                        ; preds = %bb.d, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ 0, %bb.d ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %scalar.ph ] ; 3 uses
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv ; 2 uses
   %i.s = load i32, ptr %i.r, align 4
   %i.t = call noundef i32 @llvm.bswap.i32(i32 %i.s)
@@ -247,13 +228,13 @@ scalar.ph:                                        ; preds = %bb.d, %scalar.ph
   store i32 %i.w, ptr %i.u, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %middle.block, label %scalar.ph, !llvm.loop !11
+  br i1 %exitcond.not, label %middle.block, label %scalar.ph, !llvm.loop !10
 
-middle.block:                                     ; preds = %vector.body, %scalar.ph
+middle.block:                                     ; preds = %scalar.ph
   %i.x = load i64, ptr %i.d, align 8
-  %i.y = call i32 %4(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %5, i64 noundef %i.x, i32 noundef %2) #9, !callees !16 ; 2 uses
+  %i.y = call i32 %4(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %5, i64 noundef %i.x, i32 noundef %2) #9, !callees !13 ; 2 uses
   %i.z = icmp eq i32 %i.y, 0
-  br i1 %i.z, label %bb.e, label %.outer, !llvm.loop !12
+  br i1 %i.z, label %bb.e, label %.outer, !llvm.loop !11
 
 bb.e:                                             ; preds = %middle.block
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #9
@@ -449,10 +430,10 @@ bb.c:                                             ; preds = %.lr.ph, %.backedge
 .backedge:                                        ; preds = %.backedge.sink.split, %bb.c
   %i.q = call ptr @readdir(ptr noundef nonnull %i.c) #9 ; 2 uses
   %.not = icmp eq ptr %i.q, null
-  br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !17
+  br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !14
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = call i64 @__isoc23_strtol(ptr noundef nonnull %i.k, ptr noundef null, i32 noundef 10) #9, !inline_history !18
+  %i.r = call i64 @__isoc23_strtol(ptr noundef nonnull %i.k, ptr noundef null, i32 noundef 10) #9, !inline_history !15
   %i.s = trunc i64 %i.r to i32                    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
@@ -481,7 +462,7 @@ bb.e:                                             ; preds = %bb.d
 .backedge.i:                                      ; preds = %bb.g, %bb.f, %.lr.ph.i
   %i.ab = call ptr @readdir(ptr noundef nonnull %i.v) #9 ; 2 uses
   %.not.i = icmp eq ptr %i.ab, null
-  br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !19
+  br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !16
 
 bb.f:                                             ; preds = %.lr.ph.i
   %i.ac = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.b, i64 noundef 4096, ptr noundef nonnull @.str.7, ptr noundef nonnull %i.a, ptr noundef nonnull %i.z) #9
@@ -585,9 +566,6 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #8
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #8
-
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nofree nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -613,14 +591,11 @@ attributes #10 = { nounwind willreturn memory(none) }
 !7 = !{!"Ubuntu clang version 24.0.0 (++20260804081852+44c6aed9bd9b-1~exp1~20260804202019.1766)"}
 !8 = !{!"llvm.loop.unroll.disable"}
 !9 = distinct !{!9, !8}
-!10 = distinct !{!10, !13, !8, !14, !15}
-!11 = distinct !{!11, !13, !8, !14}
-!12 = distinct !{!12, !13, !8}
-!13 = !{!"llvm.loop.mustprogress"}
-!14 = !{!"llvm.loop.isvectorized", i32 1}
-!15 = !{!"llvm.loop.unroll.runtime.disable"}
-!16 = !{ptr @_match_conn, ptr @_match_inode}
-!17 = distinct !{!17, !8}
-!18 = distinct !{null}
-!19 = distinct !{!19, !8}
+!10 = distinct !{!10, !12, !8}
+!11 = distinct !{!11, !12, !8}
+!12 = !{!"llvm.loop.mustprogress"}
+!13 = !{ptr @_match_conn, ptr @_match_inode}
+!14 = distinct !{!14, !8}
+!15 = distinct !{null}
+!16 = distinct !{!16, !8}
 end_hunk_0

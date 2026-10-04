@@ -202,9 +202,9 @@ bb.bb:                                            ; preds = %bb.az, %bb.ay, %bb.
   %.val1736 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.lb = getelementptr inbounds nuw i8, ptr %.val1736, i64 %i.eo
   %i.lc = getelementptr inbounds nuw i8, ptr %i.lb, i64 3
-  %.0.copyload.i1815 = load i8, ptr %i.lc, align 1 ; 2 uses
+  %.0.copyload.i1815 = load i8, ptr %i.lc, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1815) #8, !srcloc !21
-  %i.ld = zext i8 %.0.copyload.i1815 to i32       ; 2 uses
+  %i.ld = zext i8 %.0.copyload.i1815 to i32
   %i.le = icmp ult i32 %.6, %i.ld
   br i1 %i.le, label %bb.bc, label %.loopexit1863
 
@@ -214,12 +214,15 @@ bb.bc:                                            ; preds = %.loopexit1864
   %i.lg = getelementptr inbounds nuw i8, ptr %.val1633, i64 %i.ed
   %.0.copyload.i1816 = load i32, ptr %i.lg, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1816) #8, !srcloc !13
-  %i.lh = zext i32 %.0.copyload.i1816 to i64      ; 2 uses
+  %3 = zext i32 %.0.copyload.i1816 to i64         ; 2 uses
+  %4 = zext nneg i32 %.6 to i64
+  %i.lh = zext i8 %.0.copyload.i1815 to i64
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bg, %bb.bc
-  %.7 = phi i32 [ %.6, %bb.bc ], [ %3, %bb.bg ]   ; 2 uses
-  %i.li = add i32 %i.lf, %.7
+  %indvars.iv1889 = phi i64 [ %indvars.iv.next1890, %bb.bg ], [ %4, %bb.bc ] ; 2 uses
+  %5 = trunc nuw nsw i64 %indvars.iv1889 to i32
+  %i.li = add i32 %i.lf, %5
   %i.lj = zext i32 %i.li to i64
   %.val1735 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.lk = getelementptr inbounds nuw i8, ptr %.val1735, i64 %i.lj
@@ -238,7 +241,7 @@ bb.bd:                                            ; preds = %bb.bg, %bb.bc
 bb.be:                                            ; preds = %bb.bd
   %i.lq = and i32 %.0.copyload.i1818, 268435455
   %.val1631 = load ptr, ptr %i.d, align 8, !tbaa !12
-  %i.lr = getelementptr inbounds nuw i8, ptr %.val1631, i64 %i.lh
+  %i.lr = getelementptr inbounds nuw i8, ptr %.val1631, i64 %3
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lr, i64 568
   %.0.copyload.i1819 = load i32, ptr %i.ls, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1819) #8, !srcloc !13
@@ -247,7 +250,7 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %bb.be
   %.val1630 = load ptr, ptr %i.d, align 8, !tbaa !12
-  %i.lt = getelementptr inbounds nuw i8, ptr %.val1630, i64 %i.lh
+  %i.lt = getelementptr inbounds nuw i8, ptr %.val1630, i64 %3
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lt, i64 560
   %.0.copyload.i1820 = load i32, ptr %i.lu, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1820) #8, !srcloc !13
@@ -268,8 +271,8 @@ bb.bf:                                            ; preds = %bb.be
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.be, %bb.bd, %bb.bf
-  %3 = add i32 %.7, 1                             ; 2 uses
-  %.not1575 = icmp eq i32 %3, %i.ld
+  %indvars.iv.next1890 = add nuw nsw i64 %indvars.iv1889, 1 ; 2 uses
+  %.not1575 = icmp eq i64 %indvars.iv.next1890, %i.lh
   br i1 %.not1575, label %.loopexit1863, label %bb.bd
 
 .loopexit1863:                                    ; preds = %bb.bg, %.loopexit1864
@@ -672,7 +675,7 @@ declare void @w2c_hermes_llvh0x3A0x3Areport_bad_alloc_error0x28char0x20const0x2A
 define hidden void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AIdentifierTable0x3A0x3AfreeUnmarkedSymbols0x28llvh0x3A0x3ABitVector0x20const0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AGCBase0x3A0x3AIDTracker0x260x29(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = add i32 %1, 12                           ; 6 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 110 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 111 uses
   %i.c = zext i32 %2 to i64                       ; 2 uses
   %i.d = add nuw nsw i64 %i.c, 8                  ; 3 uses
   %.val1454 = load ptr, ptr %i.b, align 8, !tbaa !12
@@ -1023,7 +1026,7 @@ bb.n:                                             ; preds = %bb.m
   %i.el = lshr i32 -1, %i.ek
   %i.em = add i32 %.0.copyload.i1528, -1
   %i.en = lshr i32 %i.em, 5
-  %i.eo = zext i32 %i.a to i64                    ; 8 uses
+  %i.eo = zext i32 %i.a to i64                    ; 9 uses
   %.val1424 = load ptr, ptr %i.b, align 8, !tbaa !12
   %i.ep = getelementptr inbounds nuw i8, ptr %.val1424, i64 %i.eo
   %.0.copyload.i1530 = load i32, ptr %i.ep, align 1 ; 2 uses
@@ -1426,14 +1429,14 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay, %bb.
 
 bb.bb:                                            ; preds = %bb.t, %bb.s, %._crit_edge
   %.9 = phi i32 [ %.01303, %bb.s ], [ %.01303, %bb.t ], [ %.0.copyload.i1581, %._crit_edge ] ; 4 uses
-  %i.pd = add nuw i32 %.71326, 1                  ; 3 uses
+  %i.pd = add nuw i32 %.71326, 1                  ; 4 uses
   %i.pe = icmp eq i32 %i.pd, %.9
   br i1 %i.pe, label %.loopexit, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.pf = lshr i32 %i.pd, 5                       ; 3 uses
+  %i.pf = lshr i32 %i.pd, 5                       ; 2 uses
   %i.pg = add i32 %.9, -1
-  %i.ph = lshr i32 %i.pg, 5                       ; 2 uses
+  %i.ph = lshr i32 %i.pg, 5                       ; 3 uses
   %i.pi = icmp samesign ugt i32 %i.pf, %i.ph
   br i1 %i.pi, label %.loopexit, label %bb.bd
 
@@ -1446,49 +1449,76 @@ bb.bd:                                            ; preds = %bb.bc
   %.not1381 = icmp ne i32 %i.pj, 0
   %i.po = sub i32 0, %.9
   %i.pp = and i32 %i.po, 31
-  %i.pq = lshr i32 -1, %i.pp
+  %4 = lshr i32 -1, %i.pp                         ; 2 uses
+  %.val1388 = load ptr, ptr %i.b, align 8, !tbaa !12
+  %5 = getelementptr inbounds nuw i8, ptr %.val1388, i64 %i.eo
+  %.0.copyload.i1582 = load i32, ptr %5, align 1  ; 3 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1582) #8, !srcloc !13
+  %i.pq = lshr i32 %i.pd, 5                       ; 5 uses
+  %6 = zext nneg i32 %i.ph to i64
+  %7 = shl nuw nsw i32 %i.pq, 2
+  %8 = add i32 %7, %.0.copyload.i1582
+  %9 = zext i32 %8 to i64
   %.val1388.a = load ptr, ptr %i.b, align 8, !tbaa !12
-  %i.pr = getelementptr inbounds nuw i8, ptr %.val1388.a, i64 %i.eo
+  %i.pr = getelementptr inbounds nuw i8, ptr %.val1388.a, i64 %9
   %.0.copyload.i1582.a = load i32, ptr %i.pr, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1582.a) #8, !srcloc !13
+  %.not1382.peel = icmp eq i32 %i.pf, %i.pq
+  %10 = and i1 %.not1381, %.not1382.peel
+  %11 = select i1 %10, i32 %i.pn, i32 -1
+  %.not1384.peel = icmp eq i32 %i.pq, %i.ph       ; 2 uses
+  %12 = select i1 %.not1384.peel, i32 %4, i32 -1
+  %13 = and i32 %12, %11
+  %14 = and i32 %13, %.0.copyload.i1582.a         ; 2 uses
+  %.not1383.peel = icmp eq i32 %14, 0
+  br i1 %.not1383.peel, label %15, label %bb.bg
+
+15:                                               ; preds = %bb.bd
+  br i1 %.not1384.peel, label %.loopexit, label %.peel.next.preheader
+
+.peel.next.preheader:                             ; preds = %15
+  %16 = zext nneg i32 %i.pq to i64
   br label %bb.be
 
-bb.be:                                            ; preds = %bb.bf, %bb.bd
-  %.81327 = phi i32 [ %i.pf, %bb.bd ], [ %7, %bb.bf ] ; 5 uses
-  %i.ps = shl i32 %.81327, 2
-  %i.pt = add i32 %i.ps, %.0.copyload.i1582.a
+bb.be:                                            ; preds = %.peel.next.preheader, %17
+  %indvars.iv1648.in = phi i64 [ %indvars.iv1648, %17 ], [ %16, %.peel.next.preheader ]
+  %indvars.iv1648 = add nuw nsw i64 %indvars.iv1648.in, 1 ; 4 uses
+  %indvars.iv1648.tr = trunc nuw nsw i64 %indvars.iv1648 to i32
+  %i.ps = shl nuw nsw i32 %indvars.iv1648.tr, 2
+  %i.pt = add i32 %i.ps, %.0.copyload.i1582
   %i.pu = zext i32 %i.pt to i64
   %.val = load ptr, ptr %i.b, align 8, !tbaa !12
   %i.pv = getelementptr inbounds nuw i8, ptr %.val, i64 %i.pu
   %.0.copyload.i1583 = load i32, ptr %i.pv, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1583) #8, !srcloc !13
-  %.not1382 = icmp eq i32 %i.pf, %.81327
-  %4 = and i1 %.not1381, %.not1382
-  %5 = select i1 %4, i32 %i.pn, i32 -1
-  %.not1384 = icmp eq i32 %.81327, %i.ph          ; 2 uses
-  %i.pw = select i1 %.not1384, i32 %i.pq, i32 -1
-  %6 = and i32 %i.pw, %5
-  %i.px = and i32 %6, %.0.copyload.i1583          ; 2 uses
+  %.not1384 = icmp eq i64 %indvars.iv1648, %6     ; 2 uses
+  %i.pw = select i1 %.not1384, i32 %4, i32 -1
+  %i.px = and i32 %i.pw, %.0.copyload.i1583       ; 2 uses
   %.not1383 = icmp eq i32 %i.px, 0
-  br i1 %.not1383, label %bb.bf, label %bb.bg
+  br i1 %.not1383, label %17, label %bb.bf
+
+17:                                               ; preds = %bb.be
+  br i1 %.not1384, label %.loopexit, label %bb.be, !llvm.loop !42
 
 bb.bf:                                            ; preds = %bb.be
-  %7 = add i32 %.81327, 1
-  br i1 %.not1384, label %.loopexit, label %bb.be
+  %18 = trunc nuw nsw i64 %indvars.iv1648 to i32
+  br label %bb.bg
 
-bb.bg:                                            ; preds = %bb.be
-  %i.py = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.px, i1 true)
-  %i.pz = shl i32 %.81327, 5
+bb.bg:                                            ; preds = %bb.bf, %bb.bd
+  %.81327.lcssa.wide = phi i32 [ %i.pq, %bb.bd ], [ %18, %bb.bf ]
+  %.lcssa1623 = phi i32 [ %14, %bb.bd ], [ %i.px, %bb.bf ]
+  %i.py = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.lcssa1623, i1 true)
+  %i.pz = shl i32 %.81327.lcssa.wide, 5
   %i.qa = or disjoint i32 %i.py, %i.pz            ; 3 uses
   %i.qb = icmp ne i32 %i.qa, -1
   %i.qc = icmp ult i32 %i.qa, %.0.copyload.i1529
   %or.cond1387 = select i1 %i.qb, i1 %i.qc, i1 false
   br i1 %or.cond1387, label %bb.s, label %.loopexit
 
-.loopexit:                                        ; preds = %bb.p, %bb.bg, %bb.bc, %bb.bb, %bb.bf, %..loopexit_crit_edge, %bb.q
-  %.pre-phi1648 = phi i64 [ %.pre, %..loopexit_crit_edge ], [ %i.eo, %bb.bg ], [ %i.eo, %bb.bf ], [ %i.eo, %bb.q ], [ %i.eo, %bb.bb ], [ %i.eo, %bb.bc ], [ %i.eo, %bb.p ]
+.loopexit:                                        ; preds = %bb.p, %bb.bg, %bb.bc, %bb.bb, %15, %17, %..loopexit_crit_edge, %bb.q
+  %.pre-phi1653 = phi i64 [ %.pre, %..loopexit_crit_edge ], [ %i.eo, %bb.bg ], [ %i.eo, %17 ], [ %i.eo, %bb.q ], [ %i.eo, %15 ], [ %i.eo, %bb.bb ], [ %i.eo, %bb.bc ], [ %i.eo, %bb.p ]
   %.val1491 = load ptr, ptr %i.b, align 8, !tbaa !12
-  %i.qd = getelementptr inbounds nuw i8, ptr %.val1491, i64 %.pre-phi1648
+  %i.qd = getelementptr inbounds nuw i8, ptr %.val1491, i64 %.pre-phi1653
   %.0.copyload.i1584 = load i64, ptr %i.qd, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i1584) #8, !srcloc !22
   %i.qe = lshr i64 %.0.copyload.i1584, 32         ; 2 uses
@@ -1891,4 +1921,6 @@ attributes #9 = { noreturn nounwind }
 !39 = !{!"branch_weights", i32 4001, i32 4000000}
 !40 = !{!"branch_weights", !"expected", i32 2147483112, i32 536}
 !41 = !{ptr @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AJSObject0x3A0x3AgetOwnComputedDescriptor0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AJSObject0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3AMutableHandle0x3Chermes0x3A0x3Avm0x3A0x3ASymbolID0x3E0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AComputedPropertyDescriptor0x260x29}
+!42 = distinct !{!42, !43}
+!43 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_3

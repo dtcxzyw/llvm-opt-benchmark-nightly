@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/struct_grid?download=true
 inline.NumInlined: 2
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 4
 begin_hunk_0_@hypre_GatherAllBoxes:bb.a
   br i1 %i.t, label %.lr.ph, label %._crit_edge
@@ -204,10 +204,10 @@ bb.a:
   %i.f = load i32, ptr %i.e, align 8, !tbaa !7    ; 3 uses
   %.not = icmp ne i32 %i.b, 0                     ; 3 uses
   %spec.select.neg = sext i1 %.not to i32         ; 2 uses
-  %.not176 = icmp ne i32 %i.d, 0                  ; 5 uses
+  %.not176 = icmp ne i32 %i.d, 0                  ; 4 uses
   %.0170.neg = sext i1 %.not176 to i32            ; 2 uses
-  %.not177 = icmp ne i32 %i.f, 0                  ; 3 uses
-  %.0169.neg = sext i1 %.not177 to i32            ; 4 uses
+  %.not177 = icmp ne i32 %i.f, 0                  ; 7 uses
+  %.0169.neg = sext i1 %.not177 to i32            ; 3 uses
   %i.g = or i32 %i.d, %i.b
   %i.h = or i32 %i.g, %i.f
   %or.cond3 = icmp eq i32 %i.h, 0
@@ -233,16 +233,40 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader184.preheader:                          ; preds = %bb.b
   %i.x = zext nneg i32 %i.m to i64
-  %i.y = select i1 %.not177, i32 2, i32 1         ; 4 uses
-  %i.z = select i1 %.not176, i32 2, i32 1         ; 2 uses
+  %i.y = select i1 %.not177, i32 2, i32 1
+  %i.z = select i1 %.not176, i32 2, i32 1
   %i.aa = select i1 %.not, i32 2, i32 1           ; 2 uses
-  %not..not176 = xor i1 %.not176, true
-  %5 = zext i1 %not..not176 to i32
+  %trip.count.minus.1 = select i1 %.not177, i32 2, i32 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %trip.count.minus.1, i64 0
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
+  %5 = icmp samesign uge <4 x i32> %broadcast.splat, <i32 0, i32 1, i32 2, i32 3>
+  %broadcast.splatinsert249 = insertelement <4 x i32> poison, i32 %.0169.neg, i64 0
+  %broadcast.splat250 = shufflevector <4 x i32> %broadcast.splatinsert249, <4 x i32> poison, <4 x i32> zeroinitializer
+  %induction = add nsw <4 x i32> %broadcast.splat250, <i32 0, i32 1, i32 2, i32 3>
+  %trip.count.minus.1.1 = select i1 %.not177, i32 2, i32 0
+  %broadcast.splatinsert.1 = insertelement <4 x i32> poison, i32 %trip.count.minus.1.1, i64 0
+  %broadcast.splat.1 = shufflevector <4 x i32> %broadcast.splatinsert.1, <4 x i32> poison, <4 x i32> zeroinitializer
+  %6 = icmp samesign uge <4 x i32> %broadcast.splat.1, <i32 0, i32 1, i32 2, i32 3>
+  %broadcast.splatinsert249.1 = insertelement <4 x i32> poison, i32 %.0169.neg, i64 0
+  %broadcast.splat250.1 = shufflevector <4 x i32> %broadcast.splatinsert249.1, <4 x i32> poison, <4 x i32> zeroinitializer
+  %induction.1 = add nsw <4 x i32> %broadcast.splat250.1, <i32 0, i32 1, i32 2, i32 3>
+  %trip.count.minus.1.2 = select i1 %.not177, i32 2, i32 0
+  %broadcast.splatinsert.2 = insertelement <4 x i32> poison, i32 %trip.count.minus.1.2, i64 0
+  %broadcast.splat.2 = shufflevector <4 x i32> %broadcast.splatinsert.2, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat.2.fr = freeze <4 x i32> %broadcast.splat.2
+  %7 = icmp samesign uge <4 x i32> %broadcast.splat.2.fr, <i32 0, i32 1, i32 2, i32 3>
+  %trip.count.minus.1.3 = select i1 %.not177, i32 2, i32 0
+  %broadcast.splatinsert.3 = insertelement <4 x i32> poison, i32 %trip.count.minus.1.3, i64 0
+  %broadcast.splat.3 = shufflevector <4 x i32> %broadcast.splatinsert.3, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat.3.fr = freeze <4 x i32> %broadcast.splat.3
+  %8 = icmp samesign uge <4 x i32> %broadcast.splat.3.fr, <i32 0, i32 1, i32 2, i32 3>
+  %9 = bitcast <4 x i1> %8 to i4
+  %.not254.3 = icmp eq i4 %9, 0                   ; 0 uses
   br label %.preheader184
 
 .preheader184:                                    ; preds = %.preheader184.preheader, %.split206.us
   %.0159211 = phi i32 [ %.us-phi207, %.split206.us ], [ 0, %.preheader184.preheader ] ; 3 uses
-  %.0160210 = phi i32 [ %.us-phi, %.split206.us ], [ 0, %.preheader184.preheader ] ; 9 uses
+  %.0160210 = phi i32 [ %.us-phi, %.split206.us ], [ 0, %.preheader184.preheader ] ; 7 uses
   %.0167209 = phi i32 [ %.1168, %.split206.us ], [ undef, %.preheader184.preheader ]
   %.0172208 = phi i32 [ %.1173, %.split206.us ], [ 0, %.preheader184.preheader ]
   %i.ab = sext i32 %.0160210 to i64               ; 3 uses
@@ -306,7 +330,7 @@ bb.d:                                             ; preds = %bb.c
   %.1.lcssa = trunc i64 %.1.lcssa.in to i32       ; 2 uses
   %i.bg = icmp slt i32 %.0160210, %.1161.lcssa
   %.fr = freeze i1 %i.bg
-  br i1 %.fr, label %.preheader183.us.preheader, label %.preheader183
+  br i1 %.fr, label %.preheader183.us.preheader, label %.preheader.prol
 
 .preheader183.us.preheader:                       ; preds = %.split.loop.exit241
   %i.bh = sext i32 %.1161.lcssa to i64
@@ -411,57 +435,39 @@ bb.f:                                             ; preds = %bb.f, %.preheader.u
   %exitcond234.not = icmp eq i32 %i.cw, %i.aa
   br i1 %exitcond234.not, label %.split206.us, label %.preheader183.us, !llvm.loop !47
 
-.preheader183:                                    ; preds = %.split.loop.exit241, %.split198
-  %.0158203 = phi i32 [ %i.cy, %.split198 ], [ %spec.select.neg, %.split.loop.exit241 ] ; 3 uses
-  %.2162201 = phi i32 [ %spec.select214.lcssa.lcssa, %.split198 ], [ %.1161.lcssa, %.split.loop.exit241 ]
-  %6 = or i32 %.0158203, %.0170.neg
-  br label %.preheader.prol
+.preheader.prol:                                  ; preds = %.split.loop.exit241, %.split198
+  %.0192.prol = phi i32 [ %i.cy, %.split198 ], [ %spec.select.neg, %.split.loop.exit241 ] ; 3 uses
+  %.4164190.prol = phi i32 [ %spec.select214.lcssa.lcssa, %.split198 ], [ %.1161.lcssa, %.split.loop.exit241 ]
+  %i.cx = or i32 %.0192.prol, %.0170.neg
+  %broadcast.splatinsert247 = insertelement <4 x i32> poison, i32 %i.cx, i64 0
+  %broadcast.splat248 = shufflevector <4 x i32> %broadcast.splatinsert247, <4 x i32> poison, <4 x i32> zeroinitializer
+  %10 = or <4 x i32> %broadcast.splat248, %induction
+  %11 = icmp ne <4 x i32> %10, zeroinitializer
+  %12 = select <4 x i1> %5, <4 x i1> %11, <4 x i1> zeroinitializer
+  %.fr253 = freeze <4 x i1> %12
+  %13 = bitcast <4 x i1> %.fr253 to i4
+  %exitcond.not.prol = icmp eq i4 %13, 0
+  %rdx.select = select i1 %exitcond.not.prol, i32 %.4164190.prol, i32 %.0160210 ; 2 uses
+  br i1 %.not176, label %.preheader, label %.split198
 
-.preheader.prol:                                  ; preds = %.preheader.prol, %.preheader183
-  %.0192.prol = phi i32 [ %.0169.neg, %.preheader183 ], [ %7, %.preheader.prol ] ; 2 uses
-  %.4164190.prol = phi i32 [ %.2162201, %.preheader183 ], [ %spec.select214.prol, %.preheader.prol ]
-  %i.cx = or i32 %6, %.0192.prol
-  %or.cond7.prol = icmp eq i32 %i.cx, 0
-  %spec.select214.prol = select i1 %or.cond7.prol, i32 %.4164190.prol, i32 %.0160210 ; 3 uses
-  %7 = add nsw i32 %.0192.prol, 1                 ; 2 uses
-  %exitcond.not.prol = icmp eq i32 %7, %i.y
-  br i1 %exitcond.not.prol, label %.preheader182.prol.loopexit, label %.preheader.prol, !llvm.loop !48
+.preheader:                                       ; preds = %.preheader.prol
+  %broadcast.splatinsert247.1 = insertelement <4 x i32> poison, i32 %.0192.prol, i64 0
+  %broadcast.splat248.1 = shufflevector <4 x i32> %broadcast.splatinsert247.1, <4 x i32> poison, <4 x i32> zeroinitializer
+  %14 = or <4 x i32> %broadcast.splat248.1, %induction.1
+  %15 = icmp ne <4 x i32> %14, zeroinitializer
+  %16 = select <4 x i1> %6, <4 x i1> %15, <4 x i1> zeroinitializer
+  %.fr253.1 = freeze <4 x i1> %16
+  %17 = or <4 x i1> %7, %.fr253.1
+  %18 = bitcast <4 x i1> %17 to i4
+  %exitcond.not = icmp eq i4 %18, 0
+  %rdx.select.2 = select i1 %exitcond.not, i32 %rdx.select, i32 %.0160210
+  br label %.split198
 
-.preheader182.prol.loopexit:                      ; preds = %.preheader.prol
-  br i1 %.not176, label %.preheader182, label %.split198
-
-.preheader182:                                    ; preds = %.preheader182.prol.loopexit, %.split.1
-  %.0157196 = phi i32 [ %12, %.split.1 ], [ %5, %.preheader182.prol.loopexit ] ; 2 uses
-  %.3163194 = phi i32 [ %.0160210, %.split.1 ], [ %spec.select214.prol, %.preheader182.prol.loopexit ]
-  %8 = or i32 %.0157196, %.0158203
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader182, %.preheader
-  %.0192 = phi i32 [ %.0169.neg, %.preheader182 ], [ %10, %.preheader ] ; 2 uses
-  %.4164190 = phi i32 [ %.3163194, %.preheader182 ], [ %spec.select214, %.preheader ]
-  %9 = or i32 %8, %.0192
-  %or.cond7 = icmp eq i32 %9, 0
-  %spec.select214 = select i1 %or.cond7, i32 %.4164190, i32 %.0160210
-  %10 = add nsw i32 %.0192, 1                     ; 2 uses
-  %exitcond.not = icmp eq i32 %10, %i.y
-  br i1 %exitcond.not, label %.preheader.1, label %.preheader, !llvm.loop !48
-
-.preheader.1:                                     ; preds = %.preheader, %.preheader.1
-  %.0192.1 = phi i32 [ %11, %.preheader.1 ], [ %.0169.neg, %.preheader ]
-  %11 = add nsw i32 %.0192.1, 1                   ; 2 uses
-  %exitcond.not.1 = icmp eq i32 %11, %i.y
-  br i1 %exitcond.not.1, label %.split.1, label %.preheader.1, !llvm.loop !48
-
-.split.1:                                         ; preds = %.preheader.1
-  %12 = add nsw i32 %.0157196, 2                  ; 2 uses
-  %exitcond222.not.1 = icmp eq i32 %12, %i.z
-  br i1 %exitcond222.not.1, label %.split198, label %.preheader182, !llvm.loop !46
-
-.split198:                                        ; preds = %.split.1, %.preheader182.prol.loopexit
-  %spec.select214.lcssa.lcssa = phi i32 [ %spec.select214.prol, %.preheader182.prol.loopexit ], [ %.0160210, %.split.1 ] ; 2 uses
-  %i.cy = add nsw i32 %.0158203, 1                ; 2 uses
+.split198:                                        ; preds = %.preheader, %.preheader.prol
+  %spec.select214.lcssa.lcssa = phi i32 [ %rdx.select, %.preheader.prol ], [ %rdx.select.2, %.preheader ] ; 2 uses
+  %i.cy = add nsw i32 %.0192.prol, 1              ; 2 uses
   %exitcond223.not = icmp eq i32 %i.cy, %i.aa
-  br i1 %exitcond223.not, label %.split206.us, label %.preheader183, !llvm.loop !47
+  br i1 %exitcond223.not, label %.split206.us, label %.preheader.prol, !llvm.loop !47
 
 .split206.us:                                     ; preds = %.split198, %.split198.us.us
   %.us-phi = phi i32 [ %.6166.us.us.us, %.split198.us.us ], [ %spec.select214.lcssa.lcssa, %.split198 ] ; 2 uses
@@ -473,7 +479,7 @@ bb.f:                                             ; preds = %bb.f, %.preheader.u
   %.1173 = select i1 %i.cz, i32 %i.db, i32 %.0172208 ; 2 uses
   %.1168 = select i1 %i.cz, i32 %.0159211, i32 %.0167209 ; 2 uses
   %i.dc = icmp slt i32 %.us-phi, %i.m
-  br i1 %i.dc, label %.preheader184, label %._crit_edge, !llvm.loop !49
+  br i1 %i.dc, label %.preheader184, label %._crit_edge, !llvm.loop !48
 
 ._crit_edge:                                      ; preds = %.split206.us, %bb.b
   %.0172.lcssa = phi i32 [ 0, %bb.b ], [ %.1173, %.split206.us ]
@@ -539,7 +545,7 @@ bb.a:
   %i.z = load i32, ptr %i.f, align 8, !tbaa !28
   %i.aa = sext i32 %i.z to i64
   %i.ab = icmp slt i64 %indvars.iv.next, %i.aa
-  br i1 %i.ab, label %.lr.ph, label %._crit_edge, !llvm.loop !52
+  br i1 %i.ab, label %.lr.ph, label %._crit_edge, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret i32 0
@@ -601,7 +607,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ac = add nuw nsw i32 %.09, 1                 ; 2 uses
   %i.ad = load i32, ptr %i.d, align 4, !tbaa !7
   %i.ae = icmp slt i32 %i.ac, %i.ad
-  br i1 %i.ae, label %bb.b, label %._crit_edge, !llvm.loop !53
+  br i1 %i.ae, label %bb.b, label %._crit_edge, !llvm.loop !50
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %i.af = call i32 @hypre_StructGridAssemble(ptr noundef nonnull %i.h) ; 0 uses
@@ -694,10 +700,7 @@ attributes #10 = { nounwind }
 !45 = distinct !{!45, !26}
 !46 = distinct !{!46, !26}
 !47 = distinct !{!47, !26}
-!48 = distinct !{!48, !26, !50, !51}
+!48 = distinct !{!48, !26}
 !49 = distinct !{!49, !26}
-!50 = !{!"llvm.loop.unroll.runtime.disable"}
-!51 = !{!"llvm.loop.isvectorized", i32 1}
-!52 = distinct !{!52, !26}
-!53 = distinct !{!53, !26}
+!50 = distinct !{!50, !26}
 end_hunk_0

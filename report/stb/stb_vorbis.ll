@@ -205,6 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.preheader.i:                               ; preds = %bb.g
   %i.bh = add nuw nsw i64 %i.bc, 1
+  %sext = zext nneg i32 %.043.i to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
@@ -227,8 +228,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bq = fmul float %i.bn, %i.bp
   store float %i.bq, ptr %i.bo, align 4, !tbaa !63
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %.043.i, %lftr.wideiv.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %sext
   br i1 %exitcond.not.i, label %draw_line.exit, label %.lr.ph.i, !llvm.loop !259
 
 draw_line.exit:                                   ; preds = %.lr.ph.i, %bb.g, %bb.f, %bb.e, %bb.d

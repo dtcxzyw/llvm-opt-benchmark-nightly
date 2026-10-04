@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %._crit_edge173
 bb.f:                                             ; preds = %bb.a
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.bx = load i32, ptr %i.bw, align 8, !tbaa !210 ; 2 uses
-  %i.by = load ptr, ptr %1, align 8, !tbaa !109   ; 14 uses
+  %i.by = load ptr, ptr %1, align 8, !tbaa !109   ; 12 uses
   %.not135164 = icmp eq i32 %i.bx, 0
   br i1 %.not135164, label %._crit_edge169.thread, label %.lr.ph168
 
@@ -224,7 +224,6 @@ bb.f:                                             ; preds = %bb.a
   %.pre195 = load i32, ptr %i.bz, align 4, !tbaa !73
   %.pre196 = load i32, ptr %i.ca, align 8, !tbaa !79
   %.pre197 = load i32, ptr %i.cb, align 4, !tbaa !98
-  %scevgep275 = getelementptr i8, ptr %i.by, i64 4
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph168, %.loopexit149
@@ -238,7 +237,7 @@ bb.g:                                             ; preds = %.lr.ph168, %.loopex
   %i.cp = load i32, ptr %i.co, align 8, !tbaa !210 ; 5 uses
   %i.cq = sub nsw i32 %i.cp, %.0125165            ; 8 uses
   %i.cr = sdiv i32 %i.cm, 2
-  %i.cs = add i32 %i.cr, %i.cl
+  %i.cs = add nsw i32 %i.cr, %i.cl
   %i.ct = sub i32 %i.cs, %i.ck                    ; 3 uses
   %.not137 = icmp slt i32 %.0125165, %i.ck
   %i.cu = sub nsw i32 0, %i.ct
@@ -250,40 +249,27 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.cw, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.h
-  %i.cx = load ptr, ptr %i.cc, align 8, !tbaa !74 ; 4 uses
-  %i.cy = zext nneg i32 %i.cv to i64              ; 10 uses
-  %i.cz = sext i32 %i.ct to i64                   ; 4 uses
+  %i.cx = load ptr, ptr %i.cc, align 8, !tbaa !74 ; 3 uses
+  %i.cy = zext nneg i32 %i.cv to i64              ; 9 uses
+  %i.cz = sext i32 %i.ct to i64                   ; 3 uses
   %wide.trip.count = zext nneg i32 %i.ck to i64   ; 7 uses
   %invariant.gep = getelementptr [8 x i8], ptr %i.cx, i64 %i.cz ; 4 uses
   %i.da = sub nsw i64 %wide.trip.count, %i.cy     ; 3 uses
-  %min.iters.check283 = icmp ult i64 %i.da, 48
+  %min.iters.check283 = icmp ult i64 %i.da, 28
   br i1 %min.iters.check283, label %scalar.ph282.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
   %i.db = xor i64 %i.cy, -1
-  %2 = add nsw i64 %i.db, %wide.trip.count        ; 3 uses
-  %i.dc = add nsw i64 %i.cz, %i.cy
-  %3 = shl nsw i64 %i.dc, 3
-  %scevgep = getelementptr i8, ptr %i.cx, i64 %3  ; 2 uses
-  %mul.result = shl nsw i64 %2, 3                 ; 2 uses
-  %4 = getelementptr i8, ptr %scevgep, i64 %mul.result
-  %5 = icmp ult ptr %4, %scevgep
+  %i.dc = add nsw i64 %i.db, %wide.trip.count     ; 2 uses
   %i.dd = add i32 %i.cp, %i.cv
   %i.de = sub i32 %i.dd, %.0125165                ; 2 uses
-  %i.df = shl i32 %i.de, 1                        ; 2 uses
-  %i.dg = trunc i64 %2 to i32
+  %i.df = shl i32 %i.de, 1
+  %i.dg = trunc i64 %i.dc to i32
   %i.dh = add i32 %i.de, %i.dg
   %i.di = shl i32 %i.dh, 1
   %i.dj = icmp slt i32 %i.di, %i.df
-  %i.dk = icmp ugt i64 %2, 2147483647
-  %6 = or i1 %i.dj, %i.dk
-  %7 = sext i32 %i.df to i64
-  %8 = shl nsw i64 %7, 2
-  %scevgep276 = getelementptr i8, ptr %scevgep275, i64 %8 ; 2 uses
-  %9 = getelementptr i8, ptr %scevgep276, i64 %mul.result
-  %10 = icmp ult ptr %9, %scevgep276
-  %11 = or i1 %5, %6
-  %i.dl = or i1 %10, %11
+  %i.dk = icmp ugt i64 %i.dc, 2147483647
+  %i.dl = or i1 %i.dj, %i.dk
   br i1 %i.dl, label %scalar.ph282.preheader, label %vector.memcheck277
 
 vector.memcheck277:                               ; preds = %vector.scevcheck
@@ -553,41 +539,27 @@ bb.n:                                             ; preds = %bb.g
   br i1 %i.hr, label %.lr.ph162, label %.loopexit149.thread
 
 .lr.ph162:                                        ; preds = %bb.n
-  %i.hs = load ptr, ptr %i.cc, align 8, !tbaa !74 ; 4 uses
-  %i.ht = zext nneg i32 %i.cv to i64              ; 10 uses
-  %i.hu = sext i32 %i.ct to i64                   ; 4 uses
+  %i.hs = load ptr, ptr %i.cc, align 8, !tbaa !74 ; 3 uses
+  %i.ht = zext nneg i32 %i.cv to i64              ; 9 uses
+  %i.hu = sext i32 %i.ct to i64                   ; 3 uses
   %wide.trip.count187 = zext nneg i32 %.0125165 to i64 ; 7 uses
   %invariant.gep244 = getelementptr [8 x i8], ptr %i.hs, i64 %i.hu ; 4 uses
   %i.hv = sub nsw i64 %wide.trip.count187, %i.ht  ; 3 uses
-  %min.iters.check312 = icmp ult i64 %i.hv, 58
+  %min.iters.check312 = icmp ult i64 %i.hv, 36
   br i1 %min.iters.check312, label %scalar.ph311.preheader, label %vector.scevcheck293
 
 vector.scevcheck293:                              ; preds = %.lr.ph162
   %i.hw = xor i64 %i.ht, -1
-  %12 = add nsw i64 %i.hw, %wide.trip.count187    ; 3 uses
-  %i.hx = add nsw i64 %i.hu, %i.ht
-  %13 = shl nsw i64 %i.hx, 3
-  %scevgep294 = getelementptr i8, ptr %i.hs, i64 %13 ; 2 uses
-  %mul.result296 = shl nsw i64 %12, 3             ; 2 uses
-  %14 = getelementptr i8, ptr %scevgep294, i64 %mul.result296
-  %15 = icmp ult ptr %14, %scevgep294
+  %i.hx = add nsw i64 %i.hw, %wide.trip.count187  ; 2 uses
   %i.hy = add i32 %i.cp, %i.cv
   %i.hz = sub i32 %i.hy, %.0125165                ; 2 uses
-  %i.ia = shl i32 %i.hz, 1                        ; 2 uses
-  %i.ib = trunc i64 %12 to i32
+  %i.ia = shl i32 %i.hz, 1
+  %i.ib = trunc i64 %i.hx to i32
   %i.ic = add i32 %i.hz, %i.ib
   %i.id = shl i32 %i.ic, 1
   %i.ie = icmp slt i32 %i.id, %i.ia
-  %i.if = icmp ugt i64 %12, 2147483647
-  %16 = or i1 %i.ie, %i.if
-  %scevgep301 = getelementptr i8, ptr %i.by, i64 4
-  %17 = sext i32 %i.ia to i64
-  %18 = shl nsw i64 %17, 2
-  %scevgep302 = getelementptr i8, ptr %scevgep301, i64 %18 ; 2 uses
-  %19 = getelementptr i8, ptr %scevgep302, i64 %mul.result296
-  %20 = icmp ult ptr %19, %scevgep302
-  %21 = or i1 %15, %16
-  %i.ig = or i1 %20, %21
+  %i.if = icmp ugt i64 %i.hx, 2147483647
+  %i.ig = or i1 %i.ie, %i.if
   br i1 %i.ig, label %scalar.ph311.preheader, label %vector.memcheck313
 
 vector.memcheck313:                               ; preds = %vector.scevcheck293

@@ -205,10 +205,10 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %indvars.iv85 = phi i64 [ %indvars.iv.next86, %bb.b ], [ 0, %bb.a ] ; 4 uses
   %.05475 = phi ptr [ %.lcssa92, %bb.b ], [ %1, %bb.a ]
-  %i.c = mul i64 %indvars.iv85, 176
+  %i.c = mul nuw nsw i64 %indvars.iv85, 176
   %i.d = getelementptr i8, ptr %0, i64 %i.c
   %scevgep103 = getelementptr i8, ptr %i.d, i64 176
-  %i.e = mul i64 %indvars.iv85, 176
+  %i.e = mul nuw nsw i64 %indvars.iv85, 176
   %i.f = getelementptr i8, ptr %0, i64 %i.e
   %scevgep = getelementptr i8, ptr %i.f, i64 176
   %i.g = getelementptr inbounds nuw [176 x i8], ptr %0, i64 %indvars.iv85 ; 18 uses

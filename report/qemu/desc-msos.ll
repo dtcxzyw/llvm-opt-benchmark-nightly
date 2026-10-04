@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef i32 @usb_desc_msos(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(4096) ptr @g_malloc0(i64 noundef 4096) #7 ; 22 uses
+  %i.a = tail call noalias dereferenceable_or_null(4096) ptr @g_malloc0(i64 noundef 4096) #7 ; 21 uses
   switch i32 %2, label %bb.h [
     i32 4, label %bb.b
     i32 5, label %bb.d
@@ -75,19 +75,14 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.i.i:                                       ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 36 ; 5 uses
   %wide.trip.count.i.i = zext i32 %i.w to i64     ; 8 uses
-  %min.iters.check = icmp ult i32 %i.w, 32
+  %min.iters.check = icmp ult i32 %i.w, 20
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i
-  %i.ab = add nsw i64 %wide.trip.count.i.i, -1    ; 2 uses
+  %i.ab = add nsw i64 %wide.trip.count.i.i, -1
   %i.ac = and i64 %i.ab, -3221225472
-  %5 = icmp ne i64 %i.ac, 0
-  %scevgep = getelementptr nuw i8, ptr %i.a, i64 37 ; 2 uses
-  %mul.result19 = shl nsw i64 %i.ab, 1
-  %6 = getelementptr i8, ptr %scevgep, i64 %mul.result19
-  %7 = icmp ult ptr %6, %scevgep
-  %8 = or i1 %5, %7
-  br i1 %8, label %scalar.ph.preheader, label %vector.memcheck
+  %.not = icmp eq i64 %i.ac, 0
+  br i1 %.not, label %vector.memcheck, label %scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.ad = shl nuw nsw i64 %wide.trip.count.i.i, 2

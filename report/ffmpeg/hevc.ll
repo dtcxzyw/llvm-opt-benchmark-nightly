@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = alloca [16 x i8], align 16               ; 21 uses
   %i.c = alloca [16 x i8], align 16               ; 10 uses
-  %i.d = alloca [64 x i8], align 16               ; 13 uses
+  %i.d = alloca [64 x i8], align 16               ; 16 uses
   %i.e = alloca [17 x i8], align 16               ; 13 uses
   %5 = alloca %struct.GetBitContext, align 8      ; 22 uses
   %i.f = alloca i32, align 4                      ; 4 uses
@@ -608,19 +608,25 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %umin, 48                      ; 5 uses
   %i.yw = or disjoint i64 %n.vec, 1               ; 2 uses
   %i.yx = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  store <16 x i8> <i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15, i8 16>, ptr %i.yx, align 1, !tbaa !13
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 9
+  store <8 x i8> <i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8>, ptr %i.yx, align 1, !tbaa !13
+  store <8 x i8> <i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15, i8 16>, ptr %6, align 1, !tbaa !13
   %i.yy = icmp eq i64 %n.vec, 16
   br i1 %i.yy, label %middle.block, label %vector.body.1
 
 vector.body.1:                                    ; preds = %vector.ph
   %i.yz = getelementptr inbounds nuw i8, ptr %i.d, i64 17
-  store <16 x i8> <i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23, i8 24, i8 25, i8 26, i8 27, i8 28, i8 29, i8 30, i8 31, i8 32>, ptr %i.yz, align 1, !tbaa !13
+  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 25
+  store <8 x i8> <i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23, i8 24>, ptr %i.yz, align 1, !tbaa !13
+  store <8 x i8> <i8 25, i8 26, i8 27, i8 28, i8 29, i8 30, i8 31, i8 32>, ptr %7, align 1, !tbaa !13
   %i.za = icmp eq i64 %n.vec, 32
   br i1 %i.za, label %middle.block, label %vector.body.2
 
 vector.body.2:                                    ; preds = %vector.body.1
   %i.zb = getelementptr inbounds nuw i8, ptr %i.d, i64 33
-  store <16 x i8> <i8 33, i8 34, i8 35, i8 36, i8 37, i8 38, i8 39, i8 40, i8 41, i8 42, i8 43, i8 44, i8 45, i8 46, i8 47, i8 48>, ptr %i.zb, align 1, !tbaa !13
+  %8 = getelementptr inbounds nuw i8, ptr %i.d, i64 41
+  store <8 x i8> <i8 33, i8 34, i8 35, i8 36, i8 37, i8 38, i8 39, i8 40>, ptr %i.zb, align 1, !tbaa !13
+  store <8 x i8> <i8 41, i8 42, i8 43, i8 44, i8 45, i8 46, i8 47, i8 48>, ptr %8, align 1, !tbaa !13
   br label %middle.block
 
 middle.block:                                     ; preds = %vector.body.2, %vector.body.1, %vector.ph

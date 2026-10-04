@@ -144,7 +144,7 @@ bb.u:                                             ; preds = %.lr.ph, %smix.exit
 
 .preheader82.i:                                   ; preds = %.preheader82.i, %bb.u
   %.085.i = phi i64 [ 0, %bb.u ], [ %i.cw, %.preheader82.i ] ; 2 uses
-  %.idx.i = shl nuw i64 %.085.i, 6                ; 2 uses
+  %.idx.i = shl nuw nsw i64 %.085.i, 6            ; 2 uses
   %i.ba = getelementptr i8, ptr %i.am, i64 %.idx.i ; 16 uses
   %i.bb = getelementptr i8, ptr %i.az, i64 %.idx.i ; 16 uses
   %i.bc = load i32, ptr %i.bb, align 1

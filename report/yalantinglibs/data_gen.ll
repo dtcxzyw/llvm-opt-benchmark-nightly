@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 1304
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.bs, i8 0, i64 52, i1 false)
   store i8 1, ptr %i.bu, align 8, !tbaa !1490
-  %i.bv = add nuw i64 %.011.i.i, 4                ; 2 uses
+  %i.bv = add nuw nsw i64 %.011.i.i, 4            ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph.preheader.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !7178
@@ -235,7 +235,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bx, i64 320
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.by, i8 0, i64 52, i1 false)
   store i8 1, ptr %i.ca, align 8, !tbaa !1490
-  %i.cb = add nuw i64 %.011.i.i.epil, 1
+  %i.cb = add nuw nsw i64 %.011.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.lr.ph.i.i.epil, !llvm.loop !7179
@@ -278,7 +278,7 @@ bb.c:                                             ; preds = %bb.a
   %i.cs = getelementptr inbounds nuw [328 x i8], ptr %i.bb, i64 %.06.i
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 2616
   store i8 0, ptr %i.ct, align 8, !tbaa !1490
-  %i.cu = add nuw i64 %.06.i, 8                   ; 2 uses
+  %i.cu = add nuw nsw i64 %.06.i, 8               ; 2 uses
   %niter9.next.7 = add i64 %niter9, 8             ; 2 uses
   %niter9.ncmp.7 = icmp eq i64 %niter9.next.7, %unroll_iter8
   br i1 %niter9.ncmp.7, label %_ZN3ylt6detail10moodycamel15ConcurrentQueueISt10unique_ptrIN7coro_io16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS6_EENS1_28ConcurrentQueueDefaultTraitsEE27populate_initial_block_listEm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !7180
@@ -299,7 +299,7 @@ _ZN3ylt6detail10moodycamel15ConcurrentQueueISt10unique_ptrIN7coro_io16ib_buffer_
   %i.cv = getelementptr inbounds nuw [328 x i8], ptr %i.bb, i64 %.06.i.epil
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 320
   store i8 0, ptr %i.cw, align 8, !tbaa !1490
-  %i.cx = add nuw i64 %.06.i.epil, 1
+  %i.cx = add nuw nsw i64 %.06.i.epil, 1
   %epil.iter5.next = add i64 %epil.iter5, 1       ; 2 uses
   %epil.iter5.cmp.not = icmp eq i64 %epil.iter5.next, %xtraiter4
   br i1 %epil.iter5.cmp.not, label %_ZN3ylt6detail10moodycamel15ConcurrentQueueISt10unique_ptrIN7coro_io16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS6_EENS1_28ConcurrentQueueDefaultTraitsEE27populate_initial_block_listEm.exit, label %.lr.ph.i.epil, !llvm.loop !7181
@@ -702,7 +702,7 @@ bb.c:                                             ; preds = %bb.a
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 10520
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.bs, i8 0, i64 52, i1 false)
   store i8 1, ptr %i.bu, align 8, !tbaa !2780
-  %i.bv = add nuw i64 %.011.i.i, 4                ; 2 uses
+  %i.bv = add nuw nsw i64 %.011.i.i, 4            ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph.preheader.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !8467
@@ -732,7 +732,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bx, i64 2624
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.by, i8 0, i64 52, i1 false)
   store i8 1, ptr %i.ca, align 8, !tbaa !2780
-  %i.cb = add nuw i64 %.011.i.i.epil, 1
+  %i.cb = add nuw nsw i64 %.011.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.lr.ph.i.i.epil, !llvm.loop !8468
@@ -775,7 +775,7 @@ bb.c:                                             ; preds = %bb.a
   %i.cs = getelementptr inbounds nuw [2632 x i8], ptr %i.bb, i64 %.06.i
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 21048
   store i8 0, ptr %i.ct, align 8, !tbaa !2780
-  %i.cu = add nuw i64 %.06.i, 8                   ; 2 uses
+  %i.cu = add nuw nsw i64 %.06.i, 8               ; 2 uses
   %niter9.next.7 = add i64 %niter9, 8             ; 2 uses
   %niter9.ncmp.7 = icmp eq i64 %niter9.next.7, %unroll_iter8
   br i1 %niter9.ncmp.7, label %_ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQueueDefaultTraitsEE27populate_initial_block_listEm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !8469
@@ -796,7 +796,7 @@ _ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQ
   %i.cv = getelementptr inbounds nuw [2632 x i8], ptr %i.bb, i64 %.06.i.epil
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 2624
   store i8 0, ptr %i.cw, align 8, !tbaa !2780
-  %i.cx = add nuw i64 %.06.i.epil, 1
+  %i.cx = add nuw nsw i64 %.06.i.epil, 1
   %epil.iter5.next = add i64 %epil.iter5, 1       ; 2 uses
   %epil.iter5.cmp.not = icmp eq i64 %epil.iter5.next, %xtraiter4
   br i1 %epil.iter5.cmp.not, label %_ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQueueDefaultTraitsEE27populate_initial_block_listEm.exit, label %.lr.ph.i.epil, !llvm.loop !8470

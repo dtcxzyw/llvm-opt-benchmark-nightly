@@ -205,7 +205,7 @@ _RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs26L2cHvO7VQ_13cf_rustracin
   %.val11.i.i.i.i.i.3 = load i64, ptr %i.bt, align 8, !dbg !9910, !alias.scope !9801, !noundef !494
   %i.bu = add i64 %.val.i.i.i.i.i.3, %i.bq, !dbg !9911
   %i.bv = add i64 %i.bu, %.val11.i.i.i.i.i.3, !dbg !9912 ; 3 uses
-  %i.bw = add nuw i64 %.sroa.04.0.i.i.i.i.i, 4, !dbg !9913 ; 2 uses
+  %i.bw = add nuw nsw i64 %.sroa.04.0.i.i.i.i.i, 4, !dbg !9913 ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4, !dbg !9906 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !9906
   br i1 %niter.ncmp.3, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs26L2cHvO7VQ_13cf_rustracing3log3LogjjNvNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing24output_jaeger_thrift_udp7logging8log_sizeNCINvXsK_NtNtB8_6traits5accumjNtB3l_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1C_EE0E0B1M_.exit.i.loopexit.unr-lcssa, label %.preheader.i.i.i.i, !dbg !9906
@@ -232,7 +232,7 @@ _RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs26L2cHvO7VQ_13
   %.val11.i.i.i.i.i.epil = load i64, ptr %i.bz, align 8, !dbg !9910, !alias.scope !9801, !noundef !494
   %i.ca = add i64 %.val.i.i.i.i.i.epil, %.sroa.02.0.i.i.i.i.i.epil, !dbg !9911
   %i.cb = add i64 %i.ca, %.val11.i.i.i.i.i.epil, !dbg !9912 ; 2 uses
-  %i.cc = add nuw i64 %.sroa.04.0.i.i.i.i.i.epil, 1, !dbg !9913
+  %i.cc = add nuw nsw i64 %.sroa.04.0.i.i.i.i.i.epil, 1, !dbg !9913
   %epil.iter.next = add i64 %epil.iter, 1, !dbg !9906 ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter, !dbg !9906
   br i1 %epil.iter.cmp.not, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRNtNtCs26L2cHvO7VQ_13cf_rustracing3log3LogjjNvNtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing24output_jaeger_thrift_udp7logging8log_sizeNCINvXsK_NtNtB8_6traits5accumjNtB3l_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1C_EE0E0B1M_.exit.i, label %.preheader.i.i.i.i.epil, !dbg !9906, !llvm.loop !9626

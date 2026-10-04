@@ -205,7 +205,7 @@ define internal noundef zeroext i1 @nstrace_read_v30(ptr nofree noundef readonly
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 120
   %i.b = load ptr, ptr %i.a, align 8              ; 9 uses
-  %i.c = load ptr, ptr %i.b, align 8              ; 66 uses
+  %i.c = load ptr, ptr %i.b, align 8              ; 64 uses
   %i.d = ptrtoaddr ptr %i.c to i64                ; 5 uses
   %i.e = getelementptr i8, ptr %i.b, i64 24       ; 3 uses
   %i.f = load i32, ptr %i.e, align 8
@@ -608,7 +608,7 @@ vec.epilog.middle.block820:                       ; preds = %vec.epilog.vector.b
   br label %.lr.ph483
 
 .preheader:                                       ; preds = %select.unfold, %bb.u
-  %.3340.lcssa = phi i32 [ %i.df, %bb.u ], [ 0, %select.unfold ] ; 11 uses
+  %.3340.lcssa = phi i32 [ %i.df, %bb.u ], [ 0, %select.unfold ] ; 10 uses
   %.1335.lcssa = phi i32 [ %.0334, %bb.u ], [ %i.he, %select.unfold ]
   %.1332.lcssa = phi i32 [ 52, %bb.u ], [ %.2333.lcssa, %select.unfold ] ; 2 uses
   %i.ff = icmp ult i32 %.1332.lcssa, %i.do
@@ -623,17 +623,12 @@ iter.check845:                                    ; preds = %.preheader
 
 vector.scevcheck824:                              ; preds = %iter.check845
   %i.fi = xor i64 %i.fg, -1
-  %i.fj = add nsw i64 %i.fi, %wide.trip.count616  ; 3 uses
+  %i.fj = add nsw i64 %i.fi, %wide.trip.count616  ; 2 uses
   %i.fk = trunc i64 %i.fj to i32
   %i.fl = xor i32 %.3340.lcssa, -1
   %i.fm = icmp ult i32 %i.fl, %i.fk
   %i.fn = icmp ugt i64 %i.fj, 4294967295
-  %5 = or i1 %i.fm, %i.fn
-  %6 = zext i32 %.3340.lcssa to i64
-  %scevgep825 = getelementptr i8, ptr %i.c, i64 %6 ; 2 uses
-  %7 = getelementptr i8, ptr %scevgep825, i64 %i.fj
-  %8 = icmp ult ptr %7, %scevgep825
-  %i.fo = or i1 %5, %8
+  %i.fo = or i1 %i.fm, %i.fn
   br i1 %i.fo, label %.lr.ph495.preheader, label %vector.memcheck827
 
 vector.memcheck827:                               ; preds = %vector.scevcheck824
@@ -1036,7 +1031,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph466
 
 .preheader412:                                    ; preds = %select.unfold406, %bb.bi
-  %.7344.lcssa = phi i32 [ %indvars.iv.next563.34, %bb.bi ], [ 0, %select.unfold406 ] ; 11 uses
+  %.7344.lcssa = phi i32 [ %indvars.iv.next563.34, %bb.bi ], [ 0, %select.unfold406 ] ; 10 uses
   %.2336.lcssa = phi i32 [ %.0334, %bb.bi ], [ %i.tg, %select.unfold406 ]
   %.5.lcssa = phi i32 [ 35, %bb.bi ], [ %.6.lcssa, %select.unfold406 ] ; 2 uses
   %i.rh = icmp ult i32 %.5.lcssa, %i.pr
@@ -1051,17 +1046,12 @@ iter.check764:                                    ; preds = %.preheader412
 
 vector.scevcheck745:                              ; preds = %iter.check764
   %i.rk = xor i64 %i.ri, -1
-  %i.rl = add nsw i64 %i.rk, %wide.trip.count581  ; 3 uses
+  %i.rl = add nsw i64 %i.rk, %wide.trip.count581  ; 2 uses
   %i.rm = trunc i64 %i.rl to i32
   %i.rn = xor i32 %.7344.lcssa, -1
   %i.ro = icmp ult i32 %i.rn, %i.rm
   %i.rp = icmp ugt i64 %i.rl, 4294967295
-  %9 = or i1 %i.ro, %i.rp
-  %10 = zext i32 %.7344.lcssa to i64
-  %scevgep746 = getelementptr i8, ptr %i.c, i64 %10 ; 2 uses
-  %11 = getelementptr i8, ptr %scevgep746, i64 %i.rl
-  %12 = icmp ult ptr %11, %scevgep746
-  %i.rq = or i1 %9, %12
+  %i.rq = or i1 %i.ro, %i.rp
   br i1 %i.rq, label %.lr.ph476.preheader, label %vector.memcheck748
 
 vector.memcheck748:                               ; preds = %vector.scevcheck745

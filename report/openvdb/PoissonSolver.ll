@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_ZN7openvdb5v13_04m
   %i.t = add i32 %i.e, %indvar78
   %i.u = mul i32 %i.t, 7
   %i.v = zext i32 %i.u to i64
-  %i.w = mul i64 %indvars.iv.i.i.i.i.i.i, 7
+  %i.w = mul nuw nsw i64 %indvars.iv.i.i.i.i.i.i, 7
   %i.x = and i64 %i.w, 4294967295
   %i.y = getelementptr [8 x i8], ptr %i.o, i64 %i.x ; 7 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %indvars.iv.i.i.i.i.i.i
@@ -608,7 +608,7 @@ bb.y:                                             ; preds = %_ZN7openvdb5v13_04m
   %i.nc = add i32 %i.mt, %indvar
   %i.nd = mul i32 %i.nc, 7
   %i.ne = zext i32 %i.nd to i64
-  %i.nf = mul i64 %indvars.iv.i.i.i.i.i.i17, 7
+  %i.nf = mul nuw nsw i64 %indvars.iv.i.i.i.i.i.i17, 7
   %i.ng = and i64 %i.nf, 4294967295
   %i.nh = getelementptr [8 x i8], ptr %i.my, i64 %i.ng ; 7 uses
   %i.ni = getelementptr inbounds nuw [4 x i8], ptr %i.na, i64 %indvars.iv.i.i.i.i.i.i17
@@ -1011,7 +1011,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %_ZNK7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE8getValueEjj.exit.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
   %indvars.iv.i.i.i.i.i.i = phi i64 [ %i.v, %.lr.ph.i.i.i.i.i.i ], [ %indvars.iv.next.i.i.i.i.i.i, %_ZNK7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE8getValueEjj.exit.i.i.i.i.i.i ] ; 6 uses
-  %i.w = mul i64 %indvars.iv.i.i.i.i.i.i, 7
+  %i.w = mul nuw nsw i64 %indvars.iv.i.i.i.i.i.i, 7
   %i.x = and i64 %i.w, 4294967295                 ; 2 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.x
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.x ; 3 uses
@@ -1414,7 +1414,7 @@ _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exi
 
 bb.aa:                                            ; preds = %_ZNK7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE8getValueEjj.exit.i.i.i.i.i.i28, %.lr.ph.i.i.i.i.i.i15
   %indvars.iv.i.i.i.i.i.i17 = phi i64 [ %i.mx, %.lr.ph.i.i.i.i.i.i15 ], [ %indvars.iv.next.i.i.i.i.i.i30, %_ZNK7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE8getValueEjj.exit.i.i.i.i.i.i28 ] ; 6 uses
-  %i.my = mul i64 %indvars.iv.i.i.i.i.i.i17, 7
+  %i.my = mul nuw nsw i64 %indvars.iv.i.i.i.i.i.i17, 7
   %i.mz = and i64 %i.my, 4294967295               ; 2 uses
   %i.na = getelementptr inbounds nuw [8 x i8], ptr %i.mr, i64 %i.mz
   %i.nb = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %i.mz ; 3 uses
@@ -1817,7 +1817,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %_ZNK7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE7RowBaseINS4_12ConstRowDataEE3dotIdEET_PKS9_j.exit.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
   %indvars.iv.i.i.i.i.i.i = phi i64 [ %i.y, %.lr.ph.i.i.i.i.i.i ], [ %indvars.iv.next.i.i.i.i.i.i, %_ZNK7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE7RowBaseINS4_12ConstRowDataEE3dotIdEET_PKS9_j.exit.i.i.i.i.i.i ] ; 4 uses
-  %i.z = mul i64 %indvars.iv.i.i.i.i.i.i, 7
+  %i.z = mul nuw nsw i64 %indvars.iv.i.i.i.i.i.i, 7
   %i.aa = and i64 %i.z, 4294967295                ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.aa ; 5 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.aa ; 5 uses
@@ -2220,7 +2220,7 @@ _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exi
 
 bb.aa:                                            ; preds = %_ZNK7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE7RowBaseINS4_12ConstRowDataEE3dotIdEET_PKS9_j.exit.i.i.i.i.i.i26, %.lr.ph.i.i.i.i.i.i15
   %indvars.iv.i.i.i.i.i.i17 = phi i64 [ %i.nt, %.lr.ph.i.i.i.i.i.i15 ], [ %indvars.iv.next.i.i.i.i.i.i28, %_ZNK7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE7RowBaseINS4_12ConstRowDataEE3dotIdEET_PKS9_j.exit.i.i.i.i.i.i26 ] ; 4 uses
-  %i.nu = mul i64 %indvars.iv.i.i.i.i.i.i17, 7
+  %i.nu = mul nuw nsw i64 %indvars.iv.i.i.i.i.i.i17, 7
   %i.nv = and i64 %i.nu, 4294967295               ; 2 uses
   %i.nw = getelementptr inbounds nuw [8 x i8], ptr %i.nl, i64 %i.nv ; 5 uses
   %i.nx = getelementptr inbounds nuw [4 x i8], ptr %i.nn, i64 %i.nv ; 5 uses

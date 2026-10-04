@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/oracle_compat?download=true
 inline.NumInlined: 111
 inline.NumDeleted: 13
-loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0_@translate:bb.a
   %i.cl = icmp sgt i32 %i.ay, 0
@@ -204,43 +204,76 @@ VARSIZE_ANY_EXHDR.exit.thread:                    ; preds = %bb.b, %VARSIZE_ANY_
   %i.v = and i8 %i.f, 1
   %.not.i24 = icmp eq i8 %i.v, 0
   %.v.i = select i1 %.not.i24, i64 4, i64 1
-  %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 %.v.i ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 %.v.i ; 8 uses
   %i.x = icmp eq i32 %i.e, 6
   br i1 %i.x, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %VARSIZE_ANY_EXHDR.exit.thread
-  %i.y = load i8, ptr %i.w, align 1               ; 4 uses
+  %i.y = load i8, ptr %i.w, align 1               ; 5 uses
   %i.z = icmp slt i8 %i.y, 0
   br i1 %i.z, label %.epil.preheader, label %bb.h
 
 .epil.preheader:                                  ; preds = %bb.f
-  %1 = zext i8 %i.y to i32
-  %i.aa = icmp samesign ugt i8 %i.y, -17          ; 2 uses
-  %2 = icmp samesign ugt i8 %i.y, -33             ; 2 uses
-  %..a = select i1 %2, i32 15, i32 31
-  %.sink = select i1 %i.aa, i32 7, i32 %..a
-  %i.ab = and i32 %.sink, %1
-  %3 = select i1 %2, i64 2, i64 1
-  %4 = select i1 %i.aa, i64 3, i64 %3
-  br label %bb.g
+  %1 = icmp samesign ult i8 %i.y, -16             ; 3 uses
+  %i.aa = icmp samesign ugt i8 %i.y, -33          ; 2 uses
+  %. = select i1 %i.aa, i32 15, i32 31
+  %..a = select i1 %1, i32 %., i32 7
+  %2 = zext i8 %i.y to i32
+  %i.ab = and i32 %..a, %2
+  %3 = shl nuw nsw i32 %i.ab, 6
+  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 1
+  %5 = load i8, ptr %4, align 1
+  %6 = and i8 %5, 63
+  %7 = zext nneg i8 %6 to i32
+  %8 = or disjoint i32 %3, %7                     ; 2 uses
+  %not.32 = xor i1 %1, true
+  %9 = select i1 %not.32, i1 true, i1 %i.aa
+  br i1 %9, label %10, label %.epilog-lcssa
 
-bb.g:                                             ; preds = %bb.g, %.epil.preheader
-  %indvars.iv.epil = phi i64 [ 1, %.epil.preheader ], [ %indvars.iv.next.epil, %bb.g ] ; 2 uses
-  %.126.epil = phi i32 [ %i.ab, %.epil.preheader ], [ %i.ah, %bb.g ]
-  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.g ]
-  %i.ac = shl i32 %.126.epil, 6
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.w, i64 %indvars.iv.epil
+10:                                               ; preds = %.epil.preheader
+  %11 = shl nuw nsw i32 %8, 6
+  %12 = getelementptr inbounds nuw i8, ptr %i.w, i64 2
+  %13 = load i8, ptr %12, align 1
+  %14 = and i8 %13, 63
+  %15 = zext nneg i8 %14 to i32
+  %16 = or disjoint i32 %11, %15                  ; 2 uses
+  %17 = and i8 %i.y, -16
+  %exitcond.not.1 = icmp eq i8 %17, -32
+  br i1 %exitcond.not.1, label %.epilog-lcssa, label %18
+
+18:                                               ; preds = %10
+  %19 = shl nuw nsw i32 %16, 6
+  %20 = getelementptr inbounds nuw i8, ptr %i.w, i64 3
+  %21 = load i8, ptr %20, align 1
+  %22 = and i8 %21, 63
+  %23 = zext nneg i8 %22 to i32
+  %24 = or disjoint i32 %19, %23                  ; 2 uses
+  br i1 %1, label %bb.g, label %.epilog-lcssa
+
+bb.g:                                             ; preds = %18
+  %25 = shl i32 %24, 12
+  %26 = getelementptr inbounds nuw i8, ptr %i.w, i64 4
+  %27 = load i8, ptr %26, align 1
+  %28 = and i8 %27, 63
+  %29 = zext nneg i8 %28 to i32
+  %i.ac = shl nuw nsw i32 %29, 6
+  %30 = or disjoint i32 %25, %i.ac
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.w, i64 5
   %i.ae = load i8, ptr %i.ad, align 1
   %i.af = and i8 %i.ae, 63
   %i.ag = zext nneg i8 %i.af to i32
-  %i.ah = or disjoint i32 %i.ac, %i.ag            ; 2 uses
-  %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %4
-  br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.g, !llvm.loop !22
+  %i.ah = or disjoint i32 %30, %i.ag
+  %31 = shl i32 %i.ah, 6
+  %32 = getelementptr inbounds nuw i8, ptr %i.w, i64 6
+  %33 = load i8, ptr %32, align 1
+  %34 = and i8 %33, 63
+  %35 = zext nneg i8 %34 to i32
+  %36 = or disjoint i32 %31, %35
+  br label %.epilog-lcssa
 
-.epilog-lcssa:                                    ; preds = %bb.g
-  %i.ai = sext i32 %i.ah to i64
+.epilog-lcssa:                                    ; preds = %bb.g, %18, %10, %.epil.preheader
+  %.lcssa = phi i32 [ %8, %.epil.preheader ], [ %16, %10 ], [ %24, %18 ], [ %36, %bb.g ]
+  %i.ai = sext i32 %.lcssa to i64
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.f, %VARSIZE_ANY_EXHDR.exit.thread
@@ -519,7 +552,7 @@ bb.i:                                             ; preds = %.lr.ph, %bb.k
   %i.ar = getelementptr inbounds i8, ptr %.022, i64 %i.aq
   %i.as = load volatile i32, ptr @InterruptPending, align 4
   %.not = icmp eq i32 %i.as, 0
-  br i1 %.not, label %bb.k, label %bb.j, !prof !25
+  br i1 %.not, label %bb.k, label %bb.j, !prof !23
 
 bb.j:                                             ; preds = %bb.i
   tail call void @ProcessInterrupts() #6
@@ -528,7 +561,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i, %bb.j
   %i.at = add nuw nsw i32 %.01721, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.at, %i.g
-  br i1 %exitcond.not, label %._crit_edge, label %bb.i, !llvm.loop !24
+  br i1 %exitcond.not, label %._crit_edge, label %bb.i, !llvm.loop !22
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.h
   %i.au = ptrtoint ptr %i.aj to i64
@@ -588,8 +621,6 @@ attributes #7 = { cold nounwind }
 !19 = distinct !{!19, !6}
 !20 = distinct !{!20, !6}
 !21 = distinct !{!21, !6}
-!22 = distinct !{!22, !23}
-!23 = !{!"llvm.loop.unroll.disable"}
-!24 = distinct !{!24, !6}
-!25 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!22 = distinct !{!22, !6}
+!23 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 end_hunk_0

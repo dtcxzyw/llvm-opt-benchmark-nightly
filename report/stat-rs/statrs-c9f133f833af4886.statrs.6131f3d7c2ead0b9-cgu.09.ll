@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.z = getelementptr i8, ptr %i.y, i64 24
   store i64 %.val15.i.3, ptr %i.z, align 8, !noalias !58
   %i.aa = add i64 %i.g, 4                         ; 3 uses
-  %i.ab = add nuw i64 %.sroa.01.0.i, 4            ; 2 uses
+  %i.ab = add nuw nsw i64 %.sroa.01.0.i, 4        ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterINtNtCs1xwejQucwHj_5alloc3vec3VecdEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1w_8adapters3map8map_foldRBQ_juNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests8f_oneway8f_oneways0_0NCINvNvB1q_8for_each4calljNCINvMsk_BT_IBR_jE14extend_trustedINtB2g_3MapBF_B2Q_EE0E0E0EB2Y_.exit.loopexit.unr-lcssa, label %bb.c
@@ -232,7 +232,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.copyload, i64 %i.ac
   store i64 %.val15.i.epil, ptr %i.ag, align 8, !noalias !58
   %i.ah = add i64 %i.ac, 1                        ; 2 uses
-  %i.ai = add nuw i64 %.sroa.01.0.i.epil, 1
+  %i.ai = add nuw nsw i64 %.sroa.01.0.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterINtNtCs1xwejQucwHj_5alloc3vec3VecdEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1w_8adapters3map8map_foldRBQ_juNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests8f_oneway8f_oneways0_0NCINvNvB1q_8for_each4calljNCINvMsk_BT_IBR_jE14extend_trustedINtB2g_3MapBF_B2Q_EE0E0E0EB2Y_.exit, label %bb.d, !llvm.loop !56
@@ -284,7 +284,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.r = fmul double %i.q, %i.q
   %i.s = fdiv double %i.r, %i.f
   %i.t = fadd double %i.m, %i.s                   ; 3 uses
-  %i.u = add nuw i64 %.sroa.04.0.i, 2             ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.04.0.i, 2         ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters3map8map_foldRjddNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests9chisquare9chisquare0NCIB1G_dddNCB2h_s_0NCINvXs26_NtBW_5accumdNtB3J_3Sum3sumINtB1I_3MapIB4a_BF_B2f_EB3q_EE0E0E0EB2n_.exit.loopexit.unr-lcssa, label %bb.c
@@ -687,7 +687,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %.sroa.04.0.i
   %.val.i = load i64, ptr %i.af, align 8, !noundef !6
   %i.ag = add i64 %.val.i, %.sroa.02.0.i          ; 2 uses
-  %i.ah = add nuw i64 %.sroa.04.0.i, 1            ; 2 uses
+  %i.ah = add nuw nsw i64 %.sroa.04.0.i, 1        ; 2 uses
   %i.ai = icmp eq i64 %i.ah, %..i
   br i1 %i.ai, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvXsM_NtBW_5accumjINtB1M_3SumRjE3sumBF_E0ECs8lmMd0ZksV9_6statrs.exit.loopexit, label %scalar.ph, !llvm.loop !111
 
@@ -883,7 +883,7 @@ bb.a:
   %i.ab = add i64 %i.v, %.val.i.3
   %i.ac = sub i64 %i.aa, %i.ab
   %i.ad = add i64 %i.z, %i.ac                     ; 3 uses
-  %i.ae = add nuw i64 %.sroa.04.0.i, 4            ; 2 uses
+  %i.ae = add nuw nsw i64 %.sroa.04.0.i, 4        ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtBY_8adapters3map8map_foldRjjjNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests12mannwhitneyu26calc_mwu_asymptotic_pvalue0NCINvXsK_NtBW_5accumjNtB3L_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2n_.exit.loopexit.unr-lcssa, label %.preheader
@@ -915,7 +915,7 @@ _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
   %i.ai = mul i64 %i.ah, %.val.i.epil
   %i.aj = sub i64 %.sroa.02.0.i.epil, %.val.i.epil
   %i.ak = add i64 %i.ai, %i.aj                    ; 2 uses
-  %i.al = add nuw i64 %.sroa.04.0.i.epil, 1
+  %i.al = add nuw nsw i64 %.sroa.04.0.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtBY_8adapters3map8map_foldRjjjNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests12mannwhitneyu26calc_mwu_asymptotic_pvalue0NCINvXsK_NtBW_5accumjNtB3L_3Sum3sumINtB1I_3MapBF_B2f_EE0E0EB2n_.exit.loopexit, label %.preheader.epil, !llvm.loop !114

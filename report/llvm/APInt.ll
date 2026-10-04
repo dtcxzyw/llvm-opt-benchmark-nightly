@@ -204,12 +204,11 @@ _ZN4llvm5APInt8tcAssignEPmPKmj.exit:              ; preds = %.lr.ph.i.prol.loope
   %indvars.iv.next.i3943 = phi i64 [ 1, %.lr.ph.preheader.new ], [ %indvars.iv.next.i39.1, %.lr.ph ] ; 4 uses
   %i.aq = phi ptr [ %0, %.lr.ph.preheader.new ], [ %i.bc, %.lr.ph ]
   %i.ar = phi i64 [ %i.am, %.lr.ph.preheader.new ], [ %i.bd, %.lr.ph ]
-  %indvars.iv.i3842 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.i39, %.lr.ph ]
+  %indvars.iv.i3842 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.ay, %.lr.ph ]
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
-  %5 = add nuw nsw i64 %indvars.iv.i3842, 1
-  %6 = and i64 %5, 4294967295
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %6
-  %i.as = load i64, ptr %7, align 8, !tbaa !26
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.i3842
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.as = load i64, ptr %6, align 8, !tbaa !26
   %i.at = shl i64 %i.as, %i.ak
   %i.au = or i64 %i.at, %i.ar
   store i64 %i.au, ptr %i.aq, align 8, !tbaa !26
@@ -217,17 +216,15 @@ _ZN4llvm5APInt8tcAssignEPmPKmj.exit:              ; preds = %.lr.ph.i.prol.loope
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !26
   %i.ax = lshr i64 %i.aw, %i.ai                   ; 2 uses
   store i64 %i.ax, ptr %i.av, align 8, !tbaa !26
-  %indvars.iv.next.i39 = add nuw nsw i64 %indvars.iv.next.i3943, 1 ; 3 uses
-  %i.ay = add nuw nsw i64 %indvars.iv.next.i3943, 1
-  %8 = and i64 %i.ay, 4294967295
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %8
-  %i.az = load i64, ptr %9, align 8, !tbaa !26
+  %i.ay = add nuw nsw i64 %indvars.iv.next.i3943, 1 ; 3 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next.i3943
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.az = load i64, ptr %8, align 8, !tbaa !26    ; 2 uses
   %i.ba = shl i64 %i.az, %i.ak
   %i.bb = or i64 %i.ba, %i.ax
   store i64 %i.bb, ptr %i.av, align 8, !tbaa !26
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next.i39 ; 4 uses
-  %10 = load i64, ptr %i.bc, align 8, !tbaa !26
-  %i.bd = lshr i64 %10, %i.ai                     ; 3 uses
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ay ; 3 uses
+  %i.bd = lshr i64 %i.az, %i.ai                   ; 3 uses
   store i64 %i.bd, ptr %i.bc, align 8, !tbaa !26
   %indvars.iv.next.i39.1 = add nuw nsw i64 %indvars.iv.next.i3943, 2 ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
@@ -242,13 +239,12 @@ _ZN4llvm5APInt12tcShiftRightEPmjj.exit.loopexit.unr-lcssa: ; preds = %.lr.ph
   %indvars.iv.next.i3943.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next.i39.1, %_ZN4llvm5APInt12tcShiftRightEPmjj.exit.loopexit.unr-lcssa ]
   %.epil.init = phi ptr [ %0, %.lr.ph.preheader ], [ %i.bc, %_ZN4llvm5APInt12tcShiftRightEPmjj.exit.loopexit.unr-lcssa ]
   %.epil.init58 = phi i64 [ %i.am, %.lr.ph.preheader ], [ %i.bd, %_ZN4llvm5APInt12tcShiftRightEPmjj.exit.loopexit.unr-lcssa ]
-  %indvars.iv.i3842.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.i39, %_ZN4llvm5APInt12tcShiftRightEPmjj.exit.loopexit.unr-lcssa ]
+  %indvars.iv.i3842.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.ay, %_ZN4llvm5APInt12tcShiftRightEPmjj.exit.loopexit.unr-lcssa ]
   %lcmp.mod60 = trunc i64 %i.ao to i1
   tail call void @llvm.assume(i1 %lcmp.mod60)
-  %11 = add nuw nsw i64 %indvars.iv.i3842.epil.init, 1
-  %12 = and i64 %11, 4294967295
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %12
-  %i.be = load i64, ptr %13, align 8, !tbaa !26
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.i3842.epil.init
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.be = load i64, ptr %10, align 8, !tbaa !26
   %i.bf = shl i64 %i.be, %i.ak
   %i.bg = or i64 %i.bf, %.epil.init58
   store i64 %i.bg, ptr %.epil.init, align 8, !tbaa !26
