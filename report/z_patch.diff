@@ -1,0 +1,171 @@
+diff --git a/llvm/lib/Analysis/BasicAliasAnalysis.cpp b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+index 3aece3ca7d769..ab8fe818f6d99 100644
+--- a/llvm/lib/Analysis/BasicAliasAnalysis.cpp
++++ b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+@@ -2102,11 +2102,57 @@ bool BasicAAResult::computeConstantOffsetHeuristic(const DecomposedGEP &GEP,
+ 
+   const VariableGEPIndex &Var0 = GEP.VarIndices[0], &Var1 = GEP.VarIndices[1];
+ 
+-  if (Var0.Val.TruncBits != 0 || !Var0.Val.hasSameCastsAs(Var1.Val) ||
+-      !Var0.hasNegatedScaleOf(Var1) ||
++  if (!Var0.Val.hasSameCastsAs(Var1.Val) || !Var0.hasNegatedScaleOf(Var1) ||
+       Var0.Val.V->getType() != Var1.Val.V->getType())
+     return false;
+ 
++  // Check each select alternative before losing its offset correlation.
++  if (!AAQI.MayBeCrossIteration &&
++      (isa<SelectInst>(Var0.Val.V) || isa<SelectInst>(Var1.Val.V))) {
++    unsigned Budget = 8;
++    auto Check = [&](auto &&Check, const Value *V0, const Value *V1) -> bool {
++      if (!Budget)
++        return false;
++      --Budget;
++      LinearExpression E0 = GetLinearExpression(CastedValue(V0), DL, 0, AC, DT);
++      LinearExpression E1 = GetLinearExpression(CastedValue(V1), DL, 0, AC, DT);
++      if (E0.Scale == E1.Scale && E0.Val.hasSameCastsAs(E1.Val) &&
++          isValueEqualInPotentialCycles(E0.Val.V, E1.Val.V, AAQI)) {
++        APInt Diff = E0.Offset - E1.Offset;
++        if (Var0.Val.TruncBits)
++          Diff = Diff.trunc(Diff.getBitWidth() - Var0.Val.TruncBits);
++        if (!Var0.Val.ZExtBits && !Var0.Val.SExtBits &&
++            Var0.Val.getBitWidth() == GEP.Offset.getBitWidth()) {
++          APInt Offset = Diff * Var0.Scale;
++          if (Var0.IsNegated)
++            Offset = -Offset;
++          Offset += GEP.Offset;
++          return Offset.uge(V2Size) && (-Offset).uge(V1Size);
++        }
++
++        // Extensions may change the direction of the difference on wrapping,
++        // but preserve its minimum absolute distance in the source type.
++        APInt MinDiff = APIntOps::umin(Diff, -Diff);
++        APInt MinDiffBytes =
++            MinDiff.zextOrTrunc(Var0.Scale.getBitWidth()) * Var0.Scale.abs();
++        return MinDiffBytes.uge(V1Size + GEP.Offset.abs()) &&
++               MinDiffBytes.uge(V2Size + GEP.Offset.abs());
++      }
++      if (const auto *SI = dyn_cast<SelectInst>(V0))
++        return Check(Check, SI->getTrueValue(), V1) &&
++               Check(Check, SI->getFalseValue(), V1);
++      if (const auto *SI = dyn_cast<SelectInst>(V1))
++        return Check(Check, V0, SI->getTrueValue()) &&
++               Check(Check, V0, SI->getFalseValue());
++      return false;
++    };
++    if (Check(Check, Var0.Val.V, Var1.Val.V))
++      return true;
++  }
++
++  if (Var0.Val.TruncBits)
++    return false;
++
+   // We'll strip off the Extensions of Var0 and Var1 and do another round
+   // of GetLinearExpression decomposition. In the example above, if Var0
+   // is zext(%x + 1) we should get V1 == %x and V1Offset == 1.
+diff --git a/llvm/test/Analysis/BasicAA/non-equal-select.ll b/llvm/test/Analysis/BasicAA/non-equal-select.ll
+index fe38a57eeb1b4..0642ef159015b 100644
+--- a/llvm/test/Analysis/BasicAA/non-equal-select.ll
++++ b/llvm/test/Analysis/BasicAA/non-equal-select.ll
+@@ -1,4 +1,6 @@
+ ; RUN: opt < %s -aa-pipeline=basic-aa -passes=aa-eval -print-all-alias-modref-info -disable-output 2>&1 | FileCheck %s
++target datalayout = "e-p:64:64-p1:64:64:64:32"
++
+ @G = global [10 x i32] zeroinitializer, align 4
+ 
+ define void @select_in_gep1(i1 %c, i64 %x) {
+@@ -17,9 +19,8 @@ entry:
+ 
+ define void @select_in_gep2(i1 %c, i64 %x) {
+ entry:
+-  ; TODO: should be "NoAlias" here as well.
+ ; CHECK-LABEL: Function: select_in_gep2
+-; CHECK: MayAlias:     i32* %arrayidx1, i32* %arrayidx2
++; CHECK: NoAlias:      i32* %arrayidx1, i32* %arrayidx2
+   %add1_ = add nsw i64 %x, 1
+   %add2_ = add nsw i64 %x, 2
+   %add3_ = add nsw i64 %x, 3
+@@ -77,3 +78,84 @@ entry:
+   store i32 43, ptr %arrayidx2, align 4
+   ret void
+ }
++
++; CHECK-LABEL: Function: select_offsets_zext_gap
++; CHECK: NoAlias: i32* %p, i32* %q
++define void @select_offsets_zext_gap(ptr %base, i1 %c, i32 %x) {
++  %a = add i32 %x, 1
++  %b = add i32 %x, 2
++  %d = add i32 %x, 5
++  %s = select i1 %c, i32 %a, i32 %b
++  %i = zext i32 %s to i64
++  %j = zext i32 %d to i64
++  %p = getelementptr i32, ptr %base, i64 %i
++  %qbase = getelementptr i32, ptr %base, i64 %j
++  %q = getelementptr i8, ptr %qbase, i64 1
++  store i32 0, ptr %p, align 1
++  store i32 0, ptr %q, align 1
++  ret void
++}
++
++; CHECK-LABEL: Function: select_offsets_sext_gap
++; CHECK: NoAlias: i32* %p, i32* %q
++define void @select_offsets_sext_gap(ptr %base, i1 %c, i32 %x) {
++  %a = add i32 %x, 1
++  %b = add i32 %x, 2
++  %d = add i32 %x, 5
++  %s = select i1 %c, i32 %a, i32 %b
++  %i = sext i32 %s to i64
++  %j = sext i32 %d to i64
++  %p = getelementptr i32, ptr %base, i64 %i
++  %qbase = getelementptr i32, ptr %base, i64 %j
++  %q = getelementptr i8, ptr %qbase, i64 1
++  store i32 0, ptr %p, align 1
++  store i32 0, ptr %q, align 1
++  ret void
++}
++
++; CHECK-LABEL: Function: select_offsets_zext_overlap
++; CHECK: MayAlias: i32* %p, i32* %q
++define void @select_offsets_zext_overlap(ptr %base, i1 %c, i32 %x) {
++  %a = add i32 %x, 1
++  %b = add i32 %x, 2
++  %d = add i32 %x, 3
++  %s = select i1 %c, i32 %a, i32 %b
++  %i = zext i32 %s to i64
++  %j = zext i32 %d to i64
++  %p = getelementptr i32, ptr %base, i64 %i
++  %qbase = getelementptr i32, ptr %base, i64 %j
++  %q = getelementptr i8, ptr %qbase, i64 -1
++  store i32 0, ptr %p, align 1
++  store i32 0, ptr %q, align 1
++  ret void
++}
++
++; CHECK-LABEL: Function: select_offsets_trunc_gap
++; CHECK: NoAlias: i32 addrspace(1)* %p, i32 addrspace(1)* %q
++define void @select_offsets_trunc_gap(ptr addrspace(1) %base, i1 %c, i64 %x) {
++  %a = add i64 %x, 1
++  %b = add i64 %x, 2
++  %d = add i64 %x, 5
++  %s = select i1 %c, i64 %a, i64 %b
++  %p = getelementptr i32, ptr addrspace(1) %base, i64 %s
++  %qbase = getelementptr i32, ptr addrspace(1) %base, i64 %d
++  %q = getelementptr i8, ptr addrspace(1) %qbase, i64 1
++  store i32 0, ptr addrspace(1) %p, align 1
++  store i32 0, ptr addrspace(1) %q, align 1
++  ret void
++}
++
++; CHECK-LABEL: Function: select_offsets_trunc_wrap
++; CHECK: MayAlias: i32 addrspace(1)* %p, i32 addrspace(1)* %q
++define void @select_offsets_trunc_wrap(ptr addrspace(1) %base, i1 %c, i64 %x) {
++  %a = add i64 %x, 1
++  %b = add i64 %x, 2
++  %d = add i64 %x, 4294967297
++  %s = select i1 %c, i64 %a, i64 %b
++  %p = getelementptr i32, ptr addrspace(1) %base, i64 %s
++  %qbase = getelementptr i32, ptr addrspace(1) %base, i64 %d
++  %q = getelementptr i8, ptr addrspace(1) %qbase, i64 0
++  store i32 0, ptr addrspace(1) %p, align 1
++  store i32 0, ptr addrspace(1) %q, align 1
++  ret void
++}
