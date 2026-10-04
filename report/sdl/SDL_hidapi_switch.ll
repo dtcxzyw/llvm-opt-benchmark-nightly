@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.0.i4.i = phi i8 [ %.val.i, %bb.i ], [ %..i.i, %bb.j ] ; 3 uses
+  %.0.i4.i = phi i8 [ %.val.i, %bb.i ], [ %..i.i, %bb.j ] ; 4 uses
   %i.aa = load i32, ptr %i.f, align 8
   switch i32 %i.aa, label %bb.o [
     i32 0, label %.thread15.i.i
@@ -214,7 +214,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %cond.i.i = icmp eq i8 %.0.i4.i, 63
-  br i1 %cond.i.i, label %GetSensorInputMode.exit.i, label %.thread.fold.split.i.i
+  %spec.select18.i.i = select i1 %cond.i.i, i8 48, i8 %.0.i4.i
+  br label %GetSensorInputMode.exit.i
 
 bb.m:                                             ; preds = %bb.k
   %i.ab = load ptr, ptr %i.e, align 8             ; 2 uses
@@ -232,7 +233,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %bb.k
   %i.ai = icmp eq i8 %.0.i4.i, 63
-  br i1 %i.ai, label %.thread15.i.i, label %.thread.fold.split.i.i
+  br i1 %i.ai, label %.thread15.i.i, label %GetSensorInputMode.exit.i
 
 .thread15.i.i:                                    ; preds = %bb.o, %bb.k
   %i.aj = load ptr, ptr %i.e, align 8
@@ -242,11 +243,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.k
   %spec.select.i.i = select i1 %i.am, i8 63, i8 48
   br label %GetSensorInputMode.exit.i
 
-.thread.fold.split.i.i:                           ; preds = %bb.o, %bb.l
-  br label %GetSensorInputMode.exit.i
-
-GetSensorInputMode.exit.i:                        ; preds = %.thread.fold.split.i.i, %.thread15.i.i, %bb.n, %bb.l, %bb.h, %bb.g, %bb.g
-  %.0.i = phi i8 [ 48, %bb.g ], [ %.val.i, %bb.h ], [ 48, %bb.g ], [ %spec.select.i.i, %.thread15.i.i ], [ 48, %bb.n ], [ 48, %bb.l ], [ %.0.i4.i, %.thread.fold.split.i.i ] ; 3 uses
+GetSensorInputMode.exit.i:                        ; preds = %.thread15.i.i, %bb.o, %bb.n, %bb.l, %bb.h, %bb.g, %bb.g
+  %.0.i = phi i8 [ 48, %bb.g ], [ %.val.i, %bb.h ], [ 48, %bb.g ], [ %spec.select.i.i, %.thread15.i.i ], [ %.0.i4.i, %bb.o ], [ %spec.select18.i.i, %bb.l ], [ 48, %bb.n ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i8 %.0.i, ptr %i.b, align 1
   %i.an = getelementptr inbounds nuw i8, ptr %i.e, i64 37 ; 2 uses
@@ -649,7 +647,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.0.i4.i = phi i8 [ %.val.i, %bb.h ], [ %..i.i, %bb.i ] ; 3 uses
+  %.0.i4.i = phi i8 [ %.val.i, %bb.h ], [ %..i.i, %bb.i ] ; 4 uses
   %i.m = load i32, ptr %i.b, align 8
   switch i32 %i.m, label %bb.n [
     i32 0, label %.thread15.i.i
@@ -659,7 +657,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %cond.i.i = icmp eq i8 %.0.i4.i, 63
-  br i1 %cond.i.i, label %GetSensorInputMode.exit.i, label %.thread.fold.split.i.i
+  %spec.select18.i.i = select i1 %cond.i.i, i8 48, i8 %.0.i4.i
+  br label %GetSensorInputMode.exit.i
 
 bb.l:                                             ; preds = %bb.j
   %i.n = load ptr, ptr %0, align 8                ; 2 uses
@@ -677,7 +676,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.j
   %i.u = icmp eq i8 %.0.i4.i, 63
-  br i1 %i.u, label %.thread15.i.i, label %.thread.fold.split.i.i
+  br i1 %i.u, label %.thread15.i.i, label %GetSensorInputMode.exit.i
 
 .thread15.i.i:                                    ; preds = %bb.n, %bb.j
   %i.v = load ptr, ptr %0, align 8
@@ -687,11 +686,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.j
   %spec.select.i.i = select i1 %i.y, i8 63, i8 48
   br label %GetSensorInputMode.exit.i
 
-.thread.fold.split.i.i:                           ; preds = %bb.n, %bb.k
-  br label %GetSensorInputMode.exit.i
-
-GetSensorInputMode.exit.i:                        ; preds = %.thread.fold.split.i.i, %.thread15.i.i, %bb.m, %bb.k, %bb.g, %bb.f, %bb.f
-  %.0.i = phi i8 [ 48, %bb.f ], [ %.val.i, %bb.g ], [ 48, %bb.f ], [ %spec.select.i.i, %.thread15.i.i ], [ 48, %bb.m ], [ 48, %bb.k ], [ %.0.i4.i, %.thread.fold.split.i.i ] ; 3 uses
+GetSensorInputMode.exit.i:                        ; preds = %.thread15.i.i, %bb.n, %bb.m, %bb.k, %bb.g, %bb.f, %bb.f
+  %.0.i = phi i8 [ 48, %bb.f ], [ %.val.i, %bb.g ], [ 48, %bb.f ], [ %spec.select.i.i, %.thread15.i.i ], [ %.0.i4.i, %bb.n ], [ %spec.select18.i.i, %bb.k ], [ 48, %bb.m ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 %.0.i, ptr %i.a, align 1
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses

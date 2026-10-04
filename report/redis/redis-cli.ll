@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %._crit_edge
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %bb.c
-  %.048 = phi ptr [ %i.r, %bb.c ], [ %i.as, %bb.e ] ; 4 uses
+  %.048 = phi ptr [ %i.r, %bb.c ], [ %i.as, %bb.e ] ; 5 uses
   %i.v = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.048, i32 noundef 44) #34 ; 3 uses
   %.not62 = icmp eq ptr %i.v, null
   br i1 %.not62, label %bb.f, label %bb.e
@@ -252,14 +252,13 @@ bb.e:                                             ; preds = %bb.d
   %fputc68.14 = call i32 @fputc(i32 32, ptr %i.ap) ; 0 uses
   %i.aq = load ptr, ptr @stdout, align 8, !tbaa !27
   %i.ar = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.aq, ptr noundef nonnull @.str.503, ptr noundef nonnull %i.a) #32 ; 0 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %i.v, i64 1 ; 3 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.v, i64 1 ; 2 uses
   %.not64 = icmp ult ptr %i.as, %i.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #32
-  br i1 %.not64, label %bb.d, label %bb.f
+  br i1 %.not64, label %bb.d, label %bb.g
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %.1 = phi ptr [ %i.as, %bb.e ], [ %.048, %bb.d ] ; 2 uses
-  %i.at = icmp ult ptr %.1, %i.u
+bb.f:                                             ; preds = %bb.d
+  %i.at = icmp ult ptr %.048, %i.u
   br i1 %i.at, label %.preheader.preheader, label %bb.g
 
 .preheader.preheader:                             ; preds = %bb.f
@@ -294,10 +293,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.bi = load ptr, ptr @stdout, align 8, !tbaa !27
   %fputc66.14 = call i32 @fputc(i32 32, ptr %i.bi) ; 0 uses
   %i.bj = load ptr, ptr @stdout, align 8, !tbaa !27
-  %i.bk = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bj, ptr noundef nonnull @.str.503, ptr noundef nonnull %.1) #32 ; 0 uses
+  %i.bk = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bj, ptr noundef nonnull @.str.503, ptr noundef nonnull %.048) #32 ; 0 uses
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %.preheader.preheader, %._crit_edge
+bb.g:                                             ; preds = %bb.e, %bb.f, %.preheader.preheader, %._crit_edge
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond82.not = icmp eq i64 %indvars.iv.next, 13
   br i1 %exitcond82.not, label %bb.h, label %bb.b, !llvm.loop !288

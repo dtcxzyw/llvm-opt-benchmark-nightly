@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !79   ; 4 uses
   %.not.i.i = icmp eq i64 %i.c, 0
-  br i1 %.not.i.i, label %_ZN4Luau12DenseHashMapINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEEPNS_14ConstraintListENS_23HashBlockedConstraintIdESt8equal_toISB_EE5beginEv.exit, label %.lr.ph.i.i
+  br i1 %.not.i.i, label %._crit_edge173, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !80
@@ -215,7 +215,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %.04.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.p, %bb.c ] ; 3 uses
+  %.04.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.p, %bb.c ] ; 4 uses
   %i.i = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %.04.i.i ; 2 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !23
   %i.k = icmp eq i32 %i.j, %i.f
@@ -230,9 +230,8 @@ bb.c:                                             ; preds = %bb.b
   %exitcond.not.i.i = icmp eq i64 %i.p, %i.c
   br i1 %exitcond.not.i.i, label %._crit_edge173, label %bb.b, !llvm.loop !350
 
-_ZN4Luau12DenseHashMapINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEEPNS_14ConstraintListENS_23HashBlockedConstraintIdESt8equal_toISB_EE5beginEv.exit: ; preds = %bb.b, %bb.a
-  %.0.lcssa.i.i = phi i64 [ 0, %bb.a ], [ %.04.i.i, %bb.b ] ; 2 uses
-  %.not170 = icmp eq i64 %.0.lcssa.i.i, %i.c
+_ZN4Luau12DenseHashMapINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEEPNS_14ConstraintListENS_23HashBlockedConstraintIdESt8equal_toISB_EE5beginEv.exit: ; preds = %bb.b
+  %.not170 = icmp eq i64 %.04.i.i, %i.c
   br i1 %.not170, label %._crit_edge173, label %.lr.ph172
 
 .lr.ph172:                                        ; preds = %_ZN4Luau12DenseHashMapINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEEPNS_14ConstraintListENS_23HashBlockedConstraintIdESt8equal_toISB_EE5beginEv.exit
@@ -256,11 +255,11 @@ _ZN4Luau12DenseHashMapINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10Constra
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 176
   br label %bb.d
 
-._crit_edge173:                                   ; preds = %bb.c, %_ZN4Luau6detail14DenseHashTableINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEESt4pairISC_PNS_14ConstraintListEESD_IKSC_SF_ENS0_16ItemInterfaceMapISC_SF_EENS_23HashBlockedConstraintIdESt8equal_toISC_EE8iteratorppEv.exit, %_ZN4Luau12DenseHashMapINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEEPNS_14ConstraintListENS_23HashBlockedConstraintIdESt8equal_toISB_EE5beginEv.exit
+._crit_edge173:                                   ; preds = %bb.c, %_ZN4Luau6detail14DenseHashTableINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEESt4pairISC_PNS_14ConstraintListEESD_IKSC_SF_ENS0_16ItemInterfaceMapISC_SF_EENS_23HashBlockedConstraintIdESt8equal_toISC_EE8iteratorppEv.exit, %bb.a, %_ZN4Luau12DenseHashMapINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEEPNS_14ConstraintListENS_23HashBlockedConstraintIdESt8equal_toISB_EE5beginEv.exit
   ret void
 
 bb.d:                                             ; preds = %.lr.ph172, %_ZN4Luau6detail14DenseHashTableINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEESt4pairISC_PNS_14ConstraintListEESD_IKSC_SF_ENS0_16ItemInterfaceMapISC_SF_EENS_23HashBlockedConstraintIdESt8equal_toISC_EE8iteratorppEv.exit
-  %.sroa.7.0171 = phi i64 [ %.0.lcssa.i.i, %.lr.ph172 ], [ %.lcssa175, %_ZN4Luau6detail14DenseHashTableINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEESt4pairISC_PNS_14ConstraintListEESD_IKSC_SF_ENS0_16ItemInterfaceMapISC_SF_EENS_23HashBlockedConstraintIdESt8equal_toISC_EE8iteratorppEv.exit ] ; 4 uses
+  %.sroa.7.0171 = phi i64 [ %.04.i.i, %.lr.ph172 ], [ %.lcssa175, %_ZN4Luau6detail14DenseHashTableINS_7VariantIJPKNS_4TypeEPKNS_11TypePackVarEPKNS_10ConstraintEEEESt4pairISC_PNS_14ConstraintListEESD_IKSC_SF_ENS0_16ItemInterfaceMapISC_SF_EENS_23HashBlockedConstraintIdESt8equal_toISC_EE8iteratorppEv.exit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #27
   %i.ai = load ptr, ptr %i.a, align 8, !tbaa !80
   %i.aj = getelementptr inbounds nuw [24 x i8], ptr %i.ai, i64 %.sroa.7.0171 ; 3 uses

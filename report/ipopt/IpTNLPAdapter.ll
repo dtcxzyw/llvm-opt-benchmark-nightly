@@ -205,9 +205,9 @@ bb.ho:                                            ; preds = %._crit_edge2160
   br label %bb.hv
 
 bb.hp:                                            ; preds = %._crit_edge2160, %bb.hk
-  %i.vz = load ptr, ptr %61, align 8, !tbaa !127  ; 4 uses
+  %i.vz = load ptr, ptr %61, align 8, !tbaa !127  ; 3 uses
   %i.wa = icmp eq ptr %i.vz, %61
-  br i1 %i.wa, label %bb.hu, label %bb.hq
+  br i1 %i.wa, label %_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit, label %bb.hq
 
 bb.hq:                                            ; preds = %bb.hp
   %i.wb = getelementptr inbounds nuw i8, ptr %i.vz, i64 16
@@ -372,18 +372,13 @@ bb.hs:                                            ; preds = %.thread1912, %bb.hr
   br label %.loopexit2083
 
 .loopexit2083:                                    ; preds = %bb.hs, %.loopexit2083.loopexit, %bb.hq, %.preheader2082
-  %.3630 = phi i32 [ %i.yf, %.loopexit2083.loopexit ], [ %.06272162, %.preheader2082 ], [ %i.wc, %bb.hq ], [ %.16281916, %bb.hs ]
+  %.3630 = phi i32 [ %i.yf, %.loopexit2083.loopexit ], [ %.06272162, %.preheader2082 ], [ %i.wc, %bb.hq ], [ %.16281916, %bb.hs ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #22
   store double 0.000000e+00, ptr %i.g, align 8, !tbaa !123
   %i.yg = load i32, ptr %i.hj, align 4, !tbaa !110
   %i.yh = load ptr, ptr %i.hw, align 8, !tbaa !80
   invoke void @_ZN5Ipopt10IpBlasCopyEiPKdiPdi(i32 noundef %i.yg, ptr noundef nonnull %i.g, i32 noundef 0, ptr noundef %i.yh, i32 noundef 1)
-          to label %76 unwind label %bb.ht
-
-76:                                               ; preds = %.loopexit2083
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #22
-  %.pre2604 = load ptr, ptr %61, align 8, !tbaa !127
-  br label %bb.hu
+          to label %bb.hu unwind label %bb.ht
 
 bb.ht:                                            ; preds = %.loopexit2083
   %i.yi = landingpad { ptr, i32 }
@@ -391,20 +386,21 @@ bb.ht:                                            ; preds = %.loopexit2083
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #22
   br label %bb.hv
 
-bb.hu:                                            ; preds = %76, %bb.hp
-  %77 = phi ptr [ %i.vz, %bb.hp ], [ %.pre2604, %76 ] ; 2 uses
-  %.3657 = phi i32 [ %.1655.lcssa, %bb.hp ], [ %.3630, %76 ]
-  %.not8.i.i = icmp eq ptr %77, %61
+bb.hu:                                            ; preds = %.loopexit2083
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #22
+  %.pre2604 = load ptr, ptr %61, align 8, !tbaa !127 ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre2604, %61
   br i1 %.not8.i.i, label %_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.hu, %.lr.ph.i.i
-  %.09.i.i = phi ptr [ %i.yj, %.lr.ph.i.i ], [ %77, %bb.hu ] ; 2 uses
+  %.09.i.i = phi ptr [ %i.yj, %.lr.ph.i.i ], [ %.pre2604, %bb.hu ] ; 2 uses
   %i.yj = load ptr, ptr %.09.i.i, align 8, !tbaa !127 ; 2 uses
   call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 24) #24
   %.not.i.i1054 = icmp eq ptr %i.yj, %61
   br i1 %.not.i.i1054, label %_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit, label %.lr.ph.i.i, !llvm.loop !231
 
-_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit:       ; preds = %.lr.ph.i.i, %bb.hu
+_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit:       ; preds = %.lr.ph.i.i, %bb.hp, %bb.hu
+  %.36573040 = phi i32 [ %.1655.lcssa, %bb.hp ], [ %.3630, %bb.hu ], [ %.3630, %.lr.ph.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %61) #22
   br label %bb.hw
 
@@ -426,7 +422,7 @@ _ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit1059:   ; preds = %.lr.ph.i.i1056, %bb
   br label %_ZN5Ipopt8SmartPtrINS_16DenseVectorSpaceEED2Ev.exit1531
 
 bb.hw:                                            ; preds = %bb.gz, %bb.ha, %_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit
-  %.4658 = phi i32 [ %.3657, %_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit ], [ %.1655.lcssa, %bb.ha ], [ %.1655.lcssa, %bb.gz ] ; 24 uses
+  %.4658 = phi i32 [ %.36573040, %_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit ], [ %.1655.lcssa, %bb.ha ], [ %.1655.lcssa, %bb.gz ] ; 24 uses
   call void @_ZdaPv(ptr noundef nonnull %i.ku) #24
   call void @_ZdaPv(ptr noundef nonnull %i.la) #24
   %i.ym = invoke noalias noundef nonnull dereferenceable(160) ptr @_Znwm(i64 noundef 160) #25

@@ -205,10 +205,10 @@ bb.a:
   br i1 %i.l, label %.lr.ph387, label %.loopexit332
 
 .lr.ph387:                                        ; preds = %.lr.ph397, %.loopexit331
-  %.1156385 = phi i32 [ %.13, %.loopexit331 ], [ %i.k, %.lr.ph397 ] ; 5 uses
-  %.1163384 = phi i64 [ %.13175, %.loopexit331 ], [ %i.j, %.lr.ph397 ] ; 6 uses
-  %.1182383 = phi ptr [ %.12193, %.loopexit331 ], [ %.0181393, %.lr.ph397 ] ; 23 uses
-  %.1216382 = phi ptr [ %.13228, %.loopexit331 ], [ %i.g, %.lr.ph397 ] ; 7 uses
+  %.1156385 = phi i32 [ %.13, %.loopexit331 ], [ %i.k, %.lr.ph397 ] ; 4 uses
+  %.1163384 = phi i64 [ %.13175, %.loopexit331 ], [ %i.j, %.lr.ph397 ] ; 5 uses
+  %.1182383 = phi ptr [ %.12193, %.loopexit331 ], [ %.0181393, %.lr.ph397 ] ; 22 uses
+  %.1216382 = phi ptr [ %.13228, %.loopexit331 ], [ %i.g, %.lr.ph397 ] ; 6 uses
   %i.m = add nsw i32 %.1156385, -14
   %i.n = zext nneg i32 %i.m to i64
   %i.o = lshr i64 %.1163384, %i.n
@@ -365,7 +365,7 @@ bb.l:                                             ; preds = %.lr.ph387
   %i.bj = getelementptr inbounds nuw i8, ptr %i.q, i64 4
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !44 ; 3 uses
   %.not418 = icmp eq i32 %i.bk, 0
-  br i1 %.not418, label %.loopexit329, label %.lr.ph370.preheader
+  br i1 %.not418, label %.thread314, label %.lr.ph370.preheader
 
 .lr.ph370.preheader:                              ; preds = %.preheader
   %wide.trip.count = zext i32 %i.bk to i64
@@ -424,7 +424,7 @@ bb.m:                                             ; preds = %._crit_edge
   br i1 %i.cl, label %bb.n, label %bb.w
 
 bb.n:                                             ; preds = %bb.m
-  %i.cm = trunc nuw i64 %indvars.iv to i32        ; 5 uses
+  %i.cm = trunc nuw i64 %indvars.iv to i32
   %i.cn = icmp eq i32 %i.bm, %4
   br i1 %i.cn, label %bb.o, label %bb.u
 
@@ -558,13 +558,12 @@ bb.w:                                             ; preds = %bb.m, %._crit_edge
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.thread314, label %.lr.ph370, !llvm.loop !151
 
-.loopexit329:                                     ; preds = %.lr.ph380, %middle.block, %vec.epilog.middle.block, %.preheader, %bb.t, %bb.v
-  %.0152340 = phi i32 [ %i.cm, %bb.t ], [ %i.cm, %bb.v ], [ 0, %.preheader ], [ %i.cm, %middle.block ], [ %i.cm, %vec.epilog.middle.block ], [ %i.cm, %.lr.ph380 ]
-  %.10225 = phi ptr [ %.6221, %bb.t ], [ %.5220.lcssa, %bb.v ], [ %.1216382, %.preheader ], [ %.6221, %middle.block ], [ %.6221, %vec.epilog.middle.block ], [ %.6221, %.lr.ph380 ]
-  %.9190 = phi ptr [ %.1182383, %bb.t ], [ %i.dx, %bb.v ], [ %.1182383, %.preheader ], [ %i.dj, %middle.block ], [ %i.dq, %vec.epilog.middle.block ], [ %i.du, %.lr.ph380 ]
-  %.10172 = phi i64 [ %.6168, %bb.t ], [ %.5167.lcssa, %bb.v ], [ %.1163384, %.preheader ], [ %.6168, %middle.block ], [ %.6168, %vec.epilog.middle.block ], [ %.6168, %.lr.ph380 ]
-  %.10 = phi i32 [ %i.cv, %bb.t ], [ %i.cf, %bb.v ], [ %.1156385, %.preheader ], [ %i.cv, %middle.block ], [ %i.cv, %vec.epilog.middle.block ], [ %i.cv, %.lr.ph380 ]
-  %i.dy = icmp eq i32 %.0152340, %i.bk
+.loopexit329:                                     ; preds = %.lr.ph380, %middle.block, %vec.epilog.middle.block, %bb.t, %bb.v
+  %.10225 = phi ptr [ %.6221, %bb.t ], [ %.5220.lcssa, %bb.v ], [ %.6221, %middle.block ], [ %.6221, %vec.epilog.middle.block ], [ %.6221, %.lr.ph380 ]
+  %.9190 = phi ptr [ %.1182383, %bb.t ], [ %i.dx, %bb.v ], [ %i.dj, %middle.block ], [ %i.dq, %vec.epilog.middle.block ], [ %i.du, %.lr.ph380 ]
+  %.10172 = phi i64 [ %.6168, %bb.t ], [ %.5167.lcssa, %bb.v ], [ %.6168, %middle.block ], [ %.6168, %vec.epilog.middle.block ], [ %.6168, %.lr.ph380 ]
+  %.10 = phi i32 [ %i.cv, %bb.t ], [ %i.cf, %bb.v ], [ %i.cv, %middle.block ], [ %i.cv, %vec.epilog.middle.block ], [ %i.cv, %.lr.ph380 ]
+  %i.dy = icmp eq i32 %i.bk, %i.cm
   br i1 %i.dy, label %.thread314, label %.loopexit331
 
 .loopexit331:                                     ; preds = %.lr.ph, %middle.block523, %vec.epilog.middle.block539, %bb.i, %bb.k, %.loopexit329
@@ -754,8 +753,8 @@ bb.af:                                            ; preds = %bb.ae
   %.262 = zext i1 %.not to i32
   br label %.thread314
 
-.thread314:                                       ; preds = %.loopexit329, %bb.r, %bb.p, %bb.s, %bb.u, %bb.l, %bb.g, %bb.e, %bb.h, %bb.b, %bb.j, %bb.w, %bb.ab, %bb.z, %bb.ac, %.lr.ph414, %bb.ae, %._crit_edge415
-  %.15214 = phi i32 [ %.262, %._crit_edge415 ], [ 23, %bb.w ], [ 23, %bb.ab ], [ 23, %bb.ae ], [ 23, %.lr.ph414 ], [ 1, %bb.ac ], [ 1, %bb.z ], [ 23, %.loopexit329 ], [ 1, %bb.p ], [ 23, %bb.r ], [ 23, %bb.u ], [ 23, %bb.l ], [ 1, %bb.s ], [ 1, %bb.e ], [ 23, %bb.g ], [ 23, %bb.j ], [ 1, %bb.h ], [ 23, %bb.b ]
+.thread314:                                       ; preds = %.preheader, %.loopexit329, %bb.r, %bb.p, %bb.s, %bb.u, %bb.l, %bb.g, %bb.e, %bb.h, %bb.b, %bb.j, %bb.w, %bb.ab, %bb.z, %bb.ac, %.lr.ph414, %bb.ae, %._crit_edge415
+  %.15214 = phi i32 [ %.262, %._crit_edge415 ], [ 23, %bb.w ], [ 23, %bb.ab ], [ 23, %bb.ae ], [ 23, %.lr.ph414 ], [ 1, %bb.ac ], [ 1, %bb.z ], [ 23, %bb.b ], [ 23, %.loopexit329 ], [ 1, %bb.p ], [ 23, %bb.r ], [ 23, %bb.u ], [ 23, %bb.l ], [ 1, %bb.s ], [ 1, %bb.e ], [ 23, %.preheader ], [ 23, %bb.g ], [ 23, %bb.j ], [ 1, %bb.h ]
   ret i32 %.15214
 }
 

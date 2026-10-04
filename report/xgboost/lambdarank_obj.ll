@@ -205,18 +205,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !140  ; 3 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !140  ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %.not45 = icmp eq ptr %i.g, %i.h
-  br i1 %.not45, label %._crit_edge, label %.lr.ph
+  br i1 %.not45, label %._crit_edge51, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %bb.e
-  %.pre53 = load ptr, ptr %i.f, align 8, !tbaa !140
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
-  %7 = phi ptr [ %.pre53, %._crit_edge.loopexit ], [ %i.g, %bb.b ] ; 2 uses
-  %.not4047 = icmp eq ptr %7, %i.h
+._crit_edge:                                      ; preds = %bb.e
+  %.pre53 = load ptr, ptr %i.f, align 8, !tbaa !140 ; 2 uses
+  %.not4047 = icmp eq ptr %.pre53, %i.h
   br i1 %.not4047, label %._crit_edge51, label %.lr.ph50
 
 bb.c:                                             ; preds = %bb.a
@@ -271,9 +267,9 @@ bb.d:                                             ; preds = %_ZNSt3setIPN4dmlc9p
 bb.e:                                             ; preds = %_ZNSt3setIPN4dmlc9parameter16FieldAccessEntryESt4lessIS3_ESaIS3_EE4findERKS3_.exit.thread, %_ZNSt3setIPN4dmlc9parameter16FieldAccessEntryESt4lessIS3_ESaIS3_EE4findERKS3_.exit
   %i.v = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.035.046) #41 ; 2 uses
   %.not = icmp eq ptr %i.v, %i.h
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
-._crit_edge51:                                    ; preds = %bb.h, %._crit_edge
+._crit_edge51:                                    ; preds = %bb.h, %bb.b, %._crit_edge
   %i.w = load ptr, ptr %i.b, align 8, !tbaa !92
   invoke void @_ZNSt8_Rb_treeIPN4dmlc9parameter16FieldAccessEntryES3_St9_IdentityIS3_ESt4lessIS3_ESaIS3_EE8_M_eraseEPSt13_Rb_tree_nodeIS3_E(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef %i.w)
           to label %_ZNSt3setIPN4dmlc9parameter16FieldAccessEntryESt4lessIS3_ESaIS3_EED2Ev.exit unwind label %bb.f
@@ -290,7 +286,7 @@ _ZNSt3setIPN4dmlc9parameter16FieldAccessEntryESt4lessIS3_ESaIS3_EED2Ev.exit: ; p
   ret void
 
 .lr.ph50:                                         ; preds = %._crit_edge, %bb.h
-  %.sroa.028.048 = phi ptr [ %i.ak, %bb.h ], [ %7, %._crit_edge ] ; 2 uses
+  %.sroa.028.048 = phi ptr [ %i.ak, %bb.h ], [ %.pre53, %._crit_edge ] ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.028.048, i64 64
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !92  ; 2 uses
   %.not10.i.i.i18 = icmp eq ptr %i.aa, null

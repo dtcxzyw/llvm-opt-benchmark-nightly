@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bz = getelementptr i8, ptr %i.bx, i64 16
   %.val56 = load i64, ptr %i.bz, align 8, !noundef !5 ; 6 uses
   %.not11.i.i = icmp eq i64 %.val56, 0
-  br i1 %.not11.i.i, label %_RNvMs_NtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trieNtB4_5State4find.exit, label %.lr.ph.i.i
+  br i1 %.not11.i.i, label %bb.s, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.q, %bb.r
   %.sroa.0.010.i.i = phi i64 [ %.sroa.0.1.i.i, %bb.r ], [ 0, %bb.q ] ; 2 uses
@@ -221,7 +221,7 @@ bb.r:                                             ; preds = %.lr.ph.i.i
   %.not.i.i = icmp ult i8 %.val7.i.i, %i.bp       ; 2 uses
   %i.cf = add nuw nsw i64 %i.cb, 1
   %.sroa.03.1.i.i = select i1 %.not.i.i, i64 %.sroa.03.09.i.i, i64 %i.cb ; 2 uses
-  %.sroa.0.1.i.i = select i1 %.not.i.i, i64 %i.cf, i64 %.sroa.0.010.i.i ; 3 uses
+  %.sroa.0.1.i.i = select i1 %.not.i.i, i64 %i.cf, i64 %.sroa.0.010.i.i ; 4 uses
   %i.cg = icmp ult i64 %.sroa.0.1.i.i, %.sroa.03.1.i.i
   br i1 %i.cg, label %.lr.ph.i.i, label %_RNvMs_NtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trieNtB4_5State4find.exit
 
@@ -235,11 +235,10 @@ bb.r:                                             ; preds = %.lr.ph.i.i
 .cont1658:                                        ; preds = %.invoke1657
   unreachable
 
-_RNvMs_NtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trieNtB4_5State4find.exit: ; preds = %bb.r, %bb.q
-  %.sroa.0.0.lcssa.i.i = phi i64 [ 0, %bb.q ], [ %.sroa.0.1.i.i, %bb.r ] ; 2 uses
+_RNvMs_NtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trieNtB4_5State4find.exit: ; preds = %bb.r
   %i.ck = icmp ult i64 %.val56, 1152921504606846976
   call void @llvm.assume(i1 %i.ck)
-  %i.cl = icmp eq i64 %.sroa.0.0.lcssa.i.i, %.val56
+  %i.cl = icmp eq i64 %.sroa.0.1.i.i, %.val56
   br i1 %i.cl, label %bb.s, label %.lr.ph722
 
 .lr.ph722:                                        ; preds = %_RNvMs_NtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trieNtB4_5State4find.exit
@@ -247,7 +246,7 @@ _RNvMs_NtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trieNtB4_5State4
   %i.cn = trunc nuw nsw i64 %i.bs to i8           ; 4 uses
   br label %bb.v
 
-bb.s:                                             ; preds = %_RNvMs_NtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trieNtB4_5State4find.exit
+bb.s:                                             ; preds = %bb.q, %_RNvMs_NtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trieNtB4_5State4find.exit
   call void @llvm.experimental.noalias.scope.decl(metadata !388)
   %i.co = icmp eq i64 %i.bs, 0
   br i1 %i.co, label %_RNvMs0_NtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson10range_trieNtB5_10NextInsert4push.exit, label %bb.t
@@ -294,7 +293,7 @@ bb.v:                                             ; preds = %.lr.ph722, %.loopex
   %.val641189 = phi i64 [ %i.bu, %.lr.ph722 ], [ %i.fq, %.loopexit254 ]
   %.sroa.04.0721 = phi i8 [ %i.bp, %.lr.ph722 ], [ %.sroa.04.1, %.loopexit254 ] ; 25 uses
   %.sroa.9.0720 = phi i8 [ %i.br, %.lr.ph722 ], [ %.sroa.9.1, %.loopexit254 ] ; 27 uses
-  %.sroa.017.0719 = phi i64 [ %.sroa.0.0.lcssa.i.i, %.lr.ph722 ], [ %.sroa.017.1, %.loopexit254 ] ; 10 uses
+  %.sroa.017.0719 = phi i64 [ %.sroa.0.1.i.i, %.lr.ph722 ], [ %.sroa.017.1, %.loopexit254 ] ; 10 uses
   %i.cz = load ptr, ptr %i.ai, align 8, !nonnull !5, !noundef !5
   %i.da = getelementptr inbounds nuw [24 x i8], ptr %i.cz, i64 %i.bt ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 16

@@ -202,7 +202,7 @@ bb.a:
   %.idx = shl nuw nsw i64 %2, 4
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
   %i.e = icmp eq i64 %2, 0
-  br i1 %i.e, label %._crit_edge, label %.lr.ph
+  br i1 %i.e, label %bb.e, label %.lr.ph
 
 .loopexit:                                        ; preds = %bb.k
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -232,15 +232,13 @@ bb.b:                                             ; preds = %.loopexit.split-lp,
   %i.j = icmp ugt i64 %i.i, 1023
   br i1 %i.j, label %bb.l, label %bb.f
 
-._crit_edge:                                      ; preds = %bb.i, %bb.a
-  %3 = phi i64 [ 0, %bb.a ], [ %i.z, %bb.i ]      ; 3 uses
-  %.sroa.0.0.lcssa = phi i64 [ 0, %bb.a ], [ %.sroa.0.1, %bb.i ] ; 2 uses
-  %i.k = icmp ult i64 %.sroa.0.0.lcssa, %2
+._crit_edge:                                      ; preds = %bb.i
+  %i.k = icmp samesign ult i64 %.sroa.0.1, %2
   br i1 %i.k, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %._crit_edge
   %i.l = load i64, ptr %i.a, align 8, !range !17, !alias.scope !328, !noundef !5
-  %i.m = icmp eq i64 %3, %i.l
+  %i.m = icmp eq i64 %i.z, %i.l
   br i1 %i.m, label %bb.d, label %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -249,15 +247,15 @@ bb.d:                                             ; preds = %bb.c
 
 _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit: ; preds = %bb.d, %bb.c
   %i.n = load ptr, ptr %i.b, align 8, !alias.scope !328, !nonnull !5, !noundef !5
-  %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %3 ; 2 uses
-  store i64 %.sroa.0.0.lcssa, ptr %i.o, align 8
+  %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %i.z ; 2 uses
+  store i64 %.sroa.0.1, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store i64 %2, ptr %i.p, align 8
-  %i.q = add i64 %3, 1
+  %i.q = add i64 %i.z, 1
   store i64 %i.q, ptr %i.c, align 8, !alias.scope !328
   br label %bb.e
 
-bb.e:                                             ; preds = %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit, %._crit_edge
+bb.e:                                             ; preds = %bb.a, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit, %._crit_edge
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
@@ -280,10 +278,10 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.y, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit22, %bb.g, %bb.l, %bb.h
-  %i.z = phi i64 [ %i.f, %bb.g ], [ %i.f, %bb.h ], [ %i.f, %bb.l ], [ %i.al, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit22 ] ; 2 uses
+  %i.z = phi i64 [ %i.f, %bb.g ], [ %i.f, %bb.h ], [ %i.f, %bb.l ], [ %i.al, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit22 ] ; 4 uses
   %.sroa.08.1 = phi i64 [ %.sroa.08.033, %bb.g ], [ %.sroa.08.033, %bb.h ], [ %.sroa.08.033, %bb.l ], [ 0, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit22 ]
   %.sroa.06.1 = phi i64 [ %.sroa.06.034, %bb.g ], [ %.sroa.06.034, %bb.h ], [ %.sroa.06.034, %bb.l ], [ 0, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit22 ]
-  %.sroa.0.1 = phi i64 [ %.sroa.0.035, %bb.g ], [ %.sroa.0.035, %bb.h ], [ %.sroa.0.035, %bb.l ], [ %.sroa.7.031, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit22 ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.0.035, %bb.g ], [ %.sroa.0.035, %bb.h ], [ %.sroa.0.035, %bb.l ], [ %.sroa.7.031, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejEE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit22 ] ; 3 uses
   %i.aa = load i64, ptr %.sroa.0.02332, align 8, !noundef !5
   %i.ab = call i64 @llvm.uadd.sat.i64(i64 %.sroa.06.1, i64 %i.aa)
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0.02332, i64 8

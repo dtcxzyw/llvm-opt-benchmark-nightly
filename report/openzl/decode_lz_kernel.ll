@@ -156,8 +156,8 @@ bb.a:
   %i.l = icmp sgt i64 %i.j, 0
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.a, %5
-  %i.m = phi i64 [ %6, %5 ], [ 0, %bb.a ]         ; 2 uses
+.lr.ph:                                           ; preds = %bb.a, %.thread43
+  %i.m = phi i64 [ %i.af, %.thread43 ], [ 0, %bb.a ] ; 2 uses
   %i.n = load i64, ptr %i.d, align 8, !tbaa !29   ; 4 uses
   %i.o = load i64, ptr %i.e, align 8, !tbaa !27
   %i.p = icmp sgt i64 %i.n, %i.o
@@ -212,9 +212,9 @@ bb.f:                                             ; preds = %.thread64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %.thread, %._crit_edge47
-  %i.ab = phi i64 [ %.pre, %._crit_edge47 ], [ %i.m, %bb.e ], [ %i.m, %.thread ] ; 3 uses
+  %i.ab = phi i64 [ %.pre, %._crit_edge47 ], [ %i.m, %bb.e ], [ %i.m, %.thread ] ; 2 uses
   %i.ac = icmp slt i64 %i.ab, %i.j
-  br i1 %i.ac, label %bb.h, label %5
+  br i1 %i.ac, label %bb.h, label %._crit_edge.loopexit
 
 bb.h:                                             ; preds = %bb.g
   %i.ad = call fastcc i32 @ZL_Lz_decode_sequence(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %4, i64 noundef %i.ab, ptr noundef %i.c, ptr noundef %i.d) ; 2 uses
@@ -223,16 +223,12 @@ bb.h:                                             ; preds = %bb.g
 
 .thread43:                                        ; preds = %bb.h
   %i.ae = load i64, ptr %i.b, align 8, !tbaa !32
-  %i.af = add nsw i64 %i.ae, 1                    ; 2 uses
+  %i.af = add nsw i64 %i.ae, 1                    ; 3 uses
   store i64 %i.af, ptr %i.b, align 8, !tbaa !32
-  br label %5
+  %5 = icmp slt i64 %i.af, %i.j
+  br i1 %5, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !46
 
-5:                                                ; preds = %.thread43, %bb.g
-  %6 = phi i64 [ %i.af, %.thread43 ], [ %i.ab, %bb.g ] ; 2 uses
-  %7 = icmp slt i64 %6, %i.j
-  br i1 %7, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !46
-
-._crit_edge.loopexit:                             ; preds = %5
+._crit_edge.loopexit:                             ; preds = %bb.g, %.thread43
   %.pre48 = load i64, ptr %i.c, align 8, !tbaa !31
   %.pre49 = load i64, ptr %i.d, align 8, !tbaa !29
   %.val40.pre = load i64, ptr %i.f, align 8, !tbaa !25
