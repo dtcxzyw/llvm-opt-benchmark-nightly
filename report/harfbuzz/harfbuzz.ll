@@ -205,7 +205,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load <2 x float>, ptr %i.a, align 4, !tbaa !304 ; 2 uses
   %i.d = load <2 x float>, ptr %1, align 4, !tbaa !304 ; 2 uses
-  %i.e = load <2 x float>, ptr %i.b, align 4, !tbaa !304 ; 3 uses
+  %i.e = load <2 x float>, ptr %i.b, align 4, !tbaa !304 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !1525 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -238,30 +238,29 @@ _ZN15hb_draw_funcs_t13emit_cubic_toEPvR15hb_draw_state_tffffff.exit: ; preds = %
   %i.t = insertelement <2 x float> poison, float %7, i64 0
   %i.u = shufflevector <2 x float> %i.t, <2 x float> poison, <2 x i32> zeroinitializer
   %i.v = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.d, <2 x float> %i.u, <2 x float> %i.c)
-  %10 = extractelement <2 x float> %i.e, i64 1    ; 2 uses
-  %11 = extractelement <2 x float> %i.e, i64 0    ; 2 uses
   %i.w = shufflevector <2 x float> %i.d, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 0>
   %i.x = insertelement <4 x float> poison, float %5, i64 0
   %i.y = insertelement <4 x float> %i.x, float %3, i64 1
   %i.z = shufflevector <4 x float> %i.y, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.aa = shufflevector <2 x float> %i.c, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 0>
-  %i.ab = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.w, <4 x float> %i.z, <4 x float> %i.aa) ; 4 uses
-  %12 = extractelement <4 x float> %i.ab, i64 0
-  %13 = tail call float @llvm.fmuladd.f32(float %10, float %6, float %12)
-  %14 = extractelement <4 x float> %i.ab, i64 2
-  %15 = tail call float @llvm.fmuladd.f32(float %11, float %6, float %14)
-  %16 = extractelement <4 x float> %i.ab, i64 1
-  %17 = tail call float @llvm.fmuladd.f32(float %10, float %4, float %16)
-  %18 = extractelement <4 x float> %i.ab, i64 3
-  %19 = tail call float @llvm.fmuladd.f32(float %11, float %4, float %18)
-  %20 = getelementptr inbounds nuw i8, ptr %i.k, i64 12
-  %21 = insertelement <2 x float> poison, float %8, i64 0
-  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> zeroinitializer
-  %23 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.e, <2 x float> %22, <2 x float> %i.v) ; 3 uses
-  %i.ac = extractelement <2 x float> %23, i64 0
-  %i.ad = extractelement <2 x float> %23, i64 1
-  tail call void %i.n(ptr noundef nonnull align 8 dereferenceable(72) %i.g, ptr noundef %i.i, ptr noundef nonnull align 4 dereferenceable(48) %i.k, float noundef %19, float noundef %17, float noundef %15, float noundef %13, float noundef %i.ac, float noundef %i.ad, ptr noundef %i.s) #63, !inline_history !34
-  store <2 x float> %23, ptr %20, align 4, !tbaa !304
+  %i.ab = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.w, <4 x float> %i.z, <4 x float> %i.aa)
+  %10 = shufflevector <2 x float> %i.e, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 0>
+  %11 = insertelement <4 x float> poison, float %6, i64 0
+  %12 = insertelement <4 x float> %11, float %4, i64 1
+  %13 = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %14 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %10, <4 x float> %13, <4 x float> %i.ab) ; 4 uses
+  %15 = getelementptr inbounds nuw i8, ptr %i.k, i64 12
+  %16 = insertelement <2 x float> poison, float %8, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.e, <2 x float> %17, <2 x float> %i.v) ; 3 uses
+  %19 = extractelement <2 x float> %18, i64 0
+  %20 = extractelement <2 x float> %18, i64 1
+  %21 = extractelement <4 x float> %14, i64 0
+  %22 = extractelement <4 x float> %14, i64 1
+  %i.ac = extractelement <4 x float> %14, i64 2
+  %i.ad = extractelement <4 x float> %14, i64 3
+  tail call void %i.n(ptr noundef nonnull align 8 dereferenceable(72) %i.g, ptr noundef %i.i, ptr noundef nonnull align 4 dereferenceable(48) %i.k, float noundef %i.ad, float noundef %22, float noundef %i.ac, float noundef %21, float noundef %19, float noundef %20, ptr noundef %i.s) #63, !inline_history !34
+  store <2 x float> %18, ptr %15, align 4, !tbaa !304
   ret void
 }
 

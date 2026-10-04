@@ -204,12 +204,11 @@ bb.as:                                            ; preds = %bb.ar
   %i.ec = insertelement <2 x double> poison, double %.3118, i64 0
   %i.ed = insertelement <2 x double> %i.ec, double %.4114, i64 1
   %i.ee = fdiv <2 x double> %i.eb, %i.ed
-  %i.ef = fmul <2 x double> %i.ee, splat (double f0x3F50000000000000) ; 2 uses
-  %21 = extractelement <2 x double> %i.ef, i64 0
-  %22 = fmul double %21, f0x3F50000000000000
-  %i.eg = extractelement <2 x double> %i.ef, i64 1
-  %23 = fmul double %i.eg, f0x3F50000000000000
-  %i.eh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.203, i64 noundef %5, double noundef %.0119, double noundef %i.dx, double noundef %22, double noundef %i.dz, double noundef %23) ; 0 uses
+  %i.ef = fmul <2 x double> %i.ee, splat (double f0x3F50000000000000)
+  %21 = fmul <2 x double> %i.ef, splat (double f0x3F50000000000000) ; 2 uses
+  %i.eg = extractelement <2 x double> %21, i64 0
+  %22 = extractelement <2 x double> %21, i64 1
+  %i.eh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.203, i64 noundef %5, double noundef %.0119, double noundef %i.dx, double noundef %i.eg, double noundef %i.dz, double noundef %22) ; 0 uses
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.ar, %bb.as

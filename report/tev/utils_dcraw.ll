@@ -205,7 +205,7 @@ define void @_ZN6LibRaw10aRGB_coeffEPA3_d(ptr nofree noundef nonnull writeonly a
   %gep.1.2 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.j = load double, ptr %gep.1.2, align 8, !tbaa !79 ; 3 uses
   %gep.2.2 = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.k = load double, ptr %gep.2.2, align 8, !tbaa !79
+  %i.k = load double, ptr %gep.2.2, align 8, !tbaa !79 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 153292
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 153300
   %i.n = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.b, <2 x double> splat (double f0x3E705A85C0780001), <2 x double> zeroinitializer)
@@ -232,18 +232,17 @@ define void @_ZN6LibRaw10aRGB_coeffEPA3_d(ptr nofree noundef nonnull writeonly a
   %i.af = insertelement <2 x double> poison, double %i.j, i64 0
   %i.ag = insertelement <2 x double> %i.af, double %i.i, i64 1
   %i.ah = shufflevector <2 x double> %i.w, <2 x double> <double poison, double 0.000000e+00>, <2 x i32> <i32 1, i32 3>
-  %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ag, <2 x double> <double f0x3FEFFFFFF5BEEA7E, double f0x3E57535E3100000D>, <2 x double> %i.ah) ; 2 uses
-  %2 = extractelement <2 x double> %i.ai, i64 1
-  %3 = tail call double @llvm.fmuladd.f64(double %i.j, double f0xBFA5FC02F1263C63, double %2)
-  %4 = shufflevector <2 x double> %i.t, <2 x double> poison, <2 x i32> zeroinitializer
-  %5 = insertelement <2 x double> %i.ai, double %3, i64 1
-  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> <double f0x3E4C9C70D0BFFFF8, double f0x3FF0AFE00CE7E752>, <2 x double> %5)
-  %7 = fptrunc <2 x double> %6 to <2 x float>     ; 2 uses
-  %8 = extractelement <2 x float> %7, i64 0
-  store float %8, ptr %i.z, align 4, !tbaa !76
+  %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ag, <2 x double> <double f0x3FEFFFFFF5BEEA7E, double f0x3E57535E3100000D>, <2 x double> %i.ah)
+  %2 = insertelement <2 x double> %i.t, double %i.j, i64 1
+  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %2, <2 x double> <double f0x3E4C9C70D0BFFFF8, double f0xBFA5FC02F1263C63>, <2 x double> %i.ai) ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  %5 = fptrunc double %4 to float
+  store float %5, ptr %i.z, align 4, !tbaa !76
+  %6 = extractelement <2 x double> %3, i64 1
+  %7 = tail call double @llvm.fmuladd.f64(double %i.k, double f0x3FF0AFE00CE7E752, double %6)
+  %8 = fptrunc double %7 to float
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 153324
-  %9 = extractelement <2 x float> %7, i64 1
-  store float %9, ptr %i.aj, align 4, !tbaa !76
+  store float %8, ptr %i.aj, align 4, !tbaa !76
   ret void
 }
 

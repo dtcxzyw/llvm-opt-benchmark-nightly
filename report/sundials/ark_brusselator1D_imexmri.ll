@@ -203,7 +203,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 72
   %i.m = load <2 x double>, ptr %i.l, align 8, !tbaa !17
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.o = load double, ptr %i.n, align 8, !tbaa !23 ; 4 uses
+  %i.o = load double, ptr %i.n, align 8, !tbaa !23 ; 2 uses
   %i.p = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #14 ; 15 uses
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %check_retval.exit, label %bb.b
@@ -226,12 +226,9 @@ check_retval.exit109:                             ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   tail call void @N_VConst(double noundef 0.000000e+00, ptr noundef %2) #14
   %i.x = insertelement <2 x double> poison, double %i.o, i64 0
-  %i.y = shufflevector <2 x double> %i.x, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
-  %i.z = fdiv <2 x double> %i.i, %i.y             ; 2 uses
-  %4 = extractelement <2 x double> %i.z, i64 0
-  %5 = fdiv double %4, %i.o                       ; 2 uses
-  %6 = extractelement <2 x double> %i.z, i64 1
-  %7 = fdiv double %6, %i.o                       ; 2 uses
+  %i.y = shufflevector <2 x double> %i.x, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
+  %i.z = fdiv <2 x double> %i.i, %i.y
+  %4 = fdiv <2 x double> %i.z, %i.y               ; 4 uses
   %i.aa = fmul <2 x double> %i.k, <double 1.000000e+00, double -5.000000e-01>
   %i.ab = fdiv <2 x double> %i.aa, %i.y           ; 3 uses
   %i.ac = extractelement <2 x double> %i.ab, i64 0
@@ -262,13 +259,11 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ai, -2                      ; 2 uses
   %i.ao = or i64 %i.ai, 1
   %broadcast.splat = shufflevector <2 x double> %i.ab, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %broadcast.splatinsert119 = insertelement <2 x double> poison, double %5, i64 0
-  %broadcast.splat120 = shufflevector <2 x double> %broadcast.splatinsert119, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat120 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert121 = insertelement <2 x double> poison, double %i.c, i64 0
   %broadcast.splat122 = shufflevector <2 x double> %broadcast.splatinsert121, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splat124 = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> zeroinitializer
-  %broadcast.splatinsert125 = insertelement <2 x double> poison, double %7, i64 0
-  %broadcast.splat126 = shufflevector <2 x double> %broadcast.splatinsert125, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat126 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %broadcast.splat128 = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %broadcast.splatinsert129 = insertelement <2 x double> poison, double %i.ad, i64 0
   %broadcast.splat130 = shufflevector <2 x double> %broadcast.splatinsert129, <2 x double> poison, <2 x i32> zeroinitializer
@@ -392,7 +387,9 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader135:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.0115.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph.preheader ], [ %i.ao, %middle.block ]
+  %5 = extractelement <2 x double> %4, i64 0
   %i.em = shufflevector <2 x double> %i.ab, <2 x double> %i.af, <2 x i32> <i32 1, i32 2>
+  %6 = extractelement <2 x double> %4, i64 1
   %i.en = extractelement <2 x double> %i.af, i64 1
   br label %.lr.ph
 
@@ -435,7 +432,7 @@ middle.block:                                     ; preds = %vector.body
   %i.fv = tail call double @llvm.fmuladd.f64(double %i.fn, double %5, double %i.fu)
   %i.fw = fadd double %i.c, %i.fv
   %i.fx = extractelement <2 x double> %i.ft, i64 1
-  %i.fy = tail call double @llvm.fmuladd.f64(double %i.fs, double %7, double %i.fx)
+  %i.fy = tail call double @llvm.fmuladd.f64(double %i.fs, double %6, double %i.fx)
   %i.fz = fneg double %i.fg
   %i.ga = insertelement <2 x double> poison, double %i.ff, i64 0
   %i.gb = insertelement <2 x double> %i.ga, double %i.ez, i64 1

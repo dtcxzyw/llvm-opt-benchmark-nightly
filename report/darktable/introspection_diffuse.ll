@@ -204,25 +204,11 @@ bb.t:                                             ; preds = %bb.p, %bb.r, %bb.s
   call void @llvm.experimental.noalias.scope.decl(metadata !124)
   call void @llvm.experimental.noalias.scope.decl(metadata !125)
   call void @llvm.experimental.noalias.scope.decl(metadata !126)
-  %i.pv = load <4 x float>, ptr %i.jr, align 4, !tbaa !20, !noalias !127 ; 7 uses
-  %6 = extractelement <4 x float> %i.pv, i64 0
-  %7 = fcmp reassoc nsz arcp contract afn oeq float %6, 0.000000e+00
-  %8 = extractelement <4 x float> %i.pv, i64 1
-  %9 = fcmp reassoc nsz arcp contract afn oeq float %8, 0.000000e+00
-  %10 = extractelement <4 x float> %i.pv, i64 2
-  %11 = fcmp reassoc nsz arcp contract afn oeq float %10, 0.000000e+00
-  %12 = extractelement <4 x float> %i.pv, i64 3
-  %13 = fcmp reassoc nsz arcp contract afn oeq float %12, 0.000000e+00
+  %i.pv = load <4 x float>, ptr %i.jr, align 4, !tbaa !20, !noalias !127 ; 4 uses
+  %6 = fcmp reassoc nsz arcp contract afn oeq <4 x float> %i.pv, zeroinitializer
   %i.pw = fcmp reassoc nsz arcp contract afn ogt <4 x float> %i.pv, zeroinitializer
-  %i.px = select <4 x i1> %i.pw, <4 x i32> splat (i32 1), <4 x i32> splat (i32 2) ; 4 uses
-  %14 = extractelement <4 x i32> %i.px, i64 0
-  %.0.i.i = select i1 %7, i32 0, i32 %14
-  %15 = extractelement <4 x i32> %i.px, i64 1
-  %.0.i106.i = select i1 %9, i32 0, i32 %15
-  %16 = extractelement <4 x i32> %i.px, i64 2
-  %.0.i108.i = select i1 %11, i32 0, i32 %16
-  %17 = extractelement <4 x i32> %i.px, i64 3
-  %.0.i110.i = select i1 %13, i32 0, i32 %17
+  %i.px = select <4 x i1> %i.pw, <4 x i32> splat (i32 1), <4 x i32> splat (i32 2)
+  %7 = select <4 x i1> %6, <4 x i32> zeroinitializer, <4 x i32> %i.px ; 4 uses
   %i.py = load float, ptr %i.js, align 4, !tbaa !128, !noalias !127
   %i.pz = call reassoc nsz arcp contract afn float @llvm.pow.f32(float 1.000000e+01, float %i.py)
   %i.qa = load float, ptr %i.jt, align 4, !tbaa !129, !noalias !127
@@ -310,6 +296,10 @@ bb.w:                                             ; preds = %bb.v, %decompose_2D
   %i.rb = shufflevector <4 x float> %i.qy, <4 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.rc = shufflevector <4 x float> %i.qy, <4 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.rd = shufflevector <4 x float> %i.qy, <4 x float> poison, <2 x i32> <i32 3, i32 3>
+  %8 = extractelement <4 x i32> %7, i64 0
+  %9 = extractelement <4 x i32> %7, i64 1
+  %10 = extractelement <4 x i32> %7, i64 2
+  %11 = extractelement <4 x i32> %7, i64 3
   %i.re = insertelement <4 x float> poison, float %i.qb, i64 0
   %i.rf = shufflevector <4 x float> %i.re, <4 x float> poison, <4 x i32> zeroinitializer
   br label %bb.af
@@ -712,7 +702,7 @@ begin_hunk_1_@process:bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #20, !noalias !196
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #20, !noalias !196
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #20, !noalias !196
-  switch i32 %.0.i.i, label %bb.am [
+  switch i32 %8, label %bb.am [
     i32 2, label %bb.ao
     i32 1, label %bb.an
   ]
@@ -867,7 +857,7 @@ compute_kernel.exit.i.i:                          ; preds = %bb.ao, %bb.an, %bb.
   store float %.sink70.i.i.i, ptr %i.ls, align 4, !tbaa !20, !noalias !196
   store float %.sink72.i.i.i, ptr %i.lt, align 4, !tbaa !20, !noalias !196
   store float %.sink74.i.i.i, ptr %i.lu, align 4, !tbaa !20, !noalias !196
-  switch i32 %.0.i106.i, label %bb.ap [
+  switch i32 %9, label %bb.ap [
     i32 2, label %bb.ar
     i32 1, label %bb.aq
   ]
@@ -1022,7 +1012,7 @@ compute_kernel.exit228.i.i:                       ; preds = %bb.ar, %bb.aq, %bb.
   store float %.sink70.i225.i.i, ptr %i.mu, align 4, !tbaa !20, !noalias !196
   store float %.sink72.i224.i.i, ptr %i.mv, align 4, !tbaa !20, !noalias !196
   store float %.sink74.i223.i.i, ptr %i.mw, align 4, !tbaa !20, !noalias !196
-  switch i32 %.0.i108.i, label %bb.as [
+  switch i32 %10, label %bb.as [
     i32 2, label %bb.au
     i32 1, label %bb.at
   ]
@@ -1177,7 +1167,7 @@ compute_kernel.exit234.i.i:                       ; preds = %bb.au, %bb.at, %bb.
   store float %.sink70.i231.i.i, ptr %i.nw, align 4, !tbaa !20, !noalias !196
   store float %.sink72.i230.i.i, ptr %i.nx, align 4, !tbaa !20, !noalias !196
   store float %.sink74.i229.i.i, ptr %i.ny, align 4, !tbaa !20, !noalias !196
-  switch i32 %.0.i110.i, label %bb.av [
+  switch i32 %11, label %bb.av [
     i32 2, label %bb.ax
     i32 1, label %bb.aw
   ]

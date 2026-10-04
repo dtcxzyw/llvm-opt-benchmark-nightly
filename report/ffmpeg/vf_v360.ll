@@ -205,26 +205,29 @@ define internal void @spline16_kernel(float noundef %0, float noundef %1, ptr no
   %i.b = fsub nsz float 1.200000e+00, %0
   %i.c = insertelement <4 x float> poison, float %0, i64 0
   %i.d = shufflevector <4 x float> %i.c, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.e = insertelement <4 x float> <float f0xBEAAAAAB, float poison, float poison, float f0x3EAAAAAB>, float %i.a, i64 1
-  %i.f = insertelement <4 x float> %i.e, float %i.b, i64 2
-  %i.g = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.d, <4 x float> %i.f, <4 x float> <float 8.000000e-01, float -2.000000e-01, float 8.000000e-01, float -2.000000e-01>) ; 3 uses
+  %6 = insertelement <4 x float> <float f0xBEAAAAAB, float poison, float poison, float f0x3EAAAAAB>, float %i.a, i64 1
+  %7 = insertelement <4 x float> %6, float %i.b, i64 2
+  %8 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.d, <4 x float> %7, <4 x float> <float 8.000000e-01, float -2.000000e-01, float 8.000000e-01, float -2.000000e-01>) ; 2 uses
+  %i.e = insertelement <4 x float> %8, float %1, i64 2
+  %i.f = insertelement <4 x float> <float poison, float f0xBEAAAAAB, float poison, float poison>, float %0, i64 0
+  %9 = shufflevector <4 x float> %i.f, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
+  %i.g = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.e, <4 x float> %9, <4 x float> <float f0xBEEEEEEF, float 1.000000e+00, float 8.000000e-01, float f0xBE088889>) ; 3 uses
   %i.h = fadd nsz float %1, -1.800000e+00
   %i.i = fsub nsz float 1.200000e+00, %1
   %i.j = insertelement <4 x float> poison, float %1, i64 0
-  %6 = shufflevector <4 x float> %i.g, <4 x float> %i.j, <4 x i32> <i32 3, i32 4, i32 4, i32 4>
-  %7 = insertelement <4 x float> <float poison, float f0xBEAAAAAB, float poison, float poison>, float %0, i64 0
-  %i.k = insertelement <4 x float> %7, float %i.h, i64 2
-  %i.l = insertelement <4 x float> %i.k, float %i.i, i64 3
-  %i.m = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %6, <4 x float> %i.l, <4 x float> <float f0xBE088889, float 8.000000e-01, float -2.000000e-01, float 8.000000e-01>) ; 4 uses
-  %i.n = extractelement <4 x float> %i.m, i64 1
-  %8 = tail call nsz float @llvm.fmuladd.f32(float %i.n, float %1, float f0xBEEEEEEF)
-  %i.o = fmul nsz float %1, %8
-  %i.p = extractelement <4 x float> %i.m, i64 2
+  %10 = shufflevector <4 x float> %i.j, <4 x float> poison, <4 x i32> zeroinitializer
+  %11 = shufflevector <4 x float> %i.g, <4 x float> <float poison, float poison, float poison, float f0x3EAAAAAB>, <4 x i32> <i32 2, i32 poison, i32 poison, i32 7>
+  %i.k = insertelement <4 x float> %11, float %i.h, i64 1
+  %i.l = insertelement <4 x float> %i.k, float %i.i, i64 2
+  %i.m = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %10, <4 x float> %i.l, <4 x float> <float f0xBEEEEEEF, float -2.000000e-01, float 8.000000e-01, float -2.000000e-01>) ; 4 uses
+  %i.n = extractelement <4 x float> %i.m, i64 0
+  %i.o = fmul nsz float %1, %i.n
+  %i.p = extractelement <4 x float> %i.m, i64 1
   %i.q = tail call nsz float @llvm.fmuladd.f32(float %i.p, float %1, float 1.000000e+00) ; 4 uses
-  %i.r = extractelement <4 x float> %i.m, i64 3
+  %i.r = extractelement <4 x float> %i.m, i64 2
   %i.s = fmul nsz float %1, %i.r                  ; 4 uses
-  %9 = tail call nsz float @llvm.fmuladd.f32(float %1, float f0x3EAAAAAB, float -2.000000e-01)
-  %i.t = tail call nsz float @llvm.fmuladd.f32(float %9, float %1, float f0xBE088889)
+  %12 = extractelement <4 x float> %i.m, i64 3
+  %i.t = tail call nsz float @llvm.fmuladd.f32(float %12, float %1, float f0xBE088889)
   %i.u = fmul nsz float %1, %i.t                  ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.w = load i16, ptr %2, align 2, !tbaa !18
@@ -245,48 +248,41 @@ define internal void @spline16_kernel(float noundef %0, float noundef %1, ptr no
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 6
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 38
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 6
-  %10 = shufflevector <4 x float> %i.g, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  %11 = insertelement <2 x float> poison, float %0, i64 0 ; 2 uses
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
-  %13 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %12, <2 x float> <float f0xBEEEEEEF, float 1.000000e+00>) ; 2 uses
-  %14 = shufflevector <2 x float> %11, <2 x float> <float poison, float 1.000000e+00>, <4 x i32> <i32 0, i32 3, i32 0, i32 0>
-  %15 = shufflevector <4 x float> %i.g, <4 x float> %i.m, <4 x i32> <i32 poison, i32 poison, i32 2, i32 4>
-  %16 = shufflevector <2 x float> %13, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %17 = shufflevector <4 x float> %16, <4 x float> %15, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.am = fmul nsz <4 x float> %14, %17           ; 4 uses
+  %13 = extractelement <4 x float> %i.g, i64 1    ; 3 uses
+  %14 = shufflevector <4 x float> %i.g, <4 x float> %8, <4 x i32> <i32 0, i32 1, i32 6, i32 3>
+  %15 = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %0, i64 0
+  %16 = shufflevector <4 x float> %15, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 0>
+  %i.am = fmul nsz <4 x float> %14, %16           ; 4 uses
   %i.an = insertelement <4 x float> poison, float %i.o, i64 0
   %i.ao = shufflevector <4 x float> %i.an, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.ap = fmul nsz <4 x float> %i.am, %i.ao       ; 4 uses
-  %18 = extractelement <4 x float> %i.ap, i64 0
-  %19 = fmul nsz float %18, 1.638500e+04
-  %i.aq = tail call i64 @llvm.lrint.i64.f32(float %19)
+  %i.ap = fmul nsz <4 x float> %i.am, %i.ao
+  %17 = fmul nsz <4 x float> %i.ap, splat (float 1.638500e+04) ; 4 uses
+  %18 = extractelement <4 x float> %17, i64 0
+  %i.aq = tail call i64 @llvm.lrint.i64.f32(float %18)
   %i.ar = trunc i64 %i.aq to i16
   store i16 %i.ar, ptr %5, align 2, !tbaa !18
   %i.as = load i16, ptr %i.y, align 2, !tbaa !18
   store i16 %i.as, ptr %i.z, align 2, !tbaa !18
   %i.at = load i16, ptr %i.aa, align 2, !tbaa !18
   store i16 %i.at, ptr %i.ab, align 2, !tbaa !18
-  %i.au = extractelement <4 x float> %i.ap, i64 1
-  %20 = fmul nsz float %i.au, 1.638500e+04
-  %i.av = tail call i64 @llvm.lrint.i64.f32(float %20)
+  %i.au = extractelement <4 x float> %17, i64 1
+  %i.av = tail call i64 @llvm.lrint.i64.f32(float %i.au)
   %i.aw = trunc i64 %i.av to i16
   store i16 %i.aw, ptr %i.ac, align 2, !tbaa !18
   %i.ax = load i16, ptr %i.ad, align 2, !tbaa !18
   store i16 %i.ax, ptr %i.ae, align 2, !tbaa !18
   %i.ay = load i16, ptr %i.af, align 2, !tbaa !18
   store i16 %i.ay, ptr %i.ag, align 2, !tbaa !18
-  %i.az = extractelement <4 x float> %i.ap, i64 2
-  %21 = fmul nsz float %i.az, 1.638500e+04
-  %i.ba = tail call i64 @llvm.lrint.i64.f32(float %21)
+  %i.az = extractelement <4 x float> %17, i64 2
+  %i.ba = tail call i64 @llvm.lrint.i64.f32(float %i.az)
   %i.bb = trunc i64 %i.ba to i16
   store i16 %i.bb, ptr %i.ah, align 2, !tbaa !18
   %i.bc = load i16, ptr %i.ai, align 2, !tbaa !18
   store i16 %i.bc, ptr %i.aj, align 2, !tbaa !18
   %i.bd = load i16, ptr %i.ak, align 2, !tbaa !18
   store i16 %i.bd, ptr %i.al, align 2, !tbaa !18
-  %i.be = extractelement <4 x float> %i.ap, i64 3
-  %22 = fmul nsz float %i.be, 1.638500e+04
-  %i.bf = tail call i64 @llvm.lrint.i64.f32(float %22)
+  %i.be = extractelement <4 x float> %17, i64 3
+  %i.bf = tail call i64 @llvm.lrint.i64.f32(float %i.be)
   %i.bg = trunc i64 %i.bf to i16
   %i.bh = getelementptr inbounds nuw i8, ptr %5, i64 6
   store i16 %i.bg, ptr %i.bh, align 2, !tbaa !18
@@ -313,8 +309,7 @@ define internal void @spline16_kernel(float noundef %0, float noundef %1, ptr no
   %i.by = load i16, ptr %i.bx, align 2, !tbaa !18
   %i.bz = getelementptr inbounds nuw i8, ptr %4, i64 10
   store i16 %i.by, ptr %i.bz, align 2, !tbaa !18
-  %23 = extractelement <2 x float> %13, i64 1     ; 3 uses
-  %i.ca = fmul nsz float %23, %i.q
+  %i.ca = fmul nsz float %13, %i.q
   %i.cb = fmul nsz float %i.ca, 1.638500e+04
   %i.cc = tail call i64 @llvm.lrint.i64.f32(float %i.cb)
   %i.cd = trunc i64 %i.cc to i16
@@ -372,7 +367,7 @@ define internal void @spline16_kernel(float noundef %0, float noundef %1, ptr no
   %i.ds = load i16, ptr %i.dr, align 2, !tbaa !18
   %i.dt = getelementptr inbounds nuw i8, ptr %4, i64 18
   store i16 %i.ds, ptr %i.dt, align 2, !tbaa !18
-  %i.du = fmul nsz float %23, %i.s
+  %i.du = fmul nsz float %13, %i.s
   %i.dv = fmul nsz float %i.du, 1.638500e+04
   %i.dw = tail call i64 @llvm.lrint.i64.f32(float %i.dv)
   %i.dx = trunc i64 %i.dw to i16
@@ -428,7 +423,7 @@ define internal void @spline16_kernel(float noundef %0, float noundef %1, ptr no
   %i.fk = load i16, ptr %i.fj, align 2, !tbaa !18
   %i.fl = getelementptr inbounds nuw i8, ptr %4, i64 26
   store i16 %i.fk, ptr %i.fl, align 2, !tbaa !18
-  %i.fm = fmul nsz float %23, %i.u
+  %i.fm = fmul nsz float %13, %i.u
   %i.fn = fmul nsz float %i.fm, 1.638500e+04
   %i.fo = tail call i64 @llvm.lrint.i64.f32(float %i.fn)
   %i.fp = trunc i64 %i.fo to i16
@@ -831,11 +826,11 @@ declare <16 x i64> @llvm.lrint.v16i64.v16f32(<16 x float>) #10
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #10
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #10
-
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.asin.v2f32(<2 x float>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #10

@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN3igl20Frame_field_deformer13computeXFieldERSt6vectorIN5Eigen6Ma
   %foldExtExtBinop318 = fadd <2 x double> %i.gn, %shift317
   %shift320 = shufflevector <2 x double> %i.gl, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop321 = fadd <2 x double> %shift320, %foldExtExtBinop318 ; 2 uses
-  %.sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.16..i.i.i.i = load <2 x double>, ptr %.sroa.4.i.i.i.i, align 16, !tbaa !97 ; 3 uses
+  %.sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.16..i.i.i.i = load <2 x double>, ptr %.sroa.4.i.i.i.i, align 16, !tbaa !97 ; 2 uses
   store <2 x double> %.sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.16..i.i.i.i, ptr %.sroa.4, align 16, !tbaa !97
   %.sroa.4.i.i.i.i.16..sroa.4.i.i.i.i.16..sroa.4.i.i.i.i.16..sroa.4.i.i.i.16..sroa.4.i.i.i.16..sroa.4.i.i.16..sroa.4.i.i.16..sroa.4.i.16..sroa.4.i.16..sroa.4.16..sroa.4.16..sroa.4.32..i.i.i.i = load <2 x double>, ptr %.sroa.4.i.i.i.i.16.i.i.i.i.16.i.i.i.i.16.i.i.i.16.i.i.i.16.i.i.16.i.i.16.i.16.i.16..sroa_idx, align 16, !tbaa !97 ; 3 uses
   store <2 x double> %.sroa.4.i.i.i.i.16..sroa.4.i.i.i.i.16..sroa.4.i.i.i.i.16..sroa.4.i.i.i.16..sroa.4.i.i.i.16..sroa.4.i.i.16..sroa.4.i.i.16..sroa.4.i.16..sroa.4.i.16..sroa.4.16..sroa.4.16..sroa.4.32..i.i.i.i, ptr %.sroa.4.16..sroa_idx334, align 16, !tbaa !97
@@ -229,12 +229,9 @@ begin_hunk_0_@_ZN3igl20Frame_field_deformer13computeXFieldERSt6vectorIN5Eigen6Ma
   %i.hc = shufflevector <2 x double> %i.hb, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hd = fmul <2 x double> %i.gi, %i.hc
   %i.he = fadd <2 x double> %i.gz, %i.hd
-  %foldExtExtBinop323 = fmul <2 x double> %i.gs, %.sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.16..i.i.i.i
   %i.hf = shufflevector <2 x double> %i.hb, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.hg = fmul <2 x double> %i.fy, %i.hf
   %i.hh = getelementptr inbounds nuw i8, ptr %i.gp, i64 32
-  %shift325 = shufflevector <2 x double> %i.hb, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop326 = fmul <2 x double> %.sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.16..i.i.i.i, %shift325
   %i.hi = load <2 x double>, ptr %i.hh, align 16, !tbaa !93 ; 4 uses
   %i.hj = shufflevector <2 x double> %i.hi, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hk = shufflevector <2 x double> %foldExtExtBinop321, <2 x double> %i.hi, <2 x i32> <i32 0, i32 2>
@@ -243,19 +240,20 @@ begin_hunk_0_@_ZN3igl20Frame_field_deformer13computeXFieldERSt6vectorIN5Eigen6Ma
   %i.hn = shufflevector <2 x double> %i.gw, <2 x double> %foldExtExtBinop321, <2 x i32> <i32 0, i32 2>
   %i.ho = shufflevector <2 x double> %.sroa.4.i.i.i.i.16..sroa.4.i.i.i.i.16..sroa.4.i.i.i.i.16..sroa.4.i.i.i.16..sroa.4.i.i.i.16..sroa.4.i.i.16..sroa.4.i.i.16..sroa.4.i.16..sroa.4.i.16..sroa.4.16..sroa.4.16..sroa.4.32..i.i.i.i, <2 x double> %i.hi, <2 x i32> <i32 1, i32 3>
   %i.hp = fmul <2 x double> %i.hn, %i.ho
-  %i.hq = fadd <2 x double> %i.hm, %i.hp          ; 2 uses
-  %foldExtExtBinop328 = fadd <2 x double> %foldExtExtBinop323, %i.hq
-  %2 = extractelement <2 x double> %foldExtExtBinop328, i64 0
-  store double %2, ptr %.sroa.4.i.i.i.i28, align 16, !tbaa !93
-  %i.hr = fmul <2 x double> %.sroa.4.8..sroa.4.8..sroa.4.24., %i.hj
-  %i.hs = fadd <2 x double> %i.hg, %i.hr
-  %3 = shufflevector <2 x double> %i.hi, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %4 = fmul <2 x double> %i.gi, %3
-  %5 = fadd <2 x double> %i.hs, %4
-  store <2 x double> %5, ptr %.sroa.4.i.i.i.i28.8.i.i.i.i28.8.i.i.i.i28.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !tbaa !97
-  %shift330 = shufflevector <2 x double> %i.hq, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop331 = fadd <2 x double> %foldExtExtBinop326, %shift330
-  %i.ht = extractelement <2 x double> %foldExtExtBinop331, i64 0
+  %i.hq = fadd <2 x double> %i.hm, %i.hp
+  %2 = fmul <2 x double> %.sroa.4.8..sroa.4.8..sroa.4.24., %i.hj
+  %3 = fadd <2 x double> %i.hg, %2
+  %4 = shufflevector <2 x double> %i.hi, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.hr = fmul <2 x double> %i.gi, %4
+  %i.hs = fadd <2 x double> %3, %i.hr
+  store <2 x double> %i.hs, ptr %.sroa.4.i.i.i.i28.8.i.i.i.i28.8.i.i.i.i28.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !tbaa !97
+  %5 = shufflevector <2 x double> %.sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.16..i.i.i.i, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = shufflevector <2 x double> %i.gs, <2 x double> %i.hb, <2 x i32> <i32 0, i32 3>
+  %7 = fmul <2 x double> %5, %6
+  %8 = fadd <2 x double> %7, %i.hq                ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  store double %9, ptr %.sroa.4.i.i.i.i28, align 16, !tbaa !93
+  %i.ht = extractelement <2 x double> %8, i64 1
   store double %i.ht, ptr %.sroa.4.i.i.i.i28.24.i.i.i.i28.24.i.i.i.i28.24.i.i.i.24.i.i.i.24.i.i.24.i.i.24.i.24.i.24..sroa_idx, align 8, !tbaa !93
   store <2 x double> %i.he, ptr %i.gr, align 16, !tbaa !97
   %i.hu = getelementptr inbounds nuw i8, ptr %i.gr, i64 16

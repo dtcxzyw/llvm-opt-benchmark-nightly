@@ -205,13 +205,11 @@ begin_hunk_0_@_ZN5State22calc_finite_differenceEd:bb.a
   %i.ui = fsub <2 x double> %i.uh, %i.ug
   %i.uj = shufflevector <2 x double> %i.sj, <2 x double> %i.ue, <2 x i32> <i32 1, i32 2>
   %i.uk = fdiv <2 x double> %i.tz, %i.uj          ; 3 uses
-  %3 = extractelement <2 x double> %i.uk, i64 1
-  %i.ul = fmul <2 x double> %i.ue, %i.ue          ; 2 uses
-  %4 = extractelement <2 x double> %i.ul, i64 0
-  %5 = fmul double %4, 4.900000e+00
-  %6 = fadd double %3, %5                         ; 2 uses
-  %i.um = extractelement <2 x double> %i.ul, i64 1
-  %7 = fmul double %i.um, 4.900000e+00
+  %i.ul = fmul <2 x double> %i.ue, %i.ue
+  %3 = fmul <2 x double> %i.ul, splat (double 4.900000e+00) ; 2 uses
+  %shift1356 = shufflevector <2 x double> %i.uk, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop1357 = fadd <2 x double> %shift1356, %3
+  %i.um = extractelement <2 x double> %foldExtExtBinop1357, i64 0 ; 2 uses
   %i.un = shufflevector <2 x double> %i.tk, <2 x double> %i.rc, <2 x i32> <i32 0, i32 3>
   %i.uo = fmul <2 x double> %i.au, %i.un
   %i.up = shufflevector <2 x double> %i.tk, <2 x double> %i.tp, <2 x i32> <i32 0, i32 2>
@@ -226,8 +224,9 @@ begin_hunk_0_@_ZN5State22calc_finite_differenceEd:bb.a
   %i.uy = fmul <2 x double> %i.uu, %i.us
   %i.uz = shufflevector <2 x double> %i.ue, <2 x double> %foldExtExtBinop1349, <2 x i32> <i32 1, i32 2>
   %i.va = fdiv <2 x double> %i.uy, %i.uz          ; 2 uses
-  %8 = extractelement <2 x double> %i.va, i64 0
-  %9 = fadd double %8, %7                         ; 2 uses
+  %shift1359 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop1360 = fadd <2 x double> %i.va, %shift1359
+  %4 = extractelement <2 x double> %foldExtExtBinop1360, i64 0 ; 2 uses
   %i.vb = extractelement <2 x double> %i.uu, i64 1 ; 5 uses
   %i.vc = fmul double %i.vb, %i.vb
   %i.vd = fdiv double %i.vc, %i.tl
@@ -352,7 +351,7 @@ bb.o:                                             ; preds = %bb.n
   %i.za = fdiv <2 x double> %i.yy, %i.yz          ; 2 uses
   %i.zb = extractelement <2 x double> %i.za, i64 0
   %i.zc = fadd double %i.yv, %i.zb
-  %i.zd = fadd double %6, %i.zc
+  %i.zd = fadd double %i.um, %i.zc
   %i.ze = fmul double %i.zd, 5.000000e-01
   %shift1367 = shufflevector <2 x double> %i.za, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop1368 = fadd <2 x double> %i.ux, %shift1367
@@ -362,7 +361,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.01138 = phi double [ %i.yt, %bb.o ], [ %i.xg, %bb.n ]
-  %.01137 = phi double [ %i.ze, %bb.o ], [ %6, %bb.n ]
+  %.01137 = phi double [ %i.ze, %bb.o ], [ %i.um, %bb.n ]
   %.01136 = phi double [ %i.zg, %bb.o ], [ %i.xh, %bb.n ]
   %i.zh = phi <2 x double> [ %i.ye, %bb.o ], [ zeroinitializer, %bb.n ] ; 4 uses
   %i.zi = extractelement <2 x double> %i.ux, i64 1 ; 2 uses
@@ -446,14 +445,14 @@ bb.q:                                             ; preds = %bb.p
   %i.aca = fmul double %i.abz, 4.900000e+00
   %i.acb = extractelement <2 x double> %i.abv, i64 1
   %i.acc = fadd double %i.aca, %i.acb
-  %i.acd = fadd double %9, %i.acc
+  %i.acd = fadd double %4, %i.acc
   %i.ace = fmul double %i.acd, 5.000000e-01
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.01135 = phi double [ %i.abq, %bb.q ], [ %i.zj, %bb.p ]
   %.01134 = phi double [ %i.aby, %bb.q ], [ %i.zi, %bb.p ]
-  %.01133 = phi double [ %i.ace, %bb.q ], [ %9, %bb.p ]
+  %.01133 = phi double [ %i.ace, %bb.q ], [ %4, %bb.p ]
   %i.acf = phi <2 x double> [ %i.abo, %bb.q ], [ zeroinitializer, %bb.p ] ; 4 uses
   %i.acg = extractelement <2 x double> %i.va, i64 1 ; 2 uses
   br i1 %i.hx, label %bb.s, label %bb.t

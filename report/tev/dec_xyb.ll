@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %.sink.split, %bb.c
   br label %.thread143
 
 .thread143:                                       ; preds = %..thread143_crit_edge, %bb.d
-  %.sroa.9.0.copyload = phi double [ %i.hl, %..thread143_crit_edge ], [ f0x3FB27BB300000000, %bb.d ] ; 3 uses
+  %.sroa.9.0.copyload = phi double [ %i.hl, %..thread143_crit_edge ], [ f0x3FB27BB300000000, %bb.d ] ; 2 uses
   %.6146 = phi i8 [ %.6.ph, %..thread143_crit_edge ], [ %i.bg, %bb.d ]
   %i.hm = phi <2 x double> [ %i.hk, %..thread143_crit_edge ], [ <double f0x3FCB367A00000000, double f0x3FE6E2EB20000000>, %bb.d ] ; 4 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -215,15 +215,11 @@ bb.af:                                            ; preds = %.sink.split, %bb.c
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 2 uses
   %.sroa.8.0.copyload = load float, ptr %.sroa.8.0..sroa_idx, align 4
   %.sroa.979.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
-  %.sroa.979.0.copyload = load float, ptr %.sroa.979.0..sroa_idx, align 8
-  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 28 ; 2 uses
-  %.sroa.10.0.copyload = load float, ptr %.sroa.10.0..sroa_idx, align 4
+  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 28
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %.sroa.11.0.copyload = load float, ptr %.sroa.11.0..sroa_idx, align 8, !tbaa !36
-  %10 = fpext float %.sroa.979.0.copyload to double
   %i.hn = extractelement <2 x double> %i.hm, i64 1
   %i.ho = extractelement <2 x double> %i.hm, i64 0
-  %11 = fpext float %.sroa.10.0.copyload to double
   %i.hp = load <2 x float>, ptr %4, align 8
   %i.hq = load <2 x float>, ptr %.sroa.678.0..sroa_idx, align 4
   %i.hr = fpext <2 x float> %i.hp to <2 x double>
@@ -231,16 +227,19 @@ bb.af:                                            ; preds = %.sink.split, %bb.c
   %i.ht = shufflevector <2 x double> %i.hm, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.hu = fmul <2 x double> %i.ht, %i.hs
   %i.hv = shufflevector <2 x double> %i.hm, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hw = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hv, <2 x double> %i.hr, <2 x double> %i.hu) ; 2 uses
-  %12 = extractelement <2 x double> %i.hw, i64 0
-  %13 = call double @llvm.fmuladd.f64(double %.sroa.9.0.copyload, double %10, double %12)
-  %i.hx = fptrunc double %13 to float             ; 3 uses
+  %i.hw = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hv, <2 x double> %i.hr, <2 x double> %i.hu)
+  %10 = load <2 x float>, ptr %.sroa.979.0..sroa_idx, align 8
+  %11 = fpext <2 x float> %10 to <2 x double>
+  %12 = insertelement <2 x double> poison, double %.sroa.9.0.copyload, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> %11, <2 x double> %i.hw) ; 2 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  %i.hx = fptrunc double %15 to float             ; 3 uses
   store float %i.hx, ptr %4, align 8, !tbaa !38
   store float %i.hx, ptr %.sroa.678.0..sroa_idx, align 4, !tbaa !38
   store float %i.hx, ptr %.sroa.979.0..sroa_idx, align 8, !tbaa !38
-  %i.hy = extractelement <2 x double> %i.hw, i64 1
-  %14 = call double @llvm.fmuladd.f64(double %.sroa.9.0.copyload, double %11, double %i.hy)
-  %i.hz = fptrunc double %14 to float             ; 3 uses
+  %i.hy = extractelement <2 x double> %14, i64 1
+  %i.hz = fptrunc double %i.hy to float           ; 3 uses
   store float %i.hz, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !38
   store float %i.hz, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !38
   store float %i.hz, ptr %.sroa.10.0..sroa_idx, align 4, !tbaa !38

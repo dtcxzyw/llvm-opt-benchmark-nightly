@@ -205,7 +205,7 @@ bb.bv:                                            ; preds = %bb.bt, %bb.bu
   %i.kg = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 3 uses
   %.sroa.0707.0.copyload = load float, ptr %i.kg, align 8, !tbaa !177 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 276 ; 2 uses
-  %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !177 ; 3 uses
+  %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !177
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 3 uses
   %.sroa.8.0.copyload = load float, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !177
   %i.kh = getelementptr inbounds nuw i8, ptr %0, i64 188 ; 4 uses
@@ -608,7 +608,7 @@ bb.dr:                                            ; preds = %bb.do, %bb.dp, %bb.
   %i.uj = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
   %.sroa.0.0.copyload = load float, ptr %i.uj, align 8, !tbaa !177
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 292
-  %.sroa.9.0.copyload = load float, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !177 ; 8 uses
+  %.sroa.9.0.copyload = load float, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !177
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 5 uses
   %.sroa.13.0.copyload = load float, ptr %.sroa.13.0..sroa_idx, align 8, !tbaa !177 ; 8 uses
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 300
@@ -628,26 +628,18 @@ bb.dr:                                            ; preds = %bb.do, %bb.dp, %bb.
   %i.us = getelementptr inbounds nuw i8, ptr %0, i64 556
   %i.ut = getelementptr inbounds nuw i8, ptr %0, i64 591 ; 2 uses
   %wide.trip.count805 = zext nneg i32 %i.e to i64
-  %2 = fcmp olt float %.sroa.6.0.copyload, %.sroa.9.0.copyload
   %i.uu = insertelement <4 x float> <float poison, float f0x7F7FFFFF, float poison, float f0x7F7FFFFF>, float %.sroa.6.0.copyload, i64 0
-  %i.uv = shufflevector <4 x float> %i.uu, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3> ; 2 uses
-  %i.uw = insertelement <4 x float> poison, float %.sroa.18.0.copyload, i64 0
+  %i.uv = shufflevector <4 x float> %i.uu, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3> ; 3 uses
+  %i.uw = insertelement <4 x float> poison, float %.sroa.9.0.copyload, i64 0
   %i.ux = shufflevector <4 x float> %i.uw, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %3 = fcmp ogt <4 x float> %i.uv, %i.ux
-  %4 = fcmp ogt float %.sroa.9.0.copyload, f0x7F7FFFFF
-  %5 = fcmp olt float %.sroa.6.0.copyload, %.sroa.9.0.copyload
-  %6 = fcmp ogt float %.sroa.9.0.copyload, f0x7F7FFFFF
-  %i.uy = select <4 x i1> %3, <4 x float> %i.ux, <4 x float> %i.uv ; 4 uses
-  %7 = extractelement <4 x float> %i.uy, i64 0
-  %8 = select i1 %2, float %.sroa.9.0.copyload, float %7
-  %9 = extractelement <4 x float> %i.uy, i64 1
-  %10 = select i1 %4, float %.sroa.9.0.copyload, float %9
-  %11 = extractelement <4 x float> %i.uy, i64 2
-  %12 = select i1 %5, float %.sroa.9.0.copyload, float %11
-  %13 = extractelement <4 x float> %i.uy, i64 3
-  %14 = select i1 %6, float %.sroa.9.0.copyload, float %13
-  %.sroa.0.0.vec.insert.i.i684 = insertelement <2 x float> poison, float %8, i64 1
-  %.sroa.0.0.vec.insert.i8.i688 = insertelement <2 x float> poison, float %10, i64 1
+  %2 = fcmp olt <4 x float> %i.uv, %i.ux
+  %3 = insertelement <4 x float> poison, float %.sroa.18.0.copyload, i64 0
+  %4 = shufflevector <4 x float> %3, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %5 = fcmp ogt <4 x float> %i.uv, %4
+  %i.uy = select <4 x i1> %5, <4 x float> %4, <4 x float> %i.uv
+  %6 = select <4 x i1> %2, <4 x float> %i.ux, <4 x float> %i.uy ; 4 uses
+  %7 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 poison, i32 2>
+  %8 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 poison, i32 3>
   br label %bb.ds
 
 ._crit_edge783:                                   ; preds = %bb.ep
@@ -730,11 +722,10 @@ _Z7ImClampRK6ImVec2S1_S1_.exit.i:                 ; preds = %bb.dx
   %i.wj = fcmp olt float %.1, %.sroa.0.0777
   %i.wk = fcmp ogt float %.1, %.sroa.13.0.copyload
   %..i.i = select i1 %i.wk, float %.sroa.13.0.copyload, float %.1
-  %i.wl = select i1 %i.wj, float %.sroa.0.0777, float %..i.i
-  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %i.wl, i64 0 ; 2 uses
-  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %12, i64 1
+  %i.wl = select i1 %i.wj, float %.sroa.0.0777, float %..i.i ; 2 uses
+  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %7, float %i.wl, i64 0
   store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.wd, align 4, !tbaa !177
-  %.sroa.0.4.vec.insert.i9.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %14, i64 1
+  %.sroa.0.4.vec.insert.i9.i = insertelement <2 x float> %8, float %i.wl, i64 0
   store <2 x float> %.sroa.0.4.vec.insert.i9.i, ptr %i.we, align 4, !tbaa !177
   %i.wm = getelementptr inbounds nuw i8, ptr %i.vg, i64 109
   store <4 x i8> <i8 0, i8 0, i8 0, i8 1>, ptr %i.wm, align 1, !tbaa !301
@@ -845,14 +836,16 @@ _ZN5ImGui23TableCalcMaxColumnWidthEPK10ImGuiTablei.exit: ; preds = %bb.dz, %bb.e
   %i.zl = fcmp ogt float %.1, %.sroa.13.0.copyload
   %..i.i681 = select i1 %i.zl, float %.sroa.13.0.copyload, float %.1
   %i.zm = select i1 %i.zk, float %.sroa.0.0777, float %..i.i681 ; 3 uses
-  %15 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i684, float %i.zm, i64 0
-  store <2 x float> %15, ptr %i.zi, align 4, !tbaa !177
+  %9 = insertelement <4 x float> poison, float %i.zm, i64 0
+  %10 = shufflevector <4 x float> %9, <4 x float> %6, <2 x i32> <i32 0, i32 4>
+  store <2 x float> %10, ptr %i.zi, align 4, !tbaa !177
   %i.zn = fcmp olt float %i.yv, %.sroa.0.0777
   %i.zo = fcmp ogt float %i.yv, %.sroa.13.0.copyload
   %..i6.i686 = select i1 %i.zo, float %.sroa.13.0.copyload, float %i.yv
   %i.zp = select i1 %i.zn, float %.sroa.0.0777, float %..i6.i686 ; 3 uses
-  %16 = insertelement <2 x float> %.sroa.0.0.vec.insert.i8.i688, float %i.zp, i64 0
-  store <2 x float> %16, ptr %i.zj, align 4, !tbaa !177
+  %11 = insertelement <4 x float> poison, float %i.zp, i64 0
+  %12 = shufflevector <4 x float> %11, <4 x float> %6, <2 x i32> <i32 0, i32 5>
+  store <2 x float> %12, ptr %i.zj, align 4, !tbaa !177
   %i.zq = fcmp ogt float %i.zp, %i.zm             ; 3 uses
   %i.zr = getelementptr inbounds nuw i8, ptr %i.vg, i64 109
   %i.zs = zext i1 %i.zq to i8

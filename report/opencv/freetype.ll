@@ -204,7 +204,6 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 3 uses
@@ -221,9 +220,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.l = uitofp nneg i32 %.03354 to double
   %i.m = sitofp i32 %i.k to double
   %i.n = fdiv double %i.l, %i.m                   ; 4 uses
-  %i.o = fmul double %i.n, %i.n                   ; 2 uses
-  %4 = load i64, ptr %1, align 8, !tbaa !43
-  %5 = sitofp i64 %4 to double
+  %i.o = fmul double %i.n, %i.n
   %i.p = fsub double 1.000000e+00, %i.n           ; 3 uses
   %i.q = fmul double %i.p, %i.p
   %i.r = fmul double %i.n, 2.000000e+00
@@ -237,14 +234,14 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.z = fmul <2 x double> %i.y, %i.w
   %i.aa = insertelement <2 x double> poison, double %i.q, i64 0
   %i.ab = shufflevector <2 x double> %i.aa, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ac = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.u, <2 x double> %i.ab, <2 x double> %i.z) ; 2 uses
-  %6 = extractelement <2 x double> %i.ac, i64 0
-  %7 = tail call double @llvm.fmuladd.f64(double %5, double %i.o, double %6)
-  %8 = load i64, ptr %3, align 8, !tbaa !44
-  %9 = sitofp i64 %8 to double
-  %10 = extractelement <2 x double> %i.ac, i64 1
-  %11 = tail call double @llvm.fmuladd.f64(double %9, double %i.o, double %10)
-  %i.ad = fptosi double %7 to i64                 ; 3 uses
+  %i.ac = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.u, <2 x double> %i.ab, <2 x double> %i.z)
+  %3 = load <2 x i64>, ptr %1, align 8, !tbaa !47
+  %4 = sitofp <2 x i64> %3 to <2 x double>
+  %5 = insertelement <2 x double> poison, double %i.o, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %6, <2 x double> %i.ac) ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %i.ad = fptosi double %8 to i64                 ; 3 uses
   %i.ae = icmp sgt i64 %i.ad, 0
   br i1 %i.ae, label %bb.c, label %bb.d
 
@@ -261,7 +258,8 @@ bb.d:                                             ; preds = %bb.b
 
 _ZN2cv8freetype13FreeType2Impl3ftdEl.exit:        ; preds = %bb.c, %bb.d
   %.0.in.i = phi i64 [ %i.ag, %bb.c ], [ %.neg.i, %bb.d ] ; 2 uses
-  %i.ai = fptosi double %11 to i64                ; 3 uses
+  %9 = extractelement <2 x double> %7, i64 1
+  %i.ai = fptosi double %9 to i64                 ; 3 uses
   %i.aj = icmp sgt i64 %i.ai, 0
   br i1 %i.aj, label %bb.e, label %bb.f
 
