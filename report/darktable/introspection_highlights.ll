@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 704
-  %i.e = load ptr, ptr %i.d, align 16, !tbaa !91  ; 8 uses
+  %i.e = load ptr, ptr %i.d, align 16, !tbaa !91  ; 9 uses
   %.not.i = icmp eq ptr %0, null
   br i1 %.not.i, label %._crit_edge.i, label %bb.c
 
@@ -216,12 +216,17 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call i32 @dt_bauhaus_widget_get_quad_active(ptr noundef nonnull %0) #33
   %.not25.i = icmp eq i32 %i.f, 0
-  %.pre30.i = load ptr, ptr %i.e, align 8, !tbaa !161 ; 5 uses
+  %.pre30.i = load ptr, ptr %i.e, align 8, !tbaa !161 ; 4 uses
   br i1 %.not25.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = icmp eq ptr %0, %.pre30.i
-  br i1 %i.g, label %bb.g, label %bb.e
+  br i1 %i.g, label %.thread.i, label %bb.e
+
+.thread.i:                                        ; preds = %bb.d
+  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 80
+  store i32 4, ptr %2, align 8, !tbaa !94
+  br label %bb.i
 
 bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 56
@@ -236,19 +241,19 @@ bb.f:                                             ; preds = %bb.e
   %i.n = select i1 %i.m, i32 3, i32 2
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %._crit_edge.i
-  %2 = phi ptr [ %.pre30.i, %bb.e ], [ %.pre30.i, %bb.d ], [ %.pre30.i, %bb.f ], [ %.pre30.i, %bb.c ], [ %.pre.i, %._crit_edge.i ] ; 2 uses
-  %3 = phi i32 [ 1, %bb.e ], [ 4, %bb.d ], [ %i.n, %bb.f ], [ 0, %bb.c ], [ 0, %._crit_edge.i ]
+bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c, %._crit_edge.i
+  %3 = phi ptr [ %.pre30.i, %bb.e ], [ %.pre.i, %._crit_edge.i ], [ %.pre30.i, %bb.f ], [ %.pre30.i, %bb.c ] ; 2 uses
+  %4 = phi i32 [ 1, %bb.e ], [ 0, %._crit_edge.i ], [ %i.n, %bb.f ], [ 0, %bb.c ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 80
-  store i32 %3, ptr %i.o, align 8, !tbaa !94
-  %.not26.i = icmp eq ptr %0, %2
+  store i32 %4, ptr %i.o, align 8, !tbaa !94
+  %.not26.i = icmp eq ptr %0, %3
   br i1 %.not26.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @dt_bauhaus_widget_set_quad_active(ptr noundef %2, i32 noundef 0) #33
+  tail call void @dt_bauhaus_widget_set_quad_active(ptr noundef %3, i32 noundef 0) #33
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.g
+bb.i:                                             ; preds = %bb.h, %bb.g, %.thread.i
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !157  ; 2 uses
   %.not27.i = icmp eq ptr %0, %i.q

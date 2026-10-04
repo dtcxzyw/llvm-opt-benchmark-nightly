@@ -204,11 +204,11 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN4lean4exprC2ERKS0_.exit
 
 _ZN4lean4exprC2ERKS0_.exit:                       ; preds = %bb.a, %bb.c, %bb.d, %bb.e
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !182  ; 3 uses
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !182  ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 7 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !182  ; 5 uses
   %i.k = icmp eq ptr %i.h, %i.j
-  br i1 %i.k, label %bb.q, label %bb.f
+  br i1 %i.k, label %.critedge, label %bb.f
 
 bb.f:                                             ; preds = %_ZN4lean4exprC2ERKS0_.exit
   %i.l = getelementptr inbounds i8, ptr %i.j, i64 -32 ; 2 uses
@@ -276,10 +276,10 @@ bb.p:                                             ; preds = %bb.o
           cleanup
   br label %bb.ak
 
-bb.q:                                             ; preds = %_ZN4lean4expraSERKS0_.exit, %bb.f, %_ZN4lean4exprC2ERKS0_.exit
-  %6 = phi ptr [ %i.v, %_ZN4lean4expraSERKS0_.exit ], [ %i.b, %bb.f ], [ %i.b, %_ZN4lean4exprC2ERKS0_.exit ] ; 2 uses
-  %7 = phi ptr [ %.pre25, %_ZN4lean4expraSERKS0_.exit ], [ %i.j, %bb.f ], [ %i.j, %_ZN4lean4exprC2ERKS0_.exit ] ; 3 uses
-  %8 = phi ptr [ %.pre, %_ZN4lean4expraSERKS0_.exit ], [ %i.h, %bb.f ], [ %i.h, %_ZN4lean4exprC2ERKS0_.exit ] ; 2 uses
+bb.q:                                             ; preds = %_ZN4lean4expraSERKS0_.exit, %bb.f
+  %6 = phi ptr [ %i.v, %_ZN4lean4expraSERKS0_.exit ], [ %i.b, %bb.f ] ; 3 uses
+  %7 = phi ptr [ %.pre25, %_ZN4lean4expraSERKS0_.exit ], [ %i.j, %bb.f ] ; 3 uses
+  %8 = phi ptr [ %.pre, %_ZN4lean4expraSERKS0_.exit ], [ %i.h, %bb.f ] ; 2 uses
   %i.aa = icmp eq ptr %8, %7
   br i1 %i.aa, label %.critedge, label %.lr.ph
 
@@ -336,10 +336,11 @@ _ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instant
   %i.aq = icmp eq ptr %i.ap, %i.ao
   br i1 %i.aq, label %.critedge, label %.lr.ph, !llvm.loop !527
 
-.critedge:                                        ; preds = %.lr.ph, %_ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE8pop_backEv.exit, %bb.q
-  %9 = phi ptr [ %7, %bb.q ], [ %i.ac, %.lr.ph ], [ %i.ao, %_ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE8pop_backEv.exit ] ; 4 uses
+.critedge:                                        ; preds = %.lr.ph, %_ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE8pop_backEv.exit, %_ZN4lean4exprC2ERKS0_.exit, %bb.q
+  %9 = phi ptr [ %i.b, %_ZN4lean4exprC2ERKS0_.exit ], [ %6, %bb.q ], [ %6, %_ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE8pop_backEv.exit ], [ %6, %.lr.ph ] ; 2 uses
+  %10 = phi ptr [ %i.j, %_ZN4lean4exprC2ERKS0_.exit ], [ %7, %bb.q ], [ %i.ac, %.lr.ph ], [ %i.ao, %_ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE8pop_backEv.exit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
-  store ptr %6, ptr %5, align 8, !tbaa !25
+  store ptr %9, ptr %5, align 8, !tbaa !25
   store ptr inttoptr (i64 1 to ptr), ptr %4, align 8, !tbaa !25
   %i.ar = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 148
@@ -353,13 +354,13 @@ _ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instant
   store i32 %3, ptr %i.ax, align 8, !tbaa !187
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !174
-  %.not.i.i = icmp eq ptr %9, %i.az
+  %.not.i.i = icmp eq ptr %10, %i.az
   br i1 %.not.i.i, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %.critedge
-  store ptr %6, ptr %9, align 8, !tbaa !25
+  store ptr %9, ptr %10, align 8, !tbaa !25
   store ptr inttoptr (i64 1 to ptr), ptr %5, align 8, !tbaa !25
-  %i.ba = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.ba = getelementptr inbounds nuw i8, ptr %10, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.ba, ptr noundef nonnull align 8 dereferenceable(20) %i.ar, i64 20, i1 false)
   %i.bb = load ptr, ptr %i.i, align 8, !tbaa !173
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 32
@@ -367,7 +368,7 @@ bb.x:                                             ; preds = %.critedge
   br label %_ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE9push_backEOSA_.exit
 
 bb.y:                                             ; preds = %.critedge
-  invoke void @_ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE17_M_realloc_insertIJSA_EEEvN9__gnu_cxx17__normal_iteratorIPSA_SC_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr %9, ptr noundef nonnull align 8 dereferenceable(28) %5)
+  invoke void @_ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE17_M_realloc_insertIJSA_EEEvN9__gnu_cxx17__normal_iteratorIPSA_SC_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr %10, ptr noundef nonnull align 8 dereferenceable(28) %5)
           to label %._ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE9push_backEOSA_.exit_crit_edge unwind label %bb.aj
 
 ._ZNSt6vectorIN4lean11scope_cacheISt4pairIP11lean_objectjENS0_4exprENS0_22instantiate_delayed_fn10key_hasherEE11cache_entryESaISA_EE9push_backEOSA_.exit_crit_edge: ; preds = %bb.y

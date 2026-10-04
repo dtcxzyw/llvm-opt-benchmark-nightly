@@ -204,20 +204,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.pre = load i32, ptr %0, align 8, !tbaa !10    ; 3 uses
+  %.pre = load i32, ptr %0, align 8, !tbaa !10    ; 2 uses
   %i.g = icmp ugt i32 %.pre, 1
-  br i1 %i.g, label %.lr.ph, label %.preheader
+  br i1 %i.g, label %.lr.ph, label %.loopexit
 
-.preheader:                                       ; preds = %bb.f, %bb.c
-  %.029.lcssa = phi i32 [ 1, %bb.c ], [ %.130, %bb.f ] ; 5 uses
-  %.lcssa = phi i32 [ %.pre, %bb.c ], [ %i.ad, %bb.f ] ; 2 uses
-  %i.h = icmp ult i32 %.029.lcssa, %.lcssa
+.preheader:                                       ; preds = %bb.f
+  %i.h = icmp ult i32 %.130, %i.ad
   br i1 %i.h, label %.lr.ph40, label %.loopexit
 
 .lr.ph40:                                         ; preds = %.preheader
   %i.i = load ptr, ptr %i.c, align 8, !tbaa !11   ; 5 uses
-  %i.j = zext i32 %.029.lcssa to i64              ; 4 uses
-  %wide.trip.count = zext i32 %.lcssa to i64      ; 3 uses
+  %i.j = zext i32 %.130 to i64                    ; 4 uses
+  %wide.trip.count = zext i32 %i.ad to i64        ; 3 uses
   %i.k = sub nsw i64 %wide.trip.count, %i.j
   %xtraiter = and i64 %i.k, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -270,8 +268,8 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %i.ad = phi i32 [ %.pre47, %bb.e ], [ %i.q, %bb.d ] ; 3 uses
-  %.130 = phi i32 [ %i.aa, %bb.e ], [ %.02937, %bb.d ] ; 2 uses
+  %i.ad = phi i32 [ %.pre47, %bb.e ], [ %i.q, %bb.d ] ; 4 uses
+  %.130 = phi i32 [ %i.aa, %bb.e ], [ %.02937, %bb.d ] ; 6 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ae = zext i32 %i.ad to i64
   %i.af = icmp samesign ult i64 %indvars.iv.next, %i.ae
@@ -310,8 +308,8 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next44.3, %wide.trip.count
   br i1 %exitcond.not.3, label %.loopexit, label %.lr.ph40.new, !llvm.loop !27
 
-.loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph40.new, %bb.b, %.preheader, %bb.a
-  %.033 = phi i32 [ 0, %bb.a ], [ %.029.lcssa, %.preheader ], [ 0, %bb.b ], [ %.029.lcssa, %.lr.ph40.new ], [ %.029.lcssa, %.prol.loopexit ]
+.loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph40.new, %bb.c, %bb.b, %.preheader, %bb.a
+  %.033 = phi i32 [ 0, %bb.a ], [ %.130, %.preheader ], [ 0, %bb.b ], [ 1, %bb.c ], [ %.130, %.lr.ph40.new ], [ %.130, %.prol.loopexit ]
   ret i32 %.033
 }
 

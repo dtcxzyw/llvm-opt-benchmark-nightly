@@ -202,9 +202,9 @@ bb.a:
   br i1 %.not2125, label %_ZNSt7__cxx1110_List_baseIPN3g2o33HyperGraphElementActionCollectionESaIS3_EED2Ev.exit, label %.lr.ph
 
 .preheader:                                       ; preds = %.thread
-  %.sroa.012.027.pre = load ptr, ptr %2, align 8, !tbaa !98 ; 3 uses
+  %.sroa.012.027.pre = load ptr, ptr %2, align 8, !tbaa !98 ; 2 uses
   %.not2228 = icmp eq ptr %.sroa.012.027.pre, %2
-  br i1 %.not2228, label %._crit_edge, label %.lr.ph30
+  br i1 %.not2228, label %_ZNSt7__cxx1110_List_baseIPN3g2o33HyperGraphElementActionCollectionESaIS3_EED2Ev.exit, label %.lr.ph30
 
 .lr.ph30:                                         ; preds = %.preheader
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
@@ -281,23 +281,19 @@ bb.h:                                             ; preds = %bb.g
   %.not21 = icmp eq ptr %i.ad, %i.e
   br i1 %.not21, label %.preheader, label %.lr.ph, !llvm.loop !90
 
-._crit_edge.loopexit:                             ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN3g2o23HyperGraphElementActionEESt4lessIS5_ESaISt4pairIKS5_S9_EEE5eraseERSD_.exit
-  %.pre = load ptr, ptr %2, align 8, !tbaa !98
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %3 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.sroa.012.027.pre, %.preheader ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %3, %2
+._crit_edge:                                      ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN3g2o23HyperGraphElementActionEESt4lessIS5_ESaISt4pairIKS5_S9_EEE5eraseERSD_.exit
+  %.pre = load ptr, ptr %2, align 8, !tbaa !98    ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre, %2
   br i1 %.not8.i.i, label %_ZNSt7__cxx1110_List_baseIPN3g2o33HyperGraphElementActionCollectionESaIS3_EED2Ev.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %._crit_edge, %.lr.ph.i.i
-  %.09.i.i = phi ptr [ %i.ae, %.lr.ph.i.i ], [ %3, %._crit_edge ] ; 2 uses
+  %.09.i.i = phi ptr [ %i.ae, %.lr.ph.i.i ], [ %.pre, %._crit_edge ] ; 2 uses
   %i.ae = load ptr, ptr %.09.i.i, align 8, !tbaa !98 ; 2 uses
   call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 24) #26
   %.not.i.i = icmp eq ptr %i.ae, %2
   br i1 %.not.i.i, label %_ZNSt7__cxx1110_List_baseIPN3g2o33HyperGraphElementActionCollectionESaIS3_EED2Ev.exit, label %.lr.ph.i.i, !llvm.loop !91
 
-_ZNSt7__cxx1110_List_baseIPN3g2o33HyperGraphElementActionCollectionESaIS3_EED2Ev.exit: ; preds = %.lr.ph.i.i, %bb.a, %._crit_edge
+_ZNSt7__cxx1110_List_baseIPN3g2o33HyperGraphElementActionCollectionESaIS3_EED2Ev.exit: ; preds = %.lr.ph.i.i, %bb.a, %.preheader, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #27
   ret i1 true
 
@@ -418,7 +414,7 @@ _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S
 _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN3g2o23HyperGraphElementActionEESt4lessIS5_ESaISt4pairIKS5_S9_EEE5eraseERSD_.exit: ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10shared_ptrIN3g2o23HyperGraphElementActionEEESt10_Select1stISC_ESt4lessIS5_ESaISC_EE12_M_erase_auxESt23_Rb_tree_const_iteratorISC_E.exit, %.critedge.i.i.i, %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10shared_ptrIN3g2o23HyperGraphElementActionEEESt10_Select1stISC_ESt4lessIS5_ESaISC_EE5clearEv.exit.i.i.i
   %.sroa.012.0 = load ptr, ptr %.sroa.012.029, align 8, !tbaa !98 ; 2 uses
   %.not22 = icmp eq ptr %.sroa.012.0, %2
-  br i1 %.not22, label %._crit_edge.loopexit, label %bb.i, !llvm.loop !94
+  br i1 %.not22, label %._crit_edge, label %bb.i, !llvm.loop !94
 
 bb.r:                                             ; preds = %bb.i
   %i.bs = landingpad { ptr, i32 }

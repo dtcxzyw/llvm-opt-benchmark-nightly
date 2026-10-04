@@ -204,21 +204,17 @@ bb.b:                                             ; preds = %_ZN5Darts7Details8A
 bb.c:                                             ; preds = %bb.b, %_ZN5Darts7Details8AutoPoolIjE6resizeEm.exit.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
   %.not = icmp eq i64 %i.d, 0
-  br i1 %.not, label %bb.d, label %1
+  br i1 %.not, label %_ZN5Darts7Details8AutoPoolIjE6resizeEmRKj.exit, label %bb.d
 
-1:                                                ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c
   tail call void @_ZN5Darts7Details8AutoPoolIjE10resize_bufEm(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %i.d)
-  %.pre.i = load i64, ptr %i.b, align 8, !tbaa !152
-  br label %bb.d
-
-bb.d:                                             ; preds = %1, %bb.c
-  %2 = phi i64 [ %.pre.i, %1 ], [ 0, %bb.c ]      ; 3 uses
-  %i.f = icmp ult i64 %2, %i.d
+  %.pre.i = load i64, ptr %i.b, align 8, !tbaa !152 ; 3 uses
+  %i.f = icmp ult i64 %.pre.i, %i.d
   br i1 %i.f, label %.lr.ph9.i, label %_ZN5Darts7Details8AutoPoolIjE6resizeEmRKj.exit
 
 .lr.ph9.i:                                        ; preds = %bb.d
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !117
-  %i.h = shl i64 %2, 2                            ; 2 uses
+  %i.h = shl i64 %.pre.i, 2                       ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.g, i64 %i.h
   %i.i = shl i64 %i.c, 3
   %i.j = sub i64 %i.i, %i.h
@@ -226,8 +222,8 @@ bb.d:                                             ; preds = %1, %bb.c
   store i64 %i.d, ptr %i.b, align 8, !tbaa !152
   br label %_ZN5Darts7Details8AutoPoolIjE6resizeEmRKj.exit
 
-_ZN5Darts7Details8AutoPoolIjE6resizeEmRKj.exit:   ; preds = %bb.d, %.lr.ph9.i
-  %3 = phi i64 [ %2, %bb.d ], [ %i.d, %.lr.ph9.i ]
+_ZN5Darts7Details8AutoPoolIjE6resizeEmRKj.exit:   ; preds = %bb.c, %bb.d, %.lr.ph9.i
+  %1 = phi i64 [ %.pre.i, %bb.d ], [ %i.d, %.lr.ph9.i ], [ 0, %bb.c ]
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.m = load i64, ptr %i.l, align 8, !tbaa !135  ; 2 uses
@@ -306,7 +302,7 @@ _ZNK5Darts7Details11DawgBuilder9hash_unitEj.exit.i: ; preds = %bb.i, %bb.h, %bb.
 bb.j:                                             ; preds = %bb.j, %_ZNK5Darts7Details11DawgBuilder9hash_unitEj.exit.i
   %.pn.in.i = phi i32 [ %.1.i.i, %_ZNK5Darts7Details11DawgBuilder9hash_unitEj.exit.i ], [ %i.az, %bb.j ]
   %.pn.i = zext i32 %.pn.in.i to i64
-  %storemerge.in.i = urem i64 %.pn.i, %3          ; 3 uses
+  %storemerge.in.i = urem i64 %.pn.i, %1          ; 3 uses
   %storemerge.i = trunc nuw i64 %storemerge.in.i to i32
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %storemerge.in.i
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !56

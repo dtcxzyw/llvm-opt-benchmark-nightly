@@ -205,17 +205,16 @@ bb.a:
   %i.h = ashr exact i64 %i.g, 2
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
   %.not13 = icmp eq ptr %1, %2
-  br i1 %.not13, label %.critedge, label %.lr.ph
+  br i1 %.not13, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.014 = phi ptr [ %i.x, %bb.b ], [ %1, %bb.a ]  ; 3 uses
+  %.014 = phi ptr [ %i.x, %bb.b ], [ %1, %bb.a ]  ; 4 uses
   %i.j = load i64, ptr %i.i, align 8, !tbaa !450  ; 2 uses
   %.not9 = icmp eq i64 %i.j, %i.h
   br i1 %.not9, label %.critedge, label %bb.b
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi ptr [ %1, %bb.a ], [ %i.x, %bb.b ], [ %.014, %.lr.ph ] ; 2 uses
-  %.not1017 = icmp eq ptr %.0.lcssa, %2
+.critedge:                                        ; preds = %.lr.ph
+  %.not1017 = icmp eq ptr %.014, %2
   br i1 %.not1017, label %._crit_edge, label %.lr.ph19
 
 .lr.ph19:                                         ; preds = %.critedge
@@ -236,12 +235,12 @@ bb.b:                                             ; preds = %.lr.ph
   %i.v = getelementptr i8, ptr %i.u, i64 -4
   %i.w = load i32, ptr %i.v, align 4, !tbaa !350
   store i32 %i.w, ptr %.014, align 4, !tbaa !350
-  %i.x = getelementptr inbounds nuw i8, ptr %.014, i64 4 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %.014, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.x, %2
-  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !4576
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !4576
 
 bb.c:                                             ; preds = %.lr.ph19, %_ZN4entt13basic_storageINS_6entityES1_SaIS1_EE4nextEv.exit
-  %.118 = phi ptr [ %.0.lcssa, %.lr.ph19 ], [ %i.bk, %_ZN4entt13basic_storageINS_6entityES1_SaIS1_EE4nextEv.exit ] ; 2 uses
+  %.118 = phi ptr [ %.014, %.lr.ph19 ], [ %i.bk, %_ZN4entt13basic_storageINS_6entityES1_SaIS1_EE4nextEv.exit ] ; 2 uses
   %i.y = load i64, ptr %i.k, align 8, !tbaa !655  ; 3 uses
   %i.z = trunc i64 %i.y to i32
   %i.aa = and i32 %i.z, 1048575                   ; 3 uses
@@ -305,7 +304,7 @@ _ZN4entt13basic_storageINS_6entityES1_SaIS1_EE4nextEv.exit: ; preds = %.lr.ph.i,
   %.not10 = icmp eq ptr %i.bk, %2
   br i1 %.not10, label %._crit_edge, label %bb.c, !llvm.loop !4577
 
-._crit_edge:                                      ; preds = %_ZN4entt13basic_storageINS_6entityES1_SaIS1_EE4nextEv.exit, %.critedge
+._crit_edge:                                      ; preds = %bb.b, %_ZN4entt13basic_storageINS_6entityES1_SaIS1_EE4nextEv.exit, %bb.a, %.critedge
   ret void
 }
 

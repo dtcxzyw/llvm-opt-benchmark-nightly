@@ -204,10 +204,10 @@ bb.if:                                            ; preds = %.noexc944
   br label %.loopexit2629
 
 .loopexit2629:                                    ; preds = %.lr.ph3045, %.loopexit2629.loopexit3091
-  %i.bfi = phi ptr [ %.pre3318, %.loopexit2629.loopexit3091 ], [ %i.bak, %.lr.ph3045 ] ; 3 uses
-  %i.bfj = phi ptr [ %.pre3317, %.loopexit2629.loopexit3091 ], [ %i.baj, %.lr.ph3045 ] ; 3 uses
+  %i.bfi = phi ptr [ %.pre3318, %.loopexit2629.loopexit3091 ], [ %i.bak, %.lr.ph3045 ] ; 2 uses
+  %i.bfj = phi ptr [ %.pre3317, %.loopexit2629.loopexit3091 ], [ %i.baj, %.lr.ph3045 ] ; 2 uses
   %i.bfk = icmp eq ptr %i.bfj, %i.bfi
-  br i1 %i.bfk, label %.noexc946, label %.lr.ph.i1895
+  br i1 %i.bfk, label %_ZN8facebook4yogaL21resolveFlexibleLengthEPNS0_4NodeERNS0_8FlexLineENS0_13FlexDirectionES5_NS0_9DirectionEffffffbNS0_10SizingModeEbRNS0_10LayoutDataEjj.exit, label %.lr.ph.i1895
 
 .lr.ph.i1895:                                     ; preds = %.loopexit2629, %bb.ip
   %.075.i = phi float [ %.1.i1897, %bb.ip ], [ 0.000000e+00, %.loopexit2629 ] ; 9 uses
@@ -355,21 +355,15 @@ bb.ip:                                            ; preds = %bb.io, %bb.in, %.no
   %.1.i1897 = phi float [ %i.bgd, %.noexc1910 ], [ %.075.i, %bb.ik ], [ %.075.i, %bb.ii ], [ %.075.i, %.noexc1909 ], [ %.075.i, %.noexc1908 ], [ %i.bhl, %bb.io ], [ %.075.i, %.noexc1911 ], [ %.075.i, %bb.in ], [ %.075.i, %.noexc1920 ] ; 2 uses
   %i.bho = getelementptr inbounds nuw i8, ptr %.sroa.070.074.i, i64 8 ; 2 uses
   %i.bhp = icmp eq ptr %i.bho, %i.bfi
-  br i1 %i.bhp, label %.noexc946.loopexit, label %.lr.ph.i1895
+  br i1 %i.bhp, label %.noexc946, label %.lr.ph.i1895
 
-.noexc946.loopexit:                               ; preds = %bb.ip
-  %.pre3319 = load ptr, ptr %20, align 8, !tbaa !21
-  %.pre3320 = load ptr, ptr %i.aqu, align 8, !tbaa !21
-  br label %.noexc946
-
-.noexc946:                                        ; preds = %.noexc946.loopexit, %.loopexit2629
-  %26 = phi ptr [ %i.bfi, %.loopexit2629 ], [ %.pre3320, %.noexc946.loopexit ] ; 2 uses
-  %27 = phi ptr [ %i.bfj, %.loopexit2629 ], [ %.pre3319, %.noexc946.loopexit ] ; 2 uses
-  %.0.lcssa.i = phi float [ 0.000000e+00, %.loopexit2629 ], [ %.1.i1897, %.noexc946.loopexit ]
+.noexc946:                                        ; preds = %bb.ip
+  %.pre3319 = load ptr, ptr %20, align 8, !tbaa !21 ; 2 uses
+  %.pre3320 = load ptr, ptr %i.aqu, align 8, !tbaa !21 ; 2 uses
   %i.bhq = load float, ptr %i.aqt, align 8, !tbaa !168
-  %i.bhr = fsub float %i.bhq, %.0.lcssa.i
+  %i.bhr = fsub float %i.bhq, %.1.i1897
   store float %i.bhr, ptr %i.aqt, align 8, !tbaa !168
-  %i.bhs = icmp eq ptr %27, %26
+  %i.bhs = icmp eq ptr %.pre3319, %.pre3320
   br i1 %i.bhs, label %_ZN8facebook4yogaL21resolveFlexibleLengthEPNS0_4NodeERNS0_8FlexLineENS0_13FlexDirectionES5_NS0_9DirectionEffffffbNS0_10SizingModeEbRNS0_10LayoutDataEjj.exit, label %.lr.ph3048
 
 .lr.ph3048:                                       ; preds = %.noexc946
@@ -381,7 +375,7 @@ bb.ip:                                            ; preds = %bb.io, %bb.in, %.no
 
 bb.iq:                                            ; preds = %.lr.ph3048, %.noexc1894
   %.0147.i3047 = phi float [ 0.000000e+00, %.lr.ph3048 ], [ %i.biv, %.noexc1894 ]
-  %.sroa.02339.03046 = phi ptr [ %27, %.lr.ph3048 ], [ %i.bru, %.noexc1894 ] ; 2 uses
+  %.sroa.02339.03046 = phi ptr [ %.pre3319, %.lr.ph3048 ], [ %i.bru, %.noexc1894 ] ; 2 uses
   %i.bhv = load ptr, ptr %.sroa.02339.03046, align 8, !tbaa !23 ; 36 uses
   %i.bhw = getelementptr inbounds nuw i8, ptr %i.bhv, i64 340
   %.sroa.0.0.copyload.i1829 = load float, ptr %i.bhw, align 4, !tbaa !16
@@ -784,11 +778,11 @@ bb.kf:                                            ; preds = %bb.ke, %.noexc1893
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   %i.bru = getelementptr inbounds nuw i8, ptr %.sroa.02339.03046, i64 8 ; 2 uses
-  %i.brv = icmp eq ptr %i.bru, %26
+  %i.brv = icmp eq ptr %i.bru, %.pre3320
   br i1 %i.brv, label %_ZN8facebook4yogaL21resolveFlexibleLengthEPNS0_4NodeERNS0_8FlexLineENS0_13FlexDirectionES5_NS0_9DirectionEffffffbNS0_10SizingModeEbRNS0_10LayoutDataEjj.exit, label %bb.iq
 
-_ZN8facebook4yogaL21resolveFlexibleLengthEPNS0_4NodeERNS0_8FlexLineENS0_13FlexDirectionES5_NS0_9DirectionEffffffbNS0_10SizingModeEbRNS0_10LayoutDataEjj.exit: ; preds = %.noexc1894, %bb.if, %bb.hb, %.noexc946
-  %.0147.i.lcssa = phi float [ 0.000000e+00, %.noexc946 ], [ 0.000000e+00, %bb.if ], [ 0.000000e+00, %bb.hb ], [ %i.biv, %.noexc1894 ]
+_ZN8facebook4yogaL21resolveFlexibleLengthEPNS0_4NodeERNS0_8FlexLineENS0_13FlexDirectionES5_NS0_9DirectionEffffffbNS0_10SizingModeEbRNS0_10LayoutDataEjj.exit: ; preds = %.noexc1894, %bb.if, %bb.hb, %.loopexit2629, %.noexc946
+  %.0147.i.lcssa = phi float [ 0.000000e+00, %.noexc946 ], [ 0.000000e+00, %bb.if ], [ 0.000000e+00, %.loopexit2629 ], [ 0.000000e+00, %bb.hb ], [ %i.biv, %.noexc1894 ]
   %i.brw = fsub float %.pre3322, %.0147.i.lcssa   ; 2 uses
   store float %i.brw, ptr %i.aqt, align 8, !tbaa !168
   br label %bb.kg

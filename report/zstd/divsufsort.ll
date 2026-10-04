@@ -204,12 +204,10 @@ bb.fa:                                            ; preds = %bb.ez, %bb.ey
   %i.akt = add i32 %i.aks, -1                     ; 2 uses
   %i.aku = getelementptr inbounds i8, ptr %i.aip, i64 -4 ; 3 uses
   %.not89.i.i.i = icmp ugt ptr %.0462.ph.i.i, %i.aku
-  br i1 %.not89.i.i.i, label %.preheader.i.i.i, label %.lr.ph.i550.i.i
+  br i1 %.not89.i.i.i, label %._crit_edge.i553.i.i, label %.lr.ph.i550.i.i
 
-.preheader.i.i.i:                                 ; preds = %bb.fd, %bb.fa
-  %.073.lcssa.i.i.i = phi ptr [ %i.aku, %bb.fa ], [ %.174.i.i.i, %bb.fd ] ; 3 uses
-  %.0.lcssa.i552.i.i = phi i32 [ -1, %bb.fa ], [ %.2.i.i.i306, %bb.fd ] ; 2 uses
-  %.not8495.i.i.i = icmp ugt ptr %.0462.ph.i.i, %.073.lcssa.i.i.i
+.preheader.i.i.i:                                 ; preds = %bb.fd
+  %.not8495.i.i.i = icmp ugt ptr %.0462.ph.i.i, %.174.i.i.i
   br i1 %.not8495.i.i.i, label %._crit_edge.i553.i.i, label %.lr.ph99.i.i.i
 
 .lr.ph.i550.i.i:                                  ; preds = %bb.fa, %bb.fd
@@ -245,17 +243,17 @@ bb.fc:                                            ; preds = %bb.fb
   br label %bb.fd
 
 bb.fd:                                            ; preds = %bb.fc, %bb.fb, %.lr.ph.i550.i.i
-  %.174.i.i.i = phi ptr [ %i.alc, %bb.fc ], [ %.07391.i.i.i, %bb.fb ], [ %.07391.i.i.i, %.lr.ph.i550.i.i ] ; 3 uses
+  %.174.i.i.i = phi ptr [ %i.alc, %bb.fc ], [ %.07391.i.i.i, %bb.fb ], [ %.07391.i.i.i, %.lr.ph.i550.i.i ] ; 6 uses
   %.266.i.i.i = phi i32 [ %i.alf, %bb.fc ], [ %.06492.i.i.i, %bb.fb ], [ %.06492.i.i.i, %.lr.ph.i550.i.i ]
-  %.2.i.i.i306 = phi i32 [ %.1.i554.i.i, %bb.fc ], [ %.093.i.i.i, %bb.fb ], [ %.093.i.i.i, %.lr.ph.i550.i.i ] ; 2 uses
+  %.2.i.i.i306 = phi i32 [ %.1.i554.i.i, %bb.fc ], [ %.093.i.i.i, %bb.fb ], [ %.093.i.i.i, %.lr.ph.i550.i.i ] ; 3 uses
   %i.alk = getelementptr inbounds nuw i8, ptr %.07790.i.i.i, i64 4 ; 2 uses
   %.not.i551.i.i = icmp ugt ptr %i.alk, %.174.i.i.i
   br i1 %.not.i551.i.i, label %.preheader.i.i.i, label %.lr.ph.i550.i.i, !llvm.loop !65
 
 .lr.ph99.i.i.i:                                   ; preds = %.preheader.i.i.i, %bb.ff
-  %.398.i.i.i = phi i32 [ %.4.i.i.i, %bb.ff ], [ %.0.lcssa.i552.i.i, %.preheader.i.i.i ]
+  %.398.i.i.i = phi i32 [ %.4.i.i.i, %bb.ff ], [ %.2.i.i.i306, %.preheader.i.i.i ]
   %.36797.i.i.i = phi i32 [ %i.alo, %bb.ff ], [ -1, %.preheader.i.i.i ]
-  %.07296.i.i.i = phi ptr [ %i.alt, %bb.ff ], [ %.073.lcssa.i.i.i, %.preheader.i.i.i ] ; 3 uses
+  %.07296.i.i.i = phi ptr [ %i.alt, %bb.ff ], [ %.174.i.i.i, %.preheader.i.i.i ] ; 3 uses
   %i.all = load i32, ptr %.07296.i.i.i, align 4, !tbaa !9
   %i.alm = sext i32 %i.all to i64
   %i.aln = getelementptr inbounds [4 x i8], ptr %i.cb, i64 %i.alm ; 2 uses
@@ -278,9 +276,10 @@ bb.ff:                                            ; preds = %bb.fe, %.lr.ph99.i.
   %.not84.i.i.i = icmp ugt ptr %.0462.ph.i.i, %i.alt
   br i1 %.not84.i.i.i, label %._crit_edge.i553.i.i, label %.lr.ph99.i.i.i, !llvm.loop !66
 
-._crit_edge.i553.i.i:                             ; preds = %bb.ff, %.preheader.i.i.i
-  %.3.lcssa.i.i.i = phi i32 [ %.0.lcssa.i552.i.i, %.preheader.i.i.i ], [ %.4.i.i.i, %bb.ff ]
-  %i.alu = getelementptr inbounds nuw i8, ptr %.073.lcssa.i.i.i, i64 4 ; 2 uses
+._crit_edge.i553.i.i:                             ; preds = %bb.ff, %.preheader.i.i.i, %bb.fa
+  %.073.lcssa121.i.i.i = phi ptr [ %.174.i.i.i, %.preheader.i.i.i ], [ %i.aku, %bb.fa ], [ %.174.i.i.i, %bb.ff ]
+  %.3.lcssa.i.i.i = phi i32 [ %.2.i.i.i306, %.preheader.i.i.i ], [ -1, %bb.fa ], [ %.4.i.i.i, %bb.ff ]
+  %i.alu = getelementptr inbounds nuw i8, ptr %.073.lcssa121.i.i.i, i64 4 ; 2 uses
   %i.alv = icmp ult ptr %i.alu, %i.air
   br i1 %i.alv, label %.lr.ph107.i.i.i, label %tr_copy.exit.i.i
 
@@ -344,7 +343,7 @@ bb.fj:                                            ; preds = %tr_copy.exit.i.i
   br label %.outer.i.i.backedge
 
 ._crit_edge.thread.i.i299:                        ; preds = %.critedge2.i.i, %bb.bx, %tr_heapsort.exit.i.i, %._crit_edge.i.i305, %.lr.ph640.split.us.i.i
-  %i.amz = load i32, ptr %.0462.ph.i.i, align 4, !tbaa !9 ; 2 uses
+  %i.amz = load i32, ptr %.0462.ph.i.i, align 4, !tbaa !9 ; 3 uses
   %i.ana = icmp sgt i32 %i.amz, -1
   br i1 %i.ana, label %.preheader.i.a, label %.critedge.i.i300
 
@@ -358,27 +357,24 @@ bb.fj:                                            ; preds = %tr_copy.exit.i.i
   %i.anh = zext nneg i32 %i.anb to i64
   %i.ani = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %i.anh
   store i32 %i.ang, ptr %i.ani, align 4, !tbaa !9
-  %i.anj = getelementptr inbounds nuw i8, ptr %i.anc, i64 4 ; 5 uses
+  %i.anj = getelementptr inbounds nuw i8, ptr %i.anc, i64 4 ; 4 uses
   %i.ank = icmp ult ptr %i.anj, %.0459.ph.i.i
-  br i1 %i.ank, label %bb.fk, label %.critedge.i.i300
+  br i1 %i.ank, label %bb.fk, label %bb.gf
 
 bb.fk:                                            ; preds = %.preheader.i.a
-  %i.anl = load i32, ptr %i.anj, align 4, !tbaa !9 ; 2 uses
+  %i.anl = load i32, ptr %i.anj, align 4, !tbaa !9 ; 3 uses
   %i.anm = icmp sgt i32 %i.anl, -1
   br i1 %i.anm, label %.preheader.i.a, label %.critedge.i.i300, !llvm.loop !68
 
-.critedge.i.i300:                                 ; preds = %bb.fk, %.preheader.i.a, %._crit_edge.thread.i.i299
-  %.1463.i.i = phi ptr [ %.0462.ph.i.i, %._crit_edge.thread.i.i299 ], [ %i.anj, %.preheader.i.a ], [ %i.anj, %bb.fk ] ; 9 uses
+.critedge.i.i300:                                 ; preds = %bb.fk, %._crit_edge.thread.i.i299
+  %6 = phi i32 [ %i.amz, %._crit_edge.thread.i.i299 ], [ %i.anl, %bb.fk ]
+  %.1463.i.i = phi ptr [ %.0462.ph.i.i, %._crit_edge.thread.i.i299 ], [ %i.anj, %bb.fk ] ; 8 uses
   %i.ann = icmp ult ptr %.1463.i.i, %.0459.ph.i.i
-  br i1 %i.ann, label %6, label %bb.gf
+  br i1 %i.ann, label %bb.fl, label %bb.gf
 
-6:                                                ; preds = %.critedge.i.i300
-  %.pre.i.i301 = load i32, ptr %.1463.i.i, align 4, !tbaa !9
-  br label %bb.fl
-
-bb.fl:                                            ; preds = %bb.fl, %6
-  %i.ano = phi i32 [ %i.ans, %bb.fl ], [ %.pre.i.i301, %6 ]
-  %i.anp = phi ptr [ %i.anr, %bb.fl ], [ %.1463.i.i, %6 ] ; 3 uses
+bb.fl:                                            ; preds = %.critedge.i.i300, %bb.fl
+  %i.ano = phi i32 [ %i.ans, %bb.fl ], [ %6, %.critedge.i.i300 ]
+  %i.anp = phi ptr [ %i.anr, %bb.fl ], [ %.1463.i.i, %.critedge.i.i300 ] ; 3 uses
   %i.anq = xor i32 %i.ano, -1
   store i32 %i.anq, ptr %i.anp, align 4, !tbaa !9
   %i.anr = getelementptr inbounds nuw i8, ptr %i.anp, i64 4 ; 3 uses
@@ -566,7 +562,7 @@ bb.ge:                                            ; preds = %bb.gd
   %i.arf = load i32, ptr %i.are, align 4, !tbaa !107
   br label %.outer.i.i.backedge
 
-bb.gf:                                            ; preds = %.critedge.i.i300
+bb.gf:                                            ; preds = %.preheader.i.a, %.critedge.i.i300
   %i.arg = icmp eq i32 %.0445.ph.i.i, 0
   br i1 %i.arg, label %tr_introsort.exit.i, label %bb.gg
 

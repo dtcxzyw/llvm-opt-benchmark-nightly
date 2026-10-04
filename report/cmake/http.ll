@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %.critedge.i, label %sub_0.i
 
 sub_0.i:                                          ; preds = %bb.b
-  %i.q = load i8, ptr %i.p, align 1               ; 2 uses
+  %i.q = load i8, ptr %i.p, align 1
   %.not49.i = icmp eq i8 %i.q, 104
-  br i1 %.not49.i, label %sub_1.i, label %.tail.thread.i
+  br i1 %.not49.i, label %sub_1.i, label %.critedge.i
 
 sub_1.i:                                          ; preds = %sub_0.i
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 1
@@ -219,11 +219,6 @@ sub_1.i:                                          ; preds = %sub_0.i
   %i.u = load i8, ptr %i.t, align 1
   %.not34.i117 = icmp eq i8 %i.u, 0
   br i1 %.not34.i117, label %bb.h, label %.critedge.i
-
-.tail.thread.i:                                   ; preds = %sub_0.i
-  %6 = zext i8 %i.q to i32
-  %7 = sub nsw i32 104, %6
-  br label %.tail44.i
 
 sub_045.i:                                        ; preds = %sub_1.i
   %i.v = zext i8 %i.s to i32
@@ -238,9 +233,9 @@ sub_247.i:                                        ; preds = %sub_045.i
   %i.aa = sub nsw i32 0, %i.z
   br label %.tail44.i
 
-.tail44.i:                                        ; preds = %sub_247.i, %sub_045.i, %.tail.thread.i
-  %8 = phi i32 [ %7, %.tail.thread.i ], [ %i.w, %sub_045.i ], [ %i.aa, %sub_247.i ]
-  %.not35.i = icmp eq i32 %8, 0
+.tail44.i:                                        ; preds = %sub_247.i, %sub_045.i
+  %6 = phi i32 [ %i.aa, %sub_247.i ], [ %i.w, %sub_045.i ]
+  %.not35.i = icmp eq i32 %6, 0
   br i1 %.not35.i, label %bb.c, label %.critedge.i
 
 bb.c:                                             ; preds = %.tail44.i
@@ -259,7 +254,7 @@ bb.e:                                             ; preds = %bb.d
   %.not39.i = icmp eq i32 %i.ae, 0
   br i1 %.not39.i, label %bb.h, label %http_check_new_conn.exit
 
-.critedge.i:                                      ; preds = %.tail.i.thread, %.tail44.i, %bb.b
+.critedge.i:                                      ; preds = %.tail.i.thread, %sub_0.i, %.tail44.i, %bb.b
   %i.af = call zeroext i1 @Curl_http2_may_switch(ptr noundef nonnull %0) #9
   br i1 %i.af, label %bb.f, label %bb.h
 

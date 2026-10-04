@@ -202,33 +202,31 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %i.b = call ptr @luaL_checklstring(ptr noundef %0, i32 noundef 1, ptr noundef nonnull %i.a) #3 ; 2 uses
-  %i.c = call i64 @lua_tointegerx(ptr noundef %0, i32 noundef 2, ptr noundef null) #3 ; 3 uses
+  %i.c = call i64 @lua_tointegerx(ptr noundef %0, i32 noundef 2, ptr noundef null) #3 ; 2 uses
   %i.d = load i64, ptr %i.a, align 8, !tbaa !11   ; 2 uses
   %i.e = icmp ult i64 %i.c, %i.d
-  br i1 %i.e, label %.preheader, label %.loopexit
+  br i1 %i.e, label %.preheader, label %bb.k
 
 .preheader:                                       ; preds = %bb.a, %.preheader
-  %.0 = phi i64 [ %i.i, %.preheader ], [ %i.c, %bb.a ] ; 3 uses
+  %.0 = phi i64 [ %i.i, %.preheader ], [ %i.c, %bb.a ] ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0
-  %i.g = load i8, ptr %i.f, align 1, !tbaa !12
+  %i.g = load i8, ptr %i.f, align 1, !tbaa !12    ; 4 uses
   %i.h = icmp slt i8 %i.g, -64
-  %i.i = add i64 %.0, 1
+  %i.i = add i64 %.0, 1                           ; 2 uses
   br i1 %i.h, label %.preheader, label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader, %bb.a
-  %.1 = phi i64 [ %i.c, %bb.a ], [ %.0, %.preheader ] ; 3 uses
-  %.not = icmp ult i64 %.1, %i.d
+.loopexit:                                        ; preds = %.preheader
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0 ; 3 uses
+  %.not = icmp ult i64 %.0, %i.d
   br i1 %.not, label %bb.b, label %bb.k
 
 bb.b:                                             ; preds = %.loopexit
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.1 ; 4 uses
-  %3 = load i8, ptr %2, align 1, !tbaa !12        ; 3 uses
-  %i.j = zext i8 %3 to i32                        ; 4 uses
-  %i.k = icmp sgt i8 %3, -1
+  %i.j = zext i8 %i.g to i32                      ; 4 uses
+  %i.k = icmp sgt i8 %i.g, -1
   br i1 %i.k, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = icmp samesign ugt i8 %3, -3
+  %i.l = icmp samesign ugt i8 %i.g, -3
   br i1 %i.l, label %utf8_decode.exit.thread, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.c
@@ -307,14 +305,13 @@ utf8_decode.exit.thread:                          ; preds = %.lr.ph.i, %bb.e, %.
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %4 = add i64 %.1, 1
-  call void @lua_pushinteger(ptr noundef %0, i64 noundef %4) #3
+  call void @lua_pushinteger(ptr noundef %0, i64 noundef %i.i) #3
   %i.ao = zext nneg i32 %.3.i to i64
   call void @lua_pushinteger(ptr noundef %0, i64 noundef %i.ao) #3
   br label %bb.k
 
-bb.k:                                             ; preds = %utf8_decode.exit.thread, %bb.j, %.loopexit
-  %.117 = phi i32 [ 0, %.loopexit ], [ %i.an, %utf8_decode.exit.thread ], [ 2, %bb.j ]
+bb.k:                                             ; preds = %bb.a, %utf8_decode.exit.thread, %bb.j, %.loopexit
+  %.117 = phi i32 [ 2, %bb.j ], [ 0, %.loopexit ], [ %i.an, %utf8_decode.exit.thread ], [ 0, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   ret i32 %.117
 }

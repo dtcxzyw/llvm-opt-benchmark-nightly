@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader.i:                                     ; preds = %bb.b
   %.not39.i = icmp eq i64 %i.c, 0
-  br i1 %.not39.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not39.i, label %mempool_multiple_find.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %i.f = load ptr, ptr %0, align 8
+  %i.f = load ptr, ptr %0, align 8                ; 3 uses
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
@@ -233,22 +233,20 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   %i.s = icmp ugt i64 %i.r, %1                    ; 2 uses
   %i.t = add nuw i64 %i.p, 1
   %.129.i = select i1 %i.s, i64 %i.p, i64 %.02837.i ; 2 uses
-  %.1.i = select i1 %i.s, i64 %.038.i, i64 %i.t   ; 3 uses
+  %.1.i = select i1 %i.s, i64 %.038.i, i64 %i.t   ; 4 uses
   %i.u = icmp ult i64 %.1.i, %.129.i
   br i1 %i.u, label %bb.e, label %._crit_edge.i, !llvm.loop !0
 
-._crit_edge.i:                                    ; preds = %bb.e, %.preheader.i
-  %.0.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %.1.i, %bb.e ] ; 2 uses
-  %i.v = icmp eq i64 %.0.lcssa.i, %i.c
+._crit_edge.i:                                    ; preds = %bb.e
+  %i.v = icmp eq i64 %.1.i, %i.c
   br i1 %i.v, label %mempool_multiple_find.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.i
-  %2 = load ptr, ptr %0, align 8                  ; 2 uses
-  %i.w = getelementptr inbounds nuw [192 x i8], ptr %2, i64 %.0.lcssa.i
+  %i.w = getelementptr inbounds nuw [192 x i8], ptr %i.f, i64 %.1.i
   br label %mempool_multiple_find.exit
 
 mempool_multiple_find.exit:                       ; preds = %bb.d, %bb.f
-  %i.x = phi ptr [ %2, %bb.f ], [ %i.g, %bb.d ]
+  %i.x = phi ptr [ %i.f, %bb.f ], [ %i.g, %bb.d ]
   %.030.i = phi ptr [ %i.w, %bb.f ], [ %i.n, %bb.d ] ; 2 uses
   %i.y = icmp eq ptr %.030.i, null
   br i1 %i.y, label %mempool_multiple_find.exit.thread, label %mempool_multiple_find.exit.thread17
@@ -270,8 +268,8 @@ bb.h:                                             ; preds = %bb.g
   %i.ad = icmp ult ptr %i.ac, %i.aa
   br i1 %i.ad, label %bb.g, label %mempool_multiple_find.exit.thread, !llvm.loop !15
 
-mempool_multiple_find.exit.thread:                ; preds = %bb.h, %bb.g, %._crit_edge.i, %bb.d, %bb.a, %mempool_multiple_find.exit
-  %.2 = phi ptr [ null, %bb.d ], [ null, %mempool_multiple_find.exit ], [ null, %._crit_edge.i ], [ null, %bb.a ], [ null, %bb.h ], [ %i.ab, %bb.g ]
+mempool_multiple_find.exit.thread:                ; preds = %bb.h, %bb.g, %.preheader.i, %._crit_edge.i, %bb.d, %bb.a, %mempool_multiple_find.exit
+  %.2 = phi ptr [ null, %._crit_edge.i ], [ null, %mempool_multiple_find.exit ], [ null, %.preheader.i ], [ null, %bb.a ], [ null, %bb.d ], [ null, %bb.h ], [ %i.ab, %bb.g ]
   ret ptr %.2
 }
 
@@ -458,10 +456,10 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader.i:                                     ; preds = %bb.d
   %.not39.i = icmp eq i64 %i.f, 0
-  br i1 %.not39.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not39.i, label %mempool_multiple_find.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %i.i = load ptr, ptr %0, align 8
+  %i.i = load ptr, ptr %0, align 8                ; 3 uses
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.d
@@ -489,22 +487,20 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i
   %i.v = icmp ugt i64 %i.u, %i.c                  ; 2 uses
   %i.w = add nuw i64 %i.s, 1
   %.129.i = select i1 %i.v, i64 %i.s, i64 %.02837.i ; 2 uses
-  %.1.i = select i1 %i.v, i64 %.038.i, i64 %i.w   ; 3 uses
+  %.1.i = select i1 %i.v, i64 %.038.i, i64 %i.w   ; 4 uses
   %i.x = icmp ult i64 %.1.i, %.129.i
   br i1 %i.x, label %bb.g, label %._crit_edge.i, !llvm.loop !0
 
-._crit_edge.i:                                    ; preds = %bb.g, %.preheader.i
-  %.0.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %.1.i, %bb.g ] ; 2 uses
-  %i.y = icmp eq i64 %.0.lcssa.i, %i.f
+._crit_edge.i:                                    ; preds = %bb.g
+  %i.y = icmp eq i64 %.1.i, %i.f
   br i1 %i.y, label %mempool_multiple_find.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.i
-  %3 = load ptr, ptr %0, align 8                  ; 2 uses
-  %i.z = getelementptr inbounds nuw [192 x i8], ptr %3, i64 %.0.lcssa.i
+  %i.z = getelementptr inbounds nuw [192 x i8], ptr %i.i, i64 %.1.i
   br label %mempool_multiple_find.exit
 
 mempool_multiple_find.exit:                       ; preds = %bb.f, %bb.h
-  %i.aa = phi ptr [ %3, %bb.h ], [ %i.j, %bb.f ]
+  %i.aa = phi ptr [ %i.i, %bb.h ], [ %i.j, %bb.f ]
   %.030.i = phi ptr [ %i.z, %bb.h ], [ %i.q, %bb.f ] ; 2 uses
   %i.ab = icmp eq ptr %.030.i, null
   br i1 %i.ab, label %mempool_multiple_find.exit.thread, label %mempool_multiple_find.exit.thread25
@@ -536,8 +532,8 @@ bb.k:                                             ; preds = %bb.i
   %i.am = icmp ult ptr %i.al, %i.ad
   br i1 %i.am, label %bb.i, label %mempool_multiple_find.exit.thread, !llvm.loop !16
 
-mempool_multiple_find.exit.thread:                ; preds = %bb.k, %._crit_edge.i, %bb.f, %bb.c, %bb.j, %mempool_multiple_find.exit
-  %.2 = phi ptr [ %i.ak, %bb.j ], [ null, %mempool_multiple_find.exit ], [ null, %._crit_edge.i ], [ null, %bb.c ], [ null, %bb.f ], [ null, %bb.k ]
+mempool_multiple_find.exit.thread:                ; preds = %bb.k, %.preheader.i, %._crit_edge.i, %bb.f, %bb.c, %bb.j, %mempool_multiple_find.exit
+  %.2 = phi ptr [ %i.ak, %bb.j ], [ null, %mempool_multiple_find.exit ], [ null, %.preheader.i ], [ null, %bb.c ], [ null, %bb.f ], [ null, %._crit_edge.i ], [ null, %bb.k ]
   ret ptr %.2
 }
 

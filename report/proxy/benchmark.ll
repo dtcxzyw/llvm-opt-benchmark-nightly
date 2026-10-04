@@ -204,7 +204,7 @@ _ZN9benchmark8internal18GetNullLogInstanceEv.exit.i: ; preds = %bb.d, %bb.c, %_Z
   %i.j = load i32, ptr %i.i, align 8, !tbaa !314
   %i.k = icmp slt i32 %i.h, %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 3 uses
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !315  ; 3 uses
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !315  ; 2 uses
   br i1 %i.k, label %.lr.ph.preheader, label %_ZN9benchmark8internal18GetNullLogInstanceEv.exit._crit_edge.i
 
 .lr.ph.preheader:                                 ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit.i
@@ -215,33 +215,26 @@ _ZZN9benchmark7Barrier13createBarrierERNS_9MutexLockEENKUlvE_clEv.exit.i.i: ; pr
   %i.o = load i32, ptr %i.f, align 8, !tbaa !313
   %i.p = load i32, ptr %i.i, align 8, !tbaa !314
   %i.q = icmp eq i32 %i.o, %i.p
-  br i1 %i.q, label %_ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i, label %.lr.ph, !llvm.loop !308
+  br i1 %i.q, label %_ZN9benchmark8internal18GetNullLogInstanceEv.exit._crit_edge.i, label %.lr.ph, !llvm.loop !308
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZZN9benchmark7Barrier13createBarrierERNS_9MutexLockEENKUlvE_clEv.exit.i.i
   invoke void @_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE(ptr noundef nonnull align 8 dereferenceable(48) %i.n, ptr noundef nonnull align 8 dereferenceable(16) %1)
           to label %.noexc unwind label %bb.h
 
 .noexc:                                           ; preds = %.lr.ph
-  %i.r = load i32, ptr %i.l, align 4, !tbaa !315  ; 3 uses
+  %i.r = load i32, ptr %i.l, align 4, !tbaa !315  ; 2 uses
   %i.s = icmp sgt i32 %i.r, %i.m
-  br i1 %i.s, label %.noexc._ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i_crit_edge, label %_ZZN9benchmark7Barrier13createBarrierERNS_9MutexLockEENKUlvE_clEv.exit.i.i, !llvm.loop !308
+  br i1 %i.s, label %_ZN9benchmark7Barrier13createBarrierERNS_9MutexLockE.exit, label %_ZZN9benchmark7Barrier13createBarrierERNS_9MutexLockEENKUlvE_clEv.exit.i.i, !llvm.loop !308
 
-.noexc._ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i_crit_edge: ; preds = %.noexc
-  br label %_ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i, !llvm.loop !308
-
-_ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i: ; preds = %_ZZN9benchmark7Barrier13createBarrierERNS_9MutexLockEENKUlvE_clEv.exit.i.i, %.noexc._ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i_crit_edge
-  %.not.i = icmp sgt i32 %i.r, %i.m
-  br i1 %.not.i, label %_ZN9benchmark7Barrier13createBarrierERNS_9MutexLockE.exit, label %_ZN9benchmark8internal18GetNullLogInstanceEv.exit._crit_edge.i
-
-_ZN9benchmark8internal18GetNullLogInstanceEv.exit._crit_edge.i: ; preds = %_ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit.i
-  %i.t = phi i32 [ %i.r, %_ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i ], [ %i.m, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit.i ]
+_ZN9benchmark8internal18GetNullLogInstanceEv.exit._crit_edge.i: ; preds = %_ZZN9benchmark7Barrier13createBarrierERNS_9MutexLockEENKUlvE_clEv.exit.i.i, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit.i
+  %i.t = phi i32 [ %i.m, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit.i ], [ %i.r, %_ZZN9benchmark7Barrier13createBarrierERNS_9MutexLockEENKUlvE_clEv.exit.i.i ]
   %i.u = add nsw i32 %i.t, 1
   store i32 %i.u, ptr %i.l, align 4, !tbaa !315
   store i32 0, ptr %i.f, align 8, !tbaa !313
   br label %_ZN9benchmark7Barrier13createBarrierERNS_9MutexLockE.exit
 
-_ZN9benchmark7Barrier13createBarrierERNS_9MutexLockE.exit: ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit._crit_edge.i, %_ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i
-  %.1.i = phi i1 [ true, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit._crit_edge.i ], [ false, %_ZNSt18condition_variable4waitIZN9benchmark7Barrier13createBarrierERNS1_9MutexLockEEUlvE_EEvRSt11unique_lockISt5mutexET_.exit.i ] ; 2 uses
+_ZN9benchmark7Barrier13createBarrierERNS_9MutexLockE.exit: ; preds = %.noexc, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit._crit_edge.i
+  %.1.i = phi i1 [ true, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit._crit_edge.i ], [ false, %.noexc ] ; 2 uses
   %i.v = load i8, ptr %i.a, align 8, !tbaa !312, !range !84, !noundef !85
   %i.w = trunc nuw i8 %i.v to i1
   br i1 %i.w, label %bb.e, label %_ZN9benchmark9MutexLockD2Ev.exit
