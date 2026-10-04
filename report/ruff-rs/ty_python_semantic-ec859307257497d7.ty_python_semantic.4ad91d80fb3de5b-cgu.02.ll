@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 7440
 inline.NumDeleted: 2774
 loop-unroll.NumCompletelyUnrolled: 52
-loop-unroll.NumRuntimeUnrolled: 178
-loop-unroll.NumUnrolled: 230
+loop-unroll.NumRuntimeUnrolled: 177
+loop-unroll.NumUnrolled: 229
 begin_hunk_0_@_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable7ipnsortTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameBU_ENvYBT_NtNtB8_3cmp10PartialOrd2ltECsoTR8nlGN3X_18ty_python_semantic:bb.a
   %spec.select.i.i.i.i.i12 = select i1 %i.bk, i64 %i.bl, i64 %i.bj
   %i.bm = icmp slt i64 %spec.select.i.i.i.i.i12, 0
@@ -205,30 +205,18 @@ bb.e:                                             ; preds = %_RINvNtNtNtCs4NRVxs
   tail call fastcc void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort9quicksortTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtB1e_6frozen16FrozenValueIndexENCINvMB8_SB17_16sort_unstable_byNCNvXsa_B2k_INtB2k_14FrozenValueMapB18_NtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEINtNtBa_7convert4FromINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapB18_B3Z_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherEE4from0E0EB43_(ptr noalias noundef nonnull align 4 %0, i64 noundef %1, ptr noalias noundef readonly align 4 captures(address, read_provenance) dereferenceable_or_null(8) null, i32 noundef %i.p, ptr noalias noundef align 8 dereferenceable(8) %2)
   br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE7reverseCsoTR8nlGN3X_18ty_python_semantic.exit
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE7reverseCsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i, %middle.block, %bb.a, %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtB19_6frozen16FrozenValueIndexENCINvMB6_SB12_16sort_unstable_byNCNvXsa_B2f_INtB2f_14FrozenValueMapB13_NtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEINtNtB8_7convert4FromINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapB13_B3U_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherEE4from0E0EB3Y_.exit.thread, %bb.e
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE7reverseCsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a, %bb.a, %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtB19_6frozen16FrozenValueIndexENCINvMB6_SB12_16sort_unstable_byNCNvXsa_B2f_INtB2f_14FrozenValueMapB13_NtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEINtNtB8_7convert4FromINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapB13_B3U_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherEE4from0E0EB3Y_.exit.thread, %bb.e
   ret void
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.preheader.i.i: ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtB19_6frozen16FrozenValueIndexENCINvMB6_SB12_16sort_unstable_byNCNvXsa_B2f_INtB2f_14FrozenValueMapB13_NtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEINtNtB8_7convert4FromINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapB13_B3U_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherEE4from0E0EB3Y_.exit.thread
-  %i.q = lshr i64 %1, 1                           ; 5 uses
+  %i.q = lshr i64 %1, 1                           ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4442)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4443)
-  %i.r = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %1 ; 4 uses
-  %min.iters.check = icmp samesign ult i64 %1, 32
-  br i1 %min.iters.check, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a, label %vector.scevcheck
+  %i.r = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %1 ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %1, 4
+  br i1 %min.iters.check, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit, label %vector.ph
 
-vector.scevcheck:                                 ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.preheader.i.i
-  %3 = add nsw i64 %i.q, -1                       ; 2 uses
-  %4 = shl nuw nsw i64 %1, 3
-  %5 = getelementptr i8, ptr %0, i64 %4
-  %scevgep = getelementptr i8, ptr %5, i64 -8     ; 2 uses
-  %mul.result.neg = mul nsw i64 %3, -8
-  %mul.overflow = icmp ugt i64 %3, 2305843009213693951
-  %6 = getelementptr i8, ptr %scevgep, i64 %mul.result.neg
-  %7 = icmp ugt ptr %6, %scevgep
-  %8 = or i1 %7, %mul.overflow
-  br i1 %8, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.scevcheck
+vector.ph:                                        ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.preheader.i.i
   %n.vec = and i64 %i.q, 576460752303423486       ; 3 uses
   br label %vector.body
 
@@ -247,53 +235,26 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %interleaved.vec, ptr %i.w, align 4, !alias.scope !4445, !noalias !4442
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec
-  br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !4440
+  br i1 %i.x, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a, label %vector.body, !llvm.loop !4440
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.q, %n.vec
-  br i1 %cmp.n, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE7reverseCsoTR8nlGN3X_18ty_python_semantic.exit, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a: ; preds = %vector.body
+  %lcmp.mod.not = icmp eq i64 %i.q, %n.vec
+  br i1 %lcmp.mod.not, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE7reverseCsoTR8nlGN3X_18ty_python_semantic.exit, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a: ; preds = %vector.scevcheck, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.preheader.i.i, %middle.block
-  %.sroa.0.016.i.i.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.preheader.i.i ], [ %n.vec, %middle.block ] ; 5 uses
-  %.neg = or disjoint i64 %.sroa.0.016.i.i.ph, 1
-  %9 = and i64 %1, 2
-  %lcmp.mod.not = icmp eq i64 %9, 0
-  br i1 %lcmp.mod.not, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol
-
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a
-  %10 = xor i64 %.sroa.0.016.i.i.ph, -1
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.016.i.i.ph ; 2 uses
-  %12 = getelementptr [8 x i8], ptr %i.r, i64 %10 ; 2 uses
-  %13 = load i64, ptr %12, align 4, !alias.scope !4445, !noalias !4442
-  %14 = load <2 x i32>, ptr %11, align 4, !alias.scope !4444, !noalias !4443
-  store i64 %13, ptr %11, align 4, !alias.scope !4444, !noalias !4443
-  store <2 x i32> %14, ptr %12, align 4, !alias.scope !4445, !noalias !4442
-  %15 = or disjoint i64 %.sroa.0.016.i.i.ph, 1
-  br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit
-
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a
-  %.sroa.0.016.i.i.unr = phi i64 [ %.sroa.0.016.i.i.ph, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a ], [ %15, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol ]
-  %16 = icmp eq i64 %i.q, %.neg
-  br i1 %16, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE7reverseCsoTR8nlGN3X_18ty_python_semantic.exit, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.preheader.i.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a
+  %.sroa.0.016.i.i.unr = phi i64 [ 0, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.preheader.i.i ], [ %n.vec, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.preheader.a ]
+  br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i
-  %.sroa.0.016.i.i = phi i64 [ %i.ad, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i ], [ %.sroa.0.016.i.i.unr, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit ] ; 5 uses
+  %.sroa.0.016.i.i = phi i64 [ %i.ad, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i ], [ %.sroa.0.016.i.i.unr, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i.prol.loopexit ] ; 3 uses
   %i.y = xor i64 %.sroa.0.016.i.i, -1
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.016.i.i ; 2 uses
-  %18 = getelementptr [8 x i8], ptr %i.r, i64 %i.y ; 2 uses
-  %19 = load i64, ptr %18, align 4, !alias.scope !4445, !noalias !4442
-  %20 = load <2 x i32>, ptr %17, align 4, !alias.scope !4444, !noalias !4443
-  store i64 %19, ptr %17, align 4, !alias.scope !4444, !noalias !4443
-  store <2 x i32> %20, ptr %18, align 4, !alias.scope !4445, !noalias !4442
-  %21 = sub i64 -2, %.sroa.0.016.i.i
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.016.i.i
-  %22 = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
-  %i.aa = getelementptr [8 x i8], ptr %i.r, i64 %21 ; 2 uses
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.016.i.i ; 2 uses
+  %i.aa = getelementptr [8 x i8], ptr %i.r, i64 %i.y ; 2 uses
   %i.ab = load i64, ptr %i.aa, align 4, !alias.scope !4445, !noalias !4442
-  %i.ac = load <2 x i32>, ptr %22, align 4, !alias.scope !4444, !noalias !4443
-  store i64 %i.ab, ptr %22, align 4, !alias.scope !4444, !noalias !4443
+  %i.ac = load <2 x i32>, ptr %i.z, align 4, !alias.scope !4444, !noalias !4443
+  store i64 %i.ab, ptr %i.z, align 4, !alias.scope !4444, !noalias !4443
   store <2 x i32> %i.ac, ptr %i.aa, align 4, !alias.scope !4445, !noalias !4442
-  %i.ad = add nuw nsw i64 %.sroa.0.016.i.i, 2     ; 2 uses
+  %i.ad = add nuw nsw i64 %.sroa.0.016.i.i, 1     ; 2 uses
   %exitcond.not.i.i.1 = icmp eq i64 %i.ad, %i.q
   br i1 %exitcond.not.i.i.1, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE7reverseCsoTR8nlGN3X_18ty_python_semantic.exit, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE12split_at_mutCsoTR8nlGN3X_18ty_python_semantic.exit11.i.i, !llvm.loop !4441
 }
@@ -696,7 +657,7 @@ begin_hunk_1_@llvm.umin.i8
 !4438 = distinct !{!4438, i1 false, !"_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE7reverseCsoTR8nlGN3X_18ty_python_semantic"}
 !4439 = distinct !{!4439, !4438, !"_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtNtCs2O29vuvTAEJ_14ty_python_core7ast_ids8node_key17ExpressionNodeKeyNtNtBB_6frozen16FrozenValueIndexE7reverseCsoTR8nlGN3X_18ty_python_semantic: argument 0"}
 !4440 = distinct !{!4440, !30, !31}
-!4441 = distinct !{!4441, !30}
+!4441 = distinct !{!4441, !31, !30}
 !4442 = !{!4436}
 !4443 = !{!4437}
 !4444 = !{!4436, !4439}

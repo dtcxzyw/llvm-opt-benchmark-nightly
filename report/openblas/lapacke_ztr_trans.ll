@@ -62,16 +62,15 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %wide.trip.count = zext i32 %i.n to i64         ; 7 uses
   %i.s = xor i64 %i.o, -1
   %i.t = add nsw i64 %i.s, %wide.trip.count
-  %i.u = select i1 %.not76, i64 16, i64 0         ; 4 uses
-  %i.v = shl nsw i64 %i.r, 4
-  %8 = add nsw i64 %i.v, 16                       ; 2 uses
-  %i.w = shl nuw nsw i64 %wide.trip.count, 4
+  %i.u = select i1 %.not76, i64 16, i64 0         ; 3 uses
+  %i.v = shl nuw nsw i64 %wide.trip.count, 4
+  %i.w = shl nsw i64 %i.r, 4
+  %8 = add nsw i64 %i.w, 16
   %9 = shl nsw i64 %i.r, 4
-  %10 = getelementptr i8, ptr %6, i64 %i.u
-  %i.x = getelementptr i8, ptr %4, i64 %i.u
-  %i.y = getelementptr i8, ptr %4, i64 %i.w
-  %i.z = getelementptr i8, ptr %6, i64 %i.u
-  %i.aa = getelementptr i8, ptr %4, i64 %i.u
+  %i.x = getelementptr i8, ptr %6, i64 %i.u
+  %i.y = getelementptr i8, ptr %4, i64 %i.u
+  %i.z = getelementptr i8, ptr %4, i64 %i.v
+  %i.aa = getelementptr i8, ptr %6, i64 %i.u
   %ident.check = icmp ne i32 %7, 1
   br label %bb.h
 
@@ -226,24 +225,22 @@ scalar.ph148:                                     ; preds = %scalar.ph148.prol.l
   br i1 %exitcond105.not.3, label %.loopexit, label %scalar.ph148, !llvm.loop !14
 
 bb.h:                                             ; preds = %.lr.ph86, %._crit_edge
-  %indvars.iv94 = phi i64 [ 0, %.lr.ph86 ], [ %indvars.iv.next95, %._crit_edge ] ; 12 uses
+  %indvars.iv94 = phi i64 [ 0, %.lr.ph86 ], [ %indvars.iv.next95, %._crit_edge ] ; 11 uses
   %indvars.iv = phi i64 [ %i.o, %.lr.ph86 ], [ %indvars.iv.next, %._crit_edge ] ; 6 uses
   %i.bs = add nuw i64 %indvars.iv94, %i.o
   %i.bt = sub i64 %wide.trip.count, %i.bs         ; 3 uses
   %i.bu = shl nuw nsw i64 %indvars.iv94, 5
-  %scevgep124.a = getelementptr i8, ptr %10, i64 %i.bu
+  %scevgep124.a = getelementptr i8, ptr %i.x, i64 %i.bu
   %i.bv = add nuw i64 %indvars.iv94, %wide.trip.count
   %i.bw = shl i64 %i.bv, 4
   %scevgep125.a = getelementptr i8, ptr %6, i64 %i.bw
   %i.bx = mul i64 %8, %indvars.iv94
-  %scevgep126.a = getelementptr i8, ptr %i.x, i64 %i.bx
+  %scevgep126.a = getelementptr i8, ptr %i.y, i64 %i.bx
   %i.by = mul i64 %9, %indvars.iv94
-  %scevgep127 = getelementptr i8, ptr %i.y, i64 %i.by
+  %scevgep127 = getelementptr i8, ptr %i.z, i64 %i.by
   %i.bz = sub i64 %i.t, %indvars.iv94             ; 2 uses
   %i.ca = shl nuw nsw i64 %indvars.iv94, 5
-  %scevgep = getelementptr i8, ptr %i.z, i64 %i.ca ; 2 uses
-  %11 = mul i64 %8, %indvars.iv94
-  %scevgep123 = getelementptr i8, ptr %i.aa, i64 %11 ; 2 uses
+  %scevgep123 = getelementptr i8, ptr %i.aa, i64 %i.ca ; 2 uses
   %i.cb = icmp slt i64 %indvars.iv94, %invariant.op
   br i1 %i.cb, label %.lr.ph, label %._crit_edge
 
@@ -251,19 +248,16 @@ bb.h:                                             ; preds = %.lr.ph86, %._crit_e
   %i.cc = mul nsw i64 %indvars.iv94, %i.r
   %invariant.gep = getelementptr [16 x i8], ptr %4, i64 %i.cc ; 7 uses
   %invariant.gep115 = getelementptr [16 x i8], ptr %6, i64 %indvars.iv94 ; 7 uses
-  %min.iters.check = icmp ult i64 %i.bt, 28
+  %min.iters.check = icmp ult i64 %i.bt, 24
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
-  %mul.result = shl i64 %i.bz, 4                  ; 2 uses
+  %mul.result = shl i64 %i.bz, 4
   %mul.overflow = icmp ugt i64 %i.bz, 1152921504606846975
-  %12 = getelementptr i8, ptr %scevgep, i64 %mul.result
-  %13 = icmp ult ptr %12, %scevgep
   %i.cd = getelementptr i8, ptr %scevgep123, i64 %mul.result
   %i.ce = icmp ult ptr %i.cd, %scevgep123
-  %14 = or i1 %i.ce, %mul.overflow
-  %i.cf = or i1 %13, %ident.check
-  %i.cg = or i1 %i.cf, %14
+  %i.cf = or i1 %i.ce, %mul.overflow
+  %i.cg = or i1 %ident.check, %i.cf
   br i1 %i.cg, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

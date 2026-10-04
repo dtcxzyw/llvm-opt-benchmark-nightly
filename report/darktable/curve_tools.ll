@@ -164,7 +164,7 @@ bb.a:
 
 .preheader.i:                                     ; preds = %bb.a
   %i.b = add nsw i32 %0, -1                       ; 3 uses
-  %wide.trip.count.i = zext nneg i32 %i.b to i64  ; 5 uses
+  %wide.trip.count.i = zext nneg i32 %i.b to i64  ; 4 uses
   %exitcond.not.i2 = icmp eq i32 %i.b, 0
   br i1 %exitcond.not.i2, label %._crit_edge, label %.lr.ph
 
@@ -185,7 +185,7 @@ bb.b:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.preheader.i
   %i.h = mul nuw nsw i32 %0, 3
   %i.i = zext nneg i32 %i.h to i64                ; 2 uses
-  %i.j = tail call noalias ptr @calloc(i64 noundef %i.i, i64 noundef 4) #13 ; 12 uses
+  %i.j = tail call noalias ptr @calloc(i64 noundef %i.i, i64 noundef 4) #13 ; 11 uses
   %i.k = zext nneg i32 %0 to i64
   %i.l = tail call noalias ptr @calloc(i64 noundef %i.k, i64 noundef 4) #13 ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 4
@@ -195,25 +195,14 @@ bb.b:                                             ; preds = %.lr.ph
 
 .lr.ph.preheader.i:                               ; preds = %._crit_edge
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %.pre.i = load float, ptr %.phi.trans.insert.i, align 4, !tbaa !12 ; 3 uses
+  %.pre.i = load float, ptr %.phi.trans.insert.i, align 4, !tbaa !12 ; 2 uses
   %.phi.trans.insert150.i = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.pre151.i = load float, ptr %.phi.trans.insert150.i, align 4, !tbaa !12 ; 3 uses
+  %.pre151.i = load float, ptr %.phi.trans.insert150.i, align 4, !tbaa !12 ; 2 uses
   %i.n = add nsw i64 %wide.trip.count.i, -1       ; 3 uses
   %min.iters.check = icmp ult i64 %i.n, 8
-  br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.scevcheck
+  br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
-vector.scevcheck:                                 ; preds = %.lr.ph.preheader.i
-  %3 = add nsw i64 %wide.trip.count.i, -2
-  %scevgep = getelementptr i8, ptr %i.j, i64 8    ; 2 uses
-  %mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 12) ; 2 uses
-  %mul.result = extractvalue { i64, i1 } %mul, 0
-  %mul.overflow = extractvalue { i64, i1 } %mul, 1
-  %4 = getelementptr i8, ptr %scevgep, i64 %mul.result
-  %5 = icmp ult ptr %4, %scevgep
-  %6 = or i1 %5, %mul.overflow
-  br i1 %6, label %.lr.ph.i.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.scevcheck
+vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %i.n, -8                       ; 3 uses
   %i.o = or disjoint i64 %n.vec, 1
   %vector.recur.init = insertelement <8 x float> poison, float %.pre151.i, i64 7
@@ -252,7 +241,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ai = fpext reassoc nsz arcp contract afn <8 x float> %i.ad to <8 x double>
   %i.aj = fmul reassoc nsz arcp contract afn <8 x double> %i.ai, splat (double f0x3FC5555555555555)
   %i.ak = fptrunc reassoc nsz arcp contract afn <8 x double> %i.aj to <8 x float>
-  %i.al = mul <8 x i64> %i.y, splat (i64 12)
+  %i.al = mul nuw nsw <8 x i64> %i.y, splat (i64 12)
   %wide.gep = getelementptr i8, ptr %i.j, <8 x i64> %i.al
   %wide.gep9 = getelementptr i8, <8 x ptr> %wide.gep, i64 8
   tail call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %i.ak, <8 x ptr> align 4 %wide.gep9, <8 x i1> splat (i1 true)), !tbaa !12
@@ -281,10 +270,10 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.n, %n.vec
   br i1 %cmp.n, label %._crit_edge.i, label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %vector.scevcheck, %.lr.ph.preheader.i, %middle.block
-  %.ph = phi float [ %.pre151.i, %vector.scevcheck ], [ %.pre151.i, %.lr.ph.preheader.i ], [ %vector.recur.extract, %middle.block ]
-  %.ph15 = phi float [ %.pre.i, %vector.scevcheck ], [ %.pre.i, %.lr.ph.preheader.i ], [ %vector.recur.extract13, %middle.block ]
-  %indvars.iv145.i.ph = phi i64 [ 1, %vector.scevcheck ], [ 1, %.lr.ph.preheader.i ], [ %i.o, %middle.block ]
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %middle.block
+  %.ph = phi float [ %.pre151.i, %.lr.ph.preheader.i ], [ %vector.recur.extract, %middle.block ]
+  %.ph15 = phi float [ %.pre.i, %.lr.ph.preheader.i ], [ %vector.recur.extract13, %middle.block ]
+  %indvars.iv145.i.ph = phi i64 [ 1, %.lr.ph.preheader.i ], [ %i.o, %middle.block ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
@@ -313,7 +302,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bp = fpext reassoc nsz arcp contract afn float %i.bl to double
   %i.bq = fmul reassoc nsz arcp contract afn double %i.bp, f0x3FC5555555555555
   %i.br = fptrunc reassoc nsz arcp contract afn double %i.bq to float
-  %.idx.i = mul i64 %i.bf, 12
+  %.idx.i = mul nuw nsw i64 %i.bf, 12
   %i.bs = getelementptr i8, ptr %i.j, i64 %.idx.i
   %i.bt = getelementptr i8, ptr %i.bs, i64 8
   store float %i.br, ptr %i.bt, align 4, !tbaa !12
@@ -716,9 +705,6 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #7
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v8f32.v8p0(<8 x float>, <8 x ptr>, <8 x i1>) #11
 
@@ -764,7 +750,7 @@ attributes #14 = { nounwind }
 !16 = !{!"any pointer", !7, i64 0}
 !17 = !{!16, !16, i64 0}
 !18 = distinct !{!18, !13, !14}
-!19 = distinct !{!19, !13}
+!19 = distinct !{!19, !14, !13}
 !20 = distinct !{!20, !13, !14}
 !21 = distinct !{!21, !13, !14}
 !22 = distinct !{!22, !14, !13}

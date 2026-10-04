@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mold/original/perf?download=true
 inline.NumInlined: 1228
 inline.NumDeleted: 448
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 8
 loop-unroll.NumUnrolled: 11
 begin_hunk_0_@_ZN3tbb6detail2d014try_call_proxyIZNS0_2d113segment_tableIPN4mold11TimerRecordENS3_23cache_aligned_allocatorIS7_EENS3_17concurrent_vectorIS7_S9_EELm3EE25extend_table_if_necessaryERPSt6atomicIPS7_EmmEUlvE_E12on_exceptionIZNSC_25extend_table_if_necessaryESH_mmEUlvE0_EEvT_:bb.a
   %i.l = tail call noundef i32 @sched_yield() #14 ; 0 uses
@@ -205,7 +205,7 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.us.i: ; preds = %_ZN3tbb6detail2d
 
 bb.f:                                             ; preds = %bb.b
   %i.u = shl i64 8, %i.d
-  %i.v = tail call noundef ptr @_ZN3tbb6detail2r122cache_aligned_allocateEm(i64 noundef %i.u) #14 ; 17 uses
+  %i.v = tail call noundef ptr @_ZN3tbb6detail2r122cache_aligned_allocateEm(i64 noundef %i.u) #14 ; 10 uses
   %i.w = load ptr, ptr %i.b, align 8, !tbaa !95
   %i.x = cmpxchg ptr %i.w, ptr null, ptr %i.v seq_cst seq_cst, align 8
   %i.y = extractvalue { ptr, i1 } %i.x, 1
@@ -215,7 +215,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 0, ptr %i.a, align 8, !tbaa !51
   %i.z = load ptr, ptr %i.b, align 8, !tbaa !95
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 10 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ab = icmp eq ptr %i.z, %i.aa
   %i.ac = icmp ugt i64 %i.d, 3
   %or.cond.i = and i1 %i.ac, %i.ab
@@ -251,7 +251,7 @@ _ZN3tbb6detail2d113segment_tableIPN4mold11TimerRecordENS1_23cache_aligned_alloca
 
 .preheader.unr-lcssa:                             ; preds = %.lr.ph
   %lcmp.mod114.not = icmp eq i64 %xtraiter113, 0
-  br i1 %lcmp.mod114.not, label %.preheader, label %.lr.ph.epil.preheader
+  br i1 %lcmp.mod114.not, label %.lr.ph89, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %.preheader.unr-lcssa, %.lr.ph.preheader
   %.01087.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %i.av, %.preheader.unr-lcssa ]
@@ -268,19 +268,7 @@ _ZN3tbb6detail2d113segment_tableIPN4mold11TimerRecordENS1_23cache_aligned_alloca
   %i.aj = add nuw i64 %.01087.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter113
-  br i1 %epil.iter.cmp.not, label %.preheader, label %.lr.ph.epil, !llvm.loop !556
-
-.preheader:                                       ; preds = %.lr.ph.epil, %.preheader.unr-lcssa
-  %invariant.umin = call i64 @llvm.umin.i64(i64 %i.d, i64 3) ; 2 uses
-  %5 = add nsw i64 %invariant.umin, -1            ; 2 uses
-  %6 = add nsw i64 %invariant.umin, -2
-  %xtraiter116 = and i64 %5, 7                    ; 3 uses
-  %7 = icmp ult i64 %6, 7
-  br i1 %7, label %.lr.ph89.epil.preheader, label %.preheader.new
-
-.preheader.new:                                   ; preds = %.preheader
-  %unroll_iter120 = and i64 %5, -8
-  br label %.lr.ph89
+  br i1 %epil.iter.cmp.not, label %.lr.ph89, label %.lr.ph.epil, !llvm.loop !556
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.01087 = phi i64 [ 1, %.lr.ph.preheader.new ], [ %i.av, %.lr.ph ] ; 5 uses
@@ -305,36 +293,16 @@ _ZN3tbb6detail2d113segment_tableIPN4mold11TimerRecordENS1_23cache_aligned_alloca
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !557
 
-.lr.ph89:                                         ; preds = %.lr.ph89, %.preheader.new
-  %.088 = phi i64 [ 1, %.preheader.new ], [ %22, %.lr.ph89 ] ; 9 uses
-  %niter121 = phi i64 [ 0, %.preheader.new ], [ %niter121.next.7, %.lr.ph89 ]
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.088
-  store atomic ptr %i.v, ptr %8 release, align 8
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.088
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store atomic ptr %i.v, ptr %10 release, align 8
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.088
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 16
-  store atomic ptr %i.v, ptr %12 release, align 8
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.088
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 24
-  store atomic ptr %i.v, ptr %14 release, align 8
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.088
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 32
-  store atomic ptr %i.v, ptr %16 release, align 8
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.088
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 40
-  store atomic ptr %i.v, ptr %18 release, align 8
-  %19 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.088
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 48
-  store atomic ptr %i.v, ptr %20 release, align 8
-  %21 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.088
-  %i.aw = getelementptr inbounds nuw i8, ptr %21, i64 56
+.lr.ph89:                                         ; preds = %.preheader.unr-lcssa, %.lr.ph.epil
+  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 32
   store atomic ptr %i.v, ptr %i.aw release, align 8
-  %22 = add nuw nsw i64 %.088, 8                  ; 2 uses
-  %niter121.next.7 = add i64 %niter121, 8         ; 2 uses
-  %niter121.ncmp.7 = icmp eq i64 %niter121.next.7, %unroll_iter120
-  br i1 %niter121.ncmp.7, label %_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit.loopexit.unr-lcssa, label %.lr.ph89, !llvm.loop !558
+  %niter121.ncmp.7 = icmp eq i64 %i.d, 2
+  br i1 %niter121.ncmp.7, label %_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit, label %.lr.ph89.1
+
+.lr.ph89.1:                                       ; preds = %.lr.ph89
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store atomic ptr %i.v, ptr %5 release, align 8
+  br label %_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit
 
 _ZNSt6atomicIPPN4mold11TimerRecordEE23compare_exchange_strongERS3_S3_St12memory_order.exit: ; preds = %bb.f
   %i.ax = load ptr, ptr %0, align 8, !tbaa !73
@@ -374,7 +342,7 @@ bb.j:                                             ; preds = %.lr.ph.i16
   tail call void @llvm.x86.sse2.pause()
   %prol.iter112.next = add i32 %prol.iter112, 1   ; 2 uses
   %prol.iter112.cmp.not = icmp eq i32 %prol.iter112.next, %xtraiter110
-  br i1 %prol.iter112.cmp.not, label %.lr.ph.i.i.us.i21.prol.loopexit, label %.lr.ph.i.i.us.i21.prol, !llvm.loop !559
+  br i1 %prol.iter112.cmp.not, label %.lr.ph.i.i.us.i21.prol.loopexit, label %.lr.ph.i.i.us.i21.prol, !llvm.loop !558
 
 .lr.ph.i.i.us.i21.prol.loopexit:                  ; preds = %.lr.ph.i.i.us.i21.prol, %.lr.ph.i.i.us.i21.preheader
   %.01.i.i.us.i22.unr = phi i32 [ %.sroa.0.09.us.i17, %.lr.ph.i.i.us.i21.preheader ], [ %i.bf, %.lr.ph.i.i.us.i21.prol ]
@@ -453,7 +421,7 @@ bb.o:                                             ; preds = %.lr.ph.i25
   tail call void @llvm.x86.sse2.pause()
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.us.i30.prol.loopexit, label %.lr.ph.i.i.us.i30.prol, !llvm.loop !560
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.us.i30.prol.loopexit, label %.lr.ph.i.i.us.i30.prol, !llvm.loop !559
 
 .lr.ph.i.i.us.i30.prol.loopexit:                  ; preds = %.lr.ph.i.i.us.i30.prol, %.lr.ph.i.i.us.i30.preheader
   %.01.i.i.us.i31.unr = phi i32 [ %.sroa.0.09.us.i26, %.lr.ph.i.i.us.i30.preheader ], [ %i.cc, %.lr.ph.i.i.us.i30.prol ]
@@ -484,27 +452,7 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.us.i27: ; preds = %_ZN3tbb6detail
   %i.ci = icmp eq ptr %i.ch, null
   br i1 %i.ci, label %.lr.ph.i25, label %_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit, !llvm.loop !12
 
-_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit.loopexit.unr-lcssa: ; preds = %.lr.ph89
-  %lcmp.mod118.not = icmp eq i64 %xtraiter116, 0
-  br i1 %lcmp.mod118.not, label %_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit, label %.lr.ph89.epil.preheader
-
-.lr.ph89.epil.preheader:                          ; preds = %_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit.loopexit.unr-lcssa, %.preheader
-  %.088.epil.init = phi i64 [ 1, %.preheader ], [ %22, %_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit.loopexit.unr-lcssa ]
-  %lcmp.mod119 = icmp ne i64 %xtraiter116, 0
-  call void @llvm.assume(i1 %lcmp.mod119)
-  br label %.lr.ph89.epil
-
-.lr.ph89.epil:                                    ; preds = %.lr.ph89.epil, %.lr.ph89.epil.preheader
-  %.088.epil = phi i64 [ %24, %.lr.ph89.epil ], [ %.088.epil.init, %.lr.ph89.epil.preheader ] ; 2 uses
-  %epil.iter117 = phi i64 [ %epil.iter117.next, %.lr.ph89.epil ], [ 0, %.lr.ph89.epil.preheader ]
-  %23 = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.088.epil
-  store atomic ptr %i.v, ptr %23 release, align 8
-  %24 = add nuw nsw i64 %.088.epil, 1
-  %epil.iter117.next = add i64 %epil.iter117, 1   ; 2 uses
-  %epil.iter117.cmp.not = icmp eq i64 %epil.iter117.next, %xtraiter116
-  br i1 %epil.iter117.cmp.not, label %_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit, label %.lr.ph89.epil, !llvm.loop !561
-
-_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit: ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.us.i27, %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.us.i, %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.us.i18, %_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit.loopexit.unr-lcssa, %.lr.ph89.epil, %_ZN3tbb6detail2d113segment_tableIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS5_EENS1_17concurrent_vectorIS5_S7_EELm3EE25extend_table_if_necessaryERPSt6atomicIPS5_Emm.exit, %bb.m, %_ZNSt6atomicIPPN4mold11TimerRecordEE23compare_exchange_strongERS3_S3_St12memory_order.exit, %bb.h, %bb.c, %bb.l
+_ZN3tbb6detail2d015spin_wait_whileIPPN4mold11TimerRecordEZNS1_18spin_wait_while_eqIS6_S6_EET_RKSt6atomicIS8_ET0_St12memory_orderEUlS6_E_EES8_SC_SD_SE_.exit: ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.us.i27, %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.us.i, %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.us.i18, %.lr.ph89, %.lr.ph89.1, %_ZN3tbb6detail2d113segment_tableIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS5_EENS1_17concurrent_vectorIS5_S7_EELm3EE25extend_table_if_necessaryERPSt6atomicIPS5_Emm.exit, %bb.m, %_ZNSt6atomicIPPN4mold11TimerRecordEE23compare_exchange_strongERS3_S3_St12memory_order.exit, %bb.h, %bb.c, %bb.l
   ret ptr null
 }
 
@@ -907,8 +855,6 @@ begin_hunk_1_@llvm.smin.i64
 !555 = distinct !{!555, !94}
 !556 = distinct !{!556, !94}
 !557 = distinct !{!557, !37}
-!558 = distinct !{!558, !37}
+!558 = distinct !{!558, !94}
 !559 = distinct !{!559, !94}
-!560 = distinct !{!560, !94}
-!561 = distinct !{!561, !94}
 end_hunk_1

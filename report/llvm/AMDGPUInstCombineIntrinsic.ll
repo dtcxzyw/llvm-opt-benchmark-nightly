@@ -204,7 +204,7 @@ _ZNK4llvm5APInt13getActiveBitsEv.exit:            ; preds = %bb.c, %bb.d
   %.0.i108 = phi i32 [ %..i, %bb.c ], [ %i.s, %bb.d ] ; 4 uses
   %.0.i.i = phi i32 [ %i.r, %bb.c ], [ %i.t, %bb.d ]
   %i.u = add i32 %.0.i.i, %.0.i108                ; 3 uses
-  %i.v = sub i32 %i.k, %i.u                       ; 8 uses
+  %i.v = sub i32 %i.k, %i.u                       ; 6 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.x = load i32, ptr %i.w, align 8, !tbaa !358  ; 5 uses
   %i.y = icmp eq i32 %i.v, %i.x
@@ -315,7 +315,7 @@ _ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit: ;
 
 bb.k:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #21
-  %i.bx = zext i32 %i.v to i64                    ; 3 uses
+  %i.bx = zext i32 %i.v to i64                    ; 5 uses
   %i.by = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 6 uses
   store ptr %i.by, ptr %11, align 8, !tbaa !163
   %i.bz = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
@@ -445,8 +445,7 @@ bb.m:                                             ; preds = %.lr.ph
 
 bb.n:                                             ; preds = %.lr.ph, %bb.m
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
-  %.not71 = icmp eq i32 %i.v, %indvars
+  %.not71 = icmp eq i64 %indvars.iv.next, %i.bx
   br i1 %.not71, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !560
 
 ._crit_edge121.loopexit:                          ; preds = %bb.r
@@ -510,8 +509,7 @@ bb.q:                                             ; preds = %.lr.ph120
 
 bb.r:                                             ; preds = %.lr.ph120, %bb.q
   %indvars.iv.next126 = add nuw nsw i64 %indvars.iv125, 1 ; 2 uses
-  %indvars127 = trunc i64 %indvars.iv.next126 to i32
-  %.not72 = icmp eq i32 %i.v, %indvars127
+  %.not72 = icmp eq i64 %indvars.iv.next126, %i.bx
   br i1 %.not72, label %._crit_edge121.loopexit, label %.lr.ph120, !llvm.loop !561
 
 bb.s:                                             ; preds = %_ZN4llvm11SmallVectorIiLj12EED2Ev.exit87, %_ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit

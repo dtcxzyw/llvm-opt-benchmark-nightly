@@ -1,7 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/mvn_layer?download=true
 inline.NumInlined: 215
 inline.NumDeleted: 123
-loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN2cv3dnn12MVNLayerImpl13setActivationERKNS_3PtrINS0_14dnn5_v2026060515ActivationLayerEEE:bb.a
 
@@ -204,8 +205,8 @@ define linkonce_odr hidden noundef i64 @_ZNK2cv3dnn12MVNLayerImpl8getFLOPSERKSt6
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %4 = alloca %"class.std::allocator.5", align 1  ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !122  ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !123    ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !121  ; 2 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !122    ; 3 uses
   %.not = icmp eq ptr %i.b, %i.c
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -216,9 +217,8 @@ define linkonce_odr hidden noundef i64 @_ZNK2cv3dnn12MVNLayerImpl8getFLOPSERKSt6
   %i.g = sdiv exact i64 %i.f, 52
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.i = load i8, ptr %i.h, align 8, !range !65
-  %i.j = trunc nuw i8 %i.i to i1
-  %i.k = select i1 %i.j, i32 2, i32 1             ; 3 uses
-  %5 = zext nneg i32 %i.k to i64
+  %i.j = trunc nuw i8 %i.i to i1                  ; 2 uses
+  %i.k = select i1 %i.j, i32 2, i32 1             ; 2 uses
   br label %bb.a
 
 ._crit_edge:                                      ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa, %.split
@@ -228,7 +228,7 @@ define linkonce_odr hidden noundef i64 @_ZNK2cv3dnn12MVNLayerImpl8getFLOPSERKSt6
 bb.a:                                             ; preds = %.lr.ph, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa ] ; 2 uses
   %.0934 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa ]
-  %i.l = getelementptr inbounds nuw [52 x i8], ptr %i.c, i64 %indvars.iv ; 3 uses
+  %i.l = getelementptr inbounds nuw [52 x i8], ptr %i.c, i64 %indvars.iv ; 4 uses
   %i.m = load i32, ptr %i.l, align 4, !tbaa !68   ; 5 uses
   %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.m, i32 0) ; 3 uses
   %.not33.i = icmp slt i32 %i.m, 1
@@ -359,36 +359,33 @@ _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit: ; preds = %_Z
 _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit: ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit, %bb.a
   %.021.lcssa.i = phi i64 [ 6, %bb.a ], [ %i.bo, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit ]
   %.not.i = icmp slt i32 %i.m, %i.k
-  br i1 %.not.i, label %bb.e, label %.preheader.i
+  br i1 %.not.i, label %.preheader.i, label %bb.e
 
 .preheader.i:                                     ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit
-  %6 = getelementptr inbounds nuw i8, ptr %i.l, i64 12
-  br label %_ZNK2cv8MatShapeixEm.exit.i19.epil
-
-bb.e:                                             ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit
   tail call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %i.k, i32 noundef %narrow.i.i, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEiiE15__cv_check__167) #23
   unreachable
 
-_ZNK2cv8MatShapeixEm.exit.i19.epil:               ; preds = %_ZNK2cv8MatShapeixEm.exit.i19.epil, %.preheader.i
-  %indvars.iv.i20.epil = phi i64 [ %indvars.iv.next.i22.epil, %_ZNK2cv8MatShapeixEm.exit.i19.epil ], [ 0, %.preheader.i ] ; 2 uses
-  %.02128.i21.epil = phi i64 [ %i.br, %_ZNK2cv8MatShapeixEm.exit.i19.epil ], [ 1, %.preheader.i ]
-  %epil.iter60 = phi i64 [ %epil.iter60.next, %_ZNK2cv8MatShapeixEm.exit.i19.epil ], [ 0, %.preheader.i ]
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.i20.epil
-  %i.bp = load i32, ptr %7, align 4, !tbaa !63
-  %i.bq = sext i32 %i.bp to i64
-  %i.br = mul i64 %.02128.i21.epil, %i.bq         ; 2 uses
-  %indvars.iv.next.i22.epil = add nuw nsw i64 %indvars.iv.i20.epil, 1
-  %epil.iter60.next = add i64 %epil.iter60, 1     ; 2 uses
-  %epil.iter60.cmp.not = icmp eq i64 %epil.iter60.next, %5
-  br i1 %epil.iter60.cmp.not, label %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa, label %_ZNK2cv8MatShapeixEm.exit.i19.epil, !llvm.loop !118
+bb.e:                                             ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit
+  %5 = getelementptr inbounds nuw i8, ptr %i.l, i64 12
+  %6 = load i32, ptr %5, align 4, !tbaa !63
+  %7 = sext i32 %6 to i64                         ; 2 uses
+  br i1 %i.j, label %_ZNK2cv8MatShapeixEm.exit.i19.epil, label %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa
 
-_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa: ; preds = %_ZNK2cv8MatShapeixEm.exit.i19.epil
-  %i.bs = mul i64 %i.br, 3
+_ZNK2cv8MatShapeixEm.exit.i19.epil:               ; preds = %bb.e
+  %8 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
+  %i.bp = load i32, ptr %8, align 4, !tbaa !63
+  %i.bq = sext i32 %i.bp to i64
+  %i.br = mul nsw i64 %7, %i.bq
+  br label %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa
+
+_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa: ; preds = %_ZNK2cv8MatShapeixEm.exit.i19.epil, %bb.e
+  %.lcssa53 = phi i64 [ %7, %bb.e ], [ %i.br, %_ZNK2cv8MatShapeixEm.exit.i19.epil ]
+  %i.bs = mul i64 %.lcssa53, 3
   %i.bt = add i64 %.021.lcssa.i, %.0934
   %i.bu = add i64 %i.bt, %i.bs                    ; 2 uses
   %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.g
-  br i1 %exitcond.not, label %._crit_edge, label %bb.a, !llvm.loop !119
+  br i1 %exitcond.not, label %._crit_edge, label %bb.a, !llvm.loop !118
 }
 
 declare noundef zeroext i1 @_ZN2cv3dnn14dnn5_v202606055Layer18updateMemoryShapesERKSt6vectorINS_8MatShapeESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(156), ptr noundef nonnull align 8 dereferenceable(24)) unnamed_addr #4
@@ -649,7 +646,7 @@ bb.x:                                             ; preds = %bb.o
   %i.bd = load ptr, ptr %i.ag, align 8, !tbaa !87
   %i.be = getelementptr inbounds nuw [32 x i8], ptr %i.bd, i64 %i.bc
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !22
-  %i.bg = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.bf, ptr noundef null, i32 noundef 10) #22, !inline_history !125
+  %i.bg = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.bf, ptr noundef null, i32 noundef 10) #22, !inline_history !124
   %sext = shl i64 %i.bg, 32
   %i.bh = ashr exact i64 %sext, 32
   br label %bb.ae
@@ -897,7 +894,7 @@ bb.r:                                             ; preds = %bb.o
   %i.at = load ptr, ptr %i.ag, align 8, !tbaa !87
   %i.au = getelementptr inbounds nuw [32 x i8], ptr %i.at, i64 %i.as
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !22
-  %i.aw = tail call double @strtod(ptr noundef nonnull captures(none) %i.av, ptr noundef null) #22, !inline_history !126
+  %i.aw = tail call double @strtod(ptr noundef nonnull captures(none) %i.av, ptr noundef null) #22, !inline_history !125
   br label %bb.x
 
 bb.s:                                             ; preds = %bb.o
@@ -952,7 +949,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !15
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #22, !inline_history !127
+  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #22, !inline_history !126
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.e = load i8, ptr @__libc_single_threaded, align 1, !tbaa !23
   %.not.i = icmp eq i8 %i.e, 0
@@ -977,7 +974,7 @@ bb.d:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.j = load ptr, ptr %0, align 8, !tbaa !15
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #22, !inline_history !127
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #22, !inline_history !126
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit: ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i, %bb.d
@@ -1090,11 +1087,11 @@ bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !15
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load ptr, ptr %i.i, align 8
-  tail call void %i.j(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #22, !inline_history !128
+  tail call void %i.j(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #22, !inline_history !127
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !15
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.m = load ptr, ptr %i.l, align 8
-  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #22, !inline_history !128
+  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #22, !inline_history !127
   br label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -1451,16 +1448,15 @@ attributes #24 = { noreturn nounwind }
 !114 = !{!"_ZTSN2cv3dnn14dnn5_v202606059ReLULayerE", !113, i64 0, !38, i64 156}
 !115 = !{!114, !38, i64 156}
 !116 = distinct !{!116, !25}
-!117 = distinct !{!117, !124}
-!118 = distinct !{!118, !124}
-!119 = distinct !{!119, !25}
-!120 = !{!"p1 _ZTSN2cv8MatShapeE", !11, i64 0}
-!121 = !{!"_ZTSNSt12_Vector_baseIN2cv8MatShapeESaIS1_EE17_Vector_impl_dataE", !120, i64 0, !120, i64 8, !120, i64 16}
-!122 = !{!121, !120, i64 8}
-!123 = !{!121, !120, i64 0}
-!124 = !{!"llvm.loop.unroll.disable"}
+!117 = distinct !{!117, !123}
+!118 = distinct !{!118, !25}
+!119 = !{!"p1 _ZTSN2cv8MatShapeE", !11, i64 0}
+!120 = !{!"_ZTSNSt12_Vector_baseIN2cv8MatShapeESaIS1_EE17_Vector_impl_dataE", !119, i64 0, !119, i64 8, !119, i64 16}
+!121 = !{!120, !119, i64 8}
+!122 = !{!120, !119, i64 0}
+!123 = !{!"llvm.loop.unroll.disable"}
+!124 = distinct !{null}
 !125 = distinct !{null}
 !126 = distinct !{null}
-!127 = distinct !{null}
-!128 = distinct !{null, null}
+!127 = distinct !{null, null}
 end_hunk_0

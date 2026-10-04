@@ -19,7 +19,7 @@ define dso_local void @_ZN7NCrypto5NSha110Pbkdf2HmacEPKhmS2_mjPhm(ptr noundef %0
 bb.a:
   %7 = alloca %"class.NCrypto::NSha1::CHmac", align 8 ; 6 uses
   %8 = alloca %"class.NCrypto::NSha1::CHmac", align 8 ; 15 uses
-  %i.a = alloca [20 x i8], align 16               ; 22 uses
+  %i.a = alloca [20 x i8], align 16               ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #5
   call void @_ZN7NCrypto5NSha15CHmac6SetKeyEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %7, ptr noundef %0, i64 noundef %1)
   %.not38 = icmp eq i64 %6, 0
@@ -30,12 +30,18 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 2 uses
   %i.e = icmp ugt i32 %4, 1
-  br i1 %i.e, label %.lr.ph43.split.us, label %.lr.ph43.split
+  br i1 %i.e, label %.lr.ph43.split.us.preheader, label %.lr.ph43.split
 
-.lr.ph43.split.us:                                ; preds = %.lr.ph43, %._crit_edge.us
-  %.03141.us = phi i32 [ %i.y, %._crit_edge.us ], [ 1, %.lr.ph43 ] ; 5 uses
-  %.03240.us = phi i64 [ %i.x, %._crit_edge.us ], [ %6, %.lr.ph43 ] ; 5 uses
-  %.03339.us = phi ptr [ %i.w, %._crit_edge.us ], [ %5, %.lr.ph43 ] ; 6 uses
+.lr.ph43.split.us.preheader:                      ; preds = %.lr.ph43
+  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  br label %.lr.ph43.split.us
+
+.lr.ph43.split.us:                                ; preds = %.lr.ph43.split.us.preheader, %._crit_edge.us
+  %.03141.us = phi i32 [ %i.y, %._crit_edge.us ], [ 1, %.lr.ph43.split.us.preheader ] ; 5 uses
+  %.03240.us = phi i64 [ %i.x, %._crit_edge.us ], [ %6, %.lr.ph43.split.us.preheader ] ; 3 uses
+  %.03339.us = phi ptr [ %i.w, %._crit_edge.us ], [ %5, %.lr.ph43.split.us.preheader ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #5
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull align 8 dereferenceable(208) %7, i64 208, i1 false)
   call void @_ZN7NCrypto5NSha18CContext6UpdateEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef %2, i64 noundef %3)
@@ -43,27 +49,26 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.a, i8 0, i64 20, i1 false)
   %i.f = lshr i32 %.03141.us, 24
   %i.g = trunc nuw i32 %i.f to i8
-  store i8 %i.g, ptr %i.a, align 16, !tbaa !13
+  store i8 %i.g, ptr %i.a, align 16, !tbaa !12
   %i.h = lshr i32 %.03141.us, 16
   %i.i = trunc i32 %i.h to i8
-  store i8 %i.i, ptr %i.b, align 1, !tbaa !13
+  store i8 %i.i, ptr %i.b, align 1, !tbaa !12
   %i.j = lshr i32 %.03141.us, 8
   %i.k = trunc i32 %i.j to i8
-  store i8 %i.k, ptr %i.c, align 2, !tbaa !13
+  store i8 %i.k, ptr %i.c, align 2, !tbaa !12
   %i.l = trunc i32 %.03141.us to i8
-  store i8 %i.l, ptr %i.d, align 1, !tbaa !13
-  %i.m = call i64 @llvm.umin.i64(i64 %.03240.us, i64 20) ; 8 uses
+  store i8 %i.l, ptr %i.d, align 1, !tbaa !12
+  %i.m = call i64 @llvm.umin.i64(i64 %.03240.us, i64 20) ; 6 uses
   call void @_ZN7NCrypto5NSha18CContext6UpdateEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @_ZN7NCrypto5NSha15CHmac5FinalEPhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 20)
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03339.us, ptr nonnull align 16 %i.a, i64 %i.m, i1 false), !tbaa !13
-  %min.iters.check = icmp ult i64 %.03240.us, 4
-  %min.iters.check56 = icmp ult i64 %.03240.us, 16
-  %i.n = and i64 %i.m, 12
-  %n.vec = and i64 %i.m, 16                       ; 3 uses
-  %cmp.n.a = icmp eq i64 %.03240.us, %n.vec
-  %min.epilog.iters.check = icmp eq i64 %i.n, 0
-  %n.vec58 = and i64 %i.m, 28                     ; 3 uses
-  %cmp.n63 = icmp eq i64 %i.m, %n.vec58
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03339.us, ptr nonnull align 16 %i.a, i64 %i.m, i1 false), !tbaa !12
+  %min.iters.check56 = icmp ult i64 %.03240.us, 8
+  %i.n = and i64 %i.m, 24                         ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %.03339.us, i64 4 ; 2 uses
+  %cmp.n.a = icmp eq i64 %i.n, 8
+  %13 = getelementptr inbounds nuw i8, ptr %.03339.us, i64 8 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %.03339.us, i64 12 ; 2 uses
+  %cmp.n63 = icmp eq i64 %i.m, %i.n
   br label %iter.check
 
 iter.check:                                       ; preds = %.lr.ph43.split.us, %.loopexit
@@ -71,60 +76,53 @@ iter.check:                                       ; preds = %.lr.ph43.split.us, 
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull align 8 dereferenceable(208) %7, i64 208, i1 false)
   call void @_ZN7NCrypto5NSha18CContext6UpdateEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 20)
   call void @_ZN7NCrypto5NSha15CHmac5FinalEPhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 20)
-  br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check56, label %vec.epilog.scalar.ph.preheader, label %vector.body
 
-vector.main.loop.iter.check:                      ; preds = %iter.check
-  br i1 %min.iters.check56, label %vec.epilog.ph, label %vector.body
+vector.body:                                      ; preds = %iter.check
+  %wide.load = load <4 x i8>, ptr %i.a, align 16, !tbaa !12
+  %wide.load56 = load <4 x i8>, ptr %9, align 4, !tbaa !12
+  %wide.load57 = load <4 x i8>, ptr %.03339.us, align 1, !tbaa !12
+  %wide.load58 = load <4 x i8>, ptr %12, align 1, !tbaa !12
+  %15 = xor <4 x i8> %wide.load57, %wide.load
+  %16 = xor <4 x i8> %wide.load58, %wide.load56
+  store <4 x i8> %15, ptr %.03339.us, align 1, !tbaa !12
+  store <4 x i8> %16, ptr %12, align 1, !tbaa !12
+  br i1 %cmp.n.a, label %vec.epilog.middle.block, label %vec.epilog.vector.body
 
-vector.body:                                      ; preds = %vector.main.loop.iter.check
-  %wide.load = load <16 x i8>, ptr %i.a, align 16, !tbaa !13
-  %wide.load57 = load <16 x i8>, ptr %.03339.us, align 1, !tbaa !13
-  %9 = xor <16 x i8> %wide.load57, %wide.load
-  store <16 x i8> %9, ptr %.03339.us, align 1, !tbaa !13
-  br i1 %cmp.n.a, label %.loopexit, label %vec.epilog.iter.check
+vec.epilog.vector.body:                           ; preds = %vector.body
+  %wide.load.1 = load <4 x i8>, ptr %10, align 8, !tbaa !12
+  %wide.load60 = load <4 x i8>, ptr %11, align 4, !tbaa !12
+  %wide.load57.1 = load <4 x i8>, ptr %13, align 1, !tbaa !12
+  %wide.load61 = load <4 x i8>, ptr %14, align 1, !tbaa !12
+  %i.o = xor <4 x i8> %wide.load57.1, %wide.load.1
+  %17 = xor <4 x i8> %wide.load61, %wide.load60
+  store <4 x i8> %i.o, ptr %13, align 1, !tbaa !12
+  store <4 x i8> %17, ptr %14, align 1, !tbaa !12
+  br label %vec.epilog.middle.block
 
-vec.epilog.iter.check:                            ; preds = %vector.body
-  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !14
-
-vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  br label %vec.epilog.vector.body
-
-vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
-  %index59 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next62, %vec.epilog.vector.body ] ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 %index59
-  %wide.load60 = load <4 x i8>, ptr %10, align 4, !tbaa !13
-  %11 = getelementptr inbounds nuw i8, ptr %.03339.us, i64 %index59 ; 2 uses
-  %wide.load61 = load <4 x i8>, ptr %11, align 1, !tbaa !13
-  %i.o = xor <4 x i8> %wide.load61, %wide.load60
-  store <4 x i8> %i.o, ptr %11, align 1, !tbaa !13
-  %index.next62 = add nuw i64 %index59, 4         ; 2 uses
-  %12 = icmp eq i64 %index.next62, %n.vec58
-  br i1 %12, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !9
-
-vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body, %vector.body
   br i1 %cmp.n63, label %.loopexit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec58, %vec.epilog.middle.block ]
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.middle.block
+  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %i.n, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !13
+  %i.q = load i8, ptr %i.p, align 1, !tbaa !12
   %i.r = getelementptr inbounds nuw i8, ptr %.03339.us, i64 %indvars.iv ; 2 uses
-  %i.s = load i8, ptr %i.r, align 1, !tbaa !13
+  %i.s = load i8, ptr %i.r, align 1, !tbaa !12
   %i.t = xor i8 %i.s, %i.q
-  store i8 %i.t, ptr %i.r, align 1, !tbaa !13
+  store i8 %i.t, ptr %i.r, align 1, !tbaa !12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.m
-  br i1 %exitcond.not, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !10
+  br i1 %exitcond.not, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !9
 
-.loopexit:                                        ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %vector.body
+.loopexit:                                        ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block
   %i.u = add i32 %.037.us, -1                     ; 2 uses
   %i.v = icmp ugt i32 %i.u, 1
-  br i1 %i.v, label %iter.check, label %._crit_edge.us, !llvm.loop !11
+  br i1 %i.v, label %iter.check, label %._crit_edge.us, !llvm.loop !10
 
 ._crit_edge.us:                                   ; preds = %.loopexit
   %i.w = getelementptr inbounds nuw i8, ptr %.03339.us, i64 %i.m
@@ -133,7 +131,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
   %i.y = add i32 %.03141.us, 1
   %.not.us = icmp eq i64 %i.x, 0
-  br i1 %.not.us, label %._crit_edge44, label %.lr.ph43.split.us, !llvm.loop !12
+  br i1 %.not.us, label %._crit_edge44, label %.lr.ph43.split.us, !llvm.loop !11
 
 ._crit_edge44:                                    ; preds = %.lr.ph43.split, %._crit_edge.us, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
@@ -150,26 +148,26 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.a, i8 0, i64 20, i1 false)
   %i.z = lshr i32 %.03141, 24
   %i.aa = trunc nuw i32 %i.z to i8
-  store i8 %i.aa, ptr %i.a, align 16, !tbaa !13
+  store i8 %i.aa, ptr %i.a, align 16, !tbaa !12
   %i.ab = lshr i32 %.03141, 16
   %i.ac = trunc i32 %i.ab to i8
-  store i8 %i.ac, ptr %i.b, align 1, !tbaa !13
+  store i8 %i.ac, ptr %i.b, align 1, !tbaa !12
   %i.ad = lshr i32 %.03141, 8
   %i.ae = trunc i32 %i.ad to i8
-  store i8 %i.ae, ptr %i.c, align 2, !tbaa !13
+  store i8 %i.ae, ptr %i.c, align 2, !tbaa !12
   %i.af = trunc i32 %.03141 to i8
-  store i8 %i.af, ptr %i.d, align 1, !tbaa !13
+  store i8 %i.af, ptr %i.d, align 1, !tbaa !12
   %i.ag = call i64 @llvm.umin.i64(i64 %.03240, i64 20) ; 3 uses
   call void @_ZN7NCrypto5NSha18CContext6UpdateEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @_ZN7NCrypto5NSha15CHmac5FinalEPhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 20)
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03339, ptr nonnull align 16 %i.a, i64 %i.ag, i1 false), !tbaa !13
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03339, ptr nonnull align 16 %i.a, i64 %i.ag, i1 false), !tbaa !12
   %i.ah = getelementptr inbounds nuw i8, ptr %.03339, i64 %i.ag
   %i.ai = sub nuw i64 %.03240, %i.ag              ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
   %i.aj = add i32 %.03141, 1
   %.not = icmp eq i64 %i.ai, 0
-  br i1 %.not, label %._crit_edge44, label %.lr.ph43.split, !llvm.loop !12
+  br i1 %.not, label %._crit_edge44, label %.lr.ph43.split, !llvm.loop !11
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -230,7 +228,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
   %i.g = add i32 %.01927, 1
   %.not = icmp eq i64 %i.f, 0
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !17
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !15
 }
 
 declare void @_ZN7NCrypto5NSha17CHmac326SetKeyEPKhm(ptr noundef nonnull align 8 dereferenceable(208), ptr noundef, i64 noundef) local_unnamed_addr #2
@@ -266,13 +264,11 @@ attributes #5 = { nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!6, !6, i64 0}
 !8 = !{!"llvm.loop.mustprogress"}
-!9 = distinct !{!9, !8, !15, !16}
-!10 = distinct !{!10, !8, !16, !15}
+!9 = distinct !{!9, !8, !13, !14}
+!10 = distinct !{!10, !8}
 !11 = distinct !{!11, !8}
-!12 = distinct !{!12, !8}
-!13 = !{!5, !5, i64 0}
-!14 = !{!"branch_weights", i32 4, i32 12}
-!15 = !{!"llvm.loop.isvectorized", i32 1}
-!16 = !{!"llvm.loop.unroll.runtime.disable"}
-!17 = distinct !{!17, !8}
+!12 = !{!5, !5, i64 0}
+!13 = !{!"llvm.loop.unroll.runtime.disable"}
+!14 = !{!"llvm.loop.isvectorized", i32 1}
+!15 = distinct !{!15, !8}
 end_hunk_0

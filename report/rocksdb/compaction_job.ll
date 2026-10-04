@@ -205,49 +205,49 @@ _ZTWN7rocksdb15iostats_contextE.exit17:           ; preds = %_ZTWN7rocksdb15iost
   br i1 %exitcond.peel24.not, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %.peel.next
-  %i.bb = add nsw i64 %wide.trip.count, -2        ; 7 uses
-  %min.iters.check = icmp ult i64 %i.bb, 4
+  %i.bb = add nsw i64 %wide.trip.count, -2        ; 6 uses
+  %min.iters.check = icmp ult i64 %i.bb, 5
   br i1 %min.iters.check, label %.peel.next21.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check26 = icmp ult i64 %i.bb, 16
+  %min.iters.check26 = icmp ult i64 %i.bb, 17
   br i1 %min.iters.check26, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.bc = and i64 %i.bb, 12
-  %n.vec = and i64 %i.bb, -16                     ; 4 uses
-  %2 = or disjoint i64 %n.vec, 2                  ; 2 uses
+  %i.bc = and i64 %i.bb, 15                       ; 2 uses
+  %2 = icmp eq i64 %i.bc, 0
+  %3 = select i1 %2, i64 16, i64 %i.bc            ; 2 uses
+  %n.vec = sub nsw i64 %i.bb, %3                  ; 3 uses
+  %4 = add nsw i64 %n.vec, 2
   %i.bd = insertelement <4 x i64> <i64 poison, i64 0, i64 0, i64 0>, i64 %i.ba, i64 0
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.ind = phi <4 x i64> [ <i64 2, i64 3, i64 4, i64 5>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
   %vec.phi = phi <4 x i64> [ %i.bd, %vector.ph ], [ %i.be, %vector.body ]
   %vec.phi27 = phi <4 x i64> [ zeroinitializer, %vector.ph ], [ %i.bf, %vector.body ]
   %vec.phi28 = phi <4 x i64> [ zeroinitializer, %vector.ph ], [ %i.bg, %vector.body ]
   %vec.phi29 = phi <4 x i64> [ zeroinitializer, %vector.ph ], [ %i.bh, %vector.body ]
-  %step.add = add nuw nsw <4 x i64> %vec.ind, splat (i64 4)
-  %step.add.2 = add nuw nsw <4 x i64> %vec.ind, splat (i64 8)
-  %step.add.3 = add nuw nsw <4 x i64> %vec.ind, splat (i64 12)
-  %wide.gep = getelementptr [16 x i8], ptr %i.aw, <4 x i64> %vec.ind
-  %wide.gep30 = getelementptr [16 x i8], ptr %i.aw, <4 x i64> %step.add
-  %wide.gep31 = getelementptr [16 x i8], ptr %i.aw, <4 x i64> %step.add.2
-  %wide.gep32 = getelementptr [16 x i8], ptr %i.aw, <4 x i64> %step.add.3
-  %wide.gep33 = getelementptr i8, <4 x ptr> %wide.gep, i64 -32
-  %wide.gep34 = getelementptr i8, <4 x ptr> %wide.gep30, i64 -32
-  %wide.gep35 = getelementptr i8, <4 x ptr> %wide.gep31, i64 -32
-  %wide.gep36 = getelementptr i8, <4 x ptr> %wide.gep32, i64 -32
-  %wide.masked.gather = tail call <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr> align 8 %wide.gep33, <4 x i1> splat (i1 true), <4 x i64> poison), !tbaa !458
-  %wide.masked.gather37 = tail call <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr> align 8 %wide.gep34, <4 x i1> splat (i1 true), <4 x i64> poison), !tbaa !458
-  %wide.masked.gather38 = tail call <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr> align 8 %wide.gep35, <4 x i1> splat (i1 true), <4 x i64> poison), !tbaa !458
-  %wide.masked.gather39 = tail call <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr> align 8 %wide.gep36, <4 x i1> splat (i1 true), <4 x i64> poison), !tbaa !458
-  %i.be = add <4 x i64> %wide.masked.gather, %vec.phi ; 2 uses
-  %i.bf = add <4 x i64> %wide.masked.gather37, %vec.phi27 ; 2 uses
-  %i.bg = add <4 x i64> %wide.masked.gather38, %vec.phi28 ; 2 uses
-  %i.bh = add <4 x i64> %wide.masked.gather39, %vec.phi29 ; 2 uses
+  %5 = getelementptr [16 x i8], ptr %i.aw, i64 %index
+  %6 = getelementptr [16 x i8], ptr %i.aw, i64 %index
+  %7 = getelementptr [16 x i8], ptr %i.aw, i64 %index
+  %8 = getelementptr [16 x i8], ptr %i.aw, i64 %index
+  %9 = getelementptr i8, ptr %6, i64 64
+  %10 = getelementptr i8, ptr %7, i64 128
+  %11 = getelementptr i8, ptr %8, i64 192
+  %wide.vec = load <8 x i64>, ptr %5, align 8, !tbaa !458
+  %strided.vec = shufflevector <8 x i64> %wide.vec, <8 x i64> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %wide.vec30 = load <8 x i64>, ptr %9, align 8, !tbaa !458
+  %strided.vec31 = shufflevector <8 x i64> %wide.vec30, <8 x i64> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %wide.vec32 = load <8 x i64>, ptr %10, align 8, !tbaa !458
+  %strided.vec33 = shufflevector <8 x i64> %wide.vec32, <8 x i64> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %wide.vec34 = load <8 x i64>, ptr %11, align 8, !tbaa !458
+  %strided.vec35 = shufflevector <8 x i64> %wide.vec34, <8 x i64> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.be = add <4 x i64> %strided.vec, %vec.phi    ; 2 uses
+  %i.bf = add <4 x i64> %strided.vec31, %vec.phi27 ; 2 uses
+  %i.bg = add <4 x i64> %strided.vec33, %vec.phi28 ; 2 uses
+  %i.bh = add <4 x i64> %strided.vec35, %vec.phi29 ; 2 uses
   %index.next = add nuw i64 %index, 16            ; 2 uses
-  %vec.ind.next = add nuw nsw <4 x i64> %vec.ind, splat (i64 16)
   %i.bi = icmp eq i64 %index.next, %n.vec
   br i1 %i.bi, label %middle.block, label %vector.body, !llvm.loop !1320
 
@@ -255,51 +255,43 @@ middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i64> %i.bf, %i.be
   %bin.rdx40 = add <4 x i64> %i.bg, %bin.rdx
   %bin.rdx41 = add <4 x i64> %i.bh, %bin.rdx40
-  %i.bj = tail call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %bin.rdx41) ; 3 uses
-  %cmp.n = icmp eq i64 %i.bb, %n.vec
-  br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
-
-vec.epilog.iter.check:                            ; preds = %middle.block
-  %min.epilog.iters.check = icmp eq i64 %i.bc, 0
+  %i.bj = tail call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %bin.rdx41) ; 2 uses
+  %min.epilog.iters.check = icmp samesign ult i64 %3, 5
   br i1 %min.epilog.iters.check, label %.peel.next21.preheader, label %vec.epilog.ph, !prof !462
 
-vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.resume.val = phi i64 [ %2, %vec.epilog.iter.check ], [ 2, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i64 [ %i.bj, %vec.epilog.iter.check ], [ %i.ba, %vector.main.loop.iter.check ]
-  %n.vec42 = and i64 %i.bb, -4                    ; 3 uses
-  %3 = or disjoint i64 %n.vec42, 2
-  %4 = insertelement <4 x i64> <i64 poison, i64 0, i64 0, i64 0>, i64 %bc.merge.rdx, i64 0
-  %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %bc.resume.val, i64 0
-  %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
-  %induction = add nuw nsw <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3>
+vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %middle.block
+  %bc.resume.val = phi i64 [ %n.vec, %middle.block ], [ 0, %vector.main.loop.iter.check ]
+  %bc.merge.rdx = phi i64 [ %i.bj, %middle.block ], [ %i.ba, %vector.main.loop.iter.check ]
+  %n.vec42 = and i64 %i.bb, 3                     ; 2 uses
+  %12 = icmp eq i64 %n.vec42, 0
+  %13 = select i1 %12, i64 4, i64 %n.vec42
+  %n.vec38 = sub nsw i64 %i.bb, %13               ; 2 uses
+  %14 = add nsw i64 %n.vec38, 2
+  %15 = insertelement <4 x i64> <i64 poison, i64 0, i64 0, i64 0>, i64 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
-  %index43 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next49, %vec.epilog.vector.body ]
-  %vec.ind44 = phi <4 x i64> [ %induction, %vec.epilog.ph ], [ %vec.ind.next50, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi45 = phi <4 x i64> [ %4, %vec.epilog.ph ], [ %i.bk, %vec.epilog.vector.body ]
-  %wide.gep46 = getelementptr [16 x i8], ptr %i.aw, <4 x i64> %vec.ind44
-  %wide.gep47 = getelementptr i8, <4 x ptr> %wide.gep46, i64 -32
-  %wide.masked.gather48 = tail call <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr> align 8 %wide.gep47, <4 x i1> splat (i1 true), <4 x i64> poison), !tbaa !458
-  %i.bk = add <4 x i64> %wide.masked.gather48, %vec.phi45 ; 2 uses
+  %index43 = phi i64 [ %bc.resume.val, %vec.epilog.ph ], [ %index.next49, %vec.epilog.vector.body ] ; 2 uses
+  %vec.phi45 = phi <4 x i64> [ %15, %vec.epilog.ph ], [ %i.bk, %vec.epilog.vector.body ]
+  %16 = getelementptr [16 x i8], ptr %i.aw, i64 %index43
+  %wide.vec41 = load <8 x i64>, ptr %16, align 8, !tbaa !458
+  %strided.vec42 = shufflevector <8 x i64> %wide.vec41, <8 x i64> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.bk = add <4 x i64> %strided.vec42, %vec.phi45 ; 2 uses
   %index.next49 = add nuw i64 %index43, 4         ; 2 uses
-  %vec.ind.next50 = add nuw nsw <4 x i64> %vec.ind44, splat (i64 4)
-  %i.bl = icmp eq i64 %index.next49, %n.vec42
+  %i.bl = icmp eq i64 %index.next49, %n.vec38
   br i1 %i.bl, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !1321
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %i.bm = tail call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %i.bk) ; 2 uses
-  %cmp.n51 = icmp eq i64 %i.bb, %n.vec42
-  br i1 %cmp.n51, label %._crit_edge, label %.peel.next21.preheader
+  %i.bm = tail call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %i.bk)
+  br label %.peel.next21.preheader
 
-.peel.next21.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv.ph = phi i64 [ 2, %iter.check ], [ %2, %vec.epilog.iter.check ], [ %3, %vec.epilog.middle.block ]
-  %.01518.ph = phi i64 [ %i.ba, %iter.check ], [ %i.bj, %vec.epilog.iter.check ], [ %i.bm, %vec.epilog.middle.block ]
+.peel.next21.preheader:                           ; preds = %iter.check, %middle.block, %vec.epilog.middle.block
+  %indvars.iv.ph = phi i64 [ 2, %iter.check ], [ %4, %middle.block ], [ %14, %vec.epilog.middle.block ]
+  %.01518.ph = phi i64 [ %i.ba, %iter.check ], [ %i.bj, %middle.block ], [ %i.bm, %vec.epilog.middle.block ]
   br label %.peel.next21
 
-._crit_edge:                                      ; preds = %.peel.next21, %middle.block, %vec.epilog.middle.block, %.lr.ph, %.peel.next, %_ZTWN7rocksdb15iostats_contextE.exit17
-  %.015.lcssa = phi i64 [ 0, %_ZTWN7rocksdb15iostats_contextE.exit17 ], [ %i.ba, %.peel.next ], [ %i.ax, %.lr.ph ], [ %i.bm, %vec.epilog.middle.block ], [ %i.bj, %middle.block ], [ %i.bs, %.peel.next21 ]
+._crit_edge:                                      ; preds = %.peel.next21, %.lr.ph, %.peel.next, %_ZTWN7rocksdb15iostats_contextE.exit17
+  %.015.lcssa = phi i64 [ 0, %_ZTWN7rocksdb15iostats_contextE.exit17 ], [ %i.ba, %.peel.next ], [ %i.ax, %.lr.ph ], [ %i.bs, %.peel.next21 ]
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ae, i64 40
   store i64 %.015.lcssa, ptr %i.bn, align 8, !tbaa !463
   %i.bo = getelementptr inbounds nuw i8, ptr %i.ae, i64 112
@@ -702,11 +694,11 @@ declare i64 @llvm.smax.i64(i64, i64) #31
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #31
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
-declare <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr>, <4 x i1>, <4 x i64>) #33
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #31
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
+declare <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr>, <4 x i1>, <4 x i64>) #33
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { nounwind uwtable "frame-pointer"="non-leaf-no-reserve" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
