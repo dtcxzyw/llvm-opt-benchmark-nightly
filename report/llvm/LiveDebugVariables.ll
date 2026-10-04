@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %.lr.ph, %bb.x
   store <2 x i64> %i.hm, ptr %i.hl, align 8, !tbaa !170
   %i.hn = getelementptr inbounds nuw [24 x i8], ptr %i.gs, i64 %i.hh ; 3 uses
   %i.ho = getelementptr inbounds nuw [24 x i8], ptr %i.gs, i64 %i.hk ; 6 uses
-  %i.hp = getelementptr inbounds nuw i8, ptr %i.hn, i64 8 ; 3 uses
+  %i.hp = getelementptr inbounds nuw i8, ptr %i.hn, i64 8 ; 5 uses
   %.val17.i.i131.i.i = load i8, ptr %i.hp, align 8
   %i.hq = and i8 %.val17.i.i131.i.i, 63           ; 2 uses
   %.not.i.i132.i.i = icmp eq i8 %i.hq, 0
@@ -253,8 +253,22 @@ bb.ad:                                            ; preds = %.lr.ph.split.i.i.i
 
 _ZSt4copyIPKjPjET0_T_S4_S3_.exit.i.i140.i.i:      ; preds = %bb.ad, %bb.ac, %bb.ab, %bb.aa
   %.val15.i.i141.i.i = load i8, ptr %i.hp, align 8
-  %i.hz = getelementptr inbounds nuw i8, ptr %i.ho, i64 8
-  store i8 %.val15.i.i141.i.i, ptr %i.hz, align 8
+  %6 = and i8 %.val15.i.i141.i.i, 63              ; 2 uses
+  %i.hz = getelementptr inbounds nuw i8, ptr %i.ho, i64 8 ; 4 uses
+  %7 = load i8, ptr %i.hz, align 8
+  %8 = and i8 %7, -64
+  %9 = or disjoint i8 %8, %6                      ; 2 uses
+  store i8 %9, ptr %i.hz, align 8
+  %.val12.i.i142.i.i = load i8, ptr %i.hp, align 8
+  %10 = and i8 %.val12.i.i142.i.i, 64             ; 2 uses
+  %11 = and i8 %9, -65
+  %12 = or disjoint i8 %11, %10
+  store i8 %12, ptr %i.hz, align 8
+  %.val13.i.i143.i.i = load i8, ptr %i.hp, align 8
+  %13 = and i8 %.val13.i.i143.i.i, -128
+  %14 = or disjoint i8 %6, %13
+  %15 = or disjoint i8 %14, %10
+  store i8 %15, ptr %i.hz, align 8
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hn, i64 16
   %.val14.i.i144.i.i = load ptr, ptr %i.ia, align 8, !tbaa !254
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ho, i64 16
@@ -657,7 +671,7 @@ bb.ay:                                            ; preds = %_ZN4llvm15IntervalM
   store <2 x i64> %i.no, ptr %i.nn, align 8, !tbaa !170
   %i.np = getelementptr inbounds nuw [24 x i8], ptr %i.ng, i64 %i.nj ; 3 uses
   %i.nq = getelementptr inbounds nuw [24 x i8], ptr %i.ng, i64 %i.nm ; 6 uses
-  %i.nr = getelementptr inbounds nuw i8, ptr %i.np, i64 8 ; 3 uses
+  %i.nr = getelementptr inbounds nuw i8, ptr %i.np, i64 8 ; 5 uses
   %.val17.i.i219.i.i = load i8, ptr %i.nr, align 8
   %i.ns = and i8 %.val17.i.i219.i.i, 63           ; 2 uses
   %.not.i.i220.i.i = icmp eq i8 %i.ns, 0
@@ -705,8 +719,22 @@ bb.bd:                                            ; preds = %.lr.ph.split.i215.i
 
 _ZSt4copyIPKjPjET0_T_S4_S3_.exit.i.i228.i.i:      ; preds = %bb.bd, %bb.bc, %bb.bb, %bb.ba
   %.val15.i.i229.i.i = load i8, ptr %i.nr, align 8
-  %i.ob = getelementptr inbounds nuw i8, ptr %i.nq, i64 8
-  store i8 %.val15.i.i229.i.i, ptr %i.ob, align 8
+  %16 = and i8 %.val15.i.i229.i.i, 63             ; 2 uses
+  %i.ob = getelementptr inbounds nuw i8, ptr %i.nq, i64 8 ; 4 uses
+  %17 = load i8, ptr %i.ob, align 8
+  %18 = and i8 %17, -64
+  %19 = or disjoint i8 %18, %16                   ; 2 uses
+  store i8 %19, ptr %i.ob, align 8
+  %.val12.i.i230.i.i = load i8, ptr %i.nr, align 8
+  %20 = and i8 %.val12.i.i230.i.i, 64             ; 2 uses
+  %21 = and i8 %19, -65
+  %22 = or disjoint i8 %21, %20
+  store i8 %22, ptr %i.ob, align 8
+  %.val13.i.i231.i.i = load i8, ptr %i.nr, align 8
+  %23 = and i8 %.val13.i.i231.i.i, -128
+  %24 = or disjoint i8 %16, %23
+  %25 = or disjoint i8 %24, %20
+  store i8 %25, ptr %i.ob, align 8
   %i.oc = getelementptr inbounds nuw i8, ptr %i.np, i64 16
   %.val14.i.i232.i.i = load ptr, ptr %i.oc, align 8, !tbaa !254
   %i.od = getelementptr inbounds nuw i8, ptr %i.nq, i64 16
