@@ -204,7 +204,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !251
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
-  ret i1 %i.d
+  %1 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %1, %i.d
+  ret i1 %spec.select.i.i.i.i
 }
 
 declare noundef ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef) local_unnamed_addr #2
@@ -575,8 +577,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !251
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3gpu9GPUFuncOpEvE2idE
+  %4 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu9GPUFuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %4, %i.d
   %.not4.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not4.i, %i.d
+  %.not.i = or i1 %.not4.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_125LowerGpuOpsToROCDLOpsPass14runOnOperationEvEUlNS_3gpu9GPUFuncOpEE_S7_NS_10WalkResultEEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_S9_EE5valueESI_E4typeESD_OT1_ENKUlSD_E_clESD_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -979,8 +983,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !251
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %7 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %7, %i.e
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_125LowerGpuOpsToROCDLOpsPass14runOnOperationEvEUlNS_4LLVM10LLVMFuncOpEE_S7_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

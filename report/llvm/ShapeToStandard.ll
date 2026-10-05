@@ -202,7 +202,9 @@ _ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit:
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !62
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_5shape19CstrBroadcastableOpEvE2idE
-  %spec.select.i.i = select i1 %i.g, ptr %1, ptr null
+  %18 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5shape19CstrBroadcastableOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %18, %i.g
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null
   store ptr %spec.select.i.i, ptr %4, align 8
   %i.h = call i64 @_ZN4mlir5shape19CstrBroadcastableOp27getODSOperandIndexAndLengthEj(ptr noundef nonnull align 8 dereferenceable(8) %4, i32 noundef 0) #20 ; 3 uses
   %i.i = load ptr, ptr %4, align 8, !tbaa !63     ; 2 uses
@@ -605,7 +607,9 @@ _ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit:
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !62
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_5shape8CstrEqOpEvE2idE
-  %spec.select.i.i = select i1 %i.g, ptr %1, ptr null
+  %18 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5shape8CstrEqOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %18, %i.g
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null
   store ptr %spec.select.i.i, ptr %4, align 8
   %i.h = call i64 @_ZN4mlir5shape8CstrEqOp27getODSOperandIndexAndLengthEj(ptr noundef nonnull align 8 dereferenceable(8) %4, i32 noundef 0) #20 ; 3 uses
   %i.i = load ptr, ptr %4, align 8, !tbaa !63     ; 2 uses
@@ -1008,7 +1012,9 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !62
   %i.n = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_5shape9ShapeOfOpEvE2idE
-  br i1 %i.n, label %bb.d, label %_ZNK4mlir5Value13getDefiningOpINS_5shape9ShapeOfOpEEET_v.exit.thread
+  %12 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5shape9ShapeOfOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %12, %i.n
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %_ZNK4mlir5Value13getDefiningOpINS_5shape9ShapeOfOpEEET_v.exit.thread
 
 _ZNK4mlir5Value13getDefiningOpINS_5shape9ShapeOfOpEEET_v.exit.thread: ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #20

@@ -204,12 +204,12 @@ bb.jy:                                            ; preds = %.backedge
   br label %_PyThreadState_HasStackSpace.exit10638.thread
 
 _PyThreadState_HasStackSpace.exit10638.thread:    ; preds = %bb.vh, %bb.lr, %bb.kv, %bb.wj, %bb.wi, %bb.wc, %bb.wb, %bb.vv, %bb.vu, %bb.vp, %bb.vo, %bb.vn, %bb.vm, %bb.vi, %_PyThreadState_HasStackSpace.exit10803, %bb.vg, %bb.vf, %bb.ve, %bb.vd, %bb.uz, %bb.up, %bb.uo, %bb.un, %bb.um, %bb.ul, %bb.ue, %bb.ud, %bb.uc, %bb.ub, %bb.ua, %bb.tw, %bb.tv, %bb.tu, %bb.tt, %bb.tp, %bb.to, %bb.tn, %bb.tm, %bb.tc, %bb.tb, %bb.ta, %bb.ss, %bb.sr, %bb.qi, %bb.qh, %bb.nb, %bb.na, %bb.mz, %bb.my, %bb.mu, %bb.mt, %bb.mp, %bb.mo, %bb.mk, %bb.mj, %PyStackRef_CLOSE.exit10663, %bb.lx, %bb.lw, %bb.lv, %bb.lu, %bb.ls, %_PyThreadState_HasStackSpace.exit10655, %bb.lq, %bb.lp, %PyStackRef_CLOSE.exit10653, %bb.lh, %bb.lg, %bb.lf, %_PyThreadState_HasStackSpace.exit10638, %bb.ku, %bb.kt, %bb.ks, %bb.kr, %bb.jy
-  %.69046 = phi ptr [ %.4.val1003611565, %bb.jy ], [ %.4.val1003611565, %bb.kr ], [ %.4.val1003611565, %bb.ku ], [ %.4.val1003611565, %_PyThreadState_HasStackSpace.exit10638 ], [ %.4.val1003611565, %bb.kt ], [ %.4.val1003611565, %bb.ks ], [ %.4.val1003611565, %bb.lf ], [ %.4.val1003611565, %bb.lh ], [ %.4.val10262, %bb.lp ], [ %.4.val10262, %bb.lq ], [ %.4.val10262, %bb.ls ], [ %.4.val10262, %_PyThreadState_HasStackSpace.exit10655 ], [ %.4.val10262, %PyStackRef_CLOSE.exit10653 ], [ %.4.val1003611565, %bb.lg ], [ %.4.val1003611565, %bb.lu ], [ %.4.val1003611565, %bb.lv ], [ %.4.val10260, %PyStackRef_CLOSE.exit10663 ], [ %.4.val1003611565, %bb.lx ], [ %.4.val1003611565, %bb.lw ], [ %.4.val1003611565, %bb.mk ], [ %.4.val1003611565, %bb.mj ], [ %.4.val1003611565, %bb.mp ], [ %.4.val1003611565, %bb.mo ], [ %.4.val1003611565, %bb.mu ], [ %.4.val1003611565, %bb.mt ], [ %.4.val1003611565, %bb.my ], [ %.4.val1003611565, %bb.na ], [ %.4.val1003611565, %bb.nb ], [ %.4.val1003611565, %bb.mz ], [ %.4.val1003611565, %bb.qi ], [ %.4.val1003611565, %bb.qh ], [ %.4.val1003611565, %bb.ss ], [ %.4.val1003611565, %bb.sr ], [ %.4.val1003611565, %bb.ta ], [ %.4.val1003611565, %bb.tb ], [ %.4.val1003611565, %bb.tc ], [ %.4.val1003611565, %bb.tm ], [ %.4.val1003611565, %bb.to ], [ %.4.val1003611565, %bb.tp ], [ %.4.val1003611565, %bb.tn ], [ %.4.val1003611565, %bb.tt ], [ %.4.val1003611565, %bb.tv ], [ %.4.val1003611565, %bb.tw ], [ %.4.val1003611565, %bb.tu ], [ %.4.val1003611565, %bb.ua ], [ %.4.val1003611565, %bb.ud ], [ %.4.val1003611565, %bb.ue ], [ %.4.val1003611565, %bb.uc ], [ %.4.val1003611565, %bb.ub ], [ %.4.val1003611565, %bb.ul ], [ %.4.val1003611565, %bb.un ], [ %.4.val1003611565, %bb.uo ], [ %.4.val1003611565, %bb.up ], [ %.4.val1003611565, %bb.um ], [ %.4.val1003611565, %bb.uz ], [ %.4.val1003611565, %bb.vh ], [ %.4.val1003611565, %bb.vd ], [ %.4.val1003611565, %bb.vf ], [ %.4.val1003611565, %bb.vg ], [ %.4.val1003611565, %bb.vi ], [ %.4.val1003611565, %_PyThreadState_HasStackSpace.exit10803 ], [ %.4.val1003611565, %bb.ve ], [ %.4.val1003611565, %bb.vm ], [ %.4.val1003611565, %bb.vo ], [ %.4.val1003611565, %bb.vp ], [ %.4.val1003611565, %bb.vn ], [ %.4.val1003611565, %bb.vv ], [ %.4.val1003611565, %bb.vu ], [ %.4.val1003611565, %bb.wc ], [ %.4.val1003611565, %bb.wb ], [ %.4.val1003611565, %bb.wj ], [ %.4.val1003611565, %bb.wi ], [ %.4.val10262, %bb.lr ], [ %.4.val1003611565, %bb.kv ] ; 6 uses
+  %.69046 = phi ptr [ %.4.val1003611565, %bb.jy ], [ %.4.val1003611565, %bb.kr ], [ %.4.val1003611565, %bb.ku ], [ %.4.val1003611565, %_PyThreadState_HasStackSpace.exit10638 ], [ %.4.val1003611565, %bb.kt ], [ %.4.val1003611565, %bb.ks ], [ %.4.val1003611565, %bb.lf ], [ %.4.val1003611565, %bb.lh ], [ %.4.val10262, %bb.lp ], [ %.4.val10262, %bb.lq ], [ %.4.val10262, %bb.ls ], [ %.4.val10262, %_PyThreadState_HasStackSpace.exit10655 ], [ %.4.val10262, %PyStackRef_CLOSE.exit10653 ], [ %.4.val1003611565, %bb.lg ], [ %.4.val1003611565, %bb.lu ], [ %.4.val1003611565, %bb.lv ], [ %.4.val10260, %PyStackRef_CLOSE.exit10663 ], [ %.4.val1003611565, %bb.lx ], [ %.4.val1003611565, %bb.lw ], [ %.4.val1003611565, %bb.mk ], [ %.4.val1003611565, %bb.mj ], [ %.4.val1003611565, %bb.mp ], [ %.4.val1003611565, %bb.mo ], [ %.4.val1003611565, %bb.mu ], [ %.4.val1003611565, %bb.mt ], [ %.4.val1003611565, %bb.my ], [ %.4.val1003611565, %bb.na ], [ %.4.val1003611565, %bb.nb ], [ %.4.val1003611565, %bb.mz ], [ %.4.val1003611565, %bb.qi ], [ %.4.val1003611565, %bb.qh ], [ %.4.val1003611565, %bb.ss ], [ %.4.val1003611565, %bb.sr ], [ %.4.val1003611565, %bb.ta ], [ %.4.val1003611565, %bb.tb ], [ %.4.val1003611565, %bb.tc ], [ %.4.val1003611565, %bb.tm ], [ %.4.val1003611565, %bb.to ], [ %.4.val1003611565, %bb.tp ], [ %.4.val1003611565, %bb.tn ], [ %.4.val1003611565, %bb.tt ], [ %.4.val1003611565, %bb.tv ], [ %.4.val1003611565, %bb.tw ], [ %.4.val1003611565, %bb.tu ], [ %.4.val1003611565, %bb.ua ], [ %.4.val1003611565, %bb.ud ], [ %.4.val1003611565, %bb.ue ], [ %.4.val1003611565, %bb.uc ], [ %.4.val1003611565, %bb.ub ], [ %.4.val1003611565, %bb.ul ], [ %.4.val1003611565, %bb.un ], [ %.4.val1003611565, %bb.uo ], [ %.4.val1003611565, %bb.up ], [ %.4.val1003611565, %bb.um ], [ %.4.val1003611565, %bb.uz ], [ %.4.val1003611565, %bb.vh ], [ %.4.val1003611565, %bb.vd ], [ %.4.val1003611565, %bb.vf ], [ %.4.val1003611565, %bb.vg ], [ %.4.val1003611565, %bb.vi ], [ %.4.val1003611565, %_PyThreadState_HasStackSpace.exit10803 ], [ %.4.val1003611565, %bb.ve ], [ %.4.val1003611565, %bb.vm ], [ %.4.val1003611565, %bb.vo ], [ %.4.val1003611565, %bb.vp ], [ %.4.val1003611565, %bb.vn ], [ %.4.val1003611565, %bb.vv ], [ %.4.val1003611565, %bb.vu ], [ %.4.val1003611565, %bb.wc ], [ %.4.val1003611565, %bb.wb ], [ %.4.val1003611565, %bb.wj ], [ %.4.val1003611565, %bb.wi ], [ %.4.val10262, %bb.lr ], [ %.4.val1003611565, %bb.kv ] ; 5 uses
   %.19036 = phi ptr [ %i.asg, %bb.jy ], [ %i.avv, %bb.kr ], [ %i.avv, %bb.ku ], [ %i.avv, %_PyThreadState_HasStackSpace.exit10638 ], [ %i.avv, %bb.kt ], [ %i.avv, %bb.ks ], [ %i.azj, %bb.lf ], [ %i.azj, %bb.lh ], [ %i.azj, %bb.lp ], [ %i.azj, %bb.lq ], [ %i.azj, %bb.ls ], [ %i.azj, %_PyThreadState_HasStackSpace.exit10655 ], [ %i.azj, %PyStackRef_CLOSE.exit10653 ], [ %i.azj, %bb.lg ], [ %i.bdo, %bb.lu ], [ %i.bdo, %bb.lv ], [ %i.bdo, %PyStackRef_CLOSE.exit10663 ], [ %i.bdo, %bb.lx ], [ %i.bdo, %bb.lw ], [ %i.bgk, %bb.mk ], [ %i.bgk, %bb.mj ], [ %i.bhx, %bb.mp ], [ %i.bhx, %bb.mo ], [ %i.bjj, %bb.mu ], [ %i.bjj, %bb.mt ], [ %i.bkv, %bb.my ], [ %i.bkv, %bb.na ], [ %i.bkv, %bb.nb ], [ %i.bkv, %bb.mz ], [ %i.bzh, %bb.qi ], [ %i.bzh, %bb.qh ], [ %i.clu, %bb.ss ], [ %i.clu, %bb.sr ], [ %i.cnj, %bb.ta ], [ %i.cnj, %bb.tb ], [ %i.cnj, %bb.tc ], [ %i.cpd, %bb.tm ], [ %i.cpd, %bb.to ], [ %i.cpd, %bb.tp ], [ %i.cpd, %bb.tn ], [ %i.cra, %bb.tt ], [ %i.cra, %bb.tv ], [ %i.cra, %bb.tw ], [ %i.cra, %bb.tu ], [ %i.csx, %bb.ua ], [ %i.csx, %bb.ud ], [ %i.csx, %bb.ue ], [ %i.csx, %bb.uc ], [ %i.csx, %bb.ub ], [ %i.cvd, %bb.ul ], [ %i.cvd, %bb.un ], [ %i.cvd, %bb.uo ], [ %i.cvd, %bb.up ], [ %i.cvd, %bb.um ], [ %i.cxx, %bb.uz ], [ %i.czi, %bb.vh ], [ %i.czi, %bb.vd ], [ %i.czi, %bb.vf ], [ %i.czi, %bb.vg ], [ %i.czi, %bb.vi ], [ %i.czi, %_PyThreadState_HasStackSpace.exit10803 ], [ %i.czi, %bb.ve ], [ %i.ddo, %bb.vm ], [ %i.ddo, %bb.vo ], [ %i.ddo, %bb.vp ], [ %i.ddo, %bb.vn ], [ %i.dfl, %bb.vv ], [ %i.dfl, %bb.vu ], [ %i.dgq, %bb.wc ], [ %i.dgq, %bb.wb ], [ %i.dhv, %bb.wj ], [ %i.dhv, %bb.wi ], [ %i.azj, %bb.lr ], [ %i.avv, %bb.kv ] ; 5 uses
   %i.ash = xor i32 %.09034, -1
   %i.asi = sext i32 %i.ash to i64                 ; 4 uses
   %i.asj = getelementptr [8 x i8], ptr %.69046, i64 %i.asi ; 2 uses
-  %.sroa.03552.0.copyload = load i64, ptr %i.asj, align 8, !tbaa !30 ; 5 uses
+  %.sroa.03552.0.copyload = load i64, ptr %i.asj, align 8, !tbaa !30 ; 4 uses
   %i.ask = sub i32 -2, %.09034
   %i.asl = sext i32 %i.ask to i64                 ; 6 uses
   %i.asm = getelementptr [8 x i8], ptr %.69046, i64 %i.asl ; 2 uses
@@ -236,20 +236,26 @@ bb.ka:                                            ; preds = %_PyThreadState_HasS
   store i16 %i.asv, ptr %i.asn, align 2, !tbaa !101
   %i.asw = and i64 %.sroa.03559.0.copyload, 3
   %i.asx = icmp eq i64 %i.asw, 3
-  br i1 %i.asx, label %PyStackRef_TYPE.exit.thread, label %PyStackRef_TYPE.exit
+  br i1 %i.asx, label %PyStackRef_TYPE.exit, label %6
 
-PyStackRef_TYPE.exit:                             ; preds = %bb.ka
-  %6 = and i64 %.sroa.03559.0.copyload, -2
-  %7 = inttoptr i64 %6 to ptr                     ; 3 uses
-  %8 = getelementptr i8, ptr %7, i64 8
-  %.val.i10625 = load ptr, ptr %8, align 8, !tbaa !43
-  %i.asy = icmp eq ptr %.val.i10625, @PyMethod_Type
+6:                                                ; preds = %bb.ka
+  %7 = and i64 %.sroa.03559.0.copyload, -2
+  %8 = inttoptr i64 %7 to ptr
+  %9 = getelementptr i8, ptr %8, i64 8
+  %.val.i10625 = load ptr, ptr %9, align 8, !tbaa !43
+  br label %PyStackRef_TYPE.exit
+
+PyStackRef_TYPE.exit:                             ; preds = %bb.ka, %6
+  %.0.i10626 = phi ptr [ %.val.i10625, %6 ], [ @PyLong_Type, %bb.ka ]
+  %i.asy = icmp eq ptr %.0.i10626, @PyMethod_Type
   %i.asz = icmp eq i64 %.sroa.03552.0.copyload, 1
   %or.cond = select i1 %i.asy, i1 %i.asz, i1 false
   br i1 %or.cond, label %bb.kb, label %PyStackRef_TYPE.exit.thread
 
 bb.kb:                                            ; preds = %PyStackRef_TYPE.exit
-  %i.ata = getelementptr i8, ptr %7, i64 24
+  %10 = and i64 %.sroa.03559.0.copyload, -2
+  %11 = inttoptr i64 %10 to ptr                   ; 2 uses
+  %i.ata = getelementptr i8, ptr %11, i64 24
   %i.atb = load ptr, ptr %i.ata, align 8, !tbaa !197 ; 4 uses
   %i.atc = load i32, ptr %i.atb, align 8, !tbaa !30 ; 2 uses
   %.not.i10627 = icmp sgt i32 %i.atc, -1
@@ -268,7 +274,7 @@ bb.kd:                                            ; preds = %bb.kb
 
 _PyStackRef_FromPyObjectNew.exit10629:            ; preds = %bb.kc, %bb.kd
   %.sroa.0.0.i10628 = phi i64 [ %i.ate, %bb.kc ], [ %i.atg, %bb.kd ] ; 2 uses
-  %i.ath = getelementptr i8, ptr %7, i64 16
+  %i.ath = getelementptr i8, ptr %11, i64 16
   %i.ati = load ptr, ptr %i.ath, align 8, !tbaa !198 ; 4 uses
   %i.atj = load i32, ptr %i.ati, align 8, !tbaa !30 ; 2 uses
   %.not.i10630 = icmp sgt i32 %i.atj, -1
@@ -311,10 +317,10 @@ PyStackRef_CLOSE.exit10634:                       ; preds = %_PyStackRef_FromPyO
   %.4.val10272 = load ptr, ptr %i.ato, align 8, !tbaa !50
   br label %PyStackRef_TYPE.exit.thread
 
-PyStackRef_TYPE.exit.thread:                      ; preds = %bb.ka, %PyStackRef_CLOSE.exit10634, %PyStackRef_TYPE.exit
-  %.sroa.03552.0 = phi i64 [ %.sroa.0.0.i10628, %PyStackRef_CLOSE.exit10634 ], [ %.sroa.03552.0.copyload, %PyStackRef_TYPE.exit ], [ %.sroa.03552.0.copyload, %bb.ka ] ; 3 uses
-  %.sroa.03559.0 = phi i64 [ %.sroa.0.0.i10631, %PyStackRef_CLOSE.exit10634 ], [ %.sroa.03559.0.copyload, %PyStackRef_TYPE.exit ], [ %.sroa.03559.0.copyload, %bb.ka ] ; 5 uses
-  %.79047 = phi ptr [ %.4.val10272, %PyStackRef_CLOSE.exit10634 ], [ %.69046, %PyStackRef_TYPE.exit ], [ %.69046, %bb.ka ] ; 7 uses
+PyStackRef_TYPE.exit.thread:                      ; preds = %PyStackRef_CLOSE.exit10634, %PyStackRef_TYPE.exit
+  %.sroa.03552.0 = phi i64 [ %.sroa.0.0.i10628, %PyStackRef_CLOSE.exit10634 ], [ %.sroa.03552.0.copyload, %PyStackRef_TYPE.exit ] ; 3 uses
+  %.sroa.03559.0 = phi i64 [ %.sroa.0.0.i10631, %PyStackRef_CLOSE.exit10634 ], [ %.sroa.03559.0.copyload, %PyStackRef_TYPE.exit ] ; 5 uses
+  %.79047 = phi ptr [ %.4.val10272, %PyStackRef_CLOSE.exit10634 ], [ %.69046, %PyStackRef_TYPE.exit ] ; 7 uses
   %i.atu = sub i32 0, %.09034
   %i.atv = sext i32 %i.atu to i64
   %i.atw = getelementptr [8 x i8], ptr %.79047, i64 %i.atv
@@ -717,7 +723,7 @@ bb.qs:                                            ; preds = %bb.sk, %bb.sj, %bb.
   %i.cax = sub i32 -2, %.09034
   %i.cay = sext i32 %i.cax to i64                 ; 4 uses
   %i.caz = getelementptr [8 x i8], ptr %.4.val1003611565, i64 %i.cay ; 2 uses
-  %.sroa.03089.0.copyload = load i64, ptr %i.caz, align 8, !tbaa !30 ; 4 uses
+  %.sroa.03089.0.copyload = load i64, ptr %i.caz, align 8, !tbaa !30 ; 3 uses
   %i.cba = sub i32 -3, %.09034
   %i.cbb = sext i32 %i.cba to i64                 ; 6 uses
   %i.cbc = getelementptr [8 x i8], ptr %.4.val1003611565, i64 %i.cbb ; 2 uses
@@ -744,20 +750,26 @@ bb.qu:                                            ; preds = %bb.qs
   store i16 %i.cbl, ptr %i.cbd, align 2, !tbaa !101
   %i.cbm = and i64 %.sroa.03095.0.copyload, 3
   %i.cbn = icmp eq i64 %i.cbm, 3
-  br i1 %i.cbn, label %PyStackRef_TYPE.exit10735.thread, label %PyStackRef_TYPE.exit10735
+  br i1 %i.cbn, label %PyStackRef_TYPE.exit10735, label %12
 
-PyStackRef_TYPE.exit10735:                        ; preds = %bb.qu
-  %9 = and i64 %.sroa.03095.0.copyload, -2
-  %10 = inttoptr i64 %9 to ptr                    ; 3 uses
-  %11 = getelementptr i8, ptr %10, i64 8
-  %.val.i10733 = load ptr, ptr %11, align 8, !tbaa !43
-  %i.cbo = icmp eq ptr %.val.i10733, @PyMethod_Type
+12:                                               ; preds = %bb.qu
+  %13 = and i64 %.sroa.03095.0.copyload, -2
+  %14 = inttoptr i64 %13 to ptr
+  %15 = getelementptr i8, ptr %14, i64 8
+  %.val.i10733 = load ptr, ptr %15, align 8, !tbaa !43
+  br label %PyStackRef_TYPE.exit10735
+
+PyStackRef_TYPE.exit10735:                        ; preds = %bb.qu, %12
+  %.0.i10734 = phi ptr [ %.val.i10733, %12 ], [ @PyLong_Type, %bb.qu ]
+  %i.cbo = icmp eq ptr %.0.i10734, @PyMethod_Type
   %i.cbp = icmp eq i64 %.sroa.03089.0.copyload, 1
   %or.cond3 = select i1 %i.cbo, i1 %i.cbp, i1 false
   br i1 %or.cond3, label %bb.qv, label %PyStackRef_TYPE.exit10735.thread
 
 bb.qv:                                            ; preds = %PyStackRef_TYPE.exit10735
-  %i.cbq = getelementptr i8, ptr %10, i64 24
+  %16 = and i64 %.sroa.03095.0.copyload, -2
+  %17 = inttoptr i64 %16 to ptr                   ; 2 uses
+  %i.cbq = getelementptr i8, ptr %17, i64 24
   %i.cbr = load ptr, ptr %i.cbq, align 8, !tbaa !197 ; 4 uses
   %i.cbs = load i32, ptr %i.cbr, align 8, !tbaa !30 ; 2 uses
   %.not.i10736 = icmp sgt i32 %i.cbs, -1
@@ -776,7 +788,7 @@ bb.qx:                                            ; preds = %bb.qv
 
 _PyStackRef_FromPyObjectNew.exit10738:            ; preds = %bb.qw, %bb.qx
   %.sroa.0.0.i10737 = phi i64 [ %i.cbu, %bb.qw ], [ %i.cbw, %bb.qx ] ; 2 uses
-  %i.cbx = getelementptr i8, ptr %10, i64 16
+  %i.cbx = getelementptr i8, ptr %17, i64 16
   %i.cby = load ptr, ptr %i.cbx, align 8, !tbaa !198 ; 4 uses
   %i.cbz = load i32, ptr %i.cby, align 8, !tbaa !30 ; 2 uses
   %.not.i10739 = icmp sgt i32 %i.cbz, -1
@@ -819,10 +831,10 @@ PyStackRef_CLOSE.exit10743:                       ; preds = %_PyStackRef_FromPyO
   %.4.val10216 = load ptr, ptr %i.cce, align 8, !tbaa !50
   br label %PyStackRef_TYPE.exit10735.thread
 
-PyStackRef_TYPE.exit10735.thread:                 ; preds = %bb.qu, %PyStackRef_CLOSE.exit10743, %PyStackRef_TYPE.exit10735
-  %.sroa.03089.0 = phi i64 [ %.sroa.0.0.i10737, %PyStackRef_CLOSE.exit10743 ], [ %.sroa.03089.0.copyload, %PyStackRef_TYPE.exit10735 ], [ %.sroa.03089.0.copyload, %bb.qu ] ; 3 uses
-  %.sroa.03095.0 = phi i64 [ %.sroa.0.0.i10740, %PyStackRef_CLOSE.exit10743 ], [ %.sroa.03095.0.copyload, %PyStackRef_TYPE.exit10735 ], [ %.sroa.03095.0.copyload, %bb.qu ] ; 5 uses
-  %.139053 = phi ptr [ %.4.val10216, %PyStackRef_CLOSE.exit10743 ], [ %.4.val1003611565, %PyStackRef_TYPE.exit10735 ], [ %.4.val1003611565, %bb.qu ] ; 8 uses
+PyStackRef_TYPE.exit10735.thread:                 ; preds = %PyStackRef_CLOSE.exit10743, %PyStackRef_TYPE.exit10735
+  %.sroa.03089.0 = phi i64 [ %.sroa.0.0.i10737, %PyStackRef_CLOSE.exit10743 ], [ %.sroa.03089.0.copyload, %PyStackRef_TYPE.exit10735 ] ; 3 uses
+  %.sroa.03095.0 = phi i64 [ %.sroa.0.0.i10740, %PyStackRef_CLOSE.exit10743 ], [ %.sroa.03095.0.copyload, %PyStackRef_TYPE.exit10735 ] ; 5 uses
+  %.139053 = phi ptr [ %.4.val10216, %PyStackRef_CLOSE.exit10743 ], [ %.4.val1003611565, %PyStackRef_TYPE.exit10735 ] ; 8 uses
   %i.cck = getelementptr i8, ptr %.139053, i64 -8
   %.sroa.03085.0.copyload = load i64, ptr %i.cck, align 8, !tbaa !30 ; 4 uses
   %i.ccl = xor i32 %.09034, -1
@@ -1225,27 +1237,33 @@ bb.aht:                                           ; preds = %.backedge
   %i.ffy = xor i32 %.09034, -1
   %i.ffz = sext i32 %i.ffy to i64                 ; 4 uses
   %i.fga = getelementptr [8 x i8], ptr %.4.val1003611565, i64 %i.ffz ; 2 uses
-  %.sroa.02029.0.copyload = load i64, ptr %i.fga, align 8, !tbaa !30 ; 3 uses
+  %.sroa.02029.0.copyload = load i64, ptr %i.fga, align 8, !tbaa !30 ; 2 uses
   %i.fgb = sub i32 -2, %.09034
   %i.fgc = sext i32 %i.fgb to i64                 ; 6 uses
   %i.fgd = getelementptr [8 x i8], ptr %.4.val1003611565, i64 %i.fgc ; 2 uses
   %.sroa.02034.0.copyload = load i64, ptr %i.fgd, align 8, !tbaa !30 ; 6 uses
   %i.fge = and i64 %.sroa.02034.0.copyload, 3
   %i.fgf = icmp eq i64 %i.fge, 3
-  br i1 %i.fgf, label %PyStackRef_TYPE.exit10965.thread, label %PyStackRef_TYPE.exit10965
+  br i1 %i.fgf, label %PyStackRef_TYPE.exit10965, label %18
 
-PyStackRef_TYPE.exit10965:                        ; preds = %bb.aht
-  %12 = and i64 %.sroa.02034.0.copyload, -2
-  %13 = inttoptr i64 %12 to ptr                   ; 3 uses
-  %14 = getelementptr i8, ptr %13, i64 8
-  %.val.i10963 = load ptr, ptr %14, align 8, !tbaa !43
-  %i.fgg = icmp eq ptr %.val.i10963, @PyMethod_Type
+18:                                               ; preds = %bb.aht
+  %19 = and i64 %.sroa.02034.0.copyload, -2
+  %20 = inttoptr i64 %19 to ptr
+  %21 = getelementptr i8, ptr %20, i64 8
+  %.val.i10963 = load ptr, ptr %21, align 8, !tbaa !43
+  br label %PyStackRef_TYPE.exit10965
+
+PyStackRef_TYPE.exit10965:                        ; preds = %bb.aht, %18
+  %.0.i10964 = phi ptr [ %.val.i10963, %18 ], [ @PyLong_Type, %bb.aht ]
+  %i.fgg = icmp eq ptr %.0.i10964, @PyMethod_Type
   %i.fgh = icmp eq i64 %.sroa.02029.0.copyload, 1
   %or.cond7 = select i1 %i.fgg, i1 %i.fgh, i1 false
   br i1 %or.cond7, label %bb.ahu, label %PyStackRef_TYPE.exit10965.thread
 
 bb.ahu:                                           ; preds = %PyStackRef_TYPE.exit10965
-  %i.fgi = getelementptr i8, ptr %13, i64 24
+  %22 = and i64 %.sroa.02034.0.copyload, -2
+  %23 = inttoptr i64 %22 to ptr                   ; 2 uses
+  %i.fgi = getelementptr i8, ptr %23, i64 24
   %i.fgj = load ptr, ptr %i.fgi, align 8, !tbaa !197 ; 4 uses
   %i.fgk = load i32, ptr %i.fgj, align 8, !tbaa !30 ; 2 uses
   %.not.i10966 = icmp sgt i32 %i.fgk, -1
@@ -1264,7 +1282,7 @@ bb.ahw:                                           ; preds = %bb.ahu
 
 _PyStackRef_FromPyObjectNew.exit10968:            ; preds = %bb.ahv, %bb.ahw
   %.sroa.0.0.i10967 = phi i64 [ %i.fgm, %bb.ahv ], [ %i.fgo, %bb.ahw ] ; 2 uses
-  %i.fgp = getelementptr i8, ptr %13, i64 16
+  %i.fgp = getelementptr i8, ptr %23, i64 16
   %i.fgq = load ptr, ptr %i.fgp, align 8, !tbaa !198 ; 4 uses
   %i.fgr = load i32, ptr %i.fgq, align 8, !tbaa !30 ; 2 uses
   %.not.i10969 = icmp sgt i32 %i.fgr, -1
@@ -1307,10 +1325,10 @@ PyStackRef_CLOSE.exit10973:                       ; preds = %_PyStackRef_FromPyO
   %.4.val10098 = load ptr, ptr %i.fgw, align 8, !tbaa !50
   br label %PyStackRef_TYPE.exit10965.thread
 
-PyStackRef_TYPE.exit10965.thread:                 ; preds = %bb.aht, %PyStackRef_CLOSE.exit10973, %PyStackRef_TYPE.exit10965
-  %.sroa.02029.0 = phi i64 [ %.sroa.0.0.i10967, %PyStackRef_CLOSE.exit10973 ], [ %.sroa.02029.0.copyload, %PyStackRef_TYPE.exit10965 ], [ %.sroa.02029.0.copyload, %bb.aht ] ; 3 uses
-  %.sroa.02034.0 = phi i64 [ %.sroa.0.0.i10970, %PyStackRef_CLOSE.exit10973 ], [ %.sroa.02034.0.copyload, %PyStackRef_TYPE.exit10965 ], [ %.sroa.02034.0.copyload, %bb.aht ] ; 2 uses
-  %.229062 = phi ptr [ %.4.val10098, %PyStackRef_CLOSE.exit10973 ], [ %.4.val1003611565, %PyStackRef_TYPE.exit10965 ], [ %.4.val1003611565, %bb.aht ] ; 4 uses
+PyStackRef_TYPE.exit10965.thread:                 ; preds = %PyStackRef_CLOSE.exit10973, %PyStackRef_TYPE.exit10965
+  %.sroa.02029.0 = phi i64 [ %.sroa.0.0.i10967, %PyStackRef_CLOSE.exit10973 ], [ %.sroa.02029.0.copyload, %PyStackRef_TYPE.exit10965 ] ; 3 uses
+  %.sroa.02034.0 = phi i64 [ %.sroa.0.0.i10970, %PyStackRef_CLOSE.exit10973 ], [ %.sroa.02034.0.copyload, %PyStackRef_TYPE.exit10965 ] ; 2 uses
+  %.229062 = phi ptr [ %.4.val10098, %PyStackRef_CLOSE.exit10973 ], [ %.4.val1003611565, %PyStackRef_TYPE.exit10965 ] ; 4 uses
   %i.fhc = sub i32 0, %.09034
   %i.fhd = sext i32 %i.fhc to i64                 ; 2 uses
   %i.fhe = getelementptr [8 x i8], ptr %.229062, i64 %i.fhd
@@ -1706,27 +1724,33 @@ bb.ajp:                                           ; preds = %.backedge
   %i.fmw = sub i32 -2, %.09034
   %i.fmx = sext i32 %i.fmw to i64                 ; 3 uses
   %i.fmy = getelementptr [8 x i8], ptr %.4.val1003611565, i64 %i.fmx ; 2 uses
-  %.sroa.01892.0.copyload = load i64, ptr %i.fmy, align 8, !tbaa !30 ; 3 uses
+  %.sroa.01892.0.copyload = load i64, ptr %i.fmy, align 8, !tbaa !30 ; 2 uses
   %i.fmz = sub i32 -3, %.09034
   %i.fna = sext i32 %i.fmz to i64                 ; 5 uses
   %i.fnb = getelementptr [8 x i8], ptr %.4.val1003611565, i64 %i.fna ; 2 uses
   %.sroa.01898.0.copyload = load i64, ptr %i.fnb, align 8, !tbaa !30 ; 6 uses
   %i.fnc = and i64 %.sroa.01898.0.copyload, 3
   %i.fnd = icmp eq i64 %i.fnc, 3
-  br i1 %i.fnd, label %PyStackRef_TYPE.exit10991.thread, label %PyStackRef_TYPE.exit10991
+  br i1 %i.fnd, label %PyStackRef_TYPE.exit10991, label %24
 
-PyStackRef_TYPE.exit10991:                        ; preds = %bb.ajp
-  %15 = and i64 %.sroa.01898.0.copyload, -2
-  %16 = inttoptr i64 %15 to ptr                   ; 3 uses
-  %17 = getelementptr i8, ptr %16, i64 8
-  %.val.i10989 = load ptr, ptr %17, align 8, !tbaa !43
-  %i.fne = icmp eq ptr %.val.i10989, @PyMethod_Type
+24:                                               ; preds = %bb.ajp
+  %25 = and i64 %.sroa.01898.0.copyload, -2
+  %26 = inttoptr i64 %25 to ptr
+  %27 = getelementptr i8, ptr %26, i64 8
+  %.val.i10989 = load ptr, ptr %27, align 8, !tbaa !43
+  br label %PyStackRef_TYPE.exit10991
+
+PyStackRef_TYPE.exit10991:                        ; preds = %bb.ajp, %24
+  %.0.i10990 = phi ptr [ %.val.i10989, %24 ], [ @PyLong_Type, %bb.ajp ]
+  %i.fne = icmp eq ptr %.0.i10990, @PyMethod_Type
   %i.fnf = icmp eq i64 %.sroa.01892.0.copyload, 1
   %or.cond9 = select i1 %i.fne, i1 %i.fnf, i1 false
   br i1 %or.cond9, label %bb.ajq, label %PyStackRef_TYPE.exit10991.thread
 
 bb.ajq:                                           ; preds = %PyStackRef_TYPE.exit10991
-  %i.fng = getelementptr i8, ptr %16, i64 24
+  %28 = and i64 %.sroa.01898.0.copyload, -2
+  %29 = inttoptr i64 %28 to ptr                   ; 2 uses
+  %i.fng = getelementptr i8, ptr %29, i64 24
   %i.fnh = load ptr, ptr %i.fng, align 8, !tbaa !197 ; 4 uses
   %i.fni = load i32, ptr %i.fnh, align 8, !tbaa !30 ; 2 uses
   %.not.i10992 = icmp sgt i32 %i.fni, -1
@@ -1745,7 +1769,7 @@ bb.ajs:                                           ; preds = %bb.ajq
 
 _PyStackRef_FromPyObjectNew.exit10994:            ; preds = %bb.ajr, %bb.ajs
   %.sroa.0.0.i10993 = phi i64 [ %i.fnk, %bb.ajr ], [ %i.fnm, %bb.ajs ] ; 2 uses
-  %i.fnn = getelementptr i8, ptr %16, i64 16
+  %i.fnn = getelementptr i8, ptr %29, i64 16
   %i.fno = load ptr, ptr %i.fnn, align 8, !tbaa !198 ; 4 uses
   %i.fnp = load i32, ptr %i.fno, align 8, !tbaa !30 ; 2 uses
   %.not.i10995 = icmp sgt i32 %i.fnp, -1
@@ -1788,10 +1812,10 @@ PyStackRef_CLOSE.exit10999:                       ; preds = %_PyStackRef_FromPyO
   %.4.val10081 = load ptr, ptr %i.fnu, align 8, !tbaa !50
   br label %PyStackRef_TYPE.exit10991.thread
 
-PyStackRef_TYPE.exit10991.thread:                 ; preds = %bb.ajp, %PyStackRef_CLOSE.exit10999, %PyStackRef_TYPE.exit10991
-  %.sroa.01892.0 = phi i64 [ %.sroa.0.0.i10993, %PyStackRef_CLOSE.exit10999 ], [ %.sroa.01892.0.copyload, %PyStackRef_TYPE.exit10991 ], [ %.sroa.01892.0.copyload, %bb.ajp ] ; 3 uses
-  %.sroa.01898.0 = phi i64 [ %.sroa.0.0.i10996, %PyStackRef_CLOSE.exit10999 ], [ %.sroa.01898.0.copyload, %PyStackRef_TYPE.exit10991 ], [ %.sroa.01898.0.copyload, %bb.ajp ] ; 4 uses
-  %.259065 = phi ptr [ %.4.val10081, %PyStackRef_CLOSE.exit10999 ], [ %.4.val1003611565, %PyStackRef_TYPE.exit10991 ], [ %.4.val1003611565, %bb.ajp ] ; 4 uses
+PyStackRef_TYPE.exit10991.thread:                 ; preds = %PyStackRef_CLOSE.exit10999, %PyStackRef_TYPE.exit10991
+  %.sroa.01892.0 = phi i64 [ %.sroa.0.0.i10993, %PyStackRef_CLOSE.exit10999 ], [ %.sroa.01892.0.copyload, %PyStackRef_TYPE.exit10991 ] ; 3 uses
+  %.sroa.01898.0 = phi i64 [ %.sroa.0.0.i10996, %PyStackRef_CLOSE.exit10999 ], [ %.sroa.01898.0.copyload, %PyStackRef_TYPE.exit10991 ] ; 4 uses
+  %.259065 = phi ptr [ %.4.val10081, %PyStackRef_CLOSE.exit10999 ], [ %.4.val1003611565, %PyStackRef_TYPE.exit10991 ] ; 4 uses
   %i.foa = xor i32 %.09034, -1
   %i.fob = sext i32 %i.foa to i64                 ; 2 uses
   %i.foc = getelementptr [8 x i8], ptr %.259065, i64 %i.fob ; 2 uses
@@ -2194,23 +2218,27 @@ bb.bed:                                           ; preds = %bb.bec
   call void @_Py_Dealloc(ptr noundef nonnull %i.izs) #8
   br label %bb.bee
 
-bb.bee:                                           ; preds = %bb.beb, %bb.bec, %bb.bed
-  %.4.val9970 = load ptr, ptr %i.izq, align 8, !tbaa !50
+bb.bee:                                           ; preds = %bb.bed, %bb.bec, %bb.beb
+  %.4.val9970 = load ptr, ptr %i.izq, align 8, !tbaa !50 ; 2 uses
   %i.izw = getelementptr i8, ptr %.32, i64 2      ; 2 uses
   %i.izx = load i16, ptr %i.izw, align 2, !tbaa !30
   %i.izy = shl i16 %i.izx, 1
-  store i16 %i.izy, ptr %i.izw, align 2, !tbaa !30
-  %18 = load i8, ptr %i.izj, align 2, !tbaa !30
-  %19 = icmp eq i8 %18, 28
-  %20 = zext i1 %19 to i32
+  %30 = or disjoint i16 %i.izy, %45
+  store i16 %30, ptr %i.izw, align 2, !tbaa !30
+  br i1 %44, label %bb.bef, label %31
+
+31:                                               ; preds = %bb.bee
+  %32 = load i8, ptr %i.izj, align 2, !tbaa !30
+  %33 = icmp eq i8 %32, 28
+  %34 = zext i1 %33 to i32
   br label %bb.bef
 
-bb.bef:                                           ; preds = %.thread13709, %bb.bee
-  %.5213711 = phi ptr [ %.4.val9970, %bb.bee ], [ %.4.val1003611565, %.thread13709 ]
-  %21 = phi i32 [ %20, %bb.bee ], [ %.09034, %.thread13709 ]
-  %i.izz = sext i32 %21 to i64
+bb.bef:                                           ; preds = %.thread13709, %bb.bee, %31
+  %.5213704 = phi ptr [ %.4.val9970, %31 ], [ %.4.val9970, %bb.bee ], [ %.4.val1003611565, %.thread13709 ]
+  %35 = phi i32 [ %34, %31 ], [ %.09034, %bb.bee ], [ %.09034, %.thread13709 ]
+  %i.izz = sext i32 %35 to i64
   %i.jaa = getelementptr [2 x i8], ptr %i.izj, i64 %i.izz ; 2 uses
-  %i.jab = getelementptr i8, ptr %.5213711, i64 -8
+  %i.jab = getelementptr i8, ptr %.5213704, i64 -8
   %i.jac = load i16, ptr %i.jaa, align 2, !tbaa !101 ; 2 uses
   %.sroa.2772.0.extract.shift = lshr i16 %i.jac, 8
   %.sroa.2772.0.extract.trunc = zext nneg i16 %.sroa.2772.0.extract.shift to i32
@@ -2260,18 +2288,22 @@ bb.bek:                                           ; preds = %bb.beg
   %i.jat = getelementptr i8, ptr %.32, i64 2      ; 2 uses
   %i.jau = load i16, ptr %i.jat, align 2, !tbaa !30
   %i.jav = shl i16 %i.jau, 1
-  store i16 %i.jav, ptr %i.jat, align 2, !tbaa !30
-  %22 = load i8, ptr %i.jag, align 2, !tbaa !30
-  %23 = icmp eq i8 %22, 28
-  %24 = zext i1 %23 to i32
+  %36 = or disjoint i16 %i.jav, %43
+  store i16 %36, ptr %i.jat, align 2, !tbaa !30
+  br i1 %42, label %bb.bel, label %37
+
+37:                                               ; preds = %bb.bek
+  %38 = load i8, ptr %i.jag, align 2, !tbaa !30
+  %39 = icmp eq i8 %38, 28
+  %40 = zext i1 %39 to i32
   br label %bb.bel
 
-bb.bel:                                           ; preds = %.thread13712, %bb.bek
-  %.5313715 = phi ptr [ %.4.val1003611565, %bb.bek ], [ %.4.val9969, %.thread13712 ]
-  %25 = phi i32 [ %24, %bb.bek ], [ %.09034, %.thread13712 ]
-  %i.jaw = sext i32 %25 to i64
+bb.bel:                                           ; preds = %.thread13712, %bb.bek, %37
+  %.5313708 = phi ptr [ %.4.val1003611565, %37 ], [ %.4.val1003611565, %bb.bek ], [ %.4.val9969, %.thread13712 ]
+  %41 = phi i32 [ %40, %37 ], [ %.09034, %bb.bek ], [ %.09034, %.thread13712 ]
+  %i.jaw = sext i32 %41 to i64
   %i.jax = getelementptr [2 x i8], ptr %i.jag, i64 %i.jaw ; 2 uses
-  %i.jay = getelementptr i8, ptr %.5313715, i64 -8
+  %i.jay = getelementptr i8, ptr %.5313708, i64 -8
   %i.jaz = load i16, ptr %i.jax, align 2, !tbaa !101 ; 2 uses
   %.sroa.2758.0.extract.shift = lshr i16 %i.jaz, 8
   %.sroa.2758.0.extract.trunc = zext nneg i16 %.sroa.2758.0.extract.shift to i32
@@ -2674,6 +2706,10 @@ _Py_EnterRecursivePy.exit11456.thread:            ; preds = %bb.bwc, %_Py_EnterR
   %i.lup = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 2 uses
   %i.luq = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %i.lur = getelementptr inbounds nuw i8, ptr %i.n, i64 32
+  %42 = icmp eq i64 ptrtoint (ptr @_Py_TrueStruct to i64), ptrtoint (ptr @_Py_FalseStruct to i64) ; 2 uses
+  %43 = zext i1 %42 to i16
+  %44 = icmp eq i64 ptrtoint (ptr @_Py_FalseStruct to i64), ptrtoint (ptr @_Py_TrueStruct to i64) ; 2 uses
+  %45 = zext i1 %44 to i16
   br label %.backedge
 
 bb.bwd:                                           ; preds = %_Py_EnterRecursivePy.exit
@@ -2695,9 +2731,9 @@ PyStackRef_AsPyObjectSteal.exit11052:             ; preds = %bb.aqc, %bb.aqb, %b
   ret ptr %.0
 
 .backedge:                                        ; preds = %.backedge.backedge, %.preheader11633
-  %.4.val1003611565 = phi ptr [ %.65.ph, %.preheader11633 ], [ %.4.val1003611565.be, %.backedge.backedge ] ; 740 uses
+  %.4.val1003611565 = phi ptr [ %.65.ph, %.preheader11633 ], [ %.4.val1003611565.be, %.backedge.backedge ] ; 738 uses
   %.32 = phi ptr [ %.32.ph, %.preheader11633 ], [ %.32.be, %.backedge.backedge ] ; 635 uses
-  %.09034 = phi i32 [ %.09034.ph, %.preheader11633 ], [ %.09034.be, %.backedge.backedge ] ; 282 uses
+  %.09034 = phi i32 [ %.09034.ph, %.preheader11633 ], [ %.09034.be, %.backedge.backedge ] ; 284 uses
   %.4 = phi ptr [ %.4.ph, %.preheader11633 ], [ %.4.be, %.backedge.backedge ] ; 962 uses
   %.pn.pn = phi i64 [ %.pn, %.preheader11633 ], [ %.pn.pn.be, %.backedge.backedge ]
   %.4.val100361156514716 = ptrtoaddr ptr %.4.val1003611565 to i64

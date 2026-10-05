@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sdl/original/SDL_hidapijoystick?download=true
 inline.NumInlined: 43
 inline.NumDeleted: 18
-loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@HIDAPI_UpdateDeviceProperties:bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4
@@ -204,323 +204,21 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
   tail call void @SDL_AssertJoysticksLocked() #8
   store i32 0, ptr @SDL_HIDAPI_numdrivers, align 4
-  %1 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverGameCube, i64 32), align 8
-  %2 = tail call zeroext i1 %1() #8, !inline_history !21 ; 2 uses
-  %3 = zext i1 %2 to i8
-  store i8 %3, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverGameCube, i64 8), align 8
-  br i1 %2, label %4, label %7
-
-4:                                                ; preds = %bb.b
-  %5 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %6 = add nsw i32 %5, 1
-  store i32 %6, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %7
-
-7:                                                ; preds = %4, %bb.b
-  %8 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverLuna, i64 32), align 8
-  %9 = tail call zeroext i1 %8() #8, !inline_history !21 ; 2 uses
-  %10 = zext i1 %9 to i8
-  store i8 %10, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverLuna, i64 8), align 8
-  br i1 %9, label %11, label %14
-
-11:                                               ; preds = %7
-  %12 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %13 = add nsw i32 %12, 1
-  store i32 %13, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %14
-
-14:                                               ; preds = %11, %7
-  %15 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverShield, i64 32), align 8
-  %16 = tail call zeroext i1 %15() #8, !inline_history !21 ; 2 uses
-  %17 = zext i1 %16 to i8
-  store i8 %17, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverShield, i64 8), align 8
-  br i1 %16, label %18, label %21
-
-18:                                               ; preds = %14
-  %19 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %20 = add nsw i32 %19, 1
-  store i32 %20, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %21
-
-21:                                               ; preds = %18, %14
-  %22 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS3, i64 32), align 8
-  %23 = tail call zeroext i1 %22() #8, !inline_history !21 ; 2 uses
-  %24 = zext i1 %23 to i8
-  store i8 %24, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS3, i64 8), align 8
-  br i1 %23, label %25, label %28
-
-25:                                               ; preds = %21
-  %26 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %27 = add nsw i32 %26, 1
-  store i32 %27, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %28
-
-28:                                               ; preds = %25, %21
-  %29 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS3ThirdParty, i64 32), align 8
-  %30 = tail call zeroext i1 %29() #8, !inline_history !21 ; 2 uses
-  %31 = zext i1 %30 to i8
-  store i8 %31, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS3ThirdParty, i64 8), align 8
-  br i1 %30, label %32, label %35
-
-32:                                               ; preds = %28
-  %33 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %34 = add nsw i32 %33, 1
-  store i32 %34, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %35
-
-35:                                               ; preds = %32, %28
-  %36 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS3SonySixaxis, i64 32), align 8
-  %37 = tail call zeroext i1 %36() #8, !inline_history !21 ; 2 uses
-  %38 = zext i1 %37 to i8
-  store i8 %38, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS3SonySixaxis, i64 8), align 8
-  br i1 %37, label %39, label %42
-
-39:                                               ; preds = %35
-  %40 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %41 = add nsw i32 %40, 1
-  store i32 %41, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %42
-
-42:                                               ; preds = %39, %35
-  %43 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS4, i64 32), align 8
-  %44 = tail call zeroext i1 %43() #8, !inline_history !21 ; 2 uses
-  %45 = zext i1 %44 to i8
-  store i8 %45, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS4, i64 8), align 8
-  br i1 %44, label %46, label %49
-
-46:                                               ; preds = %42
-  %47 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %48 = add nsw i32 %47, 1
-  store i32 %48, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %49
-
-49:                                               ; preds = %46, %42
-  %50 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS5, i64 32), align 8
-  %51 = tail call zeroext i1 %50() #8, !inline_history !21 ; 2 uses
-  %52 = zext i1 %51 to i8
-  store i8 %52, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverPS5, i64 8), align 8
-  br i1 %51, label %53, label %56
-
-53:                                               ; preds = %49
-  %54 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %55 = add nsw i32 %54, 1
-  store i32 %55, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %56
-
-56:                                               ; preds = %53, %49
-  %57 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverStadia, i64 32), align 8
-  %58 = tail call zeroext i1 %57() #8, !inline_history !21 ; 2 uses
-  %59 = zext i1 %58 to i8
-  store i8 %59, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverStadia, i64 8), align 8
-  br i1 %58, label %60, label %63
-
-60:                                               ; preds = %56
-  %61 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %62 = add nsw i32 %61, 1
-  store i32 %62, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %63
-
-63:                                               ; preds = %60, %56
-  %64 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSteam, i64 32), align 8
-  %65 = tail call zeroext i1 %64() #8, !inline_history !21 ; 2 uses
-  %66 = zext i1 %65 to i8
-  store i8 %66, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSteam, i64 8), align 8
-  br i1 %65, label %67, label %70
-
-67:                                               ; preds = %63
-  %68 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %69 = add nsw i32 %68, 1
-  store i32 %69, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %70
-
-70:                                               ; preds = %67, %63
-  %71 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSteamHori, i64 32), align 8
-  %72 = tail call zeroext i1 %71() #8, !inline_history !21 ; 2 uses
-  %73 = zext i1 %72 to i8
-  store i8 %73, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSteamHori, i64 8), align 8
-  br i1 %72, label %74, label %77
-
-74:                                               ; preds = %70
-  %75 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %76 = add nsw i32 %75, 1
-  store i32 %76, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %77
-
-77:                                               ; preds = %74, %70
-  %78 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSteamDeck, i64 32), align 8
-  %79 = tail call zeroext i1 %78() #8, !inline_history !21 ; 2 uses
-  %80 = zext i1 %79 to i8
-  store i8 %80, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSteamDeck, i64 8), align 8
-  br i1 %79, label %81, label %84
-
-81:                                               ; preds = %77
-  %82 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %83 = add nsw i32 %82, 1
-  store i32 %83, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %84
-
-84:                                               ; preds = %81, %77
-  %85 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSteamTriton, i64 32), align 8
-  %86 = tail call zeroext i1 %85() #8, !inline_history !21 ; 2 uses
-  %87 = zext i1 %86 to i8
-  store i8 %87, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSteamTriton, i64 8), align 8
-  br i1 %86, label %88, label %91
-
-88:                                               ; preds = %84
-  %89 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %90 = add nsw i32 %89, 1
-  store i32 %90, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %91
-
-91:                                               ; preds = %88, %84
-  %92 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverNintendoClassic, i64 32), align 8
-  %93 = tail call zeroext i1 %92() #8, !inline_history !21 ; 2 uses
-  %94 = zext i1 %93 to i8
-  store i8 %94, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverNintendoClassic, i64 8), align 8
-  br i1 %93, label %95, label %98
-
-95:                                               ; preds = %91
-  %96 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %97 = add nsw i32 %96, 1
-  store i32 %97, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %98
-
-98:                                               ; preds = %95, %91
-  %99 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverJoyCons, i64 32), align 8
-  %100 = tail call zeroext i1 %99() #8, !inline_history !21 ; 2 uses
-  %101 = zext i1 %100 to i8
-  store i8 %101, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverJoyCons, i64 8), align 8
-  br i1 %100, label %102, label %105
-
-102:                                              ; preds = %98
-  %103 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %104 = add nsw i32 %103, 1
-  store i32 %104, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %105
-
-105:                                              ; preds = %102, %98
-  %106 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSwitch, i64 32), align 8
-  %107 = tail call zeroext i1 %106() #8, !inline_history !21 ; 2 uses
-  %108 = zext i1 %107 to i8
-  store i8 %108, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSwitch, i64 8), align 8
-  br i1 %107, label %109, label %112
-
-109:                                              ; preds = %105
-  %110 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %111 = add nsw i32 %110, 1
-  store i32 %111, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %112
-
-112:                                              ; preds = %109, %105
-  %113 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverWii, i64 32), align 8
-  %114 = tail call zeroext i1 %113() #8, !inline_history !21 ; 2 uses
-  %115 = zext i1 %114 to i8
-  store i8 %115, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverWii, i64 8), align 8
-  br i1 %114, label %116, label %119
-
-116:                                              ; preds = %112
-  %117 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %118 = add nsw i32 %117, 1
-  store i32 %118, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %119
-
-119:                                              ; preds = %116, %112
-  %120 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverXbox360, i64 32), align 8
-  %121 = tail call zeroext i1 %120() #8, !inline_history !21 ; 2 uses
-  %122 = zext i1 %121 to i8
-  store i8 %122, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverXbox360, i64 8), align 8
-  br i1 %121, label %123, label %126
-
-123:                                              ; preds = %119
-  %124 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %125 = add nsw i32 %124, 1
-  store i32 %125, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %126
-
-126:                                              ; preds = %123, %119
-  %127 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverXbox360W, i64 32), align 8
-  %128 = tail call zeroext i1 %127() #8, !inline_history !21 ; 2 uses
-  %129 = zext i1 %128 to i8
-  store i8 %129, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverXbox360W, i64 8), align 8
-  br i1 %128, label %130, label %133
-
-130:                                              ; preds = %126
-  %131 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %132 = add nsw i32 %131, 1
-  store i32 %132, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %133
-
-133:                                              ; preds = %130, %126
-  %134 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverGIP, i64 32), align 8
-  %135 = tail call zeroext i1 %134() #8, !inline_history !21 ; 2 uses
-  %136 = zext i1 %135 to i8
-  store i8 %136, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverGIP, i64 8), align 8
-  br i1 %135, label %137, label %140
-
-137:                                              ; preds = %133
-  %138 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %139 = add nsw i32 %138, 1
-  store i32 %139, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %140
-
-140:                                              ; preds = %137, %133
-  %141 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverXboxOne, i64 32), align 8
-  %142 = tail call zeroext i1 %141() #8, !inline_history !21 ; 2 uses
-  %143 = zext i1 %142 to i8
-  store i8 %143, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverXboxOne, i64 8), align 8
-  br i1 %142, label %144, label %147
-
-144:                                              ; preds = %140
-  %145 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %146 = add nsw i32 %145, 1
-  store i32 %146, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %147
-
-147:                                              ; preds = %144, %140
-  %148 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverLg4ff, i64 32), align 8
-  %149 = tail call zeroext i1 %148() #8, !inline_history !21 ; 2 uses
-  %150 = zext i1 %149 to i8
-  store i8 %150, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverLg4ff, i64 8), align 8
-  br i1 %149, label %151, label %154
-
-151:                                              ; preds = %147
-  %152 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %153 = add nsw i32 %152, 1
-  store i32 %153, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %154
-
-154:                                              ; preds = %151, %147
-  %155 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_Driver8BitDo, i64 32), align 8
-  %156 = tail call zeroext i1 %155() #8, !inline_history !21 ; 2 uses
-  %157 = zext i1 %156 to i8
-  store i8 %157, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_Driver8BitDo, i64 8), align 8
-  br i1 %156, label %158, label %161
-
-158:                                              ; preds = %154
-  %159 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %160 = add nsw i32 %159, 1
-  store i32 %160, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %161
-
-161:                                              ; preds = %158, %154
-  %162 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverFlydigi, i64 32), align 8
-  %163 = tail call zeroext i1 %162() #8, !inline_history !21 ; 2 uses
-  %164 = zext i1 %163 to i8
-  store i8 %164, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverFlydigi, i64 8), align 8
-  br i1 %163, label %165, label %bb.c
-
-165:                                              ; preds = %161
-  %166 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %167 = add nsw i32 %166, 1
-  store i32 %167, ptr @SDL_HIDAPI_numdrivers, align 4
   br label %bb.c
 
-bb.c:                                             ; preds = %165, %161
-  %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSInput, i64 32), align 8
+bb.c:                                             ; preds = %bb.e, %bb.b
+  %indvars.iv.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.next.i, %bb.e ] ; 2 uses
+  %1 = getelementptr inbounds nuw [8 x i8], ptr @SDL_HIDAPI_drivers, i64 %indvars.iv.i
+  %2 = load ptr, ptr %1, align 8                  ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %i.d = load ptr, ptr %3, align 8
   %i.e = tail call zeroext i1 %i.d() #8, !inline_history !21 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = zext i1 %i.e to i8
-  store i8 %i.f, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverSInput, i64 8), align 8
-  br i1 %i.e, label %bb.d, label %bb.e
+  store i8 %i.f, ptr %4, align 8
+  %5 = icmp ne ptr %2, @SDL_HIDAPI_DriverCombined
+  %or.cond.i = and i1 %5, %i.e
+  br i1 %or.cond.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
@@ -529,19 +227,11 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %168 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverZUIKI, i64 32), align 8
-  %169 = tail call zeroext i1 %168() #8, !inline_history !21 ; 2 uses
-  %170 = zext i1 %169 to i8
-  store i8 %170, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_DriverZUIKI, i64 8), align 8
-  br i1 %169, label %171, label %bb.f
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 26
+  br i1 %exitcond.not.i, label %bb.f, label %bb.c, !llvm.loop !22
 
-171:                                              ; preds = %bb.e
-  %172 = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
-  %173 = add nsw i32 %172, 1
-  store i32 %173, ptr @SDL_HIDAPI_numdrivers, align 4
-  br label %bb.f
-
-bb.f:                                             ; preds = %171, %bb.e
+bb.f:                                             ; preds = %bb.e
   store i8 0, ptr %i.c, align 1
   %i.i = load ptr, ptr @SDL_HIDAPI_devices, align 8 ; 2 uses
   %i.j = icmp eq ptr %i.i, null
@@ -553,7 +243,7 @@ bb.f:                                             ; preds = %171, %bb.e
 
 .split.i.backedge:                                ; preds = %.splitthread-pre-split.i.loopexit, %._crit_edge.i
   %.013.pr.i120.be = phi ptr [ null, %._crit_edge.i ], [ %.013.pr.i.pre, %.splitthread-pre-split.i.loopexit ]
-  br label %.split.i, !llvm.loop !22
+  br label %.split.i, !llvm.loop !23
 
 .split.i:                                         ; preds = %bb.f, %.split.i.backedge
   %.013.pr.i120 = phi ptr [ %.013.pr.i120.be, %.split.i.backedge ], [ %i.i, %bb.f ] ; 2 uses
@@ -565,7 +255,7 @@ bb.g:                                             ; preds = %.lr.ph.i
   %i.l = getelementptr inbounds nuw i8, ptr %.015.i, i64 184
   %.0.i = load ptr, ptr %i.l, align 8             ; 2 uses
   %.not.i = icmp eq ptr %.0.i, null
-  br i1 %.not.i, label %SDL_HIDAPI_UpdateDrivers.exit, label %.lr.ph.i, !llvm.loop !23
+  br i1 %.not.i, label %SDL_HIDAPI_UpdateDrivers.exit, label %.lr.ph.i, !llvm.loop !24
 
 .lr.ph.i:                                         ; preds = %.split.i, %bb.g
   %.015.i = phi ptr [ %.0.i, %bb.g ], [ %.013.pr.i120, %.split.i ] ; 2 uses
@@ -603,7 +293,7 @@ bb.j:                                             ; preds = %.lr.ph, %bb.i
   %i.r = getelementptr inbounds nuw i8, ptr %.04297, i64 184
   %.042 = load ptr, ptr %i.r, align 8             ; 2 uses
   %.not = icmp eq ptr %.042, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !24
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !25
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.h
   %i.s = load i32, ptr @SDL_HIDAPI_numdrivers, align 4
@@ -655,7 +345,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %.lr.p
   %i.ak = getelementptr inbounds nuw i8, ptr %.010.i, i64 184
   %.0.i61 = load ptr, ptr %i.ak, align 8          ; 2 uses
   %.not.i62 = icmp eq ptr %.0.i61, null
-  br i1 %.not.i62, label %.loopexit84, label %.lr.ph.i60, !llvm.loop !25
+  br i1 %.not.i62, label %.loopexit84, label %.lr.ph.i60, !llvm.loop !26
 
 HIDAPI_GetJoystickByInfo.exit:                    ; preds = %bb.n
   %i.al = getelementptr inbounds nuw i8, ptr %.010.i, i64 152
@@ -777,7 +467,7 @@ HIDAPI_SetDeviceSerialW.exit:                     ; preds = %.preheader.i, %bb.w
   %i.bz = getelementptr inbounds nuw i8, ptr %.04198, i64 72
   %i.ca = load ptr, ptr %i.bz, align 8            ; 2 uses
   %.not49 = icmp eq ptr %i.ca, null
-  br i1 %.not49, label %bb.x, label %.preheader85, !llvm.loop !26
+  br i1 %.not49, label %bb.x, label %.preheader85, !llvm.loop !27
 
 bb.x:                                             ; preds = %HIDAPI_SetDeviceSerialW.exit
   tail call void @SDL_hid_free_enumeration_REAL(ptr noundef nonnull %i.u) #8
@@ -871,7 +561,7 @@ bb.ae:                                            ; preds = %.lr.ph100, %bb.ae
   %i.dj = load i32, ptr %i.dc, align 8
   %i.dk = sext i32 %i.dj to i64
   %i.dl = icmp slt i64 %indvars.iv.next, %i.dk
-  br i1 %i.dl, label %bb.ae, label %._crit_edge101, !llvm.loop !27
+  br i1 %i.dl, label %bb.ae, label %._crit_edge101, !llvm.loop !28
 
 ._crit_edge101:                                   ; preds = %bb.ae, %.preheader82
   tail call fastcc void @HIDAPI_DelDevice(ptr noundef nonnull %i.db)
@@ -1057,7 +747,7 @@ bb.bb:                                            ; preds = %bb.ba
   %.02961.i.be = phi ptr [ %.029.i, %.thread.i ], [ %.02957.i, %HIDAPI_CreateCombinedJoyCons.exit ]
   %.sroa.8.060.i.be = phi ptr [ %.sroa.8.2.ph.i, %.thread.i ], [ null, %HIDAPI_CreateCombinedJoyCons.exit ]
   %.sroa.0.059.i.be = phi ptr [ %.sroa.0.2.ph.i, %.thread.i ], [ null, %HIDAPI_CreateCombinedJoyCons.exit ]
-  br label %.lr.ph.i69, !llvm.loop !28
+  br label %.lr.ph.i69, !llvm.loop !29
 
 HIDAPI_CreateCombinedJoyCons.exit.thread79:       ; preds = %bb.aw, %.critedge.i, %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #8
@@ -1104,13 +794,13 @@ bb.c:                                             ; preds = %.critedge.i, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = tail call zeroext i1 %i.i(ptr noundef null, ptr noundef %3, i32 noundef %i.b, i16 noundef zeroext %0, i16 noundef zeroext %1, i16 noundef zeroext %2, i32 noundef -1, i32 noundef 0, i32 noundef 0, i32 noundef 0) #8, !inline_history !30
+  %i.j = tail call zeroext i1 %i.i(ptr noundef null, ptr noundef %3, i32 noundef %i.b, i16 noundef zeroext %0, i16 noundef zeroext %1, i16 noundef zeroext %2, i32 noundef -1, i32 noundef 0, i32 noundef 0, i32 noundef 0) #8, !inline_history !31
   br i1 %i.j, label %.critedge, label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.d, %bb.c
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 26
-  br i1 %exitcond.not.i, label %HIDAPI_IsDeviceSupported.exit, label %bb.c, !llvm.loop !31
+  br i1 %exitcond.not.i, label %HIDAPI_IsDeviceSupported.exit, label %bb.c, !llvm.loop !32
 
 HIDAPI_IsDeviceSupported.exit:                    ; preds = %.critedge.i
   %i.k = tail call ptr @SDL_strstr_REAL(ptr noundef %3, ptr noundef nonnull @.str.4) #8
@@ -1204,7 +894,7 @@ HIDAPI_IsEquivalentToDevice.exit.us:              ; preds = %bb.o, %bb.m, %.thre
   %i.aj = getelementptr inbounds nuw i8, ptr %.01931.us, i64 184
   %.019.us = load ptr, ptr %i.aj, align 8         ; 2 uses
   %.not23.us.not = icmp eq ptr %.019.us, null
-  br i1 %.not23.us.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.us, !llvm.loop !32
+  br i1 %.not23.us.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.us, !llvm.loop !33
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.ak = icmp eq i16 %0, 2389
@@ -1249,7 +939,7 @@ HIDAPI_IsEquivalentToDevice.exit.us50:            ; preds = %.thread73, %bb.q, %
   %i.ax = getelementptr inbounds nuw i8, ptr %.01931.us48, i64 184
   %.019.us51 = load ptr, ptr %i.ax, align 8       ; 2 uses
   %.not23.us52.not = icmp eq ptr %.019.us51, null
-  br i1 %.not23.us52.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.split.us, !llvm.loop !32
+  br i1 %.not23.us52.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.split.us, !llvm.loop !33
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %HIDAPI_IsEquivalentToDevice.exit
   %.01931 = phi ptr [ %.019, %HIDAPI_IsEquivalentToDevice.exit ], [ %.01929, %.lr.ph.split ] ; 4 uses
@@ -1278,7 +968,7 @@ HIDAPI_IsEquivalentToDevice.exit:                 ; preds = %.lr.ph.split.split,
   %i.bi = getelementptr inbounds nuw i8, ptr %.01931, i64 184
   %.019 = load ptr, ptr %i.bi, align 8            ; 2 uses
   %.not23.not = icmp eq ptr %.019, null
-  br i1 %.not23.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.split, !llvm.loop !32
+  br i1 %.not23.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.split, !llvm.loop !33
 
 HIDAPI_IsEquivalentToDevice.exit.thread:          ; preds = %HIDAPI_IsEquivalentToDevice.exit, %bb.t, %HIDAPI_IsEquivalentToDevice.exit.us50, %bb.s, %.thread73, %HIDAPI_IsEquivalentToDevice.exit.us, %bb.l, %bb.n, %bb.m, %bb.o, %bb.h
   %.not23.lcssa = phi i1 [ false, %bb.h ], [ false, %HIDAPI_IsEquivalentToDevice.exit.us50 ], [ true, %bb.o ], [ true, %bb.m ], [ true, %bb.n ], [ true, %bb.l ], [ false, %HIDAPI_IsEquivalentToDevice.exit.us ], [ true, %.thread73 ], [ true, %bb.s ], [ true, %bb.t ], [ false, %HIDAPI_IsEquivalentToDevice.exit ]
@@ -1327,7 +1017,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %.0814, i64 184
   %.08 = load ptr, ptr %i.j, align 8              ; 2 uses
   %.not = icmp eq ptr %.08, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !33
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !34
 
 .loopexit:                                        ; preds = %bb.e, %bb.a, %bb.c, %bb.d
   %.0 = phi ptr [ %i.i, %bb.d ], [ null, %bb.c ], [ null, %bb.a ], [ null, %bb.e ]
@@ -1370,7 +1060,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %.0814, i64 184
   %.08 = load ptr, ptr %i.j, align 8              ; 2 uses
   %.not = icmp eq ptr %.08, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !34
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !35
 
 .loopexit:                                        ; preds = %bb.e, %bb.a, %bb.c, %bb.d
   %.0 = phi ptr [ %i.i, %bb.d ], [ null, %bb.c ], [ null, %bb.a ], [ null, %bb.e ]
@@ -1406,7 +1096,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %.048, i64 184
   %.04 = load ptr, ptr %i.g, align 8              ; 2 uses
   %.not = icmp eq ptr %.04, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !35
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !36
 
 .loopexit:                                        ; preds = %bb.c, %bb.a, %bb.b
   %.0 = phi i32 [ %i.f, %bb.b ], [ 0, %bb.a ], [ 0, %bb.c ]
@@ -1444,7 +1134,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %.048, i64 184
   %.04 = load ptr, ptr %i.g, align 8              ; 2 uses
   %.not = icmp eq ptr %.04, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !36
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !37
 
 .loopexit:                                        ; preds = %bb.c, %bb.a, %bb.b
   %.0 = phi i32 [ %i.f, %bb.b ], [ 1, %bb.a ], [ 1, %bb.c ]
@@ -1499,7 +1189,7 @@ bb.e:                                             ; preds = %bb.b, %bb.d, %bb.c,
   %i.o = getelementptr inbounds nuw i8, ptr %.014, i64 184
   %.0 = load ptr, ptr %i.o, align 8               ; 2 uses
   %.not = icmp eq ptr %.0, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !37
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !38
 
 ._crit_edge:                                      ; preds = %bb.e, %.preheader
   %i.p = tail call i32 @SDL_SetAtomicInt_REAL(ptr noundef nonnull @SDL_HIDAPI_updating_devices, i32 noundef 0) #8 ; 0 uses
@@ -1902,14 +1592,14 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.am = load i32, ptr %i.af, align 8
   %i.an = sext i32 %i.am to i64
   %i.ao = icmp slt i64 %indvars.iv.next, %i.an
-  br i1 %i.ao, label %bb.b, label %._crit_edge, !llvm.loop !38
+  br i1 %i.ao, label %bb.b, label %._crit_edge, !llvm.loop !39
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph21, %.preheader17
   %.sink = phi ptr [ %i.ae, %.preheader17 ], [ %i.ac, %.lr.ph21 ], [ %i.ae, %bb.b ]
   tail call fastcc void @HIDAPI_DelDevice(ptr noundef nonnull %.sink)
   %i.ap = load ptr, ptr @SDL_HIDAPI_devices, align 8 ; 2 uses
   %.not = icmp eq ptr %i.ap, null
-  br i1 %.not, label %.preheader, label %.lr.ph21, !llvm.loop !39
+  br i1 %.not, label %.preheader, label %.lr.ph21, !llvm.loop !40
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -1975,7 +1665,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %.0111 = load ptr, ptr %.0111.in, align 8       ; 3 uses
   %.not = icmp eq ptr %.0111, null
   %i.b = getelementptr inbounds nuw i8, ptr %.0111, i64 184
-  br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !40
+  br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !41
 
 bb.c:                                             ; preds = %bb.b
   %i.c = load ptr, ptr %0, align 8
@@ -2327,7 +2017,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.lr.ph70
   %i.ap = icmp eq ptr %.043, %0
-  br i1 %i.ap, label %.lr.ph._crit_edge, label %.lr.ph70, !llvm.loop !41
+  br i1 %i.ap, label %.lr.ph._crit_edge, label %.lr.ph70, !llvm.loop !42
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
   %.04357.lcssa = phi ptr [ %.04354, %.lr.ph.preheader ], [ %.043, %.lr.ph ]
@@ -2367,7 +2057,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   tail call void @SDL_Delay_REAL(i32 noundef 10) #8
   %i.ba = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull %i.at) #8
   %i.bb = icmp sgt i32 %i.ba, 0
-  br i1 %i.bb, label %.lr.ph58, label %.preheader, !llvm.loop !42
+  br i1 %i.bb, label %.lr.ph58, label %.preheader, !llvm.loop !43
 
 bb.f:                                             ; preds = %.lr.ph60, %bb.f
   %indvars.iv = phi i64 [ 0, %.lr.ph60 ], [ %indvars.iv.next, %bb.f ] ; 2 uses
@@ -2380,7 +2070,7 @@ bb.f:                                             ; preds = %.lr.ph60, %bb.f
   %i.bg = load i32, ptr %i.aw, align 8
   %i.bh = sext i32 %i.bg to i64
   %i.bi = icmp slt i64 %indvars.iv.next, %i.bh
-  br i1 %i.bi, label %bb.f, label %._crit_edge, !llvm.loop !43
+  br i1 %i.bi, label %bb.f, label %._crit_edge, !llvm.loop !44
 
 ._crit_edge:                                      ; preds = %bb.f, %.preheader
   tail call void @SDL_SetObjectValid(ptr noundef nonnull %0, i32 noundef 9, i1 noundef zeroext false) #8
@@ -2410,7 +2100,7 @@ bb.f:                                             ; preds = %.lr.ph60, %bb.f
   %i.bu = getelementptr inbounds nuw i8, ptr %.0435769, i64 184
   %.043 = load ptr, ptr %i.bu, align 8            ; 4 uses
   %.not50 = icmp eq ptr %.043, null
-  br i1 %.not50, label %.loopexit, label %.lr.ph, !llvm.loop !41
+  br i1 %.not50, label %.loopexit, label %.lr.ph, !llvm.loop !42
 
 .loopexit:                                        ; preds = %.lr.ph70, %.thread, %._crit_edge
   ret void
@@ -2464,7 +2154,7 @@ bb.e:                                             ; preds = %bb.c, %bb.c, %bb.d
 bb.f:                                             ; preds = %bb.g
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !44
+  br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !45
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 2 uses
@@ -2581,7 +2271,7 @@ bb.b:                                             ; preds = %.lr.ph
   tail call void @HIDAPI_JoystickDisconnected(ptr noundef nonnull %0, i32 noundef %i.g)
   %i.h = load i32, ptr %i.d, align 4
   %.not18 = icmp eq i32 %i.h, 0
-  br i1 %.not18, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !45
+  br i1 %.not18, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !46
 
 .critedge.loopexit:                               ; preds = %bb.b, %.lr.ph
   %.pre = load ptr, ptr %i.a, align 8
@@ -2704,7 +2394,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g, %bb.h
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 26
-  br i1 %exitcond.not, label %.loopexit, label %bb.g, !llvm.loop !46
+  br i1 %exitcond.not, label %.loopexit, label %bb.g, !llvm.loop !47
 
 .loopexit:                                        ; preds = %bb.h, %bb.i, %bb.d, %bb.e, %bb.b, %bb.a
   %.2 = phi ptr [ null, %bb.e ], [ @SDL_HIDAPI_DriverCombined, %bb.a ], [ null, %bb.b ], [ null, %bb.d ], [ %i.w, %bb.h ], [ null, %bb.i ]
@@ -2895,16 +2585,16 @@ attributes #10 = { nounwind allocsize(0,1) }
 !19 = distinct !{!19, !6}
 !20 = distinct !{!20, !6}
 !21 = distinct !{null}
-!22 = distinct !{!22, !6, !29}
-!23 = distinct !{!23, !6}
+!22 = distinct !{!22, !6}
+!23 = distinct !{!23, !6, !30}
 !24 = distinct !{!24, !6}
 !25 = distinct !{!25, !6}
 !26 = distinct !{!26, !6}
 !27 = distinct !{!27, !6}
 !28 = distinct !{!28, !6}
-!29 = !{!"llvm.loop.unswitch.partial.disable"}
-!30 = distinct !{null}
-!31 = distinct !{!31, !6}
+!29 = distinct !{!29, !6}
+!30 = !{!"llvm.loop.unswitch.partial.disable"}
+!31 = distinct !{null}
 !32 = distinct !{!32, !6}
 !33 = distinct !{!33, !6}
 !34 = distinct !{!34, !6}
@@ -2920,4 +2610,5 @@ attributes #10 = { nounwind allocsize(0,1) }
 !44 = distinct !{!44, !6}
 !45 = distinct !{!45, !6}
 !46 = distinct !{!46, !6}
+!47 = distinct !{!47, !6}
 end_hunk_1

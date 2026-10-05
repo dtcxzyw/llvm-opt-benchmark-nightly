@@ -202,8 +202,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !78
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %4 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %4, %i.e
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_110LoopUnroll14runOnOperationEvE3$_0NS_6affine11AffineForOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -319,8 +321,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !78
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %4 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %4, %i.e
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZL20gatherInnermostLoopsNS_19FunctionOpInterfaceERN4llvm15SmallVectorImplINS_6affine11AffineForOpEEEE3$_0S8_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESK_E4typeESF_OT1_ENKUlSF_E_clESF_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -482,8 +486,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !78
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %spec.select.i.i.i.i.not4.i = or i1 %2, %i.d
   %i.e = icmp eq ptr %1, null
-  %.not2.i = or i1 %i.e, %i.d
+  %.not2.i = or i1 %i.e, %spec.select.i.i.i.i.not4.i
   %.sroa.02.1.i = zext i1 %.not2.i to i32
   ret i32 %.sroa.02.1.i
 }

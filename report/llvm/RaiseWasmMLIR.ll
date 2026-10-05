@@ -204,9 +204,11 @@ bb.c:                                             ; preds = %_ZN4mlir9Operation1
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !148
   %i.aa = icmp ne ptr %i.z, @_ZN4mlir6detail14TypeIDResolverINS_7wasmssa7ConstOpEvE2idE
+  %15 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_7wasmssa7ConstOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %15, %i.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #19
   %.not1415 = icmp eq ptr %i.w, null
-  %.not14 = or i1 %.not1415, %i.aa
+  %.not14 = or i1 %.not1415, %spec.select.i.i.i.i.not
   br i1 %.not14, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
@@ -609,9 +611,11 @@ bb.c:                                             ; preds = %_ZN4mlir9Operation1
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !148
   %i.aa = icmp ne ptr %i.z, @_ZN4mlir6detail14TypeIDResolverINS_7wasmssa11GlobalGetOpEvE2idE
+  %26 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_7wasmssa11GlobalGetOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %26, %i.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #19
   %.not1415 = icmp eq ptr %i.w, null
-  %.not14 = or i1 %.not1415, %i.aa
+  %.not14 = or i1 %.not1415, %spec.select.i.i.i.i.not
   br i1 %.not14, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c

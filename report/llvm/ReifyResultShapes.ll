@@ -202,11 +202,17 @@ bb.d:                                             ; preds = %_ZN4llvm8dyn_castIN
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !42   ; 2 uses
   %i.k = icmp eq ptr %i.j, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5PadOpEvE2idE
-  %2 = icmp eq ptr %i.j, @_ZN4mlir6detail14TypeIDResolverINS_6tensor8ConcatOpEvE2idE
-  %spec.select.i.i.i = or i1 %i.k, %2
-  br i1 %spec.select.i.i.i, label %bb.e, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_121ReifyResultShapesPass14runOnOperationEvE3$_0NS_32ReifyRankedShapedTypeOpInterfaceEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESG_E4typeESB_OT1_ENKUlSB_E_clESB_.exit"
+  %2 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5PadOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %2, %i.k
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.e, label %_ZN4llvm3isaIJN4mlir6tensor5PadOpENS2_8ConcatOpEEPNS1_9OperationEEEbRKT0_.exit.i.i
 
-bb.e:                                             ; preds = %bb.d
+_ZN4llvm3isaIJN4mlir6tensor5PadOpENS2_8ConcatOpEEPNS1_9OperationEEEbRKT0_.exit.i.i: ; preds = %bb.d
+  %3 = icmp eq ptr %i.j, @_ZN4mlir6detail14TypeIDResolverINS_6tensor8ConcatOpEvE2idE
+  %4 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor8ConcatOpEvE2idE
+  %spec.select.i.i.i.i3.i.i.i = and i1 %4, %3
+  br i1 %spec.select.i.i.i.i3.i.i.i, label %bb.e, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_121ReifyResultShapesPass14runOnOperationEvE3$_0NS_32ReifyRankedShapedTypeOpInterfaceEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESG_E4typeESB_OT1_ENKUlSB_E_clESB_.exit"
+
+bb.e:                                             ; preds = %_ZN4llvm3isaIJN4mlir6tensor5PadOpENS2_8ConcatOpEEPNS1_9OperationEEEbRKT0_.exit.i.i, %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i, i64 8 ; 3 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !26   ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.val.i, i64 12
@@ -230,7 +236,7 @@ bb.g:                                             ; preds = %bb.e
   store i32 %i.t, ptr %i.l, align 8, !tbaa !26
   br label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_121ReifyResultShapesPass14runOnOperationEvE3$_0NS_32ReifyRankedShapedTypeOpInterfaceEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESG_E4typeESB_OT1_ENKUlSB_E_clESB_.exit"
 
-"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_121ReifyResultShapesPass14runOnOperationEvE3$_0NS_32ReifyRankedShapedTypeOpInterfaceEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESG_E4typeESB_OT1_ENKUlSB_E_clESB_.exit": ; preds = %_ZN4llvm8dyn_castIN4mlir32ReifyRankedShapedTypeOpInterfaceENS1_9OperationEEEDcPT0_.exit.i, %bb.d, %bb.f, %bb.g
+"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_121ReifyResultShapesPass14runOnOperationEvE3$_0NS_32ReifyRankedShapedTypeOpInterfaceEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESG_E4typeESB_OT1_ENKUlSB_E_clESB_.exit": ; preds = %_ZN4llvm8dyn_castIN4mlir32ReifyRankedShapedTypeOpInterfaceENS1_9OperationEEEDcPT0_.exit.i, %_ZN4llvm3isaIJN4mlir6tensor5PadOpENS2_8ConcatOpEEPNS1_9OperationEEEbRKT0_.exit.i.i, %bb.f, %bb.g
   ret void
 }
 

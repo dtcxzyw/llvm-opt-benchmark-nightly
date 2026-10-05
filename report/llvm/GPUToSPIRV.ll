@@ -204,10 +204,29 @@ bb.a:
   %18 = alloca %"class.mlir::ValueRange", align 8 ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.a, align 8 ; 6 uses
-  br label %bb.b
+  %.not8.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5spirv8ModuleOpEvE2idE
+  br i1 %.not8.i, label %.split.us.i, label %bb.b
 
-bb.b:                                             ; preds = %bb.c, %bb.a
-  %.0.i = phi ptr [ %1, %bb.a ], [ %i.d, %bb.c ]
+.split.us.i:                                      ; preds = %bb.a
+  %19 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %20 = load ptr, ptr %19, align 8, !tbaa !931    ; 2 uses
+  %.not.i.us6.i = icmp eq ptr %20, null
+  br i1 %.not.i.us6.i, label %.loopexit, label %_ZN4mlir9Operation11getParentOpEv.exit.us.i
+
+21:                                               ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.us.i
+  %22 = getelementptr inbounds nuw i8, ptr %25, i64 16
+  %23 = load ptr, ptr %22, align 8, !tbaa !931    ; 2 uses
+  %.not.i.us.i = icmp eq ptr %23, null
+  br i1 %.not.i.us.i, label %.loopexit, label %_ZN4mlir9Operation11getParentOpEv.exit.us.i
+
+_ZN4mlir9Operation11getParentOpEv.exit.us.i:      ; preds = %.split.us.i, %21
+  %24 = phi ptr [ %23, %21 ], [ %20, %.split.us.i ]
+  %25 = tail call noundef ptr @_ZN4mlir5Block11getParentOpEv(ptr noundef nonnull align 8 dereferenceable(80) %24) #17 ; 2 uses
+  %.not.us.i = icmp eq ptr %25, null
+  br i1 %.not.us.i, label %.loopexit, label %21
+
+bb.b:                                             ; preds = %bb.a, %bb.c
+  %.0.i = phi ptr [ %i.d, %bb.c ], [ %1, %bb.a ]
   %i.b = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !931  ; 2 uses
   %.not.i.i = icmp eq ptr %i.c, null
@@ -610,8 +629,8 @@ _ZN4llvm23SmallVectorTemplateBaseIN4mlir9AttributeELb1EE9push_backES2_.exit: ; p
   %.not = icmp eq ptr %i.gm, %i.bl
   br i1 %.not, label %_ZN4llvmplERKNS_5TwineES2_.exit.loopexit, label %bb.o
 
-.loopexit:                                        ; preds = %bb.b, %_ZN4mlir9Operation11getParentOpEv.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66
-  %.sroa.057.0 = phi i8 [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66 ], [ 0, %_ZN4mlir9Operation11getParentOpEv.exit.i ], [ 0, %bb.b ]
+.loopexit:                                        ; preds = %bb.b, %_ZN4mlir9Operation11getParentOpEv.exit.i, %21, %_ZN4mlir9Operation11getParentOpEv.exit.us.i, %.split.us.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66
+  %.sroa.057.0 = phi i8 [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66 ], [ 0, %.split.us.i ], [ 0, %21 ], [ 0, %_ZN4mlir9Operation11getParentOpEv.exit.us.i ], [ 0, %_ZN4mlir9Operation11getParentOpEv.exit.i ], [ 0, %bb.b ]
   ret i8 %.sroa.057.0
 }
 

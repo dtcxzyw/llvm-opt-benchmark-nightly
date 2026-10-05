@@ -179,6 +179,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_10ShapedTypeEvE13resolveTypeIDEvE2id = co
 @.str.10 = private unnamed_addr constant [21 x i8] c"Invalid operand rank\00", align 1
 @.str.11 = private unnamed_addr constant [35 x i8] c"Not applicable to scalable vectors\00", align 1
 @.str.12 = private unnamed_addr constant [20 x i8] c"Dimensions mismatch\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtSIOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtUIOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
@@ -581,7 +582,9 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !102
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtSIOpEvE2idE
-  br i1 %i.e, label %_ZNK4mlir5Value13getDefiningOpINS_5arith7ExtSIOpEEET_v.exit, label %bb.c
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtSIOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %8, %i.e
+  br i1 %spec.select.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_5arith7ExtSIOpEEET_v.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
@@ -714,7 +717,9 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !102
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtUIOpEvE2idE
-  br i1 %i.e, label %_ZNK4mlir5Value13getDefiningOpINS_5arith7ExtUIOpEEET_v.exit, label %bb.j
+  %6 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtUIOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %6, %i.e
+  br i1 %spec.select.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_5arith7ExtUIOpEEET_v.exit, label %bb.j
 
 _ZNK4mlir5Value13getDefiningOpINS_5arith7ExtUIOpEEET_v.exit: ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 72

@@ -202,8 +202,10 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !67
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_6memref7StoreOpEvE2idE
+  %10 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6memref7StoreOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %10, %i.h
   %i.i = icmp ne ptr %1, null
-  %i.j = and i1 %i.i, %i.h
+  %i.j = and i1 %i.i, %spec.select.i.i.i.i
   br i1 %i.j, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a

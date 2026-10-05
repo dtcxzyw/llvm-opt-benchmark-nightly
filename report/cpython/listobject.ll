@@ -204,7 +204,13 @@ bb.n:                                             ; preds = %bb.m
   %or.cond.us = select i1 %i.an, i1 %i.aw, i1 false
   br i1 %or.cond.us, label %4, label %bb.o
 
-bb.o:                                             ; preds = %bb.n
+4:                                                ; preds = %bb.n
+  %5 = getelementptr i8, ptr %i.au, i64 16
+  %.val195.us = load i64, ptr %5, align 8, !tbaa !59
+  %6 = icmp ugt i64 %.val195.us, 15
+  br i1 %6, label %.thread248.us, label %bb.o
+
+bb.o:                                             ; preds = %4, %bb.n
   %i.ax = icmp ne i32 %.0141328.us, 0
   %or.cond3.us = select i1 %i.ao, i1 %i.ax, i1 false
   br i1 %or.cond3.us, label %bb.p, label %.thread248.us
@@ -217,16 +223,9 @@ bb.p:                                             ; preds = %bb.o
   %spec.select.us = zext i1 %.not176.us to i32
   br label %.thread248.us
 
-4:                                                ; preds = %bb.n
-  %5 = getelementptr i8, ptr %i.au, i64 16
-  %.val195.us = load i64, ptr %5, align 8, !tbaa !59
-  %6 = icmp ult i64 %.val195.us, 16
-  %spec.select290.us = zext i1 %6 to i32
-  br label %.thread248.us
-
-.thread248.us:                                    ; preds = %4, %bb.p, %bb.o, %bb.m
-  %.2143.ph.us = phi i32 [ %.0141328.us, %4 ], [ %.0141328.us, %bb.m ], [ %.0141328.us, %bb.o ], [ %spec.select.us, %bb.p ] ; 2 uses
-  %.2140.ph.us = phi i32 [ %spec.select290.us, %4 ], [ %.0138329.us, %bb.m ], [ %.0138329.us, %bb.o ], [ %.0138329.us, %bb.p ] ; 2 uses
+.thread248.us:                                    ; preds = %bb.p, %bb.o, %4, %bb.m
+  %.2143.ph.us = phi i32 [ %.0141328.us, %bb.m ], [ %.0141328.us, %bb.o ], [ %spec.select.us, %bb.p ], [ %.0141328.us, %4 ] ; 2 uses
+  %.2140.ph.us = phi i32 [ %.0138329.us, %bb.m ], [ %.0138329.us, %bb.o ], [ %.0138329.us, %bb.p ], [ 0, %4 ] ; 2 uses
   %i.bb = add nuw nsw i64 %.2154326.us, 1         ; 2 uses
   %exitcond363.not = icmp eq i64 %i.bb, %.val189
   br i1 %exitcond363.not, label %._crit_edge331.loopexit, label %.lr.ph330.split.us, !llvm.loop !99
@@ -250,11 +249,10 @@ bb.q:                                             ; preds = %.critedge
 bb.r:                                             ; preds = %bb.q
   %i.bg = getelementptr i8, ptr %i.bd, i64 16
   %.val195 = load i64, ptr %i.bg, align 8, !tbaa !59
-  %7 = icmp ult i64 %.val195, 16
-  %spec.select290 = zext i1 %7 to i32
-  br label %.thread248
+  %7 = icmp ugt i64 %.val195, 15
+  br i1 %7, label %.thread248, label %bb.s
 
-bb.s:                                             ; preds = %bb.q
+bb.s:                                             ; preds = %bb.r, %bb.q
   %i.bh = icmp ne i32 %.0141328, 0
   %or.cond3 = select i1 %i.aj, i1 %i.bh, i1 false
   br i1 %or.cond3, label %bb.t, label %.thread248
@@ -268,8 +266,8 @@ bb.t:                                             ; preds = %bb.s
   br label %.thread248
 
 .thread248:                                       ; preds = %bb.r, %bb.t, %bb.s
-  %.2143.ph = phi i32 [ %.0141328, %bb.r ], [ %spec.select, %bb.t ], [ %.0141328, %bb.s ] ; 2 uses
-  %.2140.ph = phi i32 [ %spec.select290, %bb.r ], [ %.0138329, %bb.t ], [ %.0138329, %bb.s ] ; 2 uses
+  %.2143.ph = phi i32 [ %.0141328, %bb.r ], [ %.0141328, %bb.s ], [ %spec.select, %bb.t ] ; 2 uses
+  %.2140.ph = phi i32 [ 0, %bb.r ], [ %.0138329, %bb.s ], [ %.0138329, %bb.t ] ; 2 uses
   %i.bl = add nuw nsw i64 %.2154326, 1            ; 2 uses
   %exitcond361.not = icmp eq i64 %i.bl, %.val189
   br i1 %exitcond361.not, label %._crit_edge331, label %.critedge, !llvm.loop !99
@@ -279,7 +277,7 @@ bb.t:                                             ; preds = %bb.s
   br label %._crit_edge331
 
 ._crit_edge331:                                   ; preds = %.thread248, %._crit_edge331.loopexit
-  %i.bn = phi ptr [ %.val191, %._crit_edge331.loopexit ], [ %.val194, %.thread248 ] ; 5 uses
+  %i.bn = phi ptr [ %.val191, %._crit_edge331.loopexit ], [ %.val194, %.thread248 ] ; 7 uses
   %i.bo = phi i1 [ true, %._crit_edge331.loopexit ], [ false, %.thread248 ] ; 6 uses
   %.0145.lcssa = phi i1 [ %i.bm, %._crit_edge331.loopexit ], [ false, %.thread248 ]
   %.0141.lcssa = phi i32 [ %.2143.ph.us, %._crit_edge331.loopexit ], [ %.2143.ph, %.thread248 ]
@@ -323,32 +321,29 @@ bb.x:                                             ; preds = %bb.w
 
 .split269:                                        ; preds = %bb.x
   store ptr @unsafe_object_compare, ptr %i.bz, align 8, !tbaa !62
-  br i1 %i.bo, label %8, label %.loopexit.thread
+  br i1 %i.bo, label %.thread272, label %.loopexit.thread
 
 .split270:                                        ; preds = %bb.x
   store ptr @safe_object_compare, ptr %i.bz, align 8, !tbaa !62
-  br i1 %i.bo, label %8, label %.loopexit.thread
+  br i1 %i.bo, label %.thread272, label %.loopexit.thread
 
 .split267:                                        ; preds = %._crit_edge331
   %i.ca = getelementptr inbounds nuw i8, ptr %3, i64 4152
   store ptr @safe_object_compare, ptr %i.ca, align 8, !tbaa !62
-  br i1 %i.bo, label %8, label %.loopexit.thread
+  br i1 %i.bo, label %.thread272, label %.loopexit.thread
 
 bb.y:                                             ; preds = %bb.w
   %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 4152
   store ptr @unsafe_float_compare, ptr %i.cb, align 8, !tbaa !62
   br i1 %i.bo, label %.thread272, label %.loopexit.thread
 
-8:                                                ; preds = %.split270, %.split269, %.split267
-  %9 = phi ptr [ @safe_object_compare, %.split270 ], [ @unsafe_object_compare, %.split269 ], [ @safe_object_compare, %.split267 ]
-  %10 = icmp eq ptr %i.bn, @PyTuple_Type
-  %spec.select436 = select i1 %10, ptr @safe_object_compare, ptr %9
-  br label %.thread272
-
-.thread272:                                       ; preds = %8, %.split268.a, %.split, %bb.y
-  %.sink = phi ptr [ %spec.select436, %8 ], [ @unsafe_float_compare, %bb.y ], [ @unsafe_latin_compare, %.split ], [ @unsafe_long_compare, %.split268.a ]
+.thread272:                                       ; preds = %.split270, %.split269, %.split268.a, %.split267, %.split, %bb.y
+  %8 = phi ptr [ %i.bn, %.split270 ], [ %i.bn, %.split269 ], [ @PyLong_Type, %.split268.a ], [ %i.bn, %.split267 ], [ @PyUnicode_Type, %.split ], [ @PyFloat_Type, %bb.y ]
+  %9 = phi ptr [ @safe_object_compare, %.split270 ], [ @unsafe_object_compare, %.split269 ], [ @unsafe_long_compare, %.split268.a ], [ @safe_object_compare, %.split267 ], [ @unsafe_latin_compare, %.split ], [ @unsafe_float_compare, %bb.y ]
+  %10 = icmp eq ptr %8, @PyTuple_Type
+  %spec.select428 = select i1 %10, ptr @safe_object_compare, ptr %9
   %i.cc = getelementptr inbounds nuw i8, ptr %3, i64 4168
-  store ptr %.sink, ptr %i.cc, align 8, !tbaa !65
+  store ptr %spec.select428, ptr %i.cc, align 8, !tbaa !65
   br label %.loopexit.thread.sink.split
 
 .loopexit.thread.sink.split:                      ; preds = %.critedge, %bb.l, %.lr.ph330.split.us, %.thread272

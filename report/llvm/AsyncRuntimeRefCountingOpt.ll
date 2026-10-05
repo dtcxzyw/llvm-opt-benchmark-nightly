@@ -202,6 +202,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPN4mlir5BlockEZN12_GLOBAL__N_130AsyncRuntime
   br i1 %.not3091, label %._crit_edge94, label %.lr.ph93
 
 .lr.ph93:                                         ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapIPN4mlir5BlockEZN12_GLOBAL__N_130AsyncRuntimeRefCountingOptPass25optimizeReferenceCountingENS2_5ValueERNS_13SmallDenseMapIPNS2_9OperationESA_Lj4ENS_12DenseMapInfoISA_vEENS_6detail12DenseMapPairISA_SA_EEEEE14BlockUsersInfoNSB_IS4_vEENSE_IS4_SI_EEEES4_SI_SJ_SK_E5beginEv.exit
+  %6 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6CallOpEvE2idE
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
@@ -604,8 +605,9 @@ bb.ax:                                            ; preds = %bb.aw
   %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.gq, align 8, !tbaa !35
   %i.gr = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.gs = load ptr, ptr %i.gr, align 8, !tbaa !37
-  %.not32 = icmp eq ptr %i.gs, @_ZN4mlir6detail14TypeIDResolverINS_4func6CallOpEvE2idE
-  br i1 %.not32, label %bb.ay, label %.critedge
+  %7 = icmp ne ptr %i.gs, @_ZN4mlir6detail14TypeIDResolverINS_4func6CallOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %6, %7
+  br i1 %spec.select.i.i.i.i.not, label %.critedge, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %.not75 = icmp eq ptr %.05870, null
@@ -950,8 +952,10 @@ _ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit: ; 
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !37
   %i.ca = icmp ne ptr %i.bz, @_ZN4mlir6detail14TypeIDResolverINS_5async15RuntimeAddRefOpEvE2idE
+  %1 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5async15RuntimeAddRefOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %1, %i.ca
   %.not2 = icmp eq ptr %0, null                   ; 2 uses
-  %.not = or i1 %.not2, %i.ca
+  %.not = or i1 %.not2, %spec.select.i.i.i.i.not
   br i1 %.not, label %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5async15RuntimeAddRefOpELb1EE9push_backES3_.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit
@@ -981,7 +985,9 @@ _ZN4llvm23SmallVectorTemplateBaseIN4mlir5async15RuntimeAddRefOpELb1EE9push_backE
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i10, i64 16
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !37
   %i.cm = icmp ne ptr %i.cl, @_ZN4mlir6detail14TypeIDResolverINS_5async16RuntimeDropRefOpEvE2idE
-  %.not3 = or i1 %.not2, %i.cm
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5async16RuntimeDropRefOpEvE2idE
+  %spec.select.i.i.i.i11.not = or i1 %2, %i.cm
+  %.not3 = or i1 %.not2, %spec.select.i.i.i.i11.not
   br i1 %.not3, label %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5async16RuntimeDropRefOpELb1EE9push_backES3_.exit, label %bb.j
 
 bb.j:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5async15RuntimeAddRefOpELb1EE9push_backES3_.exit

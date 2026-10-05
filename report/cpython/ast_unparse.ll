@@ -202,7 +202,9 @@ bb.c:                                             ; preds = %bb.b
   %.val25 = load double, ptr %i.c, align 8, !tbaa !104
   %i.d = tail call double @llvm.fabs.f64(double %.val25) #4
   %i.e = fcmp oeq double %i.d, +inf
-  br i1 %i.e, label %bb.e, label %bb.h
+  %.not27 = icmp eq ptr @PyFloat_Type, @PyComplex_Type
+  %or.cond = or i1 %.not27, %i.e
+  br i1 %or.cond, label %bb.e, label %bb.h
 
 bb.d:                                             ; preds = %bb.b
   %.not27.old = icmp eq ptr %.val24, @PyComplex_Type

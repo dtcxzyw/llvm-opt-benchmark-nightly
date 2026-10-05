@@ -62,24 +62,28 @@ bb.c:                                             ; preds = %bb.b
 
 thread-pre-split:                                 ; preds = %bb.b, %bb.c, %bb.a
   %i.i = icmp sgt i32 %0, 18
-  br i1 %i.i, label %bb.r, label %bb.d
+  br i1 %i.i, label %.thread.sink.split, label %bb.d
 
 bb.d:                                             ; preds = %thread-pre-split
   %i.j = icmp sgt i32 %0, 9
-  br i1 %i.j, label %bb.g, label %bb.e
+  br i1 %i.j, label %2, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.k = icmp sgt i32 %0, 4
-  br i1 %i.k, label %bb.g, label %bb.f
+  br i1 %i.k, label %2, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.l = icmp sgt i32 %0, 2
   %ompi_mpi_short.ompi_mpi_byte = select i1 %i.l, ptr @ompi_mpi_short, ptr @ompi_mpi_byte
-  br label %bb.g
+  br label %2
 
-bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
-  %ompi_mpi_int.sink = phi ptr [ @ompi_mpi_long, %bb.d ], [ @ompi_mpi_int, %bb.e ], [ %ompi_mpi_short.ompi_mpi_byte, %bb.f ]
+2:                                                ; preds = %bb.f, %bb.e, %bb.d
+  %ompi_mpi_int.sink = phi ptr [ @ompi_mpi_long, %bb.d ], [ @ompi_mpi_int, %bb.e ], [ %ompi_mpi_short.ompi_mpi_byte, %bb.f ] ; 2 uses
   store ptr %ompi_mpi_int.sink, ptr %1, align 8, !tbaa !18
+  %.not = icmp eq ptr %ompi_mpi_int.sink, @ompi_mpi_datatype_null
+  br i1 %.not, label %bb.r, label %bb.g
+
+bb.g:                                             ; preds = %2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   %i.m = tail call i32 @opal_hash_table_get_value_uint32(ptr noundef nonnull @ompi_mpi_f90_integer_hashtable, i32 noundef %0, ptr noundef nonnull %1) #6
@@ -221,8 +225,11 @@ bb.q:                                             ; preds = %bb.g, %bb.p, %ompi_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   br label %bb.s
 
-bb.r:                                             ; preds = %thread-pre-split
+.thread.sink.split:                               ; preds = %thread-pre-split
   store ptr @ompi_mpi_datatype_null, ptr %1, align 8, !tbaa !18
+  br label %bb.r
+
+bb.r:                                             ; preds = %.thread.sink.split, %2
   %i.br = tail call i32 @ompi_errhandler_invoke(ptr noundef null, ptr noundef null, i32 noundef -1, i32 noundef 13, ptr noundef nonnull @FUNC_NAME) #6
   br label %bb.s
 

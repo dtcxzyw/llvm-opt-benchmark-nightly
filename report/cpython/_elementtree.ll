@@ -205,19 +205,19 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %bb.e
   %.val39 = load i32, ptr %i.b, align 8, !tbaa !27
   %.not47 = icmp eq i32 %.val39, 1
-  br i1 %.not47, label %bb.g, label %.thread56
+  br i1 %.not47, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
   %i.j = getelementptr i8, ptr %1, i64 8
   %.val37 = load ptr, ptr %i.j, align 8, !tbaa !30
   %.not48 = icmp eq ptr %.val37, @PyBytes_Type
-  br i1 %.not48, label %bb.h, label %.thread56
+  br i1 %.not48, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
   %i.k = getelementptr i8, ptr %1, i64 16
   %.val41 = load i64, ptr %i.k, align 8, !tbaa !96
   %i.l = icmp eq i64 %.val41, 1
-  br i1 %i.l, label %bb.i, label %.thread56
+  br i1 %i.l, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.m = getelementptr i8, ptr %i.b, i64 16
@@ -236,7 +236,7 @@ bb.i:                                             ; preds = %bb.h
   store i8 %i.r, ptr %i.u, align 1, !tbaa !27
   br label %Py_DECREF.exit.thread
 
-bb.j:                                             ; preds = %bb.e
+bb.j:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e
   %.not49 = icmp eq ptr %.val38, @PyList_Type
   br i1 %.not49, label %bb.k, label %.thread56
 
@@ -245,7 +245,7 @@ bb.k:                                             ; preds = %bb.j
   %i.w = icmp slt i32 %i.v, 0
   br i1 %i.w, label %Py_DECREF.exit, label %Py_DECREF.exit.thread
 
-.thread56:                                        ; preds = %bb.f, %bb.g, %bb.h, %bb.j
+.thread56:                                        ; preds = %bb.j
   %i.x = tail call ptr @PyList_New(i64 noundef 2) #11 ; 3 uses
   %.not36 = icmp eq ptr %i.x, null
   br i1 %.not36, label %Py_DECREF.exit, label %bb.l

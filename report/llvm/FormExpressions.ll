@@ -202,10 +202,32 @@ bb.a:
   %i.a = inttoptr i64 %0 to ptr
   %i.b = tail call noundef ptr @_ZN4mlir11OpInterfaceINS_5emitc20CExpressionInterfaceENS1_6detail35CExpressionInterfaceInterfaceTraitsEE15getInterfaceForEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(64) %1)
   %.not.i = icmp eq ptr %i.b, null
-  br i1 %.not.i, label %_ZZN12_GLOBAL__N_119FormExpressionsPass14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit, label %.preheader.i
+  br i1 %.not.i, label %_ZZN12_GLOBAL__N_119FormExpressionsPass14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit, label %2
 
-.preheader.i:                                     ; preds = %bb.a, %bb.b
-  %.0.i.i = phi ptr [ %i.e, %bb.b ], [ %1, %bb.a ]
+2:                                                ; preds = %bb.a
+  %.not8.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5emitc12ExpressionOpEvE2idE
+  br i1 %.not8.i.i, label %.split.us.i.i, label %.preheader.i
+
+.split.us.i.i:                                    ; preds = %2
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %4 = load ptr, ptr %3, align 8, !tbaa !127      ; 2 uses
+  %.not.i.us6.i.i = icmp eq ptr %4, null
+  br i1 %.not.i.us6.i.i, label %bb.c, label %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i
+
+5:                                                ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %7 = load ptr, ptr %6, align 8, !tbaa !127      ; 2 uses
+  %.not.i.us.i.i = icmp eq ptr %7, null
+  br i1 %.not.i.us.i.i, label %bb.c, label %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i
+
+_ZN4mlir9Operation11getParentOpEv.exit.us.i.i:    ; preds = %.split.us.i.i, %5
+  %8 = phi ptr [ %7, %5 ], [ %4, %.split.us.i.i ]
+  %9 = tail call noundef ptr @_ZN4mlir5Block11getParentOpEv(ptr noundef nonnull align 8 dereferenceable(80) %8) #14 ; 2 uses
+  %.not.us.i.i = icmp eq ptr %9, null
+  br i1 %.not.us.i.i, label %bb.c, label %5
+
+.preheader.i:                                     ; preds = %2, %bb.b
+  %.0.i.i = phi ptr [ %i.e, %bb.b ], [ %1, %2 ]
   %i.c = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !127  ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.d, null
@@ -224,7 +246,7 @@ bb.b:                                             ; preds = %_ZN4mlir9Operation1
   %i.i = icmp eq ptr %i.h, @_ZN4mlir6detail14TypeIDResolverINS_5emitc12ExpressionOpEvE2idE
   br i1 %i.i, label %_ZZN12_GLOBAL__N_119FormExpressionsPass14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit, label %.preheader.i, !llvm.loop !126
 
-bb.c:                                             ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.i.i, %.preheader.i
+bb.c:                                             ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.i.i, %.preheader.i, %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i, %5, %.split.us.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.k = load i32, ptr %i.j, align 4, !tbaa !128
   %i.l = icmp eq i32 %i.k, 1

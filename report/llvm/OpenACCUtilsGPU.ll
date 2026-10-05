@@ -38,6 +38,7 @@ $_ZN4mlir9Operation7setAttrENS_10StringAttrENS_9AttributeE = comdat any
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
 @.str = private unnamed_addr constant [15 x i8] c"acc_gpu_module\00", align 1
 @.str.2 = private unnamed_addr constant [21 x i8] c"gpu.container_module\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -60,9 +61,11 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !tbaa !24
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !27
-  %i.f = icmp ne ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE ; 2 uses
-  %brmerge.not = and i1 %i.f, %1
-  %not. = xor i1 %i.f, true
+  %i.f = icmp ne ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
+  %7 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
+  %spec.select.i.i.i.i.i.i.not31 = or i1 %7, %i.f ; 2 uses
+  %brmerge.not = and i1 %spec.select.i.i.i.i.i.i.not31, %1
+  %not. = xor i1 %spec.select.i.i.i.i.i.i.not31, true
   %.mux29 = zext i1 %not. to i8
   br i1 %brmerge.not, label %bb.c, label %_ZNK4mlir11SymbolTable6lookupINS_3gpu11GPUModuleOpEEET_N4llvm9StringRefE.exit
 

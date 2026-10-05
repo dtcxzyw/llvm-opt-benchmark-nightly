@@ -205,9 +205,19 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !24   ; 2 uses
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_2cf12CondBranchOpEvE2idE
-  %2 = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_2cf8SwitchOpEvE2idE
-  %spec.select.i = or i1 %i.d, %2
-  ret i1 %spec.select.i
+  %2 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_2cf12CondBranchOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %2, %i.d
+  br i1 %spec.select.i.i.i.i.i, label %_ZN4llvm3isaIJN4mlir2cf12CondBranchOpENS2_8SwitchOpEEPNS1_9OperationEEEbRKT0_.exit, label %3
+
+3:                                                ; preds = %bb.a
+  %4 = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_2cf8SwitchOpEvE2idE
+  %5 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_2cf8SwitchOpEvE2idE
+  %spec.select.i.i.i.i3.i = and i1 %5, %4
+  br label %_ZN4llvm3isaIJN4mlir2cf12CondBranchOpENS2_8SwitchOpEEPNS1_9OperationEEEbRKT0_.exit
+
+_ZN4llvm3isaIJN4mlir2cf12CondBranchOpENS2_8SwitchOpEEPNS1_9OperationEEEbRKT0_.exit: ; preds = %bb.a, %3
+  %6 = phi i1 [ true, %bb.a ], [ %spec.select.i.i.i.i3.i, %3 ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -231,7 +241,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !24   ; 2 uses
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_2cf12CondBranchOpEvE2idE
-  %spec.select.i.i = select i1 %i.d, ptr %2, ptr null ; 2 uses
+  %16 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_2cf12CondBranchOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %16, %i.d
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %2, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %9, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -293,7 +305,9 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #18
   %i.at = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_2cf8SwitchOpEvE2idE
-  %spec.select.i.i35 = select i1 %i.at, ptr %2, ptr null ; 2 uses
+  %17 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_2cf8SwitchOpEvE2idE
+  %spec.select.i.i.i.i35 = and i1 %17, %i.at
+  %spec.select.i.i35 = select i1 %spec.select.i.i.i.i35, ptr %2, ptr null ; 2 uses
   store ptr %spec.select.i.i35, ptr %10, align 8
   %.not75 = icmp eq ptr %spec.select.i.i35, null
   br i1 %.not75, label %.thread72, label %bb.d
@@ -696,7 +710,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !24
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
-  %spec.select.i.i = select i1 %i.f, ptr %i.b, ptr null ; 2 uses
+  %11 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %11, %i.f
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.b, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %6, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %bb.b, label %bb.h
@@ -1099,8 +1115,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !24
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %6 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %6, %i.e
   %.not2.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not2.i, %i.e
+  %.not.i = or i1 %.not2.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_120LiftControlFlowToSCF14runOnOperationEvEUlNS_4func6FuncOpEE_S7_NS_10WalkResultEEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_S9_EE5valueESI_E4typeESD_OT1_ENKUlSD_E_clESD_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

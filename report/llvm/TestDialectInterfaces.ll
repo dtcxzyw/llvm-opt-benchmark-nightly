@@ -202,6 +202,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_30ConvertToEmitCPatternInterfaceEvE13reso
 @_ZZN4mlir6detail14TypeIDResolverINS_20DialectFoldInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_20DialectFoldInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str.43 = private unnamed_addr constant [77 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::DialectFoldInterface]\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverIN4test11OneRegionOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZTVN12_GLOBAL__N_120TestInlinerInterfaceE = internal unnamed_addr constant { [15 x ptr] } { [15 x ptr] [ptr null, ptr null, ptr @_ZN4mlir16DialectInterfaceD2Ev, ptr @_ZN12_GLOBAL__N_120TestInlinerInterfaceD0Ev, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface15isLegalToInlineEPN4mlir9OperationES3_b, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface15isLegalToInlineEPN4mlir6RegionES3_bRNS1_9IRMappingE, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface15isLegalToInlineEPN4mlir9OperationEPNS1_6RegionEbRNS1_9IRMappingE, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface24shouldAnalyzeRecursivelyEPN4mlir9OperationE, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface16handleTerminatorEPN4mlir9OperationEPNS1_5BlockE, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface16handleTerminatorEPN4mlir9OperationENS1_10ValueRangeE, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface25materializeCallConversionERN4mlir9OpBuilderENS1_5ValueENS1_4TypeENS1_8LocationE, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface14handleArgumentERN4mlir9OpBuilderEPNS1_9OperationES5_NS1_5ValueENS1_14DictionaryAttrE, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface12handleResultERN4mlir9OpBuilderEPNS1_9OperationES5_NS1_5ValueENS1_14DictionaryAttrE, ptr @_ZNK12_GLOBAL__N_120TestInlinerInterface24processInlinedCallBlocksEPN4mlir9OperationEN4llvm14iterator_rangeINS4_14ilist_iteratorINS4_12ilist_detail12node_optionsINS1_5BlockELb0ELb0EvLb0EvEELb0ELb0EEEEE, ptr @_ZNK4mlir23DialectInlinerInterface28allowSingleBlockOptimizationEN4llvm14iterator_rangeINS1_14ilist_iteratorINS1_12ilist_detail12node_optionsINS_5BlockELb0ELb0EvLb0EvEELb0ELb0EEEEE] }, align 8
 @_ZZN4mlir6detail14TypeIDResolverINS_23DialectInlinerInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
@@ -604,7 +605,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !90
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverIN4test11OneRegionOpEvE2idE
-  ret i1 %i.f
+  %2 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test11OneRegionOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %2, %i.f
+  ret i1 %spec.select.i.i.i.i.i
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
@@ -665,7 +668,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !90
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverIN4test18FunctionalRegionOpEvE2idE
-  ret i1 %i.d
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test18FunctionalRegionOpEvE2idE
+  %spec.select.i.i.i.i.i.not = or i1 %2, %i.d
+  ret i1 %spec.select.i.i.i.i.i.not
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -678,8 +683,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !90
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverIN4test12TestReturnOpEvE2idE
+  %5 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test12TestReturnOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %5, %i.d
   %.not8 = icmp eq ptr %1, null
-  %.not = or i1 %.not8, %i.d
+  %.not = or i1 %.not8, %spec.select.i.i.i.i.not
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -739,8 +746,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !90
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverIN4test12TestReturnOpEvE2idE
+  %5 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test12TestReturnOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %5, %i.e
   %.not2425 = icmp eq ptr %1, null
-  %.not24 = or i1 %.not2425, %i.e
+  %.not24 = or i1 %.not2425, %spec.select.i.i.i.i.not
   br i1 %.not24, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -937,8 +946,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !90
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverIN4test16ConversionCallOpEvE2idE
+  %5 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test16ConversionCallOpEvE2idE
+  %spec.select.i.i.i.i.i.not12 = or i1 %5, %i.e
   %.not8 = icmp eq ptr %2, %3
-  %or.cond = select i1 %i.e, i1 true, i1 %.not8
+  %or.cond = select i1 %spec.select.i.i.i.i.i.not12, i1 true, i1 %.not8
   br i1 %or.cond, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
@@ -1341,8 +1352,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !90
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverIN4test16TestVersionedOpAEvE2idE
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test16TestVersionedOpAEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %2, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZNK12_GLOBAL__N_128TestBytecodeDialectInterface18upgradeFromVersionEPNS_9OperationERKNS_14DialectVersionEEUlN4test16TestVersionedOpAEE_SC_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_S7_PNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESK_E4typeES7_OT1_ENKUlS7_E_clES7_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

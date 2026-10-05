@@ -202,6 +202,8 @@ bb.a:
   br i1 %.not313384, label %_ZN4llvm11SmallVectorIPN4mlir9OperationELj6EED2Ev.exit, label %.lr.ph387
 
 .lr.ph387:                                        ; preds = %bb.a
+  %24 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program12GlobalLoadOpEvE2idE
+  %25 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program13GlobalStoreOpEvE2idE
   %i.f = getelementptr inbounds nuw i8, ptr %17, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 360
@@ -246,10 +248,11 @@ bb.b:                                             ; preds = %.lr.ph387, %bb.bf
   %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.ah, align 8, !tbaa !79
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !81
-  %i.ak = icmp eq ptr %i.aj, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program12GlobalLoadOpEvE2idE ; 2 uses
-  %spec.select.i.i = select i1 %i.ak, ptr %i.ag, ptr null
+  %i.ak = icmp eq ptr %i.aj, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program12GlobalLoadOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %24, %i.ak        ; 2 uses
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.ag, ptr null
   store ptr %spec.select.i.i, ptr %13, align 8
-  br i1 %i.ak, label %bb.c, label %bb.k
+  br i1 %spec.select.i.i.i.i, label %bb.c, label %bb.k
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #17
@@ -389,10 +392,11 @@ bb.k:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #17
   %i.cu = load ptr, ptr %i.ai, align 8, !tbaa !81
-  %i.cv = icmp eq ptr %i.cu, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program13GlobalStoreOpEvE2idE ; 2 uses
-  %spec.select.i.i55 = select i1 %i.cv, ptr %i.ag, ptr null
+  %i.cv = icmp eq ptr %i.cu, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program13GlobalStoreOpEvE2idE
+  %spec.select.i.i.i.i55 = and i1 %25, %i.cv      ; 2 uses
+  %spec.select.i.i55 = select i1 %spec.select.i.i.i.i55, ptr %i.ag, ptr null
   store ptr %spec.select.i.i55, ptr %15, align 8
-  br i1 %i.cv, label %bb.l, label %bb.r
+  br i1 %spec.select.i.i.i.i55, label %bb.l, label %bb.r
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #17
@@ -795,8 +799,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !81
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program12GlobalLoadOpEvE2idE
+  %4 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program12GlobalLoadOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %4, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZNS_10ml_program12_GLOBAL__N_124MLProgramPipelineGlobals14buildGlobalMapENS_8ModuleOpEE3$_1NS4_12GlobalLoadOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESI_E4typeESD_OT1_ENKUlSD_E_clESD_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1175,8 +1181,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !81
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program13GlobalStoreOpEvE2idE
+  %4 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program13GlobalStoreOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %4, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZNS_10ml_program12_GLOBAL__N_124MLProgramPipelineGlobals14buildGlobalMapENS_8ModuleOpEE3$_2NS4_13GlobalStoreOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESI_E4typeESD_OT1_ENKUlSD_E_clESD_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a

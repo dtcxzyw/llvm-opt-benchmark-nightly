@@ -204,6 +204,8 @@ bb.ab:                                            ; preds = %._crit_edge
   %i.iv = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.iw = getelementptr inbounds nuw i8, ptr %23, i64 32
   %i.ix = getelementptr inbounds nuw i8, ptr %23, i64 72
+  %26 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToTensorOpEvE2idE
+  %27 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToBufferOpEvE2idE
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph155, %.loopexit
@@ -293,8 +295,10 @@ bb.ai:                                            ; preds = %.critedge, %bb.ah
   %i.kq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.kr = load ptr, ptr %i.kq, align 8, !tbaa !173 ; 2 uses
   %i.ks = icmp eq ptr %i.kr, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToTensorOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %26, %i.ks
   %i.kt = icmp eq ptr %i.kr, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToBufferOpEvE2idE
-  %spec.select.i = or i1 %i.ks, %i.kt
+  %spec.select.i.i.i.i3.i = and i1 %27, %i.kt
+  %spec.select.i = or i1 %spec.select.i.i.i.i.i, %spec.select.i.i.i.i3.i
   br i1 %spec.select.i, label %.loopexit, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -697,7 +701,9 @@ bb.k:                                             ; preds = %bb.j, %_ZN4llvm6det
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !173 ; 2 uses
   %i.bl = icmp eq ptr %i.bk, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToBufferOpEvE2idE
-  br i1 %i.bl, label %bb.l, label %bb.m
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToBufferOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %7, %i.bl
+  br i1 %spec.select.i.i.i.i.i, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -707,7 +713,9 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.bp = icmp eq ptr %i.bk, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToTensorOpEvE2idE
-  br i1 %i.bp, label %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit, label %bb.n
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToTensorOpEvE2idE
+  %spec.select.i.i.i.i.i3 = and i1 %8, %i.bp
+  br i1 %spec.select.i.i.i.i.i3, label %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bq = call noundef zeroext i1 @_ZN4mlir13bufferization18hasTensorSemanticsEPNS_9OperationE(ptr noundef nonnull %1) #27
@@ -1110,8 +1118,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !173
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToBufferOpEvE2idE
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToBufferOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %2, %i.e
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZNS_13bufferization11bufferizeOpEPNS_9OperationERKNS4_20BufferizationOptionsERNS4_18BufferizationStateEPNS4_23BufferizationStatisticsEE3$_0NS4_10ToBufferOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_S6_PNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESM_E4typeES6_OT1_ENKUlS6_E_clES6_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1514,8 +1524,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !173
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToTensorOpEvE2idE
+  %4 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToTensorOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %4, %i.e
   %.not2.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not2.i, %i.e
+  %.not.i = or i1 %.not2.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZNS_13bufferization11bufferizeOpEPNS_9OperationERKNS4_20BufferizationOptionsERNS4_18BufferizationStateEPNS4_23BufferizationStatisticsEE3$_2NS4_10ToTensorOpENS_10WalkResultEEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_S6_PNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_SG_EE5valueESN_E4typeES6_OT1_ENKUlS6_E_clES6_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a

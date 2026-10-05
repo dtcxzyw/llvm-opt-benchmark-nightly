@@ -204,8 +204,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !49
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3scf5ForOpEvE2idE
+  %11 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf5ForOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %11, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_119TestSCFForUtilsPass14runOnOperationEvEUlNS_3scf5ForOpEE_S7_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -608,8 +610,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !49
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3scf4IfOpEvE2idE
+  %11 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf4IfOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %11, %i.d
   %.not2.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not2.i, %i.d
+  %.not.i = or i1 %.not2.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_118TestSCFIfUtilsPass14runOnOperationEvEUlNS_3scf4IfOpEE_S7_NS_10WalkResultEEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_S9_EE5valueESI_E4typeESD_OT1_ENKUlSD_E_clESD_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1012,7 +1016,9 @@ _ZN4llvm15SmallVectorImplIN4mlir5ValueEE7reserveEm.exit: ; preds = %bb.d, %bb.e
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !49
   %i.cc = icmp eq ptr %i.cb, @_ZN4mlir6detail14TypeIDResolverINS_6memref9SubViewOpEvE2idE
-  br i1 %i.cc, label %bb.f, label %bb.h
+  %12 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6memref9SubViewOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %12, %i.cc
+  br i1 %spec.select.i.i.i.i, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE7reserveEm.exit
   %i.cd = call noundef ptr @_ZN4mlir9OpBuilder5cloneERNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(64) %1) #25 ; 2 uses

@@ -205,7 +205,9 @@ _ZN4llvm15isa_and_nonnullIJN4mlir10ml_program10SubgraphOpEEPNS1_9OperationEEEbRK
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !187
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program10SubgraphOpEvE2idE
-  br i1 %i.g, label %bb.k, label %_ZN4llvm15isa_and_nonnullIJN4mlir10ml_program10SubgraphOpEEPNS1_9OperationEEEbRKT0_.exit.thread
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program10SubgraphOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %7, %i.g
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.k, label %_ZN4llvm15isa_and_nonnullIJN4mlir10ml_program10SubgraphOpEEPNS1_9OperationEEEbRKT0_.exit.thread
 
 _ZN4llvm15isa_and_nonnullIJN4mlir10ml_program10SubgraphOpEEPNS1_9OperationEEEbRKT0_.exit.thread: ; preds = %bb.a, %_ZN4mlir9Operation11getParentOpEv.exit, %_ZN4llvm15isa_and_nonnullIJN4mlir10ml_program10SubgraphOpEEPNS1_9OperationEEEbRKT0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
@@ -608,7 +610,9 @@ _ZN4llvm15isa_and_nonnullIJN4mlir10ml_program6FuncOpEEPNS1_9OperationEEEbRKT0_.e
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !187
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program6FuncOpEvE2idE
-  br i1 %i.g, label %bb.k, label %_ZN4llvm15isa_and_nonnullIJN4mlir10ml_program6FuncOpEEPNS1_9OperationEEEbRKT0_.exit.thread
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_10ml_program6FuncOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %7, %i.g
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.k, label %_ZN4llvm15isa_and_nonnullIJN4mlir10ml_program6FuncOpEEPNS1_9OperationEEEbRKT0_.exit.thread
 
 _ZN4llvm15isa_and_nonnullIJN4mlir10ml_program6FuncOpEEPNS1_9OperationEEEbRKT0_.exit.thread: ; preds = %bb.a, %_ZN4mlir9Operation11getParentOpEv.exit, %_ZN4llvm15isa_and_nonnullIJN4mlir10ml_program6FuncOpEEPNS1_9OperationEEEbRKT0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19

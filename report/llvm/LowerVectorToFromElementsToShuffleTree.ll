@@ -204,8 +204,8 @@ bb.a:
   %20 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %21 = alloca %"class.mlir::vector::FromElementsOp", align 8 ; 5 uses
   %22 = alloca %"class.llvm::SetVector", align 8  ; 10 uses
-  %23 = alloca %"class.mlir::Value", align 8      ; 5 uses
-  %24 = alloca %"class.mlir::vector::ToElementsOp", align 8 ; 6 uses
+  %23 = alloca %"class.mlir::Value", align 8      ; 8 uses
+  %24 = alloca %"class.mlir::vector::ToElementsOp", align 8 ; 7 uses
   %25 = alloca %class.anon.242, align 8           ; 4 uses
   %26 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %27 = alloca %class.anon.242, align 8           ; 4 uses
@@ -433,13 +433,26 @@ _ZN4mlir6vector14FromElementsOp11getElementsEv.exit.i: ; preds = %bb.o, %_ZNK4ml
   %.sroa.5.0.extract.shift.i.i.i = lshr i64 %i.bi, 32
   %i.bq = add i64 %.sroa.5.0.extract.shift.i.i.i, %i.bi
   %i.br = and i64 %i.bq, 4294967295               ; 2 uses
-  %i.bs = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0.i.i.i.i.i.i, i64 %i.bp
+  %i.bs = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0.i.i.i.i.i.i, i64 %i.bp ; 2 uses
   %i.bt = sub nsw i64 %i.br, %i.bp
   %.not20.i = icmp eq i64 %i.br, %i.bp
-  br i1 %.not20.i, label %._crit_edge.i, label %.lr.ph.i.a
+  br i1 %.not20.i, label %._crit_edge.i, label %.lr.ph.i
 
-.lr.ph.i.a:                                       ; preds = %_ZN4mlir6vector14FromElementsOp11getElementsEv.exit.i, %bb.u
-  %.sroa.4.021.i = phi i64 [ %i.ck, %bb.u ], [ 0, %_ZN4mlir6vector14FromElementsOp11getElementsEv.exit.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %_ZN4mlir6vector14FromElementsOp11getElementsEv.exit.i
+  %.not22.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector12ToElementsOpEvE2idE
+  br i1 %.not22.i, label %.lr.ph.split.us.i, label %.lr.ph.i.a
+
+.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %23) #18
+  %36 = getelementptr inbounds nuw i8, ptr %i.bs, i64 24
+  %.sroa.0.0.copyload.i.i.i.us.i = load ptr, ptr %36, align 8, !tbaa !102
+  store ptr %.sroa.0.0.copyload.i.i.i.us.i, ptr %23, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %24) #18
+  %37 = call noundef ptr @_ZNK4mlir5Value13getDefiningOpEv(ptr noundef nonnull align 8 dereferenceable(8) %23) #18 ; 0 uses
+  br label %.thread.i
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i, %bb.u
+  %.sroa.4.021.i = phi i64 [ %i.ck, %bb.u ], [ 0, %.lr.ph.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #18
   %i.bu = getelementptr inbounds nuw [32 x i8], ptr %i.bs, i64 %.sroa.4.021.i
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 24
@@ -486,7 +499,7 @@ bb.t:                                             ; preds = %bb.r
   store i32 %i.cj, ptr %i.bg, align 8, !tbaa !50
   br label %bb.u
 
-.thread.i:                                        ; preds = %bb.p, %.lr.ph.i.a
+.thread.i:                                        ; preds = %bb.p, %.lr.ph.i.a, %.lr.ph.split.us.i
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #18
   br label %bb.w

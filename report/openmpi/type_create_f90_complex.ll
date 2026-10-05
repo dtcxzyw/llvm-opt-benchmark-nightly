@@ -72,16 +72,20 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.s
 
 bb.f:                                             ; preds = %bb.d, %bb.a
+  %3 = icmp eq i32 %0, -32766
+  %spec.select = select i1 %3, i32 0, i32 %0
+  %4 = icmp eq i32 %1, -32766
+  %.030 = select i1 %4, i32 0, i32 %1
   %i.m = icmp sgt i32 %0, 18
   %i.n = icmp sgt i32 %1, 4931
   %or.cond5 = or i1 %i.m, %i.n
-  br i1 %or.cond5, label %bb.r, label %bb.g
+  br i1 %or.cond5, label %.thread, label %bb.g
+
+.thread:                                          ; preds = %bb.f
+  store ptr @ompi_mpi_datatype_null, ptr %2, align 8, !tbaa !18
+  br label %bb.r
 
 bb.g:                                             ; preds = %bb.f
-  %3 = icmp eq i32 %1, -32766
-  %.030 = select i1 %3, i32 0, i32 %1
-  %4 = icmp eq i32 %0, -32766
-  %spec.select = select i1 %4, i32 0, i32 %0
   %i.o = icmp sgt i32 %0, 15
   %i.p = icmp sgt i32 %1, 307
   %or.cond9 = or i1 %i.o, %i.p
@@ -89,19 +93,23 @@ bb.g:                                             ; preds = %bb.f
   %i.r = icmp sgt i32 %1, 37
   %or.cond13 = or i1 %i.q, %i.r
   %ompi_mpi_dblcplex.ompi_mpi_cplex = select i1 %or.cond13, ptr @ompi_mpi_dblcplex, ptr @ompi_mpi_cplex
-  %ompi_mpi_ldblcplex.sink = select i1 %or.cond9, ptr @ompi_mpi_ldblcplex, ptr %ompi_mpi_dblcplex.ompi_mpi_cplex
+  %ompi_mpi_ldblcplex.sink = select i1 %or.cond9, ptr @ompi_mpi_ldblcplex, ptr %ompi_mpi_dblcplex.ompi_mpi_cplex ; 2 uses
   store ptr %ompi_mpi_ldblcplex.sink, ptr %2, align 8, !tbaa !18
+  %i.s = icmp eq ptr %ompi_mpi_ldblcplex.sink, @ompi_mpi_datatype_null
+  br i1 %i.s, label %bb.r, label %5
+
+5:                                                ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
-  %5 = sext i32 %spec.select to i64
-  %6 = shl nsw i64 %5, 32
-  %7 = sext i32 %.030 to i64
-  %8 = or i64 %6, %7                              ; 2 uses
-  %9 = tail call i32 @opal_hash_table_get_value_uint64(ptr noundef nonnull @ompi_mpi_f90_complex_hashtable, i64 noundef %8, ptr noundef nonnull %2) #6
-  %i.s = icmp eq i32 %9, 0
-  br i1 %i.s, label %bb.q, label %bb.h
+  %6 = sext i32 %spec.select to i64
+  %7 = shl nsw i64 %6, 32
+  %8 = sext i32 %.030 to i64
+  %9 = or i64 %7, %8                              ; 2 uses
+  %10 = tail call i32 @opal_hash_table_get_value_uint64(ptr noundef nonnull @ompi_mpi_f90_complex_hashtable, i64 noundef %9, ptr noundef nonnull %2) #6
+  %11 = icmp eq i32 %10, 0
+  br i1 %11, label %bb.q, label %bb.h
 
-bb.h:                                             ; preds = %bb.g
+bb.h:                                             ; preds = %5
   %i.t = load ptr, ptr %2, align 8, !tbaa !18
   %i.u = call i32 @ompi_datatype_duplicate(ptr noundef %i.t, ptr noundef nonnull %i.c) #6
   %.not36 = icmp eq i32 %i.u, 0
@@ -129,7 +137,7 @@ bb.j:                                             ; preds = %bb.h
   %i.ah = load ptr, ptr %i.c, align 8, !tbaa !18
   %i.ai = call i32 @ompi_datatype_set_args(ptr noundef %i.ah, i32 noundef 2, ptr noundef nonnull %i.d, i32 noundef 0, ptr noundef null, i32 noundef 0, ptr noundef null, i32 noundef 15) #6 ; 0 uses
   %i.aj = load ptr, ptr %i.c, align 8, !tbaa !18
-  %i.ak = call i32 @opal_hash_table_set_value_uint64(ptr noundef nonnull @ompi_mpi_f90_complex_hashtable, i64 noundef %8, ptr noundef %i.aj) #6 ; 5 uses
+  %i.ak = call i32 @opal_hash_table_set_value_uint64(ptr noundef nonnull @ompi_mpi_f90_complex_hashtable, i64 noundef %9, ptr noundef %i.aj) #6 ; 5 uses
   %.not37 = icmp eq i32 %i.ak, 0
   br i1 %.not37, label %bb.p, label %bb.k
 
@@ -231,14 +239,13 @@ bb.p:                                             ; preds = %bb.j
   store ptr %i.bv, ptr %2, align 8, !tbaa !18
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.g, %bb.p, %ompi_errcode_get_mpi_code.exit, %bb.i
-  %.0 = phi i32 [ 0, %bb.p ], [ 17, %bb.i ], [ %i.bu, %ompi_errcode_get_mpi_code.exit ], [ 0, %bb.g ]
+bb.q:                                             ; preds = %5, %bb.p, %ompi_errcode_get_mpi_code.exit, %bb.i
+  %.0 = phi i32 [ 0, %bb.p ], [ 17, %bb.i ], [ %i.bu, %ompi_errcode_get_mpi_code.exit ], [ 0, %5 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   br label %bb.s
 
-bb.r:                                             ; preds = %bb.f
-  store ptr @ompi_mpi_datatype_null, ptr %2, align 8, !tbaa !18
+bb.r:                                             ; preds = %.thread, %bb.g
   %i.bw = tail call i32 @ompi_errhandler_invoke(ptr noundef null, ptr noundef null, i32 noundef -1, i32 noundef 13, ptr noundef nonnull @FUNC_NAME) #6
   br label %bb.s
 

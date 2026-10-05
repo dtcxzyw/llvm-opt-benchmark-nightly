@@ -202,18 +202,24 @@ declare noundef ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optio
 ; Function Attrs: mustprogress nounwind uwtable
 define internal void @"_ZN4llvm12function_refIFvPN4mlir9OperationEEE11callback_fnIZN12_GLOBAL__N_125TestMemRefDependenceCheck14runOnOperationEvE3$_0EEvlS3_"(i64 noundef %0, ptr noundef %1) #0 align 2 {
 bb.a:
+  %2 = inttoptr i64 %0 to ptr
+  %.val = load ptr, ptr %2, align 8, !tbaa !22    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.a, align 8, !tbaa !33
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !35   ; 2 uses
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_6affine12AffineLoadOpEvE2idE
-  %2 = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_6affine13AffineStoreOpEvE2idE
-  %spec.select.i.i = or i1 %i.d, %2
-  br i1 %spec.select.i.i, label %bb.b, label %"_ZZN12_GLOBAL__N_125TestMemRefDependenceCheck14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit"
+  %3 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine12AffineLoadOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %3, %i.d
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.b, label %_ZN4llvm3isaIJN4mlir6affine12AffineLoadOpENS2_13AffineStoreOpEEPNS1_9OperationEEEbRKT0_.exit.i
 
-bb.b:                                             ; preds = %bb.a
-  %3 = inttoptr i64 %0 to ptr
-  %.val = load ptr, ptr %3, align 8, !tbaa !22    ; 3 uses
+_ZN4llvm3isaIJN4mlir6affine12AffineLoadOpENS2_13AffineStoreOpEEPNS1_9OperationEEEbRKT0_.exit.i: ; preds = %bb.a
+  %4 = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_6affine13AffineStoreOpEvE2idE
+  %5 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine13AffineStoreOpEvE2idE
+  %spec.select.i.i.i.i3.i.i = and i1 %5, %4
+  br i1 %spec.select.i.i.i.i3.i.i, label %bb.b, label %"_ZZN12_GLOBAL__N_125TestMemRefDependenceCheck14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit"
+
+bb.b:                                             ; preds = %_ZN4llvm3isaIJN4mlir6affine12AffineLoadOpENS2_13AffineStoreOpEEPNS1_9OperationEEEbRKT0_.exit.i, %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %.val, i64 336 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.val, i64 344 ; 3 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !19   ; 2 uses
@@ -236,7 +242,7 @@ bb.d:                                             ; preds = %bb.b
   store i32 %i.n, ptr %i.f, align 8, !tbaa !19
   br label %"_ZZN12_GLOBAL__N_125TestMemRefDependenceCheck14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit"
 
-"_ZZN12_GLOBAL__N_125TestMemRefDependenceCheck14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit": ; preds = %bb.a, %bb.c, %bb.d
+"_ZZN12_GLOBAL__N_125TestMemRefDependenceCheck14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit": ; preds = %_ZN4llvm3isaIJN4mlir6affine12AffineLoadOpENS2_13AffineStoreOpEEPNS1_9OperationEEEbRKT0_.exit.i, %bb.c, %bb.d
   ret void
 }
 

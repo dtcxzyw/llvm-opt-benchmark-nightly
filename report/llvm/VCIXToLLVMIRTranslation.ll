@@ -134,6 +134,7 @@ $_ZTVZN4mlir15DialectRegistry12addExtensionIJNS_4vcix11VCIXDialectEEEEbPFvPNS_11
 @_ZZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str = private unnamed_addr constant [88 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::LLVMTranslationDialectInterface]\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4vcix11BinaryImmOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4vcix8BinaryOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4vcix11VCIXDialectEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
@@ -502,7 +503,9 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !162  ; 2 uses
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_4vcix11BinaryImmOpEvE2idE
-  %spec.select.i.i = select i1 %i.h, ptr %1, ptr null ; 2 uses
+  %16 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4vcix11BinaryImmOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %16, %i.h
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %14, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %.thread, label %bb.b
@@ -511,7 +514,9 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #15
   %i.i = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_4vcix8BinaryOpEvE2idE
-  %spec.select.i.i114 = select i1 %i.i, ptr %1, ptr null ; 2 uses
+  %17 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4vcix8BinaryOpEvE2idE
+  %spec.select.i.i.i.i114 = and i1 %17, %i.i
+  %spec.select.i.i114 = select i1 %spec.select.i.i.i.i114, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i114, ptr %15, align 8
   %.not188 = icmp eq ptr %spec.select.i.i114, null
   br i1 %.not188, label %.thread187, label %bb.l

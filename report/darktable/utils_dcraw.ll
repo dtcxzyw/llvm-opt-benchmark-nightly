@@ -204,8 +204,8 @@ define void @_ZN6LibRaw18crop_masked_pixelsEv(ptr nofree noundef nonnull align 8
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !83   ; 6 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !83   ; 7 uses
   %i.e = icmp sgt i32 %i.d, 0
   br i1 %i.e, label %.thread70.thread, label %bb.b
 
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   %.elt41 = getelementptr inbounds nuw i8, ptr %0, i64 768424
   %.unpack42 = load i64, ptr %.elt41, align 8, !tbaa !128
   %i.g = icmp eq i64 %.unpack, ptrtoint (ptr @_ZN6LibRaw14canon_load_rawEv to i64)
-  %i.h = icmp eq i64 %.unpack42, 0                ; 6 uses
+  %i.h = icmp eq i64 %.unpack42, 0                ; 7 uses
   %i.i = icmp eq i64 %.unpack, ptrtoint (ptr @_ZN6LibRaw22lossless_jpeg_load_rawEv to i64)
   %i.j = or i1 %i.g, %i.i
   %i.k = icmp eq i64 %.unpack, ptrtoint (ptr @_ZN6LibRaw10crxLoadRawEv to i64)
@@ -250,34 +250,38 @@ sub_0:                                            ; preds = %bb.e
   %i.w = load i8, ptr %i.v, align 4
   %.not86.a = icmp eq i8 %i.w, 68
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 269
-  %1 = load i8, ptr %i.x, align 1
-  %.not87 = icmp eq i8 %1, 67
-  %or.cond = select i1 %.not86.a, i1 %.not87, i1 false
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 270
-  %i.y = load i8, ptr %2, align 2
-  %i.z = icmp eq i8 %i.y, 50
-  %or.cond107 = select i1 %or.cond, i1 %i.z, i1 false
-  br i1 %or.cond107, label %.thread70.thread, label %.tail.thread
+  %i.y = load i8, ptr %i.x, align 1
+  %i.z = icmp eq i8 %i.y, 67
+  %or.cond107 = select i1 %.not86.a, i1 %i.z, i1 false
+  br i1 %or.cond107, label %.tail, label %.tail.thread
+
+.tail:                                            ; preds = %sub_0
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 270
+  %2 = load i8, ptr %1, align 2
+  %3 = icmp ne i8 %2, 50
+  %4 = icmp eq i64 ptrtoint (ptr @_ZN6LibRaw18eight_bit_load_rawEv to i64), ptrtoint (ptr @_ZN6LibRaw18kodak_262_load_rawEv to i64)
+  %or.cond70 = or i1 %4, %3
+  br i1 %or.cond70, label %.tail.thread, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = icmp eq i64 %.unpack, ptrtoint (ptr @_ZN6LibRaw18kodak_262_load_rawEv to i64)
   %i.ab = and i1 %i.aa, %i.h
   br i1 %i.ab, label %.tail.thread, label %bb.g
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %.tail, %bb.f
   %i.ac = icmp eq i64 %.unpack, ptrtoint (ptr @_ZN6LibRaw15packed_load_rawEv to i64)
   %i.ad = and i1 %i.ac, %i.h
-  br i1 %i.ad, label %bb.h, label %bb.i
+  br i1 %i.ad, label %bb.h, label %6
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 381860
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !129
   %i.ag = and i32 %i.af, 32
   %.not46 = icmp eq i32 %i.ag, 0
-  br i1 %.not46, label %.thread70.thread, label %.tail.thread
+  br i1 %.not46, label %6, label %.tail.thread
 
-.tail.thread:                                     ; preds = %sub_0, %bb.d, %bb.f, %bb.h, %bb.c
-  %3 = phi i32 [ %i.d, %bb.d ], [ %i.d, %sub_0 ], [ %i.d, %bb.f ], [ %i.d, %bb.h ], [ %i.p, %bb.c ]
+.tail.thread:                                     ; preds = %sub_0, %bb.d, %.tail, %bb.f, %bb.h, %bb.c
+  %5 = phi i32 [ %i.d, %bb.d ], [ %i.d, %.tail ], [ %i.d, %bb.f ], [ %i.d, %bb.h ], [ %i.p, %bb.c ], [ %i.d, %sub_0 ]
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ai = load i16, ptr %i.ah, align 8, !tbaa !74
   %i.aj = zext i16 %i.ai to i32                   ; 3 uses
@@ -295,7 +299,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 26
   %i.as = load i16, ptr %i.ar, align 2, !tbaa !75
   %i.at = zext i16 %i.as to i32                   ; 2 uses
-  %i.au = add nsw i32 %3, %i.at
+  %i.au = add nsw i32 %5, %i.at
   store i32 %i.au, ptr %i.c, align 8, !tbaa !83
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 22
   %i.aw = load i16, ptr %i.av, align 2, !tbaa !88
@@ -312,16 +316,31 @@ bb.h:                                             ; preds = %bb.g
   %i.bg = load i32, ptr %i.bf, align 8, !tbaa !83
   %i.bh = add nsw i32 %i.bg, %i.be
   store i32 %i.bh, ptr %i.bf, align 8, !tbaa !83
-  br label %bb.i
+  br label %6
 
-bb.i:                                             ; preds = %.tail.thread, %bb.g
-  %4 = icmp eq i64 %.unpack, ptrtoint (ptr @_ZN6LibRaw14nokia_load_rawEv to i64)
-  %5 = icmp eq i64 %.unpack, ptrtoint (ptr @_ZN6LibRaw17broadcom_load_rawEv to i64)
-  %6 = or i1 %4, %5
-  %or.cond113 = and i1 %6, %i.h
-  br i1 %or.cond113, label %.thread70.thread.sink.split, label %.thread70.thread
+6:                                                ; preds = %.tail.thread, %bb.h, %bb.g
+  %7 = icmp eq i64 %.unpack, ptrtoint (ptr @_ZN6LibRaw14nokia_load_rawEv to i64)
+  %8 = and i1 %7, %i.h
+  br i1 %8, label %bb.i, label %16
 
-.thread70.thread.sink.split:                      ; preds = %bb.i
+bb.i:                                             ; preds = %6
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %10 = load i16, ptr %9, align 8, !tbaa !74
+  %11 = zext i16 %10 to i32
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 60
+  store i32 %11, ptr %12, align 4, !tbaa !83
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 22
+  %14 = load i16, ptr %13, align 2, !tbaa !88
+  %15 = zext i16 %14 to i32
+  store i32 %15, ptr %i.c, align 8, !tbaa !83
+  br label %16
+
+16:                                               ; preds = %bb.i, %6
+  %17 = icmp eq i64 %.unpack, ptrtoint (ptr @_ZN6LibRaw17broadcom_load_rawEv to i64)
+  %18 = and i1 %17, %i.h
+  br i1 %18, label %.thread70.thread.sink.split, label %.thread70.thread
+
+.thread70.thread.sink.split:                      ; preds = %16
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bj = load i16, ptr %i.bi, align 8, !tbaa !74
   %i.bk = zext i16 %i.bj to i32
@@ -333,7 +352,7 @@ bb.i:                                             ; preds = %.tail.thread, %bb.g
   store i32 %i.bo, ptr %i.c, align 8, !tbaa !83
   br label %.thread70.thread
 
-.thread70.thread:                                 ; preds = %bb.i, %.thread70.thread.sink.split, %sub_0, %bb.h, %bb.a
+.thread70.thread:                                 ; preds = %16, %.thread70.thread.sink.split, %bb.a
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 153876 ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.bp, i8 0, i64 32, i1 false)
   %i.bq = load i16, ptr %i.a, align 8, !tbaa !131

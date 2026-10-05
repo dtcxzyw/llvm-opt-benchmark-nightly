@@ -202,24 +202,108 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define internal fastcc ptr @inet6_lhash2_lookup(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef captures(address) %1, ptr noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i16 noundef zeroext %5, ptr nofree noundef readonly captures(none) %6, i16 noundef zeroext %7, i32 noundef %8, i32 noundef %9) unnamed_addr #0 align 16 prefalign(16) {
+define internal fastcc ptr @inet6_lhash2_lookup(ptr noundef %0, ptr nofree noundef captures(address) %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, i16 noundef zeroext %5, ptr noundef %6, i16 noundef zeroext %7, i32 noundef %8, i32 noundef %9) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !43
   %i.a = getelementptr i8, ptr %1, i64 8
-  %i.b = load volatile ptr, ptr %i.a, align 8     ; 2 uses
+  %i.b = load volatile ptr, ptr %i.a, align 8     ; 3 uses
   %i.c = ptrtoint ptr %i.b to i64
   %i.d = and i64 %i.c, 1
   %.not45 = icmp eq i64 %i.d, 0
-  br i1 %.not45, label %.lr.ph.a, label %.critedge
+  br i1 %.not45, label %.lr.ph, label %.critedge
 
-.lr.ph.a:                                         ; preds = %bb.a
-  %i.e = getelementptr i8, ptr %6, i64 8
-  br label %bb.b
+.lr.ph:                                           ; preds = %bb.a
+  %10 = getelementptr i8, ptr %6, i64 8           ; 2 uses
+  %11 = icmp eq ptr @inet6_ehashfn, @udp6_ehashfn
+  br i1 %11, label %.lr.ph.split.us, label %bb.b, !prof !14
 
-bb.b:                                             ; preds = %.lr.ph.a, %inet6_lookup_reuseport.exit.thread
-  %.03448 = phi ptr [ null, %.lr.ph.a ], [ %.1, %inet6_lookup_reuseport.exit.thread ]
-  %.03547 = phi ptr [ %i.b, %.lr.ph.a ], [ %i.aj, %inet6_lookup_reuseport.exit.thread ] ; 10 uses
-  %.03646 = phi i32 [ 0, %.lr.ph.a ], [ %.137, %inet6_lookup_reuseport.exit.thread ] ; 2 uses
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %inet6_lookup_reuseport.exit.thread.us
+  %.03448.us = phi ptr [ %.1.us, %inet6_lookup_reuseport.exit.thread.us ], [ null, %.lr.ph ]
+  %.03547.us = phi ptr [ %46, %inet6_lookup_reuseport.exit.thread.us ], [ %i.b, %.lr.ph ] ; 10 uses
+  %.03646.us = phi i32 [ %.137.us, %inet6_lookup_reuseport.exit.thread.us ], [ 0, %.lr.ph ] ; 2 uses
+  %12 = getelementptr i8, ptr %.03547.us, i64 -104 ; 3 uses
+  %13 = getelementptr i8, ptr %.03547.us, i64 -56
+  %.val.i.us = load ptr, ptr %13, align 8
+  %.not.i.us = icmp eq ptr %.val.i.us, %0
+  br i1 %.not.i.us, label %14, label %compute_score.exit.us
+
+14:                                               ; preds = %.lr.ph.split.us
+  %15 = getelementptr i8, ptr %.03547.us, i64 -90
+  %16 = load volatile i16, ptr %15, align 2
+  %17 = icmp eq i16 %16, %7
+  br i1 %17, label %18, label %compute_score.exit.us
+
+18:                                               ; preds = %14
+  %19 = getelementptr i8, ptr %.03547.us, i64 -88
+  %20 = load i16, ptr %19, align 8
+  %21 = icmp eq i16 %20, 10
+  br i1 %21, label %22, label %compute_score.exit.us
+
+22:                                               ; preds = %18
+  %23 = getelementptr i8, ptr %.03547.us, i64 -32
+  %.val25.i.us = load i64, ptr %23, align 8
+  %24 = getelementptr i8, ptr %.03547.us, i64 -24
+  %.val26.i.us = load i64, ptr %24, align 8
+  %.val27.i.us = load i64, ptr %6, align 8
+  %.val28.i.us = load i64, ptr %10, align 8
+  %25 = icmp eq i64 %.val25.i.us, %.val27.i.us
+  %26 = icmp eq i64 %.val26.i.us, %.val28.i.us
+  %27 = and i1 %25, %26
+  br i1 %27, label %28, label %compute_score.exit.us
+
+28:                                               ; preds = %22
+  %29 = getelementptr i8, ptr %.03547.us, i64 -84
+  %30 = load i32, ptr %29, align 4                ; 3 uses
+  %.not.i.i.i.us = icmp eq i32 %30, 0
+  br i1 %.not.i.i.i.us, label %.lr.ph.a, label %inet_sk_bound_dev_eq.exit.i.us
+
+inet_sk_bound_dev_eq.exit.i.us:                   ; preds = %28
+  %31 = icmp eq i32 %30, %8
+  %32 = icmp eq i32 %30, %9
+  %33 = or i1 %31, %32
+  br i1 %33, label %.lr.ph.a, label %compute_score.exit.us
+
+.lr.ph.a:                                         ; preds = %inet_sk_bound_dev_eq.exit.i.us, %28
+  %34 = phi i32 [ 1, %28 ], [ 2, %inet_sk_bound_dev_eq.exit.i.us ]
+  %i.e = getelementptr i8, ptr %.03547.us, i64 20
+  %35 = load volatile i32, ptr %i.e, align 4
+  %36 = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #9, !srcloc !44
+  %37 = icmp eq i32 %35, %36
+  %38 = zext i1 %37 to i32
+  %spec.select.i.us = add nuw nsw i32 %34, %38
+  br label %compute_score.exit.us
+
+compute_score.exit.us:                            ; preds = %.lr.ph.a, %inet_sk_bound_dev_eq.exit.i.us, %22, %18, %14, %.lr.ph.split.us
+  %.0.i.us = phi i32 [ -1, %inet_sk_bound_dev_eq.exit.i.us ], [ -1, %22 ], [ -1, %.lr.ph.split.us ], [ %spec.select.i.us, %.lr.ph.a ], [ -1, %18 ], [ -1, %14 ] ; 3 uses
+  %39 = icmp sgt i32 %.0.i.us, %.03646.us
+  br i1 %39, label %40, label %inet6_lookup_reuseport.exit.thread.us
+
+40:                                               ; preds = %compute_score.exit.us
+  %41 = getelementptr i8, ptr %.03547.us, i64 -85
+  %42 = load i8, ptr %41, align 1
+  %43 = and i8 %42, 16
+  %.not.i41.us = icmp eq i8 %43, 0
+  br i1 %.not.i41.us, label %inet6_lookup_reuseport.exit.thread.us, label %inet6_lookup_reuseport.exit.us
+
+inet6_lookup_reuseport.exit.us:                   ; preds = %40
+  %44 = tail call i32 @udp6_ehashfn(ptr noundef %0, ptr noundef %6, i16 noundef zeroext %7, ptr noundef %4, i16 noundef zeroext %5) #10
+  %45 = tail call ptr @reuseport_select_sock(ptr noundef %12, i32 noundef %44, ptr noundef %2, i32 noundef %3) #10 ; 2 uses
+  %.not40.us = icmp eq ptr %45, null
+  br i1 %.not40.us, label %inet6_lookup_reuseport.exit.thread.us, label %.critedge
+
+inet6_lookup_reuseport.exit.thread.us:            ; preds = %inet6_lookup_reuseport.exit.us, %40, %compute_score.exit.us
+  %.137.us = phi i32 [ %.03646.us, %compute_score.exit.us ], [ %.0.i.us, %inet6_lookup_reuseport.exit.us ], [ %.0.i.us, %40 ]
+  %.1.us = phi ptr [ %.03448.us, %compute_score.exit.us ], [ %12, %inet6_lookup_reuseport.exit.us ], [ %12, %40 ] ; 2 uses
+  %46 = load volatile ptr, ptr %.03547.us, align 8 ; 2 uses
+  %47 = ptrtoint ptr %46 to i64
+  %48 = and i64 %47, 1
+  %.not.us = icmp eq i64 %48, 0
+  br i1 %.not.us, label %.lr.ph.split.us, label %.critedge, !llvm.loop !42
+
+bb.b:                                             ; preds = %.lr.ph, %inet6_lookup_reuseport.exit.thread
+  %.03448 = phi ptr [ %.1, %inet6_lookup_reuseport.exit.thread ], [ null, %.lr.ph ]
+  %.03547 = phi ptr [ %i.aj, %inet6_lookup_reuseport.exit.thread ], [ %i.b, %.lr.ph ] ; 10 uses
+  %.03646 = phi i32 [ %.137, %inet6_lookup_reuseport.exit.thread ], [ 0, %.lr.ph ] ; 2 uses
   %i.f = getelementptr i8, ptr %.03547, i64 -104  ; 3 uses
   %i.g = getelementptr i8, ptr %.03547, i64 -56
   %.val.i = load ptr, ptr %i.g, align 8
@@ -244,7 +328,7 @@ bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr i8, ptr %.03547, i64 -24
   %.val26.i = load i64, ptr %i.o, align 8
   %.val27.i = load i64, ptr %6, align 8
-  %.val28.i = load i64, ptr %i.e, align 8
+  %.val28.i = load i64, ptr %10, align 8
   %i.p = icmp eq i64 %.val25.i, %.val27.i
   %i.q = icmp eq i64 %.val26.i, %.val28.i
   %i.r = and i1 %i.p, %i.q
@@ -299,8 +383,8 @@ inet6_lookup_reuseport.exit.thread:               ; preds = %bb.g, %inet6_lookup
   %.not = icmp eq i64 %i.al, 0
   br i1 %.not, label %bb.b, label %.critedge, !llvm.loop !42
 
-.critedge:                                        ; preds = %inet6_lookup_reuseport.exit, %inet6_lookup_reuseport.exit.thread, %bb.a
-  %.0 = phi ptr [ null, %bb.a ], [ %.1, %inet6_lookup_reuseport.exit.thread ], [ %i.ai, %inet6_lookup_reuseport.exit ]
+.critedge:                                        ; preds = %inet6_lookup_reuseport.exit, %inet6_lookup_reuseport.exit.thread, %inet6_lookup_reuseport.exit.us, %inet6_lookup_reuseport.exit.thread.us, %bb.a
+  %.0 = phi ptr [ %.1.us, %inet6_lookup_reuseport.exit.thread.us ], [ null, %bb.a ], [ %45, %inet6_lookup_reuseport.exit.us ], [ %.1, %inet6_lookup_reuseport.exit.thread ], [ %i.ai, %inet6_lookup_reuseport.exit ]
   ret ptr %.0
 }
 

@@ -204,7 +204,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !72
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
-  ret i1 %i.d
+  %1 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %1, %i.d
+  ret i1 %spec.select.i.i.i.i
 }
 
 declare noundef ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef) local_unnamed_addr #2
@@ -597,10 +599,19 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7.i: ; preds = %_Z
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
-  br label %_ZN4mlir9Operation11getParentOpEv.exit.i.i.i
+  %.not8.i.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  br i1 %.not8.i.i.i, label %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i.i, label %_ZN4mlir9Operation11getParentOpEv.exit.i.i.i
 
-_ZN4mlir9Operation11getParentOpEv.exit.i.i.i:     ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7.i
-  %.0.i.i.i = phi ptr [ %1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7.i ], [ %i.dn, %_ZN4mlir9Operation11getParentOpEv.exit.i.i.i ]
+_ZN4mlir9Operation11getParentOpEv.exit.us.i.i.i:  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7.i, %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i.i
+  %.pn.i.i = phi ptr [ %19, %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i.i ], [ %1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7.i ]
+  %.in.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 16
+  %18 = load ptr, ptr %.in.i.i, align 8, !tbaa !207, !nonnull !35, !noundef !35
+  %19 = call noundef ptr @_ZN4mlir5Block11getParentOpEv(ptr noundef nonnull align 8 dereferenceable(80) %18) #20 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %19) ]
+  br label %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i.i
+
+_ZN4mlir9Operation11getParentOpEv.exit.i.i.i:     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7.i, %_ZN4mlir9Operation11getParentOpEv.exit.i.i.i
+  %.0.i.i.i = phi ptr [ %i.dn, %_ZN4mlir9Operation11getParentOpEv.exit.i.i.i ], [ %1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7.i ]
   %i.dl = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 16
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !207, !nonnull !35, !noundef !35
   %i.dn = call noundef ptr @_ZN4mlir5Block11getParentOpEv(ptr noundef nonnull align 8 dereferenceable(80) %i.dm) #20 ; 8 uses

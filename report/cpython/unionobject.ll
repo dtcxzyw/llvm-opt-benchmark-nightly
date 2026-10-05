@@ -202,15 +202,19 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph
   br i1 %or.cond.not, label %bb.d, label %unionbuilder_add_tuple.exit, !llvm.loop !1
 
 bb.e:                                             ; preds = %bb.a, %bb.b
-  %.014 = phi ptr [ %1, %bb.b ], [ @_PyNone_Type, %bb.a ] ; 7 uses
+  %.014 = phi ptr [ %1, %bb.b ], [ @_PyNone_Type, %bb.a ] ; 8 uses
   %i.l = getelementptr i8, ptr %0, i64 24
   %i.m = load i8, ptr %i.l, align 8, !tbaa !33, !range !56, !noundef !57
   %i.n = trunc nuw i8 %i.m to i1
-  br i1 %i.n, label %bb.f, label %bb.v
+  br i1 %i.n, label %2, label %bb.v
 
-bb.f:                                             ; preds = %bb.e
-  %2 = getelementptr i8, ptr %.014, i64 8         ; 2 uses
-  %.val.i18 = load ptr, ptr %2, align 8, !tbaa !16 ; 3 uses
+2:                                                ; preds = %bb.e
+  %3 = icmp eq ptr %.014, @_Py_NoneStruct
+  %4 = getelementptr i8, ptr %.014, i64 8         ; 2 uses
+  %.val.i18 = load ptr, ptr %4, align 8, !tbaa !16 ; 4 uses
+  br i1 %3, label %type_check.exit, label %bb.f
+
+bb.f:                                             ; preds = %2
   %i.o = getelementptr i8, ptr %.val.i18, i64 168
   %.val.val.i.i = load i64, ptr %i.o, align 8, !tbaa !26
   %i.p = and i64 %.val.val.i.i, 2147483648
@@ -225,7 +229,7 @@ PyObject_TypeCheck.exit.i.i:                      ; preds = %bb.f
   br i1 %.not.i14.i, label %bb.g, label %is_unionable.exit.thread.i
 
 bb.g:                                             ; preds = %PyObject_TypeCheck.exit.i.i
-  %.val10.i.i = load ptr, ptr %2, align 8, !tbaa !16 ; 2 uses
+  %.val10.i.i = load ptr, ptr %4, align 8, !tbaa !16 ; 2 uses
   %.not13.i.i = icmp eq ptr %.val10.i.i, @_PyUnion_Type
   %.not14.i.not.i = icmp eq ptr %.val10.i.i, @_PyTypeAlias_Type
   %or.cond.i = or i1 %.not13.i.i, %.not14.i.not.i
@@ -234,12 +238,12 @@ bb.g:                                             ; preds = %PyObject_TypeCheck.
 is_unionable.exit.thread.i:                       ; preds = %bb.g, %PyObject_TypeCheck.exit.i.i, %bb.f
   %i.s = load i32, ptr %.014, align 8, !tbaa !31  ; 2 uses
   %i.t = icmp ugt i32 %i.s, -1073741825
-  br i1 %i.t, label %type_check.exit.thread, label %bb.h
+  br i1 %i.t, label %type_check.exit, label %bb.h
 
 bb.h:                                             ; preds = %is_unionable.exit.thread.i
   %i.u = add nuw i32 %i.s, 1
   store i32 %i.u, ptr %.014, align 8, !tbaa !31
-  br label %type_check.exit.thread
+  br label %type_check.exit
 
 bb.i:                                             ; preds = %bb.g
   %i.v = tail call ptr @PyUnicode_FromString(ptr noundef nonnull @.str.2) #6, !inline_history !55 ; 5 uses
@@ -304,41 +308,44 @@ Py_DECREF.exit16.sink.split.i.i:                  ; preds = %bb.q, %bb.m
   br label %call_typing_func_object.exit.i
 
 call_typing_func_object.exit.i:                   ; preds = %Py_DECREF.exit16.sink.split.i.i, %bb.q, %Py_DECREF.exit14.i.i, %bb.m, %bb.l, %bb.j
-  %.1.i.i = phi ptr [ null, %bb.j ], [ %i.af, %bb.q ], [ null, %bb.l ], [ null, %bb.m ], [ %i.af, %Py_DECREF.exit14.i.i ], [ %.1.ph.i.i, %Py_DECREF.exit16.sink.split.i.i ] ; 2 uses
+  %.1.i.i = phi ptr [ null, %bb.j ], [ %i.af, %bb.q ], [ null, %bb.l ], [ null, %bb.m ], [ %i.af, %Py_DECREF.exit14.i.i ], [ %.1.ph.i.i, %Py_DECREF.exit16.sink.split.i.i ]
   %i.am = load i32, ptr %i.v, align 8, !tbaa !31  ; 2 uses
   %.not.i.i = icmp sgt i32 %i.am, -1
-  br i1 %.not.i.i, label %bb.r, label %type_check.exit
+  br i1 %.not.i.i, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %call_typing_func_object.exit.i
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
   store i32 %i.an, ptr %i.v, align 8, !tbaa !31
   %i.ao = icmp eq i32 %i.an, 0
-  br i1 %i.ao, label %bb.s, label %type_check.exit
+  br i1 %i.ao, label %5, label %bb.s
 
-bb.s:                                             ; preds = %bb.r
+5:                                                ; preds = %bb.r
   call void @_Py_Dealloc(ptr noundef nonnull %i.v) #6, !inline_history !55
+  br label %bb.s
+
+bb.s:                                             ; preds = %5, %bb.r, %call_typing_func_object.exit.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %type_check.exit
 
-type_check.exit:                                  ; preds = %call_typing_func_object.exit.i, %bb.r, %bb.s
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
-  %i.ap = icmp eq ptr %.1.i.i, null
+type_check.exit:                                  ; preds = %2, %is_unionable.exit.thread.i, %bb.h, %bb.s
+  %.1.i = phi ptr [ %.014, %bb.h ], [ %.val.i18, %2 ], [ %.1.i.i, %bb.s ], [ %.014, %is_unionable.exit.thread.i ] ; 5 uses
+  %i.ap = icmp eq ptr %.1.i, null
   br i1 %i.ap, label %unionbuilder_add_tuple.exit, label %type_check.exit.thread
 
-type_check.exit.thread:                           ; preds = %is_unionable.exit.thread.i, %bb.h, %type_check.exit
-  %.1.i20 = phi ptr [ %.1.i.i, %type_check.exit ], [ %.014, %bb.h ], [ %.014, %is_unionable.exit.thread.i ] ; 4 uses
-  %i.aq = call fastcc zeroext i1 @unionbuilder_add_single_unchecked(ptr noundef %0, ptr noundef nonnull %.1.i20) ; 3 uses
-  %i.ar = load i32, ptr %.1.i20, align 8, !tbaa !31 ; 2 uses
+type_check.exit.thread:                           ; preds = %type_check.exit
+  %i.aq = call fastcc zeroext i1 @unionbuilder_add_single_unchecked(ptr noundef %0, ptr noundef nonnull %.1.i) ; 3 uses
+  %i.ar = load i32, ptr %.1.i, align 8, !tbaa !31 ; 2 uses
   %.not.i = icmp sgt i32 %i.ar, -1
   br i1 %.not.i, label %bb.t, label %unionbuilder_add_tuple.exit
 
 bb.t:                                             ; preds = %type_check.exit.thread
   %i.as = add nsw i32 %i.ar, -1                   ; 2 uses
-  store i32 %i.as, ptr %.1.i20, align 8, !tbaa !31
+  store i32 %i.as, ptr %.1.i, align 8, !tbaa !31
   %i.at = icmp eq i32 %i.as, 0
   br i1 %i.at, label %bb.u, label %unionbuilder_add_tuple.exit
 
 bb.u:                                             ; preds = %bb.t
-  call void @_Py_Dealloc(ptr noundef nonnull %.1.i20) #6
+  call void @_Py_Dealloc(ptr noundef nonnull %.1.i) #6
   br label %unionbuilder_add_tuple.exit
 
 bb.v:                                             ; preds = %bb.e

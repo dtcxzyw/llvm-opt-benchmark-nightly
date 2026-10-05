@@ -204,7 +204,9 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV15StreamLogOutput, i64 16), ptr @stderr_output, align 8, !tbaa !30
   store ptr @_ZSt4cerr, ptr getelementptr inbounds nuw (i8, ptr @stderr_output, i64 8), align 8, !tbaa !92
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @stderr_output, i64 16), align 8, !tbaa !96
-  %i.e = tail call i32 @isatty(i32 noundef 2) #4
+  %0 = icmp eq ptr @_ZSt4cerr, @_ZSt4cout
+  %spec.select.i = select i1 %0, i32 1, i32 2
+  %i.e = tail call i32 @isatty(i32 noundef %spec.select.i) #4
   %i.f = icmp ne i32 %i.e, 0
   %i.g = zext i1 %i.f to i8
   store i8 %i.g, ptr getelementptr inbounds nuw (i8, ptr @stderr_output, i64 16), align 8, !tbaa !96

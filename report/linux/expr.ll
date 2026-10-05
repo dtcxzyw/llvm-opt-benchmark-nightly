@@ -203,7 +203,7 @@ expr_alloc_two.exit:                              ; preds = %bb.d, %hlist_add_he
   br label %expr_join_or.exit.thread
 
 bb.h:                                             ; preds = %bb.a
-  %i.aq = load ptr, ptr %2, align 8, !tbaa !27    ; 20 uses
+  %i.aq = load ptr, ptr %2, align 8, !tbaa !27    ; 25 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 16 ; 3 uses
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !19
   %i.at = icmp eq i32 %i.as, %0
@@ -382,53 +382,68 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.cw = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !20 ; 3 uses
-  %i.cy = icmp eq ptr %i.cx, @symbol_yes
+  %i.cy = icmp eq ptr %i.cx, @symbol_yes          ; 2 uses
   br i1 %i.cy, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cz = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
-  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !20 ; 2 uses
+  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !20
   %i.db = icmp eq ptr %i.da, @symbol_mod
-  br i1 %i.db, label %bb.ae, label %.thread.i
+  br i1 %i.db, label %bb.ae, label %bb.ac
 
-bb.ac:                                            ; preds = %bb.aa
-  %i.dc = icmp eq ptr %i.cx, @symbol_mod
-  br i1 %i.dc, label %bb.ad, label %bb.af
+bb.ac:                                            ; preds = %bb.ab, %bb.aa
+  %i.dc = icmp eq ptr %i.cx, @symbol_mod          ; 2 uses
+  br i1 %i.dc, label %bb.ad, label %3
 
 bb.ad:                                            ; preds = %bb.ac
   %i.dd = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
-  %i.de = load ptr, ptr %i.dd, align 8, !tbaa !20 ; 2 uses
+  %i.de = load ptr, ptr %i.dd, align 8, !tbaa !20
   %i.df = icmp eq ptr %i.de, @symbol_yes
-  br i1 %i.df, label %bb.ae, label %bb.ai
+  br i1 %i.df, label %bb.ae, label %3
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ab
   %i.dg = tail call ptr @expr_alloc_comp(i32 noundef 5, ptr noundef nonnull %.056.i, ptr noundef nonnull @symbol_no)
   br label %expr_join_or.exit
 
-.thread.i:                                        ; preds = %bb.ab
-  %i.dh = icmp eq ptr %i.da, @symbol_no
-  br i1 %i.dh, label %bb.ah, label %expr_join_or.exit.thread
+3:                                                ; preds = %bb.ad, %bb.ac
+  br i1 %i.cy, label %.thread.i, label %bb.af
 
-bb.af:                                            ; preds = %bb.ac
-  %i.di = icmp eq ptr %i.cx, @symbol_no
-  br i1 %i.di, label %bb.ag, label %expr_join_or.exit.thread
+.thread.i:                                        ; preds = %3
+  %4 = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
+  %5 = load ptr, ptr %4, align 8, !tbaa !20
+  %i.dh = icmp eq ptr %5, @symbol_no
+  br i1 %i.dh, label %bb.ah, label %bb.af
+
+bb.af:                                            ; preds = %.thread.i, %3
+  %i.di = icmp eq ptr %i.cx, @symbol_no           ; 2 uses
+  br i1 %i.di, label %bb.ag, label %6
 
 bb.ag:                                            ; preds = %bb.af
   %i.dj = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
-  %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !20 ; 2 uses
+  %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !20
   %i.dl = icmp eq ptr %i.dk, @symbol_yes
-  br i1 %i.dl, label %bb.ah, label %bb.aj
+  br i1 %i.dl, label %bb.ah, label %6
 
 bb.ah:                                            ; preds = %bb.ag, %.thread.i
   %i.dm = tail call ptr @expr_alloc_comp(i32 noundef 5, ptr noundef nonnull %.056.i, ptr noundef nonnull @symbol_mod)
   br label %expr_join_or.exit
 
-bb.ai:                                            ; preds = %bb.ad
-  %i.dn = icmp eq ptr %i.de, @symbol_no
-  br i1 %i.dn, label %bb.ak, label %expr_join_or.exit.thread
+6:                                                ; preds = %bb.ag, %bb.af
+  br i1 %i.dc, label %bb.ai, label %9
 
-bb.aj:                                            ; preds = %bb.ag
-  %i.do = icmp eq ptr %i.dk, @symbol_mod
+bb.ai:                                            ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
+  %8 = load ptr, ptr %7, align 8, !tbaa !20
+  %i.dn = icmp eq ptr %8, @symbol_no
+  br i1 %i.dn, label %bb.ak, label %9
+
+9:                                                ; preds = %bb.ai, %6
+  br i1 %i.di, label %bb.aj, label %expr_join_or.exit.thread
+
+bb.aj:                                            ; preds = %9
+  %10 = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
+  %11 = load ptr, ptr %10, align 8, !tbaa !20
+  %i.do = icmp eq ptr %11, @symbol_mod
   br i1 %i.do, label %bb.ak, label %expr_join_or.exit.thread
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
@@ -754,36 +769,41 @@ bb.cd:                                            ; preds = %bb.cb
 bb.ce:                                            ; preds = %bb.by
   %i.hk = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.hl = load ptr, ptr %i.hk, align 8, !tbaa !20 ; 3 uses
-  %i.hm = icmp eq ptr %i.hl, @symbol_yes
+  %i.hm = icmp eq ptr %i.hl, @symbol_yes          ; 2 uses
   br i1 %i.hm, label %bb.cf, label %bb.cg
 
 bb.cf:                                            ; preds = %bb.ce
   %i.hn = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
-  %i.ho = load ptr, ptr %i.hn, align 8, !tbaa !20 ; 2 uses
+  %i.ho = load ptr, ptr %i.hn, align 8, !tbaa !20
   %i.hp = icmp eq ptr %i.ho, @symbol_no
-  br i1 %i.hp, label %bb.ci, label %.thread167.i
+  br i1 %i.hp, label %bb.ci, label %bb.cg
 
-bb.cg:                                            ; preds = %bb.ce
-  %i.hq = icmp eq ptr %i.hl, @symbol_no
-  br i1 %i.hq, label %bb.ch, label %bb.cj
+bb.cg:                                            ; preds = %bb.cf, %bb.ce
+  %i.hq = icmp eq ptr %i.hl, @symbol_no           ; 2 uses
+  br i1 %i.hq, label %bb.ch, label %12
 
 bb.ch:                                            ; preds = %bb.cg
   %i.hr = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
-  %i.hs = load ptr, ptr %i.hr, align 8, !tbaa !20 ; 2 uses
+  %i.hs = load ptr, ptr %i.hr, align 8, !tbaa !20
   %i.ht = icmp eq ptr %i.hs, @symbol_yes
-  br i1 %i.ht, label %bb.ci, label %bb.cm
+  br i1 %i.ht, label %bb.ci, label %12
 
 bb.ci:                                            ; preds = %bb.ch, %bb.cf
   %i.hu = tail call ptr @expr_alloc_comp(i32 noundef 4, ptr noundef nonnull %.0100.i, ptr noundef nonnull @symbol_mod)
   br label %expr_join_and.exit
 
-.thread167.i:                                     ; preds = %bb.cf
-  %i.hv = icmp eq ptr %i.ho, @symbol_mod
-  br i1 %i.hv, label %bb.cl, label %expr_join_or.exit.thread
+12:                                               ; preds = %bb.ch, %bb.cg
+  br i1 %i.hm, label %.thread167.i, label %bb.cj
 
-bb.cj:                                            ; preds = %bb.cg
+.thread167.i:                                     ; preds = %12
+  %13 = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
+  %14 = load ptr, ptr %13, align 8, !tbaa !20
+  %i.hv = icmp eq ptr %14, @symbol_mod
+  br i1 %i.hv, label %bb.cl, label %bb.cj
+
+bb.cj:                                            ; preds = %.thread167.i, %12
   %i.hw = icmp eq ptr %i.hl, @symbol_mod
-  br i1 %i.hw, label %bb.ck, label %expr_join_or.exit.thread
+  br i1 %i.hw, label %bb.ck, label %15
 
 bb.ck:                                            ; preds = %bb.cj
   %i.hx = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
@@ -797,10 +817,15 @@ bb.cl:                                            ; preds = %bb.ck, %.thread167.
 
 .thread173.i:                                     ; preds = %bb.ck
   %i.ib = icmp eq ptr %i.hy, @symbol_no
-  br i1 %i.ib, label %bb.cn, label %expr_join_or.exit.thread
+  br i1 %i.ib, label %bb.cn, label %15
 
-bb.cm:                                            ; preds = %bb.ch
-  %i.ic = icmp eq ptr %i.hs, @symbol_mod
+15:                                               ; preds = %.thread173.i, %bb.cj
+  br i1 %i.hq, label %bb.cm, label %expr_join_or.exit.thread
+
+bb.cm:                                            ; preds = %15
+  %16 = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
+  %17 = load ptr, ptr %16, align 8, !tbaa !20
+  %i.ic = icmp eq ptr %17, @symbol_mod
   br i1 %i.ic, label %bb.cn, label %expr_join_or.exit.thread
 
 bb.cn:                                            ; preds = %bb.cm, %.thread173.i
@@ -883,7 +908,7 @@ expr_alloc_symbol.exit68:                         ; preds = %bb.cp, %hlist_add_h
   store i32 %i.jc, ptr @trans_count, align 4, !tbaa !28
   br label %expr_join_or.exit.thread
 
-expr_join_or.exit.thread:                         ; preds = %bb.cj, %bb.by, %bb.br, %bb.bs, %bb.bu, %bb.bt, %bb.ca, %bb.bz, %.thread173.i, %bb.bj, %.thread167.i, %bb.cm, %bb.bd, %bb.bc, %bb.bb, %bb.az, %bb.ax, %bb.aw, %.thread153.i, %bb.af, %.thread.i, %bb.z, %bb.aj, %bb.ai, %bb.ao, %bb.an, %bb.w, %bb.v, %bb.t, %bb.r, %bb.q, %bb.x, %expr_alloc_symbol.exit, %expr_alloc_symbol.exit68, %bb.o, %expr_alloc_two.exit44, %expr_alloc_two.exit
+expr_join_or.exit.thread:                         ; preds = %bb.by, %bb.bs, %bb.bu, %bb.bt, %bb.br, %bb.bz, %bb.ca, %bb.bj, %15, %bb.cm, %bb.bd, %bb.bc, %bb.bb, %bb.az, %bb.ax, %bb.aw, %.thread153.i, %bb.z, %9, %bb.aj, %bb.ao, %bb.an, %bb.w, %bb.v, %bb.t, %bb.r, %bb.q, %bb.x, %expr_alloc_symbol.exit, %expr_alloc_symbol.exit68, %bb.o, %expr_alloc_two.exit44, %expr_alloc_two.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   ret void

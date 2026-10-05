@@ -205,6 +205,7 @@ _ZNRSt8optionalIN4llvm9StringRefEE5valueEv.exit:  ; preds = %_ZN4llvmplERKNS_5Tw
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 1208
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 368
+  %22 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_7wasmssa6FuncOpEvE2idE
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 8 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 3 uses
@@ -258,7 +259,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.a
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !133
   %i.bo = icmp eq ptr %i.bn, @_ZN4mlir6detail14TypeIDResolverINS_7wasmssa6FuncOpEvE2idE
-  %spec.select.i.i.i = select i1 %i.bo, ptr %i.bk, ptr null ; 2 uses
+  %spec.select.i.i.i.i.i = and i1 %22, %i.bo
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %i.bk, ptr null ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
   store ptr %spec.select.i.i.i, ptr %2, align 8

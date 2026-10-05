@@ -205,12 +205,12 @@ bb.bq:                                            ; preds = %bb.bp
   %i.jy = getelementptr inbounds nuw i8, ptr %0, i64 2032
   %i.jz = load i16, ptr %i.jy, align 8, !tbaa !133
   %.not412 = icmp eq i16 %i.jz, 0
-  br i1 %.not412, label %.thread586thread-pre-split, label %bb.br
+  br i1 %.not412, label %bb.bv, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
-  %i.ka = load i32, ptr %i.aq, align 4, !tbaa !110 ; 2 uses
+  %i.ka = load i32, ptr %i.aq, align 4, !tbaa !110
   %i.kb = icmp eq i32 %i.ka, 29
-  br i1 %i.kb, label %bb.bs, label %.thread586
+  br i1 %i.kb, label %bb.bs, label %bb.bv
 
 bb.bs:                                            ; preds = %bb.br
   %i.kc = getelementptr inbounds nuw i8, ptr %0, i64 268 ; 2 uses
@@ -221,7 +221,7 @@ bb.bs:                                            ; preds = %bb.br
 bb.bt:                                            ; preds = %bb.bs
   %i.ke = tail call i32 @strncasecmp(ptr noundef nonnull %i.kc, ptr noundef nonnull @.str.35, i64 noundef 9) #20
   %.not414 = icmp eq i32 %i.ke, 0
-  br i1 %.not414, label %bb.bu, label %.thread586thread-pre-split
+  br i1 %.not414, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %i.kf = getelementptr inbounds nuw i8, ptr %0, i64 153088
@@ -238,12 +238,12 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %i.kl = load i32, ptr %i.kk, align 4, !tbaa !85
   %i.km = or i32 %i.kl, 512
   store i32 %i.km, ptr %i.kk, align 4, !tbaa !85
-  br label %.thread586thread-pre-split
+  br label %bb.bv
 
-bb.bv:                                            ; preds = %bb.bp
+bb.bv:                                            ; preds = %bb.bu, %bb.bt, %bb.br, %bb.bq, %bb.bp
   %i.kn = icmp eq i64 %.unpack409, ptrtoint (ptr @_ZN6LibRaw18panasonic_load_rawEv to i64)
   %i.ko = and i1 %i.kn, %i.jw
-  br i1 %i.ko, label %bb.bw, label %.thread586thread-pre-split
+  br i1 %i.ko, label %bb.bw, label %.thread586
 
 bb.bw:                                            ; preds = %bb.bv
   %i.kp = getelementptr inbounds nuw i8, ptr %0, i64 381908
@@ -279,7 +279,7 @@ bb.bw:                                            ; preds = %bb.bv
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw, %.preheader690
-  switch i32 %i.kq, label %.thread586thread-pre-split [
+  switch i32 %i.kq, label %.thread586 [
     i32 6, label %bb.by
     i32 7, label %bb.cj
     i32 8, label %bb.cn
@@ -341,7 +341,7 @@ bb.cd:                                            ; preds = %bb.cc
 bb.ce:                                            ; preds = %bb.cd
   store i64 ptrtoint (ptr @_ZN6LibRaw20panasonicC6_load_rawEv to i64), ptr %i.jr, align 8, !tbaa !87
   store i64 0, ptr %.elt407, align 8, !tbaa !87
-  br label %.thread586thread-pre-split
+  br label %.thread586
 
 bb.cf:                                            ; preds = %bb.cd, %bb.cc
   %i.mi = urem i16 %i.lz, 14
@@ -360,12 +360,12 @@ bb.cg:                                            ; preds = %bb.cf
 bb.ch:                                            ; preds = %bb.cg
   store i64 ptrtoint (ptr @_ZN6LibRaw20panasonicC6_load_rawEv to i64), ptr %i.jr, align 8, !tbaa !87
   store i64 0, ptr %.elt407, align 8, !tbaa !87
-  br label %.thread586thread-pre-split
+  br label %.thread586
 
 bb.ci:                                            ; preds = %bb.cg, %bb.cf
   %i.mq = getelementptr inbounds nuw i8, ptr %0, i64 528
   store i32 0, ptr %i.mq, align 8, !tbaa !92
-  br label %.thread586thread-pre-split
+  br label %.thread586
 
 bb.cj:                                            ; preds = %bb.bx
   %i.mr = getelementptr inbounds nuw i8, ptr %0, i64 381912
@@ -394,12 +394,12 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.ck
   store i64 ptrtoint (ptr @_ZN6LibRaw20panasonicC7_load_rawEv to i64), ptr %i.jr, align 8, !tbaa !87
   store i64 0, ptr %.elt407, align 8, !tbaa !87
-  br label %.thread586thread-pre-split
+  br label %.thread586
 
 bb.cm:                                            ; preds = %bb.ck, %bb.cj
   %i.nh = getelementptr inbounds nuw i8, ptr %0, i64 528
   store i32 0, ptr %i.nh, align 8, !tbaa !92
-  br label %.thread586thread-pre-split
+  br label %.thread586
 
 bb.cn:                                            ; preds = %bb.bx
   %i.ni = getelementptr inbounds nuw i8, ptr %0, i64 382068
@@ -410,19 +410,15 @@ bb.cn:                                            ; preds = %bb.bx
 bb.co:                                            ; preds = %bb.cn
   store i64 ptrtoint (ptr @_ZN6LibRaw20panasonicC8_load_rawEv to i64), ptr %i.jr, align 8, !tbaa !87
   store i64 0, ptr %.elt407, align 8, !tbaa !87
-  br label %.thread586thread-pre-split
+  br label %.thread586
 
 bb.cp:                                            ; preds = %bb.cn
   %i.nk = getelementptr inbounds nuw i8, ptr %0, i64 528
   store i32 0, ptr %i.nk, align 8, !tbaa !92
-  br label %.thread586thread-pre-split
-
-.thread586thread-pre-split:                       ; preds = %bb.bv, %bb.co, %bb.cp, %bb.ch, %bb.ci, %bb.ce, %bb.cm, %bb.cl, %bb.bx, %bb.bu, %bb.bt, %bb.bq
-  %.pr636 = load i32, ptr %i.aq, align 4, !tbaa !110
   br label %.thread586
 
-.thread586:                                       ; preds = %.thread586thread-pre-split, %bb.br
-  %2 = phi i32 [ %.pr636, %.thread586thread-pre-split ], [ %i.ka, %bb.br ] ; 2 uses
+.thread586:                                       ; preds = %bb.bx, %bb.cl, %bb.cm, %bb.ce, %bb.ci, %bb.ch, %bb.cp, %bb.co, %bb.bv
+  %2 = load i32, ptr %i.aq, align 4, !tbaa !110   ; 2 uses
   switch i32 %2, label %.thread591 [
     i32 43, label %bb.cq
     i32 63, label %bb.cw
@@ -825,7 +821,7 @@ bb.hc:                                            ; preds = %bb.hb, %bb.ha
   br label %.thread624
 
 .thread624:                                       ; preds = %bb.gu, %bb.gv, %bb.gw, %bb.gr, %bb.gs, %bb.gt, %.thread608, %bb.fv, %bb.fy, %bb.fz, %bb.fx, %bb.fu, %bb.fw, %bb.fs, %bb.fr, %bb.ga, %bb.gd, %bb.ge, %bb.gb, %bb.gc, %.thread599, %bb.gx, %bb.gy, %bb.hc, %bb.hb, %bb.gz
-  %i.amj = phi i1 [ false, %.thread599 ], [ false, %bb.gx ], [ false, %bb.gy ], [ true, %bb.gr ], [ false, %bb.hc ], [ false, %bb.hb ], [ false, %bb.gz ], [ true, %bb.gc ], [ true, %bb.gb ], [ true, %bb.ge ], [ true, %bb.gd ], [ true, %bb.ga ], [ false, %bb.fr ], [ false, %bb.fs ], [ false, %bb.fw ], [ false, %bb.fu ], [ false, %bb.fx ], [ false, %bb.fz ], [ false, %bb.fy ], [ false, %bb.fv ], [ true, %.thread608 ], [ true, %bb.gs ], [ true, %bb.gt ], [ false, %bb.gw ], [ false, %bb.gv ], [ false, %bb.gu ] ; 3 uses
+  %i.amj = phi i1 [ false, %.thread599 ], [ false, %bb.gx ], [ false, %bb.gy ], [ true, %bb.gr ], [ false, %bb.hc ], [ false, %bb.hb ], [ false, %bb.gz ], [ true, %bb.gc ], [ true, %bb.gb ], [ true, %bb.ge ], [ true, %bb.gd ], [ true, %bb.ga ], [ false, %bb.fr ], [ false, %bb.fs ], [ false, %bb.fw ], [ false, %bb.fu ], [ false, %bb.fx ], [ false, %bb.fz ], [ false, %bb.fy ], [ false, %bb.fv ], [ true, %.thread608 ], [ true, %bb.gs ], [ true, %bb.gt ], [ false, %bb.gw ], [ false, %bb.gv ], [ false, %bb.gu ] ; 2 uses
   %i.amk = phi i1 [ false, %.thread599 ], [ false, %bb.gx ], [ false, %bb.gy ], [ false, %bb.gr ], [ false, %bb.hc ], [ false, %bb.hb ], [ false, %bb.gz ], [ false, %bb.gc ], [ false, %bb.gb ], [ false, %bb.ge ], [ false, %bb.gd ], [ false, %bb.ga ], [ false, %bb.fr ], [ false, %bb.fs ], [ false, %bb.fw ], [ false, %bb.fu ], [ false, %bb.fx ], [ false, %bb.fz ], [ false, %bb.fy ], [ false, %bb.fv ], [ false, %.thread608 ], [ false, %bb.gs ], [ false, %bb.gt ], [ true, %bb.gw ], [ true, %bb.gv ], [ true, %bb.gu ] ; 2 uses
   %.unpack498 = load i64, ptr %i.jr, align 8, !tbaa !87 ; 3 uses
   %.unpack500 = load i64, ptr %.elt407, align 8, !tbaa !87 ; 2 uses
@@ -875,7 +871,7 @@ bb.hi:                                            ; preds = %bb.hh
   br label %bb.hj
 
 bb.hj:                                            ; preds = %bb.hi, %bb.hh, %bb.hg, %bb.he, %bb.hd
-  br i1 %i.amj, label %bb.hk, label %.thread628.a
+  br i1 %i.amj, label %bb.hk, label %.loopexit683
 
 bb.hk:                                            ; preds = %bb.hj
   %i.ang = getelementptr inbounds nuw i8, ptr %0, i64 153096 ; 2 uses
@@ -895,7 +891,7 @@ bb.hm:                                            ; preds = %bb.hl, %bb.hk
   %.pre872 = load i32, ptr %.phi.trans.insert871, align 8, !tbaa !134 ; 2 uses
   %i.anm = icmp ugt i32 %.pre872, 256
   %or.cond958 = select i1 %i.anl, i1 true, i1 %i.anm
-  br i1 %or.cond958, label %.preheader682, label %.thread628.a
+  br i1 %or.cond958, label %.preheader682, label %.loopexit683
 
 .preheader682:                                    ; preds = %bb.hm
   %i.ann = lshr i32 %i.ank, 2
@@ -917,7 +913,7 @@ bb.hm:                                            ; preds = %bb.hl, %bb.hk
   %i.anz = load i32, ptr %i.anx, align 4, !tbaa !134
   %i.aoa = mul i32 %i.anz, %i.any
   %.not750 = icmp eq i32 %i.aoa, 0
-  br i1 %.not750, label %.thread628.a, label %.lr.ph734
+  br i1 %.not750, label %.loopexit683, label %.lr.ph734
 
 .lr.ph734:                                        ; preds = %.preheader682, %.lr.ph734
   %indvars.iv815 = phi i64 [ %indvars.iv.next816, %.lr.ph734 ], [ 0, %.preheader682 ] ; 2 uses
@@ -933,9 +929,9 @@ bb.hm:                                            ; preds = %bb.hl, %bb.hk
   %i.aoi = mul i32 %i.aoh, %i.aog
   %i.aoj = zext i32 %i.aoi to i64
   %i.aok = icmp samesign ult i64 %indvars.iv.next816, %i.aoj
-  br i1 %i.aok, label %.lr.ph734, label %.thread628.a, !llvm.loop !101
+  br i1 %i.aok, label %.lr.ph734, label %.loopexit683, !llvm.loop !101
 
-.loopexit683:                                     ; preds = %.thread624
+.loopexit683:                                     ; preds = %.lr.ph734, %bb.hm, %.preheader682, %.thread624, %bb.hj
   %i.aol = icmp eq i64 %.unpack498, ptrtoint (ptr @_ZN6LibRaw18nikon_yuv_load_rawEv to i64)
   %i.aom = and i1 %i.aol, %i.amm
   br i1 %i.aom, label %bb.hn, label %.thread628.a
@@ -995,12 +991,10 @@ bb.ho:                                            ; preds = %bb.hn, %bb.ho
   %exitcond821.not = icmp eq i64 %indvars.iv.next819, 3073
   br i1 %exitcond821.not, label %.preheader681, label %bb.ho, !llvm.loop !102
 
-.thread628.a:                                     ; preds = %.lr.ph734, %bb.hm, %.preheader682, %.preheader681, %bb.hj, %.loopexit683
-  %3 = phi i1 [ %i.amj, %.preheader681 ], [ false, %bb.hj ], [ true, %bb.hm ], [ %i.amj, %.loopexit683 ], [ true, %.preheader682 ], [ true, %.lr.ph734 ]
-  %.unpack513 = phi i64 [ 0, %.preheader681 ], [ 0, %bb.hj ], [ 0, %bb.hm ], [ %.unpack500, %.loopexit683 ], [ 0, %.preheader682 ], [ 0, %.lr.ph734 ]
-  %.unpack511 = phi i64 [ ptrtoint (ptr @_ZN6LibRaw15nikon_load_srawEv to i64), %.preheader681 ], [ ptrtoint (ptr @_ZN6LibRaw15packed_load_rawEv to i64), %bb.hj ], [ ptrtoint (ptr @_ZN6LibRaw15packed_load_rawEv to i64), %bb.hm ], [ %.unpack498, %.loopexit683 ], [ ptrtoint (ptr @_ZN6LibRaw15packed_load_rawEv to i64), %.preheader682 ], [ ptrtoint (ptr @_ZN6LibRaw15packed_load_rawEv to i64), %.lr.ph734 ] ; 6 uses
+.thread628.a:                                     ; preds = %.preheader681, %.loopexit683
+  %.unpack511 = phi i64 [ ptrtoint (ptr @_ZN6LibRaw15nikon_load_srawEv to i64), %.preheader681 ], [ %.unpack498, %.loopexit683 ] ; 6 uses
   %i.apr = icmp eq i64 %.unpack511, ptrtoint (ptr @_ZN6LibRaw14nikon_load_rawEv to i64)
-  %i.aps = icmp eq i64 %.unpack513, 0             ; 5 uses
+  %i.aps = icmp eq i64 %.unpack500, 0             ; 5 uses
   %i.apt = icmp eq i64 %.unpack511, ptrtoint (ptr @_ZN6LibRaw15packed_load_rawEv to i64)
   %i.apu = or i1 %i.apr, %i.apt
   %i.apv = icmp eq i64 %.unpack511, ptrtoint (ptr @_ZN6LibRaw28nikon_load_padded_packed_rawEv to i64)
@@ -1118,8 +1112,8 @@ bb.hx:                                            ; preds = %bb.hw
 
 bb.hy:                                            ; preds = %bb.hw, %.thread630.a
   %i.arq = icmp eq i64 %.unpack511, ptrtoint (ptr @_ZN6LibRaw19sony_ycbcr_load_rawEv to i64)
-  %i.arr = and i1 %i.arq, %3
-  %or.cond661 = and i1 %i.arr, %i.aps
+  %i.arr = and i1 %i.arq, %i.aps
+  %or.cond661 = and i1 %i.amj, %i.arr
   %i.ars = getelementptr inbounds nuw i8, ptr %0, i64 192600 ; 2 uses
   br i1 %or.cond661, label %bb.hz, label %bb.ia
 

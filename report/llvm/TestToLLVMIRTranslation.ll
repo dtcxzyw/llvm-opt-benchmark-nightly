@@ -149,6 +149,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13res
 @_ZZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str.9 = private unnamed_addr constant [88 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::LLVMTranslationDialectInterface]\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverIN4test8SymbolOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.10 = private unnamed_addr constant [42 x i8] c"unsupported translation of test operation\00", align 1
 @.str.13 = private unnamed_addr constant [64 x i8] c"attribute 'test.discardable_mod_attr' only supported in modules\00", align 1
@@ -551,8 +552,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !64
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverIN4test8SymbolOpEvE2idE
+  %7 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test8SymbolOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i = or i1 %7, %i.d
   %.not2.i.i = icmp eq ptr %1, null
-  %.not.i.i = or i1 %.not2.i.i, %i.d
+  %.not.i.i = or i1 %.not2.i.i, %spec.select.i.i.i.i.i.not.i.i
   br i1 %.not.i.i, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_137TestDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEE3$_0EERS7_OT_.exit", label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_137TestDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEE3$_0EERS7_OT_.exit.thread"
 
 "_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_137TestDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEE3$_0EERS7_OT_.exit.thread": ; preds = %bb.a
@@ -849,7 +852,9 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !64
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  br i1 %i.g, label %bb.f, label %bb.b
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %7, %i.g
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17

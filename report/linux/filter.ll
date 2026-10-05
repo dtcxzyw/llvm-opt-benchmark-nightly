@@ -204,54 +204,70 @@ ____bpf_skc_to_tcp_sock.exit:                     ; preds = %sk_is_tcp.exit, %bb
 ; Function Attrs: fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong memory(readwrite, target_mem: none)
 define dso_local i64 @bpf_skc_to_tcp_timewait_sock(i64 noundef %0, i64 %1, i64 %2, i64 %3, i64 %4) #6 align 16 prefalign(16) {
 bb.a:
-  %i.a = inttoptr i64 %0 to ptr                   ; 2 uses
+  %i.a = inttoptr i64 %0 to ptr                   ; 3 uses
   %.not.i = icmp eq i64 %0, 0
   br i1 %.not.i, label %____bpf_skc_to_tcp_timewait_sock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %i.a, i64 40
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
-  %5 = icmp eq ptr %i.c, @tcp_prot
-  %i.d = icmp eq ptr %i.c, @tcpv6_prot
-  %or.cond = or i1 %5, %i.d
-  br i1 %or.cond, label %____bpf_skc_to_tcp_timewait_sock.exit.sink.split, label %____bpf_skc_to_tcp_timewait_sock.exit
+  %i.d = icmp eq ptr %i.c, @tcp_prot
+  br i1 %i.d, label %5, label %9
 
-____bpf_skc_to_tcp_timewait_sock.exit.sink.split: ; preds = %bb.b
+5:                                                ; preds = %bb.b
+  %6 = getelementptr i8, ptr %i.a, i64 18
+  %7 = load volatile i8, ptr %6, align 2
+  %8 = icmp eq i8 %7, 6
+  br i1 %8, label %____bpf_skc_to_tcp_timewait_sock.exit, label %9
+
+9:                                                ; preds = %bb.b, %5
+  %10 = icmp eq ptr %i.c, @tcpv6_prot
+  br i1 %10, label %____bpf_skc_to_tcp_timewait_sock.exit.sink.split, label %____bpf_skc_to_tcp_timewait_sock.exit
+
+____bpf_skc_to_tcp_timewait_sock.exit.sink.split: ; preds = %9
   %i.e = getelementptr i8, ptr %i.a, i64 18
   %i.f = load volatile i8, ptr %i.e, align 2
   %i.g = icmp eq i8 %i.f, 6
   %spec.select = select i1 %i.g, i64 %0, i64 0
   br label %____bpf_skc_to_tcp_timewait_sock.exit
 
-____bpf_skc_to_tcp_timewait_sock.exit:            ; preds = %bb.b, %____bpf_skc_to_tcp_timewait_sock.exit.sink.split, %bb.a
-  %.0.i = phi i64 [ 0, %bb.b ], [ 0, %bb.a ], [ %spec.select, %____bpf_skc_to_tcp_timewait_sock.exit.sink.split ]
+____bpf_skc_to_tcp_timewait_sock.exit:            ; preds = %5, %bb.a, %9, %____bpf_skc_to_tcp_timewait_sock.exit.sink.split
+  %.0.i = phi i64 [ 0, %9 ], [ %0, %5 ], [ 0, %bb.a ], [ %spec.select, %____bpf_skc_to_tcp_timewait_sock.exit.sink.split ]
   ret i64 %.0.i
 }
 
 ; Function Attrs: fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong memory(readwrite, target_mem: none)
 define dso_local i64 @bpf_skc_to_tcp_request_sock(i64 noundef %0, i64 %1, i64 %2, i64 %3, i64 %4) #6 align 16 prefalign(16) {
 bb.a:
-  %i.a = inttoptr i64 %0 to ptr                   ; 2 uses
+  %i.a = inttoptr i64 %0 to ptr                   ; 3 uses
   %.not.i = icmp eq i64 %0, 0
   br i1 %.not.i, label %____bpf_skc_to_tcp_request_sock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %i.a, i64 40
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
-  %5 = icmp eq ptr %i.c, @tcp_prot
-  %i.d = icmp eq ptr %i.c, @tcpv6_prot
-  %or.cond = or i1 %5, %i.d
-  br i1 %or.cond, label %____bpf_skc_to_tcp_request_sock.exit.sink.split, label %____bpf_skc_to_tcp_request_sock.exit
+  %i.d = icmp eq ptr %i.c, @tcp_prot
+  br i1 %i.d, label %5, label %9
 
-____bpf_skc_to_tcp_request_sock.exit.sink.split:  ; preds = %bb.b
+5:                                                ; preds = %bb.b
+  %6 = getelementptr i8, ptr %i.a, i64 18
+  %7 = load volatile i8, ptr %6, align 2
+  %8 = icmp eq i8 %7, 12
+  br i1 %8, label %____bpf_skc_to_tcp_request_sock.exit, label %9
+
+9:                                                ; preds = %bb.b, %5
+  %10 = icmp eq ptr %i.c, @tcpv6_prot
+  br i1 %10, label %____bpf_skc_to_tcp_request_sock.exit.sink.split, label %____bpf_skc_to_tcp_request_sock.exit
+
+____bpf_skc_to_tcp_request_sock.exit.sink.split:  ; preds = %9
   %i.e = getelementptr i8, ptr %i.a, i64 18
   %i.f = load volatile i8, ptr %i.e, align 2
   %i.g = icmp eq i8 %i.f, 12
   %spec.select = select i1 %i.g, i64 %0, i64 0
   br label %____bpf_skc_to_tcp_request_sock.exit
 
-____bpf_skc_to_tcp_request_sock.exit:             ; preds = %bb.b, %____bpf_skc_to_tcp_request_sock.exit.sink.split, %bb.a
-  %.0.i = phi i64 [ 0, %bb.b ], [ 0, %bb.a ], [ %spec.select, %____bpf_skc_to_tcp_request_sock.exit.sink.split ]
+____bpf_skc_to_tcp_request_sock.exit:             ; preds = %5, %bb.a, %9, %____bpf_skc_to_tcp_request_sock.exit.sink.split
+  %.0.i = phi i64 [ 0, %9 ], [ %0, %5 ], [ 0, %bb.a ], [ %spec.select, %____bpf_skc_to_tcp_request_sock.exit.sink.split ]
   ret i64 %.0.i
 }
 

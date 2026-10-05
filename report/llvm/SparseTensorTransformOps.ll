@@ -205,6 +205,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_23MemoryEffectOpInterface5TraitIZNS_6Type
 @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
 @_ZN4mlir6detail14TypeIDResolverINS_14DictionaryAttrEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.5 = private unnamed_addr constant [43 x i8] c"transform.sparse_tensor.match.sparse_inout\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.6 = private unnamed_addr constant [3 x i8] c" #\00", align 1
 @.str.7 = private unnamed_addr constant [57 x i8] c" must be TransformHandleTypeInterface instance, but got \00", align 1
 @_ZZN4mlir6detail14TypeIDResolverINS_9transform28TransformHandleTypeInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
@@ -607,7 +608,9 @@ _ZN4mlir9transform16MatchSparseInOut5buildERNS_9OpBuilderERNS_14OperationStateEN
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !86
   %i.r = icmp eq ptr %i.q, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
-  %spec.select.i.i = select i1 %i.r, ptr %i.n, ptr null
+  %6 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
+  %spec.select.i.i.i.i = and i1 %6, %i.r
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.n, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %5) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   ret ptr %spec.select.i.i
@@ -755,7 +758,9 @@ _ZN4mlir9transform16MatchSparseInOut5buildERNS_9OpBuilderERNS_14OperationStateEN
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !86
   %i.z = icmp eq ptr %i.y, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
-  %spec.select.i.i = select i1 %i.z, ptr %i.v, ptr null
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
+  %spec.select.i.i.i.i = and i1 %7, %i.z
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.v, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %6) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   ret ptr %spec.select.i.i
@@ -880,7 +885,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !86
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
-  %spec.select.i.i = select i1 %i.e, ptr %i.a, ptr null
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
+  %spec.select.i.i.i.i = and i1 %8, %i.e
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.a, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %7) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
   ret ptr %spec.select.i.i
@@ -901,7 +908,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !86
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
-  %spec.select.i.i.i = select i1 %i.f, ptr %i.b, ptr null
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %7, %i.f
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %i.b, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %6) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   ret ptr %spec.select.i.i.i
@@ -1037,7 +1046,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !86
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
-  %spec.select.i.i = select i1 %i.e, ptr %i.a, ptr null
+  %9 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
+  %spec.select.i.i.i.i = and i1 %9, %i.e
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.a, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %8) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19
   ret ptr %spec.select.i.i
@@ -1058,7 +1069,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !86
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
-  %spec.select.i.i.i = select i1 %i.f, ptr %i.b, ptr null
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform16MatchSparseInOutEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %8, %i.f
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %i.b, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %7) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
   ret ptr %spec.select.i.i.i

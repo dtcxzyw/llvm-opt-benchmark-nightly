@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"class.llvm::detail::IEEEFloat", align 8 ; 5 uses
   %3 = alloca %"class.llvm::detail::IEEEFloat", align 8 ; 5 uses
   %i.a = load i32, ptr %1, align 8, !tbaa !205
-  switch i32 %i.a, label %bb.d [
+  switch i32 %i.a, label %4 [
     i32 6, label %bb.b
     i32 10, label %bb.b
     i32 4, label %bb.b
@@ -233,8 +233,19 @@ bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   br label %_ZN4llvm7APFloat7getZeroERKNS_12fltSemanticsEb.exit
 
-bb.d:                                             ; preds = %bb.a
+4:                                                ; preds = %bb.a
+  %.not.i.i.i = icmp eq ptr @_ZN4llvm11APFloatBase13semIEEEsingleE, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  br i1 %.not.i.i.i, label %6, label %5
+
+5:                                                ; preds = %4
   tail call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase13semIEEEsingleE, i32 noundef 0) #18
+  br label %bb.d
+
+6:                                                ; preds = %4
+  tail call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase13semIEEEsingleE, i32 noundef 0) #18
+  br label %bb.d
+
+bb.d:                                             ; preds = %6, %5
   %i.f = load ptr, ptr %0, align 8, !tbaa !63, !alias.scope !1197
   %.not.i.i = icmp eq ptr %i.f, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
   br i1 %.not.i.i, label %bb.f, label %bb.e
@@ -636,6 +647,8 @@ declare void @_ZN4llvm6detail9IEEEFloatD1Ev(ptr noundef nonnull align 8 dead_on_
 declare void @_ZN4llvm6detail9IEEEFloatC1Ed(ptr noundef nonnull align 8 dereferenceable(24), double noundef) unnamed_addr #2
 
 declare void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 4 dereferenceable(29), i32 noundef) unnamed_addr #2
+
+declare void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 4 dereferenceable(29), i32 noundef) unnamed_addr #2
 
 declare void @_ZN4llvm6detail9IEEEFloat8makeZeroEb(ptr noundef nonnull align 8 dereferenceable(24), i1 noundef zeroext) local_unnamed_addr #2
 

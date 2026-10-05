@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.hd = getelementptr i8, ptr %i.gf, i64 8      ; 5 uses
   %i.he = load ptr, ptr %i.hd, align 8, !tbaa !36
   %i.hf = tail call i32 @_PyUnicode_EqualToASCIIString(ptr noundef %i.he, ptr noundef nonnull @.str.286) #10, !inline_history !301
-  %.not.not.i = icmp eq i32 %i.hf, 0              ; 2 uses
+  %.not.not.i = icmp eq i32 %i.hf, 0
   br i1 %.not.not.i, label %bb.as, label %bb.aw
 
 bb.as:                                            ; preds = %bb.ar
@@ -238,7 +238,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.ar, %bb.
   %.ph90 = phi i1 [ false, %bb.au ], [ false, %bb.ar ], [ false, %bb.at ], [ false, %bb.as ], [ true, %bb.av ] ; 3 uses
   %or.cond5.i.ph = phi i1 [ false, %bb.au ], [ true, %bb.ar ], [ false, %bb.at ], [ true, %bb.as ], [ false, %bb.av ]
   %.0134.i.ph = phi i32 [ 5, %bb.au ], [ 3, %bb.ar ], [ 2, %bb.at ], [ 4, %bb.as ], [ 6, %bb.av ]
-  %.0133.i.ph = phi ptr [ null, %bb.au ], [ @_Py_TrueStruct, %bb.ar ], [ null, %bb.at ], [ @_Py_FalseStruct, %bb.as ], [ null, %bb.av ]
+  %.0133.i.ph = phi ptr [ null, %bb.au ], [ @_Py_TrueStruct, %bb.ar ], [ null, %bb.at ], [ @_Py_FalseStruct, %bb.as ], [ null, %bb.av ] ; 2 uses
   %.0132.i.ph = phi i32 [ -1, %bb.au ], [ 103, %bb.ar ], [ -1, %bb.at ], [ 100, %bb.as ], [ -1, %bb.av ]
   %i.ho = tail call ptr @_PyCompile_InstrSequence(ptr noundef %0) #10, !inline_history !301
   %i.hp = tail call i32 @_PyInstructionSequence_Addop(ptr noundef %i.ho, i32 noundef 59, i32 noundef 1, i64 %.sroa.040.4.insert.insert.i, i64 %.sroa.24.12.insert.insert.i) #10
@@ -373,7 +373,8 @@ bb.bu:                                            ; preds = %bb.bt
   br i1 %or.cond5.i.ph, label %bb.bv, label %bb.bw
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.jt = select i1 %.not.not.i, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct
+  %2 = icmp eq ptr %.0133.i.ph, @_Py_TrueStruct
+  %i.jt = select i1 %2, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct
   %i.ju = tail call fastcc i32 @codegen_addop_load_const(ptr noundef %0, i64 %.sroa.040.4.insert.insert.i, i64 %.sroa.24.12.insert.insert.i, ptr noundef nonnull %i.jt), !inline_history !301
   %i.jv = icmp eq i32 %i.ju, -1
   br i1 %i.jv, label %maybe_optimize_method_call.exit.thread, label %bb.bw

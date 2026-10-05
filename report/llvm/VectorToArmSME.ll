@@ -202,7 +202,9 @@ bb.f:                                             ; preds = %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !77
   %i.y = icmp eq ptr %i.x, @_ZN4mlir6detail14TypeIDResolverINS_6vector14TransferReadOpEvE2idE
-  br i1 %i.y, label %bb.g, label %_ZNK4mlir5Value13getDefiningOpINS_6vector14TransferReadOpEEET_v.exit.thread
+  %18 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector14TransferReadOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %18, %i.y
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.g, label %_ZNK4mlir5Value13getDefiningOpINS_6vector14TransferReadOpEEET_v.exit.thread
 
 bb.g:                                             ; preds = %bb.f
   store ptr %i.u, ptr %11, align 8
@@ -605,7 +607,9 @@ bb.k:                                             ; preds = %_ZN4mlir9Operation1
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !77, !noalias !387
   %i.bv = icmp eq ptr %i.bu, @_ZN4mlir6detail14TypeIDResolverINS_6vector12CreateMaskOpEvE2idE
-  br i1 %i.bv, label %_ZNK4mlir5Value13getDefiningOpINS_6vector12CreateMaskOpEEET_v.exit.i, label %.thread
+  %18 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector12CreateMaskOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %18, %i.bv
+  br i1 %spec.select.i.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_6vector12CreateMaskOpEEET_v.exit.i, label %.thread
 
 _ZNK4mlir5Value13getDefiningOpINS_6vector12CreateMaskOpEEET_v.exit.i: ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15, !noalias !387
@@ -1008,7 +1012,9 @@ bb.g:                                             ; preds = %_ZN4mlir6detail30Ve
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !77
   %i.av = icmp eq ptr %i.au, @_ZN4mlir6detail14TypeIDResolverINS_7arm_sme18ExtractTileSliceOpEvE2idE
-  br i1 %i.av, label %bb.j, label %bb.h
+  %22 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_7arm_sme18ExtractTileSliceOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %22, %i.av
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_ZN4mlir6detail30VectorTransferOpInterfaceTraitINS_6vector15TransferWriteOpEE17hasOutOfBoundsDimEv.exit.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #15
@@ -1411,7 +1417,9 @@ bb.h:                                             ; preds = %bb.g
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !77
   %i.as = icmp eq ptr %i.ar, @_ZN4mlir6detail14TypeIDResolverINS_6vector12CreateMaskOpEvE2idE
-  br i1 %i.as, label %bb.k, label %bb.i
+  %24 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector12CreateMaskOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %24, %i.as
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #15

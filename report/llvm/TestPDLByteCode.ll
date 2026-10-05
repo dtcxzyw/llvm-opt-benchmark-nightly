@@ -202,7 +202,9 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !37
   %i.m = icmp eq ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  %spec.select.i.i.i.i = select i1 %i.m, ptr %i.i, ptr null
+  %21 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %21, %i.m
+  %spec.select.i.i.i.i = select i1 %spec.select.i.i.i.i.i.i, ptr %i.i, ptr null
   br label %_ZN4mlir7OpTrait11SymbolTableINS_8ModuleOpEE12lookupSymbolIS2_EET_NS_10StringAttrE.exit
 
 _ZN4mlir7OpTrait11SymbolTableINS_8ModuleOpEE12lookupSymbolIS2_EET_NS_10StringAttrE.exit: ; preds = %bb.a, %bb.b
@@ -226,9 +228,12 @@ _ZN4mlir7OpTrait11SymbolTableINS_8ModuleOpEE12lookupSymbolIS2_EET_NS_10StringAtt
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i5, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !37
   %i.v = icmp eq ptr %i.u, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %22 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i.i.i6 = and i1 %22, %i.v    ; 2 uses
+  %spec.select.i.i.i.i7 = select i1 %spec.select.i.i.i.i.i.i6, ptr %i.r, ptr null
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #16
   %i.w = icmp ne ptr %.sroa.0.0.i.i.i, null
-  %or.cond = select i1 %i.w, i1 %i.v, i1 false
+  %or.cond = select i1 %i.w, i1 %spec.select.i.i.i.i.i.i6, i1 false
   br i1 %or.cond, label %bb.c, label %.thread
 
 _ZN4mlir7OpTrait11SymbolTableINS_8ModuleOpEE12lookupSymbolIS2_EET_NS_10StringAttrE.exit8.thread: ; preds = %_ZN4mlir7OpTrait11SymbolTableINS_8ModuleOpEE12lookupSymbolIS2_EET_NS_10StringAttrE.exit
@@ -547,7 +552,7 @@ _ZN4mlir16PDLPatternModule23registerRewriteFunctionIRFvRNS_15PatternRewriterEPNS
   %i.dk = and i32 %i.dj, 8388607
   %i.dl = icmp ne i32 %i.dk, 0
   call void @llvm.assume(i1 %i.dl)
-  %i.dm = getelementptr inbounds nuw i8, ptr %i.r, i64 64
+  %i.dm = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i7, i64 64
   %i.dn = lshr i32 %i.dj, 23
   %.lobit.i.i.i.i.i.i.i.i.i.i.i = and i32 %i.dn, 1
   %i.do = zext nneg i32 %.lobit.i.i.i.i.i.i.i.i.i.i.i to i64

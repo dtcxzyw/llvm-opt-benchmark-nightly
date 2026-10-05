@@ -204,6 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 536
+  %20 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 136
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 152
@@ -263,7 +264,8 @@ bb.c:                                             ; preds = %bb.b
   %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !105
   %i.bq = icmp eq ptr %i.bp, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
-  %spec.select.i.i = select i1 %i.bq, ptr %i.bj, ptr null
+  %spec.select.i.i.i.i = and i1 %20, %i.bq
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.bj, ptr null
   %i.br = call fastcc ptr @_ZN12_GLOBAL__N_114GPUToSPIRVPass24lookupTargetEnvOrDefaultEN4mlir3gpu11GPUModuleOpE(ptr %spec.select.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   call void @_ZN4mlir5spirv9TargetEnvC1ENS0_13TargetEnvAttrE(ptr noundef nonnull align 8 dereferenceable(184) %2, ptr %i.br) #22
@@ -666,8 +668,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !105
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
+  %3 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %3, %i.e
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_114GPUToSPIRVPass14runOnOperationEvE3$_0NS_3gpu11GPUModuleOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1070,8 +1074,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !105
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
+  %5 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %5, %i.e
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_114GPUToSPIRVPass14runOnOperationEvE3$_2NS_3gpu11GPUModuleOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1143,8 +1149,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !105
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3gpu9GPUFuncOpEvE2idE
+  %8 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu9GPUFuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %8, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZZN12_GLOBAL__N_114GPUToSPIRVPass14runOnOperationEvENK3$_2clENS_3gpu11GPUModuleOpEEUlNS7_9GPUFuncOpEE_S9_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESJ_E4typeESE_OT1_ENKUlSE_E_clESE_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a

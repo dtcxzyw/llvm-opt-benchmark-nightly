@@ -205,6 +205,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_9AttributeEvE13resolveTypeIDEvE2id = comd
 @.str.27 = private unnamed_addr constant [28 x i8] c"cannot convert element type\00", align 1
 @.str.28 = private unnamed_addr constant [26 x i8] c"expected pointer operands\00", align 1
 @.str.29 = private unnamed_addr constant [7 x i8] c"memcpy\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.30 = private unnamed_addr constant [85 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = (anonymous namespace)::ConvertCopy]\00", align 1
 @_ZTVN12_GLOBAL__N_114ConvertDeallocE = internal unnamed_addr constant { [10 x ptr] } { [10 x ptr] [ptr null, ptr null, ptr @_ZN4mlir14RewritePatternD2Ev, ptr @_ZN12_GLOBAL__N_114ConvertDeallocD0Ev, ptr @_ZNK4mlir17ConversionPattern15matchAndRewriteEPNS_9OperationERNS_15PatternRewriterE, ptr @_ZN4mlir14RewritePattern6anchorEv, ptr @_ZNK4mlir19OpConversionPatternINS_6memref9DeallocOpEE15matchAndRewriteEPNS_9OperationEN4llvm8ArrayRefINS_5ValueEEERNS_25ConversionPatternRewriterE, ptr @_ZNK4mlir19OpConversionPatternINS_6memref9DeallocOpEE15matchAndRewriteEPNS_9OperationEN4llvm8ArrayRefINS_10ValueRangeEEERNS_25ConversionPatternRewriterE, ptr @_ZNK12_GLOBAL__N_114ConvertDealloc15matchAndRewriteEN4mlir6memref9DeallocOpENS2_16DeallocOpAdaptorERNS1_25ConversionPatternRewriterE, ptr @_ZNK4mlir19OpConversionPatternINS_6memref9DeallocOpEE15matchAndRewriteES2_NS1_23DeallocOpGenericAdaptorIN4llvm8ArrayRefINS_10ValueRangeEEEEERNS_25ConversionPatternRewriterE] }, align 8
@@ -607,7 +608,9 @@ bb.m:                                             ; preds = %bb.l
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !118
   %i.bj = icmp eq ptr %i.bi, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  br i1 %i.bj, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.thread.i
+  %27 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %27, %i.bj
+  br i1 %spec.select.i.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.thread.i
 
 _ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i: ; preds = %bb.m
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bf, i64 44
@@ -678,7 +681,9 @@ bb.p:                                             ; preds = %bb.o
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i78, i64 16
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !118
   %i.cn = icmp eq ptr %i.cm, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  br i1 %i.cn, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i81, label %_ZN12_GLOBAL__N_116getMemRefPointerEN4mlir5ValueE.exit87.thread
+  %28 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i79 = and i1 %28, %i.cn
+  br i1 %spec.select.i.i.i.i.i.i.i79, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i81, label %_ZN12_GLOBAL__N_116getMemRefPointerEN4mlir5ValueE.exit87.thread
 
 _ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i81: ; preds = %bb.p
   %i.co = getelementptr inbounds nuw i8, ptr %i.cj, i64 44
@@ -1081,7 +1086,9 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !118
   %i.o = icmp eq ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  br i1 %i.o, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i, label %bb.e
+  %14 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %14, %i.o
+  br i1 %spec.select.i.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i, label %bb.e
 
 _ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i: ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 44
@@ -1484,7 +1491,9 @@ bb.h:                                             ; preds = %bb.g
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i32, i64 16
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !118
   %i.ba = icmp eq ptr %i.az, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  br i1 %i.ba, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i, label %bb.j
+  %17 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %17, %i.ba
+  br i1 %spec.select.i.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i, label %bb.j
 
 _ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i: ; preds = %bb.h
   %i.bb = getelementptr inbounds nuw i8, ptr %i.aw, i64 44
@@ -1887,7 +1896,9 @@ bb.e:                                             ; preds = %bb.d
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i26, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !118
   %i.ak = icmp eq ptr %i.aj, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  br i1 %i.ak, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i, label %bb.g
+  %19 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %19, %i.ak
+  br i1 %spec.select.i.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i, label %bb.g
 
 _ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.i: ; preds = %bb.e
   %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 44

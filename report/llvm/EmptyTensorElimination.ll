@@ -202,6 +202,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !76
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %8 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %8, %i.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
   call void @_ZN4mlir13bufferization20BufferizationOptionsC2Ev(ptr noundef nonnull align 8 dereferenceable(380) %5) #17
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 352
@@ -211,7 +213,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.g, i8 0, i64 24, i1 false)
   store i8 1, ptr %i.e, align 8, !tbaa !142
   %.not9 = icmp eq ptr %1, null
-  %.not = or i1 %.not9, %i.d
+  %.not = or i1 %.not9, %spec.select.i.i.i.i.not
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -614,6 +616,7 @@ bb.h:                                             ; preds = %_ZN4llvm6detail12De
   br i1 %.not77.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.h
+  %15 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
   %i.an = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 72
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
@@ -669,7 +672,8 @@ bb.l:                                             ; preds = %bb.k
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !76
   %i.bl = icmp eq ptr %i.bk, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
-  %spec.select.i.i.i.i.i.i = select i1 %i.bl, ptr %i.bh, ptr null
+  %spec.select.i.i.i.i.i.i.i.i = and i1 %15, %i.bl
+  %spec.select.i.i.i.i.i.i = select i1 %spec.select.i.i.i.i.i.i.i.i, ptr %i.bh, ptr null
   br label %_ZNK4mlir5Value13getDefiningOpINS_6tensor7EmptyOpEEET_v.exit.i.i
 
 _ZNK4mlir5Value13getDefiningOpINS_6tensor7EmptyOpEEET_v.exit.i.i: ; preds = %bb.l, %bb.k
@@ -1072,10 +1076,12 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !76
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
+  %3 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %3, %i.e
   br label %"_ZZZN4mlir13bufferization21eliminateEmptyTensorsERNS_12RewriterBaseEPNS_9OperationERNS0_20OneShotAnalysisStateESt8functionIFNS_5ValueES2_NS_26SubsetInsertionOpInterfaceENS_6tensor7EmptyOpES4_EEENK3$_0clES9_ENKUlS8_E_clES8_.exit"
 
 "_ZZZN4mlir13bufferization21eliminateEmptyTensorsERNS_12RewriterBaseEPNS_9OperationERNS0_20OneShotAnalysisStateESt8functionIFNS_5ValueES2_NS_26SubsetInsertionOpInterfaceENS_6tensor7EmptyOpES4_EEENK3$_0clES9_ENKUlS8_E_clES8_.exit": ; preds = %bb.a, %bb.b
-  %.sroa.0.0.i.i.i.i = phi i1 [ %i.e, %bb.b ], [ false, %bb.a ]
+  %.sroa.0.0.i.i.i.i = phi i1 [ %spec.select.i.i.i.i.i.i.i, %bb.b ], [ false, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   ret i1 %.sroa.0.0.i.i.i.i
 }

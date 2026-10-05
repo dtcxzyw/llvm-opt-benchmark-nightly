@@ -118,6 +118,7 @@ $_ZTVZN4mlir15DialectRegistry12addExtensionIJNS_8arm_neon14ArmNeonDialectEEEEbPF
 @_ZZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str = private unnamed_addr constant [88 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::LLVMTranslationDialectInterface]\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon8BfmmlaOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon7SMullOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon6SdotOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
@@ -512,8 +513,10 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !116  ; 6 uses
   %i.m = icmp ne ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon8BfmmlaOpEvE2idE
+  %34 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon8BfmmlaOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %34, %i.m
   %.not107 = icmp eq ptr %1, null                 ; 6 uses
-  %.not = or i1 %.not107, %i.m
+  %.not = or i1 %.not107, %spec.select.i.i.i.i.not
   br i1 %.not, label %bb.b, label %.thread
 
 .thread:                                          ; preds = %bb.a
@@ -536,7 +539,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.t = icmp ne ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon7SMullOpEvE2idE
-  %.not108 = or i1 %.not107, %i.t
+  %35 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon7SMullOpEvE2idE
+  %spec.select.i.i.i.i77.not = or i1 %35, %i.t
+  %.not108 = or i1 %.not107, %spec.select.i.i.i.i77.not
   br i1 %.not108, label %bb.c, label %.thread102
 
 .thread102:                                       ; preds = %bb.b
@@ -564,7 +569,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.ab = icmp ne ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon6SdotOpEvE2idE
-  %.not110 = or i1 %.not107, %i.ab
+  %36 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon6SdotOpEvE2idE
+  %spec.select.i.i.i.i81.not = or i1 %36, %i.ab
+  %.not110 = or i1 %.not107, %spec.select.i.i.i.i81.not
   br i1 %.not110, label %bb.d, label %.thread103
 
 .thread103:                                       ; preds = %bb.c
@@ -597,7 +604,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.ak = icmp ne ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon7SmmlaOpEvE2idE
-  %.not112 = or i1 %.not107, %i.ak
+  %37 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon7SmmlaOpEvE2idE
+  %spec.select.i.i.i.i85.not = or i1 %37, %i.ak
+  %.not112 = or i1 %.not107, %spec.select.i.i.i.i85.not
   br i1 %.not112, label %bb.e, label %.thread104
 
 .thread104:                                       ; preds = %bb.d
@@ -630,7 +639,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.at = icmp ne ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon7UmmlaOpEvE2idE
-  %.not114 = or i1 %.not107, %i.at
+  %38 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon7UmmlaOpEvE2idE
+  %spec.select.i.i.i.i89.not = or i1 %38, %i.at
+  %.not114 = or i1 %.not107, %spec.select.i.i.i.i89.not
   br i1 %.not114, label %bb.f, label %.thread105
 
 .thread105:                                       ; preds = %bb.e
@@ -663,7 +674,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.bc = icmp ne ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon8UsmmlaOpEvE2idE
-  %.not116 = or i1 %.not107, %i.bc
+  %39 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8arm_neon8UsmmlaOpEvE2idE
+  %spec.select.i.i.i.i93.not = or i1 %39, %i.bc
+  %.not116 = or i1 %.not107, %spec.select.i.i.i.i93.not
   br i1 %.not116, label %bb.g, label %.thread106
 
 .thread106:                                       ; preds = %bb.f

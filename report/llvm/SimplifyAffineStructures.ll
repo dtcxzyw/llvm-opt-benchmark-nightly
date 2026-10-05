@@ -202,12 +202,22 @@ bb.a:
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.k, align 8, !tbaa !40
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !42   ; 3 uses
-  %7 = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
-  %i.n = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_6affine10AffineIfOpEvE2idE
-  %or.cond.i.i = or i1 %7, %i.n
-  %8 = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_6affine13AffineApplyOpEvE2idE
-  %spec.select.i.i = or i1 %8, %or.cond.i.i
-  br i1 %spec.select.i.i, label %bb.p, label %"_ZZN12_GLOBAL__N_124SimplifyAffineStructures14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit"
+  %i.n = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %7, %i.n
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.p, label %8
+
+8:                                                ; preds = %._crit_edge.i
+  %9 = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_6affine10AffineIfOpEvE2idE
+  %10 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine10AffineIfOpEvE2idE
+  %spec.select.i.i.i.i4.i.i = and i1 %10, %9
+  br i1 %spec.select.i.i.i.i4.i.i, label %bb.p, label %_ZN4llvm3isaIJN4mlir6affine11AffineForOpENS2_10AffineIfOpENS2_13AffineApplyOpEEPNS1_9OperationEEEbRKT0_.exit.i
+
+_ZN4llvm3isaIJN4mlir6affine11AffineForOpENS2_10AffineIfOpENS2_13AffineApplyOpEEPNS1_9OperationEEEbRKT0_.exit.i: ; preds = %8
+  %11 = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_6affine13AffineApplyOpEvE2idE
+  %12 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine13AffineApplyOpEvE2idE
+  %spec.select.i.i.i.i6.i.i = and i1 %12, %11
+  br i1 %spec.select.i.i.i.i6.i.i, label %bb.p, label %"_ZZN12_GLOBAL__N_124SimplifyAffineStructures14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit"
 
 bb.b:                                             ; preds = %bb.o, %.lr.ph.i
   %.029.i = phi ptr [ %i.e, %.lr.ph.i ], [ %i.as, %bb.o ] ; 2 uses
@@ -327,7 +337,7 @@ bb.o:                                             ; preds = %_ZN12_GLOBAL__N_124
   %.not.i = icmp eq ptr %i.as, %i.g
   br i1 %.not.i, label %._crit_edge.i, label %bb.b
 
-bb.p:                                             ; preds = %._crit_edge.i
+bb.p:                                             ; preds = %_ZN4llvm3isaIJN4mlir6affine11AffineForOpENS2_10AffineIfOpENS2_13AffineApplyOpEEPNS1_9OperationEEEbRKT0_.exit.i, %8, %._crit_edge.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !128, !nonnull !45, !align !129 ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 8 ; 3 uses
@@ -351,7 +361,7 @@ bb.r:                                             ; preds = %bb.p
   store i32 %i.bd, ptr %i.av, align 8, !tbaa !31
   br label %"_ZZN12_GLOBAL__N_124SimplifyAffineStructures14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit"
 
-"_ZZN12_GLOBAL__N_124SimplifyAffineStructures14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit": ; preds = %._crit_edge.i, %bb.q, %bb.r
+"_ZZN12_GLOBAL__N_124SimplifyAffineStructures14runOnOperationEvENK3$_0clEPN4mlir9OperationE.exit": ; preds = %_ZN4llvm3isaIJN4mlir6affine11AffineForOpENS2_10AffineIfOpENS2_13AffineApplyOpEEPNS1_9OperationEEEbRKT0_.exit.i, %bb.q, %bb.r
   ret void
 }
 

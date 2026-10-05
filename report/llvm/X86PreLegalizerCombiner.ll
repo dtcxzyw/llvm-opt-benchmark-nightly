@@ -204,34 +204,26 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.assume(i1 %.not1114.i.i.i)
   %i.j = load ptr, ptr %i.g, align 8, !tbaa !1124 ; 2 uses
   %.not.i3.i.i = icmp eq ptr %i.j, @_ZN4llvm16TargetPassConfig2IDE
-  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit.thread, label %.lr.ph.i.i.i
-
-_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit.thread: ; preds = %bb.b
-  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %6 = load ptr, ptr %5, align 8
-  br label %.lr.ph.i.i.i16.preheader
+  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.b, %.lr.ph.i.i.i
-  %.sroa.08.015.i4.i.i = phi ptr [ %i.k, %.lr.ph.i.i.i ], [ %i.g, %bb.b ] ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 3 uses
+  %.sroa.08.015.i4.i.i = phi ptr [ %i.k, %.lr.ph.i.i.i ], [ %i.g, %bb.b ]
+  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 4 uses
   %.not11.i.i.i = icmp ne ptr %i.k, %i.i
   tail call void @llvm.assume(i1 %.not11.i.i.i)
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !1124
   %.not.i.i.i = icmp eq ptr %i.l, @_ZN4llvm16TargetPassConfig2IDE
   br i1 %.not.i.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit, label %.lr.ph.i.i.i
 
-_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit: ; preds = %.lr.ph.i.i.i
-  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 24
+_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit: ; preds = %.lr.ph.i.i.i, %bb.b
+  %.sroa.08.015.i.lcssa.i.i = phi ptr [ %i.g, %bb.b ], [ %i.k, %.lr.ph.i.i.i ]
+  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i, i64 8
   %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
   %.not.i3.i.i15 = icmp eq ptr %i.j, @_ZN4llvm27GISelCSEAnalysisWrapperPass2IDE
-  br i1 %.not.i3.i.i15, label %_ZNK4llvm4Pass11getAnalysisINS_27GISelCSEAnalysisWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i16.preheader
+  br i1 %.not.i3.i.i15, label %_ZNK4llvm4Pass11getAnalysisINS_27GISelCSEAnalysisWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i16
 
-.lr.ph.i.i.i16.preheader:                         ; preds = %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit.thread, %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit
-  %7 = phi ptr [ %6, %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit.thread ], [ %i.n, %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit ]
-  br label %.lr.ph.i.i.i16
-
-.lr.ph.i.i.i16:                                   ; preds = %.lr.ph.i.i.i16.preheader, %.lr.ph.i.i.i16
-  %.sroa.08.015.i4.i.i17 = phi ptr [ %i.o, %.lr.ph.i.i.i16 ], [ %i.g, %.lr.ph.i.i.i16.preheader ]
+.lr.ph.i.i.i16:                                   ; preds = %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit, %.lr.ph.i.i.i16
+  %.sroa.08.015.i4.i.i17 = phi ptr [ %i.o, %.lr.ph.i.i.i16 ], [ %i.g, %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit ]
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i17, i64 16 ; 4 uses
   %.not11.i.i.i18 = icmp ne ptr %i.o, %i.i
   tail call void @llvm.assume(i1 %.not11.i.i.i18)
@@ -240,15 +232,14 @@ _ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit: ; preds = %.lr.ph
   br i1 %.not.i.i.i19, label %_ZNK4llvm4Pass11getAnalysisINS_27GISelCSEAnalysisWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i16
 
 _ZNK4llvm4Pass11getAnalysisINS_27GISelCSEAnalysisWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i16, %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit
-  %8 = phi ptr [ %i.n, %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit ], [ %7, %.lr.ph.i.i.i16 ] ; 2 uses
   %.sroa.08.015.i.lcssa.i.i20 = phi ptr [ %i.g, %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit ], [ %i.o, %.lr.ph.i.i.i16 ]
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i20, i64 8
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 56
-  %i.t = load ptr, ptr %8, align 8, !tbaa !31
+  %i.t = load ptr, ptr %i.n, align 8, !tbaa !31
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 256
   %i.v = load ptr, ptr %i.u, align 8
-  call void %i.v(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.620") align 8 %2, ptr noundef nonnull align 8 dereferenceable(134) %8) #24
+  call void %i.v(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.620") align 8 %2, ptr noundef nonnull align 8 dereferenceable(134) %i.n) #24
   %i.w = call noundef nonnull align 8 dereferenceable(337) ptr @_ZN4llvm23GISelCSEAnalysisWrapper3getESt10unique_ptrINS_13CSEConfigBaseESt14default_deleteIS2_EE(ptr noundef nonnull align 8 dereferenceable(353) %i.s, ptr nofree noundef nonnull align 8 dereferenceable(8) %2) #24
   %i.x = load ptr, ptr %2, align 8, !tbaa !1126   ; 3 uses
   %.not.i = icmp eq ptr %i.x, null

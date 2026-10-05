@@ -202,7 +202,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !75
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_9transform3smt17ConstrainParamsOpEvE2idE
-  %spec.select.i.i = select i1 %i.e, ptr %i.a, ptr null
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform3smt17ConstrainParamsOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %8, %i.e
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.a, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %7) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
   ret ptr %spec.select.i.i
@@ -230,7 +232,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !75
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_9transform3smt17ConstrainParamsOpEvE2idE
-  %spec.select.i.i.i = select i1 %i.f, ptr %i.b, ptr null
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform3smt17ConstrainParamsOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %7, %i.f
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %i.b, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %6) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
   ret ptr %spec.select.i.i.i
@@ -367,7 +371,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !75
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_9transform3smt17ConstrainParamsOpEvE2idE
-  %spec.select.i.i = select i1 %i.e, ptr %i.a, ptr null
+  %9 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform3smt17ConstrainParamsOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %9, %i.e
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.a, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %8) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #15
   ret ptr %spec.select.i.i
@@ -388,7 +394,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !75
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_9transform3smt17ConstrainParamsOpEvE2idE
-  %spec.select.i.i.i = select i1 %i.f, ptr %i.b, ptr null
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_9transform3smt17ConstrainParamsOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %8, %i.f
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %i.b, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %7) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
   ret ptr %spec.select.i.i.i
@@ -791,10 +799,12 @@ bb.a:
   %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.v, align 8, !tbaa !15
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !75
-  %i.y = icmp eq ptr %i.x, @_ZN4mlir6detail14TypeIDResolverINS_3smt7YieldOpEvE2idE ; 2 uses
-  %spec.select.i.i = select i1 %i.y, ptr %i.u, ptr null
+  %i.y = icmp eq ptr %i.x, @_ZN4mlir6detail14TypeIDResolverINS_3smt7YieldOpEvE2idE
+  %118 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3smt7YieldOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %118, %i.y        ; 2 uses
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.u, ptr null
   store ptr %spec.select.i.i, ptr %101, align 8
-  br i1 %i.y, label %bb.l, label %bb.b
+  br i1 %spec.select.i.i.i.i, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %102) #15

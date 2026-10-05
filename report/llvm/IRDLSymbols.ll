@@ -9,18 +9,30 @@ target triple = "x86_64-pc-linux-gnu"
 
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4irdl9DialectOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef ptr @_ZN4mlir4irdl23lookupSymbolNearDialectERNS_21SymbolTableCollectionEPNS_9OperationENS_13SymbolRefAttrE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef readonly captures(none) %1, ptr %2) local_unnamed_addr #0 {
-bb.a:
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  %.not7.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4irdl9DialectOpEvE2idE
+  br i1 %.not7.i, label %.lr.ph.split.us.i, label %bb.a
+
+bb.a:                                             ; preds = %3
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i3 = load ptr, ptr %i.a, align 8, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i3, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !13
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_4irdl9DialectOpEvE2idE
   br i1 %i.d, label %_ZL15lookupDialectOpPN4mlir9OperationE.exit, label %_ZN4mlir9Operation11getParentOpEv.exit.i
+
+.lr.ph.split.us.i:                                ; preds = %3, %.lr.ph.split.us.i
+  %storemerge4.us.i = phi ptr [ %6, %.lr.ph.split.us.i ], [ %1, %3 ]
+  %4 = getelementptr inbounds nuw i8, ptr %storemerge4.us.i, i64 16
+  %5 = load ptr, ptr %4, align 8, !tbaa !30, !nonnull !31, !noundef !31
+  %6 = tail call noundef ptr @_ZN4mlir5Block11getParentOpEv(ptr noundef nonnull align 8 dereferenceable(80) %5) #3 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %6) ]
+  br label %.lr.ph.split.us.i
 
 _ZN4mlir9Operation11getParentOpEv.exit.i:         ; preds = %bb.a, %_ZN4mlir9Operation11getParentOpEv.exit.i
   %.sink.i4 = phi ptr [ %i.g, %_ZN4mlir9Operation11getParentOpEv.exit.i ], [ %1, %bb.a ]
@@ -57,14 +69,25 @@ _ZN4mlir9Operation11getParentOpEv.exit:           ; preds = %_ZL15lookupDialectO
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef ptr @_ZN4mlir4irdl23lookupSymbolNearDialectEPNS_9OperationENS_13SymbolRefAttrE(ptr nofree noundef readonly captures(none) %0, ptr %1) local_unnamed_addr #0 {
-bb.a:
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
+  %.not7.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4irdl9DialectOpEvE2idE
+  br i1 %.not7.i, label %.lr.ph.split.us.i, label %bb.a
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i2 = load ptr, ptr %i.a, align 8, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i2, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !13
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_4irdl9DialectOpEvE2idE
   br i1 %i.d, label %_ZL15lookupDialectOpPN4mlir9OperationE.exit, label %_ZN4mlir9Operation11getParentOpEv.exit.i
+
+.lr.ph.split.us.i:                                ; preds = %2, %.lr.ph.split.us.i
+  %storemerge4.us.i = phi ptr [ %5, %.lr.ph.split.us.i ], [ %0, %2 ]
+  %3 = getelementptr inbounds nuw i8, ptr %storemerge4.us.i, i64 16
+  %4 = load ptr, ptr %3, align 8, !tbaa !30, !nonnull !31, !noundef !31
+  %5 = tail call noundef ptr @_ZN4mlir5Block11getParentOpEv(ptr noundef nonnull align 8 dereferenceable(80) %4) #3 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
+  br label %.lr.ph.split.us.i
 
 _ZN4mlir9Operation11getParentOpEv.exit.i:         ; preds = %bb.a, %_ZN4mlir9Operation11getParentOpEv.exit.i
   %.sink.i3 = phi ptr [ %i.g, %_ZN4mlir9Operation11getParentOpEv.exit.i ], [ %0, %bb.a ]

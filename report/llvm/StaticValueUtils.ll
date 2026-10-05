@@ -202,7 +202,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef zeroext i1 @_ZN4mlir11isZeroFloatENS_12OpFoldResultE(i64 %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = alloca %"class.llvm::APFloat", align 8     ; 8 uses
+  %1 = alloca %"class.llvm::APFloat", align 8     ; 9 uses
   %2 = alloca %"struct.mlir::detail::constant_float_value_binder", align 8 ; 4 uses
   %3 = alloca %"class.mlir::Value", align 8       ; 4 uses
   %4 = alloca %"class.mlir::FloatAttr", align 8   ; 4 uses
@@ -251,11 +251,22 @@ bb.e:                                             ; preds = %bb.a
   store ptr %i.d, ptr %3, align 8
   %i.n = call noundef ptr @_ZNK4mlir5Value13getDefiningOpEv(ptr noundef nonnull align 8 dereferenceable(8) %3) #14 ; 2 uses
   %.not.not.not.i = icmp eq ptr %i.n, null
-  br i1 %.not.not.not.i, label %_ZN4mlir12matchPatternINS_6detail32constant_float_predicate_matcherEEEbNS_5ValueERKT_.exit, label %bb.f
+  br i1 %.not.not.not.i, label %_ZN4mlir12matchPatternINS_6detail32constant_float_predicate_matcherEEEbNS_5ValueERKT_.exit, label %6
 
-bb.f:                                             ; preds = %bb.e
+6:                                                ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
+  %.not.i.i.i.i = icmp eq ptr @_ZN4llvm11APFloatBase8semBogusE, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  br i1 %.not.i.i.i.i, label %8, label %7
+
+7:                                                ; preds = %6
   call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase8semBogusE) #14
+  br label %bb.f
+
+8:                                                ; preds = %6
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase8semBogusE) #14
+  br label %bb.f
+
+bb.f:                                             ; preds = %8, %7
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   store ptr %1, ptr %2, align 8, !tbaa !26
   %i.o = call noundef zeroext i1 @_ZN4mlir6detail27constant_float_value_binder5matchEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %i.n)
@@ -657,6 +668,8 @@ bb.f:                                             ; preds = %_ZN4llvm3isaIJN4mli
 }
 
 declare void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 4 dereferenceable(29)) unnamed_addr #2
+
+declare void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 4 dereferenceable(29)) unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN4mlir6detail18constant_op_binderINS_9AttributeEE5matchEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {

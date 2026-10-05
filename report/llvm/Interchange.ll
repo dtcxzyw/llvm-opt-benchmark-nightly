@@ -77,6 +77,7 @@ $_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE15growAndPushBackES2_ = com
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
 @.str = private unnamed_addr constant [22 x i8] c"preconditions not met\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_6linalg7IndexOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -479,14 +480,26 @@ _ZN4mlir24applyPermutationToVectorINS_9AttributeELj6EEEvRN4llvm11SmallVectorIT_X
   %i.ft = getelementptr inbounds nuw [32 x i8], ptr %i.fp, i64 %i.fs
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 72
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !92 ; 2 uses
-  %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 32 ; 3 uses
+  %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 32 ; 4 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fv, i64 40
-  %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !92, !noalias !93 ; 2 uses
+  %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !92, !noalias !93 ; 3 uses
   %.not1.i.i.i.i.i.i = icmp eq ptr %i.fy, %i.fw
-  br i1 %.not1.i.i.i.i.i.i, label %_ZN4mlir9OpBuilder14InsertionGuardD2Ev.exit, label %.lr.ph.i.i.i.i.i.i
+  br i1 %.not1.i.i.i.i.i.i, label %_ZN4mlir9OpBuilder14InsertionGuardD2Ev.exit, label %.lr.ph.i.i.i.i.preheader.i.i
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %_ZN4mlir24applyPermutationToVectorINS_9AttributeELj6EEEvRN4llvm11SmallVectorIT_XT0_EEENS2_8ArrayRefIlEE.exit, %bb.k
-  %.sroa.010.0.i.i = phi ptr [ %i.gf, %bb.k ], [ %i.fy, %_ZN4mlir24applyPermutationToVectorINS_9AttributeELj6EEEvRN4llvm11SmallVectorIT_XT0_EEENS2_8ArrayRefIlEE.exit ] ; 3 uses
+.lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %_ZN4mlir24applyPermutationToVectorINS_9AttributeELj6EEEvRN4llvm11SmallVectorIT_XT0_EEENS2_8ArrayRefIlEE.exit
+  %.not.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg7IndexOpEvE2idE
+  br i1 %.not.i.i, label %.lr.ph.i.i.i.i.us.i.i, label %.lr.ph.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.us.i.i:                            ; preds = %.lr.ph.i.i.i.i.preheader.i.i, %.lr.ph.i.i.i.i.us.i.i
+  %.sroa.010.0.us.i.i = phi ptr [ %25, %.lr.ph.i.i.i.i.us.i.i ], [ %i.fy, %.lr.ph.i.i.i.i.preheader.i.i ] ; 2 uses
+  %23 = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %.sroa.010.0.us.i.i) #8, !noalias !93 ; 0 uses
+  %24 = getelementptr inbounds nuw i8, ptr %.sroa.010.0.us.i.i, i64 8
+  %25 = load ptr, ptr %24, align 8, !tbaa !92, !noalias !93 ; 2 uses
+  %.not.i.i.i.i.us.i.i = icmp eq ptr %25, %i.fw
+  br i1 %.not.i.i.i.i.us.i.i, label %_ZN4mlir9OpBuilder14InsertionGuardD2Ev.exit, label %.lr.ph.i.i.i.i.us.i.i, !llvm.loop !35
+
+.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.preheader.i.i, %bb.k
+  %.sroa.010.0.i.i = phi ptr [ %i.gf, %bb.k ], [ %i.fy, %.lr.ph.i.i.i.i.preheader.i.i ] ; 3 uses
   %i.fz = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %.sroa.010.0.i.i) #8, !noalias !93
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 48
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.ga, align 8, !tbaa !94, !noalias !93
@@ -663,8 +676,8 @@ bb.u:                                             ; preds = %.lr.ph.i.i.i.i.i51
   %.not.i.i.i.i.i52 = icmp eq ptr %i.iu, %i.hu
   br i1 %.not.i.i.i.i.i52, label %_ZN4llvm23early_inc_iterator_implIN4mlir6detail11op_iteratorINS1_6linalg7IndexOpENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS1_9OperationELb0ELb0EvLb0EvEELb0ELb0EEEEEEdeEv.exit, label %.lr.ph.i.i.i.i.i51, !llvm.loop !35
 
-_ZN4llvm23early_inc_iterator_implIN4mlir6detail11op_iteratorINS1_6linalg7IndexOpENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS1_9OperationELb0ELb0EvLb0EvEELb0ELb0EEEEEEdeEv.exit: ; preds = %.lr.ph.i.i.i.i.i51, %bb.u, %bb.t
-  %.sroa.062.2 = phi ptr [ %i.in, %bb.t ], [ %.sroa.062.1, %.lr.ph.i.i.i.i.i51 ], [ %i.iu, %bb.u ] ; 2 uses
+_ZN4llvm23early_inc_iterator_implIN4mlir6detail11op_iteratorINS1_6linalg7IndexOpENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS1_9OperationELb0ELb0EvLb0EvEELb0ELb0EEEEEEdeEv.exit: ; preds = %bb.u, %.lr.ph.i.i.i.i.i51, %bb.t
+  %.sroa.062.2 = phi ptr [ %i.in, %bb.t ], [ %i.iu, %bb.u ], [ %.sroa.062.1, %.lr.ph.i.i.i.i.i51 ] ; 2 uses
   %i.iv = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %.sroa.062.0106) #8 ; 3 uses
   store ptr %i.iv, ptr %21, align 8
   %i.iw = getelementptr inbounds nuw i8, ptr %i.iv, i64 16
@@ -784,7 +797,7 @@ _ZN4llvm11SmallVectorIN4mlir5ValueELj6EED2Ev.exit: ; preds = %"_ZN4llvm9transfor
   %.not101 = icmp eq ptr %.sroa.062.2, %i.hu
   br i1 %.not101, label %._crit_edge108, label %bb.t
 
-_ZN4mlir9OpBuilder14InsertionGuardD2Ev.exit:      ; preds = %bb.k, %_ZN4mlir24applyPermutationToVectorINS_9AttributeELj6EEEvRN4llvm11SmallVectorIT_XT0_EEENS2_8ArrayRefIlEE.exit, %bb.s, %bb.r, %_ZN4mlir6linalg9GenericOp17hasIndexSemanticsEv.exit
+_ZN4mlir9OpBuilder14InsertionGuardD2Ev.exit:      ; preds = %bb.k, %.lr.ph.i.i.i.i.us.i.i, %_ZN4mlir24applyPermutationToVectorINS_9AttributeELj6EEEvRN4llvm11SmallVectorIT_XT0_EEENS2_8ArrayRefIlEE.exit, %bb.s, %bb.r, %_ZN4mlir6linalg9GenericOp17hasIndexSemanticsEv.exit
   %i.kk = load i64, ptr %14, align 8
   %i.kl = inttoptr i64 %i.kk to ptr
   %i.km = load ptr, ptr %20, align 8, !tbaa !11   ; 2 uses

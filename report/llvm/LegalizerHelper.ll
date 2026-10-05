@@ -205,8 +205,8 @@ bb.a:
   %11 = alloca %"class.llvm::LLT", align 8        ; 5 uses
   %12 = alloca %"class.llvm::LLT", align 8        ; 5 uses
   %13 = alloca %"class.llvm::APInt", align 8      ; 11 uses
-  %14 = alloca %"class.llvm::APFloat", align 8    ; 8 uses
-  %15 = alloca %"class.llvm::APInt", align 8      ; 8 uses
+  %14 = alloca %"class.llvm::APFloat", align 8    ; 9 uses
+  %15 = alloca %"class.llvm::APInt", align 8      ; 9 uses
   %16 = alloca %"class.llvm::DstOp", align 8      ; 5 uses
   %17 = alloca %"class.llvm::DstOp", align 8      ; 5 uses
   %18 = alloca %"class.llvm::DstOp", align 8      ; 5 uses
@@ -409,24 +409,35 @@ bb.m:                                             ; preds = %_ZNK4llvm3LLT13getS
   unreachable
 
 _ZNK4llvm8TypeSizecvmEv.exit67:                   ; preds = %_ZNK4llvm3LLT13getSizeInBitsEv.exit66.thread, %_ZNK4llvm3LLT13getSizeInBitsEv.exit66
-  %spec.select160 = phi ptr [ %spec.select161, %_ZNK4llvm3LLT13getSizeInBitsEv.exit66.thread ], [ %spec.select162, %_ZNK4llvm3LLT13getSizeInBitsEv.exit66 ]
+  %spec.select160 = phi ptr [ %spec.select161, %_ZNK4llvm3LLT13getSizeInBitsEv.exit66.thread ], [ %spec.select162, %_ZNK4llvm3LLT13getSizeInBitsEv.exit66 ] ; 3 uses
   %.sroa.05.0.i61155 = phi i64 [ %i.bq, %_ZNK4llvm3LLT13getSizeInBitsEv.exit66.thread ], [ %i.bx, %_ZNK4llvm3LLT13getSizeInBitsEv.exit66 ] ; 2 uses
   %i.bz = trunc nuw i64 %.sroa.05.0.i61155 to i32
   %i.ca = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
   store i32 %i.bz, ptr %i.ca, align 8, !tbaa !250, !alias.scope !742
   %i.cb = icmp samesign ult i64 %.sroa.05.0.i61155, 65
-  br i1 %i.cb, label %bb.n, label %bb.o
+  br i1 %i.cb, label %bb.n, label %25
 
 bb.n:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit67
   store i64 0, ptr %15, align 8, !tbaa !226, !alias.scope !742
-  br label %_ZN4llvm5APInt7getZeroEj.exit.a
+  br label %_ZN4llvm5APInt7getZeroEj.exit
 
-bb.o:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit67
+25:                                               ; preds = %_ZNK4llvm8TypeSizecvmEv.exit67
   call void @_ZN4llvm5APInt12initSlowCaseEmb(ptr noundef nonnull align 8 dereferenceable(12) %15, i64 noundef 0, i1 noundef zeroext false) #19
+  br label %_ZN4llvm5APInt7getZeroEj.exit
+
+_ZN4llvm5APInt7getZeroEj.exit:                    ; preds = %bb.n, %25
+  %.not.i.i = icmp eq ptr %spec.select160, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  br i1 %.not.i.i, label %bb.o, label %26
+
+26:                                               ; preds = %_ZN4llvm5APInt7getZeroEj.exit
+  call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %14, ptr noundef nonnull align 4 dereferenceable(29) %spec.select160, ptr noundef nonnull align 8 dereferenceable(12) %15) #19
   br label %_ZN4llvm5APInt7getZeroEj.exit.a
 
-_ZN4llvm5APInt7getZeroEj.exit.a:                  ; preds = %bb.n, %bb.o
-  call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %14, ptr noundef nonnull align 4 dereferenceable(29) %spec.select160, ptr noundef nonnull align 8 dereferenceable(12) %15) #19
+bb.o:                                             ; preds = %_ZN4llvm5APInt7getZeroEj.exit
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %14, ptr noundef nonnull align 4 dereferenceable(29) %spec.select160, ptr noundef nonnull align 8 dereferenceable(12) %15) #19
+  br label %_ZN4llvm5APInt7getZeroEj.exit.a
+
+_ZN4llvm5APInt7getZeroEj.exit.a:                  ; preds = %26, %bb.o
   %i.cc = load i32, ptr %i.ca, align 8, !tbaa !250
   %i.cd = icmp ugt i32 %i.cc, 64
   br i1 %i.cd, label %bb.p, label %_ZN4llvm5APIntD2Ev.exit
@@ -828,6 +839,8 @@ bb.d:                                             ; preds = %bb.a
 declare noundef i64 @_ZNK4llvm5APInt4uremEm(ptr noundef nonnull align 8 dereferenceable(12), i64 noundef) local_unnamed_addr #2
 
 declare void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 4 dereferenceable(29), ptr noundef nonnull align 8 dereferenceable(12)) unnamed_addr #2
+
+declare void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 4 dereferenceable(29), ptr noundef nonnull align 8 dereferenceable(12)) unnamed_addr #2
 
 declare noundef i32 @_ZN4llvm6detail9IEEEFloat16convertFromAPIntERKNS_5APIntEbNS_12RoundingModeE(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 8 dereferenceable(12), i1 noundef zeroext, i8 noundef signext) local_unnamed_addr #2
 

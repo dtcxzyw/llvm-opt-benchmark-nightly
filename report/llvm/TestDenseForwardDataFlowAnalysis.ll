@@ -204,7 +204,9 @@ bb.ak:                                            ; preds = %bb.a
   %i.qc = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.qd = load ptr, ptr %i.qc, align 8, !tbaa !67
   %i.qe = icmp eq ptr %i.qd, @_ZN4mlir6detail14TypeIDResolverIN4test18TestCallAndStoreOpEvE2idE
-  %spec.select.i.i = select i1 %i.qe, ptr %1, ptr null ; 2 uses
+  %14 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test18TestCallAndStoreOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %14, %i.qe
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %13, align 8
   %.not93 = icmp eq ptr %spec.select.i.i, null
   br i1 %.not93, label %bb.ap, label %bb.al
@@ -345,8 +347,10 @@ bb.c:                                             ; preds = %.sink.split.i.i.i.i
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !67  ; 2 uses
   %i.ab = icmp ne ptr %i.aa, @_ZN4mlir6detail14TypeIDResolverIN4test20TestStoreWithARegionEvE2idE
+  %13 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test20TestStoreWithARegionEvE2idE
+  %spec.select.i.i.i.i.i.not.i = or i1 %13, %i.ab
   %.not3.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not3.i, %i.ab
+  %.not.i = or i1 %.not3.i, %spec.select.i.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseIN4test20TestStoreWithARegionERZN12_GLOBAL__N_120LastModifiedAnalysis36visitRegionBranchControlFlowTransferENS1_23RegionBranchOpInterfaceESt8optionalIjESC_RKNS8_16LastModificationEPSD_E3$_0EERS4_OT0_.exit", label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -395,8 +399,10 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   br label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE7DefaultIZN12_GLOBAL__N_120LastModifiedAnalysis36visitRegionBranchControlFlowTransferENS1_23RegionBranchOpInterfaceESt8optionalIjESA_RKNS6_16LastModificationEPSB_E3$_1EEvOT_.exit"
 
 "_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseIN4test20TestStoreWithARegionERZN12_GLOBAL__N_120LastModifiedAnalysis36visitRegionBranchControlFlowTransferENS1_23RegionBranchOpInterfaceESt8optionalIjESC_RKNS8_16LastModificationEPSD_E3$_0EERS4_OT0_.exit": ; preds = %bb.c
-  %.not = icmp eq ptr %i.aa, @_ZN4mlir6detail14TypeIDResolverIN4test24TestStoreWithALoopRegionEvE2idE
-  br i1 %.not, label %bb.i, label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseIN4test24TestStoreWithALoopRegionERZN12_GLOBAL__N_120LastModifiedAnalysis36visitRegionBranchControlFlowTransferENS1_23RegionBranchOpInterfaceESt8optionalIjESC_RKNS8_16LastModificationEPSD_E3$_0EERS4_OT0_.exit"
+  %14 = icmp ne ptr %i.aa, @_ZN4mlir6detail14TypeIDResolverIN4test24TestStoreWithALoopRegionEvE2idE
+  %.not = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test24TestStoreWithALoopRegionEvE2idE
+  %spec.select.i.i.i.i.i.not.i15 = or i1 %.not, %14
+  br i1 %spec.select.i.i.i.i.i.not.i15, label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseIN4test24TestStoreWithALoopRegionERZN12_GLOBAL__N_120LastModifiedAnalysis36visitRegionBranchControlFlowTransferENS1_23RegionBranchOpInterfaceESt8optionalIjESC_RKNS8_16LastModificationEPSD_E3$_0EERS4_OT0_.exit", label %bb.i
 
 bb.i:                                             ; preds = %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseIN4test20TestStoreWithARegionERZN12_GLOBAL__N_120LastModifiedAnalysis36visitRegionBranchControlFlowTransferENS1_23RegionBranchOpInterfaceESt8optionalIjESC_RKNS8_16LastModificationEPSD_E3$_0EERS4_OT0_.exit"
   call void @llvm.lifetime.start.p0(ptr nonnull %7)

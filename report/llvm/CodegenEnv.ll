@@ -69,6 +69,7 @@ $_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE15growAndPushBackES2_ = com
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
 @.str = private unnamed_addr constant [15 x i8] c"linalg.generic\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_13bufferization13AllocTensorOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 
@@ -267,7 +268,9 @@ bb.i:                                             ; preds = %._crit_edge
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !154
   %i.ao = icmp eq ptr %i.an, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
-  br i1 %i.ao, label %_ZL15isMaterializingN4mlir5ValueE.exit, label %bb.j
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %7, %i.ao
+  br i1 %spec.select.i.i.i.i.i.i.i, label %_ZL15isMaterializingN4mlir5ValueE.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.ap = call noundef ptr @_ZNK4mlir5Value13getDefiningOpEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #16 ; 2 uses
@@ -280,10 +283,12 @@ bb.k:                                             ; preds = %bb.j
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i2.i, i64 16
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !154
   %i.at = icmp eq ptr %i.as, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization13AllocTensorOpEvE2idE
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization13AllocTensorOpEvE2idE
+  %spec.select.i.i.i.i.i.i3.i = and i1 %8, %i.at
   br label %_ZL15isMaterializingN4mlir5ValueE.exit
 
 _ZL15isMaterializingN4mlir5ValueE.exit:           ; preds = %bb.i, %bb.j, %bb.k
-  %i.au = phi i1 [ true, %bb.i ], [ %i.at, %bb.k ], [ false, %bb.j ]
+  %i.au = phi i1 [ true, %bb.i ], [ %spec.select.i.i.i.i.i.i3.i, %bb.k ], [ false, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.av = load ptr, ptr %6, align 8, !tbaa !117   ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %6, i64 16

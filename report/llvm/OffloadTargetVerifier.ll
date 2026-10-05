@@ -204,14 +204,24 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.l, align 8, !tbaa !85
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !87   ; 3 uses
-  %48 = icmp eq ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_3acc10ParallelOpEvE2idE
-  %i.o = icmp eq ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_3acc9KernelsOpEvE2idE
-  %or.cond.i.i = or i1 %48, %i.o
-  %49 = icmp eq ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_3acc8SerialOpEvE2idE
-  %spec.select.i6.i = or i1 %49, %or.cond.i.i
-  br i1 %spec.select.i6.i, label %bb.d, label %bb.i
+  %i.o = icmp eq ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_3acc10ParallelOpEvE2idE
+  %48 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3acc10ParallelOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %48, %i.o
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %49
 
-bb.d:                                             ; preds = %bb.c
+49:                                               ; preds = %bb.c
+  %50 = icmp eq ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_3acc9KernelsOpEvE2idE
+  %51 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3acc9KernelsOpEvE2idE
+  %spec.select.i.i.i.i4.i.i = and i1 %51, %50
+  br i1 %spec.select.i.i.i.i4.i.i, label %bb.d, label %_ZN4llvm3isaIJN4mlir3acc10ParallelOpENS2_9KernelsOpENS2_8SerialOpEEPNS1_9OperationEEEbRKT0_.exit.i
+
+_ZN4llvm3isaIJN4mlir3acc10ParallelOpENS2_9KernelsOpENS2_8SerialOpEEPNS1_9OperationEEEbRKT0_.exit.i: ; preds = %49
+  %52 = icmp eq ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_3acc8SerialOpEvE2idE
+  %53 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3acc8SerialOpEvE2idE
+  %spec.select.i.i.i.i6.i.i = and i1 %53, %52
+  br i1 %spec.select.i.i.i.i6.i.i, label %bb.d, label %bb.i
+
+bb.d:                                             ; preds = %_ZN4llvm3isaIJN4mlir3acc10ParallelOpENS2_9KernelsOpENS2_8SerialOpEEPNS1_9OperationEEEbRKT0_.exit.i, %49, %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !477, !nonnull !43, !align !117
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -277,7 +287,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit.i:          ; preds = %bb.h, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #22
   br label %_ZZN12_GLOBAL__N_121OffloadTargetVerifier14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit
 
-bb.i:                                             ; preds = %bb.c, %bb.b
+bb.i:                                             ; preds = %_ZN4llvm3isaIJN4mlir3acc10ParallelOpENS2_9KernelsOpENS2_8SerialOpEEPNS1_9OperationEEEbRKT0_.exit.i, %bb.b
   %i.ag = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !477, !nonnull !43, !align !117 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %41)

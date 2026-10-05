@@ -204,36 +204,27 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   tail call void @llvm.assume(i1 %.not1114.i.i.i)
   %i.aj = load ptr, ptr %i.ag, align 8, !tbaa !714 ; 2 uses
   %.not.i3.i.i = icmp eq ptr %i.aj, @_ZN4llvm35MachineDominanceFrontierWrapperPass2IDE
-  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit.thread, label %.lr.ph.i.i.i
-
-_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit.thread: ; preds = %bb.e
-  %85 = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %86 = load ptr, ptr %85, align 8
-  %87 = getelementptr inbounds nuw i8, ptr %86, i64 56
-  br label %.lr.ph.i.i.i58.preheader
+  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e, %.lr.ph.i.i.i
-  %.sroa.08.015.i4.i.i = phi ptr [ %i.ak, %.lr.ph.i.i.i ], [ %i.ag, %bb.e ] ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 3 uses
+  %.sroa.08.015.i4.i.i = phi ptr [ %i.ak, %.lr.ph.i.i.i ], [ %i.ag, %bb.e ]
+  %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 4 uses
   %.not11.i.i.i = icmp ne ptr %i.ak, %i.ai
   tail call void @llvm.assume(i1 %.not11.i.i.i)
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !714
   %.not.i.i.i = icmp eq ptr %i.al, @_ZN4llvm35MachineDominanceFrontierWrapperPass2IDE
   br i1 %.not.i.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
-_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 24
+_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i, %bb.e
+  %.sroa.08.015.i.lcssa.i.i = phi ptr [ %i.ag, %bb.e ], [ %i.ak, %.lr.ph.i.i.i ]
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i, i64 8
   %i.an = load ptr, ptr %i.am, align 8
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 56 ; 2 uses
   %.not.i3.i.i57 = icmp eq ptr %i.aj, @_ZN4llvm31MachineDominatorTreeWrapperPass2IDE
-  br i1 %.not.i3.i.i57, label %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i58.preheader
+  br i1 %.not.i3.i.i57, label %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i58
 
-.lr.ph.i.i.i58.preheader:                         ; preds = %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit.thread, %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit
-  %88 = phi ptr [ %87, %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit.thread ], [ %i.ao, %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit ]
-  br label %.lr.ph.i.i.i58
-
-.lr.ph.i.i.i58:                                   ; preds = %.lr.ph.i.i.i58.preheader, %.lr.ph.i.i.i58
-  %.sroa.08.015.i4.i.i59 = phi ptr [ %i.ap, %.lr.ph.i.i.i58 ], [ %i.ag, %.lr.ph.i.i.i58.preheader ]
+.lr.ph.i.i.i58:                                   ; preds = %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit, %.lr.ph.i.i.i58
+  %.sroa.08.015.i4.i.i59 = phi ptr [ %i.ap, %.lr.ph.i.i.i58 ], [ %i.ag, %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit ]
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i59, i64 16 ; 4 uses
   %.not11.i.i.i60 = icmp ne ptr %i.ap, %i.ai
   tail call void @llvm.assume(i1 %.not11.i.i.i60)
@@ -242,7 +233,6 @@ _ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit
   br i1 %.not.i.i.i61, label %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i58
 
 _ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i58, %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit
-  %89 = phi ptr [ %i.ao, %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit ], [ %88, %.lr.ph.i.i.i58 ] ; 2 uses
   %.sroa.08.015.i.lcssa.i.i62 = phi ptr [ %i.ag, %_ZNK4llvm4Pass11getAnalysisINS_35MachineDominanceFrontierWrapperPassEEERT_v.exit ], [ %i.ap, %.lr.ph.i.i.i58 ]
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i62, i64 8
   %i.as = load ptr, ptr %i.ar, align 8
@@ -251,7 +241,7 @@ _ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit: ; 
   store ptr %i.k, ptr %i.au, align 8, !tbaa !410
   call void @llvm.lifetime.start.p0(ptr nonnull %77) #20
   %i.av = load ptr, ptr %i.s, align 8, !tbaa !408
-  call void @_ZN4llvm3rdf13DataFlowGraphC1ERNS_15MachineFunctionERKNS_15TargetInstrInfoERKNS_18TargetRegisterInfoERKNS_20MachineDominatorTreeERKNS_24MachineDominanceFrontierE(ptr noundef nonnull align 8 dereferenceable(808) %77, ptr noundef nonnull align 8 dereferenceable(1065) %1, ptr noundef nonnull align 8 dereferenceable(112) %i.av, ptr noundef nonnull align 8 dereferenceable(316) %i.z, ptr noundef nonnull align 8 dereferenceable(204) %i.at, ptr noundef nonnull align 8 dereferenceable(24) %89) #20
+  call void @_ZN4llvm3rdf13DataFlowGraphC1ERNS_15MachineFunctionERKNS_15TargetInstrInfoERKNS_18TargetRegisterInfoERKNS_20MachineDominatorTreeERKNS_24MachineDominanceFrontierE(ptr noundef nonnull align 8 dereferenceable(808) %77, ptr noundef nonnull align 8 dereferenceable(1065) %1, ptr noundef nonnull align 8 dereferenceable(112) %i.av, ptr noundef nonnull align 8 dereferenceable(316) %i.z, ptr noundef nonnull align 8 dereferenceable(204) %i.at, ptr noundef nonnull align 8 dereferenceable(24) %i.ao) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %76) #20
   %i.aw = getelementptr inbounds nuw i8, ptr %76, i64 8 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %76, i64 24 ; 2 uses
@@ -654,7 +644,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit212:              ; preds = %bb.jm, %bb.jn
   call void @llvm.lifetime.start.p0(ptr nonnull %82) #20
   %i.clb = load ptr, ptr %i.s, align 8, !tbaa !408
   %i.clc = load ptr, ptr %i.aa, align 8, !tbaa !409
-  call void @_ZN4llvm3rdf13DataFlowGraphC1ERNS_15MachineFunctionERKNS_15TargetInstrInfoERKNS_18TargetRegisterInfoERKNS_20MachineDominatorTreeERKNS_24MachineDominanceFrontierE(ptr noundef nonnull align 8 dereferenceable(808) %82, ptr noundef nonnull align 8 dereferenceable(1065) %1, ptr noundef nonnull align 8 dereferenceable(112) %i.clb, ptr noundef nonnull align 8 dereferenceable(316) %i.clc, ptr noundef nonnull align 8 dereferenceable(204) %i.at, ptr noundef nonnull align 8 dereferenceable(24) %89) #20
+  call void @_ZN4llvm3rdf13DataFlowGraphC1ERNS_15MachineFunctionERKNS_15TargetInstrInfoERKNS_18TargetRegisterInfoERKNS_20MachineDominatorTreeERKNS_24MachineDominanceFrontierE(ptr noundef nonnull align 8 dereferenceable(808) %82, ptr noundef nonnull align 8 dereferenceable(1065) %1, ptr noundef nonnull align 8 dereferenceable(112) %i.clb, ptr noundef nonnull align 8 dereferenceable(316) %i.clc, ptr noundef nonnull align 8 dereferenceable(204) %i.at, ptr noundef nonnull align 8 dereferenceable(24) %i.ao) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %i.cld = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.cle = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses

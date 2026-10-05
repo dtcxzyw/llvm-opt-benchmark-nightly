@@ -175,6 +175,7 @@ $_ZTVZN4mlir15DialectRegistry12addExtensionIJNS_3gpu10GPUDialectEEEEbPFvPNS_11ML
 @_ZGVZN4mlir6detail14TypeIDResolverINS_3gpu38OffloadingLLVMTranslationAttrInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str.1 = private unnamed_addr constant [100 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::gpu::OffloadingLLVMTranslationAttrInterface]\00", align 1
 @.str.5 = private unnamed_addr constant [31 x i8] c"operation must be a GPU binary\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.6 = private unnamed_addr constant [46 x i8] c"the requested target object couldn't be found\00", align 1
 @_ZN4mlir6detail14TypeIDResolverINS_11IntegerAttrEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
@@ -438,7 +439,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !47
   %i.j = icmp eq ptr %i.i, @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE
-  br i1 %i.j, label %bb.g, label %bb.c
+  %31 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %31, %i.j
+  br i1 %spec.select.i.i.i.i.i, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #18
@@ -841,7 +844,9 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !47
   %i.p = icmp eq ptr %i.o, @_ZN4mlir6detail14TypeIDResolverINS_3gpu12LaunchFuncOpEvE2idE
-  br i1 %i.p, label %bb.g, label %bb.c
+  %54 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu12LaunchFuncOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %54, %i.p
+  br i1 %spec.select.i.i.i.i.i, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #18
@@ -881,8 +886,10 @@ bb.g:                                             ; preds = %bb.b
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i13.i, i64 16
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !47
   %i.aa = icmp ne ptr %i.z, @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE
+  %55 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE
+  %spec.select.i.i.i.i14.not.i = or i1 %55, %i.aa
   %.not4748.i = icmp eq ptr %3, null
-  %.not47.i = or i1 %.not4748.i, %i.aa
+  %.not47.i = or i1 %.not4748.i, %spec.select.i.i.i.i14.not.i
   br i1 %.not47.i, label %bb.h, label %bb.l
 
 bb.h:                                             ; preds = %bb.g

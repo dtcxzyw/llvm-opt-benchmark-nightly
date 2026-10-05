@@ -204,7 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !86
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_6tensor15CollapseShapeOpEvE2idE
-  br i1 %i.f, label %bb.c, label %.critedge.i.i.i
+  %12 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor15CollapseShapeOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %12, %i.f
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.c, label %.critedge.i.i.i
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
@@ -235,8 +237,10 @@ _ZN4llvm20ValueFromPointerCastIN4mlir6linalg8LinalgOpENS1_9OperationENS_8CastInf
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i16.i.i.i, i64 16
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !86
   %i.r = icmp ne ptr %i.q, @_ZN4mlir6detail14TypeIDResolverINS_6tensor13ExpandShapeOpEvE2idE
+  %13 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor13ExpandShapeOpEvE2idE
+  %spec.select.i.i.i.i17.not.i.i.i = or i1 %13, %i.r
   %.not1112.i.i.i = icmp eq ptr %i.n, null
-  %.not11.i.i.i = or i1 %.not1112.i.i.i, %i.r
+  %.not11.i.i.i = or i1 %.not1112.i.i.i, %spec.select.i.i.i.i17.not.i.i.i
   br i1 %.not11.i.i.i, label %_ZSt10__invoke_rIbRZN12_GLOBAL__N_127TestLinalgElementwiseFusion14runOnOperationEvEUlPN4mlir9OpOperandEE1_JS4_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit, label %bb.e
 
 bb.e:                                             ; preds = %.critedge.i.i.i
@@ -452,7 +456,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !86
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_6tensor13ExpandShapeOpEvE2idE
-  br i1 %i.f, label %bb.b, label %bb.c
+  %3 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor13ExpandShapeOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i.i = and i1 %3, %i.f
+  br i1 %spec.select.i.i.i.i.i.i.i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.g = call noundef i32 @_ZNK4mlir9OpOperand16getOperandNumberEv(ptr noundef nonnull align 8 dereferenceable(32) %.val) #23
@@ -467,8 +473,10 @@ bb.c:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !86
   %i.n = icmp ne ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_6tensor15CollapseShapeOpEvE2idE
+  %4 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor15CollapseShapeOpEvE2idE
+  %spec.select.i.i.i.i.not.i.i.i = or i1 %4, %i.n
   %.not4.i.i.i = icmp eq ptr %i.j, null
-  %.not.i.i.i = or i1 %.not4.i.i.i, %i.n
+  %.not.i.i.i = or i1 %.not4.i.i.i, %spec.select.i.i.i.i.not.i.i.i
   br i1 %.not.i.i.i, label %_ZSt10__invoke_rIbRZN12_GLOBAL__N_127TestLinalgElementwiseFusion14runOnOperationEvEUlPN4mlir9OpOperandEE3_JS4_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c

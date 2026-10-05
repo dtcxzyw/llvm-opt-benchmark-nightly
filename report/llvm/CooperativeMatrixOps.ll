@@ -72,6 +72,7 @@ $_ZN4mlir10DiagnosticD2Ev = comdat any
 @.str.11 = private unnamed_addr constant [47 x i8] c"missing value for the 'Aligned' memory operand\00", align 1
 @.str.12 = private unnamed_addr constant [59 x i8] c"found alignment attribute for non-'Aligned' memory operand\00", align 1
 @_ZN4mlir6detail14TypeIDResolverINS_10VectorTypeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_5spirv26KHRCooperativeMatrixLoadOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_5spirv27KHRCooperativeMatrixStoreOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_11IntegerTypeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
@@ -218,14 +219,14 @@ bb.i:                                             ; preds = %_ZN4llvm3isaIJN4mli
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !50 ; 2 uses
   %i.ac = icmp eq ptr %i.ab, @_ZN4mlir6detail14TypeIDResolverINS_5spirv26KHRCooperativeMatrixLoadOpEvE2idE
-  br i1 %i.ac, label %17, label %bb.n
-
-17:                                               ; preds = %bb.i
+  %17 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5spirv26KHRCooperativeMatrixLoadOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %17, %i.ac
   %18 = and i32 %i.y, 8
-  %.not15 = icmp eq i32 %18, 0
-  br i1 %.not15, label %.thread.a, label %bb.j
+  %19 = icmp ne i32 %18, 0
+  %or.cond = and i1 %19, %spec.select.i.i.i.i.i
+  br i1 %or.cond, label %bb.j, label %bb.n
 
-bb.j:                                             ; preds = %17
+bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #8
   %i.ad = getelementptr inbounds nuw i8, ptr %10, i64 32
@@ -262,9 +263,11 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit8:           ; preds = %bb.l, %bb.m
 
 bb.n:                                             ; preds = %bb.i
   %i.al = icmp eq ptr %i.ab, @_ZN4mlir6detail14TypeIDResolverINS_5spirv27KHRCooperativeMatrixStoreOpEvE2idE
+  %20 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5spirv27KHRCooperativeMatrixStoreOpEvE2idE
+  %spec.select.i.i.i.i.i10 = and i1 %20, %i.al
   %i.am = and i32 %i.y, 16
   %i.an = icmp ne i32 %i.am, 0
-  %or.cond.a = and i1 %i.an, %i.al
+  %or.cond.a = and i1 %i.an, %spec.select.i.i.i.i.i10
   br i1 %or.cond.a, label %bb.o, label %.thread.a
 
 bb.o:                                             ; preds = %bb.n
@@ -302,7 +305,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit11:          ; preds = %bb.q, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #8
   br label %.thread10
 
-.thread.a:                                        ; preds = %17, %bb.n
+.thread.a:                                        ; preds = %bb.n
   %i.aw = and i32 %i.y, 2
   %.not16 = icmp eq i32 %i.aw, 0
   %.not17 = icmp eq ptr %3, null                  ; 2 uses

@@ -202,6 +202,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_3gpu13MMAMatrixTypeEvE13resolveTypeIDEvE2
 @_ZTVN4mlir12_GLOBAL__N_141WmmaElementwiseOpToSPIRVScalarMulLoweringE = internal unnamed_addr constant { [10 x ptr] } { [10 x ptr] [ptr null, ptr null, ptr @_ZN4mlir14RewritePatternD2Ev, ptr @_ZN4mlir12_GLOBAL__N_141WmmaElementwiseOpToSPIRVScalarMulLoweringD0Ev, ptr @_ZNK4mlir17ConversionPattern15matchAndRewriteEPNS_9OperationERNS_15PatternRewriterE, ptr @_ZN4mlir14RewritePattern6anchorEv, ptr @_ZNK4mlir19OpConversionPatternINS_3gpu24SubgroupMmaElementwiseOpEE15matchAndRewriteEPNS_9OperationEN4llvm8ArrayRefINS_5ValueEEERNS_25ConversionPatternRewriterE, ptr @_ZNK4mlir19OpConversionPatternINS_3gpu24SubgroupMmaElementwiseOpEE15matchAndRewriteEPNS_9OperationEN4llvm8ArrayRefINS_10ValueRangeEEERNS_25ConversionPatternRewriterE, ptr @_ZNK4mlir12_GLOBAL__N_141WmmaElementwiseOpToSPIRVScalarMulLowering15matchAndRewriteENS_3gpu24SubgroupMmaElementwiseOpENS2_31SubgroupMmaElementwiseOpAdaptorERNS_25ConversionPatternRewriterE, ptr @_ZNK4mlir19OpConversionPatternINS_3gpu24SubgroupMmaElementwiseOpEE15matchAndRewriteES2_NS1_38SubgroupMmaElementwiseOpGenericAdaptorIN4llvm8ArrayRefINS_10ValueRangeEEEEERNS_25ConversionPatternRewriterE] }, align 8
 @.str.26 = private unnamed_addr constant [17 x i8] c"no splat operand\00", align 1
 @.str.27 = private unnamed_addr constant [35 x i8] c"splat is not a composite construct\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3gpu27SubgroupMmaConstantMatrixOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_5spirv20CompositeConstructOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.28 = private unnamed_addr constant [121 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::(anonymous namespace)::WmmaElementwiseOpToSPIRVScalarMulLowering]\00", align 1
@@ -604,7 +605,9 @@ bb.f:                                             ; preds = %_ZN4mlir7OpTrait6de
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !399
   %i.aa = icmp eq ptr %i.z, @_ZN4mlir6detail14TypeIDResolverINS_3gpu27SubgroupMmaConstantMatrixOpEvE2idE
-  br i1 %i.aa, label %_ZNK4mlir5Value13getDefiningOpINS_3gpu27SubgroupMmaConstantMatrixOpEEET_v.exit, label %bb.g
+  %20 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu27SubgroupMmaConstantMatrixOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %20, %i.aa
+  br i1 %spec.select.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_3gpu27SubgroupMmaConstantMatrixOpEEET_v.exit, label %bb.g
 
 _ZNK4mlir5Value13getDefiningOpINS_3gpu27SubgroupMmaConstantMatrixOpEEET_v.exit: ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #16
@@ -633,7 +636,9 @@ bb.h:                                             ; preds = %bb.g
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i42, i64 16
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !399
   %i.aj = icmp eq ptr %i.ai, @_ZN4mlir6detail14TypeIDResolverINS_3gpu27SubgroupMmaConstantMatrixOpEvE2idE
-  br i1 %i.aj, label %_ZNK4mlir5Value13getDefiningOpINS_3gpu27SubgroupMmaConstantMatrixOpEEET_v.exit45, label %thread-pre-split.thread
+  %21 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu27SubgroupMmaConstantMatrixOpEvE2idE
+  %spec.select.i.i.i.i.i.i43 = and i1 %21, %i.aj
+  br i1 %spec.select.i.i.i.i.i.i43, label %_ZNK4mlir5Value13getDefiningOpINS_3gpu27SubgroupMmaConstantMatrixOpEEET_v.exit45, label %thread-pre-split.thread
 
 _ZNK4mlir5Value13getDefiningOpINS_3gpu27SubgroupMmaConstantMatrixOpEEET_v.exit45: ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #16
@@ -705,7 +710,9 @@ bb.k:                                             ; preds = %bb.j
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i61, i64 16
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !399
   %i.bg = icmp eq ptr %i.bf, @_ZN4mlir6detail14TypeIDResolverINS_5spirv20CompositeConstructOpEvE2idE
-  br i1 %i.bg, label %bb.m, label %bb.l
+  %22 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5spirv20CompositeConstructOpEvE2idE
+  %spec.select.i.i.i.i.i.i63 = and i1 %22, %i.bg
+  br i1 %spec.select.i.i.i.i.i.i63, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bh = call i8 @_ZN4mlir12RewriterBase18notifyMatchFailureIRNS_3gpu24SubgroupMmaElementwiseOpEEEN4llvm13LogicalResultEOT_PKc(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull align 8 dereferenceable(8) %8, ptr noundef nonnull @.str.27)

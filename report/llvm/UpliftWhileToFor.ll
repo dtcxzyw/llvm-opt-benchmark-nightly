@@ -126,6 +126,7 @@ $_ZNK4mlir6detail31OpOrInterfaceRewritePatternBaseINS_3scf7WhileOpEE15matchAndRe
 @.str.2 = private unnamed_addr constant [19 x i8] c"Invalid args order\00", align 1
 @.str.3 = private unnamed_addr constant [32 x i8] c"Didn't found suitable 'addi' op\00", align 1
 @.str.4 = private unnamed_addr constant [20 x i8] c"Invalid 'addi' form\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_5arith6CmpIOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.10 = private unnamed_addr constant [32 x i8] c"Expected single condition use: \00", align 1
 @.str.11 = private unnamed_addr constant [36 x i8] c"Expected 'slt' or 'sgt' predicate: \00", align 1
@@ -263,10 +264,12 @@ bb.c:                                             ; preds = %_ZN4llvm16hasSingle
   %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.ao, align 8, !tbaa !91
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !94
-  %i.ar = icmp eq ptr %i.aq, @_ZN4mlir6detail14TypeIDResolverINS_5arith6CmpIOpEvE2idE ; 2 uses
-  %spec.select.i.i = select i1 %i.ar, ptr %i.an, ptr null
+  %i.ar = icmp eq ptr %i.aq, @_ZN4mlir6detail14TypeIDResolverINS_5arith6CmpIOpEvE2idE
+  %43 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith6CmpIOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %43, %i.ar        ; 2 uses
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.an, ptr null
   store ptr %spec.select.i.i, ptr %13, align 8
-  br i1 %i.ar, label %bb.f, label %bb.d
+  br i1 %spec.select.i.i.i.i, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #16
@@ -669,7 +672,9 @@ bb.bd:                                            ; preds = %bb.bc
   %i.mf = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.mg = load ptr, ptr %i.mf, align 8, !tbaa !94
   %i.mh = icmp eq ptr %i.mg, @_ZN4mlir6detail14TypeIDResolverINS_5arith6AddIOpEvE2idE
-  br i1 %i.mh, label %_ZNK4mlir5Value13getDefiningOpINS_5arith6AddIOpEEET_v.exit, label %bb.be
+  %44 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith6AddIOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %44, %i.mh
+  br i1 %spec.select.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_5arith6AddIOpEEET_v.exit, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc
   %i.mi = call i8 @_ZN4mlir12RewriterBase18notifyMatchFailureIRNS_3scf7WhileOpEEEN4llvm13LogicalResultEOT_PKc(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(8) %12, ptr noundef nonnull @.str.3) ; 0 uses

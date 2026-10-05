@@ -204,7 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !122
   %i.k = icmp eq ptr %i.j, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
-  br i1 %i.k, label %_ZN4llvm16dyn_cast_or_nullIN4mlir4LLVM10LLVMFuncOpENS1_9OperationEEEDaPT0_.exit, label %bb.c
+  %14 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %14, %i.k
+  br i1 %spec.select.i.i.i.i.i, label %_ZN4llvm16dyn_cast_or_nullIN4mlir4LLVM10LLVMFuncOpENS1_9OperationEEEDaPT0_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #28
@@ -555,10 +557,29 @@ bb.a:
   %35 = alloca [2 x %"class.mlir::Value"], align 8 ; 5 uses
   store ptr %1, ptr %28, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #28
-  br label %bb.b
+  %.not8.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  br i1 %.not8.i.i, label %.split.us.i.i, label %bb.b
 
-bb.b:                                             ; preds = %bb.c, %bb.a
-  %.0.i.i = phi ptr [ %1, %bb.a ], [ %i.c, %bb.c ]
+.split.us.i.i:                                    ; preds = %bb.a
+  %36 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %37 = load ptr, ptr %36, align 8, !tbaa !205    ; 2 uses
+  %.not.i.us6.i.i = icmp eq ptr %37, null
+  br i1 %.not.i.us6.i.i, label %_ZN12_GLOBAL__N_120GPUShuffleConversion15getSubgroupSizeEPN4mlir9OperationE.exit.thread, label %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i
+
+38:                                               ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i
+  %39 = getelementptr inbounds nuw i8, ptr %42, i64 16
+  %40 = load ptr, ptr %39, align 8, !tbaa !205    ; 2 uses
+  %.not.i.us.i.i = icmp eq ptr %40, null
+  br i1 %.not.i.us.i.i, label %_ZN12_GLOBAL__N_120GPUShuffleConversion15getSubgroupSizeEPN4mlir9OperationE.exit.thread, label %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i
+
+_ZN4mlir9Operation11getParentOpEv.exit.us.i.i:    ; preds = %.split.us.i.i, %38
+  %41 = phi ptr [ %40, %38 ], [ %37, %.split.us.i.i ]
+  %42 = tail call noundef ptr @_ZN4mlir5Block11getParentOpEv(ptr noundef nonnull align 8 dereferenceable(80) %41) #28 ; 2 uses
+  %.not.us.i.i = icmp eq ptr %42, null
+  br i1 %.not.us.i.i, label %_ZN12_GLOBAL__N_120GPUShuffleConversion15getSubgroupSizeEPN4mlir9OperationE.exit.thread, label %38
+
+bb.b:                                             ; preds = %bb.a, %bb.c
+  %.0.i.i = phi ptr [ %i.c, %bb.c ], [ %1, %bb.a ]
   %i.a = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !205  ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.b, null
@@ -577,7 +598,7 @@ bb.c:                                             ; preds = %_ZN4mlir9Operation1
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
   br i1 %i.g, label %_ZN12_GLOBAL__N_120GPUShuffleConversion15getSubgroupSizeEPN4mlir9OperationE.exit, label %bb.b, !llvm.loop !738
 
-_ZN12_GLOBAL__N_120GPUShuffleConversion15getSubgroupSizeEPN4mlir9OperationE.exit.thread: ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.i.i, %bb.b
+_ZN12_GLOBAL__N_120GPUShuffleConversion15getSubgroupSizeEPN4mlir9OperationE.exit.thread: ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.i.i, %bb.b, %_ZN4mlir9Operation11getParentOpEv.exit.us.i.i, %38, %.split.us.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #28
   br label %bb.l
 

@@ -200,34 +200,26 @@ bb.a:
   tail call void @llvm.assume(i1 %.not1114.i.i.i)
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !83   ; 2 uses
   %.not.i3.i.i = icmp eq ptr %i.f, @_ZN4llvm29LazyBranchProbabilityInfoPass2IDE
-  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit.thread, label %.lr.ph.i.i.i
-
-_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit.thread: ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %3 = load ptr, ptr %2, align 8
-  br label %.lr.ph.i.i.i6.preheader
+  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %.lr.ph.i.i.i
-  %.sroa.08.015.i4.i.i = phi ptr [ %i.g, %.lr.ph.i.i.i ], [ %i.c, %bb.a ] ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 3 uses
+  %.sroa.08.015.i4.i.i = phi ptr [ %i.g, %.lr.ph.i.i.i ], [ %i.c, %bb.a ]
+  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 4 uses
   %.not11.i.i.i = icmp ne ptr %i.g, %i.e
   tail call void @llvm.assume(i1 %.not11.i.i.i)
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !83
   %.not.i.i.i = icmp eq ptr %i.h, @_ZN4llvm29LazyBranchProbabilityInfoPass2IDE
   br i1 %.not.i.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit, label %.lr.ph.i.i.i
 
-_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i
-  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 24
-  %i.j = load ptr, ptr %i.i, align 8              ; 2 uses
+_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i, %bb.a
+  %.sroa.08.015.i.lcssa.i.i = phi ptr [ %i.c, %bb.a ], [ %i.g, %.lr.ph.i.i.i ]
+  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i, i64 8
+  %i.j = load ptr, ptr %i.i, align 8
   %.not.i3.i.i5 = icmp eq ptr %i.f, @_ZN4llvm19LoopInfoWrapperPass2IDE
-  br i1 %.not.i3.i.i5, label %_ZNK4llvm4Pass11getAnalysisINS_19LoopInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i6.preheader
+  br i1 %.not.i3.i.i5, label %_ZNK4llvm4Pass11getAnalysisINS_19LoopInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i6
 
-.lr.ph.i.i.i6.preheader:                          ; preds = %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit.thread, %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit
-  %4 = phi ptr [ %3, %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit.thread ], [ %i.j, %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit ]
-  br label %.lr.ph.i.i.i6
-
-.lr.ph.i.i.i6:                                    ; preds = %.lr.ph.i.i.i6.preheader, %.lr.ph.i.i.i6
-  %.sroa.08.015.i4.i.i7 = phi ptr [ %i.k, %.lr.ph.i.i.i6 ], [ %i.c, %.lr.ph.i.i.i6.preheader ]
+.lr.ph.i.i.i6:                                    ; preds = %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit, %.lr.ph.i.i.i6
+  %.sroa.08.015.i4.i.i7 = phi ptr [ %i.k, %.lr.ph.i.i.i6 ], [ %i.c, %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i7, i64 16 ; 4 uses
   %.not11.i.i.i8 = icmp ne ptr %i.k, %i.e
   tail call void @llvm.assume(i1 %.not11.i.i.i8)
@@ -236,7 +228,6 @@ _ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit: ; pr
   br i1 %.not.i.i.i9, label %_ZNK4llvm4Pass11getAnalysisINS_19LoopInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i6
 
 _ZNK4llvm4Pass11getAnalysisINS_19LoopInfoWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i6, %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit
-  %5 = phi ptr [ %i.j, %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit ], [ %4, %.lr.ph.i.i.i6 ]
   %.sroa.08.015.i.lcssa.i.i10 = phi ptr [ %i.c, %_ZNK4llvm4Pass11getAnalysisINS_29LazyBranchProbabilityInfoPassEEERT_v.exit ], [ %i.k, %.lr.ph.i.i.i6 ]
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i10, i64 8
   %i.n = load ptr, ptr %i.m, align 8
@@ -244,7 +235,7 @@ _ZNK4llvm4Pass11getAnalysisINS_19LoopInfoWrapperPassEEERT_v.exit: ; preds = %.lr
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %1, ptr %i.p, align 8, !tbaa !33
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store ptr %5, ptr %i.q, align 8, !tbaa !34
+  store ptr %i.j, ptr %i.q, align 8, !tbaa !34
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.o, ptr %i.r, align 8, !tbaa !36
   ret i1 false

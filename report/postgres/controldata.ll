@@ -20,6 +20,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.7 = private unnamed_addr constant [7 x i8] c"LC_ALL\00", align 1
 @.str.8 = private unnamed_addr constant [12 x i8] c"LC_MESSAGES\00", align 1
 @.str.9 = private unnamed_addr constant [2 x i8] c"C\00", align 1
+@new_cluster = external global %struct.ClusterInfo, align 8
 @.str.10 = private unnamed_addr constant [25 x i8] c"\22%s/pg_controldata\22 \22%s\22\00", align 1
 @.str.11 = private unnamed_addr constant [2 x i8] c"r\00", align 1
 @.str.12 = private unnamed_addr constant [40 x i8] c"could not get control data using %s: %m\00", align 1
@@ -228,7 +229,9 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.ae = tail call i32 @unsetenv(ptr noundef nonnull @.str.6) #9 ; 0 uses
   %i.af = tail call i32 @unsetenv(ptr noundef nonnull @.str.7) #9 ; 0 uses
   %i.ag = tail call i32 @setenv(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, i32 noundef 1) #9 ; 0 uses
-  br i1 %i.f, label %bb.an, label %bb.t
+  %1 = icmp ne ptr %0, @new_cluster
+  %or.cond.not = and i1 %1, %i.f
+  br i1 %or.cond.not, label %bb.an, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 160

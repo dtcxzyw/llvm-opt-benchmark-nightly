@@ -202,6 +202,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_5xegpu20DistributeLayoutAttrEvE13resolveT
 @.str.9 = private unnamed_addr constant [84 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::xegpu::DistributeLayoutAttr]\00", align 1
 @_ZN4mlir6detail14TypeIDResolverINS_10MemRefTypeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_11IntegerTypeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_5xegpu8LoadNdOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.10 = private unnamed_addr constant [96 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = (anonymous namespace)::OptimizeCreateNdDescOp]\00", align 1
 @.str.11 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
@@ -604,12 +605,13 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not73, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.q
+  %25 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu8LoadNdOpEvE2idE
   %i.bx = getelementptr inbounds nuw i8, ptr %8, i64 16
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %8, i64 8
-  br label %bb.r
+  br i1 %25, label %._crit_edge, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph, %bb.v
-  %.sroa.050.074 = phi ptr [ %.sroa.050.072, %.lr.ph ], [ %.sroa.050.0, %bb.v ] ; 2 uses
+  %.sroa.050.074 = phi ptr [ %.sroa.050.0, %bb.v ], [ %.sroa.050.072, %.lr.ph ] ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.050.074, i64 16
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !226 ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 48
@@ -664,7 +666,7 @@ bb.v:                                             ; preds = %_ZN12_GLOBAL__N_123
   %.not = icmp eq ptr %.sroa.050.0, null
   br i1 %.not, label %._crit_edge, label %bb.r
 
-._crit_edge:                                      ; preds = %bb.v, %bb.q
+._crit_edge:                                      ; preds = %bb.v, %.lr.ph, %bb.q
   %i.cl = call { ptr, i64 } @_ZNK4mlir5xegpu14TensorDescType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %19) #16
   %i.cm = extractvalue { ptr, i64 } %i.cl, 0      ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
@@ -1067,7 +1069,9 @@ bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !54
   %i.p = icmp eq ptr %i.o, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu8LoadNdOpEvE2idE
-  br i1 %i.p, label %bb.f, label %bb.e
+  %21 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu8LoadNdOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %21, %i.p
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #16

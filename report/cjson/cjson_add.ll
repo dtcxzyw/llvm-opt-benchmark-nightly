@@ -204,9 +204,13 @@ bb.b:                                             ; preds = %bb.a
   br label %cJSON_CreateObject.exit
 
 cJSON_CreateObject.exit:                          ; preds = %bb.a, %bb.b
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.c = tail call ptr @failing_malloc(i64 noundef 64) #30, !inline_history !10 ; 14 uses
   %.not.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i, label %cJSON_AddNullToObject.exit, label %cJSON_CreateNull.exit.i
@@ -475,9 +479,13 @@ bb.b:                                             ; preds = %bb.a
   br label %cJSON_CreateObject.exit
 
 cJSON_CreateObject.exit:                          ; preds = %bb.a, %bb.b
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.c = tail call ptr @failing_malloc(i64 noundef 64) #30, !inline_history !13 ; 14 uses
   %.not.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i, label %cJSON_AddTrueToObject.exit, label %cJSON_CreateTrue.exit.i
@@ -563,9 +571,13 @@ bb.l:                                             ; preds = %cJSON_AddTrueToObje
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @cjson_create_int_array_should_fail_on_allocation_failure() #8 {
 bb.a:
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.a = tail call ptr @failing_malloc(i64 noundef 64) #30, !inline_history !117 ; 5 uses
   %.not.i.i.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i.i.not.i, label %cJSON_CreateIntArray.exit.thread, label %cJSON_CreateArray.exit.i
@@ -648,9 +660,13 @@ cJSON_CreateIntArray.exit.thread:                 ; preds = %.split.us.i, %bb.a,
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @cjson_create_float_array_should_fail_on_allocation_failure() #8 {
 bb.a:
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.a = tail call ptr @failing_malloc(i64 noundef 64) #30, !inline_history !119 ; 5 uses
   %.not.i.i.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i.i.not.i, label %cJSON_CreateFloatArray.exit.thread, label %cJSON_CreateArray.exit.i
@@ -733,9 +749,13 @@ cJSON_CreateFloatArray.exit.thread:               ; preds = %.split.us.i, %bb.a,
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @cjson_create_double_array_should_fail_on_allocation_failure() #8 {
 bb.a:
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.a = tail call ptr @failing_malloc(i64 noundef 64) #30, !inline_history !121 ; 5 uses
   %.not.i.i.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i.i.not.i, label %cJSON_CreateDoubleArray.exit.thread, label %cJSON_CreateArray.exit.i
@@ -821,9 +841,13 @@ bb.a:
   %i.a = alloca [3 x ptr], align 16               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, ptr noundef nonnull align 16 dereferenceable(24) @__const.cjson_create_string_array_should_fail_on_allocation_failure.strings, i64 24, i1 false)
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.b = call ptr @cJSON_CreateStringArray(ptr noundef nonnull %i.a, i32 noundef 3)
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.c, label %bb.b
@@ -1026,9 +1050,13 @@ bb.b:                                             ; preds = %bb.a
   br label %cJSON_CreateObject.exit
 
 cJSON_CreateObject.exit:                          ; preds = %bb.a, %bb.b
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.c = tail call ptr @failing_malloc(i64 noundef 64) #30, !inline_history !16 ; 14 uses
   %.not.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i, label %cJSON_AddFalseToObject.exit, label %cJSON_CreateFalse.exit.i
@@ -1406,9 +1434,13 @@ bb.b:                                             ; preds = %bb.a
   br label %cJSON_CreateObject.exit
 
 cJSON_CreateObject.exit:                          ; preds = %bb.a, %bb.b
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.c = tail call ptr @failing_malloc(i64 noundef 64) #30, !inline_history !19 ; 14 uses
   %.not.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i, label %cJSON_AddBoolToObject.exit, label %cJSON_CreateBool.exit.i
@@ -1619,9 +1651,13 @@ bb.b:                                             ; preds = %bb.a
   br label %cJSON_CreateObject.exit
 
 cJSON_CreateObject.exit:                          ; preds = %bb.a, %bb.b
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.c = tail call ptr @cJSON_AddNumberToObject(ptr noundef %i.a, ptr noundef nonnull @.str.49, double noundef 4.200000e+01)
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.d, label %bb.c
@@ -1785,9 +1821,13 @@ bb.b:                                             ; preds = %bb.a
   br label %cJSON_CreateObject.exit
 
 cJSON_CreateObject.exit:                          ; preds = %bb.a, %bb.b
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.c = tail call ptr @cJSON_AddStringToObject(ptr noundef %i.a, ptr noundef nonnull @.str.50, ptr noundef nonnull @.str.50)
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.d, label %bb.c
@@ -1951,9 +1991,13 @@ bb.b:                                             ; preds = %bb.a
   br label %cJSON_CreateObject.exit
 
 cJSON_CreateObject.exit:                          ; preds = %bb.a, %bb.b
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.c = tail call ptr @cJSON_AddRawToObject(ptr noundef %i.a, ptr noundef nonnull @.str.52, ptr noundef nonnull @.str.53)
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.d, label %bb.c
@@ -2156,9 +2200,13 @@ bb.b:                                             ; preds = %bb.a
   br label %cJSON_CreateObject.exit
 
 cJSON_CreateObject.exit:                          ; preds = %bb.a, %bb.b
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.c = tail call ptr @failing_malloc(i64 noundef 64) #30, !inline_history !22 ; 14 uses
   %.not.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i, label %cJSON_AddObjectToObject.exit, label %cJSON_CreateObject.exit.i
@@ -2427,9 +2475,13 @@ bb.b:                                             ; preds = %bb.a
   br label %cJSON_CreateObject.exit
 
 cJSON_CreateObject.exit:                          ; preds = %bb.a, %bb.b
+  %0 = icmp eq ptr @failing_malloc, @malloc
+  %1 = icmp eq ptr @normal_free, @free
+  %or.cond.i = and i1 %0, %1
+  %spec.store.select.i = select i1 %or.cond.i, ptr @realloc, ptr null
   store ptr @failing_malloc, ptr @global_hooks, align 8, !tbaa !50
   store ptr @normal_free, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !51
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
+  store ptr %spec.store.select.i, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 16), align 8, !tbaa !52
   %i.c = tail call ptr @failing_malloc(i64 noundef 64) #30, !inline_history !25 ; 14 uses
   %.not.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i, label %cJSON_AddArrayToObject.exit, label %cJSON_CreateArray.exit.i

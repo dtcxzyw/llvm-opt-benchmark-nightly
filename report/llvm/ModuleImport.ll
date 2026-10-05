@@ -205,7 +205,9 @@ bb.t:                                             ; preds = %bb.s
   %i.cs = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !373
   %i.cu = icmp eq ptr %i.ct, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM12LandingpadOpEvE2idE
-  br i1 %i.cu, label %bb.u, label %bb.v
+  %16 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM12LandingpadOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %16, %i.cu
+  br i1 %spec.select.i.i.i.i.i, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   %i.cv = load ptr, ptr %i.co, align 8, !tbaa !160

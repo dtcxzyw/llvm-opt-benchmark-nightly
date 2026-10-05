@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @fileno(ptr noundef %i.b) #33
   %i.d = tail call i32 @isatty(i32 noundef %i.c) #33
   %.not = icmp eq i32 %i.d, 0
-  br i1 %.not, label %.thread15, label %bb.g
+  br i1 %.not, label %bb.c, label %bb.g
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %bb.b, %bb.a
   %i.e = icmp eq ptr %1, @_ZSt4cerr
   br i1 %i.e, label %bb.d, label %bb.e
 
@@ -216,12 +216,9 @@ bb.d:                                             ; preds = %bb.c
   %i.g = tail call i32 @fileno(ptr noundef %i.f) #33
   %i.h = tail call i32 @isatty(i32 noundef %i.g) #33
   %.not11 = icmp eq i32 %i.h, 0
-  br i1 %.not11, label %.thread15, label %bb.g
+  br i1 %.not11, label %bb.e, label %bb.g
 
-.thread15:                                        ; preds = %bb.d, %bb.b
-  br label %bb.g
-
-bb.e:                                             ; preds = %bb.c
+bb.e:                                             ; preds = %bb.d, %bb.c
   %i.i = icmp eq ptr %1, @_ZSt4clog
   br i1 %i.i, label %bb.f, label %bb.g
 
@@ -233,8 +230,8 @@ bb.f:                                             ; preds = %bb.e
   %i.n = zext i1 %i.m to i8
   br label %bb.g
 
-bb.g:                                             ; preds = %.thread15, %bb.e, %bb.f, %bb.d, %bb.b
-  %5 = phi i8 [ 1, %bb.d ], [ 1, %bb.b ], [ 0, %bb.e ], [ %i.n, %bb.f ], [ 0, %.thread15 ]
+bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d, %bb.b
+  %5 = phi i8 [ 1, %bb.d ], [ 1, %bb.b ], [ 0, %bb.e ], [ %i.n, %bb.f ]
   store i8 %5, ptr %0, align 1, !tbaa !63
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
   store ptr @.str.30, ptr %3, align 8, !tbaa !57

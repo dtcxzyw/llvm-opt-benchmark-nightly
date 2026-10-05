@@ -204,11 +204,17 @@ _ZN4mlir9Operation11getParentOpEv.exit:
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !89   ; 2 uses
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_3scf10ParallelOpEvE2idE
-  %5 = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_6affine16AffineParallelOpEvE2idE
-  %spec.select.i = or i1 %i.g, %5
-  br i1 %spec.select.i, label %bb.c, label %bb.a
+  %5 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf10ParallelOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %5, %i.g
+  br i1 %spec.select.i.i.i.i.i, label %bb.c, label %_ZN4llvm3isaIJN4mlir3scf10ParallelOpENS1_6affine16AffineParallelOpEEPNS1_9OperationEEEbRKT0_.exit
 
-bb.a:                                             ; preds = %_ZN4mlir9Operation11getParentOpEv.exit
+_ZN4llvm3isaIJN4mlir3scf10ParallelOpENS1_6affine16AffineParallelOpEEPNS1_9OperationEEEbRKT0_.exit: ; preds = %_ZN4mlir9Operation11getParentOpEv.exit
+  %6 = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_6affine16AffineParallelOpEvE2idE
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine16AffineParallelOpEvE2idE
+  %spec.select.i.i.i.i3.i = and i1 %7, %6
+  br i1 %spec.select.i.i.i.i3.i, label %bb.c, label %bb.a
+
+bb.a:                                             ; preds = %_ZN4llvm3isaIJN4mlir3scf10ParallelOpENS1_6affine16AffineParallelOpEEPNS1_9OperationEEEbRKT0_.exit
   %i.h = call i64 @_ZN4mlir6affine13AffineYieldOp27getODSOperandIndexAndLengthEj(ptr noundef nonnull align 8 dereferenceable(8) %4, i32 noundef 0) #17 ; 3 uses
   %i.i = load ptr, ptr %4, align 8, !tbaa !23     ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 44
@@ -246,8 +252,8 @@ _ZN4mlir6affine13AffineYieldOp11getOperandsEv.exit: ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZN4mlir9Operation11getParentOpEv.exit, %_ZN4mlir6affine13AffineYieldOp11getOperandsEv.exit
-  %.sroa.01.0 = phi i8 [ 1, %_ZN4mlir6affine13AffineYieldOp11getOperandsEv.exit ], [ 0, %_ZN4mlir9Operation11getParentOpEv.exit ]
+bb.c:                                             ; preds = %_ZN4mlir9Operation11getParentOpEv.exit, %_ZN4llvm3isaIJN4mlir3scf10ParallelOpENS1_6affine16AffineParallelOpEEPNS1_9OperationEEEbRKT0_.exit, %_ZN4mlir6affine13AffineYieldOp11getOperandsEv.exit
+  %.sroa.01.0 = phi i8 [ 1, %_ZN4mlir6affine13AffineYieldOp11getOperandsEv.exit ], [ 0, %_ZN4llvm3isaIJN4mlir3scf10ParallelOpENS1_6affine16AffineParallelOpEEPNS1_9OperationEEEbRKT0_.exit ], [ 0, %_ZN4mlir9Operation11getParentOpEv.exit ]
   ret i8 %.sroa.01.0
 }
 

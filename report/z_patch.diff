@@ -1,0 +1,133 @@
+diff --git a/llvm/lib/IR/ConstantFold.cpp b/llvm/lib/IR/ConstantFold.cpp
+index d19100931d4d9..dd7c4f919c751 100644
+--- a/llvm/lib/IR/ConstantFold.cpp
++++ b/llvm/lib/IR/ConstantFold.cpp
+@@ -998,7 +998,8 @@ static ICmpInst::Predicate areGlobalsPotentiallyEqual(const GlobalValue *GV1,
+   auto isGlobalUnsafeForEquality = [](const GlobalValue *GV) {
+     // noipa doesn't affect which definition (and so which address) a global
+     // resolves to, so it's ignored here.
+-    if (GV->isInterposable(/*CheckNoIPA=*/false) || GV->hasGlobalUnnamedAddr())
++    if (GV->isDeclaration() || GV->isInterposable(/*CheckNoIPA=*/false) ||
++        GV->hasGlobalUnnamedAddr())
+       return true;
+     if (const auto *GVar = dyn_cast<GlobalVariable>(GV)) {
+       Type *Ty = GVar->getValueType();
+diff --git a/llvm/test/Transforms/InstCombine/icmp-bitcast-glob.ll b/llvm/test/Transforms/InstCombine/icmp-bitcast-glob.ll
+deleted file mode 100644
+index 62c7b8e71fb6a..0000000000000
+--- a/llvm/test/Transforms/InstCombine/icmp-bitcast-glob.ll
++++ /dev/null
+@@ -1,31 +0,0 @@
+-; RUN: opt < %s -passes=instcombine -S | FileCheck %s
+-
+-declare i32 @f32(ptr, ptr)
+-
+-declare i32 @f64(ptr, ptr)
+-
+-define i1 @icmp_func() {
+-; CHECK-LABEL: @icmp_func(
+-; CHECK: ret i1 false
+-  %cmp = icmp eq ptr @f32, @f64
+-  ret i1 %cmp
+-}
+-
+-define i1 @icmp_fptr(ptr) {
+-; CHECK-LABEL: @icmp_fptr(
+-; CHECK: %cmp = icmp ne ptr %0, @f32
+-; CHECK: ret i1 %cmp
+-  %cmp = icmp ne ptr @f32, %0
+-  ret i1 %cmp
+-}
+-
+-@b = external global i32
+-
+-define i32 @icmp_glob(i32 %x, i32 %y) {
+-; CHECK-LABEL: define i32 @icmp_glob(i32 %x, i32 %y)
+-; CHECK-NEXT:   ret i32 %y
+-;
+-  %cmp = icmp eq ptr @icmp_glob, @b
+-  %sel = select i1 %cmp, i32 %x, i32 %y
+-  ret i32 %sel
+-}
+diff --git a/llvm/test/Transforms/InstSimplify/ConstProp/icmp-global.ll b/llvm/test/Transforms/InstSimplify/ConstProp/icmp-global.ll
+index d50c03dfd4b4c..59831bd5c491c 100644
+--- a/llvm/test/Transforms/InstSimplify/ConstProp/icmp-global.ll
++++ b/llvm/test/Transforms/InstSimplify/ConstProp/icmp-global.ll
+@@ -69,6 +69,8 @@ define i1 @ult_constexpr_constexpr_one(ptr %x) {
+ @g2 = global i32 0
+ @g2_weak = extern_weak global i32
+ @g3 = global i8 0
++@g4 = external global i32
++@g5 = external global i32
+ 
+ define i1 @global_ne_null() {
+ ; CHECK-LABEL: @global_ne_null(
+@@ -325,3 +327,20 @@ define i1 @global_no_cfi_dso_local_equivalent() {
+   %cmp = icmp eq ptr dso_local_equivalent @func, no_cfi @func
+   ret i1 %cmp
+ }
++
++define i1 @different_global_decls() {
++; CHECK-LABEL: @different_global_decls(
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr @g4, @g5
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %cmp = icmp eq ptr @g4, @g5
++  ret i1 %cmp
++}
++
++define i1 @different_global_defs() {
++; CHECK-LABEL: @different_global_defs(
++; CHECK-NEXT:    ret i1 false
++;
++  %cmp = icmp eq ptr @g, @g2
++  ret i1 %cmp
++}
+diff --git a/llvm/test/Transforms/InstSimplify/ptrtoaddr.ll b/llvm/test/Transforms/InstSimplify/ptrtoaddr.ll
+index 88ff0080f229a..7c689ffce08d2 100644
+--- a/llvm/test/Transforms/InstSimplify/ptrtoaddr.ll
++++ b/llvm/test/Transforms/InstSimplify/ptrtoaddr.ll
+@@ -10,6 +10,12 @@ target datalayout = "pe1:64:64:64:32"
+ @g.as1 = external addrspace(1) global i8
+ @g2.as1 = external addrspace(1) global i8
+ 
++@g.def = global i8 0
++@g2.def = global i8 0
++
++@g.as1.def = addrspace(1) global i8 0
++@g2.as1.def = addrspace(1) global i8 0
++
+ define i64 @ptrtoaddr_inttoptr_arg(i64 %a) {
+ ; CHECK-LABEL: define i64 @ptrtoaddr_inttoptr_arg(
+ ; CHECK-SAME: i64 [[A:%.*]]) {
+@@ -349,7 +355,7 @@ define i1 @icmp_ptrtoaddr_ptrtoaddr() {
+ ; CHECK-LABEL: define i1 @icmp_ptrtoaddr_ptrtoaddr() {
+ ; CHECK-NEXT:    ret i1 true
+ ;
+-  %cmp = icmp ne i64 ptrtoaddr (ptr @g to i64), ptrtoaddr (ptr @g2 to i64)
++  %cmp = icmp ne i64 ptrtoaddr (ptr @g.def to i64), ptrtoaddr (ptr @g2.def to i64)
+   ret i1 %cmp
+ }
+ 
+@@ -357,7 +363,7 @@ define i1 @icmp_ptrtoaddr_ptrtoaddr_addrsize() {
+ ; CHECK-LABEL: define i1 @icmp_ptrtoaddr_ptrtoaddr_addrsize() {
+ ; CHECK-NEXT:    ret i1 true
+ ;
+-  %cmp = icmp ne i32 ptrtoaddr (ptr addrspace(1) @g.as1 to i32), ptrtoaddr (ptr addrspace(1) @g2.as1 to i32)
++  %cmp = icmp ne i32 ptrtoaddr (ptr addrspace(1) @g.as1.def to i32), ptrtoaddr (ptr addrspace(1) @g2.as1.def to i32)
+   ret i1 %cmp
+ }
+ 
+@@ -365,10 +371,10 @@ define i1 @icmp_ptrtoaddr_ptrtoaddr_addrsize() {
+ ; that all pointer bits together are non-equal.
+ define i1 @icmp_ptrtoint_ptrtoint_addrsize() {
+ ; CHECK-LABEL: define i1 @icmp_ptrtoint_ptrtoint_addrsize() {
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp ne i64 ptrtoint (ptr addrspace(1) @g.as1 to i64), ptrtoint (ptr addrspace(1) @g2.as1 to i64)
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne i64 ptrtoint (ptr addrspace(1) @g.as1.def to i64), ptrtoint (ptr addrspace(1) @g2.as1.def to i64)
+ ; CHECK-NEXT:    ret i1 [[CMP]]
+ ;
+-  %cmp = icmp ne i64 ptrtoint (ptr addrspace(1) @g.as1 to i64), ptrtoint (ptr addrspace(1) @g2.as1 to i64)
++  %cmp = icmp ne i64 ptrtoint (ptr addrspace(1) @g.as1.def to i64), ptrtoint (ptr addrspace(1) @g2.as1.def to i64)
+   ret i1 %cmp
+ }
+ 

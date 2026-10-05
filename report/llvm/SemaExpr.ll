@@ -205,12 +205,10 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   %i.ai = tail call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK5clang10ASTContext21getFloatTypeSemanticsENS_8QualTypeE(ptr noundef nonnull align 8 dereferenceable(23904) %i.ah, i64 %.sroa.06.0) #30 ; 2 uses
   %i.aj = load ptr, ptr %i.ag, align 8, !tbaa !1116, !nonnull !97, !align !787
   %i.ak = tail call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK5clang10ASTContext21getFloatTypeSemanticsENS_8QualTypeE(ptr noundef nonnull align 8 dereferenceable(23904) %i.aj, i64 %.sroa.05.0) #30 ; 2 uses
-  %.not17.a = icmp eq ptr %i.ai, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
-  br i1 %.not17.a, label %3, label %bb.l
-
-3:                                                ; preds = %bb.k
-  %.not18 = icmp eq ptr %i.ak, @_ZN4llvm11APFloatBase11semIEEEquadE
-  br i1 %.not18, label %bb.m, label %.thread
+  %.not17 = icmp eq ptr %i.ai, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  %.not17.a = icmp eq ptr %i.ak, @_ZN4llvm11APFloatBase11semIEEEquadE
+  %or.cond = and i1 %.not17, %.not17.a
+  br i1 %or.cond, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %.not19 = icmp eq ptr %i.ai, @_ZN4llvm11APFloatBase11semIEEEquadE
@@ -218,11 +216,11 @@ bb.l:                                             ; preds = %bb.k
   %or.cond.a = and i1 %.not19, %.not20
   br i1 %or.cond.a, label %bb.m, label %.thread
 
-bb.m:                                             ; preds = %bb.l, %3
+bb.m:                                             ; preds = %bb.l, %bb.k
   br label %.thread
 
-.thread:                                          ; preds = %3, %bb.m, %bb.l, %bb.a, %bb.b
-  %.1 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %bb.m ], [ false, %3 ], [ false, %bb.l ]
+.thread:                                          ; preds = %bb.m, %bb.l, %bb.a, %bb.b
+  %.1 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %bb.m ], [ false, %bb.l ]
   ret i1 %.1
 }
 

@@ -204,39 +204,29 @@ _ZN12_GLOBAL__N_115MachineOutliner22initializeOutlinerModeERKN4llvm6ModuleE.exit
   tail call void @llvm.assume(i1 %.not1114.i.i.i)
   %i.am = load ptr, ptr %i.aj, align 8, !tbaa !109 ; 2 uses
   %.not.i3.i.i = icmp eq ptr %i.am, @_ZN4llvm28MachineModuleInfoWrapperPass2IDE
-  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit.thread, label %.lr.ph.i.i.i
-
-_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit.thread: ; preds = %_ZN12_GLOBAL__N_115MachineOutliner22initializeOutlinerModeERKN4llvm6ModuleE.exit
-  %9 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %10 = load ptr, ptr %9, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 32
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr %11, ptr %12, align 8, !tbaa !110
-  br label %.lr.ph.i.i.i13.preheader
+  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN12_GLOBAL__N_115MachineOutliner22initializeOutlinerModeERKN4llvm6ModuleE.exit, %.lr.ph.i.i.i
-  %.sroa.08.015.i4.i.i = phi ptr [ %i.an, %.lr.ph.i.i.i ], [ %i.aj, %_ZN12_GLOBAL__N_115MachineOutliner22initializeOutlinerModeERKN4llvm6ModuleE.exit ] ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 3 uses
+  %.sroa.08.015.i4.i.i = phi ptr [ %i.an, %.lr.ph.i.i.i ], [ %i.aj, %_ZN12_GLOBAL__N_115MachineOutliner22initializeOutlinerModeERKN4llvm6ModuleE.exit ]
+  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 4 uses
   %.not11.i.i.i = icmp ne ptr %i.an, %i.al
   tail call void @llvm.assume(i1 %.not11.i.i.i)
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !109
   %.not.i.i.i10 = icmp eq ptr %i.ao, @_ZN4llvm28MachineModuleInfoWrapperPass2IDE
   br i1 %.not.i.i.i10, label %_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
-_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i
-  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 24
+_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i, %_ZN12_GLOBAL__N_115MachineOutliner22initializeOutlinerModeERKN4llvm6ModuleE.exit
+  %.sroa.08.015.i.lcssa.i.i = phi ptr [ %i.aj, %_ZN12_GLOBAL__N_115MachineOutliner22initializeOutlinerModeERKN4llvm6ModuleE.exit ], [ %i.an, %.lr.ph.i.i.i ]
+  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.ar, ptr %i.as, align 8, !tbaa !110
   %.not.i3.i.i12 = icmp eq ptr %i.am, @_ZN4llvm16TargetPassConfig2IDE
-  br i1 %.not.i3.i.i12, label %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit, label %.lr.ph.i.i.i13.preheader
+  br i1 %.not.i3.i.i12, label %_ZNK4llvm4Pass11getAnalysisINS_16TargetPassConfigEEERT_v.exit, label %.lr.ph.i.i.i13
 
-.lr.ph.i.i.i13.preheader:                         ; preds = %_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit.thread, %_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit
-  br label %.lr.ph.i.i.i13
-
-.lr.ph.i.i.i13:                                   ; preds = %.lr.ph.i.i.i13.preheader, %.lr.ph.i.i.i13
-  %.sroa.08.015.i4.i.i14 = phi ptr [ %i.at, %.lr.ph.i.i.i13 ], [ %i.aj, %.lr.ph.i.i.i13.preheader ]
+.lr.ph.i.i.i13:                                   ; preds = %_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit, %.lr.ph.i.i.i13
+  %.sroa.08.015.i4.i.i14 = phi ptr [ %i.at, %.lr.ph.i.i.i13 ], [ %i.aj, %_ZNK4llvm4Pass11getAnalysisINS_28MachineModuleInfoWrapperPassEEERT_v.exit ]
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i14, i64 16 ; 4 uses
   %.not11.i.i.i15 = icmp ne ptr %i.at, %i.al
   tail call void @llvm.assume(i1 %.not11.i.i.i15)
